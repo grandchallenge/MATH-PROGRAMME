@@ -1,0 +1,59 @@
+# Architecture Overview
+
+## The missing middle
+
+The earlier two-part split, MATHFORGE plus MATHCERT, was logically clean but structurally incomplete. It separated exploration from certification, yet omitted the long middle process where Grand Challenge work actually happens. The Chaidez-style Work Packages did not merely discover problems or certify final theorems. They built mathematical campaigns: normal forms, restricted theorem targets, proof attempts, compact residual reductions, exact screens, interval scaffolds, failure ledgers, and plain-language companions.
+
+That middle is now named **MATHSOLVE**.
+
+```text
+MATHFORGE  ->  MATHSOLVE  ->  MATHCERT
+discover       attack         certify
+```
+
+## Three-pillar doctrine
+
+### MATHFORGE
+
+MATHFORGE is the exploratory foundry. It ingests open-problem corpora, source papers, surveys, repository data, examples, counterexamples, computational searches, and speculative conjectures. Its output is not mathematical authority. Its output is candidate ore.
+
+### MATHSOLVE
+
+MATHSOLVE is the campaign room. It turns promising ore into disciplined mathematical form: status spines, theorem candidates, reductions, exact computations, Work Packages, failed attempts, lay explanations, and certification handoffs. MATHSOLVE is allowed to be incomplete, but it must be honest.
+
+### MATHCERT
+
+MATHCERT is the assay office. It checks, rejects, certifies, or records the exact status of claims. It is Lean-first but not Lean-only. It also admits exact rational computation, interval arithmetic, SAT/SMT proof artifacts, theorem prover alternatives, and independently replayable certificate ledgers.
+
+## The promotion path
+
+```text
+Candidate problem card
+  -> Status audit
+  -> Work Package 01: problem spine
+  -> Work Package 02: definitions and reductions
+  -> Work Package 03+: restricted results, exact screens, failure analysis
+  -> MATHCERT handoff
+  -> formal statement / checked lemma / exact certificate / interval certificate
+  -> public claim
+```
+
+No artifact is promoted merely because it sounds mathematical. Promotion requires a claim type, support type, source trail, and certification route.
+
+## Why three pillars instead of one repo
+
+The three functions have different failure modes.
+
+- MATHFORGE fails by hallucinating promise, over-selecting fashionable problems, or producing noisy conjectures.
+- MATHSOLVE fails by writing impressive prose without theorem-grade obligations, hiding dead ends, or confusing evidence with proof.
+- MATHCERT fails by becoming a technical shrine disconnected from mathematical understanding, or by formalizing statements that nobody has explained.
+
+Separating the pillars allows each to check the others.
+
+## Naming note
+
+MATHSMELT remains a useful internal term for the refinement phase inside MATHSOLVE, but it is not the public pillar. MATHSOLVE is clearer and more institutional. It does not mean that the system magically solves mathematics. It means the system organizes the struggle.
+
+## Binding maxim
+
+> No theorem without a spine. No computation without a ledger. No conjecture without a map. No proof without a reader.

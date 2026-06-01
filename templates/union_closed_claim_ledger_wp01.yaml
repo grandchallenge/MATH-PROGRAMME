@@ -1,0 +1,34 @@
+claims:
+  - claim_id: UC-WP01-C001
+    short_name: Frankl conjecture statement
+    claim_text: Every finite nontrivial union-closed family has an element present in at least half its members.
+    claim_class: LITERATURE_DERIVED
+    support_type: SOURCE_CITATION
+    status: OPEN_PROBLEM
+    certainty: PROVED_NOT_FORMALIZED_FOR_STATEMENT_ONLY
+    source_or_artifact:
+      - https://en.wikipedia.org/wiki/Union-closed_sets_conjecture
+      - https://arxiv.org/abs/2306.12351
+    assumptions: []
+    promotion_condition: Formal Lean statement in WP02; proof would require solving conjecture or restricted case.
+    related_files:
+      - WP01_UNION_CLOSED_STATUS_SPINE.md
+      - WP02_UNION_CLOSED_LEAN_HANDOFF.md
+
+  - claim_id: UC-WP01-C004
+    short_name: small universe exact sanity check
+    claim_text: Exact enumeration finds no Frankl violations for all union-closed families on universes of size n <= 4.
+    claim_class: COMPUTED_EXACTLY
+    support_type: EXACT_RATIONAL_COMPUTATION
+    status: CERTIFIED
+    certainty: EXACTLY_COMPUTED
+    source_or_artifact:
+      - MATHFORGE/domains/union_closed/enumerate_small_families.py
+      - MATHFORGE/domains/union_closed/union_closed_small_audit.json
+      - MATHCERT/certificates/exact/union_closed_n_le_4.json
+      - MATHCERT/ci/replay_certificates.py
+    assumptions:
+      - Python integer semantics are trusted for the independently implemented bounded replay.
+    promotion_condition: Extend the certified bound only with a separately reviewed larger-domain verifier.
+    related_files:
+      - WP01_UNION_CLOSED_STATUS_SPINE.md

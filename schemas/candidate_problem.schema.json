@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MATHFORGE Candidate Problem Card",
+  "type": "object",
+  "required": [
+    "problem_id",
+    "title",
+    "domain",
+    "status_signal",
+    "grand_challenge_fit",
+    "recommended_wp01"
+  ],
+  "properties": {
+    "problem_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "domain": {
+      "type": "string"
+    },
+    "status_signal": {
+      "type": "string"
+    },
+    "source_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "grand_challenge_fit": {
+      "type": "string"
+    },
+    "risk_flags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "recommended_wp01": {
+      "type": "string"
+    },
+    "recommended_certification_route": {
+      "type": "string"
+    }
+  }
+}
