@@ -25,6 +25,16 @@ not a second source of truth.
 relevant CI checks pass. Direct pushes are reserved for repository bootstrap and
 time-critical administration.
 
+## Maintainer Policy
+
+`@fyremael` is the initial code owner and write-capable maintainer. During the
+single-maintainer phase, pull requests and relevant CI checks remain mandatory, but
+an approving review is not required because GitHub does not allow an author to
+approve their own pull request.
+
+When another independent write-capable contributor is active, restore the
+one-approval branch rule and require code-owner review where appropriate.
+
 ## Promotion Rule
 
 No artifact moves downstream without a handoff packet. No public theorem claim is
