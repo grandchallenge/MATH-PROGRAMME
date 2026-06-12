@@ -3,37 +3,24 @@ site_description: A Grand Challenge mathematics programme for turning curiosity 
 site_url: https://grandchallenge.github.io/MATH-PROGRAMME/
 repo_url: https://github.com/grandchallenge/MATH-PROGRAMME
 repo_name: grandchallenge/MATH-PROGRAMME
-edit_uri: edit/main/
+edit_uri: edit/main/docs/
 
-docs_dir: .
-site_dir: .site
+docs_dir: docs
+site_dir: site
 
 nav:
-  - Home: docs/index.md
-  - Showcase: docs/SHOWCASE.md
-  - Reader Guide: docs/GRAND_CHALLENGE_READER_GUIDE.md
-  - Programme Atlas: docs/PROGRAMME_ATLAS.md
-  - Architecture: ARCHITECTURE_OVERVIEW.md
-  - Pillars:
-      - MATHFORGE: MATHFORGE_SPEC.md
-      - MATHSOLVE: MATHSOLVE_SPEC.md
-      - MATHCERT: MATHCERT_SPEC.md
+  - Home: index.md
+  - Showcase: SHOWCASE.md
+  - Reader Guide: GRAND_CHALLENGE_READER_GUIDE.md
+  - Programme Atlas: PROGRAMME_ATLAS.md
+  - Repository Documents: REPOSITORY_DOCS.md
   - Doctrine:
-      - Thurstonian Ethos: THURSTONIAN_ETHOS.md
-      - Claim Boundary: docs/CLAIM_BOUNDARY_DOCTRINE.md
-      - Pedagogy: docs/PEDAGOGICAL_STYLE_GUIDE.md
-      - Cross-Pillar Lanes: docs/CROSS_PILLAR_LANES.md
-      - Groebner and EXPSPACE: docs/GROEBNER_EXPSPACE_DOCTRINE.md
-      - Resource Budgets: docs/RESOURCE_BUDGET_POLICY.md
-  - Standards:
-      - Work Package Standard: GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md
-      - Claim Ledger Standard: CLAIM_LEDGER_STANDARD.md
-      - Certification Ladder: CERTIFICATION_LADDER.md
-  - First Domain:
-      - Union-Closed Master Plan: DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md
-      - WP01 Status Spine: WP01_UNION_CLOSED_STATUS_SPINE.md
-      - WP02 Lean Handoff: WP02_UNION_CLOSED_LEAN_HANDOFF.md
-  - Glossary: docs/GLOSSARY.md
+      - Claim Boundary: CLAIM_BOUNDARY_DOCTRINE.md
+      - Pedagogy: PEDAGOGICAL_STYLE_GUIDE.md
+      - Cross-Pillar Lanes: CROSS_PILLAR_LANES.md
+      - Groebner and EXPSPACE: GROEBNER_EXPSPACE_DOCTRINE.md
+      - Resource Budgets: RESOURCE_BUDGET_POLICY.md
+  - Glossary: GLOSSARY.md
 
 theme:
   name: material
@@ -66,8 +53,3 @@ markdown_extensions:
 
 plugins:
   - search
-
-exclude_docs: |
-  .git
-  .github
-  .site
