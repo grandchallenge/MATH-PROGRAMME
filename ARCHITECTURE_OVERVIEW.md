@@ -11,19 +11,47 @@ MATHFORGE  ->  MATHSOLVE  ->  MATHCERT
 discover       attack         certify
 ```
 
+A more faithful picture is:
+
+```text
+raw mathematical signal
+  -> reconstructed source context
+  -> problem card
+  -> status spine
+  -> theorem spine
+  -> work-package campaign
+  -> claim ledger
+  -> certification handoff
+  -> checked artifact or rejected claim
+```
+
+The architecture exists to prevent each stage from pretending to be the next one.
+
 ## Three-pillar doctrine
 
 ### MATHFORGE
 
 MATHFORGE is the exploratory foundry. It ingests open-problem corpora, source papers, surveys, repository data, examples, counterexamples, computational searches, and speculative conjectures. Its output is not mathematical authority. Its output is candidate ore.
 
+Its governing question is:
+
+> What is worth carrying into a disciplined campaign?
+
 ### MATHSOLVE
 
 MATHSOLVE is the campaign room. It turns promising ore into disciplined mathematical form: status spines, theorem candidates, reductions, exact computations, Work Packages, failed attempts, lay explanations, and certification handoffs. MATHSOLVE is allowed to be incomplete, but it must be honest.
 
+Its governing question is:
+
+> What exact mathematical obligation have we clarified?
+
 ### MATHCERT
 
 MATHCERT is the assay office. It checks, rejects, certifies, or records the exact status of claims. It is Lean-first but not Lean-only. It also admits exact rational computation, interval arithmetic, SAT/SMT proof artifacts, theorem prover alternatives, and independently replayable certificate ledgers.
+
+Its governing question is:
+
+> What has crossed a trusted proof or replay boundary?
 
 ## The promotion path
 
@@ -49,6 +77,20 @@ The three functions have different failure modes.
 - MATHCERT fails by becoming a technical shrine disconnected from mathematical understanding, or by formalizing statements that nobody has explained.
 
 Separating the pillars allows each to check the others.
+
+## Cross-pillar lanes
+
+Some workflows cut across all three pillars. These are called lanes. A lane is a reusable route from discovery to tactic to certification.
+
+The first explicit lane is the algebraic witness-to-certificate route:
+
+```text
+MATHFORGE: external CAS or exact symbolic search emits a witness
+MATHSOLVE: recognizes the algebraic subproblem and routes the tactic
+MATHCERT: replays or Lean-checks the certificate before promotion
+```
+
+The lane doctrine lives in `docs/CROSS_PILLAR_LANES.md`.
 
 ## Naming note
 
