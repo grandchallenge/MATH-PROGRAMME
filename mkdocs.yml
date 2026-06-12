@@ -23,7 +23,7 @@ nav:
       - Claim Boundary: docs/CLAIM_BOUNDARY_DOCTRINE.md
       - Pedagogy: docs/PEDAGOGICAL_STYLE_GUIDE.md
       - Cross-Pillar Lanes: docs/CROSS_PILLAR_LANES.md
-      - Gröbner and EXPSPACE: docs/GROEBNER_EXPSPACE_DOCTRINE.md
+      - Groebner and EXPSPACE: docs/GROEBNER_EXPSPACE_DOCTRINE.md
       - Resource Budgets: docs/RESOURCE_BUDGET_POLICY.md
   - Standards:
       - Work Package Standard: GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md
@@ -39,13 +39,10 @@ theme:
   name: material
   language: en
   features:
-    - navigation.instant
-    - navigation.tracking
     - navigation.sections
     - navigation.expand
     - navigation.top
     - toc.follow
-    - content.action.edit
     - content.code.copy
     - search.suggest
     - search.highlight
@@ -53,42 +50,19 @@ theme:
     - scheme: default
       primary: deep purple
       accent: amber
-      toggle:
-        icon: material/weather-night
-        name: Switch to dark mode
     - scheme: slate
       primary: deep purple
       accent: amber
-      toggle:
-        icon: material/weather-sunny
-        name: Switch to light mode
-  icon:
-    repo: fontawesome/brands/github
-  font:
-    text: Merriweather Sans
-    code: JetBrains Mono
 
 markdown_extensions:
   - admonition
   - attr_list
   - def_list
   - footnotes
-  - md_in_html
   - pymdownx.details
   - pymdownx.superfences
-  - pymdownx.tabbed:
-      alternate_style: true
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.tasklist:
-      custom_checkbox: true
   - toc:
       permalink: true
-
-extra_css:
-  - docs/stylesheets/extra.css
 
 plugins:
   - search
