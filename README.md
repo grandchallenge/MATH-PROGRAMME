@@ -74,6 +74,7 @@ Presentation and pedagogy companions:
 - `docs/PROGRAMME_ATLAS.md`
 - `docs/PEDAGOGICAL_STYLE_GUIDE.md`
 - `docs/CLAIM_BOUNDARY_DOCTRINE.md`
+- `docs/CROSS_PILLAR_LANES.md`
 - `docs/GLOSSARY.md`
 
 Additional supporting files include schemas, templates, exact finite enumerators, small audit outputs, and Lean scaffolding for the Union-Closed domain.
@@ -86,7 +87,8 @@ Additional supporting files include schemas, templates, exact finite enumerators
 4. Use `GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md` for every MATHSOLVE Work Package.
 5. Treat `CLAIM_LEDGER_STANDARD.md` as binding. No claim should appear without a type, support route, and promotion condition.
 6. Treat `CERTIFICATION_LADDER.md` as the promotion gate from mathematical development to certified result.
-7. Begin the first domain with `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`, `WP01_UNION_CLOSED_STATUS_SPINE.md`, and `WP02_UNION_CLOSED_LEAN_HANDOFF.md`.
+7. Read `docs/CROSS_PILLAR_LANES.md` when a recurring tactic, witness, or certificate path spans all three pillars.
+8. Begin the first domain with `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`, `WP01_UNION_CLOSED_STATUS_SPINE.md`, and `WP02_UNION_CLOSED_LEAN_HANDOFF.md`.
 
 ## Claim boundary
 
