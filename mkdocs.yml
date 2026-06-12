@@ -1,0 +1,99 @@
+site_name: Grand Challenge Mathematics Programme
+site_description: A Grand Challenge mathematics programme for turning curiosity into checked understanding.
+site_url: https://grandchallenge.github.io/MATH-PROGRAMME/
+repo_url: https://github.com/grandchallenge/MATH-PROGRAMME
+repo_name: grandchallenge/MATH-PROGRAMME
+edit_uri: edit/main/
+
+docs_dir: .
+site_dir: .site
+
+nav:
+  - Home: docs/index.md
+  - Showcase: docs/SHOWCASE.md
+  - Reader Guide: docs/GRAND_CHALLENGE_READER_GUIDE.md
+  - Programme Atlas: docs/PROGRAMME_ATLAS.md
+  - Architecture: ARCHITECTURE_OVERVIEW.md
+  - Pillars:
+      - MATHFORGE: MATHFORGE_SPEC.md
+      - MATHSOLVE: MATHSOLVE_SPEC.md
+      - MATHCERT: MATHCERT_SPEC.md
+  - Doctrine:
+      - Thurstonian Ethos: THURSTONIAN_ETHOS.md
+      - Claim Boundary: docs/CLAIM_BOUNDARY_DOCTRINE.md
+      - Pedagogy: docs/PEDAGOGICAL_STYLE_GUIDE.md
+      - Cross-Pillar Lanes: docs/CROSS_PILLAR_LANES.md
+      - Gröbner and EXPSPACE: docs/GROEBNER_EXPSPACE_DOCTRINE.md
+      - Resource Budgets: docs/RESOURCE_BUDGET_POLICY.md
+  - Standards:
+      - Work Package Standard: GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md
+      - Claim Ledger Standard: CLAIM_LEDGER_STANDARD.md
+      - Certification Ladder: CERTIFICATION_LADDER.md
+  - First Domain:
+      - Union-Closed Master Plan: DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md
+      - WP01 Status Spine: WP01_UNION_CLOSED_STATUS_SPINE.md
+      - WP02 Lean Handoff: WP02_UNION_CLOSED_LEAN_HANDOFF.md
+  - Glossary: docs/GLOSSARY.md
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - toc.follow
+    - content.action.edit
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+  font:
+    text: Merriweather Sans
+    code: JetBrains Mono
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - toc:
+      permalink: true
+
+extra_css:
+  - docs/stylesheets/extra.css
+
+plugins:
+  - search
+
+exclude_docs: |
+  .git
+  .github
+  .site
