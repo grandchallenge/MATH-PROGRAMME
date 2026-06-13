@@ -4,48 +4,62 @@ site_url: https://grandchallenge.github.io/MATH-PROGRAMME/
 repo_url: https://github.com/grandchallenge/MATH-PROGRAMME
 repo_name: grandchallenge/MATH-PROGRAMME
 edit_uri: edit/main/docs/
+copyright: No theorem without a spine. No computation without a ledger. No proof without a reader.
 
 docs_dir: docs
 site_dir: site
 
 nav:
-  - Home: index.md
-  - Showcase: SHOWCASE.md
-  - Reader Guide: GRAND_CHALLENGE_READER_GUIDE.md
-  - Programme Atlas: PROGRAMME_ATLAS.md
-  - Repository Documents: REPOSITORY_DOCS.md
+  - Start Here: index.md
+  - Programme:
+      - Showcase: SHOWCASE.md
+      - Reader Guide: GRAND_CHALLENGE_READER_GUIDE.md
+      - Programme Atlas: PROGRAMME_ATLAS.md
   - Doctrine:
       - Claim Boundary: CLAIM_BOUNDARY_DOCTRINE.md
       - Pedagogy: PEDAGOGICAL_STYLE_GUIDE.md
       - Cross-Pillar Lanes: CROSS_PILLAR_LANES.md
       - Groebner and EXPSPACE: GROEBNER_EXPSPACE_DOCTRINE.md
       - Resource Budgets: RESOURCE_BUDGET_POLICY.md
+  - Domains:
+      - Repository Documents: REPOSITORY_DOCS.md
   - Glossary: GLOSSARY.md
 
 theme:
   name: material
   language: en
+  logo: assets/grand-challenge-mark.svg
+  favicon: assets/grand-challenge-mark.svg
   features:
+    - navigation.tabs
     - navigation.sections
-    - navigation.expand
+    - navigation.indexes
     - navigation.top
     - toc.follow
     - content.code.copy
     - search.suggest
     - search.highlight
   palette:
-    - scheme: default
-      primary: deep purple
-      accent: amber
-    - scheme: slate
-      primary: deep purple
-      accent: amber
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Use dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Use light mode
+
+extra_css:
+  - stylesheets/extra.css
 
 markdown_extensions:
   - admonition
   - attr_list
   - def_list
   - footnotes
+  - md_in_html
   - pymdownx.details
   - pymdownx.superfences
   - toc:
@@ -53,3 +67,10 @@ markdown_extensions:
 
 plugins:
   - search
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/grandchallenge/MATH-PROGRAMME
+      name: MATH-PROGRAMME on GitHub
