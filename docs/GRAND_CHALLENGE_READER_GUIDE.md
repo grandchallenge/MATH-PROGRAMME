@@ -1,80 +1,65 @@
 # Grand Challenge Reader Guide
 
-## The first principle
+<p class="page-deck">A reading protocol for reconstructing the object, locating the obstruction, testing the claim boundary, and identifying the next move.</p>
 
-The programme is built for readers, not only for solvers. A mathematical artifact is successful when another serious reader can reconstruct the object, the obstruction, the claim boundary, and the next move without guessing what the author meant.
+<div class="reader-compact">
+  <p>The programme is built for readers, not only for solvers. A mathematical artifact succeeds when another serious reader can reconstruct what was attempted without guessing what the author meant.</p>
+  <p><strong>The author promises to mark uncertainty. The reader promises to respect partial progress when it is honestly bounded.</strong></p>
+</div>
 
-The three-pillar stack exists to protect that clarity.
+## Four questions govern the reading
 
-```text
-MATHFORGE asks:  What might be worth studying?
-MATHSOLVE asks:  What exactly are we trying, and what did we learn?
-MATHCERT asks:   What has crossed the proof boundary?
-```
+<div class="reader-questions">
+  <article><span>01</span><h3>What is the object?</h3><p>Identify the ingredients, examples, non-examples, ambient category, and the exact formulation being preserved.</p><small>Do not let machinery arrive before the mathematical object.</small></article>
+  <article><span>02</span><h3>Where is the obstruction?</h3><p>Find the point where naive reasoning fails: explosion, singularity, non-compactness, missing invariant, undecidability, or boundary pathology.</p><small>A Work Package should teach the difficulty, not hide it.</small></article>
+  <article><span>03</span><h3>What is the claim boundary?</h3><p>Separate what is proved, formalized, exactly computed, literature-derived, heuristic, conjectural, failed, superseded, or refuted.</p><small>Status determines what kind of reliance is permitted.</small></article>
+  <article><span>04</span><h3>What is the next move?</h3><p>Demand a finite obligation: a lemma, certificate replay, counterexample search, formal definition, or residual domain reduction.</p><small>“More work is needed” is not a next move.</small></article>
+</div>
 
-## The four questions every reader should ask
+## Read through the correct lens
 
-### 1. What is the object?
+<div class="lens-register">
+  <div><span>New contributor</span><strong>Can I reconstruct the landscape?</strong><p>Begin with the Showcase, Programme Atlas, and source map. Learn the nouns before proposing a route.</p></div>
+  <div><span>Campaign author</span><strong>Is the obligation sharp enough to attack?</strong><p>Inspect definitions, reductions, dependencies, failed routes, and promotion conditions.</p></div>
+  <div><span>Formalization lead</span><strong>Is the intended statement encoded?</strong><p>Compare human semantics, formal statement, assumptions, imports, and replay environment.</p></div>
+  <div><span>Skeptical reviewer</span><strong>What could downgrade this claim?</strong><p>Test the support type, active assumptions, independent artifact, and failure condition.</p></div>
+</div>
 
-Before asking whether something is true, identify the mathematical object with enough precision that examples and non-examples can be built.
+## Anatomy of a serious artifact
 
-A good artifact shows the object by:
-
-- naming its basic ingredients;
-- giving small examples;
-- stating equivalent formulations only after the original formulation is visible;
-- explaining why the chosen definitions preserve the problem rather than simplifying it away.
-
-### 2. Where is the obstruction?
-
-The obstruction is the reason the problem is alive. It may be combinatorial explosion, a fragile boundary case, loss of compactness, non-normal amplification, undecidable search, lack of monotonicity, a missing invariant, or a misleading heuristic.
-
-A Work Package should teach the obstruction, not hide it.
-
-### 3. What is the claim boundary?
-
-Every mathematical sentence belongs to a status class:
-
-- proved in the package;
-- formalized;
-- computed exactly;
-- interval-certified;
-- literature-derived;
-- heuristic;
-- conjectural;
-- failed;
-- superseded;
-- refuted.
-
-A reader should never have to infer which status applies.
-
-### 4. What is the next move?
-
-The next move should be sharp. Avoid vague endings such as "more work is needed." State the next finite task: a lemma to prove, a certificate to replay, a counterexample search to run, a missing definition to formalize, or a residual domain to shrink.
+<div class="artifact-anatomy">
+  <div><b>01</b><span>Orientation</span><p>Problem statement, source reconstruction, status, terminology.</p></div>
+  <div><b>02</b><span>Mathematical core</span><p>Definitions, examples, invariants, normal forms, diagrams.</p></div>
+  <div><b>03</b><span>Obstruction register</span><p>Known barriers, boundary cases, complexity, failed heuristics.</p></div>
+  <div><b>04</b><span>Theorem spine</span><p>Dependency graph from local obligations to target claim.</p></div>
+  <div><b>05</b><span>Evidence ledger</span><p>Proofs, computations, certificates, citations, and status labels.</p></div>
+  <div><b>06</b><span>Handoff</span><p>Exact next task, promotion condition, and certification route.</p></div>
+</div>
 
 ## Reading order
 
-For the whole programme:
+### For the programme
 
-1. `README.md`
-2. `ARCHITECTURE_OVERVIEW.md`
-3. `THURSTONIAN_ETHOS.md`
-4. `docs/PROGRAMME_ATLAS.md`
-5. the three pillar specs
-6. `CLAIM_LEDGER_STANDARD.md`
-7. `CERTIFICATION_LADDER.md`
+1. [Showcase](SHOWCASE.md) for the entire apparatus in one view.
+2. [Programme Charter](PROGRAMME_CHARTER.md) for the obligations governing every artifact.
+3. [Programme Atlas](PROGRAMME_ATLAS.md) for the transformation from question to checked claim.
+4. [Claim Boundary Doctrine](CLAIM_BOUNDARY_DOCTRINE.md) for support classes and promotion.
+5. The three pillar specifications for operational detail.
+6. The claim ledger and certification standards for review practice.
 
-For a domain:
+### For a domain
 
-1. domain master plan;
-2. WP01 status spine;
-3. WP02 definition/formalization handoff;
-4. later Work Packages in order;
-5. claim ledger;
-6. certification handoff.
+1. Read the domain master plan.
+2. Reconstruct the status spine and source boundary.
+3. Inspect definitions and the formalization handoff.
+4. Follow later Work Packages in dependency order, not merely chronological order.
+5. Read the claim ledger before trusting the prose summary.
+6. Inspect the certification packet before treating a result as promoted.
 
-## The reader's compact
+## The final test
 
-The author promises to mark uncertainty. The reader promises to respect partial progress when it is honestly bounded.
+A reader should be able to close the artifact and answer, in plain language:
 
-The programme's work is not merely to solve. It is to reduce confusion in a way that survives contact with proof.
+> What object did we study? Why was it difficult? What changed? What may I now rely upon? What must happen next?
+
+The programme's work is not merely to solve. It is to reduce confusion in a form that survives contact with proof.
