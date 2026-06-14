@@ -1,0 +1,165 @@
+{
+  "schema_version": "1.0.0",
+  "fixture_id": "UF-INV-001",
+  "coefficient_domain": {
+    "kind": "rational_field",
+    "characteristic": 0
+  },
+  "model_class": "field_extensions_of_QQ",
+  "variables": [
+    "x",
+    "t"
+  ],
+  "monomial_order": "lex",
+  "source_claim": "For every field extension K of QQ and x in K, if x^2 = 1 and x != -1, then x = 1.",
+  "source_hypotheses": {
+    "equations": [
+      {
+        "name": "square_is_one",
+        "polynomial": [
+          {
+            "coefficient": [
+              1,
+              1
+            ],
+            "exponents": [
+              2,
+              0
+            ]
+          },
+          {
+            "coefficient": [
+              -1,
+              1
+            ],
+            "exponents": [
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    ],
+    "inequations": [
+      {
+        "name": "not_minus_one",
+        "polynomial": [
+          {
+            "coefficient": [
+              1,
+              1
+            ],
+            "exponents": [
+              1,
+              0
+            ]
+          },
+          {
+            "coefficient": [
+              1,
+              1
+            ],
+            "exponents": [
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "compiled_equations": [
+    {
+      "name": "square_is_one",
+      "polynomial": [
+        {
+          "coefficient": [
+            1,
+            1
+          ],
+          "exponents": [
+            2,
+            0
+          ]
+        },
+        {
+          "coefficient": [
+            -1,
+            1
+          ],
+          "exponents": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "inverse_for_x_plus_one",
+      "polynomial": [
+        {
+          "coefficient": [
+            1,
+            1
+          ],
+          "exponents": [
+            1,
+            1
+          ]
+        },
+        {
+          "coefficient": [
+            1,
+            1
+          ],
+          "exponents": [
+            0,
+            1
+          ]
+        },
+        {
+          "coefficient": [
+            -1,
+            1
+          ],
+          "exponents": [
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "target": [
+    {
+      "coefficient": [
+        1,
+        1
+      ],
+      "exponents": [
+        1,
+        0
+      ]
+    },
+    {
+      "coefficient": [
+        -1,
+        1
+      ],
+      "exponents": [
+        0,
+        0
+      ]
+    }
+  ],
+  "semantic_correspondence": {
+    "claim_id": "UF-INV-001-C001",
+    "status": "proved_in_fixture_not_formalized",
+    "argument": [
+      "In a field, x != -1 is equivalent to x + 1 being nonzero.",
+      "Every nonzero field element has an inverse, so the inequation is equivalent to the existence of t with t(x + 1) - 1 = 0.",
+      "The compiled system therefore represents exactly the source hypotheses after existentially adjoining t.",
+      "The checked ideal-membership identity makes x - 1 vanish on every solution of the compiled system."
+    ]
+  }
+}
