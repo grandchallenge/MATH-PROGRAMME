@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "certificate_id": "RAD-NIL-002-CERT-001",
+  "fixture_id": "RAD-NIL-002",
+  "certificate_kind": "radical_membership",
+  "coefficient_domain": "QQ",
+  "variables": [
+    "x"
+  ],
+  "monomial_order": "lex",
+  "encoding_sha256": "c184f52832c2055150cabc916099fe9d86c266a11f56790568e4b3170970b124",
+  "radical_exponent": 2,
+  "generator_coefficients": [
+    {
+      "generator": "square_is_zero",
+      "coefficient_polynomial": [
+        {
+          "coefficient": [
+            1,
+            1
+          ],
+          "exponents": [
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "target": [
+    {
+      "coefficient": [
+        1,
+        1
+      ],
+      "exponents": [
+        1
+      ]
+    }
+  ],
+  "verification": {
+    "checker": "ci/check_radical_fixture.py",
+    "arithmetic": "exact_rational",
+    "expected_result": "checked"
+  }
+}
