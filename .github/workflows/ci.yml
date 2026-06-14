@@ -24,6 +24,12 @@ jobs:
               print(f"valid json: {path}")
           PY
 
+      - name: Check exact algebraic fixture
+        run: python3 ci/check_algebraic_fixture.py fixtures/algebraic/UF-INV-001
+
+      - name: Run adversarial fixture tests
+        run: python3 ci/test_algebraic_fixture.py
+
       - name: Install documentation dependencies
         run: |
           python -m pip install --upgrade pip

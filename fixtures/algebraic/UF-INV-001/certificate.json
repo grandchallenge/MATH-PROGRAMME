@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0.0",
+  "certificate_id": "UF-INV-001-CERT-001",
+  "fixture_id": "UF-INV-001",
+  "certificate_kind": "ideal_membership",
+  "coefficient_domain": "QQ",
+  "variables": [
+    "x",
+    "t"
+  ],
+  "monomial_order": "lex",
+  "encoding_sha256": "688ebae8af0cfbd1928904203bbe609cbcc0851226f2b99ca426f3411ec6870b",
+  "generator_coefficients": [
+    {
+      "generator": "square_is_one",
+      "coefficient_polynomial": [
+        {
+          "coefficient": [
+            1,
+            1
+          ],
+          "exponents": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "generator": "inverse_for_x_plus_one",
+      "coefficient_polynomial": [
+        {
+          "coefficient": [
+            -1,
+            1
+          ],
+          "exponents": [
+            1,
+            0
+          ]
+        },
+        {
+          "coefficient": [
+            1,
+            1
+          ],
+          "exponents": [
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "target": [
+    {
+      "coefficient": [
+        1,
+        1
+      ],
+      "exponents": [
+        1,
+        0
+      ]
+    },
+    {
+      "coefficient": [
+        -1,
+        1
+      ],
+      "exponents": [
+        0,
+        0
+      ]
+    }
+  ],
+  "verification": {
+    "checker": "ci/check_algebraic_fixture.py",
+    "arithmetic": "exact_rational",
+    "expected_result": "checked"
+  }
+}
