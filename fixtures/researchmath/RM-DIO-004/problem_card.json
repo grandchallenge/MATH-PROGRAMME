@@ -1,0 +1,124 @@
+{
+  "algebraic_extraction": {
+    "coefficient_domain": {
+      "kind": "integer_ring",
+      "symbol": "ZZ"
+    },
+    "equations": [
+      {
+        "canonical_polynomial": [
+          {
+            "coefficient": [
+              1,
+              1
+            ],
+            "exponents": [
+              2,
+              0
+            ]
+          },
+          {
+            "coefficient": [
+              -1,
+              1
+            ],
+            "exponents": [
+              1,
+              0
+            ]
+          },
+          {
+            "coefficient": [
+              -1,
+              1
+            ],
+            "exponents": [
+              0,
+              5
+            ]
+          },
+          {
+            "coefficient": [
+              1,
+              1
+            ],
+            "exponents": [
+              0,
+              1
+            ]
+          }
+        ],
+        "human_readable": "x^2 - x - y^5 + y = 0",
+        "name": "researchmath_diophantine_curve"
+      }
+    ],
+    "excluded_relaxations": [
+      "complex affine variety does not solve the integer classification problem",
+      "finite search window does not prove completeness",
+      "dataset open_status is not a certification claim"
+    ],
+    "inequations": [],
+    "model_class": "integer_points_on_affine_plane_curve",
+    "quantifier_scope": "exists_or_classify_all_integer_pairs",
+    "variables": [
+      "x",
+      "y"
+    ]
+  },
+  "artifact_kind": "researchmath_problem_card",
+  "fixture_id": "RM-DIO-004",
+  "problem_statement": {
+    "original_question": "Determine all integer pairs (x, y) that satisfy the Diophantine equation x^2 - x = y^5 - y.",
+    "self_contained_problem": "Determine all pairs of integers (x, y) in Z x Z that satisfy the Diophantine equation x^2 - x = y^5 - y. That is, find every integer solution of the equation, and prove that the list is complete."
+  },
+  "route_classification": {
+    "application_lane": "APP-DIO-01",
+    "candidate_methods": [
+      "finite exact sanity screen",
+      "curve/invariant extraction",
+      "local obstruction search",
+      "handoff to number-theoretic methods"
+    ],
+    "first_executable_step": "Run an exact finite sanity screen for y in {-1, 0, 1, 2, 3}; compute D = 1 + 4(y^5 - y) and retain only y for which D is a nonnegative square. Record this as evidence only, not a completeness proof.",
+    "primary_route": "DIOPHANTINE_ALGEBRAIC_INTAKE",
+    "route_status": "MATHFORGE_TRIAGE_READY",
+    "switch_condition": "Switch from algebraic intake to number-theoretic methods when global integer completeness becomes the obligation."
+  },
+  "schema_version": "1.0.0",
+  "semantic_boundary": {
+    "allowed_claim": "This ResearchMath row has been preserved, audited as unknown, classified as a Diophantine algebraic intake problem, and converted into a MATHSOLVE-ready work-package seed.",
+    "excluded_inference": "This fixture does not solve x^2 - x = y^5 - y and does not verify that the problem is currently open.",
+    "handoff_boundary": "MATHSOLVE may use this as a campaign seed; MATHCERT has no theorem to certify from this fixture."
+  },
+  "source_dataset": {
+    "dataset_card_url": "https://huggingface.co/datasets/amphora/ResearchMath-14k",
+    "license": "MIT",
+    "name": "amphora/ResearchMath-14k",
+    "split": "test"
+  },
+  "source_provenance": {
+    "evidence_urls": [
+      "https://pub.math.leidenuniv.nl/~evertsejh/07-workshop-problems.pdf"
+    ],
+    "paper_id": "07-workshop-problems",
+    "provenance_status": "PRESERVED_NOT_VERIFIED",
+    "question_link": "https://pub.math.leidenuniv.nl/~evertsejh/07-workshop-problems.pdf#page=1"
+  },
+  "source_row_sha256": "dc25e5a17d247043e3eab9c50ea8a8b0d5686de7785b86e7f757065dc3c63c5b",
+  "status_audit": {
+    "imported_open_status": "unknown",
+    "mathforge_audited_status": "STATUS_UNVERIFIED_UNKNOWN",
+    "promotion_allowed": false,
+    "promotion_blockers": [
+      "global literature status has not been independently reconstructed",
+      "source list provenance is preserved but not cross-checked",
+      "no complete solution or certificate is claimed by this fixture"
+    ],
+    "status_authority": "dataset_metadata_only"
+  },
+  "taxonomy": {
+    "level_1": "Number Theory",
+    "level_2": "Number Theory",
+    "level_3": "Diophantine equations"
+  }
+}
