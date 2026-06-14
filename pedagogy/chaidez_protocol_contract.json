@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0.0",
+  "protocol_id": "CHAIDEZ-PEDAGOGY-001",
+  "campaign_unit": "SINGLE_THEOREM_SPINE",
+  "result_status_fields": [
+    "result_status",
+    "conditional_on",
+    "strongest_supported_claim",
+    "not_claimed",
+    "computation_class",
+    "certification_state",
+    "first_executable_step"
+  ],
+  "exposition_sequence": [
+    "PLAIN_OBJECT",
+    "EXACT_OBSTRUCTION",
+    "WORKING_MODEL",
+    "RESTRICTED_CLAIM",
+    "THEOREM_SPINE",
+    "MATHEMATICAL_ACTION",
+    "DEBT_AND_CLAIM_BOUNDARY",
+    "FIRST_EXECUTABLE_STEP"
+  ],
+  "trust_quartet": [
+    "WHAT_IS_PROVED",
+    "WHAT_IS_CHECKED",
+    "WHAT_REMAINS_OPEN",
+    "WHAT_REQUIRES_EXTERNAL_VERIFICATION"
+  ],
+  "computation_classes": [
+    "EXPLORATORY_EVIDENCE",
+    "REGRESSION_AUDIT",
+    "EXACT_FINITE_VERIFICATION",
+    "CONTINUUM_PROOF"
+  ],
+  "proof_debt_categories": [
+    "MISSING_LEMMA",
+    "UNPROVED_BRIDGE",
+    "EXTERNAL_SOURCE",
+    "COMPUTATIONAL_REPLAY",
+    "SEMANTIC_CORRESPONDENCE",
+    "ANALYTIC_ESTIMATE",
+    "FORMALIZATION_BLOCKER"
+  ],
+  "spine_node_fields": [
+    "node_id",
+    "role",
+    "status",
+    "dependencies",
+    "discharge_criterion",
+    "proof_debt_ids"
+  ],
+  "escalation_gate": {
+    "theorem_spine_audited": true,
+    "dependencies_named": true,
+    "proof_debt_register_current": true,
+    "trust_quartet_complete": true,
+    "first_executable_step_present": true,
+    "next_package_names_spine_node": true
+  },
+  "required_work_package_artifacts": [
+    "RESULT_STATUS",
+    "LAY_COMPANION",
+    "OBJECT_AND_OBSTRUCTION",
+    "STATUS_AUDIT",
+    "CLAIM_LEDGER",
+    "THEOREM_SPINE",
+    "DEPENDENCY_DAG",
+    "PROOFS_AND_COMPUTATIONS",
+    "FAILURE_AND_NEGATIVE_RESULTS",
+    "PROOF_DEBT_REGISTER",
+    "CERT_HANDOFF",
+    "NEXT_EXECUTABLE_STEP"
+  ]
+}
