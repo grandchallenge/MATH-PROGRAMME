@@ -67,6 +67,72 @@ These labels are not decoration. They prevent a promising observation, a success
 
 This lane does not promise that Gröbner bases solve open problems. It permits symbolic algebra to contribute inside a bounded obligation while respecting worst-case complexity and preserving an exact replay route.
 
+## Executable progress
+
+<div class="fixture-showcase" aria-label="UF-INV-001 exact algebraic fixture">
+  <header class="fixture-showcase__header">
+    <div>
+      <span class="fixture-showcase__index">Fixture 001 · merged · CI enforced</span>
+      <h3>One claim, three support boundaries</h3>
+    </div>
+    <a href="https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/fixtures/algebraic/UF-INV-001">Inspect the artifact <span>→</span></a>
+  </header>
+
+  <div class="fixture-statement">
+    <span>Source statement</span>
+    <strong>x² = 1 and x ≠ −1 <i>implies</i> x = 1</strong>
+    <small>over every field extension of ℚ</small>
+  </div>
+
+  <div class="fixture-route" aria-label="Claim support route">
+    <div class="fixture-route__stage fixture-route__stage--audited">
+      <span>01 · Semantic compilation</span>
+      <strong>Audited</strong>
+      <p>Replace the inequation by an inverse variable: <code>t(x + 1) = 1</code>.</p>
+    </div>
+    <b aria-hidden="true">→</b>
+    <div class="fixture-route__stage fixture-route__stage--checked">
+      <span>02 · Exact identity</span>
+      <strong>Checked</strong>
+      <p>Replay sparse polynomial arithmetic over exact rational coefficients.</p>
+    </div>
+    <b aria-hidden="true">→</b>
+    <div class="fixture-route__stage fixture-route__stage--audited">
+      <span>03 · Source implication</span>
+      <strong>Audited</strong>
+      <p>Depends on both the semantic argument and the checked identity.</p>
+    </div>
+  </div>
+
+  <div class="fixture-witness">
+    <div class="fixture-witness__label">
+      <span>Exact witness</span>
+      <small>independently expanded coefficient by coefficient</small>
+    </div>
+    <code>x − 1 = t(x² − 1) + (1 − x)(t(x + 1) − 1)</code>
+  </div>
+
+  <div class="fixture-verdicts" aria-label="Fixture verification results">
+    <div><strong>1</strong><span>identity checked</span></div>
+    <div><strong>6</strong><span>mutations rejected</span></div>
+    <div><strong>0</strong><span>unsupported promotions</span></div>
+  </div>
+
+  <div class="fixture-rejections">
+    <span>Rejected by CI</span>
+    <ul>
+      <li>altered coefficient</li>
+      <li>changed variable order</li>
+      <li>duplicate monomial</li>
+      <li>missing hypothesis</li>
+      <li>false artifact hash</li>
+      <li>premature certification</li>
+    </ul>
+  </div>
+</div>
+
+The important result is not the elementary theorem. It is that the programme now checks a serialized mathematical witness, attacks it with malformed alternatives, and still refuses to call the surrounding theorem certified before its semantic bridge reaches a proof assistant.
+
 ## Current demonstration domain
 
 <div class="domain-brief domain-brief--compact">
