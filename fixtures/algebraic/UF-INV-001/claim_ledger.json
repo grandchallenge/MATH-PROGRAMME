@@ -1,0 +1,73 @@
+{
+  "claims": [
+    {
+      "claim_id": "UF-INV-001-C001",
+      "short_name": "semantic correspondence",
+      "claim_text": "Over field extensions of QQ, adjoining t with t(x + 1) = 1 is equivalent to the source inequation x != -1.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "support_type": "HUMAN_PROOF",
+      "status": "AUDITED",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "source_or_artifact": [
+        "fixtures/algebraic/UF-INV-001/encoding.json",
+        "fixtures/algebraic/UF-INV-001/README.md"
+      ],
+      "assumptions": [
+        "The model is a field extension of QQ."
+      ],
+      "depends_on": [],
+      "artifact_hashes": {},
+      "promotion_condition": "Formalize the field-level equivalence between nonzero and invertible and connect it to the imported encoding.",
+      "related_files": [
+        "fixtures/algebraic/UF-INV-001/README.md"
+      ]
+    },
+    {
+      "claim_id": "UF-INV-001-C002",
+      "short_name": "ideal membership identity",
+      "claim_text": "x - 1 = t(x^2 - 1) + (1 - x)(t(x + 1) - 1) in QQ[x,t].",
+      "claim_class": "COMPUTED_EXACTLY",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "status": "CHECKED",
+      "certainty": "EXACTLY_COMPUTED",
+      "source_or_artifact": [
+        "fixtures/algebraic/UF-INV-001/certificate.json"
+      ],
+      "assumptions": [],
+      "depends_on": [],
+      "artifact_hashes": {
+        "certificate.json": "983f482f9c6b5bed4bd7f8f0052387c7e2ef052d41fb8e32677b9762c6352c29"
+      },
+      "checker_result": "ci/check_algebraic_fixture.py:checked",
+      "promotion_condition": "Import the serialized witness into a proof assistant and prove the same identity in the kernel.",
+      "related_files": [
+        "ci/check_algebraic_fixture.py"
+      ]
+    },
+    {
+      "claim_id": "UF-INV-001-C003",
+      "short_name": "source implication",
+      "claim_text": "For every field extension K of QQ and x in K, if x^2 = 1 and x != -1, then x = 1.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "support_type": "HUMAN_PROOF",
+      "status": "AUDITED",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "source_or_artifact": [
+        "fixtures/algebraic/UF-INV-001/README.md"
+      ],
+      "assumptions": [
+        "K is a field extension of QQ."
+      ],
+      "depends_on": [
+        "UF-INV-001-C001",
+        "UF-INV-001-C002"
+      ],
+      "artifact_hashes": {},
+      "promotion_condition": "Formalize the semantic correspondence and imported certificate, then prove the implication from both checked dependencies.",
+      "related_files": [
+        "fixtures/algebraic/UF-INV-001/encoding.json",
+        "fixtures/algebraic/UF-INV-001/certificate.json"
+      ]
+    }
+  ]
+}
