@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/chaidez_pedagogy.schema.json",
+  "title": "Chaidez Pedagogical Protocol Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "protocol_id",
+    "campaign_unit",
+    "result_status_fields",
+    "exposition_sequence",
+    "trust_quartet",
+    "computation_classes",
+    "proof_debt_categories",
+    "spine_node_fields",
+    "escalation_gate",
+    "required_work_package_artifacts"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "protocol_id": {"const": "CHAIDEZ-PEDAGOGY-001"},
+    "campaign_unit": {"const": "SINGLE_THEOREM_SPINE"},
+    "result_status_fields": {
+      "type": "array",
+      "minItems": 7,
+      "uniqueItems": true,
+      "items": {"type": "string"}
+    },
+    "exposition_sequence": {
+      "type": "array",
+      "minItems": 8,
+      "uniqueItems": true,
+      "items": {"type": "string"}
+    },
+    "trust_quartet": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {"type": "string"}
+    },
+    "computation_classes": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {"type": "string"}
+    },
+    "proof_debt_categories": {
+      "type": "array",
+      "minItems": 7,
+      "uniqueItems": true,
+      "items": {"type": "string"}
+    },
+    "spine_node_fields": {
+      "type": "array",
+      "minItems": 6,
+      "uniqueItems": true,
+      "items": {"type": "string"}
+    },
+    "escalation_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "theorem_spine_audited",
+        "dependencies_named",
+        "proof_debt_register_current",
+        "trust_quartet_complete",
+        "first_executable_step_present",
+        "next_package_names_spine_node"
+      ],
+      "properties": {
+        "theorem_spine_audited": {"const": true},
+        "dependencies_named": {"const": true},
+        "proof_debt_register_current": {"const": true},
+        "trust_quartet_complete": {"const": true},
+        "first_executable_step_present": {"const": true},
+        "next_package_names_spine_node": {"const": true}
+      }
+    },
+    "required_work_package_artifacts": {
+      "type": "array",
+      "minItems": 12,
+      "uniqueItems": true,
+      "items": {"type": "string"}
+    }
+  }
+}
