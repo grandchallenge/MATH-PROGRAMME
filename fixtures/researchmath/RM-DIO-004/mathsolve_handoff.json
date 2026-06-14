@@ -1,0 +1,44 @@
+{
+  "artifact_kind": "mathsolve_handoff",
+  "fixture_id": "RM-DIO-004",
+  "from_pillar": "MATHFORGE",
+  "handoff_id": "RM-DIO-004-HANDOFF",
+  "handoff_status": "READY_FOR_MATHSOLVE_TRIAGE",
+  "problem_card_sha256": "6c2944be313de59982a80de9d0615dea7b06be2f8cd5ad212599b1e6c9b6d120",
+  "schema_version": "1.0.0",
+  "semantic_boundary": {
+    "mathsolve_allowed_to_do": "open a Chaidez-style campaign package and run exact bounded screens",
+    "mathsolve_not_allowed_to_do": "mark the ResearchMath problem solved or certify global status from this intake fixture"
+  },
+  "source_row_sha256": "dc25e5a17d247043e3eab9c50ea8a8b0d5686de7785b86e7f757065dc3c63c5b",
+  "to_pillar": "MATHSOLVE",
+  "work_package_seed": {
+    "first_executable_step": {
+      "description": "Enumerate y in {-1, 0, 1, 2, 3}; check whether D = 1 + 4(y^5 - y) is a nonnegative square; lift corresponding x values exactly.",
+      "expected_output": "finite-screen ledger of known small branches",
+      "kind": "finite_exact_sanity_screen",
+      "not_a_proof_of": "complete integer solution set"
+    },
+    "handoff_questions": [
+      "Can the finite screen be expanded with a clear resource budget?",
+      "Does the equation reduce to a known curve class requiring number-theoretic tools?",
+      "Which claims are source reconstruction, exact computation, or conjectural?"
+    ],
+    "motivating_object": "integer points on the affine curve x^2 - x - y^5 + y = 0",
+    "obstruction": "Algebraic relaxation and finite enumeration do not prove complete integer classification.",
+    "proof_debt_register": [
+      "independent literature/status audit",
+      "source PDF reconstruction",
+      "global arithmetic method selection",
+      "completeness criterion for integer solutions"
+    ],
+    "proposed_work_package_id": "WP-RM-DIO-004",
+    "theorem_spine_seed": [
+      "source reconstruction lemma",
+      "canonical polynomial encoding lemma",
+      "finite sanity-screen computation lemma",
+      "status-preservation lemma"
+    ],
+    "title": "ResearchMath Diophantine intake: x^2 - x = y^5 - y"
+  }
+}

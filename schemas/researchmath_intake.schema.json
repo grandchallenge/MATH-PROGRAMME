@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MATHFORGE ResearchMath Intake Fixture",
+  "type": "object",
+  "required": [
+    "fixture_id",
+    "schema_version",
+    "source_row_sha256",
+    "status_audit",
+    "algebraic_extraction",
+    "route_classification",
+    "semantic_boundary"
+  ],
+  "properties": {
+    "fixture_id": {
+      "const": "RM-DIO-004"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "source_row_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "status_audit": {
+      "type": "object",
+      "required": ["imported_open_status", "mathforge_audited_status", "promotion_allowed"],
+      "properties": {
+        "imported_open_status": {"const": "unknown"},
+        "mathforge_audited_status": {"const": "STATUS_UNVERIFIED_UNKNOWN"},
+        "promotion_allowed": {"const": false}
+      }
+    },
+    "algebraic_extraction": {
+      "type": "object",
+      "required": ["coefficient_domain", "model_class", "variables", "equations", "excluded_relaxations"]
+    },
+    "route_classification": {
+      "type": "object",
+      "required": ["primary_route", "application_lane", "first_executable_step", "switch_condition"]
+    },
+    "semantic_boundary": {
+      "type": "object",
+      "required": ["allowed_claim", "excluded_inference", "handoff_boundary"]
+    }
+  },
+  "additionalProperties": true
+}
