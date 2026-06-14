@@ -42,6 +42,12 @@ jobs:
       - name: Run adversarial manifest tests
         run: python3 ci/test_grobner_manifest.py
 
+      - name: Check Chaidez pedagogy contract
+        run: python3 ci/validate_chaidez_pedagogy.py
+
+      - name: Run adversarial pedagogy tests
+        run: python3 ci/test_chaidez_pedagogy.py
+
       - name: Install documentation dependencies
         run: |
           python -m pip install --upgrade pip
