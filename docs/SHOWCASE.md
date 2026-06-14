@@ -131,7 +131,90 @@ This lane does not promise that Gröbner bases solve open problems. It permits s
   </div>
 </div>
 
-The important result is not the elementary theorem. It is that the programme now checks a serialized mathematical witness, attacks it with malformed alternatives, and still refuses to call the surrounding theorem certified before its semantic bridge reaches a proof assistant.
+The important result is not the elementary theorem. It is that the programme checks a serialized mathematical witness, attacks it with malformed alternatives, and still refuses to call the surrounding theorem certified before its semantic bridge reaches a proof assistant.
+
+<div class="fixture-showcase fixture-showcase--radical" aria-label="RAD-NIL-002 radical membership fixture">
+  <header class="fixture-showcase__header">
+    <div>
+      <span class="fixture-showcase__index">Fixture 002 · radical membership · model-class audit</span>
+      <h3>The exponent and the universe both matter</h3>
+    </div>
+    <a href="https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/fixtures/algebraic/RAD-NIL-002">Inspect the artifact <span>→</span></a>
+  </header>
+
+  <div class="fixture-statement">
+    <span>Field-level statement</span>
+    <strong>x² = 0 <i>implies</i> x = 0</strong>
+    <small>over every field extension of ℚ</small>
+  </div>
+
+  <div class="fixture-route" aria-label="Radical membership support route">
+    <div class="fixture-route__stage fixture-route__stage--audited">
+      <span>01 · Target</span>
+      <strong>Not ideal membership</strong>
+      <p>The polynomial <code>x</code> does not belong to the ideal <code>(x²)</code>.</p>
+    </div>
+    <b aria-hidden="true">→</b>
+    <div class="fixture-route__stage fixture-route__stage--checked">
+      <span>02 · Radical witness</span>
+      <strong>Checked</strong>
+      <p>The certificate carries exponent <code>N = 2</code> and verifies <code>xᴺ ∈ (x²)</code>.</p>
+    </div>
+    <b aria-hidden="true">→</b>
+    <div class="fixture-route__stage fixture-route__stage--audited">
+      <span>03 · Field semantics</span>
+      <strong>Audited</strong>
+      <p>Fields have no nonzero nilpotents, so the checked radical fact supports the implication.</p>
+    </div>
+  </div>
+
+  <div class="fixture-witness">
+    <div class="fixture-witness__label">
+      <span>Exponent-bearing witness</span>
+      <small>the power is part of the proof object</small>
+    </div>
+    <code>xᴺ = 1 · x², where N = 2</code>
+  </div>
+
+  <div class="fixture-model-boundary" aria-label="Valid and refuted model classes">
+    <div class="fixture-model-boundary__valid">
+      <span>Valid model class</span>
+      <strong>Field extensions of ℚ</strong>
+      <p>No nonzero nilpotent elements.</p>
+    </div>
+    <div class="fixture-model-boundary__refuted">
+      <span>Refuted generalization</span>
+      <strong>All commutative ℚ-algebras</strong>
+      <p><code>ℚ[ε]/(ε²)</code> has <code>ε² = 0</code> with <code>ε ≠ 0</code>.</p>
+    </div>
+  </div>
+
+  <div class="fixture-verdicts" aria-label="Radical fixture verification results">
+    <div><strong>1</strong><span>radical witness checked</span></div>
+    <div><strong>9</strong><span>mutations rejected</span></div>
+    <div><strong>1</strong><span>false generalization retained</span></div>
+  </div>
+
+  <div class="fixture-rejections">
+    <span>Rejected by CI</span>
+    <ul>
+      <li>zero exponent</li>
+      <li>exponent N = 1</li>
+      <li>wrong certificate kind</li>
+      <li>broadened model class</li>
+      <li>altered target</li>
+      <li>false artifact hash</li>
+      <li>premature certification</li>
+      <li>missing refutation</li>
+      <li>removed countermodel</li>
+    </ul>
+  </div>
+</div>
+
+<div class="fixture-series-note">
+  <strong>What advanced</strong>
+  <p>The checker now distinguishes ordinary ideal membership from radical membership. The claim ledger also preserves a false generalization and its countermodel instead of allowing a valid field theorem to drift into an invalid ring theorem.</p>
+</div>
 
 ## Current demonstration domain
 

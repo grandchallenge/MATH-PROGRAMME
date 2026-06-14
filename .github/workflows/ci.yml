@@ -30,6 +30,12 @@ jobs:
       - name: Run adversarial fixture tests
         run: python3 ci/test_algebraic_fixture.py
 
+      - name: Check radical membership fixture
+        run: python3 ci/check_radical_fixture.py fixtures/algebraic/RAD-NIL-002
+
+      - name: Run adversarial radical tests
+        run: python3 ci/test_radical_fixture.py
+
       - name: Install documentation dependencies
         run: |
           python -m pip install --upgrade pip
