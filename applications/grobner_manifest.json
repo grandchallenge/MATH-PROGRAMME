@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_id": "GROBNER-APPLICATIONS-2026-06",
+  "governing_rule": "Route each polynomial application through a narrow obligation, explicit excluded inference, bounded method, and replayable certificate.",
+  "foundation_fixtures": [
+    {
+      "fixture_id": "UF-INV-001",
+      "capability": "ideal_membership_with_inequation",
+      "status": "merged_ci_enforced"
+    },
+    {
+      "fixture_id": "RAD-NIL-002",
+      "capability": "radical_membership_with_model_boundary",
+      "status": "merged_ci_enforced"
+    }
+  ],
+  "next_fixture_lane": "APP-GEO-02",
+  "lanes": [
+    {
+      "lane_id": "APP-DIO-01",
+      "name": "Diophantine systems",
+      "status": "queued",
+      "source_object": "integer and rational polynomial equations",
+      "local_obligation": "derive eliminants and algebraic branches before exact arithmetic reconstruction",
+      "excluded_inference": "solutions over an algebraic closure do not by themselves prove integer or rational solvability",
+      "first_fixture": "Solve x + y = 5 and xy = 6 algebraically, reconstruct both branches, and certify integrality.",
+      "certificate_route": [
+        "eliminant identity",
+        "branch lifting",
+        "exact substitution",
+        "integrality check"
+      ],
+      "switch_condition": "Switch to number-theoretic methods when arithmetic obstructions dominate the algebraic relaxation."
+    },
+    {
+      "lane_id": "APP-GEO-02",
+      "name": "Automated geometry",
+      "status": "next_fixture",
+      "source_object": "coordinate geometry theorem with explicit nondegeneracy hypotheses",
+      "local_obligation": "compile the theorem conclusion into ideal or radical membership",
+      "excluded_inference": "a polynomial identity does not certify that the coordinates cover exactly the intended geometric configurations",
+      "first_fixture": "Certify a small coordinate theorem with one nondegeneracy condition and a human-readable semantic bridge.",
+      "certificate_route": [
+        "geometry encoding",
+        "degeneracy saturation or inverse variable",
+        "membership witness",
+        "source-language theorem"
+      ],
+      "switch_condition": "Switch encoding or use synthetic proof when coordinates obscure the theorem or inflate the witness."
+    },
+    {
+      "lane_id": "APP-SIG-03",
+      "name": "Signal and image systems",
+      "status": "queued",
+      "source_object": "small exact convolution, calibration, or reconstruction model",
+      "local_obligation": "establish algebraic identifiability and enumerate exact branches",
+      "excluded_inference": "algebraic identifiability does not establish numerical stability, robustness to noise, or perceptual quality",
+      "first_fixture": "Recover a two-tap exact signal from a noiseless polynomial convolution model and expose non-identifiable branches.",
+      "certificate_route": [
+        "forward-model encoding",
+        "branch decomposition",
+        "exact reconstruction",
+        "identifiability ledger"
+      ],
+      "switch_condition": "Switch to interval or numerical analysis when perturbation and conditioning are the actual obligations."
+    },
+    {
+      "lane_id": "APP-ROB-04",
+      "name": "Robotics",
+      "status": "queued",
+      "source_object": "planar linkage or inverse-kinematics constraints",
+      "local_obligation": "eliminate auxiliary variables and isolate feasible real configurations",
+      "excluded_inference": "complex algebraic solutions do not establish real reachability, collision freedom, or joint-limit feasibility",
+      "first_fixture": "Solve a two-link planar inverse-kinematics target with exact real-root isolation and joint-limit filtering.",
+      "certificate_route": [
+        "kinematic encoding",
+        "elimination",
+        "real-root isolation",
+        "configuration lifting"
+      ],
+      "switch_condition": "Switch to numerical continuation or interval methods when exact elimination exceeds its budget."
+    },
+    {
+      "lane_id": "APP-SDK-05",
+      "name": "Sudoku and finite constraints",
+      "status": "queued",
+      "source_object": "small finite-domain puzzle or Latin constraint system",
+      "local_obligation": "certify existence, inconsistency, or uniqueness of a bounded instance",
+      "excluded_inference": "a polynomial encoding is not automatically the best solver and must be compared with SAT or combinatorial search",
+      "first_fixture": "Encode a 4 by 4 Sudoku instance, recover its solution, and certify uniqueness with an independent finite checker.",
+      "certificate_route": [
+        "finite-domain encoding",
+        "solution witness",
+        "uniqueness obstruction",
+        "independent grid verifier"
+      ],
+      "switch_condition": "Switch to SAT when the polynomial certificate is larger or less transparent than the proof-producing Boolean route."
+    },
+    {
+      "lane_id": "APP-REC-06",
+      "name": "Reconstruction and missing data",
+      "status": "queued",
+      "source_object": "partial measurements under an explicit polynomial generative model",
+      "local_obligation": "determine completion branches and whether the missing values are identifiable",
+      "excluded_inference": "algebraic completion does not establish scientific, causal, historical, or palaeontological truth",
+      "first_fixture": "Complete one missing coordinate in a small exact model and certify whether the completion is unique or branched.",
+      "certificate_route": [
+        "model assumptions",
+        "completion ideal",
+        "branch or uniqueness certificate",
+        "interpretation boundary"
+      ],
+      "switch_condition": "Reject the lane when the scientific model cannot justify the polynomial constraints."
+    }
+  ]
+}
