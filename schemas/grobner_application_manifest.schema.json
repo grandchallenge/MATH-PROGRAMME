@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Grand Challenge Groebner application manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "governing_rule",
+    "foundation_fixtures",
+    "next_fixture_lane",
+    "lanes"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "manifest_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "governing_rule": {
+      "type": "string",
+      "minLength": 1
+    },
+    "foundation_fixtures": {
+      "type": "array",
+      "minItems": 2
+    },
+    "next_fixture_lane": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lanes": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "required": [
+          "lane_id",
+          "name",
+          "status",
+          "source_object",
+          "local_obligation",
+          "excluded_inference",
+          "first_fixture",
+          "certificate_route",
+          "switch_condition"
+        ]
+      }
+    }
+  }
+}

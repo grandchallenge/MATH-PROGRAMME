@@ -36,6 +36,12 @@ jobs:
       - name: Run adversarial radical tests
         run: python3 ci/test_radical_fixture.py
 
+      - name: Check application manifest
+        run: python3 ci/validate_grobner_manifest.py
+
+      - name: Run adversarial manifest tests
+        run: python3 ci/test_grobner_manifest.py
+
       - name: Install documentation dependencies
         run: |
           python -m pip install --upgrade pip
