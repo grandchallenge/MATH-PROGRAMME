@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Grand Challenge exact algebraic fixture",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "fixture_id",
+    "coefficient_domain",
+    "model_class",
+    "variables",
+    "compiled_equations",
+    "target",
+    "semantic_correspondence"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "fixture_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "coefficient_domain": {
+      "type": "object",
+      "required": [
+        "kind",
+        "characteristic"
+      ],
+      "properties": {
+        "kind": {
+          "const": "rational_field"
+        },
+        "characteristic": {
+          "const": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "model_class": {
+      "const": "field_extensions_of_QQ"
+    },
+    "variables": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "compiled_equations": {
+      "type": "array",
+      "minItems": 1
+    },
+    "target": {
+      "type": "array",
+      "minItems": 1
+    },
+    "semantic_correspondence": {
+      "type": "object",
+      "required": [
+        "claim_id",
+        "status",
+        "argument"
+      ]
+    }
+  }
+}
