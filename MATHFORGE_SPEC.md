@@ -18,9 +18,10 @@ MATHFORGE owns:
 2. **Source reconstruction**: locate the original source, author, date, problem formulation, and surrounding context.
 3. **Status triage**: classify candidate status as open, solved, partially solved, unknown, malformed, duplicate, or stale.
 4. **Domain clustering**: group adjacent problems into coherent research neighbourhoods.
-5. **Reconnaissance computation**: enumerate small cases, search for examples/counterexamples, build toy models, and generate ledgers.
-6. **Conjecture mining**: produce candidate patterns, reductions, or formulations for MATHSOLVE to evaluate.
-7. **Danger labelling**: flag likely false folklore, unstable source status, extraction errors, or problems requiring specialist audit.
+5. **Reconnaissance computation**: enumerate small cases, search for examples/counterexamples, build toy models, generate ledgers, and compare bounded exact methods.
+6. **Representation search**: test equivalent formulations, polynomial encodings, normal forms, coordinate choices, term orders, sparse supports, and localizations as explicit hypotheses.
+7. **Conjecture mining**: produce candidate patterns, reductions, or formulations for MATHSOLVE to evaluate.
+8. **Danger labelling**: flag likely false folklore, unstable source status, extraction errors, representation artifacts, or problems requiring specialist audit.
 
 ## Non-responsibilities
 
@@ -31,6 +32,7 @@ MATHFORGE does not:
 - declare a proof complete;
 - hide failed searches;
 - conflate numerical evidence with proof;
+- treat a CAS transcript as a certificate;
 - alter MATHCERT ledgers.
 
 ## Inputs
@@ -46,6 +48,7 @@ formal libraries
 finite examples
 counterexamples
 symbolic computations
+polynomial and toric encodings
 SAT/SMT encodings
 interval search outputs
 human notes
@@ -73,6 +76,26 @@ recommended_mathsolve_entry: WP01 status spine
 recommended_mathcert_route: Lean definitions + finite-family verifier
 ```
 
+For an algebraic reconnaissance run, MATHFORGE may additionally emit:
+
+```text
+ALGEBRAIC_ENCODING_CARD
+TERM_ORDER_SWEEP
+ELIMINATION_MAP
+MODEL_CLEANING_LEDGER
+RESULTANT_FEASIBILITY_PROBE
+QUOTIENT_ALGEBRA_MODEL
+REAL_ROOT_ISOLATION_LEDGER
+LOCAL_SINGULARITY_CARD
+SYZYGY_DEPENDENCY_MAP
+HILBERT_PROFILE
+SPARSE_SUPPORT_FORECAST
+ORDER_CONVERSION_PLAN
+TORIC_ENCODING_CARD
+```
+
+These are discovery artifacts. Each must carry provenance, side conditions, backend details, resource measurements, and a non-certification status.
+
 ## Required directory structure
 
 ```text
@@ -97,9 +120,13 @@ MATHFORGE/
       problem_cards/
       status_triage/
       reconnaissance/
+      algebraic_encodings/
+      route_comparisons/
   schemas/
     candidate_problem.schema.json
     forge_run_ledger.schema.json
+    algebraic_encoding_card.schema.json
+    algebraic_route_probe.schema.json
 ```
 
 ## Quality gates
@@ -114,9 +141,21 @@ A MATHFORGE artifact may pass to MATHSOLVE only if it includes:
 6. Failure-mode notes.
 7. Candidate first Work Package.
 
+An algebraic artifact must also state:
+
+1. coefficient domain;
+2. variables and their source meanings;
+3. equations, inequations, and side conditions;
+4. solution-correspondence argument or caveat;
+5. expected dimension or finiteness;
+6. resource budget and termination status;
+7. at least one fallback route when the computation is nontrivial.
+
 ## Grand Challenge expectations
 
 A MATHFORGE output should be generous with possibility but severe with status. The right tone is not “we found a solvable problem.” The right tone is “we found a problem neighbourhood whose structure may support disciplined attack.”
+
+For computational algebra, the corresponding tone is not “the system returned zero.” It is “under this encoding, domain, order, and budget, the system produced this candidate witness for independent replay.”
 
 ## MATHFORGE-to-MATHSOLVE handoff packet
 
@@ -131,6 +170,23 @@ FAILURE_RISKS.md
 SUGGESTED_WP01.md
 CERTIFICATION_ROUTE_SKETCH.md
 ```
+
+When the computational algebraic geometry lane is used, append:
+
+```text
+ALGEBRAIC_ENCODING_CARD.yaml
+STRUCTURAL_FORECAST.json
+ROUTE_COMPARISON.md
+CANDIDATE_WITNESS.json
+RESOURCE_LEDGER.json
+FAILED_ROUTES.md
+```
+
+## Computational algebraic geometry route
+
+The detailed discovery kit and method-router contract are defined in `docs/COMPUTATIONAL_ALGEBRAIC_GEOMETRY_LANE.md`.
+
+MATHFORGE's role is to expose alternatives. A polynomial system must not automatically trigger a direct lexicographic Groebner computation. Compare resultants, quotient-algebra methods, favorable graded orders plus conversion, local methods, and sparse support geometry where applicable.
 
 ## First domain: Union-Closed Sets
 
