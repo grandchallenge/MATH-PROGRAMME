@@ -23,11 +23,12 @@ MATHSOLVE owns:
 3. **Status audit synthesis**: what is known, what is open, what is solved under special hypotheses, what has changed recently.
 4. **Reduction strategy**: identify normal forms, equivalences, restricted regimes, and finite/infinite decompositions.
 5. **Method routing**: classify local proof obligations, compare viable exact methods, and select routes under declared budgets.
-6. **Failure accounting**: record approaches that fail and the obstruction they reveal.
-7. **Exact computational campaigns**: rational screens, exhaustive enumeration, algebraic elimination, certificate ledgers, and reproducibility notes.
-8. **Witness minimization**: convert expensive discovery output into a smaller exact artifact suitable for replay.
-9. **Pedagogical companion writing**: explain the object, obstruction, reduction, achieved result, and next target.
-10. **MATHCERT handoff preparation**: theorem statements, formal definitions, missing library notes, certificate schemas.
+6. **Proof-obligation decomposition**: separate semantics, encoding, adequacy, termination, local confluence, provenance, and final certification.
+7. **Failure accounting**: record approaches that fail and the obstruction they reveal.
+8. **Exact computational campaigns**: rational screens, exhaustive enumeration, algebraic elimination, certificate ledgers, and reproducibility notes.
+9. **Witness minimization**: convert expensive discovery output into a smaller exact artifact suitable for replay.
+10. **Pedagogical companion writing**: explain the object, obstruction, reduction, achieved result, and next target.
+11. **MATHCERT handoff preparation**: theorem statements, formal definitions, missing library notes, certificate schemas.
 
 ## Non-responsibilities
 
@@ -39,6 +40,7 @@ MATHSOLVE does not:
 - erase dead ends;
 - publish a theorem claim without a claim ledger;
 - infer mathematical failure from resource exhaustion;
+- infer confluence from one successful reduction path;
 - accept a numerical root list where exact reality or multiplicity matters;
 - require that every Work Package prove a theorem.
 
@@ -80,12 +82,17 @@ Every serious Work Package must include:
 A computational campaign must additionally include:
 
 1. representation and solution-correspondence audit;
-2. structural forecast;
-3. method comparison and selection rationale;
-4. resource ledger;
-5. failed-route ledger;
-6. minimized witness;
-7. independent replay status.
+2. computation contract and intended equivalence relation;
+3. termination and adequacy statement for any reduction system;
+4. structural forecast;
+5. method comparison and selection rationale;
+6. resource ledger;
+7. failed-route ledger;
+8. provenance from generated objects to source generators;
+9. minimized witness;
+10. independent replay status.
+
+If canonical normal forms or a Groebner basis are claimed, the package must include a complete critical-pair disposition ledger.
 
 ## Work Package lifecycle
 
@@ -104,22 +111,53 @@ Not every domain follows this sequence exactly, but deviations must be justified
 For an algebraic geometry campaign, the internal lifecycle is:
 
 ```text
-AG-00 encoding audit
-  -> AG-01 dimension and support forecast
+AG-00 semantic and encoding audit
+  -> AG-01 reduction contract, dimension, and support forecast
   -> AG-02 method comparison
-  -> AG-03 bounded exact run
+  -> AG-03 bounded exact run with provenance
   -> AG-04 witness minimization
   -> AG-05 independent replay
   -> AG-06 MATHCERT handoff
 ```
 
+## Proof-obligation decomposition
+
+Every nontrivial exact symbolic campaign should separate:
+
+```text
+semantic obligation
+  source claim and model class
+
+encoding obligation
+  source objects correspond to algebraic solutions
+
+reduction obligation
+  rules preserve the intended congruence
+
+termination obligation
+  reduction or completion cannot continue forever
+
+local-confluence obligation
+  required critical pairs close
+
+construction obligation
+  generated objects remain in the source ideal
+
+certificate obligation
+  the local claim follows from a compact exact artifact
+```
+
+A campaign may discharge only the obligations it actually needs. For one membership claim, an explicit coefficient identity is preferable to certification of a complete basis.
+
 ## Algebraic method routing
 
-The computational algebraic geometry lane is defined in `docs/COMPUTATIONAL_ALGEBRAIC_GEOMETRY_LANE.md`.
+The computational algebraic geometry lane is defined in `docs/COMPUTATIONAL_ALGEBRAIC_GEOMETRY_LANE.md`. Its reduction and certificate contract is defined in `docs/REDUCTION_CERTIFICATE_FOUNDATIONS.md`.
 
 MATHSOLVE must route by obligation:
 
 - identity or ideal membership: exact reduction and a coefficient witness;
+- universal implication over extension rings: ideal membership;
+- universal implication over extension fields or domains: radical membership;
 - structured square elimination: resultants before a full elimination basis;
 - finite systems: favorable graded basis, quotient algebra, multiplication matrices, or FGLM;
 - real solutions: exact isolation and lifting;
@@ -127,9 +165,36 @@ MATHSOLVE must route by obligation:
 - generator dependencies: syzygies and relation matrices;
 - dimension and degree: Hilbert functions, Hilbert polynomials, or generic slicing;
 - sparse Laurent systems: Newton polytopes, mixed volume, and sparse resultants;
-- expensive target orders: basis conversion rather than direct computation where possible.
+- expensive target orders: basis conversion rather than direct computation where possible;
+- parametric claims: branch conditions and specialized certificates.
 
 The selected method must be justified against at least one alternative when the obligation is nontrivial.
+
+## Certificate selection
+
+Use the weakest sufficient certificate:
+
+```text
+membership
+  f = sum(ai*gi)
+
+radical membership
+  f^N = sum(ai*gi)
+
+basis validity
+  critical-pair ledger
+
+canonical normal forms
+  basis validity + termination + adequacy
+
+source-ideal preservation
+  forward and reverse generator transformation matrices
+
+parametric theorem
+  branch conditions + specialized witness per relevant branch
+```
+
+Search output should be translated back into the original theorem vocabulary before handoff whenever practical.
 
 ## Success conditions
 
@@ -143,6 +208,7 @@ A MATHSOLVE package succeeds when it makes the next state of the problem clearer
 - a formalization-ready definition layer;
 - a reproducible computation;
 - a smaller exact witness extracted from a larger search;
+- a parameter branch exposing a missing hypothesis;
 - an honest failure that exposes the true obstruction.
 
 ## Failure conditions
@@ -155,6 +221,8 @@ A MATHSOLVE package fails if it:
 - lacks a next target;
 - hides uncertainty;
 - suppresses resource exhaustion or failed routes;
+- discards generator provenance;
+- promotes a generic computation across exceptional parameter values;
 - does not teach the reader the problem’s structure;
 - cannot be handed to MATHCERT in any meaningful form.
 
@@ -184,6 +252,8 @@ MATHSOLVE/
     claim_ledger_template.yaml
     cert_handoff_template.md
     algebraic_campaign_template.md
+    reduction_system_card.yaml
+    critical_pair_ledger.yaml
 ```
 
 ## MATHSMELT as internal stage
