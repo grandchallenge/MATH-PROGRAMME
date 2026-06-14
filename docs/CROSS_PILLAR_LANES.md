@@ -14,7 +14,7 @@ A lane should state:
 
 ## Lane 01: algebraic witness to certificate
 
-This lane covers polynomial identities, Gröbner-style normal forms, ideal membership, ideal equality, elimination, radical membership, and finite truncations of algebraic systems.
+This lane covers polynomial identities, Groebner-style normal forms, ideal membership, ideal equality, elimination, radical membership, and finite truncations of algebraic systems.
 
 ```text
 MATHFORGE
@@ -44,7 +44,7 @@ Allowed pre-certification statuses:
 
 ### MATHSOLVE responsibility
 
-MATHSOLVE decides whether the local proof obligation is genuinely algebraic and whether a Gröbner-style tactic is appropriate.
+MATHSOLVE decides whether the local proof obligation is genuinely algebraic and whether a Groebner-style tactic is appropriate.
 
 Allowed tactical statuses:
 
@@ -66,6 +66,52 @@ MATHCERT owns the proof boundary. It may accept:
 - another explicitly trusted proof-producing route.
 
 External CAS output alone is never certification.
+
+## Lane 02: computational algebraic geometry campaign
+
+Lane 01 governs the final witness. Lane 02 governs the earlier choice of representation and method when several algebraic routes are possible.
+
+It covers:
+
+- polynomialization and encoding audits;
+- elimination and resultants;
+- zero-dimensional quotient algebras;
+- exact real-root isolation;
+- local singularity and multiplicity calculations;
+- syzygies, resolutions, and Hilbert data;
+- sparse systems, Newton polytopes, and mixed-volume forecasts;
+- FGLM and Groebner-walk order conversion.
+
+```text
+MATHFORGE
+  encode + forecast + compare routes
+  -> representation probes and candidate witnesses
+
+MATHSOLVE
+  select method + declare budget + minimize witness
+  -> bounded campaign and exact handoff
+
+MATHCERT
+  replay the smallest explicit artifact
+  -> certify only the stated local obligation
+```
+
+The full contract is defined in [Computational Algebraic Geometry Lane](COMPUTATIONAL_ALGEBRAIC_GEOMETRY_LANE.md).
+
+The routing rule is:
+
+> Choose the smallest exact method that matches the obligation and can emit an auditable witness.
+
+A polynomial system must not automatically trigger a direct lexicographic Groebner computation. MATHSOLVE compares resultants, quotient-algebra methods, favorable graded orders plus conversion, local methods, and sparse support routes before committing resources.
+
+Allowed campaign statuses:
+
+- `route_selected`;
+- `bounded_run_complete`;
+- `budget_exceeded`;
+- `representation_rejected`;
+- `route_switched`;
+- `ready_for_mathcert`.
 
 ## How to add a new lane
 
