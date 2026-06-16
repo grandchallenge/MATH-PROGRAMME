@@ -2,38 +2,66 @@
 
 ## Purpose
 
-This standard defines what counts as a Grand Challenge Work Package. It is binding for MATHSOLVE and strongly recommended for MATHFORGE and MATHCERT companion documents.
+This standard defines what counts as a Grand Challenge Work Package. It is
+binding for MATHSOLVE and strongly recommended for MATHFORGE and MATHCERT
+companion documents.
 
-A Grand Challenge Work Package is not a blog post, not a code dump, not a motivational memo, and not a theorem claim dressed in prose. It is a disciplined mathematical artifact that teaches the problem, records the state of the work, and makes its claims auditable.
+A Work Package is a controlled slice of one campaign theorem spine. It is not a
+blog post, code dump, motivational memo, or isolated theorem claim. It teaches
+the object, records the obstruction and proof debt, and makes the next move
+auditable.
+
+## Campaign rule
+
+A domain has one evolving theorem spine and dependency DAG. Every Work Package
+must name the global spine node it advances and the dependencies it consumes.
+
+A new package may not be opened merely because the current one is difficult.
+The escalation gate in section 13 must be satisfied first.
 
 ## Required structure
 
 Every Work Package must contain the following sections.
 
-### 1. Lay executive companion
+### 1. Result-status box
 
-This section explains the problem to an intelligent non-specialist. It must answer:
+Place this before the executive companion. It must state:
 
-- What is the object?
-- Why does the problem matter?
-- What would a solution mean?
-- What did this package actually achieve?
-- What did it not achieve?
-- What is the next move?
+- result status;
+- conditions on which the result depends;
+- strongest supported claim;
+- claims explicitly not made;
+- computation class or `NONE`;
+- certification state;
+- first executable step.
 
-This section must not exaggerate. It must not hide uncertainty. It must not condescend.
+### 2. Lay executive companion
 
-### 2. Formal problem statement
+Explain the object, obstruction, restricted target, actual achievement, limit,
+and next move to an intelligent non-specialist. Do not exaggerate, conceal
+uncertainty, or condescend.
 
-This section gives definitions, notation, hypotheses, and the exact target statement. If the problem has multiple equivalent formulations, list them and state which one the package uses.
+### 3. Formal problem statement
 
-### 3. Known terrain and status audit
+Give definitions, notation, hypotheses, and the exact target statement. If
+multiple equivalent formulations exist, state which one the package uses and
+what correspondence must be justified.
 
-This section records known results, special cases, partial bounds, solved variants, false-proof risk, and the present status of the problem. Each literature-derived claim must have a source.
+### 4. Object and obstruction
 
-### 4. Claim ledger
+Present a working model and the smallest exact calculation, counterexample, or
+failed mechanism that exposes the principal obstruction. "The problem is hard"
+is not an obstruction analysis.
 
-Every nontrivial claim in the package must be recorded in a ledger. The ledger must classify each claim as one of:
+### 5. Known terrain and source audit
+
+Record known results, special cases, partial bounds, solved variants,
+false-proof risks, and present status. Every literature-derived claim needs a
+source and an audit state.
+
+### 6. Claim ledger and trust quartet
+
+Every nontrivial claim must appear in the claim ledger with one of:
 
 ```text
 PROVED_IN_PACKAGE
@@ -49,41 +77,106 @@ SUPERSEDED
 REFUTED
 ```
 
-### 5. Theorem spine
+Display these four answers together:
 
-This is the formal mathematical heart. It should contain theorem, proposition, lemma, corollary, definition, example, and counterexample statements. Even a synthesis package should have a proposition-like spine: reductions, equivalences, known theorem dependencies, and obstruction claims.
+1. What is proved?
+2. What is checked?
+3. What remains open?
+4. What requires external verification?
 
-### 6. Proofs and computations
+### 7. Theorem-spine slice and dependency DAG
 
-Provide proofs, proof sketches, exact computations, interval ledgers, scripts, reproducibility steps, or failure analysis. Every computation must specify arithmetic mode: floating point, exact rational, interval, symbolic, SAT/SMT, or other.
+The local spine must identify every definition, reduction, bridge, theorem,
+obstruction, and certificate node used by the package. For each node record:
 
-### 7. Failure analysis
+- stable identifier;
+- role;
+- status;
+- incoming dependencies;
+- discharge criterion;
+- linked proof-debt items.
 
-A failed attempt is valuable if it exposes the structure of the obstruction. Record what was attempted, why it seemed plausible, where it failed, and what it teaches.
+### 8. Proofs and classified computations
 
-### 8. Certification boundary
+Provide proofs, proof sketches, exact computations, interval ledgers, scripts,
+reproducibility steps, or failure analysis. Every computation must specify its
+arithmetic mode and exactly one pedagogical class:
 
-State which claims are pencil-and-paper proved, machine checked, exactly computed, interval certified, heuristic, or still pending. This must be explicit.
+```text
+EXPLORATORY_EVIDENCE
+REGRESSION_AUDIT
+EXACT_FINITE_VERIFICATION
+CONTINUUM_PROOF
+```
 
-### 9. MATHCERT handoff
+The classification must agree with the claim ledger.
 
-List candidate Lean/equivalent definitions, theorem statements, exact certificate formats, missing libraries, formalization blockers, and first lemmas to check.
+### 9. Failure and negative-result analysis
 
-### 10. Next analytic target
+Record the attempted route, why it was plausible, the smallest exact
+obstruction, what the obstruction rules out, what it does not rule out, and the
+next viable restricted problem.
 
-A Work Package must end with a sharp next target. “Continue research” is not acceptable. The next target should be a theorem, reduction, finite screen, interval campaign, formalization milestone, or obstruction analysis.
+### 10. Proof-debt register
+
+Classify unresolved obligations as:
+
+```text
+MISSING_LEMMA
+UNPROVED_BRIDGE
+EXTERNAL_SOURCE
+COMPUTATIONAL_REPLAY
+SEMANTIC_CORRESPONDENCE
+ANALYTIC_ESTIMATE
+FORMALIZATION_BLOCKER
+```
+
+Each item must name the blocked spine node, current evidence, discharge
+condition, and intended route or owner.
+
+### 11. Certification boundary and MATHCERT handoff
+
+Separate mathematical status from certification state. List candidate formal
+definitions, theorem statements, exact certificate formats, missing libraries,
+formalization blockers, and first lemmas or witnesses to check.
+
+### 12. First executable step
+
+End with one bounded action. It must name:
+
+- input;
+- operation;
+- output artifact;
+- completion test;
+- spine node advanced or debt item discharged.
+
+"Continue research" is not acceptable.
+
+### 13. Escalation gate
+
+The next Work Package may be opened or promoted only when:
+
+- the current theorem-spine slice has been audited;
+- all dependencies are named;
+- the proof-debt register is current;
+- the trust quartet is complete;
+- the first executable step is explicit;
+- the proposed package names the spine node it advances.
+
+Unresolved debt does not always block progression, but unrecorded debt does.
 
 ## Quality bar
 
-A Work Package is Grand-Challenge grade only if a reader can leave with:
+A Work Package is Grand-Challenge grade only if a reader leaves with:
 
-1. a correct mental picture;
-2. a precise formal statement;
-3. a map of known terrain;
+1. a correct mental picture of the object and obstruction;
+2. a precise restricted target;
+3. a map of the theorem spine and dependencies;
 4. a list of actual claims;
-5. a clear boundary between proof and evidence;
-6. a concrete next target;
-7. a path to certification.
+5. a clear boundary between proof, checks, and conjecture;
+6. a visible proof-debt register;
+7. one executable next step;
+8. a path to certification.
 
 ## Anti-patterns
 
@@ -92,33 +185,37 @@ Reject Work Packages that:
 - contain large claims with no ledger;
 - use citations as proof;
 - present floating-point output as theorem-grade evidence;
-- hide dead ends;
+- hide dead ends or proof debt;
 - lack a lay companion;
-- lack a next target;
-- lack a certification handoff;
-- make the project look bigger by being vaguer.
-
-## Grand Challenge style
-
-The expected style is ambitious but accountable. It should be spacious enough to teach, formal enough to audit, and honest enough to preserve trust. It should not sound like corporate strategy or research theatre.
+- lack an exact obstruction;
+- present an isolated theorem list with no dependencies;
+- lack a first executable step;
+- open a new package before auditing the current spine;
+- make the programme look bigger by being vaguer.
 
 ## File bundle for each Work Package
 
 ```text
 WP##_TITLE/
   00_README.md
-  01_LAY_COMPANION.md
-  02_PROBLEM_SPINE.md
-  03_STATUS_AUDIT.md
-  04_THEOREM_SPINE.md
-  05_PROOFS_AND_COMPUTATIONS.md
-  06_FAILURE_ANALYSIS.md
-  07_CLAIM_LEDGER.yaml
-  08_CERT_HANDOFF.md
-  09_NEXT_TARGET.md
+  01_RESULT_STATUS.json
+  02_LAY_COMPANION.md
+  03_OBJECT_AND_OBSTRUCTION.md
+  04_PROBLEM_AND_STATUS_AUDIT.md
+  05_THEOREM_SPINE.md
+  06_DEPENDENCY_DAG.json
+  07_PROOFS_AND_COMPUTATIONS.md
+  08_FAILURE_AND_NEGATIVE_RESULTS.md
+  09_PROOF_DEBT.json
+  10_CLAIM_LEDGER.yaml
+  11_CERT_HANDOFF.md
+  12_NEXT_EXECUTABLE_STEP.md
   artifacts/
     code/
     data/
     certificates/
     figures/
 ```
+
+The compact single-file template remains acceptable for small packages, but it
+must preserve the same information.
