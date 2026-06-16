@@ -1,0 +1,49 @@
+{
+  "claims": [
+    {
+      "artifact_hashes": {
+        "source_row.json": "dc25e5a17d247043e3eab9c50ea8a8b0d5686de7785b86e7f757065dc3c63c5b"
+      },
+      "claim_class": "SOURCE_RECONSTRUCTION",
+      "claim_id": "RM-DIO-004-C001",
+      "status": "AUDITED",
+      "support_type": "DATASET_ROW_PRESERVATION",
+      "text": "The ResearchMath source row was serialized with preserved provenance."
+    },
+    {
+      "artifact_hashes": {
+        "problem_card.json": "6c2944be313de59982a80de9d0615dea7b06be2f8cd5ad212599b1e6c9b6d120"
+      },
+      "claim_class": "ROUTE_CLASSIFICATION",
+      "claim_id": "RM-DIO-004-C002",
+      "depends_on": [
+        "RM-DIO-004-C001"
+      ],
+      "status": "AUDITED",
+      "support_type": "MATHFORGE_TRIAGE",
+      "text": "The problem was classified as Diophantine algebraic intake with canonical polynomial x^2 - x - y^5 + y."
+    },
+    {
+      "artifact_hashes": {
+        "mathsolve_handoff.json": "1e903db35804d13550887be19951f0f4581e7dc7247fef4a510d3f0722842dd9"
+      },
+      "claim_class": "HANDOFF_READY",
+      "claim_id": "RM-DIO-004-C003",
+      "depends_on": [
+        "RM-DIO-004-C001",
+        "RM-DIO-004-C002"
+      ],
+      "status": "PROVISIONAL",
+      "support_type": "WORK_PACKAGE_SEED",
+      "text": "The row is ready for MATHSOLVE triage as a Work Package seed, not as a solved theorem."
+    }
+  ],
+  "fixture_id": "RM-DIO-004",
+  "forbidden_promotions": [
+    "SOLVED",
+    "CERTIFIED",
+    "CHECKED_GLOBAL_STATUS",
+    "COMPLETE_INTEGER_CLASSIFICATION"
+  ],
+  "schema_version": "1.0.0"
+}
