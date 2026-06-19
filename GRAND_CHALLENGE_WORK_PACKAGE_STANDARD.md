@@ -53,6 +53,10 @@ Present a working model and the smallest exact calculation, counterexample, or
 failed mechanism that exposes the principal obstruction. "The problem is hard"
 is not an obstruction analysis.
 
+The Work Package metadata must also record its stable knowledge graph references
+and versioned classification mapping references. Discovery-provider output is
+evidence, not a programme assertion, until reviewed.
+
 ### 5. Known terrain and source audit
 
 Record known results, special cases, partial bounds, solved variants,

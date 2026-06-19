@@ -65,7 +65,13 @@ promotion_condition: "Would require proof or certified reduction to checked case
 related_files:
   - WP01_UNION_CLOSED_STATUS_SPINE.md
   - WP02_UNION_CLOSED_LEAN_HANDOFF.md
+knowledge_graph_refs:
+  - UC-CONJECTURE-FRANKL
 ```
+
+`knowledge_graph_refs` is optional. It carries stable provenance and navigation
+links only; it does not supply proof, promote a claim, or change certification
+status.
 
 ## Claim status values
 

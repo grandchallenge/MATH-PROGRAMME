@@ -16,6 +16,7 @@
           "claim_class",
           "support_type",
           "status",
+          "source_or_artifact",
           "promotion_condition"
         ],
         "properties": {
@@ -33,6 +34,8 @@
               "PROVED_IN_PACKAGE",
               "FORMALIZED",
               "COMPUTED_EXACTLY",
+              "ALGEBRAIC_CERTIFIED",
+              "GROEBNER_CERTIFIED",
               "INTERVAL_CERTIFIED",
               "SAT_SMT_CERTIFIED",
               "LITERATURE_DERIVED",
@@ -51,6 +54,10 @@
               "COQ_PROOF",
               "ISABELLE_PROOF",
               "EXACT_RATIONAL_COMPUTATION",
+              "ALGEBRAIC_CERTIFICATE",
+              "GROEBNER_CERTIFICATE",
+              "CAS_CERTIFICATE",
+              "LEAN_KERNEL_CHECKED_CERTIFICATE",
               "INTERVAL_CERTIFICATE",
               "SAT_SMT_CERTIFICATE",
               "SOURCE_CITATION",
@@ -96,6 +103,14 @@
             "type": "array",
             "items": {
               "type": "string"
+            }
+          },
+          "knowledge_graph_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
             }
           }
         }

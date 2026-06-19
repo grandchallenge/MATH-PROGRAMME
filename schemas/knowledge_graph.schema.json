@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Programme mathematical knowledge graph",
+  "type": "object",
+  "required": ["graph_id", "graph_version", "domain_id", "nodes", "edges"],
+  "properties": {
+    "graph_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "graph_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "domain_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["node_id", "kind", "label", "programme_status"],
+        "properties": {
+          "node_id": {
+            "type": "string",
+            "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+$"
+          },
+          "kind": {
+            "enum": [
+              "DOMAIN",
+              "PROBLEM",
+              "CONJECTURE",
+              "DEFINITION",
+              "MATHEMATICAL_OBJECT",
+              "THEOREM",
+              "METHOD",
+              "WORK_PACKAGE",
+              "CLAIM",
+              "ARTIFACT"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "programme_status": {
+            "enum": [
+              "ACTIVE",
+              "PLANNED",
+              "OPEN",
+              "AUDITED",
+              "CHECKED",
+              "CERTIFIED",
+              "SUPERSEDED"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "artifact_ref": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "edge_id",
+          "source",
+          "relation",
+          "target",
+          "assertion_status",
+          "provenance"
+        ],
+        "properties": {
+          "edge_id": {
+            "type": "string",
+            "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+$"
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relation": {
+            "enum": [
+              "CONTAINS",
+              "EQUIVALENT_TO",
+              "SPECIAL_CASE_OF",
+              "STRENGTHENS",
+              "DEPENDS_ON",
+              "USES_METHOD",
+              "FORMALIZES",
+              "CERTIFIES",
+              "SUPPORTED_BY",
+              "NEXT_TARGET_OF"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assertion_status": {
+            "enum": [
+              "PROPOSED",
+              "AUDITED",
+              "CHECKED",
+              "CERTIFIED",
+              "REJECTED",
+              "SUPERSEDED"
+            ]
+          },
+          "provenance": {
+            "type": "object",
+            "required": ["source_ids", "asserted_by", "asserted_at", "evidence"],
+            "properties": {
+              "source_ids": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "asserted_by": {
+                "type": "string",
+                "minLength": 1
+              },
+              "asserted_at": {
+                "type": "string",
+                "format": "date"
+              },
+              "evidence": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

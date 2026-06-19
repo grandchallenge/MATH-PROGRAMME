@@ -23,6 +23,8 @@ MATHFORGE owns:
 7. **Reduction-system reconnaissance**: identify the intended congruence, termination measure, critical overlaps, parametric branches, and provenance needed for replay.
 8. **Conjecture mining**: produce candidate patterns, reductions, or formulations for MATHSOLVE to evaluate.
 9. **Danger labelling**: flag likely false folklore, unstable source status, extraction errors, representation artifacts, or problems requiring specialist audit.
+10. **Discovery normalization**: query approved providers and emit provider-neutral records with query provenance, identifiers, and content hashes.
+11. **Mapping proposals**: propose versioned external classifications without changing the programme knowledge graph.
 
 ## Non-responsibilities
 
@@ -64,19 +66,31 @@ Every MATHFORGE candidate should emit a problem card:
 ```yaml
 problem_id: MF-UC-0001
 title: Frankl union-closed sets conjecture
-source_status: open-signal
+domain_id: UC
+status_signal: open-signal
 source_urls:
   - https://en.wikipedia.org/wiki/Union-closed_sets_conjecture
   - https://arxiv.org/abs/2306.12351
-domain: finite-combinatorics
+knowledge_graph_refs:
+  - UC-CONJECTURE-FRANKL
+classification_mapping_refs:
+  - UC-MAP-MSC-05D05
+  - UC-MAP-MSC-06A12
+  - UC-MAP-ARXIV-MATH-CO
+discovery_provenance:
+  source_ids:
+    - msc2020_skos
+    - zbmath_open
+  reviewed_at: 2026-06-14
+  reviewed_by: programme-maintainer
 forge_outputs:
   - exact enumeration n <= 4
   - equivalent formulation notes
 risk_flags:
   - attractive false-proof target
   - many known special cases
-recommended_mathsolve_entry: WP01 status spine
-recommended_mathcert_route: Lean definitions + finite-family verifier
+recommended_wp01: WP01 status spine
+recommended_certification_route: Lean definitions + finite-family verifier
 ```
 
 For an algebraic reconnaissance run, MATHFORGE may additionally emit:
@@ -156,6 +170,8 @@ A MATHFORGE artifact may pass to MATHSOLVE only if it includes:
 5. Reason for Grand Challenge relevance.
 6. Failure-mode notes.
 7. Candidate first Work Package.
+8. Stable knowledge graph and classification mapping references.
+9. Discovery provenance for externally sourced candidates.
 
 An algebraic artifact must also state:
 

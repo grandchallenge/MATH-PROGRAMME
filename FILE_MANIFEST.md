@@ -1,6 +1,7 @@
 # File Manifest
 
 - `ARCHITECTURE_OVERVIEW.md`
+- `CLASSIFICATION_DISCOVERY_STANDARD.md`
 - `CERTIFICATION_LADDER.md`
 - `CLAIM_LEDGER_STANDARD.md`
 - `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`
@@ -21,6 +22,7 @@
 - `MATHCERT/ci/replay_certificates.py`
 - `MATHCERT/ci/test_validate_ledgers.py`
 - `MATHCERT/ci/validate_ledgers.py`
+- `MATHCERT/contracts/classification_discovery_refs.json`
 - `MATHCERT/claim_ledger_wp04.yaml`
 - `MATHCERT/lake-manifest.json`
 - `MATHCERT/lakefile.lean`
@@ -28,11 +30,27 @@
 - `MATHCERT/MathCert.lean`
 - `MATHCERT_SPEC.md`
 - `MATHFORGE/README.md`
+- `MATHFORGE/ci/validate_forge.py`
+- `MATHFORGE/contracts/classification_discovery_refs.json`
+- `MATHFORGE/discovery/adapters.py`
+- `MATHFORGE/discovery/search.py`
 - `MATHFORGE/domains/union_closed/enumerate_small_families.py`
 - `MATHFORGE/domains/union_closed/union_closed_small_audit.json`
 - `MATHFORGE/domains/union_closed/union_closed_small_audit.stdout`
 - `MATHFORGE_SPEC.md`
+- `MATHFORGE/reports/problem_cards/MF-UC-0001.json`
+- `MATHFORGE/schemas/discovery_record.schema.json`
+- `MATHFORGE/tests/test_discovery.py`
+- `classification/source_registry.json`
+- `classification/mappings/union_closed.json`
+- `knowledge_graph/union_closed.json`
+- `examples/candidate_problem_union_closed.json`
+- `tools/cache_msc2020_skos.py`
+- `ci/validate_programme.py`
+- `ci/test_validate_programme.py`
 - `MATHSOLVE/README.md`
+- `MATHSOLVE/ci/validate_solve.py`
+- `MATHSOLVE/contracts/classification_discovery_refs.json`
 - `MATHSOLVE/domains/union_closed/README.md`
 - `MATHSOLVE/domains/union_closed/WP01_status_spine/README.md`
 - `MATHSOLVE/domains/union_closed/WP02_lean_handoff/README.md`
@@ -52,12 +70,18 @@
 - `MATHSOLVE/domains/union_closed/WP04_small_cases_and_certificates/README.md`
 - `MATHSOLVE/domains/union_closed/WP05_lattice_minimal_counterexample/README.md`
 - `MATHSOLVE_SPEC.md`
+- `MATHSOLVE/schemas/claim_ledger.schema.json`
 - `README.md`
 - `THURSTONIAN_ETHOS.md`
 - `WP01_UNION_CLOSED_STATUS_SPINE.md`
 - `WP02_UNION_CLOSED_LEAN_HANDOFF.md`
 - `schemas/candidate_problem.schema.json`
+- `schemas/classification_source_registry.schema.json`
 - `schemas/claim_ledger.schema.json`
+- `schemas/discovery_record.schema.json`
+- `schemas/domain_registry.schema.json`
+- `schemas/external_mapping.schema.json`
+- `schemas/knowledge_graph.schema.json`
 - `schemas/union_closed_small_certificate.schema.json`
 - `templates/claim_ledger_template.yaml`
 - `templates/union_closed_claim_ledger_wp01.yaml`

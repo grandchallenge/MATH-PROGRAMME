@@ -10,6 +10,11 @@
 
 **Claim status:** no new theorem claimed
 
+**Knowledge graph refs:** `UC-CONJECTURE-FRANKL`, `UC-WP01`
+
+**Classification mappings:** `UC-MAP-MSC-05D05`,
+`UC-MAP-MSC-06A12`, `UC-MAP-ARXIV-MATH-CO`
+
 ## 1. Lay executive companion
 
 Frankl's union-closed sets conjecture is one of those mathematical problems that looks almost too simple to be dangerous.

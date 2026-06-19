@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Programme domain registry",
+  "type": "object",
+  "required": ["domains"],
+  "properties": {
+    "domains": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "domain_id",
+          "slug",
+          "title",
+          "status",
+          "forge_entry",
+          "solve_entry",
+          "cert_route",
+          "next_review",
+          "knowledge_graph_refs",
+          "classification_mapping_refs"
+        ],
+        "properties": {
+          "domain_id": {
+            "type": "string",
+            "pattern": "^[A-Z0-9]+$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]+$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": ["PLANNED", "ACTIVE", "PAUSED", "COMPLETE", "ARCHIVED"]
+          },
+          "forge_entry": {
+            "type": "string",
+            "minLength": 1
+          },
+          "solve_entry": {
+            "type": "string",
+            "minLength": 1
+          },
+          "cert_route": {
+            "type": "string",
+            "minLength": 1
+          },
+          "next_review": {
+            "type": "string",
+            "minLength": 1
+          },
+          "knowledge_graph_refs": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "classification_mapping_refs": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

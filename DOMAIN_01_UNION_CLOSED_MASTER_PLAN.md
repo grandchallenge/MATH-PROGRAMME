@@ -6,6 +6,16 @@
 
 This is the first Lean-friendly Grand Challenge domain for the MATHFORGE -> MATHSOLVE -> MATHCERT platform.
 
+## Classification and graph identity
+
+- Knowledge graph: `UC-KNOWLEDGE-GRAPH`, rooted at `UC-DOMAIN`.
+- Primary MSC2020 mapping: `UC-MAP-MSC-05D05` (`05D05`).
+- Secondary MSC2020 mapping: `UC-MAP-MSC-06A12` (`06A12`).
+- arXiv current-awareness facet: `UC-MAP-ARXIV-MATH-CO` (`math.CO`).
+
+These are navigation and discovery mappings. Programme meaning remains in the
+internal knowledge graph.
+
 ## Problem statement
 
 A finite family `F` of sets is union-closed if whenever `A` and `B` are in `F`, the union `A ∪ B` is also in `F`. Frankl's union-closed sets conjecture states that every finite nontrivial union-closed family has an element appearing in at least half of the sets in the family.
@@ -132,6 +142,30 @@ Candidates:
 - low-height or chain-constrained families;
 - certificate-verifiable finite lattice classes.
 
+Status: complete as a target-selection milestone. The selected target is
+`UC-WP05-L001`: a minimum-cardinality finite-lattice counterexample has at least
+two atoms. Both deletion constructions, that theorem, and `UC-WP05-L004`
+(Bouchard's Theorem 2.3) are now Lean-checked. `UC-WP05-L005`, Corollary 2.4,
+is checked in the explicit form that top is the join of two proper elements.
+`UC-WP05-L006`, Lemma 2.5, supplies the exact upper-cone equation for doubly
+irreducible elements. `UC-WP05-L007`, Theorem 2.6, proves that a minimum
+counterexample contains at most one such element. `UC-WP05-L008`, Theorem
+1.4, supplies finite homogeneous deletion in both dual directions.
+`UC-WP05-L009`, Theorem 2.9, proves the strict-majority upper-cone statement
+for every nonempty finite set of inf-irreducibles. `UC-WP05-L010` and
+`UC-WP05-L011` certify Corollaries 2.10 and 2.11. `UC-WP05-L012` certifies
+Theorem 2.12, giving an exact-cone sup-irreducible below every
+inf-irreducible. `UC-WP05-L013` certifies Theorem 2.13: the elements
+incomparable with any non-endpoint do not form a chain. `UC-WP05-L014`
+certifies Corollary 2.14: every non-endpoint has at least three incomparable
+elements. `UC-WP05-L015` certifies Theorem 2.15 branch (ii), the dual-atom
+cardinality-gap criterion for embedded finite lattice subposets. `UC-WP05-C016`
+certifies by exact replay the finite-lattice enumeration fact used by Theorem
+2.15 branch (i), and `UC-WP05-L016` certifies the Lean transfer from two
+internal doubly irreducible elements to an ambient boundary touch. Together
+these certify full source Theorem 2.15 as the hybrid package claim
+`UC-WP05-C015`.
+
 ## Claim boundary
 
 No Work Package in this domain may state or imply that Frankl's conjecture is close to solved unless it has an actual theorem-grade route. Computations over small universes validate definitions and tooling, not the general conjecture.
@@ -146,12 +180,31 @@ WP02 and the first WP04 restricted result now provide checked definitions and lo
 4. a union-closed family containing `{a, b}` satisfies Frankl for at least one of `a` or `b`;
 5. independent exact replay finds no nontrivial violations for universes `n <= 4`.
 
+## Milestone status
+
+| Milestone | Status | Boundary |
+|---|---|---|
+| 0: Baseline repair | Complete | Counting convention, artifacts, and ledger agree. |
+| 1: WP02 Lean substrate | Complete | Pinned package builds with checked local lemmas and no proof placeholders. |
+| 2: Exact certificate pipeline | Complete | Independent replay certifies the `n <= 4` nontrivial audit. |
+| 3: WP03 source audit | Complete | Primary-source method map, classification, and certification boundaries are recorded through 2026-06-14. |
+| 4: Restricted results | Complete | Singleton and two-element cases are checked; external reuse is assessed; the WP05 lattice spine is checked through `UC-WP05-L016`, including homogeneous deletion, Theorems 2.9, 2.12, 2.13, Corollary 2.14, Theorem 2.15 branch (ii), and the branch (i) transfer theorem; `UC-WP05-C016` replay-certifies the finite small-lattice fact, making full Theorem 2.15 hybrid-certified as `UC-WP05-C015`. |
+
 ## First concrete next target
 
-Reconstruct Bouchard's lattice-minimal-counterexample conditions in a theorem
-spine and nominate the smallest Lean-ready condition as `UC-WP05-L001`. The
-ideal-family branch is deferred because a public Lean development already
-exists and should be reused through a translation layer if activated.
+Bouchard's Theorem 2.15 branch (ii) is checked as `UC-WP05-L015`: embedded
+finite lattice subposets satisfying the dual-atom cardinality-gap criterion
+must touch the ambient boundary. The small-lattice enumeration fact for branch
+(i) is independently replay-certified as `UC-WP05-C016` for sizes `4..7`, and
+the branch (i) Lean transfer is checked as `UC-WP05-L016`. The full source
+theorem is now hybrid-certified as `UC-WP05-C015`, not as a single Lean theorem.
+The next source move should open a new source branch outside Bouchard, or
+backfill Theorem 2.7 and Corollary 2.8 only after auditing Rival's external
+length theorem. That audit is now recorded as `UC-WP05-C017`/`UC-WP05-C018`;
+the next formal target is a finite lattice length API plus a conditional
+`RivalBound` wrapper for Theorem 2.7. The ideal-family branch remains deferred
+because a public Lean development already exists and should be reused through a
+translation layer if activated.
 
 ## Source notes
 

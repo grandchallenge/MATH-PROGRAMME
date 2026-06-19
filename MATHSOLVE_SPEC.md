@@ -29,6 +29,9 @@ MATHSOLVE owns:
 9. **Witness minimization**: convert expensive discovery output into a smaller exact artifact suitable for replay.
 10. **Pedagogical companion writing**: explain the object, obstruction, reduction, achieved result, and next target.
 11. **MATHCERT handoff preparation**: theorem statements, formal definitions, missing library notes, certificate schemas.
+12. **Programme reference preservation**: carry stable knowledge graph,
+   classification mapping, and discovery record references through every Work
+   Package and certification handoff.
 
 ## Non-responsibilities
 

@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Normalized discovery result batch",
+  "type": "object",
+  "required": ["batch_id", "provider", "query", "retrieved_at", "records"],
+  "properties": {
+    "batch_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider": {
+      "enum": ["zbmath", "openalex", "arxiv"]
+    },
+    "query": {
+      "type": "object",
+      "required": ["mode"],
+      "properties": {
+        "mode": {
+          "enum": ["keyword", "semantic", "category"]
+        },
+        "text": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "since": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "additionalProperties": false
+    },
+    "retrieved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "record_id",
+          "provider_id",
+          "title",
+          "authors",
+          "identifiers",
+          "classifications",
+          "metrics",
+          "provenance",
+          "content_hash",
+          "review_status"
+        ],
+        "properties": {
+          "record_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "provider_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "authors": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "publication_year": {
+            "type": ["integer", "null"],
+            "minimum": 1000
+          },
+          "identifiers": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "classifications": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["scheme", "identifier"],
+              "properties": {
+                "scheme": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "identifier": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "role": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "metrics": {
+            "type": "object",
+            "additionalProperties": {
+              "type": ["integer", "number", "string", "boolean", "null"]
+            }
+          },
+          "provenance": {
+            "type": "object",
+            "required": ["source_id", "query_url", "retrieved_at"],
+            "properties": {
+              "source_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "query_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "retrieved_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          },
+          "content_hash": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "review_status": {
+            "enum": ["UNREVIEWED", "REVIEWED", "PROMOTED", "REJECTED"]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -92,6 +92,26 @@ MATHCERT: replays or Lean-checks the certificate before promotion
 
 The lane doctrine lives in `docs/CROSS_PILLAR_LANES.md`.
 
+## Classification and discovery layer
+
+The three-pillar workflow shares a fourth, programme-owned information layer:
+
+```text
+MSC2020-SKOS          -> versioned subject mappings
+external discovery    -> reviewed evidence records
+internal graph        -> programme concepts, relations, and state
+```
+
+MSC2020-SKOS is the stable classification spine. It does not define mathematical
+dependencies or programme meaning. Those belong to the versioned internal
+knowledge graph.
+
+MATHFORGE queries zbMATH Open for mathematics-specific literature, OpenAlex for
+semantic and citation discovery, and arXiv for current-awareness intake. Results
+remain discovery evidence until a human review promotes a normalized record into
+an audited mapping or graph assertion. OntoMathPRO may inform graph design but is
+not a runtime or governance dependency.
+
 ## Naming note
 
 MATHSMELT remains a useful internal term for the refinement phase inside MATHSOLVE, but it is not the public pillar. MATHSOLVE is clearer and more institutional. It does not mean that the system magically solves mathematics. It means the system organizes the struggle.
