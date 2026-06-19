@@ -47,11 +47,20 @@ jobs:
 
       - name: Run adversarial pedagogy tests
         run: python3 ci/test_chaidez_pedagogy.py
+
       - name: Check ResearchMath intake fixture
         run: python3 ci/validate_researchmath_fixture.py
 
       - name: Run adversarial ResearchMath intake tests
         run: python3 ci/test_researchmath_fixture.py
+
+      - name: Install policy dependencies
+        run: python -m pip install jsonschema pyyaml
+
+      - name: Validate programme contracts
+        run: |
+          python ci/validate_programme.py
+          python ci/test_validate_programme.py
 
       - name: Install documentation dependencies
         run: |

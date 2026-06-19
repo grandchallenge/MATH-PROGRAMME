@@ -15,6 +15,15 @@ Shared standards and schemas are canonical in this repository. A pillar may vend
 the subset required for local CI, but a policy change begins here and is synchronized
 to affected pillars in an explicit pull request.
 
+The internal mathematical knowledge graph is the source of truth for programme
+concepts, relationships, and state. External classifications and discovery
+providers are versioned mappings or evidence sources only. They do not determine
+claim status, certification, research priority, or internal graph relationships.
+
+`CLASSIFICATION_DISCOVERY_STANDARD.md` is binding for classification and discovery.
+MSC2020-SKOS is the canonical subject spine. zbMATH Open, OpenAlex, and arXiv
+support discovery, while OntoMathPRO is a non-binding design reference.
+
 Issues live in the repository that owns the next action. Cross-pillar work is linked
 through immutable commit URLs and stable identifiers. GitHub Projects is an index,
 not a second source of truth.

@@ -88,7 +88,8 @@ Additional supporting files include schemas, templates, exact finite enumerators
 5. Treat `CLAIM_LEDGER_STANDARD.md` as binding. No claim should appear without a type, support route, and promotion condition.
 6. Treat `CERTIFICATION_LADDER.md` as the promotion gate from mathematical development to certified result.
 7. Read `docs/CROSS_PILLAR_LANES.md` when a recurring tactic, witness, or certificate path spans all three pillars.
-8. Begin the first domain with `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`, `WP01_UNION_CLOSED_STATUS_SPINE.md`, and `WP02_UNION_CLOSED_LEAN_HANDOFF.md`.
+8. Treat `CLASSIFICATION_DISCOVERY_STANDARD.md` as binding for subject mappings, knowledge graph assertions, and discovery evidence.
+9. Begin the first domain with `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`, `WP01_UNION_CLOSED_STATUS_SPINE.md`, and `WP02_UNION_CLOSED_LEAN_HANDOFF.md`.
 
 ## Claim boundary
 

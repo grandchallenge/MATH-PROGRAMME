@@ -1,0 +1,454 @@
+{
+  "graph_id": "UC-KNOWLEDGE-GRAPH",
+  "graph_version": "1.0.0",
+  "domain_id": "UC",
+  "nodes": [
+    {
+      "node_id": "UC-DOMAIN",
+      "kind": "DOMAIN",
+      "label": "Union-Closed Sets",
+      "programme_status": "ACTIVE"
+    },
+    {
+      "node_id": "UC-CONJECTURE-FRANKL",
+      "kind": "CONJECTURE",
+      "label": "Frankl's union-closed sets conjecture",
+      "programme_status": "OPEN"
+    },
+    {
+      "node_id": "UC-PROBLEM-SET-FAMILY",
+      "kind": "PROBLEM",
+      "label": "Finite set-family formulation",
+      "programme_status": "AUDITED"
+    },
+    {
+      "node_id": "UC-PROBLEM-LATTICE",
+      "kind": "PROBLEM",
+      "label": "Finite lattice formulation",
+      "programme_status": "AUDITED"
+    },
+    {
+      "node_id": "UC-DEFINITION-UNION-CLOSED-FAMILY",
+      "kind": "DEFINITION",
+      "label": "Union-closed finite family",
+      "programme_status": "CHECKED",
+      "artifact_ref": "MATHCERT/MathCert/Domains/UnionClosed/Basic.lean"
+    },
+    {
+      "node_id": "UC-OBJECT-FINITE-LATTICE",
+      "kind": "MATHEMATICAL_OBJECT",
+      "label": "Finite lattice",
+      "programme_status": "ACTIVE"
+    },
+    {
+      "node_id": "UC-METHOD-ENTROPY",
+      "kind": "METHOD",
+      "label": "Entropy and coupling methods",
+      "programme_status": "AUDITED"
+    },
+    {
+      "node_id": "UC-METHOD-AVERAGING",
+      "kind": "METHOD",
+      "label": "Averaging methods",
+      "programme_status": "AUDITED"
+    },
+    {
+      "node_id": "UC-METHOD-EXACT-ENUMERATION",
+      "kind": "METHOD",
+      "label": "Exact finite enumeration",
+      "programme_status": "CERTIFIED"
+    },
+    {
+      "node_id": "UC-WP01",
+      "kind": "WORK_PACKAGE",
+      "label": "WP01 status spine",
+      "programme_status": "AUDITED"
+    },
+    {
+      "node_id": "UC-WP02",
+      "kind": "WORK_PACKAGE",
+      "label": "WP02 Lean handoff",
+      "programme_status": "CHECKED"
+    },
+    {
+      "node_id": "UC-WP03",
+      "kind": "WORK_PACKAGE",
+      "label": "WP03 known bounds synthesis",
+      "programme_status": "AUDITED"
+    },
+    {
+      "node_id": "UC-WP04",
+      "kind": "WORK_PACKAGE",
+      "label": "WP04 small cases and certificates",
+      "programme_status": "CERTIFIED"
+    },
+    {
+      "node_id": "UC-WP05",
+      "kind": "WORK_PACKAGE",
+      "label": "WP05 lattice minimal counterexample",
+      "programme_status": "CHECKED"
+    },
+    {
+      "node_id": "UC-CLAIM-WP05-L001",
+      "kind": "CLAIM",
+      "label": "A minimum lattice counterexample has at least two atoms",
+      "programme_status": "CHECKED"
+    },
+    {
+      "node_id": "UC-CLAIM-WP05-COROLLARY-2-4",
+      "kind": "CLAIM",
+      "label": "The top element of a minimum lattice counterexample is join-reducible",
+      "programme_status": "CHECKED"
+    },
+    {
+      "node_id": "UC-CLAIM-WP05-LEMMA-2-5",
+      "kind": "CLAIM",
+      "label": "A doubly irreducible element has exact upper-cone size",
+      "programme_status": "CHECKED"
+    },
+    {
+      "node_id": "UC-CLAIM-WP05-THEOREM-2-6",
+      "kind": "CLAIM",
+      "label": "A minimum lattice counterexample has at most one doubly irreducible element",
+      "programme_status": "CHECKED"
+    },
+    {
+      "node_id": "UC-CLAIM-WP05-THEOREM-1-4",
+      "kind": "CLAIM",
+      "label": "Deleting a finite homogeneous set of irreducibles leaves a lattice",
+      "programme_status": "CHECKED"
+    },
+    {
+      "node_id": "UC-CLAIM-WP05-THEOREM-2-9",
+      "kind": "CLAIM",
+      "label": "A nonempty set of meet-irreducibles has a join-irreducible strict majority",
+      "programme_status": "CHECKED"
+    },
+    {
+      "node_id": "UC-CLAIM-WP05-COROLLARY-2-10",
+      "kind": "CLAIM",
+      "label": "A join-irreducible lies below most meet-irreducibles",
+      "programme_status": "CHECKED"
+    },
+    {
+      "node_id": "UC-CLAIM-WP05-COROLLARY-2-11",
+      "kind": "CLAIM",
+      "label": "Two meet-irreducibles have a common join-irreducible lower bound",
+      "programme_status": "CHECKED"
+    },
+    {
+      "node_id": "UC-CLAIM-WP05-THEOREM-2-12",
+      "kind": "CLAIM",
+      "label": "Every meet-irreducible lies above a minimum-cone join-irreducible",
+      "programme_status": "CHECKED"
+    },
+    {
+      "node_id": "UC-CLAIM-WP05-THEOREM-2-13",
+      "kind": "CLAIM",
+      "label": "Incomparables of a non-endpoint do not form a chain",
+      "programme_status": "CHECKED"
+    },
+    {
+      "node_id": "UC-CLAIM-WP05-COROLLARY-2-14",
+      "kind": "CLAIM",
+      "label": "Every non-endpoint has at least three incomparable elements",
+      "programme_status": "CHECKED"
+    },
+    {
+      "node_id": "UC-ARTIFACT-LEAN-FRANKL-STATEMENT",
+      "kind": "ARTIFACT",
+      "label": "Lean statement of Frankl's conjecture",
+      "programme_status": "CHECKED",
+      "artifact_ref": "MATHCERT/MathCert/Domains/UnionClosed/FranklStatement.lean"
+    },
+    {
+      "node_id": "UC-ARTIFACT-N4-CERTIFICATE",
+      "kind": "ARTIFACT",
+      "label": "Exact union-closed audit for universes n <= 4",
+      "programme_status": "CERTIFIED",
+      "artifact_ref": "MATHCERT/certificates/exact/union_closed_n_le_4.json"
+    },
+    {
+      "node_id": "UC-ARTIFACT-LATTICE-MINIMUM-LEAN",
+      "kind": "ARTIFACT",
+      "label": "Lean minimum-lattice-counterexample development",
+      "programme_status": "CHECKED",
+      "artifact_ref": "MATHCERT/MathCert/Domains/UnionClosed/LatticeMinimum.lean"
+    },
+    {
+      "node_id": "UC-ARTIFACT-LATTICE-DELETION-LEAN",
+      "kind": "ARTIFACT",
+      "label": "Lean finite-lattice deletion development",
+      "programme_status": "CHECKED",
+      "artifact_ref": "MATHCERT/MathCert/Domains/UnionClosed/LatticeDeletion.lean"
+    },
+    {
+      "node_id": "UC-ARTIFACT-LATTICE-INTERVAL-LEAN",
+      "kind": "ARTIFACT",
+      "label": "Lean finite-lattice upper-interval development",
+      "programme_status": "CHECKED",
+      "artifact_ref": "MATHCERT/MathCert/Domains/UnionClosed/LatticeInterval.lean"
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "UC-EDGE-DOMAIN-CONJECTURE",
+      "source": "UC-DOMAIN",
+      "relation": "CONTAINS",
+      "target": "UC-CONJECTURE-FRANKL",
+      "assertion_status": "AUDITED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-CONJECTURE-SET-FORM",
+      "source": "UC-CONJECTURE-FRANKL",
+      "relation": "EQUIVALENT_TO",
+      "target": "UC-PROBLEM-SET-FAMILY",
+      "assertion_status": "AUDITED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["WP01_UNION_CLOSED_STATUS_SPINE.md"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-CONJECTURE-LATTICE-FORM",
+      "source": "UC-CONJECTURE-FRANKL",
+      "relation": "EQUIVALENT_TO",
+      "target": "UC-PROBLEM-LATTICE",
+      "assertion_status": "AUDITED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-WP03-ENTROPY",
+      "source": "UC-WP03",
+      "relation": "USES_METHOD",
+      "target": "UC-METHOD-ENTROPY",
+      "assertion_status": "AUDITED",
+      "provenance": {
+        "source_ids": ["math_programme", "arxiv"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["MATHSOLVE/domains/union_closed/WP03_known_bounds_synthesis/README.md"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-WP03-AVERAGING",
+      "source": "UC-WP03",
+      "relation": "USES_METHOD",
+      "target": "UC-METHOD-AVERAGING",
+      "assertion_status": "AUDITED",
+      "provenance": {
+        "source_ids": ["math_programme", "arxiv"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["MATHSOLVE/domains/union_closed/WP03_known_bounds_synthesis/README.md"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-WP04-ENUMERATION",
+      "source": "UC-WP04",
+      "relation": "USES_METHOD",
+      "target": "UC-METHOD-EXACT-ENUMERATION",
+      "assertion_status": "CERTIFIED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["MATHCERT/certificates/exact/union_closed_n_le_4.json"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-LEAN-FORMALIZES-CONJECTURE",
+      "source": "UC-ARTIFACT-LEAN-FRANKL-STATEMENT",
+      "relation": "FORMALIZES",
+      "target": "UC-CONJECTURE-FRANKL",
+      "assertion_status": "CHECKED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["MATHCERT/MathCert/Domains/UnionClosed/FranklStatement.lean"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-CERTIFICATE-SUPPORTS-CONJECTURE",
+      "source": "UC-ARTIFACT-N4-CERTIFICATE",
+      "relation": "SUPPORTED_BY",
+      "target": "UC-METHOD-EXACT-ENUMERATION",
+      "assertion_status": "CERTIFIED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["MATHCERT/ci/replay_certificates.py"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-LATTICE-LEAN-CERTIFIES-L001",
+      "source": "UC-ARTIFACT-LATTICE-MINIMUM-LEAN",
+      "relation": "CERTIFIES",
+      "target": "UC-CLAIM-WP05-L001",
+      "assertion_status": "CHECKED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["MATHCERT/MathCert/Domains/UnionClosed/LatticeMinimum.lean"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-LATTICE-LEAN-CERTIFIES-COROLLARY-2-4",
+      "source": "UC-ARTIFACT-LATTICE-MINIMUM-LEAN",
+      "relation": "CERTIFIES",
+      "target": "UC-CLAIM-WP05-COROLLARY-2-4",
+      "assertion_status": "CHECKED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["MATHCERT/MathCert/Domains/UnionClosed/LatticeMinimum.lean"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-LATTICE-LEAN-CERTIFIES-LEMMA-2-5",
+      "source": "UC-ARTIFACT-LATTICE-MINIMUM-LEAN",
+      "relation": "CERTIFIES",
+      "target": "UC-CLAIM-WP05-LEMMA-2-5",
+      "assertion_status": "CHECKED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["MATHCERT/MathCert/Domains/UnionClosed/LatticeMinimum.lean"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-LATTICE-LEAN-CERTIFIES-THEOREM-2-6",
+      "source": "UC-ARTIFACT-LATTICE-MINIMUM-LEAN",
+      "relation": "CERTIFIES",
+      "target": "UC-CLAIM-WP05-THEOREM-2-6",
+      "assertion_status": "CHECKED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["MATHCERT/MathCert/Domains/UnionClosed/LatticeMinimum.lean"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-LATTICE-DELETION-LEAN-CERTIFIES-THEOREM-1-4",
+      "source": "UC-ARTIFACT-LATTICE-DELETION-LEAN",
+      "relation": "CERTIFIES",
+      "target": "UC-CLAIM-WP05-THEOREM-1-4",
+      "assertion_status": "CHECKED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["MATHCERT/MathCert/Domains/UnionClosed/LatticeDeletion.lean"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-LATTICE-LEAN-CERTIFIES-THEOREM-2-9",
+      "source": "UC-ARTIFACT-LATTICE-MINIMUM-LEAN",
+      "relation": "CERTIFIES",
+      "target": "UC-CLAIM-WP05-THEOREM-2-9",
+      "assertion_status": "CHECKED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": [
+          "MATHCERT/MathCert/Domains/UnionClosed/LatticeDeletion.lean",
+          "MATHCERT/MathCert/Domains/UnionClosed/LatticeMinimum.lean"
+        ]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-LATTICE-LEAN-CERTIFIES-COROLLARY-2-10",
+      "source": "UC-ARTIFACT-LATTICE-MINIMUM-LEAN",
+      "relation": "CERTIFIES",
+      "target": "UC-CLAIM-WP05-COROLLARY-2-10",
+      "assertion_status": "CHECKED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["MATHCERT/MathCert/Domains/UnionClosed/LatticeMinimum.lean"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-LATTICE-LEAN-CERTIFIES-COROLLARY-2-11",
+      "source": "UC-ARTIFACT-LATTICE-MINIMUM-LEAN",
+      "relation": "CERTIFIES",
+      "target": "UC-CLAIM-WP05-COROLLARY-2-11",
+      "assertion_status": "CHECKED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": ["MATHCERT/MathCert/Domains/UnionClosed/LatticeMinimum.lean"]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-LATTICE-LEAN-CERTIFIES-THEOREM-2-12",
+      "source": "UC-ARTIFACT-LATTICE-MINIMUM-LEAN",
+      "relation": "CERTIFIES",
+      "target": "UC-CLAIM-WP05-THEOREM-2-12",
+      "assertion_status": "CHECKED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": [
+          "MATHCERT/MathCert/Domains/UnionClosed/LatticeDeletion.lean",
+          "MATHCERT/MathCert/Domains/UnionClosed/LatticeMinimum.lean"
+        ]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-LATTICE-LEAN-CERTIFIES-THEOREM-2-13",
+      "source": "UC-ARTIFACT-LATTICE-MINIMUM-LEAN",
+      "relation": "CERTIFIES",
+      "target": "UC-CLAIM-WP05-THEOREM-2-13",
+      "assertion_status": "CHECKED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-14",
+        "evidence": [
+          "MATHCERT/MathCert/Domains/UnionClosed/LatticeInterval.lean",
+          "MATHCERT/MathCert/Domains/UnionClosed/LatticeMinimum.lean"
+        ]
+      }
+    },
+    {
+      "edge_id": "UC-EDGE-LATTICE-LEAN-CERTIFIES-COROLLARY-2-14",
+      "source": "UC-ARTIFACT-LATTICE-MINIMUM-LEAN",
+      "relation": "CERTIFIES",
+      "target": "UC-CLAIM-WP05-COROLLARY-2-14",
+      "assertion_status": "CHECKED",
+      "provenance": {
+        "source_ids": ["math_programme"],
+        "asserted_by": "programme-maintainer",
+        "asserted_at": "2026-06-18",
+        "evidence": [
+          "MATHCERT/MathCert/Domains/UnionClosed/LatticeInterval.lean",
+          "MATHCERT/MathCert/Domains/UnionClosed/LatticeMinimum.lean"
+        ]
+      }
+    }
+  ]
+}
