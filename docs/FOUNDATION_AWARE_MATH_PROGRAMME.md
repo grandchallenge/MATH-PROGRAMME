@@ -1,12 +1,14 @@
 # Foundation-Aware MATH-PROGRAMME Doctrine
 
-Status: proposed programme standard  
+Status: active programme doctrine  
 Scope: MATH-PROGRAMME, MATHFORGE, MATHSOLVE, MATHCERT  
 Doctrine: **No object without structure. No existence without provenance. No proof without an axiom profile.**
 
+This doctrine is part of the current operating standards alongside the [Grand Challenge Pedagogy Standard](GRAND_CHALLENGE_PEDAGOGY_STANDARD.md), [Claim Boundary Doctrine](CLAIM_BOUNDARY_DOCTRINE.md), and [Classification and Discovery Standard](../CLASSIFICATION_DISCOVERY_STANDARD.md).
+
 ## Purpose
 
-The Grand Challenge MATH-PROGRAMME is to become foundation-aware by design. The stack should not treat every mathematical statement as an untyped assertion about bare sets. It should record the structure, regularity, construction discipline, proof strength, and certificate target that make the statement meaningful and trustworthy.
+The Grand Challenge MATH-PROGRAMME is foundation-aware by design. The stack should not treat every mathematical statement as an untyped assertion about bare sets. It should record the structure, regularity, construction discipline, proof strength, and certificate target that make the statement meaningful and trustworthy.
 
 A naked set is not intrinsically convex, measurable, computable, topological, smooth, algebraic, or certifiable. Those properties appear only after the set is placed in an ambient structure with declared admissible operations. The programme therefore treats mathematical objects as structured records rather than anonymous membership collections.
 
@@ -40,7 +42,7 @@ Preferred evidence:
 - bounded exhaustive check;
 - small verifier;
 - Lean/Coq theorem;
-- SAT/SMT/PB/Gröbner/interval certificate.
+- SAT/SMT/PB/Groebner/interval certificate.
 
 ### F1: constructive and type-theoretic layer
 
@@ -88,7 +90,7 @@ Claims in this layer must clearly separate:
 
 ## Required foundational profile
 
-All new MATH-PROGRAMME cards, work packages, and certificate ledgers should include this block, either inline or by reference:
+All new MATH-PROGRAMME cards, work packages, and certificate ledgers should include this block, either inline or by reference. The machine-readable contract lives in [`schemas/foundational_profile.schema.json`](../schemas/foundational_profile.schema.json).
 
 ```yaml
 foundational_profile:
@@ -136,6 +138,8 @@ foundational_profile:
     level: low | medium | high | unknown
     notes: ""
 ```
+
+Historical artifacts may be backfilled gradually. New artifacts should include the profile unless the owning issue explicitly records why the profile is deferred.
 
 ## Stack responsibilities
 
