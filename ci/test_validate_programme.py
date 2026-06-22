@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regression tests for programme graph and mapping rejection paths."""
+"""Regression tests for programme graph, mapping, and profile rejection paths."""
 from __future__ import annotations
 
 import copy
@@ -57,6 +57,15 @@ def main() -> int:
         "primary mapping must be AUDITED" in error
         for error in validate_documents(
             source_registry, graph, unaudited_primary, domains, candidates
+        )
+    )
+
+    invalid_profile_candidates = copy.deepcopy(candidates)
+    invalid_profile_candidates[0]["foundational_profile"] = {"carrier_type": "bare_set"}
+    assert any(
+        "foundational_profile" in error
+        for error in validate_documents(
+            source_registry, graph, mappings, domains, invalid_profile_candidates
         )
     )
 

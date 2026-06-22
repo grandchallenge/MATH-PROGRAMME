@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Grand Challenge foundational profile",
+  "type": "object",
+  "required": [
+    "carrier_type",
+    "ambient_structure",
+    "regularity",
+    "axiom_profile",
+    "witness_policy",
+    "certification_target",
+    "pathology_risk"
+  ],
+  "properties": {
+    "carrier_type": {
+      "enum": ["finite", "countable", "continuum", "higher_type", "categorical", "unknown"]
+    },
+    "ambient_structure": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "vector_space",
+          "affine_space",
+          "metric_space",
+          "topological_space",
+          "measurable_space",
+          "probability_space",
+          "algebraic_structure",
+          "order_structure",
+          "computable_presentation"
+        ]
+      }
+    },
+    "regularity": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "finite",
+          "decidable",
+          "computable",
+          "Borel",
+          "Lebesgue_measurable",
+          "compact",
+          "convex",
+          "smooth",
+          "Noetherian",
+          "separable"
+        ]
+      }
+    },
+    "axiom_profile": {
+      "type": "object",
+      "required": ["base", "choice_usage", "excluded_middle", "large_cardinal_usage", "determinacy_usage"],
+      "properties": {
+        "base": {"enum": ["finite", "constructive", "ZF", "ZF+DC", "ZFC", "stronger", "unknown"]},
+        "choice_usage": {"enum": ["none", "finite_choice", "countable_choice", "dependent_choice", "full_choice", "unknown"]},
+        "excluded_middle": {"enum": ["avoided", "local", "used", "unknown"]},
+        "large_cardinal_usage": {"enum": ["none", "consistency_background", "essential", "unknown"]},
+        "determinacy_usage": {"enum": ["none", "local", "essential", "unknown"]}
+      },
+      "additionalProperties": false
+    },
+    "witness_policy": {
+      "type": "object",
+      "required": ["existence_claim", "witness_location"],
+      "properties": {
+        "existence_claim": {"enum": ["explicit_witness", "extractable", "nonconstructive", "contradiction_only", "unknown"]},
+        "witness_location": {"enum": ["card", "solver_artifact", "certificate_artifact", "absent"]}
+      },
+      "additionalProperties": false
+    },
+    "certification_target": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "Lean",
+          "Coq",
+          "SAT_certificate",
+          "SMT_certificate",
+          "pseudo_boolean_certificate",
+          "CAS_certificate",
+          "interval_certificate",
+          "human_audit"
+        ]
+      }
+    },
+    "pathology_risk": {
+      "type": "object",
+      "required": ["level", "notes"],
+      "properties": {
+        "level": {"enum": ["low", "medium", "high", "unknown"]},
+        "notes": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
