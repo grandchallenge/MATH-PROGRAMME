@@ -6,6 +6,14 @@
 
 Pedagogy is not simplification, decoration, or persuasion. It is part of mathematical governance.
 
+This is the programme-wide teaching and exposition standard. It should be read with:
+
+- [Pedagogical Style Guide](PEDAGOGICAL_STYLE_GUIDE.md) for sentence-level practice;
+- [Chaidez Pedagogical Protocol](CHAIDEZ_PEDAGOGICAL_PROTOCOL.md) for theorem-spine campaigns;
+- [Foundation-Aware MATH-PROGRAMME Doctrine](FOUNDATION_AWARE_MATH_PROGRAMME.md) for structured-object and axiom-profile discipline;
+- [Minderlings](MINDERLINGS.md) for reader-facing mnemonic process roles;
+- [Classification and Discovery Standard](../CLASSIFICATION_DISCOVERY_STANDARD.md) for external corpus quarantine and discovery evidence.
+
 A document is pedagogically successful when a reader can answer five questions without inferring the author's intent:
 
 1. What object is being studied?
@@ -29,6 +37,7 @@ Pedagogy must therefore make these rails visible:
 | proof-debt register | show what blocks promotion |
 | fixture ledger | prove that the process works on a bounded, inspectable example |
 | resource budget | bound expensive symbolic, search, and computational lanes |
+| foundational profile | state the carrier, ambient structure, axiom profile, witness policy, and pathology risk |
 | certification route | name the local statement that could be checked |
 
 A beautiful explanation that hides one of these rails is not Grand Challenge pedagogy.
@@ -89,7 +98,7 @@ They must obey three rules:
 2. They identify roles, boundaries, and routes.
 3. They never become proof-relevant by themselves.
 
-The Minderlings are an example: they are mnemonic companions for readers, not authorities. Their value is that they help people remember which part of the stack discovers, organizes, certifies, maps, stewards, or maintains fixtures.
+The [Minderlings](MINDERLINGS.md) are an example: they are mnemonic companions for readers, not authorities. Their value is that they help people remember which part of the stack discovers, organizes, certifies, maps, stewards, or maintains fixtures.
 
 ## Semantic bridge discipline
 
@@ -102,6 +111,7 @@ Pedagogy must therefore show:
 - the translation between them;
 - assumptions added or dropped;
 - model-class restrictions;
+- foundation and axiom-profile assumptions;
 - what would refute the bridge;
 - what would promote the bridge.
 
@@ -133,6 +143,7 @@ Before a page, Work Package, fixture, or route doctrine is merged, reviewers sho
 - Are imported claims quarantined?
 - Is the proof boundary explicit?
 - Is the semantic bridge named?
+- Is the foundational profile present or explicitly deferred?
 - Does every visual or mnemonic artifact teach structure rather than claim support?
 - Is there a first executable step?
 - Would a skeptical reader know what could downgrade the claim?

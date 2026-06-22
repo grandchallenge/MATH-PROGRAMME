@@ -106,6 +106,7 @@ hide:
           <li>What remains open?</li>
           <li>What requires external verification?</li>
         </ol>
+        <p>See the <a href="GRAND_CHALLENGE_PEDAGOGY_STANDARD.md">Pedagogy Standard</a> for the full reader contract.</p>
       </article>
       <article class="minderling-panel minderling-panel--flow">
         <h2>Stack flow at a glance</h2>
@@ -119,7 +120,7 @@ hide:
       <div>
         <p class="minderling-kicker">Release-train deployment</p>
         <h2>Use them as mnemonic operating roles, not authorities.</h2>
-        <p>The Minderlings are a reader aid and coordination device. They do not certify mathematics, replace reviewers, or create theorem status. Their purpose is to help people mentally organize the programme.</p>
+        <p>The Minderlings are a reader aid and coordination device. They do not certify mathematics, replace reviewers, or create theorem status. Their purpose is to help people mentally organize the programme under the <a href="GRAND_CHALLENGE_PEDAGOGY_STANDARD.md">Grand Challenge Pedagogy Standard</a> and the <a href="FOUNDATION_AWARE_MATH_PROGRAMME.md">Foundation-Aware Doctrine</a>.</p>
       </div>
       <div class="minderling-steps">
         <span><b>M0</b> stack navigation and issue hygiene</span>
