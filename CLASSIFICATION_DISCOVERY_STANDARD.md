@@ -15,6 +15,8 @@ No external classification, topic assignment, citation metric, or search ranking
 determines mathematical truth, certification status, research priority, or an
 internal graph relationship.
 
+This standard is the machinery behind the [Grand Challenge Pedagogy Standard](docs/GRAND_CHALLENGE_PEDAGOGY_STANDARD.md)'s external corpus quarantine rule: provider output may guide discovery, but it remains imported evidence until programme review reconstructs and promotes it.
+
 ## Canonical data
 
 Programme-owned graph and mapping data are versioned JSON documents validated by
