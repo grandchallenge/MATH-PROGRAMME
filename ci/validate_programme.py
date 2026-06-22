@@ -28,6 +28,15 @@ def schema_errors(instance: Any, schema_name: str) -> list[str]:
     ]
 
 
+def foundational_profile_errors(instance: dict[str, Any], label: str) -> list[str]:
+    if "foundational_profile" not in instance:
+        return []
+    return [
+        f"{label}.foundational_profile: {error}"
+        for error in schema_errors(instance["foundational_profile"], "foundational_profile.schema.json")
+    ]
+
+
 def duplicate_values(values: list[str]) -> set[str]:
     seen: set[str] = set()
     duplicates: set[str] = set()
@@ -124,6 +133,7 @@ def validate_documents(
         for source_id in candidate.get("discovery_provenance", {}).get("source_ids", []):
             if source_id not in source_ids:
                 errors.append(f"{problem_id}: unknown discovery source_id {source_id}")
+        errors.extend(foundational_profile_errors(candidate, problem_id))
 
     return errors
 
@@ -169,6 +179,12 @@ def main() -> int:
                     errors.append(
                         f"{ledger_path.relative_to(ROOT)}: unresolved knowledge_graph_ref {graph_ref}"
                     )
+            errors.extend(
+                foundational_profile_errors(
+                    claim,
+                    f"{ledger_path.relative_to(ROOT)}:{claim.get('claim_id', '<unknown>')}",
+                )
+            )
 
     for schema_path in sorted((ROOT / "schemas").glob("*.json")):
         Draft202012Validator.check_schema(load_json(schema_path))
@@ -188,7 +204,7 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"programme validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print("programme classification and discovery contracts are valid")
+    print("programme classification, discovery, and foundational-profile contracts are valid")
     return 0
 
 
