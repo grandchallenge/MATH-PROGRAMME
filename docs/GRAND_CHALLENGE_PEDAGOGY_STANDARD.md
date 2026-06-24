@@ -9,6 +9,7 @@ Pedagogy is not simplification, decoration, or persuasion. It is part of mathema
 This is the programme-wide teaching and exposition standard. It should be read with:
 
 - [Pedagogical Style Guide](PEDAGOGICAL_STYLE_GUIDE.md) for sentence-level practice;
+- [Accessible Research Guide Standard](ACCESSIBLE_RESEARCH_GUIDE_STANDARD.md) for prerequisites, examples, fixtures, challenge ladders, certification paths, and continuation graphs;
 - [Chaidez Pedagogical Protocol](CHAIDEZ_PEDAGOGICAL_PROTOCOL.md) for theorem-spine campaigns;
 - [Foundation-Aware MATH-PROGRAMME Doctrine](FOUNDATION_AWARE_MATH_PROGRAMME.md) for structured-object and axiom-profile discipline;
 - [Minderlings](MINDERLINGS.md) for reader-facing mnemonic process roles;
@@ -39,6 +40,7 @@ Pedagogy must therefore make these rails visible:
 | resource budget | bound expensive symbolic, search, and computational lanes |
 | foundational profile | state the carrier, ambient structure, axiom profile, witness policy, and pathology risk |
 | certification route | name the local statement that could be checked |
+| accessible research guide | show the prerequisites, first examples, first fixture, challenge ladder, and continuation graph |
 
 A beautiful explanation that hides one of these rails is not Grand Challenge pedagogy.
 
@@ -55,6 +57,26 @@ Every serious artifact should use this sequence. It may be compressed, but no st
 7. **Support route.** Present the proof, computation, certificate, replay, or negative result, with its support class.
 8. **Debt and boundary.** Separate what is proved, checked, open, imported, heuristic, or externally dependent.
 9. **First executable step.** End with one bounded action with input, output, and completion test.
+
+## Accessible research handoff
+
+A serious mathematical artifact should not require a private mentor to reveal how to begin.
+
+When a project is intended to recruit readers, collaborators, reviewers, or agentic assistants, it must include or point to an Accessible Research Guide. The guide supplies the missing on-ramp:
+
+```text
+prerequisites
+  -> first examples
+  -> first fixture
+  -> first local proposition
+  -> challenge ladder
+  -> certification path
+  -> continuation graph
+```
+
+This is not a separate outreach layer. It is part of research integrity. A claim boundary that only experts can locate is still too easy to misuse.
+
+The guide may be deferred only when the deferral is named in proof debt and has a completion condition.
 
 ## External corpus quarantine
 
@@ -144,6 +166,8 @@ Before a page, Work Package, fixture, or route doctrine is merged, reviewers sho
 - Is the proof boundary explicit?
 - Is the semantic bridge named?
 - Is the foundational profile present or explicitly deferred?
+- Does the artifact include or point to an Accessible Research Guide when reader handoff matters?
+- Does the challenge ladder move from exercises to fixtures to restricted claims?
 - Does every visual or mnemonic artifact teach structure rather than claim support?
 - Is there a first executable step?
 - Would a skeptical reader know what could downgrade the claim?
