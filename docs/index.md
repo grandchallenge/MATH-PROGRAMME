@@ -165,5 +165,6 @@ hide:
     <a href="GRAND_CHALLENGE_READER_GUIDE/"><span>02</span><strong>How should I read the work?</strong><small>Use the reader's compact and review lenses.</small></a>
     <a href="PROGRAMME_ATLAS/"><span>03</span><strong>How does an artifact advance?</strong><small>Follow the route from raw question to checked claim.</small></a>
     <a href="CLAIM_BOUNDARY_DOCTRINE/"><span>04</span><strong>What may I rely upon?</strong><small>Inspect the doctrine of support and promotion.</small></a>
+    <a href="ACCESSIBLE_RESEARCH_GUIDE_STANDARD/"><span>05</span><strong>How does a new reader begin?</strong><small>Use the accessible research guide contract.</small></a>
   </div>
 </section>
