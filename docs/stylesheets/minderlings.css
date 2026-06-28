@@ -1,11 +1,10 @@
 .minderling-shell {
   position: relative;
-  left: 50%;
   display: grid;
   grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
-  width: 100vw;
+  width: calc(100% + clamp(0rem, 12vw, 10rem));
   min-height: calc(100svh - 4rem);
-  margin: -1.6rem 0 0 -50vw;
+  margin: -1.6rem 0 0 calc(-1 * clamp(0rem, 12vw, 10rem));
   background:
     radial-gradient(circle at 85% 8%, rgba(242, 182, 50, 0.18), transparent 24rem),
     linear-gradient(135deg, #f8f1e4 0%, #fffaf0 52%, #f6efe3 100%);
@@ -95,7 +94,10 @@
 }
 
 .minderling-app {
-  width: min(100%, 95rem);
+  box-sizing: border-box;
+  width: auto;
+  max-width: 95rem;
+  min-width: 0;
   padding: clamp(1.2rem, 3vw, 2.2rem);
 }
 
@@ -382,6 +384,11 @@
 }
 
 @media (max-width: 720px) {
+  .minderling-shell {
+    width: auto;
+    margin-left: 0;
+  }
+
   .minderling-rail nav,
   .minderling-role-grid,
   .minderling-steps,

@@ -65,7 +65,7 @@ These labels are not decoration. They prevent a promising observation, a success
   <span>Polynomial obligation</span><b>→</b><span>Witness search</span><b>→</b><span>Explicit certificate</span><b>→</b><span>Exact replay</span><b>→</b><span>Local lemma</span>
 </div>
 
-This lane does not promise that Gröbner bases solve open problems. It permits symbolic algebra to contribute inside a bounded obligation while respecting worst-case complexity and preserving an exact replay route.
+This lane does not promise that Groebner bases solve open problems. It permits symbolic algebra to contribute inside a bounded obligation while respecting worst-case complexity and preserving an exact replay route.
 
 ## Executable progress
 

@@ -12,7 +12,7 @@ This is the programme-wide teaching and exposition standard. It should be read w
 - [Chaidez Pedagogical Protocol](CHAIDEZ_PEDAGOGICAL_PROTOCOL.md) for theorem-spine campaigns;
 - [Foundation-Aware MATH-PROGRAMME Doctrine](FOUNDATION_AWARE_MATH_PROGRAMME.md) for structured-object and axiom-profile discipline;
 - [Minderlings](MINDERLINGS.md) for reader-facing mnemonic process roles;
-- [Classification and Discovery Standard](../CLASSIFICATION_DISCOVERY_STANDARD.md) for external corpus quarantine and discovery evidence.
+- [Classification and Discovery Standard](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/CLASSIFICATION_DISCOVERY_STANDARD.md) for external corpus quarantine and discovery evidence.
 
 A document is pedagogically successful when a reader can answer five questions without inferring the author's intent:
 

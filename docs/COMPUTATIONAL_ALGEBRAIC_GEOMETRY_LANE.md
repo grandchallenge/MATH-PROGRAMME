@@ -2,7 +2,7 @@
 
 <div class="programme-kicker">Reusable lane 02</div>
 
-# Route the obligation, not the fashion
+## Route the obligation, not the fashion
 
 Computational algebraic geometry gives the programme several distinct ways to expose structure in polynomial problems. Groebner bases are one route. Resultants, quotient algebras, local standard bases, syzygies, Hilbert data, and sparse polyhedral methods are others.
 

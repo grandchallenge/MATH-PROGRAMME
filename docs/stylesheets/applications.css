@@ -1,9 +1,8 @@
 .application-hero {
   position: relative;
-  left: 50%;
-  width: 100vw;
+  width: calc(100% + clamp(0rem, 12vw, 10rem));
   min-height: min(42rem, calc(100svh - 6rem));
-  margin: -1.6rem 0 4rem -50vw;
+  margin: -1.6rem 0 4rem calc(-1 * clamp(0rem, 12vw, 10rem));
   overflow: hidden;
   background: var(--gc-ink);
   color: var(--gc-paper);
@@ -277,7 +276,9 @@
 
 @media (max-width: 760px) {
   .application-hero {
+    width: auto;
     min-height: calc(100svh - 3rem);
+    margin-left: 0;
   }
 
   .application-hero__rule,

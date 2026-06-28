@@ -13,6 +13,40 @@
   ],
   "recommended_wp01": "WP01 status spine",
   "recommended_certification_route": "Lean definitions plus exact finite-family verifier",
+  "foundational_profile": {
+    "carrier_type": "finite",
+    "ambient_structure": [
+      "order_structure",
+      "algebraic_structure",
+      "computable_presentation"
+    ],
+    "regularity": [
+      "finite",
+      "decidable",
+      "computable"
+    ],
+    "axiom_profile": {
+      "base": "finite",
+      "choice_usage": "finite_choice",
+      "excluded_middle": "used",
+      "large_cardinal_usage": "none",
+      "determinacy_usage": "none"
+    },
+    "witness_policy": {
+      "existence_claim": "extractable",
+      "witness_location": "certificate_artifact"
+    },
+    "certification_target": [
+      "Lean",
+      "pseudo_boolean_certificate",
+      "CAS_certificate",
+      "human_audit"
+    ],
+    "pathology_risk": {
+      "level": "low",
+      "notes": "The active Union-Closed programme routes are finite/computable; no continuum, determinacy, or large-cardinal assumptions are in scope."
+    }
+  },
   "knowledge_graph_refs": [
     "UC-CONJECTURE-FRANKL",
     "UC-PROBLEM-SET-FAMILY"
