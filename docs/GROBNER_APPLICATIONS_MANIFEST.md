@@ -7,7 +7,7 @@ hide:
   <div class="application-hero__inner">
     <p class="gc-kicker">Application manifest · edition 2026.06</p>
     <h1>Polynomial structure,<br>made operational.</h1>
-    <p class="application-hero__lead">Gröbner methods can expose elimination, implication, branching, and finite algebra across many domains. Every use still owes the programme a representation audit, a bounded obligation, and a certificate.</p>
+    <p class="application-hero__lead">Groebner methods can expose elimination, implication, branching, and finite algebra across many domains. Every use still owes the programme a representation audit, a bounded obligation, and a certificate.</p>
     <div class="application-hero__rule">
       <span>Not</span><strong>a universal solver</strong>
       <span>But</span><strong>a reusable exact lane</strong>

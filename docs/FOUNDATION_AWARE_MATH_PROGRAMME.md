@@ -4,7 +4,7 @@ Status: active programme doctrine
 Scope: MATH-PROGRAMME, MATHFORGE, MATHSOLVE, MATHCERT  
 Doctrine: **No object without structure. No existence without provenance. No proof without an axiom profile.**
 
-This doctrine is part of the current operating standards alongside the [Grand Challenge Pedagogy Standard](GRAND_CHALLENGE_PEDAGOGY_STANDARD.md), [Claim Boundary Doctrine](CLAIM_BOUNDARY_DOCTRINE.md), and [Classification and Discovery Standard](../CLASSIFICATION_DISCOVERY_STANDARD.md).
+This doctrine is part of the current operating standards alongside the [Grand Challenge Pedagogy Standard](GRAND_CHALLENGE_PEDAGOGY_STANDARD.md), [Claim Boundary Doctrine](CLAIM_BOUNDARY_DOCTRINE.md), and [Classification and Discovery Standard](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/CLASSIFICATION_DISCOVERY_STANDARD.md).
 
 ## Purpose
 
@@ -90,7 +90,7 @@ Claims in this layer must clearly separate:
 
 ## Required foundational profile
 
-All new MATH-PROGRAMME cards, work packages, and certificate ledgers should include this block, either inline or by reference. The machine-readable contract lives in [`schemas/foundational_profile.schema.json`](../schemas/foundational_profile.schema.json).
+All new MATH-PROGRAMME cards, work packages, and certificate ledgers should include this block, either inline or by reference. The machine-readable contract lives in [`schemas/foundational_profile.schema.json`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/schemas/foundational_profile.schema.json).
 
 ```yaml
 foundational_profile:

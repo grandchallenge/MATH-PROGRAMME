@@ -2,22 +2,22 @@
 
 <div class="programme-kicker">Reusable lane · tropical degeneration and exact certification</div>
 
-# Certified tropical degeneration for symbolic problem solving
+## Certified tropical degeneration for symbolic problem solving
 
 TROPIC-GROEBNER is the MATH stack route for polynomial obligations where sparse support, valuations, or toric structure matter before a large symbolic calculation begins.
 
 The doctrine is:
 
-> Tropical geometry proposes controlled degenerations. Gröbner bases certify the initial ideals. MATHCERT decides which claims cross the proof boundary.
+> Tropical geometry proposes controlled degenerations. Groebner bases certify the initial ideals. MATHCERT decides which claims cross the proof boundary.
 
-This is not a new proof boundary and it is not a replacement for ordinary Gröbner work. It is a disciplined way to use the geometry of weight space to choose, reject, and record exact algebraic routes.
+This is not a new proof boundary and it is not a replacement for ordinary Groebner work. It is a disciplined way to use the geometry of weight space to choose, reject, and record exact algebraic routes.
 
 ```text
 raw polynomial obligation
   -> support and valuation audit
   -> candidate weight vectors
   -> weighted initial forms
-  -> Gröbner-certified initial ideals
+  -> Groebner-certified initial ideals
   -> monomial-free test
   -> accepted/rejected tropical route record
   -> MATHSOLVE campaign or MATHCERT certificate
@@ -109,7 +109,7 @@ Add `TROPIC_GROEBNER_CAMPAIGN` as a specialized MATHSOLVE work package type unde
 TG-00  Encoding and torus-domain audit
 TG-01  Support, valuation, and Newton-polytope forecast
 TG-02  Candidate weight generation
-TG-03  Weighted Gröbner / initial-ideal computation
+TG-03  Weighted Groebner / initial-ideal computation
 TG-04  Monomial-free acceptance test
 TG-05  Route score and witness minimization
 TG-06  MATHCERT handoff or rejection ledger
@@ -121,7 +121,7 @@ State whether the source problem is genuinely a polynomial or Laurent-polynomial
 
 ### TG-01: support and valuation forecast
 
-Record monomial supports before computing a basis. Total degree is not enough. Sparse support may justify a tropical route even when a dense Gröbner route looks unattractive.
+Record monomial supports before computing a basis. Total degree is not enough. Sparse support may justify a tropical route even when a dense Groebner route looks unattractive.
 
 ### TG-02: candidate weight generation
 
@@ -129,7 +129,7 @@ Candidate weights may come from Newton-polytope normal fans, coefficient valuati
 
 ### TG-03: weighted exact computation
 
-For each selected weight, compute a Gröbner basis for an order refining the weight order, then derive the claimed initial ideal. Backend output is evidence only until replayed or checked.
+For each selected weight, compute a Groebner basis for an order refining the weight order, then derive the claimed initial ideal. Backend output is evidence only until replayed or checked.
 
 ### TG-04: monomial-free test
 
@@ -198,7 +198,7 @@ Each weight selection can be treated as a routing action:
 loss(w) = runtime + basis_size + degree_swell + failed_certificate_penalty - useful_structure_bonus.
 ```
 
-The no-regret layer may recommend candidate weights, but it cannot certify them. Its output is advisory until the Gröbner and MATHCERT layers check the corresponding initial-ideal claim.
+The no-regret layer may recommend candidate weights, but it cannot certify them. Its output is advisory until the Groebner and MATHCERT layers check the corresponding initial-ideal claim.
 
 ## Boundary statement
 

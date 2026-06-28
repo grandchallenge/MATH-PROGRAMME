@@ -67,7 +67,7 @@ and the application lane:
 APP-DIO-01
 ```
 
-This does not mean Gröbner bases solve the problem. It means the polynomial form is useful for intake, finite exact screens, local obstruction search, and deciding when to switch to number-theoretic methods.
+This does not mean Groebner bases solve the problem. It means the polynomial form is useful for intake, finite exact screens, local obstruction search, and deciding when to switch to number-theoretic methods.
 
 The excluded relaxations are part of the artifact:
 

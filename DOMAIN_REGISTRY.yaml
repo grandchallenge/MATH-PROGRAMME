@@ -6,6 +6,33 @@ domains:
     forge_entry: MF-UC-0001
     solve_entry: MS-UC-WP01
     cert_route: LEAN_FORMALIZATION_AND_EXACT_REPLAY
+    foundational_profile:
+      carrier_type: finite
+      ambient_structure:
+        - order_structure
+        - algebraic_structure
+        - computable_presentation
+      regularity:
+        - finite
+        - decidable
+        - computable
+      axiom_profile:
+        base: finite
+        choice_usage: finite_choice
+        excluded_middle: used
+        large_cardinal_usage: none
+        determinacy_usage: none
+      witness_policy:
+        existence_claim: extractable
+        witness_location: certificate_artifact
+      certification_target:
+        - Lean
+        - pseudo_boolean_certificate
+        - CAS_certificate
+        - human_audit
+      pathology_risk:
+        level: low
+        notes: Active Union-Closed routes remain finite/computable and do not use continuum pathologies, determinacy, or large-cardinal assumptions.
     next_review: TBD
     knowledge_graph_refs:
       - UC-DOMAIN

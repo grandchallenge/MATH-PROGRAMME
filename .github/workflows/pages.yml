@@ -32,7 +32,7 @@ jobs:
           pip install mkdocs mkdocs-material pymdown-extensions
 
       - name: Build site
-        run: mkdocs build
+        run: mkdocs build --strict
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

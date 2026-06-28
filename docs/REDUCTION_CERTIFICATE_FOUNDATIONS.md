@@ -2,7 +2,7 @@
 
 <div class="programme-kicker">Foundation beneath lane 02</div>
 
-# From symbolic transformation to a decision procedure
+## From symbolic transformation to a decision procedure
 
 A Groebner basis is not fundamentally a special list of polynomials. It is a finite presentation of a terminating and confluent reduction system for congruence modulo an ideal.
 
