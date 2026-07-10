@@ -1,0 +1,102 @@
+version: 2
+name: agent_review
+machine_schema: schemas/agent_review.schema.json
+purpose: Records Agent Council review state and Amanuensis continuity control for programme artifacts.
+
+artifact:
+  id: nonempty string
+  type:
+    enum:
+      - work_package
+      - theorem_spine
+      - certificate
+      - research_artifact
+  title: string
+  pillar:
+    enum:
+      - MATHFORGE
+      - MATHSOLVE
+      - MATHCERT
+  status:
+    enum:
+      - draft
+      - active
+      - blocked
+      - ready_for_certification
+      - certified
+
+council_review:
+  required_agents:
+    - Axiomatist
+    - Prospector
+    - Experimentalist
+    - Cartographer
+    - Verifier
+    - Adversary
+    - Formalist
+    - Steward
+    - Composer
+    - Grammarian
+    - Amanuensis
+    - Archivist
+    - Mechanist
+    - Typesetter
+    - Referee
+  each_agent_record:
+    status:
+      enum:
+        - pending
+        - reviewed
+        - blocked
+    reviewed_by: optional string
+    reviewed_at: optional date
+    obligations: list of strings
+    findings: list of strings
+
+amanuensis_control:
+  artifact_ledger:
+    ledger_ref: nonempty string or null
+    entry_id: nonempty string or null
+  decision_record_refs: unique list of nonempty strings
+  terminology_registry:
+    registry_ref: nonempty string or null
+    terms_introduced_or_changed: unique list of nonempty strings
+  review_provenance:
+    complete: boolean
+    evidence_refs: unique list of nonempty strings
+  cross_document_consistency:
+    status:
+      enum:
+        - pending
+        - reviewed
+        - blocked
+    checked_against: unique list of nonempty strings
+    conflicts: list of nonempty strings
+  final_editorial_integration:
+    status:
+      enum:
+        - pending
+        - reviewed
+        - blocked
+    integrated_artifact_ref: nonempty string or null
+    integration_notes: list of nonempty strings
+
+unresolved_obligations:
+  item:
+    id: nonempty string
+    owner: one required agent name
+    description: nonempty string
+    severity:
+      enum:
+        - low
+        - medium
+        - high
+        - critical
+    blocking: boolean
+
+promotion:
+  ready_for_next_stage: boolean
+  blockers: list of strings
+  certification_route: string or null
+
+promotion_rule: When ready_for_next_stage is true, the artifact ledger and integrated artifact references must be present, review provenance must be complete, cross-document consistency and final editorial integration must be reviewed, and blockers must be empty.
