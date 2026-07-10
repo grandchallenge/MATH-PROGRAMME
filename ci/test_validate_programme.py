@@ -79,12 +79,48 @@ def main() -> int:
         for error in schema_errors(missing_agent_review, "agent_review.schema.json")
     )
 
+    missing_amanuensis_review = copy.deepcopy(agent_review)
+    missing_amanuensis_review["council_review"].pop("Amanuensis")
+    assert any(
+        "Amanuensis" in error and "required property" in error
+        for error in schema_errors(missing_amanuensis_review, "agent_review.schema.json")
+    )
+
+    missing_amanuensis_control = copy.deepcopy(agent_review)
+    missing_amanuensis_control.pop("amanuensis_control")
+    assert any(
+        "amanuensis_control" in error and "required property" in error
+        for error in schema_errors(missing_amanuensis_control, "agent_review.schema.json")
+    )
+
     invalid_status_review = copy.deepcopy(agent_review)
     invalid_status_review["council_review"]["Verifier"]["status"] = "approved"
     assert any(
         "approved" in error
         for error in schema_errors(invalid_status_review, "agent_review.schema.json")
     )
+
+    premature_promotion = copy.deepcopy(agent_review)
+    premature_promotion["promotion"]["ready_for_next_stage"] = True
+    assert any(
+        "amanuensis_control" in error
+        for error in schema_errors(premature_promotion, "agent_review.schema.json")
+    )
+
+    integrated_promotion = copy.deepcopy(agent_review)
+    integrated_promotion["promotion"]["ready_for_next_stage"] = True
+    integrated_promotion["amanuensis_control"]["artifact_ledger"] = {
+        "ledger_ref": "docs/ARTIFACT_LEDGER.md",
+        "entry_id": "WPXX_DOMAIN_000X",
+    }
+    integrated_promotion["amanuensis_control"]["review_provenance"]["complete"] = True
+    integrated_promotion["amanuensis_control"]["cross_document_consistency"]["status"] = "reviewed"
+    integrated_promotion["amanuensis_control"]["final_editorial_integration"] = {
+        "status": "reviewed",
+        "integrated_artifact_ref": "work_packages/WPXX_DOMAIN_000X.md",
+        "integration_notes": [],
+    }
+    assert not schema_errors(integrated_promotion, "agent_review.schema.json")
 
     print("programme validator rejection tests passed")
     return 0
