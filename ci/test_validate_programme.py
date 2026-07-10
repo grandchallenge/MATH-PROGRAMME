@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Regression tests for programme graph, mapping, and profile rejection paths."""
+"""Regression tests for programme graph, mapping, profile, and agent-review rejection paths."""
 from __future__ import annotations
 
 import copy
 
-from validate_programme import load_json, validate_documents, ROOT
+from validate_programme import load_json, schema_errors, validate_documents, ROOT
 
 
 def fixtures():
@@ -15,11 +15,12 @@ def fixtures():
 
     domains = yaml.safe_load((ROOT / "DOMAIN_REGISTRY.yaml").read_text(encoding="utf-8"))
     candidate = load_json(ROOT / "examples" / "candidate_problem_union_closed.json")
-    return source_registry, graph, mappings, domains, [candidate]
+    agent_review = yaml.safe_load((ROOT / "templates" / "agent_review.yaml").read_text(encoding="utf-8"))
+    return source_registry, graph, mappings, domains, [candidate], agent_review
 
 
 def main() -> int:
-    source_registry, graph, mappings, domains, candidates = fixtures()
+    source_registry, graph, mappings, domains, candidates, agent_review = fixtures()
 
     duplicate_graph = copy.deepcopy(graph)
     duplicate_graph["nodes"].append(copy.deepcopy(duplicate_graph["nodes"][0]))
@@ -35,7 +36,7 @@ def main() -> int:
     assert any(
         "dangling target" in error
         for error in validate_documents(
-            source_registry, dangling_graph, mappings, domains, candidates
+            source_registry, graph=dangling_graph, mappings=mappings, domain_registry=domains, candidates=candidates
         )
     )
 
@@ -67,6 +68,22 @@ def main() -> int:
         for error in validate_documents(
             source_registry, graph, mappings, domains, invalid_profile_candidates
         )
+    )
+
+    assert not schema_errors(agent_review, "agent_review.schema.json")
+
+    missing_agent_review = copy.deepcopy(agent_review)
+    missing_agent_review["council_review"].pop("Verifier")
+    assert any(
+        "Verifier" in error and "required property" in error
+        for error in schema_errors(missing_agent_review, "agent_review.schema.json")
+    )
+
+    invalid_status_review = copy.deepcopy(agent_review)
+    invalid_status_review["council_review"]["Verifier"]["status"] = "approved"
+    assert any(
+        "approved" in error
+        for error in schema_errors(invalid_status_review, "agent_review.schema.json")
     )
 
     print("programme validator rejection tests passed")
