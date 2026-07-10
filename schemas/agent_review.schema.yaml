@@ -1,0 +1,28 @@
+version: 1
+name: agent_review
+purpose: Records Agent Council review state for programme artifacts.
+
+artifact:
+  id: string
+  type: work_package | theorem_spine | certificate | research_artifact
+  pillar: MATHFORGE | MATHSOLVE | MATHCERT
+  status: draft | active | blocked | ready_for_certification | certified
+
+council_review:
+  agents:
+    - name: string
+      status: pending | reviewed | blocked
+      obligations: []
+      findings: []
+
+unresolved_obligations:
+  - id: string
+    owner: string
+    description: string
+    severity: low | medium | high | critical
+    blocking: true | false
+
+promotion:
+  ready_for_next_stage: false
+  blockers: []
+  certification_route: string | null
