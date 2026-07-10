@@ -159,6 +159,14 @@ def main() -> int:
         for error in schema_errors(domain_registry, "domain_registry.schema.json")
     )
 
+    agent_review_template = yaml.safe_load(
+        (ROOT / "templates" / "agent_review.yaml").read_text(encoding="utf-8")
+    )
+    errors.extend(
+        f"templates/agent_review.yaml: {error}"
+        for error in schema_errors(agent_review_template, "agent_review.schema.json")
+    )
+
     ledger_paths = [
         ROOT / "templates" / "claim_ledger_template.yaml",
         ROOT / "templates" / "union_closed_claim_ledger_wp01.yaml",
