@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/agent_review.schema.json",
+  "title": "Agent Council Review",
+  "description": "Machine-readable review contract for Grand Challenge MATH-PROGRAMME artifacts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "artifact",
+    "council_review",
+    "unresolved_obligations",
+    "promotion"
+  ],
+  "properties": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "title", "pillar", "status"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "type": {
+          "type": "string",
+          "enum": ["work_package", "theorem_spine", "certificate", "research_artifact"]
+        },
+        "title": {"type": "string"},
+        "pillar": {
+          "type": "string",
+          "enum": ["MATHFORGE", "MATHSOLVE", "MATHCERT"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "active", "blocked", "ready_for_certification", "certified"]
+        }
+      }
+    },
+    "council_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "Axiomatist",
+        "Prospector",
+        "Experimentalist",
+        "Cartographer",
+        "Verifier",
+        "Adversary",
+        "Formalist",
+        "Steward",
+        "Composer",
+        "Grammarian",
+        "Archivist",
+        "Mechanist",
+        "Typesetter",
+        "Referee"
+      ],
+      "properties": {
+        "Axiomatist": {"$ref": "#/$defs/agent_review_record"},
+        "Prospector": {"$ref": "#/$defs/agent_review_record"},
+        "Experimentalist": {"$ref": "#/$defs/agent_review_record"},
+        "Cartographer": {"$ref": "#/$defs/agent_review_record"},
+        "Verifier": {"$ref": "#/$defs/agent_review_record"},
+        "Adversary": {"$ref": "#/$defs/agent_review_record"},
+        "Formalist": {"$ref": "#/$defs/agent_review_record"},
+        "Steward": {"$ref": "#/$defs/agent_review_record"},
+        "Composer": {"$ref": "#/$defs/agent_review_record"},
+        "Grammarian": {"$ref": "#/$defs/agent_review_record"},
+        "Archivist": {"$ref": "#/$defs/agent_review_record"},
+        "Mechanist": {"$ref": "#/$defs/agent_review_record"},
+        "Typesetter": {"$ref": "#/$defs/agent_review_record"},
+        "Referee": {"$ref": "#/$defs/agent_review_record"}
+      }
+    },
+    "unresolved_obligations": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/unresolved_obligation"}
+    },
+    "promotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ready_for_next_stage", "blockers", "certification_route"],
+      "properties": {
+        "ready_for_next_stage": {"type": "boolean"},
+        "blockers": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "certification_route": {
+          "anyOf": [
+            {"type": "string", "minLength": 1},
+            {"type": "null"}
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "agent_review_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "obligations", "findings"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["pending", "reviewed", "blocked"]
+        },
+        "reviewed_by": {"type": "string"},
+        "reviewed_at": {"type": "string", "format": "date"},
+        "obligations": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "findings": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "unresolved_obligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "owner", "description", "severity", "blocking"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "owner": {
+          "type": "string",
+          "enum": [
+            "Axiomatist",
+            "Prospector",
+            "Experimentalist",
+            "Cartographer",
+            "Verifier",
+            "Adversary",
+            "Formalist",
+            "Steward",
+            "Composer",
+            "Grammarian",
+            "Archivist",
+            "Mechanist",
+            "Typesetter",
+            "Referee"
+          ]
+        },
+        "description": {"type": "string", "minLength": 1},
+        "severity": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"]
+        },
+        "blocking": {"type": "boolean"}
+      }
+    }
+  }
+}
