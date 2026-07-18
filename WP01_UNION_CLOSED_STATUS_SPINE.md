@@ -15,6 +15,48 @@
 **Classification mappings:** `UC-MAP-MSC-05D05`,
 `UC-MAP-MSC-06A12`, `UC-MAP-ARXIV-MATH-CO`
 
+## Agent Council gate
+
+This Work Package is governed by the first Union-Closed Agent Council pilot.
+
+- Review record: `reviews/union_closed/UC-WP01.agent_review.yaml`
+- Dependency DAG: `reviews/union_closed/UC-WP01.dependency_dag.yaml`
+- Council audit: `UC_WP01_AGENT_COUNCIL_AUDIT.md`
+- Amanuensis ledger ID: `UC-WP01`
+- Decision record: `ADR-0002`
+- Promotion state: ready for the existing WP02/MATHCERT handoff; no critical council blockers remain.
+
+The council record is a governance index. Proofs, computations, source evidence, and claim status remain authoritative in their existing artifacts and are not duplicated in the review record.
+
+### Foundational profile
+
+```yaml
+foundational_profile:
+  carrier_type: finite
+  ambient_structure:
+    - set_system
+    - finite_combinatorial_structure
+    - computable_presentation
+  regularity:
+    - finite
+    - decidable
+    - computable
+  axiom_profile:
+    base: finite
+    choice_usage: none
+    excluded_middle: local
+  witness_policy:
+    existence_claim: explicit_witness
+    witness_location: certificate_artifact
+  certification_target:
+    - Lean
+    - exact_replay
+    - human_audit
+  pathology_risk:
+    level: low
+    notes: The principal risks are semantic ambiguity and combinatorial overclaiming.
+```
+
 ## 1. Lay executive companion
 
 Frankl's union-closed sets conjecture is one of those mathematical problems that looks almost too simple to be dangerous.
