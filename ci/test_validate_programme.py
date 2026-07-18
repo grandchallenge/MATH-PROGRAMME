@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
-"""Regression tests for programme graph, mapping, profile, and agent-review rejection paths."""
+"""Regression tests for programme graph, mapping, profile, and Agent Council rejection paths."""
 from __future__ import annotations
 
 import copy
 
-from validate_programme import load_json, schema_errors, validate_documents, ROOT
+from validate_programme import (
+    ROOT,
+    agent_review_semantic_errors,
+    load_json,
+    schema_errors,
+    validate_documents,
+)
 
 
 def fixtures():
@@ -16,11 +22,24 @@ def fixtures():
     domains = yaml.safe_load((ROOT / "DOMAIN_REGISTRY.yaml").read_text(encoding="utf-8"))
     candidate = load_json(ROOT / "examples" / "candidate_problem_union_closed.json")
     agent_review = yaml.safe_load((ROOT / "templates" / "agent_review.yaml").read_text(encoding="utf-8"))
-    return source_registry, graph, mappings, domains, [candidate], agent_review
+    governed_review = yaml.safe_load(
+        (ROOT / "reviews" / "union_closed" / "UC-WP01.agent_review.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    return source_registry, graph, mappings, domains, [candidate], agent_review, governed_review
 
 
 def main() -> int:
-    source_registry, graph, mappings, domains, candidates, agent_review = fixtures()
+    (
+        source_registry,
+        graph,
+        mappings,
+        domains,
+        candidates,
+        agent_review,
+        governed_review,
+    ) = fixtures()
 
     duplicate_graph = copy.deepcopy(graph)
     duplicate_graph["nodes"].append(copy.deepcopy(duplicate_graph["nodes"][0]))
@@ -36,7 +55,11 @@ def main() -> int:
     assert any(
         "dangling target" in error
         for error in validate_documents(
-            source_registry, graph=dangling_graph, mappings=mappings, domain_registry=domains, candidates=candidates
+            source_registry,
+            graph=dangling_graph,
+            mappings=mappings,
+            domain_registry=domains,
+            candidates=candidates,
         )
     )
 
@@ -121,6 +144,38 @@ def main() -> int:
         "integration_notes": [],
     }
     assert not schema_errors(integrated_promotion, "agent_review.schema.json")
+
+    assert not schema_errors(governed_review, "agent_review.schema.json")
+    assert not agent_review_semantic_errors(governed_review, "UC-WP01")
+
+    pending_verifier = copy.deepcopy(governed_review)
+    pending_verifier["council_review"]["Verifier"]["status"] = "pending"
+    assert any(
+        "promotion requires Verifier status reviewed" in error
+        for error in agent_review_semantic_errors(pending_verifier, "UC-WP01")
+    )
+
+    blocking_obligation = copy.deepcopy(governed_review)
+    blocking_obligation["unresolved_obligations"].append(
+        {
+            "id": "UC-WP01-TEST-BLOCKER",
+            "owner": "Adversary",
+            "description": "Synthetic blocking obligation for rejection testing.",
+            "severity": "critical",
+            "blocking": True,
+        }
+    )
+    assert any(
+        "blocking obligation UC-WP01-TEST-BLOCKER" in error
+        for error in agent_review_semantic_errors(blocking_obligation, "UC-WP01")
+    )
+
+    blocked_agent = copy.deepcopy(governed_review)
+    blocked_agent["council_review"]["Experimentalist"]["status"] = "blocked"
+    assert any(
+        "Experimentalist is blocked" in error
+        for error in agent_review_semantic_errors(blocked_agent, "UC-WP01")
+    )
 
     print("programme validator rejection tests passed")
     return 0
