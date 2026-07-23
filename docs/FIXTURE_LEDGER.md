@@ -19,7 +19,7 @@ Each fixture must answer four questions:
 | --- | --- | --- | --- | --- | --- |
 | `UF-INV-001` | Foundation 01 | Ordinary ideal membership with inequation compilation | exact identity `CHECKED`; semantic bridge `AUDITED` | the source theorem is not certified merely because the identity replays | proof-assistant bridge for semantic compilation |
 | `RAD-NIL-002` | Foundation 02 | Radical membership with exponent and model-class boundary | radical witness `CHECKED`; field semantics `AUDITED`; ring generalization `REFUTED` | a valid field theorem cannot be generalized to all commutative rings | formal model-class theorem or Lean bridge |
-| `LOG-GCD-001` | Formal 01 | Lean formalization of the positive semidefinite logarithmic GCD kernel | theorem `CERTIFIED`; provenance, manifest, adversarial boundary, and replay `CHECKED` | positive semidefinite does not imply strict positive definite; the feature map is not yet a separate formal object | formal finitely supported divisor feature map |
+| `LOG-GCD-001` | Formal 01 | Certified PSD theorem plus explicit finitely supported divisor features | PSD theorem `CERTIFIED`; feature identity `PENDING CI`; prior art `AUDITED—NOVELTY NOT SUPPORTED` | positive semidefinite does not imply strict positive definite; bounded search does not establish priority | replay expanded Lean module, then certify feature claim |
 | `GROBNER-APPLICATIONS-2026-06` | Portfolio | Six application lanes with one selected next fixture | manifest validated in CI | polynomial form does not imply tractability or theorem status | executable application fixture |
 | `RM-DIO-004` | Intake 01 | ResearchMath row to problem card to MATHSOLVE handoff | source preservation `AUDITED`; handoff `PROVISIONAL` | dataset status is not a theorem; finite screens are not completeness proofs | MATHSOLVE campaign package |
 | `TROPIC-GROEBNER-001` | Route 01 | Tropical weight acceptance/rejection via exact initial-form witnesses | route doctrine `ADDED`; replay `PENDING` | sampled weights do not enumerate the full tropical variety | MATHCERT replay script for initial-form certificates |
@@ -37,9 +37,10 @@ RAD-NIL-002
   protects: field-versus-ring model boundary
 
 LOG-GCD-001
-  verifies: pinned Lean theorem intake and repository-native proof replay
-  protects: positive-semidefinite, strict-positive-definite, feature-map,
-            zero-input, dependency-drift, and novelty boundaries
+  verifies: pinned Lean theorem intake, explicit Finsupp Gram realization,
+            and repository-native proof replay
+  protects: positive-semidefinite, strict-positive-definite, zero-input,
+            dependency-drift, mathematical-novelty, and priority boundaries
 
 GROBNER-APPLICATIONS-2026-06
   verifies: lane portfolio completeness and boundaries
@@ -61,8 +62,11 @@ The fixtures do not prove major mathematics. They prove that the programme can p
 - exact arithmetic versus semantic theorem;
 - ideal membership versus radical membership;
 - field theorem versus ring falsehood;
-- formal theorem versus stronger unformalized interpretation;
+- formal theorem versus stronger interpretation;
+- finitely supported realization versus completed-space packaging;
 - positive semidefiniteness versus strict positive definiteness;
+- mathematical prior art versus formal-artifact contribution;
+- bounded search versus priority evidence;
 - dependency pinning versus ambient-environment success;
 - application potential versus application proof;
 - external corpus status versus independently audited mathematical status;
@@ -83,19 +87,17 @@ A fixture may move a claim upward only when its support route changes.
 
 ## The next visible gap
 
-The ledger now contains exact algebraic foundations, an external-corpus intake
-fixture, a certified Lean theorem fixture, and a named tropical-degeneration
-route. `LOG-GCD-001` has crossed its certification gate; its remaining formal
-debt is the explicit divisor feature map. The tropical route still lacks
-replayed certificates.
-
-The immediate executable gates are therefore:
+`LOG-GCD-001` now contains the requested first-class `Finsupp` feature map and
+a completed prior-art audit. The audit closes its Archivist debt by determining
+that mathematical novelty is not supported and artifact priority is not
+established. The remaining gate is purely mechanical: compile the expanded
+module and promote claim `LOG-GCD-001-C003` only after replay succeeds.
 
 ```text
-LOG-GCD-001 certified PSD theorem
-  -> formal Finsupp divisor feature map
-  -> inner-product identity
-  -> optional coprimality-as-orthogonality corollary
+LOG-GCD-001 LogGcdFeature.lean
+  -> pinned repository-native lake build
+  -> certify logGcd_eq_feature_inner
+  -> close LOG-GCD-001-O002
 
 TROPIC-GROEBNER-001 witness records
   -> MATHSOLVE route decision report
