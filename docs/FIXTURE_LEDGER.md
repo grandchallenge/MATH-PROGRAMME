@@ -19,7 +19,7 @@ Each fixture must answer four questions:
 | --- | --- | --- | --- | --- | --- |
 | `UF-INV-001` | Foundation 01 | Ordinary ideal membership with inequation compilation | exact identity `CHECKED`; semantic bridge `AUDITED` | the source theorem is not certified merely because the identity replays | proof-assistant bridge for semantic compilation |
 | `RAD-NIL-002` | Foundation 02 | Radical membership with exponent and model-class boundary | radical witness `CHECKED`; field semantics `AUDITED`; ring generalization `REFUTED` | a valid field theorem cannot be generalized to all commutative rings | formal model-class theorem or Lean bridge |
-| `LOG-GCD-001` | Formal 01 | Certified PSD theorem plus explicit finitely supported divisor features | PSD theorem `CERTIFIED`; feature identity `PENDING CI`; prior art `AUDITED—NOVELTY NOT SUPPORTED` | positive semidefinite does not imply strict positive definite; bounded search does not establish priority | replay expanded Lean module, then certify feature claim |
+| `LOG-GCD-001` | Formal 01 | Certified PSD theorem and explicit finitely supported divisor features | PSD theorem `CERTIFIED`; feature identity `CERTIFIED`; prior art `AUDITED—NOVELTY NOT SUPPORTED` | positive semidefinite does not imply strict positive definite; bounded search does not establish priority | none; both declared obligations closed |
 | `GROBNER-APPLICATIONS-2026-06` | Portfolio | Six application lanes with one selected next fixture | manifest validated in CI | polynomial form does not imply tractability or theorem status | executable application fixture |
 | `RM-DIO-004` | Intake 01 | ResearchMath row to problem card to MATHSOLVE handoff | source preservation `AUDITED`; handoff `PROVISIONAL` | dataset status is not a theorem; finite screens are not completeness proofs | MATHSOLVE campaign package |
 | `TROPIC-GROEBNER-001` | Route 01 | Tropical weight acceptance/rejection via exact initial-form witnesses | route doctrine `ADDED`; replay `PENDING` | sampled weights do not enumerate the full tropical variety | MATHCERT replay script for initial-form certificates |
@@ -38,7 +38,7 @@ RAD-NIL-002
 
 LOG-GCD-001
   verifies: pinned Lean theorem intake, explicit Finsupp Gram realization,
-            and repository-native proof replay
+            prior-art governance, and repository-native proof replay
   protects: positive-semidefinite, strict-positive-definite, zero-input,
             dependency-drift, mathematical-novelty, and priority boundaries
 
@@ -85,25 +85,36 @@ A fixture may move a claim upward only when its support route changes.
 | `CHECKED` to `CERTIFIED` | semantic correspondence is formalized or otherwise crosses the trusted boundary |
 | any status to `REFUTED` | counterexample, failed invariant, false generalization, or invalid support route is established |
 
-## The next visible gap
+## LOG-GCD completion record
 
-`LOG-GCD-001` now contains the requested first-class `Finsupp` feature map and
-a completed prior-art audit. The audit closes its Archivist debt by determining
-that mathematical novelty is not supported and artifact priority is not
-established. The remaining gate is purely mechanical: compile the expanded
-module and promote claim `LOG-GCD-001-C003` only after replay succeeds.
+`LOG-GCD-001` has crossed both remaining boundaries:
 
 ```text
-LOG-GCD-001 LogGcdFeature.lean
-  -> pinned repository-native lake build
-  -> certify logGcd_eq_feature_inner
-  -> close LOG-GCD-001-O002
+LogGcdFeature.lean
+  -> pinned repository-native build, workflow 29993578051
+  -> logGcd_eq_feature_inner CERTIFIED
+  -> LOG-GCD-001-O002 closed
 
+PRIOR_ART_AUDIT.md + prior_art_audit.json
+  -> classical GCD-matrix criterion identified
+  -> mathematical novelty NOT SUPPORTED
+  -> artifact priority NOT ESTABLISHED
+  -> LOG-GCD-001-O003 closed
+```
+
+The fixture has no unresolved obligation. Its permanent boundary is now
+substantive rather than procedural: the programme may claim a certified formal
+artifact, but not a new mathematical theorem or a first formalization.
+
+## The next visible gap
+
+The programme-wide executable gap remains the tropical route:
+
+```text
 TROPIC-GROEBNER-001 witness records
   -> MATHSOLVE route decision report
   -> MATHCERT replay script
   -> claim ledger update
 ```
 
-These are different certification routes, but they obey the same rule: no status
-promotion without a changed support boundary.
+No status promotion occurs without a changed support boundary.
