@@ -1,7 +1,7 @@
 # The logarithmic GCD kernel
 
-`LOG-GCD-001` brings a compact Lean result into the programme as a certified
-MATHCERT formal fixture.
+`LOG-GCD-001` is a certified MATHCERT fixture for the logarithmic GCD kernel,
+now extended with an explicit finitely supported feature realization.
 
 ## The result
 
@@ -21,6 +21,27 @@ Thus `K` is a positive semidefinite kernel in the finite-Gram-matrix sense.
 The Lean theorem `logGcd_posSemidef` is certified by MATH-PROGRAMME workflow
 run `29984406250`.
 
+## Explicit feature realization
+
+The follow-on module defines a finitely supported vector
+
+```text
+φ(n)_d = sqrt(Λ(d)) [d | n]
+```
+
+as `logGcdFeature n : ℕ →₀ ℝ`. It proves the exact Gram identity
+
+```lean
+finsuppDot (logGcdFeature m) (logGcdFeature n)
+  = Real.log (Nat.gcd m n)
+```
+
+for nonzero natural inputs. The declaration is
+`logGcd_eq_feature_inner` in `LogGcdFeature.lean`.
+
+Finite support is part of the type: the vector is supported on the divisors of
+`n`. No convergence assumption is hidden in the construction.
+
 ## Why it works
 
 The von Mangoldt divisor identity gives
@@ -29,12 +50,44 @@ The von Mangoldt divisor identity gives
 log(gcd(m,n)) = Σ_d Λ(d)[d|m][d|n].
 ```
 
-Every divisor `d` contributes a rank-one positive semidefinite matrix, weighted
-by `Λ(d) ≥ 0`. Summing those matrices preserves positive semidefiniteness.
+Every divisor `d` contributes one coordinate. When `d` divides both numbers,
+the coordinate product is
+
+```text
+sqrt(Λ(d)) sqrt(Λ(d)) = Λ(d).
+```
+
+Summing the coordinate products therefore recovers the logarithm of the gcd.
+The original positive-semidefinite theorem and the feature theorem expose two
+views of the same nonnegative divisor decomposition.
+
+## Prior-art determination
+
+The mathematical theorem and feature factorization are classical, not novel.
+General GCD-matrix theory factors matrices of the form
+
+```text
+[f(gcd(x_i,x_j))] = E diag((f * μ)(d)) Eᵀ
+```
+
+and characterizes positivity through nonnegativity of the Möbius transform
+`f * μ`. For `f(n)=log n`, this transform is the nonnegative von Mangoldt
+function.
+
+The programme therefore permits the description:
+
+> A GCL-certified Lean formalization and explicit `Finsupp` realization of a
+> classical GCD-matrix positivity criterion.
+
+It prohibits “new theorem,” “novel kernel,” “first proof,” “first feature
+representation,” and “first Lean formalization.” The bounded search did not
+locate an earlier exact public Lean artifact beyond the credited upstream
+source, but this does not establish priority. See **LOG-GCD prior-art audit**
+for the governing literature and complete determination.
 
 ## What entered the programme
 
-The upstream formalization is pinned to:
+The upstream base formalization is pinned to:
 
 ```text
 repository:      irregular-rhomboid/log-gcd-lean
@@ -48,9 +101,9 @@ mathlib release: v4.33.0-rc1
 mathlib commit:  79d0395a1825a6264ad5d269e35e60537518955e
 ```
 
-The CC0 source is vendored as a standalone Lake fixture, with exact provenance,
-claim ledger, Agent Council review, adversarial metadata tests, and a dedicated
-Lean CI replay.
+The CC0 source is vendored as a standalone Lake fixture. The feature module,
+prior-art audit, claim-ledger promotion, Agent Council review, adversarial
+tests, and documentation are GCL follow-on artifacts.
 
 ## Claim boundary
 
@@ -61,20 +114,20 @@ definiteness. The value at `1` is zero:
 K(1,1) = log(1) = 0.
 ```
 
-The divisor-feature formula suggests an explicit Hilbert-space embedding, but
-that feature map is not yet packaged as a separate Lean object. No novelty or
-priority claim is made.
+The feature map is a formal `Finsupp` realization. It is not advertised as a
+novel embedding or as a separately developed completed-space `ℓ²`
+construction. Zero inputs remain outside the theorem statement.
 
 ## Certification route
 
 ```text
-upstream Lean artifact
-    ↓ provenance and dependency locks
-vendored GCL Lake fixture
-    ↓ metadata and adversarial validation
-repository-native `lake build`
-    ↓ passed in workflow run 29984406250
-CERTIFIED MATHCERT artifact
+classical GCD-matrix factorization
+    ↓ formalized divisor features
+LogGcdFeature.lean
+    ↓ provenance, audit, and adversarial policy checks
+repository-native pinned `lake build`
+    ↓
+MATHCERT feature-claim promotion
 ```
 
 The authoritative integrated artifact is
