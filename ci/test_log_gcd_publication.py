@@ -45,7 +45,7 @@ def main() -> int:
     rejected(
         lambda root: update_json(
             root / "publication_manifest.json",
-            lambda value: value.update(status="PUBLISHED"),
+            lambda value: value.update(status="CANDIDATE"),
         )
     )
     rejected(
@@ -105,13 +105,33 @@ def main() -> int:
     rejected(
         lambda root: update_json(
             root / "publication_manifest.json",
-            lambda value: value.update(publication_date="2026-07-23"),
+            lambda value: value.update(publication_date=None),
+        )
+    )
+    rejected(
+        lambda root: update_json(
+            root / "publication_manifest.json",
+            lambda value: value.update(publication_date="2026-07-22"),
+        )
+    )
+    rejected(
+        lambda root: update_json(
+            root / "publication_manifest.json",
+            lambda value: value.pop("publication_ci_evidence"),
         )
     )
     rejected(
         lambda root: update_json(
             root / "publication_manifest.json",
             lambda value: value.update(publication_ci_evidence="fabricated"),
+        )
+    )
+    rejected(
+        lambda root: update_json(
+            root / "publication_manifest.json",
+            lambda value: value["publication_gate"].update(
+                promotion_condition="Publication pending."
+            ),
         )
     )
     rejected(
