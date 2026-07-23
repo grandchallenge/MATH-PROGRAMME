@@ -9,11 +9,11 @@
 | Certified declarations | `logGcd_posSemidef`, `logGcdFeature`, `logGcd_eq_feature_inner` |
 | Support route | Lean 4 + mathlib, pinned to `v4.33.0-rc1` and exact transitive revisions |
 | Certification state | **CERTIFIED** by repository-native replay |
-| Publication state | `PUB-LOG-GCD-001` **CANDIDATE**, governed by `publication_manifest.json` |
+| Publication state | `PUB-LOG-GCD-001` **PUBLISHED** on 2026-07-23; gate evidence workflow run `29997559180` |
 | Prior-art determination | Mathematical novelty **NOT SUPPORTED**; Lean-artifact priority **NOT ESTABLISHED** |
 | Computation class | `NONE` |
 | Claims not made | novelty, priority, strict positive definiteness, zero-input extension, completed-space ℓ² packaging |
-| Remaining blocking certification obligations | `NONE` |
+| Remaining blocking obligations | `NONE` |
 
 ## Lay companion
 
@@ -65,7 +65,7 @@ LOG-GCD-T01  logGcd_posSemidef                          [CERTIFIED]
       |
 LOG-GCD-I01  positive-semidefinite-kernel interpretation [AUDITED]
       |
-PUB-LOG-GCD-001 public claim bound to C001/C003/C004/C005 [CANDIDATE]
+PUB-LOG-GCD-001 public claim bound to C001/C003/C004/C005 [PUBLISHED]
 ```
 
 The feature theorem and the quadratic-form theorem expose two formal views of
@@ -159,7 +159,7 @@ The upstream repository is dedicated under CC0-1.0. `LogGcdFeature.lean`, the
 prior-art audit, and the publication packet are GCL follow-on artifacts and do
 not alter upstream attribution.
 
-## Reproduction and certification evidence
+## Reproduction and evidence
 
 From this fixture directory:
 
@@ -168,12 +168,15 @@ lake exe cache get
 lake build
 ```
 
-The repository-native replay history is:
+The repository-native evidence history is:
 
 - workflow run `29984406250`: certified `logGcd_posSemidef`;
 - workflow run `29993578051`: certified the expanded package containing
   `logGcdFeature` and `logGcd_eq_feature_inner`;
-- workflow run `29994235171`: checked the completed governance state.
+- workflow run `29994235171`: checked the completed certification-governance state;
+- workflow run `29997559180`: passed the publication candidate policy,
+  adversarial mutations, programme contracts, strict documentation build, and
+  unchanged pinned Lean replay.
 
 Both Lean builds used the exact pinned toolchain and dependency manifest,
 without `sorry` or local axioms.
@@ -200,9 +203,10 @@ without `sorry` or local axioms.
 - the Fixture 003 entry in `docs/SHOWCASE.md`;
 - a strict documentation and adversarial policy gate.
 
-The publication is currently a candidate. It may be promoted to `PUBLISHED`
-only after the candidate packet passes repository policy checks and the strict
-site build.
+The publication gate passed in workflow run `29997559180`. The result was
+published on 2026-07-23. Future edits must preserve the certified claim set,
+negative prior-art determination, permanent exclusions, and exact publication
+evidence.
 
 ## Completion state
 
@@ -213,5 +217,6 @@ The two former certification obligations are closed:
 - `LOG-GCD-001-O003`: discharged by the prior-art audit’s negative novelty
   determination.
 
-No unresolved LOG-GCD certification obligation remains. Publication is a
-separate editorial promotion and does not alter the certified claim ledger.
+The publication-stage gate is also closed by workflow run `29997559180`. No
+unresolved LOG-GCD obligation remains. Publication did not alter the certified
+claim ledger.
