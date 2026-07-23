@@ -1,7 +1,7 @@
 # The logarithmic GCD kernel
 
-`LOG-GCD-001` brings a compact Lean result into the programme as a
-MATHCERT-oriented formal fixture.
+`LOG-GCD-001` brings a compact Lean result into the programme as a certified
+MATHCERT formal fixture.
 
 ## The result
 
@@ -18,6 +18,8 @@ For any finite collection `xᵢ` and real coefficients `cᵢ`,
 ```
 
 Thus `K` is a positive semidefinite kernel in the finite-Gram-matrix sense.
+The Lean theorem `logGcd_posSemidef` is certified by MATH-PROGRAMME workflow
+run `29984406250`.
 
 ## Why it works
 
@@ -35,13 +37,15 @@ by `Λ(d) ≥ 0`. Summing those matrices preserves positive semidefiniteness.
 The upstream formalization is pinned to:
 
 ```text
-repository: irregular-rhomboid/log-gcd-lean
-commit:     d2038c7b09fe849f236d6428d7159b5a40f9aed7
-file:       Loggcd/Lean/loggcd.lean
-blob:       fd5b136ed32c6d48f5f71381ccf4b69d1329088f
-license:    CC0-1.0
-toolchain:  leanprover/lean4:v4.33.0-rc1
-mathlib:    v4.33.0-rc1
+repository:      irregular-rhomboid/log-gcd-lean
+commit:          d2038c7b09fe849f236d6428d7159b5a40f9aed7
+formal file:     Loggcd/Lean/loggcd.lean
+formal blob:     fd5b136ed32c6d48f5f71381ccf4b69d1329088f
+manifest blob:   99d43177d509c4ceb340c8b2e6330e9c75233169
+license:         CC0-1.0
+toolchain:       leanprover/lean4:v4.33.0-rc1
+mathlib release: v4.33.0-rc1
+mathlib commit:  79d0395a1825a6264ad5d269e35e60537518955e
 ```
 
 The CC0 source is vendored as a standalone Lake fixture, with exact provenance,
@@ -65,12 +69,12 @@ priority claim is made.
 
 ```text
 upstream Lean artifact
-    ↓ provenance lock
+    ↓ provenance and dependency locks
 vendored GCL Lake fixture
     ↓ metadata and adversarial validation
 repository-native `lake build`
-    ↓
-MATHCERT promotion decision
+    ↓ passed in workflow run 29984406250
+CERTIFIED MATHCERT artifact
 ```
 
 The authoritative integrated artifact is
