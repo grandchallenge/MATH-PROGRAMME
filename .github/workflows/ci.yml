@@ -73,6 +73,22 @@ jobs:
       - name: Run adversarial LOG-GCD fixture tests
         run: python3 ci/test_log_gcd_fixture.py
 
+      - name: Check LOG-GCD publication candidate
+        run: |
+          set -o pipefail
+          python3 ci/validate_log_gcd_publication.py fixtures/formal/LOG-GCD-001 2>&1 | tee log-gcd-publication-policy.log
+
+      - name: Preserve LOG-GCD publication-policy failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: log-gcd-publication-policy-failure
+          path: log-gcd-publication-policy.log
+          if-no-files-found: error
+
+      - name: Run adversarial LOG-GCD publication tests
+        run: python3 ci/test_log_gcd_publication.py
+
       - name: Validate programme contracts
         run: |
           python ci/validate_programme.py
