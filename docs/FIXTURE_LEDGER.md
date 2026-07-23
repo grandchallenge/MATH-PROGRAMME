@@ -19,7 +19,7 @@ Each fixture must answer four questions:
 | --- | --- | --- | --- | --- | --- |
 | `UF-INV-001` | Foundation 01 | Ordinary ideal membership with inequation compilation | exact identity `CHECKED`; semantic bridge `AUDITED` | the source theorem is not certified merely because the identity replays | proof-assistant bridge for semantic compilation |
 | `RAD-NIL-002` | Foundation 02 | Radical membership with exponent and model-class boundary | radical witness `CHECKED`; field semantics `AUDITED`; ring generalization `REFUTED` | a valid field theorem cannot be generalized to all commutative rings | formal model-class theorem or Lean bridge |
-| `LOG-GCD-001` | Publication candidate | Certified PSD theorem, explicit divisor features, and bounded public claim | theorem and feature identity `CERTIFIED`; prior art `AUDITED`; `PUB-LOG-GCD-001` candidate | publication does not create novelty, priority, strict-PD, zero-input, or completed-space claims | publication policy and strict docs gate |
+| `LOG-GCD-001` | Published | Certified PSD theorem, explicit divisor features, and bounded public claim | theorem and feature identity `CERTIFIED`; prior art `AUDITED`; `PUB-LOG-GCD-001` published | publication does not create novelty, priority, strict-PD, zero-input, or completed-space claims | none; publication gate passed in workflow `29997559180` |
 | `GROBNER-APPLICATIONS-2026-06` | Portfolio | Six application lanes with one selected next fixture | manifest validated in CI | polynomial form does not imply tractability or theorem status | executable application fixture |
 | `RM-DIO-004` | Intake 01 | ResearchMath row to problem card to MATHSOLVE handoff | source preservation `AUDITED`; handoff `PROVISIONAL` | dataset status is not a theorem; finite screens are not completeness proofs | MATHSOLVE campaign package |
 | `TROPIC-GROEBNER-001` | Route 01 | Tropical weight acceptance/rejection via exact initial-form witnesses | route doctrine `ADDED`; replay `PENDING` | sampled weights do not enumerate the full tropical variety | MATHCERT replay script for initial-form certificates |
@@ -109,7 +109,7 @@ PRIOR_ART_AUDIT.md + prior_art_audit.json
 
 The fixture has no unresolved certification obligation. Its permanent boundary is substantive: the programme may claim a certified formal artifact, but not a new mathematical theorem or a first formalization.
 
-## LOG-GCD publication candidate
+## LOG-GCD publication record
 
 `PUB-LOG-GCD-001` binds the public note and Showcase entry to the certified claim ledger:
 
@@ -127,13 +127,19 @@ publication_manifest.json
         +-- canonical public page
         +-- Showcase entry
         +-- strict documentation gate
+        |
+        v
+workflow 29997559180 PASSED
+        |
+        v
+PUB-LOG-GCD-001 PUBLISHED on 2026-07-23
 ```
 
-Publication may change visibility, not mathematical status. Promotion to `PUBLISHED` requires the publication validator, adversarial mutations, and strict documentation build to pass together.
+Publication changed visibility, not mathematical status. The published state is now protected against claim demotion, missing evidence, removed boundaries, and unsupported novelty or priority language.
 
 ## The next visible gap
 
-After the publication gate, the programme-wide executable gap remains the tropical route:
+The programme-wide executable gap remains the tropical route:
 
 ```text
 TROPIC-GROEBNER-001 witness records
