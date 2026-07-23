@@ -3,7 +3,7 @@ artifact:
   type: certificate
   title: Positive semidefiniteness of the logarithmic GCD kernel
   pillar: MATHCERT
-  status: ready_for_certification
+  status: certified
 council_review:
   Axiomatist:
     status: reviewed
@@ -32,44 +32,43 @@ council_review:
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - The theorem spine now includes the finitely supported divisor feature definition, its exact dot-product identity, and the original PSD theorem.
+    - The theorem spine includes the finitely supported divisor feature definition, its exact dot-product identity, and the original PSD theorem.
   Verifier:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
     reviewed_at: '2026-07-23'
-    obligations:
-    - Require the expanded pinned Lake project to pass repository-native Lean CI before certifying C003.
+    obligations: []
     findings:
-    - The original theorem remains certified by workflow run 29984406250; the new feature module is pending target-repository replay.
+    - The original theorem remains certified by workflow run 29984406250.
+    - The expanded pinned Lake project, including `LogGcdFeature.lean`, passed workflow run 29993578051.
   Adversary:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - CI rejects missing feature declarations, novelty promotion, strict-positive-definiteness overclaim, and reintroduced unresolved debt.
+    - CI rejects missing feature declarations, feature-claim demotion, novelty promotion, unsupported priority inference, and strict-positive-definiteness overclaim.
   Formalist:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
     reviewed_at: '2026-07-23'
-    obligations:
-    - Close LOG-GCD-001-O002 only after `LogGcdFeature.lean` compiles without `sorry` or local axioms.
+    obligations: []
     findings:
-    - '`logGcdFeature : ℕ → ℕ →₀ ℝ` and `logGcd_eq_feature_inner` supply the requested first-class finitely supported feature realization.'
+    - '`logGcdFeature : ℕ → ℕ →₀ ℝ` and `logGcd_eq_feature_inner` are compiled, sorry-free first-class finitely supported feature declarations.'
   Steward:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - The fixture separates the classical mathematical result, the new formal artifact, and the prohibited priority inferences.
+    - The fixture separates the classical mathematical result, the certified formal artifact, and the prohibited priority inferences.
   Composer:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - The result-status box, theorem spine, feature construction, audit conclusion, trust quartet, and certification gate are integrated.
+    - The result-status box, theorem spine, feature construction, audit conclusion, trust quartet, and certification evidence are integrated.
   Grammarian:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
@@ -83,7 +82,7 @@ council_review:
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - The fixture README remains the authoritative integrated artifact; the feature module and audit records are linked evidence.
+    - The fixture README remains the authoritative integrated artifact; the feature module, audit records, and replay evidence are linked.
   Archivist:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
@@ -98,7 +97,7 @@ council_review:
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - The standalone Lake package now builds both `LogGcd` and `LogGcdFeature` against the exact pinned dependency manifest.
+    - The standalone Lake package builds both `LogGcd` and `LogGcdFeature` against the exact pinned dependency manifest in workflow run 29993578051.
   Typesetter:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
@@ -112,7 +111,7 @@ council_review:
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - The feature identity is an appropriate formal strengthening; the novelty audit correctly records a negative determination rather than manufacturing priority.
+    - The feature identity is a certified formal strengthening; the novelty audit correctly records a negative determination rather than manufacturing priority.
 amanuensis_control:
   artifact_ledger:
     ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md
@@ -132,6 +131,7 @@ amanuensis_control:
     - fixtures/formal/LOG-GCD-001/prior_art_audit.json
     - fixtures/formal/LOG-GCD-001/lake-manifest.json
     - MATH-PROGRAMME workflow run 29984406250
+    - MATH-PROGRAMME workflow run 29993578051
   cross_document_consistency:
     status: reviewed
     checked_against:
@@ -141,22 +141,17 @@ amanuensis_control:
     - GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md
     - docs/FIXTURE_LEDGER.md
     - docs/LOG_GCD_KERNEL.md
+    - docs/LOG_GCD_PRIOR_ART_AUDIT.md
     conflicts: []
   final_editorial_integration:
     status: reviewed
     integrated_artifact_ref: fixtures/formal/LOG-GCD-001/README.md
     integration_notes:
-    - Added the requested finitely supported feature-map declaration and exact Gram identity.
+    - Added and certified the requested finitely supported feature-map declaration and exact Gram identity.
     - Completed a prior-art audit that rejects mathematical novelty and leaves artifact priority unestablished.
     - Retained explicit boundaries around zero inputs, strict positive definiteness, and completed-space packaging.
-unresolved_obligations:
-- id: LOG-GCD-001-O002
-  owner: Formalist
-  description: The new `LogGcdFeature.lean` module must build successfully in MATH-PROGRAMME CI before its formal claim is certified.
-  severity: high
-  blocking: true
+unresolved_obligations: []
 promotion:
-  ready_for_next_stage: false
-  blockers:
-  - LOG-GCD-001-O002
+  ready_for_next_stage: true
+  blockers: []
   certification_route: LEAN_FORMALIZATION
