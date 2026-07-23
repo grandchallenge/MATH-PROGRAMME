@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "fixture_id": "LOG-GCD-001",
   "title": "Positive semidefiniteness of the logarithmic GCD kernel",
   "claims": [
@@ -28,14 +28,17 @@
     },
     {
       "claim_id": "LOG-GCD-001-C003",
-      "claim_text": "The divisor-indicator representation with nonnegative von Mangoldt weights supplies an explicit feature decomposition of the kernel.",
-      "claim_class": "PROVED_IN_PACKAGE",
-      "support_type": "HUMAN_PROOF",
-      "status": "AUDITED_NOT_FORMALIZED_AS_FEATURE_MAP",
+      "claim_text": "The finitely supported divisor feature map φ(n)_d=sqrt(Λ(d))[d|n] has dot product log(gcd(m,n)) for nonzero natural inputs.",
+      "claim_class": "FORMALIZED",
+      "support_type": "LEAN_FORMALIZATION",
+      "status": "PENDING_TARGET_CI",
+      "formal_definition": "logGcdFeature",
+      "formal_theorem": "logGcd_eq_feature_inner",
+      "artifact": "LogGcdFeature.lean",
       "depends_on": [
         "LOG-GCD-001-C001"
       ],
-      "promotion_condition": "Formalize the feature map and its ℓ² well-definedness as separate Lean declarations."
+      "promotion_condition": "The expanded pinned Lake project builds successfully in MATH-PROGRAMME CI."
     },
     {
       "claim_id": "LOG-GCD-001-C004",
@@ -49,13 +52,25 @@
         "value": "log(gcd(1,1)) = log(1) = 0"
       },
       "promotion_condition": "None; this is a permanent boundary on strict-positive-definiteness claims."
+    },
+    {
+      "claim_id": "LOG-GCD-001-C005",
+      "claim_text": "Mathematical novelty of the logarithmic GCD positivity theorem and its divisor feature factorization is not supported by the literature; public Lean-artifact priority is not established.",
+      "claim_class": "LITERATURE_DERIVED",
+      "support_type": "PRIOR_ART_AUDIT",
+      "status": "AUDITED",
+      "artifact": "PRIOR_ART_AUDIT.md",
+      "machine_record": "prior_art_audit.json",
+      "depends_on": [],
+      "promotion_condition": "No novelty or priority statement is permitted without a materially broader specialist audit that overturns this determination."
     }
   ],
   "claims_explicitly_not_made": [
-    "No novelty or priority claim.",
+    "No mathematical novelty or priority claim; the audit determines that novelty is not supported.",
+    "No first-proof, first-feature-representation, or first-Lean-formalization claim.",
     "No strict-positive-definiteness claim.",
     "No theorem over inputs containing 0.",
-    "No formalized ℓ² feature-map object yet.",
+    "No claim that the Finsupp realization is a separately completed ℓ²-space construction.",
     "No claim that primes form a complete orthogonal basis in a formally specified Hilbert space."
   ]
 }
