@@ -7,11 +7,12 @@
 | Object | `K(m,n) = log(gcd(m,n))` on positive natural numbers |
 | Strongest supported claim | Every finite Gram quadratic form is nonnegative |
 | Formal theorem | `logGcd_posSemidef` |
-| Support route | Lean 4 + mathlib, pinned to `v4.33.0-rc1` |
-| Current certification state | Formal artifact imported; MATH-PROGRAMME CI replay required |
+| Support route | Lean 4 + mathlib, pinned to `v4.33.0-rc1` and exact transitive revisions |
+| Current certification state | **CERTIFIED** by repository-native Lean replay |
+| Certification evidence | MATH-PROGRAMME workflow run `29984406250` |
 | Computation class | `NONE` |
 | Claims not made | novelty, strict positive definiteness, zero-input extension, formal ℓ² feature map |
-| First executable step | Build the vendored Lake project in CI |
+| First executable step | Formalize the explicit finitely supported divisor feature map |
 
 ## Lay companion
 
@@ -34,7 +35,7 @@ coefficients `c : ι → ℝ`:
 0 ≤ ∑ i, ∑ j, c i * c j * Real.log (Nat.gcd (x i) (x j))
 ```
 
-The checked declaration is `logGcd_posSemidef` in `LogGcd.lean`.
+The certified declaration is `logGcd_posSemidef` in `LogGcd.lean`.
 
 ## Theorem spine
 
@@ -47,13 +48,13 @@ LOG-GCD-B01  log(gcd) as weighted divisor-indicator products
       |
 LOG-GCD-B02  finite-sum interchange and square completion
       |
-LOG-GCD-T01  logGcd_posSemidef
+LOG-GCD-T01  logGcd_posSemidef                         [CERTIFIED]
       |
-LOG-GCD-I01  positive-semidefinite-kernel interpretation
+LOG-GCD-I01  positive-semidefinite-kernel interpretation [AUDITED]
 ```
 
-`LOG-GCD-T01` is formalized. The explicit Hilbert-space feature-map object is
-not yet formalized.
+The explicit Hilbert-space or finitely supported feature-map object is not yet
+formalized as a separate declaration.
 
 ## Proof idea
 
@@ -98,34 +99,46 @@ The formalization is adapted from
 `Loggcd/Lean/loggcd.lean`, Git blob
 `fd5b136ed32c6d48f5f71381ccf4b69d1329088f`.
 
+The upstream `lake-manifest.json` is pinned by Git blob
+`99d43177d509c4ceb340c8b2e6330e9c75233169`; it resolves mathlib to commit
+`79d0395a1825a6264ad5d269e35e60537518955e`.
+
 The upstream repository is dedicated under CC0-1.0. The source lock records
-the license blob, theorem file blob, toolchain, and mathlib revision.
+the license blob, theorem blob, manifest blob, toolchain, and exact dependency
+revision.
 
 ## Reproduction
 
 From this fixture directory:
 
 ```bash
+lake exe cache get
 lake build
 ```
 
-CI executes the same build through `leanprover/lean-action`.
+CI performs the same pinned replay. Workflow run `29984406250` completed
+successfully.
 
 ## Trust quartet
 
-1. **Proved:** the finite quadratic-form inequality, conditional only on the
-   displayed positivity hypotheses and mathlib dependencies.
-2. **Checked:** source identity, provenance lock, claim ledger, Agent Council
-   record, and—after the CI gate—the Lean build.
-3. **Open:** a first-class formal feature map, its ℓ² packaging, and optional
-   corollaries such as coprimality-as-orthogonality.
+1. **Proved and certified:** the finite quadratic-form inequality, conditional
+   only on the displayed positivity hypotheses and pinned mathlib dependencies.
+2. **Checked:** provenance lock, dependency manifest, claim ledger, Agent Council
+   record, adversarial mutations, programme contracts, documentation, and Lean
+   compilation.
+3. **Open:** a first-class formal feature map, its Hilbert-space packaging, and
+   optional corollaries such as coprimality-as-orthogonality.
 4. **External verification:** novelty and prior-art assessment have not been
    performed.
 
 ## Next executable step
 
-**Input:** the vendored pinned Lake package.  
-**Operation:** run `lake build` in GitHub Actions.  
-**Output:** a repository-native Lean replay result.  
-**Completion test:** the `log-gcd-lean` CI job passes.  
-**Debt discharged:** `LOG-GCD-001-O001`.
+**Input:** `logGcd_posSemidef`, the von Mangoldt divisor identity, and the
+finite support of the divisors of each positive integer.  
+**Operation:** define a `Finsupp` divisor feature map weighted by
+`sqrt (Λ d)` and prove its inner product equals `log (gcd m n)`.  
+**Output:** `LogGcdFeature.lean` with a theorem such as
+`logGcd_eq_feature_inner`.  
+**Completion test:** the new theorem builds with no `sorry` and the existing PSD
+theorem can be recovered as a corollary.  
+**Debt advanced:** `LOG-GCD-001-O002`.
