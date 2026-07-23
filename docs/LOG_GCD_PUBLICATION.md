@@ -7,7 +7,9 @@
 | Field | Status |
 | --- | --- |
 | Publication ID | `PUB-LOG-GCD-001` |
-| Publication status | **CANDIDATE** |
+| Publication status | **PUBLISHED** |
+| Publication date | 2026-07-23 |
+| Publication gate | **PASSED** · workflow `29997559180` |
 | Mathematical status | Classical result; mathematical novelty **not claimed** |
 | Formal status | Lean declarations **CERTIFIED** by pinned repository-native replay |
 | Public claim | Positive semidefiniteness and exact divisor-feature Gram identity |
@@ -127,6 +129,7 @@ K(1,1) = log(gcd(1,1)) = log 1 = 0.
 | `logGcd_posSemidef` | `CERTIFIED` | workflow `29984406250` |
 | `logGcdFeature` and `logGcd_eq_feature_inner` | `CERTIFIED` | workflow `29993578051` |
 | promoted governance state | `CHECKED` | workflow `29994235171` |
+| publication gate | `PASSED` | workflow `29997559180` |
 | prior-art determination | `AUDITED` | `PRIOR_ART_AUDIT.md` and `prior_art_audit.json` |
 
 All Lean builds use `leanprover/lean4:v4.33.0-rc1`, mathlib release `v4.33.0-rc1`, and the exact pinned dependency graph. The fixture contains no `sorry` and introduces no local axioms.
