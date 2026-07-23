@@ -12,9 +12,9 @@ PROGRAMME_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ROOT = PROGRAMME_ROOT / "fixtures" / "formal" / "LOG-GCD-001"
 
 EXPECTED_SOURCE_COMMIT = "81e391ba26352b0291dd02495157fe313dddca46"
-EXPECTED_STATUS = "CANDIDATE"
-EXPECTED_PUBLICATION_DATE = None
-EXPECTED_PUBLICATION_EVIDENCE = None
+EXPECTED_STATUS = "PUBLISHED"
+EXPECTED_PUBLICATION_DATE = "2026-07-23"
+EXPECTED_PUBLICATION_EVIDENCE = "MATH-PROGRAMME workflow run 29997559180"
 EXPECTED_PUBLISHED = {"LOG-GCD-001-C001", "LOG-GCD-001-C003"}
 EXPECTED_BOUNDARIES = {"LOG-GCD-001-C004", "LOG-GCD-001-C005"}
 EXPECTED_DESCRIPTION = (
@@ -29,7 +29,7 @@ EXPECTED_PROHIBITED = {
     "first Lean formalization",
     "strictly positive definite on all positive natural numbers",
 }
-EXPECTED_EVIDENCE = {
+EXPECTED_CERTIFICATION_EVIDENCE = {
     "MATH-PROGRAMME workflow run 29984406250",
     "MATH-PROGRAMME workflow run 29993578051",
     "MATH-PROGRAMME workflow run 29994235171",
@@ -68,17 +68,10 @@ def check_manifest(root: Path) -> dict[str, Any]:
         "showcase_page": "docs/SHOWCASE.md#fixture-003-the-logarithmic-gcd-kernel",
         "publication_date": EXPECTED_PUBLICATION_DATE,
         "source_commit": EXPECTED_SOURCE_COMMIT,
+        "publication_ci_evidence": EXPECTED_PUBLICATION_EVIDENCE,
     }
     for key, value in expected.items():
         require(manifest.get(key) == value, f"publication manifest: {key} drift")
-
-    if EXPECTED_PUBLICATION_EVIDENCE is None:
-        require("publication_ci_evidence" not in manifest, "candidate publication has fabricated CI evidence")
-    else:
-        require(
-            manifest.get("publication_ci_evidence") == EXPECTED_PUBLICATION_EVIDENCE,
-            "publication CI evidence drift",
-        )
 
     published = manifest.get("published_claims")
     require(isinstance(published, list), "published_claims must be a list")
@@ -106,7 +99,7 @@ def check_manifest(root: Path) -> dict[str, Any]:
     require(set(prohibited) == EXPECTED_PROHIBITED, "publication prohibition set changed")
     evidence = manifest.get("certification_evidence")
     require(isinstance(evidence, list), "certification_evidence must be a list")
-    require(set(evidence) == EXPECTED_EVIDENCE, "publication certification evidence drift")
+    require(set(evidence) == EXPECTED_CERTIFICATION_EVIDENCE, "publication certification evidence drift")
 
     gate = manifest.get("publication_gate")
     require(isinstance(gate, dict), "publication gate missing")
@@ -119,7 +112,10 @@ def check_manifest(root: Path) -> dict[str, Any]:
     ):
         require(gate.get(key) is True, f"publication gate disabled: {key}")
     promotion = gate.get("promotion_condition")
-    require(isinstance(promotion, str) and "PUBLISHED" in promotion, "publication promotion condition missing")
+    require(
+        isinstance(promotion, str) and "Satisfied by workflow run 29997559180" in promotion,
+        "publication promotion evidence missing",
+    )
     return manifest
 
 
@@ -147,21 +143,24 @@ def check_claim_support(root: Path, manifest: dict[str, Any]) -> None:
     }, "publication is detached from the negative prior-art determination")
 
 
-def check_public_pages(manifest: dict[str, Any]) -> None:
+def check_public_pages(root: Path, manifest: dict[str, Any]) -> None:
     page = PROGRAMME_ROOT / manifest["canonical_page"]
     showcase_path = manifest["showcase_page"].split("#", 1)[0]
     showcase = PROGRAMME_ROOT / showcase_path
     nav = PROGRAMME_ROOT / "mkdocs.yml"
     ledger = PROGRAMME_ROOT / "docs" / "FIXTURE_LEDGER.md"
     artifact_ledger = PROGRAMME_ROOT / "docs" / "AGENT_COUNCIL_ARTIFACT_LEDGER.md"
+    certificate_readme = root / "README.md"
 
-    for path in (page, showcase, nav, ledger, artifact_ledger):
+    for path in (page, showcase, nav, ledger, artifact_ledger, certificate_readme):
         require(path.is_file(), f"publication integration file missing: {path}")
 
     page_text = page.read_text(encoding="utf-8")
     required_page_fragments = (
         "Publication ID | `PUB-LOG-GCD-001`",
-        f"Publication status | **{EXPECTED_STATUS}**",
+        "Publication status | **PUBLISHED**",
+        "Publication date | 2026-07-23",
+        "Publication gate | **PASSED** · workflow `29997559180`",
         "Mathematical status | Classical result; mathematical novelty **not claimed**",
         "logGcd_posSemidef",
         "logGcd_eq_feature_inner",
@@ -175,6 +174,7 @@ def check_public_pages(manifest: dict[str, Any]) -> None:
     )
     for fragment in required_page_fragments:
         require(fragment in page_text, f"publication page missing: {fragment!r}")
+    require("Publication status | **CANDIDATE**" not in page_text, "publication page remains a candidate")
     require("Mathematical novelty is **supported**" not in page_text, "publication page promotes novelty")
     require("This is the first Lean formalization" not in page_text, "publication page promotes priority")
 
@@ -183,10 +183,11 @@ def check_public_pages(manifest: dict[str, Any]) -> None:
         "## Fixture 003: The logarithmic GCD kernel",
         "PUB-LOG-GCD-001",
         "Classical mathematics · certified formal artifact",
-        f"Publication {EXPECTED_STATUS.lower()}",
+        "Publication status: published",
         "No novelty or priority claim",
     ):
         require(fragment in showcase_text, f"showcase entry missing: {fragment!r}")
+    require("Publication candidate" not in showcase_text, "showcase retains candidate status")
 
     nav_text = nav.read_text(encoding="utf-8")
     require(
@@ -195,12 +196,17 @@ def check_public_pages(manifest: dict[str, Any]) -> None:
     )
 
     ledger_text = ledger.read_text(encoding="utf-8")
-    require("Publication candidate" in ledger_text, "fixture ledger lacks publication-stage record")
-    require("PUB-LOG-GCD-001" in ledger_text, "fixture ledger lacks publication ID")
+    require("`PUB-LOG-GCD-001` published" in ledger_text, "fixture ledger lacks published record")
+    require("Publication candidate" not in ledger_text, "fixture ledger retains candidate status")
 
     artifact_text = artifact_ledger.read_text(encoding="utf-8")
     require("PUB-LOG-GCD-001" in artifact_text, "artifact ledger lacks publication entry")
-    require("publication candidate" in artifact_text, "artifact ledger publication status drift")
+    require("| published |" in artifact_text, "artifact ledger publication status drift")
+    require("publication candidate" not in artifact_text, "artifact ledger retains candidate status")
+
+    readme_text = certificate_readme.read_text(encoding="utf-8")
+    require("`PUB-LOG-GCD-001` **PUBLISHED**" in readme_text, "certificate README lacks publication state")
+    require("workflow run `29997559180`" in readme_text, "certificate README lacks publication evidence")
 
 
 def validate(root: Path = DEFAULT_ROOT) -> None:
@@ -208,7 +214,7 @@ def validate(root: Path = DEFAULT_ROOT) -> None:
     require((root / "publication_manifest.json").is_file(), "publication manifest missing")
     manifest = check_manifest(root)
     check_claim_support(root, manifest)
-    check_public_pages(manifest)
+    check_public_pages(root, manifest)
 
 
 def main(argv: list[str]) -> int:
