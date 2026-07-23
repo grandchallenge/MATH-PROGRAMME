@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "fixture_id": "LOG-GCD-001",
+  "title": "Positive semidefiniteness of the logarithmic GCD kernel",
+  "claims": [
+    {
+      "claim_id": "LOG-GCD-001-C001",
+      "claim_text": "For every finite type ι, positive natural-valued x : ι → ℕ, and c : ι → ℝ, the quadratic form ΣᵢΣⱼ cᵢcⱼ log(gcd(xᵢ,xⱼ)) is nonnegative.",
+      "claim_class": "FORMALIZED",
+      "support_type": "LEAN_FORMALIZATION",
+      "status": "PENDING_TARGET_CI",
+      "formal_theorem": "logGcd_posSemidef",
+      "artifact": "LogGcd.lean",
+      "depends_on": [],
+      "promotion_condition": "The pinned Lake project builds successfully in MATH-PROGRAMME CI."
+    },
+    {
+      "claim_id": "LOG-GCD-001-C002",
+      "claim_text": "K(m,n)=log(gcd(m,n)) is a positive semidefinite kernel on positive natural numbers in the finite-Gram-matrix sense.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "support_type": "FORMAL_THEOREM_INTERPRETATION",
+      "status": "AUDITED",
+      "depends_on": [
+        "LOG-GCD-001-C001"
+      ],
+      "promotion_condition": "Retain the finite-Gram-matrix convention and the positivity hypothesis m,n≥1."
+    },
+    {
+      "claim_id": "LOG-GCD-001-C003",
+      "claim_text": "The divisor-indicator representation with nonnegative von Mangoldt weights supplies an explicit feature decomposition of the kernel.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "support_type": "HUMAN_PROOF",
+      "status": "AUDITED_NOT_FORMALIZED_AS_FEATURE_MAP",
+      "depends_on": [
+        "LOG-GCD-001-C001"
+      ],
+      "promotion_condition": "Formalize the feature map and its ℓ² well-definedness as separate Lean declarations."
+    },
+    {
+      "claim_id": "LOG-GCD-001-C004",
+      "claim_text": "The kernel is not strictly positive definite on all positive natural numbers; the point 1 has zero self-kernel.",
+      "claim_class": "REFUTED",
+      "support_type": "EXACT_COUNTEREXAMPLE",
+      "status": "AUDITED",
+      "depends_on": [],
+      "counterexample": {
+        "point": 1,
+        "value": "log(gcd(1,1)) = log(1) = 0"
+      },
+      "promotion_condition": "None; this is a permanent boundary on strict-positive-definiteness claims."
+    }
+  ],
+  "claims_explicitly_not_made": [
+    "No novelty or priority claim.",
+    "No strict-positive-definiteness claim.",
+    "No theorem over inputs containing 0.",
+    "No formalized ℓ² feature-map object yet.",
+    "No claim that primes form a complete orthogonal basis in a formally specified Hilbert space."
+  ]
+}
