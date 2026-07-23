@@ -1,7 +1,7 @@
 name = "loggcd-lean"
 version = "0.1.0"
 keywords = ["number-theory", "kernel", "positive-semidefinite", "formalization"]
-defaultTargets = ["LogGcd"]
+defaultTargets = ["LogGcd", "LogGcdFeature"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -16,3 +16,6 @@ rev = "v4.33.0-rc1"
 
 [[lean_lib]]
 name = "LogGcd"
+
+[[lean_lib]]
+name = "LogGcdFeature"
