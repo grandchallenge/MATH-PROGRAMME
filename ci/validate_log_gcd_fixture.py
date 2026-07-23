@@ -17,9 +17,11 @@ PROGRAMME_ROOT = Path(__file__).resolve().parents[1]
 
 EXPECTED_SOURCE_COMMIT = "d2038c7b09fe849f236d6428d7159b5a40f9aed7"
 EXPECTED_SOURCE_BLOB = "fd5b136ed32c6d48f5f71381ccf4b69d1329088f"
+EXPECTED_MANIFEST_BLOB = "99d43177d509c4ceb340c8b2e6330e9c75233169"
 EXPECTED_LICENSE_BLOB = "0e259d42c996742e9e3cba14c677129b2c1b6311"
 EXPECTED_TOOLCHAIN = "leanprover/lean4:v4.33.0-rc1"
 EXPECTED_MATHLIB = "v4.33.0-rc1"
+EXPECTED_MATHLIB_COMMIT = "79d0395a1825a6264ad5d269e35e60537518955e"
 EXPECTED_CLAIMS = {
     "LOG-GCD-001-C001",
     "LOG-GCD-001-C002",
@@ -72,6 +74,11 @@ def check_source_lock(root: Path) -> None:
         lock.get("source_formal_file_git_blob_sha") == EXPECTED_SOURCE_BLOB,
         "source_lock: theorem blob drift",
     )
+    require(lock.get("source_manifest_file") == "lake-manifest.json", "source_lock: manifest path drift")
+    require(
+        lock.get("source_manifest_git_blob_sha") == EXPECTED_MANIFEST_BLOB,
+        "source_lock: manifest blob drift",
+    )
     license_record = lock.get("source_license")
     require(isinstance(license_record, dict), "source_lock: missing license record")
     require(license_record.get("spdx") == "CC0-1.0", "source_lock: wrong license")
@@ -85,16 +92,19 @@ def check_source_lock(root: Path) -> None:
     )
     require(lock.get("theorem_names") == ["logGcd_posSemidef"], "source_lock: theorem set changed")
     require(lock.get("lean_toolchain") == EXPECTED_TOOLCHAIN, "source_lock: toolchain drift")
-    require(lock.get("mathlib_revision") == EXPECTED_MATHLIB, "source_lock: mathlib drift")
+    require(lock.get("mathlib_revision") == EXPECTED_MATHLIB, "source_lock: mathlib revision drift")
+    require(lock.get("mathlib_commit") == EXPECTED_MATHLIB_COMMIT, "source_lock: mathlib commit drift")
 
 
 def check_lean_project(root: Path) -> None:
     lean_path = root / "LogGcd.lean"
     lake_path = root / "lakefile.toml"
+    manifest_path = root / "lake-manifest.json"
     toolchain_path = root / "lean-toolchain"
 
     lean = lean_path.read_text(encoding="utf-8")
     lake = lake_path.read_text(encoding="utf-8")
+    manifest = load_json(manifest_path)
     toolchain = toolchain_path.read_text(encoding="utf-8").strip()
 
     require(
@@ -107,9 +117,19 @@ def check_lean_project(root: Path) -> None:
     require(re.search(r"\bsorry\b", lean) is None, "LogGcd.lean: sorry is forbidden")
     require(re.search(r"^\s*axiom\b", lean, re.MULTILINE) is None, "LogGcd.lean: local axioms are forbidden")
     require(toolchain == EXPECTED_TOOLCHAIN, "lean-toolchain: unexpected toolchain")
-    require('name = "log-gcd-gcl"' in lake, "lakefile: wrong package name")
+    require('name = "loggcd-lean"' in lake, "lakefile: wrong package name")
     require('name = "LogGcd"' in lake, "lakefile: LogGcd library missing")
     require(f'rev = "{EXPECTED_MATHLIB}"' in lake, "lakefile: mathlib pin drift")
+    require(manifest.get("name") == "«loggcd-lean»", "lake-manifest: wrong root package")
+    packages = manifest.get("packages")
+    require(isinstance(packages, list), "lake-manifest: packages must be a list")
+    mathlib = next(
+        (item for item in packages if isinstance(item, dict) and item.get("name") == "mathlib"),
+        None,
+    )
+    require(isinstance(mathlib, dict), "lake-manifest: mathlib package missing")
+    require(mathlib.get("inputRev") == EXPECTED_MATHLIB, "lake-manifest: mathlib input revision drift")
+    require(mathlib.get("rev") == EXPECTED_MATHLIB_COMMIT, "lake-manifest: mathlib commit drift")
 
 
 def check_claim_ledger(root: Path) -> None:
@@ -152,14 +172,8 @@ def check_claim_ledger(root: Path) -> None:
 
     exclusions = ledger.get("claims_explicitly_not_made")
     require(isinstance(exclusions, list) and len(exclusions) >= 5, "claim ledger: exclusions incomplete")
-    require(
-        any("No novelty" in item for item in exclusions),
-        "claim ledger: novelty boundary missing",
-    )
-    require(
-        any("No strict" in item for item in exclusions),
-        "claim ledger: strict-PD boundary missing",
-    )
+    require(any("No novelty" in item for item in exclusions), "claim ledger: novelty boundary missing")
+    require(any("No strict" in item for item in exclusions), "claim ledger: strict-PD boundary missing")
 
 
 def check_agent_review(root: Path) -> None:
@@ -211,6 +225,7 @@ def validate(root: Path = DEFAULT_ROOT) -> None:
         "README.md",
         "LogGcd.lean",
         "lakefile.toml",
+        "lake-manifest.json",
         "lean-toolchain",
         "source_lock.json",
         "claim_ledger.json",
