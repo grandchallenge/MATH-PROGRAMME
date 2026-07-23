@@ -19,7 +19,7 @@ Each fixture must answer four questions:
 | --- | --- | --- | --- | --- | --- |
 | `UF-INV-001` | Foundation 01 | Ordinary ideal membership with inequation compilation | exact identity `CHECKED`; semantic bridge `AUDITED` | the source theorem is not certified merely because the identity replays | proof-assistant bridge for semantic compilation |
 | `RAD-NIL-002` | Foundation 02 | Radical membership with exponent and model-class boundary | radical witness `CHECKED`; field semantics `AUDITED`; ring generalization `REFUTED` | a valid field theorem cannot be generalized to all commutative rings | formal model-class theorem or Lean bridge |
-| `LOG-GCD-001` | Formal 01 | Certified PSD theorem and explicit finitely supported divisor features | PSD theorem `CERTIFIED`; feature identity `CERTIFIED`; prior art `AUDITED—NOVELTY NOT SUPPORTED` | positive semidefinite does not imply strict positive definite; bounded search does not establish priority | none; both declared obligations closed |
+| `LOG-GCD-001` | Publication candidate | Certified PSD theorem, explicit divisor features, and bounded public claim | theorem and feature identity `CERTIFIED`; prior art `AUDITED`; `PUB-LOG-GCD-001` candidate | publication does not create novelty, priority, strict-PD, zero-input, or completed-space claims | publication policy and strict docs gate |
 | `GROBNER-APPLICATIONS-2026-06` | Portfolio | Six application lanes with one selected next fixture | manifest validated in CI | polynomial form does not imply tractability or theorem status | executable application fixture |
 | `RM-DIO-004` | Intake 01 | ResearchMath row to problem card to MATHSOLVE handoff | source preservation `AUDITED`; handoff `PROVISIONAL` | dataset status is not a theorem; finite screens are not completeness proofs | MATHSOLVE campaign package |
 | `TROPIC-GROEBNER-001` | Route 01 | Tropical weight acceptance/rejection via exact initial-form witnesses | route doctrine `ADDED`; replay `PENDING` | sampled weights do not enumerate the full tropical variety | MATHCERT replay script for initial-form certificates |
@@ -38,9 +38,11 @@ RAD-NIL-002
 
 LOG-GCD-001
   verifies: pinned Lean theorem intake, explicit Finsupp Gram realization,
-            prior-art governance, and repository-native proof replay
+            prior-art governance, repository-native proof replay,
+            and publication-stage claim binding
   protects: positive-semidefinite, strict-positive-definite, zero-input,
-            dependency-drift, mathematical-novelty, and priority boundaries
+            dependency-drift, mathematical-novelty, priority, and
+            publication-rhetoric boundaries
 
 GROBNER-APPLICATIONS-2026-06
   verifies: lane portfolio completeness and boundaries
@@ -67,6 +69,8 @@ The fixtures do not prove major mathematics. They prove that the programme can p
 - positive semidefiniteness versus strict positive definiteness;
 - mathematical prior art versus formal-artifact contribution;
 - bounded search versus priority evidence;
+- certification versus publication;
+- public exposition versus claim promotion;
 - dependency pinning versus ambient-environment success;
 - application potential versus application proof;
 - external corpus status versus independently audited mathematical status;
@@ -83,11 +87,12 @@ A fixture may move a claim upward only when its support route changes.
 | `LEAD` to `AUDITED` | source, object, and boundary reconstructed |
 | `AUDITED` to `CHECKED` | exact replay, proof checker, or independently verified computation succeeds |
 | `CHECKED` to `CERTIFIED` | semantic correspondence is formalized or otherwise crosses the trusted boundary |
+| `CERTIFIED` to `PUBLISHED` | the public claim is bound to certified claim IDs, permanent exclusions, prior-art status, and a passing publication gate |
 | any status to `REFUTED` | counterexample, failed invariant, false generalization, or invalid support route is established |
 
-## LOG-GCD completion record
+## LOG-GCD certification record
 
-`LOG-GCD-001` has crossed both remaining boundaries:
+`LOG-GCD-001` crossed both formal and audit boundaries:
 
 ```text
 LogGcdFeature.lean
@@ -102,13 +107,33 @@ PRIOR_ART_AUDIT.md + prior_art_audit.json
   -> LOG-GCD-001-O003 closed
 ```
 
-The fixture has no unresolved obligation. Its permanent boundary is now
-substantive rather than procedural: the programme may claim a certified formal
-artifact, but not a new mathematical theorem or a first formalization.
+The fixture has no unresolved certification obligation. Its permanent boundary is substantive: the programme may claim a certified formal artifact, but not a new mathematical theorem or a first formalization.
+
+## LOG-GCD publication candidate
+
+`PUB-LOG-GCD-001` binds the public note and Showcase entry to the certified claim ledger:
+
+```text
+LOG-GCD-001-C001 CERTIFIED
+LOG-GCD-001-C003 CERTIFIED
+LOG-GCD-001-C004 AUDITED boundary
+LOG-GCD-001-C005 AUDITED prior-art determination
+        |
+        v
+publication_manifest.json
+        |
+        +-- exact permitted description
+        +-- prohibited novelty and priority descriptions
+        +-- canonical public page
+        +-- Showcase entry
+        +-- strict documentation gate
+```
+
+Publication may change visibility, not mathematical status. Promotion to `PUBLISHED` requires the publication validator, adversarial mutations, and strict documentation build to pass together.
 
 ## The next visible gap
 
-The programme-wide executable gap remains the tropical route:
+After the publication gate, the programme-wide executable gap remains the tropical route:
 
 ```text
 TROPIC-GROEBNER-001 witness records
