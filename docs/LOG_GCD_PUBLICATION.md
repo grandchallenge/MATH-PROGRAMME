@@ -15,7 +15,7 @@
 | Priority | First-proof and first-formalization priority **not claimed** |
 | Strictness | Positive semidefinite, not strictly positive definite on the full domain |
 
-> A GCL-certified Lean formalization and explicit `Finsupp` realization of a classical GCD-matrix positivity criterion.
+> A GCL-certified Lean formalization and explicit Finsupp realization of a classical GCD-matrix positivity criterion.
 
 ## The claim
 
@@ -96,7 +96,7 @@ and positivity is governed by nonnegativity of the Möbius transform `f * μ`. F
 
 Accordingly:
 
-- mathematical novelty is **not supported**;
+- Mathematical novelty is **not supported**;
 - novelty of the divisor-feature factorization is **not supported**;
 - no first-public-Lean-formalization priority is established;
 - the programme contribution is a pinned, replayable Lean artifact, explicit `Finsupp` packaging, claim governance, and public exposition.
