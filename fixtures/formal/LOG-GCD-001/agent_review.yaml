@@ -1,0 +1,173 @@
+artifact:
+  id: CERT-LOG-GCD-001
+  type: certificate
+  title: Positive semidefiniteness of the logarithmic GCD kernel
+  pillar: MATHCERT
+  status: certified
+council_review:
+  Axiomatist:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations: []
+    findings:
+    - The statement is over positive naturals, finite index types, and real coefficients;
+      the zero-input extension is excluded.
+  Prospector:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations: []
+    findings:
+    - No novelty or priority claim is made; the result enters as a certified formal
+      artifact rather than discovery ore.
+  Experimentalist:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations: []
+    findings:
+    - No numerical or finite-search evidence is used.
+  Cartographer:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations: []
+    findings:
+    - The von Mangoldt identity and nonnegativity feed the divisor-feature bridge,
+      square completion, and final PSD theorem.
+  Verifier:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations: []
+    findings:
+    - The pinned Lake project and theorem `logGcd_posSemidef` built successfully in
+      MATH-PROGRAMME workflow run 29984406250.
+  Adversary:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations: []
+    findings:
+    - Strict positive definiteness is explicitly rejected by the point 1 counterexample;
+      zero inputs are excluded.
+  Formalist:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations:
+    - Formalize the explicit ℓ² feature map only if that stronger artifact is promoted.
+    findings:
+    - The certified theorem proves the finite quadratic-form criterion; the ℓ² feature
+      map is not separately formalized.
+  Steward:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations: []
+    findings:
+    - The fixture separates theorem, interpretation, provenance, and unmade claims.
+  Composer:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations: []
+    findings:
+    - The result-status box, theorem spine, proof, trust quartet, and next executable
+      step are integrated.
+  Grammarian:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations: []
+    findings:
+    - Positive semidefinite and positive definite kernel terminology is disambiguated.
+  Amanuensis:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations: []
+    findings:
+    - The fixture README is the authoritative integrated artifact and is registered
+      in the artifact ledger.
+  Archivist:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations:
+    - Conduct a prior-art audit before any novelty statement.
+    findings:
+    - Upstream repository, commit, theorem blob, manifest blob, license blob, toolchain,
+      and exact mathlib commit are pinned.
+  Mechanist:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations: []
+    findings:
+    - A standalone Lake project, mathlib binary cache, and dedicated CI job provide
+      the replay mechanism.
+  Typesetter:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations: []
+    findings:
+    - Lean and mathematical notation are presented in copy-safe fenced blocks.
+  Referee:
+    status: reviewed
+    reviewed_by: GPT-5.6 Thinking
+    reviewed_at: '2026-07-22'
+    obligations: []
+    findings:
+    - The strongest claim matches the formal theorem; novelty and stronger Hilbert-space
+      claims remain outside the certified boundary.
+amanuensis_control:
+  artifact_ledger:
+    ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md
+    entry_id: CERT-LOG-GCD-001
+  decision_record_refs: []
+  terminology_registry:
+    registry_ref: docs/GLOSSARY.md
+    terms_introduced_or_changed: []
+  review_provenance:
+    complete: true
+    evidence_refs:
+    - fixtures/formal/LOG-GCD-001/source_lock.json
+    - fixtures/formal/LOG-GCD-001/claim_ledger.json
+    - fixtures/formal/LOG-GCD-001/LogGcd.lean
+    - fixtures/formal/LOG-GCD-001/lake-manifest.json
+    - MATH-PROGRAMME workflow run 29984406250
+  cross_document_consistency:
+    status: reviewed
+    checked_against:
+    - MATHCERT_SPEC.md
+    - CERTIFICATION_LADDER.md
+    - CLAIM_LEDGER_STANDARD.md
+    - GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md
+    - docs/FIXTURE_LEDGER.md
+    conflicts: []
+  final_editorial_integration:
+    status: reviewed
+    integrated_artifact_ref: fixtures/formal/LOG-GCD-001/README.md
+    integration_notes:
+    - Preserved the formal theorem while separating formal, interpretive, and novelty
+      claims.
+    - Recorded upstream CC0 provenance, dependency manifest, and successful Lean replay.
+unresolved_obligations:
+- id: LOG-GCD-001-O002
+  owner: Formalist
+  description: The explicit ℓ² feature map and coprimality-as-orthogonality corollaries
+    are not separately formalized.
+  severity: medium
+  blocking: false
+- id: LOG-GCD-001-O003
+  owner: Archivist
+  description: Novelty and related-work status have not been audited.
+  severity: low
+  blocking: false
+promotion:
+  ready_for_next_stage: true
+  blockers: []
+  certification_route: LEAN_FORMALIZATION

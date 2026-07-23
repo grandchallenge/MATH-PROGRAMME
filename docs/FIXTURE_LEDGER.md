@@ -19,6 +19,7 @@ Each fixture must answer four questions:
 | --- | --- | --- | --- | --- | --- |
 | `UF-INV-001` | Foundation 01 | Ordinary ideal membership with inequation compilation | exact identity `CHECKED`; semantic bridge `AUDITED` | the source theorem is not certified merely because the identity replays | proof-assistant bridge for semantic compilation |
 | `RAD-NIL-002` | Foundation 02 | Radical membership with exponent and model-class boundary | radical witness `CHECKED`; field semantics `AUDITED`; ring generalization `REFUTED` | a valid field theorem cannot be generalized to all commutative rings | formal model-class theorem or Lean bridge |
+| `LOG-GCD-001` | Formal 01 | Lean formalization of the positive semidefinite logarithmic GCD kernel | theorem `CERTIFIED`; provenance, manifest, adversarial boundary, and replay `CHECKED` | positive semidefinite does not imply strict positive definite; the feature map is not yet a separate formal object | formal finitely supported divisor feature map |
 | `GROBNER-APPLICATIONS-2026-06` | Portfolio | Six application lanes with one selected next fixture | manifest validated in CI | polynomial form does not imply tractability or theorem status | executable application fixture |
 | `RM-DIO-004` | Intake 01 | ResearchMath row to problem card to MATHSOLVE handoff | source preservation `AUDITED`; handoff `PROVISIONAL` | dataset status is not a theorem; finite screens are not completeness proofs | MATHSOLVE campaign package |
 | `TROPIC-GROEBNER-001` | Route 01 | Tropical weight acceptance/rejection via exact initial-form witnesses | route doctrine `ADDED`; replay `PENDING` | sampled weights do not enumerate the full tropical variety | MATHCERT replay script for initial-form certificates |
@@ -34,6 +35,11 @@ UF-INV-001
 RAD-NIL-002
   verifies: radical-membership arithmetic with exponent N
   protects: field-versus-ring model boundary
+
+LOG-GCD-001
+  verifies: pinned Lean theorem intake and repository-native proof replay
+  protects: positive-semidefinite, strict-positive-definite, feature-map,
+            zero-input, dependency-drift, and novelty boundaries
 
 GROBNER-APPLICATIONS-2026-06
   verifies: lane portfolio completeness and boundaries
@@ -55,6 +61,9 @@ The fixtures do not prove major mathematics. They prove that the programme can p
 - exact arithmetic versus semantic theorem;
 - ideal membership versus radical membership;
 - field theorem versus ring falsehood;
+- formal theorem versus stronger unformalized interpretation;
+- positive semidefiniteness versus strict positive definiteness;
+- dependency pinning versus ambient-environment success;
 - application potential versus application proof;
 - external corpus status versus independently audited mathematical status;
 - MATHFORGE triage versus MATHSOLVE campaign;
@@ -74,15 +83,25 @@ A fixture may move a claim upward only when its support route changes.
 
 ## The next visible gap
 
-The current ledger has exact algebraic foundations, one external-corpus intake fixture, and now a named tropical-degeneration route fixture. It does not yet have replayed TROPIC-GROEBNER certificates or a complete MATHSOLVE campaign package generated from ResearchMath intake.
+The ledger now contains exact algebraic foundations, an external-corpus intake
+fixture, a certified Lean theorem fixture, and a named tropical-degeneration
+route. `LOG-GCD-001` has crossed its certification gate; its remaining formal
+debt is the explicit divisor feature map. The tropical route still lacks
+replayed certificates.
 
-The immediate next documentation artifact is therefore:
+The immediate executable gates are therefore:
 
 ```text
+LOG-GCD-001 certified PSD theorem
+  -> formal Finsupp divisor feature map
+  -> inner-product identity
+  -> optional coprimality-as-orthogonality corollary
+
 TROPIC-GROEBNER-001 witness records
   -> MATHSOLVE route decision report
   -> MATHCERT replay script
   -> claim ledger update
 ```
 
-That is the bridge from tropical route doctrine to checked algebraic certificate, and it is where the programme must next prove that it can avoid theatre.
+These are different certification routes, but they obey the same rule: no status
+promotion without a changed support boundary.

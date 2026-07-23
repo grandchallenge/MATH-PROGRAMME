@@ -27,6 +27,7 @@ Every governed artifact receives:
 | Artifact ID | Type | Pillar | Authoritative integrated artifact | Status | Decision records | Terminology registry | Review record | Last integrated | Amanuensis state |
 |---|---|---|---|---|---|---|---|---|---|
 | GOV-AGENT-COUNCIL-001 | governance bundle | MATH-PROGRAMME | `docs/MATH_PROGRAMME_AGENT_COUNCIL.md` | active | `ADR-0001` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `templates/agent_review.yaml` | 2026-07-09 | reviewed |
+| CERT-LOG-GCD-001 | formal certificate fixture | MATHCERT | `fixtures/formal/LOG-GCD-001/README.md` | certified | none | `docs/GLOSSARY.md` | `fixtures/formal/LOG-GCD-001/agent_review.yaml` | 2026-07-22 | reviewed |
 
 ## Update rules
 
