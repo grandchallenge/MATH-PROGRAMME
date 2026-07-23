@@ -26,12 +26,12 @@ theorem logGcdFeature_apply (n d : ℕ) :
 
 /-- The canonical finite dot product on real-valued finitely supported functions. -/
 def finsuppDot (u v : ℕ →₀ ℝ) : ℝ :=
-  u.sum fun d a => a * v d
+  ∑ d ∈ u.support, u d * v d
 
 /-- A finitely supported vector has nonnegative squared dot norm. -/
 theorem finsuppDot_self_nonneg (u : ℕ →₀ ℝ) : 0 ≤ finsuppDot u u := by
   classical
-  change 0 ≤ ∑ d ∈ u.support, u d * u d
+  unfold finsuppDot
   exact Finset.sum_nonneg fun d _ => mul_self_nonneg (u d)
 
 /-- The logarithmic GCD kernel is exactly the Gram kernel of `logGcdFeature`. -/
@@ -44,6 +44,20 @@ theorem logGcd_eq_feature_inner
     rw [Ne, Nat.gcd_eq_zero_iff]
     rintro ⟨h, _⟩
     exact hm h
+  have hsupp : (logGcdFeature m).support ⊆ m.divisors := by
+    intro d hd
+    by_contra hnot
+    have hzero : logGcdFeature m d = 0 := by
+      simp [logGcdFeature_apply, hnot]
+    have hne : logGcdFeature m d ≠ 0 := by
+      simpa using hd
+    exact hne hzero
+  have hsupp_zero : ∀ d ∈ m.divisors, d ∉ (logGcdFeature m).support →
+      logGcdFeature m d * logGcdFeature n d = 0 := by
+    intro d _ hd
+    have hzero : logGcdFeature m d = 0 := by
+      simpa using hd
+    simp [hzero]
   have hsub : (Nat.gcd m n).divisors ⊆ m.divisors :=
     Nat.divisors_subset_of_dvd hm (Nat.gcd_dvd_left _ _)
   have h_on : ∀ d ∈ (Nat.gcd m n).divisors,
@@ -64,8 +78,12 @@ theorem logGcd_eq_feature_inner
     simp [logGcdFeature_apply, Nat.mem_divisors, hnotn]
   calc
     finsuppDot (logGcdFeature m) (logGcdFeature n)
-        = ∑ d ∈ m.divisors, Real.sqrt (Λ d) * logGcdFeature n d := by
-            simp [finsuppDot, logGcdFeature, Finset.sum_attach]
+        = ∑ d ∈ m.divisors, logGcdFeature m d * logGcdFeature n d := by
+            unfold finsuppDot
+            exact Finset.sum_subset hsupp hsupp_zero
+    _ = ∑ d ∈ m.divisors, Real.sqrt (Λ d) * logGcdFeature n d := by
+          exact Finset.sum_congr rfl fun d hd => by
+            rw [logGcdFeature_apply, if_pos hd]
     _ = ∑ d ∈ (Nat.gcd m n).divisors, Λ d := by
           rw [← Finset.sum_subset hsub h_off]
           exact Finset.sum_congr rfl h_on
