@@ -65,9 +65,18 @@ def main() -> int:
         )
     )
     rejected(
+        lambda root: (root / "LogGcdFeature.lean").write_text(
+            (root / "LogGcdFeature.lean").read_text(encoding="utf-8").replace(
+                "theorem logGcd_eq_feature_inner", "theorem removed_feature_identity"
+            ),
+            encoding="utf-8",
+        )
+    )
+    rejected(lambda root: (root / "LogGcdFeature.lean").unlink())
+    rejected(
         lambda root: update_json(
             root / "claim_ledger.json",
-            lambda value: value["claims"][0].update(status="PENDING_TARGET_CI"),
+            lambda value: value["claims"][2].update(status="PENDING_TARGET_CI"),
         )
     )
     rejected(
@@ -77,12 +86,44 @@ def main() -> int:
         )
     )
     rejected(
+        lambda root: update_json(
+            root / "prior_art_audit.json",
+            lambda value: value["determinations"].update(mathematical_novelty="SUPPORTED"),
+        )
+    )
+    rejected(
+        lambda root: update_json(
+            root / "prior_art_audit.json",
+            lambda value: value["formalization_search"].update(priority_inference="FIRST_FORMALIZATION"),
+        )
+    )
+    rejected(
+        lambda root: update_yaml(
+            root / "agent_review.yaml",
+            lambda value: value["unresolved_obligations"].append(
+                {
+                    "id": "LOG-GCD-001-O999",
+                    "owner": "Formalist",
+                    "description": "Fabricated residual obligation.",
+                    "severity": "high",
+                    "blocking": True,
+                }
+            ),
+        )
+    )
+    rejected(
         lambda root: update_yaml(
             root / "agent_review.yaml",
             lambda value: value["promotion"].update(
                 ready_for_next_stage=False,
-                blockers=["LOG-GCD-001-O001"],
+                blockers=["LOG-GCD-001-O999"],
             ),
+        )
+    )
+    rejected(
+        lambda root: update_yaml(
+            root / "agent_review.yaml",
+            lambda value: value["artifact"].update(status="ready_for_certification"),
         )
     )
     rejected(

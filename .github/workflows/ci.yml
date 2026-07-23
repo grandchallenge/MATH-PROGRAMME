@@ -58,7 +58,17 @@ jobs:
         run: python -m pip install jsonschema pyyaml
 
       - name: Check LOG-GCD formal fixture
-        run: python3 ci/validate_log_gcd_fixture.py fixtures/formal/LOG-GCD-001
+        run: |
+          set -o pipefail
+          python3 ci/validate_log_gcd_fixture.py fixtures/formal/LOG-GCD-001 2>&1 | tee log-gcd-policy.log
+
+      - name: Preserve LOG-GCD policy failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: log-gcd-policy-failure
+          path: log-gcd-policy.log
+          if-no-files-found: error
 
       - name: Run adversarial LOG-GCD fixture tests
         run: python3 ci/test_log_gcd_fixture.py
