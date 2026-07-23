@@ -84,7 +84,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Set up pinned Lean toolchain
+      - name: Set up pinned Lean and mathlib cache
         id: lean-setup
         continue-on-error: true
         uses: leanprover/lean-action@v1
@@ -94,7 +94,7 @@ jobs:
           build: false
           test: false
           use-github-cache: false
-          use-mathlib-cache: false
+          use-mathlib-cache: true
 
       - name: Build LOG-GCD fixture
         working-directory: fixtures/formal/LOG-GCD-001
@@ -109,7 +109,10 @@ jobs:
             command -v lake || true
             elan --version || true
             lake --version || true
-            lake update
+            if [[ "${LEAN_SETUP_OUTCOME}" != "success" ]]; then
+              echo "Lean or mathlib-cache setup failed before compilation."
+              exit 1
+            fi
             lake build
           } > lean-build.log 2>&1
           status=$?
