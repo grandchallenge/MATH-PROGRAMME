@@ -91,10 +91,21 @@ jobs:
 
       - name: Validate programme contracts
         run: |
-          python ci/validate_programme.py
-          python ci/test_validate_programme.py
-          python ci/validate_docs.py
-          python ci/test_validate_docs.py
+          set -o pipefail
+          {
+            python ci/validate_programme.py
+            python ci/test_validate_programme.py
+            python ci/validate_docs.py
+            python ci/test_validate_docs.py
+          } 2>&1 | tee programme-contracts.log
+
+      - name: Preserve programme contract failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: programme-contract-failure
+          path: programme-contracts.log
+          if-no-files-found: error
 
       - name: Install documentation dependencies
         run: |
