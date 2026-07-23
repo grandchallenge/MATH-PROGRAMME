@@ -1,7 +1,7 @@
 # The logarithmic GCD kernel
 
 `LOG-GCD-001` is a certified MATHCERT fixture for the logarithmic GCD kernel,
-now extended with an explicit finitely supported feature realization.
+including an explicit finitely supported feature realization.
 
 ## The result
 
@@ -36,8 +36,9 @@ finsuppDot (logGcdFeature m) (logGcdFeature n)
   = Real.log (Nat.gcd m n)
 ```
 
-for nonzero natural inputs. The declaration is
-`logGcd_eq_feature_inner` in `LogGcdFeature.lean`.
+for nonzero natural inputs. The declaration
+`logGcd_eq_feature_inner` in `LogGcdFeature.lean` is certified by the expanded
+repository-native replay in workflow run `29993578051`.
 
 Finite support is part of the type: the vector is supported on the divisors of
 `n`. No convergence assumption is hidden in the construction.
@@ -57,9 +58,9 @@ the coordinate product is
 sqrt(Λ(d)) sqrt(Λ(d)) = Λ(d).
 ```
 
-Summing the coordinate products therefore recovers the logarithm of the gcd.
-The original positive-semidefinite theorem and the feature theorem expose two
-views of the same nonnegative divisor decomposition.
+Summing the coordinate products recovers the logarithm of the gcd. The
+quadratic-form theorem and feature theorem are two certified views of the same
+nonnegative divisor decomposition.
 
 ## Prior-art determination
 
@@ -118,16 +119,16 @@ The feature map is a formal `Finsupp` realization. It is not advertised as a
 novel embedding or as a separately developed completed-space `ℓ²`
 construction. Zero inputs remain outside the theorem statement.
 
-## Certification route
+## Certification record
 
 ```text
 classical GCD-matrix factorization
     ↓ formalized divisor features
 LogGcdFeature.lean
     ↓ provenance, audit, and adversarial policy checks
-repository-native pinned `lake build`
+repository-native pinned lake build: workflow 29993578051
     ↓
-MATHCERT feature-claim promotion
+C003 CERTIFIED; O002 and O003 CLOSED
 ```
 
 The authoritative integrated artifact is
