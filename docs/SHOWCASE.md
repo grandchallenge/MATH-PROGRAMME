@@ -218,10 +218,10 @@ The important result is not the elementary theorem. It is that the programme che
 
 ## Fixture 003: The logarithmic GCD kernel
 
-<div class="fixture-showcase" id="fixture-003-the-logarithmic-gcd-kernel" aria-label="LOG-GCD-001 certified Lean publication candidate">
+<div class="fixture-showcase" id="fixture-003-the-logarithmic-gcd-kernel" aria-label="LOG-GCD-001 published certified Lean result">
   <header class="fixture-showcase__header">
     <div>
-      <span class="fixture-showcase__index">Fixture 003 · PUB-LOG-GCD-001 · Publication candidate</span>
+      <span class="fixture-showcase__index">Fixture 003 · PUB-LOG-GCD-001 · Publication status: published</span>
       <h3>Classical mathematics · certified formal artifact</h3>
     </div>
     <a href="LOG_GCD_PUBLICATION.md">Read the public note <span>→</span></a>
@@ -246,10 +246,10 @@ The important result is not the elementary theorem. It is that the programme che
       <p>Lean checks positive semidefiniteness and the exact <code>Finsupp</code> Gram realization.</p>
     </div>
     <b aria-hidden="true">→</b>
-    <div class="fixture-route__stage fixture-route__stage--audited">
+    <div class="fixture-route__stage fixture-route__stage--checked">
       <span>03 · Public claim</span>
-      <strong>Publication candidate</strong>
-      <p>The published statement carries its certification evidence and permanent claim boundary.</p>
+      <strong>Published</strong>
+      <p>Workflow <code>29997559180</code> checked the published statement, certification evidence, and permanent claim boundary.</p>
     </div>
   </div>
 
@@ -263,7 +263,7 @@ The important result is not the elementary theorem. It is that the programme che
 
   <div class="fixture-verdicts" aria-label="LOG-GCD publication results">
     <div><strong>2</strong><span>certified theorem claims</span></div>
-    <div><strong>3</strong><span>pinned replay records</span></div>
+    <div><strong>1</strong><span>publication gate passed</span></div>
     <div><strong>0</strong><span>novelty claims</span></div>
   </div>
 
@@ -282,7 +282,7 @@ The important result is not the elementary theorem. It is that the programme che
 
 <div class="fixture-series-note">
   <strong>What advanced</strong>
-  <p>A certified artifact has entered the publication lane without changing its mathematical status. The public note makes the exact formal contribution inspectable while retaining the classical prior-art determination and every permanent exclusion.</p>
+  <p>A certified artifact has crossed the publication gate without changing its mathematical status. The public note makes the exact formal contribution inspectable while retaining the classical prior-art determination and every permanent exclusion.</p>
 </div>
 
 ## Current demonstration domain
