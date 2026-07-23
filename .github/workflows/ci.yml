@@ -83,19 +83,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: leanprover/lean-action@v1
+
+      - name: Set up pinned Lean toolchain
+        id: lean-setup
+        continue-on-error: true
+        uses: leanprover/lean-action@v1
         with:
           lake-package-directory: fixtures/formal/LOG-GCD-001
           auto-config: false
           build: false
           test: false
+          use-github-cache: false
+          use-mathlib-cache: false
 
       - name: Build LOG-GCD fixture
         working-directory: fixtures/formal/LOG-GCD-001
         shell: bash
+        env:
+          LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}
         run: |
           set +e
-          lake build > lean-build.log 2>&1
+          {
+            echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+            command -v elan || true
+            command -v lake || true
+            elan --version || true
+            lake --version || true
+            lake update
+            lake build
+          } > lean-build.log 2>&1
           status=$?
           cat lean-build.log
           exit "$status"
