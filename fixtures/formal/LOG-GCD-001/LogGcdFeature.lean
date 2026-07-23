@@ -10,7 +10,7 @@ For a positive natural number `n`, the coordinate indexed by `d` is
 `Real.sqrt (Λ d)` when `d ∣ n`, and zero otherwise.
 
 The feature vector is represented by `ℕ →₀ ℝ`, so finite support is part of the
-type rather than an external convergence obligation.  Its canonical finite dot
+type rather than an external convergence obligation. Its canonical finite dot
 product recovers `Real.log (Nat.gcd m n)` exactly.
 -/
 
@@ -51,8 +51,8 @@ theorem logGcd_eq_feature_inner
     intro d hd
     have hdivg : d ∣ Nat.gcd m n := (Nat.mem_divisors.mp hd).1
     have hdivn : d ∣ n := hdivg.trans (Nat.gcd_dvd_right _ _)
-    rw [logGcdFeature_apply]
-    simp only [Nat.mem_divisors, hdivn, hn, and_self, if_true]
+    have hdn : d ∈ n.divisors := Nat.mem_divisors.mpr ⟨hdivn, hn⟩
+    rw [logGcdFeature_apply, if_pos hdn]
     simpa [pow_two] using (Real.sq_sqrt (vonMangoldt_nonneg : 0 ≤ Λ d))
   have h_off : ∀ d ∈ m.divisors, d ∉ (Nat.gcd m n).divisors →
       Real.sqrt (Λ d) * logGcdFeature n d = 0 := by
@@ -65,7 +65,7 @@ theorem logGcd_eq_feature_inner
   calc
     finsuppDot (logGcdFeature m) (logGcdFeature n)
         = ∑ d ∈ m.divisors, Real.sqrt (Λ d) * logGcdFeature n d := by
-            simp [finsuppDot, logGcdFeature]
+            simp [finsuppDot, logGcdFeature, Finset.sum_attach]
     _ = ∑ d ∈ (Nat.gcd m n).divisors, Λ d := by
           rw [← Finset.sum_subset hsub h_off]
           exact Finset.sum_congr rfl h_on
