@@ -73,7 +73,7 @@ jobs:
       - name: Run adversarial LOG-GCD fixture tests
         run: python3 ci/test_log_gcd_fixture.py
 
-      - name: Check LOG-GCD publication candidate
+      - name: Check LOG-GCD published result
         run: |
           set -o pipefail
           python3 ci/validate_log_gcd_publication.py fixtures/formal/LOG-GCD-001 2>&1 | tee log-gcd-publication-policy.log
