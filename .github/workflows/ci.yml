@@ -87,5 +87,23 @@ jobs:
         with:
           lake-package-directory: fixtures/formal/LOG-GCD-001
           auto-config: false
-          build: true
+          build: false
           test: false
+
+      - name: Build LOG-GCD fixture
+        working-directory: fixtures/formal/LOG-GCD-001
+        shell: bash
+        run: |
+          set +e
+          lake build > lean-build.log 2>&1
+          status=$?
+          cat lean-build.log
+          exit "$status"
+
+      - name: Preserve Lean failure log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: log-gcd-lean-failure
+          path: fixtures/formal/LOG-GCD-001/lean-build.log
+          if-no-files-found: error
