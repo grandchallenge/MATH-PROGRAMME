@@ -3,7 +3,7 @@ artifact:
   type: certificate
   title: Positive semidefiniteness of the logarithmic GCD kernel
   pillar: MATHCERT
-  status: ready_for_certification
+  status: certified
 council_review:
   Axiomatist:
     status: reviewed
@@ -19,8 +19,8 @@ council_review:
     reviewed_at: '2026-07-22'
     obligations: []
     findings:
-    - No novelty or priority claim is made; the result enters as a certified-result
-      candidate rather than discovery ore.
+    - No novelty or priority claim is made; the result enters as a certified formal
+      artifact rather than discovery ore.
   Experimentalist:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
@@ -40,11 +40,10 @@ council_review:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
     reviewed_at: '2026-07-22'
-    obligations:
-    - Require the target-repository Lean CI job to pass before promotion to certified.
+    obligations: []
     findings:
-    - The theorem declaration and pinned toolchain are identified; repository-native
-      Lean replay remains the blocking gate.
+    - The pinned Lake project and theorem `logGcd_posSemidef` built successfully in
+      MATH-PROGRAMME workflow run 29984406250.
   Adversary:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
@@ -60,7 +59,7 @@ council_review:
     obligations:
     - Formalize the explicit ℓ² feature map only if that stronger artifact is promoted.
     findings:
-    - The imported theorem proves the finite quadratic-form criterion; the ℓ² feature
+    - The certified theorem proves the finite quadratic-form criterion; the ℓ² feature
       map is not separately formalized.
   Steward:
     status: reviewed
@@ -99,14 +98,16 @@ council_review:
     obligations:
     - Conduct a prior-art audit before any novelty statement.
     findings:
-    - Upstream repository, commit, file blob, license blob, and toolchain are pinned.
+    - Upstream repository, commit, theorem blob, manifest blob, license blob, toolchain,
+      and exact mathlib commit are pinned.
   Mechanist:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
     reviewed_at: '2026-07-22'
     obligations: []
     findings:
-    - A standalone Lake project and dedicated CI job provide the replay mechanism.
+    - A standalone Lake project, mathlib binary cache, and dedicated CI job provide
+      the replay mechanism.
   Typesetter:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
@@ -136,6 +137,8 @@ amanuensis_control:
     - fixtures/formal/LOG-GCD-001/source_lock.json
     - fixtures/formal/LOG-GCD-001/claim_ledger.json
     - fixtures/formal/LOG-GCD-001/LogGcd.lean
+    - fixtures/formal/LOG-GCD-001/lake-manifest.json
+    - MATH-PROGRAMME workflow run 29984406250
   cross_document_consistency:
     status: reviewed
     checked_against:
@@ -151,14 +154,8 @@ amanuensis_control:
     integration_notes:
     - Preserved the formal theorem while separating formal, interpretive, and novelty
       claims.
-    - Recorded upstream CC0 provenance and exact source lock.
+    - Recorded upstream CC0 provenance, dependency manifest, and successful Lean replay.
 unresolved_obligations:
-- id: LOG-GCD-001-O001
-  owner: Verifier
-  description: The vendored Lean project must build successfully in MATH-PROGRAMME
-    CI.
-  severity: high
-  blocking: true
 - id: LOG-GCD-001-O002
   owner: Formalist
   description: The explicit ℓ² feature map and coprimality-as-orthogonality corollaries
@@ -171,7 +168,6 @@ unresolved_obligations:
   severity: low
   blocking: false
 promotion:
-  ready_for_next_stage: false
-  blockers:
-  - LOG-GCD-001-O001
+  ready_for_next_stage: true
+  blockers: []
   certification_route: LEAN_FORMALIZATION
