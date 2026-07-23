@@ -31,14 +31,15 @@
       "claim_text": "The finitely supported divisor feature map φ(n)_d=sqrt(Λ(d))[d|n] has dot product log(gcd(m,n)) for nonzero natural inputs.",
       "claim_class": "FORMALIZED",
       "support_type": "LEAN_FORMALIZATION",
-      "status": "PENDING_TARGET_CI",
+      "status": "CERTIFIED",
       "formal_definition": "logGcdFeature",
       "formal_theorem": "logGcd_eq_feature_inner",
       "artifact": "LogGcdFeature.lean",
       "depends_on": [
         "LOG-GCD-001-C001"
       ],
-      "promotion_condition": "The expanded pinned Lake project builds successfully in MATH-PROGRAMME CI."
+      "certification_evidence": "MATH-PROGRAMME workflow run 29993578051: Replay LOG-GCD-001 in Lean passed with the expanded feature module.",
+      "promotion_condition": "Satisfied by repository-native build of the exact pinned Lake project."
     },
     {
       "claim_id": "LOG-GCD-001-C004",
