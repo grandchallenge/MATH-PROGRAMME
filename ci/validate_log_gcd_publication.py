@@ -167,7 +167,7 @@ def check_public_pages(manifest: dict[str, Any]) -> None:
         "logGcd_eq_feature_inner",
         EXPECTED_DESCRIPTION,
         "Mathematical novelty is **not supported**",
-        "first-public-Lean-formalization priority is established",
+        "no first-public-Lean-formalization priority is established",
         "The publication does **not** claim any of the following",
         "workflow `29984406250`",
         "workflow `29993578051`",
@@ -189,8 +189,10 @@ def check_public_pages(manifest: dict[str, Any]) -> None:
         require(fragment in showcase_text, f"showcase entry missing: {fragment!r}")
 
     nav_text = nav.read_text(encoding="utf-8")
-    require("Published Result: Logarithmic GCD Kernel: LOG_GCD_PUBLICATION.md" in nav_text,
-            "publication page missing from site navigation")
+    require(
+        '"Published Result: Logarithmic GCD Kernel": LOG_GCD_PUBLICATION.md' in nav_text,
+        "publication page missing from site navigation",
+    )
 
     ledger_text = ledger.read_text(encoding="utf-8")
     require("Publication candidate" in ledger_text, "fixture ledger lacks publication-stage record")
