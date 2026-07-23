@@ -1,0 +1,128 @@
+claims:
+  - claim_id: NS-CI-WP00-C001
+    short_name: energy-to-L2L6
+    claim_text: The Leray-Hopf energy inequality together with the three-dimensional Sobolev inequality yields u in L^2(0,T;L^6(R^3)).
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: UNDER_REVIEW
+    certainty: CONDITIONAL_ON_AUDIT_OF_IMPORTED_ENERGY_INTERFACE
+    source_or_artifact:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md#51-what-energy-gives
+    assumptions:
+      - Leray-Hopf energy inequality in the selected R^3 convention
+      - Sobolev inequality from homogeneous H1 control to L6
+      - viscosity nu is positive
+    promotion_condition: Audit the imported energy and Sobolev statements and obtain independent verification of the derivation.
+    related_files:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/06_DEPENDENCY_DAG.json
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/09_PROOF_DEBT.json
+    knowledge_graph_refs: []
+
+  - claim_id: NS-CI-WP00-C002
+    short_name: energy-space-nonembedding
+    claim_text: The abstract energy space L-infinity in time L2 in space intersect L2 in time H1 in space is not contained in L4 in time L6 in space.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: UNDER_REVIEW
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md#53-exact-energy-space-obstruction
+    assumptions:
+      - existence of a nonzero smooth compactly supported divergence-free vector field on R3
+      - standard spatial scaling formulas for Lp and gradient norms
+    promotion_condition: Independently verify the concentrating witness and confirm that no time-regularity property beyond energy-space membership is being claimed.
+    related_files:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/06_DEPENDENCY_DAG.json
+    knowledge_graph_refs: []
+
+  - claim_id: NS-CI-WP00-C003
+    short_name: critical-scaling
+    claim_text: Under u_lambda(x,t)=lambda u(lambda x,lambda^2 t), the integral of the fourth power of the L6 norm is invariant after the corresponding time-interval rescaling.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: UNDER_REVIEW
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md#54-scaling-calculation
+    assumptions:
+      - sufficient measurability and integrability for change of variables
+      - standard Navier-Stokes scaling on R3
+    promotion_condition: Independent algebraic review or kernel-checked mixed-norm scaling proof.
+    related_files:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/11_CERT_HANDOFF.md
+    knowledge_graph_refs: []
+
+  - claim_id: NS-CI-WP00-C004
+    short_name: LPS-regularity-at-4-6
+    claim_text: A Leray-Hopf solution in L4(0,T;L6(R3)) is regular on the interval and lies in the conditional uniqueness class.
+    claim_class: LITERATURE_DERIVED
+    support_type: SOURCE_CITATION
+    status: DRAFT
+    certainty: EXPECTED_CLASSICAL_RESULT_EXACT_HYPOTHESES_PENDING
+    source_or_artifact:
+      - https://doi.org/10.1007/BF02410664
+      - https://doi.org/10.1007/BF00253344
+      - https://www.mathnet.ru/eng/znsl2228
+    assumptions:
+      - selected solution class matches the source theorem
+      - selected domain matches or is covered by a verified transfer
+      - endpoint and time-interval conventions match
+    promotion_condition: Extract and reconcile exact primary-source theorem statements and verify them against a modern authoritative treatment.
+    related_files:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/09_PROOF_DEBT.json
+    knowledge_graph_refs: []
+
+  - claim_id: NS-CI-WP00-C005
+    short_name: universal-integrability-implies-global-regularity
+    claim_text: Universal L4_t L6_x integrability for the campaign's smooth divergence-free data and Leray-Hopf solutions implies the positive global-regularity branch for the corresponding R3 Navier-Stokes problem.
+    claim_class: NEEDS_AUDIT
+    support_type: EXTERNAL_SPECIALIST_PENDING
+    status: DRAFT
+    certainty: HIGH_LEVEL_CORRESPONDENCE_ONLY
+    source_or_artifact:
+      - https://www.claymath.org/wp-content/uploads/2022/06/navierstokes.pdf
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md#44-maximal-strong-solution-companion
+    assumptions:
+      - local strong existence and uniqueness for the selected data class
+      - Ladyzhenskaya-Prodi-Serrin regularity at the pair 4,6
+      - weak-strong uniqueness
+      - correspondence between the campaign data/domain and the official positive branch
+    promotion_condition: Commit a theorem-by-theorem implication proof with every quantifier and domain difference resolved and obtain Referee approval.
+    related_files:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/06_DEPENDENCY_DAG.json
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/09_PROOF_DEBT.json
+    knowledge_graph_refs: []
+
+  - claim_id: NS-CI-WP00-C006
+    short_name: universal-integrability-open
+    claim_text: The universal L4_t L6_x estimate posed by NS-CI-001 is not presently known for arbitrary smooth finite-energy divergence-free initial data in three dimensions.
+    claim_class: LITERATURE_DERIVED
+    support_type: SOURCE_CITATION
+    status: DRAFT
+    certainty: OFFICIAL_STATUS_IDENTIFIED_CURRENT_AUDIT_PENDING
+    source_or_artifact:
+      - https://www.claymath.org/millennium/navier-stokes-equation/
+      - https://www.claymath.org/wp-content/uploads/2022/06/navierstokes.pdf
+    assumptions:
+      - the correspondence in claim NS-CI-WP00-C005 is correct
+      - no accepted resolution has superseded the official status
+    promotion_condition: Complete a dated current-status audit and the correspondence proof in NS-CI-WP00-C005.
+    related_files:
+      - DOMAIN_02_NAVIER_STOKES_CRITICAL_INTEGRABILITY_MASTER_PLAN.md
+    knowledge_graph_refs: []
+
+  - claim_id: NS-CI-WP00-C007
+    short_name: no-new-result
+    claim_text: WP00 introduces a governed campaign and local expository derivations but no new Navier-Stokes regularity theorem.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - DOMAIN_02_NAVIER_STOKES_CRITICAL_INTEGRABILITY_MASTER_PLAN.md#claim-boundary
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/01_RESULT_STATUS.json
+    assumptions: []
+    promotion_condition: Preserve the claim boundary in every derivative artifact and reject any wording that upgrades the campaign initialization into mathematical progress on the open estimate.
+    related_files:
+      - reviews/navier_stokes/NS-CI-WP00.agent_review.yaml
+    knowledge_graph_refs: []
