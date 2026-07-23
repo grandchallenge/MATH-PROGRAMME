@@ -67,7 +67,7 @@ def main() -> int:
     rejected(
         lambda root: update_json(
             root / "claim_ledger.json",
-            lambda value: value["claims"][0].update(status="CERTIFIED"),
+            lambda value: value["claims"][0].update(status="PENDING_TARGET_CI"),
         )
     )
     rejected(
@@ -79,13 +79,22 @@ def main() -> int:
     rejected(
         lambda root: update_yaml(
             root / "agent_review.yaml",
-            lambda value: value["promotion"].update(ready_for_next_stage=True, blockers=[]),
+            lambda value: value["promotion"].update(
+                ready_for_next_stage=False,
+                blockers=["LOG-GCD-001-O001"],
+            ),
         )
     )
     rejected(
         lambda root: update_json(
             root / "source_lock.json",
             lambda value: value["source_license"].update(spdx="MIT"),
+        )
+    )
+    rejected(
+        lambda root: update_json(
+            root / "lake-manifest.json",
+            lambda value: value["packages"][0].update(rev="0" * 40),
         )
     )
 
