@@ -28,6 +28,7 @@ Every governed artifact receives:
 |---|---|---|---|---|---|---|---|---|---|
 | GOV-AGENT-COUNCIL-001 | governance bundle | MATH-PROGRAMME | `docs/MATH_PROGRAMME_AGENT_COUNCIL.md` | active | `ADR-0001` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `templates/agent_review.yaml` | 2026-07-09 | reviewed |
 | CERT-LOG-GCD-001 | formal certificate fixture | MATHCERT | `fixtures/formal/LOG-GCD-001/README.md` | certified | none | `docs/GLOSSARY.md` | `fixtures/formal/LOG-GCD-001/agent_review.yaml` | 2026-07-23 | reviewed |
+| PUB-LOG-GCD-001 | public research note | MATH-PROGRAMME | `docs/LOG_GCD_PUBLICATION.md` | published | none | `docs/GLOSSARY.md` | `fixtures/formal/LOG-GCD-001/agent_review.yaml` | 2026-07-23 | reviewed |
 
 ## Update rules
 
@@ -37,3 +38,4 @@ Every governed artifact receives:
 4. A ledger entry may not be marked reviewed while review provenance is incomplete.
 5. A blocking cross-document conflict changes the Amanuensis state to `blocked`.
 6. Mathematical promotion is never inferred from ledger status alone.
+7. Publication status changes visibility and editorial readiness; it does not change the underlying claim status.

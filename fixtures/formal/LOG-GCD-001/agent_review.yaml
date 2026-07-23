@@ -11,14 +11,14 @@ council_review:
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - The kernel and feature identity are stated for nonzero natural inputs; the zero-input extension remains excluded.
+    - The kernel and feature identity are stated for nonzero natural inputs; the zero-input extension remains excluded from certification and publication.
   Prospector:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - The prior-art audit determines that mathematical novelty is not supported; the programme contribution is formalization and certification.
+    - The prior-art audit determines that mathematical novelty is not supported; the public contribution is formalization, certification, and exposition.
   Experimentalist:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
@@ -32,7 +32,7 @@ council_review:
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - The theorem spine includes the finitely supported divisor feature definition, its exact dot-product identity, and the original PSD theorem.
+    - The theorem spine includes the finitely supported divisor feature definition, its exact dot-product identity, the PSD theorem, and a published node bound to certified claim IDs.
   Verifier:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
@@ -41,6 +41,8 @@ council_review:
     findings:
     - The original theorem remains certified by workflow run 29984406250.
     - The expanded pinned Lake project, including `LogGcdFeature.lean`, passed workflow run 29993578051.
+    - The promoted certification state passed policy and Lean replay in workflow run 29994235171.
+    - The publication candidate passed policy, adversarial, strict-documentation, and Lean gates in workflow run 29997559180.
   Adversary:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
@@ -48,6 +50,7 @@ council_review:
     obligations: []
     findings:
     - CI rejects missing feature declarations, feature-claim demotion, novelty promotion, unsupported priority inference, and strict-positive-definiteness overclaim.
+    - The published-state gate rejects uncertified public claims, removed negative boundaries, missing publication evidence, status demotion, and altered permitted wording.
   Formalist:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
@@ -61,28 +64,28 @@ council_review:
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - The fixture separates the classical mathematical result, the certified formal artifact, and the prohibited priority inferences.
+    - The fixture separates the classical mathematical result, the certified formal artifact, the published artifact, and prohibited priority inferences.
   Composer:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - The result-status box, theorem spine, feature construction, audit conclusion, trust quartet, and certification evidence are integrated.
+    - The public research note presents the claim, explicit feature construction, worked example, proof mechanism, prior-art determination, certification record, publication evidence, and exclusions in reader order.
   Grammarian:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - Finsupp realization, completed ℓ² packaging, positive semidefiniteness, and strict positive definiteness are kept distinct.
+    - Finsupp realization, completed ℓ² packaging, positive semidefiniteness, strict positive definiteness, certification, and publication are kept distinct.
   Amanuensis:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - The fixture README remains the authoritative integrated artifact; the feature module, audit records, and replay evidence are linked.
+    - The fixture README remains the authoritative certificate artifact; `docs/LOG_GCD_PUBLICATION.md` is the authoritative published note governed by `publication_manifest.json`.
   Archivist:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
@@ -98,20 +101,21 @@ council_review:
     obligations: []
     findings:
     - The standalone Lake package builds both `LogGcd` and `LogGcdFeature` against the exact pinned dependency manifest in workflow run 29993578051.
+    - Publication policy is independently replayed without modifying the certified Lean package.
   Typesetter:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - Mathematical notation, formal declarations, citations, and claim-status language are presented in copy-safe form.
+    - Mathematical notation, formal declarations, citations, publication date, gate evidence, and claim-boundary language are presented in copy-safe form.
   Referee:
     status: reviewed
     reviewed_by: GPT-5.6 Thinking
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-    - The feature identity is a certified formal strengthening; the novelty audit correctly records a negative determination rather than manufacturing priority.
+    - The published note accurately exposes the certified result and negative novelty determination without changing mathematical status.
 amanuensis_control:
   artifact_ledger:
     ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md
@@ -129,9 +133,14 @@ amanuensis_control:
     - fixtures/formal/LOG-GCD-001/LogGcdFeature.lean
     - fixtures/formal/LOG-GCD-001/PRIOR_ART_AUDIT.md
     - fixtures/formal/LOG-GCD-001/prior_art_audit.json
+    - fixtures/formal/LOG-GCD-001/publication_manifest.json
     - fixtures/formal/LOG-GCD-001/lake-manifest.json
+    - docs/LOG_GCD_PUBLICATION.md
+    - docs/SHOWCASE.md
     - MATH-PROGRAMME workflow run 29984406250
     - MATH-PROGRAMME workflow run 29993578051
+    - MATH-PROGRAMME workflow run 29994235171
+    - MATH-PROGRAMME workflow run 29997559180
   cross_document_consistency:
     status: reviewed
     checked_against:
@@ -139,17 +148,21 @@ amanuensis_control:
     - CERTIFICATION_LADDER.md
     - CLAIM_LEDGER_STANDARD.md
     - GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md
+    - docs/PROGRAMME_ATLAS.md
     - docs/FIXTURE_LEDGER.md
     - docs/LOG_GCD_KERNEL.md
     - docs/LOG_GCD_PRIOR_ART_AUDIT.md
+    - docs/LOG_GCD_PUBLICATION.md
+    - docs/SHOWCASE.md
     conflicts: []
   final_editorial_integration:
     status: reviewed
     integrated_artifact_ref: fixtures/formal/LOG-GCD-001/README.md
     integration_notes:
-    - Added and certified the requested finitely supported feature-map declaration and exact Gram identity.
+    - Added and certified the finitely supported feature-map declaration and exact Gram identity.
     - Completed a prior-art audit that rejects mathematical novelty and leaves artifact priority unestablished.
-    - Retained explicit boundaries around zero inputs, strict positive definiteness, and completed-space packaging.
+    - Published `PUB-LOG-GCD-001` after workflow run 29997559180 passed the candidate gate.
+    - Retained explicit boundaries around zero inputs, strict positive definiteness, completed-space packaging, novelty, and priority.
 unresolved_obligations: []
 promotion:
   ready_for_next_stage: true

@@ -9,6 +9,7 @@
 | Certified declarations | `logGcd_posSemidef`, `logGcdFeature`, `logGcd_eq_feature_inner` |
 | Support route | Lean 4 + mathlib, pinned to `v4.33.0-rc1` and exact transitive revisions |
 | Certification state | **CERTIFIED** by repository-native replay |
+| Publication state | `PUB-LOG-GCD-001` **PUBLISHED** on 2026-07-23; gate evidence workflow run `29997559180` |
 | Prior-art determination | Mathematical novelty **NOT SUPPORTED**; Lean-artifact priority **NOT ESTABLISHED** |
 | Computation class | `NONE` |
 | Claims not made | novelty, priority, strict positive definiteness, zero-input extension, completed-space ℓ² packaging |
@@ -63,10 +64,13 @@ LOG-GCD-F02  logGcd_eq_feature_inner                    [CERTIFIED]
 LOG-GCD-T01  logGcd_posSemidef                          [CERTIFIED]
       |
 LOG-GCD-I01  positive-semidefinite-kernel interpretation [AUDITED]
+      |
+PUB-LOG-GCD-001 public claim bound to C001/C003/C004/C005 [PUBLISHED]
 ```
 
 The feature theorem and the quadratic-form theorem expose two formal views of
-the same nonnegative divisor decomposition.
+the same nonnegative divisor decomposition. The publication node changes
+visibility, not mathematical status.
 
 ## Feature realization
 
@@ -127,8 +131,8 @@ Permitted description:
 > A GCL-certified Lean formalization and explicit `Finsupp` realization of a
 > classical GCD-matrix positivity criterion.
 
-Descriptions such as “new theorem,” “novel kernel,” “first proof,” “first
-feature representation,” or “first Lean formalization” are prohibited.
+Descriptions such as “new theorem,” “novel kernel,” “first proof,” or “first
+Lean formalization” are prohibited.
 
 ## Claim boundary
 
@@ -151,11 +155,11 @@ The upstream `lake-manifest.json` is pinned by Git blob
 `99d43177d509c4ceb340c8b2e6330e9c75233169`; it resolves mathlib to commit
 `79d0395a1825a6264ad5d269e35e60537518955e`.
 
-The upstream repository is dedicated under CC0-1.0. `LogGcdFeature.lean` and
-the prior-art audit are GCL follow-on artifacts and do not alter upstream
-attribution.
+The upstream repository is dedicated under CC0-1.0. `LogGcdFeature.lean`, the
+prior-art audit, and the publication packet are GCL follow-on artifacts and do
+not alter upstream attribution.
 
-## Reproduction and certification evidence
+## Reproduction and evidence
 
 From this fixture directory:
 
@@ -164,14 +168,18 @@ lake exe cache get
 lake build
 ```
 
-The repository-native replay history is:
+The repository-native evidence history is:
 
 - workflow run `29984406250`: certified `logGcd_posSemidef`;
 - workflow run `29993578051`: certified the expanded package containing
-  `logGcdFeature` and `logGcd_eq_feature_inner`.
+  `logGcdFeature` and `logGcd_eq_feature_inner`;
+- workflow run `29994235171`: checked the completed certification-governance state;
+- workflow run `29997559180`: passed the publication candidate policy,
+  adversarial mutations, programme contracts, strict documentation build, and
+  unchanged pinned Lean replay.
 
-Both builds used the exact pinned toolchain and dependency manifest, without
-`sorry` or local axioms.
+Both Lean builds used the exact pinned toolchain and dependency manifest,
+without `sorry` or local axioms.
 
 ## Trust quartet
 
@@ -183,13 +191,32 @@ Both builds used the exact pinned toolchain and dependency manifest, without
 4. **Excluded:** strict positive definiteness, zero-input extension,
    completed-space packaging, and every first-or-novelty assertion.
 
+## Publication stage
+
+`publication_manifest.json` binds `PUB-LOG-GCD-001` to:
+
+- certified claims `LOG-GCD-001-C001` and `LOG-GCD-001-C003`;
+- audited boundary claims `LOG-GCD-001-C004` and `LOG-GCD-001-C005`;
+- the exact permitted public description;
+- the prohibited novelty, priority, and strictness descriptions;
+- `docs/LOG_GCD_PUBLICATION.md` as the canonical public note;
+- the Fixture 003 entry in `docs/SHOWCASE.md`;
+- a strict documentation and adversarial policy gate.
+
+The publication gate passed in workflow run `29997559180`. The result was
+published on 2026-07-23. Future edits must preserve the certified claim set,
+negative prior-art determination, permanent exclusions, and exact publication
+evidence.
+
 ## Completion state
 
-The two former nonblocking obligations are closed:
+The two former certification obligations are closed:
 
 - `LOG-GCD-001-O002`: discharged by the certified feature-module replay in
   workflow run `29993578051`;
 - `LOG-GCD-001-O003`: discharged by the prior-art audit’s negative novelty
   determination.
 
-No unresolved LOG-GCD obligation remains.
+The publication-stage gate is also closed by workflow run `29997559180`. No
+unresolved LOG-GCD obligation remains. Publication did not alter the certified
+claim ledger.
