@@ -76,7 +76,7 @@ def main() -> int:
     rejected(
         lambda root: update_json(
             root / "claim_ledger.json",
-            lambda value: value["claims"][2].update(status="CERTIFIED"),
+            lambda value: value["claims"][2].update(status="PENDING_TARGET_CI"),
         )
     )
     rejected(
@@ -100,13 +100,30 @@ def main() -> int:
     rejected(
         lambda root: update_yaml(
             root / "agent_review.yaml",
-            lambda value: value["unresolved_obligations"].clear(),
+            lambda value: value["unresolved_obligations"].append(
+                {
+                    "id": "LOG-GCD-001-O999",
+                    "owner": "Formalist",
+                    "description": "Fabricated residual obligation.",
+                    "severity": "high",
+                    "blocking": True,
+                }
+            ),
         )
     )
     rejected(
         lambda root: update_yaml(
             root / "agent_review.yaml",
-            lambda value: value["promotion"].update(ready_for_next_stage=True, blockers=[]),
+            lambda value: value["promotion"].update(
+                ready_for_next_stage=False,
+                blockers=["LOG-GCD-001-O999"],
+            ),
+        )
+    )
+    rejected(
+        lambda root: update_yaml(
+            root / "agent_review.yaml",
+            lambda value: value["artifact"].update(status="ready_for_certification"),
         )
     )
     rejected(
