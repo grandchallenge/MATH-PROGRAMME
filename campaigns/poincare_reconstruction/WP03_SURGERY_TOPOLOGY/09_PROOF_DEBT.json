@@ -11,6 +11,7 @@
       "current_evidence": ["MT_Theorem_0_3", "MT_Proposition_15_3", "MT_Corollary_15_4", "PC-WP02_crosswalk"],
       "discharge_condition": "Every transition catalogue row has Perelman, Morgan-Tian, and Kleiner-Lott locations or an explicit no-counterpart disposition.",
       "owner": "Archivist",
+      "status": "ACTIVE",
       "blocking_for_wp03_promotion": false
     },
     {
@@ -21,6 +22,7 @@
       "current_evidence": ["JSON_schema", "Python_semantic_validator", "human_proof_PC03_T001"],
       "discharge_condition": "Kernel-checked evaluator soundness theorem conditional on an abstract event contract.",
       "owner": "Formalist",
+      "status": "ACTIVE",
       "blocking_for_wp03_promotion": false
     },
     {
@@ -31,6 +33,7 @@
       "current_evidence": ["human_standard_topology_imports"],
       "discharge_condition": "Formal theorem or explicit axiomatized interface with provenance and no hidden Poincare statement.",
       "owner": "Formalist",
+      "status": "ACTIVE",
       "blocking_for_wp03_promotion": false
     },
     {
@@ -41,6 +44,7 @@
       "current_evidence": ["PC-WP02_theorem_interfaces"],
       "discharge_condition": "Independent analytic reconstruction or formalization; outside current bounded lane.",
       "owner": "Verifier",
+      "status": "ACTIVE",
       "blocking_for_wp03_promotion": false
     },
     {
@@ -48,9 +52,14 @@
       "category": "EXECUTABLE_VALIDATION",
       "blocked_claim": "repository_native_schema_validation",
       "description": "Integrate the WP03 validator and positive/malformed fixtures into programme CI rather than relying only on manual invocation.",
-      "current_evidence": ["14_local_fixtures_pass"],
-      "discharge_condition": "CI invokes validator and fails on mutated malformed histories.",
+      "current_evidence": [
+        "14_local_fixtures_pass",
+        ".github/workflows/ci.yml::Validate_PC-WP03_surgery_histories",
+        "programme_policy_run_30092592581_step_success"
+      ],
+      "discharge_condition": "DISCHARGED: repository CI invokes the validator and the two positive plus twelve malformed histories pass their expected outcomes.",
       "owner": "Experimentalist",
+      "status": "DISCHARGED",
       "blocking_for_wp03_promotion": false
     },
     {
@@ -61,10 +70,11 @@
       "current_evidence": ["schema_general_profile", "twisted_bundle_factor"],
       "discharge_condition": "Separate reviewed theorem and fixtures for the general profile.",
       "owner": "Axiomatist",
+      "status": "ACTIVE",
       "blocking_for_wp03_promotion": false
     }
   ],
   "blocking_for_wp03_promotion": [],
-  "blocking_for_full_formal_certificate": ["PC03-D002", "PC03-D003", "PC03-D005"],
+  "blocking_for_full_formal_certificate": ["PC03-D002", "PC03-D003"],
   "blocking_for_independent_analytic_proof": ["PC03-D004"]
 }
