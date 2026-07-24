@@ -1,69 +1,37 @@
-artifact:
-  id: NS-CI-WP02
-  type: work_package
-  title: Source-normalized conditional-regularity ledger for critical Navier-Stokes integrability
-  pillar: MATHSOLVE
-  status: referee_promoted
-
+artifact: {id: NS-CI-WP02, type: work_package, title: Source-normalized conditional-regularity ledger for critical Navier-Stokes integrability, pillar: MATHSOLVE, status: referee_promoted}
 council_review:
-  Axiomatist: {status: reviewed, obligations: [], findings: [CR-009 is one-way and CR-010 remains pending.]}
-  Prospector: {status: reviewed, obligations: [], findings: [All source IDs resolve and audit-state distinctions are preserved.]}
+  Axiomatist: {status: reviewed, obligations: [], findings: [CR-009 is one-way; CR-010 remains pending.]}
+  Prospector: {status: reviewed, obligations: [], findings: [All source IDs resolve and audit states are preserved.]}
   Experimentalist: {status: reviewed, obligations: [], findings: [No computation supports the theorem chain.]}
   Cartographer: {status: reviewed, obligations: [], findings: [CR-000 through CR-011 agree with WP00 and WP01.]}
-  Verifier:
-    status: reviewed
-    obligations: []
-    findings:
-      - CR-005 exponent and viscosity calculations are correct.
-      - CR-006 is rigorous through the integrated weak-strong inequality; the smooth-pair equality is formal.
-      - CR-007 restart logic is valid in the adopted H1 interface.
-  Adversary: {status: reviewed, obligations: [], findings: [No hidden test, pressure, endpoint, data-class, quantifier, or equivalence transfer remains.]}
-  Formalist: {status: reviewed, obligations: [], findings: [Imported PDE interfaces remain provenance-bearing assumptions.]}
+  Verifier: {status: reviewed, obligations: [], findings: [CR-005, CR-006 integrated semantics, and CR-007 restart logic are correct.]}
+  Adversary: {status: reviewed, obligations: [], findings: [No hidden test, pressure, endpoint, data, quantifier, or equivalence transfer remains.]}
+  Formalist: {status: reviewed, obligations: [], findings: [Imported PDE interfaces remain provenance-bearing.]}
   Steward: {status: reviewed, obligations: [], findings: [The ledger consumes but does not produce the critical norm.]}
-  Composer: {status: reviewed, obligations: [], findings: [Definitions, imports, derivations, bridges, and pending nodes are separated.]}
-  Grammarian: {status: reviewed, obligations: [], findings: [Time-first notation and formal-versus-integrated wording are consistent.]}
-  Amanuensis: {status: reviewed, obligations: [], findings: [WP00, WP01, WP02, and ordered integration are consistent.]}
-  Archivist:
-    status: reviewed
-    obligations: [Continue nonblocking historical extraction.]
-    findings: [Historical gaps are not used as operational theorem bodies.]
+  Composer: {status: reviewed, obligations: [], findings: [Definitions, imports, derivations, bridges, and debt are separated.]}
+  Grammarian: {status: reviewed, obligations: [], findings: [Time-first and formal-versus-integrated wording is consistent.]}
+  Amanuensis: {status: reviewed, obligations: [], findings: [WP00/WP01/WP02 and ordered integration are consistent.]}
+  Archivist: {status: reviewed, obligations: [Continue nonblocking historical extraction.], findings: [Historical gaps are not operational theorem bodies.]}
   Mechanist: {status: reviewed, obligations: [], findings: [Future mechanisms must name the CR interface changed.]}
-  Typesetter: {status: reviewed, obligations: [], findings: [Norm order, powers, and weak/strong forms are consistent.]}
-  Referee:
-    status: reviewed
-    obligations: []
-    findings:
-      - Approved as the canonical conditional-regularity ledger.
-      - Promotion does not apply to universal integrability or global regularity.
-
+  Typesetter: {status: reviewed, obligations: [], findings: [Norm order and weak/strong forms are consistent.]}
+  Referee: {status: reviewed, obligations: [], findings: [Approved as the canonical conditional ledger; no universal-regularity claim is implied.]}
 amanuensis_control:
   artifact_ledger: {ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md, entry_id: NS-CI-WP02}
   decision_record_refs: [ADR-0003]
   terminology_registry: {registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md, terms_introduced_or_changed: []}
   review_provenance:
     complete: true
-    evidence_refs:
-      - https://github.com/grandchallenge/MATHSOLVE/issues/20
-      - https://github.com/grandchallenge/MATHSOLVE/pull/21
-      - grandchallenge/MATHSOLVE:work_packages/NS_CI_WP02_ADVERSARIAL_SEMANTIC_REVIEW.md
+    evidence_refs: [https://github.com/grandchallenge/MATHSOLVE/issues/20, https://github.com/grandchallenge/MATHSOLVE/pull/21, grandchallenge/MATHSOLVE:work_packages/NS_CI_WP02_ADVERSARIAL_SEMANTIC_REVIEW.md]
   cross_document_consistency:
     status: reviewed
-    checked_against:
-      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md
-      - campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md
-      - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/source_ledger.yaml
+    checked_against: [campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md, campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md, grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/source_ledger.yaml]
     conflicts: []
   final_editorial_integration:
     status: reviewed
     integrated_artifact_ref: campaigns/navier_stokes_critical_integrability/WP02_CONDITIONAL_REGULARITY_LEDGER/00_README.md
-    integration_notes: [Merge WP01 before WP02; WP02 carries the combined artifact ledger.]
-
+    integration_notes: [Merge WP01 before WP02; WP02 carries combined ledger.]
 unresolved_obligations:
   - {id: NS-CI-WP02-HIST-001, owner: Archivist, description: Complete historical source concordance., severity: medium, blocking: false}
-  - {id: NS-CI-WP02-SRC-002, owner: Prospector, description: Record exact lifespan and bootstrap source locations., severity: medium, blocking: false}
-  - {id: NS-CI-WP02-BRIDGE-003, owner: Axiomatist, description: Complete CR-010 before any equivalence claim., severity: high, blocking: false}
-
-promotion:
-  ready_for_next_stage: true
-  blockers: []
-  certification_route: Human-checked analytic derivations plus provenance-bearing MATHCERT interfaces
+  - {id: NS-CI-WP02-SRC-002, owner: Prospector, description: Record lifespan and bootstrap source locations., severity: medium, blocking: false}
+  - {id: NS-CI-WP02-BRIDGE-003, owner: Axiomatist, description: Complete CR-010 before equivalence claims., severity: high, blocking: false}
+promotion: {ready_for_next_stage: true, blockers: [], certification_route: Human-checked analytic derivations plus provenance-bearing MATHCERT interfaces}
