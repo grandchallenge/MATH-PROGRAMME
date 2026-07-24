@@ -43,6 +43,8 @@ Every governed artifact receives:
 | PC-WP03-REFEREE-DECISION | promotion decision | MATH-PROGRAMME | `campaigns/poincare_reconstruction/PC_WP03_REFEREE_DECISION.md` | wp04_authorized | `ADR-0005`; `PC-WP03-REFEREE-DECISION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP03.agent_review.yaml` | 2026-07-24 | reviewed |
 | PC-WP04 | formal certificate work package | MATHCERT | `campaigns/poincare_reconstruction/WP04_BOUNDED_CERTIFICATION/00_README.md` | kernel_checked_bounded_evaluator | `ADR-0005`; `PC-WP04-REFEREE-DECISION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP04.agent_review.yaml` | 2026-07-24 | reviewed |
 | PC-WP04-REFEREE-DECISION | promotion decision | MATH-PROGRAMME | `campaigns/poincare_reconstruction/PC_WP04_REFEREE_DECISION.md` | wp05_closure_audit_authorized | `ADR-0005`; `PC-WP04-REFEREE-DECISION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP04.agent_review.yaml` | 2026-07-24 | reviewed |
+| PC-WP05 | archival closure work package | MATH-PROGRAMME | `campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/00_README.md` | referee_promoted_qualified_archive | `ADR-0005`; `PC-WP05-REFEREE-DECISION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP05.agent_review.yaml` | 2026-07-24 | reviewed |
+| ARCHIVE-PC-001 | solved-problem research archive | MATH-PROGRAMME | `docs/POINCARE_RECONSTRUCTION_ARCHIVE.md` | ready_for_qualified_archival_publication | `PC-WP05-REFEREE-DECISION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP05.agent_review.yaml` | 2026-07-24 | reviewed |
 
 ## Update rules
 
