@@ -3,83 +3,142 @@ artifact:
   type: work_package
   title: Source-normalized conditional-regularity ledger for critical Navier-Stokes integrability
   pillar: MATHSOLVE
-  status: draft
+  status: referee_promoted
 
 council_review:
   Axiomatist:
-    status: pending
-    obligations:
-      - Verify whole-space data, solution-class, and one-way correspondence quantifiers.
-    findings: []
+    status: reviewed
+    reviewed_by: wp02-adversarial-semantic-review
+    reviewed_at: '2026-07-23'
+    obligations: []
+    findings:
+      - Whole-space data, solution-class, and universal weak-solution quantifiers agree with WP00.
+      - CR-009 remains one-way and CR-010 remains pending.
+
   Prospector:
-    status: pending
-    obligations:
-      - Resolve every source ID against the MATHFORGE source ledger and preserve audit-state distinctions.
-    findings: []
+    status: reviewed
+    reviewed_by: wp02-source-id-reconciliation
+    reviewed_at: '2026-07-23'
+    obligations: []
+    findings:
+      - Every required source ID resolves to the MATHFORGE source ledger.
+      - Historical and operational audit states remain distinct.
+
   Experimentalist:
-    status: pending
-    obligations:
-      - Confirm that no computational artifact is used in the conditional theorem chain.
-    findings: []
+    status: reviewed
+    reviewed_by: wp02-adversarial-semantic-review
+    reviewed_at: '2026-07-23'
+    obligations: []
+    findings:
+      - No computational artifact is used in the conditional theorem chain.
+
   Cartographer:
-    status: pending
-    obligations:
-      - Verify CR-000 through CR-011 dependencies and cross-links to WP01 fixtures.
-    findings: []
+    status: reviewed
+    reviewed_by: wp02-cross-document-integration
+    reviewed_at: '2026-07-23'
+    obligations: []
+    findings:
+      - CR-000 through CR-011 dependencies agree with the WP00 theorem spine.
+      - WP01 fixture cross-links protect the relevant analytic and semantic boundaries.
+
   Verifier:
-    status: pending
-    obligations:
-      - Independently derive CR-005 and CR-006 line by line.
-      - Verify the local-restart logic in CR-007.
-    findings: []
+    status: reviewed
+    reviewed_by: wp02-independent-analytic-replay
+    reviewed_at: '2026-07-23'
+    obligations: []
+    findings:
+      - CR-005 Holder, Gagliardo-Nirenberg, Young, exponent-four, and viscosity-minus-three calculations are correct.
+      - CR-006 is valid through the integrated weak-strong inequality; the displayed smooth-pair equality is formal only.
+      - CR-007 restart logic is sound within the adopted local H1 interface.
+      - Solve CI workflow run 30058471721 passed.
+
   Adversary:
-    status: pending
-    obligations:
-      - Search for hidden test-function, endpoint, pressure, and data-class assumptions.
-    findings: []
+    status: reviewed
+    reviewed_by: wp02-adversarial-semantic-review
+    reviewed_at: '2026-07-23'
+    obligations: []
+    findings:
+      - No hidden unconditional minus-Delta test, pressure cancellation, endpoint transfer, data-class transfer, or equivalence claim remains.
+      - The formal versus rigorous weak-strong distinction is now explicit in the programme artifact.
+
   Formalist:
-    status: pending
-    obligations:
-      - Check which entries are formalizable lemmas and which remain imported PDE interfaces.
-    findings: []
+    status: reviewed
+    reviewed_by: wp02-formal-boundary-review
+    reviewed_at: '2026-07-23'
+    obligations: []
+    findings:
+      - Scaling and implication composition are formalization targets.
+      - LPS, local theory, weak-strong uniqueness, and smooth bootstrapping remain provenance-bearing imported PDE interfaces.
+
   Steward:
-    status: pending
-    obligations:
-      - Preserve the separation between conditional analysis and the missing universal estimate.
-    findings: []
+    status: reviewed
+    reviewed_by: wp02-adversarial-semantic-review
+    reviewed_at: '2026-07-23'
+    obligations: []
+    findings:
+      - The ledger consumes but does not produce the critical norm.
+      - Promotion does not open mechanism generation automatically.
+
   Composer:
-    status: pending
+    status: reviewed
+    reviewed_by: wp02-cross-document-integration
+    reviewed_at: '2026-07-23'
     obligations: []
-    findings: []
+    findings:
+      - Definitions, imported theorems, derived estimates, bridges, and pending nodes are separated consistently.
+
   Grammarian:
-    status: pending
-    obligations:
-      - Enforce one-way implication wording and time-first mixed-norm notation.
-    findings: []
-  Amanuensis:
-    status: pending
-    obligations:
-      - Check source, theorem-ID, and claim consistency with WP00 and WP01.
-    findings: []
-  Archivist:
-    status: pending
-    obligations:
-      - Confirm historical and operational source roles remain distinct.
-    findings: []
-  Mechanist:
-    status: pending
-    obligations:
-      - Identify the exact estimate any future mechanism must improve beyond CR-005.
-    findings: []
-  Typesetter:
-    status: pending
+    status: reviewed
+    reviewed_by: wp02-cross-document-integration
+    reviewed_at: '2026-07-23'
     obligations: []
-    findings: []
-  Referee:
-    status: pending
+    findings:
+      - Time-first mixed-norm notation and sufficient-for wording are consistent.
+      - Formal differential identities are distinguished from rigorous integrated weak inequalities.
+
+  Amanuensis:
+    status: reviewed
+    reviewed_by: wp02-cross-document-integration
+    reviewed_at: '2026-07-23'
+    obligations: []
+    findings:
+      - WP02 agrees with WP00 and the promoted WP01 atlas.
+      - Source, theorem-ID, claim-boundary, and correspondence terminology are consistent.
+      - Review provenance includes provider artifacts, semantic review, and CI evidence.
+
+  Archivist:
+    status: reviewed
+    reviewed_by: wp02-source-id-reconciliation
+    reviewed_at: '2026-07-23'
     obligations:
-      - Reconstruct the one-way implication and verify all remaining debt is explicit.
-    findings: []
+      - Continue the nonblocking Leray, Serrin, and Ladyzhenskaya historical extraction.
+    findings:
+      - Historical gaps remain visible and are not used as operational theorem bodies.
+
+  Mechanist:
+    status: reviewed
+    reviewed_by: wp02-adversarial-semantic-review
+    reviewed_at: '2026-07-23'
+    obligations: []
+    findings:
+      - Future mechanisms must identify the exact estimate or interface they alter beyond CR-005 through CR-009.
+
+  Typesetter:
+    status: reviewed
+    reviewed_by: wp02-cross-document-integration
+    reviewed_at: '2026-07-23'
+    obligations: []
+    findings:
+      - Norm order, viscosity powers, and formal-versus-integrated statements are rendered consistently.
+
+  Referee:
+    status: reviewed
+    reviewed_by: ns-ci-referee
+    reviewed_at: '2026-07-23'
+    obligations: []
+    findings:
+      - The conditional theorem chain is reproducible and all remaining debt is explicit and nonblocking for this ledger.
+      - Promotion applies to the source-normalized conditional analysis, not to universal critical integrability or global regularity.
 
 amanuensis_control:
   artifact_ledger:
@@ -91,51 +150,52 @@ amanuensis_control:
     registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md
     terms_introduced_or_changed: []
   review_provenance:
-    complete: false
+    complete: true
     evidence_refs:
       - https://github.com/grandchallenge/MATHSOLVE/issues/20
+      - https://github.com/grandchallenge/MATHSOLVE/pull/21
       - campaigns/navier_stokes_critical_integrability/WP02_CONDITIONAL_REGULARITY_LEDGER/00_README.md
       - grandchallenge/MATHSOLVE:work_packages/NS_CI_WP02_CONDITIONAL_REGULARITY_LEDGER.md
       - grandchallenge/MATHSOLVE:work_packages/ns_ci_wp02_theorem_ledger.yaml
+      - grandchallenge/MATHSOLVE:work_packages/NS_CI_WP02_ADVERSARIAL_SEMANTIC_REVIEW.md
+      - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/source_ledger.yaml
+      - workflow:grandchallenge/MATHSOLVE/30058471721
+      - workflow:grandchallenge/MATH-PROGRAMME/30058245792
   cross_document_consistency:
-    status: pending
+    status: reviewed
     checked_against:
       - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md
-      - campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md
       - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md
+      - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/false_proof_atlas.md
+      - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/WP01_ADVERSARIAL_SEMANTIC_REVIEW.md
+      - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/source_ledger.yaml
     conflicts: []
   final_editorial_integration:
-    status: pending
+    status: reviewed
     integrated_artifact_ref: campaigns/navier_stokes_critical_integrability/WP02_CONDITIONAL_REGULARITY_LEDGER/00_README.md
-    integration_notes: []
+    integration_notes:
+      - The rigorous weak-strong statement is presented as an integrated inequality.
+      - The one-way Clay bridge and pending reverse correspondence remain separate.
+      - Historical and formalization debts remain explicit and nonblocking.
 
 unresolved_obligations:
-  - id: NS-CI-WP02-REV-001
+  - id: NS-CI-WP02-HIST-001
+    owner: Archivist
+    description: Complete exact historical theorem concordance and translation for Leray, Serrin, and Ladyzhenskaya.
+    severity: medium
+    blocking: false
+  - id: NS-CI-WP02-SRC-002
     owner: Prospector
-    description: Verify all source IDs and audit states against MATHFORGE.
+    description: Record exact source locations for local lifespan dependence and final smooth-bootstrap and pressure-recovery interfaces.
+    severity: medium
+    blocking: false
+  - id: NS-CI-WP02-BRIDGE-003
+    owner: Axiomatist
+    description: Complete reverse correspondence CR-010 before any bidirectional-equivalence claim.
     severity: high
-    blocking: true
-  - id: NS-CI-WP02-REV-002
-    owner: Verifier
-    description: Independently check CR-005, CR-006, and CR-007.
-    severity: critical
-    blocking: true
-  - id: NS-CI-WP02-REV-003
-    owner: Amanuensis
-    description: Complete cross-document consistency with WP00 and WP01.
-    severity: high
-    blocking: true
-  - id: NS-CI-WP02-REV-004
-    owner: Referee
-    description: Approve the theorem ledger and one-way correspondence boundary.
-    severity: critical
-    blocking: true
+    blocking: false
 
 promotion:
-  ready_for_next_stage: false
-  blockers:
-    - Source-ID reconciliation is pending.
-    - Independent analytic verification is pending.
-    - Cross-document consistency is pending.
-    - Referee approval is pending.
+  ready_for_next_stage: true
+  blockers: []
   certification_route: Human-checked analytic derivations plus provenance-bearing MATHCERT interfaces
