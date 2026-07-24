@@ -3,84 +3,149 @@ artifact:
   type: work_package
   title: Restricted theorem target scorecard
   pillar: MATH-PROGRAMME
-  status: active
+  status: active_shortlist_review
 
 council_review:
   Axiomatist:
-    status: pending
-    obligations: [Normalize every candidate theorem and prove it is strictly narrower than the open target.]
+    status: reviewed
+    obligations:
+      - Finalize the exact imported definition and quantifier profile for A2.
+      - Reject D1 unless an independent hypothesis H_D is supplied.
+      - Normalize the approximation topology in E1.
+    findings:
+      - A2, D1, and E1 are distinct restricted statements rather than silent replacements of the universal target.
+      - D1 is presently an interface, not a theorem-grade hypothesis.
   Prospector:
-    status: pending
-    obligations: [Complete prior-art and source-state audit for every candidate family.]
+    status: reviewed
+    obligations:
+      - Confirm that no exact Lambda-in-L2 criterion already appears in the literature.
+      - Complete claimed-proof triage in grandchallenge/MATHFORGE#20.
+    findings:
+      - Generic B, C, and F families were terminated as established, scaling-gap-limited, or low-leverage.
+      - A2, D1, and E1 form the provisional shortlist.
   Experimentalist:
-    status: pending
-    obligations: [Keep WP03 closed unless a precise falsification protocol is approved.]
+    status: reviewed
+    obligations: []
+    findings:
+      - WP03 remains closed because no approved numerical protocol can decide the continuum implications.
   Cartographer:
-    status: pending
-    obligations: [Build candidate-to-WP01/WP02 dependency maps.]
+    status: reviewed
+    obligations:
+      - Update the dependency graph after Referee selection.
+    findings:
+      - A2 consumes CR-004 and CR-007 after a new frequency estimate.
+      - D1 consumes CR-005 and CR-007 after a uniform compensated inequality.
+      - E1 consumes CR-004 and CR-006 after compactness and lower semicontinuity.
   Verifier:
     status: pending
-    obligations: [Check scaling, theorem hypotheses, and proof-obligation DAGs.]
+    obligations:
+      - Test A2 against the product-of-L1 obstruction and search for a valid weighted frequency estimate.
+      - Verify the whole-space compactness route in E1.
+    findings:
+      - The elementary A2 low-frequency estimate does not close the target integral.
   Adversary:
     status: pending
-    obligations: [Reduce candidates to WP01 fixtures or hidden regularity assumptions where possible.]
+    obligations:
+      - Attempt to collapse A2 to an established Besov or LPS criterion.
+      - Reject every D1 formulation that encodes its compensated conclusion.
+      - Test E1 for quantifier reversal and hidden global-stability assumptions.
+    findings:
+      - Multiplication of Lambda-squared and the energy dissipation density would repeat a WP01 integrability error.
   Formalist:
-    status: pending
-    obligations: [Audit formal statement shape and imported-interface visibility.]
+    status: reviewed
+    obligations:
+      - Implement the first scaling and quantifier fixtures after statement freeze.
+    findings:
+      - A2 is exactly scale-critical.
+      - D1 requires cutoff covariance and a coefficient scaling as lambda-squared.
+      - E1 is primarily a quantifier-order and imported-interface theorem.
   Steward:
     status: reviewed
     obligations: []
-    findings: [Broad mechanism generation and numerical regularity claims remain closed.]
+    findings:
+      - Broad mechanism generation, WP03, numerical regularity claims, and novelty claims remain closed.
   Composer:
     status: pending
-    obligations: [Integrate the selected theorem statement and rationale.]
+    obligations:
+      - Integrate the final selected theorem or no-selection rationale.
   Grammarian:
-    status: pending
-    obligations: [Enforce exact norm, quantifier, and implication language.]
+    status: reviewed
+    obligations:
+      - Preserve the distinction between provisional lead and selected target.
+    findings:
+      - The exact mixed-norm order and universal Leray-Hopf quantifier are preserved.
   Amanuensis:
-    status: pending
-    obligations: [Maintain candidate ledger, decision record, and cross-document consistency.]
+    status: reviewed
+    obligations:
+      - Maintain source, decision, and claimed-proof provenance until Referee disposition.
+    findings:
+      - MATHFORGE, MATHSOLVE, MATHCERT, WP01, and WP02 artifacts are cross-linked without a current semantic conflict.
   Archivist:
-    status: pending
-    obligations: [Preserve source and prior-art provenance.]
+    status: reviewed
+    obligations:
+      - Complete exact source-location concordance for A2 and the recent claimed proofs.
+    findings:
+      - Source states distinguish established results, absent exact criteria, and unreviewed recent claims.
   Mechanist:
-    status: pending
-    obligations: [State the exact mechanism and estimate for surviving candidates.]
+    status: reviewed
+    obligations:
+      - Search for an equation-specific route through A2-L5.
+      - Supply a non-tautological H_D or recommend D1 termination.
+    findings:
+      - A2 exposes a precise weighted-integrability obstruction.
+      - D1 has no independent mechanism yet.
   Typesetter:
-    status: pending
-    obligations: [Normalize mathematical notation in candidate records.]
+    status: reviewed
+    obligations: []
+    findings:
+      - Scaling exponents and norm order are normalized.
   Referee:
     status: pending
-    obligations: [Select at most one target or approve an explicit no-selection result.]
+    obligations:
+      - Select at most one target after exact prior-art, adversarial, and Verifier review, or approve no selection.
+    findings:
+      - A2 is the provisional lead only; D1 is blocked; E1 is the bridge fallback.
 
 amanuensis_control:
   artifact_ledger: {ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md, entry_id: NS-CI-WP04}
-  decision_record_refs: []
-  terminology_registry: {registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md, terms_introduced_or_changed: [restricted theorem target, target scorecard]}
+  decision_record_refs:
+    - campaigns/navier_stokes_critical_integrability/WP04_RESTRICTED_TARGET_SCORECARD/01_INITIAL_TRIAGE_DECISION.md
+  terminology_registry: {registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md, terms_introduced_or_changed: [restricted theorem target, target scorecard, provisional lead]}
   review_provenance:
     complete: false
     evidence_refs:
       - https://github.com/grandchallenge/MATH-PROGRAMME/issues/61
       - https://github.com/grandchallenge/MATHFORGE/issues/18
+      - https://github.com/grandchallenge/MATHFORGE/issues/20
+      - https://github.com/grandchallenge/MATHFORGE/pull/19
       - https://github.com/grandchallenge/MATHSOLVE/issues/22
+      - https://github.com/grandchallenge/MATHSOLVE/pull/23
       - https://github.com/grandchallenge/MATHCERT/issues/21
+      - https://github.com/grandchallenge/MATHCERT/pull/22
   cross_document_consistency:
-    status: pending
+    status: reviewed
     checked_against:
       - campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md
       - campaigns/navier_stokes_critical_integrability/WP02_CONDITIONAL_REGULARITY_LEDGER/00_README.md
+      - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/wp04_candidate_prior_art.md
+      - grandchallenge/MATHSOLVE:work_packages/NS_CI_WP04_RESTRICTED_TARGETS.md
+      - grandchallenge/MATHCERT:docs/ns_ci_wp04_candidate_certification.md
     conflicts: []
   final_editorial_integration:
     status: pending
     integrated_artifact_ref: campaigns/navier_stokes_critical_integrability/WP04_RESTRICTED_TARGET_SCORECARD/00_README.md
 
 unresolved_obligations:
-  - {id: NS-CI-WP04-PA-001, owner: Prospector, description: Complete candidate prior-art audit., severity: high, blocking: true}
-  - {id: NS-CI-WP04-AX-002, owner: Axiomatist, description: Normalize shortlisted theorem statements., severity: high, blocking: true}
-  - {id: NS-CI-WP04-ADV-003, owner: Adversary, description: Attempt fixture and circularity reductions., severity: high, blocking: true}
+  - {id: NS-CI-WP04-PA-001, owner: Prospector, description: Confirm exact A2 prior-art boundary and finish claim triage., severity: high, blocking: true}
+  - {id: NS-CI-WP04-ADV-003, owner: Adversary, description: Complete A2, D1, and E1 circularity and fixture reductions., severity: high, blocking: true}
   - {id: NS-CI-WP04-REF-004, owner: Referee, description: Select at most one target or record no selection., severity: high, blocking: true}
+  - {id: NS-CI-WP04-A2-005, owner: Verifier, description: Resolve or certify the product-of-L1 obstruction in the A2 proof DAG., severity: high, blocking: true}
+  - {id: NS-CI-WP04-D1-006, owner: Mechanist, description: Supply an independent H_D or terminate D1., severity: medium, blocking: true}
+  - {id: NS-CI-WP04-E1-007, owner: Axiomatist, description: Normalize E1 topology and compactness interfaces., severity: medium, blocking: false}
 
 promotion:
   ready_for_next_stage: false
-  blockers: [NS-CI-WP04-PA-001, NS-CI-WP04-AX-002, NS-CI-WP04-ADV-003, NS-CI-WP04-REF-004]
-  certification_route: Prior-art audit plus human theorem review plus selective MATHCERT scaling checks
+  blockers: [NS-CI-WP04-PA-001, NS-CI-WP04-ADV-003, NS-CI-WP04-REF-004, NS-CI-WP04-A2-005, NS-CI-WP04-D1-006]
+  provisional_lead: NS-CI-R014-A2
+  selected_target: null
+  certification_route: Source confirmation plus adversarial theorem review plus selective MATHCERT scaling and implication fixtures
