@@ -51,7 +51,7 @@ jobs:
           use-github-cache: false
           use-mathlib-cache: true
 
-      - name: Build PC-WP04 fixture
+      - name: Resolve and build PC-WP04 fixture
         working-directory: fixtures/formal/PC-WP04
         shell: bash
         env:
@@ -64,10 +64,12 @@ jobs:
             command -v lake || true
             elan --version || true
             lake --version || true
-            if [[ "${LEAN_SETUP_OUTCOME}" != "success" ]]; then
-              echo "Lean or mathlib-cache setup failed before compilation."
+            if ! command -v lake >/dev/null 2>&1; then
+              echo "Lean toolchain was not installed."
               exit 1
             fi
+            lake update
+            lake exe cache get
             lake build
           } > pc-wp04-lean-build.log 2>&1
           status=$?
