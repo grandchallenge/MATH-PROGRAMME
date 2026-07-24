@@ -35,7 +35,7 @@ Every governed artifact receives:
 
 ## Integration order
 
-`NS-CI-WP01` is merged before `NS-CI-WP02`. The WP02 branch carries the combined ledger state so the second merge preserves both promoted records.
+Merge the WP01 governance PR before the WP02 governance PR. The WP02 branch carries the combined ledger state so the second merge preserves both promoted records without semantic loss.
 
 ## Update rules
 
