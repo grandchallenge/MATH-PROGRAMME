@@ -8,122 +8,85 @@ artifact:
 council_review:
   Axiomatist:
     status: reviewed
-    reviewed_by: wp02-adversarial-semantic-review
-    reviewed_at: '2026-07-23'
     obligations: []
     findings:
       - Whole-space data, solution-class, and universal weak-solution quantifiers agree with WP00.
-      - CR-009 remains one-way and CR-010 remains pending.
+      - CR-009 is one-way; CR-010 remains pending.
   Prospector:
     status: reviewed
-    reviewed_by: wp02-source-id-reconciliation
-    reviewed_at: '2026-07-23'
     obligations: []
     findings:
-      - Every required source ID resolves to the MATHFORGE source ledger.
-      - Historical and operational audit states remain distinct.
+      - Every required source ID resolves to MATHFORGE and preserves its audit state.
   Experimentalist:
     status: reviewed
-    reviewed_by: wp02-adversarial-semantic-review
-    reviewed_at: '2026-07-23'
     obligations: []
     findings:
-      - No computational artifact is used in the conditional theorem chain.
+      - No computational artifact supports the conditional theorem chain.
   Cartographer:
     status: reviewed
-    reviewed_by: wp02-cross-document-integration
-    reviewed_at: '2026-07-23'
     obligations: []
     findings:
-      - CR-000 through CR-011 dependencies agree with the WP00 theorem spine.
-      - WP01 fixture cross-links protect the relevant analytic and semantic boundaries.
+      - CR-000 through CR-011 agree with the WP00 spine and WP01 fixture map.
   Verifier:
     status: reviewed
-    reviewed_by: wp02-independent-analytic-replay
-    reviewed_at: '2026-07-23'
     obligations: []
     findings:
-      - CR-005 Holder, Gagliardo-Nirenberg, Young, exponent-four, and viscosity-minus-three calculations are correct.
-      - CR-006 is valid through the integrated weak-strong inequality; the smooth-pair equality is formal only.
+      - CR-005 exponent and viscosity calculations are correct.
+      - CR-006 is rigorous through the integrated weak-strong inequality; the smooth-pair equality is formal only.
       - CR-007 restart logic is sound within the adopted local H1 interface.
   Adversary:
     status: reviewed
-    reviewed_by: wp02-adversarial-semantic-review
-    reviewed_at: '2026-07-23'
     obligations: []
     findings:
-      - No hidden unconditional minus-Delta test, pressure cancellation, endpoint transfer, data-class transfer, or equivalence claim remains.
-      - The formal-versus-rigorous weak-strong distinction is explicit.
+      - No hidden unconditional test, pressure, endpoint, data-class, quantifier, or equivalence transfer remains.
   Formalist:
     status: reviewed
-    reviewed_by: wp02-formal-boundary-review
-    reviewed_at: '2026-07-23'
     obligations: []
     findings:
-      - Scaling and implication composition are formalization targets.
-      - LPS, local theory, weak-strong uniqueness, and smooth bootstrapping remain provenance-bearing imported PDE interfaces.
+      - Scaling and implication composition are formalizable; imported PDE interfaces remain provenance-bearing assumptions.
   Steward:
     status: reviewed
-    reviewed_by: wp02-adversarial-semantic-review
-    reviewed_at: '2026-07-23'
     obligations: []
     findings:
       - The ledger consumes but does not produce the critical norm.
-      - Promotion does not open mechanism generation automatically.
   Composer:
     status: reviewed
-    reviewed_by: wp02-cross-document-integration
-    reviewed_at: '2026-07-23'
     obligations: []
     findings:
-      - Definitions, imported theorems, derived estimates, bridges, and pending nodes are separated consistently.
+      - Definitions, imported results, derived estimates, bridges, and pending nodes are separated.
   Grammarian:
     status: reviewed
-    reviewed_by: wp02-cross-document-integration
-    reviewed_at: '2026-07-23'
     obligations: []
     findings:
-      - Time-first mixed-norm notation and sufficient-for wording are consistent.
-      - Formal differential identities are distinguished from rigorous integrated weak inequalities.
+      - Time-first notation, sufficient-for wording, and formal-versus-integrated distinctions are consistent.
   Amanuensis:
     status: reviewed
-    reviewed_by: wp02-cross-document-integration
-    reviewed_at: '2026-07-23'
     obligations: []
     findings:
-      - WP02 agrees with WP00 and the promoted WP01 atlas.
-      - Source, theorem-ID, claim-boundary, and correspondence terminology are consistent.
-      - The combined artifact ledger preserves WP01 before WP02 in the integration order.
+      - WP00, WP01, and WP02 are semantically consistent.
+      - The combined ledger and ordered merge plan preserve both WP01 and WP02 promotions.
   Archivist:
     status: reviewed
-    reviewed_by: wp02-source-id-reconciliation
-    reviewed_at: '2026-07-23'
     obligations:
-      - Continue the nonblocking Leray, Serrin, and Ladyzhenskaya historical extraction.
+      - Continue nonblocking historical theorem extraction.
     findings:
-      - Historical gaps remain visible and are not used as operational theorem bodies.
+      - Historical gaps are visible and not substituted for operational theorem bodies.
   Mechanist:
     status: reviewed
-    reviewed_by: wp02-adversarial-semantic-review
-    reviewed_at: '2026-07-23'
     obligations: []
     findings:
-      - Future mechanisms must identify the exact estimate or interface they alter beyond CR-005 through CR-009.
+      - Future mechanisms must identify the exact CR-005 through CR-009 interface changed.
   Typesetter:
     status: reviewed
-    reviewed_by: wp02-cross-document-integration
-    reviewed_at: '2026-07-23'
     obligations: []
     findings:
-      - Norm order, viscosity powers, and formal-versus-integrated statements are rendered consistently.
+      - Norm order, viscosity powers, and weak/strong statement forms are consistent.
   Referee:
     status: reviewed
-    reviewed_by: ns-ci-referee
-    reviewed_at: '2026-07-23'
     obligations: []
     findings:
-      - The conditional theorem chain is reproducible and all remaining debt is explicit and nonblocking for this ledger.
-      - Promotion applies to the source-normalized conditional analysis, not to universal critical integrability or global regularity.
+      - The ledger is reproducible and all remaining debt is nonblocking for this artifact.
+      - Promotion does not apply to universal critical integrability or global regularity.
 
 amanuensis_control:
   artifact_ledger:
@@ -144,8 +107,6 @@ amanuensis_control:
       - grandchallenge/MATHSOLVE:work_packages/ns_ci_wp02_theorem_ledger.yaml
       - grandchallenge/MATHSOLVE:work_packages/NS_CI_WP02_ADVERSARIAL_SEMANTIC_REVIEW.md
       - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/source_ledger.yaml
-      - workflow:grandchallenge/MATHSOLVE/latest-green-on-provider-head
-      - workflow:grandchallenge/MATH-PROGRAMME/latest-green-on-governance-head
   cross_document_consistency:
     status: reviewed
     checked_against:
@@ -154,32 +115,30 @@ amanuensis_control:
       - campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md
       - reviews/navier_stokes/NS-CI-WP01.agent_review.yaml
       - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/false_proof_atlas.md
-      - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/WP01_ADVERSARIAL_SEMANTIC_REVIEW.md
       - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/source_ledger.yaml
     conflicts: []
   final_editorial_integration:
     status: reviewed
     integrated_artifact_ref: campaigns/navier_stokes_critical_integrability/WP02_CONDITIONAL_REGULARITY_LEDGER/00_README.md
     integration_notes:
-      - The rigorous weak-strong statement is presented as an integrated inequality.
-      - The one-way Clay bridge and pending reverse correspondence remain separate.
-      - Historical and formalization debts remain explicit and nonblocking.
-      - Merge order is WP01 governance PR before WP02 governance PR.
+      - The rigorous weak-strong statement is integrated.
+      - The one-way and reverse correspondence nodes remain separate.
+      - Merge order is WP01 then WP02.
 
 unresolved_obligations:
   - id: NS-CI-WP02-HIST-001
     owner: Archivist
-    description: Complete exact historical theorem concordance and translation for Leray, Serrin, and Ladyzhenskaya.
+    description: Complete historical theorem concordance and translation.
     severity: medium
     blocking: false
   - id: NS-CI-WP02-SRC-002
     owner: Prospector
-    description: Record exact source locations for local lifespan dependence and final smooth-bootstrap and pressure-recovery interfaces.
+    description: Record exact lifespan and smooth-bootstrap source locations.
     severity: medium
     blocking: false
   - id: NS-CI-WP02-BRIDGE-003
     owner: Axiomatist
-    description: Complete reverse correspondence CR-010 before any bidirectional-equivalence claim.
+    description: Complete CR-010 before any equivalence claim.
     severity: high
     blocking: false
 
