@@ -54,7 +54,7 @@ The complete calculations and machine-readable fixtures live in the provider art
 
 ## Adversarial semantic determination
 
-The Verifier replayed `FP-001`, `FP-002`, `FP-007`, `FP-008`, and `FP-012`. The exact arithmetic, interpolation, cutoff, smoothing, and exponent-order calculations are correct.
+The Verifier replayed `FP-001`, `FP-002`, `FP-007`, `FP-008`, `FP-010`, and `FP-012`. The exact arithmetic, interpolation, cutoff, smoothing, numerical-scope, and exponent-order checks pass.
 
 The Adversary attempted to evade each fixture without changing its hypotheses. Every attempted evasion either triggered another fixture or introduced a genuinely new estimate or theorem interface. No fixture was found to reject a valid route under its stated assumptions.
 
@@ -143,8 +143,8 @@ WP01 rules out only the listed arguments in their listed forms. It does not rule
 - [x] Adversary scope review complete.
 - [x] Amanuensis consistency review complete.
 - [x] Referee promotion approved.
-- [x] Provider Forge CI passed in workflow run `30058521633`.
-- [x] Programme policy CI passed in workflow run `30058238368`.
+- [x] Provider Forge CI passed in workflow run `30059677032`.
+- [x] Programme policy CI passed on the promoted governance branch.
 
 ## Promotion decision
 
