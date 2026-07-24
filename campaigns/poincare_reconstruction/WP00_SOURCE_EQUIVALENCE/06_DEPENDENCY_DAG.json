@@ -1,0 +1,146 @@
+{
+  "campaign_id": "PC-001",
+  "work_package_id": "PC-WP00",
+  "root_target": "PC-T017",
+  "nodes": [
+    {
+      "id": "PC-D000",
+      "kind": "definition",
+      "statement": "Fix closed, connected, topological/PL/smooth 3-manifold conventions and trivial fundamental group.",
+      "status": "CLOSED_IN_WP00",
+      "dependencies": []
+    },
+    {
+      "id": "PC-L001",
+      "kind": "external_topology_bridge",
+      "statement": "Topological, PL, and smooth classification of 3-manifolds agree through dimension-three triangulation and smoothing theorems.",
+      "status": "AUDITED_IMPORT_EXACT_EXTRACTION_PENDING",
+      "dependencies": ["PC-D000"],
+      "sources": ["Moise_1952", "Munkres_1960", "Moise_1977"]
+    },
+    {
+      "id": "PC-L002",
+      "kind": "elementary_topology",
+      "statement": "A connected simply connected manifold is orientable.",
+      "status": "CLOSED_IN_WP00",
+      "dependencies": ["PC-D000"]
+    },
+    {
+      "id": "PC-L003",
+      "kind": "geometry_bridge",
+      "statement": "A smooth 3-manifold admits a smooth Riemannian metric, which may be normalized by scaling.",
+      "status": "STANDARD_IMPORT",
+      "dependencies": ["PC-L001"]
+    },
+    {
+      "id": "PC-L004",
+      "kind": "analytic_import",
+      "statement": "Short-time Ricci flow exists from a smooth initial metric.",
+      "status": "SOURCE_NORMALIZATION_PENDING",
+      "dependencies": ["PC-L003"]
+    },
+    {
+      "id": "PC-L005",
+      "kind": "analytic_import",
+      "statement": "Perelman entropy/reduced-geometry machinery yields the required no-local-collapsing and scale control.",
+      "status": "SOURCE_NORMALIZATION_PENDING",
+      "dependencies": ["PC-L004"],
+      "sources": ["Perelman_math_0211159"]
+    },
+    {
+      "id": "PC-L006",
+      "kind": "analytic_import",
+      "statement": "High-curvature regions satisfy canonical-neighbourhood and singularity-model conclusions sufficient for surgery.",
+      "status": "SOURCE_NORMALIZATION_PENDING",
+      "dependencies": ["PC-L005"]
+    },
+    {
+      "id": "PC-L007",
+      "kind": "analytic_geometric_import",
+      "statement": "A Ricci flow with surgery exists for all positive time with a controlled surgery parameter hierarchy.",
+      "status": "HEADLINE_THEOREM_AUDITED_DETAILS_PENDING",
+      "dependencies": ["PC-L006", "PC-L002"],
+      "sources": ["Perelman_math_0303109", "Morgan_Tian_Theorem_0_3"]
+    },
+    {
+      "id": "PC-L008",
+      "kind": "topology_of_surgery_import",
+      "statement": "Crossing a surgery time induces recorded connected-sum decompositions and removal of components from an explicit permitted list.",
+      "status": "HEADLINE_THEOREM_AUDITED_DETAILS_PENDING",
+      "dependencies": ["PC-L007"],
+      "sources": ["Morgan_Tian_Theorem_0_3"]
+    },
+    {
+      "id": "PC-L009",
+      "kind": "topology_hypothesis_bridge",
+      "statement": "The simply connected closed case satisfies the finite-extinction topological/group hypothesis without using Poincare.",
+      "status": "AUDITED_PROOF_EXPANSION_PENDING",
+      "dependencies": ["PC-D000", "PC-L002"],
+      "sources": ["Kneser_Milnor", "Morgan_Tian_Corollary_0_5"]
+    },
+    {
+      "id": "PC-L010",
+      "kind": "analytic_geometric_import",
+      "statement": "The relevant Ricci flow with surgery becomes extinct in finite time.",
+      "status": "HEADLINE_THEOREM_AUDITED_DETAILS_PENDING",
+      "dependencies": ["PC-L007", "PC-L009"],
+      "sources": ["Perelman_math_0307245", "Morgan_Tian_Theorem_0_4", "Morgan_Tian_Theorem_18_1"]
+    },
+    {
+      "id": "PC-L011",
+      "kind": "finite_history_induction",
+      "statement": "Surgery topology plus extinction reconstructs the initial manifold as a connected sum of spherical space forms and sphere bundles.",
+      "status": "AUDITED_INTERFACE_FORMALIZATION_CANDIDATE",
+      "dependencies": ["PC-L008", "PC-L010"]
+    },
+    {
+      "id": "PC-L012",
+      "kind": "elementary_topology",
+      "statement": "Trivial fundamental group eliminates every nontrivial finite or infinite-cyclic factor; remaining spherical factors are S^3.",
+      "status": "CLOSED_IN_WP00_FORMALIZATION_CANDIDATE",
+      "dependencies": ["PC-L011", "PC-D000"],
+      "sources": ["van_Kampen", "spherical_space_form_definition"]
+    },
+    {
+      "id": "PC-C013",
+      "kind": "classical_conclusion",
+      "statement": "The smooth input manifold is diffeomorphic to S^3.",
+      "status": "SOLVED_CLASSICAL_THEOREM",
+      "dependencies": ["PC-L001", "PC-L003", "PC-L007", "PC-L010", "PC-L011", "PC-L012"]
+    },
+    {
+      "id": "PC-C014",
+      "kind": "classical_conclusion",
+      "statement": "The topological input manifold is homeomorphic to S^3.",
+      "status": "SOLVED_CLASSICAL_THEOREM",
+      "dependencies": ["PC-C013", "PC-L001"]
+    },
+    {
+      "id": "PC-B015",
+      "kind": "stronger_implication_route",
+      "statement": "Elliptization implies the Poincare conclusion by triviality of the spherical deck group.",
+      "status": "CLOSED_LOGICAL_BRIDGE",
+      "dependencies": ["PC-D000"]
+    },
+    {
+      "id": "PC-B016",
+      "kind": "stronger_implication_route",
+      "statement": "Geometrization implies elliptization in the finite-fundamental-group case.",
+      "status": "CLASSICAL_IMPORT",
+      "dependencies": []
+    },
+    {
+      "id": "PC-T017",
+      "kind": "programme_target",
+      "statement": "Produce a source-complete, dependency-explicit, adversarially audited, and progressively formalizable reconstruction of the Hamilton-Perelman proof.",
+      "status": "WP00_ADVANCED_WP01_WP02_REQUIRED",
+      "dependencies": ["PC-C014", "PC-B015", "PC-B016"]
+    }
+  ],
+  "forbidden_shortcuts": [
+    "PC-L004 directly to PC-C013 by assuming smooth convergence",
+    "PC-L010 directly to PC-C013 without PC-L008 and PC-L011",
+    "PC-D000 directly to PC-L012 by assuming each simply connected prime factor is S^3",
+    "PC-C014 to PC-B015 or PC-B016 as converse implications"
+  ]
+}
