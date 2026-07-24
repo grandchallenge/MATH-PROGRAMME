@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -23,7 +24,7 @@ REQUIRED_SOURCES = {
     ("Morgan-Tian", "Corollary 15.4"),
     ("PC-WP02", "PC02-T013/PC02-T014/PC02-T016"),
 }
-PROHIBITED_TOKENS = ("sorry", "axiom")
+PROHIBITED_PATTERN = re.compile(r"(^|[^A-Za-z])(sorry|axiom)([^A-Za-z]|$)")
 
 
 def fail(message: str) -> None:
@@ -70,11 +71,9 @@ def main() -> None:
     for declaration in REQUIRED_DECLARATIONS | {"ImportedEventRelation"}:
         if declaration not in lean_text:
             fail(f"Lean source omits {declaration}")
-    for token in PROHIBITED_TOKENS:
-        for line_no, line in enumerate(lean_text.splitlines(), start=1):
-            stripped = line.strip()
-            if stripped.startswith(f"{token} ") or stripped == token:
-                fail(f"prohibited {token} declaration at line {line_no}")
+    for line_no, line in enumerate(lean_text.splitlines(), start=1):
+        if PROHIBITED_PATTERN.search(line):
+            fail(f"prohibited proof placeholder or local axiom at line {line_no}")
 
     sources = {
         (entry.get("provider"), entry.get("theorem_id"))
