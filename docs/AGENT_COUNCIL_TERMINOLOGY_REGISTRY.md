@@ -23,6 +23,8 @@ This registry preserves the canonical meaning of governance terms used across Ag
 | Authoritative integrated artifact | The version designated by the artifact ledger as the current complete representation of the reviewed work. | Drafts, review fragments, and superseded versions are not authoritative. |
 | Exposition and Continuity Kernel | The Cartographer, Steward, Composer, Grammarian, and Amanuensis acting together to preserve dependency, purpose, composition, language, and continuity. | Does not replace the full Agent Council or mathematical certification. |
 | Amanuensis continuity state | The recorded state `pending`, `reviewed`, or `blocked` for continuity-related checks. | Must not be interpreted as a mathematical claim status. |
+| Solved-problem reconstruction campaign | A governed campaign whose target theorem is already established and whose purpose is source normalization, dependency reconstruction, adversarial audit, pedagogy, or selective certification. | Must not be presented as an open-problem attack, a novelty claim, or an independent proof unless the relevant proof obligations are actually discharged. |
+| Finite-extinction route | The Poincaré-specific Hamilton–Perelman route from Ricci flow with surgery and a finite-extinction theorem, through explicit surgery-topology bookkeeping, to the terminal connected-sum and fundamental-group discharge. | Finite extinction alone is insufficient; the term always includes the provenance-bearing surgery and topological reconstruction interfaces. |
 
 ## Change rule
 
