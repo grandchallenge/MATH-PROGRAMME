@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import hashlib
 import json
 import subprocess
 import sys
@@ -31,8 +30,14 @@ def fail(message: str) -> None:
     raise SystemExit(f"PC-WP04 policy failure: {message}")
 
 
-def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+def git_blob(path: Path) -> str:
+    result = subprocess.run(
+        ["git", "hash-object", str(path)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
 
 
 def main() -> None:
@@ -83,9 +88,9 @@ def main() -> None:
         path = root / replay.get(key, "")
         if not path.is_file():
             fail(f"missing replay input {key}: {path}")
-        digest_key = f"{key}_sha256"
-        if sha256(path) != replay.get(digest_key):
-            fail(f"digest mismatch for {key}")
+        digest_key = f"{key}_git_blob"
+        if git_blob(path) != replay.get(digest_key):
+            fail(f"Git blob mismatch for {key}")
 
     if replay.get("expected_total") != 14 or replay.get("expected_valid") != 2 or replay.get("expected_invalid") != 12:
         fail("fixture cardinality contract drift")
