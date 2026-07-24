@@ -56,7 +56,7 @@ jobs:
           use-github-cache: false
           use-mathlib-cache: true
 
-      - name: Build pinned PC-WP04 fixture
+      - name: Resolve and build PC-WP04 fixture
         working-directory: fixtures/formal/PC-WP04
         shell: bash
         env:
@@ -77,6 +77,7 @@ jobs:
               echo "Pinned lake-manifest.json is required."
               exit 1
             }
+            lake update
             lake exe cache get
             lake build
           } > pc-wp04-lean-build.log 2>&1
