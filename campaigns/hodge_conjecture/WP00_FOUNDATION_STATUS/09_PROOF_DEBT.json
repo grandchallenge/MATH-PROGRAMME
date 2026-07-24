@@ -1,0 +1,149 @@
+{
+  "schema_version": "1.2.0",
+  "campaign_id": "HC-001",
+  "work_package_id": "HC-WP00",
+  "audit_date": "2026-07-24",
+  "resolved_items": [
+    {
+      "id": "HC-D-001",
+      "category": "SEMANTIC_CORRESPONDENCE",
+      "blocked_node": "HC-T004",
+      "resolution": "The canonical target is normalized as rational cycle-class surjectivity for smooth projective varieties over C.",
+      "evidence": ["campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md", "https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf"],
+      "boundary": "No integral, Kahler, generalized, variational, Tate, effective, absolute, or motivated formulation is identified with the canonical target."
+    },
+    {
+      "id": "HC-D-002",
+      "category": "MISSING_LEMMA",
+      "blocked_node": "HC-B005",
+      "resolution": "Surjectivity from CH^p tensor Q is equivalent to rational generation by irreducible codimension-p subvariety classes because the cycle map factors through rational equivalence without changing its image.",
+      "evidence": ["campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/00_README.md", "grandchallenge/MATHSOLVE#63"],
+      "boundary": "No effectivity, uniqueness, or Chow-level injectivity is claimed."
+    },
+    {
+      "id": "HC-D-003",
+      "category": "UNPROVED_BRIDGE",
+      "blocked_node": "HC-K007",
+      "resolution": "The cases p=0,1,n-1,n and the dimension-at-most-three consequence are reconstructed using Lefschetz (1,1) and hard Lefschetz as a rational Hodge-structure isomorphism.",
+      "evidence": ["campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md", "campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/05_KNOWN_CASE_LEDGER.csv"],
+      "boundary": "The argument does not assume algebraicity of the inverse Lefschetz correspondence."
+    },
+    {
+      "id": "HC-D-004",
+      "category": "EXTERNAL_SOURCE",
+      "blocked_node": "HC-O009",
+      "resolution": "The naive integral formulation is source-audited as false in general through Atiyah-Hirzebruch cohomology-operation obstructions.",
+      "evidence": ["https://doi.org/10.1016/0040-9383(62)90001-3", "grandchallenge/MATHFORGE#22"],
+      "boundary": "Restricted or refined integral statements remain separate."
+    },
+    {
+      "id": "HC-D-005",
+      "category": "EXTERNAL_SOURCE",
+      "blocked_node": "HC-O010",
+      "resolution": "The unrestricted compact-Kahler analogue is source-audited as false in general.",
+      "evidence": ["https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf", "https://doi.org/10.1155/S1073792802104076"],
+      "boundary": "The exact Zucker appendix locator remains nonblocking provenance debt."
+    },
+    {
+      "id": "HC-D-006",
+      "category": "SEMANTIC_CORRESPONDENCE",
+      "blocked_node": "HC-T020",
+      "resolution": "A statement lattice and implication ledger separate generalized, variational, Hodge-locus, absolute, motivated, standard-conjecture, and Tate formulations.",
+      "evidence": ["campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/03_STATEMENT_LATTICE.yaml", "campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/07_IMPLICATION_LEDGER.yaml"],
+      "boundary": "No missing algebraic-cycle bridge is silently promoted."
+    },
+    {
+      "id": "HC-D-007",
+      "category": "EXTERNAL_SOURCE",
+      "blocked_node": "HC-T020",
+      "resolution": "The official Clay status page was audited on 2026-07-24 and continues to list the problem as unsolved.",
+      "evidence": ["https://www.claymath.org/millennium/hodge-conjecture/", "campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md"],
+      "boundary": "Specific claimed proofs are triaged only when admitted to the campaign."
+    },
+    {
+      "id": "HC-D-GOV-001",
+      "category": "SEMANTIC_CORRESPONDENCE",
+      "blocked_node": "HC-WP00-PROMOTION",
+      "resolution": "Amanuensis cross-document consistency and Referee reconstruction completed with no blocking conflict.",
+      "evidence": ["reviews/hodge_conjecture/HC-WP00.agent_review.yaml", "grandchallenge/MATH-PROGRAMME#68"],
+      "boundary": "Historical extraction and formalization debt remain visible and nonblocking."
+    },
+    {
+      "id": "HC-D-CI-001",
+      "category": "COMPUTATIONAL_REPLAY",
+      "blocked_node": "HC-WP00-PROMOTION",
+      "resolution": "All relevant repository checks passed.",
+      "evidence": ["MATH-PROGRAMME workflow 30084154340", "MATHFORGE workflow 30084108503", "MATHSOLVE workflow 30084121944", "MATHCERT workflow 30084135657"],
+      "boundary": "CI certifies repository contracts, not the open mathematical conjecture."
+    }
+  ],
+  "items": [
+    {
+      "id": "HC-D-HIST-001",
+      "category": "EXTERNAL_SOURCE",
+      "blocked_node": "HC-T004",
+      "description": "Complete exact passage and notation concordance for Hodge's 1950 ICM formulation.",
+      "current_evidence": "Primary bibliographic source identified; Deligne supplies the operational canonical statement.",
+      "discharge_condition": "Commit page/passage extraction and a term-by-term translation to the modern CH^p tensor Q formulation.",
+      "owner": "Archivist",
+      "severity": "medium",
+      "blocking": false
+    },
+    {
+      "id": "HC-D-HIST-002",
+      "category": "EXTERNAL_SOURCE",
+      "blocked_node": "HC-O010",
+      "description": "Identify and extract the exact Zucker appendix counterexample cited in the official problem description.",
+      "current_evidence": "The result is authoritative through Deligne; Voisin supplies a separate stronger compact-Kahler Chern-generation counterexample.",
+      "discharge_condition": "Record host publication, appendix pages, exact geometric category, coefficients, and conclusion.",
+      "owner": "Archivist",
+      "severity": "medium",
+      "blocking": false
+    },
+    {
+      "id": "HC-D-HIST-003",
+      "category": "EXTERNAL_SOURCE",
+      "blocked_node": "HC-O015",
+      "description": "Extract Tate 1965 and Grothendieck 1969 theorem bodies with modern coefficient and coniveau conventions.",
+      "current_evidence": "Primary metadata and official contextual descriptions are identified.",
+      "discharge_condition": "Commit exact source-normalized statements and implication boundaries.",
+      "owner": "Archivist",
+      "severity": "medium",
+      "blocking": false
+    },
+    {
+      "id": "HC-D-KNOWN-001",
+      "category": "EXTERNAL_SOURCE",
+      "blocked_node": "HC-K008",
+      "description": "Build a comprehensive higher-dimensional known-case ledger.",
+      "current_evidence": "Elementary universal boundary and cubic fourfolds are admitted; other categories remain deliberately unpromoted.",
+      "discharge_condition": "Every entry records variety class, dimension, codimension, coefficients, construction mechanism, conditional dependencies, and theorem locator.",
+      "owner": "Prospector",
+      "severity": "high",
+      "blocking": false
+    },
+    {
+      "id": "HC-D-FORMAL-001",
+      "category": "FORMALIZATION_BLOCKER",
+      "blocked_node": "HC-T004",
+      "description": "Current theorem-prover libraries lack an integrated faithful stack for complex projective varieties, Chow groups, Hodge structures, and cycle classes.",
+      "current_evidence": "MATHCERT certification-boundary audit and bounded mathlib documentation search.",
+      "discharge_condition": "Implement the missing foundations or maintain explicit provenance-bearing abstract interfaces without claiming continuum certification.",
+      "owner": "Formalist",
+      "severity": "high",
+      "blocking": false
+    },
+    {
+      "id": "HC-D-TARGET-001",
+      "category": "UNPROVED_BRIDGE",
+      "blocked_node": "HC-R021",
+      "description": "Select a first restricted theorem target only after WP01, WP02, and prior-art review.",
+      "current_evidence": "No target selected at WP00.",
+      "discharge_condition": "Council scorecard identifies a precise non-circular cycle-construction target.",
+      "owner": "Cartographer",
+      "severity": "high",
+      "blocking": false
+    }
+  ],
+  "promotion_blockers": []
+}

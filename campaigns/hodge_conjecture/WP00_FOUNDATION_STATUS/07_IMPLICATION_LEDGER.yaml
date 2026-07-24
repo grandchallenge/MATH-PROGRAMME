@@ -1,0 +1,109 @@
+schema_version: 1.0.0
+campaign_id: HC-001
+work_package_id: HC-WP00
+implications:
+  - id: HC-IMP-001
+    source: algebraic_cycle_class
+    target: rational_Hodge_class
+    status: THEOREM
+    conditions:
+      - smooth projective X over C
+      - codimension-p algebraic cycle
+    boundary: necessary direction only
+  - id: HC-IMP-002
+    source: cycle_class_surjectivity
+    target: rational_generation_by_irreducible_subvarieties
+    status: EQUIVALENT
+    conditions:
+      - cycle map factors through CH^p
+      - rational coefficients
+  - id: HC-IMP-003
+    source: rational_generation_by_irreducible_subvarieties
+    target: cycle_class_surjectivity
+    status: EQUIVALENT
+    conditions:
+      - same image convention
+  - id: HC-IMP-004
+    source: Lefschetz_1_1
+    target: classical_Hodge_codimension_1
+    status: THEOREM
+  - id: HC-IMP-005
+    source: Lefschetz_1_1_plus_hard_Lefschetz
+    target: classical_Hodge_codimension_n_minus_1
+    status: THEOREM
+    boundary: uses cohomological inverse only to identify a divisor preimage; does not assert algebraicity of inverse correspondence
+  - id: HC-IMP-006
+    source: boundary_cases_0_1_n_minus_1_n
+    target: classical_Hodge_dimension_at_most_3
+    status: THEOREM
+  - id: HC-IMP-007
+    source: full_classical_Hodge_on_relevant_products
+    target: algebraicity_of_Hodge_Kunneth_components
+    status: CONDITIONAL_THEOREM
+    boundary: exact product degree and Tate twist must be recorded
+  - id: HC-IMP-008
+    source: full_classical_Hodge_on_relevant_products
+    target: complex_Lefschetz_standard_correspondence
+    status: CONDITIONAL_THEOREM
+    boundary: correspondence represented by the appropriate Hodge class on a product
+  - id: HC-IMP-009
+    source: algebraic_class
+    target: absolute_Hodge_class
+    status: THEOREM
+    boundary: converse not promoted
+non_implications:
+  - id: HC-NIMP-001
+    source: rational_Hodge_class
+    target: algebraic_cycle_class
+    status: OPEN_TARGET
+  - id: HC-NIMP-002
+    source: complex_type_p_p
+    target: rational_Hodge_class
+    status: FALSE_WITHOUT_RATIONALITY
+  - id: HC-NIMP-003
+    source: algebraic_Hodge_locus
+    target: algebraic_cycle_representative
+    status: NO_IMPLICATION_WITHOUT_RELATIVE_CYCLE_BRIDGE
+  - id: HC-NIMP-004
+    source: absolute_Hodge_class
+    target: algebraic_cycle_class
+    status: NO_GENERAL_CONVERSE_KNOWN
+  - id: HC-NIMP-005
+    source: motivated_class
+    target: algebraic_cycle_class
+    status: NO_GENERAL_BRIDGE
+  - id: HC-NIMP-006
+    source: cohomological_inverse_Lefschetz
+    target: algebraic_correspondence
+    status: STANDARD_CONJECTURE_OBLIGATION
+  - id: HC-NIMP-007
+    source: cohomological_Kunneth_projector
+    target: algebraic_projector
+    status: HODGE_OR_STANDARD_CONJECTURE_OBLIGATION
+  - id: HC-NIMP-008
+    source: Tate_class_after_reduction
+    target: characteristic_zero_algebraic_cycle
+    status: REQUIRES_COMPARISON_SPECIALIZATION_AND_LIFTING
+  - id: HC-NIMP-009
+    source: high_precision_period_relation
+    target: exact_rational_Hodge_or_algebraic_class
+    status: HEURISTIC_ONLY
+  - id: HC-NIMP-010
+    source: theorem_for_very_general_fiber
+    target: theorem_for_every_fiber
+    status: QUANTIFIER_BRIDGE_REQUIRED
+  - id: HC-NIMP-011
+    source: vanishing_Abel_Jacobi_invariant
+    target: general_cycle_algebraicity_or_triviality
+    status: INCOMPLETE_DETECTOR
+  - id: HC-NIMP-012
+    source: topological_K_theory_generation
+    target: algebraic_cycle_generation
+    status: ALGEBRAIC_REALIZATION_REQUIRED
+false_analogues:
+  - formulation: naive_integral_Hodge
+    status: FALSE_IN_GENERAL
+    does_not_refute: classical_rational_Hodge
+  - formulation: unrestricted_compact_Kahler_Hodge
+    status: FALSE_IN_GENERAL
+    does_not_refute: smooth_projective_rational_Hodge

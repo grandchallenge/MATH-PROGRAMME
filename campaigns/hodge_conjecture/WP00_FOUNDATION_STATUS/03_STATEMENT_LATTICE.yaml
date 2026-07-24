@@ -1,0 +1,102 @@
+schema_version: 1.0.0
+campaign_id: HC-001
+work_package_id: HC-WP00
+canonical_node: HC-CLASSICAL-RATIONAL
+nodes:
+  - id: HC-CLASSICAL-RATIONAL
+    name: classical rational Hodge conjecture
+    status: OPEN
+    domain: smooth projective varieties over C
+    coefficients: Q
+    conclusion: rational cycle-class surjectivity
+  - id: HC-INTEGRAL-NAIVE
+    name: naive integral Hodge conjecture
+    status: FALSE_IN_GENERAL
+    coefficients: Z
+  - id: HC-KAHLER
+    name: unrestricted compact-Kahler analogue
+    status: FALSE_IN_GENERAL
+    domain: compact Kahler manifolds
+  - id: HC-LEFSCHETZ-11
+    name: Lefschetz (1,1) theorem
+    status: THEOREM
+    conclusion: divisor realization of degree-two integral Hodge classes
+  - id: HC-GENERALIZED
+    name: generalized Hodge conjecture
+    status: OPEN_DISTINCT
+    conclusion: coniveau/support of Hodge substructures
+  - id: HC-VARIATIONAL
+    name: variational Hodge conjecture
+    status: OPEN_DISTINCT
+    conclusion: deformation transport of algebraicity
+  - id: HC-HODGE-LOCUS
+    name: algebraicity of Hodge loci
+    status: THEOREM
+    conclusion: algebraicity of parameter loci
+  - id: HC-ABSOLUTE
+    name: absolute Hodge classes
+    status: SUBSTITUTE_PROPERTY
+  - id: HC-MOTIVATED
+    name: motivated cycles
+    status: BROADER_CORRESPONDENCE_THEORY
+  - id: HC-STANDARD-B
+    name: Lefschetz standard conjecture
+    status: OPEN_IN_GENERAL
+    conclusion: algebraicity of inverse Lefschetz correspondence
+  - id: HC-TATE
+    name: Tate conjecture
+    status: OPEN_IN_GENERAL
+    domain: arithmetic varieties and l-adic cohomology
+  - id: HC-EFFECTIVE
+    name: single effective representative strengthening
+    status: NOT_CANONICAL
+relations:
+  - source: HC-LEFSCHETZ-11
+    target: HC-CLASSICAL-RATIONAL
+    kind: ESTABLISHES_CODIMENSION_ONE_CASE
+  - source: HC-CLASSICAL-RATIONAL
+    target: HC-INTEGRAL-NAIVE
+    kind: DOES_NOT_IMPLY
+  - source: HC-INTEGRAL-NAIVE
+    target: HC-CLASSICAL-RATIONAL
+    kind: WOULD_IMPLY_IF_TRUE_BUT_FALSE_IN_GENERAL
+  - source: HC-KAHLER
+    target: HC-CLASSICAL-RATIONAL
+    kind: BROADER_DOMAIN_FALSE_ANALOGUE
+  - source: HC-GENERALIZED
+    target: HC-CLASSICAL-RATIONAL
+    kind: STRONGER_SUPPORT_FAMILY_NOT_EQUIVALENT
+  - source: HC-CLASSICAL-RATIONAL
+    target: HC-VARIATIONAL
+    kind: EXPECTED_IMPLICATION_REQUIRES_FAMILY_ARGUMENT
+  - source: HC-HODGE-LOCUS
+    target: HC-CLASSICAL-RATIONAL
+    kind: DOES_NOT_IMPLY_CLASS_ALGEBRAICITY
+  - source: HC-CLASSICAL-RATIONAL
+    target: HC-ABSOLUTE
+    kind: ALGEBRAIC_CLASSES_ARE_ABSOLUTE
+  - source: HC-ABSOLUTE
+    target: HC-CLASSICAL-RATIONAL
+    kind: NO_GENERAL_CONVERSE_KNOWN
+  - source: HC-MOTIVATED
+    target: HC-CLASSICAL-RATIONAL
+    kind: NO_GENERAL_ALGEBRAIC_BRIDGE
+  - source: HC-CLASSICAL-RATIONAL
+    target: HC-STANDARD-B
+    kind: IMPLIES_RELEVANT_COMPLEX_CASES_VIA_PRODUCT_HODGE_CLASSES
+  - source: HC-TATE
+    target: HC-CLASSICAL-RATIONAL
+    kind: PARALLEL_REQUIRES_COMPARISON_SPECIALIZATION_LIFTING
+  - source: HC-EFFECTIVE
+    target: HC-CLASSICAL-RATIONAL
+    kind: STRICTER_THAN_CANONICAL
+forbidden_collapses:
+  - [HC-CLASSICAL-RATIONAL, HC-INTEGRAL-NAIVE]
+  - [HC-CLASSICAL-RATIONAL, HC-KAHLER]
+  - [HC-CLASSICAL-RATIONAL, HC-GENERALIZED]
+  - [HC-CLASSICAL-RATIONAL, HC-VARIATIONAL]
+  - [HC-CLASSICAL-RATIONAL, HC-HODGE-LOCUS]
+  - [HC-CLASSICAL-RATIONAL, HC-ABSOLUTE]
+  - [HC-CLASSICAL-RATIONAL, HC-MOTIVATED]
+  - [HC-CLASSICAL-RATIONAL, HC-TATE]
+  - [HC-CLASSICAL-RATIONAL, HC-EFFECTIVE]

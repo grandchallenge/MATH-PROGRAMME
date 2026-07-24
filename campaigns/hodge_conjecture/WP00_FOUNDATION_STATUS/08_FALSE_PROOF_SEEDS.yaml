@@ -1,0 +1,61 @@
+schema_version: 1.0.0
+campaign_id: HC-001
+work_package_id: HC-WP00
+canonical_forge_ledger: https://github.com/grandchallenge/MATHFORGE/blob/campaign/hc-source-audit/reports/discovery/hc_001/false_proof_seed_ledger.yaml
+seeds:
+  - id: HC-FP-001
+    name: integral_coefficient_substitution
+    blocked_node: HC-O009
+  - id: HC-FP-002
+    name: complex_type_without_rationality
+    blocked_node: HC-D001
+  - id: HC-FP-003
+    name: extrapolate_Lefschetz_1_1
+    blocked_node: HC-K006
+  - id: HC-FP-004
+    name: inverse_Lefschetz_assumed_algebraic
+    blocked_node: HC-O011
+  - id: HC-FP-005
+    name: Kunneth_projectors_assumed_algebraic
+    blocked_node: HC-O011
+  - id: HC-FP-006
+    name: Hodge_locus_promoted_to_cycle
+    blocked_node: HC-O012
+  - id: HC-FP-007
+    name: deformation_without_variational_bridge
+    blocked_node: HC-O013
+  - id: HC-FP-008
+    name: numerical_period_certification
+    blocked_node: HC-O014
+  - id: HC-FP-009
+    name: Tate_without_lifting
+    blocked_node: HC-O015
+  - id: HC-FP-010
+    name: topological_Chern_generation
+    blocked_node: HC-O016
+  - id: HC-FP-011
+    name: Abel_Jacobi_completeness
+    blocked_node: HC-O017
+  - id: HC-FP-012
+    name: projective_to_Kahler_substitution
+    blocked_node: HC-O010
+  - id: HC-FP-013
+    name: absolute_or_motivated_promoted_to_algebraic
+    blocked_node: HC-O018
+  - id: HC-FP-014
+    name: very_general_to_every_fiber
+    blocked_node: HC-O019
+  - id: HC-FP-015
+    name: effectivity_strengthening
+    blocked_node: HC-B005
+fixture_contract:
+  required_fields:
+    - tempting_argument
+    - exact_failure
+    - smallest_witness_or_missing_theorem
+    - what_is_ruled_out
+    - what_is_not_ruled_out
+    - source_or_direct_proof
+    - theorem_spine_node
+    - route_termination_or_repair
+  promotion_rule: No fixture may present failure of a proof route as evidence that the Hodge conjecture is false.
