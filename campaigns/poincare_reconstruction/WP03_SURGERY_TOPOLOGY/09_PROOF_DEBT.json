@@ -1,0 +1,70 @@
+{
+  "campaign_id": "PC-001",
+  "work_package_id": "PC-WP03",
+  "audit_date": "2026-07-24",
+  "items": [
+    {
+      "debt_id": "PC03-D001",
+      "category": "SOURCE_EXTRACTION",
+      "blocked_claim": "quotation_level_source_completeness",
+      "description": "Pin exact Perelman II locations corresponding to each Morgan-Tian topology transition and record any version differences.",
+      "current_evidence": ["MT_Theorem_0_3", "MT_Proposition_15_3", "MT_Corollary_15_4", "PC-WP02_crosswalk"],
+      "discharge_condition": "Every transition catalogue row has Perelman, Morgan-Tian, and Kleiner-Lott locations or an explicit no-counterpart disposition.",
+      "owner": "Archivist",
+      "blocking_for_wp03_promotion": false
+    },
+    {
+      "debt_id": "PC03-D002",
+      "category": "FORMALIZATION",
+      "blocked_claim": "kernel_checked_schema_soundness",
+      "description": "Formalize the event datatype, active-set transition relation, and backward evaluator in a proof assistant.",
+      "current_evidence": ["JSON_schema", "Python_semantic_validator", "human_proof_PC03_T001"],
+      "discharge_condition": "Kernel-checked evaluator soundness theorem conditional on an abstract event contract.",
+      "owner": "Formalist",
+      "blocking_for_wp03_promotion": false
+    },
+    {
+      "debt_id": "PC03-D003",
+      "category": "TOPOLOGY_LIBRARY",
+      "blocked_claim": "kernel_checked_connected_sum_reconstruction",
+      "description": "Supply connected-sum associativity/identity and fundamental-group free-product interfaces in the selected prover.",
+      "current_evidence": ["human_standard_topology_imports"],
+      "discharge_condition": "Formal theorem or explicit axiomatized interface with provenance and no hidden Poincare statement.",
+      "owner": "Formalist",
+      "blocking_for_wp03_promotion": false
+    },
+    {
+      "debt_id": "PC03-D004",
+      "category": "ANALYTIC_IMPORT",
+      "blocked_claim": "independent_surgery_verification",
+      "description": "The schema does not certify neck detection, cap metric quality, pinching, noncollapsing, surgery continuation, or extinction.",
+      "current_evidence": ["PC-WP02_theorem_interfaces"],
+      "discharge_condition": "Independent analytic reconstruction or formalization; outside current bounded lane.",
+      "owner": "Verifier",
+      "blocking_for_wp03_promotion": false
+    },
+    {
+      "debt_id": "PC03-D005",
+      "category": "EXECUTABLE_VALIDATION",
+      "blocked_claim": "repository_native_schema_validation",
+      "description": "Integrate the WP03 validator and positive/malformed fixtures into programme CI rather than relying only on manual invocation.",
+      "current_evidence": ["14_local_fixtures_pass"],
+      "discharge_condition": "CI invokes validator and fails on mutated malformed histories.",
+      "owner": "Experimentalist",
+      "blocking_for_wp03_promotion": false
+    },
+    {
+      "debt_id": "PC03-D006",
+      "category": "SCOPE",
+      "blocked_claim": "general_nonorientable_terminal_discharge",
+      "description": "The Poincare terminal theorem uses the orientable profile. A full nonorientable classification certificate requires separate group and bundle handling.",
+      "current_evidence": ["schema_general_profile", "twisted_bundle_factor"],
+      "discharge_condition": "Separate reviewed theorem and fixtures for the general profile.",
+      "owner": "Axiomatist",
+      "blocking_for_wp03_promotion": false
+    }
+  ],
+  "blocking_for_wp03_promotion": [],
+  "blocking_for_full_formal_certificate": ["PC03-D002", "PC03-D003", "PC03-D005"],
+  "blocking_for_independent_analytic_proof": ["PC03-D004"]
+}
