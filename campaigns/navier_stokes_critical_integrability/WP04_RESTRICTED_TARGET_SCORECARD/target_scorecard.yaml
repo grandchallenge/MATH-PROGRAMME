@@ -1,10 +1,11 @@
-schema_version: 1.1.0
+schema_version: 1.2.0
 campaign_id: NS-CI-001
 work_package_id: NS-CI-WP04
 tracker: grandchallenge/MATH-PROGRAMME#61
-state: SHORTLIST_INTEGRATED_PROVISIONAL_LEAD_A2
-selected_target: null
-provisional_lead: NS-CI-R014-A2
+state: REFEREE_SELECTED_RESEARCH_TARGET_A2
+selected_target: NS-CI-R014-A2
+selected_target_status: SELECTED_RESEARCH_TARGET_UNPROVED
+selection_record: campaigns/navier_stokes_critical_integrability/WP04_RESTRICTED_TARGET_SCORECARD/02_REFEREE_SELECTION.md
 wp03_state: CLOSED
 novelty_claim_allowed: false
 
@@ -42,11 +43,18 @@ family_dispositions:
 candidates:
   - id: NS-CI-R014-A2
     family: critical_dissipation_wavenumber_integrability
-    state: PROVISIONAL_LEAD
+    state: SELECTED_RESEARCH_TARGET_UNPROVED
     hypothesis: Lambda in L2(0,T)
-    conclusion: finite L4(0,T;L6(R3)) critical integral
+    intermediate_conclusion: low-mode vorticity coefficient f belongs to L1(0,T)
+    final_conclusion: finite L4(0,T;L6(R3)) critical integral
     scaling_class: CRITICAL
-    wp01_state: ADVERSARIAL_REVIEW_REQUIRED
+    source_boundary:
+      universal_information: Lambda in L1_t
+      known_sufficient_condition: Lambda in L5/2_t
+      pointwise_envelope: nu times Lambda squared lesssim f lesssim Lambda to 5/2 times energy norm
+      exact_L2_match_found: false
+      negative_search_is_novelty_claim: false
+    wp01_state: INITIAL_FIXTURE_REPLAY_COMPLETE
     wp02_dependencies: [CR-004, CR-007, CR-008]
     scores:
       leverage: 5
@@ -59,15 +67,21 @@ candidates:
       full_problem_relevance: 5
       information_value_if_false: 5
       execution_cost: 3
-    blockers:
-      - exact_prior_art_confirmation
-      - product_of_L1_obstruction
-      - adversarial_reduction_to_known_criterion
-      - referee_selection
+    exact_obstructions:
+      - source_envelope_does_not_close_at_exponent_two
+      - product_of_unrelated_L1_coefficients
+      - direct_holder_route_requires_Lambda_in_L3
+    authorized_attack_lanes:
+      - dyadic_level_set_packing
+      - excursion_and_dwell_time
+      - weighted_dissipation
+      - direct_high_low_critical_integral_split
+      - abstract_packet_adversary
+    tracker: grandchallenge/MATHSOLVE#24
 
   - id: NS-CI-R014-D1
     family: uniform_shell_flux_compensation
-    state: SHORTLISTED_WITH_FORMULATION_DEBT
+    state: NOT_SELECTED_REENTRY_REQUIRES_INDEPENDENT_H_D
     hypothesis: independent shell-transfer or commutator condition H_D not yet defined
     conclusion: uniform compensated enstrophy inequality and WP02 continuation
     scaling_class: CRITICAL_IF_CUTOFF_COVARIANT_AND_A_IN_L1
@@ -84,14 +98,11 @@ candidates:
       full_problem_relevance: 4
       information_value_if_false: 4
       execution_cost: 4
-    blockers:
-      - independent_H_D_missing
-      - uniform_cutoff_estimate_missing
-      - tautology_risk
+    blockers: [independent_H_D_missing, uniform_cutoff_estimate_missing, tautology_risk]
 
   - id: NS-CI-R014-E1
     family: uniform_compact_support_to_schwartz_bridge
-    state: SHORTLISTED_BRIDGE_FALLBACK
+    state: AUXILIARY_BRIDGE_NOT_SELECTED
     hypothesis: uniform critical bounds along explicit compactly supported approximation of a fixed Schwartz datum
     conclusion: every Leray-Hopf solution from the datum has finite critical integral
     scaling_class: LOGICAL_BRIDGE_WITH_CRITICAL_BOUND
@@ -108,18 +119,13 @@ candidates:
       full_problem_relevance: 4
       information_value_if_false: 3
       execution_cost: 2
-    blockers:
-      - approximation_topology_normalization
-      - whole_space_compactness_interface
-      - uniform_bound_may_encode_original_problem
+    residual_obligations: [approximation_topology_normalization, whole_space_compactness_interface]
 
 promotion_gate:
   shortlist_limit: 3
   selected_target_limit: 1
-  required_reviews: [Prospector, Axiomatist, Verifier, Adversary, Formalist, Amanuensis, Referee]
-  blocking_obligations:
-    - NS-CI-WP04-PA-001
-    - NS-CI-WP04-ADV-003
-    - NS-CI-WP04-A2-005
-    - NS-CI-WP04-D1-006
-    - NS-CI-WP04-REF-004
+  selection_complete: true
+  mechanism_generation_scope: NS-CI-R014-A2_ONLY
+  numerical_scope: CLOSED
+  formal_scope: A2_scaling_exponent_quantifier_and_imported_interface_fixtures
+  theorem_promotion_requires: [Verifier, Adversary, Formalist, Amanuensis, Referee]
