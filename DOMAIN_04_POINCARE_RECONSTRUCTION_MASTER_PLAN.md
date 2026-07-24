@@ -7,10 +7,10 @@
 - Campaign identifier: `PC-001`
 - Canonical tracker: `MATH-PROGRAMME#69`
 - Result status: `SOLVED_CLASSICAL_THEOREM`
-- Programme state: `WP01_WP02_REFEREE_PROMOTED_WP03_AUTHORIZED`
+- Programme state: `WP03_REFEREE_PROMOTED_WP04_AUTHORIZED`
 - Primary route: Ricci flow with surgery plus finite-time extinction
 - Stronger routes: elliptization and Thurston geometrization
-- Claim posture: source-normalized reconstruction, adversarial audit, pedagogy, and selective certification; no novelty claim
+- Claim posture: source-normalized reconstruction, adversarial audit, conditional topology certification, and bounded formalization; no novelty claim
 
 ## Canonical theorem
 
@@ -35,7 +35,7 @@ This is a solved-problem reconstruction campaign. It must:
 3. mark equivalences separately from one-way stronger implications;
 4. expose every imported theorem between topology, smooth geometry, Ricci flow, surgery, extinction, and terminal classification;
 5. version and cross-check the Hamilton–Perelman source chain;
-6. maintain a proof-dependency graph, false-proof atlas, claim ledger, and proof-debt register;
+6. maintain theorem, false-proof, event, claim, and proof-debt ledgers;
 7. formalize only delimited slices whose imported boundaries remain visible.
 
 ## Category bridge
@@ -88,8 +88,9 @@ category bridge and initial metric
   -> high-curvature canonical neighbourhoods
   -> controlled surgery and restart
   -> all-time Ricci flow with surgery
-  -> finite-time extinction for the relevant topological class
-  -> finite surgery-history connected-sum reconstruction
+  -> finite-time extinction
+  -> finite source-bound surgery history
+  -> backward connected-sum reconstruction
   -> simple connectivity eliminates every nontrivial factor
   -> M diffeomorphic to S3
   -> M homeomorphic to S3.
@@ -111,7 +112,7 @@ PC-L007  Standard caps, surgery, noncollapse, and all-time surgery flow
 PC-L008  Topological description of surgery and discarded components
 PC-L009  Prime-decomposition/no-aspherical-factor hypothesis bridge
 PC-L010  Finite-time extinction theorem
-PC-L011  Extinction plus surgery history gives connected-sum classification
+PC-L011  Finite surgery history and backward connected-sum reconstruction
 PC-L012  van Kampen/free-product elimination of nontrivial factors
 PC-C013  Smooth Poincaré conclusion
 PC-C014  Topological Poincaré conclusion
@@ -135,21 +136,23 @@ B016 -> B015 -> C014
 
 ## Adversarial guard architecture
 
-`PC-WP01` attaches named guards to theorem-spine nodes. Principal protections are:
+`PC-WP01` protects the proof spine from:
 
 ```text
 D000 -> homology/open/boundary substitutions
 L001 -> category suppression
 L004/L007 -> smooth-flow-through-singularity
-L006 -> local blow-up/global-manifold confusion and deleted hypotheses
-L007/L008 -> surgery topology, orientability, finiteness, and source correction
+L006 -> pointed-limit/global-manifold confusion and deleted hypotheses
+L007/L008 -> surgery topology, orientation, finiteness, and source drift
 L010/L011 -> extinction without topology
 L009/L012 -> circular prime-factor discharge
 B015/B016 -> stronger-route equivalence collapse
 T017 -> formal-interface overclaim.
 ```
 
-Passing these guards is necessary but is not a proof certificate.
+`PC-WP03` adds executable event-history guards for source omission, component loss, ancestry collision, malformed cuts, impermissible discards, orientation drift, discreteness/finiteness confusion, nonempty terminal slices, and terminal group-profile failure.
+
+Passing these guards is necessary but is not an analytic proof certificate.
 
 ## Source hierarchy
 
@@ -185,45 +188,57 @@ Delivered canonical status, category bridge, route hierarchy, source tiers, theo
 
 Status: `REFEREE_PROMOTED`.
 
-Delivered fifteen exact fixtures covering hypothesis substitution, category drift, smooth-flow overreach, local/global singularity confusion, canonical-neighbourhood mutation, surgery topology, extinction overreach, route-strength collapse, circularity, quantifier drift, source correction, and formalization overclaim.
-
-Canonical artifacts:
+Delivered fifteen exact semantic and proof-route fixtures. Canonical artifact:
 
 - `campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/00_README.md`
-- `campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/01_FIXTURE_LEDGER.yaml`
-- `campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md`
 
 ### PC-WP02 — source-normalized Hamilton–Perelman ledger
 
 Status: `REFEREE_PROMOTED_AT_THEOREM_INTERFACE_LEVEL`.
 
-Delivered a versioned source ledger, Perelman/reconstruction crosswalk, correction ledger, parameter hierarchy, nineteen theorem interfaces, finite-extinction mechanism ledger, dependency DAG, proof debt, claim ledger, and MATHCERT handoff.
+Delivered the source ledger, correction crosswalk, parameter hierarchy, nineteen theorem interfaces, finite-extinction mechanism ledger, proof debt, claims, and MATHCERT handoff.
+
+Canonical artifact:
+
+- `campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/00_README.md`
 
 The promotion does not assert independent analytic verification or full formalization.
 
-Canonical artifacts:
-
-- `campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/00_README.md`
-- `campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/04_SOURCE_NORMALIZED_THEOREMS.md`
-- `campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/05_FINITE_EXTINCTION_LEDGER.md`
-
 ### PC-WP03 — surgery topology and extinction bookkeeping
 
-Status: `AUTHORIZED_TO_INITIALIZE_WITH_TRANSFERRED_BLOCKING_DEBT`.
+Status: `REFEREE_PROMOTED_CONDITIONAL_TOPOLOGY_CERTIFICATE`.
 
-Entry obligations:
+Delivered:
 
-- finite source-bound event schema;
-- complete separating/nonseparating cut catalogue;
-- cap, survival, discard, and ancestry semantics;
-- finite-history proof from local finiteness plus extinction;
-- backward connected-sum reconstruction;
-- malformed-history adversarial fixtures;
-- terminal factor normalization certificate.
+- exact finite event JSON Schema;
+- separating and nonseparating transition catalogue;
+- D3 cap and discarded-component semantics;
+- complete active-set and component-ancestry contract;
+- finite-history derivation from bounded-interval finiteness plus extinction;
+- backward connected-sum reconstruction theorem;
+- `RP3#RP3` and bundle-factor normalization;
+- non-circular simply connected terminal discharge;
+- two positive and twelve malformed executable histories.
 
-### PC-WP04 — certification substrate
+Canonical artifact:
 
-Status: initial handoff open only for finite-history and terminal algebraic/topological logic.
+- `campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/00_README.md`
+
+The certificate is conditional on the imported surgery and finite-extinction theorem interfaces.
+
+### PC-WP04 — bounded certification substrate
+
+Status: `AUTHORIZED`.
+
+Immediate targets:
+
+1. formal `FactorAtom`, `Event`, and `History` types;
+2. total finite backward evaluator;
+3. active-set conservation and no-component-loss theorem;
+4. evaluator soundness conditional on the imported event relation;
+5. simply connected group-profile discharge;
+6. replay of positive and malformed JSON histories;
+7. provenance-preserving certificate output.
 
 The analytic Ricci-flow interfaces remain explicit unformalized imports.
 
@@ -232,7 +247,7 @@ The analytic Ricci-flow interfaces remain explicit unformalized imports.
 ### MATHFORGE
 
 - source discovery and edition control;
-- false-proof atlas;
+- false-proof and history-mutation atlases;
 - reconstruction comparison;
 - theorem-location and citation audit.
 
@@ -247,16 +262,16 @@ The analytic Ricci-flow interfaces remain explicit unformalized imports.
 
 - finite surgery-history representation;
 - connected-sum and group-expression terminal logic;
-- provenance-bearing analytic interfaces;
-- no full-proof badge unless the imported analytic chain is actually formalized.
+- provenance-bearing imported interfaces;
+- no full-proof badge unless the analytic chain is actually formalized.
 
 ## Foundational profile
 
-- Carrier: closed connected topological, PL, smooth, and Riemannian `3`-manifolds.
-- Ambient structures: algebraic topology, geometric topology, Riemannian geometry, nonlinear parabolic PDE, geometric measure theory, and finite surgery histories.
+- Carrier: closed connected topological, PL, smooth, and Riemannian `3`-manifolds plus finite surgery histories.
+- Ambient structures: algebraic topology, geometric topology, Riemannian geometry, nonlinear parabolic PDE, finite directed forests, connected sums, and group free products.
 - Classical base: standard classical mathematics.
-- Witness policy: literature-derived complete proof; formal certificates initially cover selected logical and combinatorial slices.
-- Pathology risk: high at category changes, singular limits, surgery times, discarded components, source-version changes, and compressed theorem interfaces.
+- Witness policy: literature-derived complete proof; current executable certificates cover selected logical and combinatorial slices.
+- Pathology risk: high at category changes, singular limits, surgery times, discarded components, source versions, event conservation, and formalization boundaries.
 
 ## Claim boundary
 
@@ -266,12 +281,16 @@ The campaign does not claim:
 - independent verification of every Hamilton–Perelman estimate;
 - equivalence of Poincaré with elliptization or geometrization;
 - that extinction alone determines topology;
+- that a schema-valid history proves the history exists;
 - that formalized implication interfaces certify their analytic assumptions;
 - quotation-level source completeness where proof debt remains;
 - novelty for any classical component.
 
 ## Current executable stage
 
-Initialize `PC-WP03` under the admission contract in `campaigns/poincare_reconstruction/PC_WP01_WP02_INTEGRATION_DECISION.md`.
+Execute `PC-WP04` within the bounded certification contract in:
 
-The immediate obligation is the finite surgery-history schema and source-bound transition catalogue. Broad proof compression and any full-formalization claim remain closed.
+- `campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/11_CERT_HANDOFF.md`
+- `campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/12_NEXT_EXECUTABLE_STEP.md`
+
+Full analytic formalization and any new-proof claim remain closed.
