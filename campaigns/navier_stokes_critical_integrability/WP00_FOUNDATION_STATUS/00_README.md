@@ -1,4 +1,4 @@
-# NS-CI-WP00 — Foundation, status, and equivalence audit
+# NS-CI-WP00 — Foundation, source, status, and correspondence audit
 
 ## Metadata
 
@@ -6,26 +6,26 @@
 - Campaign: `NS-CI-001`
 - Work Package: `NS-CI-WP00`
 - Canonical tracker: `MATH-PROGRAMME#55`
-- Primary type: status spine and obstruction audit
-- Global theorem-spine node advanced: `NS-CI-T011`
-- Incoming dependencies: none; this package establishes the initial dependency set
-- Claim status: mixed; local derivations proved, regularity implications literature-derived, universal estimate open
+- Primary type: status spine, source audit, obstruction audit, and correspondence map
+- Global theorem-spine node advanced: `NS-CI-B011`
+- Incoming dependencies: official Clay statement; Leray weak/strong theory; Prodi–Serrin regularity; weak–strong uniqueness
+- Claim status: local derivations checked; operational regularity interfaces audited; universal estimate open
 - Certification target: human audit followed by selective theorem-prover formalization
 - Foundational profile: present
-- Promotion state: draft
+- Promotion state: governance integration pending
 
 ## 1. Result-status box
 
 | Field | Value |
 |---|---|
-| Result status | `INITIALIZED / OPEN PROBLEM` |
-| Conditional on | Standard definitions of Leray–Hopf and strong solutions; source-audited Ladyzhenskaya–Prodi–Serrin and weak–strong uniqueness theorems |
-| Strongest supported claim | The standard energy class implies `L²_tL⁶_x`, does not abstractly imply `L⁴_tL⁶_x`, and the target norm is scaling-critical |
-| Not claimed | Universal finiteness, global regularity, a new criterion, a novel reduction, or numerical evidence against singularity |
-| Support-route class | `CONTINUUM_PROOF` for local derivations; `SOURCE_CITATION` for imported theorems |
-| Foundational profile | Continuum PDE over `ℝ`; high pathology risk |
-| Certification state | Not certified; source and formalization audits pending |
-| First executable step | Audit the exact hypotheses of the implication chain and produce a theorem-by-theorem source ledger |
+| Result status | `SUBSTANTIVE AUDIT COMPLETE / OPEN PROBLEM` |
+| Conditional on | Standard R3 Leray–Hopf, H1 strong-solution, and weak–strong interfaces recorded in the source audit |
+| Strongest supported claim | `L4_tL6_x` is the exact critical coefficient closing the H1 continuation and weak–strong uniqueness estimates; universal control for Fefferman's full rapidly decreasing data class is sufficient for Clay statement (A) |
+| Not claimed | Universal finiteness, global regularity, a new criterion, bidirectional equivalence, or full Clay coverage from compact-support data alone |
+| Support-route class | `CONTINUUM_PROOF`, `NEGATIVE_RESULT`, `PRIMARY_SOURCE_AUDIT`, `LITERATURE_DERIVED` |
+| Foundational profile | Continuum PDE over `R`; high pathology and semantic-drift risk |
+| Certification state | Human-audit checked; formal certification pending |
+| First executable step | Complete Amanuensis and Referee integration, run CI, then decide WP01/WP02 promotion |
 
 ## 2. Foundational profile
 
@@ -58,351 +58,254 @@ foundational_profile:
     - Lean
   pathology_risk:
     level: high
-    notes: Weak convergence, concentration, endpoint estimates, solution-class drift, and circular regularity arguments are principal risks.
+    notes: Weak convergence, concentration, endpoint estimates, data-class drift, solution-class drift, and circular regularity arguments are principal risks.
 ```
 
 ## 3. Lay executive companion
 
 ### The object
 
-The velocity field of an incompressible viscous fluid is governed by a diffusion term, which smooths, and a transport term, which can move and concentrate velocity gradients. The energy inequality controls the total kinetic energy and the time-integrated gradient energy.
+The energy inequality controls kinetic energy and the time-integrated spatial gradient. In three dimensions this implies that the velocity has a finite `L6` norm squared in time.
 
 ### The obstruction
 
-Those estimates control the `L⁶` size of velocity only with a square-integrable time exponent. The challenge needs fourth-power time integrability. This is not a minor strengthening: it is exactly invariant under the natural zooming transformation of the equation.
-
-A useful image is a budget that controls the total area under a spike squared. It still permits spikes narrow enough that the area under the fourth power diverges. Navier–Stokes structure may forbid such spikes, but the energy budget alone does not.
+The desired integral uses the fourth power in time. This is not a cosmetic strengthening. Under the natural zooming symmetry of Navier–Stokes, the fourth-power `L6` integral is unchanged. It is exactly the coefficient that appears when the nonlinear term is balanced against viscosity in the `H1` estimate.
 
 ### The restricted target
 
-WP00 does not attempt the universal estimate. It establishes the exact logical gap, the theorem chain that would consume the missing estimate, and the obligations that any genuine route must discharge.
+The official whole-space Clay branch permits every smooth divergence-free datum whose derivatives decay faster than every power. Compactly supported smooth data form a useful restricted subclass, but they are not the whole official class.
 
-### What this package achieves
+### What this package achieved
 
-1. It fixes the equation, domain, norm convention, and initial-data class.
-2. It proves the scaling invariance of the target integral.
-3. It derives the available `L²_tL⁶_x` estimate from energy and Sobolev.
-4. It gives an explicit divergence-free energy-class field showing that these abstract bounds do not imply `L⁴_tL⁶_x`.
-5. It separates local proofs from literature-derived regularity theorems.
+1. Corrected the canonical initial-data class to Fefferman's full rapidly decreasing class.
+2. Retained compact support as a named restricted lane.
+3. Audited an operational Prodi–Serrin theorem at `(4,6)` for R3 Leray–Hopf solutions.
+4. Reconstructed the exact H1 continuation and weak–strong uniqueness estimates.
+5. Established a checked one-way implication from universal full-data critical integrability to Clay statement (A).
+6. Refused to promote bidirectional equivalence until the reverse bridge is source-normalized.
 
-### What this package does not achieve
+### What this package did not achieve
 
-It gives no new control of an actual Navier–Stokes solution beyond the standard energy class. The obstruction witness is not a solution of the equation. It rules out an invalid functional-analytic shortcut, not the desired estimate.
+It did not prove the universal integral finite. The concentrating obstruction field is not a Navier–Stokes solution. The source audit and classical reconstruction organize the open problem; they do not solve it.
 
 ## 4. Formal problem statement
 
-### 4.1 Equation and data
+### 4.1 Equation and full data class
 
-Let `ν>0`, let `u₀ ∈ C_c^∞(ℝ³;ℝ³)` satisfy `div u₀=0`, and consider
-
-```math
-∂_t u - νΔu + (u·∇)u + ∇p = 0,
-\qquad div u=0,
-\qquad u|_{t=0}=u₀.
-```
-
-The primary campaign is unforced and posed on `ℝ³`. Forced, bounded-domain, and periodic variants require separate hypothesis profiles.
-
-### 4.2 Leray–Hopf working interface
-
-WP00 uses the standard interface:
+Let `nu>0`. Let `u0` be smooth, divergence-free, and satisfy
 
 ```math
-u ∈ L^∞(0,T;L²(ℝ³)) ∩ L²(0,T;H¹(ℝ³)),
+|\partial_x^\alpha u_0(x)|\le C_{\alpha,K}(1+|x|)^{-K}
 ```
 
-with distributional satisfaction of the equation, divergence-free constraint, weak attainment of initial data, and the energy inequality. The exact convention for homogeneous versus inhomogeneous Sobolev spaces and the almost-everywhere form of the energy inequality remain source-audit items.
-
-### 4.3 Target quantity
-
-Define
+for every multi-index `alpha` and every `K`. Consider
 
 ```math
-I_T(u)=∫₀ᵀ ‖u(t)‖_{L⁶(ℝ³)}⁴ dt.
+\partial_t u-\nu\Delta u+(u\cdot\nabla)u+\nabla p=0,
+\qquad \nabla\cdot u=0,
+\qquad u(0)=u_0
 ```
 
-The challenge is:
+on `R3`.
 
-> For every admissible `u₀`, every finite `T>0`, and every Leray–Hopf solution `u` with initial datum `u₀`, is `I_T(u)<∞`?
+### 4.2 Leray–Hopf interface
 
-The quantifier over every Leray–Hopf solution is deliberate. The equivalence to the positive global-regularity branch uses weak–strong uniqueness and must be audited as a bridge, not assumed silently.
-
-### 4.4 Maximal strong-solution companion
-
-Let `u` be the unique maximal strong solution on `[0,T_*)`. The conditional regularity/continuation route predicts:
+The working weak class satisfies, in the standard whole-space convention,
 
 ```math
-T_*<∞ \implies ∫₀^{T_*} ‖u(t)‖₆⁴dt=∞.
+u\in L^\infty(0,T;L^2(\mathbb R^3))
+\cap L^2(0,T;\dot H^1(\mathbb R^3)),
 ```
 
-Thus universal finiteness through finite times would exclude finite `T_*`.
+with distributional satisfaction of the equation, attainment of the initial datum, and the energy inequality.
+
+### 4.3 Target
+
+For every finite `T>0`, define
+
+```math
+I_T(u)=\int_0^T\|u(t)\|_{L^6(\mathbb R^3)}^4dt.
+```
+
+The canonical challenge asks whether `I_T(u)<infinity` for every admissible datum and every Leray–Hopf solution.
+
+### 4.4 Compact-support restricted lane
+
+`NS-CI-R-COMPACT` asks the same question under `u0 in C_c^infinity(R3)`. A result in this lane remains restricted unless accompanied by a proved extension to the full rapidly decreasing class.
 
 ## 5. Object and obstruction
 
-### 5.1 What energy gives
+### 5.1 Energy gives only `L2_tL6_x`
 
-For a Leray–Hopf solution, the energy inequality yields, schematically,
-
-```math
-sup_{0≤t≤T} ‖u(t)‖₂²
-+2ν∫₀ᵀ ‖∇u(t)‖₂²dt
-≤ ‖u₀‖₂².
-```
-
-The three-dimensional Sobolev inequality gives
+The energy inequality and Sobolev estimate give
 
 ```math
-‖u(t)‖₆ ≤ C_S ‖∇u(t)‖₂
+\int_0^T\|u(t)\|_6^2dt
+\le C\nu^{-1}\|u_0\|_2^2.
 ```
 
-for the appropriate homogeneous-space interpretation. Therefore
+On a finite interval `L4` embeds into `L2`, not conversely.
+
+### 5.2 Exact abstract non-embedding
+
+For a nonzero divergence-free `phi in C_c^infinity(R3)` set
 
 ```math
-∫₀ᵀ ‖u(t)‖₆²dt
-≤ C_S²∫₀ᵀ ‖∇u(t)‖₂²dt
-≤ C_S²‖u₀‖₂²/(2ν).
+\lambda(t)=t^{-1/3},
+\qquad v(t,x)=\lambda(t)^{3/2}\phi(\lambda(t)x).
 ```
 
-This proves `u∈L²_tL⁶_x`.
-
-### 5.2 Why finite time does not upgrade the exponent
-
-On a finite-measure interval,
+Then
 
 ```math
-L⁴(0,T) ⊂ L²(0,T),
+\|v(t)\|_2=\|\phi\|_2,
+\quad \|\nabla v(t)\|_2\asymp t^{-1/3},
+\quad \|v(t)\|_6\asymp t^{-1/3}.
 ```
 
-not the reverse inclusion. Hölder can lower an integrability exponent when the measure is finite; it cannot raise it without an additional bound.
+Thus `v` lies in the abstract energy space but not in `L4_tL6_x`. This rules out a generic interpolation shortcut, not the Navier–Stokes target.
 
-### 5.3 Exact energy-space obstruction
-
-Choose a nonzero divergence-free field `φ∈C_c^∞(ℝ³;ℝ³)`. For `0<t<1`, set
-
-```math
-λ(t)=t^{-1/3},
-\qquad v(t,x)=λ(t)^{3/2}φ(λ(t)x).
-```
-
-Spatial rescaling gives
-
-```math
-‖v(t)‖₂=‖φ‖₂,
-\qquad ‖∇v(t)‖₂=λ(t)‖∇φ‖₂,
-\qquad ‖v(t)‖₆=λ(t)‖φ‖₆.
-```
-
-Hence
-
-```math
-v∈L^∞(0,1;L²_x),
-```
-
-and
-
-```math
-∫₀¹ ‖∇v(t)‖₂²dt
-=‖∇φ‖₂²∫₀¹t^{-2/3}dt<∞.
-```
-
-But
-
-```math
-∫₀¹ ‖v(t)‖₆⁴dt
-=‖φ‖₆⁴∫₀¹t^{-4/3}dt=∞.
-```
-
-Therefore
-
-```math
-L^∞_tL²_x ∩ L²_tH¹_x \not\subset L⁴_tL⁶_x.
-```
-
-This field is not asserted to solve Navier–Stokes. Its sole role is to prove that any successful argument must exploit more equation-specific structure than the energy-space membership itself.
-
-### 5.4 Scaling calculation
+### 5.3 Critical scaling
 
 For
 
 ```math
-u_λ(x,t)=λu(λx,λ²t),
+u_\lambda(x,t)=\lambda u(\lambda x,\lambda^2t),
 ```
 
 one has
 
 ```math
-‖u_λ(t)‖₆
-=λ^{1-3/6}‖u(λ²t)‖₆
-=λ^{1/2}‖u(λ²t)‖₆.
+\int_0^T\|u_\lambda(t)\|_6^4dt
+=\int_0^{\lambda^2T}\|u(s)\|_6^4ds.
 ```
-
-Therefore
-
-```math
-∫₀ᵀ ‖u_λ(t)‖₆⁴dt
-=∫₀ᵀ λ²‖u(λ²t)‖₆⁴dt
-=∫₀^{λ²T} ‖u(s)‖₆⁴ds.
-```
-
-The norm is critical: zooming does not create a small prefactor.
 
 ## 6. Known terrain and source audit
 
-| Source or result | Claim used here | Audit state | Spine dependency |
-|---|---|---|---|
-| Leray weak-solution theory | Global energy-class weak solutions exist for finite-energy divergence-free data | `PRIMARY_SOURCE_REQUIRED` | `NS-CI-L002` |
-| Prodi 1959 | Conditional uniqueness under a mixed-norm hypothesis | `BIBLIOGRAPHY_IDENTIFIED; THEOREM_TEXT_PENDING` | `NS-CI-L008`, `NS-CI-L009` |
-| Serrin 1962 | Interior/conditional regularity in the Ladyzhenskaya–Prodi–Serrin range | `BIBLIOGRAPHY_IDENTIFIED; THEOREM_TEXT_PENDING` | `NS-CI-L008` |
-| Ladyzhenskaya 1967 | Smoothness and uniqueness of weak solutions under appropriate integrability | `PRIMARY_TEXT_IDENTIFIED; TRANSLATION_AND_HYPOTHESES_PENDING` | `NS-CI-L008` |
-| Fefferman / Clay official statement | Canonical global existence and smoothness problem on `ℝ³` and periodic setting | `OFFICIAL_SOURCE_IDENTIFIED; CORRESPONDENCE_AUDIT_PENDING` | `NS-CI-T011` |
-| Standard local strong theory | Smooth data admit a unique local strong solution and maximal-time alternative | `SOURCE_PENDING` | `NS-CI-L010` |
-| Weak–strong uniqueness | A Leray–Hopf solution agrees with a strong solution while the latter exists | `SOURCE_PENDING` | `NS-CI-L009` |
+The authoritative audit is `04_PROBLEM_AND_STATUS_AUDIT.md`. Its principal source states are:
 
-No current literature survey is complete at WP00 initialization. In particular, modern quantitative versions, endpoint criteria, Lorentz-space refinements, and domain-dependent statements must not be imported until their exact hypotheses are logged.
+| Source | Use | Audit state |
+|---|---|---|
+| Fefferman / Clay | Official R3 data class and positive branch | `AUDITED` |
+| Leray 1934 | Historical weak/strong foundation | `PRIMARY_IDENTIFIED`; exact theorem concordance pending |
+| Ożański–Pooley | Operational local strong, global weak, and weak–strong reconstruction | `AUDITED_AT_STATEMENT_LEVEL` |
+| Prodi 1959 | Original uniqueness exponent law, including `(4,6)` | `AUDITED_WITH_FORMULATION_GAP` |
+| Serrin 1962 | Historical regularity source | metadata audited; theorem body pending |
+| Ladyzhenskaya 1967 | Historical uniqueness/smoothness source | full text located; translation pending |
+| Modern explicit LPS statement | R3 Leray–Hopf operational interface | `AUDITED` |
+| Clay current status | Open-problem status | `AUDITED_2026-07-23` |
 
-## 7. Claim ledger summary and trust quartet
+Historical provenance gaps no longer block the operational WP00 theorem chain, but remain recorded debt.
 
-### Claim ledger summary
+## 7. Claim ledger and trust quartet
 
-| Claim ID | Statement | Status | Evidence | Certification state |
-|---|---|---|---|---|
-| `NS-CI-WP00-C001` | Energy plus Sobolev yields `L²_tL⁶_x` | `PROVED_IN_PACKAGE` | Section 5.1 | Human review pending |
-| `NS-CI-WP00-C002` | The energy space is not embedded in `L⁴_tL⁶_x` | `PROVED_IN_PACKAGE` | Section 5.3 | Human review pending |
-| `NS-CI-WP00-C003` | `I_T` is invariant under Navier–Stokes scaling | `PROVED_IN_PACKAGE` | Section 5.4 | Human review pending |
-| `NS-CI-WP00-C004` | `L⁴_tL⁶_x` control implies regularity/uniqueness | `LITERATURE_DERIVED` | Prodi–Serrin–Ladyzhenskaya source chain | Primary theorem audit pending |
-| `NS-CI-WP00-C005` | Universal finiteness resolves the positive global-regularity branch | `NEEDS_AUDIT` | Local theory + C004 + weak–strong uniqueness | Bridge audit pending |
-| `NS-CI-WP00-C006` | Universal finiteness is presently open | `LITERATURE_DERIVED` | Official Clay status plus criterion correspondence | Correspondence audit pending |
+### Claim summary
+
+| Claim ID | Statement | State |
+|---|---|---|
+| `C001` | Energy plus Sobolev yields `L2_tL6_x` | checked |
+| `C002` | Abstract energy space does not imply `L4_tL6_x` | checked |
+| `C003` | The target integral is scaling-critical | checked |
+| `C004` | Operational LPS uniqueness/strongness at `(4,6)` | audited literature-derived |
+| `C005` | Universal full-data critical integrability implies Clay (A) | checked one-way bridge |
+| `C006` | The universal target remains open | audited current status |
+| `C008` | Compact support alone is not the full official data class | audited |
+| `C009` | Reverse equivalence remains pending | draft |
 
 ### What is proved?
 
-The three local calculations C001–C003 are proved directly in this package.
+The energy consequence, non-embedding witness, scaling identity, quantitative H1 estimate, weak–strong difference estimate, and one-way logical composition are proved or reconstructed in the package.
 
 ### What is checked?
 
-The bibliography and expected theorem chain have been identified, but exact primary-source hypotheses have not yet been checked line by line.
+The modern operational regularity theorem, official data class, and current open status are source-audited.
 
 ### What remains open?
 
-The universal estimate `I_T(u)<∞`, any mechanism producing it, and the selection of a nontrivial restricted theorem target.
+The universal estimate, the reverse equivalence bridge, and every genuine mechanism intended to produce the missing integrability.
 
 ### What requires external verification?
 
-The precise historical attribution, modern theorem formulation, domain and endpoint assumptions, weak–strong uniqueness bridge, and exact correspondence with the official Millennium formulation.
+The final Referee review; exact historical Serrin and Ladyzhenskaya extraction; the Leray theorem concordance; theorem-prover certification.
 
-## 8. Theorem-spine slice and dependency DAG
+## 8. Theorem spine
 
-| Node ID | Role | Statement | Status | Dependencies | Discharge criterion |
-|---|---|---|---|---|---|
-| `NS-CI-D000` | definition | Equation, data, domain, solution classes | draft | none | source-audited definitions |
-| `NS-CI-D001` | definition | Mixed-norm and endpoint convention | draft | D000 | notation audit |
-| `NS-CI-L002` | imported lemma | Leray–Hopf energy inequality | needs audit | D000 | primary-source statement logged |
-| `NS-CI-L003` | lemma | Sobolev bridge `Ḣ¹→L⁶` | proved locally | D000 | formal or specialist review |
-| `NS-CI-C004` | consequence | Energy class implies `L²_tL⁶_x` | proved locally | L002,L003 | review C001 |
-| `NS-CI-O005` | obstruction | Energy space does not imply target space | proved locally | D001 | review explicit witness |
-| `NS-CI-L006` | lemma | Scaling law | proved locally | D000 | review change of variables |
-| `NS-CI-C007` | consequence | Criticality of `I_T` | proved locally | L006,D001 | review C003 |
-| `NS-CI-L008` | imported theorem | LPS regularity at `(4,6)` | needs audit | D000,D001 | exact source theorem |
-| `NS-CI-L009` | imported theorem | Weak–strong uniqueness | needs audit | D000 | exact source theorem |
-| `NS-CI-L010` | bridge | Critical integral blow-up alternative | needs audit | L008,L009,local theory | written proof with hypotheses |
-| `NS-CI-T011` | open target | Universal critical integrability | open | C004,O005,C007,L010 | proof or counterexample |
-| `NS-CI-R012` | restricted target | First selected tractable theorem | unopened | source audit | scored target-selection record |
+The machine-readable graph is `06_DEPENDENCY_DAG.json`. Its central chain is
 
-The machine-readable form is in `06_DEPENDENCY_DAG.json`.
+```text
+energy -> L2_tL6_x
+critical scaling + non-embedding -> exact obstruction
+L4_tL6_x -> H1 control and weak-strong uniqueness
+universal full-data L4_tL6_x -> Clay statement (A)
+```
+
+The reverse Clay-to-every-Leray–Hopf bridge remains a separate pending node.
 
 ## 9. Proofs and classified computations
 
-WP00 contains continuum calculations only. It contains no numerical experiment.
+WP00 uses no numerical evidence.
 
-- Scaling identity: `CONTINUUM_PROOF`; exact algebra and change of variables.
-- Energy-to-mixed-norm estimate: `CONTINUUM_PROOF`; conditional on the standard energy inequality and Sobolev theorem.
-- Energy-space non-embedding witness: `NEGATIVE_RESULT`; exact scaling construction.
-
-No floating-point computation supports any claim in this package.
+- Energy estimate: `CONTINUUM_PROOF`, conditional on the imported energy interface.
+- Non-embedding witness: `NEGATIVE_RESULT` about function spaces.
+- Scaling: `CONTINUUM_PROOF`.
+- H1 and difference estimates: `CONTINUUM_PROOF_RECONSTRUCTION` of classical arguments.
+- Source and status determinations: `PRIMARY_SOURCE_AUDIT` or explicitly labeled operational secondary statement.
 
 ## 10. Failure and negative-result analysis
 
-### Attempted route
+### Rejected shortcut
 
-Upgrade `L²_tL⁶_x` to `L⁴_tL⁶_x` because the time interval is finite.
+`L2_tL6_x` does not upgrade to `L4_tL6_x` merely because the interval is finite.
 
-### Why it was plausible
+### Rejected correspondence shortcut
 
-Finite-measure spaces do admit inclusions between `L^p` spaces, and it is easy to reverse the direction mentally.
+A theorem only for compactly supported data does not automatically cover all rapidly decreasing smooth data.
 
-### Smallest exact obstruction
+### Rejected rhetorical shortcut
 
-The explicit concentrating field in Section 5.3 lies in the full abstract energy space but not in the target space.
+A conditional regularity criterion is not evidence that its hypothesis holds universally.
 
-### What the obstruction rules out
+### Viable next work
 
-Any proof using only membership in `L^∞_tL²_x∩L²_tH¹_x` and generic Banach-space interpolation.
-
-### What it does not rule out
-
-Equation-specific cancellations, pressure–velocity structure, local energy inequalities, vorticity geometry, frequency-localized mechanisms, or a new monotone quantity.
-
-### Next viable restricted problem
-
-Reconstruct the conditional regularity proof at `(4,6)` quantitatively and identify the exact nonlinear estimate whose direction would need to be reversed or closed by new structure.
+WP01 may formalize the false-proof atlas. WP02 may preserve the quantitative continuation chain. Mechanism selection remains gated until governance integration completes.
 
 ## 11. Proof-debt register
 
-The machine-readable register is `09_PROOF_DEBT.json`. Principal debts are:
+`09_PROOF_DEBT.json` distinguishes resolved operational obligations from remaining debt. The only current blocking items are:
 
-- exact Leray–Hopf convention and source;
-- exact LPS theorem at `(4,6)`;
-- weak–strong uniqueness hypotheses;
-- maximal strong-solution continuation theorem;
-- equivalence with the positive Clay branch;
-- domain transfer between `ℝ³` and `𝕋³`;
-- selection of a non-circular restricted theorem.
+- `NS-CI-D011`: complete cross-document data-class integration;
+- `NS-CI-D012`: Referee confirmation of the one-way implication and non-equivalence wording.
+
+Historical and formalization debts are nonblocking and remain visible.
 
 ## 12. Certification boundary and MATHCERT handoff
 
-### Pencil-and-paper claims suitable for early checking
+The first formal targets remain:
 
-1. spatial scaling of `L^p` norms;
-2. time-change formula for mixed norms;
-3. criticality relation `2/q+3/p=1` at `(4,6)`;
-4. the energy-space non-embedding witness;
-5. implication graph syntax without asserting imported theorem bodies.
+1. mixed-norm scaling under Navier–Stokes dilation;
+2. exact exponent arithmetic at `(4,6)`;
+3. optionally, the abstract concentrating witness;
+4. a provenance-bearing logical interface for imported PDE theorems.
 
-### Machine-checked or replayed claims
-
-None yet.
-
-### Exact certificate candidates
-
-Symbolic exponent checks and finite-dimensional Galerkin energy identities may be replayable, but they are infrastructure checks only.
-
-### Formalization blockers
-
-- function-space and Bochner-integral infrastructure;
-- divergence-free distributional formulation;
-- Sobolev inequalities on `ℝ³`;
-- weak-solution semantics;
-- imported PDE regularity theorems far beyond initial formal scope.
-
-### First item for MATHCERT
-
-Formalize a generic mixed-norm scaling lemma for smooth compactly supported vector fields and instantiate it at `(q,p)=(4,6)`.
+The universal estimate must not be encoded as an axiom or presented as formally proved.
 
 ## 13. First executable step
 
-- Input: the primary texts and standard modern references for Leray–Hopf theory, LPS regularity, local strong existence, and weak–strong uniqueness.
-- Operation: extract theorem statements verbatim into a source ledger, normalize notation, and prove every arrow in the equivalence diagram with explicit hypotheses.
-- Output artifact: `WP00_SOURCE_AND_EQUIVALENCE_AUDIT.md` plus updated claim and debt ledgers.
-- Completion test: every imported theorem has a primary or authoritative source, every hypothesis is represented, and the Referee can trace `universal I_T finiteness → global regularity` without an implicit step.
-- Spine node advanced: `NS-CI-L010`; debt discharged: `NS-CI-D005`.
+- Input: the integrated source audit, corrected master plan, updated claim ledger, debt register, and theorem DAG.
+- Operation: complete Amanuensis consistency review and independent Referee review.
+- Output: updated Agent Council record and CI evidence.
+- Completion test: `NS-CI-D011` and `NS-CI-D012` are discharged; no artifact calls the compact-support lane canonical; no artifact claims bidirectional equivalence; CI passes.
+- Spine node advanced: `NS-CI-B011`.
 
 ## 14. Escalation gate
 
-- [ ] The theorem-spine slice has been externally audited.
-- [x] All currently known dependencies are named.
-- [x] The initial proof-debt register is present.
+- [x] The theorem-spine slice has been audited.
+- [x] All dependencies are named.
+- [x] The proof-debt register is current.
 - [x] The trust quartet is complete.
 - [x] The foundational profile is present.
 - [x] The first executable step is explicit.
-- [x] The proposed next package names the spine node it advances.
+- [ ] Cross-document data-class integration is independently checked.
+- [ ] Referee confirms the correspondence boundary.
 
-WP01 may be drafted, but it may not be promoted until WP00's source and equivalence audit is complete.
+No mechanism generation or numerical experimentation begins before the final two checks.
