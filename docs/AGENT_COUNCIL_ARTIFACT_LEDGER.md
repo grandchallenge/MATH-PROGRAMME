@@ -41,6 +41,8 @@ Every governed artifact receives:
 | PC-WP01-WP02-INTEGRATION | integration decision | MATH-PROGRAMME | `campaigns/poincare_reconstruction/PC_WP01_WP02_INTEGRATION_DECISION.md` | referee_promoted_wp03_authorized | `ADR-0005`; `PC-WP01-WP02-INTEGRATION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP01_WP02.integration_review.yaml` | 2026-07-24 | reviewed |
 | PC-WP03 | work package | MATHCERT | `campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/00_README.md` | referee_promoted_conditional | `ADR-0005`; `PC-WP03-REFEREE-DECISION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP03.agent_review.yaml` | 2026-07-24 | reviewed |
 | PC-WP03-REFEREE-DECISION | promotion decision | MATH-PROGRAMME | `campaigns/poincare_reconstruction/PC_WP03_REFEREE_DECISION.md` | wp04_authorized | `ADR-0005`; `PC-WP03-REFEREE-DECISION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP03.agent_review.yaml` | 2026-07-24 | reviewed |
+| PC-WP04 | formal certificate work package | MATHCERT | `campaigns/poincare_reconstruction/WP04_BOUNDED_CERTIFICATION/00_README.md` | kernel_checked_bounded_evaluator | `ADR-0005`; `PC-WP04-REFEREE-DECISION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP04.agent_review.yaml` | 2026-07-24 | reviewed |
+| PC-WP04-REFEREE-DECISION | promotion decision | MATH-PROGRAMME | `campaigns/poincare_reconstruction/PC_WP04_REFEREE_DECISION.md` | wp05_closure_audit_authorized | `ADR-0005`; `PC-WP04-REFEREE-DECISION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP04.agent_review.yaml` | 2026-07-24 | reviewed |
 
 ## Update rules
 
