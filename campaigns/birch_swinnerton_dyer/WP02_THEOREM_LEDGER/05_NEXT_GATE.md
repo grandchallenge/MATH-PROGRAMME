@@ -1,6 +1,6 @@
 # BSD-WP01/WP02 — Gate result
 
-WP01 and WP02 are review-ready and may be promoted only after policy validation and independent semantic review.
+WP01 and WP02 are Referee-promoted after exact policy validation and independent semantic reconstruction.
 
 Still closed:
 
@@ -10,4 +10,4 @@ Still closed:
 - restricted-target selection;
 - any claim that WP01 or WP02 advances the truth of BSD itself.
 
-A later scorecard may open only after the Referee confirms that every candidate target names the exact WP02 interfaces it imports and every WP01 fixture it must bypass.
+`BSD-WP03` is the next eligible stage only upon explicit authorization. A later scorecard remains closed until a separately reviewed WP03 handoff confirms that every candidate target names the exact WP02 interfaces it imports and every WP01 fixture it must bypass.
