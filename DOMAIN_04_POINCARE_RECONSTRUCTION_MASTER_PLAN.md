@@ -7,10 +7,10 @@
 - Campaign identifier: `PC-001`
 - Canonical tracker: `MATH-PROGRAMME#69`
 - Result status: `SOLVED_CLASSICAL_THEOREM`
-- Programme state: `WP03_REFEREE_PROMOTED_WP04_AUTHORIZED`
+- Programme state: `WP04_KERNEL_CHECKED_WP05_CLOSURE_AUDIT_AUTHORIZED`
 - Primary route: Ricci flow with surgery plus finite-time extinction
 - Stronger routes: elliptization and Thurston geometrization
-- Claim posture: source-normalized reconstruction, adversarial audit, conditional topology certification, and bounded formalization; no novelty claim
+- Claim posture: source-normalized reconstruction, adversarial audit, conditional topology certification, and bounded kernel checking; no novelty claim
 
 ## Canonical theorem
 
@@ -35,7 +35,7 @@ This is a solved-problem reconstruction campaign. It must:
 3. mark equivalences separately from one-way stronger implications;
 4. expose every imported theorem between topology, smooth geometry, Ricci flow, surgery, extinction, and terminal classification;
 5. version and cross-check the Hamilton–Perelman source chain;
-6. maintain theorem, false-proof, event, claim, and proof-debt ledgers;
+6. maintain theorem, false-proof, event, claim, proof-debt, and certificate ledgers;
 7. formalize only delimited slices whose imported boundaries remain visible.
 
 ## Category bridge
@@ -134,6 +134,20 @@ B016 -> B015 -> C014
 
 `B015` and `B016` are implication routes, not equivalences with the Poincaré theorem.
 
+## Certification architecture
+
+```text
+WP02 imported topology/extinction interfaces
+  -> WP03 source-bound finite event contract
+  -> WP03 executable history validation
+  -> WP04 Lean event and history carriers
+  -> WP04 finite backward evaluator
+  -> WP04 active-set and evaluator correctness theorems
+  -> WP04 provenance-preserving bounded certificate.
+```
+
+The formal boundary is `ImportedEventRelation`. It connects a source-certified event to its finite reconstruction equation. It does not assert event existence or any Ricci-flow analytic theorem.
+
 ## Adversarial guard architecture
 
 `PC-WP01` protects the proof spine from:
@@ -151,6 +165,8 @@ T017 -> formal-interface overclaim.
 ```
 
 `PC-WP03` adds executable event-history guards for source omission, component loss, ancestry collision, malformed cuts, impermissible discards, orientation drift, discreteness/finiteness confusion, nonempty terminal slices, and terminal group-profile failure.
+
+`PC-WP04` adds certificate-policy guards for source removal, declaration drift, proof placeholders, and opaque local axioms.
 
 Passing these guards is necessary but is not an analytic proof certificate.
 
@@ -188,7 +204,9 @@ Delivered canonical status, category bridge, route hierarchy, source tiers, theo
 
 Status: `REFEREE_PROMOTED`.
 
-Delivered fifteen exact semantic and proof-route fixtures. Canonical artifact:
+Delivered fifteen exact semantic and proof-route fixtures.
+
+Canonical artifact:
 
 - `campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/00_README.md`
 
@@ -212,7 +230,7 @@ Delivered:
 
 - exact finite event JSON Schema;
 - separating and nonseparating transition catalogue;
-- D3 cap and discarded-component semantics;
+- `D3` cap and discarded-component semantics;
 - complete active-set and component-ancestry contract;
 - finite-history derivation from bounded-interval finiteness plus extinction;
 - backward connected-sum reconstruction theorem;
@@ -228,19 +246,39 @@ The certificate is conditional on the imported surgery and finite-extinction the
 
 ### PC-WP04 — bounded certification substrate
 
+Status: `KERNEL_CHECKED_BOUNDED_EVALUATOR_CERTIFICATE`.
+
+Delivered:
+
+- pinned Lean 4 and mathlib project;
+- finite factor, reconstruction, event, event-contract, and history types;
+- total backward evaluator;
+- active-set coverage and exact-support theorems;
+- explicit no-component-loss contract extraction;
+- event- and history-level evaluator correctness conditional on `ImportedEventRelation`;
+- chronological source-binding preservation;
+- bounded terminal factor-profile elimination;
+- repository replay of fourteen WP03 histories and three adversarial certificate-policy mutations;
+- rejection of `sorry` and local axioms.
+
+Canonical artifacts:
+
+- `campaigns/poincare_reconstruction/WP04_BOUNDED_CERTIFICATION/00_README.md`
+- `fixtures/formal/PC-WP04/README.md`
+- `fixtures/formal/PC-WP04/certificate_manifest.json`
+
+Evidence:
+
+- dedicated certificate workflow `30094600807` — success;
+- programme policy workflow `30094600804` — success.
+
+The formalization is expression-level. It does not formalize manifold connected sums, van Kampen, Ricci-flow analysis, surgery existence, or finite extinction.
+
+### PC-WP05 — integrated closure and source-concordance audit
+
 Status: `AUTHORIZED`.
 
-Immediate targets:
-
-1. formal `FactorAtom`, `Event`, and `History` types;
-2. total finite backward evaluator;
-3. active-set conservation and no-component-loss theorem;
-4. evaluator soundness conditional on the imported event relation;
-5. simply connected group-profile discharge;
-6. replay of positive and malformed JSON histories;
-7. provenance-preserving certificate output.
-
-The analytic Ricci-flow interfaces remain explicit unformalized imports.
+The next stage is editorial and archival rather than theorem strengthening. It must integrate WP00–WP04, resolve or prominently retain exact source-concordance debt, publish a claim-level trust matrix, and determine archival-release readiness.
 
 ## Three-pillar split
 
@@ -255,23 +293,24 @@ The analytic Ricci-flow interfaces remain explicit unformalized imports.
 
 - theorem spine and proof-debt ownership;
 - analytic theorem ledger;
-- surgery/extinction reconstruction;
+- surgery and extinction reconstruction;
 - pedagogical compression only after dependency closure.
 
 ### MATHCERT
 
 - finite surgery-history representation;
-- connected-sum and group-expression terminal logic;
+- finite backward expression evaluation;
 - provenance-bearing imported interfaces;
-- no full-proof badge unless the analytic chain is actually formalized.
+- bounded kernel-checked logic;
+- no full-proof badge unless the analytic and manifold-level chains are actually formalized.
 
 ## Foundational profile
 
-- Carrier: closed connected topological, PL, smooth, and Riemannian `3`-manifolds plus finite surgery histories.
-- Ambient structures: algebraic topology, geometric topology, Riemannian geometry, nonlinear parabolic PDE, finite directed forests, connected sums, and group free products.
+- Carrier: closed connected topological, PL, smooth, and Riemannian `3`-manifolds plus finite surgery histories and finite factor expressions.
+- Ambient structures: algebraic topology, geometric topology, Riemannian geometry, nonlinear parabolic PDE, finite directed forests, connected sums, group free products, and proof-assistant datatypes.
 - Classical base: standard classical mathematics.
-- Witness policy: literature-derived complete proof; current executable certificates cover selected logical and combinatorial slices.
-- Pathology risk: high at category changes, singular limits, surgery times, discarded components, source versions, event conservation, and formalization boundaries.
+- Witness policy: literature-derived complete proof; executable and kernel-checked certificates cover selected logical and combinatorial slices.
+- Pathology risk: high at category changes, singular limits, surgery times, discarded components, source versions, event conservation, parser boundaries, and formalization claims.
 
 ## Claim boundary
 
@@ -282,15 +321,17 @@ The campaign does not claim:
 - equivalence of Poincaré with elliptization or geometrization;
 - that extinction alone determines topology;
 - that a schema-valid history proves the history exists;
+- that the Lean evaluator proves the imported event relation;
+- that the bounded Boolean factor profile formalizes van Kampen;
 - that formalized implication interfaces certify their analytic assumptions;
 - quotation-level source completeness where proof debt remains;
 - novelty for any classical component.
 
 ## Current executable stage
 
-Execute `PC-WP04` within the bounded certification contract in:
+Initialize `PC-WP05 — integrated closure and source-concordance audit` under:
 
-- `campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/11_CERT_HANDOFF.md`
-- `campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/12_NEXT_EXECUTABLE_STEP.md`
+- `campaigns/poincare_reconstruction/PC_WP04_REFEREE_DECISION.md`
+- `campaigns/poincare_reconstruction/WP04_BOUNDED_CERTIFICATION/12_NEXT_EXECUTABLE_STEP.md`
 
-Full analytic formalization and any new-proof claim remain closed.
+Full analytic formalization, a full Poincaré proof certificate, and any novelty claim remain closed.
