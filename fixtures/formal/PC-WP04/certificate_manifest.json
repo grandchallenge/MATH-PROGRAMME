@@ -1,0 +1,86 @@
+{
+  "artifact_id": "PC-WP04",
+  "campaign_id": "PC-001",
+  "tracker": "grandchallenge/MATH-PROGRAMME#77",
+  "status": "CANDIDATE_PENDING_KERNEL_REPLAY",
+  "toolchain": {
+    "lean": "v4.33.0-rc1",
+    "mathlib": "v4.33.0-rc1",
+    "source": "PCWP04/History.lean"
+  },
+  "formal_declarations": [
+    "eventContract_noComponentLoss",
+    "stepBack_covers",
+    "stepBack_none_outside",
+    "stepBack_exactSupport",
+    "stepBack_correct",
+    "runBackward_covers",
+    "runBackward_correct",
+    "buildCertificate_sources",
+    "all_s3_of_simplyConnectedCompatible"
+  ],
+  "imported_boundary": {
+    "declaration": "ImportedEventRelation",
+    "meaning": "A source-certified topology transition satisfies the recorded finite reconstruction equation.",
+    "does_not_assert": [
+      "neck existence",
+      "cap metric quality",
+      "surgery continuation",
+      "noncollapsing",
+      "finite extinction",
+      "Ricci-flow analytic correctness"
+    ]
+  },
+  "source_binding_fields": [
+    "provider",
+    "theoremId",
+    "version",
+    "locator",
+    "importedAssumptions"
+  ],
+  "governing_sources": [
+    {
+      "provider": "Morgan-Tian",
+      "theorem_id": "Theorem 0.3",
+      "role": "terminal connected-sum factor classification"
+    },
+    {
+      "provider": "Morgan-Tian",
+      "theorem_id": "Proposition 15.3",
+      "role": "single-surgery backward reconstruction"
+    },
+    {
+      "provider": "Morgan-Tian",
+      "theorem_id": "Corollary 15.4",
+      "role": "finite-history reconstruction"
+    },
+    {
+      "provider": "PC-WP02",
+      "theorem_id": "PC02-T013/PC02-T014/PC02-T016",
+      "role": "all-time surgery flow, topology event, and finite-extinction interfaces"
+    }
+  ],
+  "fixture_replay": {
+    "schema": "campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/01_EVENT_SCHEMA.json",
+    "fixtures": "campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/05_ADVERSARIAL_HISTORIES/fixtures.json",
+    "validator": "campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/05_ADVERSARIAL_HISTORIES/validate_histories.py",
+    "expected_total": 14,
+    "expected_valid": 2,
+    "expected_invalid": 12,
+    "schema_sha256": "a0cd9edd94de6010ede600771fca1719e21d470d4915330b7db934f8a008888b",
+    "fixtures_sha256": "336a90d14c10a52844e26e982c8887659b80acf1be6d54b974d06e3eb7177d47",
+    "validator_sha256": "4d46064a906908a4dcc6598a335a202bb83e2458c2c7afa9a2a6392eb792fc40"
+  },
+  "prohibited_claims": [
+    "formalized Perelman proof",
+    "formalized Ricci flow with surgery",
+    "proved event existence from JSON",
+    "independently verified finite extinction",
+    "new proof of Poincare",
+    "full proof certificate"
+  ],
+  "evidence": {
+    "workflow": null,
+    "head_sha": null
+  }
+}
