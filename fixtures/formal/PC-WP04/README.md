@@ -9,10 +9,11 @@
 | Evaluator | `stepBack` and `runBackward` |
 | Kernel-checked obligations | active-set coverage; exact support; no-component-loss extraction; event and history evaluator correctness; source-binding preservation; terminal factor-profile elimination |
 | Imported boundary | `ImportedEventRelation` connecting a source-certified topology event to its reconstruction equation |
-| Analytic results not formalized | Ricci flow, canonical neighbourhoods, neck detection, cap geometry, surgery existence/continuation, noncollapsing, finite extinction |
+| Analytic results not formalized | Ricci flow, canonical neighbourhoods, neck detection, cap geometry, surgery existence or continuation, noncollapsing, finite extinction |
 | Fixture corpus | two valid and twelve malformed WP03 JSON histories |
-| Toolchain | Lean `v4.33.0-rc1`, mathlib `v4.33.0-rc1` |
-| Certification state | **CANDIDATE** pending repository-native kernel replay |
+| Toolchain | Lean `v4.33.0-rc1`, mathlib commit `79d0395a1825a6264ad5d269e35e60537518955e` |
+| Certification state | **KERNEL CHECKED BOUNDED EVALUATOR CERTIFICATE** |
+| Evidence | dedicated workflow `30094600807`; programme workflow `30094600804` |
 
 ## Formal theorem surface
 
@@ -49,7 +50,6 @@ The dedicated workflow executes the authoritative WP03 validator against all fou
 From this directory:
 
 ```bash
-lake update
 lake exe cache get
 lake build
 ```
@@ -59,7 +59,21 @@ From the repository root:
 ```bash
 python3 campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/05_ADVERSARIAL_HISTORIES/validate_histories.py
 python3 ci/validate_pc_wp04_fixture.py fixtures/formal/PC-WP04
+python3 ci/test_pc_wp04_fixture.py
 ```
+
+## Evidence
+
+Dedicated workflow run `30094600807` passed:
+
+- certificate policy validation;
+- adversarial policy mutations;
+- complete WP03 JSON replay;
+- `sorry` and local-axiom rejection;
+- pinned Lean and mathlib resolution;
+- kernel compilation.
+
+Programme workflow run `30094600804` independently passed repository contracts, strict documentation, and the existing formal replay suite.
 
 ## Claim boundary
 
@@ -67,4 +81,4 @@ The strongest permitted statement is:
 
 > PC-WP04 kernel-checks the finite backward evaluator and its structural correctness conditional on explicit source-bound event relations, while repository CI replays the complete WP03 JSON corpus.
 
-It is prohibited to describe this artifact as a formalization of Perelman's analytic proof, a proof of surgery existence, or a new proof of the Poincaré theorem.
+It is prohibited to describe this artifact as a formalization of Perelman's analytic proof, a proof of surgery existence, a machine-checked proof of Poincaré, or a new proof of the Poincaré theorem.
