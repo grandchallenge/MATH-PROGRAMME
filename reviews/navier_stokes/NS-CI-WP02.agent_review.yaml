@@ -50,7 +50,6 @@ council_review:
       - CR-005 Holder, Gagliardo-Nirenberg, Young, exponent-four, and viscosity-minus-three calculations are correct.
       - CR-006 is valid through the integrated weak-strong inequality; the displayed smooth-pair equality is formal only.
       - CR-007 restart logic is sound within the adopted local H1 interface.
-      - Solve CI workflow run 30058471721 passed.
 
   Adversary:
     status: reviewed
@@ -59,7 +58,7 @@ council_review:
     obligations: []
     findings:
       - No hidden unconditional minus-Delta test, pressure cancellation, endpoint transfer, data-class transfer, or equivalence claim remains.
-      - The formal versus rigorous weak-strong distinction is now explicit in the programme artifact.
+      - The formal versus rigorous weak-strong distinction is explicit in the programme artifact.
 
   Formalist:
     status: reviewed
@@ -104,6 +103,7 @@ council_review:
     findings:
       - WP02 agrees with WP00 and the promoted WP01 atlas.
       - Source, theorem-ID, claim-boundary, and correspondence terminology are consistent.
+      - The combined artifact ledger preserves WP01 before WP02 in the integration order.
       - Review provenance includes provider artifacts, semantic review, and CI evidence.
 
   Archivist:
@@ -159,13 +159,15 @@ amanuensis_control:
       - grandchallenge/MATHSOLVE:work_packages/ns_ci_wp02_theorem_ledger.yaml
       - grandchallenge/MATHSOLVE:work_packages/NS_CI_WP02_ADVERSARIAL_SEMANTIC_REVIEW.md
       - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/source_ledger.yaml
-      - workflow:grandchallenge/MATHSOLVE/30058471721
-      - workflow:grandchallenge/MATH-PROGRAMME/30058245792
+      - workflow:grandchallenge/MATHSOLVE/latest-green-on-provider-head
+      - workflow:grandchallenge/MATH-PROGRAMME/latest-green-on-governance-head
   cross_document_consistency:
     status: reviewed
     checked_against:
       - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md
       - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md
+      - campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md
+      - reviews/navier_stokes/NS-CI-WP01.agent_review.yaml
       - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/false_proof_atlas.md
       - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/WP01_ADVERSARIAL_SEMANTIC_REVIEW.md
       - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/source_ledger.yaml
@@ -177,6 +179,7 @@ amanuensis_control:
       - The rigorous weak-strong statement is presented as an integrated inequality.
       - The one-way Clay bridge and pending reverse correspondence remain separate.
       - Historical and formalization debts remain explicit and nonblocking.
+      - Merge order is WP01 governance PR before WP02 governance PR.
 
 unresolved_obligations:
   - id: NS-CI-WP02-HIST-001
