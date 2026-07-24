@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "BSD-WP02-DEPENDENCY-DEBT-GATE",
+  "edges": [
+    {"from": "BSD-T-020", "to": "BSD-T-060", "relation": "analytic foundation"},
+    {"from": "BSD-T-040", "to": "BSD-T-050", "relation": "formal consequence"},
+    {"from": "BSD-T-050", "to": "BSD-T-080", "relation": "arithmetic input must retain Sha control"},
+    {"from": "BSD-T-060", "to": "BSD-T-090", "relation": "rank-one analytic input"},
+    {"from": "BSD-T-070", "to": "BSD-FP-001", "relation": "guards parity-only use"},
+    {"from": "BSD-T-050", "to": "BSD-FP-004", "relation": "guards Selmer-rank conflation"},
+    {"from": "BSD-T-090", "to": "BSD-FP-006", "relation": "guards one-prime promotion"},
+    {"from": "BSD-T-110", "to": "BSD-FP-014", "relation": "guards family promotion"},
+    {"from": "BSD-T-130", "to": "BSD-FP-015", "relation": "guards finite-database promotion"}
+  ],
+  "debts": [
+    {
+      "id": "BSD-WP02-D001",
+      "owner": "Archivist",
+      "severity": "high",
+      "blocking": false,
+      "description": "Complete original-paper theorem-number concordance for the Gross-Zagier and Kolyvagin components behind BSD-T-060; the operational statement is text-audited through Skinner 2020."
+    },
+    {
+      "id": "BSD-WP02-D002",
+      "owner": "Prospector",
+      "severity": "high",
+      "blocking": false,
+      "description": "Split Kato and the 2024 zeta-element paper into theorem-level branch records before either can enter a proof graph."
+    },
+    {
+      "id": "BSD-WP02-D003",
+      "owner": "Typesetter",
+      "severity": "medium",
+      "blocking": false,
+      "description": "Build a complete conversion table for periods, Manin constants, isogenies, primitive or imprimitive factors, and archimedean conventions."
+    },
+    {
+      "id": "BSD-WP02-D004",
+      "owner": "Formalist",
+      "severity": "medium",
+      "blocking": false,
+      "description": "Formalize ledger validation, Selmer corank algebra, finite-factor conversion, and parity-only inference."
+    }
+  ],
+  "gate": {
+    "wp01_state": "REVIEW_READY",
+    "wp02_state": "REVIEW_READY",
+    "mechanism_generation": "CLOSED",
+    "restricted_target_selection": "CLOSED",
+    "novelty_claims": "CLOSED",
+    "next_review": "Independent Referee replay of WP01 and source-scope reconstruction of WP02."
+  }
+}
