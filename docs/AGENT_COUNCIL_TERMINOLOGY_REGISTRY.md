@@ -25,6 +25,9 @@ This registry preserves the canonical meaning of governance terms used across Ag
 | Amanuensis continuity state | The recorded state `pending`, `reviewed`, or `blocked` for continuity-related checks. | Must not be interpreted as a mathematical claim status. |
 | Solved-problem reconstruction campaign | A governed campaign whose target theorem is already established and whose purpose is source normalization, dependency reconstruction, adversarial audit, pedagogy, or selective certification. | Must not be presented as an open-problem attack, novelty claim, or independent proof unless the corresponding obligations are discharged. |
 | Finite-extinction route | The Poincaré-specific route from Ricci flow with surgery and finite extinction, through explicit surgery-topology bookkeeping, to terminal connected-sum and fundamental-group discharge. | Finite extinction alone is insufficient; the term includes the provenance-bearing surgery and topology interfaces. |
+| Adversarial guard | A named false-proof fixture attached to a theorem interface to prevent a known hypothesis deletion, scope expansion, circular inference, source drift, or certification overclaim. | Passing all attached guards is not a proof of the guarded theorem. |
+| Theorem-interface reconstruction level | A reconstruction state in which exact theorem roles, operational hypotheses, conclusions, sources, corrections, parameters, dependencies, consumers, and claim boundaries are recorded. | Does not assert independent proof, quotation-level source completeness, or formal verification of the imported theorem. |
+| Source correction ledger | A versioned record of statements corrected, withdrawn, deferred, or reformulated across primary and reconstruction sources, together with the governing replacement and downstream disposition. | Not a general errata list; only corrections affecting campaign theorem interfaces and claims belong here. |
 
 ## Change rule
 
