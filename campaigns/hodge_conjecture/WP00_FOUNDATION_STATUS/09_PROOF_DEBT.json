@@ -9,21 +9,15 @@
       "category": "SEMANTIC_CORRESPONDENCE",
       "blocked_node": "HC-T004",
       "resolution": "The canonical target is normalized as rational cycle-class surjectivity for smooth projective varieties over C.",
-      "evidence": [
-        "campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md",
-        "https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf"
-      ],
+      "evidence": ["campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md", "https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf"],
       "boundary": "No integral, Kahler, generalized, variational, Tate, effective, absolute, or motivated formulation is identified with the canonical target."
     },
     {
       "id": "HC-D-002",
       "category": "MISSING_LEMMA",
       "blocked_node": "HC-B005",
-      "resolution": "Surjectivity from CH^p tensor Q is proved equivalent to rational generation by irreducible codimension-p subvariety classes because the cycle map factors through rational equivalence without changing its image.",
-      "evidence": [
-        "campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/00_README.md",
-        "https://github.com/grandchallenge/MATHSOLVE/blob/campaign/hc-wp00/work_packages/HC_WP00.md"
-      ],
+      "resolution": "Surjectivity from CH^p tensor Q is equivalent to rational generation by irreducible codimension-p subvariety classes because the cycle map factors through rational equivalence without changing its image.",
+      "evidence": ["campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/00_README.md", "grandchallenge/MATHSOLVE#63"],
       "boundary": "No effectivity, uniqueness, or Chow-level injectivity is claimed."
     },
     {
@@ -31,10 +25,7 @@
       "category": "UNPROVED_BRIDGE",
       "blocked_node": "HC-K007",
       "resolution": "The cases p=0,1,n-1,n and the dimension-at-most-three consequence are reconstructed using Lefschetz (1,1) and hard Lefschetz as a rational Hodge-structure isomorphism.",
-      "evidence": [
-        "campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md",
-        "campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/05_KNOWN_CASE_LEDGER.csv"
-      ],
+      "evidence": ["campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md", "campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/05_KNOWN_CASE_LEDGER.csv"],
       "boundary": "The argument does not assume algebraicity of the inverse Lefschetz correspondence."
     },
     {
@@ -42,10 +33,7 @@
       "category": "EXTERNAL_SOURCE",
       "blocked_node": "HC-O009",
       "resolution": "The naive integral formulation is source-audited as false in general through Atiyah-Hirzebruch cohomology-operation obstructions.",
-      "evidence": [
-        "https://doi.org/10.1016/0040-9383(62)90001-3",
-        "https://github.com/grandchallenge/MATHFORGE/blob/campaign/hc-source-audit/reports/discovery/hc_001/source_ledger.yaml"
-      ],
+      "evidence": ["https://doi.org/10.1016/0040-9383(62)90001-3", "grandchallenge/MATHFORGE#22"],
       "boundary": "Restricted or refined integral statements remain separate."
     },
     {
@@ -53,21 +41,15 @@
       "category": "EXTERNAL_SOURCE",
       "blocked_node": "HC-O010",
       "resolution": "The unrestricted compact-Kahler analogue is source-audited as false in general.",
-      "evidence": [
-        "https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf",
-        "https://doi.org/10.1155/S1073792802104076"
-      ],
+      "evidence": ["https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf", "https://doi.org/10.1155/S1073792802104076"],
       "boundary": "The exact Zucker appendix locator remains nonblocking provenance debt."
     },
     {
       "id": "HC-D-006",
       "category": "SEMANTIC_CORRESPONDENCE",
       "blocked_node": "HC-T020",
-      "resolution": "A statement lattice and implication ledger now separate generalized, variational, Hodge-locus, absolute, motivated, standard-conjecture, and Tate formulations.",
-      "evidence": [
-        "campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/03_STATEMENT_LATTICE.yaml",
-        "campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/07_IMPLICATION_LEDGER.yaml"
-      ],
+      "resolution": "A statement lattice and implication ledger separate generalized, variational, Hodge-locus, absolute, motivated, standard-conjecture, and Tate formulations.",
+      "evidence": ["campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/03_STATEMENT_LATTICE.yaml", "campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/07_IMPLICATION_LEDGER.yaml"],
       "boundary": "No missing algebraic-cycle bridge is silently promoted."
     },
     {
@@ -75,11 +57,24 @@
       "category": "EXTERNAL_SOURCE",
       "blocked_node": "HC-T020",
       "resolution": "The official Clay status page was audited on 2026-07-24 and continues to list the problem as unsolved.",
-      "evidence": [
-        "https://www.claymath.org/millennium/hodge-conjecture/",
-        "campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md"
-      ],
+      "evidence": ["https://www.claymath.org/millennium/hodge-conjecture/", "campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md"],
       "boundary": "Specific claimed proofs are triaged only when admitted to the campaign."
+    },
+    {
+      "id": "HC-D-GOV-001",
+      "category": "SEMANTIC_CORRESPONDENCE",
+      "blocked_node": "HC-WP00-PROMOTION",
+      "resolution": "Amanuensis cross-document consistency and Referee reconstruction completed with no blocking conflict.",
+      "evidence": ["reviews/hodge_conjecture/HC-WP00.agent_review.yaml", "grandchallenge/MATH-PROGRAMME#68"],
+      "boundary": "Historical extraction and formalization debt remain visible and nonblocking."
+    },
+    {
+      "id": "HC-D-CI-001",
+      "category": "COMPUTATIONAL_REPLAY",
+      "blocked_node": "HC-WP00-PROMOTION",
+      "resolution": "All relevant repository checks passed.",
+      "evidence": ["MATH-PROGRAMME workflow 30084154340", "MATHFORGE workflow 30084108503", "MATHSOLVE workflow 30084121944", "MATHCERT workflow 30084135657"],
+      "boundary": "CI certifies repository contracts, not the open mathematical conjecture."
     }
   ],
   "items": [
@@ -139,28 +134,6 @@
       "blocking": false
     },
     {
-      "id": "HC-D-GOV-001",
-      "category": "SEMANTIC_CORRESPONDENCE",
-      "blocked_node": "HC-WP00-PROMOTION",
-      "description": "Complete Amanuensis cross-document consistency and Referee review.",
-      "current_evidence": "Draft artifacts and cross-pillar packages are committed.",
-      "discharge_condition": "Review record marks all blocking offices reviewed with no unresolved conflicts.",
-      "owner": "Amanuensis",
-      "severity": "high",
-      "blocking": true
-    },
-    {
-      "id": "HC-D-CI-001",
-      "category": "COMPUTATIONAL_REPLAY",
-      "blocked_node": "HC-WP00-PROMOTION",
-      "description": "Run repository policy and schema checks for all four draft PRs.",
-      "current_evidence": "Branches committed; PRs pending.",
-      "discharge_condition": "Relevant checks pass or any failure is diagnosed and corrected.",
-      "owner": "Verifier",
-      "severity": "high",
-      "blocking": true
-    },
-    {
       "id": "HC-D-TARGET-001",
       "category": "UNPROVED_BRIDGE",
       "blocked_node": "HC-R021",
@@ -171,5 +144,6 @@
       "severity": "high",
       "blocking": false
     }
-  ]
+  ],
+  "promotion_blockers": []
 }
