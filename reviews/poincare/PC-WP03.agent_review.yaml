@@ -32,9 +32,9 @@ council_review:
     reviewed_by: pc-wp03-fixture-pass
     reviewed_at: '2026-07-24'
     obligations:
-      - Integrate the standard-library validator into repository CI.
+      - Preserve the WP03 validator in repository policy CI when the fixture format changes.
     findings:
-      - Two positive and twelve malformed histories pass their expected outcomes.
+      - Two positive and twelve malformed histories pass their expected outcomes locally and in programme policy run 30092592581.
       - No numerical simulation is used as topology evidence.
 
   Cartographer:
@@ -110,11 +110,11 @@ council_review:
     status: reviewed
     reviewed_by: pc-wp03-integration-pass
     reviewed_at: '2026-07-24'
-    obligations:
-      - Register the final PR and CI run after creation.
+    obligations: []
     findings:
       - WP00, WP01, WP02, WP03, the master plan, claim ledgers, and decision records use consistent theorem identifiers.
       - Transferred debts PC-WP01-D004, PC-WP02-D006, PC-WP02-D009, and event-level PC-WP02-D010 are discharged or reclassified explicitly.
+      - Draft PR 76 and programme policy run 30092592581 are registered as integration evidence.
 
   Archivist:
     status: reviewed
@@ -173,6 +173,8 @@ amanuensis_control:
     complete: true
     evidence_refs:
       - https://github.com/grandchallenge/MATH-PROGRAMME/issues/75
+      - https://github.com/grandchallenge/MATH-PROGRAMME/pull/76
+      - https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/30092592581
       - campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/01_EVENT_SCHEMA.json
       - campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/04_BACKWARD_RECONSTRUCTION.md
       - campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/05_ADVERSARIAL_HISTORIES/validate_histories.py
@@ -210,11 +212,6 @@ unresolved_obligations:
     owner: Formalist
     description: Kernel-check the finite backward evaluator and terminal group-profile discharge.
     severity: high
-    blocking: false
-  - id: PC03-REV-003C
-    owner: Experimentalist
-    description: Add WP03 history validation to programme CI.
-    severity: medium
     blocking: false
 
 promotion:
