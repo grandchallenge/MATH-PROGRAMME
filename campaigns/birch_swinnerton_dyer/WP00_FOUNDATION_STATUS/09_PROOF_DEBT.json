@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.1.0",
+  "campaign_id": "BSD-001",
+  "work_package_id": "BSD-WP00",
+  "audit_date": "2026-07-24",
+  "resolved_items": [
+    {
+      "id": "BSD-D008",
+      "category": "REPOSITORY_GOVERNANCE",
+      "blocked_node": "BSD-WP00-PROMOTION",
+      "resolution": "Programme policy checks passed and an independent Referee reconstruction found no blocking semantic or normalization conflict.",
+      "evidence": [
+        "https://github.com/grandchallenge/MATH-PROGRAMME/pull/67",
+        "MATH-PROGRAMME workflow run 30083374165",
+        "reviews/birch_swinnerton_dyer/BSD-WP00.agent_review.yaml"
+      ],
+      "boundary": "Mathematical promotion records the audit boundary only; it does not certify BSD or the imported deep theorems."
+    }
+  ],
+  "items": [
+    {
+      "id": "BSD-D001",
+      "category": "EXTERNAL_SOURCE",
+      "blocked_node": "BSD-B060",
+      "description": "Extract exact theorem numbers and hypotheses across the original Gross-Zagier and Kolyvagin source variants used for rank zero, rank one, and Sha finiteness.",
+      "current_evidence": "Official Wiles statement and modern rank-one sources support the operational low-rank interface.",
+      "discharge_condition": "WP02 theorem ledger records primary theorem numbers, curve hypotheses, and exact conclusions.",
+      "owner": "Archivist",
+      "severity": "high",
+      "blocking": false
+    },
+    {
+      "id": "BSD-D002",
+      "category": "EXTERNAL_SOURCE",
+      "blocked_node": "BSD-B080",
+      "description": "Complete the modern p-converse taxonomy beyond the audited Skinner 2020 and Burungale-Tian 2026 statements.",
+      "current_evidence": "Two primary journal abstracts and statements are audited.",
+      "discharge_condition": "Classify CM/non-CM, rank zero/one, prime, reduction, and residual-representation hypotheses.",
+      "owner": "Prospector",
+      "severity": "high",
+      "blocking": false
+    },
+    {
+      "id": "BSD-D003",
+      "category": "SEMANTIC_CORRESPONDENCE",
+      "blocked_node": "BSD-B090",
+      "description": "Separate all meanings of p-adic BSD and p-part of complex BSD.",
+      "current_evidence": "Ordinary, split multiplicative exceptional-zero, supersingular signed, and multivariable branches are identified.",
+      "discharge_condition": "WP02 provides normalization-specific records and forbids cross-branch theorem composition without conversion.",
+      "owner": "Axiomatist",
+      "severity": "high",
+      "blocking": false
+    },
+    {
+      "id": "BSD-D004",
+      "category": "EXTERNAL_SOURCE",
+      "blocked_node": "BSD-B090",
+      "description": "Audit the exact primary source behind recent claims of full BSD for infinite non-CM twist families.",
+      "current_evidence": "Banwait-Huang 2026 identifies and operationalizes imported criteria; related older twist-family papers are located.",
+      "discharge_condition": "Primary theorem, version, and exact hypotheses are recorded rather than inherited from a secondary preprint summary.",
+      "owner": "Archivist",
+      "severity": "high",
+      "blocking": false
+    },
+    {
+      "id": "BSD-D005",
+      "category": "SEMANTIC_CORRESPONDENCE",
+      "blocked_node": "BSD-O120",
+      "description": "Complete a factor-by-factor conversion table among full-real-period, plus-period, archimedean-component, completed-Lambda, optimal-curve, and isogenous-curve conventions.",
+      "current_evidence": "The canonical campaign convention and Wiles incomplete-series warning are fixed.",
+      "discharge_condition": "Every imported formula in WP02 has a checked conversion to the campaign normalization.",
+      "owner": "Verifier",
+      "severity": "high",
+      "blocking": false
+    },
+    {
+      "id": "BSD-D006",
+      "category": "FORMALIZATION_BLOCKER",
+      "blocked_node": "BSD-C140",
+      "description": "Determine theorem-prover support for elliptic curves over Q, Neron-Tate heights, Galois cohomology, Selmer groups, and corank.",
+      "current_evidence": "The logical statement lattice and finite-rank algebra are formalizable independently of deep arithmetic libraries.",
+      "discharge_condition": "MATHCERT library reconnaissance and a minimal formal interface are committed.",
+      "owner": "Formalist",
+      "severity": "medium",
+      "blocking": false
+    },
+    {
+      "id": "BSD-D007",
+      "category": "COMPUTATIONAL_REPLAY",
+      "blocked_node": "BSD-F130",
+      "description": "Specify certificate formats for rigorous individual-curve analytic rank and strong-BSD verification.",
+      "current_evidence": "Miller 2011 demonstrates a rigorous computational lane for finite low-rank collections.",
+      "discharge_condition": "WP03 distinguishes certified interval arithmetic, descent/Selmer certificates, and heuristic database fields.",
+      "owner": "Experimentalist",
+      "severity": "medium",
+      "blocking": false
+    }
+  ]
+}
