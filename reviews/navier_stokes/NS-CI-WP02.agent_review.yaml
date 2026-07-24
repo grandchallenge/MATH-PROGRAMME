@@ -6,141 +6,62 @@ artifact:
   status: referee_promoted
 
 council_review:
-  Axiomatist:
-    status: reviewed
-    obligations: []
-    findings:
-      - Whole-space data, solution-class, and universal weak-solution quantifiers agree with WP00.
-      - CR-009 is one-way; CR-010 remains pending.
-  Prospector:
-    status: reviewed
-    obligations: []
-    findings:
-      - Every required source ID resolves to MATHFORGE and preserves its audit state.
-  Experimentalist:
-    status: reviewed
-    obligations: []
-    findings:
-      - No computational artifact supports the conditional theorem chain.
-  Cartographer:
-    status: reviewed
-    obligations: []
-    findings:
-      - CR-000 through CR-011 agree with the WP00 spine and WP01 fixture map.
+  Axiomatist: {status: reviewed, obligations: [], findings: [CR-009 is one-way and CR-010 remains pending.]}
+  Prospector: {status: reviewed, obligations: [], findings: [All source IDs resolve and audit-state distinctions are preserved.]}
+  Experimentalist: {status: reviewed, obligations: [], findings: [No computation supports the theorem chain.]}
+  Cartographer: {status: reviewed, obligations: [], findings: [CR-000 through CR-011 agree with WP00 and WP01.]}
   Verifier:
     status: reviewed
     obligations: []
     findings:
       - CR-005 exponent and viscosity calculations are correct.
-      - CR-006 is rigorous through the integrated weak-strong inequality; the smooth-pair equality is formal only.
-      - CR-007 restart logic is sound within the adopted local H1 interface.
-  Adversary:
-    status: reviewed
-    obligations: []
-    findings:
-      - No hidden unconditional test, pressure, endpoint, data-class, quantifier, or equivalence transfer remains.
-  Formalist:
-    status: reviewed
-    obligations: []
-    findings:
-      - Scaling and implication composition are formalizable; imported PDE interfaces remain provenance-bearing assumptions.
-  Steward:
-    status: reviewed
-    obligations: []
-    findings:
-      - The ledger consumes but does not produce the critical norm.
-  Composer:
-    status: reviewed
-    obligations: []
-    findings:
-      - Definitions, imported results, derived estimates, bridges, and pending nodes are separated.
-  Grammarian:
-    status: reviewed
-    obligations: []
-    findings:
-      - Time-first notation, sufficient-for wording, and formal-versus-integrated distinctions are consistent.
-  Amanuensis:
-    status: reviewed
-    obligations: []
-    findings:
-      - WP00, WP01, and WP02 are semantically consistent.
-      - The combined ledger and ordered merge plan preserve both WP01 and WP02 promotions.
+      - CR-006 is rigorous through the integrated weak-strong inequality; the smooth-pair equality is formal.
+      - CR-007 restart logic is valid in the adopted H1 interface.
+  Adversary: {status: reviewed, obligations: [], findings: [No hidden test, pressure, endpoint, data-class, quantifier, or equivalence transfer remains.]}
+  Formalist: {status: reviewed, obligations: [], findings: [Imported PDE interfaces remain provenance-bearing assumptions.]}
+  Steward: {status: reviewed, obligations: [], findings: [The ledger consumes but does not produce the critical norm.]}
+  Composer: {status: reviewed, obligations: [], findings: [Definitions, imports, derivations, bridges, and pending nodes are separated.]}
+  Grammarian: {status: reviewed, obligations: [], findings: [Time-first notation and formal-versus-integrated wording are consistent.]}
+  Amanuensis: {status: reviewed, obligations: [], findings: [WP00, WP01, WP02, and ordered integration are consistent.]}
   Archivist:
     status: reviewed
-    obligations:
-      - Continue nonblocking historical theorem extraction.
-    findings:
-      - Historical gaps are visible and not substituted for operational theorem bodies.
-  Mechanist:
-    status: reviewed
-    obligations: []
-    findings:
-      - Future mechanisms must identify the exact CR-005 through CR-009 interface changed.
-  Typesetter:
-    status: reviewed
-    obligations: []
-    findings:
-      - Norm order, viscosity powers, and weak/strong statement forms are consistent.
+    obligations: [Continue nonblocking historical extraction.]
+    findings: [Historical gaps are not used as operational theorem bodies.]
+  Mechanist: {status: reviewed, obligations: [], findings: [Future mechanisms must name the CR interface changed.]}
+  Typesetter: {status: reviewed, obligations: [], findings: [Norm order, powers, and weak/strong forms are consistent.]}
   Referee:
     status: reviewed
     obligations: []
     findings:
-      - The ledger is reproducible and all remaining debt is nonblocking for this artifact.
-      - Promotion does not apply to universal critical integrability or global regularity.
+      - Approved as the canonical conditional-regularity ledger.
+      - Promotion does not apply to universal integrability or global regularity.
 
 amanuensis_control:
-  artifact_ledger:
-    ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md
-    entry_id: NS-CI-WP02
-  decision_record_refs:
-    - ADR-0003
-  terminology_registry:
-    registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md
-    terms_introduced_or_changed: []
+  artifact_ledger: {ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md, entry_id: NS-CI-WP02}
+  decision_record_refs: [ADR-0003]
+  terminology_registry: {registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md, terms_introduced_or_changed: []}
   review_provenance:
     complete: true
     evidence_refs:
       - https://github.com/grandchallenge/MATHSOLVE/issues/20
       - https://github.com/grandchallenge/MATHSOLVE/pull/21
-      - campaigns/navier_stokes_critical_integrability/WP02_CONDITIONAL_REGULARITY_LEDGER/00_README.md
-      - grandchallenge/MATHSOLVE:work_packages/NS_CI_WP02_CONDITIONAL_REGULARITY_LEDGER.md
-      - grandchallenge/MATHSOLVE:work_packages/ns_ci_wp02_theorem_ledger.yaml
       - grandchallenge/MATHSOLVE:work_packages/NS_CI_WP02_ADVERSARIAL_SEMANTIC_REVIEW.md
-      - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/source_ledger.yaml
   cross_document_consistency:
     status: reviewed
     checked_against:
-      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md
       - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md
       - campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md
-      - reviews/navier_stokes/NS-CI-WP01.agent_review.yaml
-      - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/false_proof_atlas.md
       - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/source_ledger.yaml
     conflicts: []
   final_editorial_integration:
     status: reviewed
     integrated_artifact_ref: campaigns/navier_stokes_critical_integrability/WP02_CONDITIONAL_REGULARITY_LEDGER/00_README.md
-    integration_notes:
-      - The rigorous weak-strong statement is integrated.
-      - The one-way and reverse correspondence nodes remain separate.
-      - Merge order is WP01 then WP02.
+    integration_notes: [Merge WP01 before WP02; WP02 carries the combined artifact ledger.]
 
 unresolved_obligations:
-  - id: NS-CI-WP02-HIST-001
-    owner: Archivist
-    description: Complete historical theorem concordance and translation.
-    severity: medium
-    blocking: false
-  - id: NS-CI-WP02-SRC-002
-    owner: Prospector
-    description: Record exact lifespan and smooth-bootstrap source locations.
-    severity: medium
-    blocking: false
-  - id: NS-CI-WP02-BRIDGE-003
-    owner: Axiomatist
-    description: Complete CR-010 before any equivalence claim.
-    severity: high
-    blocking: false
+  - {id: NS-CI-WP02-HIST-001, owner: Archivist, description: Complete historical source concordance., severity: medium, blocking: false}
+  - {id: NS-CI-WP02-SRC-002, owner: Prospector, description: Record exact lifespan and bootstrap source locations., severity: medium, blocking: false}
+  - {id: NS-CI-WP02-BRIDGE-003, owner: Axiomatist, description: Complete CR-010 before any equivalence claim., severity: high, blocking: false}
 
 promotion:
   ready_for_next_stage: true
