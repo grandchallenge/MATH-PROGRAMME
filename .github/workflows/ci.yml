@@ -57,6 +57,9 @@ jobs:
       - name: Install policy dependencies
         run: python -m pip install jsonschema pyyaml
 
+      - name: Validate PC-WP03 surgery histories
+        run: python3 campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/05_ADVERSARIAL_HISTORIES/validate_histories.py
+
       - name: Check LOG-GCD formal fixture
         run: |
           set -o pipefail

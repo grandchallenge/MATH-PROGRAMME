@@ -1,0 +1,145 @@
+campaign_id: PC-001
+work_package_id: PC-WP01
+tracker: MATH-PROGRAMME#72
+audit_date: '2026-07-24'
+claims:
+  - claim_id: PC-WP01-C001
+    short_name: homology-not-enough
+    claim_text: Integral homology equal to that of S3 does not imply a closed 3-manifold is S3.
+    claim_class: NEGATIVE_RESULT
+    support_type: EXPLICIT_COUNTEREXAMPLE
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md#pc-fp-001--homology-is-not-simple-connectivity
+    assumptions: []
+    promotion_condition: Preserve the nonabelian fundamental-group distinction.
+  - claim_id: PC-WP01-C002
+    short_name: open-contractible-not-r3
+    claim_text: Contractibility does not classify open 3-manifolds as R3.
+    claim_class: NEGATIVE_RESULT
+    support_type: EXPLICIT_COUNTEREXAMPLE
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md#pc-fp-002--contractibility-does-not-control-infinity
+    assumptions: []
+    promotion_condition: Retain compactness or add end hypotheses.
+  - claim_id: PC-WP01-C003
+    short_name: category-bridge-external
+    claim_text: The Top/PL/Diff passage in dimension three is an imported theorem package rather than a definitional identification.
+    claim_class: SEMANTIC_CORRESPONDENCE_AUDIT
+    support_type: EXTERNAL_THEOREM_INTERFACE
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md#pc-fp-004--category-equivalence-is-a-theorem
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/04_PROBLEM_SOURCE_EQUIVALENCE_AUDIT.md
+    assumptions:
+      - dimension_three_category_theorems
+    promotion_condition: Exact source extraction remains in PC-WP02.
+  - claim_id: PC-WP01-C004
+    short_name: singularities-force-new-interface
+    claim_text: Short-time smooth Ricci flow does not supply a globally smooth deformation through finite-time singularities.
+    claim_class: NEGATIVE_RESULT
+    support_type: EXACT_MODEL_SOLUTION
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md#pc-fp-005--ricci-flow-does-not-remain-smooth-automatically
+    assumptions:
+      - unnormalized_Ricci_flow_convention
+    promotion_condition: Preserve maximal smooth intervals and surgery restart semantics.
+  - claim_id: PC-WP01-C005
+    short_name: local-model-not-global-topology
+    claim_text: Pointed parabolic blow-up limits are local singularity models and do not identify the original closed manifold globally.
+    claim_class: NEGATIVE_RESULT
+    support_type: LIMIT_SCOPE_AUDIT
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md#pc-fp-006--a-blow-up-is-not-the-original-manifold
+    assumptions: []
+    promotion_condition: Every use must name basepoints, rescalings, convergence mode, and locality.
+  - claim_id: PC-WP01-C006
+    short_name: surgery-changes-topology
+    claim_text: Ricci-flow surgery may change components and connected-sum data, so a topology event ledger is mandatory.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: TOPOLOGICAL_RECONSTRUCTION_INTERFACE
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md#pc-fp-008--surgery-changes-topology-and-must-be-reversible-on-paper
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/04_SOURCE_NORMALIZED_THEOREMS.md
+    assumptions:
+      - imported_surgery_topology_theorem
+    promotion_condition: Bind the transitions to the PC-WP03 history schema.
+  - claim_id: PC-WP01-C007
+    short_name: extinction-not-classifier
+    claim_text: Finite extinction alone does not identify the initial manifold as S3.
+    claim_class: NEGATIVE_RESULT
+    support_type: EXPLICIT_COUNTEREXAMPLE_CLASS
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md#pc-fp-009--extinction-is-not-a-classifier-by-itself
+    assumptions:
+      - shrinking_round_space_form_solution
+    promotion_condition: Require surgery-history classification and fundamental-group discharge.
+  - claim_id: PC-WP01-C008
+    short_name: route-hierarchy
+    claim_text: Geometrization implies elliptization and elliptization implies Poincare, while the converse implications are not supplied by Poincare.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: LOGICAL_SCOPE_AUDIT
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md#pc-fp-011--stronger-theorems-are-not-equivalent-to-poincare
+    assumptions:
+      - standard_scope_of_elliptization_and_geometrization
+    promotion_condition: Preserve one-way arrows.
+  - claim_id: PC-WP01-C009
+    short_name: prime-route-circularity
+    claim_text: Declaring every simply connected prime 3-manifold to be S3 is circular in a Poincare proof.
+    claim_class: NEGATIVE_RESULT
+    support_type: LOGICAL_CIRCULARITY_AUDIT
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md#pc-fp-012--prime-decomposition-can-hide-the-target-theorem
+    assumptions: []
+    promotion_condition: Use only the independently supplied terminal factor list.
+  - claim_id: PC-WP01-C010
+    short_name: conditional-formalization-boundary
+    claim_text: A formal implication from imported Hamilton-Perelman interfaces to the Poincare conclusion does not formalize those imported interfaces.
+    claim_class: CERTIFICATION_BOUNDARY
+    support_type: FORMAL_LOGIC_AUDIT
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md#pc-fp-013--conditional-formalization-is-not-full-formalization
+    assumptions: []
+    promotion_condition: Label all unformalized imports visibly.
+  - claim_id: PC-WP01-C011
+    short_name: source-corrections-material
+    claim_text: Perelman source corrections and deferred assertions must be represented in the theorem ledger.
+    claim_class: PRIMARY_SOURCE_AUDIT
+    support_type: VERSIONED_SOURCE
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - https://arxiv.org/abs/math/0303109
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md#pc-fp-015--source-correction-is-part-of-the-theorem
+    assumptions: []
+    promotion_condition: Complete the WP02 source crosswalk.
+  - claim_id: PC-WP01-C012
+    short_name: no-new-proof
+    claim_text: WP01 rejects invalid proof moves but proves no new Poincare theorem or Ricci-flow theorem.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_AUDIT
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/00_README.md
+    assumptions: []
+    promotion_condition: Preserve this boundary in derivative artifacts.

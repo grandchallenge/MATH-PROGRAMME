@@ -1,0 +1,87 @@
+matrix_id: PC-WP05-TRUST-MATRIX
+campaign_id: PC-001
+version: 1
+trust_classes:
+  classical_established: established theorem imported from the literature
+  primary_source_asserted: asserted in a Perelman primary preprint
+  detailed_reconstruction: supplied with detailed proof in Morgan-Tian or Kleiner-Lott
+  interface_audited: source-normalized theorem interface reviewed by GCL
+  executable_checked: finite record checked by repository code
+  kernel_checked_conditional: proof-assistant theorem conditional on an explicit imported relation
+  retained_import: not independently proved or formalized in the repository
+claims:
+  - id: PC05-C001
+    statement: Every closed connected simply connected topological 3-manifold is homeomorphic to S3.
+    trust: classical_established
+    sources: [CMI, MT-C02]
+    repository_artifacts: [WP00, MASTER_PLAN]
+    exclusions: [new_proof, independent_reproof]
+  - id: PC05-C002
+    statement: The topological and smooth formulations are equivalent in dimension three through the classical category bridge.
+    trust: retained_import
+    sources: [Moise, Munkres, MT-INTRO-FOOTNOTE-1]
+    repository_artifacts: [WP00, WP05-CATEGORY-AUDIT]
+    exclusions: [formalized_category_bridge]
+  - id: PC05-C003
+    statement: Perelman I supplies the entropy, reduced-geometry, noncollapsing and singularity-model inputs used by the route.
+    trust: interface_audited
+    sources: [P-I, KL, MT-PARTS-1-2]
+    repository_artifacts: [WP02, WP05-CONCORDANCE]
+    exclusions: [independent_analytic_verification]
+  - id: PC05-C004
+    statement: Controlled Ricci flow with surgery exists for the campaign profile and surgery times do not accumulate.
+    trust: detailed_reconstruction
+    sources: [P-II, KL-CLAIM-3.4, MT-T03, MT-T159]
+    repository_artifacts: [WP02]
+    exclusions: [kernel_checked_surgery_existence]
+  - id: PC05-C005
+    statement: Each admitted surgery event has the source-normalized connected-sum and discarded-component topology used by WP03.
+    trust: interface_audited
+    sources: [P-II, KL-CLAIMS-3.2-3.3, MT-P153]
+    repository_artifacts: [WP02, WP03]
+    exclusions: [schema_implies_event_existence]
+  - id: PC05-C006
+    statement: The relevant Ricci flow with surgery becomes extinct in finite time.
+    trust: detailed_reconstruction
+    sources: [P-III-T11, KL-CLAIM-3.5, MT-T04, MT-CH18]
+    repository_artifacts: [WP02]
+    exclusions: [independent_extinction_proof, formalized_extinction]
+  - id: PC05-C007
+    statement: A valid finite WP03 event history reconstructs the initial factor expression without component loss.
+    trust: executable_checked
+    sources: [MT-P153, MT-C154, PC02-T014, PC02-T016]
+    repository_artifacts: [WP03]
+    exclusions: [event_history_exists_from_json]
+  - id: PC05-C008
+    statement: The WP04 backward evaluator is structurally correct conditional on ImportedEventRelation and preserves source bindings.
+    trust: kernel_checked_conditional
+    sources: [PC-WP04-LEAN]
+    repository_artifacts: [WP04, PC-WP04-FIXTURE]
+    exclusions: [formalized_manifold_connected_sum, formalized_van_kampen, full_poincare_certificate]
+  - id: PC05-C009
+    statement: Once the independent standard-factor expression is available, simple connectivity eliminates every nontrivial factor and leaves S3.
+    trust: interface_audited
+    sources: [KL-OVERVIEW, MT-C02, MT-C154, van_Kampen]
+    repository_artifacts: [WP00, WP03, WP05-NONCIRCULARITY]
+    exclusions: [assume_simply_connected_prime_is_s3]
+  - id: PC05-C010
+    statement: WP00-WP04 form a dependency-complete qualified archival reconstruction with explicit imported boundaries.
+    trust: interface_audited
+    sources: [WP00, WP01, WP02, WP03, WP04]
+    repository_artifacts: [WP05-INTEGRATED-DOSSIER, WP05-DEPENDENCY-CLOSURE]
+    exclusions: [full_source_complete_proof, independent_proof_verification]
+  - id: PC05-C011
+    statement: The campaign is ready for solved-problem archival publication under the exact bounded public description.
+    trust: interface_audited
+    sources: [WP05-READINESS, WP05-REFEREE]
+    repository_artifacts: [WP05-ARCHIVAL-MANIFEST]
+    exclusions: [novelty, priority, open_problem_breakthrough]
+permanent_prohibitions:
+  - new proof of the Poincare conjecture
+  - formalized Perelman proof
+  - machine-checked proof of the Poincare conjecture
+  - independent verification of all Hamilton-Perelman estimates
+  - schema validity proves a Ricci-flow history exists
+  - extinction alone classifies topology
+  - Poincare is equivalent to elliptization or geometrization
+  - novelty or priority claim

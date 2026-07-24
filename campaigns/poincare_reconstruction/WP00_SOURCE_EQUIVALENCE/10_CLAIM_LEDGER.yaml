@@ -1,0 +1,161 @@
+campaign_id: PC-001
+work_package_id: PC-WP00
+audit_date: '2026-07-24'
+claims:
+  - claim_id: PC-WP00-C001
+    short_name: solved-status
+    claim_text: The three-dimensional Poincare conjecture is a solved theorem established through Perelman's Hamilton-Ricci-flow programme.
+    claim_class: EXTERNAL_STATUS
+    support_type: PRIMARY_SOURCE_AND_OFFICIAL_STATUS
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - https://www.claymath.org/millennium/poincare-conjecture/
+      - https://arxiv.org/abs/math/0211159
+      - https://arxiv.org/abs/math/0303109
+      - https://arxiv.org/abs/math/0307245
+    assumptions: []
+    promotion_condition: Preserve solved status in every derivative artifact.
+    related_files:
+      - DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/01_RESULT_STATUS.json
+    knowledge_graph_refs: []
+
+  - claim_id: PC-WP00-C002
+    short_name: canonical-topological-statement
+    claim_text: Every closed connected simply connected topological 3-manifold is homeomorphic to S^3.
+    claim_class: EXTERNAL_THEOREM_STATEMENT
+    support_type: OFFICIAL_PROBLEM_DESCRIPTION
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - https://www.claymath.org/wp-content/uploads/2022/06/poincare.pdf
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/04_PROBLEM_SOURCE_EQUIVALENCE_AUDIT.md
+    assumptions:
+      - connectedness is explicit
+      - closed means compact_without_boundary
+    promotion_condition: Preserve category and boundary conventions.
+    related_files:
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/00_README.md
+    knowledge_graph_refs: []
+
+  - claim_id: PC-WP00-C003
+    short_name: category-equivalence
+    claim_text: In dimension three, the topological, PL, and smooth Poincare formulations are equivalent through triangulation, Hauptvermutung, and smoothing theorems.
+    claim_class: LITERATURE_DERIVED
+    support_type: EXTERNAL_SPECIALIST_SOURCE
+    status: AUDITED_WITH_EXTRACTION_DEBT
+    certainty: HIGH_STANDARD_RESULT
+    source_or_artifact:
+      - Edwin_E_Moise_Annals_1952_56_96_114
+      - James_Munkres_Annals_1960_72_521_554
+      - https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf
+    assumptions:
+      - standard closed_3_manifold compatibility consequences
+    promotion_condition: Discharge PC-D001.
+    related_files:
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/09_PROOF_DEBT.json
+    knowledge_graph_refs: []
+
+  - claim_id: PC-WP00-C004
+    short_name: stronger-route-hierarchy
+    claim_text: Geometrization implies elliptization and elliptization implies Poincare; the converse implications are not supplied by Poincare.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF_PLUS_EXTERNAL_THEOREM_INTERFACES
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - https://www.claymath.org/wp-content/uploads/2022/06/poincare.pdf
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/04_PROBLEM_SOURCE_EQUIVALENCE_AUDIT.md
+    assumptions:
+      - standard spherical_space_form universal_cover description
+    promotion_condition: Preserve one-way implication arrows.
+    related_files:
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/06_DEPENDENCY_DAG.json
+    knowledge_graph_refs: []
+
+  - claim_id: PC-WP00-C005
+    short_name: finite-extinction-route
+    claim_text: Surgery-flow existence, the topological surgery ledger, and finite-time extinction imply the Poincare conclusion for a simply connected closed 3-manifold.
+    claim_class: LITERATURE_DERIVED
+    support_type: PRIMARY_SOURCE_AND_DETAILED_RECONSTRUCTION
+    status: AUDITED_AT_THEOREM_INTERFACE_LEVEL
+    certainty: HIGH
+    source_or_artifact:
+      - https://arxiv.org/abs/math/0303109
+      - https://arxiv.org/abs/math/0307245
+      - https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf
+    assumptions:
+      - exact analytic hypotheses are those in the cited reconstruction
+      - PC-L009 is discharged without circularity
+    promotion_condition: WP02 must extract the full theorem chain before any source-complete claim.
+    related_files:
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/09_PROOF_DEBT.json
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/06_DEPENDENCY_DAG.json
+    knowledge_graph_refs: []
+
+  - claim_id: PC-WP00-C006
+    short_name: terminal-factor-elimination
+    claim_text: If a connected sum of spherical space forms and S2-bundles over S1 has trivial fundamental group, every nontrivial factor is excluded and the manifold is S^3.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/00_README.md
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/04_PROBLEM_SOURCE_EQUIVALENCE_AUDIT.md
+    assumptions:
+      - van_Kampen free_product formula
+      - trivial spherical deck group gives S3
+      - connected_sum with S3 is neutral
+    promotion_condition: Formalize as a delimited terminal theorem without importing Poincare.
+    related_files:
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/11_CERT_HANDOFF.md
+    knowledge_graph_refs: []
+
+  - claim_id: PC-WP00-C007
+    short_name: perelman-source-correction
+    claim_text: Perelman's surgery paper modifies or defers assertions sketched in the entropy paper, requiring versioned source cross-checking.
+    claim_class: PRIMARY_SOURCE_AUDIT
+    support_type: PRIMARY_SOURCE
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - https://arxiv.org/abs/math/0303109
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/04_PROBLEM_SOURCE_EQUIVALENCE_AUDIT.md
+    assumptions: []
+    promotion_condition: WP02 must record relevant corrections.
+    related_files:
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/09_PROOF_DEBT.json
+    knowledge_graph_refs: []
+
+  - claim_id: PC-WP00-C008
+    short_name: no-new-proof
+    claim_text: PC-WP00 audits the classical proof architecture but proves no new Poincare theorem and independently verifies no major Ricci-flow theorem.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_AUDIT
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/01_RESULT_STATUS.json
+    assumptions: []
+    promotion_condition: Preserve this boundary in every public and formal artifact.
+    related_files:
+      - reviews/poincare/PC-WP00.agent_review.yaml
+    knowledge_graph_refs: []
+
+  - claim_id: PC-WP00-C009
+    short_name: source-completeness-pending
+    claim_text: Exact category extraction, source crosswalks, the surgery parameter hierarchy, and the finite-extinction proof ledger remain outstanding.
+    claim_class: NEEDS_FURTHER_WORK
+    support_type: PROOF_DEBT_REGISTER
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/09_PROOF_DEBT.json
+    assumptions: []
+    promotion_condition: Discharge PC-D001 through PC-D007 and PC-D010.
+    related_files:
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/12_NEXT_EXECUTABLE_STEP.md
+    knowledge_graph_refs: []

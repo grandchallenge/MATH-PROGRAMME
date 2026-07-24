@@ -1,0 +1,94 @@
+name: PC-WP04 certificate checks
+
+on:
+  pull_request:
+    paths:
+      - "fixtures/formal/PC-WP04/**"
+      - "campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/**"
+      - "campaigns/poincare_reconstruction/WP04_BOUNDED_CERTIFICATION/**"
+      - "ci/*pc_wp04*"
+      - ".github/workflows/pc-wp04.yml"
+  push:
+    branches: [main]
+    paths:
+      - "fixtures/formal/PC-WP04/**"
+      - "campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/**"
+      - "campaigns/poincare_reconstruction/WP04_BOUNDED_CERTIFICATION/**"
+      - "ci/*pc_wp04*"
+      - ".github/workflows/pc-wp04.yml"
+
+jobs:
+  pc-wp04-lean:
+    name: Kernel-check PC-WP04
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install fixture dependencies
+        run: python -m pip install jsonschema
+
+      - name: Validate PC-WP04 certificate policy
+        run: python3 ci/validate_pc_wp04_fixture.py fixtures/formal/PC-WP04
+
+      - name: Run adversarial PC-WP04 policy tests
+        run: python3 ci/test_pc_wp04_fixture.py
+
+      - name: Reject proof placeholders and opaque axioms
+        run: |
+          if grep -R -n -E '(^|[^A-Za-z])(sorry|axiom)([^A-Za-z]|$)' fixtures/formal/PC-WP04/PCWP04 fixtures/formal/PC-WP04/PCWP04.lean; then
+            echo "PC-WP04 must contain neither sorry nor local axioms."
+            exit 1
+          fi
+
+      - name: Set up pinned Lean and mathlib cache
+        id: lean-setup
+        continue-on-error: true
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: fixtures/formal/PC-WP04
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+
+      - name: Resolve and build PC-WP04 fixture
+        working-directory: fixtures/formal/PC-WP04
+        shell: bash
+        env:
+          LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}
+        run: |
+          set +e
+          {
+            echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+            command -v elan || true
+            command -v lake || true
+            elan --version || true
+            lake --version || true
+            if ! command -v lake >/dev/null 2>&1; then
+              echo "Lean toolchain was not installed."
+              exit 1
+            fi
+            test -f lake-manifest.json || {
+              echo "Pinned lake-manifest.json is required."
+              exit 1
+            }
+            lake update
+            lake exe cache get
+            lake build
+          } > pc-wp04-lean-build.log 2>&1
+          status=$?
+          cat pc-wp04-lean-build.log
+          exit "$status"
+
+      - name: Preserve PC-WP04 Lean failure log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pc-wp04-lean-failure
+          path: fixtures/formal/PC-WP04/pc-wp04-lean-build.log
+          if-no-files-found: warn

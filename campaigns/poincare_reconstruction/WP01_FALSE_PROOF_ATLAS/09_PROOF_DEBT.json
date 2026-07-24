@@ -1,0 +1,49 @@
+{
+  "campaign_id": "PC-001",
+  "work_package_id": "PC-WP01",
+  "tracker": "MATH-PROGRAMME#72",
+  "items": [
+    {
+      "debt_id": "PC-WP01-D001",
+      "category": "EXTERNAL_SOURCE",
+      "blocked_fixture": "PC-FP-001",
+      "description": "Add a theorem-level source citation for the fundamental group of the Poincare homology sphere.",
+      "blocking": false,
+      "route_or_owner": "Archivist"
+    },
+    {
+      "debt_id": "PC-WP01-D002",
+      "category": "EXTERNAL_SOURCE",
+      "blocked_fixture": "PC-FP-002",
+      "description": "Add a canonical source for the Whitehead manifold and its failure of simple connectivity at infinity.",
+      "blocking": false,
+      "route_or_owner": "Archivist"
+    },
+    {
+      "debt_id": "PC-WP01-D003",
+      "category": "COMPUTATIONAL_REPLAY",
+      "blocked_fixture": "PC-FP-005",
+      "description": "Optionally formalize the round-space-form Ricci-flow scaling ODE as an exact regression fixture.",
+      "blocking": false,
+      "route_or_owner": "MATHCERT"
+    },
+    {
+      "debt_id": "PC-WP01-D004",
+      "category": "SEMANTIC_CORRESPONDENCE",
+      "blocked_fixture": "PC-FP-008",
+      "description": "Bind each surgery topology mutation to the finite-history schema developed in PC-WP03.",
+      "blocking": true,
+      "route_or_owner": "PC-WP03 / Cartographer"
+    },
+    {
+      "debt_id": "PC-WP01-D005",
+      "category": "EXTERNAL_SOURCE",
+      "blocked_fixture": "PC-FP-015",
+      "description": "Complete the section-by-section correction table among Perelman I, Perelman II, Morgan-Tian, and Kleiner-Lott.",
+      "blocking": true,
+      "route_or_owner": "PC-WP02 / Archivist"
+    }
+  ],
+  "blocking_for_wp01_integration": [],
+  "blocking_for_wp03": ["PC-WP01-D004", "PC-WP01-D005"]
+}

@@ -1,0 +1,131 @@
+campaign_id: PC-001
+work_package_id: PC-WP02
+tracker: MATH-PROGRAMME#73
+audit_date: '2026-07-24'
+sources:
+  - source_id: P-I
+    citation: Grisha Perelman, The entropy formula for the Ricci flow and its geometric applications, arXiv:math/0211159
+    tier: PRIMARY
+    version_policy: record arXiv version and compare corrections in P-II and KL
+    scope:
+      - W_entropy_and_mu_functional
+      - no_local_collapsing
+      - reduced_distance_and_reduced_volume
+      - pseudolocality
+      - ancient_kappa_solution_structure
+      - canonical_neighbourhood_strategy
+    consumers: [PC02-T003, PC02-T004, PC02-T005, PC02-T006, PC02-T007, PC02-T008]
+    audit_state: SECTION_LEVEL_AUDITED
+    corrections:
+      - selected section_11 inaccuracies corrected in P-II
+      - selected section_13 assertions withdrawn_or_deferred in P-II
+  - source_id: P-II
+    citation: Grisha Perelman, Ricci flow with surgery on three-manifolds, arXiv:math/0303109
+    tier: PRIMARY
+    version_policy: governing source for corrected ancient-solution statements and surgery construction
+    scope:
+      - correction_notice_for_P-I
+      - canonical_neighbourhood_justification
+      - standard_solution
+      - delta_neck_surgery
+      - pinching_preservation
+      - noncollapsing_and_continuation_strategy
+      - positive_scalar_curvature_topology_consequence
+    consumers: [PC02-T007, PC02-T008, PC02-T009, PC02-T010, PC02-T011, PC02-T012, PC02-T013, PC02-T014]
+    audit_state: SECTION_LEVEL_AUDITED_WITH_RECONSTRUCTION_IMPORTS
+    corrections:
+      - P-I_section_11_7_inaccuracies
+      - P-I_section_13_2_maximal_horn_volume_claim_not_used
+      - P-I_eventual_smoothness_assertion_not_used
+  - source_id: P-III
+    citation: Grisha Perelman, Finite extinction time for the solutions to the Ricci flow on certain three-manifolds, arXiv:math/0307245
+    tier: PRIMARY
+    version_policy: governing primary source for the Poincare-specific finite-extinction lane
+    scope:
+      - finite_extinction_for_no_aspherical_prime_class
+      - minimal_disk_width_functional
+      - surgery_time_control
+    consumers: [PC02-T015, PC02-T016]
+    audit_state: THEOREM_AND_MECHANISM_OVERVIEW_AUDITED
+    corrections: []
+  - source_id: MT
+    citation: John Morgan and Gang Tian, Ricci Flow and the Poincare Conjecture, Clay Mathematics Monographs 3, 2007
+    tier: DETAILED_RECONSTRUCTION
+    version_policy: canonical integrated detailed proof for this campaign
+    scope:
+      - category_note
+      - theorem_0_3_surgery_existence_and_topology
+      - theorem_0_4_finite_extinction
+      - corollary_0_5_topological_group_hypotheses
+      - theorem_15_9_all_time_surgery_flow
+      - corollary_15_4_extinction_to_connected_sum
+      - theorem_18_1_finite_extinction
+      - chapters_1_through_17_analytic_and_surgery_reconstruction
+      - chapters_18_through_19_finite_extinction
+    consumers: [PC02-T001, PC02-T002, PC02-T003, PC02-T004, PC02-T005, PC02-T006, PC02-T007, PC02-T008, PC02-T009, PC02-T010, PC02-T011, PC02-T012, PC02-T013, PC02-T014, PC02-T015, PC02-T016, PC02-T017, PC02-T018, PC02-T019]
+    audit_state: HEADLINE_THEOREMS_AND_CONTENT_MAP_AUDITED
+    corrections: []
+  - source_id: KL
+    citation: Bruce Kleiner and John Lott, Notes on Perelman's Papers, Geometry and Topology 12 (2008), arXiv:math/0605667
+    tier: INDEPENDENT_DETAILED_RECONSTRUCTION
+    version_policy: pin the consulted version; section numbering follows P-I and P-II where practical
+    scope:
+      - details_and_corrections_for_P-I_and_P-II
+      - W_entropy
+      - no_collapsing
+      - reduced_volume
+      - pseudolocality
+      - kappa_solutions
+      - canonical_neighbourhoods
+      - surgery_construction
+    consumers: [PC02-T003, PC02-T004, PC02-T005, PC02-T006, PC02-T007, PC02-T008, PC02-T009, PC02-T010, PC02-T011, PC02-T012, PC02-T013]
+    audit_state: CONTENT_AND_VERSION_BOUNDARY_AUDITED
+    corrections:
+      - identifies_incorrect_or_incomplete_statements_and_repairs
+      - does_not_cover_P-III_finite_extinction_proof
+  - source_id: MOISE
+    citation: Edwin E. Moise, Affine Structures in 3-Manifolds V, Annals of Mathematics 56 (1952), 96-114
+    tier: FOUNDATIONAL_PRIMARY
+    version_policy: exact theorem extraction pending
+    scope: [dimension_three_triangulation, Hauptvermutung]
+    consumers: [PC02-T001]
+    audit_state: IDENTIFIED_EXTRACTION_PENDING
+    corrections: []
+  - source_id: SMOOTH
+    citation: Classical compatible smoothing results for 3-manifolds, including Munkres
+    tier: FOUNDATIONAL_PRIMARY
+    version_policy: exact theorem and dimension hypotheses pending
+    scope: [PL_to_smooth_existence_and_compatibility]
+    consumers: [PC02-T001]
+    audit_state: IDENTIFIED_EXTRACTION_PENDING
+    corrections: []
+  - source_id: HAM
+    citation: Richard Hamilton, short-time Ricci flow and three-dimensional precursor theory
+    tier: FOUNDATIONAL_PRIMARY
+    version_policy: theorem-level source locations to be pinned
+    scope: [short_time_existence, uniqueness_interface, curvature_evolution, singularity_precursors]
+    consumers: [PC02-T002]
+    audit_state: OPERATIONAL_INTERFACE_AUDITED_SOURCE_EXTRACTION_PENDING
+    corrections: []
+  - source_id: KM
+    citation: Kneser-Milnor prime decomposition for compact 3-manifolds
+    tier: FOUNDATIONAL_PRIMARY
+    version_policy: exact oriented and uniqueness formulation pending
+    scope: [prime_decomposition, group_free_product_bridge]
+    consumers: [PC02-T015, PC02-T017, PC02-T018]
+    audit_state: OPERATIONAL_INTERFACE_AUDITED_SOURCE_EXTRACTION_PENDING
+    corrections: []
+  - source_id: VK
+    citation: Seifert-van Kampen theorem and connected-sum fundamental-group corollary
+    tier: FOUNDATIONAL
+    version_policy: formal-library source to be selected for MATHCERT
+    scope: [fundamental_group_of_connected_sum, terminal_factor_elimination]
+    consumers: [PC02-T018, PC02-T019]
+    audit_state: OPERATIONAL_INTERFACE_AUDITED
+    corrections: []
+source_rules:
+  - Primary sources govern attribution and original statement scope.
+  - P-II corrections override superseded or deferred P-I assertions.
+  - Detailed reconstructions may fill arguments but must remain distinguished from primary sources.
+  - KL is not a source for the P-III finite-extinction proof.
+  - Exact historical theorem extraction debts remain visible and do not become folklore assumptions.

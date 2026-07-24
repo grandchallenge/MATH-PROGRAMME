@@ -1,0 +1,29 @@
+{
+  "campaign_id": "PC-001",
+  "work_package_id": "PC-WP01",
+  "tracker": "MATH-PROGRAMME#72",
+  "state": "INTEGRATION_READY",
+  "guards": {
+    "PC-D000": ["PC-FP-001", "PC-FP-002", "PC-FP-003"],
+    "PC-L001": ["PC-FP-004"],
+    "PC-L004": ["PC-FP-005"],
+    "PC-L005": ["PC-FP-015"],
+    "PC-L006": ["PC-FP-006", "PC-FP-007", "PC-FP-015"],
+    "PC-L007": ["PC-FP-005", "PC-FP-008", "PC-FP-010", "PC-FP-014", "PC-FP-015"],
+    "PC-L008": ["PC-FP-008"],
+    "PC-L009": ["PC-FP-010", "PC-FP-012"],
+    "PC-L010": ["PC-FP-009", "PC-FP-014"],
+    "PC-L011": ["PC-FP-008", "PC-FP-009", "PC-FP-014"],
+    "PC-L012": ["PC-FP-001", "PC-FP-009", "PC-FP-011", "PC-FP-012"],
+    "PC-B015": ["PC-FP-011"],
+    "PC-B016": ["PC-FP-011"],
+    "PC-T017": ["PC-FP-013", "PC-FP-015"]
+  },
+  "route_rule": "A theorem-spine edge may be promoted only when all attached fixtures are either passed with their hypotheses preserved or explicitly declared inapplicable with a checked reason.",
+  "non_implication": "Passing all guards is not a proof of the guarded theorem interface.",
+  "next_gate": {
+    "target": "PC-WP03",
+    "dependencies": ["PC-WP01", "PC-WP02"],
+    "condition": "joint Agent Council and Referee review"
+  }
+}

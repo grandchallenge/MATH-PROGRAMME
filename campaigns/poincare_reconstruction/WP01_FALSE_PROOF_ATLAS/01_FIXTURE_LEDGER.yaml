@@ -1,0 +1,131 @@
+campaign_id: PC-001
+work_package_id: PC-WP01
+tracker: MATH-PROGRAMME#72
+state: INTEGRATION_READY
+audit_date: '2026-07-24'
+fixtures:
+  - fixture_id: PC-FP-001
+    title: Homology sphere substitution
+    tempting_inference: A closed 3-manifold with the homology of S3 is S3.
+    exact_failure: The Poincare homology sphere has the same integral homology as S3 and a nontrivial binary-icosahedral fundamental group.
+    corrupted_nodes: [PC-D000, PC-L012]
+    disposition: TERMINATE_HOMOLOGY_ONLY_ROUTE
+    repaired_route: Retain the trivial-fundamental-group hypothesis and the terminal group discharge.
+    support_class: EXPLICIT_COUNTEREXAMPLE
+  - fixture_id: PC-FP-002
+    title: Open contractible substitution
+    tempting_inference: Every contractible 3-manifold is R3.
+    exact_failure: The Whitehead manifold is contractible and open but not homeomorphic to R3; topology at infinity is not controlled by contractibility.
+    corrupted_nodes: [PC-D000]
+    disposition: RESTORE_CLOSEDNESS_OR_END_STRUCTURE
+    repaired_route: Keep compactness without boundary in the canonical theorem.
+    support_class: EXPLICIT_COUNTEREXAMPLE
+  - fixture_id: PC-FP-003
+    title: Boundary suppression
+    tempting_inference: Compact and simply connected already implies S3.
+    exact_failure: The 3-ball is compact and simply connected but has nonempty boundary and is not homeomorphic to S3.
+    corrupted_nodes: [PC-D000]
+    disposition: RESTORE_EMPTY_BOUNDARY
+    repaired_route: State closed as compact without boundary.
+    support_class: EXPLICIT_COUNTEREXAMPLE
+  - fixture_id: PC-FP-004
+    title: Category bridge suppression
+    tempting_inference: Topological, PL, and smooth 3-manifolds are the same object by definition.
+    exact_failure: Their agreement in dimension three is an external theorem package; the corresponding unrestricted higher-dimensional claim is false.
+    corrupted_nodes: [PC-L001]
+    disposition: NAME_CATEGORY_THEOREMS
+    repaired_route: Import triangulation, Hauptvermutung, and smoothing compatibility with provenance.
+    support_class: SEMANTIC_CORRESPONDENCE_FAILURE
+  - fixture_id: PC-FP-005
+    title: Smooth flow through singularity
+    tempting_inference: Ricci flow smooths any initial metric continuously until it becomes round.
+    exact_failure: The unnormalized round S3 solution shrinks to zero size with curvature blow-up in finite time; continuation requires a new surgery-flow object or rescaling, not the same smooth flow.
+    corrupted_nodes: [PC-L004, PC-L007]
+    disposition: REQUIRE_SINGULARITY_AND_SURGERY_INTERFACES
+    repaired_route: Separate maximal smooth intervals, singular-time analysis, surgery, and restart.
+    support_class: EXACT_MODEL_SOLUTION
+  - fixture_id: PC-FP-006
+    title: Blow-up model identified with original manifold
+    tempting_inference: If a curvature blow-up limit is a cylinder, the original manifold is globally a cylinder.
+    exact_failure: Pointed parabolic rescaling records local high-curvature geometry; a closed manifold can have a cylindrical neck model without being globally S2 times R.
+    corrupted_nodes: [PC-L006]
+    disposition: RESTORE_POINTED_LOCAL_SCOPE
+    repaired_route: Use the model only to classify canonical neighbourhoods near selected spacetime points.
+    support_class: LIMIT_SCOPE_FAILURE
+  - fixture_id: PC-FP-007
+    title: Canonical-neighbourhood hypothesis deletion
+    tempting_inference: Every sufficiently curved region of any 3-metric is a neck, cap, or round component.
+    exact_failure: The theorem applies inside a controlled Ricci flow under pinching, noncollapsing, scale, and high-curvature hypotheses; an arbitrary metric snapshot is outside the theorem.
+    corrupted_nodes: [PC-L006]
+    disposition: RESTORE_QUANTITATIVE_HYPOTHESES
+    repaired_route: Record epsilon, r, kappa, curvature threshold, and flow-history assumptions.
+    support_class: THEOREM_MUTATION
+  - fixture_id: PC-FP-008
+    title: Surgery topology preservation
+    tempting_inference: Cutting a neck and capping changes only the metric.
+    exact_failure: Cutting along a separating or nonseparating 2-sphere changes component ancestry and connected-sum data; a nonseparating cut records an S2-bundle-over-S1 factor.
+    corrupted_nodes: [PC-L008]
+    disposition: REQUIRE_TOPOLOGY_EVENT_LEDGER
+    repaired_route: Record every cut, cap, discarded component, and connected-sum reconstruction rule.
+    support_class: TOPOLOGICAL_COUNTERCOMPUTATION
+  - fixture_id: PC-FP-009
+    title: Extinction without topology
+    tempting_inference: Any Ricci flow that becomes extinct started on S3.
+    exact_failure: Nontrivial spherical space forms also admit positively curved shrinking flows and become extinct.
+    corrupted_nodes: [PC-L010, PC-L011]
+    disposition: REQUIRE_SURGERY_HISTORY_AND_PI1_DISCHARGE
+    repaired_route: Combine extinction with the permitted-factor classification and trivial fundamental group.
+    support_class: EXPLICIT_COUNTEREXAMPLE_CLASS
+  - fixture_id: PC-FP-010
+    title: RP2 and orientability qualification suppression
+    tempting_inference: The surgery theorem applies to every closed 3-manifold without qualification.
+    exact_failure: Standard surgery statements impose orientability or exclude embedded two-sided RP2 components; deleting this condition changes the topology interface.
+    corrupted_nodes: [PC-L007, PC-L009]
+    disposition: RESTORE_ORIENTABILITY_PROFILE
+    repaired_route: Derive orientability from simple connectivity before invoking the oriented surgery theorem.
+    support_class: HYPOTHESIS_PROFILE_FAILURE
+  - fixture_id: PC-FP-011
+    title: Stronger-route collapse
+    tempting_inference: Poincare, elliptization, and geometrization are equivalent statements.
+    exact_failure: Elliptization classifies every closed finite-pi1 3-manifold, including nontrivial lens spaces, whereas Poincare concerns only trivial pi1.
+    corrupted_nodes: [PC-B015, PC-B016]
+    disposition: PRESERVE_ONE_WAY_IMPLICATIONS
+    repaired_route: Record geometrization implies elliptization implies Poincare.
+    support_class: QUANTIFIER_AND_SCOPE_FAILURE
+  - fixture_id: PC-FP-012
+    title: Circular prime-factor discharge
+    tempting_inference: Prime decomposition reduces the theorem because every simply connected prime 3-manifold is S3.
+    exact_failure: The final clause is the Poincare theorem itself and cannot be imported as a classification premise.
+    corrupted_nodes: [PC-L009, PC-L012]
+    disposition: TERMINATE_CIRCULAR_ROUTE
+    repaired_route: Use the surgery-derived permitted-factor list, then eliminate factors through their independently known fundamental groups.
+    support_class: CIRCULARITY_FAILURE
+  - fixture_id: PC-FP-013
+    title: Formal-interface overclaim
+    tempting_inference: A proof assistant theorem of the form AnalyticCore implies Poincare formalizes Perelman's proof.
+    exact_failure: The theorem proves only the implication unless AnalyticCore and its geometric realizability are themselves formalized.
+    corrupted_nodes: [PC-T017]
+    disposition: LABEL_UNFORMALIZED_IMPORTS
+    repaired_route: Preserve provenance-bearing assumptions and certify only the discharged logical slice.
+    support_class: CERTIFICATION_BOUNDARY_FAILURE
+  - fixture_id: PC-FP-014
+    title: Local finiteness promoted to global finiteness
+    tempting_inference: Surgery-flow existence gives finitely many surgeries over all positive time.
+    exact_failure: The standard existence interface gives finitely many surgery times on each bounded time interval; global finiteness requires extinction or another argument.
+    corrupted_nodes: [PC-L007]
+    disposition: RESTORE_TIME_QUANTIFIER
+    repaired_route: State local finiteness first and use finite extinction before asserting a finite total history.
+    support_class: QUANTIFIER_FAILURE
+  - fixture_id: PC-FP-015
+    title: Source-version drift
+    tempting_inference: Every assertion sketched in Perelman's first preprint can be imported unchanged.
+    exact_failure: The surgery preprint explicitly withdraws or defers selected assertions from the first paper and corrects inaccuracies in the ancient-solution discussion.
+    corrupted_nodes: [PC-L005, PC-L006, PC-L007]
+    disposition: REQUIRE_VERSIONED_SOURCE_CROSSWALK
+    repaired_route: Use corrected statements from the surgery paper and audited reconstructions.
+    support_class: PRIMARY_SOURCE_CORRECTION
+completion:
+  all_required_wp00_classes_covered: true
+  exhaustive: false
+  passing_is_proof_certificate: false
+  wp03_gate: joint_review_with_PC-WP02_required

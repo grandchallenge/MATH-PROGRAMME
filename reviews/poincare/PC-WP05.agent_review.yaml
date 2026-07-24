@@ -1,0 +1,69 @@
+review_id: PC-WP05-AGENT-REVIEW
+artifact_id: PC-WP05
+campaign_id: PC-001
+review_date: 2026-07-24
+scope:
+  - campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE
+  - docs/POINCARE_RECONSTRUCTION_ARCHIVE.md
+  - campaigns/poincare_reconstruction/PC_WP05_REFEREE_DECISION.md
+reviewers:
+  cartographer:
+    disposition: pass
+    findings:
+      - WP00-WP04 are connected by a complete typed dependency graph.
+      - Analytic imports, executable history checks and kernel-checked consequences remain separate.
+      - No forbidden edge from conclusion to hypothesis is present.
+  steward:
+    disposition: pass_with_retained_debt
+    findings:
+      - Campaign-critical source roles are concordant across Perelman, Morgan-Tian and Kleiner-Lott.
+      - Line-by-line and parameter-level concordance remains explicit nonblocking debt.
+      - Stronger proof and formalization claims remain blocked.
+  grammarian:
+    disposition: pass
+    findings:
+      - Solved-problem status and bounded certification language are consistent.
+      - Homeomorphism, diffeomorphism, event validity and event existence are not conflated.
+      - Public wording avoids novelty and breakthrough language.
+  composer:
+    disposition: pass
+    findings:
+      - The public archive presents theorem, route, source hierarchy, repository contribution and trust boundary in that order.
+      - Detailed work-package material remains accessible without overloading the landing note.
+  amanuensis:
+    disposition: pass
+    findings:
+      - Canonical artifact paths, decision records, terminology and retained debt are registered.
+      - The archival manifest uses pull-request checks rather than a self-referential commit hash.
+      - No cross-document claim conflict was found.
+adversarial_review:
+  checked:
+    - removal of a mandatory disclosure
+    - false closure of line-by-line concordance
+    - false claim of full analytic formalization
+    - deletion of a trust-matrix claim
+    - opening of the new-proof publication gate
+  result: all_mutations_rejected
+claim_boundary:
+  strongest_permitted: >-
+    A source-normalized, dependency-explicit and adversarially audited reconstruction
+    of the Hamilton-Perelman finite-extinction route, with executable finite-history
+    checks and a kernel-checked evaluator conditional on explicit imported event relations.
+  prohibited:
+    - new proof
+    - independent analytic verification
+    - formalized Perelman proof
+    - machine-checked Poincare theorem
+    - schema proves event existence
+    - novelty or priority
+open_debt:
+  blocking_qualified_archive: []
+  retained:
+    - PC05-D001
+    - PC05-D002
+    - PC05-D003
+    - PC05-D004
+    - PC05-D005
+    - PC05-D006
+    - PC05-D007
+final_disposition: recommend_referee_promotion_for_qualified_archival_publication

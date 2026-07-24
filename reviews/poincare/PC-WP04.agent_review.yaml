@@ -1,0 +1,86 @@
+artifact:
+  id: PC-WP04
+  type: formal_certificate_fixture
+  title: Bounded surgery-history evaluator certificate
+  pillar: MATHCERT
+  status: kernel_checked_bounded
+  reviewed_at: '2026-07-24'
+  evidence:
+    - workflow: 30094600807
+      conclusion: success
+    - workflow: 30094600804
+      conclusion: success
+
+council_review:
+  Axiomatist:
+    status: reviewed
+    findings:
+      - ImportedEventRelation is explicit and expression-level.
+      - No analytic theorem is introduced as an axiom.
+  Prospector:
+    status: reviewed
+    findings:
+      - Morgan-Tian Theorem 0.3, Proposition 15.3, and Corollary 15.4 remain manifest-bound.
+    obligations:
+      - Retain exact cross-edition concordance debt.
+  Experimentalist:
+    status: reviewed
+    findings:
+      - Fourteen WP03 histories and three PC-WP04 policy mutations replay in CI.
+  Cartographer:
+    status: reviewed
+    findings:
+      - The DAG separates event imports, evaluator logic, source retention, and terminal abstraction.
+  Verifier:
+    status: reviewed
+    findings:
+      - stepBack and runBackward correctness are conditional and kernel checked.
+      - Exact support prevents undeclared component values.
+  Adversary:
+    status: reviewed
+    findings:
+      - Missing sources, declaration drift, and inline proof placeholders are rejected.
+  Formalist:
+    status: reviewed
+    findings:
+      - The Lean project is pinned and contains no sorry or local axiom declarations.
+      - Manifold semantics and formal van Kampen remain explicit debt.
+  Steward:
+    status: reviewed
+    findings:
+      - The bounded certification objective is complete.
+      - Only closure and source-concordance work is authorized next.
+  Composer:
+    status: reviewed
+    findings:
+      - The package progresses from carrier to evaluator, soundness, replay, claims, and handoff.
+  Grammarian:
+    status: reviewed
+    findings:
+      - Kernel checked, conditional, imported, and replayed are not used interchangeably.
+  Amanuensis:
+    status: reviewed
+    findings:
+      - WP03 and WP04 identifiers, claims, sources, and boundaries are consistent.
+  Archivist:
+    status: reviewed
+    obligations:
+      - Complete exact Perelman and Kleiner-Lott topology-transition concordance in PC-WP05.
+  Mechanist:
+    status: reviewed
+    findings:
+      - The formal mechanism is finite backward substitution, not geometric flow generation.
+  Typesetter:
+    status: reviewed
+    findings:
+      - Declaration names and certificate statuses are consistently rendered.
+  Referee:
+    status: reviewed
+    findings:
+      - Promotion is valid only at bounded expression-evaluator level.
+      - Full-proof and analytic-formalization claims remain prohibited.
+
+promotion:
+  state: KERNEL_CHECKED_BOUNDED_EVALUATOR_CERTIFICATE
+  next_stage: PC-WP05_INTEGRATED_CLOSURE_AND_SOURCE_CONCORDANCE_AUDIT
+  blockers: []

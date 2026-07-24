@@ -1,0 +1,151 @@
+campaign_id: PC-001
+work_package_id: PC-WP02
+tracker: MATH-PROGRAMME#73
+audit_date: '2026-07-24'
+claims:
+  - claim_id: PC-WP02-C001
+    short_name: versioned-source-chain
+    claim_text: The Poincare-specific Hamilton-Perelman route requires a versioned chain across Perelman I, II, and III rather than an undifferentiated citation to Perelman.
+    claim_class: PRIMARY_SOURCE_AUDIT
+    support_type: VERSIONED_SOURCE_CROSSWALK
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/01_SOURCE_LEDGER.yaml
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/02_THEOREM_CROSSWALK.md
+    assumptions: []
+    promotion_condition: Preserve corrections and edition identifiers in later extracts.
+  - claim_id: PC-WP02-C002
+    short_name: no-collapse-to-canonical-chain
+    claim_text: Entropy/reduced geometry, pseudolocality, and quantitative noncollapsing supply compactness and scale control consumed by ancient-limit and canonical-neighbourhood theorems.
+    claim_class: LITERATURE_DERIVED
+    support_type: PRIMARY_SOURCE_AND_RECONSTRUCTION
+    status: AUDITED_AT_THEOREM_INTERFACE_LEVEL
+    certainty: HIGH
+    source_or_artifact:
+      - https://arxiv.org/abs/math/0211159
+      - https://arxiv.org/abs/math/0303109
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/04_SOURCE_NORMALIZED_THEOREMS.md
+    assumptions:
+      - exact corrected theorem hypotheses in the cited sources
+    promotion_condition: Constant-level reconstruction remains separate proof debt.
+  - claim_id: PC-WP02-C003
+    short_name: surgery-hierarchy
+    claim_text: Ricci flow with surgery depends on an ordered hierarchy of canonical-neighbourhood, noncollapsing, neck-quality, surgery-radius, and cutoff parameters rather than one free small parameter.
+    claim_class: LITERATURE_DERIVED
+    support_type: DETAILED_RECONSTRUCTION
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - https://arxiv.org/abs/math/0303109
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/03_PARAMETER_REGISTRY.md
+    assumptions:
+      - source-specific notation translated by declared roles
+    promotion_condition: Exact stagewise dependencies must be preserved in PC-WP03.
+  - claim_id: PC-WP02-C004
+    short_name: all-time-surgery-flow
+    claim_text: The selected literature interface constructs a controlled Ricci flow with surgery for all positive times, with finitely many surgeries on each bounded time interval.
+    claim_class: LITERATURE_DERIVED
+    support_type: PRIMARY_SOURCE_AND_DETAILED_RECONSTRUCTION
+    status: AUDITED_AT_THEOREM_INTERFACE_LEVEL
+    certainty: HIGH
+    source_or_artifact:
+      - https://arxiv.org/abs/math/0303109
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/04_SOURCE_NORMALIZED_THEOREMS.md#pc02-t013--all-time-ricci-flow-with-surgery
+    assumptions:
+      - normalized orientable input and source RP2 qualification
+      - sufficiently small stagewise surgery controls
+    promotion_condition: Do not replace local finiteness by global finiteness before extinction.
+  - claim_id: PC-WP02-C005
+    short_name: surgery-topology-separate
+    claim_text: The geometric surgery theorem and the topology reconstruction theorem are separate interfaces; topology changes must be recorded event by event.
+    claim_class: LITERATURE_DERIVED
+    support_type: TOPOLOGY_INTERFACE_AUDIT
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/04_SOURCE_NORMALIZED_THEOREMS.md#pc02-t014--topology-of-surgery-and-discarded-components
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md#pc-fp-008--surgery-changes-topology-and-must-be-reversible-on-paper
+    assumptions:
+      - imported Morgan-Tian surgery topology theorem
+    promotion_condition: PC-WP03 must encode the complete event list.
+  - claim_id: PC-WP02-C006
+    short_name: simply-connected-enters-extinction-class
+    claim_text: A closed simply connected 3-manifold satisfies the finite-extinction topology/group hypothesis without assuming the Poincare conclusion.
+    claim_class: PROVED_IN_PACKAGE_WITH_EXTERNAL_TOPOLOGY_INTERFACES
+    support_type: HUMAN_PROOF
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/04_SOURCE_NORMALIZED_THEOREMS.md#pc02-t015--simply-connected-input-satisfies-the-extinction-class
+    assumptions:
+      - Kneser-Milnor prime decomposition
+      - van Kampen free-product formula
+      - closed aspherical prime has nontrivial fundamental group
+    promotion_condition: Quotation-level source extraction remains PC-WP02-D008.
+  - claim_id: PC-WP02-C007
+    short_name: finite-extinction
+    claim_text: For the audited topology class and sufficiently controlled surgery flow, the Hamilton-Perelman finite-extinction theorem gives an empty flow after finite time.
+    claim_class: LITERATURE_DERIVED
+    support_type: PRIMARY_SOURCE_AND_DETAILED_RECONSTRUCTION
+    status: AUDITED_AT_THEOREM_AND_MECHANISM_LEVEL
+    certainty: HIGH
+    source_or_artifact:
+      - https://arxiv.org/abs/math/0307245
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/05_FINITE_EXTINCTION_LEDGER.md
+    assumptions:
+      - exact P-III and Morgan-Tian hypotheses
+      - sufficiently small surgery parameters
+    promotion_condition: Line-by-line analytic verification remains PC-WP02-D007.
+  - claim_id: PC-WP02-C008
+    short_name: extinction-plus-history
+    claim_text: Finite extinction, local finiteness, and the per-surgery topology theorem yield a finite connected-sum reconstruction of the initial manifold.
+    claim_class: PROVED_IN_PACKAGE_CONDITIONAL_ON_IMPORTS
+    support_type: FINITE_INDUCTION
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/04_SOURCE_NORMALIZED_THEOREMS.md#pc02-t017--finite-history-and-connected-sum-reconstruction
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/05_FINITE_EXTINCTION_LEDGER.md
+    assumptions:
+      - PC02-T014
+      - PC02-T016
+    promotion_condition: Formal event schema remains PC-WP03 work.
+  - claim_id: PC-WP02-C009
+    short_name: terminal-group-discharge
+    claim_text: Trivial fundamental group eliminates every nontrivial permitted factor and leaves S3.
+    claim_class: PROVED_IN_PACKAGE_CONDITIONAL_ON_IMPORTS
+    support_type: ALGEBRAIC_TOPOLOGY_PROOF
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/04_SOURCE_NORMALIZED_THEOREMS.md#pc02-t018--terminal-fundamental-group-elimination
+    assumptions:
+      - surgery-derived permitted factor list
+      - van Kampen free-product formula
+      - spherical space form fundamental group equals deck group
+    promotion_condition: MATHCERT may formalize this bounded terminal slice.
+  - claim_id: PC-WP02-C010
+    short_name: conditional-reconstruction
+    claim_text: WP02 reconstructs the established proof at theorem-interface level but does not independently prove or formalize the analytic interfaces PC02-T002 through PC02-T016.
+    claim_class: CERTIFICATION_BOUNDARY
+    support_type: HUMAN_AUDIT
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/00_README.md
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/09_PROOF_DEBT.json
+    assumptions: []
+    promotion_condition: Preserve imported-interface labels in all derivative artifacts.
+  - claim_id: PC-WP02-C011
+    short_name: wp03-not-yet-open
+    claim_text: The theorem interfaces are stable, but PC-WP03 remains gated by the exact surgery-event schema and completion of the source discrepancy table.
+    claim_class: GOVERNANCE_BOUNDARY
+    support_type: PROOF_DEBT_REGISTER
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/09_PROOF_DEBT.json
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/12_NEXT_EXECUTABLE_STEP.md
+    assumptions: []
+    promotion_condition: Joint WP01/WP02 Referee review may discharge or transfer the two blockers.

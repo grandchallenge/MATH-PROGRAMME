@@ -1,0 +1,49 @@
+campaign_id: PC-001
+work_package_id: PC-WP04
+claims:
+  - claim_id: PC04-C001
+    statement: The finite factor, event, history, source-binding, and certificate carriers are defined in Lean.
+    status: KERNEL_CHECKED
+    evidence: fixtures/formal/PC-WP04/PCWP04/History.lean
+  - claim_id: PC04-C002
+    statement: A covered post-event active set yields a covered pre-event active set under EventContract.
+    status: KERNEL_CHECKED
+    declaration: stepBack_covers
+  - claim_id: PC04-C003
+    statement: The backward evaluator has exact support on the declared pre-event active set.
+    status: KERNEL_CHECKED
+    declaration: stepBack_exactSupport
+  - claim_id: PC04-C004
+    statement: Every CertifiedEvent contains an explicit no-component-loss witness.
+    status: KERNEL_CHECKED_CONTRACT_EXTRACTION
+    declaration: eventContract_noComponentLoss
+  - claim_id: PC04-C005
+    statement: The event evaluator is correct conditional on EventContract and ImportedEventRelation.
+    status: KERNEL_CHECKED_CONDITIONAL
+    declaration: stepBack_correct
+  - claim_id: PC04-C006
+    statement: The backward evaluator is correct through every finite ImportedHistoryRelation.
+    status: KERNEL_CHECKED_CONDITIONAL
+    declaration: runBackward_correct
+  - claim_id: PC04-C007
+    statement: Certificate construction preserves chronological source bindings.
+    status: KERNEL_CHECKED
+    declaration: buildCertificate_sources
+  - claim_id: PC04-C008
+    statement: The complete WP03 JSON corpus replays with two valid and twelve rejected cases.
+    status: REPOSITORY_REPLAYED
+    evidence: .github/workflows/pc-wp04.yml
+  - claim_id: PC04-C009
+    statement: The bounded simply-connected compatibility predicate admits only S3 atoms.
+    status: KERNEL_CHECKED_ABSTRACTION
+    declaration: all_s3_of_simplyConnectedCompatible
+  - claim_id: PC04-C010
+    statement: PC-WP04 formalizes Perelman's analytic proof or proves event existence.
+    status: PROHIBITED_FALSE_CLAIM
+  - claim_id: PC04-C011
+    statement: PC-WP04 is a new proof of Poincare.
+    status: PROHIBITED_FALSE_CLAIM
+strongest_permitted_description: >-
+  A kernel-checked finite backward evaluator for the PC-WP03 surgery-history language,
+  correct conditional on explicit source-bound event equations, with repository-native
+  replay of the complete fixture corpus.
