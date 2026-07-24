@@ -274,7 +274,7 @@ theorem runBackward_correct
       simpa [runBackward] using hv
   | cons head tail before middle terminal terminalActive headRelation tailRelation ih =>
       exact stepBack_correct head.event head.contract before middle
-        headRelation (runBackward tail v) (ih v hv)
+        headRelation (runBackward tail v) (ih hv)
 
 theorem runBackward_covers
     {events : List CertifiedEvent}
@@ -288,7 +288,7 @@ theorem runBackward_covers
   | nil semantic active =>
       simpa [runBackward] using hv
   | cons head tail before middle terminal terminalActive headRelation tailRelation ih =>
-      exact stepBack_covers head.event head.contract (runBackward tail v) (ih v hv)
+      exact stepBack_covers head.event head.contract (runBackward tail v) (ih hv)
 
 def contributesNontrivialGroup : FactorAtom → Bool
   | .s3 => false
