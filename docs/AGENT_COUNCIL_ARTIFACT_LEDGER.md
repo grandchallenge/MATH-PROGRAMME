@@ -36,6 +36,8 @@ Every governed artifact receives:
 | NS-CI-R014-A2 | selected research target | MATHSOLVE | `campaigns/navier_stokes_critical_integrability/WP04_RESTRICTED_TARGET_SCORECARD/02_REFEREE_SELECTION.md` | selected_unproved | `WP04/02` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/navier_stokes/NS-CI-WP04.agent_review.yaml` | 2026-07-23 | active |
 | HC-WP00 | work package | MATH-PROGRAMME | `campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/00_README.md` | promoted | `ADR-0004` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/hodge_conjecture/HC-WP00.agent_review.yaml` | 2026-07-24 | reviewed |
 | PC-WP00 | work package | MATHSOLVE | `campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/00_README.md` | promoted | `ADR-0005` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP00.agent_review.yaml` | 2026-07-24 | reviewed |
+| PC-WP01 | work package | MATHFORGE | `campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/00_README.md` | referee_promoted | `ADR-0005`; `PC-WP01-WP02-INTEGRATION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP01.agent_review.yaml` | 2026-07-24 | reviewed |
+| PC-WP02 | work package | MATHSOLVE | `campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/00_README.md` | referee_promoted_interface_level | `ADR-0005`; `PC-WP01-WP02-INTEGRATION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP02.agent_review.yaml` | 2026-07-24 | reviewed |
 
 ## Update rules
 
