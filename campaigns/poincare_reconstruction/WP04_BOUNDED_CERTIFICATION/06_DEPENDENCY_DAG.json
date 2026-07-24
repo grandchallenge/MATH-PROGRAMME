@@ -1,0 +1,43 @@
+{
+  "campaign_id": "PC-001",
+  "work_package_id": "PC-WP04",
+  "nodes": [
+    {"id": "PC04-D000", "kind": "import", "label": "WP03 finite source-bound event records"},
+    {"id": "PC04-D001", "kind": "definition", "label": "factor and source-binding carrier"},
+    {"id": "PC04-D002", "kind": "definition", "label": "event and event contract"},
+    {"id": "PC04-D003", "kind": "import", "label": "ImportedEventRelation"},
+    {"id": "PC04-L004", "kind": "lemma", "label": "child and reconstruction evaluator exactness"},
+    {"id": "PC04-T005", "kind": "theorem", "label": "active-set coverage"},
+    {"id": "PC04-T006", "kind": "theorem", "label": "exact support"},
+    {"id": "PC04-T007", "kind": "theorem", "label": "no-component-loss contract"},
+    {"id": "PC04-T008", "kind": "theorem", "label": "single-event correctness"},
+    {"id": "PC04-T009", "kind": "theorem", "label": "finite-history correctness"},
+    {"id": "PC04-T010", "kind": "theorem", "label": "source-binding preservation"},
+    {"id": "PC04-T011", "kind": "theorem", "label": "bounded terminal factor discharge"},
+    {"id": "PC04-C012", "kind": "certificate", "label": "kernel-checked bounded evaluator certificate"}
+  ],
+  "edges": [
+    ["PC04-D000", "PC04-D001"],
+    ["PC04-D001", "PC04-D002"],
+    ["PC04-D002", "PC04-L004"],
+    ["PC04-D002", "PC04-T005"],
+    ["PC04-T005", "PC04-T006"],
+    ["PC04-D002", "PC04-T007"],
+    ["PC04-D003", "PC04-T008"],
+    ["PC04-L004", "PC04-T008"],
+    ["PC04-T008", "PC04-T009"],
+    ["PC04-D001", "PC04-T010"],
+    ["PC04-D001", "PC04-T011"],
+    ["PC04-T006", "PC04-C012"],
+    ["PC04-T007", "PC04-C012"],
+    ["PC04-T009", "PC04-C012"],
+    ["PC04-T010", "PC04-C012"],
+    ["PC04-T011", "PC04-C012"]
+  ],
+  "forbidden_edges": [
+    {"from": "JSON_SCHEMA_VALID", "to": "EVENT_EXISTS", "reason": "schema validity is not geometric existence"},
+    {"from": "PC04-C012", "to": "RICCI_FLOW_FORMALIZED", "reason": "analytic interfaces remain imported"},
+    {"from": "PC04-T011", "to": "VAN_KAMPEN_FORMALIZED", "reason": "terminal theorem uses a bounded Boolean profile"},
+    {"from": "SOURCE_BINDING_PRESENT", "to": "SOURCE_THEOREM_TRUE", "reason": "provenance retention is not theorem verification"}
+  ]
+}
