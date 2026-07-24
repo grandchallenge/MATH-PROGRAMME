@@ -7,8 +7,8 @@
 - Primary domain: elliptic curves over `\(\mathbb Q\)`
 - Primary target: equality of Mordell–Weil rank and analytic rank
 - Refined targets: finiteness of the Tate–Shafarevich group and the leading-term formula
-- Current state: `WP00_PROMOTED / OPEN_PROBLEM`
-- Claim boundary: no proof, reduction, novelty, or universal converse is claimed
+- Current state: `WP01_WP02_REFEREE_PROMOTED / OPEN_PROBLEM`
+- Claim boundary: no proof, reduction, novelty, mechanism, restricted target, or universal converse is claimed
 
 ## 2. Canonical problem
 
@@ -81,28 +81,19 @@ Promoted on 2026-07-24 after independent Referee review and successful Programme
 
 ### `BSD-WP01` — False-proof atlas
 
-Build executable semantic fixtures for the recurrent invalid moves:
-
-- functional-equation sign \(\Rightarrow\) exact rank;
-- numerical near-zero \(\Rightarrow\) exact analytic order;
-- Selmer corank \(\Rightarrow\) Mordell–Weil rank without controlling \(\Sha[p^\infty]\);
-- one \(p\)-part \(\Rightarrow\) full strong BSD;
-- \(p\)-adic order \(\Rightarrow\) complex order without a comparison theorem;
-- family or density theorem \(\Rightarrow\) universal theorem;
-- incomplete and complete \(L\)-function normalizations silently interchanged;
-- rank-one Euler-system reasoning silently extrapolated to higher rank.
+Referee-promoted on 2026-07-24. The package contains eighteen executable semantic fixtures for parity-to-rank, numerical vanishing, Selmer/rank, hidden-\(\Sha\), one-prime, \(p\)-adic/complex, normalization, higher-rank extrapolation, family, finite-database, height, local-condition, and circularity failures. A triggered fixture rejects or narrows an inference; passing the atlas is not a proof certificate.
 
 ### `BSD-WP02` — Source-normalized theorem ledger
 
-Record exact curve class, prime, reduction type, residual representation, rank range, direction, conclusion, exceptional factors, and source theorem number for every imported result.
+Referee-promoted on 2026-07-24. Sixteen theorem interfaces record curve class, direction, rank range, prime and reduction profile, residual hypotheses, Selmer structure, normalization, conclusion, source locator, and composition state. Kato and modern zeta-element source pointers remain noncomposable until theorem-level extraction. Family, finite-database, and individual-curve statements remain below the universal quantifier.
 
 ### `BSD-WP03` — Computational and formal substrate
 
-Separate rigorous individual-curve certification, database experiments, and formalizable algebraic interfaces. No finite computation may promote a universal claim.
+Next eligible stage, but not yet authorized. It must separate rigorous individual-curve certification, database experiments, and formalizable algebraic interfaces. No finite computation may promote a universal claim.
 
 ### `BSD-WP04` — Restricted-target scorecard
 
-Select exactly one theorem-grade target after WP01 and WP02. A target must be narrower than BSD, not a restatement through Selmer notation, and must have a falsifiable proof-obligation DAG.
+Closed. It may select exactly one theorem-grade target only after a separately authorized and reviewed WP03 handoff. A target must be narrower than BSD, not a restatement through Selmer notation, and must have a falsifiable proof-obligation DAG.
 
 ## 6. Governing restrictions
 
@@ -113,3 +104,4 @@ Select exactly one theorem-grade target after WP01 and WP02. A target must be na
 5. A theorem for one prime, one reduction type, one twist family, or one density class remains restricted.
 6. Numerical vanishing must be replaced by certified analytic-rank bounds before it can support an individual-curve theorem.
 7. The universal conjecture must never be encoded as an axiom in a formal artifact.
+8. Mechanism generation, novelty claims, and restricted-target selection remain closed until separately authorized.
