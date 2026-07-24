@@ -12,20 +12,20 @@
 - Claim status: local derivations checked; operational regularity interfaces audited; universal estimate open
 - Certification target: human audit followed by selective theorem-prover formalization
 - Foundational profile: present
-- Promotion state: governance integration pending
+- Promotion state: active; WP01 and WP02 progression permitted
 
 ## 1. Result-status box
 
 | Field | Value |
 |---|---|
-| Result status | `SUBSTANTIVE AUDIT COMPLETE / OPEN PROBLEM` |
+| Result status | `WP00 PROMOTED / OPEN PROBLEM` |
 | Conditional on | Standard R3 Leray–Hopf, H1 strong-solution, and weak–strong interfaces recorded in the source audit |
 | Strongest supported claim | `L4_tL6_x` is the exact critical coefficient closing the H1 continuation and weak–strong uniqueness estimates; universal control for Fefferman's full rapidly decreasing data class is sufficient for Clay statement (A) |
 | Not claimed | Universal finiteness, global regularity, a new criterion, bidirectional equivalence, or full Clay coverage from compact-support data alone |
 | Support-route class | `CONTINUUM_PROOF`, `NEGATIVE_RESULT`, `PRIMARY_SOURCE_AUDIT`, `LITERATURE_DERIVED` |
 | Foundational profile | Continuum PDE over `R`; high pathology and semantic-drift risk |
-| Certification state | Human-audit checked; formal certification pending |
-| First executable step | Complete Amanuensis and Referee integration, run CI, then decide WP01/WP02 promotion |
+| Certification state | Human-audit promoted; formal certification pending |
+| First executable step | Proceed with WP01 false-proof fixtures and WP02 conditional-regularity ledger; mechanism and numerical stages remain closed |
 
 ## 2. Foundational profile
 
@@ -83,6 +83,7 @@ The official whole-space Clay branch permits every smooth divergence-free datum 
 4. Reconstructed the exact H1 continuation and weak–strong uniqueness estimates.
 5. Established a checked one-way implication from universal full-data critical integrability to Clay statement (A).
 6. Refused to promote bidirectional equivalence until the reverse bridge is source-normalized.
+7. Passed the Amanuensis, Referee, and repository-contract gates for controlled progression.
 
 ### What this package did not achieve
 
@@ -218,7 +219,7 @@ The energy consequence, non-embedding witness, scaling identity, quantitative H1
 
 ### What is checked?
 
-The modern operational regularity theorem, official data class, and current open status are source-audited.
+The modern operational regularity theorem, official data class, current open status, cross-document consistency, and forward correspondence boundary are source- or governance-audited.
 
 ### What remains open?
 
@@ -226,7 +227,7 @@ The universal estimate, the reverse equivalence bridge, and every genuine mechan
 
 ### What requires external verification?
 
-The final Referee review; exact historical Serrin and Ladyzhenskaya extraction; the Leray theorem concordance; theorem-prover certification.
+Exact historical Serrin and Ladyzhenskaya extraction, the Leray theorem concordance, and theorem-prover certification remain nonblocking external work.
 
 ## 8. Theorem spine
 
@@ -267,16 +268,19 @@ A conditional regularity criterion is not evidence that its hypothesis holds uni
 
 ### Viable next work
 
-WP01 may formalize the false-proof atlas. WP02 may preserve the quantitative continuation chain. Mechanism selection remains gated until governance integration completes.
+WP01 may formalize the false-proof atlas. WP02 may preserve the quantitative continuation chain. Mechanism selection, numerical regularity claims, and restricted-target promotion remain separately gated.
 
 ## 11. Proof-debt register
 
-`09_PROOF_DEBT.json` distinguishes resolved operational obligations from remaining debt. The only current blocking items are:
+`09_PROOF_DEBT.json` distinguishes resolved operational obligations from remaining nonblocking debt. No unresolved item blocks WP01 or WP02.
 
-- `NS-CI-D011`: complete cross-document data-class integration;
-- `NS-CI-D012`: Referee confirmation of the one-way implication and non-equivalence wording.
+Remaining debt includes:
 
-Historical and formalization debts are nonblocking and remain visible.
+- original Leray theorem concordance;
+- exact Serrin theorem extraction and Ladyzhenskaya translation;
+- reverse Clay-to-every-Leray–Hopf correspondence;
+- mixed-norm scaling formalization;
+- restricted-target selection through the WP04 Council gate.
 
 ## 12. Certification boundary and MATHCERT handoff
 
@@ -291,11 +295,11 @@ The universal estimate must not be encoded as an axiom or presented as formally 
 
 ## 13. First executable step
 
-- Input: the integrated source audit, corrected master plan, updated claim ledger, debt register, and theorem DAG.
-- Operation: complete Amanuensis consistency review and independent Referee review.
-- Output: updated Agent Council record and CI evidence.
-- Completion test: `NS-CI-D011` and `NS-CI-D012` are discharged; no artifact calls the compact-support lane canonical; no artifact claims bidirectional equivalence; CI passes.
-- Spine node advanced: `NS-CI-B011`.
+- Input: the promoted WP00 package and cross-pillar source/reconstruction artifacts.
+- Operation: execute WP01 false-proof fixtures and WP02 conditional-regularity ledger in parallel.
+- Output: governed WP01 and WP02 artifact bundles.
+- Completion test: every false route has an exact diagnosis; every classical continuation arrow is reproducible without relying on a theorem-name slogan.
+- Spine nodes advanced: `NS-CI-O005`, `NS-CI-L008`, `NS-CI-L009`, and `NS-CI-L010`.
 
 ## 14. Escalation gate
 
@@ -305,7 +309,8 @@ The universal estimate must not be encoded as an axiom or presented as formally 
 - [x] The trust quartet is complete.
 - [x] The foundational profile is present.
 - [x] The first executable step is explicit.
-- [ ] Cross-document data-class integration is independently checked.
-- [ ] Referee confirms the correspondence boundary.
+- [x] Cross-document data-class integration is independently checked.
+- [x] Referee confirms the correspondence boundary.
+- [x] Repository checks pass for the integrated source and reconstruction lanes.
 
-No mechanism generation or numerical experimentation begins before the final two checks.
+WP01 and WP02 may proceed. Mechanism generation, numerical experimentation intended as regularity evidence, and restricted-target promotion do not begin without their own explicit gates.
