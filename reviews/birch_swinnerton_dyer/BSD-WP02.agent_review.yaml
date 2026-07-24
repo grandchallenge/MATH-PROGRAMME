@@ -1,0 +1,38 @@
+artifact:
+  id: BSD-WP02
+  type: work_package
+  title: Source-normalized theorem ledger
+  pillar: MATHSOLVE
+  status: review_ready
+council_review:
+  Axiomatist: {status: reviewed, obligations: [], findings: [Directions and non-equivalences are explicit.]}
+  Prospector: {status: reviewed, obligations: [], findings: [Source states distinguish theorem text, scope audit, and noncomposable pointers.]}
+  Experimentalist: {status: reviewed, obligations: [], findings: [Individual, finite-database, family, and universal scopes are distinct.]}
+  Cartographer: {status: reviewed, obligations: [], findings: [The theorem spine and fixture links are explicit.]}
+  Verifier: {status: reviewed, obligations: [], findings: [Low-rank, parity, converse, p-part, CM, family, and computation records retain scope.]}
+  Adversary: {status: reviewed, obligations: [], findings: [No theorem label alone can bypass missing hypotheses.]}
+  Formalist: {status: reviewed, obligations: [], findings: [Derived records are separated from imported deep theorems.]}
+  Steward: {status: reviewed, obligations: [], findings: [Noncomposable source pointers cannot enter proof graphs.]}
+  Composer: {status: reviewed, obligations: [], findings: [Source registry, theorem ledger, rules, dependencies, and debt align.]}
+  Grammarian: {status: reviewed, obligations: [], findings: [Converse, parity, p-part, and complete-formula language is bounded.]}
+  Amanuensis: {status: reviewed, obligations: [], findings: [WP00, WP01, and WP02 cross-document consistency checked.]}
+  Archivist: {status: reviewed, obligations: [Continue nonblocking original-paper concordance.], findings: [Operational low-rank statement is text-audited through Skinner 2020.]}
+  Mechanist: {status: reviewed, obligations: [], findings: [No research mechanism or target is selected.]}
+  Typesetter: {status: reviewed, obligations: [], findings: [Normalization fields are mandatory.]}
+  Referee: {status: pending, obligations: [Independently reconstruct theorem scopes and source-state classifications.], findings: []}
+amanuensis_control:
+  artifact_ledger: {ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md, entry_id: BSD-WP02}
+  decision_record_refs: [ADR-0005]
+  terminology_registry: {registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md, terms_introduced_or_changed: []}
+  review_provenance: {complete: false, evidence_refs: [MATH-PROGRAMME#66]}
+  cross_document_consistency:
+    status: reviewed
+    checked_against: [BSD-WP00, BSD-WP01]
+    conflicts: []
+  final_editorial_integration:
+    status: pending
+    integrated_artifact_ref: campaigns/birch_swinnerton_dyer/WP02_THEOREM_LEDGER/00_README.md
+unresolved_obligations:
+- {id: BSD-WP02-R001, owner: Referee, description: Independent source-scope reconstruction., severity: high, blocking: true}
+- {id: BSD-WP02-D001, owner: Archivist, description: Original-paper theorem-number concordance for Gross-Zagier and Kolyvagin., severity: high, blocking: false}
+promotion: {ready_for_next_stage: false, blockers: [BSD-WP02-R001], certification_route: source audit plus semantic Referee review}
