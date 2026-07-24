@@ -8,86 +8,38 @@
 - Canonical tracker: `MATH-PROGRAMME#65`
 - Primary type: source audit, statement normalization, known-boundary ledger, and proof-obligation map
 - Global theorem-spine node advanced: `HC-T004`
-- Incoming dependencies: Hodge decomposition; algebraic cycle-class construction; Lefschetz `(1,1)`; hard Lefschetz
 - Claim status: canonical statement and elementary boundaries checked; universal surjectivity open
 - Certification target: semantic schema and conditional abstract formalization
-- Promotion state: draft pending integrated Council and CI review
+- Promotion state: `PROMOTED_2026-07-24`
 
 ## 1. Result-status box
 
 | Field | Value |
 |---|---|
-| Result status | `WP00 DRAFT / OPEN PROBLEM` |
+| Result status | `WP00 PROMOTED / OPEN PROBLEM` |
 | Conditions | Smooth projective `X/C`; rational coefficients; codimension-`p` cycles; singular cohomology with Hodge decomposition |
 | Strongest supported claim | The exact target is surjectivity of `CH^p(X) tensor Q -> Hdg^(2p)(X,Q)`; it is known in codimensions `0,1,n-1,n`, hence for all dimensions at most three |
 | Not claimed | Full Hodge, new known cases, integral/Kahler variants, a Tate reduction, an algorithm, or numerical evidence of algebraicity |
 | Support-route class | `CONTINUUM_PROOF`, `PRIMARY_SOURCE_AUDIT`, `NEGATIVE_RESULT`, `SEMANTIC_CORRESPONDENCE_AUDIT` |
-| Certification state | Human audit complete in draft; abstract schema committed; full geometry formalization unavailable |
-| First executable step | Execute WP01 false-proof fixtures and WP02 source-normalized known-case/construction ledger after promotion |
+| Certification state | Human source and logic audit promoted; abstract schema committed; full geometry formalization unavailable |
+| First executable step | Execute WP01 false-proof fixtures and WP02 source-normalized known-case/construction ledger in parallel |
 
-## 2. Foundational profile
+## 2. Lay companion
 
-```yaml
-foundational_profile:
-  carrier_type: continuum_and_algebraic
-  ambient_structure:
-    - smooth_projective_varieties_over_C
-    - algebraic_cycles_and_Chow_groups
-    - singular_cohomology
-    - rational_Hodge_structures
-    - correspondences_and_intersection_theory
-  axiom_profile:
-    base: classical_mathematics
-    choice_usage: standard
-    excluded_middle: used
-  witness_policy:
-    positive_claim: explicit_or_theorem_constructed_algebraic_cycle
-    rejected_surrogates:
-      - floating_point_period_relation
-      - topological_correspondence_without_algebraicity
-      - motivated_or_absolute_label_without_cycle_bridge
-  certification_target:
-    - human_source_audit
-    - semantic_schema_validation
-    - conditional_abstract_Lean
-  pathology_risk:
-    level: high
-    notes: Coefficient, category, equivalence-relation, correspondence, and family-quantifier drift are principal risks.
-```
+A smooth projective complex variety has a geometric description by algebraic subvarieties and a topological-analytic description by cohomology. Complex geometry splits cohomology into Hodge types.
 
-## 3. Lay executive companion
+Every codimension-`p` algebraic subvariety produces a rational cohomology class of degree `2p` and type `(p,p)`. The Hodge conjecture asks for the converse: does every rational class of type `(p,p)` arise from a rational combination of algebraic subvarieties?
 
-### The two descriptions
+The difficult step is construction. Hodge type is a necessary analytic symmetry, but it does not itself exhibit a subvariety. Several neighboring theories recognize support, deformation loci, arithmetic invariance, or motivic stability without producing the required algebraic cycle.
 
-A smooth projective complex variety can be studied through algebraic subvarieties and through cohomology. Algebraic subvarieties produce cohomology classes. Complex geometry splits cohomology into Hodge types.
+The adjectives are structural:
 
-A codimension-`p` algebraic subvariety always produces a degree-`2p` class of type `(p,p)`. The conjecture asks for the converse only for rational classes: does every rational class of type `(p,p)` come from a rational combination of algebraic subvarieties?
+- **rational:** the naive integral statement is false in general;
+- **projective:** unrestricted compact-Kahler analogues are false;
+- **combination:** subtraction and denominators are allowed; one effective cycle is not required;
+- **every:** a theorem for very general members or sampled classes is restricted.
 
-### The obstruction
-
-Hodge type is an analytic/topological condition. Algebraicity is a construction requirement. Knowing that a class has the correct symmetry does not exhibit a subvariety. Many neighboring theories detect stability, support, deformation loci, or arithmetic invariance without constructing the required cycle.
-
-### Why the adjectives matter
-
-- **Rational:** the integral statement is false in general.
-- **Projective:** arbitrary compact Kahler analogues are false.
-- **Combination:** one may subtract cycles and use denominators; a single effective representative is not required.
-- **Every:** a theorem for very general members or sampled classes is restricted.
-
-### What WP00 achieved
-
-1. Fixed the cycle-class-surjectivity statement and its exact coefficients.
-2. Proved the equivalence with rational generation by irreducible subvariety classes.
-3. Reconstructed the elementary boundary cases and the dimension-at-most-three consequence.
-4. Separated eleven neighboring or false formulations.
-5. Built a source ledger, statement lattice, implication map, theorem DAG, false-proof seeds, proof debt, and certification boundary.
-6. Identified the first unrestricted new case as fourfolds in codimension two.
-
-### What WP00 did not achieve
-
-It did not construct a new algebraic cycle, prove a new family, or reduce the full problem to computation or arithmetic. It prepares the ground on which such a claim could be judged.
-
-## 4. Formal problem statement
+## 3. Canonical statement
 
 Let `X` be smooth and projective over `C`, with `n=dim_C X`. Hodge decomposition gives
 
@@ -95,7 +47,7 @@ Let `X` be smooth and projective over `C`, with `n=dim_C X`. Hodge decomposition
 H^k(X,C)=\bigoplus_{a+b=k}H^{a,b}(X).
 ```
 
-For `0<=p<=n`, set
+For `0<=p<=n`, define
 
 ```math
 Hdg^{2p}(X,Q)=H^{2p}(X,Q)\cap H^{p,p}(X).
@@ -107,140 +59,160 @@ Let `CH^p(X)` be the Chow group of codimension-`p` cycles modulo rational equiva
 cl_Q^p:CH^p(X)\otimes_Z Q -> Hdg^{2p}(X,Q).
 ```
 
-The target is:
+The conjecture is
 
 ```math
 for every X,p,alpha in Hdg^{2p}(X,Q),
 there exists z in CH^p(X) tensor Q with cl_Q^p(z)=alpha.
 ```
 
-## 5. Object and obstruction
+## 4. Exact equivalence
 
-### 5.1 Necessary direction
+Let `Z^p(X)` be free on irreducible codimension-`p` subvarieties. Its cycle-class image is the rational span of their cohomology classes. Since rationally equivalent cycles have the same cohomology class, quotienting by rational equivalence does not change this image. Therefore
 
-For an irreducible codimension-`p` algebraic subvariety `Z`, its fundamental cohomology class has degree `2p` and type `(p,p)`. Linear combinations give
-
-```math
-image(cl_Q^p) subset Hdg^{2p}(X,Q).
+```text
+cl_Q^p is surjective
+<-> every rational Hodge class is a rational linear combination of irreducible subvariety classes.
 ```
 
-### 5.2 Missing direction
+This equivalence does not assert effectivity, uniqueness, injectivity of the cycle map, or equality in the Chow group between cycles with equal cohomology class.
 
-The reverse inclusion asks for a geometric construction from an arbitrary rational Hodge class. Hodge decomposition alone contains no cycle-producing operation.
+## 5. Elementary known boundary
 
-### 5.3 Minimal semantic obstruction
+For `n=dim_C X`:
 
-The vector space `H^{p,p}(X)` is complex. The input set is the rational intersection `H^{2p}(X,Q) intersect H^{p,p}(X)`. A basis or dimension calculation over `C` does not establish rationality, and rationality does not establish algebraicity.
+- `p=0`: component/fundamental classes generate degree zero;
+- `p=n`: point classes generate top degree componentwise;
+- `p=1`: Lefschetz `(1,1)` identifies integral degree-two Hodge classes with first Chern classes of line bundles, hence divisor classes;
+- `p=n-1`: hard Lefschetz gives an isomorphism of rational Hodge structures
 
-### 5.4 Circular correspondence obstruction
+```math
+L^{n-2}:H^2(X,Q)->H^{2n-2}(X,Q).
+```
 
-Hard Lefschetz supplies cohomological isomorphisms. Treating their inverses or Kunneth projectors as algebraic correspondences in general assumes standard-conjecture-type algebraicity. Such use must be independently sourced for the selected variety class.
+A rational `(n-1,n-1)` class therefore has a rational `(1,1)` preimage. Lefschetz `(1,1)` makes that preimage a rational divisor class, and multiplication by the algebraic hyperplane class produces the required codimension-`n-1` algebraic class.
 
-## 6. Known terrain and source audit
+This argument uses a cohomological inverse to identify a preimage. It does **not** assume that inverse Lefschetz is induced by an algebraic correspondence.
 
-The authoritative detailed audit is `04_PROBLEM_AND_STATUS_AUDIT.md`; the cross-pillar primary ledger is in MATHFORGE.
+For `n<=3`, every codimension lies in `0,1,n-1,n`. Hence the full conjecture holds for all smooth projective complex varieties of dimension at most three. The first unrestricted new case is `n=4,p=2`.
 
-| Source family | Use | Audit state |
-|---|---|---|
-| Deligne / Clay official description | canonical statement, boundaries, neighboring theories | `AUDITED` |
-| Hodge 1950 | historical formulation | primary identified; passage concordance pending |
-| Kodaira-Spencer / Lefschetz `(1,1)` | divisor case | operational theorem audited; historical locator refinement pending |
-| Atiyah-Hirzebruch | integral obstruction | core result audited |
-| Zucker/Voisin | compact-Kahler boundaries | result audited; one exact appendix locator pending |
-| Cattani-Deligne-Kaplan | Hodge-locus theorem | audited |
-| Zucker cubic fourfolds | selected fourfold known case | audited |
-| Deligne absolute Hodge / Andre motivated cycles | substitute notions | audited at result level |
-| Tate 1965 | arithmetic parallel | primary identified; exact modern statement extraction pending |
-| Clay status | current open status | `AUDITED_2026-07-24` |
+Smooth cubic fourfolds are retained as a special known case; they do not settle arbitrary fourfolds.
 
-## 7. Claim ledger and trust quartet
+## 6. Formulation boundaries
 
-### What is proved?
+The following are separate nodes in the statement lattice:
 
-- Cycle-map surjectivity is equivalent to rational generation by irreducible subvariety classes.
-- The boundary cases `p=0,n`.
-- The reduction of `p=n-1` to the divisor case through hard Lefschetz as a Hodge-structure isomorphism.
-- The dimension-at-most-three consequence.
-- Effectivity is a strict extra demand, not part of the canonical statement.
+- naive integral Hodge: stronger and false in general;
+- compact-Kahler analogue: broader and false in general;
+- generalized Hodge: coniveau/support of Hodge substructures;
+- variational Hodge: transport of algebraicity in families;
+- Hodge-locus algebraicity: theorem about parameter loci, not cycle construction;
+- absolute Hodge: stability property; no general converse to algebraicity;
+- motivated cycles: broader correspondence class;
+- Lefschetz standard conjecture: algebraicity of inverse Lefschetz correspondences;
+- Tate conjecture: arithmetic parallel requiring comparison, specialization, and lifting;
+- effectivity: an additional strengthening not present in the classical claim.
 
-### What is checked?
+## 7. Principal obstruction nodes
 
-- Official formulation and current open status.
-- Divisor theorem interface.
-- Integral and compact-Kahler failure boundaries.
-- Hodge-locus, generalized, variational, absolute, motivated, standard, and Tate statement separation.
-- Cubic fourfolds as a restricted known case.
+Any proposed proof must survive:
+
+1. rational versus integral coefficient control;
+2. rationality versus arbitrary complex `(p,p)` type;
+3. higher-codimension non-extrapolation from the divisor theorem;
+4. non-algebraicity-by-default of Kunneth projectors and inverse Lefschetz;
+5. Hodge-locus versus cycle-class distinction;
+6. deformation transport without a relative-cycle theorem;
+7. numerical period non-certification;
+8. Tate comparison/specialization/lifting debt;
+9. topological versus algebraic Chern generation;
+10. incompleteness of Abel-Jacobi and normal-function tests in general;
+11. absolute/motivated versus algebraic distinction;
+12. very-general versus every-fiber quantifier control;
+13. effectivity drift.
+
+The canonical false-proof seed registry contains fifteen fixtures.
+
+## 8. Trust quartet
+
+### What is proved in the package?
+
+- cycle-map surjectivity is equivalent to rational generation by irreducible subvariety classes;
+- the `p=0,n` cases;
+- the reduction of `p=n-1` to `p=1` through hard Lefschetz;
+- the dimension-at-most-three consequence;
+- effectivity is not part of the canonical statement.
+
+### What is source-checked?
+
+- Deligne's official rational/projective formulation;
+- Lefschetz `(1,1)` as the divisor interface;
+- the Atiyah-Hirzebruch integral obstruction;
+- compact-Kahler failure boundaries;
+- Cattani-Deligne-Kaplan Hodge-locus algebraicity;
+- cubic fourfolds as a restricted known case;
+- absolute, motivated, projector, and Tate distinctions;
+- current official open status.
 
 ### What remains open?
 
-- The universal cycle-class surjectivity target.
-- Arbitrary fourfold codimension-two classes.
-- Higher-dimensional unrestricted cases.
-- Any bridge not independently established for a restricted class.
+- universal rational cycle-class surjectivity;
+- arbitrary fourfold codimension-two classes;
+- all higher unrestricted cases;
+- every unproved algebraic-cycle bridge.
 
-### What requires external verification?
+### What remains as nonblocking debt?
 
-- Hodge 1950 exact passage concordance.
-- Exact Zucker appendix host/locator.
-- Corrected generalized-Hodge theorem extraction.
-- Tate 1965 exact theorem-body and coefficient normalization.
-- Comprehensive known-case bibliography.
-- Full theorem-prover foundations for Hodge and Chow theory.
+- exact Hodge 1950 passage concordance;
+- exact Zucker compact-Kahler appendix locator;
+- exact Grothendieck 1969 and Tate 1965 theorem-body normalization;
+- comprehensive higher-dimensional known-case catalogue;
+- full theorem-prover foundations for Hodge and Chow theory.
 
-## 8. Theorem spine
+## 9. Certification boundary
 
-The machine-readable graph is `06_DEPENDENCY_DAG.json`. Its central chain is
+MATHCERT may check claim-record schemas, semantic mutations, statement relations, abstract generator equivalence, and the boundary-case implication under explicit imported interfaces.
 
-```text
-cycles -> rational Hodge classes
-surjectivity <-> rational generation
-Lefschetz (1,1) + hard Lefschetz -> boundary cases -> dimension <=3
-all obstruction nodes constrain any route to universal surjectivity
-```
+It may not encode the missing complex-algebraic-geometry stack as axioms and report the resulting conditional term as a proof of the Hodge conjecture.
 
-## 9. Proofs and classified computations
+## 10. Promotion evidence
 
-WP00 uses no numerical evidence.
+- Programme PR: `grandchallenge/MATH-PROGRAMME#68`
+- Forge PR: `grandchallenge/MATHFORGE#22`
+- Solve PR: `grandchallenge/MATHSOLVE#63`
+- Cert PR: `grandchallenge/MATHCERT#24`
+- Programme policy checks: workflow `30084154340`, success
+- Forge checks: workflow `30084108503`, success
+- Solve checks: workflow `30084121944`, success
+- Cert checks: workflow `30084135657`, success
+- Agent Council: all blocking offices reviewed; no cross-document conflict
+- Review record: `reviews/hodge_conjecture/HC-WP00.agent_review.yaml`
 
-- Formal equivalence and boundary arguments: `CONTINUUM_PROOF`.
-- Integral/Kahler failures: `NEGATIVE_RESULT`, literature-derived.
-- Official/current determinations: `PRIMARY_SOURCE_AUDIT`.
-- Statement lattice: `SEMANTIC_CORRESPONDENCE_AUDIT`.
-- Certification artifacts: statement-schema and conditional abstract interfaces only.
+CI certifies repository and schema contracts. It does not certify the open mathematical conjecture.
 
-## 10. Failure and negative-result analysis
+## 11. Promotion decision
 
-Rejected shortcuts include:
+`HC-WP00` is promoted.
 
-- replacing `Q` by `Z`;
-- replacing rational Hodge classes by arbitrary complex `(p,p)` classes;
-- extrapolating Lefschetz `(1,1)` to higher codimension;
-- assuming algebraicity of projectors or inverse Lefschetz;
-- promoting algebraic Hodge loci to algebraic classes;
-- transporting cycles through deformation without a relative-cycle theorem;
-- promoting numerical periods, Tate classes, absolute classes, or motivated classes directly to algebraic cycles;
-- extending very-general results to all fibers;
-- demanding effectivity.
+The promotion establishes only the canonical source, statement, equivalence, known-boundary, obstruction, debt, and certification architecture. It establishes no new Hodge theorem.
 
-Each becomes a WP01 fixture.
+## 12. Next controlled stage
 
-## 11. Proof-debt register
+The following may proceed in parallel:
 
-`09_PROOF_DEBT.json` separates nonblocking provenance and formalization work from the open theorem itself. No debt is silently discharged by a secondary source.
+- `HC-WP01`: false-proof atlas;
+- `HC-WP02`: source-normalized known-case and cycle-construction ledger.
 
-## 12. Certification boundary
+The following remain closed:
 
-The first certifiable layer checks statement identity, relation graphs, boundary-case logic under visible imports, and generator/surjectivity equivalence. The universal theorem remains outside the current formal substrate.
+- broad numerical period experiments;
+- mechanism generation detached from a selected theorem target;
+- `HC-R021` restricted-target selection;
+- novelty claims;
+- claimed-proof promotion;
+- universal algebraicity claims.
 
-## 13. First executable step
-
-- Input: promoted WP00 artifacts and cross-pillar source/schema packages.
-- Operation: execute WP01 semantic fixtures and WP02 known-case/construction reconstruction in parallel.
-- Output: governed false-proof atlas and source-normalized mechanism ledger.
-- Completion test: every false route fails exactly; every admitted known case identifies how cycles are actually produced.
-- Spine nodes advanced: `HC-O009` through `HC-O019`, and `HC-K008`.
-
-## 14. Escalation gate
+## 13. Escalation gate
 
 - [x] Exact canonical target recorded.
 - [x] Equivalent formulation proved.
@@ -249,8 +221,8 @@ The first certifiable layer checks statement identity, relation graphs, boundary
 - [x] Statement lattice and implication map created.
 - [x] False-proof seeds created.
 - [x] Proof debt and certification boundary created.
-- [ ] Cross-document Amanuensis review complete.
-- [ ] Referee review complete.
-- [ ] Cross-pillar CI evidence recorded.
+- [x] Cross-document Amanuensis review complete.
+- [x] Referee review complete.
+- [x] Cross-pillar CI evidence recorded.
 
-WP01 and WP02 remain closed until the final three checks pass.
+The immediate obligations are now `HC-WP01` and `HC-WP02`.
