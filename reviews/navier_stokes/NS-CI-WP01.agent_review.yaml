@@ -29,7 +29,7 @@ council_review:
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-      - FP-010 rejects inference from finitely many finite approximations to a uniform continuum theorem.
+      - FP-010 rejects inference from finitely many fixed finite-dimensional approximations to a uniform continuum theorem.
       - Verified a posteriori analysis and simulations used for falsification remain permitted.
 
   Cartographer:
@@ -47,8 +47,8 @@ council_review:
     reviewed_at: '2026-07-23'
     obligations: []
     findings:
-      - FP-001, FP-002, FP-007, FP-008, and FP-012 replay exactly.
-      - Forge CI workflow run 30058521633 passed.
+      - FP-001, FP-002, FP-007, FP-008, FP-010, and FP-012 replay exactly.
+      - Forge CI workflow run 30059677032 passed on the reviewed provider head.
 
   Adversary:
     status: reviewed
@@ -153,8 +153,8 @@ amanuensis_control:
       - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/false_proof_atlas.md
       - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/false_proof_fixtures.json
       - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/WP01_ADVERSARIAL_SEMANTIC_REVIEW.md
-      - workflow:grandchallenge/MATHFORGE/30058521633
-      - workflow:grandchallenge/MATH-PROGRAMME/30058238368
+      - workflow:grandchallenge/MATHFORGE/30059677032
+      - workflow:grandchallenge/MATH-PROGRAMME/30059140953
   cross_document_consistency:
     status: reviewed
     checked_against:
@@ -168,7 +168,7 @@ amanuensis_control:
     integrated_artifact_ref: campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md
     integration_notes:
       - Promotion wording is limited to a canonical route-rejection atlas.
-      - The numerical fixture is scoped to nonuniform finite approximations.
+      - The numerical fixture is scoped to fixed nonuniform finite approximations.
       - The atlas is explicitly extensible rather than exhaustive.
 
 unresolved_obligations: []
