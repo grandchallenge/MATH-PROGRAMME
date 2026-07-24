@@ -1,0 +1,69 @@
+{
+  "schema_version": "pc.wp05.proof-debt.v1",
+  "campaign_id": "PC-001",
+  "work_package_id": "PC-WP05",
+  "debts": [
+    {
+      "id": "PC05-D001",
+      "title": "Line-by-line Perelman reconstruction concordance",
+      "status": "retained_nonblocking",
+      "blocks": ["source_complete_line_by_line_claim", "independent_verification_claim"],
+      "does_not_block": ["qualified_archival_publication"],
+      "discharge": "Map every WP02 analytic subclaim to exact editions, pages and proof dependencies in P-I/P-II/P-III, KL and MT."
+    },
+    {
+      "id": "PC05-D002",
+      "title": "Surgery parameter equivalence",
+      "status": "retained_nonblocking",
+      "blocks": ["parameter_normalized_full_reconstruction"],
+      "does_not_block": ["theorem_role_concordance", "qualified_archival_publication"],
+      "discharge": "Prove exact translation among all epsilon, kappa, r, delta, h and cutoff conventions."
+    },
+    {
+      "id": "PC05-D003",
+      "title": "Independent analytic proof verification",
+      "status": "retained_blocking_for_stronger_claims",
+      "blocks": ["independently_verified_proof", "full_proof_certificate"],
+      "does_not_block": ["literature_based_reconstruction"],
+      "discharge": "Recheck or formalize the complete Hamilton-Perelman analytic chain."
+    },
+    {
+      "id": "PC05-D004",
+      "title": "Top/PL/Diff bridge formalization",
+      "status": "retained_nonblocking",
+      "blocks": ["fully_formal_topological_theorem"],
+      "does_not_block": ["classical_category_import"],
+      "discharge": "Formalize the dimension-three category bridge and final forgetful implication."
+    },
+    {
+      "id": "PC05-D005",
+      "title": "Manifold connected-sum and van Kampen formalization",
+      "status": "retained_blocking_for_full_certificate",
+      "blocks": ["machine_checked_poincare_theorem"],
+      "does_not_block": ["bounded_expression_certificate"],
+      "discharge": "Replace factor-expression semantics with formal manifold and fundamental-group constructions."
+    },
+    {
+      "id": "PC05-D006",
+      "title": "Verified JSON-to-Lean translation",
+      "status": "retained_nonblocking",
+      "blocks": ["end_to_end_machine_certificate_from_json"],
+      "does_not_block": ["independent_fixture_replay", "Lean_theorem_replay"],
+      "discharge": "Implement and verify a parser translating admitted WP03 histories into WP04 terms."
+    },
+    {
+      "id": "PC05-D007",
+      "title": "Alternative complete exposition comparison",
+      "status": "retained_nonblocking",
+      "blocks": ["exhaustive_literature_concordance"],
+      "does_not_block": ["Perelman_MT_KL_archive"],
+      "discharge": "Extend the concordance matrix to Cao-Zhu, BBBMP and later singular-Ricci-flow treatments."
+    }
+  ],
+  "publication_gate": {
+    "qualified_archival_publication": "pass",
+    "new_proof_claim": "permanently_prohibited",
+    "full_formal_proof_claim": "blocked",
+    "independent_analytic_verification_claim": "blocked"
+  }
+}
