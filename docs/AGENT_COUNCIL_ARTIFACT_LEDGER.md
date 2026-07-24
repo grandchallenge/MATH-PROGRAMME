@@ -34,7 +34,8 @@ Every governed artifact receives:
 | NS-CI-WP02 | work package | MATHSOLVE | `campaigns/navier_stokes_critical_integrability/WP02_CONDITIONAL_REGULARITY_LEDGER/00_README.md` | referee_promoted | `ADR-0003` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/navier_stokes/NS-CI-WP02.agent_review.yaml` | 2026-07-23 | reviewed |
 | NS-CI-WP04 | work package | MATH-PROGRAMME | `campaigns/navier_stokes_critical_integrability/WP04_RESTRICTED_TARGET_SCORECARD/00_README.md` | referee_selected_target | `ADR-0003`; `WP04/01`; `WP04/02` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/navier_stokes/NS-CI-WP04.agent_review.yaml` | 2026-07-23 | reviewed |
 | NS-CI-R014-A2 | selected research target | MATHSOLVE | `campaigns/navier_stokes_critical_integrability/WP04_RESTRICTED_TARGET_SCORECARD/02_REFEREE_SELECTION.md` | selected_unproved | `WP04/02` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/navier_stokes/NS-CI-WP04.agent_review.yaml` | 2026-07-23 | active |
-| PC-WP00 | work package | MATHSOLVE | `campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/00_README.md` | promoted | `ADR-0004` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP00.agent_review.yaml` | 2026-07-24 | reviewed |
+| HC-WP00 | work package | MATH-PROGRAMME | `campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/00_README.md` | promoted | `ADR-0004` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/hodge_conjecture/HC-WP00.agent_review.yaml` | 2026-07-24 | reviewed |
+| PC-WP00 | work package | MATHSOLVE | `campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/00_README.md` | promoted | `ADR-0005` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP00.agent_review.yaml` | 2026-07-24 | reviewed |
 
 ## Update rules
 
