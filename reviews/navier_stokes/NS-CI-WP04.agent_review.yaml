@@ -1,0 +1,86 @@
+artifact:
+  id: NS-CI-WP04
+  type: work_package
+  title: Restricted theorem target scorecard
+  pillar: MATH-PROGRAMME
+  status: active
+
+council_review:
+  Axiomatist:
+    status: pending
+    obligations: [Normalize every candidate theorem and prove it is strictly narrower than the open target.]
+  Prospector:
+    status: pending
+    obligations: [Complete prior-art and source-state audit for every candidate family.]
+  Experimentalist:
+    status: pending
+    obligations: [Keep WP03 closed unless a precise falsification protocol is approved.]
+  Cartographer:
+    status: pending
+    obligations: [Build candidate-to-WP01/WP02 dependency maps.]
+  Verifier:
+    status: pending
+    obligations: [Check scaling, theorem hypotheses, and proof-obligation DAGs.]
+  Adversary:
+    status: pending
+    obligations: [Reduce candidates to WP01 fixtures or hidden regularity assumptions where possible.]
+  Formalist:
+    status: pending
+    obligations: [Audit formal statement shape and imported-interface visibility.]
+  Steward:
+    status: reviewed
+    obligations: []
+    findings: [Broad mechanism generation and numerical regularity claims remain closed.]
+  Composer:
+    status: pending
+    obligations: [Integrate the selected theorem statement and rationale.]
+  Grammarian:
+    status: pending
+    obligations: [Enforce exact norm, quantifier, and implication language.]
+  Amanuensis:
+    status: pending
+    obligations: [Maintain candidate ledger, decision record, and cross-document consistency.]
+  Archivist:
+    status: pending
+    obligations: [Preserve source and prior-art provenance.]
+  Mechanist:
+    status: pending
+    obligations: [State the exact mechanism and estimate for surviving candidates.]
+  Typesetter:
+    status: pending
+    obligations: [Normalize mathematical notation in candidate records.]
+  Referee:
+    status: pending
+    obligations: [Select at most one target or approve an explicit no-selection result.]
+
+amanuensis_control:
+  artifact_ledger: {ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md, entry_id: NS-CI-WP04}
+  decision_record_refs: []
+  terminology_registry: {registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md, terms_introduced_or_changed: [restricted theorem target, target scorecard]}
+  review_provenance:
+    complete: false
+    evidence_refs:
+      - https://github.com/grandchallenge/MATH-PROGRAMME/issues/61
+      - https://github.com/grandchallenge/MATHFORGE/issues/18
+      - https://github.com/grandchallenge/MATHSOLVE/issues/22
+      - https://github.com/grandchallenge/MATHCERT/issues/21
+  cross_document_consistency:
+    status: pending
+    checked_against:
+      - campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md
+      - campaigns/navier_stokes_critical_integrability/WP02_CONDITIONAL_REGULARITY_LEDGER/00_README.md
+    conflicts: []
+  final_editorial_integration:
+    status: pending
+    integrated_artifact_ref: campaigns/navier_stokes_critical_integrability/WP04_RESTRICTED_TARGET_SCORECARD/00_README.md
+
+unresolved_obligations:
+  - {id: NS-CI-WP04-PA-001, owner: Prospector, description: Complete candidate prior-art audit., severity: high, blocking: true}
+  - {id: NS-CI-WP04-AX-002, owner: Axiomatist, description: Normalize shortlisted theorem statements., severity: high, blocking: true}
+  - {id: NS-CI-WP04-ADV-003, owner: Adversary, description: Attempt fixture and circularity reductions., severity: high, blocking: true}
+  - {id: NS-CI-WP04-REF-004, owner: Referee, description: Select at most one target or record no selection., severity: high, blocking: true}
+
+promotion:
+  ready_for_next_stage: false
+  blockers: [NS-CI-WP04-PA-001, NS-CI-WP04-AX-002, NS-CI-WP04-ADV-003, NS-CI-WP04-REF-004]
+  certification_route: Prior-art audit plus human theorem review plus selective MATHCERT scaling checks
