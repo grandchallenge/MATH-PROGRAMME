@@ -10,4 +10,4 @@ Active continuity register owned by the Amanuensis; not a claim ledger or certif
 | NS-CI-WP00 | MATHSOLVE | `campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md` | promoted | `reviews/navier_stokes/NS-CI-WP00.agent_review.yaml` |
 | NS-CI-WP01 | MATHFORGE | `campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md` | referee_promoted | `reviews/navier_stokes/NS-CI-WP01.agent_review.yaml` |
 
-Merge WP01 governance before WP02. WP02 carries the combined final ledger. Artifact IDs are not reused; promotion is not inferred from this register alone.
+Merge WP01 before WP02; WP02 carries the combined final ledger. Artifact IDs are not reused and promotion is not inferred from this register alone.
