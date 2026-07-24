@@ -1,75 +1,93 @@
-# NS-CI-WP00 — Next executable step
+# NS-CI — Next executable stage after WP00
 
-## Objective
+## WP00 decision
 
-Close the governance integration gate for the completed source-and-correspondence audit. Mechanism generation and numerical experimentation remain out of scope.
+The source-and-correspondence audit is promoted. The canonical data class, operational theorem interfaces, one-way Clay implication, claim boundary, theorem DAG, proof debt, Agent Council review, and CI evidence are integrated.
+
+WP00 does not prove the universal estimate. It establishes a trustworthy starting point for the next controlled work.
+
+## Permitted parallel work
+
+### WP01 — false-proof atlas
+
+Build exact, minimized fixtures for:
+
+1. reversed finite-measure inclusion `L²_t ⊄ L⁴_t`;
+2. interpolation that silently assumes `L^∞_tL⁶_x` or `L^∞_tH¹_x`;
+3. circular use of regularity to prove the criterion;
+4. unjustified pressure or boundary cancellations;
+5. scale-breaking truncations whose constants deteriorate under dilation;
+6. Galerkin boundedness promoted to a continuum statement;
+7. compact-support results promoted to the full rapid-decay class without an extension theorem;
+8. formalization of imported assumptions presented as proof of the open estimate.
+
+Each fixture must state the tempting argument, the smallest exact failure, what is ruled out, what remains viable, and the associated theorem-spine node.
+
+### WP02 — conditional-regularity ledger
+
+Turn the quantitative reconstruction into a durable theorem ledger containing:
+
+- the exact H1 differential inequality;
+- the weak–strong difference inequality;
+- every Hölder, interpolation, Young, pressure, and density step;
+- viscosity dependence and constants;
+- the maximal-time restart interface;
+- the operational source for each imported theorem;
+- the distinction between the one-way Clay implication and pending reverse correspondence.
+
+WP02 may improve exposition and theorem-interface precision. It may not claim a new regularity criterion.
+
+## Still prohibited
+
+- proposing an unrestricted mechanism as though WP00 supplied evidence for it;
+- broad numerical experimentation intended to support global regularity;
+- promoting bounded truncations or shell models as continuum evidence;
+- selecting `NS-CI-R014` without the WP04 Council scorecard;
+- claiming novelty before prior-art audit;
+- using the word `equivalent` for the Clay correspondence without discharging `NS-CI-D005R`.
 
 ## Inputs
 
-1. `04_PROBLEM_AND_STATUS_AUDIT.md`.
-2. MATHFORGE source ledger, hypothesis matrix, and current-status audit on `campaign/ns-ci-source-audit`.
-3. MATHSOLVE quantitative reconstruction on `campaign/ns-ci-wp00`.
-4. Corrected master plan, result-status record, theorem DAG, claim ledger, and proof-debt register.
-5. Existing Agent Council review record.
-
-## Operation
-
-### A. Amanuensis consistency pass
-
-Verify that every campaign artifact now states:
-
-- the canonical whole-space data class is Fefferman's smooth rapidly decreasing divergence-free class;
-- compact support is a named restricted lane, not the canonical full class;
-- universal full-data critical integrability is **sufficient for** Clay statement (A);
-- bidirectional equivalence is not claimed;
-- historical source gaps are separated from the operational theorem interface;
-- no computation or formal interface is represented as a continuum regularity proof.
-
-### B. Referee pass
-
-Reproduce the forward implication from the committed artifacts:
-
-```text
-global Leray weak existence
- + universal finite L4_tL6_x on every finite interval
- + operational LPS regularity and uniqueness
- + local H1 continuation
- -> global smooth solution with bounded energy
- -> Fefferman statement (A).
-```
-
-Check that every arrow uses the full official data class and that no reverse implication is smuggled into the wording.
-
-### C. CI pass
-
-Run all repository policy, schema, documentation, and existing certification checks. CI success validates artifact contracts only; it does not certify the open theorem.
+- `00_README.md`
+- `04_PROBLEM_AND_STATUS_AUDIT.md`
+- `06_DEPENDENCY_DAG.json`
+- `09_PROOF_DEBT.json`
+- `10_CLAIM_LEDGER.yaml`
+- `reviews/navier_stokes/NS-CI-WP00.agent_review.yaml`
+- MATHFORGE source ledger and hypothesis matrix
+- MATHSOLVE quantitative LPS reconstruction
 
 ## Outputs
 
-- updated `reviews/navier_stokes/NS-CI-WP00.agent_review.yaml`;
-- proof-debt resolution for `NS-CI-D011` and `NS-CI-D012`;
-- PR comment recording CI evidence and the final WP00 claim boundary;
-- decision on whether WP01 and WP02 may proceed.
+### WP01
 
-## Completion test
+```text
+campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/
+  00_README.md
+  01_FIXTURE_LEDGER.yaml
+  fixtures/
+  09_PROOF_DEBT.json
+  10_CLAIM_LEDGER.yaml
+  12_NEXT_EXECUTABLE_STEP.md
+```
 
-The gate closes only when:
+### WP02
 
-- every canonical artifact uses the corrected full data class;
-- compact support appears only as a restricted lane;
-- `equivalent` is absent from promoted correspondence claims unless explicitly qualified as pending;
-- the Referee can reconstruct the one-way implication without an unstated transfer;
-- all remaining obligations are nonblocking and recorded;
-- CI passes;
-- the PR remains explicit that no new Navier–Stokes theorem has been proved.
+```text
+campaigns/navier_stokes_critical_integrability/WP02_CONDITIONAL_REGULARITY_LEDGER/
+  00_README.md
+  04_SOURCE_NORMALIZED_THEOREMS.md
+  05_QUANTITATIVE_ESTIMATE_LEDGER.md
+  06_DEPENDENCY_DAG.json
+  09_PROOF_DEBT.json
+  10_CLAIM_LEDGER.yaml
+  11_CERT_HANDOFF.md
+```
 
-## Stage effect
+## Completion tests
 
-- Nodes advanced: `NS-CI-D000`, `NS-CI-B011`.
-- Debts targeted: `NS-CI-D011`, `NS-CI-D012`.
-- Permitted next work after completion: WP01 false-proof atlas and WP02 conditional-regularity ledger.
-- Still prohibited after completion: unrestricted mechanism generation, numerical regularity claims, or restricted-target promotion without the WP04 Council gate.
+WP01 is complete when every listed false route has an exact witness or a precise theorem-level diagnosis and no fixture overstates its conclusion.
 
-## Stop condition
+WP02 is complete when a specialist can reproduce the classical `(4,6)` continuation chain from the committed artifact without relying on the phrase “by the Serrin criterion.”
 
-If any artifact still uses compact support as the full Clay data class, claims bidirectional equivalence, or hides an imported theorem interface, keep WP00 blocked and repair the inconsistency before progression.
+Neither package opens the mechanism or numerical stage automatically. The next escalation decision must name the theorem-spine node advanced and pass the applicable Council gate.
