@@ -1,0 +1,46 @@
+artifact:
+  id: NS-CI-WP01
+  type: work_package
+  title: Exact false-proof atlas
+  pillar: MATHFORGE
+  status: referee_promoted
+
+council_review:
+  Axiomatist: {status: reviewed, obligations: [], findings: [Data and quantifiers checked.]}
+  Prospector: {status: reviewed, obligations: [], findings: [Source scope checked.]}
+  Experimentalist: {status: reviewed, obligations: [], findings: [FP-010 narrowed to fixed nonuniform finite-dimensional approximations.]}
+  Cartographer: {status: reviewed, obligations: [], findings: [Fixture map checked and atlas marked extensible.]}
+  Verifier: {status: reviewed, obligations: [], findings: [Exact fixtures replay in MATHFORGE CI.]}
+  Adversary: {status: reviewed, obligations: [], findings: [No fixture overreaches from route failure to theorem failure.]}
+  Formalist: {status: reviewed, obligations: [], findings: [Imported-assumption trust boundary preserved.]}
+  Steward: {status: reviewed, obligations: [], findings: [Triggered routes terminate or narrow.]}
+  Composer: {status: reviewed, obligations: [], findings: [Fixture structure checked.]}
+  Grammarian: {status: reviewed, obligations: [], findings: [Failure language bounded.]}
+  Amanuensis: {status: reviewed, obligations: [], findings: [WP00/WP01/WP02 integration checked.]}
+  Archivist: {status: reviewed, obligations: [], findings: [Historical theorem scope checked.]}
+  Mechanist: {status: reviewed, obligations: [], findings: [Future routes must identify bypassed fixtures and new estimates.]}
+  Typesetter: {status: reviewed, obligations: [], findings: [Notation and constants checked.]}
+  Referee: {status: reviewed, obligations: [], findings: [Approved as eliminative route-rejection atlas only.]}
+
+amanuensis_control:
+  artifact_ledger: {ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md, entry_id: NS-CI-WP01}
+  decision_record_refs: [ADR-0003]
+  terminology_registry: {registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md, terms_introduced_or_changed: []}
+  review_provenance:
+    complete: true
+    evidence_refs:
+      - https://github.com/grandchallenge/MATHFORGE/issues/16
+      - https://github.com/grandchallenge/MATHFORGE/pull/17
+      - workflow:grandchallenge/MATHFORGE/30059677032
+  cross_document_consistency:
+    status: reviewed
+    checked_against:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md
+      - grandchallenge/MATHSOLVE:work_packages/NS_CI_WP02_CONDITIONAL_REGULARITY_LEDGER.md
+    conflicts: []
+  final_editorial_integration:
+    status: reviewed
+    integrated_artifact_ref: campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md
+
+unresolved_obligations: []
+promotion: {ready_for_next_stage: true, blockers: [], certification_route: Exact MATHFORGE tests plus semantic review}
