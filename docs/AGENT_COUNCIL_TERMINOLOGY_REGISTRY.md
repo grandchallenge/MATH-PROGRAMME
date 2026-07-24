@@ -23,6 +23,9 @@ This registry preserves the canonical meaning of governance terms used across Ag
 | Authoritative integrated artifact | The version designated by the artifact ledger as the current complete representation of the reviewed work. | Drafts, review fragments, and superseded versions are not authoritative. |
 | Exposition and Continuity Kernel | The Cartographer, Steward, Composer, Grammarian, and Amanuensis acting together to preserve dependency, purpose, composition, language, and continuity. | Does not replace the full Agent Council or mathematical certification. |
 | Amanuensis continuity state | The recorded state `pending`, `reviewed`, or `blocked` for continuity-related checks. | Must not be interpreted as a mathematical claim status. |
+| BSD-RANK-Q | The universal equality of Mordell–Weil rank and complex analytic rank for every elliptic curve over `Q`. | Excludes `Sha` finiteness, leading-term values, parity-only statements, family results, and finite computation unless separately stated. |
+| BSD-SHA-Q | The universal assertion that `Sha(E/Q)` is finite for every elliptic curve over `Q`. | Not implied merely by rank equality or control of one `p`-primary component. |
+| BSD-LEAD-Q | The universal strong complex leading-term formula in the campaign normalization. | Requires explicit period, regulator, Tamagawa, torsion, `Sha`, Euler-factor, and quantifier conventions; a one-prime or `p`-adic formula is not identical. |
 
 ## Change rule
 
