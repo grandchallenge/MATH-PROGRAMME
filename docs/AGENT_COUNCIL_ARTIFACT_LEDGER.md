@@ -32,6 +32,10 @@ Every governed artifact receives:
 | NS-CI-WP00 | work package | MATHSOLVE | `campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md` | promoted | `ADR-0003` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/navier_stokes/NS-CI-WP00.agent_review.yaml` | 2026-07-23 | reviewed |
 | NS-CI-WP01 | work package | MATHFORGE | `campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md` | referee_promoted | `ADR-0003` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/navier_stokes/NS-CI-WP01.agent_review.yaml` | 2026-07-23 | reviewed |
 
+## Integration order
+
+Merge this WP01 governance change before the WP02 governance change. The WP02 branch carries the combined WP01/WP02 ledger state.
+
 ## Update rules
 
 1. Artifact IDs are never reused.
