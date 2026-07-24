@@ -7,10 +7,10 @@
 - Campaign identifier: `PC-001`
 - Canonical tracker: `MATH-PROGRAMME#69`
 - Result status: `SOLVED_CLASSICAL_THEOREM`
-- Programme state: `WP00_PROMOTED_WP01_WP02_PERMITTED`
+- Programme state: `WP01_WP02_REFEREE_PROMOTED_WP03_AUTHORIZED`
 - Primary route: Ricci flow with surgery plus finite-time extinction
 - Stronger routes: elliptization and Thurston geometrization
-- Claim posture: reconstruction, dependency audit, pedagogy, and selective certification; no novelty claim
+- Claim posture: source-normalized reconstruction, adversarial audit, pedagogy, and selective certification; no novelty claim
 
 ## Canonical theorem
 
@@ -35,7 +35,7 @@ This is a solved-problem reconstruction campaign. It must:
 3. mark equivalences separately from one-way stronger implications;
 4. expose every imported theorem between topology, smooth geometry, Ricci flow, surgery, extinction, and terminal classification;
 5. version and cross-check the Hamilton–Perelman source chain;
-6. maintain a proof-dependency graph, claim ledger, and proof-debt register;
+6. maintain a proof-dependency graph, false-proof atlas, claim ledger, and proof-debt register;
 7. formalize only delimited slices whose imported boundaries remain visible.
 
 ## Category bridge
@@ -61,9 +61,9 @@ The phrase “choose a metric” may not conceal these dependencies.
 ```text
 geometrization
   -> elliptization in the finite-fundamental-group case
-  -> spherical space form S^3/Gamma
-  -> Gamma = 1 when pi_1(M)=1
-  -> M = S^3.
+  -> spherical space form S3/Gamma
+  -> Gamma = 1 when pi1(M)=1
+  -> M = S3.
 ```
 
 This route is valid but strictly stronger than Poincaré.
@@ -71,11 +71,11 @@ This route is valid but strictly stronger than Poincaré.
 ### Route B — elliptization
 
 ```text
-finite pi_1
-  -> M diffeomorphic to S^3/Gamma
-  -> pi_1(M) is Gamma
-  -> trivial pi_1 gives Gamma=1
-  -> M diffeomorphic to S^3.
+finite pi1
+  -> M diffeomorphic to S3/Gamma
+  -> pi1(M) is Gamma
+  -> trivial pi1 gives Gamma=1
+  -> M diffeomorphic to S3.
 ```
 
 Elliptization implies Poincaré. Poincaré alone does not imply elliptization.
@@ -84,12 +84,15 @@ Elliptization implies Poincaré. Poincaré alone does not imply elliptization.
 
 ```text
 category bridge and initial metric
-  -> Ricci flow with surgery
+  -> smooth Ricci-flow segments
+  -> high-curvature canonical neighbourhoods
+  -> controlled surgery and restart
+  -> all-time Ricci flow with surgery
   -> finite-time extinction for the relevant topological class
-  -> surgery-history connected-sum classification
+  -> finite surgery-history connected-sum reconstruction
   -> simple connectivity eliminates every nontrivial factor
-  -> M diffeomorphic to S^3
-  -> M homeomorphic to S^3.
+  -> M diffeomorphic to S3
+  -> M homeomorphic to S3.
 ```
 
 This is the primary Poincaré-specific reconstruction route.
@@ -102,9 +105,9 @@ PC-L001  Dimension-three topological/PL/smooth category bridge
 PC-L002  Simple connectivity implies orientability
 PC-L003  Existence and normalization of a smooth Riemannian metric
 PC-L004  Short-time Ricci flow interface
-PC-L005  Entropy, reduced geometry, and no-local-collapsing interfaces
-PC-L006  High-curvature limits and canonical-neighbourhood interface
-PC-L007  Ricci flow with surgery existence and parameter hierarchy
+PC-L005  Entropy, reduced geometry, pseudolocality, and no-local-collapsing
+PC-L006  Ancient limits and canonical-neighbourhood interface
+PC-L007  Standard caps, surgery, noncollapse, and all-time surgery flow
 PC-L008  Topological description of surgery and discarded components
 PC-L009  Prime-decomposition/no-aspherical-factor hypothesis bridge
 PC-L010  Finite-time extinction theorem
@@ -130,6 +133,24 @@ B016 -> B015 -> C014
 
 `B015` and `B016` are implication routes, not equivalences with the Poincaré theorem.
 
+## Adversarial guard architecture
+
+`PC-WP01` attaches named guards to theorem-spine nodes. Principal protections are:
+
+```text
+D000 -> homology/open/boundary substitutions
+L001 -> category suppression
+L004/L007 -> smooth-flow-through-singularity
+L006 -> local blow-up/global-manifold confusion and deleted hypotheses
+L007/L008 -> surgery topology, orientability, finiteness, and source correction
+L010/L011 -> extinction without topology
+L009/L012 -> circular prime-factor discharge
+B015/B016 -> stronger-route equivalence collapse
+T017 -> formal-interface overclaim.
+```
+
+Passing these guards is necessary but is not a proof certificate.
+
 ## Source hierarchy
 
 ### Primary proof sources
@@ -148,7 +169,7 @@ B016 -> B015 -> C014
 
 7. Edwin E. Moise, dimension-three triangulation and Hauptvermutung.
 8. James Munkres, compatible smoothing results.
-9. Richard Hamilton, positive-curvature, singularity-formation, and nonsingular-flow precursor results.
+9. Richard Hamilton, short-time, curvature, singularity, and nonsingular-flow precursor results.
 10. Kneser–Milnor prime decomposition and van Kampen connected-sum interfaces.
 11. John Milnor and the Clay Mathematics Institute for the canonical statement and official status.
 
@@ -156,39 +177,55 @@ B016 -> B015 -> C014
 
 ### PC-WP00 — source, normalization, equivalence, and non-circularity audit
 
-Status: promoted.
+Status: `PROMOTED`.
 
-Delivered:
-
-- solved-result status correction;
-- category dictionary and bridge;
-- implication/equivalence matrix;
-- proof-route separation;
-- source hierarchy;
-- theorem DAG;
-- claim and proof-debt ledgers;
-- MATHCERT handoff;
-- Agent Council review and next-stage gate.
+Delivered canonical status, category bridge, route hierarchy, source tiers, theorem DAG, proof debt, claim ledger, certification handoff, and Agent Council governance.
 
 ### PC-WP01 — false-proof and semantic-failure atlas
 
-Status: permitted.
+Status: `REFEREE_PROMOTED`.
 
-Required failures include homology-sphere substitution, Whitehead-manifold substitution, boundary suppression, smooth flow through singularity, surgery treated as topology-preserving, extinction without bookkeeping, blow-up/original-space confusion, category suppression, route-strength collapse, circular prime-factor discharge, and formal-interface overclaim.
+Delivered fifteen exact fixtures covering hypothesis substitution, category drift, smooth-flow overreach, local/global singularity confusion, canonical-neighbourhood mutation, surgery topology, extinction overreach, route-strength collapse, circularity, quantifier drift, source correction, and formalization overclaim.
+
+Canonical artifacts:
+
+- `campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/00_README.md`
+- `campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/01_FIXTURE_LEDGER.yaml`
+- `campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md`
 
 ### PC-WP02 — source-normalized Hamilton–Perelman ledger
 
-Status: permitted.
+Status: `REFEREE_PROMOTED_AT_THEOREM_INTERFACE_LEVEL`.
 
-Extract exact theorem statements, hypotheses, constants, normalizations, parameter dependencies, corrections, and consumers for entropy, reduced geometry, non-collapsing, `kappa`-solutions, canonical neighbourhoods, surgery, topology changes, and finite extinction.
+Delivered a versioned source ledger, Perelman/reconstruction crosswalk, correction ledger, parameter hierarchy, nineteen theorem interfaces, finite-extinction mechanism ledger, dependency DAG, proof debt, claim ledger, and MATHCERT handoff.
+
+The promotion does not assert independent analytic verification or full formalization.
+
+Canonical artifacts:
+
+- `campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/00_README.md`
+- `campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/04_SOURCE_NORMALIZED_THEOREMS.md`
+- `campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/05_FINITE_EXTINCTION_LEDGER.md`
 
 ### PC-WP03 — surgery topology and extinction bookkeeping
 
-Status: closed pending WP01/WP02 integration.
+Status: `AUTHORIZED_TO_INITIALIZE_WITH_TRANSFERRED_BLOCKING_DEBT`.
+
+Entry obligations:
+
+- finite source-bound event schema;
+- complete separating/nonseparating cut catalogue;
+- cap, survival, discard, and ancestry semantics;
+- finite-history proof from local finiteness plus extinction;
+- backward connected-sum reconstruction;
+- malformed-history adversarial fixtures;
+- terminal factor normalization certificate.
 
 ### PC-WP04 — certification substrate
 
-Status: initial handoff open only for finite history and terminal algebraic/topological logic.
+Status: initial handoff open only for finite-history and terminal algebraic/topological logic.
+
+The analytic Ricci-flow interfaces remain explicit unformalized imports.
 
 ## Three-pillar split
 
@@ -219,7 +256,7 @@ Status: initial handoff open only for finite history and terminal algebraic/topo
 - Ambient structures: algebraic topology, geometric topology, Riemannian geometry, nonlinear parabolic PDE, geometric measure theory, and finite surgery histories.
 - Classical base: standard classical mathematics.
 - Witness policy: literature-derived complete proof; formal certificates initially cover selected logical and combinatorial slices.
-- Pathology risk: high at category changes, singular limits, surgery times, discarded components, and compressed theorem interfaces.
+- Pathology risk: high at category changes, singular limits, surgery times, discarded components, source-version changes, and compressed theorem interfaces.
 
 ## Claim boundary
 
@@ -230,8 +267,11 @@ The campaign does not claim:
 - equivalence of Poincaré with elliptization or geometrization;
 - that extinction alone determines topology;
 - that formalized implication interfaces certify their analytic assumptions;
+- quotation-level source completeness where proof debt remains;
 - novelty for any classical component.
 
 ## Current executable stage
 
-Execute `PC-WP01` and `PC-WP02` in parallel. `PC-WP03` remains closed until adversarial review and cross-document integration establish a stable surgery-and-extinction interface.
+Initialize `PC-WP03` under the admission contract in `campaigns/poincare_reconstruction/PC_WP01_WP02_INTEGRATION_DECISION.md`.
+
+The immediate obligation is the finite surgery-history schema and source-bound transition catalogue. Broad proof compression and any full-formalization claim remain closed.
