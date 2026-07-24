@@ -1,29 +1,29 @@
 artifact: {id: NS-CI-WP02, type: work_package, title: Source-normalized conditional-regularity ledger, pillar: MATHSOLVE, status: referee_promoted}
 council_review:
-  Axiomatist: {status: reviewed, obligations: [], findings: [CR-009 is one-way; CR-010 is pending.]}
-  Prospector: {status: reviewed, obligations: [], findings: [Source IDs and audit states are reconciled.]}
-  Experimentalist: {status: reviewed, obligations: [], findings: [No computation is analytic evidence.]}
-  Cartographer: {status: reviewed, obligations: [], findings: [The CR ledger agrees with WP00 and WP01.]}
-  Verifier: {status: reviewed, obligations: [], findings: [CR-005, rigorous CR-006, and CR-007 are checked.]}
-  Adversary: {status: reviewed, obligations: [], findings: [No hidden semantic transfer remains.]}
-  Formalist: {status: reviewed, obligations: [], findings: [Imported PDE interfaces remain explicit.]}
-  Steward: {status: reviewed, obligations: [], findings: [The ledger does not supply the open estimate.]}
-  Composer: {status: reviewed, obligations: [], findings: [Artifact structure is consistent.]}
-  Grammarian: {status: reviewed, obligations: [], findings: [Notation and implication language are consistent.]}
-  Amanuensis: {status: reviewed, obligations: [], findings: [Cross-document and ordered-merge integration are complete.]}
-  Archivist: {status: reviewed, obligations: [Continue nonblocking historical extraction.], findings: [Historical debt is visible.]}
-  Mechanist: {status: reviewed, obligations: [], findings: [Future routes must name the changed CR interface.]}
-  Typesetter: {status: reviewed, obligations: [], findings: [Displayed estimates are consistent.]}
+  Axiomatist: {status: reviewed, obligations: [], findings: [One-way bridge only; reverse remains pending.]}
+  Prospector: {status: reviewed, obligations: [], findings: [Source IDs reconciled.]}
+  Experimentalist: {status: reviewed, obligations: [], findings: [No computational evidence.]}
+  Cartographer: {status: reviewed, obligations: [], findings: [CR dependencies and WP01 links checked.]}
+  Verifier: {status: reviewed, obligations: [], findings: [CR-005, integrated CR-006, and CR-007 checked.]}
+  Adversary: {status: reviewed, obligations: [], findings: [No hidden semantic transfer.]}
+  Formalist: {status: reviewed, obligations: [], findings: [Imported PDE interfaces explicit.]}
+  Steward: {status: reviewed, obligations: [], findings: [Open estimate not supplied.]}
+  Composer: {status: reviewed, obligations: [], findings: [Structure consistent.]}
+  Grammarian: {status: reviewed, obligations: [], findings: [Notation and implication language consistent.]}
+  Amanuensis: {status: reviewed, obligations: [], findings: [WP00/WP01/WP02 integration complete.]}
+  Archivist: {status: reviewed, obligations: [Continue nonblocking historical extraction.], findings: [Debt visible.]}
+  Mechanist: {status: reviewed, obligations: [], findings: [Future mechanisms must name changed interfaces.]}
+  Typesetter: {status: reviewed, obligations: [], findings: [Displayed formulas consistent.]}
   Referee: {status: reviewed, obligations: [], findings: [Approved as conditional ledger only.]}
 amanuensis_control:
   artifact_ledger: {ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md, entry_id: NS-CI-WP02}
   decision_record_refs: [ADR-0003]
   terminology_registry: {registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md, terms_introduced_or_changed: []}
   review_provenance: {complete: true, evidence_refs: [https://github.com/grandchallenge/MATHSOLVE/issues/20, https://github.com/grandchallenge/MATHSOLVE/pull/21]}
-  cross_document_consistency: {status: reviewed, checked_against: [campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md, campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md, grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/source_ledger.yaml], conflicts: []}
+  cross_document_consistency: {status: reviewed, checked_against: [campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md, campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md], conflicts: []}
   final_editorial_integration: {status: reviewed, integrated_artifact_ref: campaigns/navier_stokes_critical_integrability/WP02_CONDITIONAL_REGULARITY_LEDGER/00_README.md, integration_notes: [Merge WP01 before WP02.]}
 unresolved_obligations:
-  - {id: NS-CI-WP02-HIST-001, owner: Archivist, description: Complete historical concordance., severity: medium, blocking: false}
+  - {id: NS-CI-WP02-HIST-001, owner: Archivist, description: Complete historical source concordance., severity: medium, blocking: false}
   - {id: NS-CI-WP02-SRC-002, owner: Prospector, description: Record exact local/bootstrap source locations., severity: medium, blocking: false}
   - {id: NS-CI-WP02-BRIDGE-003, owner: Axiomatist, description: Complete CR-010 before equivalence claims., severity: high, blocking: false}
-promotion: {ready_for_next_stage: true, blockers: [], certification_route: Human analytic review plus provenance-bearing MATHCERT interfaces}
+promotion: {ready_for_next_stage: true, blockers: [], certification_route: Human analytic review plus MATHCERT interfaces}
