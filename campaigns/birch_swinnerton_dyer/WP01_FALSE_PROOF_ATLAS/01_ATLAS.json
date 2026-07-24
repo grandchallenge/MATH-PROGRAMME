@@ -1,0 +1,191 @@
+{
+  "schema_version": "1.0.0",
+  "campaign_id": "BSD-001",
+  "protected_claims": ["BSD-RANK-Q", "BSD-SHA-Q", "BSD-LEAD-Q"],
+  "fixture_contract": {
+    "required": ["id", "name", "invalid_inference", "missing_obligation", "witness", "decision", "remediation", "wp02_interfaces"],
+    "allowed_decisions": ["REJECT", "NARROW"]
+  },
+  "fixtures": [
+    {
+      "id": "BSD-FP-001",
+      "name": "Root number promoted to exact rank",
+      "invalid_inference": "w(E)=-1 therefore r_an=1 or r_alg=1.",
+      "missing_obligation": "The sign fixes parity only; an upper bound or nonvanishing statement is missing.",
+      "witness": "Orders 1, 3, 5, and higher odd values have the same parity.",
+      "decision": "REJECT",
+      "remediation": "Supply a certified order-of-vanishing bound and the required analytic/arithmetic bridge.",
+      "wp02_interfaces": ["BSD-T-070"]
+    },
+    {
+      "id": "BSD-FP-002",
+      "name": "Numerical near-zero promoted to exact vanishing",
+      "invalid_inference": "A small computed L(E,1) or derivative proves exact zero.",
+      "missing_obligation": "Floating-point evaluation supplies neither exact vanishing nor an exclusion of higher order.",
+      "witness": "Finite precision cannot distinguish zero from a sufficiently small nonzero value.",
+      "decision": "REJECT",
+      "remediation": "Use rigorous interval bounds, exact modular-symbol methods, or a theorem-grade analytic-rank certificate.",
+      "wp02_interfaces": ["BSD-T-100"]
+    },
+    {
+      "id": "BSD-FP-003",
+      "name": "Finite derivative sample promoted to exact analytic order",
+      "invalid_inference": "The first numerically nonzero sampled derivative determines ord at s=1.",
+      "missing_obligation": "All lower derivatives require certified zero statements and the selected derivative requires certified nonzero.",
+      "witness": "Sampling and truncation error can change both conclusions.",
+      "decision": "REJECT",
+      "remediation": "Produce certified Taylor-coefficient bounds in the fixed complete-L normalization.",
+      "wp02_interfaces": ["BSD-T-100"]
+    },
+    {
+      "id": "BSD-FP-004",
+      "name": "Selmer corank identified with Mordell–Weil rank",
+      "invalid_inference": "corank Sel_{p-infinity}=r implies rank E(Q)=r.",
+      "missing_obligation": "The divisible p-primary Sha contribution is uncontrolled.",
+      "witness": "The Kummer exact sequence gives corank Selmer = rank E(Q) + corank Sha[p-infinity].",
+      "decision": "REJECT",
+      "remediation": "Prove finiteness or zero corank of Sha[p-infinity], then apply the exact sequence.",
+      "wp02_interfaces": ["BSD-T-040", "BSD-T-050"]
+    },
+    {
+      "id": "BSD-FP-005",
+      "name": "One p-primary Sha component promoted to full Sha finiteness",
+      "invalid_inference": "Sha[p-infinity] finite for one p implies Sha finite.",
+      "missing_obligation": "Other primary components remain uncontrolled.",
+      "witness": "A torsion group may have finite p-primary part and infinite q-primary part.",
+      "decision": "REJECT",
+      "remediation": "Control every primary component or invoke a theorem proving global finiteness.",
+      "wp02_interfaces": ["BSD-T-050"]
+    },
+    {
+      "id": "BSD-FP-006",
+      "name": "One p-part promoted to the full leading-term formula",
+      "invalid_inference": "A p-adic valuation identity for one prime proves BSD-LEAD-Q.",
+      "missing_obligation": "Prime-to-p factors and exact rational equality remain undetermined.",
+      "witness": "Equal p-adic valuations do not determine a rational number.",
+      "decision": "REJECT",
+      "remediation": "Assemble all prime parts plus sign and normalization data, or use a complete-formula theorem.",
+      "wp02_interfaces": ["BSD-T-090"]
+    },
+    {
+      "id": "BSD-FP-007",
+      "name": "p-adic order promoted to complex analytic order",
+      "invalid_inference": "ord L_p=r therefore ord_{s=1} L(E,s)=r.",
+      "missing_obligation": "No named comparison or p-converse theorem is supplied.",
+      "witness": "Exceptional zeros and signed supersingular functions can change the p-adic order.",
+      "decision": "REJECT",
+      "remediation": "Name and verify a branch-specific comparison or converse theorem.",
+      "wp02_interfaces": ["BSD-T-080", "BSD-T-085"]
+    },
+    {
+      "id": "BSD-FP-008",
+      "name": "Ordinary theorem transferred to multiplicative or supersingular reduction",
+      "invalid_inference": "A good-ordinary main-conjecture theorem applies unchanged at every prime.",
+      "missing_obligation": "Local conditions, interpolation factors, and exceptional-zero corrections differ.",
+      "witness": "Split multiplicative and supersingular theories use materially different objects.",
+      "decision": "REJECT",
+      "remediation": "Restate the theorem in the correct reduction branch and discharge its local hypotheses.",
+      "wp02_interfaces": ["BSD-T-090"]
+    },
+    {
+      "id": "BSD-FP-009",
+      "name": "Primitive and imprimitive Euler products silently interchanged",
+      "invalid_inference": "An imprimitive formula has the same leading coefficient as the primitive formula.",
+      "missing_obligation": "Removed local factors can change the leading coefficient and valuation.",
+      "witness": "Finite nonzero factors preserve order but rescale the coefficient.",
+      "decision": "REJECT",
+      "remediation": "Insert the omitted Euler factors explicitly and recompute the coefficient.",
+      "wp02_interfaces": ["BSD-T-020", "BSD-T-090"]
+    },
+    {
+      "id": "BSD-FP-010",
+      "name": "Incomplete and complete complex L-functions silently interchanged",
+      "invalid_inference": "Wiles's initially incomplete Euler product can be inserted directly into the modern Tamagawa formula.",
+      "missing_obligation": "The omitted bad-prime factors rescale the leading coefficient.",
+      "witness": "Order of vanishing may agree while the coefficient differs.",
+      "decision": "REJECT",
+      "remediation": "Use the complete finite L-function or record the exact conversion multiplier.",
+      "wp02_interfaces": ["BSD-T-020"]
+    },
+    {
+      "id": "BSD-FP-011",
+      "name": "Period or isogeny normalization drift",
+      "invalid_inference": "Omega_E, Omega_E-plus, an optimal-curve period, and a nonminimal-differential period are interchangeable.",
+      "missing_obligation": "Component, Manin-constant, differential, and isogeny factors are missing.",
+      "witness": "Isogenous curves can have different displayed periods and local factors while satisfying compatible formulas.",
+      "decision": "REJECT",
+      "remediation": "Bind the theorem to the registry normalization and state every conversion factor.",
+      "wp02_interfaces": ["BSD-T-090"]
+    },
+    {
+      "id": "BSD-FP-012",
+      "name": "Rank-one Euler-system mechanism extrapolated to higher rank",
+      "invalid_inference": "One non-torsion Heegner point or one Kolyvagin-system direction proves arbitrary-rank BSD.",
+      "missing_obligation": "Higher rank requires several independent classes and determinant-level height control.",
+      "witness": "A single class spans at most one rational direction.",
+      "decision": "REJECT",
+      "remediation": "Provide an exterior-power or derived-height mechanism with independence and nondegeneracy proofs.",
+      "wp02_interfaces": ["BSD-T-060"]
+    },
+    {
+      "id": "BSD-FP-013",
+      "name": "Parity plus an unproved upper bound promoted to exact rank",
+      "invalid_inference": "Parity and a heuristic Selmer or rank bound determine the exact rank.",
+      "missing_obligation": "The upper bound is not theorem-grade or still contains Sha.",
+      "witness": "Parity only selects a congruence class.",
+      "decision": "REJECT",
+      "remediation": "Certify the upper bound and identify whether it bounds Mordell–Weil rank, Selmer corank, or analytic order.",
+      "wp02_interfaces": ["BSD-T-050", "BSD-T-070"]
+    },
+    {
+      "id": "BSD-FP-014",
+      "name": "Family or positive-proportion theorem promoted to universality",
+      "invalid_inference": "BSD holds for a positive proportion or infinitely many twists, therefore it holds for all E/Q.",
+      "missing_obligation": "The universal quantifier is not discharged.",
+      "witness": "An infinite proper subset can omit infinitely many curves.",
+      "decision": "REJECT",
+      "remediation": "Retain the exact family and density quantifier.",
+      "wp02_interfaces": ["BSD-T-110", "BSD-T-120"]
+    },
+    {
+      "id": "BSD-FP-015",
+      "name": "Finite database promoted to universality",
+      "invalid_inference": "A rigorous computation below conductor B proves BSD for every elliptic curve.",
+      "missing_obligation": "Curves above the bound are untreated.",
+      "witness": "A finite verification cannot discharge an infinite universal domain.",
+      "decision": "REJECT",
+      "remediation": "Report an individual or finite-range certificate only.",
+      "wp02_interfaces": ["BSD-T-130"]
+    },
+    {
+      "id": "BSD-FP-016",
+      "name": "Height nondegeneracy assumed at the decisive step",
+      "invalid_inference": "A derived or p-adic height regulator is nonzero because the expected rank is r.",
+      "missing_obligation": "Nondegeneracy is itself an open or theorem-specific obligation.",
+      "witness": "A bilinear form may be degenerate on a nonzero space.",
+      "decision": "REJECT",
+      "remediation": "Prove nondegeneracy under explicit hypotheses or keep the conclusion conditional.",
+      "wp02_interfaces": ["BSD-T-060", "BSD-T-090"]
+    },
+    {
+      "id": "BSD-FP-017",
+      "name": "Selmer local conditions changed without notice",
+      "invalid_inference": "A theorem for a Bloch–Kato, Greenberg, signed, strict, or relaxed Selmer group applies to another Selmer group.",
+      "missing_obligation": "The comparison of local conditions and correction terms is absent.",
+      "witness": "Changing one local condition can change corank and characteristic ideal.",
+      "decision": "REJECT",
+      "remediation": "Name the Selmer structure and prove the comparison exact sequence.",
+      "wp02_interfaces": ["BSD-T-040", "BSD-T-090"]
+    },
+    {
+      "id": "BSD-FP-018",
+      "name": "Circular BSD computation",
+      "invalid_inference": "BSD is used to infer rank or Sha and the inferred value is then presented as evidence for BSD.",
+      "missing_obligation": "The conclusion is already embedded in the input assumption.",
+      "witness": "A conditional calculator can reproduce its assumption without independent evidence.",
+      "decision": "REJECT",
+      "remediation": "Separate unconditional inputs, conditional outputs, and independent verification.",
+      "wp02_interfaces": ["BSD-T-100", "BSD-T-130"]
+    }
+  ]
+}
