@@ -149,3 +149,79 @@ Initialize the problem as campaign `NS-CI-001` and Work Package `NS-CI-WP00`, su
 ### Supersedes
 
 No prior Navier–Stokes campaign decision. `ADR-0002` remains reserved by the open Union-Closed Agent Council pilot and is not reused here.
+
+## ADR-0004: Initialize Poincaré as a solved-problem reconstruction campaign
+
+**Date:** 2026-07-24  
+**Status:** Accepted and promoted through WP00  
+**Owner:** The Amanuensis with the Axiomatist, Archivist, Cartographer, Formalist, Steward, and Referee
+
+### Context
+
+The proposed challenge names the Poincaré Conjecture, but the mathematical problem was solved by Perelman through the Hamilton Ricci-flow programme. Treating it as an open conjecture would corrupt the result-status ledger and invite inappropriate novelty, mechanism-generation, or numerical-evidence workflows.
+
+The canonical theorem is topological, while the proof uses smooth Riemannian geometry and nonlinear PDE. In addition, several related statements—smooth Poincaré, elliptization, geometrization, Ricci flow with surgery, and finite extinction—are often compressed into one narrative despite having different logical strengths and dependencies.
+
+### Decision
+
+Initialize campaign `PC-001` and Work Package `PC-WP00` as a **solved-problem reconstruction campaign**, subject to the following controls:
+
+1. The canonical target is the topological theorem: every closed connected simply connected topological `3`-manifold is homeomorphic to `S³`.
+2. The topological, PL, and smooth formulations are treated as equivalent only through named dimension-three category theorems.
+3. Geometrization implies elliptization, and elliptization implies Poincaré; no converse implication is claimed.
+4. The primary pedagogical route is Ricci flow with surgery plus finite extinction and explicit surgery-topology bookkeeping.
+5. Finite extinction is never used as a topology-free conclusion.
+6. Perelman's three preprints remain the primary proof sources; detailed reconstructions are secondary sources and cross-checks.
+7. Versioned source corrections, including modifications recorded in Perelman's surgery paper, must remain visible.
+8. Formalization begins with finite surgery-history and terminal factor/fundamental-group logic, not with an axiom packaging the analytic core.
+9. Numerical experimentation is not an evidentiary route for this solved theorem.
+10. No new-proof, independent-recertification, novelty, or priority claim is permitted at WP00.
+
+### Alternatives considered
+
+1. Treat the challenge as an open Millennium problem. Rejected because the official status is solved.
+2. Present only the implication “geometrization implies Poincaré.” Rejected because it hides the Poincaré-specific finite-extinction route and its mechanisms.
+3. Begin directly in the smooth category. Rejected because the canonical theorem is topological and the category bridge is a substantive imported dependency.
+4. State that Poincaré, elliptization, and geometrization are equivalent. Rejected because the latter statements are strictly stronger in scope.
+5. Formalize a terminal implication theorem and label it a formal proof of Poincaré. Rejected because the geometric and analytic imports would remain unformalized.
+6. Compress the proof to “Ricci flow rounds the manifold.” Rejected because general flows develop singularities and require non-collapsing, canonical neighbourhoods, surgery, and extinction analysis.
+
+### Consequences
+
+- `PC-WP00` is registered as a promoted governed artifact.
+- The terms `solved-problem reconstruction campaign` and `finite-extinction route` are entered in the terminology registry.
+- WP01 and WP02 may proceed in parallel.
+- WP01 must build a false-proof and semantic-failure atlas.
+- WP02 must produce a source-normalized Hamilton–Perelman theorem ledger and source crosswalk.
+- PC-WP03 remains closed until WP01/WP02 integration and Referee review.
+- MATHCERT work is limited initially to delimited finite-history and terminal algebraic/topological slices.
+
+### Unresolved obligations
+
+- Exact Moise/Munkres category-theorem extraction.
+- Versioned Perelman/Morgan–Tian/Kleiner–Lott theorem crosswalk.
+- Canonical-neighbourhood and surgery-parameter dependency ledger.
+- Exact topology of surgeries and discarded components.
+- Non-circular bridge to the finite-extinction hypothesis class.
+- Finite-extinction proof ledger.
+- Formal finite surgery-history and terminal factor-discharge substrate.
+
+### Affected artifacts
+
+- `DOMAIN_03_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`
+- `campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/`
+- `reviews/poincare/PC-WP00.agent_review.yaml`
+- `docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md`
+- `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md`
+- `MATH-PROGRAMME#69`
+
+### Review provenance
+
+- Governing instruction: initiate and proceed with the Poincaré MATH-PROGRAMME challenge, 2026-07-24.
+- Canonical tracker: `https://github.com/grandchallenge/MATH-PROGRAMME/issues/69`.
+- Review record: `reviews/poincare/PC-WP00.agent_review.yaml`.
+- Primary-source registry: `campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/04_PROBLEM_SOURCE_EQUIVALENCE_AUDIT.md`.
+
+### Supersedes
+
+No prior Poincaré campaign decision. The decision reserves the term “conjecture” for historical naming and uses “Poincaré theorem” for current mathematical status.
