@@ -1,6 +1,6 @@
 # Agent Council Artifact Ledger
 
-Active continuity register owned by the Amanuensis; not a claim ledger or certificate registry.
+Active Amanuensis continuity register; not a claim ledger or certificate registry.
 
 | Artifact ID | Pillar | Authoritative artifact | Status | Review record |
 |---|---|---|---|---|
