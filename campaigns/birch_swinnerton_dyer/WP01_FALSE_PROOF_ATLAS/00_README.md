@@ -1,6 +1,6 @@
 # BSD-WP01 — False-proof atlas
 
-Campaign `BSD-001`; state `REVIEW_READY_ELIMINATIVE_ATLAS`.
+Campaign `BSD-001`; state `REFEREE_PROMOTED_ELIMINATIVE_ATLAS`.
 
 WP01 is an executable semantic firewall. It rejects recurrent invalid inferences without claiming that the protected BSD statements are false or that a route avoiding the fixtures is correct.
 
@@ -19,3 +19,5 @@ python campaigns/birch_swinnerton_dyer/WP01_FALSE_PROOF_ATLAS/replay.py
 ```
 
 A triggered fixture requires route rejection or explicit narrowing. Passing every fixture is not a proof certificate. Mechanism generation and restricted-target selection remain gated.
+
+Programme policy workflow `30099634106` and independent Referee replay passed on the promoted package.
