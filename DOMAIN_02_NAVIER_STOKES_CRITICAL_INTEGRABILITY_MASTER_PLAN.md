@@ -8,8 +8,8 @@
 - Canonical tracker: `MATH-PROGRAMME#55`
 - Primary domain: the unforced Cauchy problem on `ℝ³`
 - Secondary domain: the periodic problem on `𝕋³`, tracked as a separate hypothesis profile
-- Initial result status: `OPEN`
-- Programme state: `WP00_SOURCE_AND_EQUIVALENCE_INTEGRATION`
+- Result status: `OPEN`
+- Programme state: `WP00_PROMOTED_WP01_WP02_PERMITTED`
 
 ## Corrected canonical challenge
 
@@ -133,7 +133,7 @@ NS-CI-L010  Blow-up/continuation alternative through I_T
 NS-CI-B011  Full-data critical integrability implies Clay statement (A)
 NS-CI-B012  Reverse strong-class correspondence
 NS-CI-T013  Universal critical-integrability challenge
-NS-CI-R014  Restricted theorem target, selected only after WP00 promotion
+NS-CI-R014  Restricted theorem target, selected only after the WP04 gate
 NS-CI-R-COMPACT  Compact-support restricted lane
 ```
 
@@ -149,16 +149,16 @@ L008 ─> L009 ─> L010 ─> B011 ──┘
                          └─> Clay statement (A)
 
 Clay smooth class ─> B012 ─> reverse formulation  [pending]
-source audit + adversarial review ─> R014
+WP00 audit + WP01 adversarial review ─> R014 gate
 ```
 
 `O005` is an obstruction node, not a negative result about Navier–Stokes. It proves only that the standard energy-class information is insufficient by itself.
 
 ## Work Package sequence
 
-### WP00: Foundation, status, and equivalence audit
+### WP00: Foundation, status, and correspondence audit
 
-Status: substantive audit complete; governance integration and Referee gate pending.
+Status: promoted. Source, data-class, theorem-interface, correspondence, Amanuensis, Referee, and repository-contract gates passed.
 
 Delivered:
 
@@ -170,9 +170,11 @@ Delivered:
 - primary-source ledger with explicit audit states;
 - quantitative LPS and continuation reconstruction;
 - one-way Clay implication and reverse-correspondence debt;
-- theorem spine, claim ledger, proof debt, MATHCERT handoff, and Agent Council review.
+- theorem spine, claim ledger, proof debt, MATHCERT handoff, and completed Agent Council review.
 
 ### WP01: Energy-gap obstruction and false-proof atlas
+
+Status: permitted to proceed.
 
 Goal: catalogue invalid routes from the energy inequality to the critical estimate.
 
@@ -185,23 +187,32 @@ Required failures include:
 - unjustified pressure estimates;
 - scale-breaking truncations whose constants diverge;
 - numerical boundedness presented as continuum proof;
-- compact-support results silently promoted to the full rapid-decay class.
+- compact-support results silently promoted to the full rapid-decay class;
+- formalized assumptions presented as proof of the universal estimate.
 
 ### WP02: Conditional regularity and continuation ledger
+
+Status: permitted to proceed.
 
 Goal: preserve the exact theorem chain consuming `L⁴_tL⁶_x`, including the critical nonlinear estimate, constants, approximation steps, and imported theorem interfaces.
 
 ### WP03: Quantitative concentration observatory
 
-Goal: build reproducible diagnostics for concentration in shell models, Galerkin truncations, and verified smooth benchmark flows.
+Status: closed.
+
+Goal, when separately authorized: build reproducible diagnostics for concentration in shell models, Galerkin truncations, and verified smooth benchmark flows.
 
 Boundary: computations may test mechanisms. They cannot certify global regularity or rule out singularity in the continuum equation.
 
 ### WP04: Restricted theorem target
 
-Goal: select one theorem-grade restricted target only after WP00 governance promotion. Candidates must be ranked by leverage, non-circularity, prior-art status, scale compatibility, formalizability, and falsifiability.
+Status: closed pending Council scorecard.
+
+Goal: select one theorem-grade restricted target after WP01/WP02 evidence is integrated. Candidates must be ranked by leverage, non-circularity, prior-art status, scale compatibility, formalizability, and falsifiability.
 
 ### WP05: Certification substrate
+
+Status: scaling lane active in MATHCERT; PDE regularity imports remain explicit interfaces.
 
 Goal: formalize safe statements and interfaces: scaling identities, mixed-norm algebra, energy/Sobolev consequences, implication structure, and visible imported hypotheses.
 
@@ -213,15 +224,15 @@ Goal: formalize safe statements and interfaces: scaling identities, mixed-norm a
 - historical theorem extraction with audit states;
 - taxonomy of regularity criteria;
 - false-proof and claimed-proof triage;
-- restricted-regime candidate generation;
-- non-probative computational diagnostics.
+- restricted-regime candidate generation only after its gate;
+- non-probative computational diagnostics only after authorization.
 
 ### MATHSOLVE
 
 - theorem spine and proof-debt ownership;
 - quantitative LPS reconstruction;
 - continuation and correspondence map;
-- restricted-target selection;
+- restricted-target selection only after its gate;
 - explicit route termination when a mechanism fails.
 
 ### MATHCERT
@@ -264,11 +275,11 @@ This campaign does not claim:
 - that a compact-support theorem alone settles the full whole-space branch;
 - completed bidirectional equivalence with the official statement.
 
-## Current executable gate
+## Current executable stage
 
-Integrate the WP00 audit into the claim ledger, proof-debt register, theorem DAG, and Agent Council review. Mechanism generation and numerical experimentation remain closed until:
+Execute WP01 and WP02 in parallel:
 
-- the corrected data class is consistent across artifacts;
-- one-way implication language replaces unaudited equivalence language;
-- the Referee confirms that all remaining gaps are recorded;
-- CI validates the integrated bundle.
+- WP01 builds exact false-proof fixtures and route-termination records.
+- WP02 produces the source-normalized quantitative conditional-regularity ledger.
+
+Mechanism generation, broad numerical experimentation, numerical regularity claims, and `NS-CI-R014` target promotion remain closed until their own explicit gates are satisfied.
