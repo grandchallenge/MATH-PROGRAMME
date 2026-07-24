@@ -1,0 +1,42 @@
+schema_version: 1.0.0
+campaign_id: NS-CI-001
+work_package_id: NS-CI-WP04
+tracker: grandchallenge/MATH-PROGRAMME#61
+state: ACTIVE_TARGET_SELECTION_GATE
+selected_target: null
+
+score_dimensions:
+  leverage: [0, 5]
+  non_circularity: [0, 5]
+  prior_art_distance: [0, 5]
+  scale_compatibility: [0, 5]
+  proof_tractability: [0, 5]
+  formalizability: [0, 5]
+  falsifiability: [0, 5]
+  full_problem_relevance: [0, 5]
+  information_value_if_false: [0, 5]
+  execution_cost: [0, 5]
+
+hard_rejection_rules:
+  - unresolved_wp01_fixture
+  - hypothesis_equivalent_to_target_regularity
+  - nonuniform_approximation_constant
+  - data_class_or_quantifier_drift
+  - opaque_imported_theorem
+  - already_classical_without_distinct_bridge
+  - numerical_evidence_used_as_continuum_proof
+  - formal_interface_used_as_analytic_proof
+
+candidates:
+  - {id: NS-CI-R014-A, family: dyadic_frequency_envelope, state: PRIOR_ART_AUDIT}
+  - {id: NS-CI-R014-B, family: geometric_depletion, state: PRIOR_ART_AUDIT}
+  - {id: NS-CI-R014-C, family: concentration_or_sparsity, state: PRIOR_ART_AUDIT}
+  - {id: NS-CI-R014-D, family: flux_or_commutator_compensation, state: PRIOR_ART_AUDIT}
+  - {id: NS-CI-R014-E, family: compact_support_extension, state: PRIOR_ART_AUDIT}
+  - {id: NS-CI-R014-F, family: symmetry_or_structural_class, state: PRIOR_ART_AUDIT}
+
+promotion_gate:
+  shortlist_limit: 3
+  selected_target_limit: 1
+  wp03_default: CLOSED
+  required_reviews: [Prospector, Axiomatist, Verifier, Adversary, Formalist, Amanuensis, Referee]
