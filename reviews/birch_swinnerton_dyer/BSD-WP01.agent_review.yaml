@@ -1,0 +1,51 @@
+artifact:
+  id: BSD-WP01
+  type: work_package
+  title: Executable false-proof atlas
+  pillar: MATHFORGE
+  status: referee_promoted
+council_review:
+  Axiomatist: {status: reviewed, obligations: [], findings: [Rank, Sha, and leading-term propositions remain distinct.]}
+  Prospector: {status: reviewed, obligations: [], findings: [Every source-dependent fixture points to WP02 interfaces.]}
+  Experimentalist: {status: reviewed, obligations: [], findings: [Numerical and finite-database claims are bounded.]}
+  Cartographer: {status: reviewed, obligations: [], findings: [Eighteen fixtures cover the WP00 invalid-arrow boundary.]}
+  Verifier: {status: reviewed, obligations: [], findings: [Deterministic replay validates structure and linkage.]}
+  Adversary: {status: reviewed, obligations: [], findings: [Fixture verdicts reject inferences, not BSD.]}
+  Formalist: {status: reviewed, obligations: [], findings: [The replay has no open conjecture as an axiom.]}
+  Steward: {status: reviewed, obligations: [], findings: [Triggered routes reject or narrow; mechanism gate stays closed.]}
+  Composer: {status: reviewed, obligations: [], findings: [Schema, fixtures, replay, and interpretation contract are coherent.]}
+  Grammarian: {status: reviewed, obligations: [], findings: [No invalid route is called a counterexample to BSD.]}
+  Amanuensis: {status: reviewed, obligations: [], findings: [WP00, WP01, and WP02 identifiers and boundaries agree.]}
+  Archivist: {status: reviewed, obligations: [], findings: [Historical claims are delegated to WP02.]}
+  Mechanist: {status: reviewed, obligations: [], findings: [No mechanism is selected.]}
+  Typesetter: {status: reviewed, obligations: [], findings: [Notation follows WP00 normalization.]}
+  Referee:
+    status: reviewed
+    reviewed_by: independent-bsd-wp01-wp02-referee-pass
+    reviewed_at: '2026-07-24'
+    obligations: [Reopen review if a fixture changes its protected claim, logical witness, or decision semantics.]
+    findings:
+    - All eighteen fixtures replay with unique IDs, explicit missing obligations, remediation, and valid WP02 links.
+    - Each verdict rejects or narrows an inference; none asserts that BSD is false.
+    - Passing the atlas is correctly denied proof-certificate status.
+amanuensis_control:
+  artifact_ledger: {ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md, entry_id: BSD-WP01}
+  decision_record_refs: [ADR-0005]
+  terminology_registry: {registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md, terms_introduced_or_changed: []}
+  review_provenance:
+    complete: true
+    evidence_refs:
+    - https://github.com/grandchallenge/MATH-PROGRAMME/issues/66
+    - https://github.com/grandchallenge/MATH-PROGRAMME/pull/79
+    - MATH-PROGRAMME workflow run 30099201596
+    - campaigns/birch_swinnerton_dyer/WP01_FALSE_PROOF_ATLAS/01_ATLAS.json
+    - campaigns/birch_swinnerton_dyer/WP01_FALSE_PROOF_ATLAS/replay.py
+  cross_document_consistency:
+    status: reviewed
+    checked_against: [BSD-WP00, BSD-WP02]
+    conflicts: []
+  final_editorial_integration:
+    status: reviewed
+    integrated_artifact_ref: campaigns/birch_swinnerton_dyer/WP01_FALSE_PROOF_ATLAS/00_README.md
+unresolved_obligations: []
+promotion: {ready_for_next_stage: true, blockers: [], certification_route: deterministic replay plus independent semantic Referee review}

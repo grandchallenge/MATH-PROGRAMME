@@ -1,0 +1,50 @@
+schema_version: 1.0.0
+artifact_id: BSD-WP00-NORMALIZATION
+scope: elliptic curves over Q
+complex_L_function:
+  good_prime:
+    a_l: 'l + 1 - #E(F_l)'
+    local_polynomial: 1 - a_l*T + l*T^2
+  split_multiplicative_prime:
+    local_polynomial: 1 - T
+  nonsplit_multiplicative_prime:
+    local_polynomial: 1 + T
+  additive_prime:
+    local_polynomial: '1'
+  finite_L_function: L(E,s) = product_l P_l(l^(-s))^(-1)
+  completed_function: Lambda(E,s) = N_E^(s/2) * (2*pi)^(-s) * Gamma(s) * L(E,s)
+  functional_equation: Lambda(E,s) = w_E * Lambda(E,2-s)
+  root_number: w_E in {+1,-1}
+  central_point: 1
+  analytic_rank: ord_(s=1) L(E,s)
+arithmetic:
+  model: global minimal Neron model
+  differential: minimal Neron differential omega_E
+  real_period: Omega_E = integral over E(R) of |omega_E|
+  tamagawa_number: c_l = [E(Q_l):E^0(Q_l)]
+  regulator: determinant of the Neron-Tate height pairing on a Z-basis of E(Q)/E(Q)_tors; empty determinant is 1
+  sha: kernel(H^1(Q,E) -> product_v H^1(Q_v,E))
+  torsion: '#E(Q)_tors'
+strong_formula: 'L^(r)(E,1)/r! = Omega_E * Reg_E * #Sha(E/Q) * product_l c_l / (#E(Q)_tors)^2'
+wiles_official_concordance:
+  initial_series: Wiles first uses an incomplete Euler product omitting primes dividing 2*Delta
+  completed_finite_series: Wiles later restores the omitted finite factors in L*(E,s)
+  order_of_vanishing: unchanged by multiplication by nonzero omitted local factors
+  leading_coefficient: changes by the omitted local factors
+  prohibition: do not combine an incomplete leading coefficient with the modern Tamagawa formula without an explicit conversion
+alternative_conventions_requiring_conversion:
+- Omega_E^+ instead of the integral over all E(R)
+- separate archimedean component or c_infinity factor
+- completed Lambda-value instead of finite L-value
+- optimal curve or isogeny-class normalization
+- non-minimal invariant differential
+- primitive versus imprimitive Euler products
+p_adic_branches:
+- branch: good ordinary
+  warning: record interpolation factors, period normalization, and Selmer local conditions
+- branch: split multiplicative
+  warning: exceptional zero and L-invariant correction alter order and leading term
+- branch: supersingular
+  warning: signed or plus/minus p-adic L-functions and signed Selmer groups are required
+- branch: anticyclotomic or multivariable
+  warning: variable and specialization must be named
