@@ -56,7 +56,7 @@ jobs:
           use-github-cache: false
           use-mathlib-cache: true
 
-      - name: Resolve and build PC-WP04 fixture
+      - name: Build pinned PC-WP04 fixture
         working-directory: fixtures/formal/PC-WP04
         shell: bash
         env:
@@ -73,7 +73,10 @@ jobs:
               echo "Lean toolchain was not installed."
               exit 1
             fi
-            lake update
+            test -f lake-manifest.json || {
+              echo "Pinned lake-manifest.json is required."
+              exit 1
+            }
             lake exe cache get
             lake build
           } > pc-wp04-lean-build.log 2>&1
