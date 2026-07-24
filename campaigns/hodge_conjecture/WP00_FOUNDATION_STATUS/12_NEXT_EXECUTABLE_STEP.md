@@ -1,28 +1,16 @@
 # HC-001 — Next executable stage after WP00
 
-## Current decision
+## Promotion decision
 
-The mathematical content of the source, normalization, and equivalence audit is complete in draft. Promotion remains blocked by Council integration and repository validation.
+`HC-WP00` is promoted. Amanuensis and Referee reviews are complete, no blocking cross-document conflict remains, and all four relevant workflow suites passed.
 
-No mechanism, computational observatory, restricted target, or novelty claim is authorized by this draft.
+Promotion does not alter the open status of the Hodge conjecture. It authorizes only the next two controlled audit packages.
 
-## Promotion prerequisites
-
-1. Amanuensis confirms cross-document consistency across Programme, Forge, Solve, and Cert artifacts.
-2. Referee reconstructs:
-   - the canonical statement;
-   - the cycle-map/generator equivalence;
-   - the codimension `n-1` boundary without algebraic inverse-Lefschetz circularity;
-   - the dimension-at-most-three consequence;
-   - every formulation separation.
-3. Repository checks pass for all four draft PRs.
-4. The proof-debt register is updated with resulting evidence.
-
-## Permitted parallel work after promotion
+## Immediate parallel obligations
 
 ### HC-WP01 — false-proof atlas
 
-Build minimized fixtures for:
+Build minimized, replayable fixtures for:
 
 - rational/integral coefficient drift;
 - arbitrary complex `(p,p)` versus rational Hodge;
@@ -39,76 +27,74 @@ Build minimized fixtures for:
 - very-general results promoted to every fiber;
 - effectivity added to the target.
 
-Completion test: every fixture states the tempting proof, exact failure, smallest missing theorem or counterexample, what is ruled out, and what survives.
+Each fixture must state:
 
-### HC-WP02 — known-case and construction ledger
+1. the tempting argument;
+2. the exact invalid step;
+3. the smallest counterexample or missing theorem;
+4. what the failure rules out;
+5. what it does not rule out;
+6. the surviving repair route;
+7. source and theorem-spine node.
 
-For each admitted family, record:
+Completion test: every fixture fails for the intended reason and no route failure is presented as evidence that the rational projective conjecture is false.
 
-- exact variety class, dimension, and codimension;
+### HC-WP02 — source-normalized known-case and construction ledger
+
+For every admitted family, record:
+
+- exact variety class and base field;
+- dimension and codimension;
 - coefficient ring;
+- universal versus selected-class quantifier;
 - source and theorem locator;
-- whether all classes or selected classes are treated;
 - the actual cycle-construction mechanism;
-- use of monodromy, deformation, invariant theory, correspondences, or arithmetic specialization;
+- use of invariant theory, monodromy, deformation, correspondences, specialization, or arithmetic comparison;
 - conditional dependencies;
-- exact equality certificate in cohomology;
+- exact rational-cohomology equality certificate;
 - prior-art and novelty boundary.
 
-Completion test: a specialist can reconstruct why each admitted case produces algebraic cycles rather than relying on a theorem-name catalogue.
-
-## Still prohibited
-
-- selecting `HC-R021` before WP01/WP02 and prior-art integration;
-- broad period computations intended as evidence for universal Hodge;
-- treating symbolic intersection output as exhaustive generation;
-- importing standard conjectures, variational Hodge, or Tate as invisible assumptions;
-- claiming novelty from absence in a bounded search;
-- using `formalized` for a theorem proved only in an abstract surrogate interface;
-- changing `Q`, projectivity, or universal quantifiers without renaming the claim.
-
-## Inputs
-
-- `00_README.md`
-- `02_NOTATION_REGISTRY.yaml`
-- `03_STATEMENT_LATTICE.yaml`
-- `04_PROBLEM_AND_STATUS_AUDIT.md`
-- `05_KNOWN_CASE_LEDGER.csv`
-- `06_DEPENDENCY_DAG.json`
-- `07_IMPLICATION_LEDGER.yaml`
-- `08_FALSE_PROOF_SEEDS.yaml`
-- `09_PROOF_DEBT.json`
-- `10_CLAIM_LEDGER.yaml`
-- `11_CERT_HANDOFF.md`
-- MATHFORGE source and fixture ledgers
-- MATHSOLVE statement lattice and obligation DAG
-- MATHCERT schema and certification boundary
-
-## Outputs after promotion
+The ledger must distinguish:
 
 ```text
-campaigns/hodge_conjecture/WP01_FALSE_PROOF_ATLAS/
-  00_README.md
-  01_FIXTURE_LEDGER.yaml
-  fixtures/
-  09_PROOF_DEBT.json
-  10_CLAIM_LEDGER.yaml
-  12_NEXT_EXECUTABLE_STEP.md
-
-campaigns/hodge_conjecture/WP02_KNOWN_CASE_CONSTRUCTION_LEDGER/
-  00_README.md
-  04_SOURCE_NORMALIZED_CASES.md
-  05_CONSTRUCTION_MECHANISM_LEDGER.yaml
-  06_DEPENDENCY_DAG.json
-  09_PROOF_DEBT.json
-  10_CLAIM_LEDGER.yaml
-  11_CERT_HANDOFF.md
+all Hodge classes generated
+selected Hodge classes constructed
+necessary detection criterion only
+absolute or motivated status only
+conditional theorem
+very-general-family theorem
 ```
+
+Completion test: a specialist can reconstruct why each admitted case produces algebraic cycles rather than relying on a theorem-name list.
+
+## Still closed
+
+- `HC-WP03` broad computational observatory;
+- mechanism generation not attached to a selected theorem target;
+- `HC-R021` restricted-target selection;
+- claimed-proof promotion;
+- novelty claims;
+- numerical evidence presented as universal algebraicity;
+- silent import of standard conjectures, variational Hodge, or Tate;
+- changing `Q`, projectivity, or universal quantifiers without renaming the claim.
+
+## Promotion evidence
+
+- `grandchallenge/MATH-PROGRAMME#68`
+- `grandchallenge/MATHFORGE#22`
+- `grandchallenge/MATHSOLVE#63`
+- `grandchallenge/MATHCERT#24`
+- Programme workflow `30084154340`: success
+- Forge workflow `30084108503`: success
+- Solve workflow `30084121944`: success
+- Cert workflow `30084135657`: success
+- `reviews/hodge_conjecture/HC-WP00.agent_review.yaml`: `ready_for_next_stage=true`
 
 ## Bounded next action
 
-- Input: four draft branches and this WP00 package.
-- Operation: open draft PRs, run checks, perform Amanuensis and Referee reviews, and repair any conflict.
-- Output: promoted `HC-WP00` or an explicit blocked disposition.
-- Completion test: `promotion.ready_for_next_stage=true`, no blocking debt, and passing relevant checks.
-- Spine node advanced: `HC-T004`; next nodes opened: `HC-O009..HC-O019` and `HC-K008`.
+- Input: promoted HC-WP00 bundle and cross-pillar source/schema artifacts.
+- Operation: instantiate WP01 fixtures and WP02 construction records in parallel.
+- Output: governed false-proof atlas and known-case/construction ledger.
+- Completion test: exact failure replay for WP01; mechanism-level reconstruction for WP02; current proof debt and claim ledgers in both packages.
+- Spine nodes advanced: `HC-O009..HC-O019` and `HC-K008`.
+- Gate retained: `HC-R021` remains unselected until WP01, WP02, and prior-art integration are Referee-reviewed.
