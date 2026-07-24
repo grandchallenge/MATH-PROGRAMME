@@ -1,6 +1,6 @@
 # Agent Council Artifact Ledger
 
-Active continuity register owned by the Amanuensis. It is not a claim ledger or certificate registry.
+Active continuity register owned by the Amanuensis; not a claim ledger or certificate registry.
 
 | Artifact ID | Pillar | Authoritative artifact | Status | Review record |
 |---|---|---|---|---|
@@ -10,6 +10,4 @@ Active continuity register owned by the Amanuensis. It is not a claim ledger or 
 | NS-CI-WP00 | MATHSOLVE | `campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md` | promoted | `reviews/navier_stokes/NS-CI-WP00.agent_review.yaml` |
 | NS-CI-WP01 | MATHFORGE | `campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md` | referee_promoted | `reviews/navier_stokes/NS-CI-WP01.agent_review.yaml` |
 
-Merge WP01 governance before WP02. The WP02 branch contains the combined final ledger.
-
-Artifact IDs are not reused. Promotion is not inferred from this register alone. Blocking cross-document conflicts set Amanuensis state to blocked.
+Merge WP01 governance before WP02. WP02 carries the combined final ledger. Artifact IDs are not reused; promotion is not inferred from this register alone.
