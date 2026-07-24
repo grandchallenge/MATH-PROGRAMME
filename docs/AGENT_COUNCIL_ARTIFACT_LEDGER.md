@@ -38,6 +38,7 @@ Every governed artifact receives:
 | PC-WP00 | work package | MATHSOLVE | `campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/00_README.md` | promoted | `ADR-0005` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP00.agent_review.yaml` | 2026-07-24 | reviewed |
 | PC-WP01 | work package | MATHFORGE | `campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/00_README.md` | referee_promoted | `ADR-0005`; `PC-WP01-WP02-INTEGRATION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP01.agent_review.yaml` | 2026-07-24 | reviewed |
 | PC-WP02 | work package | MATHSOLVE | `campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/00_README.md` | referee_promoted_interface_level | `ADR-0005`; `PC-WP01-WP02-INTEGRATION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP02.agent_review.yaml` | 2026-07-24 | reviewed |
+| PC-WP01-WP02-INTEGRATION | integration decision | MATH-PROGRAMME | `campaigns/poincare_reconstruction/PC_WP01_WP02_INTEGRATION_DECISION.md` | referee_promoted_wp03_authorized | `ADR-0005`; `PC-WP01-WP02-INTEGRATION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP01_WP02.integration_review.yaml` | 2026-07-24 | reviewed |
 
 ## Update rules
 
