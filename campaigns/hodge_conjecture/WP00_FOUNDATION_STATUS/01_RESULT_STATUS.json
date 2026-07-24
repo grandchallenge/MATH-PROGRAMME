@@ -3,7 +3,7 @@
   "artifact_id": "HC-WP00",
   "campaign_id": "HC-001",
   "title": "Source, normalization, and equivalence audit",
-  "result_status": "WP00_DRAFT_OPEN_PROBLEM",
+  "result_status": "WP00_PROMOTED_OPEN_PROBLEM",
   "conditions": [
     "smooth projective algebraic variety X over C",
     "0 <= p <= dim_C X",
@@ -29,12 +29,8 @@
     "NEGATIVE_RESULT",
     "SEMANTIC_CORRESPONDENCE_AUDIT"
   ],
-  "certification_state": "HUMAN_AUDIT_DRAFT_ABSTRACT_SCHEMA_COMMITTED_FULL_FORMALIZATION_BLOCKED",
-  "remaining_blockers": [
-    "Amanuensis cross-document consistency review",
-    "Referee review of boundary-case and statement-lattice determinations",
-    "cross-pillar CI validation"
-  ],
+  "certification_state": "HUMAN_SOURCE_AND_LOGIC_AUDIT_PROMOTED_ABSTRACT_SCHEMA_COMMITTED_FULL_FORMALIZATION_BLOCKED",
+  "remaining_blockers": [],
   "nonblocking_debt": [
     "exact Hodge 1950 passage concordance",
     "exact Zucker compact-Kahler appendix locator",
@@ -43,7 +39,19 @@
     "comprehensive higher-dimensional known-case bibliography",
     "full Lean foundations for complex projective geometry, Hodge structures, Chow groups, and cycle classes"
   ],
-  "first_executable_step": "After promotion, execute HC-WP01 false-proof fixtures and HC-WP02 source-normalized known-case and construction ledger in parallel.",
+  "promotion_evidence": {
+    "programme_pr": "grandchallenge/MATH-PROGRAMME#68",
+    "forge_pr": "grandchallenge/MATHFORGE#22",
+    "solve_pr": "grandchallenge/MATHSOLVE#63",
+    "cert_pr": "grandchallenge/MATHCERT#24",
+    "programme_workflow_run": "30084154340",
+    "forge_workflow_run": "30084108503",
+    "solve_workflow_run": "30084121944",
+    "cert_workflow_run": "30084135657",
+    "all_relevant_checks": "success",
+    "agent_review": "reviews/hodge_conjecture/HC-WP00.agent_review.yaml"
+  },
+  "first_executable_step": "Execute HC-WP01 false-proof fixtures and HC-WP02 source-normalized known-case and construction ledger in parallel. Keep computation, mechanism generation, restricted-target selection, and novelty claims closed.",
   "tracker": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/65",
   "audit_artifact": "campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md"
 }
