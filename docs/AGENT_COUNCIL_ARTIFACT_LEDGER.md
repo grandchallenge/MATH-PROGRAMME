@@ -29,7 +29,8 @@ Every governed artifact receives:
 | GOV-AGENT-COUNCIL-001 | governance bundle | MATH-PROGRAMME | `docs/MATH_PROGRAMME_AGENT_COUNCIL.md` | active | `ADR-0001` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `templates/agent_review.yaml` | 2026-07-09 | reviewed |
 | CERT-LOG-GCD-001 | formal certificate fixture | MATHCERT | `fixtures/formal/LOG-GCD-001/README.md` | certified | none | `docs/GLOSSARY.md` | `fixtures/formal/LOG-GCD-001/agent_review.yaml` | 2026-07-23 | reviewed |
 | PUB-LOG-GCD-001 | public research note | MATH-PROGRAMME | `docs/LOG_GCD_PUBLICATION.md` | published | none | `docs/GLOSSARY.md` | `fixtures/formal/LOG-GCD-001/agent_review.yaml` | 2026-07-23 | reviewed |
-| NS-CI-WP00 | work package | MATHSOLVE | `campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md` | draft | `ADR-0003` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/navier_stokes/NS-CI-WP00.agent_review.yaml` | 2026-07-23 | pending |
+| NS-CI-WP00 | work package | MATHSOLVE | `campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md` | promoted | `ADR-0003` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/navier_stokes/NS-CI-WP00.agent_review.yaml` | 2026-07-23 | reviewed |
+| NS-CI-WP01 | work package | MATHFORGE | `campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md` | referee_promoted | `ADR-0003` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/navier_stokes/NS-CI-WP01.agent_review.yaml` | 2026-07-23 | reviewed |
 
 ## Update rules
 
