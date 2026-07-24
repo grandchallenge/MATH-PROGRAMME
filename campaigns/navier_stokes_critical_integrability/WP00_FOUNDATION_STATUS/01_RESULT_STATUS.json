@@ -1,30 +1,41 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "artifact_id": "NS-CI-WP00",
   "campaign_id": "NS-CI-001",
-  "title": "Foundation, status, and equivalence audit",
-  "result_status": "OPEN_PROBLEM_INITIALIZED",
+  "title": "Foundation, source, status, and correspondence audit",
+  "result_status": "SUBSTANTIVE_AUDIT_COMPLETE_GOVERNANCE_INTEGRATION_PENDING",
   "conditions": [
     "unforced three-dimensional incompressible Navier-Stokes equations",
     "primary domain R^3",
     "viscosity nu > 0",
-    "smooth compactly supported divergence-free initial data",
-    "Leray-Hopf solution interface subject to source audit"
+    "canonical data class: smooth divergence-free fields satisfying Fefferman's rapid-decay condition",
+    "restricted lane: smooth compactly supported divergence-free data",
+    "modern R3 Leray-Hopf solution interface",
+    "operational LPS and weak-strong interfaces explicitly sourced"
   ],
-  "strongest_supported_claim": "The standard energy class implies L^2_t L^6_x, does not by abstract functional analysis imply L^4_t L^6_x, and the target mixed norm is invariant under Navier-Stokes scaling.",
+  "strongest_supported_claim": "The standard energy class yields L^2_t L^6_x but not abstractly L^4_t L^6_x; the target norm is scaling-critical; finite L^4_t L^6_x control closes the H1 continuation and weak-strong uniqueness estimates; and universal critical integrability for the full Fefferman data class is sufficient for the whole-space positive Clay statement (A).",
   "claims_not_made": [
     "universal finiteness of the critical integral",
     "global regularity",
     "a new regularity criterion",
     "a novel reduction of the Millennium problem",
+    "bidirectional equivalence with the official Clay statement",
+    "that compact-support data alone cover the full official data class",
     "continuum evidence derived from numerical boundedness"
   ],
   "support_routes": [
     "CONTINUUM_PROOF",
     "NEGATIVE_RESULT",
-    "SOURCE_CITATION_PENDING_AUDIT"
+    "PRIMARY_SOURCE_AUDIT",
+    "OPERATIONAL_LITERATURE_INTERFACE",
+    "SEMANTIC_CORRESPONDENCE_AUDIT"
   ],
-  "certification_state": "NOT_CERTIFIED",
-  "first_executable_step": "Audit the exact hypotheses of the Leray-Hopf, Ladyzhenskaya-Prodi-Serrin, weak-strong uniqueness, and continuation statements and produce an explicit equivalence proof.",
-  "tracker": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/55"
+  "certification_state": "HUMAN_AUDIT_CHECKED_FORMAL_CERTIFICATION_PENDING",
+  "remaining_blockers": [
+    "cross-document integration of the corrected full data class",
+    "Referee confirmation of the one-way Clay implication and non-equivalence wording"
+  ],
+  "first_executable_step": "Complete Amanuensis and Referee integration, run CI, and only then open WP01/WP02 progression; mechanism generation and numerical experimentation remain closed.",
+  "tracker": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/55",
+  "audit_artifact": "campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md"
 }
