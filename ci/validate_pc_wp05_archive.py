@@ -106,8 +106,12 @@ def main() -> None:
             fail(f"stronger claim gate {key} is not blocked")
 
     concordance = (wp / "02_SOURCE_CONCORDANCE.md").read_text(encoding="utf-8")
-    for token in REQUIRED_SOURCES | {"unjustified", "retained concordance debt"}:
+    concordance_lower = concordance.lower()
+    for token in REQUIRED_SOURCES:
         if token not in concordance:
+            fail(f"source concordance omits {token}")
+    for token in ("unjustified", "retained concordance debt"):
+        if token not in concordance_lower:
             fail(f"source concordance omits {token}")
 
     readiness = (wp / "07_PUBLICATION_READINESS.md").read_text(encoding="utf-8")
