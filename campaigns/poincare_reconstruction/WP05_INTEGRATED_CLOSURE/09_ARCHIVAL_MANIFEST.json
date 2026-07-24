@@ -2,6 +2,8 @@
   "manifest_version": "pc.wp05.archive.v1",
   "archive_id": "ARCHIVE-PC-001",
   "campaign_id": "PC-001",
+  "domain_id": "05",
+  "governance_decision": "ADR-0006",
   "work_package_id": "PC-WP05",
   "tracker": "grandchallenge/MATH-PROGRAMME#80",
   "title": "Hamilton-Perelman Poincare reconstruction archive",
@@ -10,7 +12,8 @@
   "canonical_statement": "Every closed connected simply connected topological 3-manifold is homeomorphic to S3.",
   "permitted_public_description": "A source-normalized and adversarially audited reconstruction of the Hamilton-Perelman finite-extinction proof route, with executable topology-history fixtures and a Lean-checked finite backward evaluator. The analytic Ricci-flow and manifold-level topology theorems remain explicitly imported from the classical literature.",
   "canonical_artifacts": [
-    "DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md",
+    "DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md",
+    "docs/decisions/ADR-0006_POINCARE_RECONSTRUCTION_ARCHIVE.md",
     "campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/00_README.md",
     "campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/00_README.md",
     "campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/00_README.md",
@@ -25,6 +28,10 @@
     "campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/05_NON_CIRCULARITY_AUDIT.md",
     "campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/06_DEPENDENCY_CLOSURE.json",
     "campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/08_PROOF_DEBT.json"
+  ],
+  "historical_aliases": [
+    "DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md",
+    "Poincare draft references to ADR-0005"
   ],
   "source_editions": [
     {"key": "P-I", "locator": "arXiv:math/0211159v1", "role": "entropy, reduced geometry, noncollapsing, singularity models"},
