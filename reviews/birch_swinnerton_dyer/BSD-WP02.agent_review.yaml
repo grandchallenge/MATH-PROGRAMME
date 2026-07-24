@@ -3,7 +3,7 @@ artifact:
   type: work_package
   title: Source-normalized theorem ledger
   pillar: MATHSOLVE
-  status: review_ready
+  status: referee_promoted
 council_review:
   Axiomatist: {status: reviewed, obligations: [], findings: [Directions and non-equivalences are explicit.]}
   Prospector: {status: reviewed, obligations: [], findings: [Source states distinguish theorem text, scope audit, and noncomposable pointers.]}
@@ -19,20 +19,38 @@ council_review:
   Archivist: {status: reviewed, obligations: [Continue nonblocking original-paper concordance.], findings: [Operational low-rank statement is text-audited through Skinner 2020.]}
   Mechanist: {status: reviewed, obligations: [], findings: [No research mechanism or target is selected.]}
   Typesetter: {status: reviewed, obligations: [], findings: [Normalization fields are mandatory.]}
-  Referee: {status: pending, obligations: [Independently reconstruct theorem scopes and source-state classifications.], findings: []}
+  Referee:
+    status: reviewed
+    reviewed_by: independent-bsd-wp01-wp02-referee-pass
+    reviewed_at: '2026-07-24'
+    obligations:
+    - Reopen review if a theorem record changes its source state, hypotheses, direction, quantifier, or normalization.
+    findings:
+    - Sixteen theorem interfaces retain domain, rank, prime, reduction, residual, Selmer, normalization, and conclusion fields.
+    - The low-rank implication and Skinner converse have explicit text locators and bounded conclusions.
+    - Kato and the modern zeta-element source pointers are correctly noncomposable pending theorem-level extraction.
+    - Family, finite-database, and individual-curve records cannot discharge the universal conjecture.
 amanuensis_control:
   artifact_ledger: {ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md, entry_id: BSD-WP02}
   decision_record_refs: [ADR-0005]
   terminology_registry: {registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md, terms_introduced_or_changed: []}
-  review_provenance: {complete: false, evidence_refs: [MATH-PROGRAMME#66]}
+  review_provenance:
+    complete: true
+    evidence_refs:
+    - https://github.com/grandchallenge/MATH-PROGRAMME/issues/66
+    - https://github.com/grandchallenge/MATH-PROGRAMME/pull/79
+    - MATH-PROGRAMME workflow run 30099201596
+    - campaigns/birch_swinnerton_dyer/WP02_THEOREM_LEDGER/01_SOURCE_REGISTRY.json
+    - campaigns/birch_swinnerton_dyer/WP02_THEOREM_LEDGER/02_THEOREM_LEDGER.json
+    - campaigns/birch_swinnerton_dyer/WP02_THEOREM_LEDGER/03_COMPOSITION_RULES.md
   cross_document_consistency:
     status: reviewed
     checked_against: [BSD-WP00, BSD-WP01]
     conflicts: []
   final_editorial_integration:
-    status: pending
+    status: reviewed
     integrated_artifact_ref: campaigns/birch_swinnerton_dyer/WP02_THEOREM_LEDGER/00_README.md
 unresolved_obligations:
-- {id: BSD-WP02-R001, owner: Referee, description: Independent source-scope reconstruction., severity: high, blocking: true}
 - {id: BSD-WP02-D001, owner: Archivist, description: Original-paper theorem-number concordance for Gross-Zagier and Kolyvagin., severity: high, blocking: false}
-promotion: {ready_for_next_stage: false, blockers: [BSD-WP02-R001], certification_route: source audit plus semantic Referee review}
+- {id: BSD-WP02-D002, owner: Prospector, description: Instantiate Kato and modern zeta-element records before proof-graph composition., severity: high, blocking: false}
+promotion: {ready_for_next_stage: true, blockers: [], certification_route: source audit plus independent semantic Referee review}
