@@ -231,3 +231,77 @@ for every smooth projective `X/C` and every `p`, subject to these controls:
 ### Supersedes
 
 No prior Hodge campaign decision. `ADR-0002` remains reserved and is not reused.
+
+## ADR-0005: Initialize Poincaré as a solved-problem reconstruction campaign
+
+**Date:** 2026-07-24  
+**Status:** Accepted and promoted through WP00  
+**Owner:** The Amanuensis with the Axiomatist, Archivist, Cartographer, Formalist, Steward, and Referee
+
+### Context
+
+The proposed challenge names the Poincaré Conjecture, but the mathematical problem was solved by Perelman through the Hamilton Ricci-flow programme. Treating it as open would corrupt the result-status ledger and invite inappropriate novelty, mechanism-generation, or numerical-evidence workflows.
+
+The canonical theorem is topological, while the proof uses smooth Riemannian geometry and nonlinear PDE. Smooth Poincaré, elliptization, geometrization, Ricci flow with surgery, and finite extinction also have different logical strengths and dependencies.
+
+### Decision
+
+Initialize campaign `PC-001` and Work Package `PC-WP00` as a solved-problem reconstruction campaign, subject to these controls:
+
+1. The canonical target is the topological theorem.
+2. Topological, PL, and smooth formulations are equivalent only through named dimension-three category theorems.
+3. Geometrization implies elliptization, and elliptization implies Poincaré; no converse is claimed.
+4. The primary pedagogical route is Ricci flow with surgery, finite extinction, and explicit topology bookkeeping.
+5. Finite extinction is never used as a topology-free conclusion.
+6. Perelman's three preprints are primary sources; detailed reconstructions are secondary.
+7. Versioned source corrections must remain visible.
+8. Formalization begins with finite history and terminal group logic, not an axiom packaging the analytic core.
+9. Numerical experimentation is not an evidentiary route.
+10. No new-proof, independent-recertification, novelty, or priority claim is permitted at WP00.
+
+### Alternatives considered
+
+1. Treat the challenge as an open Millennium problem. Rejected because the official status is solved.
+2. Present only geometrization implies Poincaré. Rejected because it hides the Poincaré-specific finite-extinction route.
+3. Begin directly in the smooth category. Rejected because the canonical theorem is topological.
+4. Call Poincaré, elliptization, and geometrization equivalent. Rejected because the latter statements are stronger.
+5. Label a terminal conditional formalization a full proof. Rejected because the analytic imports remain unformalized.
+6. Compress the proof to “Ricci flow rounds the manifold.” Rejected because singularities require non-collapsing, canonical neighbourhoods, surgery, and extinction.
+
+### Consequences
+
+- `PC-WP00` is registered as promoted.
+- `solved-problem reconstruction campaign` and `finite-extinction route` enter the terminology registry.
+- WP01 and WP02 may proceed in parallel.
+- PC-WP03 remains closed until WP01/WP02 integration and Referee review.
+- MATHCERT initially covers only delimited history and terminal logic.
+
+### Unresolved obligations
+
+- Exact Moise/Munkres theorem extraction.
+- Versioned Perelman/Morgan–Tian/Kleiner–Lott crosswalk.
+- Canonical-neighbourhood and surgery-parameter ledger.
+- Exact topology of surgeries and discarded components.
+- Non-circular bridge to the finite-extinction class.
+- Finite-extinction proof ledger.
+- Formal surgery-history and terminal factor-discharge substrate.
+
+### Affected artifacts
+
+- `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`
+- `campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/`
+- `reviews/poincare/PC-WP00.agent_review.yaml`
+- `docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md`
+- `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md`
+- `MATH-PROGRAMME#69`
+
+### Review provenance
+
+- Governing instruction: initiate and proceed with the Poincaré MATH-PROGRAMME challenge, 2026-07-24.
+- Canonical tracker: `https://github.com/grandchallenge/MATH-PROGRAMME/issues/69`.
+- Review record: `reviews/poincare/PC-WP00.agent_review.yaml`.
+- Primary-source registry: `campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/04_PROBLEM_SOURCE_EQUIVALENCE_AUDIT.md`.
+
+### Supersedes
+
+No prior Poincaré campaign decision. The term “conjecture” is retained only for historical naming; current status uses “Poincaré theorem.”
