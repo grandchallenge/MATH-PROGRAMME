@@ -1,0 +1,139 @@
+artifact:
+  id: NS-CI-WP01
+  type: work_package
+  title: Exact false-proof atlas for critical Navier-Stokes integrability
+  pillar: MATHFORGE
+  status: draft
+
+council_review:
+  Axiomatist:
+    status: pending
+    obligations:
+      - Verify data-class, theorem-scope, and quantifier fixtures.
+    findings: []
+  Prospector:
+    status: pending
+    obligations:
+      - Confirm source-dependent fixtures match the WP00 source ledger.
+    findings: []
+  Experimentalist:
+    status: pending
+    obligations:
+      - Validate the numerical-overclaim fixture and define permitted diagnostic uses.
+    findings: []
+  Cartographer:
+    status: pending
+    obligations:
+      - Map each fixture to protected theorem-spine nodes and route records.
+    findings: []
+  Verifier:
+    status: pending
+    obligations:
+      - Independently check FP-001, FP-002, FP-007, FP-008, and FP-012.
+    findings: []
+  Adversary:
+    status: pending
+    obligations:
+      - Attempt to construct a counter-route that evades each fixture without changing its assumptions.
+    findings: []
+  Formalist:
+    status: pending
+    obligations:
+      - Review the formalization-overclaim and exact-test boundaries.
+    findings: []
+  Steward:
+    status: pending
+    obligations:
+      - Ensure triggered fixtures terminate or narrow routes before mechanism work.
+    findings: []
+  Composer:
+    status: pending
+    obligations: []
+    findings: []
+  Grammarian:
+    status: pending
+    obligations:
+      - Ensure failure of an argument is never phrased as failure of the target theorem.
+    findings: []
+  Amanuensis:
+    status: pending
+    obligations:
+      - Check consistency with WP00 and WP02 and register the authoritative artifact after promotion.
+    findings: []
+  Archivist:
+    status: pending
+    obligations:
+      - Verify attribution-sensitive fixtures do not overstate historical theorem contents.
+    findings: []
+  Mechanist:
+    status: pending
+    obligations:
+      - Require new mechanisms to state which fixtures they bypass and by what new estimate.
+    findings: []
+  Typesetter:
+    status: pending
+    obligations: []
+    findings: []
+  Referee:
+    status: pending
+    obligations:
+      - Determine whether the atlas is complete enough to govern route rejection.
+    findings: []
+
+amanuensis_control:
+  artifact_ledger:
+    ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md
+    entry_id: NS-CI-WP01
+  decision_record_refs:
+    - ADR-0003
+  terminology_registry:
+    registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md
+    terms_introduced_or_changed: []
+  review_provenance:
+    complete: false
+    evidence_refs:
+      - https://github.com/grandchallenge/MATHFORGE/issues/16
+      - campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md
+      - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/false_proof_atlas.md
+      - grandchallenge/MATHFORGE:reports/discovery/ns_ci_001/false_proof_fixtures.json
+  cross_document_consistency:
+    status: pending
+    checked_against:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md
+      - campaigns/navier_stokes_critical_integrability/WP02_CONDITIONAL_REGULARITY_LEDGER/00_README.md
+    conflicts: []
+  final_editorial_integration:
+    status: pending
+    integrated_artifact_ref: campaigns/navier_stokes_critical_integrability/WP01_FALSE_PROOF_ATLAS/00_README.md
+    integration_notes: []
+
+unresolved_obligations:
+  - id: NS-CI-WP01-REV-001
+    owner: Verifier
+    description: Independently replay the exact arithmetic and scaling fixtures.
+    severity: high
+    blocking: true
+  - id: NS-CI-WP01-REV-002
+    owner: Adversary
+    description: Confirm that each fixture rejects only the stated route and does not overreach.
+    severity: high
+    blocking: true
+  - id: NS-CI-WP01-REV-003
+    owner: Amanuensis
+    description: Complete cross-document consistency with WP00 and WP02.
+    severity: high
+    blocking: true
+  - id: NS-CI-WP01-REV-004
+    owner: Referee
+    description: Approve the atlas as the canonical route-rejection artifact.
+    severity: critical
+    blocking: true
+
+promotion:
+  ready_for_next_stage: false
+  blockers:
+    - Exact fixture replay is pending.
+    - Adversarial scope review is pending.
+    - Cross-document consistency is pending.
+    - Referee approval is pending.
+  certification_route: Exact arithmetic tests in MATHFORGE CI plus human review of semantic fixtures
