@@ -1,0 +1,166 @@
+{
+  "schema_version": "1.1.0",
+  "campaign_id": "NS-CI-001",
+  "work_package_id": "NS-CI-WP00",
+  "nodes": [
+    {
+      "id": "NS-CI-D000",
+      "role": "DEFINITION",
+      "title": "Equation, R3 domain, Fefferman rapid-decay data class, forcing, and solution classes",
+      "status": "AUDITED",
+      "dependencies": [],
+      "discharge_criterion": "Preserve the full official data class and a separately named compact-support restricted lane."
+    },
+    {
+      "id": "NS-CI-D001",
+      "role": "DEFINITION",
+      "title": "Mixed-norm convention and endpoint policy",
+      "status": "AUDITED",
+      "dependencies": ["NS-CI-D000"],
+      "discharge_criterion": "Preserve time exponent q=4, space exponent p=6, and finite-interval Bochner conventions."
+    },
+    {
+      "id": "NS-CI-L002",
+      "role": "IMPORTED_LEMMA",
+      "title": "Leray-Hopf energy inequality and global weak existence",
+      "status": "OPERATIONALLY_AUDITED",
+      "dependencies": ["NS-CI-D000"],
+      "discharge_criterion": "Historical Leray theorem concordance remains nonblocking provenance debt."
+    },
+    {
+      "id": "NS-CI-L003",
+      "role": "LEMMA",
+      "title": "Whole-space Sobolev bridge from gradient control to L6",
+      "status": "CHECKED",
+      "dependencies": ["NS-CI-D000"],
+      "discharge_criterion": "Later formalization or specialist certification."
+    },
+    {
+      "id": "NS-CI-C004",
+      "role": "CONSEQUENCE",
+      "title": "Energy class implies L2 in time and L6 in space",
+      "status": "CHECKED",
+      "dependencies": ["NS-CI-L002", "NS-CI-L003"],
+      "discharge_criterion": "No additional mathematical debt for WP00."
+    },
+    {
+      "id": "NS-CI-O005",
+      "role": "OBSTRUCTION",
+      "title": "The abstract energy space does not embed in L4_t L6_x",
+      "status": "CHECKED",
+      "dependencies": ["NS-CI-D001"],
+      "discharge_criterion": "Optional faithful formalization remains nonblocking."
+    },
+    {
+      "id": "NS-CI-L006",
+      "role": "LEMMA",
+      "title": "Navier-Stokes scaling law",
+      "status": "CHECKED",
+      "dependencies": ["NS-CI-D000"],
+      "discharge_criterion": "MATHCERT kernel check remains nonblocking."
+    },
+    {
+      "id": "NS-CI-C007",
+      "role": "CONSEQUENCE",
+      "title": "Criticality of the L4_t L6_x integral",
+      "status": "CHECKED",
+      "dependencies": ["NS-CI-D001", "NS-CI-L006"],
+      "discharge_criterion": "Formal mixed-norm scaling lemma and adversarial tests."
+    },
+    {
+      "id": "NS-CI-L008",
+      "role": "IMPORTED_THEOREM",
+      "title": "Operational Prodi-Serrin regularity and uniqueness at the pair (4,6)",
+      "status": "AUDITED",
+      "dependencies": ["NS-CI-D000", "NS-CI-D001"],
+      "discharge_criterion": "Historical Serrin extraction and Ladyzhenskaya translation remain nonblocking provenance debt."
+    },
+    {
+      "id": "NS-CI-L009",
+      "role": "IMPORTED_THEOREM",
+      "title": "Weak-strong uniqueness",
+      "status": "OPERATIONALLY_AUDITED",
+      "dependencies": ["NS-CI-D000", "NS-CI-L008"],
+      "discharge_criterion": "Preserve exact same-data and solution-class hypotheses."
+    },
+    {
+      "id": "NS-CI-L010",
+      "role": "BRIDGE",
+      "title": "Critical-integral continuation and blow-up alternative",
+      "status": "CHECKED",
+      "dependencies": ["NS-CI-L008", "NS-CI-L009"],
+      "discharge_criterion": "Referee confirms the local H1 restart interface."
+    },
+    {
+      "id": "NS-CI-B011",
+      "role": "BRIDGE",
+      "title": "Universal full-data critical integrability implies Clay statement A",
+      "status": "CHECKED",
+      "dependencies": ["NS-CI-L002", "NS-CI-L008", "NS-CI-L009", "NS-CI-L010"],
+      "discharge_criterion": "Referee confirms exact full-data and bounded-energy correspondence."
+    },
+    {
+      "id": "NS-CI-B012",
+      "role": "BRIDGE",
+      "title": "Reverse strong-class correspondence from Clay statement A",
+      "status": "NEEDS_AUDIT",
+      "dependencies": ["NS-CI-D000", "NS-CI-L009"],
+      "discharge_criterion": "Source-normalized proof of finite L4_tL6_x membership and every-Leray-Hopf identification."
+    },
+    {
+      "id": "NS-CI-T013",
+      "role": "OPEN_TARGET",
+      "title": "Universal critical L4_t L6_x integrability for Fefferman-class data",
+      "status": "OPEN",
+      "dependencies": ["NS-CI-C004", "NS-CI-O005", "NS-CI-C007", "NS-CI-L010", "NS-CI-B011"],
+      "discharge_criterion": "A valid proof or counterexample for the exact full data and solution-class specification."
+    },
+    {
+      "id": "NS-CI-R014",
+      "role": "RESTRICTED_TARGET",
+      "title": "First theorem-grade restricted target",
+      "status": "UNSELECTED",
+      "dependencies": ["NS-CI-L008", "NS-CI-L010", "NS-CI-B011"],
+      "discharge_criterion": "Council-reviewed target selection after WP00 promotion."
+    },
+    {
+      "id": "NS-CI-R-COMPACT",
+      "role": "RESTRICTED_TARGET",
+      "title": "Compact-support universal critical-integrability lane",
+      "status": "DEFINED",
+      "dependencies": ["NS-CI-D000", "NS-CI-T013"],
+      "discharge_criterion": "Prove the restricted statement or a data-class extension theorem; never silently identify it with the full target."
+    }
+  ],
+  "edges": [
+    {"source": "NS-CI-D000", "target": "NS-CI-D001", "kind": "defines"},
+    {"source": "NS-CI-D000", "target": "NS-CI-L002", "kind": "supplies_hypotheses"},
+    {"source": "NS-CI-D000", "target": "NS-CI-L003", "kind": "supplies_domain"},
+    {"source": "NS-CI-L002", "target": "NS-CI-C004", "kind": "supports"},
+    {"source": "NS-CI-L003", "target": "NS-CI-C004", "kind": "supports"},
+    {"source": "NS-CI-D001", "target": "NS-CI-O005", "kind": "fixes_target_space"},
+    {"source": "NS-CI-D000", "target": "NS-CI-L006", "kind": "defines_scaling_context"},
+    {"source": "NS-CI-D001", "target": "NS-CI-C007", "kind": "fixes_mixed_norm"},
+    {"source": "NS-CI-L006", "target": "NS-CI-C007", "kind": "supports"},
+    {"source": "NS-CI-D000", "target": "NS-CI-L008", "kind": "supplies_solution_class"},
+    {"source": "NS-CI-D001", "target": "NS-CI-L008", "kind": "supplies_exponents"},
+    {"source": "NS-CI-L008", "target": "NS-CI-L009", "kind": "controlled_solution_class"},
+    {"source": "NS-CI-L008", "target": "NS-CI-L010", "kind": "regularity_input"},
+    {"source": "NS-CI-L009", "target": "NS-CI-L010", "kind": "uniqueness_input"},
+    {"source": "NS-CI-L002", "target": "NS-CI-B011", "kind": "weak_existence_and_energy"},
+    {"source": "NS-CI-L008", "target": "NS-CI-B011", "kind": "regularity_input"},
+    {"source": "NS-CI-L009", "target": "NS-CI-B011", "kind": "identification_input"},
+    {"source": "NS-CI-L010", "target": "NS-CI-B011", "kind": "continuation_input"},
+    {"source": "NS-CI-D000", "target": "NS-CI-B012", "kind": "official_smooth_class"},
+    {"source": "NS-CI-L009", "target": "NS-CI-B012", "kind": "every_weak_solution_input"},
+    {"source": "NS-CI-C004", "target": "NS-CI-T013", "kind": "available_baseline"},
+    {"source": "NS-CI-O005", "target": "NS-CI-T013", "kind": "blocks_generic_shortcut"},
+    {"source": "NS-CI-C007", "target": "NS-CI-T013", "kind": "establishes_criticality"},
+    {"source": "NS-CI-L010", "target": "NS-CI-T013", "kind": "establishes_continuation_consequence"},
+    {"source": "NS-CI-B011", "target": "NS-CI-T013", "kind": "establishes_clay_significance"},
+    {"source": "NS-CI-T013", "target": "NS-CI-R-COMPACT", "kind": "restricts_data_class"},
+    {"source": "NS-CI-L008", "target": "NS-CI-R014", "kind": "bounds_target_selection"},
+    {"source": "NS-CI-L010", "target": "NS-CI-R014", "kind": "bounds_target_selection"},
+    {"source": "NS-CI-B011", "target": "NS-CI-R014", "kind": "measures_leverage"}
+  ]
+}
