@@ -12,6 +12,8 @@ from validate_docs import (
     ROOT,
     authority_contract_errors,
     domain_contract_errors,
+    governed_campaign_entry_errors,
+    governed_root_wp00_entries,
     local_link_targets,
     nav_documents,
     rendered_h1_count,
@@ -35,10 +37,29 @@ def main() -> int:
         path.write_text("# Title\n\n<h1>Duplicate</h1>\n", encoding="utf-8")
         assert rendered_h1_count(path) == 2
 
+        root = Path(directory)
+        governed = root / "TEST-WP00-source-normalization-audit.md"
+        governed.write_text(
+            "# Test\n\n**Artifact ID:** `TEST-WP00`\n"
+            "**Challenge:** Test\n"
+            "**Claim class:** `SOURCE-NORMALIZED / NON-SOLUTION ARTIFACT`\n",
+            encoding="utf-8",
+        )
+        noise = root / "NOT-WP00-notes.md"
+        noise.write_text("# Notes\n", encoding="utf-8")
+        assert governed_root_wp00_entries(root) == {governed.name}
+
     registry = yaml.safe_load((ROOT / "DOMAIN_REGISTRY.yaml").read_text(encoding="utf-8"))
     nav = nav_documents()
     assert not domain_contract_errors(registry, nav)
     assert not authority_contract_errors()
+
+    discovered = governed_root_wp00_entries()
+    assert {
+        "YM-WP00-source-normalization-equivalence-audit.md",
+        "PNP-WP00-source-definition-equivalence-audit.md",
+        "RH-WP00-source-normalization-equivalence-audit.md",
+    } <= discovered
 
     duplicate_number = copy.deepcopy(registry)
     duplicate_number["domains"][1]["programme_number"] = duplicate_number["domains"][0][
@@ -61,6 +82,16 @@ def main() -> int:
     assert any(
         "does not resolve uniquely" in error
         for error in domain_contract_errors(missing_adr, nav)
+    )
+
+    missing_governed_campaign = copy.deepcopy(registry)
+    missing_governed_campaign["domains"] = [
+        domain for domain in missing_governed_campaign["domains"] if domain["domain_id"] != "YM"
+    ]
+    assert any(
+        "YM-WP00-source-normalization-equivalence-audit.md" in error
+        and "missing from DOMAIN_REGISTRY.yaml" in error
+        for error in governed_campaign_entry_errors(missing_governed_campaign)
     )
 
     print("documentation validator rejection tests passed")
