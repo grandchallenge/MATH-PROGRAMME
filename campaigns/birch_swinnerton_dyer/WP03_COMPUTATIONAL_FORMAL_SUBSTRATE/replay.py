@@ -229,6 +229,8 @@ def main() -> int:
            load(FIXTURES / "invalid_universal_from_finite.json"))
     reject("numerical-only certificate", validate_certificate,
            load(FIXTURES / "invalid_certificate_numerical_only.json"), records)
+    reject("noncomposable WP02 interface", validate_certificate,
+           load(FIXTURES / "invalid_certificate_noncomposable_interface.json"), records)
     reject("open BSD axiom in formal interface", validate_formal,
            load(FIXTURES / "invalid_formal_open_axiom.json"), interfaces)
     print("BSD-WP03 substrate replay passed")
