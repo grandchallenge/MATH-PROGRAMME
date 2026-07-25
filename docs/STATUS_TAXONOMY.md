@@ -26,6 +26,8 @@ This vocabulary applies to governed documents and artifacts, not directly to the
 
 An artifact may be `completed` while its target conjecture remains open. A publication may be `published` while explicitly making no novelty claim.
 
+Repository review, CI success, pull-request merge, and public navigation are evidence about an artifact's documentary integration. They are not additional mathematical support levels. Where an immutable artifact preserves its pre-merge wording, the [Campaign Promotion Register](CAMPAIGN_PROMOTION_REGISTER.md) records the current documentary disposition.
+
 ## Campaign disposition
 
 Disposition is a human-readable campaign qualification, such as:
@@ -49,6 +51,6 @@ The programme has three mathematical execution pillars:
 
 Before relying on a status word, ask:
 
-1. Does it describe a mathematical claim, an artifact lifecycle, or a campaign disposition?
-2. Which support route or review record governs it?
+1. Does it describe a mathematical claim, an artifact lifecycle, a campaign disposition, or merely repository integration?
+2. Which support route, review record, decision, or promotion register governs it?
 3. What nearby stronger statement is explicitly excluded?
