@@ -22,6 +22,11 @@ CORE_CAMPAIGN_AGENTS = (
     "Amanuensis",
     "Referee",
 )
+# Legacy campaign reviews use several pre-contract formats. Add a record here only
+# after it has been migrated to schemas/agent_review.schema.json.
+SCHEMA_BOUND_AGENT_REVIEWS = (
+    "reviews/union_closed/UC-WP01.agent_review.yaml",
+)
 
 
 def load_json(path: Path) -> Any:
@@ -205,11 +210,14 @@ def main() -> int:
         for error in schema_errors(agent_review_template, "agent_review.schema.json")
     )
 
-    review_paths = sorted((ROOT / "reviews").rglob("*.agent_review.yaml"))
+    review_paths = [ROOT / relative for relative in SCHEMA_BOUND_AGENT_REVIEWS]
     if not review_paths:
-        errors.append("reviews: no governed Agent Council review records found")
+        errors.append("reviews: no schema-bound Agent Council review records registered")
     for review_path in review_paths:
         relative = review_path.relative_to(ROOT).as_posix()
+        if not review_path.is_file():
+            errors.append(f"{relative}: registered Agent Council review record is missing")
+            continue
         review = yaml.safe_load(review_path.read_text(encoding="utf-8"))
         errors.extend(
             f"{relative}: {error}"
@@ -262,7 +270,10 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"programme validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print("programme classification, discovery, foundation, and Agent Council contracts are valid")
+    print(
+        "programme classification, discovery, foundation, and schema-bound "
+        "Agent Council contracts are valid"
+    )
     return 0
 
 
