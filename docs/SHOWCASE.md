@@ -129,12 +129,12 @@ The fixture proves that a serialized witness can be checked and adversarially mu
 
 The checker distinguishes ideal membership from radical membership and preserves the false broader statement with its countermodel.
 
-## Executable fixture 003 · Logarithmic GCD kernel
+## Fixture 003: The logarithmic GCD kernel
 
 <div class="fixture-showcase" aria-label="LOG-GCD-001 published certified Lean result">
   <header class="fixture-showcase__header">
     <div>
-      <span class="fixture-showcase__index">PUB-LOG-GCD-001 · publication status: published</span>
+      <span class="fixture-showcase__index">Fixture 003 · PUB-LOG-GCD-001 · Publication status: published</span>
       <h3>Classical mathematics · certified formal artifact</h3>
     </div>
     <a href="LOG_GCD_PUBLICATION.md">Read the public note <span>→</span></a>
@@ -152,6 +152,17 @@ The checker distinguishes ideal membership from radical membership and preserves
     <div class="fixture-route__stage fixture-route__stage--checked"><span>02 · Formal artifact</span><strong>Certified</strong><p>Lean checks positive semidefiniteness and the exact finite-support Gram realization.</p></div>
     <b aria-hidden="true">→</b>
     <div class="fixture-route__stage fixture-route__stage--checked"><span>03 · Public claim</span><strong>Published</strong><p>The publication gate preserves every exclusion and makes no novelty claim.</p></div>
+  </div>
+
+  <div class="fixture-rejections">
+    <span>No novelty or priority claim</span>
+    <ul>
+      <li>not a new theorem</li>
+      <li>not a novel kernel</li>
+      <li>not a first proof</li>
+      <li>not a first feature representation</li>
+      <li>not a first Lean formalization</li>
+    </ul>
   </div>
 </div>
 
