@@ -82,7 +82,7 @@ Campaign-specific phrases such as `referee_promoted_conditional` belong in `arti
 
 - Governing instruction: implement the complete documentation consistency repair, 2026-07-24.
 - Source audit: cross-document review of the UC-WP01 ledger, ADRs, validator, schemas, review record, status spine, downstream handoff, and MkDocs navigation.
-- Repository integration: recorded by the pull request carrying this ADR.
+- Repository integration: pull request 85, branch `agent/documentation-consistency-repair`.
 
 ## Supersedes
 
