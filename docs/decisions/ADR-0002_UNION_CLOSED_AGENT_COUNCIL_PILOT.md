@@ -31,15 +31,16 @@ The review record references existing proofs, certificates, claim ledgers, and s
 1. One authoritative review record per governed Work Package state.
 2. One dependency DAG containing only promotion-relevant nodes.
 3. Nonblocking obligations remain visible without halting useful work.
-4. A new review version is required only when mathematical status, representation, dependencies, or promotion state materially changes.
+4. A new review version is required only when mathematical status, representation, dependencies, promotion state, or governing contract materially changes.
 5. Council review cannot upgrade mathematical claim status without the relevant proof or certificate route.
 
 ## Consequences
 
 - `UC-WP01` becomes the first battle-tested council-governed mathematical artifact.
-- CI validates all committed Agent Council review records, not only the blank template.
+- CI validates explicitly schema-bound Agent Council review records registered in `SCHEMA_BOUND_AGENT_REVIEWS`; committed legacy review formats are not covered until migrated and registered.
 - Promotion semantics reject blocking unresolved obligations, incomplete continuity control, or unreviewed core campaign offices.
 - The pilot yields a reusable pattern for later Union-Closed Work Packages without requiring a new governance document for routine changes.
+- The completed WP02/MATHCERT handoff does not retroactively change WP01 into a theorem package.
 
 ## Unresolved obligations
 
@@ -47,6 +48,7 @@ The review record references existing proofs, certificates, claim ledgers, and s
 - Any finite-range extension requires an independent replay and new ledger entry.
 - Finite-set and lattice formulations require explicit correspondence lemmas before claims transfer between them.
 - Any original theorem claim requires a fresh novelty and contribution-boundary review.
+- Legacy campaign review formats require individual migration before schema-bound CI registration.
 
 ## Affected artifacts
 
@@ -62,7 +64,10 @@ The review record references existing proofs, certificates, claim ledgers, and s
 
 - Governing instruction: apply the council to the Union-Closed campaign without bureaucratic overhead, 2026-07-17.
 - Existing mathematical evidence: WP01 status spine, WP02 formal handoff, claim ledger, bounded exact audit, and MATHCERT replay route.
+- Review record: `reviews/union_closed/UC-WP01.agent_review.yaml`.
+- Initial repository integration: pull request 51.
+- Contract normalization and temporal repair: `ADR-0007`.
 
 ## Supersedes
 
-No prior campaign-pilot decision record.
+No prior campaign-pilot decision record. CI-scope, decision-storage, lifecycle, and temporal language are subsequently normalized by `ADR-0007` without changing the pilot's mathematical claim boundary.
