@@ -3,39 +3,44 @@ artifact:
   type: work_package
   title: Computational and formal substrate
   pillar: MATH-PROGRAMME
-  status: review_ready
+  status: referee_promoted
 
 council_review:
   Axiomatist: {status: reviewed, obligations: [], findings: [Certificate, experiment, and formal-interface propositions are disjoint.]}
-  Prospector: {status: reviewed, obligations: [], findings: [Future theorem applications must import composable WP02 records only.]}
-  Experimentalist: {status: reviewed, obligations: [], findings: [Finite snapshots and population counts are mandatory.]}
-  Cartographer: {status: reviewed, obligations: [], findings: [Trust lattice has no finite-to-universal path.]}
-  Verifier: {status: reviewed, obligations: [], findings: [Positive and adversarial replay fixtures are specified.]}
-  Adversary: {status: reviewed, obligations: [], findings: [Universal, numerical-only, and open-axiom promotions are rejected.]}
-  Formalist: {status: reviewed, obligations: [], findings: [Five formal interfaces avoid open BSD axioms.]}
+  Prospector: {status: reviewed, obligations: [], findings: [Certificate imports are resolved against exact WP02 records and composition states.]}
+  Experimentalist: {status: reviewed, obligations: [], findings: [Finite snapshots require content-addressed identity, exact query, outputs, and population count.]}
+  Cartographer: {status: reviewed, obligations: [], findings: [The allowed-edge graph has no path from finite or certified substrate classes to universal BSD.]}
+  Verifier: {status: reviewed, obligations: [], findings: [Three positive and five adversarial cases replay successfully.]}
+  Adversary: {status: reviewed, obligations: [], findings: [Universal, numerical-only, noncomposable-source, open-assumption, and hidden-promotion routes are rejected.]}
+  Formalist: {status: reviewed, obligations: [], findings: [Five formal interfaces avoid open BSD assumptions across imports and axioms.]}
   Steward: {status: reviewed, obligations: [], findings: [Mechanism, novelty, and WP04 gates remain closed.]}
-  Composer: {status: reviewed, obligations: [], findings: [Schemas, fixtures, replay, policy, debt, and handoff form one package.]}
-  Grammarian: {status: reviewed, obligations: [], findings: [Verification, certification, and theorem language remain distinct.]}
-  Amanuensis: {status: reviewed, obligations: [], findings: [WP00-WP03 boundaries and identifiers agree.]}
-  Archivist: {status: reviewed, obligations: [], findings: [No historical or priority claim is introduced.]}
+  Composer: {status: reviewed, obligations: [], findings: [Schemas, fixtures, replay, policy, debt, workflow, and handoff form one package.]}
+  Grammarian: {status: reviewed, obligations: [], findings: [Observation, experiment, candidate, certificate, interface, and theorem language remain distinct.]}
+  Amanuensis: {status: reviewed, obligations: [], findings: [WP00-WP03 identifiers, domain records, review state, and ledger agree.]}
+  Archivist: {status: reviewed, obligations: [], findings: [No historical, novelty, or priority claim is introduced.]}
   Mechanist: {status: reviewed, obligations: [], findings: [No mechanism or restricted target is selected.]}
-  Typesetter: {status: reviewed, obligations: [], findings: [Complete-L and p-primary notation remain explicit.]}
-  Referee: {status: pending, obligations: [Independently replay the substrate and test the trust-boundary gates.], findings: []}
+  Typesetter: {status: reviewed, obligations: [], findings: [Complete-L, p-primary, curve-model, and trust-class notation are explicit.]}
+  Referee: {status: reviewed, obligations: [], findings: [Independent reconstruction confirms fail-closed theorem-ledger coupling and promotion boundaries.]}
 
 amanuensis_control:
   artifact_ledger: {ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md, entry_id: BSD-WP03}
   decision_record_refs: [ADR-0005]
   terminology_registry: {registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md, terms_introduced_or_changed: []}
-  review_provenance: {complete: false, evidence_refs: [MATH-PROGRAMME#66]}
+  review_provenance:
+    complete: true
+    evidence_refs:
+      - MATH-PROGRAMME#66
+      - MATH-PROGRAMME#83
+      - workflow:grandchallenge/MATH-PROGRAMME/30138932356
+      - workflow:grandchallenge/MATH-PROGRAMME/30138932345
   cross_document_consistency:
     status: reviewed
-    checked_against: [BSD-WP00, BSD-WP01, BSD-WP02]
+    checked_against: [BSD-WP00, BSD-WP01, BSD-WP02, DOMAIN_04_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md]
     conflicts: []
   final_editorial_integration:
-    status: pending
+    status: reviewed
     integrated_artifact_ref: campaigns/birch_swinnerton_dyer/WP03_COMPUTATIONAL_FORMAL_SUBSTRATE/00_README.md
 
-unresolved_obligations:
-  - {id: BSD-WP03-R001, owner: Referee, description: Independent substrate replay and trust-boundary review., severity: high, blocking: true}
+unresolved_obligations: []
 
-promotion: {ready_for_next_stage: false, blockers: [BSD-WP03-R001], certification_route: deterministic replay plus semantic Referee review}
+promotion: {ready_for_next_stage: true, blockers: [], certification_route: deterministic replay plus semantic Referee review}
