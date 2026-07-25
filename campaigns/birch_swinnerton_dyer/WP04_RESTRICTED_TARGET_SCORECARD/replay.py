@@ -145,15 +145,18 @@ def validate_gates(gates, target_id):
     if gates["selected_target_id"] != target_id:
         raise ContractError("gate target mismatch")
     expected = {
-        "target_selection": "PROVISIONAL_PENDING_REFEREE",
+        "target_selection": "REFEREE_SELECTED",
         "target_truth": "UNPROVED",
         "mechanism_generation": "CLOSED",
         "novelty_claims": "CLOSED",
         "universal_BSD": "OPEN_PROBLEM_UNCHANGED",
+        "wp05": "ELIGIBLE_BUT_UNAUTHORIZED",
     }
     for key, value in expected.items():
         if gates["states"].get(key) != value:
             raise ContractError(f"gate {key} must be {value}")
+    if gates["next_stage"].get("authorization") != "REQUIRES_SEPARATE_USER_AUTHORIZATION":
+        raise ContractError("WP05 authorization boundary drift")
 
 
 def validate_nonvacuity(witness, target_id):
