@@ -98,11 +98,11 @@ hide:
 <section class="gc-section gc-section--current">
   <div class="gc-section__heading">
     <p class="gc-kicker">The current portfolio</p>
-    <h2>Five domains, each with a different claim boundary.</h2>
+    <h2>Eight domains, each with a different claim boundary.</h2>
   </div>
   <div class="domain-brief">
-    <div class="domain-brief__identity"><span>Domains 01–05</span><strong>Open campaigns and a solved-problem archive</strong><p>One method, distinct mathematical states.</p></div>
-    <div class="domain-brief__body"><p>Union-Closed Sets remains the foundational demonstration domain. Navier–Stokes, Hodge, and Birch–Swinnerton-Dyer are open campaigns. Poincaré is a qualified reconstruction archive for a solved classical theorem.</p><a class="text-link" href="domains/">Inspect the domain catalogue <span>→</span></a></div>
+    <div class="domain-brief__identity"><span>Domains 01–08</span><strong>Open campaigns and a solved-problem archive</strong><p>One method, distinct mathematical states.</p></div>
+    <div class="domain-brief__body"><p>Union-Closed Sets remains the foundational demonstration domain. Navier–Stokes, Hodge, Birch–Swinnerton-Dyer, Yang–Mills, P versus NP, and the Riemann Hypothesis are open campaigns. Poincaré is a qualified reconstruction archive for a solved classical theorem.</p><a class="text-link" href="domains/">Inspect the domain catalogue <span>→</span></a></div>
   </div>
 </section>
 
