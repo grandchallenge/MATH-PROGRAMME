@@ -31,12 +31,19 @@ REQUIRED_REPOSITORY_DOCS = {
     "MATHCERT_SPEC.md",
     "MATHFORGE_SPEC.md",
     "MATHSOLVE_SPEC.md",
+    "PNP-WP00-source-definition-equivalence-audit.md",
+    "RH-WP00-source-normalization-equivalence-audit.md",
     "THURSTONIAN_ETHOS.md",
     "WP01_UNION_CLOSED_STATUS_SPINE.md",
     "WP02_UNION_CLOSED_LEAN_HANDOFF.md",
+    "YM-WP00-source-normalization-equivalence-audit.md",
 }
 
-EXPECTED_DOMAIN_IDS = {"UC", "NSCI", "HC", "BSD", "PC"}
+GOVERNED_ROOT_WP00_MARKERS = (
+    "**Artifact ID:**",
+    "**Challenge:**",
+    "**Claim class:** `SOURCE-NORMALIZED / NON-SOLUTION ARTIFACT`",
+)
 REQUIRED_STATUS_TERMS = {
     "Claim and support status",
     "Artifact lifecycle status",
@@ -119,6 +126,28 @@ def duplicate_values(values: list[Any]) -> set[Any]:
     return duplicates
 
 
+def governed_root_wp00_entries(root: Path = ROOT) -> set[str]:
+    """Discover integrated source-normalized root WP00 campaign dossiers."""
+    entries: set[str] = set()
+    for path in root.glob("*-WP00-*.md"):
+        text = path.read_text(encoding="utf-8")
+        if all(marker in text for marker in GOVERNED_ROOT_WP00_MARKERS):
+            entries.add(path.name)
+    return entries
+
+
+def governed_campaign_entry_errors(registry: dict[str, Any], root: Path = ROOT) -> list[str]:
+    canonical_entries = {
+        domain.get("canonical_entry")
+        for domain in registry.get("domains", [])
+        if domain.get("canonical_entry")
+    }
+    return [
+        f"{entry}: governed root WP00 campaign is missing from DOMAIN_REGISTRY.yaml"
+        for entry in sorted(governed_root_wp00_entries(root) - canonical_entries)
+    ]
+
+
 def domain_contract_errors(registry: dict[str, Any], nav: set[str]) -> list[str]:
     errors: list[str] = []
     domains = registry.get("domains", [])
@@ -133,16 +162,17 @@ def domain_contract_errors(registry: dict[str, Any], nav: set[str]) -> list[str]
         ("slug", slugs),
         ("campaign_id", campaigns),
     ):
+        if any(value in {None, ""} for value in values):
+            errors.append(f"DOMAIN_REGISTRY.yaml: every domain requires a nonempty {label}")
         for duplicate in sorted(duplicate_values(values), key=str):
             errors.append(f"DOMAIN_REGISTRY.yaml: duplicate {label}: {duplicate}")
 
-    if set(ids) != EXPECTED_DOMAIN_IDS:
-        errors.append(
-            "DOMAIN_REGISTRY.yaml: canonical domain set must be "
-            + ", ".join(sorted(EXPECTED_DOMAIN_IDS))
-        )
-    if sorted(numbers) != list(range(1, len(domains) + 1)):
+    if not all(isinstance(number, int) for number in numbers):
+        errors.append("DOMAIN_REGISTRY.yaml: programme_number values must be integers")
+    elif sorted(numbers) != list(range(1, len(domains) + 1)):
         errors.append("DOMAIN_REGISTRY.yaml: programme_number values must be contiguous from 1")
+
+    errors.extend(governed_campaign_entry_errors(registry))
 
     decision_index = (DOCS / "AGENT_COUNCIL_DECISION_RECORDS.md").read_text(encoding="utf-8")
     catalogue = (DOCS / "domains" / "index.md").read_text(encoding="utf-8")
@@ -213,6 +243,10 @@ def authority_contract_errors() -> list[str]:
     manifest = (ROOT / "FILE_MANIFEST.md").read_text(encoding="utf-8")
     if "Current governed inventory" not in manifest:
         errors.append("FILE_MANIFEST.md: missing current governed inventory status")
+
+    promotion_register = DOCS / "CAMPAIGN_PROMOTION_REGISTER.md"
+    if not promotion_register.is_file():
+        errors.append("docs/CAMPAIGN_PROMOTION_REGISTER.md: current promotion register is missing")
 
     return errors
 

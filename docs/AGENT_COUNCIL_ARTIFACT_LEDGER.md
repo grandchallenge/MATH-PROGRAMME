@@ -26,8 +26,9 @@ Every governed artifact receives:
 
 | Artifact ID | Type | Pillar | Authoritative integrated artifact | Status / disposition | Decision records | Terminology registry | Review record | Last integrated | Amanuensis state |
 |---|---|---|---|---|---|---|---|---|---|
-| GOV-AGENT-COUNCIL-001 | governance bundle | MATH-PROGRAMME | `docs/MATH_PROGRAMME_AGENT_COUNCIL.md` | active | `ADR-0001`; `ADR-0007`; `ADR-0008` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `templates/agent_review.yaml` | 2026-07-24 | reviewed |
-| DOCS-PUBLIC-001 | documentation bundle | MATH-PROGRAMME | `docs/domains/index.md` | ready for next stage; maximum coverage repair complete; merge pending | `ADR-0008` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml` | 2026-07-24 | reviewed |
+| GOV-AGENT-COUNCIL-001 | governance bundle | MATH-PROGRAMME | `docs/MATH_PROGRAMME_AGENT_COUNCIL.md` | active | `ADR-0001`; `ADR-0007`; `ADR-0008`; `ADR-0009` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `templates/agent_review.yaml` | 2026-07-25 | reviewed |
+| DOCS-PUBLIC-001 | documentation bundle | MATH-PROGRAMME | `docs/domains/index.md` | completed; PR #87 merged; post-merge audit closed with eight-domain coverage | `ADR-0008`; `ADR-0009` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml` | 2026-07-25 | reviewed |
+| PROMOTION-REGISTER-001 | documentary promotion register | MATH-PROGRAMME | `docs/CAMPAIGN_PROMOTION_REGISTER.md` | active; current repository disposition for immutable pre-merge campaign snapshots | `ADR-0009` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml` | 2026-07-25 | reviewed |
 | UC-WP01 | work package | MATHSOLVE | `WP01_UNION_CLOSED_STATUS_SPINE.md` | completed; WP02/MATHCERT handoff discharged | `ADR-0002`; `ADR-0007` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/union_closed/UC-WP01.agent_review.yaml` | 2026-07-24 | reviewed |
 | CERT-LOG-GCD-001 | formal certificate fixture | MATHCERT | `fixtures/formal/LOG-GCD-001/README.md` | certified | none | `docs/GLOSSARY.md` | `fixtures/formal/LOG-GCD-001/agent_review.yaml` | 2026-07-23 | reviewed |
 | PUB-LOG-GCD-001 | public research note | MATH-PROGRAMME | `docs/LOG_GCD_PUBLICATION.md` | published | none | `docs/GLOSSARY.md` | `fixtures/formal/LOG-GCD-001/agent_review.yaml` | 2026-07-23 | reviewed |
@@ -53,6 +54,9 @@ Every governed artifact receives:
 | PC-WP04-REFEREE-DECISION | promotion decision | MATH-PROGRAMME | `campaigns/poincare_reconstruction/PC_WP04_REFEREE_DECISION.md` | wp05_closure_audit_authorized | `ADR-0006`; `PC-WP04-REFEREE-DECISION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP04.agent_review.yaml` | 2026-07-24 | reviewed |
 | PC-WP05 | archival closure work package | MATH-PROGRAMME | `campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/00_README.md` | referee_promoted_qualified_archive | `ADR-0006`; `PC-WP05-REFEREE-DECISION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP05.agent_review.yaml` | 2026-07-24 | reviewed |
 | ARCHIVE-PC-001 | solved-problem research archive | MATH-PROGRAMME | `docs/POINCARE_RECONSTRUCTION_ARCHIVE.md` | ready_for_qualified_archival_publication | `ADR-0006`; `PC-WP05-REFEREE-DECISION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP05.agent_review.yaml` | 2026-07-24 | reviewed |
+| YM-WP00-source-normalization-equivalence-audit | work package | MATHSOLVE | `YM-WP00-source-normalization-equivalence-audit.md` | documentary repository gate discharged; source-normalized non-solution dossier promoted | `ADR-0009` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | embedded role review; `docs/CAMPAIGN_PROMOTION_REGISTER.md` | 2026-07-25 | reviewed |
+| PNP-WP00-source-definition-equivalence-audit | work package | MATHSOLVE | `PNP-WP00-source-definition-equivalence-audit.md` | documentary repository gate discharged; source, machine, encoding, and equivalence dossier promoted | `ADR-0009` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | embedded role review; `docs/CAMPAIGN_PROMOTION_REGISTER.md` | 2026-07-25 | reviewed |
+| RH-WP00-source-normalization-equivalence-audit | work package | MATHSOLVE | `RH-WP00-source-normalization-equivalence-audit.md` | documentary repository gate discharged; source, function, zero, and equivalence dossier promoted | `ADR-0009` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | embedded role review; `docs/CAMPAIGN_PROMOTION_REGISTER.md` | 2026-07-25 | reviewed |
 
 ## Update rules
 
@@ -64,4 +68,5 @@ Every governed artifact receives:
 6. Mathematical promotion is never inferred from ledger status alone.
 7. Publication status changes visibility and editorial readiness; it does not change the underlying claim status.
 8. Schema-bound review lifecycle tokens and campaign-specific ledger dispositions remain distinct under `ADR-0007`.
-9. Public documentation coverage and authority are governed by `ADR-0008` and the schema-bound `DOCS-PUBLIC-001` review.
+9. Public documentation coverage and authority are governed by `ADR-0008`, `ADR-0009`, and the schema-bound `DOCS-PUBLIC-001` review.
+10. A governed root WP00 campaign dossier must appear in the domain registry and public documentation routes; repository merge changes documentary disposition only.
