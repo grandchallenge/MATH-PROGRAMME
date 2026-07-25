@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "BSD-WP03-DATABASE-EXPERIMENT-SCHEMA",
+  "required": [
+    "schema_version",
+    "artifact_id",
+    "trust_class",
+    "status",
+    "scope",
+    "snapshot",
+    "selection",
+    "population_count",
+    "software",
+    "outputs",
+    "claim_boundary"
+  ],
+  "enums": {
+    "trust_class": ["finite_database_experiment"],
+    "status": ["PLANNED", "EXECUTED", "REJECTED"],
+    "scope": ["finite_snapshot"],
+    "output_class": ["descriptive", "falsifying_search", "implementation_check", "hypothesis_generation"]
+  },
+  "hard_requirements": [
+    "population_count is a positive integer",
+    "snapshot has immutable identifier, source, and retrieval date",
+    "selection has exact query and inclusion rule",
+    "universal_claim must be false",
+    "outputs must name their finite population"
+  ],
+  "prohibited_promotions": [
+    "finite frequency to density theorem",
+    "finite database to all elliptic curves",
+    "database analytic-rank label to rigorous analytic-rank certificate",
+    "absence of counterexamples to proof"
+  ]
+}
