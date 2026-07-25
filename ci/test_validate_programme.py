@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import copy
 
+import yaml
+
 from validate_programme import (
     ROOT,
     SCHEMA_BOUND_AGENT_REVIEWS,
@@ -19,8 +21,6 @@ def fixtures():
     source_registry = load_json(ROOT / "classification" / "source_registry.json")
     graph = load_json(ROOT / "knowledge_graph" / "union_closed.json")
     mappings = load_json(ROOT / "classification" / "mappings" / "union_closed.json")
-    import yaml
-
     domains = yaml.safe_load((ROOT / "DOMAIN_REGISTRY.yaml").read_text(encoding="utf-8"))
     candidate = load_json(ROOT / "examples" / "candidate_problem_union_closed.json")
     agent_review = yaml.safe_load((ROOT / "templates" / "agent_review.yaml").read_text(encoding="utf-8"))
@@ -29,7 +29,21 @@ def fixtures():
             encoding="utf-8"
         )
     )
-    return source_registry, graph, mappings, domains, [candidate], agent_review, governed_review
+    documentation_review = yaml.safe_load(
+        (ROOT / "reviews" / "documentation" / "MKDOCS-COVERAGE.agent_review.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    return (
+        source_registry,
+        graph,
+        mappings,
+        domains,
+        [candidate],
+        agent_review,
+        governed_review,
+        documentation_review,
+    )
 
 
 def main() -> int:
@@ -41,15 +55,14 @@ def main() -> int:
         candidates,
         agent_review,
         governed_review,
+        documentation_review,
     ) = fixtures()
 
     duplicate_graph = copy.deepcopy(graph)
     duplicate_graph["nodes"].append(copy.deepcopy(duplicate_graph["nodes"][0]))
     assert any(
         "duplicate graph node_id" in error
-        for error in validate_documents(
-            source_registry, duplicate_graph, mappings, domains, candidates
-        )
+        for error in validate_documents(source_registry, duplicate_graph, mappings, domains, candidates)
     )
 
     dangling_graph = copy.deepcopy(graph)
@@ -72,18 +85,14 @@ def main() -> int:
     multiple_primary["mappings"].append(second_primary)
     assert any(
         "multiple primary MSC mappings" in error
-        for error in validate_documents(
-            source_registry, graph, multiple_primary, domains, candidates
-        )
+        for error in validate_documents(source_registry, graph, multiple_primary, domains, candidates)
     )
 
     unaudited_primary = copy.deepcopy(mappings)
     unaudited_primary["mappings"][0]["review_status"] = "PROPOSED"
     assert any(
         "primary mapping must be AUDITED" in error
-        for error in validate_documents(
-            source_registry, graph, unaudited_primary, domains, candidates
-        )
+        for error in validate_documents(source_registry, graph, unaudited_primary, domains, candidates)
     )
 
     invalid_profile_candidates = copy.deepcopy(candidates)
@@ -174,6 +183,7 @@ def main() -> int:
 
     assert SCHEMA_BOUND_AGENT_REVIEWS == (
         "reviews/union_closed/UC-WP01.agent_review.yaml",
+        "reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml",
     )
     assert not schema_bound_review_registry_errors(SCHEMA_BOUND_AGENT_REVIEWS)
     assert any(
@@ -191,20 +201,24 @@ def main() -> int:
         for error in schema_bound_review_registry_errors(("reviews/union_closed/review.json",))
     )
 
-    assert not schema_errors(governed_review, "agent_review.schema.json")
-    assert not agent_review_semantic_errors(governed_review, "UC-WP01")
+    for label, review in (
+        ("UC-WP01", governed_review),
+        ("DOCS-PUBLIC-001", documentation_review),
+    ):
+        assert not schema_errors(review, "agent_review.schema.json")
+        assert not agent_review_semantic_errors(review, label)
 
-    pending_verifier = copy.deepcopy(governed_review)
+    pending_verifier = copy.deepcopy(documentation_review)
     pending_verifier["council_review"]["Verifier"]["status"] = "pending"
     assert any(
         "promotion requires Verifier status reviewed" in error
-        for error in agent_review_semantic_errors(pending_verifier, "UC-WP01")
+        for error in agent_review_semantic_errors(pending_verifier, "DOCS-PUBLIC-001")
     )
 
-    blocking_obligation = copy.deepcopy(governed_review)
+    blocking_obligation = copy.deepcopy(documentation_review)
     blocking_obligation["unresolved_obligations"].append(
         {
-            "id": "UC-WP01-TEST-BLOCKER",
+            "id": "DOCS-PUBLIC-001-TEST-BLOCKER",
             "owner": "Adversary",
             "description": "Synthetic blocking obligation for rejection testing.",
             "severity": "critical",
@@ -212,15 +226,15 @@ def main() -> int:
         }
     )
     assert any(
-        "blocking obligation UC-WP01-TEST-BLOCKER" in error
-        for error in agent_review_semantic_errors(blocking_obligation, "UC-WP01")
+        "blocking obligation DOCS-PUBLIC-001-TEST-BLOCKER" in error
+        for error in agent_review_semantic_errors(blocking_obligation, "DOCS-PUBLIC-001")
     )
 
-    blocked_agent = copy.deepcopy(governed_review)
+    blocked_agent = copy.deepcopy(documentation_review)
     blocked_agent["council_review"]["Experimentalist"]["status"] = "blocked"
     assert any(
         "Experimentalist is blocked" in error
-        for error in agent_review_semantic_errors(blocked_agent, "UC-WP01")
+        for error in agent_review_semantic_errors(blocked_agent, "DOCS-PUBLIC-001")
     )
 
     print("programme validator rejection tests passed")
