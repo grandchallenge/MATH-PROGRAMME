@@ -2,7 +2,7 @@
 
 **Status:** Current governed inventory, edition 2026.07.
 
-This is a curated map of authoritative entry points, not an exhaustive recursive file listing. Exact repository contents remain available through version control. New campaign files do not become authoritative merely by appearing in the tree; authority is established by the domain registry, Agent Council artifact ledger, decision records, claim ledgers, and certification routes.
+This is a curated map of authoritative entry points, not an exhaustive recursive file listing. Exact repository contents remain available through version control. New campaign files do not become authoritative merely by appearing in the tree; authority is established by the domain registry, Agent Council artifact ledger, decision records, claim ledgers, promotion register, and certification routes.
 
 ## Programme architecture
 
@@ -35,7 +35,8 @@ This is a curated map of authoritative entry points, not an exhaustive recursive
 - `docs/AGENT_COUNCIL_DECISION_RECORDS.md`
 - `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md`
 - `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`
-- `docs/decisions/ADR-0001_*.md` through `ADR-0007_*.md`
+- `docs/CAMPAIGN_PROMOTION_REGISTER.md`
+- `docs/decisions/ADR-0001_*.md` through `ADR-0009_*.md`
 - `schemas/agent_review.schema.json`
 - `templates/agent_review.yaml`
 
@@ -46,12 +47,18 @@ This is a curated map of authoritative entry points, not an exhaustive recursive
 - `DOMAIN_03_HODGE_CONJECTURE_MASTER_PLAN.md`
 - `DOMAIN_04_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md`
 - `DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`
+- `YM-WP00-source-normalization-equivalence-audit.md`
+- `PNP-WP00-source-definition-equivalence-audit.md`
+- `RH-WP00-source-normalization-equivalence-audit.md`
 - `docs/domains/index.md`
 - `docs/domains/union_closed.md`
 - `docs/domains/navier_stokes.md`
 - `docs/domains/hodge.md`
 - `docs/domains/birch_swinnerton_dyer.md`
 - `docs/domains/poincare_reconstruction.md`
+- `docs/domains/yang_mills.md`
+- `docs/domains/p_vs_np.md`
+- `docs/domains/riemann_hypothesis.md`
 
 Historical filenames retained under decision control:
 
@@ -64,11 +71,16 @@ Historical filenames retained under decision control:
 - `campaigns/hodge_conjecture/`
 - `campaigns/birch_swinnerton_dyer/`
 - `campaigns/poincare_reconstruction/`
+- `campaigns/p_vs_np/`
+- `campaigns/riemann_hypothesis/`
 - `reviews/union_closed/`
 - `reviews/navier_stokes/`
 - `reviews/hodge_conjecture/`
 - `reviews/birch_swinnerton_dyer/`
 - `reviews/poincare/`
+- `reviews/documentation/`
+
+Yang–Mills currently uses its integrated root WP00 dossier as the complete campaign stack entry.
 
 ## Union-Closed formal and exact baseline
 
@@ -101,4 +113,4 @@ Historical filenames retained under decision control:
 
 ## Maintenance rule
 
-This manifest is updated when a canonical domain, governance contract, public result, or certification entry point changes. Routine internal files remain discoverable through the repository tree and need not be duplicated here.
+This manifest is updated when a canonical domain, governance contract, public result, campaign promotion register, or certification entry point changes. Routine internal files remain discoverable through the repository tree and need not be duplicated here.
