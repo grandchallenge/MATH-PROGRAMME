@@ -1,29 +1,43 @@
-version: 2
+version: 3
 name: agent_review
 machine_schema: schemas/agent_review.schema.json
-purpose: Records Agent Council review state and Amanuensis continuity control for programme artifacts.
+purpose: Records Agent Council review state and Amanuensis continuity control for schema-bound programme artifacts.
+
+binding:
+  rule: CI validates only records explicitly registered in SCHEMA_BOUND_AGENT_REVIEWS in ci/validate_programme.py.
+  legacy_boundary: Committed legacy review formats are not schema-bound until migrated and registered.
 
 artifact:
   id: nonempty string
   type:
-    enum:
+    format: stable snake_case string
+    examples:
       - work_package
       - theorem_spine
       - certificate
-      - research_artifact
+      - governance_bundle
+      - selected_research_target
   title: string
   pillar:
     enum:
       - MATHFORGE
       - MATHSOLVE
       - MATHCERT
+      - MATH-PROGRAMME
   status:
+    meaning: canonical lifecycle token
     enum:
       - draft
       - active
       - blocked
+      - ready_for_next_stage
       - ready_for_certification
       - certified
+      - completed
+      - selected
+      - published
+      - archived
+  disposition: optional nonempty campaign-specific qualification; not a lifecycle token
 
 council_review:
   required_agents:
@@ -97,6 +111,6 @@ unresolved_obligations:
 promotion:
   ready_for_next_stage: boolean
   blockers: list of strings
-  certification_route: string or null
+  certification_route: evidence or certification route string, or null
 
 promotion_rule: When ready_for_next_stage is true, the artifact ledger and integrated artifact references must be present, review provenance must be complete, cross-document consistency and final editorial integration must be reviewed, and blockers must be empty.

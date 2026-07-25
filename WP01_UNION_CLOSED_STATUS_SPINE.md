@@ -10,6 +10,8 @@
 
 **Claim status:** no new theorem claimed
 
+**Snapshot role:** completed baseline; downstream theorem and certificate status is maintained in WP02, WP04, WP05, and `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`.
+
 **Knowledge graph refs:** `UC-CONJECTURE-FRANKL`, `UC-WP01`
 
 **Classification mappings:** `UC-MAP-MSC-05D05`,
@@ -23,8 +25,9 @@ This Work Package is governed by the first Union-Closed Agent Council pilot.
 - Dependency DAG: `reviews/union_closed/UC-WP01.dependency_dag.yaml`
 - Council audit: `UC_WP01_AGENT_COUNCIL_AUDIT.md`
 - Amanuensis ledger ID: `UC-WP01`
-- Decision record: `ADR-0002`
-- Promotion state: ready for the existing WP02/MATHCERT handoff; no critical council blockers remain.
+- Decision records: `ADR-0002`, `ADR-0007`
+- Lifecycle state: `completed`
+- Promotion state: the WP02/MATHCERT handoff has been discharged; no critical council blockers remain.
 
 The council record is a governance index. Proofs, computations, source evidence, and claim status remain authoritative in their existing artifacts and are not duplicated in the review record.
 
@@ -65,7 +68,7 @@ Take a finite collection of sets. Suppose the collection has the following closu
 
 The problem is easy to understand because it is about ordinary finite sets. It is hard because union-closure is a global condition. It says what happens when sets combine, but it does not directly tell us how often any single element must appear. The conjecture predicts that the closure pressure cannot be evenly hidden across all elements.
 
-This Work Package does not prove the conjecture. It establishes the programme spine: the exact statement, known terrain, current partial-progress landscape, first finite sanity checks, formalization route, and the next certification target.
+This Work Package does not prove the conjecture. It establishes the programme spine: the exact statement, known terrain, current partial-progress landscape, first finite sanity checks, formalization route, and certification handoff boundary.
 
 ## 2. Formal problem statement
 
@@ -97,9 +100,11 @@ The conjecture is open in general. It was posed by Péter Frankl in 1979 and is 
 
 This matters for the programme because it shows that the field is not stagnant. There is active structure to learn from. But these constant-bound results remain below the conjectured `1/2` threshold.
 
+Date-sensitive literature status is governed by the Archivist refresh obligation in `reviews/union_closed/UC-WP01.agent_review.yaml` and the completed WP03 source audit recorded in the domain master plan.
+
 ## 4. Equivalent viewpoints
 
-The following viewpoints are relevant for future Work Packages:
+The following viewpoints are relevant for later Work Packages:
 
 ### Union-closed families
 
@@ -111,7 +116,7 @@ Taking complements relative to the universe converts union-closure into intersec
 
 ### Lattice formulation
 
-Union-closed families can be studied through finite lattices, join-irreducibles, and closure systems. This is mathematically rich but requires care before Lean formalization.
+Union-closed families can be studied through finite lattices, join-irreducibles, and closure systems. Transfer of claims requires explicit correspondence lemmas.
 
 ### Information-theoretic formulation
 
@@ -156,33 +161,35 @@ WP01 therefore sets a conservative posture:
 - use exact enumeration for tooling only;
 - use literature synthesis for status only;
 - use Lean definitions to control ambiguity;
-- reserve theorem claims for later packages.
+- reserve theorem claims for packages that contain the corresponding proof or certificate route.
 
-## 8. Certification boundary
+## 8. Certification boundary and downstream status
 
-This package contains:
+WP01 itself contains:
 
 - literature-derived claims;
 - exact small finite computation;
 - no new theorem;
-- no Lean-certified proof yet.
+- no Lean proof artifact inside WP01.
 
-The next certification movement is WP02: formal definitions and checked elementary lemmas.
+The handoff described by this baseline has since been completed. WP02 implements the Lean substrate and checked elementary lemmas; the independent exact replay certifies the `n <= 4` bounded result; WP04 and WP05 contain later restricted results. Those downstream artifacts, not this snapshot, govern their current proof and certificate status.
 
-## 9. MATHCERT handoff
+## 9. Implemented MATHCERT handoff
 
-The handoff should include:
+The original handoff is realized by:
 
 ```text
-UnionClosedFamily.lean
-Frequency.lean
-FranklStatement.lean
+MathCert/Domains/UnionClosed/Basic.lean
+MathCert/Domains/UnionClosed/Frequency.lean
+MathCert/Domains/UnionClosed/FranklStatement.lean
+MathCert/Domains/UnionClosed/SingletonCase.lean
 MATHCERT/ci/replay_certificates.py
-claim_ledger_wp01.yaml
-certificate schema for finite-family enumeration
+templates/union_closed_claim_ledger_wp01.yaml
 ```
 
-First Lean definitions:
+The finite-family certificate schema and replay contract are maintained in the MATHCERT certificate pipeline rather than duplicated here.
+
+Core Lean definitions include:
 
 ```text
 isUnionClosed(F)
@@ -193,10 +200,12 @@ isFranklAbundant(F)
 FranklConjecture
 ```
 
-## 10. Next analytic target
+## 10. Discharged first target and current frontier
 
-WP02 proves the singleton-containing case in Lean:
+WP02 checked the singleton-containing case in Lean:
 
 > If `F` is union-closed and `{a} ∈ F`, then `a` appears in at least half of the members of `F`.
 
-This is elementary but meaningful. The checked proof maps every set not containing `a` injectively to its union with `{a}`, which does contain `a`. WP04 extends the same pairing discipline to the two-element-member case.
+The checked proof maps every set not containing `a` injectively to its union with `{a}`, which does contain `a`. WP04 extended the same pairing discipline to the two-element-member case.
+
+The current Union-Closed frontier is maintained in `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`; WP01 remains the authoritative baseline statement and handoff record rather than the live milestone register.

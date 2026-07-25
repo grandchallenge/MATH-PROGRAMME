@@ -2,7 +2,9 @@
 
 The Agent Council is the review-governance layer for Grand Challenge MATH-PROGRAMME artifacts.
 
-Every Work Package records council participation through `templates/agent_review.yaml` and is checked against `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`.
+Every governed Work Package, regardless of pillar, records council participation through an Agent Council review record and is checked against `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`.
+
+The current machine schema is `schemas/agent_review.schema.json`. CI validates only review records explicitly registered in `SCHEMA_BOUND_AGENT_REVIEWS` in `ci/validate_programme.py`. Legacy campaign reviews remain governed evidence, but they are not represented as schema-conformant until migrated and registered.
 
 The council preserves separation of concerns:
 
@@ -11,6 +13,26 @@ The council preserves separation of concerns:
 - Exposition is not evidence.
 - Formalization is not understanding.
 - Archival provenance is not internal editorial continuity.
+
+## Review-record scope
+
+The review contract applies across:
+
+- `MATHFORGE` discovery and experimental Work Packages;
+- `MATHSOLVE` theorem and reconstruction Work Packages;
+- `MATHCERT` certificate and formalization Work Packages;
+- `MATH-PROGRAMME` integration, governance, and archival Work Packages.
+
+A record may use the current schema only when its complete field structure has been migrated. CI registration is explicit so that legacy formats cannot be mistaken for validated current-schema records.
+
+## Lifecycle and disposition
+
+A schema-bound review record separates:
+
+- `artifact.status`: a canonical lifecycle token such as `draft`, `active`, `completed`, or `certified`;
+- `artifact.disposition`: an optional campaign-specific description such as `referee_promoted_conditional`.
+
+The artifact ledger may retain detailed human-readable dispositions. They do not silently extend the schema's lifecycle vocabulary.
 
 ## Amanuensis authority
 
@@ -30,7 +52,7 @@ The Amanuensis does not certify mathematical truth. It certifies that the review
 
 ## Promotion boundary
 
-Promotion requires explicit council review state, unresolved-obligation tracking, a declared route toward MATHCERT, and Amanuensis continuity control.
+Promotion requires explicit council review state, unresolved-obligation tracking, a declared evidence or certification route, and Amanuensis continuity control.
 
 A Work Package cannot be marked ready for its next stage unless:
 

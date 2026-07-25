@@ -3,7 +3,8 @@ artifact:
   type: work_package
   title: 'Union-Closed Sets: Status Spine and Certification Entry Point'
   pillar: MATHSOLVE
-  status: ready_for_certification
+  status: completed
+  disposition: WP01 baseline complete; WP02/MATHCERT handoff discharged.
 council_review:
   Axiomatist:
     status: reviewed
@@ -93,13 +94,14 @@ council_review:
       - Core notation is introduced before use and the half-frequency inequality is stated without ambiguity.
   Amanuensis:
     status: reviewed
-    reviewed_by: MATH-PROGRAMME Agent Council pilot
-    reviewed_at: '2026-07-17'
+    reviewed_by: MATH-PROGRAMME Agent Council consistency repair
+    reviewed_at: '2026-07-24'
     obligations:
-      - Keep the artifact ledger, review record, dependency DAG, claim ledger, and authoritative WP01 document synchronized.
+      - Keep the artifact ledger, review record, dependency DAG, claim ledger, authoritative WP01 document, ADR index, schemas, validator scope, and navigation synchronized.
     findings:
-      - UC-WP01 is registered as the authoritative integrated status-spine artifact.
-      - Review provenance and cross-document consistency references are complete for this pilot.
+      - UC-WP01 is registered as the authoritative completed baseline artifact.
+      - ADR-0002 and ADR-0007 record the pilot and the post-pilot contract normalization.
+      - Review provenance and cross-document consistency references are complete after the 2026-07-24 repair.
   Archivist:
     status: reviewed
     reviewed_by: MATH-PROGRAMME Agent Council pilot
@@ -118,50 +120,84 @@ council_review:
       - The package names the executable enumeration, replay, ledger, and Lean handoff artifacts.
   Typesetter:
     status: reviewed
-    reviewed_by: MATH-PROGRAMME Agent Council pilot
-    reviewed_at: '2026-07-17'
+    reviewed_by: MATH-PROGRAMME Agent Council consistency repair
+    reviewed_at: '2026-07-24'
     obligations: []
     findings:
+      - MkDocs navigation exposes the canonical ADR index and all dedicated Agent Council ADR files.
       - Tables, displayed definitions, and bounded audit counts expose the programme structure adequately.
   Referee:
     status: reviewed
-    reviewed_by: MATH-PROGRAMME Agent Council pilot
-    reviewed_at: '2026-07-17'
+    reviewed_by: MATH-PROGRAMME Agent Council consistency repair
+    reviewed_at: '2026-07-24'
     obligations:
       - Require a fresh novelty and source audit before any original theorem claim is attached to the Union-Closed campaign.
     findings:
-      - Acceptance is limited to a reliable status spine, exact bounded audit, and formalization entry point.
+      - Acceptance is limited to a reliable completed status spine, exact bounded audit, and discharged formalization entry point.
       - The package is not acceptable as evidence that Frankl's conjecture is close to resolution.
+      - The corrected CI scope and lifecycle/disposition separation remove the previously identified governance contradictions.
 amanuensis_control:
   artifact_ledger:
     ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md
     entry_id: UC-WP01
   decision_record_refs:
     - ADR-0002
+    - ADR-0007
   terminology_registry:
     registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md
-    terms_introduced_or_changed: []
+    terms_introduced_or_changed:
+      - Decision-record index
+      - Schema-bound Agent Council review record
+      - Artifact lifecycle status
+      - Artifact disposition
   review_provenance:
     complete: true
     evidence_refs:
       - WP01_UNION_CLOSED_STATUS_SPINE.md
+      - UC_WP01_AGENT_COUNCIL_AUDIT.md
       - DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md
+      - WP02_UNION_CLOSED_LEAN_HANDOFF.md
       - templates/union_closed_claim_ledger_wp01.yaml
       - reviews/union_closed/UC-WP01.dependency_dag.yaml
+      - docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md
+      - docs/AGENT_COUNCIL_DECISION_RECORDS.md
+      - docs/decisions/ADR-0002_UNION_CLOSED_AGENT_COUNCIL_PILOT.md
+      - docs/decisions/ADR-0007_AGENT_COUNCIL_CONTRACT_NORMALIZATION.md
+      - schemas/agent_review.schema.json
+      - schemas/agent_review.schema.yaml
+      - ci/validate_programme.py
+      - ci/test_validate_programme.py
+      - mkdocs.yml
   cross_document_consistency:
     status: reviewed
     checked_against:
       - WP01_UNION_CLOSED_STATUS_SPINE.md
+      - UC_WP01_AGENT_COUNCIL_AUDIT.md
       - WP02_UNION_CLOSED_LEAN_HANDOFF.md
       - DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md
       - CLAIM_LEDGER_STANDARD.md
       - GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md
+      - docs/AGENT_COUNCIL_GOVERNANCE.md
+      - docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md
+      - docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md
+      - docs/AGENT_COUNCIL_DECISION_RECORDS.md
+      - docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md
+      - docs/decisions/ADR-0002_UNION_CLOSED_AGENT_COUNCIL_PILOT.md
+      - docs/decisions/ADR-0007_AGENT_COUNCIL_CONTRACT_NORMALIZATION.md
+      - schemas/agent_review.schema.json
+      - schemas/agent_review.schema.yaml
+      - ci/validate_programme.py
+      - ci/test_validate_programme.py
+      - mkdocs.yml
     conflicts: []
   final_editorial_integration:
     status: reviewed
     integrated_artifact_ref: WP01_UNION_CLOSED_STATUS_SPINE.md
     integration_notes:
       - The council audit references existing proof, claim-ledger, and replay artifacts rather than duplicating them.
+      - WP01 is explicitly a completed baseline; current downstream status remains in WP02, WP04, WP05, and the domain master plan.
+      - The implemented Lean and replay paths replace the original aspirational handoff filenames.
+      - ADR storage, CI schema scope, lifecycle vocabulary, ledger date, and MkDocs navigation are synchronized under ADR-0007.
 unresolved_obligations:
   - id: UC-WP01-O001
     owner: Archivist
@@ -183,7 +219,12 @@ unresolved_obligations:
     description: Require novelty, source, and contribution-boundary review before accepting any original theorem claim.
     severity: high
     blocking: false
+  - id: UC-WP01-O005
+    owner: Amanuensis
+    description: Migrate legacy campaign review formats individually before registering them as schema-bound CI inputs.
+    severity: medium
+    blocking: false
 promotion:
   ready_for_next_stage: true
   blockers: []
-  certification_route: MATHCERT claim-ledger audit, Lean statement review, and independent exact finite replay
+  certification_route: Completed WP02/MATHCERT handoff; maintain claim-ledger audit, Lean statement review, and independent exact finite replay.
