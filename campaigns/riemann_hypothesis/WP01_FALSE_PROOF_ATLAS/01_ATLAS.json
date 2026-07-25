@@ -1,0 +1,305 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "RH-WP01-ATLAS",
+  "campaign_id": "RH-001",
+  "protected_claims": [
+    "RH-T-000"
+  ],
+  "fixture_contract": {
+    "required": [
+      "id",
+      "name",
+      "invalid_inference",
+      "missing_obligation",
+      "witness",
+      "decision",
+      "remediation",
+      "wp02_interfaces",
+      "does_not_rule_out"
+    ],
+    "allowed_decisions": [
+      "REJECT",
+      "NARROW"
+    ]
+  },
+  "fixtures": [
+    {
+      "id": "RH-F001",
+      "name": "Finite verification promoted to RH",
+      "invalid_inference": "All zeros checked up to height H lie on the line, therefore every nontrivial zero lies on the line.",
+      "missing_obligation": "The universal height quantifier was replaced by one bounded interval.",
+      "witness": "A hypothetical off-line zero with ordinate greater than H is compatible with the finite certificate.",
+      "decision": "REJECT",
+      "remediation": "Report only the exact certified interval or supply a global theorem excluding zeros above H.",
+      "wp02_interfaces": [
+        "RH-T-070",
+        "RH-T-210"
+      ],
+      "does_not_rule_out": "This does not discredit rigorous finite-height verification or its finite consequences."
+    },
+    {
+      "id": "RH-F002",
+      "name": "Density or almost-all result promoted to universality",
+      "invalid_inference": "N0(T)/N(T) tends to one, or a positive proportion lies on the line, therefore RH holds.",
+      "missing_obligation": "A density-zero exceptional set may still be infinite and contain off-line zeros.",
+      "witness": "The set of squares has density zero in the integers but is infinite; density alone does not imply emptiness.",
+      "decision": "REJECT",
+      "remediation": "Add a theorem excluding every exceptional zero, not merely bounding their density.",
+      "wp02_interfaces": [
+        "RH-T-050",
+        "RH-T-060"
+      ],
+      "does_not_rule_out": "This does not weaken the valid proportion or density theorem."
+    },
+    {
+      "id": "RH-F003",
+      "name": "Quartet symmetry used as a location theorem",
+      "invalid_inference": "Conjugation and rho↦1-rho symmetry force each zero to have real part one-half.",
+      "missing_obligation": "Invariance of a set under reflections does not imply every point is fixed by the reflections.",
+      "witness": "Any beta+i gamma with beta≠1/2 generates a symmetry-compatible quartet.",
+      "decision": "REJECT",
+      "remediation": "Supply an independent coercive mechanism excluding off-line quartets.",
+      "wp02_interfaces": [
+        "RH-T-010",
+        "RH-T-020"
+      ],
+      "does_not_rule_out": "This does not challenge the functional equation or zero symmetries."
+    },
+    {
+      "id": "RH-F004",
+      "name": "Euler product continued termwise into the critical strip",
+      "invalid_inference": "The Euler product has no zero factors, so zeta has no zeros throughout the continued domain.",
+      "missing_obligation": "The Euler product is absolutely convergent only for Re(s)>1 and cannot be continued termwise as a nonvanishing product.",
+      "witness": "A representation may define an analytic function on one domain while its termwise product diverges elsewhere.",
+      "decision": "REJECT",
+      "remediation": "Use a representation valid on the target domain and prove its convergence and nonvanishing there.",
+      "wp02_interfaces": [
+        "RH-T-010",
+        "RH-T-020",
+        "RH-T-040"
+      ],
+      "does_not_rule_out": "This does not affect the valid zero-free conclusion for Re(s)>1."
+    },
+    {
+      "id": "RH-F005",
+      "name": "Conditionally convergent zero sum rearranged",
+      "invalid_inference": "A formally rearranged sum over zeros has a desired sign, so all zeros lie on the line.",
+      "missing_obligation": "The sum is not absolutely convergent and no symmetric truncation or regularization was fixed.",
+      "witness": "Conditionally convergent series can change value under rearrangement.",
+      "decision": "REJECT",
+      "remediation": "Declare the limiting order or regularization and prove convergence before using sign or equality.",
+      "wp02_interfaces": [
+        "RH-T-100",
+        "RH-T-110"
+      ],
+      "does_not_rule_out": "This does not exclude correctly regularized Hadamard-product or explicit-formula arguments."
+    },
+    {
+      "id": "RH-F006",
+      "name": "Global logarithm of zeta assumed",
+      "invalid_inference": "Differentiate or integrate a single-valued Log zeta across the strip.",
+      "missing_obligation": "Zeros and the pole obstruct a global analytic logarithm.",
+      "witness": "The logarithm of a holomorphic function exists analytically only on a suitable zero-free simply connected domain.",
+      "decision": "NARROW",
+      "remediation": "Restrict to a declared zero-free simply connected domain or work with zeta'/zeta and account for residues.",
+      "wp02_interfaces": [
+        "RH-T-040",
+        "RH-T-100"
+      ],
+      "does_not_rule_out": "This does not prohibit local analytic logarithms."
+    },
+    {
+      "id": "RH-F007",
+      "name": "Contour moved without residue ledger",
+      "invalid_inference": "Shift a contour across the pole or zeros and keep the same integral identity.",
+      "missing_obligation": "Crossed singularities contribute residues and horizontal/limiting contours require bounds.",
+      "witness": "The residue theorem changes the integral by 2pi i times the sum of crossed residues.",
+      "decision": "REJECT",
+      "remediation": "List every crossed pole/zero, its order and residue, and prove all boundary limits.",
+      "wp02_interfaces": [
+        "RH-T-030",
+        "RH-T-100"
+      ],
+      "does_not_rule_out": "This does not rule out a correctly justified contour shift."
+    },
+    {
+      "id": "RH-F008",
+      "name": "Sum, integral, derivative, or limit interchanged formally",
+      "invalid_inference": "Exchange analytic operations in an infinite zeta or zero expansion without a convergence theorem.",
+      "missing_obligation": "No domination, uniform convergence, absolute convergence, or closed-operator theorem is supplied.",
+      "witness": "Pointwise convergence alone does not justify differentiation or integration term by term.",
+      "decision": "REJECT",
+      "remediation": "Name the exact convergence theorem and verify its hypotheses on the full domain.",
+      "wp02_interfaces": [
+        "RH-T-080",
+        "RH-T-090",
+        "RH-T-100"
+      ],
+      "does_not_rule_out": "This does not rule out exchanges supported by uniform or dominated convergence."
+    },
+    {
+      "id": "RH-F009",
+      "name": "Positivity checked on sampled test functions",
+      "invalid_inference": "A Weil-type quadratic form is positive for a large finite library, therefore RH.",
+      "missing_obligation": "The criterion quantifies over an exact infinite test class or its proven dense core.",
+      "witness": "A continuous form can be negative in an unsampled direction unless density and continuity control are established.",
+      "decision": "REJECT",
+      "remediation": "Fix the test space, prove density of the checked core, and prove continuity/closure of the form.",
+      "wp02_interfaces": [
+        "RH-T-160"
+      ],
+      "does_not_rule_out": "This does not diminish sampled positivity as regression evidence."
+    },
+    {
+      "id": "RH-F010",
+      "name": "Symmetric operator identified as self-adjoint",
+      "invalid_inference": "A formally Hermitian differential expression has real spectrum, hence gives RH.",
+      "missing_obligation": "Operator symmetry on a core does not determine the self-adjoint domain or deficiency indices.",
+      "witness": "The derivative operator on an interval has different symmetric and self-adjoint domain choices.",
+      "decision": "REJECT",
+      "remediation": "Specify the Hilbert space and domain and prove self-adjointness or essential self-adjointness.",
+      "wp02_interfaces": [
+        "RH-T-200"
+      ],
+      "does_not_rule_out": "This does not exclude a valid Hilbert–Pólya construction."
+    },
+    {
+      "id": "RH-F011",
+      "name": "Partial spectral match promoted to exact correspondence",
+      "invalid_inference": "Several eigenvalues or spacing statistics match zero ordinates, so the operator proves RH.",
+      "missing_obligation": "Missing zeros, extraneous spectrum, multiplicities, and continuous spectrum are uncontrolled.",
+      "witness": "Two sequences can agree for arbitrarily many initial terms and then diverge.",
+      "decision": "REJECT",
+      "remediation": "Prove a complete multiplicity-preserving spectral equality and exclude all extraneous spectrum.",
+      "wp02_interfaces": [
+        "RH-T-190",
+        "RH-T-200"
+      ],
+      "does_not_rule_out": "This does not deny the heuristic value of spectral statistics."
+    },
+    {
+      "id": "RH-F012",
+      "name": "Finite Li positivity promoted to the Li criterion",
+      "invalid_inference": "lambda_1 through lambda_N are positive, therefore every lambda_n is nonnegative.",
+      "missing_obligation": "The criterion has a universal quantifier over all positive integers.",
+      "witness": "A sequence may be positive for any prescribed finite prefix and negative later.",
+      "decision": "REJECT",
+      "remediation": "Supply a uniform proof for arbitrary n or a theorem controlling the entire tail.",
+      "wp02_interfaces": [
+        "RH-T-110"
+      ],
+      "does_not_rule_out": "This does not invalidate certified finite Li-coefficient calculations."
+    },
+    {
+      "id": "RH-F013",
+      "name": "Near-looking prime error substituted for the exact equivalent",
+      "invalid_inference": "An error term resembling sqrt(x) times logarithms is treated as the Bombieri/Titchmarsh RH equivalent.",
+      "missing_obligation": "The exponent, logarithmic power, counting function, uniformity, and converse direction are not preserved.",
+      "witness": "Bounds for pi, theta, psi, or smoothed functions transfer only through explicit partial summation and prime-power corrections.",
+      "decision": "NARROW",
+      "remediation": "State the exact function and bound, prove conversion terms, and reconstruct both implications.",
+      "wp02_interfaces": [
+        "RH-T-040",
+        "RH-T-100"
+      ],
+      "does_not_rule_out": "This does not rule out stronger correctly normalized prime-error estimates."
+    },
+    {
+      "id": "RH-F014",
+      "name": "One epsilon used for the Mertens criterion",
+      "invalid_inference": "M(x)=O(x^(1/2+epsilon_0)) for one fixed epsilon_0>0, therefore RH.",
+      "missing_obligation": "The equivalence quantifies over every epsilon>0.",
+      "witness": "A single exponent 1/2+epsilon_0 is compatible with zeros whose real part lies between 1/2 and 1/2+epsilon_0.",
+      "decision": "REJECT",
+      "remediation": "Prove the family for arbitrary epsilon with explicit dependence of the constant.",
+      "wp02_interfaces": [
+        "RH-T-150"
+      ],
+      "does_not_rule_out": "This does not weaken a valid fixed-epsilon estimate."
+    },
+    {
+      "id": "RH-F015",
+      "name": "GRH or finite-field analogue substituted for classical RH",
+      "invalid_inference": "Evidence or a theorem for another L-function family or zeta function proves the classical zeta statement.",
+      "missing_obligation": "The analytic object, Euler factors, gamma factors, and zero multiset differ.",
+      "witness": "A theorem for a family does not specialize unless the classical zeta function is explicitly included with all conventions matched.",
+      "decision": "REJECT",
+      "remediation": "Provide a valid specialization or comparison theorem to the locked classical zeta function.",
+      "wp02_interfaces": [
+        "RH-T-000",
+        "RH-T-010"
+      ],
+      "does_not_rule_out": "This does not diminish genuine analogies or stronger theorems that explicitly include classical zeta."
+    },
+    {
+      "id": "RH-F016",
+      "name": "Simplicity assumed at a decisive step",
+      "invalid_inference": "Every zero is simple, so a sign-change or derivative argument counts all zeros and proves RH.",
+      "missing_obligation": "Global simplicity is a separate unproved conjecture; sign changes can miss even multiplicity.",
+      "witness": "A real entire function may touch zero with even multiplicity without changing sign.",
+      "decision": "REJECT",
+      "remediation": "Make the argument multiplicity-safe or prove simplicity under the exact required scope.",
+      "wp02_interfaces": [
+        "RH-T-060",
+        "RH-T-070",
+        "RH-T-210"
+      ],
+      "does_not_rule_out": "This does not affect the certified simplicity statement below 3·10^12."
+    },
+    {
+      "id": "RH-F017",
+      "name": "Zero-free region asymptotically squeezed to the critical line",
+      "invalid_inference": "A zero-free region near Re(s)=1 improves with height, so all zeros must approach Re(s)=1/2.",
+      "missing_obligation": "The region excludes only points near one and supplies no uniform exclusion of every beta>1/2.",
+      "witness": "The boundary 1-c/(log t)^(2/3)(loglog t)^(1/3) tends to one, not one-half.",
+      "decision": "REJECT",
+      "remediation": "Prove a zero-free half-strip Re(s)>1/2 or another theorem excluding every off-line beta.",
+      "wp02_interfaces": [
+        "RH-T-040",
+        "RH-T-050"
+      ],
+      "does_not_rule_out": "This does not weaken the prime-distribution consequences of zero-free regions."
+    },
+    {
+      "id": "RH-F018",
+      "name": "Rouché theorem invoked without boundary control",
+      "invalid_inference": "Two functions look close numerically inside a contour, so they have the same zeros.",
+      "missing_obligation": "Rouché requires a strict inequality on every boundary point and a zero-free boundary.",
+      "witness": "A single uncontrolled boundary point can invalidate the zero count.",
+      "decision": "REJECT",
+      "remediation": "Certify |f-g|<|f| or the chosen alternative uniformly on the entire contour.",
+      "wp02_interfaces": [
+        "RH-T-210"
+      ],
+      "does_not_rule_out": "This does not rule out interval-certified Rouché arguments."
+    },
+    {
+      "id": "RH-F019",
+      "name": "Floating-point off-line root promoted to a counterexample",
+      "invalid_inference": "A numerical solver returns beta+i gamma with beta≠1/2 and small |zeta|, so RH is false.",
+      "missing_obligation": "Small residual is not exact vanishing; conditioning, cancellation, and solver error are uncontrolled.",
+      "witness": "Analytic functions can take arbitrarily small nonzero values near a point without vanishing there.",
+      "decision": "REJECT",
+      "remediation": "Give an interval enclosure, argument-principle zero count, and certified separation from the critical line.",
+      "wp02_interfaces": [
+        "RH-T-070",
+        "RH-T-210"
+      ],
+      "does_not_rule_out": "This does not rule out a rigorously certified off-line zero as a terminal refutation."
+    },
+    {
+      "id": "RH-F020",
+      "name": "Zero or pole inferred from one factor of the completion",
+      "invalid_inference": "A zero or pole of Gamma, s(s-1), or zeta alone determines the order of xi without local accounting.",
+      "missing_obligation": "Zeros and poles of the remaining factors may cancel or change the local order.",
+      "witness": "At negative even integers, the zeta zero and Gamma pole must be combined locally.",
+      "decision": "REJECT",
+      "remediation": "Compute the local order of every factor in the complete product.",
+      "wp02_interfaces": [
+        "RH-T-010",
+        "RH-T-020"
+      ],
+      "does_not_rule_out": "This does not challenge the correctly derived trivial-zero taxonomy."
+    }
+  ]
+}
