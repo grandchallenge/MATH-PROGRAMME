@@ -37,6 +37,7 @@ Each decision record contains:
 | ADR-0005 | 2026-07-24 | Accepted and WP00 promoted | Initialize Birch–Swinnerton-Dyer under source-and-equivalence controls. | [`ADR-0005_BSD_SOURCE_EQUIVALENCE.md`](decisions/ADR-0005_BSD_SOURCE_EQUIVALENCE.md) |
 | ADR-0006 | 2026-07-24 | Accepted | Integrate the Poincaré reconstruction archive and normalize domain identifiers. | [`ADR-0006_POINCARE_RECONSTRUCTION_ARCHIVE.md`](decisions/ADR-0006_POINCARE_RECONSTRUCTION_ARCHIVE.md) |
 | ADR-0007 | 2026-07-24 | Accepted | Normalize Agent Council decision, review, lifecycle, and UC-WP01 temporal contracts. | [`ADR-0007_AGENT_COUNCIL_CONTRACT_NORMALIZATION.md`](decisions/ADR-0007_AGENT_COUNCIL_CONTRACT_NORMALIZATION.md) |
+| ADR-0008 | 2026-07-24 | Accepted | Govern public domain coverage, documentation authority, and semantic MkDocs validation. | [`ADR-0008_MKDOCS_DOMAIN_COVERAGE.md`](decisions/ADR-0008_MKDOCS_DOMAIN_COVERAGE.md) |
 
 ## Identifier rule
 
