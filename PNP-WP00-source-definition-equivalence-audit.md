@@ -81,7 +81,7 @@ The full binding representation contract is `PNP-WP00-02-MACHINE-ENCODING-LOCK`.
 | `SRC-PNP-04` | T. Baker, J. Gill, R. Solovay, “Relativizations of the P =? NP Question,” *SIAM J. Comput.* 4(4), 1975, DOI `10.1137/0204037` | Barrier source | Oracles relative to which `P = NP` and oracles relative to which `P != NP`. |
 | `SRC-PNP-05` | S. Cook, R. Reckhow, “The Relative Efficiency of Propositional Proof Systems,” *J. Symbolic Logic* 44, 1979 | Proof-complexity boundary | Polynomially bounded proof systems and the `NP` versus `coNP` bridge. |
 | `SRC-PNP-06` | A. Razborov, S. Rudich, “Natural Proofs,” *JCSS* 55, 1997, DOI `10.1006/jcss.1997.1494` | Conditional barrier source | Constructivity/largeness/usefulness barrier for broad circuit-lower-bound methods under pseudorandomness assumptions. |
-| `SRC-PNP-07` | S. Aaronson, A. Wigderson, “Algebrization: A New Barrier in Complexity Theory,” STOC 2008 / *Theory of Computing* | Barrier source | Extension of relativization-style limitations to broad arithmetizing methods. |
+| `SRC-PNP-07` | S. Aaronson, A. Wigderson, “Algebrization: A New Barrier in Complexity Theory,” STOC 2008; journal version in *ACM Transactions on Computation Theory* 1(1), 2009 | Barrier source | Extension of relativization-style limitations to broad arithmetizing methods. |
 
 ### 3.1 Source hierarchy
 
