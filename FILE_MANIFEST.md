@@ -1,88 +1,104 @@
 # File Manifest
 
+**Status:** Current governed inventory, edition 2026.07.
+
+This is a curated map of authoritative entry points, not an exhaustive recursive file listing. Exact repository contents remain available through version control. New campaign files do not become authoritative merely by appearing in the tree; authority is established by the domain registry, Agent Council artifact ledger, decision records, claim ledgers, and certification routes.
+
+## Programme architecture
+
+- `README.md`
 - `ARCHITECTURE_OVERVIEW.md`
-- `CLASSIFICATION_DISCOVERY_STANDARD.md`
-- `CERTIFICATION_LADDER.md`
-- `CLAIM_LEDGER_STANDARD.md`
-- `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`
-- `GRAND_CHALLENGE_PEDAGOGY_STANDARD.md`
-- `GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md`
-- `MATHCERT/MathCert/Core/CertificateLevel.lean`
-- `MATHCERT/MathCert/Core/ClaimType.lean`
-- `MATHCERT/MathCert/Domains/UnionClosed/Basic.lean`
-- `MATHCERT/MathCert/Domains/UnionClosed/FranklStatement.lean`
-- `MATHCERT/MathCert/Domains/UnionClosed/Frequency.lean`
-- `MATHCERT/MathCert/Domains/UnionClosed/SingletonCase.lean`
-- `MATHCERT/MathCert/Domains/UnionClosed/TwoElementCase.lean`
-- `MATHCERT/README.md`
-- `MATHCERT/certificates/exact/union_closed_n_le_4.json`
-- `MATHCERT/ci/check_lean.ps1`
-- `MATHCERT/ci/check_lean.sh`
-- `MATHCERT/ci/check_sorries.py`
-- `MATHCERT/ci/replay_certificates.py`
-- `MATHCERT/ci/test_validate_ledgers.py`
-- `MATHCERT/ci/validate_ledgers.py`
-- `MATHCERT/contracts/classification_discovery_refs.json`
-- `MATHCERT/claim_ledger_wp04.yaml`
-- `MATHCERT/lake-manifest.json`
-- `MATHCERT/lakefile.lean`
-- `MATHCERT/lean-toolchain`
-- `MATHCERT/MathCert.lean`
-- `MATHCERT_SPEC.md`
-- `MATHFORGE/README.md`
-- `MATHFORGE/ci/validate_forge.py`
-- `MATHFORGE/contracts/classification_discovery_refs.json`
-- `MATHFORGE/discovery/adapters.py`
-- `MATHFORGE/discovery/search.py`
-- `MATHFORGE/domains/union_closed/enumerate_small_families.py`
-- `MATHFORGE/domains/union_closed/union_closed_small_audit.json`
-- `MATHFORGE/domains/union_closed/union_closed_small_audit.stdout`
 - `MATHFORGE_SPEC.md`
-- `MATHFORGE/reports/problem_cards/MF-UC-0001.json`
-- `MATHFORGE/schemas/discovery_record.schema.json`
-- `MATHFORGE/tests/test_discovery.py`
+- `MATHSOLVE_SPEC.md`
+- `MATHCERT_SPEC.md`
+- `PROGRAMME_CHARTER.md` through the rendered `docs/PROGRAMME_CHARTER.md`
+- `DOMAIN_REGISTRY.yaml`
+- `mkdocs.yml`
+
+## Governing standards
+
+- `GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md`
+- `GRAND_CHALLENGE_PEDAGOGY_STANDARD.md` — compatibility pointer
+- `docs/GRAND_CHALLENGE_PEDAGOGY_STANDARD.md` — canonical pedagogy standard
+- `CLAIM_LEDGER_STANDARD.md`
+- `CERTIFICATION_LADDER.md`
+- `CLASSIFICATION_DISCOVERY_STANDARD.md`
+- `HANDOFF_STANDARD.md`
+- `GOVERNANCE.md`
+- `THURSTONIAN_ETHOS.md`
+
+## Agent Council and continuity
+
+- `docs/MATH_PROGRAMME_AGENT_COUNCIL.md`
+- `docs/AGENT_COUNCIL_GOVERNANCE.md`
+- `docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md`
+- `docs/AGENT_COUNCIL_DECISION_RECORDS.md`
+- `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md`
+- `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`
+- `docs/decisions/ADR-0001_*.md` through `ADR-0007_*.md`
+- `schemas/agent_review.schema.json`
+- `templates/agent_review.yaml`
+
+## Canonical domains
+
+- `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`
+- `DOMAIN_02_NAVIER_STOKES_CRITICAL_INTEGRABILITY_MASTER_PLAN.md`
+- `DOMAIN_03_HODGE_CONJECTURE_MASTER_PLAN.md`
+- `DOMAIN_04_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md`
+- `DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`
+- `docs/domains/index.md`
+- `docs/domains/union_closed.md`
+- `docs/domains/navier_stokes.md`
+- `docs/domains/hodge.md`
+- `docs/domains/birch_swinnerton_dyer.md`
+- `docs/domains/poincare_reconstruction.md`
+
+Historical filenames retained under decision control:
+
+- `DOMAIN_03_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md`
+- `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`
+
+## Campaign stacks
+
+- `campaigns/navier_stokes_critical_integrability/`
+- `campaigns/hodge_conjecture/`
+- `campaigns/birch_swinnerton_dyer/`
+- `campaigns/poincare_reconstruction/`
+- `reviews/union_closed/`
+- `reviews/navier_stokes/`
+- `reviews/hodge_conjecture/`
+- `reviews/birch_swinnerton_dyer/`
+- `reviews/poincare/`
+
+## Union-Closed formal and exact baseline
+
+- `WP01_UNION_CLOSED_STATUS_SPINE.md`
+- `WP02_UNION_CLOSED_LEAN_HANDOFF.md`
+- `MathCert/Domains/UnionClosed/`
+- `MATHCERT/ci/replay_certificates.py`
+- `templates/union_closed_claim_ledger_wp01.yaml`
+
+## Certified fixtures and publications
+
+- `fixtures/algebraic/UF-INV-001/`
+- `fixtures/algebraic/RAD-NIL-002/`
+- `fixtures/formal/LOG-GCD-001/`
+- `docs/LOG_GCD_PUBLICATION.md`
+- `docs/POINCARE_RECONSTRUCTION_ARCHIVE.md`
+
+## Classification and machine contracts
+
 - `classification/source_registry.json`
 - `classification/mappings/union_closed.json`
 - `knowledge_graph/union_closed.json`
-- `examples/candidate_problem_union_closed.json`
-- `tools/cache_msc2020_skos.py`
+- `schemas/domain_registry.schema.json`
+- `schemas/foundational_profile.schema.json`
+- `schemas/claim_ledger.schema.json`
 - `ci/validate_programme.py`
 - `ci/test_validate_programme.py`
-- `MATHSOLVE/README.md`
-- `MATHSOLVE/ci/validate_solve.py`
-- `MATHSOLVE/contracts/classification_discovery_refs.json`
-- `MATHSOLVE/domains/union_closed/README.md`
-- `MATHSOLVE/domains/union_closed/WP01_status_spine/README.md`
-- `MATHSOLVE/domains/union_closed/WP02_lean_handoff/README.md`
-- `MATHSOLVE/domains/union_closed/WP02_lean_handoff/00_README.md`
-- `MATHSOLVE/domains/union_closed/WP02_lean_handoff/01_LAY_COMPANION.md`
-- `MATHSOLVE/domains/union_closed/WP02_lean_handoff/02_PROBLEM_SPINE.md`
-- `MATHSOLVE/domains/union_closed/WP02_lean_handoff/03_STATUS_AUDIT.md`
-- `MATHSOLVE/domains/union_closed/WP02_lean_handoff/04_THEOREM_SPINE.md`
-- `MATHSOLVE/domains/union_closed/WP02_lean_handoff/05_PROOFS_AND_COMPUTATIONS.md`
-- `MATHSOLVE/domains/union_closed/WP02_lean_handoff/06_FAILURE_ANALYSIS.md`
-- `MATHSOLVE/domains/union_closed/WP02_lean_handoff/07_CLAIM_LEDGER.yaml`
-- `MATHSOLVE/domains/union_closed/WP02_lean_handoff/08_CERT_HANDOFF.md`
-- `MATHSOLVE/domains/union_closed/WP02_lean_handoff/09_NEXT_TARGET.md`
-- `MATHSOLVE/domains/union_closed/WP02_lean_handoff/artifacts/README.md`
-- `MATHSOLVE/domains/union_closed/WP03_known_bounds_synthesis/README.md`
-- `MATHSOLVE/domains/union_closed/WP03_known_bounds_synthesis/claim_ledger_wp03.yaml`
-- `MATHSOLVE/domains/union_closed/WP04_small_cases_and_certificates/README.md`
-- `MATHSOLVE/domains/union_closed/WP05_lattice_minimal_counterexample/README.md`
-- `MATHSOLVE_SPEC.md`
-- `MATHSOLVE/schemas/claim_ledger.schema.json`
-- `README.md`
-- `THURSTONIAN_ETHOS.md`
-- `WP01_UNION_CLOSED_STATUS_SPINE.md`
-- `WP02_UNION_CLOSED_LEAN_HANDOFF.md`
-- `schemas/candidate_problem.schema.json`
-- `schemas/classification_source_registry.schema.json`
-- `schemas/claim_ledger.schema.json`
-- `schemas/discovery_record.schema.json`
-- `schemas/domain_registry.schema.json`
-- `schemas/external_mapping.schema.json`
-- `schemas/knowledge_graph.schema.json`
-- `schemas/union_closed_small_certificate.schema.json`
-- `templates/claim_ledger_template.yaml`
-- `templates/union_closed_claim_ledger_wp01.yaml`
-- `templates/work_package_template.md`
+- `ci/validate_docs.py`
+- `ci/test_validate_docs.py`
+
+## Maintenance rule
+
+This manifest is updated when a canonical domain, governance contract, public result, or certification entry point changes. Routine internal files remain discoverable through the repository tree and need not be duplicated here.
