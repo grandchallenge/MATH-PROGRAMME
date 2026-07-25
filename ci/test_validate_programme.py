@@ -6,8 +6,10 @@ import copy
 
 from validate_programme import (
     ROOT,
+    SCHEMA_BOUND_AGENT_REVIEWS,
     agent_review_semantic_errors,
     load_json,
+    schema_bound_review_registry_errors,
     schema_errors,
     validate_documents,
 )
@@ -95,6 +97,31 @@ def main() -> int:
 
     assert not schema_errors(agent_review, "agent_review.schema.json")
 
+    programme_governance_review = copy.deepcopy(agent_review)
+    programme_governance_review["artifact"].update(
+        {
+            "type": "governance_bundle",
+            "pillar": "MATH-PROGRAMME",
+            "status": "completed",
+            "disposition": "Contract normalization integrated.",
+        }
+    )
+    assert not schema_errors(programme_governance_review, "agent_review.schema.json")
+
+    invalid_artifact_type = copy.deepcopy(agent_review)
+    invalid_artifact_type["artifact"]["type"] = "Governance Bundle"
+    assert any(
+        "does not match" in error
+        for error in schema_errors(invalid_artifact_type, "agent_review.schema.json")
+    )
+
+    campaign_disposition_as_status = copy.deepcopy(agent_review)
+    campaign_disposition_as_status["artifact"]["status"] = "referee_promoted_conditional"
+    assert any(
+        "referee_promoted_conditional" in error
+        for error in schema_errors(campaign_disposition_as_status, "agent_review.schema.json")
+    )
+
     missing_agent_review = copy.deepcopy(agent_review)
     missing_agent_review["council_review"].pop("Verifier")
     assert any(
@@ -144,6 +171,25 @@ def main() -> int:
         "integration_notes": [],
     }
     assert not schema_errors(integrated_promotion, "agent_review.schema.json")
+
+    assert SCHEMA_BOUND_AGENT_REVIEWS == (
+        "reviews/union_closed/UC-WP01.agent_review.yaml",
+    )
+    assert not schema_bound_review_registry_errors(SCHEMA_BOUND_AGENT_REVIEWS)
+    assert any(
+        "duplicate schema-bound review registration" in error
+        for error in schema_bound_review_registry_errors(
+            (SCHEMA_BOUND_AGENT_REVIEWS[0], SCHEMA_BOUND_AGENT_REVIEWS[0])
+        )
+    )
+    assert any(
+        "must live under reviews/" in error
+        for error in schema_bound_review_registry_errors(("legacy/review.yaml",))
+    )
+    assert any(
+        "must be YAML" in error
+        for error in schema_bound_review_registry_errors(("reviews/union_closed/review.json",))
+    )
 
     assert not schema_errors(governed_review, "agent_review.schema.json")
     assert not agent_review_semantic_errors(governed_review, "UC-WP01")
