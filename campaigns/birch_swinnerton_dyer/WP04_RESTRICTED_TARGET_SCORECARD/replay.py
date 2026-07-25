@@ -15,6 +15,7 @@ DELTA = ROOT / "01_SOURCE_DELTA.json"
 CANDIDATES = ROOT / "02_CANDIDATE_LEDGER.json"
 DAG = ROOT / "04_PROOF_OBLIGATION_DAG.json"
 GATES = ROOT / "05_CLAIM_AND_GATE.json"
+WITNESS = ROOT / "06_CLASS_NONVACUITY.json"
 
 COMPOSABLE = {
     "COMPOSABLE_STANDARD", "COMPOSABLE", "COMPOSABLE_OPERATIONAL_INTERFACE",
@@ -155,6 +156,29 @@ def validate_gates(gates, target_id):
             raise ContractError(f"gate {key} must be {value}")
 
 
+def validate_nonvacuity(witness, target_id):
+    require(witness, {"target_id", "witness", "purpose", "claim_boundary"}, "nonvacuity witness")
+    if witness["target_id"] != target_id:
+        raise ContractError("nonvacuity target mismatch")
+    curve = witness["witness"]
+    require(curve, {"canonical_id", "source", "integral_weierstrass_coefficients", "conductor", "semistable", "analytic_rank", "torsion_order", "reduction_at_2", "a_2", "e2_irreducibility_reason"}, "nonvacuity curve")
+    coeffs = curve["integral_weierstrass_coefficients"]
+    if not isinstance(coeffs, list) or len(coeffs) != 5 or not all(isinstance(x, int) for x in coeffs):
+        raise ContractError("nonvacuity curve lacks an integral Weierstrass model")
+    if curve["conductor"] <= 0 or curve["conductor"] % 2 == 0 or curve["semistable"] is not True:
+        raise ContractError("nonvacuity curve is outside the semistable odd-conductor class")
+    if curve["analytic_rank"] != 1 or curve["torsion_order"] != 1:
+        raise ContractError("nonvacuity curve lacks rank-one or irreducible-E[2] evidence")
+    if curve["reduction_at_2"] != "ordinary" or curve["a_2"] % 2 == 0:
+        raise ContractError("nonvacuity curve is not ordinary at 2")
+    boundary = witness["claim_boundary"]
+    if boundary.get("class_nonempty") is not True:
+        raise ContractError("nonvacuity witness does not establish class nonemptiness")
+    for key in ("target_verified", "mathematical_certificate", "universal_BSD", "finite_data_used_as_proof"):
+        if boundary.get(key) is not False:
+            raise ContractError(f"nonvacuity witness overclaims {key}")
+
+
 def expect_reject(label, fn, *args):
     try:
         fn(*args)
@@ -171,12 +195,14 @@ def main():
     ledger = load(CANDIDATES)
     dag = load(DAG)
     gates = load(GATES)
+    witness = load(WITNESS)
     validate_delta(delta)
     records = theorem_records(base, delta)
     wp01_ids = {fixture["id"] for fixture in atlas["fixtures"]}
     target_id = validate_candidates(ledger, records, wp01_ids)
     validate_dag(dag, target_id)
     validate_gates(gates, target_id)
+    validate_nonvacuity(witness, target_id)
     print(f"ACCEPT selected target {target_id}")
 
     mutation = copy.deepcopy(ledger)
@@ -197,6 +223,9 @@ def main():
     mutation = copy.deepcopy(dag)
     mutation["adversarial_gates"].pop("BSD-FP-006")
     expect_reject("one-prime firewall removed", validate_dag, mutation, target_id)
+    mutation = copy.deepcopy(witness)
+    mutation["claim_boundary"]["target_verified"] = True
+    expect_reject("nonvacuity promoted to theorem evidence", validate_nonvacuity, mutation, target_id)
 
     print("BSD-WP04 target-selection replay passed")
     return 0
