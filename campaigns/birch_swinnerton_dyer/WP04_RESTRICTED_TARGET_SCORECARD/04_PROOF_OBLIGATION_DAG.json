@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "BSD-WP04-R2-A1-DAG",
+  "target_id": "BSD-R2-A1",
+  "target_status": "SELECTED_RESEARCH_TARGET_UNPROVED",
+  "nodes": [
+    {"id": "A1-P00", "statement": "Fix the exact curve class: E/Q semistable, odd conductor, good ordinary at 2, E[2] irreducible, and complex analytic rank one.", "status": "input_contract"},
+    {"id": "A1-P01", "statement": "Bind the complete Hasse-Weil L-function, Neron differential, real period, regulator, Tamagawa factors, torsion denominator, and ord_2 convention to WP00.", "status": "required"},
+    {"id": "A1-P02", "statement": "Import analytic-rank-one consequences: rank E(Q)=1 and Sha(E/Q) finite.", "status": "imported", "interfaces": ["BSD-T-060"]},
+    {"id": "A1-P03", "statement": "Establish rationality and exact normalization of L'(E,1)/(Omega_E Reg_E).", "status": "required"},
+    {"id": "A1-P04", "statement": "Define the 2-primary Selmer structure and compare local conditions at 2 and all bad primes without ordinary/strict/relaxed drift.", "status": "open"},
+    {"id": "A1-P05", "statement": "Prove a 2-adic main-conjecture, Euler-system, or finite-level substitute strong enough to control the relevant Selmer length.", "status": "open"},
+    {"id": "A1-P06", "statement": "Prove the required 2-adic explicit-reciprocity or Gross-Zagier comparison with every exceptional and integrality factor explicit.", "status": "open"},
+    {"id": "A1-P07", "statement": "Compute and verify all local correction terms, including Tamagawa and period/isogeny conversion factors.", "status": "open"},
+    {"id": "A1-P08", "statement": "Identify the resulting 2-adic length with ord_2 of Sha, Tamagawa, regulator, period, and torsion terms.", "status": "open"},
+    {"id": "A1-P09", "statement": "Conclude the exact ord_2 valuation identity and nothing stronger.", "status": "open"}
+  ],
+  "edges": [
+    ["A1-P00", "A1-P01"], ["A1-P00", "A1-P02"], ["A1-P01", "A1-P03"],
+    ["A1-P00", "A1-P04"], ["A1-P04", "A1-P05"], ["A1-P03", "A1-P06"],
+    ["A1-P05", "A1-P06"], ["A1-P04", "A1-P07"], ["A1-P06", "A1-P08"],
+    ["A1-P07", "A1-P08"], ["A1-P02", "A1-P08"], ["A1-P08", "A1-P09"]
+  ],
+  "adversarial_gates": {
+    "BSD-FP-006": "The conclusion is one prime part only and may not be promoted to the full formula.",
+    "BSD-FP-008": "The p=2 ordinary local theory must be stated independently of odd-prime ordinary results.",
+    "BSD-FP-009": "Primitive and imprimitive Euler factors require explicit conversion.",
+    "BSD-FP-010": "The complete complex L-function is mandatory.",
+    "BSD-FP-011": "Period, differential, isogeny, and Manin factors are fixed.",
+    "BSD-FP-016": "No p-adic or derived-height nondegeneracy may be assumed silently.",
+    "BSD-FP-017": "Every Selmer local condition and comparison sequence is named.",
+    "BSD-FP-018": "No BSD identity may be used to generate its own arithmetic inputs."
+  },
+  "mechanism_generation": "CLOSED_PENDING_SEPARATE_AUTHORIZATION"
+}
