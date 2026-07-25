@@ -1,5 +1,21 @@
 # Glossary
 
+## Agent Council
+
+The programme review-governance system that assigns explicit responsibility for foundations, discovery, experiments, dependency structure, verification, adversarial review, formalization, exposition, provenance, implementation, continuity, and Referee readiness.
+
+## Amanuensis
+
+The Agent Council office responsible for internal artifact continuity: authoritative identity, decision records, terminology, review provenance, cross-document consistency, and final editorial integration. The Amanuensis does not certify mathematical truth.
+
+## Artifact disposition
+
+A human-readable campaign qualification such as `selected_unproved` or `referee_promoted_conditional`. Disposition explains an artifact's campaign state without creating a new machine lifecycle token.
+
+## Artifact lifecycle status
+
+The machine-readable phase of a governed artifact: `draft`, `active`, `blocked`, `ready_for_next_stage`, `ready_for_certification`, `certified`, `completed`, `selected`, `published`, or `archived`. Lifecycle status does not directly state whether a conjecture is proved.
+
 ## Assay office
 
 The MATHCERT role. It tests whether a claim survives a trusted proof or replay boundary.
@@ -32,9 +48,13 @@ The MATHFORGE role. It gathers source material, runs reconnaissance, generates e
 
 A bounded mathematical campaign artifact with lay companion, formal problem statement, source audit, claim ledger, theorem spine, proof/computation/failure analysis, next target, and certification handoff.
 
+## MATH-PROGRAMME
+
+The governance, integration, publication, and archival layer. It may own governed artifacts in the review schema, but it is not a fourth mathematical execution or proof stage.
+
 ## MATHCERT
 
-The certification pillar. It owns Lean/equivalent formalization, exact replay, interval certificates, SAT/SMT artifacts, CI gates, and claim-status enforcement.
+The certification pillar. It owns Lean or equivalent formalization, exact replay, interval certificates, SAT/SMT artifacts, CI gates, and claim-status enforcement.
 
 ## MATHFORGE
 
@@ -52,9 +72,21 @@ A reformulation that reduces ambiguity and exposes the essential structure of a 
 
 The explanatory layer that teaches the object, obstruction, claim boundary, and next target to a serious reader.
 
+## Programme domain
+
+A governed mathematical campaign with a stable domain ID, campaign ID, canonical repository entry, public landing page, foundational profile, review date, and explicit claim boundary in `DOMAIN_REGISTRY.yaml`.
+
 ## Promotion condition
 
 The specific action required for a claim to move to a stronger status: proof, exact replay, formalization, interval certificate, SAT/SMT replay, or specialist audit.
+
+## Qualified solved-problem archive
+
+A governed reconstruction dossier for an established theorem whose sources, dependencies, adversarial guards, certificates, retained debt, and public claim boundary are explicit. It is not automatically a new proof or complete formalization.
+
+## Schema-bound review record
+
+An Agent Council review record that conforms to the current schema and is explicitly registered for CI validation. Legacy review files are governed evidence but are not schema-bound until migrated and registered.
 
 ## Status spine
 
@@ -63,3 +95,7 @@ A structured account of what is known, unknown, solved, refuted, stale, or speci
 ## Theorem spine
 
 The chain of definitions, propositions, lemmas, corollaries, examples, and counterexamples that makes a Work Package mathematically auditable.
+
+## Terminology authority
+
+The [Agent Council Terminology Registry](AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md) governs terms that materially affect review, lifecycle, continuity, and cross-artifact interpretation. The [Programme Status Taxonomy](STATUS_TAXONOMY.md) gives the public mapping among claim status, artifact lifecycle, and campaign disposition.
