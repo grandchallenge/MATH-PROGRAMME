@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate programme classification, graph, mapping, review, and reference contracts."""
+"""Validate programme classification, graph, mapping, and schema-bound review contracts."""
 from __future__ import annotations
 
 import json
@@ -22,9 +22,10 @@ CORE_CAMPAIGN_AGENTS = (
     "Amanuensis",
     "Referee",
 )
-# Legacy campaign reviews use several pre-contract formats. Add a record here only
-# after it has been migrated to schemas/agent_review.schema.json.
-SCHEMA_BOUND_AGENT_REVIEWS = (
+# CI validates only the records explicitly registered here. Legacy campaign reviews
+# use several pre-contract formats; add one only after complete migration to
+# schemas/agent_review.schema.json.
+SCHEMA_BOUND_AGENT_REVIEWS: tuple[str, ...] = (
     "reviews/union_closed/UC-WP01.agent_review.yaml",
 )
 
@@ -88,6 +89,24 @@ def duplicate_values(values: list[str]) -> set[str]:
             duplicates.add(value)
         seen.add(value)
     return duplicates
+
+
+def schema_bound_review_registry_errors(review_paths: tuple[str, ...]) -> list[str]:
+    """Validate the explicit CI binding registry without inferring legacy coverage."""
+    errors: list[str] = []
+    if not review_paths:
+        return ["reviews: no schema-bound Agent Council review records registered"]
+    for duplicate in sorted(duplicate_values(list(review_paths))):
+        errors.append(f"reviews: duplicate schema-bound review registration {duplicate}")
+    for relative in review_paths:
+        path = Path(relative)
+        if path.is_absolute() or ".." in path.parts:
+            errors.append(f"reviews: schema-bound review path must be repository-relative: {relative}")
+        if not relative.startswith("reviews/"):
+            errors.append(f"reviews: schema-bound review must live under reviews/: {relative}")
+        if path.suffix not in {".yaml", ".yml"}:
+            errors.append(f"reviews: schema-bound review must be YAML: {relative}")
+    return errors
 
 
 def validate_documents(
@@ -210,11 +229,9 @@ def main() -> int:
         for error in schema_errors(agent_review_template, "agent_review.schema.json")
     )
 
-    review_paths = [ROOT / relative for relative in SCHEMA_BOUND_AGENT_REVIEWS]
-    if not review_paths:
-        errors.append("reviews: no schema-bound Agent Council review records registered")
-    for review_path in review_paths:
-        relative = review_path.relative_to(ROOT).as_posix()
+    errors.extend(schema_bound_review_registry_errors(SCHEMA_BOUND_AGENT_REVIEWS))
+    for relative in SCHEMA_BOUND_AGENT_REVIEWS:
+        review_path = ROOT / relative
         if not review_path.is_file():
             errors.append(f"{relative}: registered Agent Council review record is missing")
             continue
@@ -271,7 +288,7 @@ def main() -> int:
         print(f"programme validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
     print(
-        "programme classification, discovery, foundation, and schema-bound "
+        "programme classification, discovery, foundation, and explicitly schema-bound "
         "Agent Council contracts are valid"
     )
     return 0
