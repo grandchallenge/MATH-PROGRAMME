@@ -1,0 +1,115 @@
+artifact:
+  id: BSD-WP04
+  type: work_package
+  title: Restricted theorem target scorecard
+  pillar: MATH-PROGRAMME
+  status: review_ready
+
+council_review:
+  Axiomatist:
+    status: reviewed
+    obligations: []
+    findings:
+      - The selected proposition is one exact 2-primary valuation identity, not universal or strong BSD.
+  Prospector:
+    status: reviewed
+    obligations: []
+    findings:
+      - Current primary-source delta retires the unrestricted rank-one converse and multiplicative odd-prime p-part from the open shortlist.
+  Experimentalist:
+    status: reviewed
+    obligations: []
+    findings:
+      - Finite computation is absent from the target premise and cannot support selection truth.
+  Cartographer:
+    status: reviewed
+    obligations: []
+    findings:
+      - The proof-obligation DAG exposes local-condition, reciprocity, correction-factor, and valuation-identification cuts.
+  Verifier:
+    status: reviewed
+    obligations: []
+    findings:
+      - Deterministic replay checks score arithmetic, exactly-one selection, imports, gates, and adversarial mutations.
+  Adversary:
+    status: reviewed
+    obligations: []
+    findings:
+      - One-prime promotion, odd-prime local-theory transfer, normalization drift, hidden nondegeneracy, and circularity remain blocked.
+  Formalist:
+    status: reviewed
+    obligations: []
+    findings:
+      - Only composable WP02 interfaces are imported; boundary sources are not treated as assumptions.
+  Steward:
+    status: reviewed
+    obligations: []
+    findings:
+      - Mechanism generation, novelty claims, and WP05 execution remain closed.
+  Composer:
+    status: reviewed
+    obligations: []
+    findings:
+      - Source delta, scorecard, decision, DAG, gate, replay, and workflow form one bounded package.
+  Grammarian:
+    status: reviewed
+    obligations: []
+    findings:
+      - Selected, unproved, source-boundary, theorem, and novelty language remain distinct.
+  Amanuensis:
+    status: reviewed
+    obligations: []
+    findings:
+      - WP01-WP04 identifiers, target status, and claim boundary are internally aligned.
+  Archivist:
+    status: reviewed
+    obligations: []
+    findings:
+      - No novelty, priority, or first-proof claim is introduced.
+  Mechanist:
+    status: reviewed
+    obligations: []
+    findings:
+      - The package identifies obligations but proposes no attack mechanism.
+  Typesetter:
+    status: reviewed
+    obligations: []
+    findings:
+      - Complete-L, period, regulator, Tamagawa, torsion, and ord_2 notation are explicit.
+  Referee:
+    status: pending
+    obligations:
+      - Independently reconstruct the source frontier, scorecard, target statement, and proof-obligation DAG.
+    findings: []
+
+amanuensis_control:
+  artifact_ledger:
+    ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md
+    entry_id: BSD-WP04
+  decision_record_refs: [ADR-0005]
+  terminology_registry:
+    registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md
+    terms_introduced_or_changed: []
+  review_provenance:
+    complete: false
+    evidence_refs:
+      - MATH-PROGRAMME#66
+  cross_document_consistency:
+    status: reviewed
+    checked_against: [BSD-WP01, BSD-WP02, BSD-WP03]
+    conflicts: []
+  final_editorial_integration:
+    status: pending
+    integrated_artifact_ref: campaigns/birch_swinnerton_dyer/WP04_RESTRICTED_TARGET_SCORECARD/00_README.md
+
+unresolved_obligations:
+  - id: BSD-WP04-R001
+    owner: Referee
+    description: Independent source-frontier and target-selection reconstruction.
+    severity: high
+    blocking: true
+
+promotion:
+  ready_for_next_stage: false
+  blockers: [BSD-WP04-R001]
+  certification_route: deterministic scorecard replay plus semantic Referee review
