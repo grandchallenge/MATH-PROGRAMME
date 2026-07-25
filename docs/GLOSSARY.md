@@ -20,6 +20,10 @@ The machine-readable phase of a governed artifact: `draft`, `active`, `blocked`,
 
 The MATHCERT role. It tests whether a claim survives a trusted proof or replay boundary.
 
+## Campaign promotion register
+
+The current documentary register that records when repository review and merge conditions have been discharged for an immutable campaign artifact whose text preserves its pre-merge status snapshot. It does not promote a theorem, novelty claim, or certification state.
+
 ## Candidate ore
 
 A promising mathematical object, problem, pattern, or computational signal produced by MATHFORGE before disciplined Work Package treatment.
@@ -43,6 +47,10 @@ A reproducible finite or symbolic computation used to verify a finite statement,
 ## Foundry
 
 The MATHFORGE role. It gathers source material, runs reconnaissance, generates examples, and produces candidate artifacts.
+
+## Governed root campaign artifact
+
+An integrated root-level `*-WP00-*.md` source-normalized non-solution dossier with an artifact ID, challenge identity, and explicit claim class. Documentation CI requires it to be registered as a canonical programme domain entry. Registration does not strengthen its mathematical claims.
 
 ## Grand Challenge Work Package
 
@@ -78,7 +86,7 @@ A governed mathematical campaign with a stable domain ID, campaign ID, canonical
 
 ## Promotion condition
 
-The specific action required for a claim to move to a stronger status: proof, exact replay, formalization, interval certificate, SAT/SMT replay, or specialist audit.
+The specific action required for a claim or artifact to move to a stronger status. Mathematical promotion requires the declared support route; documentary promotion may instead require review, integration, CI, or repository merge. The two must not be confused.
 
 ## Qualified solved-problem archive
 
