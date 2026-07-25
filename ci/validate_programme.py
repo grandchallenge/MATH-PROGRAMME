@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate programme classification, graph, mapping, and reference contracts."""
+"""Validate programme classification, graph, mapping, review, and reference contracts."""
 from __future__ import annotations
 
 import json
@@ -13,6 +13,20 @@ from jsonschema import Draft202012Validator, FormatChecker
 
 ROOT = Path(__file__).resolve().parents[1]
 MSC_CODE = re.compile(r"^\d{2}(?:-\d{2}|[A-Z](?:xx|\d{2}))$")
+CORE_CAMPAIGN_AGENTS = (
+    "Axiomatist",
+    "Cartographer",
+    "Verifier",
+    "Adversary",
+    "Formalist",
+    "Amanuensis",
+    "Referee",
+)
+# Legacy campaign reviews use several pre-contract formats. Add a record here only
+# after it has been migrated to schemas/agent_review.schema.json.
+SCHEMA_BOUND_AGENT_REVIEWS = (
+    "reviews/union_closed/UC-WP01.agent_review.yaml",
+)
 
 
 def load_json(path: Path) -> Any:
@@ -35,6 +49,35 @@ def foundational_profile_errors(instance: dict[str, Any], label: str) -> list[st
         f"{label}.foundational_profile: {error}"
         for error in schema_errors(instance["foundational_profile"], "foundational_profile.schema.json")
     ]
+
+
+def agent_review_semantic_errors(instance: dict[str, Any], label: str) -> list[str]:
+    """Enforce promotion semantics that are awkward to express in JSON Schema."""
+    errors: list[str] = []
+    promotion = instance.get("promotion", {})
+    if not promotion.get("ready_for_next_stage", False):
+        return errors
+
+    council = instance.get("council_review", {})
+    for agent in CORE_CAMPAIGN_AGENTS:
+        status = council.get(agent, {}).get("status")
+        if status != "reviewed":
+            errors.append(
+                f"{label}: promotion requires {agent} status reviewed, found {status!r}"
+            )
+
+    for agent, record in council.items():
+        if record.get("status") == "blocked":
+            errors.append(f"{label}: promotion cannot proceed while {agent} is blocked")
+
+    for obligation in instance.get("unresolved_obligations", []):
+        if obligation.get("blocking"):
+            errors.append(
+                f"{label}: promotion cannot proceed with blocking obligation "
+                f"{obligation.get('id', '<unknown>')}"
+            )
+
+    return errors
 
 
 def duplicate_values(values: list[str]) -> set[str]:
@@ -167,6 +210,21 @@ def main() -> int:
         for error in schema_errors(agent_review_template, "agent_review.schema.json")
     )
 
+    review_paths = [ROOT / relative for relative in SCHEMA_BOUND_AGENT_REVIEWS]
+    if not review_paths:
+        errors.append("reviews: no schema-bound Agent Council review records registered")
+    for review_path in review_paths:
+        relative = review_path.relative_to(ROOT).as_posix()
+        if not review_path.is_file():
+            errors.append(f"{relative}: registered Agent Council review record is missing")
+            continue
+        review = yaml.safe_load(review_path.read_text(encoding="utf-8"))
+        errors.extend(
+            f"{relative}: {error}"
+            for error in schema_errors(review, "agent_review.schema.json")
+        )
+        errors.extend(agent_review_semantic_errors(review, relative))
+
     ledger_paths = [
         ROOT / "templates" / "claim_ledger_template.yaml",
         ROOT / "templates" / "union_closed_claim_ledger_wp01.yaml",
@@ -212,7 +270,10 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"programme validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print("programme classification, discovery, and foundational-profile contracts are valid")
+    print(
+        "programme classification, discovery, foundation, and schema-bound "
+        "Agent Council contracts are valid"
+    )
     return 0
 
 

@@ -1,0 +1,88 @@
+artifact_id: UC-WP01
+purpose: Minimal dependency graph for the Union-Closed status spine and certification entry point.
+nodes:
+  - id: UC-WP01-D001
+    role: definition
+    statement: Finite universe, finite family, union-closure, frequency, support, and abundance are defined.
+    status: established
+    depends_on: []
+    discharge_criterion: Definitions appear in WP01 and have Lean-oriented counterparts in WP02.
+  - id: UC-WP01-D002
+    role: convention
+    statement: Nontrivial means nonempty support, equivalently the family contains a nonempty member.
+    status: established
+    depends_on:
+      - UC-WP01-D001
+    discharge_criterion: The convention is explicit in prose, claim ledger, and formal handoff.
+  - id: UC-WP01-D003
+    role: target_statement
+    statement: Frankl abundance requires an element with twice its frequency at least the family cardinality.
+    status: open_problem_statement
+    depends_on:
+      - UC-WP01-D001
+      - UC-WP01-D002
+    discharge_criterion: A clean formal statement exists; no proof is claimed.
+  - id: UC-WP01-D004
+    role: source_status
+    statement: The general conjecture remains open and current dimension-free bounds remain below one half.
+    status: audited_with_refresh_debt
+    depends_on:
+      - UC-WP01-D003
+    discharge_criterion: Literature-derived claims are sourced, dated, and periodically refreshed.
+  - id: UC-WP01-D005
+    role: computation_contract
+    statement: The bounded enumerator distinguishes raw union-closed counts from nontrivial Frankl-facing counts.
+    status: established
+    depends_on:
+      - UC-WP01-D001
+      - UC-WP01-D002
+      - UC-WP01-D003
+    discharge_criterion: Counting conventions, arithmetic mode, and output format are recorded.
+  - id: UC-WP01-D006
+    role: exact_computation
+    statement: Exhaustive enumeration for universes n <= 4 finds no nontrivial violations.
+    status: computed_exactly
+    depends_on:
+      - UC-WP01-D005
+    discharge_criterion: Source enumerator output is complete and hashed.
+  - id: UC-WP01-D007
+    role: certificate_replay
+    statement: MATHCERT independently reproduces the bounded counts and abundance checks.
+    status: certified_bounded_result
+    depends_on:
+      - UC-WP01-D006
+    discharge_criterion: Independent replay passes against the recorded source audit.
+  - id: UC-WP01-D008
+    role: claim_ledger
+    statement: Literature, heuristic, computed, and certified claims are separated by support type.
+    status: established
+    depends_on:
+      - UC-WP01-D004
+      - UC-WP01-D007
+    discharge_criterion: Every nontrivial claim has a class, status, and promotion condition.
+  - id: UC-WP01-D009
+    role: formalization_handoff
+    statement: WP02 receives the definitions, conventions, target statement, ledger boundary, and finite certificate route.
+    status: promoted
+    depends_on:
+      - UC-WP01-D001
+      - UC-WP01-D002
+      - UC-WP01-D003
+      - UC-WP01-D008
+    discharge_criterion: WP02 states the Lean representation, local theorem targets, and acceptance criteria.
+critical_path:
+  - UC-WP01-D001
+  - UC-WP01-D002
+  - UC-WP01-D003
+  - UC-WP01-D005
+  - UC-WP01-D006
+  - UC-WP01-D007
+  - UC-WP01-D008
+  - UC-WP01-D009
+proof_debt_links:
+  UC-WP01-D004:
+    - UC-WP01-O001
+  UC-WP01-D005:
+    - UC-WP01-O003
+  UC-WP01-D009:
+    - UC-WP01-O002
