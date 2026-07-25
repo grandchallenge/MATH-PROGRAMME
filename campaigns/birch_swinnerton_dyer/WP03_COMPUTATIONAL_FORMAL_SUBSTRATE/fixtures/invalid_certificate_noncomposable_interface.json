@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "BSD-CERT-INVALID-NONCOMPOSABLE",
+  "trust_class": "individual_curve_certificate",
+  "status": "CANDIDATE",
+  "scope": "individual_curve",
+  "universal_claim": false,
+  "curve": {
+    "canonical_id": "SCHEMA-FIXTURE-DISCRIMINANT-37",
+    "integral_weierstrass_coefficients": [0, 0, 1, -1, 0]
+  },
+  "claims": [
+    {
+      "claim_kind": "analytic_rank",
+      "statement": "Placeholder bounded claim for schema replay only",
+      "scope": "individual_curve"
+    }
+  ],
+  "theorem_interfaces": ["BSD-T-140"],
+  "theorem_applications": [
+    {
+      "interface_id": "BSD-T-140",
+      "hypotheses_verified": ["incorrectly treated as instantiated"],
+      "evidence_refs": ["adversarial-fixture"]
+    }
+  ],
+  "normalization": {
+    "complex_L": "complete_complex_L",
+    "registry_ref": "BSD-WP00/07_NORMALIZATION_REGISTRY.yaml"
+  },
+  "computation": {
+    "software": "none",
+    "version": "none",
+    "command": "none",
+    "input_hash": "schema-fixture",
+    "output_hash": "schema-fixture"
+  },
+  "proof_evidence": [
+    {"kind": "theorem_application", "description": "Must be rejected before use."}
+  ],
+  "claim_boundary": {
+    "mathematical_certificate": false,
+    "universal_BSD": false,
+    "notes": "BSD-T-140 is NONCOMPOSABLE_UNTIL_INSTANTIATED."
+  }
+}

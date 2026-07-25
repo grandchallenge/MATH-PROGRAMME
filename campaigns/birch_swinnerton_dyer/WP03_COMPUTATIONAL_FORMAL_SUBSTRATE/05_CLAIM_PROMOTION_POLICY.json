@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "BSD-WP03-CLAIM-PROMOTION-POLICY",
+  "trust_classes": [
+    "numerical_observation",
+    "finite_database_experiment",
+    "individual_curve_certificate_candidate",
+    "individual_curve_certificate",
+    "formal_interface",
+    "certified_formal_interface"
+  ],
+  "allowed_edges": [
+    {"from": "numerical_observation", "to": "finite_database_experiment", "requires": ["frozen snapshot", "reproducible query"]},
+    {"from": "numerical_observation", "to": "individual_curve_certificate_candidate", "requires": ["explicit curve", "bounded claim"]},
+    {"from": "individual_curve_certificate_candidate", "to": "individual_curve_certificate", "requires": ["proof-producing evidence", "source-normalized theorem applications", "independent replay"]},
+    {"from": "formal_interface", "to": "certified_formal_interface", "requires": ["theorem-prover replay", "no open-conjecture axioms"]}
+  ],
+  "forbidden_edges": [
+    {"from": "finite_database_experiment", "to": "BSD-RANK-Q"},
+    {"from": "finite_database_experiment", "to": "BSD-SHA-Q"},
+    {"from": "finite_database_experiment", "to": "BSD-LEAD-Q"},
+    {"from": "individual_curve_certificate", "to": "universal_BSD"},
+    {"from": "certified_formal_interface", "to": "universal_BSD"},
+    {"from": "one_prime_result", "to": "global_leading_term"}
+  ],
+  "gates": {
+    "mechanism_generation": "CLOSED",
+    "novelty_claims": "CLOSED",
+    "restricted_target_selection": "CLOSED",
+    "wp04": "CLOSED"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "BSD-CERT-INVALID-NUMERICAL-ONLY",
+  "trust_class": "individual_curve_certificate",
+  "status": "CERTIFIED",
+  "scope": "individual_curve",
+  "universal_claim": false,
+  "curve": {
+    "canonical_id": "SCHEMA-FIXTURE-DISCRIMINANT-37",
+    "integral_weierstrass_coefficients": [0, 0, 1, -1, 0]
+  },
+  "claims": [
+    {
+      "claim_kind": "analytic_rank",
+      "statement": "Placeholder bounded claim for schema replay only",
+      "scope": "individual_curve"
+    }
+  ],
+  "theorem_interfaces": ["BSD-T-020"],
+  "theorem_applications": [
+    {
+      "interface_id": "BSD-T-020",
+      "hypotheses_verified": ["structural schema fixture only"],
+      "evidence_refs": ["structural-fixture"]
+    }
+  ],
+  "normalization": {
+    "complex_L": "complete_complex_L",
+    "registry_ref": "BSD-WP00/07_NORMALIZATION_REGISTRY.yaml"
+  },
+  "computation": {
+    "software": "floating-point-demo",
+    "version": "0",
+    "command": "evaluate central value",
+    "input_hash": "schema-fixture",
+    "output_hash": "schema-fixture"
+  },
+  "proof_evidence": [],
+  "numerical_evidence": [{"precision_bits": 4096, "observed_value": "0.0"}],
+  "claim_boundary": {
+    "mathematical_certificate": true,
+    "universal_BSD": false,
+    "notes": "Must be rejected because numerical evidence alone cannot certify exact order."
+  }
+}

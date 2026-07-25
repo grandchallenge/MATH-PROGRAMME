@@ -7,8 +7,8 @@
 - Primary domain: elliptic curves over `\(\mathbb Q\)`
 - Primary target: equality of Mordell–Weil rank and analytic rank
 - Refined targets: finiteness of the Tate–Shafarevich group and the leading-term formula
-- Current state: `WP01_WP02_REFEREE_PROMOTED / OPEN_PROBLEM`
-- Claim boundary: no proof, reduction, novelty, mechanism, restricted target, or universal converse is claimed
+- Current state: `WP03_REFEREE_PROMOTED / OPEN_PROBLEM`
+- Claim boundary: no proof, reduction, novelty, mechanism, restricted target, universal converse, or certified curve instance is claimed
 
 ## 2. Canonical problem
 
@@ -89,11 +89,11 @@ Referee-promoted on 2026-07-24. Sixteen theorem interfaces record curve class, d
 
 ### `BSD-WP03` — Computational and formal substrate
 
-Next eligible stage, but not yet authorized. It must separate rigorous individual-curve certification, database experiments, and formalizable algebraic interfaces. No finite computation may promote a universal claim.
+Referee-promoted on 2026-07-24. It separates individual-curve certificate candidates, finite database experiments, and formal interfaces. The package includes certificate and experiment schemas, five bounded formal-interface specifications, exact coupling to WP02 composition states, a claim-promotion graph firewall, three positive and five adversarial cases, deterministic replay, proof debt, and a handoff gate. It contains no certified curve result and no theorem-prover-certified BSD interface yet.
 
 ### `BSD-WP04` — Restricted-target scorecard
 
-Closed. It may select exactly one theorem-grade target only after a separately authorized and reviewed WP03 handoff. A target must be narrower than BSD, not a restatement through Selmer notation, and must have a falsifiable proof-obligation DAG.
+Next eligible stage, but not authorized. It may select exactly one theorem-grade target only after separate authorization. A target must be narrower than BSD, not a restatement through Selmer notation or finite data, and must have a falsifiable proof-obligation DAG.
 
 ## 6. Governing restrictions
 
@@ -105,3 +105,4 @@ Closed. It may select exactly one theorem-grade target only after a separately a
 6. Numerical vanishing must be replaced by certified analytic-rank bounds before it can support an individual-curve theorem.
 7. The universal conjecture must never be encoded as an axiom in a formal artifact.
 8. Mechanism generation, novelty claims, and restricted-target selection remain closed until separately authorized.
+9. WP03 structural fixtures are not mathematical certificates and may not be described as verified BSD instances.
