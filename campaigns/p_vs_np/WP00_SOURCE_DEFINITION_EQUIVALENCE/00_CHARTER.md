@@ -68,7 +68,7 @@ Historical and structural sources used by this Work Package include:
 - Theodore Baker, John Gill, and Robert Solovay, “Relativizations of the P =? NP Question,” *SIAM Journal on Computing* 4(4), 1975, DOI `10.1137/0204037`;
 - Stephen Cook and Robert Reckhow, “The Relative Efficiency of Propositional Proof Systems,” *Journal of Symbolic Logic* 44, 1979;
 - Alexander Razborov and Steven Rudich, “Natural Proofs,” *Journal of Computer and System Sciences* 55, 1997, DOI `10.1006/jcss.1997.1494`;
-- Scott Aaronson and Avi Wigderson, “Algebrization: A New Barrier in Complexity Theory,” STOC 2008 / *Theory of Computing*.
+- Scott Aaronson and Avi Wigderson, “Algebrization: A New Barrier in Complexity Theory,” STOC 2008; journal version in *ACM Transactions on Computation Theory* 1(1), 2009.
 
 Later literature may refine strategy, known restricted lower bounds, algorithms, or meta-complexity routes. It may not silently change the target proposition.
 
