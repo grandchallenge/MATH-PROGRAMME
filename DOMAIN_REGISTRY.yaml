@@ -1,8 +1,16 @@
 domains:
   - domain_id: UC
+    programme_number: 1
+    campaign_id: UC
     slug: union_closed
     title: Union-Closed Sets
     status: ACTIVE
+    canonical_entry: DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md
+    public_page: docs/domains/union_closed.md
+    governance_refs:
+      - ADR-0002
+      - ADR-0007
+    claim_boundary: Open conjecture; bounded computations and local Lean results do not prove Frankl's conjecture.
     forge_entry: MF-UC-0001
     solve_entry: MS-UC-WP01
     cert_route: LEAN_FORMALIZATION_AND_EXACT_REPLAY
@@ -32,8 +40,8 @@ domains:
         - human_audit
       pathology_risk:
         level: low
-        notes: Active Union-Closed routes remain finite/computable and do not use continuum pathologies, determinacy, or large-cardinal assumptions.
-    next_review: TBD
+        notes: Active Union-Closed routes remain finite and computable; no continuum pathology is imported.
+    next_review: '2026-10-01'
     knowledge_graph_refs:
       - UC-DOMAIN
       - UC-CONJECTURE-FRANKL
@@ -41,3 +49,175 @@ domains:
       - UC-MAP-MSC-05D05
       - UC-MAP-MSC-06A12
       - UC-MAP-ARXIV-MATH-CO
+
+  - domain_id: NSCI
+    programme_number: 2
+    campaign_id: NS-CI-001
+    slug: navier_stokes
+    title: Navier–Stokes Critical Integrability
+    status: ACTIVE
+    canonical_entry: DOMAIN_02_NAVIER_STOKES_CRITICAL_INTEGRABILITY_MASTER_PLAN.md
+    public_page: docs/domains/navier_stokes.md
+    governance_refs:
+      - ADR-0003
+    claim_boundary: Open problem; restricted estimates and route terminations do not prove global regularity or the universal critical-integral estimate.
+    forge_entry: NS-CI-WP01
+    solve_entry: NS-CI-WP00
+    cert_route: ANALYTIC_PROOF_WITH_EQUATION_SPECIFIC_AUDIT
+    foundational_profile:
+      carrier_type: continuum
+      ambient_structure:
+        - vector_space
+        - metric_space
+        - topological_space
+        - measurable_space
+      regularity:
+        - smooth
+        - separable
+      axiom_profile:
+        base: ZFC
+        choice_usage: full_choice
+        excluded_middle: used
+        large_cardinal_usage: none
+        determinacy_usage: none
+      witness_policy:
+        existence_claim: nonconstructive
+        witness_location: absent
+      certification_target:
+        - Lean
+        - interval_certificate
+        - human_audit
+      pathology_risk:
+        level: high
+        notes: Critical scaling, weak-solution semantics, singularity formation, and whole-space versus periodic transfer require explicit control.
+    next_review: '2026-10-01'
+    knowledge_graph_refs: []
+    classification_mapping_refs: []
+
+  - domain_id: HC
+    programme_number: 3
+    campaign_id: HC-001
+    slug: hodge
+    title: Hodge Conjecture
+    status: ACTIVE
+    canonical_entry: DOMAIN_03_HODGE_CONJECTURE_MASTER_PLAN.md
+    public_page: docs/domains/hodge.md
+    governance_refs:
+      - ADR-0004
+    claim_boundary: Open conjecture; current work normalizes sources, coefficient conventions, categories, and equivalent formulations without a new algebraicity theorem.
+    forge_entry: HC-WP00
+    solve_entry: HC-WP00
+    cert_route: SOURCE_EQUIVALENCE_AND_FORMALIZATION_HANDOFF
+    foundational_profile:
+      carrier_type: categorical
+      ambient_structure:
+        - vector_space
+        - topological_space
+        - algebraic_structure
+      regularity:
+        - smooth
+        - compact
+        - Noetherian
+      axiom_profile:
+        base: ZFC
+        choice_usage: full_choice
+        excluded_middle: used
+        large_cardinal_usage: none
+        determinacy_usage: none
+      witness_policy:
+        existence_claim: nonconstructive
+        witness_location: absent
+      certification_target:
+        - Lean
+        - human_audit
+      pathology_risk:
+        level: high
+        notes: Coefficient field, cycle-class normalization, ambient category, and equivalence transfer are theorem-critical.
+    next_review: '2026-10-01'
+    knowledge_graph_refs: []
+    classification_mapping_refs: []
+
+  - domain_id: BSD
+    programme_number: 4
+    campaign_id: BSD-001
+    slug: birch_swinnerton_dyer
+    title: Birch–Swinnerton-Dyer Conjecture
+    status: ACTIVE
+    canonical_entry: DOMAIN_04_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md
+    public_page: docs/domains/birch_swinnerton_dyer.md
+    governance_refs:
+      - ADR-0005
+    claim_boundary: Open conjecture; WP00–WP04 are documentary and target-selection achievements, while BSD-R2-A1 remains unproved.
+    forge_entry: BSD-WP01
+    solve_entry: BSD-WP00
+    cert_route: THEOREM_LEDGER_WITH_CAS_AND_FORMAL_HANDOFF
+    foundational_profile:
+      carrier_type: countable
+      ambient_structure:
+        - algebraic_structure
+        - computable_presentation
+      regularity:
+        - countable
+        - computable
+        - Noetherian
+      axiom_profile:
+        base: ZFC
+        choice_usage: countable_choice
+        excluded_middle: used
+        large_cardinal_usage: none
+        determinacy_usage: none
+      witness_policy:
+        existence_claim: nonconstructive
+        witness_location: absent
+      certification_target:
+        - Lean
+        - CAS_certificate
+        - human_audit
+      pathology_risk:
+        level: medium
+        notes: Rank, Sha finiteness, leading-term normalization, complex versus p-adic statements, and universal versus family quantifiers must remain separated.
+    next_review: '2026-10-01'
+    knowledge_graph_refs: []
+    classification_mapping_refs: []
+
+  - domain_id: PC
+    programme_number: 5
+    campaign_id: PC-001
+    slug: poincare_reconstruction
+    title: Poincaré Theorem Reconstruction
+    status: ARCHIVED
+    canonical_entry: DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md
+    public_page: docs/domains/poincare_reconstruction.md
+    governance_refs:
+      - ADR-0006
+    claim_boundary: Solved classical theorem reconstructed under a qualified archive; no new proof, complete formalization, novelty, or independent analytic verification is claimed.
+    forge_entry: PC-WP01
+    solve_entry: PC-WP00
+    cert_route: SOURCE_NORMALIZED_RECONSTRUCTION_WITH_BOUNDED_LEAN_CERTIFICATE
+    foundational_profile:
+      carrier_type: continuum
+      ambient_structure:
+        - metric_space
+        - topological_space
+      regularity:
+        - smooth
+        - compact
+        - separable
+      axiom_profile:
+        base: ZFC
+        choice_usage: full_choice
+        excluded_middle: used
+        large_cardinal_usage: none
+        determinacy_usage: none
+      witness_policy:
+        existence_claim: nonconstructive
+        witness_location: certificate_artifact
+      certification_target:
+        - Lean
+        - human_audit
+      pathology_risk:
+        level: high
+        notes: Imported Ricci-flow surgery relations, source concordance, topology-event semantics, and bounded evaluator scope must remain explicit.
+    next_review: '2027-01-01'
+    knowledge_graph_refs: []
+    classification_mapping_refs: []
