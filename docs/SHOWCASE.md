@@ -1,6 +1,6 @@
 # Showcase
 
-<p class="page-deck">The programme in one view: three mathematical execution modes, one continuity layer, five governed domains, explicit handoffs, and a refusal to confuse momentum with completion.</p>
+<p class="page-deck">The programme in one view: three mathematical execution modes, one continuity layer, eight governed domains, explicit handoffs, and a refusal to confuse momentum with completion.</p>
 
 <div class="showcase-declaration">
   <span>Purpose</span>
@@ -71,6 +71,9 @@ These compact labels summarize mathematical support. They are not the same as ar
 | [03 · Hodge Conjecture](domains/hodge.md) | Open conjecture | Source and equivalence normalization; no new algebraicity result |
 | [04 · Birch–Swinnerton-Dyer](domains/birch_swinnerton_dyer.md) | Open conjecture | WP00–WP04 promoted; selected restricted target remains unproved |
 | [05 · Poincaré Reconstruction](domains/poincare_reconstruction.md) | Solved classical theorem | Qualified reconstruction archive; no new proof or complete formalization |
+| [06 · Yang–Mills Existence and Mass Gap](domains/yang_mills.md) | Open problem | Source-normalized axiomatic dossier; no continuum construction or physical gap theorem |
+| [07 · P versus NP](domains/p_vs_np.md) | Open problem | Machine and encoding lock; no equality, separation, algorithm, or unrestricted lower bound |
+| [08 · Riemann Hypothesis](domains/riemann_hypothesis.md) | Open conjecture | Function and zero normalization; no proof, disproof, or newly certified zero range |
 
 The catalogue is not a scoreboard. Different domains may legitimately produce a source audit, a false-proof atlas, a negative result, a selected target, a bounded certificate, or an archival dossier.
 
