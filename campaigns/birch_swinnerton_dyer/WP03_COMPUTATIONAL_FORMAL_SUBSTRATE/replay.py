@@ -3,7 +3,9 @@
 
 from __future__ import annotations
 
+import copy
 import json
+from collections import deque
 from pathlib import Path
 from typing import Any, Callable
 
@@ -11,6 +13,13 @@ ROOT = Path(__file__).resolve().parent
 FIXTURES = ROOT / "fixtures"
 WP02_LEDGER = ROOT.parent / "WP02_THEOREM_LEDGER" / "02_THEOREM_LEDGER.json"
 OPEN_BSD = {"BSD-RANK-Q", "BSD-SHA-Q", "BSD-LEAD-Q"}
+FORBIDDEN_PROMOTION_TARGETS = OPEN_BSD | {"universal_BSD", "global_leading_term"}
+PROMOTION_SOURCES = {
+    "finite_database_experiment",
+    "individual_curve_certificate",
+    "certified_formal_interface",
+    "one_prime_result",
+}
 CERTIFICATE_STATES = {
     "COMPOSABLE_STANDARD",
     "COMPOSABLE",
@@ -19,6 +28,7 @@ CERTIFICATE_STATES = {
     "COMPOSABLE_RESTRICTED_P_PART",
     "INDIVIDUAL_ONLY",
 }
+IMMUTABLE_ID_PREFIXES = ("sha256:", "release:", "doi:", "git:")
 
 
 class ContractError(ValueError):
@@ -37,6 +47,12 @@ def require(obj: dict[str, Any], keys: list[str], label: str) -> None:
     missing = [key for key in keys if key not in obj]
     if missing:
         raise ContractError(f"{label}: missing {missing}")
+
+
+def nonempty_text(value: Any, label: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise ContractError(f"{label}: expected nonempty text")
+    return value.strip()
 
 
 def wp02_records() -> dict[str, dict[str, Any]]:
@@ -68,6 +84,7 @@ def validate_certificate(obj: dict[str, Any], records: dict[str, dict[str, Any]]
 
     curve = obj["curve"]
     require(curve, ["canonical_id", "integral_weierstrass_coefficients"], "curve")
+    nonempty_text(curve["canonical_id"], "curve canonical_id")
     coeffs = curve["integral_weierstrass_coefficients"]
     if not isinstance(coeffs, list) or len(coeffs) != 5 or not all(isinstance(x, int) for x in coeffs):
         raise ContractError("curve: expected five integral Weierstrass coefficients")
@@ -84,12 +101,15 @@ def validate_certificate(obj: dict[str, Any], records: dict[str, dict[str, Any]]
         raise ContractError("certificate: claims must be nonempty")
     for claim in claims:
         require(claim, ["claim_kind", "statement", "scope"], "claim")
+        nonempty_text(claim["statement"], "claim statement")
         if claim["scope"] != "individual_curve":
             raise ContractError("claim: scope drift")
 
     interfaces = obj["theorem_interfaces"]
     if not isinstance(interfaces, list) or not interfaces:
         raise ContractError("certificate: theorem_interfaces must be nonempty")
+    if len(interfaces) != len(set(interfaces)):
+        raise ContractError("certificate: duplicate theorem interface")
     for interface_id in interfaces:
         record = records.get(interface_id)
         if record is None:
@@ -107,8 +127,10 @@ def validate_certificate(obj: dict[str, Any], records: dict[str, dict[str, Any]]
         interface_id = application["interface_id"]
         if interface_id not in interfaces or interface_id in applied:
             raise ContractError("certificate: undeclared or duplicate theorem application")
-        if not application["hypotheses_verified"] or not application["evidence_refs"]:
-            raise ContractError("certificate: theorem application lacks evidence")
+        if not isinstance(application["hypotheses_verified"], list) or not application["hypotheses_verified"]:
+            raise ContractError("certificate: theorem application lacks verified hypotheses")
+        if not isinstance(application["evidence_refs"], list) or not application["evidence_refs"]:
+            raise ContractError("certificate: theorem application lacks evidence references")
         applied.add(interface_id)
     if applied != set(interfaces):
         raise ContractError("certificate: each interface needs one application record")
@@ -125,8 +147,10 @@ def validate_certificate(obj: dict[str, Any], records: dict[str, dict[str, Any]]
             "exact_symbolic", "rigorous_interval", "theorem_application",
             "formal_certificate", "independently_replayed_certificate",
         }
-        if not evidence or any(item.get("kind") not in allowed for item in evidence):
+        if not isinstance(evidence, list) or not evidence:
             raise ContractError("certificate: CERTIFIED requires proof-producing evidence")
+        if any(not isinstance(item, dict) or item.get("kind") not in allowed for item in evidence):
+            raise ContractError("certificate: unsupported evidence kind")
         if any(claim["claim_kind"] == "full_leading_term" for claim in claims):
             required = {"global_sha_finiteness", "global_sha_order", "exact_arithmetic_factors"}
             if not required.issubset(obj):
@@ -153,8 +177,21 @@ def validate_experiment(obj: dict[str, Any]) -> None:
     count = obj["population_count"]
     if not isinstance(count, int) or isinstance(count, bool) or count <= 0:
         raise ContractError("experiment: population_count must be a positive integer")
-    require(obj["snapshot"], ["source", "immutable_id", "retrieval_date"], "snapshot")
-    require(obj["selection"], ["query", "inclusion_rule"], "selection")
+
+    snapshot = obj["snapshot"]
+    require(snapshot, ["source", "immutable_id", "retrieval_date"], "snapshot")
+    nonempty_text(snapshot["source"], "snapshot source")
+    immutable_id = nonempty_text(snapshot["immutable_id"], "snapshot immutable_id")
+    if not immutable_id.startswith(IMMUTABLE_ID_PREFIXES):
+        raise ContractError("experiment: snapshot identifier is not immutable/content-addressed")
+    nonempty_text(snapshot["retrieval_date"], "snapshot retrieval_date")
+
+    selection = obj["selection"]
+    require(selection, ["query", "inclusion_rule"], "selection")
+    nonempty_text(selection["query"], "selection query")
+    nonempty_text(selection["inclusion_rule"], "selection inclusion_rule")
+    if not isinstance(obj["outputs"], list) or not obj["outputs"]:
+        raise ContractError("experiment: outputs must be nonempty")
     if any(obj["claim_boundary"].get(key) is True for key in
            ("universal_BSD", "density_theorem", "individual_certificate")):
         raise ContractError("experiment: prohibited promotion")
@@ -172,8 +209,9 @@ def validate_formal(obj: dict[str, Any], registry_ids: set[str]) -> None:
     )
     if obj["trust_class"] != "formal_interface" or obj["interface_id"] not in registry_ids:
         raise ContractError("formal interface: wrong class or unknown interface")
-    if set(obj["open_conjecture_axioms"]) & OPEN_BSD:
-        raise ContractError("formal interface: open BSD proposition imported as axiom")
+    imported = set(obj["imports"]) | set(obj["axioms"]) | set(obj["open_conjecture_axioms"])
+    if imported & OPEN_BSD:
+        raise ContractError("formal interface: open BSD proposition imported")
     if obj["claim_boundary"].get("proves_BSD") is not False:
         raise ContractError("formal interface: boundary claims BSD")
 
@@ -183,19 +221,42 @@ def registry_ids() -> set[str]:
     require(registry, ["interfaces"], "registry")
     ids: set[str] = set()
     for interface in registry["interfaces"]:
-        require(interface, ["id", "forbidden_axioms"], "registry interface")
+        require(interface, ["id", "imports", "forbidden_axioms"], "registry interface")
         if interface["id"] in ids:
             raise ContractError(f"registry: duplicate {interface['id']}")
+        if set(interface["imports"]) & OPEN_BSD:
+            raise ContractError(f"registry: {interface['id']} imports an open BSD proposition")
         ids.add(interface["id"])
     return ids
 
 
-def validate_policy() -> None:
-    policy = load(ROOT / "05_CLAIM_PROMOTION_POLICY.json")
-    require(policy, ["forbidden_edges", "gates"], "policy")
-    targets = {edge["to"] for edge in policy["forbidden_edges"]}
-    if not OPEN_BSD.issubset(targets):
-        raise ContractError("policy: universal targets are not all forbidden")
+def validate_policy(policy: dict[str, Any]) -> None:
+    require(policy, ["allowed_edges", "forbidden_edges", "gates"], "policy")
+    forbidden_targets = {edge["to"] for edge in policy["forbidden_edges"]}
+    if not OPEN_BSD.issubset(forbidden_targets):
+        raise ContractError("policy: universal targets are not all explicitly forbidden")
+
+    adjacency: dict[str, set[str]] = {}
+    for edge in policy["allowed_edges"]:
+        require(edge, ["from", "to"], "allowed edge")
+        source = nonempty_text(edge["from"], "allowed edge source")
+        target = nonempty_text(edge["to"], "allowed edge target")
+        if target in FORBIDDEN_PROMOTION_TARGETS:
+            raise ContractError(f"policy: direct allowed promotion to {target}")
+        adjacency.setdefault(source, set()).add(target)
+
+    for source in PROMOTION_SOURCES:
+        queue: deque[str] = deque([source])
+        seen = {source}
+        while queue:
+            node = queue.popleft()
+            for target in adjacency.get(node, set()):
+                if target in FORBIDDEN_PROMOTION_TARGETS:
+                    raise ContractError(f"policy: hidden allowed path {source} -> {target}")
+                if target not in seen:
+                    seen.add(target)
+                    queue.append(target)
+
     for gate in ("mechanism_generation", "novelty_claims", "restricted_target_selection", "wp04"):
         if policy["gates"].get(gate) != "CLOSED":
             raise ContractError(f"policy: {gate} must remain CLOSED")
@@ -218,13 +279,16 @@ def reject(label: str, validator: Callable[..., None], obj: dict[str, Any], *arg
 def main() -> int:
     records = wp02_records()
     interfaces = registry_ids()
-    validate_policy()
+    policy = load(ROOT / "05_CLAIM_PROMOTION_POLICY.json")
+    validate_policy(policy)
+
     accept("valid individual candidate", validate_certificate,
            load(FIXTURES / "valid_individual_candidate.json"), records)
     accept("valid finite experiment", validate_experiment,
            load(FIXTURES / "valid_database_experiment.json"))
     accept("valid formal interface", validate_formal,
            load(FIXTURES / "valid_formal_interface.json"), interfaces)
+
     reject("finite experiment promoted to universal", validate_experiment,
            load(FIXTURES / "invalid_universal_from_finite.json"))
     reject("numerical-only certificate", validate_certificate,
@@ -233,6 +297,14 @@ def main() -> int:
            load(FIXTURES / "invalid_certificate_noncomposable_interface.json"), records)
     reject("open BSD axiom in formal interface", validate_formal,
            load(FIXTURES / "invalid_formal_open_axiom.json"), interfaces)
+
+    invalid_policy = copy.deepcopy(policy)
+    invalid_policy["allowed_edges"].extend([
+        {"from": "finite_database_experiment", "to": "intermediate_claim", "requires": []},
+        {"from": "intermediate_claim", "to": "BSD-RANK-Q", "requires": []},
+    ])
+    reject("hidden allowed path to universal BSD", validate_policy, invalid_policy)
+
     print("BSD-WP03 substrate replay passed")
     return 0
 
