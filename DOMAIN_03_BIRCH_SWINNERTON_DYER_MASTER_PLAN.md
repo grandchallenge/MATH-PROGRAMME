@@ -7,8 +7,9 @@
 - Primary domain: elliptic curves over `\(\mathbb Q\)`
 - Primary target: equality of Mordell–Weil rank and analytic rank
 - Refined targets: finiteness of the Tate–Shafarevich group and the leading-term formula
-- Current state: `WP03_REFEREE_PROMOTED / OPEN_PROBLEM`
-- Claim boundary: no proof, reduction, novelty, mechanism, restricted target, universal converse, or certified curve instance is claimed
+- Current state: `WP04_REVIEW_READY_SELECTED_TARGET / OPEN_PROBLEM`
+- Selected restricted target: `BSD-R2-A1`, provisional and unproved
+- Claim boundary: no proof, novelty, mechanism, universal converse, universal leading-term result, or certified curve instance is claimed
 
 ## 2. Canonical problem
 
@@ -54,6 +55,7 @@ The campaign treats the rank equality, finiteness of \(\Sha\), and the leading-t
 | `BSD-P-LEAD` | \(p\)-parts or \(p\)-adic leading-term formulas | theorem terrain with normalization branches |
 | `BSD-FAMILY` | density, average, twist-family, or explicit-family theorems | theorem terrain; not universal |
 | `BSD-COMPUTE` | rigorous verification for individual finite sets of curves | evidence/certification lane; not universal |
+| `BSD-R2-A1` | exact rank-one \(2\)-primary valuation identity for the WP04 semistable ordinary-at-2 class | provisional selected target; unproved |
 
 ## 4. Theorem spine
 
@@ -93,7 +95,11 @@ Referee-promoted on 2026-07-24. It separates individual-curve certificate candid
 
 ### `BSD-WP04` — Restricted-target scorecard
 
-Next eligible stage, but not authorized. It may select exactly one theorem-grade target only after separate authorization. A target must be narrower than BSD, not a restatement through Selmer notation or finite data, and must have a falsifiable proof-obligation DAG.
+Authorized and review-ready on 2026-07-24. The package audits post-WP02 sources, retires candidate routes that are already theorem terrain, scores five restricted candidates, and provisionally selects exactly one: `BSD-R2-A1`, the exact \(2\)-primary rank-one valuation identity for a semistable odd-conductor, ordinary-at-2, irreducible-\(E[2]\) class. Selection is unproved, non-novelty-bearing, and narrower than the full leading-term formula. Its proof-obligation DAG retains closed mechanism-generation and numerical-proof gates.
+
+### `BSD-WP05` — Target-specific source and interface reconstruction
+
+Next eligible only after WP04 Referee promotion and separate authorization. It may extract the exact \(2\)-adic local-condition, reciprocity, main-conjecture, and correction-factor interfaces required by `BSD-R2-A1`. It may not generate mechanisms or assert the target.
 
 ## 6. Governing restrictions
 
@@ -104,5 +110,6 @@ Next eligible stage, but not authorized. It may select exactly one theorem-grade
 5. A theorem for one prime, one reduction type, one twist family, or one density class remains restricted.
 6. Numerical vanishing must be replaced by certified analytic-rank bounds before it can support an individual-curve theorem.
 7. The universal conjecture must never be encoded as an axiom in a formal artifact.
-8. Mechanism generation, novelty claims, and restricted-target selection remain closed until separately authorized.
+8. Mechanism generation and novelty claims remain closed until separately authorized.
 9. WP03 structural fixtures are not mathematical certificates and may not be described as verified BSD instances.
+10. Selection of `BSD-R2-A1` asserts neither truth nor novelty and may not be promoted from one \(2\)-primary valuation to the full leading-term formula.
