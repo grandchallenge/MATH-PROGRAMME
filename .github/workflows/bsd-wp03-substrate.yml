@@ -1,0 +1,26 @@
+name: BSD WP03 substrate replay
+
+on:
+  pull_request:
+    paths:
+      - "campaigns/birch_swinnerton_dyer/WP03_COMPUTATIONAL_FORMAL_SUBSTRATE/**"
+      - ".github/workflows/bsd-wp03-substrate.yml"
+  push:
+    branches: [main]
+    paths:
+      - "campaigns/birch_swinnerton_dyer/WP03_COMPUTATIONAL_FORMAL_SUBSTRATE/**"
+      - ".github/workflows/bsd-wp03-substrate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Replay BSD-WP03 substrate contract
+        run: python campaigns/birch_swinnerton_dyer/WP03_COMPUTATIONAL_FORMAL_SUBSTRATE/replay.py
