@@ -30,6 +30,11 @@ Do not infer Pages URLs for root files. Use the canonical GitHub links below.
 - [Domain 03 · Hodge Conjecture](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/DOMAIN_03_HODGE_CONJECTURE_MASTER_PLAN.md)
 - [Domain 04 · Birch–Swinnerton-Dyer](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/DOMAIN_04_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md)
 - [Domain 05 · Poincaré Reconstruction](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md)
+- [Domain 06 · Yang–Mills Existence and Mass Gap](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/YM-WP00-source-normalization-equivalence-audit.md)
+- [Domain 07 · P versus NP](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/PNP-WP00-source-definition-equivalence-audit.md)
+- [Domain 08 · Riemann Hypothesis](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/RH-WP00-source-normalization-equivalence-audit.md)
+
+Domains 06–08 begin with integrated root WP00 dossiers rather than separate master-plan files. A later governed master plan may supersede those canonical entries only through an explicit registry and decision update.
 
 Historical filename note: the detailed BSD plan remains under `DOMAIN_03_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md`, and the development-stage Poincaré plan remains under `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`. ADR-0005 and ADR-0006 govern their canonical numbering.
 
@@ -39,6 +44,10 @@ Historical filename note: the detailed BSD plan remains under `DOMAIN_03_BIRCH_S
 - [Hodge](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/hodge_conjecture)
 - [Birch–Swinnerton-Dyer](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/birch_swinnerton_dyer)
 - [Poincaré Reconstruction](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/poincare_reconstruction)
+- [P versus NP](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/p_vs_np)
+- [Riemann Hypothesis](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/riemann_hypothesis)
+
+Yang–Mills currently uses its integrated root WP00 as the complete campaign entry.
 
 ## Union-Closed baseline
 
@@ -50,8 +59,9 @@ Historical filename note: the detailed BSD plan remains under `DOMAIN_03_BIRCH_S
 - [Current File Manifest](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/FILE_MANIFEST.md)
 - [Repository README](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/README.md)
 - [Public Domain Catalogue](domains/index.md)
+- [Campaign Promotion Register](CAMPAIGN_PROMOTION_REGISTER.md)
 - [Programme Status Taxonomy](STATUS_TAXONOMY.md)
 
 ## Authority rule
 
-The domain registry identifies canonical domain entries and public pages. The Agent Council artifact ledger identifies authoritative integrated governed artifacts. Claim ledgers, proof files, source records, and MATHCERT artifacts remain authoritative for mathematical status.
+The domain registry identifies canonical domain entries and public pages. The Agent Council artifact ledger identifies authoritative integrated governed artifacts. Claim ledgers, proof files, source records, and MATHCERT artifacts remain authoritative for mathematical status. Repository merge and CI can promote documentary readiness; they cannot prove the underlying open problem.
