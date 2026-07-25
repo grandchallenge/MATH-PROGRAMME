@@ -208,14 +208,21 @@ def main() -> int:
         assert not schema_errors(review, "agent_review.schema.json")
         assert not agent_review_semantic_errors(review, label)
 
-    pending_verifier = copy.deepcopy(documentation_review)
+    documentation_promotion = copy.deepcopy(documentation_review)
+    documentation_promotion["artifact"]["status"] = "ready_for_next_stage"
+    documentation_promotion["promotion"]["ready_for_next_stage"] = True
+    documentation_promotion["promotion"]["certification_route"] = (
+        "Programme documentation contracts, adversarial tests, and strict MkDocs build."
+    )
+
+    pending_verifier = copy.deepcopy(documentation_promotion)
     pending_verifier["council_review"]["Verifier"]["status"] = "pending"
     assert any(
         "promotion requires Verifier status reviewed" in error
         for error in agent_review_semantic_errors(pending_verifier, "DOCS-PUBLIC-001")
     )
 
-    blocking_obligation = copy.deepcopy(documentation_review)
+    blocking_obligation = copy.deepcopy(documentation_promotion)
     blocking_obligation["unresolved_obligations"].append(
         {
             "id": "DOCS-PUBLIC-001-TEST-BLOCKER",
@@ -230,7 +237,7 @@ def main() -> int:
         for error in agent_review_semantic_errors(blocking_obligation, "DOCS-PUBLIC-001")
     )
 
-    blocked_agent = copy.deepcopy(documentation_review)
+    blocked_agent = copy.deepcopy(documentation_promotion)
     blocked_agent["council_review"]["Experimentalist"]["status"] = "blocked"
     assert any(
         "Experimentalist is blocked" in error
