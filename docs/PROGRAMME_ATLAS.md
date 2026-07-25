@@ -62,8 +62,11 @@ Each transformation changes the status of the material. The programme exists to 
 | [03 · Hodge Conjecture](domains/hodge.md) | Open conjecture | Source and equivalence normalization |
 | [04 · Birch–Swinnerton-Dyer](domains/birch_swinnerton_dyer.md) | Open conjecture | Theorem-ledger and restricted-target campaign |
 | [05 · Poincaré Reconstruction](domains/poincare_reconstruction.md) | Solved theorem | Qualified reconstruction and bounded-certification archive |
+| [06 · Yang–Mills Existence and Mass Gap](domains/yang_mills.md) | Open problem | Axiomatic source and equivalence control |
+| [07 · P versus NP](domains/p_vs_np.md) | Open problem | Machine, encoding, reduction, and barrier control |
+| [08 · Riemann Hypothesis](domains/riemann_hypothesis.md) | Open conjecture | Function, zero, equivalence, and barrier control |
 
-Union-Closed remains the programme's first demonstration of the complete route. It no longer exhausts the public domain catalogue.
+Union-Closed remains the programme's first demonstration of the complete route. It no longer exhausts the public domain catalogue. A merged WP00 dossier is documentary progress, not evidence that its terminal problem has moved toward resolution.
 
 ## Cross-pillar obligations
 
