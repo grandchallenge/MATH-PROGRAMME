@@ -221,3 +221,134 @@ domains:
     next_review: '2027-01-01'
     knowledge_graph_refs: []
     classification_mapping_refs: []
+
+  - domain_id: YM
+    programme_number: 6
+    campaign_id: YM-001
+    slug: yang_mills
+    title: Yang–Mills Existence and Mass Gap
+    status: ACTIVE
+    canonical_entry: YM-WP00-source-normalization-equivalence-audit.md
+    public_page: docs/domains/yang_mills.md
+    governance_refs:
+      - ADR-0009
+    claim_boundary: Open problem; source normalization and axiomatic obligation control do not construct four-dimensional quantum Yang–Mills theory or prove a mass gap.
+    forge_entry: YM-WP01
+    solve_entry: YM-WP00
+    cert_route: SOURCE_EQUIVALENCE_AND_AXIOMATIC_CONSTRUCTION_HANDOFF
+    foundational_profile:
+      carrier_type: continuum
+      ambient_structure:
+        - vector_space
+        - topological_space
+        - measurable_space
+        - algebraic_structure
+      regularity:
+        - smooth
+        - separable
+      axiom_profile:
+        base: ZFC
+        choice_usage: unknown
+        excluded_middle: used
+        large_cardinal_usage: none
+        determinacy_usage: none
+      witness_policy:
+        existence_claim: nonconstructive
+        witness_location: absent
+      certification_target:
+        - Lean
+        - human_audit
+      pathology_risk:
+        level: high
+        notes: Regulator removal, infinite volume, gauge invariance, positivity, locality, nontriviality, ultraviolet behaviour, and the physical spectral gap must remain jointly controlled.
+    next_review: '2026-10-01'
+    knowledge_graph_refs: []
+    classification_mapping_refs: []
+
+  - domain_id: PNP
+    programme_number: 7
+    campaign_id: PNP-001
+    slug: p_vs_np
+    title: P versus NP
+    status: ACTIVE
+    canonical_entry: PNP-WP00-source-definition-equivalence-audit.md
+    public_page: docs/domains/p_vs_np.md
+    governance_refs:
+      - ADR-0009
+    claim_boundary: Open problem; machine, encoding, reduction, and barrier normalization do not establish P equals NP, P differs from NP, a new algorithm, or a new lower bound.
+    forge_entry: PNP-WP01
+    solve_entry: PNP-WP00
+    cert_route: FORMAL_COMPLEXITY_DEFINITIONS_REDUCTIONS_AND_THEOREM_LEDGER
+    foundational_profile:
+      carrier_type: countable
+      ambient_structure:
+        - algebraic_structure
+        - computable_presentation
+      regularity:
+        - countable
+        - decidable
+        - computable
+      axiom_profile:
+        base: ZFC
+        choice_usage: unknown
+        excluded_middle: used
+        large_cardinal_usage: none
+        determinacy_usage: none
+      witness_policy:
+        existence_claim: unknown
+        witness_location: absent
+      certification_target:
+        - Lean
+        - SAT_certificate
+        - human_audit
+      pathology_risk:
+        level: high
+        notes: Machine model, uniformity, encoded bit-length, totality, reduction direction, hidden resource costs, restricted models, and barrier scope are theorem-critical.
+    next_review: '2026-10-01'
+    knowledge_graph_refs: []
+    classification_mapping_refs: []
+
+  - domain_id: RH
+    programme_number: 8
+    campaign_id: RH-001
+    slug: riemann_hypothesis
+    title: Riemann Hypothesis
+    status: ACTIVE
+    canonical_entry: RH-WP00-source-normalization-equivalence-audit.md
+    public_page: docs/domains/riemann_hypothesis.md
+    governance_refs:
+      - ADR-0009
+    claim_boundary: Open conjecture; normalization, equivalence catalogues, finite zero verification, and spectral heuristics do not prove or disprove the Riemann Hypothesis.
+    forge_entry: RH-WP01
+    solve_entry: RH-WP00
+    cert_route: SOURCE_NORMALIZED_THEOREM_LEDGER_WITH_INTERVAL_AND_FORMAL_HANDOFF
+    foundational_profile:
+      carrier_type: continuum
+      ambient_structure:
+        - vector_space
+        - metric_space
+        - topological_space
+        - measurable_space
+        - algebraic_structure
+      regularity:
+        - smooth
+        - separable
+      axiom_profile:
+        base: ZFC
+        choice_usage: unknown
+        excluded_middle: used
+        large_cardinal_usage: none
+        determinacy_usage: none
+      witness_policy:
+        existence_claim: unknown
+        witness_location: absent
+      certification_target:
+        - Lean
+        - interval_certificate
+        - human_audit
+      pathology_risk:
+        level: high
+        notes: Analytic continuation, pole and zero taxonomy, multiplicity, symmetry, finite versus global quantifiers, arithmetic criteria, and spectral self-adjointness must remain explicit.
+    next_review: '2026-10-01'
+    knowledge_graph_refs: []
+    classification_mapping_refs: []
