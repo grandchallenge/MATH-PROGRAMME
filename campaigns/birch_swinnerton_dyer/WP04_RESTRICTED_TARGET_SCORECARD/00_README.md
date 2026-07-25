@@ -5,7 +5,7 @@
 - Campaign: `BSD-001`
 - Work package: `BSD-WP04`
 - Tracker: `MATH-PROGRAMME#66`
-- State: `REVIEW_READY_SELECTED_TARGET_BSD-R2-A1`
+- State: `REFEREE_SELECTED_TARGET_BSD-R2-A1`
 - Selected target: `BSD-R2-A1`
 - Selected-target status: `SELECTED_RESEARCH_TARGET_UNPROVED`
 - Inputs: Referee-promoted WP01, WP02, and WP03
@@ -39,9 +39,13 @@ The current theorem frontier is broad for odd primes:
 - good-reduction rank-one \(p\)-parts are established in the semistable, irreducible setting;
 - multiplicative primes \(p>3\) are also covered;
 - newer good-ordinary and Eisenstein work enlarges the odd-prime terrain;
-- explicit \(2\)-part results exist for special quadratic-twist families.
+- explicit \(2\)-part results exist for CM curves and special quadratic-twist families, with further modulo-squares transport results.
 
-The prime \(2\) remains excluded from the general odd-prime Iwasawa interfaces. `BSD-R2-A1` isolates that exclusion in a finite-level statement with an explicit curve class, fixed normalization, no finite-data premise, and no hidden height-nondegeneracy assumption.
+The prime \(2\) remains excluded from the audited general non-CM odd-prime Iwasawa interfaces. `BSD-R2-A1` isolates that exclusion in a finite-level statement with an explicit curve class, fixed normalization, no finite-data premise, and no hidden height-nondegeneracy assumption.
+
+## Non-vacuity boundary
+
+LMFDB curve `53.a1` witnesses that the selected class is nonempty: it has odd conductor \(53\), semistable reduction, analytic rank one, trivial rational torsion, irreducible \(E[2]\), and ordinary reduction at \(2\). `06_CLASS_NONVACUITY.json` records this only as class non-vacuity. It is neither a target certificate nor evidence for the valuation identity.
 
 ## Candidate dispositions
 
@@ -67,8 +71,10 @@ Passing the scorecard is not evidence that `BSD-R2-A1` is true.
 python campaigns/birch_swinnerton_dyer/WP04_RESTRICTED_TARGET_SCORECARD/replay.py
 ```
 
-The replay validates the source delta, score arithmetic, exactly-one selection, composable imports, WP01 gates, proof-obligation DAG, and closed downstream gates.
+The replay validates the source delta, score arithmetic, exactly-one selection, composable imports, WP01 gates, proof-obligation DAG, bounded non-vacuity witness, and closed downstream gates.
 
-## Current decision
+## Referee decision
 
-`BSD-R2-A1` is selected provisionally pending independent Referee reconstruction. It remains unproved. `BSD-WP05`, target-specific source and interface reconstruction, is next eligible only after promotion and separate authorization. Mechanism generation remains closed.
+Independent reconstruction confirmed the source boundary, nonempty curve class, score ordering, exact target statement, and fail-closed proof-obligation DAG. Pre-promotion target-scorecard workflow `30140379838` and Programme workflow `30140379827` passed.
+
+`BSD-R2-A1` is Referee-selected and remains unproved. `BSD-WP05`, target-specific source and interface reconstruction, is next eligible but unauthorized. Mechanism generation remains closed.
