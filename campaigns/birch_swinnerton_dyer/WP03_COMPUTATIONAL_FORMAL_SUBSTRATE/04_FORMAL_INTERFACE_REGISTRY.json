@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "BSD-WP03-FORMAL-INTERFACE-REGISTRY",
+  "interfaces": [
+    {
+      "id": "BSD-FI-001",
+      "name": "Selmer corank decomposition interface",
+      "statement": "Under the Kummer/Selmer short exact sequence and additivity of Z_p-corank, corank Sel_{p∞} = rank E(Q) + corank Sha[p∞].",
+      "imports": ["BSD-T-040", "corank additivity"],
+      "forbidden_axioms": ["BSD-RANK-Q", "BSD-SHA-Q", "BSD-LEAD-Q"],
+      "formalization_state": "SPECIFIED",
+      "claim_scope": "algebraic_interface"
+    },
+    {
+      "id": "BSD-FI-002",
+      "name": "Finite Euler-factor conversion interface",
+      "statement": "Multiplication by a holomorphic nonzero local factor preserves order of vanishing at s=1 and multiplies the leading coefficient by its value there.",
+      "imports": ["elementary local analytic algebra"],
+      "forbidden_axioms": ["BSD-RANK-Q", "BSD-LEAD-Q"],
+      "formalization_state": "SPECIFIED",
+      "claim_scope": "analytic_interface"
+    },
+    {
+      "id": "BSD-FI-003",
+      "name": "Functional-equation parity interface",
+      "statement": "For a function satisfying Lambda(s)=w Lambda(2-s), the central order has parity determined by w; the sign alone does not determine the exact order.",
+      "imports": ["functional equation", "local Taylor expansion"],
+      "forbidden_axioms": ["BSD-RANK-Q"],
+      "formalization_state": "SPECIFIED",
+      "claim_scope": "analytic_interface"
+    },
+    {
+      "id": "BSD-FI-004",
+      "name": "Prime-part nonpromotion interface",
+      "statement": "Knowledge of one p-primary valuation or one p-primary subgroup does not determine a global finite order without all-prime control and finiteness.",
+      "imports": ["unique factorization for finite positive integers"],
+      "forbidden_axioms": ["BSD-SHA-Q", "BSD-LEAD-Q"],
+      "formalization_state": "SPECIFIED",
+      "claim_scope": "arithmetic_interface"
+    },
+    {
+      "id": "BSD-FI-005",
+      "name": "Finite-to-universal quantifier barrier",
+      "statement": "Verification of P(x) on an explicitly finite subset S does not derive forall x in X, P(x), unless S=X is independently proved.",
+      "imports": ["first-order logic"],
+      "forbidden_axioms": ["finite database exhausts all elliptic curves"],
+      "formalization_state": "SPECIFIED",
+      "claim_scope": "logical_interface"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "fixture_id": "LOG-GCD-001",
+  "audit_date": "2026-07-23",
+  "scope": [
+    "positive semidefiniteness of K(m,n)=log(gcd(m,n))",
+    "divisor-indicator feature factorization weighted by sqrt(von Mangoldt)",
+    "public Lean formalization priority"
+  ],
+  "determinations": {
+    "mathematical_novelty": "NOT_SUPPORTED",
+    "feature_factorization_novelty": "NOT_SUPPORTED",
+    "lean_artifact_priority": "NOT_ESTABLISHED"
+  },
+  "governing_reduction": {
+    "general_criterion": "The GCD kernel f(gcd(m,n)) is positive semidefinite when the Mobius transform f*mu is pointwise nonnegative.",
+    "specialization": "For f(n)=log(n), (f*mu)(d)=Lambda(d)>=0.",
+    "consequence": "LOG-GCD-001 is a specialization of established GCD-matrix theory."
+  },
+  "closest_prior_art": [
+    {
+      "citation_key": "Smith1875",
+      "citation": "H. J. S. Smith, On the value of a certain arithmetical determinant, Proceedings of the London Mathematical Society 7 (1875/76), 208-212.",
+      "relevance": "Historical divisor-incidence origin of GCD matrices."
+    },
+    {
+      "citation_key": "BeslinLigh1989",
+      "citation": "Scott Beslin and Steve Ligh, Greatest common divisor matrices, Linear Algebra and its Applications 118 (1989), 69-76.",
+      "doi": "10.1016/0024-3795(89)90572-7",
+      "relevance": "Foundational positive-definiteness results for GCD matrices."
+    },
+    {
+      "citation_key": "BourqueLigh1993",
+      "citation": "Keith Bourque and Steve Ligh, Matrices associated with arithmetical functions, Linear and Multilinear Algebra 34 (1993), 261-267.",
+      "doi": "10.1080/03081089308818225",
+      "relevance": "General matrices with entries f(gcd(x_i,x_j)) and arithmetic-function positivity conditions."
+    },
+    {
+      "citation_key": "MattilaHaukkanen2019",
+      "citation": "Mika Mattila and Pentti Haukkanen, A Notion of Positive Definiteness for Arithmetical Functions, in Matrices, Statistics and Big Data, Springer (2019), 61-74.",
+      "doi": "10.1007/978-3-030-17519-1_5",
+      "relevance": "Explicit iff criterion f positive definite exactly when f*mu is nonnegative; directly subsumes the logarithm case."
+    },
+    {
+      "citation_key": "KaarniojaEtAl2018",
+      "citation": "Vesa Kaarnioja, Pentti Haukkanen, Pauliina Ilmonen, and Mika Mattila, Positive definite functions on semilattices, arXiv:1804.03047 (2018).",
+      "relevance": "Semilattice and incidence-algebra generalization of meet/GCD matrix positivity."
+    }
+  ],
+  "formalization_search": {
+    "result": "NO_EARLIER_PUBLIC_EXACT_ARTIFACT_LOCATED",
+    "priority_inference": "FORBIDDEN",
+    "limitations": [
+      "Public indexing is incomplete.",
+      "Private or unpublished formalizations are not visible.",
+      "Equivalent statements may use different theorem names or representations."
+    ]
+  },
+  "permitted_descriptions": [
+    "A GCL-certified Lean formalization of a classical GCD-matrix positivity result.",
+    "An explicit finitely supported Lean realization of the classical divisor-incidence Gram factorization."
+  ],
+  "prohibited_descriptions": [
+    "new theorem",
+    "novel positive-definite kernel",
+    "first proof",
+    "first feature representation",
+    "first Lean formalization"
+  ],
+  "audit_conclusion": "The mathematical result and feature factorization are prior art. Artifact-level priority is not established and no novelty claim is permitted."
+}

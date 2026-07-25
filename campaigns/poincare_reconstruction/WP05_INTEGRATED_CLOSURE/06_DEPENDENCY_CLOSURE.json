@@ -1,0 +1,58 @@
+{
+  "schema_version": "pc.wp05.dependency-closure.v1",
+  "campaign_id": "PC-001",
+  "work_package_id": "PC-WP05",
+  "tracker": "grandchallenge/MATH-PROGRAMME#80",
+  "result_status": "SOLVED_CLASSICAL_THEOREM",
+  "nodes": [
+    {"id": "WP00", "kind": "audit", "status": "promoted", "artifact": "campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/00_README.md"},
+    {"id": "WP01", "kind": "adversarial_atlas", "status": "referee_promoted", "artifact": "campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/00_README.md"},
+    {"id": "WP02", "kind": "theorem_interface_ledger", "status": "referee_promoted_interface_level", "artifact": "campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/00_README.md"},
+    {"id": "WP03", "kind": "conditional_topology_certificate", "status": "referee_promoted_conditional", "artifact": "campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/00_README.md"},
+    {"id": "WP04", "kind": "kernel_checked_bounded_certificate", "status": "kernel_checked_conditional", "artifact": "campaigns/poincare_reconstruction/WP04_BOUNDED_CERTIFICATION/00_README.md"},
+    {"id": "WP05", "kind": "archival_closure", "status": "candidate_ready", "artifact": "campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/00_README.md"},
+    {"id": "P-I", "kind": "primary_source", "status": "imported", "locator": "arXiv:math/0211159"},
+    {"id": "P-II", "kind": "primary_source", "status": "imported_with_correction_discipline", "locator": "arXiv:math/0303109"},
+    {"id": "P-III", "kind": "primary_source", "status": "imported", "locator": "arXiv:math/0307245"},
+    {"id": "KL", "kind": "detailed_reconstruction", "status": "imported", "locator": "arXiv:math/0605667v5"},
+    {"id": "MT", "kind": "complete_detailed_reconstruction", "status": "governing", "locator": "Clay Mathematics Monographs 3 (2007)"},
+    {"id": "CATEGORY", "kind": "classical_import", "status": "explicit", "locator": "Moise-Munkres dimension-three category bridge"},
+    {"id": "GROUP", "kind": "classical_import", "status": "explicit", "locator": "Kneser-Milnor and van Kampen"}
+  ],
+  "edges": [
+    {"from": "P-I", "to": "WP02", "role": "entropy_noncollapse_canonical_neighbourhood_inputs", "trust": "source_import"},
+    {"from": "P-II", "to": "WP02", "role": "surgery_and_all_time_continuation", "trust": "source_import"},
+    {"from": "P-III", "to": "WP02", "role": "finite_extinction", "trust": "source_import"},
+    {"from": "KL", "to": "WP02", "role": "detailed_crosscheck_of_P-I_and_P-II", "trust": "reconstruction_import"},
+    {"from": "MT", "to": "WP02", "role": "governing_complete_reconstruction", "trust": "reconstruction_import"},
+    {"from": "CATEGORY", "to": "WP00", "role": "top_pl_diff_bridge", "trust": "classical_import"},
+    {"from": "GROUP", "to": "WP00", "role": "prime_and_terminal_group_logic", "trust": "classical_import"},
+    {"from": "WP00", "to": "WP01", "role": "guard_targets", "trust": "programme_dependency"},
+    {"from": "WP00", "to": "WP02", "role": "normalized_theorem_spine", "trust": "programme_dependency"},
+    {"from": "WP01", "to": "WP02", "role": "semantic_guards", "trust": "programme_dependency"},
+    {"from": "WP02", "to": "WP03", "role": "imported_event_and_extinction_interfaces", "trust": "explicit_conditional_boundary"},
+    {"from": "WP03", "to": "WP04", "role": "finite_history_language_and_fixtures", "trust": "executable_to_formal_boundary"},
+    {"from": "WP04", "to": "WP05", "role": "kernel_checked_bounded_results", "trust": "kernel_checked_conditional"},
+    {"from": "WP00", "to": "WP05", "role": "status_category_and_route", "trust": "integrated"},
+    {"from": "WP01", "to": "WP05", "role": "adversarial_boundary", "trust": "integrated"},
+    {"from": "WP02", "to": "WP05", "role": "analytic_source_ledger", "trust": "integrated"},
+    {"from": "WP03", "to": "WP05", "role": "topology_certificate", "trust": "integrated"}
+  ],
+  "forbidden_edges": [
+    ["WP03_schema_validity", "analytic_event_existence"],
+    ["WP04_kernel_check", "ImportedEventRelation"],
+    ["finite_extinction", "topology_classification_without_event_topology"],
+    ["poincare_conclusion", "no_aspherical_factor_hypothesis"],
+    ["simply_connected", "prime_is_S3_before_factor_reconstruction"],
+    ["poincare", "equivalent_to_geometrization"]
+  ],
+  "closure": {
+    "all_material_edges_classified": true,
+    "category_bridge_explicit": true,
+    "non_circularity_audited": true,
+    "critical_source_concordance_closed": true,
+    "line_by_line_source_concordance_closed": false,
+    "full_analytic_formalization": false,
+    "qualified_archival_publication_ready": true
+  }
+}

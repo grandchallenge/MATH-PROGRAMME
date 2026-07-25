@@ -1,0 +1,115 @@
+campaign_id: PC-001
+work_package_id: PC-WP03
+audit_date: '2026-07-24'
+claims:
+  - claim_id: PC-WP03-C001
+    short_name: exact-event-schema
+    claim_text: The WP03 JSON schema represents the source-required finite surgery history, including separating and nonseparating cuts, D3 caps, surviving and discarded components, source bindings, local finiteness, extinction, ancestry, and backward reconstruction groups.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: SCHEMA_AND_HUMAN_AUDIT
+    status: REFEREE_PROMOTED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/01_EVENT_SCHEMA.json
+      - campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/02_TRANSITION_CATALOGUE.md
+    assumptions:
+      - imported_event_contract_PC02_T014
+    promotion_condition: Reopen review when the source transition list changes.
+
+  - claim_id: PC-WP03-C002
+    short_name: separating-rule
+    claim_text: Under the imported surgery-topology contract, a separating sphere cut with two D3 caps reconstructs the pre-component as the connected sum of the two post-components.
+    claim_class: PROVED_IN_PACKAGE_CONDITIONAL
+    support_type: HUMAN_PROOF_AND_SOURCE_INTERFACE
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - Morgan_Tian_Proposition_15_3
+      - campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/04_BACKWARD_RECONSTRUCTION.md
+    assumptions:
+      - cut_is_a_source_qualified_sphere_surgery
+    promotion_condition: Preserve the imported geometric qualification.
+
+  - claim_id: PC-WP03-C003
+    short_name: nonseparating-rule
+    claim_text: Under the imported surgery-topology contract, a nonseparating sphere cut reconstructs the pre-component as the post-component connected-summed with an S2-bundle over S1; in the orientable profile the factor is S2 x S1.
+    claim_class: PROVED_IN_PACKAGE_CONDITIONAL
+    support_type: HUMAN_PROOF_AND_SOURCE_INTERFACE
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - Morgan_Tian_Proposition_15_3
+      - campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/02_TRANSITION_CATALOGUE.md
+    assumptions:
+      - orientation_profile_is_correct
+    promotion_condition: Keep twisted and orientable bundles distinct.
+
+  - claim_id: PC-WP03-C004
+    short_name: finite-history
+    claim_text: Finite surgery events on every bounded interval together with finite extinction at T_ext imply a finite event history on [0,T_ext].
+    claim_class: PROVED_IN_PACKAGE_CONDITIONAL
+    support_type: ELEMENTARY_LOGIC_WITH_IMPORTED_PREMISES
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - PC02-T013
+      - PC02-T016
+      - campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/04_BACKWARD_RECONSTRUCTION.md
+    assumptions:
+      - bounded_interval_finiteness_not_merely_discreteness
+    promotion_condition: Preserve both imported premises.
+
+  - claim_id: PC-WP03-C005
+    short_name: backward-reconstruction
+    claim_text: Every schema-valid finite source-compliant history reconstructs each initial component as a connected sum of permitted normalized factors.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: FINITE_BACKWARD_INDUCTION
+    status: REFEREE_PROMOTED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/04_BACKWARD_RECONSTRUCTION.md
+      - campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/05_ADVERSARIAL_HISTORIES/validate_histories.py
+    assumptions:
+      - PC02-T014_event_contract
+      - finite_history_certificate
+    promotion_condition: Formalization may strengthen certification but must retain the conditional boundary.
+
+  - claim_id: PC-WP03-C006
+    short_name: terminal-group-discharge
+    claim_text: For a connected orientable simply connected initial manifold, the reconstructed factor expression contains only trivial spherical factors and therefore reduces to S3.
+    claim_class: PROVED_IN_PACKAGE_CONDITIONAL
+    support_type: VAN_KAMPEN_AND_FACTOR_GROUP_PROFILES
+    status: REFEREE_PROMOTED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/04_BACKWARD_RECONSTRUCTION.md
+    assumptions:
+      - connected_sum_fundamental_group_is_free_product
+      - spherical_space_form_group_is_its_deck_group
+      - factor_list_was_obtained_independently
+    promotion_condition: No arbitrary simply connected prime may be classified as S3 inside the proof.
+
+  - claim_id: PC-WP03-C007
+    short_name: adversarial-validation
+    claim_text: Fourteen positive and malformed fixtures exercise source binding, event order, cut cardinality, ancestry, reconstruction conservation, discard admissibility, orientation, finite-history, extinction, RP3#RP3 normalization, and simple-connectivity discharge.
+    claim_class: COMPUTATIONAL_CERTIFICATE
+    support_type: DETERMINISTIC_STANDARD_LIBRARY_VALIDATOR
+    status: AUDITED
+    certainty: HIGH_FOR_FIXTURE_SCOPE
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/05_ADVERSARIAL_HISTORIES/
+    assumptions: []
+    promotion_condition: Passing fixtures is not an analytic Ricci-flow proof.
+
+  - claim_id: PC-WP03-C008
+    short_name: no-analytic-overclaim
+    claim_text: WP03 does not verify the existence or geometric correctness of the recorded surgery and extinction events; these remain provenance-bearing imports.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: CLAIM_BOUNDARY_AUDIT
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/00_README.md
+      - campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/11_CERT_HANDOFF.md
+    assumptions: []
+    promotion_condition: Preserve this boundary in every formal certificate and public summary.

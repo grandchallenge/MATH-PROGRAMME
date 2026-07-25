@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "BSD-WP04-CLAIM-GATE",
+  "selected_target_id": "BSD-R2-A1",
+  "states": {
+    "target_selection": "REFEREE_SELECTED",
+    "target_truth": "UNPROVED",
+    "mechanism_generation": "CLOSED",
+    "novelty_claims": "CLOSED",
+    "universal_BSD": "OPEN_PROBLEM_UNCHANGED",
+    "numerical_experimentation": "CLOSED_EXCEPT_FUTURE_FALSIFICATION_AUTHORIZATION",
+    "wp05": "ELIGIBLE_BUT_UNAUTHORIZED"
+  },
+  "prohibited_claims": [
+    "BSD-R2-A1 proves or implies universal BSD",
+    "one 2-primary valuation proves the full leading-term formula",
+    "absence of an exact source match establishes novelty",
+    "structural or numerical fixtures verify a curve theorem",
+    "odd-prime Iwasawa theorems apply unchanged at p=2",
+    "the selected target is true"
+  ],
+  "next_stage": {
+    "id": "BSD-WP05",
+    "name": "target-specific source and interface reconstruction",
+    "authorization": "REQUIRES_SEPARATE_USER_AUTHORIZATION",
+    "mechanism_generation": "REMAINS_CLOSED"
+  }
+}

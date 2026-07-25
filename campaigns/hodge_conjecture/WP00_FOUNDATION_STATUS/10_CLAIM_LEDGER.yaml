@@ -1,0 +1,179 @@
+claims:
+  - claim_id: HC-WP00-C001
+    short_name: canonical-rational-cycle-surjectivity
+    claim_text: The classical Hodge conjecture asks whether cl_Q^p from CH^p(X) tensor Q to H^(2p)(X,Q) intersect H^(p,p)(X) is surjective for every smooth projective X over C and every p.
+    claim_class: LITERATURE_DERIVED
+    support_type: SOURCE_CITATION
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf
+      - campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md
+    assumptions:
+      - singular cohomology and standard Hodge decomposition conventions
+      - cycle class factors through rational equivalence
+    promotion_condition: Preserve exact geometry coefficients and quantifiers.
+    knowledge_graph_refs: []
+
+  - claim_id: HC-WP00-C002
+    short_name: cycle-classes-are-Hodge
+    claim_text: A codimension-p algebraic cycle on a smooth projective complex variety has rational cohomology class of Hodge type (p,p).
+    claim_class: LITERATURE_DERIVED
+    support_type: SOURCE_CITATION
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf
+    assumptions:
+      - standard cycle-class construction
+    promotion_condition: Future formalization of the imported analytic/algebraic interface.
+    knowledge_graph_refs: []
+
+  - claim_id: HC-WP00-C003
+    short_name: surjectivity-generation-equivalence
+    claim_text: Surjectivity of cl_Q^p is equivalent to rational generation of every rational Hodge class by classes of irreducible codimension-p algebraic subvarieties.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: CHECKED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/00_README.md
+      - https://github.com/grandchallenge/MATHSOLVE/blob/campaign/hc-wp00/work_packages/HC_WP00.md
+    assumptions:
+      - Z^p is free on irreducible codimension-p subvarieties
+      - cycle class kills rational equivalence
+    promotion_condition: Independent Referee review.
+    knowledge_graph_refs: []
+
+  - claim_id: HC-WP00-C004
+    short_name: divisor-boundary
+    claim_text: The rational Hodge conjecture holds in codimension one by Lefschetz (1,1).
+    claim_class: LITERATURE_DERIVED
+    support_type: SOURCE_CITATION
+    status: AUDITED
+    certainty: HIGH_FOR_OPERATIONAL_THEOREM
+    source_or_artifact:
+      - https://www.pnas.org/doi/10.1073/pnas.39.8.872
+      - https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf
+    assumptions:
+      - smooth projective X over C
+      - first Chern class and divisor conventions
+    promotion_condition: Historical theorem-locator refinement is nonblocking.
+    knowledge_graph_refs: []
+
+  - claim_id: HC-WP00-C005
+    short_name: dual-divisor-boundary
+    claim_text: The rational Hodge conjecture holds in codimension n-1 by hard Lefschetz and the divisor case.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: CHECKED
+    certainty: HIGH_CONDITIONAL_ON_CLASSICAL_INTERFACES
+    source_or_artifact:
+      - campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md
+    assumptions:
+      - hard Lefschetz is an isomorphism of rational Hodge structures
+      - Lefschetz (1,1)
+      - hyperplane class is algebraic
+    promotion_condition: Referee confirms no use of algebraicity of the inverse correspondence.
+    knowledge_graph_refs: []
+
+  - claim_id: HC-WP00-C006
+    short_name: dimension-at-most-three
+    claim_text: The rational Hodge conjecture holds for every smooth projective complex variety of dimension at most three.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: CHECKED
+    certainty: HIGH_CONDITIONAL_ON_C004_C005
+    source_or_artifact:
+      - https://www.claymath.org/millennium/hodge-conjecture/
+      - campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/05_KNOWN_CASE_LEDGER.csv
+    assumptions:
+      - claims HC-WP00-C004 and HC-WP00-C005
+    promotion_condition: Referee review and official-status consistency.
+    knowledge_graph_refs: []
+
+  - claim_id: HC-WP00-C007
+    short_name: integral-false
+    claim_text: The naive integral Hodge conjecture is false in general for smooth projective complex varieties.
+    claim_class: LITERATURE_DERIVED
+    support_type: SOURCE_CITATION
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - https://doi.org/10.1016/0040-9383(62)90001-3
+      - https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf
+    assumptions: []
+    promotion_condition: Preserve the distinction from refined integral variants.
+    knowledge_graph_refs: []
+
+  - claim_id: HC-WP00-C008
+    short_name: Kahler-analogue-false
+    claim_text: Projectivity cannot be replaced by arbitrary compact Kahler geometry in an unrestricted Hodge-to-cycle generation statement.
+    claim_class: LITERATURE_DERIVED
+    support_type: SOURCE_CITATION
+    status: AUDITED
+    certainty: HIGH_AT_FORMULATION_BOUNDARY
+    source_or_artifact:
+      - https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf
+      - https://doi.org/10.1155/S1073792802104076
+    assumptions: []
+    promotion_condition: Keep analytic-cycle and coherent-sheaf Chern-generation variants distinct.
+    knowledge_graph_refs: []
+
+  - claim_id: HC-WP00-C009
+    short_name: Hodge-locus-not-cycle
+    claim_text: Algebraicity of a Hodge locus does not by itself construct an algebraic cycle representing the fixed Hodge class.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: CHECKED
+    certainty: HIGH
+    source_or_artifact:
+      - https://publications.ias.edu/node/451
+      - campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/07_IMPLICATION_LEDGER.yaml
+    assumptions:
+      - correct statement of the Cattani-Deligne-Kaplan theorem
+    promotion_condition: Preserve object-level distinction between parameter locus and cycle.
+    knowledge_graph_refs: []
+
+  - claim_id: HC-WP00-C010
+    short_name: full-Hodge-open
+    claim_text: The universal rational Hodge conjecture remains unsolved; arbitrary fourfold codimension-two classes form the first unrestricted new case.
+    claim_class: LITERATURE_DERIVED
+    support_type: SOURCE_CITATION
+    status: AUDITED
+    certainty: OFFICIAL_STATUS_CURRENT_2026_07_24
+    source_or_artifact:
+      - https://www.claymath.org/millennium/hodge-conjecture/
+      - campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md
+    assumptions:
+      - boundary-case reconstruction is correct
+    promotion_condition: Re-audit if official status changes.
+    knowledge_graph_refs: []
+
+  - claim_id: HC-WP00-C011
+    short_name: cubic-fourfold-known
+    claim_text: The rational Hodge conjecture is known for smooth cubic fourfolds.
+    claim_class: LITERATURE_DERIVED
+    support_type: SOURCE_CITATION
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - http://www.numdam.org/item/CM_1977__34_2_199_0/
+    assumptions:
+      - smooth cubic hypersurface of complex dimension four
+    promotion_condition: Do not generalize to arbitrary fourfolds.
+    knowledge_graph_refs: []
+
+  - claim_id: HC-WP00-C012
+    short_name: no-new-result
+    claim_text: HC-WP00 normalizes sources statements and obligations but proves no new algebraicity theorem.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - DOMAIN_03_HODGE_CONJECTURE_MASTER_PLAN.md
+      - campaigns/hodge_conjecture/WP00_FOUNDATION_STATUS/01_RESULT_STATUS.json
+    assumptions: []
+    promotion_condition: Preserve this boundary in every derivative artifact.
+    knowledge_graph_refs: []

@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.1.0",
+  "fixture_id": "LOG-GCD-001",
+  "title": "Positive semidefiniteness of the logarithmic GCD kernel",
+  "claims": [
+    {
+      "claim_id": "LOG-GCD-001-C001",
+      "claim_text": "For every finite type ι, positive natural-valued x : ι → ℕ, and c : ι → ℝ, the quadratic form ΣᵢΣⱼ cᵢcⱼ log(gcd(xᵢ,xⱼ)) is nonnegative.",
+      "claim_class": "FORMALIZED",
+      "support_type": "LEAN_FORMALIZATION",
+      "status": "CERTIFIED",
+      "formal_theorem": "logGcd_posSemidef",
+      "artifact": "LogGcd.lean",
+      "depends_on": [],
+      "certification_evidence": "MATH-PROGRAMME workflow run 29984406250: Replay LOG-GCD-001 in Lean passed.",
+      "promotion_condition": "Satisfied by repository-native build of the pinned Lake project."
+    },
+    {
+      "claim_id": "LOG-GCD-001-C002",
+      "claim_text": "K(m,n)=log(gcd(m,n)) is a positive semidefinite kernel on positive natural numbers in the finite-Gram-matrix sense.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "support_type": "FORMAL_THEOREM_INTERPRETATION",
+      "status": "AUDITED",
+      "depends_on": [
+        "LOG-GCD-001-C001"
+      ],
+      "promotion_condition": "Retain the finite-Gram-matrix convention and the positivity hypothesis m,n≥1."
+    },
+    {
+      "claim_id": "LOG-GCD-001-C003",
+      "claim_text": "The finitely supported divisor feature map φ(n)_d=sqrt(Λ(d))[d|n] has dot product log(gcd(m,n)) for nonzero natural inputs.",
+      "claim_class": "FORMALIZED",
+      "support_type": "LEAN_FORMALIZATION",
+      "status": "CERTIFIED",
+      "formal_definition": "logGcdFeature",
+      "formal_theorem": "logGcd_eq_feature_inner",
+      "artifact": "LogGcdFeature.lean",
+      "depends_on": [
+        "LOG-GCD-001-C001"
+      ],
+      "certification_evidence": "MATH-PROGRAMME workflow run 29993578051: Replay LOG-GCD-001 in Lean passed with the expanded feature module.",
+      "promotion_condition": "Satisfied by repository-native build of the exact pinned Lake project."
+    },
+    {
+      "claim_id": "LOG-GCD-001-C004",
+      "claim_text": "The kernel is not strictly positive definite on all positive natural numbers; the point 1 has zero self-kernel.",
+      "claim_class": "REFUTED",
+      "support_type": "EXACT_COUNTEREXAMPLE",
+      "status": "AUDITED",
+      "depends_on": [],
+      "counterexample": {
+        "point": 1,
+        "value": "log(gcd(1,1)) = log(1) = 0"
+      },
+      "promotion_condition": "None; this is a permanent boundary on strict-positive-definiteness claims."
+    },
+    {
+      "claim_id": "LOG-GCD-001-C005",
+      "claim_text": "Mathematical novelty of the logarithmic GCD positivity theorem and its divisor feature factorization is not supported by the literature; public Lean-artifact priority is not established.",
+      "claim_class": "LITERATURE_DERIVED",
+      "support_type": "PRIOR_ART_AUDIT",
+      "status": "AUDITED",
+      "artifact": "PRIOR_ART_AUDIT.md",
+      "machine_record": "prior_art_audit.json",
+      "depends_on": [],
+      "promotion_condition": "No novelty or priority statement is permitted without a materially broader specialist audit that overturns this determination."
+    }
+  ],
+  "claims_explicitly_not_made": [
+    "No mathematical novelty or priority claim; the audit determines that novelty is not supported.",
+    "No first-proof, first-feature-representation, or first-Lean-formalization claim.",
+    "No strict-positive-definiteness claim.",
+    "No theorem over inputs containing 0.",
+    "No claim that the Finsupp realization is a separately completed ℓ²-space construction.",
+    "No claim that primes form a complete orthogonal basis in a formally specified Hilbert space."
+  ]
+}

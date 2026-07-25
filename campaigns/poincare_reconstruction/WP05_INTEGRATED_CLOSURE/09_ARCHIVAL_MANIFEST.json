@@ -1,0 +1,77 @@
+{
+  "manifest_version": "pc.wp05.archive.v1",
+  "archive_id": "ARCHIVE-PC-001",
+  "campaign_id": "PC-001",
+  "domain_id": "05",
+  "governance_decision": "ADR-0006",
+  "work_package_id": "PC-WP05",
+  "tracker": "grandchallenge/MATH-PROGRAMME#80",
+  "title": "Hamilton-Perelman Poincare reconstruction archive",
+  "result_status": "SOLVED_CLASSICAL_THEOREM",
+  "publication_status": "READY_FOR_QUALIFIED_SOLVED_PROBLEM_ARCHIVAL_PUBLICATION",
+  "canonical_statement": "Every closed connected simply connected topological 3-manifold is homeomorphic to S3.",
+  "permitted_public_description": "A source-normalized and adversarially audited reconstruction of the Hamilton-Perelman finite-extinction proof route, with executable topology-history fixtures and a Lean-checked finite backward evaluator. The analytic Ricci-flow and manifold-level topology theorems remain explicitly imported from the classical literature.",
+  "canonical_artifacts": [
+    "DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md",
+    "docs/decisions/ADR-0006_POINCARE_RECONSTRUCTION_ARCHIVE.md",
+    "campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/00_README.md",
+    "campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/00_README.md",
+    "campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/00_README.md",
+    "campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/00_README.md",
+    "campaigns/poincare_reconstruction/WP04_BOUNDED_CERTIFICATION/00_README.md",
+    "fixtures/formal/PC-WP04/README.md",
+    "campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/00_README.md",
+    "campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/01_INTEGRATED_DOSSIER.md",
+    "campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/02_SOURCE_CONCORDANCE.md",
+    "campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/03_CLAIM_TRUST_MATRIX.yaml",
+    "campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/04_CATEGORY_AUDIT.md",
+    "campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/05_NON_CIRCULARITY_AUDIT.md",
+    "campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/06_DEPENDENCY_CLOSURE.json",
+    "campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/08_PROOF_DEBT.json"
+  ],
+  "historical_aliases": [
+    "DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md",
+    "Poincare draft references to ADR-0005"
+  ],
+  "source_editions": [
+    {"key": "P-I", "locator": "arXiv:math/0211159v1", "role": "entropy, reduced geometry, noncollapsing, singularity models"},
+    {"key": "P-II", "locator": "arXiv:math/0303109v1", "role": "surgery and all-time continuation", "correction_discipline": true},
+    {"key": "P-III", "locator": "arXiv:math/0307245v1", "role": "finite extinction"},
+    {"key": "KL", "locator": "arXiv:math/0605667v5; Geometry & Topology 12", "role": "detailed reconstruction of P-I and P-II"},
+    {"key": "MT", "locator": "Clay Mathematics Monographs 3 (2007)", "role": "governing complete detailed Poincare reconstruction"}
+  ],
+  "trust_boundaries": {
+    "analytic_chain": "literature_imported",
+    "event_schema": "repository_executable",
+    "finite_evaluator": "kernel_checked_conditional",
+    "event_existence": "not_certified_by_schema_or_Lean",
+    "manifold_connected_sum_and_van_kampen": "classical_imported",
+    "category_bridge": "classical_imported"
+  },
+  "mandatory_disclosures": [
+    "not a new proof",
+    "analytic Ricci-flow proof not formalized",
+    "schema validity does not prove event existence",
+    "Lean result conditional on ImportedEventRelation",
+    "line-by-line source concordance incomplete",
+    "no novelty or priority claim"
+  ],
+  "prohibited_claims": [
+    "new proof of the Poincare conjecture",
+    "formalized Perelman proof",
+    "machine-checked proof of the Poincare conjecture",
+    "independent verification of all Hamilton-Perelman estimates",
+    "schema-valid history proves a Ricci-flow history exists",
+    "extinction alone determines topology",
+    "Poincare is equivalent to elliptization or geometrization",
+    "novelty or priority"
+  ],
+  "evidence_policy": {
+    "binding": "GitHub pull-request checks on the archive head",
+    "self_referential_commit_hash": false,
+    "required_checks": [
+      "PC-WP05 archival checks",
+      "Programme policy checks"
+    ]
+  }
+}

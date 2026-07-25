@@ -1,0 +1,145 @@
+schema_version: 1.0.0
+artifact_id: BSD-WP00-IMPLICATION-LEDGER
+records:
+- id: BSD-I001
+  antecedent: E is an elliptic curve over Q
+  consequent: E(Q) is a finitely generated abelian group
+  direction: forward
+  status: theorem
+  hypotheses:
+  - elliptic curve over Q
+  source: Mordell 1922
+  notes: Defines the algebraic rank.
+- id: BSD-I002
+  antecedent: E/Q is modular
+  consequent: L(E,s) has analytic continuation and a functional equation centered at s=1
+  direction: forward
+  status: theorem
+  hypotheses:
+  - elliptic curve over Q
+  - modularity theorem
+  source: Wiles; Taylor-Wiles; Breuil-Conrad-Diamond-Taylor
+  notes: All elliptic curves over Q satisfy the antecedent.
+- id: BSD-I003
+  antecedent: Lambda(E,s)=w_E Lambda(E,2-s)
+  consequent: (-1)^(r_an)=w_E
+  direction: forward
+  status: checked analytic consequence
+  hypotheses:
+  - Lambda holomorphic at s=1
+  source: functional equation
+  notes: Determines parity only, not exact rank.
+- id: BSD-I004
+  antecedent: the Kummer local conditions defining Sel_{p^infinity}(E/Q)
+  consequent: 0 -> E(Q) tensor Q_p/Z_p -> Sel_{p^infinity}(E/Q) -> Sha(E/Q)[p^infinity] -> 0
+  direction: forward
+  status: theorem
+  hypotheses:
+  - prime p
+  - standard Selmer definition
+  source: Kummer sequence and Galois cohomology
+  notes: Central arithmetic correspondence.
+- id: BSD-I005
+  antecedent: the exact sequence BSD-I004
+  consequent: corank Sel_{p^infinity} = rank E(Q) + corank Sha[p^infinity]
+  direction: forward
+  status: checked algebraic consequence
+  hypotheses:
+  - coranks are defined
+  source: BSD-I004
+  notes: Blocks Selmer-rank/Mordell-Weil-rank conflation.
+- id: BSD-I006
+  antecedent: Sha(E/Q)[p^infinity] is finite
+  consequent: corank Sel_{p^infinity}(E/Q) = rank E(Q)
+  direction: forward
+  status: checked algebraic consequence
+  hypotheses:
+  - BSD-I004
+  source: BSD-I005
+  notes: Finiteness at one p is not finiteness of all Sha.
+- id: BSD-I007
+  antecedent: ord_(s=1)L(E,s)=0
+  consequent: rank E(Q)=0 and Sha(E/Q) is finite
+  direction: analytic_to_arithmetic
+  status: theorem
+  hypotheses:
+  - E/Q; modularity now unconditional
+  source: Gross-Zagier/Kolyvagin terrain; official Wiles account
+  notes: Does not by itself record every prime-part of the strong leading-term formula.
+- id: BSD-I008
+  antecedent: ord_(s=1)L(E,s)=1
+  consequent: rank E(Q)=1 and Sha(E/Q) is finite
+  direction: analytic_to_arithmetic
+  status: theorem
+  hypotheses:
+  - E/Q; modularity now unconditional
+  source: Gross-Zagier and Kolyvagin
+  notes: The universal higher-rank analogue is open.
+- id: BSD-I009
+  antecedent: E/Q and a prime p
+  consequent: parity(corank Sel_{p^infinity}) = parity(ord_(s=1)L(E,s))
+  direction: parity_equivalence
+  status: theorem
+  hypotheses:
+  - elliptic curve over Q
+  - any prime p
+  source: Dokchitser-Dokchitser 2010
+  notes: Mordell-Weil parity requires additional control of Sha[p^infinity].
+- id: BSD-I010
+  antecedent: 'rank E(Q)=1 and #Sha(E/Q)<infinity'
+  consequent: ord_(s=1)L(E,s)=1
+  direction: arithmetic_to_analytic
+  status: restricted theorem
+  hypotheses:
+  - E/Q semistable
+  - non-split multiplicative reduction at at least one odd prime OR split multiplicative reduction at at least two odd primes
+  source: Skinner 2020, Annals of Mathematics
+  notes: Not a universal rank-one converse.
+- id: BSD-I011
+  antecedent: corank_Zp Sel_{p^infinity}(E/Q)=0
+  consequent: ord_(s=1)L(E,s)=0
+  direction: selmer_to_analytic
+  status: restricted theorem
+  hypotheses:
+  - E/Q has complex multiplication
+  - p is a prime
+  source: Burungale-Tian 2026, Annals of Mathematics
+  notes: A CM rank-zero p-converse; not a universal non-CM theorem.
+- id: BSD-I012
+  antecedent: ord_(s=1)L(E,s)=1
+  consequent: the p-part of the strong BSD formula holds
+  direction: analytic_to_leading_term
+  status: restricted theorem
+  hypotheses:
+  - E/Q semistable
+  - p>=5 is a good-reduction prime
+  - E[p] is irreducible
+  - or the stated p=3 supersingular condition
+  source: Jetchev-Skinner-Wan 2017
+  notes: One p-part is not the complete formula.
+- id: BSD-I013
+  antecedent: the full strong BSD statement in the campaign normalization
+  consequent: rank equality, finiteness of Sha, and the leading-term identity
+  direction: definition_bundle
+  status: conjectural universal bundle
+  hypotheses:
+  - E/Q
+  source: BSD formulation
+  notes: The components remain separately tracked for partial results.
+- id: BSD-I014
+  antecedent: BSD holds for a positive proportion, an infinite twist family, or every curve in a finite database range
+  consequent: BSD holds for every elliptic curve over Q
+  direction: invalid
+  status: non_implication
+  hypotheses: []
+  source: quantifier logic
+  notes: A principal WP01 fixture.
+- id: BSD-I015
+  antecedent: a p-adic L-function has a stated order of vanishing
+  consequent: the complex L-function has the same order at s=1
+  direction: invalid_without_interface
+  status: non_implication
+  hypotheses:
+  - a named comparison or p-converse theorem is absent
+  source: normalization and correspondence audit
+  notes: Exceptional-zero and signed supersingular branches make the unqualified arrow especially unsafe.

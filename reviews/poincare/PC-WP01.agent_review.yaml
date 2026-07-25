@@ -1,0 +1,152 @@
+artifact:
+  id: PC-WP01
+  type: work_package
+  title: False-proof and semantic-failure atlas for the Poincare reconstruction
+  pillar: MATHFORGE
+  status: integration_ready
+council_review:
+  Axiomatist:
+    status: reviewed
+    obligations:
+      - Preserve exact closed, connected, simply connected, and category hypotheses.
+    findings:
+      - Homology, contractibility, compactness, boundary, and fundamental-group profiles are separated.
+      - The prime-factor fixture blocks circular import of the target theorem.
+  Prospector:
+    status: reviewed
+    obligations:
+      - Add canonical historical sources for the Poincare homology sphere and Whitehead manifold.
+    findings:
+      - Counterexamples are standard and correctly scoped.
+      - Perelman source-version drift is represented as a separate fixture.
+  Experimentalist:
+    status: reviewed
+    obligations:
+      - Do not treat visual or numerical Ricci-flow simulations as proof fixtures.
+    findings:
+      - The atlas uses exact examples and theorem mutations, not numerical evidence.
+  Cartographer:
+    status: reviewed
+    obligations:
+      - Transfer surgery-event guards into the PC-WP03 history schema.
+    findings:
+      - Every fixture names corrupted theorem-spine nodes.
+      - The guard DAG agrees with the WP02 consumer graph.
+  Verifier:
+    status: reviewed
+    obligations:
+      - Recheck the round-sphere normalization if an exact ODE fixture is formalized.
+    findings:
+      - Each mandated failure has a counterexample, scope diagnosis, or certification-boundary proof.
+      - No fixture is presented as evidence against the classical theorem.
+  Adversary:
+    status: reviewed
+    obligations:
+      - Extend the atlas if WP03 introduces a new topology transition or quantifier.
+    findings:
+      - Fifteen fixtures cover all WP00-mandated failure classes.
+      - Passing the atlas is explicitly not a proof certificate.
+  Formalist:
+    status: reviewed
+    obligations:
+      - Encode malformed-history fixtures in MATHCERT without hiding imported geometry.
+    findings:
+      - The conditional-formalization overclaim is isolated as PC-FP-013.
+      - Local versus global surgery finiteness is machine-checkable as a distinct field.
+  Steward:
+    status: reviewed
+    obligations:
+      - Keep PC-WP03 gated until joint WP01/WP02 review completes.
+    findings:
+      - WP01 is complete as an eliminative package.
+      - Remaining source citations are nonblocking for integration.
+  Composer:
+    status: reviewed
+    obligations: []
+    findings:
+      - The atlas proceeds from elementary hypothesis substitutions to analytic, topological, source, and formalization failures.
+  Grammarian:
+    status: reviewed
+    obligations:
+      - Preserve the distinction between rejected route and false theorem.
+    findings:
+      - The wording states exactly what each fixture rules out and what remains viable.
+  Amanuensis:
+    status: reviewed
+    obligations:
+      - Register WP01 only after stacked PR integration.
+    findings:
+      - README, ledger, exact fixtures, DAG, debt register, claim ledger, and next-step file are consistent.
+      - Fixture identifiers agree with WP02 adversarial guards.
+  Archivist:
+    status: reviewed
+    obligations:
+      - Discharge PC-WP01-D001, D002, and the source-correction crosswalk debt.
+    findings:
+      - Primary-source correction claims are bounded to the explicit P-II notice.
+      - Historical counterexamples are not misattributed as parts of Perelman's proof.
+  Mechanist:
+    status: reviewed
+    obligations:
+      - Require future mechanism summaries to pass FP-005 through FP-010.
+    findings:
+      - The atlas blocks the misleading summary that Ricci flow simply rounds every manifold smoothly.
+  Typesetter:
+    status: reviewed
+    obligations: []
+    findings:
+      - Node and fixture identifiers are stable across human- and machine-readable artifacts.
+  Referee:
+    status: reviewed
+    obligations:
+      - Reopen review if the atlas is advertised as exhaustive or as a proof certificate.
+    findings:
+      - The required adversarial classes are covered with correct logical scope.
+      - WP01 is suitable for promotion jointly with WP02.
+amanuensis_control:
+  artifact_ledger:
+    ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md
+    entry_id: PC-WP01
+  decision_record_refs:
+    - ADR-0005
+  terminology_registry:
+    registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md
+    terms_introduced_or_changed:
+      - adversarial guard
+  review_provenance:
+    complete: true
+    evidence_refs:
+      - https://github.com/grandchallenge/MATH-PROGRAMME/issues/72
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/00_README.md
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/01_FIXTURE_LEDGER.yaml
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/02_EXACT_FIXTURES.md
+      - campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/10_CLAIM_LEDGER.yaml
+  cross_document_consistency:
+    status: reviewed
+    checked_against:
+      - DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/06_DEPENDENCY_DAG.json
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/04_SOURCE_NORMALIZED_THEOREMS.md
+      - campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/06_DEPENDENCY_DAG.json
+    conflicts: []
+  final_editorial_integration:
+    status: reviewed
+    integrated_artifact_ref: campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/00_README.md
+    integration_notes:
+      - Every mandated failure has an exact fixture.
+      - Positive theorem interfaces carry the corresponding guard identifiers.
+unresolved_obligations:
+  - id: PC-WP01-REV-001
+    owner: Archivist
+    description: Add quotation-level sources for the two historical counterexamples.
+    severity: low
+    blocking: false
+  - id: PC-WP01-REV-002
+    owner: Cartographer
+    description: Bind topology mutation guards to the PC-WP03 event schema.
+    severity: high
+    blocking: true
+promotion:
+  ready_for_next_stage: true
+  blockers: []
+  certification_route: Promote jointly with PC-WP02; open PC-WP03 only after the event-schema debt is transferred explicitly.

@@ -1,0 +1,182 @@
+claims:
+  - claim_id: NS-CI-WP00-C001
+    short_name: energy-to-L2L6
+    claim_text: The Leray-Hopf energy inequality together with the three-dimensional whole-space Sobolev inequality yields u in L^2(0,T;L^6(R^3)).
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: CHECKED
+    certainty: HIGH_CONDITIONAL_ON_STANDARD_INTERFACES
+    source_or_artifact:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md#51-what-energy-gives
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md#4-energy-class-baseline
+    assumptions:
+      - Leray-Hopf energy inequality in the selected R3 convention
+      - whole-space Sobolev inequality from homogeneous H1 control to L6
+      - viscosity nu is positive
+    promotion_condition: Source-normalize the exact Leray-Hopf and Sobolev interfaces or formalize them without changing the statement.
+    related_files:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/06_DEPENDENCY_DAG.json
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/09_PROOF_DEBT.json
+    knowledge_graph_refs: []
+
+  - claim_id: NS-CI-WP00-C002
+    short_name: energy-space-nonembedding
+    claim_text: The abstract energy space L-infinity in time L2 in space intersect L2 in time H1 in space is not contained in L4 in time L6 in space.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: CHECKED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md#53-exact-energy-space-obstruction
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md#4-energy-class-baseline
+    assumptions:
+      - existence of a nonzero smooth compactly supported divergence-free vector field on R3
+      - standard spatial scaling formulas for Lp and gradient norms
+    promotion_condition: Obtain independent specialist review or a faithful kernel-checked continuum formalization.
+    related_files:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/06_DEPENDENCY_DAG.json
+    knowledge_graph_refs: []
+
+  - claim_id: NS-CI-WP00-C003
+    short_name: critical-scaling
+    claim_text: Under u_lambda(x,t)=lambda u(lambda x,lambda^2 t), the integral of the fourth power of the L6 norm is invariant after the corresponding time-interval rescaling.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: CHECKED
+    certainty: HIGH
+    source_or_artifact:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md#54-scaling-calculation
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md
+    assumptions:
+      - sufficient measurability and integrability for change of variables
+      - positive dilation parameter
+    promotion_condition: Complete the MATHCERT mixed-norm scaling theorem and adversarial exponent tests.
+    related_files:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/11_CERT_HANDOFF.md
+      - https://github.com/grandchallenge/MATHCERT/issues/19
+    knowledge_graph_refs: []
+
+  - claim_id: NS-CI-WP00-C004
+    short_name: operational-LPS-at-4-6
+    claim_text: For two Leray-Hopf weak solutions on R3 with the same initial datum, membership of one solution in L4(0,T;L6(R3)) lies in the non-endpoint Prodi-Serrin range and implies uniqueness; with H1 initial data the controlled solution is strong through the initial time.
+    claim_class: LITERATURE_DERIVED
+    support_type: SOURCE_CITATION
+    status: AUDITED
+    certainty: HIGH_FOR_OPERATIONAL_MODERN_FORMULATION
+    source_or_artifact:
+      - https://doi.org/10.1007/BF02410664
+      - https://doi.org/10.1007/BF00253344
+      - https://www.mathnet.ru/eng/znsl2228
+      - https://doi.org/10.1007/s00205-024-01992-y
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md#5-operational-lps-theorem-at-46
+    assumptions:
+      - modern Leray-Hopf solution convention on R3
+      - same initial datum
+      - zero forcing in the campaign formulation
+      - H1 initial datum for a strong conclusion through time zero
+    promotion_condition: Preserve the operational statement; complete historical Serrin theorem extraction and Ladyzhenskaya translation as provenance work without weakening the modern theorem interface.
+    related_files:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/09_PROOF_DEBT.json
+      - https://github.com/grandchallenge/MATHFORGE/pull/15
+      - https://github.com/grandchallenge/MATHSOLVE/pull/19
+    knowledge_graph_refs: []
+
+  - claim_id: NS-CI-WP00-C005
+    short_name: full-data-integrability-implies-Clay-A
+    claim_text: Universal L4_t L6_x integrability for every Leray-Hopf solution generated by every smooth divergence-free datum satisfying Fefferman's rapid-decay condition is sufficient for the whole-space positive Clay statement (A).
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: CHECKED
+    certainty: HIGH_SUBJECT_TO_EXPLICIT_STANDARD_INTERFACES
+    source_or_artifact:
+      - https://www.claymath.org/wp-content/uploads/2022/06/navierstokes.pdf
+      - https://arxiv.org/abs/1708.09787
+      - https://doi.org/10.1007/s00205-024-01992-y
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md#9-correspondence-with-the-clay-statement
+      - https://github.com/grandchallenge/MATHSOLVE/blob/campaign/ns-ci-wp00/work_packages/NS_CI_WP00_LPS_RECONSTRUCTION.md
+    assumptions:
+      - global Leray weak existence for the selected data class
+      - operational LPS regularity and uniqueness at the pair 4,6
+      - weak-strong uniqueness
+      - local strong existence and parabolic bootstrapping
+      - the Leray energy inequality supplies the official bounded-energy condition
+    promotion_condition: Obtain Referee confirmation that all interfaces and the full Fefferman data class match exactly.
+    related_files:
+      - DOMAIN_02_NAVIER_STOKES_CRITICAL_INTEGRABILITY_MASTER_PLAN.md
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/06_DEPENDENCY_DAG.json
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/09_PROOF_DEBT.json
+    knowledge_graph_refs: []
+
+  - claim_id: NS-CI-WP00-C006
+    short_name: universal-integrability-open
+    claim_text: The universal L4_t L6_x estimate posed by NS-CI-001 is not presently known for the full smooth rapidly decreasing divergence-free initial-data class in three dimensions.
+    claim_class: LITERATURE_DERIVED
+    support_type: SOURCE_CITATION
+    status: AUDITED
+    certainty: OFFICIAL_STATUS_CURRENT_2026_07_23
+    source_or_artifact:
+      - https://www.claymath.org/millennium/navier-stokes-equation/
+      - https://www.claymath.org/wp-content/uploads/2022/06/navierstokes.pdf
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md#1-audit-determination
+    assumptions:
+      - claim NS-CI-WP00-C005 correctly records the one-way correspondence
+      - no accepted resolution has superseded the official Clay status
+    promotion_condition: Re-audit if the official status changes or an accepted resolution appears.
+    related_files:
+      - DOMAIN_02_NAVIER_STOKES_CRITICAL_INTEGRABILITY_MASTER_PLAN.md
+      - https://github.com/grandchallenge/MATHFORGE/blob/campaign/ns-ci-source-audit/reports/discovery/ns_ci_001/current_status_audit.md
+    knowledge_graph_refs: []
+
+  - claim_id: NS-CI-WP00-C007
+    short_name: no-new-result
+    claim_text: WP00 reconstructs classical estimates and corrects the campaign formulation but proves no new Navier-Stokes regularity theorem.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - DOMAIN_02_NAVIER_STOKES_CRITICAL_INTEGRABILITY_MASTER_PLAN.md#claim-boundary
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/01_RESULT_STATUS.json
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md
+    assumptions: []
+    promotion_condition: Preserve the claim boundary in every derivative artifact.
+    related_files:
+      - reviews/navier_stokes/NS-CI-WP00.agent_review.yaml
+    knowledge_graph_refs: []
+
+  - claim_id: NS-CI-WP00-C008
+    short_name: compact-support-is-restricted
+    claim_text: The compactly supported smooth divergence-free data class is a strict subclass of Fefferman's rapidly decreasing data class, so a compact-support-only universal theorem does not by itself settle the full whole-space positive Clay branch.
+    claim_class: PROVED_IN_PACKAGE
+    support_type: HUMAN_PROOF
+    status: AUDITED
+    certainty: HIGH
+    source_or_artifact:
+      - https://www.claymath.org/wp-content/uploads/2022/06/navierstokes.pdf
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md#2-corrected-canonical-challenge
+    assumptions:
+      - standard inclusion of compactly supported smooth functions in the rapidly decreasing smooth class
+    promotion_condition: Any future extension from compact support to the full class must appear as a separate proved bridge.
+    related_files:
+      - DOMAIN_02_NAVIER_STOKES_CRITICAL_INTEGRABILITY_MASTER_PLAN.md
+    knowledge_graph_refs: []
+
+  - claim_id: NS-CI-WP00-C009
+    short_name: reverse-equivalence-pending
+    claim_text: Bidirectional equivalence between the official whole-space positive Clay statement and the every-Leray-Hopf universal L4_t L6_x formulation remains conditional on a source-normalized reverse strong-class and weak-strong correspondence bridge.
+    claim_class: NEEDS_AUDIT
+    support_type: EXTERNAL_SPECIALIST_PENDING
+    status: DRAFT
+    certainty: STANDARD_EXPECTATION_NOT_YET_PROMOTED
+    source_or_artifact:
+      - https://www.claymath.org/wp-content/uploads/2022/06/navierstokes.pdf
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/04_PROBLEM_AND_STATUS_AUDIT.md#9-correspondence-with-the-clay-statement
+    assumptions:
+      - a globally smooth Fefferman solution belongs to the required local strong class on each compact time interval
+      - finite L4_t L6_x membership follows in that class
+      - every Leray-Hopf solution agrees with the smooth solution
+    promotion_condition: Commit and independently review the reverse implication with exact data, time-zero, and solution-class hypotheses.
+    related_files:
+      - campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/09_PROOF_DEBT.json
+      - reviews/navier_stokes/NS-CI-WP00.agent_review.yaml
+    knowledge_graph_refs: []

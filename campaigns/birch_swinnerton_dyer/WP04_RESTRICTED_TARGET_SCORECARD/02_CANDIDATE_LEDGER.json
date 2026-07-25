@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "BSD-WP04-CANDIDATE-LEDGER",
+  "selection_rule": {
+    "exactly_one_selected": true,
+    "minimum_adjusted_score": 30,
+    "all_hard_gates_required": true,
+    "selection_is_not_truth_or_novelty": true
+  },
+  "retired_before_scoring": [
+    {
+      "id": "BSD-R1-CONVERSE",
+      "disposition": "RETIRED_AS_THEOREM",
+      "source_records": ["BSD-T-082"],
+      "reason": "The revised p-converse source removes the earlier conductor restrictions for non-CM curves; the global rank-one converse is not an open target."
+    },
+    {
+      "id": "BSD-MULT-PART",
+      "disposition": "RETIRED_AS_THEOREM",
+      "source_records": ["BSD-T-092"],
+      "reason": "The p-part at multiplicative primes p>3 with irreducible E[p] is established."
+    },
+    {
+      "id": "BSD-EIS-GENERIC",
+      "disposition": "RETIRED_AS_GENERIC_FAMILY",
+      "source_records": ["BSD-T-097"],
+      "reason": "Substantial Eisenstein branches are theorem terrain; a remaining target must name an exact uncovered branch and hypotheses."
+    }
+  ],
+  "candidates": [
+    {
+      "id": "BSD-R2-A1",
+      "name": "2-primary rank-one leading-term valuation for an ordinary-at-2 semistable class",
+      "status": "SELECTED_RESEARCH_TARGET_UNPROVED",
+      "statement": "For every semistable elliptic curve E/Q of odd conductor, good ordinary reduction at 2, irreducible E[2], and ord_{s=1}L(E,s)=1, prove or disprove the exact ord_2 equality between the normalized complex leading term and the BSD arithmetic quotient.",
+      "scores": {"leverage": 5, "non_circularity": 5, "audited_open_gap": 5, "proof_tractability": 2, "formalizability": 4, "falsifiability": 5, "full_problem_relevance": 5, "information_value_if_false": 5, "interface_readiness": 4, "execution_cost": 4},
+      "adjusted_score": 36,
+      "hard_gates": {"exact_statement": true, "strictly_restricted": true, "audited_open_status": true, "non_circular": true, "normalization_fixed": true, "no_open_conjecture_axiom": true, "not_finite_data": true, "no_novelty_claim": true},
+      "imports": ["BSD-T-020", "BSD-T-060"],
+      "boundary_sources": ["BSD-T-090", "BSD-T-092", "BSD-T-094", "BSD-T-098"],
+      "wp01_fixtures_to_bypass": ["BSD-FP-002", "BSD-FP-003", "BSD-FP-006", "BSD-FP-008", "BSD-FP-009", "BSD-FP-010", "BSD-FP-011", "BSD-FP-016", "BSD-FP-017", "BSD-FP-018"],
+      "rationale": "It isolates the prime excluded from the broad p>2 Iwasawa/BSD theorem frontier while retaining a finite-level exact statement and avoiding a claim of full BSD."
+    },
+    {
+      "id": "BSD-R2-A0",
+      "name": "2-primary rank-zero leading-term valuation for the same ordinary-at-2 class",
+      "status": "SHORTLISTED_NOT_SELECTED",
+      "statement": "For every semistable elliptic curve E/Q of odd conductor, good ordinary reduction at 2, irreducible E[2], and L(E,1) nonzero, prove the exact ord_2 equality predicted by BSD.",
+      "scores": {"leverage": 4, "non_circularity": 5, "audited_open_gap": 5, "proof_tractability": 3, "formalizability": 4, "falsifiability": 5, "full_problem_relevance": 4, "information_value_if_false": 4, "interface_readiness": 4, "execution_cost": 3},
+      "adjusted_score": 35,
+      "hard_gates": {"exact_statement": true, "strictly_restricted": true, "audited_open_status": true, "non_circular": true, "normalization_fixed": true, "no_open_conjecture_axiom": true, "not_finite_data": true, "no_novelty_claim": true},
+      "imports": ["BSD-T-020", "BSD-T-060"],
+      "boundary_sources": ["BSD-T-094", "BSD-T-098"],
+      "wp01_fixtures_to_bypass": ["BSD-FP-002", "BSD-FP-006", "BSD-FP-008", "BSD-FP-009", "BSD-FP-010", "BSD-FP-011", "BSD-FP-017", "BSD-FP-018"],
+      "rationale": "Cleaner than rank one because no regulator is present, but it exercises less of the leading-term architecture and has lower information value for the rank-one frontier."
+    },
+    {
+      "id": "BSD-PC2-1",
+      "name": "Soft 2-converse in Selmer corank one",
+      "status": "SHORTLISTED_NOT_SELECTED",
+      "statement": "For a non-CM E/Q with good ordinary reduction at 2 and irreducible E[2], prove that 2-infinity Selmer corank one plus an exact local restriction isomorphism implies complex analytic rank one.",
+      "scores": {"leverage": 4, "non_circularity": 4, "audited_open_gap": 4, "proof_tractability": 2, "formalizability": 4, "falsifiability": 4, "full_problem_relevance": 4, "information_value_if_false": 4, "interface_readiness": 3, "execution_cost": 4},
+      "adjusted_score": 29,
+      "hard_gates": {"exact_statement": true, "strictly_restricted": true, "audited_open_status": true, "non_circular": true, "normalization_fixed": true, "no_open_conjecture_axiom": true, "not_finite_data": true, "no_novelty_claim": true},
+      "imports": ["BSD-T-020", "BSD-T-040", "BSD-T-050"],
+      "boundary_sources": ["BSD-T-082", "BSD-T-094"],
+      "wp01_fixtures_to_bypass": ["BSD-FP-001", "BSD-FP-004", "BSD-FP-007", "BSD-FP-008", "BSD-FP-013", "BSD-FP-017"],
+      "rationale": "A precise p=2 analogue of odd-prime p-converse interfaces, but farther from the exact complex leading-term formula."
+    },
+    {
+      "id": "BSD-ADD-1",
+      "name": "Rank-one p-part at an additive reduction prime",
+      "status": "DEFERRED_FORMULATION_DEBT",
+      "statement": "Extend the rank-one p-part formula to a specified additive reduction branch at an odd prime.",
+      "scores": {"leverage": 4, "non_circularity": 4, "audited_open_gap": 3, "proof_tractability": 1, "formalizability": 3, "falsifiability": 3, "full_problem_relevance": 4, "information_value_if_false": 4, "interface_readiness": 1, "execution_cost": 5},
+      "adjusted_score": 22,
+      "hard_gates": {"exact_statement": false, "strictly_restricted": true, "audited_open_status": false, "non_circular": true, "normalization_fixed": false, "no_open_conjecture_axiom": true, "not_finite_data": true, "no_novelty_claim": true},
+      "imports": ["BSD-T-020", "BSD-T-060"],
+      "boundary_sources": ["BSD-T-092", "BSD-T-094", "BSD-T-097"],
+      "wp01_fixtures_to_bypass": ["BSD-FP-007", "BSD-FP-008", "BSD-FP-009", "BSD-FP-011", "BSD-FP-017"],
+      "rationale": "The additive local branch and correction factors are not normalized tightly enough for theorem-grade selection."
+    },
+    {
+      "id": "BSD-HR2-1",
+      "name": "Rank-two derived-height determinant bridge",
+      "status": "REJECTED_HIDDEN_NONDEGENERACY",
+      "statement": "Use a rank-two derived or p-adic height determinant to force exact complex and algebraic rank two.",
+      "scores": {"leverage": 5, "non_circularity": 2, "audited_open_gap": 4, "proof_tractability": 1, "formalizability": 2, "falsifiability": 3, "full_problem_relevance": 5, "information_value_if_false": 5, "interface_readiness": 1, "execution_cost": 5},
+      "adjusted_score": 23,
+      "hard_gates": {"exact_statement": true, "strictly_restricted": true, "audited_open_status": true, "non_circular": false, "normalization_fixed": true, "no_open_conjecture_axiom": false, "not_finite_data": true, "no_novelty_claim": true},
+      "imports": ["BSD-T-020", "BSD-T-050", "BSD-T-070"],
+      "boundary_sources": ["BSD-T-140", "BSD-T-150"],
+      "wp01_fixtures_to_bypass": ["BSD-FP-001", "BSD-FP-004", "BSD-FP-012", "BSD-FP-013", "BSD-FP-016", "BSD-FP-017"],
+      "rationale": "Without an independently proved nondegeneracy theorem, the determinant assumption packages the decisive open step."
+    }
+  ],
+  "selected_target_id": "BSD-R2-A1",
+  "claim_boundary": {"universal_BSD": false, "full_leading_term": false, "novelty": false, "mechanism_generation": "CLOSED", "numerical_proof": "PROHIBITED", "target_selection_only": true}
+}

@@ -1,0 +1,92 @@
+schema_version: 1.0.0
+artifact_id: BSD-WP00-CLAIMS
+claims:
+- id: BSD-C001
+  statement: The official Clay rank conjecture asserts rank_Z E(Q) = ord_(s=1)L(E,s) for every elliptic curve E/Q.
+  type: OFFICIAL_PROBLEM_STATEMENT
+  status: audited
+  support_route:
+  - SRC-OFFICIAL-WILES
+  promotion_condition: none for use as the canonical problem statement
+- id: BSD-C002
+  statement: Every elliptic curve over Q is modular, so its L-function has analytic continuation and the central functional equation.
+  type: IMPORTED_THEOREM
+  status: audited
+  support_route:
+  - SRC-BCDT-2001
+  - SRC-OFFICIAL-WILES
+  promotion_condition: exact modularity theorem citation retained
+- id: BSD-C003
+  statement: The campaign complete L-function and Wiles's initial incomplete L-series have the same order of vanishing at s=1 but different leading coefficients unless the omitted factors are restored.
+  type: NORMALIZATION_CORRESPONDENCE
+  status: checked
+  support_route:
+  - SRC-OFFICIAL-WILES
+  - 07_NORMALIZATION_REGISTRY.yaml
+  promotion_condition: conversion warning remains attached to leading-term uses
+- id: BSD-C004
+  statement: The p-infinity Selmer corank equals the Mordell-Weil rank plus the corank of Sha[p-infinity].
+  type: ALGEBRAIC_DERIVATION
+  status: checked
+  support_route:
+  - Kummer exact sequence
+  - 08_IMPLICATION_LEDGER.yaml
+  promotion_condition: standard Selmer definitions are fixed
+- id: BSD-C005
+  statement: Analytic rank zero or one implies the matching algebraic rank and finiteness of Sha.
+  type: IMPORTED_THEOREM
+  status: audited_operational_interface
+  support_route:
+  - SRC-OFFICIAL-WILES
+  - SRC-GZ-1986
+  - SRC-KOLYVAGIN
+  promotion_condition: WP02 supplies exact theorem concordance before mechanism composition
+- id: BSD-C006
+  statement: For every E/Q and every prime p, p-Selmer parity agrees with analytic parity.
+  type: IMPORTED_THEOREM
+  status: audited
+  support_route:
+  - SRC-DD-2010
+  promotion_condition: do not rewrite Selmer parity as Mordell-Weil parity without Sha control
+- id: BSD-C007
+  statement: Rank BSD, finiteness of Sha, and the strong leading-term formula are distinct obligations.
+  type: SEMANTIC_DECOMPOSITION
+  status: checked
+  support_route:
+  - SRC-OFFICIAL-WILES
+  - 07_NORMALIZATION_REGISTRY.yaml
+  - 08_IMPLICATION_LEDGER.yaml
+  promotion_condition: all future artifacts preserve the separation
+- id: BSD-C008
+  statement: Universal arithmetic-to-analytic converses are not known; audited converse theorems impose material hypotheses.
+  type: CURRENT_THEOREM_FRONTIER
+  status: audited
+  support_route:
+  - SRC-SKINNER-2020
+  - SRC-BT-2026
+  promotion_condition: date and theorem hypotheses remain visible
+- id: BSD-C009
+  statement: A theorem for one p-part, one p-adic normalization, one family, a density class, or a finite conductor range does not imply universal BSD.
+  type: NEGATIVE_LOGICAL_RESULT
+  status: checked
+  support_route:
+  - quantifier logic
+  - SRC-JSW-2017
+  - SRC-BS-2015
+  - SRC-MILLER-2011
+  promotion_condition: encode as WP01 fixtures
+- id: BSD-C010
+  statement: The universal rank conjecture, universal finiteness of Sha, and universal leading-term formula remain open as of 2026-07-24.
+  type: CURRENT_STATUS
+  status: audited
+  support_route:
+  - SRC-CLAY-STATUS
+  promotion_condition: repeat current-status audit before any later status claim
+- id: BSD-C011
+  statement: There is no single unqualified p-adic BSD normalization covering ordinary, exceptional-zero multiplicative, supersingular signed, and multivariable settings.
+  type: NORMALIZATION_BOUNDARY
+  status: checked
+  support_route:
+  - 07_NORMALIZATION_REGISTRY.yaml
+  - 04_SOURCE_NORMALIZATION_EQUIVALENCE_AUDIT.md
+  promotion_condition: WP02 creates branch-specific theorem records

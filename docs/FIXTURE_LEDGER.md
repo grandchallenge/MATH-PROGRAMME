@@ -19,6 +19,7 @@ Each fixture must answer four questions:
 | --- | --- | --- | --- | --- | --- |
 | `UF-INV-001` | Foundation 01 | Ordinary ideal membership with inequation compilation | exact identity `CHECKED`; semantic bridge `AUDITED` | the source theorem is not certified merely because the identity replays | proof-assistant bridge for semantic compilation |
 | `RAD-NIL-002` | Foundation 02 | Radical membership with exponent and model-class boundary | radical witness `CHECKED`; field semantics `AUDITED`; ring generalization `REFUTED` | a valid field theorem cannot be generalized to all commutative rings | formal model-class theorem or Lean bridge |
+| `LOG-GCD-001` | Published | Certified PSD theorem, explicit divisor features, and bounded public claim | theorem and feature identity `CERTIFIED`; prior art `AUDITED`; `PUB-LOG-GCD-001` published | publication does not create novelty, priority, strict-PD, zero-input, or completed-space claims | none; publication gate passed in workflow `29997559180` |
 | `GROBNER-APPLICATIONS-2026-06` | Portfolio | Six application lanes with one selected next fixture | manifest validated in CI | polynomial form does not imply tractability or theorem status | executable application fixture |
 | `RM-DIO-004` | Intake 01 | ResearchMath row to problem card to MATHSOLVE handoff | source preservation `AUDITED`; handoff `PROVISIONAL` | dataset status is not a theorem; finite screens are not completeness proofs | MATHSOLVE campaign package |
 | `TROPIC-GROEBNER-001` | Route 01 | Tropical weight acceptance/rejection via exact initial-form witnesses | route doctrine `ADDED`; replay `PENDING` | sampled weights do not enumerate the full tropical variety | MATHCERT replay script for initial-form certificates |
@@ -34,6 +35,14 @@ UF-INV-001
 RAD-NIL-002
   verifies: radical-membership arithmetic with exponent N
   protects: field-versus-ring model boundary
+
+LOG-GCD-001
+  verifies: pinned Lean theorem intake, explicit Finsupp Gram realization,
+            prior-art governance, repository-native proof replay,
+            and publication-stage claim binding
+  protects: positive-semidefinite, strict-positive-definite, zero-input,
+            dependency-drift, mathematical-novelty, priority, and
+            publication-rhetoric boundaries
 
 GROBNER-APPLICATIONS-2026-06
   verifies: lane portfolio completeness and boundaries
@@ -55,6 +64,14 @@ The fixtures do not prove major mathematics. They prove that the programme can p
 - exact arithmetic versus semantic theorem;
 - ideal membership versus radical membership;
 - field theorem versus ring falsehood;
+- formal theorem versus stronger interpretation;
+- finitely supported realization versus completed-space packaging;
+- positive semidefiniteness versus strict positive definiteness;
+- mathematical prior art versus formal-artifact contribution;
+- bounded search versus priority evidence;
+- certification versus publication;
+- public exposition versus claim promotion;
+- dependency pinning versus ambient-environment success;
 - application potential versus application proof;
 - external corpus status versus independently audited mathematical status;
 - MATHFORGE triage versus MATHSOLVE campaign;
@@ -70,13 +87,59 @@ A fixture may move a claim upward only when its support route changes.
 | `LEAD` to `AUDITED` | source, object, and boundary reconstructed |
 | `AUDITED` to `CHECKED` | exact replay, proof checker, or independently verified computation succeeds |
 | `CHECKED` to `CERTIFIED` | semantic correspondence is formalized or otherwise crosses the trusted boundary |
+| `CERTIFIED` to `PUBLISHED` | the public claim is bound to certified claim IDs, permanent exclusions, prior-art status, and a passing publication gate |
 | any status to `REFUTED` | counterexample, failed invariant, false generalization, or invalid support route is established |
+
+## LOG-GCD certification record
+
+`LOG-GCD-001` crossed both formal and audit boundaries:
+
+```text
+LogGcdFeature.lean
+  -> pinned repository-native build, workflow 29993578051
+  -> logGcd_eq_feature_inner CERTIFIED
+  -> LOG-GCD-001-O002 closed
+
+PRIOR_ART_AUDIT.md + prior_art_audit.json
+  -> classical GCD-matrix criterion identified
+  -> mathematical novelty NOT SUPPORTED
+  -> artifact priority NOT ESTABLISHED
+  -> LOG-GCD-001-O003 closed
+```
+
+The fixture has no unresolved certification obligation. Its permanent boundary is substantive: the programme may claim a certified formal artifact, but not a new mathematical theorem or a first formalization.
+
+## LOG-GCD publication record
+
+`PUB-LOG-GCD-001` binds the public note and Showcase entry to the certified claim ledger:
+
+```text
+LOG-GCD-001-C001 CERTIFIED
+LOG-GCD-001-C003 CERTIFIED
+LOG-GCD-001-C004 AUDITED boundary
+LOG-GCD-001-C005 AUDITED prior-art determination
+        |
+        v
+publication_manifest.json
+        |
+        +-- exact permitted description
+        +-- prohibited novelty and priority descriptions
+        +-- canonical public page
+        +-- Showcase entry
+        +-- strict documentation gate
+        |
+        v
+workflow 29997559180 PASSED
+        |
+        v
+PUB-LOG-GCD-001 PUBLISHED on 2026-07-23
+```
+
+Publication changed visibility, not mathematical status. The published state is now protected against claim demotion, missing evidence, removed boundaries, and unsupported novelty or priority language.
 
 ## The next visible gap
 
-The current ledger has exact algebraic foundations, one external-corpus intake fixture, and now a named tropical-degeneration route fixture. It does not yet have replayed TROPIC-GROEBNER certificates or a complete MATHSOLVE campaign package generated from ResearchMath intake.
-
-The immediate next documentation artifact is therefore:
+The programme-wide executable gap remains the tropical route:
 
 ```text
 TROPIC-GROEBNER-001 witness records
@@ -85,4 +148,4 @@ TROPIC-GROEBNER-001 witness records
   -> claim ledger update
 ```
 
-That is the bridge from tropical route doctrine to checked algebraic certificate, and it is where the programme must next prove that it can avoid theatre.
+No status promotion occurs without a changed support boundary.

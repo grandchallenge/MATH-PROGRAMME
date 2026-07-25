@@ -1,0 +1,39 @@
+{
+  "campaign_id": "PC-001",
+  "work_package_id": "PC-WP02",
+  "tracker": "MATH-PROGRAMME#73",
+  "state": "INTEGRATION_READY_AT_THEOREM_INTERFACE_LEVEL",
+  "nodes": [
+    {"id":"PC02-T001","role":"category_bridge","status":"AUDITED_IMPORT_WITH_EXTRACTION_DEBT","depends_on":[],"consumers":["PC02-T002","PC02-T019"],"guards":["PC-FP-004"]},
+    {"id":"PC02-T002","role":"short_time_flow","status":"AUDITED_IMPORT_WITH_EXTRACTION_DEBT","depends_on":["PC02-T001"],"consumers":["PC02-T003","PC02-T004","PC02-T005","PC02-T006"],"guards":["PC-FP-005"]},
+    {"id":"PC02-T003","role":"entropy_monotonicity","status":"AUDITED_IMPORT","depends_on":["PC02-T002"],"consumers":["PC02-T006"],"guards":["PC-FP-015"]},
+    {"id":"PC02-T004","role":"reduced_volume","status":"AUDITED_IMPORT","depends_on":["PC02-T002"],"consumers":["PC02-T006","PC02-T007"],"guards":["PC-FP-006","PC-FP-015"]},
+    {"id":"PC02-T005","role":"pseudolocality","status":"AUDITED_IMPORT","depends_on":["PC02-T002"],"consumers":["PC02-T006","PC02-T011"],"guards":["PC-FP-007","PC-FP-015"]},
+    {"id":"PC02-T006","role":"no_local_collapsing","status":"AUDITED_IMPORT","depends_on":["PC02-T003","PC02-T004","PC02-T005"],"consumers":["PC02-T007","PC02-T008","PC02-T011"],"guards":["PC-FP-006","PC-FP-007","PC-FP-015"]},
+    {"id":"PC02-T007","role":"ancient_kappa_solutions","status":"AUDITED_IMPORT_WITH_CORRECTION_DEPENDENCY","depends_on":["PC02-T004","PC02-T006"],"consumers":["PC02-T008"],"guards":["PC-FP-006","PC-FP-015"]},
+    {"id":"PC02-T008","role":"canonical_neighbourhoods","status":"AUDITED_IMPORT","depends_on":["PC02-T006","PC02-T007"],"consumers":["PC02-T009","PC02-T010","PC02-T012"],"guards":["PC-FP-006","PC-FP-007","PC-FP-015"]},
+    {"id":"PC02-T009","role":"standard_solution","status":"AUDITED_IMPORT","depends_on":["PC02-T008"],"consumers":["PC02-T010","PC02-T011","PC02-T012"],"guards":["PC-FP-007","PC-FP-015"]},
+    {"id":"PC02-T010","role":"surgery_operation","status":"AUDITED_IMPORT","depends_on":["PC02-T008","PC02-T009"],"consumers":["PC02-T011","PC02-T013","PC02-T014"],"guards":["PC-FP-005","PC-FP-007","PC-FP-008","PC-FP-010","PC-FP-015"]},
+    {"id":"PC02-T011","role":"noncollapse_through_surgery","status":"AUDITED_IMPORT","depends_on":["PC02-T005","PC02-T006","PC02-T009","PC02-T010"],"consumers":["PC02-T012","PC02-T013"],"guards":["PC-FP-007","PC-FP-014","PC-FP-015"]},
+    {"id":"PC02-T012","role":"strong_canonical_neighbourhoods","status":"AUDITED_IMPORT","depends_on":["PC02-T008","PC02-T009","PC02-T011"],"consumers":["PC02-T013"],"guards":["PC-FP-006","PC-FP-007","PC-FP-015"]},
+    {"id":"PC02-T013","role":"all_time_surgery_flow","status":"AUDITED_IMPORT_AT_THEOREM_INTERFACE_LEVEL","depends_on":["PC02-T010","PC02-T011","PC02-T012"],"consumers":["PC02-T014","PC02-T016"],"guards":["PC-FP-005","PC-FP-008","PC-FP-010","PC-FP-014","PC-FP-015"]},
+    {"id":"PC02-T014","role":"surgery_topology","status":"AUDITED_IMPORT_AT_TOPOLOGY_INTERFACE_LEVEL","depends_on":["PC02-T010","PC02-T013"],"consumers":["PC02-T017"],"guards":["PC-FP-008","PC-FP-009","PC-FP-010"]},
+    {"id":"PC02-T015","role":"extinction_hypothesis_bridge","status":"AUDITED_TOPOLOGY_BRIDGE_WITH_EXTRACTION_DEBT","depends_on":["PC02-T001"],"consumers":["PC02-T016"],"guards":["PC-FP-010","PC-FP-012"]},
+    {"id":"PC02-T016","role":"finite_extinction","status":"AUDITED_IMPORT_AT_THEOREM_AND_MECHANISM_LEVEL","depends_on":["PC02-T013","PC02-T015"],"consumers":["PC02-T017"],"guards":["PC-FP-009","PC-FP-012","PC-FP-014"]},
+    {"id":"PC02-T017","role":"finite_history_reconstruction","status":"PROVED_IN_PACKAGE_CONDITIONAL_ON_IMPORTED_EVENT_INTERFACE","depends_on":["PC02-T014","PC02-T016"],"consumers":["PC02-T018"],"guards":["PC-FP-008","PC-FP-009","PC-FP-014"]},
+    {"id":"PC02-T018","role":"terminal_group_discharge","status":"PROVED_IN_PACKAGE_CONDITIONAL_ON_PC02-T017","depends_on":["PC02-T017"],"consumers":["PC02-T019"],"guards":["PC-FP-001","PC-FP-009","PC-FP-011","PC-FP-012"]},
+    {"id":"PC02-T019","role":"poincare_conclusion","status":"SOLVED_CLASSICAL_THEOREM_RECONSTRUCTED_CONDITIONALLY_ON_AUDITED_IMPORTS","depends_on":["PC02-T001","PC02-T018"],"consumers":[],"guards":["PC-FP-004","PC-FP-011","PC-FP-013"]}
+  ],
+  "forbidden_edges": [
+    ["PC02-T002","PC02-T019"],
+    ["PC02-T008","PC02-T013"],
+    ["PC02-T013","PC02-T019"],
+    ["PC02-T016","PC02-T019"],
+    ["PC02-T015","PC02-T018"]
+  ],
+  "next_gate": {
+    "target": "PC-WP03",
+    "required": ["PC-WP01", "PC-WP02", "joint_referee_review"],
+    "focus": "finite surgery-history and extinction bookkeeping"
+  }
+}

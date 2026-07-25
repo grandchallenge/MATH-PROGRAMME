@@ -216,6 +216,75 @@ The important result is not the elementary theorem. It is that the programme che
   <p>The checker now distinguishes ordinary ideal membership from radical membership. The claim ledger also preserves a false generalization and its countermodel instead of allowing a valid field theorem to drift into an invalid ring theorem.</p>
 </div>
 
+## Fixture 003: The logarithmic GCD kernel
+
+<div class="fixture-showcase" id="fixture-003-the-logarithmic-gcd-kernel" aria-label="LOG-GCD-001 published certified Lean result">
+  <header class="fixture-showcase__header">
+    <div>
+      <span class="fixture-showcase__index">Fixture 003 · PUB-LOG-GCD-001 · Publication status: published</span>
+      <h3>Classical mathematics · certified formal artifact</h3>
+    </div>
+    <a href="LOG_GCD_PUBLICATION.md">Read the public note <span>→</span></a>
+  </header>
+
+  <div class="fixture-statement">
+    <span>Certified Gram identity</span>
+    <strong>K(m,n) = log(gcd(m,n)) = ⟨φ(m),φ(n)⟩</strong>
+    <small>for positive inputs, with φ(n) a finitely supported divisor feature vector</small>
+  </div>
+
+  <div class="fixture-route" aria-label="LOG-GCD publication support route">
+    <div class="fixture-route__stage fixture-route__stage--audited">
+      <span>01 · Prior art</span>
+      <strong>Classical</strong>
+      <p>General GCD-matrix theory already supplies the incidence-factorization criterion.</p>
+    </div>
+    <b aria-hidden="true">→</b>
+    <div class="fixture-route__stage fixture-route__stage--checked">
+      <span>02 · Formal artifact</span>
+      <strong>Certified</strong>
+      <p>Lean checks positive semidefiniteness and the exact <code>Finsupp</code> Gram realization.</p>
+    </div>
+    <b aria-hidden="true">→</b>
+    <div class="fixture-route__stage fixture-route__stage--checked">
+      <span>03 · Public claim</span>
+      <strong>Published</strong>
+      <p>Workflow <code>29997559180</code> checked the published statement, certification evidence, and permanent claim boundary.</p>
+    </div>
+  </div>
+
+  <div class="fixture-witness">
+    <div class="fixture-witness__label">
+      <span>Divisor feature</span>
+      <small>finite support is part of the Lean type</small>
+    </div>
+    <code>φ(n)₍d₎ = sqrt(Λ(d)) when d ∣ n, and 0 otherwise</code>
+  </div>
+
+  <div class="fixture-verdicts" aria-label="LOG-GCD publication results">
+    <div><strong>2</strong><span>certified theorem claims</span></div>
+    <div><strong>1</strong><span>publication gate passed</span></div>
+    <div><strong>0</strong><span>novelty claims</span></div>
+  </div>
+
+  <div class="fixture-rejections">
+    <span>No novelty or priority claim</span>
+    <ul>
+      <li>not a new theorem</li>
+      <li>not a novel kernel</li>
+      <li>not a first proof</li>
+      <li>not a first feature representation</li>
+      <li>not a first Lean formalization</li>
+      <li>not strictly positive definite on the full domain</li>
+    </ul>
+  </div>
+</div>
+
+<div class="fixture-series-note">
+  <strong>What advanced</strong>
+  <p>A certified artifact has crossed the publication gate without changing its mathematical status. The public note makes the exact formal contribution inspectable while retaining the classical prior-art determination and every permanent exclusion.</p>
+</div>
+
 ## Current demonstration domain
 
 <div class="domain-brief domain-brief--compact">

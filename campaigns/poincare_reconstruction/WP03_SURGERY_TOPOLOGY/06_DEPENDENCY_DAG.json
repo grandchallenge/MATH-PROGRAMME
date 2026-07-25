@@ -1,0 +1,104 @@
+{
+  "campaign_id": "PC-001",
+  "work_package_id": "PC-WP03",
+  "tracker": "MATH-PROGRAMME#75",
+  "root_target": "PC03-C011",
+  "nodes": [
+    {
+      "id": "PC03-D000",
+      "kind": "imported_contract",
+      "statement": "A controlled surgery transition has the topology effect stated by PC02-T014 / Morgan-Tian Proposition 15.3.",
+      "status": "AUDITED_IMPORT",
+      "dependencies": [],
+      "guards": ["PC-FP-008", "PC-FP-010", "PC-FP-015"]
+    },
+    {
+      "id": "PC03-D001",
+      "kind": "provenance",
+      "statement": "Every event, factor, and discard carries a resolved pinned source binding.",
+      "status": "CLOSED_IN_WP03",
+      "dependencies": ["PC03-D000"],
+      "guards": ["PC-FP-015"]
+    },
+    {
+      "id": "PC03-D002",
+      "kind": "schema",
+      "statement": "The finite history schema represents components, factors, active sets, cuts, caps, discards, ancestry, reconstruction groups, local finiteness, and extinction.",
+      "status": "CLOSED_IN_WP03",
+      "dependencies": ["PC03-D001"],
+      "guards": ["PC-FP-008", "PC-FP-009", "PC-FP-014"]
+    },
+    {
+      "id": "PC03-L003",
+      "kind": "topology_rule",
+      "statement": "A separating sphere cut with two caps reconstructs the parent as the connected sum of two children.",
+      "status": "PROVED_CONDITIONAL_ON_EVENT_CONTRACT",
+      "dependencies": ["PC03-D000", "PC03-D002"]
+    },
+    {
+      "id": "PC03-L004",
+      "kind": "topology_rule",
+      "statement": "A nonseparating sphere cut with two caps reconstructs the parent as one child connected-summed with an S2-bundle over S1.",
+      "status": "PROVED_CONDITIONAL_ON_EVENT_CONTRACT",
+      "dependencies": ["PC03-D000", "PC03-D002"]
+    },
+    {
+      "id": "PC03-L005",
+      "kind": "topology_rule",
+      "statement": "Every discarded component contributes a permitted normalized topology factor and has no descendants.",
+      "status": "PROVED_CONDITIONAL_ON_EVENT_CONTRACT",
+      "dependencies": ["PC03-D000", "PC03-D002"]
+    },
+    {
+      "id": "PC03-L006",
+      "kind": "ancestry",
+      "statement": "Active-set conservation and one-parent ancestry produce a finite forward forest with no silent component loss.",
+      "status": "PROVED_AND_EXECUTABLY_CHECKED",
+      "dependencies": ["PC03-L003", "PC03-L004", "PC03-L005"]
+    },
+    {
+      "id": "PC03-L007",
+      "kind": "finiteness",
+      "statement": "Finite-on-bounded-interval surgery control plus finite extinction yields a finite event history.",
+      "status": "PROVED_IN_PACKAGE_CONDITIONAL_ON_IMPORTED_PREMISES",
+      "dependencies": ["PC02-T013", "PC02-T016"],
+      "guards": ["PC-FP-009", "PC-FP-014"]
+    },
+    {
+      "id": "PC03-T008",
+      "kind": "backward_induction",
+      "statement": "Reverse substitution through the finite event list expresses every initial component as a connected sum of permitted factors.",
+      "status": "PROVED_IN_PACKAGE",
+      "dependencies": ["PC03-L006", "PC03-L007"]
+    },
+    {
+      "id": "PC03-T009",
+      "kind": "normalization",
+      "statement": "RP3#RP3 expands to two spherical factors; S3 is the neutral connected-sum factor.",
+      "status": "PROVED_IN_PACKAGE_WITH_STANDARD_TOPOLOGY_IMPORTS",
+      "dependencies": ["PC03-T008"]
+    },
+    {
+      "id": "PC03-T010",
+      "kind": "terminal_group_discharge",
+      "statement": "In the connected orientable simply connected profile, van Kampen eliminates every nontrivial factor and leaves S3.",
+      "status": "PROVED_IN_PACKAGE_CONDITIONAL_ON_STANDARD_GROUP_INTERFACES",
+      "dependencies": ["PC03-T009"],
+      "guards": ["PC-FP-011", "PC-FP-012"]
+    },
+    {
+      "id": "PC03-C011",
+      "kind": "conditional_certificate",
+      "statement": "A schema-valid source-compliant Poincare-profile history certifies the terminal topology conclusion conditional on imported Hamilton-Perelman interfaces.",
+      "status": "REFEREE_PROMOTED_CONDITIONAL_CERTIFICATE",
+      "dependencies": ["PC03-D001", "PC03-T010"]
+    }
+  ],
+  "forbidden_edges": [
+    {"from": "PC02-T016", "to": "PC03-C011", "reason": "finite extinction without topology history"},
+    {"from": "PC03-D002", "to": "PC03-C011", "reason": "schema conformance without semantic validation or backward proof"},
+    {"from": "PC03-L006", "to": "PC03-T010", "reason": "ancestry without factor reconstruction"},
+    {"from": "pi1_trivial", "to": "prime_factor_is_S3", "reason": "circular Poincare use"},
+    {"from": "discrete_surgery_times", "to": "PC03-L007", "reason": "discreteness alone does not establish bounded-interval finiteness"}
+  ]
+}

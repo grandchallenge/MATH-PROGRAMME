@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "BSD-WP03-INDIVIDUAL-CURVE-CERTIFICATE-SCHEMA",
+  "required": [
+    "schema_version",
+    "artifact_id",
+    "trust_class",
+    "status",
+    "scope",
+    "curve",
+    "claims",
+    "theorem_interfaces",
+    "theorem_applications",
+    "normalization",
+    "computation",
+    "proof_evidence",
+    "claim_boundary"
+  ],
+  "enums": {
+    "trust_class": ["individual_curve_certificate"],
+    "status": ["CANDIDATE", "CERTIFIED", "REJECTED"],
+    "scope": ["individual_curve"],
+    "claim_kind": [
+      "analytic_rank",
+      "algebraic_rank",
+      "sha_p_primary_finiteness",
+      "sha_order",
+      "leading_term_p_part",
+      "full_leading_term"
+    ],
+    "evidence_kind": [
+      "exact_symbolic",
+      "rigorous_interval",
+      "theorem_application",
+      "formal_certificate",
+      "independently_replayed_certificate"
+    ]
+  },
+  "certified_requirements": [
+    "universal_claim must be false",
+    "curve has canonical_id and integral_weierstrass_coefficients",
+    "claims is nonempty and every claim has exact statement and scope individual_curve",
+    "proof_evidence is nonempty and contains no numerical_only evidence",
+    "every imported theorem interface exists in WP02 and has a certificate-composable composition state",
+    "every theorem interface has one hypothesis-verification application record with evidence references",
+    "analytic claims use complete_complex_L normalization or give an explicit conversion proof",
+    "full_leading_term additionally supplies global Sha finiteness/order and exact arithmetic factors"
+  ],
+  "prohibited_promotions": [
+    "individual certificate to family theorem",
+    "individual certificate to universal BSD",
+    "one p-primary result to global Sha order",
+    "numerical zero to exact analytic order"
+  ]
+}

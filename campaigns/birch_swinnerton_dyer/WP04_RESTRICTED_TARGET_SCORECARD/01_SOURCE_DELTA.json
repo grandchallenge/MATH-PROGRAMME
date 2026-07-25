@@ -1,0 +1,160 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "BSD-WP02-2026-SOURCE-DELTA",
+  "audit_date": "2026-07-24",
+  "purpose": "Close post-WP02 source gaps before BSD-WP04 target selection.",
+  "sources": [
+    {
+      "id": "BSD-SRC-015",
+      "citation": "Chan-Ho Kim, On the p-converse to a theorem of Gross-Zagier and Kolyvagin, arXiv:2109.12344, revision dated 2026-03-22",
+      "kind": "primary_preprint",
+      "locator": "Theorem 1.1; Corollaries 1.2 and 1.4; Remarks 1.3 and surrounding conductor-removal discussion",
+      "audit_state": "THEOREM_TEXT_AUDITED",
+      "url": "https://arxiv.org/abs/2109.12344"
+    },
+    {
+      "id": "BSD-SRC-016",
+      "citation": "Francesc Castella, On the p-part of the Birch-Swinnerton-Dyer formula for multiplicative primes, arXiv:1704.06608",
+      "kind": "primary_preprint",
+      "locator": "main theorem and abstract",
+      "audit_state": "PRIMARY_SCOPE_AUDITED",
+      "url": "https://arxiv.org/abs/1704.06608"
+    },
+    {
+      "id": "BSD-SRC-017",
+      "citation": "Xiaojun Yan and Xiuwu Zhu, Main conjectures for non-CM elliptic curves at good ordinary primes, arXiv:2412.20078; J. Algebra 693 (2026)",
+      "kind": "primary",
+      "locator": "Theorem 1.2 and Corollary 1.4",
+      "audit_state": "THEOREM_TEXT_AUDITED",
+      "url": "https://arxiv.org/abs/2412.20078"
+    },
+    {
+      "id": "BSD-SRC-018",
+      "citation": "Timo Keller and Mulun Yin, On the anticyclotomic Iwasawa theory of newforms at Eisenstein primes of semistable reduction, arXiv:2402.12781",
+      "kind": "primary_preprint",
+      "locator": "abstract-level strong-BSD and p-converse applications; theorem-level extraction required before composition",
+      "audit_state": "PRIMARY_SCOPE_AUDITED_NONCOMPOSABLE",
+      "url": "https://arxiv.org/abs/2402.12781"
+    },
+    {
+      "id": "BSD-SRC-019",
+      "citation": "Li Cai, Chao Li, and Shuai Zhai, On the 2-part of the Birch and Swinnerton-Dyer conjecture for quadratic twists of elliptic curves, arXiv:1712.01271",
+      "kind": "primary_preprint",
+      "locator": "main family theorems and abstract",
+      "audit_state": "PRIMARY_SCOPE_AUDITED_FAMILY_ONLY",
+      "url": "https://arxiv.org/abs/1712.01271"
+    },
+    {
+      "id": "BSD-SRC-020",
+      "citation": "Jie Shu and Shuai Zhai, Generalized Birch lemma and the 2-part of the Birch and Swinnerton-Dyer conjecture for certain elliptic curves, arXiv:2102.11808",
+      "kind": "primary_preprint",
+      "locator": "main twist-family theorems and abstract",
+      "audit_state": "PRIMARY_SCOPE_AUDITED_FAMILY_ONLY",
+      "url": "https://arxiv.org/abs/2102.11808"
+    }
+  ],
+  "records": [
+    {
+      "id": "BSD-T-082",
+      "name": "Non-CM rank-one p-converse without conductor restrictions",
+      "status": "THEOREM",
+      "domain": "non-CM elliptic curves over Q",
+      "direction": "arithmetic_to_complex_analytic",
+      "rank_range": "algebraic rank 1",
+      "prime_profile": "at least one good ordinary p>3 with E[p] irreducible and Sha[p-infinity] finite",
+      "reduction_profile": "no conductor restriction",
+      "residual_hypotheses": ["E[p] irreducible at the chosen good ordinary prime"],
+      "selmer_structure": "classical p-infinity Selmer group and p-strict local condition",
+      "normalization": "complete complex L(E,s), central point s=1",
+      "hypotheses": ["E/Q non-CM", "rank E(Q)=1", "Sha(E/Q)[p-infinity] finite for one admissible p"],
+      "conclusion": "ord_{s=1}L(E,s)=1 and Sha(E/Q) is finite",
+      "source_ids": ["BSD-SRC-015"],
+      "source_locator": "Corollary 1.4; conductor-removal discussion",
+      "composition_state": "COMPOSABLE_OPERATIONAL_INTERFACE"
+    },
+    {
+      "id": "BSD-T-092",
+      "name": "Rank-one p-part at multiplicative primes",
+      "status": "THEOREM_RESTRICTED",
+      "domain": "semistable elliptic curves over Q of analytic rank one",
+      "direction": "analytic_to_p_part",
+      "rank_range": "r_an=1",
+      "prime_profile": "p>3 of multiplicative reduction with E[p] irreducible",
+      "reduction_profile": "semistable; p multiplicative",
+      "residual_hypotheses": ["E[p] irreducible"],
+      "selmer_structure": "multiplicative local condition with exceptional-zero correction",
+      "normalization": "complex rank-one BSD quotient with source local factors",
+      "hypotheses": ["ord_{s=1}L(E,s)=1", "p>3", "p multiplicative", "E[p] irreducible"],
+      "conclusion": "the p-adic valuation identity predicted by the rank-one BSD formula",
+      "source_ids": ["BSD-SRC-016"],
+      "source_locator": "main theorem and abstract",
+      "composition_state": "COMPOSABLE_RESTRICTED_P_PART"
+    },
+    {
+      "id": "BSD-T-094",
+      "name": "Good-ordinary p-converse and p-part in ranks at most one",
+      "status": "THEOREM_RESTRICTED",
+      "domain": "non-CM elliptic curves over Q",
+      "direction": "selmer_complex_equivalence_and_p_part",
+      "rank_range": "r in {0,1}",
+      "prime_profile": "p>2, p not dividing 2N, good ordinary",
+      "reduction_profile": "good ordinary at p",
+      "residual_hypotheses": ["residual representation irreducible", "source image condition for the integral p-part"],
+      "selmer_structure": "ordinary p-infinity Selmer group",
+      "normalization": "source p-adic L-functions and complete complex BSD quotient",
+      "hypotheses": ["p not dividing 2N", "good ordinary at p", "r<=1", "source hypotheses"],
+      "conclusion": "Selmer corank r iff complex analytic rank r; under the image condition the p-part BSD formula holds",
+      "source_ids": ["BSD-SRC-017"],
+      "source_locator": "Theorem 1.2 and Corollary 1.4",
+      "composition_state": "COMPOSABLE_RESTRICTED_P_PART"
+    },
+    {
+      "id": "BSD-T-097",
+      "name": "Eisenstein-prime strong-BSD interface",
+      "status": "THEOREM_FAMILY_INTERFACE",
+      "domain": "elliptic curves and weight-two newforms at reducible residual primes",
+      "direction": "Iwasawa_main_conjecture_to_p_part_and_p_converse",
+      "rank_range": "analytic rank 0 or 1",
+      "prime_profile": "p>2 Eisenstein primes under source-specific hypotheses",
+      "reduction_profile": "good and multiplicative branches in the source",
+      "residual_hypotheses": ["reducible residual representation with theorem-specific characters and local hypotheses"],
+      "selmer_structure": "ordinary/anticyclotomic source-specific structures",
+      "normalization": "source-specific p-adic and complex BSD normalizations",
+      "hypotheses": ["exact theorem and branch must be extracted before use"],
+      "conclusion": "source proves p-parts and p-converses in substantial Eisenstein cases; no generic reducible-prime theorem is imported",
+      "source_ids": ["BSD-SRC-018"],
+      "source_locator": "abstract-level scope; theorem extraction pending",
+      "composition_state": "NONCOMPOSABLE_UNTIL_INSTANTIATED"
+    },
+    {
+      "id": "BSD-T-098",
+      "name": "Explicit quadratic-twist 2-part families",
+      "status": "THEOREM_FAMILY",
+      "domain": "explicit quadratic twist families of elliptic curves over Q",
+      "direction": "family_2_part",
+      "rank_range": "analytic rank 0 or 1 in specified families",
+      "prime_profile": "2-primary",
+      "reduction_profile": "family-specific",
+      "residual_hypotheses": ["base curve and twist hypotheses from the source"],
+      "selmer_structure": "2-Selmer and Heegner-point family methods",
+      "normalization": "source 2-part BSD quotient",
+      "hypotheses": ["curve belongs to the explicit source family"],
+      "conclusion": "the 2-part holds for specified infinite twist families or propagates under the source hypotheses",
+      "source_ids": ["BSD-SRC-019", "BSD-SRC-020"],
+      "source_locator": "main family theorems and abstracts",
+      "composition_state": "FAMILY_ONLY"
+    }
+  ],
+  "candidate_dispositions": {
+    "unrestricted_rank_one_converse": "RETIRED_AS_THEOREM",
+    "multiplicative_odd_prime_p_part": "RETIRED_AS_THEOREM",
+    "generic_eisenstein_prime_gap": "NOT_THEOREM_GRADE_WITHOUT_BRANCH_EXTRACTION",
+    "general_2_primary_rank_zero_or_one": "OPEN_BOUNDARY_SUBJECT_TO_EXPLICIT_FAMILY_EXCLUSIONS"
+  },
+  "claim_boundary": {
+    "new_theorem": false,
+    "novelty": false,
+    "universal_BSD": false,
+    "purpose_is_source_normalization": true
+  }
+}
