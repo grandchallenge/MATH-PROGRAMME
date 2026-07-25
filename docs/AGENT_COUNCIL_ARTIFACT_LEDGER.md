@@ -15,19 +15,19 @@ Every governed artifact receives:
 - a stable artifact ID;
 - an artifact type and owning pillar;
 - one authoritative integrated artifact reference;
-- lifecycle status;
+- lifecycle status or detailed disposition;
 - references to relevant decision records;
 - a terminology-registry reference when terms are introduced or changed;
 - an Agent Council review-record reference;
-- the most recent editorial-integration date;
+- the most recent material editorial-integration date;
 - the current Amanuensis continuity state.
 
 ## Ledger
 
-| Artifact ID | Type | Pillar | Authoritative integrated artifact | Status | Decision records | Terminology registry | Review record | Last integrated | Amanuensis state |
+| Artifact ID | Type | Pillar | Authoritative integrated artifact | Status / disposition | Decision records | Terminology registry | Review record | Last integrated | Amanuensis state |
 |---|---|---|---|---|---|---|---|---|---|
-| GOV-AGENT-COUNCIL-001 | governance bundle | MATH-PROGRAMME | `docs/MATH_PROGRAMME_AGENT_COUNCIL.md` | active | `ADR-0001` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `templates/agent_review.yaml` | 2026-07-09 | reviewed |
-| UC-WP01 | work package | MATHSOLVE | `WP01_UNION_CLOSED_STATUS_SPINE.md` | ready for certification handoff | `ADR-0002` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/union_closed/UC-WP01.agent_review.yaml` | 2026-07-17 | reviewed |
+| GOV-AGENT-COUNCIL-001 | governance bundle | MATH-PROGRAMME | `docs/MATH_PROGRAMME_AGENT_COUNCIL.md` | active | `ADR-0001`; `ADR-0007` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `templates/agent_review.yaml` | 2026-07-24 | reviewed |
+| UC-WP01 | work package | MATHSOLVE | `WP01_UNION_CLOSED_STATUS_SPINE.md` | completed; WP02/MATHCERT handoff discharged | `ADR-0002`; `ADR-0007` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/union_closed/UC-WP01.agent_review.yaml` | 2026-07-24 | reviewed |
 | CERT-LOG-GCD-001 | formal certificate fixture | MATHCERT | `fixtures/formal/LOG-GCD-001/README.md` | certified | none | `docs/GLOSSARY.md` | `fixtures/formal/LOG-GCD-001/agent_review.yaml` | 2026-07-23 | reviewed |
 | PUB-LOG-GCD-001 | public research note | MATH-PROGRAMME | `docs/LOG_GCD_PUBLICATION.md` | published | none | `docs/GLOSSARY.md` | `fixtures/formal/LOG-GCD-001/agent_review.yaml` | 2026-07-23 | reviewed |
 | NS-CI-WP00 | work package | MATHSOLVE | `campaigns/navier_stokes_critical_integrability/WP00_FOUNDATION_STATUS/00_README.md` | promoted | `ADR-0003` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/navier_stokes/NS-CI-WP00.agent_review.yaml` | 2026-07-23 | reviewed |
@@ -62,3 +62,4 @@ Every governed artifact receives:
 5. A blocking cross-document conflict changes the Amanuensis state to `blocked`.
 6. Mathematical promotion is never inferred from ledger status alone.
 7. Publication status changes visibility and editorial readiness; it does not change the underlying claim status.
+8. Schema-bound review lifecycle tokens and campaign-specific ledger dispositions remain distinct under `ADR-0007`.
