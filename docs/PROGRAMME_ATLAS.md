@@ -1,6 +1,6 @@
 # Programme Atlas
 
-<p class="page-deck">A map of mathematical work as a sequence of accountable transformations.</p>
+<p class="page-deck">A map of mathematical work as a sequence of accountable transformations, with governance preserving the meaning of every transition.</p>
 
 <div class="atlas-route" aria-label="Programme artifact route">
   <span><b>01</b>Raw question</span>
@@ -13,9 +13,9 @@
   <span><b>08</b>Checked artifact</span>
 </div>
 
-Each transformation changes the status of the material. The programme exists to make those changes explicit.
+Each transformation changes the status of the material. The programme exists to make those changes explicit and to preserve them across revisions.
 
-## Three rooms
+## Three execution rooms and one continuity layer
 
 <div class="room-register">
   <section>
@@ -38,31 +38,32 @@ Each transformation changes the status of the material. The programme exists to 
   </section>
 </div>
 
+`MATH-PROGRAMME` governs integration, decision records, publication, and archival maintenance. It appears as a schema pillar for those artifacts, but it is not a fourth mathematical support route.
+
 ## Artifact ladder
 
 | Stage | Artifact | Owner | Promotion condition |
-| --- | --- | --- | --- |
+|---|---|---|---|
 | Curiosity | Lead note | MATHFORGE | Source can be reconstructed |
 | Candidate | Problem card | MATHFORGE | Status and risks recorded |
 | Campaign | Work Package | MATHSOLVE | Claim ledger and next target present |
-| Local result | Lemma, proposition, or screen | MATHSOLVE | Support route identified |
+| Local result | Lemma, proposition, obstruction, or exact screen | MATHSOLVE | Support route identified |
 | Handoff | Certification packet | MATHSOLVE + MATHCERT | Statement and dependencies clear |
-| Certification | Checked artifact | MATHCERT | Proof or replay passes the gate |
-| Publication | Public claim | Programme | Claim boundary visible to the reader |
+| Certification | Checked artifact | MATHCERT | Proof or replay passes the declared gate |
+| Integration | Authoritative artifact | MATH-PROGRAMME | Reviews, terminology, decisions, and continuity agree |
+| Publication or archive | Public claim or qualified dossier | MATH-PROGRAMME | Claim boundary remains visible to the reader |
 
-## First domain: Union-Closed Sets
+## Domain portfolio
 
-The first domain is intentionally modest. The programme does not begin by claiming progress on Frankl's conjecture. It begins by building reusable infrastructure:
+| Domain | Status | Programme role |
+|---|---|---|
+| [01 · Union-Closed Sets](domains/union_closed.md) | Open conjecture | Foundational demonstration domain |
+| [02 · Navier–Stokes Critical Integrability](domains/navier_stokes.md) | Open problem | Equation-specific analytic campaign |
+| [03 · Hodge Conjecture](domains/hodge.md) | Open conjecture | Source and equivalence normalization |
+| [04 · Birch–Swinnerton-Dyer](domains/birch_swinnerton_dyer.md) | Open conjecture | Theorem-ledger and restricted-target campaign |
+| [05 · Poincaré Reconstruction](domains/poincare_reconstruction.md) | Solved theorem | Qualified reconstruction and bounded-certification archive |
 
-- definitions;
-- small exact enumerations;
-- status spines;
-- Lean-friendly statements;
-- local lemmas;
-- claim ledgers;
-- certification handoffs.
-
-This establishes the method before attempting ambitious theorem production.
+Union-Closed remains the programme's first demonstration of the complete route. It no longer exhausts the public domain catalogue.
 
 ## Cross-pillar obligations
 
@@ -72,4 +73,10 @@ MATHSOLVE must give MATHCERT claims precise enough to check or reject.
 
 MATHCERT must return missing definitions, unsupported assumptions, and proof gaps to the other pillars.
 
-The system improves when each pillar makes the others harder to fool.
+MATH-PROGRAMME must preserve the authoritative artifact, review provenance, terminology, and claim boundary without converting editorial integration into mathematical promotion.
+
+The system improves when each layer makes the others harder to fool.
+
+## Status discipline
+
+Claim support, artifact lifecycle, and campaign disposition are separate vocabularies. Use the [Programme Status Taxonomy](STATUS_TAXONOMY.md) before interpreting words such as `completed`, `certified`, `selected`, or `referee promoted`.
