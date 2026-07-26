@@ -1,0 +1,76 @@
+{
+  "$schema": "../schemas/campaign_replay_registry.schema.json",
+  "schema_version": "1.0.0",
+  "discovery_globs": [
+    "campaigns/**/replay.py",
+    "campaigns/**/validate*.py"
+  ],
+  "entries": [
+    {
+      "id": "BSD-WP01-REPLAY",
+      "command": ["python3", "campaigns/birch_swinnerton_dyer/WP01_FALSE_PROOF_ATLAS/replay.py"],
+      "timeout_seconds": 60,
+      "scope": "Deterministic replay of the BSD false-proof atlas."
+    },
+    {
+      "id": "BSD-WP01-WP02-CROSS-VALIDATION",
+      "command": ["python3", "campaigns/birch_swinnerton_dyer/validate_wp01_wp02.py"],
+      "timeout_seconds": 60,
+      "scope": "Cross-validate BSD fixtures, sources, theorem interfaces, and closed gates."
+    },
+    {
+      "id": "BSD-WP03-SUBSTRATE-REPLAY",
+      "command": ["python3", "campaigns/birch_swinnerton_dyer/WP03_COMPUTATIONAL_FORMAL_SUBSTRATE/replay.py"],
+      "timeout_seconds": 60,
+      "scope": "Replay BSD computational and formal substrate firewalls."
+    },
+    {
+      "id": "BSD-WP04-TARGET-REPLAY",
+      "command": ["python3", "campaigns/birch_swinnerton_dyer/WP04_RESTRICTED_TARGET_SCORECARD/replay.py"],
+      "timeout_seconds": 60,
+      "scope": "Replay BSD restricted-target scorecard and claim firewall."
+    },
+    {
+      "id": "RH-WP01-REPLAY",
+      "command": ["python3", "campaigns/riemann_hypothesis/WP01_FALSE_PROOF_ATLAS/replay.py"],
+      "timeout_seconds": 60,
+      "scope": "Deterministic replay of the RH false-proof atlas."
+    },
+    {
+      "id": "RH-WP01-WP02-CROSS-VALIDATION",
+      "command": ["python3", "campaigns/riemann_hypothesis/validate_wp01_wp02.py"],
+      "timeout_seconds": 60,
+      "scope": "Cross-validate RH fixtures, sources, theorem interfaces, debt, and closed gates."
+    },
+    {
+      "id": "PC-WP03-HISTORY-REPLAY",
+      "command": ["python3", "campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/05_ADVERSARIAL_HISTORIES/validate_histories.py"],
+      "timeout_seconds": 60,
+      "scope": "Replay all valid and malformed Poincaré surgery histories."
+    },
+    {
+      "id": "PC-WP04-POLICY",
+      "command": ["python3", "ci/validate_pc_wp04_fixture.py", "fixtures/formal/PC-WP04"],
+      "timeout_seconds": 60,
+      "scope": "Validate the bounded PC-WP04 certificate policy."
+    },
+    {
+      "id": "PC-WP04-ADVERSARIAL",
+      "command": ["python3", "ci/test_pc_wp04_fixture.py"],
+      "timeout_seconds": 60,
+      "scope": "Reject PC-WP04 certificate-policy mutations."
+    },
+    {
+      "id": "PC-WP05-ARCHIVE-POLICY",
+      "command": ["python3", "ci/validate_pc_wp05_archive.py"],
+      "timeout_seconds": 60,
+      "scope": "Validate the qualified Poincaré archival manifest and trust matrix."
+    },
+    {
+      "id": "PC-WP05-ADVERSARIAL",
+      "command": ["python3", "ci/test_pc_wp05_archive.py"],
+      "timeout_seconds": 60,
+      "scope": "Reject PC-WP05 archival-policy mutations."
+    }
+  ]
+}
