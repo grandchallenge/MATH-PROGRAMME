@@ -39,7 +39,7 @@ Do not infer Pages URLs for root files. Use the canonical GitHub links below.
 
 Domains 06–08 begin with integrated root WP00 dossiers rather than separate master-plan files. A later governed master plan may supersede those canonical entries only through an explicit registry and decision update.
 
-Historical filename note: the detailed BSD plan remains under `DOMAIN_03_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md`, and the development-stage Poincaré plan remains under `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`. ADR-0005 and ADR-0006 govern their canonical numbering.
+Historical filename note: the detailed BSD plan remains recoverable under `DOMAIN_03_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md`. The mislabelled development-stage `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` was removed in PR #96; the canonical Poincaré entry is `DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`. ADR-0005 and ADR-0006 govern the canonical numbering.
 
 ## Campaign directories
 
