@@ -1,33 +1,5 @@
 # Agent Council Decision Records
 
-## Status
-
-Active programme index.
-
-**Owner:** The Amanuensis.
-
-Decision records preserve governance choices that affect how an artifact must be interpreted, reviewed, integrated, or superseded. They record why a choice was made and which alternatives were rejected. They do not replace mathematical proofs, claim ledgers, or source provenance.
-
-## Canonical storage rule
-
-Every decision record has one canonical file under `docs/decisions/`. This document is the index and contract description; it does not duplicate ADR bodies. Historical embedded copies remain recoverable through version control.
-
-## Record contract
-
-Each decision record contains:
-
-- a stable decision ID;
-- date and decision status;
-- context and governing problem;
-- the adopted decision;
-- material alternatives considered;
-- consequences and unresolved obligations, when applicable;
-- affected artifact references;
-- review-provenance references;
-- supersession relationships, when applicable.
-
-## Active index
-
 | Decision | Date | Status | Scope | Canonical record |
 |---|---|---|---|---|
 | ADR-0001 | 2026-07-09 | Accepted | Establish the Amanuensis continuity office. | [`ADR-0001_AMANUENSIS_CONTINUITY_OFFICE.md`](decisions/ADR-0001_AMANUENSIS_CONTINUITY_OFFICE.md) |
@@ -39,6 +11,7 @@ Each decision record contains:
 | ADR-0007 | 2026-07-24 | Accepted | Normalize Agent Council decision, review, lifecycle, and UC-WP01 temporal contracts. | [`ADR-0007_AGENT_COUNCIL_CONTRACT_NORMALIZATION.md`](decisions/ADR-0007_AGENT_COUNCIL_CONTRACT_NORMALIZATION.md) |
 | ADR-0008 | 2026-07-24 | Accepted | Govern public domain coverage, documentation authority, and semantic MkDocs validation. | [`ADR-0008_MKDOCS_DOMAIN_COVERAGE.md`](decisions/ADR-0008_MKDOCS_DOMAIN_COVERAGE.md) |
 | ADR-0009 | 2026-07-25 | Accepted | Close the post-merge documentation audit, register Domains 06–08, and replace fixed-domain validation with governed-campaign discovery. | [`ADR-0009_POST_MERGE_DOMAIN_COVERAGE.md`](decisions/ADR-0009_POST_MERGE_DOMAIN_COVERAGE.md) |
+| ADR-0010 | 2026-07-26 | Accepted | Govern Documentary Library authority, release-class artifacts, source records, web editions, RH post-merge disposition, and continuity ownership. | [`ADR-0010_DOCUMENTARY_LIBRARY_AUTHORITY.md`](decisions/ADR-0010_DOCUMENTARY_LIBRARY_AUTHORITY.md) |
 
 ## Identifier rule
 
