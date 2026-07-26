@@ -32,7 +32,7 @@ A successful workflow establishes only the recorded integration, replay, policy,
 ```text
 campaigns/**/replay.py
 campaigns/**/validate*.py
-campaigns/**/test_validate*.py
+campaigns/**/test*.py
 ```
 
 A discovered executable that is absent from the registry fails policy. Registry entries use direct argument arrays rather than shell strings, have unique IDs and script paths, and run under explicit timeouts. This prevents a newly merged campaign validator or its adversarial rejection suite from existing in the tree without being executed by the global gate.
