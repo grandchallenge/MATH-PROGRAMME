@@ -12,7 +12,7 @@ The programme workflow is a claim-boundary control. A green documentation build 
 - every push to `main`;
 - explicit manual audit through `workflow_dispatch`.
 
-The workflow uses read-only repository permissions, bounded job timeouts, non-persistent checkout credentials, and pull-request concurrency cancellation.
+The workflow uses read-only repository permissions, bounded job timeouts, non-persistent checkout credentials, immutable action references, and pull-request concurrency cancellation.
 
 Its required jobs are:
 
@@ -71,7 +71,7 @@ The adversarial tests reject any silent conversion of repository integration int
 3. the originating event was a push;
 4. the Pages build checks out the exact validated `head_sha`.
 
-A manual Pages bypass is not provided. Manual audits run the policy workflow but do not publish.
+Workflow-level permissions remain read-only. The build job receives only repository read access and the Pages permission needed to configure and upload the site artifact. The deploy job alone receives the Pages write and OIDC token permissions needed to publish. A manual Pages bypass is not provided; manual audits run the policy workflow but do not publish.
 
 ## Workflow inventory
 
@@ -84,7 +84,7 @@ The current governed workflow set is:
 - `pc-wp04.yml` — PC-WP04 fast certificate replay;
 - `pc-wp05.yml` — PC-WP05 archival fast replay.
 
-`ci/validate_workflow_coverage.py` rejects an unregistered workflow, a missing governed workflow, absent least-privilege permissions, missing job timeouts, persistent checkout credentials, missing global jobs, a direct Pages push trigger, or an unpinned external evidence commit.
+`ci/validate_workflow_coverage.py` rejects an unregistered workflow, a missing governed workflow, absent or excessive permissions, missing concurrency controls, missing job timeouts, mutable action references, persistent checkout credentials, missing global jobs, a direct Pages push trigger, a publication-permission bypass, or an unpinned external evidence commit.
 
 ## Maintenance rule
 
