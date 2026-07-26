@@ -92,6 +92,30 @@ def main() -> int:
         for error in workflow_coverage_errors(texts=mutable_action, evidence=evidence)
     )
 
+    dynamic_external_repository = dict(texts)
+    dynamic_external_repository["ci.yml"] = dynamic_external_repository["ci.yml"].replace(
+        "          repository: grandchallenge/MATHCERT\n",
+        "          repository: ${{ steps.external-evidence.outputs.repository }}\n",
+        1,
+    )
+    assert any(
+        "external checkout repository must match" in error
+        for error in workflow_coverage_errors(
+            texts=dynamic_external_repository, evidence=evidence
+        )
+    )
+
+    mismatched_external_ref = dict(texts)
+    mismatched_external_ref["ci.yml"] = mismatched_external_ref["ci.yml"].replace(
+        "          ref: d59173899dcd1a67dbe8f31de0b9f0917cd1459a\n",
+        "          ref: 0000000000000000000000000000000000000000\n",
+        1,
+    )
+    assert any(
+        "external checkout ref must match" in error
+        for error in workflow_coverage_errors(texts=mismatched_external_ref, evidence=evidence)
+    )
+
     missing_replay = dict(texts)
     missing_replay["ci.yml"] = missing_replay["ci.yml"].replace(
         "python3 ci/validate_campaign_replays.py", "python3 -c 'print(\"skipped\")'", 1
