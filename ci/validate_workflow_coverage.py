@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -14,6 +15,7 @@ from validate_rh_continuity import rh_continuity_errors
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW_DIR = ROOT / ".github" / "workflows"
+IMMUTABLE_ACTION = re.compile(r"^[^@\s]+@[0-9a-f]{40}$")
 EXPECTED_WORKFLOWS = {
     "bsd-wp03-substrate.yml",
     "bsd-wp04-target.yml",
@@ -46,13 +48,15 @@ def _as_list(value: Any) -> list[str]:
     return [str(value)]
 
 
-def _checkout_errors(name: str, workflow: dict[str, Any]) -> list[str]:
+def _job_hardening_errors(name: str, workflow: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     for job_id, job in workflow.get("jobs", {}).items():
         if "timeout-minutes" not in job:
             errors.append(f"{name}:{job_id}: timeout-minutes is required")
         for step in job.get("steps", []):
             uses = str(step.get("uses", ""))
+            if uses and not uses.startswith("./") and not IMMUTABLE_ACTION.fullmatch(uses):
+                errors.append(f"{name}:{job_id}: action reference must use a full commit SHA: {uses}")
             if uses.startswith("actions/checkout@"):
                 options = step.get("with", {})
                 if str(options.get("persist-credentials", "")).lower() != "false":
@@ -116,7 +120,7 @@ def workflow_coverage_errors(
             errors.append(f"{name}: invalid workflow YAML: {exc}")
             continue
         parsed[name] = workflow
-        errors.extend(_checkout_errors(name, workflow))
+        errors.extend(_job_hardening_errors(name, workflow))
         if "permissions" not in workflow:
             errors.append(f"{name}: explicit least-privilege permissions are required")
 
@@ -184,8 +188,8 @@ def main() -> int:
         print(f"workflow coverage validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
     print(
-        "workflow inventory, campaign replay reachability, RH continuity, deployment gate, "
-        "and external evidence are valid"
+        "workflow inventory, immutable actions, campaign replay reachability, RH continuity, "
+        "deployment gate, and external evidence are valid"
     )
     return 0
 
