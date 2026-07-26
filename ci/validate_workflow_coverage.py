@@ -10,6 +10,8 @@ from typing import Any
 import yaml
 from jsonschema import Draft202012Validator
 
+from validate_rh_continuity import rh_continuity_errors
+
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW_DIR = ROOT / ".github" / "workflows"
 EXPECTED_WORKFLOWS = {
@@ -170,6 +172,7 @@ def workflow_coverage_errors(
                 errors.append(f"pages.yml: missing publication gate {marker}")
 
     errors.extend(external_evidence_errors(root, evidence))
+    errors.extend(rh_continuity_errors(root))
     return errors
 
 
@@ -180,7 +183,10 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"workflow coverage validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print("workflow inventory, replay reachability, deployment gate, and external evidence are valid")
+    print(
+        "workflow inventory, campaign replay reachability, RH continuity, deployment gate, "
+        "and external evidence are valid"
+    )
     return 0
 
 
