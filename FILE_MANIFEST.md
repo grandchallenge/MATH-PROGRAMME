@@ -36,7 +36,7 @@ This is a curated map of authoritative entry points, not an exhaustive recursive
 - `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md`
 - `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`
 - `docs/CAMPAIGN_PROMOTION_REGISTER.md`
-- `docs/decisions/ADR-0001_*.md` through `ADR-0010_*.md`
+- `docs/decisions/ADR-0001_*.md` through `ADR-0011_*.md`
 - `schemas/agent_review.schema.json`
 - `templates/agent_review.yaml`
 - `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml`
@@ -177,7 +177,7 @@ The global programme policy checks out the evidence-pinned MATHCERT commit and e
 - `.github/workflows/pc-wp04.yml` — path-scoped bounded certificate replay.
 - `.github/workflows/pc-wp05.yml` — path-scoped archival and bounded-certificate replay.
 
-Workflow inventory, checkout credential handling, job timeouts, policy triggers, deployment gating, replay discovery, and external evidence are machine-checked. A new campaign `replay.py` or `validate*.py` file fails closed until registered.
+Workflow inventory, checkout credential handling, job timeouts, policy triggers, deployment gating, replay discovery, and external evidence are machine-checked. A new campaign `replay.py`, `validate*.py`, or `test_validate*.py` file fails closed until registered.
 
 ## Maintenance rule
 
