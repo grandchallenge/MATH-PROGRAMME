@@ -12,6 +12,7 @@
 | ADR-0008 | 2026-07-24 | Accepted | Govern public domain coverage, documentation authority, and semantic MkDocs validation. | [`ADR-0008_MKDOCS_DOMAIN_COVERAGE.md`](decisions/ADR-0008_MKDOCS_DOMAIN_COVERAGE.md) |
 | ADR-0009 | 2026-07-25 | Accepted | Close the post-merge documentation audit, register Domains 06–08, and replace fixed-domain validation with governed-campaign discovery. | [`ADR-0009_POST_MERGE_DOMAIN_COVERAGE.md`](decisions/ADR-0009_POST_MERGE_DOMAIN_COVERAGE.md) |
 | ADR-0010 | 2026-07-26 | Accepted | Govern Documentary Library authority, release-class artifacts, source records, web editions, RH post-merge disposition, and continuity ownership. | [`ADR-0010_DOCUMENTARY_LIBRARY_AUTHORITY.md`](decisions/ADR-0010_DOCUMENTARY_LIBRARY_AUTHORITY.md) |
+| ADR-0011 | 2026-07-26 | Accepted | Require complete campaign replay reachability, pinned external certification evidence, RH retained-blocker enforcement, and policy-gated publication. | [`ADR-0011_FULL_WORKFLOW_COVERAGE.md`](decisions/ADR-0011_FULL_WORKFLOW_COVERAGE.md) |
 
 ## Identifier rule
 
