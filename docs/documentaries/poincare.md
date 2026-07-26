@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="../../stylesheets/documentary.css">
 
-<div class="gcl-monograph" data-gcl-reader="poincare" data-edition="1.0.0">
+<div class="gcl-monograph" data-gcl-reader="poincare" data-edition="1.1.0">
 <a class="monograph-skip" href="#monograph-start">Skip to the manuscript</a>
 
 <header class="monograph-hero" aria-labelledby="monograph-title">
@@ -12,12 +12,12 @@
     <p class="monograph-hero__subtitle">A gentle illustrated guide to the Poincaré theorem</p>
     <p class="monograph-hero__thesis">A closed three-dimensional world in which every loop contracts must be the three-sphere.</p>
     <div class="monograph-status" aria-label="Publication status"><span>Classical solved theorem</span><span>Archival reconstruction</span><span>No new-proof claim</span></div>
-    <div class="monograph-actions"><a class="monograph-button monograph-button--primary" href="#monograph-start">Begin the journey</a><a class="monograph-button" href="../">Documentary library</a><a class="monograph-button" href="../sources/the_shape_of_a_sphere.tex">LaTeX source</a></div>
+    <div class="monograph-actions"><a class="monograph-button monograph-button--primary" href="#monograph-start">Begin the journey</a><a class="monograph-button" href="../">Documentary library</a><a class="monograph-button" href="../sources/the_shape_of_a_sphere.tex">Source record</a></div>
   </div>
 </header>
 
 <div class="monograph-progress" aria-hidden="true"><span data-reader-progress-bar></span></div>
-<div class="monograph-reader" id="monograph-start">
+<div class="monograph-reader" id="monograph-start" tabindex="-1">
   <nav class="monograph-toolbar" aria-label="Reader controls">
     <div class="monograph-toolbar__identity"><span>Digital Grand Challenge Library</span><strong>The Shape of a Sphere</strong></div>
     <div class="monograph-toolbar__controls"><button type="button" data-reader-focus aria-pressed="false">Focus mode</button><button type="button" data-reader-print>Print / save</button><button type="button" data-reader-reset>Reset position</button><output data-reader-progress aria-live="polite">0% read</output></div>
@@ -31,7 +31,7 @@
       <ol><li><a href="#appendix-categories">Categories and definitions</a></li><li><a href="#appendix-flow">Ricci-flow controls</a></li><li><a href="#appendix-trust">Trust matrix</a></li><li><a href="#sources">Sources</a></li></ol>
     </aside>
 
-    <main class="monograph-body">
+    <article class="monograph-body" aria-label="The Shape of a Sphere manuscript">
       <section class="monograph-section" id="reader-note" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">A note to the reader</p>
       ## Wonder first; authority always visible
@@ -39,6 +39,8 @@
       This web edition is meant to be entered as one enters an old observatory: first by wonder, then by instruments, and finally by exact measurement. Its illuminated plates are aids to orientation and memory. They are not proof diagrams. The prose, equations, cited sources, and explicit trust labels govern every mathematical claim.
 
       The Poincaré theorem is solved. This volume reconstructs the classical Hamilton–Perelman route for a broad reader; it does not offer a new proof, an independent verification of the nonlinear estimates, or a machine-checked formalization of Ricci flow with surgery.
+
+      The committed `.tex` file is a source record. The checksum-locked complete illustrated source bundle is the authoritative source artifact; the checksum-locked PDF is the rendered edition. Both are currently identified as `metadata_only`, without an asserted stable public release locator.
 
       <div class="claim-box"><strong>Established theorem</strong><p>Every closed, connected, simply connected topological three-manifold is homeomorphic to the three-sphere.</p></div>
       <div class="guardrail"><strong>Category guardrail</strong><p>Pictures of two-dimensional spheres and tori are analogies. The theorem concerns three-manifolds. Passing among topological, PL, smooth, and Riemannian categories uses dimension-three theorems; it is not definitional.</p></div>
@@ -162,7 +164,7 @@
       | Illuminated plates | pedagogical | never authoritative proof diagrams |
       | New proof or novelty | not claimed | explicitly excluded |
 
-      <div class="guardrail"><strong>Final claim boundary</strong><p>This web edition changes presentation, not theorem strength. It adds responsive reading, searchability, accessibility, source links, plate enlargement, reading-position memory, and print fidelity. It does not alter the archived mathematical disposition of PC-001.</p></div>
+      <div class="guardrail"><strong>Final claim boundary</strong><p>This web edition changes presentation, not theorem strength. It adds responsive reading, searchability, accessibility, source links, plate enlargement, reading-position memory, and print treatment. It does not alter the archived mathematical disposition of PC-001.</p></div>
       </section>
 
       <section class="monograph-section" id="sources" data-reader-section markdown="1">
@@ -182,17 +184,18 @@
       <section class="monograph-colophon" aria-labelledby="edition-record-title">
         <h2 id="edition-record-title">Edition record</h2>
         <p>This is the reference implementation for the Grand Challenge Library web format. Its content schema, plate contract, scoped palette, responsive rules, accessibility landmarks, interactive controls, and print treatment are intended for reuse by the remaining documentary volumes.</p>
-        <div class="monograph-actions"><a class="monograph-button" href="../poincare.edition.json">Web-edition data</a><a class="monograph-button" href="../documentary_web.schema.json">Reusable schema</a><a class="monograph-button" href="../sources/the_shape_of_a_sphere.tex">Authoritative LaTeX</a></div>
-        <dl class="edition-integrity"><div><dt>Facsimile PDF</dt><dd>18,426,001 bytes · <code>0e1499ee13a6966a3b190b850b6acd2db647952826c54b3abc575d607a2f6ea4</code></dd></div><div><dt>LaTeX source</dt><dd>59,039 bytes · <code>58dc94e7296bdfad5f31720f2e3b53be4097ff356f6c83a58db769db357e7b9d</code></dd></div><div><dt>Illustrated bundle</dt><dd>42,084,814 bytes · <code>670cb6a4d63ed79a21fbbe70857bd0d46ad63ce546c92d320de7e39f06612771</code></dd></div></dl>
+        <p>The web edition is derivative. The source record identifies the release-class artifacts; the checksum-locked complete illustrated source bundle is authoritative. MathJax 3.2.2 is a version-pinned network enhancement, and the source TeX remains present when it is unavailable.</p>
+        <div class="monograph-actions"><a class="monograph-button" href="../poincare.edition.json">Web-edition data</a><a class="monograph-button" href="../documentary_web.schema.json">Reusable schema</a><a class="monograph-button" href="../sources/the_shape_of_a_sphere.tex">Source record</a></div>
+        <dl class="edition-integrity"><div><dt>Rendered PDF</dt><dd>18,426,001 bytes · <code>0e1499ee13a6966a3b190b850b6acd2db647952826c54b3abc575d607a2f6ea4</code> · <code>metadata_only</code></dd></div><div><dt>Complete LaTeX source</dt><dd>59,039 bytes · <code>58dc94e7296bdfad5f31720f2e3b53be4097ff356f6c83a58db769db357e7b9d</code> · <code>metadata_only</code></dd></div><div><dt>Authoritative complete illustrated source bundle</dt><dd>42,084,814 bytes · <code>670cb6a4d63ed79a21fbbe70857bd0d46ad63ce546c92d320de7e39f06612771</code> · <code>metadata_only</code></dd></div></dl>
       </section>
-    </main>
+    </article>
   </div>
 </div>
 
 <dialog class="monograph-lightbox" data-plate-dialog aria-labelledby="plate-dialog-title"><form method="dialog"><button class="monograph-lightbox__close" aria-label="Close plate view">Close</button></form><div class="monograph-lightbox__frame"><img data-plate-dialog-image alt=""><p id="plate-dialog-title" data-plate-dialog-caption></p></div></dialog>
-<noscript><p>The manuscript remains fully readable without JavaScript. Plate enlargement, reading progress, focus mode, and reading-position memory are unavailable.</p></noscript>
+<noscript><p>The manuscript and source TeX remain readable without JavaScript. Plate enlargement, rendered mathematics, reading progress, focus mode, and reading-position memory are unavailable; the checksum-locked PDF remains the rendered archival edition.</p></noscript>
 </div>
 
 <script defer src="../../javascripts/documentary-mathjax.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" crossorigin="anonymous" referrerpolicy="no-referrer" data-archival-role="enhancement-only"></script>
 <script defer src="../../javascripts/documentary.js"></script>
