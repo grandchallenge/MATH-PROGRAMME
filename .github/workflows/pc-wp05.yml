@@ -19,15 +19,25 @@ on:
       - "ci/*pc_wp05*"
       - ".github/workflows/pc-wp05.yml"
 
+permissions:
+  contents: read
+
+concurrency:
+  group: pc-wp05-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   archival-policy:
     name: Validate PC-WP05 archive
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
-          python-version: "3.x"
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
       - name: Install policy dependencies
         run: python -m pip install pyyaml jsonschema
       - name: Validate archival manifest and trust matrix
@@ -42,12 +52,15 @@ jobs:
   bounded-certificate-replay:
     name: Replay PC-WP04 Lean certificate
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
       - name: Set up pinned Lean and mathlib cache
         id: lean-setup
         continue-on-error: true
-        uses: leanprover/lean-action@v1
+        uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
         with:
           lake-package-directory: fixtures/formal/PC-WP04
           auto-config: false
@@ -63,7 +76,7 @@ jobs:
         run: |
           set -euo pipefail
           echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+          test "${LEAN_SETUP_OUTCOME}" = "success"
           command -v lake
-          lake update
-          lake exe cache get
+          test -f lake-manifest.json
           lake build
