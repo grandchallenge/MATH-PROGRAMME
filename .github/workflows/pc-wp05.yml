@@ -76,7 +76,9 @@ jobs:
         run: |
           set -euo pipefail
           echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
-          test "${LEAN_SETUP_OUTCOME}" = "success"
+          command -v elan
           command -v lake
+          elan --version
+          lake --version
           test -f lake-manifest.json
           lake build
