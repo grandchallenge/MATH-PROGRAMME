@@ -15,6 +15,10 @@ REFERENCE_MARKERS = {
         "retired from the current tree"
     ),
 }
+POLICY_MARKERS = (
+    "python3 ci/validate_retired_paths.py",
+    "python3 ci/test_retired_paths.py",
+)
 SCAN_SUFFIXES = {".md", ".yaml", ".yml", ".json", ".py", ".toml"}
 SELF_PATHS = {
     "ci/validate_retired_paths.py",
@@ -27,8 +31,9 @@ def repository_texts(root: Path) -> dict[str, str]:
     for path in root.rglob("*"):
         if not path.is_file() or path.suffix not in SCAN_SUFFIXES:
             continue
-        relative = path.relative_to(root).as_posix()
-        if relative in SELF_PATHS or any(part.startswith(".") for part in path.relative_to(root).parts):
+        relative_path = path.relative_to(root)
+        relative = relative_path.as_posix()
+        if relative in SELF_PATHS or any(part.startswith(".") for part in relative_path.parts):
             continue
         texts[relative] = path.read_text(encoding="utf-8")
     return texts
@@ -37,9 +42,13 @@ def repository_texts(root: Path) -> dict[str, str]:
 def retired_path_errors(
     root: Path = ROOT,
     texts: dict[str, str] | None = None,
+    policy_text: str | None = None,
 ) -> list[str]:
     errors: list[str] = []
     texts = repository_texts(root) if texts is None else texts
+    if policy_text is None:
+        policy_path = root / ".github" / "workflows" / "ci.yml"
+        policy_text = policy_path.read_text(encoding="utf-8") if policy_path.is_file() else ""
 
     if (root / RETIRED_PATH).exists():
         errors.append(f"retired path must not exist in current tree: {RETIRED_PATH}")
@@ -61,6 +70,10 @@ def retired_path_errors(
         if marker not in text:
             errors.append(f"{relative}: missing retirement marker {marker!r}")
 
+    for marker in POLICY_MARKERS:
+        if marker not in policy_text:
+            errors.append(f"global policy is missing retired-path check: {marker}")
+
     return errors
 
 
@@ -71,7 +84,10 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"retired-path validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print("retired path, canonical replacement, and historical-reference boundaries are valid")
+    print(
+        "retired path, canonical replacement, historical references, and global policy binding "
+        "are valid"
+    )
     return 0
 
 
