@@ -18,7 +18,7 @@ Its required jobs are:
 
 | Job | Controlled obligation |
 |---|---|
-| `validate-json` | Schemas, fixtures, documentary policy, programme contracts, documentation, workflow coverage, RH retained blockers, and every registered campaign replay |
+| `validate-json` | Schemas, fixtures, documentary policy, programme contracts, documentation, workflow coverage, RH retained blockers, retired-path continuity, and every registered campaign replay |
 | `log-gcd-lean` | Pinned Lean replay of the published LOG-GCD formal fixture |
 | `pc-wp04-lean` | Pinned Lean replay and policy validation of the bounded Poincaré certificate |
 | `union-closed-mathcert` | Exact checkout and replay of the evidence-pinned external `grandchallenge/MATHCERT` certification gate |
@@ -49,7 +49,7 @@ Union-Closed Lean definitions and bounded certificates are maintained in the sep
 - the complete certification command;
 - the claim boundary.
 
-The global policy checks out that exact commit and runs `bash ci/check_lean.sh`. A moving branch name is not accepted as evidence. Updating the external dependency requires updating the evidence record and passing the full programme policy again.
+The global policy checks out that exact commit and runs `bash ci/check_lean.sh`. A moving branch name is not accepted as evidence. The workflow checkout coordinates are literal and must agree exactly with the audited evidence record; a pull-request edit cannot redirect the external checkout. Updating the dependency requires changing both controls and passing the full programme policy again.
 
 ## RH retained-blocker continuity
 
@@ -61,6 +61,19 @@ The global policy checks out that exact commit and runs `bash ci/check_lean.sh`.
 - the blocking Referee findings remain active.
 
 The adversarial tests reject any silent conversion of repository integration into mathematical or artifact promotion.
+
+## Retired-path continuity
+
+`ci/validate_retired_paths.py` governs the removal of the mislabelled Poincaré Domain 04 master-plan alias. It requires:
+
+- the retired filename to be absent from the current tree;
+- the canonical Domain 05 master plan to exist;
+- current authority records to state that the alias was removed;
+- claim provenance to use an exact commit-pinned version-history locator;
+- frozen pre-renumbering reviews and the archival alias registry to be enumerated in `reviews/poincare/HISTORICAL_IDENTITY_CROSSWALK.yaml`;
+- all other references to the retired filename to fail closed.
+
+This preserves historical review provenance without restoring the retired alias to current authority.
 
 ## Publication gate
 
@@ -88,4 +101,4 @@ The current governed workflow set is:
 
 ## Maintenance rule
 
-A change to a campaign replay, workflow file, external certification dependency, publication gate, or retained-blocker contract must update its governing registry or evidence record and pass the global policy workflow. Merge state, workflow success, and publication visibility remain separate from theorem support and formal artifact promotion.
+A change to a campaign replay, workflow file, external certification dependency, publication gate, retained-blocker contract, retired path, or historical-identity crosswalk must update its governing registry or evidence record and pass the global policy workflow. Merge state, workflow success, and publication visibility remain separate from theorem support and formal artifact promotion.
