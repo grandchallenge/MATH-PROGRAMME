@@ -44,6 +44,18 @@ def main() -> int:
         )
     )
 
+    missing_adr_marker = copy.deepcopy(texts)
+    adr = "docs/decisions/ADR-0011_FULL_WORKFLOW_COVERAGE.md"
+    missing_adr_marker[adr] = missing_adr_marker[adr].replace(
+        REFERENCE_MARKERS[adr], "the legacy alias was noted", 1
+    )
+    assert any(
+        "missing retirement marker" in error
+        for error in retired_path_errors(
+            texts=missing_adr_marker, policy_text=policy_text, crosswalk=crosswalk
+        )
+    )
+
     missing_identity = copy.deepcopy(texts)
     repository_docs = "docs/REPOSITORY_DOCS.md"
     missing_identity[repository_docs] = missing_identity[repository_docs].replace(
