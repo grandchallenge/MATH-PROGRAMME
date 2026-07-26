@@ -7,8 +7,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages-${{ github.event.workflow_run.head_branch }}
@@ -20,6 +18,9 @@ jobs:
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.head_branch == 'main' &&
       github.event.workflow_run.event == 'push'
+    permissions:
+      contents: read
+      pages: write
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -51,6 +52,9 @@ jobs:
           path: site
 
   deploy:
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
     runs-on: ubuntu-latest
