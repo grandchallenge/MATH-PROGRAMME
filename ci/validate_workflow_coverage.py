@@ -117,6 +117,9 @@ def workflow_coverage_errors(
 ) -> list[str]:
     errors: list[str] = []
     texts = workflow_texts(root) if texts is None else texts
+    if evidence is None:
+        evidence = json.loads((root / "evidence/UC-WP02-MATHCERT.json").read_text(encoding="utf-8"))
+
     names = set(texts)
     for missing in sorted(EXPECTED_WORKFLOWS - names):
         errors.append(f"workflow inventory: missing governed workflow {missing}")
@@ -158,9 +161,32 @@ def workflow_coverage_errors(
             "python3 ci/test_workflow_coverage.py",
             "evidence/UC-WP02-MATHCERT.json",
             "fixtures/formal/PC-WP04",
+            "bash ci/check_lean.sh",
         ):
             if marker not in policy_text:
                 errors.append(f"ci.yml: missing workflow coverage marker {marker}")
+
+        external_job = policy.get("jobs", {}).get("union-closed-mathcert", {})
+        external_checkouts = []
+        for step in external_job.get("steps", []):
+            uses = str(step.get("uses", ""))
+            options = step.get("with", {})
+            if uses.startswith("actions/checkout@") and options.get("repository"):
+                external_checkouts.append(options)
+        if len(external_checkouts) != 1:
+            errors.append(
+                "ci.yml: union-closed-mathcert must contain exactly one explicit external checkout"
+            )
+        else:
+            checkout = external_checkouts[0]
+            if checkout.get("repository") != evidence.get("repository"):
+                errors.append(
+                    "ci.yml: external checkout repository must match audited evidence repository"
+                )
+            if checkout.get("ref") != evidence.get("commit"):
+                errors.append("ci.yml: external checkout ref must match audited evidence commit")
+            if checkout.get("path") != "external/MATHCERT":
+                errors.append("ci.yml: external checkout path must be external/MATHCERT")
 
     pages = parsed.get("pages.yml")
     if pages:
