@@ -41,6 +41,17 @@ def main() -> int:
         for error in workflow_coverage_errors(texts=bypass_success, evidence=evidence)
     )
 
+    mutable_action = dict(texts)
+    mutable_action["pages.yml"] = mutable_action["pages.yml"].replace(
+        "actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b",
+        "actions/configure-pages@v5",
+        1,
+    )
+    assert any(
+        "action reference must use a full commit SHA" in error
+        for error in workflow_coverage_errors(texts=mutable_action, evidence=evidence)
+    )
+
     missing_replay = dict(texts)
     missing_replay["ci.yml"] = missing_replay["ci.yml"].replace(
         "python3 ci/validate_campaign_replays.py", "python3 -c 'print(\"skipped\")'", 1
