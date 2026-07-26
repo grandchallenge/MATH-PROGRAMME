@@ -4,7 +4,7 @@ artifact:
   title: Full programme workflow coverage and policy-gated publication
   pillar: MATH-PROGRAMME
   status: active
-  disposition: Global replay reachability, exact external certification evidence, RH retained blockers, immutable action references, and Pages deployment order are governed under ADR-0011.
+  disposition: Global replay reachability, exact external certification evidence, RH retained blockers, retired-path continuity, immutable action references, and Pages deployment order are governed under ADR-0011.
 council_review:
   Axiomatist:
     status: reviewed
@@ -35,23 +35,23 @@ council_review:
     reviewed_by: MATH-PROGRAMME workflow coverage council
     reviewed_at: '2026-07-26'
     obligations:
-      - Make workflow, replay, external-evidence, continuity, and publication dependencies explicit.
+      - Make workflow, replay, external-evidence, continuity, historical-identity, and publication dependencies explicit.
     findings:
-      - The global gate is upstream of Pages and incorporates local campaign, formal-fixture, and pinned external certification routes.
+      - The global gate is upstream of Pages and incorporates local campaign, formal-fixture, pinned external certification, retained-blocker, and retired-path routes.
   Verifier:
     status: reviewed
     reviewed_by: MATH-PROGRAMME workflow coverage council
     reviewed_at: '2026-07-26'
     obligations:
-      - Reject missing workflow jobs, unregistered executables, mutable action references, and publication bypasses.
+      - Reject missing workflow jobs, unregistered executables, mutable action references, dynamic external checkout coordinates, stale current-path references, and publication bypasses.
     findings:
-      - Workflow inventory and adversarial tests exercise all four rejection classes.
+      - Workflow inventory and adversarial tests exercise each rejection class.
   Adversary:
     status: reviewed
     reviewed_by: MATH-PROGRAMME workflow coverage council
     reviewed_at: '2026-07-26'
     obligations:
-      - Attempt silent RH promotion, omitted campaign replay, moving external evidence, and direct Pages deployment.
+      - Attempt silent RH promotion, omitted campaign replay, moving external evidence, dynamic external checkout, direct Pages deployment, and restoration of retired current authority.
     findings:
       - Each mutation is rejected by a dedicated machine-readable test.
   Formalist:
@@ -75,15 +75,15 @@ council_review:
     reviewed_by: MATH-PROGRAMME workflow coverage council
     reviewed_at: '2026-07-26'
     obligations:
-      - Present the global gate, fast-feedback workflows, and publication sequence as one coherent control system.
+      - Present the global gate, fast-feedback workflows, historical-identity control, and publication sequence as one coherent control system.
     findings:
-      - The public workflow coverage page separates global authority from path-scoped acceleration.
+      - The public workflow coverage page separates global authority, path-scoped acceleration, historical provenance, and publication.
   Grammarian:
     status: reviewed
     reviewed_by: MATH-PROGRAMME workflow coverage council
     reviewed_at: '2026-07-26'
     obligations:
-      - Avoid language that equates merge, CI, replay, certification, publication, and proof.
+      - Avoid language that equates merge, CI, replay, certification, publication, historical recoverability, current authority, and proof.
     findings:
       - Current governance and public wording preserve those distinctions.
   Amanuensis:
@@ -91,17 +91,19 @@ council_review:
     reviewed_by: MATH-PROGRAMME workflow coverage council
     reviewed_at: '2026-07-26'
     obligations:
-      - Align ADR-0011, workflow inventory, artifact ledger, terminology, evidence records, and public navigation.
+      - Align ADR-0006, ADR-0011, workflow inventory, artifact ledger, terminology, evidence records, historical-identity crosswalk, and public navigation.
     findings:
       - WORKFLOW-COVERAGE-001 is registered with synchronized continuity surfaces.
+      - Frozen pre-renumbering Poincare reviews remain recoverable without presenting their retired filename as current authority.
   Archivist:
     status: reviewed
     reviewed_by: MATH-PROGRAMME workflow coverage council
     reviewed_at: '2026-07-26'
     obligations:
-      - Record the external MATHCERT identity without duplicating or obscuring formal-source authority.
+      - Record external MATHCERT and retired Poincare identities without duplicating or obscuring current formal and documentary authority.
     findings:
       - The external repository, exact commit, controlled paths, command, and claim boundary are explicit.
+      - The retired Poincare alias is tied to exact version history and an enumerated historical-identity crosswalk.
   Mechanist:
     status: reviewed
     reviewed_by: MATH-PROGRAMME workflow coverage council
@@ -109,7 +111,7 @@ council_review:
     obligations:
       - Ensure the versioned workflow graph actually executes every declared control.
     findings:
-      - Global jobs cover campaign replay, LOG-GCD Lean, PC-WP04 Lean, and pinned MATHCERT replay before publication.
+      - Global jobs cover campaign replay, retired-path continuity, LOG-GCD Lean, PC-WP04 Lean, and pinned MATHCERT replay before publication.
   Typesetter:
     status: reviewed
     reviewed_by: MATH-PROGRAMME workflow coverage council
@@ -123,7 +125,7 @@ council_review:
     reviewed_by: MATH-PROGRAMME workflow coverage council
     reviewed_at: '2026-07-26'
     obligations:
-      - Require a green final-head global workflow including all formal and external gates before merge readiness.
+      - Require a green final-head global workflow including all continuity, formal, and external gates before merge readiness.
     findings:
       - No workflow-control promotion or merge readiness is inferred before the complete PR-head run succeeds.
 amanuensis_control:
@@ -131,6 +133,7 @@ amanuensis_control:
     ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md
     entry_id: WORKFLOW-COVERAGE-001
   decision_record_refs:
+    - ADR-0006
     - ADR-0011
   terminology_registry:
     registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md
@@ -138,6 +141,8 @@ amanuensis_control:
       - Global programme policy gate
       - Governed campaign replay registry
       - Cross-repository certification evidence
+      - Retired path continuity
+      - Historical identity crosswalk
       - Policy-gated publication
   review_provenance:
     complete: true
@@ -151,10 +156,14 @@ amanuensis_control:
       - ci/test_workflow_coverage.py
       - ci/validate_rh_continuity.py
       - ci/test_rh_continuity.py
+      - ci/validate_retired_paths.py
+      - ci/test_retired_paths.py
       - evidence/UC-WP02-MATHCERT.json
+      - reviews/poincare/HISTORICAL_IDENTITY_CROSSWALK.yaml
       - schemas/campaign_replay_registry.schema.json
       - schemas/cross_repository_evidence.schema.json
       - docs/WORKFLOW_COVERAGE.md
+      - docs/decisions/ADR-0006_POINCARE_RECONSTRUCTION_ARCHIVE.md
       - docs/decisions/ADR-0011_FULL_WORKFLOW_COVERAGE.md
   cross_document_consistency:
     status: reviewed
@@ -166,6 +175,10 @@ amanuensis_control:
       - docs/domains/riemann_hypothesis.md
       - campaigns/riemann_hypothesis/RH_WP01_WP02_POST_MERGE_DISPOSITION.md
       - WP02_UNION_CLOSED_LEAN_HANDOFF.md
+      - DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md
+      - campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/10_CLAIM_LEDGER.yaml
+      - campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/09_ARCHIVAL_MANIFEST.json
+      - reviews/poincare/HISTORICAL_IDENTITY_CROSSWALK.yaml
       - FILE_MANIFEST.md
       - docs/REPOSITORY_DOCS.md
       - mkdocs.yml
@@ -178,6 +191,7 @@ amanuensis_control:
       - Path-scoped workflows remain supplementary fast feedback.
       - External MATHCERT evidence is pinned and replayed without duplicating formal authority.
       - RH-WP01 and RH-WP02 remain explicitly unpromoted while their blocking reviews remain active.
+      - Historical Poincare review provenance remains frozen and governed without restoring the retired alias to current authority.
 unresolved_obligations:
   - id: WORKFLOW-COVERAGE-001-O001
     owner: Archivist
