@@ -41,6 +41,7 @@ This is a curated map of authoritative entry points, not an exhaustive recursive
 - `templates/agent_review.yaml`
 - `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml`
 - `reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml`
+- `reviews/governance/WORKFLOW-COVERAGE.agent_review.yaml`
 
 ## Canonical domains
 
@@ -62,10 +63,11 @@ This is a curated map of authoritative entry points, not an exhaustive recursive
 - `docs/domains/p_vs_np.md`
 - `docs/domains/riemann_hypothesis.md`
 
-Historical filenames retained under decision control:
+Historical filename retained under decision control:
 
 - `DOMAIN_03_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md`
-- `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`
+
+The mislabelled `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` was removed in PR #96. The canonical Poincaré master plan is `DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`.
 
 ## Campaign stacks
 
@@ -177,8 +179,4 @@ The global programme policy checks out the evidence-pinned MATHCERT commit and e
 - `.github/workflows/pc-wp04.yml` — path-scoped bounded certificate replay.
 - `.github/workflows/pc-wp05.yml` — path-scoped archival and bounded-certificate replay.
 
-Workflow inventory, checkout credential handling, job timeouts, policy triggers, deployment gating, replay discovery, and external evidence are machine-checked. A new campaign `replay.py`, `validate*.py`, or `test_validate*.py` file fails closed until registered.
-
-## Maintenance rule
-
-This manifest is updated when a canonical domain, governance contract, public result, documentary authority, campaign promotion or retained-blocker record, release-class artifact policy, executable replay, workflow role, cross-repository certification dependency, or certification entry point changes. Routine internal files remain discoverable through version control and need not be duplicated here.
+Workflow inventory, checkout credential handling, job timeouts, policy triggers, deployment gating, replay discovery, and external evidence are machine-checked. A new campaign `replay.py`, `validate*.py`, or `test*.py` file fails closed until registered.
