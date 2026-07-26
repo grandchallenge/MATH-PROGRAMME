@@ -18,6 +18,9 @@ REFERENCE_MARKERS = {
     "docs/decisions/ADR-0006_POINCARE_RECONSTRUCTION_ARCHIVE.md": (
         "retired from the current tree"
     ),
+    "docs/decisions/ADR-0011_FULL_WORKFLOW_COVERAGE.md": (
+        "PR #96 removed the mislabelled"
+    ),
 }
 POLICY_MARKERS = (
     "python3 ci/validate_retired_paths.py",
