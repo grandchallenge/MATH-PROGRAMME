@@ -253,20 +253,26 @@ jobs:
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: "3.12"
-      - name: Read pinned external evidence
-        id: external-evidence
+      - name: Validate pinned external evidence
         run: |
-          python - <<'PY' >> "$GITHUB_OUTPUT"
+          python - <<'PY'
           import json
           evidence = json.load(open("evidence/UC-WP02-MATHCERT.json", encoding="utf-8"))
-          print(f"repository={evidence['repository']}")
-          print(f"commit={evidence['commit']}")
+          expected = {
+              "repository": "grandchallenge/MATHCERT",
+              "commit": "d59173899dcd1a67dbe8f31de0b9f0917cd1459a",
+              "command": ["bash", "ci/check_lean.sh"],
+          }
+          for key, value in expected.items():
+              if evidence.get(key) != value:
+                  raise SystemExit(f"external evidence {key} drift: {evidence.get(key)!r} != {value!r}")
+          print("external MATHCERT evidence matches workflow pin")
           PY
       - name: Checkout pinned MATHCERT repository
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
-          repository: ${{ steps.external-evidence.outputs.repository }}
-          ref: ${{ steps.external-evidence.outputs.commit }}
+          repository: grandchallenge/MATHCERT
+          ref: d59173899dcd1a67dbe8f31de0b9f0917cd1459a
           path: external/MATHCERT
           persist-credentials: false
       - name: Set up pinned Lean and mathlib cache
