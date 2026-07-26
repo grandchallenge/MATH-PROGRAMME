@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate programme classification, graph, mapping, and schema-bound review contracts."""
+"""Validate programme classification, graph, mapping, review, and documentary contracts."""
 from __future__ import annotations
 
 import json
@@ -10,6 +10,8 @@ from typing import Any
 
 import yaml
 from jsonschema import Draft202012Validator, FormatChecker
+
+from validate_documentaries import documentary_contract_errors
 
 ROOT = Path(__file__).resolve().parents[1]
 MSC_CODE = re.compile(r"^\d{2}(?:-\d{2}|[A-Z](?:xx|\d{2}))$")
@@ -28,6 +30,7 @@ CORE_CAMPAIGN_AGENTS = (
 SCHEMA_BOUND_AGENT_REVIEWS: tuple[str, ...] = (
     "reviews/union_closed/UC-WP01.agent_review.yaml",
     "reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml",
+    "reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml",
 )
 
 
@@ -282,6 +285,7 @@ def main() -> int:
             [loaded["examples/candidate_problem_union_closed.json"]],
         )
     )
+    errors.extend(documentary_contract_errors())
 
     if errors:
         for error in errors:
@@ -289,8 +293,8 @@ def main() -> int:
         print(f"programme validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
     print(
-        "programme classification, discovery, foundation, and explicitly schema-bound "
-        "Agent Council contracts are valid"
+        "programme classification, discovery, foundation, schema-bound review, and "
+        "documentary contracts are valid"
     )
     return 0
 
