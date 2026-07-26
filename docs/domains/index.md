@@ -15,10 +15,10 @@ The programme has three mathematical execution pillars—MATHFORGE, MATHSOLVE, a
 | [05 · Poincaré Reconstruction](poincare_reconstruction.md) | `PC-001` | Solved classical theorem | Qualified solved-problem reconstruction and bounded-certification archive |
 | [06 · Yang–Mills Existence and Mass Gap](yang_mills.md) | `YM-001` | Open problem | Source-normalized axiomatic and equivalence dossier; no construction or gap theorem |
 | [07 · P versus NP](p_vs_np.md) | `PNP-001` | Open problem | Machine, encoding, reduction, and barrier dossier; no equality, separation, algorithm, or lower bound |
-| [08 · Riemann Hypothesis](riemann_hypothesis.md) | `RH-001` | Open conjecture | Function, zero, equivalence, and barrier dossier; no proof, disproof, or newly certified zero range |
+| [08 · Riemann Hypothesis](riemann_hypothesis.md) | `RH-001` | Open conjecture | WP00 promoted; WP01/WP02 implemented, merged, and CI-passed, with formal promotion withheld under retained review blockers |
 
 ## Reading rule
 
 A domain landing page is an orientation artifact, not a theorem ledger. Before relying on a mathematical statement, follow its canonical entry to the relevant claim ledger, review record, proof, source, or certificate route.
 
-The programme never infers theorem status from domain activity, document count, Referee disposition, repository merge, CI success, or public visibility.
+The programme never infers theorem status from domain activity, document count, Referee disposition, repository merge, CI success, public visibility, or documentary publication.
