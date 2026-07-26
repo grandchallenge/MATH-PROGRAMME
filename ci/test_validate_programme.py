@@ -40,6 +40,11 @@ def fixtures():
             encoding="utf-8"
         )
     )
+    workflow_review = yaml.safe_load(
+        (ROOT / "reviews" / "governance" / "WORKFLOW-COVERAGE.agent_review.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
     return (
         source_registry,
         graph,
@@ -50,6 +55,7 @@ def fixtures():
         governed_review,
         documentation_review,
         documentary_review,
+        workflow_review,
     )
 
 
@@ -64,6 +70,7 @@ def main() -> int:
         governed_review,
         documentation_review,
         documentary_review,
+        workflow_review,
     ) = fixtures()
 
     duplicate_graph = copy.deepcopy(graph)
@@ -193,6 +200,7 @@ def main() -> int:
         "reviews/union_closed/UC-WP01.agent_review.yaml",
         "reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml",
         "reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml",
+        "reviews/governance/WORKFLOW-COVERAGE.agent_review.yaml",
     )
     assert not schema_bound_review_registry_errors(SCHEMA_BOUND_AGENT_REVIEWS)
     assert any(
@@ -214,9 +222,21 @@ def main() -> int:
         ("UC-WP01", governed_review),
         ("DOCS-PUBLIC-001", documentation_review),
         ("DOCS-DOCUMENTARY-001", documentary_review),
+        ("WORKFLOW-COVERAGE-001", workflow_review),
     ):
         assert not schema_errors(review, "agent_review.schema.json")
         assert not agent_review_semantic_errors(review, label)
+
+    workflow_without_referee = copy.deepcopy(workflow_review)
+    workflow_without_referee["council_review"]["Referee"]["status"] = "pending"
+    workflow_without_referee["promotion"]["ready_for_next_stage"] = True
+    workflow_without_referee["promotion"]["certification_route"] = "Complete workflow policy run."
+    assert any(
+        "promotion requires Referee status reviewed" in error
+        for error in agent_review_semantic_errors(
+            workflow_without_referee, "WORKFLOW-COVERAGE-001"
+        )
+    )
 
     documentation_promotion = copy.deepcopy(documentation_review)
     documentation_promotion["artifact"]["status"] = "ready_for_next_stage"
@@ -256,7 +276,7 @@ def main() -> int:
 
     run_documentary_rejection_tests()
 
-    print("programme and documentary validator rejection tests passed")
+    print("programme, workflow-review, and documentary validator rejection tests passed")
     return 0
 
 
