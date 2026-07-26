@@ -75,14 +75,10 @@ jobs:
           set +e
           {
             echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
-            command -v elan || true
-            command -v lake || true
-            elan --version || true
-            lake --version || true
-            if [[ "${LEAN_SETUP_OUTCOME}" != "success" ]]; then
-              echo "Lean toolchain setup failed."
-              exit 1
-            fi
+            command -v elan
+            command -v lake
+            elan --version
+            lake --version
             test -f lake-manifest.json || {
               echo "Pinned lake-manifest.json is required."
               exit 1
