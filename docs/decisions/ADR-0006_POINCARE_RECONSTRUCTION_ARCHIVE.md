@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted, 2026-07-24.
+Accepted, 2026-07-24; filename consequence clarified 2026-07-26.
 
 ## Context
 
@@ -18,11 +18,12 @@ Retaining both identifiers would make the programme registers ambiguous without 
 4. Treat draft-branch references to Poincaré Domain 04 or Poincaré `ADR-0005` as historical pre-integration aliases superseded by this record.
 5. Preserve all mathematical, source, certification, and claim-boundary content of `PC-WP00` through `PC-WP05` unchanged.
 6. Enter `PC-001` into archival maintenance after qualified archival integration.
+7. Remove the mislabelled root alias `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` from the current tree while preserving it through version history.
 
 ## Consequences
 
 - `DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` is the canonical domain entry.
-- `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` remains only as a historical development artifact.
+- `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` is retired from the current tree and remains recoverable only through version history; it must not be listed as a current or retained repository artifact.
 - Poincaré artifact-ledger entries reference `ADR-0006`.
 - No theorem-strengthening work package is opened.
 - Citation correction, documentation preservation, CI maintenance, overclaim repair, and bounded pedagogy remain permitted.
