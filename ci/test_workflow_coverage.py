@@ -23,6 +23,26 @@ def main() -> int:
         for error in workflow_coverage_errors(texts=missing_policy, evidence=evidence)
     )
 
+    missing_concurrency = dict(texts)
+    missing_concurrency["ci.yml"] = missing_concurrency["ci.yml"].replace(
+        "concurrency:\n", "concurrency-disabled:\n", 1
+    )
+    assert any(
+        "explicit concurrency control is required" in error
+        for error in workflow_coverage_errors(texts=missing_concurrency, evidence=evidence)
+    )
+
+    overprivileged_policy = dict(texts)
+    overprivileged_policy["ci.yml"] = overprivileged_policy["ci.yml"].replace(
+        "permissions:\n  contents: read\n",
+        "permissions:\n  contents: read\n  actions: write\n",
+        1,
+    )
+    assert any(
+        "top-level permissions must be exactly contents: read" in error
+        for error in workflow_coverage_errors(texts=overprivileged_policy, evidence=evidence)
+    )
+
     direct_pages_push = dict(texts)
     direct_pages_push["pages.yml"] = direct_pages_push["pages.yml"].replace(
         "  workflow_run:\n", "  push:\n    branches: [main]\n  workflow_run:\n", 1
@@ -39,6 +59,26 @@ def main() -> int:
     assert any(
         "missing publication gate" in error
         for error in workflow_coverage_errors(texts=bypass_success, evidence=evidence)
+    )
+
+    overprivileged_build = dict(texts)
+    overprivileged_build["pages.yml"] = overprivileged_build["pages.yml"].replace(
+        "    permissions:\n      contents: read\n      pages: write\n",
+        "    permissions:\n      contents: read\n      pages: write\n      id-token: write\n",
+        1,
+    )
+    assert any(
+        "build permissions must be exactly" in error
+        for error in workflow_coverage_errors(texts=overprivileged_build, evidence=evidence)
+    )
+
+    missing_deploy_token = dict(texts)
+    missing_deploy_token["pages.yml"] = missing_deploy_token["pages.yml"].replace(
+        "      id-token: write\n", "", 1
+    )
+    assert any(
+        "deploy permissions must be exactly" in error
+        for error in workflow_coverage_errors(texts=missing_deploy_token, evidence=evidence)
     )
 
     mutable_action = dict(texts)
