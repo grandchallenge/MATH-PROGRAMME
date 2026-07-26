@@ -67,7 +67,7 @@ Historical filename retained under decision control:
 
 - `DOMAIN_03_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md`
 
-The mislabelled `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` was removed in PR #96. The canonical Poincaré master plan is `DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`.
+The mislabelled `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` was removed in PR #96. The canonical Poincaré master plan is `DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`; frozen pre-renumbering provenance is governed by `reviews/poincare/HISTORICAL_IDENTITY_CROSSWALK.yaml`.
 
 ## Campaign stacks
 
@@ -82,6 +82,7 @@ The mislabelled `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` was removed i
 - `reviews/hodge_conjecture/`
 - `reviews/birch_swinnerton_dyer/`
 - `reviews/poincare/`
+- `reviews/poincare/HISTORICAL_IDENTITY_CROSSWALK.yaml`
 - `reviews/riemann_hypothesis/`
 
 Yang–Mills currently uses its integrated root WP00 dossier as the complete campaign stack entry.
@@ -161,6 +162,8 @@ The global programme policy checks out the evidence-pinned MATHCERT commit and e
 - `ci/test_campaign_replays.py`
 - `ci/validate_rh_continuity.py`
 - `ci/test_rh_continuity.py`
+- `ci/validate_retired_paths.py`
+- `ci/test_retired_paths.py`
 - `ci/validate_workflow_coverage.py`
 - `ci/test_workflow_coverage.py`
 - `ci/validate_programme.py`
@@ -172,11 +175,11 @@ The global programme policy checks out the evidence-pinned MATHCERT commit and e
 
 ## Workflow coverage
 
-- `.github/workflows/ci.yml` — global policy on every pull request, every push to `main`, and manual audit; includes all registered campaign replays, LOG-GCD Lean, PC-WP04 Lean, and pinned external MATHCERT replay.
+- `.github/workflows/ci.yml` — global policy on every pull request, every push to `main`, and manual audit; includes all registered campaign replays, LOG-GCD Lean, PC-WP04 Lean, pinned external MATHCERT replay, and retired-path continuity checks.
 - `.github/workflows/pages.yml` — deploys only the exact `main` commit from a successful push-triggered global policy run.
 - `.github/workflows/bsd-wp03-substrate.yml` — path-scoped fast feedback for BSD-WP03.
 - `.github/workflows/bsd-wp04-target.yml` — path-scoped fast feedback for BSD-WP04.
 - `.github/workflows/pc-wp04.yml` — path-scoped bounded certificate replay.
 - `.github/workflows/pc-wp05.yml` — path-scoped archival and bounded-certificate replay.
 
-Workflow inventory, checkout credential handling, job timeouts, policy triggers, deployment gating, replay discovery, and external evidence are machine-checked. A new campaign `replay.py`, `validate*.py`, or `test*.py` file fails closed until registered.
+Workflow inventory, checkout credential handling, job timeouts, policy triggers, deployment gating, replay discovery, external evidence, and retired-path continuity are machine-checked. A new campaign `replay.py`, `validate*.py`, or `test*.py` file fails closed until registered.
