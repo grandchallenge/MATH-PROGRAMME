@@ -22,6 +22,7 @@ Do not infer Pages URLs for root files. Use the canonical GitHub links below.
 - [Governance](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/GOVERNANCE.md)
 - [Thurstonian Ethos](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/THURSTONIAN_ETHOS.md)
 - [Domain Registry](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/DOMAIN_REGISTRY.yaml)
+- [ADR-0010 Documentary Authority](decisions/ADR-0010_DOCUMENTARY_LIBRARY_AUTHORITY.md)
 
 ## Canonical domains
 
@@ -49,6 +50,26 @@ Historical filename note: the detailed BSD plan remains under `DOMAIN_03_BIRCH_S
 
 Yang–Mills currently uses its integrated root WP00 as the complete campaign entry.
 
+Riemann Hypothesis post-WP00 records:
+
+- [WP01/WP02 integration dossier](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/RH-WP01-WP02-post-WP00-integration.md)
+- [WP01 false-proof atlas](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/riemann_hypothesis/WP01_FALSE_PROOF_ATLAS)
+- [WP02 theorem ledger](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/riemann_hypothesis/WP02_THEOREM_LEDGER)
+- [Post-merge retained-blocker disposition](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/campaigns/riemann_hypothesis/RH_WP01_WP02_POST_MERGE_DISPOSITION.md)
+
+RH-WP01 and RH-WP02 are implemented, merged, and CI-passed but remain formally unpromoted while their blocking legacy review dispositions remain in force.
+
+## Documentary Library and release authority
+
+- [Documentary Library](documentaries/index.md)
+- [Release-artifact manifest](documentaries/ARTIFACT_MANIFEST.json)
+- [Source-record policy](documentaries/sources/README.md)
+- [Poincaré reference web edition](documentaries/poincare.md)
+- [Reusable web-edition schema](documentaries/documentary_web.schema.json)
+- [Poincaré edition record](documentaries/poincare.edition.json)
+
+The committed `.tex` files are source records. The checksum-locked complete illustrated source bundle is the authoritative documentary source artifact, and the checksum-locked PDF is the rendered edition. Entries marked `metadata_only` have governed identities but no asserted stable public release locator.
+
 ## Union-Closed baseline
 
 - [WP01 Union-Closed Status Spine](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/WP01_UNION_CLOSED_STATUS_SPINE.md)
@@ -64,4 +85,4 @@ Yang–Mills currently uses its integrated root WP00 as the complete campaign en
 
 ## Authority rule
 
-The domain registry identifies canonical domain entries and public pages. The Agent Council artifact ledger identifies authoritative integrated governed artifacts. Claim ledgers, proof files, source records, and MATHCERT artifacts remain authoritative for mathematical status. Repository merge and CI can promote documentary readiness; they cannot prove the underlying open problem.
+The domain registry identifies canonical domain entries and public pages. The Agent Council artifact ledger identifies authoritative integrated governed artifacts. Claim ledgers, proof files, source records, governing source artifacts, and MATHCERT artifacts remain authoritative within their declared roles. Repository merge and CI can establish integration and replay facts; they cannot prove the underlying open problem or override an explicit blocking review.
