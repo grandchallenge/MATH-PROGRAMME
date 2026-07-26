@@ -4,16 +4,34 @@
   "title": "GCL documentary web edition",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "volume_id", "title", "subtitle", "status", "claim_boundary", "palette", "plates", "chapters", "appendices", "sources"],
+  "required": [
+    "schema_version", "volume_id", "title", "subtitle", "status", "claim_boundary",
+    "asset_base", "math_rendering", "palette", "plates", "chapters", "appendices", "sources"
+  ],
   "properties": {
-    "schema_version": {"const": "1.0.0"},
+    "schema_version": {"const": "1.1.0"},
     "volume_id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
     "title": {"type": "string", "minLength": 1},
     "subtitle": {"type": "string", "minLength": 1},
     "status": {"type": "string", "minLength": 1},
     "claim_boundary": {"type": "string", "minLength": 1},
+    "asset_base": {"const": "docs_root"},
+    "math_rendering": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "version", "delivery", "script_url", "archival_role", "fallback"],
+      "properties": {
+        "provider": {"const": "MathJax"},
+        "version": {"const": "3.2.2"},
+        "delivery": {"const": "version_pinned_cdn"},
+        "script_url": {"const": "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"},
+        "archival_role": {"const": "enhancement_only"},
+        "fallback": {"const": "source_tex_remains_readable_without_javascript"}
+      }
+    },
     "palette": {
-      "type": "object", "additionalProperties": false,
+      "type": "object",
+      "additionalProperties": false,
       "required": ["navy", "parchment", "gold", "ink"],
       "properties": {
         "navy": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
@@ -29,22 +47,32 @@
   },
   "$defs": {
     "plate": {
-      "type": "object", "additionalProperties": false,
+      "type": "object",
+      "additionalProperties": false,
       "required": ["id", "label", "title", "asset", "alt", "authority"],
       "properties": {
         "id": {"type": "string", "pattern": "^[a-z0-9_-]+$"},
-        "label": {"type": "string"}, "title": {"type": "string"}, "asset": {"type": "string"},
+        "label": {"type": "string"},
+        "title": {"type": "string"},
+        "asset": {"type": "string", "pattern": "^assets/[A-Za-z0-9_./-]+$"},
         "alt": {"type": "string", "minLength": 20},
         "authority": {"const": "pedagogical_orientation_only"}
       }
     },
     "section": {
-      "type": "object", "additionalProperties": false,
+      "type": "object",
+      "additionalProperties": false,
       "required": ["id", "title", "source_heading", "claim_classes"],
       "properties": {
         "id": {"type": "string", "pattern": "^[a-z0-9_-]+$"},
-        "title": {"type": "string"}, "source_heading": {"type": "string"},
-        "claim_classes": {"type": "array", "items": {"enum": ["exposition", "established", "imported", "conditional", "formal_bounded", "guardrail", "open"]}}
+        "title": {"type": "string"},
+        "source_heading": {"type": "string"},
+        "claim_classes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"enum": ["exposition", "established", "imported", "conditional", "formal_bounded", "guardrail", "open"]}
+        }
       }
     }
   }
