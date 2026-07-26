@@ -32,9 +32,10 @@ A successful workflow establishes only the recorded integration, replay, policy,
 ```text
 campaigns/**/replay.py
 campaigns/**/validate*.py
+campaigns/**/test_validate*.py
 ```
 
-A discovered executable that is absent from the registry fails policy. Registry entries use direct argument arrays rather than shell strings, have unique IDs and script paths, and run under explicit timeouts. This prevents a newly merged campaign validator from existing in the tree without being executed by the global gate.
+A discovered executable that is absent from the registry fails policy. Registry entries use direct argument arrays rather than shell strings, have unique IDs and script paths, and run under explicit timeouts. This prevents a newly merged campaign validator or its adversarial rejection suite from existing in the tree without being executed by the global gate.
 
 Path-scoped BSD and Poincaré workflows remain as fast feedback. They do not replace the global replay gate.
 
