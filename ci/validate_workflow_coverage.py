@@ -16,6 +16,7 @@ from validate_rh_continuity import rh_continuity_errors
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW_DIR = ROOT / ".github" / "workflows"
 IMMUTABLE_ACTION = re.compile(r"^[^@\s]+@[0-9a-f]{40}$")
+READ_ONLY_PERMISSIONS = {"contents": "read"}
 EXPECTED_WORKFLOWS = {
     "bsd-wp03-substrate.yml",
     "bsd-wp04-target.yml",
@@ -50,9 +51,19 @@ def _as_list(value: Any) -> list[str]:
 
 def _job_hardening_errors(name: str, workflow: dict[str, Any]) -> list[str]:
     errors: list[str] = []
+    if "concurrency" not in workflow:
+        errors.append(f"{name}: explicit concurrency control is required")
+    if workflow.get("permissions") != READ_ONLY_PERMISSIONS:
+        errors.append(f"{name}: top-level permissions must be exactly contents: read")
+
     for job_id, job in workflow.get("jobs", {}).items():
         if "timeout-minutes" not in job:
             errors.append(f"{name}:{job_id}: timeout-minutes is required")
+        job_permissions = job.get("permissions")
+        if name != "pages.yml" and job_permissions not in (None, {}, READ_ONLY_PERMISSIONS):
+            errors.append(
+                f"{name}:{job_id}: non-Pages job permissions may not exceed contents: read"
+            )
         for step in job.get("steps", []):
             uses = str(step.get("uses", ""))
             if uses and not uses.startswith("./") and not IMMUTABLE_ACTION.fullmatch(uses):
@@ -121,8 +132,6 @@ def workflow_coverage_errors(
             continue
         parsed[name] = workflow
         errors.extend(_job_hardening_errors(name, workflow))
-        if "permissions" not in workflow:
-            errors.append(f"{name}: explicit least-privilege permissions are required")
 
     policy = parsed.get("ci.yml")
     if policy:
@@ -132,8 +141,6 @@ def workflow_coverage_errors(
                 errors.append(f"ci.yml: missing {required} trigger")
         if "main" not in _as_list(trigger.get("push", {}).get("branches")):
             errors.append("ci.yml: push trigger must cover main")
-        if policy.get("permissions", {}).get("contents") != "read":
-            errors.append("ci.yml: contents permission must be read")
         required_jobs = {
             "validate-json",
             "log-gcd-lean",
@@ -165,6 +172,26 @@ def workflow_coverage_errors(
             errors.append("pages.yml: deployment must depend on Programme policy checks")
         if "completed" not in _as_list(workflow_run.get("types")):
             errors.append("pages.yml: workflow_run trigger must wait for completion")
+
+        jobs = pages.get("jobs", {})
+        build = jobs.get("build", {})
+        deploy = jobs.get("deploy", {})
+        expected_build_permissions = {"contents": "read", "pages": "write"}
+        expected_deploy_permissions = {"pages": "write", "id-token": "write"}
+        if build.get("permissions") != expected_build_permissions:
+            errors.append(
+                "pages.yml: build permissions must be exactly contents: read and pages: write"
+            )
+        if deploy.get("permissions") != expected_deploy_permissions:
+            errors.append(
+                "pages.yml: deploy permissions must be exactly pages: write and id-token: write"
+            )
+        if deploy.get("needs") != "build":
+            errors.append("pages.yml: deploy job must depend on build")
+        environment = deploy.get("environment", {})
+        if not isinstance(environment, dict) or environment.get("name") != "github-pages":
+            errors.append("pages.yml: deploy environment must be github-pages")
+
         pages_text = texts["pages.yml"]
         for marker in (
             "github.event.workflow_run.conclusion == 'success'",
@@ -188,8 +215,8 @@ def main() -> int:
         print(f"workflow coverage validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
     print(
-        "workflow inventory, immutable actions, campaign replay reachability, RH continuity, "
-        "deployment gate, and external evidence are valid"
+        "workflow inventory, least-privilege permissions, immutable actions, campaign replay "
+        "reachability, RH continuity, deployment gate, and external evidence are valid"
     )
     return 0
 
