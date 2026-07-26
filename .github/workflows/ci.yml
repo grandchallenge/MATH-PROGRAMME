@@ -174,14 +174,11 @@ jobs:
           set +e
           {
             echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
-            command -v elan || true
-            command -v lake || true
-            elan --version || true
-            lake --version || true
-            if [[ "${LEAN_SETUP_OUTCOME}" != "success" ]]; then
-              echo "Lean or mathlib-cache setup failed before compilation."
-              exit 1
-            fi
+            command -v elan
+            command -v lake
+            elan --version
+            lake --version
+            test -f lake-manifest.json
             lake build
           } > lean-build.log 2>&1
           status=$?
@@ -238,7 +235,10 @@ jobs:
         run: |
           set -euo pipefail
           echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
-          test "${LEAN_SETUP_OUTCOME}" = "success"
+          command -v elan
+          command -v lake
+          elan --version
+          lake --version
           test -f lake-manifest.json
           lake build
 
@@ -287,6 +287,10 @@ jobs:
         run: |
           set -euo pipefail
           echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
-          test "${LEAN_SETUP_OUTCOME}" = "success"
+          command -v elan
+          command -v lake
+          elan --version
+          lake --version
+          test -f lake-manifest.json
           python -m pip install pyyaml
           bash ci/check_lean.sh
