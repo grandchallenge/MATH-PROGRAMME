@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Regression tests for programme graph, mapping, profile, and Agent Council rejection paths."""
+"""Regression tests for programme graph, mapping, profile, review, and documentary rejection paths."""
 from __future__ import annotations
 
 import copy
 
 import yaml
 
+from test_validate_documentaries import run_rejection_tests as run_documentary_rejection_tests
 from validate_programme import (
     ROOT,
     SCHEMA_BOUND_AGENT_REVIEWS,
@@ -34,6 +35,11 @@ def fixtures():
             encoding="utf-8"
         )
     )
+    documentary_review = yaml.safe_load(
+        (ROOT / "reviews" / "documentation" / "DOCUMENTARY-LIBRARY.agent_review.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
     return (
         source_registry,
         graph,
@@ -43,6 +49,7 @@ def fixtures():
         agent_review,
         governed_review,
         documentation_review,
+        documentary_review,
     )
 
 
@@ -56,6 +63,7 @@ def main() -> int:
         agent_review,
         governed_review,
         documentation_review,
+        documentary_review,
     ) = fixtures()
 
     duplicate_graph = copy.deepcopy(graph)
@@ -184,6 +192,7 @@ def main() -> int:
     assert SCHEMA_BOUND_AGENT_REVIEWS == (
         "reviews/union_closed/UC-WP01.agent_review.yaml",
         "reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml",
+        "reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml",
     )
     assert not schema_bound_review_registry_errors(SCHEMA_BOUND_AGENT_REVIEWS)
     assert any(
@@ -204,6 +213,7 @@ def main() -> int:
     for label, review in (
         ("UC-WP01", governed_review),
         ("DOCS-PUBLIC-001", documentation_review),
+        ("DOCS-DOCUMENTARY-001", documentary_review),
     ):
         assert not schema_errors(review, "agent_review.schema.json")
         assert not agent_review_semantic_errors(review, label)
@@ -244,7 +254,9 @@ def main() -> int:
         for error in agent_review_semantic_errors(blocked_agent, "DOCS-PUBLIC-001")
     )
 
-    print("programme validator rejection tests passed")
+    run_documentary_rejection_tests()
+
+    print("programme and documentary validator rejection tests passed")
     return 0
 
 

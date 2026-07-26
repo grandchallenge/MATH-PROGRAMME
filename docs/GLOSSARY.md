@@ -20,9 +20,13 @@ The machine-readable phase of a governed artifact: `draft`, `active`, `blocked`,
 
 The MATHCERT role. It tests whether a claim survives a trusted proof or replay boundary.
 
+## Authoritative documentary source artifact
+
+The checksum-locked complete illustrated source bundle named by the documentary manifest. A digest establishes its identity after acquisition; it does not by itself establish public availability.
+
 ## Campaign promotion register
 
-The current documentary register that records when repository review and merge conditions have been discharged for an immutable campaign artifact whose text preserves its pre-merge status snapshot. It does not promote a theorem, novelty claim, or certification state.
+The current documentary register that records when repository review and merge conditions have been discharged, or when a merged artifact retains an explicit promotion blocker. It does not promote a theorem, novelty claim, or certification state.
 
 ## Candidate ore
 
@@ -39,6 +43,22 @@ The line separating what is proved or certified from what is heuristic, conjectu
 ## Claim ledger
 
 A machine- and human-readable record of claims, support types, statuses, assumptions, artifacts, and promotion conditions.
+
+## Documentary Library
+
+The governed public collection under `docs/documentaries/`. It contains documentary records and derivative web editions; library publication is a presentation state rather than mathematical support.
+
+## Documentary scope relation
+
+The explicit relation between a volume and its programme crosswalk: `campaign_documentary`, `parent_challenge_orientation`, or `solved_theorem_archive`. It prevents a broad documentary subject from being silently identified with a narrower active campaign.
+
+## Documentary source record
+
+A small Git-tracked `.tex` pointer that records a documentary title, page count, and release-artifact checksums. It is not the complete compilable source.
+
+## Documentary web edition
+
+A derivative browser-native presentation governed by an edition schema, campaign claim boundary, and accessibility contract. Interactive and visual features are not proof evidence.
 
 ## Exact screen
 
@@ -72,6 +92,10 @@ The discovery pillar. It owns intake, source reconstruction, reconnaissance comp
 
 The campaign pillar. It owns Work Packages, theorem spines, reductions, exact screens, failed-attempt accounting, synthesis, and MATHCERT handoffs.
 
+## Metadata-only release identity
+
+A PDF or source artifact whose byte length and SHA-256 digest are governed but whose stable public release locator is null. The identity is recorded; publication or downloadability is not asserted.
+
 ## Normal form
 
 A reformulation that reduces ambiguity and exposes the essential structure of a problem without changing its content.
@@ -91,6 +115,14 @@ The specific action required for a claim or artifact to move to a stronger statu
 ## Qualified solved-problem archive
 
 A governed reconstruction dossier for an established theorem whose sources, dependencies, adversarial guards, certificates, retained debt, and public claim boundary are explicit. It is not automatically a new proof or complete formalization.
+
+## Release-class artifact availability
+
+The documentary-manifest state `metadata_only` or `published_release`. A published release requires a stable locator; a checksum alone is not an availability claim.
+
+## Rendered documentary edition
+
+The checksum-locked PDF associated with a documentary volume. It is a presentation artifact rather than the governing source or a change in theorem status.
 
 ## Schema-bound review record
 

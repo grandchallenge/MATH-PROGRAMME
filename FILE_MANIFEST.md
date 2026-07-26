@@ -2,7 +2,7 @@
 
 **Status:** Current governed inventory, edition 2026.07.
 
-This is a curated map of authoritative entry points, not an exhaustive recursive file listing. Exact repository contents remain available through version control. New campaign files do not become authoritative merely by appearing in the tree; authority is established by the domain registry, Agent Council artifact ledger, decision records, claim ledgers, promotion register, and certification routes.
+This is a curated map of authoritative entry points, not an exhaustive recursive file listing. Exact repository contents remain available through version control. New campaign or publication files do not become authoritative merely by appearing in the tree; authority is established by the domain registry, Agent Council artifact ledger, decision records, claim ledgers, promotion register, schema-bound reviews, and certification routes.
 
 ## Programme architecture
 
@@ -36,9 +36,11 @@ This is a curated map of authoritative entry points, not an exhaustive recursive
 - `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md`
 - `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`
 - `docs/CAMPAIGN_PROMOTION_REGISTER.md`
-- `docs/decisions/ADR-0001_*.md` through `ADR-0009_*.md`
+- `docs/decisions/ADR-0001_*.md` through `ADR-0010_*.md`
 - `schemas/agent_review.schema.json`
 - `templates/agent_review.yaml`
+- `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml`
+- `reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml`
 
 ## Canonical domains
 
@@ -78,9 +80,43 @@ Historical filenames retained under decision control:
 - `reviews/hodge_conjecture/`
 - `reviews/birch_swinnerton_dyer/`
 - `reviews/poincare/`
-- `reviews/documentation/`
+- `reviews/riemann_hypothesis/`
 
 Yang–Mills currently uses its integrated root WP00 dossier as the complete campaign stack entry.
+
+Riemann Hypothesis post-WP00 continuity entry points:
+
+- `RH-WP01-WP02-post-WP00-integration.md`
+- `campaigns/riemann_hypothesis/WP01_FALSE_PROOF_ATLAS/`
+- `campaigns/riemann_hypothesis/WP02_THEOREM_LEDGER/`
+- `campaigns/riemann_hypothesis/RH_WP01_WP02_POST_MERGE_DISPOSITION.md`
+
+RH-WP01 and RH-WP02 are implemented, merged, and CI-passed but not formally promoted while their retained review blockers remain open.
+
+## Documentary Library
+
+- `docs/documentaries/index.md`
+- `docs/documentaries/ARTIFACT_MANIFEST.json`
+- `docs/documentaries/sources/README.md`
+- `docs/documentaries/sources/*.tex` — source records, not complete compilable projects
+- `docs/documentaries/documentary_web.schema.json`
+- `docs/documentaries/poincare.edition.json`
+- `docs/documentaries/poincare.md`
+- `docs/documentaries/bsd.md`
+- `docs/documentaries/hodge.md`
+- `docs/documentaries/navier_stokes.md`
+- `docs/documentaries/yang_mills.md`
+- `docs/documentaries/p_vs_np.md`
+- `docs/documentaries/riemann.md`
+- `docs/stylesheets/documentary.css`
+- `docs/javascripts/documentary.js`
+- `docs/javascripts/documentary-mathjax.js`
+- `docs/assets/documentaries/poincare/`
+- `schemas/documentary_manifest.schema.json`
+- `ci/validate_documentaries.py`
+- `ci/test_validate_documentaries.py`
+
+The checksum-locked complete illustrated source bundle is the authoritative documentary source artifact. The checksum-locked PDF is the rendered edition. Current release-class entries are `metadata_only` and do not assert stable public release locators.
 
 ## Union-Closed formal and exact baseline
 
@@ -106,11 +142,14 @@ Yang–Mills currently uses its integrated root WP00 dossier as the complete cam
 - `schemas/domain_registry.schema.json`
 - `schemas/foundational_profile.schema.json`
 - `schemas/claim_ledger.schema.json`
+- `schemas/documentary_manifest.schema.json`
 - `ci/validate_programme.py`
 - `ci/test_validate_programme.py`
 - `ci/validate_docs.py`
 - `ci/test_validate_docs.py`
+- `ci/validate_documentaries.py`
+- `ci/test_validate_documentaries.py`
 
 ## Maintenance rule
 
-This manifest is updated when a canonical domain, governance contract, public result, campaign promotion register, or certification entry point changes. Routine internal files remain discoverable through the repository tree and need not be duplicated here.
+This manifest is updated when a canonical domain, governance contract, public result, documentary authority, campaign promotion or retained-blocker record, release-class artifact policy, or certification entry point changes. Routine internal files remain discoverable through the repository tree and need not be duplicated here.

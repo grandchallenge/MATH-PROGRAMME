@@ -1,12 +1,14 @@
 # Documentary source records
 
-The GCL–Chaidez documentary editions are maintained as two coordinated artifact classes:
+The GCL–Chaidez documentary editions are maintained as coordinated artifact classes:
 
-1. **Web documentation records** in `docs/documentaries/`, suitable for MkDocs review, navigation, and claim-boundary maintenance.
-2. **Release-class editions** consisting of the rendered PDF and the complete illustrated LaTeX source bundle.
+1. **Web records and web editions** in `docs/documentaries/`, suitable for MkDocs review, navigation, accessibility, and claim-boundary maintenance.
+2. **Source records** in this directory. These small Git-tracked `.tex` pointers identify a complete source artifact by documentary title, page count, and checksum. They are not expected to compile.
+3. **Authoritative source artifacts** consisting of the checksum-locked complete illustrated source bundles.
+4. **Rendered editions** consisting of the checksum-locked PDFs.
 
-The release-class files are intentionally not duplicated in ordinary Git history. Their exact byte lengths and SHA-256 digests are fixed in [`../ARTIFACT_MANIFEST.json`](../ARTIFACT_MANIFEST.json). A file presented under one of these titles is authentic only when both its byte length and digest agree with the manifest.
+The release-class files are intentionally not duplicated in ordinary Git history. Their exact byte lengths, SHA-256 digests, programme crosswalks, and release availability are fixed in [`../ARTIFACT_MANIFEST.json`](../ARTIFACT_MANIFEST.json).
 
-The `.tex` records in this directory are archival pointers. They identify the authoritative source artifact, documentary title, page count, and checksum. They are not substitutes for the complete illustrated bundle and are not expected to compile independently.
+A source record is not the authoritative complete source. A file presented as a source bundle or rendered edition is authentic only when its byte length and digest agree with the manifest. A checksum does not establish availability: entries marked `metadata_only` have governed identities but no asserted stable public release locator.
 
-This separation keeps documentation reviewable while preserving cryptographic identity for the full-resolution editions.
+The Poincaré web edition is governed separately by [`../documentary_web.schema.json`](../documentary_web.schema.json) and [`../poincare.edition.json`](../poincare.edition.json). Its mathematics-rendering script is an enhancement rather than an archival authority; the source TeX remains readable without JavaScript.
