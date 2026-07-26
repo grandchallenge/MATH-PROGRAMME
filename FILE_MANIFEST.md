@@ -2,7 +2,7 @@
 
 **Status:** Current governed inventory, edition 2026.07.
 
-This is a curated map of authoritative entry points, not an exhaustive recursive file listing. Exact repository contents remain available through version control. New campaign or publication files do not become authoritative merely by appearing in the tree; authority is established by the domain registry, Agent Council artifact ledger, decision records, claim ledgers, promotion register, schema-bound reviews, and certification routes.
+This is a curated map of authoritative entry points, not an exhaustive recursive file listing. Exact repository contents remain available through version control. New campaign or publication files do not become authoritative merely by appearing in the tree; authority is established by the domain registry, Agent Council artifact ledger, decision records, claim ledgers, promotion register, schema-bound reviews, executable replay registry, and certification routes.
 
 ## Programme architecture
 
@@ -120,17 +120,26 @@ The checksum-locked complete illustrated source bundle is the authoritative docu
 
 ## Union-Closed formal and exact baseline
 
+The implementation and bounded replay are maintained in the external [`grandchallenge/MATHCERT`](https://github.com/grandchallenge/MATHCERT) repository rather than under local `MathCert/` or `MATHCERT/` paths.
+
 - `WP01_UNION_CLOSED_STATUS_SPINE.md`
 - `WP02_UNION_CLOSED_LEAN_HANDOFF.md`
-- `MathCert/Domains/UnionClosed/`
-- `MATHCERT/ci/replay_certificates.py`
+- `evidence/UC-WP02-MATHCERT.json` — exact external repository, commit, paths, command, and claim boundary
+- `schemas/cross_repository_evidence.schema.json`
+- external `grandchallenge/MATHCERT/MathCert/Domains/UnionClosed/`
+- external `grandchallenge/MATHCERT/certificates/exact/union_closed_n_le_4.json`
+- external `grandchallenge/MATHCERT/ci/replay_certificates.py`
+- external `grandchallenge/MATHCERT/ci/check_lean.sh`
 - `templates/union_closed_claim_ledger_wp01.yaml`
+
+The global programme policy checks out the evidence-pinned MATHCERT commit and executes its complete certification gate. Bounded replay and checked local lemmas do not prove Frankl's conjecture.
 
 ## Certified fixtures and publications
 
 - `fixtures/algebraic/UF-INV-001/`
 - `fixtures/algebraic/RAD-NIL-002/`
 - `fixtures/formal/LOG-GCD-001/`
+- `fixtures/formal/PC-WP04/`
 - `docs/LOG_GCD_PUBLICATION.md`
 - `docs/POINCARE_RECONSTRUCTION_ARCHIVE.md`
 
@@ -143,6 +152,15 @@ The checksum-locked complete illustrated source bundle is the authoritative docu
 - `schemas/foundational_profile.schema.json`
 - `schemas/claim_ledger.schema.json`
 - `schemas/documentary_manifest.schema.json`
+- `schemas/campaign_replay_registry.schema.json`
+- `schemas/cross_repository_evidence.schema.json`
+- `ci/campaign_replay_registry.json`
+- `ci/validate_campaign_replays.py`
+- `ci/test_campaign_replays.py`
+- `ci/validate_rh_continuity.py`
+- `ci/test_rh_continuity.py`
+- `ci/validate_workflow_coverage.py`
+- `ci/test_workflow_coverage.py`
 - `ci/validate_programme.py`
 - `ci/test_validate_programme.py`
 - `ci/validate_docs.py`
@@ -150,6 +168,17 @@ The checksum-locked complete illustrated source bundle is the authoritative docu
 - `ci/validate_documentaries.py`
 - `ci/test_validate_documentaries.py`
 
+## Workflow coverage
+
+- `.github/workflows/ci.yml` — global policy on every pull request, every push to `main`, and manual audit; includes all registered campaign replays, LOG-GCD Lean, PC-WP04 Lean, and pinned external MATHCERT replay.
+- `.github/workflows/pages.yml` — deploys only the exact `main` commit from a successful push-triggered global policy run.
+- `.github/workflows/bsd-wp03-substrate.yml` — path-scoped fast feedback for BSD-WP03.
+- `.github/workflows/bsd-wp04-target.yml` — path-scoped fast feedback for BSD-WP04.
+- `.github/workflows/pc-wp04.yml` — path-scoped bounded certificate replay.
+- `.github/workflows/pc-wp05.yml` — path-scoped archival and bounded-certificate replay.
+
+Workflow inventory, checkout credential handling, job timeouts, policy triggers, deployment gating, replay discovery, and external evidence are machine-checked. A new campaign `replay.py` or `validate*.py` file fails closed until registered.
+
 ## Maintenance rule
 
-This manifest is updated when a canonical domain, governance contract, public result, documentary authority, campaign promotion or retained-blocker record, release-class artifact policy, or certification entry point changes. Routine internal files remain discoverable through the repository tree and need not be duplicated here.
+This manifest is updated when a canonical domain, governance contract, public result, documentary authority, campaign promotion or retained-blocker record, release-class artifact policy, executable replay, workflow role, cross-repository certification dependency, or certification entry point changes. Routine internal files remain discoverable through version control and need not be duplicated here.
