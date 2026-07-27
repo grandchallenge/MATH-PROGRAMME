@@ -19,19 +19,6 @@ jobs:
 """
 
 
-def make_root() -> Path:
-    temporary = tempfile.TemporaryDirectory()
-    root = Path(temporary.name)
-    root._temporary_directory = temporary  # type: ignore[attr-defined]
-    (root / ".github" / "workflows").mkdir(parents=True)
-    (root / "ci").mkdir()
-    (root / ".github" / "workflows" / "ci.yml").write_text(WORKFLOW, encoding="utf-8")
-    (root / "ci" / "campaign_replay_registry.json").write_text(
-        '{"entries": []}\n', encoding="utf-8"
-    )
-    return root
-
-
 def main() -> int:
     with tempfile.TemporaryDirectory() as temporary:
         root = Path(temporary)
