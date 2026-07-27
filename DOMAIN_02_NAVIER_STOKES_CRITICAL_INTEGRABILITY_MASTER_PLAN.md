@@ -55,7 +55,7 @@ The programme separates four logically distinct objects:
 
 The campaign must not confuse a criterion for regularity with a proof that the criterion always holds.
 
-A separate fifth object is tracked only in `NS-CI-WP06`: whether a computable family of admissible initial data could encode a decision problem through an exact event of the true viscous equation. That question is not part of the active proof spine and supplies no evidence for or against universal critical integrability unless a complete two-way reduction and transfer theorem are proved.
+A separate fifth object is tracked only in `NS-CI-WP06`: whether a computable family of admissible initial data could encode a decision problem through an exact event of the true viscous equation. That question is not part of the active proof spine and supplies no evidence for or against universal critical integrability unless a complete two-way reduction, exact solution semantics, and an undecidability-transfer theorem are proved. Formal-independence language additionally requires a separate formal-system-relative transfer theorem.
 
 ## Why this formulation is useful
 
@@ -140,7 +140,7 @@ NS-CI-R014  Restricted theorem target, selected only after the WP04 gate
 NS-CI-R-COMPACT  Compact-support restricted lane
 ```
 
-`NS-CI-WP06` is not a theorem-spine node. It is an investigatory branch governed by reduction obligations `U001–U010` and cannot feed `T013`, `B011`, or `B012` without an explicit later Council decision.
+`NS-CI-WP06` is not a theorem-spine node. It is an investigatory branch governed by obligations `U001–U012`. Reduction escalation requires `U001–U011`; formal-independence language separately requires `U012`. The branch cannot feed `T013`, `B011`, or `B012` without an explicit later Council decision.
 
 ## Dependency architecture
 
@@ -232,7 +232,7 @@ Permitted work:
 
 - primary-source literature audit;
 - separation of Euler, averaged-equation, ODE, and true-equation claims;
-- reduction obligations `U001–U010`;
+- reduction and transfer obligations `U001–U012`;
 - computability and independence risk analysis;
 - bounded software interface fixtures governed by repository tests.
 
@@ -241,6 +241,7 @@ Closed work:
 - true-equation mechanism generation;
 - numerical or software evidence promoted as a continuum claim;
 - one-way simulation described as a reduction;
+- an event predicate with implicit solution class or quantifier;
 - undecidability described as formal independence;
 - any change to WP00–WP05 result or promotion states.
 
@@ -263,7 +264,7 @@ Closed work:
 - continuation and correspondence map;
 - restricted-target selection only after its gate;
 - explicit route termination when a mechanism fails;
-- no computability reduction enters MATHSOLVE until all equation-fidelity and two-way obligations are theorem-grade.
+- no computability reduction enters MATHSOLVE until `U001–U011` are theorem-grade.
 
 ### MATHCERT
 
@@ -272,7 +273,7 @@ Closed work:
 - energy/Sobolev bridge where library support permits;
 - conditional implication interfaces with provenance;
 - proof objects only for closed lemmas, never for the open universal estimate;
-- formal-system-relative review required before any independence language.
+- `U012` formal-system-relative review required before any independence language.
 
 ## Foundational profile
 
@@ -319,6 +320,6 @@ Execute the analytic mainline WP01 and WP02 in parallel:
 - WP01 builds exact false-proof fixtures and route-termination records.
 - WP02 produces the source-normalized quantitative conditional-regularity ledger.
 
-WP06 may proceed concurrently only as a non-blocking literature, obligation, risk, and bounded-interface lane. It has no theorem-spine edge and no authority to change mainline priorities or claim status.
+WP06 may proceed concurrently only as a non-blocking literature, obligation, risk, and bounded-interface lane. It has no theorem-spine edge and no authority to change mainline priorities or claim status. Reduction escalation requires theorem-level discharge of `U001–U011`; any independence claim additionally requires `U012` and a new Council decision.
 
 Mechanism generation for the true equation, broad numerical experimentation, numerical regularity claims, `NS-CI-R014` target promotion, and WP06 mathematical escalation remain closed until their own explicit gates and later Council decisions are satisfied.
