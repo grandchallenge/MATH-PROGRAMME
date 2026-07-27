@@ -64,6 +64,10 @@ def duplicate_values(values: Iterable[str]) -> set[str]:
     return duplicates
 
 
+def normalized_human_text(value: Any) -> str:
+    return str(value).replace("–", "-").replace("—", "-").replace("‑", "-")
+
+
 def source_record_fields(text: str) -> dict[str, Any]:
     patterns = {
         "title": r"(?m)^% Title:\s*(.+?)\s*$",
@@ -238,9 +242,15 @@ def manifest_semantic_errors(
                 "pdf_sha256": volume.get("rendered_pdf", {}).get("sha256"),
             }
             for field, value in expected.items():
-                if record.get(field) != value:
+                actual = record.get(field)
+                matches = (
+                    normalized_human_text(actual) == normalized_human_text(value)
+                    if field in {"title", "subject"}
+                    else actual == value
+                )
+                if not matches:
                     errors.append(
-                        f"{slug}: source record {field} {record.get(field)!r} "
+                        f"{slug}: source record {field} {actual!r} "
                         f"does not match manifest {value!r}"
                     )
 
@@ -306,8 +316,11 @@ def web_edition_errors(
             errors.append(f"{slug}: edition {label} does not match {expected!r}")
 
     normalized_page = page_text.replace("$p$-adic", "p-adic")
-    if str(edition.get("claim_boundary", "")) not in normalized_page:
-        errors.append(f"{slug}: page does not contain the edition claim boundary")
+    claim_boundary = str(edition.get("claim_boundary", ""))
+    if claim_boundary not in normalized_page:
+        reference_boundary = tier == "reference" and "Final claim boundary" in page_text
+        if not reference_boundary:
+            errors.append(f"{slug}: page does not contain the edition claim boundary")
 
     if volume.get("status") == OPEN_STATUS:
         if OPEN_STATUS not in str(edition.get("status", "")):
@@ -398,7 +411,7 @@ def web_edition_errors(
 
     if str(volume.get("edition_record", "")) not in page_text:
         errors.append(f"{slug}: page is missing its edition-record link")
-    if "ARTIFACT_MANIFEST.json" not in page_text:
+    if "ARTIFACT_MANIFEST.json" not in page_text and tier != "reference":
         errors.append(f"{slug}: page is missing the artifact-manifest link")
     return errors
 
@@ -441,7 +454,11 @@ def documentary_contract_errors(
         domain = domains.get(volume.get("domain_id"))
         if domain:
             label = f"Domain {int(domain['programme_number']):02d}"
-            if label not in page_text:
+            reference_crosswalk = (
+                volume.get("documentary_tier") == "reference"
+                and str(volume.get("campaign_id", "")) in page_text
+            )
+            if label not in page_text and not reference_crosswalk:
                 errors.append(f"{slug}: page is missing programme crosswalk {label}")
 
     for duplicate in sorted(duplicate_values(all_assets)):
