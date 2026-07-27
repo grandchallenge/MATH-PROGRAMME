@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "UC-DOC-WP00",
+  "nodes": [
+    {"id": "UC-DOC-S000", "role": "source_lock", "status": "COMPLETE"},
+    {"id": "UC-DOC-S001", "role": "open_target", "status": "CONJECTURAL"},
+    {"id": "UC-DOC-S002", "role": "sharpness", "status": "PROVED_IN_PACKAGE"},
+    {"id": "UC-DOC-S003", "role": "formal_restricted_cases", "status": "FORMALIZED"},
+    {"id": "UC-DOC-S004", "role": "bounded_certificate", "status": "COMPUTED_EXACTLY"},
+    {"id": "UC-DOC-S005", "role": "average_size_import", "status": "LITERATURE_DERIVED"},
+    {"id": "UC-DOC-S006", "role": "entropy_imports", "status": "LITERATURE_DERIVED"},
+    {"id": "UC-DOC-S007", "role": "lattice_bridge", "status": "SEMANTIC_CORRESPONDENCE"},
+    {"id": "UC-DOC-S008", "role": "formal_hybrid_lattice", "status": "FORMALIZED_HYBRID"},
+    {"id": "UC-DOC-S009", "role": "proof_claim_watch", "status": "NEEDS_AUDIT"},
+    {"id": "UC-DOC-S010", "role": "artifact_identity", "status": "COMPUTED_EXACTLY"},
+    {"id": "UC-DOC-S011", "role": "web_admission", "status": "AUTHORIZED_NOT_EXECUTED"}
+  ],
+  "edges": [
+    {"source": "UC-DOC-S001", "target": "UC-DOC-S000", "relation": "governs_claim_boundary"},
+    {"source": "UC-DOC-S002", "target": "UC-DOC-S000", "relation": "supports_exposition"},
+    {"source": "UC-DOC-S003", "target": "UC-DOC-S000", "relation": "supports_formal_terrain"},
+    {"source": "UC-DOC-S004", "target": "UC-DOC-S000", "relation": "supports_bounded_terrain"},
+    {"source": "UC-DOC-S005", "target": "UC-DOC-S000", "relation": "supports_theorem_terrain"},
+    {"source": "UC-DOC-S006", "target": "UC-DOC-S000", "relation": "supports_theorem_terrain"},
+    {"source": "UC-DOC-S007", "target": "UC-DOC-S008", "relation": "enables_translation"},
+    {"source": "UC-DOC-S008", "target": "UC-DOC-S000", "relation": "supports_campaign_status"},
+    {"source": "UC-DOC-S009", "target": "UC-DOC-S000", "relation": "constrains_status"},
+    {"source": "UC-DOC-S010", "target": "UC-DOC-S000", "relation": "locks_release_identity"},
+    {"source": "UC-DOC-S000", "target": "UC-DOC-S011", "relation": "authorizes_next_stage"}
+  ]
+}
