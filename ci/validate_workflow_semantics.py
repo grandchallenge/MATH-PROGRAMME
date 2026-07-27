@@ -17,6 +17,7 @@ EXPECTED_NAMES = {
     "pc-wp04.yml": "PC-WP04 certificate checks",
     "pc-wp05.yml": "PC-WP05 archival checks",
 }
+PYTHON_MINOR_LINE = "3.12"
 POLICY_REQUIREMENTS = ("jsonschema==4.26.0", "PyYAML==6.0.3")
 DOCS_REQUIREMENTS = (
     "mkdocs==1.6.1",
@@ -97,13 +98,25 @@ def workflow_semantic_errors(
     for name in sorted(duplicates):
         errors.append(f"workflow names must be unique; duplicate {name!r}")
 
+    setup_python_steps = 0
     for filename, workflow in workflows.items():
         for job_id, job in workflow.get("jobs", {}).items():
             if str(job.get("runs-on", "")) != "ubuntu-24.04":
                 errors.append(f"{filename}:{job_id}: runs-on must be pinned to ubuntu-24.04")
+            for step in job.get("steps", []):
+                if str(step.get("uses", "")).startswith("actions/setup-python@"):
+                    setup_python_steps += 1
+                    version = str(step.get("with", {}).get("python-version", ""))
+                    if version != PYTHON_MINOR_LINE:
+                        errors.append(
+                            f"{filename}:{job_id}: setup-python must use governed minor line "
+                            f"{PYTHON_MINOR_LINE!r}, found {version!r}"
+                        )
         for line in command_lines(all_runs(workflow)):
             if "pip install" in line and "--requirement" not in line:
                 errors.append(f"{filename}: ad hoc or unpinned pip install is forbidden: {line}")
+    if setup_python_steps == 0:
+        errors.append("governed workflows must contain at least one setup-python step")
 
     if requirement_lines(root, "requirements/policy.txt") != POLICY_REQUIREMENTS:
         errors.append("requirements/policy.txt must contain the exact governed policy pins")
@@ -185,7 +198,10 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"workflow semantic validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print("workflow names, runners, dependencies, execution routes, and publication freshness are valid")
+    print(
+        "workflow names, runners, Python minor line, dependencies, execution routes, and "
+        "publication freshness are valid"
+    )
     return 0
 
 
