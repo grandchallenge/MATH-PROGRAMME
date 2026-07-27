@@ -1,36 +1,72 @@
-# The Music of the Primes
+<link rel="stylesheet" href="../../stylesheets/documentary.css">
+<link rel="stylesheet" href="../../stylesheets/documentary-status.css">
+<div class="gcl-monograph" data-gcl-reader="riemann" data-edition="1.1.0"><a class="monograph-skip" href="#monograph-start">Skip to the manuscript</a><header class="monograph-hero" aria-labelledby="monograph-title"><div class="monograph-hero__art" aria-hidden="true"><img src="../../assets/documentaries/riemann/cover.svg" width="1024" height="1536" alt=""></div><div class="monograph-hero__veil"></div><div class="monograph-hero__copy"><p class="monograph-eyebrow">MATH-PROGRAMME · Documentary Treatment · RH-001</p><h1 id="monograph-title">The Music of the Primes</h1><p class="monograph-hero__subtitle">A guided journey from the Euler product to the critical line</p><p class="monograph-hero__thesis">The zeros of one complex function conduct the fluctuations of the primes; the hypothesis places every nontrivial zero on a single vertical line.</p><div class="monograph-status" aria-label="Publication status"><span>Open Millennium Prize Problem</span><span>RH-001</span><span>No solution claimed</span></div><div class="monograph-actions"><a class="monograph-button monograph-button--primary" href="#monograph-start">Begin the journey</a><a class="monograph-button" href="../">Documentary library</a><a class="monograph-button" href="../sources/the_music_of_the_primes.tex">Source record</a></div></div></header>
+<div class="monograph-progress" aria-hidden="true"><span data-reader-progress-bar></span></div><div class="monograph-reader" id="monograph-start" tabindex="-1"><nav class="monograph-toolbar" aria-label="Reader controls"><div class="monograph-toolbar__identity"><span>Digital Grand Challenge Library</span><strong>The Music of the Primes</strong></div><div class="monograph-toolbar__controls"><button type="button" data-reader-focus aria-pressed="false">Focus mode</button><button type="button" data-reader-print>Print / save</button><button type="button" data-reader-reset>Reset position</button><output data-reader-progress aria-live="polite">0% read</output></div></nav><div class="monograph-layout"><aside class="monograph-contents" aria-label="Manuscript contents"><p class="monograph-contents__title">The journey</p><ol><li><a href="#reader-note">How to Read the Music</a></li><li><a href="#euler-product">Primes Become an Analytic Function</a></li><li><a href="#continuation">Beyond the Half-Plane</a></li><li><a href="#zeros">The Critical Strip</a></li><li><a href="#explicit-formula">How Zeros Conduct the Primes</a></li><li><a href="#evidence">The Infinite Quantifier</a></li></ol><p class="monograph-contents__title">Technical appendix</p><ol><li><a href="#appendix-xi">The Completed Xi-Function</a></li><li><a href="#appendix-counting">Zero Counting and Prime Error</a></li><li><a href="#appendix-computation">Rigorous Computation and Equivalent Criteria</a></li><li><a href="#appendix-trust">Spectral Analogies and Trust Matrix</a></li><li><a href="#sources">Sources</a></li></ol></aside><article class="monograph-body" aria-label="The Music of the Primes manuscript">
+<section class="monograph-section" id="reader-note" data-reader-section markdown="1"><p class="monograph-section__eyebrow">A note to the reader</p>
+## How to Read the Music
+Prime numbers appear irregular, yet their collective distribution is encoded by the zeros of the Riemann zeta function. The hypothesis is an infinite universal statement beyond any finite computation. Musical waves and celestial lines are memory devices; analytic continuation, zero taxonomy, multiplicity, interval certification, and the exact quantifier govern the mathematics.
 
-## The Riemann Hypothesis
-
-A journey from prime counting and the Euler product to analytic continuation, the functional equation, the critical strip, explicit formulas, zero computation, equivalent criteria, random-matrix evidence, and the unresolved infinite quantifier.
-
-!!! abstract "Documentary record"
-    **Subject:** Riemann Hypothesis  
-    **Status:** Open Millennium Prize Problem  
-    **Programme crosswalk:** `RH` / `RH-001`  
-    **Length:** 49 pages  
-    **Pedagogical mode:** GCL–Chaidez illustrated monograph  
-    **Source record:** [`the_music_of_the_primes.tex`](sources/the_music_of_the_primes.tex)  
-    **Authoritative source artifact:** checksum-locked complete illustrated source bundle
-
-## How to read this volume
-
-The musical and celestial plates provide memory and orientation. Analytic continuation, the completed xi-function, zero taxonomy, explicit formulas, equivalent criteria, computation protocols, campaign artifacts, and the technical appendix govern the mathematics.
-
-## Claim boundary
-
-Symmetry, extensive numerical verification, zero-density theorems, random-matrix agreement, prime-error heuristics, spectral analogies, and the merged RH-WP01/WP02 audit artifacts do not prove that every nontrivial zero lies on the critical line.
-
-## Artifact identity
-
-| Artifact | Bytes | SHA-256 | Availability |
-|---|---:|---|---|
-| Rendered PDF | 13,938,685 | `aa573c7fe1201f9edf43c01dcf1f22d427bbbbe7728165281dffdda3a4c2626c` | `metadata_only` |
-| Complete LaTeX source | 55,302 | `e0d778b53d0ea924b7ac5e3a7304fa5eeb0e61bea4bccc470bfd7550028235a0` | `metadata_only` |
-| Authoritative complete illustrated source bundle | 14,027,469 | `b97653729ff130efbe6badc56e258b55b3a0ca2d279075753c46184f8349c4c0` | `metadata_only` |
-
-`metadata_only` records governed identity but does not assert a stable public release locator.
-
-- [Open the source record](sources/the_music_of_the_primes.tex)
-- [Inspect the release-artifact manifest](ARTIFACT_MANIFEST.json)
-- [Return to the Documentary Library](index.md)
+**Edition status:** Open Millennium Prize Problem; analytic-number-theory documentary; no zero-free proof claim.
+<div class="conjecture-box"><strong>Open hypothesis</strong><p>Every nontrivial zero \(\rho\) of \(\zeta(s)\) satisfies \(\operatorname{Re}\rho=\tfrac12\).</p></div><div class="warning-box"><strong>Claim boundary</strong><p>Symmetry, a vast finite verification, a positive proportion on the line, random-matrix agreement, or a proposed spectral analogy does not prove the universal statement.</p></div></section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate I"><img src="../../assets/documentaries/riemann/euler.svg" width="1024" height="1536" loading="lazy" alt="Prime factors become local notes whose infinite product forms the zeta function."></button><figcaption><span class="plate-label">Plate I</span><strong>The Euler product</strong><small>Pedagogical orientation only. Absolute convergence governs the product identity.</small></figcaption></figure>
+<section class="monograph-section" id="euler-product" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter I</p>
+## Primes Become an Analytic Function
+For \(\operatorname{Re}(s)>1\),
+\[\zeta(s)=\sum_{n=1}^\infty n^{-s}=\prod_p(1-p^{-s})^{-1}.\]
+<div class="definition-box"><strong>Definition</strong><p>The Euler product is the analytic expression of unique prime factorization in its half-plane of absolute convergence.</p></div><div class="theorem-box"><strong>Established theorem</strong><p>The product implies \(\zeta(s)\ne0\) for \(\operatorname{Re}(s)>1\). The prime number theorem is equivalent to zero-freeness on \(\operatorname{Re}(s)=1\).</p></div>
+The product cannot simply be manipulated term by term inside the critical strip.</section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate II"><img src="../../assets/documentaries/riemann/strip.svg" width="1024" height="1536" loading="lazy" alt="Trivial zeros, the pole, symmetry, and nontrivial zeros are arranged around the critical line."></button><figcaption><span class="plate-label">Plate II</span><strong>The critical strip</strong><small>Pedagogical orientation only. Symmetry pairs zeros but does not place them on the axis.</small></figcaption></figure>
+<section class="monograph-section" id="continuation" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter II</p>
+## Beyond the Half-Plane
+The zeta function extends meromorphically to the plane with a simple pole at one. The completed function
+\[\xi(s)=\tfrac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)\]
+is entire and satisfies \(\xi(s)=\xi(1-s)\).
+<div class="imported-box"><strong>Imported established structure</strong><p>Analytic continuation and the functional equation produce symmetries under \(s\mapsto1-s\) and complex conjugation. Symmetry alone does not force each zero onto the symmetry axis.</p></div></section>
+<section class="monograph-section" id="zeros" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter III</p>
+## The Critical Strip
+Trivial zeros occur at the negative even integers. Nontrivial zeros lie in \(0<\operatorname{Re}(s)<1\). The critical line is \(\operatorname{Re}(s)=1/2\).
+<div class="definition-box"><strong>Definition</strong><p>A nontrivial zero is a zero of the analytically continued zeta function that is not a negative even integer. RH concerns every such zero, counted with multiplicity.</p></div><div class="theorem-box"><strong>Established terrain</strong><p>Infinitely many zeros and a positive proportion are known to lie on the critical line; zero-free regions and density estimates constrain the remainder. “Many” is not “all.”</p></div></section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate III"><img src="../../assets/documentaries/riemann/explicit.svg" width="1024" height="1536" loading="lazy" alt="An explicit-formula bridge sends waves from complex zeros into prime-counting fluctuations."></button><figcaption><span class="plate-label">Plate III</span><strong>The zeros speak to the primes</strong><small>Pedagogical orientation only. Truncation and summation conventions govern the explicit formula.</small></figcaption></figure>
+<section class="monograph-section" id="explicit-formula" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter IV</p>
+## How Zeros Conduct the Primes
+Schematically,
+\[\psi(x)=x-\sum_\rho\frac{x^\rho}{\rho}-\log(2\pi)-\tfrac12\log(1-x^{-2}),\]
+with an exact summation convention. A zero \(\rho=\beta+i\gamma\) contributes an oscillation of approximate size \(x^\beta\).
+<div class="warning-box"><strong>Explicit-formula guardrail</strong><p>The zero sum is not an ordinary absolutely convergent series. Truncation, multiplicity, poles, trivial zeros, and error terms must all be controlled.</p></div></section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate IV"><img src="../../assets/documentaries/riemann/evidence.svg" width="1024" height="1536" loading="lazy" alt="Finite verification, critical-line proportions, random matrices, and spectral analogies stop before the universal claim."></button><figcaption><span class="plate-label">Plate IV</span><strong>Evidence is not the infinite quantifier</strong><small>Pedagogical orientation only. A verified height remains finite.</small></figcaption></figure>
+<section class="monograph-section" id="evidence" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter V</p>
+## The Infinite Quantifier
+Rigorous computation can certify every zero up to a height, provided a completeness method proves none were missed. Equivalent criteria translate RH into prime errors, divisor inequalities, Li coefficients, approximation, or positivity statements. An equivalence is a new doorway, not a proof.
+Random-matrix statistics model observed spacings; Hilbert–Pólya proposes a self-adjoint spectral explanation. No accepted operator satisfying the required identities has been constructed.
+<div class="conjecture-box"><strong>The infinite quantifier</strong><p>Every verified interval is bounded. RH asks about all nontrivial zeros without an upper height.</p></div><p class="monograph-pullquote">The primes provide the rhythm. The zeros conduct the deviations. The critical line is the unresolved score.</p></section>
+<section class="monograph-section" id="appendix-xi" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix A</p>
+## The Completed Xi-Function
+The Hadamard product encodes nontrivial zeros with the appropriate canonical-product interpretation. Reality and functional symmetry produce quartets \(\rho,\bar\rho,1-\rho,1-\bar\rho\), with degeneracies on symmetry lines.</section>
+<section class="monograph-section" id="appendix-counting" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix B</p>
+## Zero Counting and Prime Error
+\[N(T)=\frac{T}{2\pi}\log\frac{T}{2\pi}-\frac{T}{2\pi}+O(\log T).\]
+Turing-style methods compare a computed list with an independent zero count. RH implies strong prime-error estimates with logarithmic qualifications; suitable error estimates conversely constrain zero location.</section>
+<section class="monograph-section" id="appendix-computation" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix C</p>
+## Rigorous Computation and Equivalent Criteria
+The Riemann–Siegel formula accelerates critical-line evaluation. Gram patterns have exceptions. Rigorous verification requires interval control, root isolation or argument variation, and an independent completeness count. Robin, Lagarias, Li, Nyman–Beurling, and Weil-type criteria retain their exact hypotheses.</section>
+<section class="monograph-section" id="appendix-trust" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix D</p>
+## Spectral Analogies and Trust Matrix
+| Claim | Trust class | Qualification |
+|---|---|---|
+| Euler product for \(\operatorname{Re}(s)>1\) | established | absolute convergence |
+| Continuation and functional equation | imported established | global zeta structure |
+| Nontrivial zeros lie in the critical strip | established | outer half-planes excluded |
+| Positive proportion on critical line | imported established | not all zeros |
+| Finite-height verification | bounded theorem | needs completeness certificate |
+| Random-matrix agreement | empirical/heuristic | no location proof |
+| Hilbert–Pólya | research programme | operator not constructed |
+| Riemann Hypothesis | open | every nontrivial zero |
+| Generalized RH | separate family | not identical to RH |
+| Illuminated plates | pedagogical | never authoritative zero plots |
+<div class="warning-box"><strong>Final claim boundary</strong><p>This edition does not prove RH, GRH, a new zero-free region, a new critical-line proportion, or a self-adjoint Hilbert–Pólya operator.</p></div></section>
+<section class="monograph-section" id="sources" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Sources and programme crosswalk</p>
+## Governing literature and campaign record
+<div class="bibliography"><p><a href="https://www.claymath.org/millennium/riemann-hypothesis/">Clay Mathematics Institute: Riemann Hypothesis</a>.</p><p><a href="https://www.claymath.org/wp-content/uploads/2022/05/riemann.pdf">Bombieri, official problem description</a>.</p><p><a href="https://www.claymath.org/library/historical/riemann/r.html">Riemann's 1859 memoir</a>.</p><p><a href="https://dlmf.nist.gov/25.10">NIST DLMF: zeta zeros</a>.</p><p><a href="https://doi.org/10.1112/plms/s3-32.1.193">Levinson: critical-line proportion</a>.</p></div>
+Programme links: [Domain 08](../../domains/riemann_hypothesis/) · [claim-authority record](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/RH-WP00-source-normalization-equivalence-audit.md) · [campaign artifacts](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/riemann_hypothesis) · [review records](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/reviews/riemann_hypothesis)</section>
+<section class="monograph-colophon" aria-labelledby="edition-record-title"><h2 id="edition-record-title">Edition record</h2><p>This browser-native edition uses the immutable Poincaré reference contract and shared open-problem status vocabulary. Native SVG plates are pedagogical; semantic HTML preserves the finite-versus-infinite boundary.</p><p>The committed pointer is a source record; the checksum-locked complete illustrated source bundle is the authoritative source artifact. MathJax 3.2.2 is a version-pinned network enhancement, and the source TeX remains present when unavailable.</p><p><strong>Web claim boundary:</strong> Browser-native, source-normalized exposition of the Riemann Hypothesis. Functional-equation symmetry, finite zero verification, zero-density and critical-line proportion theorems, equivalent criteria, random-matrix agreement, prime-error heuristics, the de Bruijn–Newman constant, and Hilbert–Pólya analogies are not promoted to the universal assertion that every nontrivial zero has real part one half.</p><div class="monograph-actions"><a class="monograph-button" href="../riemann.edition.json">Web-edition data</a><a class="monograph-button" href="../documentary_web.schema.json">Reusable schema</a><a class="monograph-button" href="../sources/the_music_of_the_primes.tex">Source record</a><a class="monograph-button" href="../ARTIFACT_MANIFEST.json">Artifact manifest</a></div><dl class="edition-integrity"><div><dt>Rendered PDF</dt><dd>13,938,685 bytes · <code>aa573c7fe1201f9edf43c01dcf1f22d427bbbbe7728165281dffdda3a4c2626c</code> · <code>metadata_only</code></dd></div><div><dt>Complete LaTeX source</dt><dd>55,302 bytes · <code>e0d778b53d0ea924b7ac5e3a7304fa5eeb0e61bea4bccc470bfd7550028235a0</code> · <code>metadata_only</code></dd></div><div><dt>Authoritative complete illustrated source bundle</dt><dd>14,027,469 bytes · <code>b97653729ff130efbe6badc56e258b55b3a0ca2d279075753c46184f8349c4c0</code> · <code>metadata_only</code></dd></div></dl></section>
+</article></div></div><dialog class="monograph-lightbox" data-plate-dialog aria-labelledby="plate-dialog-title"><form method="dialog"><button class="monograph-lightbox__close" aria-label="Close plate view">Close</button></form><div class="monograph-lightbox__frame"><img data-plate-dialog-image alt=""><p id="plate-dialog-title" data-plate-dialog-caption></p></div></dialog><noscript><p>The manuscript and source TeX remain readable without JavaScript. Plate enlargement, rendered mathematics, reading progress, focus mode, and reading-position memory are unavailable; the checksum-locked PDF remains the rendered archival edition.</p></noscript></div><script defer src="../../javascripts/documentary-mathjax.js"></script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" crossorigin="anonymous" referrerpolicy="no-referrer" data-archival-role="enhancement-only"></script><script defer src="../../javascripts/documentary.js"></script>
