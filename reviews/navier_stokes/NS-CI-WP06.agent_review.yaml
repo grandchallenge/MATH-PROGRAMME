@@ -11,9 +11,9 @@ council_review:
     reviewed_by: NS-CI-WP06 Agent Council
     reviewed_at: '2026-07-26'
     obligations:
-      - Preserve the exact true-equation, data-class, event, quantifier, and formal-system identities.
+      - Preserve the exact true-equation, data-class, event, solution-semantics, quantifier, representation, and formal-system identities.
     findings:
-      - U001–U010 expose the missing reduction and transfer obligations without asserting that any is discharged.
+      - U001–U011 expose the reduction and undecidability-transfer obligations; U012 is the separate independence-transfer gate, and none is asserted discharged.
   Prospector:
     status: reviewed
     reviewed_by: NS-CI-WP06 Agent Council
@@ -43,25 +43,25 @@ council_review:
     reviewed_by: NS-CI-WP06 Agent Council
     reviewed_at: '2026-07-26'
     obligations:
-      - Reject one-way reductions, noninteger machine states, nonfinite numerical parameters, and untested experiment modules.
+      - Reject one-way reductions, implicit solution quantifiers, noninteger machine states, nonfinite numerical parameters, and untested experiment modules.
     findings:
-      - Repository execution policy and fixture tests cover the bounded software contract; theorem obligations remain open.
+      - Repository execution policy and fixture tests cover the bounded software contract; theorem and transfer obligations remain open.
   Adversary:
     status: reviewed
     reviewed_by: NS-CI-WP06 Agent Council
     reviewed_at: '2026-07-26'
     obligations:
-      - Attempt transfers from Euler, averaged equations, ODE blow-up, numerical nontermination, and instance undecidability.
+      - Attempt transfers from Euler, averaged equations, ODE blow-up, numerical nontermination, instance undecidability, and nonunique solution semantics.
     findings:
-      - Each attempted transfer is explicitly blocked by the claim boundary and risk ledger.
+      - Each attempted transfer is explicitly blocked by the claim boundary, risk ledger, and U010–U012 gates.
   Formalist:
     status: reviewed
     reviewed_by: NS-CI-WP06 Agent Council
     reviewed_at: '2026-07-26'
     obligations:
-      - Separate undecidability of represented instance families from independence of a universal sentence in a named formal system.
+      - Separate the represented target decision problem, its undecidability theorem, and independence of a universal sentence in a named formal system.
     findings:
-      - ADR-0013 requires a separate formal-system-relative metatheorem for any independence claim.
+      - U011 governs computability-theoretic transfer to the exact target problem; U012 separately requires formal-system-relative arithmetization and an independence bridge.
   Steward:
     status: reviewed
     reviewed_by: NS-CI-WP06 Agent Council
@@ -107,9 +107,9 @@ council_review:
     reviewed_by: NS-CI-WP06 Agent Council
     reviewed_at: '2026-07-26'
     obligations:
-      - Require equation fidelity, robust computation, viscous persistence, and both directions of the reduction.
+      - Require equation fidelity, effective representation, robust computation, viscous persistence, both reduction directions, exact solution semantics, and undecidability transfer.
     findings:
-      - No mechanism claim is authorized while U002 and U005–U008 remain theorem-level debt.
+      - No mechanism or undecidability claim is authorized while U002 and U005–U011 remain theorem-level debt.
   Typesetter:
     status: reviewed
     reviewed_by: NS-CI-WP06 Agent Council
@@ -123,7 +123,7 @@ council_review:
     reviewed_by: NS-CI-WP06 Agent Council
     reviewed_at: '2026-07-26'
     obligations:
-      - Refuse promotion until a new Council decision follows theorem-level discharge of the escalation gate.
+      - Refuse reduction escalation until U001–U011 are discharged, and refuse independence language until U012 is separately discharged under a new Council decision.
     findings:
       - Current disposition is retain as literature and bounded interface reconnaissance; no next-stage promotion is recommended.
 amanuensis_control:
@@ -169,16 +169,17 @@ amanuensis_control:
     integration_notes:
       - The lane is separate from the active analytic theorem spine.
       - Related-system evidence is recorded only with explicit transfer barriers.
+      - Solution semantics, undecidability transfer, and formal independence transfer are separate gates.
       - The software fixture is governed through repository-wide tests and remains non-probative.
 unresolved_obligations:
   - id: NS-CI-WP06-O001
     owner: Mechanist
-    description: Discharge true-equation encoding, admissibility, robustness, viscous persistence, and both reduction directions before any mathematical escalation.
+    description: Discharge U001–U011, including true-equation encoding, admissibility, robustness, viscous persistence, both reduction directions, solution semantics, and undecidability transfer, before reduction escalation.
     severity: critical
     blocking: false
   - id: NS-CI-WP06-O002
     owner: Formalist
-    description: Supply a formal-system-relative transfer theorem before using independence language.
+    description: Discharge U012 with a named formal system, arithmetization, and a separate transfer theorem before using independence language.
     severity: critical
     blocking: false
   - id: NS-CI-WP06-O003
@@ -189,6 +190,6 @@ unresolved_obligations:
 promotion:
   ready_for_next_stage: false
   blockers:
-    - U001–U010 are not discharged at theorem level.
-    - No true-equation reduction or formal independence transfer theorem exists in the campaign.
+    - U001–U011 are not discharged at theorem level.
+    - U012 is not discharged, so formal-independence language remains closed.
   certification_route: null
