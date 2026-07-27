@@ -37,7 +37,7 @@ class BSDDocumentaryTopicTests(unittest.TestCase):
 
     def test_low_rank_theorem_boundary_is_present(self) -> None:
         self.assertIn("analytic rank zero or one", self.page)
-        self.assertIn("higher rank", self.page)
+        self.assertIn("higher-rank", self.page)
         self.assertIn("universal leading-term frontier", self.page)
 
 
