@@ -56,7 +56,7 @@ This is a curated map of authoritative entry points, not an exhaustive recursive
 - `RH-WP00-source-normalization-equivalence-audit.md`
 - `docs/domains/`
 
-The historical BSD Domain 03 filename remains under decision control. The mislabelled Poincaré Domain 04 filename was removed in PR #96; Domain 05 is canonical and its frozen provenance is governed by `reviews/poincare/HISTORICAL_IDENTITY_CROSSWALK.yaml`.
+The historical BSD Domain 03 filename remains under decision control. The mislabelled `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` was removed in PR #96; `DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` is canonical and frozen provenance is governed by `reviews/poincare/HISTORICAL_IDENTITY_CROSSWALK.yaml`.
 
 ## Campaign stacks
 
