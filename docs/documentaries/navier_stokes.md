@@ -23,8 +23,7 @@ This web edition is a derivative, source-normalized exposition. Its streamlines,
 <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate I"><img src="../../assets/documentaries/navier_stokes/field.svg" width="1024" height="1536" loading="lazy" alt="A vector field flows through a channel while pressure and viscosity act across the moving fluid."></button><figcaption><span class="plate-label">Plate I</span><strong>A fluid has a velocity everywhere</strong><small>Pedagogical orientation only. The semantic manuscript, equations, and trust labels govern the mathematical claim.</small></figcaption></figure>
 <section class="monograph-section" id="field-equation" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter I</p>
 ## The Language of a Fluid
-The incompressible Navier–Stokes equation for velocity \(u(x,t)\), pressure \(p(x,t)\), viscosity \(
-u>0\), and force \(f\) is
+The incompressible Navier–Stokes equation for velocity \(u(x,t)\), pressure \(p(x,t)\), viscosity \(\nu>0\), and force \(f\) is
 
 \[
 \partial_tu+(u\cdot\nabla)u=-\nabla p+\nu\Delta u+f,
