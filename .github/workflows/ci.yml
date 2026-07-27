@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   validate-json:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
@@ -66,7 +66,7 @@ jobs:
         run: python3 ci/test_researchmath_fixture.py
 
       - name: Install policy dependencies
-        run: python -m pip install jsonschema pyyaml
+        run: python -m pip install --requirement requirements/policy.txt
 
       - name: Validate and replay governed campaigns
         run: |
@@ -128,6 +128,10 @@ jobs:
             python3 ci/test_retired_paths.py
             python3 ci/validate_workflow_coverage.py
             python3 ci/test_workflow_coverage.py
+            python3 ci/validate_policy_reachability.py
+            python3 ci/test_policy_reachability.py
+            python3 ci/validate_workflow_semantics.py
+            python3 ci/test_workflow_semantics.py
           } 2>&1 | tee programme-contracts.log
 
       - name: Preserve programme contract failure
@@ -139,16 +143,14 @@ jobs:
           if-no-files-found: error
 
       - name: Install documentation dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install mkdocs mkdocs-material pymdown-extensions
+        run: python -m pip install --requirement requirements/docs.txt
 
       - name: Build documentation
         run: mkdocs build --strict
 
   log-gcd-lean:
     name: Replay LOG-GCD-001 in Lean
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
@@ -197,7 +199,7 @@ jobs:
 
   pc-wp04-lean:
     name: Replay PC-WP04 bounded certificate
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
@@ -207,7 +209,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install certificate dependencies
-        run: python -m pip install jsonschema
+        run: python -m pip install --requirement requirements/policy.txt
       - name: Validate bounded certificate policy
         run: |
           python3 ci/validate_pc_wp04_fixture.py fixtures/formal/PC-WP04
@@ -246,7 +248,7 @@ jobs:
 
   union-closed-mathcert:
     name: Replay pinned Union-Closed MATHCERT evidence
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
@@ -255,6 +257,8 @@ jobs:
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: "3.12"
+      - name: Install external policy dependencies
+        run: python -m pip install --requirement "$GITHUB_WORKSPACE/requirements/policy.txt"
       - name: Validate pinned external evidence
         run: |
           python - <<'PY'
@@ -300,5 +304,4 @@ jobs:
           elan --version
           lake --version
           test -f lake-manifest.json
-          python -m pip install pyyaml
           bash ci/check_lean.sh
