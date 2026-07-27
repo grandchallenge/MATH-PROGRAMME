@@ -23,17 +23,36 @@ def main() -> int:
 
     duplicate_name = copy.deepcopy(workflows)
     duplicate_name["pages.yml"]["name"] = duplicate_name["ci.yml"]["name"]
-    assert any("workflow names must be unique" in error for error in workflow_semantic_errors(workflows=duplicate_name))
+    assert any(
+        "workflow names must be unique" in error
+        for error in workflow_semantic_errors(workflows=duplicate_name)
+    )
 
     mutable_runner = copy.deepcopy(workflows)
     mutable_runner["ci.yml"]["jobs"]["validate-json"]["runs-on"] = "ubuntu-latest"
-    assert any("runs-on must be pinned" in error for error in workflow_semantic_errors(workflows=mutable_runner))
+    assert any(
+        "runs-on must be pinned" in error
+        for error in workflow_semantic_errors(workflows=mutable_runner)
+    )
+
+    python_line_drift = copy.deepcopy(workflows)
+    for step in python_line_drift["ci.yml"]["jobs"]["validate-json"]["steps"]:
+        if str(step.get("uses", "")).startswith("actions/setup-python@"):
+            step["with"]["python-version"] = "3.x"
+            break
+    assert any(
+        "setup-python must use governed minor line" in error
+        for error in workflow_semantic_errors(workflows=python_line_drift)
+    )
 
     unpinned_install = copy.deepcopy(workflows)
     unpinned_install["pc-wp04.yml"]["jobs"]["pc-wp04-lean"]["steps"].append(
         {"run": "python -m pip install jsonschema"}
     )
-    assert any("unpinned pip install is forbidden" in error for error in workflow_semantic_errors(workflows=unpinned_install))
+    assert any(
+        "unpinned pip install is forbidden" in error
+        for error in workflow_semantic_errors(workflows=unpinned_install)
+    )
 
     comment_spoof = copy.deepcopy(workflows)
     for step in comment_spoof["ci.yml"]["jobs"]["validate-json"]["steps"]:
@@ -52,7 +71,10 @@ def main() -> int:
 
     stale_pages = copy.deepcopy(workflows)
     stale_pages["pages.yml"]["concurrency"]["cancel-in-progress"] = "false"
-    assert any("cancel stale" in error for error in workflow_semantic_errors(workflows=stale_pages))
+    assert any(
+        "cancel stale" in error
+        for error in workflow_semantic_errors(workflows=stale_pages)
+    )
 
     missing_freshness = copy.deepcopy(workflows)
     for step in missing_freshness["pages.yml"]["jobs"]["build"]["steps"]:
@@ -60,13 +82,19 @@ def main() -> int:
         if "refs/heads/main:refs/remotes/origin/main" in run:
             step["run"] = "echo 'freshness omitted'"
             break
-    assert any("current-main freshness check" in error for error in workflow_semantic_errors(workflows=missing_freshness))
+    assert any(
+        "current-main freshness check" in error
+        for error in workflow_semantic_errors(workflows=missing_freshness)
+    )
 
     checkout_drift = copy.deepcopy(workflows)
     for step in checkout_drift["pages.yml"]["jobs"]["build"]["steps"]:
         if str(step.get("uses", "")).startswith("actions/checkout@"):
             step["with"]["ref"] = "main"
-    assert any("validated workflow_run.head_sha" in error for error in workflow_semantic_errors(workflows=checkout_drift))
+    assert any(
+        "validated workflow_run.head_sha" in error
+        for error in workflow_semantic_errors(workflows=checkout_drift)
+    )
 
     with tempfile.TemporaryDirectory() as temporary:
         root = Path(temporary)
