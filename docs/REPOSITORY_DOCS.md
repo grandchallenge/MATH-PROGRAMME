@@ -24,6 +24,7 @@ Do not infer Pages URLs for root files. Use the canonical GitHub links below.
 - [Domain Registry](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/DOMAIN_REGISTRY.yaml)
 - [ADR-0010 Documentary Authority](decisions/ADR-0010_DOCUMENTARY_LIBRARY_AUTHORITY.md)
 - [ADR-0011 Full Workflow Coverage](decisions/ADR-0011_FULL_WORKFLOW_COVERAGE.md)
+- [ADR-0012 Self-Authenticating Workflow Coverage](decisions/ADR-0012_SELF_AUTHENTICATING_WORKFLOW_COVERAGE.md)
 - [Programme Workflow Coverage](WORKFLOW_COVERAGE.md)
 
 ## Canonical domains
@@ -85,10 +86,15 @@ The Union-Closed formal implementation is external, not a local `MathCert/` dire
 
 - [Global programme policy](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/.github/workflows/ci.yml)
 - [Campaign replay registry](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ci/campaign_replay_registry.json)
-- [Workflow coverage validator](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ci/validate_workflow_coverage.py)
+- [Campaign executable validator](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ci/validate_campaign_replays.py)
+- [CI policy reachability validator](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ci/validate_policy_reachability.py)
+- [Workflow inventory validator](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ci/validate_workflow_coverage.py)
+- [Workflow semantic validator](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ci/validate_workflow_semantics.py)
+- [Policy dependency declaration](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/requirements/policy.txt)
+- [Documentation dependency declaration](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/requirements/docs.txt)
 - [Pages deployment gate](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/.github/workflows/pages.yml)
 
-The global policy runs all governed campaign replay commands, LOG-GCD Lean, PC-WP04 Lean, and the pinned external MATHCERT gate. Pages deploys only the exact `main` commit from a successful push-triggered global policy run.
+The global policy independently discovers campaign executables, proves executable CI controls reachable from operative workflow roots, runs all governed replay and formal gates, and validates parsed workflow semantics. All jobs use fixed Ubuntu runners and checked-in exact top-level dependency pins. Pages deploys only a successful policy-validated SHA that remains the current `main` tip; a newer commit cancels or rejects stale publication. The dependency declarations are not represented as a complete transitive hash lock.
 
 ## Inventory and public entry points
 
@@ -100,4 +106,4 @@ The global policy runs all governed campaign replay commands, LOG-GCD Lean, PC-W
 
 ## Authority rule
 
-The domain registry identifies canonical domain entries and public pages. The Agent Council artifact ledger identifies authoritative integrated governed artifacts. Claim ledgers, proof files, source records, governing source artifacts, and MATHCERT artifacts remain authoritative within their declared roles. Repository merge and CI can establish integration and replay facts; they cannot prove the underlying open problem or override an explicit blocking review. Publication is permitted only after the exact `main` commit passes the global programme policy.
+The domain registry identifies canonical domain entries and public pages. The Agent Council artifact ledger identifies authoritative integrated governed artifacts. Claim ledgers, proof files, source records, governing source artifacts, and MATHCERT artifacts remain authoritative within their declared roles. Repository merge and CI can establish integration, declared-environment, reachability, and replay facts; they cannot prove the underlying open problem or override an explicit blocking review. Publication is permitted only after the successful policy-validated SHA is confirmed as the current `main` tip.
