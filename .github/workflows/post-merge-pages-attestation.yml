@@ -1,0 +1,226 @@
+name: Post-merge Pages attestation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  actions: read
+  contents: read
+  deployments: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: post-merge-pages-attestation-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  attest:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Attest exact post-merge publication chain
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          TARGET_SHA: ebb73aa1b2c025e52b741cce9756cb0e268e17ef
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import json
+          import os
+          import re
+          import urllib.parse
+          import urllib.request
+          from datetime import datetime, timezone
+
+          token = os.environ["GH_TOKEN"]
+          repository = os.environ["REPOSITORY"]
+          pr_number = int(os.environ["PR_NUMBER"])
+          target_sha = os.environ["TARGET_SHA"]
+          api_root = f"https://api.github.com/repos/{repository}"
+          headers = {
+              "Accept": "application/vnd.github+json",
+              "Authorization": f"Bearer {token}",
+              "X-GitHub-Api-Version": "2022-11-28",
+              "User-Agent": "MATH-PROGRAMME-post-merge-attestation",
+          }
+
+          def api(path: str, *, method: str = "GET", payload: dict | None = None):
+              data = None
+              request_headers = dict(headers)
+              if payload is not None:
+                  data = json.dumps(payload).encode("utf-8")
+                  request_headers["Content-Type"] = "application/json"
+              request = urllib.request.Request(
+                  f"{api_root}{path}", data=data, headers=request_headers, method=method
+              )
+              with urllib.request.urlopen(request, timeout=60) as response:
+                  raw = response.read()
+              return json.loads(raw) if raw else None
+
+          def download(path: str) -> bytes:
+              request = urllib.request.Request(f"{api_root}{path}", headers=headers)
+              with urllib.request.urlopen(request, timeout=120) as response:
+                  return response.read()
+
+          def post_comment(body: str) -> None:
+              api(
+                  f"/issues/{pr_number}/comments",
+                  method="POST",
+                  payload={"body": body},
+              )
+
+          def require(condition: bool, message: str) -> None:
+              if not condition:
+                  raise RuntimeError(message)
+
+          try:
+              run_listing = api(
+                  "/actions/runs?"
+                  + urllib.parse.urlencode(
+                      {"branch": "main", "event": "push", "per_page": 100}
+                  )
+              )
+              policy_runs = [
+                  run
+                  for run in run_listing.get("workflow_runs", [])
+                  if run.get("head_sha") == target_sha
+                  and run.get("name") == "Programme policy checks"
+              ]
+              require(policy_runs, f"no main-push policy run found for {target_sha}")
+              policy_run = max(
+                  policy_runs,
+                  key=lambda run: run.get("run_started_at") or run.get("created_at") or "",
+              )
+              require(policy_run.get("status") == "completed", "policy run is not completed")
+              require(policy_run.get("conclusion") == "success", "policy run did not succeed")
+              require(policy_run.get("head_branch") == "main", "policy run is not on main")
+              require(policy_run.get("event") == "push", "policy run is not push-triggered")
+              policy_run_id = int(policy_run["id"])
+
+              artifact_listing = api(f"/actions/runs/{policy_run_id}/artifacts?per_page=100")
+              artifacts = [
+                  artifact
+                  for artifact in artifact_listing.get("artifacts", [])
+                  if artifact.get("name") == "validated-site"
+                  and not artifact.get("expired")
+              ]
+              require(len(artifacts) == 1, f"expected one live validated-site artifact, found {len(artifacts)}")
+              artifact = artifacts[0]
+              artifact_id = int(artifact["id"])
+              artifact_digest = str(artifact.get("digest", ""))
+              require(artifact_digest.startswith("sha256:"), "artifact has no SHA-256 digest")
+
+              deployment_run_listing = api(
+                  "/actions/runs?"
+                  + urllib.parse.urlencode({"event": "workflow_run", "per_page": 100})
+              )
+              deployment_runs = [
+                  run
+                  for run in deployment_run_listing.get("workflow_runs", [])
+                  if run.get("head_sha") == target_sha
+                  and run.get("name") == "Deploy documentation site"
+              ]
+              require(deployment_runs, f"no Pages workflow_run found for {target_sha}")
+              deployment_run = max(
+                  deployment_runs,
+                  key=lambda run: run.get("run_started_at") or run.get("created_at") or "",
+              )
+              require(deployment_run.get("status") == "completed", "Pages workflow is not completed")
+              require(deployment_run.get("conclusion") == "success", "Pages workflow did not succeed")
+              deployment_run_id = int(deployment_run["id"])
+
+              jobs_listing = api(f"/actions/runs/{deployment_run_id}/jobs?per_page=100")
+              jobs = {job["name"]: job for job in jobs_listing.get("jobs", [])}
+              require(jobs.get("build", {}).get("conclusion") == "success", "Pages build/verification job failed")
+              require(jobs.get("deploy", {}).get("conclusion") == "success", "Pages deploy job failed")
+
+              build_job_id = int(jobs["build"]["id"])
+              build_log = download(f"/actions/jobs/{build_job_id}/logs").decode("utf-8", errors="replace")
+              match = re.search(
+                  r"verified policy artifact (\d+) from run (\d+): "
+                  r"artifact sha256=([0-9a-f]{64}), site archive sha256=([0-9a-f]{64})",
+                  build_log,
+              )
+              require(match is not None, "Pages verification log lacks the digest attestation line")
+              logged_artifact_id = int(match.group(1))
+              logged_policy_run_id = int(match.group(2))
+              outer_digest = match.group(3)
+              inner_digest = match.group(4)
+              require(logged_artifact_id == artifact_id, "verified artifact ID differs from policy artifact")
+              require(logged_policy_run_id == policy_run_id, "verified run ID differs from policy run")
+              require(artifact_digest == f"sha256:{outer_digest}", "verified outer digest differs from artifact metadata")
+
+              deployments = api(
+                  "/deployments?"
+                  + urllib.parse.urlencode(
+                      {"sha": target_sha, "environment": "github-pages", "per_page": 100}
+                  )
+              )
+              require(deployments, f"no github-pages deployment object found for {target_sha}")
+              successful_status = None
+              deployment_id = None
+              for deployment in deployments:
+                  statuses = api(f"/deployments/{deployment['id']}/statuses?per_page=100")
+                  for status in statuses:
+                      if status.get("state") == "success":
+                          successful_status = status
+                          deployment_id = int(deployment["id"])
+                          break
+                  if successful_status:
+                      break
+              require(successful_status is not None, "no successful github-pages deployment status found")
+
+              live_checks = [
+                  (
+                      "https://grandchallenge.github.io/MATH-PROGRAMME/decisions/ADR-0014_EXACT_ARTIFACT_AND_REPOSITORY_EXECUTION/",
+                      "Exact Artifact and Repository Execution",
+                  ),
+                  (
+                      "https://grandchallenge.github.io/MATH-PROGRAMME/domains/navier_stokes/",
+                      "NS-CI-WP06",
+                  ),
+              ]
+              checked_urls = []
+              for url, marker in live_checks:
+                  request = urllib.request.Request(url, headers={"User-Agent": headers["User-Agent"]})
+                  with urllib.request.urlopen(request, timeout=60) as response:
+                      html = response.read().decode("utf-8", errors="replace")
+                      status_code = response.status
+                  require(status_code == 200, f"live page returned HTTP {status_code}: {url}")
+                  require(marker in html, f"live page lacks expected marker {marker!r}: {url}")
+                  checked_urls.append(url)
+
+              timestamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
+              body = f"""## Post-merge publication attestation — PASS
+
+Target merge commit: `{target_sha}`
+
+- Main-push policy run: [#{policy_run['run_number']}]({policy_run['html_url']}) — `success`
+- Policy run ID: `{policy_run_id}`
+- `validated-site` artifact ID: `{artifact_id}`
+- GitHub artifact digest: `{artifact_digest}`
+- Verified site-archive digest: `sha256:{inner_digest}`
+- Pages workflow run: [#{deployment_run['run_number']}]({deployment_run['html_url']}) — `success`
+- Pages build/verification job: `success`
+- Pages deploy job: `success`
+- GitHub deployment ID: `{deployment_id}` — `success`
+- Live ADR-0014 page: `{checked_urls[0]}` — HTTP 200 with expected marker
+- Live Navier–Stokes page: `{checked_urls[1]}` — HTTP 200 with `NS-CI-WP06`
+- Attested at: `{timestamp}`
+
+The Pages job verified the exact run-scoped artifact ZIP digest and its inner deterministic site archive before deploying. No site rebuild occurred in the Pages workflow.
+"""
+              post_comment(body)
+              print(body)
+          except Exception as exc:
+              failure = f"## Post-merge publication attestation — FAIL\n\nTarget merge commit: `{target_sha}`\n\n`{type(exc).__name__}: {exc}`"
+              try:
+                  post_comment(failure)
+              finally:
+                  raise
+          PY
