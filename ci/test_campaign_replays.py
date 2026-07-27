@@ -41,7 +41,7 @@ def main() -> int:
 
     narrowed_registry = copy.deepcopy(registry)
     narrowed_registry["discovery_globs"] = ["campaigns/riemann_hypothesis/**/replay.py"]
-    assert any("additional properties" in error for error in registry_errors(narrowed_registry))
+    assert any("additional properties" in error.lower() for error in registry_errors(narrowed_registry))
 
     with tempfile.TemporaryDirectory() as temporary:
         root = Path(temporary)
