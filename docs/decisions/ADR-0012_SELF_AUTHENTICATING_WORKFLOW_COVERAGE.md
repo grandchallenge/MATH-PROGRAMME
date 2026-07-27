@@ -22,11 +22,12 @@ These are execution-governance defects. They do not alter any mathematical claim
 1. Campaign executable discovery is owned by validator code, not by the replay registry. Every Python file under `campaigns/` with a shebang or `__main__` guard is discovered independently of its filename.
 2. The campaign registry remains the command authority for direct argument arrays, scope, and timeout. An executable must be registered or carry a governed exemption with an explicit rationale; registration and exemption may not overlap.
 3. Every executable `ci/*.py` file must be reachable from an actual Python command in a governed workflow or replay registry, directly or through a statically parsed local import path.
-4. Workflow names, runners, dependency-install routes, policy commands, Pages conditions, checkout references, and publication-freshness checks are validated from parsed YAML structures and operative `run` lines rather than raw-file marker presence.
+4. Workflow names, runners, Python selectors, dependency-install routes, policy commands, Pages conditions, checkout references, and publication-freshness checks are validated from parsed YAML structures and operative `run` lines rather than raw-file marker presence.
 5. All governed workflows use `ubuntu-24.04` rather than `ubuntu-latest`.
-6. Policy and documentation dependencies are pinned in `requirements/policy.txt` and `requirements/docs.txt`. Ad hoc workflow `pip install` commands are rejected.
-7. Pages cancels stale in-progress publication runs and verifies that the policy-validated SHA is still the current `main` tip immediately before building.
-8. The stronger controls are adversarially tested against narrowed discovery, hidden executables, command-marker spoofing, duplicate workflow names, mutable runners, unpinned installation, stale publication, and missing workflow roots.
+6. Every `actions/setup-python` step uses the governed `3.12` minor line. Patch-level movement within that line is accepted and must not be described as an exact runtime pin.
+7. Policy and documentation dependencies are pinned in `requirements/policy.txt` and `requirements/docs.txt`. Ad hoc workflow `pip install` commands are rejected.
+8. Pages cancels stale in-progress publication runs and verifies that the policy-validated SHA is still the current `main` tip immediately before building.
+9. The stronger controls are adversarially tested against narrowed discovery, hidden executables, command-marker spoofing, duplicate workflow names, mutable runners, unconstrained Python selectors, unpinned installation, stale publication, and missing workflow roots.
 
 ## Alternatives considered
 
@@ -44,7 +45,11 @@ Rejected. Helper modules are not commands and some scripts require arguments. Di
 
 ### Rely on successful historical dependency resolution
 
-Rejected. A later policy or Pages run could resolve different packages. Checked-in exact top-level pins provide a stable declared environment, although they are not represented as a complete transitive hash lock.
+Rejected. A later policy or Pages run could resolve different packages. Checked-in exact top-level pins stabilize the declared package layer, although they are not represented as a complete transitive hash lock.
+
+### Present Python `3.12` as an exact runtime pin
+
+Rejected. The minor-line selector permits patch-level movement. The declared environment must state that boundary explicitly unless a later supply-chain decision introduces an exact patch and stronger lock discipline.
 
 ### Publish every successful historical `main` run
 
@@ -54,9 +59,9 @@ Rejected. Publication should represent the current repository tip. A successful 
 
 - Campaign and CI coverage boundaries can no longer be narrowed by editing their registries or using unexpected executable filenames.
 - Comments and echo statements cannot satisfy operative workflow-command obligations.
-- All six governed workflows share a fixed runner family and checked-in dependency declarations.
+- All six governed workflows share a fixed runner family, a governed Python minor line, and checked-in top-level dependency declarations.
 - A newer `main` commit supersedes any older Pages build before publication.
-- The policy remains bounded: exact top-level dependency pins do not constitute a full transitive hash lock, and static import reachability does not prove semantic correctness of the imported code.
+- The policy remains bounded: Python patch-level drift is accepted, exact top-level dependency pins do not constitute a full transitive hash lock, and static import reachability does not prove semantic correctness of the imported code.
 - Runtime and maintenance cost increase modestly because workflow structure and dependency files are now governed artifacts.
 
 ## Affected artifacts
@@ -83,7 +88,7 @@ Rejected. Publication should represent the current repository tip. A successful 
 
 ## Claim boundary
 
-This decision establishes stronger evidence about repository execution, declared dependencies, workflow structure, and publication freshness. It does not certify a theorem, strengthen an imported mathematical relation, promote RH-WP01 or RH-WP02, establish complete software supply-chain reproducibility, or make a novelty or priority claim.
+This decision establishes stronger evidence about repository execution, the declared Python minor line, top-level dependencies, workflow structure, and publication freshness. It does not establish an exact Python patch, a complete operating-system image identity, a transitive dependency hash lock, theorem certification, stronger imported mathematical relations, RH-WP01 or RH-WP02 promotion, novelty, or priority.
 
 ## Review provenance
 
