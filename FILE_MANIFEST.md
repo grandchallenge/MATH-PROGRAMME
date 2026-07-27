@@ -83,32 +83,45 @@ Riemann Hypothesis post-WP00 continuity entries remain implemented and CI-passed
 ## Repository tests and bounded experiments
 
 - `tests/test_ns_wp06_halting_gate_fixture.py`
+- `tests/test_documentary_web_editions.py`
+- `tests/test_documentary_wave_one.py`
 - `experiments/__init__.py`
 - `experiments/ns_wp06_undec/__init__.py`
 - `experiments/ns_wp06_undec/halting_gate_fixture.py`
 - `ci/validate_repository_execution.py`
 - `ci/test_repository_execution.py`
 
-Experiment modules are library-only and must be reachable from discovered standard-library unit tests. Passing tests establish bounded software behaviour only.
+Experiment modules are library-only and must be reachable from discovered standard-library unit tests. Passing tests establish bounded software behaviour only. Documentary repository tests retain problem-specific mathematical spines; shared discovery, authority, accessibility, release, plate, section, and rendering invariants belong to `ci/validate_documentaries.py`.
 
 ## Documentary Library
 
 - `docs/documentaries/index.md`
-- `docs/documentaries/ARTIFACT_MANIFEST.json`
+- `docs/documentaries/ARTIFACT_MANIFEST.json` — sole machine discovery authority
 - `docs/documentaries/sources/README.md`
 - `docs/documentaries/sources/*.tex`
 - `docs/documentaries/documentary_web.schema.json`
-- `docs/documentaries/poincare.edition.json`
+- `docs/documentaries/*.edition.json`
 - `docs/documentaries/*.md`
 - `docs/stylesheets/documentary.css`
+- `docs/stylesheets/documentary-status.css`
 - `docs/javascripts/documentary.js`
 - `docs/javascripts/documentary-mathjax.js`
 - `docs/assets/documentaries/poincare/`
+- `docs/assets/documentaries/bsd/`
+- `docs/assets/documentaries/hodge/`
+- `docs/assets/documentaries/navier_stokes/`
+- `docs/assets/documentaries/yang_mills/`
+- `docs/assets/documentaries/p_vs_np/`
+- `docs/assets/documentaries/riemann/`
 - `schemas/documentary_manifest.schema.json`
 - `ci/validate_documentaries.py`
 - `ci/test_validate_documentaries.py`
+- `tests/test_documentary_web_editions.py`
+- `tests/test_documentary_wave_one.py`
 
-The complete illustrated source bundle is the authoritative documentary source artifact; the checksum-locked PDF is the rendered edition. Current release-class entries are `metadata_only` and do not assert stable public locators.
+The manifest names every source record, web page, edition record, claim authority, scope relation, and documentary tier. The complete illustrated source bundle is the authoritative documentary source artifact; the checksum-locked PDF is the rendered edition. Current release-class entries are `metadata_only` and do not assert stable public locators.
+
+The tier vocabulary is expository rather than mathematical: Poincaré is the reference tier, BSD is the full tier, and Hodge, Navier–Stokes, Yang–Mills, P versus NP, and Riemann are orientation tier.
 
 ## Union-Closed formal and exact baseline
 

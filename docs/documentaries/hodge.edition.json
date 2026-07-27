@@ -1,9 +1,172 @@
 {
-  "schema_version":"1.1.0","volume_id":"hodge","title":"The Geometry of Hidden Harmony","subtitle":"A guided journey through cohomology, Hodge decomposition, and algebraic cycles","status":"Open Millennium Prize Problem; rational projective statement; no algebraicity proof claim","claim_boundary":"Browser-native, source-normalized exposition of the rational Hodge conjecture for smooth projective complex varieties. Low-dimensional cases, numerical coincidence, integral classes, arbitrary compact Kähler manifolds, Hodge loci, Abel–Jacobi invariants, the Tate conjecture, Mumford–Tate theory, and motivic heuristics are not promoted to the general algebraicity statement.","asset_base":"docs_root",
-  "math_rendering":{"provider":"MathJax","version":"3.2.2","delivery":"version_pinned_cdn","script_url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js","archival_role":"enhancement_only","fallback":"source_tex_remains_readable_without_javascript"},
-  "palette":{"navy":"#14203A","parchment":"#F3E9D8","gold":"#B89549","ink":"#28253B"},
-  "plates":[{"id":"cover","label":"Cover","title":"The Geometry of Hidden Harmony","asset":"assets/documentaries/hodge/cover.svg","alt":"An illuminated complex variety is overlaid by a Hodge diamond and golden algebraic cycles.","authority":"pedagogical_orientation_only"},{"id":"memory","label":"Plate I","title":"How a shape remembers","asset":"assets/documentaries/hodge/memory.svg","alt":"Cycles thread through a complex geometric world while cohomology records their global traces.","authority":"pedagogical_orientation_only"},{"id":"diamond","label":"Plate II","title":"The Hodge decomposition","asset":"assets/documentaries/hodge/diamond.svg","alt":"A luminous Hodge diamond separates cohomology into conjugate bidegrees.","authority":"pedagogical_orientation_only"},{"id":"cycles","label":"Plate III","title":"From subvarieties to classes","asset":"assets/documentaries/hodge/cycles.svg","alt":"Algebraic subvarieties map through the cycle-class map into rational Hodge classes.","authority":"pedagogical_orientation_only"},{"id":"frontier","label":"Plate IV","title":"The exact rational frontier","asset":"assets/documentaries/hodge/frontier.svg","alt":"Known divisor and low-dimensional terrain is separated from false integral and unrestricted Kähler variants.","authority":"pedagogical_orientation_only"}],
-  "chapters":[{"id":"reader-note","title":"How to Read the Harmony","source_heading":"A Note to the Reader","claim_classes":["exposition","guardrail","open"]},{"id":"cohomology","title":"How a Shape Remembers","source_heading":"Cohomology: How a Shape Remembers","claim_classes":["established","guardrail"]},{"id":"decomposition","title":"The Hodge Decomposition","source_heading":"The Hodge Decomposition","claim_classes":["imported","established","guardrail"]},{"id":"cycles","title":"Algebraic Cycles and Their Classes","source_heading":"Algebraic Cycles","claim_classes":["established","guardrail"]},{"id":"conjecture","title":"The Exact Rational Conjecture","source_heading":"The Hodge Conjecture, Exactly","claim_classes":["open","guardrail"]},{"id":"terrain","title":"Known Islands and False Extensions","source_heading":"Known Cases and False Generalizations","claim_classes":["imported","established","open","guardrail"]}],
-  "appendices":[{"id":"appendix-categories","title":"Category and Coefficient Restrictions","source_heading":"Technical Appendix: Categories and Coefficients","claim_classes":["established","guardrail"]},{"id":"appendix-cycle-map","title":"The Cycle-Class Map","source_heading":"Technical Appendix: The Cycle-Class Map","claim_classes":["established","open"]},{"id":"appendix-low-dimensional","title":"Lefschetz and the Low-Dimensional Boundary","source_heading":"Technical Appendix: Known Low-Dimensional Terrain","claim_classes":["imported","established","guardrail"]},{"id":"appendix-trust","title":"Hodge Loci, Motives, and Trust Matrix","source_heading":"Technical Appendix: Adjacent Conjectures and Trust Matrix","claim_classes":["imported","open","guardrail"]}],
-  "sources":["https://www.claymath.org/millennium/hodge-conjecture/","https://www.claymath.org/wp-content/uploads/2022/05/hodge.pdf","https://doi.org/10.1007/978-3-662-03080-7","https://doi.org/10.1007/BF02684695","https://doi.org/10.1007/s00222-003-0329-0"]
+  "schema_version": "1.1.0",
+  "volume_id": "hodge",
+  "title": "The Geometry of Hidden Harmony",
+  "subtitle": "A guided journey through cohomology, Hodge decomposition, and algebraic cycles",
+  "status": "Open Millennium Prize Problem; rational projective statement; no algebraicity proof claim",
+  "claim_boundary": "Browser-native, source-normalized exposition of the rational Hodge conjecture for smooth projective complex varieties. Low-dimensional cases, numerical coincidence, integral classes, arbitrary compact Kähler manifolds, Hodge loci, Abel–Jacobi invariants, the Tate conjecture, Mumford–Tate theory, and motivic heuristics are not promoted to the general algebraicity statement.",
+  "asset_base": "docs_root",
+  "math_rendering": {
+    "provider": "MathJax",
+    "version": "3.2.2",
+    "delivery": "version_pinned_cdn",
+    "script_url": "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js",
+    "archival_role": "enhancement_only",
+    "fallback": "source_tex_remains_readable_without_javascript"
+  },
+  "palette": {
+    "navy": "#14203A",
+    "parchment": "#F3E9D8",
+    "gold": "#B89549",
+    "ink": "#28253B"
+  },
+  "plates": [
+    {
+      "id": "cover",
+      "label": "Cover",
+      "title": "The Geometry of Hidden Harmony",
+      "asset": "assets/documentaries/hodge/cover.svg",
+      "alt": "An illuminated complex variety is overlaid by a Hodge diamond and golden algebraic cycles.",
+      "authority": "pedagogical_orientation_only"
+    },
+    {
+      "id": "memory",
+      "label": "Plate I",
+      "title": "How a shape remembers",
+      "asset": "assets/documentaries/hodge/memory.svg",
+      "alt": "Cycles thread through a complex geometric world while cohomology records their global traces.",
+      "authority": "pedagogical_orientation_only"
+    },
+    {
+      "id": "diamond",
+      "label": "Plate II",
+      "title": "The Hodge decomposition",
+      "asset": "assets/documentaries/hodge/diamond.svg",
+      "alt": "A luminous Hodge diamond separates cohomology into conjugate bidegrees.",
+      "authority": "pedagogical_orientation_only"
+    },
+    {
+      "id": "cycles",
+      "label": "Plate III",
+      "title": "From subvarieties to classes",
+      "asset": "assets/documentaries/hodge/cycles.svg",
+      "alt": "Algebraic subvarieties map through the cycle-class map into rational Hodge classes.",
+      "authority": "pedagogical_orientation_only"
+    },
+    {
+      "id": "frontier",
+      "label": "Plate IV",
+      "title": "The exact rational frontier",
+      "asset": "assets/documentaries/hodge/frontier.svg",
+      "alt": "Known divisor and low-dimensional terrain is separated from false integral and unrestricted Kähler variants.",
+      "authority": "pedagogical_orientation_only"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "reader-note",
+      "title": "How to Read the Harmony",
+      "source_heading": "A Note to the Reader",
+      "claim_classes": [
+        "exposition",
+        "guardrail",
+        "open"
+      ]
+    },
+    {
+      "id": "cohomology",
+      "title": "How a Shape Remembers",
+      "source_heading": "Cohomology: How a Shape Remembers",
+      "claim_classes": [
+        "established",
+        "guardrail"
+      ]
+    },
+    {
+      "id": "decomposition",
+      "title": "The Hodge Decomposition",
+      "source_heading": "The Hodge Decomposition",
+      "claim_classes": [
+        "imported",
+        "established",
+        "guardrail"
+      ]
+    },
+    {
+      "id": "cycles",
+      "title": "Algebraic Cycles and Their Classes",
+      "source_heading": "Algebraic Cycles",
+      "claim_classes": [
+        "established",
+        "guardrail"
+      ]
+    },
+    {
+      "id": "conjecture",
+      "title": "The Exact Rational Conjecture",
+      "source_heading": "The Hodge Conjecture, Exactly",
+      "claim_classes": [
+        "open",
+        "guardrail"
+      ]
+    },
+    {
+      "id": "terrain",
+      "title": "Known Islands and False Extensions",
+      "source_heading": "Known Cases and False Generalizations",
+      "claim_classes": [
+        "imported",
+        "established",
+        "open",
+        "guardrail"
+      ]
+    }
+  ],
+  "appendices": [
+    {
+      "id": "appendix-categories",
+      "title": "Category and Coefficient Restrictions",
+      "source_heading": "Technical Appendix: Categories and Coefficients",
+      "claim_classes": [
+        "established",
+        "guardrail"
+      ]
+    },
+    {
+      "id": "appendix-cycle-map",
+      "title": "The Cycle-Class Map",
+      "source_heading": "Technical Appendix: The Cycle-Class Map",
+      "claim_classes": [
+        "established",
+        "open"
+      ]
+    },
+    {
+      "id": "appendix-low-dimensional",
+      "title": "Lefschetz and the Low-Dimensional Boundary",
+      "source_heading": "Technical Appendix: Known Low-Dimensional Terrain",
+      "claim_classes": [
+        "imported",
+        "established",
+        "guardrail"
+      ]
+    },
+    {
+      "id": "appendix-trust",
+      "title": "Hodge Loci, Motives, and Trust Matrix",
+      "source_heading": "Technical Appendix: Adjacent Conjectures and Trust Matrix",
+      "claim_classes": [
+        "imported",
+        "open",
+        "guardrail"
+      ]
+    }
+  ],
+  "sources": [
+    "https://www.claymath.org/millennium/hodge-conjecture/",
+    "https://www.claymath.org/wp-content/uploads/2022/05/hodge.pdf",
+    "https://doi.org/10.1007/978-3-662-03080-7",
+    "https://doi.org/10.1007/BF02684695",
+    "https://doi.org/10.1007/s00222-003-0329-0"
+  ]
 }
