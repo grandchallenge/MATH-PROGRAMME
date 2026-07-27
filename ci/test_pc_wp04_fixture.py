@@ -45,6 +45,28 @@ def mutate_placeholder(fixture: Path) -> None:
     )
 
 
+def mutate_invalid_package_name(fixture: Path) -> None:
+    path = fixture / "lakefile.toml"
+    path.write_text(
+        path.read_text(encoding="utf-8").replace('name = "pc_wp04"', 'name = "pc-wp04"', 1),
+        encoding="utf-8",
+    )
+
+
+def mutate_manifest_name(fixture: Path) -> None:
+    path = fixture / "lake-manifest.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data["name"] = "other_package"
+    path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+
+
+def mutate_unpinned_dependency(fixture: Path) -> None:
+    path = fixture / "lake-manifest.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data["packages"][0]["rev"] = "main"
+    path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+
+
 def main() -> None:
     if run(SOURCE_FIXTURE) != 0:
         raise SystemExit("baseline PC-WP04 fixture failed")
@@ -53,6 +75,9 @@ def main() -> None:
         ("missing-source", mutate_manifest),
         ("missing-declaration", mutate_declaration),
         ("proof-placeholder", mutate_placeholder),
+        ("invalid-package-name", mutate_invalid_package_name),
+        ("manifest-name-drift", mutate_manifest_name),
+        ("unpinned-dependency", mutate_unpinned_dependency),
     ]:
         with tempfile.TemporaryDirectory(prefix=f"pc-wp04-{name}-") as tmp:
             fixture = Path(tmp) / "PC-WP04"

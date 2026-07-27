@@ -11,11 +11,9 @@
 
 ## Historical master plan
 
-The full development-stage master plan remains at:
+The development-stage master plan was originally committed under the mislabelled alias `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`. PR #96 removed that alias from the current tree after Domain 05 became canonical. The reviewed historical bytes remain recoverable through version history at commit `fe5a8c63d7b2f27927f27d7d9e2e203e19330398`.
 
-- `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`
-
-That filename predates integration of BSD as canonical Domain 04. Under `ADR-0006`, it is retained as a historical development artifact. This Domain 05 entry is the canonical programme identity for all archival and maintenance work.
+Under `ADR-0006`, this Domain 05 entry is the sole current programme identity for archival and maintenance work. Historical review records may preserve the retired alias only as governed review provenance.
 
 ## Claim boundary
 

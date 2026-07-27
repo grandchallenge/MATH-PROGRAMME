@@ -17,16 +17,26 @@ on:
       - "ci/*pc_wp04*"
       - ".github/workflows/pc-wp04.yml"
 
+permissions:
+  contents: read
+
+concurrency:
+  group: pc-wp04-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   pc-wp04-lean:
     name: Kernel-check PC-WP04
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
-          python-version: "3.x"
+          persist-credentials: false
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
 
       - name: Install fixture dependencies
         run: python -m pip install jsonschema
@@ -47,7 +57,7 @@ jobs:
       - name: Set up pinned Lean and mathlib cache
         id: lean-setup
         continue-on-error: true
-        uses: leanprover/lean-action@v1
+        uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
         with:
           lake-package-directory: fixtures/formal/PC-WP04
           auto-config: false
@@ -65,20 +75,14 @@ jobs:
           set +e
           {
             echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
-            command -v elan || true
-            command -v lake || true
-            elan --version || true
-            lake --version || true
-            if ! command -v lake >/dev/null 2>&1; then
-              echo "Lean toolchain was not installed."
-              exit 1
-            fi
+            command -v elan
+            command -v lake
+            elan --version
+            lake --version
             test -f lake-manifest.json || {
               echo "Pinned lake-manifest.json is required."
               exit 1
             }
-            lake update
-            lake exe cache get
             lake build
           } > pc-wp04-lean-build.log 2>&1
           status=$?
@@ -87,7 +91,7 @@ jobs:
 
       - name: Preserve PC-WP04 Lean failure log
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: pc-wp04-lean-failure
           path: fixtures/formal/PC-WP04/pc-wp04-lean-build.log

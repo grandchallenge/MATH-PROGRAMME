@@ -1,0 +1,35 @@
+crosswalk_version: '1.0.0'
+campaign_id: PC-001
+governing_decision: ADR-0006
+retired_path: DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md
+canonical_path: DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md
+retirement:
+  pull_request: 96
+  deletion_commit: 99f66fdb0e2d5cd99c2d6e4f716d77d56cd3ea35
+  last_integrated_commit_with_historical_bytes: fe5a8c63d7b2f27927f27d7d9e2e203e19330398
+references:
+  - path: DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md
+    relation: canonical_retirement_notice
+    required_marker: removed that alias from the current tree
+  - path: campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/10_CLAIM_LEDGER.yaml
+    relation: version_history_provenance
+    required_marker: git-history:fe5a8c63d7b2f27927f27d7d9e2e203e19330398:DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md
+  - path: campaigns/poincare_reconstruction/WP05_INTEGRATED_CLOSURE/09_ARCHIVAL_MANIFEST.json
+    relation: historical_alias_registry
+    required_marker: '"historical_aliases"'
+  - path: reviews/poincare/PC-WP00.agent_review.yaml
+    relation: frozen_review_provenance
+    required_marker: 'id: PC-WP00'
+  - path: reviews/poincare/PC-WP01.agent_review.yaml
+    relation: frozen_review_provenance
+    required_marker: 'id: PC-WP01'
+  - path: reviews/poincare/PC-WP01_WP02.integration_review.yaml
+    relation: frozen_review_provenance
+    required_marker: 'id: PC-WP01-WP02-INTEGRATION'
+  - path: reviews/poincare/PC-WP02.agent_review.yaml
+    relation: frozen_review_provenance
+    required_marker: 'id: PC-WP02'
+  - path: reviews/poincare/PC-WP03.agent_review.yaml
+    relation: frozen_review_provenance
+    required_marker: 'id: PC-WP03'
+claim_boundary: Historical identity preservation does not restore the retired path to current authority, change any review finding, or strengthen the Poincare archive claim.

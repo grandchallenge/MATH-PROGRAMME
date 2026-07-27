@@ -23,6 +23,8 @@ Do not infer Pages URLs for root files. Use the canonical GitHub links below.
 - [Thurstonian Ethos](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/THURSTONIAN_ETHOS.md)
 - [Domain Registry](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/DOMAIN_REGISTRY.yaml)
 - [ADR-0010 Documentary Authority](decisions/ADR-0010_DOCUMENTARY_LIBRARY_AUTHORITY.md)
+- [ADR-0011 Full Workflow Coverage](decisions/ADR-0011_FULL_WORKFLOW_COVERAGE.md)
+- [Programme Workflow Coverage](WORKFLOW_COVERAGE.md)
 
 ## Canonical domains
 
@@ -37,7 +39,7 @@ Do not infer Pages URLs for root files. Use the canonical GitHub links below.
 
 Domains 06–08 begin with integrated root WP00 dossiers rather than separate master-plan files. A later governed master plan may supersede those canonical entries only through an explicit registry and decision update.
 
-Historical filename note: the detailed BSD plan remains under `DOMAIN_03_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md`, and the development-stage Poincaré plan remains under `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`. ADR-0005 and ADR-0006 govern their canonical numbering.
+Historical filename note: the detailed BSD plan remains recoverable under `DOMAIN_03_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md`. The mislabelled development-stage `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` was removed in PR #96; the canonical Poincaré entry is `DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`. ADR-0005 and ADR-0006 govern the canonical numbering.
 
 ## Campaign directories
 
@@ -70,10 +72,23 @@ RH-WP01 and RH-WP02 are implemented, merged, and CI-passed but remain formally u
 
 The committed `.tex` files are source records. The checksum-locked complete illustrated source bundle is the authoritative documentary source artifact, and the checksum-locked PDF is the rendered edition. Entries marked `metadata_only` have governed identities but no asserted stable public release locator.
 
-## Union-Closed baseline
+## Union-Closed formal and exact baseline
 
 - [WP01 Union-Closed Status Spine](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/WP01_UNION_CLOSED_STATUS_SPINE.md)
 - [WP02 Union-Closed Lean Handoff](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/WP02_UNION_CLOSED_LEAN_HANDOFF.md)
+- [Pinned cross-repository evidence](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/evidence/UC-WP02-MATHCERT.json)
+- [External MATHCERT implementation](https://github.com/grandchallenge/MATHCERT)
+
+The Union-Closed formal implementation is external, not a local `MathCert/` directory. The global programme policy checks out the exact MATHCERT commit in the evidence record and runs its complete certification gate.
+
+## Workflow and publication controls
+
+- [Global programme policy](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/.github/workflows/ci.yml)
+- [Campaign replay registry](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ci/campaign_replay_registry.json)
+- [Workflow coverage validator](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ci/validate_workflow_coverage.py)
+- [Pages deployment gate](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/.github/workflows/pages.yml)
+
+The global policy runs all governed campaign replay commands, LOG-GCD Lean, PC-WP04 Lean, and the pinned external MATHCERT gate. Pages deploys only the exact `main` commit from a successful push-triggered global policy run.
 
 ## Inventory and public entry points
 
@@ -85,4 +100,4 @@ The committed `.tex` files are source records. The checksum-locked complete illu
 
 ## Authority rule
 
-The domain registry identifies canonical domain entries and public pages. The Agent Council artifact ledger identifies authoritative integrated governed artifacts. Claim ledgers, proof files, source records, governing source artifacts, and MATHCERT artifacts remain authoritative within their declared roles. Repository merge and CI can establish integration and replay facts; they cannot prove the underlying open problem or override an explicit blocking review.
+The domain registry identifies canonical domain entries and public pages. The Agent Council artifact ledger identifies authoritative integrated governed artifacts. Claim ledgers, proof files, source records, governing source artifacts, and MATHCERT artifacts remain authoritative within their declared roles. Repository merge and CI can establish integration and replay facts; they cannot prove the underlying open problem or override an explicit blocking review. Publication is permitted only after the exact `main` commit passes the global programme policy.

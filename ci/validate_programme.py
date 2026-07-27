@@ -31,6 +31,7 @@ SCHEMA_BOUND_AGENT_REVIEWS: tuple[str, ...] = (
     "reviews/union_closed/UC-WP01.agent_review.yaml",
     "reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml",
     "reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml",
+    "reviews/governance/WORKFLOW-COVERAGE.agent_review.yaml",
 )
 
 

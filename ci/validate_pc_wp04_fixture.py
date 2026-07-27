@@ -5,6 +5,7 @@ import json
 import re
 import subprocess
 import sys
+import tomllib
 from pathlib import Path
 
 REQUIRED_DECLARATIONS = {
@@ -25,6 +26,8 @@ REQUIRED_SOURCES = {
     ("PC-WP02", "PC02-T013/PC02-T014/PC02-T016"),
 }
 PROHIBITED_PATTERN = re.compile(r"(^|[^A-Za-z])(sorry|axiom)([^A-Za-z]|$)")
+LEAN_NAME = re.compile(r"^[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)*$")
+GIT_REVISION = re.compile(r"^[0-9a-f]{40}$")
 
 
 def fail(message: str) -> None:
@@ -41,6 +44,42 @@ def git_blob(path: Path) -> str:
     return result.stdout.strip()
 
 
+def validate_lake_metadata(fixture: Path) -> None:
+    lakefile_path = fixture / "lakefile.toml"
+    lake_manifest_path = fixture / "lake-manifest.json"
+    toolchain_path = fixture / "lean-toolchain"
+    if not lake_manifest_path.is_file():
+        fail("missing pinned lake-manifest.json")
+
+    lakefile = tomllib.loads(lakefile_path.read_text(encoding="utf-8"))
+    lake_manifest = json.loads(lake_manifest_path.read_text(encoding="utf-8"))
+    project_name = lakefile.get("name")
+    if not isinstance(project_name, str) or not LEAN_NAME.fullmatch(project_name):
+        fail(f"Lake package name is not a valid Lean Name: {project_name!r}")
+    if lake_manifest.get("name") != project_name:
+        fail("lakefile.toml and lake-manifest.json package names disagree")
+
+    requirements = lakefile.get("require", [])
+    mathlib_requirements = [entry for entry in requirements if entry.get("name") == "mathlib"]
+    if len(mathlib_requirements) != 1:
+        fail("lakefile.toml must contain exactly one mathlib requirement")
+    mathlib_input = mathlib_requirements[0].get("rev")
+    expected_toolchain = f"leanprover/lean4:{mathlib_input}"
+    if toolchain_path.read_text(encoding="utf-8").strip() != expected_toolchain:
+        fail("lean-toolchain must match the lakefile mathlib release")
+
+    packages = lake_manifest.get("packages", [])
+    mathlib_packages = [entry for entry in packages if entry.get("name") == "mathlib"]
+    if len(mathlib_packages) != 1:
+        fail("lake-manifest.json must contain exactly one mathlib package")
+    if mathlib_packages[0].get("inputRev") != mathlib_input:
+        fail("mathlib inputRev does not match lakefile.toml")
+    for package in packages:
+        revision = package.get("rev")
+        if not isinstance(revision, str) or not GIT_REVISION.fullmatch(revision):
+            fail(f"dependency {package.get('name', '<unknown>')} is not pinned to a full Git revision")
+
+
 def main() -> None:
     fixture = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("fixtures/formal/PC-WP04")
     root = Path.cwd()
@@ -52,10 +91,13 @@ def main() -> None:
         fixture / "README.md",
         fixture / "lakefile.toml",
         fixture / "lean-toolchain",
+        fixture / "lake-manifest.json",
     ]
     for path in required:
         if not path.is_file():
             fail(f"missing required file {path}")
+
+    validate_lake_metadata(fixture)
 
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if manifest.get("artifact_id") != "PC-WP04":

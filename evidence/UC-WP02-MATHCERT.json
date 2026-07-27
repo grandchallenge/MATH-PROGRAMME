@@ -1,0 +1,19 @@
+{
+  "$schema": "../schemas/cross_repository_evidence.schema.json",
+  "schema_version": "1.0.0",
+  "evidence_id": "UC-WP02-MATHCERT",
+  "repository": "grandchallenge/MATHCERT",
+  "commit": "d59173899dcd1a67dbe8f31de0b9f0917cd1459a",
+  "workflow": "Cert checks",
+  "paths": [
+    "MathCert/Domains/UnionClosed/Basic.lean",
+    "MathCert/Domains/UnionClosed/Frequency.lean",
+    "MathCert/Domains/UnionClosed/FranklStatement.lean",
+    "MathCert/Domains/UnionClosed/SingletonCase.lean",
+    "certificates/exact/union_closed_n_le_4.json",
+    "ci/replay_certificates.py",
+    "ci/check_lean.sh"
+  ],
+  "command": ["bash", "ci/check_lean.sh"],
+  "claim_boundary": "This evidence checks the external MATHCERT formal and bounded replay substrate at one pinned commit. It does not prove Frankl's conjecture or convert bounded finite replay into a universal result."
+}

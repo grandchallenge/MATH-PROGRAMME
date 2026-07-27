@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/cross_repository_evidence.schema.json",
+  "title": "Cross-repository certification evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "evidence_id", "repository", "commit", "workflow", "paths", "command", "claim_boundary"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": "1.0.0"},
+    "evidence_id": {"type": "string", "pattern": "^[A-Z0-9][A-Z0-9-]*$"},
+    "repository": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"},
+    "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "workflow": {"type": "string", "minLength": 1},
+    "paths": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "command": {
+      "type": "array",
+      "minItems": 2,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "claim_boundary": {"type": "string", "minLength": 40}
+  }
+}
