@@ -20,7 +20,7 @@
 | Field | Value |
 |---|---|
 | Result status | Investigatory lane authorized |
-| Strongest supported claim | Computation and undecidable trajectory or blow-up phenomena occur in related dynamical systems |
+| Strongest supported claim | Primary sources establish computational universality or undecidable events in specified adjacent systems; no transfer to the true viscous equation is established |
 | Not claimed | Turing completeness, undecidable blow-up, singularity, or formal independence for the true 3D incompressible Navier–Stokes equations |
 | Support-route class | `EXPLORATORY_EVIDENCE` and source audit only |
 | Certification state | Not eligible for mathematical promotion |
@@ -34,7 +34,7 @@ Determine whether there exists a computable encoding
 (M,x)\longmapsto u_{M,x}
 ```
 
-from a Turing machine and input to admissible smooth, divergence-free initial data for the true unforced three-dimensional incompressible Navier–Stokes equations such that a precisely stated fluid event is equivalent to the machine halting.
+from a Turing machine and input to admissible smooth, divergence-free initial data for the true unforced three-dimensional incompressible Navier–Stokes equations such that, relative to an explicitly fixed domain, solution class, solution quantifier, representation, and fluid event, the event is equivalent to the machine halting.
 
 Candidate fluid events must remain distinct:
 
@@ -63,18 +63,20 @@ A valid many-one reduction into a Navier–Stokes decision problem must discharg
 
 | ID | Obligation | Completion condition |
 |---|---|---|
-| `U001` | Computable encoding | An explicit algorithm emits admissible initial data from `(M,x)` |
+| `U001` | Computable encoding | An explicit algorithm emits represented admissible initial data from `(M,x)` |
 | `U002` | Equation fidelity | The construction uses the true Navier–Stokes nonlinearity, pressure projection, and viscosity |
-| `U003` | Admissible data | Smoothness, divergence freedom, decay or periodicity, and finite energy are proved |
+| `U003` | Admissible data | Smoothness, divergence freedom, decay or periodicity, finite energy, and effective representation are proved |
 | `U004` | Uniform simulation | One construction works for all encoded machines and inputs |
 | `U005` | Robust clock | Computational steps are represented without an unproved infinite-precision oracle |
 | `U006` | Viscous persistence | Dissipation does not erase the encoded transition before it is used |
 | `U007` | Halting witness | Halting implies the chosen fluid event |
 | `U008` | Non-halting safety | Non-halting excludes the chosen fluid event |
-| `U009` | Event decision profile | The target event is stated with exact quantifiers, representations, and tolerances |
-| `U010` | Claim transfer | Any undecidability or independence conclusion follows from an explicit metatheorem |
+| `U009` | Event decision profile | The target event is stated with exact quantifiers, representations, tolerances, and observation horizon |
+| `U010` | Solution semantics | Domain, solution class, existence assumptions, uniqueness or selection rule, and universal/existential quantification over solutions are explicit |
+| `U011` | Undecidability transfer | A stated computability-theoretic theorem transfers the two-way reduction to the exact represented target decision problem |
+| `U012` | Independence transfer | Any independence claim names a formal system, arithmetizes the target statement, and proves the separate metamathematical bridge |
 
-Failure of any one obligation terminates the proposed reduction.
+Failure of any one obligation terminates the proposed reduction or the stronger conclusion that depends on it. `U012` is required only for formal-independence language, but no such language is permitted without it.
 
 ## Claim boundary
 
@@ -97,10 +99,12 @@ The bounded software fixture under `experiments/ns_wp06_undec/` is an interface 
 Escalation beyond literature and bounded interface fixtures requires all of:
 
 - [ ] a true-equation construction, not an averaged or altered nonlinearity;
-- [ ] explicit admissible initial data;
+- [ ] explicit effectively represented admissible initial data;
+- [ ] an exact solution class and solution quantifier;
 - [ ] a two-way halting/event proof;
 - [ ] an adversarial precision and robustness audit;
-- [ ] a metamathematical review separating undecidability from formal independence;
+- [ ] a computability-theoretic transfer theorem for the represented decision problem;
+- [ ] a separate formal-system-relative theorem before any independence claim;
 - [ ] a new Council decision authorizing the next stage.
 
 Until then, the lane remains non-blocking and non-probative.
