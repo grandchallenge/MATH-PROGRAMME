@@ -2,7 +2,9 @@
 
 ## Status
 
-Accepted, 2026-07-26, pending final-head integration evidence.
+Accepted, 2026-07-26.
+
+Final-head workflow evidence is recorded in the governing pull-request history rather than embedded self-referentially in this decision.
 
 ## Context
 
