@@ -5,11 +5,16 @@ import re
 import unittest
 from pathlib import Path
 
+import yaml
+from jsonschema import Draft202012Validator, FormatChecker
+
 ROOT = Path(__file__).resolve().parents[1]
 WP = ROOT / "campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK"
 SOURCE = ROOT / "docs/documentaries/sources/the_element_in_half_the_worlds.tex"
 LOCK = WP / "artifacts/UC-DOC-WP00_SOURCE_LOCK.json"
 MANIFEST = ROOT / "docs/documentaries/ARTIFACT_MANIFEST.json"
+REVIEW = ROOT / "reviews/union_closed/UC-DOC-WP00.agent_review.yaml"
+REVIEW_SCHEMA = ROOT / "schemas/agent_review.schema.json"
 
 
 class UnionClosedDocumentarySourceLockTests(unittest.TestCase):
@@ -21,12 +26,20 @@ class UnionClosedDocumentarySourceLockTests(unittest.TestCase):
 
     def test_work_package_bundle_is_complete(self) -> None:
         required = [
-            "00_README.md", "01_RESULT_STATUS.json", "02_LAY_COMPANION.md",
-            "03_OBJECT_AND_OBSTRUCTION.md", "04_PROBLEM_AND_STATUS_AUDIT.md",
-            "05_THEOREM_SPINE.md", "06_DEPENDENCY_DAG.json",
-            "07_PROOFS_AND_COMPUTATIONS.md", "08_FAILURE_AND_NEGATIVE_RESULTS.md",
-            "09_PROOF_DEBT.json", "10_CLAIM_LEDGER.yaml", "11_CERT_HANDOFF.md",
-            "12_NEXT_EXECUTABLE_STEP.md", "artifacts/UC-DOC-WP00_SOURCE_LOCK.json",
+            "00_README.md",
+            "01_RESULT_STATUS.json",
+            "02_LAY_COMPANION.md",
+            "03_OBJECT_AND_OBSTRUCTION.md",
+            "04_PROBLEM_AND_STATUS_AUDIT.md",
+            "05_THEOREM_SPINE.md",
+            "06_DEPENDENCY_DAG.json",
+            "07_PROOFS_AND_COMPUTATIONS.md",
+            "08_FAILURE_AND_NEGATIVE_RESULTS.md",
+            "09_PROOF_DEBT.json",
+            "10_CLAIM_LEDGER.yaml",
+            "11_CERT_HANDOFF.md",
+            "12_NEXT_EXECUTABLE_STEP.md",
+            "artifacts/UC-DOC-WP00_SOURCE_LOCK.json",
         ]
         for relative in required:
             self.assertTrue((WP / relative).is_file(), relative)
@@ -35,7 +48,10 @@ class UnionClosedDocumentarySourceLockTests(unittest.TestCase):
         for key, label in (
             ("latex_source", "Complete LaTeX source"),
             ("rendered_pdf", "Rendered PDF"),
-            ("authoritative_source_bundle", "Authoritative complete illustrated source bundle"),
+            (
+                "authoritative_source_bundle",
+                "Authoritative complete illustrated source bundle",
+            ),
         ):
             artifact = self.lock["release_artifacts"][key]
             self.assertIn(f"% {label} bytes: {artifact['bytes']}", self.source)
@@ -51,7 +67,11 @@ class UnionClosedDocumentarySourceLockTests(unittest.TestCase):
         self.assertIn("Frankl's conjecture open", readme)
         self.assertIn("Status: `OPEN`", audit)
         self.assertIn("does not prove Frankl's conjecture", boundary)
-        for forbidden in ("Frankl's conjecture is proved", "solves Frankl", "new proof of Frankl"):
+        for forbidden in (
+            "Frankl's conjecture is proved",
+            "solves Frankl",
+            "new proof of Frankl",
+        ):
             self.assertNotIn(forbidden, readme + audit + self.source)
 
     def test_manifest_admission_is_deferred_fail_closed(self) -> None:
@@ -61,7 +81,10 @@ class UnionClosedDocumentarySourceLockTests(unittest.TestCase):
         self.assertNotIn("union_closed.edition.json", editions)
         self.assertFalse((ROOT / "docs/documentaries/union_closed.edition.json").exists())
         self.assertFalse((ROOT / "docs/documentaries/union_closed.md").exists())
-        self.assertEqual("deferred_to_UC-DOC-WP01", self.lock["manifest_admission"]["state"])
+        self.assertEqual(
+            "deferred_to_UC-DOC-WP01",
+            self.lock["manifest_admission"]["state"],
+        )
         self.assertFalse(self.lock["manifest_admission"]["manifest_member"])
 
     def test_plate_authority_and_inventory(self) -> None:
@@ -78,9 +101,39 @@ class UnionClosedDocumentarySourceLockTests(unittest.TestCase):
             "pages": "48",
             "date": "2026-07-27",
         }
+        labels = {
+            "title": "Title",
+            "subject": "Subject",
+            "pages": "Pages",
+            "date": "Source-lock date",
+        }
         for key, value in expected.items():
-            label = {"title": "Title", "subject": "Subject", "pages": "Pages", "date": "Source-lock date"}[key]
-            self.assertRegex(self.source, rf"(?m)^% {re.escape(label)}: {re.escape(value)}$")
+            self.assertRegex(
+                self.source,
+                rf"(?m)^% {re.escape(labels[key])}: {re.escape(value)}$",
+            )
+
+    def test_agent_review_is_schema_valid_and_promotable(self) -> None:
+        review = yaml.safe_load(REVIEW.read_text(encoding="utf-8"))
+        schema = json.loads(REVIEW_SCHEMA.read_text(encoding="utf-8"))
+        validator = Draft202012Validator(schema, format_checker=FormatChecker())
+        errors = sorted(validator.iter_errors(review), key=lambda item: list(item.path))
+        self.assertEqual(
+            [],
+            [f"{error.json_path}: {error.message}" for error in errors],
+        )
+        self.assertTrue(review["promotion"]["ready_for_next_stage"])
+        self.assertEqual([], review["promotion"]["blockers"])
+        for role in (
+            "Axiomatist",
+            "Cartographer",
+            "Verifier",
+            "Adversary",
+            "Formalist",
+            "Amanuensis",
+            "Referee",
+        ):
+            self.assertEqual("reviewed", review["council_review"][role]["status"])
 
 
 if __name__ == "__main__":
