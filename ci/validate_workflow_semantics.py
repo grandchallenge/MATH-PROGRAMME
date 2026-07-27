@@ -51,6 +51,15 @@ def all_runs(workflow: dict[str, Any]) -> list[str]:
     return runs
 
 
+def command_lines(runs: list[str]) -> set[str]:
+    return {
+        line.strip()
+        for run in runs
+        for line in run.splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    }
+
+
 def requirement_lines(root: Path, relative: str) -> tuple[str, ...]:
     path = root / relative
     if not path.is_file():
@@ -63,7 +72,11 @@ def requirement_lines(root: Path, relative: str) -> tuple[str, ...]:
 
 
 def contains_command(runs: list[str], command: str) -> bool:
-    return any(command in run for run in runs)
+    return command in command_lines(runs)
+
+
+def contains_marker(runs: list[str], marker: str) -> bool:
+    return any(marker in line for line in command_lines(runs))
 
 
 def workflow_semantic_errors(
@@ -88,11 +101,9 @@ def workflow_semantic_errors(
         for job_id, job in workflow.get("jobs", {}).items():
             if str(job.get("runs-on", "")) != "ubuntu-24.04":
                 errors.append(f"{filename}:{job_id}: runs-on must be pinned to ubuntu-24.04")
-        for run in all_runs(workflow):
-            for line in run.splitlines():
-                stripped = line.strip()
-                if "pip install" in stripped and "--requirement" not in stripped:
-                    errors.append(f"{filename}: ad hoc or unpinned pip install is forbidden: {stripped}")
+        for line in command_lines(all_runs(workflow)):
+            if "pip install" in line and "--requirement" not in line:
+                errors.append(f"{filename}: ad hoc or unpinned pip install is forbidden: {line}")
 
     if requirement_lines(root, "requirements/policy.txt") != POLICY_REQUIREMENTS:
         errors.append("requirements/policy.txt must contain the exact governed policy pins")
@@ -105,14 +116,14 @@ def workflow_semantic_errors(
         errors.append("ci.yml:validate-json must install requirements/policy.txt")
     if not contains_command(validate_runs, DOCS_INSTALL):
         errors.append("ci.yml:validate-json must install requirements/docs.txt")
-    for marker in (
+    for command in (
         "python3 ci/validate_policy_reachability.py",
         "python3 ci/test_policy_reachability.py",
         "python3 ci/validate_workflow_semantics.py",
         "python3 ci/test_workflow_semantics.py",
     ):
-        if not contains_command(validate_runs, marker):
-            errors.append(f"ci.yml:validate-json is missing executable coverage command {marker}")
+        if not contains_command(validate_runs, command):
+            errors.append(f"ci.yml:validate-json is missing executable coverage command {command}")
     if not contains_command(job_runs(policy, "pc-wp04-lean"), POLICY_INSTALL):
         errors.append("ci.yml:pc-wp04-lean must install requirements/policy.txt")
     if not contains_command(
@@ -156,13 +167,12 @@ def workflow_semantic_errors(
     build_runs = job_runs(pages, "build")
     if not contains_command(build_runs, DOCS_INSTALL):
         errors.append("pages.yml: build must install requirements/docs.txt")
-    freshness_markers = (
+    for marker in (
         "refs/heads/main:refs/remotes/origin/main",
         "git rev-parse HEAD",
         "git rev-parse refs/remotes/origin/main",
-    )
-    for marker in freshness_markers:
-        if not contains_command(build_runs, marker):
+    ):
+        if not contains_marker(build_runs, marker):
             errors.append(f"pages.yml: missing current-main freshness check {marker}")
 
     return errors
