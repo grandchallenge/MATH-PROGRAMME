@@ -1,0 +1,11 @@
+/* Status vocabulary shared by open-problem documentary web editions. */
+.gcl-monograph[data-gcl-reader="bsd"]{--navy:#081a2e;--navy2:#12384c;--paper:#f3ead5;--paper2:#e8d8ba;--gold:#c29a48;--gold2:#e2bf74;--ink:#1b2435;--muted:#6d6250;--red:#8c3d2e;--accent:#4f7f7d}
+.definition-box,.theorem-box,.conjecture-box,.imported-box,.warning-box{position:relative;margin:2rem 0;padding:1.3rem 1.45rem;border:1px solid color-mix(in srgb,var(--gold) 48%,var(--paper2));background:color-mix(in srgb,var(--paper2) 64%,white);box-shadow:0 .5rem 1.4rem rgba(62,47,27,.07)}
+.definition-box:before,.theorem-box:before,.conjecture-box:before,.imported-box:before,.warning-box:before{position:absolute;inset:.28rem;border:1px solid rgba(189,145,58,.16);content:"";pointer-events:none}
+.definition-box{border-left:4px solid var(--accent)}.theorem-box{border-left:4px solid #355d78}.conjecture-box{border-left:4px solid var(--gold);background:#f4e8c8}.imported-box{border-left:4px solid #695b83;background:#e9e2ec}.warning-box{border-left:4px solid var(--red);background:#f2dfd5}
+.definition-box strong,.theorem-box strong,.conjecture-box strong,.imported-box strong,.warning-box strong{display:block;position:relative;font:850 .66rem Inter,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase}
+.definition-box strong{color:var(--accent)}.theorem-box strong{color:#355d78}.conjecture-box strong{color:#815f16}.imported-box strong{color:#695b83}.warning-box strong{color:var(--red)}
+.definition-box p,.theorem-box p,.conjecture-box p,.imported-box p,.warning-box p{position:relative;margin:.5rem 0 0!important}
+.ledger-pair{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:stretch;margin:2.2rem 0}.ledger-pair>div{padding:1.2rem;border:1px solid rgba(110,98,80,.28);background:rgba(255,255,255,.28)}.ledger-pair>span{display:grid;place-items:center;color:var(--gold);font-size:1.6rem}.ledger-pair h3{margin:.1rem 0 .6rem!important;font-size:1.1rem}.ledger-pair p{margin:.35rem 0!important}
+@media(max-width:680px){.ledger-pair{grid-template-columns:1fr}.ledger-pair>span{transform:rotate(90deg)}}
+@media print{.definition-box,.theorem-box,.conjecture-box,.imported-box,.warning-box,.ledger-pair{break-inside:avoid}}
