@@ -52,11 +52,17 @@ This registry preserves canonical governance terms used across Agent Council doc
 | Instance-family undecidability | Undecidability of membership or behaviour across a computably represented family of inputs or initial data. | Does not imply independence of one universal mathematical sentence. |
 | Formal independence contingency | The requirement that any independence claim name a formal system and supply a transfer metatheorem separate from dynamical undecidability. | Chaos, nontermination, or Turing completeness alone is insufficient. |
 | Bounded interface fixture | A finite deterministic software object testing distinctions or API contracts under declared inputs. | Not a PDE simulation, reduction, non-halting oracle, singularity witness, or theorem certificate. |
-| Documentary Library | The public collection under `docs/documentaries/`. | Publication is presentation, not mathematical support. |
+| Documentary Library | The public collection under `docs/documentaries/`, discovered through `ARTIFACT_MANIFEST.json`. | Publication is presentation, not mathematical support. |
 | Documentary source record | A small pointer identifying a complete documentary source artifact. | Not the complete compilable source. |
 | Authoritative documentary source artifact | The checksum-locked complete illustrated source bundle. | Identity does not establish public availability. |
 | Rendered documentary edition | The checksum-locked PDF identified by the documentary manifest. | Not the governing source. |
 | Documentary web edition | A derivative browser-native presentation governed by schema and campaign authority. | Interactive features are not proof evidence. |
+| Documentary edition record | A manifest-named `*.edition.json` instance defining one browser edition’s title, claim boundary, assets, sections, sources, palette, and rendering policy. | Not a source artifact or theorem ledger. |
+| Documentary discovery authority | `docs/documentaries/ARTIFACT_MANIFEST.json`, the sole machine inventory of collection editions. | Files appearing in the directory without manifest registration are orphaned, not implicitly governed. |
+| Documentary edition tier | The expository class `reference`, `full`, or `orientation` recorded in the documentary manifest. | Tiers do not encode theorem strength, campaign promotion, or release availability. |
+| Reference documentary tier | The canonical browser-reader substrate and most complete implementation exemplar. | Reference status does not strengthen imported mathematics or create a new proof. |
+| Full documentary tier | A sustained narrative and technical treatment with greater depth than orientation while using the shared authority contract. | Full status is editorial, not mathematical promotion. |
+| Orientation documentary tier | A complete but compressed first-principles map of the problem, theorem terrain, terminology, and guardrails. | May be expanded later; compression does not weaken claim boundaries or source obligations. |
 | Release-class artifact availability | Whether an identified release artifact is `metadata_only` or a `published_release`. | A checksum without a locator is not publication evidence. |
 | Metadata-only release identity | A governed artifact identity without a stable public release locator. | Must not be described as downloadable or published. |
 | Documentary scope relation | The relation `campaign_documentary`, `parent_challenge_orientation`, or `solved_theorem_archive`. | Prevents scope conflation. |
@@ -79,4 +85,4 @@ This registry preserves canonical governance terms used across Agent Council doc
 
 A term is added or changed only when its decision, affected artifacts, consistency check, integrated authority, and ledger state are recorded.
 
-ADR-0007 governs decision and review normalization; ADR-0008 and ADR-0009 govern public and campaign coverage; ADR-0010 governs documentary authority; ADR-0011 and ADR-0012 govern global execution, discovery, environment, and current-tip publication; ADR-0013 governs the non-probative NS-CI-WP06 lane; ADR-0014 governs repository experiment reachability and exact-artifact publication.
+ADR-0007 governs decision and review normalization; ADR-0008 and ADR-0009 govern public and campaign coverage; ADR-0010 governs documentary authority, manifest discovery, and edition tiers; ADR-0011 and ADR-0012 govern global execution, discovery, environment, and current-tip publication; ADR-0013 governs the non-probative NS-CI-WP06 lane; ADR-0014 governs repository experiment reachability and exact-artifact publication.
