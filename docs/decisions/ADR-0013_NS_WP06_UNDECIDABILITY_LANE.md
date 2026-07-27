@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted, 2026-07-26, for active non-blocking investigatory use.
+Accepted, 2026-07-26, for active non-blocking investigatory use; amended after Adversary, Formalist, and Referee review on 2026-07-26.
 
 ## Context
 
@@ -14,22 +14,23 @@ These results do not transfer automatically to the true viscous equation. They a
 
 1. Establish `NS-CI-WP06` as a non-blocking, non-probative investigatory lane under Domain 02.
 2. Keep the active WP01/WP02 analytic mainline and all WP00–WP05 claim and promotion states unchanged.
-3. Require every proposed reduction to discharge obligations `U001–U010`, including true-equation fidelity, admissible data, robust finite-precision simulation, both reduction directions, and an explicit transfer metatheorem.
+3. Require every proposed reduction to discharge obligations `U001–U012`, including true-equation fidelity, effectively represented admissible data, robust computation, viscous persistence, both reduction directions, exact solution semantics, an undecidability-transfer theorem, and—only for independence language—a separate formal-system-relative transfer theorem.
 4. Separate four layers without implicit arrows:
    - dynamics or simulation capacity;
    - an encoded instance-family decision problem;
    - the universal mathematical statement under investigation;
    - formal independence relative to a named formal system.
-5. Classify the software fixture as bounded `EXPLORATORY_EVIDENCE`. It is an interface test, not a PDE simulation, reduction, non-halting oracle, or singularity witness.
-6. Require experiment modules to remain library-only and reachable through the repository-wide unit-test gate.
-7. Permit only literature audit, obligation mapping, risk analysis, and bounded interface fixtures at the current stage.
-8. Require a new Council decision before any true-equation construction, mechanism campaign, or mathematical escalation begins.
+5. Fix the target domain, solution class, existence assumptions, uniqueness or selection rule, and universal or existential quantifier over solutions before a fluid event can serve as a decision predicate.
+6. Classify the software fixture as bounded `EXPLORATORY_EVIDENCE`. It is an interface test, not a PDE simulation, reduction, non-halting oracle, or singularity witness.
+7. Require experiment modules to remain library-only and reachable through the repository-wide unit-test gate.
+8. Permit only literature audit, obligation mapping, risk analysis, and bounded interface fixtures at the current stage.
+9. Require a new Council decision before any true-equation construction, mechanism campaign, or mathematical escalation begins.
 
 ## Alternatives considered
 
 ### Reject the lane as irrelevant
 
-Rejected. The computability perspective can expose hidden representation, robustness, and quantifier obligations even when it does not solve the active problem.
+Rejected. The computability perspective can expose hidden representation, robustness, solution-semantics, and quantifier obligations even when it does not solve the active problem.
 
 ### Treat related-system universality as evidence for the true equation
 
@@ -38,6 +39,10 @@ Rejected. Euler flow, averaged Navier–Stokes, finite-dimensional ODEs, and the
 ### Equate undecidability with independence
 
 Rejected. Undecidability of a represented instance family and independence of a fixed universal sentence are distinct claims requiring different metatheorems.
+
+### Leave solution quantification implicit
+
+Rejected. A PDE event is not a well-defined decision predicate until the solution class and quantifier are fixed; existence without uniqueness can change the logical content of the target problem.
 
 ### Make the lane part of the active proof route
 
@@ -48,7 +53,7 @@ Rejected. No reduction obligation is currently discharged at theorem level, and 
 - The programme gains a governed place to audit computability claims without distorting the main theorem spine.
 - Related-system results remain literature evidence only.
 - The bounded fixture can falsify software-interface assumptions but cannot support continuum or metamathematical claims.
-- Any attempted escalation fails closed when one of `U001–U010` remains open.
+- Any attempted reduction escalation fails closed when one of `U001–U011` remains open; any independence claim additionally fails closed unless `U012` is discharged.
 - Mainline resource priority remains with WP01/WP02 and the equation-specific critical-integral routes.
 
 ## Affected artifacts
