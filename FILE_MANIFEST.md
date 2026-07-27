@@ -2,7 +2,7 @@
 
 **Status:** Current governed inventory, edition 2026.07.
 
-This is a curated map of authoritative entry points, not an exhaustive recursive file listing. Exact repository contents remain available through version control. New campaign or publication files do not become authoritative merely by appearing in the tree; authority is established by the domain registry, Agent Council artifact ledger, decision records, claim ledgers, promotion register, schema-bound reviews, executable replay registry, and certification routes.
+This is a curated map of authoritative entry points, not an exhaustive recursive file listing. Exact repository contents remain available through version control. New campaign or publication files do not become authoritative merely by appearing in the tree; authority is established by the domain registry, Agent Council artifact ledger, decision records, claim ledgers, promotion register, schema-bound reviews, code-owned executable discovery, governed command routes, declared workflow environments, and certification routes.
 
 ## Programme architecture
 
@@ -36,7 +36,7 @@ This is a curated map of authoritative entry points, not an exhaustive recursive
 - `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md`
 - `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`
 - `docs/CAMPAIGN_PROMOTION_REGISTER.md`
-- `docs/decisions/ADR-0001_*.md` through `ADR-0011_*.md`
+- `docs/decisions/ADR-0001_*.md` through `ADR-0012_*.md`
 - `schemas/agent_review.schema.json`
 - `templates/agent_review.yaml`
 - `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml`
@@ -157,9 +157,15 @@ The global programme policy checks out the evidence-pinned MATHCERT commit and e
 - `schemas/documentary_manifest.schema.json`
 - `schemas/campaign_replay_registry.schema.json`
 - `schemas/cross_repository_evidence.schema.json`
+- `requirements/policy.txt`
+- `requirements/docs.txt`
 - `ci/campaign_replay_registry.json`
 - `ci/validate_campaign_replays.py`
 - `ci/test_campaign_replays.py`
+- `ci/validate_policy_reachability.py`
+- `ci/test_policy_reachability.py`
+- `ci/validate_workflow_semantics.py`
+- `ci/test_workflow_semantics.py`
 - `ci/validate_rh_continuity.py`
 - `ci/test_rh_continuity.py`
 - `ci/validate_retired_paths.py`
@@ -175,11 +181,11 @@ The global programme policy checks out the evidence-pinned MATHCERT commit and e
 
 ## Workflow coverage
 
-- `.github/workflows/ci.yml` — global policy on every pull request, every push to `main`, and manual audit; includes all registered campaign replays, LOG-GCD Lean, PC-WP04 Lean, pinned external MATHCERT replay, and retired-path continuity checks.
-- `.github/workflows/pages.yml` — deploys only the exact `main` commit from a successful push-triggered global policy run.
+- `.github/workflows/ci.yml` — global policy on every pull request, every push to `main`, and manual audit; includes code-owned campaign discovery, CI import-graph reachability, semantic workflow checks, strict documentation, LOG-GCD Lean, PC-WP04 Lean, pinned external MATHCERT replay, and continuity controls.
+- `.github/workflows/pages.yml` — deploys only a successful policy-validated SHA that remains the current `main` tip; stale in-progress publication is cancelled.
 - `.github/workflows/bsd-wp03-substrate.yml` — path-scoped fast feedback for BSD-WP03.
 - `.github/workflows/bsd-wp04-target.yml` — path-scoped fast feedback for BSD-WP04.
 - `.github/workflows/pc-wp04.yml` — path-scoped bounded certificate replay.
 - `.github/workflows/pc-wp05.yml` — path-scoped archival and bounded-certificate replay.
 
-Workflow inventory, checkout credential handling, job timeouts, policy triggers, deployment gating, replay discovery, external evidence, and retired-path continuity are machine-checked. A new campaign `replay.py`, `validate*.py`, or `test*.py` file fails closed until registered.
+Workflow identity, runners, dependency routes, permissions, checkout credential handling, job timeouts, policy triggers, action immutability, external evidence, executable reachability, and current-tip deployment are machine-checked. A new executable campaign or CI Python file fails closed until it has an actual governed route or an explicit campaign exemption. Exact top-level pins establish the declared workflow environment but are not a complete transitive hash lock.

@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import copy
+import tempfile
+from pathlib import Path
 
 from validate_campaign_replays import ROOT, load_json, registry_errors
 
@@ -36,6 +38,56 @@ def main() -> int:
     shell_command = copy.deepcopy(registry)
     shell_command["entries"][0]["command"] = ["bash", "-lc", "true"]
     assert any("must invoke Python directly" in error for error in registry_errors(shell_command))
+
+    narrowed_registry = copy.deepcopy(registry)
+    narrowed_registry["discovery_globs"] = ["campaigns/riemann_hypothesis/**/replay.py"]
+    assert any("additional properties" in error.lower() for error in registry_errors(narrowed_registry))
+
+    with tempfile.TemporaryDirectory() as temporary:
+        root = Path(temporary)
+        (root / "schemas").mkdir()
+        (root / "ci").mkdir()
+        (root / "campaigns" / "synthetic").mkdir(parents=True)
+        (root / "schemas" / "campaign_replay_registry.schema.json").write_text(
+            (ROOT / "schemas" / "campaign_replay_registry.schema.json").read_text(encoding="utf-8"),
+            encoding="utf-8",
+        )
+        synthetic = root / "campaigns" / "synthetic" / "custom_runner.py"
+        synthetic.write_text(
+            "#!/usr/bin/env python3\nif __name__ == '__main__':\n    print('synthetic')\n",
+            encoding="utf-8",
+        )
+        synthetic_registry = copy.deepcopy(registry)
+        synthetic_registry["entries"] = []
+        synthetic_registry["exemptions"] = []
+        assert any(
+            "campaigns/synthetic/custom_runner.py" in error
+            and "unregistered executable" in error
+            for error in registry_errors(synthetic_registry, root=root)
+        )
+
+        exempted = copy.deepcopy(synthetic_registry)
+        exempted["exemptions"] = [
+            {
+                "path": "campaigns/synthetic/custom_runner.py",
+                "rationale": "Synthetic executable is intentionally excluded from execution for this test.",
+            }
+        ]
+        assert not [
+            error for error in registry_errors(exempted, root=root)
+            if "custom_runner.py" in error
+        ]
+
+        overlap = copy.deepcopy(exempted)
+        overlap["entries"] = [
+            {
+                "id": "SYNTHETIC-RUNNER",
+                "command": ["python3", "campaigns/synthetic/custom_runner.py"],
+                "timeout_seconds": 10,
+                "scope": "Execute the synthetic campaign runner for overlap rejection testing.",
+            }
+        ]
+        assert any("both registered and exempt" in error for error in registry_errors(overlap, root=root))
 
     print("campaign replay registry rejection tests passed")
     return 0

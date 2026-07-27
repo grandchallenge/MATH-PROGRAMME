@@ -2,12 +2,12 @@
 
 | Artifact ID | Type | Pillar | Authoritative integrated artifact | Status / disposition | Decision records | Terminology registry | Review record | Last integrated | Amanuensis state |
 |---|---|---|---|---|---|---|---|---|---|
-| GOV-AGENT-COUNCIL-001 | governance bundle | MATH-PROGRAMME | `docs/MATH_PROGRAMME_AGENT_COUNCIL.md` | active | `ADR-0001`; `ADR-0007`; `ADR-0008`; `ADR-0009`; `ADR-0010`; `ADR-0011` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `templates/agent_review.yaml` | 2026-07-26 | reviewed |
+| GOV-AGENT-COUNCIL-001 | governance bundle | MATH-PROGRAMME | `docs/MATH_PROGRAMME_AGENT_COUNCIL.md` | active | `ADR-0001`; `ADR-0007`; `ADR-0008`; `ADR-0009`; `ADR-0010`; `ADR-0011`; `ADR-0012` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `templates/agent_review.yaml` | 2026-07-26 | reviewed |
 | DOCS-PUBLIC-001 | documentation bundle | MATH-PROGRAMME | `docs/domains/index.md` | completed; PR #87 merged; post-merge audit closed with eight-domain coverage | `ADR-0008`; `ADR-0009` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml` | 2026-07-25 | reviewed |
 | PROMOTION-REGISTER-001 | documentary promotion register | MATH-PROGRAMME | `docs/CAMPAIGN_PROMOTION_REGISTER.md` | active; records promoted WP00 entries and retained post-merge blockers | `ADR-0009`; `ADR-0010`; `ADR-0011` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml` | 2026-07-26 | reviewed |
 | DOCS-DOCUMENTARY-001 | documentary library | MATH-PROGRAMME | `docs/documentaries/index.md` | published documentation surface; seven volume records; release-class artifacts currently `metadata_only` | `ADR-0010` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml` | 2026-07-26 | reviewed |
 | DOCS-PC-WEB-001 | documentary web edition | MATH-PROGRAMME | `docs/documentaries/poincare.md` | published reference web edition; derivative presentation of the qualified PC-001 archive | `ADR-0006`; `ADR-0010` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml` | 2026-07-26 | reviewed |
-| WORKFLOW-COVERAGE-001 | workflow and publication control | MATH-PROGRAMME | `docs/WORKFLOW_COVERAGE.md` | active; global replay reachability, pinned external certification, RH retained blockers, and policy-gated Pages deployment | `ADR-0011` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/governance/WORKFLOW-COVERAGE.agent_review.yaml` | 2026-07-26 | reviewed |
+| WORKFLOW-COVERAGE-001 | workflow and publication control | MATH-PROGRAMME | `docs/WORKFLOW_COVERAGE.md` | active; self-authenticating campaign and CI reachability, fixed declared environments, pinned external certification, retained blockers, and current-tip Pages deployment | `ADR-0011`; `ADR-0012` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/governance/WORKFLOW-COVERAGE.agent_review.yaml` | 2026-07-26 | reviewed |
 | UC-WP01 | work package | MATHSOLVE | `WP01_UNION_CLOSED_STATUS_SPINE.md` | completed; WP02/MATHCERT handoff discharged | `ADR-0002`; `ADR-0007`; `ADR-0011` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/union_closed/UC-WP01.agent_review.yaml`; `evidence/UC-WP02-MATHCERT.json` | 2026-07-26 | reviewed |
 | CERT-LOG-GCD-001 | formal certificate fixture | MATHCERT | `fixtures/formal/LOG-GCD-001/README.md` | certified | none | `docs/GLOSSARY.md` | `fixtures/formal/LOG-GCD-001/agent_review.yaml` | 2026-07-23 | reviewed |
 | PUB-LOG-GCD-001 | public research note | MATH-PROGRAMME | `docs/LOG_GCD_PUBLICATION.md` | published | none | `docs/GLOSSARY.md` | `fixtures/formal/LOG-GCD-001/agent_review.yaml` | 2026-07-23 | reviewed |
@@ -49,9 +49,10 @@
 6. Mathematical promotion is never inferred from ledger status alone.
 7. Publication status changes visibility and editorial readiness; it does not change the underlying claim status.
 8. Schema-bound review lifecycle tokens and campaign-specific ledger dispositions remain distinct under `ADR-0007`.
-9. Public documentation coverage and authority are governed by `ADR-0008`, `ADR-0009`, `ADR-0010`, `ADR-0011`, and their explicit validation records.
+9. Public documentation coverage and authority are governed by `ADR-0008`, `ADR-0009`, `ADR-0010`, `ADR-0011`, `ADR-0012`, and their explicit validation records.
 10. A governed root WP00 campaign dossier must appear in the domain registry and public documentation routes; repository merge changes documentary disposition only.
 11. A documentary source record is not the authoritative complete source; release identity, availability, and web-edition derivation must follow `ADR-0010`.
 12. Repository merge and CI success do not override an explicit blocking review disposition.
-13. A workflow or campaign executable is not governed merely because it exists; it must be reachable through the global policy or an explicitly recorded external certification gate under `ADR-0011`.
-14. Pages publication may use only the exact `main` commit from a successful push-triggered global policy run.
+13. A workflow or campaign executable is not governed merely because it exists; it must be discoverable independently and reachable through the global policy or an explicitly recorded external certification gate under `ADR-0011` and `ADR-0012`.
+14. Pages publication may use only a successful policy-validated commit that remains the current `main` tip at build time.
+15. Exact top-level dependency pins establish the declared workflow environment but do not assert a complete transitive hash lock.

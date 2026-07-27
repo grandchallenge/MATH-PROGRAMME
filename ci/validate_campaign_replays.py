@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -14,6 +15,7 @@ from jsonschema import Draft202012Validator
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = ROOT / "ci" / "campaign_replay_registry.json"
 SCHEMA_PATH = ROOT / "schemas" / "campaign_replay_registry.schema.json"
+MAIN_GUARD = re.compile(r"if\s+__name__\s*==\s*['\"]__main__['\"]\s*:")
 
 
 def load_json(path: Path) -> Any:
@@ -30,15 +32,18 @@ def duplicate_values(values: list[str]) -> set[str]:
     return duplicates
 
 
-def discovered_campaign_scripts(registry: dict[str, Any], root: Path = ROOT) -> set[str]:
-    discovered: set[str] = set()
-    for pattern in registry.get("discovery_globs", []):
-        discovered.update(
-            path.relative_to(root).as_posix()
-            for path in root.glob(pattern)
-            if path.is_file()
-        )
-    return discovered
+def is_executable_python(path: Path) -> bool:
+    text = path.read_text(encoding="utf-8")
+    return text.startswith("#!") or bool(MAIN_GUARD.search(text))
+
+
+def discovered_campaign_scripts(root: Path = ROOT) -> set[str]:
+    """Discover executable campaign Python files independently of the registry."""
+    return {
+        path.relative_to(root).as_posix()
+        for path in (root / "campaigns").rglob("*.py")
+        if path.is_file() and is_executable_python(path)
+    }
 
 
 def registry_errors(registry: dict[str, Any], root: Path = ROOT) -> list[str]:
@@ -51,16 +56,20 @@ def registry_errors(registry: dict[str, Any], root: Path = ROOT) -> list[str]:
     )
 
     entries = registry.get("entries", [])
+    exemptions = registry.get("exemptions", [])
     ids = [str(entry.get("id", "")) for entry in entries]
     command_paths = [
         str(entry.get("command", ["", ""])[1])
         for entry in entries
         if len(entry.get("command", [])) >= 2
     ]
+    exemption_paths = [str(entry.get("path", "")) for entry in exemptions]
     for duplicate in sorted(duplicate_values(ids)):
         errors.append(f"campaign replay registry: duplicate id {duplicate}")
     for duplicate in sorted(duplicate_values(command_paths)):
         errors.append(f"campaign replay registry: duplicate command path {duplicate}")
+    for duplicate in sorted(duplicate_values(exemption_paths)):
+        errors.append(f"campaign replay registry: duplicate exemption path {duplicate}")
 
     registered_campaign_scripts: set[str] = set()
     for entry in entries:
@@ -81,11 +90,30 @@ def registry_errors(registry: dict[str, Any], root: Path = ROOT) -> list[str]:
         if script.startswith("campaigns/"):
             registered_campaign_scripts.add(script)
 
-    discovered = discovered_campaign_scripts(registry, root)
-    for script in sorted(discovered - registered_campaign_scripts):
+    exempted_scripts: set[str] = set()
+    for exemption in exemptions:
+        script = str(exemption.get("path", ""))
+        path = root / script
+        if Path(script).is_absolute() or ".." in Path(script).parts:
+            errors.append(f"campaign replay exemption path must be repository-relative: {script}")
+        if not path.is_file():
+            errors.append(f"campaign replay exemption target is missing: {script}")
+        elif not is_executable_python(path):
+            errors.append(f"campaign replay exemption target is not executable Python: {script}")
+        exempted_scripts.add(script)
+
+    overlap = registered_campaign_scripts & exempted_scripts
+    for script in sorted(overlap):
+        errors.append(f"campaign replay script may not be both registered and exempt: {script}")
+
+    discovered = discovered_campaign_scripts(root)
+    governed = registered_campaign_scripts | exempted_scripts
+    for script in sorted(discovered - governed):
         errors.append(f"campaign replay discovery: unregistered executable {script}")
     for script in sorted(registered_campaign_scripts - discovered):
-        errors.append(f"campaign replay registry: campaign script is outside discovery contract {script}")
+        errors.append(f"campaign replay registry: campaign script is outside executable discovery {script}")
+    for script in sorted(exempted_scripts - discovered):
+        errors.append(f"campaign replay registry: exemption is outside executable discovery {script}")
     return errors
 
 

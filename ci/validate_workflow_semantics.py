@@ -1,0 +1,209 @@
+#!/usr/bin/env python3
+"""Validate semantic workflow identity, dependency, runner, and publication contracts."""
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+from typing import Any
+
+import yaml
+
+ROOT = Path(__file__).resolve().parents[1]
+EXPECTED_NAMES = {
+    "bsd-wp03-substrate.yml": "BSD WP03 substrate replay",
+    "bsd-wp04-target.yml": "BSD WP04 target scorecard",
+    "ci.yml": "Programme policy checks",
+    "pages.yml": "Deploy documentation site",
+    "pc-wp04.yml": "PC-WP04 certificate checks",
+    "pc-wp05.yml": "PC-WP05 archival checks",
+}
+PYTHON_MINOR_LINE = "3.12"
+POLICY_REQUIREMENTS = ("jsonschema==4.26.0", "PyYAML==6.0.3")
+DOCS_REQUIREMENTS = (
+    "mkdocs==1.6.1",
+    "mkdocs-material==9.7.7",
+    "pymdown-extensions==11.0.1",
+    "PyYAML==6.0.3",
+)
+POLICY_INSTALL = "python -m pip install --requirement requirements/policy.txt"
+DOCS_INSTALL = "python -m pip install --requirement requirements/docs.txt"
+EXTERNAL_POLICY_INSTALL = (
+    'python -m pip install --requirement "$GITHUB_WORKSPACE/requirements/policy.txt"'
+)
+
+
+def load_workflows(root: Path = ROOT) -> dict[str, dict[str, Any]]:
+    workflows: dict[str, dict[str, Any]] = {}
+    for path in sorted((root / ".github" / "workflows").glob("*.y*ml")):
+        data = yaml.load(path.read_text(encoding="utf-8"), Loader=yaml.BaseLoader)
+        workflows[path.name] = data if isinstance(data, dict) else {}
+    return workflows
+
+
+def job_runs(workflow: dict[str, Any], job_id: str) -> list[str]:
+    job = workflow.get("jobs", {}).get(job_id, {})
+    return [str(step.get("run", "")) for step in job.get("steps", []) if step.get("run")]
+
+
+def all_runs(workflow: dict[str, Any]) -> list[str]:
+    runs: list[str] = []
+    for job in workflow.get("jobs", {}).values():
+        runs.extend(str(step.get("run", "")) for step in job.get("steps", []) if step.get("run"))
+    return runs
+
+
+def command_lines(runs: list[str]) -> set[str]:
+    return {
+        line.strip()
+        for run in runs
+        for line in run.splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    }
+
+
+def requirement_lines(root: Path, relative: str) -> tuple[str, ...]:
+    path = root / relative
+    if not path.is_file():
+        return ()
+    return tuple(
+        line.strip()
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    )
+
+
+def contains_command(runs: list[str], command: str) -> bool:
+    return command in command_lines(runs)
+
+
+def contains_marker(runs: list[str], marker: str) -> bool:
+    return any(marker in line for line in command_lines(runs))
+
+
+def workflow_semantic_errors(
+    root: Path = ROOT,
+    workflows: dict[str, dict[str, Any]] | None = None,
+) -> list[str]:
+    errors: list[str] = []
+    workflows = load_workflows(root) if workflows is None else workflows
+
+    names: list[str] = []
+    for filename, expected in EXPECTED_NAMES.items():
+        workflow = workflows.get(filename, {})
+        actual = str(workflow.get("name", ""))
+        names.append(actual)
+        if actual != expected:
+            errors.append(f"{filename}: workflow name must be exactly {expected!r}, found {actual!r}")
+    duplicates = {name for name in names if name and names.count(name) > 1}
+    for name in sorted(duplicates):
+        errors.append(f"workflow names must be unique; duplicate {name!r}")
+
+    setup_python_steps = 0
+    for filename, workflow in workflows.items():
+        for job_id, job in workflow.get("jobs", {}).items():
+            if str(job.get("runs-on", "")) != "ubuntu-24.04":
+                errors.append(f"{filename}:{job_id}: runs-on must be pinned to ubuntu-24.04")
+            for step in job.get("steps", []):
+                if str(step.get("uses", "")).startswith("actions/setup-python@"):
+                    setup_python_steps += 1
+                    version = str(step.get("with", {}).get("python-version", ""))
+                    if version != PYTHON_MINOR_LINE:
+                        errors.append(
+                            f"{filename}:{job_id}: setup-python must use governed minor line "
+                            f"{PYTHON_MINOR_LINE!r}, found {version!r}"
+                        )
+        for line in command_lines(all_runs(workflow)):
+            if "pip install" in line and "--requirement" not in line:
+                errors.append(f"{filename}: ad hoc or unpinned pip install is forbidden: {line}")
+    if setup_python_steps == 0:
+        errors.append("governed workflows must contain at least one setup-python step")
+
+    if requirement_lines(root, "requirements/policy.txt") != POLICY_REQUIREMENTS:
+        errors.append("requirements/policy.txt must contain the exact governed policy pins")
+    if requirement_lines(root, "requirements/docs.txt") != DOCS_REQUIREMENTS:
+        errors.append("requirements/docs.txt must contain the exact governed documentation pins")
+
+    policy = workflows.get("ci.yml", {})
+    validate_runs = job_runs(policy, "validate-json")
+    if not contains_command(validate_runs, POLICY_INSTALL):
+        errors.append("ci.yml:validate-json must install requirements/policy.txt")
+    if not contains_command(validate_runs, DOCS_INSTALL):
+        errors.append("ci.yml:validate-json must install requirements/docs.txt")
+    for command in (
+        "python3 ci/validate_policy_reachability.py",
+        "python3 ci/test_policy_reachability.py",
+        "python3 ci/validate_workflow_semantics.py",
+        "python3 ci/test_workflow_semantics.py",
+    ):
+        if not contains_command(validate_runs, command):
+            errors.append(f"ci.yml:validate-json is missing executable coverage command {command}")
+    if not contains_command(job_runs(policy, "pc-wp04-lean"), POLICY_INSTALL):
+        errors.append("ci.yml:pc-wp04-lean must install requirements/policy.txt")
+    if not contains_command(
+        job_runs(policy, "union-closed-mathcert"), EXTERNAL_POLICY_INSTALL
+    ):
+        errors.append(
+            "ci.yml:union-closed-mathcert must install the root policy requirements by absolute workspace path"
+        )
+
+    if not contains_command(
+        job_runs(workflows.get("pc-wp04.yml", {}), "pc-wp04-lean"), POLICY_INSTALL
+    ):
+        errors.append("pc-wp04.yml must install requirements/policy.txt")
+    if not contains_command(
+        job_runs(workflows.get("pc-wp05.yml", {}), "archival-policy"), POLICY_INSTALL
+    ):
+        errors.append("pc-wp05.yml archival policy must install requirements/policy.txt")
+
+    pages = workflows.get("pages.yml", {})
+    concurrency = pages.get("concurrency", {})
+    if str(concurrency.get("cancel-in-progress", "")).lower() != "true":
+        errors.append("pages.yml: concurrency must cancel stale in-progress publications")
+    build = pages.get("jobs", {}).get("build", {})
+    build_if = str(build.get("if", ""))
+    for clause in (
+        "github.event.workflow_run.conclusion == 'success'",
+        "github.event.workflow_run.head_branch == 'main'",
+        "github.event.workflow_run.event == 'push'",
+    ):
+        if clause not in build_if:
+            errors.append(f"pages.yml: build.if is missing semantic gate {clause}")
+    checkout_steps = [
+        step
+        for step in build.get("steps", [])
+        if str(step.get("uses", "")).startswith("actions/checkout@")
+    ]
+    if len(checkout_steps) != 1:
+        errors.append("pages.yml: build must contain exactly one checkout step")
+    elif checkout_steps[0].get("with", {}).get("ref") != "${{ github.event.workflow_run.head_sha }}":
+        errors.append("pages.yml: checkout must use the validated workflow_run.head_sha")
+    build_runs = job_runs(pages, "build")
+    if not contains_command(build_runs, DOCS_INSTALL):
+        errors.append("pages.yml: build must install requirements/docs.txt")
+    for marker in (
+        "refs/heads/main:refs/remotes/origin/main",
+        "git rev-parse HEAD",
+        "git rev-parse refs/remotes/origin/main",
+    ):
+        if not contains_marker(build_runs, marker):
+            errors.append(f"pages.yml: missing current-main freshness check {marker}")
+
+    return errors
+
+
+def main() -> int:
+    errors = workflow_semantic_errors()
+    if errors:
+        for error in errors:
+            print(error, file=sys.stderr)
+        print(f"workflow semantic validation failed with {len(errors)} error(s)", file=sys.stderr)
+        return 1
+    print(
+        "workflow names, runners, Python minor line, dependencies, execution routes, and "
+        "publication freshness are valid"
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
