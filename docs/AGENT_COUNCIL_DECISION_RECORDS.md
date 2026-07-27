@@ -14,6 +14,8 @@
 | ADR-0010 | 2026-07-26 | Accepted | Govern Documentary Library authority, release-class artifacts, source records, web editions, RH post-merge disposition, and continuity ownership. | [`ADR-0010_DOCUMENTARY_LIBRARY_AUTHORITY.md`](decisions/ADR-0010_DOCUMENTARY_LIBRARY_AUTHORITY.md) |
 | ADR-0011 | 2026-07-26 | Accepted | Require complete campaign replay reachability, pinned external certification evidence, RH retained-blocker enforcement, and policy-gated publication. | [`ADR-0011_FULL_WORKFLOW_COVERAGE.md`](decisions/ADR-0011_FULL_WORKFLOW_COVERAGE.md) |
 | ADR-0012 | 2026-07-26 | Accepted | Make discovery boundaries self-authenticating, pin workflow environments, validate operative workflow semantics, and prevent stale publication. | [`ADR-0012_SELF_AUTHENTICATING_WORKFLOW_COVERAGE.md`](decisions/ADR-0012_SELF_AUTHENTICATING_WORKFLOW_COVERAGE.md) |
+| ADR-0013 | 2026-07-26 | Accepted for active non-blocking investigation | Authorize NS-CI-WP06 as a non-probative undecidability and reduction lane. | [`ADR-0013_NS_WP06_UNDECIDABILITY_LANE.md`](decisions/ADR-0013_NS_WP06_UNDECIDABILITY_LANE.md) |
+| ADR-0014 | 2026-07-26 | Accepted | Bind Pages publication to the exact policy-built site artifact and govern repository tests and experiments. | [`ADR-0014_EXACT_ARTIFACT_AND_REPOSITORY_EXECUTION.md`](decisions/ADR-0014_EXACT_ARTIFACT_AND_REPOSITORY_EXECUTION.md) |
 
 ## Identifier rule
 

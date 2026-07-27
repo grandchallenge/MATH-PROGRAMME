@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Adversarial tests for semantic workflow and dependency contracts."""
+"""Adversarial tests for semantic workflow, execution, and artifact contracts."""
 from __future__ import annotations
 
 import copy
@@ -69,6 +69,24 @@ def main() -> int:
         for error in workflow_semantic_errors(workflows=comment_spoof)
     )
 
+    missing_unit_tests = copy.deepcopy(workflows)
+    for step in missing_unit_tests["ci.yml"]["jobs"]["validate-json"]["steps"]:
+        if step.get("name") == "Run repository unit tests":
+            step["run"] = "echo tests skipped"
+    assert any(
+        "unittest discover" in error
+        for error in workflow_semantic_errors(workflows=missing_unit_tests)
+    )
+
+    short_retention = copy.deepcopy(workflows)
+    for step in short_retention["ci.yml"]["jobs"]["validate-json"]["steps"]:
+        if step.get("with", {}).get("name") == "validated-site":
+            step["with"]["retention-days"] = "2"
+    assert any(
+        "retention must be exactly one day" in error
+        for error in workflow_semantic_errors(workflows=short_retention)
+    )
+
     stale_pages = copy.deepcopy(workflows)
     stale_pages["pages.yml"]["concurrency"]["cancel-in-progress"] = "false"
     assert any(
@@ -83,7 +101,7 @@ def main() -> int:
             step["run"] = "echo 'freshness omitted'"
             break
     assert any(
-        "current-main freshness check" in error
+        "exact-artifact publication check" in error
         for error in workflow_semantic_errors(workflows=missing_freshness)
     )
 
@@ -94,6 +112,38 @@ def main() -> int:
     assert any(
         "validated workflow_run.head_sha" in error
         for error in workflow_semantic_errors(workflows=checkout_drift)
+    )
+
+    pages_rebuild = copy.deepcopy(workflows)
+    pages_rebuild["pages.yml"]["jobs"]["build"]["steps"].append(
+        {"run": "mkdocs build --strict"}
+    )
+    assert any(
+        "without resolving dependencies or rebuilding" in error
+        for error in workflow_semantic_errors(workflows=pages_rebuild)
+    )
+
+    missing_artifact_digest = copy.deepcopy(workflows)
+    for step in missing_artifact_digest["pages.yml"]["jobs"]["build"]["steps"]:
+        run = str(step.get("run", ""))
+        if "hashlib.sha256(artifact_zip)" in run:
+            step["run"] = run.replace(
+                "hashlib.sha256(artifact_zip)",
+                "hashlib.md5(artifact_zip)",
+                1,
+            )
+    assert any(
+        "hashlib.sha256(artifact_zip)" in error
+        for error in workflow_semantic_errors(workflows=missing_artifact_digest)
+    )
+
+    missing_deployment_id = copy.deepcopy(workflows)
+    for step in missing_deployment_id["pages.yml"]["jobs"]["deploy"]["steps"]:
+        if str(step.get("uses", "")).startswith("actions/deploy-pages@"):
+            step.pop("id", None)
+    assert any(
+        "must have id deployment" in error
+        for error in workflow_semantic_errors(workflows=missing_deployment_id)
     )
 
     with tempfile.TemporaryDirectory() as temporary:

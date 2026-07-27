@@ -130,7 +130,7 @@ def workflow_coverage_errors(
     for name, text in texts.items():
         try:
             workflow = load_yaml_text(text)
-        except Exception as exc:  # pragma: no cover - defensive parser boundary
+        except Exception as exc:  # pragma: no cover
             errors.append(f"{name}: invalid workflow YAML: {exc}")
             continue
         parsed[name] = workflow
@@ -157,11 +157,17 @@ def workflow_coverage_errors(
         for marker in (
             "python3 ci/validate_campaign_replays.py",
             "python3 ci/test_campaign_replays.py",
+            "python3 ci/validate_repository_execution.py",
+            "python3 ci/test_repository_execution.py",
+            "python -m unittest discover -s tests -p 'test_*.py'",
             "python3 ci/validate_workflow_coverage.py",
             "python3 ci/test_workflow_coverage.py",
             "evidence/UC-WP02-MATHCERT.json",
             "fixtures/formal/PC-WP04",
             "bash ci/check_lean.sh",
+            "name: validated-site",
+            "validated-site.tar.gz.sha256",
+            "retention-days: 1",
         ):
             if marker not in policy_text:
                 errors.append(f"ci.yml: missing workflow coverage marker {marker}")
@@ -202,11 +208,15 @@ def workflow_coverage_errors(
         jobs = pages.get("jobs", {})
         build = jobs.get("build", {})
         deploy = jobs.get("deploy", {})
-        expected_build_permissions = {"contents": "read", "pages": "write"}
+        expected_build_permissions = {
+            "actions": "read",
+            "contents": "read",
+            "pages": "write",
+        }
         expected_deploy_permissions = {"pages": "write", "id-token": "write"}
         if build.get("permissions") != expected_build_permissions:
             errors.append(
-                "pages.yml: build permissions must be exactly contents: read and pages: write"
+                "pages.yml: build permissions must be exactly actions: read, contents: read, and pages: write"
             )
         if deploy.get("permissions") != expected_deploy_permissions:
             errors.append(
@@ -224,6 +234,11 @@ def workflow_coverage_errors(
             "github.event.workflow_run.head_branch == 'main'",
             "github.event.workflow_run.event == 'push'",
             "ref: ${{ github.event.workflow_run.head_sha }}",
+            "archive_download_url",
+            'artifact.get("name") == "validated-site"',
+            "workflow artifact digest mismatch",
+            "validated-site inner digest mismatch",
+            'archive.extractall(site, filter="data")',
         ):
             if marker not in pages_text:
                 errors.append(f"pages.yml: missing publication gate {marker}")
@@ -241,8 +256,8 @@ def main() -> int:
         print(f"workflow coverage validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
     print(
-        "workflow inventory, least-privilege permissions, immutable actions, campaign replay "
-        "reachability, RH continuity, deployment gate, and external evidence are valid"
+        "workflow inventory, least-privilege permissions, immutable actions, repository execution, "
+        "exact artifact publication, RH continuity, and external evidence are valid"
     )
     return 0
 

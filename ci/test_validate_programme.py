@@ -30,6 +30,11 @@ def fixtures():
             encoding="utf-8"
         )
     )
+    ns_wp06_review = yaml.safe_load(
+        (ROOT / "reviews" / "navier_stokes" / "NS-CI-WP06.agent_review.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
     documentation_review = yaml.safe_load(
         (ROOT / "reviews" / "documentation" / "MKDOCS-COVERAGE.agent_review.yaml").read_text(
             encoding="utf-8"
@@ -53,6 +58,7 @@ def fixtures():
         [candidate],
         agent_review,
         governed_review,
+        ns_wp06_review,
         documentation_review,
         documentary_review,
         workflow_review,
@@ -68,6 +74,7 @@ def main() -> int:
         candidates,
         agent_review,
         governed_review,
+        ns_wp06_review,
         documentation_review,
         documentary_review,
         workflow_review,
@@ -198,6 +205,7 @@ def main() -> int:
 
     assert SCHEMA_BOUND_AGENT_REVIEWS == (
         "reviews/union_closed/UC-WP01.agent_review.yaml",
+        "reviews/navier_stokes/NS-CI-WP06.agent_review.yaml",
         "reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml",
         "reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml",
         "reviews/governance/WORKFLOW-COVERAGE.agent_review.yaml",
@@ -220,12 +228,20 @@ def main() -> int:
 
     for label, review in (
         ("UC-WP01", governed_review),
+        ("NS-CI-WP06", ns_wp06_review),
         ("DOCS-PUBLIC-001", documentation_review),
         ("DOCS-DOCUMENTARY-001", documentary_review),
         ("WORKFLOW-COVERAGE-001", workflow_review),
     ):
         assert not schema_errors(review, "agent_review.schema.json")
         assert not agent_review_semantic_errors(review, label)
+
+    ns_premature_promotion = copy.deepcopy(ns_wp06_review)
+    ns_premature_promotion["promotion"]["ready_for_next_stage"] = True
+    assert any(
+        "amanuensis_control" in error or "blockers" in error
+        for error in schema_errors(ns_premature_promotion, "agent_review.schema.json")
+    )
 
     workflow_without_referee = copy.deepcopy(workflow_review)
     workflow_without_referee["council_review"]["Referee"]["status"] = "pending"
@@ -276,7 +292,7 @@ def main() -> int:
 
     run_documentary_rejection_tests()
 
-    print("programme, workflow-review, and documentary validator rejection tests passed")
+    print("programme, workflow-review, NS-WP06, and documentary validator rejection tests passed")
     return 0
 
 

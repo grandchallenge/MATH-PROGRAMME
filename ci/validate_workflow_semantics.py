@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate semantic workflow identity, dependency, runner, and publication contracts."""
+"""Validate semantic workflow identity, dependency, runner, execution, and publication contracts."""
 from __future__ import annotations
 
 import sys
@@ -30,6 +30,7 @@ DOCS_INSTALL = "python -m pip install --requirement requirements/docs.txt"
 EXTERNAL_POLICY_INSTALL = (
     'python -m pip install --requirement "$GITHUB_WORKSPACE/requirements/policy.txt"'
 )
+UNIT_TEST_COMMAND = "python -m unittest discover -s tests -p 'test_*.py'"
 
 
 def load_workflows(root: Path = ROOT) -> dict[str, dict[str, Any]]:
@@ -80,6 +81,14 @@ def contains_marker(runs: list[str], marker: str) -> bool:
     return any(marker in line for line in command_lines(runs))
 
 
+def steps_using(job: dict[str, Any], action_prefix: str) -> list[dict[str, Any]]:
+    return [
+        step
+        for step in job.get("steps", [])
+        if str(step.get("uses", "")).startswith(action_prefix)
+    ]
+
+
 def workflow_semantic_errors(
     root: Path = ROOT,
     workflows: dict[str, dict[str, Any]] | None = None,
@@ -124,19 +133,50 @@ def workflow_semantic_errors(
         errors.append("requirements/docs.txt must contain the exact governed documentation pins")
 
     policy = workflows.get("ci.yml", {})
+    validate_job = policy.get("jobs", {}).get("validate-json", {})
     validate_runs = job_runs(policy, "validate-json")
     if not contains_command(validate_runs, POLICY_INSTALL):
         errors.append("ci.yml:validate-json must install requirements/policy.txt")
     if not contains_command(validate_runs, DOCS_INSTALL):
         errors.append("ci.yml:validate-json must install requirements/docs.txt")
     for command in (
+        UNIT_TEST_COMMAND,
         "python3 ci/validate_policy_reachability.py",
         "python3 ci/test_policy_reachability.py",
+        "python3 ci/validate_repository_execution.py",
+        "python3 ci/test_repository_execution.py",
         "python3 ci/validate_workflow_semantics.py",
         "python3 ci/test_workflow_semantics.py",
     ):
         if not contains_command(validate_runs, command):
             errors.append(f"ci.yml:validate-json is missing executable coverage command {command}")
+
+    upload_steps = steps_using(validate_job, "actions/upload-artifact@")
+    validated_site_steps = [
+        step for step in upload_steps if step.get("with", {}).get("name") == "validated-site"
+    ]
+    if len(validated_site_steps) != 1:
+        errors.append("ci.yml:validate-json must upload exactly one validated-site artifact")
+    else:
+        step = validated_site_steps[0]
+        condition = str(step.get("if", ""))
+        if "github.event_name == 'push'" not in condition or "github.ref == 'refs/heads/main'" not in condition:
+            errors.append("ci.yml: validated-site upload must be limited to pushes on main")
+        options = step.get("with", {})
+        if str(options.get("retention-days", "")) != "1":
+            errors.append("ci.yml: validated-site artifact retention must be exactly one day")
+        paths = str(options.get("path", ""))
+        for required in ("validated-site.tar.gz", "validated-site.tar.gz.sha256"):
+            if required not in paths:
+                errors.append(f"ci.yml: validated-site upload is missing {required}")
+    for marker in (
+        "tar --sort=name",
+        "sha256sum validated-site.tar.gz",
+        "git show -s --format=%ct HEAD",
+    ):
+        if not contains_marker(validate_runs, marker):
+            errors.append(f"ci.yml: missing deterministic validated-site packaging marker {marker}")
+
     if not contains_command(job_runs(policy, "pc-wp04-lean"), POLICY_INSTALL):
         errors.append("ci.yml:pc-wp04-lean must install requirements/policy.txt")
     if not contains_command(
@@ -168,25 +208,34 @@ def workflow_semantic_errors(
     ):
         if clause not in build_if:
             errors.append(f"pages.yml: build.if is missing semantic gate {clause}")
-    checkout_steps = [
-        step
-        for step in build.get("steps", [])
-        if str(step.get("uses", "")).startswith("actions/checkout@")
-    ]
+    checkout_steps = steps_using(build, "actions/checkout@")
     if len(checkout_steps) != 1:
         errors.append("pages.yml: build must contain exactly one checkout step")
     elif checkout_steps[0].get("with", {}).get("ref") != "${{ github.event.workflow_run.head_sha }}":
         errors.append("pages.yml: checkout must use the validated workflow_run.head_sha")
     build_runs = job_runs(pages, "build")
-    if not contains_command(build_runs, DOCS_INSTALL):
-        errors.append("pages.yml: build must install requirements/docs.txt")
+    if contains_command(build_runs, DOCS_INSTALL) or contains_command(build_runs, "mkdocs build --strict"):
+        errors.append("pages.yml: Pages must deploy the policy artifact without resolving dependencies or rebuilding MkDocs")
     for marker in (
         "refs/heads/main:refs/remotes/origin/main",
         "git rev-parse HEAD",
         "git rev-parse refs/remotes/origin/main",
+        "actions/runs/{run_id}/artifacts",
+        'artifact.get("name") == "validated-site"',
+        "hashlib.sha256(artifact_zip)",
+        "hashlib.sha256(archive_path.read_bytes())",
+        'archive.extractall(site, filter="data")',
     ):
         if not contains_marker(build_runs, marker):
-            errors.append(f"pages.yml: missing current-main freshness check {marker}")
+            errors.append(f"pages.yml: missing exact-artifact publication check {marker}")
+
+    deploy = pages.get("jobs", {}).get("deploy", {})
+    environment = deploy.get("environment", {})
+    if str(environment.get("url", "")) != "${{ steps.deployment.outputs.page_url }}":
+        errors.append("pages.yml: deploy environment must expose the deploy-pages page_url output")
+    deploy_steps = steps_using(deploy, "actions/deploy-pages@")
+    if len(deploy_steps) != 1 or deploy_steps[0].get("id") != "deployment":
+        errors.append("pages.yml: deploy-pages step must have id deployment")
 
     return errors
 
@@ -199,8 +248,8 @@ def main() -> int:
         print(f"workflow semantic validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
     print(
-        "workflow names, runners, Python minor line, dependencies, execution routes, and "
-        "publication freshness are valid"
+        "workflow names, runners, Python minor line, dependencies, repository execution, "
+        "exact artifact promotion, and publication freshness are valid"
     )
     return 0
 

@@ -60,7 +60,8 @@ domains:
     public_page: docs/domains/navier_stokes.md
     governance_refs:
       - ADR-0003
-    claim_boundary: Open problem; restricted estimates and route terminations do not prove global regularity or the universal critical-integral estimate.
+      - ADR-0013
+    claim_boundary: Open problem; restricted estimates, route terminations, related-system computability results, and bounded interface fixtures do not prove global regularity, the universal critical-integral estimate, Turing completeness, undecidable blow-up, or formal independence for the true equation.
     forge_entry: NS-CI-WP01
     solve_entry: NS-CI-WP00
     cert_route: ANALYTIC_PROOF_WITH_EQUATION_SPECIFIC_AUDIT
@@ -89,7 +90,7 @@ domains:
         - human_audit
       pathology_risk:
         level: high
-        notes: Critical scaling, weak-solution semantics, singularity formation, and whole-space versus periodic transfer require explicit control.
+        notes: Critical scaling, weak-solution semantics, singularity formation, whole-space versus periodic transfer, computational representation, viscous persistence, and undecidability versus independence require explicit control.
     next_review: '2026-10-01'
     knowledge_graph_refs: []
     classification_mapping_refs: []

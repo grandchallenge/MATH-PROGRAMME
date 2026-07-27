@@ -2,7 +2,7 @@
 
 **Status:** Current governed inventory, edition 2026.07.
 
-This is a curated map of authoritative entry points, not an exhaustive recursive file listing. Exact repository contents remain available through version control. New campaign or publication files do not become authoritative merely by appearing in the tree; authority is established by the domain registry, Agent Council artifact ledger, decision records, claim ledgers, promotion register, schema-bound reviews, code-owned executable discovery, governed command routes, declared workflow environments, and certification routes.
+This is a curated map of authoritative entry points, not an exhaustive recursive listing. Files become authoritative through the domain registry, artifact ledger, decisions, claim and promotion records, schema-bound reviews, governed execution routes, and certification controls—not merely by appearing in the tree.
 
 ## Programme architecture
 
@@ -11,15 +11,15 @@ This is a curated map of authoritative entry points, not an exhaustive recursive
 - `MATHFORGE_SPEC.md`
 - `MATHSOLVE_SPEC.md`
 - `MATHCERT_SPEC.md`
-- `PROGRAMME_CHARTER.md` through the rendered `docs/PROGRAMME_CHARTER.md`
+- `PROGRAMME_CHARTER.md` through `docs/PROGRAMME_CHARTER.md`
 - `DOMAIN_REGISTRY.yaml`
 - `mkdocs.yml`
 
 ## Governing standards
 
 - `GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md`
-- `GRAND_CHALLENGE_PEDAGOGY_STANDARD.md` — compatibility pointer
-- `docs/GRAND_CHALLENGE_PEDAGOGY_STANDARD.md` — canonical pedagogy standard
+- `GRAND_CHALLENGE_PEDAGOGY_STANDARD.md`
+- `docs/GRAND_CHALLENGE_PEDAGOGY_STANDARD.md`
 - `CLAIM_LEDGER_STANDARD.md`
 - `CERTIFICATION_LADDER.md`
 - `CLASSIFICATION_DISCOVERY_STANDARD.md`
@@ -36,12 +36,13 @@ This is a curated map of authoritative entry points, not an exhaustive recursive
 - `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md`
 - `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`
 - `docs/CAMPAIGN_PROMOTION_REGISTER.md`
-- `docs/decisions/ADR-0001_*.md` through `ADR-0012_*.md`
+- `docs/decisions/ADR-0001_*.md` through `ADR-0014_*.md`
 - `schemas/agent_review.schema.json`
 - `templates/agent_review.yaml`
 - `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml`
 - `reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml`
 - `reviews/governance/WORKFLOW-COVERAGE.agent_review.yaml`
+- `reviews/navier_stokes/NS-CI-WP06.agent_review.yaml`
 
 ## Canonical domains
 
@@ -53,25 +54,14 @@ This is a curated map of authoritative entry points, not an exhaustive recursive
 - `YM-WP00-source-normalization-equivalence-audit.md`
 - `PNP-WP00-source-definition-equivalence-audit.md`
 - `RH-WP00-source-normalization-equivalence-audit.md`
-- `docs/domains/index.md`
-- `docs/domains/union_closed.md`
-- `docs/domains/navier_stokes.md`
-- `docs/domains/hodge.md`
-- `docs/domains/birch_swinnerton_dyer.md`
-- `docs/domains/poincare_reconstruction.md`
-- `docs/domains/yang_mills.md`
-- `docs/domains/p_vs_np.md`
-- `docs/domains/riemann_hypothesis.md`
+- `docs/domains/`
 
-Historical filename retained under decision control:
-
-- `DOMAIN_03_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md`
-
-The mislabelled `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` was removed in PR #96. The canonical Poincaré master plan is `DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md`; frozen pre-renumbering provenance is governed by `reviews/poincare/HISTORICAL_IDENTITY_CROSSWALK.yaml`.
+The historical BSD Domain 03 filename remains under decision control. The mislabelled `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` was removed in PR #96; `DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` is canonical and frozen provenance is governed by `reviews/poincare/HISTORICAL_IDENTITY_CROSSWALK.yaml`.
 
 ## Campaign stacks
 
 - `campaigns/navier_stokes_critical_integrability/`
+- `campaigns/navier_stokes_critical_integrability/WP06_UNDECIDABILITY_REDUCTION_LANE/`
 - `campaigns/hodge_conjecture/`
 - `campaigns/birch_swinnerton_dyer/`
 - `campaigns/poincare_reconstruction/`
@@ -82,35 +72,34 @@ The mislabelled `DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md` was removed i
 - `reviews/hodge_conjecture/`
 - `reviews/birch_swinnerton_dyer/`
 - `reviews/poincare/`
-- `reviews/poincare/HISTORICAL_IDENTITY_CROSSWALK.yaml`
 - `reviews/riemann_hypothesis/`
+
+NS-CI-WP06 is a non-blocking, non-probative computability lane. Its literature, risk, obligation, and bounded fixture artifacts do not alter the WP01/WP02 analytic mainline or any WP00–WP05 result state.
 
 Yang–Mills currently uses its integrated root WP00 dossier as the complete campaign stack entry.
 
-Riemann Hypothesis post-WP00 continuity entry points:
+Riemann Hypothesis post-WP00 continuity entries remain implemented and CI-passed but formally unpromoted while retained blockers remain open.
 
-- `RH-WP01-WP02-post-WP00-integration.md`
-- `campaigns/riemann_hypothesis/WP01_FALSE_PROOF_ATLAS/`
-- `campaigns/riemann_hypothesis/WP02_THEOREM_LEDGER/`
-- `campaigns/riemann_hypothesis/RH_WP01_WP02_POST_MERGE_DISPOSITION.md`
+## Repository tests and bounded experiments
 
-RH-WP01 and RH-WP02 are implemented, merged, and CI-passed but not formally promoted while their retained review blockers remain open.
+- `tests/test_ns_wp06_halting_gate_fixture.py`
+- `experiments/__init__.py`
+- `experiments/ns_wp06_undec/__init__.py`
+- `experiments/ns_wp06_undec/halting_gate_fixture.py`
+- `ci/validate_repository_execution.py`
+- `ci/test_repository_execution.py`
+
+Experiment modules are library-only and must be reachable from discovered standard-library unit tests. Passing tests establish bounded software behaviour only.
 
 ## Documentary Library
 
 - `docs/documentaries/index.md`
 - `docs/documentaries/ARTIFACT_MANIFEST.json`
 - `docs/documentaries/sources/README.md`
-- `docs/documentaries/sources/*.tex` — source records, not complete compilable projects
+- `docs/documentaries/sources/*.tex`
 - `docs/documentaries/documentary_web.schema.json`
 - `docs/documentaries/poincare.edition.json`
-- `docs/documentaries/poincare.md`
-- `docs/documentaries/bsd.md`
-- `docs/documentaries/hodge.md`
-- `docs/documentaries/navier_stokes.md`
-- `docs/documentaries/yang_mills.md`
-- `docs/documentaries/p_vs_np.md`
-- `docs/documentaries/riemann.md`
+- `docs/documentaries/*.md`
 - `docs/stylesheets/documentary.css`
 - `docs/javascripts/documentary.js`
 - `docs/javascripts/documentary-mathjax.js`
@@ -119,23 +108,21 @@ RH-WP01 and RH-WP02 are implemented, merged, and CI-passed but not formally prom
 - `ci/validate_documentaries.py`
 - `ci/test_validate_documentaries.py`
 
-The checksum-locked complete illustrated source bundle is the authoritative documentary source artifact. The checksum-locked PDF is the rendered edition. Current release-class entries are `metadata_only` and do not assert stable public release locators.
+The complete illustrated source bundle is the authoritative documentary source artifact; the checksum-locked PDF is the rendered edition. Current release-class entries are `metadata_only` and do not assert stable public locators.
 
 ## Union-Closed formal and exact baseline
 
-The implementation and bounded replay are maintained in the external [`grandchallenge/MATHCERT`](https://github.com/grandchallenge/MATHCERT) repository rather than under local `MathCert/` or `MATHCERT/` paths.
+The implementation and bounded replay are maintained in external `grandchallenge/MATHCERT` rather than local `MathCert/` or `MATHCERT/` paths.
 
 - `WP01_UNION_CLOSED_STATUS_SPINE.md`
 - `WP02_UNION_CLOSED_LEAN_HANDOFF.md`
-- `evidence/UC-WP02-MATHCERT.json` — exact external repository, commit, paths, command, and claim boundary
+- `evidence/UC-WP02-MATHCERT.json`
 - `schemas/cross_repository_evidence.schema.json`
 - external `grandchallenge/MATHCERT/MathCert/Domains/UnionClosed/`
 - external `grandchallenge/MATHCERT/certificates/exact/union_closed_n_le_4.json`
-- external `grandchallenge/MATHCERT/ci/replay_certificates.py`
 - external `grandchallenge/MATHCERT/ci/check_lean.sh`
-- `templates/union_closed_claim_ledger_wp01.yaml`
 
-The global programme policy checks out the evidence-pinned MATHCERT commit and executes its complete certification gate. Bounded replay and checked local lemmas do not prove Frankl's conjecture.
+The global policy checks out the evidence-pinned commit and runs the complete gate. Bounded replay and checked local lemmas do not prove Frankl's conjecture.
 
 ## Certified fixtures and publications
 
@@ -164,14 +151,16 @@ The global programme policy checks out the evidence-pinned MATHCERT commit and e
 - `ci/test_campaign_replays.py`
 - `ci/validate_policy_reachability.py`
 - `ci/test_policy_reachability.py`
+- `ci/validate_repository_execution.py`
+- `ci/test_repository_execution.py`
 - `ci/validate_workflow_semantics.py`
 - `ci/test_workflow_semantics.py`
+- `ci/validate_workflow_coverage.py`
+- `ci/test_workflow_coverage.py`
 - `ci/validate_rh_continuity.py`
 - `ci/test_rh_continuity.py`
 - `ci/validate_retired_paths.py`
 - `ci/test_retired_paths.py`
-- `ci/validate_workflow_coverage.py`
-- `ci/test_workflow_coverage.py`
 - `ci/validate_programme.py`
 - `ci/test_validate_programme.py`
 - `ci/validate_docs.py`
@@ -181,11 +170,11 @@ The global programme policy checks out the evidence-pinned MATHCERT commit and e
 
 ## Workflow coverage
 
-- `.github/workflows/ci.yml` — global policy on every pull request, every push to `main`, and manual audit; includes code-owned campaign discovery, CI import-graph reachability, semantic workflow checks, strict documentation, LOG-GCD Lean, PC-WP04 Lean, pinned external MATHCERT replay, and continuity controls.
-- `.github/workflows/pages.yml` — deploys only a successful policy-validated SHA that remains the current `main` tip; stale in-progress publication is cancelled.
-- `.github/workflows/bsd-wp03-substrate.yml` — path-scoped fast feedback for BSD-WP03.
-- `.github/workflows/bsd-wp04-target.yml` — path-scoped fast feedback for BSD-WP04.
-- `.github/workflows/pc-wp04.yml` — path-scoped bounded certificate replay.
-- `.github/workflows/pc-wp05.yml` — path-scoped archival and bounded-certificate replay.
+- `.github/workflows/ci.yml` — global policy, repository tests, strict site producer, formal gates, external evidence, and continuity controls.
+- `.github/workflows/pages.yml` — retrieves and verifies the exact run-scoped `validated-site` artifact, refuses stale `main`, and deploys without rebuilding.
+- `.github/workflows/bsd-wp03-substrate.yml` — BSD-WP03 fast feedback.
+- `.github/workflows/bsd-wp04-target.yml` — BSD-WP04 fast feedback.
+- `.github/workflows/pc-wp04.yml` — bounded certificate replay.
+- `.github/workflows/pc-wp05.yml` — archival and bounded-certificate replay.
 
-Workflow identity, runners, dependency routes, permissions, checkout credential handling, job timeouts, policy triggers, action immutability, external evidence, executable reachability, and current-tip deployment are machine-checked. A new executable campaign or CI Python file fails closed until it has an actual governed route or an explicit campaign exemption. Exact top-level pins establish the declared workflow environment but are not a complete transitive hash lock.
+Workflow identity, permissions, immutable actions, environment declarations, executable reachability, repository tests, experiment imports, exact workflow-artifact and inner archive digests, external evidence, and current-tip deployment are machine-checked. Exact top-level pins remain short of a complete transitive hash lock.

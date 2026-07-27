@@ -9,7 +9,8 @@
 - Primary domain: the unforced Cauchy problem on `ℝ³`
 - Secondary domain: the periodic problem on `𝕋³`, tracked as a separate hypothesis profile
 - Result status: `OPEN`
-- Programme state: `WP00_PROMOTED_WP01_WP02_PERMITTED`
+- Programme state: `WP00_PROMOTED_WP01_WP02_ACTIVE_WP06_NONBLOCKING`
+- Governing decisions: `ADR-0003`; `ADR-0013`
 
 ## Corrected canonical challenge
 
@@ -53,6 +54,8 @@ The programme separates four logically distinct objects:
 4. the correspondence between universal critical integrability and global smoothness.
 
 The campaign must not confuse a criterion for regularity with a proof that the criterion always holds.
+
+A separate fifth object is tracked only in `NS-CI-WP06`: whether a computable family of admissible initial data could encode a decision problem through an exact event of the true viscous equation. That question is not part of the active proof spine and supplies no evidence for or against universal critical integrability unless a complete two-way reduction, exact solution semantics, and an undecidability-transfer theorem are proved. Formal-independence language additionally requires a separate formal-system-relative transfer theorem.
 
 ## Why this formulation is useful
 
@@ -137,6 +140,8 @@ NS-CI-R014  Restricted theorem target, selected only after the WP04 gate
 NS-CI-R-COMPACT  Compact-support restricted lane
 ```
 
+`NS-CI-WP06` is not a theorem-spine node. It is an investigatory branch governed by obligations `U001–U012`. Reduction escalation requires `U001–U011`; formal-independence language separately requires `U012`. The branch cannot feed `T013`, `B011`, or `B012` without an explicit later Council decision.
+
 ## Dependency architecture
 
 ```text
@@ -150,6 +155,7 @@ L008 ─> L009 ─> L010 ─> B011 ──┘
 
 Clay smooth class ─> B012 ─> reverse formulation  [pending]
 WP00 audit + WP01 adversarial review ─> R014 gate
+WP00 source identity ─> WP06 literature and reduction audit  [non-blocking; no theorem-spine edge]
 ```
 
 `O005` is an obstruction node, not a negative result about Navier–Stokes. It proves only that the standard energy-class information is insufficient by itself.
@@ -216,6 +222,29 @@ Status: scaling lane active in MATHCERT; PDE regularity imports remain explicit 
 
 Goal: formalize safe statements and interfaces: scaling identities, mixed-norm algebra, energy/Sobolev consequences, implication structure, and visible imported hypotheses.
 
+### WP06: Undecidability and reduction lane
+
+Status: active, non-blocking, and non-probative under `ADR-0013`; `ready_for_next_stage: false`.
+
+Goal: audit whether a computable encoding from machines and inputs to admissible data for the true equation could make a precisely represented fluid event equivalent to halting.
+
+Permitted work:
+
+- primary-source literature audit;
+- separation of Euler, averaged-equation, ODE, and true-equation claims;
+- reduction and transfer obligations `U001–U012`;
+- computability and independence risk analysis;
+- bounded software interface fixtures governed by repository tests.
+
+Closed work:
+
+- true-equation mechanism generation;
+- numerical or software evidence promoted as a continuum claim;
+- one-way simulation described as a reduction;
+- an event predicate with implicit solution class or quantifier;
+- undecidability described as formal independence;
+- any change to WP00–WP05 result or promotion states.
+
 ## Three-pillar split
 
 ### MATHFORGE
@@ -225,7 +254,8 @@ Goal: formalize safe statements and interfaces: scaling identities, mixed-norm a
 - taxonomy of regularity criteria;
 - false-proof and claimed-proof triage;
 - restricted-regime candidate generation only after its gate;
-- non-probative computational diagnostics only after authorization.
+- non-probative computational diagnostics only after authorization;
+- adjacent-system computability literature audit without transfer claims.
 
 ### MATHSOLVE
 
@@ -233,7 +263,8 @@ Goal: formalize safe statements and interfaces: scaling identities, mixed-norm a
 - quantitative LPS reconstruction;
 - continuation and correspondence map;
 - restricted-target selection only after its gate;
-- explicit route termination when a mechanism fails.
+- explicit route termination when a mechanism fails;
+- no computability reduction enters MATHSOLVE until `U001–U011` are theorem-grade.
 
 ### MATHCERT
 
@@ -241,15 +272,16 @@ Goal: formalize safe statements and interfaces: scaling identities, mixed-norm a
 - mixed-norm and scaling identities;
 - energy/Sobolev bridge where library support permits;
 - conditional implication interfaces with provenance;
-- proof objects only for closed lemmas, never for the open universal estimate.
+- proof objects only for closed lemmas, never for the open universal estimate;
+- `U012` formal-system-relative review required before any independence language.
 
 ## Foundational profile
 
 - Carrier: real-valued vector fields and distributions on `ℝ³ × [0,T]`.
 - Ambient structures: measure spaces, Banach/Sobolev spaces, distributions, nonlinear PDE, weak and strong solution classes.
 - Classical base: standard classical mathematics with ordinary choice as used in analysis.
-- Witness policy: existential weak solutions are literature-derived until reconstructed; computational trajectories are not witnesses for the continuum universal claim.
-- Pathology risk: high, due to weak convergence, concentration, endpoint estimates, nonuniqueness outside audited classes, and semantic drift between data and solution concepts.
+- Witness policy: existential weak solutions are literature-derived until reconstructed; computational trajectories and bounded software fixtures are not witnesses for the continuum universal claim.
+- Pathology risk: high, due to weak convergence, concentration, endpoint estimates, nonuniqueness outside audited classes, semantic drift between data and solution concepts, infinite-precision simulation assumptions, and undecidability/independence conflation.
 
 Registry promotion remains deferred until MSC/arXiv mappings and knowledge-graph nodes are independently audited.
 
@@ -262,6 +294,7 @@ Registry promotion remains deferred until MSC/arXiv mappings and knowledge-graph
 5. Leray original paper: identified; modern Ożański–Pooley reconstruction used operationally; exact historical theorem map pending.
 6. Modern operational LPS statement: audited at `(4,6)`.
 7. Current official open status: audited on 2026-07-23.
+8. WP06 adjacent-system sources: identity-audited; all transfer barriers remain open.
 
 ## Claim boundary
 
@@ -273,13 +306,20 @@ This campaign does not claim:
 - evidence against finite-time singularity from numerical experiments;
 - novelty for the challenge formulation;
 - that a compact-support theorem alone settles the full whole-space branch;
-- completed bidirectional equivalence with the official statement.
+- completed bidirectional equivalence with the official statement;
+- Turing completeness of the true viscous equation;
+- undecidable blow-up or noncomputability of the critical integral;
+- that related Euler, averaged-equation, or ODE results transfer to Navier–Stokes;
+- formal independence from ZFC or any other named system;
+- that the WP06 software fixture is a PDE simulation or mathematical witness.
 
 ## Current executable stage
 
-Execute WP01 and WP02 in parallel:
+Execute the analytic mainline WP01 and WP02 in parallel:
 
 - WP01 builds exact false-proof fixtures and route-termination records.
 - WP02 produces the source-normalized quantitative conditional-regularity ledger.
 
-Mechanism generation, broad numerical experimentation, numerical regularity claims, and `NS-CI-R014` target promotion remain closed until their own explicit gates are satisfied.
+WP06 may proceed concurrently only as a non-blocking literature, obligation, risk, and bounded-interface lane. It has no theorem-spine edge and no authority to change mainline priorities or claim status. Reduction escalation requires theorem-level discharge of `U001–U011`; any independence claim additionally requires `U012` and a new Council decision.
+
+Mechanism generation for the true equation, broad numerical experimentation, numerical regularity claims, `NS-CI-R014` target promotion, and WP06 mathematical escalation remain closed until their own explicit gates and later Council decisions are satisfied.
