@@ -1,11 +1,6 @@
 {
   "$schema": "../schemas/campaign_replay_registry.schema.json",
-  "schema_version": "1.0.0",
-  "discovery_globs": [
-    "campaigns/**/replay.py",
-    "campaigns/**/validate*.py",
-    "campaigns/**/test*.py"
-  ],
+  "schema_version": "2.0.0",
   "entries": [
     {
       "id": "BSD-WP01-REPLAY",
@@ -79,5 +74,6 @@
       "timeout_seconds": 60,
       "scope": "Reject PC-WP05 archival-policy mutations."
     }
-  ]
+  ],
+  "exemptions": []
 }
