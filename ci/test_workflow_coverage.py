@@ -63,13 +63,22 @@ def main() -> int:
 
     overprivileged_build = dict(texts)
     overprivileged_build["pages.yml"] = overprivileged_build["pages.yml"].replace(
-        "    permissions:\n      contents: read\n      pages: write\n",
-        "    permissions:\n      contents: read\n      pages: write\n      id-token: write\n",
+        "    permissions:\n      actions: read\n      contents: read\n      pages: write\n",
+        "    permissions:\n      actions: read\n      contents: read\n      pages: write\n      id-token: write\n",
         1,
     )
     assert any(
         "build permissions must be exactly" in error
         for error in workflow_coverage_errors(texts=overprivileged_build, evidence=evidence)
+    )
+
+    missing_artifact_read = dict(texts)
+    missing_artifact_read["pages.yml"] = missing_artifact_read["pages.yml"].replace(
+        "      actions: read\n", "", 1
+    )
+    assert any(
+        "build permissions must be exactly" in error
+        for error in workflow_coverage_errors(texts=missing_artifact_read, evidence=evidence)
     )
 
     missing_deploy_token = dict(texts)
@@ -90,6 +99,37 @@ def main() -> int:
     assert any(
         "action reference must use a full commit SHA" in error
         for error in workflow_coverage_errors(texts=mutable_action, evidence=evidence)
+    )
+
+    missing_exact_artifact = dict(texts)
+    missing_exact_artifact["pages.yml"] = missing_exact_artifact["pages.yml"].replace(
+        'artifact.get("name") == "validated-site"',
+        'artifact.get("name") == "some-other-artifact"',
+        1,
+    )
+    assert any(
+        "missing publication gate" in error
+        for error in workflow_coverage_errors(texts=missing_exact_artifact, evidence=evidence)
+    )
+
+    missing_inner_digest = dict(texts)
+    missing_inner_digest["pages.yml"] = missing_inner_digest["pages.yml"].replace(
+        "validated-site inner digest mismatch", "inner verification removed", 1
+    )
+    assert any(
+        "missing publication gate" in error
+        for error in workflow_coverage_errors(texts=missing_inner_digest, evidence=evidence)
+    )
+
+    missing_repository_tests = dict(texts)
+    missing_repository_tests["ci.yml"] = missing_repository_tests["ci.yml"].replace(
+        "python3 ci/validate_repository_execution.py",
+        "python3 -c 'print(\"repository tests skipped\")'",
+        1,
+    )
+    assert any(
+        "validate_repository_execution.py" in error
+        for error in workflow_coverage_errors(texts=missing_repository_tests, evidence=evidence)
     )
 
     dynamic_external_repository = dict(texts)
@@ -141,7 +181,7 @@ def main() -> int:
 
     assert run_rh_continuity_tests() == 0
 
-    print("workflow and RH continuity rejection tests passed")
+    print("workflow, exact-artifact, repository-execution, and RH rejection tests passed")
     return 0
 
 
