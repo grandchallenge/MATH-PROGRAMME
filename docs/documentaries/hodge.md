@@ -1,36 +1,70 @@
-# The Geometry of Hidden Harmony
+<link rel="stylesheet" href="../../stylesheets/documentary.css">
+<link rel="stylesheet" href="../../stylesheets/documentary-status.css">
+<div class="gcl-monograph" data-gcl-reader="hodge" data-edition="1.1.0"><a class="monograph-skip" href="#monograph-start">Skip to the manuscript</a><header class="monograph-hero" aria-labelledby="monograph-title"><div class="monograph-hero__art" aria-hidden="true"><img src="../../assets/documentaries/hodge/cover.svg" width="1024" height="1536" alt=""></div><div class="monograph-hero__veil"></div><div class="monograph-hero__copy"><p class="monograph-eyebrow">MATH-PROGRAMME · Documentary Treatment · HC-001</p><h1 id="monograph-title">The Geometry of Hidden Harmony</h1><p class="monograph-hero__subtitle">A guided journey through cohomology, Hodge decomposition, and algebraic cycles</p><p class="monograph-hero__thesis">When topology carries the exact Hodge type expected of an algebraic subvariety, must that class come from algebraic geometry?</p><div class="monograph-status" aria-label="Publication status"><span>Open Millennium Prize Problem</span><span>HC-001</span><span>No solution claimed</span></div><div class="monograph-actions"><a class="monograph-button monograph-button--primary" href="#monograph-start">Begin the journey</a><a class="monograph-button" href="../">Documentary library</a><a class="monograph-button" href="../sources/the_geometry_of_hidden_harmony.tex">Source record</a></div></div></header>
+<div class="monograph-progress" aria-hidden="true"><span data-reader-progress-bar></span></div><div class="monograph-reader" id="monograph-start" tabindex="-1"><nav class="monograph-toolbar" aria-label="Reader controls"><div class="monograph-toolbar__identity"><span>Digital Grand Challenge Library</span><strong>The Geometry of Hidden Harmony</strong></div><div class="monograph-toolbar__controls"><button type="button" data-reader-focus aria-pressed="false">Focus mode</button><button type="button" data-reader-print>Print / save</button><button type="button" data-reader-reset>Reset position</button><output data-reader-progress aria-live="polite">0% read</output></div></nav><div class="monograph-layout"><aside class="monograph-contents" aria-label="Manuscript contents"><p class="monograph-contents__title">The journey</p><ol><li><a href="#reader-note">How to Read the Harmony</a></li><li><a href="#cohomology">How a Shape Remembers</a></li><li><a href="#decomposition">The Hodge Decomposition</a></li><li><a href="#cycles">Algebraic Cycles and Their Classes</a></li><li><a href="#conjecture">The Exact Rational Conjecture</a></li><li><a href="#terrain">Known Islands and False Extensions</a></li></ol><p class="monograph-contents__title">Technical appendix</p><ol><li><a href="#appendix-categories">Category and Coefficient Restrictions</a></li><li><a href="#appendix-cycle-map">The Cycle-Class Map</a></li><li><a href="#appendix-low-dimensional">Lefschetz and the Low-Dimensional Boundary</a></li><li><a href="#appendix-trust">Hodge Loci, Motives, and Trust Matrix</a></li><li><a href="#sources">Sources</a></li></ol></aside><article class="monograph-body" aria-label="The Geometry of Hidden Harmony manuscript">
+<section class="monograph-section" id="reader-note" data-reader-section markdown="1"><p class="monograph-section__eyebrow">A note to the reader</p>
+## How to Read the Harmony
+A complex algebraic variety may be studied as equations, topology, and complex geometry. Hodge theory decomposes its cohomology into analytic types; algebraic cycles produce special classes. The stained-glass diamonds are orientation devices. Rational coefficients, smooth projectivity, the cycle-class map, and known counterexamples govern the claim.
 
-## The Hodge Conjecture
-
-A visual and technical exploration of complex projective varieties, cohomology, Hodge decomposition, algebraic cycles, the cycle-class map, known low-dimensional terrain, and the false integral and unrestricted Kähler variants.
-
-!!! abstract "Documentary record"
-    **Subject:** Hodge Conjecture  
-    **Status:** Open Millennium Prize Problem  
-    **Programme crosswalk:** `HC` / `HC-001`  
-    **Length:** 41 pages  
-    **Pedagogical mode:** GCL–Chaidez illustrated monograph  
-    **Source record:** [`the_geometry_of_hidden_harmony.tex`](sources/the_geometry_of_hidden_harmony.tex)  
-    **Authoritative source artifact:** checksum-locked complete illustrated source bundle
-
-## How to read this volume
-
-The plates provide orientation. The exact rational statement, category restrictions, known cases, counterexamples to stronger variants, campaign artifacts, and technical appendix govern the mathematics.
-
-## Claim boundary
-
-The volume does not infer algebraicity from numerical coincidence, low-dimensional cases, the integral conjecture, arbitrary compact Kähler examples, or the Tate conjecture.
-
-## Artifact identity
-
-| Artifact | Bytes | SHA-256 | Availability |
-|---|---:|---|---|
-| Rendered PDF | 19,725,126 | `375a142a6a11492922130e555c37d308734aec0f64fc3a10d205f1863d348d59` | `metadata_only` |
-| Complete LaTeX source | 57,896 | `10a93fbe472c76d6e11b78fa3221c96cc615fe014fa80b70d9bc2feec7ee2690` | `metadata_only` |
-| Authoritative complete illustrated source bundle | 19,663,963 | `be1952b50d2938f061e763f3f7c8150c8957b95710ebce2f6ca3b11210085746` | `metadata_only` |
-
-`metadata_only` records governed identity but does not assert a stable public release locator.
-
-- [Open the source record](sources/the_geometry_of_hidden_harmony.tex)
-- [Inspect the release-artifact manifest](ARTIFACT_MANIFEST.json)
-- [Return to the Documentary Library](index.md)
+**Edition status:** Open Millennium Prize Problem; rational projective statement; no algebraicity proof claim.
+<div class="conjecture-box"><strong>Open conjecture</strong><p>For a smooth projective complex variety \(X\), every rational class in \(H^{2p}(X,\mathbb Q)\cap H^{p,p}(X)\) is conjectured to be a rational linear combination of codimension-\(p\) algebraic cycle classes.</p></div><div class="warning-box"><strong>Claim boundary</strong><p>The rational, smooth, projective, and complex hypotheses are structural. Integral and unrestricted compact Kähler extensions are false.</p></div></section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate I"><img src="../../assets/documentaries/hodge/memory.svg" width="1024" height="1536" loading="lazy" alt="Cycles thread through a complex geometric world while cohomology records their global traces."></button><figcaption><span class="plate-label">Plate I</span><strong>How a shape remembers</strong><small>Pedagogical orientation only. Cohomology and Poincaré duality govern the claim.</small></figcaption></figure>
+<section class="monograph-section" id="cohomology" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter I</p>
+## How a Shape Remembers
+Cohomology records global holes through closed differential forms. A codimension-\(p\) subvariety has real codimension \(2p\), so its fundamental class lives in even-degree cohomology.
+<div class="definition-box"><strong>Definition</strong><p>A smooth projective complex variety is a nonsingular projective algebraic variety over \(\mathbb C\). Projectivity supplies the polarization and algebraic category required by the conjecture.</p></div>
+The cycle-class map forgets much geometry: distinct cycles can share a class, and homologically trivial cycles map to zero.</section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate II"><img src="../../assets/documentaries/hodge/diamond.svg" width="1024" height="1536" loading="lazy" alt="A luminous Hodge diamond separates cohomology into conjugate bidegrees."></button><figcaption><span class="plate-label">Plate II</span><strong>The Hodge decomposition</strong><small>Pedagogical orientation only. The direct-sum decomposition governs the types.</small></figcaption></figure>
+<section class="monograph-section" id="decomposition" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter II</p>
+## The Hodge Decomposition
+For a compact Kähler manifold,
+\[H^k(X,\mathbb C)=\bigoplus_{p+q=k}H^{p,q}(X),\qquad \overline{H^{p,q}}=H^{q,p}.\]
+<div class="imported-box"><strong>Imported established theorem</strong><p>Harmonic theory gives the Hodge decomposition. Algebraic cycles necessarily yield classes of type \((p,p)\); the higher-codimension converse for rational classes is the open step.</p></div>
+Symmetry of the Hodge diamond is theorem-level structure, not a construction of algebraic representatives.</section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate III"><img src="../../assets/documentaries/hodge/cycles.svg" width="1024" height="1536" loading="lazy" alt="Algebraic subvarieties map through the cycle-class map into rational Hodge classes."></button><figcaption><span class="plate-label">Plate III</span><strong>From subvarieties to classes</strong><small>Pedagogical orientation only. The cycle-class map is many-to-one and need not be surjective.</small></figcaption></figure>
+<section class="monograph-section" id="cycles" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter III</p>
+## Algebraic Cycles and Their Classes
+Let \(Z^p(X)\) be generated by irreducible codimension-\(p\) subvarieties. The cycle-class map is
+\[\operatorname{cl}^p:Z^p(X)\longrightarrow H^{2p}(X,\mathbb Z)\cap H^{p,p}(X).\]
+<div class="definition-box"><strong>Definition</strong><p>A rational Hodge class is an element of \(H^{2p}(X,\mathbb Q)\) whose complexification lies in \(H^{p,p}(X)\).</p></div>
+Chow groups and Abel–Jacobi invariants refine information lost in ordinary cohomology, but they do not make every Hodge class algebraic by definition.</section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate IV"><img src="../../assets/documentaries/hodge/frontier.svg" width="1024" height="1536" loading="lazy" alt="Known divisor and low-dimensional terrain is separated from false integral and unrestricted Kähler variants."></button><figcaption><span class="plate-label">Plate IV</span><strong>The exact rational frontier</strong><small>Pedagogical orientation only. Category and coefficient restrictions are theorem-critical.</small></figcaption></figure>
+<section class="monograph-section" id="conjecture" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter IV</p>
+## The Exact Rational Conjecture
+\[\operatorname{Im}(\operatorname{cl}^p\otimes\mathbb Q)=H^{2p}(X,\mathbb Q)\cap H^{p,p}(X).\]
+The left side is generated geometrically; the right side is selected analytically and arithmetically.
+<div class="warning-box"><strong>Coefficient and category guardrail</strong><p>The integral conjecture is false, and the analogous statement for arbitrary compact Kähler manifolds is false. Replacing \(\mathbb Q\) by \(\mathbb Z\), or projective by Kähler, changes the theorem.</p></div></section>
+<section class="monograph-section" id="terrain" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter V</p>
+## Known Islands and False Extensions
+<div class="theorem-box"><strong>Established low-dimensional terrain</strong><p>Lefschetz \((1,1)\) proves codimension one. Together with duality and the available codimensions, the rational Hodge conjecture follows for smooth projective varieties of complex dimension at most three.</p></div>
+Dimension four contains genuine middle-dimensional codimension-two classes. Hodge loci, the Tate conjecture, Mumford–Tate groups, and motives are connected programmes, not interchangeable statements.
+<p class="monograph-pullquote">Topology keeps the memory. Hodge theory sorts the memory. Algebraic geometry asks who wrote it.</p></section>
+<section class="monograph-section" id="appendix-categories" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix A</p>
+## Category and Coefficient Restrictions
+The statement fixes smooth projective \(X/\mathbb C\), singular cohomology with rational coefficients, Hodge decomposition, and algebraic cycles of fixed codimension. Singular or open varieties require different structures; integral coefficients retain torsion.</section>
+<section class="monograph-section" id="appendix-cycle-map" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix B</p>
+## The Cycle-Class Map
+For irreducible \(Z\subset X\), Poincaré duality gives \([Z]\in H^{2p}(X,\mathbb Z)\). Algebraicity implies Hodge type \((p,p)\). Surjectivity after tensoring with \(\mathbb Q\) is the conjecture; injectivity is false and belongs to finer cycle theories.</section>
+<section class="monograph-section" id="appendix-low-dimensional" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix C</p>
+## Lefschetz and the Low-Dimensional Boundary
+The exponential sequence and Lefschetz theorem give \(c_1:\operatorname{Pic}(X)\twoheadrightarrow H^2(X,\mathbb Z)\cap H^{1,1}(X)\). The argument does not automatically reach middle cohomology in dimension four or higher.</section>
+<section class="monograph-section" id="appendix-trust" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix D</p>
+## Hodge Loci, Motives, and Trust Matrix
+| Claim | Trust class | Qualification |
+|---|---|---|
+| Hodge decomposition | imported established | compact Kähler theorem |
+| Algebraic cycles have \((p,p)\) classes | established | necessary direction |
+| Lefschetz \((1,1)\) | imported established | codimension one |
+| Dimension at most three | established consequence | low-dimensional boundary |
+| Integral Hodge conjecture | false in general | not the Clay statement |
+| Unrestricted Kähler analogue | false in general | projectivity essential |
+| General rational projective conjecture | open | dimension four already open |
+| Tate/Mumford–Tate/motives | adjacent programmes | not identical |
+| Illuminated plates | pedagogical | never authoritative cycle diagrams |
+<div class="warning-box"><strong>Final claim boundary</strong><p>This edition does not prove algebraicity of a new Hodge class, settle a new family, or transfer an arithmetic or motivic statement into the general complex conjecture.</p></div></section>
+<section class="monograph-section" id="sources" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Sources and programme crosswalk</p>
+## Governing literature and campaign record
+<div class="bibliography"><p><a href="https://www.claymath.org/millennium/hodge-conjecture/">Clay Mathematics Institute: Hodge Conjecture</a>.</p><p><a href="https://www.claymath.org/wp-content/uploads/2022/05/hodge.pdf">Pierre Deligne, official problem description</a>.</p><p><a href="https://doi.org/10.1007/978-3-662-03080-7">Claire Voisin, Hodge theory</a>.</p><p><a href="https://doi.org/10.1007/BF02684695">Atiyah and Hirzebruch, integral counterexamples</a>.</p><p><a href="https://doi.org/10.1007/s00222-003-0329-0">Cattani, Deligne, and Kaplan, Hodge loci</a>.</p></div>
+Programme links: [Domain 03](../../domains/hodge/) · [claim-authority record](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/DOMAIN_03_HODGE_CONJECTURE_MASTER_PLAN.md) · [campaign artifacts](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/hodge_conjecture) · [review records](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/reviews/hodge_conjecture)</section>
+<section class="monograph-colophon" aria-labelledby="edition-record-title"><h2 id="edition-record-title">Edition record</h2><p>This browser-native edition uses the immutable Poincaré reference contract and shared open-problem status vocabulary. Native SVG plates are pedagogical; semantic HTML carries the coefficient and category restrictions.</p><p>The committed pointer is a source record; the checksum-locked complete illustrated source bundle is the authoritative source artifact. MathJax 3.2.2 is a version-pinned network enhancement, and the source TeX remains present when unavailable.</p><p><strong>Web claim boundary:</strong> Browser-native, source-normalized exposition of the rational Hodge conjecture for smooth projective complex varieties. Low-dimensional cases, numerical coincidence, integral classes, arbitrary compact Kähler manifolds, Hodge loci, Abel–Jacobi invariants, the Tate conjecture, Mumford–Tate theory, and motivic heuristics are not promoted to the general algebraicity statement.</p><div class="monograph-actions"><a class="monograph-button" href="../hodge.edition.json">Web-edition data</a><a class="monograph-button" href="../documentary_web.schema.json">Reusable schema</a><a class="monograph-button" href="../sources/the_geometry_of_hidden_harmony.tex">Source record</a><a class="monograph-button" href="../ARTIFACT_MANIFEST.json">Artifact manifest</a></div><dl class="edition-integrity"><div><dt>Rendered PDF</dt><dd>19,725,126 bytes · <code>375a142a6a11492922130e555c37d308734aec0f64fc3a10d205f1863d348d59</code> · <code>metadata_only</code></dd></div><div><dt>Complete LaTeX source</dt><dd>57,896 bytes · <code>10a93fbe472c76d6e11b78fa3221c96cc615fe014fa80b70d9bc2feec7ee2690</code> · <code>metadata_only</code></dd></div><div><dt>Authoritative complete illustrated source bundle</dt><dd>19,663,963 bytes · <code>be1952b50d2938f061e763f3f7c8150c8957b95710ebce2f6ca3b11210085746</code> · <code>metadata_only</code></dd></div></dl></section>
+</article></div></div><dialog class="monograph-lightbox" data-plate-dialog aria-labelledby="plate-dialog-title"><form method="dialog"><button class="monograph-lightbox__close" aria-label="Close plate view">Close</button></form><div class="monograph-lightbox__frame"><img data-plate-dialog-image alt=""><p id="plate-dialog-title" data-plate-dialog-caption></p></div></dialog><noscript><p>The manuscript and source TeX remain readable without JavaScript. Plate enlargement, rendered mathematics, reading progress, focus mode, and reading-position memory are unavailable; the checksum-locked PDF remains the rendered archival edition.</p></noscript></div><script defer src="../../javascripts/documentary-mathjax.js"></script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" crossorigin="anonymous" referrerpolicy="no-referrer" data-archival-role="enhancement-only"></script><script defer src="../../javascripts/documentary.js"></script>

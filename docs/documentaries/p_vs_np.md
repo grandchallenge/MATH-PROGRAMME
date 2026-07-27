@@ -1,36 +1,67 @@
-# The Shape of Computational Truth
+<link rel="stylesheet" href="../../stylesheets/documentary.css">
+<link rel="stylesheet" href="../../stylesheets/documentary-status.css">
+<div class="gcl-monograph" data-gcl-reader="p_vs_np" data-edition="1.1.0"><a class="monograph-skip" href="#monograph-start">Skip to the manuscript</a>
+<header class="monograph-hero" aria-labelledby="monograph-title"><div class="monograph-hero__art" aria-hidden="true"><img src="../../assets/documentaries/p_vs_np/cover.svg" width="1024" height="1536" alt=""></div><div class="monograph-hero__veil"></div><div class="monograph-hero__copy"><p class="monograph-eyebrow">MATH-PROGRAMME · Documentary Treatment · PNP-001</p><h1 id="monograph-title">The Shape of Computational Truth</h1><p class="monograph-hero__subtitle">A guided journey through efficient solution, verification, and reduction</p><p class="monograph-hero__thesis">Can every solution whose correctness is efficiently checkable also be efficiently found?</p><div class="monograph-status" aria-label="Publication status"><span>Open Millennium Prize Problem</span><span>PNP-001</span><span>No solution claimed</span></div><div class="monograph-actions"><a class="monograph-button monograph-button--primary" href="#monograph-start">Begin the journey</a><a class="monograph-button" href="../">Documentary library</a><a class="monograph-button" href="../sources/the_shape_of_computational_truth.tex">Source record</a></div></div></header>
+<div class="monograph-progress" aria-hidden="true"><span data-reader-progress-bar></span></div><div class="monograph-reader" id="monograph-start" tabindex="-1"><nav class="monograph-toolbar" aria-label="Reader controls"><div class="monograph-toolbar__identity"><span>Digital Grand Challenge Library</span><strong>The Shape of Computational Truth</strong></div><div class="monograph-toolbar__controls"><button type="button" data-reader-focus aria-pressed="false">Focus mode</button><button type="button" data-reader-print>Print / save</button><button type="button" data-reader-reset>Reset position</button><output data-reader-progress aria-live="polite">0% read</output></div></nav>
+<div class="monograph-layout"><aside class="monograph-contents" aria-label="Manuscript contents"><p class="monograph-contents__title">The journey</p><ol><li><a href="#reader-note">How to Read the Machine</a></li><li><a href="#verification">Finding and Checking</a></li><li><a href="#classes">The Classes P and NP</a></li><li><a href="#reductions">Reductions Preserve Difficulty</a></li><li><a href="#complete">The Complete Problems</a></li><li><a href="#barriers">The Frontier and Its Barriers</a></li></ol><p class="monograph-contents__title">Technical appendix</p><ol><li><a href="#appendix-machines">Machines, Encodings, and Clocks</a></li><li><a href="#appendix-forms">Decision, Search, Optimization, and Counting</a></li><li><a href="#appendix-lower-bounds">Circuits and Proof Complexity</a></li><li><a href="#appendix-trust">Claim-Level Trust Matrix</a></li><li><a href="#sources">Sources</a></li></ol></aside>
+<article class="monograph-body" aria-label="The Shape of Computational Truth manuscript">
+<section class="monograph-section" id="reader-note" data-reader-section markdown="1"><p class="monograph-section__eyebrow">A note to the reader</p>
+## How to Read the Machine
+Complexity theory asks not merely whether a problem can be solved, but how resources grow with encoded input length. The labyrinths and gates in this edition are metaphors. Machine models, encodings, reduction direction, worst-case quantifiers, and uniformity govern the mathematics.
 
-## P versus NP
-
-An illustrated account of efficient solution and verification, reductions, Cook–Levin, NP-completeness, decision versus search and optimization, complexity barriers, cryptographic consequences, and the exact machine-level question.
-
-!!! abstract "Documentary record"
-    **Subject:** P versus NP  
-    **Status:** Open Millennium Prize Problem  
-    **Programme crosswalk:** `PNP` / `PNP-001`  
-    **Length:** 50 pages  
-    **Pedagogical mode:** GCL–Chaidez illustrated monograph  
-    **Source record:** [`the_shape_of_computational_truth.tex`](sources/the_shape_of_computational_truth.tex)  
-    **Authoritative source artifact:** checksum-locked complete illustrated source bundle
-
-## How to read this volume
-
-The two kingdoms, labyrinths, and gateways are metaphors. Turing-machine definitions, encoding conventions, reductions, worst-case quantifiers, campaign artifacts, and the technical appendix determine the mathematics.
-
-## Claim boundary
-
-Heuristic success, finite testing, average-case performance, quantum speedup, oracle results, special algorithms, and restricted lower bounds are not promoted into a proof of either equality or separation.
-
-## Artifact identity
-
-| Artifact | Bytes | SHA-256 | Availability |
-|---|---:|---|---|
-| Rendered PDF | 19,050,413 | `2bde341f24383dbaa66c326488bc01355990a8c676f7a5ac2e518905b75097a9` | `metadata_only` |
-| Complete LaTeX source | 66,883 | `166497cf0b5b4dfc8124c002b6dd510816779907864df0611328a8172ab9729f` | `metadata_only` |
-| Authoritative complete illustrated source bundle | 37,547,668 | `f7afac36f2381738bd6b850519df151f48a9c2983a7e8fcee78c2442ff2c5a2a` | `metadata_only` |
-
-`metadata_only` records governed identity but does not assert a stable public release locator.
-
-- [Open the source record](sources/the_shape_of_computational_truth.tex)
-- [Inspect the release-artifact manifest](ARTIFACT_MANIFEST.json)
-- [Return to the Documentary Library](index.md)
+**Edition status:** Open Millennium Prize Problem; machine-normalized documentary; no algorithm or lower-bound claim.
+<div class="conjecture-box"><strong>Open problem</strong><p>Determine whether every language in \(\mathsf{NP}\) is in \(\mathsf{P}\). Since \(\mathsf{P}\subseteq\mathsf{NP}\), the question is whether the inclusion is equality.</p></div><div class="warning-box"><strong>Claim boundary</strong><p>A fast heuristic, a quantum speedup, a restricted lower bound, an oracle separation, or success on a finite benchmark does not settle the uniform worst-case machine-level question.</p></div></section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate I"><img src="../../assets/documentaries/p_vs_np/verification.svg" width="1024" height="1536" loading="lazy" alt="A maze contrasts discovering a path with rapidly verifying a supplied path certificate."></button><figcaption><span class="plate-label">Plate I</span><strong>Finding and checking</strong><small>Pedagogical orientation only. The verifier definition governs the claim.</small></figcaption></figure>
+<section class="monograph-section" id="verification" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter I</p>
+## Finding and Checking
+A supplied Sudoku grid, Hamiltonian cycle, or satisfying assignment may be rapidly checked even when discovering it appears difficult.
+<div class="definition-box"><strong>Definition</strong><p>A language \(L\) lies in \(\mathsf{NP}\) when a polynomial-time verifier \(V\) and polynomial \(p\) satisfy: \(x\in L\) exactly when some certificate \(y\), with \(|y|\le p(|x|)\), has \(V(x,y)=1\).</p></div><div class="theorem-box"><strong>Established inclusion</strong><p>\(\mathsf{P}\subseteq\mathsf{NP}\): a deterministic polynomial-time algorithm supplies a verifier that simply runs the algorithm.</p></div></section>
+<section class="monograph-section" id="classes" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter II</p>
+## The Classes P and NP
+\[\mathsf{P}\subseteq\mathsf{NP},\qquad \mathsf{P}\stackrel{?}{=}\mathsf{NP}.\]
+Polynomial time is robust across standard reasonable machine models only after encoding costs and uniformity are fixed. Unary and binary encodings can assign radically different input lengths to the same numerical value.
+<div class="warning-box"><strong>Encoding guardrail</strong><p>An algorithm polynomial in a numerical magnitude may be exponential in its bit length. Every complexity claim must state the representation and count the resources used to read, transform, and verify it.</p></div></section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate II"><img src="../../assets/documentaries/p_vs_np/reduction.svg" width="1024" height="1536" loading="lazy" alt="Directed gateways map one decision problem into another while preserving yes and no instances."></button><figcaption><span class="plate-label">Plate II</span><strong>The grammar of reduction</strong><small>Pedagogical orientation only. Reduction direction is theorem-critical.</small></figcaption></figure>
+<section class="monograph-section" id="reductions" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter III</p>
+## Reductions Preserve Difficulty
+A polynomial-time many-one reduction satisfies \(x\in A\Longleftrightarrow f(x)\in B\). If \(A\le_p B\), an efficient solver for \(B\) yields one for \(A\); the direction cannot be reversed by rhetoric.
+<div class="definition-box"><strong>Definition</strong><p>A language is NP-hard when every language in \(\mathsf{NP}\) reduces to it. It is NP-complete when it is NP-hard and itself belongs to \(\mathsf{NP}\).</p></div></section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate III"><img src="../../assets/documentaries/p_vs_np/complete.svg" width="1024" height="1536" loading="lazy" alt="SAT sits at a hub linked to graph, scheduling, routing, and packing problems by polynomial reductions."></button><figcaption><span class="plate-label">Plate III</span><strong>The complete problems</strong><small>Pedagogical orientation only. Exact reduction chains govern completeness.</small></figcaption></figure>
+<section class="monograph-section" id="complete" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter IV</p>
+## The Complete Problems
+<div class="imported-box"><strong>Imported established theorem · Cook–Levin</strong><p>Boolean satisfiability is NP-complete. A polynomial-time algorithm for SAT would place every language in \(\mathsf{NP}\) inside \(\mathsf{P}\).</p></div>
+Computation tableaux encode accepting machine histories as Boolean formulas. Thousands of graph, scheduling, routing, packing, algebraic, and logical problems are complete through explicit reduction chains. Decision, search, optimization, and counting remain distinct contracts unless an interreduction is proved.</section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate IV"><img src="../../assets/documentaries/p_vs_np/barriers.svg" width="1024" height="1536" loading="lazy" alt="Relativization, natural proofs, and algebrization form distinct barriers around the unresolved central question."></button><figcaption><span class="plate-label">Plate IV</span><strong>The walls around the frontier</strong><small>Pedagogical orientation only. Barriers constrain technique families; they do not settle the problem.</small></figcaption></figure>
+<section class="monograph-section" id="barriers" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter V</p>
+## The Frontier and Its Barriers
+<div class="ledger-pair"><div><h3>Relativization</h3><p>Oracles exist relative to which P equals NP and others relative to which they differ.</p><h3>Natural proofs</h3><p>Broad constructive circuit arguments conflict with strong pseudorandom functions.</p></div><span aria-hidden="true">≠</span><div><h3>Algebrization</h3><p>Even arithmetized relativizing methods meet oracle-style limits.</p><h3>Meaning</h3><p>These are barriers to methods, not evidence of undecidability.</p></div></div>
+Quantum computation, interactive proofs, PCPs, approximation, parameterization, and average-case theory reveal nearby structure without deciding equality.
+<p class="monograph-pullquote">A reduction is a bridge of obligation: solve the destination, and every source problem may cross.</p></section>
+<section class="monograph-section" id="appendix-machines" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix A</p>
+## Machines, Encodings, and Clocks
+A deterministic Turing machine decides a language in polynomial time when its worst-case step count is \(n^{O(1)}\). A nondeterministic machine accepts if at least one polynomially bounded branch accepts. The verifier and nondeterministic definitions of NP are equivalent. Uniformity excludes an unrelated advice circuit for each input length.</section>
+<section class="monograph-section" id="appendix-forms" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix B</p>
+## Decision, Search, Optimization, and Counting
+Self-reduction recovers a SAT witness from polynomially many decision queries. This theorem does not automatically transfer to every search problem. Approximation changes the output contract; a heuristic or approximation ratio is not an exact polynomial-time algorithm for the NP-complete decision problem.</section>
+<section class="monograph-section" id="appendix-lower-bounds" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix C</p>
+## Circuits and Proof Complexity
+Strong lower bounds are known for restricted circuits and proof systems. The unrestricted lower bounds needed for P versus NP remain open. Cryptographic consequences are conditional: P = NP would undermine standard one-way-function assumptions, while P ≠ NP alone does not guarantee secure cryptography.</section>
+<section class="monograph-section" id="appendix-trust" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix D</p>
+## Claim-Level Trust Matrix
+| Claim | Trust class | Qualification |
+|---|---|---|
+| \(\mathsf{P}\subseteq\mathsf{NP}\) | established | direct verifier construction |
+| SAT is NP-complete | imported established | Cook–Levin |
+| Restricted circuit/proof lower bounds | established in model | no unrestricted separation |
+| Relativization, natural proofs, algebrization | imported established | barriers to method families |
+| P = NP or P ≠ NP | open | neither direction proved |
+| Quantum advantage | model-specific | no known NP-complete polynomial-time algorithm |
+| AI benchmark success | empirical | not worst-case classification |
+| Illuminated plates | pedagogical | never authoritative machine proofs |
+<div class="warning-box"><strong>Final claim boundary</strong><p>This edition supplies no new algorithm, reduction, circuit lower bound, proof-system lower bound, oracle theorem, or cryptographic construction that settles P versus NP.</p></div></section>
+<section class="monograph-section" id="sources" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Sources and programme crosswalk</p>
+## Governing literature and campaign record
+<div class="bibliography"><p><a href="https://www.claymath.org/millennium/p-vs-np/">Clay Mathematics Institute: P versus NP</a>.</p><p><a href="https://www.claymath.org/wp-content/uploads/2022/06/pvsnp.pdf">Stephen Cook, official problem description</a>.</p><p><a href="https://doi.org/10.1145/800157.805047">Cook–Levin foundations</a>.</p><p><a href="https://doi.org/10.1137/0204037">Baker, Gill, and Solovay: relativization</a>.</p><p><a href="https://doi.org/10.1145/237814.237866">Razborov and Rudich: natural proofs</a>.</p><p><a href="https://doi.org/10.1145/780542.780545">Aaronson and Wigderson: algebrization</a>.</p></div>
+Programme links: [Domain 07](../../domains/p_vs_np/) · [claim-authority record](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/PNP-WP00-source-definition-equivalence-audit.md) · [campaign artifacts](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/p_vs_np) · [review records](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/reviews/p_vs_np)</section>
+<section class="monograph-colophon" aria-labelledby="edition-record-title"><h2 id="edition-record-title">Edition record</h2><p>This browser-native edition uses the immutable Poincaré reference contract and shared open-problem status vocabulary. Native SVG diagrams are pedagogical; semantic HTML carries the machine definitions and reductions.</p><p>The committed pointer is a source record; the checksum-locked complete illustrated source bundle is the authoritative source artifact. MathJax 3.2.2 is a version-pinned network enhancement, and the source TeX remains present when unavailable.</p><p><strong>Web claim boundary:</strong> Browser-native, source-normalized exposition of the machine-and-encoding question P versus NP. Fast heuristics, finite experiments, average-case success, quantum algorithms, oracle separations, special-case algorithms, restricted circuit lower bounds, and proof-complexity results are not promoted to P = NP or P ≠ NP.</p><div class="monograph-actions"><a class="monograph-button" href="../p_vs_np.edition.json">Web-edition data</a><a class="monograph-button" href="../documentary_web.schema.json">Reusable schema</a><a class="monograph-button" href="../sources/the_shape_of_computational_truth.tex">Source record</a><a class="monograph-button" href="../ARTIFACT_MANIFEST.json">Artifact manifest</a></div><dl class="edition-integrity"><div><dt>Rendered PDF</dt><dd>19,050,413 bytes · <code>2bde341f24383dbaa66c326488bc01355990a8c676f7a5ac2e518905b75097a9</code> · <code>metadata_only</code></dd></div><div><dt>Complete LaTeX source</dt><dd>66,883 bytes · <code>166497cf0b5b4dfc8124c002b6dd510816779907864df0611328a8172ab9729f</code> · <code>metadata_only</code></dd></div><div><dt>Authoritative complete illustrated source bundle</dt><dd>37,547,668 bytes · <code>f7afac36f2381738bd6b850519df151f48a9c2983a7e8fcee78c2442ff2c5a2a</code> · <code>metadata_only</code></dd></div></dl></section>
+</article></div></div><dialog class="monograph-lightbox" data-plate-dialog aria-labelledby="plate-dialog-title"><form method="dialog"><button class="monograph-lightbox__close" aria-label="Close plate view">Close</button></form><div class="monograph-lightbox__frame"><img data-plate-dialog-image alt=""><p id="plate-dialog-title" data-plate-dialog-caption></p></div></dialog><noscript><p>The manuscript and source TeX remain readable without JavaScript. Plate enlargement, rendered mathematics, reading progress, focus mode, and reading-position memory are unavailable; the checksum-locked PDF remains the rendered archival edition.</p></noscript></div><script defer src="../../javascripts/documentary-mathjax.js"></script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" crossorigin="anonymous" referrerpolicy="no-referrer" data-archival-role="enhancement-only"></script><script defer src="../../javascripts/documentary.js"></script>

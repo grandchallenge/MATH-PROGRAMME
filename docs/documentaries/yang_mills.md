@@ -1,36 +1,68 @@
-# The Geometry of Force and Silence
+<link rel="stylesheet" href="../../stylesheets/documentary.css">
+<link rel="stylesheet" href="../../stylesheets/documentary-status.css">
+<div class="gcl-monograph" data-gcl-reader="yang_mills" data-edition="1.1.0"><a class="monograph-skip" href="#monograph-start">Skip to the manuscript</a><header class="monograph-hero" aria-labelledby="monograph-title"><div class="monograph-hero__art" aria-hidden="true"><img src="../../assets/documentaries/yang_mills/cover.svg" width="1024" height="1536" alt=""></div><div class="monograph-hero__veil"></div><div class="monograph-hero__copy"><p class="monograph-eyebrow">MATH-PROGRAMME · Documentary Treatment · YM-001</p><h1 id="monograph-title">The Geometry of Force and Silence</h1><p class="monograph-hero__subtitle">A guided journey through gauge fields, quantum existence, and the mass gap</p><p class="monograph-hero__thesis">A rigorous quantum gauge theory must first exist; only then can its vacuum spectrum be shown to begin with a strictly positive gap.</p><div class="monograph-status" aria-label="Publication status"><span>Open Millennium Prize Problem</span><span>YM-001</span><span>No solution claimed</span></div><div class="monograph-actions"><a class="monograph-button monograph-button--primary" href="#monograph-start">Begin the journey</a><a class="monograph-button" href="../">Documentary library</a><a class="monograph-button" href="../sources/the_geometry_of_force_and_silence.tex">Source record</a></div></div></header>
+<div class="monograph-progress" aria-hidden="true"><span data-reader-progress-bar></span></div><div class="monograph-reader" id="monograph-start" tabindex="-1"><nav class="monograph-toolbar" aria-label="Reader controls"><div class="monograph-toolbar__identity"><span>Digital Grand Challenge Library</span><strong>The Geometry of Force and Silence</strong></div><div class="monograph-toolbar__controls"><button type="button" data-reader-focus aria-pressed="false">Focus mode</button><button type="button" data-reader-print>Print / save</button><button type="button" data-reader-reset>Reset position</button><output data-reader-progress aria-live="polite">0% read</output></div></nav><div class="monograph-layout"><aside class="monograph-contents" aria-label="Manuscript contents"><p class="monograph-contents__title">The journey</p><ol><li><a href="#reader-note">How to Read the Field</a></li><li><a href="#gauge-symmetry">Symmetry That Changes from Point to Point</a></li><li><a href="#connection-curvature">Connection, Curvature, and Holonomy</a></li><li><a href="#classical">The Classical Equation</a></li><li><a href="#quantum-existence">The Quantum Construction Obligation</a></li><li><a href="#mass-gap">The Silence Above the Vacuum</a></li></ol><p class="monograph-contents__title">Technical appendix</p><ol><li><a href="#appendix-geometry">Bundles, Connections, and Action</a></li><li><a href="#appendix-axioms">Wightman and Osterwalder–Schrader Obligations</a></li><li><a href="#appendix-spectrum">Spectral Gap and Correlation Decay</a></li><li><a href="#appendix-lattice">Lattice, Renormalization, and Trust Matrix</a></li><li><a href="#sources">Sources</a></li></ol></aside><article class="monograph-body" aria-label="The Geometry of Force and Silence manuscript">
+<section class="monograph-section" id="reader-note" data-reader-section markdown="1"><p class="monograph-section__eyebrow">A note to the reader</p>
+## How to Read the Field
+Yang–Mills theory begins with local symmetry and becomes the geometric language of fundamental interactions. The Millennium problem is not merely to manipulate the classical equation or estimate a lattice spectrum. It asks for a nontrivial quantum field theory in four dimensions, constructed with rigorous axioms, and for a strictly positive spectral gap above its vacuum.
 
-## Yang–Mills existence and mass gap
-
-A guided passage through gauge symmetry, principal bundles, connections, curvature, instantons, quantization, axiomatic quantum field theory, reflection positivity, the vacuum spectrum, mass gap, confinement, and lattice-continuum obligations.
-
-!!! abstract "Documentary record"
-    **Subject:** Yang–Mills existence and mass gap  
-    **Status:** Open Millennium Prize Problem  
-    **Programme crosswalk:** `YM` / `YM-001`  
-    **Length:** 58 pages  
-    **Pedagogical mode:** GCL–Chaidez illustrated monograph  
-    **Source record:** [`the_geometry_of_force_and_silence.tex`](sources/the_geometry_of_force_and_silence.tex)  
-    **Authoritative source artifact:** checksum-locked complete illustrated source bundle
-
-## How to read this volume
-
-The cosmic and geometric plates are visual overtures. The exact Clay formulation, classical-versus-quantum distinction, axiomatic requirements, spectral definition of the gap, campaign artifacts, and continuum-limit obligations govern the claims.
-
-## Claim boundary
-
-Classical Yang–Mills existence, instantons, perturbation theory, lattice evidence, finite-volume spectra, supersymmetric models, and confinement heuristics are not substituted for a four-dimensional constructive quantum theory with a positive mass gap.
-
-## Artifact identity
-
-| Artifact | Bytes | SHA-256 | Availability |
-|---|---:|---|---|
-| Rendered PDF | 13,812,666 | `c8e2a57844dc7e4d83c0fc586c694d1c2db7d51bfb0556126f7a257d6049c7fb` | `metadata_only` |
-| Complete LaTeX source | 74,484 | `f45045a908cc3b2ae27d24f892cbcfc139e516ba1ab1bbc3e44f37bd3308dd74` | `metadata_only` |
-| Authoritative complete illustrated source bundle | 27,844,145 | `ac7920263aed80a7237d4174260e1198d9a60da8bb2c6800147262036b628910` | `metadata_only` |
-
-`metadata_only` records governed identity but does not assert a stable public release locator.
-
-- [Open the source record](sources/the_geometry_of_force_and_silence.tex)
-- [Inspect the release-artifact manifest](ARTIFACT_MANIFEST.json)
-- [Return to the Documentary Library](index.md)
+**Edition status:** Open Millennium Prize Problem; constructive quantum-field obligation; no mass-gap proof claim.
+<div class="conjecture-box"><strong>Open problem</strong><p>For every compact simple gauge group \(G\), construct a nontrivial quantum Yang–Mills theory on \(\mathbb R^4\) satisfying axioms at least as strong as Wightman or Osterwalder–Schrader requirements, and prove a positive mass gap.</p></div><div class="warning-box"><strong>Claim boundary</strong><p>Classical solutions, lattice simulations, perturbative renormalization, confinement heuristics, and a finite-volume glueball spectrum are not the required continuum construction.</p></div></section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate I"><img src="../../assets/documentaries/yang_mills/gauge.svg" width="1024" height="1536" loading="lazy" alt="Local gauge frames rotate across space while the connection records how neighbouring frames compare."></button><figcaption><span class="plate-label">Plate I</span><strong>Symmetry that changes from point to point</strong><small>Pedagogical orientation only. Gauge equivalence governs the representation.</small></figcaption></figure>
+<section class="monograph-section" id="gauge-symmetry" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter I</p>
+## Symmetry That Changes from Point to Point
+A gauge field is geometrically a connection \(A\) on a principal \(G\)-bundle. Under a local transformation \(g\),
+\[A\longmapsto gAg^{-1}-(dg)g^{-1}.\]
+<div class="definition-box"><strong>Definition</strong><p>Gauge symmetry is redundancy in the choice of local internal frame. A physical observable must be gauge invariant or belong to a rigorously controlled gauge-fixed construction.</p></div></section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate II"><img src="../../assets/documentaries/yang_mills/curvature.svg" width="1024" height="1536" loading="lazy" alt="A loop measures holonomy while curvature marks the infinitesimal failure to return unchanged."></button><figcaption><span class="plate-label">Plate II</span><strong>Connection, curvature, and holonomy</strong><small>Pedagogical orientation only. The bundle and connection data govern the geometry.</small></figcaption></figure>
+<section class="monograph-section" id="connection-curvature" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter II</p>
+## Connection, Curvature, and Holonomy
+\[F_A=dA+A\wedge A.\]
+Curvature measures infinitesimal holonomy. The nonabelian quadratic term means the field interacts with itself. Wilson loops are traces of holonomy around closed curves and provide gauge-invariant observables.
+<div class="definition-box"><strong>Definition</strong><p>An instanton is a finite-action Euclidean solution with self-dual or anti-self-dual curvature. It reveals topology and nonperturbative sectors but does not construct the full quantum measure.</p></div></section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate III"><img src="../../assets/documentaries/yang_mills/quantum.svg" width="1024" height="1536" loading="lazy" alt="A classical Yang–Mills field passes through regularization, positivity, reconstruction, and continuum-limit obligations."></button><figcaption><span class="plate-label">Plate III</span><strong>From classical action to quantum theory</strong><small>Pedagogical orientation only. Regulator removal and reconstruction are independent obligations.</small></figcaption></figure>
+<section class="monograph-section" id="classical" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter III</p>
+## The Classical Equation
+\[S(A)=\frac1{2g^2}\int\langle F_A,F_A\rangle\,d^4x,\qquad D_A^*F_A=0.\]
+<div class="theorem-box"><strong>Established classical terrain</strong><p>Connections, curvature, instantons, compactness modulo gauge under controlled energy, and substantial classical evolution theory are rigorous mathematical subjects.</p></div><div class="warning-box"><strong>Classical–quantum guardrail</strong><p>A theorem about smooth classical fields does not construct quantum correlation functions, a positive Hilbert space, local observables, or the quantum spectrum.</p></div></section>
+<section class="monograph-section" id="quantum-existence" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter IV</p>
+## The Quantum Construction Obligation
+The formal integral \(Z=\int e^{-S(A)}\,\mathcal DA\) is not a construction. One needs regulated measures or correlators, renormalization, gauge-invariant observables, positivity, locality, regulator removal, infinite volume, and nontriviality.
+<div class="imported-box"><strong>Axiomatic target</strong><p>Osterwalder–Schrader data require Euclidean invariance, symmetry, reflection positivity, regularity, and clustering sufficient for reconstruction. Wightman formulations require a Hilbert space, vacuum, locality, covariance, and spectral positivity.</p></div></section>
+<figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate IV"><img src="../../assets/documentaries/yang_mills/gap.svg" width="1024" height="1536" loading="lazy" alt="A Hamiltonian spectrum shows a vacuum at zero and the required positive interval before the first excitation."></button><figcaption><span class="plate-label">Plate IV</span><strong>The silence above the vacuum</strong><small>Pedagogical orientation only. The spectrum belongs to the reconstructed continuum theory.</small></figcaption></figure>
+<section class="monograph-section" id="mass-gap" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter V</p>
+## The Silence Above the Vacuum
+For Hamiltonian \(H\) and vacuum \(\Omega\), a gap \(\Delta>0\) means
+\[\operatorname{spec}(H)\cap(0,\Delta)=\varnothing.\]
+Under suitable hypotheses this yields exponential clustering of connected gauge-invariant correlations.
+<div class="ledger-pair"><div><h3>Mass gap</h3><p>A positive spectral interval above the vacuum.</p><p>Quantitative exponential clustering.</p></div><span aria-hidden="true">≠</span><div><h3>Confinement</h3><p>No isolated colour-charged asymptotic states.</p><p>Often probed through Wilson loops.</p></div></div>
+<div class="conjecture-box"><strong>Joint open obligation</strong><p>The theory must first be constructed nontrivially in the continuum; the positive physical gap must then be proved in its Hamiltonian spectrum.</p></div><p class="monograph-pullquote">The problem asks for both the instrument and the silence between its lowest notes.</p></section>
+<section class="monograph-section" id="appendix-geometry" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix A</p>
+## Bundles, Connections, and Action
+The Bianchi identity is \(D_AF_A=0\), and curvature transforms homogeneously. In four Euclidean dimensions the action is scale critical. Self-dual instantons saturate the topological action bound under fixed normalization.</section>
+<section class="monograph-section" id="appendix-axioms" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix B</p>
+## Wightman and Osterwalder–Schrader Obligations
+Reflection positivity becomes positivity of the reconstructed Hilbert-space inner product. Gauge-fixed elementary fields may violate positivity, so the observable algebra and reconstruction domain must remain explicit. Existence requires a consistent family of distributions, not convergence of selected correlators.</section>
+<section class="monograph-section" id="appendix-spectrum" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix C</p>
+## Spectral Gap and Correlation Decay
+A finite-volume spectrum is discrete even without an infinite-volume mass gap. Uniformity in volume and cutoff is essential. The bridge from exponential Euclidean decay to a Hamiltonian gap requires spectral representation and exact observable hypotheses.</section>
+<section class="monograph-section" id="appendix-lattice" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix D</p>
+## Lattice, Renormalization, and Trust Matrix
+| Claim | Trust class | Qualification |
+|---|---|---|
+| Classical gauge geometry | established | not quantum existence |
+| Finite-lattice gauge theory | established regulator | not the continuum theory |
+| Perturbative asymptotic freedom | imported established | perturbative control |
+| Strong-coupling lattice gap/area law | theorem in regime | requires continuum transfer |
+| Numerical glueball spectrum | empirical | finite cutoff and volume |
+| Axiomatic continuum existence | open | joint construction obligation |
+| Positive physical mass gap | open | spectrum after construction |
+| Confinement | related property | not definitionally the gap |
+| Illuminated plates | pedagogical | never authoritative field diagrams |
+<div class="warning-box"><strong>Final claim boundary</strong><p>This edition does not construct the quantum measure, remove regulators, prove nontriviality, establish a continuum area law, or prove a positive Hamiltonian gap.</p></div></section>
+<section class="monograph-section" id="sources" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Sources and programme crosswalk</p>
+## Governing literature and campaign record
+<div class="bibliography"><p><a href="https://www.claymath.org/millennium/yang-mills-the-maths-gap/">Clay Mathematics Institute: Yang–Mills and Mass Gap</a>.</p><p><a href="https://www.claymath.org/wp-content/uploads/2022/05/yangmills.pdf">Jaffe and Witten, official problem description</a>.</p><p><a href="https://doi.org/10.1007/BF01645738">Osterwalder and Schrader</a>.</p><p><a href="https://doi.org/10.1103/PhysRevLett.30.1343">Gross and Wilczek: asymptotic freedom</a>.</p><p><a href="https://doi.org/10.1103/PhysRevD.10.2445">Wilson: lattice gauge theory</a>.</p></div>
+Programme links: [Domain 06](../../domains/yang_mills/) · [claim-authority record](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/YM-WP00-source-normalization-equivalence-audit.md) · [campaign artifacts](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/yang_mills) · [review records](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/reviews/yang_mills)</section>
+<section class="monograph-colophon" aria-labelledby="edition-record-title"><h2 id="edition-record-title">Edition record</h2><p>This browser-native edition uses the immutable Poincaré reference contract and shared open-problem status vocabulary. Native SVG plates are pedagogical; semantic HTML preserves the construction and spectrum obligations.</p><p>The committed pointer is a source record; the checksum-locked complete illustrated source bundle is the authoritative source artifact. MathJax 3.2.2 is a version-pinned network enhancement, and the source TeX remains present when unavailable.</p><p><strong>Web claim boundary:</strong> Browser-native, source-normalized exposition of four-dimensional quantum Yang–Mills existence and mass gap. Classical solutions, instantons, perturbation theory, asymptotic freedom, finite-lattice models, strong-coupling expansions, numerical glueball spectra, supersymmetric theories, and confinement heuristics are not substituted for an axiomatic nontrivial continuum theory with a positive spectral gap.</p><div class="monograph-actions"><a class="monograph-button" href="../yang_mills.edition.json">Web-edition data</a><a class="monograph-button" href="../documentary_web.schema.json">Reusable schema</a><a class="monograph-button" href="../sources/the_geometry_of_force_and_silence.tex">Source record</a><a class="monograph-button" href="../ARTIFACT_MANIFEST.json">Artifact manifest</a></div><dl class="edition-integrity"><div><dt>Rendered PDF</dt><dd>13,812,666 bytes · <code>c8e2a57844dc7e4d83c0fc586c694d1c2db7d51bfb0556126f7a257d6049c7fb</code> · <code>metadata_only</code></dd></div><div><dt>Complete LaTeX source</dt><dd>74,484 bytes · <code>f45045a908cc3b2ae27d24f892cbcfc139e516ba1ab1bbc3e44f37bd3308dd74</code> · <code>metadata_only</code></dd></div><div><dt>Authoritative complete illustrated source bundle</dt><dd>27,844,145 bytes · <code>ac7920263aed80a7237d4174260e1198d9a60da8bb2c6800147262036b628910</code> · <code>metadata_only</code></dd></div></dl></section>
+</article></div></div><dialog class="monograph-lightbox" data-plate-dialog aria-labelledby="plate-dialog-title"><form method="dialog"><button class="monograph-lightbox__close" aria-label="Close plate view">Close</button></form><div class="monograph-lightbox__frame"><img data-plate-dialog-image alt=""><p id="plate-dialog-title" data-plate-dialog-caption></p></div></dialog><noscript><p>The manuscript and source TeX remain readable without JavaScript. Plate enlargement, rendered mathematics, reading progress, focus mode, and reading-position memory are unavailable; the checksum-locked PDF remains the rendered archival edition.</p></noscript></div><script defer src="../../javascripts/documentary-mathjax.js"></script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" crossorigin="anonymous" referrerpolicy="no-referrer" data-archival-role="enhancement-only"></script><script defer src="../../javascripts/documentary.js"></script>
