@@ -12,7 +12,7 @@ The programme workflow is a claim-boundary control. A green documentation build 
 - every push to `main`;
 - explicit manual audit through `workflow_dispatch`.
 
-The workflow uses read-only repository permissions, bounded job timeouts, non-persistent checkout credentials, immutable action references, fixed `ubuntu-24.04` runners, checked-in dependency pins, and pull-request concurrency cancellation.
+The workflow uses read-only repository permissions, bounded job timeouts, non-persistent checkout credentials, immutable action references, fixed `ubuntu-24.04` runners, a governed Python `3.12` minor line, checked-in dependency pins, and pull-request concurrency cancellation.
 
 Its required jobs are:
 
@@ -56,22 +56,25 @@ This allows helper modules to remain helpers while preventing a new validator or
 
 - exact and unique workflow names;
 - `ubuntu-24.04` for every governed job;
+- Python `3.12` for every `setup-python` step;
 - exact checked-in dependency declarations;
 - requirement-file installation rather than ad hoc `pip install` commands;
 - direct execution of the reachability and semantic validators and their adversarial tests;
 - exact Pages workflow conditions and checkout reference;
 - a current-`main` freshness check before publication.
 
-Adversarial tests reject comments or echo statements that merely contain a required command string.
+Adversarial tests reject comments or echo statements that merely contain a required command string, mutable runner labels, or an unconstrained Python selector such as `3.x`.
 
-## Declared Python environments
+## Declared Python environment
 
-The checked-in top-level declarations are:
+The governed declaration consists of:
 
+- the fixed `ubuntu-24.04` runner family;
+- the Python `3.12` minor line;
 - `requirements/policy.txt` for JSON-schema and YAML policy execution;
 - `requirements/docs.txt` for strict MkDocs publication.
 
-All governed workflows install from those files. These exact top-level pins make the declared environment stable across PR, push, and Pages runs. They are not presented as a complete transitive hash lock.
+All governed workflows install from those files. The exact top-level pins stabilize the declared package layer across PR, push, and Pages runs. The Python selector deliberately permits patch-level movement within `3.12`. Neither that minor-line policy nor the top-level package pins is presented as a complete transitive hash lock or an exact operating-system image digest.
 
 ## External MATHCERT evidence
 
@@ -132,8 +135,8 @@ The current governed workflow set is:
 - `pc-wp04.yml` — PC-WP04 fast certificate replay;
 - `pc-wp05.yml` — PC-WP05 archival fast replay.
 
-`ci/validate_workflow_coverage.py` governs inventory, permissions, action immutability, triggers, required jobs, external evidence, and publication authority. `ci/validate_workflow_semantics.py` adds parsed names, runner pins, dependency routes, operative commands, and current-tip publication checks.
+`ci/validate_workflow_coverage.py` governs inventory, permissions, action immutability, triggers, required jobs, external evidence, and publication authority. `ci/validate_workflow_semantics.py` adds parsed names, runner pins, Python minor-line governance, dependency routes, operative commands, and current-tip publication checks.
 
 ## Maintenance rule
 
-A change to a campaign executable, CI policy script, workflow file, dependency declaration, external certification dependency, publication gate, retained-blocker contract, retired path, or historical-identity crosswalk must update its governing registry, decision, or evidence record and pass the global policy workflow. Merge state, workflow success, declared reproducibility, and publication visibility remain separate from theorem support and formal artifact promotion.
+A change to a campaign executable, CI policy script, workflow file, Python minor line, dependency declaration, external certification dependency, publication gate, retained-blocker contract, retired path, or historical-identity crosswalk must update its governing registry, decision, or evidence record and pass the global policy workflow. Merge state, workflow success, declared reproducibility, and publication visibility remain separate from theorem support and formal artifact promotion.
