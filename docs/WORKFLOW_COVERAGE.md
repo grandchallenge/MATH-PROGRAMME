@@ -2,141 +2,98 @@
 
 ## Purpose
 
-The programme workflow is a claim-boundary control. A green documentation build alone is insufficient: governed campaign replays, executable policy scripts, formal fixtures, cross-repository certification evidence, continuity records, declared dependencies, and publication gates must all remain reachable from the repository-wide policy workflow.
+The programme workflow is a claim-boundary control. A green documentation build alone is insufficient: campaign replays, repository tests, executable policy scripts, formal fixtures, cross-repository evidence, continuity records, declared dependencies, and the exact published site artifact must all remain governed.
 
 ## Global policy gate
 
-`.github/workflows/ci.yml` is the global `Programme policy checks` workflow. It runs on:
+`.github/workflows/ci.yml` is the global `Programme policy checks` workflow. It runs on every pull request, every push to `main`, and explicit manual audit through `workflow_dispatch`.
 
-- every pull request;
-- every push to `main`;
-- explicit manual audit through `workflow_dispatch`.
-
-The workflow uses read-only repository permissions, bounded job timeouts, non-persistent checkout credentials, immutable action references, fixed `ubuntu-24.04` runners, a governed Python `3.12` minor line, checked-in dependency pins, and pull-request concurrency cancellation.
-
-Its required jobs are:
+It uses read-only repository permissions, bounded timeouts, non-persistent checkout credentials, immutable action references, fixed `ubuntu-24.04` runners, the Python `3.12` minor line, checked-in dependency pins, and pull-request concurrency cancellation.
 
 | Job | Controlled obligation |
 |---|---|
-| `validate-json` | Schemas, fixtures, documentary policy, programme contracts, documentation, semantic workflow coverage, CI-script reachability, RH retained blockers, retired-path continuity, and every governed campaign executable |
-| `log-gcd-lean` | Pinned Lean replay of the published LOG-GCD formal fixture |
+| `validate-json` | Schemas, fixtures, campaign replays, repository unit tests, experiment reachability, documentation, continuity, workflow semantics, and strict MkDocs |
+| `log-gcd-lean` | Pinned Lean replay of the LOG-GCD formal fixture |
 | `pc-wp04-lean` | Pinned Lean replay and policy validation of the bounded Poincaré certificate |
-| `union-closed-mathcert` | Exact checkout and replay of the evidence-pinned external `grandchallenge/MATHCERT` certification gate |
+| `union-closed-mathcert` | Exact checkout and complete replay of the evidence-pinned external MATHCERT gate |
 
-A successful workflow establishes only the recorded integration, replay, policy, dependency, or bounded-certification facts. It does not promote an open mathematical claim.
+A successful workflow records integration, execution, policy, artifact, or bounded-certification facts. It does not promote an open mathematical claim.
 
 ## Campaign executable discovery
 
-`ci/campaign_replay_registry.json` is the governed command registry, but it does not define its own search boundary. `ci/validate_campaign_replays.py` independently scans every Python file under `campaigns/` and treats a file as executable when it has a shebang or an `if __name__ == "__main__"` guard.
-
-Every discovered executable must be one of:
-
-1. a registered direct Python command with a unique ID, scope, and bounded timeout; or
-2. a governed exemption naming the exact path and a substantive rationale.
-
-A script cannot be both registered and exempt. Missing exemption targets, non-executable targets, unexpected executable filenames, and attempts to restore registry-controlled discovery globs fail policy. The registry remains the command authority; validator code owns discovery.
-
-Path-scoped BSD and Poincaré workflows remain fast feedback. They do not replace the global replay gate.
+`ci/validate_campaign_replays.py` independently discovers every Python file under `campaigns/` with a shebang or `__main__` guard. Each discovered executable must be a registered direct Python command with a unique ID, scope, and timeout, or an explicit governed exemption with a substantive rationale. The registry cannot redefine the discovery boundary.
 
 ## CI policy reachability
 
-`ci/validate_policy_reachability.py` discovers every executable Python file directly under `ci/`. It then:
+`ci/validate_policy_reachability.py` discovers executable `ci/*.py` files, extracts operative Python roots from parsed workflows and the campaign registry, builds a local AST import graph, and requires every executable CI control to be reachable.
 
-- extracts actual Python commands from parsed governed workflows;
-- adds direct Python commands from the campaign replay registry;
-- builds a local AST import graph among `ci/*.py` modules;
-- requires every executable CI script to be reachable from a workflow root, directly or through imports;
-- rejects workflow or registry commands that name missing Python files.
+## Repository tests and experiment modules
 
-This allows helper modules to remain helpers while preventing a new validator or adversarial test from existing in the tree without an execution route.
+`ci/validate_repository_execution.py` closes the separate `tests/` and `experiments/` surface:
+
+- every `tests/test_*.py` file must contain discoverable `unittest.TestCase` methods;
+- the global policy executes the full test tree with `python -m unittest discover`;
+- every non-package Python module under `experiments/` must be library-only;
+- every experiment module must be reachable from discovered tests, directly or through the local experiment import graph;
+- hidden, standalone, syntactically invalid, or untested experiment modules fail policy.
+
+Passing tests establish bounded software behaviour only. They do not establish mathematical truth or numerical evidence for a continuum claim.
 
 ## Workflow semantic contract
 
-`ci/validate_workflow_semantics.py` validates operative workflow structures rather than relying on raw YAML marker presence. It requires:
+`ci/validate_workflow_semantics.py` validates operative YAML structures rather than raw marker presence. It requires exact workflow names, fixed runners, Python `3.12`, exact requirement-file routes, real execution of coverage controls, deterministic validated-site packaging, Pages artifact verification, and current-tip publication. Comments or echo statements cannot satisfy command obligations.
 
-- exact and unique workflow names;
-- `ubuntu-24.04` for every governed job;
-- Python `3.12` for every `setup-python` step;
-- exact checked-in dependency declarations;
-- requirement-file installation rather than ad hoc `pip install` commands;
-- direct execution of the reachability and semantic validators and their adversarial tests;
-- exact Pages workflow conditions and checkout reference;
-- a current-`main` freshness check before publication.
+## Declared environment
 
-Adversarial tests reject comments or echo statements that merely contain a required command string, mutable runner labels, or an unconstrained Python selector such as `3.x`.
+The declared workflow environment consists of the `ubuntu-24.04` runner family, Python `3.12`, `requirements/policy.txt`, and `requirements/docs.txt`. Python patch movement within `3.12`, transitive dependency movement, and runner-image digest movement remain outside the guarantee.
 
-## Declared Python environment
+## Formal and external evidence
 
-The governed declaration consists of:
+The global workflow directly compiles LOG-GCD and PC-WP04. Union-Closed formal evidence is maintained in `grandchallenge/MATHCERT`; `evidence/UC-WP02-MATHCERT.json` records the exact repository, commit, paths, command, and claim boundary. Workflow checkout coordinates are literal and must match that evidence.
 
-- the fixed `ubuntu-24.04` runner family;
-- the Python `3.12` minor line;
-- `requirements/policy.txt` for JSON-schema and YAML policy execution;
-- `requirements/docs.txt` for strict MkDocs publication.
+## Continuity controls
 
-All governed workflows install from those files. The exact top-level pins stabilize the declared package layer across PR, push, and Pages runs. The Python selector deliberately permits patch-level movement within `3.12`. Neither that minor-line policy nor the top-level package pins is presented as a complete transitive hash lock or an exact operating-system image digest.
+The global policy also enforces:
 
-## External MATHCERT evidence
+- RH-WP01/WP02 retained promotion blockers;
+- absence and historical provenance of the retired Poincaré Domain 04 alias;
+- schema-bound Agent Council reviews;
+- documentary authority and availability distinctions;
+- decision, ledger, terminology, navigation, and public-domain consistency.
 
-Union-Closed Lean definitions and bounded certificates are maintained in the separate `grandchallenge/MATHCERT` repository. `evidence/UC-WP02-MATHCERT.json` records:
+## Policy-validated site artifact
 
-- the repository;
-- an exact 40-character commit SHA;
-- the formal and certificate paths;
-- the complete certification command;
-- the claim boundary.
+On a successful push to `main`, the policy job packages the strict MkDocs output as a deterministic `validated-site.tar.gz`, writes an inner SHA-256 record, and uploads both files in a run-scoped `validated-site` workflow artifact retained for one day.
 
-The global policy checks out that exact commit and runs `bash ci/check_lean.sh`. A moving branch name is not accepted as evidence. The workflow checkout coordinates are literal and must agree exactly with the audited evidence record; a pull-request edit cannot redirect the external checkout. Updating the dependency requires changing both controls and passing the full programme policy again.
+This artifact is publication evidence for that workflow run. It is not a permanent documentary release artifact and is unrelated to theorem support.
 
-## RH retained-blocker continuity
+## Exact artifact publication
 
-`ci/validate_rh_continuity.py` requires the RH public page, catalogue, artifact ledger, promotion register, disposition record, and legacy review records to agree that:
-
-- RH-WP01 and RH-WP02 are implemented, merged, and CI-passed;
-- they are not formally promoted;
-- `promotion_recommended` remains false;
-- the blocking Referee findings remain active.
-
-The adversarial tests reject any silent conversion of repository integration into mathematical or artifact promotion.
-
-## Retired-path continuity
-
-`ci/validate_retired_paths.py` governs the removal of the mislabelled Poincaré Domain 04 master-plan alias. It requires:
-
-- the retired filename to be absent from the current tree;
-- the canonical Domain 05 master plan to exist;
-- current authority records to state that the alias was removed;
-- claim provenance to use an exact commit-pinned version-history locator;
-- frozen pre-renumbering reviews and the archival alias registry to be enumerated in `reviews/poincare/HISTORICAL_IDENTITY_CROSSWALK.yaml`;
-- all other references to the retired filename to fail closed.
-
-This preserves historical review provenance without restoring the retired alias to current authority.
-
-## Publication gate
-
-`.github/workflows/pages.yml` runs only after `Programme policy checks` completes and only when all of the following hold:
+`.github/workflows/pages.yml` is triggered only after a completed `Programme policy checks` run. Publication proceeds only when:
 
 1. the policy conclusion is `success`;
 2. the validated branch is `main`;
 3. the originating event was a push;
-4. the Pages build checks out the exact validated `head_sha`;
-5. that SHA is still the current `origin/main` tip immediately before the site build.
+4. Pages checks out the exact validated `head_sha`;
+5. that SHA is still the current `origin/main` tip;
+6. exactly one unexpired `validated-site` artifact exists for the triggering workflow run;
+7. GitHub’s artifact SHA-256 digest verifies;
+8. the inner site-archive SHA-256 verifies;
+9. the safely extracted site contains `index.html`.
 
-A newer `main` commit supersedes an older publication run. Pages concurrency cancels stale in-progress publication, and the build itself fails closed if the validated SHA is no longer current. Workflow-level permissions remain read-only. The build job receives only repository read access and the Pages permission needed to configure and upload the site artifact. The deploy job alone receives Pages write and OIDC token permissions. A manual Pages bypass is not provided.
+Pages does not install documentation dependencies or rebuild MkDocs. It uploads the verified policy-produced site bytes to Pages and then deploys them. A newer `main` commit cancels or invalidates an older publication run.
+
+The build job receives only `actions: read`, `contents: read`, and `pages: write`; the deploy job alone receives Pages write and OIDC token permissions. There is no manual Pages bypass.
 
 ## Workflow inventory
 
-The current governed workflow set is:
-
-- `ci.yml` — global policy;
-- `pages.yml` — downstream current-tip publication;
+- `ci.yml` — global policy and validated-site producer;
+- `pages.yml` — exact-artifact verifier and current-tip deployer;
 - `bsd-wp03-substrate.yml` — BSD-WP03 fast replay;
 - `bsd-wp04-target.yml` — BSD-WP04 fast replay;
 - `pc-wp04.yml` — PC-WP04 fast certificate replay;
 - `pc-wp05.yml` — PC-WP05 archival fast replay.
 
-`ci/validate_workflow_coverage.py` governs inventory, permissions, action immutability, triggers, required jobs, external evidence, and publication authority. `ci/validate_workflow_semantics.py` adds parsed names, runner pins, Python minor-line governance, dependency routes, operative commands, and current-tip publication checks.
-
 ## Maintenance rule
 
-A change to a campaign executable, CI policy script, workflow file, Python minor line, dependency declaration, external certification dependency, publication gate, retained-blocker contract, retired path, or historical-identity crosswalk must update its governing registry, decision, or evidence record and pass the global policy workflow. Merge state, workflow success, declared reproducibility, and publication visibility remain separate from theorem support and formal artifact promotion.
+A change to campaign executables, CI controls, repository tests, experiment modules, workflows, dependency declarations, external evidence, publication gates, retained blockers, retired paths, or historical crosswalks must update the governing decision or evidence record and pass the global policy. Merge state, workflow success, test success, artifact identity, publication visibility, certification, and theorem support remain distinct.
