@@ -39,7 +39,8 @@ class BSDWebEditionTests(unittest.TestCase):
     def test_claim_boundary_and_open_status_are_explicit(self) -> None:
         self.assertIn("Open Millennium Prize Problem", self.edition["status"])
         self.assertGreaterEqual(self.page.count("Open Millennium Prize Problem"), 2)
-        self.assertIn(self.edition["claim_boundary"], self.page)
+        presentation_normalized = self.page.replace("$p$-adic", "p-adic")
+        self.assertIn(self.edition["claim_boundary"], presentation_normalized)
         for phrase in (
             "does not prove BSD",
             "Rank equality, finiteness",
