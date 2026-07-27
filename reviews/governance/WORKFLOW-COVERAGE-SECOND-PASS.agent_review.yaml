@@ -1,0 +1,187 @@
+artifact:
+  id: WORKFLOW-COVERAGE-002
+  type: workflow_control
+  title: Self-authenticating workflow discovery, environment, and publication freshness
+  pillar: MATH-PROGRAMME
+  status: active
+  disposition: Second-pass hardening under ADR-0012 extends WORKFLOW-COVERAGE-001 without altering mathematical claim boundaries.
+council_review:
+  Axiomatist:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - Preserve the distinction between execution evidence and mathematical support.
+    findings:
+      - Discovery, dependency, and publication facts remain repository-control claims only.
+  Prospector:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - Require executable discovery to be independent of the registry under audit.
+    findings:
+      - Campaign executability is detected by shebang or main guard, regardless of filename.
+  Experimentalist:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - Retain bounded timeouts and deterministic adversarial mutations.
+    findings:
+      - Existing replay timeouts remain bounded and new rejection classes are deterministic.
+  Cartographer:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - Expose workflow roots, CI imports, dependency declarations, and Pages succession explicitly.
+    findings:
+      - The control graph now separates discovery, command authority, import reachability, and publication freshness.
+  Verifier:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - Reject narrowed discovery, unreachable executables, marker spoofing, mutable runners, and stale deployment.
+    findings:
+      - Each class has a direct validator and adversarial test.
+  Adversary:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - Attempt unexpected executable names, comments posing as commands, and superseded-main publication.
+    findings:
+      - Synthetic mutations are rejected without broadening mathematical claims.
+  Formalist:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - Keep direct Lean builds and external certification gates unchanged.
+    findings:
+      - The formal jobs retain actual compiler and complete external-gate evidence.
+  Steward:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - State the limit of exact top-level pins without claiming a transitive hash lock.
+    findings:
+      - ADR-0012 and public documentation preserve that limitation.
+  Composer:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - Present the stronger controls as an extension of ADR-0011.
+    findings:
+      - ADR-0012, the coverage page, and this review form one coherent second-pass record.
+  Grammarian:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - Distinguish declared reproducibility from complete supply-chain reproducibility.
+    findings:
+      - Current language does not overstate the dependency guarantee.
+  Amanuensis:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - Synchronize ADR-0012, ledger, terminology, navigation, inventory, and review provenance.
+    findings:
+      - The second-pass control is registered as WORKFLOW-COVERAGE-002.
+  Archivist:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - Record dependency-version provenance without presenting PyPI recency as mathematical evidence.
+    findings:
+      - Version selection is bounded to workflow environment governance.
+  Mechanist:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - Ensure all executable CI scripts are reachable from actual workflow roots.
+    findings:
+      - AST import reachability and campaign command roots close the remaining execution graph.
+  Typesetter:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - Keep ADR-0012 and the workflow coverage page in strict MkDocs navigation.
+    findings:
+      - Both records are public navigation targets.
+  Referee:
+    status: reviewed
+    reviewed_by: MATH-PROGRAMME second-pass workflow council
+    reviewed_at: '2026-07-26'
+    obligations:
+      - Require a green exact final-head run before readiness or merge.
+    findings:
+      - Initial discovery confirmed the campaign executable set was complete and exposed only an adversarial diagnostic mismatch, which was repaired.
+amanuensis_control:
+  artifact_ledger:
+    ledger_ref: docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md
+    entry_id: WORKFLOW-COVERAGE-002
+  decision_record_refs:
+    - ADR-0011
+    - ADR-0012
+  terminology_registry:
+    registry_ref: docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md
+    terms_introduced_or_changed:
+      - Code-owned executable discovery
+      - CI policy reachability
+      - Declared workflow environment
+      - Current-tip publication
+  review_provenance:
+    complete: true
+    evidence_refs:
+      - .github/workflows/ci.yml
+      - .github/workflows/pages.yml
+      - requirements/policy.txt
+      - requirements/docs.txt
+      - ci/campaign_replay_registry.json
+      - ci/validate_campaign_replays.py
+      - ci/test_campaign_replays.py
+      - ci/validate_policy_reachability.py
+      - ci/test_policy_reachability.py
+      - ci/validate_workflow_semantics.py
+      - ci/test_workflow_semantics.py
+      - schemas/campaign_replay_registry.schema.json
+      - docs/WORKFLOW_COVERAGE.md
+      - docs/decisions/ADR-0012_SELF_AUTHENTICATING_WORKFLOW_COVERAGE.md
+  cross_document_consistency:
+    status: reviewed
+    checked_against:
+      - docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md
+      - docs/AGENT_COUNCIL_DECISION_RECORDS.md
+      - docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md
+      - FILE_MANIFEST.md
+      - docs/REPOSITORY_DOCS.md
+      - mkdocs.yml
+      - reviews/governance/WORKFLOW-COVERAGE.agent_review.yaml
+    conflicts: []
+  final_editorial_integration:
+    status: reviewed
+    integrated_artifact_ref: docs/WORKFLOW_COVERAGE.md
+    integration_notes:
+      - ADR-0012 extends but does not replace ADR-0011.
+      - Registry command authority is separated from code-owned executable discovery.
+      - Current-tip publication supersedes successful but stale main commits.
+unresolved_obligations:
+  - id: WORKFLOW-COVERAGE-002-O001
+    owner: Archivist
+    description: Upgrade exact top-level dependency pins to a complete transitive hash lock only through a separate audited supply-chain decision.
+    severity: medium
+    blocking: false
+promotion:
+  ready_for_next_stage: false
+  blockers: []
+  certification_route: null
