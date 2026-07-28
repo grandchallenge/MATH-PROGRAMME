@@ -33,17 +33,22 @@ SCHEMA_BOUND_AGENT_REVIEWS: tuple[str, ...] = (
     "reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml",
     "reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml",
     "reviews/governance/WORKFLOW-COVERAGE.agent_review.yaml",
+    "reviews/yang_mills/YM-WP01.agent_review.yaml",
+    "reviews/yang_mills/YM-WP02.agent_review.yaml",
 )
 SCHEMA_BOUND_REVIEW_DISCOVERY_ROOTS: tuple[str, ...] = (
     "reviews/union_closed",
     "reviews/documentation",
     "reviews/governance",
+    "reviews/yang_mills",
     "reviews/navier_stokes/NS-CI-WP06.agent_review.yaml",
 )
 SCHEMA_BOUND_CLAIM_LEDGERS: tuple[str, ...] = (
     "templates/claim_ledger_template.yaml",
     "templates/union_closed_claim_ledger_wp01.yaml",
     "campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/10_CLAIM_LEDGER.yaml",
+    "campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/10_CLAIM_LEDGER.yaml",
+    "campaigns/yang_mills/WP02_THEOREM_LEDGER/10_CLAIM_LEDGER.yaml",
 )
 
 
