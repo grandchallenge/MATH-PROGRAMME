@@ -33,6 +33,24 @@
       "scope": "Replay BSD restricted-target scorecard and claim firewall."
     },
     {
+      "id": "PNP-WP01-REPLAY",
+      "command": ["python3", "campaigns/p_vs_np/WP01_FALSE_PROOF_ATLAS/replay.py"],
+      "timeout_seconds": 60,
+      "scope": "Deterministic replay of the P-versus-NP false-proof atlas."
+    },
+    {
+      "id": "PNP-WP01-WP02-CROSS-VALIDATION",
+      "command": ["python3", "campaigns/p_vs_np/validate_wp01_wp02.py"],
+      "timeout_seconds": 60,
+      "scope": "Cross-validate P-versus-NP fixtures, sources, theorem interfaces, frontier debt, and closed gates."
+    },
+    {
+      "id": "PNP-WP01-WP02-ADVERSARIAL",
+      "command": ["python3", "campaigns/p_vs_np/tests/test_validate_wp01_wp02.py"],
+      "timeout_seconds": 60,
+      "scope": "Reject P-versus-NP identifier, source, terminal-state, barrier, frontier-debt, and gate-opening mutations."
+    },
+    {
       "id": "RH-WP01-REPLAY",
       "command": ["python3", "campaigns/riemann_hypothesis/WP01_FALSE_PROOF_ATLAS/replay.py"],
       "timeout_seconds": 60,
