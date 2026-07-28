@@ -1,14 +1,30 @@
 # Documentary source records
 
-The GCL–Chaidez documentary editions are maintained as coordinated artifact classes:
+The GCL–Chaidez documentary programme distinguishes admitted public editions from pre-admission candidates.
 
-1. **Web records and web editions** in `docs/documentaries/`, suitable for MkDocs review, navigation, accessibility, and claim-boundary maintenance.
-2. **Source records** in this directory. These small Git-tracked `.tex` pointers identify a complete source artifact by documentary title, page count, and checksum. They are not expected to compile.
-3. **Authoritative source artifacts** consisting of the checksum-locked complete illustrated source bundles.
-4. **Rendered editions** consisting of the checksum-locked PDFs.
+## Admitted editions
 
-The release-class files are intentionally not duplicated in ordinary Git history. Their exact byte lengths, SHA-256 digests, programme crosswalks, and release availability are fixed in [`../ARTIFACT_MANIFEST.json`](../ARTIFACT_MANIFEST.json).
+For every volume in [`../ARTIFACT_MANIFEST.json`](../ARTIFACT_MANIFEST.json):
 
-A source record is not the authoritative complete source. A file presented as a source bundle or rendered edition is authentic only when its byte length and digest agree with the manifest. A checksum does not establish availability: entries marked `metadata_only` have governed identities but no asserted stable public release locator.
+1. the browser page and edition record live in `docs/documentaries/`;
+2. the small Git-tracked `.tex` **source record** lives in this directory;
+3. the checksum-locked complete illustrated source bundle is the **authoritative source artifact**;
+4. the checksum-locked PDF is the **rendered edition**.
 
-The Poincaré web edition is governed separately by [`../documentary_web.schema.json`](../documentary_web.schema.json) and [`../poincare.edition.json`](../poincare.edition.json). Its mathematics-rendering script is an enhancement rather than an archival authority; the source TeX remains readable without JavaScript.
+Admitted source records are public static files because their corresponding page, edition record, assets, navigation, and manifest volume have entered atomically. They are pointers, not complete compilable projects.
+
+The manifest fixes each admitted volume's title, topic, claim status, problem class, display status, page count, programme crosswalk, source record, edition record, claim authority, documentary tier, byte lengths, SHA-256 digests, and release availability.
+
+## Pre-admission candidates
+
+[`../DOCUMENTARY_CANDIDATES.json`](../DOCUMENTARY_CANDIDATES.json) is the public metadata authority for source-locked documentary candidates that have not yet entered the collection.
+
+Candidate source pointers remain under their governing campaign and are **repository-only until manifest admission**. They are not copied into the Pages site. Public candidate metadata may identify the title, status, proposed tier, claim authority, source lock, review, release identities, and admission obligations without implying that a browser edition or public source record exists.
+
+A candidate becomes an admitted edition only through one atomic change that adds its web page, edition record, native assets, source record in this directory, collection-index row, MkDocs navigation entry, and manifest volume. Candidate metadata alone confer no collection membership.
+
+## Integrity and availability
+
+A source record is not the authoritative complete source. A file presented as a source bundle or rendered edition is authentic only when its byte length and digest agree with its governing manifest or candidate source lock. A checksum establishes identity after acquisition; it does not establish availability. Entries marked `metadata_only` have governed identities but no asserted stable public release locator.
+
+Every admitted browser edition is validated against [`../documentary_web.schema.json`](../documentary_web.schema.json) and the shared manifest-driven semantic, accessibility, asset, release, source, and rendering contracts. MathJax remains a version-pinned enhancement rather than an archival authority; source mathematics remains readable without JavaScript.
