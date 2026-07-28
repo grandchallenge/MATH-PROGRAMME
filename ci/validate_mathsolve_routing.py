@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
 """Compatibility entry point for reviewed MATHSOLVE routing validation."""
 
-from mathsolve_routing_reviewed import (
+from pathlib import Path
+import sys
+
+CI_DIR = Path(__file__).resolve().parent
+if str(CI_DIR) not in sys.path:
+    sys.path.insert(0, str(CI_DIR))
+
+from mathsolve_routing_reviewed import (  # noqa: E402
     COMPLETE_CERT_STATES,
     EXPECTED_MANIFESTS,
     EXPECTED_PROVIDER_COMMIT,
