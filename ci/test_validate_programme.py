@@ -30,20 +30,26 @@ def main() -> int:
     mappings = load_json(ROOT / "classification/mappings/union_closed.json")
     domains = yaml.safe_load((ROOT / "DOMAIN_REGISTRY.yaml").read_text(encoding="utf-8"))
     candidate = load_json(ROOT / "examples/candidate_problem_union_closed.json")
-    agent_review = yaml.safe_load((ROOT / "templates/agent_review.yaml").read_text(encoding="utf-8"))
+    agent_review = yaml.safe_load(
+        (ROOT / "templates/agent_review.yaml").read_text(encoding="utf-8")
+    )
 
     duplicate_graph = copy.deepcopy(graph)
     duplicate_graph["nodes"].append(copy.deepcopy(duplicate_graph["nodes"][0]))
     assert any(
         "duplicate graph node_id" in error
-        for error in validate_documents(source_registry, duplicate_graph, mappings, domains, [candidate])
+        for error in validate_documents(
+            source_registry, duplicate_graph, mappings, domains, [candidate]
+        )
     )
 
     dangling_graph = copy.deepcopy(graph)
     dangling_graph["edges"][0]["target"] = "UC-MISSING"
     assert any(
         "dangling target" in error
-        for error in validate_documents(source_registry, dangling_graph, mappings, domains, [candidate])
+        for error in validate_documents(
+            source_registry, dangling_graph, mappings, domains, [candidate]
+        )
     )
 
     multiple_primary = copy.deepcopy(mappings)
@@ -53,21 +59,27 @@ def main() -> int:
     multiple_primary["mappings"].append(second_primary)
     assert any(
         "multiple primary MSC mappings" in error
-        for error in validate_documents(source_registry, graph, multiple_primary, domains, [candidate])
+        for error in validate_documents(
+            source_registry, graph, multiple_primary, domains, [candidate]
+        )
     )
 
     unaudited_primary = copy.deepcopy(mappings)
     unaudited_primary["mappings"][0]["review_status"] = "PROPOSED"
     assert any(
         "primary mapping must be AUDITED" in error
-        for error in validate_documents(source_registry, graph, unaudited_primary, domains, [candidate])
+        for error in validate_documents(
+            source_registry, graph, unaudited_primary, domains, [candidate]
+        )
     )
 
     invalid_profile = copy.deepcopy(candidate)
     invalid_profile["foundational_profile"] = {"carrier_type": "bare_set"}
     assert any(
         "foundational_profile" in error
-        for error in validate_documents(source_registry, graph, mappings, domains, [invalid_profile])
+        for error in validate_documents(
+            source_registry, graph, mappings, domains, [invalid_profile]
+        )
     )
 
     assert not schema_errors(agent_review, "agent_review.schema.json")
@@ -92,7 +104,9 @@ def main() -> int:
         "entry_id": "TEST-ARTIFACT",
     }
     integrated_promotion["amanuensis_control"]["review_provenance"]["complete"] = True
-    integrated_promotion["amanuensis_control"]["cross_document_consistency"]["status"] = "reviewed"
+    integrated_promotion["amanuensis_control"]["cross_document_consistency"][
+        "status"
+    ] = "reviewed"
     integrated_promotion["amanuensis_control"]["final_editorial_integration"] = {
         "status": "reviewed",
         "integrated_artifact_ref": "tests/test_validate_programme.py",
@@ -125,6 +139,7 @@ def main() -> int:
     assert SCHEMA_BOUND_AGENT_REVIEWS == (
         "reviews/union_closed/UC-WP01.agent_review.yaml",
         "reviews/union_closed/UC-DOC-WP00.agent_review.yaml",
+        "reviews/union_closed/UC-DOC-WP01.agent_review.yaml",
         "reviews/navier_stokes/NS-CI-WP06.agent_review.yaml",
         "reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml",
         "reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml",
@@ -135,7 +150,7 @@ def main() -> int:
     omitted_review_registry = tuple(
         path
         for path in SCHEMA_BOUND_AGENT_REVIEWS
-        if path != "reviews/union_closed/UC-DOC-WP00.agent_review.yaml"
+        if path != "reviews/union_closed/UC-DOC-WP01.agent_review.yaml"
     )
     assert any(
         "discovered schema-bound review is unregistered" in error
@@ -222,9 +237,9 @@ def main() -> int:
     )
 
     duplicate_claim_ledger = copy.deepcopy(ledgers[2][1])
-    duplicate_claim_ledger["claims"][1]["claim_id"] = duplicate_claim_ledger["claims"][0][
-        "claim_id"
-    ]
+    duplicate_claim_ledger["claims"][1]["claim_id"] = duplicate_claim_ledger["claims"][
+        0
+    ]["claim_id"]
     assert any(
         "duplicate claim_id" in error
         for error in claim_ledger_semantic_errors(
