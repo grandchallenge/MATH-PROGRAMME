@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Adversarial rejection tests for Documentary Library contracts."""
+"""Adversarial rejection and admission-transition tests for documentary contracts."""
 
 from __future__ import annotations
 
@@ -29,6 +29,31 @@ def volume_by_slug(manifest: dict, slug: str) -> dict:
     return next(volume for volume in manifest["volumes"] if volume["slug"] == slug)
 
 
+def admitted_union_closed_volume(candidate: dict) -> dict:
+    release = candidate["release_artifacts"]
+    return {
+        "slug": candidate["slug"],
+        "domain_id": candidate["domain_id"],
+        "campaign_id": candidate["campaign_id"],
+        "scope_relation": candidate["scope_relation"],
+        "documentary_tier": candidate["proposed_documentary_tier"],
+        "title": candidate["title"],
+        "topic": candidate["topic"],
+        "claim_status": candidate["claim_status"],
+        "problem_class": candidate["problem_class"],
+        "display_status": candidate["display_status"],
+        "pages": 48,
+        "source_record": "sources/the_element_in_half_the_worlds.tex",
+        "source_lock": candidate["source_lock"],
+        "web_page": "union_closed.md",
+        "edition_record": "union_closed.edition.json",
+        "claim_authority": candidate["claim_authority"],
+        "rendered_pdf": release["rendered_pdf"],
+        "latex_source": release["latex_source"],
+        "authoritative_source_bundle": release["authoritative_source_bundle"],
+    }
+
+
 def run_rejection_tests() -> None:
     manifest = load_json(ROOT / "docs/documentaries/ARTIFACT_MANIFEST.json")
     candidates = load_json(ROOT / "docs/documentaries/DOCUMENTARY_CANDIDATES.json")
@@ -39,7 +64,7 @@ def run_rejection_tests() -> None:
     discovered_sources = discovered_source_records()
     discovered_assets = discovered_documentary_assets()
     discovered_dirs = discovered_asset_directories()
-    discovered_candidate_records = discovered_candidate_locks()
+    discovered_locks = discovered_candidate_locks()
 
     assert not documentary_contract_errors()
 
@@ -70,9 +95,7 @@ def run_rejection_tests() -> None:
     assert any(
         "orphaned edition record" in error
         for error in collection_discovery_errors(
-            manifest,
-            candidates=candidates,
-            discovered_records=orphaned_record,
+            manifest, candidates=candidates, discovered_records=orphaned_record
         )
     )
 
@@ -81,9 +104,7 @@ def run_rejection_tests() -> None:
     assert any(
         "manifest edition record is missing" in error
         for error in collection_discovery_errors(
-            manifest,
-            candidates=candidates,
-            discovered_records=incomplete_discovery,
+            manifest, candidates=candidates, discovered_records=incomplete_discovery
         )
     )
 
@@ -92,9 +113,7 @@ def run_rejection_tests() -> None:
     assert any(
         "orphaned web page" in error
         for error in collection_discovery_errors(
-            manifest,
-            candidates=candidates,
-            discovered_pages=orphaned_page,
+            manifest, candidates=candidates, discovered_pages=orphaned_page
         )
     )
 
@@ -103,9 +122,7 @@ def run_rejection_tests() -> None:
     assert any(
         "admitted source record is missing" in error
         for error in collection_discovery_errors(
-            manifest,
-            candidates=candidates,
-            discovered_sources=missing_source,
+            manifest, candidates=candidates, discovered_sources=missing_source
         )
     )
 
@@ -114,9 +131,7 @@ def run_rejection_tests() -> None:
     assert any(
         "orphaned admitted source record" in error
         for error in collection_discovery_errors(
-            manifest,
-            candidates=candidates,
-            discovered_sources=orphaned_source,
+            manifest, candidates=candidates, discovered_sources=orphaned_source
         )
     )
 
@@ -125,9 +140,7 @@ def run_rejection_tests() -> None:
     assert any(
         "orphaned documentary asset" in error
         for error in collection_discovery_errors(
-            manifest,
-            candidates=candidates,
-            discovered_assets=orphaned_asset,
+            manifest, candidates=candidates, discovered_assets=orphaned_asset
         )
     )
 
@@ -136,9 +149,7 @@ def run_rejection_tests() -> None:
     assert any(
         "asset directory is missing" in error
         for error in collection_discovery_errors(
-            manifest,
-            candidates=candidates,
-            discovered_asset_dirs=missing_dir,
+            manifest, candidates=candidates, discovered_asset_dirs=missing_dir
         )
     )
 
@@ -147,33 +158,32 @@ def run_rejection_tests() -> None:
     assert any(
         "orphaned asset directory" in error
         for error in collection_discovery_errors(
-            manifest,
-            candidates=candidates,
-            discovered_asset_dirs=orphaned_dir,
+            manifest, candidates=candidates, discovered_asset_dirs=orphaned_dir
         )
     )
 
-    orphaned_candidate = set(discovered_candidate_records)
-    orphaned_candidate.add("campaigns/union_closed/UNKNOWN/artifacts/UNKNOWN_SOURCE_LOCK.json")
+    orphaned_lock = set(discovered_locks)
+    orphaned_lock.add("campaigns/union_closed/UNKNOWN/artifacts/UNKNOWN_SOURCE_LOCK.json")
     assert any(
         "orphaned source lock" in error
         for error in collection_discovery_errors(
             manifest,
             candidates=candidates,
-            discovered_candidate_records=orphaned_candidate,
+            discovered_candidate_records=orphaned_lock,
         )
     )
 
-    missing_candidate = set(discovered_candidate_records)
-    missing_candidate.remove(
-        "campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/artifacts/UC-DOC-WP00_SOURCE_LOCK.json"
+    missing_lock = set(discovered_locks)
+    missing_lock.remove(
+        "campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/"
+        "artifacts/UC-DOC-WP00_SOURCE_LOCK.json"
     )
     assert any(
         "registered source lock is missing" in error
         for error in collection_discovery_errors(
             manifest,
             candidates=candidates,
-            discovered_candidate_records=missing_candidate,
+            discovered_candidate_records=missing_lock,
         )
     )
 
@@ -280,6 +290,47 @@ def run_rejection_tests() -> None:
         for error in schema_errors(candidate_wrong_status, candidate_schema, "candidates")
     )
 
+    # Regression: the candidate authority remains valid after the last candidate is admitted.
+    empty_candidates = copy.deepcopy(candidates)
+    empty_candidates["candidates"] = []
+    assert not schema_errors(empty_candidates, candidate_schema, "candidates")
+
+    # Regression: atomic admission removes candidate membership but preserves source-lock
+    # provenance through the admitted manifest entry.
+    admitted_manifest = copy.deepcopy(manifest)
+    admitted_volume = admitted_union_closed_volume(candidates["candidates"][0])
+    admitted_manifest["volumes"].append(admitted_volume)
+    assert not schema_errors(admitted_manifest, manifest_schema, "manifest")
+    transition_errors = collection_discovery_errors(
+        admitted_manifest,
+        candidates=empty_candidates,
+        discovered_candidate_records=discovered_locks,
+    )
+    assert not any("source-lock discovery" in error for error in transition_errors)
+    semantic_transition_errors = manifest_semantic_errors(admitted_manifest)
+    assert not any(
+        "source lock" in error or "source-lock" in error
+        for error in semantic_transition_errors
+    )
+
+    missing_provenance = copy.deepcopy(admitted_manifest)
+    missing_provenance["volumes"][-1].pop("source_lock")
+    assert any(
+        "orphaned source lock" in error
+        for error in collection_discovery_errors(
+            missing_provenance,
+            candidates=empty_candidates,
+            discovered_candidate_records=discovered_locks,
+        )
+    )
+
+    drifted_provenance = copy.deepcopy(admitted_manifest)
+    drifted_provenance["volumes"][-1]["display_status"] = "Different open label"
+    assert any(
+        "source lock display_status" in error
+        for error in manifest_semantic_errors(drifted_provenance)
+    )
+
     bsd_volume = volume_by_slug(manifest, "bsd")
     bsd_edition = load_json(ROOT / "docs/documentaries" / bsd_volume["edition_record"])
     bsd_page = (ROOT / "docs/documentaries" / bsd_volume["web_page"]).read_text(
@@ -356,7 +407,7 @@ def run_rejection_tests() -> None:
 
 def main() -> int:
     run_rejection_tests()
-    print("documentary validator rejection tests passed")
+    print("documentary validator rejection and admission-transition tests passed")
     return 0
 
 
