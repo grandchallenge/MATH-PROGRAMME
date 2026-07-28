@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Adversarial rejection and admission-transition tests for documentary contracts."""
+"""Adversarial rejection tests for admitted and pre-admission documentary contracts."""
 
 from __future__ import annotations
 
@@ -29,28 +29,35 @@ def volume_by_slug(manifest: dict, slug: str) -> dict:
     return next(volume for volume in manifest["volumes"] if volume["slug"] == slug)
 
 
-def admitted_union_closed_volume(candidate: dict) -> dict:
-    release = candidate["release_artifacts"]
+def synthetic_candidate_from_admitted(volume: dict) -> dict:
+    """Construct a valid pre-admission-shaped fixture from an admitted volume."""
     return {
-        "slug": candidate["slug"],
-        "domain_id": candidate["domain_id"],
-        "campaign_id": candidate["campaign_id"],
-        "scope_relation": candidate["scope_relation"],
-        "documentary_tier": candidate["proposed_documentary_tier"],
-        "title": candidate["title"],
-        "topic": candidate["topic"],
-        "claim_status": candidate["claim_status"],
-        "problem_class": candidate["problem_class"],
-        "display_status": candidate["display_status"],
-        "pages": 48,
-        "source_record": "sources/the_element_in_half_the_worlds.tex",
-        "source_lock": candidate["source_lock"],
-        "web_page": "union_closed.md",
-        "edition_record": "union_closed.edition.json",
-        "claim_authority": candidate["claim_authority"],
-        "rendered_pdf": release["rendered_pdf"],
-        "latex_source": release["latex_source"],
-        "authoritative_source_bundle": release["authoritative_source_bundle"],
+        "slug": volume["slug"],
+        "domain_id": volume["domain_id"],
+        "campaign_id": volume["campaign_id"],
+        "scope_relation": volume["scope_relation"],
+        "proposed_documentary_tier": volume["documentary_tier"],
+        "title": volume["title"],
+        "topic": volume["topic"],
+        "claim_status": volume["claim_status"],
+        "problem_class": volume["problem_class"],
+        "display_status": volume["display_status"],
+        "claim_authority": volume["claim_authority"],
+        "source_record": (
+            "campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/"
+            "artifacts/the_element_in_half_the_worlds.tex"
+        ),
+        "source_lock": volume["source_lock"],
+        "review_record": "reviews/union_closed/UC-DOC-WP00.agent_review.yaml",
+        "admission_state": "source_locked_web_admission_pending",
+        "manifest_member": False,
+        "public_copy_policy": "metadata_public_source_record_repository_only",
+        "admission_obligations": ["synthetic pre-admission obligation"],
+        "release_artifacts": {
+            "rendered_pdf": volume["rendered_pdf"],
+            "latex_source": volume["latex_source"],
+            "authoritative_source_bundle": volume["authoritative_source_bundle"],
+        },
     }
 
 
@@ -58,7 +65,9 @@ def run_rejection_tests() -> None:
     manifest = load_json(ROOT / "docs/documentaries/ARTIFACT_MANIFEST.json")
     candidates = load_json(ROOT / "docs/documentaries/DOCUMENTARY_CANDIDATES.json")
     manifest_schema = load_json(ROOT / "schemas/documentary_manifest.schema.json")
-    candidate_schema = load_json(ROOT / "schemas/documentary_candidate_registry.schema.json")
+    candidate_schema = load_json(
+        ROOT / "schemas/documentary_candidate_registry.schema.json"
+    )
     discovered_editions = discovered_edition_records()
     discovered_pages = discovered_web_pages()
     discovered_sources = discovered_source_records()
@@ -66,11 +75,16 @@ def run_rejection_tests() -> None:
     discovered_dirs = discovered_asset_directories()
     discovered_locks = discovered_candidate_locks()
 
+    assert len(manifest["volumes"]) == 8
+    assert candidates["candidates"] == []
+    assert not schema_errors(candidates, candidate_schema, "candidates")
     assert not documentary_contract_errors()
 
     duplicate_slug = copy.deepcopy(manifest)
     duplicate_slug["volumes"][1]["slug"] = duplicate_slug["volumes"][0]["slug"]
-    assert any("duplicate slug" in error for error in manifest_semantic_errors(duplicate_slug))
+    assert any(
+        "duplicate slug" in error for error in manifest_semantic_errors(duplicate_slug)
+    )
 
     omitted_volume = copy.deepcopy(manifest)
     omitted_volume["volumes"] = [
@@ -174,10 +188,7 @@ def run_rejection_tests() -> None:
     )
 
     missing_lock = set(discovered_locks)
-    missing_lock.remove(
-        "campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/"
-        "artifacts/UC-DOC-WP00_SOURCE_LOCK.json"
-    )
+    missing_lock.remove(volume_by_slug(manifest, "union_closed")["source_lock"])
     assert any(
         "registered source lock is missing" in error
         for error in collection_discovery_errors(
@@ -185,6 +196,26 @@ def run_rejection_tests() -> None:
             candidates=candidates,
             discovered_candidate_records=missing_lock,
         )
+    )
+
+    missing_provenance = copy.deepcopy(manifest)
+    volume_by_slug(missing_provenance, "union_closed").pop("source_lock")
+    assert any(
+        "orphaned source lock" in error
+        for error in collection_discovery_errors(
+            missing_provenance,
+            candidates=candidates,
+            discovered_candidate_records=discovered_locks,
+        )
+    )
+
+    drifted_provenance = copy.deepcopy(manifest)
+    volume_by_slug(drifted_provenance, "union_closed")["display_status"] = (
+        "Different open label"
+    )
+    assert any(
+        "source lock display_status" in error
+        for error in manifest_semantic_errors(drifted_provenance)
     )
 
     assert any(
@@ -236,7 +267,9 @@ def run_rejection_tests() -> None:
     )
 
     invalid_scope = copy.deepcopy(manifest)
-    volume_by_slug(invalid_scope, "poincare")["scope_relation"] = "campaign_documentary"
+    volume_by_slug(invalid_scope, "poincare")["scope_relation"] = (
+        "campaign_documentary"
+    )
     assert any(
         "incompatible with scope relation" in error or "requires an ACTIVE domain" in error
         for error in manifest_semantic_errors(invalid_scope)
@@ -261,20 +294,24 @@ def run_rejection_tests() -> None:
     )
 
     invalid_status_pair = copy.deepcopy(manifest)
-    volume_by_slug(invalid_status_pair, "bsd")["problem_class"] = "solved_classical_theorem"
+    volume_by_slug(invalid_status_pair, "bsd")["problem_class"] = (
+        "solved_classical_theorem"
+    )
     assert any(
         "problem_class" in error
         for error in schema_errors(invalid_status_pair, manifest_schema, "manifest")
     )
 
+    union_volume = volume_by_slug(manifest, "union_closed")
     candidate_overlap = copy.deepcopy(candidates)
-    candidate_overlap["candidates"][0]["slug"] = "bsd"
+    candidate_overlap["candidates"] = [synthetic_candidate_from_admitted(union_volume)]
+    assert not schema_errors(candidate_overlap, candidate_schema, "candidates")
     assert any(
         "already admitted" in error
         for error in candidate_semantic_errors(candidate_overlap, manifest)
     )
 
-    candidate_public_source = copy.deepcopy(candidates)
+    candidate_public_source = copy.deepcopy(candidate_overlap)
     candidate_public_source["candidates"][0]["source_record"] = (
         "docs/documentaries/sources/the_element_in_half_the_worlds.tex"
     )
@@ -283,80 +320,19 @@ def run_rejection_tests() -> None:
         for error in candidate_semantic_errors(candidate_public_source, manifest)
     )
 
-    candidate_wrong_status = copy.deepcopy(candidates)
-    candidate_wrong_status["candidates"][0]["problem_class"] = "solved_classical_theorem"
+    candidate_wrong_status = copy.deepcopy(candidate_overlap)
+    candidate_wrong_status["candidates"][0]["problem_class"] = (
+        "solved_classical_theorem"
+    )
     assert any(
         "problem_class" in error
         for error in schema_errors(candidate_wrong_status, candidate_schema, "candidates")
-    )
-
-    # Regression: the candidate authority remains valid after the last candidate is admitted.
-    empty_candidates = copy.deepcopy(candidates)
-    empty_candidates["candidates"] = []
-    assert not schema_errors(empty_candidates, candidate_schema, "candidates")
-
-    # Regression: atomic admission removes candidate membership but preserves source-lock
-    # provenance through the admitted manifest entry.
-    admitted_manifest = copy.deepcopy(manifest)
-    admitted_volume = admitted_union_closed_volume(candidates["candidates"][0])
-    admitted_manifest["volumes"].append(admitted_volume)
-    assert not schema_errors(admitted_manifest, manifest_schema, "manifest")
-    transition_errors = collection_discovery_errors(
-        admitted_manifest,
-        candidates=empty_candidates,
-        discovered_candidate_records=discovered_locks,
-    )
-    assert not any("source-lock discovery" in error for error in transition_errors)
-    semantic_transition_errors = manifest_semantic_errors(admitted_manifest)
-    assert not any(
-        "source lock" in error or "source-lock" in error
-        for error in semantic_transition_errors
-    )
-
-    missing_provenance = copy.deepcopy(admitted_manifest)
-    missing_provenance["volumes"][-1].pop("source_lock")
-    assert any(
-        "orphaned source lock" in error
-        for error in collection_discovery_errors(
-            missing_provenance,
-            candidates=empty_candidates,
-            discovered_candidate_records=discovered_locks,
-        )
-    )
-
-    drifted_provenance = copy.deepcopy(admitted_manifest)
-    drifted_provenance["volumes"][-1]["display_status"] = "Different open label"
-    assert any(
-        "source lock display_status" in error
-        for error in manifest_semantic_errors(drifted_provenance)
     )
 
     bsd_volume = volume_by_slug(manifest, "bsd")
     bsd_edition = load_json(ROOT / "docs/documentaries" / bsd_volume["edition_record"])
     bsd_page = (ROOT / "docs/documentaries" / bsd_volume["web_page"]).read_text(
         encoding="utf-8"
-    )
-
-    union_fixture_volume = copy.deepcopy(bsd_volume)
-    union_fixture_volume.update(
-        {
-            "claim_status": "open",
-            "problem_class": "open_conjecture",
-            "display_status": "Open conjecture",
-        }
-    )
-    union_fixture_edition = copy.deepcopy(bsd_edition)
-    union_fixture_edition["status"] = "Open conjecture; documentary exposition; no proof claim"
-    union_fixture_page = bsd_page.replace(
-        "Open Millennium Prize Problem", "Open conjecture"
-    )
-    assert not any(
-        "solved status" in error or "Solved classical theorem" in error
-        for error in web_edition_errors(
-            union_fixture_volume,
-            union_fixture_edition,
-            union_fixture_page,
-        )
     )
 
     duplicate_plate_id = copy.deepcopy(bsd_edition)
@@ -407,7 +383,7 @@ def run_rejection_tests() -> None:
 
 def main() -> int:
     run_rejection_tests()
-    print("documentary validator rejection and admission-transition tests passed")
+    print("documentary validator rejection tests passed for admitted state")
     return 0
 
 
