@@ -33,6 +33,16 @@
       "scope": "Replay BSD restricted-target scorecard and claim firewall."
     },
     {
+      "id": "OZ-WP00-INTAKE-VALIDATION",
+      "command": [
+        "python3",
+        "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/tools/validate_intake_manifest.py",
+        "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/01_INTAKE_SOURCE_LOCK.yaml"
+      ],
+      "timeout_seconds": 60,
+      "scope": "Validate the open OZ-WP00 intake manifest without promoting incomplete source locks."
+    },
+    {
       "id": "PNP-WP01-REPLAY",
       "command": ["python3", "campaigns/p_vs_np/WP01_FALSE_PROOF_ATLAS/replay.py"],
       "timeout_seconds": 60,
