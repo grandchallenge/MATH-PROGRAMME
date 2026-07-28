@@ -33,6 +33,18 @@ The Council can return one of four dispositions:
 
 Approval of the candidate pilot does not satisfy the version `1.0` acceptance criteria in `GCL-TCS-00` Section 20.
 
+## Review locations
+
+- Charter source parts: `council_submissions/GCL-TCS-00/parts/`
+- Charter source assembler: `council_submissions/GCL-TCS-00/tools/assemble_source.py`
+- Charter machine policy: `docs/council/submissions/GCL-TCS-00/GCL-TCS-00.policy.yaml`
+- Charter conformance schema: `docs/council/submissions/GCL-TCS-00/schemas/gcl-tcs-conformance.schema.json`
+- Position source: `council_submissions/GCL-POS-01/GCL-POS-01.md`
+- Position conformance and review records: `docs/council/submissions/GCL-POS-01/`
+- Submission manifest: `docs/council/submissions/SUBMISSION_MANIFEST.yaml`
+
+The exact source files remain outside `docs/` because they are source-locked review artifacts, not admitted MkDocs pages.
+
 ## Relationship to current programme doctrine
 
 The submission is intended to sit above and coordinate, not silently replace, the current operating standards:
@@ -83,9 +95,11 @@ Not supported by this submission:
 
 ## Required pre-approval checks
 
-- Run `GCL-TCS-00/tools/validate_package.py`.
-- Run `GCL-POS-01/tools/validate_artifact.py --write-report`.
-- Confirm that the checked revision matches the review record.
+- Run `python3 council_submissions/GCL-TCS-00/tools/assemble_source.py`.
+- Confirm that the assembled charter has SHA-256 `ea750b9b80b53c7d6ed755978fa4bdf59413fad93cec1db81eb3238372ce61c9`.
+- Confirm that the position source has SHA-256 `d8be180052a48655a02612b0d6ca883067abe93f0391c4b9c6561a3867ad4d2c`.
+- Validate the position conformance declaration against the submitted schema.
+- Confirm that the checked revision matches each review record.
 - Confirm that the submission does not overwrite current binding doctrine by implication.
 - Reconcile terminology with `CLAIM_LEDGER_STANDARD.md`, `CERTIFICATION_LADDER.md`, and `docs/CLAIM_BOUNDARY_DOCTRINE.md`.
 - Decide whether candidate approval belongs in the README source-of-truth list or in a separate candidate-governance section.
@@ -104,4 +118,4 @@ A merge without an explicit disposition admits the files for review only. It doe
 
 ## First executable step
 
-Review `GCL-TCS-00/GCL-TCS-00.md`, then test its machine-readable policy against the existing claim, certification, pedagogy, and work-package standards. Record all conflicts before reviewing `GCL-POS-01` for institutional approval.
+Assemble and review `GCL-TCS-00`, then test its machine-readable policy against the existing claim, certification, pedagogy, and work-package standards. Record all conflicts before reviewing `GCL-POS-01` for institutional approval.
