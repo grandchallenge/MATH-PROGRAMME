@@ -9,6 +9,12 @@
       "scope": "Fail closed on missing active-domain provider coverage, provider commit drift, manifest identity drift, or malformed waivers."
     },
     {
+      "id": "MATHSOLVE-ROUTING-VALIDATION",
+      "command": ["python3", "ci/validate_mathsolve_routing.py"],
+      "timeout_seconds": 60,
+      "scope": "Fail closed on missing Solve routes, provider or manifest drift, Programme-embedded future promotion, and missing MATHCERT handoffs."
+    },
+    {
       "id": "BSD-WP01-REPLAY",
       "command": ["python3", "campaigns/birch_swinnerton_dyer/WP01_FALSE_PROOF_ATLAS/replay.py"],
       "timeout_seconds": 60,
