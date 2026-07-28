@@ -1,97 +1,177 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Grand Challenge Claim Ledger",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/claim_ledger.schema.json",
+  "title": "Grand Challenge canonical claim ledger",
   "type": "object",
-  "required": ["claims"],
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "ledger_contract",
+    "ledger_id",
+    "claims"
+  ],
   "properties": {
+    "schema_version": {
+      "const": "1.1.0"
+    },
+    "ledger_contract": {
+      "const": "canonical_claim_ledger"
+    },
+    "ledger_id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9][A-Z0-9._-]*$"
+    },
     "claims": {
       "type": "array",
+      "minItems": 1,
       "items": {
-        "type": "object",
-        "required": [
-          "claim_id",
-          "claim_text",
-          "claim_class",
-          "support_type",
-          "status",
-          "source_or_artifact",
-          "promotion_condition"
-        ],
-        "properties": {
-          "claim_id": {"type": "string"},
-          "short_name": {"type": "string"},
-          "claim_text": {"type": "string"},
-          "claim_class": {
-            "enum": [
-              "PROVED_IN_PACKAGE",
-              "FORMALIZED",
-              "COMPUTED_EXACTLY",
-              "ALGEBRAIC_CERTIFIED",
-              "GROEBNER_CERTIFIED",
-              "INTERVAL_CERTIFIED",
-              "SAT_SMT_CERTIFIED",
-              "LITERATURE_DERIVED",
-              "HEURISTIC",
-              "CONJECTURAL",
-              "FAILED_ATTEMPT",
-              "NEEDS_AUDIT",
-              "SUPERSEDED",
-              "REFUTED"
-            ]
-          },
-          "support_type": {
-            "enum": [
-              "HUMAN_PROOF",
-              "LEAN_PROOF",
-              "COQ_PROOF",
-              "ISABELLE_PROOF",
-              "EXACT_RATIONAL_COMPUTATION",
-              "ALGEBRAIC_CERTIFICATE",
-              "GROEBNER_CERTIFICATE",
-              "CAS_CERTIFICATE",
-              "LEAN_KERNEL_CHECKED_CERTIFICATE",
-              "INTERVAL_CERTIFICATE",
-              "SAT_SMT_CERTIFICATE",
-              "SOURCE_CITATION",
-              "NUMERICAL_EVIDENCE",
-              "HEURISTIC_ARGUMENT",
-              "EXTERNAL_SPECIALIST_PENDING"
-            ]
-          },
-          "status": {
-            "enum": [
-              "DRAFT",
-              "UNDER_REVIEW",
-              "AUDITED",
-              "CHECKED",
-              "CERTIFIED",
-              "OPEN_PROBLEM",
-              "PARTIAL",
-              "FAILED",
-              "REJECTED",
-              "SUPERSEDED"
-            ]
-          },
-          "certainty": {"type": "string"},
-          "source_or_artifact": {
-            "type": "array",
-            "items": {"type": "string"}
-          },
-          "assumptions": {
-            "type": "array",
-            "items": {"type": "string"}
-          },
-          "promotion_condition": {"type": "string", "minLength": 1},
-          "related_files": {
-            "type": "array",
-            "items": {"type": "string"}
-          },
-          "knowledge_graph_refs": {
-            "type": "array",
-            "uniqueItems": true,
-            "items": {"type": "string", "minLength": 1}
-          },
-          "foundational_profile": {"type": "object"}
+        "$ref": "#/$defs/claim"
+      }
+    }
+  },
+  "$defs": {
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id",
+        "short_name",
+        "claim_text",
+        "claim_class",
+        "mathematical_domain",
+        "support_type",
+        "support_summary",
+        "status",
+        "certainty",
+        "source_or_artifact",
+        "assumptions",
+        "promotion_condition",
+        "related_files",
+        "knowledge_graph_refs"
+      ],
+      "properties": {
+        "claim_id": {
+          "type": "string",
+          "pattern": "^[A-Z0-9][A-Z0-9._-]*$"
+        },
+        "short_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_class": {
+          "enum": [
+            "PROVED_IN_PACKAGE",
+            "FORMALIZED",
+            "COMPUTED_EXACTLY",
+            "ALGEBRAIC_CERTIFIED",
+            "GROEBNER_CERTIFIED",
+            "INTERVAL_CERTIFIED",
+            "SAT_SMT_CERTIFIED",
+            "LITERATURE_DERIVED",
+            "HEURISTIC",
+            "CONJECTURAL",
+            "FAILED_ATTEMPT",
+            "NEEDS_AUDIT",
+            "SUPERSEDED",
+            "REFUTED"
+          ]
+        },
+        "mathematical_domain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "support_type": {
+          "enum": [
+            "HUMAN_PROOF",
+            "LEAN_PROOF",
+            "COQ_PROOF",
+            "ISABELLE_PROOF",
+            "EXACT_RATIONAL_COMPUTATION",
+            "ALGEBRAIC_CERTIFICATE",
+            "GROEBNER_CERTIFICATE",
+            "CAS_CERTIFICATE",
+            "LEAN_KERNEL_CHECKED_CERTIFICATE",
+            "INTERVAL_CERTIFICATE",
+            "SAT_SMT_CERTIFICATE",
+            "SOURCE_CITATION",
+            "NUMERICAL_EVIDENCE",
+            "HEURISTIC_ARGUMENT",
+            "EXTERNAL_SPECIALIST_PENDING"
+          ]
+        },
+        "support_summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "DRAFT",
+            "UNDER_REVIEW",
+            "AUDITED",
+            "CHECKED",
+            "CERTIFIED",
+            "OPEN_PROBLEM",
+            "PARTIAL",
+            "FAILED",
+            "REJECTED",
+            "SUPERSEDED"
+          ]
+        },
+        "certainty": {
+          "enum": [
+            "CERTIFIED",
+            "PROVED_NOT_FORMALIZED",
+            "EXACTLY_COMPUTED",
+            "STRONGLY_SUPPORTED",
+            "PLAUSIBLE",
+            "SPECULATIVE",
+            "UNKNOWN",
+            "FALSE"
+          ]
+        },
+        "source_or_artifact": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "promotion_condition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "related_files": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "knowledge_graph_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "foundational_profile": {
+          "type": "object"
         }
       }
     }
