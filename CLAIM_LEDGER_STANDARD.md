@@ -1,77 +1,75 @@
 # CLAIM_LEDGER_STANDARD.md
 
+## Status
+
+Binding canonical claim-ledger contract, version 1.1.0.
+
 ## Purpose
 
-The claim ledger is the trust spine of the programme. Every meaningful assertion must have a claim type, support route, status, source or artifact link, and promotion condition.
+The claim ledger is the trust spine of a governed mathematical artifact. Every meaningful assertion must identify what kind of claim it is, what supports it, its present review state, the assumptions under which it is stated, and the exact condition required for promotion.
 
-If a claim is not in the ledger, it should not be treated as part of the package's mathematical content.
+If a claim is not in the governing ledger, it must not be treated as part of the package's mathematical content.
+
+The prose standard, `schemas/claim_ledger.schema.json`, and `templates/claim_ledger_template.yaml` define one contract. A file called a claim ledger is canonical only when it validates against that schema and is registered for programme validation.
+
+## Ledger envelope
+
+Every canonical ledger is YAML or JSON with exactly these top-level fields:
+
+```yaml
+schema_version: 1.1.0
+ledger_contract: canonical_claim_ledger
+ledger_id: DOMAIN-WP##-CLAIMS
+claims: []
+```
+
+- `schema_version` identifies the machine contract.
+- `ledger_contract` prevents unrelated or legacy YAML from being mistaken for a canonical ledger.
+- `ledger_id` is a stable repository identifier.
+- `claims` contains one or more canonical claim entries.
+
+Legacy ledgers may remain as historical evidence, but they are not canonical until migrated and registered.
 
 ## Claim classes
 
 ```text
 PROVED_IN_PACKAGE
-  A proof is supplied in the Work Package. Not necessarily machine checked.
-
 FORMALIZED
-  The claim is checked in Lean/Coq/Isabelle/etc.
-
 COMPUTED_EXACTLY
-  The claim follows from exact rational/integer/symbolic computation with replayable code.
-
+ALGEBRAIC_CERTIFIED
+GROEBNER_CERTIFIED
 INTERVAL_CERTIFIED
-  The claim follows from a validated interval arithmetic certificate.
-
 SAT_SMT_CERTIFIED
-  The claim follows from a proof-producing SAT/SMT/MILP certificate.
-
 LITERATURE_DERIVED
-  The claim is taken from a cited source and not reproved here.
-
 HEURISTIC
-  The claim is a plausible guide, analogy, or informal expectation.
-
 CONJECTURAL
-  The claim is explicitly proposed but not proved.
-
 FAILED_ATTEMPT
-  The claim or route was attempted and failed; the failure is informative.
-
 NEEDS_AUDIT
-  The claim may be true but requires specialist or source verification.
-
 SUPERSEDED
-  The claim has been replaced by a stronger or corrected claim.
-
 REFUTED
-  The claim is false or the proposed route is invalid.
 ```
 
-## Required fields
+## Support types
 
-Every claim entry must include:
-
-```yaml
-claim_id: UC-WP01-C001
-short_name: Frankl statement
-claim_text: "Every finite nontrivial union-closed family has an element present in at least half its members."
-claim_class: LITERATURE_DERIVED
-mathematical_domain: finite-combinatorics
-source_or_artifact:
-  - source-url-or-file
-support_summary: "Open conjecture stated for orientation; not proved here."
-status: OPEN_PROBLEM
-certainty: HIGH_FOR_STATEMENT_LOW_FOR_SOLUTION
-promotion_condition: "Would require proof or certified reduction to checked cases."
-related_files:
-  - WP01_UNION_CLOSED_STATUS_SPINE.md
-  - WP02_UNION_CLOSED_LEAN_HANDOFF.md
-knowledge_graph_refs:
-  - UC-CONJECTURE-FRANKL
+```text
+HUMAN_PROOF
+LEAN_PROOF
+COQ_PROOF
+ISABELLE_PROOF
+EXACT_RATIONAL_COMPUTATION
+ALGEBRAIC_CERTIFICATE
+GROEBNER_CERTIFICATE
+CAS_CERTIFICATE
+LEAN_KERNEL_CHECKED_CERTIFICATE
+INTERVAL_CERTIFICATE
+SAT_SMT_CERTIFICATE
+SOURCE_CITATION
+NUMERICAL_EVIDENCE
+HEURISTIC_ARGUMENT
+EXTERNAL_SPECIALIST_PENDING
 ```
 
-`knowledge_graph_refs` is optional. It carries stable provenance and navigation
-links only; it does not supply proof, promote a claim, or change certification
-status.
+Claim class and support type answer different questions and must not be collapsed.
 
 ## Claim status values
 
@@ -88,25 +86,7 @@ REJECTED
 SUPERSEDED
 ```
 
-## Support types
-
-```text
-HUMAN_PROOF
-LEAN_PROOF
-COQ_PROOF
-ISABELLE_PROOF
-EXACT_RATIONAL_COMPUTATION
-INTERVAL_CERTIFICATE
-SAT_SMT_CERTIFICATE
-SOURCE_CITATION
-NUMERICAL_EVIDENCE
-HEURISTIC_ARGUMENT
-EXTERNAL_SPECIALIST_PENDING
-```
-
-## Certainty language
-
-Use precise certainty labels:
+## Certainty values
 
 ```text
 CERTIFIED
@@ -119,39 +99,71 @@ UNKNOWN
 FALSE
 ```
 
-Do not use vague phrases such as “clearly,” “obviously,” “likely solved,” or “essentially proved” unless the ledger explains exactly what they mean.
+Do not invent compound certainty tokens. Qualification belongs in `support_summary`, `assumptions`, or `promotion_condition`.
+
+## Required claim fields
+
+Every claim entry must contain the following fields, plus the optional `foundational_profile` object when needed:
+
+```yaml
+claim_id: UC-WP01-C001
+short_name: Frankl statement
+claim_text: Every finite nontrivial union-closed family has an element present in at least half its members.
+claim_class: LITERATURE_DERIVED
+mathematical_domain: finite combinatorics
+support_type: SOURCE_CITATION
+support_summary: Open conjecture stated from governing sources; no proof is supplied here.
+status: OPEN_PROBLEM
+certainty: STRONGLY_SUPPORTED
+source_or_artifact:
+  - DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md
+assumptions:
+  - finite nontrivial union-closed set family
+promotion_condition: A proof or certified reduction covering every finite nontrivial family.
+related_files:
+  - WP01_UNION_CLOSED_STATUS_SPINE.md
+knowledge_graph_refs:
+  - UC-CONJECTURE-FRANKL
+```
+
+Field meanings:
+
+- `claim_id`: stable unique identifier within the ledger.
+- `short_name`: concise human-facing label.
+- `claim_text`: complete mathematical or documentary assertion.
+- `claim_class`: epistemic class from the controlled vocabulary.
+- `mathematical_domain`: concise subject domain, not a proof claim.
+- `support_type`: mechanism carrying the current support.
+- `support_summary`: what the support establishes and what it does not.
+- `status`: current review or claim state.
+- `certainty`: controlled confidence label.
+- `source_or_artifact`: nonempty list of governing sources, files, proofs, certificates, or replay artifacts.
+- `assumptions`: explicit assumptions; use an empty list only when none are required.
+- `promotion_condition`: concrete action or proof obligation required for stronger status.
+- `related_files`: repository files materially connected to the claim; may be empty.
+- `knowledge_graph_refs`: provenance and navigation identifiers; may be empty and never supply proof.
+- `foundational_profile`: optional structured foundational metadata governed by its own schema.
 
 ## Promotion conditions
 
-Every non-certified claim must say what would promote it. Examples:
+Every claim must state an executable or mathematically precise promotion condition. “More evidence,” “further work,” and similar indefinite language are insufficient.
 
-- formalize lemma in Lean;
-- reproduce source theorem and cite primary paper;
-- run exact rational certificate verifier;
-- replace floating-point computation with interval proof;
-- obtain specialist audit;
-- prove missing inequality;
-- produce counterexample.
+Examples include formalizing a lemma, auditing a primary theorem, replaying an exact certificate, replacing floating-point evidence with interval certification, obtaining specialist review, proving a missing inequality, or constructing a counterexample.
 
-## Ledger formats
+## Ledger formats and registration
 
-The canonical ledger format is YAML. JSON is allowed for automated tooling. Markdown tables are allowed only as human-readable summaries.
+The canonical ledger format is YAML. JSON is permitted for generated tooling when it validates against the same schema. Markdown tables are summaries only.
+
+Canonical ledgers must be explicitly registered in the programme validator. CI also discovers every schema-valid canonical ledger under governed repository roots and rejects:
+
+- a discovered canonical ledger absent from the registry;
+- a registered ledger absent from the repository;
+- duplicate ledger paths or ledger IDs;
+- a malformed registered ledger;
+- unresolved knowledge-graph references where the programme graph governs them.
+
+This two-way check prevents both silent omission and accidental authority by filename alone.
 
 ## Anti-hallucination rule
 
-A citation cannot promote a claim beyond the cited source. A computation cannot promote a theorem beyond the domain it exhausts. A proof sketch cannot promote a claim to certification. A formal statement with `sorry` is not a proof.
-
-## Example ledger entry
-
-```yaml
-- claim_id: UC-WP01-C004
-  short_name: small-universe sanity check
-  claim_text: "The exact enumerator finds no Frankl violations for all union-closed families on universes of size n <= 4."
-  claim_class: COMPUTED_EXACTLY
-  support_type: EXACT_RATIONAL_COMPUTATION
-  source_or_artifact:
-    - MATHFORGE/domains/union_closed/enumerate_small_families.py
-    - MATHFORGE/domains/union_closed/union_closed_small_audit.json
-  status: AUDITED
-  promotion_condition: "Lean-check the enumerator logic or verify emitted certificates in MATHCERT."
-```
+A citation cannot promote a claim beyond the cited source. A computation cannot promote a theorem beyond the domain it exhausts. A proof sketch cannot promote a claim to certification. A formal statement containing an admitted placeholder is not a proof. Repository merge, CI success, publication, and documentary presentation are not additional mathematical support types.
