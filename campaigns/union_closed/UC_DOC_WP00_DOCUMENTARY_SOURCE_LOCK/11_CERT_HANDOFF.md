@@ -35,12 +35,13 @@ These checks establish documentary governance, artifact identity, and admission 
 MATHCERT and programme CI should validate:
 
 1. `union_closed.edition.json` against `documentary_web.schema.json`;
-2. exact agreement with the candidate registry and UC-DOC-WP00 source lock;
+2. exact agreement with the candidate registry and UC-DOC-WP00 source lock before admission;
 3. machine `claim_status: open`, `problem_class: open_conjecture`, and reader-facing display status;
 4. domain, campaign, scope, proposed full tier, and claim-authority concordance;
 5. native plate inventory, title, description, alternative text, and pedagogical authority;
 6. semantic landmarks, keyboard focus, reduced motion, narrow mobile, and print;
 7. movement or controlled copy of the source pointer into `docs/documentaries/sources/` only in the atomic admission change;
 8. atomic page, edition, asset, source-record, index, navigation, and manifest admission;
-9. removal of the candidate entry in the same atomic change, with no candidate or admitted orphan;
-10. unchanged open-conjecture and non-solution boundaries.
+9. removal of the candidate entry in the same atomic change, permitting an empty candidate registry;
+10. retention of the UC-DOC-WP00 `source_lock` path in the admitted manifest entry so the historical source lock remains governed rather than orphaned;
+11. unchanged release identities, open-conjecture status, and non-solution boundaries.
