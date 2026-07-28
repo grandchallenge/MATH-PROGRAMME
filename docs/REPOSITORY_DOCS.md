@@ -1,8 +1,8 @@
 # Repository Documents
 
-The Pages site is the public front door. The full governed programme pack remains in the repository root and campaign directories. Root documents are repository-only unless a rendered page explicitly links to them.
+The Pages site is the public front door. The full governed programme pack remains in the repository root and campaign directories. Root documents and campaign source pointers are repository-only unless a rendered page explicitly links to them.
 
-Do not infer Pages URLs for root files. Use the canonical GitHub links below.
+Do not infer Pages URLs for root or campaign files. Use the canonical GitHub links below.
 
 ## Architecture and execution pillars
 
@@ -27,6 +27,8 @@ Do not infer Pages URLs for root files. Use the canonical GitHub links below.
 - [ADR-0012 Self-Authenticating Workflow Coverage](decisions/ADR-0012_SELF_AUTHENTICATING_WORKFLOW_COVERAGE.md)
 - [Programme Workflow Coverage](WORKFLOW_COVERAGE.md)
 
+Canonical claim ledgers use the versioned schema and an explicit central registry. Schema-bound Agent Council reviews likewise require both schema conformance and central registration. Programme policy adversarially detects omitted canonical ledgers and omitted discoverable reviews.
+
 ## Canonical domains
 
 - [Domain 01 · Union-Closed Sets](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md)
@@ -44,12 +46,16 @@ Historical filename note: the detailed BSD plan remains recoverable under `DOMAI
 
 ## Campaign directories
 
+- [Union-Closed](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/union_closed)
+- [Union-Closed documentary source lock](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK)
 - [Navier–Stokes](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/navier_stokes_critical_integrability)
 - [Hodge](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/hodge_conjecture)
 - [Birch–Swinnerton-Dyer](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/birch_swinnerton_dyer)
 - [Poincaré Reconstruction](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/poincare_reconstruction)
 - [P versus NP](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/p_vs_np)
 - [Riemann Hypothesis](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/riemann_hypothesis)
+
+UC-DOC-WP00 has completed its source lock and trust-spine repair. Its source pointer remains under the campaign and outside the generated site; public candidate metadata do not imply manifest membership or web-edition publication.
 
 Yang–Mills currently uses its integrated root WP00 as the complete campaign entry.
 
@@ -65,13 +71,16 @@ RH-WP01 and RH-WP02 are implemented, merged, and CI-passed but remain formally u
 ## Documentary Library and release authority
 
 - [Documentary Library](documentaries/index.md)
-- [Release-artifact manifest](documentaries/ARTIFACT_MANIFEST.json)
+- [Admitted-edition manifest](documentaries/ARTIFACT_MANIFEST.json)
+- [Pre-admission candidate registry](documentaries/DOCUMENTARY_CANDIDATES.json)
 - [Source-record policy](documentaries/sources/README.md)
 - [Poincaré reference web edition](documentaries/poincare.md)
 - [Reusable web-edition schema](documentaries/documentary_web.schema.json)
 - [Poincaré edition record](documentaries/poincare.edition.json)
 
-The committed `.tex` files are source records. The checksum-locked complete illustrated source bundle is the authoritative documentary source artifact, and the checksum-locked PDF is the rendered edition. Entries marked `metadata_only` have governed identities but no asserted stable public release locator.
+`ARTIFACT_MANIFEST.json` is the sole authority for admitted public editions. `DOCUMENTARY_CANDIDATES.json` records source-locked projects before admission but cannot confer collection membership. Candidate source pointers remain repository-only until the page, edition record, assets, public source record, index, navigation, and manifest volume enter atomically.
+
+The checksum-locked complete illustrated source bundle is the authoritative documentary source artifact, and the checksum-locked PDF is the rendered edition. Entries marked `metadata_only` have governed identities but no asserted stable public release locator. Documentary machine status separates claim status, problem class, and reader-facing display wording.
 
 ## Union-Closed formal and exact baseline
 
@@ -79,8 +88,10 @@ The committed `.tex` files are source records. The checksum-locked complete illu
 - [WP02 Union-Closed Lean Handoff](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/WP02_UNION_CLOSED_LEAN_HANDOFF.md)
 - [Pinned cross-repository evidence](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/evidence/UC-WP02-MATHCERT.json)
 - [External MATHCERT implementation](https://github.com/grandchallenge/MATHCERT)
+- [UC-DOC-WP00 canonical claim ledger](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/10_CLAIM_LEDGER.yaml)
+- [UC-DOC-WP00 schema-bound review](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/reviews/union_closed/UC-DOC-WP00.agent_review.yaml)
 
-The Union-Closed formal implementation is external, not a local `MathCert/` directory. The global programme policy checks out the exact MATHCERT commit in the evidence record and runs its complete certification gate.
+The Union-Closed formal implementation is external, not a local `MathCert/` directory. The global programme policy checks out the exact MATHCERT commit in the evidence record and runs its complete certification gate. None of the bounded, formal, documentary, or source-lock artifacts proves Frankl's conjecture.
 
 ## Workflow and publication controls
 
@@ -106,4 +117,4 @@ The global policy independently discovers campaign executables, proves executabl
 
 ## Authority rule
 
-The domain registry identifies canonical domain entries and public pages. The Agent Council artifact ledger identifies authoritative integrated governed artifacts. Claim ledgers, proof files, source records, governing source artifacts, and MATHCERT artifacts remain authoritative within their declared roles. Repository merge and CI can establish integration, declared-environment, reachability, and replay facts; they cannot prove the underlying open problem or override an explicit blocking review. Publication is permitted only after the successful policy-validated SHA is confirmed as the current `main` tip.
+The domain registry identifies canonical domain entries and public pages. The Agent Council artifact ledger identifies authoritative integrated governed artifacts. Canonical claim ledgers, proof files, admitted source records, candidate source locks, governing source artifacts, and MATHCERT artifacts remain authoritative within their declared roles. Repository merge and CI can establish integration, declared-environment, reachability, and replay facts; they cannot prove the underlying open problem or override an explicit blocking review. Publication is permitted only after the successful policy-validated SHA is confirmed as the current `main` tip.
