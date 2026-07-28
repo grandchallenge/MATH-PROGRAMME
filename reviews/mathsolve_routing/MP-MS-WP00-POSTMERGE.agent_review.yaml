@@ -1,0 +1,165 @@
+artifact:
+  id: MP-MS-WP00-POSTMERGE
+  type: governance_review
+  title: Post-merge MATHSOLVE routing and certification review
+  pillar: MATH-PROGRAMME
+  status: active
+  disposition: Corrective controls implemented; exact-head CI and linked upstream merges remain required.
+council_review:
+  Axiomatist:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Separate route existence, complete Cert disposition, and positive promotion.]
+    findings: [Judgment may consume a complete disposition; claim promotion requires certified or qualified status.]
+  Prospector:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Inventory every active campaign without inventing inactive routes.]
+    findings: [The registry covers exactly the eight ACTIVE campaigns.]
+  Experimentalist:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Preserve bounded computation and negative-result boundaries.]
+    findings: [Routing records do not upgrade finite, statistical, regulated, or failed-route evidence.]
+  Cartographer:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Record Forge, Solve, Cert, placement, migration, and promotion edges.]
+    findings: [Every active campaign has exact Forge, Solve-manifest, and Cert issue identities.]
+  Verifier:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Reject provider, manifest, campaign, Cert-identity, and blocker drift.]
+    findings: [The provider PR, provider commit, and eight manifest blob identities are pinned.]
+  Adversary:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Test omission, stale identity, incomplete authority, expired waiver, stage drift, and nonpositive promotion.]
+    findings: [New tests reject each class; rejected and proof-debt dispositions cannot promote claims.]
+  Formalist:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Define waiver authority and the certification-state lattice explicitly.]
+    findings: [Waivers require Referee, Steward, Human Steward, stage scope, authorization identity, and review date.]
+  Steward:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Keep exceptions narrow, reviewable, and reversible.]
+    findings: [Waivers fail outside their named stages or after their review date.]
+  Composer:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Present the three-repository repair as one linked system.]
+    findings: [INTELLECT governs lifecycle admission, MATHSOLVE campaign lineage, and MATH-PROGRAMME portfolio promotion.]
+  Grammarian:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Do not use handoff, disposition, certification, and promotion as synonyms.]
+    findings: [The reviewed records use distinct terms and transitions.]
+  Amanuensis:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Reconcile campaign identities, review provenance, registry pins, and linked work.]
+    findings: [All eight campaigns now have non-null MATHCERT route issues and exact Solve manifest identities.]
+  Archivist:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Preserve retrospective placement and historical source identity.]
+    findings: [BSD, PNP, RH, YM, and OZ remain Programme-embedded retrospective routes with migration debt.]
+  Mechanist:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Prevent future Solve-owned stages from executing in Programme by accident.]
+    findings: [Programme-embedded routes remain admissible only for retrospective WP00 registration.]
+  Typesetter:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Keep machine records and review prose exact and legible.]
+    findings: [Registry, schema, validator, tests, and review use the same identifiers and vocabulary.]
+  Referee:
+    status: reviewed
+    reviewed_by: MP-MS-WP00 post-merge Council
+    reviewed_at: '2026-07-28'
+    obligations: [Require exact-head Programme CI and linked INTELLECT and MATHSOLVE corrective merges.]
+    findings: [The design is acceptable; final promotion remains conditional on dependency-order merger and re-pinning.]
+amanuensis_control:
+  artifact_ledger:
+    ledger_ref: reviews/mathsolve_routing/ARTIFACT_LEDGER.md
+    entry_id: MP-MS-WP00-POSTMERGE
+  decision_record_refs: [GI-MATH-INV-01, MP-MS-WP00, MS-GOV-WP00]
+  terminology_registry:
+    registry_ref: reviews/mathsolve_routing/TERMINOLOGY.md
+    terms_introduced_or_changed:
+      - Complete Cert disposition
+      - Positive Cert disposition
+      - Stage-scoped Solve waiver
+      - Cert route identity
+      - Programme-embedded retrospective route
+  review_provenance:
+    complete: true
+    evidence_refs:
+      - governance/mathsolve_routing_audit.json
+      - schemas/mathsolve_routing_registry.schema.json
+      - ci/validate_mathsolve_routing.py
+      - tests/test_mathsolve_routing_review.py
+      - https://github.com/grandchallenge/INTELLECT/pull/5
+      - https://github.com/grandchallenge/MATHSOLVE/pull/72
+      - https://github.com/grandchallenge/MATHCERT/issues/25
+      - https://github.com/grandchallenge/MATHCERT/issues/26
+      - https://github.com/grandchallenge/MATHCERT/issues/27
+      - https://github.com/grandchallenge/MATHCERT/issues/28
+      - https://github.com/grandchallenge/MATHCERT/issues/29
+      - https://github.com/grandchallenge/MATHCERT/issues/30
+  cross_document_consistency:
+    status: reviewed
+    checked_against:
+      - DOMAIN_REGISTRY.yaml
+      - MATHFORGE_PROVIDER_IMPORT_POLICY.md
+      - MATHSOLVE_ROUTING_POLICY.md
+      - MATHSOLVE_SPEC.md
+      - docs/AGENT_COUNCIL_GOVERNANCE.md
+      - docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md
+    conflicts: []
+  final_editorial_integration:
+    status: reviewed
+    integrated_artifact_ref: governance/mathsolve_routing_audit.json
+    integration_notes:
+      - GitHub remains authoritative; AETHER remains a future projection.
+      - A complete negative disposition may be integrated as knowledge but cannot promote a positive claim.
+      - Retrospective registration does not imply native Solve execution.
+unresolved_obligations:
+  - id: MP-MS-REV00-O001
+    owner: Verifier
+    description: Complete the exact-head Programme policy workflow.
+    severity: critical
+    blocking: true
+  - id: MP-MS-REV00-O002
+    owner: Amanuensis
+    description: Re-pin provider and manifest identities if MATHSOLVE PR 72 changes.
+    severity: critical
+    blocking: true
+  - id: MP-MS-REV00-O003
+    owner: Referee
+    description: Confirm INTELLECT PR 5 and MATHSOLVE PR 72 merge before Programme promotion.
+    severity: critical
+    blocking: true
+promotion:
+  ready_for_next_stage: false
+  blockers:
+    - Exact-head Programme CI is pending.
+    - INTELLECT PR 5 and MATHSOLVE PR 72 remain unmerged.
+  certification_route: null
