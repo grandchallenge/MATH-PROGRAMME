@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "artifact_id": "UC-DOC-WP00",
   "campaign_id": "UC",
   "title": "Union-Closed documentary admission and source lock",
@@ -7,9 +7,10 @@
   "conditions": [
     "finite nontrivial union-closed set families",
     "claim authority DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md",
-    "documentary source records remain outside manifest discovery until web admission"
+    "public candidate metadata does not confer manifest membership",
+    "pre-admission source records remain repository-only until atomic web admission"
   ],
-  "strongest_supported_claim": "The release-class Union-Closed documentary source is complete, source-normalized, current through 2026-07-27, and checksum-locked; Frankl's conjecture remains open.",
+  "strongest_supported_claim": "The release-class Union-Closed documentary source is complete, source-normalized, current through 2026-07-27, checksum-locked, represented by a canonical claim ledger, and registered as a pre-admission candidate; Frankl's conjecture remains open.",
   "claims_not_made": [
     "proof of Frankl's conjecture",
     "new universal frequency bound",
@@ -22,15 +23,17 @@
     "PRIMARY_SOURCE_AUDIT",
     "SEMANTIC_CORRESPONDENCE_AUDIT",
     "EXACT_ARTIFACT_IDENTITY",
-    "DOCUMENTARY_GOVERNANCE"
+    "CANONICAL_CLAIM_LEDGER",
+    "SCHEMA_BOUND_AGENT_REVIEW",
+    "DOCUMENTARY_CANDIDATE_AUTHORITY"
   ],
-  "certification_state": "SOURCE_IDENTITIES_LOCKED_SCHEMA_BOUND_REVIEW_READY_MANIFEST_ADMISSION_DEFERRED",
+  "certification_state": "SOURCE_IDENTITIES_LOCKED_TRUST_SPINE_REGISTERED_CANDIDATE_AUTHORITY_BOUND_MANIFEST_ADMISSION_DEFERRED",
   "remaining_blockers": [],
   "nonblocking_debt": [
     "independent theorem-body audit of recent claimed proofs",
     "stable public release locators for PDF and source bundle",
     "semantic web conversion and accessibility review",
-    "atomic manifest admission with edition record and web page"
+    "atomic manifest admission with edition record, web page, and assets"
   ],
   "release_artifacts": {
     "rendered_pdf": {
@@ -52,6 +55,10 @@
       "release_locator": null
     }
   },
+  "candidate_registry": "docs/documentaries/DOCUMENTARY_CANDIDATES.json",
+  "source_record": "campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/artifacts/the_element_in_half_the_worlds.tex",
+  "claim_ledger": "campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/10_CLAIM_LEDGER.yaml",
+  "review_record": "reviews/union_closed/UC-DOC-WP00.agent_review.yaml",
   "first_executable_step": "Open UC-DOC-WP01 and construct union_closed.edition.json, the semantic reader, native web plates, and atomic manifest admission.",
   "audit_artifact": "campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/04_PROBLEM_AND_STATUS_AUDIT.md"
 }
