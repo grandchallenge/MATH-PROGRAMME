@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "PNP-WP02-DEPENDENCY-DEBT-GATE",
+  "campaign_id": "PNP-001",
+  "audit_date": "2026-07-28",
+  "debts": [
+    {"id":"PNP-D-001","owner":"Archivist","severity":"high","blocking":true,"description":"Extract theorem-level locators and final publication status for every 2025-2026 current-frontier record before any theorem-strengthening or novelty claim."},
+    {"id":"PNP-D-002","owner":"Verifier","severity":"critical","blocking":true,"description":"No unrestricted lower-bound interface currently composes to PNP-T-130; every restricted-model result requires a proved transfer."},
+    {"id":"PNP-D-003","owner":"Mechanist","severity":"high","blocking":true,"description":"No algorithm interface supplies a uniform deterministic worst-case polynomial-time SAT decider under WP00 bit-cost accounting."},
+    {"id":"PNP-D-004","owner":"Adversary","severity":"high","blocking":true,"description":"Hardness magnification, hardness-versus-randomness, and SAT-to-lower-bound records are conditional transfers whose premises remain independent theorem obligations."},
+    {"id":"PNP-D-005","owner":"Formalist","severity":"medium","blocking":false,"description":"MATHCERT formalization is limited to finite encodings, reduction composition, implication direction, fixture replay, and ledger consistency; no terminal lower bound is formalized."},
+    {"id":"PNP-D-006","owner":"Amanuensis","severity":"high","blocking":true,"description":"Repository review, authoritative integration, and merge are required before WP01 or WP02 may be recorded as promoted."}
+  ],
+  "edges": [
+    {"from":"PNP-T-001","to":"PNP-T-130","relation":"equality route requires a polynomial-time decider"},
+    {"from":"PNP-T-070","to":"PNP-T-130","relation":"nonuniform separation is a stronger sufficient route only"},
+    {"from":"PNP-T-090","to":"PNP-T-130","relation":"counting lacks explicit-language bridge"},
+    {"from":"PNP-T-100","to":"PNP-T-130","relation":"monotone model requires unrestricted lifting"},
+    {"from":"PNP-T-110","to":"PNP-T-130","relation":"AC0 model requires unrestricted lifting"},
+    {"from":"PNP-T-120","to":"PNP-T-130","relation":"AC0[p] model requires unrestricted lifting"},
+    {"from":"PNP-T-140","to":"PNP-T-130","relation":"higher-class restricted lower bound does not descend automatically"},
+    {"from":"PNP-T-150","to":"PNP-T-160","relation":"qualifying SAT algorithm implies circuit lower bound"},
+    {"from":"PNP-T-160","to":"PNP-T-130","relation":"restricted algorithmic method does not supply terminal premise"},
+    {"from":"PNP-T-170","to":"PNP-T-130","relation":"barrier classification only"},
+    {"from":"PNP-T-180","to":"PNP-T-130","relation":"conditional barrier classification only"},
+    {"from":"PNP-T-190","to":"PNP-T-130","relation":"barrier classification only"},
+    {"from":"PNP-T-200","to":"PNP-T-130","relation":"conditional derandomization route"},
+    {"from":"PNP-T-210","to":"PNP-T-130","relation":"NP not equal coNP is a stronger sufficient route"},
+    {"from":"PNP-T-220","to":"PNP-T-210","relation":"named proof-system lower bound does not quantify over all proof systems"},
+    {"from":"PNP-T-230","to":"PNP-T-130","relation":"magnification requires trigger premise"},
+    {"from":"PNP-T-240","to":"PNP-T-230","relation":"meta-complexity route requires exact representation and reduction"},
+    {"from":"PNP-T-250","to":"PNP-T-130","relation":"algebraic-to-Boolean transfer remains unproved"},
+    {"from":"PNP-T-260","to":"PNP-T-130","relation":"restricted model and higher class"},
+    {"from":"PNP-T-270","to":"PNP-T-130","relation":"restricted model, advice and higher class"},
+    {"from":"PNP-T-280","to":"PNP-T-180","relation":"localized barrier refinement"},
+    {"from":"PNP-T-290","to":"PNP-T-250","relation":"algebraic analogue"},
+    {"from":"PNP-T-300","to":"PNP-T-290","relation":"research programme requires explicit obstruction"},
+    {"from":"PNP-T-310","to":"PNP-T-160","relation":"self-improvement amplifies a supplied circuit-analysis gain"}
+  ],
+  "gate": {
+    "wp01_status":"INTERNAL_REVIEW_COMPLETE_REPOSITORY_GATE_PENDING",
+    "wp02_status":"INTERNAL_REVIEW_COMPLETE_REPOSITORY_GATE_PENDING",
+    "mechanism_generation":"CLOSED",
+    "restricted_target_selection":"CLOSED",
+    "large_scale_experiments":"CLOSED",
+    "novelty_claims":"CLOSED",
+    "next_authorized_action":"Repository review and merge of the WP01/WP02 package."
+  }
+}
