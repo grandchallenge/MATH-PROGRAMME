@@ -23,13 +23,14 @@ Open `UC-DOC-WP01` and construct one atomic admission change containing:
    - `claim_status: open`;
    - `problem_class: open_conjecture`;
    - reader-facing `display_status`;
+   - `source_lock` retaining the UC-DOC-WP00 provenance path;
 6. collection-index and MkDocs navigation entries;
-7. removal of the `union_closed` candidate from `DOCUMENTARY_CANDIDATES.json` in the same change;
+7. removal of the `union_closed` candidate from `DOCUMENTARY_CANDIDATES.json` in the same change, allowing the registry to become empty;
 8. problem-specific mathematical-spine tests.
 
 ## Output artifact
 
-A draft Union-Closed full-tier web edition whose source, status, sections, assets, release identities, and claim boundary are bound to UC-DOC-WP00 without retaining simultaneous candidate and admitted membership.
+A draft Union-Closed full-tier web edition whose source, status, sections, assets, release identities, claim boundary, and historical source-lock provenance are bound to UC-DOC-WP00 without retaining simultaneous candidate and admitted membership.
 
 ## Completion test
 
@@ -37,9 +38,10 @@ The generalized documentary validator, canonical claim-ledger and review registr
 
 - no theorem strengthening;
 - no candidate/admitted overlap;
-- no orphaned page, edition record, source record, asset, asset directory, candidate lock, or static file;
+- no orphaned page, edition record, source record, asset, asset directory, source lock, or static file;
 - no false Millennium classification;
-- no public source pointer before the atomic admission commit.
+- no public source pointer before the atomic admission commit;
+- a schema-valid zero-candidate registry when no other documentary candidate remains.
 
 ## Node advanced
 
