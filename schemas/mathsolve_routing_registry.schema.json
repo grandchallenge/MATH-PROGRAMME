@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/mathsolve_routing_registry.schema.json",
+  "title": "MATH-PROGRAMME MATHSOLVE routing audit registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "provider_repository", "provider_commit", "verified_at", "campaigns"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "registry_id": {"const": "MATHSOLVE-ROUTING-AUDIT"},
+    "provider_repository": {"const": "grandchallenge/MATHSOLVE"},
+    "provider_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "verified_at": {"type": "string", "format": "date"},
+    "campaigns": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["campaign_id", "title", "disposition"],
+        "properties": {
+          "campaign_id": {"type": "string", "pattern": "^[A-Z][A-Z0-9-]+$"},
+          "title": {"type": "string", "minLength": 3},
+          "disposition": {"enum": ["route", "waiver"]},
+          "coverage_mode": {"enum": ["native", "retrospective"]},
+          "placement": {"enum": ["solve_native", "programme_embedded"]},
+          "manifest_path": {"type": "string", "pattern": "^campaign_manifests/[A-Z0-9-]+\\.json$"},
+          "manifest_git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "solve_work_package_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+          "forge": {
+            "type": "object", "additionalProperties": false,
+            "required": ["repository", "commit_sha", "manifest_path", "manifest_git_blob_sha1"],
+            "properties": {
+              "repository": {"const": "grandchallenge/MATHFORGE"},
+              "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+              "manifest_path": {"type": "string", "minLength": 1},
+              "manifest_git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+            }
+          },
+          "cert": {
+            "type": "object", "additionalProperties": false,
+            "required": ["repository", "state", "issue"],
+            "properties": {
+              "repository": {"const": "grandchallenge/MATHCERT"},
+              "state": {"enum": ["ready", "submitted", "certified", "qualified", "rejected", "proof_debt", "partial", "pending", "not_applicable"]},
+              "issue": {"type": ["string", "null"]}
+            }
+          },
+          "promotion": {
+            "type": "object", "additionalProperties": false,
+            "required": ["state", "blockers"],
+            "properties": {
+              "state": {"enum": ["allowed", "blocked"]},
+              "blockers": {"type": "array", "items": {"type": "string", "minLength": 1}}
+            }
+          },
+          "waiver": {
+            "type": "object", "additionalProperties": false,
+            "required": ["waiver_id", "approved_by", "reason", "scope", "review_on"],
+            "properties": {
+              "waiver_id": {"type": "string", "minLength": 1},
+              "approved_by": {"type": "array", "minItems": 2, "items": {"type": "string", "minLength": 1}},
+              "reason": {"type": "string", "minLength": 10},
+              "scope": {"type": "string", "minLength": 3},
+              "review_on": {"type": "string", "format": "date"}
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"disposition": {"const": "route"}}},
+            "then": {
+              "required": ["coverage_mode", "placement", "manifest_path", "manifest_git_blob_sha1", "solve_work_package_ids", "forge", "cert", "promotion"],
+              "not": {"required": ["waiver"]}
+            }
+          },
+          {
+            "if": {"properties": {"disposition": {"const": "waiver"}}},
+            "then": {
+              "required": ["waiver"],
+              "not": {"anyOf": [{"required": ["coverage_mode"]}, {"required": ["placement"]}, {"required": ["manifest_path"]}, {"required": ["manifest_git_blob_sha1"]}, {"required": ["solve_work_package_ids"]}, {"required": ["forge"]}, {"required": ["cert"]}, {"required": ["promotion"]}]}
+            }
+          }
+        ]
+      }
+    }
+  }
+}
