@@ -1,0 +1,161 @@
+schema_version: 0.1.0
+attempt_id: OZ-ACQ-A001
+campaign_id: OZ
+work_package_id: OZ-WP00
+performed_at: '2026-07-28'
+authority:
+  - 01_INTAKE_SOURCE_LOCK.yaml
+  - 02_SOURCE_ACQUISITION_DOCKET.md
+status: COMPLETE_NO_AUTHORITATIVE_BUNDLE_LOCATED
+claim_boundary: >-
+  This record documents a source-acquisition attempt. It does not identify an
+  authoritative manuscript, certify any mathematical statement, assign a
+  permanent OZ source identifier, or weaken any downstream gate.
+channels_examined:
+  - id: OZ-ACQ-CH001
+    channel: files_uploaded_in_conversation
+    method: semantic and keyword search
+    search_scope:
+      - odd zeta
+      - Apéry recurrence and harmonic companion formula
+      - zeta(5) and zeta(7)
+      - Lean declarations
+      - WZ and Gosper certificates
+      - computation corpus
+    result: NO_RELEVANT_AUTHORITATIVE_SOURCE
+    note: >-
+      No complete manuscript, Lean repository export, certificate corpus,
+      computation bundle, or provenance bundle was located.
+
+  - id: OZ-ACQ-CH002
+    channel: user_file_library
+    method: semantic and keyword search
+    search_scope:
+      - odd zeta
+      - Apéry recurrence and congruence
+      - Lean and certificate artifacts
+    result: NO_RELEVANT_AUTHORITATIVE_SOURCE
+    note: >-
+      Retrieved zeta-related items concern the Riemann Hypothesis or unrelated
+      uses of a variable named zeta. They do not satisfy the OZ source docket.
+
+  - id: OZ-ACQ-CH003
+    channel: MATH-PROGRAMME_repository
+    method: repository, pull-request, and issue search
+    search_scope:
+      - OZ-WP00
+      - odd zeta
+      - Apéry
+      - manuscript source
+      - Lean source
+    result: INTAKE_AND_GOVERNANCE_RECORDS_ONLY
+    note: >-
+      PRs 111 and 114 and issue 113 contain the intake mechanism, acquisition
+      docket, bridge register, and source-identification records. They do not
+      contain the missing authoritative corpus.
+
+  - id: OZ-ACQ-CH004
+    channel: connected_GitHub_repositories
+    method: installed-repository search
+    search_scope:
+      - odd zeta
+      - apery
+      - zeta5
+      - zeta7
+    result: NO_CANDIDATE_REPOSITORY_LOCATED
+
+  - id: OZ-ACQ-CH005
+    channel: public_GitHub
+    method: repository and code search
+    search_scope:
+      - exact harmonic-companion formula fragments
+      - odd-zeta Lean Apéry congruence
+      - WZ and Gosper certificate terms
+    result: NO_AUTHORITATIVE_MATCH_LOCATED
+    note: >-
+      Search results were absent or unrelated. No public repository was
+      promoted to candidate authority.
+
+excluded_channels:
+  - channel: Gmail
+    disposition: NOT_USED
+    rationale: >-
+      Email access is neither required nor authorized by the source-acquisition
+      docket. No source locator, sender identity, or email-delivery instruction
+      was supplied. Repository and file intake are the prescribed channels.
+
+candidate_dispositions:
+  - candidate: conversation screenshots and quoted summaries
+    disposition: REJECTED_AS_AUTHORITATIVE_SOURCE
+    reason: >-
+      They are partial renderings without complete bytes, immutable version,
+      SHA-256 identity, internal statement index, or source provenance.
+
+  - candidate: Riemann-Hypothesis monograph files found in the file library
+    disposition: OUT_OF_SCOPE
+    reason: >-
+      They concern zero distribution and the Riemann Hypothesis, not the
+      submitted odd-zeta Apéry structures.
+
+  - candidate: prior-art seed ledger entries
+    disposition: COMPARISON_CANDIDATES_ONLY
+    reason: >-
+      They are literature identifiers awaiting exact acquisition and hashing;
+      they are not the submitted manuscript, Lean corpus, certificates, or
+      computations.
+
+accepted_source_locks: []
+permanent_object_ids_assigned: []
+blockers:
+  - id: OZ-ACQ-B001
+    requirement: complete authoritative manuscript bytes
+    state: OPEN
+  - id: OZ-ACQ-B002
+    requirement: pinned Lean repository and revision
+    state: OPEN
+  - id: OZ-ACQ-B003
+    requirement: WZ, Gosper, and other certificate corpus
+    state: OPEN
+  - id: OZ-ACQ-B004
+    requirement: exact computation corpus and environment locks
+    state: OPEN
+  - id: OZ-ACQ-B005
+    requirement: source provenance and transformation history
+    state: OPEN
+  - id: OZ-ACQ-B006
+    requirement: acquired primary literature files with theorem locators
+    state: OPEN
+required_delivery:
+  accepted_routes:
+    - upload the complete source bundle directly to the campaign intake
+    - provide an exact repository URL and immutable commit containing the bundle
+    - provide immutable file locators for every bundle member
+  minimum_identity_fields:
+    - logical role
+    - file name or repository path
+    - exact version or commit
+    - byte length
+    - SHA-256
+    - acquisition date
+    - provenance owner
+  prohibited_substitutions:
+    - screenshots for complete source files
+    - branch names for immutable commits
+    - theorem names for semantic correspondence
+    - successful compilation for manuscript equivalence
+    - finite computation for an unbounded theorem
+resulting_gate_state:
+  oz_wp00: IN_PROGRESS
+  source_lock: INCOMPLETE
+  oz_wp01: GATED
+  oz_wp02: GATED
+  mechanism_generation: GATED
+  new_numerical_experimentation: GATED
+  novelty_claims: NOT_AUTHORIZED
+  irrationality_claims: NOT_SUPPORTED
+next_executable_obligation: >-
+  Receive one of the accepted delivery routes, preserve the exact bytes, compute
+  byte lengths and SHA-256 digests, register immutable source locks, and then
+  enumerate source-bound manuscript, Lean, certificate, computation, and
+  literature objects. Until delivery occurs, repeat search only when a new
+  concrete locator or file is supplied.

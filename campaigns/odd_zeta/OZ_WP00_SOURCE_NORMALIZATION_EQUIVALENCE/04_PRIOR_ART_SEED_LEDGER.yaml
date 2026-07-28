@@ -1,0 +1,111 @@
+schema_version: 0.1.0
+ledger_id: OZ-WP00-PRIOR-ART-SEED
+status: SOURCE_IDENTIFICATION_ONLY
+claim_boundary: >-
+  These records identify initial comparison sources. They are not source locks,
+  theorem-level audits, exhaustive searches, or novelty findings. Permanent
+  OZ-LIT-B### identifiers may be assigned only after exact source acquisition,
+  hashing, and review.
+search_date: '2026-07-28'
+candidates:
+  - candidate_id: OZ-LIT-CAND-001
+    title: Arithmetic of linear forms involving odd zeta values
+    authors:
+      - Wadim Zudilin
+    source_version: arXiv:math/0206176v2
+    persistent_locator: https://arxiv.org/abs/math/0206176v2
+    journal_reference: J. Théorie des Nombres de Bordeaux 16 (2004), 251-291
+    comparison_scope:
+      - hypergeometric linear forms in odd zeta values
+      - theorem that at least one of zeta(5), zeta(7), zeta(9), zeta(11) is irrational
+      - denominator, asymptotic, and linear-independence architecture
+    acquisition_status: CONTENT_HASH_PENDING
+    audit_status: NOT_STARTED
+    novelty_effect: NONE
+
+  - candidate_id: OZ-LIT-CAND-002
+    title: On cellular rational approximations to zeta(5)
+    authors:
+      - Francis Brown
+      - Wadim Zudilin
+    source_version: arXiv:2210.03391v3
+    persistent_locator: https://arxiv.org/abs/2210.03391v3
+    comparison_scope:
+      - simultaneous rational approximations to zeta(3) and zeta(5)
+      - cellular integrals on M_0,8
+      - effective approximation exponent and its irrationality boundary
+    acquisition_status: CONTENT_HASH_PENDING
+    audit_status: NOT_STARTED
+    novelty_effect: NONE
+
+  - candidate_id: OZ-LIT-CAND-003
+    title: Divisibility properties of sporadic Apéry-like numbers
+    authors:
+      - Amita Malik
+      - Armin Straub
+    source_version: arXiv:1508.00297v1
+    persistent_locator: https://arxiv.org/abs/1508.00297v1
+    comparison_scope:
+      - Lucas congruences for sporadic Apéry-like sequences
+      - sequence-specific divisibility and periodicity
+      - scope and exceptional-case handling
+    acquisition_status: CONTENT_HASH_PENDING
+    audit_status: NOT_STARTED
+    novelty_effect: NONE
+
+  - candidate_id: OZ-LIT-CAND-004
+    title: New representations for all sporadic Apéry-like sequences, with applications to congruences
+    authors:
+      - Ofir Gorodetsky
+    source_version: arXiv:2102.11839v2
+    persistent_locator: https://arxiv.org/abs/2102.11839v2
+    journal_reference: Experimental Mathematics 32 (2023), 641-656
+    comparison_scope:
+      - all fifteen sporadic Apéry-like sequences
+      - constant-term and binomial representations
+      - Lucas and supercongruence consequences
+      - p-adic valuation bounds
+    acquisition_status: CONTENT_HASH_PENDING
+    audit_status: NOT_STARTED
+    novelty_effect: NONE
+
+  - candidate_id: OZ-LIT-CAND-005
+    title: Gessel-Lucas congruences for sporadic sequences
+    authors:
+      - Armin Straub
+    source_version: arXiv:2301.12248v1
+    persistent_locator: https://arxiv.org/abs/2301.12248v1
+    comparison_scope:
+      - congruences modulo p^2 for each of the fifteen sporadic sequences
+      - two-term supercongruences modulo p^(2r)
+      - relation to Gessel's Apéry-number congruences
+    acquisition_status: CONTENT_HASH_PENDING
+    audit_status: NOT_STARTED
+    novelty_effect: NONE
+
+  - candidate_id: OZ-LIT-CAND-006
+    title: A Formal Proof of the Irrationality of zeta(3) in Lean 4
+    authors:
+      - Junqi Liu
+      - Jujian Zhang
+      - Lihong Zhi
+    source_version: arXiv:2503.07625v2
+    persistent_locator: https://arxiv.org/abs/2503.07625v2
+    comparison_scope:
+      - Lean 4 formalization boundary for an Apéry-adjacent irrationality proof
+      - toolchain, dependency, and semantic-correspondence expectations
+      - reusable formal analytic infrastructure
+    acquisition_status: CONTENT_HASH_PENDING
+    audit_status: NOT_STARTED
+    novelty_effect: NONE
+required_expansion:
+  - original and modern sources for Apéry's zeta(3) recurrence and companion sequence
+  - Ball-Rivoal and later quantitative odd-zeta linear-independence results
+  - source-level records for Gessel's congruences
+  - WZ and Gosper certificate literature nearest to the submitted identities
+  - Franel and quartic-binomial companion-formula literature
+  - any paper or repository cited by the authoritative manuscript
+promotion_rule: >-
+  No source receives a permanent OZ-LIT-B### identifier and no novelty state may
+  change from NOT_ASSESSED until the exact source is acquired, hashed, theorem-level
+  locators are recorded, and specialist comparison is complete.
