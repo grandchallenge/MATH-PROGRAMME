@@ -1,0 +1,108 @@
+schema_version: 1.1.0
+ledger_contract: canonical_claim_ledger
+ledger_id: YM-WP01-CLAIMS
+claims:
+- claim_id: YM-WP01-C001
+  short_name: atlas claim boundary
+  claim_text: YM-WP01 is an eliminative false-proof atlas and does not prove or disprove
+    the four-dimensional Yang-Mills existence and mass-gap target.
+  claim_class: PROVED_IN_PACKAGE
+  mathematical_domain: mathematical logic and constructive quantum field theory governance
+  support_type: HUMAN_PROOF
+  support_summary: The package contains only invalid-inference fixtures and explicit
+    non-overreach boundaries; no terminal theorem is asserted.
+  status: AUDITED
+  certainty: PROVED_NOT_FORMALIZED
+  source_or_artifact:
+  - campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/00_README.md
+  - campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/01_ATLAS.json
+  assumptions:
+  - the artifact contents are read under the YM-WP00 protected-target lock
+  promotion_condition: Repository review and CI may promote the artifact lifecycle
+    but cannot strengthen this mathematical claim.
+  related_files:
+  - YM-WP00-source-normalization-equivalence-audit.md
+  - reviews/yang_mills/YM-WP01.agent_review.yaml
+  knowledge_graph_refs: []
+- claim_id: YM-WP01-C002
+  short_name: twenty-fixture inventory
+  claim_text: The committed atlas contains exactly twenty ordered fixtures YM-F001
+    through YM-F020 with all contract fields populated.
+  claim_class: COMPUTED_EXACTLY
+  mathematical_domain: artifact integrity
+  support_type: EXACT_RATIONAL_COMPUTATION
+  support_summary: Deterministic JSON replay counts and checks the complete finite
+    fixture inventory.
+  status: CHECKED
+  certainty: EXACTLY_COMPUTED
+  source_or_artifact:
+  - campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/01_ATLAS.json
+  - campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/replay.py
+  assumptions:
+  - standard Python JSON parsing of the committed bytes
+  promotion_condition: Any fixture change requires successful replay and review of
+    the changed semantic coverage.
+  related_files:
+  - campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/02_REPLAY_CONTRACT.md
+  knowledge_graph_refs: []
+- claim_id: YM-WP01-C003
+  short_name: fixture interface closure
+  claim_text: Every YM-WP01 fixture names at least one theorem interface present in
+    YM-WP02.
+  claim_class: COMPUTED_EXACTLY
+  mathematical_domain: dependency graph integrity
+  support_type: EXACT_RATIONAL_COMPUTATION
+  support_summary: The replay and cross-validator reject dangling WP02 interface IDs.
+  status: CHECKED
+  certainty: EXACTLY_COMPUTED
+  source_or_artifact:
+  - campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/replay.py
+  - campaigns/yang_mills/validate_wp01_wp02.py
+  assumptions:
+  - the committed WP01 and WP02 JSON files are validated together
+  promotion_condition: Rerun both validators after any fixture or theorem-interface
+    edit.
+  related_files:
+  - campaigns/yang_mills/WP02_THEOREM_LEDGER/02_THEOREM_LEDGER.json
+  knowledge_graph_refs: []
+- claim_id: YM-WP01-C004
+  short_name: downstream gates closed
+  claim_text: Mechanism generation, numerical experimentation, restricted-target selection,
+    and novelty claims remain closed in the WP01 atlas.
+  claim_class: COMPUTED_EXACTLY
+  mathematical_domain: campaign governance
+  support_type: EXACT_RATIONAL_COMPUTATION
+  support_summary: The replay rejects any gate token other than CLOSED and cross-checks
+    WP01 against the WP02 dependency gate.
+  status: CHECKED
+  certainty: EXACTLY_COMPUTED
+  source_or_artifact:
+  - campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/01_ATLAS.json
+  - campaigns/yang_mills/validate_wp01_wp02.py
+  assumptions: []
+  promotion_condition: Only a later Referee decision satisfying the explicit opening
+    conditions may alter a gate.
+  related_files:
+  - campaigns/yang_mills/WP02_THEOREM_LEDGER/04_DEPENDENCY_DEBT_GATE.json
+  knowledge_graph_refs: []
+- claim_id: YM-WP01-C005
+  short_name: recent solution claims unverified
+  claim_text: Recent manuscripts claiming a complete four-dimensional solution remain
+    unverified and cannot be used as theorem premises in YM-WP01.
+  claim_class: NEEDS_AUDIT
+  mathematical_domain: constructive quantum field theory
+  support_type: EXTERNAL_SPECIALIST_PENDING
+  support_summary: The manuscripts are registered for intake, while current governing
+    status remains open and no independent line-by-line audit is supplied here.
+  status: UNDER_REVIEW
+  certainty: UNKNOWN
+  source_or_artifact:
+  - campaigns/yang_mills/WP02_THEOREM_LEDGER/01_SOURCE_REGISTRY.json
+  - campaigns/yang_mills/WP02_THEOREM_LEDGER/02_THEOREM_LEDGER.json
+  assumptions:
+  - current institutional status and the programme audit states recorded in YM-WP02
+  promotion_condition: Independent specialist review must discharge every YM-E and
+    YM-M obligation for a specific manuscript.
+  related_files:
+  - campaigns/yang_mills/WP02_THEOREM_LEDGER/04_DEPENDENCY_DEBT_GATE.json
+  knowledge_graph_refs: []

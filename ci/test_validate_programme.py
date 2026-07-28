@@ -144,13 +144,15 @@ def main() -> int:
         "reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml",
         "reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml",
         "reviews/governance/WORKFLOW-COVERAGE.agent_review.yaml",
+        "reviews/yang_mills/YM-WP01.agent_review.yaml",
+        "reviews/yang_mills/YM-WP02.agent_review.yaml",
     )
     discovered_reviews = discovered_schema_bound_reviews()
     assert not schema_bound_review_registry_errors(SCHEMA_BOUND_AGENT_REVIEWS)
     omitted_review_registry = tuple(
         path
         for path in SCHEMA_BOUND_AGENT_REVIEWS
-        if path != "reviews/union_closed/UC-DOC-WP01.agent_review.yaml"
+        if path != "reviews/yang_mills/YM-WP02.agent_review.yaml"
     )
     assert any(
         "discovered schema-bound review is unregistered" in error
@@ -185,14 +187,15 @@ def main() -> int:
         "templates/claim_ledger_template.yaml",
         "templates/union_closed_claim_ledger_wp01.yaml",
         "campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/10_CLAIM_LEDGER.yaml",
+        "campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/10_CLAIM_LEDGER.yaml",
+        "campaigns/yang_mills/WP02_THEOREM_LEDGER/10_CLAIM_LEDGER.yaml",
     )
     discovered_ledgers = discovered_canonical_claim_ledgers()
     assert not claim_ledger_registry_errors(SCHEMA_BOUND_CLAIM_LEDGERS)
     omitted_ledger_registry = tuple(
         path
         for path in SCHEMA_BOUND_CLAIM_LEDGERS
-        if path
-        != "campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/10_CLAIM_LEDGER.yaml"
+        if path != "campaigns/yang_mills/WP02_THEOREM_LEDGER/10_CLAIM_LEDGER.yaml"
     )
     assert any(
         "discovered canonical ledger is unregistered" in error
