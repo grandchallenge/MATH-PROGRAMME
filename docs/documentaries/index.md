@@ -14,7 +14,7 @@ The Documentary Library translates the programme's hardest mathematical terrain 
 The tiers describe expository scope, not mathematical authority.
 
 - **Reference** — the canonical browser-reader implementation and most complete substrate exemplar. The Poincaré reconstruction occupies this tier.
-- **Full** — a sustained documentary treatment comparable in narrative and technical depth to the reference while retaining its own problem-specific structure. The BSD volume occupies this tier.
+- **Full** — a sustained documentary treatment comparable in narrative and technical depth to the reference while retaining its own problem-specific structure. The BSD and Union-Closed volumes occupy this tier.
 - **Orientation** — a complete, claim-safe first-principles map of the problem, theorem terrain, guardrails, and technical vocabulary. Orientation editions are intentionally more compressed and may later be expanded without changing theorem strength.
 
 All tiers obey the same artifact-authority, accessibility, source, release-identity, and claim-boundary contracts.
@@ -30,6 +30,7 @@ All tiers obey the same artifact-authority, accessibility, source, release-ident
 | [The Geometry of Force and Silence](yang_mills.md) | Orientation | `YM` / `YM-001` | Yang–Mills existence and mass gap | Open Millennium Prize Problem | 58 pages | [Record](sources/the_geometry_of_force_and_silence.tex) | [Edition](yang_mills.edition.json) |
 | [The Shape of Computational Truth](p_vs_np.md) | Orientation | `PNP` / `PNP-001` | P versus NP | Open Millennium Prize Problem | 50 pages | [Record](sources/the_shape_of_computational_truth.tex) | [Edition](p_vs_np.edition.json) |
 | [The Music of the Primes](riemann.md) | Orientation | `RH` / `RH-001` | Riemann Hypothesis | Open Millennium Prize Problem | 49 pages | [Record](sources/the_music_of_the_primes.tex) | [Edition](riemann.edition.json) |
+| [The Element in Half the Worlds](union_closed.md) | Full | `UC` / `UC` | Frankl's Union-Closed Sets Conjecture | Open conjecture | 48 pages | [Record](sources/the_element_in_half_the_worlds.tex) | [Edition](union_closed.edition.json) |
 
 The Navier–Stokes volume orients the full Millennium problem. Its programme crosswalk points to the narrower `NS-CI-001` critical-integrability campaign and must not be read as an identity between those scopes.
 
@@ -57,4 +58,4 @@ The Poincaré page is the reference browser-native implementation. Its reusable 
 
 ## Reading order
 
-There is no required order. A reader seeking geometry may begin with Poincaré or Hodge; arithmetic with BSD or Riemann; physical law with Navier–Stokes or Yang–Mills; computation with P versus NP. Each volume begins again from first principles.
+There is no required order. A reader seeking geometry may begin with Poincaré or Hodge; arithmetic with BSD or Riemann; physical law with Navier–Stokes or Yang–Mills; computation with P versus NP; finite combinatorics, formal replay, and extremal counting with Union-Closed Sets. Each volume begins again from first principles.
