@@ -77,6 +77,7 @@ working_registers:
   source_acquisition_docket: campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/02_SOURCE_ACQUISITION_DOCKET.md
   irrationality_bridge_register: campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/03_IRRATIONALITY_BRIDGE_REGISTER.yaml
   prior_art_seed_ledger: campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/04_PRIOR_ART_SEED_LEDGER.yaml
+  latest_acquisition_attempt: campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/05_SOURCE_ACQUISITION_ATTEMPT_2026-07-28.yaml
   authority: WORKING_RECORDS_ONLY
   note: >-
     These files make the remaining intake obligations explicit. They are not
@@ -188,9 +189,10 @@ validation:
     --require-complete
     campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/01_INTAKE_SOURCE_LOCK.yaml
 first_executable_next_step:
-  id: OZ-NEXT-002
+  id: OZ-NEXT-003
   instruction: >-
-    Obtain the authoritative source bundle specified by
-    02_SOURCE_ACQUISITION_DOCKET.md. Compute byte lengths and SHA-256 digests,
-    register immutable source locks, and only then enumerate manuscript, Lean,
-    certificate, computation, and permanent literature objects.
+    Receive a complete source bundle or an exact immutable repository locator.
+    Preserve the delivered bytes, compute byte lengths and SHA-256 digests,
+    register source locks, and then enumerate the source-bound manuscript, Lean,
+    certificate, computation, and literature records. Do not repeat undirected
+    search without a new concrete locator or file.
