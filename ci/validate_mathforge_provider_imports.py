@@ -17,6 +17,7 @@ DOMAIN_REGISTRY_PATH = ROOT / "DOMAIN_REGISTRY.yaml"
 
 PROVIDER_REPOSITORY = "grandchallenge/MATHFORGE"
 EXPECTED_PROVIDER_COMMIT = "2cb624cc61cd95ec0c8cfb8429d93128972289a5"
+CAMPAIGN_ID_ALIASES = {"UC": "UC-001"}
 EXPECTED_IMPORTS: dict[str, tuple[str, str, str]] = {
     "UC-001": (
         "native",
@@ -69,10 +70,14 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def canonical_campaign_id(campaign_id: str) -> str:
+    return CAMPAIGN_ID_ALIASES.get(campaign_id, campaign_id)
+
+
 def active_domain_campaign_ids() -> set[str]:
     registry = yaml.safe_load(DOMAIN_REGISTRY_PATH.read_text(encoding="utf-8"))
     return {
-        str(domain["campaign_id"])
+        canonical_campaign_id(str(domain["campaign_id"]))
         for domain in registry.get("domains", [])
         if isinstance(domain, dict) and domain.get("status") == "ACTIVE"
     }
@@ -132,7 +137,7 @@ def mathforge_provider_import_errors(
         )
 
     domain_ids = (
-        active_campaigns
+        {canonical_campaign_id(item) for item in active_campaigns}
         if active_campaigns is not None
         else active_domain_campaign_ids()
     )
@@ -189,17 +194,18 @@ def provider_gate_errors(
     """Return blocking errors for a provider-gated promotion decision."""
     if stage not in PROVIDER_GATED_STAGES:
         return []
+    canonical_id = canonical_campaign_id(campaign_id)
     instance = registry if registry is not None else load_json(REGISTRY_PATH)
     entry = next(
         (
             item
             for item in instance.get("campaigns", [])
-            if isinstance(item, dict) and item.get("campaign_id") == campaign_id
+            if isinstance(item, dict) and item.get("campaign_id") == canonical_id
         ),
         None,
     )
     if not entry:
-        return [f"{campaign_id} {stage}: no MATHFORGE import or approved waiver"]
+        return [f"{canonical_id} {stage}: no MATHFORGE import or approved waiver"]
     if entry.get("disposition") == "import":
         required = (
             "coverage_mode",
@@ -209,7 +215,7 @@ def provider_gate_errors(
         missing = [field for field in required if not entry.get(field)]
         if missing:
             return [
-                f"{campaign_id} {stage}: incomplete MATHFORGE import fields: "
+                f"{canonical_id} {stage}: incomplete MATHFORGE import fields: "
                 f"{', '.join(missing)}"
             ]
         return []
@@ -219,11 +225,11 @@ def provider_gate_errors(
         missing = [field for field in required if not waiver.get(field)]
         if missing:
             return [
-                f"{campaign_id} {stage}: incomplete MATHFORGE waiver fields: "
+                f"{canonical_id} {stage}: incomplete MATHFORGE waiver fields: "
                 f"{', '.join(missing)}"
             ]
         return []
-    return [f"{campaign_id} {stage}: invalid MATHFORGE provider disposition"]
+    return [f"{canonical_id} {stage}: invalid MATHFORGE provider disposition"]
 
 
 def main() -> int:
