@@ -15,9 +15,15 @@ DOCS = ROOT / "docs/documentaries"
 class UnionClosedDocumentaryAdmissionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.manifest = json.loads((DOCS / "ARTIFACT_MANIFEST.json").read_text(encoding="utf-8"))
-        cls.volume = next(v for v in cls.manifest["volumes"] if v["slug"] == "union_closed")
-        cls.edition = json.loads((DOCS / cls.volume["edition_record"]).read_text(encoding="utf-8"))
+        cls.manifest = json.loads(
+            (DOCS / "ARTIFACT_MANIFEST.json").read_text(encoding="utf-8")
+        )
+        cls.volume = next(
+            volume for volume in cls.manifest["volumes"] if volume["slug"] == "union_closed"
+        )
+        cls.edition = json.loads(
+            (DOCS / cls.volume["edition_record"]).read_text(encoding="utf-8")
+        )
         cls.page = (DOCS / cls.volume["web_page"]).read_text(encoding="utf-8")
 
     def test_atomic_manifest_admission(self) -> None:
@@ -26,14 +32,22 @@ class UnionClosedDocumentaryAdmissionTests(unittest.TestCase):
         self.assertEqual("UC", self.volume["campaign_id"])
         self.assertEqual("campaign_documentary", self.volume["scope_relation"])
         self.assertEqual("full", self.volume["documentary_tier"])
-        self.assertEqual("Open conjecture", self.volume["status"])
+        self.assertEqual("open", self.volume["claim_status"])
+        self.assertEqual("open_conjecture", self.volume["problem_class"])
+        self.assertEqual("Open conjecture", self.volume["display_status"])
         self.assertTrue((DOCS / self.volume["source_record"]).is_file())
         self.assertTrue((DOCS / self.volume["edition_record"]).is_file())
         self.assertTrue((DOCS / self.volume["web_page"]).is_file())
 
     def test_edition_schema_and_depth(self) -> None:
-        schema = json.loads((DOCS / "documentary_web.schema.json").read_text(encoding="utf-8"))
-        errors = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(self.edition))
+        schema = json.loads(
+            (DOCS / "documentary_web.schema.json").read_text(encoding="utf-8")
+        )
+        errors = list(
+            Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(
+                self.edition
+            )
+        )
         self.assertEqual([], errors)
         self.assertGreaterEqual(len(self.edition["plates"]), 6)
         self.assertGreaterEqual(len(self.edition["chapters"]), 6)
@@ -47,10 +61,20 @@ class UnionClosedDocumentaryAdmissionTests(unittest.TestCase):
         self.assertIn("Frankl’s conjecture remains open", self.page)
 
     def test_claim_surfaces_and_boundary(self) -> None:
-        for marker in ('class="definition-box"', 'class="theorem-box"', 'class="conjecture-box"', 'class="imported-box"', 'class="warning-box"'):
+        for marker in (
+            'class="definition-box"',
+            'class="theorem-box"',
+            'class="conjecture-box"',
+            'class="imported-box"',
+            'class="warning-box"',
+        ):
             self.assertIn(marker, self.page)
         self.assertIn(self.edition["claim_boundary"], self.page)
-        for forbidden in ("proves Frankl", "solves Frankl", "Frankl's conjecture is proved"):
+        for forbidden in (
+            "proves Frankl",
+            "solves Frankl",
+            "Frankl's conjecture is proved",
+        ):
             self.assertNotIn(forbidden, self.page)
 
     def test_native_plates_are_accessible_and_pedagogical(self) -> None:
@@ -70,9 +94,18 @@ class UnionClosedDocumentaryAdmissionTests(unittest.TestCase):
 
     def test_release_identities_are_preserved(self) -> None:
         expected = {
-            "rendered_pdf": (3343773, "6ea03bef444f19ae8013e80c76a5112fda9c6b740d61387c2bfeea5921ac71dc"),
-            "latex_source": (50548, "e889079fc77163e57b0c239e8f25ae29a3ded640b32120f65d1f3708c05dfdde"),
-            "authoritative_source_bundle": (3100936, "3a1fcf16dee92c6bbf5fd8285702e31c828aa6d1666e5605e8981346f4bd2daf"),
+            "rendered_pdf": (
+                3343773,
+                "6ea03bef444f19ae8013e80c76a5112fda9c6b740d61387c2bfeea5921ac71dc",
+            ),
+            "latex_source": (
+                50548,
+                "e889079fc77163e57b0c239e8f25ae29a3ded640b32120f65d1f3708c05dfdde",
+            ),
+            "authoritative_source_bundle": (
+                3100936,
+                "3a1fcf16dee92c6bbf5fd8285702e31c828aa6d1666e5605e8981346f4bd2daf",
+            ),
         }
         for key, (size, digest) in expected.items():
             self.assertEqual(size, self.volume[key]["bytes"])
@@ -83,9 +116,19 @@ class UnionClosedDocumentaryAdmissionTests(unittest.TestCase):
             self.assertIn(digest, self.page)
 
     def test_review_record_conforms(self) -> None:
-        schema = json.loads((ROOT / "schemas/agent_review.schema.json").read_text(encoding="utf-8"))
-        review = yaml.safe_load((ROOT / "reviews/union_closed/UC-DOC-WP01.agent_review.yaml").read_text(encoding="utf-8"))
-        errors = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(review))
+        schema = json.loads(
+            (ROOT / "schemas/agent_review.schema.json").read_text(encoding="utf-8")
+        )
+        review = yaml.safe_load(
+            (ROOT / "reviews/union_closed/UC-DOC-WP01.agent_review.yaml").read_text(
+                encoding="utf-8"
+            )
+        )
+        errors = list(
+            Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(
+                review
+            )
+        )
         self.assertEqual([], errors)
         self.assertTrue(review["promotion"]["ready_for_next_stage"])
         self.assertEqual([], review["promotion"]["blockers"])
