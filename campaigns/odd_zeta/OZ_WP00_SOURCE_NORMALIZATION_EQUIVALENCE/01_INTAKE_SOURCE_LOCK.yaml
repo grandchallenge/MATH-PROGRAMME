@@ -1,0 +1,185 @@
+schema_version: 0.1.0
+manifest_contract: oz_wp00_intake_source_lock
+manifest_id: OZ-WP00-INTAKE-SOURCE-LOCK
+campaign_id: OZ
+work_package_id: OZ-WP00
+title: Odd-zeta intake and source-lock manifest
+status: OPEN_INTAKE
+promotion_ready: false
+claim_boundary: >-
+  This manifest establishes stable identities and provenance requirements only.
+  It proves no odd-zeta irrationality result, validates no manuscript theorem,
+  and makes no novelty or priority claim.
+completion_gate:
+  rule: >-
+    OZ-WP00 may not be marked complete until every in-scope object is bound to a
+    stable identifier, immutable source identity, exact locator, support class,
+    scope, and review status, and until every missing irrationality bridge is
+    registered.
+  independent_reviewer_question: >-
+    Can an independent reviewer state exactly which formulas and congruences are
+    proved, which are Lean-checked, which are only finitely verified, which are
+    genuinely new relative to the audited literature, and which missing bridges
+    prevent any irrationality conclusion?
+  required_object_classes:
+    - manuscript_statement
+    - recurrence
+    - harmonic_formula
+    - congruence
+    - lean_declaration
+    - certificate
+    - computation
+    - literature_source
+    - irrationality_bridge
+stable_id_policy:
+  manuscript_statement: OZ-MSS-S###
+  recurrence: OZ-REC-R###
+  harmonic_formula: OZ-HAR-H###
+  congruence: OZ-CON-C###
+  lean_declaration: OZ-L4-T###
+  certificate: OZ-CER-E###
+  computation: OZ-CMP-X###
+  literature_source: OZ-LIT-B###
+  irrationality_bridge: OZ-BRG-G###
+  rules:
+    - IDs are permanent after merge.
+    - Deleted or superseded objects retain tombstone records.
+    - One ID denotes one exact mathematical or evidentiary object.
+    - Equivalent normalizations receive distinct IDs linked by an equivalence edge.
+    - A manuscript label or Lean theorem name is a locator, not the stable ID.
+allowed_status:
+  mathematical:
+    - NEEDS_INTAKE
+    - STATED_ONLY
+    - PROVED_IN_PACKAGE
+    - LITERATURE_DERIVED
+    - FORMALIZED
+    - COMPUTED_EXACTLY
+    - CONJECTURED
+    - REFUTED
+    - SUPERSEDED
+  novelty:
+    - NOT_ASSESSED
+    - KNOWN_SAME_FORM
+    - KNOWN_EQUIVALENT
+    - KNOWN_SPECIAL_CASE
+    - APPARENTLY_NEW_PENDING_REVIEW
+    - NEW_AFTER_AUDIT
+    - NOT_NEW
+  review:
+    - UNREVIEWED
+    - INTAKE_CHECKED
+    - SEMANTICALLY_AUDITED
+    - ADVERSARIALLY_AUDITED
+    - FORMALLY_REPLAYED
+    - REFEREE_ACCEPTED
+source_locks: []
+objects:
+  manuscript_statements: []
+  recurrences: []
+  harmonic_formulas: []
+  congruences: []
+  lean_declarations: []
+  certificates: []
+  computations: []
+  literature_sources: []
+  irrationality_bridges: []
+required_record_fields:
+  common:
+    - id
+    - exact_statement_or_description
+    - source_lock_id
+    - exact_locator
+    - content_sha256
+    - mathematical_status
+    - novelty_status
+    - review_status
+    - assumptions
+    - scope
+    - dependencies
+    - supports
+    - conflicts
+  lean_declaration:
+    - repository
+    - commit
+    - file
+    - declaration
+    - imported_axioms
+    - sorry_free
+    - build_result
+    - semantic_correspondence_id
+  certificate:
+    - certificate_type
+    - producer
+    - verifier
+    - replay_command
+    - bounded_domain
+  computation:
+    - code_commit
+    - environment_lock
+    - input_hashes
+    - output_hashes
+    - arithmetic_mode
+    - bounded_domain
+    - replay_command
+  literature_source:
+    - bibliographic_identity
+    - persistent_locator
+    - audited_claims
+    - equivalence_findings
+unresolved_intake:
+  - id: OZ-INTAKE-U001
+    missing: authoritative manuscript source
+    required_binding: file or persistent versioned URI plus SHA-256 and exact version
+    blocks:
+      - manuscript_statement
+      - recurrence
+      - harmonic_formula
+      - congruence
+  - id: OZ-INTAKE-U002
+    missing: Lean source repository and pinned revision
+    required_binding: repository, commit, toolchain, theorem inventory, and axiom report
+    blocks:
+      - lean_declaration
+  - id: OZ-INTAKE-U003
+    missing: certificate corpus
+    required_binding: certificate files, producers, independent verifiers, and replay commands
+    blocks:
+      - certificate
+  - id: OZ-INTAKE-U004
+    missing: computation corpus
+    required_binding: code, environment, exact inputs and outputs, domain, and arithmetic mode
+    blocks:
+      - computation
+  - id: OZ-INTAKE-U005
+    missing: audited literature corpus
+    required_binding: primary sources with persistent locators and theorem-level comparison notes
+    blocks:
+      - literature_source
+      - novelty assessment
+  - id: OZ-INTAKE-U006
+    missing: irrationality bridge decomposition
+    required_binding: explicit obligations from proved identities to an irrationality criterion
+    blocks:
+      - irrationality_bridge
+promotion_prohibitions:
+  - No entry may use NEW_AFTER_AUDIT before a specialist prior-art review is recorded.
+  - Finite verification may not discharge an unbounded formula or congruence.
+  - Lean kernel acceptance may not discharge semantic correspondence to the manuscript.
+  - A recurrence identity alone may not be promoted to an irrationality result.
+  - No irrationality claim may be made while any required bridge remains OPEN.
+  - OZ-WP01, OZ-WP02, mechanism generation, and new numerical experimentation remain gated.
+validation:
+  structural_command: >-
+    python3 campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/tools/validate_intake_manifest.py
+    campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/01_INTAKE_SOURCE_LOCK.yaml
+  completion_command: >-
+    python3 campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/tools/validate_intake_manifest.py
+    --require-complete
+    campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/01_INTAKE_SOURCE_LOCK.yaml
+first_executable_next_step:
+  id: OZ-NEXT-001
+  instruction: >-
+    Acquire and checksum-lock the authoritative manuscript, Lean repository,
+    certificate corpus, computation corpus, and bibliography; then enumerate
+    every in-scope object under the stable-ID namespaces above.
