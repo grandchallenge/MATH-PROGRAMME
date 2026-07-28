@@ -124,8 +124,12 @@ class UnionClosedDocumentarySourceLockTests(unittest.TestCase):
         self.assertIn("UC-DOC-C001", claim_ids)
         self.assertIn("UC-DOC-C010", claim_ids)
 
-    def test_atomic_admission_is_complete_and_candidate_is_removed(self) -> None:
-        self.assertEqual("deferred_to_UC-DOC-WP01", self.lock["manifest_admission"]["state"])
+    def test_atomic_admission_discharges_historical_pending_state(self) -> None:
+        self.assertEqual(
+            "source_locked_web_admission_pending",
+            self.lock["manifest_admission"]["state"],
+        )
+        self.assertTrue(self.lock["manifest_admission"]["candidate_member"])
         self.assertFalse(self.lock["manifest_admission"]["manifest_member"])
         self.assertEqual([], self.candidates["candidates"])
         self.assertEqual("admitted_by_UC-DOC-WP01", self.admission["state"])
@@ -150,9 +154,17 @@ class UnionClosedDocumentarySourceLockTests(unittest.TestCase):
         self.assertEqual(len(plates), len({plate["id"] for plate in plates}))
         for plate in plates:
             self.assertEqual("pedagogical_orientation_only", plate["authority"])
-            self.assertTrue(
-                (ROOT / "docs/assets/documentaries/union_closed" / plate["file"]).is_file()
-            )
+        expected_assets = {
+            "cover.svg",
+            "plate_garden.svg",
+            "plate_frequency.svg",
+            "plate_entropy.svg",
+            "plate_lattice.svg",
+            "plate_certificate.svg",
+            "plate_frontier.svg",
+        }
+        asset_root = ROOT / "docs/assets/documentaries/union_closed"
+        self.assertEqual(expected_assets, {path.name for path in asset_root.glob("*.svg")})
 
     def test_source_record_fields(self) -> None:
         expected = {
