@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 DOCUMENTARIES = DOCS / "documentaries"
 
-OPEN_STATUS = "Open Millennium Prize Problem"
+SOLVED_STATUS_PREFIX = "Solved classical theorem"
 FORBIDDEN_SOURCE_LABELS = (
     "Authoritative LaTeX",
     "Authoritative source:",
@@ -322,13 +322,16 @@ def web_edition_errors(
         if not reference_boundary:
             errors.append(f"{slug}: page does not contain the edition claim boundary")
 
-    if volume.get("status") == OPEN_STATUS:
-        if OPEN_STATUS not in str(edition.get("status", "")):
+    volume_status = str(volume.get("status", ""))
+    edition_status = str(edition.get("status", ""))
+    if volume_status.startswith(SOLVED_STATUS_PREFIX):
+        if SOLVED_STATUS_PREFIX not in edition_status:
+            errors.append(f"{slug}: solved status is missing from edition record")
+    else:
+        if volume_status not in edition_status:
             errors.append(f"{slug}: open status is missing from edition record")
-        if page_text.count(OPEN_STATUS) < 2:
+        if page_text.count(volume_status) < 2:
             errors.append(f"{slug}: open status must appear at least twice")
-    elif "Solved classical theorem" not in str(edition.get("status", "")):
-        errors.append(f"{slug}: solved status is missing from edition record")
 
     markers = (
         f'data-gcl-reader="{slug}"',
@@ -505,7 +508,7 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"documentary validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print("documentary manifest discovery and seven-edition contracts are valid")
+    print("documentary manifest discovery and manifest-discovered edition contracts are valid")
     return 0
 
 
