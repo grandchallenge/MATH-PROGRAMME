@@ -33,6 +33,16 @@
       "scope": "Replay BSD restricted-target scorecard and claim firewall."
     },
     {
+      "id": "OZ-WP00-INTAKE-VALIDATION",
+      "command": [
+        "python3",
+        "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/tools/validate_intake_manifest.py",
+        "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/01_INTAKE_SOURCE_LOCK.yaml"
+      ],
+      "timeout_seconds": 60,
+      "scope": "Validate the open OZ-WP00 intake manifest without promoting incomplete source locks."
+    },
+    {
       "id": "PNP-WP01-REPLAY",
       "command": ["python3", "campaigns/p_vs_np/WP01_FALSE_PROOF_ATLAS/replay.py"],
       "timeout_seconds": 60,
@@ -63,10 +73,28 @@
       "scope": "Cross-validate RH fixtures, sources, theorem interfaces, debt, and closed gates."
     },
     {
+      "id": "YM-WP01-REPLAY",
+      "command": ["python3", "campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/replay.py"],
+      "timeout_seconds": 60,
+      "scope": "Deterministic replay of the Yang-Mills false-proof atlas."
+    },
+    {
+      "id": "YM-WP01-WP02-CROSS-VALIDATION",
+      "command": ["python3", "campaigns/yang_mills/validate_wp01_wp02.py"],
+      "timeout_seconds": 60,
+      "scope": "Cross-validate Yang-Mills fixtures, sources, theorem interfaces, dependency debt, unverified claims, and closed gates."
+    },
+    {
+      "id": "YM-WP01-WP02-ADVERSARIAL",
+      "command": ["python3", "campaigns/yang_mills/test_validate_wp01_wp02.py"],
+      "timeout_seconds": 60,
+      "scope": "Reject Yang-Mills source, interface, audit-state, status, debt, and gate-opening mutations."
+    },
+    {
       "id": "PC-WP03-HISTORY-REPLAY",
       "command": ["python3", "campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/05_ADVERSARIAL_HISTORIES/validate_histories.py"],
       "timeout_seconds": 60,
-      "scope": "Replay all valid and malformed Poincaré surgery histories."
+      "scope": "Replay all valid and malformed Poincare surgery histories."
     },
     {
       "id": "PC-WP04-POLICY",
@@ -84,7 +112,7 @@
       "id": "PC-WP05-ARCHIVE-POLICY",
       "command": ["python3", "ci/validate_pc_wp05_archive.py"],
       "timeout_seconds": 60,
-      "scope": "Validate the qualified Poincaré archival manifest and trust matrix."
+      "scope": "Validate the qualified Poincare archival manifest and trust matrix."
     },
     {
       "id": "PC-WP05-ADVERSARIAL",
