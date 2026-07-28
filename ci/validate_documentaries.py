@@ -102,10 +102,7 @@ def release_identity_strings(volume: dict[str, Any]) -> list[str]:
 
 
 def discovered_edition_records(root: Path = ROOT) -> set[str]:
-    return {
-        path.name
-        for path in (root / "docs/documentaries").glob("*.edition.json")
-    }
+    return {path.name for path in (root / "docs/documentaries").glob("*.edition.json")}
 
 
 def discovered_web_pages(root: Path = ROOT) -> set[str]:
@@ -117,10 +114,9 @@ def discovered_web_pages(root: Path = ROOT) -> set[str]:
 
 
 def discovered_source_records(root: Path = ROOT) -> set[str]:
-    source_dir = root / "docs/documentaries/sources"
     return {
         f"sources/{path.name}"
-        for path in source_dir.glob("*.tex")
+        for path in (root / "docs/documentaries/sources").glob("*.tex")
     }
 
 
@@ -143,6 +139,7 @@ def discovered_asset_directories(root: Path = ROOT) -> set[str]:
 
 
 def discovered_candidate_locks(root: Path = ROOT) -> set[str]:
+    """Discover all documentary source locks, including locks retained after admission."""
     return {
         path.relative_to(root).as_posix()
         for path in (root / "campaigns").glob("**/artifacts/*SOURCE_LOCK.json")
@@ -170,10 +167,9 @@ def _expected_assets(manifest: dict[str, Any], root: Path) -> set[str]:
     assets: set[str] = set()
     for volume in manifest.get("volumes", []):
         path = root / "docs/documentaries" / str(volume.get("edition_record", ""))
-        if not path.is_file():
-            continue
-        edition = load_json(path)
-        assets.update(str(plate.get("asset", "")) for plate in edition.get("plates", []))
+        if path.is_file():
+            edition = load_json(path)
+            assets.update(str(plate.get("asset", "")) for plate in edition.get("plates", []))
     return assets
 
 
@@ -211,6 +207,19 @@ def _static_documentary_errors(
     return errors
 
 
+def _expected_source_locks(
+    manifest: dict[str, Any], candidates: dict[str, Any]
+) -> set[str]:
+    return {
+        str(record.get("source_lock", ""))
+        for record in [
+            *manifest.get("volumes", []),
+            *candidates.get("candidates", []),
+        ]
+        if record.get("source_lock")
+    }
+
+
 def collection_discovery_errors(
     manifest: dict[str, Any],
     root: Path = ROOT,
@@ -229,7 +238,9 @@ def collection_discovery_errors(
     mkdocs_text: str | None = None,
 ) -> list[str]:
     errors: list[str] = []
-    candidates = candidates if candidates is not None else load_json(root / "docs/documentaries/DOCUMENTARY_CANDIDATES.json")
+    candidates = candidates if candidates is not None else load_json(
+        root / "docs/documentaries/DOCUMENTARY_CANDIDATES.json"
+    )
     volumes = manifest.get("volumes", [])
 
     expected_editions = {str(volume.get("edition_record", "")) for volume in volumes}
@@ -267,19 +278,16 @@ def collection_discovery_errors(
     for name in sorted(actual_dirs - expected_dirs):
         errors.append(f"documentary discovery: orphaned asset directory is undeclared: {name}")
 
-    expected_candidate_records = {
-        str(candidate.get("source_lock", ""))
-        for candidate in candidates.get("candidates", [])
-    }
-    actual_candidate_records = (
+    expected_locks = _expected_source_locks(manifest, candidates)
+    actual_locks = (
         discovered_candidate_records
         if discovered_candidate_records is not None
         else discovered_candidate_locks(root)
     )
-    for name in sorted(expected_candidate_records - actual_candidate_records):
-        errors.append(f"documentary candidate discovery: registered source lock is missing: {name}")
-    for name in sorted(actual_candidate_records - expected_candidate_records):
-        errors.append(f"documentary candidate discovery: orphaned source lock is unregistered: {name}")
+    for name in sorted(expected_locks - actual_locks):
+        errors.append(f"documentary source-lock discovery: registered source lock is missing: {name}")
+    for name in sorted(actual_locks - expected_locks):
+        errors.append(f"documentary source-lock discovery: orphaned source lock is unregistered: {name}")
 
     actual_css, actual_js = discovered_shared_authority_files(root)
     if discovered_css is not None:
@@ -305,8 +313,12 @@ def collection_discovery_errors(
     if "orientation" not in tiers:
         errors.append("documentary discovery: at least one orientation tier is required")
 
-    index_text = index_text if index_text is not None else (root / "docs/documentaries/index.md").read_text(encoding="utf-8")
-    mkdocs_text = mkdocs_text if mkdocs_text is not None else (root / "mkdocs.yml").read_text(encoding="utf-8")
+    index_text = index_text if index_text is not None else (
+        root / "docs/documentaries/index.md"
+    ).read_text(encoding="utf-8")
+    mkdocs_text = mkdocs_text if mkdocs_text is not None else (
+        root / "mkdocs.yml"
+    ).read_text(encoding="utf-8")
     if "DOCUMENTARY_CANDIDATES.json" not in index_text:
         errors.append("documentary candidates: collection index is missing candidate-registry link")
     if "documentaries/DOCUMENTARY_CANDIDATES.json" not in mkdocs_text:
@@ -335,7 +347,9 @@ def _scope_errors(volume: dict[str, Any], domain: dict[str, Any] | None) -> list
     }
     errors: list[str] = []
     if tier in allowed and scope not in allowed[tier]:
-        errors.append(f"{slug}: documentary tier {tier!r} is incompatible with scope relation {scope!r}")
+        errors.append(
+            f"{slug}: documentary tier {tier!r} is incompatible with scope relation {scope!r}"
+        )
     if domain:
         archived = domain.get("status") == "ARCHIVED"
         if scope == "solved_theorem_archive" and not archived:
@@ -357,6 +371,47 @@ def _status_errors(record: dict[str, Any], label: str) -> list[str]:
     return []
 
 
+def _source_lock_semantic_errors(
+    volume: dict[str, Any], root: Path, slug: str
+) -> list[str]:
+    source_lock = volume.get("source_lock")
+    if not source_lock:
+        return []
+    path = root / str(source_lock)
+    if not path.is_file():
+        return [f"{slug}: source lock is missing: {source_lock}"]
+    lock = load_json(path)
+    comparisons = {
+        "domain_id": volume.get("domain_id"),
+        "campaign_id": volume.get("campaign_id"),
+        "title": volume.get("title"),
+        "subject": volume.get("topic"),
+        "claim_status": volume.get("claim_status"),
+        "problem_class": volume.get("problem_class"),
+        "display_status": volume.get("display_status"),
+        "claim_authority": volume.get("claim_authority"),
+        "proposed_documentary_tier": volume.get("documentary_tier"),
+    }
+    errors: list[str] = []
+    for field, expected in comparisons.items():
+        actual = lock.get(field)
+        if field in {"title", "subject"}:
+            matches = normalized_human_text(actual) == normalized_human_text(expected)
+        else:
+            matches = actual == expected
+        if not matches:
+            errors.append(
+                f"{slug}: source lock {field} {actual!r} does not match manifest {expected!r}"
+            )
+    expected_release = {
+        key: volume.get(key)
+        for key in ("rendered_pdf", "latex_source", "authoritative_source_bundle")
+    }
+    if lock.get("release_artifacts") != expected_release:
+        errors.append(f"{slug}: source-lock release artifacts do not match manifest")
+    return errors
+
+
 def manifest_semantic_errors(manifest: dict[str, Any], root: Path = ROOT) -> list[str]:
     errors: list[str] = []
     volumes = manifest.get("volumes", [])
@@ -364,8 +419,13 @@ def manifest_semantic_errors(manifest: dict[str, Any], root: Path = ROOT) -> lis
     directory = root / "docs/documentaries"
 
     for field in ("slug", "title", "source_record", "web_page", "edition_record"):
-        for duplicate in sorted(duplicate_values(str(volume.get(field, "")) for volume in volumes)):
+        for duplicate in sorted(
+            duplicate_values(str(volume.get(field, "")) for volume in volumes)
+        ):
             errors.append(f"documentary manifest: duplicate {field}: {duplicate}")
+    locks = [str(volume["source_lock"]) for volume in volumes if volume.get("source_lock")]
+    for duplicate in sorted(duplicate_values(locks)):
+        errors.append(f"documentary manifest: duplicate source_lock: {duplicate}")
 
     for volume in volumes:
         slug = str(volume.get("slug", "<unknown>"))
@@ -375,8 +435,12 @@ def manifest_semantic_errors(manifest: dict[str, Any], root: Path = ROOT) -> lis
         if not domain:
             errors.append(f"{slug}: unknown domain_id {volume.get('domain_id')!r}")
         elif domain.get("campaign_id") != campaign:
-            errors.append(f"{slug}: campaign_id {campaign!r} does not match domain {volume.get('domain_id')} campaign {domain.get('campaign_id')!r}")
+            errors.append(
+                f"{slug}: campaign_id {campaign!r} does not match domain "
+                f"{volume.get('domain_id')} campaign {domain.get('campaign_id')!r}"
+            )
         errors += _scope_errors(volume, domain)
+        errors += _source_lock_semantic_errors(volume, root, slug)
 
         paths = {
             "source record": directory / str(volume.get("source_record", "")),
@@ -389,9 +453,16 @@ def manifest_semantic_errors(manifest: dict[str, Any], root: Path = ROOT) -> lis
                 errors.append(f"{slug}: {label} is missing: {path.relative_to(root)}")
 
         if domain:
-            expected_authority = "docs/POINCARE_RECONSTRUCTION_ARCHIVE.md" if volume.get("scope_relation") == "solved_theorem_archive" else domain.get("canonical_entry")
+            expected_authority = (
+                "docs/POINCARE_RECONSTRUCTION_ARCHIVE.md"
+                if volume.get("scope_relation") == "solved_theorem_archive"
+                else domain.get("canonical_entry")
+            )
             if volume.get("claim_authority") != expected_authority:
-                errors.append(f"{slug}: claim authority {volume.get('claim_authority')!r} does not match expected authority {expected_authority!r}")
+                errors.append(
+                    f"{slug}: claim authority {volume.get('claim_authority')!r} "
+                    f"does not match expected authority {expected_authority!r}"
+                )
 
         source = paths["source record"]
         if source.is_file():
@@ -406,21 +477,34 @@ def manifest_semantic_errors(manifest: dict[str, Any], root: Path = ROOT) -> lis
             }
             for field, value in expected.items():
                 actual = record.get(field)
-                matches = normalized_human_text(actual) == normalized_human_text(value) if field in {"title", "subject"} else actual == value
+                matches = (
+                    normalized_human_text(actual) == normalized_human_text(value)
+                    if field in {"title", "subject"}
+                    else actual == value
+                )
                 if not matches:
-                    errors.append(f"{slug}: source record {field} {actual!r} does not match manifest {value!r}")
+                    errors.append(
+                        f"{slug}: source record {field} {actual!r} "
+                        f"does not match manifest {value!r}"
+                    )
 
         page = paths["web page"]
         if page.is_file():
             text = page.read_text(encoding="utf-8")
-            for value, label in ((volume.get("title"), "manifest title"), (campaign, f"campaign crosswalk {campaign}")):
+            for value, label in (
+                (volume.get("title"), "manifest title"),
+                (campaign, f"campaign crosswalk {campaign}"),
+            ):
                 if str(value) not in text:
                     errors.append(f"{slug}: web page is missing {label}")
             if "claim boundary" not in text.lower():
                 errors.append(f"{slug}: web page is missing explicit claim boundary")
             if "source record" not in text.lower():
                 errors.append(f"{slug}: web page does not identify the source record")
-            if "authoritative source artifact" not in text.lower() and "authoritative complete illustrated source bundle" not in text.lower():
+            if (
+                "authoritative source artifact" not in text.lower()
+                and "authoritative complete illustrated source bundle" not in text.lower()
+            ):
                 errors.append(f"{slug}: web page does not identify the authoritative source")
             for forbidden in FORBIDDEN_SOURCE_LABELS:
                 if forbidden in text:
@@ -431,13 +515,17 @@ def manifest_semantic_errors(manifest: dict[str, Any], root: Path = ROOT) -> lis
     return errors
 
 
-def candidate_semantic_errors(candidates: dict[str, Any], manifest: dict[str, Any], root: Path = ROOT) -> list[str]:
+def candidate_semantic_errors(
+    candidates: dict[str, Any], manifest: dict[str, Any], root: Path = ROOT
+) -> list[str]:
     errors: list[str] = []
     domains = _domains(root)
     items = candidates.get("candidates", [])
     admitted_slugs = {str(volume.get("slug", "")) for volume in manifest.get("volumes", [])}
     for field in ("slug", "source_record", "source_lock", "review_record"):
-        for duplicate in sorted(duplicate_values(str(item.get(field, "")) for item in items)):
+        for duplicate in sorted(
+            duplicate_values(str(item.get(field, "")) for item in items)
+        ):
             errors.append(f"documentary candidates: duplicate {field}: {duplicate}")
     for candidate in items:
         slug = str(candidate.get("slug", "<unknown>"))
@@ -476,7 +564,10 @@ def candidate_semantic_errors(candidates: dict[str, Any], manifest: dict[str, An
             }
             for field, expected in comparisons.items():
                 if lock.get(field) != expected:
-                    errors.append(f"candidate {slug}: source lock {field} {lock.get(field)!r} does not match registry {expected!r}")
+                    errors.append(
+                        f"candidate {slug}: source lock {field} {lock.get(field)!r} "
+                        f"does not match registry {expected!r}"
+                    )
             if lock.get("release_artifacts") != candidate.get("release_artifacts"):
                 errors.append(f"candidate {slug}: release artifacts do not match source lock")
     return errors
@@ -496,7 +587,12 @@ def _svg_errors(path: Path, slug: str, plate_id: str) -> list[str]:
     return errors
 
 
-def web_edition_errors(volume: dict[str, Any], edition: dict[str, Any], page_text: str, root: Path = ROOT) -> list[str]:
+def web_edition_errors(
+    volume: dict[str, Any],
+    edition: dict[str, Any],
+    page_text: str,
+    root: Path = ROOT,
+) -> list[str]:
     slug = str(volume.get("slug", "<unknown>"))
     tier = str(volume.get("documentary_tier", ""))
     errors: list[str] = []
@@ -595,7 +691,11 @@ def web_edition_errors(volume: dict[str, Any], edition: dict[str, Any], page_tex
     math = edition.get("math_rendering", {})
     if str(math.get("script_url", "")) not in page_text:
         errors.append(f"{slug}: pinned MathJax URL does not match")
-    for marker in ('crossorigin="anonymous"', 'referrerpolicy="no-referrer"', 'data-archival-role="enhancement-only"'):
+    for marker in (
+        'crossorigin="anonymous"',
+        'referrerpolicy="no-referrer"',
+        'data-archival-role="enhancement-only"',
+    ):
         if marker not in page_text:
             errors.append(f"{slug}: MathJax policy attribute missing: {marker}")
 
@@ -626,7 +726,12 @@ def documentary_contract_errors(
     errors += schema_errors(candidates, candidate_schema, "docs/documentaries/DOCUMENTARY_CANDIDATES.json")
     errors += manifest_semantic_errors(manifest, root)
     errors += candidate_semantic_errors(candidates, manifest, root)
-    errors += collection_discovery_errors(manifest, root, candidates=candidates, discovered_records=discovered_records)
+    errors += collection_discovery_errors(
+        manifest,
+        root,
+        candidates=candidates,
+        discovered_records=discovered_records,
+    )
 
     domains = _domains(root)
     all_assets: list[str] = []
@@ -644,7 +749,10 @@ def documentary_contract_errors(
         domain = domains.get(volume.get("domain_id"))
         if domain:
             label = f"Domain {int(domain['programme_number']):02d}"
-            reference_crosswalk = volume.get("documentary_tier") == "reference" and str(volume.get("campaign_id", "")) in page_text
+            reference_crosswalk = (
+                volume.get("documentary_tier") == "reference"
+                and str(volume.get("campaign_id", "")) in page_text
+            )
             if label not in page_text and not reference_crosswalk:
                 errors.append(f"{slug}: page is missing programme crosswalk {label}")
 
@@ -666,7 +774,12 @@ def documentary_contract_errors(
             errors.append(f"documentary authority file is missing: {path.relative_to(root)}")
 
     reader_css = required[2].read_text(encoding="utf-8") if required[2].is_file() else ""
-    for marker in ("@media(max-width:680px)", "prefers-reduced-motion", "@media print", ":focus-visible"):
+    for marker in (
+        "@media(max-width:680px)",
+        "prefers-reduced-motion",
+        "@media print",
+        ":focus-visible",
+    ):
         if marker not in reader_css:
             errors.append(f"documentary reader CSS is missing {marker}")
 
