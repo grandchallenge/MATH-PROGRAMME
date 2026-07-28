@@ -15,7 +15,7 @@ completion_gate:
     OZ-WP00 may not be marked complete until every in-scope object is bound to a
     stable identifier, immutable source identity, exact locator, support class,
     scope, and review status, and until every missing irrationality bridge is
-    registered.
+    registered and resolved to the extent required by the claimed conclusion.
   independent_reviewer_question: >-
     Can an independent reviewer state exactly which formulas and congruences are
     proved, which are Lean-checked, which are only finitely verified, which are
@@ -73,6 +73,14 @@ allowed_status:
     - ADVERSARIALLY_AUDITED
     - FORMALLY_REPLAYED
     - REFEREE_ACCEPTED
+working_registers:
+  source_acquisition_docket: campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/02_SOURCE_ACQUISITION_DOCKET.md
+  irrationality_bridge_register: campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/03_IRRATIONALITY_BRIDGE_REGISTER.yaml
+  prior_art_seed_ledger: campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/04_PRIOR_ART_SEED_LEDGER.yaml
+  authority: WORKING_RECORDS_ONLY
+  note: >-
+    These files make the remaining intake obligations explicit. They are not
+    source locks and do not populate the governed object collections below.
 source_locks: []
 objects:
   manuscript_statements: []
@@ -152,16 +160,18 @@ unresolved_intake:
     blocks:
       - computation
   - id: OZ-INTAKE-U005
-    missing: audited literature corpus
-    required_binding: primary sources with persistent locators and theorem-level comparison notes
+    missing: acquired and audited literature corpus
+    progress_record: 04_PRIOR_ART_SEED_LEDGER.yaml identifies an initial comparison set without assigning permanent literature IDs.
+    required_binding: exact primary-source files or immutable versions, hashes, theorem locators, and comparison notes
     blocks:
       - literature_source
       - novelty assessment
   - id: OZ-INTAKE-U006
-    missing: irrationality bridge decomposition
-    required_binding: explicit obligations from proved identities to an irrationality criterion
+    missing: discharge of required irrationality bridges
+    progress_record: 03_IRRATIONALITY_BRIDGE_REGISTER.yaml enumerates eight open obligations.
+    required_binding: source-audited proofs or accepted literature imports satisfying the selected irrationality criterion
     blocks:
-      - irrationality_bridge
+      - irrationality conclusion
 promotion_prohibitions:
   - No entry may use NEW_AFTER_AUDIT before a specialist prior-art review is recorded.
   - Finite verification may not discharge an unbounded formula or congruence.
@@ -178,8 +188,9 @@ validation:
     --require-complete
     campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/01_INTAKE_SOURCE_LOCK.yaml
 first_executable_next_step:
-  id: OZ-NEXT-001
+  id: OZ-NEXT-002
   instruction: >-
-    Acquire and checksum-lock the authoritative manuscript, Lean repository,
-    certificate corpus, computation corpus, and bibliography; then enumerate
-    every in-scope object under the stable-ID namespaces above.
+    Obtain the authoritative source bundle specified by
+    02_SOURCE_ACQUISITION_DOCKET.md. Compute byte lengths and SHA-256 digests,
+    register immutable source locks, and only then enumerate manuscript, Lean,
+    certificate, computation, and permanent literature objects.
