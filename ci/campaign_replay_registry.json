@@ -3,6 +3,12 @@
   "schema_version": "2.0.0",
   "entries": [
     {
+      "id": "MATHFORGE-PROVIDER-IMPORT-VALIDATION",
+      "command": ["python3", "ci/validate_mathforge_provider_imports.py"],
+      "timeout_seconds": 60,
+      "scope": "Fail closed on missing active-domain provider coverage, provider commit drift, manifest identity drift, or malformed waivers."
+    },
+    {
       "id": "BSD-WP01-REPLAY",
       "command": ["python3", "campaigns/birch_swinnerton_dyer/WP01_FALSE_PROOF_ATLAS/replay.py"],
       "timeout_seconds": 60,
