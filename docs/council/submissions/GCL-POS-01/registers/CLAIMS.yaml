@@ -1,0 +1,136 @@
+register_id: GCL-POS-01-CLAIMS
+artifact_id: GCL-POS-01
+version: 0.1.0
+date: '2026-07-27'
+claims:
+- claim_id: CLAIM-GCLPOS-001
+  artifact_id: GCL-POS-01
+  statement: Grand Challenge Labs should treat governed technical communication as part of the research instrument,
+    not as packaging added after research.
+  claim_type: recommendation
+  claim_status: proposed
+  scope: Governed GCL technical artifacts that seek institutional or public authority.
+  assumptions:
+  - GCL requires durable transfer of claims between people, tools, repositories, and decisions.
+  dependencies:
+  - GCL-TCS-00@0.1.0
+  supporting_evidence:
+  - EVIDENCE-GCLPOS-001
+  - EVIDENCE-GCLPOS-002
+  counterevidence:
+  - The process can add cost, become ceremonial, or drive work into ungoverned channels.
+  falsifiers:
+  - Pilot projects show sustained high cost without material improvement in traceability, defect detection, or responsible
+    reuse.
+  limitations:
+  - This is an institutional recommendation, not an empirical result.
+  - It does not claim that GCL-TCS-00 is optimal.
+  owner: Grand Challenge Labs
+  last_reviewed: '2026-07-27'
+- claim_id: CLAIM-GCLPOS-002
+  artifact_id: GCL-POS-01
+  statement: Clear prose alone does not preserve claim identity, provenance, review state, and authority across
+    an artifact lifecycle.
+  claim_type: interpretation
+  claim_status: proposed
+  scope: Consequential technical artifacts and their summaries, derivatives, and public explanations.
+  assumptions:
+  - Artifacts can move across contexts and lose surrounding discussion.
+  dependencies:
+  - GCL-TCS-00@0.1.0
+  supporting_evidence:
+  - EVIDENCE-GCLPOS-001
+  - EVIDENCE-GCLPOS-002
+  counterevidence:
+  - Highly cohesive teams can preserve context informally for limited periods.
+  falsifiers:
+  - A pilot shows that prose-only records preserve the required claim and authority state as reliably as the governed
+    model.
+  limitations:
+  - The claim does not deny the value of skilled reading or good prose.
+  owner: Grand Challenge Labs
+  last_reviewed: '2026-07-27'
+- claim_id: CLAIM-GCLPOS-003
+  artifact_id: GCL-POS-01
+  statement: Consequential claims should bind to machine-readable status, evidence, provenance, limitation, and
+    review records.
+  claim_type: recommendation
+  claim_status: proposed
+  scope: IC-2 and IC-3 GCL artifacts, with impact-scaled application to IC-1 artifacts.
+  assumptions:
+  - Downstream tools and processes need deterministic discovery of status and dependencies.
+  dependencies:
+  - GCL-TCS-00@0.1.0
+  supporting_evidence:
+  - EVIDENCE-GCLPOS-001
+  counterevidence:
+  - Machine-readable fields can create false precision and administrative burden.
+  falsifiers:
+  - The records fail to prevent claim drift or cannot be maintained at acceptable cost.
+  limitations:
+  - Machine-readable status does not replace domain judgment.
+  owner: Grand Challenge Labs
+  last_reviewed: '2026-07-27'
+- claim_id: CLAIM-GCLPOS-004
+  artifact_id: GCL-POS-01
+  statement: Public exposition should inherit the claim status, scope, assumptions, and material limitations of
+    its authoritative source.
+  claim_type: recommendation
+  claim_status: proposed
+  scope: GCL public summaries, web editions, release pages, explanatory articles, and technical announcements.
+  assumptions:
+  - A public artifact derives its technical authority from a governed source.
+  dependencies:
+  - GCL-TCS-00@0.1.0
+  supporting_evidence:
+  - EVIDENCE-GCLPOS-001
+  counterevidence:
+  - Public audiences need substantial simplification.
+  falsifiers:
+  - The inheritance rule prevents accurate public explanation without reducing claim inflation.
+  limitations:
+  - Simplification of language, examples, and structure remains permitted.
+  owner: Grand Challenge Labs
+  last_reviewed: '2026-07-27'
+- claim_id: CLAIM-GCLPOS-005
+  artifact_id: GCL-POS-01
+  statement: Promotion should fail closed when mandatory claim, evidence, provenance, review, or authority records
+    are missing.
+  claim_type: recommendation
+  claim_status: proposed
+  scope: Promotion of governed GCL artifacts.
+  assumptions:
+  - Missing mandatory records create unacceptable ambiguity about downstream authority.
+  dependencies:
+  - GCL-TCS-00@0.1.0
+  supporting_evidence:
+  - EVIDENCE-GCLPOS-001
+  counterevidence:
+  - Fail-closed controls can delay useful work when requirements are disproportionate.
+  falsifiers:
+  - Impact-scaled exceptions and profiles cannot prevent repeated disproportionate blocking.
+  limitations:
+  - The rule applies to promotion, not to private exploration.
+  owner: Grand Challenge Labs
+  last_reviewed: '2026-07-27'
+- claim_id: CLAIM-GCLPOS-006
+  artifact_id: GCL-POS-01
+  statement: Impact-scaled governance can preserve low-friction exploration while applying stronger controls at
+    points of downstream authority.
+  claim_type: interpretation
+  claim_status: proposed
+  scope: The GCL-TCS-00 distinction between IC-0 through IC-3 artifacts.
+  assumptions:
+  - Projects correctly classify impact and do not use low classes to evade review.
+  dependencies:
+  - GCL-TCS-00@0.1.0
+  supporting_evidence:
+  - EVIDENCE-GCLPOS-001
+  counterevidence:
+  - Classification can be inconsistent or strategically lowered.
+  falsifiers:
+  - Pilots show persistent under-classification, shadow authority, or no meaningful reduction in exploratory burden.
+  limitations:
+  - This claim requires pilot evidence before stronger status is justified.
+  owner: Grand Challenge Labs
+  last_reviewed: '2026-07-27'
