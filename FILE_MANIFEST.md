@@ -2,7 +2,7 @@
 
 **Status:** Current governed inventory, edition 2026.07.
 
-This is a curated map of authoritative entry points, not an exhaustive recursive listing. Files become authoritative through the domain registry, artifact ledger, decisions, claim and promotion records, schema-bound reviews, governed execution routes, and certification controls—not merely by appearing in the tree.
+This is a curated map of authoritative entry points, not an exhaustive recursive listing. Files become authoritative through the domain registry, artifact ledger, decisions, canonical claim-ledger and review registries, promotion records, governed execution routes, documentary discovery authorities, and certification controls—not merely by appearing in the tree.
 
 ## Programme architecture
 
@@ -39,10 +39,24 @@ This is a curated map of authoritative entry points, not an exhaustive recursive
 - `docs/decisions/ADR-0001_*.md` through `ADR-0014_*.md`
 - `schemas/agent_review.schema.json`
 - `templates/agent_review.yaml`
+- `reviews/union_closed/UC-WP01.agent_review.yaml`
+- `reviews/union_closed/UC-DOC-WP00.agent_review.yaml`
 - `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml`
 - `reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml`
 - `reviews/governance/WORKFLOW-COVERAGE.agent_review.yaml`
 - `reviews/navier_stokes/NS-CI-WP06.agent_review.yaml`
+
+The programme validator maintains an explicit schema-bound review registry and adversarially discovers schema-valid records under governed review roots. A discovered review omitted from the registry and a registered review missing from the repository both fail policy.
+
+## Canonical claim ledgers
+
+- `CLAIM_LEDGER_STANDARD.md`
+- `schemas/claim_ledger.schema.json`
+- `templates/claim_ledger_template.yaml`
+- `templates/union_closed_claim_ledger_wp01.yaml`
+- `campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/10_CLAIM_LEDGER.yaml`
+
+Canonical ledgers carry `ledger_contract: canonical_claim_ledger`, conform to schema version 1.1.0, and are explicitly registered. Discovery and registration are bidirectional; legacy claim lists remain historical evidence until migrated.
 
 ## Canonical domains
 
@@ -60,6 +74,8 @@ The historical BSD Domain 03 filename remains under decision control. The mislab
 
 ## Campaign stacks
 
+- `campaigns/union_closed/`
+- `campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/`
 - `campaigns/navier_stokes_critical_integrability/`
 - `campaigns/navier_stokes_critical_integrability/WP06_UNDECIDABILITY_REDUCTION_LANE/`
 - `campaigns/hodge_conjecture/`
@@ -74,6 +90,8 @@ The historical BSD Domain 03 filename remains under decision control. The mislab
 - `reviews/poincare/`
 - `reviews/riemann_hypothesis/`
 
+UC-DOC-WP00 is a completed documentary source lock. Its candidate metadata are public, its source pointer remains repository-only, and its page, edition record, assets, public source record, navigation, and manifest admission remain deferred to one atomic UC-DOC-WP01 change.
+
 NS-CI-WP06 is a non-blocking, non-probative computability lane. Its literature, risk, obligation, and bounded fixture artifacts do not alter the WP01/WP02 analytic mainline or any WP00–WP05 result state.
 
 Yang–Mills currently uses its integrated root WP00 dossier as the complete campaign stack entry.
@@ -85,23 +103,25 @@ Riemann Hypothesis post-WP00 continuity entries remain implemented and CI-passed
 - `tests/test_ns_wp06_halting_gate_fixture.py`
 - `tests/test_documentary_web_editions.py`
 - `tests/test_documentary_wave_one.py`
+- `tests/test_uc_doc_source_lock.py`
 - `experiments/__init__.py`
 - `experiments/ns_wp06_undec/__init__.py`
 - `experiments/ns_wp06_undec/halting_gate_fixture.py`
 - `ci/validate_repository_execution.py`
 - `ci/test_repository_execution.py`
 
-Experiment modules are library-only and must be reachable from discovered standard-library unit tests. Passing tests establish bounded software behaviour only. Documentary repository tests retain problem-specific mathematical spines; shared discovery, authority, accessibility, release, plate, section, and rendering invariants belong to `ci/validate_documentaries.py`.
+Experiment modules are library-only and must be reachable from discovered standard-library unit tests. Passing tests establish bounded software behaviour only. Documentary repository tests retain problem-specific mathematical spines; shared discovery, authority, accessibility, release, plate, section, rendering, candidate, and orphan invariants belong to `ci/validate_documentaries.py`.
 
 ## Documentary Library
 
 - `docs/documentaries/index.md`
-- `docs/documentaries/ARTIFACT_MANIFEST.json` — sole machine discovery authority
+- `docs/documentaries/ARTIFACT_MANIFEST.json` — sole machine discovery authority for admitted public editions
+- `docs/documentaries/DOCUMENTARY_CANDIDATES.json` — public metadata authority for pre-admission source locks
 - `docs/documentaries/sources/README.md`
-- `docs/documentaries/sources/*.tex`
+- `docs/documentaries/sources/*.tex` — admitted public source records only
 - `docs/documentaries/documentary_web.schema.json`
 - `docs/documentaries/*.edition.json`
-- `docs/documentaries/*.md`
+- admitted documentary `docs/documentaries/*.md`
 - `docs/stylesheets/documentary.css`
 - `docs/stylesheets/documentary-status.css`
 - `docs/javascripts/documentary.js`
@@ -114,12 +134,16 @@ Experiment modules are library-only and must be reachable from discovered standa
 - `docs/assets/documentaries/p_vs_np/`
 - `docs/assets/documentaries/riemann/`
 - `schemas/documentary_manifest.schema.json`
+- `schemas/documentary_candidate_registry.schema.json`
 - `ci/validate_documentaries.py`
 - `ci/test_validate_documentaries.py`
 - `tests/test_documentary_web_editions.py`
 - `tests/test_documentary_wave_one.py`
+- `tests/test_uc_doc_source_lock.py`
 
-The manifest names every source record, web page, edition record, claim authority, scope relation, and documentary tier. The complete illustrated source bundle is the authoritative documentary source artifact; the checksum-locked PDF is the rendered edition. Current release-class entries are `metadata_only` and do not assert stable public locators.
+The manifest names every admitted source record, web page, edition record, claim authority, scope relation, documentary tier, machine claim status, problem class, and display status. The candidate registry records source-locked but unadmitted projects without conferring collection membership. Candidate source pointers remain under their governing campaign and outside `docs/` until atomic admission.
+
+The complete illustrated source bundle is the authoritative documentary source artifact; the checksum-locked PDF is the rendered edition. Current release-class entries and candidates are `metadata_only` and do not assert stable public locators.
 
 The tier vocabulary is expository rather than mathematical: Poincaré is the reference tier, BSD is the full tier, and Hodge, Navier–Stokes, Yang–Mills, P versus NP, and Riemann are orientation tier.
 
@@ -155,6 +179,7 @@ The global policy checks out the evidence-pinned commit and runs the complete ga
 - `schemas/foundational_profile.schema.json`
 - `schemas/claim_ledger.schema.json`
 - `schemas/documentary_manifest.schema.json`
+- `schemas/documentary_candidate_registry.schema.json`
 - `schemas/campaign_replay_registry.schema.json`
 - `schemas/cross_repository_evidence.schema.json`
 - `requirements/policy.txt`
