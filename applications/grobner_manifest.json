@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "2.0.0",
   "manifest_id": "GROBNER-APPLICATIONS-2026-06",
-  "governing_rule": "Route each polynomial application through a narrow obligation, explicit excluded inference, bounded method, and replayable certificate.",
+  "governing_rule": "Route each polynomial application through a narrow obligation, explicit excluded inference, bounded method, controlled execution ledger, and replayable certificate.",
   "foundation_fixtures": [
     {
       "fixture_id": "UF-INV-001",
@@ -24,13 +24,21 @@
       "local_obligation": "derive eliminants and algebraic branches before exact arithmetic reconstruction",
       "excluded_inference": "solutions over an algebraic closure do not by themselves prove integer or rational solvability",
       "first_fixture": "Solve x + y = 5 and xy = 6 algebraically, reconstruct both branches, and certify integrality.",
-      "certificate_route": [
-        "eliminant identity",
-        "branch lifting",
-        "exact substitution",
-        "integrality check"
-      ],
-      "switch_condition": "Switch to number-theoretic methods when arithmetic obstructions dominate the algebraic relaxation."
+      "certificate_route": ["eliminant identity", "branch lifting", "exact substitution", "integrality check"],
+      "switch_condition": "Switch to number-theoretic methods when arithmetic obstructions dominate the algebraic relaxation.",
+      "lane_class": "expensive_symbolic",
+      "resource_budget": {
+        "max_variables": 8,
+        "max_total_degree": 8,
+        "max_runtime_seconds": 300,
+        "max_basis_elements": 5000,
+        "max_intermediate_terms": 100000,
+        "monomial_order": "graded_reverse_lexicographic_then_elimination",
+        "backend": "SageMath/Singular",
+        "backend_version": "pinned-by-fixture",
+        "fallback_route": "number_theoretic_reconstruction"
+      },
+      "run_ledger": {"execution_status": "not_started", "termination_status": "not_started", "failure_status": null, "failure_record": null, "result_artifact": null, "recorded_at": null}
     },
     {
       "lane_id": "APP-GEO-02",
@@ -40,13 +48,21 @@
       "local_obligation": "compile the theorem conclusion into ideal or radical membership",
       "excluded_inference": "a polynomial identity does not certify that the coordinates cover exactly the intended geometric configurations",
       "first_fixture": "Certify a small coordinate theorem with one nondegeneracy condition and a human-readable semantic bridge.",
-      "certificate_route": [
-        "geometry encoding",
-        "degeneracy saturation or inverse variable",
-        "membership witness",
-        "source-language theorem"
-      ],
-      "switch_condition": "Switch encoding or use synthetic proof when coordinates obscure the theorem or inflate the witness."
+      "certificate_route": ["geometry encoding", "degeneracy saturation or inverse variable", "membership witness", "source-language theorem"],
+      "switch_condition": "Switch encoding or use synthetic proof when coordinates obscure the theorem or inflate the witness.",
+      "lane_class": "expensive_symbolic",
+      "resource_budget": {
+        "max_variables": 16,
+        "max_total_degree": 12,
+        "max_runtime_seconds": 600,
+        "max_basis_elements": 10000,
+        "max_intermediate_terms": 250000,
+        "monomial_order": "graded_reverse_lexicographic_with_saturation",
+        "backend": "SageMath/Singular",
+        "backend_version": "pinned-by-fixture",
+        "fallback_route": "synthetic_or_alternate_coordinate_proof"
+      },
+      "run_ledger": {"execution_status": "not_started", "termination_status": "not_started", "failure_status": null, "failure_record": null, "result_artifact": null, "recorded_at": null}
     },
     {
       "lane_id": "APP-SIG-03",
@@ -56,13 +72,21 @@
       "local_obligation": "establish algebraic identifiability and enumerate exact branches",
       "excluded_inference": "algebraic identifiability does not establish numerical stability, robustness to noise, or perceptual quality",
       "first_fixture": "Recover a two-tap exact signal from a noiseless polynomial convolution model and expose non-identifiable branches.",
-      "certificate_route": [
-        "forward-model encoding",
-        "branch decomposition",
-        "exact reconstruction",
-        "identifiability ledger"
-      ],
-      "switch_condition": "Switch to interval or numerical analysis when perturbation and conditioning are the actual obligations."
+      "certificate_route": ["forward-model encoding", "branch decomposition", "exact reconstruction", "identifiability ledger"],
+      "switch_condition": "Switch to interval or numerical analysis when perturbation and conditioning are the actual obligations.",
+      "lane_class": "expensive_symbolic",
+      "resource_budget": {
+        "max_variables": 12,
+        "max_total_degree": 8,
+        "max_runtime_seconds": 300,
+        "max_basis_elements": 6000,
+        "max_intermediate_terms": 150000,
+        "monomial_order": "graded_reverse_lexicographic",
+        "backend": "SageMath/Singular",
+        "backend_version": "pinned-by-fixture",
+        "fallback_route": "interval_or_numerical_conditioning_analysis"
+      },
+      "run_ledger": {"execution_status": "not_started", "termination_status": "not_started", "failure_status": null, "failure_record": null, "result_artifact": null, "recorded_at": null}
     },
     {
       "lane_id": "APP-ROB-04",
@@ -72,13 +96,21 @@
       "local_obligation": "eliminate auxiliary variables and isolate feasible real configurations",
       "excluded_inference": "complex algebraic solutions do not establish real reachability, collision freedom, or joint-limit feasibility",
       "first_fixture": "Solve a two-link planar inverse-kinematics target with exact real-root isolation and joint-limit filtering.",
-      "certificate_route": [
-        "kinematic encoding",
-        "elimination",
-        "real-root isolation",
-        "configuration lifting"
-      ],
-      "switch_condition": "Switch to numerical continuation or interval methods when exact elimination exceeds its budget."
+      "certificate_route": ["kinematic encoding", "elimination", "real-root isolation", "configuration lifting"],
+      "switch_condition": "Switch to numerical continuation or interval methods when exact elimination exceeds its budget.",
+      "lane_class": "expensive_symbolic",
+      "resource_budget": {
+        "max_variables": 14,
+        "max_total_degree": 10,
+        "max_runtime_seconds": 600,
+        "max_basis_elements": 8000,
+        "max_intermediate_terms": 200000,
+        "monomial_order": "elimination_order",
+        "backend": "SageMath/Singular",
+        "backend_version": "pinned-by-fixture",
+        "fallback_route": "interval_continuation_and_real_root_isolation"
+      },
+      "run_ledger": {"execution_status": "not_started", "termination_status": "not_started", "failure_status": null, "failure_record": null, "result_artifact": null, "recorded_at": null}
     },
     {
       "lane_id": "APP-SDK-05",
@@ -88,13 +120,21 @@
       "local_obligation": "certify existence, inconsistency, or uniqueness of a bounded instance",
       "excluded_inference": "a polynomial encoding is not automatically the best solver and must be compared with SAT or combinatorial search",
       "first_fixture": "Encode a 4 by 4 Sudoku instance, recover its solution, and certify uniqueness with an independent finite checker.",
-      "certificate_route": [
-        "finite-domain encoding",
-        "solution witness",
-        "uniqueness obstruction",
-        "independent grid verifier"
-      ],
-      "switch_condition": "Switch to SAT when the polynomial certificate is larger or less transparent than the proof-producing Boolean route."
+      "certificate_route": ["finite-domain encoding", "solution witness", "uniqueness obstruction", "independent grid verifier"],
+      "switch_condition": "Switch to SAT when the polynomial certificate is larger or less transparent than the proof-producing Boolean route.",
+      "lane_class": "expensive_symbolic",
+      "resource_budget": {
+        "max_variables": 64,
+        "max_total_degree": 4,
+        "max_runtime_seconds": 300,
+        "max_basis_elements": 12000,
+        "max_intermediate_terms": 300000,
+        "monomial_order": "graded_reverse_lexicographic",
+        "backend": "SageMath/Singular",
+        "backend_version": "pinned-by-fixture",
+        "fallback_route": "proof_producing_sat"
+      },
+      "run_ledger": {"execution_status": "not_started", "termination_status": "not_started", "failure_status": null, "failure_record": null, "result_artifact": null, "recorded_at": null}
     },
     {
       "lane_id": "APP-REC-06",
@@ -104,13 +144,21 @@
       "local_obligation": "determine completion branches and whether the missing values are identifiable",
       "excluded_inference": "algebraic completion does not establish scientific, causal, historical, or palaeontological truth",
       "first_fixture": "Complete one missing coordinate in a small exact model and certify whether the completion is unique or branched.",
-      "certificate_route": [
-        "model assumptions",
-        "completion ideal",
-        "branch or uniqueness certificate",
-        "interpretation boundary"
-      ],
-      "switch_condition": "Reject the lane when the scientific model cannot justify the polynomial constraints."
+      "certificate_route": ["model assumptions", "completion ideal", "branch or uniqueness certificate", "interpretation boundary"],
+      "switch_condition": "Reject the lane when the scientific model cannot justify the polynomial constraints.",
+      "lane_class": "expensive_symbolic",
+      "resource_budget": {
+        "max_variables": 12,
+        "max_total_degree": 8,
+        "max_runtime_seconds": 300,
+        "max_basis_elements": 6000,
+        "max_intermediate_terms": 150000,
+        "monomial_order": "graded_reverse_lexicographic_then_elimination",
+        "backend": "SageMath/Singular",
+        "backend_version": "pinned-by-fixture",
+        "fallback_route": "reject_or_use_domain_specific_model"
+      },
+      "run_ledger": {"execution_status": "not_started", "termination_status": "not_started", "failure_status": null, "failure_record": null, "result_artifact": null, "recorded_at": null}
     }
   ]
 }
