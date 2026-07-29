@@ -43,15 +43,15 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         with self.assertRaises(ReleaseTrustError):
             validate_contract(contract, self.schema)
 
-    def test_payload_is_fail_closed(self) -> None:
+    def test_payload_is_fail_closed_without_approval_deadlock(self) -> None:
         policy = self.contract["branch_policy"]
         payload = protection_payload(policy, ["certify"])
         self.assertTrue(payload["required_status_checks"]["strict"])
         self.assertTrue(payload["enforce_admins"])
         self.assertEqual(
-            payload["required_pull_request_reviews"]["required_approving_review_count"], 1
+            payload["required_pull_request_reviews"]["required_approving_review_count"], 0
         )
-        self.assertTrue(
+        self.assertFalse(
             payload["required_pull_request_reviews"]["require_last_push_approval"]
         )
         self.assertTrue(payload["required_conversation_resolution"])
@@ -70,8 +70,8 @@ class ReleaseTrustAdminTests(unittest.TestCase):
             "required_pull_request_reviews": {
                 "dismiss_stale_reviews": True,
                 "require_code_owner_reviews": False,
-                "required_approving_review_count": 1,
-                "require_last_push_approval": True,
+                "required_approving_review_count": 0,
+                "require_last_push_approval": False,
                 "bypass_pull_request_allowances": {"users": [], "teams": [], "apps": []},
             },
             "required_conversation_resolution": {"enabled": True},
@@ -92,8 +92,8 @@ class ReleaseTrustAdminTests(unittest.TestCase):
             "required_pull_request_reviews": {
                 "dismiss_stale_reviews": True,
                 "require_code_owner_reviews": False,
-                "required_approving_review_count": 1,
-                "require_last_push_approval": True,
+                "required_approving_review_count": 0,
+                "require_last_push_approval": False,
                 "bypass_pull_request_allowances": {
                     "users": [{"login": "octocat"}],
                     "teams": [],
@@ -118,8 +118,8 @@ class ReleaseTrustAdminTests(unittest.TestCase):
             "required_pull_request_reviews": {
                 "dismiss_stale_reviews": True,
                 "require_code_owner_reviews": False,
-                "required_approving_review_count": 1,
-                "require_last_push_approval": True,
+                "required_approving_review_count": 0,
+                "require_last_push_approval": False,
                 "bypass_pull_request_allowances": {"users": [], "teams": [], "apps": []},
             },
             "required_conversation_resolution": {"enabled": True},
