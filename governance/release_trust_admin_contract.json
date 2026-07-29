@@ -20,12 +20,12 @@
     {
       "repository": "grandchallenge/MATHCERT",
       "branch": "main",
-      "required_checks": ["certify", "policy / policy"]
+      "required_checks": ["certify", "policy / policy", "security / action-policy"]
     },
     {
       "repository": "grandchallenge/MATHSOLVE",
       "branch": "main",
-      "required_checks": ["ledgers", "policy / policy"]
+      "required_checks": ["ledgers", "policy / policy", "security / action-policy"]
     },
     {
       "repository": "grandchallenge/MATH-PROGRAMME",
@@ -35,13 +35,19 @@
         "Replay LOG-GCD-001 in Lean",
         "Replay PC-WP04 bounded certificate",
         "Replay pinned Union-Closed MATHCERT evidence",
-        "policy / policy"
+        "policy / policy",
+        "security / action-policy"
       ]
     },
     {
       "repository": "grandchallenge/INTELLECT",
       "branch": "main",
-      "required_checks": ["test (3.11.14)", "test (3.12.13)", "policy / policy"]
+      "required_checks": [
+        "test (3.11.14)",
+        "test (3.12.13)",
+        "policy / policy",
+        "security / action-policy"
+      ]
     }
   ],
   "branch_policy": {
