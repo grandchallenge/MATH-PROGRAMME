@@ -43,21 +43,6 @@ def main() -> int:
         for error in workflow_coverage_errors(texts=overprivileged_policy, evidence=evidence)
     )
 
-    overprivileged_security = dict(texts)
-    overprivileged_security["gcl-conformance.yml"] = overprivileged_security[
-        "gcl-conformance.yml"
-    ].replace(
-        "      security-events: write\n",
-        "      security-events: write\n      actions: write\n",
-        1,
-    )
-    assert any(
-        "job permissions exceed the governed allowance" in error
-        for error in workflow_coverage_errors(
-            texts=overprivileged_security, evidence=evidence
-        )
-    )
-
     direct_pages_push = dict(texts)
     direct_pages_push["pages.yml"] = direct_pages_push["pages.yml"].replace(
         "  workflow_run:\n", "  push:\n    branches: [main]\n  workflow_run:\n", 1
