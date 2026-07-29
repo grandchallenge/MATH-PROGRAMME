@@ -13,7 +13,7 @@ from jsonschema import Draft202012Validator, FormatChecker
 ROOT = Path(__file__).resolve().parents[1]
 AUDIT_PATH = ROOT / "governance" / "workflow_coverage_audit.json"
 SCHEMA_PATH = ROOT / "schemas" / "workflow_coverage_audit.schema.json"
-EXPECTED_PROGRAMME_BASE = "379e0480361c2f3cf92c3d3343134fc6f8cbd3fb"
+EXPECTED_PROGRAMME_BASE = "ab38db828c94f652b72c90e8a0c43893f4296a02"
 EXPECTED_AREAS = {
     "GLOBAL-POLICY",
     "CAMPAIGN-REPLAY-DISCOVERY",
@@ -31,6 +31,7 @@ EXPECTED_AREAS = {
     "EXTERNAL-MATHCERT-EVIDENCE",
     "STRICT-DOCUMENTATION-BUILD",
     "PAGES-PUBLICATION-CONTRACT",
+    "RELEASE-TRUST-EVIDENCE",
     "FAST-PATH-WORKFLOWS",
 }
 EXPECTED_CHILDREN = {
@@ -39,10 +40,50 @@ EXPECTED_CHILDREN = {
     ("grandchallenge/MATHFORGE", 6),
     ("grandchallenge/MATHSOLVE", 6),
 }
-EXPECTED_BLOCKERS = {
-    "PAGES-CURRENT-MAIN-DEPLOYMENT",
-    "PAGES-HOMEPAGE-METADATA",
-    "PROTECTED-BRANCH-REQUIRED-CHECKS",
+EXPECTED_ADMINISTRATIVE_IMPLEMENTATION = {
+    "release_trust_workflow_run_id": 30438260023,
+    "release_trust_artifact_id": 8718321584,
+    "evidence_sha256": "b8fa17184a77418eee4eead316508b74b5306c77540cc0d8b24f54387cb85799",
+}
+EXPECTED_RELEASE_TRUST_EVIDENCE = {
+    "contract_id": "ORG-REL-TRUST-01",
+    "evidence_id": "ORG-REL-TRUST-01-EVIDENCE",
+    "generated_at": "2026-07-29T09:07:02.418805+00:00",
+    "workflow_run_id": 30438260023,
+    "workflow_run_url": "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/30438260023",
+    "workflow_head_sha": "ab38db828c94f652b72c90e8a0c43893f4296a02",
+    "artifact_id": 8718321584,
+    "artifact_url": "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/actions/artifacts/8718321584",
+    "artifact_sha256": "cfae7c6c2a268c2a6c985ac01c503fb1007bb9971c298cc3535b00e87b736c35",
+    "evidence_file_sha256": "ac62119f887e15ca9cb9f2f2c46a3c25e1bb9ee234b17d5d4defda1b3730a389",
+    "evidence_sha256": "b8fa17184a77418eee4eead316508b74b5306c77540cc0d8b24f54387cb85799",
+    "contract_sha256": "fbf222e28c24d20602b2cfba58c8db9169a21d6ed264836becee3db6ad0f35b6",
+    "policy_workflow_run_id": 30437963352,
+    "pages_workflow_run_id": 30438169974,
+    "validated_site_artifact_id": 8718200794,
+    "validated_site_artifact_sha256": "edb1248ed218418e02390fb0654ee315924832a74f2d1c0954ca9fe1decf7499",
+    "site_archive_sha256": "b0a33faa409f39447738c7a4853c3d658e9b41838698436b0b06bdede17c3156",
+    "index_sha256": "9a54a3831d6fb0922b1e21a792c246051d1d8f078621fac5da5e87cdd59535c7",
+    "live_index_sha256": "9a54a3831d6fb0922b1e21a792c246051d1d8f078621fac5da5e87cdd59535c7",
+    "branch_protections": [
+        {
+            "repository": "grandchallenge/MATHCERT",
+            "snapshot_sha256": "a7f7f05b1fc136fba712686956e13f7eb092aa969e7ef8e09dedb6980db95030",
+        },
+        {
+            "repository": "grandchallenge/MATHSOLVE",
+            "snapshot_sha256": "c9e408782e3a31be19662f9dedbd2bcd6400093523970222db866d484c3f2c83",
+        },
+        {
+            "repository": "grandchallenge/MATH-PROGRAMME",
+            "snapshot_sha256": "c7d915443c0c55de19dd1916ef365634a02c4ef24d57144dfa63c2c05462b212",
+        },
+        {
+            "repository": "grandchallenge/INTELLECT",
+            "snapshot_sha256": "830b649f826418e6667082a78c0d7e9d39c6181f19ab194533f1d4b3caac9828",
+        },
+    ],
+    "verified": True,
 }
 EXPECTED_TECHNICAL_IMPLEMENTATIONS = {
     ("grandchallenge/MATHFORGE", 6): {
@@ -101,6 +142,10 @@ def validate(root: Path = ROOT) -> None:
         audit["programme_main_commit"] == EXPECTED_PROGRAMME_BASE,
         "umbrella audit base commit drift",
     )
+    require(
+        audit["release_trust_evidence"] == EXPECTED_RELEASE_TRUST_EVIDENCE,
+        "release-trust evidence identity drift",
+    )
 
     areas = audit["coverage_areas"]
     area_ids = [area["area_id"] for area in areas]
@@ -128,10 +173,16 @@ def validate(root: Path = ROOT) -> None:
         )
 
     for child in administrative:
-        require(child["state"] == "OPEN", f"administrative child state is not open: {child['issue']}")
-        require(child["complete"] is False, f"administrative child is incorrectly complete: {child['issue']}")
-        require(child["implementation"] is None, f"administrative child has fabricated implementation: {child['issue']}")
-        require(child["close_conditions"], f"administrative child lacks close conditions: {child['issue']}")
+        require(child["state"] == "CLOSED", f"administrative child remains open: {child['issue']}")
+        require(child["complete"] is True, f"administrative child is not complete: {child['issue']}")
+        require(
+            child["implementation"] == EXPECTED_ADMINISTRATIVE_IMPLEMENTATION,
+            f"administrative child evidence identity drift: {child['issue']}",
+        )
+        require(
+            child["close_conditions"] == [],
+            f"completed administrative child retains close conditions: {child['issue']}",
+        )
 
     technical_complete = all(child["complete"] for child in technical)
     administrative_complete = all(child["complete"] for child in administrative)
@@ -157,8 +208,7 @@ def validate(root: Path = ROOT) -> None:
         require(audit["operational_release_closure"] == "COMPLETE", "completed release must have COMPLETE closure")
         require(audit["umbrella_issue_disposition"] == "CLOSE", "completed release must close issue #6")
     else:
-        require(set(blocker_ids) == EXPECTED_BLOCKERS, "operational blocker set drift")
-        require({blocker["issue"] for blocker in blockers} == {7, 125}, "blockers must be scoped to issues #7 and #125")
+        require(blockers, "incomplete operational release lacks blockers")
         require(audit["operational_release_closure"] == "BLOCKED", "incomplete release must remain BLOCKED")
         require(audit["umbrella_issue_disposition"] == "KEEP_OPEN", "issue #6 must remain open while any child is incomplete")
 
@@ -182,7 +232,7 @@ def main() -> int:
         print(f"workflow coverage audit rejected: {exc}", file=sys.stderr)
         return 1
     print(
-        "umbrella audit checked: technical children complete; operational release blocked by Pages and protected-branch administration"
+        "umbrella audit checked: technical and administrative children complete; operational release closure is complete"
     )
     return 0
 

@@ -16,6 +16,7 @@
     "administrative_children_complete",
     "operational_release_complete",
     "operational_release_closure",
+    "release_trust_evidence",
     "children",
     "coverage_areas",
     "remaining_blockers",
@@ -24,7 +25,7 @@
   ],
   "properties": {
     "$schema": {"type": "string", "minLength": 1},
-    "schema_version": {"const": "1.1.0"},
+    "schema_version": {"const": "1.2.0"},
     "audit_id": {"const": "UMBRELLA-RELEASE-AUDIT-2026-07-29"},
     "audited_at": {"type": "string", "format": "date"},
     "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
@@ -34,6 +35,7 @@
     "administrative_children_complete": {"type": "boolean"},
     "operational_release_complete": {"type": "boolean"},
     "operational_release_closure": {"enum": ["COMPLETE", "BLOCKED"]},
+    "release_trust_evidence": {"$ref": "#/$defs/release_trust_evidence"},
     "children": {
       "type": "array",
       "minItems": 4,
@@ -73,7 +75,8 @@
                   "schema": {"$ref": "#/$defs/artifact"},
                   "registry": {"$ref": "#/$defs/artifact"}
                 }
-              }
+              },
+              {"$ref": "#/$defs/administrative_implementation"}
             ]
           },
           "close_conditions": {
@@ -85,7 +88,7 @@
     },
     "coverage_areas": {
       "type": "array",
-      "minItems": 16,
+      "minItems": 18,
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -125,6 +128,87 @@
       "properties": {
         "path": {"type": "string", "minLength": 1},
         "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "administrative_implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "release_trust_workflow_run_id",
+        "release_trust_artifact_id",
+        "evidence_sha256"
+      ],
+      "properties": {
+        "release_trust_workflow_run_id": {"type": "integer", "minimum": 1},
+        "release_trust_artifact_id": {"type": "integer", "minimum": 1},
+        "evidence_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "release_trust_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_id",
+        "evidence_id",
+        "generated_at",
+        "workflow_run_id",
+        "workflow_run_url",
+        "workflow_head_sha",
+        "artifact_id",
+        "artifact_url",
+        "artifact_sha256",
+        "evidence_file_sha256",
+        "evidence_sha256",
+        "contract_sha256",
+        "policy_workflow_run_id",
+        "pages_workflow_run_id",
+        "validated_site_artifact_id",
+        "validated_site_artifact_sha256",
+        "site_archive_sha256",
+        "index_sha256",
+        "live_index_sha256",
+        "branch_protections",
+        "verified"
+      ],
+      "properties": {
+        "contract_id": {"const": "ORG-REL-TRUST-01"},
+        "evidence_id": {"const": "ORG-REL-TRUST-01-EVIDENCE"},
+        "generated_at": {"type": "string", "format": "date-time"},
+        "workflow_run_id": {"type": "integer", "minimum": 1},
+        "workflow_run_url": {"type": "string", "format": "uri"},
+        "workflow_head_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "artifact_id": {"type": "integer", "minimum": 1},
+        "artifact_url": {"type": "string", "format": "uri"},
+        "artifact_sha256": {"$ref": "#/$defs/sha256"},
+        "evidence_file_sha256": {"$ref": "#/$defs/sha256"},
+        "evidence_sha256": {"$ref": "#/$defs/sha256"},
+        "contract_sha256": {"$ref": "#/$defs/sha256"},
+        "policy_workflow_run_id": {"type": "integer", "minimum": 1},
+        "pages_workflow_run_id": {"type": "integer", "minimum": 1},
+        "validated_site_artifact_id": {"type": "integer", "minimum": 1},
+        "validated_site_artifact_sha256": {"$ref": "#/$defs/sha256"},
+        "site_archive_sha256": {"$ref": "#/$defs/sha256"},
+        "index_sha256": {"$ref": "#/$defs/sha256"},
+        "live_index_sha256": {"$ref": "#/$defs/sha256"},
+        "branch_protections": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["repository", "snapshot_sha256"],
+            "properties": {
+              "repository": {"type": "string", "minLength": 1},
+              "snapshot_sha256": {"$ref": "#/$defs/sha256"}
+            }
+          }
+        },
+        "verified": {"const": true}
       }
     }
   },

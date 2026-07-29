@@ -63,22 +63,33 @@ class WorkflowCoverageAuditTests(unittest.TestCase):
             lambda root: self.mutate(root, lambda audit: audit["coverage_areas"].pop())
         )
 
-    def test_blocker_cannot_be_silently_removed(self) -> None:
-        self.assert_rejected(
-            lambda root: self.mutate(root, lambda audit: audit["remaining_blockers"].pop())
-        )
-
-    def test_umbrella_issue_cannot_close_while_blocked(self) -> None:
+    def test_blocker_cannot_be_reintroduced_after_closure(self) -> None:
         self.assert_rejected(
             lambda root: self.mutate(
-                root, lambda audit: audit.update(umbrella_issue_disposition="CLOSE")
+                root,
+                lambda audit: audit["remaining_blockers"].append(
+                    {
+                        "blocker_id": "REINTRODUCED-BLOCKER",
+                        "issue": 7,
+                        "state": "OPEN",
+                        "scope": "invalid",
+                        "close_condition": "invalid",
+                    }
+                ),
             )
         )
 
-    def test_operational_release_cannot_be_true_with_incomplete_children(self) -> None:
+    def test_umbrella_issue_cannot_remain_open_after_closure(self) -> None:
         self.assert_rejected(
             lambda root: self.mutate(
-                root, lambda audit: audit.update(operational_release_complete=True)
+                root, lambda audit: audit.update(umbrella_issue_disposition="KEEP_OPEN")
+            )
+        )
+
+    def test_operational_release_cannot_be_false_with_complete_children(self) -> None:
+        self.assert_rejected(
+            lambda root: self.mutate(
+                root, lambda audit: audit.update(operational_release_complete=False)
             )
         )
 
@@ -89,14 +100,25 @@ class WorkflowCoverageAuditTests(unittest.TestCase):
 
         self.assert_rejected(lambda root: self.mutate(root, mutate))
 
-    def test_administrative_child_cannot_be_marked_complete_without_full_closure(self) -> None:
+    def test_administrative_child_cannot_be_reopened_after_governed_closure(self) -> None:
         def mutate(audit: dict) -> None:
             child = next(item for item in audit["children"] if item["issue"] == 7)
-            child["state"] = "CLOSED"
-            child["complete"] = True
-            child["close_conditions"] = []
+            child["state"] = "OPEN"
+            child["complete"] = False
+            child["implementation"] = None
+            child["close_conditions"] = ["invalid"]
 
         self.assert_rejected(lambda root: self.mutate(root, mutate))
+
+    def test_release_trust_artifact_identity_drift_is_rejected(self) -> None:
+        self.assert_rejected(
+            lambda root: self.mutate(
+                root,
+                lambda audit: audit["release_trust_evidence"].update(
+                    artifact_sha256="0" * 64
+                ),
+            )
+        )
 
     def test_missing_child_is_rejected(self) -> None:
         self.assert_rejected(
