@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = ROOT / "governance" / "mathsolve_routing_audit.json"
 SCHEMA_PATH = ROOT / "schemas" / "mathsolve_routing_registry.schema.json"
 DOMAIN_REGISTRY_PATH = ROOT / "DOMAIN_REGISTRY.yaml"
-EXPECTED_PROVIDER_COMMIT = "5b84627b31df04a9177c12bfb988e3bf6213ddcf"
+EXPECTED_PROVIDER_COMMIT = "68bbe0ae63c454b0dc63bedd0bc9f5501f8d5c03"
 EXPECTED_PROVIDER_PULL_REQUEST = "https://github.com/grandchallenge/MATHSOLVE/pull/72"
 EXPECTED_MANIFESTS = {
     "UC-001": ("campaign_manifests/UC-001.json", "8124414182c2270af55f6aabb51ec150e6747591"),
