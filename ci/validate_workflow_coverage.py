@@ -17,6 +17,10 @@ ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW_DIR = ROOT / ".github" / "workflows"
 IMMUTABLE_ACTION = re.compile(r"^[^@\s]+@[0-9a-f]{40}$")
 READ_ONLY_PERMISSIONS = {"contents": "read"}
+SECURITY_REPORTING_PERMISSIONS = {
+    "contents": "read",
+    "security-events": "write",
+}
 EXPECTED_WORKFLOWS = {
     "bsd-wp03-substrate.yml",
     "bsd-wp04-target.yml",
@@ -66,9 +70,15 @@ def _job_hardening_errors(name: str, workflow: dict[str, Any]) -> list[str]:
                 f"{name}:{job_id}: reusable workflow reference must use a full commit SHA"
             )
         job_permissions = job.get("permissions")
-        if name != "pages.yml" and job_permissions not in (None, {}, READ_ONLY_PERMISSIONS):
+        is_shared_security = name == "gcl-conformance.yml" and job_id == "security"
+        allowed_permissions = (
+            (None, {}, READ_ONLY_PERMISSIONS, SECURITY_REPORTING_PERMISSIONS)
+            if is_shared_security
+            else (None, {}, READ_ONLY_PERMISSIONS)
+        )
+        if name != "pages.yml" and job_permissions not in allowed_permissions:
             errors.append(
-                f"{name}:{job_id}: non-Pages job permissions may not exceed contents: read"
+                f"{name}:{job_id}: job permissions exceed the governed allowance"
             )
         for step in job.get("steps", []):
             uses = str(step.get("uses", ""))
