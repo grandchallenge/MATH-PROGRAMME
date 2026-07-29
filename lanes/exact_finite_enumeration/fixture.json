@@ -1,0 +1,22 @@
+{
+  "input": {
+    "lane_id": "LANE-EXACT-FINITE",
+    "object_definition": "all subsets of a two-element labelled set",
+    "carrier": "{0,1}",
+    "bound": 2,
+    "equivalence_relation": "label-preserving equality",
+    "generation_rule": "enumerate all two-bit incidence vectors",
+    "pruning_rule": "none",
+    "exact_backend": "Python integer bit masks",
+    "claim_boundary": "The fixture establishes only that the labelled two-element carrier has four subsets."
+  },
+  "handoff": {
+    "lane_id": "LANE-EXACT-FINITE",
+    "status": "replayed",
+    "enumerated_count": 4,
+    "witness_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "replay_command": ["python3", "toy_enumeration.py"],
+    "completeness_scope": "all labelled subsets of {0,1}",
+    "certification_state": "not_certified"
+  }
+}
