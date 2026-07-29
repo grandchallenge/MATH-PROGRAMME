@@ -33,6 +33,12 @@ EXPECTED_REPOSITORIES = {
     "grandchallenge/MATH-PROGRAMME",
     "grandchallenge/INTELLECT",
 }
+RULESET_NAMES = {
+    "grandchallenge/MATHCERT": "Cert profile - main",
+    "grandchallenge/MATHSOLVE": "Solve profile - main",
+    "grandchallenge/MATH-PROGRAMME": "Programme profile - main",
+    "grandchallenge/INTELLECT": "Provider profile - main",
+}
 
 
 class ReleaseTrustError(RuntimeError):
@@ -65,99 +71,143 @@ def validate_contract(contract: dict[str, Any], schema: dict[str, Any]) -> None:
         raise ReleaseTrustError("release-trust repository set drift")
     checks = {entry["repository"]: entry["required_checks"] for entry in repositories}
     expected_checks = {
-        "grandchallenge/MATHCERT": ["certify"],
-        "grandchallenge/MATHSOLVE": ["ledgers"],
+        "grandchallenge/MATHCERT": ["certify", "policy / policy"],
+        "grandchallenge/MATHSOLVE": ["ledgers", "policy / policy"],
         "grandchallenge/MATH-PROGRAMME": [
             "validate-json",
             "Replay LOG-GCD-001 in Lean",
             "Replay PC-WP04 bounded certificate",
             "Replay pinned Union-Closed MATHCERT evidence",
+            "policy / policy",
         ],
-        "grandchallenge/INTELLECT": ["test (3.11.14)", "test (3.12.13)"],
+        "grandchallenge/INTELLECT": [
+            "test (3.11.14)",
+            "test (3.12.13)",
+            "policy / policy",
+        ],
     }
     if checks != expected_checks:
         raise ReleaseTrustError("required status-check context set drift")
 
 
-def protection_payload(policy: dict[str, Any], contexts: list[str]) -> dict[str, Any]:
+def ruleset_payload(
+    name: str, policy: dict[str, Any], contexts: list[str]
+) -> dict[str, Any]:
+    rules: list[dict[str, Any]] = [
+        {"type": "deletion"},
+        {"type": "non_fast_forward"},
+        {
+            "type": "pull_request",
+            "parameters": {
+                "allowed_merge_methods": ["merge", "squash"],
+                "dismiss_stale_reviews_on_push": policy["dismiss_stale_reviews"],
+                "require_code_owner_review": policy["require_code_owner_reviews"],
+                "require_last_push_approval": policy["require_last_push_approval"],
+                "required_approving_review_count": policy["required_approving_reviews"],
+                "required_review_thread_resolution": policy[
+                    "required_conversation_resolution"
+                ],
+                "required_reviewers": [],
+                "dismissal_restriction": {"enabled": False, "allowed_actors": []},
+            },
+        },
+        {
+            "type": "required_status_checks",
+            "parameters": {
+                "do_not_enforce_on_create": False,
+                "strict_required_status_checks_policy": policy["strict_status_checks"],
+                "required_status_checks": [
+                    {"context": context} for context in contexts
+                ],
+            },
+        },
+    ]
+    if policy["required_linear_history"]:
+        rules.append({"type": "required_linear_history"})
     return {
-        "required_status_checks": {
-            "strict": policy["strict_status_checks"],
-            "contexts": contexts,
+        "name": name,
+        "target": "branch",
+        "enforcement": "active",
+        "bypass_actors": [],
+        "conditions": {
+            "ref_name": {"include": ["~DEFAULT_BRANCH"], "exclude": []}
         },
-        "enforce_admins": policy["enforce_admins"],
-        "required_pull_request_reviews": {
-            "dismissal_restrictions": {"users": [], "teams": []},
-            "dismiss_stale_reviews": policy["dismiss_stale_reviews"],
-            "require_code_owner_reviews": policy["require_code_owner_reviews"],
-            "required_approving_review_count": policy["required_approving_reviews"],
-            "require_last_push_approval": policy["require_last_push_approval"],
-            "bypass_pull_request_allowances": {"users": [], "teams": [], "apps": []},
-        },
-        "restrictions": None,
-        "required_linear_history": policy["required_linear_history"],
-        "allow_force_pushes": policy["allow_force_pushes"],
-        "allow_deletions": policy["allow_deletions"],
-        "block_creations": False,
-        "required_conversation_resolution": policy["required_conversation_resolution"],
-        "lock_branch": False,
-        "allow_fork_syncing": True,
+        "rules": rules,
     }
 
 
-def enabled(value: Any) -> bool:
-    if isinstance(value, dict):
-        return bool(value.get("enabled"))
-    return bool(value)
-
-
-def actor_names(value: Any) -> list[str]:
-    if not isinstance(value, list):
-        return []
-    names: list[str] = []
-    for actor in value:
-        if isinstance(actor, dict):
-            names.append(str(actor.get("slug") or actor.get("login") or actor.get("name") or ""))
-        elif actor is not None:
-            names.append(str(actor))
-    return sorted(name for name in names if name)
-
-
-def normalize_protection(protection: dict[str, Any]) -> dict[str, Any]:
-    status = protection.get("required_status_checks") or {}
-    contexts = list(status.get("contexts") or [])
-    for check in status.get("checks") or []:
-        if isinstance(check, dict) and check.get("context"):
-            contexts.append(str(check["context"]))
-    reviews = protection.get("required_pull_request_reviews") or {}
-    bypass = reviews.get("bypass_pull_request_allowances") or {}
+def normalize_ruleset(ruleset: dict[str, Any]) -> dict[str, Any]:
+    rules = {
+        str(rule.get("type")): rule
+        for rule in ruleset.get("rules", [])
+        if isinstance(rule, dict)
+    }
+    status = rules.get("required_status_checks", {}).get("parameters", {})
+    reviews = rules.get("pull_request", {}).get("parameters", {})
+    bypass = ruleset.get("bypass_actors") or []
+    conditions = ruleset.get("conditions") or {}
+    ref_name = conditions.get("ref_name") or {}
     return {
-        "url": str(protection.get("url", "")),
-        "strict_status_checks": bool(status.get("strict")),
-        "required_checks": sorted(set(contexts)),
-        "enforce_admins": enabled(protection.get("enforce_admins")),
-        "required_approving_reviews": int(reviews.get("required_approving_review_count") or 0),
-        "dismiss_stale_reviews": bool(reviews.get("dismiss_stale_reviews")),
-        "require_last_push_approval": bool(reviews.get("require_last_push_approval")),
-        "require_code_owner_reviews": bool(reviews.get("require_code_owner_reviews")),
-        "required_conversation_resolution": enabled(
-            protection.get("required_conversation_resolution")
+        "name": str(ruleset.get("name") or ""),
+        "target": str(ruleset.get("target") or ""),
+        "enforcement": str(ruleset.get("enforcement") or ""),
+        "ref_include": sorted(str(value) for value in ref_name.get("include") or []),
+        "ref_exclude": sorted(str(value) for value in ref_name.get("exclude") or []),
+        "url": str(
+            (ruleset.get("_links") or {}).get("self", {}).get("href")
+            or ruleset.get("source")
+            or ""
         ),
-        "allow_force_pushes": enabled(protection.get("allow_force_pushes")),
-        "allow_deletions": enabled(protection.get("allow_deletions")),
-        "required_linear_history": enabled(protection.get("required_linear_history")),
+        "strict_status_checks": bool(status.get("strict_required_status_checks_policy")),
+        "required_checks": sorted(
+            str(check.get("context"))
+            for check in status.get("required_status_checks", [])
+            if isinstance(check, dict) and check.get("context")
+        ),
+        "enforce_admins": not bool(bypass),
+        "required_approving_reviews": int(
+            reviews.get("required_approving_review_count") or 0
+        ),
+        "dismiss_stale_reviews": bool(reviews.get("dismiss_stale_reviews_on_push")),
+        "require_last_push_approval": bool(
+            reviews.get("require_last_push_approval")
+        ),
+        "require_code_owner_reviews": bool(reviews.get("require_code_owner_review")),
+        "required_conversation_resolution": bool(
+            reviews.get("required_review_thread_resolution")
+        ),
+        "allow_force_pushes": "non_fast_forward" not in rules,
+        "allow_deletions": "deletion" not in rules,
+        "required_linear_history": "required_linear_history" in rules,
         "bypass_actors": {
-            "users": actor_names(bypass.get("users")),
-            "teams": actor_names(bypass.get("teams")),
-            "apps": actor_names(bypass.get("apps")),
+            "users": [],
+            "teams": [],
+            "apps": [
+                str(actor.get("actor_id"))
+                for actor in bypass
+                if isinstance(actor, dict)
+            ],
         },
     }
 
 
-def protection_errors(
-    normalized: dict[str, Any], policy: dict[str, Any], contexts: list[str]
+def ruleset_errors(
+    normalized: dict[str, Any],
+    policy: dict[str, Any],
+    contexts: list[str],
+    expected_name: str,
 ) -> list[str]:
     errors: list[str] = []
+    structural_expectations = {
+        "name": expected_name,
+        "target": "branch",
+        "enforcement": "active",
+        "ref_include": ["~DEFAULT_BRANCH"],
+        "ref_exclude": [],
+    }
+    for key, value in structural_expectations.items():
+        if normalized.get(key) != value:
+            errors.append(f"{key} drift: {normalized.get(key)!r} != {value!r}")
     expected = {
         "strict_status_checks": policy["strict_status_checks"],
         "required_checks": sorted(contexts),
@@ -176,9 +226,9 @@ def protection_errors(
             errors.append(f"{key} drift: {normalized.get(key)!r} != {value!r}")
     bypass = normalized.get("bypass_actors", {})
     if any(bypass.get(kind) for kind in ("users", "teams", "apps")):
-        errors.append(f"branch protection has bypass actors: {bypass}")
+        errors.append(f"repository ruleset has bypass actors: {bypass}")
     if not normalized.get("url"):
-        errors.append("branch protection has no stable API URL")
+        errors.append("repository ruleset has no stable API identity")
     return errors
 
 
@@ -235,17 +285,38 @@ def fetch_public_bytes(url: str, expected_sha: str) -> bytes:
         raise ReleaseTrustError(f"public Pages site is unavailable: {exc}") from exc
 
 
+def branch_ruleset(client: GitHubClient, repository: str) -> dict[str, Any]:
+    listing = client.request("GET", f"/repos/{repository}/rulesets")
+    candidates = [
+        item
+        for item in listing
+        if item.get("target") == "branch" and item.get("enforcement") == "active"
+    ]
+    if len(candidates) != 1:
+        raise ReleaseTrustError(
+            f"{repository}: expected exactly one active branch ruleset, found "
+            f"{len(candidates)}"
+        )
+    ruleset_id = candidates[0].get("id")
+    if not ruleset_id:
+        raise ReleaseTrustError(f"{repository}: active branch ruleset has no id")
+    return client.request("GET", f"/repos/{repository}/rulesets/{ruleset_id}")
+
+
 def apply_contract(client: GitHubClient, contract: dict[str, Any]) -> None:
     pages = contract["pages"]
     client.request("PATCH", f"/repos/{pages['repository']}", {"homepage": pages["homepage"]})
     policy = contract["branch_policy"]
     for entry in contract["repositories"]:
         repository = entry["repository"]
-        branch = urllib.parse.quote(entry["branch"], safe="")
+        current = branch_ruleset(client, repository)
+        ruleset_id = current["id"]
         client.request(
             "PUT",
-            f"/repos/{repository}/branches/{branch}/protection",
-            protection_payload(policy, entry["required_checks"]),
+            f"/repos/{repository}/rulesets/{ruleset_id}",
+            ruleset_payload(
+                RULESET_NAMES[repository], policy, entry["required_checks"]
+            ),
         )
 
 
@@ -340,15 +411,19 @@ def verify_contract(client: GitHubClient, contract: dict[str, Any]) -> dict[str,
     if homepage.rstrip("/") != pages["homepage"].rstrip("/"):
         errors.append(f"repository homepage drift: {homepage!r} != {pages['homepage']!r}")
 
-    protections: list[dict[str, Any]] = []
+    rulesets: list[dict[str, Any]] = []
     for entry in contract["repositories"]:
         repository = entry["repository"]
-        branch = urllib.parse.quote(entry["branch"], safe="")
-        raw = client.request("GET", f"/repos/{repository}/branches/{branch}/protection")
-        normalized = normalize_protection(raw)
-        current_errors = protection_errors(normalized, policy, entry["required_checks"])
+        raw = branch_ruleset(client, repository)
+        normalized = normalize_ruleset(raw)
+        current_errors = ruleset_errors(
+            normalized,
+            policy,
+            entry["required_checks"],
+            RULESET_NAMES[repository],
+        )
         errors.extend(f"{repository}: {message}" for message in current_errors)
-        protections.append(
+        rulesets.append(
             {
                 "repository": repository,
                 "branch": entry["branch"],
@@ -436,7 +511,7 @@ def verify_contract(client: GitHubClient, contract: dict[str, Any]) -> dict[str,
         "pages_workflow_run": run_evidence(pages_run),
         "validated_site_artifact": artifact_evidence,
         "live_index_sha256": live_index_sha,
-        "branch_protections": protections,
+        "repository_rulesets": rulesets,
         "verified": not errors,
         "errors": errors,
     }

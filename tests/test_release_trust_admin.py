@@ -14,9 +14,9 @@ sys.path.insert(0, str(ROOT / "ci"))
 
 from release_trust_admin import (  # noqa: E402
     ReleaseTrustError,
-    normalize_protection,
-    protection_errors,
-    protection_payload,
+    normalize_ruleset,
+    ruleset_errors,
+    ruleset_payload,
     validate_contract,
 )
 from github_http import CrossOriginAuthStrippingRedirectHandler  # noqa: E402
@@ -47,92 +47,71 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         with self.assertRaises(ReleaseTrustError):
             validate_contract(contract, self.schema)
 
-    def test_payload_is_fail_closed_without_approval_deadlock(self) -> None:
+    def test_ruleset_payload_is_fail_closed_without_approval_deadlock(self) -> None:
         policy = self.contract["branch_policy"]
-        payload = protection_payload(policy, ["certify"])
-        self.assertTrue(payload["required_status_checks"]["strict"])
-        self.assertTrue(payload["enforce_admins"])
+        payload = ruleset_payload("Cert profile - main", policy, ["certify"])
+        self.assertEqual(payload["target"], "branch")
+        self.assertEqual(payload["enforcement"], "active")
+        self.assertEqual(payload["bypass_actors"], [])
         self.assertEqual(
-            payload["required_pull_request_reviews"]["required_approving_review_count"], 0
+            payload["conditions"],
+            {"ref_name": {"include": ["~DEFAULT_BRANCH"], "exclude": []}},
         )
-        self.assertFalse(
-            payload["required_pull_request_reviews"]["require_last_push_approval"]
-        )
-        self.assertTrue(payload["required_conversation_resolution"])
-        self.assertFalse(payload["allow_force_pushes"])
-        self.assertFalse(payload["allow_deletions"])
-        self.assertEqual(
-            payload["required_pull_request_reviews"]["bypass_pull_request_allowances"],
-            {"users": [], "teams": [], "apps": []},
-        )
+        rules = {rule["type"]: rule for rule in payload["rules"]}
+        status = rules["required_status_checks"]["parameters"]
+        reviews = rules["pull_request"]["parameters"]
+        self.assertTrue(status["strict_required_status_checks_policy"])
+        self.assertEqual(status["required_status_checks"], [{"context": "certify"}])
+        self.assertEqual(reviews["required_approving_review_count"], 0)
+        self.assertFalse(reviews["require_last_push_approval"])
+        self.assertTrue(reviews["required_review_thread_resolution"])
+        self.assertIn("non_fast_forward", rules)
+        self.assertIn("deletion", rules)
 
-    def test_normalized_matching_protection_passes(self) -> None:
-        raw = {
-            "url": "https://api.github.com/repos/grandchallenge/MATHCERT/branches/main/protection",
-            "required_status_checks": {"strict": True, "contexts": ["certify"]},
-            "enforce_admins": {"enabled": True},
-            "required_pull_request_reviews": {
-                "dismiss_stale_reviews": True,
-                "require_code_owner_reviews": False,
-                "required_approving_review_count": 0,
-                "require_last_push_approval": False,
-                "bypass_pull_request_allowances": {"users": [], "teams": [], "apps": []},
-            },
-            "required_conversation_resolution": {"enabled": True},
-            "allow_force_pushes": {"enabled": False},
-            "allow_deletions": {"enabled": False},
-            "required_linear_history": {"enabled": False},
-        }
-        normalized = normalize_protection(raw)
+    def test_normalized_matching_ruleset_passes(self) -> None:
+        raw = ruleset_payload(
+            "Cert profile - main", self.contract["branch_policy"], ["certify"]
+        )
+        raw["source"] = "grandchallenge/MATHCERT"
+        normalized = normalize_ruleset(raw)
         self.assertEqual(
-            protection_errors(normalized, self.contract["branch_policy"], ["certify"]), []
+            ruleset_errors(
+                normalized,
+                self.contract["branch_policy"],
+                ["certify"],
+                "Cert profile - main",
+            ),
+            [],
         )
 
     def test_bypass_actor_is_rejected(self) -> None:
-        raw = {
-            "url": "https://api.github.com/protection",
-            "required_status_checks": {"strict": True, "contexts": ["certify"]},
-            "enforce_admins": {"enabled": True},
-            "required_pull_request_reviews": {
-                "dismiss_stale_reviews": True,
-                "require_code_owner_reviews": False,
-                "required_approving_review_count": 0,
-                "require_last_push_approval": False,
-                "bypass_pull_request_allowances": {
-                    "users": [{"login": "octocat"}],
-                    "teams": [],
-                    "apps": [],
-                },
-            },
-            "required_conversation_resolution": {"enabled": True},
-            "allow_force_pushes": {"enabled": False},
-            "allow_deletions": {"enabled": False},
-            "required_linear_history": {"enabled": False},
-        }
-        errors = protection_errors(
-            normalize_protection(raw), self.contract["branch_policy"], ["certify"]
+        raw = ruleset_payload(
+            "Cert profile - main", self.contract["branch_policy"], ["certify"]
+        )
+        raw["source"] = "grandchallenge/MATHCERT"
+        raw["bypass_actors"] = [{"actor_id": 1, "actor_type": "Team"}]
+        errors = ruleset_errors(
+            normalize_ruleset(raw),
+            self.contract["branch_policy"],
+            ["certify"],
+            "Cert profile - main",
         )
         self.assertTrue(any("bypass actors" in error for error in errors))
 
     def test_relaxed_status_checks_are_rejected(self) -> None:
-        raw = {
-            "url": "https://api.github.com/protection",
-            "required_status_checks": {"strict": False, "contexts": ["certify"]},
-            "enforce_admins": {"enabled": True},
-            "required_pull_request_reviews": {
-                "dismiss_stale_reviews": True,
-                "require_code_owner_reviews": False,
-                "required_approving_review_count": 0,
-                "require_last_push_approval": False,
-                "bypass_pull_request_allowances": {"users": [], "teams": [], "apps": []},
-            },
-            "required_conversation_resolution": {"enabled": True},
-            "allow_force_pushes": {"enabled": False},
-            "allow_deletions": {"enabled": False},
-            "required_linear_history": {"enabled": False},
-        }
-        errors = protection_errors(
-            normalize_protection(raw), self.contract["branch_policy"], ["certify"]
+        raw = ruleset_payload(
+            "Cert profile - main", self.contract["branch_policy"], ["certify"]
+        )
+        raw["source"] = "grandchallenge/MATHCERT"
+        status = next(
+            rule for rule in raw["rules"] if rule["type"] == "required_status_checks"
+        )
+        status["parameters"]["strict_required_status_checks_policy"] = False
+        errors = ruleset_errors(
+            normalize_ruleset(raw),
+            self.contract["branch_policy"],
+            ["certify"],
+            "Cert profile - main",
         )
         self.assertTrue(any("strict_status_checks drift" in error for error in errors))
 
