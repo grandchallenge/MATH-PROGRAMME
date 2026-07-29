@@ -42,6 +42,30 @@ def main() -> int:
             excluded_inference=manifest["lanes"][4]["local_obligation"]
         )
     )
+    rejected(lambda manifest: manifest["lanes"][0].pop("resource_budget"))
+    rejected(
+        lambda manifest: manifest["lanes"][1]["resource_budget"].update(
+            max_runtime_seconds=0
+        )
+    )
+    rejected(lambda manifest: manifest["lanes"][2].pop("run_ledger"))
+    rejected(
+        lambda manifest: manifest["lanes"][3]["run_ledger"].update(
+            execution_status="failed",
+            termination_status="timeout",
+            failure_status="timeout",
+            failure_record=None,
+            recorded_at="2026-07-28T00:00:00Z",
+        )
+    )
+    rejected(
+        lambda manifest: manifest["lanes"][4]["run_ledger"].update(
+            execution_status="completed",
+            termination_status="success",
+            result_artifact=None,
+            recorded_at="2026-07-28T00:00:00Z",
+        )
+    )
     print("adversarial application manifest tests passed")
     return 0
 
