@@ -3,6 +3,18 @@
   "schema_version": "2.0.0",
   "entries": [
     {
+      "id": "WORKFLOW-COVERAGE-AUDIT-VALIDATION",
+      "command": ["python3", "ci/validate_workflow_coverage_audit.py"],
+      "timeout_seconds": 60,
+      "scope": "Validate complete CI contract coverage, preserve explicit Pages release blockers, and prevent premature closure of umbrella issue #6."
+    },
+    {
+      "id": "WORKFLOW-COVERAGE-AUDIT-ADVERSARIAL",
+      "command": ["python3", "tests/test_workflow_coverage_audit.py"],
+      "timeout_seconds": 60,
+      "scope": "Reject omitted workflow coverage areas, silently removed Pages blockers, missing audited controls, and premature umbrella closure."
+    },
+    {
       "id": "CROSS-PILLAR-LANE-PACKAGE-VALIDATION",
       "command": ["python3", "ci/validate_cross_pillar_lane_packages.py"],
       "timeout_seconds": 60,
