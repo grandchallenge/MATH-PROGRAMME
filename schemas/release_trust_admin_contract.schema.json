@@ -25,13 +25,28 @@
     "pages": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["repository", "branch", "homepage", "revision_marker_url", "workflow_file", "issue"],
+      "required": [
+        "repository",
+        "branch",
+        "homepage",
+        "public_url",
+        "policy_workflow_file",
+        "pages_workflow_file",
+        "artifact_name",
+        "archive_name",
+        "checksum_name",
+        "issue"
+      ],
       "properties": {
         "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
         "branch": {"const": "main"},
         "homepage": {"const": "https://grandchallenge.github.io/MATH-PROGRAMME/"},
-        "revision_marker_url": {"const": "https://grandchallenge.github.io/MATH-PROGRAMME/release-trust.json"},
-        "workflow_file": {"const": "pages.yml"},
+        "public_url": {"const": "https://grandchallenge.github.io/MATH-PROGRAMME/"},
+        "policy_workflow_file": {"const": "ci.yml"},
+        "pages_workflow_file": {"const": "pages.yml"},
+        "artifact_name": {"const": "validated-site"},
+        "archive_name": {"const": "validated-site.tar.gz"},
+        "checksum_name": {"const": "validated-site.tar.gz.sha256"},
         "issue": {"const": 7}
       }
     },
