@@ -8,8 +8,12 @@
     "repository": "grandchallenge/MATH-PROGRAMME",
     "branch": "main",
     "homepage": "https://grandchallenge.github.io/MATH-PROGRAMME/",
-    "revision_marker_url": "https://grandchallenge.github.io/MATH-PROGRAMME/release-trust.json",
-    "workflow_file": "pages.yml",
+    "public_url": "https://grandchallenge.github.io/MATH-PROGRAMME/",
+    "policy_workflow_file": "ci.yml",
+    "pages_workflow_file": "pages.yml",
+    "artifact_name": "validated-site",
+    "archive_name": "validated-site.tar.gz",
+    "checksum_name": "validated-site.tar.gz.sha256",
     "issue": 7
   },
   "repositories": [
@@ -57,5 +61,5 @@
     "protected_branches": 125,
     "umbrella": 6
   },
-  "closure_rule": "Close issues 7 and 125 only after the generated evidence proves the Pages marker matches current main, the homepage matches, and every repository has the exact branch policy. Rerun the umbrella audit before closing issue 6."
+  "closure_rule": "Close issues 7 and 125 only after the generated evidence proves that the live Pages index exactly matches the current-main validated-site artifact, the homepage matches, and every repository has the exact branch policy. Rerun the umbrella audit before closing issue 6."
 }
