@@ -1,16 +1,26 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://grandchallenge.ai/schemas/mathsolve_routing_registry.schema.json",
-  "title": "MATH-PROGRAMME MATHSOLVE routing audit registry",
+  "title": "MATH-PROGRAMME MATHSOLVE and MATHCERT routing audit registry",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "registry_id", "provider_repository", "provider_commit", "provider_pull_request", "verified_at", "campaigns"],
+  "required": [
+    "schema_version", "registry_id",
+    "provider_repository", "provider_commit", "provider_pull_request",
+    "certification_provider_repository", "certification_provider_commit",
+    "certification_route_registry_path", "certification_route_registry_git_blob_sha1",
+    "verified_at", "campaigns"
+  ],
   "properties": {
-    "schema_version": {"const": "1.1.0"},
+    "schema_version": {"const": "1.2.0"},
     "registry_id": {"const": "MATHSOLVE-ROUTING-AUDIT"},
     "provider_repository": {"const": "grandchallenge/MATHSOLVE"},
-    "provider_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-    "provider_pull_request": {"type": "string", "pattern": "^https://github.com/grandchallenge/MATHSOLVE/pull/[0-9]+$"},
+    "provider_commit": {"const": "cdb34f47829942bd89a3f7f754b412527eaafb92"},
+    "provider_pull_request": {"const": "https://github.com/grandchallenge/MATHSOLVE/pull/74"},
+    "certification_provider_repository": {"const": "grandchallenge/MATHCERT"},
+    "certification_provider_commit": {"const": "3854dd1b4f6e162a7e74c3da1993f022ee691e5e"},
+    "certification_route_registry_path": {"const": "governance/certification_routes.json"},
+    "certification_route_registry_git_blob_sha1": {"const": "065f0531e4d763b389b207d4922d5a85b4335ee3"},
     "verified_at": {"type": "string", "format": "date"},
     "campaigns": {
       "type": "array",
@@ -42,11 +52,23 @@
           "cert": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["repository", "state", "issue"],
+            "required": ["repository", "route_issue", "route_state", "handoff"],
             "properties": {
               "repository": {"const": "grandchallenge/MATHCERT"},
-              "state": {"enum": ["ready", "submitted", "certified", "qualified", "rejected", "proof_debt", "partial", "pending", "not_applicable"]},
-              "issue": {"type": "string", "pattern": "^https://github.com/grandchallenge/MATHCERT/issues/[0-9]+$"}
+              "route_issue": {"type": "string", "pattern": "^https://github.com/grandchallenge/MATHCERT/issues/[0-9]+$"},
+              "route_state": {"enum": ["pending", "ready", "submitted", "certified", "qualified", "rejected", "proof_debt"]},
+              "handoff": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["repository", "handoff_id", "state", "path", "git_blob_sha1"],
+                "properties": {
+                  "repository": {"const": "grandchallenge/MATHSOLVE"},
+                  "handoff_id": {"type": "string", "pattern": "^MC-HANDOFF-[A-Z0-9-]+$"},
+                  "state": {"enum": ["pending", "ready", "submitted", "certified", "qualified", "rejected", "proof_debt"]},
+                  "path": {"type": "string", "pattern": "^cert_handoffs/[A-Z0-9-]+\\.json$"},
+                  "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+                }
+              }
             }
           },
           "promotion": {
@@ -65,21 +87,15 @@
             "properties": {
               "waiver_id": {"type": "string", "minLength": 1},
               "approved_by": {
-                "type": "array",
-                "uniqueItems": true,
+                "type": "array", "uniqueItems": true,
                 "contains": {"const": "Referee"},
-                "allOf": [
-                  {"contains": {"const": "Steward"}},
-                  {"contains": {"const": "Human Steward"}}
-                ]
+                "allOf": [{"contains": {"const": "Steward"}}, {"contains": {"const": "Human Steward"}}]
               },
               "human_steward_authorization": {"type": "string", "minLength": 1},
               "reason": {"type": "string", "minLength": 10},
               "scope": {"type": "string", "minLength": 3},
               "stages": {
-                "type": "array",
-                "minItems": 1,
-                "uniqueItems": true,
+                "type": "array", "minItems": 1, "uniqueItems": true,
                 "items": {"enum": ["WP00", "WP01", "WP02", "RESTRICTED_TARGET", "MECHANISM", "SPECIFICATION", "REALIZATION", "CONFRONTATION", "JUDGMENT", "INTEGRATION", "CLAIM_PROMOTION"]}
               },
               "review_on": {"type": "string", "format": "date"}
