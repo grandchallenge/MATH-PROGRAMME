@@ -59,8 +59,12 @@ def _job_hardening_errors(name: str, workflow: dict[str, Any]) -> list[str]:
         errors.append(f"{name}: top-level permissions must be exactly contents: read")
 
     for job_id, job in workflow.get("jobs", {}).items():
-        if "timeout-minutes" not in job:
+        if "uses" not in job and "timeout-minutes" not in job:
             errors.append(f"{name}:{job_id}: timeout-minutes is required")
+        if "uses" in job and not IMMUTABLE_ACTION.fullmatch(str(job.get("uses", ""))):
+            errors.append(
+                f"{name}:{job_id}: reusable workflow reference must use a full commit SHA"
+            )
         job_permissions = job.get("permissions")
         if name != "pages.yml" and job_permissions not in (None, {}, READ_ONLY_PERMISSIONS):
             errors.append(
