@@ -101,9 +101,6 @@ class MathCertCrossRepositoryConformanceTests(unittest.TestCase):
             repositories["math_programme"]["routing_registry"]["git_blob_sha1"],
             "39e907cce79137168e5b2a240674d7f4e6f56cdd",
         )
-        for value in repositories["intellect"]["semantic_artifacts"].values():
-            if value.endswith("sha1"):
-                continue
         for key, value in repositories["intellect"]["semantic_artifacts"].items():
             if key.endswith("git_blob_sha1"):
                 self.assertRegex(value, HEX40)
