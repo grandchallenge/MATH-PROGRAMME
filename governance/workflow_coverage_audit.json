@@ -1,40 +1,83 @@
 {
   "$schema": "../schemas/workflow_coverage_audit.schema.json",
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "audit_id": "UMBRELLA-RELEASE-AUDIT-2026-07-29",
   "audited_at": "2026-07-29",
   "repository": "grandchallenge/MATH-PROGRAMME",
-  "programme_main_commit": "379e0480361c2f3cf92c3d3343134fc6f8cbd3fb",
+  "programme_main_commit": "ab38db828c94f652b72c90e8a0c43893f4296a02",
   "ci_contract_coverage": "COMPLETE",
   "technical_children_complete": true,
-  "administrative_children_complete": false,
-  "operational_release_complete": false,
-  "operational_release_closure": "BLOCKED",
+  "administrative_children_complete": true,
+  "operational_release_complete": true,
+  "operational_release_closure": "COMPLETE",
+  "release_trust_evidence": {
+    "contract_id": "ORG-REL-TRUST-01",
+    "evidence_id": "ORG-REL-TRUST-01-EVIDENCE",
+    "generated_at": "2026-07-29T09:07:02.418805+00:00",
+    "workflow_run_id": 30438260023,
+    "workflow_run_url": "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/30438260023",
+    "workflow_head_sha": "ab38db828c94f652b72c90e8a0c43893f4296a02",
+    "artifact_id": 8718321584,
+    "artifact_url": "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/actions/artifacts/8718321584",
+    "artifact_sha256": "cfae7c6c2a268c2a6c985ac01c503fb1007bb9971c298cc3535b00e87b736c35",
+    "evidence_file_sha256": "ac62119f887e15ca9cb9f2f2c46a3c25e1bb9ee234b17d5d4defda1b3730a389",
+    "evidence_sha256": "b8fa17184a77418eee4eead316508b74b5306c77540cc0d8b24f54387cb85799",
+    "contract_sha256": "fbf222e28c24d20602b2cfba58c8db9169a21d6ed264836becee3db6ad0f35b6",
+    "policy_workflow_run_id": 30437963352,
+    "pages_workflow_run_id": 30438169974,
+    "validated_site_artifact_id": 8718200794,
+    "validated_site_artifact_sha256": "edb1248ed218418e02390fb0654ee315924832a74f2d1c0954ca9fe1decf7499",
+    "site_archive_sha256": "b0a33faa409f39447738c7a4853c3d658e9b41838698436b0b06bdede17c3156",
+    "index_sha256": "9a54a3831d6fb0922b1e21a792c246051d1d8f078621fac5da5e87cdd59535c7",
+    "live_index_sha256": "9a54a3831d6fb0922b1e21a792c246051d1d8f078621fac5da5e87cdd59535c7",
+    "branch_protections": [
+      {
+        "repository": "grandchallenge/MATHCERT",
+        "snapshot_sha256": "a7f7f05b1fc136fba712686956e13f7eb092aa969e7ef8e09dedb6980db95030"
+      },
+      {
+        "repository": "grandchallenge/MATHSOLVE",
+        "snapshot_sha256": "c9e408782e3a31be19662f9dedbd2bcd6400093523970222db866d484c3f2c83"
+      },
+      {
+        "repository": "grandchallenge/MATH-PROGRAMME",
+        "snapshot_sha256": "c7d915443c0c55de19dd1916ef365634a02c4ef24d57144dfa63c2c05462b212"
+      },
+      {
+        "repository": "grandchallenge/INTELLECT",
+        "snapshot_sha256": "830b649f826418e6667082a78c0d7e9d39c6181f19ab194533f1d4b3caac9828"
+      }
+    ],
+    "verified": true
+  },
   "children": [
     {
       "child_id": "PAGES-RELEASE-TRUST",
       "repository": "grandchallenge/MATH-PROGRAMME",
       "issue": 7,
       "category": "administrative",
-      "state": "OPEN",
-      "complete": false,
-      "implementation": null,
-      "close_conditions": [
-        "Set the repository homepage to https://grandchallenge.github.io/MATH-PROGRAMME/.",
-        "Record a successful Deploy documentation site run for current main and prove that the public site serves that revision."
-      ]
+      "state": "CLOSED",
+      "complete": true,
+      "implementation": {
+        "release_trust_workflow_run_id": 30438260023,
+        "release_trust_artifact_id": 8718321584,
+        "evidence_sha256": "b8fa17184a77418eee4eead316508b74b5306c77540cc0d8b24f54387cb85799"
+      },
+      "close_conditions": []
     },
     {
       "child_id": "PROTECTED-BRANCH-ENFORCEMENT",
       "repository": "grandchallenge/MATH-PROGRAMME",
       "issue": 125,
       "category": "administrative",
-      "state": "OPEN",
-      "complete": false,
-      "implementation": null,
-      "close_conditions": [
-        "Record ruleset or branch-protection identities proving that required checks, review rules, strict update policy, and bypass policy govern main in MATHCERT, MATHSOLVE, MATH-PROGRAMME, and INTELLECT."
-      ]
+      "state": "CLOSED",
+      "complete": true,
+      "implementation": {
+        "release_trust_workflow_run_id": 30438260023,
+        "release_trust_artifact_id": 8718321584,
+        "evidence_sha256": "b8fa17184a77418eee4eead316508b74b5306c77540cc0d8b24f54387cb85799"
+      },
+      "close_conditions": []
     },
     {
       "child_id": "MATHFORGE-BOUNDED-WITNESS",
@@ -100,31 +143,10 @@
     {"area_id": "EXTERNAL-MATHCERT-EVIDENCE", "status": "COMPLETE", "evidence": ["evidence/UC-WP02-MATHCERT.json", "Replay pinned Union-Closed MATHCERT evidence"]},
     {"area_id": "STRICT-DOCUMENTATION-BUILD", "status": "COMPLETE", "evidence": ["mkdocs build --strict", "requirements/docs.txt"]},
     {"area_id": "PAGES-PUBLICATION-CONTRACT", "status": "COMPLETE", "evidence": [".github/workflows/pages.yml", "ci/validate_workflow_semantics.py", "exact policy artifact deployment contract"]},
+    {"area_id": "RELEASE-TRUST-EVIDENCE", "status": "COMPLETE", "evidence": ["workflow run 30438260023", "artifact 8718321584", "artifact SHA-256 cfae7c6c2a268c2a6c985ac01c503fb1007bb9971c298cc3535b00e87b736c35", "evidence SHA-256 b8fa17184a77418eee4eead316508b74b5306c77540cc0d8b24f54387cb85799"]},
     {"area_id": "FAST-PATH-WORKFLOWS", "status": "COMPLETE", "evidence": ["bsd-wp03-substrate.yml", "bsd-wp04-target.yml", "pc-wp04.yml", "pc-wp05.yml"]}
   ],
-  "remaining_blockers": [
-    {
-      "blocker_id": "PAGES-CURRENT-MAIN-DEPLOYMENT",
-      "issue": 7,
-      "state": "UNVERIFIED",
-      "scope": "A successful Deploy documentation site run tied to current main and a served-revision identity remain unverified through the available connector.",
-      "close_condition": "Record the successful Pages deployment run for the current main revision and confirm the public site serves that revision."
-    },
-    {
-      "blocker_id": "PAGES-HOMEPAGE-METADATA",
-      "issue": 7,
-      "state": "OPEN",
-      "scope": "The available GitHub connector does not expose repository-homepage mutation or a normalized homepage field.",
-      "close_condition": "Set the repository homepage to https://grandchallenge.github.io/MATH-PROGRAMME/ and verify it through repository metadata."
-    },
-    {
-      "blocker_id": "PROTECTED-BRANCH-REQUIRED-CHECKS",
-      "issue": 125,
-      "state": "UNVERIFIED",
-      "scope": "Exact-head workflows pass, but ruleset enforcement, strict update requirements, review requirements, and bypass actors are not observable through the available connector.",
-      "close_condition": "Record authoritative ruleset or branch-protection evidence for all four mathematics governance repositories."
-    }
-  ],
-  "umbrella_issue_disposition": "KEEP_OPEN",
+  "remaining_blockers": [],
+  "umbrella_issue_disposition": "CLOSE",
   "closure_rule": "Close MATH-PROGRAMME issue #6 only when all four children are complete, remaining_blockers is empty, and operational_release_complete is true."
 }
