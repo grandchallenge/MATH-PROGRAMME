@@ -4,6 +4,7 @@ import copy
 import json
 import sys
 import unittest
+import urllib.request
 from pathlib import Path
 
 import yaml
@@ -18,6 +19,7 @@ from release_trust_admin import (  # noqa: E402
     protection_payload,
     validate_contract,
 )
+from github_http import CrossOriginAuthStrippingRedirectHandler  # noqa: E402
 
 
 class ReleaseTrustAdminTests(unittest.TestCase):
@@ -133,6 +135,41 @@ class ReleaseTrustAdminTests(unittest.TestCase):
             normalize_protection(raw), self.contract["branch_policy"], ["certify"]
         )
         self.assertTrue(any("strict_status_checks drift" in error for error in errors))
+
+    def test_cross_origin_artifact_redirect_drops_authorization(self) -> None:
+        request = urllib.request.Request(
+            "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/actions/artifacts/1/zip",
+            headers={"Authorization": "Bearer secret", "Accept": "application/zip"},
+        )
+        redirected = CrossOriginAuthStrippingRedirectHandler().redirect_request(
+            request,
+            None,
+            302,
+            "Found",
+            {},
+            "https://pipelines.actions.githubusercontent.com/signed-artifact",
+        )
+        self.assertIsNotNone(redirected)
+        assert redirected is not None
+        self.assertNotIn("Authorization", redirected.headers)
+        self.assertEqual(redirected.get_header("Accept"), "application/zip")
+
+    def test_same_origin_redirect_keeps_authorization(self) -> None:
+        request = urllib.request.Request(
+            "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/actions/artifacts/1/zip",
+            headers={"Authorization": "Bearer secret"},
+        )
+        redirected = CrossOriginAuthStrippingRedirectHandler().redirect_request(
+            request,
+            None,
+            302,
+            "Found",
+            {},
+            "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/actions/artifacts/2/zip",
+        )
+        self.assertIsNotNone(redirected)
+        assert redirected is not None
+        self.assertEqual(redirected.get_header("Authorization"), "Bearer secret")
 
     def test_administration_workflow_is_governed(self) -> None:
         workflow = yaml.load(
