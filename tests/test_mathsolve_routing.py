@@ -34,7 +34,7 @@ class RoutingTests(unittest.TestCase):
     def test_provider_commit_drift_fails(self):
         data = self.registry()
         data["provider_commit"] = "0" * 40
-        self.assertTrue(any("provider commit drift" in error for error in routing.routing_errors(data, active=set())))
+        self.assertTrue(any("provider_commit drift" in error for error in routing.routing_errors(data, active=set())))
 
     def test_programme_embedded_future_stage_fails(self):
         self.assertTrue(routing.provider_gate_errors("PNP-001", "WP02", self.registry()))
