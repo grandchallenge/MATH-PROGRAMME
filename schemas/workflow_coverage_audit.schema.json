@@ -6,6 +6,7 @@
   "additionalProperties": false,
   "required": ["schema_version", "audit_id", "audited_at", "repository", "main_commit", "ci_contract_coverage", "operational_release_closure", "coverage_areas", "remaining_blockers", "umbrella_issue_disposition"],
   "properties": {
+    "$schema": {"type": "string", "minLength": 1},
     "schema_version": {"const": "1.0.0"},
     "audit_id": {"const": "CI-COVERAGE-AUDIT-2026-07-29"},
     "audited_at": {"type": "string", "format": "date"},
