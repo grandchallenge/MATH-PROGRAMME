@@ -9,12 +9,14 @@ The two remaining technical umbrella children are also complete:
 - MATHFORGE issue #6 — bounded algebraic witness generation;
 - MATHSOLVE issue #6 — bounded algebraic tactic routing.
 
-Operational release closure is not complete. MATH-PROGRAMME issues #7 and #125 remain open. Therefore:
+Operational release closure is complete. MATH-PROGRAMME issues #7 and #125 are closed from exact, App-backed release-trust evidence. Therefore:
 
 - `technical_children_complete: true`;
-- `administrative_children_complete: false`;
-- `operational_release_complete: false`;
-- umbrella issue #6: `KEEP_OPEN`.
+- `administrative_children_complete: true`;
+- `operational_release_complete: true`;
+- `operational_release_closure: COMPLETE`;
+- `remaining_blockers: []`;
+- umbrella issue #6: `CLOSE`.
 
 ## Completed technical children
 
@@ -43,27 +45,40 @@ MATHSOLVE issue #6 was completed through PR #77.
 
 The Solve lane now requires one local algebraic obligation, explicit rejection of global open-problem encoding, bounded resources, a fallback route, an expected witness, exact witness lineage, correct MATHCERT intake and adjudication states, and failure evidence for rejected or proof-debt routes.
 
-## Remaining administrative children
+## Completed administrative children
 
 ### Issue #7 — Pages release trust
 
-Two facts remain unresolved:
+The protected `Release trust administration` workflow verified:
 
-1. the repository homepage must be set to `https://grandchallenge.github.io/MATH-PROGRAMME/`;
-2. a successful Pages deployment for current `main` must be recorded, together with evidence that the public site serves that revision.
+- repository homepage `https://grandchallenge.github.io/MATH-PROGRAMME/`;
+- exact-main policy run `30446169969` at `8b965d2e8913ed1252f37dc83de8456a335cedd9`;
+- exact-main Pages run `30446339153`;
+- validated-site artifact `8721515246`;
+- byte-identical artifact and public index SHA-256 `9a54a3831d6fb0922b1e21a792c246051d1d8f078621fac5da5e87cdd59535c7`.
 
-The repository-side publication workflow is governed. The remaining debt concerns live repository metadata and deployment evidence.
+### Issue #125 — repository-ruleset enforcement
 
-### Issue #125 — protected-branch enforcement
+App-backed apply run `30446399649` updated and read back one active profile ruleset for MATHCERT, MATHSOLVE, MATH-PROGRAMME and INTELLECT. The evidence proves:
 
-The audit has exact-head success evidence for MATHCERT, MATHSOLVE, MATH-PROGRAMME and INTELLECT. It does not have authoritative ruleset or branch-protection evidence proving that:
+- repository-specific semantic checks and shared `policy / policy` checks are mandatory;
+- strict required-status-check policy is active;
+- pull requests and resolved review conversations are required;
+- stale reviews are dismissed;
+- force pushes and deletion are blocked;
+- no bypass actor is present.
 
-- the required workflow is mandatory;
-- branches must be up to date;
-- review requirements are active;
-- bypass actors are absent or explicitly governed.
+The run used a short-lived `gcl-release-trust` GitHub App installation token from the protected `release-trust` environment. The temporary human PAT was removed afterward, and verify-only run `30446476966` succeeded without it.
 
-The connected GitHub surface does not expose those administration records.
+## Admitted release-trust evidence
+
+- workflow run: `30446399649`;
+- exact head: `8b965d2e8913ed1252f37dc83de8456a335cedd9`;
+- evidence artifact: `8721612194`;
+- artifact SHA-256: `719c28ea73b69cfcb07049988ab48f231c235160e8c2b01f48761b49623ac33e`;
+- evidence-file SHA-256: `6c09d735c3b4f1ee4f5f53031658183ebc7a98a65fecc9c0eb9eca6a8ded2e74`;
+- canonical evidence SHA-256: `a3cfeea6a58de0e193015b96fd5929567bae9a3ee2aca68efe52795474669a85`;
+- verified: `true`.
 
 ## Closure invariant
 
