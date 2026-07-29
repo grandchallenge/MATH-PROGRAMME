@@ -6,6 +6,8 @@ import sys
 import unittest
 from pathlib import Path
 
+import yaml
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "ci"))
 
@@ -131,6 +133,42 @@ class ReleaseTrustAdminTests(unittest.TestCase):
             normalize_protection(raw), self.contract["branch_policy"], ["certify"]
         )
         self.assertTrue(any("strict_status_checks drift" in error for error in errors))
+
+    def test_administration_workflow_is_governed(self) -> None:
+        workflow = yaml.load(
+            (ROOT / ".github/workflows/release-trust-admin.yml").read_text(encoding="utf-8"),
+            Loader=yaml.BaseLoader,
+        )
+        self.assertEqual(workflow["name"], "Release trust administration")
+        self.assertIn("workflow_dispatch", workflow["on"])
+        self.assertEqual(workflow["permissions"], {"contents": "read"})
+        self.assertEqual(workflow["concurrency"]["group"], "release-trust-administration")
+        job = workflow["jobs"]["administer"]
+        self.assertEqual(job["runs-on"], "ubuntu-24.04")
+        self.assertEqual(job["timeout-minutes"], "30")
+        self.assertEqual(job["environment"], "release-trust")
+        self.assertEqual(
+            job["env"]["GCL_REPOSITORY_ADMIN_TOKEN"],
+            "${{ secrets.GCL_REPOSITORY_ADMIN_TOKEN }}",
+        )
+        uses = [step.get("uses", "") for step in job["steps"]]
+        self.assertIn(
+            "actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803", uses
+        )
+        self.assertIn(
+            "actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1", uses
+        )
+        self.assertIn(
+            "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02", uses
+        )
+        runs = "\n".join(str(step.get("run", "")) for step in job["steps"])
+        self.assertIn("python -m pip install --requirement requirements/policy.txt", runs)
+        self.assertIn("python ci/release_trust_admin.py --mode validate", runs)
+        self.assertIn("--wait-seconds 1200", runs)
+        self.assertIn("--close-child-issues", runs)
+        upload = next(step for step in job["steps"] if step.get("name") == "Upload release-trust evidence")
+        self.assertEqual(upload["with"]["retention-days"], "90")
+        self.assertEqual(upload["with"]["if-no-files-found"], "error")
 
 
 if __name__ == "__main__":
