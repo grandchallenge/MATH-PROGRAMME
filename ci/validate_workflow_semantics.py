@@ -2,6 +2,7 @@
 """Validate semantic workflow identity, dependency, runner, execution, and publication contracts."""
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -31,6 +32,7 @@ EXTERNAL_POLICY_INSTALL = (
     'python -m pip install --requirement "$GITHUB_WORKSPACE/requirements/policy.txt"'
 )
 UNIT_TEST_COMMAND = "python -m unittest discover -s tests -p 'test_*.py'"
+PINNED_REUSABLE_WORKFLOW = re.compile(r"^[^@\s]+/\.github/workflows/[^@\s]+@[0-9a-f]{40}$")
 
 
 def load_workflows(root: Path = ROOT) -> dict[str, dict[str, Any]]:
@@ -110,6 +112,13 @@ def workflow_semantic_errors(
     setup_python_steps = 0
     for filename, workflow in workflows.items():
         for job_id, job in workflow.get("jobs", {}).items():
+            reusable = str(job.get("uses", ""))
+            if reusable:
+                if not PINNED_REUSABLE_WORKFLOW.fullmatch(reusable):
+                    errors.append(
+                        f"{filename}:{job_id}: reusable workflow must use a full commit SHA"
+                    )
+                continue
             if str(job.get("runs-on", "")) != "ubuntu-24.04":
                 errors.append(f"{filename}:{job_id}: runs-on must be pinned to ubuntu-24.04")
             for step in job.get("steps", []):

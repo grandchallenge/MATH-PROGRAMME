@@ -184,11 +184,12 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         self.assertEqual(job["runs-on"], "ubuntu-24.04")
         self.assertEqual(job["timeout-minutes"], "30")
         self.assertEqual(job["environment"], "release-trust")
-        self.assertEqual(
-            job["env"]["GCL_REPOSITORY_ADMIN_TOKEN"],
-            "${{ secrets.GCL_REPOSITORY_ADMIN_TOKEN }}",
-        )
         uses = [step.get("uses", "") for step in job["steps"]]
+        self.assertIn(
+            "actions/create-github-app-token@"
+            "fee1f7d63c2ff003460e3d139729b119787bc349",
+            uses,
+        )
         self.assertIn(
             "actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803", uses
         )
@@ -198,6 +199,25 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         self.assertIn(
             "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02", uses
         )
+        app_step = next(step for step in job["steps"] if step.get("id") == "app-token")
+        self.assertEqual(
+            app_step["with"]["app-id"], "${{ secrets.GCL_RELEASE_TRUST_APP_ID }}"
+        )
+        self.assertEqual(
+            app_step["with"]["private-key"],
+            "${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}",
+        )
+        admin_steps = [
+            step
+            for step in job["steps"]
+            if "GCL_REPOSITORY_ADMIN_TOKEN" in step.get("env", {})
+        ]
+        self.assertEqual(len(admin_steps), 2)
+        for step in admin_steps:
+            self.assertEqual(
+                step["env"]["GCL_REPOSITORY_ADMIN_TOKEN"],
+                "${{ steps.app-token.outputs.token }}",
+            )
         runs = "\n".join(str(step.get("run", "")) for step in job["steps"])
         self.assertIn("python -m pip install --requirement requirements/policy.txt", runs)
         self.assertIn("python ci/release_trust_admin.py --mode validate", runs)
