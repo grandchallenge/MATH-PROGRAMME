@@ -21,6 +21,7 @@ EXPECTED_WORKFLOWS = {
     "bsd-wp03-substrate.yml",
     "bsd-wp04-target.yml",
     "ci.yml",
+    "gcl-conformance.yml",
     "pages.yml",
     "pc-wp04.yml",
     "pc-wp05.yml",
