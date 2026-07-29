@@ -4,6 +4,18 @@
 
 The programme workflow is a claim-boundary control. A green documentation build alone is insufficient: campaign replays, repository tests, executable policy scripts, formal fixtures, cross-repository evidence, continuity records, declared dependencies, and the exact published site artifact must all remain governed.
 
+## Current audit disposition
+
+The repository-wide audit dated 2026-07-29 is recorded in `WORKFLOW_COVERAGE_AUDIT_2026_07_29.md` and `governance/workflow_coverage_audit.json`.
+
+Its determination is:
+
+- CI contract coverage: `COMPLETE`;
+- operational release closure: `BLOCKED`;
+- umbrella issue #6: `KEEP_OPEN`.
+
+The remaining blockers are confined to issue #7: independently recording a current-main Pages deployment and setting the repository About homepage URL.
+
 ## Global policy gate
 
 `.github/workflows/ci.yml` is the global `Programme policy checks` workflow. It runs on every pull request, every push to `main`, and explicit manual audit through `workflow_dispatch`.
