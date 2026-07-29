@@ -71,19 +71,29 @@ def validate_contract(contract: dict[str, Any], schema: dict[str, Any]) -> None:
         raise ReleaseTrustError("release-trust repository set drift")
     checks = {entry["repository"]: entry["required_checks"] for entry in repositories}
     expected_checks = {
-        "grandchallenge/MATHCERT": ["certify", "policy / policy"],
-        "grandchallenge/MATHSOLVE": ["ledgers", "policy / policy"],
+        "grandchallenge/MATHCERT": [
+            "certify",
+            "policy / policy",
+            "security / action-policy",
+        ],
+        "grandchallenge/MATHSOLVE": [
+            "ledgers",
+            "policy / policy",
+            "security / action-policy",
+        ],
         "grandchallenge/MATH-PROGRAMME": [
             "validate-json",
             "Replay LOG-GCD-001 in Lean",
             "Replay PC-WP04 bounded certificate",
             "Replay pinned Union-Closed MATHCERT evidence",
             "policy / policy",
+            "security / action-policy",
         ],
         "grandchallenge/INTELLECT": [
             "test (3.11.14)",
             "test (3.12.13)",
             "policy / policy",
+            "security / action-policy",
         ],
     }
     if checks != expected_checks:
