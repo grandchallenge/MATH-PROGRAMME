@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["lane_id", "status", "result", "artifact", "checker_command", "source_correspondence", "certification_state"],
+  "properties": {
+    "lane_id": {"const": "LANE-SAT-SMT"},
+    "status": {"enum": ["encoded", "solver_result", "proof_checked", "ready_for_mathcert", "rejected"]},
+    "result": {"enum": ["sat", "unsat", "unknown"]},
+    "artifact": {"type": "string", "minLength": 1},
+    "checker_command": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "source_correspondence": {"type": "string", "minLength": 1},
+    "certification_state": {"enum": ["not_certified", "ready_for_mathcert", "certified_by_mathcert"]}
+  }
+}
