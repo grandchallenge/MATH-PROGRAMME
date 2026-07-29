@@ -3,6 +3,18 @@
   "schema_version": "2.0.0",
   "entries": [
     {
+      "id": "SYMBOLIC-RESOURCE-BUDGET-VALIDATION",
+      "command": ["python3", "ci/validate_symbolic_resource_budgets.py"],
+      "timeout_seconds": 60,
+      "scope": "Discover every marked expensive symbolic lane and fail closed on missing registration, budgets, execution state, or preserved failure evidence."
+    },
+    {
+      "id": "SYMBOLIC-RESOURCE-BUDGET-ADVERSARIAL",
+      "command": ["python3", "tests/test_symbolic_resource_budgets.py"],
+      "timeout_seconds": 60,
+      "scope": "Reject omitted budgets, unregistered lanes, orphan registry records, suppressed failures, and completed runs without result artifacts."
+    },
+    {
       "id": "MATHFORGE-PROVIDER-IMPORT-VALIDATION",
       "command": ["python3", "ci/validate_mathforge_provider_imports.py"],
       "timeout_seconds": 60,
