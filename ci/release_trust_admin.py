@@ -4,13 +4,16 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import io
 import json
 import os
 import sys
+import tarfile
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -188,33 +191,45 @@ class GitHubClient:
             "User-Agent": "grandchallenge-release-trust-admin",
         }
 
-    def request(self, method: str, path: str, data: Any | None = None) -> Any:
+    @staticmethod
+    def url(path_or_url: str) -> str:
+        return path_or_url if path_or_url.startswith("https://") else f"{API_ROOT}{path_or_url}"
+
+    def request_bytes(self, method: str, path_or_url: str, data: Any | None = None) -> bytes:
         body = None if data is None else json.dumps(data).encode("utf-8")
         request = urllib.request.Request(
-            f"{API_ROOT}{path}", data=body, headers=self.headers, method=method
+            self.url(path_or_url), data=body, headers=self.headers, method=method
         )
         try:
-            with urllib.request.urlopen(request, timeout=60) as response:
-                raw = response.read()
-                return json.loads(raw) if raw else None
+            with urllib.request.urlopen(request, timeout=90) as response:
+                return response.read()
         except urllib.error.HTTPError as exc:
             detail = exc.read().decode("utf-8", errors="replace")
             raise ReleaseTrustError(
-                f"GitHub API {method} {path} failed with {exc.code}: {detail}"
+                f"GitHub API {method} {path_or_url} failed with {exc.code}: {detail}"
             ) from exc
 
+    def request(self, method: str, path_or_url: str, data: Any | None = None) -> Any:
+        raw = self.request_bytes(method, path_or_url, data)
+        return json.loads(raw) if raw else None
 
-def fetch_public_json(url: str, expected_sha: str) -> dict[str, Any]:
+
+def fetch_public_bytes(url: str, expected_sha: str) -> bytes:
     separator = "&" if "?" in url else "?"
     request = urllib.request.Request(
         f"{url}{separator}expected_sha={urllib.parse.quote(expected_sha)}&ts={int(time.time())}",
-        headers={"Cache-Control": "no-cache", "User-Agent": "grandchallenge-release-trust-admin"},
+        headers={
+            "Accept-Encoding": "identity",
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache",
+            "User-Agent": "grandchallenge-release-trust-admin",
+        },
     )
     try:
-        with urllib.request.urlopen(request, timeout=30) as response:
-            return json.load(response)
-    except (urllib.error.URLError, json.JSONDecodeError) as exc:
-        raise ReleaseTrustError(f"public revision marker is unavailable or invalid: {exc}") from exc
+        with urllib.request.urlopen(request, timeout=45) as response:
+            return response.read()
+    except urllib.error.URLError as exc:
+        raise ReleaseTrustError(f"public Pages site is unavailable: {exc}") from exc
 
 
 def apply_contract(client: GitHubClient, contract: dict[str, Any]) -> None:
@@ -231,11 +246,16 @@ def apply_contract(client: GitHubClient, contract: dict[str, Any]) -> None:
         )
 
 
-def latest_pages_run(
-    client: GitHubClient, repository: str, workflow_file: str, branch: str, head_sha: str
+def latest_workflow_run(
+    client: GitHubClient,
+    repository: str,
+    workflow_file: str,
+    branch: str,
+    head_sha: str,
+    event: str,
 ) -> dict[str, Any] | None:
     query = urllib.parse.urlencode(
-        {"branch": branch, "status": "success", "per_page": 100}
+        {"branch": branch, "event": event, "status": "success", "per_page": 100}
     )
     listing = client.request(
         "GET", f"/repos/{repository}/actions/workflows/{workflow_file}/runs?{query}"
@@ -244,6 +264,68 @@ def latest_pages_run(
         if run.get("head_sha") == head_sha and run.get("conclusion") == "success":
             return run
     return None
+
+
+def validated_site_index(
+    client: GitHubClient,
+    repository: str,
+    policy_run_id: int,
+    artifact_name: str,
+    archive_name: str,
+    checksum_name: str,
+) -> tuple[bytes, dict[str, Any]]:
+    listing = client.request(
+        "GET", f"/repos/{repository}/actions/runs/{policy_run_id}/artifacts?per_page=100"
+    )
+    matches = [
+        artifact
+        for artifact in listing.get("artifacts", [])
+        if artifact.get("name") == artifact_name and not artifact.get("expired")
+    ]
+    if len(matches) != 1:
+        raise ReleaseTrustError(
+            f"expected exactly one unexpired {artifact_name} artifact for run {policy_run_id}, found {len(matches)}"
+        )
+    artifact = matches[0]
+    declared_digest = str(artifact.get("digest") or "")
+    if not declared_digest.startswith("sha256:"):
+        raise ReleaseTrustError(f"workflow artifact lacks a SHA-256 digest: {declared_digest!r}")
+    artifact_zip = client.request_bytes("GET", str(artifact["archive_download_url"]))
+    outer_sha = hashlib.sha256(artifact_zip).hexdigest()
+    if outer_sha != declared_digest.split(":", 1)[1]:
+        raise ReleaseTrustError("workflow artifact SHA-256 mismatch")
+
+    with zipfile.ZipFile(io.BytesIO(artifact_zip)) as bundle:
+        names = set(bundle.namelist())
+        if archive_name not in names or checksum_name not in names:
+            raise ReleaseTrustError("validated-site artifact is missing archive or checksum")
+        archive_bytes = bundle.read(archive_name)
+        checksum_fields = bundle.read(checksum_name).decode("utf-8").split()
+    if len(checksum_fields) != 2 or checksum_fields[1] != archive_name:
+        raise ReleaseTrustError("validated-site checksum record is malformed")
+    inner_sha = hashlib.sha256(archive_bytes).hexdigest()
+    if inner_sha != checksum_fields[0]:
+        raise ReleaseTrustError("validated-site inner SHA-256 mismatch")
+
+    index_bytes: bytes | None = None
+    with tarfile.open(fileobj=io.BytesIO(archive_bytes), mode="r:gz") as archive:
+        for member in archive.getmembers():
+            normalized = member.name.lstrip("./")
+            if normalized == "index.html":
+                handle = archive.extractfile(member)
+                if handle is None:
+                    raise ReleaseTrustError("validated-site index.html is not a regular file")
+                index_bytes = handle.read()
+                break
+    if index_bytes is None:
+        raise ReleaseTrustError("validated-site archive has no index.html")
+    return index_bytes, {
+        "artifact_id": artifact.get("id"),
+        "artifact_url": artifact.get("url"),
+        "artifact_sha256": outer_sha,
+        "site_archive_sha256": inner_sha,
+        "index_sha256": hashlib.sha256(index_bytes).hexdigest(),
+    }
 
 
 def verify_contract(client: GitHubClient, contract: dict[str, Any]) -> dict[str, Any]:
@@ -278,26 +360,67 @@ def verify_contract(client: GitHubClient, contract: dict[str, Any]) -> dict[str,
     main_sha = str(branch_data.get("commit", {}).get("sha") or "")
     if len(main_sha) != 40:
         errors.append(f"current main identity is invalid: {main_sha!r}")
-    marker = fetch_public_json(pages["revision_marker_url"], main_sha) if main_sha else {}
-    if marker.get("repository") != pages["repository"]:
-        errors.append("public revision marker repository mismatch")
-    if marker.get("head_sha") != main_sha:
-        errors.append(
-            f"public revision marker is stale: {marker.get('head_sha')!r} != {main_sha!r}"
-        )
-    pages_run = (
-        latest_pages_run(
+
+    policy_run = (
+        latest_workflow_run(
             client,
             pages["repository"],
-            pages["workflow_file"],
+            pages["policy_workflow_file"],
             pages["branch"],
             main_sha,
+            "push",
         )
         if main_sha
         else None
     )
+    pages_run = (
+        latest_workflow_run(
+            client,
+            pages["repository"],
+            pages["pages_workflow_file"],
+            pages["branch"],
+            main_sha,
+            "workflow_run",
+        )
+        if main_sha
+        else None
+    )
+    if policy_run is None:
+        errors.append(f"no successful policy workflow run is tied to current main {main_sha}")
     if pages_run is None:
         errors.append(f"no successful Pages workflow run is tied to current main {main_sha}")
+
+    artifact_evidence: dict[str, Any] | None = None
+    live_index_sha = ""
+    if policy_run is not None:
+        expected_index, artifact_evidence = validated_site_index(
+            client,
+            pages["repository"],
+            int(policy_run["id"]),
+            pages["artifact_name"],
+            pages["archive_name"],
+            pages["checksum_name"],
+        )
+        live_index = fetch_public_bytes(pages["public_url"], main_sha)
+        live_index_sha = hashlib.sha256(live_index).hexdigest()
+        if live_index != expected_index:
+            errors.append(
+                "public Pages index does not byte-match the current-main validated-site artifact: "
+                f"{live_index_sha} != {artifact_evidence['index_sha256']}"
+            )
+
+    def run_evidence(run: dict[str, Any] | None) -> dict[str, Any] | None:
+        if run is None:
+            return None
+        return {
+            "id": run.get("id"),
+            "html_url": run.get("html_url"),
+            "head_sha": run.get("head_sha"),
+            "conclusion": run.get("conclusion"),
+            "event": run.get("event"),
+            "created_at": run.get("created_at"),
+            "updated_at": run.get("updated_at"),
+        }
 
     evidence = {
         "schema_version": "1.0.0",
@@ -306,18 +429,10 @@ def verify_contract(client: GitHubClient, contract: dict[str, Any]) -> dict[str,
         "contract_sha256": canonical_sha256(contract),
         "repository_homepage": homepage,
         "current_main_sha": main_sha,
-        "public_revision_marker": marker,
-        "pages_workflow_run": None
-        if pages_run is None
-        else {
-            "id": pages_run.get("id"),
-            "html_url": pages_run.get("html_url"),
-            "head_sha": pages_run.get("head_sha"),
-            "conclusion": pages_run.get("conclusion"),
-            "event": pages_run.get("event"),
-            "created_at": pages_run.get("created_at"),
-            "updated_at": pages_run.get("updated_at"),
-        },
+        "policy_workflow_run": run_evidence(policy_run),
+        "pages_workflow_run": run_evidence(pages_run),
+        "validated_site_artifact": artifact_evidence,
+        "live_index_sha256": live_index_sha,
         "branch_protections": protections,
         "verified": not errors,
         "errors": errors,
@@ -336,13 +451,16 @@ def close_child_issues(client: GitHubClient, contract: dict[str, Any], evidence:
     repository = contract["pages"]["repository"]
     evidence_sha = evidence["evidence_sha256"]
     pages_run = evidence["pages_workflow_run"] or {}
+    artifact = evidence["validated_site_artifact"] or {}
     issue_comment(
         client,
         repository,
         contract["issues"]["pages"],
         "Release-trust administration passed. "
-        f"Homepage and public revision marker match current main `{evidence['current_main_sha']}`; "
-        f"Pages run `{pages_run.get('id')}` succeeded. Evidence SHA-256: `{evidence_sha}`.",
+        f"Homepage matches; Pages run `{pages_run.get('id')}` succeeded for current main "
+        f"`{evidence['current_main_sha']}`; the live index byte-matches validated-site artifact "
+        f"`{artifact.get('artifact_id')}` at SHA-256 `{artifact.get('index_sha256')}`. "
+        f"Evidence SHA-256: `{evidence_sha}`.",
     )
     client.request(
         "PATCH",
