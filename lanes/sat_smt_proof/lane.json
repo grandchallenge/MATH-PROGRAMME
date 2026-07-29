@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "lane_id": "LANE-SAT-SMT",
+  "title": "SAT and SMT proof artifact to certificate",
+  "obligation": "Decide a bounded Boolean or theory instance and preserve a model or proof artifact for an independent checker.",
+  "artifacts": {"input_schema": "input.schema.json", "handoff_schema": "handoff.schema.json", "toy_fixture": "fixture.json"},
+  "allowed_statuses": ["encoded", "solver_result", "proof_checked", "ready_for_mathcert", "rejected"],
+  "rejection_policy": [
+    "Reject a solver result without an exact encoding and solver version.",
+    "Reject UNSAT without a proof artifact accepted by an independent checker.",
+    "Reject SAT without a model that satisfies the original source constraints."
+  ],
+  "mathcert_route": [
+    "reconstruct the source-to-formula translation",
+    "check the model or proof artifact independently",
+    "verify the result maps back to the stated bounded obligation",
+    "certify only the encoded proposition"
+  ],
+  "claim_boundary": "A checked SAT or SMT artifact certifies the encoded bounded instance, not an unstated family or informal source claim."
+}
