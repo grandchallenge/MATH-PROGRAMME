@@ -1,0 +1,23 @@
+{
+  "input": {
+    "lane_id": "LANE-INTERVAL",
+    "expression": "x^2",
+    "variables": ["x"],
+    "domain": {"x": [0.0, 1.0]},
+    "target_relation": "0 <= x^2 <= 1",
+    "precision_bits": 128,
+    "rounding_mode": "outward",
+    "backend": "toy exact interval evaluator",
+    "backend_version": "1.0"
+  },
+  "handoff": {
+    "lane_id": "LANE-INTERVAL",
+    "status": "enclosed",
+    "enclosure": [0.0, 1.0],
+    "enclosure_claim": "x^2 is enclosed by [0,1] for x in [0,1]",
+    "subdivision_count": 1,
+    "proof_artifact": "toy_interval_trace.json",
+    "replay_command": ["python3", "check_interval_fixture.py"],
+    "certification_state": "not_certified"
+  }
+}
