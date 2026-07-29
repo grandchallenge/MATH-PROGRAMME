@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the repository-wide CI coverage audit and its explicit release blockers."""
+"""Validate the programme umbrella audit and its exact closure conditions."""
 
 from __future__ import annotations
 
@@ -11,8 +11,9 @@ from typing import Any
 from jsonschema import Draft202012Validator, FormatChecker
 
 ROOT = Path(__file__).resolve().parents[1]
-AUDIT_PATH = ROOT / "governance/workflow_coverage_audit.json"
-SCHEMA_PATH = ROOT / "schemas/workflow_coverage_audit.schema.json"
+AUDIT_PATH = ROOT / "governance" / "workflow_coverage_audit.json"
+SCHEMA_PATH = ROOT / "schemas" / "workflow_coverage_audit.schema.json"
+EXPECTED_PROGRAMME_BASE = "379e0480361c2f3cf92c3d3343134fc6f8cbd3fb"
 EXPECTED_AREAS = {
     "GLOBAL-POLICY",
     "CAMPAIGN-REPLAY-DISCOVERY",
@@ -23,15 +24,55 @@ EXPECTED_AREAS = {
     "CROSS-PILLAR-LANES",
     "MATHFORGE-PROVIDER-IMPORTS",
     "MATHSOLVE-ROUTING",
+    "MATHCERT-CONFORMANCE",
+    "MATHFORGE-BOUNDED-WITNESS",
+    "MATHSOLVE-BOUNDED-TACTIC",
     "FORMAL-REPLAYS",
     "EXTERNAL-MATHCERT-EVIDENCE",
     "STRICT-DOCUMENTATION-BUILD",
     "PAGES-PUBLICATION-CONTRACT",
     "FAST-PATH-WORKFLOWS",
 }
+EXPECTED_CHILDREN = {
+    ("grandchallenge/MATH-PROGRAMME", 7),
+    ("grandchallenge/MATH-PROGRAMME", 125),
+    ("grandchallenge/MATHFORGE", 6),
+    ("grandchallenge/MATHSOLVE", 6),
+}
 EXPECTED_BLOCKERS = {
     "PAGES-CURRENT-MAIN-DEPLOYMENT",
     "PAGES-HOMEPAGE-METADATA",
+    "PROTECTED-BRANCH-REQUIRED-CHECKS",
+}
+EXPECTED_TECHNICAL_IMPLEMENTATIONS = {
+    ("grandchallenge/MATHFORGE", 6): {
+        "pull_request": 25,
+        "tested_head": "95be2b36d1cfb6f64c3f4e64c0b5c71d2ef2def6",
+        "merge_commit": "5d6461b6812dd9a99d73ddf98904c33465bffca0",
+        "workflow_run_id": 30426791431,
+        "schema": {
+            "path": "schemas/algebraic_witness.schema.json",
+            "git_blob_sha1": "517d96566f35a0563c2b4059338aac0738a0a1b7",
+        },
+        "registry": {
+            "path": "governance/algebraic_witness_registry.json",
+            "git_blob_sha1": "022ebb5dbffa6685aef1dcb9bea8b1d338c5e7ec",
+        },
+    },
+    ("grandchallenge/MATHSOLVE", 6): {
+        "pull_request": 77,
+        "tested_head": "107312712da7fce228c7100c7d15a1ee45bae03a",
+        "merge_commit": "1f763c3a554814f40806a424e8b2c83f3ec8d24e",
+        "workflow_run_id": 30427137579,
+        "schema": {
+            "path": "schemas/grobner_tactic_invocation.schema.json",
+            "git_blob_sha1": "845117b233ddb5676d59f0e2e6a43f8e17abb497",
+        },
+        "registry": {
+            "path": "governance/grobner_tactic_registry.json",
+            "git_blob_sha1": "5ee8b1aa596172f3c7d96126e93809bc80e1dcda",
+        },
+    },
 }
 
 
@@ -56,18 +97,70 @@ def validate(root: Path = ROOT) -> None:
         key=lambda error: list(error.path),
     )
     require(not errors, "; ".join(f"{error.json_path}: {error.message}" for error in errors))
+    require(
+        audit["programme_main_commit"] == EXPECTED_PROGRAMME_BASE,
+        "umbrella audit base commit drift",
+    )
 
     areas = audit["coverage_areas"]
     area_ids = [area["area_id"] for area in areas]
     require(len(area_ids) == len(set(area_ids)), "workflow coverage audit has duplicate area IDs")
     require(set(area_ids) == EXPECTED_AREAS, "workflow coverage area set drift")
 
+    children = audit["children"]
+    child_keys = [(child["repository"], child["issue"]) for child in children]
+    require(len(child_keys) == len(set(child_keys)), "umbrella audit has duplicate child issues")
+    require(set(child_keys) == EXPECTED_CHILDREN, "umbrella child issue set drift")
+
+    technical = [child for child in children if child["category"] == "technical"]
+    administrative = [child for child in children if child["category"] == "administrative"]
+    require(len(technical) == 2, "umbrella audit must have exactly two technical children")
+    require(len(administrative) == 2, "umbrella audit must have exactly two administrative children")
+
+    for child in technical:
+        key = (child["repository"], child["issue"])
+        require(child["state"] == "CLOSED", f"technical child remains open: {key}")
+        require(child["complete"] is True, f"technical child is not complete: {key}")
+        require(child["close_conditions"] == [], f"completed technical child retains close conditions: {key}")
+        require(
+            child["implementation"] == EXPECTED_TECHNICAL_IMPLEMENTATIONS[key],
+            f"technical child implementation identity drift: {key}",
+        )
+
+    for child in administrative:
+        require(child["state"] == "OPEN", f"administrative child state is not open: {child['issue']}")
+        require(child["complete"] is False, f"administrative child is incorrectly complete: {child['issue']}")
+        require(child["implementation"] is None, f"administrative child has fabricated implementation: {child['issue']}")
+        require(child["close_conditions"], f"administrative child lacks close conditions: {child['issue']}")
+
+    technical_complete = all(child["complete"] for child in technical)
+    administrative_complete = all(child["complete"] for child in administrative)
+    operational_complete = all(child["complete"] for child in children)
+    require(
+        audit["technical_children_complete"] is technical_complete,
+        "technical_children_complete does not match child records",
+    )
+    require(
+        audit["administrative_children_complete"] is administrative_complete,
+        "administrative_children_complete does not match child records",
+    )
+    require(
+        audit["operational_release_complete"] is operational_complete,
+        "operational_release_complete does not match all four child records",
+    )
+
     blockers = audit["remaining_blockers"]
     blocker_ids = [blocker["blocker_id"] for blocker in blockers]
     require(len(blocker_ids) == len(set(blocker_ids)), "workflow coverage audit has duplicate blockers")
-    require(set(blocker_ids) == EXPECTED_BLOCKERS, "Pages blocker set drift")
-    require(all(blocker["issue"] == 7 for blocker in blockers), "all remaining blockers must be scoped to issue #7")
-    require(audit["umbrella_issue_disposition"] == "KEEP_OPEN", "issue #6 must remain open while Pages blockers exist")
+    if operational_complete:
+        require(not blockers, "completed operational release retains blockers")
+        require(audit["operational_release_closure"] == "COMPLETE", "completed release must have COMPLETE closure")
+        require(audit["umbrella_issue_disposition"] == "CLOSE", "completed release must close issue #6")
+    else:
+        require(set(blocker_ids) == EXPECTED_BLOCKERS, "operational blocker set drift")
+        require({blocker["issue"] for blocker in blockers} == {7, 125}, "blockers must be scoped to issues #7 and #125")
+        require(audit["operational_release_closure"] == "BLOCKED", "incomplete release must remain BLOCKED")
+        require(audit["umbrella_issue_disposition"] == "KEEP_OPEN", "issue #6 must remain open while any child is incomplete")
 
     for required in (
         ".github/workflows/ci.yml",
@@ -77,6 +170,7 @@ def validate(root: Path = ROOT) -> None:
         "ci/validate_repository_execution.py",
         "ci/validate_symbolic_resource_budgets.py",
         "ci/validate_cross_pillar_lane_packages.py",
+        "governance/mathcert_cross_repository_conformance.json",
     ):
         require((root / required).is_file(), f"audited workflow control is missing: {required}")
 
@@ -87,7 +181,9 @@ def main() -> int:
     except (WorkflowCoverageAuditError, OSError, json.JSONDecodeError) as exc:
         print(f"workflow coverage audit rejected: {exc}", file=sys.stderr)
         return 1
-    print("workflow coverage audit checked: CI contracts complete; Pages operational blockers explicit")
+    print(
+        "umbrella audit checked: technical children complete; operational release blocked by Pages and protected-branch administration"
+    )
     return 0
 
 

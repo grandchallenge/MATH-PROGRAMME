@@ -1,26 +1,105 @@
 {
   "$schema": "../schemas/workflow_coverage_audit.schema.json",
-  "schema_version": "1.0.0",
-  "audit_id": "CI-COVERAGE-AUDIT-2026-07-29",
+  "schema_version": "1.1.0",
+  "audit_id": "UMBRELLA-RELEASE-AUDIT-2026-07-29",
   "audited_at": "2026-07-29",
   "repository": "grandchallenge/MATH-PROGRAMME",
-  "main_commit": "08dc04f34e0bb5e83a1555b3b0b6e55784dabfd1",
+  "programme_main_commit": "379e0480361c2f3cf92c3d3343134fc6f8cbd3fb",
   "ci_contract_coverage": "COMPLETE",
+  "technical_children_complete": true,
+  "administrative_children_complete": false,
+  "operational_release_complete": false,
   "operational_release_closure": "BLOCKED",
+  "children": [
+    {
+      "child_id": "PAGES-RELEASE-TRUST",
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 7,
+      "category": "administrative",
+      "state": "OPEN",
+      "complete": false,
+      "implementation": null,
+      "close_conditions": [
+        "Set the repository homepage to https://grandchallenge.github.io/MATH-PROGRAMME/.",
+        "Record a successful Deploy documentation site run for current main and prove that the public site serves that revision."
+      ]
+    },
+    {
+      "child_id": "PROTECTED-BRANCH-ENFORCEMENT",
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 125,
+      "category": "administrative",
+      "state": "OPEN",
+      "complete": false,
+      "implementation": null,
+      "close_conditions": [
+        "Record ruleset or branch-protection identities proving that required checks, review rules, strict update policy, and bypass policy govern main in MATHCERT, MATHSOLVE, MATH-PROGRAMME, and INTELLECT."
+      ]
+    },
+    {
+      "child_id": "MATHFORGE-BOUNDED-WITNESS",
+      "repository": "grandchallenge/MATHFORGE",
+      "issue": 6,
+      "category": "technical",
+      "state": "CLOSED",
+      "complete": true,
+      "implementation": {
+        "pull_request": 25,
+        "tested_head": "95be2b36d1cfb6f64c3f4e64c0b5c71d2ef2def6",
+        "merge_commit": "5d6461b6812dd9a99d73ddf98904c33465bffca0",
+        "workflow_run_id": 30426791431,
+        "schema": {
+          "path": "schemas/algebraic_witness.schema.json",
+          "git_blob_sha1": "517d96566f35a0563c2b4059338aac0738a0a1b7"
+        },
+        "registry": {
+          "path": "governance/algebraic_witness_registry.json",
+          "git_blob_sha1": "022ebb5dbffa6685aef1dcb9bea8b1d338c5e7ec"
+        }
+      },
+      "close_conditions": []
+    },
+    {
+      "child_id": "MATHSOLVE-BOUNDED-TACTIC",
+      "repository": "grandchallenge/MATHSOLVE",
+      "issue": 6,
+      "category": "technical",
+      "state": "CLOSED",
+      "complete": true,
+      "implementation": {
+        "pull_request": 77,
+        "tested_head": "107312712da7fce228c7100c7d15a1ee45bae03a",
+        "merge_commit": "1f763c3a554814f40806a424e8b2c83f3ec8d24e",
+        "workflow_run_id": 30427137579,
+        "schema": {
+          "path": "schemas/grobner_tactic_invocation.schema.json",
+          "git_blob_sha1": "845117b233ddb5676d59f0e2e6a43f8e17abb497"
+        },
+        "registry": {
+          "path": "governance/grobner_tactic_registry.json",
+          "git_blob_sha1": "5ee8b1aa596172f3c7d96126e93809bc80e1dcda"
+        }
+      },
+      "close_conditions": []
+    }
+  ],
   "coverage_areas": [
     {"area_id": "GLOBAL-POLICY", "status": "COMPLETE", "evidence": [".github/workflows/ci.yml", "ci/validate_workflow_semantics.py"]},
     {"area_id": "CAMPAIGN-REPLAY-DISCOVERY", "status": "COMPLETE", "evidence": ["ci/validate_campaign_replays.py", "ci/campaign_replay_registry.json"]},
     {"area_id": "CI-REACHABILITY", "status": "COMPLETE", "evidence": ["ci/validate_policy_reachability.py", "ci/test_policy_reachability.py"]},
     {"area_id": "REPOSITORY-TESTS", "status": "COMPLETE", "evidence": ["ci/validate_repository_execution.py", "python -m unittest discover -s tests -p test_*.py"]},
     {"area_id": "EXPERIMENT-REACHABILITY", "status": "COMPLETE", "evidence": ["ci/validate_repository_execution.py"]},
-    {"area_id": "SYMBOLIC-BUDGETS", "status": "COMPLETE", "evidence": ["PR #120", "ci/validate_symbolic_resource_budgets.py", "governance/expensive_symbolic_lane_registry.json", "workflow run 30411135117"]},
-    {"area_id": "CROSS-PILLAR-LANES", "status": "COMPLETE", "evidence": ["PR #121", "ci/validate_cross_pillar_lane_packages.py", "governance/cross_pillar_lane_packages.json", "workflow run 30411923062"]},
+    {"area_id": "SYMBOLIC-BUDGETS", "status": "COMPLETE", "evidence": ["PR #120", "ci/validate_symbolic_resource_budgets.py", "governance/expensive_symbolic_lane_registry.json"]},
+    {"area_id": "CROSS-PILLAR-LANES", "status": "COMPLETE", "evidence": ["PR #121", "ci/validate_cross_pillar_lane_packages.py", "governance/cross_pillar_lane_packages.json"]},
     {"area_id": "MATHFORGE-PROVIDER-IMPORTS", "status": "COMPLETE", "evidence": ["ci/validate_mathforge_provider_imports.py", "governance/mathforge_provider_imports.json"]},
-    {"area_id": "MATHSOLVE-ROUTING", "status": "COMPLETE", "evidence": ["ci/validate_mathsolve_routing.py", "governance/mathsolve_routing.json"]},
+    {"area_id": "MATHSOLVE-ROUTING", "status": "COMPLETE", "evidence": ["ci/validate_mathsolve_routing.py", "governance/mathsolve_routing_audit.json"]},
+    {"area_id": "MATHCERT-CONFORMANCE", "status": "COMPLETE", "evidence": ["PR #126", "governance/mathcert_cross_repository_conformance.json", "workflow run 30423298405"]},
+    {"area_id": "MATHFORGE-BOUNDED-WITNESS", "status": "COMPLETE", "evidence": ["grandchallenge/MATHFORGE#6", "grandchallenge/MATHFORGE#25", "merge 5d6461b6812dd9a99d73ddf98904c33465bffca0", "workflow run 30426791431"]},
+    {"area_id": "MATHSOLVE-BOUNDED-TACTIC", "status": "COMPLETE", "evidence": ["grandchallenge/MATHSOLVE#6", "grandchallenge/MATHSOLVE#77", "merge 1f763c3a554814f40806a424e8b2c83f3ec8d24e", "workflow run 30427137579"]},
     {"area_id": "FORMAL-REPLAYS", "status": "COMPLETE", "evidence": ["LOG-GCD Lean replay", "PC-WP04 bounded certificate replay"]},
-    {"area_id": "EXTERNAL-MATHCERT-EVIDENCE", "status": "COMPLETE", "evidence": ["evidence/UC-WP02-MATHCERT.json", "union-closed-mathcert job"]},
+    {"area_id": "EXTERNAL-MATHCERT-EVIDENCE", "status": "COMPLETE", "evidence": ["evidence/UC-WP02-MATHCERT.json", "Replay pinned Union-Closed MATHCERT evidence"]},
     {"area_id": "STRICT-DOCUMENTATION-BUILD", "status": "COMPLETE", "evidence": ["mkdocs build --strict", "requirements/docs.txt"]},
-    {"area_id": "PAGES-PUBLICATION-CONTRACT", "status": "COMPLETE", "evidence": [".github/workflows/pages.yml", "ci/validate_workflow_semantics.py", "historically successful Deploy documentation site runs"]},
+    {"area_id": "PAGES-PUBLICATION-CONTRACT", "status": "COMPLETE", "evidence": [".github/workflows/pages.yml", "ci/validate_workflow_semantics.py", "exact policy artifact deployment contract"]},
     {"area_id": "FAST-PATH-WORKFLOWS", "status": "COMPLETE", "evidence": ["bsd-wp03-substrate.yml", "bsd-wp04-target.yml", "pc-wp04.yml", "pc-wp05.yml"]}
   ],
   "remaining_blockers": [
@@ -28,16 +107,24 @@
       "blocker_id": "PAGES-CURRENT-MAIN-DEPLOYMENT",
       "issue": 7,
       "state": "UNVERIFIED",
-      "scope": "A successful Deploy documentation site run tied to current main commit 08dc04f34e0bb5e83a1555b3b0b6e55784dabfd1 was not independently observable through the available connector or anonymous Actions listing.",
+      "scope": "A successful Deploy documentation site run tied to current main and a served-revision identity remain unverified through the available connector.",
       "close_condition": "Record the successful Pages deployment run for the current main revision and confirm the public site serves that revision."
     },
     {
       "blocker_id": "PAGES-HOMEPAGE-METADATA",
       "issue": 7,
       "state": "OPEN",
-      "scope": "The GitHub repository About section has no homepage URL, and the available GitHub connector exposes no repository-metadata write operation.",
+      "scope": "The available GitHub connector does not expose repository-homepage mutation or a normalized homepage field.",
       "close_condition": "Set the repository homepage to https://grandchallenge.github.io/MATH-PROGRAMME/ and verify it through repository metadata."
+    },
+    {
+      "blocker_id": "PROTECTED-BRANCH-REQUIRED-CHECKS",
+      "issue": 125,
+      "state": "UNVERIFIED",
+      "scope": "Exact-head workflows pass, but ruleset enforcement, strict update requirements, review requirements, and bypass actors are not observable through the available connector.",
+      "close_condition": "Record authoritative ruleset or branch-protection evidence for all four mathematics governance repositories."
     }
   ],
-  "umbrella_issue_disposition": "KEEP_OPEN"
+  "umbrella_issue_disposition": "KEEP_OPEN",
+  "closure_rule": "Close MATH-PROGRAMME issue #6 only when all four children are complete, remaining_blockers is empty, and operational_release_complete is true."
 }

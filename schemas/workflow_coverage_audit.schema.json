@@ -1,22 +1,91 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://grandchallenge.ai/schemas/workflow_coverage_audit.schema.json",
-  "title": "Repository-wide workflow coverage audit",
+  "title": "Programme umbrella workflow and release audit",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "audit_id", "audited_at", "repository", "main_commit", "ci_contract_coverage", "operational_release_closure", "coverage_areas", "remaining_blockers", "umbrella_issue_disposition"],
+  "required": [
+    "$schema",
+    "schema_version",
+    "audit_id",
+    "audited_at",
+    "repository",
+    "programme_main_commit",
+    "ci_contract_coverage",
+    "technical_children_complete",
+    "administrative_children_complete",
+    "operational_release_complete",
+    "operational_release_closure",
+    "children",
+    "coverage_areas",
+    "remaining_blockers",
+    "umbrella_issue_disposition",
+    "closure_rule"
+  ],
   "properties": {
     "$schema": {"type": "string", "minLength": 1},
-    "schema_version": {"const": "1.0.0"},
-    "audit_id": {"const": "CI-COVERAGE-AUDIT-2026-07-29"},
+    "schema_version": {"const": "1.1.0"},
+    "audit_id": {"const": "UMBRELLA-RELEASE-AUDIT-2026-07-29"},
     "audited_at": {"type": "string", "format": "date"},
     "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
-    "main_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "programme_main_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
     "ci_contract_coverage": {"const": "COMPLETE"},
-    "operational_release_closure": {"const": "BLOCKED"},
+    "technical_children_complete": {"type": "boolean"},
+    "administrative_children_complete": {"type": "boolean"},
+    "operational_release_complete": {"type": "boolean"},
+    "operational_release_closure": {"enum": ["COMPLETE", "BLOCKED"]},
+    "children": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "child_id",
+          "repository",
+          "issue",
+          "category",
+          "state",
+          "complete",
+          "implementation",
+          "close_conditions"
+        ],
+        "properties": {
+          "child_id": {"type": "string", "pattern": "^[A-Z0-9-]+$"},
+          "repository": {"type": "string", "minLength": 1},
+          "issue": {"type": "integer", "minimum": 1},
+          "category": {"enum": ["technical", "administrative"]},
+          "state": {"enum": ["OPEN", "CLOSED"]},
+          "complete": {"type": "boolean"},
+          "implementation": {
+            "oneOf": [
+              {"type": "null"},
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["pull_request", "tested_head", "merge_commit", "workflow_run_id", "schema", "registry"],
+                "properties": {
+                  "pull_request": {"type": "integer", "minimum": 1},
+                  "tested_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+                  "merge_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+                  "workflow_run_id": {"type": "integer", "minimum": 1},
+                  "schema": {"$ref": "#/$defs/artifact"},
+                  "registry": {"$ref": "#/$defs/artifact"}
+                }
+              }
+            ]
+          },
+          "close_conditions": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
     "coverage_areas": {
       "type": "array",
-      "minItems": 10,
+      "minItems": 16,
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -30,20 +99,57 @@
     },
     "remaining_blockers": {
       "type": "array",
-      "minItems": 1,
       "items": {
         "type": "object",
         "additionalProperties": false,
         "required": ["blocker_id", "issue", "state", "scope", "close_condition"],
         "properties": {
           "blocker_id": {"type": "string", "pattern": "^[A-Z0-9-]+$"},
-          "issue": {"const": 7},
+          "issue": {"enum": [7, 125]},
           "state": {"enum": ["OPEN", "UNVERIFIED"]},
           "scope": {"type": "string", "minLength": 1},
           "close_condition": {"type": "string", "minLength": 1}
         }
       }
     },
-    "umbrella_issue_disposition": {"const": "KEEP_OPEN"}
-  }
+    "umbrella_issue_disposition": {"enum": ["KEEP_OPEN", "CLOSE"]},
+    "closure_rule": {
+      "const": "Close MATH-PROGRAMME issue #6 only when all four children are complete, remaining_blockers is empty, and operational_release_complete is true."
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "git_blob_sha1"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"operational_release_complete": {"const": true}}},
+      "then": {
+        "properties": {
+          "technical_children_complete": {"const": true},
+          "administrative_children_complete": {"const": true},
+          "operational_release_closure": {"const": "COMPLETE"},
+          "remaining_blockers": {"maxItems": 0},
+          "umbrella_issue_disposition": {"const": "CLOSE"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"operational_release_complete": {"const": false}}},
+      "then": {
+        "properties": {
+          "operational_release_closure": {"const": "BLOCKED"},
+          "remaining_blockers": {"minItems": 1},
+          "umbrella_issue_disposition": {"const": "KEEP_OPEN"}
+        }
+      }
+    }
+  ]
 }

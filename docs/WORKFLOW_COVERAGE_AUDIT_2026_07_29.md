@@ -1,65 +1,82 @@
-# Repository-Wide Workflow Coverage Audit — 2026-07-29
+# Programme Umbrella Release Audit — 2026-07-29
 
 ## Determination
 
-CI contract coverage is complete at main commit `08dc04f34e0bb5e83a1555b3b0b6e55784dabfd1`.
+CI contract coverage is complete.
 
-Operational release closure is not complete. Issue #7 remains open on two repository-level facts:
+The two remaining technical umbrella children are also complete:
 
-1. a successful `Deploy documentation site` run for the current main revision has not been independently recorded;
-2. the repository About section does not contain the Pages homepage URL.
+- MATHFORGE issue #6 — bounded algebraic witness generation;
+- MATHSOLVE issue #6 — bounded algebraic tactic routing.
 
-Issue #6 therefore remains open.
+Operational release closure is not complete. MATH-PROGRAMME issues #7 and #125 remain open. Therefore:
 
-## Completed corrective sequence
+- `technical_children_complete: true`;
+- `administrative_children_complete: false`;
+- `operational_release_complete: false`;
+- umbrella issue #6: `KEEP_OPEN`.
 
-### Symbolic resource budgets
+## Completed technical children
 
-Issue #11 was completed through PR #120, merged at `242994ce3da70f4fa71c775715a5bbb3a6675f3c`.
+### MATHFORGE bounded witness contract
 
-The global workflow now rejects unregistered expensive symbolic lanes, missing or invalid budgets, missing backend and fallback data, suppressed failure evidence, orphan registrations, and successful runs without result artifacts. Exact-head policy run `30411135117` passed.
+MATHFORGE issue #6 was completed through PR #25.
 
-### Reusable cross-pillar lane packages
+- exact tested head: `95be2b36d1cfb6f64c3f4e64c0b5c71d2ef2def6`;
+- successful Forge run: `30426791431`;
+- merge commit: `5d6461b6812dd9a99d73ddf98904c33465bffca0`;
+- witness schema blob: `517d96566f35a0563c2b4059338aac0738a0a1b7`;
+- witness registry blob: `022ebb5dbffa6685aef1dcb9bea8b1d338c5e7ec`;
+- governed demonstration witness blob: `a1e3a0eb61702430516f5961bbc4e44332f677ce`.
 
-Issue #10 was completed through PR #121, merged at `08dc04f34e0bb5e83a1555b3b0b6e55784dabfd1`.
+The Forge lane now requires local scope, exact backend identity, bounded variables, degree, runtime, basis size and intermediate terms, an expected witness, a fallback route, observed execution, a failure ledger and content-addressed registry admission.
 
-Exact finite enumeration, interval arithmetic, SAT/SMT proof artifacts, Lean formalization handoff, and literature synthesis now each have doctrine, schemas, a bounded fixture, controlled statuses, rejection rules, and a MATHCERT route. Exact-head policy run `30411923062` passed.
+### MATHSOLVE bounded tactic contract
 
-## Audited CI surface
+MATHSOLVE issue #6 was completed through PR #77.
 
-The audit found machine-enforced coverage for:
+- exact tested head: `107312712da7fce228c7100c7d15a1ee45bae03a`;
+- successful Solve run after the Forge re-pin: `30427137579`;
+- merge commit: `1f763c3a554814f40806a424e8b2c83f3ec8d24e`;
+- tactic schema blob: `845117b233ddb5676d59f0e2e6a43f8e17abb497`;
+- tactic registry blob: `5ee8b1aa596172f3c7d96126e93809bc80e1dcda`.
 
-- the global policy workflow;
-- recursive campaign executable discovery;
-- executable CI reachability;
-- repository tests and experiment reachability;
-- symbolic resource budgets and failure ledgers;
-- the five reusable cross-pillar lane packages;
-- MATHFORGE provider imports;
-- MATHSOLVE routing;
-- formal Lean replays;
-- pinned external MATHCERT evidence;
-- strict documentation construction;
-- exact-artifact Pages publication semantics;
-- BSD and Poincaré fast-path workflows.
+The Solve lane now requires one local algebraic obligation, explicit rejection of global open-problem encoding, bounded resources, a fallback route, an expected witness, exact witness lineage, correct MATHCERT intake and adjudication states, and failure evidence for rejected or proof-debt routes.
 
-The machine-readable audit is `governance/workflow_coverage_audit.json`.
+## Remaining administrative children
 
-## Pages verification
+### Issue #7 — Pages release trust
 
-The public Actions inventory confirms that `Deploy documentation site` exists and has successful historical main-branch deployments. The repository's public About block shows a description and topics but no homepage URL.
+Two facts remain unresolved:
 
-The current connector can read repository state and has administrative repository permission, but it does not expose either unfiltered push-triggered workflow history or repository-homepage mutation. No additional repository-administration plugin is available.
+1. the repository homepage must be set to `https://grandchallenge.github.io/MATH-PROGRAMME/`;
+2. a successful Pages deployment for current `main` must be recorded, together with evidence that the public site serves that revision.
 
-## Close conditions
+The repository-side publication workflow is governed. The remaining debt concerns live repository metadata and deployment evidence.
 
-Issue #7 may close only after both facts are recorded:
+### Issue #125 — protected-branch enforcement
 
-- a successful Pages deployment tied to the current main commit and a public-site revision check;
-- repository homepage set to `https://grandchallenge.github.io/MATH-PROGRAMME/`.
+The audit has exact-head success evidence for MATHCERT, MATHSOLVE, MATH-PROGRAMME and INTELLECT. It does not have authoritative ruleset or branch-protection evidence proving that:
 
-After #7 closes, repeat this audit with `operational_release_closure: COMPLETE`, then close umbrella issue #6.
+- the required workflow is mandatory;
+- branches must be up to date;
+- review requirements are active;
+- bypass actors are absent or explicitly governed.
+
+The connected GitHub surface does not expose those administration records.
+
+## Closure invariant
+
+MATH-PROGRAMME issue #6 may close only when all of the following are true:
+
+- all four child issues are complete;
+- `remaining_blockers` is empty;
+- `administrative_children_complete` is `true`;
+- `operational_release_complete` is `true`;
+- `umbrella_issue_disposition` is `CLOSE`.
+
+The machine-readable authority is `governance/workflow_coverage_audit.json`. The schema and validator reject any attempt to close the umbrella while one child or blocker remains.
 
 ## Claim boundary
 
-Complete CI coverage means the declared repository contracts are reachable and fail closed under tested mutations. It does not establish mathematical truth, certification, publication permanence, or absence of future workflow defects.
+This audit governs repository workflows, provider contracts, release metadata and branch administration. It certifies no mathematical claim and does not convert a witness, tactic record, green workflow or public web page into a theorem.

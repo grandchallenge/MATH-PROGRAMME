@@ -26,6 +26,7 @@ class WorkflowCoverageAuditTests(unittest.TestCase):
             (root / relative).mkdir(parents=True, exist_ok=True)
         for relative in (
             "governance/workflow_coverage_audit.json",
+            "governance/mathcert_cross_repository_conformance.json",
             "schemas/workflow_coverage_audit.schema.json",
             ".github/workflows/ci.yml",
             ".github/workflows/pages.yml",
@@ -62,7 +63,7 @@ class WorkflowCoverageAuditTests(unittest.TestCase):
             lambda root: self.mutate(root, lambda audit: audit["coverage_areas"].pop())
         )
 
-    def test_pages_blocker_cannot_be_silently_removed(self) -> None:
+    def test_blocker_cannot_be_silently_removed(self) -> None:
         self.assert_rejected(
             lambda root: self.mutate(root, lambda audit: audit["remaining_blockers"].pop())
         )
@@ -72,6 +73,34 @@ class WorkflowCoverageAuditTests(unittest.TestCase):
             lambda root: self.mutate(
                 root, lambda audit: audit.update(umbrella_issue_disposition="CLOSE")
             )
+        )
+
+    def test_operational_release_cannot_be_true_with_incomplete_children(self) -> None:
+        self.assert_rejected(
+            lambda root: self.mutate(
+                root, lambda audit: audit.update(operational_release_complete=True)
+            )
+        )
+
+    def test_technical_implementation_identity_drift_is_rejected(self) -> None:
+        def mutate(audit: dict) -> None:
+            child = next(item for item in audit["children"] if item["repository"] == "grandchallenge/MATHFORGE")
+            child["implementation"]["merge_commit"] = "0" * 40
+
+        self.assert_rejected(lambda root: self.mutate(root, mutate))
+
+    def test_administrative_child_cannot_be_marked_complete_without_full_closure(self) -> None:
+        def mutate(audit: dict) -> None:
+            child = next(item for item in audit["children"] if item["issue"] == 7)
+            child["state"] = "CLOSED"
+            child["complete"] = True
+            child["close_conditions"] = []
+
+        self.assert_rejected(lambda root: self.mutate(root, mutate))
+
+    def test_missing_child_is_rejected(self) -> None:
+        self.assert_rejected(
+            lambda root: self.mutate(root, lambda audit: audit["children"].pop())
         )
 
     def test_missing_audited_control_is_rejected(self) -> None:
