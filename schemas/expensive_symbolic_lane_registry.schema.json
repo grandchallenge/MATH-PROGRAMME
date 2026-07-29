@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/expensive_symbolic_lane_registry.schema.json",
+  "title": "Expensive symbolic lane registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "scan_roots", "entries"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "registry_id": {"const": "EXPENSIVE-SYMBOLIC-LANES"},
+    "scan_roots": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["lane_id", "path", "owner", "reviewed_at"],
+        "properties": {
+          "lane_id": {"type": "string", "pattern": "^[A-Z0-9][A-Z0-9-]+$"},
+          "path": {"type": "string", "minLength": 1},
+          "owner": {"type": "string", "minLength": 1},
+          "reviewed_at": {"type": "string", "format": "date"}
+        }
+      }
+    }
+  }
+}
