@@ -12,14 +12,12 @@ Its determination is:
 
 - CI contract coverage: `COMPLETE`;
 - technical umbrella children: `COMPLETE`;
-- administrative umbrella children: `INCOMPLETE`;
-- `operational_release_complete: false`;
-- umbrella issue #6: `KEEP_OPEN`.
+- administrative umbrella children: `COMPLETE`;
+- `operational_release_complete: true`;
+- remaining blockers: none;
+- umbrella issue #6: `CLOSE`.
 
-The remaining blockers are confined to:
-
-- issue #7 — repository homepage metadata and current-main Pages deployment evidence;
-- issue #125 — protected-branch ruleset and required-check evidence across MATHCERT, MATHSOLVE, MATH-PROGRAMME, and INTELLECT.
+The admitted administrative evidence is App-backed release-trust run `30446399649`, artifact `8721612194`, and canonical evidence SHA-256 `a3cfeea6a58de0e193015b96fd5929567bae9a3ee2aca68efe52795474669a85`.
 
 ## Global policy gate
 
@@ -78,13 +76,13 @@ On a successful push to `main`, the policy job packages the strict MkDocs output
 
 Publication proceeds only when the policy run succeeded for a `main` push, the validated SHA remains the current `main` tip, artifact digests verify, safe extraction succeeds, and the site contains its required entry point.
 
-This repository-side publication contract is complete. Issue #7 remains open because live deployment and repository-homepage facts have not been independently recorded.
+This repository-side publication contract is complete. Issue #7 is closed: the release-trust evidence records the repository homepage, exact-main policy run, Pages deployment, validated-site artifact, and byte-identical public index.
 
 ## Protected-branch boundary
 
-Exact-head workflow success does not prove that a repository administrator cannot bypass the workflow. Issue #125 requires authoritative branch-protection or ruleset evidence for each mathematics governance repository.
+Exact-head workflow success alone does not prove that a repository administrator cannot bypass the workflow. Issue #125 is closed because the Release Trust App applied and read back the authoritative ruleset evidence for each mathematics governance repository.
 
-The final administration record must state:
+The admitted administration record states:
 
 - ruleset or protection identifier;
 - required status-check context;

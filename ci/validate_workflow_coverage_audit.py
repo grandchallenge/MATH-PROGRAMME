@@ -13,7 +13,7 @@ from jsonschema import Draft202012Validator, FormatChecker
 ROOT = Path(__file__).resolve().parents[1]
 AUDIT_PATH = ROOT / "governance" / "workflow_coverage_audit.json"
 SCHEMA_PATH = ROOT / "schemas" / "workflow_coverage_audit.schema.json"
-EXPECTED_PROGRAMME_BASE = "ab38db828c94f652b72c90e8a0c43893f4296a02"
+EXPECTED_PROGRAMME_BASE = "8b965d2e8913ed1252f37dc83de8456a335cedd9"
 EXPECTED_AREAS = {
     "GLOBAL-POLICY",
     "CAMPAIGN-REPLAY-DISCOVERY",
@@ -41,46 +41,46 @@ EXPECTED_CHILDREN = {
     ("grandchallenge/MATHSOLVE", 6),
 }
 EXPECTED_ADMINISTRATIVE_IMPLEMENTATION = {
-    "release_trust_workflow_run_id": 30438260023,
-    "release_trust_artifact_id": 8718321584,
-    "evidence_sha256": "b8fa17184a77418eee4eead316508b74b5306c77540cc0d8b24f54387cb85799",
+    "release_trust_workflow_run_id": 30446399649,
+    "release_trust_artifact_id": 8721612194,
+    "evidence_sha256": "a3cfeea6a58de0e193015b96fd5929567bae9a3ee2aca68efe52795474669a85",
 }
 EXPECTED_RELEASE_TRUST_EVIDENCE = {
     "contract_id": "ORG-REL-TRUST-01",
     "evidence_id": "ORG-REL-TRUST-01-EVIDENCE",
-    "generated_at": "2026-07-29T09:07:02.418805+00:00",
-    "workflow_run_id": 30438260023,
-    "workflow_run_url": "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/30438260023",
-    "workflow_head_sha": "ab38db828c94f652b72c90e8a0c43893f4296a02",
-    "artifact_id": 8718321584,
-    "artifact_url": "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/actions/artifacts/8718321584",
-    "artifact_sha256": "cfae7c6c2a268c2a6c985ac01c503fb1007bb9971c298cc3535b00e87b736c35",
-    "evidence_file_sha256": "ac62119f887e15ca9cb9f2f2c46a3c25e1bb9ee234b17d5d4defda1b3730a389",
-    "evidence_sha256": "b8fa17184a77418eee4eead316508b74b5306c77540cc0d8b24f54387cb85799",
-    "contract_sha256": "fbf222e28c24d20602b2cfba58c8db9169a21d6ed264836becee3db6ad0f35b6",
-    "policy_workflow_run_id": 30437963352,
-    "pages_workflow_run_id": 30438169974,
-    "validated_site_artifact_id": 8718200794,
-    "validated_site_artifact_sha256": "edb1248ed218418e02390fb0654ee315924832a74f2d1c0954ca9fe1decf7499",
-    "site_archive_sha256": "b0a33faa409f39447738c7a4853c3d658e9b41838698436b0b06bdede17c3156",
+    "generated_at": "2026-07-29T11:09:00.207599+00:00",
+    "workflow_run_id": 30446399649,
+    "workflow_run_url": "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/30446399649",
+    "workflow_head_sha": "8b965d2e8913ed1252f37dc83de8456a335cedd9",
+    "artifact_id": 8721612194,
+    "artifact_url": "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/actions/artifacts/8721612194",
+    "artifact_sha256": "719c28ea73b69cfcb07049988ab48f231c235160e8c2b01f48761b49623ac33e",
+    "evidence_file_sha256": "6c09d735c3b4f1ee4f5f53031658183ebc7a98a65fecc9c0eb9eca6a8ded2e74",
+    "evidence_sha256": "a3cfeea6a58de0e193015b96fd5929567bae9a3ee2aca68efe52795474669a85",
+    "contract_sha256": "1eb8c72397f6f4922df1a89cb9cf592ed87b93bd5e1b8c1a1854539fde2315e0",
+    "policy_workflow_run_id": 30446169969,
+    "pages_workflow_run_id": 30446339153,
+    "validated_site_artifact_id": 8721515246,
+    "validated_site_artifact_sha256": "b2ef8d7fb07fa1190e3fff52b5a3477e8fcf3510cad22217290edbff23beedd1",
+    "site_archive_sha256": "a771b421510d925e16a4da966fb26d91c68ca9ae87b5c4e56f3c417313b6d445",
     "index_sha256": "9a54a3831d6fb0922b1e21a792c246051d1d8f078621fac5da5e87cdd59535c7",
     "live_index_sha256": "9a54a3831d6fb0922b1e21a792c246051d1d8f078621fac5da5e87cdd59535c7",
-    "branch_protections": [
+    "repository_rulesets": [
         {
             "repository": "grandchallenge/MATHCERT",
-            "snapshot_sha256": "a7f7f05b1fc136fba712686956e13f7eb092aa969e7ef8e09dedb6980db95030",
+            "snapshot_sha256": "7603eb6ad0ddb61ce41a2e81f8f7313ac43e822c11892dd32ed0e8266522ad5d",
         },
         {
             "repository": "grandchallenge/MATHSOLVE",
-            "snapshot_sha256": "c9e408782e3a31be19662f9dedbd2bcd6400093523970222db866d484c3f2c83",
+            "snapshot_sha256": "4801f0b22bde3695ec152e3981ab8d7137eb1c73abc98da27c2bc4263112dd76",
         },
         {
             "repository": "grandchallenge/MATH-PROGRAMME",
-            "snapshot_sha256": "c7d915443c0c55de19dd1916ef365634a02c4ef24d57144dfa63c2c05462b212",
+            "snapshot_sha256": "7274655588e344e6e8c0504611ab9ff7486ac245368690eabdf50b4fb11ccb92",
         },
         {
             "repository": "grandchallenge/INTELLECT",
-            "snapshot_sha256": "830b649f826418e6667082a78c0d7e9d39c6181f19ab194533f1d4b3caac9828",
+            "snapshot_sha256": "3ed304398948814f7c9b3ef6afb66bf8ce2a61c0c60833d880fc937b3398e53c",
         },
     ],
     "verified": True,
