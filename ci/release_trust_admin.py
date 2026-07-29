@@ -20,6 +20,8 @@ from typing import Any
 
 from jsonschema import Draft202012Validator, FormatChecker
 
+from github_http import build_github_opener
+
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONTRACT = ROOT / "governance" / "release_trust_admin_contract.json"
 DEFAULT_SCHEMA = ROOT / "schemas" / "release_trust_admin_contract.schema.json"
@@ -190,6 +192,7 @@ class GitHubClient:
             "X-GitHub-Api-Version": api_version,
             "User-Agent": "grandchallenge-release-trust-admin",
         }
+        self.opener = build_github_opener()
 
     @staticmethod
     def url(path_or_url: str) -> str:
@@ -201,7 +204,7 @@ class GitHubClient:
             self.url(path_or_url), data=body, headers=self.headers, method=method
         )
         try:
-            with urllib.request.urlopen(request, timeout=90) as response:
+            with self.opener.open(request, timeout=90) as response:
                 return response.read()
         except urllib.error.HTTPError as exc:
             detail = exc.read().decode("utf-8", errors="replace")
