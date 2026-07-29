@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/workflow_coverage_audit.schema.json",
+  "title": "Repository-wide workflow coverage audit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "audit_id", "audited_at", "repository", "main_commit", "ci_contract_coverage", "operational_release_closure", "coverage_areas", "remaining_blockers", "umbrella_issue_disposition"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "audit_id": {"const": "CI-COVERAGE-AUDIT-2026-07-29"},
+    "audited_at": {"type": "string", "format": "date"},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "main_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "ci_contract_coverage": {"const": "COMPLETE"},
+    "operational_release_closure": {"const": "BLOCKED"},
+    "coverage_areas": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["area_id", "status", "evidence"],
+        "properties": {
+          "area_id": {"type": "string", "pattern": "^[A-Z0-9-]+$"},
+          "status": {"const": "COMPLETE"},
+          "evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    },
+    "remaining_blockers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["blocker_id", "issue", "state", "scope", "close_condition"],
+        "properties": {
+          "blocker_id": {"type": "string", "pattern": "^[A-Z0-9-]+$"},
+          "issue": {"const": 7},
+          "state": {"enum": ["OPEN", "UNVERIFIED"]},
+          "scope": {"type": "string", "minLength": 1},
+          "close_condition": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "umbrella_issue_disposition": {"const": "KEEP_OPEN"}
+  }
+}
