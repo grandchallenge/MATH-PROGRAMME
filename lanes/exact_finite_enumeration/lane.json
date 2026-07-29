@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "lane_id": "LANE-EXACT-FINITE",
+  "title": "Exact finite enumeration to certificate",
+  "obligation": "Exhaust a precisely bounded finite search space and preserve enough evidence to replay completeness and each accepted or rejected object.",
+  "artifacts": {
+    "input_schema": "input.schema.json",
+    "handoff_schema": "handoff.schema.json",
+    "toy_fixture": "fixture.json"
+  },
+  "allowed_statuses": ["bounded", "enumerated", "replayed", "ready_for_mathcert", "rejected"],
+  "rejection_policy": [
+    "Reject an enumeration whose carrier, bound, equivalence relation, or pruning rule is implicit.",
+    "Reject completeness claims when skipped cases cannot be reconstructed from a proof-producing reduction.",
+    "Reject asymptotic or unbounded conclusions inferred from a finite screen."
+  ],
+  "mathcert_route": [
+    "recompute the canonical finite carrier",
+    "replay generation and pruning under exact arithmetic",
+    "verify count, witness digest, and completeness scope",
+    "certify only the bounded proposition"
+  ],
+  "claim_boundary": "A complete bounded enumeration certifies only the stated finite range. It does not establish the corresponding unbounded conjecture."
+}

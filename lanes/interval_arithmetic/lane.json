@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "lane_id": "LANE-INTERVAL",
+  "title": "Interval arithmetic to certified bound",
+  "obligation": "Produce an outward-rounded enclosure for a specified function, domain, precision, and subdivision policy.",
+  "artifacts": {"input_schema": "input.schema.json", "handoff_schema": "handoff.schema.json", "toy_fixture": "fixture.json"},
+  "allowed_statuses": ["configured", "enclosed", "subdivision_required", "ready_for_mathcert", "rejected"],
+  "rejection_policy": [
+    "Reject bounds without an explicit domain, rounding mode, precision, and backend version.",
+    "Reject an enclosure when singularities or domain exclusions are not represented.",
+    "Reject sampled floating-point extrema as interval certificates."
+  ],
+  "mathcert_route": [
+    "replay the outward-rounded computation",
+    "check every subdivision covers the declared domain",
+    "verify the final interval implies the stated local bound",
+    "certify only the explicit enclosure claim"
+  ],
+  "claim_boundary": "An interval enclosure proves only the stated bound on the stated domain under the replayed arithmetic contract."
+}
