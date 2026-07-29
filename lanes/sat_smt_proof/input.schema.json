@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["lane_id", "logic", "formula_format", "source_obligation", "encoded_formula", "solver", "solver_version", "proof_format", "resource_budget"],
+  "properties": {
+    "lane_id": {"const": "LANE-SAT-SMT"},
+    "logic": {"type": "string", "minLength": 1},
+    "formula_format": {"type": "string", "minLength": 1},
+    "source_obligation": {"type": "string", "minLength": 1},
+    "encoded_formula": {"type": "string", "minLength": 1},
+    "solver": {"type": "string", "minLength": 1},
+    "solver_version": {"type": "string", "minLength": 1},
+    "proof_format": {"type": "string", "minLength": 1},
+    "resource_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_runtime_seconds", "max_memory_mb"],
+      "properties": {
+        "max_runtime_seconds": {"type": "integer", "minimum": 1},
+        "max_memory_mb": {"type": "integer", "minimum": 1}
+      }
+    }
+  }
+}

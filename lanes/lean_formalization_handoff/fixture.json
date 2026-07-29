@@ -1,0 +1,26 @@
+{
+  "input": {
+    "lane_id": "LANE-LEAN-HANDOFF",
+    "normalized_statement": "For every natural number a, a + 0 = a.",
+    "assumptions": [],
+    "source_refs": ["toy-arithmetic-source:add-zero"],
+    "imports": ["Mathlib"],
+    "target_file": "Toy/AddZero.lean",
+    "theorem_name": "toy_add_zero",
+    "trust_policy": "no_sorry_no_local_axiom"
+  },
+  "handoff": {
+    "lane_id": "LANE-LEAN-HANDOFF",
+    "status": "formalization_ready",
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "commit": "0123456789abcdef0123456789abcdef01234567",
+    "target_file": "Toy/AddZero.lean",
+    "theorem_name": "toy_add_zero",
+    "build_command": ["lake", "build", "Toy.AddZero"],
+    "dependency_lock": "lake-manifest.json",
+    "no_sorry": true,
+    "no_local_axiom": true,
+    "source_correspondence": "The Lean theorem has the same universal quantifier, carrier, operation, and conclusion as the normalized toy statement.",
+    "certification_state": "not_certified"
+  }
+}

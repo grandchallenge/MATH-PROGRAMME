@@ -1,36 +1,29 @@
-# Certification boundary and MATHCERT handoff
+# Certification boundary and completed handoff
 
-## Certification completed in UC-DOC-WP00
+## Governance and integrity established in UC-DOC-WP00
 
-- exact byte lengths and SHA-256 identities;
-- source-record to source-lock metadata agreement;
-- claim-authority and open-status wording;
-- Work Package structure and stable node IDs;
-- absence of `union_closed.edition.json`;
-- absence of Union-Closed membership in `ARTIFACT_MANIFEST.json`;
-- schema-bound Agent Council review.
+UC-DOC-WP00 locked the documentary source identity, release metadata, open-conjecture status, claim boundary, canonical claim ledger, plate inventory, and Agent Council review. Its `manifest_admission` object records the historical pre-admission state and is not rewritten after promotion.
 
-## Existing mathematical certification imported
+These records establish documentary governance and artifact identity. They do not certify Frankl's conjecture.
 
-- external pinned Lean definitions and local lemmas;
-- independent exact replay for `n <= 4`;
-- UC-WP05 formal and hybrid lattice results.
+## Handoff discharged by UC-DOC-WP01
 
-## Not certified
+UC-DOC-WP01 completed the atomic admission recorded in:
+
+- `campaigns/union_closed/UC_DOC_WP01_WEB_ADMISSION/01_RESULT_STATUS.json`;
+- `campaigns/union_closed/UC_DOC_WP01_WEB_ADMISSION/artifacts/UC-DOC-WP01_ADMISSION.json`;
+- `docs/documentaries/union_closed.md`;
+- `docs/documentaries/union_closed.edition.json`;
+- `docs/documentaries/ARTIFACT_MANIFEST.json`.
+
+The candidate entry was removed, the candidate registry remained valid when empty, and the admitted manifest volume retained the UC-DOC-WP00 `source_lock` path as historical provenance.
+
+## Continuing certification boundary
+
+Programme CI may certify schema conformance, source and release identity, reader accessibility, asset inventory, navigation, claim-boundary consistency, formal artifacts within their declared interfaces, and exact bounded replays. It may not certify:
 
 - Frankl's conjecture;
-- completeness of the global literature;
-- any 2026 complete-proof claim;
-- any numerical optimization not accompanied by a rigorous global certificate;
-- public web accessibility, since no web edition exists yet.
-
-## UC-DOC-WP01 handoff
-
-MATHCERT and programme CI should validate:
-
-1. `union_closed.edition.json` against `documentary_web.schema.json`;
-2. exact source-lock crosswalk;
-3. domain/campaign/claim-authority concordance;
-4. native plate title, description, alt text, and pedagogical authority;
-5. semantic landmarks, keyboard focus, reduced motion, narrow mobile, and print;
-6. atomic manifest admission with no orphan record.
+- completeness of the literature;
+- unreviewed proof claims;
+- novelty or priority;
+- public availability of metadata-only release artifacts.

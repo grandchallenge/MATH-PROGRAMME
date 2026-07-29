@@ -20,6 +20,8 @@ This registry preserves canonical governance terms used across Agent Council doc
 | Terminology registry | The canonical record of governance terms and material term changes. | Not a general mathematical glossary. |
 | Review provenance | Evidence identifying who or what reviewed an obligation and where findings are recorded. | Does not imply that a claim is proved. |
 | Schema-bound Agent Council review record | A review conforming to `schemas/agent_review.schema.json` and explicitly registered for CI validation. | Legacy reviews are not schema-bound until migrated and registered. |
+| Canonical claim ledger | A `ledger_contract: canonical_claim_ledger` record conforming to `schemas/claim_ledger.schema.json` and explicitly registered for programme validation. | A file name, Markdown table, or legacy claim list alone does not create canonical claim authority. |
+| Claim-ledger registration | The two-way contract requiring every canonical ledger to be registered and every registered canonical ledger to exist with its contract marker. | Does not validate the truth of the claims; it validates trust-spine inclusion and shape. |
 | Artifact lifecycle status | The stable machine phase in `artifact.status`. | Does not encode campaign-specific theorem strength. |
 | Artifact disposition | A separate human-readable campaign qualification. | Must not silently create a lifecycle token. |
 | Cross-document consistency | A recorded comparison among relevant authority surfaces. | Consistency does not establish correctness. |
@@ -52,13 +54,22 @@ This registry preserves canonical governance terms used across Agent Council doc
 | Instance-family undecidability | Undecidability of membership or behaviour across a computably represented family of inputs or initial data. | Does not imply independence of one universal mathematical sentence. |
 | Formal independence contingency | The requirement that any independence claim name a formal system and supply a transfer metatheorem separate from dynamical undecidability. | Chaos, nontermination, or Turing completeness alone is insufficient. |
 | Bounded interface fixture | A finite deterministic software object testing distinctions or API contracts under declared inputs. | Not a PDE simulation, reduction, non-halting oracle, singularity witness, or theorem certificate. |
-| Documentary Library | The public collection under `docs/documentaries/`, discovered through `ARTIFACT_MANIFEST.json`. | Publication is presentation, not mathematical support. |
-| Documentary source record | A small pointer identifying a complete documentary source artifact. | Not the complete compilable source. |
-| Authoritative documentary source artifact | The checksum-locked complete illustrated source bundle. | Identity does not establish public availability. |
-| Rendered documentary edition | The checksum-locked PDF identified by the documentary manifest. | Not the governing source. |
+| Documentary Library | The admitted public collection under `docs/documentaries/`, discovered through `ARTIFACT_MANIFEST.json`. | Pre-admission candidates are not collection members; publication is presentation, not mathematical support. |
+| Documentary admission candidate | A source-locked documentary project registered in `DOCUMENTARY_CANDIDATES.json` before atomic public edition admission. | Candidate metadata do not confer manifest membership, a public page, an edition record, or release availability. |
+| Documentary source lock | A governed record fixing candidate source scope, claim boundary, release identities, review, and next admission obligations. | Does not publish a browser edition or strengthen the target mathematics. |
+| Pre-admission documentary source record | A repository-only pointer identifying a candidate complete source artifact before public edition admission. | Must remain outside `docs/` and is not an admitted public source record. |
+| Repository-only source pointer | A source pointer retained under its governing campaign and excluded from the generated site until atomic manifest admission. | Repository visibility is not documentary publication or release availability. |
+| Documentary source record | An admitted public pointer identifying a complete documentary source artifact. | Not the complete compilable source; candidate pointers do not enter this class before admission. |
+| Authoritative documentary source artifact | The checksum-locked complete illustrated source bundle named by an admitted manifest or candidate source lock. | Identity does not establish public availability. |
+| Rendered documentary edition | The checksum-locked PDF identified by the admitted manifest or candidate source lock. | Not the governing source. |
 | Documentary web edition | A derivative browser-native presentation governed by schema and campaign authority. | Interactive features are not proof evidence. |
 | Documentary edition record | A manifest-named `*.edition.json` instance defining one browser edition’s title, claim boundary, assets, sections, sources, palette, and rendering policy. | Not a source artifact or theorem ledger. |
-| Documentary discovery authority | `docs/documentaries/ARTIFACT_MANIFEST.json`, the sole machine inventory of collection editions. | Files appearing in the directory without manifest registration are orphaned, not implicitly governed. |
+| Documentary discovery authority | `docs/documentaries/ARTIFACT_MANIFEST.json`, the sole machine inventory of admitted collection editions. | Candidate registry membership and files appearing in directories do not imply admission. |
+| Documentary candidate authority | `docs/documentaries/DOCUMENTARY_CANDIDATES.json`, the public metadata inventory of pre-admission source locks. | It cannot admit an edition or override the manifest. |
+| Documentary claim status | The machine field `open` or `solved` governing status-sensitive validation. | Not reader-facing prose or artifact lifecycle status. |
+| Documentary problem class | The machine class such as `millennium_open_problem`, `open_conjecture`, or `solved_classical_theorem`. | Does not itself state proof support or campaign promotion. |
+| Documentary display status | Reader-facing status wording associated with a machine claim status and problem class. | Validation must not infer mathematical state from exact English wording alone. |
+| Documentary file-class discovery | Bidirectional inventory checking for pages, edition records, admitted source records, candidate locks, assets, asset directories, root static files, and shared reader code. | File presence alone never creates authority. |
 | Documentary edition tier | The expository class `reference`, `full`, or `orientation` recorded in the documentary manifest. | Tiers do not encode theorem strength, campaign promotion, or release availability. |
 | Reference documentary tier | The canonical browser-reader substrate and most complete implementation exemplar. | Reference status does not strengthen imported mathematics or create a new proof. |
 | Full documentary tier | A sustained narrative and technical treatment with greater depth than orientation while using the shared authority contract. | Full status is editorial, not mathematical promotion. |
@@ -85,4 +96,4 @@ This registry preserves canonical governance terms used across Agent Council doc
 
 A term is added or changed only when its decision, affected artifacts, consistency check, integrated authority, and ledger state are recorded.
 
-ADR-0007 governs decision and review normalization; ADR-0008 and ADR-0009 govern public and campaign coverage; ADR-0010 governs documentary authority, manifest discovery, and edition tiers; ADR-0011 and ADR-0012 govern global execution, discovery, environment, and current-tip publication; ADR-0013 governs the non-probative NS-CI-WP06 lane; ADR-0014 governs repository experiment reachability and exact-artifact publication.
+ADR-0007 governs decision and review normalization; ADR-0008 and ADR-0009 govern public and campaign coverage; ADR-0010 governs admitted documentary authority, candidate authority, machine status, manifest discovery, source policy, and edition tiers; ADR-0011 and ADR-0012 govern global execution, discovery, environment, and current-tip publication; ADR-0013 governs the non-probative NS-CI-WP06 lane; ADR-0014 governs repository experiment reachability and exact-artifact publication.

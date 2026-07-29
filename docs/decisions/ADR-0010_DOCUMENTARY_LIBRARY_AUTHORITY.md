@@ -2,116 +2,148 @@
 
 ## Status
 
-Accepted, 2026-07-26. Implementation extended, 2026-07-27.
+Accepted, 2026-07-26. Implementation extended, 2026-07-27 for manifest discovery and documentary tiers; extended again, 2026-07-27 for pre-admission candidates, machine status classes, trust-spine registration, and complete documentary inventory discovery.
 
 ## Context
 
-The MATH-PROGRAMME Documentary Library publishes seven GCL–Chaidez volume records and browser-native web editions. The initial publication correctly preserved mathematical claim boundaries, but a subsequent consistency audit found that its artifact authority and continuity model was under-specified:
+The MATH-PROGRAMME Documentary Library publishes seven GCL–Chaidez volume records and browser-native web editions. Successive consistency audits established that claim-safe presentation was not enough: artifact classes, discovery boundaries, release availability, machine status, review registration, and pre-admission lifecycle states also had to be explicit.
 
-1. committed `.tex` files were archival source records, while public labels and the artifact manifest sometimes called them authoritative LaTeX sources;
-2. checksum-locked PDFs and complete illustrated source bundles were identified but their availability and release locators were not explicit;
-3. the Documentary Library and Poincaré web edition were absent from the Agent Council artifact ledger and schema-bound review registry;
-4. the web-edition schema did not define the base used to resolve asset paths;
-5. programme CI built the pages but did not validate manifest crosswalks, source-record identities, edition metadata, reader landmarks, or external mathematics-rendering policy;
-6. RH-WP01 and RH-WP02 had merged and passed repository CI, but the public RH page still described them as future work and their legacy review records retained blocking pre-promotion language;
-7. after PRs #99 and #103, all seven volumes had web editions, but the primary validator still treated Poincaré specially while BSD and the remaining five volumes relied on separate hard-coded tests;
-8. the manifest did not name edition records, so omitted or orphaned `*.edition.json` files could escape the collection authority model;
-9. expository depth differed materially across volumes without a declared editorial vocabulary.
+The audits found:
+
+1. committed `.tex` files were pointer records, while public labels sometimes confused them with complete source artifacts;
+2. checksum-locked PDFs and illustrated bundles had identities but no explicit availability state;
+3. the original validator treated Poincaré specially and left other editions in separate tests;
+4. the manifest did not initially name edition records or documentary tiers;
+5. omitted or orphaned edition records could escape collection governance;
+6. expository depth differed without a declared editorial vocabulary;
+7. UC-DOC-WP00 introduced a legitimate source-locked documentary state before public web admission, but no machine authority represented that intermediate state;
+8. a pre-admission source pointer under `docs/` would be copied to the public site despite the Work Package declaring public admission deferred;
+9. one exact English status token, `Open Millennium Prize Problem`, could not represent an open non-Millennium conjecture such as Frankl's conjecture;
+10. documentary orphan detection covered edition JSON only, not pages, admitted source records, candidate locks, assets, asset directories, static files, or shared reader code;
+11. the UC-DOC claim ledger and Agent Council review were locally tested but not yet bound to the programme's canonical claim-ledger and central review registries.
 
 ## Decision
 
-1. Define four distinct documentary artifact classes:
-   - **source record** — the small Git-tracked pointer identifying a complete source artifact by title, page count, byte length where available, and digest;
-   - **authoritative source artifact** — the checksum-locked complete illustrated source bundle, not the pointer file;
+1. Define four admitted documentary artifact classes:
+   - **source record** — a small Git-tracked pointer identifying a complete source artifact by title, page count, and digest;
+   - **authoritative source artifact** — the checksum-locked complete illustrated source bundle;
    - **rendered edition** — the checksum-locked PDF;
    - **web edition** — a derivative public presentation whose theorem strength cannot exceed its governing campaign and source artifacts.
-2. Require each documentary manifest entry to identify its programme domain, campaign, scope relation, public page, web-edition record, governing claim-authority artifact, source record, documentary tier, and release availability.
+2. Require each admitted manifest entry to identify its programme domain, campaign, scope relation, public page, edition record, governing claim authority, source record, documentary tier, machine claim status, problem class, display status, and release availability.
 3. Use `metadata_only` when a release-class artifact has an identity record but no stable public release locator. Do not imply public availability from a checksum alone.
-4. Register the Documentary Library, the Poincaré reference web edition, and the six open-problem web editions in the Agent Council artifact ledger and bind their review record to `schemas/agent_review.schema.json` in CI.
-5. Add a machine-readable documentary manifest schema, semantic validator, and adversarial rejection tests. Validation must cover manifest structure, manifest-to-directory discovery, domain and campaign crosswalks, source-record identities, edition metadata, topic and authority concordance, scope and tier compatibility, asset existence and uniqueness, section correspondence, authority wording, accessibility landmarks, and mathematics-rendering policy.
-6. Declare `docs/documentaries/ARTIFACT_MANIFEST.json` the sole machine discovery authority. Every manifest volume must name exactly one existing edition record. Every discovered `*.edition.json` file must be registered. Omitted and orphaned editions fail policy.
-7. Declare documentary edition assets as documentation-root-relative through an explicit `asset_base` contract.
-8. Treat MathJax as a version-pinned, network-delivered enhancement. The source mathematics must remain present and readable without JavaScript; the checksum-locked PDF and source bundle, not the CDN response, carry archival identity.
-9. Use one document main landmark supplied by MkDocs. The embedded monograph uses an `article` landmark, and skip navigation must move keyboard focus to a focusable manuscript target.
-10. Record RH-WP01 and RH-WP02 as implemented, merged, and CI-passed but **not formally promoted**. Their retained blockers are independent source-locator review and migration or replacement of the legacy blocking review disposition. Repository merge and CI alone do not override that record.
-11. Normalize human-facing typography to `Poincaré`, `Hamilton–Perelman`, and `GCL–Chaidez`; ASCII remains appropriate for filenames, stable identifiers, and machine keys.
+4. Register the Documentary Library, the Poincaré reference web edition, and the six open-problem web editions in the Agent Council artifact ledger and bind their review record to the current review schema.
+5. Use `docs/documentaries/ARTIFACT_MANIFEST.json` as the sole machine discovery authority for admitted public editions.
+6. Every admitted manifest volume must name exactly one existing edition record, web page, source record, and asset directory. Every discovered admitted edition record, page, source record, asset file, and asset directory must be declared by exactly one manifest volume.
+7. Use `docs/documentaries/DOCUMENTARY_CANDIDATES.json` as the separate public metadata authority for pre-admission documentary source locks.
+8. Candidate metadata may be public, but pre-admission source pointers remain under the governing campaign and are repository-only until atomic manifest admission.
+9. Candidate membership does not confer collection membership, public source-record status, browser-edition publication, or release availability.
+10. Candidate admission must atomically add the web page, edition record, native assets, public source record, collection entry, MkDocs navigation entry, and manifest volume.
+11. Separate status into:
+    - `claim_status`: machine state such as `open` or `solved`;
+    - `problem_class`: mathematical/documentary class such as `millennium_open_problem`, `open_conjecture`, or `solved_classical_theorem`;
+    - `display_status`: reader-facing wording.
+    Validation must branch on machine state, never on an exact English phrase.
 12. Define three expository tiers:
-    - **reference** — the canonical browser-reader substrate and most complete implementation exemplar;
-    - **full** — a sustained narrative and technical treatment using the shared authority contract;
-    - **orientation** — a complete but compressed first-principles map of the problem, theorem terrain, vocabulary, and guardrails.
-    Tiers are editorial metadata only. They do not encode theorem strength, campaign promotion, certification, or release availability.
+    - **reference** — canonical browser-reader substrate and most complete implementation exemplar;
+    - **full** — sustained narrative and technical treatment using the shared authority contract;
+    - **orientation** — complete but compressed first-principles map of problem, theorem terrain, vocabulary, and guardrails.
+    Tiers are editorial metadata only and do not encode theorem strength, campaign promotion, certification, or release availability.
 13. Assign Poincaré to `reference`, BSD to `full`, and Hodge, Navier–Stokes, Yang–Mills, P versus NP, and Riemann to `orientation`.
-14. Keep problem-specific mathematical-spine tests separate, but move all shared discovery, schema, authority, accessibility, asset, release, source, section, and rendering invariants into the manifest-driven validator.
+14. Declare documentary edition assets documentation-root-relative through the `asset_base` contract.
+15. Treat MathJax as a version-pinned network enhancement. Source mathematics must remain readable without JavaScript; archival identity belongs to the PDF and complete source bundle.
+16. Use one document main landmark supplied by MkDocs. Embedded monographs use an `article` landmark and focusable skip target.
+17. Keep problem-specific mathematical-spine tests separate, but place shared discovery, schema, authority, accessibility, asset, release, source, section, and rendering invariants in the manifest-driven validator.
+18. Discover and reject documentary cruft across all governed file classes:
+    - edition records;
+    - web pages;
+    - admitted source records;
+    - candidate source locks;
+    - asset files and asset directories;
+    - root documentary `.txt`, `.tex`, and `.json` files;
+    - shared documentary CSS and JavaScript authority files.
+19. Delete obsolete static files rather than retaining unlinked public copies. Historical content remains recoverable through Git.
+20. Require UC-DOC-WP00's claim ledger to conform to the canonical claim-ledger schema and be centrally registered. Require its schema-bound Agent Council review to be centrally registered. Omitted canonical ledgers and discoverable schema-bound reviews fail policy.
+21. Retain RH-WP01 and RH-WP02 as implemented, merged, and CI-passed but not formally promoted while their independent retained blockers remain open.
+22. Normalize human-facing typography to `Poincaré`, `Hamilton–Perelman`, and `GCL–Chaidez`; ASCII remains appropriate for filenames, stable identifiers, and machine keys.
+
+## Candidate public-copy policy
+
+Public candidate metadata are useful because they expose status, authority, proposed tier, release identities, review record, and exact admission obligations. The source pointer itself is withheld from the generated site because its presence under `docs/` would create an unlisted public artifact before the page and edition contract exist.
+
+This is not secrecy or release withdrawal. The complete source and PDF remain `metadata_only`, and the pointer remains available in repository history and the governing campaign. Atomic admission will move or copy the pointer into `docs/documentaries/sources/` only when the complete public edition enters the manifest.
 
 ## Alternatives considered
 
-### Treat the committed source-record pointers as the authoritative source
+### Treat committed source-record pointers as authoritative source
 
 Rejected. They intentionally do not contain the complete illustrated LaTeX project and are not expected to compile.
 
-### Treat checksum publication as equivalent to release publication
+### Treat checksum publication as release publication
 
-Rejected. A digest establishes identity after a file is obtained; it does not tell a reader where the file is available.
+Rejected. A digest establishes identity after acquisition; it does not provide an acquisition route.
 
-### Discover editions by glob without a manifest authority
+### Discover admitted editions by directory glob alone
 
-Rejected. A directory glob can find files but cannot determine whether a file is governed, complete, intentionally retired, or correctly crosswalked. The manifest owns membership; directory discovery is used adversarially to detect omissions and orphans.
+Rejected. A glob cannot decide whether a file is governed, complete, intentionally retired, or correctly crosswalked. The manifest owns membership; directory discovery is adversarial and detects omissions or orphans.
 
-### Require identical expository length across all seven editions
+### Put pre-admission candidates directly in the admitted manifest
 
-Rejected. Equal length is not a mathematical or accessibility requirement and would invite padding. Explicit tiers make depth differences reviewable while preserving one shared authority contract.
+Rejected. That would permit manifest membership without a public page, edition record, assets, navigation, and accessibility contract, defeating atomic admission.
 
-### Promote RH-WP01 and RH-WP02 automatically because PR #90 merged and CI passed
+### Keep candidate source pointers under `docs/` but omit them from navigation
 
-Rejected. The legacy reviews retain blocking Referee dispositions and explicitly recommend no promotion. Merge and CI discharge repository checks but do not silently replace independent review obligations.
+Rejected. MkDocs copies non-Markdown static files under `docs_dir`; unlisted is not the same as unpublished.
 
-### Vendor the complete MathJax distribution into ordinary documentation history
+### Encode openness in display prose only
 
-Deferred. The web editions remain readable without JavaScript, the provider and version are pinned, and archival identity belongs to the PDF and complete source bundle. A future self-hosting decision may supersede this delivery policy.
+Rejected. Exact-English branching cannot represent non-Millennium conjectures and confuses reader language with machine state.
+
+### Require identical expository length across all editions
+
+Rejected. Equal length is not a mathematical or accessibility requirement and would invite padding. Explicit tiers make depth differences reviewable.
+
+### Vendor the complete MathJax distribution
+
+Deferred. The editions remain readable without JavaScript; provider and version are pinned; archival identity belongs to the PDF and source bundle.
 
 ## Consequences
 
-- Documentary authority is explicit and no longer split between pointer records and complete source artifacts.
-- Readers can distinguish `metadata_only` artifact identity from a published release.
-- The manifest is the fail-closed collection inventory rather than one metadata file among several.
-- All seven documentary pages, metadata records, assets, campaign crosswalks, and reader semantics are validated through one generalized contract.
-- Omitted, orphaned, topic-drifted, authority-drifted, scope-incompatible, and duplicate-asset states are rejected.
-- Expository depth differences are visible through reference, full, and orientation tiers without implying mathematical hierarchy.
-- Shared infrastructure tests no longer diverge across Poincaré, BSD, and Wave One.
-- RH public documentation reflects repository reality without over-promoting WP01 or WP02.
+- Admitted edition authority and pre-admission candidate authority are distinct and explicit.
+- Union-Closed can remain honestly classified as an open conjecture without using a false Millennium label or falling into a solved branch.
+- Candidate metadata are public while candidate source pointers remain repository-only until admission.
+- Omitted or orphaned pages, source records, candidate locks, assets, directories, static files, and reader code are rejected.
+- Canonical claim ledgers and schema-bound reviews cannot silently evade central registration.
+- Release identities remain separate from availability claims.
+- Expository tier remains separate from theorem strength.
 - No open problem, solved theorem, novelty claim, or formal-certification boundary is strengthened.
 
 ## Affected artifacts
 
-- `docs/documentaries/`
+- `CLAIM_LEDGER_STANDARD.md`
+- `schemas/claim_ledger.schema.json`
+- `templates/claim_ledger_template.yaml`
+- `templates/union_closed_claim_ledger_wp01.yaml`
+- `campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/`
+- `reviews/union_closed/UC-DOC-WP00.agent_review.yaml`
 - `docs/documentaries/ARTIFACT_MANIFEST.json`
-- `docs/documentaries/*.edition.json`
+- `docs/documentaries/DOCUMENTARY_CANDIDATES.json`
 - `schemas/documentary_manifest.schema.json`
+- `schemas/documentary_candidate_registry.schema.json`
+- `docs/documentaries/sources/README.md`
 - `ci/validate_documentaries.py`
 - `ci/test_validate_documentaries.py`
-- `tests/test_documentary_web_editions.py`
-- `tests/test_documentary_wave_one.py`
 - `ci/validate_programme.py`
 - `ci/test_validate_programme.py`
-- `docs/domains/riemann_hypothesis.md`
-- `docs/domains/index.md`
-- `docs/CAMPAIGN_PROMOTION_REGISTER.md`
-- `docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md`
-- `docs/AGENT_COUNCIL_DECISION_RECORDS.md`
-- `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md`
-- `docs/GLOSSARY.md`
-- `docs/REPOSITORY_DOCS.md`
-- `FILE_MANIFEST.md`
+- `tests/test_uc_doc_source_lock.py`
 - `mkdocs.yml`
-- `reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml`
 
 ## Review provenance
 
-- Trigger: user-authorized consistency and coverage review followed by explicit implementation authorization.
-- Documentary publication PRs inspected: #92, #93, #99, and #103.
-- Governing claim boundaries checked against all seven manifest claim authorities, the public domain catalogue, and the existing status taxonomy.
-- The 2026-07-27 extension closes the post-PR-103 discovery and test-fragmentation gap without rewriting the historical status of earlier reviews.
+- Initial publication and authority work: PRs #92, #93, #99, #103, and #104.
+- Wave Two source lock: PR #105.
+- Trigger for this extension: post-merge consistency, coverage, dangling-artifact, and cruft audit.
+- The extension repairs governance and discovery only. It does not revise the mathematical content of the seven admitted editions or promote Frankl's conjecture.
 
 ## Supersession
 
-This decision extends ADR-0008 and ADR-0009. It does not supersede their domain-coverage or governed-campaign discovery rules.
+This decision extends ADR-0008 and ADR-0009. It does not supersede their public-domain coverage or governed-campaign discovery rules. Later semantic-binding and reference-tier normalization work may extend this ADR without changing the candidate/admission boundary established here.

@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "lane_id": "LANE-LEAN-HANDOFF",
+  "title": "Lean formalization handoff",
+  "obligation": "Transfer a normalized theorem statement, assumptions, source correspondence, trust policy, and build target into a reproducible Lean package.",
+  "artifacts": {"input_schema": "input.schema.json", "handoff_schema": "handoff.schema.json", "toy_fixture": "fixture.json"},
+  "allowed_statuses": ["normalized", "formalization_ready", "build_passed", "ready_for_mathcert", "rejected"],
+  "rejection_policy": [
+    "Reject a handoff whose theorem statement or assumptions differ from the source claim without an explicit equivalence proof.",
+    "Reject local axioms, sorry placeholders, unpinned dependencies, or an unspecified build command.",
+    "Reject successful compilation as evidence for claims outside the named theorem."
+  ],
+  "mathcert_route": [
+    "checkout the pinned repository and dependency lock",
+    "scan the governed source for prohibited placeholders and local axioms",
+    "run the declared build command",
+    "confirm the exported theorem matches the normalized claim"
+  ],
+  "claim_boundary": "A passing Lean build certifies only the named declaration under its imported foundations and exact source correspondence."
+}

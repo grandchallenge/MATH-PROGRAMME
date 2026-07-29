@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "registry_id": "CROSS-PILLAR-LANE-PACKAGES",
+  "required_lane_ids": [
+    "LANE-EXACT-FINITE",
+    "LANE-INTERVAL",
+    "LANE-SAT-SMT",
+    "LANE-LEAN-HANDOFF",
+    "LANE-LITERATURE-STATUS"
+  ],
+  "packages": [
+    {
+      "lane_id": "LANE-EXACT-FINITE",
+      "root": "lanes/exact_finite_enumeration",
+      "doctrine": "docs/lanes/EXACT_FINITE_ENUMERATION.md"
+    },
+    {
+      "lane_id": "LANE-INTERVAL",
+      "root": "lanes/interval_arithmetic",
+      "doctrine": "docs/lanes/INTERVAL_ARITHMETIC.md"
+    },
+    {
+      "lane_id": "LANE-SAT-SMT",
+      "root": "lanes/sat_smt_proof",
+      "doctrine": "docs/lanes/SAT_SMT_PROOF_ARTIFACTS.md"
+    },
+    {
+      "lane_id": "LANE-LEAN-HANDOFF",
+      "root": "lanes/lean_formalization_handoff",
+      "doctrine": "docs/lanes/LEAN_FORMALIZATION_HANDOFF.md"
+    },
+    {
+      "lane_id": "LANE-LITERATURE-STATUS",
+      "root": "lanes/literature_status_spine",
+      "doctrine": "docs/lanes/LITERATURE_SYNTHESIS_STATUS_SPINE.md"
+    }
+  ]
+}

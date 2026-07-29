@@ -21,9 +21,11 @@ EXPECTED_WORKFLOWS = {
     "bsd-wp03-substrate.yml",
     "bsd-wp04-target.yml",
     "ci.yml",
+    "gcl-conformance.yml",
     "pages.yml",
     "pc-wp04.yml",
     "pc-wp05.yml",
+    "release-trust-admin.yml",
 }
 
 
@@ -57,8 +59,12 @@ def _job_hardening_errors(name: str, workflow: dict[str, Any]) -> list[str]:
         errors.append(f"{name}: top-level permissions must be exactly contents: read")
 
     for job_id, job in workflow.get("jobs", {}).items():
-        if "timeout-minutes" not in job:
+        if "uses" not in job and "timeout-minutes" not in job:
             errors.append(f"{name}:{job_id}: timeout-minutes is required")
+        if "uses" in job and not IMMUTABLE_ACTION.fullmatch(str(job.get("uses", ""))):
+            errors.append(
+                f"{name}:{job_id}: reusable workflow reference must use a full commit SHA"
+            )
         job_permissions = job.get("permissions")
         if name != "pages.yml" and job_permissions not in (None, {}, READ_ONLY_PERMISSIONS):
             errors.append(
@@ -243,6 +249,27 @@ def workflow_coverage_errors(
             if marker not in pages_text:
                 errors.append(f"pages.yml: missing publication gate {marker}")
 
+    admin = parsed.get("release-trust-admin.yml")
+    if admin:
+        trigger = _trigger(admin)
+        if set(trigger) != {"workflow_dispatch"}:
+            errors.append("release-trust-admin.yml: administration must be manually dispatched only")
+        admin_text = texts["release-trust-admin.yml"]
+        for marker in (
+            "environment: release-trust",
+            "actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349",
+            "app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}",
+            "private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}",
+            "GCL_REPOSITORY_ADMIN_TOKEN: ${{ steps.app-token.outputs.token }}",
+            "python ci/release_trust_admin.py --mode validate",
+            "--wait-seconds 1200",
+            "--close-child-issues",
+            "name: release-trust-evidence",
+            "retention-days: 90",
+        ):
+            if marker not in admin_text:
+                errors.append(f"release-trust-admin.yml: missing administration gate {marker}")
+
     errors.extend(external_evidence_errors(root, evidence))
     errors.extend(rh_continuity_errors(root))
     return errors
@@ -257,7 +284,7 @@ def main() -> int:
         return 1
     print(
         "workflow inventory, least-privilege permissions, immutable actions, repository execution, "
-        "exact artifact publication, RH continuity, and external evidence are valid"
+        "exact artifact publication, release-trust administration, RH continuity, and external evidence are valid"
     )
     return 0
 

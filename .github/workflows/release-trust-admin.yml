@@ -1,0 +1,89 @@
+name: Release trust administration
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Apply or only verify the administration contract
+        required: true
+        type: choice
+        options:
+          - apply
+          - verify
+        default: apply
+      close_child_issues:
+        description: Close issues 7 and 125 after complete verification
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-trust-administration
+  cancel-in-progress: false
+
+jobs:
+  administer:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment: release-trust
+    steps:
+      - name: Mint short-lived Release Trust token
+        id: app-token
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: |
+            MATH-PROGRAMME
+            MATHCERT
+            MATHSOLVE
+            INTELLECT
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - name: Install governed policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Require administration credential
+        shell: bash
+        env:
+          GCL_REPOSITORY_ADMIN_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${GCL_REPOSITORY_ADMIN_TOKEN}" ]]; then
+            echo "Missing release-trust environment secret GCL_REPOSITORY_ADMIN_TOKEN."
+            exit 1
+          fi
+      - name: Validate administration contract
+        run: python ci/release_trust_admin.py --mode validate
+      - name: Apply and verify release-trust administration
+        shell: bash
+        env:
+          GCL_REPOSITORY_ADMIN_TOKEN: ${{ steps.app-token.outputs.token }}
+          ADMIN_MODE: ${{ inputs.mode }}
+          CLOSE_CHILD_ISSUES: ${{ inputs.close_child_issues }}
+        run: |
+          set -euo pipefail
+          args=(
+            --mode "${ADMIN_MODE}"
+            --wait-seconds 1200
+            --evidence release-trust-evidence.json
+          )
+          if [[ "${CLOSE_CHILD_ISSUES}" == "true" ]]; then
+            args+=(--close-child-issues)
+          fi
+          python ci/release_trust_admin.py "${args[@]}"
+      - name: Upload release-trust evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: release-trust-evidence
+          path: release-trust-evidence.json
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 0

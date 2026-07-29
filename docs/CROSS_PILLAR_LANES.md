@@ -113,6 +113,60 @@ Allowed campaign statuses:
 - `route_switched`;
 - `ready_for_mathcert`.
 
+## Lane 03: exact finite enumeration to certificate
+
+Use this lane when the obligation is finite and the complete carrier can be generated exactly. The reusable package fixes the carrier, bound, equivalence relation, generation rule, pruning rule, replay command, completeness scope, and bounded claim boundary.
+
+- Doctrine: [Exact Finite Enumeration](lanes/EXACT_FINITE_ENUMERATION.md)
+- Package: `lanes/exact_finite_enumeration`
+- Proof boundary: exact bounded completeness, never an unbounded extrapolation.
+
+## Lane 04: interval arithmetic to certified bound
+
+Use this lane for outward-rounded enclosures on explicit domains. The reusable package fixes precision, rounding, backend, subdivision coverage, proof trace, and the exact local inequality implied by the enclosure.
+
+- Doctrine: [Interval Arithmetic](lanes/INTERVAL_ARITHMETIC.md)
+- Package: `lanes/interval_arithmetic`
+- Proof boundary: the stated enclosure on the stated domain.
+
+## Lane 05: SAT and SMT proof artifact to certificate
+
+Use this lane for bounded Boolean or theory instances with an independently checkable model or proof artifact. The source-to-formula correspondence remains part of the proof obligation.
+
+- Doctrine: [SAT and SMT Proof Artifacts](lanes/SAT_SMT_PROOF_ARTIFACTS.md)
+- Package: `lanes/sat_smt_proof`
+- Proof boundary: the checked encoded instance and its verified source interpretation.
+
+## Lane 06: Lean formalization handoff
+
+Use this lane to transfer a normalized theorem and assumption ledger into a reproducible Lean target. The reusable package requires pinned source, dependencies, build command, theorem name, source correspondence, and a no-`sorry`, no-local-axiom trust policy.
+
+- Doctrine: [Lean Formalization Handoff](lanes/LEAN_FORMALIZATION_HANDOFF.md)
+- Package: `lanes/lean_formalization_handoff`
+- Proof boundary: the named compiled declaration under its imported foundations.
+
+## Lane 07: literature synthesis to status spine
+
+Use this lane to turn a dated source search into a source-normalized theorem and status ledger. The reusable package preserves terminology locks, source locators, unresolved conflicts, dependency debt, and a prohibition on unsupported novelty claims.
+
+- Doctrine: [Literature Synthesis to Status Spine](lanes/LITERATURE_SYNTHESIS_STATUS_SPINE.md)
+- Package: `lanes/literature_status_spine`
+- Proof boundary: source correspondence and bounded status assertions at the stated cutoff.
+
+## Executable package governance
+
+The five reusable packages are registered in `governance/cross_pillar_lane_packages.json`. CI validates:
+
+1. the human doctrine document;
+2. the input schema;
+3. the output or handoff schema;
+4. the toy fixture;
+5. allowed statuses;
+6. the rejection policy;
+7. the promotion route into MATHCERT.
+
+The registry fails closed on missing or orphan packages, malformed schemas, invalid fixtures, status drift, incomplete rejection policies, missing doctrine sections, and toy fixtures that claim certification.
+
 ## How to add a new lane
 
 A new lane should include:

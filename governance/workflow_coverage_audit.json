@@ -1,0 +1,152 @@
+{
+  "$schema": "../schemas/workflow_coverage_audit.schema.json",
+  "schema_version": "1.3.0",
+  "audit_id": "UMBRELLA-RELEASE-AUDIT-2026-07-29",
+  "audited_at": "2026-07-29",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "programme_main_commit": "813f53ea28e1d941cc16c8f3da517c0dcfdc08a5",
+  "ci_contract_coverage": "COMPLETE",
+  "technical_children_complete": true,
+  "administrative_children_complete": true,
+  "operational_release_complete": true,
+  "operational_release_closure": "COMPLETE",
+  "release_trust_evidence": {
+    "contract_id": "ORG-REL-TRUST-01",
+    "evidence_id": "ORG-REL-TRUST-01-EVIDENCE",
+    "generated_at": "2026-07-29T12:13:58.925324+00:00",
+    "workflow_run_id": 30450610588,
+    "workflow_run_url": "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/30450610588",
+    "workflow_head_sha": "813f53ea28e1d941cc16c8f3da517c0dcfdc08a5",
+    "artifact_id": 8723362498,
+    "artifact_url": "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/actions/artifacts/8723362498",
+    "artifact_sha256": "b6f153fda1ce0d80742828aa6ede7a51c0070e908babdc924df1fe6aef65a3da",
+    "evidence_file_sha256": "95f06401dfdd0cc5535c0d812e3818fd621db01dae5509b67f68ae9ff8d2e536",
+    "evidence_sha256": "acd7e9c3ea10e9c03ea5dc81a0b84918d7241fea886426d2304e168b10c936f8",
+    "contract_sha256": "ce540a41792288f811c6cbb91b77580905b0daaebd157b51bd0409f91911b642",
+    "policy_workflow_run_id": 30450487344,
+    "pages_workflow_run_id": 30450675046,
+    "validated_site_artifact_id": 8723277027,
+    "validated_site_artifact_sha256": "c0e1719ffb935d9b7c3f3042c6010310ac6a210a101e04609e5c29d34047f19a",
+    "site_archive_sha256": "876400862c926f4c91d3932f00e852426e4f76dab841845e18bba4744c3b6465",
+    "index_sha256": "9a54a3831d6fb0922b1e21a792c246051d1d8f078621fac5da5e87cdd59535c7",
+    "live_index_sha256": "9a54a3831d6fb0922b1e21a792c246051d1d8f078621fac5da5e87cdd59535c7",
+    "repository_rulesets": [
+      {
+        "repository": "grandchallenge/MATHCERT",
+        "snapshot_sha256": "22901830aef56c55d262ae16969cbddfd38d09d366ad9b973eb48b9f2e07e5c8"
+      },
+      {
+        "repository": "grandchallenge/MATHSOLVE",
+        "snapshot_sha256": "9a7d468030c08420cf45bf4002caaef983972a291376f1da8a430cad99f71b2d"
+      },
+      {
+        "repository": "grandchallenge/MATH-PROGRAMME",
+        "snapshot_sha256": "1dd5d9c30865e1fb6adeeb73c2300fb7a829a8802d54d176b572fd5a1c059190"
+      },
+      {
+        "repository": "grandchallenge/INTELLECT",
+        "snapshot_sha256": "9d1ff325ee6439f8db30275de91d65985502e030ca432ebc24e88a8d34a66119"
+      }
+    ],
+    "verified": true
+  },
+  "children": [
+    {
+      "child_id": "PAGES-RELEASE-TRUST",
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 7,
+      "category": "administrative",
+      "state": "CLOSED",
+      "complete": true,
+      "implementation": {
+        "release_trust_workflow_run_id": 30450610588,
+        "release_trust_artifact_id": 8723362498,
+        "evidence_sha256": "acd7e9c3ea10e9c03ea5dc81a0b84918d7241fea886426d2304e168b10c936f8"
+      },
+      "close_conditions": []
+    },
+    {
+      "child_id": "PROTECTED-BRANCH-ENFORCEMENT",
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 125,
+      "category": "administrative",
+      "state": "CLOSED",
+      "complete": true,
+      "implementation": {
+        "release_trust_workflow_run_id": 30450610588,
+        "release_trust_artifact_id": 8723362498,
+        "evidence_sha256": "acd7e9c3ea10e9c03ea5dc81a0b84918d7241fea886426d2304e168b10c936f8"
+      },
+      "close_conditions": []
+    },
+    {
+      "child_id": "MATHFORGE-BOUNDED-WITNESS",
+      "repository": "grandchallenge/MATHFORGE",
+      "issue": 6,
+      "category": "technical",
+      "state": "CLOSED",
+      "complete": true,
+      "implementation": {
+        "pull_request": 25,
+        "tested_head": "95be2b36d1cfb6f64c3f4e64c0b5c71d2ef2def6",
+        "merge_commit": "5d6461b6812dd9a99d73ddf98904c33465bffca0",
+        "workflow_run_id": 30426791431,
+        "schema": {
+          "path": "schemas/algebraic_witness.schema.json",
+          "git_blob_sha1": "517d96566f35a0563c2b4059338aac0738a0a1b7"
+        },
+        "registry": {
+          "path": "governance/algebraic_witness_registry.json",
+          "git_blob_sha1": "022ebb5dbffa6685aef1dcb9bea8b1d338c5e7ec"
+        }
+      },
+      "close_conditions": []
+    },
+    {
+      "child_id": "MATHSOLVE-BOUNDED-TACTIC",
+      "repository": "grandchallenge/MATHSOLVE",
+      "issue": 6,
+      "category": "technical",
+      "state": "CLOSED",
+      "complete": true,
+      "implementation": {
+        "pull_request": 77,
+        "tested_head": "107312712da7fce228c7100c7d15a1ee45bae03a",
+        "merge_commit": "1f763c3a554814f40806a424e8b2c83f3ec8d24e",
+        "workflow_run_id": 30427137579,
+        "schema": {
+          "path": "schemas/grobner_tactic_invocation.schema.json",
+          "git_blob_sha1": "845117b233ddb5676d59f0e2e6a43f8e17abb497"
+        },
+        "registry": {
+          "path": "governance/grobner_tactic_registry.json",
+          "git_blob_sha1": "5ee8b1aa596172f3c7d96126e93809bc80e1dcda"
+        }
+      },
+      "close_conditions": []
+    }
+  ],
+  "coverage_areas": [
+    {"area_id": "GLOBAL-POLICY", "status": "COMPLETE", "evidence": [".github/workflows/ci.yml", "ci/validate_workflow_semantics.py"]},
+    {"area_id": "CAMPAIGN-REPLAY-DISCOVERY", "status": "COMPLETE", "evidence": ["ci/validate_campaign_replays.py", "ci/campaign_replay_registry.json"]},
+    {"area_id": "CI-REACHABILITY", "status": "COMPLETE", "evidence": ["ci/validate_policy_reachability.py", "ci/test_policy_reachability.py"]},
+    {"area_id": "REPOSITORY-TESTS", "status": "COMPLETE", "evidence": ["ci/validate_repository_execution.py", "python -m unittest discover -s tests -p test_*.py"]},
+    {"area_id": "EXPERIMENT-REACHABILITY", "status": "COMPLETE", "evidence": ["ci/validate_repository_execution.py"]},
+    {"area_id": "SYMBOLIC-BUDGETS", "status": "COMPLETE", "evidence": ["PR #120", "ci/validate_symbolic_resource_budgets.py", "governance/expensive_symbolic_lane_registry.json"]},
+    {"area_id": "CROSS-PILLAR-LANES", "status": "COMPLETE", "evidence": ["PR #121", "ci/validate_cross_pillar_lane_packages.py", "governance/cross_pillar_lane_packages.json"]},
+    {"area_id": "MATHFORGE-PROVIDER-IMPORTS", "status": "COMPLETE", "evidence": ["ci/validate_mathforge_provider_imports.py", "governance/mathforge_provider_imports.json"]},
+    {"area_id": "MATHSOLVE-ROUTING", "status": "COMPLETE", "evidence": ["ci/validate_mathsolve_routing.py", "governance/mathsolve_routing_audit.json"]},
+    {"area_id": "MATHCERT-CONFORMANCE", "status": "COMPLETE", "evidence": ["PR #126", "governance/mathcert_cross_repository_conformance.json", "workflow run 30423298405"]},
+    {"area_id": "MATHFORGE-BOUNDED-WITNESS", "status": "COMPLETE", "evidence": ["grandchallenge/MATHFORGE#6", "grandchallenge/MATHFORGE#25", "merge 5d6461b6812dd9a99d73ddf98904c33465bffca0", "workflow run 30426791431"]},
+    {"area_id": "MATHSOLVE-BOUNDED-TACTIC", "status": "COMPLETE", "evidence": ["grandchallenge/MATHSOLVE#6", "grandchallenge/MATHSOLVE#77", "merge 1f763c3a554814f40806a424e8b2c83f3ec8d24e", "workflow run 30427137579"]},
+    {"area_id": "FORMAL-REPLAYS", "status": "COMPLETE", "evidence": ["LOG-GCD Lean replay", "PC-WP04 bounded certificate replay"]},
+    {"area_id": "EXTERNAL-MATHCERT-EVIDENCE", "status": "COMPLETE", "evidence": ["evidence/UC-WP02-MATHCERT.json", "Replay pinned Union-Closed MATHCERT evidence"]},
+    {"area_id": "STRICT-DOCUMENTATION-BUILD", "status": "COMPLETE", "evidence": ["mkdocs build --strict", "requirements/docs.txt"]},
+    {"area_id": "PAGES-PUBLICATION-CONTRACT", "status": "COMPLETE", "evidence": [".github/workflows/pages.yml", "ci/validate_workflow_semantics.py", "exact policy artifact deployment contract"]},
+    {"area_id": "RELEASE-TRUST-EVIDENCE", "status": "COMPLETE", "evidence": ["workflow run 30450610588", "artifact 8723362498", "artifact SHA-256 b6f153fda1ce0d80742828aa6ede7a51c0070e908babdc924df1fe6aef65a3da", "evidence SHA-256 acd7e9c3ea10e9c03ea5dc81a0b84918d7241fea886426d2304e168b10c936f8"]},
+    {"area_id": "FAST-PATH-WORKFLOWS", "status": "COMPLETE", "evidence": ["bsd-wp03-substrate.yml", "bsd-wp04-target.yml", "pc-wp04.yml", "pc-wp05.yml"]}
+  ],
+  "remaining_blockers": [],
+  "umbrella_issue_disposition": "CLOSE",
+  "closure_rule": "Close MATH-PROGRAMME issue #6 only when all four children are complete, remaining_blockers is empty, and operational_release_complete is true."
+}

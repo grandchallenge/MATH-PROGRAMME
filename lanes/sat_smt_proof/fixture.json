@@ -1,0 +1,22 @@
+{
+  "input": {
+    "lane_id": "LANE-SAT-SMT",
+    "logic": "propositional",
+    "formula_format": "DIMACS-like toy expression",
+    "source_obligation": "decide whether x and not x is satisfiable",
+    "encoded_formula": "x AND NOT x",
+    "solver": "toy proof-producing solver",
+    "solver_version": "1.0",
+    "proof_format": "resolution trace",
+    "resource_budget": {"max_runtime_seconds": 5, "max_memory_mb": 32}
+  },
+  "handoff": {
+    "lane_id": "LANE-SAT-SMT",
+    "status": "proof_checked",
+    "result": "unsat",
+    "artifact": "toy_resolution_trace.json",
+    "checker_command": ["python3", "check_resolution_trace.py"],
+    "source_correspondence": "The single variable represents the same proposition in both contradictory clauses.",
+    "certification_state": "not_certified"
+  }
+}

@@ -1,16 +1,22 @@
+schema_version: 1.1.0
+ledger_contract: canonical_claim_ledger
+ledger_id: UC-WP01-CLAIMS
 claims:
   - claim_id: UC-WP01-C001
     short_name: Frankl conjecture statement
     claim_text: Every finite nontrivial union-closed family has an element present in at least half its members.
     claim_class: LITERATURE_DERIVED
+    mathematical_domain: finite combinatorics
     support_type: SOURCE_CITATION
+    support_summary: The canonical open conjecture is source-normalized for programme use; no proof is supplied by this ledger.
     status: OPEN_PROBLEM
-    certainty: PROVED_NOT_FORMALIZED_FOR_STATEMENT_ONLY
+    certainty: STRONGLY_SUPPORTED
     source_or_artifact:
-      - https://en.wikipedia.org/wiki/Union-closed_sets_conjecture
+      - DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md
       - https://arxiv.org/abs/2306.12351
-    assumptions: []
-    promotion_condition: Formal Lean statement in WP02; proof would require solving conjecture or restricted case.
+    assumptions:
+      - finite nontrivial union-closed set family
+    promotion_condition: A proof or certified reduction covering every finite nontrivial union-closed family.
     related_files:
       - WP01_UNION_CLOSED_STATUS_SPINE.md
       - WP02_UNION_CLOSED_LEAN_HANDOFF.md
@@ -18,21 +24,23 @@ claims:
       - UC-CONJECTURE-FRANKL
 
   - claim_id: UC-WP01-C004
-    short_name: small universe exact sanity check
+    short_name: small-universe exact sanity check
     claim_text: Exact enumeration finds no Frankl violations for all union-closed families on universes of size n <= 4.
     claim_class: COMPUTED_EXACTLY
-    support_type: EXACT_RATIONAL_COMPUTATION
+    mathematical_domain: finite combinatorics
+    support_type: LEAN_KERNEL_CHECKED_CERTIFICATE
+    support_summary: The bounded universe statement is independently replayed and kernel-checked at the evidence-pinned external MATHCERT revision; it has no unbounded consequence.
     status: CERTIFIED
-    certainty: EXACTLY_COMPUTED
+    certainty: CERTIFIED
     source_or_artifact:
-      - MATHFORGE/domains/union_closed/enumerate_small_families.py
-      - MATHFORGE/domains/union_closed/union_closed_small_audit.json
-      - MATHCERT/certificates/exact/union_closed_n_le_4.json
-      - MATHCERT/ci/replay_certificates.py
+      - evidence/UC-WP02-MATHCERT.json
+      - grandchallenge/MATHCERT/certificates/exact/union_closed_n_le_4.json
     assumptions:
-      - Python integer semantics are trusted for the independently implemented bounded replay.
-    promotion_condition: Extend the certified bound only with a separately reviewed larger-domain verifier.
+      - universe size at most four
+      - evidence-pinned MATHCERT revision and toolchain
+    promotion_condition: Extend the certified bound only through a separately reviewed larger-domain certificate and replay gate.
     related_files:
       - WP01_UNION_CLOSED_STATUS_SPINE.md
+      - WP02_UNION_CLOSED_LEAN_HANDOFF.md
     knowledge_graph_refs:
       - UC-ARTIFACT-N4-CERTIFICATE

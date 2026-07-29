@@ -235,3 +235,20 @@ MATHFORGE's role is to expose alternatives. A polynomial system must not automat
 ## First domain: Union-Closed Sets
 
 The first active domain is `union_closed`. MATHFORGE begins with exact enumeration of small universes, source reconstruction, equivalent formulations, known special-case discovery, and candidate Lean-friendly definitions. It must not pretend that small enumeration informs the asymptotic conjecture except as a validation of definitions and tooling.
+
+## Mandatory provider import
+
+MATH-PROGRAMME imports MATHFORGE evidence only through the binding contract in `MATHFORGE_PROVIDER_IMPORT_POLICY.md`.
+
+Every `ACTIVE` campaign in `DOMAIN_REGISTRY.yaml` must have either:
+
+- an imported MATHFORGE provider manifest pinned to a full repository commit and verified content identity; or
+- an approved, scoped, and dated waiver.
+
+The canonical import registry is `governance/mathforge_provider_imports.json`.
+
+WP00, WP01, prior-art, and restricted-target promotion fail closed without valid provider coverage. Copying source, reconnaissance, fixture, or failed-route work into MATH-PROGRAMME does not discharge this requirement.
+
+Retrospective manifests are permitted only for work that predates the provider contract. They index immutable Programme artifacts without claiming native Forge execution and preserve missing provider work as explicit debt.
+
+A provider import establishes provenance and handoff readiness. It does not establish mathematical truth, novelty, promotion, or certification.

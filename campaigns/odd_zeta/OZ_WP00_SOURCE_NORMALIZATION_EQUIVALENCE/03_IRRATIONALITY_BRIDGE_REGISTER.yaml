@@ -1,0 +1,116 @@
+schema_version: 0.1.0
+register_id: OZ-WP00-IRRATIONALITY-BRIDGES
+campaign_id: OZ
+work_package_id: OZ-WP00
+status: OPEN
+claim_boundary: >-
+  This register enumerates missing implications. It supplies no irrationality proof
+  and does not assert that the submitted recurrences, formulas, congruences, Lean
+  declarations, certificates, or computations are correct.
+targets:
+  - zeta(5)
+  - zeta(7)
+  - higher odd zeta values where explicitly stated by a source-locked manuscript
+bridges:
+  - id: OZ-BRG-G001
+    name: exact linear-form construction
+    obligation: >-
+      Construct an exact sequence of linear forms in the declared target zeta value
+      or values, with all rational coefficients and auxiliary periods explicit.
+    status: OPEN
+    dependencies:
+      - source-locked manuscript statements
+      - audited recurrence and initial conditions
+      - audited harmonic formulas
+    discharged_by: []
+    failure_mode: A recurrence or approximation sequence is presented without an exact linear-form identity.
+
+  - id: OZ-BRG-G002
+    name: denominator and integrality control
+    obligation: >-
+      Prove uniform denominator clearing or integer-coefficient control for the
+      linear forms under the exact normalization used by the irrationality criterion.
+    status: OPEN
+    dependencies:
+      - OZ-BRG-G001
+      - p-local and valuation definitions
+      - exact coefficient formulas
+    discharged_by: []
+    failure_mode: Finite divisibility data are substituted for a uniform integrality theorem.
+
+  - id: OZ-BRG-G003
+    name: nonvanishing
+    obligation: >-
+      Prove that the relevant linear forms are nonzero for infinitely many indices,
+      or provide another exact nonvanishing route accepted by the criterion.
+    status: OPEN
+    dependencies:
+      - OZ-BRG-G001
+    discharged_by: []
+    failure_mode: Small numerical values are treated as certified nonzero values for all large indices.
+
+  - id: OZ-BRG-G004
+    name: quantitative decay
+    obligation: >-
+      Establish a rigorous asymptotic upper bound for the absolute value of the
+      nonzero linear forms with constants and index range sufficient for the criterion.
+    status: OPEN
+    dependencies:
+      - OZ-BRG-G001
+      - OZ-BRG-G003
+    discharged_by: []
+    failure_mode: Convergence of a ratio is mistaken for sufficiently rapid decay of integer linear forms.
+
+  - id: OZ-BRG-G005
+    name: coefficient-height growth
+    obligation: >-
+      Bound the growth of cleared coefficients or common denominators and compare it
+      with the decay rate using the same index and normalization.
+    status: OPEN
+    dependencies:
+      - OZ-BRG-G002
+      - OZ-BRG-G004
+    discharged_by: []
+    failure_mode: A decay exponent is quoted without the corresponding denominator or height exponent.
+
+  - id: OZ-BRG-G006
+    name: target isolation
+    obligation: >-
+      Isolate the claimed odd zeta value from all other zeta values, products,
+      periods, logarithms, or auxiliary constants appearing in the linear forms.
+    status: OPEN
+    dependencies:
+      - OZ-BRG-G001
+    discharged_by: []
+    failure_mode: A simultaneous approximation is represented as an irrationality proof for one component.
+
+  - id: OZ-BRG-G007
+    name: criterion match
+    obligation: >-
+      State an exact irrationality or linear-independence criterion and prove that
+      every hypothesis is met by the constructed sequence.
+    status: OPEN
+    dependencies:
+      - OZ-BRG-G002
+      - OZ-BRG-G003
+      - OZ-BRG-G004
+      - OZ-BRG-G005
+      - OZ-BRG-G006
+    discharged_by: []
+    failure_mode: The conclusion is asserted from qualitative approximation alone.
+
+  - id: OZ-BRG-G008
+    name: infinite-scope passage
+    obligation: >-
+      Prove the required infinite statement and prevent any finite prime range,
+      finite index range, or bounded certificate from being promoted to it.
+    status: OPEN
+    dependencies:
+      - OZ-BRG-G007
+    discharged_by: []
+    failure_mode: Finite verification is used to discharge an unbounded quantifier.
+
+promotion_rule: >-
+  No irrationality conclusion is eligible for review while any bridge required by
+  the chosen criterion remains OPEN, unresolved semantic correspondence exists, or
+  the source corpus remains unlocked.

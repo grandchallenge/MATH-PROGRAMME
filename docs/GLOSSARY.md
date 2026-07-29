@@ -22,7 +22,7 @@ The MATHCERT role. It tests whether a claim survives a trusted proof or replay b
 
 ## Authoritative documentary source artifact
 
-The checksum-locked complete illustrated source bundle named by the documentary manifest. A digest establishes its identity after acquisition; it does not by itself establish public availability.
+The checksum-locked complete illustrated source bundle named by an admitted documentary manifest or a governed candidate source lock. A digest establishes identity after acquisition; it does not by itself establish public availability.
 
 ## Campaign promotion register
 
@@ -31,6 +31,10 @@ The current documentary register that records when repository review and merge c
 ## Candidate ore
 
 A promising mathematical object, problem, pattern, or computational signal produced by MATHFORGE before disciplined Work Package treatment.
+
+## Canonical claim ledger
+
+A YAML or JSON trust-spine record with `ledger_contract: canonical_claim_ledger` that validates against `schemas/claim_ledger.schema.json` and is explicitly registered for programme validation. It separates claim class, support type, review status, certainty, assumptions, support summary, and promotion condition.
 
 ## Certification handoff
 
@@ -42,19 +46,43 @@ The line separating what is proved or certified from what is heuristic, conjectu
 
 ## Claim ledger
 
-A machine- and human-readable record of claims, support types, statuses, assumptions, artifacts, and promotion conditions.
+A machine- and human-readable record of claims, support types, statuses, assumptions, artifacts, and promotion conditions. A file name or Markdown table alone does not make a ledger canonical.
+
+## Documentary admission candidate
+
+A source-locked documentary project recorded in `docs/documentaries/DOCUMENTARY_CANDIDATES.json` before atomic public edition admission. Candidate metadata may be public, but they confer no manifest membership, public page, edition record, public source record, or release availability.
+
+## Documentary candidate authority
+
+`docs/documentaries/DOCUMENTARY_CANDIDATES.json`, the public metadata inventory of pre-admission documentary source locks. It cannot admit an edition or override `ARTIFACT_MANIFEST.json`.
+
+## Documentary claim status
+
+The machine field `open` or `solved` used for status-sensitive validation. It is distinct from display prose, artifact lifecycle, and campaign disposition.
+
+## Documentary display status
+
+Reader-facing status wording associated with a machine claim status and problem class. Mathematical state must not be inferred from exact English wording alone.
 
 ## Documentary Library
 
-The governed public collection under `docs/documentaries/`. It contains documentary records and derivative web editions; library publication is a presentation state rather than mathematical support.
+The governed admitted public collection under `docs/documentaries/`, discovered through `ARTIFACT_MANIFEST.json`. It contains admitted documentary source records and derivative web editions; publication is presentation rather than mathematical support.
+
+## Documentary problem class
+
+The machine class describing the kind of problem or reconstruction, such as `millennium_open_problem`, `open_conjecture`, or `solved_classical_theorem`. It does not by itself establish proof support.
 
 ## Documentary scope relation
 
 The explicit relation between a volume and its programme crosswalk: `campaign_documentary`, `parent_challenge_orientation`, or `solved_theorem_archive`. It prevents a broad documentary subject from being silently identified with a narrower active campaign.
 
+## Documentary source lock
+
+A governed pre-admission record fixing documentary scope, status, claim authority, release identities, review, source pointer, and exact admission obligations. It does not publish a browser edition or strengthen the target mathematics.
+
 ## Documentary source record
 
-A small Git-tracked `.tex` pointer that records a documentary title, page count, and release-artifact checksums. It is not the complete compilable source.
+For an admitted volume, a small public Git-tracked `.tex` pointer that records documentary identity and release-artifact checksums. It is not the complete compilable source.
 
 ## Documentary web edition
 
@@ -104,6 +132,10 @@ A reformulation that reduces ambiguity and exposes the essential structure of a 
 
 The explanatory layer that teaches the object, obstruction, claim boundary, and next target to a serious reader.
 
+## Pre-admission documentary source record
+
+A repository-only pointer retained under the governing campaign before public edition admission. It must remain outside `docs/` and is not copied into the Pages site.
+
 ## Programme domain
 
 A governed mathematical campaign with a stable domain ID, campaign ID, canonical repository entry, public landing page, foundational profile, review date, and explicit claim boundary in `DOMAIN_REGISTRY.yaml`.
@@ -118,11 +150,15 @@ A governed reconstruction dossier for an established theorem whose sources, depe
 
 ## Release-class artifact availability
 
-The documentary-manifest state `metadata_only` or `published_release`. A published release requires a stable locator; a checksum alone is not an availability claim.
+The documentary state `metadata_only` or `published_release`. A published release requires a stable locator; a checksum alone is not an availability claim.
 
 ## Rendered documentary edition
 
-The checksum-locked PDF associated with a documentary volume. It is a presentation artifact rather than the governing source or a change in theorem status.
+The checksum-locked PDF associated with an admitted volume or pre-admission source lock. It is a presentation artifact rather than the governing source or a change in theorem status.
+
+## Repository-only source pointer
+
+A candidate source pointer retained in a campaign directory and excluded from the generated site until atomic manifest admission. Repository visibility is not documentary publication.
 
 ## Schema-bound review record
 

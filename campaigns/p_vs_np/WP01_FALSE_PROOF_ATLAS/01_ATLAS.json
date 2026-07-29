@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "PNP-WP01-ATLAS",
+  "campaign_id": "PNP-001",
+  "audit_date": "2026-07-28",
+  "protected_claims": [
+    "PNP-TERMINAL-P-EQUALS-NP",
+    "PNP-TERMINAL-P-NOT-EQUAL-NP",
+    "PNP-UNIFORM-WORST-CASE-BIT-COMPLEXITY"
+  ],
+  "fixture_contract": {
+    "required": [
+      "id", "name", "category", "invalid_inference", "missing_obligation",
+      "witness", "decision", "remediation", "wp02_interfaces"
+    ],
+    "allowed_decisions": ["REJECT", "NARROW"],
+    "interpretation": "A passing replay validates fixture structure and cross-links only. It proves no complexity separation."
+  },
+  "fixture_files": [
+    "fixtures/part_01.json", "fixtures/part_02.json",
+    "fixtures/part_03.json", "fixtures/part_04.json"
+  ],
+  "fixture_count": 46
+}

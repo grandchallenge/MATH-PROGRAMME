@@ -1,0 +1,26 @@
+{
+  "input": {
+    "lane_id": "LANE-LITERATURE-STATUS",
+    "research_question": "Which audited toy source states that every element of {0,2} is even?",
+    "cutoff_date": "2026-07-28",
+    "source_requirements": ["one identified primary toy source", "exact statement locator"],
+    "terminology_lock": {"even": "an integer divisible by 2"},
+    "claim_taxonomy": ["established", "open", "conditional", "disputed", "unresolved"],
+    "search_record": [
+      {"query": "toy even elements {0,2}", "source_class": "primary toy source", "searched_at": "2026-07-28"}
+    ]
+  },
+  "handoff": {
+    "lane_id": "LANE-LITERATURE-STATUS",
+    "status": "status_spine_ready",
+    "source_records": [
+      {"source_id": "TOY-EVEN-01", "source_type": "primary", "locator": "statement 1", "audited_claim": "0 and 2 are divisible by 2."}
+    ],
+    "status_spine": [
+      {"node_id": "TOY-STATUS-01", "status": "established", "summary": "The identified toy source states that both elements of {0,2} are even.", "source_refs": ["TOY-EVEN-01"]}
+    ],
+    "unresolved_conflicts": [],
+    "novelty_prohibition": true,
+    "certification_state": "not_certified"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/mathcert_cross_repository_conformance.schema.json",
+  "title": "Programme-wide MATHCERT cross-repository conformance audit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "audit_id", "verified_at", "parent_issue",
+    "repository_contract_status", "campaign_certification_status",
+    "administrative_enforcement_status", "administration_issue",
+    "claim_boundary", "repositories", "status_semantics", "campaigns", "closure"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "audit_id": {"const": "MP-MC-CONFORMANCE-001"},
+    "verified_at": {"type": "string", "format": "date"},
+    "parent_issue": {"const": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/123"},
+    "repository_contract_status": {"const": "conformant"},
+    "campaign_certification_status": {"const": "no_adjudications_issued"},
+    "administrative_enforcement_status": {"const": "unverified"},
+    "administration_issue": {"const": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/125"},
+    "claim_boundary": {"type": "string", "minLength": 1},
+    "repositories": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mathcert", "mathsolve", "math_programme", "intellect"],
+      "properties": {
+        "mathcert": {"$ref": "#/$defs/repository_record"},
+        "mathsolve": {"$ref": "#/$defs/repository_record"},
+        "math_programme": {"$ref": "#/$defs/repository_record"},
+        "intellect": {"$ref": "#/$defs/repository_record"}
+      }
+    },
+    "status_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intake_states", "adjudicated_states", "positive_promotion_states", "judgment_and_integration_require", "positive_promotion_requires"],
+      "properties": {
+        "intake_states": {"type": "array", "uniqueItems": true, "items": {"enum": ["pending", "ready", "submitted"]}},
+        "adjudicated_states": {"type": "array", "uniqueItems": true, "items": {"enum": ["certified", "qualified", "rejected", "proof_debt"]}},
+        "positive_promotion_states": {"type": "array", "uniqueItems": true, "items": {"enum": ["certified", "qualified"]}},
+        "judgment_and_integration_require": {"const": "adjudicated_state_with_mathcert_output_identity"},
+        "positive_promotion_requires": {"const": "certified_or_qualified"}
+      }
+    },
+    "campaigns": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {"$ref": "#/$defs/campaign_record"}
+    },
+    "closure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository_conformance_complete", "parent_issue_123_close_after_audit_merge", "programme_umbrella_issue_6_remains_open", "remaining_operational_issues"],
+      "properties": {
+        "repository_conformance_complete": {"const": true},
+        "parent_issue_123_close_after_audit_merge": {"const": true},
+        "programme_umbrella_issue_6_remains_open": {"const": true},
+        "remaining_operational_issues": {"type": "array", "contains": {"const": 7}, "allOf": [{"contains": {"const": 125}}]}
+      }
+    }
+  },
+  "$defs": {
+    "repository_record": {
+      "type": "object",
+      "required": ["repository", "workflow"],
+      "properties": {
+        "repository": {"pattern": "^grandchallenge/"},
+        "workflow": {"$ref": "#/$defs/workflow_record"}
+      }
+    },
+    "workflow_record": {
+      "type": "object",
+      "required": ["name", "workflow_id", "run_id", "exact_head", "conclusion"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "workflow_id": {"type": "integer", "minimum": 1},
+        "run_id": {"type": "integer", "minimum": 1},
+        "exact_head": {"pattern": "^[0-9a-f]{40}$"},
+        "conclusion": {"const": "success"}
+      }
+    },
+    "campaign_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["campaign_id", "manifest_git_blob_sha1", "handoff_id", "handoff_git_blob_sha1", "handoff_state", "mathcert_route_issue", "mathcert_route_state", "mathcert_output", "promotion_state"],
+      "properties": {
+        "campaign_id": {"pattern": "^[A-Z][A-Z0-9-]+$"},
+        "manifest_git_blob_sha1": {"pattern": "^[0-9a-f]{40}$"},
+        "handoff_id": {"pattern": "^MC-HANDOFF-[A-Z0-9-]+$"},
+        "handoff_git_blob_sha1": {"pattern": "^[0-9a-f]{40}$"},
+        "handoff_state": {"enum": ["pending", "ready"]},
+        "mathcert_route_issue": {"type": "integer", "minimum": 1},
+        "mathcert_route_state": {"const": "pending"},
+        "mathcert_output": {"type": "null"},
+        "promotion_state": {"const": "blocked"}
+      }
+    }
+  }
+}

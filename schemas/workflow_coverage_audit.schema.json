@@ -1,0 +1,239 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/workflow_coverage_audit.schema.json",
+  "title": "Programme umbrella workflow and release audit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "audit_id",
+    "audited_at",
+    "repository",
+    "programme_main_commit",
+    "ci_contract_coverage",
+    "technical_children_complete",
+    "administrative_children_complete",
+    "operational_release_complete",
+    "operational_release_closure",
+    "release_trust_evidence",
+    "children",
+    "coverage_areas",
+    "remaining_blockers",
+    "umbrella_issue_disposition",
+    "closure_rule"
+  ],
+  "properties": {
+    "$schema": {"type": "string", "minLength": 1},
+    "schema_version": {"const": "1.3.0"},
+    "audit_id": {"const": "UMBRELLA-RELEASE-AUDIT-2026-07-29"},
+    "audited_at": {"type": "string", "format": "date"},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "programme_main_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "ci_contract_coverage": {"const": "COMPLETE"},
+    "technical_children_complete": {"type": "boolean"},
+    "administrative_children_complete": {"type": "boolean"},
+    "operational_release_complete": {"type": "boolean"},
+    "operational_release_closure": {"enum": ["COMPLETE", "BLOCKED"]},
+    "release_trust_evidence": {"$ref": "#/$defs/release_trust_evidence"},
+    "children": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "child_id",
+          "repository",
+          "issue",
+          "category",
+          "state",
+          "complete",
+          "implementation",
+          "close_conditions"
+        ],
+        "properties": {
+          "child_id": {"type": "string", "pattern": "^[A-Z0-9-]+$"},
+          "repository": {"type": "string", "minLength": 1},
+          "issue": {"type": "integer", "minimum": 1},
+          "category": {"enum": ["technical", "administrative"]},
+          "state": {"enum": ["OPEN", "CLOSED"]},
+          "complete": {"type": "boolean"},
+          "implementation": {
+            "oneOf": [
+              {"type": "null"},
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["pull_request", "tested_head", "merge_commit", "workflow_run_id", "schema", "registry"],
+                "properties": {
+                  "pull_request": {"type": "integer", "minimum": 1},
+                  "tested_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+                  "merge_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+                  "workflow_run_id": {"type": "integer", "minimum": 1},
+                  "schema": {"$ref": "#/$defs/artifact"},
+                  "registry": {"$ref": "#/$defs/artifact"}
+                }
+              },
+              {"$ref": "#/$defs/administrative_implementation"}
+            ]
+          },
+          "close_conditions": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "coverage_areas": {
+      "type": "array",
+      "minItems": 18,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["area_id", "status", "evidence"],
+        "properties": {
+          "area_id": {"type": "string", "pattern": "^[A-Z0-9-]+$"},
+          "status": {"const": "COMPLETE"},
+          "evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    },
+    "remaining_blockers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["blocker_id", "issue", "state", "scope", "close_condition"],
+        "properties": {
+          "blocker_id": {"type": "string", "pattern": "^[A-Z0-9-]+$"},
+          "issue": {"enum": [7, 125]},
+          "state": {"enum": ["OPEN", "UNVERIFIED"]},
+          "scope": {"type": "string", "minLength": 1},
+          "close_condition": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "umbrella_issue_disposition": {"enum": ["KEEP_OPEN", "CLOSE"]},
+    "closure_rule": {
+      "const": "Close MATH-PROGRAMME issue #6 only when all four children are complete, remaining_blockers is empty, and operational_release_complete is true."
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "git_blob_sha1"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "administrative_implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "release_trust_workflow_run_id",
+        "release_trust_artifact_id",
+        "evidence_sha256"
+      ],
+      "properties": {
+        "release_trust_workflow_run_id": {"type": "integer", "minimum": 1},
+        "release_trust_artifact_id": {"type": "integer", "minimum": 1},
+        "evidence_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "release_trust_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_id",
+        "evidence_id",
+        "generated_at",
+        "workflow_run_id",
+        "workflow_run_url",
+        "workflow_head_sha",
+        "artifact_id",
+        "artifact_url",
+        "artifact_sha256",
+        "evidence_file_sha256",
+        "evidence_sha256",
+        "contract_sha256",
+        "policy_workflow_run_id",
+        "pages_workflow_run_id",
+        "validated_site_artifact_id",
+        "validated_site_artifact_sha256",
+        "site_archive_sha256",
+        "index_sha256",
+        "live_index_sha256",
+        "repository_rulesets",
+        "verified"
+      ],
+      "properties": {
+        "contract_id": {"const": "ORG-REL-TRUST-01"},
+        "evidence_id": {"const": "ORG-REL-TRUST-01-EVIDENCE"},
+        "generated_at": {"type": "string", "format": "date-time"},
+        "workflow_run_id": {"type": "integer", "minimum": 1},
+        "workflow_run_url": {"type": "string", "format": "uri"},
+        "workflow_head_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "artifact_id": {"type": "integer", "minimum": 1},
+        "artifact_url": {"type": "string", "format": "uri"},
+        "artifact_sha256": {"$ref": "#/$defs/sha256"},
+        "evidence_file_sha256": {"$ref": "#/$defs/sha256"},
+        "evidence_sha256": {"$ref": "#/$defs/sha256"},
+        "contract_sha256": {"$ref": "#/$defs/sha256"},
+        "policy_workflow_run_id": {"type": "integer", "minimum": 1},
+        "pages_workflow_run_id": {"type": "integer", "minimum": 1},
+        "validated_site_artifact_id": {"type": "integer", "minimum": 1},
+        "validated_site_artifact_sha256": {"$ref": "#/$defs/sha256"},
+        "site_archive_sha256": {"$ref": "#/$defs/sha256"},
+        "index_sha256": {"$ref": "#/$defs/sha256"},
+        "live_index_sha256": {"$ref": "#/$defs/sha256"},
+        "repository_rulesets": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["repository", "snapshot_sha256"],
+            "properties": {
+              "repository": {"type": "string", "minLength": 1},
+              "snapshot_sha256": {"$ref": "#/$defs/sha256"}
+            }
+          }
+        },
+        "verified": {"const": true}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"operational_release_complete": {"const": true}}},
+      "then": {
+        "properties": {
+          "technical_children_complete": {"const": true},
+          "administrative_children_complete": {"const": true},
+          "operational_release_closure": {"const": "COMPLETE"},
+          "remaining_blockers": {"maxItems": 0},
+          "umbrella_issue_disposition": {"const": "CLOSE"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"operational_release_complete": {"const": false}}},
+      "then": {
+        "properties": {
+          "operational_release_closure": {"const": "BLOCKED"},
+          "remaining_blockers": {"minItems": 1},
+          "umbrella_issue_disposition": {"const": "KEEP_OPEN"}
+        }
+      }
+    }
+  ]
+}

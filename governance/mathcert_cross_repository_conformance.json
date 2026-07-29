@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0.0",
+  "audit_id": "MP-MC-CONFORMANCE-001",
+  "verified_at": "2026-07-29",
+  "parent_issue": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/123",
+  "repository_contract_status": "conformant",
+  "campaign_certification_status": "no_adjudications_issued",
+  "administrative_enforcement_status": "unverified",
+  "administration_issue": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/125",
+  "claim_boundary": "This audit establishes repository contracts, artifact lineage, lifecycle semantics, and exact-head workflow evidence. It certifies no mathematical claim and records no MATHCERT adjudication.",
+  "repositories": {
+    "mathcert": {
+      "repository": "grandchallenge/MATHCERT",
+      "corrective_issue": 31,
+      "pull_request": 32,
+      "pr_head_commit": "266a377ee0446706ed49c0d956a793ac5d67faa2",
+      "merge_commit": "3854dd1b4f6e162a7e74c3da1993f022ee691e5e",
+      "route_registry": {
+        "path": "governance/certification_routes.json",
+        "git_blob_sha1": "065f0531e4d763b389b207d4922d5a85b4335ee3"
+      },
+      "workflow": {
+        "name": "Cert checks",
+        "workflow_id": 287291793,
+        "run_id": 30417641550,
+        "exact_head": "266a377ee0446706ed49c0d956a793ac5d67faa2",
+        "conclusion": "success",
+        "workflow_path": ".github/workflows/ci.yml",
+        "workflow_git_blob_sha1": "2d9f57f4a0fe6a7be144ad09676cb6e4089d4fb4",
+        "dependency_lock_path": "requirements-ci.txt",
+        "dependency_lock_git_blob_sha1": "8392d5414b46b3f92dc29db198ced67c84708438"
+      }
+    },
+    "mathsolve": {
+      "repository": "grandchallenge/MATHSOLVE",
+      "handoff_issue": 73,
+      "handoff_pull_request": 74,
+      "handoff_pr_head_commit": "c2cc4c92150a4f6d138bb5bdfce4bcede2152533",
+      "handoff_merge_commit": "cdb34f47829942bd89a3f7f754b412527eaafb92",
+      "workflow_hardening_issue": 75,
+      "workflow_hardening_pull_request": 76,
+      "workflow_hardening_pr_head_commit": "5ae7d60317eec5045271a486b1b9c2280769c9bb",
+      "current_merge_commit": "aa1a06a7103034186c1fac0d81a442a269c12acb",
+      "workflow": {
+        "name": "Solve checks",
+        "workflow_id": 287291794,
+        "run_id": 30422681058,
+        "exact_head": "5ae7d60317eec5045271a486b1b9c2280769c9bb",
+        "conclusion": "success",
+        "workflow_path": ".github/workflows/ci.yml",
+        "workflow_git_blob_sha1": "f84f02f4dcb73d98b696caa08a7a39a68ed3dff1",
+        "dependency_lock_path": "requirements-ci.txt",
+        "dependency_lock_git_blob_sha1": "d37efa74c2b806d1b29e5aea92733abed85d4ff6"
+      }
+    },
+    "math_programme": {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "provider_pin_pull_request": 124,
+      "provider_pin_pr_head_commit": "6baf936df82092319fdb443838fb677fd4bd1559",
+      "provider_pin_merge_commit": "8182b8a5dc7b157d1a6b2a0f43d66c0598a2b072",
+      "routing_registry": {
+        "path": "governance/mathsolve_routing_audit.json",
+        "git_blob_sha1": "39e907cce79137168e5b2a240674d7f4e6f56cdd"
+      },
+      "workflow": {
+        "name": "Programme policy checks",
+        "workflow_id": 287291137,
+        "run_id": 30421341832,
+        "exact_head": "6baf936df82092319fdb443838fb677fd4bd1559",
+        "conclusion": "success",
+        "coverage": [
+          "repository unit tests",
+          "governed campaign replay",
+          "programme contracts",
+          "strict documentation build",
+          "LOG-GCD Lean replay",
+          "PC-WP04 bounded certificate replay",
+          "pinned external MATHCERT replay"
+        ]
+      }
+    },
+    "intellect": {
+      "repository": "grandchallenge/INTELLECT",
+      "lifecycle_issue": 6,
+      "lifecycle_pull_request": 7,
+      "lifecycle_pr_head_commit": "bd188fd815cd6c22f917dcf3903e6c239ff74f85",
+      "lifecycle_merge_commit": "1d5316e20ac95e054c48989e0aef41c190412199",
+      "workflow_hardening_issue": 8,
+      "workflow_hardening_pull_request": 9,
+      "workflow_hardening_pr_head_commit": "b7461bc701192b1e665893556023c468906c00fc",
+      "current_merge_commit": "e2a4ddb6af5be2e32192dee2bc0e954c000006c4",
+      "semantic_artifacts": {
+        "runtime_path": "src/grand_intellect/mathsolve_cert_reviewed.py",
+        "runtime_git_blob_sha1": "50de710269afd34c3a4d43e746d4bd476c935f2b",
+        "integration_gate_path": "src/grand_intellect/mathsolve_cert.py",
+        "integration_gate_git_blob_sha1": "7967f1c6e8a380c46bb10285632c05deb1112cdb",
+        "route_schema_path": "schemas/mathsolve_route.schema.json",
+        "route_schema_git_blob_sha1": "008bc9752f08118c87442efb659cebd917a26864",
+        "aether_projection_path": "aether/intellect_math_v0.aether",
+        "aether_projection_git_blob_sha1": "688f4dcf1a04bea45b9ccb1b5cd3a666c355bc75"
+      },
+      "workflow": {
+        "name": "CI",
+        "workflow_id": 315656536,
+        "run_id": 30422791727,
+        "exact_head": "b7461bc701192b1e665893556023c468906c00fc",
+        "conclusion": "success",
+        "python_versions": ["3.11.14", "3.12.13"],
+        "workflow_path": ".github/workflows/ci.yml",
+        "workflow_git_blob_sha1": "78c23ae3b0d31749ba34bea8b680a6768daee642",
+        "dependency_lock_path": "requirements-ci.txt",
+        "dependency_lock_git_blob_sha1": "1f11425a6cc2f09d284ea67efa334750410bc370",
+        "package_manifest_path": "pyproject.toml",
+        "package_manifest_git_blob_sha1": "8167e2b8203d97fc3e66e704bf5fde4b1117b045",
+        "package_version": "0.2.2"
+      }
+    }
+  },
+  "status_semantics": {
+    "intake_states": ["pending", "ready", "submitted"],
+    "adjudicated_states": ["certified", "qualified", "rejected", "proof_debt"],
+    "positive_promotion_states": ["certified", "qualified"],
+    "judgment_and_integration_require": "adjudicated_state_with_mathcert_output_identity",
+    "positive_promotion_requires": "certified_or_qualified"
+  },
+  "campaigns": [
+    {"campaign_id": "UC-001", "manifest_git_blob_sha1": "17ed0c7278098061201f14f337e4f4a81f9a0ef4", "handoff_id": "MC-HANDOFF-UC-001", "handoff_git_blob_sha1": "8369bc21e45be6af71d2a0cdb0c5ab3cb5313bfb", "handoff_state": "ready", "mathcert_route_issue": 25, "mathcert_route_state": "pending", "mathcert_output": null, "promotion_state": "blocked"},
+    {"campaign_id": "NS-CI-001", "manifest_git_blob_sha1": "35f7cd6ccf0e27f199571189fcb34a3f8adc31d7", "handoff_id": "MC-HANDOFF-NS-CI-001", "handoff_git_blob_sha1": "58b10636bd614e91e6c35900b9f5fb68e7f88afb", "handoff_state": "ready", "mathcert_route_issue": 19, "mathcert_route_state": "pending", "mathcert_output": null, "promotion_state": "blocked"},
+    {"campaign_id": "HC-001", "manifest_git_blob_sha1": "b3efb4e44dd6ab70765e602b4837bc23355eac3d", "handoff_id": "MC-HANDOFF-HC-001", "handoff_git_blob_sha1": "0c154af2e577e4367f9f5d0aeac5e15f9420172c", "handoff_state": "ready", "mathcert_route_issue": 23, "mathcert_route_state": "pending", "mathcert_output": null, "promotion_state": "blocked"},
+    {"campaign_id": "BSD-001", "manifest_git_blob_sha1": "ff634c6303d8ba322edb739c9112466adca1d3b1", "handoff_id": "MC-HANDOFF-BSD-001", "handoff_git_blob_sha1": "20f8dbf016ab179cbf910d0510ad26b2bd9a24cb", "handoff_state": "pending", "mathcert_route_issue": 26, "mathcert_route_state": "pending", "mathcert_output": null, "promotion_state": "blocked"},
+    {"campaign_id": "PNP-001", "manifest_git_blob_sha1": "64c67206556c19ae77c1eb5afa8297aae9af224e", "handoff_id": "MC-HANDOFF-PNP-001", "handoff_git_blob_sha1": "c9d419c43293d533de8858099d26672f1b8d9dbe", "handoff_state": "pending", "mathcert_route_issue": 27, "mathcert_route_state": "pending", "mathcert_output": null, "promotion_state": "blocked"},
+    {"campaign_id": "RH-001", "manifest_git_blob_sha1": "0b58fa0ed35907eddf89062069793987b3b03f2e", "handoff_id": "MC-HANDOFF-RH-001", "handoff_git_blob_sha1": "525ca580e3b29ed7fcc690f2ce810a26a17a9df2", "handoff_state": "pending", "mathcert_route_issue": 28, "mathcert_route_state": "pending", "mathcert_output": null, "promotion_state": "blocked"},
+    {"campaign_id": "YM-001", "manifest_git_blob_sha1": "d8825019a6e65aa6210887d217a6a903cf09bdba", "handoff_id": "MC-HANDOFF-YM-001", "handoff_git_blob_sha1": "54b7ad8156532e3dceba439356848dfa65a4d1ac", "handoff_state": "pending", "mathcert_route_issue": 29, "mathcert_route_state": "pending", "mathcert_output": null, "promotion_state": "blocked"},
+    {"campaign_id": "OZ-001", "manifest_git_blob_sha1": "2cdeb2059af2e4cafe53e6c3cf88a9b27fa622b4", "handoff_id": "MC-HANDOFF-OZ-001", "handoff_git_blob_sha1": "b244c30b1b3aa4590a8b9ff9d63c5b66dab87663", "handoff_state": "pending", "mathcert_route_issue": 30, "mathcert_route_state": "pending", "mathcert_output": null, "promotion_state": "blocked"}
+  ],
+  "closure": {
+    "repository_conformance_complete": true,
+    "parent_issue_123_close_after_audit_merge": true,
+    "programme_umbrella_issue_6_remains_open": true,
+    "remaining_operational_issues": [7, 125]
+  }
+}

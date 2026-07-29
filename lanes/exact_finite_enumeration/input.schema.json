@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["lane_id", "object_definition", "carrier", "bound", "equivalence_relation", "generation_rule", "pruning_rule", "exact_backend", "claim_boundary"],
+  "properties": {
+    "lane_id": {"const": "LANE-EXACT-FINITE"},
+    "object_definition": {"type": "string", "minLength": 1},
+    "carrier": {"type": "string", "minLength": 1},
+    "bound": {"type": "integer", "minimum": 0},
+    "equivalence_relation": {"type": "string", "minLength": 1},
+    "generation_rule": {"type": "string", "minLength": 1},
+    "pruning_rule": {"type": "string", "minLength": 1},
+    "exact_backend": {"type": "string", "minLength": 1},
+    "claim_boundary": {"type": "string", "minLength": 1}
+  }
+}

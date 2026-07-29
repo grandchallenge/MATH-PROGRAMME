@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/mathforge_provider_import.schema.json",
+  "title": "MATHFORGE Provider Import Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "registry_id",
+    "provider_repository",
+    "provider_commit",
+    "verified_at",
+    "verification_method",
+    "campaigns"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "registry_id": {"const": "MATHFORGE-PROVIDER-IMPORTS"},
+    "provider_repository": {"const": "grandchallenge/MATHFORGE"},
+    "provider_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "verified_at": {"type": "string", "format": "date"},
+    "verification_method": {"enum": ["github_contents_api_git_blob_sha1", "independent_checkout_sha256"]},
+    "campaigns": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["campaign_id", "title", "disposition"],
+        "properties": {
+          "campaign_id": {"type": "string", "pattern": "^[A-Z][A-Z0-9-]+$"},
+          "title": {"type": "string", "minLength": 3},
+          "disposition": {"enum": ["import", "waiver"]},
+          "coverage_mode": {"enum": ["native", "retrospective"]},
+          "manifest_path": {"type": "string", "pattern": "^provider_manifests/[A-Z0-9-]+\\.json$"},
+          "manifest_git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "waiver": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["approved_by", "reason", "scope", "review_on"],
+            "properties": {
+              "approved_by": {"type": "string", "minLength": 2},
+              "reason": {"type": "string", "minLength": 10},
+              "scope": {"type": "string", "minLength": 3},
+              "review_on": {"type": "string", "format": "date"}
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"disposition": {"const": "import"}}},
+            "then": {
+              "required": ["coverage_mode", "manifest_path", "manifest_git_blob_sha1"],
+              "not": {"required": ["waiver"]}
+            }
+          },
+          {
+            "if": {"properties": {"disposition": {"const": "waiver"}}},
+            "then": {
+              "required": ["waiver"],
+              "not": {"anyOf": [{"required": ["coverage_mode"]}, {"required": ["manifest_path"]}, {"required": ["manifest_git_blob_sha1"]}]}
+            }
+          }
+        ]
+      }
+    }
+  }
+}

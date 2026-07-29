@@ -34,6 +34,12 @@ A schema-bound review record separates:
 
 The artifact ledger may retain detailed human-readable dispositions. They do not silently extend the schema's lifecycle vocabulary.
 
+## Issue and tracker housekeeping
+
+A duplicate operational issue must be closed with GitHub `state_reason: duplicate` and must link to the canonical tracker that retains the work. The canonical tracker remains open unless its own success condition is satisfied.
+
+A superseded implementation issue or pull request is not necessarily a duplicate. Close it with the disposition that matches the record, and identify the replacement issue, pull request, Work Package, or governing artifact. Closure must preserve the reason that downstream readers should follow the canonical record rather than the retired one.
+
 ## Amanuensis authority
 
 The Amanuensis is the council office responsible for continuity of the programme's own record. It owns the artifact ledger, decision-record references, terminology registry, review provenance, cross-document consistency, and final editorial integration.

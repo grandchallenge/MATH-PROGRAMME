@@ -1,65 +1,200 @@
-artifact_id: UC-DOC-WP00
-schema_version: 1.0.0
+schema_version: 1.1.0
+ledger_contract: canonical_claim_ledger
+ledger_id: UC-DOC-WP00-CLAIMS
 claims:
-- id: UC-DOC-C001
-  statement: Frankl's conjecture remains open.
-  status: LITERATURE_DERIVED
-  support:
-  - DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md
-  - 2026 current-source audit
-  boundary: No complete-proof claim promoted.
-- id: UC-DOC-C002
-  statement: The powerset makes the half threshold sharp.
-  status: PROVED_IN_PACKAGE
-  support:
-  - the_element_in_half_the_worlds.tex
-  boundary: Sharpness example only.
-- id: UC-DOC-C003
-  statement: Singleton and two-element-member cases are checked in the programme formal layer.
-  status: FORMALIZED
-  support:
-  - evidence/UC-WP02-MATHCERT.json
-  boundary: Restricted cases.
-- id: UC-DOC-C004
-  statement: No nontrivial counterexample exists on universes n <= 4.
-  status: COMPUTED_EXACTLY
-  support:
-  - external MATHCERT exact certificate
-  boundary: Bounded scope only.
-- id: UC-DOC-C005
-  statement: Reimer proves average set size at least one half log2 |F|.
-  status: LITERATURE_DERIVED
-  support:
-  - doi:10.1017/S0963548302005230
-  boundary: Does not imply the half-frequency threshold.
-- id: UC-DOC-C006
-  statement: Published entropy methods guarantee a universal frequency at least (3-sqrt(5))/2.
-  status: LITERATURE_DERIVED
-  support:
-  - doi:10.37236/12232
-  boundary: Still below one half.
-- id: UC-DOC-C007
-  statement: Rigorous dependent-coupling terrain reaches approximately 0.38234.
-  status: LITERATURE_DERIVED
-  support:
-  - arXiv:2212.00658
-  - arXiv:2212.12500
-  boundary: Decimal is orientation; exact source formulations govern.
-- id: UC-DOC-C008
-  statement: The approximately 0.38271 proposal depends on numerically verified hypotheses.
-  status: NEEDS_AUDIT
-  support:
-  - arXiv:2306.08824
-  boundary: Not an unconditional theorem-grade constant here.
-- id: UC-DOC-C009
-  statement: The UC-WP05 lattice package is checked through L016 with hybrid C015.
-  status: FORMALIZED
-  support:
-  - DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md
-  boundary: Necessary and restricted lattice results do not prove Frankl.
-- id: UC-DOC-C010
-  statement: The documentary PDF, TeX source, and illustrated bundle have the recorded identities.
-  status: COMPUTED_EXACTLY
-  support:
-  - artifacts/UC-DOC-WP00_SOURCE_LOCK.json
-  boundary: Identity does not assert public availability.
+  - claim_id: UC-DOC-C001
+    short_name: Frankl status
+    claim_text: Frankl's conjecture remains open.
+    claim_class: LITERATURE_DERIVED
+    mathematical_domain: finite combinatorics
+    support_type: SOURCE_CITATION
+    support_summary: The governing domain plan and current-source audit retain the conjecture as open; no complete-proof claim is promoted.
+    status: OPEN_PROBLEM
+    certainty: STRONGLY_SUPPORTED
+    source_or_artifact:
+      - DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/04_PROBLEM_AND_STATUS_AUDIT.md
+    assumptions:
+      - canonical finite nontrivial union-closed set-family formulation
+    promotion_condition: An independently audited proof or certified reduction covering the canonical universal statement.
+    related_files:
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/00_README.md
+      - reviews/union_closed/UC-DOC-WP00.agent_review.yaml
+    knowledge_graph_refs:
+      - UC-CONJECTURE-FRANKL
+
+  - claim_id: UC-DOC-C002
+    short_name: powerset sharpness
+    claim_text: The powerset construction makes the one-half frequency threshold sharp.
+    claim_class: PROVED_IN_PACKAGE
+    mathematical_domain: finite combinatorics
+    support_type: HUMAN_PROOF
+    support_summary: In a full powerset every ground element occurs in exactly half of the members; this is a sharpness example only.
+    status: AUDITED
+    certainty: PROVED_NOT_FORMALIZED
+    source_or_artifact:
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/03_OBJECT_AND_OBSTRUCTION.md
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/artifacts/the_element_in_half_the_worlds.tex
+    assumptions:
+      - finite nonempty ground set
+    promotion_condition: No mathematical promotion is required; formalization may strengthen the support route without changing the claim.
+    related_files:
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/05_THEOREM_SPINE.md
+    knowledge_graph_refs: []
+
+  - claim_id: UC-DOC-C003
+    short_name: restricted formal cases
+    claim_text: Singleton and two-element-member cases are checked in the programme formal layer.
+    claim_class: FORMALIZED
+    mathematical_domain: finite combinatorics
+    support_type: LEAN_PROOF
+    support_summary: The imported formal results cover restricted cases only and do not establish the universal conjecture.
+    status: CHECKED
+    certainty: CERTIFIED
+    source_or_artifact:
+      - evidence/UC-WP02-MATHCERT.json
+      - WP02_UNION_CLOSED_LEAN_HANDOFF.md
+    assumptions:
+      - the restricted hypotheses of the imported formal statements
+    promotion_condition: Broader scope requires additional source-audited formal theorems and the evidence-pinned MATHCERT gate.
+    related_files:
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/07_PROOFS_AND_COMPUTATIONS.md
+    knowledge_graph_refs: []
+
+  - claim_id: UC-DOC-C004
+    short_name: universe-four certificate
+    claim_text: No nontrivial counterexample exists on universes of size at most four.
+    claim_class: COMPUTED_EXACTLY
+    mathematical_domain: finite combinatorics
+    support_type: LEAN_KERNEL_CHECKED_CERTIFICATE
+    support_summary: The bounded exact certificate is independently replayed at the evidence-pinned external MATHCERT revision and has no unbounded consequence.
+    status: CERTIFIED
+    certainty: CERTIFIED
+    source_or_artifact:
+      - evidence/UC-WP02-MATHCERT.json
+      - grandchallenge/MATHCERT/certificates/exact/union_closed_n_le_4.json
+    assumptions:
+      - universe size at most four
+      - evidence-pinned MATHCERT revision and toolchain
+    promotion_condition: Extend the certified bound only with a separately reviewed larger-domain certificate and replay gate.
+    related_files:
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/07_PROOFS_AND_COMPUTATIONS.md
+    knowledge_graph_refs:
+      - UC-ARTIFACT-N4-CERTIFICATE
+
+  - claim_id: UC-DOC-C005
+    short_name: Reimer average-size theorem
+    claim_text: Reimer's theorem gives average set size at least one half of log base two of the family size.
+    claim_class: LITERATURE_DERIVED
+    mathematical_domain: extremal set theory
+    support_type: SOURCE_CITATION
+    support_summary: The primary theorem is imported with its exact average-size scope; it does not imply the one-half frequency threshold.
+    status: AUDITED
+    certainty: STRONGLY_SUPPORTED
+    source_or_artifact:
+      - doi:10.1017/S0963548302005230
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/04_PROBLEM_AND_STATUS_AUDIT.md
+    assumptions:
+      - finite union-closed family
+    promotion_condition: Any stronger frequency conclusion requires a separate theorem bridging average size to a distinguished element.
+    related_files:
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/05_THEOREM_SPINE.md
+    knowledge_graph_refs: []
+
+  - claim_id: UC-DOC-C006
+    short_name: golden-ratio frequency bound
+    claim_text: Published entropy methods guarantee an element frequency at least (3 - sqrt(5)) / 2 of the family size.
+    claim_class: LITERATURE_DERIVED
+    mathematical_domain: probabilistic and entropy methods
+    support_type: SOURCE_CITATION
+    support_summary: The published universal constant is imported exactly and remains strictly below one half.
+    status: AUDITED
+    certainty: STRONGLY_SUPPORTED
+    source_or_artifact:
+      - doi:10.37236/12232
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/04_PROBLEM_AND_STATUS_AUDIT.md
+    assumptions:
+      - finite nontrivial union-closed family
+    promotion_condition: A stronger universal constant requires a separately audited theorem with exact hypotheses and proof.
+    related_files:
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/05_THEOREM_SPINE.md
+    knowledge_graph_refs: []
+
+  - claim_id: UC-DOC-C007
+    short_name: dependent-coupling rigorous terrain
+    claim_text: Rigorous dependent-coupling results reach a universal frequency constant of approximately 0.38234.
+    claim_class: LITERATURE_DERIVED
+    mathematical_domain: probabilistic and entropy methods
+    support_type: SOURCE_CITATION
+    support_summary: The decimal is documentary orientation only; exact source formulations govern and the result remains below one half.
+    status: AUDITED
+    certainty: STRONGLY_SUPPORTED
+    source_or_artifact:
+      - arXiv:2212.00658
+      - arXiv:2212.12500
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/04_PROBLEM_AND_STATUS_AUDIT.md
+    assumptions:
+      - the exact hypotheses of the cited dependent-coupling results
+    promotion_condition: Replace the orientation decimal with any stronger statement only after exact theorem-body and hypothesis audit.
+    related_files:
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/05_THEOREM_SPINE.md
+    knowledge_graph_refs: []
+
+  - claim_id: UC-DOC-C008
+    short_name: numerically conditioned constant
+    claim_text: The approximately 0.38271 proposal depends on numerically verified hypotheses.
+    claim_class: NEEDS_AUDIT
+    mathematical_domain: probabilistic and entropy methods
+    support_type: NUMERICAL_EVIDENCE
+    support_summary: The cited proposal is retained as conditional numerical terrain and is not represented as an unconditional theorem-grade constant.
+    status: UNDER_REVIEW
+    certainty: PLAUSIBLE
+    source_or_artifact:
+      - arXiv:2306.08824
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/04_PROBLEM_AND_STATUS_AUDIT.md
+    assumptions:
+      - numerical hypotheses and verification regime stated by the source
+    promotion_condition: Independent theorem-body audit and certified verification of every numerical hypothesis used by the claimed bound.
+    related_files:
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/09_PROOF_DEBT.json
+    knowledge_graph_refs: []
+
+  - claim_id: UC-DOC-C009
+    short_name: lattice formal package
+    claim_text: The UC-WP05 lattice package is checked through L016, with C015 retained as a hybrid claim.
+    claim_class: FORMALIZED
+    mathematical_domain: finite lattice theory
+    support_type: LEAN_PROOF
+    support_summary: The formal and hybrid package supplies necessary and restricted lattice results only; the translation layer and hybrid boundary remain explicit.
+    status: CHECKED
+    certainty: STRONGLY_SUPPORTED
+    source_or_artifact:
+      - DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md
+      - evidence/UC-WP02-MATHCERT.json
+    assumptions:
+      - exact statement and translation boundaries recorded in the governing domain plan
+    promotion_condition: Any broader import requires a reviewed semantic-correspondence proof and evidence-pinned formal replay.
+    related_files:
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/07_PROOFS_AND_COMPUTATIONS.md
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/11_CERT_HANDOFF.md
+    knowledge_graph_refs: []
+
+  - claim_id: UC-DOC-C010
+    short_name: documentary artifact identities
+    claim_text: The documentary PDF, complete TeX source, and illustrated source bundle have the byte lengths and SHA-256 identities recorded by the source lock.
+    claim_class: COMPUTED_EXACTLY
+    mathematical_domain: documentary artifact integrity
+    support_type: EXACT_RATIONAL_COMPUTATION
+    support_summary: Exact byte counts and cryptographic digests establish artifact identity after acquisition; they do not establish public availability.
+    status: CHECKED
+    certainty: EXACTLY_COMPUTED
+    source_or_artifact:
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/artifacts/UC-DOC-WP00_SOURCE_LOCK.json
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/artifacts/the_element_in_half_the_worlds.tex
+    assumptions:
+      - SHA-256 and byte-length computation over the locked release artifacts
+    promotion_condition: Recompute and review every identity after any source, plate, render, or bundle change.
+    related_files:
+      - campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/00_README.md
+      - reviews/union_closed/UC-DOC-WP00.agent_review.yaml
+    knowledge_graph_refs: []

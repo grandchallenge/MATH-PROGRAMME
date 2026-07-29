@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Validate programme classification, graph, mapping, review, and documentary contracts."""
+"""Validate programme classification, graph, review, ledger, and documentary contracts."""
+
 from __future__ import annotations
 
 import json
 import re
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 import yaml
 from jsonschema import Draft202012Validator, FormatChecker
@@ -24,15 +25,30 @@ CORE_CAMPAIGN_AGENTS = (
     "Amanuensis",
     "Referee",
 )
-# CI validates only the records explicitly registered here. Legacy campaign reviews
-# use several pre-contract formats; add one only after complete migration to
-# schemas/agent_review.schema.json.
 SCHEMA_BOUND_AGENT_REVIEWS: tuple[str, ...] = (
     "reviews/union_closed/UC-WP01.agent_review.yaml",
+    "reviews/union_closed/UC-DOC-WP00.agent_review.yaml",
+    "reviews/union_closed/UC-DOC-WP01.agent_review.yaml",
     "reviews/navier_stokes/NS-CI-WP06.agent_review.yaml",
     "reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml",
     "reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml",
     "reviews/governance/WORKFLOW-COVERAGE.agent_review.yaml",
+    "reviews/yang_mills/YM-WP01.agent_review.yaml",
+    "reviews/yang_mills/YM-WP02.agent_review.yaml",
+)
+SCHEMA_BOUND_REVIEW_DISCOVERY_ROOTS: tuple[str, ...] = (
+    "reviews/union_closed",
+    "reviews/documentation",
+    "reviews/governance",
+    "reviews/yang_mills",
+    "reviews/navier_stokes/NS-CI-WP06.agent_review.yaml",
+)
+SCHEMA_BOUND_CLAIM_LEDGERS: tuple[str, ...] = (
+    "templates/claim_ledger_template.yaml",
+    "templates/union_closed_claim_ledger_wp01.yaml",
+    "campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/10_CLAIM_LEDGER.yaml",
+    "campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/10_CLAIM_LEDGER.yaml",
+    "campaigns/yang_mills/WP02_THEOREM_LEDGER/10_CLAIM_LEDGER.yaml",
 )
 
 
@@ -54,17 +70,17 @@ def foundational_profile_errors(instance: dict[str, Any], label: str) -> list[st
         return []
     return [
         f"{label}.foundational_profile: {error}"
-        for error in schema_errors(instance["foundational_profile"], "foundational_profile.schema.json")
+        for error in schema_errors(
+            instance["foundational_profile"], "foundational_profile.schema.json"
+        )
     ]
 
 
 def agent_review_semantic_errors(instance: dict[str, Any], label: str) -> list[str]:
-    """Enforce promotion semantics that are awkward to express in JSON Schema."""
     errors: list[str] = []
     promotion = instance.get("promotion", {})
     if not promotion.get("ready_for_next_stage", False):
         return errors
-
     council = instance.get("council_review", {})
     for agent in CORE_CAMPAIGN_AGENTS:
         status = council.get(agent, {}).get("status")
@@ -72,22 +88,19 @@ def agent_review_semantic_errors(instance: dict[str, Any], label: str) -> list[s
             errors.append(
                 f"{label}: promotion requires {agent} status reviewed, found {status!r}"
             )
-
     for agent, record in council.items():
         if record.get("status") == "blocked":
             errors.append(f"{label}: promotion cannot proceed while {agent} is blocked")
-
     for obligation in instance.get("unresolved_obligations", []):
         if obligation.get("blocking"):
             errors.append(
                 f"{label}: promotion cannot proceed with blocking obligation "
                 f"{obligation.get('id', '<unknown>')}"
             )
-
     return errors
 
 
-def duplicate_values(values: list[str]) -> set[str]:
+def duplicate_values(values: Iterable[str]) -> set[str]:
     seen: set[str] = set()
     duplicates: set[str] = set()
     for value in values:
@@ -97,21 +110,135 @@ def duplicate_values(values: list[str]) -> set[str]:
     return duplicates
 
 
-def schema_bound_review_registry_errors(review_paths: tuple[str, ...]) -> list[str]:
-    """Validate the explicit CI binding registry without inferring legacy coverage."""
+def discovered_schema_bound_reviews(root: Path = ROOT) -> set[str]:
+    discovered: set[str] = set()
+    for relative in SCHEMA_BOUND_REVIEW_DISCOVERY_ROOTS:
+        path = root / relative
+        if path.is_file():
+            paths = [path]
+        elif path.is_dir():
+            paths = sorted(path.rglob("*.agent_review.yaml"))
+        else:
+            paths = []
+        for review_path in paths:
+            try:
+                review = yaml.safe_load(review_path.read_text(encoding="utf-8"))
+            except yaml.YAMLError:
+                continue
+            if isinstance(review, dict) and not schema_errors(
+                review, "agent_review.schema.json"
+            ):
+                discovered.add(review_path.relative_to(root).as_posix())
+    return discovered
+
+
+def schema_bound_review_registry_errors(
+    review_paths: tuple[str, ...],
+    root: Path = ROOT,
+    *,
+    discovered_paths: set[str] | None = None,
+) -> list[str]:
     errors: list[str] = []
     if not review_paths:
         return ["reviews: no schema-bound Agent Council review records registered"]
-    for duplicate in sorted(duplicate_values(list(review_paths))):
+    for duplicate in sorted(duplicate_values(review_paths)):
         errors.append(f"reviews: duplicate schema-bound review registration {duplicate}")
+    registered = set(review_paths)
+    discovered = (
+        discovered_paths
+        if discovered_paths is not None
+        else discovered_schema_bound_reviews(root)
+    )
+    for relative in sorted(discovered - registered):
+        errors.append(f"reviews: discovered schema-bound review is unregistered: {relative}")
     for relative in review_paths:
         path = Path(relative)
         if path.is_absolute() or ".." in path.parts:
-            errors.append(f"reviews: schema-bound review path must be repository-relative: {relative}")
+            errors.append(
+                f"reviews: schema-bound review path must be repository-relative: {relative}"
+            )
         if not relative.startswith("reviews/"):
             errors.append(f"reviews: schema-bound review must live under reviews/: {relative}")
         if path.suffix not in {".yaml", ".yml"}:
             errors.append(f"reviews: schema-bound review must be YAML: {relative}")
+        if not (root / relative).is_file():
+            errors.append(f"reviews: registered schema-bound review is missing: {relative}")
+    return errors
+
+
+def discovered_canonical_claim_ledgers(root: Path = ROOT) -> set[str]:
+    discovered: set[str] = set()
+    for pattern in ("*.yaml", "*.yml"):
+        for path in root.rglob(pattern):
+            try:
+                instance = yaml.safe_load(path.read_text(encoding="utf-8"))
+            except (UnicodeDecodeError, yaml.YAMLError):
+                continue
+            if (
+                isinstance(instance, dict)
+                and instance.get("ledger_contract") == "canonical_claim_ledger"
+            ):
+                discovered.add(path.relative_to(root).as_posix())
+    return discovered
+
+
+def claim_ledger_registry_errors(
+    ledger_paths: tuple[str, ...],
+    root: Path = ROOT,
+    *,
+    discovered_paths: set[str] | None = None,
+) -> list[str]:
+    errors: list[str] = []
+    if not ledger_paths:
+        return ["claim ledgers: no canonical ledgers registered"]
+    for duplicate in sorted(duplicate_values(ledger_paths)):
+        errors.append(f"claim ledgers: duplicate registration {duplicate}")
+    registered = set(ledger_paths)
+    discovered = (
+        discovered_paths
+        if discovered_paths is not None
+        else discovered_canonical_claim_ledgers(root)
+    )
+    for relative in sorted(discovered - registered):
+        errors.append(f"claim ledgers: discovered canonical ledger is unregistered: {relative}")
+    for relative in sorted(registered - discovered):
+        errors.append(
+            "claim ledgers: registered canonical ledger is missing or lacks its "
+            f"contract marker: {relative}"
+        )
+    for relative in ledger_paths:
+        path = Path(relative)
+        if path.is_absolute() or ".." in path.parts:
+            errors.append(f"claim ledgers: path must be repository-relative: {relative}")
+        if path.suffix not in {".yaml", ".yml"}:
+            errors.append(f"claim ledgers: canonical ledger must be YAML: {relative}")
+    return errors
+
+
+def claim_ledger_semantic_errors(
+    ledgers: list[tuple[str, dict[str, Any]]], graph_ref_set: set[str]
+) -> list[str]:
+    errors: list[str] = []
+    ledger_ids = [str(instance.get("ledger_id", "")) for _, instance in ledgers]
+    for duplicate in sorted(duplicate_values(ledger_ids)):
+        errors.append(f"claim ledgers: duplicate ledger_id {duplicate}")
+    global_claim_ids: list[str] = []
+    for relative, ledger in ledgers:
+        claim_ids = [str(claim.get("claim_id", "")) for claim in ledger.get("claims", [])]
+        global_claim_ids.extend(claim_ids)
+        for duplicate in sorted(duplicate_values(claim_ids)):
+            errors.append(f"{relative}: duplicate claim_id {duplicate}")
+        for claim in ledger.get("claims", []):
+            for graph_ref in claim.get("knowledge_graph_refs", []):
+                if graph_ref not in graph_ref_set:
+                    errors.append(f"{relative}: unresolved knowledge_graph_ref {graph_ref}")
+            errors.extend(
+                foundational_profile_errors(
+                    claim, f"{relative}:{claim.get('claim_id', '<unknown>')}"
+                )
+            )
+    for duplicate in sorted(duplicate_values(global_claim_ids)):
+        errors.append(f"claim ledgers: duplicate global claim_id {duplicate}")
     return errors
 
 
@@ -123,8 +250,9 @@ def validate_documents(
     candidates: list[dict[str, Any]],
 ) -> list[str]:
     errors: list[str] = []
-    source_ids = {source["source_id"] for source in source_registry.get("sources", [])}
-    if len(source_ids) != len(source_registry.get("sources", [])):
+    sources = source_registry.get("sources", [])
+    source_ids = {source["source_id"] for source in sources}
+    if len(source_ids) != len(sources):
         errors.append("source registry contains duplicate source_id values")
 
     nodes = graph.get("nodes", [])
@@ -172,7 +300,8 @@ def validate_documents(
     for internal_ref, primary_ids in primary_msc_by_ref.items():
         if len(primary_ids) > 1:
             errors.append(
-                f"{internal_ref}: multiple primary MSC mappings: {', '.join(sorted(primary_ids))}"
+                f"{internal_ref}: multiple primary MSC mappings: "
+                f"{', '.join(sorted(primary_ids))}"
             )
 
     domain_ids: set[str] = set()
@@ -202,7 +331,6 @@ def validate_documents(
             if source_id not in source_ids:
                 errors.append(f"{problem_id}: unknown discovery source_id {source_id}")
         errors.extend(foundational_profile_errors(candidate, problem_id))
-
     return errors
 
 
@@ -216,19 +344,23 @@ def main() -> int:
     errors: list[str] = []
     loaded: dict[str, Any] = {}
     for relative_path, schema_name in documents:
-        path = ROOT / relative_path
-        instance = load_json(path)
+        instance = load_json(ROOT / relative_path)
         loaded[relative_path] = instance
-        errors.extend(f"{relative_path}: {error}" for error in schema_errors(instance, schema_name))
+        errors.extend(
+            f"{relative_path}: {error}"
+            for error in schema_errors(instance, schema_name)
+        )
 
-    domain_registry = yaml.safe_load((ROOT / "DOMAIN_REGISTRY.yaml").read_text(encoding="utf-8"))
+    domain_registry = yaml.safe_load(
+        (ROOT / "DOMAIN_REGISTRY.yaml").read_text(encoding="utf-8")
+    )
     errors.extend(
         f"DOMAIN_REGISTRY.yaml: {error}"
         for error in schema_errors(domain_registry, "domain_registry.schema.json")
     )
 
     agent_review_template = yaml.safe_load(
-        (ROOT / "templates" / "agent_review.yaml").read_text(encoding="utf-8")
+        (ROOT / "templates/agent_review.yaml").read_text(encoding="utf-8")
     )
     errors.extend(
         f"templates/agent_review.yaml: {error}"
@@ -239,7 +371,6 @@ def main() -> int:
     for relative in SCHEMA_BOUND_AGENT_REVIEWS:
         review_path = ROOT / relative
         if not review_path.is_file():
-            errors.append(f"{relative}: registered Agent Council review record is missing")
             continue
         review = yaml.safe_load(review_path.read_text(encoding="utf-8"))
         errors.extend(
@@ -248,32 +379,22 @@ def main() -> int:
         )
         errors.extend(agent_review_semantic_errors(review, relative))
 
-    ledger_paths = [
-        ROOT / "templates" / "claim_ledger_template.yaml",
-        ROOT / "templates" / "union_closed_claim_ledger_wp01.yaml",
-    ]
+    errors.extend(claim_ledger_registry_errors(SCHEMA_BOUND_CLAIM_LEDGERS))
     graph_ref_set = {
-        node["node_id"]
-        for node in loaded["knowledge_graph/union_closed.json"]["nodes"]
+        node["node_id"] for node in loaded["knowledge_graph/union_closed.json"]["nodes"]
     }
-    for ledger_path in ledger_paths:
+    ledgers: list[tuple[str, dict[str, Any]]] = []
+    for relative in SCHEMA_BOUND_CLAIM_LEDGERS:
+        ledger_path = ROOT / relative
+        if not ledger_path.is_file():
+            continue
         ledger = yaml.safe_load(ledger_path.read_text(encoding="utf-8"))
+        ledgers.append((relative, ledger))
         errors.extend(
-            f"{ledger_path.relative_to(ROOT)}: {error}"
+            f"{relative}: {error}"
             for error in schema_errors(ledger, "claim_ledger.schema.json")
         )
-        for claim in ledger.get("claims", []):
-            for graph_ref in claim.get("knowledge_graph_refs", []):
-                if graph_ref not in graph_ref_set:
-                    errors.append(
-                        f"{ledger_path.relative_to(ROOT)}: unresolved knowledge_graph_ref {graph_ref}"
-                    )
-            errors.extend(
-                foundational_profile_errors(
-                    claim,
-                    f"{ledger_path.relative_to(ROOT)}:{claim.get('claim_id', '<unknown>')}",
-                )
-            )
+    errors.extend(claim_ledger_semantic_errors(ledgers, graph_ref_set))
 
     for schema_path in sorted((ROOT / "schemas").glob("*.json")):
         Draft202012Validator.check_schema(load_json(schema_path))
@@ -295,8 +416,8 @@ def main() -> int:
         print(f"programme validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
     print(
-        "programme classification, discovery, foundation, schema-bound review, and "
-        "documentary contracts are valid"
+        "programme classification, discovery, foundation, schema-bound review, "
+        "claim-ledger, and documentary contracts are valid"
     )
     return 0
 
