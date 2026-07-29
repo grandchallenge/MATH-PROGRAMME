@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "lane_id": "LANE-LITERATURE-STATUS",
+  "title": "Literature synthesis to status spine",
+  "obligation": "Turn a source-bounded literature search into a dated theorem-and-status ledger with unresolved conflicts and novelty prohibitions.",
+  "artifacts": {"input_schema": "input.schema.json", "handoff_schema": "handoff.schema.json", "toy_fixture": "fixture.json"},
+  "allowed_statuses": ["search_locked", "sources_audited", "status_spine_ready", "ready_for_mathcert", "rejected"],
+  "rejection_policy": [
+    "Reject status claims without a dated search boundary and source locator.",
+    "Reject survey language promoted beyond the cited theorem hypotheses.",
+    "Reject novelty claims while unresolved priority, terminology, or equivalence conflicts remain."
+  ],
+  "mathcert_route": [
+    "verify source identities and locators",
+    "check each status-spine node against the cited theorem statement",
+    "preserve unresolved conflicts and dependency debt",
+    "certify only source correspondence and bounded status assertions"
+  ],
+  "claim_boundary": "A literature status spine records what the audited sources support at the stated cutoff; it neither proves an open theorem nor establishes novelty by itself."
+}
