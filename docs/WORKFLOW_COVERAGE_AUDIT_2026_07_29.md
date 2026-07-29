@@ -52,16 +52,17 @@ The Solve lane now requires one local algebraic obligation, explicit rejection o
 The protected `Release trust administration` workflow verified:
 
 - repository homepage `https://grandchallenge.github.io/MATH-PROGRAMME/`;
-- exact-main policy run `30446169969` at `8b965d2e8913ed1252f37dc83de8456a335cedd9`;
-- exact-main Pages run `30446339153`;
-- validated-site artifact `8721515246`;
+- exact-main policy run `30450487344` at `813f53ea28e1d941cc16c8f3da517c0dcfdc08a5`;
+- exact-main Pages run `30450675046`;
+- validated-site artifact `8723277027`;
 - byte-identical artifact and public index SHA-256 `9a54a3831d6fb0922b1e21a792c246051d1d8f078621fac5da5e87cdd59535c7`.
 
 ### Issue #125 — repository-ruleset enforcement
 
-App-backed apply run `30446399649` updated and read back one active profile ruleset for MATHCERT, MATHSOLVE, MATH-PROGRAMME and INTELLECT. The evidence proves:
+App-backed apply run `30450610588` updated and read back one active profile ruleset for MATHCERT, MATHSOLVE, MATH-PROGRAMME and INTELLECT. The evidence proves:
 
-- repository-specific semantic checks and shared `policy / policy` checks are mandatory;
+- repository-specific semantic checks plus shared `policy / policy` and
+  `security / action-policy` checks are mandatory;
 - strict required-status-check policy is active;
 - pull requests and resolved review conversations are required;
 - stale reviews are dismissed;
@@ -72,12 +73,12 @@ The run used a short-lived `gcl-release-trust` GitHub App installation token fro
 
 ## Admitted release-trust evidence
 
-- workflow run: `30446399649`;
-- exact head: `8b965d2e8913ed1252f37dc83de8456a335cedd9`;
-- evidence artifact: `8721612194`;
-- artifact SHA-256: `719c28ea73b69cfcb07049988ab48f231c235160e8c2b01f48761b49623ac33e`;
-- evidence-file SHA-256: `6c09d735c3b4f1ee4f5f53031658183ebc7a98a65fecc9c0eb9eca6a8ded2e74`;
-- canonical evidence SHA-256: `a3cfeea6a58de0e193015b96fd5929567bae9a3ee2aca68efe52795474669a85`;
+- workflow run: `30450610588`;
+- exact head: `813f53ea28e1d941cc16c8f3da517c0dcfdc08a5`;
+- evidence artifact: `8723362498`;
+- artifact SHA-256: `b6f153fda1ce0d80742828aa6ede7a51c0070e908babdc924df1fe6aef65a3da`;
+- evidence-file SHA-256: `95f06401dfdd0cc5535c0d812e3818fd621db01dae5509b67f68ae9ff8d2e536`;
+- canonical evidence SHA-256: `acd7e9c3ea10e9c03ea5dc81a0b84918d7241fea886426d2304e168b10c936f8`;
 - verified: `true`.
 
 ## Closure invariant
