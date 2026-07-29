@@ -8,6 +8,12 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from validate_symbolic_resource_budgets import (
+    SymbolicBudgetError,
+    validate as validate_symbolic_budgets,
+    validate_lane,
+)
+
 MANIFEST = Path("applications/grobner_manifest.json")
 EXPECTED_LANES = {
     "APP-DIO-01",
@@ -41,7 +47,7 @@ def validate(path: Path = MANIFEST) -> None:
         raise ManifestError(f"{path}: cannot load manifest: {exc}") from exc
 
     require(isinstance(manifest, dict), "manifest must be an object")
-    require(manifest.get("schema_version") == "1.0.0", "unsupported schema version")
+    require(manifest.get("schema_version") == "2.0.0", "unsupported schema version")
     require(nonempty(manifest.get("governing_rule")), "governing rule is required")
 
     foundations = manifest.get("foundation_fixtures")
@@ -87,6 +93,10 @@ def validate(path: Path = MANIFEST) -> None:
             lane["local_obligation"] != lane["excluded_inference"],
             f"{lane_id}: obligation and excluded inference must be distinct",
         )
+        try:
+            validate_lane(lane, path.as_posix())
+        except SymbolicBudgetError as exc:
+            raise ManifestError(str(exc)) from exc
 
     require(len(selected) == 1, "exactly one lane must be selected as next_fixture")
     require(
@@ -98,10 +108,11 @@ def validate(path: Path = MANIFEST) -> None:
 def main() -> int:
     try:
         validate()
-    except ManifestError as exc:
+        validate_symbolic_budgets()
+    except (ManifestError, SymbolicBudgetError) as exc:
         print(f"application manifest rejected: {exc}", file=sys.stderr)
         return 1
-    print("application manifest checked: six lanes, one selected next fixture")
+    print("application manifest checked: six bounded lanes, one selected next fixture")
     return 0
 
 
