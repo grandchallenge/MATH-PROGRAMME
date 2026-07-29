@@ -17,7 +17,7 @@ Its determination is:
 - remaining blockers: none;
 - umbrella issue #6: `CLOSE`.
 
-The admitted administrative evidence is App-backed release-trust run `30446399649`, artifact `8721612194`, and canonical evidence SHA-256 `a3cfeea6a58de0e193015b96fd5929567bae9a3ee2aca68efe52795474669a85`.
+The admitted administrative evidence is App-backed release-trust run `30450610588`, artifact `8723362498`, and canonical evidence SHA-256 `acd7e9c3ea10e9c03ea5dc81a0b84918d7241fea886426d2304e168b10c936f8`.
 
 ## Global policy gate
 
