@@ -24,6 +24,7 @@ EXPECTED_WORKFLOWS = {
     "pages.yml",
     "pc-wp04.yml",
     "pc-wp05.yml",
+    "release-trust-admin.yml",
 }
 
 
@@ -243,6 +244,24 @@ def workflow_coverage_errors(
             if marker not in pages_text:
                 errors.append(f"pages.yml: missing publication gate {marker}")
 
+    admin = parsed.get("release-trust-admin.yml")
+    if admin:
+        trigger = _trigger(admin)
+        if set(trigger) != {"workflow_dispatch"}:
+            errors.append("release-trust-admin.yml: administration must be manually dispatched only")
+        admin_text = texts["release-trust-admin.yml"]
+        for marker in (
+            "environment: release-trust",
+            "GCL_REPOSITORY_ADMIN_TOKEN: ${{ secrets.GCL_REPOSITORY_ADMIN_TOKEN }}",
+            "python ci/release_trust_admin.py --mode validate",
+            "--wait-seconds 1200",
+            "--close-child-issues",
+            "name: release-trust-evidence",
+            "retention-days: 90",
+        ):
+            if marker not in admin_text:
+                errors.append(f"release-trust-admin.yml: missing administration gate {marker}")
+
     errors.extend(external_evidence_errors(root, evidence))
     errors.extend(rh_continuity_errors(root))
     return errors
@@ -257,7 +276,7 @@ def main() -> int:
         return 1
     print(
         "workflow inventory, least-privilege permissions, immutable actions, repository execution, "
-        "exact artifact publication, RH continuity, and external evidence are valid"
+        "exact artifact publication, release-trust administration, RH continuity, and external evidence are valid"
     )
     return 0
 
