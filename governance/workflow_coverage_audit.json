@@ -1,0 +1,43 @@
+{
+  "$schema": "../schemas/workflow_coverage_audit.schema.json",
+  "schema_version": "1.0.0",
+  "audit_id": "CI-COVERAGE-AUDIT-2026-07-29",
+  "audited_at": "2026-07-29",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "main_commit": "08dc04f34e0bb5e83a1555b3b0b6e55784dabfd1",
+  "ci_contract_coverage": "COMPLETE",
+  "operational_release_closure": "BLOCKED",
+  "coverage_areas": [
+    {"area_id": "GLOBAL-POLICY", "status": "COMPLETE", "evidence": [".github/workflows/ci.yml", "ci/validate_workflow_semantics.py"]},
+    {"area_id": "CAMPAIGN-REPLAY-DISCOVERY", "status": "COMPLETE", "evidence": ["ci/validate_campaign_replays.py", "ci/campaign_replay_registry.json"]},
+    {"area_id": "CI-REACHABILITY", "status": "COMPLETE", "evidence": ["ci/validate_policy_reachability.py", "ci/test_policy_reachability.py"]},
+    {"area_id": "REPOSITORY-TESTS", "status": "COMPLETE", "evidence": ["ci/validate_repository_execution.py", "python -m unittest discover -s tests -p test_*.py"]},
+    {"area_id": "EXPERIMENT-REACHABILITY", "status": "COMPLETE", "evidence": ["ci/validate_repository_execution.py"]},
+    {"area_id": "SYMBOLIC-BUDGETS", "status": "COMPLETE", "evidence": ["PR #120", "ci/validate_symbolic_resource_budgets.py", "governance/expensive_symbolic_lane_registry.json", "workflow run 30411135117"]},
+    {"area_id": "CROSS-PILLAR-LANES", "status": "COMPLETE", "evidence": ["PR #121", "ci/validate_cross_pillar_lane_packages.py", "governance/cross_pillar_lane_packages.json", "workflow run 30411923062"]},
+    {"area_id": "MATHFORGE-PROVIDER-IMPORTS", "status": "COMPLETE", "evidence": ["ci/validate_mathforge_provider_imports.py", "governance/mathforge_provider_imports.json"]},
+    {"area_id": "MATHSOLVE-ROUTING", "status": "COMPLETE", "evidence": ["ci/validate_mathsolve_routing.py", "governance/mathsolve_routing.json"]},
+    {"area_id": "FORMAL-REPLAYS", "status": "COMPLETE", "evidence": ["LOG-GCD Lean replay", "PC-WP04 bounded certificate replay"]},
+    {"area_id": "EXTERNAL-MATHCERT-EVIDENCE", "status": "COMPLETE", "evidence": ["evidence/UC-WP02-MATHCERT.json", "union-closed-mathcert job"]},
+    {"area_id": "STRICT-DOCUMENTATION-BUILD", "status": "COMPLETE", "evidence": ["mkdocs build --strict", "requirements/docs.txt"]},
+    {"area_id": "PAGES-PUBLICATION-CONTRACT", "status": "COMPLETE", "evidence": [".github/workflows/pages.yml", "ci/validate_workflow_semantics.py", "historically successful Deploy documentation site runs"]},
+    {"area_id": "FAST-PATH-WORKFLOWS", "status": "COMPLETE", "evidence": ["bsd-wp03-substrate.yml", "bsd-wp04-target.yml", "pc-wp04.yml", "pc-wp05.yml"]}
+  ],
+  "remaining_blockers": [
+    {
+      "blocker_id": "PAGES-CURRENT-MAIN-DEPLOYMENT",
+      "issue": 7,
+      "state": "UNVERIFIED",
+      "scope": "A successful Deploy documentation site run tied to current main commit 08dc04f34e0bb5e83a1555b3b0b6e55784dabfd1 was not independently observable through the available connector or anonymous Actions listing.",
+      "close_condition": "Record the successful Pages deployment run for the current main revision and confirm the public site serves that revision."
+    },
+    {
+      "blocker_id": "PAGES-HOMEPAGE-METADATA",
+      "issue": 7,
+      "state": "OPEN",
+      "scope": "The GitHub repository About section has no homepage URL, and the available GitHub connector exposes no repository-metadata write operation.",
+      "close_condition": "Set the repository homepage to https://grandchallenge.github.io/MATH-PROGRAMME/ and verify it through repository metadata."
+    }
+  ],
+  "umbrella_issue_disposition": "KEEP_OPEN"
+}
