@@ -2,110 +2,105 @@
 
 ## Purpose
 
-The programme workflow is a claim-boundary control. A green documentation build alone is insufficient: campaign replays, repository tests, executable policy scripts, formal fixtures, cross-repository evidence, continuity records, declared dependencies, and the exact published site artifact must all remain governed.
+The programme workflow is a claim-boundary control. A green documentation build alone is insufficient. Campaign replays, repository tests, executable policy controls, formal fixtures, cross-repository evidence, provider contracts, exact publication artifacts, and repository administration must remain distinct and governed.
 
 ## Current audit disposition
 
-The repository-wide audit dated 2026-07-29 is recorded in `WORKFLOW_COVERAGE_AUDIT_2026_07_29.md` and `governance/workflow_coverage_audit.json`.
+The umbrella audit dated 2026-07-29 is recorded in `WORKFLOW_COVERAGE_AUDIT_2026_07_29.md` and `governance/workflow_coverage_audit.json`.
 
 Its determination is:
 
 - CI contract coverage: `COMPLETE`;
-- operational release closure: `BLOCKED`;
+- technical umbrella children: `COMPLETE`;
+- administrative umbrella children: `INCOMPLETE`;
+- `operational_release_complete: false`;
 - umbrella issue #6: `KEEP_OPEN`.
 
-The remaining blockers are confined to issue #7: independently recording a current-main Pages deployment and setting the repository About homepage URL.
+The remaining blockers are confined to:
+
+- issue #7 — repository homepage metadata and current-main Pages deployment evidence;
+- issue #125 — protected-branch ruleset and required-check evidence across MATHCERT, MATHSOLVE, MATH-PROGRAMME, and INTELLECT.
 
 ## Global policy gate
 
-`.github/workflows/ci.yml` is the global `Programme policy checks` workflow. It runs on every pull request, every push to `main`, and explicit manual audit through `workflow_dispatch`.
+`.github/workflows/ci.yml` is the global `Programme policy checks` workflow. It runs on pull requests, pushes to `main`, and explicit manual audits.
 
-It uses read-only repository permissions, bounded timeouts, non-persistent checkout credentials, immutable action references, fixed `ubuntu-24.04` runners, the Python `3.12` minor line, checked-in dependency pins, and pull-request concurrency cancellation.
+The workflow uses read-only repository permissions, bounded timeouts, non-persistent checkout credentials, immutable action references, fixed runner families, checked-in dependency pins, and concurrency cancellation.
 
 | Job | Controlled obligation |
 |---|---|
-| `validate-json` | Schemas, fixtures, campaign replays, repository unit tests, experiment reachability, documentation, continuity, workflow semantics, and strict MkDocs |
+| `validate-json` | Schemas, fixtures, campaign replays, repository tests, experiment reachability, documentation, continuity, workflow semantics, and strict MkDocs |
 | `log-gcd-lean` | Pinned Lean replay of the LOG-GCD formal fixture |
 | `pc-wp04-lean` | Pinned Lean replay and policy validation of the bounded Poincaré certificate |
-| `union-closed-mathcert` | Exact checkout and complete replay of the evidence-pinned external MATHCERT gate |
+| `union-closed-mathcert` | Exact checkout and complete replay of pinned external MATHCERT evidence |
 
 A successful workflow records integration, execution, policy, artifact, or bounded-certification facts. It does not promote an open mathematical claim.
 
-## Campaign executable discovery
+## Covered repository surfaces
 
-`ci/validate_campaign_replays.py` independently discovers every Python file under `campaigns/` with a shebang or `__main__` guard. Each discovered executable must be a registered direct Python command with a unique ID, scope, and timeout, or an explicit governed exemption with a substantive rationale. The registry cannot redefine the discovery boundary.
+The global contract covers:
 
-## CI policy reachability
+- recursive campaign executable discovery;
+- executable CI-control reachability;
+- repository tests and experiment reachability;
+- symbolic resource budgets and failure ledgers;
+- reusable cross-pillar lane packages;
+- MATHFORGE provider imports;
+- MATHSOLVE routing;
+- programme-wide MATHCERT conformance;
+- bounded MATHFORGE algebraic witness generation;
+- bounded MATHSOLVE algebraic tactic routing;
+- formal Lean replays;
+- pinned external certification evidence;
+- strict documentation construction;
+- exact-artifact Pages publication semantics;
+- governed fast-path workflows.
 
-`ci/validate_policy_reachability.py` discovers executable `ci/*.py` files, extracts operative Python roots from parsed workflows and the campaign registry, builds a local AST import graph, and requires every executable CI control to be reachable.
+## Bounded algebraic provider chain
 
-## Repository tests and experiment modules
+The algebraic lane now has explicit contracts at each provider boundary.
 
-`ci/validate_repository_execution.py` closes the separate `tests/` and `experiments/` surface:
+### MATHFORGE
 
-- every `tests/test_*.py` file must contain discoverable `unittest.TestCase` methods;
-- the global policy executes the full test tree with `python -m unittest discover`;
-- every non-package Python module under `experiments/` must be library-only;
-- every experiment module must be reachable from discovered tests, directly or through the local experiment import graph;
-- hidden, standalone, syntactically invalid, or untested experiment modules fail policy.
+A governed witness must record local scope, coefficient domain, variable and degree bounds, timeout, basis and term budgets, exact backend identity, observed execution, expected witness, fallback route, failure ledger, and content-addressed registry identity.
 
-Passing tests establish bounded software behaviour only. They do not establish mathematical truth or numerical evidence for a continuum claim.
+MATHFORGE outputs evidence. A `ready_for_mathcert` witness is not certified.
 
-## Workflow semantic contract
+### MATHSOLVE
 
-`ci/validate_workflow_semantics.py` validates operative YAML structures rather than raw marker presence. It requires exact workflow names, fixed runners, Python `3.12`, exact requirement-file routes, real execution of coverage controls, deterministic validated-site packaging, Pages artifact verification, and current-tip publication. Comments or echo statements cannot satisfy command obligations.
+A governed tactic invocation must identify one local proof obligation, reject global open-problem encoding, declare resource limits and fallback conditions, identify the expected witness, pin its source, and state the exact MATHCERT checking obligation.
 
-## Declared environment
-
-The declared workflow environment consists of the `ubuntu-24.04` runner family, Python `3.12`, `requirements/policy.txt`, and `requirements/docs.txt`. Python patch movement within `3.12`, transitive dependency movement, and runner-image digest movement remain outside the guarantee.
-
-## Formal and external evidence
-
-The global workflow directly compiles LOG-GCD and PC-WP04. Union-Closed formal evidence is maintained in `grandchallenge/MATHCERT`; `evidence/UC-WP02-MATHCERT.json` records the exact repository, commit, paths, command, and claim boundary. Workflow checkout coordinates are literal and must match that evidence.
-
-## Continuity controls
-
-The global policy also enforces:
-
-- RH-WP01/WP02 retained promotion blockers;
-- absence and historical provenance of the retired Poincaré Domain 04 alias;
-- schema-bound Agent Council reviews;
-- documentary authority and availability distinctions;
-- decision, ledger, terminology, navigation, and public-domain consistency.
+Packet readiness and submission are intake states. Only a content-addressed MATHCERT disposition can close the certification boundary.
 
 ## Policy-validated site artifact
 
-On a successful push to `main`, the policy job packages the strict MkDocs output as a deterministic `validated-site.tar.gz`, writes an inner SHA-256 record, and uploads both files in a run-scoped `validated-site` workflow artifact retained for one day.
+On a successful push to `main`, the policy job packages the strict MkDocs output as a deterministic validated-site artifact. The Pages workflow deploys only that verified artifact and does not rebuild documentation independently.
 
-This artifact is publication evidence for that workflow run. It is not a permanent documentary release artifact and is unrelated to theorem support.
+Publication proceeds only when the policy run succeeded for a `main` push, the validated SHA remains the current `main` tip, artifact digests verify, safe extraction succeeds, and the site contains its required entry point.
 
-## Exact artifact publication
+This repository-side publication contract is complete. Issue #7 remains open because live deployment and repository-homepage facts have not been independently recorded.
 
-`.github/workflows/pages.yml` is triggered only after a completed `Programme policy checks` run. Publication proceeds only when:
+## Protected-branch boundary
 
-1. the policy conclusion is `success`;
-2. the validated branch is `main`;
-3. the originating event was a push;
-4. Pages checks out the exact validated `head_sha`;
-5. that SHA is still the current `origin/main` tip;
-6. exactly one unexpired `validated-site` artifact exists for the triggering workflow run;
-7. GitHub’s artifact SHA-256 digest verifies;
-8. the inner site-archive SHA-256 verifies;
-9. the safely extracted site contains `index.html`.
+Exact-head workflow success does not prove that a repository administrator cannot bypass the workflow. Issue #125 requires authoritative branch-protection or ruleset evidence for each mathematics governance repository.
 
-Pages does not install documentation dependencies or rebuild MkDocs. It uploads the verified policy-produced site bytes to Pages and then deploys them. A newer `main` commit cancels or invalidates an older publication run.
+The final administration record must state:
 
-The build job receives only `actions: read`, `contents: read`, and `pages: write`; the deploy job alone receives Pages write and OIDC token permissions. There is no manual Pages bypass.
+- ruleset or protection identifier;
+- required status-check context;
+- strict or up-to-date requirement;
+- review requirement;
+- bypass actors or explicit absence of bypass;
+- effective date and verification method.
 
-## Workflow inventory
+## Closure rule
 
-- `ci.yml` — global policy and validated-site producer;
-- `pages.yml` — exact-artifact verifier and current-tip deployer;
-- `bsd-wp03-substrate.yml` — BSD-WP03 fast replay;
-- `bsd-wp04-target.yml` — BSD-WP04 fast replay;
-- `pc-wp04.yml` — PC-WP04 fast certificate replay;
-- `pc-wp05.yml` — PC-WP05 archival fast replay.
+MATH-PROGRAMME issue #6 may close only when:
 
-## Maintenance rule
+1. Pages issue #7 is complete;
+2. protected-branch issue #125 is complete;
+3. the MATHFORGE and MATHSOLVE technical children remain complete;
+4. `remaining_blockers` is empty;
+5. `operational_release_complete` is `true`.
 
-A change to campaign executables, CI controls, repository tests, experiment modules, workflows, dependency declarations, external evidence, publication gates, retained blockers, retired paths, or historical crosswalks must update the governing decision or evidence record and pass the global policy. Merge state, workflow success, test success, artifact identity, publication visibility, certification, and theorem support remain distinct.
+Merge state, workflow success, test success, witness identity, certification, publication visibility, and mathematical theorem support remain separate facts.
