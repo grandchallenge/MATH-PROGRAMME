@@ -32,7 +32,7 @@ jobs:
     steps:
       - name: Mint short-lived Release Trust token
         id: app-token
-        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
         with:
           app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
@@ -42,10 +42,10 @@ jobs:
             MATHCERT
             MATHSOLVE
             INTELLECT
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: "3.12"
       - name: Install governed policy dependencies
@@ -80,7 +80,7 @@ jobs:
           fi
           python ci/release_trust_admin.py "${args[@]}"
       - name: Upload release-trust evidence
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: release-trust-evidence
           path: release-trust-evidence.json
