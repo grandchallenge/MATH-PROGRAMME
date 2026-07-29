@@ -3,6 +3,18 @@
   "schema_version": "2.0.0",
   "entries": [
     {
+      "id": "CROSS-PILLAR-LANE-PACKAGE-VALIDATION",
+      "command": ["python3", "ci/validate_cross_pillar_lane_packages.py"],
+      "timeout_seconds": 60,
+      "scope": "Validate the five reusable lane packages, including doctrine, schemas, toy fixtures, statuses, rejection policies, and MATHCERT routes."
+    },
+    {
+      "id": "CROSS-PILLAR-LANE-PACKAGE-ADVERSARIAL",
+      "command": ["python3", "tests/test_cross_pillar_lane_packages.py"],
+      "timeout_seconds": 60,
+      "scope": "Reject missing doctrine, invalid fixtures, orphan packages, status drift, incomplete rejection policies, malformed schemas, and toy certification inflation."
+    },
+    {
       "id": "SYMBOLIC-RESOURCE-BUDGET-VALIDATION",
       "command": ["python3", "ci/validate_symbolic_resource_budgets.py"],
       "timeout_seconds": 60,
@@ -58,11 +70,7 @@
     },
     {
       "id": "OZ-WP00-INTAKE-VALIDATION",
-      "command": [
-        "python3",
-        "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/tools/validate_intake_manifest.py",
-        "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/01_INTAKE_SOURCE_LOCK.yaml"
-      ],
+      "command": ["python3", "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/tools/validate_intake_manifest.py", "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/01_INTAKE_SOURCE_LOCK.yaml"],
       "timeout_seconds": 60,
       "scope": "Validate the open OZ-WP00 intake manifest without promoting incomplete source locks."
     },
