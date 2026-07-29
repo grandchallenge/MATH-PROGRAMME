@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["lane_id", "status", "enumerated_count", "witness_digest", "replay_command", "completeness_scope", "certification_state"],
+  "properties": {
+    "lane_id": {"const": "LANE-EXACT-FINITE"},
+    "status": {"enum": ["bounded", "enumerated", "replayed", "ready_for_mathcert", "rejected"]},
+    "enumerated_count": {"type": "integer", "minimum": 0},
+    "witness_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "replay_command": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "completeness_scope": {"type": "string", "minLength": 1},
+    "certification_state": {"enum": ["not_certified", "ready_for_mathcert", "certified_by_mathcert"]}
+  }
+}
