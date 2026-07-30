@@ -1,0 +1,48 @@
+schema_version: 1.0.0
+review_id: OZ-WP01-REVIEW
+campaign_id: OZ
+work_package_id: OZ-WP01
+review_date: '2026-07-30'
+inputs:
+  oz_next_006_merge: a2eb1c685e85961515e7c748bf732b4469f63204
+  atlas: ATLAS.yaml
+  replay: replay.py
+coverage:
+  cases: 22
+  positive_controls: 6
+  rejected_packets: 16
+  controlled_families: 8
+  reason_codes: 16
+roles:
+- role: Axiomatist
+  verdict: PASS
+  finding: Each rejected inference states the missing assumption, scope, certificate, or bridge rather than declaring the mathematical conclusion false.
+- role: Cartographer
+  verdict: PASS
+  finding: The atlas covers Apéry B-row, Theorem LB, compact forms, sharp-12, novelty, irrationality, zeta(7) operator, and the finite Zudilin disjunction.
+- role: Grammarian
+  verdict: PASS
+  finding: The evaluator distinguishes modulus, quantifier, normalization, theorem-instance, review, formalization, novelty, and irrationality language.
+- role: Verifier
+  verdict: PASS_PENDING_EXACT_HEAD_CI
+  finding: All positive controls and false-proof packets replay deterministically; exact-head repository CI remains the promotion condition.
+- role: Adversary
+  verdict: PASS
+  finding: Mutation tests reject promotion inflation, omitted family coverage, duplicate IDs, and reason-code drift.
+- role: Formalist
+  verdict: PASS
+  finding: Operator definitions, conditional theorems, point certificates, finite matches, and sorryAx-tainted declarations have separate proof effects.
+- role: Amanuensis
+  verdict: PASS
+  finding: Every fixture has a stable ID, controlled family, claim packet, expected verdict, and exact rejection codes.
+- role: Referee
+  verdict: PROMOTE_ON_EXACT_HEAD_CI_SUCCESS
+  finding: WP01 may close after merge without changing any theorem, novelty, formal, or irrationality status; WP02 then becomes executable.
+claim_boundary: The atlas certifies rejection of invalid inference patterns, not falsity of the target mathematical statements.
+promotion:
+  wp01_complete_after_merge: true
+  authorizes: OZ-WP02
+  theorem_promotion: false
+  novelty_promotion: false
+  irrationality_promotion: false
+  sharp12_promotion: false
