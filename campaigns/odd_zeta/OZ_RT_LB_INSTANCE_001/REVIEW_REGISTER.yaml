@@ -1,0 +1,53 @@
+schema_version: 1.0.0
+review_id: OZ-RT-LB-INSTANCE-001-REVIEW
+campaign_id: OZ
+theorem_id: OZ-THM-T005
+review_date: '2026-07-30'
+inputs:
+  apery_brow_merge: e5c61b29f2d9cec711bba0068dda63ac099b6df0
+  hypothesis_audit: HYPOTHESIS_AUDIT.yaml
+  semantic_boundary: SEMANTIC_BOUNDARY.yaml
+  lean_replay: LEAN_REPLAY.yaml
+roles:
+  - role: Axiomatist
+    verdict: PASS
+    finding: The odd-prime assumption, digit ranges, explicit summand, coefficient denominators, weight, and trivial character are sufficient and explicit.
+  - role: Cartographer
+    verdict: PASS
+    finding: Franel was selected as the first concrete family; H1, H2, H3, H4, H4c, Hw, H5, assembly, formal replay, and recurrence debt are separately mapped.
+  - role: Grammarian
+    verdict: PASS
+    finding: The explicit harmonic sum theorem is distinguished from a recurrence-defined second-solution theorem and from any multi-digit, novelty, or irrationality statement.
+  - role: Verifier
+    verdict: PASS_PENDING_EXACT_HEAD_CI
+    finding: All Theorem-LB hypotheses are discharged in the pinned Lean source; package validation and the declaration-level axiom audit remain exact-head conditions.
+  - role: Adversary
+    verdict: PASS
+    finding: The audit checks the no-borrow premise for n-k, p=2 exclusion, denominator-four integrality, true H4 tameness, and absence of recurrence-equivalence inflation.
+  - role: Formalist
+    verdict: PASS_WITH_RECURRENCE_BOUNDARY
+    finding: Lean proves the exact explicit-sum theorem. It does not prove that bFranel is the recurrence-defined Franel second solution.
+  - role: Amanuensis
+    verdict: PASS
+    finding: The family, statement, source identities, Lean declarations, hypothesis witnesses, and successor boundary are recorded.
+  - role: Referee
+    verdict: PROMOTE_EXPLICIT_FRANEL_INSTANCE_ON_EXACT_HEAD_CI_SUCCESS
+    finding: >-
+      After the package-audit and lean-franel-instance jobs pass against the exact PR head,
+      accept the explicit-sum Franel congruence and authorize OZ-RT-BZ-T3-001. Preserve
+      recurrence-equivalence, novelty, and irrationality boundaries.
+disposition_on_success:
+  explicit_sum_franel_theorem: REFEREE_ACCEPTED
+  lean_declaration: FORMALLY_REPLAYED
+  theorem_lb_hypotheses: COMPLETELY_DISCHARGED_FOR_FRANEL
+  recurrence_defined_franel_second_solution: NOT_CLAIMED
+  novelty: NOT_ASSESSED
+  new_irrationality_conclusion: false
+  authorizes: OZ-RT-BZ-T3-001
+  sharp12_authorized: false
+continuing_prohibitions:
+  - Do not claim a theorem for the recurrence-defined Franel second solution without a separate equivalence proof.
+  - Do not generalize one Franel instance to all fifteen sporadic families.
+  - Do not assign NEW_AFTER_AUDIT or a priority claim.
+  - Do not infer an odd-zeta irrationality conclusion.
+  - Do not begin sharp-12 before T3 disposition and complete blocker packets.
