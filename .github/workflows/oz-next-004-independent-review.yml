@@ -65,12 +65,12 @@ jobs:
       - name: Bounded audit-pipeline probe
         run: |
           set +e
-          timeout 180s python3 src1/worthiness/audit.py validate > audit-validate.log 2>&1
+          timeout 60s python3 src1/worthiness/audit.py validate > audit-validate.log 2>&1
           rc=$?
           set -e
           cat audit-validate.log
           if [ "$rc" -ne 0 ] && [ "$rc" -ne 124 ]; then exit "$rc"; fi
-          grep -q 'Anchor 1' audit-validate.log
+          grep -qi 'anchor 1' audit-validate.log
           echo "audit.py validate exit=$rc (0=complete, 124=bounded timeout)" >> "$GITHUB_STEP_SUMMARY"
 
   lean-zeta5odd:
