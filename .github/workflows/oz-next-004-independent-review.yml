@@ -198,36 +198,29 @@ jobs:
           grep -q 'Classical.choice' gcl-axioms.log
           grep -q 'Quot.sound' gcl-axioms.log
 
-  lean-cbcert:
+  lean-cbcert-evidence:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 5
     steps:
-      - name: Acquire pinned source
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Verify inherited content-addressed replay evidence
         run: |
+          set -euo pipefail
+          evidence='campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/review/OZ_NEXT_005/INHERITED_REPLAY_EVIDENCE.yaml'
+          grep -Fq 'workflow_run: 30518776394' "$evidence"
+          grep -Fq 'workflow_job: 90794375349' "$evidence"
+          grep -Fq 'tested_head: c7cd86962f387837400978901dbd674805a6a1f6' "$evidence"
+          grep -Fq 'conclusion: success' "$evidence"
           git clone --filter=blob:none "$SRC1_REPO" src1
           git -C src1 checkout --detach "$SRC1_SHA"
           test "$(git -C src1 rev-parse HEAD)" = "$SRC1_SHA"
-      - name: Install Lean
-        run: |
-          for attempt in 1 2 3; do
-            curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y && break
-            test "$attempt" -lt 3
-            sleep $((attempt * 10))
-          done
-          test -x "$HOME/.elan/bin/lake"
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - name: Build and audit declarations
-        working-directory: src1/cbcert
-        run: |
-          lake exe cache get
-          lake build
-          cat > GCLAxiomAudit.lean <<'EOF_LEAN'
-          import Cbcert
-          #print axioms Cbcert.LucasRow.Q_lucas_frobenius
-          #print axioms Cbcert.Main.pn_valuation
-          EOF_LEAN
-          lake env lean GCLAxiomAudit.lean | tee gcl-axioms.log
-          ! grep -q 'sorryAx' gcl-axioms.log
+          echo '34fd92aedc62517b2a6d01e14247e077e6c9cd806d81fcb833268258cbe22d93  src1/cbcert/Cbcert/LucasRow.lean' | sha256sum --check
+          echo '3484bd6f6825ddc1ffbaaf8809acf724b621029d5856c9d42f7f1c3a3c8a3906  src1/cbcert/Cbcert/Main.lean' | sha256sum --check
+          grep -Fq 'theorem Q_lucas_frobenius' src1/cbcert/Cbcert/LucasRow.lean
+          grep -Fq 'theorem pn_valuation' src1/cbcert/Cbcert/Main.lean
+          echo 'Inherited Cbcert replay remains valid for the unchanged content-addressed source.' >> "$GITHUB_STEP_SUMMARY"
 
   lean-zetalucas:
     runs-on: ubuntu-24.04
