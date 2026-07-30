@@ -1,0 +1,43 @@
+schema_version: 1.0.0
+review_id: OZ-WP02-REVIEW
+campaign_id: OZ
+work_package_id: OZ-WP02
+review_date: '2026-07-30'
+inputs:
+  oz_next_006_merge: a2eb1c685e85961515e7c748bf732b4469f63204
+  oz_wp01_merge: 9620485c00488c8307cb0b7224640871f533c57c
+  theorem_ledger: THEOREM_LEDGER.yaml
+  normalization_register: NORMALIZATION_REGISTER.yaml
+  proof_obligations: PROOF_OBLIGATIONS.yaml
+roles:
+  - role: Axiomatist
+    verdict: PASS
+    finding: Exact assumptions, quantifiers, prime ranges, and conditional dependencies are explicit for every theorem lane.
+  - role: Cartographer
+    verdict: PASS
+    finding: Eleven theorem records and forty proof obligations map the baseline, Apéry, H1-H5, compact, sharp-12, and zeta(7) routes.
+  - role: Grammarian
+    verdict: PASS
+    finding: The ledger keeps finite, unbounded, conditional, pointwise, paper, formal, certificate, novelty, and irrationality effects distinct.
+  - role: Verifier
+    verdict: PASS_PENDING_EXACT_HEAD_CI
+    finding: The deterministic validator checks IDs, source concordance, normalization locks, dependency acyclicity, gate completeness, and fail-closed promotion state.
+  - role: Adversary
+    verdict: PASS
+    finding: Mutation tests reject bounded-to-unbounded inflation, normalization loss, dependency cycles, premature lane changes, false novelty, and sharp-12 blocker discharge.
+  - role: Formalist
+    verdict: PASS
+    finding: Candidate Lean declarations are separated from semantic-correspondence debt and from quarantined compact-form declarations.
+  - role: Amanuensis
+    verdict: PASS
+    finding: Every theorem and obligation has a stable ID, source records, proof effect, status, dependency set, and promotion boundary.
+  - role: Referee
+    verdict: PROMOTE_ON_EXACT_HEAD_CI_SUCCESS
+    finding: WP02 may close after merge and authorize OZ-RT-APERY-BROW-001 only; no theorem or novelty status is promoted by the ledger.
+promotion:
+  wp02_complete_after_merge: true
+  authorizes: OZ-RT-APERY-BROW-001
+  theorem_promotions: []
+  novelty_promotions: []
+  irrationality_promotions: []
+  sharp12_promotion: false

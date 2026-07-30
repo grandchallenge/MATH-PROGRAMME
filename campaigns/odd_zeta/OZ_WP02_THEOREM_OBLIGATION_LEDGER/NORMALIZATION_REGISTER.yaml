@@ -1,0 +1,41 @@
+schema_version: 1.0.0
+register_id: OZ-WP02-NORMALIZATIONS
+campaign_id: OZ
+normalizations:
+  - id: OZ-NRM-N001
+    name: Classical Apéry integral row
+    locked_symbol: a_n or A_n only when the cited source map is explicit
+    rule: Preserve initial values, recurrence, and integral-row meaning; do not substitute a secondary solution.
+    source_records: [OZ-REC-R001, OZ-CON-C001]
+  - id: OZ-NRM-N002
+    name: Classical secondary solution versus minimal companion
+    locked_symbol: B_n and bMin_n
+    equivalence: bMin_n = 6 B_n
+    rule: Every transfer between B and bMin must carry the factor six explicitly.
+    source_records: [OZ-HAR-H001, OZ-L4-T006]
+  - id: OZ-NRM-N003
+    name: Rational Apéry second row
+    locked_symbol: b_n
+    rule: The modular object p^3 b_n must be distinguished from b_n and from bMin_n.
+    source_records: [OZ-MSS-S002, OZ-MSS-S003]
+  - id: OZ-NRM-N004
+    name: Brown-Zudilin row and factor-12 normalization
+    locked_symbol: Q_n, Phat_n, P_n
+    rule: Separate Q-row recurrence, middle row, top row, the exact n=2 factor-12 witness, T3, and the sharp-12 denominator theorem.
+    source_records: [OZ-REC-R002, OZ-HAR-H002, OZ-HAR-H003, OZ-HAR-H004, OZ-L4-T007, OZ-L4-T008]
+  - id: OZ-NRM-N005
+    name: Modulus lock
+    locked_symbol: mod p, mod p^2, mod p^3
+    rule: These moduli are distinct theorem data and may not be interchanged.
+    source_records: [OZ-CON-C001, OZ-CON-C002, OZ-CON-C003, OZ-CON-C004]
+  - id: OZ-NRM-N006
+    name: Prime-scope lock
+    locked_symbol: p>=5 versus p=2, p=3, or all primes
+    rule: A p>=5 chain may not be promoted to an all-prime theorem.
+    source_records: [OZ-MSS-S002, OZ-MSS-S006]
+  - id: OZ-NRM-N007
+    name: Finite odd-zeta target-set lock
+    locked_symbol: zeta(5), zeta(7), ..., zeta(33)
+    rule: A finite disjunction is not an individual irrationality theorem and not a universal odd-zeta theorem.
+    source_records: [OZ-MSS-S001, OZ-L4-T001]
+required_equivalence: bMin_n = 6 B_n
