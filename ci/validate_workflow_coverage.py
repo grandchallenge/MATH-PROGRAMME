@@ -22,6 +22,7 @@ EXPECTED_WORKFLOWS = {
     "bsd-wp04-target.yml",
     "ci.yml",
     "gcl-conformance.yml",
+    "oz-next-004-independent-review.yml",
     "pages.yml",
     "pc-wp04.yml",
     "pc-wp05.yml",
