@@ -23,7 +23,7 @@ env:
 
 jobs:
   static-python-replay:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -31,7 +31,7 @@ jobs:
           persist-credentials: false
       - name: Install Python dependencies and validate review package
         run: |
-          python3 -m pip install --disable-pip-version-check pyyaml sympy mpmath numpy scipy
+          python3 -m pip install --requirement requirements/oz-next-004.txt
           python3 campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/review/OZ_NEXT_004/tools/validate_review_package.py
       - name: Acquire pinned sources
         run: |
@@ -76,7 +76,7 @@ jobs:
           echo "audit.py validate exit=$rc (0=complete, 124=bounded timeout)" >> "$GITHUB_STEP_SUMMARY"
 
   lean-zeta5odd:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
       - name: Acquire pinned source
@@ -109,7 +109,7 @@ jobs:
           grep -q 'Quot.sound' gcl-axioms.log
 
   lean-cbcert:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
       - name: Acquire pinned source
@@ -140,7 +140,7 @@ jobs:
           ! grep -q 'sorryAx' gcl-axioms.log
 
   lean-zetalucas:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
       - name: Acquire pinned source
