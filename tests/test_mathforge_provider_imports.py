@@ -60,6 +60,31 @@ class MathforgeProviderImportTests(unittest.TestCase):
         errors = mathforge_provider_import_errors(altered)
         self.assertTrue(any("manifest identity drift" in error for error in errors))
 
+    def test_supplemental_identity_drift_is_rejected(self) -> None:
+        altered = copy.deepcopy(self.registry)
+        entry = next(item for item in altered["campaigns"] if item["campaign_id"] == "RH-001")
+        entry["supplemental_artifacts"][-1]["git_blob_sha1"] = "2" * 40
+        errors = mathforge_provider_import_errors(altered)
+        self.assertTrue(any("FC-GDM-001-RH-CONCORDANCE identity drift" in error for error in errors))
+        self.assertTrue(provider_gate_errors("RH-001", "WP01", altered))
+
+    def test_missing_supplemental_artifact_fails_closed(self) -> None:
+        altered = copy.deepcopy(self.registry)
+        entry = next(item for item in altered["campaigns"] if item["campaign_id"] == "NS-CI-001")
+        entry["supplemental_artifacts"] = entry["supplemental_artifacts"][:-1]
+        errors = mathforge_provider_import_errors(altered)
+        self.assertTrue(any("supplemental artifact is missing" in error for error in errors))
+        self.assertTrue(provider_gate_errors("NS-CI-001", "WP01", altered))
+
+    def test_unregistered_supplement_on_other_campaign_fails(self) -> None:
+        altered = copy.deepcopy(self.registry)
+        entry = next(item for item in altered["campaigns"] if item["campaign_id"] == "HC-001")
+        entry["supplemental_artifacts"] = copy.deepcopy(
+            next(item for item in altered["campaigns"] if item["campaign_id"] == "RH-001")["supplemental_artifacts"]
+        )
+        errors = mathforge_provider_import_errors(altered)
+        self.assertTrue(any("HC-001 has unregistered supplemental artifacts" in error for error in errors))
+
     def test_incomplete_waiver_fails_closed(self) -> None:
         altered = copy.deepcopy(self.registry)
         entry = altered["campaigns"][0]
