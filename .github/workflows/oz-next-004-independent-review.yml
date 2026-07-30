@@ -99,7 +99,7 @@ jobs:
           ln -sfn "$GITHUB_WORKSPACE/src1" /home/runner/work/fable-episode-2/zeta-math
           ln -sfn "$GITHUB_WORKSPACE/src2" /home/runner/work/fable-episode-2/zeta-math-2
           sed -i 's#/home/ubuntu/fable-episode-2#/home/runner/work/fable-episode-2#g' src2/work/z5cf/verify_compact.py
-          python3 src2/work/z5cf/verify_compact.py | tee x007-compact.log
+          python3 -c "import runpy,sys; sys.path.insert(0,'src2/work/z5cf'); runpy.run_path('src2/work/z5cf/verify_compact.py', run_name='__main__')" | tee x007-compact.log
           grep -Fq 'w3: ALL PASS n=0..34' x007-compact.log
           grep -Fq 'w5: ALL PASS n=0..34' x007-compact.log
           grep -Fq 'L_BZ[sum T w5] = 0 for n = 0..31 : ALL ZERO' x007-compact.log
