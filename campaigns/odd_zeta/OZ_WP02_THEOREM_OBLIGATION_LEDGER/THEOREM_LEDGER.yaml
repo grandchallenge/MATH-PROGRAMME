@@ -1,0 +1,180 @@
+schema_version: 1.0.0
+ledger_id: OZ-WP02-THEOREM-LEDGER
+campaign_id: OZ
+source_authority:
+  oz_next_006_merge: a2eb1c685e85961515e7c748bf732b4469f63204
+  oz_wp01_merge: 9620485c00488c8307cb0b7224640871f533c57c
+  formalization_source_commit: 3046acf948896358f420e7a655e7a4235c92028a
+  moremath_source_commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+claim_boundary: >-
+  This ledger fixes theorem statements and proof effects. It does not itself prove an
+  open theorem, complete novelty review, repair a Lean placeholder, accept sharp-12,
+  or discharge an irrationality bridge.
+allowed_dispositions:
+  - FORMALLY_REPLAYED_KNOWN_SPECIAL_CASE
+  - SOURCE_PROOF_PRESENT_INDEPENDENT_REVIEW_OPEN
+  - FINITE_EVIDENCE_ONLY
+  - FORMALLY_REPLAYED_ABSTRACT_CONDITIONAL
+  - NOT_YET_SELECTED
+  - PAPER_PROOF_PRESENT_LEAN_QUARANTINED
+  - PAPER_PROOF_PRESENT_DEPENDENCY_REVIEW_OPEN
+  - OPEN_WITH_FINITE_EVIDENCE
+  - CONDITIONAL_CHAIN_NOT_ACCEPTED
+  - SUBMITTED_OPERATOR_VERIFIED_RECONSTRUCTION_OPEN
+  - KNOWN_AND_FORMALLY_REPLAYED
+research_order:
+  - OZ-THM-T002
+  - OZ-THM-T005
+  - OZ-THM-T008
+  - OZ-THM-T009
+theorems:
+  - id: OZ-THM-T001
+    title: Finite Zudilin odd-zeta disjunction
+    exact_statement: At least one of zeta(5), zeta(7), ..., zeta(33) is irrational.
+    quantifier_scope: finite target set of odd indices 5 through 33
+    modulus: not_applicable
+    prime_scope: not_applicable
+    normalization_ids: [OZ-NRM-N007]
+    source_records: [OZ-MSS-S001, OZ-L4-T001, OZ-CER-E001]
+    evidence_effects: [FORMALLY_REPLAYED, KNOWN_SPECIAL_CASE]
+    disposition: FORMALLY_REPLAYED_KNOWN_SPECIAL_CASE
+    target_lane: null
+    novelty_status: KNOWN_SPECIAL_CASE
+    promotion_boundary: Baseline theorem only; no individual zeta(5) or zeta(7) conclusion follows.
+  - id: OZ-THM-T002
+    title: Single-digit Apéry harmonic B-row congruence
+    exact_statement: For primes p >= 5, 1 <= a < p, and 0 <= r < p, p^3 b_(ap+r) is congruent to b_a a_r modulo p.
+    quantifier_scope: unbounded single base-p digit theorem
+    modulus: p
+    prime_scope: p>=5
+    normalization_ids: [OZ-NRM-N001, OZ-NRM-N002, OZ-NRM-N003, OZ-NRM-N005, OZ-NRM-N006]
+    source_records: [OZ-MSS-S002, OZ-CON-C002, OZ-CER-E005, OZ-L4-T006]
+    evidence_effects: [SOURCE_PAPER_PROOF, REPLAYED_CANDIDATE_LEAN_DECLARATION, SOURCE_INTERNAL_REVIEW]
+    disposition: SOURCE_PROOF_PRESENT_INDEPENDENT_REVIEW_OPEN
+    target_lane: OZ-RT-APERY-BROW-001
+    novelty_status: APPARENTLY_NEW_PENDING_REVIEW
+    promotion_boundary: Independent proof review and exact manuscript-to-Lean correspondence remain required; no multi-digit modulo-p^3 theorem follows.
+  - id: OZ-THM-T003
+    title: Multi-digit Apéry modulo-p^3 law
+    exact_statement: The submitted master form p^3 b_n a_q is congruent to b_q a_n modulo p^3, q=floor(n/p), only on its recorded finite verification domain.
+    quantifier_scope: finite p and n domain
+    bounded_domain: 5 <= p <= 31 and n <= 320
+    modulus: p3
+    prime_scope: 5<=p<=31
+    normalization_ids: [OZ-NRM-N001, OZ-NRM-N003, OZ-NRM-N005]
+    source_records: [OZ-MSS-S003, OZ-CON-C003, OZ-CMP-X003]
+    evidence_effects: [EXACT_FINITE_COMPUTATION]
+    disposition: FINITE_EVIDENCE_ONLY
+    target_lane: null
+    novelty_status: NOT_ASSESSED
+    promotion_boundary: The bounded computation may not be restated as an unbounded theorem.
+  - id: OZ-THM-T004
+    title: Abstract character-twisted harmonic companion theorem
+    exact_statement: Under H1-H5, a chi-homogeneous tame harmonic companion of weight w satisfies p^w B_(ap+r) congruent to chi(p) B_a A_r modulo p.
+    quantifier_scope: abstract conditional theorem
+    modulus: p
+    prime_scope: as specified by H1-H5
+    normalization_ids: [OZ-NRM-N005]
+    source_records: [OZ-MSS-S004, OZ-CON-C004, OZ-L4-T005]
+    evidence_effects: [SOURCE_PAPER_PROOF, FORMALLY_REPLAYED]
+    disposition: FORMALLY_REPLAYED_ABSTRACT_CONDITIONAL
+    target_lane: null
+    novelty_status: APPARENTLY_NEW_PENDING_REVIEW
+    promotion_boundary: No concrete family theorem follows until H1-H5 are discharged for that family.
+  - id: OZ-THM-T005
+    title: First concrete H1-H5 application
+    exact_statement: For one selected nontrivial family, instantiate OZ-THM-T004 only after separate proofs of H1, H2, H3, H4, and H5.
+    quantifier_scope: concrete family theorem not yet selected
+    modulus: p
+    prime_scope: to be locked during family selection
+    normalization_ids: [OZ-NRM-N005]
+    source_records: [OZ-MSS-S004, OZ-CON-C004, OZ-L4-T005, OZ-CMP-X006]
+    evidence_effects: [ABSTRACT_THEOREM_AVAILABLE, FINITE_FAMILY_SWEEP]
+    disposition: NOT_YET_SELECTED
+    target_lane: OZ-RT-LB-INSTANCE-001
+    novelty_status: NOT_ASSESSED
+    promotion_boundary: One accepted instance does not establish the other submitted families.
+  - id: OZ-THM-T006
+    title: Brown-Zudilin middle-row compact identity
+    exact_statement: The submitted compact harmonic sum equals the Brown-Zudilin middle row under the locked normalization.
+    quantifier_scope: all n as stated in the source paper
+    modulus: not_applicable
+    prime_scope: not_applicable
+    normalization_ids: [OZ-NRM-N004]
+    source_records: [OZ-MSS-S007, OZ-HAR-H002, OZ-L4-T008]
+    evidence_effects: [PAPER_PROOF_PRESENT, LEAN_DOWNSTREAM_SORRYAX]
+    disposition: PAPER_PROOF_PRESENT_LEAN_QUARANTINED
+    target_lane: null
+    novelty_status: NOT_ASSESSED
+    promotion_boundary: Paper evidence and quarantined Lean evidence remain separate.
+  - id: OZ-THM-T007
+    title: Brown-Zudilin top-row Barnes-rational anchor
+    exact_statement: The Brown-Zudilin top row satisfies the submitted Barnes-rational anchor formula, separate from T3.
+    quantifier_scope: all n as stated in the source paper
+    modulus: not_applicable
+    prime_scope: not_applicable
+    normalization_ids: [OZ-NRM-N004]
+    source_records: [OZ-MSS-S008, OZ-HAR-H003]
+    evidence_effects: [PAPER_PROOF_PRESENT]
+    disposition: PAPER_PROOF_PRESENT_DEPENDENCY_REVIEW_OPEN
+    target_lane: null
+    novelty_status: NOT_ASSESSED
+    promotion_boundary: This anchor is not the compact top-row T3 identity.
+  - id: OZ-THM-T008
+    title: Brown-Zudilin compact top-row identity T3
+    exact_statement: The submitted three-term compact weight-five sum equals the Brown-Zudilin top row for every n in its intended domain.
+    quantifier_scope: unbounded identity
+    modulus: not_applicable
+    prime_scope: not_applicable
+    normalization_ids: [OZ-NRM-N004]
+    source_records: [OZ-MSS-S009, OZ-HAR-H004, OZ-CMP-X007]
+    evidence_effects: [FINITE_EXACT_SUM_CHECK, FINITE_RECURRENCE_RESIDUAL_CHECK]
+    disposition: OPEN_WITH_FINITE_EVIDENCE
+    target_lane: OZ-RT-BZ-T3-001
+    novelty_status: NOT_ASSESSED
+    promotion_boundary: Exact checks through n=34 and residual checks through n=31 are not an unbounded proof.
+  - id: OZ-THM-T009
+    title: Brown-Zudilin sharp-12 denominator law at p>=5
+    exact_statement: The source conditional chain derives the p>=5 sharp-12 denominator law only from T1-top and DEPTH.
+    quantifier_scope: unbounded conditional p>=5 theorem
+    modulus: valuation and denominator statement
+    prime_scope: p>=5
+    normalization_ids: [OZ-NRM-N004, OZ-NRM-N006]
+    source_records: [OZ-MSS-S006, OZ-CER-E004, OZ-CMP-X004, OZ-L4-T007]
+    evidence_effects: [CONDITIONAL_PAPER_CHAIN, FINITE_T1_TOP_EVIDENCE, FINITE_DEPTH_CERTIFICATE, POINT_LEAN_CERTIFICATE]
+    disposition: CONDITIONAL_CHAIN_NOT_ACCEPTED
+    target_lane: OZ-RT-SHARP12-001
+    novelty_status: NOT_ASSESSED
+    promotion_boundary: T1-top and DEPTH are blocking; p=2 and p=3 remain separate.
+  - id: OZ-THM-T010
+    title: Submitted zeta(7) recurrence operator
+    exact_statement: The submitted order-4 degree-19 operator annihilates every exact locked q_n term checked by the verifier.
+    quantifier_scope: finite available sequence terms
+    modulus: exact rational arithmetic
+    prime_scope: not_applicable
+    normalization_ids: []
+    source_records: [OZ-REC-R003, OZ-CMP-X005]
+    evidence_effects: [FINITE_SUBMITTED_OPERATOR_VERIFICATION]
+    disposition: SUBMITTED_OPERATOR_VERIFIED_RECONSTRUCTION_OPEN
+    target_lane: null
+    novelty_status: NOT_ASSESSED
+    promotion_boundary: Verification of a submitted operator is not independent reconstruction or an unbounded symbolic certificate.
+  - id: OZ-THM-T011
+    title: Classical integral Apéry-row Lucas theorem
+    exact_statement: The classical integral Apéry row satisfies its recorded Lucas congruence.
+    quantifier_scope: unbounded theorem under the classical normalization
+    modulus: p
+    prime_scope: primes in the theorem statement
+    normalization_ids: [OZ-NRM-N001, OZ-NRM-N005]
+    source_records: [OZ-CON-C001, OZ-L4-T004, OZ-LIT-B038, OZ-LIT-B039, OZ-LIT-B040]
+    evidence_effects: [KNOWN_PRIOR_ART, FORMALLY_REPLAYED]
+    disposition: KNOWN_AND_FORMALLY_REPLAYED
+    target_lane: null
+    novelty_status: KNOWN_SAME_FORM
+    promotion_boundary: Known base-row theorem only; it does not establish a harmonic companion theorem.
+next_executable_lane: OZ-RT-APERY-BROW-001
+promotion:
+  theorem_promotions: []
+  novelty_promotions: []
+  new_irrationality_conclusions: []
+  sharp12_accepted: false
