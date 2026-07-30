@@ -1,0 +1,604 @@
+/*
+ * Grand Challenge Labs shared visual language.
+ *
+ * This file is loaded after the programme and documentary styles. It owns the
+ * public shell and common components while leaving scoped documentary palettes
+ * and artifact-specific layouts intact.
+ */
+
+:root {
+  --gcl-navy-950: #061224;
+  --gcl-navy-900: #081a31;
+  --gcl-navy-800: #102d4c;
+  --gcl-navy-700: #173f66;
+  --gcl-parchment-50: #fffaf0;
+  --gcl-parchment-100: #f6edda;
+  --gcl-parchment-200: #eadbbc;
+  --gcl-gold-300: #e8c777;
+  --gcl-gold-400: #d5ad55;
+  --gcl-gold-500: #b98a34;
+  --gcl-red-500: #a43f32;
+  --gcl-focus: #f2ce75;
+  --gcl-shadow: 0 1.5rem 4rem rgba(6, 18, 36, 0.12);
+
+  --gc-paper: var(--gcl-parchment-50);
+  --gc-paper-deep: var(--gcl-parchment-100);
+  --gc-ink: var(--gcl-navy-950);
+  --gc-muted: #625d54;
+  --gc-rule: #d5c5a4;
+  --gc-signal: var(--gcl-gold-500);
+  --gc-signal-dark: #8a641e;
+  --gc-white: #fffdf8;
+
+  --md-primary-fg-color: var(--gcl-navy-950);
+  --md-primary-fg-color--light: var(--gcl-navy-800);
+  --md-primary-fg-color--dark: #030b17;
+  --md-accent-fg-color: var(--gcl-gold-400);
+  --md-typeset-a-color: #75530f;
+}
+
+[data-md-color-scheme="default"] {
+  --md-default-bg-color: var(--gcl-parchment-50);
+  --md-default-fg-color: var(--gcl-navy-950);
+  --md-default-fg-color--light: #625d54;
+  --md-code-bg-color: #efe5d2;
+  --md-footer-bg-color: var(--gcl-navy-950);
+  --md-footer-bg-color--dark: #030b17;
+}
+
+[data-md-color-scheme="slate"] {
+  --gc-paper: #0b192b;
+  --gc-paper-deep: #10243b;
+  --gc-ink: #f8efd9;
+  --gc-muted: #c4bba9;
+  --gc-rule: #38506b;
+  --gc-signal: var(--gcl-gold-300);
+  --gc-signal-dark: #f2d88f;
+  --gc-white: var(--gcl-navy-950);
+
+  --md-default-bg-color: #0b192b;
+  --md-default-fg-color: #f8efd9;
+  --md-default-fg-color--light: #c4bba9;
+  --md-typeset-a-color: #f0cf7d;
+  --md-code-bg-color: #122841;
+  --md-footer-bg-color: #030b17;
+  --md-primary-fg-color: #061224;
+  color-scheme: dark;
+}
+
+html {
+  background: var(--gcl-navy-950);
+}
+
+body {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--gc-rule) 12%, transparent) 1px, transparent 1px),
+    var(--gc-paper);
+  background-size: 5rem 100%;
+}
+
+::selection {
+  color: var(--gcl-navy-950);
+  background: var(--gcl-gold-300);
+}
+
+:where(a, button, input, summary):focus-visible {
+  outline: 3px solid var(--gcl-focus) !important;
+  outline-offset: 3px;
+}
+
+/* Public shell */
+
+.md-header {
+  min-height: 3.8rem;
+  background:
+    linear-gradient(90deg, rgba(232, 199, 119, 0.1), transparent 24rem),
+    var(--gcl-navy-950);
+  border-bottom: 1px solid rgba(232, 199, 119, 0.34);
+}
+
+.md-header__inner {
+  min-height: 3.8rem;
+}
+
+.md-header__button.md-logo {
+  margin-right: 0.55rem;
+  padding: 0.4rem;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.md-header__title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.015em;
+}
+
+.md-header__topic:first-child {
+  color: var(--gcl-parchment-50);
+}
+
+.md-search__form {
+  background: rgba(255, 250, 240, 0.07);
+  border: 1px solid rgba(232, 199, 119, 0.18);
+  border-radius: 0;
+}
+
+.md-search__form:hover,
+.md-search__form:focus-within {
+  background: rgba(255, 250, 240, 0.12);
+  border-color: rgba(232, 199, 119, 0.48);
+}
+
+.md-search__input::placeholder {
+  color: rgba(255, 250, 240, 0.72);
+}
+
+.md-tabs {
+  background: var(--gcl-navy-900);
+  border-top: 0;
+  border-bottom: 1px solid rgba(232, 199, 119, 0.22);
+}
+
+.md-tabs__link {
+  position: relative;
+  margin-top: 0;
+  padding: 0.95rem 0 0.85rem;
+  color: rgba(255, 250, 240, 0.7);
+  opacity: 1;
+}
+
+.md-tabs__link::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--gcl-gold-300);
+  content: "";
+  opacity: 0;
+  transform: scaleX(0.4);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.md-tabs__item--active .md-tabs__link,
+.md-tabs__link:hover {
+  color: var(--gcl-parchment-50);
+}
+
+.md-tabs__item--active .md-tabs__link::after,
+.md-tabs__link:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.md-sidebar {
+  background: color-mix(in srgb, var(--gc-paper) 94%, transparent);
+}
+
+.md-nav__title {
+  color: var(--gc-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 600;
+}
+
+.md-nav__link {
+  line-height: 1.35;
+}
+
+.md-nav__link--active,
+.md-nav__link:is(:focus, :hover) {
+  color: var(--gc-signal-dark) !important;
+}
+
+.md-nav__link--active {
+  font-weight: 800;
+}
+
+.md-nav__link--active::before {
+  color: var(--gc-signal);
+  content: "◆";
+  font-size: 0.48rem;
+  margin-right: 0.45rem;
+  vertical-align: 0.18em;
+}
+
+.md-top {
+  background: var(--gcl-navy-900);
+  border: 1px solid rgba(232, 199, 119, 0.4);
+  border-radius: 0;
+  box-shadow: var(--gcl-shadow);
+}
+
+/* Editorial surface */
+
+.md-main {
+  background:
+    radial-gradient(circle at 88% 8%, color-mix(in srgb, var(--gc-signal) 7%, transparent), transparent 24rem),
+    transparent;
+}
+
+.md-content__inner {
+  max-width: 57rem;
+}
+
+.md-typeset > h1:first-child::before {
+  color: var(--gc-signal-dark);
+  content: "Grand Challenge Labs · Mathematics Programme";
+}
+
+.md-typeset h1 {
+  color: var(--gc-ink);
+  font-size: clamp(2.35rem, 4.6vw, 3.65rem);
+  letter-spacing: -0.025em;
+}
+
+.md-typeset h2 {
+  position: relative;
+  padding-top: 0.45rem;
+}
+
+.md-typeset h2::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2.5rem;
+  height: 2px;
+  background: var(--gc-signal);
+  content: "";
+}
+
+.md-typeset h3 {
+  color: var(--gc-ink);
+}
+
+.md-typeset a {
+  text-decoration-color: color-mix(in srgb, var(--gc-signal) 75%, transparent);
+}
+
+.md-typeset a:hover {
+  color: var(--gc-signal-dark);
+  text-decoration-color: currentColor;
+}
+
+.md-typeset code {
+  border: 1px solid color-mix(in srgb, var(--gc-rule) 78%, transparent);
+  border-radius: 0;
+}
+
+.md-typeset pre > code {
+  border-left: 3px solid var(--gc-signal);
+}
+
+.md-typeset .admonition,
+.md-typeset details {
+  background: color-mix(in srgb, var(--gc-paper-deep) 72%, transparent);
+  border-left: 3px solid var(--gc-signal);
+}
+
+.md-typeset .admonition-title,
+.md-typeset summary {
+  background: color-mix(in srgb, var(--gc-signal) 10%, var(--gc-paper-deep));
+}
+
+.md-typeset table:not([class]) {
+  background: color-mix(in srgb, var(--gc-paper) 96%, transparent);
+  border-top: 2px solid var(--gcl-navy-900);
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--gcl-navy-900);
+  color: var(--gcl-parchment-50);
+}
+
+.md-typeset table:not([class]) tr:hover td {
+  background: color-mix(in srgb, var(--gc-signal) 6%, transparent);
+}
+
+/* GCL frontispiece */
+
+.frontispiece {
+  background:
+    linear-gradient(90deg, var(--gc-paper-deep) 0%, var(--gc-paper-deep) 40%, color-mix(in srgb, var(--gc-paper-deep) 82%, transparent) 62%, transparent 100%),
+    linear-gradient(180deg, color-mix(in srgb, var(--gcl-gold-300) 9%, transparent), transparent 45%),
+    var(--gc-paper-deep);
+  border-top: 3px solid var(--gcl-gold-400);
+  border-bottom: 1px solid var(--gc-rule);
+}
+
+.frontispiece::before {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: max(1rem, calc((100vw - 76rem) / 2));
+  width: 1px;
+  background: linear-gradient(var(--gcl-gold-400), transparent 35%);
+  content: "";
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.frontispiece__field {
+  opacity: 0.58;
+  filter: saturate(0.88) contrast(1.04);
+  mix-blend-mode: multiply;
+}
+
+[data-md-color-scheme="slate"] .frontispiece__field {
+  filter: sepia(0.15) saturate(0.82) brightness(1.65);
+  mix-blend-mode: screen;
+  opacity: 0.32;
+}
+
+.frontispiece__inner {
+  min-height: calc(100svh - 7.15rem);
+}
+
+.frontispiece__edition {
+  max-width: 46rem;
+  color: var(--gc-signal-dark);
+  border-bottom: 1px solid color-mix(in srgb, var(--gc-signal) 40%, transparent);
+  padding-bottom: 0.75rem;
+}
+
+.frontispiece__edition span:first-child {
+  position: relative;
+  padding-left: 1.3rem;
+}
+
+.frontispiece__edition span:first-child::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0.56rem;
+  height: 0.56rem;
+  background: var(--gcl-gold-400);
+  border: 2px solid var(--gcl-navy-900);
+  content: "";
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.frontispiece h1 {
+  color: var(--gcl-navy-950);
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+[data-md-color-scheme="slate"] .frontispiece h1 {
+  color: var(--gcl-parchment-50);
+}
+
+.frontispiece__thesis {
+  color: var(--gc-ink);
+}
+
+.frontispiece__summary {
+  color: var(--gc-muted);
+}
+
+.gc-button {
+  position: relative;
+  min-height: 3rem;
+  padding-inline: 1.15rem;
+  overflow: hidden;
+  border-color: var(--gcl-navy-900);
+  color: var(--gcl-navy-900) !important;
+}
+
+.gc-button::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--gcl-gold-400);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 160ms ease;
+}
+
+.gc-button:hover::after {
+  transform: scaleX(1);
+}
+
+.gc-button--primary {
+  background: var(--gcl-navy-900);
+  border-color: var(--gcl-navy-900);
+  color: var(--gcl-parchment-50) !important;
+}
+
+.gc-button--primary::after {
+  transform: scaleX(1);
+}
+
+[data-md-color-scheme="slate"] .gc-button {
+  border-color: var(--gcl-gold-300);
+  color: var(--gcl-parchment-50) !important;
+}
+
+[data-md-color-scheme="slate"] .gc-button--primary {
+  background: var(--gcl-navy-950);
+}
+
+.programme-spine {
+  background: color-mix(in srgb, var(--gc-paper) 70%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--gcl-navy-900) 45%, var(--gc-rule));
+  border-bottom: 1px solid color-mix(in srgb, var(--gcl-navy-900) 45%, var(--gc-rule));
+  backdrop-filter: blur(6px);
+}
+
+.programme-spine__stage:hover {
+  background: color-mix(in srgb, var(--gc-signal) 12%, transparent);
+}
+
+.programme-spine__number,
+.programme-spine__arrow {
+  color: var(--gc-signal-dark);
+}
+
+.programme-spine__name {
+  color: var(--gcl-navy-900);
+}
+
+[data-md-color-scheme="slate"] .programme-spine__name {
+  color: var(--gcl-parchment-50);
+}
+
+.gc-kicker {
+  color: var(--gc-signal-dark);
+}
+
+.gc-section {
+  border-bottom-color: color-mix(in srgb, var(--gc-rule) 85%, transparent);
+}
+
+.gc-section--manifesto {
+  position: relative;
+}
+
+.gc-section--manifesto::before,
+.gc-section--manifesto::after {
+  display: inline-block;
+  width: clamp(2rem, 8vw, 6rem);
+  height: 1px;
+  margin: 0 1rem 0.28rem;
+  background: var(--gc-signal);
+  content: "";
+}
+
+.progress-ladder,
+.domain-brief {
+  border-top-color: var(--gcl-navy-900);
+}
+
+.progress-ladder > div:hover {
+  box-shadow: inset 0 3px var(--gc-signal);
+}
+
+.claim-status {
+  background: color-mix(in srgb, var(--gc-paper) 86%, transparent);
+}
+
+.claim-status--certified {
+  background: var(--gcl-navy-900);
+  border-color: var(--gcl-navy-900);
+  color: var(--gcl-parchment-50);
+}
+
+.claim-status--rejected {
+  color: var(--gcl-red-500);
+  text-decoration-color: var(--gcl-red-500);
+}
+
+.entry-links a {
+  position: relative;
+  padding-right: 1rem;
+}
+
+.entry-links a::after {
+  position: absolute;
+  top: 50%;
+  right: 0.15rem;
+  color: var(--gc-signal-dark);
+  content: "↗";
+  opacity: 0;
+  transform: translate(-0.35rem, -50%);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.entry-links a:hover::after {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+/* Footer and mobile shell */
+
+.md-footer {
+  background:
+    linear-gradient(90deg, rgba(232, 199, 119, 0.08), transparent 28rem),
+    var(--gcl-navy-950);
+  border-top: 3px solid var(--gcl-gold-400);
+}
+
+.md-footer__link {
+  color: var(--gcl-parchment-50);
+}
+
+.md-footer__title {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.md-footer-meta {
+  background: #030b17;
+  border-top-color: rgba(232, 199, 119, 0.2);
+}
+
+@media (max-width: 76.234375em) {
+  .md-header__title {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 760px) {
+  body {
+    background-size: 3.5rem 100%;
+  }
+
+  .md-header {
+    min-height: 3.3rem;
+  }
+
+  .md-header__inner {
+    min-height: 3.3rem;
+  }
+
+  .frontispiece {
+    border-top-width: 2px;
+  }
+
+  .frontispiece::before {
+    left: 0.8rem;
+  }
+
+  .frontispiece__inner {
+    min-height: calc(100svh - 3.3rem);
+    padding-inline: 1.35rem;
+  }
+
+  .frontispiece__edition {
+    padding-left: 0.1rem;
+  }
+
+  .frontispiece h1 {
+    letter-spacing: -0.04em;
+  }
+
+  .gc-section--manifesto::before,
+  .gc-section--manifesto::after {
+    width: 1.5rem;
+    margin-inline: 0.45rem;
+  }
+
+  .md-nav--primary .md-nav__title {
+    color: var(--gcl-parchment-50);
+    background: var(--gcl-navy-950);
+    border-bottom: 2px solid var(--gcl-gold-400);
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .frontispiece {
+    border-top-color: #000;
+  }
+}
