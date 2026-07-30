@@ -27,9 +27,9 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - name: Validate review package
+      - name: Install Python dependencies and validate review package
         run: |
-          python3 -m pip install --disable-pip-version-check pyyaml
+          python3 -m pip install --disable-pip-version-check pyyaml sympy mpmath numpy scipy
           python3 campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/review/OZ_NEXT_004/tools/validate_review_package.py
       - name: Acquire pinned sources
         run: |
