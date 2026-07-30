@@ -2,8 +2,8 @@
   "schema_version": "1.0.0",
   "registry_id": "MATHFORGE-PROVIDER-IMPORTS",
   "provider_repository": "grandchallenge/MATHFORGE",
-  "provider_commit": "2cb624cc61cd95ec0c8cfb8429d93128972289a5",
-  "verified_at": "2026-07-28",
+  "provider_commit": "b1cad1a9ed9256b863bb0a8658f06ea715db1230",
+  "verified_at": "2026-07-30",
   "verification_method": "github_contents_api_git_blob_sha1",
   "campaigns": [
     {
@@ -20,7 +20,37 @@
       "disposition": "import",
       "coverage_mode": "native",
       "manifest_path": "provider_manifests/NS-CI-001.json",
-      "manifest_git_blob_sha1": "ed5220c31e38ba3458dc8a94a462c89c285fc22e"
+      "manifest_git_blob_sha1": "ed5220c31e38ba3458dc8a94a462c89c285fc22e",
+      "supplemental_artifacts": [
+        {
+          "artifact_id": "FC-GDM-001-REGISTRY",
+          "kind": "external_formal_source_registry",
+          "path": "governance/external_formal_sources.json",
+          "git_blob_sha1": "4ac46df340e46697452cde4bda5c257df688e68a",
+          "claim_boundary": "This registry identifies governed external formal sources. It does not establish theorem truth, status, or certification."
+        },
+        {
+          "artifact_id": "FC-GDM-001-LOCK",
+          "kind": "external_formal_source_lock",
+          "path": "formal_sources/formal_conjectures/source_lock.json",
+          "git_blob_sha1": "0ef71adea9bcdfb63da78118f7fee053ccaa73ce",
+          "claim_boundary": "This lock establishes immutable source and extractor identities only. It does not establish semantic equivalence or proof."
+        },
+        {
+          "artifact_id": "FC-GDM-001-RH-NS-SNAPSHOT",
+          "kind": "formal_statement_snapshot",
+          "path": "formal_sources/formal_conjectures/snapshots/FC-GDM-001-RH-NS-PILOT.json",
+          "git_blob_sha1": "c171b542a60956e59f4cac14fb9413bcdd7ede66",
+          "claim_boundary": "This snapshot records pinned upstream declarations. It does not establish current status, proof, or MATHCERT certification."
+        },
+        {
+          "artifact_id": "FC-GDM-001-NS-CI-CONCORDANCE",
+          "kind": "statement_concordance",
+          "path": "formal_sources/formal_conjectures/concordance/NS-CI-001.json",
+          "git_blob_sha1": "1ebe5de5194f48217dff3db02f389154af351592",
+          "claim_boundary": "This concordance records a one-way Programme-target-to-Clay-A route only. It does not establish equivalence or global regularity."
+        }
+      ]
     },
     {
       "campaign_id": "HC-001",
@@ -52,7 +82,37 @@
       "disposition": "import",
       "coverage_mode": "retrospective",
       "manifest_path": "provider_manifests/RH-001.json",
-      "manifest_git_blob_sha1": "adcbee2583e5da2b59babefbafec943c113ba4ed"
+      "manifest_git_blob_sha1": "adcbee2583e5da2b59babefbafec943c113ba4ed",
+      "supplemental_artifacts": [
+        {
+          "artifact_id": "FC-GDM-001-REGISTRY",
+          "kind": "external_formal_source_registry",
+          "path": "governance/external_formal_sources.json",
+          "git_blob_sha1": "4ac46df340e46697452cde4bda5c257df688e68a",
+          "claim_boundary": "This registry identifies governed external formal sources. It does not establish theorem truth, status, or certification."
+        },
+        {
+          "artifact_id": "FC-GDM-001-LOCK",
+          "kind": "external_formal_source_lock",
+          "path": "formal_sources/formal_conjectures/source_lock.json",
+          "git_blob_sha1": "0ef71adea9bcdfb63da78118f7fee053ccaa73ce",
+          "claim_boundary": "This lock establishes immutable source and extractor identities only. It does not establish semantic equivalence or proof."
+        },
+        {
+          "artifact_id": "FC-GDM-001-RH-NS-SNAPSHOT",
+          "kind": "formal_statement_snapshot",
+          "path": "formal_sources/formal_conjectures/snapshots/FC-GDM-001-RH-NS-PILOT.json",
+          "git_blob_sha1": "c171b542a60956e59f4cac14fb9413bcdd7ede66",
+          "claim_boundary": "This snapshot records pinned upstream declarations. It does not establish current status, proof, or MATHCERT certification."
+        },
+        {
+          "artifact_id": "FC-GDM-001-RH-CONCORDANCE",
+          "kind": "statement_concordance",
+          "path": "formal_sources/formal_conjectures/concordance/RH-001.json",
+          "git_blob_sha1": "7332c99795f810ca1d50dda8151c267855d851e7",
+          "claim_boundary": "This concordance records a human-reviewed formulation match. It does not prove RH or transfer status authority."
+        }
+      ]
     },
     {
       "campaign_id": "YM-001",

@@ -16,7 +16,7 @@ SCHEMA_PATH = ROOT / "schemas" / "mathforge_provider_import.schema.json"
 DOMAIN_REGISTRY_PATH = ROOT / "DOMAIN_REGISTRY.yaml"
 
 PROVIDER_REPOSITORY = "grandchallenge/MATHFORGE"
-EXPECTED_PROVIDER_COMMIT = "2cb624cc61cd95ec0c8cfb8429d93128972289a5"
+EXPECTED_PROVIDER_COMMIT = "b1cad1a9ed9256b863bb0a8658f06ea715db1230"
 CAMPAIGN_ID_ALIASES = {"UC": "UC-001"}
 EXPECTED_IMPORTS: dict[str, tuple[str, str, str]] = {
     "UC-001": (
@@ -61,6 +61,47 @@ EXPECTED_IMPORTS: dict[str, tuple[str, str, str]] = {
     ),
 }
 
+COMMON_FORMAL_ARTIFACTS = (
+    (
+        "FC-GDM-001-REGISTRY",
+        "external_formal_source_registry",
+        "governance/external_formal_sources.json",
+        "4ac46df340e46697452cde4bda5c257df688e68a",
+    ),
+    (
+        "FC-GDM-001-LOCK",
+        "external_formal_source_lock",
+        "formal_sources/formal_conjectures/source_lock.json",
+        "0ef71adea9bcdfb63da78118f7fee053ccaa73ce",
+    ),
+    (
+        "FC-GDM-001-RH-NS-SNAPSHOT",
+        "formal_statement_snapshot",
+        "formal_sources/formal_conjectures/snapshots/FC-GDM-001-RH-NS-PILOT.json",
+        "c171b542a60956e59f4cac14fb9413bcdd7ede66",
+    ),
+)
+EXPECTED_SUPPLEMENTAL_ARTIFACTS: dict[str, tuple[tuple[str, str, str, str], ...]] = {
+    "NS-CI-001": COMMON_FORMAL_ARTIFACTS
+    + (
+        (
+            "FC-GDM-001-NS-CI-CONCORDANCE",
+            "statement_concordance",
+            "formal_sources/formal_conjectures/concordance/NS-CI-001.json",
+            "1ebe5de5194f48217dff3db02f389154af351592",
+        ),
+    ),
+    "RH-001": COMMON_FORMAL_ARTIFACTS
+    + (
+        (
+            "FC-GDM-001-RH-CONCORDANCE",
+            "statement_concordance",
+            "formal_sources/formal_conjectures/concordance/RH-001.json",
+            "7332c99795f810ca1d50dda8151c267855d851e7",
+        ),
+    ),
+}
+
 PROVIDER_GATED_STAGES = frozenset(
     {"WP00", "WP01", "PRIOR_ART", "RESTRICTED_TARGET"}
 )
@@ -92,6 +133,67 @@ def schema_errors(instance: Any) -> list[str]:
             validator.iter_errors(instance), key=lambda item: list(item.path)
         )
     ]
+
+
+def supplemental_artifact_errors(campaign_id: str, entry: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    expected = EXPECTED_SUPPLEMENTAL_ARTIFACTS.get(campaign_id, ())
+    artifacts = entry.get("supplemental_artifacts", [])
+    if expected and not isinstance(artifacts, list):
+        return [f"MATHFORGE imports: {campaign_id} supplemental artifacts are missing"]
+    if not expected:
+        if artifacts:
+            errors.append(
+                f"MATHFORGE imports: {campaign_id} has unregistered supplemental artifacts"
+            )
+        return errors
+
+    by_id = {
+        str(artifact.get("artifact_id")): artifact
+        for artifact in artifacts
+        if isinstance(artifact, dict) and artifact.get("artifact_id")
+    }
+    ids = [
+        str(artifact.get("artifact_id"))
+        for artifact in artifacts
+        if isinstance(artifact, dict)
+    ]
+    for duplicate in sorted({artifact_id for artifact_id in ids if ids.count(artifact_id) > 1}):
+        errors.append(
+            f"MATHFORGE imports: {campaign_id} duplicate supplemental artifact {duplicate}"
+        )
+
+    expected_ids = {item[0] for item in expected}
+    actual_ids = set(by_id)
+    for missing in sorted(expected_ids - actual_ids):
+        errors.append(
+            f"MATHFORGE imports: {campaign_id} supplemental artifact is missing: {missing}"
+        )
+    for unknown in sorted(actual_ids - expected_ids):
+        errors.append(
+            f"MATHFORGE imports: {campaign_id} unregistered supplemental artifact: {unknown}"
+        )
+
+    for artifact_id, kind, path, blob_sha in expected:
+        artifact = by_id.get(artifact_id)
+        if not artifact:
+            continue
+        if artifact.get("kind") != kind:
+            errors.append(
+                f"MATHFORGE imports: {campaign_id} {artifact_id} kind drift; "
+                f"expected {kind}, found {artifact.get('kind')!r}"
+            )
+        if artifact.get("path") != path:
+            errors.append(
+                f"MATHFORGE imports: {campaign_id} {artifact_id} path drift; "
+                f"expected {path}, found {artifact.get('path')!r}"
+            )
+        if artifact.get("git_blob_sha1") != blob_sha:
+            errors.append(
+                f"MATHFORGE imports: {campaign_id} {artifact_id} identity drift; "
+                f"expected {blob_sha}, found {artifact.get('git_blob_sha1')!r}"
+            )
+    return errors
 
 
 def mathforge_provider_import_errors(
@@ -176,6 +278,7 @@ def mathforge_provider_import_errors(
                 f"found {entry.get('manifest_git_blob_sha1')!r}"
             )
         manifest_paths.append(str(entry.get("manifest_path", "")))
+        errors.extend(supplemental_artifact_errors(campaign_id, entry))
 
     duplicate_paths = sorted(
         {path for path in manifest_paths if manifest_paths.count(path) > 1}
@@ -218,6 +321,9 @@ def provider_gate_errors(
                 f"{canonical_id} {stage}: incomplete MATHFORGE import fields: "
                 f"{', '.join(missing)}"
             ]
+        supplemental = supplemental_artifact_errors(canonical_id, entry)
+        if supplemental:
+            return [f"{canonical_id} {stage}: invalid MATHFORGE supplemental import"]
         return []
     waiver = entry.get("waiver")
     if entry.get("disposition") == "waiver" and isinstance(waiver, dict):
@@ -243,7 +349,7 @@ def main() -> int:
         return 1
     print(
         "MATHFORGE provider imports are pinned: 8 campaigns, all ACTIVE domains, "
-        "exact commit, manifest paths, content identities, and promotion coverage"
+        "exact commit, manifest identities, RH/NS formal-source supplements, and promotion coverage"
     )
     return 0
 
