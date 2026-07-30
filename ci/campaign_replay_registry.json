@@ -84,13 +84,19 @@
       "id": "OZ-WP00-INTAKE-VALIDATION",
       "command": ["python3", "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/tools/validate_intake_manifest.py", "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/01_INTAKE_SOURCE_LOCK.yaml"],
       "timeout_seconds": 60,
-      "scope": "Validate the open OZ-WP00 intake manifest without promoting incomplete source locks."
+      "scope": "Validate the historical OZ-WP00 intake manifest without promoting its source-bound classifications."
     },
     {
       "id": "OZ-NEXT-004-REVIEW-VALIDATION",
       "command": ["python3", "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/review/OZ_NEXT_004/tools/validate_review_package.py"],
       "timeout_seconds": 60,
-      "scope": "Validate the complete, independent and fail-closed OZ-NEXT-004 role-review package without promoting OZ-WP00."
+      "scope": "Validate the complete, independent and fail-closed OZ-NEXT-004 role-review package without promoting mathematical claims."
+    },
+    {
+      "id": "OZ-WP01-FALSE-PROOF-ATLAS-REPLAY",
+      "command": ["python3", "campaigns/odd_zeta/OZ_WP01_FALSE_PROOF_ATLAS/replay.py"],
+      "timeout_seconds": 60,
+      "scope": "Replay the OZ false-proof atlas and reject normalization, scope, conditional-theorem, formalization, novelty, and irrationality inference inflation."
     },
     {
       "id": "PNP-WP01-REPLAY",

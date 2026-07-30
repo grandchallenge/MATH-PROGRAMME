@@ -1,0 +1,335 @@
+schema_version: 1.0.0
+atlas_id: OZ-WP01
+campaign_id: OZ
+source_authority:
+  oz_next_006_merge: a2eb1c685e85961515e7c748bf732b4469f63204
+  closure_class: QUALIFIED_COMPLETE_NO_PROMOTION
+  source_commits:
+  - 3046acf948896358f420e7a655e7a4235c92028a
+  - 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+claim_boundary: Executable epistemic controls. A rejected inference is not automatically a refutation of its mathematical conclusion.
+required_reason_codes:
+- NORMALIZATION_EQUIVALENCE_MISSING
+- MODULUS_MISMATCH
+- FINITE_TO_UNBOUNDED
+- ABSTRACT_TO_INSTANCE
+- HYPOTHESES_INCOMPLETE
+- OPERATOR_DEFINITION_NOT_ANNIHILATION
+- FINITE_MATCH_NOT_IDENTITY
+- SOURCE_INTERNAL_NOT_INDEPENDENT
+- SORRYAX_DEPENDENCY
+- POINT_CERTIFICATE_NOT_UNIFORM
+- PRIME_SCOPE_INFLATION
+- NOVELTY_AUDIT_INCOMPLETE
+- IRRATIONALITY_BRIDGES_OPEN
+- SHARP12_DEPENDENCIES_OPEN
+- RECONSTRUCTION_INPUTS_MISSING
+- FINITE_NONVANISHING_NOT_INFINITE
+cases:
+- id: OZ-FPA-P001
+  family: APERY_BROW
+  title: Bounded multi-digit computation is stated with its exact range
+  packet:
+    claim_scope: finite
+    evidence_scope: finite
+    claim_modulus: p3
+    evidence_modulus: p3
+    claim_prime_scope: 5<=p<=31
+    evidence_prime_scope: 5<=p<=31
+    novelty_claim: NOT_ASSESSED
+    irrationality_claim: false
+  expected:
+    verdict: ACCEPT
+    reasons: []
+- id: OZ-FPA-P002
+  family: THEOREM_LB
+  title: Theorem LB remains abstract and conditional on H1-H5
+  packet:
+    claim_scope: abstract_conditional
+    evidence_scope: abstract_conditional
+    required_hypotheses:
+    - H1
+    - H2
+    - H3
+    - H4
+    - H5
+    discharged_hypotheses: []
+    novelty_claim: APPARENTLY_NEW_PENDING_REVIEW
+    novelty_audit: named_set
+    irrationality_claim: false
+  expected:
+    verdict: ACCEPT
+    reasons: []
+- id: OZ-FPA-P003
+  family: BZ_COMPACT
+  title: BZRec is admitted only as an operator definition
+  packet:
+    claim_scope: operator_definition
+    evidence_scope: operator_definition
+    operator_claim: definition
+    certificate_type: operator_definition
+    formal_evidence: clean_declaration
+    irrationality_claim: false
+  expected:
+    verdict: ACCEPT
+    reasons: []
+- id: OZ-FPA-P004
+  family: SHARP12
+  title: Exact n=2 factor-12 certificate is stated only at n=2
+  packet:
+    claim_scope: point
+    evidence_scope: point
+    claim_prime_scope: not_applicable
+    evidence_prime_scope: not_applicable
+    formal_evidence: clean_declaration
+    irrationality_claim: false
+  expected:
+    verdict: ACCEPT
+    reasons: []
+- id: OZ-FPA-P005
+  family: NOVELTY
+  title: Named comparison set supports apparent novelty only
+  packet:
+    claim_scope: theorem_status
+    evidence_scope: named_literature_set
+    novelty_claim: APPARENTLY_NEW_PENDING_REVIEW
+    novelty_audit: named_set
+    irrationality_claim: false
+  expected:
+    verdict: ACCEPT
+    reasons: []
+- id: OZ-FPA-P006
+  family: ZETA_DISJUNCTION
+  title: Replayed finite Zudilin disjunction is restated exactly
+  packet:
+    claim_scope: finite_disjunction
+    evidence_scope: finite_disjunction
+    formal_evidence: clean_declaration
+    irrationality_claim: false
+  expected:
+    verdict: ACCEPT
+    reasons: []
+- id: OZ-FPA-B001
+  family: APERY_BROW
+  title: Classical B and bMin are interchanged without the factor-six map
+  packet:
+    claim_scope: unbounded
+    evidence_scope: unbounded
+    normalization_pair: B/bMin
+    normalization_equivalence: missing
+    claim_modulus: p
+    evidence_modulus: p
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - NORMALIZATION_EQUIVALENCE_MISSING
+- id: OZ-FPA-B002
+  family: APERY_BROW
+  title: Single-digit mod-p theorem is restated as a multi-digit mod-p3 theorem
+  packet:
+    claim_scope: unbounded
+    evidence_scope: unbounded
+    claim_modulus: p3
+    evidence_modulus: p
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - MODULUS_MISMATCH
+- id: OZ-FPA-B003
+  family: APERY_BROW
+  title: Finite p and n sweep is promoted to an unbounded congruence
+  packet:
+    claim_scope: unbounded
+    evidence_scope: finite
+    claim_modulus: p3
+    evidence_modulus: p3
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - FINITE_TO_UNBOUNDED
+- id: OZ-FPA-B004
+  family: THEOREM_LB
+  title: Abstract H1-H5 implication is presented as a concrete family theorem
+  packet:
+    claim_scope: concrete_instance
+    evidence_scope: abstract_conditional
+    required_hypotheses:
+    - H1
+    - H2
+    - H3
+    - H4
+    - H5
+    discharged_hypotheses: []
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - ABSTRACT_TO_INSTANCE
+    - HYPOTHESES_INCOMPLETE
+- id: OZ-FPA-B005
+  family: THEOREM_LB
+  title: Printed tame diagnostic below p2 is treated as formal H4
+  packet:
+    claim_scope: concrete_instance
+    evidence_scope: abstract_conditional
+    required_hypotheses:
+    - H1
+    - H2
+    - H3
+    - H4
+    - H5
+    discharged_hypotheses:
+    - H1
+    - H2
+    - H3
+    - H5
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - ABSTRACT_TO_INSTANCE
+    - HYPOTHESES_INCOMPLETE
+- id: OZ-FPA-B006
+  family: BZ_COMPACT
+  title: The recurrence operator definition is treated as row annihilation
+  packet:
+    claim_scope: unbounded
+    evidence_scope: operator_definition
+    operator_claim: annihilation
+    certificate_type: operator_definition
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - OPERATOR_DEFINITION_NOT_ANNIHILATION
+- id: OZ-FPA-B007
+  family: BZ_COMPACT
+  title: Finite recurrence matching is treated as proof of T3
+  packet:
+    claim_scope: unbounded
+    evidence_scope: finite
+    target_identity: T3
+    certificate_type: finite_match
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - FINITE_TO_UNBOUNDED
+    - FINITE_MATCH_NOT_IDENTITY
+- id: OZ-FPA-B008
+  family: APERY_BROW
+  title: Source-designated review is treated as independent specialist acceptance
+  packet:
+    claim_scope: unbounded
+    evidence_scope: unbounded
+    review_required: independent
+    review_origin: source_internal
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - SOURCE_INTERNAL_NOT_INDEPENDENT
+- id: OZ-FPA-B009
+  family: BZ_COMPACT
+  title: File build is treated as sorry-free theorem evidence
+  packet:
+    claim_scope: unbounded
+    evidence_scope: unbounded
+    formal_evidence: quarantined_declaration
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - SORRYAX_DEPENDENCY
+- id: OZ-FPA-B010
+  family: SHARP12
+  title: Exact n=2 factor-12 result is promoted to a uniform denominator theorem
+  packet:
+    claim_scope: uniform
+    evidence_scope: point
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - POINT_CERTIFICATE_NOT_UNIFORM
+- id: OZ-FPA-B011
+  family: SHARP12
+  title: Conditional p>=5 chain is restated for all primes
+  packet:
+    claim_scope: unbounded
+    evidence_scope: unbounded
+    claim_prime_scope: all_primes
+    evidence_prime_scope: p>=5
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - PRIME_SCOPE_INFLATION
+- id: OZ-FPA-B012
+  family: NOVELTY
+  title: Named comparison set is promoted to NEW_AFTER_AUDIT
+  packet:
+    claim_scope: theorem_status
+    evidence_scope: named_literature_set
+    novelty_claim: NEW_AFTER_AUDIT
+    novelty_audit: named_set
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - NOVELTY_AUDIT_INCOMPLETE
+- id: OZ-FPA-B013
+  family: IRRATIONALITY
+  title: A recurrence or congruence is promoted directly to irrationality
+  packet:
+    claim_scope: irrationality
+    evidence_scope: recurrence_or_congruence
+    irrationality_claim: true
+    bridges_open: 8
+  expected:
+    verdict: REJECT
+    reasons:
+    - IRRATIONALITY_BRIDGES_OPEN
+- id: OZ-FPA-B014
+  family: SHARP12
+  title: Accepted components are treated as a complete sharp-12 proof
+  packet:
+    claim_scope: uniform
+    evidence_scope: conditional_chain
+    sharp12_claim: true
+    required_dependencies:
+    - T1-top
+    - DEPTH
+    discharged_dependencies: []
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - SHARP12_DEPENDENCIES_OPEN
+- id: OZ-FPA-B015
+  family: ZETA7_OPERATOR
+  title: Verification of a submitted operator is described as independent reconstruction
+  packet:
+    claim_scope: operator_reconstruction
+    evidence_scope: finite_operator_verification
+    operator_claim: reconstruction
+    source_inputs_complete: false
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - RECONSTRUCTION_INPUTS_MISSING
+- id: OZ-FPA-B016
+  family: IRRATIONALITY
+  title: Finite nonzero values are treated as infinite nonvanishing
+  packet:
+    claim_scope: infinite_nonvanishing
+    evidence_scope: finite_nonzero
+    irrationality_claim: false
+  expected:
+    verdict: REJECT
+    reasons:
+    - FINITE_NONVANISHING_NOT_INFINITE
