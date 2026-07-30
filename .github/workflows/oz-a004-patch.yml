@@ -1,0 +1,43 @@
+name: Patch OZ A004 admission
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/oz-a004-patch.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out PR head
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Patch and push
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('.github/workflows/oz-a004-admit.yml')
+          text = path.read_text()
+          old = 'sha256sum -c /tmp/oz-a004/artifact/SOURCE_SHA256SUMS --ignore-missing'
+          new = '(cd /tmp/oz-a004/artifact && sha256sum -c SOURCE_SHA256SUMS)'
+          if old not in text:
+              raise SystemExit('expected checksum command not found')
+          path.write_text(text.replace(old, new))
+          PY
+          git rm .github/workflows/oz-a004-patch.yml
+          git add .github/workflows/oz-a004-admit.yml
+          git config user.name 'gcl-a004-bot'
+          git config user.email 'gcl-a004-bot@users.noreply.github.com'
+          git commit -m 'Fix OZ A004 archive checksum verification'
+          git push origin "HEAD:${{ github.head_ref }}"
