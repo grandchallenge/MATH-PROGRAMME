@@ -1,0 +1,52 @@
+from __future__ import annotations
+import hashlib, json, pathlib, re, yaml
+from dataclasses import dataclass
+
+ROOT=pathlib.Path('/tmp/oz-a004')
+R1=ROOT/'repo1'; R2=ROOT/'repo2'; OUT=ROOT/'out'; OUT.mkdir(exist_ok=True)
+INV1=json.loads((ROOT/'artifact/inventories/oz-src-river-formalization-001.json').read_text())
+INV2=json.loads((ROOT/'artifact/inventories/oz-src-river-moremath-001.json').read_text())
+M1={e['path']:e for e in INV1['files'] if e['entry_type']=='blob'}
+M2={e['path']:e for e in INV2['files'] if e['entry_type']=='blob'}
+
+REPO1='rain-1/odd-zeta-values-autoformalization'; C1='3046acf948896358f420e7a655e7a4235c92028a'; L1='OZ-SRC-RIVER-FORMALIZATION-001'
+REPO2='rain-1/-odd-zeta-values-moremath'; C2='968477ed7e406df6542f8da6fbe1cd6ca7273c47'; L2='OZ-SRC-RIVER-MOREMATH-001'
+
+def loc(repo, commit, path, anchor=None):
+    s=f'https://github.com/{repo}/blob/{commit}/{path}'
+    if anchor: s += f'#{anchor}'
+    return s
+
+def common(id, desc, lock, locator, sha, math, assumptions=None, scope='', deps=None, supports=None, conflicts=None, novelty='NOT_ASSESSED', review='INTAKE_CHECKED'):
+    return {
+      'id': id,
+      'exact_statement_or_description': desc,
+      'source_lock_id': lock,
+      'exact_locator': locator,
+      'content_sha256': sha,
+      'mathematical_status': math,
+      'novelty_status': novelty,
+      'review_status': review,
+      'assumptions': assumptions or [],
+      'scope': scope,
+      'dependencies': deps or [],
+      'supports': supports or [],
+      'conflicts': conflicts or [],
+    }
+
+def rec1(id, path, desc, math, **kw): return common(id,desc,L1,loc(REPO1,C1,path),M1[path]['sha256'],math,**kw)
+def rec2(id, path, desc, math, **kw): return common(id,desc,L2,loc(REPO2,C2,path),M2[path]['sha256'],math,**kw)
+
+man=[]
+man.append(rec1('OZ-MSS-S001','zeta5odd/paper.tex','At least one of zeta(5), zeta(7), ..., zeta(33) is irrational, using the s=33 elementary fallback of Zudilin and Hanson\'s d_n <= 3^n bound.','FORMALIZED',scope='Unbounded theorem over the finite target set of odd indices 5 through 33.',supports=['OZ-L4-T001','OZ-CER-E001'],assumptions=['Classical mathematics and the source-normalized real Dirichlet-series definition of zeta values.']))
+man.append(rec2('OZ-MSS-S002','papers_out/lucas2nd/sec-weight3.tex','For primes p >= 5, 1 <= a < p and 0 <= r < p, the Apéry second solution satisfies p^3 b_(ap+r) congruent to b_a a_r modulo p.','PROVED_IN_PACKAGE',scope='Single base-p digit, p >= 5.',supports=['OZ-CON-C002','OZ-CER-E005'],assumptions=['The explicit Apéry a_n and b_n normalizations in the cited manuscript.']))
+man.append(rec2('OZ-MSS-S003','papers_out/lucas2nd/sec-depth.tex','The stronger master integer form p^3 b_n a_q congruent to b_q a_n modulo p^3, q=floor(n/p), is supported only by exact finite verification in the submitted package.','COMPUTED_EXACTLY',scope='Verified for primes 5 <= p <= 31 and n <= 320; no unbounded conclusion.',supports=['OZ-CON-C003','OZ-CMP-X003'],assumptions=['Exact rational arithmetic and the submitted computation implementation.']))
+man.append(rec2('OZ-MSS-S004','papers_out/lucas2nd/sec-general.tex','Theorem LB: under hypotheses H1-H5, a chi-homogeneous tame harmonic companion of weight w satisfies p^w B_(ap+r) congruent to chi(p) B_a A_r modulo p.','PROVED_IN_PACKAGE',scope='Abstract single-digit theorem under explicit H1-H5 assumptions.',supports=['OZ-CON-C004','OZ-L4-T005'],assumptions=['H1-H5 as stated in the manuscript and Lean theorem.']))
+man.append(rec2('OZ-MSS-S005','papers_out/lucas2nd/sec-families.tex','The naive untwisted universal Lucas law is refuted for seven of the fifteen submitted sporadic pairs; the source proposes a character-twisted replacement.','REFUTED',scope='Submitted fifteen-pair experimental and theorem inventory.',supports=['OZ-CMP-X006'],conflicts=['Naive character-free master congruence for all fifteen sporadic pairs.']))
+man.append(rec2('OZ-MSS-S006','papers_out/sharp12/sharp12.tex','For the Brown-Zudilin zeta(5) family, the package states and argues the corrected sharp-12 denominator law at primes p >= 5, with remaining source-declared mechanical certificate obligations and independent replay pending.','PROVED_IN_PACKAGE',scope='p >= 5 component; p=2 and p=3 handled separately; GCL independent review pending.',supports=['OZ-CER-E004','OZ-CMP-X004'],assumptions=['Source-defined Brown-Zudilin coefficient normalization and submitted certificate chain.']))
+man.append(rec2('OZ-MSS-S007','bz_compact_weights_proofs.tex','The middle Brown-Zudilin row admits the submitted compact harmonic formula for P-hat_n.','PROVED_IN_PACKAGE',scope='All n >= 0 as stated in the source paper.',supports=['OZ-HAR-H002'],assumptions=['Barnes kernel and descent identities cited in the source package.']))
+man.append(rec2('OZ-MSS-S008','bz_compact_weights_proofs.tex','The Brown-Zudilin top row satisfies the submitted Barnes-rational anchor formula P_n = -1/2 sum T [1]W_B.','PROVED_IN_PACKAGE',scope='All n >= 0 as stated in the source paper.',supports=['OZ-HAR-H003'],assumptions=['The source-proved middle-row identity and subtraction anchor.']))
+man.append(rec2('OZ-MSS-S009','bz_compact_weights_proofs.tex','The three-term compact top-row formula P_n = sum T w_5 remains conditional on identity T3.','CONJECTURED',scope='Exact verification is bounded; the unbounded telescoping bridge T3 remains open.',supports=['OZ-HAR-H004','OZ-CMP-X007'],assumptions=['Identity T3, which is not proved in the acquired source.']))
+man.append(rec2('OZ-MSS-S010','work/LTILDE_HUNT.md','The symmetric M_0,10 route to a conclusion that one of zeta(5) or zeta(7) is irrational is recorded as a closed negative route.','REFUTED',scope='The specific symmetric family and route analyzed in the source.',supports=[],conflicts=['Promotion of this symmetric family as an irrationality proof for zeta(5) or zeta(7).']))
+
+recs=[]
