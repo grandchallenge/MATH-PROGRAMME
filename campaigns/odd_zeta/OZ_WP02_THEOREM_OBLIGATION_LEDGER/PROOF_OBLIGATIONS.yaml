@@ -1,0 +1,308 @@
+schema_version: 1.0.0
+ledger_id: OZ-WP02-PROOF-OBLIGATIONS
+campaign_id: OZ
+status_vocabulary:
+  - SATISFIED
+  - ACCEPTED_IMPORT
+  - EXCLUDED_BY_STATEMENT
+  - OPEN
+  - BLOCKED
+  - FINITE_EVIDENCE_ONLY
+  - NOT_APPLICABLE
+obligations:
+  - id: OZ-OBL-AB-001
+    theorem_id: OZ-THM-T002
+    statement: Lock the exact single-digit statement, modulus p, prime range p>=5, and digit ranges.
+    status: SATISFIED
+    evidence: OZ-WP02 theorem ledger
+    dependencies: []
+    false_proof_controls: [OZ-FPA-B002, OZ-FPA-B003, OZ-FPA-B011]
+  - id: OZ-OBL-AB-002
+    theorem_id: OZ-THM-T002
+    statement: Prove and preserve the normalization map bMin_n = 6 B_n wherever the minimal and classical companions are compared.
+    status: ACCEPTED_IMPORT
+    evidence: OZ-HAR-H001 and OZ-L4-T006 normalization audit
+    dependencies: [OZ-OBL-AB-001]
+    false_proof_controls: [OZ-FPA-B001]
+  - id: OZ-OBL-AB-003
+    theorem_id: OZ-THM-T002
+    statement: Establish the exact denominator or integrality meaning of p^3 b_n used in the congruence.
+    status: OPEN
+    evidence: source paper proof requires independent specialist replay
+    dependencies: [OZ-OBL-AB-001]
+    false_proof_controls: [OZ-FPA-B002]
+  - id: OZ-OBL-AB-004
+    theorem_id: OZ-THM-T002
+    statement: Justify the base-p digit decomposition of the defining sum, including all boundary terms.
+    status: OPEN
+    evidence: source paper proof requires independent specialist replay
+    dependencies: [OZ-OBL-AB-003]
+    false_proof_controls: [OZ-FPA-B003]
+  - id: OZ-OBL-AB-005
+    theorem_id: OZ-THM-T002
+    statement: Import the classical integral Apéry-row Lucas theorem with exact normalization and scope.
+    status: ACCEPTED_IMPORT
+    evidence: OZ-THM-T011
+    dependencies: [OZ-OBL-AB-002]
+    false_proof_controls: []
+  - id: OZ-OBL-AB-006
+    theorem_id: OZ-THM-T002
+    statement: Prove the harmonic-number congruences required for the second-row reduction.
+    status: OPEN
+    evidence: source paper proof requires independent specialist replay
+    dependencies: [OZ-OBL-AB-004, OZ-OBL-AB-005]
+    false_proof_controls: []
+  - id: OZ-OBL-AB-007
+    theorem_id: OZ-THM-T002
+    statement: Control terms whose denominators are divisible by p and show the claimed residue survives.
+    status: OPEN
+    evidence: source paper proof requires independent specialist replay
+    dependencies: [OZ-OBL-AB-006]
+    false_proof_controls: []
+  - id: OZ-OBL-AB-008
+    theorem_id: OZ-THM-T002
+    statement: Keep p=2 and p=3 outside the theorem unless separately proved.
+    status: EXCLUDED_BY_STATEMENT
+    evidence: theorem prime range p>=5
+    dependencies: [OZ-OBL-AB-001]
+    false_proof_controls: [OZ-FPA-B011]
+  - id: OZ-OBL-AB-009
+    theorem_id: OZ-THM-T002
+    statement: Assemble the residue classes and denominator controls into the exact final congruence.
+    status: OPEN
+    evidence: source paper proof requires independent specialist replay
+    dependencies: [OZ-OBL-AB-005, OZ-OBL-AB-007, OZ-OBL-AB-008]
+    false_proof_controls: [OZ-FPA-B002, OZ-FPA-B003]
+  - id: OZ-OBL-AB-010
+    theorem_id: OZ-THM-T002
+    statement: Obtain independent specialist line-by-line proof acceptance, not source-internal review.
+    status: OPEN
+    evidence: none independent
+    dependencies: [OZ-OBL-AB-009]
+    false_proof_controls: [OZ-FPA-B008]
+  - id: OZ-OBL-AB-011
+    theorem_id: OZ-THM-T002
+    statement: Replay the candidate Lean declaration and preserve its declaration-level axiom boundary.
+    status: SATISFIED
+    evidence: OZ-L4-T006 exact-head Lean replay
+    dependencies: [OZ-OBL-AB-002]
+    false_proof_controls: [OZ-FPA-B009]
+  - id: OZ-OBL-AB-012
+    theorem_id: OZ-THM-T002
+    statement: Establish exact manuscript-to-Lean semantic correspondence for all quantifiers, normalizations, and moduli.
+    status: OPEN
+    evidence: candidate correspondence only
+    dependencies: [OZ-OBL-AB-009, OZ-OBL-AB-011]
+    false_proof_controls: [OZ-FPA-B001, OZ-FPA-B002, OZ-FPA-B009]
+  - id: OZ-OBL-AB-013
+    theorem_id: OZ-THM-T002
+    statement: Complete specialist prior-art review before any NEW_AFTER_AUDIT or priority claim.
+    status: OPEN
+    evidence: named nearest-source set only
+    dependencies: [OZ-OBL-AB-010]
+    false_proof_controls: [OZ-FPA-B012]
+
+  - id: OZ-OBL-LB-001
+    theorem_id: OZ-THM-T004
+    statement: Lock the abstract H1-H5 implication and replay its Lean declaration.
+    status: SATISFIED
+    evidence: OZ-L4-T005 exact-head Lean replay
+    dependencies: []
+    false_proof_controls: [OZ-FPA-B004]
+  - id: OZ-OBL-LB-002
+    theorem_id: OZ-THM-T005
+    statement: Select one nontrivial family and lock its exact A, B, chi, weight, modulus, and prime range.
+    status: OPEN
+    evidence: no family selected
+    dependencies: [OZ-OBL-LB-001]
+    false_proof_controls: [OZ-FPA-B004]
+  - id: OZ-OBL-LB-003
+    theorem_id: OZ-THM-T005
+    statement: Discharge H1 for the selected family.
+    status: BLOCKED
+    evidence: family selection pending
+    dependencies: [OZ-OBL-LB-002]
+    false_proof_controls: [OZ-FPA-B004]
+  - id: OZ-OBL-LB-004
+    theorem_id: OZ-THM-T005
+    statement: Discharge H2 for the selected family.
+    status: BLOCKED
+    evidence: family selection pending
+    dependencies: [OZ-OBL-LB-002]
+    false_proof_controls: [OZ-FPA-B004]
+  - id: OZ-OBL-LB-005
+    theorem_id: OZ-THM-T005
+    statement: Discharge H3 for the selected family.
+    status: BLOCKED
+    evidence: family selection pending
+    dependencies: [OZ-OBL-LB-002]
+    false_proof_controls: [OZ-FPA-B004]
+  - id: OZ-OBL-LB-006
+    theorem_id: OZ-THM-T005
+    statement: Discharge formal H4 with the required argument bound, not the weaker p^2 diagnostic.
+    status: BLOCKED
+    evidence: family selection pending; existing diagnostic is insufficient
+    dependencies: [OZ-OBL-LB-002]
+    false_proof_controls: [OZ-FPA-B005]
+  - id: OZ-OBL-LB-007
+    theorem_id: OZ-THM-T005
+    statement: Discharge H5 for the selected family.
+    status: BLOCKED
+    evidence: family selection pending
+    dependencies: [OZ-OBL-LB-002]
+    false_proof_controls: [OZ-FPA-B004]
+  - id: OZ-OBL-LB-008
+    theorem_id: OZ-THM-T005
+    statement: Audit exceptional primes and family-specific denominator failures.
+    status: BLOCKED
+    evidence: family selection pending
+    dependencies: [OZ-OBL-LB-003, OZ-OBL-LB-004, OZ-OBL-LB-005, OZ-OBL-LB-006, OZ-OBL-LB-007]
+    false_proof_controls: [OZ-FPA-B011]
+  - id: OZ-OBL-LB-009
+    theorem_id: OZ-THM-T005
+    statement: Instantiate the replayed abstract Lean theorem with the five family proofs.
+    status: BLOCKED
+    evidence: H1-H5 incomplete
+    dependencies: [OZ-OBL-LB-008]
+    false_proof_controls: [OZ-FPA-B004, OZ-FPA-B005]
+  - id: OZ-OBL-LB-010
+    theorem_id: OZ-THM-T005
+    statement: Obtain independent specialist and Referee acceptance for the concrete theorem only.
+    status: BLOCKED
+    evidence: formal and paper obligations incomplete
+    dependencies: [OZ-OBL-LB-009]
+    false_proof_controls: [OZ-FPA-B008]
+
+  - id: OZ-OBL-T3-001
+    theorem_id: OZ-THM-T008
+    statement: Lock the exact T3 finite-sum identity and all endpoint conventions.
+    status: SATISFIED
+    evidence: source-normalized theorem ledger
+    dependencies: []
+    false_proof_controls: [OZ-FPA-B007]
+  - id: OZ-OBL-T3-002
+    theorem_id: OZ-THM-T008
+    statement: Preserve exact finite checks through n=34 and recurrence residual checks through n=31 as finite evidence only.
+    status: FINITE_EVIDENCE_ONLY
+    evidence: OZ-CMP-X007 normalized replay
+    dependencies: [OZ-OBL-T3-001]
+    false_proof_controls: [OZ-FPA-B007]
+  - id: OZ-OBL-T3-003
+    theorem_id: OZ-THM-T008
+    statement: Prove summand-domain, endpoint, and removable-singularity lemmas.
+    status: OPEN
+    evidence: none accepted
+    dependencies: [OZ-OBL-T3-001]
+    false_proof_controls: []
+  - id: OZ-OBL-T3-004
+    theorem_id: OZ-THM-T008
+    statement: Produce an unbounded creative-telescoping, recurrence, or equivalent symbolic certificate.
+    status: OPEN
+    evidence: zero final T1-top telescopers in the source ledger
+    dependencies: [OZ-OBL-T3-003]
+    false_proof_controls: [OZ-FPA-B006, OZ-FPA-B007]
+  - id: OZ-OBL-T3-005
+    theorem_id: OZ-THM-T008
+    statement: Implement an independent checker with producer-verifier separation.
+    status: BLOCKED
+    evidence: symbolic certificate absent
+    dependencies: [OZ-OBL-T3-004]
+    false_proof_controls: [OZ-FPA-B007]
+  - id: OZ-OBL-T3-006
+    theorem_id: OZ-THM-T008
+    statement: Prove T3 or retain an exact counterexample and close the route as refuted.
+    status: BLOCKED
+    evidence: symbolic certificate or counterexample absent
+    dependencies: [OZ-OBL-T3-005]
+    false_proof_controls: [OZ-FPA-B007]
+  - id: OZ-OBL-T3-007
+    theorem_id: OZ-THM-T008
+    statement: Repair the quarantined Lean declaration only after OZ-OBL-T3-006 has a checked proof object.
+    status: BLOCKED
+    evidence: downstream declaration depends on sorryAx
+    dependencies: [OZ-OBL-T3-006]
+    false_proof_controls: [OZ-FPA-B009]
+
+  - id: OZ-OBL-SH-001
+    theorem_id: OZ-THM-T009
+    statement: Lock the p>=5 sharp-12 conditional statement separately from p=2 and p=3.
+    status: SATISFIED
+    evidence: OZ-NEXT-005A reconciliation
+    dependencies: []
+    false_proof_controls: [OZ-FPA-B011, OZ-FPA-B014]
+  - id: OZ-OBL-SH-002
+    theorem_id: OZ-THM-T009
+    statement: Import the independently replayed Q-row recurrence certificate.
+    status: ACCEPTED_IMPORT
+    evidence: OZ-CER-E002 and Lean/Python replay
+    dependencies: [OZ-OBL-SH-001]
+    false_proof_controls: []
+  - id: OZ-OBL-SH-003
+    theorem_id: OZ-THM-T009
+    statement: Supply an unbounded proof or independently replayable certificate for T1-top.
+    status: OPEN
+    evidence: finite verification only; zero final telescopers
+    dependencies: [OZ-OBL-SH-001]
+    false_proof_controls: [OZ-FPA-B007, OZ-FPA-B014]
+  - id: OZ-OBL-SH-004
+    theorem_id: OZ-THM-T009
+    statement: Supply a promotable universal DEPTH argument rather than a finite linear-algebra certificate.
+    status: OPEN
+    evidence: finite DEPTH evidence only
+    dependencies: [OZ-OBL-SH-001]
+    false_proof_controls: [OZ-FPA-B003, OZ-FPA-B014]
+  - id: OZ-OBL-SH-005
+    theorem_id: OZ-THM-T009
+    statement: Treat p=2 and p=3 in separate theorem packets if an all-prime statement is sought.
+    status: OPEN
+    evidence: outside accepted p>=5 chain
+    dependencies: [OZ-OBL-SH-003, OZ-OBL-SH-004]
+    false_proof_controls: [OZ-FPA-B011]
+  - id: OZ-OBL-SH-006
+    theorem_id: OZ-THM-T009
+    statement: Establish producer-verifier separation and resource budgets for every new symbolic certificate.
+    status: BLOCKED
+    evidence: T1-top and DEPTH certificates absent
+    dependencies: [OZ-OBL-SH-003, OZ-OBL-SH-004]
+    false_proof_controls: [OZ-FPA-B014]
+  - id: OZ-OBL-SH-007
+    theorem_id: OZ-THM-T009
+    statement: Replay the complete dependency chain before any Referee acceptance.
+    status: BLOCKED
+    evidence: blocking nodes remain open
+    dependencies: [OZ-OBL-SH-002, OZ-OBL-SH-005, OZ-OBL-SH-006]
+    false_proof_controls: [OZ-FPA-B010, OZ-FPA-B011, OZ-FPA-B014]
+
+  - id: OZ-OBL-Z7-001
+    theorem_id: OZ-THM-T010
+    statement: Verify the submitted operator against every exact locked sequence term.
+    status: SATISFIED
+    evidence: OZ-CMP-X005 normalized replay
+    dependencies: []
+    false_proof_controls: [OZ-FPA-B015]
+  - id: OZ-OBL-Z7-002
+    theorem_id: OZ-THM-T010
+    statement: Acquire the missing reconstruction inputs or replace the reconstruction route with a complete derivation.
+    status: OPEN
+    evidence: fleet input files absent from the pinned source
+    dependencies: [OZ-OBL-Z7-001]
+    false_proof_controls: [OZ-FPA-B015]
+  - id: OZ-OBL-Z7-003
+    theorem_id: OZ-THM-T010
+    statement: Produce an independently checkable unbounded annihilation certificate before theorem use.
+    status: BLOCKED
+    evidence: reconstruction or alternative derivation absent
+    dependencies: [OZ-OBL-Z7-002]
+    false_proof_controls: [OZ-FPA-B006, OZ-FPA-B015]
+
+promotion_gates:
+  OZ-RT-APERY-BROW-001:
+    required_obligations: [OZ-OBL-AB-001, OZ-OBL-AB-002, OZ-OBL-AB-003, OZ-OBL-AB-004, OZ-OBL-AB-005, OZ-OBL-AB-006, OZ-OBL-AB-007, OZ-OBL-AB-008, OZ-OBL-AB-009, OZ-OBL-AB-010, OZ-OBL-AB-011, OZ-OBL-AB-012]
+    novelty_optional_for_theorem_acceptance: true
+  OZ-RT-LB-INSTANCE-001:
+    required_obligations: [OZ-OBL-LB-001, OZ-OBL-LB-002, OZ-OBL-LB-003, OZ-OBL-LB-004, OZ-OBL-LB-005, OZ-OBL-LB-006, OZ-OBL-LB-007, OZ-OBL-LB-008, OZ-OBL-LB-009, OZ-OBL-LB-010]
+  OZ-RT-BZ-T3-001:
+    required_obligations: [OZ-OBL-T3-001, OZ-OBL-T3-003, OZ-OBL-T3-004, OZ-OBL-T3-005, OZ-OBL-T3-006]
+  OZ-RT-SHARP12-001:
+    required_obligations: [OZ-OBL-SH-001, OZ-OBL-SH-002, OZ-OBL-SH-003, OZ-OBL-SH-004, OZ-OBL-SH-005, OZ-OBL-SH-006, OZ-OBL-SH-007]
+next_executable_lane: OZ-RT-APERY-BROW-001
