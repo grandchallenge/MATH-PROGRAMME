@@ -1,0 +1,94 @@
+name: OZ-RT-LB-INSTANCE-001 theorem review
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/oz-rt-lb-instance.yml'
+      - 'campaigns/odd_zeta/OZ_RT_LB_INSTANCE_001/**'
+      - 'tests/test_oz_rt_lb_instance.py'
+      - 'ci/campaign_replay_registry.json'
+      - 'ci/validate_workflow_coverage.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oz-rt-lb-instance-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SRC_REPO: https://github.com/rain-1/-odd-zeta-values-moremath.git
+  SRC_SHA: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+
+jobs:
+  package-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Install validation dependencies
+        run: python3 -m pip install --requirement requirements/policy.txt
+      - name: Validate Franel instance package
+        run: |
+          python3 campaigns/odd_zeta/OZ_RT_LB_INSTANCE_001/validate.py
+          python3 -m unittest tests.test_oz_rt_lb_instance
+      - name: Acquire pinned mathematical source
+        run: |
+          git clone --filter=blob:none "$SRC_REPO" source
+          git -C source checkout --detach "$SRC_SHA"
+          test "$(git -C source rev-parse HEAD)" = "$SRC_SHA"
+      - name: Verify exact source identities
+        run: |
+          set -euo pipefail
+          cat > source-identities.sha256 <<'EOF'
+          a934fd9bf2be75d130671d788269110186e4bd5183acb4e903dd7ad9d3ace742  source/papers_out/lucas2nd/sec-general.tex
+          1360dab906effc9cc50148bd002406cdd350191a0f2088af687f3c60c80d687e  source/papers_out/lucas2nd/sec-families.tex
+          549d8dafb6dbedd8ff09129a7e3e6e8bea165d4fc73886097880988f916be590  source/lean/ZetaLucas/TheoremLB.lean
+          c5d460150770cd24bc87490709e9a638c91fde411364a0e68bbd8840826bd6b3  source/lean/ZetaLucas/Instances.lean
+          EOF
+          sha256sum --check source-identities.sha256
+          grep -Fq 'theorem bFranel_lucas' source/lean/ZetaLucas/Instances.lean
+          grep -Fq 'The fifteen sporadic families' source/papers_out/lucas2nd/sec-families.tex
+
+  lean-franel-instance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Acquire pinned Lean source
+        run: |
+          git clone --filter=blob:none "$SRC_REPO" source
+          git -C source checkout --detach "$SRC_SHA"
+          test "$(git -C source rev-parse HEAD)" = "$SRC_SHA"
+      - name: Install Lean
+        run: |
+          for attempt in 1 2 3; do
+            curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y && break
+            test "$attempt" -lt 3
+            sleep $((attempt * 10))
+          done
+          test -x "$HOME/.elan/bin/lake"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Build and audit Franel declarations
+        working-directory: source/lean
+        run: |
+          set -euo pipefail
+          lake exe cache get
+          lake build ZetaLucas.Instances
+          cat > GCLFranelAudit.lean <<'EOF'
+          import ZetaLucas.Instances
+          #check ZetaLucas.theorem_LB
+          #check ZetaLucas.bFranel_lucas
+          #check ZetaLucas.bFranel_eq
+          #check ZetaLucas.Arow_SF
+          #print axioms ZetaLucas.theorem_LB
+          #print axioms ZetaLucas.bFranel_lucas
+          #print axioms ZetaLucas.bFranel_eq
+          #print axioms ZetaLucas.Arow_SF
+          EOF
+          lake env lean GCLFranelAudit.lean | tee gcl-franel-axioms.log
+          ! grep -q 'sorryAx' gcl-franel-axioms.log
+          grep -q 'ZetaLucas.bFranel_lucas' gcl-franel-axioms.log
+          grep -q 'ZetaLucas.theorem_LB' gcl-franel-axioms.log

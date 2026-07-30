@@ -1,0 +1,34 @@
+schema_version: 1.0.0
+replay_id: OZ-RT-LB-INSTANCE-001-LEAN
+source:
+  repository: rain-1/-odd-zeta-values-moremath
+  commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+  package_directory: lean
+files:
+  - path: lean/ZetaLucas/TheoremLB.lean
+    bytes: 12328
+    sha256: 549d8dafb6dbedd8ff09129a7e3e6e8bea165d4fc73886097880988f916be590
+    git_blob: 2c79d82232a3e0e2e5aa9d0174e86d28dcf4697d
+  - path: lean/ZetaLucas/Instances.lean
+    bytes: 11821
+    sha256: c5d460150770cd24bc87490709e9a638c91fde411364a0e68bbd8840826bd6b3
+    git_blob: 08c243da431f26311c40f8de70f4b7c092f069e7
+targets:
+  - declaration: ZetaLucas.theorem_LB
+    expected_sorryAx: false
+    effect: Abstract conditional theorem.
+  - declaration: ZetaLucas.bFranel_lucas
+    expected_sorryAx: false
+    effect: Complete concrete Franel instance.
+  - declaration: ZetaLucas.bFranel_eq
+    expected_sorryAx: false
+    effect: Explicit sum equals the theorem-LB Brow representation.
+  - declaration: ZetaLucas.Arow_SF
+    expected_sorryAx: false
+    effect: Explicit Franel row equals Arow for the summand SF.
+workflow: .github/workflows/oz-rt-lb-instance.yml
+required_jobs: [package-audit, lean-franel-instance]
+status: PENDING_EXACT_HEAD_CI
+claim_boundary: >-
+  Replay proves the explicit-sum instance only. It does not formalize equality with a
+  recurrence-defined Franel second solution.

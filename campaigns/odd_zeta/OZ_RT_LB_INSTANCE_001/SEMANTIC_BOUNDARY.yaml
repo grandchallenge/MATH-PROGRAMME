@@ -1,0 +1,42 @@
+schema_version: 1.0.0
+boundary_id: OZ-RT-LB-INSTANCE-001-SEMANTICS
+campaign_id: OZ
+selected_family: Franel
+formal_objects:
+  base_row:
+    paper_symbol: A(n)
+    lean_object: ZetaLucas.franel
+    definition_relation: EXACT_EXPLICIT_SUM
+  companion:
+    paper_symbol: B(n)
+    lean_object: ZetaLucas.bFranel
+    definition_relation: EXACT_EXPLICIT_HARMONIC_SUM
+  theorem:
+    lean_object: ZetaLucas.bFranel_lucas
+    statement_relation: EXACT_FOR_EXPLICIT_SUM
+statement:
+  prime_assumption: p is prime and p != 2
+  digit_assumptions: a<p and r<p
+  modulus: p
+  exponent: 2
+  character: 1
+  base_row: franel
+  companion: bFranel
+recurrence_boundary:
+  source_claim: >-
+    Numeric checks report that bFranel begins 0,1,4,208/9,1280/9 and matches the
+    classical Franel second-solution recurrence normalization.
+  formal_status: NOT_FORMALIZED
+  permitted_statement: The explicit harmonic sum satisfies the stated Lucas congruence.
+  prohibited_statement: The recurrence-defined Franel second solution satisfies the theorem, unless a separate equivalence proof is accepted.
+novelty_boundary:
+  status: NOT_ASSESSED
+  new_after_audit: false
+  priority_claim: false
+irrationality_boundary:
+  new_conclusion: false
+  reason: A concrete harmonic-companion congruence does not discharge any odd-zeta irrationality bridge.
+successor_boundary:
+  authorizes_on_merge: OZ-RT-BZ-T3-001
+  does_not_authorize: OZ-RT-SHARP12-001
+verdict: ACCEPT_EXPLICIT_SUM_CORRESPONDENCE_PENDING_LEAN_REPLAY
