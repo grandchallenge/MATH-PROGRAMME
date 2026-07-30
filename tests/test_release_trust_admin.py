@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "ci"))
 
 from release_trust_admin import (  # noqa: E402
+    RULESET_NAMES,
     ReleaseTrustError,
     normalize_ruleset,
     ruleset_errors,
@@ -34,6 +35,12 @@ class ReleaseTrustAdminTests(unittest.TestCase):
 
     def test_current_contract_passes(self) -> None:
         validate_contract(self.contract, self.schema)
+
+    def test_intellect_uses_constitutional_ruleset_name(self) -> None:
+        self.assertEqual(
+            RULESET_NAMES["grandchallenge/INTELLECT"],
+            "Constitutional profile - main",
+        )
 
     def test_repository_omission_is_rejected(self) -> None:
         contract = copy.deepcopy(self.contract)

@@ -37,7 +37,7 @@ RULESET_NAMES = {
     "grandchallenge/MATHCERT": "Cert profile - main",
     "grandchallenge/MATHSOLVE": "Solve profile - main",
     "grandchallenge/MATH-PROGRAMME": "Programme profile - main",
-    "grandchallenge/INTELLECT": "Provider profile - main",
+    "grandchallenge/INTELLECT": "Constitutional profile - main",
 }
 
 
