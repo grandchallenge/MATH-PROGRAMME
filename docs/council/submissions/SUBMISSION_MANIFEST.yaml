@@ -1,0 +1,48 @@
+schema_version: 1.0.0
+submission_id: GCL-TCS-00_GCL-POS-01_COUNCIL_REVIEW
+submission_date: '2026-07-27'
+repository: grandchallenge/MATH-PROGRAMME
+branch: governance/gcl-tcs-00-pos-01-council-review
+status: OPEN_FOR_COUNCIL_REVIEW
+requested_disposition: APPROVE_CANDIDATE_PILOT
+artifacts:
+- artifact_id: GCL-TCS-00
+  version: 0.1.0
+  authority_status: candidate
+  promotion_status: registered
+  normative_source:
+    transport: ordered_markdown_parts
+    location: council_submissions/GCL-TCS-00/parts
+    assembled_sha256: ea750b9b80b53c7d6ed755978fa4bdf59413fad93cec1db81eb3238372ce61c9
+  machine_policy:
+    location: docs/council/submissions/GCL-TCS-00/GCL-TCS-00.policy.yaml
+    sha256: 8102c0012b79698f6294b479471117a7884609fa0bf03518a940224dae7c9735
+  conformance_schema:
+    location: docs/council/submissions/GCL-TCS-00/schemas/gcl-tcs-conformance.schema.json
+    sha256: 906d5a85cb26175667590eb2a0def92db3a03871d4a5a25719328ff39523dce9
+  issued_archive:
+    filename: GCL-TCS-00_candidate-0.1.0.zip
+    sha256: c1c4c72766cb22795337d9921c5e532c8451b324224ac63e3c3f0fce1bbd9945
+- artifact_id: GCL-POS-01
+  version: 0.1.0
+  authority_status: candidate
+  promotion_status: review_ready
+  normative_source:
+    location: council_submissions/GCL-POS-01/GCL-POS-01.md
+    sha256: d8be180052a48655a02612b0d6ca883067abe93f0391c4b9c6561a3867ad4d2c
+  governance_records:
+    location: docs/council/submissions/GCL-POS-01
+  issued_archive:
+    filename: GCL-POS-01_candidate-0.1.0.zip
+    sha256: 89751685b4944704da1460d58d1556502bbbd77e7b6c81bd303d130c1fa0657b
+binary_review_copies:
+  admission: hash_locked_external_review_package
+  note: PDF and ZIP review copies are identified by hash. The GitHub Council submission carries normative text and machine-readable review records.
+required_decisions:
+- candidate pilot authority for GCL-TCS-00
+- institutional approval of GCL-POS-01 as the bounded pilot position
+not_requested:
+- GCL-TCS-00 version 1.0 promotion
+- formal ASD-STE100 compliance
+- automatic replacement of current MATH-PROGRAMME doctrine
+- empirical validation of the governance model
