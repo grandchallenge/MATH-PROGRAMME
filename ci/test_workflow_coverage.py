@@ -92,7 +92,7 @@ def main() -> int:
 
     mutable_action = dict(texts)
     mutable_action["pages.yml"] = mutable_action["pages.yml"].replace(
-        "actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b",
+        "actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d",
         "actions/configure-pages@v5",
         1,
     )
