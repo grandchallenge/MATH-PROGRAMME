@@ -1,0 +1,108 @@
+schema_version: 1.0.0
+authorization_id: OZ-NEXT-006-LANES
+campaign_id: OZ
+closure_prerequisite: OZ-NEXT-006 merged with all required checks successful
+execution_policy: >-
+  Strict ordered admission. A successor begins only after the predecessor package
+  is merged and its Referee gate is recorded.
+execution_order:
+  - OZ-WP01
+  - OZ-WP02
+  - OZ-RT-APERY-BROW-001
+  - OZ-RT-LB-INSTANCE-001
+  - OZ-RT-BZ-T3-001
+  - OZ-RT-SHARP12-001
+lanes:
+  - id: OZ-WP01
+    title: Executable false-proof atlas
+    status: AUTHORIZED_ON_OZ_NEXT_006_MERGE
+    prerequisites: [OZ-NEXT-006]
+    scope:
+      - Apéry B-row congruences
+      - H1-H5 applications
+      - Brown-Zudilin compact-form and denominator claims
+    required_outputs:
+      - minimal executable counterexamples
+      - normalization and modulus traps
+      - finite-to-unbounded inference failures
+      - conditional-theorem application failures
+      - Lean placeholder and semantic-correspondence failures
+    promotion_boundary: >-
+      Atlas entries classify failure modes. They do not prove or refute a general
+      theorem unless a complete proof object is supplied.
+  - id: OZ-WP02
+    title: Source-normalized theorem and proof-obligation ledger
+    status: AUTHORIZED_AFTER_OZ_WP01_REFEREE_ADMISSION
+    prerequisites: [OZ-WP01]
+    scope:
+      - all selected theorem statements
+      - normalization maps
+      - lemma dependency graphs
+      - certificate and formalization obligations
+    required_outputs:
+      - exact theorem statements
+      - assumption and dependency graph
+      - source and literature locators
+      - proof-state classification per lemma
+      - promotion and falsification gates
+    promotion_boundary: >-
+      The ledger records obligations and accepted imports. It does not promote unresolved nodes.
+  - id: OZ-RT-APERY-BROW-001
+    title: Independent proof and Lean formalization of the single-digit Apéry B-row congruence
+    status: AUTHORIZED_AFTER_OZ_WP02_REFEREE_ADMISSION
+    prerequisites: [OZ-WP02]
+    scope: >-
+      p^3 b_(ap+r) congruent to b_a a_r modulo p for p>=5, 1<=a<p, 0<=r<p,
+      under the locked normalization.
+    required_outputs:
+      - normalization equivalence proof
+      - paper-proof lemma dependency graph
+      - independent specialist proof review
+      - Lean declaration with axiom audit
+      - theorem-level novelty review
+    promotion_boundary: >-
+      No multi-digit mod-p^3 theorem and no irrationality consequence follows automatically.
+  - id: OZ-RT-LB-INSTANCE-001
+    title: First complete concrete H1-H5 application
+    status: AUTHORIZED_AFTER_APERY_BROW_DISPOSITION
+    prerequisites: [OZ-RT-APERY-BROW-001]
+    scope: >-
+      One selected nontrivial family with separate H1, H2, H3, H4, and H5 discharge.
+    required_outputs:
+      - family selection record
+      - five independent hypothesis certificates or proofs
+      - formal instantiation of Theorem LB
+      - adversarial exceptional-prime and tameness tests
+    promotion_boundary: >-
+      A single accepted instance does not establish all fifteen submitted families.
+  - id: OZ-RT-BZ-T3-001
+    title: Symbolic proof or refutation of compact identity T3
+    status: AUTHORIZED_AFTER_LB_INSTANCE_DISPOSITION
+    prerequisites: [OZ-RT-LB-INSTANCE-001]
+    scope: The exact compact top-row identity under the fixed Brown-Zudilin normalizations.
+    required_outputs:
+      - exact statement and endpoint analysis
+      - creative-telescoping or recurrence certificate target
+      - independent checker
+      - counterexample fixture if false
+      - Lean repair only after a symbolic certificate exists
+    promotion_boundary: >-
+      Finite agreement through n=34 and recurrence residuals through n=31 are not a proof.
+  - id: OZ-RT-SHARP12-001
+    title: Sharp-12 blocker-limited resumption
+    status: DEFERRED_UNTIL_BLOCKER_PACKETS_COMPLETE
+    prerequisites:
+      - OZ-RT-BZ-T3-001
+      - OZ-SH12-N003 blocker packet
+      - OZ-SH12-N004 blocker packet
+    scope: >-
+      Resume only the p>=5 conditional chain after exact T1-top and DEPTH obligations
+      have executable packets.
+    required_outputs:
+      - T1-top unbounded proof or certificate
+      - DEPTH universal proof or promotable certificate
+      - producer-verifier separation
+      - resource budgets and retained failures
+      - full dependency replay
+    promotion_boundary: >-
+      No work on the headline theorem may substitute finite consistency checks for either blocker.
