@@ -27,6 +27,8 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
       - name: Install Python dependencies and validate review package
         run: |
           python3 -m pip install --disable-pip-version-check pyyaml sympy mpmath numpy scipy
@@ -92,7 +94,7 @@ jobs:
           lake exe cache get
           lake build
           cat > GCLAxiomAudit.lean <<'EOF'
-          import Solution
+          import Zeta5Odd
           #print axioms Zeta5Odd.zeta_odd_irrational
           EOF
           lake env lean GCLAxiomAudit.lean | tee gcl-axioms.log
