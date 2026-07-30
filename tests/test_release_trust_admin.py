@@ -173,17 +173,18 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         uses = [step.get("uses", "") for step in job["steps"]]
         self.assertIn(
             "actions/create-github-app-token@"
-            "fee1f7d63c2ff003460e3d139729b119787bc349",
+            "bcd2ba49218906704ab6c1aa796996da409d3eb1",
             uses,
         )
         self.assertIn(
-            "actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803", uses
+            "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1", uses
         )
         self.assertIn(
-            "actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1", uses
+            "actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97", uses
         )
         self.assertIn(
-            "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02", uses
+            "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+            uses,
         )
         app_step = next(step for step in job["steps"] if step.get("id") == "app-token")
         self.assertEqual(
