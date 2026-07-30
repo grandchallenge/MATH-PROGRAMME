@@ -1,0 +1,41 @@
+schema_version: 1.0.0
+record_id: OZ-NEXT-005B
+campaign_id: OZ
+work_package_id: OZ-WP00
+runtime:
+  runner: ubuntu-24.04
+  python: system Python 3.x; exact version captured by CI
+  dependency_lock: requirements/oz-next-004.txt plus standard library; exact installed inventory captured by CI
+sources:
+  - repository: rain-1/odd-zeta-values-autoformalization
+    commit: 3046acf948896358f420e7a655e7a4235c92028a
+  - repository: rain-1/-odd-zeta-values-moremath
+    commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+lanes:
+  - id: OZ-CMP-X002
+    normalized_command: python3 worthiness/audit.py validate
+    working_directory: source-one
+    mode: BOUNDED_ANCHOR_AND_RECORD_POINT
+    expected_boundary: Anchor n=1 and n=2 values must print OK. The record-point lane may end at the workflow timeout.
+    theorem_effect: NONE
+  - id: OZ-CMP-X005
+    normalized_command: python3 verify_zeta7_operator.py --source source-one
+    working_directory: programme review tools
+    mode: EXACT_SUBMITTED_OPERATOR_VERIFICATION
+    expected_boundary: Verify the submitted order-4 degree-19 operator against every available exact q_n term.
+    reconstruction_status: NOT_REPLAYABLE
+    reconstruction_blocker: The pinned repository contains no fleet_*.txt files required by zeta7_crt_recon.py.
+    theorem_effect: FINITE_OPERATOR_CHECK_ONLY
+  - id: OZ-CMP-X007
+    normalized_command: python3 work/z5cf/verify_compact.py
+    working_directory: source-two with source-one/source-two compatibility symlinks
+    mode: EXACT_FINITE_SUM_AND_RECURRENCE_CHECK
+    expected_boundary: Compact sums pass through n=34 and recurrence residuals vanish through n=31.
+    theorem_effect: FINITE_EVIDENCE_ONLY; identity T3 remains open.
+outputs:
+  retained_as_workflow_artifact: true
+  required_files:
+    - environment.txt
+    - x002-audit.log
+    - x005-operator.log
+    - x007-compact.log
