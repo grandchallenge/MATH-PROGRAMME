@@ -1,0 +1,107 @@
+schema_version: 1.0.0
+audit_id: OZ-RT-LB-INSTANCE-001-HYPOTHESES
+campaign_id: OZ
+theorem_id: OZ-THM-T005
+selected_family: Franel
+source:
+  repository: rain-1/-odd-zeta-values-moremath
+  commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+  theorem_lb_paper:
+    path: papers_out/lucas2nd/sec-general.tex
+    bytes: 8904
+    sha256: a934fd9bf2be75d130671d788269110186e4bd5183acb4e903dd7ad9d3ace742
+    git_blob: 3784746b46ed5c342898f1ac0f148eb96b388951
+  family_paper:
+    path: papers_out/lucas2nd/sec-families.tex
+    bytes: 18442
+    sha256: 1360dab906effc9cc50148bd002406cdd350191a0f2088af687f3c60c80d687e
+    git_blob: 1c9b71446ef9eac59e238bbec67c8482a9aa7c95
+  lean_instance:
+    path: lean/ZetaLucas/Instances.lean
+    bytes: 11821
+    sha256: c5d460150770cd24bc87490709e9a638c91fde411364a0e68bbd8840826bd6b3
+    git_blob: 08c243da431f26311c40f8de70f4b7c092f069e7
+exact_target:
+  statement: >-
+    For every prime p with p != 2 and every a,r with a<p and r<p,
+    p^2 bFranel(a p+r) is congruent modulo p to bFranel(a) franel(r).
+  base_row: franel(n) = sum from k=0 to n of C(n,k)^3
+  companion: >-
+    bFranel(n) = sum from k=0 to n C(n,k)^3 times
+    [(1/4) H_k^(2) + (3/4) H_k^2 - (3/4) H_k H_(n-k)].
+  modulus: p
+  prime_scope: odd primes
+  weight: 2
+  character: trivial
+  exclusions:
+    - No statement about a recurrence-defined Franel second solution is inferred.
+    - No multi-digit theorem is inferred.
+    - No novelty or irrationality conclusion is inferred.
+hypotheses:
+  - id: H1
+    name: digit factorization of the summand
+    status: FORMALLY_DISCHARGED
+    proof: >-
+      Lucas gives C(ap+r,bp+s) congruent to C(a,b)C(r,s) modulo p.
+      Cubing preserves the congruence, yielding the required factorization for SF(n,k)=C(n,k)^3.
+    lean_witness: ZetaLucas.bFranel_lucas H1 block using choose_digits
+    adversarial_boundary: A base-row recurrence is not used as a substitute for summand factorization.
+  - id: H2
+    name: support
+    status: FORMALLY_DISCHARGED
+    proof: If k>n then C(n,k)=0, so SF(n,k)=0.
+    lean_witness: ZetaLucas.bFranel_lucas H2 block using Nat.choose_eq_zero_of_lt
+    adversarial_boundary: The finite summation range is exact.
+  - id: H3
+    name: digit splitting of letter arguments on nonzero support
+    status: FORMALLY_DISCHARGED
+    proof: >-
+      The k-letters split by Euclidean division. For the n-k letter, nonzero low-digit
+      support forces s<=r; together with b<=a this excludes a borrow and gives
+      (ap+r)-(bp+s)=(a-b)p+(r-s), with r-s<p.
+    lean_witness: ZetaLucas.bFranel_lucas H3 block and frMon_mem
+    adversarial_boundary: The no-borrow conclusion depends on nonzero S(r,s); it is not unconditional.
+  - id: H4
+    name: tameness of letter arguments
+    status: FORMALLY_DISCHARGED
+    proof: The arguments k and n-k are at most n on the support k<=n.
+    lean_witness: ZetaLucas.bFranel_lucas H4 block
+    adversarial_boundary: This is the formal argument<=n condition, not a weaker p^2 diagnostic.
+  - id: H4c
+    name: coefficient p-integrality
+    status: FORMALLY_DISCHARGED
+    proof: >-
+      The only denominator is 4. For prime p with p!=2, p does not divide 4, so
+      1/4, 3/4 and -3/4 are p-integral.
+    lean_witness: ZetaLucas.bFranel_lucas H4c block
+    adversarial_boundary: The theorem excludes p=2 and makes no all-prime claim.
+  - id: Hw
+    name: exact total harmonic weight
+    status: FORMALLY_DISCHARGED
+    proof: >-
+      H_k^(2) has degree 2, H_k H_k has degree 1+1, and H_k H_(n-k) has degree 1+1.
+      Every monomial has total weight 2.
+    lean_witness: ZetaLucas.bFranel_lucas Hw block
+    adversarial_boundary: Numeric denominator growth is not used to infer the weight.
+  - id: H5
+    name: character homogeneity
+    status: FORMALLY_DISCHARGED
+    proof: Every harmonic letter has the trivial character, so each monomial character is 1.
+    lean_witness: ZetaLucas.bFranel_lucas H5 block
+    adversarial_boundary: No quadratic-character instance is inferred.
+assembly:
+  status: FORMALLY_PROVED_PENDING_EXACT_HEAD_REPLAY
+  witness: ZetaLucas.bFranel_lucas
+  method: Instantiate the replayed abstract theorem_LB with H1, H2, H3, H4, H4c, Hw and H5, then rewrite Brow and Arow to bFranel and franel.
+wp02_obligation_disposition:
+  OZ-OBL-LB-001: SATISFIED
+  OZ-OBL-LB-002: SATISFIED_FRANEL_SELECTED
+  OZ-OBL-LB-003: SATISFIED_H1
+  OZ-OBL-LB-004: SATISFIED_H2
+  OZ-OBL-LB-005: SATISFIED_H3
+  OZ-OBL-LB-006: SATISFIED_H4_AND_H4C
+  OZ-OBL-LB-007: SATISFIED_H5_AND_WEIGHT
+  OZ-OBL-LB-008: SATISFIED_P_EQUALS_2_EXCLUDED
+  OZ-OBL-LB-009: PENDING_EXACT_HEAD_LEAN_REPLAY
+  OZ-OBL-LB-010: PENDING_EXACT_HEAD_REFEREE_GATE
+verdict: COMPLETE_HYPOTHESIS_DISCHARGE_PENDING_EXACT_HEAD_REPLAY
