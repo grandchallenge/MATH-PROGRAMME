@@ -1,36 +1,30 @@
-schema_version: 0.1.0
+schema_version: 0.2.0
 manifest_contract: oz_wp00_intake_source_lock
 manifest_id: OZ-WP00-INTAKE-SOURCE-LOCK
 campaign_id: OZ
 work_package_id: OZ-WP00
 title: Odd-zeta intake and source-lock manifest
-status: OPEN_INTAKE
+status: SOURCE_LOCKED_AUDIT_OPEN
 promotion_ready: false
-claim_boundary: >-
-  This manifest establishes stable identities and provenance requirements only.
-  It proves no odd-zeta irrationality result, validates no manuscript theorem,
-  and makes no novelty or priority claim.
+claim_boundary: This manifest content-addresses the acquired source bundle and assigns intake identities. It does
+  not independently validate a manuscript theorem, establish novelty, or promote an odd-zeta irrationality conclusion.
 completion_gate:
-  rule: >-
-    OZ-WP00 may not be marked complete until every in-scope object is bound to a
-    stable identifier, immutable source identity, exact locator, support class,
-    scope, and review status, and until every missing irrationality bridge is
-    registered and resolved to the extent required by the claimed conclusion.
-  independent_reviewer_question: >-
-    Can an independent reviewer state exactly which formulas and congruences are
-    proved, which are Lean-checked, which are only finitely verified, which are
-    genuinely new relative to the audited literature, and which missing bridges
-    prevent any irrationality conclusion?
+  rule: OZ-WP00 may not be complete until all in-scope source objects are enumerated and semantically audited, formal
+    and executable evidence is independently replayed, literature comparisons are completed, and the required irrationality
+    bridges are discharged for any promoted conclusion.
+  independent_reviewer_question: Can an independent reviewer state exactly which formulas and congruences are proved,
+    which are Lean-checked, which are only finitely verified, which are genuinely new relative to audited literature,
+    and which missing bridges prevent any irrationality conclusion?
   required_object_classes:
-    - manuscript_statement
-    - recurrence
-    - harmonic_formula
-    - congruence
-    - lean_declaration
-    - certificate
-    - computation
-    - literature_source
-    - irrationality_bridge
+  - manuscript_statement
+  - recurrence
+  - harmonic_formula
+  - congruence
+  - lean_declaration
+  - certificate
+  - computation
+  - literature_source
+  - irrationality_bridge
 stable_id_policy:
   manuscript_statement: OZ-MSS-S###
   recurrence: OZ-REC-R###
@@ -42,157 +36,1716 @@ stable_id_policy:
   literature_source: OZ-LIT-B###
   irrationality_bridge: OZ-BRG-G###
   rules:
-    - IDs are permanent after merge.
-    - Deleted or superseded objects retain tombstone records.
-    - One ID denotes one exact mathematical or evidentiary object.
-    - Equivalent normalizations receive distinct IDs linked by an equivalence edge.
-    - A manuscript label or Lean theorem name is a locator, not the stable ID.
+  - IDs are permanent after merge.
+  - Deleted or superseded objects retain tombstone records.
+  - One ID denotes one exact mathematical or evidentiary object.
+  - Equivalent normalizations receive distinct IDs linked by an equivalence edge.
+  - A manuscript label or Lean theorem name is a locator, not the stable ID.
 allowed_status:
   mathematical:
-    - NEEDS_INTAKE
-    - STATED_ONLY
-    - PROVED_IN_PACKAGE
-    - LITERATURE_DERIVED
-    - FORMALIZED
-    - COMPUTED_EXACTLY
-    - CONJECTURED
-    - REFUTED
-    - SUPERSEDED
+  - NEEDS_INTAKE
+  - STATED_ONLY
+  - PROVED_IN_PACKAGE
+  - LITERATURE_DERIVED
+  - FORMALIZED
+  - COMPUTED_EXACTLY
+  - CONJECTURED
+  - REFUTED
+  - SUPERSEDED
   novelty:
-    - NOT_ASSESSED
-    - KNOWN_SAME_FORM
-    - KNOWN_EQUIVALENT
-    - KNOWN_SPECIAL_CASE
-    - APPARENTLY_NEW_PENDING_REVIEW
-    - NEW_AFTER_AUDIT
-    - NOT_NEW
+  - NOT_ASSESSED
+  - KNOWN_SAME_FORM
+  - KNOWN_EQUIVALENT
+  - KNOWN_SPECIAL_CASE
+  - APPARENTLY_NEW_PENDING_REVIEW
+  - NEW_AFTER_AUDIT
+  - NOT_NEW
   review:
-    - UNREVIEWED
-    - INTAKE_CHECKED
-    - SEMANTICALLY_AUDITED
-    - ADVERSARIALLY_AUDITED
-    - FORMALLY_REPLAYED
-    - REFEREE_ACCEPTED
+  - UNREVIEWED
+  - INTAKE_CHECKED
+  - SEMANTICALLY_AUDITED
+  - ADVERSARIALLY_AUDITED
+  - FORMALLY_REPLAYED
+  - REFEREE_ACCEPTED
 working_registers:
   source_acquisition_docket: campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/02_SOURCE_ACQUISITION_DOCKET.md
   irrationality_bridge_register: campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/03_IRRATIONALITY_BRIDGE_REGISTER.yaml
   prior_art_seed_ledger: campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/04_PRIOR_ART_SEED_LEDGER.yaml
-  latest_acquisition_attempt: campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/05_SOURCE_ACQUISITION_ATTEMPT_2026-07-28.yaml
-  authority: WORKING_RECORDS_ONLY
-  note: >-
-    These files make the remaining intake obligations explicit. They are not
-    source locks and do not populate the governed object collections below.
-source_locks: []
+  previous_acquisition_attempt: campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/05_SOURCE_ACQUISITION_ATTEMPT_2026-07-28.yaml
+  a004_acquisition_record: campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/06_SOURCE_ACQUISITION_A004.yaml
+  a004_file_identities: campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/source_lock/A004/
+  authority: SOURCE_BOUND_INTAKE_RECORDS
+  note: A004 assigns permanent IDs at intake. Mathematical, semantic, novelty, and replay review statuses remain
+    explicit and fail closed.
+source_locks:
+- id: OZ-SRC-RIVER-FORMALIZATION-001
+  kind: deterministic_git_archive
+  version: 3046acf948896358f420e7a655e7a4235c92028a
+  locator: https://github.com/rain-1/odd-zeta-values-autoformalization/tree/3046acf948896358f420e7a655e7a4235c92028a
+  bytes: 4352844
+  sha256: fff66a629f4e45840eb425aae30ffbd4a23b64b568ea2d54c9c07258b74b2d22
+  acquired_at: '2026-07-30'
+  construction: git archive --format=tar | gzip -n -9
+  workflow_run: 30509137583
+  workflow_artifact_id: 8746466262
+  tracked_blob_count: 335
+  tracked_blob_bytes: 8193412
+  gitlink_count: 4
+  preservation_note: Exact source bytes remain available at the pinned public Git commit. The deterministic archive
+    was acquired and hashed; the Actions artifact is a temporary transport copy.
+- id: OZ-SRC-RIVER-MOREMATH-001
+  kind: deterministic_git_archive
+  version: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+  locator: https://github.com/rain-1/-odd-zeta-values-moremath/tree/968477ed7e406df6542f8da6fbe1cd6ca7273c47
+  bytes: 191999838
+  sha256: 2217a932e8ee338595d0188314aa4f079afb258fc98ea36df3e5c817a40fdd93
+  acquired_at: '2026-07-30'
+  construction: git archive --format=tar | gzip -n -9
+  workflow_run: 30509137583
+  workflow_artifact_id: 8746466262
+  tracked_blob_count: 1779
+  tracked_blob_bytes: 535648210
+  gitlink_count: 0
+  preservation_note: Exact source bytes remain available at the pinned public Git commit. The deterministic archive
+    was acquired and hashed; the Actions artifact is a temporary transport copy.
 objects:
-  manuscript_statements: []
-  recurrences: []
-  harmonic_formulas: []
-  congruences: []
-  lean_declarations: []
-  certificates: []
-  computations: []
-  literature_sources: []
+  manuscript_statements:
+  - id: OZ-MSS-S001
+    exact_statement_or_description: At least one of zeta(5), zeta(7), ..., zeta(33) is irrational, using the s=33
+      elementary fallback of Zudilin and Hanson's d_n <= 3^n bound.
+    source_lock_id: OZ-SRC-RIVER-FORMALIZATION-001
+    exact_locator: https://github.com/rain-1/odd-zeta-values-autoformalization/blob/3046acf948896358f420e7a655e7a4235c92028a/zeta5odd/paper.tex
+    content_sha256: 9622d008c6bed701e487bccfa7fbeef59ef891f5a48d1e071d4623844f79aba6
+    mathematical_status: FORMALIZED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions:
+    - Classical mathematics and the source-normalized real Dirichlet-series definition of zeta values.
+    scope: Unbounded theorem over the finite target set of odd indices 5 through 33.
+    dependencies: []
+    supports:
+    - OZ-L4-T001
+    - OZ-CER-E001
+    conflicts: []
+  - id: OZ-MSS-S002
+    exact_statement_or_description: For primes p >= 5, 1 <= a < p and 0 <= r < p, the Apéry second solution satisfies
+      p^3 b_(ap+r) congruent to b_a a_r modulo p.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers_out/lucas2nd/sec-weight3.tex
+    content_sha256: 6641f3af3804fa8b4230284ec6e6843e0071de0f10b3613b5c18ae9aa3514e3e
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions:
+    - The explicit Apéry a_n and b_n normalizations in the cited manuscript.
+    scope: Single base-p digit, p >= 5.
+    dependencies: []
+    supports:
+    - OZ-CON-C002
+    - OZ-CER-E005
+    conflicts: []
+  - id: OZ-MSS-S003
+    exact_statement_or_description: The stronger master integer form p^3 b_n a_q congruent to b_q a_n modulo p^3,
+      q=floor(n/p), is supported only by exact finite verification in the submitted package.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers_out/lucas2nd/sec-depth.tex
+    content_sha256: 36efdafd9bf0fcdcf0eacd5bbb5fbb35a380ccf7d1c3de448a03c6d10a002e75
+    mathematical_status: COMPUTED_EXACTLY
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions:
+    - Exact rational arithmetic and the submitted computation implementation.
+    scope: Verified for primes 5 <= p <= 31 and n <= 320; no unbounded conclusion.
+    dependencies: []
+    supports:
+    - OZ-CON-C003
+    - OZ-CMP-X003
+    conflicts: []
+  - id: OZ-MSS-S004
+    exact_statement_or_description: 'Theorem LB: under hypotheses H1-H5, a chi-homogeneous tame harmonic companion
+      of weight w satisfies p^w B_(ap+r) congruent to chi(p) B_a A_r modulo p.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers_out/lucas2nd/sec-general.tex
+    content_sha256: a934fd9bf2be75d130671d788269110186e4bd5183acb4e903dd7ad9d3ace742
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions:
+    - H1-H5 as stated in the manuscript and Lean theorem.
+    scope: Abstract single-digit theorem under explicit H1-H5 assumptions.
+    dependencies: []
+    supports:
+    - OZ-CON-C004
+    - OZ-L4-T005
+    conflicts: []
+  - id: OZ-MSS-S005
+    exact_statement_or_description: The naive untwisted universal Lucas law is refuted for seven of the fifteen
+      submitted sporadic pairs; the source proposes a character-twisted replacement.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers_out/lucas2nd/sec-families.tex
+    content_sha256: 1360dab906effc9cc50148bd002406cdd350191a0f2088af687f3c60c80d687e
+    mathematical_status: REFUTED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Submitted fifteen-pair experimental and theorem inventory.
+    dependencies: []
+    supports:
+    - OZ-CMP-X006
+    conflicts:
+    - Naive character-free master congruence for all fifteen sporadic pairs.
+  - id: OZ-MSS-S006
+    exact_statement_or_description: For the Brown-Zudilin zeta(5) family, the package states and argues the corrected
+      sharp-12 denominator law at primes p >= 5, with remaining source-declared mechanical certificate obligations
+      and independent replay pending.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers_out/sharp12/sharp12.tex
+    content_sha256: d2b1212e884bc9e297832e0e926aca10d3c5e90732280b3a9332f2a42d79d091
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions:
+    - Source-defined Brown-Zudilin coefficient normalization and submitted certificate chain.
+    scope: p >= 5 component; p=2 and p=3 handled separately; GCL independent review pending.
+    dependencies: []
+    supports:
+    - OZ-CER-E004
+    - OZ-CMP-X004
+    conflicts: []
+  - id: OZ-MSS-S007
+    exact_statement_or_description: The middle Brown-Zudilin row admits the submitted compact harmonic formula for
+      P-hat_n.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/bz_compact_weights_proofs.tex
+    content_sha256: 540ae1bb1f14f0a3f7a249cbd32b7b902a31d25814b7d68849f6d6af1bec4440
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions:
+    - Barnes kernel and descent identities cited in the source package.
+    scope: All n >= 0 as stated in the source paper.
+    dependencies: []
+    supports:
+    - OZ-HAR-H002
+    conflicts: []
+  - id: OZ-MSS-S008
+    exact_statement_or_description: The Brown-Zudilin top row satisfies the submitted Barnes-rational anchor formula
+      P_n = -1/2 sum T [1]W_B.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/bz_compact_weights_proofs.tex
+    content_sha256: 540ae1bb1f14f0a3f7a249cbd32b7b902a31d25814b7d68849f6d6af1bec4440
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions:
+    - The source-proved middle-row identity and subtraction anchor.
+    scope: All n >= 0 as stated in the source paper.
+    dependencies: []
+    supports:
+    - OZ-HAR-H003
+    conflicts: []
+  - id: OZ-MSS-S009
+    exact_statement_or_description: The three-term compact top-row formula P_n = sum T w_5 remains conditional on
+      identity T3.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/bz_compact_weights_proofs.tex
+    content_sha256: 540ae1bb1f14f0a3f7a249cbd32b7b902a31d25814b7d68849f6d6af1bec4440
+    mathematical_status: CONJECTURED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions:
+    - Identity T3, which is not proved in the acquired source.
+    scope: Exact verification is bounded; the unbounded telescoping bridge T3 remains open.
+    dependencies: []
+    supports:
+    - OZ-HAR-H004
+    - OZ-CMP-X007
+    conflicts: []
+  - id: OZ-MSS-S010
+    exact_statement_or_description: The symmetric M_0,10 route to a conclusion that one of zeta(5) or zeta(7) is
+      irrational is recorded as a closed negative route.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/work/LTILDE_HUNT.md
+    content_sha256: 19577f6fa5364ee9c35421e8ba977405caa96e32776cef810931c985d3ee8633
+    mathematical_status: REFUTED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: The specific symmetric family and route analyzed in the source.
+    dependencies: []
+    supports: []
+    conflicts:
+    - Promotion of this symmetric family as an irrationality proof for zeta(5) or zeta(7).
+  recurrences:
+  - id: OZ-REC-R001
+    exact_statement_or_description: 'Apéry three-term recurrence: (n+1)^3 u_(n+1) - (34n^3+51n^2+27n+5)u_n + n^3
+      u_(n-1) = 0, with source-normalized initial values.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers_out/lucas2nd/sec-minimal.tex
+    content_sha256: 201c7a31cf72ec2d5b241e709ccc0ad634954683939e0f157775b6eb466a16ae
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: n >= 1; applies to the integral and second solutions after normalization.
+    dependencies: []
+    supports:
+    - OZ-HAR-H001
+    - OZ-CON-C001
+    - OZ-CON-C002
+    conflicts: []
+  - id: OZ-REC-R002
+    exact_statement_or_description: Brown-Zudilin order-3 recurrence BZRec with exact coefficient polynomials cc0,
+      cc1, cc2 and cc3.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/lean/ZetaLucas/BZClosedForm.lean
+    content_sha256: d47336c378ececb5bcd6105688d27186f6c8abfa44227f0f037ab204320ff82f
+    mathematical_status: FORMALIZED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions:
+    - Any sequence Y claimed to satisfy BZRec must have a separate proof.
+    scope: Operator definition for sequences over Q; individual row discharge status is source-dependent.
+    dependencies: []
+    supports:
+    - OZ-L4-T008
+    conflicts: []
+  - id: OZ-REC-R003
+    exact_statement_or_description: Submitted order-4 degree-19 recurrence operator for the weight-7 leading coefficient
+      sequence, reconstructed and checked against finite exact data.
+    source_lock_id: OZ-SRC-RIVER-FORMALIZATION-001
+    exact_locator: https://github.com/rain-1/odd-zeta-values-autoformalization/blob/3046acf948896358f420e7a655e7a4235c92028a/worthiness/zeta7_q_recurrence.json
+    content_sha256: 08112fe004832564bba4b09847d1109f882c3176f4c13bf6f7bcfa98f4e28fe3
+    mathematical_status: COMPUTED_EXACTLY
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Finite source data; not an independently certified unbounded recurrence theorem.
+    dependencies: []
+    supports:
+    - OZ-CMP-X005
+    conflicts: []
+  harmonic_formulas:
+  - id: OZ-HAR-H001
+    exact_statement_or_description: Minimal Apéry companion formula b_n = sum_{k=0}^n binom(n,k)^2 binom(n+k,k)^2
+      (2 H_n^(3) - H_k^(3)), identified with the classical second solution.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers_out/lucas2nd/sec-minimal.tex
+    content_sha256: 201c7a31cf72ec2d5b241e709ccc0ad634954683939e0f157775b6eb466a16ae
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: All n >= 0 as stated in the source.
+    dependencies: []
+    supports:
+    - OZ-L4-T006
+    - OZ-CON-C002
+    conflicts: []
+  - id: OZ-HAR-H002
+    exact_statement_or_description: Compact middle-row harmonic weight for P-hat_n, using the source-defined T and
+      w-hat_3.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/bz_compact_weights_proofs.tex
+    content_sha256: 540ae1bb1f14f0a3f7a249cbd32b7b902a31d25814b7d68849f6d6af1bec4440
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: All n >= 0 as stated in Theorem middle row.
+    dependencies: []
+    supports:
+    - OZ-MSS-S007
+    conflicts: []
+  - id: OZ-HAR-H003
+    exact_statement_or_description: Barnes-rational top-row anchor P_n = -1/2 sum T [1]W_B.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/bz_compact_weights_proofs.tex
+    content_sha256: 540ae1bb1f14f0a3f7a249cbd32b7b902a31d25814b7d68849f6d6af1bec4440
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: All n >= 0 as stated in Theorem top-row anchor.
+    dependencies: []
+    supports:
+    - OZ-MSS-S008
+    conflicts: []
+  - id: OZ-HAR-H004
+    exact_statement_or_description: Three-term compact top-row weight w_5 for P_n, conditional on identity T3.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/bz_compact_weights_proofs.tex
+    content_sha256: 540ae1bb1f14f0a3f7a249cbd32b7b902a31d25814b7d68849f6d6af1bec4440
+    mathematical_status: CONJECTURED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Verified exactly for n <= 12 and modulo two 31-bit primes for n <= 80 in the source; proof open.
+    dependencies: []
+    supports:
+    - OZ-MSS-S009
+    - OZ-CMP-X007
+    conflicts: []
+  congruences:
+  - id: OZ-CON-C001
+    exact_statement_or_description: Apéry integral-row Lucas congruence a_(ap+r) congruent to a_a a_r modulo p.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers_out/lucas2nd/sec-weight3.tex
+    content_sha256: 6641f3af3804fa8b4230284ec6e6843e0071de0f10b3613b5c18ae9aa3514e3e
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Every prime p, a >= 0 and 0 <= r < p.
+    dependencies: []
+    supports:
+    - OZ-L4-T004
+    conflicts: []
+  - id: OZ-CON-C002
+    exact_statement_or_description: Apéry second-row congruence p^3 b_(ap+r) congruent to b_a a_r modulo p.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers_out/lucas2nd/sec-weight3.tex
+    content_sha256: 6641f3af3804fa8b4230284ec6e6843e0071de0f10b3613b5c18ae9aa3514e3e
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: p >= 5, 1 <= a < p, 0 <= r < p.
+    dependencies: []
+    supports:
+    - OZ-MSS-S002
+    - OZ-L4-T006
+    conflicts: []
+  - id: OZ-CON-C003
+    exact_statement_or_description: Master integer congruence p^3 b_n a_floor(n/p) congruent to b_floor(n/p) a_n
+      modulo p^3.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers_out/lucas2nd/sec-depth.tex
+    content_sha256: 36efdafd9bf0fcdcf0eacd5bbb5fbb35a380ccf7d1c3de448a03c6d10a002e75
+    mathematical_status: COMPUTED_EXACTLY
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: 'Finite verification only: 5 <= p <= 31 and n <= 320.'
+    dependencies: []
+    supports:
+    - OZ-MSS-S003
+    - OZ-CMP-X003
+    conflicts: []
+  - id: OZ-CON-C004
+    exact_statement_or_description: Character-twisted Theorem LB congruence p^w B_(ap+r) congruent to chi(p) B_a
+      A_r modulo p under H1-H5.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers_out/lucas2nd/sec-general.tex
+    content_sha256: a934fd9bf2be75d130671d788269110186e4bd5183acb4e903dd7ad9d3ace742
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Single digit and explicit H1-H5 hypotheses.
+    dependencies: []
+    supports:
+    - OZ-MSS-S004
+    - OZ-L4-T005
+    conflicts: []
+  - id: OZ-CON-C005
+    exact_statement_or_description: Brown-Zudilin Q-row Lucas-Frobenius congruence Q_(ap+r) congruent to Q_a Q_r
+      modulo p.
+    source_lock_id: OZ-SRC-RIVER-FORMALIZATION-001
+    exact_locator: https://github.com/rain-1/odd-zeta-values-autoformalization/blob/3046acf948896358f420e7a655e7a4235c92028a/cbcert/Cbcert/LucasRow.lean
+    content_sha256: 34fd92aedc62517b2a6d01e14247e077e6c9cd806d81fcb833268258cbe22d93
+    mathematical_status: FORMALIZED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Every prime p, a >= 0 and r < p.
+    dependencies: []
+    supports:
+    - OZ-L4-T002
+    conflicts: []
+  - id: OZ-CON-C006
+    exact_statement_or_description: 'Clean-interval central-binomial cancellation: p divides p_n for prime n < p
+      <= 2n with p >= 5.'
+    source_lock_id: OZ-SRC-RIVER-FORMALIZATION-001
+    exact_locator: https://github.com/rain-1/odd-zeta-values-autoformalization/blob/3046acf948896358f420e7a655e7a4235c92028a/cbcert/Cbcert/Main.lean
+    content_sha256: 3484bd6f6825ddc1ffbaaf8809acf724b621029d5856c9d42f7f1c3a3c8a3906
+    mathematical_status: FORMALIZED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: n >= 1; prime n < p <= 2n; p >= 5.
+    dependencies: []
+    supports:
+    - OZ-L4-T003
+    - OZ-CER-E002
+    conflicts: []
+  lean_declarations:
+  - id: OZ-L4-T001
+    exact_statement_or_description: Lean declaration of the zeta(5) through zeta(33) irrationality disjunction.
+    source_lock_id: OZ-SRC-RIVER-FORMALIZATION-001
+    exact_locator: https://github.com/rain-1/odd-zeta-values-autoformalization/blob/3046acf948896358f420e7a655e7a4235c92028a/zeta5odd/Zeta5Odd/Main.lean
+    content_sha256: b35fcc0430f49fcf10e7ba986a98a2c19ead530f6876a24fb0d48c7aac8671b5
+    mathematical_status: FORMALIZED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Unbounded theorem as declared.
+    dependencies: []
+    supports:
+    - OZ-MSS-S001
+    conflicts: []
+    repository: rain-1/odd-zeta-values-autoformalization
+    commit: 3046acf948896358f420e7a655e7a4235c92028a
+    file: zeta5odd/Zeta5Odd/Main.lean
+    declaration: Zeta5Odd.zeta_odd_irrational
+    imported_axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    sorry_free: true
+    build_result: SOURCE_REPORTED_GREEN; GCL independent replay pending.
+    semantic_correspondence_id: OZ-MSS-S001
+  - id: OZ-L4-T002
+    exact_statement_or_description: Lean declaration of the Q-row Lucas-Frobenius congruence.
+    source_lock_id: OZ-SRC-RIVER-FORMALIZATION-001
+    exact_locator: https://github.com/rain-1/odd-zeta-values-autoformalization/blob/3046acf948896358f420e7a655e7a4235c92028a/cbcert/Cbcert/LucasRow.lean
+    content_sha256: 34fd92aedc62517b2a6d01e14247e077e6c9cd806d81fcb833268258cbe22d93
+    mathematical_status: FORMALIZED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Every prime p and digit r < p.
+    dependencies: []
+    supports:
+    - OZ-CON-C005
+    conflicts: []
+    repository: rain-1/odd-zeta-values-autoformalization
+    commit: 3046acf948896358f420e7a655e7a4235c92028a
+    file: cbcert/Cbcert/LucasRow.lean
+    declaration: Cbcert.LucasRow.Q_lucas_frobenius
+    imported_axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    sorry_free: true
+    build_result: SOURCE_REPORTED_GREEN; GCL independent replay pending.
+    semantic_correspondence_id: OZ-CON-C005
+  - id: OZ-L4-T003
+    exact_statement_or_description: Lean declaration of clean-interval p-divisibility for p_n.
+    source_lock_id: OZ-SRC-RIVER-FORMALIZATION-001
+    exact_locator: https://github.com/rain-1/odd-zeta-values-autoformalization/blob/3046acf948896358f420e7a655e7a4235c92028a/cbcert/Cbcert/Main.lean
+    content_sha256: 3484bd6f6825ddc1ffbaaf8809acf724b621029d5856c9d42f7f1c3a3c8a3906
+    mathematical_status: FORMALIZED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Prime n < p <= 2n, p >= 5.
+    dependencies: []
+    supports:
+    - OZ-CON-C006
+    conflicts: []
+    repository: rain-1/odd-zeta-values-autoformalization
+    commit: 3046acf948896358f420e7a655e7a4235c92028a
+    file: cbcert/Cbcert/Main.lean
+    declaration: Cbcert.Main.pn_valuation
+    imported_axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    sorry_free: true
+    build_result: SOURCE_REPORTED_GREEN; GCL independent replay pending.
+    semantic_correspondence_id: OZ-CON-C006
+  - id: OZ-L4-T004
+    exact_statement_or_description: Lean declaration of the Apéry integral-row Lucas congruence.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/lean/ZetaLucas/Apery.lean
+    content_sha256: d7cb7bde2d897c4995818f16260fcac50c687b3be76446f964dd71fefc44c295
+    mathematical_status: FORMALIZED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Every prime p, a >= 0, r < p.
+    dependencies: []
+    supports:
+    - OZ-CON-C001
+    conflicts: []
+    repository: rain-1/-odd-zeta-values-moremath
+    commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+    file: lean/ZetaLucas/Apery.lean
+    declaration: ZetaLucas.apery_lucas
+    imported_axioms:
+    - NOT_INDEPENDENTLY_AUDITED
+    sorry_free: true
+    build_result: SOURCE_REPORTED_GREEN; GCL independent replay pending.
+    semantic_correspondence_id: OZ-CON-C001
+  - id: OZ-L4-T005
+    exact_statement_or_description: Lean declaration of the abstract character-twisted Theorem LB.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/lean/ZetaLucas/TheoremLB.lean
+    content_sha256: 549d8dafb6dbedd8ff09129a7e3e6e8bea165d4fc73886097880988f916be590
+    mathematical_status: FORMALIZED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Under explicit H1-H5 hypotheses.
+    dependencies: []
+    supports:
+    - OZ-CON-C004
+    conflicts: []
+    repository: rain-1/-odd-zeta-values-moremath
+    commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+    file: lean/ZetaLucas/TheoremLB.lean
+    declaration: ZetaLucas.theorem_LB
+    imported_axioms:
+    - NOT_INDEPENDENTLY_AUDITED
+    sorry_free: true
+    build_result: SOURCE_REPORTED_GREEN; GCL independent replay pending.
+    semantic_correspondence_id: OZ-CON-C004
+  - id: OZ-L4-T006
+    exact_statement_or_description: Lean minimal-Apéry instance p^3 bMin_(ap+r) congruent to bMin_a a_r modulo p.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/lean/ZetaLucas/Instances.lean
+    content_sha256: c5d460150770cd24bc87490709e9a638c91fde411364a0e68bbd8840826bd6b3
+    mathematical_status: FORMALIZED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: All primes in the minimal integral-coefficient normalization.
+    dependencies: []
+    supports:
+    - OZ-HAR-H001
+    conflicts: []
+    repository: rain-1/-odd-zeta-values-moremath
+    commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+    file: lean/ZetaLucas/Instances.lean
+    declaration: ZetaLucas.bMin_lucas
+    imported_axioms:
+    - NOT_INDEPENDENTLY_AUDITED
+    sorry_free: true
+    build_result: SOURCE_REPORTED_GREEN; GCL independent replay pending.
+    semantic_correspondence_id: OZ-HAR-H001
+  - id: OZ-L4-T007
+    exact_statement_or_description: Lean exact n=2 counterexample to the uncorrected Brown-Zudilin inclusion and
+      factor-12 clearing identity.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/lean/ZetaLucas/BZFactor12.lean
+    content_sha256: c8e3b6dbefc518028681ddc04c8200d50d0d1353e5c6578f1f1234c29909b81f
+    mathematical_status: FORMALIZED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Exact index n=2 only.
+    dependencies: []
+    supports:
+    - OZ-CER-E003
+    conflicts: []
+    repository: rain-1/-odd-zeta-values-moremath
+    commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+    file: lean/ZetaLucas/BZFactor12.lean
+    declaration: ZetaLucas.BZ_P2_not_integral; ZetaLucas.BZ_P2_factor_twelve
+    imported_axioms:
+    - NOT_INDEPENDENTLY_AUDITED
+    sorry_free: true
+    build_result: SOURCE_REPORTED_GREEN; GCL independent replay pending.
+    semantic_correspondence_id: OZ-CER-E003
+  - id: OZ-L4-T008
+    exact_statement_or_description: Lean definition of the Brown-Zudilin recurrence operator; the file also contains
+      a quarantined sorry in a separate creative-telescoping declaration.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/lean/ZetaLucas/BZClosedForm.lean
+    content_sha256: d47336c378ececb5bcd6105688d27186f6c8abfa44227f0f037ab204320ff82f
+    mathematical_status: STATED_ONLY
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Operator definition only; does not certify every row.
+    dependencies: []
+    supports:
+    - OZ-REC-R002
+    conflicts: []
+    repository: rain-1/-odd-zeta-values-moremath
+    commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+    file: lean/ZetaLucas/BZClosedForm.lean
+    declaration: ZetaLucas.BZCF.BZRec
+    imported_axioms:
+    - NOT_INDEPENDENTLY_AUDITED
+    sorry_free: false
+    build_result: SOURCE_CONTAINS_QUARANTINED_SORRY; declaration-level and dependency replay required.
+    semantic_correspondence_id: OZ-REC-R002
+  certificates:
+  - id: OZ-CER-E001
+    exact_statement_or_description: Source-supplied formalization metadata, theorem correspondence, axiom report
+      and comparator claim for Zeta5Odd.zeta_odd_irrational.
+    source_lock_id: OZ-SRC-RIVER-FORMALIZATION-001
+    exact_locator: https://github.com/rain-1/odd-zeta-values-autoformalization/blob/3046acf948896358f420e7a655e7a4235c92028a/zeta5odd/formalization.yaml
+    content_sha256: 819f91184004aa147802d7e900aa82bf880ab1bb6a1863dd86fbd94aeaabf792
+    mathematical_status: FORMALIZED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source report; independent GCL replay not yet recorded.
+    dependencies: []
+    supports:
+    - OZ-L4-T001
+    conflicts: []
+    certificate_type: LEAN_KERNEL_SOURCE_REPORT
+    producer: River / source automation
+    verifier: Lean 4 kernel and leanprover comparator, source-reported
+    replay_command: cd zeta5odd && lake build && lake env lean Solution.lean
+    bounded_domain: Unbounded theorem; replay is finite compilation of the formal proof object.
+  - id: OZ-CER-E002
+    exact_statement_or_description: Executable checker supporting the clean-interval Frobenius certificate and central-binomial
+      cancellation route.
+    source_lock_id: OZ-SRC-RIVER-FORMALIZATION-001
+    exact_locator: https://github.com/rain-1/odd-zeta-values-autoformalization/blob/3046acf948896358f420e7a655e7a4235c92028a/worthiness/cb_certificate_check.py
+    content_sha256: fdf2ead6944ff2c6610ef048ac1e035cfd43587a60675a7040e2c0276b5a8964
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Certificate route for prime n < p <= 2n; independent replay pending.
+    dependencies: []
+    supports:
+    - OZ-CON-C006
+    conflicts: []
+    certificate_type: ALGEBRAIC_FROBENIUS_CERTIFICATE
+    producer: River source package
+    verifier: cb_certificate_check.py plus Lean cbcert project
+    replay_command: python3 worthiness/cb_certificate_check.py && (cd cbcert && lake build)
+    bounded_domain: Unbounded symbolic identity with finite program replay.
+  - id: OZ-CER-E003
+    exact_statement_or_description: Exact Lean certificate that the uncorrected n=2 denominator inclusion fails
+      and that multiplication by 12 clears the displayed value.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/lean/ZetaLucas/BZFactor12.lean
+    content_sha256: c8e3b6dbefc518028681ddc04c8200d50d0d1353e5c6578f1f1234c29909b81f
+    mathematical_status: FORMALIZED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: n=2 only.
+    dependencies: []
+    supports:
+    - OZ-L4-T007
+    conflicts: []
+    certificate_type: LEAN_EXACT_RATIONAL_CERTIFICATE
+    producer: River source package
+    verifier: Lean 4 kernel
+    replay_command: cd lean && lake build
+    bounded_domain: Exact index n=2.
+  - id: OZ-CER-E004
+    exact_statement_or_description: Source certificate ledger for the sharp-12 p>=5 campaign, including named component
+      certificates and remaining mechanical runs.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/work/PHASE2_CERTS.md
+    content_sha256: 0b25acd9250875180f782461819dbcfb10d398d8f995c43c4d069ba54a9c8ee0
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source-claimed p>=5 proof chain; GCL replay and dependency audit pending.
+    dependencies: []
+    supports:
+    - OZ-MSS-S006
+    conflicts: []
+    certificate_type: MIXED_SYMBOLIC_CERTIFICATE_LEDGER
+    producer: River source package
+    verifier: Source scripts and paper-level review records
+    replay_command: See commands and component scripts named in work/PHASE2_CERTS.md
+    bounded_domain: Unbounded claim assembled from symbolic certificates; independent replay pending.
+  - id: OZ-CER-E005
+    exact_statement_or_description: Source adversarial/referee verification record for the Apéry second-solution
+      single-digit congruence proof.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/work/VERIFY_ZETA3_PROOF.md
+    content_sha256: c6ca9ce3277d32f4d7a33ecfe8536dd911f655405a112e28038d3fd7f33ebfe6
+    mathematical_status: PROVED_IN_PACKAGE
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Single-digit theorem; specialist GCL review pending.
+    dependencies: []
+    supports:
+    - OZ-MSS-S002
+    conflicts: []
+    certificate_type: HUMAN_AGENT_PROOF_REVIEW
+    producer: River source package
+    verifier: Source-designated adversarial reviewer
+    replay_command: Manual theorem-level audit against papers_out/lucas2nd/sec-weight3.tex
+    bounded_domain: Unbounded single-digit theorem.
+  computations:
+  - id: OZ-CMP-X001
+    exact_statement_or_description: Search and optimization measurement for the Brown-Zudilin worthiness exponent,
+      including the 31,710-point projective AP-family scan.
+    source_lock_id: OZ-SRC-RIVER-FORMALIZATION-001
+    exact_locator: https://github.com/rain-1/odd-zeta-values-autoformalization/blob/3046acf948896358f420e7a655e7a4235c92028a/worthiness/RESULTS.md
+    content_sha256: b65479fa2a6963b5a04cef5da975a8fbdfd7717f9c91b541e26ccfb83bf34230
+    mathematical_status: COMPUTED_EXACTLY
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Finite parameter scan and numerical optimization; no irrationality consequence.
+    dependencies: []
+    supports: []
+    conflicts: []
+    code_commit: 3046acf948896358f420e7a655e7a4235c92028a
+    environment_lock: Source Python environment not fully locked; scripts and logs acquired.
+    input_hashes:
+    - 92e7adb827d7fe6ce14900b507d37fb2c3ed35e6d136fc64347a1697ae0c4015
+    output_hashes:
+    - b65479fa2a6963b5a04cef5da975a8fbdfd7717f9c91b541e26ccfb83bf34230
+    arithmetic_mode: high-precision numerical and exact anchor checks
+    bounded_domain: 31,710 projective AP-family points plus source-declared optimization searches
+    replay_command: python3 worthiness/gamma.py
+  - id: OZ-CMP-X002
+    exact_statement_or_description: Exact-rational audit supporting the submitted sharp-12 denominator conjecture
+      across more than 200 source-certified cells.
+    source_lock_id: OZ-SRC-RIVER-FORMALIZATION-001
+    exact_locator: https://github.com/rain-1/odd-zeta-values-autoformalization/blob/3046acf948896358f420e7a655e7a4235c92028a/worthiness/CONJECTURE.md
+    content_sha256: 495f5d09fa0fb10c2ce6066f9f8249caac55bcded2da8e7d4affec80d9a6328d
+    mathematical_status: COMPUTED_EXACTLY
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Finite cells only; does not prove the uniform denominator law.
+    dependencies: []
+    supports: []
+    conflicts: []
+    code_commit: 3046acf948896358f420e7a655e7a4235c92028a
+    environment_lock: Source Python environment not fully locked; audit scripts and JSONL outputs acquired.
+    input_hashes:
+    - 1b0d424aa944efb6f42c3cd73fc0ab23d77a346d8ed62be0c0523022bba2ecb8
+    output_hashes:
+    - ea0dd81a8f481a930db7d8828bd606a682fc3d8460950f719255faf2d19a2263
+    arithmetic_mode: exact rational recovery with high-precision PSLQ checks
+    bounded_domain: More than 200 source-declared certified cells
+    replay_command: python3 worthiness/audit.py
+  - id: OZ-CMP-X003
+    exact_statement_or_description: Finite exact test of the master Apéry integer congruence p^3 b_n a_q congruent
+      to b_q a_n modulo p^3.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/work/WARMUP_ZETA3_DWORK.md
+    content_sha256: 2b919e9212eae31770a7a358577024cce3171d5ca519c965a461321680b79730
+    mathematical_status: COMPUTED_EXACTLY
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Evidence only; zero failures in declared finite range.
+    dependencies: []
+    supports: []
+    conflicts: []
+    code_commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+    environment_lock: Source environment not fully locked; scripts and paper data acquired.
+    input_hashes:
+    - d505110c7add7c66aca5a4efe808db11faeebbcb3eeddd2c47fdd847da096c26
+    output_hashes:
+    - 2b919e9212eae31770a7a358577024cce3171d5ca519c965a461321680b79730
+    arithmetic_mode: exact rational and p-adic valuation arithmetic
+    bounded_domain: Primes 5 <= p <= 31; n <= 320
+    replay_command: Replay commands require normalization from source work directory; GCL replay pending.
+  - id: OZ-CMP-X004
+    exact_statement_or_description: Adversarial exact sweep of the Brown-Zudilin phase-2 descent law and singular
+      cases.
+    source_lock_id: OZ-SRC-RIVER-FORMALIZATION-001
+    exact_locator: https://github.com/rain-1/odd-zeta-values-autoformalization/blob/3046acf948896358f420e7a655e7a4235c92028a/worthiness/PHASE2_FALSIFY.md
+    content_sha256: 1bbd85f209654a12b500842c198e3427e2159b893c95ad71ee173432b32d3eff
+    mathematical_status: COMPUTED_EXACTLY
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Finite evidence; no uniform theorem follows solely from the sweep.
+    dependencies: []
+    supports: []
+    conflicts: []
+    code_commit: 3046acf948896358f420e7a655e7a4235c92028a
+    environment_lock: Source Python environment not fully locked.
+    input_hashes:
+    - 4fe27c8a1c9841fc7699d3499d7f982d97e8be9873cb3ef7745ec07338222a5c
+    - 4bf1d3b29838ad6ff92ef1c05b5c577c0e94c39b64c440f3a3c985342b8a0bd1
+    output_hashes:
+    - d65749ec57c1b9a3f07bf24f802081a63777d03881e46647a84385273eb00025
+    arithmetic_mode: exact Fraction and modular arithmetic
+    bounded_domain: n <= 360, p <= 73, 5,989 declared descents
+    replay_command: python3 worthiness/falsify_tests.py
+  - id: OZ-CMP-X005
+    exact_statement_or_description: Finite exact data and reconstructed order-4 operator for the submitted weight-7
+      leading coefficient sequence.
+    source_lock_id: OZ-SRC-RIVER-FORMALIZATION-001
+    exact_locator: https://github.com/rain-1/odd-zeta-values-autoformalization/blob/3046acf948896358f420e7a655e7a4235c92028a/worthiness/zeta7_q_recurrence.json
+    content_sha256: 08112fe004832564bba4b09847d1109f882c3176f4c13bf6f7bcfa98f4e28fe3
+    mathematical_status: COMPUTED_EXACTLY
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Finite recurrence reconstruction and validation; unbounded annihilation proof absent.
+    dependencies: []
+    supports: []
+    conflicts: []
+    code_commit: 3046acf948896358f420e7a655e7a4235c92028a
+    environment_lock: Source Python/Sage/Mathematica environments not fully locked.
+    input_hashes:
+    - 5c1dac4b6078cb8a5fdb241250662e2f0a575921137779baedd66f2fad7ba01c
+    output_hashes:
+    - 08112fe004832564bba4b09847d1109f882c3176f4c13bf6f7bcfa98f4e28fe3
+    arithmetic_mode: exact integer, modular CRT and recurrence checking
+    bounded_domain: Source-declared q_0 through q_74 data
+    replay_command: python3 worthiness/zeta7_crt_recon.py
+  - id: OZ-CMP-X006
+    exact_statement_or_description: Finite family sweep identifying failures of the naive untwisted law and evidence
+      for character-twisted behavior.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers_out/lucas2nd/sec-families.tex
+    content_sha256: 1360dab906effc9cc50148bd002406cdd350191a0f2088af687f3c60c80d687e
+    mathematical_status: COMPUTED_EXACTLY
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Fifteen sporadic pairs over source-declared finite ranges; novelty not assessed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    code_commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+    environment_lock: Source environment not fully locked.
+    input_hashes:
+    - d505110c7add7c66aca5a4efe808db11faeebbcb3eeddd2c47fdd847da096c26
+    output_hashes:
+    - 1360dab906effc9cc50148bd002406cdd350191a0f2088af687f3c60c80d687e
+    arithmetic_mode: exact modular and valuation arithmetic
+    bounded_domain: Source-declared primes and indices, including twisted tests through n < p^3 up to 1500
+    replay_command: See source work/lbw scripts; GCL replay pending.
+  - id: OZ-CMP-X007
+    exact_statement_or_description: Finite exact and modular verification of identity T3 for the conditional compact
+      top-row formula.
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/bz_compact_weights_proofs.tex
+    content_sha256: 540ae1bb1f14f0a3f7a249cbd32b7b902a31d25814b7d68849f6d6af1bec4440
+    mathematical_status: COMPUTED_EXACTLY
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: n <= 12 exactly and n <= 80 modulo two 31-bit primes; no unbounded theorem.
+    dependencies: []
+    supports: []
+    conflicts: []
+    code_commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+    environment_lock: Source environment not fully locked.
+    input_hashes:
+    - c0332ea183e0a9085a1b15ec674547ee578434679ad567038f75d78e5f98ae27
+    output_hashes:
+    - 540ae1bb1f14f0a3f7a249cbd32b7b902a31d25814b7d68849f6d6af1bec4440
+    arithmetic_mode: exact rational and modular arithmetic
+    bounded_domain: n <= 12 exact; n <= 80 modulo two 31-bit primes
+    replay_command: See work/Z5T3_BRIDGE.md; GCL replay pending.
+  literature_sources:
+  - id: OZ-LIT-B001
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: La fonction Zeta
+      de Riemann prend une infinite de valeurs irrationnelles aux entiers impairs. Conversion mode pandoc-repaired;
+      primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/01-rivoal-2000-infinite-irrational-odd/Notecras.tex
+    content_sha256: 9be1e2ab2c8eb8d0167827e5de47465bb3e485a7328cd35f11d25f20adf1887c
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: La fonction Zeta de Riemann prend une infinite de valeurs irrationnelles aux entiers
+      impairs; Tanguy Rivoal; 2000-08-07
+    persistent_locator: https://arxiv.org/abs/math/0008051
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B002
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Irrationalite d''au
+      moins un des neuf nombres zeta(5),zeta(7),...,zeta(21). Conversion mode pandoc-flat; primary bytes, not the
+      derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/02-rivoal-2001-one-of-zeta5-to-zeta21/ZETA21.tex
+    content_sha256: bd8cbe2aa691a927df637d45a8c6d597b4a0edb27e797d51df615f898b51c3f2
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Irrationalite d'au moins un des neuf nombres zeta(5),zeta(7),...,zeta(21); Tanguy Rivoal;
+      2001-04-24
+    persistent_locator: https://arxiv.org/abs/math/0104221
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B003
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Irrationality of
+      values of zeta-function. Conversion mode latex-verbatim; primary bytes, not the derivative conversion, are
+      content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/03-zudilin-2001-irrationality-of-zeta-values/zeta_xxx.tex
+    content_sha256: 8b05cc207b2e8ee446f3bf2ec17d69fbd36266141696372e9b9d9af19ec0a2a8
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Irrationality of values of zeta-function; Wadim Zudilin; 2001-04-26
+    persistent_locator: https://arxiv.org/abs/math/0104249
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B004
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Arithmetic of linear
+      forms involving odd zeta values. Conversion mode pandoc-flat; primary bytes, not the derivative conversion,
+      are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/04-zudilin-2002-arithmetic-of-linear-forms/rvbr.tex
+    content_sha256: 1b97f16394d28dc7ffea55801e12097939d8084a13ad6973cbd5887985ea416b
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Arithmetic of linear forms involving odd zeta values; Wadim Zudilin; 2002-06-18
+    persistent_locator: https://arxiv.org/abs/math/0206176
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B005
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Irrationalité de
+      valeurs de zêta (d''après Apéry, Rivoal, ...). Conversion mode pandoc-flat; primary bytes, not the derivative
+      conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/05-fischler-2003-bourbaki-survey/exposearxiv.tex
+    content_sha256: 1df37532a01e48d725ef981524e51a6be19a4ef8c43eb85b1c6803fa6c7138b3
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Irrationalité de valeurs de zêta (d'après Apéry, Rivoal, ...); Stéphane Fischler; 2003-03-05
+    persistent_locator: https://arxiv.org/abs/math/0303066
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B006
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: One of the Odd Zeta
+      Values from $ζ(5)$ to $ζ(25)$ Is Irrational. By Elementary Means. Conversion mode pandoc-flat; primary bytes,
+      not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/06-zudilin-2018-zeta5-to-zeta25-elementary/sigma18-028.tex
+    content_sha256: 59ffb003d812072f43cf2abee52137962508e8358095447c60c8aeb7b0a797a4
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: One of the Odd Zeta Values from $ζ(5)$ to $ζ(25)$ Is Irrational. By Elementary Means;
+      Wadim Zudilin; 2018-01-30
+    persistent_locator: https://arxiv.org/abs/1801.09895
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B007
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Hypergeometry inspired
+      by irrationality questions. Conversion mode pandoc-repaired; primary bytes, not the derivative conversion,
+      are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/07-krattenthaler-zudilin-2018-hypergeometry-irrationality/catagain2018-08-05.tex
+    content_sha256: 368a9c75d72802d688a0baa14b99894ce682dd0f7e97b05eb1c3cbb7dd4fee5d
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Hypergeometry inspired by irrationality questions; Christian Krattenthaler, Wadim Zudilin;
+      2018-02-24
+    persistent_locator: https://arxiv.org/abs/1802.08856
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B008
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Infinitely many odd
+      zeta values are irrational. By elementary means. Conversion mode pandoc-flat; primary bytes, not the derivative
+      conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/08-sprang-2018-infinitely-many-elementary/irrational_zeta.tex
+    content_sha256: 4a365459aabe06007a3d4bdb5d893d2c3175921b011a23db805ea46f1ff5a937
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Infinitely many odd zeta values are irrational. By elementary means; Johannes Sprang;
+      2018-02-26
+    persistent_locator: https://arxiv.org/abs/1802.09410
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B009
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: A note on odd zeta
+      values. Conversion mode pandoc-flat; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/09-rivoal-zudilin-2018-note-on-odd-zeta/zetanote.tex
+    content_sha256: b1ceca58190f333a760fc046bb926406bfb97e3cf6c462e335cde80cffc7542c
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: A note on odd zeta values; Tanguy Rivoal, Wadim Zudilin; 2018-03-08
+    persistent_locator: https://arxiv.org/abs/1803.03160
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B010
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Many odd zeta values
+      are irrational. Conversion mode pandoc-flat; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/10-fischler-sprang-zudilin-2018-many-odd-zeta/zeta11w.tex
+    content_sha256: 8682257f5129039a9e9f9b9c14f38adc024d2d4bc1a94c6f6a2d9256b3dc7bdc
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Many odd zeta values are irrational; Stéphane Fischler, Johannes Sprang, Wadim Zudilin;
+      2018-03-23
+    persistent_locator: https://arxiv.org/abs/1803.08905
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B011
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Some hypergeometric
+      integrals for linear forms in zeta values. Conversion mode pandoc-flat; primary bytes, not the derivative
+      conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/11-zudilin-2018-hypergeometric-integrals-linear-forms/hyperint03.tex
+    content_sha256: 13d7338d17862050dc95a0cd99aaeff1dfb946b7feb8e60bf41aa506d553815b
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Some hypergeometric integrals for linear forms in zeta values; Wadim Zudilin; 2018-04-11
+    persistent_locator: https://arxiv.org/abs/1804.04129
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B012
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: A note on the number
+      of irrational odd zeta values. Conversion mode pandoc-flat; primary bytes, not the derivative conversion,
+      are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/12-lai-yu-2019-number-of-irrational-odd-zeta/A_note_on_the_number_of_irrational_odd_zeta_values.tex
+    content_sha256: e814376ad085843b85f2e5a665fb0755656cf8c729de6589cafe53a967c86586
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: A note on the number of irrational odd zeta values; Li Lai, Pin Yu; 2019-11-19
+    persistent_locator: https://arxiv.org/abs/1911.08458
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B013
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: At least two of $ζ(5),ζ(7),\ldots,ζ(35)$
+      are irrational. Conversion mode pandoc-flat; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/13-lai-zhou-2021-at-least-two-zeta5-to-zeta35/Zeta35_20211018.tex
+    content_sha256: a84cef70832e5a5f2592b34a9a4a122ee81b926db2de4e1df2562ef66604b03b
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: At least two of $ζ(5),ζ(7),\ldots,ζ(35)$ are irrational; Li Lai, Li Zhou; 2021-03-01
+    persistent_locator: https://arxiv.org/abs/2103.00904
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B014
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Linear independence
+      of odd zeta values using Siegel''s lemma. Conversion mode pandoc-flat; primary bytes, not the derivative conversion,
+      are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/14-fischler-2021-siegel-lemma-linear-independence/siegel_arxiv_v3.tex
+    content_sha256: 1b8047da61e0e46a28e7993aba5ea8fbcec2352e9f678b2d3ea5068ce6b0ddb8
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Linear independence of odd zeta values using Siegel's lemma; Stéphane Fischler; 2021-09-21
+    persistent_locator: https://arxiv.org/abs/2109.10136
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B015
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Many $p$-adic odd
+      zeta values are irrational. Conversion mode pandoc-flat; primary bytes, not the derivative conversion, are
+      content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/15-lai-sprang-2023-many-p-adic-odd-zeta/Revision_Lai-Sprang_Many-p-adic-odd-zeta-values-are-irrational__1_.tex
+    content_sha256: f6b1ef85c87ccc818a00bba9f7767d32eddb11ef5f1d45214bb56c3b49afeda6
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Many $p$-adic odd zeta values are irrational; Li Lai, Johannes Sprang; 2023-06-17
+    persistent_locator: https://arxiv.org/abs/2306.10393
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B016
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Small improvements
+      on the Ball-Rivoal theorem and its $p$-adic variant. Conversion mode pandoc-flat; primary bytes, not the derivative
+      conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/16-lai-2024-improvements-ball-rivoal/Small_improvements_on_the_Ball-Rivoal_theorem_and_its__p_-adic_variant.tex
+    content_sha256: 6b2341259484e27b37e3dd8257c2a014b07b61997368348190b05b31bee63425
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Small improvements on the Ball-Rivoal theorem and its $p$-adic variant; Li Lai; 2024-07-19
+    persistent_locator: https://arxiv.org/abs/2407.14236
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B017
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: A note on the number
+      of irrational odd zeta values, II. Conversion mode pandoc-flat; primary bytes, not the derivative conversion,
+      are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/17-lai-2025-number-of-irrational-odd-zeta-II/A_note_on_the_number_of_irrational_odd_zeta_values,_II.tex
+    content_sha256: 23ab715eb383f96dc4170de3ae96c6fadcfe1e94ff058b8aa258331471080176
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: A note on the number of irrational odd zeta values, II; Li Lai; 2025-01-09
+    persistent_locator: https://arxiv.org/abs/2501.05321
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B018
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: A note on the irrationality
+      of $ζ_2(5)$. Conversion mode pandoc-flat; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/18-lai-sprang-zudilin-2025-irrationality-zeta2-of-5/zeta_2_5__20260527_for_arXiv.tex
+    content_sha256: f88f78e0d946423e3e9a9bfaef64e3a30de612b1e146b2bd8da608ae9e6b3e06
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: A note on the irrationality of $ζ_2(5)$; Li Lai, Johannes Sprang, Wadim Zudilin; 2025-05-08
+    persistent_locator: https://arxiv.org/abs/2505.05005
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B019
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Irrationality proofs
+      for zeta values, moduli spaces and dinner parties. Conversion mode pandoc-flat; primary bytes, not the derivative
+      conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/19-brown-2014-irrationality-proofs-moduli-dinner-parties/IrratModuliMotivesv8.tex
+    content_sha256: 66ba871daca9c98d64e3f10b6ac55f966e6a88bc672934ec1a918c2f5f234da8
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Irrationality proofs for zeta values, moduli spaces and dinner parties; Francis Brown;
+      2014-12-19
+    persistent_locator: https://arxiv.org/abs/1412.6508
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B020
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: On cellular rational
+      approximations to $ζ(5)$. Conversion mode pandoc-repaired; primary bytes, not the derivative conversion, are
+      content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/20-brown-zudilin-2022-cellular-rational-approx-zeta5/2026-01-26_CellZeta.tex
+    content_sha256: f7ce5730241814a7b9b9ea4c0a659b611edd28c7932bf48d5c5c7dd5e5969100
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: On cellular rational approximations to $ζ(5)$; Francis Brown, Wadim Zudilin; 2022-10-07
+    persistent_locator: https://arxiv.org/abs/2210.03391
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B021
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Mellin transforms,
+      transfinite diameter and rational approximations of integrals. Conversion mode pandoc-flat; primary bytes,
+      not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/21-brown-2026-mellin-transfinite-diameter-rational-approx/NewDetCritReSubmit.tex
+    content_sha256: a524b14576348fab4529aa8eae896e74a08f3a0417fa2b6c7bec254d7609ecad
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Mellin transforms, transfinite diameter and rational approximations of integrals; Francis
+      Brown; 2026-04-22
+    persistent_locator: https://arxiv.org/abs/2604.20741
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B022
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Séries hypergéométriques
+      multiples et polyzêtas. Conversion mode pandoc-flat; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/22-cresson-fischler-rivoal-multiple-hypergeom-polyzetas/CFRalgo-HAL.tex
+    content_sha256: 7bb6b2512cb0ed8bd95a96eff50acad26480629d6eae51209bdbce8e54cf02ad
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Séries hypergéométriques multiples et polyzêtas; Jacky Cresson, Stephane Fischler, Tanguy
+      Rivoal; 2006-09-27
+    persistent_locator: https://arxiv.org/abs/math/0609743
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B023
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Phénomènes de symétrie
+      dans des formes linéaires en polyzêtas. Conversion mode pandoc-flat; primary bytes, not the derivative conversion,
+      are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/23-cresson-fischler-rivoal-symmetry-linear-forms-polyzetas/CFRsym_corrige5.tex
+    content_sha256: 383eb59c0f0d5e9ffc30413e16b1f6ecacde7e8fd97323de40ccf38bb00185f6
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Phénomènes de symétrie dans des formes linéaires en polyzêtas; Jacky Cresson, Stephane
+      Fischler, Tanguy Rivoal; 2006-09-27
+    persistent_locator: https://arxiv.org/abs/math/0609744
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B024
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Multiple zeta values,
+      Padé approximation and Vasilyev''s conjecture. Conversion mode pandoc-flat; primary bytes, not the derivative
+      conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/24-fischler-rivoal-2013-mzv-pade-vasilyev/padezetaimp13.tex
+    content_sha256: cad129d88778d6308d0c7a6e7513762580048469010eca6a10935c0a7905d08d
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Multiple zeta values, Padé approximation and Vasilyev's conjecture; Stephane Fischler,
+      Tanguy Rivoal; 2013-09-10
+    persistent_locator: https://arxiv.org/abs/1309.2534
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B025
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Mixed Tate motives
+      over $\Z$. Conversion mode pandoc-flat; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/25-brown-2011-mixed-tate-motives-over-Z/MTZ.tex
+    content_sha256: a0adca2f1be497ffa85c07e8046754358d3084f929de258f613064c3dc002813
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Mixed Tate motives over $\Z$; Francis Brown; 2011-02-07
+    persistent_locator: https://arxiv.org/abs/1102.1312
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B026
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: On the decomposition
+      of motivic multiple zeta values. Conversion mode pandoc-flat; primary bytes, not the derivative conversion,
+      are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/26-brown-2011-decomposition-motivic-mzv/MZVDecomp.tex
+    content_sha256: 64ae102a9d57247c2b7d0841a70c7067620426653d454bd35961a9cd504972c2
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: On the decomposition of motivic multiple zeta values; Francis Brown; 2011-02-07
+    persistent_locator: https://arxiv.org/abs/1102.1310
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B027
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Depth-graded motivic
+      multiple zeta values. Conversion mode pandoc-flat; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/27-brown-2013-depth-graded-motivic-mzv/Depth16Arxiv.tex
+    content_sha256: 14a8ed4b71bc20017b189c33e1af90074595c07433c83904be98876e78162ba8
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Depth-graded motivic multiple zeta values; Francis Brown; 2013-01-14
+    persistent_locator: https://arxiv.org/abs/1301.3053
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B028
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Single-valued periods
+      and multiple zeta values. Conversion mode pandoc-flat; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/28-brown-2013-single-valued-periods-and-mzv/SVZ8.tex
+    content_sha256: 06ed8b99c5cf4e24a56a67e343b4e3ff0967fe20e4662bbb53dbcfcd51224e7f
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Single-valued periods and multiple zeta values; Francis Brown; 2013-09-20
+    persistent_locator: https://arxiv.org/abs/1309.5309
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B029
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Notes on Motivic
+      Periods. Conversion mode pandoc-flat; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/29-brown-2015-notes-on-motivic-periods/NotesOnMotPeriodsv19.tex
+    content_sha256: 95a01def652ad5a2974904f58bb733d4fb4b562cbbffb9c01152ecd83de26ca9
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Notes on Motivic Periods; Francis Brown; 2015-12-20
+    persistent_locator: https://arxiv.org/abs/1512.06410
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B030
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Motivic periods and
+      the projective line minus three points. Conversion mode pandoc-flat; primary bytes, not the derivative conversion,
+      are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/30-brown-2014-motivic-periods-P1-minus-3-points/MotivicPeriodsandP1minus3pointsv3.tex
+    content_sha256: efddfdd26c165548e67ede13f14f761a397ea159b7edca413064e7dc0181c595
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Motivic periods and the projective line minus three points; Francis Brown; 2014-07-19
+    persistent_locator: https://arxiv.org/abs/1407.5165
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B031
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: The wheel classes
+      in the locally finite homology of $\mathrm{GL}_n(\mathbb{Z})$, canonical integrals and zeta values. Conversion
+      mode pandoc-flat; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/31-brown-schnetz-2024-wheel-classes-canonical-integrals-zeta/main.tex
+    content_sha256: 056a5dedfd4b9fd542911c357ac0e652adb5f88b7e9e6c281d9d3da3f23838cc
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: The wheel classes in the locally finite homology of $\mathrm{GL}_n(\mathbb{Z})$, canonical
+      integrals and zeta values; Francis Brown, Oliver Schnetz; 2024-02-09
+    persistent_locator: https://arxiv.org/abs/2402.06757
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B032
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: Non-linear geometry
+      of multiple zeta values. Conversion mode pandoc-flat; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/papers/32-brown-2026-nonlinear-geometry-of-mzv/main.tex
+    content_sha256: 2301afe7b31ac73cee2473c3160c6948345bd0a590ef8b5ed9dd52ee447a407f
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: Non-linear geometry of multiple zeta values; Francis Brown; 2026-04-24
+    persistent_locator: https://arxiv.org/abs/2604.22735
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B033
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: ball-rivoal-2001-inventiones-irrationalite-infinite-zeta.
+      Conversion mode pdftotext -layout; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/books-and-surveys/ball-rivoal-2001-inventiones-irrationalite-infinite-zeta.pdf
+    content_sha256: b1fdd7173fe6130f0a7f4c792192ef97ce3f42a39c5d8b7b21dd8e07691c68f3
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: ball-rivoal-2001-inventiones-irrationalite-infinite-zeta; authors not normalized
+    persistent_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/books-and-surveys/ball-rivoal-2001-inventiones-irrationalite-infinite-zeta.pdf
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B034
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: zudilin-2002-irrationality-riemann-zeta-izvestiya.
+      Conversion mode pdftotext -layout; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/books-and-surveys/zudilin-2002-irrationality-riemann-zeta-izvestiya.pdf
+    content_sha256: 42e038c64552f979a9a19f8b8c8c66087240b494040012414e561f30894f6e66
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: zudilin-2002-irrationality-riemann-zeta-izvestiya; authors not normalized
+    persistent_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/books-and-surveys/zudilin-2002-irrationality-riemann-zeta-izvestiya.pdf
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B035
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: zudilin-2004-well-poised-hypergeometric-service.
+      Conversion mode pdftotext -layout; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/books-and-surveys/zudilin-2004-well-poised-hypergeometric-service.pdf
+    content_sha256: 81eeeca38692773d3760cef033d007c63da4da8747276f707aa09ef0d3de9207
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: zudilin-2004-well-poised-hypergeometric-service; authors not normalized
+    persistent_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/books-and-surveys/zudilin-2004-well-poised-hypergeometric-service.pdf
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B036
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: zudilin-2011-arithmetic-hypergeometric-series-survey.
+      Conversion mode pdftotext -layout; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/books-and-surveys/zudilin-2011-arithmetic-hypergeometric-series-survey.pdf
+    content_sha256: 00a8bc87356e3dca2ab09fcef64eeae35bb12189efe63cc489adf21a20b5d7f7
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: zudilin-2011-arithmetic-hypergeometric-series-survey; authors not normalized
+    persistent_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/books-and-surveys/zudilin-2011-arithmetic-hypergeometric-series-survey.pdf
+    audited_claims: []
+    equivalence_findings: []
+  - id: OZ-LIT-B037
+    exact_statement_or_description: 'Primary literature source acquired from the River corpus: zudilin-MZV-tasting-notes.
+      Conversion mode pdftotext -layout; primary bytes, not the derivative conversion, are content-addressed.'
+    source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+    exact_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/books-and-surveys/zudilin-MZV-tasting-notes.pdf
+    content_sha256: e1c92bda2900bf865e98dafaba76670345ff6112723139c51e1b381f4eeeb903
+    mathematical_status: LITERATURE_DERIVED
+    novelty_status: NOT_ASSESSED
+    review_status: INTAKE_CHECKED
+    assumptions: []
+    scope: Source identification and byte lock only; theorem-level claim audit not yet completed.
+    dependencies: []
+    supports: []
+    conflicts: []
+    bibliographic_identity: zudilin-MZV-tasting-notes; authors not normalized
+    persistent_locator: https://github.com/rain-1/-odd-zeta-values-moremath/blob/968477ed7e406df6542f8da6fbe1cd6ca7273c47/books-and-surveys/zudilin-MZV-tasting-notes.pdf
+    audited_claims: []
+    equivalence_findings: []
   irrationality_bridges: []
 required_record_fields:
   common:
-    - id
-    - exact_statement_or_description
-    - source_lock_id
-    - exact_locator
-    - content_sha256
-    - mathematical_status
-    - novelty_status
-    - review_status
-    - assumptions
-    - scope
-    - dependencies
-    - supports
-    - conflicts
+  - id
+  - exact_statement_or_description
+  - source_lock_id
+  - exact_locator
+  - content_sha256
+  - mathematical_status
+  - novelty_status
+  - review_status
+  - assumptions
+  - scope
+  - dependencies
+  - supports
+  - conflicts
   lean_declaration:
-    - repository
-    - commit
-    - file
-    - declaration
-    - imported_axioms
-    - sorry_free
-    - build_result
-    - semantic_correspondence_id
+  - repository
+  - commit
+  - file
+  - declaration
+  - imported_axioms
+  - sorry_free
+  - build_result
+  - semantic_correspondence_id
   certificate:
-    - certificate_type
-    - producer
-    - verifier
-    - replay_command
-    - bounded_domain
+  - certificate_type
+  - producer
+  - verifier
+  - replay_command
+  - bounded_domain
   computation:
-    - code_commit
-    - environment_lock
-    - input_hashes
-    - output_hashes
-    - arithmetic_mode
-    - bounded_domain
-    - replay_command
+  - code_commit
+  - environment_lock
+  - input_hashes
+  - output_hashes
+  - arithmetic_mode
+  - bounded_domain
+  - replay_command
   literature_source:
-    - bibliographic_identity
-    - persistent_locator
-    - audited_claims
-    - equivalence_findings
+  - bibliographic_identity
+  - persistent_locator
+  - audited_claims
+  - equivalence_findings
 unresolved_intake:
-  - id: OZ-INTAKE-U001
-    missing: authoritative manuscript source
-    required_binding: file or persistent versioned URI plus SHA-256 and exact version
-    blocks:
-      - manuscript_statement
-      - recurrence
-      - harmonic_formula
-      - congruence
-  - id: OZ-INTAKE-U002
-    missing: Lean source repository and pinned revision
-    required_binding: repository, commit, toolchain, theorem inventory, and axiom report
-    blocks:
-      - lean_declaration
-  - id: OZ-INTAKE-U003
-    missing: certificate corpus
-    required_binding: certificate files, producers, independent verifiers, and replay commands
-    blocks:
-      - certificate
-  - id: OZ-INTAKE-U004
-    missing: computation corpus
-    required_binding: code, environment, exact inputs and outputs, domain, and arithmetic mode
-    blocks:
-      - computation
-  - id: OZ-INTAKE-U005
-    missing: acquired and audited literature corpus
-    progress_record: 04_PRIOR_ART_SEED_LEDGER.yaml identifies an initial comparison set without assigning permanent literature IDs.
-    required_binding: exact primary-source files or immutable versions, hashes, theorem locators, and comparison notes
-    blocks:
-      - literature_source
-      - novelty assessment
-  - id: OZ-INTAKE-U006
-    missing: discharge of required irrationality bridges
-    progress_record: 03_IRRATIONALITY_BRIDGE_REGISTER.yaml enumerates eight open obligations.
-    required_binding: source-audited proofs or accepted literature imports satisfying the selected irrationality criterion
-    blocks:
-      - irrationality conclusion
+- id: OZ-INTAKE-U001
+  missing: complete manuscript statement enumeration and independent semantic audit
+  progress_record: A004 locked two River source repositories and assigned initial permanent statement, recurrence,
+    formula and congruence records.
+  required_binding: Complete statement index, supersession map and independent theorem-level review.
+  blocks:
+  - OZ-WP00 completion
+  - successor work packages
+- id: OZ-INTAKE-U002
+  missing: independent Lean build, axiom scan and manuscript correspondence replay
+  progress_record: Pinned Lean repositories, toolchains, manifests and initial declarations are source-locked.
+  required_binding: Clean builds at pinned revisions; declaration-level axiom and placeholder reports; semantic
+    correspondence findings.
+  blocks:
+  - FORMALLY_REPLAYED status
+  - formal promotion
+- id: OZ-INTAKE-U003
+  missing: complete certificate index and independent replay
+  progress_record: Initial certificate records are assigned, but source scripts and paper certificates have not
+    been exhaustively indexed or replayed by GCL.
+  required_binding: Producer/verifier separation, exact commands, input/output hashes and replay results for every
+    promoted certificate.
+  blocks:
+  - certificate promotion
+  - proof-status promotion
+- id: OZ-INTAKE-U004
+  missing: complete computation index, environment normalization and replay
+  progress_record: Initial bounded computations are identified with exact source bytes and declared domains.
+  required_binding: Environment locks, normalized commands, replayed outputs and retained failures for every material
+    computation.
+  blocks:
+  - COMPUTED_EXACTLY promotion beyond intake
+  - use of finite evidence
+- id: OZ-INTAKE-U005
+  missing: theorem-level specialist literature and novelty audit
+  progress_record: Thirty-seven primary literature objects are byte-locked and assigned permanent OZ-LIT identifiers.
+  required_binding: Claim locators, same/equivalent/special-case findings and signed specialist review.
+  blocks:
+  - novelty assessment
+  - priority claims
+- id: OZ-INTAKE-U006
+  missing: discharge of required irrationality bridges for any selected new conclusion
+  progress_record: 03_IRRATIONALITY_BRIDGE_REGISTER.yaml retains eight open obligations. The acquired Zeta5Odd formalization
+    is a separate source claim and still requires independent GCL replay and semantic review.
+  required_binding: Source-audited proofs or accepted literature imports satisfying the exact selected criterion.
+  blocks:
+  - new irrationality conclusion
+  - claim promotion
 promotion_prohibitions:
-  - No entry may use NEW_AFTER_AUDIT before a specialist prior-art review is recorded.
-  - Finite verification may not discharge an unbounded formula or congruence.
-  - Lean kernel acceptance may not discharge semantic correspondence to the manuscript.
-  - A recurrence identity alone may not be promoted to an irrationality result.
-  - No irrationality claim may be made while any required bridge remains OPEN.
-  - OZ-WP01, OZ-WP02, mechanism generation, and new numerical experimentation remain gated.
+- No entry may use NEW_AFTER_AUDIT before a specialist prior-art review is recorded.
+- Finite verification may not discharge an unbounded formula or congruence.
+- Source-reported Lean kernel acceptance may not discharge independent replay or semantic correspondence.
+- A recurrence identity alone may not be promoted to an irrationality result.
+- No new irrationality claim may be promoted while any required bridge remains OPEN.
+- OZ-WP01, OZ-WP02, mechanism generation and new numerical experimentation remain gated until OZ-WP00 review and
+  routing gates are satisfied.
 validation:
-  structural_command: >-
-    python3 campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/tools/validate_intake_manifest.py
+  structural_command: python3 campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/tools/validate_intake_manifest.py
     campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/01_INTAKE_SOURCE_LOCK.yaml
-  completion_command: >-
-    python3 campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/tools/validate_intake_manifest.py
-    --require-complete
-    campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/01_INTAKE_SOURCE_LOCK.yaml
+  completion_command: python3 campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/tools/validate_intake_manifest.py
+    --require-complete campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/01_INTAKE_SOURCE_LOCK.yaml
 first_executable_next_step:
-  id: OZ-NEXT-003
-  instruction: >-
-    Receive a complete source bundle or an exact immutable repository locator.
-    Preserve the delivered bytes, compute byte lengths and SHA-256 digests,
-    register source locks, and then enumerate the source-bound manuscript, Lean,
-    certificate, computation, and literature records. Do not repeat undirected
-    search without a new concrete locator or file.
+  id: OZ-NEXT-004
+  instruction: Perform independent Axiomatist, Cartographer, Grammarian, Verifier, Adversary, Formalist, Amanuensis
+    and Referee intake review of the source-locked records. Replay pinned Lean and executable certificates, complete
+    statement and computation indexing, and carry out theorem-level literature comparison. Keep successor stages
+    gated.
