@@ -29,8 +29,8 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
-      - name: Install validation dependency
-        run: python3 -m pip install PyYAML==6.0.3
+      - name: Install validation dependencies
+        run: python3 -m pip install --requirement requirements/policy.txt
       - name: Validate proof and semantic package
         run: |
           python3 campaigns/odd_zeta/OZ_RT_APERY_BROW_001/validate.py
