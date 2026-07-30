@@ -1,0 +1,50 @@
+schema_version: 1.0.0
+replay_id: OZ-RT-APERY-BROW-001-LEAN
+source:
+  repository: rain-1/-odd-zeta-values-moremath
+  commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+  package_directory: lean
+  toolchain_sha256: 62c2d9c0fc1ec4c67e151c11eff41ca004ef38e179cf9476c230406e6defedef
+  manifest_sha256: 59281a978e5026a3e3ca9ffc6b887de101fe44c59d0efb438fb2bf3eaa794cd9
+source_files:
+  - path: lean/ZetaLucas/Apery.lean
+    git_blob: bc0c92165d125ca1881145e0cd4a66c5df1a29fd
+    bytes: 6045
+    sha256: d7cb7bde2d897c4995818f16260fcac50c687b3be76446f964dd71fefc44c295
+  - path: lean/ZetaLucas/TheoremLB.lean
+    git_blob: 2c79d82232a3e0e2e5aa9d0174e86d28dcf4697d
+    bytes: 12328
+    sha256: 549d8dafb6dbedd8ff09129a7e3e6e8bea165d4fc73886097880988f916be590
+  - path: lean/ZetaLucas/Instances.lean
+    git_blob: 08c243da431f26311c40f8de70f4b7c092f069e7
+    bytes: 11821
+    sha256: c5d460150770cd24bc87490709e9a638c91fde411364a0e68bbd8840826bd6b3
+  - path: lean/ZetaLucas/MinimalForm.lean
+    git_blob: 7ade6d8fae3095b1bccc207438f3899d43e17926
+    bytes: 21358
+    sha256: 57b4d42e614060f4c217ede9ac462025daba298863f248ed508a28a9f47b002c
+targets:
+  - declaration: ZetaLucas.apery_lucas
+    semantic_effect: Classical integral-row Lucas theorem.
+    expected_sorryAx: false
+  - declaration: ZetaLucas.bMin_lucas
+    semantic_effect: Single-digit congruence for the explicit minimal harmonic sum.
+    expected_sorryAx: false
+  - declaration: ZetaLucas.bMin_eq_bApery
+    semantic_effect: Minimal harmonic sum equals the recurrence-defined classical companion.
+    expected_sorryAx: false
+  - declaration: ZetaLucas.apery_b_harmonic_closed_form
+    semantic_effect: Fully expanded minimal harmonic representation equals bApery.
+    expected_sorryAx: false
+  - declaration: ZetaLucas.bApery_lucas
+    semantic_effect: Target congruence for the recurrence-defined classical companion sequence.
+    expected_sorryAx: false
+workflow: .github/workflows/oz-rt-apery-brow.yml
+required_jobs:
+  - proof-package
+  - lean-apery-brow
+status: PENDING_EXACT_HEAD_CI
+claim_boundary: >-
+  Successful replay proves the listed Lean declarations at the pinned source revision.
+  It does not kernel-check the separate paper equality between the classical double sum
+  and the minimal harmonic sum.
