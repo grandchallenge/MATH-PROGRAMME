@@ -1,0 +1,361 @@
+schema_version: 1.0.0
+index_id: OZ-NEXT-004-OBJECT-INDEX
+campaign_id: OZ
+work_package_id: OZ-WP00
+source_manifest_blob: a2b55233a77ad05a49f55096864b7c98741411e3
+claim_boundary: Independent intake review classifications. These do not promote novelty or irrationality conclusions.
+record_count: 43
+records:
+- id: OZ-MSS-S001
+  object_class: manuscript_statement
+  source_status: FORMALIZED
+  independent_disposition: FORMAL_REPLAY_REQUIRED
+  evidence:
+  - OZ-L4-T001
+  - OZ-CER-E001
+  boundary: Known Zudilin theorem, s=33 fallback; mathematical novelty is not claimed.
+  next_action: Run pinned Lean build and axiom audit.
+- id: OZ-MSS-S002
+  object_class: manuscript_statement
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: SEMANTIC_AUDIT_PASS_REPLAY_REQUIRED
+  evidence:
+  - OZ-CON-C002
+  - OZ-CER-E005
+  - OZ-L4-T006
+  boundary: Single-digit theorem only; multi-digit and mod-p^3 forms are excluded.
+  next_action: Run paper proof replay and Lean instance audit.
+- id: OZ-MSS-S003
+  object_class: manuscript_statement
+  source_status: COMPUTED_EXACTLY
+  independent_disposition: FINITE_EVIDENCE_ONLY
+  evidence:
+  - OZ-CON-C003
+  - OZ-CMP-X003
+  boundary: 5 <= p <= 31 and n <= 320 only.
+  next_action: Do not promote as an unbounded theorem.
+- id: OZ-MSS-S004
+  object_class: manuscript_statement
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: FORMAL_ABSTRACT_THEOREM_SCOPE_LOCKED
+  evidence:
+  - OZ-CON-C004
+  - OZ-L4-T005
+  boundary: Theorem LB is conditional on H1-H5; it does not prove all fifteen applications.
+  next_action: Audit every application separately.
+- id: OZ-MSS-S005
+  object_class: manuscript_statement
+  source_status: REFUTED
+  independent_disposition: EXACT_COUNTEREXAMPLE_ROUTE_ACCEPTED
+  evidence:
+  - OZ-CMP-X006
+  boundary: Refutes the character-free universal law; does not establish the proposed replacement for every pair.
+  next_action: Retain exact counterexample witnesses.
+- id: OZ-MSS-S006
+  object_class: manuscript_statement
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: DOWNGRADE_REQUIRED
+  evidence:
+  - OZ-CER-E004
+  - OZ-CMP-X004
+  boundary: The source referee record states that Theorem B and T1-top are not certified and that headline sharp-12
+    dependencies include verified/certificate-only nodes.
+  next_action: Change manifest status to STATED_ONLY until the complete chain replays without open decomposition
+    inputs.
+- id: OZ-MSS-S007
+  object_class: manuscript_statement
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: PAPER_PROOF_PRESENT_FORMAL_REPLAY_NOT_APPLICABLE
+  evidence:
+  - OZ-HAR-H002
+  boundary: The paper gives a complete middle-row derivation, but its cited Brown-Zudilin and Zudilin inputs require
+    theorem-level source checking.
+  next_action: Specialist audit cited inputs and normalisations.
+- id: OZ-MSS-S008
+  object_class: manuscript_statement
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: PAPER_PROOF_PRESENT_DEPENDENCY_AUDIT_OPEN
+  evidence:
+  - OZ-HAR-H003
+  boundary: The subtraction-anchor proof is unconditional relative to its cited integral identities and the middle-row
+    theorem; the separate Lean compact-form file does not certify it.
+  next_action: Audit cited recurrence/integral identities independently.
+- id: OZ-MSS-S009
+  object_class: manuscript_statement
+  source_status: CONJECTURED
+  independent_disposition: OPEN_CORRECTLY_CLASSIFIED
+  evidence:
+  - OZ-HAR-H004
+  - OZ-CMP-X007
+  boundary: Identity T3 is the only unproved statement in the compact-weights paper and has bounded evidence only.
+  next_action: No promotion; retain as open.
+- id: OZ-MSS-S010
+  object_class: manuscript_statement
+  source_status: REFUTED
+  independent_disposition: NEGATIVE_ROUTE_ACCEPTED_AS_SOURCE_BOUND
+  evidence: []
+  boundary: Applies only to the specified symmetric M_0,10 route.
+  next_action: Preserve route boundary and negative evidence.
+- id: OZ-REC-R001
+  object_class: recurrence
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: KNOWN_RECURRENCE_SOURCE_BOUND
+  evidence:
+  - OZ-HAR-H001
+  boundary: Classical Apéry recurrence with normalisation lock.
+  next_action: Compare initial values and scaling against primary sources.
+- id: OZ-REC-R002
+  object_class: recurrence
+  source_status: FORMALIZED
+  independent_disposition: OPERATOR_DEFINITION_ONLY
+  evidence:
+  - OZ-L4-T008
+  boundary: BZRec is a definition; row annihilation in the same file depends on a quarantined sorry.
+  next_action: Do not infer row recurrence from the operator definition.
+- id: OZ-REC-R003
+  object_class: recurrence
+  source_status: COMPUTED_EXACTLY
+  independent_disposition: FINITE_RECONSTRUCTION_ONLY
+  evidence:
+  - OZ-CMP-X005
+  boundary: Checked against q_0 through q_74; no unbounded annihilation certificate.
+  next_action: Replay reconstruction and seek symbolic certificate.
+- id: OZ-HAR-H001
+  object_class: harmonic_formula
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: PAPER_AND_LEAN_INSTANCE_PRESENT
+  evidence:
+  - OZ-L4-T006
+  boundary: Minimal formula differs by a factor-six normalisation from the classical B(n) in some literature.
+  next_action: Record equivalence map explicitly.
+- id: OZ-HAR-H002
+  object_class: harmonic_formula
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: PAPER_PROOF_PRESENT_FORMAL_VERSION_CONDITIONAL
+  evidence:
+  - OZ-MSS-S007
+  boundary: Paper proof is separate from BZClosedForm.lean, whose sum-equality theorem depends on sorry.
+  next_action: Keep paper and Lean evidence distinct.
+- id: OZ-HAR-H003
+  object_class: harmonic_formula
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: PAPER_PROOF_PRESENT_NOT_LEAN_CERTIFIED
+  evidence:
+  - OZ-MSS-S008
+  boundary: Barnes-rational anchor is not the conditional compact w5 formula.
+  next_action: Do not conflate with OZ-HAR-H004.
+- id: OZ-HAR-H004
+  object_class: harmonic_formula
+  source_status: CONJECTURED
+  independent_disposition: OPEN_CORRECTLY_CLASSIFIED
+  evidence:
+  - OZ-CMP-X007
+  boundary: Exact n<=12 and modular n<=80 only.
+  next_action: Require T3 certificate for theorem status.
+- id: OZ-CON-C001
+  object_class: congruence
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: KNOWN_AND_FORMALIZED
+  evidence:
+  - OZ-L4-T004
+  boundary: Classical integral-row Lucas property; not novel.
+  next_action: Replay Lean declaration.
+- id: OZ-CON-C002
+  object_class: congruence
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: PROOF_PRESENT_APPARENT_NOVELTY_ONLY
+  evidence:
+  - OZ-L4-T006
+  - OZ-CER-E005
+  boundary: Single-digit harmonic companion theorem; nearest audited papers concern integral rows, not this B-row.
+  next_action: Specialist novelty review after source-locking nearest prior art.
+- id: OZ-CON-C003
+  object_class: congruence
+  source_status: COMPUTED_EXACTLY
+  independent_disposition: FINITE_EVIDENCE_ONLY
+  evidence:
+  - OZ-CMP-X003
+  boundary: No proof for the multi-digit mod-p^3 statement.
+  next_action: Retain bounded range in every restatement.
+- id: OZ-CON-C004
+  object_class: congruence
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: ABSTRACT_THEOREM_ONLY
+  evidence:
+  - OZ-L4-T005
+  boundary: H1-H5 must be discharged per family; source paper overstates some family applications.
+  next_action: Create per-family assumption-discharge ledger.
+- id: OZ-CON-C005
+  object_class: congruence
+  source_status: FORMALIZED
+  independent_disposition: FORMAL_REPLAY_REQUIRED
+  evidence:
+  - OZ-L4-T002
+  boundary: Q-row only.
+  next_action: Run pinned Lean build and axiom audit.
+- id: OZ-CON-C006
+  object_class: congruence
+  source_status: FORMALIZED
+  independent_disposition: FORMAL_AND_SCRIPT_REPLAY_REQUIRED
+  evidence:
+  - OZ-L4-T003
+  - OZ-CER-E002
+  boundary: Clean interval n<p<=2n and p>=5 only.
+  next_action: Run Python certificate and pinned Lean build.
+- id: OZ-L4-T001
+  object_class: lean_declaration
+  source_status: FORMALIZED
+  independent_disposition: PINNED_REPLAY_REQUIRED
+  evidence: []
+  boundary: zeta(5)..zeta(33) theorem.
+  next_action: 'Run CI build and #print axioms.'
+- id: OZ-L4-T002
+  object_class: lean_declaration
+  source_status: FORMALIZED
+  independent_disposition: PINNED_REPLAY_REQUIRED
+  evidence: []
+  boundary: Q-row Lucas-Frobenius.
+  next_action: 'Run CI build and #print axioms.'
+- id: OZ-L4-T003
+  object_class: lean_declaration
+  source_status: FORMALIZED
+  independent_disposition: PINNED_REPLAY_REQUIRED
+  evidence: []
+  boundary: clean-interval pn valuation.
+  next_action: 'Run CI build and #print axioms.'
+- id: OZ-L4-T004
+  object_class: lean_declaration
+  source_status: FORMALIZED
+  independent_disposition: PINNED_REPLAY_REQUIRED
+  evidence: []
+  boundary: Apéry integral-row Lucas.
+  next_action: 'Run CI build and #print axioms.'
+- id: OZ-L4-T005
+  object_class: lean_declaration
+  source_status: FORMALIZED
+  independent_disposition: PINNED_REPLAY_REQUIRED
+  evidence: []
+  boundary: abstract Theorem LB.
+  next_action: 'Run CI build and #print axioms.'
+- id: OZ-L4-T006
+  object_class: lean_declaration
+  source_status: FORMALIZED
+  independent_disposition: PINNED_REPLAY_REQUIRED
+  evidence: []
+  boundary: minimal Apéry B-row instance.
+  next_action: 'Run CI build and #print axioms.'
+- id: OZ-L4-T007
+  object_class: lean_declaration
+  source_status: FORMALIZED
+  independent_disposition: PINNED_REPLAY_REQUIRED
+  evidence: []
+  boundary: exact n=2 factor-12 certificate.
+  next_action: 'Run CI build and #print axioms.'
+- id: OZ-L4-T008
+  object_class: lean_declaration
+  source_status: STATED_ONLY
+  independent_disposition: QUARANTINED_SORRY_CONFIRMED
+  evidence: []
+  boundary: BZRec definition is clean, but BZClosedForm.lean contains bz_creative_telescoping := by sorry and downstream
+    sum equalities depend on it.
+  next_action: Keep declaration-level dependency boundary; do not mark file or downstream results sorry-free.
+- id: OZ-CER-E001
+  object_class: certificate
+  source_status: FORMALIZED
+  independent_disposition: PINNED_REPLAY_REQUIRED
+  evidence:
+  - OZ-L4-T001
+  boundary: Source report is self-assessed.
+  next_action: Independent CI replay.
+- id: OZ-CER-E002
+  object_class: certificate
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: SCRIPT_REPLAY_PASS_LEAN_PENDING
+  evidence:
+  - OZ-CON-C006
+  boundary: Local replay passed 420 prime-window pairs; Lean still requires independent CI.
+  next_action: Record CI run.
+- id: OZ-CER-E003
+  object_class: certificate
+  source_status: FORMALIZED
+  independent_disposition: PINNED_REPLAY_REQUIRED
+  evidence:
+  - OZ-L4-T007
+  boundary: Exact n=2 result only.
+  next_action: Independent CI replay.
+- id: OZ-CER-E004
+  object_class: certificate
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: INCOMPLETE_CERTIFICATE_LEDGER
+  evidence:
+  - OZ-MSS-S006
+  boundary: PHASE2_CERTS explicitly records Theorem B and T1-top as NOT CERTIFIED and zero final telescopers.
+  next_action: Downgrade linked sharp-12 claim or supply missing certificates.
+- id: OZ-CER-E005
+  object_class: certificate
+  source_status: PROVED_IN_PACKAGE
+  independent_disposition: SOURCE_INTERNAL_REVIEW_NOT_INDEPENDENT
+  evidence:
+  - OZ-MSS-S002
+  boundary: Useful adversarial review, but produced within River package.
+  next_action: GCL specialist proof audit required.
+- id: OZ-CMP-X001
+  object_class: computation
+  source_status: COMPUTED_EXACTLY
+  independent_disposition: REPLAY_PASS
+  evidence:
+  - worthiness/gamma.py
+  boundary: Self-test reproduced printed values; optimization exhaustiveness is not a proof.
+  next_action: Capture environment lock.
+- id: OZ-CMP-X002
+  object_class: computation
+  source_status: COMPUTED_EXACTLY
+  independent_disposition: REPLAY_PARTIAL_TIMEOUT
+  evidence:
+  - worthiness/audit.py validate
+  boundary: Anchor checks passed; full validation did not finish within 300 seconds and manifest command omitted
+    required subcommand.
+  next_action: Provide bounded deterministic replay profile and environment lock.
+- id: OZ-CMP-X003
+  object_class: computation
+  source_status: COMPUTED_EXACTLY
+  independent_disposition: REPLAY_PASS
+  evidence:
+  - work/apdef/validate.py
+  boundary: Finite exact ranges only.
+  next_action: Archive replay log.
+- id: OZ-CMP-X004
+  object_class: computation
+  source_status: COMPUTED_EXACTLY
+  independent_disposition: REPLAY_PASS
+  evidence:
+  - worthiness/falsify_tests.py
+  boundary: 5,989 descents and declared ranges replayed with zero violations; no theorem follows from finite sweep.
+  next_action: Archive replay log.
+- id: OZ-CMP-X005
+  object_class: computation
+  source_status: COMPUTED_EXACTLY
+  independent_disposition: REPLAY_NOT_COMPLETED
+  evidence:
+  - worthiness/zeta7_crt_recon.py
+  boundary: Environment dependencies and cost are not locked.
+  next_action: Provide self-contained replay target.
+- id: OZ-CMP-X006
+  object_class: computation
+  source_status: COMPUTED_EXACTLY
+  independent_disposition: REPLAY_PASS_WITH_ADVERSARIAL_SCOPE_FINDING
+  evidence:
+  - work/lbw/t2_final.py
+  - work/lbw/t4_proofcheck.py
+  - work/sporadic/check1.py
+  boundary: Finite sweep passes, but t4_proofcheck exposes failed separated layers and uses a weaker printed tame
+    diagnostic than formal H4.
+  next_action: Repair terminology and produce per-family hypothesis ledger.
+- id: OZ-CMP-X007
+  object_class: computation
+  source_status: COMPUTED_EXACTLY
+  independent_disposition: REPLAY_NOT_NORMALIZED
+  evidence:
+  - work/Z5T3_BRIDGE.md
+  boundary: No single deterministic replay command or environment lock.
+  next_action: Provide exact script, inputs, outputs and expected hashes.
