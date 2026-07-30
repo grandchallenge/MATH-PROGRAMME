@@ -54,20 +54,20 @@ jobs:
       - name: Replay source-one certificate and computations
         run: |
           set -euo pipefail
-          python3 src1/worthiness/cb_certificate_check.py | tee cb-certificate.log
-          python3 src1/worthiness/gamma.py | tee gamma.log
-          python3 src1/worthiness/falsify_tests.py | tee phase2-falsify.log
+          python3 -c "import runpy; runpy.run_path('src1/worthiness/cb_certificate_check.py', run_name='__main__')" | tee cb-certificate.log
+          python3 -c "import runpy; runpy.run_path('src1/worthiness/gamma.py', run_name='__main__')" | tee gamma.log
+          python3 -c "import runpy; runpy.run_path('src1/worthiness/falsify_tests.py', run_name='__main__')" | tee phase2-falsify.log
       - name: Replay source-two exact gates
         run: |
           set -euo pipefail
-          python3 src2/work/apdef/validate.py | tee apery-validate.log
-          python3 src2/work/lbw/t2_final.py | tee lbw-master.log
-          python3 src2/work/lbw/t4_proofcheck.py | tee lbw-proofcheck.log
-          python3 src2/work/sporadic/check1.py | tee sporadic-check.log
+          python3 -c "import runpy; runpy.run_path('src2/work/apdef/validate.py', run_name='__main__')" | tee apery-validate.log
+          python3 -c "import runpy; runpy.run_path('src2/work/lbw/t2_final.py', run_name='__main__')" | tee lbw-master.log
+          python3 -c "import runpy; runpy.run_path('src2/work/lbw/t4_proofcheck.py', run_name='__main__')" | tee lbw-proofcheck.log
+          python3 -c "import runpy; runpy.run_path('src2/work/sporadic/check1.py', run_name='__main__')" | tee sporadic-check.log
       - name: Bounded audit-pipeline probe
         run: |
           set +e
-          timeout 60s python3 src1/worthiness/audit.py validate > audit-validate.log 2>&1
+          timeout 60s python3 -c "import runpy,sys; sys.argv=['audit.py','validate']; runpy.run_path('src1/worthiness/audit.py', run_name='__main__')" > audit-validate.log 2>&1
           rc=$?
           set -e
           cat audit-validate.log
@@ -86,7 +86,12 @@ jobs:
           test "$(git -C src1 rev-parse HEAD)" = "$SRC1_SHA"
       - name: Install Lean
         run: |
-          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
+          for attempt in 1 2 3; do
+            curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y && break
+            test "$attempt" -lt 3
+            sleep $((attempt * 10))
+          done
+          test -x "$HOME/.elan/bin/lake"
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Build pinned formalization
         working-directory: src1/zeta5odd
@@ -114,7 +119,12 @@ jobs:
           test "$(git -C src1 rev-parse HEAD)" = "$SRC1_SHA"
       - name: Install Lean
         run: |
-          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
+          for attempt in 1 2 3; do
+            curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y && break
+            test "$attempt" -lt 3
+            sleep $((attempt * 10))
+          done
+          test -x "$HOME/.elan/bin/lake"
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Build and audit declarations
         working-directory: src1/cbcert
@@ -140,7 +150,12 @@ jobs:
           test "$(git -C src2 rev-parse HEAD)" = "$SRC2_SHA"
       - name: Install Lean
         run: |
-          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
+          for attempt in 1 2 3; do
+            curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y && break
+            test "$attempt" -lt 3
+            sleep $((attempt * 10))
+          done
+          test -x "$HOME/.elan/bin/lake"
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Build and declaration-level axiom audit
         working-directory: src2/lean
