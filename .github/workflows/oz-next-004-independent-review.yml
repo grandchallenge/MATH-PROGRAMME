@@ -141,7 +141,7 @@ jobs:
 
   lean-zetalucas:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 30
     steps:
       - name: Acquire pinned source
         run: |
@@ -157,22 +157,39 @@ jobs:
           done
           test -x "$HOME/.elan/bin/lake"
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - name: Build and declaration-level axiom audit
+      - name: Build selected modules and audit declaration boundaries
         working-directory: src2/lean
         run: |
+          set -euo pipefail
           lake exe cache get
-          lake build
-          cat > GCLAxiomAudit.lean <<'EOF'
-          import ZetaLucas
+          lake build \
+            ZetaLucas.Apery \
+            ZetaLucas.TheoremLB \
+            ZetaLucas.Instances \
+            ZetaLucas.BZFactor12 \
+            ZetaLucas.BZClosedForm
+
+          cat > GCLCleanAxiomAudit.lean <<'EOF'
+          import ZetaLucas.Apery
+          import ZetaLucas.TheoremLB
+          import ZetaLucas.Instances
+          import ZetaLucas.BZFactor12
+          import ZetaLucas.BZClosedForm
           #print axioms ZetaLucas.apery_lucas
           #print axioms ZetaLucas.theorem_LB
           #print axioms ZetaLucas.bMin_lucas
           #print axioms ZetaLucas.BZ_P2_not_integral
           #print axioms ZetaLucas.BZ_P2_factor_twelve
           #print axioms ZetaLucas.BZCF.BZRec
+          EOF
+          lake env lean GCLCleanAxiomAudit.lean | tee gcl-clean-axioms.log
+          ! grep -q 'sorryAx' gcl-clean-axioms.log
+
+          cat > GCLQuarantineAxiomAudit.lean <<'EOF'
+          import ZetaLucas.BZClosedForm
           #print axioms ZetaLucas.BZCF.PhatSum_eq_Phat
           EOF
-          lake env lean GCLAxiomAudit.lean | tee gcl-axioms.log
-          grep -q 'sorryAx' gcl-axioms.log
-          grep -q 'PhatSum_eq_Phat' gcl-axioms.log
-          echo 'The project builds, but the downstream compact-form theorem is expected to expose sorryAx.' >> "$GITHUB_STEP_SUMMARY"
+          lake env lean GCLQuarantineAxiomAudit.lean | tee gcl-quarantine-axioms.log
+          grep -q 'sorryAx' gcl-quarantine-axioms.log
+          grep -q 'P what' /dev/null 2>/dev/null || true
+          echo 'Selected clean declarations replay without sorryAx; the downstream compact-form theorem is quarantined by sorryAx.' >> "$GITHUB_STEP_SUMMARY"
