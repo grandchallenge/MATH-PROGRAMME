@@ -64,6 +64,7 @@ jobs:
 
           import hashlib
           import json
+          import os
           import pathlib
           import subprocess
 
@@ -106,7 +107,11 @@ jobs:
                   mode, object_type, object_sha1, raw_size = metadata.decode("ascii").split()
                   rel = raw_path.decode("utf-8", "surrogateescape")
                   if object_type == "blob":
-                      data = run("git", "cat-file", "blob", object_sha1, cwd=checkout)
+                      full_path = checkout / rel
+                      if mode == "120000":
+                          data = os.readlink(full_path).encode("utf-8", "surrogateescape")
+                      else:
+                          data = full_path.read_bytes()
                       content_sha256 = hashlib.sha256(data).hexdigest()
                       size = len(data)
                       total_blob_bytes += size
