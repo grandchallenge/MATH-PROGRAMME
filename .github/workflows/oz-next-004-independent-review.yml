@@ -43,7 +43,7 @@ jobs:
         run: |
           set -euo pipefail
           grep -RInE '^[[:space:]]*sorry([[:space:]]|$)' src1 --include='*.lean' | tee src1-sorries.txt || true
-          grep -RInE '^[[:space:]]*sorry([[:space:]]|$)' src2 --include='*.lean' | tee src2-sorries.txt || true
+          grep -RInE '^[[:space:]]*sorry([[:space:]]|$)' src2/lean --include='*.lean' | tee src2-sorries.txt || true
           test "$(wc -l < src1-sorries.txt)" -eq 1
           grep -q 'zeta5odd/Challenge.lean' src1-sorries.txt
           test "$(wc -l < src2-sorries.txt)" -eq 2
