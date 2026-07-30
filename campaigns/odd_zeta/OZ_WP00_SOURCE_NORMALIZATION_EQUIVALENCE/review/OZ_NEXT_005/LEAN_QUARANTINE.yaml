@@ -1,0 +1,40 @@
+schema_version: 1.0.0
+record_id: OZ-NEXT-005D
+campaign_id: OZ
+work_package_id: OZ-WP00
+repository: rain-1/-odd-zeta-values-moremath
+commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+policy: A declaration is clean only if its own #print axioms result excludes sorryAx. File-level labels are inadmissible.
+clean_targets:
+  - declaration: ZetaLucas.BZCF.BZRec
+    role: recurrence operator definition
+  - declaration: ZetaLucas.BZCF.PhatSum_eq_Phat_of_rec
+    role: conditional uniqueness theorem
+  - declaration: ZetaLucas.BZCF.PSum_eq_PBZ_of_rec
+    role: conditional uniqueness theorem
+  - declaration: ZetaLucas.BZStar.PStarSum_eq_Phat_of_rec
+    role: conditional uniqueness theorem
+  - declaration: ZetaLucas.BZCF.PhatSum_zero
+    role: exact initial value
+  - declaration: ZetaLucas.BZCF.PSum_two
+    role: exact initial value and factor-12 witness context
+quarantined_targets:
+  - declaration: ZetaLucas.BZCF.bz_creative_telescoping
+    source_file: lean/ZetaLucas/BZClosedForm.lean
+    reason: explicit sorry
+  - declaration: ZetaLucas.BZCF.PhatSum_eq_Phat
+    source_file: lean/ZetaLucas/BZClosedForm.lean
+    reason: depends on bz_creative_telescoping
+  - declaration: ZetaLucas.BZCF.PSum_eq_PBZ
+    source_file: lean/ZetaLucas/BZClosedForm.lean
+    reason: depends on bz_creative_telescoping
+  - declaration: ZetaLucas.BZStar.star_creative_telescoping
+    source_file: lean/ZetaLucas/BZStar.lean
+    reason: explicit sorry
+  - declaration: ZetaLucas.BZStar.PStarSum_eq_Phat
+    source_file: lean/ZetaLucas/BZStar.lean
+    reason: depends on star_creative_telescoping
+promotion:
+  file_level_sorry_free_claim: prohibited
+  downstream_compact_form_promotion: false
+  discharge_condition: Replace each explicit sorry with a checked certificate and rerun declaration-level axiom audit.

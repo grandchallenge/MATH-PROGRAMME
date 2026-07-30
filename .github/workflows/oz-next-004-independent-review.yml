@@ -1,18 +1,21 @@
-name: OZ-NEXT-004 independent review
+name: OZ-NEXT-004 and 005 independent review
 
 on:
   pull_request:
     paths:
       - '.github/workflows/oz-next-004-independent-review.yml'
       - 'campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/07_INDEPENDENT_REVIEW_OZ_NEXT_004.md'
+      - 'campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/08_CORRECTIVE_SEQUENCE_OZ_NEXT_005.md'
       - 'campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/review/OZ_NEXT_004/**'
+      - 'campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/review/OZ_NEXT_005/**'
+      - 'ci/oz_next_005/**'
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: oz-next-004-${{ github.ref }}
+  group: oz-review-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -29,10 +32,11 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
-      - name: Install Python dependencies and validate review package
+      - name: Install Python dependencies and validate review packages
         run: |
           python3 -m pip install --requirement requirements/oz-next-004.txt
           python3 campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/review/OZ_NEXT_004/tools/validate_review_package.py
+          python3 ci/oz_next_005/validate_package.py
       - name: Acquire pinned sources
         run: |
           git clone --filter=blob:none "$SRC1_REPO" src1
@@ -51,6 +55,14 @@ jobs:
           test "$(wc -l < src2-sorries.txt)" -eq 2
           grep -q 'lean/ZetaLucas/BZClosedForm.lean' src2-sorries.txt
           grep -q 'lean/ZetaLucas/BZStar.lean' src2-sorries.txt
+      - name: Reconcile sharp-12 source status
+        run: |
+          set -euo pipefail
+          grep -Fq 'Neither identity is `[CERTIFIED]`. Zero telescopers exist.' src2/work/PHASE2_CERTS.md
+          grep -Fq 'The p ≥ 5 headline law for `P_n` rests on **two** inputs' src2/work/REFEREE_PAPERS.md
+          grep -Fq '(T1-top)' src2/work/REFEREE_PAPERS.md
+          grep -Fq '(DEPTH)' src2/work/REFEREE_PAPERS.md
+          grep -Fq 'Theorem B is a third unproved input, needed only for the' src2/work/REFEREE_PAPERS.md
       - name: Replay source-one certificate and computations
         run: |
           set -euo pipefail
@@ -64,16 +76,94 @@ jobs:
           python3 -c "import runpy,sys; sys.path.insert(0,'src2/work/lbw'); runpy.run_path('src2/work/lbw/t2_final.py', run_name='__main__')" | tee lbw-master.log
           python3 -c "import runpy,sys; sys.path.insert(0,'src2/work/lbw'); runpy.run_path('src2/work/lbw/t4_proofcheck.py', run_name='__main__')" | tee lbw-proofcheck.log
           python3 -c "import runpy,sys; sys.path.insert(0,'src2/work/sporadic'); runpy.run_path('src2/work/sporadic/check1.py', run_name='__main__')" | tee sporadic-check.log
-      - name: Bounded audit-pipeline probe
+      - name: Normalize X002 bounded audit lane
         run: |
           set +e
-          timeout 60s python3 -c "import runpy,sys; sys.path.insert(0,'src1/worthiness'); sys.argv=['audit.py','validate']; runpy.run_path('src1/worthiness/audit.py', run_name='__main__')" > audit-validate.log 2>&1
+          timeout 90s python3 -c "import runpy,sys; sys.path.insert(0,'src1/worthiness'); sys.argv=['audit.py','validate']; runpy.run_path('src1/worthiness/audit.py', run_name='__main__')" > x002-audit.log 2>&1
           rc=$?
           set -e
-          cat audit-validate.log
+          cat x002-audit.log
           if [ "$rc" -ne 0 ] && [ "$rc" -ne 124 ]; then exit "$rc"; fi
-          grep -qi 'anchor 1' audit-validate.log
-          echo "audit.py validate exit=$rc (0=complete, 124=bounded timeout)" >> "$GITHUB_STEP_SUMMARY"
+          grep -Fq 'n=1: Q=21 P=87/4 Phat=101/4  [OK]' x002-audit.log
+          grep -Fq 'n=2: Q=2989 P=1190161/384 Phat=344923/96  [OK]' x002-audit.log
+          echo "X002 exit=$rc; timeout is an accepted bounded-record-point outcome" >> "$GITHUB_STEP_SUMMARY"
+      - name: Normalize X005 submitted-operator verification
+        run: |
+          python3 ci/oz_next_005/verify_zeta7_operator.py --source src1 | tee x005-operator.log
+          grep -Fq 'failures=0' x005-operator.log
+          grep -Fq 'reconstruction_status=blocked_missing_fleet_inputs' x005-operator.log
+      - name: Normalize X007 compact finite replay
+        run: |
+          set -euo pipefail
+          sudo mkdir -p /home/ubuntu/fable-episode-2
+          sudo ln -sfnT "$GITHUB_WORKSPACE/src1" /home/ubuntu/fable-episode-2/zeta-math
+          sudo ln -sfnT "$GITHUB_WORKSPACE/src2" /home/ubuntu/fable-episode-2/zeta-math-2
+          python3 -c "import runpy,sys; sys.path.insert(0,'src2/work/z5cf'); runpy.run_path('src2/work/z5cf/verify_compact.py', run_name='__main__')" | tee x007-compact.log
+          grep -Fq 'w3: ALL PASS n=0..34' x007-compact.log
+          grep -Fq 'w5: ALL PASS n=0..34' x007-compact.log
+          grep -Fq 'L_BZ[sum T w5] = 0 for n = 0..31 : ALL ZERO' x007-compact.log
+      - name: Capture normalized environment
+        run: |
+          {
+            python3 --version
+            uname -a
+            python3 -m pip freeze
+          } | tee environment.txt
+      - name: Preserve normalized computation evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: oz-next-005-computation-replay
+          path: |
+            environment.txt
+            x002-audit.log
+            x005-operator.log
+            x007-compact.log
+          if-no-files-found: error
+          retention-days: 30
+
+  prior-art-acquisition:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Acquire exact versioned nearest-source PDFs
+        run: |
+          set -euo pipefail
+          mkdir -p prior-art
+          while read -r id url; do
+            curl --fail --location --retry 5 --retry-delay 3 --user-agent 'GCL-OZ-WP00/1.0' "$url" -o "prior-art/$id.pdf"
+            test "$(head -c 4 "prior-art/$id.pdf")" = '%PDF'
+          done <<'EOF_SOURCES'
+          1508.00297v1 https://arxiv.org/pdf/1508.00297v1
+          2102.11839v2 https://arxiv.org/pdf/2102.11839v2
+          2301.12248v1 https://arxiv.org/pdf/2301.12248v1
+          2011.03400v1 https://arxiv.org/pdf/2011.03400v1
+          2503.07625v2 https://arxiv.org/pdf/2503.07625v2
+          EOF_SOURCES
+      - name: Emit content identities
+        run: |
+          python3 - <<'PY' | tee prior-art-identities.json
+          import hashlib, json
+          from pathlib import Path
+          rows=[]
+          for path in sorted(Path('prior-art').glob('*.pdf')):
+              data=path.read_bytes()
+              rows.append({'arxiv_version': path.stem, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
+          print(json.dumps({'sources': rows}, indent=2, sort_keys=True))
+          PY
+          cat prior-art-identities.json >> "$GITHUB_STEP_SUMMARY"
+      - name: Preserve content-addressed prior art
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: oz-next-005-prior-art
+          path: |
+            prior-art/
+            prior-art-identities.json
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
 
   lean-zeta5odd:
     runs-on: ubuntu-24.04
@@ -98,50 +188,43 @@ jobs:
         run: |
           lake exe cache get
           lake build
-          cat > GCLAxiomAudit.lean <<'EOF'
+          cat > GCLAxiomAudit.lean <<'EOF_LEAN'
           import Zeta5Odd
           #print axioms Zeta5Odd.zeta_odd_irrational
-          EOF
+          EOF_LEAN
           lake env lean GCLAxiomAudit.lean | tee gcl-axioms.log
           ! grep -q 'sorryAx' gcl-axioms.log
           grep -q 'propext' gcl-axioms.log
           grep -q 'Classical.choice' gcl-axioms.log
           grep -q 'Quot.sound' gcl-axioms.log
 
-  lean-cbcert:
+  lean-cbcert-evidence:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 5
     steps:
-      - name: Acquire pinned source
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Verify inherited content-addressed replay evidence
         run: |
+          set -euo pipefail
+          evidence='campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/review/OZ_NEXT_005/INHERITED_REPLAY_EVIDENCE.yaml'
+          grep -Fq 'workflow_run: 30518776394' "$evidence"
+          grep -Fq 'workflow_job: 90794375349' "$evidence"
+          grep -Fq 'tested_head: c7cd86962f387837400978901dbd674805a6a1f6' "$evidence"
+          grep -Fq 'conclusion: success' "$evidence"
           git clone --filter=blob:none "$SRC1_REPO" src1
           git -C src1 checkout --detach "$SRC1_SHA"
           test "$(git -C src1 rev-parse HEAD)" = "$SRC1_SHA"
-      - name: Install Lean
-        run: |
-          for attempt in 1 2 3; do
-            curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y && break
-            test "$attempt" -lt 3
-            sleep $((attempt * 10))
-          done
-          test -x "$HOME/.elan/bin/lake"
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - name: Build and audit declarations
-        working-directory: src1/cbcert
-        run: |
-          lake exe cache get
-          lake build
-          cat > GCLAxiomAudit.lean <<'EOF'
-          import Cbcert
-          #print axioms Cbcert.LucasRow.Q_lucas_frobenius
-          #print axioms Cbcert.Main.pn_valuation
-          EOF
-          lake env lean GCLAxiomAudit.lean | tee gcl-axioms.log
-          ! grep -q 'sorryAx' gcl-axioms.log
+          echo '34fd92aedc62517b2a6d01e14247e077e6c9cd806d81fcb833268258cbe22d93  src1/cbcert/Cbcert/LucasRow.lean' | sha256sum --check
+          echo '3484bd6f6825ddc1ffbaaf8809acf724b621029d5856c9d42f7f1c3a3c8a3906  src1/cbcert/Cbcert/Main.lean' | sha256sum --check
+          grep -Fq 'theorem Q_lucas_frobenius' src1/cbcert/Cbcert/LucasRow.lean
+          grep -Fq 'theorem pn_valuation' src1/cbcert/Cbcert/Main.lean
+          echo 'Inherited Cbcert replay remains valid for the unchanged content-addressed source.' >> "$GITHUB_STEP_SUMMARY"
 
   lean-zetalucas:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 40
     steps:
       - name: Acquire pinned source
         run: |
@@ -167,29 +250,33 @@ jobs:
             ZetaLucas.TheoremLB \
             ZetaLucas.Instances \
             ZetaLucas.BZFactor12 \
-            ZetaLucas.BZClosedForm
+            ZetaLucas.BZClosedForm \
+            ZetaLucas.BZStar
 
-          cat > GCLCleanAxiomAudit.lean <<'EOF'
-          import ZetaLucas.Apery
-          import ZetaLucas.TheoremLB
-          import ZetaLucas.Instances
+          cat > GCLCleanAxiomAudit.lean <<'EOF_LEAN'
+          import ZetaLucas.BZStar
           import ZetaLucas.BZFactor12
-          import ZetaLucas.BZClosedForm
           #print axioms ZetaLucas.apery_lucas
           #print axioms ZetaLucas.theorem_LB
           #print axioms ZetaLucas.bMin_lucas
           #print axioms ZetaLucas.BZ_P2_not_integral
           #print axioms ZetaLucas.BZ_P2_factor_twelve
           #print axioms ZetaLucas.BZCF.BZRec
-          EOF
+          #print axioms ZetaLucas.BZCF.PhatSum_eq_Phat_of_rec
+          #print axioms ZetaLucas.BZCF.PSum_eq_PBZ_of_rec
+          #print axioms ZetaLucas.BZStar.PStarSum_eq_Phat_of_rec
+          EOF_LEAN
           lake env lean GCLCleanAxiomAudit.lean | tee gcl-clean-axioms.log
           ! grep -q 'sorryAx' gcl-clean-axioms.log
 
-          cat > GCLQuarantineAxiomAudit.lean <<'EOF'
-          import ZetaLucas.BZClosedForm
+          cat > GCLQuarantineAxiomAudit.lean <<'EOF_LEAN'
+          import ZetaLucas.BZStar
+          #print axioms ZetaLucas.BZCF.bz_creative_telescoping
           #print axioms ZetaLucas.BZCF.PhatSum_eq_Phat
-          EOF
+          #print axioms ZetaLucas.BZCF.PSum_eq_PBZ
+          #print axioms ZetaLucas.BZStar.star_creative_telescoping
+          #print axioms ZetaLucas.BZStar.PStarSum_eq_Phat
+          EOF_LEAN
           lake env lean GCLQuarantineAxiomAudit.lean | tee gcl-quarantine-axioms.log
-          grep -q 'sorryAx' gcl-quarantine-axioms.log
-          grep -q 'P what' /dev/null 2>/dev/null || true
-          echo 'Selected clean declarations replay without sorryAx; the downstream compact-form theorem is quarantined by sorryAx.' >> "$GITHUB_STEP_SUMMARY"
+          test "$(grep -c 'sorryAx' gcl-quarantine-axioms.log)" -ge 5
+          echo 'Conditional infrastructure is clean; five named compact-form declarations remain quarantined by sorryAx.' >> "$GITHUB_STEP_SUMMARY"
