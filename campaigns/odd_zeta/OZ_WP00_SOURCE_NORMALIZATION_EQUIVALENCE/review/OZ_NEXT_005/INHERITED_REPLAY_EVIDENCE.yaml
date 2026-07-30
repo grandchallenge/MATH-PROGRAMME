@@ -1,0 +1,40 @@
+schema_version: 1.0.0
+record_id: OZ-NEXT-005-INHERITED-CBCERT
+campaign_id: OZ
+work_package_id: OZ-WP00
+evidence_type: CONTENT_ADDRESSED_REPLAY_REUSE
+claim_boundary: Reuses a successful full Lean replay because the pinned source commit and audited declaration files are unchanged. It does not extend the theorem scope or certify a new claim.
+source:
+  repository: rain-1/odd-zeta-values-autoformalization
+  commit: 3046acf948896358f420e7a655e7a4235c92028a
+  files:
+    - path: cbcert/Cbcert/LucasRow.lean
+      sha256: 34fd92aedc62517b2a6d01e14247e077e6c9cd806d81fcb833268258cbe22d93
+      declaration: Cbcert.LucasRow.Q_lucas_frobenius
+    - path: cbcert/Cbcert/Main.lean
+      sha256: 3484bd6f6825ddc1ffbaaf8809acf724b621029d5856c9d42f7f1c3a3c8a3906
+      declaration: Cbcert.Main.pn_valuation
+full_replay:
+  programme_pull_request: 144
+  tested_head: c7cd86962f387837400978901dbd674805a6a1f6
+  workflow_run: 30518776394
+  workflow_job: 90794375349
+  conclusion: success
+  replay_actions:
+    - lake exe cache get
+    - lake build
+    - '#print axioms Cbcert.LucasRow.Q_lucas_frobenius'
+    - '#print axioms Cbcert.Main.pn_valuation'
+  axiom_result:
+    sorryAx: absent
+    imported_axioms: [propext, Classical.choice, Quot.sound]
+reuse_conditions:
+  - source commit is byte-identical
+  - both declaration-file SHA-256 identities match
+  - no statement about these declarations changes in OZ-NEXT-005
+  - the current workflow validates all conditions before accepting inherited evidence
+invalidating_events:
+  - source revision change
+  - declaration-file hash change
+  - theorem locator change
+  - change to the accepted axiom boundary
