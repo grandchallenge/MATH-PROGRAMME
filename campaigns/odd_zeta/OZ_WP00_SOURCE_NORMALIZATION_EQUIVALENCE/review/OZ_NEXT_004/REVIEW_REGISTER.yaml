@@ -1,0 +1,118 @@
+schema_version: 1.0.0
+review_id: OZ-NEXT-004
+campaign_id: OZ
+work_package_id: OZ-WP00
+review_date: '2026-07-30'
+review_independence: GCL review performed against the pinned A004 source locks; source-internal reviewer records
+  are treated as evidence, not independent acceptance.
+inputs:
+  manifest_blob: a2b55233a77ad05a49f55096864b7c98741411e3
+  a004_record_blob: 20771d4515f2238920ac46a8e0186a24c1c06275
+  source_locks:
+  - OZ-SRC-RIVER-FORMALIZATION-001
+  - OZ-SRC-RIVER-MOREMATH-001
+roles:
+- role: Axiomatist
+  verdict: PASS_WITH_OBLIGATIONS
+  findings:
+  - Formal theorem assumptions are explicit.
+  - Theorem LB is conditional on H1-H5.
+  - Sharp-12 headline dependencies include unproved or certificate-only nodes; no unconditional theorem may be inferred.
+- role: Cartographer
+  verdict: PASS
+  findings:
+  - All 43 non-literature intake objects are indexed.
+  - Support edges and bounded scopes are separated.
+  - The BZ operator definition is separated from row-annihilation claims.
+- role: Grammarian
+  verdict: PASS_WITH_CORRECTIONS
+  findings:
+  - Use source-proved, formally replayed, and finitely verified as distinct terms.
+  - Keep mod p, mod p^2 and mod p^3 statements separate.
+  - Record bMin = 6 B for the classical secondary-solution normalisation.
+- role: Verifier
+  verdict: PARTIAL
+  findings:
+  - Five Python replay lanes passed locally.
+  - The large audit lane timed out after anchor checks.
+  - Two computation lanes lack normalized replay commands.
+  - Pinned Lean replay is delegated to the PR workflow and remains pending until a successful run is recorded.
+- role: Adversary
+  verdict: BLOCKING_FINDINGS
+  findings:
+  - OZ-MSS-S006 and OZ-CER-E004 are overstated relative to PHASE2_CERTS and REFEREE_PAPERS.
+  - BZClosedForm.lean and BZStar.lean contain quarantined sorries.
+  - Source-internal referee records are not independent GCL reviews.
+  - Novelty corpus omits the nearest Lucas-congruence papers from the A004 source lock.
+- role: Formalist
+  verdict: PASS_WITH_BOUNDARIES
+  findings:
+  - Selected Lean declarations have explicit semantic targets.
+  - Theorem LB proves only the abstract conditional statement.
+  - Downstream BZ compact-form theorems in Lean depend on bz_creative_telescoping and cannot support paper-proof
+    promotion.
+- role: Amanuensis
+  verdict: PASS
+  findings:
+  - Pinned commits, archive SHA-256 identities, source paths and review commands are recorded.
+  - Local replay logs must not be confused with GitHub Actions evidence.
+- role: Referee
+  verdict: REJECT_PROMOTION_ACCEPT_REVIEW_PACKAGE
+  findings:
+  - OZ-NEXT-004 may close as a fail-closed intake review.
+  - OZ-WP00 remains open.
+  - No NEW_AFTER_AUDIT finding is authorized.
+  - No new irrationality conclusion is supported.
+local_replay:
+- target: OZ-CER-E002
+  command: python3 worthiness/cb_certificate_check.py
+  result: PASS
+  detail: 420 prime-window pairs; w and wt passed.
+- target: OZ-CMP-X001
+  command: python3 worthiness/gamma.py
+  result: PASS
+  detail: Self-test and published-point values reproduced.
+- target: OZ-CMP-X002
+  command: python3 worthiness/audit.py validate
+  result: PARTIAL_TIMEOUT
+  detail: n=1 and n=2 anchors passed; timeout after 300 seconds.
+- target: OZ-CMP-X003
+  command: python3 work/apdef/validate.py
+  result: PASS
+  detail: Direct sums through n<=40 and declared congruence gates passed.
+- target: OZ-CMP-X004
+  command: python3 worthiness/falsify_tests.py
+  result: PASS
+  detail: Declared n<=360, p<=73, 5,989-descents sweep passed.
+- target: OZ-CMP-X006
+  command: python3 work/lbw/t2_final.py; python3 work/lbw/t4_proofcheck.py; python3 work/sporadic/check1.py
+  result: PASS_WITH_SCOPE_FINDING
+  detail: Master finite sweep passed; separated proof layers show expected exceptional failures and printed tame
+    diagnostic is weaker than formal H4.
+ci_replay:
+  status: PENDING
+  workflow: .github/workflows/oz-next-004-independent-review.yml
+  required_jobs:
+  - static-python-replay
+  - lean-zeta5odd
+  - lean-cbcert
+  - lean-zetalucas
+promotion:
+  eligible: false
+  wp00_complete: false
+  novelty_authorized: false
+  irrationality_claim_authorized: false
+  blockers:
+  - Incomplete sharp-12 certificate chain.
+  - Two quarantined Lean sorries and dependency boundaries.
+  - Incomplete deterministic replay for X002, X005 and X007.
+  - Nearest external prior art not source-locked and specialist novelty audit incomplete.
+next_obligations:
+- id: OZ-NEXT-005A
+  title: Sharp-12 proof and certificate reconciliation
+- id: OZ-NEXT-005B
+  title: Computation environment and replay normalization
+- id: OZ-NEXT-005C
+  title: Nearest-prior-art acquisition and specialist novelty audit
+- id: OZ-NEXT-005D
+  title: Lean placeholder quarantine and declaration dependency audit
