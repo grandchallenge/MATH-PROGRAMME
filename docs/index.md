@@ -8,8 +8,8 @@ hide:
   <img class="frontispiece__field" src="assets/programme-field.svg" alt="" aria-hidden="true">
   <div class="frontispiece__inner">
     <div class="frontispiece__edition">
-      <span>Grand Challenge Mathematics</span>
-      <span>Programme edition 2026.07</span>
+      <span>Grand Challenge Labs</span>
+      <span>Mathematics Programme · Edition 2026.07</span>
     </div>
     <h1>MATH-<br>PROGRAMME</h1>
     <p class="frontispiece__thesis">A public discipline for turning mathematical curiosity into checked understanding.</p>
