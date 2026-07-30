@@ -1,0 +1,66 @@
+schema_version: 1.0.0
+record_id: OZ-NEXT-005A
+campaign_id: OZ
+work_package_id: OZ-WP00
+source_commits:
+  formalization: 3046acf948896358f420e7a655e7a4235c92028a
+  moremath: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+claim_boundary: Reconciles the source-declared sharp-12 dependency chain. It does not supply missing certificates.
+headline:
+  record: OZ-MSS-S006
+  source_intake_status: PROVED_IN_PACKAGE
+  effective_status: STATED_ONLY
+  review_disposition: CONDITIONAL_CHAIN_NOT_ACCEPTED_AS_UNIFORM_THEOREM
+  scope: Brown-Zudilin P-row denominator law at primes p >= 5.
+  exact_dependencies:
+    - id: OZ-SH12-N001
+      statement: Q_n is annihilated by the Brown-Zudilin order-3 operator.
+      status: CERTIFIED_AND_REPLAYED
+      evidence: OZ-CER-E002 and pinned Lean/Python replay
+    - id: OZ-SH12-N002
+      statement: The paper-level arithmetic chain derives the p>=5 law from T1-top and DEPTH.
+      status: SOURCE_PROOF_CONDITIONAL
+      evidence: papers_out/sharp12/sharp12.tex and work/REFEREE_PAPERS.md
+    - id: OZ-SH12-N003
+      statement: T1-top, P_n = sum T w5, holds for all n.
+      status: VERIFIED_FINITE_NOT_CERTIFIED
+      evidence: work/PHASE2_CERTS.md
+      blocks_promotion: true
+    - id: OZ-SH12-N004
+      statement: DEPTH supplies a representative satisfying the required cell-wise bounds.
+      status: FINITE_LINEAR_ALGEBRA_CERTIFICATE_NOT_UNIVERSAL_PROOF
+      evidence: work/PHASE2_FINAL.md and papers_out/sharp12/sharp12.tex
+      blocks_promotion: true
+    - id: OZ-SH12-N005
+      statement: Theorem B, Phat_n = sum T w3hat.
+      status: VERIFIED_FINITE_NOT_CERTIFIED
+      evidence: work/PHASE2_CERTS.md
+      relevance: Required for the middle row only; not a dependency of the P_n p>=5 headline.
+    - id: OZ-SH12-N006
+      statement: p=2 and p=3 components.
+      status: OUTSIDE_ACCEPTED_P_GE_5_CHAIN
+      evidence: papers_out/sharp12/sharp12.tex
+certificate_ledger:
+  record: OZ-CER-E004
+  source_intake_status: PROVED_IN_PACKAGE
+  effective_status: STATED_ONLY
+  review_disposition: INCOMPLETE_CERTIFICATE_LEDGER
+  final_telescopers:
+    theorem_B: absent
+    T1_top: absent
+  source_definitive_text:
+    - Neither identity is certified.
+    - Zero final telescopers exist for Theorem B or T1-top.
+  accepted_components:
+    - Q-row recurrence certificate
+    - exact n=2 factor-12 Lean certificate
+    - finite falsification and consistency sweeps within their declared domains
+  rejected_inferences:
+    - accepted components imply the uniform sharp-12 theorem
+    - finite consistency of DEPTH proves an all-prime theorem
+    - recurrence matching proves either decomposition identity
+promotion:
+  eligible: false
+  blockers:
+    - OZ-SH12-N003
+    - OZ-SH12-N004
