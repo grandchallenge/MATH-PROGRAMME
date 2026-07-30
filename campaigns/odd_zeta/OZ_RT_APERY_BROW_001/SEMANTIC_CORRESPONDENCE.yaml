@@ -1,0 +1,104 @@
+schema_version: 1.0.0
+correspondence_id: OZ-RT-APERY-BROW-001-SEMANTICS
+campaign_id: OZ
+theorem_id: OZ-THM-T002
+source_commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+objects:
+  paper_integral_row:
+    symbol: a_n
+    definition: sum from k=0 to n of C(n,k)^2 C(n+k,k)^2
+    source: papers_out/lucas2nd/sec-weight3.tex::eq:Ank
+    lean_object: ZetaLucas.apery
+    lean_source: lean/ZetaLucas/Apery.lean
+    relation: DEFINITIONALLY_EQUAL_AFTER_CAST
+  paper_double_sum_companion:
+    symbol: b_n
+    initial_values: [0, 6]
+    definition: >-
+      sum_k A(n,k) [H_n^(3) + sum_{m=1}^k (-1)^(m-1)/(2 m^3 C(n,m) C(n+m,m))]
+    source: papers_out/lucas2nd/sec-weight3.tex::eq:Ank
+    lean_object: null
+    relation: NOT_DIRECTLY_FORMALIZED
+  paper_minimal_companion:
+    symbol: B_min(n)
+    definition: sum_k A(n,k) [2 H_n^(3) - H_k^(3)]
+    source: papers_out/lucas2nd/sec-minimal.tex::thm:minimal
+    lean_object: ZetaLucas.bMin
+    lean_source: lean/ZetaLucas/Instances.lean
+    relation: EXACT_AFTER_HARMONIC_SUM_EXPANSION
+  recurrence_companion:
+    symbol: bApery(n)
+    definition: >-
+      b_0=0, b_1=6 and (n+1)^3 b_(n+1) =
+      (34n^3+51n^2+27n+5)b_n - n^3 b_(n-1)
+    source: papers_out/lucas2nd/sec-minimal.tex::eq:Ldef and initial-value proof
+    lean_object: ZetaLucas.bApery
+    lean_source: lean/ZetaLucas/MinimalForm.lean
+    relation: EXACT_SAME_RECURRENCE_AND_INITIAL_VALUES
+correspondence_edges:
+  - id: OZ-COR-AB-001
+    from: paper_integral_row
+    to: ZetaLucas.apery
+    status: ACCEPTED
+    witness: ZetaLucas.Apery definitions A and apery
+  - id: OZ-COR-AB-002
+    from: paper_minimal_companion
+    to: ZetaLucas.bMin
+    status: ACCEPTED
+    witness: ZetaLucas.bMin and ZetaLucas.Harm_eq
+  - id: OZ-COR-AB-003
+    from: paper_minimal_companion
+    to: recurrence_companion
+    status: FORMALLY_PROVED_PENDING_EXACT_HEAD_REPLAY
+    witness: ZetaLucas.bMin_eq_bApery
+  - id: OZ-COR-AB-004
+    from: paper_double_sum_companion
+    to: paper_minimal_companion
+    status: PAPER_PROOF_ACCEPTED_NOT_LEAN_FORMALIZED
+    witness: >-
+      sec-minimal.tex Theorem minimal: both representations satisfy the same second-order
+      recurrence, have equal values at n=0 and n=1, and therefore agree for all n.
+  - id: OZ-COR-AB-005
+    from: recurrence_companion
+    to: target_congruence
+    status: FORMALLY_PROVED_PENDING_EXACT_HEAD_REPLAY
+    witness: ZetaLucas.bApery_lucas
+statement_comparison:
+  paper_direct:
+    prime_scope: p>=5
+    a_scope: 1<=a<p
+    r_scope: 0<=r<p
+    modulus: p
+    left: p^3 b_(ap+r)
+    right: b_a a_r
+    integrality_explicit: true
+  lean_recurrence:
+    prime_scope: all primes
+    a_scope: a<p
+    r_scope: r<p
+    modulus: PCong p over rationals
+    left: p^3 bApery(ap+r)
+    right: bApery(a) apery(r)
+    integrality_semantics: encoded by PCong
+  restriction_map:
+    - Restrict the Lean prime scope to p>=5.
+    - Restrict a<p to 1<=a<p; the unused a=0 case is harmless.
+    - Replace bApery by the paper double-sum b using OZ-COR-AB-003 and OZ-COR-AB-004.
+    - Replace apery by paper a using OZ-COR-AB-001.
+    - Preserve modulus p; do not infer the separately computed modulo-p^3 master law.
+formalization_boundary:
+  exact_target_for_recurrence_sequence_formalized: true
+  direct_double_sum_definition_present_in_lean: false
+  double_sum_equivalence_formalized: false
+  double_sum_equivalence_independently_paper_audited: true
+  consequence: >-
+    The target theorem is Lean-formalized for the exact classical recurrence sequence and
+    independently proved directly for the paper double sum. The extensional identification
+    of the double sum with the Lean sequence is accepted at paper-proof level, not claimed
+    as a kernel-checked bridge.
+prohibitions:
+  - Do not describe the double-sum equality as Lean-formalized.
+  - Do not enlarge the target to the multi-digit modulo-p^3 statement.
+  - Do not infer an individual or new odd-zeta irrationality theorem.
+  - Do not assign NEW_AFTER_AUDIT before OZ-OBL-AB-013 closes.
+verdict: ACCEPT_PENDING_EXACT_HEAD_LEAN_REPLAY
