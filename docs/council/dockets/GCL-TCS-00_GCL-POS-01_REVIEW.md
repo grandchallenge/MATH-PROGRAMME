@@ -14,6 +14,15 @@
   - a claim that conformance establishes mathematical or empirical truth;
   - automatic replacement of existing MATH-PROGRAMME standards before integration review.
 
+## Temporary staffing mode
+
+`GI-STEWARD-0001` makes the Human Steward the only required human during the
+bootstrap stage. Council offices for this docket may be staffed by agents.
+The G8 Referee must be a non-author agent with a separately recorded identity,
+session, exact-revision finding, evidence, and residual uncertainty. The Human
+Steward retains final programme authorization. Additional human review is not
+a promotion prerequisite while the directive is effective.
+
 ## Object
 
 `GCL-TCS-00` defines a programme-wide technical communication hierarchy. It specifies conformance profiles, mandatory metadata, exception rules, review roles, promotion gates, fail-closed conditions, and an adoption sequence for later modules.
@@ -112,7 +121,9 @@ The pull request must remain draft until:
 - repository validation passes;
 - Council findings are recorded;
 - blocking integration conflicts are resolved;
-- an independent Referee states the approved revision and authorized downstream use.
+- a non-author agent Referee states the approved revision and authorized
+  downstream use; and
+- the Human Steward authorizes the bounded pilot disposition.
 
 A merge without an explicit disposition admits the files for review only. It does not promote them to binding programme authority.
 

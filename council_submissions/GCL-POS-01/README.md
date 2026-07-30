@@ -18,6 +18,6 @@ sha256 89751685b4944704da1460d58d1556502bbbd77e7b6c81bd303d130c1fa0657b
 
 Status: `candidate`, `review_ready`, impact class `IC-2`.
 
-Internal machine-assisted checks cover G0 through G7. They are not independent. G8 remains deferred for an independent GCL Referee. G9 remains deferred for authority admission and release approval.
+Internal machine-assisted checks cover G0 through G7. They are not independent. Under `GI-STEWARD-0001`, G8 remains deferred for a separately identified non-author agent GCL Referee. G9 remains deferred for Human Steward authority admission and release approval.
 
 The Council review should decide whether to approve the position as the bounded institutional statement for the GCL-TCS-00 pilot. Approval must not convert its recommendations into empirical claims.
