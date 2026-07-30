@@ -26,23 +26,32 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Check out formalization repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-        with:
-          repository: rain-1/odd-zeta-values-autoformalization
-          ref: 3046acf948896358f420e7a655e7a4235c92028a
-          path: sources/odd-zeta-values-autoformalization
-          fetch-depth: 1
-          persist-credentials: false
+      - name: Fetch exact public source revisions
+        shell: bash
+        run: |
+          set -euo pipefail
 
-      - name: Check out continuation repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-        with:
-          repository: rain-1/-odd-zeta-values-moremath
-          ref: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
-          path: sources/odd-zeta-values-moremath
-          fetch-depth: 1
-          persist-credentials: false
+          fetch_exact() {
+            local url="$1"
+            local commit="$2"
+            local path="$3"
+            mkdir -p "$path"
+            git -C "$path" init
+            git -C "$path" remote add origin "$url"
+            git -C "$path" fetch --no-tags --depth=1 origin "$commit"
+            git -C "$path" checkout --detach FETCH_HEAD
+            test "$(git -C "$path" rev-parse HEAD)" = "$commit"
+          }
+
+          fetch_exact \
+            https://github.com/rain-1/odd-zeta-values-autoformalization.git \
+            3046acf948896358f420e7a655e7a4235c92028a \
+            sources/odd-zeta-values-autoformalization
+
+          fetch_exact \
+            https://github.com/rain-1/-odd-zeta-values-moremath.git \
+            968477ed7e406df6542f8da6fbe1cd6ca7273c47 \
+            sources/odd-zeta-values-moremath
 
       - name: Build deterministic archives and file inventories
         shell: bash
@@ -55,7 +64,6 @@ jobs:
 
           import hashlib
           import json
-          import os
           import pathlib
           import subprocess
 
@@ -87,37 +95,58 @@ jobs:
               if actual != spec["commit"]:
                   raise SystemExit(f"commit mismatch for {spec['repository']}: {actual}")
 
-              raw_paths = run("git", "ls-files", "-z", cwd=checkout)
-              paths = [p.decode("utf-8", "surrogateescape") for p in raw_paths.split(b"\0") if p]
+              tree = run("git", "ls-tree", "-rz", "-l", "--full-tree", "HEAD", cwd=checkout)
+              records = [record for record in tree.split(b"\0") if record]
               entries = []
-              total_bytes = 0
+              total_blob_bytes = 0
               sha_lines = []
-              for rel in paths:
-                  data = run("git", "show", f"HEAD:{rel}", cwd=checkout)
-                  content_sha256 = hashlib.sha256(data).hexdigest()
-                  blob_sha1 = run("git", "rev-parse", f"HEAD:{rel}", cwd=checkout).decode().strip()
-                  mode = run("git", "ls-files", "-s", "--", rel, cwd=checkout).decode().split()[0]
-                  size = len(data)
-                  total_bytes += size
-                  entries.append(
-                      {
+              gitlinks = []
+              for record in records:
+                  metadata, raw_path = record.split(b"\t", 1)
+                  mode, object_type, object_sha1, raw_size = metadata.decode("ascii").split()
+                  rel = raw_path.decode("utf-8", "surrogateescape")
+                  if object_type == "blob":
+                      data = run("git", "cat-file", "blob", object_sha1, cwd=checkout)
+                      content_sha256 = hashlib.sha256(data).hexdigest()
+                      size = len(data)
+                      total_blob_bytes += size
+                      entries.append(
+                          {
+                              "path": rel,
+                              "entry_type": "blob",
+                              "bytes": size,
+                              "sha256": content_sha256,
+                              "git_object_sha1": object_sha1,
+                              "git_mode": mode,
+                              "included_in_git_archive": True,
+                          }
+                      )
+                      sha_lines.append(f"{content_sha256}  {rel}")
+                  else:
+                      entry = {
                           "path": rel,
-                          "bytes": size,
-                          "sha256": content_sha256,
-                          "git_blob_sha1": blob_sha1,
+                          "entry_type": object_type,
+                          "bytes": None,
+                          "sha256": None,
+                          "git_object_sha1": object_sha1,
                           "git_mode": mode,
+                          "included_in_git_archive": False,
+                          "disposition": "GITLINK_POINTER_ONLY",
                       }
-                  )
-                  sha_lines.append(f"{content_sha256}  {rel}")
+                      entries.append(entry)
+                      gitlinks.append(entry)
 
               inventory = {
                   "schema_version": "1.0.0",
                   "source_lock_id": spec["source_lock_id"],
                   "repository": spec["repository"],
                   "commit": spec["commit"],
-                  "tracked_file_count": len(entries),
-                  "tracked_content_bytes": total_bytes,
+                  "tree_entry_count": len(entries),
+                  "tracked_blob_count": sum(e["entry_type"] == "blob" for e in entries),
+                  "gitlink_count": len(gitlinks),
+                  "tracked_blob_bytes": total_blob_bytes,
                   "files": entries,
+                  "gitlink_anomalies": gitlinks,
               }
               stem = spec["source_lock_id"].lower().replace("_", "-")
               inv_path = root / "generated/inventories" / f"{stem}.json"
@@ -154,12 +183,17 @@ jobs:
           root = pathlib.Path("generated")
           records = []
           for path in sorted((root / "archives").glob("*.tar.gz")):
-              data = path.read_bytes()
+              digest = hashlib.sha256()
+              size = 0
+              with path.open("rb") as stream:
+                  while chunk := stream.read(1024 * 1024):
+                      digest.update(chunk)
+                      size += len(chunk)
               records.append(
                   {
                       "file": path.name,
-                      "bytes": len(data),
-                      "sha256": hashlib.sha256(data).hexdigest(),
+                      "bytes": size,
+                      "sha256": digest.hexdigest(),
                       "construction": "git archive --format=tar | gzip -n -9",
                   }
               )
