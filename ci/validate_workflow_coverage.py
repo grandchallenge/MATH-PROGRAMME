@@ -257,7 +257,7 @@ def workflow_coverage_errors(
         admin_text = texts["release-trust-admin.yml"]
         for marker in (
             "environment: release-trust",
-            "actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349",
+            "actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1",
             "app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}",
             "private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}",
             "GCL_REPOSITORY_ADMIN_TOKEN: ${{ steps.app-token.outputs.token }}",
