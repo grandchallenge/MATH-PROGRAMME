@@ -1,0 +1,73 @@
+schema_version: 1.0.0
+record_id: OZ-NEXT-005C
+campaign_id: OZ
+work_package_id: OZ-WP00
+claim_boundary: Named nearest-source acquisition and theorem-scope comparison. Not an exhaustive novelty search.
+acquisition_status: HASHES_PENDING_CI
+sources:
+  - id: OZ-LIT-EXT-001
+    arxiv_version: 1508.00297v1
+    title: Divisibility properties of sporadic Apéry-like numbers
+    authors: [Amita Malik, Armin Straub]
+    locator: https://arxiv.org/pdf/1508.00297v1
+    bytes: null
+    sha256: null
+    audited_scope: Integral sporadic Apéry-like rows; Lucas congruences modulo p.
+    relation:
+      OZ-CON-C001: KNOWN_PRIOR_ART
+      OZ-CON-C002: NOT_STATED_IN_REVIEWED_THEOREM_SCOPE
+      OZ-CON-C004: NOT_STATED_IN_REVIEWED_THEOREM_SCOPE
+  - id: OZ-LIT-EXT-002
+    arxiv_version: 2102.11839v2
+    title: New representations for all sporadic Apéry-like sequences, with applications to congruences
+    authors: [Ofir Gorodetsky]
+    locator: https://arxiv.org/pdf/2102.11839v2
+    bytes: null
+    sha256: null
+    audited_scope: Constant-term and binomial representations; integral-row Lucas and supercongruence consequences.
+    relation:
+      OZ-CON-C001: KNOWN_PRIOR_ART
+      OZ-CON-C002: NOT_STATED_IN_REVIEWED_THEOREM_SCOPE
+      OZ-CON-C004: NOT_STATED_IN_REVIEWED_THEOREM_SCOPE
+  - id: OZ-LIT-EXT-003
+    arxiv_version: 2301.12248v1
+    title: Gessel-Lucas congruences for sporadic sequences
+    authors: [Armin Straub]
+    locator: https://arxiv.org/pdf/2301.12248v1
+    bytes: null
+    sha256: null
+    audited_scope: Mod-p^2 Gessel-Lucas congruences and two-term supercongruences for integral rows.
+    relation:
+      OZ-CON-C001: KNOWN_PRIOR_ART
+      OZ-CON-C002: NOT_STATED_IN_REVIEWED_THEOREM_SCOPE
+      OZ-CON-C004: NOT_STATED_IN_REVIEWED_THEOREM_SCOPE
+  - id: OZ-LIT-EXT-004
+    arxiv_version: 2011.03400v1
+    title: Apéry Limits — Experiments and Proofs
+    authors: [Marc Chamberland, Armin Straub]
+    locator: https://arxiv.org/pdf/2011.03400v1
+    bytes: null
+    sha256: null
+    audited_scope: Quotients of recurrence solutions and Apéry limits.
+    relation:
+      OZ-HAR-H001: CONTEXTUAL_PRIOR_ART_NORMALIZATION_REVIEW_REQUIRED
+      OZ-CON-C002: NOT_STATED_IN_REVIEWED_THEOREM_SCOPE
+  - id: OZ-LIT-EXT-005
+    arxiv_version: 2503.07625v2
+    title: A Formal Proof of the Irrationality of zeta(3) in Lean 4
+    authors: [Junqi Liu, Jujian Zhang, Lihong Zhi]
+    locator: https://arxiv.org/pdf/2503.07625v2
+    bytes: null
+    sha256: null
+    audited_scope: Lean 4 formalization of a Beuker-method irrationality proof and supporting analysis.
+    relation:
+      OZ-L4-T001: FORMALIZATION_COMPARATOR_DIFFERENT_THEOREM_AND_METHOD
+novelty_disposition:
+  OZ-CON-C002: APPARENTLY_NEW_PENDING_REVIEW
+  OZ-CON-C004: APPARENTLY_NEW_PENDING_REVIEW
+  prohibition: NEW_AFTER_AUDIT remains unauthorized.
+remaining_search_obligations:
+  - Gessel 1982 primary theorem source
+  - harmonic companion and secondary-solution congruence literature beyond the named set
+  - WZ/Gosper literature nearest to the minimal companion formula
+  - complete citation graph from the River manuscripts
