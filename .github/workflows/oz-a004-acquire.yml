@@ -1,0 +1,186 @@
+name: OZ A004 source acquisition
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/oz-a004-acquire.yml
+      - campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/**
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oz-a004-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  acquire:
+    name: Archive pinned River repositories
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Check out Programme branch
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+
+      - name: Check out formalization repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: rain-1/odd-zeta-values-autoformalization
+          ref: 3046acf948896358f420e7a655e7a4235c92028a
+          path: sources/odd-zeta-values-autoformalization
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Check out continuation repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: rain-1/-odd-zeta-values-moremath
+          ref: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+          path: sources/odd-zeta-values-moremath
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Build deterministic archives and file inventories
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p generated/archives generated/inventories
+
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import hashlib
+          import json
+          import os
+          import pathlib
+          import subprocess
+
+          root = pathlib.Path.cwd()
+          repos = [
+              {
+                  "source_lock_id": "OZ-SRC-RIVER-FORMALIZATION-001",
+                  "repository": "rain-1/odd-zeta-values-autoformalization",
+                  "path": root / "sources/odd-zeta-values-autoformalization",
+                  "commit": "3046acf948896358f420e7a655e7a4235c92028a",
+                  "archive": "odd-zeta-values-autoformalization-3046acf948896358f420e7a655e7a4235c92028a.tar.gz",
+              },
+              {
+                  "source_lock_id": "OZ-SRC-RIVER-MOREMATH-001",
+                  "repository": "rain-1/-odd-zeta-values-moremath",
+                  "path": root / "sources/odd-zeta-values-moremath",
+                  "commit": "968477ed7e406df6542f8da6fbe1cd6ca7273c47",
+                  "archive": "odd-zeta-values-moremath-968477ed7e406df6542f8da6fbe1cd6ca7273c47.tar.gz",
+              },
+          ]
+
+          def run(*args: str, cwd: pathlib.Path | None = None) -> bytes:
+              return subprocess.check_output(args, cwd=cwd)
+
+          summaries = []
+          for spec in repos:
+              checkout = spec["path"]
+              actual = run("git", "rev-parse", "HEAD", cwd=checkout).decode().strip()
+              if actual != spec["commit"]:
+                  raise SystemExit(f"commit mismatch for {spec['repository']}: {actual}")
+
+              raw_paths = run("git", "ls-files", "-z", cwd=checkout)
+              paths = [p.decode("utf-8", "surrogateescape") for p in raw_paths.split(b"\0") if p]
+              entries = []
+              total_bytes = 0
+              sha_lines = []
+              for rel in paths:
+                  data = run("git", "show", f"HEAD:{rel}", cwd=checkout)
+                  content_sha256 = hashlib.sha256(data).hexdigest()
+                  blob_sha1 = run("git", "rev-parse", f"HEAD:{rel}", cwd=checkout).decode().strip()
+                  mode = run("git", "ls-files", "-s", "--", rel, cwd=checkout).decode().split()[0]
+                  size = len(data)
+                  total_bytes += size
+                  entries.append(
+                      {
+                          "path": rel,
+                          "bytes": size,
+                          "sha256": content_sha256,
+                          "git_blob_sha1": blob_sha1,
+                          "git_mode": mode,
+                      }
+                  )
+                  sha_lines.append(f"{content_sha256}  {rel}")
+
+              inventory = {
+                  "schema_version": "1.0.0",
+                  "source_lock_id": spec["source_lock_id"],
+                  "repository": spec["repository"],
+                  "commit": spec["commit"],
+                  "tracked_file_count": len(entries),
+                  "tracked_content_bytes": total_bytes,
+                  "files": entries,
+              }
+              stem = spec["source_lock_id"].lower().replace("_", "-")
+              inv_path = root / "generated/inventories" / f"{stem}.json"
+              sums_path = root / "generated/inventories" / f"{stem}.sha256"
+              inv_path.write_text(json.dumps(inventory, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+              sums_path.write_text("\n".join(sha_lines) + "\n", encoding="utf-8", errors="surrogateescape")
+              summaries.append({k: v for k, v in spec.items() if k != "path"})
+
+          (root / "generated/source-repositories.json").write_text(
+              json.dumps({"schema_version": "1.0.0", "repositories": summaries}, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+          git -C sources/odd-zeta-values-autoformalization archive \
+            --format=tar \
+            --prefix=odd-zeta-values-autoformalization-3046acf948896358f420e7a655e7a4235c92028a/ \
+            3046acf948896358f420e7a655e7a4235c92028a \
+            | gzip -n -9 > generated/archives/odd-zeta-values-autoformalization-3046acf948896358f420e7a655e7a4235c92028a.tar.gz
+
+          git -C sources/odd-zeta-values-moremath archive \
+            --format=tar \
+            --prefix=odd-zeta-values-moremath-968477ed7e406df6542f8da6fbe1cd6ca7273c47/ \
+            968477ed7e406df6542f8da6fbe1cd6ca7273c47 \
+            | gzip -n -9 > generated/archives/odd-zeta-values-moremath-968477ed7e406df6542f8da6fbe1cd6ca7273c47.tar.gz
+
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import hashlib
+          import json
+          import pathlib
+
+          root = pathlib.Path("generated")
+          records = []
+          for path in sorted((root / "archives").glob("*.tar.gz")):
+              data = path.read_bytes()
+              records.append(
+                  {
+                      "file": path.name,
+                      "bytes": len(data),
+                      "sha256": hashlib.sha256(data).hexdigest(),
+                      "construction": "git archive --format=tar | gzip -n -9",
+                  }
+              )
+          (root / "archive-identities.json").write_text(
+              json.dumps({"schema_version": "1.0.0", "archives": records}, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          (root / "SOURCE_SHA256SUMS").write_text(
+              "\n".join(f"{r['sha256']}  archives/{r['file']}" for r in records) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+          cat generated/archive-identities.json
+          du -h generated/archives/*
+
+      - name: Upload acquisition artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: oz-wp00-a004-source-archives
+          path: generated/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
