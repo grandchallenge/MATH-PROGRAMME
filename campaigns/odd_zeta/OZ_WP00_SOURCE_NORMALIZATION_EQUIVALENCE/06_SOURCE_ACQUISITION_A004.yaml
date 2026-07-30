@@ -1,0 +1,82 @@
+schema_version: 1.0.0
+record_id: OZ-ACQ-A004
+campaign_id: OZ
+work_package_id: OZ-WP00
+status: ACQUIRED_AND_CONTENT_ADDRESSED
+acquired_at: '2026-07-30'
+claim_boundary: This record establishes source and archive identities only. It does not independently validate mathematical
+  claims, novelty or irrationality conclusions.
+workflow:
+  repository: grandchallenge/MATH-PROGRAMME
+  pull_request: 143
+  head_commit: 82919fb05159fdfd674c98647ad4ae534932b644
+  run_id: 30509137583
+  run_number: 3
+  conclusion: success
+  artifact_id: 8746466262
+  artifact_name: oz-wp00-a004-source-archives
+  artifact_transport_bytes: 197268101
+  artifact_digest: sha256:4e8328b3a7c9c723cacd1d3f7c2341f56fade30d4d15b1f66d17ffc09802099a
+  retention_boundary: GitHub Actions transport artifact expires 2026-08-29; pinned public Git commits and committed
+    file-identity tables are the durable reconstruction authority.
+source_locks:
+- id: OZ-SRC-RIVER-FORMALIZATION-001
+  kind: deterministic_git_archive
+  version: 3046acf948896358f420e7a655e7a4235c92028a
+  locator: https://github.com/rain-1/odd-zeta-values-autoformalization/tree/3046acf948896358f420e7a655e7a4235c92028a
+  bytes: 4352844
+  sha256: fff66a629f4e45840eb425aae30ffbd4a23b64b568ea2d54c9c07258b74b2d22
+  acquired_at: '2026-07-30'
+  construction: git archive --format=tar | gzip -n -9
+  workflow_run: 30509137583
+  workflow_artifact_id: 8746466262
+  tracked_blob_count: 335
+  tracked_blob_bytes: 8193412
+  gitlink_count: 4
+  preservation_note: Exact source bytes remain available at the pinned public Git commit. The deterministic archive
+    was acquired and hashed; the Actions artifact is a temporary transport copy.
+- id: OZ-SRC-RIVER-MOREMATH-001
+  kind: deterministic_git_archive
+  version: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+  locator: https://github.com/rain-1/-odd-zeta-values-moremath/tree/968477ed7e406df6542f8da6fbe1cd6ca7273c47
+  bytes: 191999838
+  sha256: 2217a932e8ee338595d0188314aa4f079afb258fc98ea36df3e5c817a40fdd93
+  acquired_at: '2026-07-30'
+  construction: git archive --format=tar | gzip -n -9
+  workflow_run: 30509137583
+  workflow_artifact_id: 8746466262
+  tracked_blob_count: 1779
+  tracked_blob_bytes: 535648210
+  gitlink_count: 0
+  preservation_note: Exact source bytes remain available at the pinned public Git commit. The deterministic archive
+    was acquired and hashed; the Actions artifact is a temporary transport copy.
+enumeration:
+- source_lock_id: OZ-SRC-RIVER-FORMALIZATION-001
+  tree_entry_count: 339
+  tracked_blob_count: 335
+  tracked_blob_bytes: 8193412
+  gitlink_count: 4
+  identity_table: source_lock/A004/OZ-SRC-RIVER-FORMALIZATION-001.FILE_IDENTITIES.tsv
+  gitlink_anomalies:
+  - .claude/worktrees/agent-a1d0d473abb022213
+  - .claude/worktrees/agent-a285b60800a85f106
+  - .claude/worktrees/agent-a34c35fb1984dd557
+  - .claude/worktrees/agent-ac373be4502234861
+- source_lock_id: OZ-SRC-RIVER-MOREMATH-001
+  tree_entry_count: 1779
+  tracked_blob_count: 1779
+  tracked_blob_bytes: 535648210
+  gitlink_count: 0
+  identity_table: source_lock/A004/OZ-SRC-RIVER-MOREMATH-001.FILE_IDENTITIES.tsv
+  gitlink_anomalies: []
+object_counts:
+  manuscript_statements: 10
+  recurrences: 3
+  harmonic_formulas: 4
+  congruences: 6
+  lean_declarations: 8
+  certificates: 5
+  computations: 7
+  literature_sources: 37
+  irrationality_bridges: 0
+disposition: SOURCE LOCK ACQUIRED; AUDIT AND REPLAY OPEN; PROMOTION FALSE
