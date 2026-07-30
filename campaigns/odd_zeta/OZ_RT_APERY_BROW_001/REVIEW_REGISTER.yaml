@@ -1,0 +1,53 @@
+schema_version: 1.0.0
+review_id: OZ-RT-APERY-BROW-001-REVIEW
+campaign_id: OZ
+theorem_id: OZ-THM-T002
+review_date: '2026-07-30'
+inputs:
+  oz_wp02_merge: 5be02b5e1fd08d3bff7656f67e314a423a902086
+  proof_audit: DIRECT_PROOF_AUDIT.yaml
+  semantic_correspondence: SEMANTIC_CORRESPONDENCE.yaml
+  lean_replay: LEAN_REPLAY.yaml
+roles:
+  - role: Axiomatist
+    verdict: PASS
+    finding: The prime, digit, modulus, p-integrality, and sequence-normalization assumptions are explicit and sufficient for the direct proof.
+  - role: Cartographer
+    verdict: PASS
+    finding: The direct p-adic route and the recurrence/minimal-form route are separated, with twelve mandatory WP02 obligations mapped individually.
+  - role: Grammarian
+    verdict: PASS
+    finding: Single-digit modulo-p, multi-digit modulo-p3, ratio, recurrence, minimal-sum, double-sum, novelty, and irrationality statements are not conflated.
+  - role: Verifier
+    verdict: PASS_PENDING_EXACT_HEAD_CI
+    finding: The direct proof passed line-by-line audit; five Lean declarations and source identities remain subject to the exact-head workflow.
+  - role: Adversary
+    verdict: PASS
+    finding: Boundary cases, zero residues of a_a, denominator carries, top-block completion, source-internal review, and finite-to-unbounded inflation were tested against the proof logic.
+  - role: Formalist
+    verdict: PASS_WITH_EXPLICIT_REPRESENTATION_BOUNDARY
+    finding: The recurrence-defined classical theorem is formalized; the double-sum-to-minimal equality is accepted as a paper proof and is not described as kernel-checked.
+  - role: Amanuensis
+    verdict: PASS
+    finding: Source commits, file bytes, SHA-256 identities, Git blobs, theorem labels, Lean declarations, and obligation dispositions are recorded.
+  - role: Referee
+    verdict: PROMOTE_TARGET_THEOREM_ON_EXACT_HEAD_CI_SUCCESS
+    finding: >-
+      After both required workflow jobs pass against the exact PR head, accept the exact
+      single-digit Apéry B-row theorem as Referee-reviewed and the recurrence-sequence form
+      as formally replayed. Keep novelty open, preserve the double-sum formalization boundary,
+      and authorize OZ-RT-LB-INSTANCE-001.
+disposition_on_success:
+  mathematical_theorem: REFEREE_ACCEPTED
+  recurrence_sequence_lean_theorem: FORMALLY_REPLAYED
+  paper_double_sum_direct_proof: INDEPENDENTLY_ACCEPTED
+  paper_double_sum_to_minimal_bridge: PAPER_PROOF_ACCEPTED_NOT_LEAN_FORMALIZED
+  novelty: APPARENTLY_NEW_PENDING_REVIEW
+  multi_digit_mod_p3: FINITE_EVIDENCE_ONLY
+  new_irrationality_conclusion: false
+  authorizes: OZ-RT-LB-INSTANCE-001
+continuing_prohibitions:
+  - No multi-digit modulo-p3 theorem.
+  - No NEW_AFTER_AUDIT or priority claim.
+  - No new irrationality conclusion.
+  - No claim that the classical double-sum bridge is Lean-formalized.
