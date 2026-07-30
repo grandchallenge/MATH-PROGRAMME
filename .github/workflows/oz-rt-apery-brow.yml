@@ -1,0 +1,100 @@
+name: OZ-RT-APERY-BROW-001 theorem review
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/oz-rt-apery-brow.yml'
+      - 'campaigns/odd_zeta/OZ_RT_APERY_BROW_001/**'
+      - 'tests/test_oz_rt_apery_brow.py'
+      - 'ci/campaign_replay_registry.json'
+      - 'ci/validate_workflow_coverage.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oz-rt-apery-brow-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SRC_REPO: https://github.com/rain-1/-odd-zeta-values-moremath.git
+  SRC_SHA: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+
+jobs:
+  proof-package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Install validation dependencies
+        run: python3 -m pip install --requirement requirements/policy.txt
+      - name: Validate proof and semantic package
+        run: |
+          python3 campaigns/odd_zeta/OZ_RT_APERY_BROW_001/validate.py
+          python3 -m unittest tests.test_oz_rt_apery_brow
+      - name: Acquire pinned mathematical source
+        run: |
+          git clone --filter=blob:none "$SRC_REPO" source
+          git -C source checkout --detach "$SRC_SHA"
+          test "$(git -C source rev-parse HEAD)" = "$SRC_SHA"
+      - name: Verify exact source identities
+        run: |
+          set -euo pipefail
+          cat > source-identities.sha256 <<'EOF'
+          6641f3af3804fa8b4230284ec6e6843e0071de0f10b3613b5c18ae9aa3514e3e  source/papers_out/lucas2nd/sec-weight3.tex
+          201c7a31cf72ec2d5b241e709ccc0ad634954683939e0f157775b6eb466a16ae  source/papers_out/lucas2nd/sec-minimal.tex
+          d7cb7bde2d897c4995818f16260fcac50c687b3be76446f964dd71fefc44c295  source/lean/ZetaLucas/Apery.lean
+          549d8dafb6dbedd8ff09129a7e3e6e8bea165d4fc73886097880988f916be590  source/lean/ZetaLucas/TheoremLB.lean
+          c5d460150770cd24bc87490709e9a638c91fde411364a0e68bbd8840826bd6b3  source/lean/ZetaLucas/Instances.lean
+          57b4d42e614060f4c217ede9ac462025daba298863f248ed508a28a9f47b002c  source/lean/ZetaLucas/MinimalForm.lean
+          62c2d9c0fc1ec4c67e151c11eff41ca004ef38e179cf9476c230406e6defedef  source/lean/lean-toolchain
+          59281a978e5026a3e3ca9ffc6b887de101fe44c59d0efb438fb2bf3eaa794cd9  source/lean/lake-manifest.json
+          EOF
+          sha256sum --check source-identities.sha256
+          grep -Fq '\begin{theorem}[second row, weight three]' source/papers_out/lucas2nd/sec-weight3.tex
+          grep -Fq '\begin{theorem}[minimal form]' source/papers_out/lucas2nd/sec-minimal.tex
+
+  lean-apery-brow:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Acquire pinned Lean source
+        run: |
+          git clone --filter=blob:none "$SRC_REPO" source
+          git -C source checkout --detach "$SRC_SHA"
+          test "$(git -C source rev-parse HEAD)" = "$SRC_SHA"
+      - name: Install Lean
+        run: |
+          for attempt in 1 2 3; do
+            curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y && break
+            test "$attempt" -lt 3
+            sleep $((attempt * 10))
+          done
+          test -x "$HOME/.elan/bin/lake"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Build and audit Apéry B-row declarations
+        working-directory: source/lean
+        run: |
+          set -euo pipefail
+          lake exe cache get
+          lake build ZetaLucas.MinimalForm
+          cat > GCLAperyBrowAudit.lean <<'EOF'
+          import ZetaLucas.MinimalForm
+          #check ZetaLucas.apery_lucas
+          #check ZetaLucas.bMin_lucas
+          #check ZetaLucas.bMin_eq_bApery
+          #check ZetaLucas.apery_b_harmonic_closed_form
+          #check ZetaLucas.bApery_lucas
+          #print axioms ZetaLucas.apery_lucas
+          #print axioms ZetaLucas.bMin_lucas
+          #print axioms ZetaLucas.bMin_eq_bApery
+          #print axioms ZetaLucas.apery_b_harmonic_closed_form
+          #print axioms ZetaLucas.bApery_lucas
+          EOF
+          lake env lean GCLAperyBrowAudit.lean | tee gcl-apery-brow-axioms.log
+          ! grep -q 'sorryAx' gcl-apery-brow-axioms.log
+          grep -q 'ZetaLucas.bApery_lucas' gcl-apery-brow-axioms.log
+          grep -q 'ZetaLucas.bMin_eq_bApery' gcl-apery-brow-axioms.log

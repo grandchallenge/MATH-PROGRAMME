@@ -23,6 +23,7 @@ EXPECTED_WORKFLOWS = {
     "ci.yml",
     "gcl-conformance.yml",
     "oz-next-004-independent-review.yml",
+    "oz-rt-apery-brow.yml",
     "pages.yml",
     "pc-wp04.yml",
     "pc-wp05.yml",

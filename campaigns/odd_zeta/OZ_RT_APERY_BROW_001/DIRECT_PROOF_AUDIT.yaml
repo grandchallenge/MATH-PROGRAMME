@@ -1,0 +1,133 @@
+schema_version: 1.0.0
+audit_id: OZ-RT-APERY-BROW-001-DIRECT-PROOF
+campaign_id: OZ
+theorem_id: OZ-THM-T002
+audit_date: '2026-07-30'
+independence: >-
+  GCL line-by-line mathematical audit against the pinned River sources. The source-internal
+  hostile referee report is retained as corroborating evidence only and is not the authority
+  for this disposition.
+source_lock:
+  repository: rain-1/-odd-zeta-values-moremath
+  commit: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+  direct_proof:
+    path: papers_out/lucas2nd/sec-weight3.tex
+    git_blob: 5a5c7a555a919125877d4c2e22f9cfd1e8a58335
+    bytes: 20655
+    sha256: 6641f3af3804fa8b4230284ec6e6843e0071de0f10b3613b5c18ae9aa3514e3e
+  representation_bridge:
+    path: papers_out/lucas2nd/sec-minimal.tex
+    git_blob: d3c38d524b124eb13a415e5006c548c3002a1d31
+    bytes: 27493
+    sha256: 201c7a31cf72ec2d5b241e709ccc0ad634954683939e0f157775b6eb466a16ae
+exact_target:
+  statement: >-
+    For every prime p>=5, every integer a with 1<=a<p, and every integer r with
+    0<=r<p, both p^3 b_(ap+r) and b_a a_r are p-integral and
+    p^3 b_(ap+r) is congruent to b_a a_r modulo p.
+  modulus: p
+  prime_scope: p>=5
+  digit_scope: 1<=a<p and 0<=r<p
+  sequence_normalization: >-
+    a_n = sum_k C(n,k)^2 C(n+k,k)^2. The source b_n is the Apéry companion with
+    b_0=0 and b_1=6, represented by the displayed double harmonic sum.
+  exclusions:
+    - No multi-digit theorem is asserted.
+    - No congruence modulo p^3 is asserted.
+    - No ratio b_n/a_n is formed.
+    - No novelty or irrationality conclusion is asserted.
+proof_routes:
+  - id: OZ-AB-ROUTE-DIRECT
+    name: Direct p-adic decomposition proof
+    status: ACCEPTED_BY_INDEPENDENT_GCL_AUDIT
+    outline:
+      - id: D01
+        source_label: eq:Ank and eq:split
+        claim: Define A, u, c, a_n, b_n and split b_n = H_n^(3) a_n + W(n).
+        finding: PASS
+        reason: The definitions are well-formed on their finite ranges and the split is an exact rearrangement.
+      - id: D02
+        source_label: lem:interchange
+        claim: W(n) = sum_{m=1}^n u(n,m) T(n,m).
+        finding: PASS
+        reason: The finite triangular region 1<=m<=k<=n is reordered exactly; the k=0 inner sum is empty.
+      - id: D03
+        source_label: lem:lucas-step, lem:carry-ann, lem:summand
+        claim: Base-p factorization of A(ap+r,bp+s), including carry annihilation.
+        finding: PASS
+        reason: Lucas factorization is applied to valid digits; in the carry branch r+s-p<s, so the low binomial vanishes.
+      - id: D04
+        source_label: lem:borrow, lem:carrycount, lem:levelcarry
+        claim: Exact Kummer borrow/carry counts and the two-power tail gain.
+        finding: PASS
+        reason: The hypothesis a<p gives a two-digit n. If m_0>r and m<=n then m_1<=a-1, excluding a second borrow. Squaring the wide binomial gives valuation at least two after one carry.
+      - id: D05
+        source_label: lem:fibre, thm:arow, cor:tailfact
+        claim: Fibre factorization, first-row Lucas congruence and tail congruences.
+        finding: PASS
+        reason: The non-product top block is completed only by terms with s>r, which vanish identically through C(r,s)=0. The resulting product factors into T(a,beta) and a_r.
+      - id: D06
+        source_label: lem:Hpart
+        claim: p^3 H_(ap+r)^(3) is congruent to H_a^(3) modulo p^3 and yields the constant-letter contribution.
+        finding: PASS
+        reason: Multiples of p contribute exactly p^-3 H_a^(3); all remaining summands are p-integral.
+      - id: D07
+        source_label: lem:V
+        claim: Every p-nondivisible m contributes zero modulo p after multiplication by p^3.
+        finding: PASS
+        reason: The valuation is 3-v_p(C(n,m)C(n+m,m))+v_p(T). The only zero-slack case forces three carry/borrow indicators; tail factorization and the level-a carry lemma then supply v_p(T)>=1.
+      - id: D08
+        source_label: lem:Wpart
+        claim: The p-divisible layer satisfies p^3 W(ap+r) congruent to a_r W(a) modulo p.
+        finding: PASS
+        reason: For a+j<p all denominators are p-units and may be inverted after Lucas reduction. For a+j>=p both comparison terms have valuation at least one because the relevant tails gain two powers against one denominator carry.
+      - id: D09
+        source_label: lem:integrality
+        claim: b_a and p^3 b_(ap+r) are p-integral.
+        finding: PASS
+        reason: The H-part is integral; the nondivisible W-layer has valuation at least one and the divisible layer has valuation at least zero in both carry branches.
+      - id: D10
+        source_label: thm:brow
+        claim: Assemble the H and W congruences.
+        finding: PASS
+        reason: The two accepted congruences add to a_r(H_a^(3)a_a+W(a))=a_r b_a, with local integrality already established.
+    boundary_checks:
+      - a=1 and a=p-1 are covered by the stated inequalities and the carry arguments.
+      - r=0 and r=p-1 are covered by the fibre and Kummer case splits.
+      - p=5 is valid because the integral statement never divides by a_a.
+      - p=2 and p=3 are outside this direct theorem and are not inferred.
+  - id: OZ-AB-ROUTE-REPRESENTATION
+    name: Classical-sequence and minimal-form correspondence
+    status: ACCEPTED_WITH_PAPER_LEVEL_DOUBLE_SUM_BRIDGE
+    outline:
+      - The minimal harmonic sum and the displayed double harmonic sum are proved to satisfy the same Apéry recurrence.
+      - The two representations agree at n=0 and n=1, so recurrence uniqueness gives equality for every n.
+      - The Step-D proof supplies explicit Gosper and residual-binomial certificates; all divisions are restricted to nonzero ranges or written in absorption form.
+      - The Lean development proves the minimal sum equals the recurrence-defined sequence bApery and transports the Lucas congruence to bApery.
+    formal_boundary: >-
+      The double-sum-to-minimal equality is independently accepted as a paper proof but is
+      not represented as a Lean theorem in the pinned source. Lean formalizes the exact
+      recurrence-defined classical sequence and the minimal harmonic representation.
+source_internal_corroboration:
+  path: work/VERIFY_ZETA3_PROOF.md
+  git_blob: 2dde624e1e7b7833a4a64f76752b3e08ea4c1ba2
+  role: CORROBORATING_ONLY
+  finding: Exact finite sweeps report zero failures and identify the same three formerly terse steps that are expanded in sec-weight3.tex.
+obligation_disposition:
+  OZ-OBL-AB-001: SATISFIED
+  OZ-OBL-AB-002: SATISFIED
+  OZ-OBL-AB-003: SATISFIED
+  OZ-OBL-AB-004: SATISFIED
+  OZ-OBL-AB-005: SATISFIED
+  OZ-OBL-AB-006: SATISFIED
+  OZ-OBL-AB-007: SATISFIED
+  OZ-OBL-AB-008: SATISFIED_BY_EXACT_EXCLUSION
+  OZ-OBL-AB-009: SATISFIED
+  OZ-OBL-AB-010: SATISFIED_BY_INDEPENDENT_GCL_AUDIT
+  OZ-OBL-AB-011: PENDING_EXACT_HEAD_LEAN_REPLAY
+  OZ-OBL-AB-012: PENDING_EXACT_HEAD_LEAN_REPLAY
+  OZ-OBL-AB-013: OPEN_NOVELTY_REVIEW
+mathematical_verdict: >-
+  The direct paper proof is complete and valid at its exact single-digit modulo-p scope.
+  Final Referee promotion remains conditional on exact-head Lean replay and the recorded
+  semantic-correspondence audit. Novelty remains open and is not a condition for theorem validity.
