@@ -1,0 +1,396 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/five_repository_conformance_seventh_pass_closure.schema.json",
+  "title": "Five-repository seventh-pass conformance closure",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "closure_id",
+    "verified_at",
+    "status",
+    "sixth_pass_attestation",
+    "reviewed_repository_heads",
+    "drift_assessment",
+    "authority_model",
+    "active_portfolio",
+    "candidate_portfolio",
+    "issue_mirror_reconciliation",
+    "mismatch_counts",
+    "remaining_cross_repository_governance_obligations",
+    "remaining_candidate_obligations",
+    "claim_boundaries",
+    "publication_semantics"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "closure_id": {"const": "MP-UMBRELLA-SEVENTH-PASS-CLOSURE-001"},
+    "verified_at": {"type": "string", "format": "date"},
+    "status": {"const": "CONFORMANT_UNCHANGED_HEADS_AND_SIXTH_PASS_ATTESTATION_VERIFIED"},
+    "sixth_pass_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issue",
+        "issue_state",
+        "attestation_comment_id",
+        "closure_pull_request",
+        "reviewed_head",
+        "closure_merge_commit",
+        "policy_run_id",
+        "gcl_run_id",
+        "reviewed_head_and_merge_have_no_file_differences",
+        "closure_artifacts"
+      ],
+      "properties": {
+        "issue": {"const": 178},
+        "issue_state": {"const": "closed_completed"},
+        "attestation_comment_id": {"const": 5148279008},
+        "closure_pull_request": {"const": 179},
+        "reviewed_head": {"const": "66e10ec4a2071f314680b21132f80a2c8f45a16b"},
+        "closure_merge_commit": {"const": "72025995924275778611f1e436e871604fb3e4c9"},
+        "policy_run_id": {"const": 30672521555},
+        "gcl_run_id": {"const": 30672521901},
+        "reviewed_head_and_merge_have_no_file_differences": {"const": true},
+        "closure_artifacts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["record", "schema", "tests"],
+          "properties": {
+            "record": {"$ref": "#/$defs/sixthRecord"},
+            "schema": {"$ref": "#/$defs/sixthSchema"},
+            "tests": {"$ref": "#/$defs/sixthTests"}
+          }
+        }
+      }
+    },
+    "reviewed_repository_heads": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["math_programme", "mathforge", "mathsolve", "mathcert", "intellect"],
+      "properties": {
+        "math_programme": {"$ref": "#/$defs/programmeHead"},
+        "mathforge": {"$ref": "#/$defs/forgeHead"},
+        "mathsolve": {"$ref": "#/$defs/solveHead"},
+        "mathcert": {"$ref": "#/$defs/certHead"},
+        "intellect": {"$ref": "#/$defs/intellectHead"}
+      }
+    },
+    "drift_assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protected_head_changes_since_sixth_pass",
+        "open_pull_requests_in_reviewed_repositories",
+        "open_issues_modified_after_sixth_pass_closure_before_seventh_pass_intake",
+        "material_contract_changes_since_sixth_pass",
+        "active_manifest_changes_since_sixth_pass",
+        "cert_route_changes_since_sixth_pass",
+        "certificate_output_changes_since_sixth_pass",
+        "downstream_consumer_repin_required",
+        "mathforge_protected_branch_change_required",
+        "mathsolve_protected_branch_change_required",
+        "mathcert_protected_branch_change_required",
+        "intellect_protected_branch_change_required"
+      ],
+      "properties": {
+        "protected_head_changes_since_sixth_pass": {"const": 0},
+        "open_pull_requests_in_reviewed_repositories": {"const": 0},
+        "open_issues_modified_after_sixth_pass_closure_before_seventh_pass_intake": {"const": 0},
+        "material_contract_changes_since_sixth_pass": {"const": 0},
+        "active_manifest_changes_since_sixth_pass": {"const": 0},
+        "cert_route_changes_since_sixth_pass": {"const": 0},
+        "certificate_output_changes_since_sixth_pass": {"const": 0},
+        "downstream_consumer_repin_required": {"const": false},
+        "mathforge_protected_branch_change_required": {"const": false},
+        "mathsolve_protected_branch_change_required": {"const": false},
+        "mathcert_protected_branch_change_required": {"const": false},
+        "intellect_protected_branch_change_required": {"const": false}
+      }
+    },
+    "authority_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protected_repository_records_are_state_authority",
+        "repository_head_identity_is_distinct_from_material_artifact_identity",
+        "unchanged_material_artifacts_do_not_require_repin",
+        "mutable_issue_mirrors_are_navigation_only",
+        "closure_record_may_pin_completed_prior_merge_and_attestation",
+        "closure_record_cannot_pin_its_own_future_merge"
+      ],
+      "properties": {
+        "protected_repository_records_are_state_authority": {"const": true},
+        "repository_head_identity_is_distinct_from_material_artifact_identity": {"const": true},
+        "unchanged_material_artifacts_do_not_require_repin": {"const": true},
+        "mutable_issue_mirrors_are_navigation_only": {"const": true},
+        "closure_record_may_pin_completed_prior_merge_and_attestation": {"const": true},
+        "closure_record_cannot_pin_its_own_future_merge": {"const": true}
+      }
+    },
+    "active_portfolio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "qualified_interface_only",
+        "ready_intake",
+        "pending",
+        "archived_outside_current_routing",
+        "active_routing_member_count",
+        "unchanged_since_sixth_pass"
+      ],
+      "properties": {
+        "qualified_interface_only": {"const": ["NS-CI-001", "RH-001"]},
+        "ready_intake": {"const": ["UC-001", "HC-001"]},
+        "pending": {"const": ["BSD-001", "PNP-001", "YM-001", "OZ-001"]},
+        "archived_outside_current_routing": {"const": ["PC-001"]},
+        "active_routing_member_count": {"const": 8},
+        "unchanged_since_sixth_pass": {"const": true}
+      }
+    },
+    "candidate_portfolio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "campaign_id",
+        "lifecycle_state",
+        "execution_state",
+        "source_provenance_state",
+        "active_portfolio_member",
+        "active_campaign_manifest_present",
+        "cert_handoff_present",
+        "cert_route_present",
+        "cert_adjudication_present",
+        "promotion_record_present",
+        "unchanged_since_sixth_pass"
+      ],
+      "properties": {
+        "campaign_id": {"const": "VGSE-001"},
+        "lifecycle_state": {"const": "candidate"},
+        "execution_state": {"const": "merged_candidate_work_package"},
+        "source_provenance_state": {"const": "unverified_candidate"},
+        "active_portfolio_member": {"const": false},
+        "active_campaign_manifest_present": {"const": false},
+        "cert_handoff_present": {"const": false},
+        "cert_route_present": {"const": false},
+        "cert_adjudication_present": {"const": false},
+        "promotion_record_present": {"const": false},
+        "unchanged_since_sixth_pass": {"const": true}
+      }
+    },
+    "issue_mirror_reconciliation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["programme_candidate", "forge_source_audit", "cert_pre_route"],
+      "properties": {
+        "programme_candidate": {"$ref": "#/$defs/programmeMirror"},
+        "forge_source_audit": {"$ref": "#/$defs/forgeMirror"},
+        "cert_pre_route": {"$ref": "#/$defs/certMirror"}
+      }
+    },
+    "mismatch_counts": {
+      "type": "object",
+      "minProperties": 11,
+      "additionalProperties": {"const": 0}
+    },
+    "remaining_cross_repository_governance_obligations": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "remaining_candidate_obligations": {
+      "type": "array",
+      "minItems": 7,
+      "items": {"type": "string", "minLength": 30}
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operational_release_complete_preserved",
+        "mathematical_target_proved",
+        "interface_qualification_promoted_to_theorem",
+        "historical_handoff_state_rewritten",
+        "vgse_active_admission",
+        "vgse_source_verified",
+        "vgse_cert_route_created",
+        "vgse_algebraic_fixture_certified",
+        "vgse_t_embedding_certified",
+        "mechanical_claim_authorized",
+        "manufacturing_claim_authorized",
+        "novelty_claim_authorized",
+        "priority_claim_authorized",
+        "patentability_claim_authorized",
+        "commercial_claim_authorized"
+      ],
+      "properties": {
+        "operational_release_complete_preserved": {"const": true},
+        "mathematical_target_proved": {"const": false},
+        "interface_qualification_promoted_to_theorem": {"const": false},
+        "historical_handoff_state_rewritten": {"const": false},
+        "vgse_active_admission": {"const": false},
+        "vgse_source_verified": {"const": false},
+        "vgse_cert_route_created": {"const": false},
+        "vgse_algebraic_fixture_certified": {"const": false},
+        "vgse_t_embedding_certified": {"const": false},
+        "mechanical_claim_authorized": {"const": false},
+        "manufacturing_claim_authorized": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "priority_claim_authorized": {"const": false},
+        "patentability_claim_authorized": {"const": false},
+        "commercial_claim_authorized": {"const": false}
+      }
+    },
+    "publication_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "self_inclusive_head_claim",
+        "artifact_can_pin_own_future_merge_commit",
+        "external_post_merge_attestation_required",
+        "attestation_issue"
+      ],
+      "properties": {
+        "self_inclusive_head_claim": {"const": false},
+        "artifact_can_pin_own_future_merge_commit": {"const": false},
+        "external_post_merge_attestation_required": {"const": true},
+        "attestation_issue": {"const": 180}
+      }
+    }
+  },
+  "$defs": {
+    "sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "digest_algorithm", "digest"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "digest_algorithm": {"const": "git_blob_sha1"},
+        "digest": {"$ref": "#/$defs/sha"}
+      }
+    },
+    "sixthRecord": {
+      "allOf": [
+        {"$ref": "#/$defs/artifact"},
+        {"properties": {
+          "path": {"const": "governance/five_repository_conformance_sixth_pass_closure.json"},
+          "digest": {"const": "b690d013dc2cb9172523bcf36e05fc0c8996b466"}
+        }}
+      ]
+    },
+    "sixthSchema": {
+      "allOf": [
+        {"$ref": "#/$defs/artifact"},
+        {"properties": {
+          "path": {"const": "schemas/five_repository_conformance_sixth_pass_closure.schema.json"},
+          "digest": {"const": "9faa2976720a394c668a8630915e63fb14096d18"}
+        }}
+      ]
+    },
+    "sixthTests": {
+      "allOf": [
+        {"$ref": "#/$defs/artifact"},
+        {"properties": {
+          "path": {"const": "tests/test_five_repository_conformance_sixth_pass_closure.py"},
+          "digest": {"const": "0aab4926de92ab90962da63df34966b6fa390775"}
+        }}
+      ]
+    },
+    "head": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit_sha"],
+      "properties": {
+        "repository": {"type": "string", "minLength": 1},
+        "commit_sha": {"$ref": "#/$defs/sha"}
+      }
+    },
+    "programmeHead": {
+      "allOf": [
+        {"$ref": "#/$defs/head"},
+        {"properties": {
+          "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+          "commit_sha": {"const": "72025995924275778611f1e436e871604fb3e4c9"}
+        }}
+      ]
+    },
+    "forgeHead": {
+      "allOf": [
+        {"$ref": "#/$defs/head"},
+        {"properties": {
+          "repository": {"const": "grandchallenge/MATHFORGE"},
+          "commit_sha": {"const": "0faee396ffa56c568ee0ae6a348bdb43ca80ac4d"}
+        }}
+      ]
+    },
+    "solveHead": {
+      "allOf": [
+        {"$ref": "#/$defs/head"},
+        {"properties": {
+          "repository": {"const": "grandchallenge/MATHSOLVE"},
+          "commit_sha": {"const": "26c1060c2e40b170570fcf2fccc88539fa5b26e6"}
+        }}
+      ]
+    },
+    "certHead": {
+      "allOf": [
+        {"$ref": "#/$defs/head"},
+        {"properties": {
+          "repository": {"const": "grandchallenge/MATHCERT"},
+          "commit_sha": {"const": "0258e4f0bca0d90fac05b62aeef108f16dccffdd"}
+        }}
+      ]
+    },
+    "intellectHead": {
+      "allOf": [
+        {"$ref": "#/$defs/head"},
+        {"properties": {
+          "repository": {"const": "grandchallenge/INTELLECT"},
+          "commit_sha": {"const": "949f84fef76c1d4cd64e90d7b3e97d13be15332f"}
+        }}
+      ]
+    },
+    "mirror": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "issue", "current_umbrella_issue", "pinned_closure_merge", "state"],
+      "properties": {
+        "repository": {"type": "string", "minLength": 1},
+        "issue": {"type": "integer", "minimum": 1},
+        "current_umbrella_issue": {"const": 180},
+        "pinned_closure_merge": {"const": "72025995924275778611f1e436e871604fb3e4c9"},
+        "state": {"type": "string", "minLength": 3}
+      }
+    },
+    "programmeMirror": {
+      "allOf": [
+        {"$ref": "#/$defs/mirror"},
+        {"properties": {
+          "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+          "issue": {"const": 170},
+          "state": {"const": "open_candidate"}
+        }}
+      ]
+    },
+    "forgeMirror": {
+      "allOf": [
+        {"$ref": "#/$defs/mirror"},
+        {"properties": {
+          "repository": {"const": "grandchallenge/MATHFORGE"},
+          "issue": {"const": 32},
+          "state": {"const": "open_unverified_candidate"}
+        }}
+      ]
+    },
+    "certMirror": {
+      "allOf": [
+        {"$ref": "#/$defs/mirror"},
+        {"properties": {
+          "repository": {"const": "grandchallenge/MATHCERT"},
+          "issue": {"const": 41},
+          "state": {"const": "open_pre_route_candidate"}
+        }}
+      ]
+    }
+  }
+}

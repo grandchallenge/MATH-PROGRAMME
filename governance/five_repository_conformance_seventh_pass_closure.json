@@ -1,0 +1,181 @@
+{
+  "schema_version": "1.0.0",
+  "closure_id": "MP-UMBRELLA-SEVENTH-PASS-CLOSURE-001",
+  "verified_at": "2026-07-31",
+  "status": "CONFORMANT_UNCHANGED_HEADS_AND_SIXTH_PASS_ATTESTATION_VERIFIED",
+  "sixth_pass_attestation": {
+    "issue": 178,
+    "issue_state": "closed_completed",
+    "attestation_comment_id": 5148279008,
+    "closure_pull_request": 179,
+    "reviewed_head": "66e10ec4a2071f314680b21132f80a2c8f45a16b",
+    "closure_merge_commit": "72025995924275778611f1e436e871604fb3e4c9",
+    "policy_run_id": 30672521555,
+    "gcl_run_id": 30672521901,
+    "reviewed_head_and_merge_have_no_file_differences": true,
+    "closure_artifacts": {
+      "record": {
+        "path": "governance/five_repository_conformance_sixth_pass_closure.json",
+        "digest_algorithm": "git_blob_sha1",
+        "digest": "b690d013dc2cb9172523bcf36e05fc0c8996b466"
+      },
+      "schema": {
+        "path": "schemas/five_repository_conformance_sixth_pass_closure.schema.json",
+        "digest_algorithm": "git_blob_sha1",
+        "digest": "9faa2976720a394c668a8630915e63fb14096d18"
+      },
+      "tests": {
+        "path": "tests/test_five_repository_conformance_sixth_pass_closure.py",
+        "digest_algorithm": "git_blob_sha1",
+        "digest": "0aab4926de92ab90962da63df34966b6fa390775"
+      }
+    }
+  },
+  "reviewed_repository_heads": {
+    "math_programme": {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "commit_sha": "72025995924275778611f1e436e871604fb3e4c9"
+    },
+    "mathforge": {
+      "repository": "grandchallenge/MATHFORGE",
+      "commit_sha": "0faee396ffa56c568ee0ae6a348bdb43ca80ac4d"
+    },
+    "mathsolve": {
+      "repository": "grandchallenge/MATHSOLVE",
+      "commit_sha": "26c1060c2e40b170570fcf2fccc88539fa5b26e6"
+    },
+    "mathcert": {
+      "repository": "grandchallenge/MATHCERT",
+      "commit_sha": "0258e4f0bca0d90fac05b62aeef108f16dccffdd"
+    },
+    "intellect": {
+      "repository": "grandchallenge/INTELLECT",
+      "commit_sha": "949f84fef76c1d4cd64e90d7b3e97d13be15332f"
+    }
+  },
+  "drift_assessment": {
+    "protected_head_changes_since_sixth_pass": 0,
+    "open_pull_requests_in_reviewed_repositories": 0,
+    "open_issues_modified_after_sixth_pass_closure_before_seventh_pass_intake": 0,
+    "material_contract_changes_since_sixth_pass": 0,
+    "active_manifest_changes_since_sixth_pass": 0,
+    "cert_route_changes_since_sixth_pass": 0,
+    "certificate_output_changes_since_sixth_pass": 0,
+    "downstream_consumer_repin_required": false,
+    "mathforge_protected_branch_change_required": false,
+    "mathsolve_protected_branch_change_required": false,
+    "mathcert_protected_branch_change_required": false,
+    "intellect_protected_branch_change_required": false
+  },
+  "authority_model": {
+    "protected_repository_records_are_state_authority": true,
+    "repository_head_identity_is_distinct_from_material_artifact_identity": true,
+    "unchanged_material_artifacts_do_not_require_repin": true,
+    "mutable_issue_mirrors_are_navigation_only": true,
+    "closure_record_may_pin_completed_prior_merge_and_attestation": true,
+    "closure_record_cannot_pin_its_own_future_merge": true
+  },
+  "active_portfolio": {
+    "qualified_interface_only": [
+      "NS-CI-001",
+      "RH-001"
+    ],
+    "ready_intake": [
+      "UC-001",
+      "HC-001"
+    ],
+    "pending": [
+      "BSD-001",
+      "PNP-001",
+      "YM-001",
+      "OZ-001"
+    ],
+    "archived_outside_current_routing": [
+      "PC-001"
+    ],
+    "active_routing_member_count": 8,
+    "unchanged_since_sixth_pass": true
+  },
+  "candidate_portfolio": {
+    "campaign_id": "VGSE-001",
+    "lifecycle_state": "candidate",
+    "execution_state": "merged_candidate_work_package",
+    "source_provenance_state": "unverified_candidate",
+    "active_portfolio_member": false,
+    "active_campaign_manifest_present": false,
+    "cert_handoff_present": false,
+    "cert_route_present": false,
+    "cert_adjudication_present": false,
+    "promotion_record_present": false,
+    "unchanged_since_sixth_pass": true
+  },
+  "issue_mirror_reconciliation": {
+    "programme_candidate": {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 170,
+      "current_umbrella_issue": 180,
+      "pinned_closure_merge": "72025995924275778611f1e436e871604fb3e4c9",
+      "state": "open_candidate"
+    },
+    "forge_source_audit": {
+      "repository": "grandchallenge/MATHFORGE",
+      "issue": 32,
+      "current_umbrella_issue": 180,
+      "pinned_closure_merge": "72025995924275778611f1e436e871604fb3e4c9",
+      "state": "open_unverified_candidate"
+    },
+    "cert_pre_route": {
+      "repository": "grandchallenge/MATHCERT",
+      "issue": 41,
+      "current_umbrella_issue": 180,
+      "pinned_closure_merge": "72025995924275778611f1e436e871604fb3e4c9",
+      "state": "open_pre_route_candidate"
+    }
+  },
+  "mismatch_counts": {
+    "repository_head": 0,
+    "sixth_pass_attestation": 0,
+    "closure_artifact_identity": 0,
+    "open_pull_request_interference": 0,
+    "post_closure_issue_interference": 0,
+    "material_contract": 0,
+    "active_portfolio": 0,
+    "candidate_lifecycle": 0,
+    "consumer_repin": 0,
+    "issue_mirror": 0,
+    "claim_boundary": 0
+  },
+  "remaining_cross_repository_governance_obligations": [],
+  "remaining_candidate_obligations": [
+    "Verify and content-address the VGSE source revision through MATHFORGE or record a governed waiver.",
+    "Separate source-transcribed VGSE figure data from inferred topology and newly selected numerical replay data.",
+    "Admit VGSE-001 to the protected active portfolio before creating an active Solve campaign manifest.",
+    "Create a content-addressed VGSE Cert handoff only after protected Programme admission.",
+    "Create a MATHCERT route only after provider provenance, active admission, manifest, and handoff prerequisites are satisfied.",
+    "Certify algebraic roots or planar t-embeddings only through separately scoped future certificate routes.",
+    "Keep mechanical, manufacturing, novelty, priority, patentability, and commercial claims outside the current mathematical evidence boundary."
+  ],
+  "claim_boundaries": {
+    "operational_release_complete_preserved": true,
+    "mathematical_target_proved": false,
+    "interface_qualification_promoted_to_theorem": false,
+    "historical_handoff_state_rewritten": false,
+    "vgse_active_admission": false,
+    "vgse_source_verified": false,
+    "vgse_cert_route_created": false,
+    "vgse_algebraic_fixture_certified": false,
+    "vgse_t_embedding_certified": false,
+    "mechanical_claim_authorized": false,
+    "manufacturing_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "patentability_claim_authorized": false,
+    "commercial_claim_authorized": false
+  },
+  "publication_semantics": {
+    "self_inclusive_head_claim": false,
+    "artifact_can_pin_own_future_merge_commit": false,
+    "external_post_merge_attestation_required": true,
+    "attestation_issue": 180
+  }
+}
