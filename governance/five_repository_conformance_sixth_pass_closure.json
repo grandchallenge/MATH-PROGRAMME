@@ -1,0 +1,287 @@
+{
+  "schema_version": "1.0.0",
+  "closure_id": "MP-UMBRELLA-SIXTH-PASS-CLOSURE-001",
+  "verified_at": "2026-07-31",
+  "status": "CONFORMANT_PRODUCER_ADJUDICATOR_SPLIT_RECONCILED",
+  "reviewed_repository_heads": {
+    "math_programme": {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "commit_sha": "7104b81e523f713b8dab080611fcde15c4ed67f6"
+    },
+    "mathforge": {
+      "repository": "grandchallenge/MATHFORGE",
+      "commit_sha": "0faee396ffa56c568ee0ae6a348bdb43ca80ac4d"
+    },
+    "mathsolve": {
+      "repository": "grandchallenge/MATHSOLVE",
+      "commit_sha": "26c1060c2e40b170570fcf2fccc88539fa5b26e6"
+    },
+    "mathcert": {
+      "repository": "grandchallenge/MATHCERT",
+      "commit_sha": "0258e4f0bca0d90fac05b62aeef108f16dccffdd"
+    },
+    "intellect": {
+      "repository": "grandchallenge/INTELLECT",
+      "commit_sha": "949f84fef76c1d4cd64e90d7b3e97d13be15332f"
+    }
+  },
+  "fifth_pass_attestation": {
+    "issue": 175,
+    "issue_state": "closed_completed",
+    "closure_pull_request": 177,
+    "closure_merge_commit": "7104b81e523f713b8dab080611fcde15c4ed67f6",
+    "closure_record": {
+      "path": "governance/five_repository_conformance_fifth_pass_closure.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "4b8e20627d65012a49a767db82b8489483496aac"
+    },
+    "external_post_merge_attestation_complete": true
+  },
+  "solve_reconciliation": {
+    "issue": 87,
+    "pull_request": 88,
+    "reviewed_head": "db4b16c2abc170dea6a1735284430147a956261f",
+    "merge_commit": "26c1060c2e40b170570fcf2fccc88539fa5b26e6",
+    "solve_run_id": 30671881534,
+    "gcl_run_id": 30671881847,
+    "current_route_overlay": {
+      "path": "contracts/mathcert_current_routes.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "2f6bb27a453a8615ba3af75ca77452ceb7b83ca8"
+    },
+    "current_route_schema": {
+      "path": "schemas/mathcert_current_routes.schema.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "3c7c3c53cdff909fabb9c2ec5bc6efbb924f6a9d"
+    },
+    "current_route_validator": {
+      "path": "ci/validate_current_cert_routes.py",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "4300cafdfb66fc508e58551d21290782490b90d0"
+    },
+    "mutation_tests": {
+      "path": "ci/test_campaign_manifests.py",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "a720df7da87359b96e23e901325affde85959007"
+    },
+    "state_semantics": {
+      "producer_handoff_status_is_immutable": true,
+      "route_state_is_current_cert_adjudication": true,
+      "judgment_and_integration_use": "route_state",
+      "promotion_requires_positive_route_and_manifest_eligibility": true
+    },
+    "campaign_states": {
+      "UC-001": {
+        "handoff_state": "ready",
+        "route_state": "ready",
+        "qualification_scope": null,
+        "mathematical_target_proved": false
+      },
+      "NS-CI-001": {
+        "handoff_state": "ready",
+        "route_state": "qualified",
+        "qualification_scope": "qualified_interface_only",
+        "mathematical_target_proved": false
+      },
+      "HC-001": {
+        "handoff_state": "ready",
+        "route_state": "ready",
+        "qualification_scope": null,
+        "mathematical_target_proved": false
+      },
+      "BSD-001": {
+        "handoff_state": "pending",
+        "route_state": "pending",
+        "qualification_scope": null,
+        "mathematical_target_proved": false
+      },
+      "PNP-001": {
+        "handoff_state": "pending",
+        "route_state": "pending",
+        "qualification_scope": null,
+        "mathematical_target_proved": false
+      },
+      "RH-001": {
+        "handoff_state": "pending",
+        "route_state": "qualified",
+        "qualification_scope": "qualified_interface_only",
+        "mathematical_target_proved": false
+      },
+      "YM-001": {
+        "handoff_state": "pending",
+        "route_state": "pending",
+        "qualification_scope": null,
+        "mathematical_target_proved": false
+      },
+      "OZ-001": {
+        "handoff_state": "pending",
+        "route_state": "pending",
+        "qualification_scope": null,
+        "mathematical_target_proved": false
+      }
+    }
+  },
+  "cert_authority": {
+    "repository": "grandchallenge/MATHCERT",
+    "commit_sha": "0258e4f0bca0d90fac05b62aeef108f16dccffdd",
+    "route_registry": {
+      "path": "governance/certification_routes.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1"
+    },
+    "protected_branch_change_required": false,
+    "source_manifest_repin_required": false,
+    "reason": "The correction preserves immutable MATHSOLVE manifests and handoff packets; existing MATHCERT source identities and certificate outputs therefore remain exact."
+  },
+  "intellect_reconciliation": {
+    "issue": 19,
+    "pull_request": 20,
+    "reviewed_head": "7c8e9670b0a77281a0d31cf55b7ae1f06f2284a3",
+    "merge_commit": "949f84fef76c1d4cd64e90d7b3e97d13be15332f",
+    "ci_run_id": 30672274559,
+    "gcl_run_id": 30672274832,
+    "provider_module": {
+      "path": "src/grand_intellect/mathsolve_cert_current.py",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "203fc6d2923fc2669868a172ce67682c795d4d01"
+    },
+    "qualification_fixture": {
+      "path": "tests/fixtures/rh_ns_interface_qualifications.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "ee7eb7a844d917df493f68b9752de8001881ec80"
+    },
+    "alignment_tests": {
+      "path": "tests/test_umbrella_current_state_alignment.py",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "2f4c4d4a7e75c027b0a85bae8fdeed33962b0e80"
+    },
+    "provider_contract_count": 5,
+    "package_version_preserved": "0.2.2"
+  },
+  "forge_reconciliation": {
+    "repository": "grandchallenge/MATHFORGE",
+    "commit_sha": "0faee396ffa56c568ee0ae6a348bdb43ca80ac4d",
+    "ns_ci_provider_issue": 14,
+    "ns_ci_provider_issue_state": "closed_completed",
+    "ns_ci_provider_manifest": {
+      "path": "provider_manifests/NS-CI-001.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "ed5220c31e38ba3458dc8a94a462c89c285fc22e"
+    },
+    "protected_branch_change_required": false
+  },
+  "active_portfolio": {
+    "qualified_interface_only": [
+      "NS-CI-001",
+      "RH-001"
+    ],
+    "ready_intake": [
+      "UC-001",
+      "HC-001"
+    ],
+    "pending": [
+      "BSD-001",
+      "PNP-001",
+      "YM-001",
+      "OZ-001"
+    ],
+    "archived_outside_current_routing": [
+      "PC-001"
+    ],
+    "active_routing_member_count": 8
+  },
+  "candidate_portfolio": {
+    "campaign_id": "VGSE-001",
+    "lifecycle_state": "candidate",
+    "execution_state": "merged_candidate_work_package",
+    "source_provenance_state": "unverified_candidate",
+    "active_portfolio_member": false,
+    "active_campaign_manifest_present": false,
+    "cert_handoff_present": false,
+    "cert_route_present": false,
+    "cert_adjudication_present": false,
+    "promotion_record_present": false
+  },
+  "issue_mirror_reconciliation": {
+    "programme_sixth_pass": {
+      "issue": 178,
+      "state_at_publication": "open_for_external_post_merge_attestation"
+    },
+    "solve_route_state": {
+      "issue": 87,
+      "state": "closed_completed"
+    },
+    "intellect_consumer": {
+      "issue": 19,
+      "state": "closed_completed"
+    },
+    "forge_ns_ci_provider": {
+      "issue": 14,
+      "state": "closed_completed"
+    },
+    "programme_vgse_candidate": {
+      "issue": 170,
+      "state": "open_candidate_repin_complete"
+    },
+    "forge_vgse_source": {
+      "issue": 32,
+      "state": "open_unverified_candidate_repin_complete"
+    },
+    "cert_vgse_pre_route": {
+      "issue": 41,
+      "state": "open_pre_route_candidate_repin_complete"
+    }
+  },
+  "findings": {
+    "S6-01": "Resolved: obsolete current Cert identity is no longer used as the current Solve adjudication authority; the overlay pins MATHCERT commit 0258e4f0 and blob 5b3e8d48.",
+    "S6-02": "Resolved: current-state validation is isolated in validate_current_cert_routes.py and invoked by the campaign validation entry point.",
+    "S6-03": "Resolved: immutable producer handoff state is represented separately from current MATHCERT route state and gate logic consumes route state.",
+    "S6-04": "Resolved without rewriting history: the current overlay records RH interface replay and qualification while the historical producer manifest remains immutable.",
+    "S6-05": "Resolved at publication boundary: this sixth-pass record pins the fifth-pass merge and completed external attestation; its own future merge requires the external issue-178 attestation."
+  },
+  "mismatch_counts": {
+    "repository_identity": 0,
+    "artifact_identity": 0,
+    "active_portfolio": 0,
+    "candidate_lifecycle": 0,
+    "handoff_route_state": 0,
+    "cert_output_scope": 0,
+    "consumer_pin": 0,
+    "issue_mirror": 0,
+    "workflow_evidence": 0,
+    "claim_boundary": 0
+  },
+  "remaining_cross_repository_governance_obligations": [],
+  "remaining_candidate_obligations": [
+    "Verify and content-address the VGSE source revision through MATHFORGE or record a governed waiver.",
+    "Separate source-transcribed VGSE figure data from inferred topology and newly selected numerical replay data.",
+    "Admit VGSE-001 to the protected active portfolio before creating an active Solve campaign manifest.",
+    "Create a content-addressed VGSE Cert handoff only after protected Programme admission.",
+    "Create a MATHCERT route only after provider provenance, active admission, manifest, and handoff prerequisites are satisfied.",
+    "Certify algebraic roots or planar t-embeddings only through separately scoped future certificate routes.",
+    "Keep mechanical, manufacturing, novelty, priority, patentability, and commercial claims outside the current mathematical evidence boundary."
+  ],
+  "claim_boundaries": {
+    "operational_release_complete_preserved": true,
+    "mathematical_target_proved": false,
+    "interface_qualification_promoted_to_theorem": false,
+    "historical_handoff_state_rewritten": false,
+    "vgse_active_admission": false,
+    "vgse_source_verified": false,
+    "vgse_cert_route_created": false,
+    "vgse_algebraic_fixture_certified": false,
+    "vgse_t_embedding_certified": false,
+    "mechanical_claim_authorized": false,
+    "manufacturing_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "patentability_claim_authorized": false,
+    "commercial_claim_authorized": false
+  },
+  "publication_semantics": {
+    "self_inclusive_head_claim": false,
+    "artifact_can_pin_own_future_merge_commit": false,
+    "external_post_merge_attestation_required": true,
+    "attestation_issue": 178
+  }
+}

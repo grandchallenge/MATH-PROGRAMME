@@ -1,0 +1,357 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/five_repository_conformance_sixth_pass_closure.schema.json",
+  "title": "Five-repository sixth-pass conformance closure",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "closure_id",
+    "verified_at",
+    "status",
+    "reviewed_repository_heads",
+    "fifth_pass_attestation",
+    "solve_reconciliation",
+    "cert_authority",
+    "intellect_reconciliation",
+    "forge_reconciliation",
+    "active_portfolio",
+    "candidate_portfolio",
+    "issue_mirror_reconciliation",
+    "findings",
+    "mismatch_counts",
+    "remaining_cross_repository_governance_obligations",
+    "remaining_candidate_obligations",
+    "claim_boundaries",
+    "publication_semantics"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "closure_id": {"const": "MP-UMBRELLA-SIXTH-PASS-CLOSURE-001"},
+    "verified_at": {"type": "string", "format": "date"},
+    "status": {"const": "CONFORMANT_PRODUCER_ADJUDICATOR_SPLIT_RECONCILED"},
+    "reviewed_repository_heads": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["math_programme", "mathforge", "mathsolve", "mathcert", "intellect"],
+      "properties": {
+        "math_programme": {"$ref": "#/$defs/programmeHead"},
+        "mathforge": {"$ref": "#/$defs/forgeHead"},
+        "mathsolve": {"$ref": "#/$defs/solveHead"},
+        "mathcert": {"$ref": "#/$defs/certHead"},
+        "intellect": {"$ref": "#/$defs/intellectHead"}
+      }
+    },
+    "fifth_pass_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue", "issue_state", "closure_pull_request", "closure_merge_commit", "closure_record", "external_post_merge_attestation_complete"],
+      "properties": {
+        "issue": {"const": 175},
+        "issue_state": {"const": "closed_completed"},
+        "closure_pull_request": {"const": 177},
+        "closure_merge_commit": {"const": "7104b81e523f713b8dab080611fcde15c4ed67f6"},
+        "closure_record": {
+          "allOf": [
+            {"$ref": "#/$defs/artifact"},
+            {"properties": {
+              "path": {"const": "governance/five_repository_conformance_fifth_pass_closure.json"},
+              "digest": {"const": "4b8e20627d65012a49a767db82b8489483496aac"}
+            }}
+          ]
+        },
+        "external_post_merge_attestation_complete": {"const": true}
+      }
+    },
+    "solve_reconciliation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue", "pull_request", "reviewed_head", "merge_commit", "solve_run_id", "gcl_run_id", "current_route_overlay", "current_route_schema", "current_route_validator", "mutation_tests", "state_semantics", "campaign_states"],
+      "properties": {
+        "issue": {"const": 87},
+        "pull_request": {"const": 88},
+        "reviewed_head": {"const": "db4b16c2abc170dea6a1735284430147a956261f"},
+        "merge_commit": {"const": "26c1060c2e40b170570fcf2fccc88539fa5b26e6"},
+        "solve_run_id": {"const": 30671881534},
+        "gcl_run_id": {"const": 30671881847},
+        "current_route_overlay": {"$ref": "#/$defs/solveOverlayArtifact"},
+        "current_route_schema": {"$ref": "#/$defs/solveSchemaArtifact"},
+        "current_route_validator": {"$ref": "#/$defs/solveValidatorArtifact"},
+        "mutation_tests": {"$ref": "#/$defs/solveTestsArtifact"},
+        "state_semantics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["producer_handoff_status_is_immutable", "route_state_is_current_cert_adjudication", "judgment_and_integration_use", "promotion_requires_positive_route_and_manifest_eligibility"],
+          "properties": {
+            "producer_handoff_status_is_immutable": {"const": true},
+            "route_state_is_current_cert_adjudication": {"const": true},
+            "judgment_and_integration_use": {"const": "route_state"},
+            "promotion_requires_positive_route_and_manifest_eligibility": {"const": true}
+          }
+        },
+        "campaign_states": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["UC-001", "NS-CI-001", "HC-001", "BSD-001", "PNP-001", "RH-001", "YM-001", "OZ-001"],
+          "properties": {
+            "UC-001": {"$ref": "#/$defs/readyRecord"},
+            "NS-CI-001": {"$ref": "#/$defs/nsQualifiedRecord"},
+            "HC-001": {"$ref": "#/$defs/readyRecord"},
+            "BSD-001": {"$ref": "#/$defs/pendingRecord"},
+            "PNP-001": {"$ref": "#/$defs/pendingRecord"},
+            "RH-001": {"$ref": "#/$defs/rhQualifiedRecord"},
+            "YM-001": {"$ref": "#/$defs/pendingRecord"},
+            "OZ-001": {"$ref": "#/$defs/pendingRecord"}
+          }
+        }
+      }
+    },
+    "cert_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit_sha", "route_registry", "protected_branch_change_required", "source_manifest_repin_required", "reason"],
+      "properties": {
+        "repository": {"const": "grandchallenge/MATHCERT"},
+        "commit_sha": {"const": "0258e4f0bca0d90fac05b62aeef108f16dccffdd"},
+        "route_registry": {"$ref": "#/$defs/certRegistryArtifact"},
+        "protected_branch_change_required": {"const": false},
+        "source_manifest_repin_required": {"const": false},
+        "reason": {"type": "string", "minLength": 40}
+      }
+    },
+    "intellect_reconciliation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue", "pull_request", "reviewed_head", "merge_commit", "ci_run_id", "gcl_run_id", "provider_module", "qualification_fixture", "alignment_tests", "provider_contract_count", "package_version_preserved"],
+      "properties": {
+        "issue": {"const": 19},
+        "pull_request": {"const": 20},
+        "reviewed_head": {"const": "7c8e9670b0a77281a0d31cf55b7ae1f06f2284a3"},
+        "merge_commit": {"const": "949f84fef76c1d4cd64e90d7b3e97d13be15332f"},
+        "ci_run_id": {"const": 30672274559},
+        "gcl_run_id": {"const": 30672274832},
+        "provider_module": {"$ref": "#/$defs/intellectProviderArtifact"},
+        "qualification_fixture": {"$ref": "#/$defs/intellectFixtureArtifact"},
+        "alignment_tests": {"$ref": "#/$defs/intellectTestsArtifact"},
+        "provider_contract_count": {"const": 5},
+        "package_version_preserved": {"const": "0.2.2"}
+      }
+    },
+    "forge_reconciliation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit_sha", "ns_ci_provider_issue", "ns_ci_provider_issue_state", "ns_ci_provider_manifest", "protected_branch_change_required"],
+      "properties": {
+        "repository": {"const": "grandchallenge/MATHFORGE"},
+        "commit_sha": {"const": "0faee396ffa56c568ee0ae6a348bdb43ca80ac4d"},
+        "ns_ci_provider_issue": {"const": 14},
+        "ns_ci_provider_issue_state": {"const": "closed_completed"},
+        "ns_ci_provider_manifest": {"$ref": "#/$defs/forgeManifestArtifact"},
+        "protected_branch_change_required": {"const": false}
+      }
+    },
+    "active_portfolio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["qualified_interface_only", "ready_intake", "pending", "archived_outside_current_routing", "active_routing_member_count"],
+      "properties": {
+        "qualified_interface_only": {"const": ["NS-CI-001", "RH-001"]},
+        "ready_intake": {"const": ["UC-001", "HC-001"]},
+        "pending": {"const": ["BSD-001", "PNP-001", "YM-001", "OZ-001"]},
+        "archived_outside_current_routing": {"const": ["PC-001"]},
+        "active_routing_member_count": {"const": 8}
+      }
+    },
+    "candidate_portfolio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["campaign_id", "lifecycle_state", "execution_state", "source_provenance_state", "active_portfolio_member", "active_campaign_manifest_present", "cert_handoff_present", "cert_route_present", "cert_adjudication_present", "promotion_record_present"],
+      "properties": {
+        "campaign_id": {"const": "VGSE-001"},
+        "lifecycle_state": {"const": "candidate"},
+        "execution_state": {"const": "merged_candidate_work_package"},
+        "source_provenance_state": {"const": "unverified_candidate"},
+        "active_portfolio_member": {"const": false},
+        "active_campaign_manifest_present": {"const": false},
+        "cert_handoff_present": {"const": false},
+        "cert_route_present": {"const": false},
+        "cert_adjudication_present": {"const": false},
+        "promotion_record_present": {"const": false}
+      }
+    },
+    "issue_mirror_reconciliation": {
+      "type": "object",
+      "minProperties": 7,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["issue"],
+        "properties": {
+          "issue": {"type": "integer", "minimum": 1},
+          "state": {"type": "string", "minLength": 3},
+          "state_at_publication": {"type": "string", "minLength": 3}
+        }
+      }
+    },
+    "findings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["S6-01", "S6-02", "S6-03", "S6-04", "S6-05"],
+      "properties": {
+        "S6-01": {"type": "string", "minLength": 40},
+        "S6-02": {"type": "string", "minLength": 40},
+        "S6-03": {"type": "string", "minLength": 40},
+        "S6-04": {"type": "string", "minLength": 40},
+        "S6-05": {"type": "string", "minLength": 40}
+      }
+    },
+    "mismatch_counts": {
+      "type": "object",
+      "minProperties": 10,
+      "additionalProperties": {"const": 0}
+    },
+    "remaining_cross_repository_governance_obligations": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "remaining_candidate_obligations": {
+      "type": "array",
+      "minItems": 7,
+      "items": {"type": "string", "minLength": 30}
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operational_release_complete_preserved", "mathematical_target_proved", "interface_qualification_promoted_to_theorem", "historical_handoff_state_rewritten", "vgse_active_admission", "vgse_source_verified", "vgse_cert_route_created", "vgse_algebraic_fixture_certified", "vgse_t_embedding_certified", "mechanical_claim_authorized", "manufacturing_claim_authorized", "novelty_claim_authorized", "priority_claim_authorized", "patentability_claim_authorized", "commercial_claim_authorized"],
+      "properties": {
+        "operational_release_complete_preserved": {"const": true},
+        "mathematical_target_proved": {"const": false},
+        "interface_qualification_promoted_to_theorem": {"const": false},
+        "historical_handoff_state_rewritten": {"const": false},
+        "vgse_active_admission": {"const": false},
+        "vgse_source_verified": {"const": false},
+        "vgse_cert_route_created": {"const": false},
+        "vgse_algebraic_fixture_certified": {"const": false},
+        "vgse_t_embedding_certified": {"const": false},
+        "mechanical_claim_authorized": {"const": false},
+        "manufacturing_claim_authorized": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "priority_claim_authorized": {"const": false},
+        "patentability_claim_authorized": {"const": false},
+        "commercial_claim_authorized": {"const": false}
+      }
+    },
+    "publication_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["self_inclusive_head_claim", "artifact_can_pin_own_future_merge_commit", "external_post_merge_attestation_required", "attestation_issue"],
+      "properties": {
+        "self_inclusive_head_claim": {"const": false},
+        "artifact_can_pin_own_future_merge_commit": {"const": false},
+        "external_post_merge_attestation_required": {"const": true},
+        "attestation_issue": {"const": 178}
+      }
+    }
+  },
+  "$defs": {
+    "sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "digest_algorithm", "digest"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "digest_algorithm": {"const": "git_blob_sha1"},
+        "digest": {"$ref": "#/$defs/sha"}
+      }
+    },
+    "head": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit_sha"],
+      "properties": {
+        "repository": {"type": "string", "minLength": 1},
+        "commit_sha": {"$ref": "#/$defs/sha"}
+      }
+    },
+    "programmeHead": {
+      "allOf": [
+        {"$ref": "#/$defs/head"},
+        {"properties": {"repository": {"const": "grandchallenge/MATH-PROGRAMME"}, "commit_sha": {"const": "7104b81e523f713b8dab080611fcde15c4ed67f6"}}}
+      ]
+    },
+    "forgeHead": {
+      "allOf": [
+        {"$ref": "#/$defs/head"},
+        {"properties": {"repository": {"const": "grandchallenge/MATHFORGE"}, "commit_sha": {"const": "0faee396ffa56c568ee0ae6a348bdb43ca80ac4d"}}}
+      ]
+    },
+    "solveHead": {
+      "allOf": [
+        {"$ref": "#/$defs/head"},
+        {"properties": {"repository": {"const": "grandchallenge/MATHSOLVE"}, "commit_sha": {"const": "26c1060c2e40b170570fcf2fccc88539fa5b26e6"}}}
+      ]
+    },
+    "certHead": {
+      "allOf": [
+        {"$ref": "#/$defs/head"},
+        {"properties": {"repository": {"const": "grandchallenge/MATHCERT"}, "commit_sha": {"const": "0258e4f0bca0d90fac05b62aeef108f16dccffdd"}}}
+      ]
+    },
+    "intellectHead": {
+      "allOf": [
+        {"$ref": "#/$defs/head"},
+        {"properties": {"repository": {"const": "grandchallenge/INTELLECT"}, "commit_sha": {"const": "949f84fef76c1d4cd64e90d7b3e97d13be15332f"}}}
+      ]
+    },
+    "solveOverlayArtifact": {
+      "allOf": [{"$ref": "#/$defs/artifact"}, {"properties": {"path": {"const": "contracts/mathcert_current_routes.json"}, "digest": {"const": "2f6bb27a453a8615ba3af75ca77452ceb7b83ca8"}}}]
+    },
+    "solveSchemaArtifact": {
+      "allOf": [{"$ref": "#/$defs/artifact"}, {"properties": {"path": {"const": "schemas/mathcert_current_routes.schema.json"}, "digest": {"const": "3c7c3c53cdff909fabb9c2ec5bc6efbb924f6a9d"}}}]
+    },
+    "solveValidatorArtifact": {
+      "allOf": [{"$ref": "#/$defs/artifact"}, {"properties": {"path": {"const": "ci/validate_current_cert_routes.py"}, "digest": {"const": "4300cafdfb66fc508e58551d21290782490b90d0"}}}]
+    },
+    "solveTestsArtifact": {
+      "allOf": [{"$ref": "#/$defs/artifact"}, {"properties": {"path": {"const": "ci/test_campaign_manifests.py"}, "digest": {"const": "a720df7da87359b96e23e901325affde85959007"}}}]
+    },
+    "certRegistryArtifact": {
+      "allOf": [{"$ref": "#/$defs/artifact"}, {"properties": {"path": {"const": "governance/certification_routes.json"}, "digest": {"const": "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1"}}}]
+    },
+    "intellectProviderArtifact": {
+      "allOf": [{"$ref": "#/$defs/artifact"}, {"properties": {"path": {"const": "src/grand_intellect/mathsolve_cert_current.py"}, "digest": {"const": "203fc6d2923fc2669868a172ce67682c795d4d01"}}}]
+    },
+    "intellectFixtureArtifact": {
+      "allOf": [{"$ref": "#/$defs/artifact"}, {"properties": {"path": {"const": "tests/fixtures/rh_ns_interface_qualifications.json"}, "digest": {"const": "ee7eb7a844d917df493f68b9752de8001881ec80"}}}]
+    },
+    "intellectTestsArtifact": {
+      "allOf": [{"$ref": "#/$defs/artifact"}, {"properties": {"path": {"const": "tests/test_umbrella_current_state_alignment.py"}, "digest": {"const": "2f4c4d4a7e75c027b0a85bae8fdeed33962b0e80"}}}]
+    },
+    "forgeManifestArtifact": {
+      "allOf": [{"$ref": "#/$defs/artifact"}, {"properties": {"path": {"const": "provider_manifests/NS-CI-001.json"}, "digest": {"const": "ed5220c31e38ba3458dc8a94a462c89c285fc22e"}}}]
+    },
+    "baseCampaignRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["handoff_state", "route_state", "qualification_scope", "mathematical_target_proved"],
+      "properties": {
+        "handoff_state": {"type": "string"},
+        "route_state": {"type": "string"},
+        "qualification_scope": {"type": ["string", "null"]},
+        "mathematical_target_proved": {"const": false}
+      }
+    },
+    "readyRecord": {
+      "allOf": [{"$ref": "#/$defs/baseCampaignRecord"}, {"properties": {"handoff_state": {"const": "ready"}, "route_state": {"const": "ready"}, "qualification_scope": {"type": "null"}}}]
+    },
+    "pendingRecord": {
+      "allOf": [{"$ref": "#/$defs/baseCampaignRecord"}, {"properties": {"handoff_state": {"const": "pending"}, "route_state": {"const": "pending"}, "qualification_scope": {"type": "null"}}}]
+    },
+    "nsQualifiedRecord": {
+      "allOf": [{"$ref": "#/$defs/baseCampaignRecord"}, {"properties": {"handoff_state": {"const": "ready"}, "route_state": {"const": "qualified"}, "qualification_scope": {"const": "qualified_interface_only"}}}]
+    },
+    "rhQualifiedRecord": {
+      "allOf": [{"$ref": "#/$defs/baseCampaignRecord"}, {"properties": {"handoff_state": {"const": "pending"}, "route_state": {"const": "qualified"}, "qualification_scope": {"const": "qualified_interface_only"}}}]
+    }
+  }
+}
