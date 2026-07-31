@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "registry_id": "MP-CAMPAIGN-ADMISSION-001",
   "verified_at": "2026-07-31",
   "authority": {
@@ -27,7 +27,10 @@
       "campaign_id": "VGSE-001",
       "lifecycle_state": "candidate",
       "programme_tracker_issue": 170,
-      "governance_issue": 172,
+      "governance_issue": 175,
+      "governance_history": [
+        172
+      ],
       "active_portfolio_member": false,
       "source_provenance": {
         "state": "unverified_candidate",
@@ -46,8 +49,16 @@
         "issue": 84,
         "pull_request": 85,
         "base_commit": "916f3434abcce29098ba7508a3b457a461461193",
-        "state": "draft_candidate_implementation",
-        "may_merge_candidate_work_package": true,
+        "reviewed_head": "0d66a75412543e534b81c21a51a6ad88c035b55b",
+        "merge_commit": "709c7d3f388b8df75c87a247f80424e560c31e72",
+        "merged_at": "2026-07-31T15:04:53Z",
+        "workflow_runs": {
+          "solve_checks": 30641057206,
+          "gcl_conformance": 30641058060,
+          "candidate_replay": 30641057393
+        },
+        "state": "merged_candidate_work_package",
+        "may_merge_candidate_work_package": false,
         "may_create_campaign_manifest": false,
         "may_create_cert_handoff": false,
         "may_create_adjudication": false,
@@ -63,14 +74,14 @@
       "admission_gates": {
         "forge_provider_manifest_admitted": false,
         "source_revision_concordance_complete": false,
-        "solve_candidate_package_reviewed": false,
+        "solve_candidate_package_reviewed": true,
         "cert_route_registered": false,
         "programme_active_registry_updated": false,
         "programme_routing_registry_updated": false,
         "runtime_contract_updated_for_active_admission": false,
         "intellect_repin_complete_if_required": false
       },
-      "claim_boundary": "Candidate registration and bounded replay work do not admit VGSE-001 to the active portfolio, certify the algebraic fixture, reconstruct a t-embedding, prove rigid foldability, establish manufacturability, or authorize novelty, priority, patentability, or commercial claims."
+      "claim_boundary": "A reviewed and merged candidate work package does not admit VGSE-001 to the active portfolio, verify its source, create a Cert route, certify roots or t-embeddings, establish rigid foldability or manufacture, or authorize novelty, priority, patentability, or commercial claims."
     }
   ]
 }
