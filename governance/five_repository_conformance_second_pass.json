@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0.0",
+  "audit_id": "MP-UMBRELLA-SECOND-PASS-001",
+  "verified_at": "2026-07-31",
+  "status": "CONFORMANT_AT_PINNED_SUBJECT_HEADS_WITH_EXTERNAL_PUBLICATION_ATTESTATION_REQUIRED",
+  "predecessor": {
+    "path": "governance/five_repository_conformance_matrix.json",
+    "matrix_id": "MP-FIVE-REPOSITORY-CONFORMANCE-001",
+    "publication_commit": "1cb128768803fdebcc9d7a0c8299399e467b01a9",
+    "git_blob_sha1": "7567fb172a4f335153d6112083e76575dbbcf57c",
+    "interpretation": "conformant_at_pinned_subject_heads_not_self_inclusive"
+  },
+  "subject_heads": {
+    "math_programme": "1cb128768803fdebcc9d7a0c8299399e467b01a9",
+    "mathforge": "0faee396ffa56c568ee0ae6a348bdb43ca80ac4d",
+    "mathsolve": "916f3434abcce29098ba7508a3b457a461461193",
+    "mathcert": "0258e4f0bca0d90fac05b62aeef108f16dccffdd",
+    "intellect": "7ce82ee5ad5614459ee4bffa57d22dc39adacbc1"
+  },
+  "publication_semantics": {
+    "self_inclusive_head_claim": false,
+    "artifact_can_pin_own_future_merge_commit": false,
+    "external_post_merge_attestation_required": true,
+    "attestation_issue": 165,
+    "statement": "The addendum certifies its fixed subject heads. Its eventual merge commit and blob are recorded externally after merge."
+  },
+  "ci_semantics": {
+    "evidence_kind": "pull_request_head_and_merge_ref_against_protected_base",
+    "post_merge_push_replay_claimed": false,
+    "programme_first_sync": {
+      "reviewed_head": "fcd4d7f0186794d098286d3cc4aab8c0a79c8f4e",
+      "policy_run_id": 30627289290,
+      "gcl_run_id": 30627289879
+    },
+    "programme_matrix": {
+      "reviewed_head": "d511ef1fb996ab3be48d21acab7ef24261c4ff22",
+      "policy_run_id": 30628798012,
+      "gcl_run_id": 30628798246
+    },
+    "intellect": {
+      "reviewed_head": "b53755bc37d14460ee961c1dc7daaf4efeb3eb52",
+      "ci_run_id": 30627993495,
+      "gcl_run_id": 30627994141
+    }
+  },
+  "second_pass_findings": [
+    {
+      "id": "SP-01",
+      "severity": "P1",
+      "disposition": "corrected",
+      "finding": "First-pass matrix wording could be read as self-inclusive current-head conformance."
+    },
+    {
+      "id": "SP-02",
+      "severity": "P1",
+      "disposition": "corrected",
+      "finding": "Tracker comments were counted as canonical body refreshes."
+    },
+    {
+      "id": "SP-03",
+      "severity": "P1",
+      "disposition": "corrected",
+      "finding": "Programme entries 86, 88, and 89 were pull requests, not canonical campaign trackers."
+    },
+    {
+      "id": "SP-04",
+      "severity": "P2",
+      "disposition": "corrected",
+      "finding": "Forge and Solve Union-Closed bodies retained a superseded 2026-06-15 review date."
+    },
+    {
+      "id": "SP-05",
+      "severity": "P1",
+      "disposition": "corrected",
+      "finding": "Cert bodies did not canonically state ready versus qualified route state."
+    }
+  ],
+  "canonical_trackers": {
+    "programme_campaigns": {
+      "UC-001": 1,
+      "NS-CI-001": 55,
+      "HC-001": 65,
+      "BSD-001": 66,
+      "PNP-001": 162,
+      "RH-001": 163,
+      "YM-001": 164,
+      "OZ-001": 113
+    },
+    "programme_authority": {
+      "GCL-TCS-00_GCL-POS-01": 108
+    },
+    "forge": {
+      "MF-UC-0001": 1
+    },
+    "solve": {
+      "MS-UC-WP04": 1
+    },
+    "cert": {
+      "NS-CI-001": 19,
+      "HC-001": 23,
+      "UC-001": 25,
+      "RH-001": 28,
+      "OZ-001": 30
+    }
+  },
+  "forbidden_tracker_substitutions": [86, 88, 89],
+  "portfolio": {
+    "qualified_interface_only": ["NS-CI-001", "RH-001"],
+    "ready_intake": ["UC-001", "HC-001"],
+    "pending": ["BSD-001", "PNP-001", "YM-001", "OZ-001"],
+    "archived_outside_current_routing": ["PC-001"]
+  },
+  "preserved_blockers": {
+    "UC-001": ["Frankl's conjecture remains open", "ready packet has no Cert adjudication"],
+    "NS-CI-001": ["universal critical integrability remains unproved", "NS-A2 remains unproved", "global regularity remains unproved"],
+    "HC-001": ["rational Hodge conjecture remains open", "ready packet has no Cert adjudication"],
+    "BSD-001": ["BSD-R2-A1 remains unproved", "packet remains pending"],
+    "PNP-001": ["definition-level concordance remains open", "no terminal claim packet is ready"],
+    "RH-001": ["Riemann Hypothesis remains unproved", "qualification is interface-only"],
+    "YM-001": ["construction and mass-gap obligations remain open", "packet remains pending"],
+    "OZ-001": ["T3 remains open", "Sharp-12 remains gated", "no new irrationality conclusion is authorized"]
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "operational_release_complete_preserved": true,
+    "release_trust_issues_reopened": false
+  },
+  "identity_mismatch_count_at_subject_heads": 0,
+  "unresolved_governance_mismatch_count": 0
+}

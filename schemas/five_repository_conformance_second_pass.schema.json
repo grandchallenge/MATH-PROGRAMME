@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/five_repository_conformance_second_pass.schema.json",
+  "title": "Five Repository Conformance Second Pass",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "audit_id", "verified_at", "status", "predecessor", "subject_heads", "publication_semantics", "ci_semantics", "second_pass_findings", "canonical_trackers", "forbidden_tracker_substitutions", "portfolio", "preserved_blockers", "claim_boundaries", "identity_mismatch_count_at_subject_heads", "unresolved_governance_mismatch_count"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "audit_id": {"const": "MP-UMBRELLA-SECOND-PASS-001"},
+    "verified_at": {"type": "string", "format": "date"},
+    "status": {"const": "CONFORMANT_AT_PINNED_SUBJECT_HEADS_WITH_EXTERNAL_PUBLICATION_ATTESTATION_REQUIRED"},
+    "predecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "matrix_id", "publication_commit", "git_blob_sha1", "interpretation"],
+      "properties": {
+        "path": {"const": "governance/five_repository_conformance_matrix.json"},
+        "matrix_id": {"const": "MP-FIVE-REPOSITORY-CONFORMANCE-001"},
+        "publication_commit": {"pattern": "^[0-9a-f]{40}$"},
+        "git_blob_sha1": {"pattern": "^[0-9a-f]{40}$"},
+        "interpretation": {"const": "conformant_at_pinned_subject_heads_not_self_inclusive"}
+      }
+    },
+    "subject_heads": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["math_programme", "mathforge", "mathsolve", "mathcert", "intellect"],
+      "properties": {
+        "math_programme": {"pattern": "^[0-9a-f]{40}$"},
+        "mathforge": {"pattern": "^[0-9a-f]{40}$"},
+        "mathsolve": {"pattern": "^[0-9a-f]{40}$"},
+        "mathcert": {"pattern": "^[0-9a-f]{40}$"},
+        "intellect": {"pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "publication_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["self_inclusive_head_claim", "artifact_can_pin_own_future_merge_commit", "external_post_merge_attestation_required", "attestation_issue", "statement"],
+      "properties": {
+        "self_inclusive_head_claim": {"const": false},
+        "artifact_can_pin_own_future_merge_commit": {"const": false},
+        "external_post_merge_attestation_required": {"const": true},
+        "attestation_issue": {"const": 165},
+        "statement": {"type": "string", "minLength": 20}
+      }
+    },
+    "ci_semantics": {"type": "object"},
+    "second_pass_findings": {"type": "array", "minItems": 5, "items": {"type": "object", "required": ["id", "severity", "disposition", "finding"]}},
+    "canonical_trackers": {"type": "object"},
+    "forbidden_tracker_substitutions": {"const": [86, 88, 89]},
+    "portfolio": {"type": "object"},
+    "preserved_blockers": {"type": "object", "minProperties": 8},
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mathematical_target_proved", "novelty_claim_authorized", "priority_claim_authorized", "operational_release_complete_preserved", "release_trust_issues_reopened"],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "priority_claim_authorized": {"const": false},
+        "operational_release_complete_preserved": {"const": true},
+        "release_trust_issues_reopened": {"const": false}
+      }
+    },
+    "identity_mismatch_count_at_subject_heads": {"const": 0},
+    "unresolved_governance_mismatch_count": {"const": 0}
+  }
+}
