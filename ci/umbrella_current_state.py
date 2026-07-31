@@ -22,6 +22,18 @@ EXPECTED_ROUTING = {
     "ready": {"UC-001", "HC-001"},
     "pending": {"BSD-001", "PNP-001", "YM-001", "OZ-001"},
 }
+EXPECTED_PROGRAMME_TRACKERS = {
+    "UC-001": 1,
+    "NS-CI-001": 55,
+    "HC-001": 65,
+    "BSD-001": 66,
+    "PNP-001": 162,
+    "RH-001": 163,
+    "YM-001": 164,
+    "OZ-001": 113,
+    "PC-001": None,
+}
+FORBIDDEN_TRACKER_SUBSTITUTIONS = {86, 88, 89}
 
 
 def load_json(path: Path) -> Any:
@@ -103,6 +115,28 @@ def validation_errors(
     if campaigns.get("legacy_aliases") != {"UC": "UC-001"}:
         errors.append("governed campaign registry: UC alias drift")
 
+    actual_tracker_ids: list[int] = []
+    for campaign_id, expected_issue in EXPECTED_PROGRAMME_TRACKERS.items():
+        entry = by_id.get(campaign_id, {})
+        actual_issue = entry.get("programme_tracker_issue")
+        if actual_issue != expected_issue:
+            errors.append(
+                f"governed campaign registry: {campaign_id} tracker drift; "
+                f"expected {expected_issue}, found {actual_issue}"
+            )
+        if isinstance(actual_issue, int):
+            actual_tracker_ids.append(actual_issue)
+    if len(actual_tracker_ids) != len(set(actual_tracker_ids)):
+        errors.append("governed campaign registry: Programme tracker issues must be unique")
+    if FORBIDDEN_TRACKER_SUBSTITUTIONS & set(actual_tracker_ids):
+        errors.append("governed campaign registry: pull request substituted for campaign tracker")
+
+    claim_boundary = str(campaigns.get("claim_boundary", ""))
+    if "Protected-branch repository records are authoritative" not in claim_boundary:
+        errors.append("governed campaign registry: repository authority boundary missing")
+    if "GitHub issues are mutable navigational mirrors" not in claim_boundary:
+        errors.append("governed campaign registry: issue mirror boundary missing")
+
     domains = yaml.safe_load(DOMAIN_PATH.read_text(encoding="utf-8"))
     domain_ids = {
         str(item.get("domain_id"))
@@ -124,5 +158,5 @@ def main() -> int:
     if errors:
         print("\n".join(errors), file=sys.stderr)
         return 1
-    print("validated current five-repository subject heads, portfolio states, campaign scope, historical supersession, and claim boundaries")
+    print("validated current five-repository subject heads, portfolio states, exact campaign tracker mirrors, repository authority, historical supersession, and claim boundaries")
     return 0
