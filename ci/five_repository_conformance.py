@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import json
-import sys
 from pathlib import Path
 from typing import Any
 
@@ -101,27 +100,20 @@ def validation_errors(matrix: dict[str, Any] | None = None) -> list[str]:
     if audit.get("claim_boundaries", {}).get("operational_release_complete_preserved") is not True:
         errors.append("five-repository matrix: operational release closure was not preserved")
     boundaries = matrix.get("claim_boundaries", {})
-    for field in ("mathematical_target_proved", "novelty_claim_authorized", "priority_claim_authorized", "release_trust_issues_reopened"):
+    for field in (
+        "mathematical_target_proved",
+        "novelty_claim_authorized",
+        "priority_claim_authorized",
+        "release_trust_issues_reopened",
+    ):
         if boundaries.get(field) is not False:
             errors.append(f"five-repository matrix: prohibited boundary inflation in {field}")
     if boundaries.get("operational_release_complete_preserved") is not True:
         errors.append("five-repository matrix: operational release closure must remain true")
 
-    if set(matrix.get("preserved_blockers", {})) != set(EXPECTED_STATES["qualified"] | EXPECTED_STATES["ready"] | EXPECTED_STATES["pending"]):
+    active = EXPECTED_STATES["qualified"] | EXPECTED_STATES["ready"] | EXPECTED_STATES["pending"]
+    if set(matrix.get("preserved_blockers", {})) != active:
         errors.append("five-repository matrix: blocker coverage does not equal active routing portfolio")
     if matrix.get("tracker_reconciliation", {}).get("mathsolve_retrospective_closed_completed") != [66, 67, 68, 69]:
         errors.append("five-repository matrix: retrospective Solve closure set drift")
     return errors
-
-
-def main() -> int:
-    errors = validation_errors()
-    if errors:
-        print("\n".join(errors), file=sys.stderr)
-        return 1
-    print("validated five exact repository heads, zero identity mismatches, tracker reconciliation, and preserved mathematical blockers")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
