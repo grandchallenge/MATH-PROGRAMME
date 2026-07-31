@@ -1,4 +1,4 @@
-"""Reviewed Programme-wide MATHSOLVE routing and MATHCERT disposition semantics."""
+"""Current Programme-wide MATHSOLVE routing and MATHCERT disposition semantics."""
 from __future__ import annotations
 
 import json
@@ -14,32 +14,65 @@ ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = ROOT / "governance" / "mathsolve_routing_audit.json"
 SCHEMA_PATH = ROOT / "schemas" / "mathsolve_routing_registry.schema.json"
 DOMAIN_REGISTRY_PATH = ROOT / "DOMAIN_REGISTRY.yaml"
-EXPECTED_PROVIDER_COMMIT = "cdb34f47829942bd89a3f7f754b412527eaafb92"
-EXPECTED_PROVIDER_PULL_REQUEST = "https://github.com/grandchallenge/MATHSOLVE/pull/74"
-EXPECTED_CERT_PROVIDER_COMMIT = "3854dd1b4f6e162a7e74c3da1993f022ee691e5e"
+
+EXPECTED_PROVIDER_COMMIT = "916f3434abcce29098ba7508a3b457a461461193"
+EXPECTED_PROVIDER_PULL_REQUEST = "https://github.com/grandchallenge/MATHSOLVE/pull/83"
+EXPECTED_CERT_PROVIDER_COMMIT = "0258e4f0bca0d90fac05b62aeef108f16dccffdd"
+EXPECTED_CERT_PROVIDER_PULL_REQUEST = "https://github.com/grandchallenge/MATHCERT/pull/40"
 EXPECTED_CERT_REGISTRY_PATH = "governance/certification_routes.json"
-EXPECTED_CERT_REGISTRY_BLOB = "065f0531e4d763b389b207d4922d5a85b4335ee3"
+EXPECTED_CERT_REGISTRY_BLOB = "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1"
+EXPECTED_PREDECESSOR = {
+    "path": "governance/mathcert_cross_repository_conformance.json",
+    "audit_id": "MP-MC-CONFORMANCE-001",
+    "status": "historical_superseded_for_current_portfolio_state",
+}
+
 EXPECTED_MANIFESTS = {
-    "UC-001": ("campaign_manifests/UC-001.json", "17ed0c7278098061201f14f337e4f4a81f9a0ef4"),
-    "NS-CI-001": ("campaign_manifests/NS-CI-001.json", "35f7cd6ccf0e27f199571189fcb34a3f8adc31d7"),
-    "HC-001": ("campaign_manifests/HC-001.json", "b3efb4e44dd6ab70765e602b4837bc23355eac3d"),
-    "BSD-001": ("campaign_manifests/BSD-001.json", "ff634c6303d8ba322edb739c9112466adca1d3b1"),
-    "PNP-001": ("campaign_manifests/PNP-001.json", "64c67206556c19ae77c1eb5afa8297aae9af224e"),
-    "RH-001": ("campaign_manifests/RH-001.json", "0b58fa0ed35907eddf89062069793987b3b03f2e"),
-    "YM-001": ("campaign_manifests/YM-001.json", "d8825019a6e65aa6210887d217a6a903cf09bdba"),
-    "OZ-001": ("campaign_manifests/OZ-001.json", "2cdeb2059af2e4cafe53e6c3cf88a9b27fa622b4"),
+    "UC-001": ("campaign_manifests/UC-001.json", "55629c3004b8bffc35fc0fa6f5fbc711ff48aa3c"),
+    "NS-CI-001": ("campaign_manifests/NS-CI-001.json", "fcdd10f96b19c218ba700deb452b7da7f6b9b975"),
+    "HC-001": ("campaign_manifests/HC-001.json", "48e3a0c22299147fe48cb4288cda813d7cffdcb4"),
+    "BSD-001": ("campaign_manifests/BSD-001.json", "3fb3b07400915d90047a06a353537cf2e1593b9e"),
+    "PNP-001": ("campaign_manifests/PNP-001.json", "6ecdfa0714828518878ccaf2cdc65756a5955186"),
+    "RH-001": ("campaign_manifests/RH-001.json", "4ce2c5bcdc7bc1d0d63f7b2244898c8a651d5f64"),
+    "YM-001": ("campaign_manifests/YM-001.json", "733d11811d0226fa2b2467965c3655a7d0fad963"),
+    "OZ-001": ("campaign_manifests/OZ-001.json", "8b3164ab88a35ec9fba69013b44056573e846bfe"),
 }
 EXPECTED_HANDOFFS = {
     "UC-001": (25, "ready", "cert_handoffs/UC-001.json", "8369bc21e45be6af71d2a0cdb0c5ab3cb5313bfb"),
-    "NS-CI-001": (19, "ready", "cert_handoffs/NS-CI-001.json", "58b10636bd614e91e6c35900b9f5fb68e7f88afb"),
+    "NS-CI-001": (19, "ready", "cert_handoffs/NS-CI-001.json", "40cad99646829fe40edf9c616074514407e49dee"),
     "HC-001": (23, "ready", "cert_handoffs/HC-001.json", "0c154af2e577e4367f9f5d0aeac5e15f9420172c"),
     "BSD-001": (26, "pending", "cert_handoffs/BSD-001.json", "20f8dbf016ab179cbf910d0510ad26b2bd9a24cb"),
     "PNP-001": (27, "pending", "cert_handoffs/PNP-001.json", "c9d419c43293d533de8858099d26672f1b8d9dbe"),
-    "RH-001": (28, "pending", "cert_handoffs/RH-001.json", "525ca580e3b29ed7fcc690f2ce810a26a17a9df2"),
+    "RH-001": (28, "pending", "cert_handoffs/RH-001.json", "7304f185bd817bb67b77540513dc01d05f6fcd3a"),
     "YM-001": (29, "pending", "cert_handoffs/YM-001.json", "54b7ad8156532e3dceba439356848dfa65a4d1ac"),
     "OZ-001": (30, "pending", "cert_handoffs/OZ-001.json", "b244c30b1b3aa4590a8b9ff9d63c5b66dab87663"),
 }
-EXPECTED_CERT_ROUTE_STATES = {campaign_id: "pending" for campaign_id in EXPECTED_MANIFESTS}
+EXPECTED_CERT_ROUTE_STATES = {
+    "UC-001": "ready",
+    "NS-CI-001": "qualified",
+    "HC-001": "ready",
+    "BSD-001": "pending",
+    "PNP-001": "pending",
+    "RH-001": "qualified",
+    "YM-001": "pending",
+    "OZ-001": "pending",
+}
+EXPECTED_CERT_OUTPUTS = {
+    "NS-CI-001": {
+        "repository": "grandchallenge/MATHCERT",
+        "commit_sha": "b1aa08001eb8537be8e204c3866aefd5f898252e",
+        "path": "certificates/formal_sources/MC-FC-WP00-NS-CI-001.json",
+        "digest_algorithm": "git_blob_sha1",
+        "digest": "6047ad774957974a6c2aa86bae72b51841e774a4",
+    },
+    "RH-001": {
+        "repository": "grandchallenge/MATHCERT",
+        "commit_sha": "b1aa08001eb8537be8e204c3866aefd5f898252e",
+        "path": "certificates/formal_sources/MC-FC-WP00-RH-001.json",
+        "digest_algorithm": "git_blob_sha1",
+        "digest": "3668bbf792d994a6d8919101417f2f3cad342cdc",
+    },
+}
 ALIASES = {"UC": "UC-001"}
 GATED_STAGES = {
     "WP00", "WP01", "WP02", "RESTRICTED_TARGET", "MECHANISM",
@@ -63,11 +96,13 @@ def canonical(campaign_id: str) -> str:
 
 def active_campaigns() -> set[str]:
     data = yaml.safe_load(DOMAIN_REGISTRY_PATH.read_text(encoding="utf-8"))
-    return {
+    active = {
         canonical(str(item["campaign_id"]))
         for item in data.get("domains", [])
         if isinstance(item, dict) and item.get("status") == "ACTIVE"
     }
+    active.add("OZ-001")
+    return active
 
 
 def routing_portfolio() -> set[str]:
@@ -89,6 +124,16 @@ def waiver_errors(campaign_id: str, waiver: dict[str, Any]) -> list[str]:
     return errors
 
 
+def _exact_mapping_errors(label: str, actual: Any, expected: dict[str, Any]) -> list[str]:
+    if not isinstance(actual, dict):
+        return [f"{label} is missing or malformed"]
+    return [
+        f"{label} {field} drift; expected {value}"
+        for field, value in expected.items()
+        if actual.get(field) != value
+    ]
+
+
 def routing_errors(
     registry: dict[str, Any] | None = None,
     *,
@@ -101,10 +146,12 @@ def routing_errors(
         f"governance/mathsolve_routing_audit.json: {error.json_path}: {error.message}"
         for error in sorted(validator.iter_errors(instance), key=lambda item: list(item.path))
     ]
+
     expected_top = {
         "provider_commit": EXPECTED_PROVIDER_COMMIT,
         "provider_pull_request": EXPECTED_PROVIDER_PULL_REQUEST,
         "certification_provider_commit": EXPECTED_CERT_PROVIDER_COMMIT,
+        "certification_provider_pull_request": EXPECTED_CERT_PROVIDER_PULL_REQUEST,
         "certification_route_registry_path": EXPECTED_CERT_REGISTRY_PATH,
         "certification_route_registry_git_blob_sha1": EXPECTED_CERT_REGISTRY_BLOB,
     }
@@ -113,15 +160,15 @@ def routing_errors(
             errors.append(
                 f"MATHSOLVE routing: {field} drift; expected {expected}, found {instance.get(field)!r}"
             )
+    if instance.get("predecessor") != EXPECTED_PREDECESSOR:
+        errors.append("MATHSOLVE routing: historical predecessor or supersession status drift")
 
     entries = [entry for entry in instance.get("campaigns", []) if isinstance(entry, dict)]
     ids = [str(entry.get("campaign_id", "")) for entry in entries]
     for duplicate in sorted({item for item in ids if ids.count(item) > 1}):
         errors.append(f"MATHSOLVE routing: duplicate campaign_id {duplicate}")
     actual = set(ids)
-    active_required = {
-        canonical(item) for item in (active if active is not None else active_campaigns())
-    }
+    active_required = {canonical(item) for item in (active if active is not None else active_campaigns())}
     portfolio = routing_portfolio()
     for missing in sorted(active_required - actual):
         errors.append(f"MATHSOLVE routing: ACTIVE campaign is uncovered: {missing}")
@@ -151,10 +198,9 @@ def routing_errors(
                 f"expected {EXPECTED_CERT_ROUTE_STATES[campaign_id]}"
             )
         handoff = cert.get("handoff", {})
-        expected_handoff_id = f"MC-HANDOFF-{campaign_id}"
         expected_handoff = {
             "repository": "grandchallenge/MATHSOLVE",
-            "handoff_id": expected_handoff_id,
+            "handoff_id": f"MC-HANDOFF-{campaign_id}",
             "state": handoff_state,
             "path": handoff_path,
             "git_blob_sha1": handoff_blob,
@@ -163,6 +209,27 @@ def routing_errors(
             if handoff.get(field) != expected:
                 errors.append(
                     f"MATHSOLVE routing: {campaign_id} handoff {field} drift; expected {expected}"
+                )
+
+        expected_output = EXPECTED_CERT_OUTPUTS.get(campaign_id)
+        actual_output = cert.get("cert_output")
+        scope = cert.get("qualification_scope")
+        if expected_output is None:
+            if actual_output is not None:
+                errors.append(f"MATHSOLVE routing: {campaign_id} intake route may not carry a Cert output")
+            if scope is not None:
+                errors.append(f"MATHSOLVE routing: {campaign_id} intake route may not carry qualification scope")
+        else:
+            errors.extend(_exact_mapping_errors(
+                f"MATHSOLVE routing: {campaign_id} Cert output", actual_output, expected_output
+            ))
+            if scope != "qualified_interface_only":
+                errors.append(
+                    f"MATHSOLVE routing: {campaign_id} qualified route must be interface-only"
+                )
+            if not any("unproved" in str(item).lower() for item in entry.get("promotion", {}).get("blockers", [])):
+                errors.append(
+                    f"MATHSOLVE routing: {campaign_id} qualification lacks an explicit unproved-target blocker"
                 )
 
     for entry in entries:
@@ -225,7 +292,7 @@ def provider_gate_errors(
     missing = [field for field in required if not entry.get(field)]
     if missing:
         return [f"{canonical_id} {stage}: incomplete MATHSOLVE route: {', '.join(missing)}"]
-    if entry.get("placement") == "programme_embedded" and stage != "WP00":
+    if entry.get("placement") == "programme_embedded" and stage not in {"WP00", "JUDGMENT", "INTEGRATION"}:
         return [f"{canonical_id} {stage}: future Solve-owned work may not remain embedded in MATH-PROGRAMME"]
 
     cert = entry["cert"]
@@ -248,7 +315,7 @@ def main() -> int:
         print("\n".join(errors), file=sys.stderr)
         return 1
     print(
-        "validated Solve manifests and packets, exact MATHCERT provider identity, "
-        "intake/adjudication separation, scoped waivers, and promotion semantics"
+        "validated current Solve manifests and packets, exact Cert outputs, "
+        "interface-only qualifications, historical supersession, and promotion boundaries"
     )
     return 0
