@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.1.0",
+  "contract_id": "MP-UMBRELLA-RUNTIME-004",
+  "verified_at": "2026-07-31",
+  "provider_repository": "grandchallenge/MATH-PROGRAMME",
+  "supersedes": {
+    "path": "governance/umbrella_runtime_contract.json",
+    "git_blob_sha1": "6828f552cdd3aff006aed7f23477d2541af4b2e7",
+    "status": "historical_superseded_for_runtime_consumption"
+  },
+  "programme_routing_contract": {
+    "path": "governance/mathsolve_routing_audit.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "4a27ec8aaaa60f919ba51028807b83dc522bfcff",
+    "schema_version": "1.3.0"
+  },
+  "programme_campaign_contract": {
+    "path": "governance/governed_campaign_registry.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "b1f1e4682d0f3ff0108d020e466fa2ecb0809b57",
+    "campaign_count": 9,
+    "routing_member_count": 8
+  },
+  "candidate_admission_contract": {
+    "path": "governance/campaign_admission_registry.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "9b1a307fde8bfe814210088d544ec8b03f2b413e",
+    "candidate_count": 1,
+    "candidate_ids": ["VGSE-001"]
+  },
+  "certification_contract": {
+    "repository": "grandchallenge/MATHCERT",
+    "commit_sha": "0258e4f0bca0d90fac05b62aeef108f16dccffdd",
+    "path": "governance/certification_routes.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1"
+  },
+  "active_portfolio": {
+    "qualified_interface_only": ["NS-CI-001", "RH-001"],
+    "ready_intake": ["UC-001", "HC-001"],
+    "pending": ["BSD-001", "PNP-001", "YM-001", "OZ-001"],
+    "archived_outside_current_routing": ["PC-001"]
+  },
+  "candidate_portfolio": {
+    "pre_admission": ["VGSE-001"],
+    "active_portfolio_effect": "none"
+  },
+  "authority_model": {
+    "state_authority": "protected_branch_repository_records",
+    "github_issue_role": "mutable_navigational_mirror",
+    "issue_mutation_can_change_state": false,
+    "candidate_registry_is_separate_from_active_registry": true,
+    "candidate_work_can_self_admit": false
+  },
+  "consumer_independence": {
+    "pins_intellect_commit": false,
+    "contains_downstream_completion_obligation": false,
+    "consumer_repins_by_artifact_reference": true
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "candidate_campaign_admitted": false,
+    "operational_release_complete_preserved": true,
+    "release_trust_issues_reopened": false
+  }
+}
