@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0.0",
+  "audit_id": "MP-UMBRELLA-THIRD-PASS-001",
+  "verified_at": "2026-07-31",
+  "status": "CORRECTED_ON_REVIEWED_BRANCH_EXTERNAL_PUBLICATION_ATTESTATION_REQUIRED",
+  "predecessor": {
+    "path": "governance/five_repository_conformance_second_pass.json",
+    "audit_id": "MP-UMBRELLA-SECOND-PASS-001",
+    "publication_commit": "96bebd6d9125555c6279106633318d7e32e890fe",
+    "git_blob_sha1": "f86c5101b738fc82f7a20ef5db7ebe600b79f147",
+    "interpretation": "historical_incomplete_tracker_coverage_and_authority_semantics"
+  },
+  "protected_base_heads": {
+    "math_programme": "96bebd6d9125555c6279106633318d7e32e890fe",
+    "mathforge": "0faee396ffa56c568ee0ae6a348bdb43ca80ac4d",
+    "mathsolve": "916f3434abcce29098ba7508a3b457a461461193",
+    "mathcert": "0258e4f0bca0d90fac05b62aeef108f16dccffdd",
+    "intellect": "7ce82ee5ad5614459ee4bffa57d22dc39adacbc1"
+  },
+  "external_cert_route_registry": {
+    "repository": "grandchallenge/MATHCERT",
+    "commit_sha": "0258e4f0bca0d90fac05b62aeef108f16dccffdd",
+    "path": "governance/certification_routes.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1",
+    "route_count": 8
+  },
+  "third_pass_findings": [
+    {
+      "id": "TP-01",
+      "severity": "P1",
+      "disposition": "corrected",
+      "finding": "The authoritative Programme campaign registry still substituted pull requests 86, 88, and 89 for YM, PNP, and RH trackers."
+    },
+    {
+      "id": "TP-02",
+      "severity": "P1",
+      "disposition": "corrected",
+      "finding": "The Programme current-state validator did not enforce exact programme_tracker_issue identities."
+    },
+    {
+      "id": "TP-03",
+      "severity": "P1",
+      "disposition": "corrected",
+      "finding": "The second-pass addendum listed five MATHCERT trackers and omitted BSD 26, PNP 27, and YM 29."
+    },
+    {
+      "id": "TP-04",
+      "severity": "P1",
+      "disposition": "corrected",
+      "finding": "Mutable GitHub issue bodies were described as canonical state authority rather than navigational mirrors."
+    },
+    {
+      "id": "TP-05",
+      "severity": "P2",
+      "disposition": "corrected",
+      "finding": "The omitted BSD, PNP, and YM Cert mirrors retained pre-current registration wording."
+    }
+  ],
+  "authority_model": {
+    "state_authority": "protected_branch_repository_records",
+    "programme_campaign_registry": "governance/governed_campaign_registry.json",
+    "programme_route_registry": "governance/mathsolve_routing_audit.json",
+    "cert_route_registry": "grandchallenge/MATHCERT:governance/certification_routes.json",
+    "github_issue_role": "mutable_navigational_mirror",
+    "issue_mutation_can_change_lifecycle_state": false,
+    "issue_mutation_can_change_cert_state": false,
+    "protected_branch_review_required_for_state_change": true
+  },
+  "programme_tracker_mirrors": {
+    "UC-001": 1,
+    "NS-CI-001": 55,
+    "HC-001": 65,
+    "BSD-001": 66,
+    "PNP-001": 162,
+    "RH-001": 163,
+    "YM-001": 164,
+    "OZ-001": 113
+  },
+  "cert_tracker_mirrors": {
+    "UC-001": 25,
+    "NS-CI-001": 19,
+    "HC-001": 23,
+    "BSD-001": 26,
+    "PNP-001": 27,
+    "RH-001": 28,
+    "YM-001": 29,
+    "OZ-001": 30
+  },
+  "forbidden_programme_tracker_substitutions": [86, 88, 89],
+  "mirror_coverage": {
+    "programme_campaign_count": 8,
+    "cert_route_count": 8,
+    "total_mirror_count": 16,
+    "complete": true
+  },
+  "portfolio": {
+    "qualified_interface_only": ["NS-CI-001", "RH-001"],
+    "ready_intake": ["UC-001", "HC-001"],
+    "pending": ["BSD-001", "PNP-001", "YM-001", "OZ-001"],
+    "archived_outside_current_routing": ["PC-001"]
+  },
+  "preserved_blockers": {
+    "UC-001": ["Frankl's conjecture remains open", "ready packet has no Cert adjudication"],
+    "NS-CI-001": ["universal critical integrability remains unproved", "NS-A2 remains unproved", "global regularity remains unproved"],
+    "HC-001": ["rational Hodge conjecture remains open", "ready packet has no Cert adjudication"],
+    "BSD-001": ["BSD-R2-A1 remains unproved", "packet remains pending"],
+    "PNP-001": ["definition-level concordance remains open", "no terminal claim packet is ready"],
+    "RH-001": ["Riemann Hypothesis remains unproved", "qualification is interface-only"],
+    "YM-001": ["construction and mass-gap obligations remain open", "packet remains pending"],
+    "OZ-001": ["T3 remains open", "Sharp-12 remains gated", "no new irrationality conclusion is authorized"]
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "operational_release_complete_preserved": true,
+    "release_trust_issues_reopened": false
+  },
+  "pre_correction_governance_mismatch_count": 5,
+  "reviewed_correction_unresolved_mismatch_count": 0,
+  "publication_semantics": {
+    "self_inclusive_head_claim": false,
+    "artifact_can_pin_own_future_merge_commit": false,
+    "external_post_merge_attestation_required": true,
+    "attestation_issue": 167
+  }
+}
