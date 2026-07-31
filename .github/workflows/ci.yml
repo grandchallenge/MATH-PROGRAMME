@@ -71,6 +71,9 @@ jobs:
       - name: Run repository unit tests
         run: python -m unittest discover -s tests -p 'test_*.py'
 
+      - name: Validate candidate campaign admission
+        run: python3 ci/campaign_admission_control.py
+
       - name: Validate and replay governed campaigns
         run: |
           set -o pipefail
