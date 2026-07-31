@@ -1,0 +1,187 @@
+{
+  "schema_version": "1.0.0",
+  "closure_id": "MP-UMBRELLA-FOURTH-PASS-CLOSURE-001",
+  "verified_at": "2026-07-31",
+  "status": "CONFORMANT_CANDIDATE_GOVERNANCE_SEPARATE_FROM_ACTIVE_PORTFOLIO",
+  "programme_stage": {
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "pull_request": 173,
+    "reviewed_head": "8d78db635e37d6967638c00968ee412654c4ee30",
+    "merge_commit": "b78b73e73a62cdb3d54f08ba1af104ceac9c90b8",
+    "policy_run_id": 30638003643,
+    "gcl_run_id": 30638004518,
+    "runtime_contract": {
+      "path": "governance/umbrella_runtime_contract_v4.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "d1503fba284aee29fb517a554ee3440da691fd16"
+    },
+    "candidate_admission_registry": {
+      "path": "governance/campaign_admission_registry.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "9b1a307fde8bfe814210088d544ec8b03f2b413e"
+    },
+    "active_campaign_registry": {
+      "path": "governance/governed_campaign_registry.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "b1f1e4682d0f3ff0108d020e466fa2ecb0809b57"
+    },
+    "active_routing_registry": {
+      "path": "governance/mathsolve_routing_audit.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "4a27ec8aaaa60f919ba51028807b83dc522bfcff"
+    }
+  },
+  "intellect_stage": {
+    "repository": "grandchallenge/INTELLECT",
+    "pull_request": 17,
+    "reviewed_head": "3497f1d45932ce75fcc219ed23c7eccdb6920be2",
+    "merge_commit": "9bd4ed28bf90590376e0cbfee8241c5bb35b8bca",
+    "ci_run_id": 30639856666,
+    "gcl_run_id": 30639857913,
+    "provider_module": {
+      "path": "src/grand_intellect/mathsolve_cert_current.py",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "d9800608890e5938fdb32fab85e8d9f7fc36c942"
+    },
+    "qualification_fixture": {
+      "path": "tests/fixtures/rh_ns_interface_qualifications.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "817c9902bc9cc0c7ecbf94a4d03576e8bd30aeb6"
+    }
+  },
+  "solve_candidate_stage": {
+    "repository": "grandchallenge/MATHSOLVE",
+    "pull_request": 85,
+    "reviewed_head": "0d66a75412543e534b81c21a51a6ad88c035b55b",
+    "merge_commit": "709c7d3f388b8df75c87a247f80424e560c31e72",
+    "solve_run_id": 30641057206,
+    "gcl_run_id": 30641058060,
+    "candidate_replay_run_id": 30641057393,
+    "candidate_admission_record": {
+      "path": "work_packages/VGSE_WP00/candidate_admission.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "ffc06599747b80eed3034f5e08b959799a57551b"
+    },
+    "candidate_validator": {
+      "path": "work_packages/VGSE_WP00/artifacts/code/validate_candidate_admission.py",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "79523117fd4ed1c3dfbf16c5f5fc0d8dce57028a"
+    },
+    "source_semantics_record": {
+      "path": "work_packages/VGSE_WP00_VARCHENKO_GALASHIN_SOURCE_SEMANTICS_LOCK.md",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "27009573bb9e0bd79fc7d2cbca681074dad6663d"
+    },
+    "merge_scope": "bounded_candidate_work_package_only"
+  },
+  "other_repository_heads": {
+    "mathforge": "0faee396ffa56c568ee0ae6a348bdb43ca80ac4d",
+    "mathcert": "0258e4f0bca0d90fac05b62aeef108f16dccffdd"
+  },
+  "cert_route_registry": {
+    "repository": "grandchallenge/MATHCERT",
+    "commit_sha": "0258e4f0bca0d90fac05b62aeef108f16dccffdd",
+    "path": "governance/certification_routes.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1",
+    "active_route_count": 8,
+    "vgse_route_present": false
+  },
+  "active_portfolio": {
+    "qualified_interface_only": ["NS-CI-001", "RH-001"],
+    "ready_intake": ["UC-001", "HC-001"],
+    "pending": ["BSD-001", "PNP-001", "YM-001", "OZ-001"],
+    "archived_outside_current_routing": ["PC-001"],
+    "active_routing_member_count": 8,
+    "unchanged_by_fourth_pass": true
+  },
+  "candidate_portfolio": {
+    "campaign_id": "VGSE-001",
+    "lifecycle_state": "candidate",
+    "active_portfolio_member": false,
+    "active_portfolio_effect": "none",
+    "candidate_work_package_merged": true,
+    "candidate_work_package_merge_admits_campaign": false,
+    "source_provenance_state": "unverified_candidate",
+    "source_candidate_sha256": "e513789426ae6247438920bfc80cfba6bd9c32dc6799a4f7873d806a865f95de",
+    "source_provider_manifest": null,
+    "forge_issue": 32,
+    "solve_issue": 84,
+    "programme_tracker_issue": 170,
+    "programme_governance_issue": 172,
+    "cert_issue": 41,
+    "certification_state": "pre_route_candidate",
+    "cert_route_present": false,
+    "cert_handoff_present": false,
+    "cert_adjudication_present": false,
+    "active_campaign_manifest_present": false,
+    "promotion_record_present": false
+  },
+  "authority_model": {
+    "state_authority": "protected_branch_repository_records",
+    "github_issue_role": "mutable_navigational_mirror",
+    "active_and_candidate_registries_are_separate": true,
+    "candidate_issue_mutation_can_admit_campaign": false,
+    "candidate_work_can_self_admit": false,
+    "candidate_merge_can_verify_source": false,
+    "candidate_merge_can_create_cert_route": false,
+    "protected_branch_review_required_for_admission": true
+  },
+  "fourth_pass_findings": {
+    "FP-01": "corrected_protected_candidate_lifecycle_added",
+    "FP-02": "corrected_solve_candidate_requires_programme_identity",
+    "FP-03": "corrected_source_provenance_remains_unverified_candidate",
+    "FP-04": "corrected_cert_pre_route_state_machine_represented",
+    "FP-05": "corrected_runtime_requires_candidate_admission_contract",
+    "FP-06": "corrected_expanded_numerical_package_kept_candidate_scoped",
+    "FP-07": "corrected_replay_refactor_and_test_api_reconciled"
+  },
+  "bounded_candidate_results": {
+    "exact_arrangement_beta_five": true,
+    "numerical_critical_witness_count": 5,
+    "candidate_source_vector_pattern_count": 5,
+    "numerical_t_embedding_reconstruction_count": 5,
+    "algebraic_fixture_certified": false,
+    "t_embedding_certified": false,
+    "generated_to_source_equivalence_complete": false
+  },
+  "mismatch_counts": {
+    "identity": 0,
+    "authority": 0,
+    "candidate_active_portfolio_leakage": 0,
+    "provenance_state": 0,
+    "cert_route_state": 0,
+    "workflow_reachability": 0
+  },
+  "remaining_cross_repository_governance_obligations": [],
+  "remaining_candidate_obligations": [
+    "MATHFORGE must independently verify source identity, revision concordance, theorem-chain provenance, and fixture provenance or record a governed waiver.",
+    "A protected Programme admission package must update active and routing registries before VGSE-001 becomes active.",
+    "MATHSOLVE must create an active campaign manifest and content-addressed Cert handoff only after Programme admission.",
+    "MATHCERT may create a route and adjudicate only after protected admission and an exact Solve handoff.",
+    "Exact or interval certification remains required for roots, graph weights, boundary measurement, discrete-holomorphic solves, and geometric inequalities.",
+    "Generated-to-source equivalence remains open.",
+    "Rigid deployment, collision freedom, finite thickness, manufacture, performance, economics, novelty, priority, patentability, and commercial claims remain separately gated."
+  ],
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "candidate_campaign_admitted": false,
+    "source_provider_verified": false,
+    "cert_route_created": false,
+    "cert_adjudication_issued": false,
+    "rigid_foldability_established": false,
+    "manufacturability_established": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "patentability_claim_authorized": false,
+    "commercial_claim_authorized": false,
+    "operational_release_complete_preserved": true,
+    "release_trust_issues_reopened": false
+  },
+  "publication_semantics": {
+    "self_inclusive_head_claim": false,
+    "artifact_can_pin_own_future_merge_commit": false,
+    "external_post_merge_attestation_required": true,
+    "attestation_issue": 172
+  }
+}
