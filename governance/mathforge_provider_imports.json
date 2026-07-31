@@ -1,10 +1,35 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "registry_id": "MATHFORGE-PROVIDER-IMPORTS",
   "provider_repository": "grandchallenge/MATHFORGE",
-  "provider_commit": "b1cad1a9ed9256b863bb0a8658f06ea715db1230",
+  "provider_commit": "0faee396ffa56c568ee0ae6a348bdb43ca80ac4d",
   "verified_at": "2026-07-30",
   "verification_method": "github_contents_api_git_blob_sha1",
+  "expanded_evidence": {
+    "source_id": "FC-GDM-002",
+    "upstream_repository": "google-deepmind/formal-conjectures",
+    "upstream_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+    "replay": {
+      "workflow_run_id": 30544600547,
+      "artifact_id": 8761186970,
+      "artifact_name": "formal-conjectures-expanded-replay",
+      "archive_sha256": "1c74747519c17f873f323198a92104538667092f3274a667a09e1a6b219a7bcb"
+    },
+    "snapshot": {
+      "member_name": "FC-GDM-002-ACTIVE-CAMPAIGN-EXPANSION.json",
+      "byte_length": 52589,
+      "sha256": "e7534f913160cc9cef4eb80a735c44b7b1a8ea4273f0f5236d82cc7b9dab042b",
+      "canonical_sha256": "2b6bda841d15b022ec8c66bc332177d1283ca791f5d5f6e82323c304d1e6fdf6",
+      "statement_count": 43
+    },
+    "inventory": {
+      "member_name": "FC-GDM-002-FULL-INVENTORY.json",
+      "byte_length": 1255363,
+      "sha256": "2693de3b83c0990b0e7c62ab5032698c6dde6de0942441ba7d6cdb035625e687",
+      "problem_count": 3232
+    },
+    "claim_boundary": "These identities pin the replay object and its selected statement and inventory members. They do not import theorem truth, status, novelty, or certification."
+  },
   "campaigns": [
     {
       "campaign_id": "UC-001",
@@ -12,7 +37,17 @@
       "disposition": "import",
       "coverage_mode": "native",
       "manifest_path": "provider_manifests/UC-001.json",
-      "manifest_git_blob_sha1": "6d803633c2697f100d7d5b616ea1d6f16bff34bf"
+      "manifest_git_blob_sha1": "6d803633c2697f100d7d5b616ea1d6f16bff34bf",
+      "supplemental_artifacts": [
+        {"artifact_id":"FC-GDM-002-REGISTRY","kind":"external_formal_source_registry","path":"governance/external_formal_sources.json","git_blob_sha1":"4680bee8e6b641956a5db2b453c94aab7cabb37b","claim_boundary":"This registry identifies the governed FC-GDM-002 source lane. It does not establish theorem truth, status, or certification."},
+        {"artifact_id":"FC-GDM-002-LOCK","kind":"external_formal_source_lock","path":"formal_sources/formal_conjectures/source_locks/FC-GDM-002.json","git_blob_sha1":"9acd4a94538592a235bb302c1f31e5da11662643","claim_boundary":"This lock fixes upstream, toolchain, extractor, and selected source blobs. It does not establish semantic equivalence or proof."},
+        {"artifact_id":"FC-GDM-002-SNAPSHOT-REFERENCE","kind":"formal_statement_replay_reference","path":"formal_sources/formal_conjectures/snapshots/FC-GDM-002-ACTIVE-CAMPAIGN-EXPANSION.replay.json","git_blob_sha1":"1ad4250df912bf2c7cfcc7342fb0ad75e8d667e7","claim_boundary":"This replay reference pins the successful Actions artifact and normalized snapshot identities. It does not prove any extracted statement."},
+        {"artifact_id":"FC-GDM-002-UPDATE-LEDGER","kind":"formal_source_update_ledger","path":"formal_sources/formal_conjectures/update_ledgers/FC-GDM-001-TO-FC-GDM-002.json","git_blob_sha1":"ff2590e2a91b7d5ea5ea5a42c23c67c9745608a0","claim_boundary":"This ledger records a same-revision scope expansion and its concordance impact. It imports no proof, novelty, or status effect."},
+        {"artifact_id":"FC-GDM-002-REPLAY-MANIFEST","kind":"formal_source_replay_manifest","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/REPLAY_MANIFEST.json","git_blob_sha1":"d91c8ae08262791d248c9ba87837c4624c0b4cda","claim_boundary":"This manifest pins exact replay member byte lengths and SHA-256 identities. It is evidence provenance, not theorem certification."},
+        {"artifact_id":"FC-GDM-002-INVENTORY-SCREEN","kind":"formal_source_inventory_screen","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/FC-GDM-002-INVENTORY-SCREEN.json","git_blob_sha1":"8dbe8d6769e842be72eb8be1e22cc605278c7561","claim_boundary":"This screen records exact lexical inventory results. Zero hits are not mathematical absence, and lexical hits are not semantic coverage."},
+        {"artifact_id":"FC-GDM-002-TAG-RESOLUTION","kind":"formal_source_tag_resolution","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/FC-GDM-002-TAG-RESOLUTION.json","git_blob_sha1":"7dd39a995a789da583f8f2f0b15da2c30207f0f1","claim_boundary":"This record requires exact-commit locking because no immutable benchmark tag contains the admitted revision."},
+        {"artifact_id":"FC-GDM-002-UC-CONCORDANCE","kind":"statement_concordance","path":"formal_sources/formal_conjectures/concordance/UC-001.json","git_blob_sha1":"8bba56b13978b36471e1cbafe358b82b571c2b95","claim_boundary":"This record admits a human-reviewed formulation match only. It does not prove Frankl's conjecture or provide kernel-level equivalence."}
+      ]
     },
     {
       "campaign_id": "NS-CI-001",
@@ -22,34 +57,10 @@
       "manifest_path": "provider_manifests/NS-CI-001.json",
       "manifest_git_blob_sha1": "ed5220c31e38ba3458dc8a94a462c89c285fc22e",
       "supplemental_artifacts": [
-        {
-          "artifact_id": "FC-GDM-001-REGISTRY",
-          "kind": "external_formal_source_registry",
-          "path": "governance/external_formal_sources.json",
-          "git_blob_sha1": "4ac46df340e46697452cde4bda5c257df688e68a",
-          "claim_boundary": "This registry identifies governed external formal sources. It does not establish theorem truth, status, or certification."
-        },
-        {
-          "artifact_id": "FC-GDM-001-LOCK",
-          "kind": "external_formal_source_lock",
-          "path": "formal_sources/formal_conjectures/source_lock.json",
-          "git_blob_sha1": "0ef71adea9bcdfb63da78118f7fee053ccaa73ce",
-          "claim_boundary": "This lock establishes immutable source and extractor identities only. It does not establish semantic equivalence or proof."
-        },
-        {
-          "artifact_id": "FC-GDM-001-RH-NS-SNAPSHOT",
-          "kind": "formal_statement_snapshot",
-          "path": "formal_sources/formal_conjectures/snapshots/FC-GDM-001-RH-NS-PILOT.json",
-          "git_blob_sha1": "c171b542a60956e59f4cac14fb9413bcdd7ede66",
-          "claim_boundary": "This snapshot records pinned upstream declarations. It does not establish current status, proof, or MATHCERT certification."
-        },
-        {
-          "artifact_id": "FC-GDM-001-NS-CI-CONCORDANCE",
-          "kind": "statement_concordance",
-          "path": "formal_sources/formal_conjectures/concordance/NS-CI-001.json",
-          "git_blob_sha1": "1ebe5de5194f48217dff3db02f389154af351592",
-          "claim_boundary": "This concordance records a one-way Programme-target-to-Clay-A route only. It does not establish equivalence or global regularity."
-        }
+        {"artifact_id":"FC-GDM-001-REGISTRY","kind":"external_formal_source_registry","path":"governance/external_formal_sources.json","git_blob_sha1":"4680bee8e6b641956a5db2b453c94aab7cabb37b","claim_boundary":"This registry identifies governed external formal sources. It does not establish theorem truth, status, or certification."},
+        {"artifact_id":"FC-GDM-001-LOCK","kind":"external_formal_source_lock","path":"formal_sources/formal_conjectures/source_lock.json","git_blob_sha1":"0ef71adea9bcdfb63da78118f7fee053ccaa73ce","claim_boundary":"This lock establishes immutable source and extractor identities only. It does not establish semantic equivalence or proof."},
+        {"artifact_id":"FC-GDM-001-RH-NS-SNAPSHOT","kind":"formal_statement_snapshot","path":"formal_sources/formal_conjectures/snapshots/FC-GDM-001-RH-NS-PILOT.json","git_blob_sha1":"c171b542a60956e59f4cac14fb9413bcdd7ede66","claim_boundary":"This snapshot records pinned upstream declarations. It does not establish current status, proof, or MATHCERT certification."},
+        {"artifact_id":"FC-GDM-001-NS-CI-CONCORDANCE","kind":"statement_concordance","path":"formal_sources/formal_conjectures/concordance/NS-CI-001.json","git_blob_sha1":"1ebe5de5194f48217dff3db02f389154af351592","claim_boundary":"This concordance records a one-way Programme-target-to-Clay-A route only. It does not establish equivalence or global regularity."}
       ]
     },
     {
@@ -58,7 +69,17 @@
       "disposition": "import",
       "coverage_mode": "native",
       "manifest_path": "provider_manifests/HC-001.json",
-      "manifest_git_blob_sha1": "1bce7ab1e2cc7daa8f125747c69bad262adc080f"
+      "manifest_git_blob_sha1": "1bce7ab1e2cc7daa8f125747c69bad262adc080f",
+      "supplemental_artifacts": [
+        {"artifact_id":"FC-GDM-002-REGISTRY","kind":"external_formal_source_registry","path":"governance/external_formal_sources.json","git_blob_sha1":"4680bee8e6b641956a5db2b453c94aab7cabb37b","claim_boundary":"This registry identifies the governed FC-GDM-002 source lane. It does not establish theorem truth, status, or certification."},
+        {"artifact_id":"FC-GDM-002-LOCK","kind":"external_formal_source_lock","path":"formal_sources/formal_conjectures/source_locks/FC-GDM-002.json","git_blob_sha1":"9acd4a94538592a235bb302c1f31e5da11662643","claim_boundary":"This lock fixes upstream, toolchain, extractor, and selected source blobs. It does not establish semantic equivalence or proof."},
+        {"artifact_id":"FC-GDM-002-SNAPSHOT-REFERENCE","kind":"formal_statement_replay_reference","path":"formal_sources/formal_conjectures/snapshots/FC-GDM-002-ACTIVE-CAMPAIGN-EXPANSION.replay.json","git_blob_sha1":"1ad4250df912bf2c7cfcc7342fb0ad75e8d667e7","claim_boundary":"This replay reference pins the successful Actions artifact and normalized snapshot identities. It does not prove any extracted statement."},
+        {"artifact_id":"FC-GDM-002-UPDATE-LEDGER","kind":"formal_source_update_ledger","path":"formal_sources/formal_conjectures/update_ledgers/FC-GDM-001-TO-FC-GDM-002.json","git_blob_sha1":"ff2590e2a91b7d5ea5ea5a42c23c67c9745608a0","claim_boundary":"This ledger records a same-revision scope expansion and its concordance impact. It imports no proof, novelty, or status effect."},
+        {"artifact_id":"FC-GDM-002-REPLAY-MANIFEST","kind":"formal_source_replay_manifest","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/REPLAY_MANIFEST.json","git_blob_sha1":"d91c8ae08262791d248c9ba87837c4624c0b4cda","claim_boundary":"This manifest pins exact replay member byte lengths and SHA-256 identities. It is evidence provenance, not theorem certification."},
+        {"artifact_id":"FC-GDM-002-INVENTORY-SCREEN","kind":"formal_source_inventory_screen","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/FC-GDM-002-INVENTORY-SCREEN.json","git_blob_sha1":"8dbe8d6769e842be72eb8be1e22cc605278c7561","claim_boundary":"This screen records exact lexical inventory results. Zero hits are not mathematical absence, and lexical hits are not semantic coverage."},
+        {"artifact_id":"FC-GDM-002-TAG-RESOLUTION","kind":"formal_source_tag_resolution","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/FC-GDM-002-TAG-RESOLUTION.json","git_blob_sha1":"7dd39a995a789da583f8f2f0b15da2c30207f0f1","claim_boundary":"This record requires exact-commit locking because no immutable benchmark tag contains the admitted revision."},
+        {"artifact_id":"FC-GDM-002-HC-COVERAGE","kind":"formal_source_coverage_record","path":"formal_sources/formal_conjectures/coverage/HC-001.json","git_blob_sha1":"dc9dcdd8313c86298d9b4a15a712f0b9c7928a62","claim_boundary":"This bounded negative source screen is not proof that no Hodge formulation exists."}
+      ]
     },
     {
       "campaign_id": "BSD-001",
@@ -66,7 +87,17 @@
       "disposition": "import",
       "coverage_mode": "retrospective",
       "manifest_path": "provider_manifests/BSD-001.json",
-      "manifest_git_blob_sha1": "c95e1f0ef8d2e662ca9bb3bb49317fa8aa7b2185"
+      "manifest_git_blob_sha1": "c95e1f0ef8d2e662ca9bb3bb49317fa8aa7b2185",
+      "supplemental_artifacts": [
+        {"artifact_id":"FC-GDM-002-REGISTRY","kind":"external_formal_source_registry","path":"governance/external_formal_sources.json","git_blob_sha1":"4680bee8e6b641956a5db2b453c94aab7cabb37b","claim_boundary":"This registry identifies the governed FC-GDM-002 source lane. It does not establish theorem truth, status, or certification."},
+        {"artifact_id":"FC-GDM-002-LOCK","kind":"external_formal_source_lock","path":"formal_sources/formal_conjectures/source_locks/FC-GDM-002.json","git_blob_sha1":"9acd4a94538592a235bb302c1f31e5da11662643","claim_boundary":"This lock fixes upstream, toolchain, extractor, and selected source blobs. It does not establish semantic equivalence or proof."},
+        {"artifact_id":"FC-GDM-002-SNAPSHOT-REFERENCE","kind":"formal_statement_replay_reference","path":"formal_sources/formal_conjectures/snapshots/FC-GDM-002-ACTIVE-CAMPAIGN-EXPANSION.replay.json","git_blob_sha1":"1ad4250df912bf2c7cfcc7342fb0ad75e8d667e7","claim_boundary":"This replay reference pins the successful Actions artifact and normalized snapshot identities. It does not prove any extracted statement."},
+        {"artifact_id":"FC-GDM-002-UPDATE-LEDGER","kind":"formal_source_update_ledger","path":"formal_sources/formal_conjectures/update_ledgers/FC-GDM-001-TO-FC-GDM-002.json","git_blob_sha1":"ff2590e2a91b7d5ea5ea5a42c23c67c9745608a0","claim_boundary":"This ledger records a same-revision scope expansion and its concordance impact. It imports no proof, novelty, or status effect."},
+        {"artifact_id":"FC-GDM-002-REPLAY-MANIFEST","kind":"formal_source_replay_manifest","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/REPLAY_MANIFEST.json","git_blob_sha1":"d91c8ae08262791d248c9ba87837c4624c0b4cda","claim_boundary":"This manifest pins exact replay member byte lengths and SHA-256 identities. It is evidence provenance, not theorem certification."},
+        {"artifact_id":"FC-GDM-002-INVENTORY-SCREEN","kind":"formal_source_inventory_screen","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/FC-GDM-002-INVENTORY-SCREEN.json","git_blob_sha1":"8dbe8d6769e842be72eb8be1e22cc605278c7561","claim_boundary":"This screen records exact lexical inventory results. Zero hits are not mathematical absence, and lexical hits are not semantic coverage."},
+        {"artifact_id":"FC-GDM-002-TAG-RESOLUTION","kind":"formal_source_tag_resolution","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/FC-GDM-002-TAG-RESOLUTION.json","git_blob_sha1":"7dd39a995a789da583f8f2f0b15da2c30207f0f1","claim_boundary":"This record requires exact-commit locking because no immutable benchmark tag contains the admitted revision."},
+        {"artifact_id":"FC-GDM-002-BSD-COVERAGE","kind":"formal_source_coverage_record","path":"formal_sources/formal_conjectures/coverage/BSD-001.json","git_blob_sha1":"82166625115162817551c9a6c6ce377e9e049c7e","claim_boundary":"This record admits elliptic-curve rank adjacency only, not BSD analytic-rank or leading-term coverage."}
+      ]
     },
     {
       "campaign_id": "PNP-001",
@@ -74,7 +105,17 @@
       "disposition": "import",
       "coverage_mode": "retrospective",
       "manifest_path": "provider_manifests/PNP-001.json",
-      "manifest_git_blob_sha1": "dc7f740d91b5f69b22dd11af6737064d132d278a"
+      "manifest_git_blob_sha1": "dc7f740d91b5f69b22dd11af6737064d132d278a",
+      "supplemental_artifacts": [
+        {"artifact_id":"FC-GDM-002-REGISTRY","kind":"external_formal_source_registry","path":"governance/external_formal_sources.json","git_blob_sha1":"4680bee8e6b641956a5db2b453c94aab7cabb37b","claim_boundary":"This registry identifies the governed FC-GDM-002 source lane. It does not establish theorem truth, status, or certification."},
+        {"artifact_id":"FC-GDM-002-LOCK","kind":"external_formal_source_lock","path":"formal_sources/formal_conjectures/source_locks/FC-GDM-002.json","git_blob_sha1":"9acd4a94538592a235bb302c1f31e5da11662643","claim_boundary":"This lock fixes upstream, toolchain, extractor, and selected source blobs. It does not establish semantic equivalence or proof."},
+        {"artifact_id":"FC-GDM-002-SNAPSHOT-REFERENCE","kind":"formal_statement_replay_reference","path":"formal_sources/formal_conjectures/snapshots/FC-GDM-002-ACTIVE-CAMPAIGN-EXPANSION.replay.json","git_blob_sha1":"1ad4250df912bf2c7cfcc7342fb0ad75e8d667e7","claim_boundary":"This replay reference pins the successful Actions artifact and normalized snapshot identities. It does not prove any extracted statement."},
+        {"artifact_id":"FC-GDM-002-UPDATE-LEDGER","kind":"formal_source_update_ledger","path":"formal_sources/formal_conjectures/update_ledgers/FC-GDM-001-TO-FC-GDM-002.json","git_blob_sha1":"ff2590e2a91b7d5ea5ea5a42c23c67c9745608a0","claim_boundary":"This ledger records a same-revision scope expansion and its concordance impact. It imports no proof, novelty, or status effect."},
+        {"artifact_id":"FC-GDM-002-REPLAY-MANIFEST","kind":"formal_source_replay_manifest","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/REPLAY_MANIFEST.json","git_blob_sha1":"d91c8ae08262791d248c9ba87837c4624c0b4cda","claim_boundary":"This manifest pins exact replay member byte lengths and SHA-256 identities. It is evidence provenance, not theorem certification."},
+        {"artifact_id":"FC-GDM-002-INVENTORY-SCREEN","kind":"formal_source_inventory_screen","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/FC-GDM-002-INVENTORY-SCREEN.json","git_blob_sha1":"8dbe8d6769e842be72eb8be1e22cc605278c7561","claim_boundary":"This screen records exact lexical inventory results. Zero hits are not mathematical absence, and lexical hits are not semantic coverage."},
+        {"artifact_id":"FC-GDM-002-TAG-RESOLUTION","kind":"formal_source_tag_resolution","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/FC-GDM-002-TAG-RESOLUTION.json","git_blob_sha1":"7dd39a995a789da583f8f2f0b15da2c30207f0f1","claim_boundary":"This record requires exact-commit locking because no immutable benchmark tag contains the admitted revision."},
+        {"artifact_id":"FC-GDM-002-PNP-CONCORDANCE","kind":"statement_concordance","path":"formal_sources/formal_conjectures/concordance/PNP-001.json","git_blob_sha1":"c88ac8ee7493a551670ca2a37385a9157b43c658","claim_boundary":"This direct candidate remains unresolved at the machine, encoding, totality, and polynomial-definition layer and proves no class separation."}
+      ]
     },
     {
       "campaign_id": "RH-001",
@@ -84,34 +125,10 @@
       "manifest_path": "provider_manifests/RH-001.json",
       "manifest_git_blob_sha1": "adcbee2583e5da2b59babefbafec943c113ba4ed",
       "supplemental_artifacts": [
-        {
-          "artifact_id": "FC-GDM-001-REGISTRY",
-          "kind": "external_formal_source_registry",
-          "path": "governance/external_formal_sources.json",
-          "git_blob_sha1": "4ac46df340e46697452cde4bda5c257df688e68a",
-          "claim_boundary": "This registry identifies governed external formal sources. It does not establish theorem truth, status, or certification."
-        },
-        {
-          "artifact_id": "FC-GDM-001-LOCK",
-          "kind": "external_formal_source_lock",
-          "path": "formal_sources/formal_conjectures/source_lock.json",
-          "git_blob_sha1": "0ef71adea9bcdfb63da78118f7fee053ccaa73ce",
-          "claim_boundary": "This lock establishes immutable source and extractor identities only. It does not establish semantic equivalence or proof."
-        },
-        {
-          "artifact_id": "FC-GDM-001-RH-NS-SNAPSHOT",
-          "kind": "formal_statement_snapshot",
-          "path": "formal_sources/formal_conjectures/snapshots/FC-GDM-001-RH-NS-PILOT.json",
-          "git_blob_sha1": "c171b542a60956e59f4cac14fb9413bcdd7ede66",
-          "claim_boundary": "This snapshot records pinned upstream declarations. It does not establish current status, proof, or MATHCERT certification."
-        },
-        {
-          "artifact_id": "FC-GDM-001-RH-CONCORDANCE",
-          "kind": "statement_concordance",
-          "path": "formal_sources/formal_conjectures/concordance/RH-001.json",
-          "git_blob_sha1": "7332c99795f810ca1d50dda8151c267855d851e7",
-          "claim_boundary": "This concordance records a human-reviewed formulation match. It does not prove RH or transfer status authority."
-        }
+        {"artifact_id":"FC-GDM-001-REGISTRY","kind":"external_formal_source_registry","path":"governance/external_formal_sources.json","git_blob_sha1":"4680bee8e6b641956a5db2b453c94aab7cabb37b","claim_boundary":"This registry identifies governed external formal sources. It does not establish theorem truth, status, or certification."},
+        {"artifact_id":"FC-GDM-001-LOCK","kind":"external_formal_source_lock","path":"formal_sources/formal_conjectures/source_lock.json","git_blob_sha1":"0ef71adea9bcdfb63da78118f7fee053ccaa73ce","claim_boundary":"This lock establishes immutable source and extractor identities only. It does not establish semantic equivalence or proof."},
+        {"artifact_id":"FC-GDM-001-RH-NS-SNAPSHOT","kind":"formal_statement_snapshot","path":"formal_sources/formal_conjectures/snapshots/FC-GDM-001-RH-NS-PILOT.json","git_blob_sha1":"c171b542a60956e59f4cac14fb9413bcdd7ede66","claim_boundary":"This snapshot records pinned upstream declarations. It does not establish current status, proof, or MATHCERT certification."},
+        {"artifact_id":"FC-GDM-001-RH-CONCORDANCE","kind":"statement_concordance","path":"formal_sources/formal_conjectures/concordance/RH-001.json","git_blob_sha1":"7332c99795f810ca1d50dda8151c267855d851e7","claim_boundary":"This concordance records a human-reviewed formulation match. It does not prove RH or transfer status authority."}
       ]
     },
     {
@@ -120,7 +137,17 @@
       "disposition": "import",
       "coverage_mode": "retrospective",
       "manifest_path": "provider_manifests/YM-001.json",
-      "manifest_git_blob_sha1": "c84694d5885f94da70b8124063d1b8ee55534470"
+      "manifest_git_blob_sha1": "c84694d5885f94da70b8124063d1b8ee55534470",
+      "supplemental_artifacts": [
+        {"artifact_id":"FC-GDM-002-REGISTRY","kind":"external_formal_source_registry","path":"governance/external_formal_sources.json","git_blob_sha1":"4680bee8e6b641956a5db2b453c94aab7cabb37b","claim_boundary":"This registry identifies the governed FC-GDM-002 source lane. It does not establish theorem truth, status, or certification."},
+        {"artifact_id":"FC-GDM-002-LOCK","kind":"external_formal_source_lock","path":"formal_sources/formal_conjectures/source_locks/FC-GDM-002.json","git_blob_sha1":"9acd4a94538592a235bb302c1f31e5da11662643","claim_boundary":"This lock fixes upstream, toolchain, extractor, and selected source blobs. It does not establish semantic equivalence or proof."},
+        {"artifact_id":"FC-GDM-002-SNAPSHOT-REFERENCE","kind":"formal_statement_replay_reference","path":"formal_sources/formal_conjectures/snapshots/FC-GDM-002-ACTIVE-CAMPAIGN-EXPANSION.replay.json","git_blob_sha1":"1ad4250df912bf2c7cfcc7342fb0ad75e8d667e7","claim_boundary":"This replay reference pins the successful Actions artifact and normalized snapshot identities. It does not prove any extracted statement."},
+        {"artifact_id":"FC-GDM-002-UPDATE-LEDGER","kind":"formal_source_update_ledger","path":"formal_sources/formal_conjectures/update_ledgers/FC-GDM-001-TO-FC-GDM-002.json","git_blob_sha1":"ff2590e2a91b7d5ea5ea5a42c23c67c9745608a0","claim_boundary":"This ledger records a same-revision scope expansion and its concordance impact. It imports no proof, novelty, or status effect."},
+        {"artifact_id":"FC-GDM-002-REPLAY-MANIFEST","kind":"formal_source_replay_manifest","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/REPLAY_MANIFEST.json","git_blob_sha1":"d91c8ae08262791d248c9ba87837c4624c0b4cda","claim_boundary":"This manifest pins exact replay member byte lengths and SHA-256 identities. It is evidence provenance, not theorem certification."},
+        {"artifact_id":"FC-GDM-002-INVENTORY-SCREEN","kind":"formal_source_inventory_screen","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/FC-GDM-002-INVENTORY-SCREEN.json","git_blob_sha1":"8dbe8d6769e842be72eb8be1e22cc605278c7561","claim_boundary":"This screen records exact lexical inventory results. Zero hits are not mathematical absence, and lexical hits are not semantic coverage."},
+        {"artifact_id":"FC-GDM-002-TAG-RESOLUTION","kind":"formal_source_tag_resolution","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/FC-GDM-002-TAG-RESOLUTION.json","git_blob_sha1":"7dd39a995a789da583f8f2f0b15da2c30207f0f1","claim_boundary":"This record requires exact-commit locking because no immutable benchmark tag contains the admitted revision."},
+        {"artifact_id":"FC-GDM-002-YM-COVERAGE","kind":"formal_source_coverage_record","path":"formal_sources/formal_conjectures/coverage/YM-001.json","git_blob_sha1":"84c25fe523e854cc0e64862fd3eb0bd866a2eac7","claim_boundary":"This record rejects Mills lexical false positives and establishes no Yang-Mills or mass-gap evidence."}
+      ]
     },
     {
       "campaign_id": "OZ-001",
@@ -128,7 +155,24 @@
       "disposition": "import",
       "coverage_mode": "retrospective",
       "manifest_path": "provider_manifests/OZ-001.json",
-      "manifest_git_blob_sha1": "361da6642ff3ac7953b530ee0eb21659dc94fb65"
+      "manifest_git_blob_sha1": "361da6642ff3ac7953b530ee0eb21659dc94fb65",
+      "supplemental_artifacts": [
+        {"artifact_id":"FC-GDM-002-REGISTRY","kind":"external_formal_source_registry","path":"governance/external_formal_sources.json","git_blob_sha1":"4680bee8e6b641956a5db2b453c94aab7cabb37b","claim_boundary":"This registry identifies the governed FC-GDM-002 source lane. It does not establish theorem truth, status, or certification."},
+        {"artifact_id":"FC-GDM-002-LOCK","kind":"external_formal_source_lock","path":"formal_sources/formal_conjectures/source_locks/FC-GDM-002.json","git_blob_sha1":"9acd4a94538592a235bb302c1f31e5da11662643","claim_boundary":"This lock fixes upstream, toolchain, extractor, and selected source blobs. It does not establish semantic equivalence or proof."},
+        {"artifact_id":"FC-GDM-002-SNAPSHOT-REFERENCE","kind":"formal_statement_replay_reference","path":"formal_sources/formal_conjectures/snapshots/FC-GDM-002-ACTIVE-CAMPAIGN-EXPANSION.replay.json","git_blob_sha1":"1ad4250df912bf2c7cfcc7342fb0ad75e8d667e7","claim_boundary":"This replay reference pins the successful Actions artifact and normalized snapshot identities. It does not prove any extracted statement."},
+        {"artifact_id":"FC-GDM-002-UPDATE-LEDGER","kind":"formal_source_update_ledger","path":"formal_sources/formal_conjectures/update_ledgers/FC-GDM-001-TO-FC-GDM-002.json","git_blob_sha1":"ff2590e2a91b7d5ea5ea5a42c23c67c9745608a0","claim_boundary":"This ledger records a same-revision scope expansion and its concordance impact. It imports no proof, novelty, or status effect."},
+        {"artifact_id":"FC-GDM-002-REPLAY-MANIFEST","kind":"formal_source_replay_manifest","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/REPLAY_MANIFEST.json","git_blob_sha1":"d91c8ae08262791d248c9ba87837c4624c0b4cda","claim_boundary":"This manifest pins exact replay member byte lengths and SHA-256 identities. It is evidence provenance, not theorem certification."},
+        {"artifact_id":"FC-GDM-002-INVENTORY-SCREEN","kind":"formal_source_inventory_screen","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/FC-GDM-002-INVENTORY-SCREEN.json","git_blob_sha1":"8dbe8d6769e842be72eb8be1e22cc605278c7561","claim_boundary":"This screen records exact lexical inventory results. Zero hits are not mathematical absence, and lexical hits are not semantic coverage."},
+        {"artifact_id":"FC-GDM-002-TAG-RESOLUTION","kind":"formal_source_tag_resolution","path":"formal_sources/formal_conjectures/replays/FC-GDM-002/FC-GDM-002-TAG-RESOLUTION.json","git_blob_sha1":"7dd39a995a789da583f8f2f0b15da2c30207f0f1","claim_boundary":"This record requires exact-commit locking because no immutable benchmark tag contains the admitted revision."},
+        {"artifact_id":"FC-GDM-002-OZ-ZETA3-CONCORDANCE","kind":"statement_concordance","path":"formal_sources/formal_conjectures/concordance/OZ-001-ZETA3.json","git_blob_sha1":"a7ca853bd5638814078228b40e78283ae0e29b76","claim_boundary":"This separately scoped source record imports no new odd-zeta theorem or proof effect."},
+        {"artifact_id":"FC-GDM-002-OZ-ZETA5-CONCORDANCE","kind":"statement_concordance","path":"formal_sources/formal_conjectures/concordance/OZ-001-ZETA5.json","git_blob_sha1":"b4f5ef332025669c7202b83ea3a3cb13f2c8009e","claim_boundary":"This separately scoped source record does not establish irrationality of zeta(5)."},
+        {"artifact_id":"FC-GDM-002-OZ-ZETA7-CONCORDANCE","kind":"statement_concordance","path":"formal_sources/formal_conjectures/concordance/OZ-001-ZETA7.json","git_blob_sha1":"34e28294097b1519b18c40a770e3cd3d8e81a15c","claim_boundary":"This separately scoped source record does not establish irrationality of zeta(7)."},
+        {"artifact_id":"FC-GDM-002-OZ-ZETA9-CONCORDANCE","kind":"statement_concordance","path":"formal_sources/formal_conjectures/concordance/OZ-001-ZETA9.json","git_blob_sha1":"a6ba362e0160d92f7b609bcc12eea09b66810606","claim_boundary":"This separately scoped source record does not establish irrationality of zeta(9)."},
+        {"artifact_id":"FC-GDM-002-OZ-ZETA11-CONCORDANCE","kind":"statement_concordance","path":"formal_sources/formal_conjectures/concordance/OZ-001-ZETA11.json","git_blob_sha1":"5cdda19da72b5411b67bf378b9c83df2da28dfb5","claim_boundary":"This separately scoped source record does not establish irrationality of zeta(11)."},
+        {"artifact_id":"FC-GDM-002-OZ-ODD-UNIVERSAL-CONCORDANCE","kind":"statement_concordance","path":"formal_sources/formal_conjectures/concordance/OZ-001-ODD-UNIVERSAL.json","git_blob_sha1":"06931337e40f3f7644b99470aca7939a5cd89a4f","claim_boundary":"This separately scoped source record does not establish universal irrationality of positive odd zeta values."},
+        {"artifact_id":"FC-GDM-002-OZ-ODD-INFINITUDE-CONCORDANCE","kind":"statement_concordance","path":"formal_sources/formal_conjectures/concordance/OZ-001-ODD-INFINITUDE.json","git_blob_sha1":"2e1dd5320a6c19bd4b1515c2f7abdf9843050f48","claim_boundary":"This separately scoped source record imports no proof or individual irrationality conclusion."},
+        {"artifact_id":"FC-GDM-002-OZ-ZUDILIN-CONCORDANCE","kind":"statement_concordance","path":"formal_sources/formal_conjectures/concordance/OZ-001-ZUDILIN-5-11.json","git_blob_sha1":"a17def6ccd96d4cdea6602336f2a09c5f66d188c","claim_boundary":"This statement-level strengthening does not prove the finite disjunction or select an irrational value."}
+      ]
     }
   ]
 }
