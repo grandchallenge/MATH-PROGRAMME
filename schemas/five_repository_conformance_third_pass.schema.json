@@ -11,6 +11,7 @@
     "status",
     "predecessor",
     "protected_base_heads",
+    "programme_runtime_contract",
     "external_cert_route_registry",
     "third_pass_findings",
     "authority_model",
@@ -23,13 +24,14 @@
     "claim_boundaries",
     "pre_correction_governance_mismatch_count",
     "reviewed_correction_unresolved_mismatch_count",
+    "remaining_cross_repository_obligation",
     "publication_semantics"
   ],
   "properties": {
     "schema_version": {"const": "1.0.0"},
     "audit_id": {"const": "MP-UMBRELLA-THIRD-PASS-001"},
     "verified_at": {"type": "string", "format": "date"},
-    "status": {"const": "CORRECTED_ON_REVIEWED_BRANCH_EXTERNAL_PUBLICATION_ATTESTATION_REQUIRED"},
+    "status": {"const": "PROGRAMME_CORRECTION_REVIEWED_INTELLECT_REPIN_REQUIRED"},
     "predecessor": {
       "type": "object",
       "additionalProperties": false,
@@ -43,28 +45,20 @@
       }
     },
     "protected_base_heads": {"$ref": "#/$defs/repositoryHeads"},
-    "external_cert_route_registry": {
-      "allOf": [
-        {"$ref": "#/$defs/artifact"},
-        {
-          "type": "object",
-          "required": ["route_count"],
-          "properties": {"route_count": {"const": 8}}
-        }
-      ]
-    },
+    "programme_runtime_contract": {"$ref": "#/$defs/runtimeArtifact"},
+    "external_cert_route_registry": {"$ref": "#/$defs/certArtifact"},
     "third_pass_findings": {
       "type": "array",
-      "minItems": 5,
-      "maxItems": 5,
+      "minItems": 6,
+      "maxItems": 6,
       "items": {
         "type": "object",
         "additionalProperties": false,
         "required": ["id", "severity", "disposition", "finding"],
         "properties": {
-          "id": {"pattern": "^TP-0[1-5]$"},
+          "id": {"pattern": "^TP-0[1-6]$"},
           "severity": {"enum": ["P1", "P2"]},
-          "disposition": {"const": "corrected"},
+          "disposition": {"enum": ["corrected", "programme_runtime_contract_added_consumer_repin_required"]},
           "finding": {"type": "string", "minLength": 20}
         }
       }
@@ -146,8 +140,9 @@
         "release_trust_issues_reopened": {"const": false}
       }
     },
-    "pre_correction_governance_mismatch_count": {"const": 5},
-    "reviewed_correction_unresolved_mismatch_count": {"const": 0},
+    "pre_correction_governance_mismatch_count": {"const": 6},
+    "reviewed_correction_unresolved_mismatch_count": {"const": 1},
+    "remaining_cross_repository_obligation": {"const": "GI-UMBRELLA-THIRD-PASS-001 must repin INTELLECT to the merged Programme runtime contract before final third-pass closure."},
     "publication_semantics": {
       "type": "object",
       "additionalProperties": false,
@@ -166,23 +161,34 @@
       "additionalProperties": false,
       "required": ["math_programme", "mathforge", "mathsolve", "mathcert", "intellect"],
       "properties": {
-        "math_programme": {"pattern": "^[0-9a-f]{40}$"},
-        "mathforge": {"pattern": "^[0-9a-f]{40}$"},
-        "mathsolve": {"pattern": "^[0-9a-f]{40}$"},
-        "mathcert": {"pattern": "^[0-9a-f]{40}$"},
-        "intellect": {"pattern": "^[0-9a-f]{40}$"}
+        "math_programme": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "mathforge": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "mathsolve": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "mathcert": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "intellect": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
       }
     },
-    "artifact": {
+    "runtimeArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "digest_algorithm", "digest", "contract_id"],
+      "properties": {
+        "path": {"const": "governance/umbrella_runtime_contract.json"},
+        "digest_algorithm": {"const": "git_blob_sha1"},
+        "digest": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "contract_id": {"const": "MP-UMBRELLA-RUNTIME-003"}
+      }
+    },
+    "certArtifact": {
       "type": "object",
       "additionalProperties": false,
       "required": ["repository", "commit_sha", "path", "digest_algorithm", "digest", "route_count"],
       "properties": {
         "repository": {"const": "grandchallenge/MATHCERT"},
-        "commit_sha": {"pattern": "^[0-9a-f]{40}$"},
+        "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
         "path": {"const": "governance/certification_routes.json"},
         "digest_algorithm": {"const": "git_blob_sha1"},
-        "digest": {"pattern": "^[0-9a-f]{40}$"},
+        "digest": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
         "route_count": {"const": 8}
       }
     },
