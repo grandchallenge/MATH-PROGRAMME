@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "umbrella_current_state", ROOT / "ci" / "validate_umbrella_current_state.py"
+    "umbrella_current_state", ROOT / "ci" / "umbrella_current_state.py"
 )
 module = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
@@ -48,7 +48,9 @@ class UmbrellaCurrentStateTests(unittest.TestCase):
         routing = self.load("mathsolve_routing_audit.json")
         hc = next(item for item in routing["campaigns"] if item["campaign_id"] == "HC-001")
         hc["cert"]["route_state"] = "qualified"
-        self.assertTrue(any("qualified portfolio drift" in error for error in module.validation_errors(routing=routing)))
+        self.assertTrue(
+            any("qualified portfolio drift" in error for error in module.validation_errors(routing=routing))
+        )
 
     def test_odd_zeta_must_remain_additional_campaign(self):
         campaigns = self.load("governed_campaign_registry.json")
