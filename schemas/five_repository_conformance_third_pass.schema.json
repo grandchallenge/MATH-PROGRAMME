@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/five_repository_conformance_third_pass.schema.json",
+  "title": "Five Repository Conformance Third Pass",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "audit_id",
+    "verified_at",
+    "status",
+    "predecessor",
+    "protected_base_heads",
+    "external_cert_route_registry",
+    "third_pass_findings",
+    "authority_model",
+    "programme_tracker_mirrors",
+    "cert_tracker_mirrors",
+    "forbidden_programme_tracker_substitutions",
+    "mirror_coverage",
+    "portfolio",
+    "preserved_blockers",
+    "claim_boundaries",
+    "pre_correction_governance_mismatch_count",
+    "reviewed_correction_unresolved_mismatch_count",
+    "publication_semantics"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "audit_id": {"const": "MP-UMBRELLA-THIRD-PASS-001"},
+    "verified_at": {"type": "string", "format": "date"},
+    "status": {"const": "CORRECTED_ON_REVIEWED_BRANCH_EXTERNAL_PUBLICATION_ATTESTATION_REQUIRED"},
+    "predecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "audit_id", "publication_commit", "git_blob_sha1", "interpretation"],
+      "properties": {
+        "path": {"const": "governance/five_repository_conformance_second_pass.json"},
+        "audit_id": {"const": "MP-UMBRELLA-SECOND-PASS-001"},
+        "publication_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "interpretation": {"const": "historical_incomplete_tracker_coverage_and_authority_semantics"}
+      }
+    },
+    "protected_base_heads": {"$ref": "#/$defs/repositoryHeads"},
+    "external_cert_route_registry": {
+      "allOf": [
+        {"$ref": "#/$defs/artifact"},
+        {
+          "type": "object",
+          "required": ["route_count"],
+          "properties": {"route_count": {"const": 8}}
+        }
+      ]
+    },
+    "third_pass_findings": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "severity", "disposition", "finding"],
+        "properties": {
+          "id": {"pattern": "^TP-0[1-5]$"},
+          "severity": {"enum": ["P1", "P2"]},
+          "disposition": {"const": "corrected"},
+          "finding": {"type": "string", "minLength": 20}
+        }
+      }
+    },
+    "authority_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state_authority",
+        "programme_campaign_registry",
+        "programme_route_registry",
+        "cert_route_registry",
+        "github_issue_role",
+        "issue_mutation_can_change_lifecycle_state",
+        "issue_mutation_can_change_cert_state",
+        "protected_branch_review_required_for_state_change"
+      ],
+      "properties": {
+        "state_authority": {"const": "protected_branch_repository_records"},
+        "programme_campaign_registry": {"const": "governance/governed_campaign_registry.json"},
+        "programme_route_registry": {"const": "governance/mathsolve_routing_audit.json"},
+        "cert_route_registry": {"const": "grandchallenge/MATHCERT:governance/certification_routes.json"},
+        "github_issue_role": {"const": "mutable_navigational_mirror"},
+        "issue_mutation_can_change_lifecycle_state": {"const": false},
+        "issue_mutation_can_change_cert_state": {"const": false},
+        "protected_branch_review_required_for_state_change": {"const": true}
+      }
+    },
+    "programme_tracker_mirrors": {"$ref": "#/$defs/trackerMap"},
+    "cert_tracker_mirrors": {"$ref": "#/$defs/trackerMap"},
+    "forbidden_programme_tracker_substitutions": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {"type": "integer", "minimum": 1}
+    },
+    "mirror_coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["programme_campaign_count", "cert_route_count", "total_mirror_count", "complete"],
+      "properties": {
+        "programme_campaign_count": {"const": 8},
+        "cert_route_count": {"const": 8},
+        "total_mirror_count": {"const": 16},
+        "complete": {"const": true}
+      }
+    },
+    "portfolio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["qualified_interface_only", "ready_intake", "pending", "archived_outside_current_routing"],
+      "properties": {
+        "qualified_interface_only": {"$ref": "#/$defs/campaignList"},
+        "ready_intake": {"$ref": "#/$defs/campaignList"},
+        "pending": {"$ref": "#/$defs/campaignList"},
+        "archived_outside_current_routing": {"$ref": "#/$defs/campaignList"}
+      }
+    },
+    "preserved_blockers": {
+      "type": "object",
+      "minProperties": 8,
+      "maxProperties": 8,
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": {"type": "string", "minLength": 1}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mathematical_target_proved", "novelty_claim_authorized", "priority_claim_authorized", "operational_release_complete_preserved", "release_trust_issues_reopened"],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "priority_claim_authorized": {"const": false},
+        "operational_release_complete_preserved": {"const": true},
+        "release_trust_issues_reopened": {"const": false}
+      }
+    },
+    "pre_correction_governance_mismatch_count": {"const": 5},
+    "reviewed_correction_unresolved_mismatch_count": {"const": 0},
+    "publication_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["self_inclusive_head_claim", "artifact_can_pin_own_future_merge_commit", "external_post_merge_attestation_required", "attestation_issue"],
+      "properties": {
+        "self_inclusive_head_claim": {"const": false},
+        "artifact_can_pin_own_future_merge_commit": {"const": false},
+        "external_post_merge_attestation_required": {"const": true},
+        "attestation_issue": {"const": 167}
+      }
+    }
+  },
+  "$defs": {
+    "repositoryHeads": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["math_programme", "mathforge", "mathsolve", "mathcert", "intellect"],
+      "properties": {
+        "math_programme": {"pattern": "^[0-9a-f]{40}$"},
+        "mathforge": {"pattern": "^[0-9a-f]{40}$"},
+        "mathsolve": {"pattern": "^[0-9a-f]{40}$"},
+        "mathcert": {"pattern": "^[0-9a-f]{40}$"},
+        "intellect": {"pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit_sha", "path", "digest_algorithm", "digest", "route_count"],
+      "properties": {
+        "repository": {"const": "grandchallenge/MATHCERT"},
+        "commit_sha": {"pattern": "^[0-9a-f]{40}$"},
+        "path": {"const": "governance/certification_routes.json"},
+        "digest_algorithm": {"const": "git_blob_sha1"},
+        "digest": {"pattern": "^[0-9a-f]{40}$"},
+        "route_count": {"const": 8}
+      }
+    },
+    "trackerMap": {
+      "type": "object",
+      "minProperties": 8,
+      "maxProperties": 8,
+      "additionalProperties": {"type": "integer", "minimum": 1}
+    },
+    "campaignList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9-]+$"}
+    }
+  }
+}
