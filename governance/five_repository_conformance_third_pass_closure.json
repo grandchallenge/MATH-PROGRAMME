@@ -1,0 +1,134 @@
+{
+  "schema_version": "1.0.0",
+  "closure_id": "MP-UMBRELLA-THIRD-PASS-CLOSURE-001",
+  "verified_at": "2026-07-31",
+  "status": "CONFORMANT_ZERO_IDENTITY_AND_AUTHORITY_MISMATCHES",
+  "programme_stage": {
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "merge_commit": "b620703ccc38e10382488dd87d743ea0af0461cf",
+    "reviewed_head": "2ddc8639081d403b6e1a1b8236874dd6a9e940b8",
+    "pull_request": 169,
+    "policy_run_id": 30633465214,
+    "gcl_run_id": 30633466116,
+    "staged_audit": {
+      "path": "governance/five_repository_conformance_third_pass.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "5ee5fcc74337acf6209c9166c84310d4709fe8d9"
+    },
+    "runtime_contract": {
+      "path": "governance/umbrella_runtime_contract.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "6828f552cdd3aff006aed7f23477d2541af4b2e7"
+    },
+    "campaign_registry": {
+      "path": "governance/governed_campaign_registry.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "b1f1e4682d0f3ff0108d020e466fa2ecb0809b57"
+    },
+    "routing_registry": {
+      "path": "governance/mathsolve_routing_audit.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "4a27ec8aaaa60f919ba51028807b83dc522bfcff"
+    }
+  },
+  "intellect_stage": {
+    "repository": "grandchallenge/INTELLECT",
+    "merge_commit": "712700f7f4de40fdd89342d718b1ea3bd3a02cc2",
+    "reviewed_head": "fdd8d394f79c5ba2e0a1421998684b141def29f4",
+    "pull_request": 16,
+    "ci_run_id": 30634525842,
+    "gcl_run_id": 30634526564,
+    "provider_module": {
+      "path": "src/grand_intellect/mathsolve_cert_current.py",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "2088fca1c622c52c0ea395a57c8221e3d41995c5"
+    },
+    "qualification_fixture": {
+      "path": "tests/fixtures/rh_ns_interface_qualifications.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "e2f8d5ea88379e9f4f522cb7e42eb50071e7612e"
+    }
+  },
+  "other_repository_heads": {
+    "mathforge": "0faee396ffa56c568ee0ae6a348bdb43ca80ac4d",
+    "mathsolve": "916f3434abcce29098ba7508a3b457a461461193",
+    "mathcert": "0258e4f0bca0d90fac05b62aeef108f16dccffdd"
+  },
+  "cert_route_registry": {
+    "repository": "grandchallenge/MATHCERT",
+    "commit_sha": "0258e4f0bca0d90fac05b62aeef108f16dccffdd",
+    "path": "governance/certification_routes.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1",
+    "route_count": 8
+  },
+  "authority_model": {
+    "state_authority": "protected_branch_repository_records",
+    "github_issue_role": "mutable_navigational_mirror",
+    "issue_mutation_can_change_lifecycle_state": false,
+    "issue_mutation_can_change_cert_state": false,
+    "protected_branch_review_required_for_state_change": true,
+    "runtime_contract_is_consumer_independent": true
+  },
+  "programme_tracker_mirrors": {
+    "UC-001": 1,
+    "NS-CI-001": 55,
+    "HC-001": 65,
+    "BSD-001": 66,
+    "PNP-001": 162,
+    "RH-001": 163,
+    "YM-001": 164,
+    "OZ-001": 113
+  },
+  "cert_tracker_mirrors": {
+    "UC-001": 25,
+    "NS-CI-001": 19,
+    "HC-001": 23,
+    "BSD-001": 26,
+    "PNP-001": 27,
+    "RH-001": 28,
+    "YM-001": 29,
+    "OZ-001": 30
+  },
+  "portfolio": {
+    "qualified_interface_only": ["NS-CI-001", "RH-001"],
+    "ready_intake": ["UC-001", "HC-001"],
+    "pending": ["BSD-001", "PNP-001", "YM-001", "OZ-001"],
+    "archived_outside_current_routing": ["PC-001"]
+  },
+  "third_pass_findings": {
+    "TP-01": "corrected",
+    "TP-02": "corrected",
+    "TP-03": "corrected",
+    "TP-04": "corrected",
+    "TP-05": "corrected",
+    "TP-06": "corrected"
+  },
+  "preserved_blockers": {
+    "UC-001": ["Frankl's conjecture remains open", "ready packet has no Cert adjudication"],
+    "NS-CI-001": ["universal critical integrability remains unproved", "NS-A2 remains unproved", "global regularity remains unproved"],
+    "HC-001": ["rational Hodge conjecture remains open", "ready packet has no Cert adjudication"],
+    "BSD-001": ["BSD-R2-A1 remains unproved", "packet remains pending"],
+    "PNP-001": ["definition-level concordance remains open", "no terminal claim packet is ready"],
+    "RH-001": ["Riemann Hypothesis remains unproved", "qualification is interface-only"],
+    "YM-001": ["construction and mass-gap obligations remain open", "packet remains pending"],
+    "OZ-001": ["T3 remains open", "Sharp-12 remains gated", "no new irrationality conclusion is authorized"]
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "operational_release_complete_preserved": true,
+    "release_trust_issues_reopened": false
+  },
+  "identity_mismatch_count": 0,
+  "authority_mismatch_count": 0,
+  "tracker_coverage_mismatch_count": 0,
+  "remaining_cross_repository_obligations": [],
+  "publication_semantics": {
+    "self_inclusive_head_claim": false,
+    "artifact_can_pin_own_future_merge_commit": false,
+    "external_post_merge_attestation_required": true,
+    "attestation_issue": 167
+  }
+}
