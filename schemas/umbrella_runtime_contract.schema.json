@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/umbrella_runtime_contract.schema.json",
+  "title": "MATH-PROGRAMME umbrella runtime contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "contract_id",
+    "verified_at",
+    "provider_repository",
+    "supersedes",
+    "programme_routing_contract",
+    "programme_campaign_contract",
+    "certification_contract",
+    "portfolio",
+    "authority_model",
+    "consumer_independence",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "contract_id": {"const": "MP-UMBRELLA-RUNTIME-003"},
+    "verified_at": {"type": "string", "format": "date"},
+    "provider_repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "supersedes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "git_blob_sha1", "status"],
+      "properties": {
+        "path": {"const": "governance/umbrella_current_state_conformance.json"},
+        "git_blob_sha1": {"pattern": "^[0-9a-f]{40}$"},
+        "status": {"const": "historical_superseded_for_runtime_consumption"}
+      }
+    },
+    "programme_routing_contract": {"$ref": "#/$defs/localArtifact"},
+    "programme_campaign_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "digest_algorithm", "digest", "campaign_count", "routing_member_count"],
+      "properties": {
+        "path": {"const": "governance/governed_campaign_registry.json"},
+        "digest_algorithm": {"const": "git_blob_sha1"},
+        "digest": {"pattern": "^[0-9a-f]{40}$"},
+        "campaign_count": {"const": 9},
+        "routing_member_count": {"const": 8}
+      }
+    },
+    "certification_contract": {"$ref": "#/$defs/externalArtifact"},
+    "portfolio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["qualified_interface_only", "ready_intake", "pending", "archived_outside_current_routing"],
+      "properties": {
+        "qualified_interface_only": {"$ref": "#/$defs/campaignList"},
+        "ready_intake": {"$ref": "#/$defs/campaignList"},
+        "pending": {"$ref": "#/$defs/campaignList"},
+        "archived_outside_current_routing": {"$ref": "#/$defs/campaignList"}
+      }
+    },
+    "authority_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state_authority", "github_issue_role", "issue_mutation_can_change_state"],
+      "properties": {
+        "state_authority": {"const": "protected_branch_repository_records"},
+        "github_issue_role": {"const": "mutable_navigational_mirror"},
+        "issue_mutation_can_change_state": {"const": false}
+      }
+    },
+    "consumer_independence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pins_intellect_commit", "contains_downstream_completion_obligation", "consumer_repins_by_artifact_reference"],
+      "properties": {
+        "pins_intellect_commit": {"const": false},
+        "contains_downstream_completion_obligation": {"const": false},
+        "consumer_repins_by_artifact_reference": {"const": true}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mathematical_target_proved", "novelty_claim_authorized", "priority_claim_authorized", "operational_release_complete_preserved", "release_trust_issues_reopened"],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "priority_claim_authorized": {"const": false},
+        "operational_release_complete_preserved": {"const": true},
+        "release_trust_issues_reopened": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "localArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "digest_algorithm", "digest", "schema_version"],
+      "properties": {
+        "path": {"const": "governance/mathsolve_routing_audit.json"},
+        "digest_algorithm": {"const": "git_blob_sha1"},
+        "digest": {"pattern": "^[0-9a-f]{40}$"},
+        "schema_version": {"const": "1.3.0"}
+      }
+    },
+    "externalArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit_sha", "path", "digest_algorithm", "digest"],
+      "properties": {
+        "repository": {"const": "grandchallenge/MATHCERT"},
+        "commit_sha": {"pattern": "^[0-9a-f]{40}$"},
+        "path": {"const": "governance/certification_routes.json"},
+        "digest_algorithm": {"const": "git_blob_sha1"},
+        "digest": {"pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "campaignList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9-]+$"}
+    }
+  }
+}

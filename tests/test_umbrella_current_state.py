@@ -68,6 +68,29 @@ class UmbrellaCurrentStateTests(unittest.TestCase):
             any("archived PC-001" in error for error in module.validation_errors(campaigns=campaigns))
         )
 
+    def test_programme_tracker_identity_is_exact(self):
+        campaigns = self.load("governed_campaign_registry.json")
+        rh = next(item for item in campaigns["campaigns"] if item["campaign_id"] == "RH-001")
+        rh["programme_tracker_issue"] = 89
+        self.assertTrue(
+            any("RH-001 tracker drift" in error for error in module.validation_errors(campaigns=campaigns))
+        )
+
+    def test_pull_request_cannot_substitute_for_campaign_tracker(self):
+        campaigns = self.load("governed_campaign_registry.json")
+        pnp = next(item for item in campaigns["campaigns"] if item["campaign_id"] == "PNP-001")
+        pnp["programme_tracker_issue"] = 88
+        self.assertTrue(
+            any("pull request substituted" in error for error in module.validation_errors(campaigns=campaigns))
+        )
+
+    def test_tracker_mirrors_cannot_be_state_authority(self):
+        campaigns = self.load("governed_campaign_registry.json")
+        campaigns["claim_boundary"] = "Registry inclusion establishes governance and routing coverage only."
+        errors = module.validation_errors(campaigns=campaigns)
+        self.assertTrue(any("repository authority boundary missing" in error for error in errors))
+        self.assertTrue(any("issue mirror boundary missing" in error for error in errors))
+
     def test_release_trust_cannot_be_reopened(self):
         audit = self.load("umbrella_current_state_conformance.json")
         audit["claim_boundaries"]["release_trust_issues_reopened"] = True
