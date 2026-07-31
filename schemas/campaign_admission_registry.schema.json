@@ -4,33 +4,80 @@
   "title": "Programme campaign admission registry",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "registry_id", "verified_at", "authority", "active_campaign_registry", "lifecycle_states", "candidates"],
+  "required": [
+    "schema_version",
+    "registry_id",
+    "verified_at",
+    "authority",
+    "active_campaign_registry",
+    "lifecycle_states",
+    "candidates"
+  ],
   "properties": {
-    "schema_version": {"const": "1.0.0"},
-    "registry_id": {"const": "MP-CAMPAIGN-ADMISSION-001"},
-    "verified_at": {"type": "string", "format": "date"},
+    "schema_version": {
+      "const": "1.1.0"
+    },
+    "registry_id": {
+      "const": "MP-CAMPAIGN-ADMISSION-001"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date"
+    },
     "authority": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["repository", "state_authority", "github_issue_role", "candidate_issue_mutation_can_admit_campaign", "candidate_work_can_modify_active_portfolio"],
+      "required": [
+        "repository",
+        "state_authority",
+        "github_issue_role",
+        "candidate_issue_mutation_can_admit_campaign",
+        "candidate_work_can_modify_active_portfolio"
+      ],
       "properties": {
-        "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
-        "state_authority": {"const": "protected_branch_repository_records"},
-        "github_issue_role": {"const": "mutable_navigational_mirror"},
-        "candidate_issue_mutation_can_admit_campaign": {"const": false},
-        "candidate_work_can_modify_active_portfolio": {"const": false}
+        "repository": {
+          "const": "grandchallenge/MATH-PROGRAMME"
+        },
+        "state_authority": {
+          "const": "protected_branch_repository_records"
+        },
+        "github_issue_role": {
+          "const": "mutable_navigational_mirror"
+        },
+        "candidate_issue_mutation_can_admit_campaign": {
+          "const": false
+        },
+        "candidate_work_can_modify_active_portfolio": {
+          "const": false
+        }
       }
     },
     "active_campaign_registry": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["path", "digest_algorithm", "digest", "active_routing_member_count", "archived_member_count"],
+      "required": [
+        "path",
+        "digest_algorithm",
+        "digest",
+        "active_routing_member_count",
+        "archived_member_count"
+      ],
       "properties": {
-        "path": {"const": "governance/governed_campaign_registry.json"},
-        "digest_algorithm": {"const": "git_blob_sha1"},
-        "digest": {"pattern": "^[0-9a-f]{40}$"},
-        "active_routing_member_count": {"const": 8},
-        "archived_member_count": {"const": 1}
+        "path": {
+          "const": "governance/governed_campaign_registry.json"
+        },
+        "digest_algorithm": {
+          "const": "git_blob_sha1"
+        },
+        "digest": {
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "active_routing_member_count": {
+          "const": 8
+        },
+        "archived_member_count": {
+          "const": 1
+        }
       }
     },
     "lifecycle_states": {
@@ -38,44 +85,138 @@
       "uniqueItems": true,
       "minItems": 4,
       "maxItems": 4,
-      "items": {"enum": ["candidate", "admitted_active", "rejected", "withdrawn"]}
+      "items": {
+        "enum": [
+          "candidate",
+          "admitted_active",
+          "rejected",
+          "withdrawn"
+        ]
+      }
     },
     "candidates": {
       "type": "array",
       "minItems": 1,
-      "items": {"$ref": "#/$defs/candidate"}
+      "items": {
+        "$ref": "#/$defs/candidate"
+      }
     }
   },
   "$defs": {
     "candidate": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["campaign_id", "lifecycle_state", "programme_tracker_issue", "governance_issue", "active_portfolio_member", "source_provenance", "solve_candidate", "certification_candidate", "admission_gates", "claim_boundary"],
+      "required": [
+        "campaign_id",
+        "lifecycle_state",
+        "programme_tracker_issue",
+        "governance_issue",
+        "governance_history",
+        "active_portfolio_member",
+        "source_provenance",
+        "solve_candidate",
+        "certification_candidate",
+        "admission_gates",
+        "claim_boundary"
+      ],
       "properties": {
-        "campaign_id": {"pattern": "^[A-Z][A-Z0-9-]+$"},
-        "lifecycle_state": {"enum": ["candidate", "admitted_active", "rejected", "withdrawn"]},
-        "programme_tracker_issue": {"type": "integer", "minimum": 1},
-        "governance_issue": {"type": "integer", "minimum": 1},
-        "active_portfolio_member": {"type": "boolean"},
+        "campaign_id": {
+          "pattern": "^[A-Z][A-Z0-9-]+$"
+        },
+        "lifecycle_state": {
+          "enum": [
+            "candidate",
+            "admitted_active",
+            "rejected",
+            "withdrawn"
+          ]
+        },
+        "programme_tracker_issue": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "governance_issue": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "governance_history": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "active_portfolio_member": {
+          "type": "boolean"
+        },
         "source_provenance": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["state", "forge_issue", "provider_manifest", "candidate_source"],
+          "required": [
+            "state",
+            "forge_issue",
+            "provider_manifest",
+            "candidate_source"
+          ],
           "properties": {
-            "state": {"enum": ["unverified_candidate", "provider_verified", "waived", "rejected"]},
-            "forge_issue": {"type": "integer", "minimum": 1},
-            "provider_manifest": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/artifact"}]},
+            "state": {
+              "enum": [
+                "unverified_candidate",
+                "provider_verified",
+                "waived",
+                "rejected"
+              ]
+            },
+            "forge_issue": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "provider_manifest": {
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "#/$defs/artifact"
+                }
+              ]
+            },
             "candidate_source": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["author", "title", "printed_date", "candidate_sha256", "candidate_byte_length", "target_scope"],
+              "required": [
+                "author",
+                "title",
+                "printed_date",
+                "candidate_sha256",
+                "candidate_byte_length",
+                "target_scope"
+              ],
               "properties": {
-                "author": {"type": "string", "minLength": 1},
-                "title": {"type": "string", "minLength": 1},
-                "printed_date": {"type": "string", "format": "date"},
-                "candidate_sha256": {"pattern": "^[0-9a-f]{64}$"},
-                "candidate_byte_length": {"type": "integer", "minimum": 1},
-                "target_scope": {"type": "string", "minLength": 10}
+                "author": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "printed_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "candidate_sha256": {
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "candidate_byte_length": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "target_scope": {
+                  "type": "string",
+                  "minLength": 10
+                }
               }
             }
           }
@@ -83,50 +224,192 @@
         "solve_candidate": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["issue", "pull_request", "base_commit", "state", "may_merge_candidate_work_package", "may_create_campaign_manifest", "may_create_cert_handoff", "may_create_adjudication", "may_create_promotion_record", "required_admission_record_path"],
+          "required": [
+            "issue",
+            "pull_request",
+            "base_commit",
+            "reviewed_head",
+            "merge_commit",
+            "merged_at",
+            "workflow_runs",
+            "state",
+            "may_merge_candidate_work_package",
+            "may_create_campaign_manifest",
+            "may_create_cert_handoff",
+            "may_create_adjudication",
+            "may_create_promotion_record",
+            "required_admission_record_path"
+          ],
           "properties": {
-            "issue": {"type": "integer", "minimum": 1},
-            "pull_request": {"type": "integer", "minimum": 1},
-            "base_commit": {"pattern": "^[0-9a-f]{40}$"},
-            "state": {"const": "draft_candidate_implementation"},
-            "may_merge_candidate_work_package": {"const": true},
-            "may_create_campaign_manifest": {"const": false},
-            "may_create_cert_handoff": {"const": false},
-            "may_create_adjudication": {"const": false},
-            "may_create_promotion_record": {"const": false},
-            "required_admission_record_path": {"type": "string", "minLength": 5}
+            "issue": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "pull_request": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "base_commit": {
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "reviewed_head": {
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "merge_commit": {
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "merged_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "workflow_runs": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "solve_checks",
+                "gcl_conformance",
+                "candidate_replay"
+              ],
+              "properties": {
+                "solve_checks": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "gcl_conformance": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "candidate_replay": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "state": {
+              "const": "merged_candidate_work_package"
+            },
+            "may_merge_candidate_work_package": {
+              "const": false
+            },
+            "may_create_campaign_manifest": {
+              "const": false
+            },
+            "may_create_cert_handoff": {
+              "const": false
+            },
+            "may_create_adjudication": {
+              "const": false
+            },
+            "may_create_promotion_record": {
+              "const": false
+            },
+            "required_admission_record_path": {
+              "type": "string",
+              "minLength": 5
+            }
           }
         },
         "certification_candidate": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["issue", "state", "route_registry_entry", "may_adjudicate"],
+          "required": [
+            "issue",
+            "state",
+            "route_registry_entry",
+            "may_adjudicate"
+          ],
           "properties": {
-            "issue": {"type": "integer", "minimum": 1},
-            "state": {"const": "pre_route_candidate"},
-            "route_registry_entry": {"type": "null"},
-            "may_adjudicate": {"const": false}
+            "issue": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "state": {
+              "const": "pre_route_candidate"
+            },
+            "route_registry_entry": {
+              "type": "null"
+            },
+            "may_adjudicate": {
+              "const": false
+            }
           }
         },
         "admission_gates": {
           "type": "object",
-          "minProperties": 8,
-          "maxProperties": 8,
-          "additionalProperties": {"type": "boolean"}
+          "additionalProperties": false,
+          "required": [
+            "forge_provider_manifest_admitted",
+            "source_revision_concordance_complete",
+            "solve_candidate_package_reviewed",
+            "cert_route_registered",
+            "programme_active_registry_updated",
+            "programme_routing_registry_updated",
+            "runtime_contract_updated_for_active_admission",
+            "intellect_repin_complete_if_required"
+          ],
+          "properties": {
+            "forge_provider_manifest_admitted": {
+              "type": "boolean"
+            },
+            "source_revision_concordance_complete": {
+              "type": "boolean"
+            },
+            "solve_candidate_package_reviewed": {
+              "type": "boolean"
+            },
+            "cert_route_registered": {
+              "type": "boolean"
+            },
+            "programme_active_registry_updated": {
+              "type": "boolean"
+            },
+            "programme_routing_registry_updated": {
+              "type": "boolean"
+            },
+            "runtime_contract_updated_for_active_admission": {
+              "type": "boolean"
+            },
+            "intellect_repin_complete_if_required": {
+              "type": "boolean"
+            }
+          }
         },
-        "claim_boundary": {"type": "string", "minLength": 50}
+        "claim_boundary": {
+          "type": "string",
+          "minLength": 50
+        }
       }
     },
     "artifact": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["repository", "commit_sha", "path", "digest_algorithm", "digest"],
+      "required": [
+        "repository",
+        "commit_sha",
+        "path",
+        "digest_algorithm",
+        "digest"
+      ],
       "properties": {
-        "repository": {"pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"},
-        "commit_sha": {"pattern": "^[0-9a-f]{40}$"},
-        "path": {"type": "string", "minLength": 1},
-        "digest_algorithm": {"enum": ["git_blob_sha1", "sha256"]},
-        "digest": {"pattern": "^[0-9a-f]{40}$|^[0-9a-f]{64}$"}
+        "repository": {
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest_algorithm": {
+          "enum": [
+            "git_blob_sha1",
+            "sha256"
+          ]
+        },
+        "digest": {
+          "pattern": "^[0-9a-f]{40}$|^[0-9a-f]{64}$"
+        }
       }
     }
   }
