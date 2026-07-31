@@ -56,11 +56,30 @@ class CampaignAdmissionControlTests(unittest.TestCase):
         admission["authority"]["candidate_issue_mutation_can_admit_campaign"] = True
         self.assertTrue(any("issue mutation" in error for error in self.errors(admission=admission)))
 
-    def test_source_digest_cannot_be_marked_verified_without_manifest(self):
+    def test_source_cannot_be_verified_without_manifest(self):
         admission = copy.deepcopy(self.admission)
-        source = admission["candidates"][0]["source_provenance"]
-        source["state"] = "provider_verified"
+        admission["candidates"][0]["source_provenance"]["state"] = "provider_verified"
         self.assertTrue(any("source provenance inflated" in error for error in self.errors(admission=admission)))
+
+    def test_reviewed_head_drift_is_rejected(self):
+        admission = copy.deepcopy(self.admission)
+        admission["candidates"][0]["solve_candidate"]["reviewed_head"] = "0" * 40
+        self.assertTrue(any("reviewed candidate head drift" in error for error in self.errors(admission=admission)))
+
+    def test_merge_commit_drift_is_rejected(self):
+        admission = copy.deepcopy(self.admission)
+        admission["candidates"][0]["solve_candidate"]["merge_commit"] = "0" * 40
+        self.assertTrue(any("merged candidate commit drift" in error for error in self.errors(admission=admission)))
+
+    def test_merged_candidate_cannot_revert_to_draft(self):
+        admission = copy.deepcopy(self.admission)
+        admission["candidates"][0]["solve_candidate"]["state"] = "draft_candidate_implementation"
+        self.assertTrue(any("must be recorded as merged" in error for error in self.errors(admission=admission)))
+
+    def test_completed_merge_cannot_remain_future_authority(self):
+        admission = copy.deepcopy(self.admission)
+        admission["candidates"][0]["solve_candidate"]["may_merge_candidate_work_package"] = True
+        self.assertTrue(any("future work" in error for error in self.errors(admission=admission)))
 
     def test_candidate_cannot_create_campaign_manifest(self):
         admission = copy.deepcopy(self.admission)
@@ -77,7 +96,12 @@ class CampaignAdmissionControlTests(unittest.TestCase):
         admission["candidates"][0]["certification_candidate"]["may_adjudicate"] = True
         self.assertTrue(any("Cert pre-route boundary drift" in error for error in self.errors(admission=admission)))
 
-    def test_admission_gate_cannot_be_preemptively_closed(self):
+    def test_reviewed_candidate_gate_cannot_be_rolled_back(self):
+        admission = copy.deepcopy(self.admission)
+        admission["candidates"][0]["admission_gates"]["solve_candidate_package_reviewed"] = False
+        self.assertTrue(any("reviewed candidate package gate" in error for error in self.errors(admission=admission)))
+
+    def test_active_admission_gate_cannot_be_preemptively_closed(self):
         admission = copy.deepcopy(self.admission)
         admission["candidates"][0]["admission_gates"]["forge_provider_manifest_admitted"] = True
         self.assertTrue(any("admission gate inflated" in error for error in self.errors(admission=admission)))
@@ -87,10 +111,15 @@ class CampaignAdmissionControlTests(unittest.TestCase):
         runtime["candidate_admission_contract"]["digest"] = "0" * 40
         self.assertTrue(any("candidate admission digest drift" in error for error in self.errors(runtime=runtime)))
 
+    def test_runtime_must_expose_reviewed_candidate_work(self):
+        runtime = copy.deepcopy(self.runtime)
+        runtime["candidate_portfolio"]["reviewed_candidate_work_packages"] = []
+        self.assertTrue(any("reviewed candidate execution state drift" in error for error in self.errors(runtime=runtime)))
+
     def test_candidate_has_no_active_portfolio_effect(self):
         runtime = copy.deepcopy(self.runtime)
         runtime["candidate_portfolio"]["active_portfolio_effect"] = "adds_route"
-        self.assertTrue(any("candidate effect must remain none" in error for error in self.errors(runtime=runtime)))
+        self.assertTrue(any("reviewed candidate execution state drift" in error for error in self.errors(runtime=runtime)))
 
     def test_candidate_work_cannot_self_admit(self):
         runtime = copy.deepcopy(self.runtime)

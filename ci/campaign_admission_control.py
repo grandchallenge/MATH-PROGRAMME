@@ -1,4 +1,4 @@
-"""Validate candidate campaign admission without altering the active portfolio."""
+"""Validate post-merge candidate execution without altering active admission."""
 from __future__ import annotations
 
 import hashlib
@@ -23,10 +23,17 @@ EXPECTED_ACTIVE_IDS = {
 }
 EXPECTED_ROUTING_IDS = EXPECTED_ACTIVE_IDS - {"PC-001"}
 EXPECTED_CANDIDATE_IDS = {"VGSE-001"}
-EXPECTED_CANDIDATE_DIGEST = "9b1a307fde8bfe814210088d544ec8b03f2b413e"
+EXPECTED_CANDIDATE_DIGEST = "a6bffaa197aa3921e3eb9d4f8a02b5dc2bbded24"
 EXPECTED_ACTIVE_DIGEST = "b1f1e4682d0f3ff0108d020e466fa2ecb0809b57"
 EXPECTED_CERT_DIGEST = "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1"
 EXPECTED_SOURCE_DIGEST = "e513789426ae6247438920bfc80cfba6bd9c32dc6799a4f7873d806a865f95de"
+EXPECTED_SOLVE_HEAD = "0d66a75412543e534b81c21a51a6ad88c035b55b"
+EXPECTED_SOLVE_MERGE = "709c7d3f388b8df75c87a247f80424e560c31e72"
+EXPECTED_WORKFLOW_RUNS = {
+    "solve_checks": 30641057206,
+    "gcl_conformance": 30641058060,
+    "candidate_replay": 30641057393,
+}
 EXPECTED_GATES = {
     "forge_provider_manifest_admitted",
     "source_revision_concordance_complete",
@@ -116,16 +123,17 @@ def validation_errors(
     vgse = candidates.get("VGSE-001", {})
     if vgse.get("lifecycle_state") != "candidate" or vgse.get("active_portfolio_member") is not False:
         errors.append("VGSE-001: must remain a non-active candidate")
-    if vgse.get("programme_tracker_issue") != 170 or vgse.get("governance_issue") != 172:
-        errors.append("VGSE-001: Programme issue identity drift")
+    if vgse.get("programme_tracker_issue") != 170:
+        errors.append("VGSE-001: Programme tracker identity drift")
+    if vgse.get("governance_issue") != 175 or vgse.get("governance_history") != [172]:
+        errors.append("VGSE-001: Programme governance history drift")
 
     source = vgse.get("source_provenance", {})
     if source.get("state") != "unverified_candidate":
         errors.append("VGSE-001: source provenance inflated beyond unverified candidate")
     if source.get("forge_issue") != 32 or source.get("provider_manifest") is not None:
         errors.append("VGSE-001: Forge provider state drift")
-    candidate_source = source.get("candidate_source", {})
-    if candidate_source.get("candidate_sha256") != EXPECTED_SOURCE_DIGEST:
+    if source.get("candidate_source", {}).get("candidate_sha256") != EXPECTED_SOURCE_DIGEST:
         errors.append("VGSE-001: candidate source digest drift")
 
     solve = vgse.get("solve_candidate", {})
@@ -133,8 +141,18 @@ def validation_errors(
         errors.append("VGSE-001: Solve mirror identity drift")
     if solve.get("base_commit") != "916f3434abcce29098ba7508a3b457a461461193":
         errors.append("VGSE-001: Solve protected-base identity drift")
-    if solve.get("state") != "draft_candidate_implementation":
-        errors.append("VGSE-001: Solve work must remain draft candidate implementation")
+    if solve.get("reviewed_head") != EXPECTED_SOLVE_HEAD:
+        errors.append("VGSE-001: reviewed candidate head drift")
+    if solve.get("merge_commit") != EXPECTED_SOLVE_MERGE:
+        errors.append("VGSE-001: merged candidate commit drift")
+    if solve.get("merged_at") != "2026-07-31T15:04:53Z":
+        errors.append("VGSE-001: candidate merge timestamp drift")
+    if solve.get("workflow_runs") != EXPECTED_WORKFLOW_RUNS:
+        errors.append("VGSE-001: candidate workflow evidence drift")
+    if solve.get("state") != "merged_candidate_work_package":
+        errors.append("VGSE-001: candidate work package must be recorded as merged")
+    if solve.get("may_merge_candidate_work_package") is not False:
+        errors.append("VGSE-001: completed candidate merge may not remain authorized as future work")
     for field in (
         "may_create_campaign_manifest", "may_create_cert_handoff",
         "may_create_adjudication", "may_create_promotion_record",
@@ -156,8 +174,11 @@ def validation_errors(
     gates = vgse.get("admission_gates", {})
     if set(gates) != EXPECTED_GATES:
         errors.append("VGSE-001: admission gate set drift")
-    if any(value is not False for value in gates.values()):
-        errors.append("VGSE-001: candidate admission gate inflated before evidence")
+    if gates.get("solve_candidate_package_reviewed") is not True:
+        errors.append("VGSE-001: reviewed candidate package gate must remain true")
+    for field in EXPECTED_GATES - {"solve_candidate_package_reviewed"}:
+        if gates.get(field) is not False:
+            errors.append(f"VGSE-001: admission gate inflated before evidence: {field}")
 
     if git_blob_sha1(ADMISSION_PATH) != EXPECTED_CANDIDATE_DIGEST:
         errors.append("candidate admission: on-disk registry blob drift")
@@ -174,9 +195,10 @@ def validation_errors(
         errors.append("runtime v4: candidate portfolio identity drift")
     if runtime.get("candidate_portfolio") != {
         "pre_admission": ["VGSE-001"],
+        "reviewed_candidate_work_packages": ["VGSE-001"],
         "active_portfolio_effect": "none",
     }:
-        errors.append("runtime v4: candidate effect must remain none")
+        errors.append("runtime v4: reviewed candidate execution state drift")
     runtime_authority = runtime.get("authority_model", {})
     if runtime_authority.get("candidate_registry_is_separate_from_active_registry") is not True:
         errors.append("runtime v4: candidate and active registries must remain separate")
@@ -197,7 +219,7 @@ def main() -> int:
     if errors:
         print("\n".join(errors), file=sys.stderr)
         return 1
-    print("validated separate active and candidate portfolios, unverified source provenance, pre-route Cert state, and candidate merge prohibitions")
+    print("validated reviewed and merged candidate work, unchanged active portfolio, unverified source provenance, and pre-route Cert state")
     return 0
 
 
