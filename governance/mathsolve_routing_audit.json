@@ -1,70 +1,352 @@
 {
-  "schema_version": "1.2.0",
+  "schema_version": "1.3.0",
   "registry_id": "MATHSOLVE-ROUTING-AUDIT",
   "provider_repository": "grandchallenge/MATHSOLVE",
-  "provider_commit": "cdb34f47829942bd89a3f7f754b412527eaafb92",
-  "provider_pull_request": "https://github.com/grandchallenge/MATHSOLVE/pull/74",
+  "provider_commit": "916f3434abcce29098ba7508a3b457a461461193",
+  "provider_pull_request": "https://github.com/grandchallenge/MATHSOLVE/pull/83",
   "certification_provider_repository": "grandchallenge/MATHCERT",
-  "certification_provider_commit": "3854dd1b4f6e162a7e74c3da1993f022ee691e5e",
+  "certification_provider_commit": "0258e4f0bca0d90fac05b62aeef108f16dccffdd",
+  "certification_provider_pull_request": "https://github.com/grandchallenge/MATHCERT/pull/40",
   "certification_route_registry_path": "governance/certification_routes.json",
-  "certification_route_registry_git_blob_sha1": "065f0531e4d763b389b207d4922d5a85b4335ee3",
-  "verified_at": "2026-07-29",
+  "certification_route_registry_git_blob_sha1": "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1",
+  "verified_at": "2026-07-31",
+  "predecessor": {
+    "path": "governance/mathcert_cross_repository_conformance.json",
+    "audit_id": "MP-MC-CONFORMANCE-001",
+    "status": "historical_superseded_for_current_portfolio_state"
+  },
   "campaigns": [
     {
-      "campaign_id": "UC-001", "title": "Union-Closed Sets", "disposition": "route", "coverage_mode": "native", "placement": "solve_native",
-      "manifest_path": "campaign_manifests/UC-001.json", "manifest_git_blob_sha1": "17ed0c7278098061201f14f337e4f4a81f9a0ef4", "solve_work_package_ids": ["MS-UC-WP04"],
-      "forge": {"repository": "grandchallenge/MATHFORGE", "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5", "manifest_path": "provider_manifests/UC-001.json", "manifest_git_blob_sha1": "6d803633c2697f100d7d5b616ea1d6f16bff34bf"},
-      "cert": {"repository": "grandchallenge/MATHCERT", "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/25", "route_state": "pending", "handoff": {"repository": "grandchallenge/MATHSOLVE", "handoff_id": "MC-HANDOFF-UC-001", "state": "ready", "path": "cert_handoffs/UC-001.json", "git_blob_sha1": "8369bc21e45be6af71d2a0cdb0c5ab3cb5313bfb"}},
-      "promotion": {"state": "blocked", "blockers": ["Frankl's conjecture remains open.", "MATHCERT has not adjudicated the ready packet."]}
+      "campaign_id": "UC-001",
+      "title": "Union-Closed Sets",
+      "disposition": "route",
+      "coverage_mode": "native",
+      "placement": "solve_native",
+      "manifest_path": "campaign_manifests/UC-001.json",
+      "manifest_git_blob_sha1": "55629c3004b8bffc35fc0fa6f5fbc711ff48aa3c",
+      "solve_work_package_ids": [
+        "MS-UC-WP04"
+      ],
+      "forge": {
+        "repository": "grandchallenge/MATHFORGE",
+        "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5",
+        "manifest_path": "provider_manifests/UC-001.json",
+        "manifest_git_blob_sha1": "6d803633c2697f100d7d5b616ea1d6f16bff34bf"
+      },
+      "cert": {
+        "repository": "grandchallenge/MATHCERT",
+        "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/25",
+        "route_state": "ready",
+        "handoff": {
+          "repository": "grandchallenge/MATHSOLVE",
+          "handoff_id": "MC-HANDOFF-UC-001",
+          "state": "ready",
+          "path": "cert_handoffs/UC-001.json",
+          "git_blob_sha1": "8369bc21e45be6af71d2a0cdb0c5ab3cb5313bfb"
+        },
+        "cert_output": null,
+        "qualification_scope": null
+      },
+      "promotion": {
+        "state": "blocked",
+        "blockers": [
+          "Frankl's conjecture remains open.",
+          "The ready packet has no MATHCERT adjudication."
+        ]
+      }
     },
     {
-      "campaign_id": "NS-CI-001", "title": "Critical Navier-Stokes integrability", "disposition": "route", "coverage_mode": "native", "placement": "solve_native",
-      "manifest_path": "campaign_manifests/NS-CI-001.json", "manifest_git_blob_sha1": "35f7cd6ccf0e27f199571189fcb34a3f8adc31d7", "solve_work_package_ids": ["NS-CI-R014-A2"],
-      "forge": {"repository": "grandchallenge/MATHFORGE", "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5", "manifest_path": "provider_manifests/NS-CI-001.json", "manifest_git_blob_sha1": "ed5220c31e38ba3458dc8a94a462c89c285fc22e"},
-      "cert": {"repository": "grandchallenge/MATHCERT", "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/19", "route_state": "pending", "handoff": {"repository": "grandchallenge/MATHSOLVE", "handoff_id": "MC-HANDOFF-NS-CI-001", "state": "ready", "path": "cert_handoffs/NS-CI-001.json", "git_blob_sha1": "58b10636bd614e91e6c35900b9f5fb68e7f88afb"}},
-      "promotion": {"state": "blocked", "blockers": ["The A2 bridge remains unproved.", "MATHCERT has not adjudicated the ready packet."]}
+      "campaign_id": "NS-CI-001",
+      "title": "Critical Navier-Stokes integrability",
+      "disposition": "route",
+      "coverage_mode": "native",
+      "placement": "solve_native",
+      "manifest_path": "campaign_manifests/NS-CI-001.json",
+      "manifest_git_blob_sha1": "fcdd10f96b19c218ba700deb452b7da7f6b9b975",
+      "solve_work_package_ids": [
+        "NS-CI-R014-A2",
+        "MS-FC-WP00-NS-CI-001"
+      ],
+      "forge": {
+        "repository": "grandchallenge/MATHFORGE",
+        "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5",
+        "manifest_path": "provider_manifests/NS-CI-001.json",
+        "manifest_git_blob_sha1": "ed5220c31e38ba3458dc8a94a462c89c285fc22e"
+      },
+      "cert": {
+        "repository": "grandchallenge/MATHCERT",
+        "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/19",
+        "route_state": "qualified",
+        "handoff": {
+          "repository": "grandchallenge/MATHSOLVE",
+          "handoff_id": "MC-HANDOFF-NS-CI-001",
+          "state": "ready",
+          "path": "cert_handoffs/NS-CI-001.json",
+          "git_blob_sha1": "40cad99646829fe40edf9c616074514407e49dee"
+        },
+        "cert_output": {
+          "repository": "grandchallenge/MATHCERT",
+          "commit_sha": "b1aa08001eb8537be8e204c3866aefd5f898252e",
+          "path": "certificates/formal_sources/MC-FC-WP00-NS-CI-001.json",
+          "digest_algorithm": "git_blob_sha1",
+          "digest": "6047ad774957974a6c2aa86bae72b51841e774a4"
+        },
+        "qualification_scope": "qualified_interface_only"
+      },
+      "promotion": {
+        "state": "blocked",
+        "blockers": [
+          "Universal critical integrability remains unproved.",
+          "NS-A2 and the one-way continuation bridge remain unproved.",
+          "Imported analytic predicates remain explicit axioms."
+        ]
+      }
     },
     {
-      "campaign_id": "HC-001", "title": "Hodge conjecture", "disposition": "route", "coverage_mode": "native", "placement": "solve_native",
-      "manifest_path": "campaign_manifests/HC-001.json", "manifest_git_blob_sha1": "b3efb4e44dd6ab70765e602b4837bc23355eac3d", "solve_work_package_ids": ["HC-WP00"],
-      "forge": {"repository": "grandchallenge/MATHFORGE", "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5", "manifest_path": "provider_manifests/HC-001.json", "manifest_git_blob_sha1": "1bce7ab1e2cc7daa8f125747c69bad262adc080f"},
-      "cert": {"repository": "grandchallenge/MATHCERT", "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/23", "route_state": "pending", "handoff": {"repository": "grandchallenge/MATHSOLVE", "handoff_id": "MC-HANDOFF-HC-001", "state": "ready", "path": "cert_handoffs/HC-001.json", "git_blob_sha1": "0c154af2e577e4367f9f5d0aeac5e15f9420172c"}},
-      "promotion": {"state": "blocked", "blockers": ["The full conjecture remains open.", "No restricted target has been selected.", "MATHCERT has not adjudicated the ready packet."]}
+      "campaign_id": "HC-001",
+      "title": "Hodge conjecture",
+      "disposition": "route",
+      "coverage_mode": "native",
+      "placement": "solve_native",
+      "manifest_path": "campaign_manifests/HC-001.json",
+      "manifest_git_blob_sha1": "48e3a0c22299147fe48cb4288cda813d7cffdcb4",
+      "solve_work_package_ids": [
+        "HC-WP00"
+      ],
+      "forge": {
+        "repository": "grandchallenge/MATHFORGE",
+        "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5",
+        "manifest_path": "provider_manifests/HC-001.json",
+        "manifest_git_blob_sha1": "1bce7ab1e2cc7daa8f125747c69bad262adc080f"
+      },
+      "cert": {
+        "repository": "grandchallenge/MATHCERT",
+        "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/23",
+        "route_state": "ready",
+        "handoff": {
+          "repository": "grandchallenge/MATHSOLVE",
+          "handoff_id": "MC-HANDOFF-HC-001",
+          "state": "ready",
+          "path": "cert_handoffs/HC-001.json",
+          "git_blob_sha1": "0c154af2e577e4367f9f5d0aeac5e15f9420172c"
+        },
+        "cert_output": null,
+        "qualification_scope": null
+      },
+      "promotion": {
+        "state": "blocked",
+        "blockers": [
+          "The full conjecture remains open.",
+          "No restricted target has been selected.",
+          "The ready packet has no MATHCERT adjudication."
+        ]
+      }
     },
     {
-      "campaign_id": "BSD-001", "title": "Birch and Swinnerton-Dyer conjecture", "disposition": "route", "coverage_mode": "retrospective", "placement": "programme_embedded",
-      "manifest_path": "campaign_manifests/BSD-001.json", "manifest_git_blob_sha1": "ff634c6303d8ba322edb739c9112466adca1d3b1", "solve_work_package_ids": ["BSD-WP00-WP04-RETROSPECTIVE"],
-      "forge": {"repository": "grandchallenge/MATHFORGE", "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5", "manifest_path": "provider_manifests/BSD-001.json", "manifest_git_blob_sha1": "c95e1f0ef8d2e662ca9bb3bb49317fa8aa7b2185"},
-      "cert": {"repository": "grandchallenge/MATHCERT", "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/26", "route_state": "pending", "handoff": {"repository": "grandchallenge/MATHSOLVE", "handoff_id": "MC-HANDOFF-BSD-001", "state": "pending", "path": "cert_handoffs/BSD-001.json", "git_blob_sha1": "20f8dbf016ab179cbf910d0510ad26b2bd9a24cb"}},
-      "promotion": {"state": "blocked", "blockers": ["Solve-owned work remains programme-embedded.", "BSD-R2-A1 is unproved and the packet is not ready."]}
+      "campaign_id": "BSD-001",
+      "title": "Birch and Swinnerton-Dyer conjecture",
+      "disposition": "route",
+      "coverage_mode": "retrospective",
+      "placement": "programme_embedded",
+      "manifest_path": "campaign_manifests/BSD-001.json",
+      "manifest_git_blob_sha1": "3fb3b07400915d90047a06a353537cf2e1593b9e",
+      "solve_work_package_ids": [
+        "BSD-WP00-WP04-RETROSPECTIVE"
+      ],
+      "forge": {
+        "repository": "grandchallenge/MATHFORGE",
+        "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5",
+        "manifest_path": "provider_manifests/BSD-001.json",
+        "manifest_git_blob_sha1": "c95e1f0ef8d2e662ca9bb3bb49317fa8aa7b2185"
+      },
+      "cert": {
+        "repository": "grandchallenge/MATHCERT",
+        "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/26",
+        "route_state": "pending",
+        "handoff": {
+          "repository": "grandchallenge/MATHSOLVE",
+          "handoff_id": "MC-HANDOFF-BSD-001",
+          "state": "pending",
+          "path": "cert_handoffs/BSD-001.json",
+          "git_blob_sha1": "20f8dbf016ab179cbf910d0510ad26b2bd9a24cb"
+        },
+        "cert_output": null,
+        "qualification_scope": null
+      },
+      "promotion": {
+        "state": "blocked",
+        "blockers": [
+          "Future Solve-owned work may not remain Programme-embedded.",
+          "BSD-R2-A1 is unproved and the packet is pending."
+        ]
+      }
     },
     {
-      "campaign_id": "PNP-001", "title": "P versus NP", "disposition": "route", "coverage_mode": "retrospective", "placement": "programme_embedded",
-      "manifest_path": "campaign_manifests/PNP-001.json", "manifest_git_blob_sha1": "64c67206556c19ae77c1eb5afa8297aae9af224e", "solve_work_package_ids": ["PNP-WP00-WP02-RETROSPECTIVE"],
-      "forge": {"repository": "grandchallenge/MATHFORGE", "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5", "manifest_path": "provider_manifests/PNP-001.json", "manifest_git_blob_sha1": "dc7f740d91b5f69b22dd11af6737064d132d278a"},
-      "cert": {"repository": "grandchallenge/MATHCERT", "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/27", "route_state": "pending", "handoff": {"repository": "grandchallenge/MATHSOLVE", "handoff_id": "MC-HANDOFF-PNP-001", "state": "pending", "path": "cert_handoffs/PNP-001.json", "git_blob_sha1": "c9d419c43293d533de8858099d26672f1b8d9dbe"}},
-      "promotion": {"state": "blocked", "blockers": ["Solve-owned work remains programme-embedded.", "No terminal claim packet is ready."]}
+      "campaign_id": "PNP-001",
+      "title": "P versus NP",
+      "disposition": "route",
+      "coverage_mode": "retrospective",
+      "placement": "programme_embedded",
+      "manifest_path": "campaign_manifests/PNP-001.json",
+      "manifest_git_blob_sha1": "6ecdfa0714828518878ccaf2cdc65756a5955186",
+      "solve_work_package_ids": [
+        "PNP-WP00-WP02-RETROSPECTIVE"
+      ],
+      "forge": {
+        "repository": "grandchallenge/MATHFORGE",
+        "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5",
+        "manifest_path": "provider_manifests/PNP-001.json",
+        "manifest_git_blob_sha1": "dc7f740d91b5f69b22dd11af6737064d132d278a"
+      },
+      "cert": {
+        "repository": "grandchallenge/MATHCERT",
+        "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/27",
+        "route_state": "pending",
+        "handoff": {
+          "repository": "grandchallenge/MATHSOLVE",
+          "handoff_id": "MC-HANDOFF-PNP-001",
+          "state": "pending",
+          "path": "cert_handoffs/PNP-001.json",
+          "git_blob_sha1": "c9d419c43293d533de8858099d26672f1b8d9dbe"
+        },
+        "cert_output": null,
+        "qualification_scope": null
+      },
+      "promotion": {
+        "state": "blocked",
+        "blockers": [
+          "Definition-level P/NP concordance remains open.",
+          "Future Solve-owned work may not remain Programme-embedded.",
+          "No terminal claim packet is ready."
+        ]
+      }
     },
     {
-      "campaign_id": "RH-001", "title": "Riemann Hypothesis", "disposition": "route", "coverage_mode": "retrospective", "placement": "programme_embedded",
-      "manifest_path": "campaign_manifests/RH-001.json", "manifest_git_blob_sha1": "0b58fa0ed35907eddf89062069793987b3b03f2e", "solve_work_package_ids": ["RH-WP00-WP02-RETROSPECTIVE"],
-      "forge": {"repository": "grandchallenge/MATHFORGE", "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5", "manifest_path": "provider_manifests/RH-001.json", "manifest_git_blob_sha1": "adcbee2583e5da2b59babefbafec943c113ba4ed"},
-      "cert": {"repository": "grandchallenge/MATHCERT", "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/28", "route_state": "pending", "handoff": {"repository": "grandchallenge/MATHSOLVE", "handoff_id": "MC-HANDOFF-RH-001", "state": "pending", "path": "cert_handoffs/RH-001.json", "git_blob_sha1": "525ca580e3b29ed7fcc690f2ce810a26a17a9df2"}},
-      "promotion": {"state": "blocked", "blockers": ["Solve-owned work remains programme-embedded.", "No terminal claim packet is ready."]}
+      "campaign_id": "RH-001",
+      "title": "Riemann Hypothesis",
+      "disposition": "route",
+      "coverage_mode": "retrospective",
+      "placement": "programme_embedded",
+      "manifest_path": "campaign_manifests/RH-001.json",
+      "manifest_git_blob_sha1": "4ce2c5bcdc7bc1d0d63f7b2244898c8a651d5f64",
+      "solve_work_package_ids": [
+        "RH-WP00-WP02-RETROSPECTIVE",
+        "MS-FC-WP00-RH-001"
+      ],
+      "forge": {
+        "repository": "grandchallenge/MATHFORGE",
+        "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5",
+        "manifest_path": "provider_manifests/RH-001.json",
+        "manifest_git_blob_sha1": "adcbee2583e5da2b59babefbafec943c113ba4ed"
+      },
+      "cert": {
+        "repository": "grandchallenge/MATHCERT",
+        "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/28",
+        "route_state": "qualified",
+        "handoff": {
+          "repository": "grandchallenge/MATHSOLVE",
+          "handoff_id": "MC-HANDOFF-RH-001",
+          "state": "pending",
+          "path": "cert_handoffs/RH-001.json",
+          "git_blob_sha1": "7304f185bd817bb67b77540513dc01d05f6fcd3a"
+        },
+        "cert_output": {
+          "repository": "grandchallenge/MATHCERT",
+          "commit_sha": "b1aa08001eb8537be8e204c3866aefd5f898252e",
+          "path": "certificates/formal_sources/MC-FC-WP00-RH-001.json",
+          "digest_algorithm": "git_blob_sha1",
+          "digest": "3668bbf792d994a6d8919101417f2f3cad342cdc"
+        },
+        "qualification_scope": "qualified_interface_only"
+      },
+      "promotion": {
+        "state": "blocked",
+        "blockers": [
+          "RH-T-000 remains mathematically unproved.",
+          "The qualification covers statement identity and kernel-checked concordance only.",
+          "Future proof work must be Solve-owned or explicitly waived."
+        ]
+      }
     },
     {
-      "campaign_id": "YM-001", "title": "Yang-Mills existence and mass gap", "disposition": "route", "coverage_mode": "retrospective", "placement": "programme_embedded",
-      "manifest_path": "campaign_manifests/YM-001.json", "manifest_git_blob_sha1": "d8825019a6e65aa6210887d217a6a903cf09bdba", "solve_work_package_ids": ["YM-WP00-WP02-RETROSPECTIVE"],
-      "forge": {"repository": "grandchallenge/MATHFORGE", "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5", "manifest_path": "provider_manifests/YM-001.json", "manifest_git_blob_sha1": "c84694d5885f94da70b8124063d1b8ee55534470"},
-      "cert": {"repository": "grandchallenge/MATHCERT", "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/29", "route_state": "pending", "handoff": {"repository": "grandchallenge/MATHSOLVE", "handoff_id": "MC-HANDOFF-YM-001", "state": "pending", "path": "cert_handoffs/YM-001.json", "git_blob_sha1": "54b7ad8156532e3dceba439356848dfa65a4d1ac"}},
-      "promotion": {"state": "blocked", "blockers": ["Solve-owned work remains programme-embedded.", "Existence, reconstruction, and mass-gap obligations remain open."]}
+      "campaign_id": "YM-001",
+      "title": "Yang-Mills existence and mass gap",
+      "disposition": "route",
+      "coverage_mode": "retrospective",
+      "placement": "programme_embedded",
+      "manifest_path": "campaign_manifests/YM-001.json",
+      "manifest_git_blob_sha1": "733d11811d0226fa2b2467965c3655a7d0fad963",
+      "solve_work_package_ids": [
+        "YM-WP00-WP02-RETROSPECTIVE"
+      ],
+      "forge": {
+        "repository": "grandchallenge/MATHFORGE",
+        "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5",
+        "manifest_path": "provider_manifests/YM-001.json",
+        "manifest_git_blob_sha1": "c84694d5885f94da70b8124063d1b8ee55534470"
+      },
+      "cert": {
+        "repository": "grandchallenge/MATHCERT",
+        "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/29",
+        "route_state": "pending",
+        "handoff": {
+          "repository": "grandchallenge/MATHSOLVE",
+          "handoff_id": "MC-HANDOFF-YM-001",
+          "state": "pending",
+          "path": "cert_handoffs/YM-001.json",
+          "git_blob_sha1": "54b7ad8156532e3dceba439356848dfa65a4d1ac"
+        },
+        "cert_output": null,
+        "qualification_scope": null
+      },
+      "promotion": {
+        "state": "blocked",
+        "blockers": [
+          "Future Solve-owned work may not remain Programme-embedded.",
+          "Existence, reconstruction, regulator-survival, and mass-gap obligations remain open."
+        ]
+      }
     },
     {
-      "campaign_id": "OZ-001", "title": "Odd-zeta irrationality intake", "disposition": "route", "coverage_mode": "retrospective", "placement": "programme_embedded",
-      "manifest_path": "campaign_manifests/OZ-001.json", "manifest_git_blob_sha1": "2cdeb2059af2e4cafe53e6c3cf88a9b27fa622b4", "solve_work_package_ids": ["OZ-WP00-RETROSPECTIVE"],
-      "forge": {"repository": "grandchallenge/MATHFORGE", "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5", "manifest_path": "provider_manifests/OZ-001.json", "manifest_git_blob_sha1": "361da6642ff3ac7953b530ee0eb21659dc94fb65"},
-      "cert": {"repository": "grandchallenge/MATHCERT", "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/30", "route_state": "pending", "handoff": {"repository": "grandchallenge/MATHSOLVE", "handoff_id": "MC-HANDOFF-OZ-001", "state": "pending", "path": "cert_handoffs/OZ-001.json", "git_blob_sha1": "b244c30b1b3aa4590a8b9ff9d63c5b66dab87663"}},
-      "promotion": {"state": "blocked", "blockers": ["Authoritative source lock is incomplete.", "All irrationality bridges remain open."]}
+      "campaign_id": "OZ-001",
+      "title": "Odd-zeta irrationality intake",
+      "disposition": "route",
+      "coverage_mode": "retrospective",
+      "placement": "programme_embedded",
+      "manifest_path": "campaign_manifests/OZ-001.json",
+      "manifest_git_blob_sha1": "8b3164ab88a35ec9fba69013b44056573e846bfe",
+      "solve_work_package_ids": [
+        "OZ-WP00-WP02-RETROSPECTIVE",
+        "OZ-RT-BZ-T3-001"
+      ],
+      "forge": {
+        "repository": "grandchallenge/MATHFORGE",
+        "commit_sha": "2cb624cc61cd95ec0c8cfb8429d93128972289a5",
+        "manifest_path": "provider_manifests/OZ-001.json",
+        "manifest_git_blob_sha1": "361da6642ff3ac7953b530ee0eb21659dc94fb65"
+      },
+      "cert": {
+        "repository": "grandchallenge/MATHCERT",
+        "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/30",
+        "route_state": "pending",
+        "handoff": {
+          "repository": "grandchallenge/MATHSOLVE",
+          "handoff_id": "MC-HANDOFF-OZ-001",
+          "state": "pending",
+          "path": "cert_handoffs/OZ-001.json",
+          "git_blob_sha1": "b244c30b1b3aa4590a8b9ff9d63c5b66dab87663"
+        },
+        "cert_output": null,
+        "qualification_scope": null
+      },
+      "promotion": {
+        "state": "blocked",
+        "blockers": [
+          "The eight source scopes remain noninterchangeable.",
+          "T3 remains open and Sharp-12 remains gated.",
+          "No new irrationality or novelty conclusion is authorized."
+        ]
+      }
     }
   ]
 }
