@@ -12,6 +12,9 @@ AUDIT_PATH = ROOT / "governance" / "five_repository_conformance_third_pass.json"
 SCHEMA_PATH = ROOT / "schemas" / "five_repository_conformance_third_pass.schema.json"
 CAMPAIGN_PATH = ROOT / "governance" / "governed_campaign_registry.json"
 PREDECESSOR_PATH = ROOT / "governance" / "five_repository_conformance_second_pass.json"
+RUNTIME_PATH = ROOT / "governance" / "umbrella_runtime_contract.json"
+RUNTIME_SCHEMA_PATH = ROOT / "schemas" / "umbrella_runtime_contract.schema.json"
+HISTORICAL_RUNTIME_PATH = ROOT / "governance" / "umbrella_current_state_conformance.json"
 
 EXPECTED_BASE_HEADS = {
     "math_programme": "96bebd6d9125555c6279106633318d7e32e890fe",
@@ -61,34 +64,56 @@ EXPECTED_CERT_ROUTE_REGISTRY = {
     "digest": "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1",
     "route_count": 8,
 }
+EXPECTED_RUNTIME_REF = {
+    "path": "governance/umbrella_runtime_contract.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "6828f552cdd3aff006aed7f23477d2541af4b2e7",
+    "contract_id": "MP-UMBRELLA-RUNTIME-003",
+}
 FORBIDDEN_PROGRAMME_TRACKERS = {86, 88, 89}
 ACTIVE_CAMPAIGNS = set(EXPECTED_PROGRAMME_TRACKERS)
+REMAINING_OBLIGATION = (
+    "GI-UMBRELLA-THIRD-PASS-001 must repin INTELLECT to the merged Programme "
+    "runtime contract before final third-pass closure."
+)
 
 
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def schema_errors(instance: dict[str, Any], schema_path: Path, label: str) -> list[str]:
+    schema = load_json(schema_path)
+    validator = Draft202012Validator(schema, format_checker=FormatChecker())
+    return [
+        f"{label}: {error.json_path}: {error.message}"
+        for error in sorted(validator.iter_errors(instance), key=lambda item: list(item.path))
+    ]
+
+
 def validation_errors(
     audit: dict[str, Any] | None = None,
     campaigns: dict[str, Any] | None = None,
     predecessor: dict[str, Any] | None = None,
+    runtime: dict[str, Any] | None = None,
+    historical_runtime: dict[str, Any] | None = None,
 ) -> list[str]:
     errors: list[str] = []
     if audit is None:
         audit = load_json(AUDIT_PATH)
-        schema = load_json(SCHEMA_PATH)
-        validator = Draft202012Validator(schema, format_checker=FormatChecker())
-        errors.extend(
-            f"governance/five_repository_conformance_third_pass.json: "
-            f"{error.json_path}: {error.message}"
-            for error in sorted(validator.iter_errors(audit), key=lambda item: list(item.path))
-        )
+        errors.extend(schema_errors(audit, SCHEMA_PATH, "third-pass audit"))
     if campaigns is None:
         campaigns = load_json(CAMPAIGN_PATH)
     if predecessor is None:
         predecessor = load_json(PREDECESSOR_PATH)
+    if runtime is None:
+        runtime = load_json(RUNTIME_PATH)
+        errors.extend(schema_errors(runtime, RUNTIME_SCHEMA_PATH, "umbrella runtime contract"))
+    if historical_runtime is None:
+        historical_runtime = load_json(HISTORICAL_RUNTIME_PATH)
 
+    if audit.get("status") != "PROGRAMME_CORRECTION_REVIEWED_INTELLECT_REPIN_REQUIRED":
+        errors.append("third-pass audit: staged correction status drift")
     if audit.get("protected_base_heads") != EXPECTED_BASE_HEADS:
         errors.append("third-pass audit: protected-base head drift")
 
@@ -106,6 +131,50 @@ def validation_errors(
     omitted = set(EXPECTED_CERT_TRACKERS) - set(predecessor_cert)
     if omitted != {"BSD-001", "PNP-001", "YM-001"}:
         errors.append("third-pass audit: predecessor omitted-route set drift")
+
+    if audit.get("programme_runtime_contract") != EXPECTED_RUNTIME_REF:
+        errors.append("third-pass audit: Programme runtime contract identity drift")
+
+    if runtime.get("contract_id") != "MP-UMBRELLA-RUNTIME-003":
+        errors.append("umbrella runtime contract: identity drift")
+    supersedes = runtime.get("supersedes", {})
+    if supersedes != {
+        "path": "governance/umbrella_current_state_conformance.json",
+        "git_blob_sha1": "a2a1c3d590f535972c87f57d9b86155a246a61ba",
+        "status": "historical_superseded_for_runtime_consumption",
+    }:
+        errors.append("umbrella runtime contract: predecessor supersession drift")
+    if runtime.get("programme_routing_contract", {}).get("digest") != "4a27ec8aaaa60f919ba51028807b83dc522bfcff":
+        errors.append("umbrella runtime contract: Programme routing identity drift")
+    if runtime.get("programme_campaign_contract", {}).get("digest") != "b1f1e4682d0f3ff0108d020e466fa2ecb0809b57":
+        errors.append("umbrella runtime contract: Programme campaign identity drift")
+    certification = runtime.get("certification_contract", {})
+    if certification != {key: value for key, value in EXPECTED_CERT_ROUTE_REGISTRY.items() if key != "route_count"}:
+        errors.append("umbrella runtime contract: Cert registry identity drift")
+    consumer = runtime.get("consumer_independence", {})
+    if consumer != {
+        "pins_intellect_commit": False,
+        "contains_downstream_completion_obligation": False,
+        "consumer_repins_by_artifact_reference": True,
+    }:
+        errors.append("umbrella runtime contract: consumer-independence drift")
+    runtime_authority = runtime.get("authority_model", {})
+    if runtime_authority != {
+        "state_authority": "protected_branch_repository_records",
+        "github_issue_role": "mutable_navigational_mirror",
+        "issue_mutation_can_change_state": False,
+    }:
+        errors.append("umbrella runtime contract: authority-model drift")
+    for key, expected in EXPECTED_PORTFOLIO.items():
+        if set(runtime.get("portfolio", {}).get(key, [])) != expected:
+            errors.append(f"umbrella runtime contract: {key} portfolio drift")
+
+    if historical_runtime.get("status") != "current_at_subject_heads":
+        errors.append("third-pass audit: historical runtime source status drift")
+    if historical_runtime.get("subject_heads", {}).get("intellect") != "8b5001ceb16cd74b6cdc5870bd4c63c858263c9b":
+        errors.append("third-pass audit: historical runtime pre-sync INTELLECT identity drift")
+    if not str(historical_runtime.get("remaining_cross_repository_obligation", "")).startswith("GI-UMBRELLA-SYNC-001"):
+        errors.append("third-pass audit: historical runtime completed-obligation evidence drift")
 
     authority = audit.get("authority_model", {})
     if authority.get("state_authority") != "protected_branch_repository_records":
@@ -187,10 +256,12 @@ def validation_errors(
     if boundaries.get("operational_release_complete_preserved") is not True:
         errors.append("third-pass audit: operational release closure not preserved")
 
-    if audit.get("pre_correction_governance_mismatch_count") != 5:
+    if audit.get("pre_correction_governance_mismatch_count") != 6:
         errors.append("third-pass audit: pre-correction mismatch count drift")
-    if audit.get("reviewed_correction_unresolved_mismatch_count") != 0:
-        errors.append("third-pass audit: unresolved mismatch count must be zero")
+    if audit.get("reviewed_correction_unresolved_mismatch_count") != 1:
+        errors.append("third-pass audit: staged unresolved mismatch count must be one")
+    if audit.get("remaining_cross_repository_obligation") != REMAINING_OBLIGATION:
+        errors.append("third-pass audit: remaining INTELLECT repin obligation drift")
 
     publication = audit.get("publication_semantics", {})
     if publication.get("self_inclusive_head_claim") is not False:
@@ -202,9 +273,12 @@ def validation_errors(
     if publication.get("attestation_issue") != 167:
         errors.append("third-pass audit: publication attestation issue drift")
 
-    findings = audit.get("third_pass_findings", [])
-    if {item.get("id") for item in findings} != {"TP-01", "TP-02", "TP-03", "TP-04", "TP-05"}:
+    findings = {item.get("id"): item for item in audit.get("third_pass_findings", [])}
+    if set(findings) != {"TP-01", "TP-02", "TP-03", "TP-04", "TP-05", "TP-06"}:
         errors.append("third-pass audit: finding identifier coverage drift")
-    if {item.get("disposition") for item in findings} != {"corrected"}:
-        errors.append("third-pass audit: every finding must be corrected")
+    for finding_id in ("TP-01", "TP-02", "TP-03", "TP-04", "TP-05"):
+        if findings.get(finding_id, {}).get("disposition") != "corrected":
+            errors.append(f"third-pass audit: {finding_id} must be corrected")
+    if findings.get("TP-06", {}).get("disposition") != "programme_runtime_contract_added_consumer_repin_required":
+        errors.append("third-pass audit: TP-06 staged disposition drift")
     return errors
