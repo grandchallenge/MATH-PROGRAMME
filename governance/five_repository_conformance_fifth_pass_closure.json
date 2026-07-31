@@ -1,0 +1,238 @@
+{
+  "schema_version": "1.0.0",
+  "closure_id": "MP-UMBRELLA-FIFTH-PASS-CLOSURE-001",
+  "verified_at": "2026-07-31",
+  "status": "CONFORMANT_REVIEWED_CANDIDATE_WORK_SEPARATE_FROM_ACTIVE_ADMISSION",
+  "programme_stage": {
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "issue": 175,
+    "pull_request": 176,
+    "reviewed_head": "b32a7f65f4ca308e0776363fa9e1f19d701f5a2a",
+    "merge_commit": "d56edc23152f3ccde4c7db272b7af37f6cf698b9",
+    "policy_run_id": 30669500337,
+    "gcl_run_id": 30669500714,
+    "candidate_admission_registry": {
+      "path": "governance/campaign_admission_registry.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "a6bffaa197aa3921e3eb9d4f8a02b5dc2bbded24"
+    },
+    "runtime_contract": {
+      "path": "governance/umbrella_runtime_contract_v4.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "02cdfabb04f5d273fcb7531c515a73baab2bc52d"
+    },
+    "active_campaign_registry": {
+      "path": "governance/governed_campaign_registry.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "b1f1e4682d0f3ff0108d020e466fa2ecb0809b57"
+    },
+    "active_routing_registry": {
+      "path": "governance/mathsolve_routing_audit.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "4a27ec8aaaa60f919ba51028807b83dc522bfcff"
+    }
+  },
+  "solve_stage": {
+    "repository": "grandchallenge/MATHSOLVE",
+    "implementation_pull_request": 85,
+    "implementation_merge_commit": "709c7d3f388b8df75c87a247f80424e560c31e72",
+    "reconciliation_pull_request": 86,
+    "reviewed_head": "5c5fb2195b3137667cfa299633780d2fecaf21f4",
+    "merge_commit": "5507354524302cc7f4fc7e6c178b40dfe9bf08fb",
+    "solve_run_id": 30669991624,
+    "gcl_run_id": 30669991959,
+    "candidate_replay_run_id": 30669991597,
+    "candidate_admission_record": {
+      "path": "work_packages/VGSE_WP00/candidate_admission.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "4df13f366d39eae0cef04e7d00f69d0791a57b6d"
+    },
+    "candidate_validator": {
+      "path": "work_packages/VGSE_WP00/artifacts/code/validate_candidate_admission.py",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "1c0df16f618a9aa286cfed95e8d137bb8412a7f5"
+    },
+    "candidate_tests": {
+      "path": "work_packages/VGSE_WP00/artifacts/code/test_candidate_admission.py",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "2211fb5611834c1821d984c8bb2b4b03559f0daf"
+    },
+    "source_semantics_record": {
+      "path": "work_packages/VGSE_WP00_VARCHENKO_GALASHIN_SOURCE_SEMANTICS_LOCK.md",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "ed10c62bd900f6d7ab0e1b9dea70aa66774f761e"
+    }
+  },
+  "intellect_stage": {
+    "repository": "grandchallenge/INTELLECT",
+    "pull_request": 18,
+    "reviewed_head": "24080fb37c89d7f7a7464ac1f3b2665a4b2ddb42",
+    "merge_commit": "0c70ea9c3ec4f17b2ef6efc33646d102108f228f",
+    "ci_run_id": 30670207210,
+    "gcl_run_id": 30670207592,
+    "provider_module": {
+      "path": "src/grand_intellect/mathsolve_cert_current.py",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "9162342819b0199f034edee290122c0f8ab0c709"
+    },
+    "qualification_fixture": {
+      "path": "tests/fixtures/rh_ns_interface_qualifications.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "e6954cb60b571d7d22a1ace9c8a4240ca271495d"
+    },
+    "alignment_tests": {
+      "path": "tests/test_umbrella_current_state_alignment.py",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "9eebd937403dfb67f816ca6ba45eecb016ccb7b0"
+    }
+  },
+  "unchanged_provider_heads": {
+    "mathforge": "0faee396ffa56c568ee0ae6a348bdb43ca80ac4d",
+    "mathcert": "0258e4f0bca0d90fac05b62aeef108f16dccffdd"
+  },
+  "cert_route_registry": {
+    "repository": "grandchallenge/MATHCERT",
+    "commit_sha": "0258e4f0bca0d90fac05b62aeef108f16dccffdd",
+    "path": "governance/certification_routes.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1",
+    "active_route_count": 8,
+    "vgse_route_present": false
+  },
+  "active_portfolio": {
+    "qualified_interface_only": [
+      "NS-CI-001",
+      "RH-001"
+    ],
+    "ready_intake": [
+      "UC-001",
+      "HC-001"
+    ],
+    "pending": [
+      "BSD-001",
+      "PNP-001",
+      "YM-001",
+      "OZ-001"
+    ],
+    "archived_outside_current_routing": [
+      "PC-001"
+    ],
+    "active_routing_member_count": 8,
+    "unchanged_by_fifth_pass": true
+  },
+  "candidate_portfolio": {
+    "campaign_id": "VGSE-001",
+    "lifecycle_state": "candidate",
+    "execution_state": "merged_candidate_work_package",
+    "reviewed_candidate_work_package": true,
+    "active_portfolio_member": false,
+    "active_portfolio_effect": "none",
+    "source_provenance_state": "unverified_candidate",
+    "source_provider_manifest": null,
+    "certification_state": "pre_route_candidate",
+    "cert_route_present": false,
+    "cert_handoff_present": false,
+    "cert_adjudication_present": false,
+    "active_campaign_manifest_present": false,
+    "promotion_record_present": false,
+    "solve_candidate_package_reviewed": true,
+    "all_other_admission_gates_closed": true
+  },
+  "issue_mirrors": {
+    "programme_candidate_tracker": {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 170,
+      "state": "open",
+      "role": "candidate_navigation_mirror",
+      "active_campaign_label_present": false
+    },
+    "programme_fourth_pass": {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 172,
+      "state": "closed_completed"
+    },
+    "programme_fifth_pass": {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 175,
+      "state": "open_until_external_closure_attestation"
+    },
+    "forge_source_audit": {
+      "repository": "grandchallenge/MATHFORGE",
+      "issue": 32,
+      "state": "open",
+      "role": "provider_audit_mirror"
+    },
+    "solve_candidate_work": {
+      "repository": "grandchallenge/MATHSOLVE",
+      "issue": 84,
+      "state": "closed_completed_candidate_work"
+    },
+    "cert_pre_route": {
+      "repository": "grandchallenge/MATHCERT",
+      "issue": 41,
+      "state": "open_pre_route_candidate"
+    }
+  },
+  "fifth_pass_findings": {
+    "FP5-01": "corrected_programme_candidate_execution_state_after_merge",
+    "FP5-02": "corrected_reviewed_candidate_gate_without_active_admission",
+    "FP5-03": "corrected_candidate_schema_and_validator_from_draft_only_state",
+    "FP5-04": "corrected_runtime_and_intellect_consumer_pins",
+    "FP5-05": "corrected_solve_local_post_merge_state_and_future_merge_authority",
+    "FP5-06": "corrected_programme_solve_forge_and_cert_issue_mirrors",
+    "FP5-07": "closed_completed_solve_candidate_work_tracker",
+    "FP5-08": "closed_stale_fourth_pass_governance_tracker",
+    "FP5-09": "removed_active_campaign_label_from_pre_admission_candidate"
+  },
+  "bounded_candidate_results": {
+    "exact_arrangement_beta_five": true,
+    "numerical_critical_witness_count": 5,
+    "candidate_source_vector_pattern_count": 5,
+    "numerical_t_embedding_reconstruction_count": 5,
+    "algebraic_fixture_certified": false,
+    "t_embedding_certified": false,
+    "generated_to_source_equivalence_complete": false
+  },
+  "mismatch_counts": {
+    "protected_identity": 0,
+    "candidate_execution_state": 0,
+    "active_portfolio_leakage": 0,
+    "source_provenance": 0,
+    "cert_route_state": 0,
+    "issue_mirror_state": 0,
+    "consumer_pin_state": 0,
+    "workflow_evidence": 0
+  },
+  "remaining_cross_repository_governance_obligations": [],
+  "remaining_candidate_obligations": [
+    "MATHFORGE must independently verify source identity, revision concordance, theorem-chain provenance, figure provenance, and fixture provenance or record a governed waiver.",
+    "A protected Programme admission package must update active and routing registries before VGSE-001 becomes active.",
+    "MATHSOLVE must create an active campaign manifest and content-addressed Cert handoff only after Programme admission.",
+    "MATHCERT may create a route and adjudicate only after protected admission and an exact Solve handoff.",
+    "Exact or interval certification remains required for roots, graph weights, boundary measurement, discrete-holomorphic solves, and geometric inequalities.",
+    "Generated-to-source equivalence remains open.",
+    "Rigid deployment, collision freedom, finite thickness, manufacture, performance, economics, novelty, priority, patentability, and commercial claims remain separately gated."
+  ],
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "candidate_campaign_admitted": false,
+    "source_provider_verified": false,
+    "cert_route_created": false,
+    "cert_handoff_created": false,
+    "cert_adjudication_issued": false,
+    "rigid_foldability_established": false,
+    "manufacturability_established": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "patentability_claim_authorized": false,
+    "commercial_claim_authorized": false,
+    "operational_release_complete_preserved": true,
+    "release_trust_issues_reopened": false
+  },
+  "publication_semantics": {
+    "self_inclusive_head_claim": false,
+    "artifact_can_pin_own_future_merge_commit": false,
+    "external_post_merge_attestation_required": true,
+    "attestation_issue": 175
+  }
+}

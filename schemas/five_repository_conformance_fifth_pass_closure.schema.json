@@ -1,0 +1,530 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/five_repository_conformance_fifth_pass_closure.schema.json",
+  "title": "Five-repository fifth-pass conformance closure",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "closure_id",
+    "verified_at",
+    "status",
+    "programme_stage",
+    "solve_stage",
+    "intellect_stage",
+    "unchanged_provider_heads",
+    "cert_route_registry",
+    "active_portfolio",
+    "candidate_portfolio",
+    "issue_mirrors",
+    "fifth_pass_findings",
+    "bounded_candidate_results",
+    "mismatch_counts",
+    "remaining_cross_repository_governance_obligations",
+    "remaining_candidate_obligations",
+    "claim_boundaries",
+    "publication_semantics"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "closure_id": {
+      "const": "MP-UMBRELLA-FIFTH-PASS-CLOSURE-001"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "const": "CONFORMANT_REVIEWED_CANDIDATE_WORK_SEPARATE_FROM_ACTIVE_ADMISSION"
+    },
+    "programme_stage": {
+      "$ref": "#/$defs/programmeStage"
+    },
+    "solve_stage": {
+      "$ref": "#/$defs/solveStage"
+    },
+    "intellect_stage": {
+      "$ref": "#/$defs/intellectStage"
+    },
+    "unchanged_provider_heads": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mathforge",
+        "mathcert"
+      ],
+      "properties": {
+        "mathforge": {
+          "$ref": "#/$defs/sha"
+        },
+        "mathcert": {
+          "$ref": "#/$defs/sha"
+        }
+      }
+    },
+    "cert_route_registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "commit_sha",
+        "path",
+        "digest_algorithm",
+        "digest",
+        "active_route_count",
+        "vgse_route_present"
+      ],
+      "properties": {
+        "repository": {
+          "const": "grandchallenge/MATHCERT"
+        },
+        "commit_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "path": {
+          "const": "governance/certification_routes.json"
+        },
+        "digest_algorithm": {
+          "const": "git_blob_sha1"
+        },
+        "digest": {
+          "$ref": "#/$defs/sha"
+        },
+        "active_route_count": {
+          "const": 8
+        },
+        "vgse_route_present": {
+          "const": false
+        }
+      }
+    },
+    "active_portfolio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "qualified_interface_only",
+        "ready_intake",
+        "pending",
+        "archived_outside_current_routing",
+        "active_routing_member_count",
+        "unchanged_by_fifth_pass"
+      ],
+      "properties": {
+        "qualified_interface_only": {
+          "type": "array",
+          "const": [
+            "NS-CI-001",
+            "RH-001"
+          ]
+        },
+        "ready_intake": {
+          "type": "array",
+          "const": [
+            "UC-001",
+            "HC-001"
+          ]
+        },
+        "pending": {
+          "type": "array",
+          "const": [
+            "BSD-001",
+            "PNP-001",
+            "YM-001",
+            "OZ-001"
+          ]
+        },
+        "archived_outside_current_routing": {
+          "type": "array",
+          "const": [
+            "PC-001"
+          ]
+        },
+        "active_routing_member_count": {
+          "const": 8
+        },
+        "unchanged_by_fifth_pass": {
+          "const": true
+        }
+      }
+    },
+    "candidate_portfolio": {
+      "$ref": "#/$defs/candidatePortfolio"
+    },
+    "issue_mirrors": {
+      "type": "object",
+      "minProperties": 6,
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "fifth_pass_findings": {
+      "type": "object",
+      "minProperties": 9,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 10
+      }
+    },
+    "bounded_candidate_results": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exact_arrangement_beta_five",
+        "numerical_critical_witness_count",
+        "candidate_source_vector_pattern_count",
+        "numerical_t_embedding_reconstruction_count",
+        "algebraic_fixture_certified",
+        "t_embedding_certified",
+        "generated_to_source_equivalence_complete"
+      ],
+      "properties": {
+        "exact_arrangement_beta_five": {
+          "const": true
+        },
+        "numerical_critical_witness_count": {
+          "const": 5
+        },
+        "candidate_source_vector_pattern_count": {
+          "const": 5
+        },
+        "numerical_t_embedding_reconstruction_count": {
+          "const": 5
+        },
+        "algebraic_fixture_certified": {
+          "const": false
+        },
+        "t_embedding_certified": {
+          "const": false
+        },
+        "generated_to_source_equivalence_complete": {
+          "const": false
+        }
+      }
+    },
+    "mismatch_counts": {
+      "type": "object",
+      "minProperties": 8,
+      "additionalProperties": {
+        "const": 0
+      }
+    },
+    "remaining_cross_repository_governance_obligations": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "remaining_candidate_obligations": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "type": "string",
+        "minLength": 20
+      }
+    },
+    "claim_boundaries": {
+      "$ref": "#/$defs/claimBoundaries"
+    },
+    "publication_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "self_inclusive_head_claim",
+        "artifact_can_pin_own_future_merge_commit",
+        "external_post_merge_attestation_required",
+        "attestation_issue"
+      ],
+      "properties": {
+        "self_inclusive_head_claim": {
+          "const": false
+        },
+        "artifact_can_pin_own_future_merge_commit": {
+          "const": false
+        },
+        "external_post_merge_attestation_required": {
+          "const": true
+        },
+        "attestation_issue": {
+          "const": 175
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "digest_algorithm",
+        "digest"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest_algorithm": {
+          "const": "git_blob_sha1"
+        },
+        "digest": {
+          "$ref": "#/$defs/sha"
+        }
+      }
+    },
+    "programmeStage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "issue",
+        "pull_request",
+        "reviewed_head",
+        "merge_commit",
+        "policy_run_id",
+        "gcl_run_id",
+        "candidate_admission_registry",
+        "runtime_contract",
+        "active_campaign_registry",
+        "active_routing_registry"
+      ],
+      "properties": {
+        "repository": {
+          "const": "grandchallenge/MATH-PROGRAMME"
+        },
+        "issue": {
+          "const": 175
+        },
+        "pull_request": {
+          "const": 176
+        },
+        "reviewed_head": {
+          "$ref": "#/$defs/sha"
+        },
+        "merge_commit": {
+          "$ref": "#/$defs/sha"
+        },
+        "policy_run_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "gcl_run_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "candidate_admission_registry": {
+          "$ref": "#/$defs/artifact"
+        },
+        "runtime_contract": {
+          "$ref": "#/$defs/artifact"
+        },
+        "active_campaign_registry": {
+          "$ref": "#/$defs/artifact"
+        },
+        "active_routing_registry": {
+          "$ref": "#/$defs/artifact"
+        }
+      }
+    },
+    "solveStage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "implementation_pull_request",
+        "implementation_merge_commit",
+        "reconciliation_pull_request",
+        "reviewed_head",
+        "merge_commit",
+        "solve_run_id",
+        "gcl_run_id",
+        "candidate_replay_run_id",
+        "candidate_admission_record",
+        "candidate_validator",
+        "candidate_tests",
+        "source_semantics_record"
+      ],
+      "properties": {
+        "repository": {
+          "const": "grandchallenge/MATHSOLVE"
+        },
+        "implementation_pull_request": {
+          "const": 85
+        },
+        "implementation_merge_commit": {
+          "$ref": "#/$defs/sha"
+        },
+        "reconciliation_pull_request": {
+          "const": 86
+        },
+        "reviewed_head": {
+          "$ref": "#/$defs/sha"
+        },
+        "merge_commit": {
+          "$ref": "#/$defs/sha"
+        },
+        "solve_run_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "gcl_run_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "candidate_replay_run_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "candidate_admission_record": {
+          "$ref": "#/$defs/artifact"
+        },
+        "candidate_validator": {
+          "$ref": "#/$defs/artifact"
+        },
+        "candidate_tests": {
+          "$ref": "#/$defs/artifact"
+        },
+        "source_semantics_record": {
+          "$ref": "#/$defs/artifact"
+        }
+      }
+    },
+    "intellectStage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "pull_request",
+        "reviewed_head",
+        "merge_commit",
+        "ci_run_id",
+        "gcl_run_id",
+        "provider_module",
+        "qualification_fixture",
+        "alignment_tests"
+      ],
+      "properties": {
+        "repository": {
+          "const": "grandchallenge/INTELLECT"
+        },
+        "pull_request": {
+          "const": 18
+        },
+        "reviewed_head": {
+          "$ref": "#/$defs/sha"
+        },
+        "merge_commit": {
+          "$ref": "#/$defs/sha"
+        },
+        "ci_run_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "gcl_run_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "provider_module": {
+          "$ref": "#/$defs/artifact"
+        },
+        "qualification_fixture": {
+          "$ref": "#/$defs/artifact"
+        },
+        "alignment_tests": {
+          "$ref": "#/$defs/artifact"
+        }
+      }
+    },
+    "candidatePortfolio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "campaign_id",
+        "lifecycle_state",
+        "execution_state",
+        "reviewed_candidate_work_package",
+        "active_portfolio_member",
+        "active_portfolio_effect",
+        "source_provenance_state",
+        "source_provider_manifest",
+        "certification_state",
+        "cert_route_present",
+        "cert_handoff_present",
+        "cert_adjudication_present",
+        "active_campaign_manifest_present",
+        "promotion_record_present",
+        "solve_candidate_package_reviewed",
+        "all_other_admission_gates_closed"
+      ],
+      "properties": {
+        "campaign_id": {
+          "const": "VGSE-001"
+        },
+        "lifecycle_state": {
+          "const": "candidate"
+        },
+        "execution_state": {
+          "const": "merged_candidate_work_package"
+        },
+        "reviewed_candidate_work_package": {
+          "const": true
+        },
+        "active_portfolio_member": {
+          "const": false
+        },
+        "active_portfolio_effect": {
+          "const": "none"
+        },
+        "source_provenance_state": {
+          "const": "unverified_candidate"
+        },
+        "source_provider_manifest": {
+          "type": "null"
+        },
+        "certification_state": {
+          "const": "pre_route_candidate"
+        },
+        "cert_route_present": {
+          "const": false
+        },
+        "cert_handoff_present": {
+          "const": false
+        },
+        "cert_adjudication_present": {
+          "const": false
+        },
+        "active_campaign_manifest_present": {
+          "const": false
+        },
+        "promotion_record_present": {
+          "const": false
+        },
+        "solve_candidate_package_reviewed": {
+          "const": true
+        },
+        "all_other_admission_gates_closed": {
+          "const": true
+        }
+      }
+    },
+    "claimBoundaries": {
+      "type": "object",
+      "minProperties": 14,
+      "additionalProperties": {
+        "type": "boolean"
+      },
+      "properties": {
+        "operational_release_complete_preserved": {
+          "const": true
+        },
+        "release_trust_issues_reopened": {
+          "const": false
+        }
+      }
+    }
+  }
+}
