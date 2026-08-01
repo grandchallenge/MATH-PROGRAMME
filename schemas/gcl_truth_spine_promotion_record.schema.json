@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/gcl_truth_spine_promotion_record.schema.json",
+  "title": "GCL Truth Spine Promotion and Activation Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "promotion_id",
+    "registry_id",
+    "subject_repository",
+    "subject_pull_request",
+    "subject_commit",
+    "status",
+    "effective_before_protected_merge",
+    "activation",
+    "approval_records",
+    "gate_disposition",
+    "approved_substantive_head_evidence",
+    "administrative_envelope",
+    "post_merge_obligation",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "promotion_id": {"const": "GCL-TRUTH-SPINE-PROMOTION-001"},
+    "registry_id": {"const": "GCL-TRUTH-SPINE-001"},
+    "subject_repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "subject_pull_request": {"const": 194},
+    "subject_commit": {"const": "d2a78b0b25497da192f23045d35869cd483ea15c"},
+    "status": {"const": "APPROVED_FOR_PROTECTED_MERGE_SUBJECT_TO_BRANCH_PROTECTION"},
+    "effective_before_protected_merge": {"const": false},
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "condition", "effective_on_condition", "post_merge_attestation_required", "issue_or_pr_comment_alone_can_activate"],
+      "properties": {
+        "mode": {"const": "CONDITIONAL_PROTECTED_RECORD"},
+        "condition": {"type": "string", "minLength": 1},
+        "effective_on_condition": {"const": true},
+        "post_merge_attestation_required": {"const": true},
+        "issue_or_pr_comment_alone_can_activate": {"const": false}
+      }
+    },
+    "approval_records": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["human_steward_release", "referee_review", "referee_designation"],
+      "properties": {
+        "human_steward_release": {"const": "governance/gcl_truth_spine_steward_release.json"},
+        "referee_review": {"const": "governance/gcl_truth_spine_referee_review.json"},
+        "referee_designation": {"const": "governance/gcl_delegated_referee_office.json"}
+      }
+    },
+    "gate_disposition": {
+      "type": "object",
+      "minProperties": 8,
+      "additionalProperties": {"const": true}
+    },
+    "approved_substantive_head_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gcl_conformance_run", "programme_policy_run", "conclusions"],
+      "properties": {
+        "gcl_conformance_run": {"const": 30678750162},
+        "programme_policy_run": {"const": 30678750001},
+        "conclusions": {"const": "success"}
+      }
+    },
+    "administrative_envelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["permitted", "permitted_content", "must_preserve_subject_artifact_blobs", "renewed_review_required_if_subject_artifact_blob_changes"],
+      "properties": {
+        "permitted": {"const": true},
+        "permitted_content": {"type": "array", "minItems": 5, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "must_preserve_subject_artifact_blobs": {"const": true},
+        "renewed_review_required_if_subject_artifact_blob_changes": {"const": true}
+      }
+    },
+    "post_merge_obligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_merge_commit", "record_final_pr_head", "record_required_workflow_runs", "verify_subject_artifact_blobs_unchanged", "activate_next_work_package"],
+      "properties": {
+        "record_merge_commit": {"const": true},
+        "record_final_pr_head": {"const": true},
+        "record_required_workflow_runs": {"const": true},
+        "verify_subject_artifact_blobs_unchanged": {"const": true},
+        "activate_next_work_package": {"const": "GCL-WP-TOOLING-WP00"}
+      }
+    },
+    "claim_boundaries": {"type": "object", "minProperties": 8, "additionalProperties": {"const": false}}
+  }
+}
