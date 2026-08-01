@@ -3,7 +3,7 @@
   "ledger_id": "MP-ADMIN-LEDGER-001",
   "parent_artifact_ledger": "docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md",
   "decision": "ADR-0016",
-  "status": "READY_FOR_PROTECTED_PROGRAMME_MERGE",
+  "status": "FINAL_CROSS_REPOSITORY_CLOSURE",
   "artifacts": [
     {
       "artifact_id": "MP-ADMIN-MAINT-001",
@@ -51,15 +51,21 @@
       "artifact_id": "GI-ADMIN-MAINT-001",
       "type": "intellect_adoption",
       "path": "grandchallenge/INTELLECT#21; grandchallenge/INTELLECT#22",
-      "status": "PHASE_A_COMMITTED_PENDING_PROTECTED_PIN",
-      "head": "6d4dce2db607da7a3f4629bb9b36735a3cf57b96",
-      "ci_run": 30677018860,
-      "gcl_run": 30677019107
+      "status": "PHASE_B_PROTECTED_ADOPTION_COMPLETE",
+      "head": "5018cab81369dbf3d0af9ed2ac5712b9a7494132",
+      "ci_run": 30677625855,
+      "gcl_run": 30677625999
+    },
+    {
+      "artifact_id": "MP-ADMIN-CLOSURE-001",
+      "type": "cross_repository_closure",
+      "path": "governance/administrative_maintenance_cross_repository_closure.json",
+      "status": "FINAL_CROSS_REPOSITORY_CLOSURE"
     }
   ],
   "activation": {
-    "programme_control": "protected merge of PR 184",
-    "final_cross_repository_closure": "protected INTELLECT Phase B adoption and external attestation"
+    "programme_control": "protected merge f3bea6f632a6fc653262c6c6ca0b667d0219d3e6",
+    "final_cross_repository_closure": "protected INTELLECT merge d26d673efffbe0874e1440450322869ff70be9d1 plus final Programme closure merge and external attestation"
   },
   "claim_boundaries": {
     "mathematical_target_proved": false,
