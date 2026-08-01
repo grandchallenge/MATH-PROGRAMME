@@ -17,6 +17,7 @@
     "approval_records",
     "gate_disposition",
     "approved_substantive_head_evidence",
+    "preserved_semantic_artifacts",
     "administrative_envelope",
     "post_merge_obligation",
     "claim_boundaries"
@@ -67,29 +68,47 @@
         "conclusions": {"const": "success"}
       }
     },
+    "preserved_semantic_artifacts": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/artifactIdentity"}
+    },
     "administrative_envelope": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["permitted", "permitted_content", "must_preserve_subject_artifact_blobs", "renewed_review_required_if_subject_artifact_blob_changes"],
+      "required": ["permitted", "permitted_content", "must_preserve_semantic_artifact_blobs", "renewed_review_required_if_semantic_artifact_blob_changes"],
       "properties": {
         "permitted": {"const": true},
         "permitted_content": {"type": "array", "minItems": 5, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
-        "must_preserve_subject_artifact_blobs": {"const": true},
-        "renewed_review_required_if_subject_artifact_blob_changes": {"const": true}
+        "must_preserve_semantic_artifact_blobs": {"const": true},
+        "renewed_review_required_if_semantic_artifact_blob_changes": {"const": true}
       }
     },
     "post_merge_obligation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["record_merge_commit", "record_final_pr_head", "record_required_workflow_runs", "verify_subject_artifact_blobs_unchanged", "activate_next_work_package"],
+      "required": ["record_merge_commit", "record_final_pr_head", "record_required_workflow_runs", "verify_semantic_artifact_blobs_unchanged", "activate_next_work_package"],
       "properties": {
         "record_merge_commit": {"const": true},
         "record_final_pr_head": {"const": true},
         "record_required_workflow_runs": {"const": true},
-        "verify_subject_artifact_blobs_unchanged": {"const": true},
+        "verify_semantic_artifact_blobs_unchanged": {"const": true},
         "activate_next_work_package": {"const": "GCL-WP-TOOLING-WP00"}
       }
     },
     "claim_boundaries": {"type": "object", "minProperties": 8, "additionalProperties": {"const": false}}
+  },
+  "$defs": {
+    "artifactIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "blob"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "blob": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    }
   }
 }
