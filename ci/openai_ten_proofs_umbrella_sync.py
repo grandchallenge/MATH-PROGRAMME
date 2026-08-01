@@ -13,6 +13,25 @@ RECORD_PATH = ROOT / "governance" / "openai_ten_proofs_umbrella_sync.json"
 SCHEMA_PATH = ROOT / "schemas" / "openai_ten_proofs_umbrella_sync.schema.json"
 DOCUMENT_PATH = ROOT / "work_packages" / "OTP_UMBRELLA_SYNC_001.md"
 
+EXPECTED_FORGE_ARTIFACTS = {
+    "provider_manifest": {
+        "path": "provider_manifests/OPENAI-TEN-PROOFS-001.json",
+        "git_blob_sha1": "2bf815006770e8484efcbe242380678fb7be8ca8",
+    },
+    "historical_source_lock": {
+        "path": "sources/OPENAI-TEN-PROOFS-001/source_lock.json",
+        "git_blob_sha1": "1b4981178553ad300a5abead6d3c9f6bac78d0da",
+    },
+    "theorem_intake_matrix": {
+        "path": "sources/OPENAI-TEN-PROOFS-001/theorem_intake_matrix.json",
+        "git_blob_sha1": "2d8b24c32c804c4f5ca0f5f5ad1185199d35664b",
+    },
+    "review_attestation": {
+        "path": "governance/review_attestations/OTP-EVIDENCE-CORR-001.json",
+        "git_blob_sha1": "30f98012208cc26c64f3c05cf65b7be9dba52cd6",
+    },
+}
+
 
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -30,6 +49,21 @@ def validation_errors(record: dict[str, Any] | None = None, document: str | None
         f"OTP-UMBRELLA-SYNC-001: {error.json_path}: {error.message}"
         for error in sorted(validator.iter_errors(record), key=lambda item: list(item.path))
     ]
+
+    artifacts = record.get("authority", {}).get("forge_artifacts")
+    if artifacts != EXPECTED_FORGE_ARTIFACTS:
+        if not isinstance(artifacts, dict):
+            errors.append("OTP-UMBRELLA-SYNC-001: Forge artifact map missing")
+        else:
+            for artifact_id, expected in EXPECTED_FORGE_ARTIFACTS.items():
+                if artifacts.get(artifact_id) != expected:
+                    errors.append(
+                        f"OTP-UMBRELLA-SYNC-001: Forge artifact identity drift in {artifact_id}"
+                    )
+            for extra in sorted(set(artifacts) - set(EXPECTED_FORGE_ARTIFACTS)):
+                errors.append(
+                    f"OTP-UMBRELLA-SYNC-001: unexpected Forge artifact identity {extra}"
+                )
 
     replay = record.get("trusted_replay", {})
     if replay.get("kernel_clear_count") != replay.get("kernel_result_family_count"):
