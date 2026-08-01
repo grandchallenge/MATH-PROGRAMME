@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0.0",
+  "designation_id": "GCL-DELEGATED-REFEREE-001",
+  "title": "Standing Delegated Referee Office",
+  "status": "CANDIDATE_PENDING_PROTECTED_MERGE",
+  "effective": false,
+  "designated_by": "fyremael",
+  "designation_authority": "Human Steward",
+  "designated_at": "2026-07-31T19:26:00-07:00",
+  "term": "UNTIL_REVOKED",
+  "expires_at": null,
+  "office_identity": "GCL Delegated Referee Office",
+  "agent_class": "appropriately skilled delegated review agent",
+  "appointment_method": "Human Steward standing delegation with artifact-specific assignment",
+  "jurisdiction": [
+    "authority hierarchy changes",
+    "lifecycle and promotion semantics",
+    "claim vocabulary and scope",
+    "provider producer and adjudicator boundaries",
+    "waiver and emergency-control changes",
+    "branch-protection and required-check changes",
+    "maintenance controls whose failure could permit promotion",
+    "other work packages explicitly routed to Referee review"
+  ],
+  "operating_rules": {
+    "artifact_specific_review_required": true,
+    "exact_subject_identity_required": true,
+    "review_findings_required": true,
+    "conflict_of_interest_disclosure_required": true,
+    "authoring_and_referee_roles_must_be_separated": true,
+    "review_may_not_modify_subject_before_disposition": true,
+    "review_does_not_replace_human_steward_release": true,
+    "review_does_not_replace_ci_or_protected_merge": true,
+    "claim_promotion_by_referee_fiat_allowed": false,
+    "standing_designation_is_not_blanket_approval": true
+  },
+  "independence_model": {
+    "institutional_independence": "ROLE_SEPARATION",
+    "required_disclosure": "Each review must state whether the reviewing execution identity participated in preparation of the subject and how role separation was enforced.",
+    "automatic_disqualification": [
+      "reviewer changed the reviewed subject after assignment",
+      "reviewer cannot identify the exact reviewed subject",
+      "review omits material conflicts or unresolved blockers",
+      "review relies on mutable issue text as authority"
+    ]
+  },
+  "revocation": {
+    "authority": "Human Steward through protected normative record",
+    "immediate_fail_closed_on_revocation": true,
+    "prior_reviews_remain_historical_evidence": true
+  },
+  "activation": "PROTECTED_MERGE_ONLY",
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "certificate_issued": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "patentability_claim_authorized": false,
+    "mechanical_claim_authorized": false,
+    "manufacturing_claim_authorized": false,
+    "commercial_claim_authorized": false
+  }
+}
