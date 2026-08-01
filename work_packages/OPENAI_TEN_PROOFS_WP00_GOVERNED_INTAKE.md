@@ -17,7 +17,7 @@ The upstream repository groups its material into ten lettered packages but adver
 ## Orthogonal gates
 
 1. **Source identity** establishes the exact external bytes and dependency identities.
-2. **Kernel correctness** requires a trusted exact-head build, all declared Comparator checks, and theorem-level axiom reports.
+2. **Kernel correctness** requires a trusted exact-head build, all twelve declared Comparator checks, and theorem-level axiom reports.
 3. **Statement fidelity** requires source-paper, theorem-revision, Lean-declaration, and Comparator-target concordance plus nonvacuity review.
 4. **Independent adjudication** belongs exclusively to MATHCERT and occurs per result family.
 
