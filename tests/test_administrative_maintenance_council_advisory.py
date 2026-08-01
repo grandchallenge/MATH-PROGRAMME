@@ -28,12 +28,12 @@ class AdministrativeMaintenanceCouncilAdvisoryTests(unittest.TestCase):
     def test_advisory_does_not_claim_independent_referee_review(self) -> None:
         advisory = self.load_advisory()
         self.assertEqual(advisory["council_review"]["Referee"]["status"], "pending")
-        self.assertIn("non-author Referee review is pending", advisory["promotion"]["blockers"])
+        self.assertIn("Non-author Referee review is pending.", advisory["promotion"]["blockers"])
 
     def test_advisory_does_not_claim_human_steward_release(self) -> None:
         advisory = self.load_advisory()
         self.assertEqual(advisory["council_review"]["Steward"]["status"], "pending")
-        self.assertIn("Human Steward release is pending", advisory["promotion"]["blockers"])
+        self.assertIn("Human Steward release is pending.", advisory["promotion"]["blockers"])
 
     def test_advisory_remains_blocked(self) -> None:
         advisory = self.load_advisory()
