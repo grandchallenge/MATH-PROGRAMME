@@ -49,7 +49,7 @@ class AdministrativeMaintenanceControlTests(unittest.TestCase):
         self.assertTrue(control["promotion_gate"]["council_decisions_resolved"])
         self.assertTrue(control["promotion_gate"]["human_steward_release_complete"])
 
-    def test_all_programme_merge_prerequisites_are_complete(self) -> None:
+    def test_all_programme_and_cross_repository_gates_are_complete(self) -> None:
         control = load_control()
         gate = control["promotion_gate"]
         self.assertTrue(gate["council_decisions_resolved"])
@@ -57,7 +57,7 @@ class AdministrativeMaintenanceControlTests(unittest.TestCase):
         self.assertTrue(gate["non_author_referee_review_complete"])
         self.assertTrue(gate["intellect_phase_a_buy_in_complete"])
         self.assertTrue(gate["may_merge_programme_control"])
-        self.assertFalse(gate["final_cross_repository_closure_complete"])
+        self.assertTrue(gate["final_cross_repository_closure_complete"])
 
     def test_all_durations_are_accelerated(self) -> None:
         control = load_control()
@@ -80,11 +80,11 @@ class AdministrativeMaintenanceControlTests(unittest.TestCase):
         self.assertEqual(event_loop["cadence"], "IMMEDIATE_ON_MATERIAL_CHANGE")
         self.assertTrue(control["acceleration"]["event_triggered_obligations_remain_immediate"])
 
-    def test_intellect_phase_a_buy_in_is_recorded(self) -> None:
+    def test_intellect_phase_b_buy_in_is_recorded(self) -> None:
         control = load_control()
         intellect = control["intellect_buy_in"]
         self.assertTrue(intellect["required"])
-        self.assertEqual(intellect["phase"], "PHASE_A_COMMITTED_PENDING_PROTECTED_PIN")
+        self.assertEqual(intellect["phase"], "PHASE_B_PROTECTED_ADOPTION_COMPLETE")
         self.assertEqual(intellect["phase_a_head"], "6d4dce2db607da7a3f4629bb9b36735a3cf57b96")
         self.assertEqual(intellect["phase_a_ci_run"], 30677018860)
         self.assertEqual(intellect["phase_a_gcl_run"], 30677019107)
@@ -181,9 +181,9 @@ class AdministrativeMaintenanceControlTests(unittest.TestCase):
         control["promotion_gate"]["may_merge_programme_control"] = False
         self.assertTrue(errors_for(control))
 
-    def test_mutation_rejects_premature_final_closure(self) -> None:
+    def test_mutation_rejects_reopened_final_closure(self) -> None:
         control = load_control()
-        control["promotion_gate"]["final_cross_repository_closure_complete"] = True
+        control["promotion_gate"]["final_cross_repository_closure_complete"] = False
         self.assertTrue(errors_for(control))
 
     def test_mutation_rejects_mathematical_claim_inflation(self) -> None:
