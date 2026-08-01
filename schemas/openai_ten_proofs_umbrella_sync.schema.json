@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/openai_ten_proofs_umbrella_sync.schema.json",
+  "title": "OpenAI ten-proofs umbrella synchronization",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "candidate_id",
+    "tracker_issue",
+    "lifecycle_state",
+    "active_campaign_member",
+    "authority",
+    "source_identity",
+    "trusted_replay",
+    "aggregate_integration",
+    "semantic_gate",
+    "route_state",
+    "supersession",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "record_id": {"const": "MP-OTP-UMBRELLA-SYNC-001"},
+    "candidate_id": {"const": "OPENAI-TEN-PROOFS-001"},
+    "tracker_issue": {"const": 200},
+    "lifecycle_state": {"const": "candidate_external_formalization_semantic_audit"},
+    "active_campaign_member": {"const": false},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["forge_evidence_merge", "forge_artifacts", "review_remedy"],
+      "properties": {
+        "forge_evidence_merge": {"const": "72452f4579749448169cacf9f2ab22a4df2bb182"},
+        "forge_artifacts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["provider_manifest", "historical_source_lock", "theorem_intake_matrix", "review_attestation"],
+          "properties": {
+            "provider_manifest": {"$ref": "#/$defs/artifact"},
+            "historical_source_lock": {"$ref": "#/$defs/artifact"},
+            "theorem_intake_matrix": {"$ref": "#/$defs/artifact"},
+            "review_attestation": {"$ref": "#/$defs/artifact"}
+          }
+        },
+        "review_remedy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["pull_request", "head_sha", "merge_commit_sha", "reviewer", "review_id", "review_state", "effect", "historical_merge_reviewed"],
+          "properties": {
+            "pull_request": {"const": 41},
+            "head_sha": {"const": "dfdb293e2600c17153267cd746b2914dd060ec95"},
+            "merge_commit_sha": {"const": "bffb7d63476d79e86665ec5a74d554794e24357e"},
+            "reviewer": {"const": "jimsteeg"},
+            "review_id": {"const": 4834910775},
+            "review_state": {"const": "APPROVED"},
+            "effect": {"const": "prospectively_remediated_by_retrospective_attestation"},
+            "historical_merge_reviewed": {"const": false}
+          }
+        }
+      }
+    },
+    "source_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current_official", "historical_disconnected", "official_written_sources"],
+      "properties": {
+        "current_official": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["repository", "commit", "tree", "archive_sha256"],
+          "properties": {
+            "repository": {"const": "openai/ten-proofs"},
+            "commit": {"const": "e62211d28e3a9131950c89caa6542cfe5eff3bca"},
+            "tree": {"const": "2f8e7ac5ae7f157b6b1de636c2c343b1c7a7e365"},
+            "archive_sha256": {"const": "3022e62ffbed8f5f74d232034a703dc645e6b301879dff1e87df72979914294f"}
+          }
+        },
+        "historical_disconnected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["commit", "tree", "archive_sha256", "common_ancestor_with_current", "role"],
+          "properties": {
+            "commit": {"const": "6fefffdbab0dfa726fcfde6cefae23aa7a1888f3"},
+            "tree": {"const": "79e6a50b1e391bdddb18b42be3e886c1d9784ed3"},
+            "archive_sha256": {"const": "630e10ec7f8b08ce3416fba967e6d1e4c7599677e38fd4af24fc0c68a9a5bac2"},
+            "common_ancestor_with_current": {"const": false},
+            "role": {"const": "historical_intake_evidence"}
+          }
+        },
+        "official_written_sources": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["manuscript_sha256", "reasoning_notes_sha256", "state"],
+          "properties": {
+            "manuscript_sha256": {"const": "f318c6508c9d49ef876a5a26cd73928705f96c07bb43e92a0cb35bd3f666ea53"},
+            "reasoning_notes_sha256": {"const": "13b95999f060c0be2142089cfb8b17b75e9231c3c1f3fa0980445ff1b35f0b3b"},
+            "state": {"const": "present"}
+          }
+        }
+      }
+    },
+    "trusted_replay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kernel_result_family_count", "kernel_clear_count", "corrected_target_job_count", "comparator_configuration_count", "comparator_pass_count", "lean_kernel_accept_count", "required_nanoda_count", "required_nanoda_accept_count", "theorem_axiom_report_count", "permitted_axioms", "artifacts", "state"],
+      "properties": {
+        "kernel_result_family_count": {"const": 12},
+        "kernel_clear_count": {"const": 12},
+        "corrected_target_job_count": {"const": 8710},
+        "comparator_configuration_count": {"const": 12},
+        "comparator_pass_count": {"const": 12},
+        "lean_kernel_accept_count": {"const": 12},
+        "required_nanoda_count": {"const": 9},
+        "required_nanoda_accept_count": {"const": 9},
+        "theorem_axiom_report_count": {"const": 41},
+        "permitted_axioms": {"const": ["propext", "Classical.choice", "Quot.sound"]},
+        "artifacts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["target_overlay_patch_sha256", "corrected_target_log_sha256", "comparator_summary_sha256", "axiom_summary_sha256"],
+          "properties": {
+            "target_overlay_patch_sha256": {"const": "124b0349679d6af473a17ab245725ce706317f5841625990fe3046dd462eceab"},
+            "corrected_target_log_sha256": {"const": "b442c5b3fabdaa4c1ce8cc292cb2fb71e0ad7227d0ac5a5f5295e21eab626687"},
+            "comparator_summary_sha256": {"const": "332da664bc0c66c19793256ef1af74c1a80ba6baea6172e0709dc377a565f789"},
+            "axiom_summary_sha256": {"const": "2df8dcf6210b9b46156e3136b359d4db70ffdd7abcc9f8d0082e9ff5b7bc63aa"}
+          }
+        },
+        "state": {"const": "clear_for_corrected_target_set_12_of_12"}
+      }
+    },
+    "aggregate_integration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["all_lean_state", "failure", "log_sha256", "reopens_kernel_gate"],
+      "properties": {
+        "all_lean_state": {"const": "failed_separate_integration_obligation"},
+        "failure": {"const": "SpherePacking and MetricCodes both contribute replicate_to_periodic_packing"},
+        "log_sha256": {"const": "632099162cd6d13ec88eb0eaef73a7a247591bafb8fe8177f15deb428546460b"},
+        "reopens_kernel_gate": {"const": false}
+      }
+    },
+    "semantic_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_acquisition", "result_family_count", "clear_count", "blocked_result_families", "audit_state", "route_granularity"],
+      "properties": {
+        "source_acquisition": {"const": "present"},
+        "result_family_count": {"const": 12},
+        "clear_count": {"const": 0},
+        "blocked_result_families": {"const": ["OTP-C-PERMANENT", "OTP-H-GAPCVP"]},
+        "audit_state": {"const": "authorized_to_begin"},
+        "route_granularity": {"const": "result_family"}
+      }
+    },
+    "route_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mathsolve", "mathcert", "solve_handoff_count", "may_emit_result_family_handoff", "may_emit_aggregate_handoff", "may_adjudicate", "may_promote_result", "cert_output"],
+      "properties": {
+        "mathsolve": {"const": "semantic_audit_authorized_no_handoffs"},
+        "mathcert": {"const": "pre_route_candidate_no_adjudication"},
+        "solve_handoff_count": {"const": 0},
+        "may_emit_result_family_handoff": {"const": false},
+        "may_emit_aggregate_handoff": {"const": false},
+        "may_adjudicate": {"const": false},
+        "may_promote_result": {"const": false},
+        "cert_output": {"type": "null"}
+      }
+    },
+    "supersession": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["initial_programme_record", "effect"],
+      "properties": {
+        "initial_programme_record": {"const": "governance/openai_ten_proofs_wp00_candidate_intake.json"},
+        "effect": {"const": "current_state_overlay_without_rewriting_historical_intake"}
+      }
+    },
+    "claim_boundary": {"type": "string", "minLength": 180}
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "git_blob_sha1"],
+      "properties": {
+        "path": {"type": "string", "minLength": 5},
+        "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    }
+  }
+}
