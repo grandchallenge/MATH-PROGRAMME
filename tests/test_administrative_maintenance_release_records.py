@@ -16,18 +16,26 @@ class AdministrativeMaintenanceReleaseRecordTests(unittest.TestCase):
         validator = Draft202012Validator(schema, format_checker=FormatChecker())
         return document, [error.message for error in validator.iter_errors(document)]
 
-    def test_artifact_ledger_is_valid_and_ready_for_programme_merge(self) -> None:
+    def test_artifact_ledger_is_valid_and_final(self) -> None:
         ledger, errors = self.validate(
             "administrative_maintenance_artifact_ledger.json",
             "administrative_maintenance_artifact_ledger.schema.json",
         )
         self.assertEqual(errors, [])
-        self.assertEqual(ledger["status"], "READY_FOR_PROTECTED_PROGRAMME_MERGE")
+        self.assertEqual(ledger["status"], "FINAL_CROSS_REPOSITORY_CLOSURE")
         records = {item["artifact_id"]: item for item in ledger["artifacts"]}
         self.assertEqual(records["MP-ADMIN-REFEREE-001"]["status"], "APPROVED_FOR_PROGRAMME_MERGE")
         self.assertEqual(
             records["GI-ADMIN-MAINT-001"]["status"],
-            "PHASE_A_COMMITTED_PENDING_PROTECTED_PIN",
+            "PHASE_B_PROTECTED_ADOPTION_COMPLETE",
+        )
+        self.assertEqual(
+            records["GI-ADMIN-MAINT-001"]["head"],
+            "5018cab81369dbf3d0af9ed2ac5712b9a7494132",
+        )
+        self.assertEqual(
+            records["MP-ADMIN-CLOSURE-001"]["status"],
+            "FINAL_CROSS_REPOSITORY_CLOSURE",
         )
 
     def test_human_steward_release_is_valid_and_accelerated(self) -> None:
