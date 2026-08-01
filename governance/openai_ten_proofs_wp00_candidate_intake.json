@@ -14,14 +14,30 @@
     "archive_sha256": "630e10ec7f8b08ce3416fba967e6d1e4c7599677e38fd4af24fc0c68a9a5bac2",
     "root_commit": true
   },
-  "forge_provider_proposal": {
+  "forge_provider_authority": {
     "repository": "grandchallenge/MATHFORGE",
     "pull_request": 36,
-    "head_commit": "f4283c59571a43be23d07700b4cfddafc2bcda8d",
-    "manifest_path": "provider_manifests/OPENAI-TEN-PROOFS-001.json",
-    "source_lock_path": "sources/OPENAI-TEN-PROOFS-001/source_lock.json",
-    "theorem_matrix_path": "sources/OPENAI-TEN-PROOFS-001/theorem_intake_matrix.json",
-    "authority_state": "proposal_not_merged"
+    "reviewed_head_commit": "f4283c59571a43be23d07700b4cfddafc2bcda8d",
+    "merge_commit": "89f3853f697450261cb76a638b5282c3bfa96770",
+    "artifacts": {
+      "provider_manifest": {
+        "path": "provider_manifests/OPENAI-TEN-PROOFS-001.json",
+        "git_blob_sha1": "c9754fd02026ee923040fac288e9285d72cb2b67"
+      },
+      "source_lock": {
+        "path": "sources/OPENAI-TEN-PROOFS-001/source_lock.json",
+        "git_blob_sha1": "1b4981178553ad300a5abead6d3c9f6bac78d0da"
+      },
+      "theorem_intake_matrix": {
+        "path": "sources/OPENAI-TEN-PROOFS-001/theorem_intake_matrix.json",
+        "git_blob_sha1": "63923c38471eb601161cbd1d3c8ba28244b86166"
+      },
+      "provider_coverage": {
+        "path": "governance/provider_coverage.json",
+        "git_blob_sha1": "5f00bd9bbd8e626fd23f8bde7f31c881cee9df38"
+      }
+    },
+    "authority_state": "protected_merge"
   },
   "result_families": [
     "OTP-A-SPHERE-PACKING",
@@ -39,9 +55,9 @@
   ],
   "gate_matrix": {
     "source_identity": {
-      "state": "provider_proposal_verified",
-      "satisfied_for_admission": false,
-      "reason": "The exact lock is independently reproduced but the Forge provider proposal is not merged."
+      "state": "provider_verified",
+      "satisfied_for_admission": true,
+      "reason": "The exact lock is independently reproduced and pinned to MATHFORGE protected merge 89f3853f697450261cb76a638b5282c3bfa96770 with content-addressed artifact blobs."
     },
     "kernel_correctness": {
       "state": "not_verified",
@@ -60,7 +76,7 @@
     }
   },
   "route_state": {
-    "mathforge": "provider_manifest_draft",
+    "mathforge": "provider_manifest_merged",
     "mathsolve": "blocked_pre_route_candidate",
     "mathcert": "pre_route_candidate",
     "may_emit_solve_handoff": false,
@@ -82,12 +98,12 @@
     "mathcert": "https://github.com/grandchallenge/MATHCERT/issues/43"
   },
   "next_executable_sequence": [
-    "Obtain protected review and exact-head CI for MATHFORGE pull request 36.",
+    "Obtain independent review and exact-head CI for this Programme repin.",
     "Correct or formally dispose the upstream Lake target defects without altering the locked source identity.",
     "Replay every valid library and all twelve Comparator configurations in a known-good Lean 4.32.0 environment.",
     "Record theorem-level axiom reports.",
     "Acquire and lock source papers and theorem revisions for every result family.",
-    "Authorize Solve concordance only after the merged Forge identity is repinned.",
+    "Authorize result-level Solve concordance only after trusted replay and source-theorem acquisition are complete for that result family.",
     "Create a content-addressed Cert handoff only for result families that clear the provider and semantic gates."
   ],
   "claim_boundary": "This record governs an external formalization candidate and does not add it to the active campaign portfolio, certify any theorem, assert equivalence to any paper, or authorize novelty, priority, patentability, mechanical, manufacturing, or commercial claims."
