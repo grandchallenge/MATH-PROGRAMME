@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_maintenance_artifact_ledger.schema.json",
+  "title": "Administrative Maintenance Artifact Ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "ledger_id", "parent_artifact_ledger", "decision", "status", "artifacts", "activation", "claim_boundaries"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "ledger_id": {"const": "MP-ADMIN-LEDGER-001"},
+    "parent_artifact_ledger": {"const": "docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md"},
+    "decision": {"const": "ADR-0016"},
+    "status": {"enum": ["READY_FOR_PROTECTED_PROGRAMME_MERGE", "PROGRAMME_MERGED_PENDING_INTELLECT", "FINAL_CROSS_REPOSITORY_CLOSURE"]},
+    "artifacts": {
+      "type": "array",
+      "minItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["artifact_id", "type", "path", "status"],
+        "properties": {
+          "artifact_id": {"type": "string", "minLength": 1},
+          "type": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "path": {"type": "string", "minLength": 1},
+          "status": {"type": "string", "minLength": 1},
+          "head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "ci_run": {"type": "integer", "minimum": 1},
+          "gcl_run": {"type": "integer", "minimum": 1}
+        }
+      }
+    },
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["programme_control", "final_cross_repository_closure"],
+      "properties": {
+        "programme_control": {"type": "string", "minLength": 1},
+        "final_cross_repository_closure": {"type": "string", "minLength": 1}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mathematical_target_proved", "campaign_admitted", "certificate_issued", "external_claim_authorized"],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "campaign_admitted": {"const": false},
+        "certificate_issued": {"const": false},
+        "external_claim_authorized": {"const": false}
+      }
+    }
+  }
+}
