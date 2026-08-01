@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/gcl_truth_spine_referee_review.schema.json",
+  "title": "GCL Truth Spine Delegated Referee Review",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "review_id",
+    "registry_id",
+    "designation_id",
+    "subject_repository",
+    "subject_pull_request",
+    "subject_commit",
+    "reviewed_at",
+    "reviewer",
+    "independence_disclosure",
+    "review_scope",
+    "reviewed_subject_artifacts",
+    "workflow_evidence",
+    "findings",
+    "required_administrative_corrections",
+    "semantic_change_to_reviewed_subject_authorized",
+    "disposition",
+    "blocking_findings_remaining",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "review_id": {"const": "GCL-TRUTH-SPINE-REFEREE-001"},
+    "registry_id": {"const": "GCL-TRUTH-SPINE-001"},
+    "designation_id": {"const": "GCL-DELEGATED-REFEREE-001"},
+    "subject_repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "subject_pull_request": {"const": 194},
+    "subject_commit": {"const": "d2a78b0b25497da192f23045d35869cd483ea15c"},
+    "reviewed_at": {"type": "string", "format": "date-time"},
+    "reviewer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["office_identity", "agent_identity", "appointment_authority", "standing_designation", "non_author_office"],
+      "properties": {
+        "office_identity": {"const": "GCL Delegated Referee Office"},
+        "agent_identity": {"type": "string", "minLength": 1},
+        "appointment_authority": {"const": "Human Steward fyremael"},
+        "standing_designation": {"const": true},
+        "non_author_office": {"const": true}
+      }
+    },
+    "independence_disclosure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model_or_provider_separate_from_authoring_assistant", "human_reviewer", "role_separation_used", "disclosure", "reviewer_modified_reviewed_subject_after_assignment", "counts_as_required_referee_under_human_delegation"],
+      "properties": {
+        "model_or_provider_separate_from_authoring_assistant": {"const": false},
+        "human_reviewer": {"const": false},
+        "role_separation_used": {"const": true},
+        "disclosure": {"type": "string", "minLength": 1},
+        "reviewer_modified_reviewed_subject_after_assignment": {"const": false},
+        "counts_as_required_referee_under_human_delegation": {"const": true}
+      }
+    },
+    "review_scope": {"type": "array", "minItems": 8, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "reviewed_subject_artifacts": {"type": "array", "minItems": 9, "uniqueItems": true, "items": {"$ref": "#/$defs/artifactIdentity"}},
+    "workflow_evidence": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/workflowEvidence"}},
+    "findings": {"type": "array", "minItems": 5, "items": {"$ref": "#/$defs/finding"}},
+    "required_administrative_corrections": {"type": "array", "minItems": 4, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "semantic_change_to_reviewed_subject_authorized": {"const": false},
+    "disposition": {"const": "APPROVE_WITH_ADMINISTRATIVE_CORRECTION"},
+    "blocking_findings_remaining": {"const": false},
+    "claim_boundaries": {"type": "object", "minProperties": 8, "additionalProperties": {"const": false}}
+  },
+  "$defs": {
+    "artifactIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "blob"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "blob": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "workflowEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workflow", "run_id", "subject_commit", "conclusion"],
+      "properties": {
+        "workflow": {"enum": ["GCL conformance", "Programme policy checks"]},
+        "run_id": {"enum": [30678750162, 30678750001]},
+        "subject_commit": {"const": "d2a78b0b25497da192f23045d35869cd483ea15c"},
+        "conclusion": {"const": "success"}
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["finding_id", "severity", "blocking", "finding"],
+      "properties": {
+        "finding_id": {"type": "string", "pattern": "^GCL-TS-RF-[0-9]{3}$"},
+        "severity": {"enum": ["none", "low", "medium", "high", "critical"]},
+        "blocking": {"type": "boolean"},
+        "finding": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
