@@ -55,8 +55,27 @@
     },
     "gate_disposition": {
       "type": "object",
-      "minProperties": 8,
-      "additionalProperties": {"const": true}
+      "additionalProperties": false,
+      "required": [
+        "human_steward_release_complete",
+        "delegated_referee_review_complete",
+        "approved_substantive_head_checks_complete",
+        "final_pr_head_required_checks_must_pass",
+        "protected_merge_required",
+        "semantic_change_after_approval_allowed",
+        "may_mark_ready_for_review",
+        "may_merge_when_branch_protection_is_satisfied"
+      ],
+      "properties": {
+        "human_steward_release_complete": {"const": true},
+        "delegated_referee_review_complete": {"const": true},
+        "approved_substantive_head_checks_complete": {"const": true},
+        "final_pr_head_required_checks_must_pass": {"const": true},
+        "protected_merge_required": {"const": true},
+        "semantic_change_after_approval_allowed": {"const": false},
+        "may_mark_ready_for_review": {"const": true},
+        "may_merge_when_branch_protection_is_satisfied": {"const": true}
+      }
     },
     "approved_substantive_head_evidence": {
       "type": "object",
