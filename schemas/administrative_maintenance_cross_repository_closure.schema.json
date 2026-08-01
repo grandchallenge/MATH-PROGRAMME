@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_maintenance_cross_repository_closure.schema.json",
+  "title": "Administrative Maintenance Cross-Repository Closure",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "closure_id",
+    "control_id",
+    "decision_id",
+    "status",
+    "closed_at",
+    "human_steward",
+    "programme",
+    "intellect",
+    "accelerated_schedule",
+    "dispositions",
+    "identity_mismatch_counts",
+    "unchanged_provider_disposition",
+    "pilot_activation",
+    "post_merge_attestation",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "closure_id": {"const": "MP-ADMIN-CLOSURE-001"},
+    "control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "decision_id": {"const": "MP-ADMIN-DECISION-001"},
+    "status": {"const": "FINAL_CROSS_REPOSITORY_CLOSURE"},
+    "closed_at": {"const": "2026-07-31T18:21:00-07:00"},
+    "human_steward": {"const": "fyremael"},
+    "programme": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "reviewed_head", "merge_commit", "pull_request", "policy_run", "gcl_run", "maintenance_control", "decision_record", "mirror_policy"],
+      "properties": {
+        "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+        "reviewed_head": {"const": "8e1f4eff98d60bd12e58917c604472a613c045c3"},
+        "merge_commit": {"const": "f3bea6f632a6fc653262c6c6ca0b667d0219d3e6"},
+        "pull_request": {"const": 184},
+        "policy_run": {"const": 30677379129},
+        "gcl_run": {"const": 30677379384},
+        "maintenance_control": {"$ref": "#/$defs/programmeArtifact"},
+        "decision_record": {"$ref": "#/$defs/programmeArtifact"},
+        "mirror_policy": {"$ref": "#/$defs/programmeArtifact"}
+      }
+    },
+    "intellect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "issue", "pull_request", "phase_a_head", "phase_a_ci_run", "phase_a_gcl_run", "phase_b_reviewed_head", "phase_b_ci_run", "phase_b_gcl_run", "merge_commit", "adoption"],
+      "properties": {
+        "repository": {"const": "grandchallenge/INTELLECT"},
+        "issue": {"const": 21},
+        "pull_request": {"const": 22},
+        "phase_a_head": {"const": "6d4dce2db607da7a3f4629bb9b36735a3cf57b96"},
+        "phase_a_ci_run": {"const": 30677018860},
+        "phase_a_gcl_run": {"const": 30677019107},
+        "phase_b_reviewed_head": {"const": "5018cab81369dbf3d0af9ed2ac5712b9a7494132"},
+        "phase_b_ci_run": {"const": 30677625855},
+        "phase_b_gcl_run": {"const": 30677625999},
+        "merge_commit": {"const": "d26d673efffbe0874e1440450322869ff70be9d1"},
+        "adoption": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "blob", "phase", "effective", "authority_status"],
+          "properties": {
+            "path": {"const": "governance/math_programme_maintenance_adoption.json"},
+            "blob": {"const": "3a82ef0b1a83d6b343da0098cff71bf1748f07a9"},
+            "phase": {"const": "PHASE_B_PROTECTED_ADOPTION_COMPLETE"},
+            "effective": {"const": true},
+            "authority_status": {"const": "PROTECTED_CONTENT_ADDRESSED_AUTHORITY"}
+          }
+        }
+      }
+    },
+    "accelerated_schedule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["factor", "pilot", "structural_sweep", "administrative_review", "deep_conformance_review", "constitutional_review", "tracker_refresh", "ordinary_local_waiver", "emergency_override", "emergency_steward_review", "emergency_retrospective", "unresolved_p1_limit", "event_triggered_material_synchronization"],
+      "properties": {
+        "factor": {"const": 0.1},
+        "pilot": {"const": "P9D"},
+        "structural_sweep": {"const": "PT16H48M"},
+        "administrative_review": {"const": "P3D"},
+        "deep_conformance_review": {"const": "P9D"},
+        "constitutional_review": {"const": "P36DT12H"},
+        "tracker_refresh": {"const": "PT7H12M"},
+        "ordinary_local_waiver": {"const": "P3D"},
+        "emergency_override": {"const": "PT7H12M"},
+        "emergency_steward_review": {"const": "PT2H24M"},
+        "emergency_retrospective": {"const": "PT16H48M"},
+        "unresolved_p1_limit": {"const": "PT16H48M"},
+        "event_triggered_material_synchronization": {"const": "IMMEDIATE"}
+      }
+    },
+    "dispositions": {
+      "type": "object",
+      "minProperties": 9,
+      "additionalProperties": {"const": true}
+    },
+    "identity_mismatch_counts": {
+      "type": "object",
+      "minProperties": 8,
+      "additionalProperties": {"const": 0}
+    },
+    "unchanged_provider_disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mathforge_repin_required", "mathsolve_repin_required", "mathcert_repin_required", "reason"],
+      "properties": {
+        "mathforge_repin_required": {"const": false},
+        "mathsolve_repin_required": {"const": false},
+        "mathcert_repin_required": {"const": false},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "pilot_activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["started_at", "review_due_at", "review_interval", "structural_first_due_at", "administrative_first_due_at"],
+      "properties": {
+        "started_at": {"const": "2026-07-31T18:21:00-07:00"},
+        "review_due_at": {"const": "2026-08-09T18:21:00-07:00"},
+        "review_interval": {"const": "P9D"},
+        "structural_first_due_at": {"const": "2026-08-01T11:09:00-07:00"},
+        "administrative_first_due_at": {"const": "2026-08-03T18:21:00-07:00"}
+      }
+    },
+    "post_merge_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["location", "final_programme_closure_merge", "required_after_merge"],
+      "properties": {
+        "location": {"type": "string", "minLength": 1},
+        "final_programme_closure_merge": {"type": "null"},
+        "required_after_merge": {"const": true}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "minProperties": 10,
+      "additionalProperties": {"const": false}
+    }
+  },
+  "$defs": {
+    "programmeArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "blob"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "blob": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    }
+  }
+}
