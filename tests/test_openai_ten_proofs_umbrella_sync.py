@@ -84,7 +84,7 @@ class OpenAITenProofsUmbrellaSyncTests(unittest.TestCase):
     def test_document_tokens_are_preserved(self) -> None:
         for token in ("12/12", "0/12", "All.lean", "No aggregate certification"):
             with self.subTest(token=token):
-                self.assertTrue(self.errors(document=self.document.replace(token, "REMOVED", 1)))
+                self.assertTrue(self.errors(document=self.document.replace(token, "REMOVED")))
 
 
 def record_artifacts(record):
