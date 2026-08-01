@@ -22,14 +22,20 @@ class IssueMirrorEnforcementPolicyTests(unittest.TestCase):
         validator = Draft202012Validator(self.load_schema())
         return [error.message for error in validator.iter_errors(policy)]
 
-    def test_candidate_policy_is_valid(self) -> None:
+    def test_approved_policy_is_valid(self) -> None:
         self.assertEqual(self.errors_for(self.load_policy()), [])
 
-    def test_candidate_is_nonbinding_and_nonpromotable(self) -> None:
+    def test_policy_activates_only_on_protected_merge(self) -> None:
         policy = self.load_policy()
-        self.assertFalse(policy["effective"])
-        self.assertEqual(policy["council_state"], "PENDING")
-        self.assertFalse(policy["may_promote_now"])
+        self.assertTrue(policy["effective"])
+        self.assertEqual(policy["activation"], "PROTECTED_MERGE_ONLY")
+        self.assertEqual(policy["council_state"], "APPROVE_WITH_CORRECTION")
+        self.assertTrue(policy["may_activate_on_protected_merge"])
+
+    def test_accelerated_refresh_target_is_binding(self) -> None:
+        policy = self.load_policy()
+        self.assertEqual(policy["enforcement"]["refresh_target"], "PT7H12M")
+        self.assertTrue(policy["enforcement"]["refresh_target_binding"])
 
     def test_issue_edit_cannot_create_authority(self) -> None:
         policy = self.load_policy()
@@ -57,19 +63,19 @@ class IssueMirrorEnforcementPolicyTests(unittest.TestCase):
 
     def test_mutation_rejects_contradictory_tracker_closure(self) -> None:
         policy = self.load_policy()
-        policy["proposed_enforcement"][
+        policy["enforcement"][
             "contradictory_canonical_tracker_blocks_reconciliation_closure"
         ] = False
         self.assertTrue(self.errors_for(policy))
 
-    def test_mutation_rejects_premature_binding(self) -> None:
+    def test_mutation_rejects_unaccelerated_refresh_target(self) -> None:
         policy = self.load_policy()
-        policy["effective"] = True
+        policy["enforcement"]["refresh_target"] = "PT72H"
         self.assertTrue(self.errors_for(policy))
 
-    def test_mutation_rejects_premature_promotion(self) -> None:
+    def test_mutation_rejects_unprotected_activation(self) -> None:
         policy = self.load_policy()
-        policy["may_promote_now"] = True
+        policy["activation"] = "ISSUE_COMMENT"
         self.assertTrue(self.errors_for(policy))
 
     def test_mutation_rejects_claim_inflation(self) -> None:
