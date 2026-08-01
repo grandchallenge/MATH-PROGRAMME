@@ -16,6 +16,13 @@ from validate_administrative_maintenance_control import (
     DEFAULT_SCHEMA as ADMINISTRATIVE_MAINTENANCE_SCHEMA,
     validate as validate_administrative_maintenance_control,
 )
+from validate_gcl_truth_spine import (
+    DEFAULT_MATRIX as GCL_TRUTH_SPINE_MATRIX,
+    DEFAULT_MATRIX_SCHEMA as GCL_TRUTH_SPINE_MATRIX_SCHEMA,
+    DEFAULT_REGISTRY as GCL_TRUTH_SPINE_REGISTRY,
+    DEFAULT_REGISTRY_SCHEMA as GCL_TRUTH_SPINE_REGISTRY_SCHEMA,
+    validate as validate_gcl_truth_spine,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 PYTHON_COMMAND = re.compile(r"(?:^|[;&|({\s])python(?:3)?\s+([A-Za-z0-9_./-]+\.py)(?=\s|$)")
@@ -111,6 +118,14 @@ def policy_reachability_errors(root: Path = ROOT) -> list[str]:
         ADMINISTRATIVE_MAINTENANCE_SCHEMA,
     ):
         errors.append(f"administrative maintenance control: {error}")
+
+    for error in validate_gcl_truth_spine(
+        GCL_TRUTH_SPINE_REGISTRY,
+        GCL_TRUTH_SPINE_REGISTRY_SCHEMA,
+        GCL_TRUTH_SPINE_MATRIX,
+        GCL_TRUTH_SPINE_MATRIX_SCHEMA,
+    ):
+        errors.append(f"GCL truth spine: {error}")
     return errors
 
 

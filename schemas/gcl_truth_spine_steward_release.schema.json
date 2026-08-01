@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/gcl_truth_spine_steward_release.schema.json",
+  "title": "GCL Truth Spine Human Steward Release",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "release_id",
+    "registry_id",
+    "subject_commit",
+    "subject_repository",
+    "subject_pull_request",
+    "human_steward",
+    "approved_at",
+    "disposition",
+    "source",
+    "approved_subject_artifacts",
+    "approved_scope",
+    "administrative_effectuation_authority",
+    "evidence",
+    "remaining_conditions",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "release_id": {"const": "GCL-TRUTH-SPINE-STEWARD-001"},
+    "registry_id": {"const": "GCL-TRUTH-SPINE-001"},
+    "subject_commit": {"const": "d2a78b0b25497da192f23045d35869cd483ea15c"},
+    "subject_repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "subject_pull_request": {"const": 194},
+    "human_steward": {"const": "fyremael"},
+    "approved_at": {"type": "string", "format": "date-time"},
+    "disposition": {"const": "APPROVE_FOR_PROTECTED_MERGE"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channel", "recorded_pr_comment_id", "delegated_effectuation"],
+      "properties": {
+        "channel": {"type": "string", "minLength": 1},
+        "recorded_pr_comment_id": {"const": 5149236892},
+        "delegated_effectuation": {"const": true}
+      }
+    },
+    "approved_subject_artifacts": {
+      "type": "array",
+      "minItems": 8,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/artifactIdentity"}
+    },
+    "approved_scope": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "administrative_effectuation_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["permitted", "permitted_changes", "semantic_change_to_approved_subject_permitted", "renewed_human_approval_required_for_semantic_change"],
+      "properties": {
+        "permitted": {"const": true},
+        "permitted_changes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "semantic_change_to_approved_subject_permitted": {"const": false},
+        "renewed_human_approval_required_for_semantic_change": {"const": true}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gcl_conformance_run", "gcl_conformance_conclusion", "programme_policy_run", "programme_policy_conclusion"],
+      "properties": {
+        "gcl_conformance_run": {"const": 30678750162},
+        "gcl_conformance_conclusion": {"const": "success"},
+        "programme_policy_run": {"const": 30678750001},
+        "programme_policy_conclusion": {"const": "success"}
+      }
+    },
+    "remaining_conditions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "claim_boundaries": {"type": "object", "minProperties": 8, "additionalProperties": {"const": false}}
+  },
+  "$defs": {
+    "artifactIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "blob"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "blob": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    }
+  }
+}

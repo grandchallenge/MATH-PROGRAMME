@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/gcl_delegated_referee_office.schema.json",
+  "title": "GCL Standing Delegated Referee Office",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "designation_id",
+    "title",
+    "status",
+    "effective",
+    "designated_by",
+    "designation_authority",
+    "designated_at",
+    "term",
+    "expires_at",
+    "office_identity",
+    "agent_class",
+    "appointment_method",
+    "jurisdiction",
+    "operating_rules",
+    "independence_model",
+    "revocation",
+    "activation",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "designation_id": {"const": "GCL-DELEGATED-REFEREE-001"},
+    "title": {"type": "string", "minLength": 1},
+    "status": {"const": "CANDIDATE_PENDING_PROTECTED_MERGE"},
+    "effective": {"const": false},
+    "designated_by": {"const": "fyremael"},
+    "designation_authority": {"const": "Human Steward"},
+    "designated_at": {"type": "string", "format": "date-time"},
+    "term": {"const": "UNTIL_REVOKED"},
+    "expires_at": {"type": "null"},
+    "office_identity": {"const": "GCL Delegated Referee Office"},
+    "agent_class": {"type": "string", "minLength": 1},
+    "appointment_method": {"type": "string", "minLength": 1},
+    "jurisdiction": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "operating_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_specific_review_required",
+        "exact_subject_identity_required",
+        "review_findings_required",
+        "conflict_of_interest_disclosure_required",
+        "authoring_and_referee_roles_must_be_separated",
+        "review_may_not_modify_subject_before_disposition",
+        "review_does_not_replace_human_steward_release",
+        "review_does_not_replace_ci_or_protected_merge",
+        "claim_promotion_by_referee_fiat_prohibited",
+        "standing_designation_is_not_blanket_approval"
+      ],
+      "properties": {
+        "artifact_specific_review_required": {"const": true},
+        "exact_subject_identity_required": {"const": true},
+        "review_findings_required": {"const": true},
+        "conflict_of_interest_disclosure_required": {"const": true},
+        "authoring_and_referee_roles_must_be_separated": {"const": true},
+        "review_may_not_modify_subject_before_disposition": {"const": true},
+        "review_does_not_replace_human_steward_release": {"const": true},
+        "review_does_not_replace_ci_or_protected_merge": {"const": true},
+        "claim_promotion_by_referee_fiat_prohibited": {"const": true},
+        "standing_designation_is_not_blanket_approval": {"const": true}
+      }
+    },
+    "independence_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["institutional_independence", "required_disclosure", "automatic_disqualification"],
+      "properties": {
+        "institutional_independence": {"const": "ROLE_SEPARATION"},
+        "required_disclosure": {"type": "string", "minLength": 1},
+        "automatic_disqualification": {"type": "array", "minItems": 4, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "revocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authority", "immediate_fail_closed_on_revocation", "prior_reviews_remain_historical_evidence"],
+      "properties": {
+        "authority": {"type": "string", "minLength": 1},
+        "immediate_fail_closed_on_revocation": {"const": true},
+        "prior_reviews_remain_historical_evidence": {"const": true}
+      }
+    },
+    "activation": {"const": "PROTECTED_MERGE_ONLY"},
+    "claim_boundaries": {"type": "object", "minProperties": 8, "additionalProperties": {"const": false}}
+  }
+}
