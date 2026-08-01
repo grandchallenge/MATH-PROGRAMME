@@ -8,29 +8,33 @@
     "schema_version",
     "policy_id",
     "parent_control_id",
+    "decision_record_id",
     "programme_issue",
     "council_issue",
     "council_decision",
     "status",
     "effective",
+    "activation",
     "authority_model",
     "canonical_tracker_requirements",
-    "proposed_enforcement",
+    "enforcement",
     "defect_dispositions",
     "closure_rule",
     "council_state",
-    "may_promote_now",
+    "may_activate_on_protected_merge",
     "claim_boundaries"
   ],
   "properties": {
-    "schema_version": {"const": "1.0.0"},
+    "schema_version": {"const": "1.1.0"},
     "policy_id": {"const": "MP-ADMIN-MIRROR-001"},
     "parent_control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "decision_record_id": {"const": "MP-ADMIN-DECISION-001"},
     "programme_issue": {"const": 182},
     "council_issue": {"const": 183},
     "council_decision": {"const": "D5"},
-    "status": {"enum": ["CANDIDATE_PENDING_COUNCIL_DECISION", "APPROVED_PILOT", "BINDING", "RETURNED", "REJECTED", "SUPERSEDED"]},
-    "effective": {"type": "boolean"},
+    "status": {"const": "APPROVED_ACCELERATED_PILOT"},
+    "effective": {"const": true},
+    "activation": {"const": "PROTECTED_MERGE_ONLY"},
     "authority_model": {
       "type": "object",
       "additionalProperties": false,
@@ -53,7 +57,7 @@
       "uniqueItems": true,
       "items": {"type": "string", "minLength": 1}
     },
-    "proposed_enforcement": {
+    "enforcement": {
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -63,7 +67,8 @@
         "missing_canonical_tracker_link_in_protected_current_state_is_error",
         "authority_bearing_issue_language_is_error",
         "refresh_target",
-        "refresh_target_binding"
+        "refresh_target_binding",
+        "interruption_exception"
       ],
       "properties": {
         "ordinary_staleness_is_release_gate": {"const": false},
@@ -71,8 +76,9 @@
         "contradictory_canonical_tracker_blocks_reconciliation_closure": {"const": true},
         "missing_canonical_tracker_link_in_protected_current_state_is_error": {"const": true},
         "authority_bearing_issue_language_is_error": {"const": true},
-        "refresh_target": {"type": "string", "pattern": "^P"},
-        "refresh_target_binding": {"const": false}
+        "refresh_target": {"const": "PT7H12M"},
+        "refresh_target_binding": {"const": true},
+        "interruption_exception": {"type": "string", "minLength": 1}
       }
     },
     "defect_dispositions": {
@@ -105,8 +111,8 @@
         "external_post_merge_attestation_required_when_closure_cannot_self_pin": {"const": true}
       }
     },
-    "council_state": {"enum": ["PENDING", "APPROVE", "APPROVE_WITH_CORRECTION", "RETURN_FOR_REVISION", "REJECT"]},
-    "may_promote_now": {"type": "boolean"},
+    "council_state": {"const": "APPROVE_WITH_CORRECTION"},
+    "may_activate_on_protected_merge": {"const": true},
     "claim_boundaries": {
       "type": "object",
       "additionalProperties": false,
@@ -119,17 +125,5 @@
         "external_claim_authorized": {"const": false}
       }
     }
-  },
-  "allOf": [
-    {
-      "if": {"properties": {"status": {"const": "CANDIDATE_PENDING_COUNCIL_DECISION"}}},
-      "then": {
-        "properties": {
-          "effective": {"const": false},
-          "council_state": {"const": "PENDING"},
-          "may_promote_now": {"const": false}
-        }
-      }
-    }
-  ]
+  }
 }
