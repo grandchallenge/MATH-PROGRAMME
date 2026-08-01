@@ -231,11 +231,25 @@
     "intellect_buy_in": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["required", "issue", "phase", "exact_protected_pin_required_after_programme_merge", "final_closure_allowed_without_intellect_protected_adoption"],
+      "required": [
+        "required",
+        "issue",
+        "pull_request",
+        "phase",
+        "phase_a_head",
+        "phase_a_ci_run",
+        "phase_a_gcl_run",
+        "exact_protected_pin_required_after_programme_merge",
+        "final_closure_allowed_without_intellect_protected_adoption"
+      ],
       "properties": {
         "required": {"const": true},
         "issue": {"const": "https://github.com/grandchallenge/INTELLECT/issues/21"},
+        "pull_request": {"const": "https://github.com/grandchallenge/INTELLECT/pull/22"},
         "phase": {"enum": ["PHASE_A_REVIEW_OPEN", "PHASE_A_COMMITTED_PENDING_PROTECTED_PIN", "PHASE_B_PROTECTED_ADOPTION_COMPLETE"]},
+        "phase_a_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "phase_a_ci_run": {"type": "integer", "minimum": 1},
+        "phase_a_gcl_run": {"type": "integer", "minimum": 1},
         "exact_protected_pin_required_after_programme_merge": {"const": true},
         "final_closure_allowed_without_intellect_protected_adoption": {"const": false}
       }
