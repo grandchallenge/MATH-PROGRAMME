@@ -1,14 +1,16 @@
 # MATH-PROGRAMME Administrative Maintenance Plan
 
 **Control:** `MP-ADMIN-MAINT-001`  
-**Status:** Candidate pending Council decision  
+**Decision:** `MP-ADMIN-DECISION-001`; `ADR-0016`  
+**Status:** Human Steward approved accelerated pilot; activates only on protected merge  
 **Programme tracker:** #182  
 **Council authority tracker:** #183  
+**INTELLECT adoption tracker:** grandchallenge/INTELLECT#21  
 **Foundation:** seventh-pass closure merge `3cb6bfb9f132a4cfef279d0d3bf2309d99d0d6f1`
 
 ## 1. Purpose
 
-This plan establishes a standing administrative system for the five-repository MATH-PROGRAMME umbrella:
+This plan establishes a standing administrative system for:
 
 - MATH-PROGRAMME;
 - MATHFORGE;
@@ -16,7 +18,7 @@ This plan establishes a standing administrative system for the five-repository M
 - MATHCERT;
 - INTELLECT.
 
-The system preserves **Core Clarity**. Core Clarity means that a reader, validator, or agent can answer six questions without inference:
+The system preserves **Core Clarity**. A reader, validator, or agent must be able to answer without inference:
 
 1. What record is authoritative?
 2. What exact object and revision does it identify?
@@ -25,15 +27,35 @@ The system preserves **Core Clarity**. Core Clarity means that a reader, validat
 5. What evidence proves that the workflow ran against the exact reviewed head?
 6. What action is permitted next, and what remains prohibited?
 
-The plan is administrative infrastructure. It cannot prove mathematics or authorize external claims.
+This is administrative infrastructure. It cannot prove mathematics or authorize external claims.
 
-## 2. Operating principles
+## 2. Human Steward decision and time scale
 
-### 2.1 One authority per state dimension
+The Human Steward approved Council decisions D1–D8 with one global correction: every proposed maintenance duration and cadence interval is multiplied by `0.1`.
 
-Protected repository records are authoritative. Mutable issues are navigation and discussion mirrors. A tracker may explain authority, but it cannot create authority.
+Event-triggered obligations remain immediate. A periodic cadence never permits a material synchronization to wait.
 
-The authority split is:
+The accelerated intervals are:
+
+| Control | Binding interval |
+|---|---:|
+| Pilot | `P9D` |
+| Structural sweep | `PT16H48M` |
+| Administrative portfolio review | `P3D` |
+| Deep conformance review | `P9D` |
+| Constitutional review | `P36DT12H` |
+| Canonical tracker refresh | `PT7H12M` |
+| Ordinary local Steward waiver | `P3D` |
+| Emergency override maximum | `PT7H12M` |
+| Emergency Steward review | `PT2H24M` |
+| Council and Referee retrospective | `PT16H48M` |
+| Unresolved P1 circuit-breaker interval | `PT16H48M` |
+
+The pilot starts at the protected merge timestamp of PR #184. The pilot review is due nine days later.
+
+## 3. Authority model
+
+Protected repository records are authoritative. Issues are mutable navigation and discussion mirrors.
 
 | State dimension | Authority |
 |---|---|
@@ -41,33 +63,29 @@ The authority split is:
 | Source identity, provenance, provider manifest, provider waiver | MATHFORGE |
 | Mathematical work package, campaign manifest, producer handoff | MATHSOLVE |
 | Certification route, adjudication, output, certified scope | MATHCERT |
-| Consumer projection and constitutional lifecycle semantics | INTELLECT |
+| Consumer projection, stale-contract rejection, lifecycle semantics | INTELLECT |
 
-### 2.2 Identity is content-sensitive
+INTELLECT is an explicit adoption and freshness-enforcement partner. Final administrative closure requires protected INTELLECT adoption of the exact protected Programme contract.
+
+## 4. Identity and supersession
 
 A repository head and a material artifact identity are different objects.
 
-A downstream consumer must repin when a consumed artifact changes. It must not repin merely because an unrelated commit moves the provider repository head. Ceremonial repins increase noise and hide material changes.
+A downstream consumer repins when a consumed artifact changes. It does not repin merely because an unrelated commit moves the provider repository head. Every change review records whether the change is material or nonmaterial.
 
-Every change review must therefore classify the change as material or nonmaterial and record the evidence for that classification.
+Historical audits, closures, and conformance records remain immutable. A later record may supersede them, but it does not rewrite their historical state.
 
-### 2.3 Historical evidence stays historical
+## 5. Promotion boundary
 
-A completed audit, closure, or conformance record is immutable. It may be superseded, but it is not rewritten into the present. Current-state records must identify their predecessor and state whether the predecessor is historical, superseded, or still independently authoritative for a bounded purpose.
+Missing, stale, contradictory, unreviewed, or unverified evidence fails closed.
 
-### 2.4 Promotion fails closed
-
-Missing, stale, contradictory, unreviewed, or unverified evidence cannot support promotion. Presentation, documentation, issue wording, or workflow existence cannot substitute for exact reviewed evidence.
+Presentation, documentation, issue wording, workflow-file presence, or a historical successful run cannot create current authority.
 
 Interface qualification remains interface qualification. It is not theorem proof.
 
-## 3. Control architecture
+## 6. Event-triggered synchronization
 
-The maintenance system has four control loops.
-
-### 3.1 Event-triggered synchronization
-
-Run this loop after any material change to:
+Run this loop immediately after a material change to:
 
 - a campaign registry or lifecycle record;
 - a provider manifest or waiver;
@@ -86,45 +104,43 @@ The change owner must:
 5. preserve unchanged content-addressed identities;
 6. run exact-head validation;
 7. merge only after required checks pass;
-8. publish an external post-merge attestation when the protected artifact cannot identify its own future merge.
+8. publish an external post-merge attestation when a protected artifact cannot identify its own future merge.
 
 An incomplete material synchronization has disposition `FAIL_CLOSED_MATERIAL_SYNC_INCOMPLETE`.
 
-### 3.2 Weekly structural sweep
+## 7. Accelerated assurance loops
 
-The proposed weekly sweep checks:
+### 7.1 Structural sweep — every 16 hours 48 minutes
+
+Check:
 
 - protected heads;
 - open pull-request interference;
-- parseability of schemas and current-state records;
+- schema and current-state parseability;
 - required workflow presence;
 - canonical tracker links;
 - issue text that appears to claim protected authority;
-- expired candidate review evidence;
-- unexpected missing or duplicate canonical records.
+- expired review evidence;
+- missing or duplicate canonical records.
 
-This cadence is provisional until Council decision D1.
+### 7.2 Administrative portfolio review — every 3 days
 
-### 3.3 Monthly administrative portfolio review
+Check:
 
-The proposed monthly review checks:
-
-- every active campaign;
-- every candidate campaign;
-- every archived campaign that still has live dependencies;
+- active, candidate, and dependency-bearing archived campaigns;
 - provider manifest and waiver status;
 - Solve handoff and Cert route concordance;
 - consumer pins;
 - workflow coverage;
 - tracker freshness;
-- open administrative P1 and P2 defects;
+- P1 and P2 defects;
 - maintenance burden and repeated manual work.
 
-The output is a protected review record. A chat summary or issue comment is not sufficient evidence.
+The output is a protected review record. A chat summary or issue comment is insufficient.
 
-### 3.4 Quarterly deep conformance review
+### 7.3 Deep conformance review — every 9 days
 
-The proposed quarterly review performs:
+Perform:
 
 - exact five-repository identity reconciliation;
 - supersession and archival audit;
@@ -132,13 +148,13 @@ The proposed quarterly review performs:
 - branch-protection and required-check verification;
 - recurring-defect analysis;
 - workflow evidence sampling;
-- burden, consolidation, and retirement analysis.
+- consolidation and retirement analysis.
 
-A quarterly closure requires a versioned record, strict schema, adversarial tests, exact-head workflows, protected merge, and external post-merge attestation.
+A deep closure requires a versioned record, strict schema, adversarial tests, exact-head workflows, protected merge, and external post-merge attestation.
 
-### 3.5 Annual constitutional review
+### 7.4 Constitutional review — every 36 days 12 hours
 
-The proposed annual review examines:
+Review:
 
 - authority hierarchy;
 - role separation;
@@ -152,7 +168,7 @@ The proposed annual review examines:
 
 This review belongs to the Council and Human Steward.
 
-## 4. Workflow coverage model
+## 8. Workflow coverage
 
 A workflow is **covered** only when all of the following are recorded:
 
@@ -168,11 +184,9 @@ A workflow is **covered** only when all of the following are recorded:
 10. repair route;
 11. last verified identity.
 
-The existence of a workflow file is not coverage.
+The existence of a YAML file is not coverage.
 
-### 4.1 Required capabilities
-
-The umbrella coverage matrix must account for:
+The umbrella matrix must account for:
 
 - schema and contract validation;
 - unit tests;
@@ -184,15 +198,11 @@ The umbrella coverage matrix must account for:
 - GCL conformance;
 - branch-protection and release-trust evidence.
 
-A capability may be non-applicable, but non-applicability must be explicit, scoped, reviewed, and testable.
+Non-applicability must be explicit, scoped, reviewed, and testable.
 
-### 4.2 Failure preservation
+## 9. Tracker and issue hygiene
 
-A clean workflow does not erase failed evidence. The maintenance record must identify where failed runs, replay logs, or rejected artifacts are preserved. A repair must distinguish a corrected defect from an ignored defect.
-
-## 5. Tracker and issue hygiene
-
-Every canonical tracker must contain:
+Every canonical tracker must state:
 
 - authority boundary;
 - protected authority identity;
@@ -201,28 +211,24 @@ Every canonical tracker must contain:
 - claim boundary;
 - review trigger.
 
-A tracker refresh is required after a material state transition. The proposed target is two business days after protected merge, subject to Council decision D2.
+Refresh a canonical tracker within 7 hours 12 minutes after a protected material transition. A documented infrastructure or statutory-closure interruption may pause only this mirror clock. It cannot alter protected authority.
 
-A stale tracker does not override protected state. A contradictory canonical tracker blocks closure of the reconciliation that identified it.
+A stale but noncontradictory tracker is a P2 administrative defect. A contradictory tracker or authority-bearing issue statement is P1 fail-closed. An identified contradiction blocks reconciliation closure.
 
-Completed implementation issues should close. Long-lived campaign trackers may remain open when they clearly distinguish completed stages from the next obligation.
-
-## 6. Defect classes and response
+## 10. Defect classes
 
 | Class | Meaning | Default response |
 |---|---|---|
 | P0 | Security, repository integrity, or evidence destruction risk | emergency containment; no promotion |
-| P1 | Authority, identity, lifecycle, route, certificate, required-check, or claim-boundary mismatch | immediate fail-closed repair sequence |
-| P2 | Missing coverage, stale canonical tracker, incomplete supersession, or unresolved ownership | tracked correction before next deep review; earlier when it affects interpretation |
-| P3 | Documentation, naming, navigation, or low-risk administrative debt | batch into routine maintenance |
+| P1 | Authority, identity, lifecycle, route, certificate, required-check, or claim-boundary mismatch | immediate fail-closed repair |
+| P2 | Missing coverage, stale canonical tracker, incomplete supersession, or unresolved ownership | tracked correction before the next applicable accelerated review |
+| P3 | Naming, navigation, or low-risk administrative debt | batch into routine maintenance |
 
-A lower class cannot be used to downgrade a defect that can affect authority or promotion.
+A lower class cannot downgrade a defect that affects authority or promotion.
 
-## 7. Waivers
+## 11. Waivers
 
-A waiver is an explicit temporary governance object, not an informal exception.
-
-A waiver must record:
+A waiver is a typed temporary governance object. It records:
 
 - identifier;
 - scope;
@@ -235,13 +241,21 @@ A waiver must record:
 - repair obligation;
 - renewal count.
 
-The proposed model allows Human Steward approval for at most 30 days and one renewal. Longer, repeated, cross-repository, provenance, certification, or required-check waivers require Council decision. These limits remain nonbinding pending D3.
+The Human Steward may approve an ordinary repository-local administrative waiver for at most three days and one renewal.
+
+The Council must approve:
+
+- longer or repeated waivers;
+- cross-repository waivers;
+- provenance waivers;
+- certification waivers;
+- required-check waivers.
 
 No waiver can authorize mathematical or external claim promotion.
 
-## 8. Independent review
+## 12. Independent review
 
-The proposed policy requires a non-author Referee for changes to:
+A non-author Referee is required for changes to:
 
 - authority hierarchy;
 - lifecycle or promotion semantics;
@@ -250,13 +264,13 @@ The proposed policy requires a non-author Referee for changes to:
 - waiver classes;
 - emergency powers;
 - branch-protection or required-check weakening;
-- a maintenance control whose failure could permit promotion.
+- maintenance controls whose failure could permit promotion.
 
-Routine exact-identity repins and mirror refreshes do not require an independent Referee when semantics remain unchanged. This boundary remains subject to D4.
+Routine semantic-preserving identity repins and mirror refreshes use ordinary administrative review.
 
-## 9. Emergency override
+## 13. Emergency override
 
-The proposed override exists only to restore availability, respond to a security incident, or restore CI operability.
+Emergency authority exists only to restore availability, respond to a security incident, or restore CI operability.
 
 It may not:
 
@@ -266,61 +280,91 @@ It may not:
 - weaken branch protection;
 - delete required evidence.
 
-The proposed maximum duration is 72 hours. Human Steward review is due within 24 hours. Council and Referee retrospective is due within seven days. The override expires automatically and reverts fail-closed. These rules remain subject to D6.
+It expires after 7 hours 12 minutes. Human Steward review is due within 2 hours 24 minutes. Council and Referee retrospective is due within 16 hours 48 minutes. Expiry reverts fail closed automatically.
 
-## 10. Maintenance-burden circuit breaker
+## 14. Maintenance-burden circuit breaker
 
-The proposed circuit breaker freezes new campaign admission and refers the matter to the Council when:
+A campaign missing a critical required capability fails closed immediately.
 
-- two consecutive monthly reviews fail;
-- a P1 authority or identity mismatch remains unresolved for seven days;
+Freeze new umbrella admissions when:
+
+- two consecutive three-day administrative reviews fail;
+- a P1 mismatch remains unresolved for 16 hours 48 minutes;
+- two active campaigns lack complete critical workflow coverage;
 - more than 20 percent of active campaigns lack complete workflow coverage;
 - required-check or branch-protection evidence is missing;
-- the same control defect recurs in two consecutive quarterly reviews.
+- the same defect recurs in two consecutive nine-day deep reviews.
 
-The Council may consolidate controls, increase automation, archive obsolete records, change ownership, suspend campaigns, or restore normal operation. This remains subject to D7.
+For portfolio coverage, use the stricter threshold of two active campaigns or more than 20 percent of the active portfolio.
 
-## 11. Council decisions
+The Council may consolidate controls, increase automation, archive obsolete records, change ownership, suspend campaigns, or restore normal operation.
 
-Issue #183 requests decisions D1–D8:
+## 15. Council dispositions
 
-| Decision | Question |
+| Decision | Binding disposition |
 |---|---|
-| D1 | Mandatory maintenance cadence |
-| D2 | Freshness clocks and fail-closed thresholds |
-| D3 | Waiver authority, duration, and renewal |
-| D4 | Independent Referee triggers |
-| D5 | Issue-mirror enforcement level |
-| D6 | Emergency override powers and retrospective |
-| D7 | Maintenance-burden circuit breaker |
-| D8 | GCL-TCS-00 maintenance profile |
+| D1 | `APPROVE_WITH_CORRECTION` |
+| D2 | `APPROVE_WITH_CORRECTION` |
+| D3 | `APPROVE_WITH_CORRECTION` |
+| D4 | `APPROVE` |
+| D5 | `APPROVE_WITH_CORRECTION` |
+| D6 | `APPROVE_WITH_CORRECTION` |
+| D7 | `APPROVE_WITH_CORRECTION` |
+| D8 | `APPROVE_WITH_CORRECTION` |
 
-Until these decisions are resolved, the candidate control records proposed values but sets `effective: false` and `may_promote_now: false`.
+The exact rules are in `governance/administrative_maintenance_council_decision.json` and ADR-0016.
 
-## 12. Communication profile
+## 16. Communication profile
 
-GCL-TCS-00 clarity principles may guide the pilot. GCL-TCS-00 is not binding maintenance authority until issue #108 completes G8 non-author Referee review and G9 Human Steward release.
+GCL-TCS-00 clarity principles apply during the pilot as guidance. GCL-TCS-00 does not become binding maintenance authority until issue #108 completes G8 non-author Referee review and G9 Human Steward release.
 
 Where communication vocabulary overlaps mathematical claim governance, the canonical mathematical claim ledger controls.
 
-## 13. Promotion and release gate
+## 17. INTELLECT adoption
 
-The maintenance control may become binding only after:
+INTELLECT adoption has two phases.
 
-1. schema validation;
-2. semantic validation;
-3. adversarial mutation tests;
-4. Programme policy checks;
-5. GCL conformance;
-6. Council decisions D1–D8;
-7. non-author Referee review;
-8. Human Steward release;
-9. protected merge;
-10. external post-merge attestation.
+### Phase A
 
-Until then, existing protected Programme, Forge, Solve, Cert, and INTELLECT contracts remain authoritative.
+Before Programme merge, INTELLECT records constitutional buy-in to:
 
-## 14. Claim boundary
+- the authority split;
+- the 0.1 acceleration factor;
+- immediate material synchronization;
+- stale-contract rejection;
+- claim boundaries;
+- the requirement for an exact protected pin after Programme merge.
+
+### Phase B
+
+After Programme merge, INTELLECT must:
+
+- pin the exact protected Programme merge;
+- pin the exact Git blob identities of the maintenance control, mirror policy, and decision record;
+- reject missing, stale, branch-floating, or inflated contracts;
+- pass exact-head INTELLECT CI and GCL conformance;
+- merge through protected review.
+
+Final cross-repository closure is prohibited before Phase B completes.
+
+## 18. Release gate
+
+Programme control merge requires:
+
+1. schema and semantic validation;
+2. adversarial tests;
+3. Programme policy checks;
+4. GCL conformance;
+5. resolved D1–D8 decisions;
+6. registered terminology;
+7. non-author Referee approval;
+8. Human Steward approval;
+9. INTELLECT Phase A buy-in;
+10. protected merge.
+
+Final cross-repository closure additionally requires protected INTELLECT Phase B adoption and external attestation.
+
+## 19. Claim boundary
 
 This plan does not:
 
