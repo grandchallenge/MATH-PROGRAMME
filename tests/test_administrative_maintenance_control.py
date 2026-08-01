@@ -49,6 +49,16 @@ class AdministrativeMaintenanceControlTests(unittest.TestCase):
         self.assertTrue(control["promotion_gate"]["council_decisions_resolved"])
         self.assertTrue(control["promotion_gate"]["human_steward_release_complete"])
 
+    def test_all_programme_merge_prerequisites_are_complete(self) -> None:
+        control = load_control()
+        gate = control["promotion_gate"]
+        self.assertTrue(gate["council_decisions_resolved"])
+        self.assertTrue(gate["human_steward_release_complete"])
+        self.assertTrue(gate["non_author_referee_review_complete"])
+        self.assertTrue(gate["intellect_phase_a_buy_in_complete"])
+        self.assertTrue(gate["may_merge_programme_control"])
+        self.assertFalse(gate["final_cross_repository_closure_complete"])
+
     def test_all_durations_are_accelerated(self) -> None:
         control = load_control()
         self.assertEqual(control["acceleration"]["factor"], 0.1)
@@ -70,11 +80,16 @@ class AdministrativeMaintenanceControlTests(unittest.TestCase):
         self.assertEqual(event_loop["cadence"], "IMMEDIATE_ON_MATERIAL_CHANGE")
         self.assertTrue(control["acceleration"]["event_triggered_obligations_remain_immediate"])
 
-    def test_intellect_buy_in_is_required(self) -> None:
+    def test_intellect_phase_a_buy_in_is_recorded(self) -> None:
         control = load_control()
-        self.assertTrue(control["intellect_buy_in"]["required"])
-        self.assertTrue(control["intellect_buy_in"]["exact_protected_pin_required_after_programme_merge"])
-        self.assertFalse(control["intellect_buy_in"]["final_closure_allowed_without_intellect_protected_adoption"])
+        intellect = control["intellect_buy_in"]
+        self.assertTrue(intellect["required"])
+        self.assertEqual(intellect["phase"], "PHASE_A_COMMITTED_PENDING_PROTECTED_PIN")
+        self.assertEqual(intellect["phase_a_head"], "6d4dce2db607da7a3f4629bb9b36735a3cf57b96")
+        self.assertEqual(intellect["phase_a_ci_run"], 30677018860)
+        self.assertEqual(intellect["phase_a_gcl_run"], 30677019107)
+        self.assertTrue(intellect["exact_protected_pin_required_after_programme_merge"])
+        self.assertFalse(intellect["final_closure_allowed_without_intellect_protected_adoption"])
 
     def test_mutation_rejects_issue_authority_inflation(self) -> None:
         control = load_control()
@@ -161,9 +176,9 @@ class AdministrativeMaintenanceControlTests(unittest.TestCase):
         control["communication_profile"]["gcl_tcs_00_binding"] = True
         self.assertTrue(errors_for(control))
 
-    def test_mutation_rejects_premature_programme_merge_gate(self) -> None:
+    def test_mutation_rejects_incorrectly_closed_programme_merge_gate(self) -> None:
         control = load_control()
-        control["promotion_gate"]["may_merge_programme_control"] = True
+        control["promotion_gate"]["may_merge_programme_control"] = False
         self.assertTrue(errors_for(control))
 
     def test_mutation_rejects_premature_final_closure(self) -> None:
