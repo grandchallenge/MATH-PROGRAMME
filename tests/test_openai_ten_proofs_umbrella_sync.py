@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
     "openai_ten_proofs_umbrella_sync",
-    ROOT / "ci" / "openai_ten_proofs_umbrella_sync.py",
+    ROOT / "governance" / "validators" / "openai_ten_proofs_umbrella_sync.py",
 )
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
