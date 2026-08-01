@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/openai_ten_proofs_candidate_intake.schema.json",
+  "title": "OPENAI-TEN-PROOFS-WP00 candidate intake",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "candidate_id",
+    "work_package_id",
+    "title",
+    "lifecycle_state",
+    "active_campaign_member",
+    "programme_tracker",
+    "external_subject",
+    "forge_provider_authority",
+    "result_families",
+    "gate_matrix",
+    "route_state",
+    "observed_blockers",
+    "linked_trackers",
+    "next_executable_sequence",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "record_id": {"const": "MP-OPENAI-TEN-PROOFS-WP00-CANDIDATE-INTAKE"},
+    "candidate_id": {"const": "OPENAI-TEN-PROOFS-001"},
+    "work_package_id": {"const": "OPENAI-TEN-PROOFS-WP00"},
+    "title": {"const": "Source, identity, replay, and statement-equivalence audit"},
+    "lifecycle_state": {"const": "candidate_external_formalization"},
+    "active_campaign_member": {"const": false},
+    "programme_tracker": {
+      "const": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/198"
+    },
+    "external_subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit", "tree", "archive_sha256", "root_commit"],
+      "properties": {
+        "repository": {"const": "openai/ten-proofs"},
+        "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "archive_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "root_commit": {"const": true}
+      }
+    },
+    "forge_provider_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "pull_request",
+        "reviewed_head_commit",
+        "merge_commit",
+        "artifacts",
+        "authority_state"
+      ],
+      "properties": {
+        "repository": {"const": "grandchallenge/MATHFORGE"},
+        "pull_request": {"const": 36},
+        "reviewed_head_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "merge_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "artifacts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "provider_manifest",
+            "source_lock",
+            "theorem_intake_matrix",
+            "provider_coverage"
+          ],
+          "properties": {
+            "provider_manifest": {"$ref": "#/$defs/artifact"},
+            "source_lock": {"$ref": "#/$defs/artifact"},
+            "theorem_intake_matrix": {"$ref": "#/$defs/artifact"},
+            "provider_coverage": {"$ref": "#/$defs/artifact"}
+          }
+        },
+        "authority_state": {"const": "protected_merge"}
+      }
+    },
+    "result_families": {
+      "const": [
+        "OTP-A-SPHERE-PACKING",
+        "OTP-B1-BINARY-CODES",
+        "OTP-B2-SPHERICAL-CODES",
+        "OTP-C-PERMANENT",
+        "OTP-D-NON-SOFIC",
+        "OTP-E-CONNES-RIGIDITY",
+        "OTP-F-EHRHART",
+        "OTP-G-QUANTUM-PARALLEL-REPETITION",
+        "OTP-H-GAPCVP",
+        "OTP-I-RAMSEY",
+        "OTP-J1-COMPACTNESS",
+        "OTP-J2-TWO-DEGENERATE"
+      ]
+    },
+    "gate_matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_identity",
+        "kernel_correctness",
+        "statement_fidelity",
+        "independent_adjudication"
+      ],
+      "properties": {
+        "source_identity": {
+          "allOf": [
+            {"$ref": "#/$defs/gate"},
+            {
+              "properties": {
+                "state": {"const": "provider_verified"},
+                "satisfied_for_admission": {"const": true}
+              }
+            }
+          ]
+        },
+        "kernel_correctness": {
+          "allOf": [
+            {"$ref": "#/$defs/gate"},
+            {
+              "properties": {
+                "state": {"const": "not_verified"},
+                "satisfied_for_admission": {"const": false}
+              }
+            }
+          ]
+        },
+        "statement_fidelity": {
+          "allOf": [
+            {"$ref": "#/$defs/gate"},
+            {
+              "properties": {
+                "state": {"const": "not_verified"},
+                "satisfied_for_admission": {"const": false}
+              }
+            }
+          ]
+        },
+        "independent_adjudication": {
+          "allOf": [
+            {"$ref": "#/$defs/gate"},
+            {
+              "properties": {
+                "state": {"const": "not_performed"},
+                "satisfied_for_admission": {"const": false}
+              }
+            }
+          ]
+        }
+      }
+    },
+    "route_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mathforge",
+        "mathsolve",
+        "mathcert",
+        "may_emit_solve_handoff",
+        "may_adjudicate",
+        "may_promote_result",
+        "aggregate_admission_prohibited",
+        "admission_granularity"
+      ],
+      "properties": {
+        "mathforge": {"const": "provider_manifest_merged"},
+        "mathsolve": {"const": "blocked_pre_route_candidate"},
+        "mathcert": {"const": "pre_route_candidate"},
+        "may_emit_solve_handoff": {"const": false},
+        "may_adjudicate": {"const": false},
+        "may_promote_result": {"const": false},
+        "aggregate_admission_prohibited": {"const": true},
+        "admission_granularity": {"const": "result_family"}
+      }
+    },
+    "observed_blockers": {
+      "type": "array",
+      "minItems": 5,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 20}
+    },
+    "linked_trackers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mathforge", "mathsolve", "mathcert"],
+      "properties": {
+        "mathforge": {"const": "https://github.com/grandchallenge/MATHFORGE/issues/35"},
+        "mathsolve": {"const": "https://github.com/grandchallenge/MATHSOLVE/issues/90"},
+        "mathcert": {"const": "https://github.com/grandchallenge/MATHCERT/issues/43"}
+      }
+    },
+    "next_executable_sequence": {
+      "type": "array",
+      "minItems": 7,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 20}
+    },
+    "claim_boundary": {"type": "string", "minLength": 100}
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "git_blob_sha1"],
+      "properties": {
+        "path": {"type": "string", "minLength": 5},
+        "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "satisfied_for_admission", "reason"],
+      "properties": {
+        "state": {"type": "string", "minLength": 3},
+        "satisfied_for_admission": {"type": "boolean"},
+        "reason": {"type": "string", "minLength": 20}
+      }
+    }
+  }
+}

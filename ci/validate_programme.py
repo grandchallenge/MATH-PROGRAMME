@@ -13,6 +13,7 @@ import yaml
 from jsonschema import Draft202012Validator, FormatChecker
 
 from validate_documentaries import documentary_contract_errors
+from openai_ten_proofs_intake_control import validation_errors as openai_ten_proofs_intake_errors
 
 ROOT = Path(__file__).resolve().parents[1]
 MSC_CODE = re.compile(r"^\d{2}(?:-\d{2}|[A-Z](?:xx|\d{2}))$")
@@ -409,6 +410,7 @@ def main() -> int:
         )
     )
     errors.extend(documentary_contract_errors())
+    errors.extend(openai_ten_proofs_intake_errors())
 
     if errors:
         for error in errors:

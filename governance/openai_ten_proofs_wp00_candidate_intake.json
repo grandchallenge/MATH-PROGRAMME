@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "MP-OPENAI-TEN-PROOFS-WP00-CANDIDATE-INTAKE",
+  "candidate_id": "OPENAI-TEN-PROOFS-001",
+  "work_package_id": "OPENAI-TEN-PROOFS-WP00",
+  "title": "Source, identity, replay, and statement-equivalence audit",
+  "lifecycle_state": "candidate_external_formalization",
+  "active_campaign_member": false,
+  "programme_tracker": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/198",
+  "external_subject": {
+    "repository": "openai/ten-proofs",
+    "commit": "6fefffdbab0dfa726fcfde6cefae23aa7a1888f3",
+    "tree": "79e6a50b1e391bdddb18b42be3e886c1d9784ed3",
+    "archive_sha256": "630e10ec7f8b08ce3416fba967e6d1e4c7599677e38fd4af24fc0c68a9a5bac2",
+    "root_commit": true
+  },
+  "forge_provider_authority": {
+    "repository": "grandchallenge/MATHFORGE",
+    "pull_request": 36,
+    "reviewed_head_commit": "f4283c59571a43be23d07700b4cfddafc2bcda8d",
+    "merge_commit": "89f3853f697450261cb76a638b5282c3bfa96770",
+    "artifacts": {
+      "provider_manifest": {
+        "path": "provider_manifests/OPENAI-TEN-PROOFS-001.json",
+        "git_blob_sha1": "c9754fd02026ee923040fac288e9285d72cb2b67"
+      },
+      "source_lock": {
+        "path": "sources/OPENAI-TEN-PROOFS-001/source_lock.json",
+        "git_blob_sha1": "1b4981178553ad300a5abead6d3c9f6bac78d0da"
+      },
+      "theorem_intake_matrix": {
+        "path": "sources/OPENAI-TEN-PROOFS-001/theorem_intake_matrix.json",
+        "git_blob_sha1": "63923c38471eb601161cbd1d3c8ba28244b86166"
+      },
+      "provider_coverage": {
+        "path": "governance/provider_coverage.json",
+        "git_blob_sha1": "5f00bd9bbd8e626fd23f8bde7f31c881cee9df38"
+      }
+    },
+    "authority_state": "protected_merge"
+  },
+  "result_families": [
+    "OTP-A-SPHERE-PACKING",
+    "OTP-B1-BINARY-CODES",
+    "OTP-B2-SPHERICAL-CODES",
+    "OTP-C-PERMANENT",
+    "OTP-D-NON-SOFIC",
+    "OTP-E-CONNES-RIGIDITY",
+    "OTP-F-EHRHART",
+    "OTP-G-QUANTUM-PARALLEL-REPETITION",
+    "OTP-H-GAPCVP",
+    "OTP-I-RAMSEY",
+    "OTP-J1-COMPACTNESS",
+    "OTP-J2-TWO-DEGENERATE"
+  ],
+  "gate_matrix": {
+    "source_identity": {
+      "state": "provider_verified",
+      "satisfied_for_admission": true,
+      "reason": "The exact lock is independently reproduced and pinned to MATHFORGE protected merge 89f3853f697450261cb76a638b5282c3bfa96770 with content-addressed artifact blobs."
+    },
+    "kernel_correctness": {
+      "state": "not_verified",
+      "satisfied_for_admission": false,
+      "reason": "Default build configuration is defective and trusted elaboration plus Comparator replay are incomplete."
+    },
+    "statement_fidelity": {
+      "state": "not_verified",
+      "satisfied_for_admission": false,
+      "reason": "Upstream formalization.yaml has an empty sources list and no theorem-level concordance has been admitted."
+    },
+    "independent_adjudication": {
+      "state": "not_performed",
+      "satisfied_for_admission": false,
+      "reason": "MATHCERT issue 43 is pre-route with no Solve handoff or Cert output."
+    }
+  },
+  "route_state": {
+    "mathforge": "provider_manifest_merged",
+    "mathsolve": "blocked_pre_route_candidate",
+    "mathcert": "pre_route_candidate",
+    "may_emit_solve_handoff": false,
+    "may_adjudicate": false,
+    "may_promote_result": false,
+    "aggregate_admission_prohibited": true,
+    "admission_granularity": "result_family"
+  },
+  "observed_blockers": [
+    "The default Lake target list names undeclared target ConnesRigidity2.",
+    "The ComparatorChallenges root list names missing module ComparatorChallenges.C_PermanentSuperquadraticStandalone.",
+    "The upstream formalization metadata records sources: [].",
+    "Trusted exact-head build, Comparator replay, and theorem-level axiom reports are absent.",
+    "Independent semantic-equivalence, nonvacuity, and specialist review are absent."
+  ],
+  "linked_trackers": {
+    "mathforge": "https://github.com/grandchallenge/MATHFORGE/issues/35",
+    "mathsolve": "https://github.com/grandchallenge/MATHSOLVE/issues/90",
+    "mathcert": "https://github.com/grandchallenge/MATHCERT/issues/43"
+  },
+  "next_executable_sequence": [
+    "Obtain independent review and exact-head CI for this Programme repin.",
+    "Correct or formally dispose the upstream Lake target defects without altering the locked source identity.",
+    "Replay every valid library and all twelve Comparator configurations in a known-good Lean 4.32.0 environment.",
+    "Record theorem-level axiom reports.",
+    "Acquire and lock source papers and theorem revisions for every result family.",
+    "Authorize result-level Solve concordance only after trusted replay and source-theorem acquisition are complete for that result family.",
+    "Create a content-addressed Cert handoff only for result families that clear the provider and semantic gates."
+  ],
+  "claim_boundary": "This record governs an external formalization candidate and does not add it to the active campaign portfolio, certify any theorem, assert equivalence to any paper, or authorize novelty, priority, patentability, mechanical, manufacturing, or commercial claims."
+}
