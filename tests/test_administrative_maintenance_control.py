@@ -181,9 +181,9 @@ class AdministrativeMaintenanceControlTests(unittest.TestCase):
         control["promotion_gate"]["may_merge_programme_control"] = False
         self.assertTrue(errors_for(control))
 
-    def test_mutation_rejects_reopened_final_closure(self) -> None:
+    def test_mutation_rejects_phase_b_regression_after_final_closure(self) -> None:
         control = load_control()
-        control["promotion_gate"]["final_cross_repository_closure_complete"] = False
+        control["intellect_buy_in"]["phase"] = "PHASE_A_COMMITTED_PENDING_PROTECTED_PIN"
         self.assertTrue(errors_for(control))
 
     def test_mutation_rejects_mathematical_claim_inflation(self) -> None:
