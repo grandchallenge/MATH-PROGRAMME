@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0.0",
+  "review_id": "GCL-TRUTH-SPINE-REFEREE-001",
+  "registry_id": "GCL-TRUTH-SPINE-001",
+  "designation_id": "GCL-DELEGATED-REFEREE-001",
+  "subject_repository": "grandchallenge/MATH-PROGRAMME",
+  "subject_pull_request": 194,
+  "subject_commit": "d2a78b0b25497da192f23045d35869cd483ea15c",
+  "reviewed_at": "2026-07-31T19:26:00-07:00",
+  "reviewer": {
+    "office_identity": "GCL Delegated Referee Office",
+    "agent_identity": "GPT-5.6 Thinking",
+    "appointment_authority": "Human Steward fyremael",
+    "standing_designation": true,
+    "non_author_office": true
+  },
+  "independence_disclosure": {
+    "model_or_provider_separate_from_authoring_assistant": false,
+    "human_reviewer": false,
+    "role_separation_used": true,
+    "disclosure": "The same assistant system prepared the candidate in an authoring role. After explicit Human Steward delegation, the review was performed in a distinct Referee-office role against repository-visible artifacts and exact-head evidence. This is institutional role separation, not a separate human or model-provider review.",
+    "reviewer_modified_reviewed_subject_after_assignment": false,
+    "counts_as_required_referee_under_human_delegation": true
+  },
+  "review_scope": [
+    "authority precedence",
+    "canonical record-class completeness",
+    "five-repository jurisdiction boundaries",
+    "historical and supersession semantics",
+    "AETHER dependency boundary",
+    "schema and semantic validation",
+    "adversarial mutation coverage",
+    "migration and activation posture"
+  ],
+  "reviewed_subject_artifacts": [
+    {"path": "governance/gcl_truth_spine_registry.json", "blob": "c4b30773be2f3151b3e975131ab6510245a3810b"},
+    {"path": "governance/cross_repository_authority_matrix.json", "blob": "efb009bf11bd9f6f7b82cac210dc2035036e3f46"},
+    {"path": "schemas/gcl_truth_spine_registry.schema.json", "blob": "17bfdbee116f43cbc6eb27e2c4234e3f0789d961"},
+    {"path": "schemas/cross_repository_authority_matrix.schema.json", "blob": "7d654bd59499a6a7cb74e2075ff245a7fd7af812"},
+    {"path": "ci/validate_gcl_truth_spine.py", "blob": "ffb868e0a5eb79b6283264c691a4974413f591bc"},
+    {"path": "ci/validate_policy_reachability.py", "blob": "a21afae1ab64d08c99fcd9980d5b8db2f18cbc36"},
+    {"path": "tests/test_gcl_truth_spine.py", "blob": "a03b86da65f945b4013d9a5585b5e4de62a42cf0"},
+    {"path": "docs/governance/GCL_TRUTH_SPINE.md", "blob": "886b81fe1dff1874df21ab69cdc84e34887cd4e0"},
+    {"path": "docs/governance/GCL_TRUTH_SPINE_CONFORMANCE_2026_07_31.md", "blob": "d3d60514cb0ea8e30a9c198453a90eec4d5d59c9"}
+  ],
+  "workflow_evidence": [
+    {"workflow": "GCL conformance", "run_id": 30678750162, "subject_commit": "d2a78b0b25497da192f23045d35869cd483ea15c", "conclusion": "success"},
+    {"workflow": "Programme policy checks", "run_id": 30678750001, "subject_commit": "d2a78b0b25497da192f23045d35869cd483ea15c", "conclusion": "success"}
+  ],
+  "findings": [
+    {
+      "finding_id": "GCL-TS-RF-001",
+      "severity": "none",
+      "blocking": false,
+      "finding": "The authority precedence is coherent and reserves current institutional state to protected normative records."
+    },
+    {
+      "finding_id": "GCL-TS-RF-002",
+      "severity": "none",
+      "blocking": false,
+      "finding": "The five-repository matrix preserves provider, producer, adjudicator, consumer, and Programme jurisdictions without granting silent override authority."
+    },
+    {
+      "finding_id": "GCL-TS-RF-003",
+      "severity": "none",
+      "blocking": false,
+      "finding": "The AETHER boundary is appropriately fail-closed: the bridge remains on hold, AETHER is non-authoritative for GCL, and GitHub-only operation remains sufficient."
+    },
+    {
+      "finding_id": "GCL-TS-RF-004",
+      "severity": "low",
+      "blocking": false,
+      "finding": "The reviewed candidate requires an explicit protected promotion and activation record so adoption is not inferred from PR discussion or workflow success alone."
+    },
+    {
+      "finding_id": "GCL-TS-RF-005",
+      "severity": "none",
+      "blocking": false,
+      "finding": "The additive migration posture appropriately avoids mass rewrites and preserves existing repository-specific schemas and identities."
+    }
+  ],
+  "required_administrative_corrections": [
+    "record the Human Steward exact-subject release",
+    "record the standing delegated Referee office and independence rules",
+    "add a protected promotion and conditional activation record",
+    "validate the administrative envelope on the exact final PR head"
+  ],
+  "semantic_change_to_reviewed_subject_authorized": false,
+  "disposition": "APPROVE_WITH_ADMINISTRATIVE_CORRECTION",
+  "blocking_findings_remaining": false,
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "certificate_issued": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "patentability_claim_authorized": false,
+    "mechanical_claim_authorized": false,
+    "manufacturing_claim_authorized": false,
+    "commercial_claim_authorized": false
+  }
+}
