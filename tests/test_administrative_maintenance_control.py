@@ -35,11 +35,46 @@ def errors_for(control: dict) -> list[str]:
 
 
 class AdministrativeMaintenanceControlTests(unittest.TestCase):
-    def test_candidate_control_is_valid(self) -> None:
+    def test_accelerated_control_is_valid(self) -> None:
         self.assertEqual(errors_for(load_control()), [])
 
     def test_cli_validator_accepts_repository_files(self) -> None:
         self.assertEqual(VALIDATOR.validate(CONTROL_PATH, SCHEMA_PATH), [])
+
+    def test_human_steward_decision_is_resolved(self) -> None:
+        control = load_control()
+        self.assertEqual(control["status"], "APPROVED_ACCELERATED_PILOT")
+        self.assertTrue(control["effective"])
+        self.assertEqual(control["activation"], "PROTECTED_MERGE_ONLY")
+        self.assertTrue(control["promotion_gate"]["council_decisions_resolved"])
+        self.assertTrue(control["promotion_gate"]["human_steward_release_complete"])
+
+    def test_all_durations_are_accelerated(self) -> None:
+        control = load_control()
+        self.assertEqual(control["acceleration"]["factor"], 0.1)
+        self.assertEqual(control["acceleration"]["pilot_duration"], "P9D")
+        self.assertEqual(control["control_loops"]["structural_sweep"]["cadence"], "PT16H48M")
+        self.assertEqual(control["control_loops"]["administrative_portfolio_review"]["cadence"], "P3D")
+        self.assertEqual(control["control_loops"]["deep_conformance_review"]["cadence"], "P9D")
+        self.assertEqual(control["control_loops"]["constitutional_review"]["cadence"], "P36DT12H")
+        self.assertEqual(control["tracker_hygiene"]["refresh_target"], "PT7H12M")
+        self.assertEqual(control["waiver_policy"]["steward_local_administrative_limit"], "P3D")
+        self.assertEqual(control["emergency_override_policy"]["maximum_duration"], "PT7H12M")
+        self.assertEqual(control["emergency_override_policy"]["steward_review_deadline"], "PT2H24M")
+        self.assertEqual(control["emergency_override_policy"]["council_and_referee_retrospective_deadline"], "PT16H48M")
+
+    def test_event_triggered_sync_remains_immediate(self) -> None:
+        control = load_control()
+        event_loop = control["control_loops"]["event_triggered_synchronization"]
+        self.assertTrue(event_loop["binding"])
+        self.assertEqual(event_loop["cadence"], "IMMEDIATE_ON_MATERIAL_CHANGE")
+        self.assertTrue(control["acceleration"]["event_triggered_obligations_remain_immediate"])
+
+    def test_intellect_buy_in_is_required(self) -> None:
+        control = load_control()
+        self.assertTrue(control["intellect_buy_in"]["required"])
+        self.assertTrue(control["intellect_buy_in"]["exact_protected_pin_required_after_programme_merge"])
+        self.assertFalse(control["intellect_buy_in"]["final_closure_allowed_without_intellect_protected_adoption"])
 
     def test_mutation_rejects_issue_authority_inflation(self) -> None:
         control = load_control()
@@ -51,24 +86,29 @@ class AdministrativeMaintenanceControlTests(unittest.TestCase):
         control["core_clarity_invariants"]["unchanged_material_artifacts_do_not_require_repin"] = False
         self.assertTrue(errors_for(control))
 
-    def test_mutation_rejects_candidate_activation(self) -> None:
+    def test_mutation_rejects_unaccelerated_pilot(self) -> None:
         control = load_control()
-        control["effective"] = True
+        control["acceleration"]["pilot_duration"] = "P90D"
         self.assertTrue(errors_for(control))
 
-    def test_mutation_rejects_premature_council_resolution(self) -> None:
+    def test_mutation_rejects_unaccelerated_structural_sweep(self) -> None:
         control = load_control()
-        control["council_decisions"]["D1"] = "APPROVE"
+        control["control_loops"]["structural_sweep"]["cadence"] = "P7D"
         self.assertTrue(errors_for(control))
 
-    def test_mutation_rejects_premature_promotion(self) -> None:
+    def test_mutation_rejects_delayed_material_sync(self) -> None:
         control = load_control()
-        control["promotion_gate"]["may_promote_now"] = True
+        control["control_loops"]["event_triggered_synchronization"]["cadence"] = "P3D"
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_unresolved_council_decision(self) -> None:
+        control = load_control()
+        control["council_decisions"]["D1"] = "PENDING"
         self.assertTrue(errors_for(control))
 
     def test_mutation_rejects_missing_repository_role(self) -> None:
         control = load_control()
-        del control["repository_roles"]["mathcert"]
+        del control["repository_roles"]["intellect"]
         self.assertTrue(errors_for(control))
 
     def test_mutation_rejects_incomplete_workflow_capabilities(self) -> None:
@@ -86,9 +126,9 @@ class AdministrativeMaintenanceControlTests(unittest.TestCase):
         control["tracker_hygiene"]["tracker_can_create_authority"] = True
         self.assertTrue(errors_for(control))
 
-    def test_mutation_rejects_stale_tracker_override(self) -> None:
+    def test_mutation_rejects_unaccelerated_tracker_clock(self) -> None:
         control = load_control()
-        control["tracker_hygiene"]["stale_tracker_overrides_protected_state"] = True
+        control["tracker_hygiene"]["refresh_target"] = "PT72H"
         self.assertTrue(errors_for(control))
 
     def test_mutation_rejects_uncertain_change_without_fail_closed_escalation(self) -> None:
@@ -101,9 +141,9 @@ class AdministrativeMaintenanceControlTests(unittest.TestCase):
         control["waiver_policy"]["claim_promotion_by_waiver_allowed"] = True
         self.assertTrue(errors_for(control))
 
-    def test_mutation_rejects_binding_undecided_waiver_policy(self) -> None:
+    def test_mutation_rejects_critical_waiver_delegation(self) -> None:
         control = load_control()
-        control["waiver_policy"]["binding"] = True
+        control["waiver_policy"]["council_required_for"].remove("required-check waiver")
         self.assertTrue(errors_for(control))
 
     def test_mutation_rejects_emergency_claim_promotion(self) -> None:
@@ -111,9 +151,9 @@ class AdministrativeMaintenanceControlTests(unittest.TestCase):
         control["emergency_override_policy"]["prohibited_actions"].remove("claim promotion")
         self.assertTrue(errors_for(control))
 
-    def test_mutation_rejects_nonexpiring_emergency_override(self) -> None:
+    def test_mutation_rejects_unaccelerated_emergency_override(self) -> None:
         control = load_control()
-        control["emergency_override_policy"]["automatic_expiry_required"] = False
+        control["emergency_override_policy"]["maximum_duration"] = "PT72H"
         self.assertTrue(errors_for(control))
 
     def test_mutation_rejects_binding_gcl_tcs_before_g8_g9(self) -> None:
@@ -121,15 +161,20 @@ class AdministrativeMaintenanceControlTests(unittest.TestCase):
         control["communication_profile"]["gcl_tcs_00_binding"] = True
         self.assertTrue(errors_for(control))
 
+    def test_mutation_rejects_premature_programme_merge_gate(self) -> None:
+        control = load_control()
+        control["promotion_gate"]["may_merge_programme_control"] = True
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_premature_final_closure(self) -> None:
+        control = load_control()
+        control["promotion_gate"]["final_cross_repository_closure_complete"] = True
+        self.assertTrue(errors_for(control))
+
     def test_mutation_rejects_mathematical_claim_inflation(self) -> None:
         control = load_control()
         control["claim_boundaries"]["mathematical_target_proved"] = True
         self.assertTrue(errors_for(control))
-
-    def test_all_council_decisions_are_explicit_and_pending(self) -> None:
-        control = load_control()
-        self.assertEqual(set(control["council_decisions"]), {f"D{i}" for i in range(1, 9)})
-        self.assertTrue(all(value == "PENDING" for value in control["council_decisions"].values()))
 
 
 if __name__ == "__main__":
