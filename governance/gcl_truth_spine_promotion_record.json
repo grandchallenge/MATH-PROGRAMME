@@ -9,7 +9,7 @@
   "effective_before_protected_merge": false,
   "activation": {
     "mode": "CONDITIONAL_PROTECTED_RECORD",
-    "condition": "This promotion record and the approved subject artifacts are present on protected main through PR 194 after all required exact-head checks pass.",
+    "condition": "This promotion record and the approved semantic artifacts are present on protected main through PR 194 after all required exact-head checks pass.",
     "effective_on_condition": true,
     "post_merge_attestation_required": true,
     "issue_or_pr_comment_alone_can_activate": false
@@ -34,6 +34,14 @@
     "programme_policy_run": 30678750001,
     "conclusions": "success"
   },
+  "preserved_semantic_artifacts": [
+    {"path": "governance/gcl_truth_spine_registry.json", "blob": "c4b30773be2f3151b3e975131ab6510245a3810b"},
+    {"path": "governance/cross_repository_authority_matrix.json", "blob": "efb009bf11bd9f6f7b82cac210dc2035036e3f46"},
+    {"path": "schemas/gcl_truth_spine_registry.schema.json", "blob": "17bfdbee116f43cbc6eb27e2c4234e3f0789d961"},
+    {"path": "schemas/cross_repository_authority_matrix.schema.json", "blob": "7d654bd59499a6a7cb74e2075ff245a7fd7af812"},
+    {"path": "docs/governance/GCL_TRUTH_SPINE.md", "blob": "886b81fe1dff1874df21ab69cdc84e34887cd4e0"},
+    {"path": "docs/governance/GCL_TRUTH_SPINE_CONFORMANCE_2026_07_31.md", "blob": "d3d60514cb0ea8e30a9c198453a90eec4d5d59c9"}
+  ],
   "administrative_envelope": {
     "permitted": true,
     "permitted_content": [
@@ -43,14 +51,14 @@
       "schemas validators tests and documentation for those records",
       "gate and review metadata"
     ],
-    "must_preserve_subject_artifact_blobs": true,
-    "renewed_review_required_if_subject_artifact_blob_changes": true
+    "must_preserve_semantic_artifact_blobs": true,
+    "renewed_review_required_if_semantic_artifact_blob_changes": true
   },
   "post_merge_obligation": {
     "record_merge_commit": true,
     "record_final_pr_head": true,
     "record_required_workflow_runs": true,
-    "verify_subject_artifact_blobs_unchanged": true,
+    "verify_semantic_artifact_blobs_unchanged": true,
     "activate_next_work_package": "GCL-WP-TOOLING-WP00"
   },
   "claim_boundaries": {
