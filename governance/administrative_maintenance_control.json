@@ -1,17 +1,33 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "control_id": "MP-ADMIN-MAINT-001",
   "title": "Core Clarity and Workflow Coverage Maintenance Control",
-  "status": "CANDIDATE_PENDING_COUNCIL_DECISION",
-  "effective": false,
+  "status": "APPROVED_ACCELERATED_PILOT",
+  "effective": true,
+  "activation": "PROTECTED_MERGE_ONLY",
   "prepared_at": "2026-07-31",
   "programme_issue": 182,
   "council_issue": 183,
+  "programme_pull_request": 184,
+  "decision_record": {
+    "id": "MP-ADMIN-DECISION-001",
+    "adr": "ADR-0016",
+    "path": "governance/administrative_maintenance_council_decision.json",
+    "human_steward": "fyremael",
+    "decided_at": "2026-07-31T17:41:00-07:00"
+  },
   "foundation": {
     "repository": "grandchallenge/MATH-PROGRAMME",
     "seventh_pass_merge": "3cb6bfb9f132a4cfef279d0d3bf2309d99d0d6f1",
     "seventh_pass_record": "governance/five_repository_conformance_seventh_pass_closure.json",
     "seventh_pass_record_blob": "4f2f13117e7ada0dda2f9dcaeeaa963f5e084f13"
+  },
+  "acceleration": {
+    "factor": 0.1,
+    "pilot_duration": "P9D",
+    "pilot_start_rule": "protected merge timestamp of PR 184",
+    "pilot_review_due_rule": "pilot start plus P9D",
+    "event_triggered_obligations_remain_immediate": true
   },
   "core_clarity_invariants": {
     "protected_records_are_state_authority": true,
@@ -69,13 +85,15 @@
         "consumer projection",
         "stale-contract rejection",
         "constitutional lifecycle semantics",
-        "future-state compatibility"
+        "future-state compatibility",
+        "maintenance contract adoption and freshness enforcement"
       ]
     }
   },
   "control_loops": {
     "event_triggered_synchronization": {
       "binding": true,
+      "cadence": "IMMEDIATE_ON_MATERIAL_CHANGE",
       "trigger_classes": [
         "campaign lifecycle or registry change",
         "provider manifest or waiver change",
@@ -95,9 +113,9 @@
       ],
       "failure_disposition": "FAIL_CLOSED_MATERIAL_SYNC_INCOMPLETE"
     },
-    "weekly_structural_sweep": {
-      "binding": false,
-      "proposed_cadence": "P7D",
+    "structural_sweep": {
+      "binding": true,
+      "cadence": "PT16H48M",
       "council_decision": "D1",
       "checks": [
         "protected head inventory",
@@ -109,9 +127,9 @@
       ],
       "evidence": "versioned sweep result or successful scheduled workflow run"
     },
-    "monthly_administrative_review": {
-      "binding": false,
-      "proposed_cadence": "P1M",
+    "administrative_portfolio_review": {
+      "binding": true,
+      "cadence": "P3D",
       "council_decision": "D1",
       "checks": [
         "active campaign coverage",
@@ -123,11 +141,11 @@
         "unresolved P1 and P2 administrative defects"
       ],
       "owner": "Human Steward or delegated Programme administrator",
-      "evidence": "protected monthly review record"
+      "evidence": "protected administrative review record"
     },
-    "quarterly_deep_conformance_review": {
-      "binding": false,
-      "proposed_cadence": "P3M",
+    "deep_conformance_review": {
+      "binding": true,
+      "cadence": "P9D",
       "council_decision": "D1",
       "checks": [
         "five-repository exact identity matrix",
@@ -139,9 +157,9 @@
       ],
       "evidence": "versioned conformance closure plus external post-merge attestation"
     },
-    "annual_constitutional_review": {
-      "binding": false,
-      "proposed_cadence": "P1Y",
+    "constitutional_review": {
+      "binding": true,
+      "cadence": "P36DT12H",
       "council_decision": "D1",
       "checks": [
         "authority hierarchy",
@@ -211,32 +229,33 @@
       "review trigger"
     ],
     "tracker_can_create_authority": false,
-    "proposed_refresh_target": "P2D",
-    "refresh_target_binding": false,
+    "refresh_target": "PT7H12M",
+    "refresh_target_binding": true,
     "council_decision": "D2",
+    "interruption_exception": "A documented infrastructure or statutory-closure interruption may pause only the mirror clock and cannot change protected authority.",
     "contradictory_tracker_blocks_reconciliation_closure": true,
     "stale_tracker_overrides_protected_state": false
   },
   "freshness_policy": {
     "protected_material_sync": {
-      "proposed_rule": "same governed change sequence",
-      "binding": false,
+      "rule": "same governed change sequence",
+      "binding": true,
       "council_decision": "D2"
     },
     "tracker_refresh": {
-      "proposed_rule": "within two business days after protected merge",
-      "binding": false,
+      "rule": "within PT7H12M after protected merge",
+      "binding": true,
       "council_decision": "D2"
     },
     "routine_review_expiry": {
-      "proposed_rule": "at the next required cadence",
-      "binding": false,
+      "rule": "at the next binding accelerated cadence",
+      "binding": true,
       "council_decision": "D2"
     },
     "stale_or_contradictory_protected_current_state_disposition": "FAIL_CLOSED_IMMEDIATELY"
   },
   "waiver_policy": {
-    "binding": false,
+    "binding": true,
     "council_decision": "D3",
     "required_fields": [
       "waiver_id",
@@ -251,8 +270,8 @@
       "repair_obligation",
       "renewal_count"
     ],
-    "proposed_steward_limit": "P30D",
-    "proposed_maximum_renewals": 1,
+    "steward_local_administrative_limit": "P3D",
+    "maximum_renewals": 1,
     "council_required_for": [
       "longer waiver",
       "repeated waiver",
@@ -264,9 +283,9 @@
     "claim_promotion_by_waiver_allowed": false
   },
   "independent_review_policy": {
-    "binding": false,
+    "binding": true,
     "council_decision": "D4",
-    "proposed_referee_triggers": [
+    "referee_triggers": [
       "authority hierarchy change",
       "lifecycle or promotion semantics change",
       "claim vocabulary or scope change",
@@ -280,14 +299,14 @@
     "routine_mirror_refresh_requires_independent_referee": false
   },
   "emergency_override_policy": {
-    "binding": false,
+    "binding": true,
     "council_decision": "D6",
     "permitted_purpose": [
       "restore repository availability",
       "respond to security incident",
       "restore CI operability"
     ],
-    "proposed_maximum_duration": "PT72H",
+    "maximum_duration": "PT7H12M",
     "prohibited_actions": [
       "claim promotion",
       "campaign admission",
@@ -295,22 +314,25 @@
       "branch-protection weakening",
       "required evidence deletion"
     ],
-    "proposed_steward_review_deadline": "PT24H",
-    "proposed_council_and_referee_retrospective_deadline": "P7D",
+    "steward_review_deadline": "PT2H24M",
+    "council_and_referee_retrospective_deadline": "PT16H48M",
     "automatic_expiry_required": true,
     "fail_closed_reversion_required": true
   },
   "maintenance_burden_circuit_breaker": {
-    "binding": false,
+    "binding": true,
     "council_decision": "D7",
-    "proposed_triggers": [
-      "two consecutive monthly reviews fail",
-      "a P1 authority or identity mismatch remains unresolved for seven days",
+    "campaign_level_fail_closed": true,
+    "triggers": [
+      "two consecutive P3D administrative reviews fail",
+      "a P1 authority or identity mismatch remains unresolved for PT16H48M",
+      "two active campaigns lack complete critical workflow coverage",
       "more than twenty percent of active campaigns lack complete workflow coverage",
       "required-check or branch-protection evidence is missing",
-      "the same control defect recurs in two consecutive quarterly reviews"
+      "the same control defect recurs in two consecutive P9D deep reviews"
     ],
-    "proposed_immediate_action": "FREEZE_NEW_CAMPAIGN_ADMISSION_PENDING_COUNCIL_REVIEW",
+    "portfolio_threshold_rule": "Use the stricter of two active campaigns or more than twenty percent of the active portfolio.",
+    "immediate_action": "FREEZE_NEW_CAMPAIGN_ADMISSION_PENDING_COUNCIL_REVIEW",
     "available_council_dispositions": [
       "consolidate controls",
       "increase automation",
@@ -321,6 +343,7 @@
     ]
   },
   "communication_profile": {
+    "binding": true,
     "council_decision": "D8",
     "gcl_tcs_00_pilot_principles_may_be_used": true,
     "gcl_tcs_00_binding": false,
@@ -330,15 +353,22 @@
     ],
     "canonical_mathematical_claim_ledger_remains_controlling": true
   },
+  "intellect_buy_in": {
+    "required": true,
+    "issue": "https://github.com/grandchallenge/INTELLECT/issues/21",
+    "phase": "PHASE_A_REVIEW_OPEN",
+    "exact_protected_pin_required_after_programme_merge": true,
+    "final_closure_allowed_without_intellect_protected_adoption": false
+  },
   "council_decisions": {
-    "D1": "PENDING",
-    "D2": "PENDING",
-    "D3": "PENDING",
-    "D4": "PENDING",
-    "D5": "PENDING",
-    "D6": "PENDING",
-    "D7": "PENDING",
-    "D8": "PENDING"
+    "D1": "APPROVE_WITH_CORRECTION",
+    "D2": "APPROVE_WITH_CORRECTION",
+    "D3": "APPROVE_WITH_CORRECTION",
+    "D4": "APPROVE",
+    "D5": "APPROVE_WITH_CORRECTION",
+    "D6": "APPROVE_WITH_CORRECTION",
+    "D7": "APPROVE_WITH_CORRECTION",
+    "D8": "APPROVE_WITH_CORRECTION"
   },
   "promotion_gate": {
     "schema_valid": true,
@@ -346,10 +376,15 @@
     "adversarial_tests_required": true,
     "programme_policy_checks_required": true,
     "gcl_conformance_required": true,
-    "council_decisions_resolved": false,
+    "council_decisions_resolved": true,
     "non_author_referee_review_required": true,
+    "non_author_referee_review_complete": false,
     "human_steward_release_required": true,
-    "may_promote_now": false
+    "human_steward_release_complete": true,
+    "intellect_buy_in_required": true,
+    "intellect_phase_a_buy_in_complete": false,
+    "may_merge_programme_control": false,
+    "final_cross_repository_closure_complete": false
   },
   "claim_boundaries": {
     "mathematical_target_proved": false,
