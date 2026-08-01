@@ -111,6 +111,27 @@ class CampaignAdmissionControlTests(unittest.TestCase):
         self.candidate(admission, "VGSE-001")["candidate_phase"] = "intake_only"
         self.assertTrue(any("reviewed candidate phase drift" in e for e in self.errors(admission=admission)))
 
+    def test_vgse_solve_evidence_identities_are_pinned(self):
+        mutations = {
+            "base_commit": "0" * 40,
+            "reviewed_head": "0" * 40,
+            "merge_commit": "0" * 40,
+            "merged_at": "2026-01-01T00:00:00Z",
+            "workflow_runs": {
+                "solve_checks": 1,
+                "gcl_conformance": 1,
+                "candidate_replay": 1,
+            },
+            "required_admission_record_path": "work_packages/VGSE_WP00/wrong.json",
+        }
+        for field, value in mutations.items():
+            with self.subTest(field=field):
+                admission = copy.deepcopy(self.admission)
+                solve = self.candidate(admission, "VGSE-001")["solve_candidate"]
+                solve[field] = value
+                expected = f"merged Solve evidence drift in {field}"
+                self.assertTrue(any(expected in e for e in self.errors(admission=admission)))
+
     def test_runtime_must_pin_two_candidate_ids(self):
         runtime = copy.deepcopy(self.runtime)
         runtime["candidate_admission_contract"]["candidate_ids"] = ["VGSE-001"]
