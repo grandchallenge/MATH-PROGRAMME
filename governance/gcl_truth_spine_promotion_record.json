@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "promotion_id": "GCL-TRUTH-SPINE-PROMOTION-001",
+  "registry_id": "GCL-TRUTH-SPINE-001",
+  "subject_repository": "grandchallenge/MATH-PROGRAMME",
+  "subject_pull_request": 194,
+  "subject_commit": "d2a78b0b25497da192f23045d35869cd483ea15c",
+  "status": "APPROVED_FOR_PROTECTED_MERGE_SUBJECT_TO_BRANCH_PROTECTION",
+  "effective_before_protected_merge": false,
+  "activation": {
+    "mode": "CONDITIONAL_PROTECTED_RECORD",
+    "condition": "This promotion record and the approved subject artifacts are present on protected main through PR 194 after all required exact-head checks pass.",
+    "effective_on_condition": true,
+    "post_merge_attestation_required": true,
+    "issue_or_pr_comment_alone_can_activate": false
+  },
+  "approval_records": {
+    "human_steward_release": "governance/gcl_truth_spine_steward_release.json",
+    "referee_review": "governance/gcl_truth_spine_referee_review.json",
+    "referee_designation": "governance/gcl_delegated_referee_office.json"
+  },
+  "gate_disposition": {
+    "human_steward_release_complete": true,
+    "delegated_referee_review_complete": true,
+    "approved_substantive_head_checks_complete": true,
+    "final_pr_head_required_checks_must_pass": true,
+    "protected_merge_required": true,
+    "semantic_change_after_approval_allowed": false,
+    "may_mark_ready_for_review": true,
+    "may_merge_when_branch_protection_is_satisfied": true
+  },
+  "approved_substantive_head_evidence": {
+    "gcl_conformance_run": 30678750162,
+    "programme_policy_run": 30678750001,
+    "conclusions": "success"
+  },
+  "administrative_envelope": {
+    "permitted": true,
+    "permitted_content": [
+      "Human Steward release record",
+      "delegated Referee designation and review",
+      "promotion and activation record",
+      "schemas validators tests and documentation for those records",
+      "gate and review metadata"
+    ],
+    "must_preserve_subject_artifact_blobs": true,
+    "renewed_review_required_if_subject_artifact_blob_changes": true
+  },
+  "post_merge_obligation": {
+    "record_merge_commit": true,
+    "record_final_pr_head": true,
+    "record_required_workflow_runs": true,
+    "verify_subject_artifact_blobs_unchanged": true,
+    "activate_next_work_package": "GCL-WP-TOOLING-WP00"
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "certificate_issued": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "patentability_claim_authorized": false,
+    "mechanical_claim_authorized": false,
+    "manufacturing_claim_authorized": false,
+    "commercial_claim_authorized": false
+  }
+}
