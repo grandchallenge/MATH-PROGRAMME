@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_maintenance_steward_release.schema.json",
+  "title": "Administrative Maintenance Human Steward Release",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "release_id", "control_id", "decision_id", "human_steward", "released_at", "disposition", "approved_scope", "timing_correction", "activation", "remaining_release_conditions", "claim_boundaries"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "release_id": {"const": "MP-ADMIN-STEWARD-001"},
+    "control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "decision_id": {"const": "MP-ADMIN-DECISION-001"},
+    "human_steward": {"const": "fyremael"},
+    "released_at": {"type": "string", "format": "date-time"},
+    "disposition": {"const": "APPROVE_WITH_ACCELERATED_TIMING_CORRECTION"},
+    "approved_scope": {"type": "array", "minItems": 10, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "timing_correction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["factor", "pilot_duration", "all_proposed_duration_and_cadence_estimates_scaled", "event_triggered_obligations_remain_immediate"],
+      "properties": {
+        "factor": {"const": 0.1},
+        "pilot_duration": {"const": "P9D"},
+        "all_proposed_duration_and_cadence_estimates_scaled": {"const": true},
+        "event_triggered_obligations_remain_immediate": {"const": true}
+      }
+    },
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["programme_control", "final_closure"],
+      "properties": {
+        "programme_control": {"const": "protected merge only"},
+        "final_closure": {"type": "string", "minLength": 1}
+      }
+    },
+    "remaining_release_conditions": {"type": "array", "minItems": 8, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "claim_boundaries": {
+      "type": "object",
+      "minProperties": 10,
+      "additionalProperties": {"const": false}
+    }
+  }
+}
