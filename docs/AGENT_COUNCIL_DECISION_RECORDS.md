@@ -17,6 +17,7 @@
 | ADR-0013 | 2026-07-26 | Accepted for active non-blocking investigation | Authorize NS-CI-WP06 as a non-probative undecidability and reduction lane. | [`ADR-0013_NS_WP06_UNDECIDABILITY_LANE.md`](decisions/ADR-0013_NS_WP06_UNDECIDABILITY_LANE.md) |
 | ADR-0014 | 2026-07-26 | Accepted | Bind Pages publication to the exact policy-built site artifact and govern repository tests and experiments. | [`ADR-0014_EXACT_ARTIFACT_AND_REPOSITORY_EXECUTION.md`](decisions/ADR-0014_EXACT_ARTIFACT_AND_REPOSITORY_EXECUTION.md) |
 | ADR-0015 | 2026-07-27 | Accepted | Admit the Union-Closed full-tier documentary as the Wave Two pilot while retaining Frankl's conjecture as open and preserving UC-DOC-WP00 source-lock provenance. | [`ADR-0015_UNION_CLOSED_DOCUMENTARY_ADMISSION.md`](decisions/ADR-0015_UNION_CLOSED_DOCUMENTARY_ADMISSION.md) |
+| ADR-0016 | 2026-07-31 | Accepted for protected-merge activation | Adopt Core Clarity maintenance, resolve D1–D8, apply the 0.1 accelerated time scale, and require protected INTELLECT adoption. | [`ADR-0016_ACCELERATED_CORE_CLARITY_MAINTENANCE.md`](decisions/ADR-0016_ACCELERATED_CORE_CLARITY_MAINTENANCE.md) |
 
 ## Identifier rule
 
