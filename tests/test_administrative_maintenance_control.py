@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-import copy
 import importlib.util
 import json
+import unittest
 from pathlib import Path
-
-import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTROL_PATH = ROOT / "governance" / "administrative_maintenance_control.json"
@@ -36,117 +34,103 @@ def errors_for(control: dict) -> list[str]:
     return VALIDATOR.schema_errors(control, load_schema()) + VALIDATOR.semantic_errors(control)
 
 
-def test_candidate_control_is_valid() -> None:
-    assert errors_for(load_control()) == []
+class AdministrativeMaintenanceControlTests(unittest.TestCase):
+    def test_candidate_control_is_valid(self) -> None:
+        self.assertEqual(errors_for(load_control()), [])
+
+    def test_cli_validator_accepts_repository_files(self) -> None:
+        self.assertEqual(VALIDATOR.validate(CONTROL_PATH, SCHEMA_PATH), [])
+
+    def test_mutation_rejects_issue_authority_inflation(self) -> None:
+        control = load_control()
+        control["core_clarity_invariants"]["mutable_issues_are_navigation_only"] = False
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_ceremonial_repin_policy(self) -> None:
+        control = load_control()
+        control["core_clarity_invariants"]["unchanged_material_artifacts_do_not_require_repin"] = False
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_candidate_activation(self) -> None:
+        control = load_control()
+        control["effective"] = True
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_premature_council_resolution(self) -> None:
+        control = load_control()
+        control["council_decisions"]["D1"] = "APPROVE"
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_premature_promotion(self) -> None:
+        control = load_control()
+        control["promotion_gate"]["may_promote_now"] = True
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_missing_repository_role(self) -> None:
+        control = load_control()
+        del control["repository_roles"]["mathcert"]
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_incomplete_workflow_capabilities(self) -> None:
+        control = load_control()
+        control["workflow_coverage_requirements"]["required_capabilities"].remove("adversarial mutation tests")
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_yaml_only_coverage(self) -> None:
+        control = load_control()
+        control["workflow_coverage_requirements"]["yaml_presence_alone_is_sufficient"] = True
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_tracker_authority(self) -> None:
+        control = load_control()
+        control["tracker_hygiene"]["tracker_can_create_authority"] = True
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_stale_tracker_override(self) -> None:
+        control = load_control()
+        control["tracker_hygiene"]["stale_tracker_overrides_protected_state"] = True
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_uncertain_change_without_fail_closed_escalation(self) -> None:
+        control = load_control()
+        control["material_change_classification"]["uncertain_classification_disposition"] = "ALLOW"
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_claim_promotion_by_waiver(self) -> None:
+        control = load_control()
+        control["waiver_policy"]["claim_promotion_by_waiver_allowed"] = True
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_binding_undecided_waiver_policy(self) -> None:
+        control = load_control()
+        control["waiver_policy"]["binding"] = True
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_emergency_claim_promotion(self) -> None:
+        control = load_control()
+        control["emergency_override_policy"]["prohibited_actions"].remove("claim promotion")
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_nonexpiring_emergency_override(self) -> None:
+        control = load_control()
+        control["emergency_override_policy"]["automatic_expiry_required"] = False
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_binding_gcl_tcs_before_g8_g9(self) -> None:
+        control = load_control()
+        control["communication_profile"]["gcl_tcs_00_binding"] = True
+        self.assertTrue(errors_for(control))
+
+    def test_mutation_rejects_mathematical_claim_inflation(self) -> None:
+        control = load_control()
+        control["claim_boundaries"]["mathematical_target_proved"] = True
+        self.assertTrue(errors_for(control))
+
+    def test_all_council_decisions_are_explicit_and_pending(self) -> None:
+        control = load_control()
+        self.assertEqual(set(control["council_decisions"]), {f"D{i}" for i in range(1, 9)})
+        self.assertTrue(all(value == "PENDING" for value in control["council_decisions"].values()))
 
 
-def test_cli_validator_accepts_repository_files() -> None:
-    assert VALIDATOR.validate(CONTROL_PATH, SCHEMA_PATH) == []
-
-
-def test_mutation_rejects_issue_authority_inflation() -> None:
-    control = load_control()
-    control["core_clarity_invariants"]["mutable_issues_are_navigation_only"] = False
-    assert errors_for(control)
-
-
-def test_mutation_rejects_ceremonial_repin_policy() -> None:
-    control = load_control()
-    control["core_clarity_invariants"]["unchanged_material_artifacts_do_not_require_repin"] = False
-    assert errors_for(control)
-
-
-def test_mutation_rejects_candidate_activation() -> None:
-    control = load_control()
-    control["effective"] = True
-    assert errors_for(control)
-
-
-def test_mutation_rejects_premature_council_resolution() -> None:
-    control = load_control()
-    control["council_decisions"]["D1"] = "APPROVE"
-    assert errors_for(control)
-
-
-def test_mutation_rejects_premature_promotion() -> None:
-    control = load_control()
-    control["promotion_gate"]["may_promote_now"] = True
-    assert errors_for(control)
-
-
-def test_mutation_rejects_missing_repository_role() -> None:
-    control = load_control()
-    del control["repository_roles"]["mathcert"]
-    assert errors_for(control)
-
-
-def test_mutation_rejects_incomplete_workflow_capabilities() -> None:
-    control = load_control()
-    control["workflow_coverage_requirements"]["required_capabilities"].remove("adversarial mutation tests")
-    assert errors_for(control)
-
-
-def test_mutation_rejects_yaml_only_coverage() -> None:
-    control = load_control()
-    control["workflow_coverage_requirements"]["yaml_presence_alone_is_sufficient"] = True
-    assert errors_for(control)
-
-
-def test_mutation_rejects_tracker_authority() -> None:
-    control = load_control()
-    control["tracker_hygiene"]["tracker_can_create_authority"] = True
-    assert errors_for(control)
-
-
-def test_mutation_rejects_stale_tracker_override() -> None:
-    control = load_control()
-    control["tracker_hygiene"]["stale_tracker_overrides_protected_state"] = True
-    assert errors_for(control)
-
-
-def test_mutation_rejects_uncertain_change_without_fail_closed_escalation() -> None:
-    control = load_control()
-    control["material_change_classification"]["uncertain_classification_disposition"] = "ALLOW"
-    assert errors_for(control)
-
-
-def test_mutation_rejects_claim_promotion_by_waiver() -> None:
-    control = load_control()
-    control["waiver_policy"]["claim_promotion_by_waiver_allowed"] = True
-    assert errors_for(control)
-
-
-def test_mutation_rejects_binding_undecided_waiver_policy() -> None:
-    control = load_control()
-    control["waiver_policy"]["binding"] = True
-    assert errors_for(control)
-
-
-def test_mutation_rejects_emergency_claim_promotion() -> None:
-    control = load_control()
-    control["emergency_override_policy"]["prohibited_actions"].remove("claim promotion")
-    assert errors_for(control)
-
-
-def test_mutation_rejects_nonexpiring_emergency_override() -> None:
-    control = load_control()
-    control["emergency_override_policy"]["automatic_expiry_required"] = False
-    assert errors_for(control)
-
-
-def test_mutation_rejects_binding_gcl_tcs_before_g8_g9() -> None:
-    control = load_control()
-    control["communication_profile"]["gcl_tcs_00_binding"] = True
-    assert errors_for(control)
-
-
-def test_mutation_rejects_mathematical_claim_inflation() -> None:
-    control = load_control()
-    control["claim_boundaries"]["mathematical_target_proved"] = True
-    assert errors_for(control)
-
-
-@pytest.mark.parametrize("decision", [f"D{i}" for i in range(1, 9)])
-def test_all_council_decisions_are_explicit_and_pending(decision: str) -> None:
-    control = load_control()
-    assert control["council_decisions"][decision] == "PENDING"
+if __name__ == "__main__":
+    unittest.main()
