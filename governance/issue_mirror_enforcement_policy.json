@@ -1,12 +1,14 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "policy_id": "MP-ADMIN-MIRROR-001",
   "parent_control_id": "MP-ADMIN-MAINT-001",
+  "decision_record_id": "MP-ADMIN-DECISION-001",
   "programme_issue": 182,
   "council_issue": 183,
   "council_decision": "D5",
-  "status": "CANDIDATE_PENDING_COUNCIL_DECISION",
-  "effective": false,
+  "status": "APPROVED_ACCELERATED_PILOT",
+  "effective": true,
+  "activation": "PROTECTED_MERGE_ONLY",
   "authority_model": {
     "protected_records_are_authoritative": true,
     "issues_are_navigation_and_discussion_only": true,
@@ -21,14 +23,15 @@
     "claim boundary",
     "review trigger"
   ],
-  "proposed_enforcement": {
+  "enforcement": {
     "ordinary_staleness_is_release_gate": false,
     "ordinary_staleness_creates_administrative_defect": true,
     "contradictory_canonical_tracker_blocks_reconciliation_closure": true,
     "missing_canonical_tracker_link_in_protected_current_state_is_error": true,
     "authority_bearing_issue_language_is_error": true,
-    "refresh_target": "P2D",
-    "refresh_target_binding": false
+    "refresh_target": "PT7H12M",
+    "refresh_target_binding": true,
+    "interruption_exception": "A documented infrastructure or statutory-closure interruption may pause only the mirror clock and cannot alter protected authority."
   },
   "defect_dispositions": {
     "stale_but_noncontradictory": "P2_ADMINISTRATIVE_DEFECT",
@@ -41,8 +44,8 @@
     "umbrella_reconciliation_may_close_with_unresolved_authority_bearing_issue_language": false,
     "external_post_merge_attestation_required_when_closure_cannot_self_pin": true
   },
-  "council_state": "PENDING",
-  "may_promote_now": false,
+  "council_state": "APPROVE_WITH_CORRECTION",
+  "may_activate_on_protected_merge": true,
   "claim_boundaries": {
     "campaign_admitted": false,
     "route_created": false,
