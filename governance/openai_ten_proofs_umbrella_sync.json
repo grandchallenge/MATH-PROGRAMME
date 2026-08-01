@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "MP-OTP-UMBRELLA-SYNC-001",
+  "candidate_id": "OPENAI-TEN-PROOFS-001",
+  "tracker_issue": 200,
+  "lifecycle_state": "candidate_external_formalization_semantic_audit",
+  "active_campaign_member": false,
+  "authority": {
+    "forge_evidence_merge": "72452f4579749448169cacf9f2ab22a4df2bb182",
+    "forge_artifacts": {
+      "provider_manifest": {
+        "path": "provider_manifests/OPENAI-TEN-PROOFS-001.json",
+        "git_blob_sha1": "2bf815006770e8484efcbe242380678fb7be8ca8"
+      },
+      "historical_source_lock": {
+        "path": "sources/OPENAI-TEN-PROOFS-001/source_lock.json",
+        "git_blob_sha1": "1b4981178553ad300a5abead6d3c9f6bac78d0da"
+      },
+      "theorem_intake_matrix": {
+        "path": "sources/OPENAI-TEN-PROOFS-001/theorem_intake_matrix.json",
+        "git_blob_sha1": "2d8b24c32c804c4f5ca0f5f5ad1185199d35664b"
+      },
+      "review_attestation": {
+        "path": "governance/review_attestations/OTP-EVIDENCE-CORR-001.json",
+        "git_blob_sha1": "30f98012208cc26c64f3c05cf65b7be9dba52cd6"
+      }
+    },
+    "review_remedy": {
+      "pull_request": 41,
+      "head_sha": "dfdb293e2600c17153267cd746b2914dd060ec95",
+      "merge_commit_sha": "bffb7d63476d79e86665ec5a74d554794e24357e",
+      "reviewer": "jimsteeg",
+      "review_id": 4834910775,
+      "review_state": "APPROVED",
+      "effect": "prospectively_remediated_by_retrospective_attestation",
+      "historical_merge_reviewed": false
+    }
+  },
+  "source_identity": {
+    "current_official": {
+      "repository": "openai/ten-proofs",
+      "commit": "e62211d28e3a9131950c89caa6542cfe5eff3bca",
+      "tree": "2f8e7ac5ae7f157b6b1de636c2c343b1c7a7e365",
+      "archive_sha256": "3022e62ffbed8f5f74d232034a703dc645e6b301879dff1e87df72979914294f"
+    },
+    "historical_disconnected": {
+      "commit": "6fefffdbab0dfa726fcfde6cefae23aa7a1888f3",
+      "tree": "79e6a50b1e391bdddb18b42be3e886c1d9784ed3",
+      "archive_sha256": "630e10ec7f8b08ce3416fba967e6d1e4c7599677e38fd4af24fc0c68a9a5bac2",
+      "common_ancestor_with_current": false,
+      "role": "historical_intake_evidence"
+    },
+    "official_written_sources": {
+      "manuscript_sha256": "f318c6508c9d49ef876a5a26cd73928705f96c07bb43e92a0cb35bd3f666ea53",
+      "reasoning_notes_sha256": "13b95999f060c0be2142089cfb8b17b75e9231c3c1f3fa0980445ff1b35f0b3b",
+      "state": "present"
+    }
+  },
+  "trusted_replay": {
+    "kernel_result_family_count": 12,
+    "kernel_clear_count": 12,
+    "corrected_target_job_count": 8710,
+    "comparator_configuration_count": 12,
+    "comparator_pass_count": 12,
+    "lean_kernel_accept_count": 12,
+    "required_nanoda_count": 9,
+    "required_nanoda_accept_count": 9,
+    "theorem_axiom_report_count": 41,
+    "permitted_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "artifacts": {
+      "target_overlay_patch_sha256": "124b0349679d6af473a17ab245725ce706317f5841625990fe3046dd462eceab",
+      "corrected_target_log_sha256": "b442c5b3fabdaa4c1ce8cc292cb2fb71e0ad7227d0ac5a5f5295e21eab626687",
+      "comparator_summary_sha256": "332da664bc0c66c19793256ef1af74c1a80ba6baea6172e0709dc377a565f789",
+      "axiom_summary_sha256": "2df8dcf6210b9b46156e3136b359d4db70ffdd7abcc9f8d0082e9ff5b7bc63aa"
+    },
+    "state": "clear_for_corrected_target_set_12_of_12"
+  },
+  "aggregate_integration": {
+    "all_lean_state": "failed_separate_integration_obligation",
+    "failure": "SpherePacking and MetricCodes both contribute replicate_to_periodic_packing",
+    "log_sha256": "632099162cd6d13ec88eb0eaef73a7a247591bafb8fe8177f15deb428546460b",
+    "reopens_kernel_gate": false
+  },
+  "semantic_gate": {
+    "source_acquisition": "present",
+    "result_family_count": 12,
+    "clear_count": 0,
+    "blocked_result_families": [
+      "OTP-C-PERMANENT",
+      "OTP-H-GAPCVP"
+    ],
+    "audit_state": "authorized_to_begin",
+    "route_granularity": "result_family"
+  },
+  "route_state": {
+    "mathsolve": "semantic_audit_authorized_no_handoffs",
+    "mathcert": "pre_route_candidate_no_adjudication",
+    "solve_handoff_count": 0,
+    "may_emit_result_family_handoff": false,
+    "may_emit_aggregate_handoff": false,
+    "may_adjudicate": false,
+    "may_promote_result": false,
+    "cert_output": null
+  },
+  "supersession": {
+    "initial_programme_record": "governance/openai_ten_proofs_wp00_candidate_intake.json",
+    "effect": "current_state_overlay_without_rewriting_historical_intake"
+  },
+  "claim_boundary": "This synchronization records current source, replay, review-remedy, semantic-gate, and routing state. It does not establish source-to-Lean equivalence, nonvacuity, mathematical truth, active campaign admission, a MATHSOLVE handoff, a MATHCERT route or output, novelty, priority, publication authority, or any aggregate ten-proofs certification claim."
+}
