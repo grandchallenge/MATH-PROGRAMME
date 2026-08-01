@@ -1,0 +1,406 @@
+{
+  "schema_version": "1.1.0",
+  "control_id": "MP-ADMIN-MAINT-001",
+  "title": "Core Clarity and Workflow Coverage Maintenance Control",
+  "status": "APPROVED_ACCELERATED_PILOT",
+  "effective": true,
+  "activation": "PROTECTED_MERGE_ONLY",
+  "prepared_at": "2026-07-31",
+  "programme_issue": 182,
+  "council_issue": 183,
+  "programme_pull_request": 184,
+  "decision_record": {
+    "id": "MP-ADMIN-DECISION-001",
+    "adr": "ADR-0016",
+    "path": "governance/administrative_maintenance_council_decision.json",
+    "human_steward": "fyremael",
+    "decided_at": "2026-07-31T17:41:00-07:00"
+  },
+  "foundation": {
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "seventh_pass_merge": "3cb6bfb9f132a4cfef279d0d3bf2309d99d0d6f1",
+    "seventh_pass_record": "governance/five_repository_conformance_seventh_pass_closure.json",
+    "seventh_pass_record_blob": "4f2f13117e7ada0dda2f9dcaeeaa963f5e084f13"
+  },
+  "acceleration": {
+    "factor": 0.1,
+    "pilot_duration": "P9D",
+    "pilot_start_rule": "protected merge timestamp of PR 184",
+    "pilot_review_due_rule": "pilot start plus P9D",
+    "event_triggered_obligations_remain_immediate": true
+  },
+  "core_clarity_invariants": {
+    "protected_records_are_state_authority": true,
+    "mutable_issues_are_navigation_only": true,
+    "repository_head_is_distinct_from_material_artifact_identity": true,
+    "unchanged_material_artifacts_do_not_require_repin": true,
+    "historical_records_are_immutable": true,
+    "historical_records_require_successor_or_supersession_semantics": true,
+    "missing_stale_contradictory_or_unreviewed_evidence_fails_closed": true,
+    "interface_qualification_is_not_theorem_proof": true,
+    "presentation_cannot_create_authority": true,
+    "administrative_maintenance_cannot_promote_external_claims": true
+  },
+  "repository_roles": {
+    "math_programme": {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "responsibilities": [
+        "portfolio authority",
+        "campaign lifecycle and routing registry",
+        "candidate admission",
+        "claim-boundary coordination",
+        "maintenance control ownership"
+      ]
+    },
+    "mathforge": {
+      "repository": "grandchallenge/MATHFORGE",
+      "responsibilities": [
+        "source identity and revision",
+        "provider provenance",
+        "provider manifests and waivers",
+        "source-change review triggers"
+      ]
+    },
+    "mathsolve": {
+      "repository": "grandchallenge/MATHSOLVE",
+      "responsibilities": [
+        "mathematical work-package lineage",
+        "campaign manifests",
+        "producer handoffs",
+        "producer-state integrity"
+      ]
+    },
+    "mathcert": {
+      "repository": "grandchallenge/MATHCERT",
+      "responsibilities": [
+        "certification routes",
+        "adjudication state",
+        "certificate outputs",
+        "certificate scope authority"
+      ]
+    },
+    "intellect": {
+      "repository": "grandchallenge/INTELLECT",
+      "responsibilities": [
+        "consumer projection",
+        "stale-contract rejection",
+        "constitutional lifecycle semantics",
+        "future-state compatibility",
+        "maintenance contract adoption and freshness enforcement"
+      ]
+    }
+  },
+  "control_loops": {
+    "event_triggered_synchronization": {
+      "binding": true,
+      "cadence": "IMMEDIATE_ON_MATERIAL_CHANGE",
+      "trigger_classes": [
+        "campaign lifecycle or registry change",
+        "provider manifest or waiver change",
+        "Solve campaign manifest or handoff change",
+        "Cert route adjudication or output change",
+        "Programme runtime routing admission or claim-contract change",
+        "INTELLECT provider pin or lifecycle-semantics change",
+        "branch-protection or required-workflow change"
+      ],
+      "required_actions": [
+        "classify the change as material or nonmaterial",
+        "identify affected authoritative artifacts and consumers",
+        "update all materially affected protected contracts in one governed sequence",
+        "preserve unchanged content-addressed identities",
+        "run exact-head validation and required workflows",
+        "record post-merge external attestation when an artifact cannot self-pin its future merge"
+      ],
+      "failure_disposition": "FAIL_CLOSED_MATERIAL_SYNC_INCOMPLETE"
+    },
+    "structural_sweep": {
+      "binding": true,
+      "cadence": "PT16H48M",
+      "council_decision": "D1",
+      "checks": [
+        "protected head inventory",
+        "open pull-request interference",
+        "schema parseability",
+        "required workflow presence",
+        "canonical tracker link integrity",
+        "unexpected authority-bearing issue language"
+      ],
+      "evidence": "versioned sweep result or successful scheduled workflow run"
+    },
+    "administrative_portfolio_review": {
+      "binding": true,
+      "cadence": "P3D",
+      "council_decision": "D1",
+      "checks": [
+        "active campaign coverage",
+        "candidate and archived portfolio state",
+        "provider manifest and waiver status",
+        "Solve handoff and Cert route concordance",
+        "workflow coverage matrix",
+        "tracker freshness",
+        "unresolved P1 and P2 administrative defects"
+      ],
+      "owner": "Human Steward or delegated Programme administrator",
+      "evidence": "protected administrative review record"
+    },
+    "deep_conformance_review": {
+      "binding": true,
+      "cadence": "P9D",
+      "council_decision": "D1",
+      "checks": [
+        "five-repository exact identity matrix",
+        "supersession and archival integrity",
+        "adversarial mutation coverage",
+        "branch protection and required-check evidence",
+        "repeated defect analysis",
+        "maintenance burden and consolidation candidates"
+      ],
+      "evidence": "versioned conformance closure plus external post-merge attestation"
+    },
+    "constitutional_review": {
+      "binding": true,
+      "cadence": "P36DT12H",
+      "council_decision": "D1",
+      "checks": [
+        "authority hierarchy",
+        "role separation",
+        "claim vocabulary",
+        "waiver and emergency powers",
+        "maintenance burden",
+        "communication profile",
+        "retention and archival policy"
+      ],
+      "owner": "Council and Human Steward",
+      "evidence": "Council decision record"
+    }
+  },
+  "material_change_classification": {
+    "material_changes": [
+      "semantic change to authority lifecycle route claim or promotion state",
+      "new or changed provider manifest campaign manifest handoff route adjudication or certificate output",
+      "new or changed content consumed as an exact provider contract",
+      "required workflow or branch-protection change",
+      "change that alters accepted evidence or prohibited uses"
+    ],
+    "nonmaterial_changes": [
+      "repository head movement that leaves consumed artifact blobs unchanged",
+      "issue mirror refresh that preserves protected state",
+      "typographic or explanatory change without semantic or evidence effect",
+      "external attestation that records an already reviewed merge without changing protected contract meaning"
+    ],
+    "classification_evidence_required": true,
+    "uncertain_classification_disposition": "ESCALATE_AND_FAIL_CLOSED"
+  },
+  "workflow_coverage_requirements": {
+    "coverage_definition": "A workflow is covered only when its purpose, trigger, required-check status, exact-head execution, evidence retention, failure preservation, owner, and repair route are recorded.",
+    "required_capabilities": [
+      "schema and contract validation",
+      "unit tests",
+      "adversarial mutation tests",
+      "source or provider validation where applicable",
+      "campaign admission and routing validation where applicable",
+      "formal or certificate replay where applicable",
+      "documentation build where applicable",
+      "GCL conformance",
+      "protected-branch and release-trust evidence"
+    ],
+    "required_fields_per_capability": [
+      "repository",
+      "capability",
+      "workflow_name_or_nonapplicability_record",
+      "trigger",
+      "required_check_state",
+      "evidence_location",
+      "failure_evidence_location",
+      "owner",
+      "repair_route",
+      "last_verified_identity"
+    ],
+    "missing_required_capability_disposition": "FAIL_CLOSED_WORKFLOW_COVERAGE_INCOMPLETE",
+    "yaml_presence_alone_is_sufficient": false
+  },
+  "tracker_hygiene": {
+    "canonical_tracker_required_sections": [
+      "authority boundary",
+      "protected authority identity",
+      "current lifecycle and route state",
+      "next controlled obligation",
+      "claim boundary",
+      "review trigger"
+    ],
+    "tracker_can_create_authority": false,
+    "refresh_target": "PT7H12M",
+    "refresh_target_binding": true,
+    "council_decision": "D2",
+    "interruption_exception": "A documented infrastructure or statutory-closure interruption may pause only the mirror clock and cannot change protected authority.",
+    "contradictory_tracker_blocks_reconciliation_closure": true,
+    "stale_tracker_overrides_protected_state": false
+  },
+  "freshness_policy": {
+    "protected_material_sync": {
+      "rule": "same governed change sequence",
+      "binding": true,
+      "council_decision": "D2"
+    },
+    "tracker_refresh": {
+      "rule": "within PT7H12M after protected merge",
+      "binding": true,
+      "council_decision": "D2"
+    },
+    "routine_review_expiry": {
+      "rule": "at the next binding accelerated cadence",
+      "binding": true,
+      "council_decision": "D2"
+    },
+    "stale_or_contradictory_protected_current_state_disposition": "FAIL_CLOSED_IMMEDIATELY"
+  },
+  "waiver_policy": {
+    "binding": true,
+    "council_decision": "D3",
+    "required_fields": [
+      "waiver_id",
+      "scope",
+      "owner",
+      "reason",
+      "evidence",
+      "approved_by",
+      "issued_at",
+      "expires_at",
+      "prohibited_uses",
+      "repair_obligation",
+      "renewal_count"
+    ],
+    "steward_local_administrative_limit": "P3D",
+    "maximum_renewals": 1,
+    "council_required_for": [
+      "longer waiver",
+      "repeated waiver",
+      "cross-repository waiver",
+      "provenance waiver",
+      "certification waiver",
+      "required-check waiver"
+    ],
+    "claim_promotion_by_waiver_allowed": false
+  },
+  "independent_review_policy": {
+    "binding": true,
+    "council_decision": "D4",
+    "referee_triggers": [
+      "authority hierarchy change",
+      "lifecycle or promotion semantics change",
+      "claim vocabulary or scope change",
+      "provider producer or adjudicator boundary change",
+      "waiver-class change",
+      "emergency-override power change",
+      "branch-protection or required-check weakening",
+      "maintenance control whose failure could permit promotion"
+    ],
+    "routine_identity_repin_requires_independent_referee": false,
+    "routine_mirror_refresh_requires_independent_referee": false
+  },
+  "emergency_override_policy": {
+    "binding": true,
+    "council_decision": "D6",
+    "permitted_purpose": [
+      "restore repository availability",
+      "respond to security incident",
+      "restore CI operability"
+    ],
+    "maximum_duration": "PT7H12M",
+    "prohibited_actions": [
+      "claim promotion",
+      "campaign admission",
+      "certification adjudication",
+      "branch-protection weakening",
+      "required evidence deletion"
+    ],
+    "steward_review_deadline": "PT2H24M",
+    "council_and_referee_retrospective_deadline": "PT16H48M",
+    "automatic_expiry_required": true,
+    "fail_closed_reversion_required": true
+  },
+  "maintenance_burden_circuit_breaker": {
+    "binding": true,
+    "council_decision": "D7",
+    "campaign_level_fail_closed": true,
+    "triggers": [
+      "two consecutive P3D administrative reviews fail",
+      "a P1 authority or identity mismatch remains unresolved for PT16H48M",
+      "two active campaigns lack complete critical workflow coverage",
+      "more than twenty percent of active campaigns lack complete workflow coverage",
+      "required-check or branch-protection evidence is missing",
+      "the same control defect recurs in two consecutive P9D deep reviews"
+    ],
+    "portfolio_threshold_rule": "Use the stricter of two active campaigns or more than twenty percent of the active portfolio.",
+    "immediate_action": "FREEZE_NEW_CAMPAIGN_ADMISSION_PENDING_COUNCIL_REVIEW",
+    "available_council_dispositions": [
+      "consolidate controls",
+      "increase automation",
+      "archive obsolete records",
+      "change staffing or ownership",
+      "suspend campaign",
+      "return to normal operation"
+    ]
+  },
+  "communication_profile": {
+    "binding": true,
+    "council_decision": "D8",
+    "gcl_tcs_00_pilot_principles_may_be_used": true,
+    "gcl_tcs_00_binding": false,
+    "binding_preconditions": [
+      "issue 108 G8 non-author Referee review complete",
+      "issue 108 G9 Human Steward release complete"
+    ],
+    "canonical_mathematical_claim_ledger_remains_controlling": true
+  },
+  "intellect_buy_in": {
+    "required": true,
+    "issue": "https://github.com/grandchallenge/INTELLECT/issues/21",
+    "pull_request": "https://github.com/grandchallenge/INTELLECT/pull/22",
+    "phase": "PHASE_A_COMMITTED_PENDING_PROTECTED_PIN",
+    "phase_a_head": "6d4dce2db607da7a3f4629bb9b36735a3cf57b96",
+    "phase_a_ci_run": 30677018860,
+    "phase_a_gcl_run": 30677019107,
+    "exact_protected_pin_required_after_programme_merge": true,
+    "final_closure_allowed_without_intellect_protected_adoption": false
+  },
+  "council_decisions": {
+    "D1": "APPROVE_WITH_CORRECTION",
+    "D2": "APPROVE_WITH_CORRECTION",
+    "D3": "APPROVE_WITH_CORRECTION",
+    "D4": "APPROVE",
+    "D5": "APPROVE_WITH_CORRECTION",
+    "D6": "APPROVE_WITH_CORRECTION",
+    "D7": "APPROVE_WITH_CORRECTION",
+    "D8": "APPROVE_WITH_CORRECTION"
+  },
+  "promotion_gate": {
+    "schema_valid": true,
+    "semantic_tests_required": true,
+    "adversarial_tests_required": true,
+    "programme_policy_checks_required": true,
+    "gcl_conformance_required": true,
+    "council_decisions_resolved": true,
+    "non_author_referee_review_required": true,
+    "non_author_referee_review_complete": true,
+    "human_steward_release_required": true,
+    "human_steward_release_complete": true,
+    "intellect_buy_in_required": true,
+    "intellect_phase_a_buy_in_complete": true,
+    "may_merge_programme_control": true,
+    "final_cross_repository_closure_complete": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "interface_qualification_promoted_to_theorem": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "certificate_issued": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "patentability_claim_authorized": false,
+    "mechanical_claim_authorized": false,
+    "manufacturing_claim_authorized": false,
+    "commercial_claim_authorized": false
+  }
+}

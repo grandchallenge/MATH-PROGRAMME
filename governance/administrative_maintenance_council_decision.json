@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "MP-ADMIN-DECISION-001",
+  "adr": "ADR-0016",
+  "control_id": "MP-ADMIN-MAINT-001",
+  "mirror_policy_id": "MP-ADMIN-MIRROR-001",
+  "programme_issue": 182,
+  "council_issue": 183,
+  "pull_request": 184,
+  "decided_at": "2026-07-31T17:41:00-07:00",
+  "authority": {
+    "council_office_advisory_considered": true,
+    "human_steward": "fyremael",
+    "human_steward_decision": "APPROVE_WITH_ACCELERATED_TIMING_CORRECTION",
+    "human_steward_is_binding_authority": true
+  },
+  "acceleration": {
+    "factor": 0.1,
+    "rule": "Every proposed maintenance duration and cadence interval is multiplied by 0.1 unless the interval is an event-triggered immediate obligation.",
+    "event_triggered_obligations_remain_immediate": true,
+    "rounding_policy": "Preserve exact decimal duration in ISO-8601 hours and minutes where possible; use 36 days 12 hours for one tenth of 365 days."
+  },
+  "decisions": {
+    "D1": {
+      "disposition": "APPROVE_WITH_CORRECTION",
+      "binding_rule": "Run a nine-day accelerated pilot. Use event-triggered synchronization immediately, a structural sweep every 16 hours 48 minutes, an administrative review every 3 days, a deep conformance review every 9 days, and a constitutional review every 36 days 12 hours during the pilot unless superseded by a later Council decision."
+    },
+    "D2": {
+      "disposition": "APPROVE_WITH_CORRECTION",
+      "binding_rule": "Complete protected material synchronization in the same governed change sequence. Refresh canonical trackers within 7 hours 12 minutes after protected merge. A documented infrastructure or statutory-closure interruption may pause only the mirror clock and cannot alter protected authority."
+    },
+    "D3": {
+      "disposition": "APPROVE_WITH_CORRECTION",
+      "binding_rule": "Use typed and expiring waivers. The Human Steward may approve an ordinary repository-local administrative waiver for at most 3 days with one renewal. Cross-repository, provenance, certification, or required-check waivers always require Council authority. No waiver may promote a claim."
+    },
+    "D4": {
+      "disposition": "APPROVE",
+      "binding_rule": "Require a non-author Referee for authority, lifecycle, claim, role-boundary, waiver-class, emergency-power, required-check, branch-protection, or promotion-sensitive maintenance changes. Routine semantic-preserving repins and mirror refreshes use ordinary administrative review."
+    },
+    "D5": {
+      "disposition": "APPROVE_WITH_CORRECTION",
+      "binding_rule": "Issues remain navigation and discussion mirrors only. Ordinary noncontradictory staleness is a P2 defect. Contradiction or authority inflation is P1 fail-closed. Identified contradictions block reconciliation closure. The canonical refresh interval is 7 hours 12 minutes."
+    },
+    "D6": {
+      "disposition": "APPROVE_WITH_CORRECTION",
+      "binding_rule": "Emergency override is limited to availability, security, or CI restoration. It expires after 7 hours 12 minutes, requires Human Steward review within 2 hours 24 minutes, and requires Council and Referee retrospective within 16 hours 48 minutes. It cannot promote, admit, adjudicate certification, weaken branch protection, or delete evidence."
+    },
+    "D7": {
+      "disposition": "APPROVE_WITH_CORRECTION",
+      "binding_rule": "A campaign missing a critical required capability fails closed immediately. Freeze new umbrella admissions when two active campaigns or more than 20 percent of the active portfolio are incomplete, whichever threshold is stricter; when protected required-check evidence is missing; when two consecutive accelerated administrative reviews fail; when a P1 mismatch remains unresolved for 16 hours 48 minutes; or when a defect repeats across two accelerated deep reviews."
+    },
+    "D8": {
+      "disposition": "APPROVE_WITH_CORRECTION",
+      "binding_rule": "Use GCL-TCS-00 principles during the accelerated pilot. Do not make GCL-TCS-00 binding until issue 108 completes G8 non-author Referee review and G9 Human Steward release. The canonical mathematical claim ledger remains controlling."
+    }
+  },
+  "pilot": {
+    "status": "APPROVED_ACCELERATED_PILOT",
+    "activation": "protected_merge_of_pr_184",
+    "duration": "P9D",
+    "start_rule": "Use the protected merge timestamp of PR 184.",
+    "review_due_rule": "Nine days after the protected merge timestamp.",
+    "owner": "Human Steward or explicitly delegated Programme administrator",
+    "metrics": [
+      "checks executed",
+      "defects detected",
+      "repair latency",
+      "repeated defects",
+      "false positives",
+      "waivers proposed and approved",
+      "administrator effort",
+      "INTELLECT stale-contract rejections"
+    ]
+  },
+  "intellect_requirement": {
+    "buy_in_required": true,
+    "required_before_final_closure": true,
+    "required_evidence": [
+      "INTELLECT adoption issue",
+      "content-addressed adoption contract",
+      "fail-closed stale or missing Programme maintenance contract tests",
+      "exact-head INTELLECT CI and GCL conformance",
+      "protected INTELLECT merge or explicit Council-approved non-adoption disposition"
+    ]
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "interface_qualification_promoted_to_theorem": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "certificate_issued": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "patentability_claim_authorized": false,
+    "mechanical_claim_authorized": false,
+    "manufacturing_claim_authorized": false,
+    "commercial_claim_authorized": false
+  }
+}

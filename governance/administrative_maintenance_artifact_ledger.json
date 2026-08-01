@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0.0",
+  "ledger_id": "MP-ADMIN-LEDGER-001",
+  "parent_artifact_ledger": "docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md",
+  "decision": "ADR-0016",
+  "status": "READY_FOR_PROTECTED_PROGRAMME_MERGE",
+  "artifacts": [
+    {
+      "artifact_id": "MP-ADMIN-MAINT-001",
+      "type": "administrative_maintenance_control",
+      "path": "governance/administrative_maintenance_control.json",
+      "status": "APPROVED_ACCELERATED_PILOT"
+    },
+    {
+      "artifact_id": "MP-ADMIN-DECISION-001",
+      "type": "binding_council_and_steward_decision",
+      "path": "governance/administrative_maintenance_council_decision.json",
+      "status": "ACCEPTED"
+    },
+    {
+      "artifact_id": "MP-ADMIN-MIRROR-001",
+      "type": "issue_mirror_enforcement_policy",
+      "path": "governance/issue_mirror_enforcement_policy.json",
+      "status": "APPROVED_ACCELERATED_PILOT"
+    },
+    {
+      "artifact_id": "MP-ADMIN-TERMS-001",
+      "type": "terminology_registry_extension",
+      "path": "docs/governance/ADMINISTRATIVE_MAINTENANCE_TERMINOLOGY.md",
+      "status": "ACCEPTED"
+    },
+    {
+      "artifact_id": "MP-ADMIN-PLAN-001",
+      "type": "operating_plan",
+      "path": "docs/governance/ADMINISTRATIVE_MAINTENANCE_PLAN.md",
+      "status": "APPROVED_ACCELERATED_PILOT"
+    },
+    {
+      "artifact_id": "MP-ADMIN-REFEREE-001",
+      "type": "non_author_referee_review",
+      "path": "reviews/governance/MP-ADMIN-MAINT-001.referee_review.yaml",
+      "status": "APPROVED_FOR_PROGRAMME_MERGE"
+    },
+    {
+      "artifact_id": "MP-ADMIN-STEWARD-001",
+      "type": "human_steward_release",
+      "path": "governance/administrative_maintenance_steward_release.json",
+      "status": "APPROVED"
+    },
+    {
+      "artifact_id": "GI-ADMIN-MAINT-001",
+      "type": "intellect_adoption",
+      "path": "grandchallenge/INTELLECT#21; grandchallenge/INTELLECT#22",
+      "status": "PHASE_A_COMMITTED_PENDING_PROTECTED_PIN",
+      "head": "6d4dce2db607da7a3f4629bb9b36735a3cf57b96",
+      "ci_run": 30677018860,
+      "gcl_run": 30677019107
+    }
+  ],
+  "activation": {
+    "programme_control": "protected merge of PR 184",
+    "final_cross_repository_closure": "protected INTELLECT Phase B adoption and external attestation"
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "certificate_issued": false,
+    "external_claim_authorized": false
+  }
+}

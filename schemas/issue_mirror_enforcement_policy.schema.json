@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/issue_mirror_enforcement_policy.schema.json",
+  "title": "MATH-PROGRAMME Issue Mirror Enforcement Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "parent_control_id",
+    "decision_record_id",
+    "programme_issue",
+    "council_issue",
+    "council_decision",
+    "status",
+    "effective",
+    "activation",
+    "authority_model",
+    "canonical_tracker_requirements",
+    "enforcement",
+    "defect_dispositions",
+    "closure_rule",
+    "council_state",
+    "may_activate_on_protected_merge",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.1.0"},
+    "policy_id": {"const": "MP-ADMIN-MIRROR-001"},
+    "parent_control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "decision_record_id": {"const": "MP-ADMIN-DECISION-001"},
+    "programme_issue": {"const": 182},
+    "council_issue": {"const": 183},
+    "council_decision": {"const": "D5"},
+    "status": {"const": "APPROVED_ACCELERATED_PILOT"},
+    "effective": {"const": true},
+    "activation": {"const": "PROTECTED_MERGE_ONLY"},
+    "authority_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protected_records_are_authoritative",
+        "issues_are_navigation_and_discussion_only",
+        "issue_edit_can_change_lifecycle_route_certification_or_claim_state",
+        "stale_issue_can_override_protected_state"
+      ],
+      "properties": {
+        "protected_records_are_authoritative": {"const": true},
+        "issues_are_navigation_and_discussion_only": {"const": true},
+        "issue_edit_can_change_lifecycle_route_certification_or_claim_state": {"const": false},
+        "stale_issue_can_override_protected_state": {"const": false}
+      }
+    },
+    "canonical_tracker_requirements": {
+      "type": "array",
+      "minItems": 6,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "enforcement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ordinary_staleness_is_release_gate",
+        "ordinary_staleness_creates_administrative_defect",
+        "contradictory_canonical_tracker_blocks_reconciliation_closure",
+        "missing_canonical_tracker_link_in_protected_current_state_is_error",
+        "authority_bearing_issue_language_is_error",
+        "refresh_target",
+        "refresh_target_binding",
+        "interruption_exception"
+      ],
+      "properties": {
+        "ordinary_staleness_is_release_gate": {"const": false},
+        "ordinary_staleness_creates_administrative_defect": {"const": true},
+        "contradictory_canonical_tracker_blocks_reconciliation_closure": {"const": true},
+        "missing_canonical_tracker_link_in_protected_current_state_is_error": {"const": true},
+        "authority_bearing_issue_language_is_error": {"const": true},
+        "refresh_target": {"const": "PT7H12M"},
+        "refresh_target_binding": {"const": true},
+        "interruption_exception": {"type": "string", "minLength": 1}
+      }
+    },
+    "defect_dispositions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stale_but_noncontradictory",
+        "contradictory_authority_or_state",
+        "issue_claims_protected_authority",
+        "missing_review_trigger_or_claim_boundary"
+      ],
+      "properties": {
+        "stale_but_noncontradictory": {"const": "P2_ADMINISTRATIVE_DEFECT"},
+        "contradictory_authority_or_state": {"const": "P1_FAIL_CLOSED"},
+        "issue_claims_protected_authority": {"const": "P1_FAIL_CLOSED"},
+        "missing_review_trigger_or_claim_boundary": {"const": "P2_ADMINISTRATIVE_DEFECT"}
+      }
+    },
+    "closure_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "umbrella_reconciliation_may_close_with_known_contradictory_canonical_tracker",
+        "umbrella_reconciliation_may_close_with_unresolved_authority_bearing_issue_language",
+        "external_post_merge_attestation_required_when_closure_cannot_self_pin"
+      ],
+      "properties": {
+        "umbrella_reconciliation_may_close_with_known_contradictory_canonical_tracker": {"const": false},
+        "umbrella_reconciliation_may_close_with_unresolved_authority_bearing_issue_language": {"const": false},
+        "external_post_merge_attestation_required_when_closure_cannot_self_pin": {"const": true}
+      }
+    },
+    "council_state": {"const": "APPROVE_WITH_CORRECTION"},
+    "may_activate_on_protected_merge": {"const": true},
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["campaign_admitted", "route_created", "certificate_issued", "mathematical_claim_promoted", "external_claim_authorized"],
+      "properties": {
+        "campaign_admitted": {"const": false},
+        "route_created": {"const": false},
+        "certificate_issued": {"const": false},
+        "mathematical_claim_promoted": {"const": false},
+        "external_claim_authorized": {"const": false}
+      }
+    }
+  }
+}

@@ -11,6 +11,12 @@ from typing import Any
 
 import yaml
 
+from validate_administrative_maintenance_control import (
+    DEFAULT_CONTROL as ADMINISTRATIVE_MAINTENANCE_CONTROL,
+    DEFAULT_SCHEMA as ADMINISTRATIVE_MAINTENANCE_SCHEMA,
+    validate as validate_administrative_maintenance_control,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 PYTHON_COMMAND = re.compile(r"(?:^|[;&|({\s])python(?:3)?\s+([A-Za-z0-9_./-]+\.py)(?=\s|$)")
 MAIN_GUARD = re.compile(r"if\s+__name__\s*==\s*['\"]__main__['\"]\s*:")
@@ -99,6 +105,12 @@ def policy_reachability_errors(root: Path = ROOT) -> list[str]:
     executable = executable_ci_scripts(root)
     for path in sorted(executable - reachable):
         errors.append(f"CI policy reachability: executable script is unreachable from workflows: {path}")
+
+    for error in validate_administrative_maintenance_control(
+        ADMINISTRATIVE_MAINTENANCE_CONTROL,
+        ADMINISTRATIVE_MAINTENANCE_SCHEMA,
+    ):
+        errors.append(f"administrative maintenance control: {error}")
     return errors
 
 

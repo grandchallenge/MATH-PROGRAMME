@@ -1,0 +1,351 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_maintenance_control.schema.json",
+  "title": "MATH-PROGRAMME Administrative Maintenance Control",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "control_id",
+    "title",
+    "status",
+    "effective",
+    "activation",
+    "prepared_at",
+    "programme_issue",
+    "council_issue",
+    "programme_pull_request",
+    "decision_record",
+    "foundation",
+    "acceleration",
+    "core_clarity_invariants",
+    "repository_roles",
+    "control_loops",
+    "material_change_classification",
+    "workflow_coverage_requirements",
+    "tracker_hygiene",
+    "freshness_policy",
+    "waiver_policy",
+    "independent_review_policy",
+    "emergency_override_policy",
+    "maintenance_burden_circuit_breaker",
+    "communication_profile",
+    "intellect_buy_in",
+    "council_decisions",
+    "promotion_gate",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.1.0"},
+    "control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "title": {"type": "string", "minLength": 1},
+    "status": {"const": "APPROVED_ACCELERATED_PILOT"},
+    "effective": {"const": true},
+    "activation": {"const": "PROTECTED_MERGE_ONLY"},
+    "prepared_at": {"type": "string", "format": "date"},
+    "programme_issue": {"const": 182},
+    "council_issue": {"const": 183},
+    "programme_pull_request": {"const": 184},
+    "decision_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "adr", "path", "human_steward", "decided_at"],
+      "properties": {
+        "id": {"const": "MP-ADMIN-DECISION-001"},
+        "adr": {"const": "ADR-0016"},
+        "path": {"const": "governance/administrative_maintenance_council_decision.json"},
+        "human_steward": {"const": "fyremael"},
+        "decided_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "foundation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "seventh_pass_merge", "seventh_pass_record", "seventh_pass_record_blob"],
+      "properties": {
+        "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+        "seventh_pass_merge": {"const": "3cb6bfb9f132a4cfef279d0d3bf2309d99d0d6f1"},
+        "seventh_pass_record": {"const": "governance/five_repository_conformance_seventh_pass_closure.json"},
+        "seventh_pass_record_blob": {"const": "4f2f13117e7ada0dda2f9dcaeeaa963f5e084f13"}
+      }
+    },
+    "acceleration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["factor", "pilot_duration", "pilot_start_rule", "pilot_review_due_rule", "event_triggered_obligations_remain_immediate"],
+      "properties": {
+        "factor": {"const": 0.1},
+        "pilot_duration": {"const": "P9D"},
+        "pilot_start_rule": {"type": "string", "minLength": 1},
+        "pilot_review_due_rule": {"type": "string", "minLength": 1},
+        "event_triggered_obligations_remain_immediate": {"const": true}
+      }
+    },
+    "core_clarity_invariants": {
+      "type": "object",
+      "minProperties": 10,
+      "additionalProperties": {"const": true}
+    },
+    "repository_roles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["math_programme", "mathforge", "mathsolve", "mathcert", "intellect"],
+      "properties": {
+        "math_programme": {"$ref": "#/$defs/repositoryRole"},
+        "mathforge": {"$ref": "#/$defs/repositoryRole"},
+        "mathsolve": {"$ref": "#/$defs/repositoryRole"},
+        "mathcert": {"$ref": "#/$defs/repositoryRole"},
+        "intellect": {"$ref": "#/$defs/repositoryRole"}
+      }
+    },
+    "control_loops": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_triggered_synchronization", "structural_sweep", "administrative_portfolio_review", "deep_conformance_review", "constitutional_review"],
+      "properties": {
+        "event_triggered_synchronization": {"$ref": "#/$defs/eventLoop"},
+        "structural_sweep": {"$ref": "#/$defs/timedLoop"},
+        "administrative_portfolio_review": {"$ref": "#/$defs/timedLoop"},
+        "deep_conformance_review": {"$ref": "#/$defs/timedLoop"},
+        "constitutional_review": {"$ref": "#/$defs/timedLoop"}
+      }
+    },
+    "material_change_classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["material_changes", "nonmaterial_changes", "classification_evidence_required", "uncertain_classification_disposition"],
+      "properties": {
+        "material_changes": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "nonmaterial_changes": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "classification_evidence_required": {"const": true},
+        "uncertain_classification_disposition": {"const": "ESCALATE_AND_FAIL_CLOSED"}
+      }
+    },
+    "workflow_coverage_requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coverage_definition", "required_capabilities", "required_fields_per_capability", "missing_required_capability_disposition", "yaml_presence_alone_is_sufficient"],
+      "properties": {
+        "coverage_definition": {"type": "string", "minLength": 1},
+        "required_capabilities": {"type": "array", "minItems": 9, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "required_fields_per_capability": {"type": "array", "minItems": 10, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "missing_required_capability_disposition": {"const": "FAIL_CLOSED_WORKFLOW_COVERAGE_INCOMPLETE"},
+        "yaml_presence_alone_is_sufficient": {"const": false}
+      }
+    },
+    "tracker_hygiene": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canonical_tracker_required_sections", "tracker_can_create_authority", "refresh_target", "refresh_target_binding", "council_decision", "interruption_exception", "contradictory_tracker_blocks_reconciliation_closure", "stale_tracker_overrides_protected_state"],
+      "properties": {
+        "canonical_tracker_required_sections": {"type": "array", "minItems": 6, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "tracker_can_create_authority": {"const": false},
+        "refresh_target": {"const": "PT7H12M"},
+        "refresh_target_binding": {"const": true},
+        "council_decision": {"const": "D2"},
+        "interruption_exception": {"type": "string", "minLength": 1},
+        "contradictory_tracker_blocks_reconciliation_closure": {"const": true},
+        "stale_tracker_overrides_protected_state": {"const": false}
+      }
+    },
+    "freshness_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protected_material_sync", "tracker_refresh", "routine_review_expiry", "stale_or_contradictory_protected_current_state_disposition"],
+      "properties": {
+        "protected_material_sync": {"$ref": "#/$defs/freshnessRule"},
+        "tracker_refresh": {"$ref": "#/$defs/freshnessRule"},
+        "routine_review_expiry": {"$ref": "#/$defs/freshnessRule"},
+        "stale_or_contradictory_protected_current_state_disposition": {"const": "FAIL_CLOSED_IMMEDIATELY"}
+      }
+    },
+    "waiver_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "council_decision", "required_fields", "steward_local_administrative_limit", "maximum_renewals", "council_required_for", "claim_promotion_by_waiver_allowed"],
+      "properties": {
+        "binding": {"const": true},
+        "council_decision": {"const": "D3"},
+        "required_fields": {"type": "array", "minItems": 10, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "steward_local_administrative_limit": {"const": "P3D"},
+        "maximum_renewals": {"const": 1},
+        "council_required_for": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "claim_promotion_by_waiver_allowed": {"const": false}
+      }
+    },
+    "independent_review_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "council_decision", "referee_triggers", "routine_identity_repin_requires_independent_referee", "routine_mirror_refresh_requires_independent_referee"],
+      "properties": {
+        "binding": {"const": true},
+        "council_decision": {"const": "D4"},
+        "referee_triggers": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "routine_identity_repin_requires_independent_referee": {"const": false},
+        "routine_mirror_refresh_requires_independent_referee": {"const": false}
+      }
+    },
+    "emergency_override_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "council_decision", "permitted_purpose", "maximum_duration", "prohibited_actions", "steward_review_deadline", "council_and_referee_retrospective_deadline", "automatic_expiry_required", "fail_closed_reversion_required"],
+      "properties": {
+        "binding": {"const": true},
+        "council_decision": {"const": "D6"},
+        "permitted_purpose": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "maximum_duration": {"const": "PT7H12M"},
+        "prohibited_actions": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "steward_review_deadline": {"const": "PT2H24M"},
+        "council_and_referee_retrospective_deadline": {"const": "PT16H48M"},
+        "automatic_expiry_required": {"const": true},
+        "fail_closed_reversion_required": {"const": true}
+      }
+    },
+    "maintenance_burden_circuit_breaker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "council_decision", "campaign_level_fail_closed", "triggers", "portfolio_threshold_rule", "immediate_action", "available_council_dispositions"],
+      "properties": {
+        "binding": {"const": true},
+        "council_decision": {"const": "D7"},
+        "campaign_level_fail_closed": {"const": true},
+        "triggers": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "portfolio_threshold_rule": {"type": "string", "minLength": 1},
+        "immediate_action": {"const": "FREEZE_NEW_CAMPAIGN_ADMISSION_PENDING_COUNCIL_REVIEW"},
+        "available_council_dispositions": {"$ref": "#/$defs/nonEmptyStringArray"}
+      }
+    },
+    "communication_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "council_decision", "gcl_tcs_00_pilot_principles_may_be_used", "gcl_tcs_00_binding", "binding_preconditions", "canonical_mathematical_claim_ledger_remains_controlling"],
+      "properties": {
+        "binding": {"const": true},
+        "council_decision": {"const": "D8"},
+        "gcl_tcs_00_pilot_principles_may_be_used": {"const": true},
+        "gcl_tcs_00_binding": {"const": false},
+        "binding_preconditions": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "canonical_mathematical_claim_ledger_remains_controlling": {"const": true}
+      }
+    },
+    "intellect_buy_in": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "issue",
+        "pull_request",
+        "phase",
+        "phase_a_head",
+        "phase_a_ci_run",
+        "phase_a_gcl_run",
+        "exact_protected_pin_required_after_programme_merge",
+        "final_closure_allowed_without_intellect_protected_adoption"
+      ],
+      "properties": {
+        "required": {"const": true},
+        "issue": {"const": "https://github.com/grandchallenge/INTELLECT/issues/21"},
+        "pull_request": {"const": "https://github.com/grandchallenge/INTELLECT/pull/22"},
+        "phase": {"enum": ["PHASE_A_REVIEW_OPEN", "PHASE_A_COMMITTED_PENDING_PROTECTED_PIN", "PHASE_B_PROTECTED_ADOPTION_COMPLETE"]},
+        "phase_a_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "phase_a_ci_run": {"type": "integer", "minimum": 1},
+        "phase_a_gcl_run": {"type": "integer", "minimum": 1},
+        "exact_protected_pin_required_after_programme_merge": {"const": true},
+        "final_closure_allowed_without_intellect_protected_adoption": {"const": false}
+      }
+    },
+    "council_decisions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8"],
+      "properties": {
+        "D1": {"const": "APPROVE_WITH_CORRECTION"},
+        "D2": {"const": "APPROVE_WITH_CORRECTION"},
+        "D3": {"const": "APPROVE_WITH_CORRECTION"},
+        "D4": {"const": "APPROVE"},
+        "D5": {"const": "APPROVE_WITH_CORRECTION"},
+        "D6": {"const": "APPROVE_WITH_CORRECTION"},
+        "D7": {"const": "APPROVE_WITH_CORRECTION"},
+        "D8": {"const": "APPROVE_WITH_CORRECTION"}
+      }
+    },
+    "promotion_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_valid", "semantic_tests_required", "adversarial_tests_required", "programme_policy_checks_required", "gcl_conformance_required", "council_decisions_resolved", "non_author_referee_review_required", "non_author_referee_review_complete", "human_steward_release_required", "human_steward_release_complete", "intellect_buy_in_required", "intellect_phase_a_buy_in_complete", "may_merge_programme_control", "final_cross_repository_closure_complete"],
+      "properties": {
+        "schema_valid": {"const": true},
+        "semantic_tests_required": {"const": true},
+        "adversarial_tests_required": {"const": true},
+        "programme_policy_checks_required": {"const": true},
+        "gcl_conformance_required": {"const": true},
+        "council_decisions_resolved": {"const": true},
+        "non_author_referee_review_required": {"const": true},
+        "non_author_referee_review_complete": {"type": "boolean"},
+        "human_steward_release_required": {"const": true},
+        "human_steward_release_complete": {"const": true},
+        "intellect_buy_in_required": {"const": true},
+        "intellect_phase_a_buy_in_complete": {"type": "boolean"},
+        "may_merge_programme_control": {"type": "boolean"},
+        "final_cross_repository_closure_complete": {"type": "boolean"}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "minProperties": 10,
+      "additionalProperties": {"const": false}
+    }
+  },
+  "$defs": {
+    "nonEmptyStringArray": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "repositoryRole": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "responsibilities"],
+      "properties": {
+        "repository": {"type": "string", "pattern": "^grandchallenge/[A-Z-]+$"},
+        "responsibilities": {"$ref": "#/$defs/nonEmptyStringArray"}
+      }
+    },
+    "eventLoop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "cadence", "trigger_classes", "required_actions", "failure_disposition"],
+      "properties": {
+        "binding": {"const": true},
+        "cadence": {"const": "IMMEDIATE_ON_MATERIAL_CHANGE"},
+        "trigger_classes": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "required_actions": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "failure_disposition": {"const": "FAIL_CLOSED_MATERIAL_SYNC_INCOMPLETE"}
+      }
+    },
+    "timedLoop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "cadence", "council_decision", "checks", "evidence"],
+      "properties": {
+        "binding": {"const": true},
+        "cadence": {"enum": ["PT16H48M", "P3D", "P9D", "P36DT12H"]},
+        "council_decision": {"const": "D1"},
+        "checks": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "owner": {"type": "string", "minLength": 1},
+        "evidence": {"type": "string", "minLength": 1}
+      }
+    },
+    "freshnessRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rule", "binding", "council_decision"],
+      "properties": {
+        "rule": {"type": "string", "minLength": 1},
+        "binding": {"const": true},
+        "council_decision": {"const": "D2"}
+      }
+    }
+  }
+}

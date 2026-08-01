@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_maintenance_council_decision.schema.json",
+  "title": "MATH-PROGRAMME Administrative Maintenance Council Decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "decision_id",
+    "adr",
+    "control_id",
+    "mirror_policy_id",
+    "programme_issue",
+    "council_issue",
+    "pull_request",
+    "decided_at",
+    "authority",
+    "acceleration",
+    "decisions",
+    "pilot",
+    "intellect_requirement",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "decision_id": {"const": "MP-ADMIN-DECISION-001"},
+    "adr": {"const": "ADR-0016"},
+    "control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "mirror_policy_id": {"const": "MP-ADMIN-MIRROR-001"},
+    "programme_issue": {"const": 182},
+    "council_issue": {"const": 183},
+    "pull_request": {"const": 184},
+    "decided_at": {"type": "string", "format": "date-time"},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["council_office_advisory_considered", "human_steward", "human_steward_decision", "human_steward_is_binding_authority"],
+      "properties": {
+        "council_office_advisory_considered": {"const": true},
+        "human_steward": {"const": "fyremael"},
+        "human_steward_decision": {"const": "APPROVE_WITH_ACCELERATED_TIMING_CORRECTION"},
+        "human_steward_is_binding_authority": {"const": true}
+      }
+    },
+    "acceleration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["factor", "rule", "event_triggered_obligations_remain_immediate", "rounding_policy"],
+      "properties": {
+        "factor": {"const": 0.1},
+        "rule": {"type": "string", "minLength": 1},
+        "event_triggered_obligations_remain_immediate": {"const": true},
+        "rounding_policy": {"type": "string", "minLength": 1}
+      }
+    },
+    "decisions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8"],
+      "properties": {
+        "D1": {"$ref": "#/$defs/correctedDecision"},
+        "D2": {"$ref": "#/$defs/correctedDecision"},
+        "D3": {"$ref": "#/$defs/correctedDecision"},
+        "D4": {"$ref": "#/$defs/approvedDecision"},
+        "D5": {"$ref": "#/$defs/correctedDecision"},
+        "D6": {"$ref": "#/$defs/correctedDecision"},
+        "D7": {"$ref": "#/$defs/correctedDecision"},
+        "D8": {"$ref": "#/$defs/correctedDecision"}
+      }
+    },
+    "pilot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "activation", "duration", "start_rule", "review_due_rule", "owner", "metrics"],
+      "properties": {
+        "status": {"const": "APPROVED_ACCELERATED_PILOT"},
+        "activation": {"const": "protected_merge_of_pr_184"},
+        "duration": {"const": "P9D"},
+        "start_rule": {"type": "string", "minLength": 1},
+        "review_due_rule": {"type": "string", "minLength": 1},
+        "owner": {"type": "string", "minLength": 1},
+        "metrics": {"type": "array", "minItems": 8, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "intellect_requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["buy_in_required", "required_before_final_closure", "required_evidence"],
+      "properties": {
+        "buy_in_required": {"const": true},
+        "required_before_final_closure": {"const": true},
+        "required_evidence": {"type": "array", "minItems": 5, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "minProperties": 10,
+      "additionalProperties": {"const": false}
+    }
+  },
+  "$defs": {
+    "correctedDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition", "binding_rule"],
+      "properties": {
+        "disposition": {"const": "APPROVE_WITH_CORRECTION"},
+        "binding_rule": {"type": "string", "minLength": 1}
+      }
+    },
+    "approvedDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition", "binding_rule"],
+      "properties": {
+        "disposition": {"const": "APPROVE"},
+        "binding_rule": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
