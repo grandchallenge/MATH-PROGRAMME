@@ -8,7 +8,7 @@ Candidate-only implementation under Programme issue #198. This work package does
 
 The candidate subject is `openai/ten-proofs` at exact root commit `6fefffdbab0dfa726fcfde6cefae23aa7a1888f3`, tree `79e6a50b1e391bdddb18b42be3e886c1d9784ed3`.
 
-The deterministic source archive recorded by MATHFORGE has SHA-256 `630e10ec7f8b08ce3416fba967e6d1e4c7599677e38fd4af24fc0c68a9a5bac2`. MATHFORGE pull request #36 is a provider proposal and is not protected-branch authority until reviewed and merged.
+The deterministic source archive recorded by MATHFORGE has SHA-256 `630e10ec7f8b08ce3416fba967e6d1e4c7599677e38fd4af24fc0c68a9a5bac2`. MATHFORGE pull request #36 reviewed head `f4283c59571a43be23d07700b4cfddafc2bcda8d` is protected at merge commit `89f3853f697450261cb76a638b5282c3bfa96770`; the Programme intake pins that merge and the Git blob identities of its provider manifest, source lock, theorem matrix, and provider-coverage registry.
 
 ## Admission unit
 
@@ -26,6 +26,7 @@ A positive disposition at one gate does not imply a positive disposition at anot
 ## Current evidence
 
 - Exact Git identity and deterministic archive identity are independently reproduced.
+- The source-identity gate is provider-verified at the protected Forge merge; this does not satisfy any other gate.
 - The textual solution-source scan outside the challenge modules found no `sorry`, `admit`, custom `axiom`, `unsafe`, or `opaque` declarations.
 - Upstream `formalization.yaml` has `sources: []` and records only `agent-reviewed` status.
 - Default `lake build` fails because `defaultTargets` names undeclared target `ConnesRigidity2`.
@@ -36,8 +37,8 @@ The scan result is reconnaissance only. Textual absence of proof holes is not ke
 
 ## Governed route
 
-- MATHFORGE #35 and PR #36 own the source lock, provider manifest, and twelve-result intake matrix.
-- MATHSOLVE #90 is blocked and may not emit a Cert handoff before merged Forge identity and successful replay.
+- MATHFORGE #35 and merged PR #36 own the protected source lock, provider manifest, and twelve-result intake matrix.
+- MATHSOLVE #90 is blocked and may not open or emit a result-level handoff before trusted Lean/Comparator replay and source-theorem acquisition for that result family.
 - MATHCERT #43 remains `pre_route_candidate`, with `may_adjudicate: false` and `cert_output: null`.
 
 ## Promotion boundary
