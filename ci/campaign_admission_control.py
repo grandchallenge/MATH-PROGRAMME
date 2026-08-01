@@ -28,6 +28,18 @@ EXPECTED_ACTIVE_DIGEST = "b1f1e4682d0f3ff0108d020e466fa2ecb0809b57"
 EXPECTED_CERT_DIGEST = "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1"
 EXPECTED_SCREENSHOT_DIGEST = "531d8b044623569e43949f094985c083e07cf3c0c6a7b6db6e0b5c3339b57420"
 EXPECTED_VGSE_SOURCE_DIGEST = "e513789426ae6247438920bfc80cfba6bd9c32dc6799a4f7873d806a865f95de"
+EXPECTED_VGSE_SOLVE_IDENTITY = {
+    "base_commit": "916f3434abcce29098ba7508a3b457a461461193",
+    "reviewed_head": "0d66a75412543e534b81c21a51a6ad88c035b55b",
+    "merge_commit": "709c7d3f388b8df75c87a247f80424e560c31e72",
+    "merged_at": "2026-07-31T15:04:53Z",
+    "workflow_runs": {
+        "solve_checks": 30641057206,
+        "gcl_conformance": 30641058060,
+        "candidate_replay": 30641057393,
+    },
+    "required_admission_record_path": "work_packages/VGSE_WP00/candidate_admission.json",
+}
 EXPECTED_GATES = {
     "forge_provider_manifest_admitted",
     "source_revision_concordance_complete",
@@ -146,6 +158,9 @@ def validation_errors(
     vgse_solve = vgse.get("solve_candidate", {})
     if (vgse_solve.get("issue"), vgse_solve.get("pull_request"), vgse_solve.get("state")) != (84, 85, "merged_candidate_work_package"):
         errors.append("VGSE-001: merged Solve candidate identity drift")
+    for field, expected in EXPECTED_VGSE_SOLVE_IDENTITY.items():
+        if vgse_solve.get(field) != expected:
+            errors.append(f"VGSE-001: merged Solve evidence drift in {field}")
     for field in ("may_merge_candidate_work_package", "may_create_campaign_manifest", "may_create_cert_handoff", "may_create_adjudication", "may_create_promotion_record"):
         if vgse_solve.get(field) is not False:
             errors.append(f"VGSE-001: prohibited candidate authority in {field}")
