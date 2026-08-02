@@ -7,10 +7,7 @@
     "path": ".github/workflows/administrative-maintenance-dispatch.yml",
     "name": "Administrative maintenance dispatcher",
     "permissions": {
-      "actions": "read",
-      "contents": "read",
-      "issues": "write",
-      "pull_requests": "read"
+      "contents": "read"
     },
     "pinned_actions": {
       "checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
@@ -40,6 +37,8 @@
       "21 13 6 9 *"
     ],
     "overdue_watchdog_cron_utc": "47 * * * *",
+    "exact_schedule_window_minutes": 180,
+    "watchdog_window_minutes": 60,
     "schedule_is_dispatch_not_authority": true,
     "cadence_anchor_may_not_reset": true
   },
@@ -119,9 +118,15 @@
   "dispatch": {
     "repository": "grandchallenge/MATH-PROGRAMME",
     "artifact_name": "administrative-maintenance-dispatch",
-    "deduplication": "stable HTML marker in issue body",
-    "default_label": "governance",
+    "delivery_channels": [
+      "workflow_run",
+      "workflow_summary",
+      "workflow_annotations",
+      "retained_json_artifact"
+    ],
+    "deduplication": "stable dispatch key with bounded exact-schedule and watchdog windows",
     "tracker_refresh_deadline_minutes": 432,
+    "may_create_issue": false,
     "may_create_protected_authority": false,
     "may_reset_schedule_anchor": false,
     "may_close_or_merge": false
