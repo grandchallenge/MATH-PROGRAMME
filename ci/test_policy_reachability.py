@@ -91,6 +91,18 @@ def main() -> int:
             for error in policy_reachability_errors(root)
         )
 
+        (root / "portfolio").mkdir()
+        (root / "portfolio" / "pilot_registry.json").write_text(
+            "{}\n", encoding="utf-8"
+        )
+        assert any(
+            "GCL portfolio: incomplete control surface" in error
+            and "ci/validate_portfolio.py" in error
+            and "schemas/gcl_portfolio_registry.schema.json" in error
+            and "docs/governance/GCL_PORTFOLIO_VIEW.md" in error
+            for error in policy_reachability_errors(root)
+        )
+
     print("CI policy reachability rejection tests passed")
     return 0
 
