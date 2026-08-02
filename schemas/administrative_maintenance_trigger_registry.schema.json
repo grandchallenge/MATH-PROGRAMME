@@ -17,15 +17,9 @@
     "claim_boundaries"
   ],
   "properties": {
-    "schema_version": {
-      "const": "1.0.0"
-    },
-    "trigger_id": {
-      "const": "MP-ADMIN-TRIGGER-001"
-    },
-    "control_id": {
-      "const": "MP-ADMIN-MAINT-001"
-    },
+    "schema_version": {"const": "1.0.0"},
+    "trigger_id": {"const": "MP-ADMIN-TRIGGER-001"},
+    "control_id": {"const": "MP-ADMIN-MAINT-001"},
     "status": {
       "enum": [
         "PROPOSED_PROTECTED_TRIGGER_CONTROL",
@@ -35,61 +29,26 @@
     "workflow": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "path",
-        "name",
-        "permissions",
-        "pinned_actions"
-      ],
+      "required": ["path", "name", "permissions", "pinned_actions"],
       "properties": {
-        "path": {
-          "const": ".github/workflows/administrative-maintenance-dispatch.yml"
-        },
-        "name": {
-          "const": "Administrative maintenance dispatcher"
-        },
+        "path": {"const": ".github/workflows/administrative-maintenance-dispatch.yml"},
+        "name": {"const": "Administrative maintenance dispatcher"},
         "permissions": {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "actions",
-            "contents",
-            "issues",
-            "pull_requests"
-          ],
+          "required": ["contents"],
           "properties": {
-            "actions": {
-              "const": "read"
-            },
-            "contents": {
-              "const": "read"
-            },
-            "issues": {
-              "const": "write"
-            },
-            "pull_requests": {
-              "const": "read"
-            }
+            "contents": {"const": "read"}
           }
         },
         "pinned_actions": {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "checkout",
-            "setup_python",
-            "upload_artifact"
-          ],
+          "required": ["checkout", "setup_python", "upload_artifact"],
           "properties": {
-            "checkout": {
-              "const": "3d3c42e5aac5ba805825da76410c181273ba90b1"
-            },
-            "setup_python": {
-              "const": "5fda3b95a4ea91299a34e894583c3862153e4b97"
-            },
-            "upload_artifact": {
-              "const": "ea165f8d65b6e75b540449e92b4886f43607fa02"
-            }
+            "checkout": {"const": "3d3c42e5aac5ba805825da76410c181273ba90b1"},
+            "setup_python": {"const": "5fda3b95a4ea91299a34e894583c3862153e4b97"},
+            "upload_artifact": {"const": "ea165f8d65b6e75b540449e92b4886f43607fa02"}
           }
         }
       }
@@ -104,40 +63,27 @@
         "pilot_review_due",
         "exact_pilot_crons_utc",
         "overdue_watchdog_cron_utc",
+        "exact_schedule_window_minutes",
+        "watchdog_window_minutes",
         "schedule_is_dispatch_not_authority",
         "cadence_anchor_may_not_reset"
       ],
       "properties": {
-        "timezone": {
-          "const": "America/Vancouver"
-        },
-        "anchor": {
-          "const": "2026-07-31T18:21:00-07:00"
-        },
-        "anchor_utc": {
-          "const": "2026-08-01T01:21:00Z"
-        },
-        "pilot_review_due": {
-          "const": "2026-08-09T18:21:00-07:00"
-        },
+        "timezone": {"const": "America/Vancouver"},
+        "anchor": {"const": "2026-07-31T18:21:00-07:00"},
+        "anchor_utc": {"const": "2026-08-01T01:21:00Z"},
+        "pilot_review_due": {"const": "2026-08-09T18:21:00-07:00"},
         "exact_pilot_crons_utc": {
           "type": "array",
           "minItems": 14,
           "uniqueItems": true,
-          "items": {
-            "type": "string",
-            "minLength": 5
-          }
+          "items": {"type": "string", "minLength": 5}
         },
-        "overdue_watchdog_cron_utc": {
-          "const": "47 * * * *"
-        },
-        "schedule_is_dispatch_not_authority": {
-          "const": true
-        },
-        "cadence_anchor_may_not_reset": {
-          "const": true
-        }
+        "overdue_watchdog_cron_utc": {"const": "47 * * * *"},
+        "exact_schedule_window_minutes": {"const": 180},
+        "watchdog_window_minutes": {"const": 60},
+        "schedule_is_dispatch_not_authority": {"const": true},
+        "cadence_anchor_may_not_reset": {"const": true}
       }
     },
     "procedures": {
@@ -166,36 +112,12 @@
               "constitutional_review"
             ]
           },
-          "interval_minutes": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "minimum": 1
-          },
-          "first_due_utc": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "completed_through_utc": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "active_through_utc": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "required_output": {
-            "type": "string",
-            "minLength": 1
-          },
-          "issue_class": {
-            "type": "string",
-            "minLength": 1
-          }
+          "interval_minutes": {"type": ["integer", "null"], "minimum": 1},
+          "first_due_utc": {"type": "string", "format": "date-time"},
+          "completed_through_utc": {"type": ["string", "null"], "format": "date-time"},
+          "active_through_utc": {"type": "string", "format": "date-time"},
+          "required_output": {"type": "string", "minLength": 1},
+          "issue_class": {"type": "string", "minLength": 1}
         }
       }
     },
@@ -211,24 +133,12 @@
         "manual_dispatch"
       ],
       "properties": {
-        "push_main_governed_paths": {
-          "$ref": "#/$defs/enabledTrigger"
-        },
-        "pull_request_lifecycle": {
-          "$ref": "#/$defs/enabledTrigger"
-        },
-        "issue_lifecycle": {
-          "$ref": "#/$defs/enabledTrigger"
-        },
-        "branch_protection_rule": {
-          "$ref": "#/$defs/enabledTrigger"
-        },
-        "required_workflow_completion": {
-          "$ref": "#/$defs/enabledTrigger"
-        },
-        "manual_dispatch": {
-          "$ref": "#/$defs/enabledTrigger"
-        }
+        "push_main_governed_paths": {"$ref": "#/$defs/enabledTrigger"},
+        "pull_request_lifecycle": {"$ref": "#/$defs/enabledTrigger"},
+        "issue_lifecycle": {"$ref": "#/$defs/enabledTrigger"},
+        "branch_protection_rule": {"$ref": "#/$defs/enabledTrigger"},
+        "required_workflow_completion": {"$ref": "#/$defs/enabledTrigger"},
+        "manual_dispatch": {"$ref": "#/$defs/enabledTrigger"}
       }
     },
     "dispatch": {
@@ -237,64 +147,55 @@
       "required": [
         "repository",
         "artifact_name",
+        "delivery_channels",
         "deduplication",
-        "default_label",
         "tracker_refresh_deadline_minutes",
+        "may_create_issue",
         "may_create_protected_authority",
         "may_reset_schedule_anchor",
         "may_close_or_merge"
       ],
       "properties": {
-        "repository": {
-          "const": "grandchallenge/MATH-PROGRAMME"
-        },
-        "artifact_name": {
-          "const": "administrative-maintenance-dispatch"
+        "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+        "artifact_name": {"const": "administrative-maintenance-dispatch"},
+        "delivery_channels": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "workflow_run",
+              "workflow_summary",
+              "workflow_annotations",
+              "retained_json_artifact"
+            ]
+          }
         },
         "deduplication": {
-          "const": "stable HTML marker in issue body"
+          "const": "stable dispatch key with bounded exact-schedule and watchdog windows"
         },
-        "default_label": {
-          "const": "governance"
-        },
-        "tracker_refresh_deadline_minutes": {
-          "const": 432
-        },
-        "may_create_protected_authority": {
-          "const": false
-        },
-        "may_reset_schedule_anchor": {
-          "const": false
-        },
-        "may_close_or_merge": {
-          "const": false
-        }
+        "tracker_refresh_deadline_minutes": {"const": 432},
+        "may_create_issue": {"const": false},
+        "may_create_protected_authority": {"const": false},
+        "may_reset_schedule_anchor": {"const": false},
+        "may_close_or_merge": {"const": false}
       }
     },
     "claim_boundaries": {
       "type": "object",
       "minProperties": 6,
-      "additionalProperties": {
-        "const": false
-      }
+      "additionalProperties": {"const": false}
     }
   },
   "$defs": {
     "enabledTrigger": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "enabled",
-        "purpose"
-      ],
+      "required": ["enabled", "purpose"],
       "properties": {
-        "enabled": {
-          "const": true
-        },
-        "purpose": {
-          "type": "string",
-          "minLength": 1
-        }
+        "enabled": {"const": true},
+        "purpose": {"type": "string", "minLength": 1}
       }
     }
   }
