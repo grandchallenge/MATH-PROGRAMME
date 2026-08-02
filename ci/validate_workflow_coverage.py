@@ -18,6 +18,7 @@ WORKFLOW_DIR = ROOT / ".github" / "workflows"
 IMMUTABLE_ACTION = re.compile(r"^[^@\s]+@[0-9a-f]{40}$")
 READ_ONLY_PERMISSIONS = {"contents": "read"}
 EXPECTED_WORKFLOWS = {
+    "administrative-maintenance-dispatch.yml",
     "bsd-wp03-substrate.yml",
     "bsd-wp04-target.yml",
     "ci.yml",
@@ -273,6 +274,55 @@ def workflow_coverage_errors(
             if marker not in admin_text:
                 errors.append(f"release-trust-admin.yml: missing administration gate {marker}")
 
+    dispatcher = parsed.get("administrative-maintenance-dispatch.yml")
+    if dispatcher:
+        trigger = _trigger(dispatcher)
+        required_triggers = {
+            "schedule",
+            "workflow_dispatch",
+            "push",
+            "pull_request",
+            "issues",
+            "branch_protection_rule",
+            "workflow_run",
+        }
+        for required in sorted(required_triggers - set(trigger)):
+            errors.append(
+                f"administrative-maintenance-dispatch.yml: missing {required} trigger"
+            )
+        if "main" not in _as_list(trigger.get("push", {}).get("branches")):
+            errors.append(
+                "administrative-maintenance-dispatch.yml: governed-path push trigger must cover main"
+            )
+        workflow_run = trigger.get("workflow_run", {})
+        workflows = set(_as_list(workflow_run.get("workflows")))
+        for required_workflow in ("Programme policy checks", "GCL conformance"):
+            if required_workflow not in workflows:
+                errors.append(
+                    "administrative-maintenance-dispatch.yml: workflow_run must cover "
+                    f"{required_workflow}"
+                )
+        if "completed" not in _as_list(workflow_run.get("types")):
+            errors.append(
+                "administrative-maintenance-dispatch.yml: workflow_run must wait for completion"
+            )
+        dispatcher_text = texts["administrative-maintenance-dispatch.yml"]
+        for marker in (
+            "cron: '57 10 2 8 *'",
+            "cron: '21 1 4,7,10 8 *'",
+            "cron: '21 13 6 9 *'",
+            "cron: '47 * * * *'",
+            "python ci/dispatch_administrative_maintenance.py",
+            "name: administrative-maintenance-dispatch",
+            "retention-days: 30",
+            "Enforce P1 fail-closed signal",
+        ):
+            if marker not in dispatcher_text:
+                errors.append(
+                    "administrative-maintenance-dispatch.yml: missing trigger-control marker "
+                    f"{marker}"
+                )
+
     errors.extend(external_evidence_errors(root, evidence))
     errors.extend(rh_continuity_errors(root))
     return errors
@@ -286,8 +336,9 @@ def main() -> int:
         print(f"workflow coverage validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
     print(
-        "workflow inventory, least-privilege permissions, immutable actions, repository execution, "
-        "exact artifact publication, release-trust administration, RH continuity, and external evidence are valid"
+        "workflow inventory, least-privilege permissions, immutable actions, maintenance dispatch, "
+        "repository execution, exact artifact publication, release-trust administration, RH continuity, "
+        "and external evidence are valid"
     )
     return 0
 
