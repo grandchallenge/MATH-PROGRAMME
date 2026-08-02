@@ -22,6 +22,12 @@ class RoutingTests(unittest.TestCase):
             )
         )
 
+    def uc(self, data):
+        return next(
+            entry for entry in data["campaigns"]
+            if entry["campaign_id"] == "UC-001"
+        )
+
     def test_registry_passes(self):
         active = {
             "UC-001", "NS-CI-001", "HC-001", "BSD-001",
@@ -52,6 +58,16 @@ class RoutingTests(unittest.TestCase):
             )
         )
 
+    def test_cert_provider_commit_drift_fails(self):
+        data = self.registry()
+        data["certification_provider_commit"] = "0" * 40
+        self.assertTrue(
+            any(
+                "certification_provider_commit drift" in error
+                for error in routing.routing_errors(data, active=set())
+            )
+        )
+
     def test_programme_embedded_future_stage_fails(self):
         self.assertTrue(
             routing.provider_gate_errors("PNP-001", "WP02", self.registry())
@@ -71,6 +87,15 @@ class RoutingTests(unittest.TestCase):
             routing.provider_gate_errors("RH-001", "CLAIM_PROMOTION", data)
         )
 
+    def test_uc_restricted_qualification_allows_integration_review_only(self):
+        data = self.registry()
+        self.assertEqual(
+            routing.provider_gate_errors("UC-001", "INTEGRATION", data), []
+        )
+        self.assertTrue(
+            routing.provider_gate_errors("UC-001", "CLAIM_PROMOTION", data)
+        )
+
     def test_claim_promotion_remains_blocked(self):
         self.assertTrue(
             routing.provider_gate_errors("NS-CI-001", "CLAIM_PROMOTION", self.registry())
@@ -82,6 +107,68 @@ class RoutingTests(unittest.TestCase):
         self.assertIn(
             "no MATHSOLVE route or approved waiver",
             routing.provider_gate_errors("HC-001", "WP00", data)[0],
+        )
+
+    def test_uc_manifest_identity_drift_fails(self):
+        data = self.registry()
+        self.uc(data)["manifest_git_blob_sha1"] = "0" * 40
+        self.assertTrue(
+            any(
+                "UC-001 manifest identity drift" in error
+                for error in routing.routing_errors(data, active=set())
+            )
+        )
+
+    def test_uc_route_state_cannot_regress_to_ready(self):
+        data = self.registry()
+        self.uc(data)["cert"]["route_state"] = "ready"
+        self.assertTrue(
+            any(
+                "UC-001 Cert provider state drift" in error
+                for error in routing.routing_errors(data, active=set())
+            )
+        )
+
+    def test_uc_handoff_state_cannot_be_rewritten_as_qualified(self):
+        data = self.registry()
+        self.uc(data)["cert"]["handoff"]["state"] = "qualified"
+        self.assertTrue(
+            any(
+                "UC-001 handoff state drift" in error or "is not one of" in error
+                for error in routing.routing_errors(data, active=set())
+            )
+        )
+
+    def test_uc_cert_output_identity_drift_fails(self):
+        data = self.registry()
+        self.uc(data)["cert"]["cert_output"]["digest"] = "0" * 40
+        self.assertTrue(
+            any(
+                "UC-001 Cert output digest drift" in error
+                for error in routing.routing_errors(data, active=set())
+            )
+        )
+
+    def test_uc_qualification_scope_drift_fails(self):
+        data = self.registry()
+        self.uc(data)["cert"]["qualification_scope"] = "qualified_interface_only"
+        self.assertTrue(
+            any(
+                "UC-001 qualification scope drift" in error
+                for error in routing.routing_errors(data, active=set())
+            )
+        )
+
+    def test_uc_qualification_requires_unproved_target_blocker(self):
+        data = self.registry()
+        self.uc(data)["promotion"]["blockers"] = [
+            "Finite replay remains bounded at n <= 4."
+        ]
+        self.assertTrue(
+            any(
+                "UC-001 qualification lacks an explicit unproved-target blocker" in error
+                for error in routing.routing_errors(data, active=set())
+            )
         )
 
 
