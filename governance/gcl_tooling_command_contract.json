@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "GCL-WP-TOOLING-001",
+  "status": "CANDIDATE_TRANCHE_1",
+  "authority": {
+    "truth_spine_merge": "50a2d20a21caa20570042a021842580d31d6d2d4",
+    "truth_spine_registry_id": "GCL-TRUTH-SPINE-001",
+    "truth_spine_registry_path": "governance/gcl_truth_spine_registry.json",
+    "truth_spine_registry_blob": "c4b30773be2f3151b3e975131ab6510245a3810b",
+    "work_package_issue": 188
+  },
+  "commands": [
+    {
+      "name": "init-work-package",
+      "implementation_state": "planned_not_executable",
+      "purpose": "Generate candidate work-package records from an admitted template.",
+      "requires_network": false,
+      "may_authorize": false,
+      "failure_disposition": "FAIL_CLOSED_NOT_IMPLEMENTED"
+    },
+    {
+      "name": "validate-manifest",
+      "implementation_state": "implemented_candidate",
+      "purpose": "Validate a repository-local JSON manifest against its schema and truth-spine authority class.",
+      "requires_network": false,
+      "may_authorize": false,
+      "failure_disposition": "FAIL_CLOSED_INVALID_SCHEMA_OR_AUTHORITY"
+    },
+    {
+      "name": "check-identities",
+      "implementation_state": "implemented_candidate",
+      "purpose": "Verify repository-local byte length, SHA-256, and Git blob identities.",
+      "requires_network": false,
+      "may_authorize": false,
+      "failure_disposition": "FAIL_CLOSED_IDENTITY_MISMATCH"
+    },
+    {
+      "name": "build-review-packet",
+      "implementation_state": "planned_not_executable",
+      "purpose": "Generate an exact-subject candidate review packet.",
+      "requires_network": false,
+      "may_authorize": false,
+      "failure_disposition": "FAIL_CLOSED_NOT_IMPLEMENTED"
+    },
+    {
+      "name": "verify-promotion",
+      "implementation_state": "planned_not_executable",
+      "purpose": "Verify but never create a protected promotion disposition.",
+      "requires_network": false,
+      "may_authorize": false,
+      "failure_disposition": "FAIL_CLOSED_NOT_IMPLEMENTED"
+    }
+  ],
+  "adoption_fixture": {
+    "record_class_id": "campaign_manifest",
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "manifest_path": "governance/governed_campaign_registry.json",
+    "schema_path": "schemas/governed_campaign_registry.schema.json",
+    "identity_manifest_path": "fixtures/gcl_tooling/governed_campaign_registry.identity.json"
+  },
+  "invariants": {
+    "truth_spine_is_consumed_not_duplicated": true,
+    "candidate_outputs_cannot_self_authorize": true,
+    "unknown_record_classes_fail_closed": true,
+    "stale_or_mismatched_identities_fail_closed": true,
+    "repository_local_execution_supported": true,
+    "aether_not_required": true
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "certificate_issued": false,
+    "promotion_authorized": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "publication_claim_authorized": false,
+    "patentability_claim_authorized": false,
+    "product_claim_authorized": false,
+    "commercial_claim_authorized": false
+  }
+}

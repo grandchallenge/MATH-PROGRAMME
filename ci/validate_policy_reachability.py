@@ -11,6 +11,7 @@ from typing import Any
 
 import yaml
 
+from gcl import validate_tooling
 from validate_administrative_maintenance_control import (
     DEFAULT_CONTROL as ADMINISTRATIVE_MAINTENANCE_CONTROL,
     DEFAULT_SCHEMA as ADMINISTRATIVE_MAINTENANCE_SCHEMA,
@@ -27,6 +28,12 @@ from validate_gcl_truth_spine import (
 ROOT = Path(__file__).resolve().parents[1]
 PYTHON_COMMAND = re.compile(r"(?:^|[;&|({\s])python(?:3)?\s+([A-Za-z0-9_./-]+\.py)(?=\s|$)")
 MAIN_GUARD = re.compile(r"if\s+__name__\s*==\s*['\"]__main__['\"]\s*:")
+TOOLING_CONTROL_PATHS = (
+    "ci/gcl.py",
+    "governance/gcl_tooling_command_contract.json",
+    "schemas/gcl_tooling_command_contract.schema.json",
+    "schemas/gcl_local_identity_manifest.schema.json",
+)
 
 
 def workflow_python_roots(root: Path = ROOT) -> set[str]:
@@ -107,6 +114,19 @@ def reachable_ci_scripts(root: Path = ROOT) -> tuple[set[str], list[str]]:
     return reachable, errors
 
 
+def tooling_control_errors(root: Path) -> list[str]:
+    present = [relative for relative in TOOLING_CONTROL_PATHS if (root / relative).is_file()]
+    if not present:
+        return []
+    missing = [relative for relative in TOOLING_CONTROL_PATHS if relative not in present]
+    if missing:
+        return [
+            "GCL work-package tooling: incomplete tooling control surface; missing "
+            + ", ".join(missing)
+        ]
+    return [f"GCL work-package tooling: {error}" for error in validate_tooling(root)]
+
+
 def policy_reachability_errors(root: Path = ROOT) -> list[str]:
     reachable, errors = reachable_ci_scripts(root)
     executable = executable_ci_scripts(root)
@@ -126,6 +146,8 @@ def policy_reachability_errors(root: Path = ROOT) -> list[str]:
         GCL_TRUTH_SPINE_MATRIX_SCHEMA,
     ):
         errors.append(f"GCL truth spine: {error}")
+
+    errors.extend(tooling_control_errors(root))
     return errors
 
 

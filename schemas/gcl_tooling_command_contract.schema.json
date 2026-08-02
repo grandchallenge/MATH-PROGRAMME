@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/gcl_tooling_command_contract.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "contract_id",
+    "status",
+    "authority",
+    "commands",
+    "adoption_fixture",
+    "invariants",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "contract_id": {"const": "GCL-WP-TOOLING-001"},
+    "status": {"const": "CANDIDATE_TRANCHE_1"},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "truth_spine_merge",
+        "truth_spine_registry_id",
+        "truth_spine_registry_path",
+        "truth_spine_registry_blob",
+        "work_package_issue"
+      ],
+      "properties": {
+        "truth_spine_merge": {"const": "50a2d20a21caa20570042a021842580d31d6d2d4"},
+        "truth_spine_registry_id": {"const": "GCL-TRUTH-SPINE-001"},
+        "truth_spine_registry_path": {"const": "governance/gcl_truth_spine_registry.json"},
+        "truth_spine_registry_blob": {"const": "c4b30773be2f3151b3e975131ab6510245a3810b"},
+        "work_package_issue": {"const": 188}
+      }
+    },
+    "commands": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "implementation_state",
+          "purpose",
+          "requires_network",
+          "may_authorize",
+          "failure_disposition"
+        ],
+        "properties": {
+          "name": {
+            "enum": [
+              "init-work-package",
+              "validate-manifest",
+              "check-identities",
+              "build-review-packet",
+              "verify-promotion"
+            ]
+          },
+          "implementation_state": {
+            "enum": ["implemented_candidate", "planned_not_executable"]
+          },
+          "purpose": {"type": "string", "minLength": 20},
+          "requires_network": {"const": false},
+          "may_authorize": {"const": false},
+          "failure_disposition": {"type": "string", "pattern": "^FAIL_CLOSED_"}
+        }
+      }
+    },
+    "adoption_fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_class_id",
+        "repository",
+        "manifest_path",
+        "schema_path",
+        "identity_manifest_path"
+      ],
+      "properties": {
+        "record_class_id": {"const": "campaign_manifest"},
+        "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+        "manifest_path": {"const": "governance/governed_campaign_registry.json"},
+        "schema_path": {"const": "schemas/governed_campaign_registry.schema.json"},
+        "identity_manifest_path": {
+          "const": "fixtures/gcl_tooling/governed_campaign_registry.identity.json"
+        }
+      }
+    },
+    "invariants": {
+      "type": "object",
+      "minProperties": 6,
+      "additionalProperties": {"const": true}
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "minProperties": 9,
+      "additionalProperties": {"const": false}
+    }
+  }
+}

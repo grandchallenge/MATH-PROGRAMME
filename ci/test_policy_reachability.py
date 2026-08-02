@@ -67,6 +67,18 @@ def main() -> int:
             for error in policy_reachability_errors(root)
         )
 
+        (root / ".github" / "workflows" / "ci.yml").write_text(WORKFLOW, encoding="utf-8")
+        (root / "governance").mkdir()
+        (root / "governance" / "gcl_tooling_command_contract.json").write_text(
+            "{}\n", encoding="utf-8"
+        )
+        assert any(
+            "incomplete tooling control surface" in error
+            and "ci/gcl.py" in error
+            and "schemas/gcl_tooling_command_contract.schema.json" in error
+            for error in policy_reachability_errors(root)
+        )
+
     print("CI policy reachability rejection tests passed")
     return 0
 
