@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "artifact_id": "ART-VALID",
-      "blob": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "blob": "6fc60259d2d82f87dbb7b6e4683cebaa0ded45dd",
       "commit": "2222222222222222222222222222222222222222",
       "expected_sha256": "b0c5f1bc49d11934fce324ca9f7f730ca30da662441864f0fbf227f116fbba5b",
       "path": "artifacts/public_payload.json",
@@ -11,8 +11,18 @@
       "subject_head": "2222222222222222222222222222222222222222"
     },
     {
+      "artifact_id": "ART-NOTE",
+      "blob": "b61e42ca896866cb0826a2c34229f41fc773a259",
+      "commit": "2222222222222222222222222222222222222222",
+      "expected_sha256": "8c2d9d0d69fc9dbff119927727781905a5112a52623dcf349604b3ce87d55fa7",
+      "path": "artifacts/release_note.md",
+      "repository": "synthetic.example/disclosure-demo",
+      "required": true,
+      "subject_head": "2222222222222222222222222222222222222222"
+    },
+    {
       "artifact_id": "ART-DIGEST",
-      "blob": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "blob": "97de50e3135e95a0176c18f31cb4ee27b428458d",
       "commit": "2222222222222222222222222222222222222222",
       "expected_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
       "path": "artifacts/drifted_payload.json",
@@ -119,9 +129,11 @@
     }
   ],
   "data_classification": "synthetic_public",
+  "evaluation_date": "2026-08-02",
   "evidence_files": {"reviews": "evidence/reviews.json"},
   "expected_findings": [
     {"disposition": "PASS", "finding_id": "F-ART-VALID", "reason_code": "EXACT_ARTIFACT_MATCH"},
+    {"disposition": "PASS", "finding_id": "F-ART-NOTE", "reason_code": "EXACT_ARTIFACT_MATCH"},
     {"disposition": "FAIL", "finding_id": "F-ART-DIGEST", "reason_code": "DIGEST_DRIFT"},
     {"disposition": "ABSTAIN", "finding_id": "F-ART-MISSING", "reason_code": "OPTIONAL_EVIDENCE_MISSING"},
     {"disposition": "PASS", "finding_id": "F-CLASS-VALID", "reason_code": "ACTIVE_CLASSIFICATION"},
