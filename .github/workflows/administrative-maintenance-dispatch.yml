@@ -88,7 +88,7 @@ concurrency:
 jobs:
   evaluate:
     name: Evaluate protected maintenance triggers
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - name: Check out exact event revision
@@ -99,7 +99,7 @@ jobs:
       - name: Set up Python 3.12
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
-          python-version: '3.12.8'
+          python-version: '3.12'
 
       - name: Evaluate schedule and event obligations
         id: dispatch
