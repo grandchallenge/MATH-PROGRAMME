@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "reviews": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "author_account": {"type": "boolean"},
+          "expires_at": {"format": "date", "type": "string"},
+          "head_sha": {"pattern": "^[0-9a-f]{40}$", "type": "string"},
+          "review_id": {"pattern": "^REV-[A-Z0-9-]+$", "type": "string"},
+          "review_kind": {"enum": ["disclosure_review", "release_authority"]},
+          "reviewer": {"minLength": 1, "type": "string"},
+          "state": {"enum": ["APPROVED", "CHANGES_REQUESTED", "COMMENTED"]},
+          "superseded": {"type": "boolean"}
+        },
+        "required": ["author_account", "expires_at", "head_sha", "review_id", "review_kind", "reviewer", "state", "superseded"],
+        "type": "object"
+      },
+      "minItems": 3,
+      "type": "array"
+    },
+    "schema_version": {"const": "1.0.0"}
+  },
+  "required": ["reviews", "schema_version"],
+  "type": "object"
+}
