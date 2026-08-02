@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0.0",
+  "audit_id": "MP-UMBRELLA-CONFORMANCE-002",
+  "verified_at": "2026-07-31",
+  "status": "current_at_subject_heads",
+  "predecessor": {
+    "path": "governance/mathcert_cross_repository_conformance.json",
+    "audit_id": "MP-MC-CONFORMANCE-001",
+    "status": "historical_superseded_for_current_portfolio_state"
+  },
+  "subject_heads": {
+    "math_programme_base": "aafd5d5d18989d4ac246de8f6dd2455f02614307",
+    "mathforge": "0faee396ffa56c568ee0ae6a348bdb43ca80ac4d",
+    "mathsolve": "916f3434abcce29098ba7508a3b457a461461193",
+    "mathcert": "0258e4f0bca0d90fac05b62aeef108f16dccffdd",
+    "intellect": "8b5001ceb16cd74b6cdc5870bd4c63c858263c9b"
+  },
+  "authoritative_artifacts": {
+    "programme_routing": {
+      "path": "governance/mathsolve_routing_audit.json",
+      "schema_version": "1.3.0"
+    },
+    "cert_route_registry": {
+      "repository": "grandchallenge/MATHCERT",
+      "commit_sha": "0258e4f0bca0d90fac05b62aeef108f16dccffdd",
+      "path": "governance/certification_routes.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1"
+    },
+    "governed_campaign_registry": {
+      "path": "governance/governed_campaign_registry.json",
+      "campaign_count": 9,
+      "routing_member_count": 8
+    }
+  },
+  "portfolio": {
+    "qualified_interface_only": [
+      "NS-CI-001",
+      "RH-001"
+    ],
+    "ready_intake": [
+      "UC-001",
+      "HC-001"
+    ],
+    "pending": [
+      "BSD-001",
+      "PNP-001",
+      "YM-001",
+      "OZ-001"
+    ],
+    "archived_outside_current_routing": [
+      "PC-001"
+    ]
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "operational_release_complete_preserved": true,
+    "release_trust_issues_reopened": false
+  },
+  "remaining_cross_repository_obligation": "GI-UMBRELLA-SYNC-001 must pin the merged Programme correction and current Cert registry before the final five-repository matrix is issued."
+}
