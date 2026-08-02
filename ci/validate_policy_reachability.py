@@ -24,6 +24,7 @@ from validate_gcl_truth_spine import (
     DEFAULT_REGISTRY_SCHEMA as GCL_TRUTH_SPINE_REGISTRY_SCHEMA,
     validate as validate_gcl_truth_spine,
 )
+from validate_negative_knowledge import validate as validate_negative_knowledge
 
 ROOT = Path(__file__).resolve().parents[1]
 PYTHON_COMMAND = re.compile(r"(?:^|[;&|({\s])python(?:3)?\s+([A-Za-z0-9_./-]+\.py)(?=\s|$)")
@@ -33,6 +34,11 @@ TOOLING_CONTROL_PATHS = (
     "governance/gcl_tooling_command_contract.json",
     "schemas/gcl_tooling_command_contract.schema.json",
     "schemas/gcl_local_identity_manifest.schema.json",
+)
+NEGATIVE_KNOWLEDGE_CONTROL_PATHS = (
+    "ci/validate_negative_knowledge.py",
+    "negative_knowledge/pilot_registry.json",
+    "schemas/negative_knowledge_registry.schema.json",
 )
 
 
@@ -127,6 +133,27 @@ def tooling_control_errors(root: Path) -> list[str]:
     return [f"GCL work-package tooling: {error}" for error in validate_tooling(root)]
 
 
+def negative_knowledge_control_errors(root: Path) -> list[str]:
+    present = [
+        relative for relative in NEGATIVE_KNOWLEDGE_CONTROL_PATHS if (root / relative).is_file()
+    ]
+    if not present:
+        return []
+    missing = [relative for relative in NEGATIVE_KNOWLEDGE_CONTROL_PATHS if relative not in present]
+    if missing:
+        return [
+            "GCL negative knowledge: incomplete control surface; missing "
+            + ", ".join(missing)
+        ]
+    return [
+        f"GCL negative knowledge: {error}"
+        for error in validate_negative_knowledge(
+            root / "negative_knowledge" / "pilot_registry.json",
+            root / "schemas" / "negative_knowledge_registry.schema.json",
+        )
+    ]
+
+
 def policy_reachability_errors(root: Path = ROOT) -> list[str]:
     reachable, errors = reachable_ci_scripts(root)
     executable = executable_ci_scripts(root)
@@ -148,6 +175,7 @@ def policy_reachability_errors(root: Path = ROOT) -> list[str]:
         errors.append(f"GCL truth spine: {error}")
 
     errors.extend(tooling_control_errors(root))
+    errors.extend(negative_knowledge_control_errors(root))
     return errors
 
 

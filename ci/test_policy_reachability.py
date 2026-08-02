@@ -79,6 +79,18 @@ def main() -> int:
             for error in policy_reachability_errors(root)
         )
 
+        (root / "governance" / "gcl_tooling_command_contract.json").unlink()
+        (root / "negative_knowledge").mkdir()
+        (root / "negative_knowledge" / "pilot_registry.json").write_text(
+            "{}\n", encoding="utf-8"
+        )
+        assert any(
+            "incomplete control surface" in error
+            and "ci/validate_negative_knowledge.py" in error
+            and "schemas/negative_knowledge_registry.schema.json" in error
+            for error in policy_reachability_errors(root)
+        )
+
     print("CI policy reachability rejection tests passed")
     return 0
 

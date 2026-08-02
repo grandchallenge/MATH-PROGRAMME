@@ -1,0 +1,316 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/negative_knowledge_registry.schema.json",
+  "title": "GCL negative-knowledge pilot registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "registry_id",
+    "status",
+    "activation_gate",
+    "authority",
+    "records",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "registry_id": {"const": "GCL-NEGATIVE-KNOWLEDGE-PILOT-001"},
+    "status": {"const": "active_pilot"},
+    "activation_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protected_merge_required",
+        "external_exact_head_referee_review_required",
+        "human_steward_release_required",
+        "branch_content_is_authoritative"
+      ],
+      "properties": {
+        "protected_merge_required": {"const": true},
+        "external_exact_head_referee_review_required": {"const": true},
+        "human_steward_release_required": {"const": true},
+        "branch_content_is_authoritative": {"const": false}
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "parent_issue",
+        "work_package_issue",
+        "truth_spine_merge",
+        "tooling_merge"
+      ],
+      "properties": {
+        "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+        "parent_issue": {"const": 186},
+        "work_package_issue": {"const": 189},
+        "truth_spine_merge": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "tooling_merge": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "records": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/record"}
+    },
+    "claim_boundaries": {"$ref": "#/$defs/claim_boundaries"}
+  },
+  "$defs": {
+    "artifact_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit_sha", "path", "git_blob_sha1"],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+        },
+        "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "role": {"type": "string", "minLength": 1}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mathematical_target_proved",
+        "certificate_issued",
+        "novelty_claim_authorized",
+        "priority_claim_authorized",
+        "publication_authorized",
+        "patentability_claim_authorized",
+        "product_claim_authorized",
+        "commercial_claim_authorized"
+      ],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "certificate_issued": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "priority_claim_authorized": {"const": false},
+        "publication_authorized": {"const": false},
+        "patentability_claim_authorized": {"const": false},
+        "product_claim_authorized": {"const": false},
+        "commercial_claim_authorized": {"const": false}
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "campaign_id",
+        "work_package_id",
+        "assumptions",
+        "included_variants",
+        "excluded_variants",
+        "conclusion_strength"
+      ],
+      "properties": {
+        "campaign_id": {"type": "string", "minLength": 1},
+        "work_package_id": {"type": "string", "minLength": 1},
+        "assumptions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "included_variants": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "excluded_variants": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "conclusion_strength": {
+          "enum": [
+            "route_obstruction_only",
+            "finite_search_only",
+            "implementation_defect_only",
+            "exact_scope_only"
+          ]
+        }
+      }
+    },
+    "reopening": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trigger_type", "requirements"],
+      "properties": {
+        "trigger_type": {
+          "enum": [
+            "new_theorem",
+            "new_evidence",
+            "expanded_scope",
+            "implementation_repair"
+          ]
+        },
+        "requirements": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["predecessor_record_ids", "superseded_by"],
+      "properties": {
+        "predecessor_record_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^NK-[A-Z0-9-]+$"}
+        },
+        "superseded_by": {
+          "anyOf": [
+            {"type": "null"},
+            {"$ref": "#/$defs/artifact_identity"}
+          ]
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_office", "satisfaction_mode", "may_promote_claim"],
+      "properties": {
+        "required_office": {
+          "enum": ["Verifier", "Adversary", "Referee", "Amanuensis", "Security"]
+        },
+        "satisfaction_mode": {"const": "external_exact_head_review"},
+        "may_promote_claim": {"const": false}
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "negative_record_id",
+        "record_type",
+        "failure_kind",
+        "attempted_claim",
+        "scope",
+        "scope_digest",
+        "method",
+        "result",
+        "evidence",
+        "evidence_digest",
+        "status",
+        "disposition",
+        "reopening",
+        "lineage",
+        "review",
+        "claim_boundaries"
+      ],
+      "properties": {
+        "negative_record_id": {"type": "string", "pattern": "^NK-[A-Z0-9-]+$"},
+        "record_type": {"enum": ["mathematical", "computational", "systems"]},
+        "failure_kind": {
+          "enum": [
+            "theorem_refutation",
+            "estimate_obstruction",
+            "bounded_search_exhaustion",
+            "finite_non_observation",
+            "resource_exhaustion",
+            "implementation_failure"
+          ]
+        },
+        "attempted_claim": {"type": "string", "minLength": 20},
+        "scope": {"$ref": "#/$defs/scope"},
+        "scope_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "method": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["description", "execution_identity"],
+          "properties": {
+            "description": {"type": "string", "minLength": 20},
+            "execution_identity": {"type": "string", "minLength": 10}
+          }
+        },
+        "result": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["summary", "smallest_known_witness", "does_not_establish"],
+          "properties": {
+            "summary": {"type": "string", "minLength": 20},
+            "smallest_known_witness": {"type": ["string", "null"]},
+            "does_not_establish": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/artifact_identity"}
+        },
+        "evidence_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "status": {
+          "enum": [
+            "refuted",
+            "blocked",
+            "inconclusive",
+            "superseded",
+            "invalid_under_assumptions",
+            "computationally_exhausted",
+            "reopen_on_new_theorem",
+            "reopen_on_new_evidence"
+          ]
+        },
+        "disposition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "route_state",
+            "effect",
+            "excluded_variants",
+            "non_excluded_variants"
+          ],
+          "properties": {
+            "route_state": {"const": "inactive"},
+            "effect": {"enum": ["exclude_within_scope", "inform_only"]},
+            "excluded_variants": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {"type": "string", "minLength": 1}
+            },
+            "non_excluded_variants": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "reopening": {
+          "anyOf": [
+            {"type": "null"},
+            {"$ref": "#/$defs/reopening"}
+          ]
+        },
+        "lineage": {"$ref": "#/$defs/lineage"},
+        "review": {"$ref": "#/$defs/review"},
+        "claim_boundaries": {"$ref": "#/$defs/claim_boundaries"}
+      }
+    }
+  }
+}
