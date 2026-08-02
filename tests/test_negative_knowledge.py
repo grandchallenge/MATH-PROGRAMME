@@ -155,6 +155,34 @@ class NegativeKnowledgeTests(unittest.TestCase):
         errors = self.errors_for(mutated)
         self.assertTrue(any("lineage cycle detected" in error for error in errors))
 
+    def test_refuted_status_mismatch_rejected(self) -> None:
+        mutated = copy.deepcopy(self.registry)
+        mutated["records"][0]["status"] = "refuted"
+        mutated["records"][0]["reopening"] = None
+        errors = self.errors_for(mutated)
+        self.assertTrue(any("refuted status requires theorem_refutation" in error for error in errors))
+
+    def test_computational_exhaustion_kind_mismatch_rejected(self) -> None:
+        mutated = copy.deepcopy(self.registry)
+        mutated["records"][0]["status"] = "computationally_exhausted"
+        mutated["records"][0]["reopening"]["trigger_type"] = "new_evidence"
+        errors = self.errors_for(mutated)
+        self.assertTrue(
+            any("computationally_exhausted requires" in error for error in errors)
+        )
+
+    def test_review_self_attestation_rejected(self) -> None:
+        mutated = copy.deepcopy(self.registry)
+        mutated["records"][0]["review"]["satisfaction_mode"] = "embedded_disposition"
+        errors = self.errors_for(mutated)
+        self.assertTrue(
+            any(
+                "external_exact_head_review" in error
+                or "review satisfaction must remain external" in error
+                for error in errors
+            )
+        )
+
     def test_pilot_type_coverage_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
         mutated["records"][2]["record_type"] = "mathematical"
