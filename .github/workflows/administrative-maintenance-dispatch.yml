@@ -1,0 +1,139 @@
+name: Administrative maintenance dispatcher
+
+on:
+  schedule:
+    # Exact accelerated-pilot due times, expressed in UTC.
+    - cron: '9 18 1 8 *'
+    - cron: '57 10 2 8 *'
+    - cron: '45 3 3 8 *'
+    - cron: '33 20 3 8 *'
+    - cron: '21 1 4,7,10 8 *'
+    - cron: '21 13 4 8 *'
+    - cron: '9 6 5 8 *'
+    - cron: '57 22 5 8 *'
+    - cron: '45 15 6 8 *'
+    - cron: '33 8 7 8 *'
+    - cron: '21 1 8 8 *'
+    - cron: '9 18 8 8 *'
+    - cron: '57 10 9 8 *'
+    - cron: '21 13 6 9 *'
+    # Hourly fail-closed watchdog for delayed or dropped schedule runs.
+    - cron: '47 * * * *'
+  workflow_dispatch:
+    inputs:
+      procedure:
+        description: Procedure to dispatch, or auto to evaluate the protected schedule
+        required: true
+        default: auto
+        type: choice
+        options:
+          - auto
+          - structural_sweep
+          - administrative_review
+          - deep_conformance_review
+          - pilot_review
+          - constitutional_review
+      now:
+        description: Optional ISO-8601 evaluation time for controlled replay
+        required: false
+        type: string
+      dry_run:
+        description: Generate evidence without creating a dispatch issue
+        required: true
+        default: false
+        type: boolean
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/**'
+      - 'ci/**'
+      - 'governance/**'
+      - 'schemas/**'
+      - 'docs/governance/**'
+      - 'CLAIM_LEDGER_STANDARD.md'
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+      - converted_to_draft
+      - closed
+  issues:
+    types:
+      - opened
+      - edited
+      - reopened
+      - closed
+  branch_protection_rule:
+    types:
+      - created
+      - edited
+      - deleted
+  workflow_run:
+    workflows:
+      - Programme policy checks
+      - GCL conformance
+    types:
+      - completed
+
+permissions:
+  actions: read
+  contents: read
+  issues: write
+  pull-requests: read
+
+concurrency:
+  group: administrative-maintenance-dispatch
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    name: Evaluate protected maintenance triggers
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact event revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12.8'
+
+      - name: Evaluate schedule and event obligations
+        id: dispatch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MANUAL_PROCEDURE: ${{ inputs.procedure || 'auto' }}
+          EVALUATION_NOW: ${{ inputs.now || '' }}
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(
+            --event-path "$GITHUB_EVENT_PATH"
+            --repository "$GITHUB_REPOSITORY"
+            --token "$GH_TOKEN"
+            --procedure "$MANUAL_PROCEDURE"
+            --report administrative-maintenance-dispatch.json
+          )
+          if [[ -n "$EVALUATION_NOW" ]]; then
+            args+=(--now "$EVALUATION_NOW")
+          fi
+          if [[ "$DRY_RUN" == "true" ]]; then
+            args+=(--dry-run)
+          fi
+          python ci/dispatch_administrative_maintenance.py "${args[@]}"
+
+      - name: Preserve dispatcher evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: administrative-maintenance-dispatch
+          path: administrative-maintenance-dispatch.json
+          if-no-files-found: error
+          retention-days: 30
