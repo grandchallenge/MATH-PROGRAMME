@@ -54,6 +54,45 @@ class AdministrativeMaintenanceTriggerTests(unittest.TestCase):
             ["2026-08-02T10:57:00Z"],
         )
 
+    def test_exact_schedule_dispatches_due_procedure(self) -> None:
+        registry = self.load_registry()
+        now = dispatcher.parse_datetime("2026-08-02T10:57:00Z")
+        dispatches = dispatcher.build_dispatches(
+            registry,
+            "schedule",
+            {"schedule": "57 10 2 8 *"},
+            now,
+            "auto",
+        )
+        self.assertEqual([item.key for item in dispatches], [
+            "scheduled:structural_sweep:2026-08-02T10:57:00Z"
+        ])
+
+    def test_watchdog_recovers_recent_missed_dispatch(self) -> None:
+        registry = self.load_registry()
+        now = dispatcher.parse_datetime("2026-08-02T11:47:00Z")
+        dispatches = dispatcher.build_dispatches(
+            registry,
+            "schedule",
+            {"schedule": "47 * * * *"},
+            now,
+            "auto",
+        )
+        self.assertEqual(len(dispatches), 1)
+        self.assertEqual(dispatches[0].due_at, "2026-08-02T10:57:00Z")
+
+    def test_watchdog_does_not_repeat_old_dispatch(self) -> None:
+        registry = self.load_registry()
+        now = dispatcher.parse_datetime("2026-08-02T11:58:00Z")
+        dispatches = dispatcher.build_dispatches(
+            registry,
+            "schedule",
+            {"schedule": "47 * * * *"},
+            now,
+            "auto",
+        )
+        self.assertEqual(dispatches, [])
+
     def test_three_day_review_is_anchored(self) -> None:
         procedure = self.procedure("administrative_review")
         due = dispatcher.parse_datetime("2026-08-04T01:21:00Z")
@@ -65,7 +104,13 @@ class AdministrativeMaintenanceTriggerTests(unittest.TestCase):
     def test_pilot_close_dispatches_three_distinct_procedures(self) -> None:
         registry = self.load_registry()
         now = dispatcher.parse_datetime("2026-08-10T01:21:00Z")
-        dispatches = dispatcher.build_dispatches(registry, "schedule", {}, now, "auto")
+        dispatches = dispatcher.build_dispatches(
+            registry,
+            "schedule",
+            {"schedule": "21 1 4,7,10 8 *"},
+            now,
+            "auto",
+        )
         keys = {item.key for item in dispatches}
         self.assertIn("scheduled:administrative_review:2026-08-10T01:21:00Z", keys)
         self.assertIn("scheduled:deep_conformance_review:2026-08-10T01:21:00Z", keys)
@@ -78,15 +123,28 @@ class AdministrativeMaintenanceTriggerTests(unittest.TestCase):
 
     def test_governed_push_creates_material_sync_triage(self) -> None:
         now = dispatcher.parse_datetime("2026-08-02T04:45:00Z")
-        dispatches = dispatcher.event_dispatches(
-            "push",
-            {"after": "a" * 40},
-            now,
-        )
+        dispatches = dispatcher.event_dispatches("push", {"after": "a" * 40}, now)
         self.assertEqual(len(dispatches), 1)
         self.assertEqual(dispatches[0].severity, "P2")
         self.assertIn("2026-08-02T11:57:00Z", dispatches[0].body)
-        self.assertIn("navigation only", dispatches[0].body)
+        self.assertIn("evidence only", dispatches[0].body)
+
+    def test_pull_request_lifecycle_emits_interference_evidence(self) -> None:
+        now = dispatcher.parse_datetime("2026-08-02T04:45:00Z")
+        event = {
+            "action": "synchronize",
+            "number": 203,
+            "pull_request": {
+                "number": 203,
+                "draft": True,
+                "head": {"sha": "a" * 40},
+                "base": {"sha": "b" * 40},
+            },
+        }
+        dispatches = dispatcher.event_dispatches("pull_request", event, now)
+        self.assertEqual(len(dispatches), 1)
+        self.assertEqual(dispatches[0].severity, "P3")
+        self.assertIn("does not authorize merge", dispatches[0].body)
 
     def test_required_workflow_failure_is_p1(self) -> None:
         now = dispatcher.parse_datetime("2026-08-02T04:45:00Z")
@@ -98,7 +156,7 @@ class AdministrativeMaintenanceTriggerTests(unittest.TestCase):
         self.assertEqual(len(dispatches), 1)
         self.assertEqual(dispatches[0].severity, "P1")
 
-    def test_successful_required_workflow_does_not_open_issue(self) -> None:
+    def test_successful_required_workflow_does_not_emit_failure(self) -> None:
         now = dispatcher.parse_datetime("2026-08-02T04:45:00Z")
         dispatches = dispatcher.event_dispatches(
             "workflow_run",
@@ -107,7 +165,7 @@ class AdministrativeMaintenanceTriggerTests(unittest.TestCase):
         )
         self.assertEqual(dispatches, [])
 
-    def test_dispatcher_ignores_its_own_issue_events(self) -> None:
+    def test_dispatcher_ignores_its_own_issue_mirror(self) -> None:
         now = dispatcher.parse_datetime("2026-08-02T04:45:00Z")
         event = {
             "action": "opened",
@@ -133,7 +191,7 @@ class AdministrativeMaintenanceTriggerTests(unittest.TestCase):
         self.assertEqual(len(dispatches), 1)
         self.assertEqual(dispatches[0].severity, "P1")
 
-    def test_workflow_has_exact_and_event_triggers(self) -> None:
+    def test_workflow_has_exact_read_only_and_event_triggers(self) -> None:
         workflow = WORKFLOW_PATH.read_text(encoding="utf-8")
         for fragment in (
             "cron: '57 10 2 8 *'",
@@ -145,8 +203,12 @@ class AdministrativeMaintenanceTriggerTests(unittest.TestCase):
             "pull_request:",
             "issues:",
             "push:",
+            "permissions:\n  contents: read\n",
+            "Enforce P1 fail-closed signal",
         ):
             self.assertIn(fragment, workflow)
+        self.assertNotIn("issues: write", workflow)
+        self.assertNotIn("actions: read", workflow)
         self.assertIn("actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1", workflow)
         self.assertIn("actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97", workflow)
         self.assertIn("actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02", workflow)
@@ -161,23 +223,21 @@ class AdministrativeMaintenanceTriggerTests(unittest.TestCase):
         registry["event_triggers"]["branch_protection_rule"]["enabled"] = False
         self.assertTrue(self.errors_for(registry))
 
-    def test_mutation_rejects_authority_creation(self) -> None:
+    def test_mutation_rejects_issue_creation_authority(self) -> None:
         registry = self.load_registry()
-        registry["dispatch"]["may_create_protected_authority"] = True
+        registry["dispatch"]["may_create_issue"] = True
         self.assertTrue(self.errors_for(registry))
 
     def test_main_dry_run_writes_non_authoritative_report(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             event_path = Path(temporary) / "event.json"
             report_path = Path(temporary) / "report.json"
-            event_path.write_text("{}\n", encoding="utf-8")
+            event_path.write_text(json.dumps({"schedule": "57 10 2 8 *"}), encoding="utf-8")
             with patch.dict(os.environ, {"GITHUB_EVENT_NAME": "schedule"}, clear=False):
                 result = dispatcher.main(
                     [
                         "--event-path",
                         str(event_path),
-                        "--repository",
-                        "grandchallenge/MATH-PROGRAMME",
                         "--procedure",
                         "auto",
                         "--now",
@@ -190,8 +250,27 @@ class AdministrativeMaintenanceTriggerTests(unittest.TestCase):
             self.assertEqual(result, 0)
             report = json.loads(report_path.read_text(encoding="utf-8"))
             self.assertEqual(report["dispatch_count"], 1)
+            self.assertFalse(report["authority_boundary"]["issue_creation_allowed"])
             self.assertFalse(report["authority_boundary"]["claim_promotion"])
             self.assertFalse(report["authority_boundary"]["schedule_anchor_reset"])
+
+    def test_main_operational_report_uses_read_only_delivery(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            event_path = Path(temporary) / "event.json"
+            report_path = Path(temporary) / "report.json"
+            event_path.write_text(json.dumps({"action": "opened", "number": 10, "pull_request": {"number": 10, "head": {"sha": "a" * 40}, "base": {"sha": "b" * 40}}}), encoding="utf-8")
+            with patch.dict(os.environ, {"GITHUB_EVENT_NAME": "pull_request"}, clear=False):
+                result = dispatcher.main([
+                    "--event-path", str(event_path),
+                    "--procedure", "auto",
+                    "--now", "2026-08-02T04:45:00Z",
+                    "--report", str(report_path),
+                ])
+            self.assertEqual(result, 0)
+            report = json.loads(report_path.read_text(encoding="utf-8"))
+            self.assertEqual(report["dispatches"][0]["disposition"], "emitted")
+            self.assertIn("retained_json_artifact", report["delivery_channels"])
+            self.assertFalse(report["authority_boundary"]["issue_creation_allowed"])
 
 
 if __name__ == "__main__":
