@@ -34,6 +34,8 @@ python3 ci/validate_negative_knowledge.py
 
 The validator is reached from the existing Programme policy-reachability lane. A repository with no negative-knowledge surface is unaffected. Once any surface component appears, the complete schema, registry, and validator are required; partial adoption fails closed.
 
+The registry declares the intended protected state `active_pilot`. That declaration has no authority on a feature branch. It becomes effective only after the exact subject receives external exact-head Referee review, explicit Human Steward release, and protected merge. Individual records name the reviewing office and satisfaction mode; they do not contain or simulate their own review disposition.
+
 ## Record boundary
 
 Every record binds:
@@ -48,7 +50,7 @@ Every record binds:
 - present inactive disposition;
 - structured reopening requirements;
 - supersession lineage;
-- reviewer and claim-boundary fields.
+- review jurisdiction and claim-boundary fields.
 
 The scope and evidence sections each receive a canonical SHA-256 digest. Changing either section without updating the corresponding digest is rejected.
 
@@ -73,14 +75,16 @@ The pilot rejects:
 - unknown or duplicate record identities;
 - malformed or mutable-only evidence;
 - scope or evidence digest drift;
-- missing reopening triggers for reopenable states;
-- broken or self-referential lineage;
+- missing or mismatched reopening triggers;
+- broken, self-referential, or cyclic lineage;
 - superseded records without an exact successor identity;
 - finite-search records widened beyond their finite scope;
+- incompatible status and failure-kind combinations;
 - silent route reactivation;
+- embedded review self-attestation;
 - theorem-level refutation without Referee jurisdiction;
 - any mathematical, certification, novelty, priority, publication, patentability, product, or commercial promotion flag.
 
 ## Status boundary
 
-The pilot is candidate infrastructure until its exact PR head receives the required review and Human Steward protected disposition. Validation proves only that the registry satisfies its declared contract. It does not prove the recorded mathematical targets, issue certificates, or establish broader impossibility claims.
+The pilot is candidate infrastructure until its exact PR head receives the required external review and Human Steward protected disposition. Validation proves only that the registry satisfies its declared contract. It does not prove the recorded mathematical targets, issue certificates, or establish broader impossibility claims.
