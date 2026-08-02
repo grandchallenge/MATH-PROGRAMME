@@ -104,6 +104,7 @@ def validate(
             evidence_subjects.add(subject)
 
         status = record["status"]
+        failure_kind = record["failure_kind"]
         reopening = record["reopening"]
         if status in REOPENABLE_STATUSES and reopening is None:
             errors.append(f"{record_id}: reopenable status requires a structured reopening trigger")
@@ -116,25 +117,50 @@ def validate(
             if reopening["trigger_type"] != "new_evidence":
                 errors.append(f"{record_id}: reopen_on_new_evidence requires new_evidence trigger")
 
+        if status == "refuted" and failure_kind != "theorem_refutation":
+            errors.append(f"{record_id}: refuted status requires theorem_refutation evidence")
+        if failure_kind == "theorem_refutation" and status != "refuted":
+            errors.append(f"{record_id}: theorem_refutation must use refuted status")
+        if failure_kind == "estimate_obstruction" and status not in {
+            "blocked",
+            "inconclusive",
+            "invalid_under_assumptions",
+            "reopen_on_new_theorem",
+            "reopen_on_new_evidence",
+        }:
+            errors.append(f"{record_id}: estimate obstruction has incompatible status {status}")
+        if failure_kind == "bounded_search_exhaustion" and status not in {
+            "computationally_exhausted",
+            "reopen_on_new_evidence",
+        }:
+            errors.append(f"{record_id}: bounded search exhaustion has incompatible status {status}")
+        if status == "computationally_exhausted" and failure_kind not in {
+            "bounded_search_exhaustion",
+            "resource_exhaustion",
+        }:
+            errors.append(
+                f"{record_id}: computationally_exhausted requires bounded-search or resource exhaustion"
+            )
+
         superseded_by = record["lineage"]["superseded_by"]
         if status == "superseded" and superseded_by is None:
             errors.append(f"{record_id}: superseded status requires superseded_by identity")
         if status != "superseded" and superseded_by is not None:
             errors.append(f"{record_id}: non-superseded status must not set superseded_by")
 
-        if record["failure_kind"] == "theorem_refutation":
+        if failure_kind == "theorem_refutation":
             if record["scope"]["conclusion_strength"] != "exact_scope_only":
                 errors.append(f"{record_id}: theorem refutation must be exact_scope_only")
             if record["review"]["required_office"] != "Referee":
                 errors.append(f"{record_id}: theorem refutation requires Referee review")
 
-        if record["failure_kind"] == "bounded_search_exhaustion":
+        if failure_kind == "bounded_search_exhaustion":
             if record["record_type"] != "computational":
                 errors.append(f"{record_id}: bounded search exhaustion must be computational")
             if record["scope"]["conclusion_strength"] != "finite_search_only":
                 errors.append(f"{record_id}: bounded search exhaustion must be finite_search_only")
 
-        if record["failure_kind"] == "implementation_failure":
+        if failure_kind == "implementation_failure":
             if record["record_type"] != "systems":
                 errors.append(f"{record_id}: implementation failure must be systems")
             if status not in {"superseded", "blocked", "inconclusive"}:
@@ -144,6 +170,8 @@ def validate(
             errors.append(f"{record_id}: negative records cannot activate a route")
         if not record["disposition"]["non_excluded_variants"]:
             errors.append(f"{record_id}: non_excluded_variants must remain explicit")
+        if record["review"]["satisfaction_mode"] != "external_exact_head_review":
+            errors.append(f"{record_id}: review satisfaction must remain external and exact-head bound")
         if record["review"]["may_promote_claim"]:
             errors.append(f"{record_id}: review cannot promote a claim")
 
