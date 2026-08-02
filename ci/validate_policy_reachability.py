@@ -25,6 +25,7 @@ from validate_gcl_truth_spine import (
     validate as validate_gcl_truth_spine,
 )
 from validate_negative_knowledge import validate as validate_negative_knowledge
+from validate_portfolio import validate as validate_portfolio
 
 ROOT = Path(__file__).resolve().parents[1]
 PYTHON_COMMAND = re.compile(r"(?:^|[;&|({\s])python(?:3)?\s+([A-Za-z0-9_./-]+\.py)(?=\s|$)")
@@ -39,6 +40,13 @@ NEGATIVE_KNOWLEDGE_CONTROL_PATHS = (
     "ci/validate_negative_knowledge.py",
     "negative_knowledge/pilot_registry.json",
     "schemas/negative_knowledge_registry.schema.json",
+)
+PORTFOLIO_CONTROL_PATHS = (
+    "ci/render_portfolio.py",
+    "ci/validate_portfolio.py",
+    "portfolio/pilot_registry.json",
+    "schemas/gcl_portfolio_registry.schema.json",
+    "docs/governance/GCL_PORTFOLIO_VIEW.md",
 )
 
 
@@ -154,6 +162,26 @@ def negative_knowledge_control_errors(root: Path) -> list[str]:
     ]
 
 
+def portfolio_control_errors(root: Path) -> list[str]:
+    present = [relative for relative in PORTFOLIO_CONTROL_PATHS if (root / relative).is_file()]
+    if not present:
+        return []
+    missing = [relative for relative in PORTFOLIO_CONTROL_PATHS if relative not in present]
+    if missing:
+        return [
+            "GCL portfolio: incomplete control surface; missing "
+            + ", ".join(missing)
+        ]
+    return [
+        f"GCL portfolio: {error}"
+        for error in validate_portfolio(
+            root / "portfolio" / "pilot_registry.json",
+            root / "schemas" / "gcl_portfolio_registry.schema.json",
+            root / "docs" / "governance" / "GCL_PORTFOLIO_VIEW.md",
+        )
+    ]
+
+
 def policy_reachability_errors(root: Path = ROOT) -> list[str]:
     reachable, errors = reachable_ci_scripts(root)
     executable = executable_ci_scripts(root)
@@ -176,6 +204,7 @@ def policy_reachability_errors(root: Path = ROOT) -> list[str]:
 
     errors.extend(tooling_control_errors(root))
     errors.extend(negative_knowledge_control_errors(root))
+    errors.extend(portfolio_control_errors(root))
     return errors
 
 
