@@ -1,0 +1,127 @@
+{
+  "artifacts": [
+    {
+      "artifact_id": "ART-VALID",
+      "case_kind": "valid",
+      "expected_sha256": "672b5475a38a61ecdbd6afff71a79ec6756929649ce1c50ff9619b6803331ff6",
+      "path": "artifacts/result.json",
+      "required": true,
+      "subject_head": "1111111111111111111111111111111111111111"
+    },
+    {
+      "artifact_id": "ART-STALE",
+      "case_kind": "stale",
+      "expected_sha256": "6d10fbffa6f5c7e458fb0089aeba4b39f17b8ac47c59dd3e1d977f4dea42bae1",
+      "path": "artifacts/stale.json",
+      "required": true,
+      "subject_head": "0000000000000000000000000000000000000000"
+    },
+    {
+      "artifact_id": "ART-MISSING",
+      "case_kind": "missing",
+      "expected_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "path": "artifacts/optional.json",
+      "required": false,
+      "subject_head": "1111111111111111111111111111111111111111"
+    },
+    {
+      "artifact_id": "ART-DIGEST",
+      "case_kind": "digest_drift",
+      "expected_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "path": "artifacts/drifted.json",
+      "required": true,
+      "subject_head": "1111111111111111111111111111111111111111"
+    }
+  ],
+  "authority_edges": [
+    {"source": "candidate:head", "target": "artifact:ART-VALID"},
+    {"source": "candidate:head", "target": "workflow:WF-VALID"},
+    {"source": "artifact:ART-VALID", "target": "claim:C-IDENTITY"},
+    {"source": "workflow:WF-VALID", "target": "claim:C-WORKFLOW"},
+    {"source": "review:REV-APPROVE", "target": "claim:C-REVIEW"}
+  ],
+  "candidate": {
+    "candidate_kind": "pull_request_head",
+    "head_sha": "1111111111111111111111111111111111111111",
+    "repository": "synthetic.example/research-demo"
+  },
+  "claims": [
+    {
+      "category": "artifact_identity",
+      "claim_id": "C-IDENTITY",
+      "evidence_refs": ["F-ART-VALID"],
+      "expected_disposition": "PASS",
+      "statement": "The valid synthetic artifact is byte-identical to its declared digest at the candidate head."
+    },
+    {
+      "category": "workflow_integrity",
+      "claim_id": "C-WORKFLOW",
+      "evidence_refs": ["F-WF-FABRICATED"],
+      "expected_disposition": "FAIL",
+      "statement": "All declared workflow-success evidence is trustworthy."
+    },
+    {
+      "category": "review_readiness",
+      "claim_id": "C-REVIEW",
+      "evidence_refs": ["F-REVIEW-STATE"],
+      "expected_disposition": "FAIL",
+      "statement": "The candidate is free of unresolved review contradiction."
+    },
+    {
+      "category": "scientific_truth",
+      "claim_id": "C-SCIENCE",
+      "evidence_refs": [],
+      "expected_disposition": "ABSTAIN",
+      "statement": "The research claim is scientifically true."
+    },
+    {
+      "category": "novelty",
+      "claim_id": "C-NOVELTY",
+      "evidence_refs": [],
+      "expected_disposition": "ABSTAIN",
+      "statement": "The work is novel and patentable."
+    }
+  ],
+  "data_classification": "synthetic_public",
+  "evidence_files": {
+    "reviews": "evidence/reviews.json",
+    "workflows": "evidence/workflows.json"
+  },
+  "expected_findings": [
+    {"disposition": "PASS", "finding_id": "F-ART-VALID", "reason_code": "EXACT_ARTIFACT_MATCH"},
+    {"disposition": "FAIL", "finding_id": "F-ART-STALE", "reason_code": "HEAD_DRIFT"},
+    {"disposition": "ABSTAIN", "finding_id": "F-ART-MISSING", "reason_code": "OPTIONAL_EVIDENCE_MISSING"},
+    {"disposition": "FAIL", "finding_id": "F-ART-DIGEST", "reason_code": "DIGEST_DRIFT"},
+    {"disposition": "PASS", "finding_id": "F-WF-VALID", "reason_code": "EXPORTED_WORKFLOW_SUCCESS"},
+    {"disposition": "FAIL", "finding_id": "F-WF-FABRICATED", "reason_code": "FABRICATED_WORKFLOW_SUCCESS"},
+    {"disposition": "FAIL", "finding_id": "F-REVIEW-STATE", "reason_code": "UNRESOLVED_CHANGES_REQUESTED"},
+    {"disposition": "PASS", "finding_id": "F-AUTHORITY-GRAPH", "reason_code": "ACYCLIC_AUTHORITY_GRAPH"},
+    {"disposition": "PASS", "finding_id": "F-POLICY-BOUNDARY", "reason_code": "GENERIC_POLICY_ONLY"},
+    {"disposition": "PASS", "finding_id": "F-PRIVACY-BOUNDARY", "reason_code": "SYNTHETIC_PUBLIC_ONLY"},
+    {"disposition": "PASS", "finding_id": "F-CLAIM-C-IDENTITY", "reason_code": "EVIDENCE_SUPPORTS_BOUNDED_CLAIM"},
+    {"disposition": "FAIL", "finding_id": "F-CLAIM-C-WORKFLOW", "reason_code": "SUPPORTING_EVIDENCE_FAILED"},
+    {"disposition": "FAIL", "finding_id": "F-CLAIM-C-REVIEW", "reason_code": "SUPPORTING_EVIDENCE_FAILED"},
+    {"disposition": "ABSTAIN", "finding_id": "F-CLAIM-C-SCIENCE", "reason_code": "UNSUPPORTED_CONCLUSION"},
+    {"disposition": "ABSTAIN", "finding_id": "F-CLAIM-C-NOVELTY", "reason_code": "UNSUPPORTED_CONCLUSION"}
+  ],
+  "fixture_id": "GCL-ASSURE-PR-001",
+  "policy_profile": {
+    "embedded_private_policy": false,
+    "origin": "generic_public",
+    "rules": [
+      "exact subject identity",
+      "digest concordance",
+      "exported workflow evidence",
+      "non-author review state",
+      "unsupported conclusion abstention"
+    ]
+  },
+  "privacy": {
+    "contains_credentials": false,
+    "contains_customer_secrets": false,
+    "contains_personal_data": false,
+    "contains_regulated_data": false,
+    "contains_unpublished_invention": false
+  },
+  "schema_version": "1.0.0"
+}
