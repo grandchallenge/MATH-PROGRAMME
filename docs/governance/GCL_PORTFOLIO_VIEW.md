@@ -18,7 +18,7 @@ This view is advisory only. It does not rank work, allocate resources, authorize
 | [`GCL-PORTFOLIO-WP00`](https://github.com/grandchallenge/MATH-PROGRAMME/issues/190) | active | 4 | 5 | 5 | 4 | `2.6417–2.6417` | Implement and validate the exact four-record portfolio pilot under the protected review and release gates. |
 | [`GCL-SYNTHESIS-WP00`](https://github.com/grandchallenge/MATH-PROGRAMME/issues/191) | blocked | 5 | 0 | 5 | 5 | `0.0000–0.0000` | Wait for protected disposition of the portfolio pilot, then authorize a separately bounded transfer-schema tranche. |
 | [`GCL-ASSURANCE-PRODUCT-WP00`](https://github.com/grandchallenge/MATH-PROGRAMME/issues/192) | blocked | 4 | 0 | 4 | 4 | `0.0000–0.0000` | Wait for protected portfolio and synthesis dispositions before selecting one design-partner problem and supported contract. |
-| [`GCL-DISCLOSURE-WP00`](https://github.com/grandchallenge/MATH-PROGRAMME/issues/193) | blocked | 5 | 1 | 5 | 4 | `0.2875–0.2875` | Maintain existing release controls while waiting for the ordered portfolio and synthesis packages before the new classification tranche. |
+| [`GCL-DISCLOSURE-WP00`](https://github.com/grandchallenge/MATH-PROGRAMME/issues/193) | blocked | 5 | 1 | 5 | 4 | `0.2464–0.3000` | Maintain existing release controls while waiting for the ordered portfolio and synthesis packages before the new classification tranche. |
 
 ## Decision boundary
 
