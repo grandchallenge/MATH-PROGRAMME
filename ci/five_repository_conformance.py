@@ -1,4 +1,4 @@
-"""Policy checks for the final five-repository conformance matrix."""
+"""Policy checks for the historical final five-repository conformance matrix."""
 from __future__ import annotations
 
 import json
@@ -10,7 +10,6 @@ from jsonschema import Draft202012Validator, FormatChecker
 ROOT = Path(__file__).resolve().parents[1]
 MATRIX_PATH = ROOT / "governance" / "five_repository_conformance_matrix.json"
 SCHEMA_PATH = ROOT / "schemas" / "five_repository_conformance_matrix.schema.json"
-ROUTING_PATH = ROOT / "governance" / "mathsolve_routing_audit.json"
 AUDIT_PATH = ROOT / "governance" / "umbrella_current_state_conformance.json"
 
 EXPECTED_HEADS = {
@@ -28,8 +27,8 @@ EXPECTED_BLOBS = {
     "intellect_fixture": "690a71ad1fe9f3467ef0999c1fbc5da77d7fcff2",
 }
 EXPECTED_STATES = {
-    "qualified": {"NS-CI-001", "RH-001"},
-    "ready": {"UC-001", "HC-001"},
+    "qualified_interface_only": {"NS-CI-001", "RH-001"},
+    "ready_intake": {"UC-001", "HC-001"},
     "pending": {"BSD-001", "PNP-001", "YM-001", "OZ-001"},
 }
 
@@ -74,27 +73,12 @@ def validation_errors(matrix: dict[str, Any] | None = None) -> list[str]:
     if intellect.get("qualification_fixture", {}).get("digest") != EXPECTED_BLOBS["intellect_fixture"]:
         errors.append("five-repository matrix: INTELLECT qualification-fixture blob drift")
 
-    routing = load_json(ROUTING_PATH)
-    actual_states = {"qualified": set(), "ready": set(), "pending": set()}
-    for entry in routing.get("campaigns", []):
-        state = entry.get("cert", {}).get("route_state")
-        if state in actual_states:
-            actual_states[state].add(entry.get("campaign_id"))
-        if state == "qualified":
-            if entry.get("cert", {}).get("qualification_scope") != "qualified_interface_only":
-                errors.append(f"five-repository matrix: {entry.get('campaign_id')} scope inflation")
-            if entry.get("promotion", {}).get("state") != "blocked":
-                errors.append(f"five-repository matrix: {entry.get('campaign_id')} promotion inflation")
-    if actual_states != EXPECTED_STATES:
-        errors.append("five-repository matrix: portfolio state mismatch")
-
+    # This matrix is an admitted historical snapshot. Validate its own pinned
+    # portfolio; do not compare it to the mutable current routing registry.
     portfolio = matrix.get("portfolio", {})
-    if set(portfolio.get("qualified_interface_only", [])) != EXPECTED_STATES["qualified"]:
-        errors.append("five-repository matrix: qualified portfolio mismatch")
-    if set(portfolio.get("ready_intake", [])) != EXPECTED_STATES["ready"]:
-        errors.append("five-repository matrix: ready portfolio mismatch")
-    if set(portfolio.get("pending", [])) != EXPECTED_STATES["pending"]:
-        errors.append("five-repository matrix: pending portfolio mismatch")
+    for key, expected in EXPECTED_STATES.items():
+        if set(portfolio.get(key, [])) != expected:
+            errors.append(f"five-repository matrix: {key} portfolio mismatch")
 
     audit = load_json(AUDIT_PATH)
     if audit.get("claim_boundaries", {}).get("operational_release_complete_preserved") is not True:
@@ -111,9 +95,9 @@ def validation_errors(matrix: dict[str, Any] | None = None) -> list[str]:
     if boundaries.get("operational_release_complete_preserved") is not True:
         errors.append("five-repository matrix: operational release closure must remain true")
 
-    active = EXPECTED_STATES["qualified"] | EXPECTED_STATES["ready"] | EXPECTED_STATES["pending"]
+    active = set().union(*EXPECTED_STATES.values())
     if set(matrix.get("preserved_blockers", {})) != active:
-        errors.append("five-repository matrix: blocker coverage does not equal active routing portfolio")
+        errors.append("five-repository matrix: blocker coverage does not equal admitted routing portfolio")
     if matrix.get("tracker_reconciliation", {}).get("mathsolve_retrospective_closed_completed") != [66, 67, 68, 69]:
         errors.append("five-repository matrix: retrospective Solve closure set drift")
     return errors

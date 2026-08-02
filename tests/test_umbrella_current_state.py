@@ -36,6 +36,14 @@ class UmbrellaCurrentStateTests(unittest.TestCase):
             any("RH-001 qualification is not interface-only" in error for error in module.validation_errors(routing=routing))
         )
 
+    def test_uc_qualification_cannot_change_scope(self):
+        routing = self.load("mathsolve_routing_audit.json")
+        uc = next(item for item in routing["campaigns"] if item["campaign_id"] == "UC-001")
+        uc["cert"]["qualification_scope"] = "qualified_interface_only"
+        self.assertTrue(
+            any("UC-001 qualification is not restricted-claims-only" in error for error in module.validation_errors(routing=routing))
+        )
+
     def test_ns_qualification_cannot_enable_promotion(self):
         routing = self.load("mathsolve_routing_audit.json")
         ns = next(item for item in routing["campaigns"] if item["campaign_id"] == "NS-CI-001")
@@ -44,12 +52,27 @@ class UmbrellaCurrentStateTests(unittest.TestCase):
             any("NS-CI-001 qualification may not enable promotion" in error for error in module.validation_errors(routing=routing))
         )
 
+    def test_uc_qualification_cannot_enable_promotion(self):
+        routing = self.load("mathsolve_routing_audit.json")
+        uc = next(item for item in routing["campaigns"] if item["campaign_id"] == "UC-001")
+        uc["promotion"]["state"] = "allowed"
+        self.assertTrue(
+            any("UC-001 qualification may not enable promotion" in error for error in module.validation_errors(routing=routing))
+        )
+
     def test_ready_route_cannot_be_silently_qualified(self):
         routing = self.load("mathsolve_routing_audit.json")
         hc = next(item for item in routing["campaigns"] if item["campaign_id"] == "HC-001")
         hc["cert"]["route_state"] = "qualified"
         self.assertTrue(
             any("qualified portfolio drift" in error for error in module.validation_errors(routing=routing))
+        )
+
+    def test_recorded_restricted_portfolio_cannot_drop_uc(self):
+        audit = self.load("umbrella_current_state_conformance.json")
+        audit["portfolio"]["qualified_restricted_claims_only"] = []
+        self.assertTrue(
+            any("qualified_restricted_claims_only recorded portfolio drift" in error for error in module.validation_errors(audit=audit))
         )
 
     def test_odd_zeta_must_remain_additional_campaign(self):

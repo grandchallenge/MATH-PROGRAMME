@@ -14,7 +14,9 @@ CAMPAIGN_PATH = ROOT / "governance" / "governed_campaign_registry.json"
 PREDECESSOR_PATH = ROOT / "governance" / "five_repository_conformance_second_pass.json"
 RUNTIME_PATH = ROOT / "governance" / "umbrella_runtime_contract.json"
 RUNTIME_SCHEMA_PATH = ROOT / "schemas" / "umbrella_runtime_contract.schema.json"
-HISTORICAL_RUNTIME_PATH = ROOT / "governance" / "umbrella_current_state_conformance.json"
+HISTORICAL_RUNTIME_PATH = (
+    ROOT / "governance" / "history" / "umbrella_current_state_conformance_2026-07-31.json"
+)
 
 EXPECTED_BASE_HEADS = {
     "math_programme": "96bebd6d9125555c6279106633318d7e32e890fe",

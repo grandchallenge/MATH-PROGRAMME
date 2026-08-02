@@ -15,12 +15,12 @@ REGISTRY_PATH = ROOT / "governance" / "mathsolve_routing_audit.json"
 SCHEMA_PATH = ROOT / "schemas" / "mathsolve_routing_registry.schema.json"
 DOMAIN_REGISTRY_PATH = ROOT / "DOMAIN_REGISTRY.yaml"
 
-EXPECTED_PROVIDER_COMMIT = "916f3434abcce29098ba7508a3b457a461461193"
-EXPECTED_PROVIDER_PULL_REQUEST = "https://github.com/grandchallenge/MATHSOLVE/pull/83"
-EXPECTED_CERT_PROVIDER_COMMIT = "0258e4f0bca0d90fac05b62aeef108f16dccffdd"
-EXPECTED_CERT_PROVIDER_PULL_REQUEST = "https://github.com/grandchallenge/MATHCERT/pull/40"
+EXPECTED_PROVIDER_COMMIT = "c9b9d0122017df7a117847d9ff1c2b9f6d6b75a1"
+EXPECTED_PROVIDER_PULL_REQUEST = "https://github.com/grandchallenge/MATHSOLVE/pull/95"
+EXPECTED_CERT_PROVIDER_COMMIT = "64e042ddb1147338ad7868a2847715fe7c1c079d"
+EXPECTED_CERT_PROVIDER_PULL_REQUEST = "https://github.com/grandchallenge/MATHCERT/pull/79"
 EXPECTED_CERT_REGISTRY_PATH = "governance/certification_routes.json"
-EXPECTED_CERT_REGISTRY_BLOB = "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1"
+EXPECTED_CERT_REGISTRY_BLOB = "cf876f43ae824f965a3aedf411671c110c380028"
 EXPECTED_PREDECESSOR = {
     "path": "governance/mathcert_cross_repository_conformance.json",
     "audit_id": "MP-MC-CONFORMANCE-001",
@@ -28,7 +28,7 @@ EXPECTED_PREDECESSOR = {
 }
 
 EXPECTED_MANIFESTS = {
-    "UC-001": ("campaign_manifests/UC-001.json", "55629c3004b8bffc35fc0fa6f5fbc711ff48aa3c"),
+    "UC-001": ("campaign_manifests/UC-001.json", "4faf3e9e19e6c1a48461a8ad70cfb9c110daa101"),
     "NS-CI-001": ("campaign_manifests/NS-CI-001.json", "fcdd10f96b19c218ba700deb452b7da7f6b9b975"),
     "HC-001": ("campaign_manifests/HC-001.json", "48e3a0c22299147fe48cb4288cda813d7cffdcb4"),
     "BSD-001": ("campaign_manifests/BSD-001.json", "3fb3b07400915d90047a06a353537cf2e1593b9e"),
@@ -48,7 +48,7 @@ EXPECTED_HANDOFFS = {
     "OZ-001": (30, "pending", "cert_handoffs/OZ-001.json", "b244c30b1b3aa4590a8b9ff9d63c5b66dab87663"),
 }
 EXPECTED_CERT_ROUTE_STATES = {
-    "UC-001": "ready",
+    "UC-001": "qualified",
     "NS-CI-001": "qualified",
     "HC-001": "ready",
     "BSD-001": "pending",
@@ -58,6 +58,13 @@ EXPECTED_CERT_ROUTE_STATES = {
     "OZ-001": "pending",
 }
 EXPECTED_CERT_OUTPUTS = {
+    "UC-001": {
+        "repository": "grandchallenge/MATHCERT",
+        "commit_sha": "214c4f4d7962883bb10172db84d5162dde2e5c4e",
+        "path": "certificates/union_closed/MC-UC-WP04-QUAL-001.json",
+        "digest_algorithm": "git_blob_sha1",
+        "digest": "265c185d6b2b2970dc675729efa3fc4860f29204",
+    },
     "NS-CI-001": {
         "repository": "grandchallenge/MATHCERT",
         "commit_sha": "b1aa08001eb8537be8e204c3866aefd5f898252e",
@@ -72,6 +79,11 @@ EXPECTED_CERT_OUTPUTS = {
         "digest_algorithm": "git_blob_sha1",
         "digest": "3668bbf792d994a6d8919101417f2f3cad342cdc",
     },
+}
+EXPECTED_QUALIFICATION_SCOPES = {
+    "UC-001": "qualified_restricted_claims_only",
+    "NS-CI-001": "qualified_interface_only",
+    "RH-001": "qualified_interface_only",
 }
 ALIASES = {"UC": "UC-001"}
 GATED_STAGES = {
@@ -223,9 +235,10 @@ def routing_errors(
             errors.extend(_exact_mapping_errors(
                 f"MATHSOLVE routing: {campaign_id} Cert output", actual_output, expected_output
             ))
-            if scope != "qualified_interface_only":
+            expected_scope = EXPECTED_QUALIFICATION_SCOPES[campaign_id]
+            if scope != expected_scope:
                 errors.append(
-                    f"MATHSOLVE routing: {campaign_id} qualified route must be interface-only"
+                    f"MATHSOLVE routing: {campaign_id} qualification scope drift; expected {expected_scope}"
                 )
             if not any("unproved" in str(item).lower() for item in entry.get("promotion", {}).get("blockers", [])):
                 errors.append(
@@ -316,6 +329,6 @@ def main() -> int:
         return 1
     print(
         "validated current Solve manifests and packets, exact Cert outputs, "
-        "interface-only qualifications, historical supersession, and promotion boundaries"
+        "bounded qualifications, historical supersession, and promotion boundaries"
     )
     return 0

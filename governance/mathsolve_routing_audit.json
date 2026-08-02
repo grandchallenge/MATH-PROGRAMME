@@ -1,15 +1,15 @@
 {
-  "schema_version": "1.3.0",
+  "schema_version": "1.4.0",
   "registry_id": "MATHSOLVE-ROUTING-AUDIT",
   "provider_repository": "grandchallenge/MATHSOLVE",
-  "provider_commit": "916f3434abcce29098ba7508a3b457a461461193",
-  "provider_pull_request": "https://github.com/grandchallenge/MATHSOLVE/pull/83",
+  "provider_commit": "c9b9d0122017df7a117847d9ff1c2b9f6d6b75a1",
+  "provider_pull_request": "https://github.com/grandchallenge/MATHSOLVE/pull/95",
   "certification_provider_repository": "grandchallenge/MATHCERT",
-  "certification_provider_commit": "0258e4f0bca0d90fac05b62aeef108f16dccffdd",
-  "certification_provider_pull_request": "https://github.com/grandchallenge/MATHCERT/pull/40",
+  "certification_provider_commit": "64e042ddb1147338ad7868a2847715fe7c1c079d",
+  "certification_provider_pull_request": "https://github.com/grandchallenge/MATHCERT/pull/79",
   "certification_route_registry_path": "governance/certification_routes.json",
-  "certification_route_registry_git_blob_sha1": "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1",
-  "verified_at": "2026-07-31",
+  "certification_route_registry_git_blob_sha1": "cf876f43ae824f965a3aedf411671c110c380028",
+  "verified_at": "2026-08-02",
   "predecessor": {
     "path": "governance/mathcert_cross_repository_conformance.json",
     "audit_id": "MP-MC-CONFORMANCE-001",
@@ -23,7 +23,7 @@
       "coverage_mode": "native",
       "placement": "solve_native",
       "manifest_path": "campaign_manifests/UC-001.json",
-      "manifest_git_blob_sha1": "55629c3004b8bffc35fc0fa6f5fbc711ff48aa3c",
+      "manifest_git_blob_sha1": "4faf3e9e19e6c1a48461a8ad70cfb9c110daa101",
       "solve_work_package_ids": [
         "MS-UC-WP04"
       ],
@@ -36,7 +36,7 @@
       "cert": {
         "repository": "grandchallenge/MATHCERT",
         "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/25",
-        "route_state": "ready",
+        "route_state": "qualified",
         "handoff": {
           "repository": "grandchallenge/MATHSOLVE",
           "handoff_id": "MC-HANDOFF-UC-001",
@@ -44,14 +44,21 @@
           "path": "cert_handoffs/UC-001.json",
           "git_blob_sha1": "8369bc21e45be6af71d2a0cdb0c5ab3cb5313bfb"
         },
-        "cert_output": null,
-        "qualification_scope": null
+        "cert_output": {
+          "repository": "grandchallenge/MATHCERT",
+          "commit_sha": "214c4f4d7962883bb10172db84d5162dde2e5c4e",
+          "path": "certificates/union_closed/MC-UC-WP04-QUAL-001.json",
+          "digest_algorithm": "git_blob_sha1",
+          "digest": "265c185d6b2b2970dc675729efa3fc4860f29204"
+        },
+        "qualification_scope": "qualified_restricted_claims_only"
       },
       "promotion": {
         "state": "blocked",
         "blockers": [
-          "Frankl's conjecture remains open.",
-          "The ready packet has no MATHCERT adjudication."
+          "Frankl's conjecture remains unproved and open.",
+          "Proof obligation UC-P04 remains unproved.",
+          "The finite qualification stops at universe size n <= 4."
         ]
       }
     },

@@ -89,10 +89,11 @@ class ReviewedRoutingTests(unittest.TestCase):
             )
         )
 
-    def test_ready_packet_is_not_adjudicated(self):
+    def test_ready_hc_is_not_adjudicated_but_uc_is(self):
         data = self.registry()
         self.assertTrue(routing.provider_gate_errors("HC-001", "JUDGMENT", data))
-        self.assertTrue(routing.provider_gate_errors("UC-001", "INTEGRATION", data))
+        self.assertEqual(routing.provider_gate_errors("UC-001", "INTEGRATION", data), [])
+        self.assertTrue(routing.provider_gate_errors("UC-001", "CLAIM_PROMOTION", data))
 
     def test_qualified_output_identity_is_fixed(self):
         data = self.registry()
@@ -105,13 +106,24 @@ class ReviewedRoutingTests(unittest.TestCase):
             )
         )
 
-    def test_qualified_scope_cannot_expand_to_theorem(self):
+    def test_interface_qualified_scope_cannot_expand_to_theorem(self):
         data = self.registry()
         ns = self.campaign(data, "NS-CI-001")
         ns["cert"]["qualification_scope"] = None
         self.assertTrue(
             any(
-                "qualified route must be interface-only" in error
+                "NS-CI-001 qualification scope drift" in error
+                for error in routing.routing_errors(data, active=set())
+            )
+        )
+
+    def test_restricted_qualified_scope_cannot_expand_to_theorem(self):
+        data = self.registry()
+        uc = self.campaign(data, "UC-001")
+        uc["cert"]["qualification_scope"] = None
+        self.assertTrue(
+            any(
+                "UC-001 qualification scope drift" in error
                 for error in routing.routing_errors(data, active=set())
             )
         )

@@ -18,9 +18,21 @@ ROUTING_PATH = ROOT / "governance" / "mathsolve_routing_audit.json"
 DOMAIN_PATH = ROOT / "DOMAIN_REGISTRY.yaml"
 
 EXPECTED_ROUTING = {
-    "qualified": {"NS-CI-001", "RH-001"},
-    "ready": {"UC-001", "HC-001"},
+    "qualified": {"UC-001", "NS-CI-001", "RH-001"},
+    "ready": {"HC-001"},
     "pending": {"BSD-001", "PNP-001", "YM-001", "OZ-001"},
+}
+EXPECTED_SCOPES = {
+    "UC-001": "qualified_restricted_claims_only",
+    "NS-CI-001": "qualified_interface_only",
+    "RH-001": "qualified_interface_only",
+}
+EXPECTED_AUDIT_PORTFOLIO = {
+    "qualified_restricted_claims_only": {"UC-001"},
+    "qualified_interface_only": {"NS-CI-001", "RH-001"},
+    "ready_intake": {"HC-001"},
+    "pending": {"BSD-001", "PNP-001", "YM-001", "OZ-001"},
+    "archived_outside_current_routing": {"PC-001"},
 }
 EXPECTED_PROGRAMME_TRACKERS = {
     "UC-001": 1,
@@ -74,6 +86,9 @@ def validation_errors(
         errors.append("umbrella audit: operational release closure must remain preserved")
     if boundaries.get("release_trust_issues_reopened") is not False:
         errors.append("umbrella audit: release-trust issues may not be reopened")
+    for key, expected in EXPECTED_AUDIT_PORTFOLIO.items():
+        if set(audit.get("portfolio", {}).get(key, [])) != expected:
+            errors.append(f"umbrella audit: {key} recorded portfolio drift")
 
     entries = {
         str(item.get("campaign_id")): item
@@ -85,8 +100,15 @@ def validation_errors(
         state = entry.get("cert", {}).get("route_state")
         if state == "qualified":
             actual["qualified"].add(campaign_id)
-            if entry.get("cert", {}).get("qualification_scope") != "qualified_interface_only":
-                errors.append(f"umbrella audit: {campaign_id} qualification is not interface-only")
+            expected_scope = EXPECTED_SCOPES.get(campaign_id)
+            actual_scope = entry.get("cert", {}).get("qualification_scope")
+            if actual_scope != expected_scope:
+                if expected_scope == "qualified_interface_only":
+                    errors.append(f"umbrella audit: {campaign_id} qualification is not interface-only")
+                elif expected_scope == "qualified_restricted_claims_only":
+                    errors.append(f"umbrella audit: {campaign_id} qualification is not restricted-claims-only")
+                else:
+                    errors.append(f"umbrella audit: unexpected qualified campaign {campaign_id}")
             if entry.get("promotion", {}).get("state") != "blocked":
                 errors.append(f"umbrella audit: {campaign_id} qualification may not enable promotion")
         elif state == "ready":
@@ -158,5 +180,8 @@ def main() -> int:
     if errors:
         print("\n".join(errors), file=sys.stderr)
         return 1
-    print("validated current five-repository subject heads, portfolio states, exact campaign tracker mirrors, repository authority, historical supersession, and claim boundaries")
+    print(
+        "validated current five-repository subject heads, scope-separated portfolio states, "
+        "exact campaign tracker mirrors, repository authority, historical supersession, and claim boundaries"
+    )
     return 0
