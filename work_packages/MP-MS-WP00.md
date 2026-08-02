@@ -2,61 +2,78 @@
 
 ## Result
 
-All eight ACTIVE MATH-PROGRAMME campaigns now have a pinned MATHSOLVE provider route. The audit distinguishes native Solve work from retrospective registration and identifies every campaign whose Solve-owned work remains embedded in MATH-PROGRAMME.
+All eight active MATH-PROGRAMME campaigns have a pinned MATHSOLVE provider route. The audit distinguishes native Solve work from retrospective registration, immutable producer handoff state from current Cert adjudication, and adjudication from Programme promotion.
 
-## Inventory
+## Current inventory
 
-| Campaign | Coverage | Placement | Solve record | Cert state | Future promotion |
-| --- | --- | --- | --- | --- | --- |
-| UC-001 | native | MATHSOLVE | MS-UC-WP04 | partial | blocked by open conjecture and legacy coverage debt |
-| NS-CI-001 | native | MATHSOLVE | NS-CI-R014-A2 | partial | blocked by open A2/L5 obligations |
-| HC-001 | native | MATHSOLVE | HC-WP00 | partial | blocked by open conjecture and no selected target |
-| BSD-001 | retrospective | MATH-PROGRAMME | BSD-WP00-WP04-RETROSPECTIVE | pending | migration required |
-| PNP-001 | retrospective | MATH-PROGRAMME | PNP-WP00-WP02-RETROSPECTIVE | pending | migration required |
-| RH-001 | retrospective | MATH-PROGRAMME | RH-WP00-WP02-RETROSPECTIVE | pending | migration required |
-| YM-001 | retrospective | MATH-PROGRAMME | YM-WP00-WP02-RETROSPECTIVE | pending | migration required |
-| OZ-001 | retrospective | MATH-PROGRAMME | OZ-WP00-RETROSPECTIVE | pending | source intake and migration required |
+| Campaign | Coverage | Placement | Solve record | Producer handoff | Current Cert state | Promotion |
+| --- | --- | --- | --- | --- | --- | --- |
+| UC-001 | native | MATHSOLVE | MS-UC-WP04 | ready | qualified, restricted claims only | blocked |
+| NS-CI-001 | native | MATHSOLVE | NS-CI-R014-A2 / MS-FC-WP00-NS-CI-001 | ready | qualified, interface only | blocked |
+| HC-001 | native | MATHSOLVE | HC-WP00 | ready | ready | blocked |
+| BSD-001 | retrospective | MATH-PROGRAMME | BSD-WP00-WP04-RETROSPECTIVE | pending | pending | blocked |
+| PNP-001 | retrospective | MATH-PROGRAMME | PNP-WP00-WP02-RETROSPECTIVE | pending | pending | blocked |
+| RH-001 | retrospective | MATH-PROGRAMME | RH-WP00-WP02-RETROSPECTIVE / MS-FC-WP00-RH-001 | pending | qualified, interface only | blocked |
+| YM-001 | retrospective | MATH-PROGRAMME | YM-WP00-WP02-RETROSPECTIVE | pending | pending | blocked |
+| OZ-001 | retrospective | MATH-PROGRAMME | OZ-WP00-WP02-RETROSPECTIVE / OZ-RT-BZ-T3-001 | pending | pending | blocked |
 
-## Exact lineage
+## Current exact lineage
 
 `governance/mathsolve_routing_audit.json` pins:
 
-- MATHSOLVE provider commit `ec84e40aff4d926c5962653fd313bfb4db1adb8a`;
-- each `campaign_manifests/<CAMPAIGN>.json` path;
-- each manifest Git blob SHA-1;
-- the exact MATHFORGE provider commit, manifest path, and blob identity;
-- Solve Work Package identifiers;
-- MATHCERT state and issue where available;
-- current blockers.
+- MATHSOLVE protected merge `c9b9d0122017df7a117847d9ff1c2b9f6d6b75a1` from PR #95;
+- MATHCERT protected merge `64e042ddb1147338ad7868a2847715fe7c1c079d` from PR #79;
+- MATHCERT route-registry blob `cf876f43ae824f965a3aedf411671c110c380028`;
+- each campaign manifest path and Git blob identity;
+- exact MATHFORGE provider identities;
+- immutable handoff identities and producer states;
+- current Cert route states, exact outputs, and qualification scopes;
+- current promotion blockers.
 
-The registry does not guess absent Cert issues or call pending work certified.
+## UC-001 reconciliation
+
+The UC manifest is pinned at blob `4faf3e9e19e6c1a48461a8ad70cfb9c110daa101`.
+
+The immutable producer packet remains:
+
+- `MC-HANDOFF-UC-001`;
+- blob `8369bc21e45be6af71d2a0cdb0c5ab3cb5313bfb`;
+- status `ready`.
+
+The current MATHCERT route is `qualified` only for:
+
+- `UC-WP02-L002`;
+- `UC-WP04-L001`;
+- `UC-WP01-C004`.
+
+The exact certificate is `MC-UC-WP04-QUAL-001`, blob `265c185d6b2b2970dc675729efa3fc4860f29204`, with scope `qualified_restricted_claims_only`.
+
+Frankl's conjecture and proof obligation `UC-P04` remain unproved. The finite qualification stops at `n <= 4`. Programme promotion remains blocked.
 
 ## Misplaced work
 
-The audit identifies BSD, PNP, RH, YM, and OZ as `programme_embedded`. Their historical bundles remain authoritative at their exact MATH-PROGRAMME commits. MATHSOLVE retrospective manifests preserve those identities and record migration debt.
+BSD, PNP, RH, YM, and OZ remain `programme_embedded` retrospective routes. Future theorem-spine, proof-attempt, route-selection, failed-route, restricted-target, or mechanism work for those campaigns is prohibited in MATH-PROGRAMME unless a reviewed waiver is recorded.
 
-Future theorem-spine, proof-attempt, route-selection, failed-route, restricted-target, or mechanism work for those campaigns is prohibited in MATH-PROGRAMME unless a reviewed waiver is recorded.
+## Fail-closed enforcement
 
-## Promotion gate
+`ci/validate_mathsolve_routing.py` rejects:
 
-`ci/validate_mathsolve_routing.py` fails closed when:
-
-- an ACTIVE campaign lacks a route or waiver;
-- the pinned provider commit drifts;
-- a route is incomplete;
-- Programme-embedded work attempts to advance beyond retrospective WP00 registration;
-- a mathematical claim reaches claim promotion or integration without a complete MATHCERT handoff state.
-
-`pending` and `partial` Cert states preserve lineage but do not authorize claim promotion.
+- an uncovered active campaign;
+- stale Solve or Cert provider authority;
+- manifest, handoff, route-state, output, or qualification-scope drift;
+- replacement of producer handoff state by adjudication state;
+- a positive route without its exact Cert output;
+- a qualified route without an explicit unproved-target blocker;
+- Programme-embedded work advancing outside its permitted stages;
+- claim promotion while Programme promotion remains blocked.
 
 ## Claim boundary
 
-This audit promotes no mathematical claim. It changes governance and repository routing only. Every campaign retains the mathematical blockers recorded in its MATHSOLVE manifest.
+This audit promotes no mathematical claim. It records routing and bounded adjudication only. A current qualification does not prove a campaign target and does not authorize publication, novelty, priority, patentability, product, or commercial claims.
 
 ## Next obligations
 
-1. Merge and pin MS-GOV-WP00 after review.
-2. Migrate the next active stages of BSD, PNP, RH, YM, and OZ into native MATHSOLVE Work Packages.
-3. Open claim-specific MATHCERT handoffs as targets become exact enough for checking.
-4. Add the routing gate to every future campaign promotion workflow.
-5. Project GitHub lineage into AETHER only after GitHub-first conformance is stable.
+1. Continue native Solve work for UC, NS-CI, and HC under exact Work Packages.
+2. Migrate the next active stages of BSD, PNP, RH, YM, and OZ into MATHSOLVE or record a reviewed waiver.
+3. Update the Programme audit only after a protected provider identity or adjudication changes.
+4. Project GitHub lineage into AETHER only after GitHub-first conformance is stable.
