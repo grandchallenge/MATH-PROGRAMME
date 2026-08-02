@@ -16,26 +16,104 @@ DEFAULT_REGISTRY = ROOT / "synthesis" / "pilot_registry.json"
 DEFAULT_SCHEMA = ROOT / "schemas" / "gcl_synthesis_registry.schema.json"
 DEFAULT_REPORT = ROOT / "docs" / "governance" / "GCL_SYNTHESIS_REPORT.md"
 DEFAULT_REVIEW = ROOT / "docs" / "governance" / "GCL_SYNTHESIS_REVIEW_PACKET.md"
-
+SOURCE_COMMIT = "86a3f551f35aa67bdd0437d060ce786cb3d447fb"
 EXPECTED_SOURCES = {
-    "SRC-TRUTH-SPINE": ("governance/gcl_truth_spine_registry.json", "c4b30773be2f3151b3e975131ab6510245a3810b"),
-    "SRC-NEGATIVE-KNOWLEDGE": ("negative_knowledge/pilot_registry.json", "9e205e485dfc02e04049503d67082cb7f9340c24"),
-    "SRC-PORTFOLIO": ("portfolio/pilot_registry.json", "9dd22242790ceb8a75632926bcd08838360b5a2f"),
-    "SRC-CANDIDATE-ADMISSION": ("governance/campaign_admission_registry.json", "934eccd89fdbc3350fb4e9d89a0a9759bdb7fc61"),
+    "SRC-TRUTH-SPINE": (
+        "GCL-TRUTH-SPINE-WP00",
+        SOURCE_COMMIT,
+        "governance/gcl_truth_spine_registry.json",
+        "c4b30773be2f3151b3e975131ab6510245a3810b",
+    ),
+    "SRC-NEGATIVE-KNOWLEDGE": (
+        "GCL-NEGATIVE-KNOWLEDGE-WP00",
+        SOURCE_COMMIT,
+        "negative_knowledge/pilot_registry.json",
+        "9e205e485dfc02e04049503d67082cb7f9340c24",
+    ),
+    "SRC-PORTFOLIO": (
+        "GCL-PORTFOLIO-WP00",
+        SOURCE_COMMIT,
+        "portfolio/pilot_registry.json",
+        "9dd22242790ceb8a75632926bcd08838360b5a2f",
+    ),
+    "SRC-CANDIDATE-ADMISSION": (
+        "MP-CAMPAIGN-ADMISSION-001",
+        SOURCE_COMMIT,
+        "governance/campaign_admission_registry.json",
+        "934eccd89fdbc3350fb4e9d89a0a9759bdb7fc61",
+    ),
 }
 EXPECTED_TRANSFERS = {
-    "TR-TRUTH-SPINE-IDENTITY-001": "accepted_bounded",
-    "TR-NEGATIVE-REOPEN-001": "accepted_bounded",
-    "TR-PORTFOLIO-DEPENDENCY-001": "accepted_bounded",
-    "TR-NS-GEOMETRY-ANALOGY-001": "rejected_analogy",
+    "TR-TRUTH-SPINE-IDENTITY-001": (
+        "provenance_and_certificate_gating",
+        "SRC-TRUTH-SPINE",
+        "GCL-SYNTHESIS-WP00",
+        191,
+        "accepted_bounded",
+    ),
+    "TR-NEGATIVE-REOPEN-001": (
+        "negative_knowledge_scope_lineage_and_reopening",
+        "SRC-NEGATIVE-KNOWLEDGE",
+        "GCL-SYNTHESIS-WP00",
+        191,
+        "accepted_bounded",
+    ),
+    "TR-PORTFOLIO-DEPENDENCY-001": (
+        "dependency_ordering_without_score_authority",
+        "SRC-PORTFOLIO",
+        "GCL-SYNTHESIS-WP00",
+        191,
+        "accepted_bounded",
+    ),
+    "TR-NS-GEOMETRY-ANALOGY-001": (
+        "scale_geometry_cancellation_commutator_decorrelation",
+        "SRC-NEGATIVE-KNOWLEDGE",
+        "GCL-SYNTHESIS-WP00",
+        191,
+        "rejected_analogy",
+    ),
 }
 EXPECTED_CONTRADICTIONS = {
-    "CD-AETHER-GITHUB-AUTHORITY-001": "preserve_boundary",
-    "CD-VGSE-STAGE-SEPARATION-001": "preserve_boundary",
-    "CD-PORTFOLIO-SYNTHESIS-DUP-001": "distinct_responsibilities",
-    "CD-TRUTH-SPINE-SYNTHESIS-DUP-001": "reuse_existing_control",
+    "CD-AETHER-GITHUB-AUTHORITY-001": (
+        "contradiction",
+        "compact_governed_workspaces",
+        ("SRC-TRUTH-SPINE",),
+        "preserve_boundary",
+    ),
+    "CD-VGSE-STAGE-SEPARATION-001": (
+        "contradiction",
+        "existence_realizability_rigidity_deployability_manufacturability",
+        ("SRC-CANDIDATE-ADMISSION",),
+        "preserve_boundary",
+    ),
+    "CD-PORTFOLIO-SYNTHESIS-DUP-001": (
+        "duplication",
+        "portfolio_and_synthesis_responsibility",
+        ("SRC-PORTFOLIO",),
+        "distinct_responsibilities",
+    ),
+    "CD-TRUTH-SPINE-SYNTHESIS-DUP-001": (
+        "duplication",
+        "identity_control_reuse",
+        ("SRC-TRUTH-SPINE",),
+        "reuse_existing_control",
+    ),
 }
-EXPECTED_OFFICES = {"Axiomatist", "Cartographer", "Verifier", "Adversary", "Formalist", "Amanuensis", "Referee", "Human Steward"}
+EXPECTED_NEGATIVE_KNOWLEDGE = {
+    "NK-NS-CI-A2-L4-001",
+    "NK-UC-N4-SCREEN-001",
+    "NK-GCL-TOOLING-PARTIAL-SURFACE-001",
+}
+EXPECTED_OFFICES = {
+    "Axiomatist",
+    "Cartographer",
+    "Verifier",
+    "Adversary",
+    "Formalist",
+    "Amanuensis",
+    "Referee",
+    "Human Steward",
+}
 
 
 def load_json(path: Path) -> Any:
@@ -65,33 +143,65 @@ def validate(
     if errors:
         return errors
 
-    if set(registry["activation"]["required_conditions"]) != {"external_exact_head_review", "human_steward_release", "protected_merge"}:
-        errors.append("activation conditions must be the exact external review, Human release, and protected merge set")
+    if set(registry["activation"]["required_conditions"]) != {
+        "external_exact_head_review",
+        "human_steward_release",
+        "protected_merge",
+    }:
+        errors.append(
+            "activation conditions must be the exact external review, Human release, and protected merge set"
+        )
 
     sources = {item["source_ref"]: item for item in registry["source_artifacts"]}
+    if len(sources) != len(registry["source_artifacts"]):
+        errors.append("source_ref values must be unique")
     if set(sources) != set(EXPECTED_SOURCES):
         errors.append("source artifacts must be the exact four protected pilot sources")
-    for source_ref, (path, blob) in EXPECTED_SOURCES.items():
+    for source_ref, expected in EXPECTED_SOURCES.items():
         source = sources.get(source_ref)
-        if source and (source["path"], source["git_blob_sha1"]) != (path, blob):
-            errors.append(f"{source_ref}: protected path or blob identity mismatch")
-        if source and source["authority_class"] != "protected_normative_record":
+        if not source:
+            continue
+        actual = (
+            source["programme_id"],
+            source["commit_sha"],
+            source["path"],
+            source["git_blob_sha1"],
+        )
+        if actual != expected:
+            errors.append(f"{source_ref}: protected programme, commit, path, or blob identity mismatch")
+        if source["authority_class"] != "protected_normative_record":
             errors.append(f"{source_ref}: mutable or generated source cannot satisfy transfer evidence")
 
     transfers = registry["transfer_records"]
     transfer_ids = [item["transfer_id"] for item in transfers]
     if len(transfer_ids) != len(set(transfer_ids)):
         errors.append("transfer_id values must be unique")
-    if {item["transfer_id"]: item["analysis_disposition"] for item in transfers} != EXPECTED_TRANSFERS:
-        errors.append("transfer pilot membership or dispositions drifted")
+    bindings = {
+        item["transfer_id"]: (
+            item["theme"],
+            item["source_ref"],
+            item["target"]["programme_id"],
+            item["target"]["issue_number"],
+            item["analysis_disposition"],
+        )
+        for item in transfers
+    }
+    if bindings != EXPECTED_TRANSFERS:
+        errors.append("transfer pilot membership, source-target binding, or disposition drifted")
 
     normalized_targets: set[tuple[str, str]] = set()
     for item in transfers:
         transfer_id = item["transfer_id"]
-        if item["source_ref"] not in sources:
+        source = sources.get(item["source_ref"])
+        if not source:
             errors.append(f"{transfer_id}: unknown source_ref")
+        elif source["programme_id"] == item["target"]["programme_id"]:
+            errors.append(f"{transfer_id}: circular or self transfer is prohibited")
         if item["source_ref"] not in item["evidence_links"]:
             errors.append(f"{transfer_id}: evidence_links must include source_ref")
+        for negative_id in item["negative_knowledge_links"]:
+            if negative_id not in EXPECTED_NEGATIVE_KNOWLEDGE:
+                errors.append(f"{transfer_id}: unknown negative-knowledge record {negative_id}")
         if not item["source_assumptions"] or not item["target_assumptions"]:
             errors.append(f"{transfer_id}: source and target assumptions are required")
         if not item["non_transferable_component"].strip():
@@ -103,7 +213,10 @@ def validate(
         if any(item["claim_boundaries"].values()):
             errors.append(f"{transfer_id}: claim-boundary widening is prohibited")
 
-        target_key = (item["target"]["programme_id"], " ".join(item["target"]["obligation"].lower().split()))
+        target_key = (
+            item["target"]["programme_id"],
+            " ".join(item["target"]["obligation"].lower().split()),
+        )
         if target_key in normalized_targets:
             errors.append(f"{transfer_id}: duplicate relabeling of an existing target obligation")
         normalized_targets.add(target_key)
@@ -125,11 +238,20 @@ def validate(
         errors.append("pilot must contain exactly one rejected analogy")
 
     contradictions = registry["contradiction_records"]
-    contradiction_map = {item["record_id"]: item["disposition"] for item in contradictions}
-    if contradiction_map != EXPECTED_CONTRADICTIONS:
-        errors.append("contradiction and duplication pilot membership or dispositions drifted")
-    if len(contradiction_map) != len(contradictions):
+    contradiction_ids = [item["record_id"] for item in contradictions]
+    if len(contradiction_ids) != len(set(contradiction_ids)):
         errors.append("contradiction record IDs must be unique")
+    contradiction_bindings = {
+        item["record_id"]: (
+            item["kind"],
+            item["theme"],
+            tuple(item["source_refs"]),
+            item["disposition"],
+        )
+        for item in contradictions
+    }
+    if contradiction_bindings != EXPECTED_CONTRADICTIONS:
+        errors.append("contradiction and duplication membership, source binding, or disposition drifted")
     for item in contradictions:
         for source_ref in item["source_refs"]:
             if source_ref not in sources:
@@ -138,7 +260,10 @@ def validate(
             errors.append(f"{item['record_id']}: contradiction or duplication collapse must be prohibited")
         if item["kind"] == "contradiction" and item["disposition"] != "preserve_boundary":
             errors.append(f"{item['record_id']}: contradiction must remain preserved")
-        if item["kind"] == "duplication" and item["disposition"] not in {"distinct_responsibilities", "reuse_existing_control"}:
+        if item["kind"] == "duplication" and item["disposition"] not in {
+            "distinct_responsibilities",
+            "reuse_existing_control",
+        }:
             errors.append(f"{item['record_id']}: duplication must separate responsibilities or reuse control")
         if any(item["claim_boundaries"].values()):
             errors.append(f"{item['record_id']}: claim-boundary widening is prohibited")
