@@ -28,8 +28,21 @@ The route also records:
 - current repository placement;
 - Solve Work Package identifiers;
 - exact MATHFORGE provider input;
-- MATHCERT state and issue where available;
+- immutable producer handoff state;
+- current MATHCERT adjudication state and exact output where available;
+- qualification scope;
 - promotion blockers.
+
+## Producer and adjudicator state
+
+A MATHSOLVE handoff is a content-addressed producer snapshot. Its status is not rewritten when MATHCERT later adjudicates the route.
+
+The Programme routing audit therefore records two separate states:
+
+- `cert.handoff.state`: the immutable MATHSOLVE producer status;
+- `cert.route_state`: the current MATHCERT disposition.
+
+A current `qualified` route may coexist with a historical `ready` or `pending` handoff. The validator rejects attempts to replace one state with the other.
 
 ## Repository placement
 
@@ -48,14 +61,18 @@ The executable gate in `ci/validate_mathsolve_routing.py` applies to:
 - WP02;
 - restricted-target selection;
 - mechanism work;
-- mathematical claim promotion;
-- integration.
+- specification;
+- realization;
+- confrontation;
+- judgment;
+- integration;
+- mathematical claim promotion.
 
 A missing route or waiver fails closed.
 
 Programme-embedded retrospective work may be registered at WP00, but it cannot advance to a future Solve-owned stage while remaining embedded.
 
-A claim cannot be promoted or integrated unless its MATHCERT state records a complete handoff outcome or explicit proof debt. `pending` and `partial` are not promotion states.
+`JUDGMENT` and `INTEGRATION` require a current adjudicated MATHCERT route state. `CLAIM_PROMOTION` additionally requires an explicitly allowed Programme promotion state. A qualification never implies theorem truth or promotion eligibility.
 
 ## Current audit
 
@@ -73,7 +90,13 @@ Retrospective coverage with migration required:
 - `YM-001`;
 - `OZ-001`.
 
-The Odd-zeta campaign remains blocked at source intake.
+Current positive but bounded MATHCERT dispositions:
+
+- `UC-001`: `qualified_restricted_claims_only`;
+- `NS-CI-001`: `qualified_interface_only`;
+- `RH-001`: `qualified_interface_only`.
+
+All three remain promotion-blocked. Frankl's conjecture, universal critical integrability, and the Riemann Hypothesis remain unproved. The other five routes remain intake-only.
 
 ## Authority transition
 
