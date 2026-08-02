@@ -56,7 +56,9 @@ def validate(
         "human_steward_release",
         "protected_merge",
     }:
-        errors.append("activation conditions must be the exact external review, Human release, and protected merge set")
+        errors.append(
+            "activation conditions must be the exact external review, Human release, and protected merge set"
+        )
 
     records = registry["records"]
     record_ids = [record["portfolio_record_id"] for record in records]
@@ -79,6 +81,8 @@ def validate(
             errors.append(f"{work_id}: expected issue {expected_issue}")
 
     by_work = {record["work_package_id"]: record for record in records}
+    intervals: list[tuple[float, float]] = []
+    unknown_metric_seen = False
     for record in records:
         work_id = record["work_package_id"]
         state = record["state"]
@@ -124,13 +128,33 @@ def validate(
         if any(record["claim_boundaries"].values()):
             errors.append(f"{work_id}: claim-boundary promotion is prohibited")
 
+        metric_values = [
+            record["scientific_importance"],
+            record["execution_readiness"],
+            record["institutional_leverage"],
+            record["expected_information_gain"],
+            *record["cost"].values(),
+            *record["risk"].values(),
+            *record["decisive_falsification"].values(),
+            record["transfer_value"],
+            record["publication_value"],
+            record["product_value"],
+        ]
+        unknown_metric_seen = unknown_metric_seen or "unknown" in metric_values
+
         lower, upper = advisory_interval(record, registry["model"])
+        intervals.append((lower, upper))
         if not all(math.isfinite(value) and value >= 0 for value in (lower, upper)):
             errors.append(f"{work_id}: advisory interval must be finite and nonnegative")
         if lower > upper:
             errors.append(f"{work_id}: advisory interval bounds are reversed")
         if readiness == 0 and (lower != 0 or upper != 0):
             errors.append(f"{work_id}: zero readiness must force a zero advisory interval")
+
+    if not unknown_metric_seen:
+        errors.append("portfolio pilot must preserve at least one explicit unknown metric")
+    if not any(lower < upper for lower, upper in intervals):
+        errors.append("portfolio pilot must expose at least one nontrivial sensitivity interval")
 
     active = [record for record in records if record["state"] == "active"]
     if [record["work_package_id"] for record in active] != ["GCL-PORTFOLIO-WP00"]:
