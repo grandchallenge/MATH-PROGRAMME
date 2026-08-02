@@ -61,6 +61,8 @@ def validate(
 
     records = registry["records"]
     record_ids = [record["negative_record_id"] for record in records]
+    if len(records) != 3:
+        errors.append("pilot registry must contain exactly three records")
     if len(record_ids) != len(set(record_ids)):
         errors.append("negative_record_id values must be unique")
 
@@ -107,6 +109,12 @@ def validate(
             errors.append(f"{record_id}: reopenable status requires a structured reopening trigger")
         if status not in REOPENABLE_STATUSES and status != "superseded" and reopening is not None:
             errors.append(f"{record_id}: terminal status must not contain reopening instructions")
+        if status == "reopen_on_new_theorem" and reopening is not None:
+            if reopening["trigger_type"] != "new_theorem":
+                errors.append(f"{record_id}: reopen_on_new_theorem requires new_theorem trigger")
+        if status == "reopen_on_new_evidence" and reopening is not None:
+            if reopening["trigger_type"] != "new_evidence":
+                errors.append(f"{record_id}: reopen_on_new_evidence requires new_evidence trigger")
 
         superseded_by = record["lineage"]["superseded_by"]
         if status == "superseded" and superseded_by is None:
@@ -147,6 +155,23 @@ def validate(
 
         if any(record["claim_boundaries"].values()):
             errors.append(f"{record_id}: claim boundary inflation is prohibited")
+
+    predecessor_graph = {
+        record["negative_record_id"]: set(record["lineage"]["predecessor_record_ids"])
+        for record in records
+    }
+    for start in record_ids:
+        stack: list[tuple[str, tuple[str, ...]]] = [(start, ())]
+        while stack:
+            current, path = stack.pop()
+            if current in path:
+                cycle = " -> ".join((*path, current))
+                errors.append(f"lineage cycle detected: {cycle}")
+                break
+            stack.extend(
+                (predecessor, (*path, current))
+                for predecessor in predecessor_graph.get(current, set())
+            )
 
     if any(registry["claim_boundaries"].values()):
         errors.append("registry claim boundary inflation is prohibited")
