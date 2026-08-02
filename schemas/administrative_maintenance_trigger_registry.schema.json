@@ -9,6 +9,7 @@
     "trigger_id",
     "control_id",
     "status",
+    "activation",
     "workflow",
     "schedule",
     "procedures",
@@ -20,11 +21,38 @@
     "schema_version": {"const": "1.0.0"},
     "trigger_id": {"const": "MP-ADMIN-TRIGGER-001"},
     "control_id": {"const": "MP-ADMIN-MAINT-001"},
-    "status": {
-      "enum": [
-        "PROPOSED_PROTECTED_TRIGGER_CONTROL",
-        "PROTECTED_TRIGGER_CONTROL"
-      ]
+    "status": {"const": "PROTECTED_TRIGGER_CONTROL"},
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pull_request",
+        "reviewed_head",
+        "merge_commit",
+        "merged_at",
+        "workflow_blob",
+        "delegated_review_id",
+        "dispatcher_run",
+        "programme_policy_run",
+        "gcl_conformance_run",
+        "operational_on_default_branch",
+        "intellect_repin_required",
+        "intellect_repin_reason"
+      ],
+      "properties": {
+        "pull_request": {"const": 203},
+        "reviewed_head": {"const": "70f8ef8600a4b219ea3915d333105f0c48233e7d"},
+        "merge_commit": {"const": "e941b28dbd2daa8063fcb936dca8a525d1d8d219"},
+        "merged_at": {"const": "2026-08-01T22:07:47-07:00"},
+        "workflow_blob": {"const": "786a90b4242d43947fbf8fb153f5cc384e77c07d"},
+        "delegated_review_id": {"const": 4837277963},
+        "dispatcher_run": {"const": 30733399827},
+        "programme_policy_run": {"const": 30733399846},
+        "gcl_conformance_run": {"const": 30733400069},
+        "operational_on_default_branch": {"const": true},
+        "intellect_repin_required": {"const": false},
+        "intellect_repin_reason": {"type": "string", "minLength": 1}
+      }
     },
     "workflow": {
       "type": "object",
@@ -37,9 +65,7 @@
           "type": "object",
           "additionalProperties": false,
           "required": ["contents"],
-          "properties": {
-            "contents": {"const": "read"}
-          }
+          "properties": {"contents": {"const": "read"}}
         },
         "pinned_actions": {
           "type": "object",
@@ -172,9 +198,7 @@
             ]
           }
         },
-        "deduplication": {
-          "const": "stable dispatch key with bounded exact-schedule and watchdog windows"
-        },
+        "deduplication": {"const": "stable dispatch key with bounded exact-schedule and watchdog windows"},
         "tracker_refresh_deadline_minutes": {"const": 432},
         "may_create_issue": {"const": false},
         "may_create_protected_authority": {"const": false},
