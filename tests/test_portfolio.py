@@ -20,8 +20,14 @@ from validate_portfolio import validate  # noqa: E402
 
 class PortfolioPilotTests(unittest.TestCase):
     def setUp(self) -> None:
-        self.registry = json.loads((ROOT / "portfolio" / "pilot_registry.json").read_text(encoding="utf-8"))
-        self.schema = json.loads((ROOT / "schemas" / "gcl_portfolio_registry.schema.json").read_text(encoding="utf-8"))
+        self.registry = json.loads(
+            (ROOT / "portfolio" / "pilot_registry.json").read_text(encoding="utf-8")
+        )
+        self.schema = json.loads(
+            (ROOT / "schemas" / "gcl_portfolio_registry.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
 
     def errors_for(self, registry: dict, *, view: str | None = None) -> list[str]:
         with tempfile.TemporaryDirectory() as temporary:
@@ -52,12 +58,19 @@ class PortfolioPilotTests(unittest.TestCase):
     def test_exact_cardinality_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
         mutated["records"].pop()
-        self.assertTrue(any("too short" in error or "exactly four" in error for error in self.errors_for(mutated)))
+        self.assertTrue(
+            any("too short" in error or "exactly four" in error for error in self.errors_for(mutated))
+        )
 
     def test_duplicate_work_identity_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
         mutated["records"][1]["work_package_id"] = mutated["records"][0]["work_package_id"]
-        self.assertTrue(any("unique" in error or "exactly GCL work packages" in error for error in self.errors_for(mutated)))
+        self.assertTrue(
+            any(
+                "unique" in error or "exactly GCL work packages" in error
+                for error in self.errors_for(mutated)
+            )
+        )
 
     def test_issue_mapping_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
@@ -103,7 +116,12 @@ class PortfolioPilotTests(unittest.TestCase):
     def test_active_dependency_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
         mutated["records"][0]["dependencies"] = ["GCL-SYNTHESIS-WP00"]
-        self.assertTrue(any("active record must not retain" in error or "earlier umbrella" in error for error in self.errors_for(mutated)))
+        self.assertTrue(
+            any(
+                "active record must not retain" in error or "earlier umbrella" in error
+                for error in self.errors_for(mutated)
+            )
+        )
 
     def test_unknown_widens_interval(self) -> None:
         original = self.registry["records"][1]
@@ -113,38 +131,95 @@ class PortfolioPilotTests(unittest.TestCase):
         _, unknown_upper = advisory_interval(mutated, self.registry["model"])
         self.assertGreater(unknown_upper, original_upper)
 
+    def test_actual_pilot_requires_unknown_sensitivity(self) -> None:
+        mutated = copy.deepcopy(self.registry)
+        for record in mutated["records"]:
+            for group in ("cost", "risk"):
+                for name, value in record[group].items():
+                    if value == "unknown":
+                        record[group][name] = 0
+            for name, value in record["decisive_falsification"].items():
+                if value == "unknown":
+                    record["decisive_falsification"][name] = 0
+            for name in (
+                "scientific_importance",
+                "execution_readiness",
+                "institutional_leverage",
+                "expected_information_gain",
+                "transfer_value",
+                "publication_value",
+                "product_value",
+            ):
+                if record[name] == "unknown":
+                    record[name] = 0
+        errors = self.errors_for(mutated)
+        self.assertTrue(any("explicit unknown metric" in error for error in errors))
+        self.assertTrue(any("nontrivial sensitivity interval" in error for error in errors))
+
     def test_automated_disposition_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
         mutated["records"][0]["disposition"]["automated"] = True
-        self.assertTrue(any("False was expected" in error or "automated disposition" in error for error in self.errors_for(mutated)))
+        self.assertTrue(
+            any(
+                "False was expected" in error or "automated disposition" in error
+                for error in self.errors_for(mutated)
+            )
+        )
 
     def test_machine_action_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
         mutated["records"][0]["disposition"]["machine_action"] = "allocate_compute"
-        self.assertTrue(any("not of type 'null'" in error or "automated disposition" in error for error in self.errors_for(mutated)))
+        self.assertTrue(
+            any(
+                "not of type 'null'" in error or "automated disposition" in error
+                for error in self.errors_for(mutated)
+            )
+        )
 
     def test_irreversible_lock_in_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
         mutated["records"][0]["reversibility"]["irreversible_commitment"] = True
-        self.assertTrue(any("False was expected" in error or "irreversible" in error for error in self.errors_for(mutated)))
+        self.assertTrue(
+            any("False was expected" in error or "irreversible" in error for error in self.errors_for(mutated))
+        )
 
     def test_dependency_cycle_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
         mutated["records"][0]["dependencies"] = ["GCL-DISCLOSURE-WP00"]
-        self.assertTrue(any("dependency cycle" in error or "earlier umbrella" in error for error in self.errors_for(mutated)))
+        self.assertTrue(
+            any(
+                "dependency cycle" in error or "earlier umbrella" in error
+                for error in self.errors_for(mutated)
+            )
+        )
 
     def test_generated_view_drift_rejected(self) -> None:
-        self.assertTrue(any("generated portfolio view" in error for error in self.errors_for(self.registry, view="# stale\n")))
+        self.assertTrue(
+            any(
+                "generated portfolio view" in error
+                for error in self.errors_for(self.registry, view="# stale\n")
+            )
+        )
 
     def test_fabricated_fractional_precision_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
         mutated["records"][0]["scientific_importance"] = 4.7
-        self.assertTrue(any("not valid under any" in error or "not of type 'integer'" in error for error in self.errors_for(mutated)))
+        self.assertTrue(
+            any(
+                "not valid under any" in error or "not of type 'integer'" in error
+                for error in self.errors_for(mutated)
+            )
+        )
 
     def test_claim_inflation_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
         mutated["records"][0]["claim_boundaries"]["allocates_resources"] = True
-        self.assertTrue(any("False was expected" in error or "claim-boundary" in error for error in self.errors_for(mutated)))
+        self.assertTrue(
+            any(
+                "False was expected" in error or "claim-boundary" in error
+                for error in self.errors_for(mutated)
+            )
+        )
 
 
 if __name__ == "__main__":
