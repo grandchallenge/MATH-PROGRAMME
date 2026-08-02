@@ -11,6 +11,7 @@ from typing import Any
 
 import yaml
 
+from gcl import validate_tooling
 from validate_administrative_maintenance_control import (
     DEFAULT_CONTROL as ADMINISTRATIVE_MAINTENANCE_CONTROL,
     DEFAULT_SCHEMA as ADMINISTRATIVE_MAINTENANCE_SCHEMA,
@@ -126,6 +127,9 @@ def policy_reachability_errors(root: Path = ROOT) -> list[str]:
         GCL_TRUTH_SPINE_MATRIX_SCHEMA,
     ):
         errors.append(f"GCL truth spine: {error}")
+
+    for error in validate_tooling(root):
+        errors.append(f"GCL work-package tooling: {error}")
     return errors
 
 
