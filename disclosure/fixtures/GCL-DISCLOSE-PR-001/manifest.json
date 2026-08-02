@@ -1,0 +1,170 @@
+{
+  "artifacts": [
+    {
+      "artifact_id": "ART-VALID",
+      "blob": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "commit": "2222222222222222222222222222222222222222",
+      "expected_sha256": "b0c5f1bc49d11934fce324ca9f7f730ca30da662441864f0fbf227f116fbba5b",
+      "path": "artifacts/public_payload.json",
+      "repository": "synthetic.example/disclosure-demo",
+      "required": true,
+      "subject_head": "2222222222222222222222222222222222222222"
+    },
+    {
+      "artifact_id": "ART-DIGEST",
+      "blob": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "commit": "2222222222222222222222222222222222222222",
+      "expected_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "path": "artifacts/drifted_payload.json",
+      "repository": "synthetic.example/disclosure-demo",
+      "required": true,
+      "subject_head": "2222222222222222222222222222222222222222"
+    },
+    {
+      "artifact_id": "ART-MISSING",
+      "blob": "cccccccccccccccccccccccccccccccccccccccc",
+      "commit": "2222222222222222222222222222222222222222",
+      "expected_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "path": "artifacts/optional_prior_disclosure.json",
+      "repository": "synthetic.example/disclosure-demo",
+      "required": false,
+      "subject_head": "2222222222222222222222222222222222222222"
+    }
+  ],
+  "attributions": [
+    {
+      "attribution_id": "ATTR-COMPLETE",
+      "authors": ["Synthetic Author"],
+      "contributors": ["Synthetic Contributor"],
+      "inventor_review_required": false,
+      "inventors": [],
+      "status": "complete"
+    },
+    {
+      "attribution_id": "ATTR-MISSING",
+      "authors": [],
+      "contributors": [],
+      "inventor_review_required": true,
+      "inventors": [],
+      "status": "incomplete"
+    }
+  ],
+  "authority_edges": [
+    {"source": "candidate:head", "target": "review:REV-RELEASE-AUTHOR"},
+    {"source": "review:REV-RELEASE-AUTHOR", "target": "release:simulated"},
+    {"source": "release:simulated", "target": "review:REV-RELEASE-AUTHOR"}
+  ],
+  "candidate": {
+    "head_sha": "2222222222222222222222222222222222222222",
+    "proposed_release_id": "SYNTHETIC-RELEASE-001",
+    "repository": "synthetic.example/disclosure-demo"
+  },
+  "claim_cases": [
+    {
+      "approved_language": "This synthetic fixture validates identity-bound disclosure records.",
+      "case_id": "CLAIM-APPROVED",
+      "professional_review_present": false,
+      "prohibited_terms": ["novel", "patentable", "first", "certified"],
+      "public_text": "This synthetic fixture validates identity-bound disclosure records."
+    },
+    {
+      "approved_language": "This synthetic fixture validates identity-bound disclosure records.",
+      "case_id": "CLAIM-INFLATED",
+      "professional_review_present": false,
+      "prohibited_terms": ["novel", "patentable", "first", "certified"],
+      "public_text": "This synthetic fixture validates identity-bound disclosure records and proves universal release safety."
+    },
+    {
+      "approved_language": "This synthetic fixture validates identity-bound disclosure records.",
+      "case_id": "CLAIM-NOVELTY",
+      "professional_review_present": false,
+      "prohibited_terms": ["novel", "patentable", "first", "certified"],
+      "public_text": "This is the first novel and patentable disclosure gate."
+    }
+  ],
+  "classification_cases": [
+    {
+      "case_id": "CLASS-VALID",
+      "disposition": "open_scientific_infrastructure",
+      "expires_at": "2027-08-02",
+      "status": "active",
+      "subject_head": "2222222222222222222222222222222222222222",
+      "superseded_by": null
+    },
+    {
+      "case_id": "CLASS-MISSING",
+      "disposition": null,
+      "expires_at": null,
+      "status": "missing",
+      "subject_head": "2222222222222222222222222222222222222222",
+      "superseded_by": null
+    }
+  ],
+  "confidentiality_cases": [
+    {
+      "case_id": "CONF-PUBLIC",
+      "contains_confidential_material": false,
+      "contains_credentials": false,
+      "contains_customer_data": false,
+      "contains_unpublished_invention": false,
+      "export_surface": "synthetic_public"
+    },
+    {
+      "case_id": "CONF-LEAK",
+      "contains_confidential_material": true,
+      "contains_credentials": false,
+      "contains_customer_data": false,
+      "contains_unpublished_invention": false,
+      "export_surface": "simulated_external"
+    }
+  ],
+  "data_classification": "synthetic_public",
+  "evidence_files": {"reviews": "evidence/reviews.json"},
+  "expected_findings": [
+    {"disposition": "PASS", "finding_id": "F-ART-VALID", "reason_code": "EXACT_ARTIFACT_MATCH"},
+    {"disposition": "FAIL", "finding_id": "F-ART-DIGEST", "reason_code": "DIGEST_DRIFT"},
+    {"disposition": "ABSTAIN", "finding_id": "F-ART-MISSING", "reason_code": "OPTIONAL_EVIDENCE_MISSING"},
+    {"disposition": "PASS", "finding_id": "F-CLASS-VALID", "reason_code": "ACTIVE_CLASSIFICATION"},
+    {"disposition": "ABSTAIN", "finding_id": "F-CLASS-MISSING", "reason_code": "CLASSIFICATION_ABSENT"},
+    {"disposition": "FAIL", "finding_id": "F-HOLD-ACTIVE", "reason_code": "ACTIVE_NO_RELEASE_HOLD"},
+    {"disposition": "FAIL", "finding_id": "F-HOLD-STALE", "reason_code": "STALE_HOLD_USED_AS_AUTHORITY"},
+    {"disposition": "PASS", "finding_id": "F-ATTR-COMPLETE", "reason_code": "ATTRIBUTION_COMPLETE"},
+    {"disposition": "FAIL", "finding_id": "F-ATTR-MISSING", "reason_code": "ATTRIBUTION_INCOMPLETE"},
+    {"disposition": "PASS", "finding_id": "F-CLAIM-APPROVED", "reason_code": "APPROVED_CLAIM_EXACT"},
+    {"disposition": "FAIL", "finding_id": "F-CLAIM-INFLATED", "reason_code": "CLAIM_EXCEEDS_APPROVED_LANGUAGE"},
+    {"disposition": "FAIL", "finding_id": "F-CLAIM-NOVELTY", "reason_code": "UNSUPPORTED_IP_LANGUAGE"},
+    {"disposition": "PASS", "finding_id": "F-CONF-PUBLIC", "reason_code": "SYNTHETIC_PUBLIC_EXPORT"},
+    {"disposition": "FAIL", "finding_id": "F-CONF-LEAK", "reason_code": "CONFIDENTIAL_EXPORT_LEAK"},
+    {"disposition": "PASS", "finding_id": "F-REVIEW-EXACT", "reason_code": "EXACT_NON_AUTHOR_REVIEW"},
+    {"disposition": "FAIL", "finding_id": "F-REVIEW-MISMATCH", "reason_code": "REVIEW_HEAD_MISMATCH"},
+    {"disposition": "FAIL", "finding_id": "F-RELEASE-AUTHOR", "reason_code": "AUTHOR_ONLY_RELEASE_AUTHORITY"},
+    {"disposition": "FAIL", "finding_id": "F-AUTHORITY-GRAPH", "reason_code": "CIRCULAR_RELEASE_AUTHORITY"},
+    {"disposition": "ABSTAIN", "finding_id": "F-PRIOR-DISCLOSURE", "reason_code": "PRIOR_DISCLOSURE_EVIDENCE_MISSING"}
+  ],
+  "fixture_id": "GCL-DISCLOSE-PR-001",
+  "hold_cases": [
+    {
+      "case_id": "HOLD-ACTIVE",
+      "expires_at": "2027-08-02",
+      "hold_kind": "no_external_release",
+      "status": "active",
+      "subject_head": "2222222222222222222222222222222222222222",
+      "superseded_by": null,
+      "used_as_authority": true
+    },
+    {
+      "case_id": "HOLD-STALE",
+      "expires_at": "2025-08-02",
+      "hold_kind": "patent_review",
+      "status": "expired",
+      "subject_head": "2222222222222222222222222222222222222222",
+      "superseded_by": "HOLD-NEWER",
+      "used_as_authority": true
+    }
+  ],
+  "prior_disclosure_evidence": {
+    "path": "evidence/prior_disclosures.json",
+    "required": false
+  },
+  "schema_version": "1.0.0"
+}
