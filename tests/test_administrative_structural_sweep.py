@@ -33,9 +33,20 @@ class AdministrativeStructuralSweepTests(unittest.TestCase):
     def errors_for(self, sweep: dict) -> list[str]:
         schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
         validator = Draft202012Validator(schema, format_checker=FormatChecker())
-        return [error.message for error in validator.iter_errors(sweep)]
+        errors = [error.message for error in validator.iter_errors(sweep)]
 
-    def test_sweep_is_schema_valid(self) -> None:
+        repositories = sweep.get("scope", {}).get("repositories", [])
+        observed_heads = {
+            item.get("repository"): item.get("protected_head")
+            for item in repositories
+            if isinstance(item, dict)
+        }
+        if observed_heads != EXPECTED_HEADS or len(repositories) != len(EXPECTED_HEADS):
+            errors.append("protected repository head inventory differs from exact sweep evidence")
+
+        return errors
+
+    def test_sweep_is_schema_and_semantically_valid(self) -> None:
         self.assertEqual(self.errors_for(self.load_sweep()), [])
 
     def test_lateness_is_exact_and_does_not_reset_cadence(self) -> None:
@@ -137,13 +148,7 @@ class AdministrativeStructuralSweepTests(unittest.TestCase):
         sweep = self.load_sweep()
         mutated = copy.deepcopy(sweep)
         mutated["scope"]["repositories"][0]["protected_head"] = "0" * 40
-        self.assertNotEqual(
-            {
-                item["repository"]: item["protected_head"]
-                for item in mutated["scope"]["repositories"]
-            },
-            EXPECTED_HEADS,
-        )
+        self.assertTrue(self.errors_for(mutated))
 
 
 if __name__ == "__main__":
