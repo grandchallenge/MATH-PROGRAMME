@@ -26,26 +26,40 @@ def render_report(registry: dict[str, Any]) -> str:
         "",
         "## Protected source artifacts",
         "",
-        "| Source | Programme | Protected path | Blob |",
-        "|---|---|---|---|",
+        "| Source | Programme | Commit | Protected path | Blob |",
+        "|---|---|---|---|---|",
     ]
     for source in registry["source_artifacts"]:
         lines.append(
             f"| `{source['source_ref']}` | `{source['programme_id']}` | "
-            f"`{source['path']}` | `{source['git_blob_sha1']}` |"
+            f"`{source['commit_sha']}` | `{source['path']}` | `{source['git_blob_sha1']}` |"
         )
     lines.extend(["", "## Transfer analysis", ""])
     for record in registry["transfer_records"]:
         consequence = record["bounded_executable_consequence"] or "None; analogy rejected."
+        source_assumptions = "; ".join(record["source_assumptions"])
+        target_assumptions = "; ".join(record["target_assumptions"])
+        evidence = ", ".join(f"`{item}`" for item in record["evidence_links"])
+        negative = (
+            ", ".join(f"`{item}`" for item in record["negative_knowledge_links"])
+            if record["negative_knowledge_links"]
+            else "None."
+        )
         lines.extend([
             f"### {record['transfer_id']} — {record['analysis_disposition']}",
             "",
             f"- Theme: `{record['theme']}`",
             f"- Source: `{record['source_ref']}`",
             f"- Target: `{record['target']['programme_id']}` / issue #{record['target']['issue_number']}",
+            f"- Target obligation: {record['target']['obligation']}",
             f"- Shared abstraction: {record['shared_abstraction']}",
+            f"- Source assumptions: {source_assumptions}",
+            f"- Target assumptions: {target_assumptions}",
             f"- Transferable: {record['transferable_component']}",
             f"- Non-transferable: {record['non_transferable_component']}",
+            f"- Expected value: {record['expected_value']}",
+            f"- Evidence: {evidence}",
+            f"- Negative-knowledge links: {negative}",
             f"- Bounded consequence: {consequence}",
             f"- Falsifying test: {record['falsifying_test']}",
         ])
@@ -54,11 +68,13 @@ def render_report(registry: dict[str, Any]) -> str:
         lines.append("")
     lines.extend(["## Contradictions and duplication", ""])
     for record in registry["contradiction_records"]:
+        source_refs = ", ".join(f"`{item}`" for item in record["source_refs"])
         lines.extend([
             f"### {record['record_id']} — {record['disposition']}",
             "",
             f"- Kind: `{record['kind']}`",
             f"- Theme: `{record['theme']}`",
+            f"- Sources: {source_refs}",
             f"- Statement A: {record['statement_a']}",
             f"- Statement B: {record['statement_b']}",
             f"- Required action: {record['required_action']}",
