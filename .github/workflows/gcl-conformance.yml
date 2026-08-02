@@ -21,3 +21,35 @@ jobs:
     permissions:
       contents: read
     uses: grandchallenge/.github/.github/workflows/gcl-security.yml@f98003ef7f8a28ea774e82bf21ce0fe0323d1c28
+  assurance-pilot:
+    name: GCL ASSURE PR synthetic dossier
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install governed policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Validate deterministic assurance dossier
+        run: |
+          python3 ci/assure_pr.py check
+          python -m unittest discover -s tests -p 'test_assurance_product.py'
+      - name: Upload bounded assurance evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: gcl-assure-pr-001-dossier
+          path: |
+            assurance/output/dossier.json
+            assurance/output/dossier.md
+            assurance/output/review_packet.md
+            assurance/output/control_model.md
+            assurance/output/measurement_ledger.md
+            assurance/measurement_ledger.json
+            assurance/component_disposition_ledger.json
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0

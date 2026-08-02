@@ -1,0 +1,135 @@
+{
+  "authority_boundary": {
+    "advisory_dossier_only": true,
+    "certificate_issued": false,
+    "expert_review_required": true,
+    "external_use_authorized": false
+  },
+  "candidate": {
+    "candidate_kind": "pull_request_head",
+    "head_sha": "1111111111111111111111111111111111111111",
+    "repository": "synthetic.example/research-demo"
+  },
+  "control_id": "GCL-ASSURE-PR-001",
+  "findings": [
+    {
+      "detail": "26611d7016584f41310ac4720480ae3a900295619cabbe8ae224a10005a8cbf8",
+      "disposition": "FAIL",
+      "finding_id": "F-ART-DIGEST",
+      "reason_code": "DIGEST_DRIFT",
+      "subject": "ART-DIGEST"
+    },
+    {
+      "detail": "artifacts/optional.json",
+      "disposition": "ABSTAIN",
+      "finding_id": "F-ART-MISSING",
+      "reason_code": "OPTIONAL_EVIDENCE_MISSING",
+      "subject": "ART-MISSING"
+    },
+    {
+      "detail": "0000000000000000000000000000000000000000",
+      "disposition": "FAIL",
+      "finding_id": "F-ART-STALE",
+      "reason_code": "HEAD_DRIFT",
+      "subject": "ART-STALE"
+    },
+    {
+      "detail": "672b5475a38a61ecdbd6afff71a79ec6756929649ce1c50ff9619b6803331ff6",
+      "disposition": "PASS",
+      "finding_id": "F-ART-VALID",
+      "reason_code": "EXACT_ARTIFACT_MATCH",
+      "subject": "ART-VALID"
+    },
+    {
+      "detail": "5",
+      "disposition": "PASS",
+      "finding_id": "F-AUTHORITY-GRAPH",
+      "reason_code": "ACYCLIC_AUTHORITY_GRAPH",
+      "subject": "authority graph"
+    },
+    {
+      "detail": "F-ART-VALID",
+      "disposition": "PASS",
+      "finding_id": "F-CLAIM-C-IDENTITY",
+      "reason_code": "EVIDENCE_SUPPORTS_BOUNDED_CLAIM",
+      "subject": "C-IDENTITY"
+    },
+    {
+      "detail": "novelty",
+      "disposition": "ABSTAIN",
+      "finding_id": "F-CLAIM-C-NOVELTY",
+      "reason_code": "UNSUPPORTED_CONCLUSION",
+      "subject": "C-NOVELTY"
+    },
+    {
+      "detail": "F-REVIEW-STATE",
+      "disposition": "FAIL",
+      "finding_id": "F-CLAIM-C-REVIEW",
+      "reason_code": "SUPPORTING_EVIDENCE_FAILED",
+      "subject": "C-REVIEW"
+    },
+    {
+      "detail": "scientific_truth",
+      "disposition": "ABSTAIN",
+      "finding_id": "F-CLAIM-C-SCIENCE",
+      "reason_code": "UNSUPPORTED_CONCLUSION",
+      "subject": "C-SCIENCE"
+    },
+    {
+      "detail": "F-WF-FABRICATED",
+      "disposition": "FAIL",
+      "finding_id": "F-CLAIM-C-WORKFLOW",
+      "reason_code": "SUPPORTING_EVIDENCE_FAILED",
+      "subject": "C-WORKFLOW"
+    },
+    {
+      "detail": "generic_public",
+      "disposition": "PASS",
+      "finding_id": "F-POLICY-BOUNDARY",
+      "reason_code": "GENERIC_POLICY_ONLY",
+      "subject": "policy profile"
+    },
+    {
+      "detail": "synthetic_public",
+      "disposition": "PASS",
+      "finding_id": "F-PRIVACY-BOUNDARY",
+      "reason_code": "SYNTHETIC_PUBLIC_ONLY",
+      "subject": "privacy"
+    },
+    {
+      "detail": "1",
+      "disposition": "FAIL",
+      "finding_id": "F-REVIEW-STATE",
+      "reason_code": "UNRESOLVED_CHANGES_REQUESTED",
+      "subject": "reviews"
+    },
+    {
+      "detail": "success lacks exported job evidence",
+      "disposition": "FAIL",
+      "finding_id": "F-WF-FABRICATED",
+      "reason_code": "FABRICATED_WORKFLOW_SUCCESS",
+      "subject": "WF-FABRICATED"
+    },
+    {
+      "detail": "1",
+      "disposition": "PASS",
+      "finding_id": "F-WF-VALID",
+      "reason_code": "EXPORTED_WORKFLOW_SUCCESS",
+      "subject": "WF-VALID"
+    }
+  ],
+  "fixture_id": "GCL-ASSURE-PR-001",
+  "overall_disposition": "FAIL",
+  "schema_version": "1.0.0",
+  "summary": {
+    "ABSTAIN": 3,
+    "FAIL": 6,
+    "PASS": 6
+  },
+  "unsupported_conclusions": [
+    "mathematical or scientific truth",
+    "novelty, priority, patentability, or freedom to operate",
+    "legal or security certification",
+    "product-market fit or commercial readiness"
+  ]
+}

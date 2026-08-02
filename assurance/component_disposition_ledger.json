@@ -1,0 +1,45 @@
+{
+  "commercial_use_authorized": false,
+  "components": [
+    {
+      "component_id": "generic-cli",
+      "disposition": "open_source_candidate",
+      "path": "ci/assure_pr.py",
+      "rationale": "Generic deterministic local evaluator with no GCL-private policy."
+    },
+    {
+      "component_id": "generic-schemas",
+      "disposition": "open_source_candidate",
+      "path": "schemas/gcl_assurance_manifest.schema.json",
+      "rationale": "Closed public input contract."
+    },
+    {
+      "component_id": "commercial-wrapper",
+      "disposition": "commercial_review_required",
+      "path": null,
+      "rationale": "No commercial wrapper exists in Tranche 1."
+    },
+    {
+      "component_id": "patent-screening",
+      "disposition": "patent_review_required",
+      "path": null,
+      "rationale": "No novelty or patentability conclusion is made."
+    },
+    {
+      "component_id": "private-policy-adapter",
+      "disposition": "trade_secret_candidate",
+      "path": null,
+      "rationale": "Private adapters are excluded and not implemented."
+    },
+    {
+      "component_id": "gcl-internal-policy-map",
+      "disposition": "no_release",
+      "path": null,
+      "rationale": "GCL-specific campaign and institutional policy are outside the generic core."
+    }
+  ],
+  "control_id": "GCL-ASSURE-PR-001",
+  "external_release_authorized": false,
+  "ledger_id": "GCL-ASSURE-PR-001-COMPONENTS",
+  "schema_version": "1.0.0"
+}
