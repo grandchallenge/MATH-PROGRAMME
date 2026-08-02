@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import copy
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CI = ROOT / "ci"
-import sys
 if str(CI) not in sys.path:
     sys.path.insert(0, str(CI))
 
@@ -20,7 +20,9 @@ from validate_negative_knowledge import canonical_digest, validate  # noqa: E402
 class NegativeKnowledgeTests(unittest.TestCase):
     def setUp(self) -> None:
         self.registry = json.loads(
-            (ROOT / "negative_knowledge" / "pilot_registry.json").read_text(encoding="utf-8")
+            (ROOT / "negative_knowledge" / "pilot_registry.json").read_text(
+                encoding="utf-8"
+            )
         )
         self.schema = json.loads(
             (ROOT / "schemas" / "negative_knowledge_registry.schema.json").read_text(
@@ -79,7 +81,10 @@ class NegativeKnowledgeTests(unittest.TestCase):
         mutated["records"][0]["evidence_digest"] = canonical_digest([])
         errors = self.errors_for(mutated)
         self.assertTrue(
-            any("should be non-empty" in error or "[] is too short" in error for error in errors)
+            any(
+                "should be non-empty" in error or "[] is too short" in error
+                for error in errors
+            )
         )
 
     def test_scope_inflation_rejected(self) -> None:
@@ -109,7 +114,9 @@ class NegativeKnowledgeTests(unittest.TestCase):
 
     def test_unknown_predecessor_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
-        mutated["records"][0]["lineage"]["predecessor_record_ids"] = ["NK-UNKNOWN-001"]
+        mutated["records"][0]["lineage"]["predecessor_record_ids"] = [
+            "NK-UNKNOWN-001"
+        ]
         errors = self.errors_for(mutated)
         self.assertTrue(any("unknown predecessor" in error for error in errors))
 
@@ -118,8 +125,35 @@ class NegativeKnowledgeTests(unittest.TestCase):
         mutated["records"][0]["claim_boundaries"]["mathematical_target_proved"] = True
         errors = self.errors_for(mutated)
         self.assertTrue(
-            any("False was expected" in error or "claim boundary" in error for error in errors)
+            any(
+                "False was expected" in error or "claim boundary" in error
+                for error in errors
+            )
         )
+
+    def test_exact_pilot_cardinality_rejected(self) -> None:
+        mutated = copy.deepcopy(self.registry)
+        mutated["records"].append(copy.deepcopy(mutated["records"][0]))
+        mutated["records"][-1]["negative_record_id"] = "NK-EXTRA-001"
+        mutated["records"][-1]["scope"]["work_package_id"] = "EXTRA"
+        self.redigest(mutated["records"][-1])
+        errors = self.errors_for(mutated)
+        self.assertTrue(any("too long" in error or "exactly three" in error for error in errors))
+
+    def test_reopening_status_trigger_mismatch_rejected(self) -> None:
+        mutated = copy.deepcopy(self.registry)
+        mutated["records"][0]["reopening"]["trigger_type"] = "new_evidence"
+        errors = self.errors_for(mutated)
+        self.assertTrue(any("requires new_theorem trigger" in error for error in errors))
+
+    def test_lineage_cycle_rejected(self) -> None:
+        mutated = copy.deepcopy(self.registry)
+        first = mutated["records"][0]["negative_record_id"]
+        second = mutated["records"][1]["negative_record_id"]
+        mutated["records"][0]["lineage"]["predecessor_record_ids"] = [second]
+        mutated["records"][1]["lineage"]["predecessor_record_ids"] = [first]
+        errors = self.errors_for(mutated)
+        self.assertTrue(any("lineage cycle detected" in error for error in errors))
 
     def test_pilot_type_coverage_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
