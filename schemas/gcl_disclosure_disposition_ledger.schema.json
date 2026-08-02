@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "control_id": {"const": "GCL-DISCLOSE-PR-001"},
+    "external_release_authorized": {"const": false},
+    "ledger_id": {"const": "GCL-DISCLOSE-PR-001-DISPOSITIONS"},
+    "schema_version": {"const": "1.0.0"},
+    "supported_dispositions": {
+      "items": {"enum": ["open_scientific_infrastructure", "ordinary_publication", "defensive_publication", "patent_review_candidate", "trade_secret", "internal_method", "benchmark_or_dataset_asset", "commercial_implementation", "no_external_release"]},
+      "maxItems": 9,
+      "minItems": 9,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "tranche_1_exercised_dispositions": {
+      "items": {"enum": ["open_scientific_infrastructure", "patent_review_candidate", "trade_secret", "no_external_release"]},
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": ["control_id", "external_release_authorized", "ledger_id", "schema_version", "supported_dispositions", "tranche_1_exercised_dispositions"],
+  "type": "object"
+}

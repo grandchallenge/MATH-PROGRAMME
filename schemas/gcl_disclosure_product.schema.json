@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "activation": {
+      "additionalProperties": false,
+      "properties": {
+        "external_release_authorized": {"const": false},
+        "feature_branch_non_authoritative": {"const": true},
+        "required_conditions": {
+          "items": {"enum": ["external_exact_head_review", "human_steward_release", "protected_merge"]},
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": ["external_release_authorized", "feature_branch_non_authoritative", "required_conditions"],
+      "type": "object"
+    },
+    "authority": {
+      "additionalProperties": false,
+      "properties": {
+        "human_authorization_comment": {"const": 5156986710},
+        "issue_number": {"const": 193},
+        "prerequisite_merge": {"const": "d3546a6694ee21c25d4fb2e9f3f11cb0b19e3edf"},
+        "repository": {"const": "grandchallenge/MATH-PROGRAMME"}
+      },
+      "required": ["human_authorization_comment", "issue_number", "prerequisite_merge", "repository"],
+      "type": "object"
+    },
+    "claim_boundaries": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_external_release_authorized": {"const": false},
+        "commercial_value_determined": {"const": false},
+        "confidential_processing_authorized": {"const": false},
+        "defensive_publication_authorized": {"const": false},
+        "export_eligibility_determined": {"const": false},
+        "freedom_to_operate_determined": {"const": false},
+        "inventorship_determined": {"const": false},
+        "legal_validity_determined": {"const": false},
+        "novelty_or_priority_determined": {"const": false},
+        "patent_filing_authorized": {"const": false},
+        "patentability_determined": {"const": false},
+        "publication_merit_determined": {"const": false}
+      },
+      "required": [
+        "actual_external_release_authorized", "commercial_value_determined", "confidential_processing_authorized",
+        "defensive_publication_authorized", "export_eligibility_determined", "freedom_to_operate_determined",
+        "inventorship_determined", "legal_validity_determined", "novelty_or_priority_determined",
+        "patent_filing_authorized", "patentability_determined", "publication_merit_determined"
+      ],
+      "type": "object"
+    },
+    "control_id": {"const": "GCL-DISCLOSE-PR-001"},
+    "core_contract": {
+      "additionalProperties": false,
+      "properties": {
+        "aether_required": {"const": false},
+        "confidential_data_allowed": {"const": false},
+        "finding_dispositions": {
+          "items": {"enum": ["PASS", "FAIL", "ABSTAIN"]},
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "inputs": {"items": {"type": "string"}, "minItems": 6, "type": "array"},
+        "network_required": {"const": false},
+        "operator_responsibilities": {"items": {"type": "string"}, "minItems": 6, "type": "array"},
+        "outputs": {"items": {"type": "string"}, "minItems": 7, "type": "array"},
+        "synthetic_public_only": {"const": true}
+      },
+      "required": ["aether_required", "confidential_data_allowed", "finding_dispositions", "inputs", "network_required", "operator_responsibilities", "outputs", "synthetic_public_only"],
+      "type": "object"
+    },
+    "fixture": {
+      "additionalProperties": false,
+      "properties": {
+        "data_classification": {"const": "synthetic_public"},
+        "fixture_id": {"const": "GCL-DISCLOSE-PR-001"},
+        "path": {"const": "disclosure/fixtures/GCL-DISCLOSE-PR-001"}
+      },
+      "required": ["data_classification", "fixture_id", "path"],
+      "type": "object"
+    },
+    "generated_outputs": {
+      "additionalProperties": false,
+      "properties": {
+        "control_model": {"type": "string"},
+        "json_dossier": {"type": "string"},
+        "markdown_dossier": {"type": "string"},
+        "measurement_report": {"type": "string"},
+        "review_packet": {"type": "string"}
+      },
+      "required": ["control_model", "json_dossier", "markdown_dossier", "measurement_report", "review_packet"],
+      "type": "object"
+    },
+    "intended_state": {"const": "candidate_tranche_1"},
+    "review_packet": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "may_self_authenticate": {"const": false},
+          "office": {"enum": ["Axiomatist", "Cartographer", "Verifier", "Adversary", "Formalist", "Amanuensis", "Referee", "Human Steward"]},
+          "status": {"const": "pending_external_review"}
+        },
+        "required": ["may_self_authenticate", "office", "status"],
+        "type": "object"
+      },
+      "maxItems": 8,
+      "minItems": 8,
+      "type": "array"
+    },
+    "schema_version": {"const": "1.0.0"},
+    "supported_user_profile": {"items": {"type": "string"}, "minItems": 4, "type": "array"},
+    "threat_model": {"items": {"type": "string"}, "minItems": 11, "type": "array", "uniqueItems": true}
+  },
+  "required": ["activation", "authority", "claim_boundaries", "control_id", "core_contract", "fixture", "generated_outputs", "intended_state", "review_packet", "schema_version", "supported_user_profile", "threat_model"],
+  "type": "object"
+}

@@ -1,0 +1,36 @@
+{
+  "bounded_classification": {
+    "case_count": 20,
+    "exact_match_count": 20,
+    "false_negative_count": 0,
+    "false_positive_count": 0,
+    "mismatched_finding_ids": []
+  },
+  "deterministic_replay": {
+    "byte_identical": true,
+    "runs": 2
+  },
+  "fixture_id": "GCL-DISCLOSE-PR-001",
+  "ledger_id": "GCL-DISCLOSE-PR-001-MEASUREMENTS",
+  "operator_usability": {
+    "generated_outputs": 5,
+    "network_required": false,
+    "primary_commands": [
+      "python3 ci/disclose_pr.py check",
+      "python3 ci/disclose_pr.py render"
+    ],
+    "required_operator_inputs": 6
+  },
+  "partial_evidence_recovery": {
+    "crash_free": true,
+    "expected_disposition": "ABSTAIN",
+    "implicit_clearance_forbidden": true,
+    "optional_missing_cases": [
+      "F-ART-MISSING",
+      "F-CLASS-MISSING",
+      "F-PRIOR-DISCLOSURE"
+    ]
+  },
+  "schema_version": "1.0.0",
+  "scope_boundary": "Synthetic-public fixture characterization only; no actual release or professional conclusion."
+}
