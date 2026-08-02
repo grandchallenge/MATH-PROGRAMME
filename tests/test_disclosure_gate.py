@@ -18,49 +18,74 @@ class DisclosureTests(unittest.TestCase):
         root=self.copy();data=self.read(root,rel);fn(data);self.write(root,rel,data);return validate(root)
     def finding(self,fid:str):return next(x for x in evaluate(ROOT/"disclosure/fixtures/GCL-DISCLOSE-PR-001")["findings"] if x["finding_id"]==fid)
     def test_valid(self):self.assertEqual([],validate())
-    def test_deterministic(self):self.assertEqual(canonical(evaluate(ROOT/"disclosure/fixtures/GCL-DISCLOSE-PR-001")),canonical(evaluate(ROOT/"disclosure/fixtures/GCL-DISCLOSE-PR-001")))
-    def test_product_schema_closed(self):self.assertTrue(any("Additional properties" in e for e in self.mutate("disclosure/product_contract.json",lambda d:d.update(extra=True))))
-    def test_manifest_schema_closed(self):self.assertTrue(any("Additional properties" in e for e in self.mutate("disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d.update(extra=True))))
-    def test_review_schema_closed(self):self.assertTrue(any("Additional properties" in e for e in self.mutate("disclosure/fixtures/GCL-DISCLOSE-PR-001/evidence/reviews.json",lambda d:d["reviews"][0].update(extra=True))))
-    def test_ledger_schema_closed(self):self.assertTrue(any("Additional properties" in e for e in self.mutate("disclosure/disposition_ledger.json",lambda d:d.update(extra=True))))
-    def test_activation_drift(self):self.assertTrue(any("too short" in e or "activation" in e for e in self.mutate("disclosure/product_contract.json",lambda d:d["activation"].update(required_conditions=["protected_merge"]))))
-    def test_external_release_prohibited(self):self.assertTrue(any("False was expected" in e for e in self.mutate("disclosure/product_contract.json",lambda d:d["activation"].update(external_release_authorized=True))))
-    def test_claim_promotion_prohibited(self):self.assertTrue(any("False was expected" in e or "claim-boundary" in e for e in self.mutate("disclosure/product_contract.json",lambda d:d["claim_boundaries"].update(patentability_determined=True))))
-    def test_aether_dependency_prohibited(self):self.assertTrue(any("False was expected" in e for e in self.mutate("disclosure/product_contract.json",lambda d:d["core_contract"].update(aether_required=True))))
-    def test_confidential_processing_prohibited(self):self.assertTrue(any("False was expected" in e for e in self.mutate("disclosure/product_contract.json",lambda d:d["core_contract"].update(confidential_data_allowed=True))))
-    def test_self_authentication_prohibited(self):self.assertTrue(any("False was expected" in e or "self-authenticating" in e for e in self.mutate("disclosure/product_contract.json",lambda d:d["review_packet"][0].update(may_self_authenticate=True))))
-    def test_identity_drift(self):self.assertTrue(any("expectation ledger" in e for e in self.mutate("disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["artifacts"][0].update(commit="0"*40))))
-    def test_digest_drift(self):self.assertTrue(any("expectation ledger" in e for e in self.mutate("disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["artifacts"][0].update(expected_sha256="0"*64))))
-    def test_required_missing(self):self.assertTrue(any("expectation ledger" in e for e in self.mutate("disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["artifacts"][2].update(required=True))))
-    def test_optional_missing_abstains(self):self.assertEqual(("ABSTAIN","OPTIONAL_EVIDENCE_MISSING"),(self.finding("F-ART-MISSING")["disposition"],self.finding("F-ART-MISSING")["reason_code"]))
-    def test_classification_absent_abstains(self):self.assertEqual(("ABSTAIN","CLASSIFICATION_ABSENT"),(self.finding("F-CLASS-MISSING")["disposition"],self.finding("F-CLASS-MISSING")["reason_code"]))
-    def test_classification_head_mismatch(self):self.assertTrue(any("expectation ledger" in e for e in self.mutate("disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["classification_cases"][0].update(subject_head="0"*40))))
-    def test_classification_supersession(self):self.assertTrue(any("expectation ledger" in e for e in self.mutate("disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["classification_cases"][0].update(superseded_by="CLASS-NEW"))))
-    def test_active_hold_fails(self):self.assertEqual("ACTIVE_NO_RELEASE_HOLD",self.finding("F-HOLD-ACTIVE")["reason_code"])
-    def test_stale_hold_fails(self):self.assertEqual("STALE_HOLD_USED_AS_AUTHORITY",self.finding("F-HOLD-STALE")["reason_code"])
-    def test_hold_head_mismatch(self):self.assertTrue(any("expectation ledger" in e for e in self.mutate("disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["hold_cases"][0].update(subject_head="0"*40))))
-    def test_attribution_complete(self):self.assertEqual("ATTRIBUTION_COMPLETE",self.finding("F-ATTR-COMPLETE")["reason_code"])
-    def test_attribution_missing(self):self.assertEqual("ATTRIBUTION_INCOMPLETE",self.finding("F-ATTR-MISSING")["reason_code"])
-    def test_approved_claim(self):self.assertEqual("APPROVED_CLAIM_EXACT",self.finding("F-CLAIM-APPROVED")["reason_code"])
-    def test_claim_inflation(self):self.assertEqual("CLAIM_EXCEEDS_APPROVED_LANGUAGE",self.finding("F-CLAIM-INFLATED")["reason_code"])
-    def test_unsupported_ip_language(self):self.assertEqual("UNSUPPORTED_IP_LANGUAGE",self.finding("F-CLAIM-NOVELTY")["reason_code"])
-    def test_professional_review_changes_novelty_case(self):self.assertTrue(any("expectation ledger" in e for e in self.mutate("disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["claim_cases"][2].update(professional_review_present=True))))
-    def test_public_export(self):self.assertEqual("SYNTHETIC_PUBLIC_EXPORT",self.finding("F-CONF-PUBLIC")["reason_code"])
-    def test_confidential_leak(self):self.assertEqual("CONFIDENTIAL_EXPORT_LEAK",self.finding("F-CONF-LEAK")["reason_code"])
-    def test_exact_review(self):self.assertEqual("EXACT_NON_AUTHOR_REVIEW",self.finding("F-REVIEW-EXACT")["reason_code"])
-    def test_review_head_mismatch(self):self.assertEqual("REVIEW_HEAD_MISMATCH",self.finding("F-REVIEW-MISMATCH")["reason_code"])
-    def test_author_only_authority(self):self.assertEqual("AUTHOR_ONLY_RELEASE_AUTHORITY",self.finding("F-RELEASE-AUTHOR")["reason_code"])
-    def test_review_mutation(self):self.assertTrue(any("expectation ledger" in e for e in self.mutate("disclosure/fixtures/GCL-DISCLOSE-PR-001/evidence/reviews.json",lambda d:d["reviews"][0].update(head_sha="0"*40))))
-    def test_circular_authority(self):self.assertEqual("CIRCULAR_RELEASE_AUTHORITY",self.finding("F-AUTHORITY-GRAPH")["reason_code"])
-    def test_break_cycle_changes_expectation(self):self.assertTrue(any("expectation ledger" in e or "too short" in e for e in self.mutate("disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d.update(authority_edges=d["authority_edges"][:1]))))
-    def test_prior_disclosure_abstains(self):self.assertEqual(("ABSTAIN","PRIOR_DISCLOSURE_EVIDENCE_MISSING"),(self.finding("F-PRIOR-DISCLOSURE")["disposition"],self.finding("F-PRIOR-DISCLOSURE")["reason_code"]))
-    def test_required_prior_disclosure_fails(self):self.assertTrue(any("expectation ledger" in e for e in self.mutate("disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["prior_disclosure_evidence"].update(required=True))))
-    def test_disposition_coverage(self):self.assertTrue(any("too short" in e or "exact nine" in e for e in self.mutate("disclosure/disposition_ledger.json",lambda d:d.update(supported_dispositions=d["supported_dispositions"][:-1]))))
-    def test_ledger_release_authority(self):self.assertTrue(any("False was expected" in e or "cannot authorize" in e for e in self.mutate("disclosure/disposition_ledger.json",lambda d:d.update(external_release_authorized=True))))
-    def test_measurement(self):self.assertTrue(any("measurement ledger" in e for e in self.mutate("disclosure/measurement_ledger.json",lambda d:d["bounded_classification"].update(false_positive_count=1))))
+    def test_deterministic(self):
+        fixture=ROOT/"disclosure/fixtures/GCL-DISCLOSE-PR-001"
+        self.assertEqual(canonical(evaluate(fixture)),canonical(evaluate(fixture)))
     def test_generated_json_drift(self):
         root=self.copy();(root/"disclosure/output/dossier.json").write_text("{}\n");self.assertTrue(any("generated output drift" in e for e in validate(root)))
     def test_generated_review_drift(self):
         root=self.copy();(root/"disclosure/output/review_packet.md").write_text("# stale\n");self.assertTrue(any("generated output drift" in e for e in validate(root)))
-    def test_data_classification_closed(self):self.assertTrue(any("synthetic_public" in e for e in self.mutate("disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d.update(data_classification="confidential"))))
+
+MUTATIONS=[
+("product_schema_closed","disclosure/product_contract.json",lambda d:d.update(extra=True),("Additional properties",)),
+("manifest_schema_closed","disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d.update(extra=True),("Additional properties",)),
+("review_schema_closed","disclosure/fixtures/GCL-DISCLOSE-PR-001/evidence/reviews.json",lambda d:d["reviews"][0].update(extra=True),("Additional properties",)),
+("ledger_schema_closed","disclosure/disposition_ledger.json",lambda d:d.update(extra=True),("Additional properties",)),
+("activation_drift","disclosure/product_contract.json",lambda d:d["activation"].update(required_conditions=["protected_merge"]),("too short","activation")),
+("external_release_prohibited","disclosure/product_contract.json",lambda d:d["activation"].update(external_release_authorized=True),("False was expected",)),
+("claim_promotion_prohibited","disclosure/product_contract.json",lambda d:d["claim_boundaries"].update(patentability_determined=True),("False was expected","claim-boundary")),
+("aether_dependency_prohibited","disclosure/product_contract.json",lambda d:d["core_contract"].update(aether_required=True),("False was expected",)),
+("confidential_processing_prohibited","disclosure/product_contract.json",lambda d:d["core_contract"].update(confidential_data_allowed=True),("False was expected",)),
+("self_authentication_prohibited","disclosure/product_contract.json",lambda d:d["review_packet"][0].update(may_self_authenticate=True),("False was expected","self-authenticating")),
+("identity_drift","disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["artifacts"][0].update(commit="0"*40),("expectation ledger",)),
+("digest_drift","disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["artifacts"][0].update(expected_sha256="0"*64),("expectation ledger",)),
+("required_missing","disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:next(a for a in d["artifacts"] if a["artifact_id"]=="ART-MISSING").update(required=True),("expectation ledger",)),
+("classification_head_mismatch","disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["classification_cases"][0].update(subject_head="0"*40),("expectation ledger",)),
+("classification_supersession","disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["classification_cases"][0].update(superseded_by="CLASS-NEW"),("expectation ledger",)),
+("hold_head_mismatch","disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["hold_cases"][0].update(subject_head="0"*40),("expectation ledger",)),
+("professional_review_changes_novelty","disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["claim_cases"][2].update(professional_review_present=True),("expectation ledger",)),
+("review_mutation","disclosure/fixtures/GCL-DISCLOSE-PR-001/evidence/reviews.json",lambda d:d["reviews"][0].update(head_sha="0"*40),("expectation ledger",)),
+("break_cycle","disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d.update(authority_edges=d["authority_edges"][:1]),("expectation ledger","too short")),
+("required_prior_disclosure","disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["prior_disclosure_evidence"].update(required=True),("expectation ledger",)),
+("disposition_coverage","disclosure/disposition_ledger.json",lambda d:d.update(supported_dispositions=d["supported_dispositions"][:-1]),("too short","exact nine")),
+("ledger_release_authority","disclosure/disposition_ledger.json",lambda d:d.update(external_release_authorized=True),("False was expected","cannot authorize")),
+("measurement_drift","disclosure/measurement_ledger.json",lambda d:d["bounded_classification"].update(false_positive_count=1),("measurement ledger",)),
+("data_classification_closed","disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d.update(data_classification="confidential"),("synthetic_public",)),
+("blob_drift","disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["artifacts"][0].update(blob="0"*40),("expectation ledger",)),
+("classification_expiry","disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["classification_cases"][0].update(expires_at="2025-08-02"),("expectation ledger",)),
+("active_hold_expiry_contradiction","disclosure/fixtures/GCL-DISCLOSE-PR-001/manifest.json",lambda d:d["hold_cases"][0].update(expires_at="2025-08-02"),("expectation ledger",)),
+("review_expiry","disclosure/fixtures/GCL-DISCLOSE-PR-001/evidence/reviews.json",lambda d:d["reviews"][0].update(expires_at="2025-08-02"),("expectation ledger",)),
+]
+
+def mutation_test(rel,mutator,tokens):
+    def test(self):
+        errors=self.mutate(rel,mutator);self.assertTrue(any(any(token in error for token in tokens) for error in errors),errors)
+    return test
+for name,rel,mutator,tokens in MUTATIONS:setattr(DisclosureTests,"test_"+name,mutation_test(rel,mutator,tokens))
+
+FINDINGS=[
+("optional_missing_abstains","F-ART-MISSING","ABSTAIN","OPTIONAL_EVIDENCE_MISSING"),
+("release_note_bound","F-ART-NOTE","PASS","EXACT_ARTIFACT_MATCH"),
+("classification_absent_abstains","F-CLASS-MISSING","ABSTAIN","CLASSIFICATION_ABSENT"),
+("active_hold_fails","F-HOLD-ACTIVE","FAIL","ACTIVE_NO_RELEASE_HOLD"),
+("stale_hold_fails","F-HOLD-STALE","FAIL","STALE_HOLD_USED_AS_AUTHORITY"),
+("attribution_complete","F-ATTR-COMPLETE","PASS","ATTRIBUTION_COMPLETE"),
+("attribution_missing","F-ATTR-MISSING","FAIL","ATTRIBUTION_INCOMPLETE"),
+("approved_claim","F-CLAIM-APPROVED","PASS","APPROVED_CLAIM_EXACT"),
+("claim_inflation","F-CLAIM-INFLATED","FAIL","CLAIM_EXCEEDS_APPROVED_LANGUAGE"),
+("unsupported_ip_language","F-CLAIM-NOVELTY","FAIL","UNSUPPORTED_IP_LANGUAGE"),
+("public_export","F-CONF-PUBLIC","PASS","SYNTHETIC_PUBLIC_EXPORT"),
+("confidential_leak","F-CONF-LEAK","FAIL","CONFIDENTIAL_EXPORT_LEAK"),
+("exact_review","F-REVIEW-EXACT","PASS","EXACT_NON_AUTHOR_REVIEW"),
+("review_head_mismatch","F-REVIEW-MISMATCH","FAIL","REVIEW_HEAD_MISMATCH"),
+("author_only_authority","F-RELEASE-AUTHOR","FAIL","AUTHOR_ONLY_RELEASE_AUTHORITY"),
+("circular_authority","F-AUTHORITY-GRAPH","FAIL","CIRCULAR_RELEASE_AUTHORITY"),
+("prior_disclosure_abstains","F-PRIOR-DISCLOSURE","ABSTAIN","PRIOR_DISCLOSURE_EVIDENCE_MISSING"),
+]
+def finding_test(fid,disposition,reason):
+    def test(self):
+        item=self.finding(fid);self.assertEqual((disposition,reason),(item["disposition"],item["reason_code"]))
+    return test
+for name,fid,disposition,reason in FINDINGS:setattr(DisclosureTests,"test_"+name,finding_test(fid,disposition,reason))
+
 if __name__=="__main__":unittest.main()
