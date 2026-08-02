@@ -38,7 +38,7 @@ on:
         required: false
         type: string
       dry_run:
-        description: Generate evidence without creating a dispatch issue
+        description: Generate evidence without asserting an operational dispatch
         required: true
         default: false
         type: boolean
@@ -79,10 +79,7 @@ on:
       - completed
 
 permissions:
-  actions: read
   contents: read
-  issues: write
-  pull-requests: read
 
 concurrency:
   group: administrative-maintenance-dispatch
@@ -107,7 +104,6 @@ jobs:
       - name: Evaluate schedule and event obligations
         id: dispatch
         env:
-          GH_TOKEN: ${{ github.token }}
           MANUAL_PROCEDURE: ${{ inputs.procedure || 'auto' }}
           EVALUATION_NOW: ${{ inputs.now || '' }}
           DRY_RUN: ${{ inputs.dry_run || 'false' }}
@@ -116,8 +112,6 @@ jobs:
           set -euo pipefail
           args=(
             --event-path "$GITHUB_EVENT_PATH"
-            --repository "$GITHUB_REPOSITORY"
-            --token "$GH_TOKEN"
             --procedure "$MANUAL_PROCEDURE"
             --report administrative-maintenance-dispatch.json
           )
@@ -137,3 +131,10 @@ jobs:
           path: administrative-maintenance-dispatch.json
           if-no-files-found: error
           retention-days: 30
+
+      - name: Enforce P1 fail-closed signal
+        if: always() && steps.dispatch.outputs.p1_count != '0'
+        shell: bash
+        run: |
+          echo "P1 administrative maintenance obligation requires protected disposition" >&2
+          exit 1
