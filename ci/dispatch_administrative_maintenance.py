@@ -5,9 +5,6 @@ import json
 import os
 import re
 import sys
-import urllib.error
-import urllib.parse
-import urllib.request
 from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -92,10 +89,6 @@ def due_occurrences(procedure: dict[str, Any], now: datetime) -> list[datetime]:
     ]
 
 
-def marker(key: str) -> str:
-    return f"{SELF_MARKER_PREFIX}{key} -->"
-
-
 def scheduled_dispatch(procedure: dict[str, Any], due: datetime, now: datetime) -> Dispatch:
     procedure_id = procedure["id"]
     title_name = PROCEDURE_TITLES[procedure_id]
@@ -103,10 +96,9 @@ def scheduled_dispatch(procedure: dict[str, Any], due: datetime, now: datetime) 
     late_minutes = max(0, int((now - due).total_seconds() // 60))
     key = f"scheduled:{procedure_id}:{due_text}"
     severity = "P2" if "P2" in procedure["issue_class"] else "P1"
-    body = f"""{marker(key)}
-## Administrative maintenance dispatch
+    body = f"""## Administrative maintenance dispatch
 
-This issue is a mutable execution notice only. It creates no protected authority and does not satisfy the required procedure.
+This workflow signal is execution evidence only. It creates no protected authority and does not satisfy the required procedure.
 
 - control: `MP-ADMIN-MAINT-001`
 - procedure: `{procedure_id}`
@@ -116,16 +108,14 @@ This issue is a mutable execution notice only. It creates no protected authority
 - default classification if not completed: `{procedure["issue_class"]}`
 - required output: {procedure["required_output"]}
 
-## Required action
-
 Execute the {title_name} against the exact current protected heads. Preserve the original cadence anchor and record the scheduled deadline, actual execution time, evidence, findings, repairs, review disposition, and claim boundary.
 
-A delayed workflow run or this issue cannot rewrite the deadline, grant a waiver, reset cadence, merge a pull request, or create mathematical, certification, novelty, priority, publication, patentability, product, or commercial authority.
+A delayed workflow run cannot rewrite the deadline, grant a waiver, reset cadence, merge a pull request, or create mathematical, certification, novelty, priority, publication, patentability, product, or commercial authority.
 """
     return Dispatch(
         kind="scheduled",
         key=key,
-        title=f"{SELF_TITLE_PREFIX} {title_name} due {due_text}",
+        title=f"{title_name} due {due_text}",
         body=body,
         severity=severity,
         due_at=due_text,
@@ -137,10 +127,9 @@ def manual_dispatch(procedure_id: str, now: datetime, registry: dict[str, Any]) 
     match = next(item for item in registry["procedures"] if item["id"] == procedure_id)
     key = f"manual:{procedure_id}:{iso_z(now)}"
     title_name = PROCEDURE_TITLES[procedure_id]
-    body = f"""{marker(key)}
-## Manual administrative maintenance dispatch
+    body = f"""## Manual administrative maintenance dispatch
 
-This recovery notice is non-authoritative. It does not reset the protected cadence.
+This recovery signal is non-authoritative and does not reset the protected cadence.
 
 - control: `MP-ADMIN-MAINT-001`
 - procedure: `{procedure_id}`
@@ -152,7 +141,7 @@ Execute the procedure against exact protected heads and record whether it is ear
     return Dispatch(
         kind="manual",
         key=key,
-        title=f"{SELF_TITLE_PREFIX} manual {title_name} {iso_z(now)}",
+        title=f"manual {title_name} {iso_z(now)}",
         body=body,
         severity="P2",
         due_at=None,
@@ -186,19 +175,14 @@ def suspicious_issue_authority(event: dict[str, Any]) -> list[str]:
     return [name for name, pattern in patterns.items() if re.search(pattern, text, re.I | re.S)]
 
 
-def event_dispatches(
-    event_name: str,
-    event: dict[str, Any],
-    now: datetime,
-) -> list[Dispatch]:
+def event_dispatches(event_name: str, event: dict[str, Any], now: datetime) -> list[Dispatch]:
     dispatches: list[Dispatch] = []
 
     if event_name == "push":
         sha = str(event.get("after") or os.environ.get("GITHUB_SHA") or "unknown")
         key = f"event:push:{sha}"
         refresh_due = now + TRACKER_REFRESH
-        body = f"""{marker(key)}
-## Governed-path material-change triage
+        body = f"""## Governed-path material-change triage
 
 A push to `main` changed a governed path and triggered immediate maintenance triage.
 
@@ -207,16 +191,47 @@ A push to `main` changed a governed path and triggered immediate maintenance tri
 - canonical tracker refresh target: `{iso_z(refresh_due)}`
 - protected material synchronization: same governed change sequence
 
-Classify the change as material or nonmaterial, identify affected consumers, verify exact-head evidence, preserve unchanged content-addressed identities, and create protected synchronization records where required. This issue is navigation only and cannot create authority.
+Classify the change as material or nonmaterial, identify affected consumers, verify exact-head evidence, preserve unchanged content-addressed identities, and create protected synchronization records where required. This workflow signal is evidence only and cannot create authority.
 """
         dispatches.append(
             Dispatch(
                 kind="event",
                 key=key,
-                title=f"{SELF_TITLE_PREFIX} governed-path synchronization triage {sha[:12]}",
+                title=f"governed-path synchronization triage {sha[:12]}",
                 body=body,
                 severity="P2",
                 due_at=iso_z(refresh_due),
+                source_event=event_name,
+            )
+        )
+
+    elif event_name == "pull_request":
+        pull_request = event.get("pull_request") or {}
+        action = str(event.get("action") or "changed")
+        number = str(pull_request.get("number") or event.get("number") or "unknown")
+        head = str((pull_request.get("head") or {}).get("sha") or "unknown")
+        base = str((pull_request.get("base") or {}).get("sha") or "unknown")
+        draft = bool(pull_request.get("draft", False))
+        key = f"event:pull-request:{number}:{action}:{head}"
+        body = f"""## Open-pull-request interference evidence
+
+- pull request: `#{number}`
+- lifecycle action: `{action}`
+- head: `{head}`
+- base: `{base}`
+- draft: `{str(draft).lower()}`
+- observed at: `{iso_z(now)}`
+
+Record whether the pull request interferes with protected heads, current maintenance work, required workflows, or pending release evidence. This signal does not authorize merge or alter protected authority.
+"""
+        dispatches.append(
+            Dispatch(
+                kind="event",
+                key=key,
+                title=f"pull-request interference evidence #{number} {action}",
+                body=body,
+                severity="P3",
+                due_at=None,
                 source_event=event_name,
             )
         )
@@ -226,8 +241,7 @@ Classify the change as material or nonmaterial, identify affected consumers, ver
         rule = event.get("rule") or {}
         name = str(rule.get("name") or rule.get("pattern") or "unknown")
         key = f"event:branch-protection:{action}:{name}:{iso_z(now)}"
-        body = f"""{marker(key)}
-## Branch-protection semantic review
+        body = f"""## Branch-protection semantic review
 
 A branch-protection rule was `{action}`.
 
@@ -235,13 +249,13 @@ A branch-protection rule was `{action}`.
 - observed at: `{iso_z(now)}`
 - default classification: `P1` until required-check and release-trust effects are reconciled
 
-Verify required checks, review requirements, bypass actors, force-push and deletion settings, downstream workflow coverage, and exact protected authority. This issue cannot authorize weakening.
+Verify required checks, review requirements, bypass actors, force-push and deletion settings, downstream workflow coverage, and exact protected authority. This signal cannot authorize weakening.
 """
         dispatches.append(
             Dispatch(
                 kind="event",
                 key=key,
-                title=f"{SELF_TITLE_PREFIX} P1 branch-protection review: {action} {name}",
+                title=f"P1 branch-protection review: {action} {name}",
                 body=body,
                 severity="P1",
                 due_at=iso_z(now),
@@ -256,8 +270,7 @@ Verify required checks, review requirements, bypass actors, force-push and delet
             run_id = str(run.get("id") or "unknown")
             workflow_name = str(run.get("name") or "required workflow")
             key = f"event:workflow-failure:{run_id}"
-            body = f"""{marker(key)}
-## Required-workflow failure triage
+            body = f"""## Required-workflow failure triage
 
 - workflow: `{workflow_name}`
 - run id: `{run_id}`
@@ -271,7 +284,7 @@ Preserve failure evidence, identify affected protected records and campaigns, fa
                 Dispatch(
                     kind="event",
                     key=key,
-                    title=f"{SELF_TITLE_PREFIX} P1 required-workflow failure {workflow_name} #{run_id}",
+                    title=f"P1 required-workflow failure {workflow_name} #{run_id}",
                     body=body,
                     severity="P1",
                     due_at=iso_z(now),
@@ -286,8 +299,7 @@ Preserve failure evidence, identify affected protected records and campaigns, fa
             number = str(issue.get("number") or "unknown")
             action = str(event.get("action") or "changed")
             key = f"event:issue-authority:{number}:{action}:{iso_z(now)}"
-            body = f"""{marker(key)}
-## Issue-language authority triage
+            body = f"""## Issue-language authority triage
 
 Issue #{number} matched protected-authority risk patterns after action `{action}`.
 
@@ -301,7 +313,7 @@ Confirm that the issue is navigation only, identify the controlling protected re
                 Dispatch(
                     kind="event",
                     key=key,
-                    title=f"{SELF_TITLE_PREFIX} P1 issue-authority language review #{number}",
+                    title=f"P1 issue-authority language review #{number}",
                     body=body,
                     severity="P1",
                     due_at=iso_z(now),
@@ -310,79 +322,6 @@ Confirm that the issue is navigation only, identify the controlling protected re
             )
 
     return dispatches
-
-
-class GitHubIssues:
-    def __init__(self, repository: str, token: str) -> None:
-        self.repository = repository
-        self.token = token
-        self.api = os.environ.get("GITHUB_API_URL", "https://api.github.com").rstrip("/")
-        self._markers: set[str] | None = None
-
-    def request(self, method: str, path: str, payload: dict[str, Any] | None = None) -> Any:
-        url = f"{self.api}{path}"
-        data = None if payload is None else json.dumps(payload).encode("utf-8")
-        request = urllib.request.Request(
-            url,
-            data=data,
-            method=method,
-            headers={
-                "Accept": "application/vnd.github+json",
-                "Authorization": f"Bearer {self.token}",
-                "X-GitHub-Api-Version": "2022-11-28",
-                "User-Agent": "gcl-administrative-maintenance-dispatcher",
-            },
-        )
-        try:
-            with urllib.request.urlopen(request, timeout=30) as response:
-                return json.loads(response.read().decode("utf-8"))
-        except urllib.error.HTTPError as exc:
-            detail = exc.read().decode("utf-8", errors="replace")
-            raise RuntimeError(f"GitHub API {method} {path} failed: {exc.code} {detail}") from exc
-
-    def existing_markers(self) -> set[str]:
-        if self._markers is not None:
-            return self._markers
-
-        markers: set[str] = set()
-        for page in range(1, 11):
-            query = urllib.parse.urlencode(
-                {
-                    "state": "all",
-                    "per_page": 100,
-                    "page": page,
-                    "sort": "created",
-                    "direction": "desc",
-                }
-            )
-            items = self.request("GET", f"/repos/{self.repository}/issues?{query}")
-            if not items:
-                break
-            for item in items:
-                body = str(item.get("body") or "")
-                for match in re.findall(r"<!-- maintenance-dispatch:([^>]+) -->", body):
-                    markers.add(match)
-            if len(items) < 100:
-                break
-
-        self._markers = markers
-        return markers
-
-    def ensure_issue(self, dispatch: Dispatch, label: str) -> str:
-        if dispatch.key in self.existing_markers():
-            return "duplicate"
-
-        self.request(
-            "POST",
-            f"/repos/{self.repository}/issues",
-            {
-                "title": dispatch.title,
-                "body": dispatch.body,
-                "labels": [label],
-            },
-        )
-        self.existing_markers().add(dispatch.key)
-        return "created"
 
 
 def deduplicate(dispatches: Iterable[Dispatch]) -> list[Dispatch]:
@@ -395,6 +334,38 @@ def deduplicate(dispatches: Iterable[Dispatch]) -> list[Dispatch]:
     return result
 
 
+def scheduled_candidates(
+    registry: dict[str, Any],
+    event_name: str,
+    event: dict[str, Any],
+    now: datetime,
+    manual_procedure: str,
+) -> list[tuple[dict[str, Any], datetime]]:
+    candidates = [
+        (procedure, due)
+        for procedure in registry["procedures"]
+        for due in due_occurrences(procedure, now)
+    ]
+
+    if event_name == "workflow_dispatch" and manual_procedure == "auto":
+        return candidates
+    if event_name != "schedule":
+        return []
+
+    cron = str(event.get("schedule") or "")
+    schedule = registry["schedule"]
+    if cron == schedule["overdue_watchdog_cron_utc"]:
+        window_minutes = schedule["watchdog_window_minutes"]
+    else:
+        window_minutes = schedule["exact_schedule_window_minutes"]
+
+    return [
+        (procedure, due)
+        for procedure, due in candidates
+        if 0 <= (now - due).total_seconds() < window_minutes * 60
+    ]
+
+
 def build_dispatches(
     registry: dict[str, Any],
     event_name: str,
@@ -402,12 +373,12 @@ def build_dispatches(
     now: datetime,
     manual_procedure: str,
 ) -> list[Dispatch]:
-    dispatches: list[Dispatch] = []
-
-    if event_name == "schedule" or (event_name == "workflow_dispatch" and manual_procedure == "auto"):
-        for procedure in registry["procedures"]:
-            for due in due_occurrences(procedure, now):
-                dispatches.append(scheduled_dispatch(procedure, due, now))
+    dispatches = [
+        scheduled_dispatch(procedure, due, now)
+        for procedure, due in scheduled_candidates(
+            registry, event_name, event, now, manual_procedure
+        )
+    ]
 
     if event_name == "workflow_dispatch" and manual_procedure != "auto":
         dispatches.append(manual_dispatch(manual_procedure, now, registry))
@@ -416,11 +387,48 @@ def build_dispatches(
     return deduplicate(dispatches)
 
 
+def annotation_escape(value: str) -> str:
+    return value.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+
+
+def write_summary(path: Path, report: dict[str, Any]) -> None:
+    lines = [
+        "# Administrative maintenance dispatcher",
+        "",
+        f"- evaluated at: `{report['evaluated_at']}`",
+        f"- event: `{report['event_name']}`",
+        f"- dispatches: `{report['dispatch_count']}`",
+        f"- P1: `{report['severity_counts']['P1']}`",
+        f"- P2: `{report['severity_counts']['P2']}`",
+        f"- P3: `{report['severity_counts']['P3']}`",
+        "- authority: workflow evidence only; protected record still required",
+        "",
+    ]
+    for dispatch in report["dispatches"]:
+        lines.extend(
+            [
+                f"## {dispatch['severity']} — {dispatch['title']}",
+                "",
+                f"- key: `{dispatch['key']}`",
+                f"- due: `{dispatch['due_at'] or 'not applicable'}`",
+                "",
+                dispatch["body"],
+                "",
+            ]
+        )
+    path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def emit_annotations(dispatches: list[Dispatch]) -> None:
+    for dispatch in dispatches:
+        command = "error" if dispatch.severity == "P1" else "warning" if dispatch.severity == "P2" else "notice"
+        message = annotation_escape(f"{dispatch.key}: {dispatch.title}")
+        print(f"::{command} title=Administrative maintenance {dispatch.severity}::{message}")
+
+
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--event-path", type=Path, required=True)
-    parser.add_argument("--repository", required=True)
-    parser.add_argument("--token", default="")
     parser.add_argument("--procedure", default="auto")
     parser.add_argument("--now", default="")
     parser.add_argument("--dry-run", action="store_true")
@@ -440,19 +448,12 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit(f"unsupported procedure: {args.procedure}")
 
     dispatches = build_dispatches(registry, event_name, event, now, args.procedure)
-    results: list[dict[str, Any]] = []
-
-    client: GitHubIssues | None = None
-    if not args.dry_run and dispatches:
-        if not args.token:
-            raise SystemExit("GitHub token is required when dispatches must create issues")
-        client = GitHubIssues(args.repository, args.token)
-
-    for dispatch in dispatches:
-        disposition = "dry_run"
-        if client is not None:
-            disposition = client.ensure_issue(dispatch, registry["dispatch"]["default_label"])
-        results.append({**asdict(dispatch), "disposition": disposition})
+    disposition = "dry_run" if args.dry_run else "emitted"
+    results = [{**asdict(dispatch), "disposition": disposition} for dispatch in dispatches]
+    severity_counts = {
+        severity: sum(item.severity == severity for item in dispatches)
+        for severity in ("P1", "P2", "P3")
+    }
 
     report = {
         "schema_version": "1.0.0",
@@ -460,12 +461,16 @@ def main(argv: list[str] | None = None) -> int:
         "trigger_id": registry["trigger_id"],
         "evaluated_at": iso_z(now),
         "event_name": event_name,
+        "source_schedule": event.get("schedule"),
         "manual_procedure": args.procedure,
         "dry_run": args.dry_run,
         "dispatch_count": len(results),
+        "severity_counts": severity_counts,
         "dispatches": results,
+        "delivery_channels": registry["dispatch"]["delivery_channels"],
         "authority_boundary": {
-            "issue_is_navigation_only": True,
+            "workflow_signal_is_evidence_only": True,
+            "issue_creation_allowed": False,
             "protected_record_required": True,
             "schedule_anchor_reset": False,
             "claim_promotion": False,
@@ -473,10 +478,18 @@ def main(argv: list[str] | None = None) -> int:
     }
     args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
+    summary_path_raw = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary_path_raw:
+        write_summary(Path(summary_path_raw), report)
+    emit_annotations(dispatches)
+
     output = os.environ.get("GITHUB_OUTPUT")
     if output:
         with Path(output).open("a", encoding="utf-8") as handle:
             handle.write(f"dispatch_count={len(results)}\n")
+            handle.write(f"p1_count={severity_counts['P1']}\n")
+            handle.write(f"p2_count={severity_counts['P2']}\n")
+            handle.write(f"p3_count={severity_counts['P3']}\n")
             handle.write(f"report={args.report.as_posix()}\n")
 
     print(json.dumps(report, indent=2))
