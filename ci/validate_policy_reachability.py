@@ -80,7 +80,11 @@ def workflow_python_roots(root: Path = ROOT) -> set[str]:
 
 
 def ci_modules(root: Path = ROOT) -> dict[str, str]:
-    return {path.stem: path.relative_to(root).as_posix() for path in sorted((root / "ci").glob("*.py")) if path.is_file()}
+    return {
+        path.stem: path.relative_to(root).as_posix()
+        for path in sorted((root / "ci").glob("*.py"))
+        if path.is_file()
+    }
 
 
 def imported_ci_paths(path: Path, modules: dict[str, str]) -> set[str]:
@@ -114,7 +118,10 @@ def reachable_ci_scripts(root: Path = ROOT) -> tuple[set[str], list[str]]:
     errors: list[str] = []
     modules = ci_modules(root)
     roots = workflow_python_roots(root)
-    graph = {relative: imported_ci_paths(root / relative, modules) for relative in modules.values()}
+    graph = {
+        relative: imported_ci_paths(root / relative, modules)
+        for relative in modules.values()
+    }
     reachable: set[str] = set()
     stack = [path for path in roots if path.startswith("ci/")]
     for path in sorted(roots):
@@ -129,7 +136,12 @@ def reachable_ci_scripts(root: Path = ROOT) -> tuple[set[str], list[str]]:
     return reachable, errors
 
 
-def conditional_control_errors(root: Path, label: str, paths: tuple[str, ...], validate_control) -> list[str]:
+def conditional_control_errors(
+    root: Path,
+    label: str,
+    paths: tuple[str, ...],
+    validate_control,
+) -> list[str]:
     present = [relative for relative in paths if (root / relative).is_file()]
     if not present:
         return []
@@ -140,7 +152,16 @@ def conditional_control_errors(root: Path, label: str, paths: tuple[str, ...], v
 
 
 def tooling_control_errors(root: Path) -> list[str]:
-    return conditional_control_errors(root, "GCL work-package tooling", TOOLING_CONTROL_PATHS, lambda: validate_tooling(root))
+    present = [relative for relative in TOOLING_CONTROL_PATHS if (root / relative).is_file()]
+    if not present:
+        return []
+    missing = [relative for relative in TOOLING_CONTROL_PATHS if relative not in present]
+    if missing:
+        return [
+            "GCL work-package tooling: incomplete tooling control surface; missing "
+            + ", ".join(missing)
+        ]
+    return [f"GCL work-package tooling: {error}" for error in validate_tooling(root)]
 
 
 def negative_knowledge_control_errors(root: Path) -> list[str]:
@@ -148,7 +169,10 @@ def negative_knowledge_control_errors(root: Path) -> list[str]:
         root,
         "GCL negative knowledge",
         NEGATIVE_KNOWLEDGE_CONTROL_PATHS,
-        lambda: validate_negative_knowledge(root / "negative_knowledge" / "pilot_registry.json", root / "schemas" / "negative_knowledge_registry.schema.json"),
+        lambda: validate_negative_knowledge(
+            root / "negative_knowledge" / "pilot_registry.json",
+            root / "schemas" / "negative_knowledge_registry.schema.json",
+        ),
     )
 
 
@@ -157,7 +181,11 @@ def portfolio_control_errors(root: Path) -> list[str]:
         root,
         "GCL portfolio",
         PORTFOLIO_CONTROL_PATHS,
-        lambda: validate_portfolio(root / "portfolio" / "pilot_registry.json", root / "schemas" / "gcl_portfolio_registry.schema.json", root / "docs" / "governance" / "GCL_PORTFOLIO_VIEW.md"),
+        lambda: validate_portfolio(
+            root / "portfolio" / "pilot_registry.json",
+            root / "schemas" / "gcl_portfolio_registry.schema.json",
+            root / "docs" / "governance" / "GCL_PORTFOLIO_VIEW.md",
+        ),
     )
 
 
@@ -180,9 +208,17 @@ def policy_reachability_errors(root: Path = ROOT) -> list[str]:
     executable = executable_ci_scripts(root)
     for path in sorted(executable - reachable):
         errors.append(f"CI policy reachability: executable script is unreachable from workflows: {path}")
-    for error in validate_administrative_maintenance_control(ADMINISTRATIVE_MAINTENANCE_CONTROL, ADMINISTRATIVE_MAINTENANCE_SCHEMA):
+    for error in validate_administrative_maintenance_control(
+        ADMINISTRATIVE_MAINTENANCE_CONTROL,
+        ADMINISTRATIVE_MAINTENANCE_SCHEMA,
+    ):
         errors.append(f"administrative maintenance control: {error}")
-    for error in validate_gcl_truth_spine(GCL_TRUTH_SPINE_REGISTRY, GCL_TRUTH_SPINE_REGISTRY_SCHEMA, GCL_TRUTH_SPINE_MATRIX, GCL_TRUTH_SPINE_MATRIX_SCHEMA):
+    for error in validate_gcl_truth_spine(
+        GCL_TRUTH_SPINE_REGISTRY,
+        GCL_TRUTH_SPINE_REGISTRY_SCHEMA,
+        GCL_TRUTH_SPINE_MATRIX,
+        GCL_TRUTH_SPINE_MATRIX_SCHEMA,
+    ):
         errors.append(f"GCL truth spine: {error}")
     errors.extend(tooling_control_errors(root))
     errors.extend(negative_knowledge_control_errors(root))
