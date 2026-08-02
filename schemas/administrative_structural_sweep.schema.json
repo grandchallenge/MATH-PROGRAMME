@@ -1,0 +1,227 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_structural_sweep.schema.json",
+  "title": "Administrative Structural Sweep",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sweep_id",
+    "control_id",
+    "decision_id",
+    "status",
+    "scheduled_due_at",
+    "execution_started_at",
+    "evidence_closed_at",
+    "lateness_minutes_at_start",
+    "cadence",
+    "next_structural_due_at",
+    "administrative_review_due_at",
+    "execution_authority",
+    "scope",
+    "checks",
+    "findings",
+    "repair_actions",
+    "review_readiness",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "sweep_id": {"const": "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-01-001"},
+    "control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "decision_id": {"const": "MP-ADMIN-DECISION-001"},
+    "status": {"const": "COMPLETE_WITH_REPAIRED_P2"},
+    "scheduled_due_at": {"const": "2026-08-01T11:09:00-07:00"},
+    "execution_started_at": {"const": "2026-08-01T21:31:00-07:00"},
+    "evidence_closed_at": {"const": "2026-08-01T21:36:00-07:00"},
+    "lateness_minutes_at_start": {"const": 622},
+    "cadence": {"const": "PT16H48M"},
+    "next_structural_due_at": {"const": "2026-08-02T03:57:00-07:00"},
+    "administrative_review_due_at": {"const": "2026-08-03T18:21:00-07:00"},
+    "execution_authority": {"const": "Human Steward or delegated Programme administrator"},
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repositories", "open_pull_requests"],
+      "properties": {
+        "repositories": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {"$ref": "#/$defs/repositorySweep"}
+        },
+        "open_pull_requests": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {"$ref": "#/$defs/openPullRequest"}
+        }
+      }
+    },
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protected_heads",
+        "open_pr_interference",
+        "schema_and_current_state_parseability",
+        "required_workflow_presence",
+        "canonical_tracker_links_and_freshness",
+        "issue_authority_language",
+        "expired_review_evidence",
+        "missing_canonical_records",
+        "duplicate_canonical_records"
+      ],
+      "properties": {
+        "protected_heads": {"const": "PASS"},
+        "open_pr_interference": {"const": "PASS_WITH_NONBLOCKING_DRAFT"},
+        "schema_and_current_state_parseability": {"const": "PASS_BY_EXACT_HEAD_WORKFLOWS"},
+        "required_workflow_presence": {"const": "PASS"},
+        "canonical_tracker_links_and_freshness": {"const": "PASS_AFTER_IN_SWEEP_REPAIR"},
+        "issue_authority_language": {"const": "PASS_AFTER_IN_SWEEP_REPAIR"},
+        "expired_review_evidence": {"const": "PASS"},
+        "missing_canonical_records": {"const": "PASS_AFTER_SWEEP_RECORD_CREATION"},
+        "duplicate_canonical_records": {"const": "PASS"}
+      }
+    },
+    "findings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["P0", "P1", "P2", "P3"],
+      "properties": {
+        "P0": {"type": "array", "maxItems": 0},
+        "P1": {"type": "array", "maxItems": 0},
+        "P2": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"$ref": "#/$defs/finding"}
+        },
+        "P3": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {"$ref": "#/$defs/finding"}
+        }
+      }
+    },
+    "repair_actions": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action", "status"],
+        "properties": {
+          "action": {"type": "string", "minLength": 1},
+          "status": {"enum": ["COMPLETE", "COMPLETE_ON_REVIEW_BRANCH"]}
+        }
+      }
+    },
+    "review_readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "administrative_review_clear_to_proceed",
+        "reason",
+        "circuit_breaker_triggered",
+        "waiver_used",
+        "emergency_authority_used"
+      ],
+      "properties": {
+        "administrative_review_clear_to_proceed": {"const": true},
+        "reason": {"type": "string", "minLength": 1},
+        "circuit_breaker_triggered": {"const": false},
+        "waiver_used": {"const": false},
+        "emergency_authority_used": {"const": false}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "minProperties": 13,
+      "additionalProperties": {"const": false}
+    }
+  },
+  "$defs": {
+    "sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "workflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "run_id", "conclusion"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "run_id": {"type": "integer", "minimum": 1},
+        "conclusion": {"const": "success"}
+      }
+    },
+    "repositorySweep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "protected_head",
+        "reviewed_head",
+        "latest_transition_pr",
+        "tracker_issue",
+        "core_workflow",
+        "gcl_workflow"
+      ],
+      "properties": {
+        "repository": {
+          "enum": [
+            "grandchallenge/MATH-PROGRAMME",
+            "grandchallenge/MATHFORGE",
+            "grandchallenge/MATHSOLVE",
+            "grandchallenge/MATHCERT",
+            "grandchallenge/INTELLECT"
+          ]
+        },
+        "protected_head": {"$ref": "#/$defs/sha"},
+        "reviewed_head": {"$ref": "#/$defs/sha"},
+        "latest_transition_pr": {"type": "integer", "minimum": 1},
+        "tracker_issue": {"type": "integer", "minimum": 1},
+        "core_workflow": {"$ref": "#/$defs/workflow"},
+        "gcl_workflow": {"$ref": "#/$defs/workflow"}
+      }
+    },
+    "openPullRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "pull_request",
+        "head",
+        "base",
+        "draft",
+        "merge_authorized",
+        "core_run_id",
+        "gcl_run_id",
+        "interference_disposition"
+      ],
+      "properties": {
+        "repository": {"const": "grandchallenge/INTELLECT"},
+        "pull_request": {"const": 24},
+        "head": {"const": "b6158a995a97ae58abfe139925de4ec6c9cd0a0b"},
+        "base": {"const": "d26d673efffbe0874e1440450322869ff70be9d1"},
+        "draft": {"const": true},
+        "merge_authorized": {"const": false},
+        "core_run_id": {"const": 30710145476},
+        "gcl_run_id": {"const": 30710145683},
+        "interference_disposition": {"const": "NO_PROTECTED_AUTHORITY_INTERFERENCE"}
+      }
+    },
+    "finding": {
+      "type": "object",
+      "required": ["finding_id", "title", "disposition"],
+      "properties": {
+        "finding_id": {"type": "string", "pattern": "^MP-ADMIN-P[0-3]-2026-08-01-[0-9]{3}$"},
+        "title": {"type": "string", "minLength": 1},
+        "disposition": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
