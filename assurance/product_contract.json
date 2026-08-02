@@ -1,0 +1,109 @@
+{
+  "activation": {
+    "automated_certificate_allowed": false,
+    "external_use_authorized": false,
+    "feature_branch_non_authoritative": true,
+    "required_conditions": [
+      "external_exact_head_review",
+      "human_steward_release",
+      "protected_merge"
+    ]
+  },
+  "authority": {
+    "human_authorization_comment": 5156709574,
+    "issue_number": 192,
+    "prerequisite_merge": "c8d5e6424c6b9338706b1abd00141fb7f71ed63e",
+    "repository": "grandchallenge/MATH-PROGRAMME"
+  },
+  "claim_boundaries": {
+    "certificate_issued": false,
+    "commercial_readiness_established": false,
+    "confidential_design_partner_use_authorized": false,
+    "external_release_authorized": false,
+    "legal_or_regulatory_compliance_determined": false,
+    "mathematical_or_scientific_truth_determined": false,
+    "novelty_or_priority_determined": false,
+    "patentability_or_freedom_to_operate_determined": false,
+    "product_market_fit_established": false,
+    "publication_authorized": false,
+    "security_certification_issued": false
+  },
+  "component_disposition_ledger": "assurance/component_disposition_ledger.json",
+  "control_id": "GCL-ASSURE-PR-001",
+  "core_contract": {
+    "aether_required": false,
+    "confidential_data_allowed": false,
+    "finding_dispositions": [
+      "PASS",
+      "FAIL",
+      "ABSTAIN"
+    ],
+    "generic_core_only": true,
+    "inputs": [
+      "repository or exported checkout identity",
+      "candidate head SHA",
+      "machine-readable assurance manifest",
+      "exported workflow and test evidence",
+      "exported review evidence",
+      "explicit exclusions and operator attestations"
+    ],
+    "network_required": false,
+    "operator_responsibilities": [
+      "identify the candidate head",
+      "supply complete exported evidence",
+      "protect secrets and confidential material",
+      "interpret abstentions",
+      "retain expert responsibility"
+    ],
+    "outputs": [
+      "immutable identity index",
+      "claim-to-evidence traceability matrix",
+      "PASS/FAIL/ABSTAIN findings",
+      "JSON dossier",
+      "Markdown dossier",
+      "retained replay bundle",
+      "unsupported-conclusion list"
+    ]
+  },
+  "fixture": {
+    "data_classification": "synthetic_public",
+    "fixture_id": "GCL-ASSURE-PR-001",
+    "path": "assurance/fixtures/GCL-ASSURE-PR-001"
+  },
+  "generated_outputs": {
+    "control_model": "assurance/output/control_model.md",
+    "json_dossier": "assurance/output/dossier.json",
+    "markdown_dossier": "assurance/output/dossier.md",
+    "measurement_report": "assurance/output/measurement_ledger.md",
+    "review_packet": "assurance/output/review_packet.md"
+  },
+  "intended_state": "candidate_tranche_1",
+  "measurement_ledger": "assurance/measurement_ledger.json",
+  "review_packet": [
+    {"may_self_authenticate": false, "office": "Axiomatist", "status": "pending_external_review"},
+    {"may_self_authenticate": false, "office": "Cartographer", "status": "pending_external_review"},
+    {"may_self_authenticate": false, "office": "Verifier", "status": "pending_external_review"},
+    {"may_self_authenticate": false, "office": "Adversary", "status": "pending_external_review"},
+    {"may_self_authenticate": false, "office": "Formalist", "status": "pending_external_review"},
+    {"may_self_authenticate": false, "office": "Amanuensis", "status": "pending_external_review"},
+    {"may_self_authenticate": false, "office": "Referee", "status": "pending_external_review"},
+    {"may_self_authenticate": false, "office": "Human Steward", "status": "pending_external_review"}
+  ],
+  "schema_version": "1.0.0",
+  "supported_user_profile": [
+    "technical research lead",
+    "repository maintainer",
+    "independent technical reviewer",
+    "technical due-diligence analyst"
+  ],
+  "threat_model": [
+    "T-HEAD-DRIFT",
+    "T-DIGEST-DRIFT",
+    "T-REVIEW-MISMATCH",
+    "T-MISSING-EVIDENCE",
+    "T-FABRICATED-WORKFLOW",
+    "T-CIRCULAR-AUTHORITY",
+    "T-POLICY-LEAKAGE",
+    "T-UNSUPPORTED-PROMOTION"
+  ]
+}
