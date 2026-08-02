@@ -20,10 +20,22 @@ from validate_synthesis import validate  # noqa: E402
 
 class SynthesisPilotTests(unittest.TestCase):
     def setUp(self) -> None:
-        self.registry = json.loads((ROOT / "synthesis" / "pilot_registry.json").read_text(encoding="utf-8"))
-        self.schema = json.loads((ROOT / "schemas" / "gcl_synthesis_registry.schema.json").read_text(encoding="utf-8"))
+        self.registry = json.loads(
+            (ROOT / "synthesis" / "pilot_registry.json").read_text(encoding="utf-8")
+        )
+        self.schema = json.loads(
+            (ROOT / "schemas" / "gcl_synthesis_registry.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
 
-    def errors_for(self, registry: dict, *, report: str | None = None, review: str | None = None) -> list[str]:
+    def errors_for(
+        self,
+        registry: dict,
+        *,
+        report: str | None = None,
+        review: str | None = None,
+    ) -> list[str]:
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary)
             registry_path = base / "registry.json"
@@ -63,7 +75,24 @@ class SynthesisPilotTests(unittest.TestCase):
     def test_source_blob_drift_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
         mutated["source_artifacts"][0]["git_blob_sha1"] = "a" * 40
-        self.assertTrue(any("blob identity mismatch" in e for e in self.errors_for(mutated)))
+        self.assertTrue(any("identity mismatch" in e for e in self.errors_for(mutated)))
+
+    def test_source_commit_drift_rejected(self) -> None:
+        mutated = copy.deepcopy(self.registry)
+        mutated["source_artifacts"][0]["commit_sha"] = "a" * 40
+        self.assertTrue(any("identity mismatch" in e for e in self.errors_for(mutated)))
+
+    def test_source_programme_drift_and_circularity_rejected(self) -> None:
+        mutated = copy.deepcopy(self.registry)
+        mutated["source_artifacts"][0]["programme_id"] = "GCL-SYNTHESIS-WP00"
+        errors = self.errors_for(mutated)
+        self.assertTrue(any("identity mismatch" in e for e in errors))
+        self.assertTrue(any("circular or self transfer" in e for e in errors))
+
+    def test_unknown_negative_knowledge_link_rejected(self) -> None:
+        mutated = copy.deepcopy(self.registry)
+        mutated["transfer_records"][1]["negative_knowledge_links"] = ["NK-FABRICATED-001"]
+        self.assertTrue(any("unknown negative-knowledge record" in e for e in self.errors_for(mutated)))
 
     def test_assumption_loss_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
@@ -95,7 +124,7 @@ class SynthesisPilotTests(unittest.TestCase):
         mutated["transfer_records"][3]["analysis_disposition"] = "accepted_bounded"
         mutated["transfer_records"][3]["bounded_executable_consequence"] = "Transfer the obstruction."
         mutated["transfer_records"][3]["rejection_reason"] = None
-        self.assertTrue(any("membership or dispositions drifted" in e for e in self.errors_for(mutated)))
+        self.assertTrue(any("binding, or disposition drifted" in e for e in self.errors_for(mutated)))
 
     def test_unknown_source_ref_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
@@ -109,7 +138,9 @@ class SynthesisPilotTests(unittest.TestCase):
 
     def test_duplicate_relabeling_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
-        mutated["transfer_records"][1]["target"] = copy.deepcopy(mutated["transfer_records"][0]["target"])
+        mutated["transfer_records"][1]["target"] = copy.deepcopy(
+            mutated["transfer_records"][0]["target"]
+        )
         self.assertTrue(any("duplicate relabeling" in e for e in self.errors_for(mutated)))
 
     def test_automated_disposition_rejected(self) -> None:
@@ -125,7 +156,7 @@ class SynthesisPilotTests(unittest.TestCase):
     def test_contradiction_erasure_rejected(self) -> None:
         mutated = copy.deepcopy(self.registry)
         mutated["contradiction_records"][0]["disposition"] = "distinct_responsibilities"
-        self.assertTrue(any("membership or dispositions drifted" in e or "contradiction must remain preserved" in e for e in self.errors_for(mutated)))
+        self.assertTrue(any("membership, source binding, or disposition drifted" in e for e in self.errors_for(mutated)))
 
     def test_duplication_must_reuse_or_separate(self) -> None:
         mutated = copy.deepcopy(self.registry)
@@ -143,10 +174,20 @@ class SynthesisPilotTests(unittest.TestCase):
         self.assertTrue(any("False was expected" in e or "cannot self-authenticate" in e for e in self.errors_for(mutated)))
 
     def test_generated_report_drift_rejected(self) -> None:
-        self.assertTrue(any("generated synthesis report" in e for e in self.errors_for(self.registry, report="# stale\n")))
+        self.assertTrue(
+            any(
+                "generated synthesis report" in e
+                for e in self.errors_for(self.registry, report="# stale\n")
+            )
+        )
 
     def test_generated_review_drift_rejected(self) -> None:
-        self.assertTrue(any("generated synthesis review packet" in e for e in self.errors_for(self.registry, review="# stale\n")))
+        self.assertTrue(
+            any(
+                "generated synthesis review packet" in e
+                for e in self.errors_for(self.registry, review="# stale\n")
+            )
+        )
 
 
 if __name__ == "__main__":
