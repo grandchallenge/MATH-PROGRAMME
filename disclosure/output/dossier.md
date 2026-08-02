@@ -6,7 +6,7 @@
 - Repository: `synthetic.example/disclosure-demo`
 - Candidate head: `2222222222222222222222222222222222222222`
 - Overall disposition: `FAIL`
-- Counts: PASS `6`, FAIL `10`, ABSTAIN `3`
+- Counts: PASS `7`, FAIL `10`, ABSTAIN `3`
 
 ## Findings
 
@@ -14,6 +14,7 @@
 |---|---|---|---|---|
 | `F-ART-DIGEST` | `FAIL` | `DIGEST_DRIFT` | ART-DIGEST | 2824563a90ce353c2a49ad932f04c8242e02d7ca2f0a1846cf40aa65dc06d19f |
 | `F-ART-MISSING` | `ABSTAIN` | `OPTIONAL_EVIDENCE_MISSING` | ART-MISSING | artifacts/optional_prior_disclosure.json |
+| `F-ART-NOTE` | `PASS` | `EXACT_ARTIFACT_MATCH` | ART-NOTE | 8c2d9d0d69fc9dbff119927727781905a5112a52623dcf349604b3ce87d55fa7 |
 | `F-ART-VALID` | `PASS` | `EXACT_ARTIFACT_MATCH` | ART-VALID | b0c5f1bc49d11934fce324ca9f7f730ca30da662441864f0fbf227f116fbba5b |
 | `F-ATTR-COMPLETE` | `PASS` | `ATTRIBUTION_COMPLETE` | ATTR-COMPLETE | complete |
 | `F-ATTR-MISSING` | `FAIL` | `ATTRIBUTION_INCOMPLETE` | ATTR-MISSING | incomplete |
