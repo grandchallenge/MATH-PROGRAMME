@@ -1,0 +1,143 @@
+{
+  "activation": {
+    "external_release_authorized": false,
+    "feature_branch_non_authoritative": true,
+    "required_conditions": [
+      "external_exact_head_review",
+      "human_steward_release",
+      "protected_merge"
+    ]
+  },
+  "authority": {
+    "human_authorization_comment": 5156986710,
+    "issue_number": 193,
+    "prerequisite_merge": "d3546a6694ee21c25d4fb2e9f3f11cb0b19e3edf",
+    "repository": "grandchallenge/MATH-PROGRAMME"
+  },
+  "claim_boundaries": {
+    "actual_external_release_authorized": false,
+    "commercial_value_determined": false,
+    "confidential_processing_authorized": false,
+    "defensive_publication_authorized": false,
+    "export_eligibility_determined": false,
+    "freedom_to_operate_determined": false,
+    "inventorship_determined": false,
+    "legal_validity_determined": false,
+    "novelty_or_priority_determined": false,
+    "patent_filing_authorized": false,
+    "patentability_determined": false,
+    "publication_merit_determined": false
+  },
+  "control_id": "GCL-DISCLOSE-PR-001",
+  "core_contract": {
+    "aether_required": false,
+    "confidential_data_allowed": false,
+    "finding_dispositions": [
+      "PASS",
+      "FAIL",
+      "ABSTAIN"
+    ],
+    "inputs": [
+      "exact artifact and proposed-release identities",
+      "classification and hold records",
+      "attribution and provenance records",
+      "approved and prohibited claim language",
+      "export and confidentiality classification",
+      "review and release-authority evidence"
+    ],
+    "network_required": false,
+    "operator_responsibilities": [
+      "identify the exact proposed release",
+      "supply complete provenance and disposition records",
+      "protect confidential and unpublished material",
+      "obtain professional review where required",
+      "interpret abstentions",
+      "retain final human responsibility"
+    ],
+    "outputs": [
+      "identity and provenance index",
+      "PASS/FAIL/ABSTAIN release-gate findings",
+      "approved/prohibited claim concordance report",
+      "JSON and Markdown dossiers",
+      "review packet",
+      "unresolved hold and reopening list",
+      "retained deterministic replay bundle"
+    ],
+    "synthetic_public_only": true
+  },
+  "fixture": {
+    "data_classification": "synthetic_public",
+    "fixture_id": "GCL-DISCLOSE-PR-001",
+    "path": "disclosure/fixtures/GCL-DISCLOSE-PR-001"
+  },
+  "generated_outputs": {
+    "control_model": "disclosure/output/control_model.md",
+    "json_dossier": "disclosure/output/dossier.json",
+    "markdown_dossier": "disclosure/output/dossier.md",
+    "measurement_report": "disclosure/output/measurement_ledger.md",
+    "review_packet": "disclosure/output/review_packet.md"
+  },
+  "intended_state": "candidate_tranche_1",
+  "review_packet": [
+    {
+      "may_self_authenticate": false,
+      "office": "Axiomatist",
+      "status": "pending_external_review"
+    },
+    {
+      "may_self_authenticate": false,
+      "office": "Cartographer",
+      "status": "pending_external_review"
+    },
+    {
+      "may_self_authenticate": false,
+      "office": "Verifier",
+      "status": "pending_external_review"
+    },
+    {
+      "may_self_authenticate": false,
+      "office": "Adversary",
+      "status": "pending_external_review"
+    },
+    {
+      "may_self_authenticate": false,
+      "office": "Formalist",
+      "status": "pending_external_review"
+    },
+    {
+      "may_self_authenticate": false,
+      "office": "Amanuensis",
+      "status": "pending_external_review"
+    },
+    {
+      "may_self_authenticate": false,
+      "office": "Referee",
+      "status": "pending_external_review"
+    },
+    {
+      "may_self_authenticate": false,
+      "office": "Human Steward",
+      "status": "pending_external_review"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "supported_user_profile": [
+    "technical research lead",
+    "repository or release maintainer",
+    "independent technical reviewer",
+    "disclosure or prior-art review coordinator"
+  ],
+  "threat_model": [
+    "T-IDENTITY-DRIFT",
+    "T-MISSING-CLASSIFICATION",
+    "T-ACTIVE-HOLD-BYPASS",
+    "T-STALE-HOLD-AUTHORITY",
+    "T-ATTRIBUTION-OMISSION",
+    "T-CLAIM-INFLATION",
+    "T-UNSUPPORTED-IP-LANGUAGE",
+    "T-CONFIDENTIAL-EXPORT",
+    "T-REVIEW-MISMATCH",
+    "T-CIRCULAR-RELEASE-AUTHORITY",
+    "T-PARTIAL-EVIDENCE-CLEARANCE"
+  ]
+}
