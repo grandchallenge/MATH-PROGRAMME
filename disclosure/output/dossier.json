@@ -12,31 +12,151 @@
   },
   "control_id": "GCL-DISCLOSE-PR-001",
   "findings": [
-    {"detail": "2824563a90ce353c2a49ad932f04c8242e02d7ca2f0a1846cf40aa65dc06d19f", "disposition": "FAIL", "finding_id": "F-ART-DIGEST", "reason_code": "DIGEST_DRIFT", "subject": "ART-DIGEST"},
-    {"detail": "artifacts/optional_prior_disclosure.json", "disposition": "ABSTAIN", "finding_id": "F-ART-MISSING", "reason_code": "OPTIONAL_EVIDENCE_MISSING", "subject": "ART-MISSING"},
-    {"detail": "b0c5f1bc49d11934fce324ca9f7f730ca30da662441864f0fbf227f116fbba5b", "disposition": "PASS", "finding_id": "F-ART-VALID", "reason_code": "EXACT_ARTIFACT_MATCH", "subject": "ART-VALID"},
-    {"detail": "complete", "disposition": "PASS", "finding_id": "F-ATTR-COMPLETE", "reason_code": "ATTRIBUTION_COMPLETE", "subject": "ATTR-COMPLETE"},
-    {"detail": "incomplete", "disposition": "FAIL", "finding_id": "F-ATTR-MISSING", "reason_code": "ATTRIBUTION_INCOMPLETE", "subject": "ATTR-MISSING"},
-    {"detail": "cycle detected", "disposition": "FAIL", "finding_id": "F-AUTHORITY-GRAPH", "reason_code": "CIRCULAR_RELEASE_AUTHORITY", "subject": "authority graph"},
-    {"detail": "This synthetic fixture validates identity-bound disclosure records.", "disposition": "PASS", "finding_id": "F-CLAIM-APPROVED", "reason_code": "APPROVED_CLAIM_EXACT", "subject": "CLAIM-APPROVED"},
-    {"detail": "This synthetic fixture validates identity-bound disclosure records and proves universal release safety.", "disposition": "FAIL", "finding_id": "F-CLAIM-INFLATED", "reason_code": "CLAIM_EXCEEDS_APPROVED_LANGUAGE", "subject": "CLAIM-INFLATED"},
-    {"detail": "first,novel,patentable", "disposition": "FAIL", "finding_id": "F-CLAIM-NOVELTY", "reason_code": "UNSUPPORTED_IP_LANGUAGE", "subject": "CLAIM-NOVELTY"},
-    {"detail": "no disposition", "disposition": "ABSTAIN", "finding_id": "F-CLASS-MISSING", "reason_code": "CLASSIFICATION_ABSENT", "subject": "CLASS-MISSING"},
-    {"detail": "open_scientific_infrastructure", "disposition": "PASS", "finding_id": "F-CLASS-VALID", "reason_code": "ACTIVE_CLASSIFICATION", "subject": "CLASS-VALID"},
-    {"detail": "simulated_external", "disposition": "FAIL", "finding_id": "F-CONF-LEAK", "reason_code": "CONFIDENTIAL_EXPORT_LEAK", "subject": "CONF-LEAK"},
-    {"detail": "synthetic_public", "disposition": "PASS", "finding_id": "F-CONF-PUBLIC", "reason_code": "SYNTHETIC_PUBLIC_EXPORT", "subject": "CONF-PUBLIC"},
-    {"detail": "no_external_release", "disposition": "FAIL", "finding_id": "F-HOLD-ACTIVE", "reason_code": "ACTIVE_NO_RELEASE_HOLD", "subject": "HOLD-ACTIVE"},
-    {"detail": "expired", "disposition": "FAIL", "finding_id": "F-HOLD-STALE", "reason_code": "STALE_HOLD_USED_AS_AUTHORITY", "subject": "HOLD-STALE"},
-    {"detail": "evidence/prior_disclosures.json", "disposition": "ABSTAIN", "finding_id": "F-PRIOR-DISCLOSURE", "reason_code": "PRIOR_DISCLOSURE_EVIDENCE_MISSING", "subject": "prior disclosure"},
-    {"detail": "fixture-author", "disposition": "FAIL", "finding_id": "F-RELEASE-AUTHOR", "reason_code": "AUTHOR_ONLY_RELEASE_AUTHORITY", "subject": "REV-RELEASE-AUTHOR"},
-    {"detail": "independent-disclosure-reviewer", "disposition": "PASS", "finding_id": "F-REVIEW-EXACT", "reason_code": "EXACT_NON_AUTHOR_REVIEW", "subject": "REV-DISCLOSURE-EXACT"},
-    {"detail": "3333333333333333333333333333333333333333", "disposition": "FAIL", "finding_id": "F-REVIEW-MISMATCH", "reason_code": "REVIEW_HEAD_MISMATCH", "subject": "REV-DISCLOSURE-MISMATCH"}
+    {
+      "detail": "2824563a90ce353c2a49ad932f04c8242e02d7ca2f0a1846cf40aa65dc06d19f",
+      "disposition": "FAIL",
+      "finding_id": "F-ART-DIGEST",
+      "reason_code": "DIGEST_DRIFT",
+      "subject": "ART-DIGEST"
+    },
+    {
+      "detail": "artifacts/optional_prior_disclosure.json",
+      "disposition": "ABSTAIN",
+      "finding_id": "F-ART-MISSING",
+      "reason_code": "OPTIONAL_EVIDENCE_MISSING",
+      "subject": "ART-MISSING"
+    },
+    {
+      "detail": "b0c5f1bc49d11934fce324ca9f7f730ca30da662441864f0fbf227f116fbba5b",
+      "disposition": "PASS",
+      "finding_id": "F-ART-VALID",
+      "reason_code": "EXACT_ARTIFACT_MATCH",
+      "subject": "ART-VALID"
+    },
+    {
+      "detail": "complete",
+      "disposition": "PASS",
+      "finding_id": "F-ATTR-COMPLETE",
+      "reason_code": "ATTRIBUTION_COMPLETE",
+      "subject": "ATTR-COMPLETE"
+    },
+    {
+      "detail": "incomplete",
+      "disposition": "FAIL",
+      "finding_id": "F-ATTR-MISSING",
+      "reason_code": "ATTRIBUTION_INCOMPLETE",
+      "subject": "ATTR-MISSING"
+    },
+    {
+      "detail": "cycle detected",
+      "disposition": "FAIL",
+      "finding_id": "F-AUTHORITY-GRAPH",
+      "reason_code": "CIRCULAR_RELEASE_AUTHORITY",
+      "subject": "authority graph"
+    },
+    {
+      "detail": "This synthetic fixture validates identity-bound disclosure records.",
+      "disposition": "PASS",
+      "finding_id": "F-CLAIM-APPROVED",
+      "reason_code": "APPROVED_CLAIM_EXACT",
+      "subject": "CLAIM-APPROVED"
+    },
+    {
+      "detail": "This synthetic fixture validates identity-bound disclosure records and proves universal release safety.",
+      "disposition": "FAIL",
+      "finding_id": "F-CLAIM-INFLATED",
+      "reason_code": "CLAIM_EXCEEDS_APPROVED_LANGUAGE",
+      "subject": "CLAIM-INFLATED"
+    },
+    {
+      "detail": "first,novel,patentable",
+      "disposition": "FAIL",
+      "finding_id": "F-CLAIM-NOVELTY",
+      "reason_code": "UNSUPPORTED_IP_LANGUAGE",
+      "subject": "CLAIM-NOVELTY"
+    },
+    {
+      "detail": "no disposition",
+      "disposition": "ABSTAIN",
+      "finding_id": "F-CLASS-MISSING",
+      "reason_code": "CLASSIFICATION_ABSENT",
+      "subject": "CLASS-MISSING"
+    },
+    {
+      "detail": "open_scientific_infrastructure",
+      "disposition": "PASS",
+      "finding_id": "F-CLASS-VALID",
+      "reason_code": "ACTIVE_CLASSIFICATION",
+      "subject": "CLASS-VALID"
+    },
+    {
+      "detail": "simulated_external",
+      "disposition": "FAIL",
+      "finding_id": "F-CONF-LEAK",
+      "reason_code": "CONFIDENTIAL_EXPORT_LEAK",
+      "subject": "CONF-LEAK"
+    },
+    {
+      "detail": "synthetic_public",
+      "disposition": "PASS",
+      "finding_id": "F-CONF-PUBLIC",
+      "reason_code": "SYNTHETIC_PUBLIC_EXPORT",
+      "subject": "CONF-PUBLIC"
+    },
+    {
+      "detail": "no_external_release",
+      "disposition": "FAIL",
+      "finding_id": "F-HOLD-ACTIVE",
+      "reason_code": "ACTIVE_NO_RELEASE_HOLD",
+      "subject": "HOLD-ACTIVE"
+    },
+    {
+      "detail": "expired",
+      "disposition": "FAIL",
+      "finding_id": "F-HOLD-STALE",
+      "reason_code": "STALE_HOLD_USED_AS_AUTHORITY",
+      "subject": "HOLD-STALE"
+    },
+    {
+      "detail": "evidence/prior_disclosures.json",
+      "disposition": "ABSTAIN",
+      "finding_id": "F-PRIOR-DISCLOSURE",
+      "reason_code": "PRIOR_DISCLOSURE_EVIDENCE_MISSING",
+      "subject": "prior disclosure"
+    },
+    {
+      "detail": "fixture-author",
+      "disposition": "FAIL",
+      "finding_id": "F-RELEASE-AUTHOR",
+      "reason_code": "AUTHOR_ONLY_RELEASE_AUTHORITY",
+      "subject": "REV-RELEASE-AUTHOR"
+    },
+    {
+      "detail": "independent-disclosure-reviewer",
+      "disposition": "PASS",
+      "finding_id": "F-REVIEW-EXACT",
+      "reason_code": "EXACT_NON_AUTHOR_REVIEW",
+      "subject": "REV-DISCLOSURE-EXACT"
+    },
+    {
+      "detail": "3333333333333333333333333333333333333333",
+      "disposition": "FAIL",
+      "finding_id": "F-REVIEW-MISMATCH",
+      "reason_code": "REVIEW_HEAD_MISMATCH",
+      "subject": "REV-DISCLOSURE-MISMATCH"
+    }
   ],
   "fixture_id": "GCL-DISCLOSE-PR-001",
   "overall_disposition": "FAIL",
   "schema_version": "1.0.0",
-  "summary": {"ABSTAIN": 3, "FAIL": 10, "PASS": 6},
-  "unresolved_holds": ["HOLD-ACTIVE"],
+  "summary": {
+    "ABSTAIN": 3,
+    "FAIL": 10,
+    "PASS": 6
+  },
+  "unresolved_holds": [
+    "HOLD-ACTIVE"
+  ],
   "unsupported_conclusions": [
     "novelty, priority, inventorship, patentability, or freedom to operate",
     "legal validity, export eligibility, or confidentiality obligations",
