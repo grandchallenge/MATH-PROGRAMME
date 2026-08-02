@@ -6,12 +6,12 @@ This report is advisory only. It does not establish equivalence, activate downst
 
 ## Protected source artifacts
 
-| Source | Programme | Protected path | Blob |
-|---|---|---|---|
-| `SRC-TRUTH-SPINE` | `GCL-TRUTH-SPINE-WP00` | `governance/gcl_truth_spine_registry.json` | `c4b30773be2f3151b3e975131ab6510245a3810b` |
-| `SRC-NEGATIVE-KNOWLEDGE` | `GCL-NEGATIVE-KNOWLEDGE-WP00` | `negative_knowledge/pilot_registry.json` | `9e205e485dfc02e04049503d67082cb7f9340c24` |
-| `SRC-PORTFOLIO` | `GCL-PORTFOLIO-WP00` | `portfolio/pilot_registry.json` | `9dd22242790ceb8a75632926bcd08838360b5a2f` |
-| `SRC-CANDIDATE-ADMISSION` | `MP-CAMPAIGN-ADMISSION-001` | `governance/campaign_admission_registry.json` | `934eccd89fdbc3350fb4e9d89a0a9759bdb7fc61` |
+| Source | Programme | Commit | Protected path | Blob |
+|---|---|---|---|---|
+| `SRC-TRUTH-SPINE` | `GCL-TRUTH-SPINE-WP00` | `86a3f551f35aa67bdd0437d060ce786cb3d447fb` | `governance/gcl_truth_spine_registry.json` | `c4b30773be2f3151b3e975131ab6510245a3810b` |
+| `SRC-NEGATIVE-KNOWLEDGE` | `GCL-NEGATIVE-KNOWLEDGE-WP00` | `86a3f551f35aa67bdd0437d060ce786cb3d447fb` | `negative_knowledge/pilot_registry.json` | `9e205e485dfc02e04049503d67082cb7f9340c24` |
+| `SRC-PORTFOLIO` | `GCL-PORTFOLIO-WP00` | `86a3f551f35aa67bdd0437d060ce786cb3d447fb` | `portfolio/pilot_registry.json` | `9dd22242790ceb8a75632926bcd08838360b5a2f` |
+| `SRC-CANDIDATE-ADMISSION` | `MP-CAMPAIGN-ADMISSION-001` | `86a3f551f35aa67bdd0437d060ce786cb3d447fb` | `governance/campaign_admission_registry.json` | `934eccd89fdbc3350fb4e9d89a0a9759bdb7fc61` |
 
 ## Transfer analysis
 
@@ -20,9 +20,15 @@ This report is advisory only. It does not establish equivalence, activate downst
 - Theme: `provenance_and_certificate_gating`
 - Source: `SRC-TRUTH-SPINE`
 - Target: `GCL-SYNTHESIS-WP00` / issue #191
+- Target obligation: Bind every synthesis claim to an exact protected source artifact and reject mutable-only authority.
 - Shared abstraction: exact_subject_identity_and_authority_precedence
+- Source assumptions: Protected normative records outrank generated projections and mutable issue mirrors.; Reviews and evidence apply only to exact subjects and jurisdictions.
+- Target assumptions: A transfer record is advisory and cannot create source or target authority.; Every source artifact is content-addressed by commit, path, and Git blob identity.
 - Transferable: Exact source identity, authority-class precedence, and fail-closed treatment of stale or mutable-only evidence.
 - Non-transferable: The truth-spine record classes do not establish semantic equivalence or correctness of any proposed cross-programme transfer.
+- Expected value: Prevents synthesis prose from becoming an unbound authority surface.
+- Evidence: `SRC-TRUTH-SPINE`
+- Negative-knowledge links: None.
 - Bounded consequence: Require exact source_ref resolution and generated-report identity checks in the synthesis validator.
 - Falsifying test: A transfer whose only source is a mutable issue or whose blob identity drifts must be rejected.
 
@@ -31,9 +37,15 @@ This report is advisory only. It does not establish equivalence, activate downst
 - Theme: `negative_knowledge_scope_lineage_and_reopening`
 - Source: `SRC-NEGATIVE-KNOWLEDGE`
 - Target: `GCL-SYNTHESIS-WP00` / issue #191
+- Target obligation: Preserve source scope, non-establishment statements, lineage, and reopening triggers in every transfer analysis.
 - Shared abstraction: scope_bounded_lineage_and_reopening
+- Source assumptions: Negative conclusions exclude only the exact recorded scope and assumptions.; Reopening requires a named changed premise, theorem, evidence defect, or expanded finite scope.
+- Target assumptions: Cross-programme transfer cannot widen a source exclusion or convert a route obstruction into a theorem.; Non-transferable components and falsifying criteria remain first-class.
 - Transferable: Scope declarations, non-establishment lists, evidence lineage, and explicit reopening conditions.
 - Non-transferable: No mathematical obstruction, bounded search result, or systems defect is transferred as a conclusion about another programme.
+- Expected value: Turns failed routes into reusable review constraints without exporting unsupported impossibility claims.
+- Evidence: `SRC-NEGATIVE-KNOWLEDGE`
+- Negative-knowledge links: `NK-NS-CI-A2-L4-001`, `NK-UC-N4-SCREEN-001`, `NK-GCL-TOOLING-PARTIAL-SURFACE-001`
 - Bounded consequence: Require every accepted transfer to state source and target assumptions, non-transferability, and a falsifying test.
 - Falsifying test: Deleting the non-transferable component or converting a scoped obstruction into an unconditional target conclusion must fail validation.
 
@@ -42,9 +54,15 @@ This report is advisory only. It does not establish equivalence, activate downst
 - Theme: `dependency_ordering_without_score_authority`
 - Source: `SRC-PORTFOLIO`
 - Target: `GCL-SYNTHESIS-WP00` / issue #191
+- Target obligation: Keep later work packages blocked until protected prerequisites clear, without importing portfolio scores as dispositions.
 - Shared abstraction: ordered_dependencies_and_explicit_readiness
+- Source assumptions: Portfolio intervals are advisory only and records remain in issue order.; Zero execution readiness cannot be erased by importance, prestige, or prospective product value.
+- Target assumptions: Synthesis may identify a next bounded consequence but cannot activate a downstream work package.; Dependency state is read from protected records rather than recalculated from prose.
 - Transferable: Explicit dependency direction, blocked-state preservation, and separation of readiness from importance and leverage.
 - Non-transferable: Portfolio weights, interval values, and advisory comparisons are not imported into synthesis acceptance or rejection.
+- Expected value: Prevents synthesis findings from bypassing the ordered institutional programme.
+- Evidence: `SRC-PORTFOLIO`
+- Negative-knowledge links: None.
 - Bounded consequence: Keep #192 and #193 blocked and expose only bounded review consequences in the generated synthesis report.
 - Falsifying test: Any synthesis record that activates #192 or #193, ranks programmes, or cites an advisory interval as authority must fail.
 
@@ -53,9 +71,15 @@ This report is advisory only. It does not establish equivalence, activate downst
 - Theme: `scale_geometry_cancellation_commutator_decorrelation`
 - Source: `SRC-NEGATIVE-KNOWLEDGE`
 - Target: `GCL-SYNTHESIS-WP00` / issue #191
+- Target obligation: Evaluate whether shared vocabulary across nonlinear PDE and geometric optimization supports an executable transfer.
 - Shared abstraction: scale_geometry_commutator_and_decorrelation_vocabulary
+- Source assumptions: The NS-CI obstruction is specific to audited shell selectors, signed transfer, commutator interfaces, and Navier-Stokes identities.; A new equation-specific theorem is required to reopen the exhausted route.
+- Target assumptions: Geometric optimization programmes use different state spaces, operators, objectives, and evidence standards.; Shared words do not establish an operator correspondence or preserved invariant.
 - Transferable: Only the adversarial review question: identify operators, invariants, assumptions, and a falsifying correspondence before proposing transfer.
 - Non-transferable: The Navier-Stokes route obstruction, shell counterfixture, cancellation deficit, and commutator conclusions cannot be applied to optimization or model-training systems.
+- Expected value: Prevents analogy inflation while retaining a concrete checklist for future comparison.
+- Evidence: `SRC-NEGATIVE-KNOWLEDGE`
+- Negative-knowledge links: `NK-NS-CI-A2-L4-001`
 - Bounded consequence: None; analogy rejected.
 - Falsifying test: The rejection may be reconsidered only after an exact source and target operator map, preserved assumptions, and a bounded executable test are supplied.
 - Rejection reason: No exact target artifact, operator correspondence, preserved invariant, or assumption map establishes a transferable mechanism.
@@ -66,6 +90,7 @@ This report is advisory only. It does not establish equivalence, activate downst
 
 - Kind: `contradiction`
 - Theme: `compact_governed_workspaces`
+- Sources: `SRC-TRUTH-SPINE`
 - Statement A: AETHER may later support semantic workspace, memory, and coordination functions.
 - Statement B: Current institutional authority and correctness-critical operation must remain reconstructible from protected Git and GitHub records without AETHER.
 - Required action: Keep AETHER optional and on hold; do not place exclusive institutional facts or required validation behind a live AETHER service.
@@ -75,6 +100,7 @@ This report is advisory only. It does not establish equivalence, activate downst
 
 - Kind: `contradiction`
 - Theme: `existence_realizability_rigidity_deployability_manufacturability`
+- Sources: `SRC-CANDIDATE-ADMISSION`
 - Statement A: A reviewed candidate computation may contain bounded algebraic or numerical evidence.
 - Statement B: Active admission, certification, real-geometric equivalence, rigidity, deployability, manufacturability, novelty, patentability, and commercial value remain separately gated.
 - Required action: Carry the stage distinctions into any later product or disclosure review without promoting the candidate evidence.
@@ -84,6 +110,7 @@ This report is advisory only. It does not establish equivalence, activate downst
 
 - Kind: `duplication`
 - Theme: `portfolio_and_synthesis_responsibility`
+- Sources: `SRC-PORTFOLIO`
 - Statement A: The portfolio pilot records importance, readiness, leverage, cost, risk, dependencies, and advisory sensitivity.
 - Statement B: The synthesis pilot records assumption-preserving transfers, contradictions, duplication, and bounded falsifying tests.
 - Required action: Reference portfolio dependency state but do not copy its scoring model into synthesis dispositions.
@@ -93,6 +120,7 @@ This report is advisory only. It does not establish equivalence, activate downst
 
 - Kind: `duplication`
 - Theme: `identity_control_reuse`
+- Sources: `SRC-TRUTH-SPINE`
 - Statement A: The truth spine already defines authority precedence, exact-subject review, and evidence identity rules.
 - Statement B: The synthesis pilot needs exact source identity to evaluate transfer claims.
 - Required action: Reference truth-spine identities and fail closed on drift rather than creating a competing authority hierarchy.
