@@ -2,8 +2,8 @@
 
 - Deterministic replay runs: `2`
 - Byte-identical output: `true`
-- Bounded cases: `19`
-- Exact matches: `19`
+- Bounded cases: `20`
+- Exact matches: `20`
 - False positives: `0`
 - False negatives: `0`
 - Optional missing evidence: `ABSTAIN` without crash or implicit clearance
