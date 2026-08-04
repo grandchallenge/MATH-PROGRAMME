@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "MP-UMBRELLA-RUNTIME-005",
+  "verified_at": "2026-08-04",
+  "provider_repository": "grandchallenge/MATH-PROGRAMME",
+  "supersedes": {
+    "path": "governance/umbrella_runtime_contract_v4.json",
+    "git_blob_sha1": "33cf79f38f1273a834bb43d4cc55bfc79ba2c5e0",
+    "status": "historical_superseded_for_runtime_consumption"
+  },
+  "programme_routing_contract": {
+    "path": "governance/mathsolve_routing_audit_vgse.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "6fb8dce8f1b4f11f8994798840e72b09ad862575",
+    "schema_version": "1.0.0",
+    "routing_member_count": 9
+  },
+  "programme_campaign_contract": {
+    "path": "governance/governed_campaign_registry.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "4cabbd820097029d01430f9f8a0c02653321e5af",
+    "campaign_count": 10,
+    "routing_member_count": 9
+  },
+  "candidate_admission_contract": {
+    "path": "governance/campaign_admission_registry.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "c724d1174c2e1caa8a74297a21a46aa9d1910962",
+    "tracked_record_count": 2,
+    "pre_admission_candidate_ids": [
+      "NSOF-001"
+    ],
+    "admitted_from_candidate_ids": [
+      "VGSE-001"
+    ]
+  },
+  "certification_contract": {
+    "repository": "grandchallenge/MATHCERT",
+    "commit_sha": "92e3e56fda50267a241e120eb337dbbc520e900f",
+    "path": "governance/certification_route_overlays/VGSE-001.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "de56bfb0544b27b6237a68ac87044d3f0ba2e445",
+    "route_state": "registered_pending_evidence",
+    "may_adjudicate": false
+  },
+  "active_portfolio": {
+    "qualified_interface_only": [
+      "NS-CI-001",
+      "RH-001"
+    ],
+    "ready_intake": [
+      "UC-001",
+      "HC-001"
+    ],
+    "pending": [
+      "BSD-001",
+      "PNP-001",
+      "YM-001",
+      "OZ-001"
+    ],
+    "pending_cert_evidence": [
+      "VGSE-001"
+    ],
+    "archived_outside_current_routing": [
+      "PC-001"
+    ]
+  },
+  "candidate_portfolio": {
+    "pre_admission": [
+      "NSOF-001"
+    ],
+    "intake_only": [
+      "NSOF-001"
+    ],
+    "admitted_active": [
+      "VGSE-001"
+    ],
+    "active_portfolio_effect": "VGSE-001_bounded_active_pending_cert_evidence"
+  },
+  "consumer_sync": {
+    "intellect_repin_required": true,
+    "intellect_repin_complete": false,
+    "required_runtime_path": "governance/umbrella_runtime_contract_v5.json",
+    "required_runtime_digest": null,
+    "completion_authority": "separate_protected_INTELLECT_merge"
+  },
+  "authority_model": {
+    "state_authority": "protected_branch_repository_records",
+    "github_issue_role": "mutable_navigational_mirror",
+    "issue_mutation_can_change_state": false,
+    "candidate_registry_preserves_admission_history": true,
+    "candidate_work_can_self_admit": false
+  },
+  "consumer_independence": {
+    "pins_intellect_commit": false,
+    "contains_downstream_completion_obligation": true,
+    "consumer_repins_by_artifact_reference": true
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "vgse_campaign_admitted_bounded": true,
+    "mathcert_adjudication_authorized": false,
+    "certificate_output_authorized": false,
+    "mechanical_or_manufacturing_claim_authorized": false,
+    "product_or_commercial_claim_authorized": false,
+    "operational_release_complete_preserved": true,
+    "release_trust_issues_reopened": false
+  }
+}
