@@ -2,21 +2,52 @@ review_id: REV-GCLPOS-G9-001
 artifact_id: GCL-POS-01
 reviewed_revision: sha256:d8be180052a48655a02612b0d6ca883067abe93f0391c4b9c6561a3867ad4d2c
 gate_id: G9
-reviewer: UNASSIGNED
-review_role: Release steward and Amanuensis
-independence_statement: No reviewer has been assigned. The gate remains deferred.
-date: '2026-07-27'
-decision: DEFERRED
-findings: []
+reviewer: fyremael
+reviewer_kind: human
+review_role: Human Steward and release steward
+independence_statement: The Human Steward release decision is distinct from the non-author agent Referee decision recorded at G8. Protected effectiveness requires an exact-head Human Steward disposition and protected merge.
+date: '2026-08-04'
+decision: PASS
+disposition: APPROVE_CANDIDATE_PILOT_RELEASE
+findings:
+- finding_id: G9-F01
+  severity: authority
+  statement: GCL-TCS-00 version 0.1.0 and GCL-POS-01 version 0.1.0 may be admitted atomically for bounded pilot use only.
+- finding_id: G9-F02
+  severity: hierarchy
+  statement: Current binding Programme doctrine remains controlling. The admitted candidate does not silently supersede CLAIM_LEDGER_STANDARD.md, CERTIFICATION_LADDER.md, claim-boundary doctrine, work-package standards, or existing repository governance.
+- finding_id: G9-F03
+  severity: release
+  statement: Release authority covers the exact source-locked candidate revisions and their machine-readable records; it does not authorize version 1.0, formal ASD-STE100 compliance, empirical efficacy, or independent publication claims beyond the bounded pilot position.
 required_actions:
+- action_id: A-G9-PILOT-001
+  statement: Bind the exact candidate head through a separate Human Steward PR disposition after successful exact-head checks and independent non-author review.
+- action_id: A-G9-PILOT-002
+  statement: Admit the G8 and G9 records, review index, conformance declaration, submission manifest, authority decision, and validation tests atomically.
+- action_id: A-G9-PILOT-003
+  statement: Retain a rollback and supersession path; a successor revision must explicitly replace this pilot admission.
+resolved_actions:
 - action_id: A-G9-001
-  statement: Complete authority admission, final release identification, and publication approval.
-resolved_actions: []
+  resolution: Authority admission, exact release identities, downstream scope, rollback boundary, and publication limitations are recorded for protected effectiveness.
 evidence:
-- GCL-POS-01.md
+- council_submissions/GCL-TCS-00/parts
+- docs/council/submissions/GCL-TCS-00/GCL-TCS-00.policy.yaml
+- council_submissions/GCL-POS-01/GCL-POS-01.md
 - conformance/GCL-POS-01.conformance.yaml
-- registers/CLAIMS.yaml
-- registers/EVIDENCE.yaml
-established: []
+- reviews/REV-GCLPOS-G8-001.yaml
+- reviews/REVIEW_INDEX.yaml
+- ../GCL-TCS-00_GCL-POS-01_AUTHORITY_DECISION.json
+established:
+- Candidate revision 0.1.0 is admitted for bounded pilot use on protected merge.
+- GCL-POS-01 is admitted as the bounded institutional position accompanying that pilot.
+- Pilot artifacts may be referenced as admitted candidate pilot authority, not as authoritative version 1.0 doctrine.
 not_established:
-- Authority admission, final release identification, and publication approval are not complete.
+- Organization-wide doctrine replacement.
+- Formal ASD-STE100 compliance.
+- Empirical efficacy or optimality.
+- Mathematical, certification, novelty, priority, deployment, product, manufacturing, or commercial authority.
+effective_condition: protected_merge_of_exact_candidate_after_successful_checks_independent_review_and_human_steward_exact_head_disposition
+rollback: Supersede or withdraw through a separately reviewed protected record that identifies this exact admission and preserves its history.
+release_identity:
+  GCL-TCS-00: sha256:ea750b9b80b53c7d6ed755978fa4bdf59413fad93cec1db81eb3238372ce61c9
+  GCL-POS-01: sha256:d8be180052a48655a02612b0d6ca883067abe93f0391c4b9c6561a3867ad4d2c
