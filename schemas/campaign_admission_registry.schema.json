@@ -1,7 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://grandchallenge.ai/schemas/campaign_admission_registry.schema.json",
-  "title": "Programme campaign admission registry",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -15,7 +14,7 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "1.2.0"
+      "const": "1.3.0"
     },
     "registry_id": {
       "const": "MP-CAMPAIGN-ADMISSION-001"
@@ -73,7 +72,7 @@
           "pattern": "^[0-9a-f]{40}$"
         },
         "active_routing_member_count": {
-          "const": 8
+          "const": 9
         },
         "archived_member_count": {
           "const": 1
@@ -81,7 +80,6 @@
       }
     },
     "lifecycle_states": {
-      "type": "array",
       "const": [
         "candidate",
         "admitted_active",
@@ -92,6 +90,7 @@
     "candidates": {
       "type": "array",
       "minItems": 2,
+      "maxItems": 2,
       "uniqueItems": true,
       "items": {
         "$ref": "#/$defs/candidate"
@@ -113,25 +112,27 @@
         "source_provenance",
         "solve_candidate",
         "certification_candidate",
+        "programme_decision",
         "admission_gates",
         "claim_boundary"
       ],
       "properties": {
         "campaign_id": {
-          "pattern": "^[A-Z][A-Z0-9-]+$"
+          "enum": [
+            "NSOF-001",
+            "VGSE-001"
+          ]
         },
         "candidate_phase": {
           "enum": [
             "intake_only",
-            "reviewed_candidate_work_package"
+            "activated_bounded_pending_cert_evidence"
           ]
         },
         "lifecycle_state": {
           "enum": [
             "candidate",
-            "admitted_active",
-            "rejected",
-            "withdrawn"
+            "admitted_active"
           ]
         },
         "programme_tracker_issue": {
@@ -154,332 +155,23 @@
           "type": "boolean"
         },
         "source_provenance": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "state",
-            "forge_issue",
-            "provider_manifest",
-            "candidate_source",
-            "intake_evidence"
-          ],
-          "properties": {
-            "state": {
-              "enum": [
-                "unverified_candidate",
-                "provider_verified",
-                "waived",
-                "rejected"
-              ]
-            },
-            "forge_issue": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "provider_manifest": {
-              "oneOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "$ref": "#/$defs/artifact"
-                }
-              ]
-            },
-            "candidate_source": {
-              "oneOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "author",
-                    "title",
-                    "printed_date",
-                    "candidate_sha256",
-                    "candidate_byte_length",
-                    "target_scope"
-                  ],
-                  "properties": {
-                    "author": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "title": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "printed_date": {
-                      "type": "string",
-                      "format": "date"
-                    },
-                    "candidate_sha256": {
-                      "pattern": "^[0-9a-f]{64}$"
-                    },
-                    "candidate_byte_length": {
-                      "type": "integer",
-                      "minimum": 1
-                    },
-                    "target_scope": {
-                      "type": "string",
-                      "minLength": 10
-                    }
-                  }
-                }
-              ]
-            },
-            "intake_evidence": {
-              "oneOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "artifact_type",
-                    "media_type",
-                    "sha256",
-                    "byte_length",
-                    "pixel_width",
-                    "pixel_height",
-                    "visible_title",
-                    "visible_attribution",
-                    "received_date",
-                    "manuscript_bytes_acquired",
-                    "manuscript_digest",
-                    "official_release_found",
-                    "arxiv_record_found"
-                  ],
-                  "properties": {
-                    "artifact_type": {
-                      "const": "screenshot"
-                    },
-                    "media_type": {
-                      "const": "image/png"
-                    },
-                    "sha256": {
-                      "pattern": "^[0-9a-f]{64}$"
-                    },
-                    "byte_length": {
-                      "type": "integer",
-                      "minimum": 1
-                    },
-                    "pixel_width": {
-                      "type": "integer",
-                      "minimum": 1
-                    },
-                    "pixel_height": {
-                      "type": "integer",
-                      "minimum": 1
-                    },
-                    "visible_title": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "visible_attribution": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "received_date": {
-                      "type": "string",
-                      "format": "date"
-                    },
-                    "manuscript_bytes_acquired": {
-                      "type": "boolean"
-                    },
-                    "manuscript_digest": {
-                      "oneOf": [
-                        {
-                          "type": "null"
-                        },
-                        {
-                          "pattern": "^[0-9a-f]{64}$",
-                          "type": "string"
-                        }
-                      ]
-                    },
-                    "official_release_found": {
-                      "type": "boolean"
-                    },
-                    "arxiv_record_found": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              ]
-            }
-          }
+          "type": "object"
         },
         "solve_candidate": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "issue",
-            "pull_request",
-            "base_commit",
-            "reviewed_head",
-            "merge_commit",
-            "merged_at",
-            "workflow_runs",
-            "state",
-            "may_merge_candidate_work_package",
-            "may_create_campaign_manifest",
-            "may_create_cert_handoff",
-            "may_create_adjudication",
-            "may_create_promotion_record",
-            "required_admission_record_path"
-          ],
-          "properties": {
-            "issue": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "pull_request": {
-              "oneOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "type": "integer",
-                  "minimum": 1
-                }
-              ]
-            },
-            "base_commit": {
-              "oneOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "pattern": "^[0-9a-f]{40}$",
-                  "type": "string"
-                }
-              ]
-            },
-            "reviewed_head": {
-              "oneOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "pattern": "^[0-9a-f]{40}$",
-                  "type": "string"
-                }
-              ]
-            },
-            "merge_commit": {
-              "oneOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "pattern": "^[0-9a-f]{40}$",
-                  "type": "string"
-                }
-              ]
-            },
-            "merged_at": {
-              "oneOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              ]
-            },
-            "workflow_runs": {
-              "oneOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "solve_checks",
-                    "gcl_conformance",
-                    "candidate_replay"
-                  ],
-                  "properties": {
-                    "solve_checks": {
-                      "type": "integer",
-                      "minimum": 1
-                    },
-                    "gcl_conformance": {
-                      "type": "integer",
-                      "minimum": 1
-                    },
-                    "candidate_replay": {
-                      "type": "integer",
-                      "minimum": 1
-                    }
-                  }
-                }
-              ]
-            },
-            "state": {
-              "enum": [
-                "gated_preparation",
-                "merged_candidate_work_package"
-              ]
-            },
-            "may_merge_candidate_work_package": {
-              "const": false
-            },
-            "may_create_campaign_manifest": {
-              "const": false
-            },
-            "may_create_cert_handoff": {
-              "const": false
-            },
-            "may_create_adjudication": {
-              "const": false
-            },
-            "may_create_promotion_record": {
-              "const": false
-            },
-            "required_admission_record_path": {
-              "oneOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "type": "string",
-                  "minLength": 5
-                }
-              ]
-            }
-          }
+          "type": "object"
         },
         "certification_candidate": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "issue",
-            "state",
-            "route_registry_entry",
-            "may_adjudicate"
-          ],
-          "properties": {
-            "issue": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "state": {
-              "const": "pre_route_candidate"
-            },
-            "route_registry_entry": {
+          "type": "object"
+        },
+        "programme_decision": {
+          "anyOf": [
+            {
               "type": "null"
             },
-            "may_adjudicate": {
-              "const": false
+            {
+              "type": "object"
             }
-          }
+          ]
         },
         "admission_gates": {
           "type": "object",
@@ -524,142 +216,6 @@
         "claim_boundary": {
           "type": "string",
           "minLength": 50
-        }
-      },
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "candidate_phase": {
-                "const": "intake_only"
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "source_provenance": {
-                "properties": {
-                  "candidate_source": {
-                    "type": "null"
-                  },
-                  "intake_evidence": {
-                    "type": "object"
-                  }
-                }
-              },
-              "solve_candidate": {
-                "properties": {
-                  "state": {
-                    "const": "gated_preparation"
-                  },
-                  "pull_request": {
-                    "type": "null"
-                  },
-                  "base_commit": {
-                    "type": "null"
-                  },
-                  "reviewed_head": {
-                    "type": "null"
-                  },
-                  "merge_commit": {
-                    "type": "null"
-                  },
-                  "merged_at": {
-                    "type": "null"
-                  },
-                  "workflow_runs": {
-                    "type": "null"
-                  },
-                  "required_admission_record_path": {
-                    "type": "null"
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "candidate_phase": {
-                "const": "reviewed_candidate_work_package"
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "source_provenance": {
-                "properties": {
-                  "candidate_source": {
-                    "type": "object"
-                  },
-                  "intake_evidence": {
-                    "type": "null"
-                  }
-                }
-              },
-              "solve_candidate": {
-                "properties": {
-                  "state": {
-                    "const": "merged_candidate_work_package"
-                  },
-                  "pull_request": {
-                    "type": "integer"
-                  },
-                  "base_commit": {
-                    "type": "string"
-                  },
-                  "reviewed_head": {
-                    "type": "string"
-                  },
-                  "merge_commit": {
-                    "type": "string"
-                  },
-                  "merged_at": {
-                    "type": "string"
-                  },
-                  "workflow_runs": {
-                    "type": "object"
-                  },
-                  "required_admission_record_path": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
-    "artifact": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "repository",
-        "commit_sha",
-        "path",
-        "digest_algorithm",
-        "digest"
-      ],
-      "properties": {
-        "repository": {
-          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
-        },
-        "commit_sha": {
-          "pattern": "^[0-9a-f]{40}$"
-        },
-        "path": {
-          "type": "string",
-          "minLength": 1
-        },
-        "digest_algorithm": {
-          "enum": [
-            "git_blob_sha1",
-            "sha256"
-          ]
-        },
-        "digest": {
-          "pattern": "^[0-9a-f]{40}$|^[0-9a-f]{64}$"
         }
       }
     }
