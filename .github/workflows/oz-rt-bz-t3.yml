@@ -1,0 +1,85 @@
+name: OZ-RT-BZ-T3 blocker closure
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/oz-rt-bz-t3.yml'
+      - 'campaigns/odd_zeta/OZ_RT_BZ_T3_001/**'
+      - 'tests/test_oz_rt_bz_t3.py'
+      - 'ci/campaign_replay_registry.json'
+      - 'ci/validate_workflow_coverage.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/oz-rt-bz-t3.yml'
+      - 'campaigns/odd_zeta/OZ_RT_BZ_T3_001/**'
+      - 'tests/test_oz_rt_bz_t3.py'
+      - 'ci/campaign_replay_registry.json'
+      - 'ci/validate_workflow_coverage.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oz-rt-bz-t3-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  SRC1_REPO: https://github.com/rain-1/odd-zeta-values-autoformalization.git
+  SRC1_SHA: 3046acf948896358f420e7a655e7a4235c92028a
+  SRC2_REPO: https://github.com/rain-1/-odd-zeta-values-moremath.git
+  SRC2_SHA: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact subject checkout
+        env:
+          SUBJECT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$SUBJECT_SHA"
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Install policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Validate blocker closure and mutation tests
+        run: |
+          python campaigns/odd_zeta/OZ_RT_BZ_T3_001/validate.py
+          python -m unittest tests/test_oz_rt_bz_t3.py -v
+          python -m json.tool campaigns/odd_zeta/OZ_RT_BZ_T3_001/OZ_RT_BZ_T3_001.json >/dev/null
+          python -m json.tool campaigns/odd_zeta/OZ_RT_BZ_T3_001/OZ_RT_BZ_T3_001.schema.json >/dev/null
+      - name: Acquire exact source revisions
+        run: |
+          git clone --filter=blob:none "$SRC1_REPO" src1
+          git -C src1 checkout --detach "$SRC1_SHA"
+          test "$(git -C src1 rev-parse HEAD)" = "$SRC1_SHA"
+          git clone --filter=blob:none "$SRC2_REPO" src2
+          git -C src2 checkout --detach "$SRC2_SHA"
+          test "$(git -C src2 rev-parse HEAD)" = "$SRC2_SHA"
+      - name: Verify source identities and blocker text
+        run: |
+          set -euo pipefail
+          test "$(git -C src2 hash-object bz_compact_weights_proofs.tex)" = da46db62471fbed81d861772c1d2d03d80782e23
+          test "$(git -C src2 hash-object work/Z5T3_BRIDGE.md)" = 002c96d28123e5949c38656f26677ae5a723ee93
+          test "$(git -C src2 hash-object work/z5cf/verify_compact.py)" = be458d969e1f8c989c8007a2b181506f84fd7f48
+          test "$(git -C src2 hash-object work/lb5/core.py)" = 9495275bc31e5a8f535c68f027f3b24d12c07ae1
+          grep -Fq 'ONLY remaining gap' src2/work/Z5T3_BRIDGE.md
+          grep -Fq 'FIXED letter coefficients' src2/work/Z5T3_BRIDGE.md
+          grep -Fq 'PIVOT (the mapped next campaign)' src2/work/Z5T3_BRIDGE.md
+          grep -Fq 'not attempted' src2/work/Z5T3_BRIDGE.md
+      - name: Replay X007 finite evidence without promotion
+        run: |
+          sudo mkdir -p /home/ubuntu/fable-episode-2
+          sudo ln -sfnT "$GITHUB_WORKSPACE/src1" /home/ubuntu/fable-episode-2/zeta-math
+          sudo ln -sfnT "$GITHUB_WORKSPACE/src2" /home/ubuntu/fable-episode-2/zeta-math-2
+          python3 -c "import runpy,sys; sys.path.insert(0,'src2/work/z5cf'); runpy.run_path('src2/work/z5cf/verify_compact.py', run_name='__main__')" | tee x007-compact.log
+          grep -Fq 'w5: ALL PASS n=0..34' x007-compact.log
+          grep -Fq 'L_BZ[sum T w5] = 0 for n = 0..31 : ALL ZERO' x007-compact.log
+          echo 'Finite replay has theorem_effect=NONE.' >> "$GITHUB_STEP_SUMMARY"
