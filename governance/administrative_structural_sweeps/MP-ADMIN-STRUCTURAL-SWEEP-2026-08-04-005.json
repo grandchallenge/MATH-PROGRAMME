@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "sweep_id": "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-04-005",
+  "control_id": "MP-ADMIN-MAINT-001",
+  "reconciliation_id": "MP-ADMIN-CADENCE-RECONCILIATION-001",
+  "status": "COMPLETE_BELATED_RECONSTRUCTED_P2",
+  "scheduled_due_at": "2026-08-04T06:21:00-07:00",
+  "reconstruction_started_at": "2026-08-04T16:42:38-07:00",
+  "lateness_minutes_at_start": 621,
+  "cadence": "PT16H48M",
+  "evidence_mode": "RETROSPECTIVE_RECONSTRUCTION",
+  "programme_head_at_due": "42de075a3a3412042cac371870e863f17f0e248b",
+  "programme_head_at_due_source": {
+    "query_until_utc": "2026-08-04T13:21:00Z",
+    "observed_commit_timestamp": "2026-08-04T13:20:43Z",
+    "classification": "RETROSPECTIVE_API_RECONSTRUCTION"
+  },
+  "repository_inventory_reference": "governance/administrative_cadence_reconciliation.json",
+  "dispatcher_reconciliation": {
+    "scheduled_signal_expected": true,
+    "protected_record_missing_at_reconstruction": true,
+    "dispatch_is_not_authority": true
+  },
+  "findings": {
+    "P0": [],
+    "P1": [],
+    "P2": [
+      {
+        "finding_id": "MP-ADMIN-P2-2026-08-04-001",
+        "title": "The structural sweep due 2026-08-04T06:21:00-07:00 lacked a protected procedure record at its binding locus",
+        "disposition": "BELATED_RECORD_CREATED_NO_CADENCE_RESET_NO_WAIVER"
+      }
+    ],
+    "P3": []
+  },
+  "next_structural_due_at": "2026-08-04T23:09:00-07:00",
+  "pilot_review_due_at": "2026-08-09T18:21:00-07:00",
+  "waiver_used": false,
+  "cadence_anchor_reset": false,
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "cert_route_registered": false,
+    "adjudication_authorized": false,
+    "cert_output_issued": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "publication_claim_authorized": false,
+    "patentability_claim_authorized": false,
+    "mechanical_claim_authorized": false,
+    "manufacturing_claim_authorized": false,
+    "product_claim_authorized": false,
+    "commercial_claim_authorized": false
+  }
+}
