@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/math-programme/schemas/vgse_post_repin_closure.schema.json",
+  "title": "VGSE Programme post-INTELLECT-repin closure",
+  "const": {
+    "schema_version": "1.0.0",
+    "closure_id": "MP-VGSE-POST-REPIN-CLOSURE-001",
+    "campaign_id": "VGSE-001",
+    "programme_issue": 170,
+    "verified_at": "2026-08-04",
+    "status": "ready_for_issue_closure_after_protected_merge",
+    "programme_activation": {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "pull_request": 218,
+      "reviewed_head": "49c087a39464344b387fbcf06f336675e89216e3",
+      "merge_commit": "54816c1525f0370cfbb0bfaa4ba8617cbb05fcb9",
+      "routing": {"path": "governance/mathsolve_routing_audit_vgse.json", "digest_algorithm": "git_blob_sha1", "digest": "6fb8dce8f1b4f11f8994798840e72b09ad862575"},
+      "runtime": {"path": "governance/umbrella_runtime_contract_v5.json", "digest_algorithm": "git_blob_sha1", "digest": "2f304cbf07f934e97cdd2fbac7a6ccece2ac4a5a"},
+      "admission_history": {"path": "governance/campaign_admission_registry.json", "digest_algorithm": "git_blob_sha1", "digest": "c724d1174c2e1caa8a74297a21a46aa9d1910962"},
+      "active_registry": {"path": "governance/governed_campaign_registry.json", "digest_algorithm": "git_blob_sha1", "digest": "4cabbd820097029d01430f9f8a0c02653321e5af"}
+    },
+    "intellect_consumer_repin": {
+      "repository": "grandchallenge/INTELLECT",
+      "pull_request": 47,
+      "reviewed_head": "fae856333a5e52dfba218e5ff35c87fc5782783c",
+      "merge_commit": "c8629942e96ad52df5beede0b80a5909b2561b05",
+      "review": {"reviewer": "jimsteeg", "review_id": 4859137671, "state": "APPROVED"},
+      "workflow_runs": {"ci": 30939834165, "gcl_conformance": 30939836045},
+      "protected_artifacts": [
+        {"path": "src/grand_intellect/mathsolve_cert_current.py", "digest_algorithm": "git_blob_sha1", "digest": "4c44564a411d0987789f72b1e2d90d1377dbd55c"},
+        {"path": "tests/fixtures/rh_ns_interface_qualifications.json", "digest_algorithm": "git_blob_sha1", "digest": "63eda983f7c17cd722e42d26dcbc1691579cfe4f"},
+        {"path": "tests/test_umbrella_current_state_alignment.py", "digest_algorithm": "git_blob_sha1", "digest": "3353bcf4b351ca7fdeb8e16951bf084c41fe083e"}
+      ],
+      "consumed_programme_identities": {
+        "programme_commit": "54816c1525f0370cfbb0bfaa4ba8617cbb05fcb9",
+        "routing_digest": "6fb8dce8f1b4f11f8994798840e72b09ad862575",
+        "runtime_digest": "2f304cbf07f934e97cdd2fbac7a6ccece2ac4a5a",
+        "admission_history_digest": "c724d1174c2e1caa8a74297a21a46aa9d1910962",
+        "active_registry_digest": "4cabbd820097029d01430f9f8a0c02653321e5af"
+      },
+      "unchanged_direct_consumers": {
+        "mathsolve_current_routes_digest": "2f6bb27a453a8615ba3af75ca77452ceb7b83ca8",
+        "mathcert_global_registry_digest": "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1",
+        "repin_required": false
+      }
+    },
+    "closure_semantics": {
+      "intellect_repin_obligation_satisfied": true,
+      "runtime_v5_mutated": false,
+      "runtime_v5_digest_stable": true,
+      "cyclic_repin_avoided": true,
+      "programme_activation_complete": true,
+      "issue_may_close_only_after_this_record_protected": true,
+      "issue_closure_is_navigation_only": true
+    },
+    "retained_route_state": {
+      "mathcert_route_id": "MC-ROUTE-VGSE-001",
+      "route_state": "registered_pending_evidence",
+      "may_adjudicate": false,
+      "cert_output": null,
+      "future_evidence_admission_requires_separate_authority": true,
+      "future_promotion_requires_separate_authority": true
+    },
+    "claim_boundaries": {
+      "mathematical_target_proved": false,
+      "five_root_theorem_proved": false,
+      "t_embedding_equivalence_proved": false,
+      "certificate_issued": false,
+      "mechanical_claim_authorized": false,
+      "manufacturing_claim_authorized": false,
+      "novelty_claim_authorized": false,
+      "priority_claim_authorized": false,
+      "patentability_claim_authorized": false,
+      "product_claim_authorized": false,
+      "commercial_claim_authorized": false
+    }
+  }
+}
