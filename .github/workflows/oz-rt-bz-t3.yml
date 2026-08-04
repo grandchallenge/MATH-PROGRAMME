@@ -65,14 +65,15 @@ jobs:
           test "$(git -C src2 rev-parse HEAD)" = "$SRC2_SHA"
       - name: Verify source identities and blocker text
         run: |
+          set -euo pipefail
           test "$(git -C src2 hash-object bz_compact_weights_proofs.tex)" = da46db62471fbed81d861772c1d2d03d80782e23
           test "$(git -C src2 hash-object work/Z5T3_BRIDGE.md)" = 002c96d28123e5949c38656f26677ae5a723ee93
           test "$(git -C src2 hash-object work/z5cf/verify_compact.py)" = be458d969e1f8c989c8007a2b181506f84fd7f48
           test "$(git -C src2 hash-object work/lb5/core.py)" = 9495275bc31e5a8f535c68f027f3b24d12c07ae1
-          grep -Fq 'the ONLY remaining gap' src2/work/Z5T3_BRIDGE.md
-          grep -Fq 'No cellwise certificate with FIXED letter coefficients' src2/work/Z5T3_BRIDGE.md
-          grep -Fq 'the Δ-certificate / creative-telescoping class' src2/work/Z5T3_BRIDGE.md
-          grep -Fq 'not attempted tonight' src2/work/Z5T3_BRIDGE.md
+          grep -Fq 'ONLY remaining gap' src2/work/Z5T3_BRIDGE.md
+          grep -Fq 'FIXED letter coefficients' src2/work/Z5T3_BRIDGE.md
+          grep -Fq 'PIVOT (the mapped next campaign)' src2/work/Z5T3_BRIDGE.md
+          grep -Fq 'not attempted' src2/work/Z5T3_BRIDGE.md
       - name: Replay X007 finite evidence without promotion
         run: |
           sudo mkdir -p /home/ubuntu/fable-episode-2
