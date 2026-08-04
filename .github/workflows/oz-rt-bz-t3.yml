@@ -105,8 +105,10 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.12'
-      - name: Install policy dependencies
-        run: python -m pip install --requirement requirements/policy.txt
+      - name: Install exact replay dependencies
+        run: |
+          python -m pip install --requirement requirements/policy.txt
+          python -m pip install sympy==1.14.0 mpmath==1.3.0
       - name: Validate intake package and adversarial mutations
         run: |
           python -c "from campaigns.odd_zeta.OZ_SOURCE_REVISION_DELTA_002.validate import main; raise SystemExit(main())"
@@ -134,6 +136,7 @@ jobs:
             echo '- commits: `7`'
             echo "- archive: \`$(cut -d' ' -f1 source-delta-archive.sha256)\`"
             echo "- changed paths: \`$(wc -l < source-delta-name-status.txt)\`"
+            echo '- Python replay: `sympy==1.14.0`, `mpmath==1.3.0`'
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Verify admitted source loci and status boundaries
         run: |
@@ -157,12 +160,18 @@ jobs:
         run: |
           set -euo pipefail
           python3 papers_out/expository_apery/verify.py | tee ../expository-apery-replay.log
+          grep -Fq 'CHECK1 a_n sum==recurrence n<=25: True' ../expository-apery-replay.log
+          grep -Fq 'CHECK2 b_n closed form satisfies recurrence 1<=n<=24: True' ../expository-apery-replay.log
+          grep -Fq 'CHECK4 t(q)==q(eta1 eta6/eta2 eta3)^12' ../expository-apery-replay.log
+          grep -Fq 'CHECK5 F(q)==(eta2 eta3)^7/(eta1 eta6)^5' ../expository-apery-replay.log
+          grep -Fq 'CHECK6 companion formula == B(n)' ../expository-apery-replay.log
+          grep -Fq 'CHECK7 b_n == 6 B(n) n<=25: True' ../expository-apery-replay.log
           python3 -m py_compile \
             work/z5eps/eps57_sym2_all.py \
             work/z5eps/eps58_denoms.py \
             work/z5eps/eps59_rowhunt.py \
             work/z5eps/eps60_density.py
-          echo 'Heavy symbolic lanes remain pending exact bounded replay; compilation is not theorem evidence.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Expository Apéry checks replayed exactly. Heavy symbolic lanes remain pending exact bounded replay; compilation is not theorem evidence.' >> "$GITHUB_STEP_SUMMARY"
 
   source-delta-lean:
     runs-on: ubuntu-24.04
