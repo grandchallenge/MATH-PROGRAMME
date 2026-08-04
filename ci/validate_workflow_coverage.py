@@ -30,6 +30,7 @@ EXPECTED_WORKFLOWS = {
     "pc-wp04.yml",
     "pc-wp05.yml",
     "release-trust-admin.yml",
+    "vgse-final-activation.yml",
 }
 
 
