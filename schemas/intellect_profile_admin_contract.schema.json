@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/intellect-profile-admin-contract-1.0.0.json",
+  "title": "INTELLECT profile administration contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "schema_version", "operation_id", "phase", "api_version",
+    "administration_secret", "organization", "repository", "repository_name",
+    "branch", "authority", "property_schema_extensions",
+    "repository_property_values", "ruleset", "evidence", "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"const": "../schemas/intellect_profile_admin_contract.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "operation_id": {"const": "GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001"},
+    "phase": {"const": "B"},
+    "api_version": {"const": "2026-03-10"},
+    "administration_secret": {"const": "GCL_REPOSITORY_ADMIN_TOKEN"},
+    "organization": {"const": "grandchallenge"},
+    "repository": {"const": "grandchallenge/INTELLECT"},
+    "repository_name": {"const": "INTELLECT"},
+    "branch": {"const": "main"},
+    "authority": {
+      "type": "object", "additionalProperties": false,
+      "required": ["issue", "phase_a_pr", "phase_a_head", "phase_a_merge", "post_merge_attestation_comment"],
+      "properties": {
+        "issue": {"const": "https://github.com/grandchallenge/gcl-standards/issues/12"},
+        "phase_a_pr": {"const": "https://github.com/grandchallenge/gcl-standards/pull/26"},
+        "phase_a_head": {"const": "6f908c9897d6ec06971c5e961fde68bb0a393fa6"},
+        "phase_a_merge": {"const": "eaa87bfebab9adbfd39778364aac89aa8c479297"},
+        "post_merge_attestation_comment": {"const": 5173619262}
+      }
+    },
+    "property_schema_extensions": {
+      "type": "array", "minItems": 2, "maxItems": 2,
+      "prefixItems": [
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["property_name", "required_value"],
+          "properties": {
+            "property_name": {"const": "constitutional_profile"},
+            "required_value": {"const": "Constitutional"}
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["property_name", "required_value"],
+          "properties": {
+            "property_name": {"const": "authority_scope"},
+            "required_value": {"const": "constitutional"}
+          }
+        }
+      ],
+      "items": false
+    },
+    "repository_property_values": {
+      "type": "object", "additionalProperties": false,
+      "required": ["constitutional_profile", "authority_scope", "claim_promotion_role", "risk_tier", "workflow_profile", "public_programme"],
+      "properties": {
+        "constitutional_profile": {"const": "Constitutional"},
+        "authority_scope": {"const": "constitutional"},
+        "claim_promotion_role": {"const": "none"},
+        "risk_tier": {"const": "critical"},
+        "workflow_profile": {"const": "governance"},
+        "public_programme": {"const": "true"}
+      }
+    },
+    "ruleset": {
+      "type": "object", "additionalProperties": false,
+      "required": ["allowed_pre_names", "target_name", "target", "enforcement", "ref_include", "ref_exclude", "required_checks", "strict_status_checks", "required_approving_reviews", "dismiss_stale_reviews", "require_last_push_approval", "require_code_owner_reviews", "required_conversation_resolution", "allowed_merge_methods", "allow_force_pushes", "allow_deletions", "required_linear_history", "zero_bypass"],
+      "properties": {
+        "allowed_pre_names": {"const": ["Provider profile - main", "Constitutional profile - main"]},
+        "target_name": {"const": "Constitutional profile - main"},
+        "target": {"const": "branch"},
+        "enforcement": {"const": "active"},
+        "ref_include": {"const": ["~DEFAULT_BRANCH"]},
+        "ref_exclude": {"const": []},
+        "required_checks": {"const": ["test (3.11.14)", "test (3.12.13)", "policy / policy", "security / action-policy"]},
+        "strict_status_checks": {"const": true},
+        "required_approving_reviews": {"const": 0},
+        "dismiss_stale_reviews": {"const": true},
+        "require_last_push_approval": {"const": false},
+        "require_code_owner_reviews": {"const": false},
+        "required_conversation_resolution": {"const": true},
+        "allowed_merge_methods": {"const": ["merge", "squash"]},
+        "allow_force_pushes": {"const": false},
+        "allow_deletions": {"const": false},
+        "required_linear_history": {"const": false},
+        "zero_bypass": {"const": true}
+      }
+    },
+    "evidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["output", "digest_output", "artifact_name"],
+      "properties": {
+        "output": {"const": "intellect-profile-admin-evidence.json"},
+        "digest_output": {"const": "intellect-profile-admin-evidence.json.sha256"},
+        "artifact_name": {"const": "intellect-profile-admin-evidence"}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object", "additionalProperties": false,
+      "required": ["profile_conformance_authorized", "organization_wide_conformance", "mathematical_claim_authorized", "certification_claim_authorized", "novelty_claim_authorized", "priority_claim_authorized", "deployment_claim_authorized", "manufacturing_claim_authorized", "product_claim_authorized", "commercial_claim_authorized"],
+      "properties": {
+        "profile_conformance_authorized": {"const": false},
+        "organization_wide_conformance": {"const": false},
+        "mathematical_claim_authorized": {"const": false},
+        "certification_claim_authorized": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "priority_claim_authorized": {"const": false},
+        "deployment_claim_authorized": {"const": false},
+        "manufacturing_claim_authorized": {"const": false},
+        "product_claim_authorized": {"const": false},
+        "commercial_claim_authorized": {"const": false}
+      }
+    }
+  }
+}
