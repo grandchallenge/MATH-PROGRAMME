@@ -1,7 +1,7 @@
 {
   "schema_version": "1.2.0",
   "registry_id": "MP-CAMPAIGN-ADMISSION-001",
-  "verified_at": "2026-08-01",
+  "verified_at": "2026-08-04",
   "authority": {
     "repository": "grandchallenge/MATH-PROGRAMME",
     "state_authority": "protected_branch_repository_records",
@@ -97,16 +97,22 @@
       ],
       "active_portfolio_member": false,
       "source_provenance": {
-        "state": "unverified_candidate",
+        "state": "provider_verified",
         "forge_issue": 32,
-        "provider_manifest": null,
+        "provider_manifest": {
+          "repository": "grandchallenge/MATHFORGE",
+          "commit_sha": "593afd971a53ca0285f8b94570997ed7c3d7c170",
+          "path": "provider_manifests/VGSE-001.json",
+          "digest_algorithm": "git_blob_sha1",
+          "digest": "9cb5ac2d92b458f7f63e8a9811448f245a151ddd"
+        },
         "candidate_source": {
           "author": "Pavel Galashin",
           "title": "Amplituhedra and Origami, I: Tree Level",
           "printed_date": "2026-06-03",
           "candidate_sha256": "e513789426ae6247438920bfc80cfba6bd9c32dc6799a4f7873d806a865f95de",
           "candidate_byte_length": 1317147,
-          "target_scope": "Appendix B, Examples B.1 and B.3, Proposition B.2, and Figure 16"
+          "target_scope": "Appendix B, especially Examples B.1 and B.3, Proposition B.2, Remark B.4, Problem B.5, and Figure 16"
         },
         "intake_evidence": null
       },
@@ -137,8 +143,8 @@
         "may_adjudicate": false
       },
       "admission_gates": {
-        "forge_provider_manifest_admitted": false,
-        "source_revision_concordance_complete": false,
+        "forge_provider_manifest_admitted": true,
+        "source_revision_concordance_complete": true,
         "solve_candidate_package_reviewed": true,
         "cert_route_registered": false,
         "programme_active_registry_updated": false,
@@ -146,7 +152,7 @@
         "runtime_contract_updated_for_active_admission": false,
         "intellect_repin_complete_if_required": false
       },
-      "claim_boundary": "A reviewed and merged candidate work package does not admit VGSE-001 to the active portfolio, verify its source, create a Cert route, certify roots or t-embeddings, establish rigid foldability or manufacture, or authorize novelty, priority, patentability, or commercial claims."
+      "claim_boundary": "Provider verification, reviewed candidate computation, and a bounded admission decision authorize preparation of exact Solve and Cert routing records only. VGSE-001 remains outside the active portfolio until protected cross-repository activation; no root-count theorem, t-embedding equivalence, rigid-foldability, manufacturing, novelty, priority, patentability, product, or commercial claim is certified or promoted."
     }
   ]
 }
