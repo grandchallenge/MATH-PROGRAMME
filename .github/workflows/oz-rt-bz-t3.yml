@@ -159,6 +159,8 @@ jobs:
         working-directory: source-delta
         run: |
           set -euo pipefail
+          sudo mkdir -p /home/ubuntu/fable-episode-2
+          sudo ln -sfnT "$GITHUB_WORKSPACE/source-delta" /home/ubuntu/fable-episode-2/zeta-math-2
           python3 papers_out/expository_apery/verify.py | tee ../expository-apery-replay.log
           grep -Fq 'CHECK1 a_n sum==recurrence n<=25: True' ../expository-apery-replay.log
           grep -Fq 'CHECK2 b_n closed form satisfies recurrence 1<=n<=24: True' ../expository-apery-replay.log
