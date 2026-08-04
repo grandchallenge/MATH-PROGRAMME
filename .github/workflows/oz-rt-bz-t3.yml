@@ -161,7 +161,7 @@ jobs:
           set -euo pipefail
           sudo mkdir -p /home/ubuntu/fable-episode-2
           sudo ln -sfnT "$GITHUB_WORKSPACE/source-delta" /home/ubuntu/fable-episode-2/zeta-math-2
-          python3 papers_out/expository_apery/verify.py | tee ../expository-apery-replay.log
+          python3 -c "import runpy; runpy.run_path('papers_out/expository_apery/verify.py', run_name='__main__')" | tee ../expository-apery-replay.log
           grep -Fq 'CHECK1 a_n sum==recurrence n<=25: True' ../expository-apery-replay.log
           grep -Fq 'CHECK2 b_n closed form satisfies recurrence 1<=n<=24: True' ../expository-apery-replay.log
           grep -Fq 'CHECK4 t(q)==q(eta1 eta6/eta2 eta3)^12' ../expository-apery-replay.log
