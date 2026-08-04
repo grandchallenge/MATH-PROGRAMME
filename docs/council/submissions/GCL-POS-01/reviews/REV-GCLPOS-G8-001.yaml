@@ -2,21 +2,63 @@ review_id: REV-GCLPOS-G8-001
 artifact_id: GCL-POS-01
 reviewed_revision: sha256:d8be180052a48655a02612b0d6ca883067abe93f0391c4b9c6561a3867ad4d2c
 gate_id: G8
-reviewer: UNASSIGNED
+reviewer: openai-gpt-5.6-thinking-referee
+reviewer_kind: agent
 review_role: Referee
-independence_statement: No reviewer has been assigned. The gate remains deferred.
-date: '2026-07-27'
-decision: DEFERRED
-findings: []
+authentication_id: gpt-5.6-thinking-referee-20260804T094400Z-gcltcs00
+session_id: gpt-5.6-thinking-referee-20260804T094400Z-gcltcs00
+independence_statement: The Referee is a separately identified non-author agent. G0 through G7 remain machine-assisted internal checks and are not relabelled as independent.
+date: '2026-08-04'
+decision: PASS
+disposition: APPROVE_CANDIDATE_PILOT
+findings:
+- finding_id: G8-F01
+  severity: boundary
+  statement: GCL-TCS-00 version 0.1.0 is suitable only for bounded pilot use; the review does not support version 1.0 promotion, formal ASD-STE100 compliance, empirical efficacy, or automatic doctrine replacement.
+- finding_id: G8-F02
+  severity: control
+  statement: Current binding MATH-PROGRAMME doctrine and CLAIM_LEDGER_STANDARD.md control any conflict; candidate communication vocabulary is subordinate where the canonical mathematical ledger applies.
+- finding_id: G8-F03
+  severity: measurement
+  statement: Pilot use must retain burden, defect-detection, provenance-loss, claim-drift, exception, and shadow-authority observations before any successor promotion.
+- finding_id: G8-F04
+  severity: authority
+  statement: GCL-POS-01 may accompany the pilot as a bounded institutional position whose six registered claims remain proposed recommendations or interpretations.
 required_actions:
+- action_id: A-G8-PILOT-001
+  statement: Preserve current Programme doctrine as controlling authority throughout the pilot.
+- action_id: A-G8-PILOT-002
+  statement: Record pilot measurements, exceptions, recurring failure modes, and reviewer burden before requesting a successor revision.
+- action_id: A-G8-PILOT-003
+  statement: Preserve the explicit non-claims concerning version 1.0, ASD-STE100 compliance, empirical efficacy, and doctrine replacement.
+resolved_actions:
 - action_id: A-G8-001
-  statement: Assign a non-author agent GCL Referee under GI-STEWARD-0001 and record its identity, session, evidence, residual uncertainty, and revision-bound promotion decision.
-resolved_actions: []
+  resolution: A separately identified non-author agent Referee reviewed the fixed admitted revision and recorded evidence, residual uncertainty, and a bounded downstream-use decision.
 evidence:
-- GCL-POS-01.md
+- council_submissions/GCL-TCS-00/parts
+- docs/council/submissions/GCL-TCS-00/GCL-TCS-00.policy.yaml
+- council_submissions/GCL-POS-01/GCL-POS-01.md
 - conformance/GCL-POS-01.conformance.yaml
 - registers/CLAIMS.yaml
 - registers/EVIDENCE.yaml
-established: []
+- reviews/REVIEW_INDEX.yaml
+established:
+- The fixed revision is eligible for a bounded GCL candidate pilot.
+- GCL-POS-01 is eligible to accompany that pilot as a bounded institutional position.
+- The authorized downstream use is internal and public-facing pilot application with inherited claim boundaries and current-doctrine supremacy.
 not_established:
-- Non-author agent Referee review and Human Steward authorization are not complete.
+- GCL-TCS-00 version 1.0 or authoritative-standard status.
+- Formal ASD-STE100 conformance.
+- Empirical improvement in research quality or efficiency.
+- Automatic replacement of existing Programme doctrine.
+- Mathematical, certification, novelty, priority, deployment, product, manufacturing, or commercial authority.
+residual_uncertainty:
+- Pilot cost and reviewer burden are not yet measured.
+- The effect on traceability, defect detection, and claim drift is not yet empirically established.
+- Profile and metadata requirements may require revision after multi-domain use.
+authorized_downstream_use:
+- bounded_candidate_pilot
+- bounded_institutional_position
+fixed_promoted_revision:
+  GCL-TCS-00: sha256:ea750b9b80b53c7d6ed755978fa4bdf59413fad93cec1db81eb3238372ce61c9
+  GCL-POS-01: sha256:d8be180052a48655a02612b0d6ca883067abe93f0391c4b9c6561a3867ad4d2c
