@@ -102,6 +102,35 @@ class IntellectProfileAdminTests(unittest.TestCase):
         with self.assertRaises(MODULE.IntellectProfileAdminError):
             MODULE.validate_contract(broken, schema())
 
+    def test_installation_scope_requires_exact_repositories(self) -> None:
+        payload = {
+            "total_count": 2,
+            "repositories": [
+                {"id": 2, "full_name": "grandchallenge/INTELLECT"},
+                {"id": 1, "full_name": "grandchallenge/MATH-PROGRAMME"},
+            ],
+        }
+        normalized = MODULE.normalize_installation_scope(payload)
+        self.assertEqual(normalized["authentication"], "github_app_installation")
+        self.assertEqual(normalized["repository_count"], 2)
+        self.assertEqual(
+            [row["full_name"] for row in normalized["repositories"]],
+            ["grandchallenge/INTELLECT", "grandchallenge/MATH-PROGRAMME"],
+        )
+
+    def test_installation_scope_rejects_repository_substitution(self) -> None:
+        payload = {
+            "total_count": 2,
+            "repositories": [
+                {"id": 2, "full_name": "grandchallenge/INTELLECT"},
+                {"id": 3, "full_name": "grandchallenge/MATHCERT"},
+            ],
+        }
+        with self.assertRaisesRegex(
+            MODULE.IntellectProfileAdminError, "exactly MATH-PROGRAMME and INTELLECT"
+        ):
+            MODULE.normalize_installation_scope(payload)
+
     def test_property_update_adds_required_value_and_preserves_fields(self) -> None:
         current = {
             "property_name": "constitutional_profile",
@@ -222,7 +251,7 @@ class IntellectProfileAdminTests(unittest.TestCase):
         current_contract = contract()
         before = {
             "main_sha": "a" * 40,
-            "actor": {"login": "owner"},
+            "actor": {"authentication": "github_app_installation"},
             "property_schemas": {
                 "constitutional_profile": {
                     "allowed_values": ["Provider", "Constitutional"]
