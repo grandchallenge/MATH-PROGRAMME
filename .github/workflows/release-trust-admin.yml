@@ -3,8 +3,16 @@ name: Release trust administration
 on:
   workflow_dispatch:
     inputs:
+      operation:
+        description: Select the governed administration operation
+        required: true
+        type: choice
+        options:
+          - release_trust
+          - intellect_profile
+        default: release_trust
       mode:
-        description: Apply or only verify the administration contract
+        description: Apply or only verify the selected administration contract
         required: true
         type: choice
         options:
@@ -12,7 +20,7 @@ on:
           - verify
         default: apply
       close_child_issues:
-        description: Close issues 7 and 125 after complete verification
+        description: Close issues 7 and 125 after complete release-trust verification
         required: true
         type: boolean
         default: true
@@ -26,6 +34,7 @@ concurrency:
 
 jobs:
   administer:
+    if: inputs.operation == 'release_trust'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     environment: release-trust
@@ -84,6 +93,65 @@ jobs:
         with:
           name: release-trust-evidence
           path: release-trust-evidence.json
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 0
+
+  administer-intellect-profile:
+    if: inputs.operation == 'intellect_profile'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment: release-trust
+    steps:
+      - name: Mint short-lived Release Trust token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: |
+            MATH-PROGRAMME
+            INTELLECT
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install governed policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Require administration credential
+        shell: bash
+        env:
+          GCL_REPOSITORY_ADMIN_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${GCL_REPOSITORY_ADMIN_TOKEN}" ]]; then
+            echo "Missing short-lived Release Trust token."
+            exit 1
+          fi
+      - name: Validate INTELLECT Phase B contract
+        run: python ci/intellect_profile_admin.py --mode validate
+      - name: Apply or verify INTELLECT profile administration
+        shell: bash
+        env:
+          GCL_REPOSITORY_ADMIN_TOKEN: ${{ steps.app-token.outputs.token }}
+          ADMIN_MODE: ${{ inputs.mode }}
+        run: |
+          set -euo pipefail
+          python ci/intellect_profile_admin.py \
+            --mode "${ADMIN_MODE}" \
+            --wait-seconds 120 \
+            --evidence intellect-profile-admin-evidence.json \
+            --digest intellect-profile-admin-evidence.json.sha256
+      - name: Upload bounded INTELLECT Phase B evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: intellect-profile-admin-evidence
+          path: |
+            intellect-profile-admin-evidence.json
+            intellect-profile-admin-evidence.json.sha256
           if-no-files-found: error
           retention-days: 90
           compression-level: 0
