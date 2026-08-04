@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_cadence_reconciliation.schema.json",
+  "title": "Administrative cadence reconciliation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "reconciliation_id",
+    "control_id",
+    "issue",
+    "status",
+    "opened_at",
+    "base_head",
+    "branch",
+    "structural_sweep_records",
+    "portfolio_review_record",
+    "dispatcher_evidence",
+    "evidence_classification",
+    "repository_change_inventory",
+    "disposition",
+    "mirror_refresh_targets",
+    "next_deadlines",
+    "pilot_review_options",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "reconciliation_id": {"const": "MP-ADMIN-CADENCE-RECONCILIATION-001"},
+    "control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "issue": {"const": 224},
+    "status": {"const": "IMPLEMENTED_PENDING_PROTECTED_REVIEW"},
+    "opened_at": {"const": "2026-08-04T16:42:38-07:00"},
+    "base_head": {"const": "b98d5ba79439e7ef7ee6493604bcfc40f9422dd8"},
+    "branch": {"const": "governance/mp-admin-cadence-reconciliation-001"},
+    "structural_sweep_records": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-(02|03|04)-00[2-5]\\.json$"}
+    },
+    "portfolio_review_record": {"const": "governance/administrative_portfolio_reviews/MP-ADMIN-PORTFOLIO-REVIEW-2026-08-03-001.json"},
+    "dispatcher_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scheduled_runs_observed", "latest_successful_schedule_run_id", "latest_successful_schedule_run_at", "dispatch_is_not_authority"],
+      "properties": {
+        "scheduled_runs_observed": {"const": 37},
+        "latest_successful_schedule_run_id": {"const": 30957604897},
+        "latest_successful_schedule_run_at": {"const": "2026-08-04T22:45:41Z"},
+        "dispatch_is_not_authority": {"const": true}
+      }
+    },
+    "evidence_classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contemporaneous", "retrospective", "limitation"],
+      "properties": {
+        "contemporaneous": {"type": "array", "minItems": 2, "items": {"type": "string", "minLength": 1}},
+        "retrospective": {"type": "array", "minItems": 2, "items": {"type": "string", "minLength": 1}},
+        "limitation": {"type": "string", "minLength": 1}
+      }
+    },
+    "repository_change_inventory": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["repository", "first_sweep_head", "reconciliation_head", "commits_since_first_sweep"],
+        "properties": {
+          "repository": {"type": "string", "minLength": 1},
+          "first_sweep_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "reconciliation_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "commits_since_first_sweep": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["P0", "P1", "P2", "repeated_cadence_failure", "pilot_level_escalation_required", "waiver_used", "cadence_anchor_reset"],
+      "properties": {
+        "P0": {"const": 0},
+        "P1": {"const": 0},
+        "P2": {"const": 5},
+        "repeated_cadence_failure": {"const": true},
+        "pilot_level_escalation_required": {"const": true},
+        "waiver_used": {"const": false},
+        "cadence_anchor_reset": {"const": false}
+      }
+    },
+    "mirror_refresh_targets": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {"enum": ["grandchallenge/MATH-PROGRAMME#182", "grandchallenge/MATH-PROGRAMME#183", "grandchallenge/INTELLECT#21"]}
+    },
+    "next_deadlines": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["structural_sweep", "pilot_and_deep_conformance_review"],
+      "properties": {
+        "structural_sweep": {"const": "2026-08-04T23:09:00-07:00"},
+        "pilot_and_deep_conformance_review": {"const": "2026-08-09T18:21:00-07:00"}
+      }
+    },
+    "pilot_review_options": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"enum": ["RETAIN_FACTOR_AND_CADENCE", "RELAX_PROCEDURAL_RECORD_CADENCE_ONLY", "MACHINE_GENERATED_CANDIDATE_RECORDS_WITH_PROTECTED_RATIFICATION"]}
+    },
+    "claim_boundaries": {"type": "object", "minProperties": 13, "additionalProperties": {"const": false}}
+  }
+}
