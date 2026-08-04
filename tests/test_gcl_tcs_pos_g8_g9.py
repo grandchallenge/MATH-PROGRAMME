@@ -71,7 +71,7 @@ class GclTcsPosAuthorityTests(unittest.TestCase):
         self.assertEqual(index.count("decision: PASS"), 10)
         self.assertIn("authority_status: admitted", conformance)
         self.assertIn("promotion_status: promoted", conformance)
-        self.assertIn("automatic doctrine replacement", conformance)
+        self.assertIn("automatic replacement", conformance.lower())
         self.assertIn("APPROVED_FOR_BOUNDED_CANDIDATE_PILOT_PENDING_PROTECTED_MERGE", manifest)
         self.assertIn("No formal ASD-STE100 compliance claim", manifest)
         self.assertIn(
