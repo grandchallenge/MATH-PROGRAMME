@@ -79,10 +79,42 @@ def property_update_payload(current: dict[str, Any], required_value: str) -> dic
         "value_type": "single_select",
         "required": bool(current.get("required", False)),
         "default_value": current.get("default_value"),
-        "description": str(current.get("description") or ""),
+        "description": current.get("description"),
         "allowed_values": merged,
-        "values_editable_by": str(current.get("values_editable_by") or "org_actors"),
+        "values_editable_by": current.get("values_editable_by"),
+        "require_explicit_values": bool(current.get("require_explicit_values", False)),
     }
+
+
+def verify_property_schema_change(
+    before: dict[str, Any], after: dict[str, Any], required_value: str
+) -> None:
+    immutable_fields = (
+        "property_name",
+        "value_type",
+        "required",
+        "default_value",
+        "description",
+        "values_editable_by",
+        "require_explicit_values",
+        "source_type",
+    )
+    for field in immutable_fields:
+        if before.get(field) != after.get(field):
+            raise IntellectProfileAdminError(
+                f"property schema changed outside allowed_values: {field}"
+            )
+    before_allowed = before.get("allowed_values")
+    after_allowed = after.get("allowed_values")
+    if not isinstance(before_allowed, list) or not isinstance(after_allowed, list):
+        raise IntellectProfileAdminError("property allowed_values readback is malformed")
+    expected = list(before_allowed)
+    if required_value not in expected:
+        expected.append(required_value)
+    if after_allowed != expected:
+        raise IntellectProfileAdminError(
+            "property allowed_values changed outside authorized extension"
+        )
 
 
 def normalize_property_values(rows: Any) -> dict[str, Any]:
@@ -167,7 +199,9 @@ def collect_state(client: GitHubClient, contract: dict[str, Any]) -> dict[str, A
     actor = client.request("GET", "/user")
     membership = client.request("GET", f"/user/memberships/orgs/{org}")
     if membership.get("state") != "active" or membership.get("role") != "admin":
-        raise IntellectProfileAdminError("authenticated actor is not an organization owner")
+        raise IntellectProfileAdminError(
+            "authenticated actor is not an organization owner"
+        )
     branch = urllib.parse.quote(contract["branch"], safe="")
     branch_data = client.request("GET", f"/repos/{repo}/branches/{branch}")
     main_sha = str(branch_data.get("commit", {}).get("sha") or "")
@@ -202,7 +236,9 @@ def collect_state(client: GitHubClient, contract: dict[str, Any]) -> dict[str, A
     }
 
 
-def apply_contract(client: GitHubClient, contract: dict[str, Any], before: dict[str, Any]) -> list[dict[str, Any]]:
+def apply_contract(
+    client: GitHubClient, contract: dict[str, Any], before: dict[str, Any]
+) -> list[dict[str, Any]]:
     org = contract["organization"]
     repo = contract["repository"]
     mutations: list[dict[str, Any]] = []
@@ -216,11 +252,13 @@ def apply_contract(client: GitHubClient, contract: dict[str, Any], before: dict[
             f"/orgs/{org}/properties/schema/{name}",
             property_update_payload(current, extension["required_value"]),
         )
-        mutations.append({
-            "operation": "extend_property_schema",
-            "property_name": name,
-            "required_value": extension["required_value"],
-        })
+        mutations.append(
+            {
+                "operation": "extend_property_schema",
+                "property_name": name,
+                "required_value": extension["required_value"],
+            }
+        )
     client.request(
         "PATCH",
         f"/orgs/{org}/properties/values",
@@ -232,7 +270,9 @@ def apply_contract(client: GitHubClient, contract: dict[str, Any], before: dict[
             ],
         },
     )
-    mutations.append({"operation": "apply_repository_property_values", "repository": repo})
+    mutations.append(
+        {"operation": "apply_repository_property_values", "repository": repo}
+    )
     detail = before["ruleset_detail"]
     ruleset_id = detail.get("id")
     if not isinstance(ruleset_id, int):
@@ -242,35 +282,54 @@ def apply_contract(client: GitHubClient, contract: dict[str, Any], before: dict[
         f"/repos/{repo}/rulesets/{ruleset_id}",
         writable_ruleset(detail, contract["ruleset"]["target_name"]),
     )
-    mutations.append({
-        "operation": "rename_ruleset",
-        "ruleset_id": ruleset_id,
-        "target_name": contract["ruleset"]["target_name"],
-    })
+    mutations.append(
+        {
+            "operation": "rename_ruleset",
+            "ruleset_id": ruleset_id,
+            "target_name": contract["ruleset"]["target_name"],
+        }
+    )
     return mutations
 
 
-def verify_after(before: dict[str, Any], after: dict[str, Any], contract: dict[str, Any]) -> None:
+def verify_after(
+    before: dict[str, Any], after: dict[str, Any], contract: dict[str, Any]
+) -> None:
     if before["main_sha"] != after["main_sha"]:
         raise IntellectProfileAdminError("protected main moved during administration")
     if before["actor"] != after["actor"]:
-        raise IntellectProfileAdminError("authenticated actor changed during administration")
+        raise IntellectProfileAdminError(
+            "authenticated actor changed during administration"
+        )
     expected_values = contract["repository_property_values"]
-    actual_values = {name: after["property_values"].get(name) for name in expected_values}
+    actual_values = {
+        name: after["property_values"].get(name) for name in expected_values
+    }
     if actual_values != expected_values:
         raise IntellectProfileAdminError(f"property readback drift: {actual_values!r}")
     for extension in contract["property_schema_extensions"]:
-        allowed = after["property_schemas"][extension["property_name"]].get("allowed_values", [])
-        if extension["required_value"] not in allowed:
-            raise IntellectProfileAdminError("required vocabulary value missing after apply")
+        name = extension["property_name"]
+        verify_property_schema_change(
+            before["property_schemas"][name],
+            after["property_schemas"][name],
+            extension["required_value"],
+        )
     if after["ruleset"]["name"] != contract["ruleset"]["target_name"]:
         raise IntellectProfileAdminError("ruleset target name missing after apply")
     if not ruleset_equal_except_name(before["ruleset"], after["ruleset"]):
-        raise IntellectProfileAdminError("ruleset changed outside the authorized name field")
+        raise IntellectProfileAdminError(
+            "ruleset changed outside the authorized name field"
+        )
     validate_ruleset(after["ruleset"], contract)
 
 
-def build_evidence(mode: str, contract: dict[str, Any], before: dict[str, Any], after: dict[str, Any], mutations: list[dict[str, Any]]) -> dict[str, Any]:
+def build_evidence(
+    mode: str,
+    contract: dict[str, Any],
+    before: dict[str, Any],
+    after: dict[str, Any],
+    mutations: list[dict[str, Any]],
+) -> dict[str, Any]:
     verify_after(before, after, contract)
     evidence = {
         "schema_version": "1.0.0",
@@ -305,7 +364,9 @@ def build_evidence(mode: str, contract: dict[str, Any], before: dict[str, Any], 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", choices=("validate", "verify", "apply"), default="validate")
+    parser.add_argument(
+        "--mode", choices=("validate", "verify", "apply"), default="validate"
+    )
     parser.add_argument("--contract", type=Path, default=DEFAULT_CONTRACT)
     parser.add_argument("--schema", type=Path, default=DEFAULT_SCHEMA)
     parser.add_argument("--evidence", type=Path)
@@ -324,14 +385,20 @@ def main() -> int:
         if args.mode == "validate":
             print("INTELLECT profile administration contract is valid")
             return 0
-        client = GitHubClient(os.environ.get(args.token_env, ""), contract["api_version"])
+        client = GitHubClient(
+            os.environ.get(args.token_env, ""), contract["api_version"]
+        )
         before = collect_state(client, contract)
-        mutations = apply_contract(client, contract, before) if args.mode == "apply" else []
+        mutations = (
+            apply_contract(client, contract, before) if args.mode == "apply" else []
+        )
         deadline = time.monotonic() + max(args.wait_seconds, 0)
         while True:
             try:
                 after = collect_state(client, contract)
-                evidence = build_evidence(args.mode, contract, before, after, mutations)
+                evidence = build_evidence(
+                    args.mode, contract, before, after, mutations
+                )
                 break
             except IntellectProfileAdminError:
                 if time.monotonic() >= deadline:
@@ -339,14 +406,24 @@ def main() -> int:
                 time.sleep(min(15, max(1, int(deadline - time.monotonic()))))
         evidence_path = args.evidence or ROOT / contract["evidence"]["output"]
         digest_path = args.digest or ROOT / contract["evidence"]["digest_output"]
-        evidence_path.write_text(json.dumps(evidence, indent=2) + "\n", encoding="utf-8")
+        evidence_path.write_text(
+            json.dumps(evidence, indent=2) + "\n", encoding="utf-8"
+        )
         digest_path.write_text(
-            f"{evidence['evidence_sha256']}  {evidence_path.name}\n", encoding="utf-8"
+            f"{evidence['evidence_sha256']}  {evidence_path.name}\n",
+            encoding="utf-8",
         )
         print(json.dumps(evidence, indent=2))
         return 0
-    except (OSError, json.JSONDecodeError, ReleaseTrustError, IntellectProfileAdminError) as exc:
-        print(f"INTELLECT profile administration failed: {exc}", file=os.sys.stderr)
+    except (
+        OSError,
+        json.JSONDecodeError,
+        ReleaseTrustError,
+        IntellectProfileAdminError,
+    ) as exc:
+        print(
+            f"INTELLECT profile administration failed: {exc}", file=os.sys.stderr
+        )
         return 1
 
 
