@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/umbrella_runtime_contract_v5.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "contract_id",
+    "verified_at",
+    "provider_repository",
+    "supersedes",
+    "programme_routing_contract",
+    "programme_campaign_contract",
+    "candidate_admission_contract",
+    "certification_contract",
+    "active_portfolio",
+    "candidate_portfolio",
+    "consumer_sync",
+    "authority_model",
+    "consumer_independence",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "contract_id": {
+      "const": "MP-UMBRELLA-RUNTIME-005"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provider_repository": {
+      "const": "grandchallenge/MATH-PROGRAMME"
+    },
+    "supersedes": {
+      "type": "object"
+    },
+    "programme_routing_contract": {
+      "type": "object"
+    },
+    "programme_campaign_contract": {
+      "type": "object"
+    },
+    "candidate_admission_contract": {
+      "type": "object"
+    },
+    "certification_contract": {
+      "type": "object"
+    },
+    "active_portfolio": {
+      "type": "object"
+    },
+    "candidate_portfolio": {
+      "type": "object"
+    },
+    "consumer_sync": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intellect_repin_required",
+        "intellect_repin_complete",
+        "required_runtime_path",
+        "required_runtime_digest",
+        "completion_authority"
+      ],
+      "properties": {
+        "intellect_repin_required": {
+          "const": true
+        },
+        "intellect_repin_complete": {
+          "const": false
+        },
+        "required_runtime_path": {
+          "const": "governance/umbrella_runtime_contract_v5.json"
+        },
+        "required_runtime_digest": {
+          "type": "null"
+        },
+        "completion_authority": {
+          "const": "separate_protected_INTELLECT_merge"
+        }
+      }
+    },
+    "authority_model": {
+      "type": "object"
+    },
+    "consumer_independence": {
+      "type": "object"
+    },
+    "claim_boundaries": {
+      "type": "object"
+    }
+  }
+}
