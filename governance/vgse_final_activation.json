@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "MP-VGSE-FINAL-ACTIVATION-001",
+  "campaign_id": "VGSE-001",
+  "tracker_issue": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/170",
+  "disposition": "ACTIVATE_BOUNDED_PENDING_INTELLECT_REPIN",
+  "programme_authority": {
+    "decision_merge": "3e2c4148d4304b2446a84c1e9a414d4a976a0464",
+    "decision_record": {
+      "path": "governance/vgse_bounded_admission_decision.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "a419d6832757ec2631e67d7f2b5f71d16e51f359"
+    }
+  },
+  "solve_authority": {
+    "merge_commit": "1ebc9ace360e453fbc3707f6b23032b1c3c561eb",
+    "manifest": {
+      "path": "campaign_manifests/VGSE-001.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "3bb6b18052f5754e9ae9aa4f813d9b43dcd4e3b4"
+    },
+    "handoff": {
+      "path": "cert_handoffs/VGSE-001.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "42cfa84978fd63c75f074b388afd8b1fcbd56091",
+      "state": "pending"
+    }
+  },
+  "cert_authority": {
+    "merge_commit": "92e3e56fda50267a241e120eb337dbbc520e900f",
+    "route": {
+      "path": "governance/certification_route_overlays/VGSE-001.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "de56bfb0544b27b6237a68ac87044d3f0ba2e445",
+      "state": "registered_pending_evidence"
+    },
+    "may_adjudicate": false,
+    "cert_output": null
+  },
+  "programme_effect": {
+    "active_registry": {
+      "path": "governance/governed_campaign_registry.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "4cabbd820097029d01430f9f8a0c02653321e5af"
+    },
+    "routing_overlay": {
+      "path": "governance/mathsolve_routing_audit_vgse.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "6fb8dce8f1b4f11f8994798840e72b09ad862575"
+    },
+    "admission_registry": {
+      "path": "governance/campaign_admission_registry.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "c724d1174c2e1caa8a74297a21a46aa9d1910962"
+    },
+    "runtime_contract": {
+      "path": "governance/umbrella_runtime_contract_v5.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "2f304cbf07f934e97cdd2fbac7a6ccece2ac4a5a"
+    },
+    "lifecycle_state": "admitted_active",
+    "routing_state": "active_bounded_pending_cert_evidence"
+  },
+  "consumer_obligation": {
+    "repository": "grandchallenge/INTELLECT",
+    "repin_required": true,
+    "repin_complete": false,
+    "required_runtime_path": "governance/umbrella_runtime_contract_v5.json",
+    "required_runtime_digest": "2f304cbf07f934e97cdd2fbac7a6ccece2ac4a5a",
+    "programme_issue_may_close": false
+  },
+  "claim_boundary": {
+    "mathematical_target_proved": false,
+    "mathcert_adjudication_authorized": false,
+    "certificate_output_authorized": false,
+    "rigid_foldability_authorized": false,
+    "collision_or_thickness_claim_authorized": false,
+    "manufacturing_claim_authorized": false,
+    "novelty_priority_or_patentability_authorized": false,
+    "product_or_commercial_claim_authorized": false
+  },
+  "reopening_conditions": [
+    "Reopen if any bound Programme, Solve, Forge, or Cert identity changes.",
+    "Update after the protected INTELLECT repin merges.",
+    "Require a separately reviewed operation before adjudication, certificate output, or claim promotion."
+  ]
+}
