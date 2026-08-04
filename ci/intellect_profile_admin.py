@@ -25,6 +25,10 @@ from release_trust_admin import (
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONTRACT = ROOT / "governance" / "intellect_profile_admin_contract.json"
 DEFAULT_SCHEMA = ROOT / "schemas" / "intellect_profile_admin_contract.schema.json"
+REQUIRED_INSTALLATION_REPOSITORIES = {
+    "grandchallenge/MATH-PROGRAMME",
+    "grandchallenge/INTELLECT",
+}
 FALSE_BOUNDARIES = {
     "profile_conformance_authorized",
     "organization_wide_conformance",
@@ -62,6 +66,38 @@ def validate_contract(contract: dict[str, Any], schema: dict[str, Any]) -> None:
     for field in FALSE_BOUNDARIES:
         if contract["claim_boundaries"].get(field) is not False:
             raise IntellectProfileAdminError(f"claim-boundary inflation: {field}")
+
+
+def normalize_installation_scope(payload: Any) -> dict[str, Any]:
+    if not isinstance(payload, dict):
+        raise IntellectProfileAdminError("installation scope response must be an object")
+    rows = payload.get("repositories")
+    if not isinstance(rows, list):
+        raise IntellectProfileAdminError("installation scope repositories must be a list")
+    repositories: list[dict[str, Any]] = []
+    for row in rows:
+        if not isinstance(row, dict):
+            raise IntellectProfileAdminError("malformed installation repository row")
+        full_name = row.get("full_name")
+        repository_id = row.get("id")
+        if not isinstance(full_name, str) or not isinstance(repository_id, int):
+            raise IntellectProfileAdminError("installation repository identity is malformed")
+        repositories.append({"id": repository_id, "full_name": full_name})
+    names = {row["full_name"] for row in repositories}
+    if names != REQUIRED_INSTALLATION_REPOSITORIES:
+        raise IntellectProfileAdminError(
+            "Release Trust App installation scope must be exactly MATH-PROGRAMME and INTELLECT"
+        )
+    if len(repositories) != len(names):
+        raise IntellectProfileAdminError("duplicate installation repository identity")
+    total_count = payload.get("total_count")
+    if total_count != len(repositories):
+        raise IntellectProfileAdminError("installation repository count drift")
+    return {
+        "authentication": "github_app_installation",
+        "repository_count": total_count,
+        "repositories": sorted(repositories, key=lambda row: row["full_name"]),
+    }
 
 
 def property_update_payload(current: dict[str, Any], required_value: str) -> dict[str, Any]:
@@ -196,12 +232,9 @@ def ruleset_equal_except_name(before: dict[str, Any], after: dict[str, Any]) -> 
 def collect_state(client: GitHubClient, contract: dict[str, Any]) -> dict[str, Any]:
     org = contract["organization"]
     repo = contract["repository"]
-    actor = client.request("GET", "/user")
-    membership = client.request("GET", f"/user/memberships/orgs/{org}")
-    if membership.get("state") != "active" or membership.get("role") != "admin":
-        raise IntellectProfileAdminError(
-            "authenticated actor is not an organization owner"
-        )
+    installation = normalize_installation_scope(
+        client.request("GET", "/installation/repositories?per_page=100")
+    )
     branch = urllib.parse.quote(contract["branch"], safe="")
     branch_data = client.request("GET", f"/repos/{repo}/branches/{branch}")
     main_sha = str(branch_data.get("commit", {}).get("sha") or "")
@@ -220,14 +253,7 @@ def collect_state(client: GitHubClient, contract: dict[str, Any]) -> dict[str, A
     normalized = normalize_intellect_ruleset(detail)
     validate_ruleset(normalized, contract)
     return {
-        "actor": {
-            "login": actor.get("login"),
-            "id": actor.get("id"),
-            "organization_membership": {
-                "state": membership.get("state"),
-                "role": membership.get("role"),
-            },
-        },
+        "actor": installation,
         "main_sha": main_sha,
         "property_schemas": schemas,
         "property_values": values,
@@ -299,7 +325,7 @@ def verify_after(
         raise IntellectProfileAdminError("protected main moved during administration")
     if before["actor"] != after["actor"]:
         raise IntellectProfileAdminError(
-            "authenticated actor changed during administration"
+            "Release Trust App installation scope changed during administration"
         )
     expected_values = contract["repository_property_values"]
     actual_values = {
