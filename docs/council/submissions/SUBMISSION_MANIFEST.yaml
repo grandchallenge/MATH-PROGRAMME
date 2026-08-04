@@ -1,15 +1,21 @@
-schema_version: 1.0.0
+schema_version: 1.1.0
 submission_id: GCL-TCS-00_GCL-POS-01_COUNCIL_REVIEW
 submission_date: '2026-07-27'
+authority_decision_date: '2026-08-04'
 repository: grandchallenge/MATH-PROGRAMME
-branch: governance/gcl-tcs-00-pos-01-council-review
-status: OPEN_FOR_COUNCIL_REVIEW
+branch: governance/gcl-tcs-00-pos-01-g8-g9-001
+status: APPROVED_FOR_BOUNDED_CANDIDATE_PILOT_PENDING_PROTECTED_MERGE
 requested_disposition: APPROVE_CANDIDATE_PILOT
+authorized_disposition: APPROVE_CANDIDATE_PILOT_RELEASE
+effective_condition: protected_merge_of_exact_candidate_after_successful_checks_independent_review_and_human_steward_exact_head_disposition
+authority_decision: docs/council/submissions/GCL-TCS-00_GCL-POS-01_AUTHORITY_DECISION.json
 artifacts:
 - artifact_id: GCL-TCS-00
   version: 0.1.0
-  authority_status: candidate
-  promotion_status: registered
+  version_status: candidate
+  authority_status: admitted
+  promotion_status: promoted
+  authorized_use: bounded_candidate_pilot
   normative_source:
     transport: ordered_markdown_parts
     location: council_submissions/GCL-TCS-00/parts
@@ -25,8 +31,10 @@ artifacts:
     sha256: c1c4c72766cb22795337d9921c5e532c8451b324224ac63e3c3f0fce1bbd9945
 - artifact_id: GCL-POS-01
   version: 0.1.0
-  authority_status: candidate
-  promotion_status: review_ready
+  version_status: candidate
+  authority_status: admitted
+  promotion_status: promoted
+  authorized_use: bounded_institutional_position_accompanying_pilot
   normative_source:
     location: council_submissions/GCL-POS-01/GCL-POS-01.md
     sha256: d8be180052a48655a02612b0d6ca883067abe93f0391c4b9c6561a3867ad4d2c
@@ -37,12 +45,27 @@ artifacts:
     sha256: 89751685b4944704da1460d58d1556502bbbd77e7b6c81bd303d130c1fa0657b
 binary_review_copies:
   admission: hash_locked_external_review_package
-  note: PDF and ZIP review copies are identified by hash. The GitHub Council submission carries normative text and machine-readable review records.
-required_decisions:
-- candidate pilot authority for GCL-TCS-00
-- institutional approval of GCL-POS-01 as the bounded pilot position
-not_requested:
-- GCL-TCS-00 version 1.0 promotion
-- formal ASD-STE100 compliance
-- automatic replacement of current MATH-PROGRAMME doctrine
-- empirical validation of the governance model
+  note: PDF and ZIP review copies are identified by hash. Normative authority remains bound to the source and machine-readable records.
+review_decisions:
+  G8:
+    record: docs/council/submissions/GCL-POS-01/reviews/REV-GCLPOS-G8-001.yaml
+    decision: PASS
+    disposition: APPROVE_CANDIDATE_PILOT
+  G9:
+    record: docs/council/submissions/GCL-POS-01/reviews/REV-GCLPOS-G9-001.yaml
+    decision: PASS
+    disposition: APPROVE_CANDIDATE_PILOT_RELEASE
+controlling_boundaries:
+- Current protected MATH-PROGRAMME doctrine controls any conflict during the pilot.
+- CLAIM_LEDGER_STANDARD.md controls mathematical claim vocabulary where applicable.
+- No version 1.0 or authoritative-standard promotion.
+- No formal ASD-STE100 compliance claim.
+- No empirical efficacy or optimality claim.
+- No automatic doctrine replacement.
+- No mathematical, certification, novelty, priority, deployment, product, manufacturing, or commercial authority.
+pilot_obligations:
+- Record review defects and defect-detection outcomes.
+- Record missing provenance and claim drift.
+- Record author and reviewer burden.
+- Record exceptions, recurring failure modes, and shadow-authority incidents.
+- Require a separately governed successor review before any broader promotion.
