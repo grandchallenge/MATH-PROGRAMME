@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/mathsolve_routing_audit_vgse.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "registry_id",
+    "verified_at",
+    "base_routing_contract",
+    "successor_campaign",
+    "combined_portfolio",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "registry_id": {
+      "const": "MP-MATHSOLVE-ROUTING-VGSE-001"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "base_routing_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "digest_algorithm",
+        "digest",
+        "campaign_count",
+        "status"
+      ],
+      "properties": {
+        "path": {
+          "const": "governance/mathsolve_routing_audit.json"
+        },
+        "digest_algorithm": {
+          "const": "git_blob_sha1"
+        },
+        "digest": {
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "campaign_count": {
+          "const": 8
+        },
+        "status": {
+          "const": "historical_base_preserved"
+        }
+      }
+    },
+    "successor_campaign": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "campaign_id",
+        "title",
+        "disposition",
+        "coverage_mode",
+        "placement",
+        "manifest",
+        "solve_work_package_ids",
+        "forge",
+        "cert",
+        "reconciliation",
+        "promotion"
+      ],
+      "properties": {
+        "campaign_id": {
+          "const": "VGSE-001"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 10
+        },
+        "disposition": {
+          "const": "route"
+        },
+        "coverage_mode": {
+          "const": "native"
+        },
+        "placement": {
+          "const": "solve_native"
+        },
+        "manifest": {
+          "type": "object"
+        },
+        "solve_work_package_ids": {
+          "const": [
+            "VGSE-WP00"
+          ]
+        },
+        "forge": {
+          "type": "object"
+        },
+        "cert": {
+          "type": "object"
+        },
+        "reconciliation": {
+          "type": "object"
+        },
+        "promotion": {
+          "type": "object"
+        }
+      }
+    },
+    "combined_portfolio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "campaign_count",
+        "campaign_ids"
+      ],
+      "properties": {
+        "campaign_count": {
+          "const": 9
+        },
+        "campaign_ids": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 80
+    }
+  }
+}

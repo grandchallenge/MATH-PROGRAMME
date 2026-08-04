@@ -1,4 +1,4 @@
-"""Validate candidate state and the bounded VGSE admission decision."""
+"""Validate VGSE bounded active routing pending the required INTELLECT repin."""
 from __future__ import annotations
 
 import hashlib
@@ -13,58 +13,38 @@ ROOT = Path(__file__).resolve().parents[1]
 ADMISSION_PATH = ROOT / "governance" / "campaign_admission_registry.json"
 ADMISSION_SCHEMA_PATH = ROOT / "schemas" / "campaign_admission_registry.schema.json"
 DECISION_PATH = ROOT / "governance" / "vgse_bounded_admission_decision.json"
-DECISION_SCHEMA_PATH = ROOT / "schemas" / "vgse_bounded_admission_decision.schema.json"
-RUNTIME_PATH = ROOT / "governance" / "umbrella_runtime_contract_v4.json"
-RUNTIME_SCHEMA_PATH = ROOT / "schemas" / "umbrella_runtime_contract_v4.schema.json"
 ACTIVE_PATH = ROOT / "governance" / "governed_campaign_registry.json"
-ROUTING_PATH = ROOT / "governance" / "mathsolve_routing_audit.json"
+ACTIVE_SCHEMA_PATH = ROOT / "schemas" / "governed_campaign_registry.schema.json"
+ROUTING_PATH = ROOT / "governance" / "mathsolve_routing_audit_vgse.json"
+ROUTING_SCHEMA_PATH = ROOT / "schemas" / "mathsolve_routing_audit_vgse.schema.json"
+RUNTIME_PATH = ROOT / "governance" / "umbrella_runtime_contract_v5.json"
+RUNTIME_SCHEMA_PATH = ROOT / "schemas" / "umbrella_runtime_contract_v5.schema.json"
+ACTIVATION_PATH = ROOT / "governance" / "vgse_final_activation.json"
+ACTIVATION_SCHEMA_PATH = ROOT / "schemas" / "vgse_final_activation.schema.json"
 
 EXPECTED_ACTIVE_IDS = {
     "UC-001", "NS-CI-001", "HC-001", "BSD-001", "PC-001",
-    "YM-001", "PNP-001", "RH-001", "OZ-001",
+    "YM-001", "PNP-001", "RH-001", "OZ-001", "VGSE-001",
 }
-EXPECTED_ROUTING_IDS = EXPECTED_ACTIVE_IDS - {"PC-001"}
-EXPECTED_CANDIDATE_IDS = {"NSOF-001", "VGSE-001"}
-EXPECTED_CANDIDATE_DIGEST = "5cd3f34f8cce130cd64dbea6aa8652d80783280b"
+EXPECTED_ROUTING_IDS = {
+    "UC-001", "NS-CI-001", "HC-001", "BSD-001",
+    "YM-001", "PNP-001", "RH-001", "OZ-001", "VGSE-001",
+}
+EXPECTED_BASE_ROUTING_DIGEST = "4a27ec8aaaa60f919ba51028807b83dc522bfcff"
+EXPECTED_OLD_RUNTIME_DIGEST = "33cf79f38f1273a834bb43d4cc55bfc79ba2c5e0"
 EXPECTED_DECISION_DIGEST = "a419d6832757ec2631e67d7f2b5f71d16e51f359"
-EXPECTED_ACTIVE_DIGEST = "b1f1e4682d0f3ff0108d020e466fa2ecb0809b57"
-EXPECTED_CERT_DIGEST = "5b3e8d48b9f6c5b03ed3dc439bf9e43876e017b1"
+EXPECTED_ACTIVE_DIGEST = "4cabbd820097029d01430f9f8a0c02653321e5af"
+EXPECTED_ROUTING_DIGEST = "6fb8dce8f1b4f11f8994798840e72b09ad862575"
+EXPECTED_ADMISSION_DIGEST = "c724d1174c2e1caa8a74297a21a46aa9d1910962"
+EXPECTED_RUNTIME_DIGEST = "2f304cbf07f934e97cdd2fbac7a6ccece2ac4a5a"
+EXPECTED_ACTIVATION_DIGEST = "f9311fa0fd0060cfe28072e7a6d204898449c74e"
+EXPECTED_MANIFEST_DIGEST = "3bb6b18052f5754e9ae9aa4f813d9b43dcd4e3b4"
+EXPECTED_HANDOFF_DIGEST = "42cfa84978fd63c75f074b388afd8b1fcbd56091"
+EXPECTED_ROUTE_DIGEST = "de56bfb0544b27b6237a68ac87044d3f0ba2e445"
+EXPECTED_SOLVE_MERGE = "1ebc9ace360e453fbc3707f6b23032b1c3c561eb"
+EXPECTED_CERT_MERGE = "92e3e56fda50267a241e120eb337dbbc520e900f"
+EXPECTED_PROVIDER_DIGEST = "9cb5ac2d92b458f7f63e8a9811448f245a151ddd"
 EXPECTED_SCREENSHOT_DIGEST = "531d8b044623569e43949f094985c083e07cf3c0c6a7b6db6e0b5c3339b57420"
-EXPECTED_VGSE_SOURCE_DIGEST = "e513789426ae6247438920bfc80cfba6bd9c32dc6799a4f7873d806a865f95de"
-EXPECTED_VGSE_PROVIDER_MANIFEST = {
-    "repository": "grandchallenge/MATHFORGE",
-    "commit_sha": "593afd971a53ca0285f8b94570997ed7c3d7c170",
-    "path": "provider_manifests/VGSE-001.json",
-    "digest_algorithm": "git_blob_sha1",
-    "digest": "9cb5ac2d92b458f7f63e8a9811448f245a151ddd",
-}
-EXPECTED_VGSE_SOLVE_IDENTITY = {
-    "base_commit": "916f3434abcce29098ba7508a3b457a461461193",
-    "reviewed_head": "0d66a75412543e534b81c21a51a6ad88c035b55b",
-    "merge_commit": "709c7d3f388b8df75c87a247f80424e560c31e72",
-    "merged_at": "2026-07-31T15:04:53Z",
-    "workflow_runs": {
-        "solve_checks": 30641057206,
-        "gcl_conformance": 30641058060,
-        "candidate_replay": 30641057393,
-    },
-    "required_admission_record_path": "work_packages/VGSE_WP00/candidate_admission.json",
-}
-EXPECTED_GATES = {
-    "forge_provider_manifest_admitted",
-    "source_revision_concordance_complete",
-    "solve_candidate_package_reviewed",
-    "cert_route_registered",
-    "programme_active_registry_updated",
-    "programme_routing_registry_updated",
-    "runtime_contract_updated_for_active_admission",
-    "intellect_repin_complete_if_required",
-}
-EXPECTED_VGSE_TRUE_GATES = {
-    "forge_provider_manifest_admitted",
-    "source_revision_concordance_complete",
-    "solve_candidate_package_reviewed",
-}
 
 
 def load_json(path: Path) -> Any:
@@ -73,39 +53,28 @@ def load_json(path: Path) -> Any:
 
 def git_blob_sha1(path: Path) -> str:
     payload = path.read_bytes()
-    return hashlib.sha1(f"blob {len(payload)}\0".encode() + payload).hexdigest()
+    return hashlib.sha1(
+        f"blob {len(payload)}\0".encode("ascii") + payload,
+        usedforsecurity=False,
+    ).hexdigest()
 
 
 def schema_errors(instance: Any, schema_path: Path, label: str) -> list[str]:
-    validator = Draft202012Validator(load_json(schema_path), format_checker=FormatChecker())
+    validator = Draft202012Validator(
+        load_json(schema_path), format_checker=FormatChecker()
+    )
     return [
         f"{label}: {error.json_path}: {error.message}"
         for error in sorted(validator.iter_errors(instance), key=lambda item: list(item.path))
     ]
 
 
-def _candidate_map(admission: dict[str, Any]) -> dict[str, dict[str, Any]]:
+def _records(admission: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return {
         str(item.get("campaign_id")): item
         for item in admission.get("candidates", [])
         if isinstance(item, dict)
     }
-
-
-def _gate_errors(
-    candidate_id: str,
-    candidate: dict[str, Any],
-    expected_true: set[str],
-) -> list[str]:
-    errors: list[str] = []
-    gates = candidate.get("admission_gates", {})
-    if set(gates) != EXPECTED_GATES:
-        return [f"{candidate_id}: admission gate set drift"]
-    for field in EXPECTED_GATES:
-        expected = field in expected_true
-        if gates.get(field) is not expected:
-            errors.append(f"{candidate_id}: admission gate inflated or rolled back: {field}")
-    return errors
 
 
 def validation_errors(
@@ -114,213 +83,223 @@ def validation_errors(
     runtime: dict[str, Any] | None = None,
     active: dict[str, Any] | None = None,
     routing: dict[str, Any] | None = None,
+    activation: dict[str, Any] | None = None,
 ) -> list[str]:
     errors: list[str] = []
-    on_disk_admission = admission is None
-    on_disk_decision = decision is None
-    if admission is None:
-        admission = load_json(ADMISSION_PATH)
-        errors.extend(schema_errors(admission, ADMISSION_SCHEMA_PATH, "campaign admission registry"))
-    if decision is None:
-        decision = load_json(DECISION_PATH)
-        errors.extend(schema_errors(decision, DECISION_SCHEMA_PATH, "VGSE admission decision"))
-    if runtime is None:
-        runtime = load_json(RUNTIME_PATH)
-        errors.extend(schema_errors(runtime, RUNTIME_SCHEMA_PATH, "runtime contract v4"))
-    if active is None:
-        active = load_json(ACTIVE_PATH)
-    if routing is None:
-        routing = load_json(ROUTING_PATH)
+    on_disk = all(item is None for item in (admission, decision, runtime, active, routing, activation))
 
-    candidates = _candidate_map(admission)
-    active_ids = {
-        str(item.get("campaign_id")) for item in active.get("campaigns", [])
+    admission = load_json(ADMISSION_PATH) if admission is None else admission
+    decision = load_json(DECISION_PATH) if decision is None else decision
+    runtime = load_json(RUNTIME_PATH) if runtime is None else runtime
+    active = load_json(ACTIVE_PATH) if active is None else active
+    routing = load_json(ROUTING_PATH) if routing is None else routing
+    activation = load_json(ACTIVATION_PATH) if activation is None else activation
+
+    errors.extend(schema_errors(admission, ADMISSION_SCHEMA_PATH, "campaign admission registry"))
+    errors.extend(schema_errors(active, ACTIVE_SCHEMA_PATH, "governed campaign registry"))
+    errors.extend(schema_errors(routing, ROUTING_SCHEMA_PATH, "VGSE routing successor"))
+    errors.extend(schema_errors(runtime, RUNTIME_SCHEMA_PATH, "runtime contract v5"))
+    errors.extend(schema_errors(activation, ACTIVATION_SCHEMA_PATH, "VGSE final activation"))
+
+    active_items = {
+        str(item.get("campaign_id")): item
+        for item in active.get("campaigns", [])
         if isinstance(item, dict)
     }
-    routing_ids = {
-        str(item.get("campaign_id")) for item in routing.get("campaigns", [])
-        if isinstance(item, dict)
-    }
+    if set(active_items) != EXPECTED_ACTIVE_IDS:
+        errors.append("VGSE activation: active campaign portfolio drift")
+    vgse_active = active_items.get("VGSE-001", {})
+    if (
+        vgse_active.get("lifecycle") != "active_bounded_pending_cert_evidence"
+        or vgse_active.get("routing_member") is not True
+        or vgse_active.get("programme_tracker_issue") != 170
+    ):
+        errors.append("VGSE activation: governed active-registry entry drift")
 
-    if active_ids != EXPECTED_ACTIVE_IDS:
-        errors.append("candidate admission: active campaign portfolio drift")
-    if routing_ids != EXPECTED_ROUTING_IDS:
-        errors.append("candidate admission: active routing portfolio drift")
-    if set(candidates) != EXPECTED_CANDIDATE_IDS:
-        errors.append("candidate admission: candidate portfolio drift")
-    if set(candidates) & active_ids:
-        errors.append("candidate admission: candidate leaked into active campaign registry")
-    if set(candidates) & routing_ids:
-        errors.append("candidate admission: candidate leaked into active routing registry")
+    if routing.get("base_routing_contract", {}).get("digest") != EXPECTED_BASE_ROUTING_DIGEST:
+        errors.append("VGSE activation: base routing identity drift")
+    successor = routing.get("successor_campaign", {})
+    if successor.get("campaign_id") != "VGSE-001":
+        errors.append("VGSE activation: successor routing campaign drift")
+    manifest = successor.get("manifest", {})
+    if (
+        manifest.get("digest") != EXPECTED_MANIFEST_DIGEST
+        or manifest.get("merge_commit") != EXPECTED_SOLVE_MERGE
+    ):
+        errors.append("VGSE activation: Solve manifest identity drift")
+    cert = successor.get("cert", {})
+    route = cert.get("route_registration", {})
+    handoff = cert.get("handoff", {})
+    if (
+        cert.get("route_state") != "registered_pending_evidence"
+        or cert.get("may_adjudicate") is not False
+        or cert.get("cert_output") is not None
+    ):
+        errors.append("VGSE activation: Cert pending-route boundary drift")
+    if route.get("digest") != EXPECTED_ROUTE_DIGEST or route.get("merge_commit") != EXPECTED_CERT_MERGE:
+        errors.append("VGSE activation: MATHCERT route identity drift")
+    if handoff.get("git_blob_sha1") != EXPECTED_HANDOFF_DIGEST or handoff.get("state") != "pending":
+        errors.append("VGSE activation: pending handoff identity drift")
+    combined = set(routing.get("combined_portfolio", {}).get("campaign_ids", []))
+    if combined != EXPECTED_ROUTING_IDS:
+        errors.append("VGSE activation: combined routing portfolio drift")
+    promotion = successor.get("promotion", {})
+    if promotion.get("state") != "blocked" or not promotion.get("blockers"):
+        errors.append("VGSE activation: promotion boundary drift")
 
-    authority = admission.get("authority", {})
-    if authority.get("state_authority") != "protected_branch_repository_records":
-        errors.append("candidate admission: protected repository authority required")
-    if authority.get("candidate_issue_mutation_can_admit_campaign") is not False:
-        errors.append("candidate admission: issue mutation may not admit a campaign")
-    if authority.get("candidate_work_can_modify_active_portfolio") is not False:
-        errors.append("candidate admission: candidate work may not modify active portfolio")
-    if admission.get("lifecycle_states") != ["candidate", "admitted_active", "rejected", "withdrawn"]:
-        errors.append("candidate admission: lifecycle state vocabulary drift")
+    records = _records(admission)
+    if set(records) != {"NSOF-001", "VGSE-001"}:
+        errors.append("VGSE activation: tracked admission-record portfolio drift")
+    nsof = records.get("NSOF-001", {})
+    if (
+        nsof.get("candidate_phase") != "intake_only"
+        or nsof.get("lifecycle_state") != "candidate"
+        or nsof.get("active_portfolio_member") is not False
+    ):
+        errors.append("NSOF-001: intake-only boundary drift")
+    nsof_evidence = (nsof.get("source_provenance") or {}).get("intake_evidence") or {}
+    if nsof_evidence.get("sha256") != EXPECTED_SCREENSHOT_DIGEST:
+        errors.append("NSOF-001: screenshot evidence identity drift")
+    if any((nsof.get("admission_gates") or {}).values()):
+        errors.append("NSOF-001: admission gate inflated")
 
-    vgse = candidates.get("VGSE-001", {})
-    if vgse.get("candidate_phase") != "reviewed_candidate_work_package":
-        errors.append("VGSE-001: reviewed candidate phase drift")
-    if vgse.get("lifecycle_state") != "candidate" or vgse.get("active_portfolio_member") is not False:
-        errors.append("VGSE-001: must remain non-active pending cross-repository activation")
-    if (vgse.get("programme_tracker_issue"), vgse.get("governance_issue"), vgse.get("governance_history")) != (170, 175, [172]):
-        errors.append("VGSE-001: Programme governance identity drift")
-    vgse_source = vgse.get("source_provenance", {})
-    if vgse_source.get("state") != "provider_verified":
-        errors.append("VGSE-001: provider verification state drift")
-    if vgse_source.get("provider_manifest") != EXPECTED_VGSE_PROVIDER_MANIFEST:
+    vgse = records.get("VGSE-001", {})
+    if (
+        vgse.get("candidate_phase") != "activated_bounded_pending_cert_evidence"
+        or vgse.get("lifecycle_state") != "admitted_active"
+        or vgse.get("active_portfolio_member") is not True
+    ):
+        errors.append("VGSE-001: active lifecycle projection drift")
+    source = vgse.get("source_provenance", {})
+    if (source.get("provider_manifest") or {}).get("digest") != EXPECTED_PROVIDER_DIGEST:
         errors.append("VGSE-001: provider manifest identity drift")
-    if vgse_source.get("forge_issue") != 32 or vgse_source.get("intake_evidence") is not None:
-        errors.append("VGSE-001: source evidence shape drift")
-    if (vgse_source.get("candidate_source") or {}).get("candidate_sha256") != EXPECTED_VGSE_SOURCE_DIGEST:
-        errors.append("VGSE-001: candidate source digest drift")
-    vgse_solve = vgse.get("solve_candidate", {})
-    if (vgse_solve.get("issue"), vgse_solve.get("pull_request"), vgse_solve.get("state")) != (84, 85, "merged_candidate_work_package"):
-        errors.append("VGSE-001: merged Solve candidate identity drift")
-    for field, expected in EXPECTED_VGSE_SOLVE_IDENTITY.items():
-        if vgse_solve.get(field) != expected:
-            errors.append(f"VGSE-001: merged Solve evidence drift in {field}")
-    for field in (
-        "may_merge_candidate_work_package",
-        "may_create_campaign_manifest",
-        "may_create_cert_handoff",
-        "may_create_adjudication",
-        "may_create_promotion_record",
+    solve = vgse.get("solve_candidate", {})
+    if (
+        solve.get("state") != "active_manifest_and_pending_handoff_admitted"
+        or solve.get("merge_commit") != EXPECTED_SOLVE_MERGE
+        or (solve.get("active_manifest") or {}).get("digest") != EXPECTED_MANIFEST_DIGEST
+        or (solve.get("cert_handoff") or {}).get("digest") != EXPECTED_HANDOFF_DIGEST
     ):
-        if vgse_solve.get(field) is not False:
-            errors.append(f"VGSE-001: candidate registry may not directly grant {field}")
-    if vgse.get("certification_candidate") != {
-        "issue": 41,
-        "state": "pre_route_candidate",
-        "route_registry_entry": None,
-        "may_adjudicate": False,
-    }:
-        errors.append("VGSE-001: Cert pre-route boundary drift")
-    errors.extend(_gate_errors("VGSE-001", vgse, EXPECTED_VGSE_TRUE_GATES))
-
-    nsof = candidates.get("NSOF-001", {})
-    if nsof.get("candidate_phase") != "intake_only":
-        errors.append("NSOF-001: must remain intake-only")
-    if nsof.get("lifecycle_state") != "candidate" or nsof.get("active_portfolio_member") is not False:
-        errors.append("NSOF-001: must remain a non-active candidate")
-    if (nsof.get("programme_tracker_issue"), nsof.get("governance_issue"), nsof.get("governance_history")) != (195, 196, []):
-        errors.append("NSOF-001: Programme governance identity drift")
-    source = nsof.get("source_provenance", {})
-    if source.get("state") != "unverified_candidate" or source.get("provider_manifest") is not None:
-        errors.append("NSOF-001: source provenance inflated beyond screenshot intake")
-    if source.get("forge_issue") != 34 or source.get("candidate_source") is not None:
-        errors.append("NSOF-001: manuscript source identity fabricated before acquisition")
-    evidence = source.get("intake_evidence") or {}
-    expected_evidence = {
-        "artifact_type": "screenshot", "media_type": "image/png",
-        "sha256": EXPECTED_SCREENSHOT_DIGEST, "byte_length": 408154,
-        "pixel_width": 820, "pixel_height": 513,
-        "visible_title": "NONSOFIC GROUPS EXIST", "visible_attribution": "OPENAI",
-        "received_date": "2026-08-01", "manuscript_bytes_acquired": False,
-        "manuscript_digest": None, "official_release_found": False,
-        "arxiv_record_found": False,
+        errors.append("VGSE-001: active Solve evidence drift")
+    cert_record = vgse.get("certification_candidate", {})
+    if (
+        cert_record.get("state") != "registered_pending_evidence"
+        or cert_record.get("may_adjudicate") is not False
+        or cert_record.get("cert_output") is not None
+        or (cert_record.get("route_registry_entry") or {}).get("digest") != EXPECTED_ROUTE_DIGEST
+    ):
+        errors.append("VGSE-001: registered pending Cert record drift")
+    gates = vgse.get("admission_gates", {})
+    true_gates = {
+        "forge_provider_manifest_admitted",
+        "source_revision_concordance_complete",
+        "solve_candidate_package_reviewed",
+        "cert_route_registered",
+        "programme_active_registry_updated",
+        "programme_routing_registry_updated",
+        "runtime_contract_updated_for_active_admission",
     }
-    if evidence != expected_evidence:
-        errors.append("NSOF-001: screenshot evidence identity or source boundary drift")
-    solve = nsof.get("solve_candidate", {})
-    if (solve.get("issue"), solve.get("state")) != (89, "gated_preparation"):
-        errors.append("NSOF-001: gated Solve preparation identity drift")
-    for field in (
-        "pull_request", "base_commit", "reviewed_head", "merge_commit",
-        "merged_at", "workflow_runs", "required_admission_record_path",
+    for name, value in gates.items():
+        expected = name in true_gates
+        if value is not expected:
+            errors.append(f"VGSE-001: admission gate inflated or rolled back: {name}")
+    if gates.get("intellect_repin_complete_if_required") is not False:
+        errors.append("VGSE-001: INTELLECT repin may not close before protected consumer merge")
+
+    active_ref = admission.get("active_campaign_registry", {})
+    if (
+        active_ref.get("digest") != EXPECTED_ACTIVE_DIGEST
+        or active_ref.get("active_routing_member_count") != 9
     ):
-        if solve.get(field) is not None:
-            errors.append(f"NSOF-001: fabricated Solve execution evidence in {field}")
-    for field in (
-        "may_merge_candidate_work_package", "may_create_campaign_manifest",
-        "may_create_cert_handoff", "may_create_adjudication", "may_create_promotion_record",
+        errors.append("VGSE activation: admission registry active reference drift")
+
+    if runtime.get("supersedes", {}).get("git_blob_sha1") != EXPECTED_OLD_RUNTIME_DIGEST:
+        errors.append("VGSE activation: runtime predecessor identity drift")
+    refs = [
+        (runtime.get("programme_routing_contract", {}), EXPECTED_ROUTING_DIGEST, "runtime routing"),
+        (runtime.get("programme_campaign_contract", {}), EXPECTED_ACTIVE_DIGEST, "runtime campaign"),
+        (runtime.get("candidate_admission_contract", {}), EXPECTED_ADMISSION_DIGEST, "runtime admission"),
+        (runtime.get("certification_contract", {}), EXPECTED_ROUTE_DIGEST, "runtime Cert"),
+    ]
+    for ref, expected, label in refs:
+        if ref.get("digest") != expected:
+            errors.append(f"VGSE activation: {label} identity drift")
+    if runtime.get("active_portfolio", {}).get("pending_cert_evidence") != ["VGSE-001"]:
+        errors.append("VGSE activation: runtime pending-Cert projection drift")
+    candidate_portfolio = runtime.get("candidate_portfolio", {})
+    if (
+        candidate_portfolio.get("pre_admission") != ["NSOF-001"]
+        or candidate_portfolio.get("admitted_active") != ["VGSE-001"]
     ):
-        if solve.get(field) is not False:
-            errors.append(f"NSOF-001: prohibited intake authority in {field}")
-    if nsof.get("certification_candidate") != {
-        "issue": 42,
-        "state": "pre_route_candidate",
-        "route_registry_entry": None,
-        "may_adjudicate": False,
-    }:
-        errors.append("NSOF-001: Cert pre-route boundary drift")
-    errors.extend(_gate_errors("NSOF-001", nsof, set()))
+        errors.append("VGSE activation: runtime candidate lifecycle projection drift")
+    consumer = runtime.get("consumer_sync", {})
+    if (
+        consumer.get("intellect_repin_required") is not True
+        or consumer.get("intellect_repin_complete") is not False
+    ):
+        errors.append("VGSE activation: INTELLECT consumer gate drift")
+    claims = runtime.get("claim_boundaries", {})
+    prohibited_runtime_true = {
+        "mathematical_target_proved",
+        "novelty_claim_authorized",
+        "priority_claim_authorized",
+        "mathcert_adjudication_authorized",
+        "certificate_output_authorized",
+        "mechanical_or_manufacturing_claim_authorized",
+        "product_or_commercial_claim_authorized",
+        "release_trust_issues_reopened",
+    }
+    if any(claims.get(name) is not False for name in prohibited_runtime_true):
+        errors.append("VGSE activation: runtime claim inflation")
 
     if decision.get("decision") != "ADMIT_BOUNDED_PENDING_CROSS_REPOSITORY_ACTIVATION":
-        errors.append("VGSE decision: bounded admission disposition drift")
-    if decision.get("current_lifecycle_state") != "candidate":
-        errors.append("VGSE decision: current lifecycle must remain candidate")
-    if decision.get("active_portfolio_effect") != "none_until_cross_repository_activation_is_protected_and_repinned":
-        errors.append("VGSE decision: premature active-portfolio effect")
-    source_evidence = decision.get("source_evidence", {})
-    if source_evidence.get("provider_manifest_git_blob_sha1") != EXPECTED_VGSE_PROVIDER_MANIFEST["digest"]:
-        errors.append("VGSE decision: provider manifest binding drift")
-    if source_evidence.get("source_concordance_git_blob_sha1") != "6685cd1b0ed4d759f7447fce4b217ef8a59f0f93":
-        errors.append("VGSE decision: source concordance binding drift")
-    downstream = decision.get("downstream_authority", {})
-    for field in (
-        "may_prepare_active_solve_campaign_manifest",
-        "may_prepare_content_addressed_cert_handoff",
-        "may_prepare_target_specific_mathcert_routes",
+        errors.append("VGSE activation: historical bounded decision drift")
+    if activation.get("disposition") != "ACTIVATE_BOUNDED_PENDING_INTELLECT_REPIN":
+        errors.append("VGSE activation: activation disposition drift")
+    programme_effect = activation.get("programme_effect", {})
+    for key, expected in {
+        "active_registry": EXPECTED_ACTIVE_DIGEST,
+        "routing_overlay": EXPECTED_ROUTING_DIGEST,
+        "admission_registry": EXPECTED_ADMISSION_DIGEST,
+        "runtime_contract": EXPECTED_RUNTIME_DIGEST,
+    }.items():
+        if (programme_effect.get(key) or {}).get("digest") != expected:
+            errors.append(f"VGSE activation: activation {key} identity drift")
+    obligation = activation.get("consumer_obligation", {})
+    if (
+        obligation.get("repin_required") is not True
+        or obligation.get("repin_complete") is not False
+        or obligation.get("programme_issue_may_close") is not False
+        or obligation.get("required_runtime_digest") != EXPECTED_RUNTIME_DIGEST
     ):
-        if downstream.get(field) is not True:
-            errors.append(f"VGSE decision: missing bounded preparation authority in {field}")
-    for field in ("may_adjudicate", "may_issue_certificate_output", "may_create_promotion_record"):
-        if downstream.get(field) is not False:
-            errors.append(f"VGSE decision: prohibited downstream authority in {field}")
-    boundaries = decision.get("claim_boundaries", {})
-    if not boundaries or any(boundaries.values()):
-        errors.append("VGSE decision: claim boundary inflation")
+        errors.append("VGSE activation: consumer obligation drift")
+    if any((activation.get("claim_boundary") or {}).values()):
+        errors.append("VGSE activation: activation claim boundary inflation")
 
-    if on_disk_admission and git_blob_sha1(ADMISSION_PATH) != EXPECTED_CANDIDATE_DIGEST:
-        errors.append("candidate admission: on-disk registry blob drift")
-    if on_disk_decision and git_blob_sha1(DECISION_PATH) != EXPECTED_DECISION_DIGEST:
-        errors.append("VGSE decision: on-disk decision blob drift")
-    active_ref = admission.get("active_campaign_registry", {})
-    if active_ref.get("digest") != EXPECTED_ACTIVE_DIGEST or git_blob_sha1(ACTIVE_PATH) != EXPECTED_ACTIVE_DIGEST:
-        errors.append("candidate admission: active registry identity drift")
+    if on_disk:
+        for path, expected, label in [
+            (ACTIVE_PATH, EXPECTED_ACTIVE_DIGEST, "active registry"),
+            (ROUTING_PATH, EXPECTED_ROUTING_DIGEST, "routing successor"),
+            (ADMISSION_PATH, EXPECTED_ADMISSION_DIGEST, "admission registry"),
+            (RUNTIME_PATH, EXPECTED_RUNTIME_DIGEST, "runtime contract"),
+            (ACTIVATION_PATH, EXPECTED_ACTIVATION_DIGEST, "activation record"),
+            (DECISION_PATH, EXPECTED_DECISION_DIGEST, "historical decision"),
+        ]:
+            if git_blob_sha1(path) != expected:
+                errors.append(f"VGSE activation: on-disk {label} blob drift")
 
-    candidate_ref = runtime.get("candidate_admission_contract", {})
-    if candidate_ref.get("path") != "governance/campaign_admission_registry.json" or candidate_ref.get("digest") != EXPECTED_CANDIDATE_DIGEST:
-        errors.append("runtime v4: candidate admission identity drift")
-    if candidate_ref.get("candidate_ids") != ["NSOF-001", "VGSE-001"] or candidate_ref.get("candidate_count") != 2:
-        errors.append("runtime v4: candidate portfolio identity drift")
-    expected_portfolio = {
-        "pre_admission": ["NSOF-001", "VGSE-001"],
-        "intake_only": ["NSOF-001"],
-        "reviewed_candidate_work_packages": ["VGSE-001"],
-        "active_portfolio_effect": "none",
-    }
-    if runtime.get("candidate_portfolio") != expected_portfolio:
-        errors.append("runtime v4: candidate phase projection drift")
-    runtime_authority = runtime.get("authority_model", {})
-    if runtime_authority.get("candidate_registry_is_separate_from_active_registry") is not True:
-        errors.append("runtime v4: candidate and active registries must remain separate")
-    if runtime_authority.get("candidate_work_can_self_admit") is not False:
-        errors.append("runtime v4: candidate work may not self-admit")
-    if runtime.get("certification_contract", {}).get("digest") != EXPECTED_CERT_DIGEST:
-        errors.append("runtime v4: Cert contract identity drift")
-    runtime_boundaries = runtime.get("claim_boundaries", {})
-    if runtime_boundaries.get("candidate_campaign_admitted") is not False:
-        errors.append("runtime v4: candidate campaign admission inflation")
-    if runtime_boundaries.get("mathematical_target_proved") is not False:
-        errors.append("runtime v4: mathematical proof inflation")
     return errors
 
 
 def main() -> int:
     errors = validation_errors()
     if errors:
-        print("\n".join(errors), file=sys.stderr)
+        for error in errors:
+            print(error, file=sys.stderr)
         return 1
     print(
-        "validated provider-verified VGSE bounded admission decision, "
-        "unchanged active portfolio, screenshot-only NSOF intake, and closed Cert boundaries"
+        "validated VGSE bounded active routing, pending non-adjudicating Cert route, "
+        "preserved NSOF intake boundary, and required INTELLECT repin"
     )
     return 0
 

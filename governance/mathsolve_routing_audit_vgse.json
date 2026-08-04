@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0.0",
+  "registry_id": "MP-MATHSOLVE-ROUTING-VGSE-001",
+  "verified_at": "2026-08-04",
+  "base_routing_contract": {
+    "path": "governance/mathsolve_routing_audit.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "4a27ec8aaaa60f919ba51028807b83dc522bfcff",
+    "campaign_count": 8,
+    "status": "historical_base_preserved"
+  },
+  "successor_campaign": {
+    "campaign_id": "VGSE-001",
+    "title": "Varchenko–Galashin structural enumeration",
+    "disposition": "route",
+    "coverage_mode": "native",
+    "placement": "solve_native",
+    "manifest": {
+      "repository": "grandchallenge/MATHSOLVE",
+      "merge_commit": "1ebc9ace360e453fbc3707f6b23032b1c3c561eb",
+      "path": "campaign_manifests/VGSE-001.json",
+      "digest_algorithm": "git_blob_sha1",
+      "digest": "3bb6b18052f5754e9ae9aa4f813d9b43dcd4e3b4"
+    },
+    "solve_work_package_ids": [
+      "VGSE-WP00"
+    ],
+    "forge": {
+      "repository": "grandchallenge/MATHFORGE",
+      "commit_sha": "593afd971a53ca0285f8b94570997ed7c3d7c170",
+      "manifest_path": "provider_manifests/VGSE-001.json",
+      "manifest_git_blob_sha1": "9cb5ac2d92b458f7f63e8a9811448f245a151ddd",
+      "source_concordance_path": "sources/VGSE-001/source_revision_concordance.json",
+      "source_concordance_git_blob_sha1": "6685cd1b0ed4d759f7447fce4b217ef8a59f0f93"
+    },
+    "cert": {
+      "repository": "grandchallenge/MATHCERT",
+      "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/41",
+      "route_id": "MC-ROUTE-VGSE-001",
+      "route_state": "registered_pending_evidence",
+      "route_registration": {
+        "merge_commit": "92e3e56fda50267a241e120eb337dbbc520e900f",
+        "path": "governance/certification_route_overlays/VGSE-001.json",
+        "digest_algorithm": "git_blob_sha1",
+        "digest": "de56bfb0544b27b6237a68ac87044d3f0ba2e445"
+      },
+      "handoff": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "handoff_id": "MC-HANDOFF-VGSE-001",
+        "state": "pending",
+        "path": "cert_handoffs/VGSE-001.json",
+        "git_blob_sha1": "42cfa84978fd63c75f074b388afd8b1fcbd56091"
+      },
+      "cert_output": null,
+      "qualification_scope": null,
+      "may_adjudicate": false
+    },
+    "reconciliation": {
+      "solve_route_absence_text_status": "historical_superseded_for_programme_routing",
+      "superseding_mathcert_merge": "92e3e56fda50267a241e120eb337dbbc520e900f",
+      "programme_routing_effect": "active_bounded_pending_cert_evidence"
+    },
+    "promotion": {
+      "state": "blocked",
+      "blockers": [
+        "Exact or interval certificates for the bounded algebraic and planar-geometry targets are not admitted.",
+        "The generated-to-source equivalence record remains open.",
+        "Mechanical, manufacturing, product, novelty, priority, patentability, and commercial lanes remain outside scope."
+      ]
+    }
+  },
+  "combined_portfolio": {
+    "campaign_count": 9,
+    "campaign_ids": [
+      "UC-001",
+      "NS-CI-001",
+      "HC-001",
+      "BSD-001",
+      "PNP-001",
+      "RH-001",
+      "YM-001",
+      "OZ-001",
+      "VGSE-001"
+    ]
+  },
+  "claim_boundary": "This successor overlay adds bounded Programme routing only. It does not authorize MATHCERT adjudication, certificate output, mathematical promotion, rigid foldability, collision freedom, finite thickness, manufacturing, novelty, priority, patentability, product, or commercial claims."
+}

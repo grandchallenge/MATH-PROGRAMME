@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2.0",
+  "schema_version": "1.3.0",
   "registry_id": "MP-CAMPAIGN-ADMISSION-001",
   "verified_at": "2026-08-04",
   "authority": {
@@ -12,8 +12,8 @@
   "active_campaign_registry": {
     "path": "governance/governed_campaign_registry.json",
     "digest_algorithm": "git_blob_sha1",
-    "digest": "b1f1e4682d0f3ff0108d020e466fa2ecb0809b57",
-    "active_routing_member_count": 8,
+    "digest": "4cabbd820097029d01430f9f8a0c02653321e5af",
+    "active_routing_member_count": 9,
     "archived_member_count": 1
   },
   "lifecycle_states": [
@@ -66,14 +66,18 @@
         "may_create_cert_handoff": false,
         "may_create_adjudication": false,
         "may_create_promotion_record": false,
-        "required_admission_record_path": null
+        "required_admission_record_path": null,
+        "active_manifest": null,
+        "cert_handoff": null
       },
       "certification_candidate": {
         "issue": 42,
         "state": "pre_route_candidate",
         "route_registry_entry": null,
-        "may_adjudicate": false
+        "may_adjudicate": false,
+        "cert_output": null
       },
+      "programme_decision": null,
       "admission_gates": {
         "forge_provider_manifest_admitted": false,
         "source_revision_concordance_complete": false,
@@ -88,14 +92,15 @@
     },
     {
       "campaign_id": "VGSE-001",
-      "candidate_phase": "reviewed_candidate_work_package",
-      "lifecycle_state": "candidate",
+      "candidate_phase": "activated_bounded_pending_cert_evidence",
+      "lifecycle_state": "admitted_active",
       "programme_tracker_issue": 170,
-      "governance_issue": 175,
+      "governance_issue": 170,
       "governance_history": [
-        172
+        172,
+        175
       ],
-      "active_portfolio_member": false,
+      "active_portfolio_member": true,
       "source_provenance": {
         "state": "provider_verified",
         "forge_issue": 32,
@@ -117,42 +122,68 @@
         "intake_evidence": null
       },
       "solve_candidate": {
-        "issue": 84,
-        "pull_request": 85,
-        "base_commit": "916f3434abcce29098ba7508a3b457a461461193",
-        "reviewed_head": "0d66a75412543e534b81c21a51a6ad88c035b55b",
-        "merge_commit": "709c7d3f388b8df75c87a247f80424e560c31e72",
-        "merged_at": "2026-07-31T15:04:53Z",
+        "issue": 98,
+        "pull_request": 99,
+        "base_commit": "bcae3575e34b60fb9fe93f556501c8a0752959ea",
+        "reviewed_head": "5743743fde5eadaa8f1f9f33dcc59d582966e8cf",
+        "merge_commit": "1ebc9ace360e453fbc3707f6b23032b1c3c561eb",
+        "merged_at": "2026-08-04T12:25:44Z",
         "workflow_runs": {
-          "solve_checks": 30641057206,
-          "gcl_conformance": 30641058060,
-          "candidate_replay": 30641057393
+          "solve_checks": 30907913946,
+          "gcl_conformance": 30907915050,
+          "candidate_replay": 30907913948
         },
-        "state": "merged_candidate_work_package",
+        "state": "active_manifest_and_pending_handoff_admitted",
         "may_merge_candidate_work_package": false,
         "may_create_campaign_manifest": false,
         "may_create_cert_handoff": false,
         "may_create_adjudication": false,
         "may_create_promotion_record": false,
-        "required_admission_record_path": "work_packages/VGSE_WP00/candidate_admission.json"
+        "required_admission_record_path": "work_packages/VGSE_WP00/candidate_admission.json",
+        "active_manifest": {
+          "repository": "grandchallenge/MATHSOLVE",
+          "path": "campaign_manifests/VGSE-001.json",
+          "digest_algorithm": "git_blob_sha1",
+          "digest": "3bb6b18052f5754e9ae9aa4f813d9b43dcd4e3b4"
+        },
+        "cert_handoff": {
+          "repository": "grandchallenge/MATHSOLVE",
+          "path": "cert_handoffs/VGSE-001.json",
+          "digest_algorithm": "git_blob_sha1",
+          "digest": "42cfa84978fd63c75f074b388afd8b1fcbd56091",
+          "state": "pending"
+        }
       },
       "certification_candidate": {
         "issue": 41,
-        "state": "pre_route_candidate",
-        "route_registry_entry": null,
-        "may_adjudicate": false
+        "state": "registered_pending_evidence",
+        "route_registry_entry": {
+          "repository": "grandchallenge/MATHCERT",
+          "merge_commit": "92e3e56fda50267a241e120eb337dbbc520e900f",
+          "path": "governance/certification_route_overlays/VGSE-001.json",
+          "digest_algorithm": "git_blob_sha1",
+          "digest": "de56bfb0544b27b6237a68ac87044d3f0ba2e445",
+          "route_id": "MC-ROUTE-VGSE-001"
+        },
+        "may_adjudicate": false,
+        "cert_output": null
+      },
+      "programme_decision": {
+        "merge_commit": "3e2c4148d4304b2446a84c1e9a414d4a976a0464",
+        "decision": "ADMIT_BOUNDED_PENDING_CROSS_REPOSITORY_ACTIVATION",
+        "activation_state": "programme_active_pending_intellect_repin"
       },
       "admission_gates": {
         "forge_provider_manifest_admitted": true,
         "source_revision_concordance_complete": true,
         "solve_candidate_package_reviewed": true,
-        "cert_route_registered": false,
-        "programme_active_registry_updated": false,
-        "programme_routing_registry_updated": false,
-        "runtime_contract_updated_for_active_admission": false,
+        "cert_route_registered": true,
+        "programme_active_registry_updated": true,
+        "programme_routing_registry_updated": true,
+        "runtime_contract_updated_for_active_admission": true,
         "intellect_repin_complete_if_required": false
       },
-      "claim_boundary": "Provider verification, reviewed candidate computation, and a bounded admission decision authorize preparation of exact Solve and Cert routing records only. VGSE-001 remains outside the active portfolio until protected cross-repository activation; no root-count theorem, t-embedding equivalence, rigid-foldability, manufacturing, novelty, priority, patentability, product, or commercial claim is certified or promoted."
+      "claim_boundary": "VGSE-001 is admitted to bounded active Programme routing with a pending, non-adjudicating Cert route. No five-root theorem, t-embedding equivalence, rigid-foldability, collision, finite-thickness, manufacturing, novelty, priority, patentability, product, or commercial claim is certified or promoted."
     }
   ]
 }

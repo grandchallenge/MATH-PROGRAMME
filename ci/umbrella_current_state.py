@@ -15,18 +15,20 @@ AUDIT_SCHEMA_PATH = ROOT / "schemas" / "umbrella_current_state_conformance.schem
 CAMPAIGN_PATH = ROOT / "governance" / "governed_campaign_registry.json"
 CAMPAIGN_SCHEMA_PATH = ROOT / "schemas" / "governed_campaign_registry.schema.json"
 ROUTING_PATH = ROOT / "governance" / "mathsolve_routing_audit.json"
+ROUTING_OVERLAY_PATH = ROOT / "governance" / "mathsolve_routing_audit_vgse.json"
 DOMAIN_PATH = ROOT / "DOMAIN_REGISTRY.yaml"
 
 EXPECTED_ROUTING = {
     "qualified": {"UC-001", "NS-CI-001", "RH-001"},
     "ready": {"HC-001"},
-    "pending": {"BSD-001", "PNP-001", "YM-001", "OZ-001"},
+    "pending": {"BSD-001", "PNP-001", "YM-001", "OZ-001", "VGSE-001"},
 }
 EXPECTED_SCOPES = {
     "UC-001": "qualified_restricted_claims_only",
     "NS-CI-001": "qualified_interface_only",
     "RH-001": "qualified_interface_only",
 }
+# The umbrella audit is retained historical evidence for the eight-route state.
 EXPECTED_AUDIT_PORTFOLIO = {
     "qualified_restricted_claims_only": {"UC-001"},
     "qualified_interface_only": {"NS-CI-001", "RH-001"},
@@ -43,6 +45,7 @@ EXPECTED_PROGRAMME_TRACKERS = {
     "RH-001": 163,
     "YM-001": 164,
     "OZ-001": 113,
+    "VGSE-001": 170,
     "PC-001": None,
 }
 FORBIDDEN_TRACKER_SUBSTITUTIONS = {86, 88, 89}
@@ -62,10 +65,32 @@ def _schema_errors(path: Path, schema_path: Path) -> list[str]:
     ]
 
 
+def _combined_entries(
+    routing: dict[str, Any], overlay: dict[str, Any]
+) -> dict[str, dict[str, Any]]:
+    entries = {
+        str(item.get("campaign_id")): item
+        for item in routing.get("campaigns", [])
+        if isinstance(item, dict)
+    }
+    successor = overlay.get("successor_campaign", {})
+    if successor.get("campaign_id") == "VGSE-001":
+        entries["VGSE-001"] = {
+            "campaign_id": "VGSE-001",
+            "cert": {
+                "route_state": successor.get("cert", {}).get("route_state"),
+                "qualification_scope": successor.get("cert", {}).get("qualification_scope"),
+            },
+            "promotion": successor.get("promotion", {}),
+        }
+    return entries
+
+
 def validation_errors(
     audit: dict[str, Any] | None = None,
     campaigns: dict[str, Any] | None = None,
     routing: dict[str, Any] | None = None,
+    routing_overlay: dict[str, Any] | None = None,
 ) -> list[str]:
     errors: list[str] = []
     if audit is None:
@@ -76,6 +101,8 @@ def validation_errors(
         campaigns = load_json(CAMPAIGN_PATH)
     if routing is None:
         routing = load_json(ROUTING_PATH)
+    if routing_overlay is None:
+        routing_overlay = load_json(ROUTING_OVERLAY_PATH)
 
     if audit.get("predecessor", {}).get("status") != "historical_superseded_for_current_portfolio_state":
         errors.append("umbrella audit: predecessor must be explicitly historical and superseded")
@@ -90,11 +117,20 @@ def validation_errors(
         if set(audit.get("portfolio", {}).get(key, [])) != expected:
             errors.append(f"umbrella audit: {key} recorded portfolio drift")
 
-    entries = {
-        str(item.get("campaign_id")): item
-        for item in routing.get("campaigns", [])
-        if isinstance(item, dict)
-    }
+    if routing_overlay.get("base_routing_contract", {}).get("digest") != "4a27ec8aaaa60f919ba51028807b83dc522bfcff":
+        errors.append("umbrella audit: VGSE successor base-routing identity drift")
+    successor = routing_overlay.get("successor_campaign", {})
+    if successor.get("campaign_id") != "VGSE-001":
+        errors.append("umbrella audit: VGSE successor campaign missing")
+    successor_cert = successor.get("cert", {})
+    if (
+        successor_cert.get("route_state") != "registered_pending_evidence"
+        or successor_cert.get("may_adjudicate") is not False
+        or successor_cert.get("cert_output") is not None
+    ):
+        errors.append("umbrella audit: VGSE pending Cert boundary drift")
+
+    entries = _combined_entries(routing, routing_overlay)
     actual = {"qualified": set(), "ready": set(), "pending": set()}
     for campaign_id, entry in entries.items():
         state = entry.get("cert", {}).get("route_state")
@@ -113,7 +149,7 @@ def validation_errors(
                 errors.append(f"umbrella audit: {campaign_id} qualification may not enable promotion")
         elif state == "ready":
             actual["ready"].add(campaign_id)
-        elif state == "pending":
+        elif state in {"pending", "registered_pending_evidence"}:
             actual["pending"].add(campaign_id)
         else:
             errors.append(f"umbrella audit: unexpected current route state {campaign_id}:{state}")
@@ -132,6 +168,13 @@ def validation_errors(
     by_id = {str(item.get("campaign_id")): item for item in campaign_entries if isinstance(item, dict)}
     if by_id.get("OZ-001", {}).get("domain_id") is not None:
         errors.append("governed campaign registry: OZ-001 must remain an additional campaign outside principal domains")
+    vgse = by_id.get("VGSE-001", {})
+    if (
+        vgse.get("domain_id") is not None
+        or vgse.get("lifecycle") != "active_bounded_pending_cert_evidence"
+        or vgse.get("routing_member") is not True
+    ):
+        errors.append("governed campaign registry: VGSE-001 bounded active lifecycle drift")
     if by_id.get("PC-001", {}).get("routing_member") is not False:
         errors.append("governed campaign registry: archived PC-001 may not enter the current routing portfolio")
     if campaigns.get("legacy_aliases") != {"UC": "UC-001"}:
@@ -181,7 +224,11 @@ def main() -> int:
         print("\n".join(errors), file=sys.stderr)
         return 1
     print(
-        "validated current five-repository subject heads, scope-separated portfolio states, "
-        "exact campaign tracker mirrors, repository authority, historical supersession, and claim boundaries"
+        "validated current successor-aware portfolio, exact campaign tracker mirrors, "
+        "repository authority, historical supersession, and claim boundaries"
     )
     return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
