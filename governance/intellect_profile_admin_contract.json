@@ -1,0 +1,82 @@
+{
+  "$schema": "../schemas/intellect_profile_admin_contract.schema.json",
+  "schema_version": "1.0.0",
+  "operation_id": "GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001",
+  "phase": "B",
+  "api_version": "2026-03-10",
+  "administration_secret": "GCL_REPOSITORY_ADMIN_TOKEN",
+  "organization": "grandchallenge",
+  "repository": "grandchallenge/INTELLECT",
+  "repository_name": "INTELLECT",
+  "branch": "main",
+  "authority": {
+    "issue": "https://github.com/grandchallenge/gcl-standards/issues/12",
+    "phase_a_pr": "https://github.com/grandchallenge/gcl-standards/pull/26",
+    "phase_a_head": "6f908c9897d6ec06971c5e961fde68bb0a393fa6",
+    "phase_a_merge": "eaa87bfebab9adbfd39778364aac89aa8c479297",
+    "post_merge_attestation_comment": 5173619262
+  },
+  "property_schema_extensions": [
+    {
+      "property_name": "constitutional_profile",
+      "required_value": "Constitutional"
+    },
+    {
+      "property_name": "authority_scope",
+      "required_value": "constitutional"
+    }
+  ],
+  "repository_property_values": {
+    "constitutional_profile": "Constitutional",
+    "authority_scope": "constitutional",
+    "claim_promotion_role": "none",
+    "risk_tier": "critical",
+    "workflow_profile": "governance",
+    "public_programme": "true"
+  },
+  "ruleset": {
+    "allowed_pre_names": [
+      "Provider profile - main",
+      "Constitutional profile - main"
+    ],
+    "target_name": "Constitutional profile - main",
+    "target": "branch",
+    "enforcement": "active",
+    "ref_include": ["~DEFAULT_BRANCH"],
+    "ref_exclude": [],
+    "required_checks": [
+      "test (3.11.14)",
+      "test (3.12.13)",
+      "policy / policy",
+      "security / action-policy"
+    ],
+    "strict_status_checks": true,
+    "required_approving_reviews": 0,
+    "dismiss_stale_reviews": true,
+    "require_last_push_approval": false,
+    "require_code_owner_reviews": false,
+    "required_conversation_resolution": true,
+    "allowed_merge_methods": ["merge", "squash"],
+    "allow_force_pushes": false,
+    "allow_deletions": false,
+    "required_linear_history": false,
+    "zero_bypass": true
+  },
+  "evidence": {
+    "output": "intellect-profile-admin-evidence.json",
+    "digest_output": "intellect-profile-admin-evidence.json.sha256",
+    "artifact_name": "intellect-profile-admin-evidence"
+  },
+  "claim_boundaries": {
+    "profile_conformance_authorized": false,
+    "organization_wide_conformance": false,
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "manufacturing_claim_authorized": false,
+    "product_claim_authorized": false,
+    "commercial_claim_authorized": false
+  }
+}
