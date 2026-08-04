@@ -113,6 +113,19 @@ def writable_ruleset(detail: dict[str, Any], target_name: str) -> dict[str, Any]
     }
 
 
+def normalize_intellect_ruleset(detail: dict[str, Any]) -> dict[str, Any]:
+    normalized = normalize_ruleset(detail)
+    pull_request = next(
+        (row for row in detail.get("rules", []) if row.get("type") == "pull_request"),
+        {},
+    )
+    parameters = pull_request.get("parameters", {})
+    normalized["allowed_merge_methods"] = sorted(
+        str(value) for value in parameters.get("allowed_merge_methods") or []
+    )
+    return normalized
+
+
 def validate_ruleset(normalized: dict[str, Any], contract: dict[str, Any]) -> None:
     expected = contract["ruleset"]
     if normalized.get("name") not in expected["allowed_pre_names"]:
@@ -170,7 +183,7 @@ def collect_state(client: GitHubClient, contract: dict[str, Any]) -> dict[str, A
         client.request("GET", f"/repos/{repo}/properties/values")
     )
     detail = branch_ruleset(client, repo)
-    normalized = normalize_ruleset(detail)
+    normalized = normalize_intellect_ruleset(detail)
     validate_ruleset(normalized, contract)
     return {
         "actor": {
