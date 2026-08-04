@@ -29,6 +29,7 @@ REQUIRED_INSTALLATION_REPOSITORIES = {
     "grandchallenge/MATH-PROGRAMME",
     "grandchallenge/INTELLECT",
 }
+MUTATION_PAUSE_SECONDS = 1.0
 FALSE_BOUNDARIES = {
     "profile_conformance_authorized",
     "organization_wide_conformance",
@@ -267,24 +268,39 @@ def apply_contract(
 ) -> list[dict[str, Any]]:
     org = contract["organization"]
     repo = contract["repository"]
-    mutations: list[dict[str, Any]] = []
+    property_updates: list[dict[str, Any]] = []
     for extension in contract["property_schema_extensions"]:
         name = extension["property_name"]
         current = before["property_schemas"][name]
         if current.get("property_name") != name:
             raise IntellectProfileAdminError(f"property identity drift: {name}")
-        client.request(
-            "PUT",
-            f"/orgs/{org}/properties/schema/{name}",
-            property_update_payload(current, extension["required_value"]),
-        )
-        mutations.append(
+        property_updates.append(
             {
-                "operation": "extend_property_schema",
                 "property_name": name,
-                "required_value": extension["required_value"],
+                **property_update_payload(current, extension["required_value"]),
             }
         )
+
+    mutations: list[dict[str, Any]] = []
+    client.request(
+        "PATCH",
+        f"/orgs/{org}/properties/schema",
+        {"properties": property_updates},
+    )
+    mutations.append(
+        {
+            "operation": "extend_property_schemas",
+            "properties": [
+                {
+                    "property_name": extension["property_name"],
+                    "required_value": extension["required_value"],
+                }
+                for extension in contract["property_schema_extensions"]
+            ],
+        }
+    )
+    time.sleep(MUTATION_PAUSE_SECONDS)
+
     client.request(
         "PATCH",
         f"/orgs/{org}/properties/values",
@@ -299,6 +315,8 @@ def apply_contract(
     mutations.append(
         {"operation": "apply_repository_property_values", "repository": repo}
     )
+    time.sleep(MUTATION_PAUSE_SECONDS)
+
     detail = before["ruleset_detail"]
     ruleset_id = detail.get("id")
     if not isinstance(ruleset_id, int):
@@ -315,6 +333,7 @@ def apply_contract(
             "target_name": contract["ruleset"]["target_name"],
         }
     )
+    time.sleep(MUTATION_PAUSE_SECONDS)
     return mutations
 
 
