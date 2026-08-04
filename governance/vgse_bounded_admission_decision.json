@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "MP-VGSE-ADMISSION-001",
+  "campaign_id": "VGSE-001",
+  "programme_issue": 170,
+  "recorded_at": "2026-08-04",
+  "decision": "ADMIT_BOUNDED_PENDING_CROSS_REPOSITORY_ACTIVATION",
+  "current_lifecycle_state": "candidate",
+  "authorized_next_state": "admitted_active",
+  "active_portfolio_effect": "none_until_cross_repository_activation_is_protected_and_repinned",
+  "source_evidence": {
+    "forge_repository": "grandchallenge/MATHFORGE",
+    "provider_merge": "6f79cbca52992bf03ad025347f7416e4e8fa895c",
+    "review_remedy_merge": "593afd971a53ca0285f8b94570997ed7c3d7c170",
+    "provider_manifest_path": "provider_manifests/VGSE-001.json",
+    "provider_manifest_git_blob_sha1": "9cb5ac2d92b458f7f63e8a9811448f245a151ddd",
+    "source_concordance_path": "sources/VGSE-001/source_revision_concordance.json",
+    "source_concordance_git_blob_sha1": "6685cd1b0ed4d759f7447fce4b217ef8a59f0f93",
+    "author_pdf_sha256": "e513789426ae6247438920bfc80cfba6bd9c32dc6799a4f7873d806a865f95de",
+    "arxiv_v2_pdf_sha256": "f5aefb71dd0d662679e85cd0c7f96d1bbbc029a6b5cd2f1cfaa06286cc718e34",
+    "normalized_text_sha256": "74d58d4465166fc5035e5064a2c1cabc8b0f1e62cdcf82f7b41c6af65492cba4",
+    "byte_identical": false,
+    "normalized_text_concordant": true
+  },
+  "solve_evidence": {
+    "repository": "grandchallenge/MATHSOLVE",
+    "issue": 84,
+    "pull_request": 85,
+    "reviewed_head": "0d66a75412543e534b81c21a51a6ad88c035b55b",
+    "candidate_merge": "709c7d3f388b8df75c87a247f80424e560c31e72",
+    "metadata_reconciliation_merge": "5507354524302cc7f4fc7e6c178b40dfe9bf08fb",
+    "work_package_path": "work_packages/VGSE_WP00",
+    "bounded_results": [
+      "exact_finite_beta_C_equals_5_replay",
+      "five_uncertified_divisor_excluding_numerical_critical_point_witnesses",
+      "five_candidate_figure_16_vector_pattern_extractions",
+      "positive_numerical_graph_representative_reproducing_plucker_data_up_to_scale",
+      "five_numerical_planar_t_embedding_reconstructions"
+    ]
+  },
+  "authorized_certification_targets": {
+    "algebraic": [
+      "transcription_of_the_five_line_arrangement_and_boundary_equations",
+      "beta_C_equals_5_for_the_exact_finite_fixture",
+      "saturation_and_divisor_exclusion",
+      "five_isolated_chart_solutions_away_from_all_alpha_i_equals_zero",
+      "certified_residual_nonzero_denominator_and_root_separation_bounds"
+    ],
+    "planar_geometry": [
+      "positive_graph_weights",
+      "boundary_measurement_and_plucker_coordinate_agreement",
+      "discrete_holomorphic_linear_solves",
+      "primitive_closure_convexity_kawasaki_equalities_and_boundary_inequalities",
+      "generated_to_source_equivalence_record"
+    ]
+  },
+  "downstream_authority": {
+    "may_prepare_active_solve_campaign_manifest": true,
+    "may_prepare_content_addressed_cert_handoff": true,
+    "may_prepare_target_specific_mathcert_routes": true,
+    "may_adjudicate": false,
+    "may_issue_certificate_output": false,
+    "may_create_promotion_record": false
+  },
+  "activation_prerequisites": [
+    "protected_active_solve_campaign_manifest",
+    "protected_content_addressed_cert_handoff",
+    "protected_target_specific_mathcert_route_registration",
+    "programme_governed_campaign_registry_update",
+    "programme_mathsolve_routing_audit_update",
+    "programme_runtime_contract_update",
+    "intellect_repin_if_consumed_artifact_identity_changes",
+    "exact_head_ci",
+    "independent_non_author_review",
+    "human_steward_exact_head_authorization",
+    "protected_merge"
+  ],
+  "claim_boundaries": {
+    "five_root_theorem_certified": false,
+    "t_embedding_equivalence_certified": false,
+    "continuous_rigid_foldability_certified": false,
+    "collision_freedom_certified": false,
+    "finite_thickness_certified": false,
+    "manufacturability_certified": false,
+    "product_performance_certified": false,
+    "novelty_authorized": false,
+    "priority_authorized": false,
+    "patentability_authorized": false,
+    "commercial_value_authorized": false
+  },
+  "rollback": "Return to continued pre-admission or withdraw through a separately reviewed protected record preserving this decision history."
+}
