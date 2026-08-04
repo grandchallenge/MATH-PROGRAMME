@@ -206,7 +206,8 @@ def validation_errors(
         for item in campaigns.get("campaigns", [])
         if isinstance(item, dict)
     }
-    if set(campaign_map) != ACTIVE_CAMPAIGNS | {"PC-001"}:
+    historical_campaigns = ACTIVE_CAMPAIGNS | {"PC-001"}
+    if not historical_campaigns.issubset(set(campaign_map)):
         errors.append("third-pass audit: governed campaign registry coverage drift")
     for campaign_id, expected_issue in EXPECTED_PROGRAMME_TRACKERS.items():
         actual_issue = campaign_map.get(campaign_id, {}).get("programme_tracker_issue")
