@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/vgse_bounded_admission_decision.schema.json",
+  "title": "VGSE bounded admission decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "decision_id",
+    "campaign_id",
+    "programme_issue",
+    "recorded_at",
+    "decision",
+    "current_lifecycle_state",
+    "authorized_next_state",
+    "active_portfolio_effect",
+    "source_evidence",
+    "solve_evidence",
+    "authorized_certification_targets",
+    "downstream_authority",
+    "activation_prerequisites",
+    "claim_boundaries",
+    "rollback"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "decision_id": {"const": "MP-VGSE-ADMISSION-001"},
+    "campaign_id": {"const": "VGSE-001"},
+    "programme_issue": {"const": 170},
+    "recorded_at": {"type": "string", "format": "date"},
+    "decision": {"const": "ADMIT_BOUNDED_PENDING_CROSS_REPOSITORY_ACTIVATION"},
+    "current_lifecycle_state": {"const": "candidate"},
+    "authorized_next_state": {"const": "admitted_active"},
+    "active_portfolio_effect": {"const": "none_until_cross_repository_activation_is_protected_and_repinned"},
+    "source_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "forge_repository",
+        "provider_merge",
+        "review_remedy_merge",
+        "provider_manifest_path",
+        "provider_manifest_git_blob_sha1",
+        "source_concordance_path",
+        "source_concordance_git_blob_sha1",
+        "author_pdf_sha256",
+        "arxiv_v2_pdf_sha256",
+        "normalized_text_sha256",
+        "byte_identical",
+        "normalized_text_concordant"
+      ],
+      "properties": {
+        "forge_repository": {"const": "grandchallenge/MATHFORGE"},
+        "provider_merge": {"const": "6f79cbca52992bf03ad025347f7416e4e8fa895c"},
+        "review_remedy_merge": {"const": "593afd971a53ca0285f8b94570997ed7c3d7c170"},
+        "provider_manifest_path": {"const": "provider_manifests/VGSE-001.json"},
+        "provider_manifest_git_blob_sha1": {"const": "9cb5ac2d92b458f7f63e8a9811448f245a151ddd"},
+        "source_concordance_path": {"const": "sources/VGSE-001/source_revision_concordance.json"},
+        "source_concordance_git_blob_sha1": {"const": "6685cd1b0ed4d759f7447fce4b217ef8a59f0f93"},
+        "author_pdf_sha256": {"const": "e513789426ae6247438920bfc80cfba6bd9c32dc6799a4f7873d806a865f95de"},
+        "arxiv_v2_pdf_sha256": {"const": "f5aefb71dd0d662679e85cd0c7f96d1bbbc029a6b5cd2f1cfaa06286cc718e34"},
+        "normalized_text_sha256": {"const": "74d58d4465166fc5035e5064a2c1cabc8b0f1e62cdcf82f7b41c6af65492cba4"},
+        "byte_identical": {"const": false},
+        "normalized_text_concordant": {"const": true}
+      }
+    },
+    "solve_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "issue",
+        "pull_request",
+        "reviewed_head",
+        "candidate_merge",
+        "metadata_reconciliation_merge",
+        "work_package_path",
+        "bounded_results"
+      ],
+      "properties": {
+        "repository": {"const": "grandchallenge/MATHSOLVE"},
+        "issue": {"const": 84},
+        "pull_request": {"const": 85},
+        "reviewed_head": {"const": "0d66a75412543e534b81c21a51a6ad88c035b55b"},
+        "candidate_merge": {"const": "709c7d3f388b8df75c87a247f80424e560c31e72"},
+        "metadata_reconciliation_merge": {"const": "5507354524302cc7f4fc7e6c178b40dfe9bf08fb"},
+        "work_package_path": {"const": "work_packages/VGSE_WP00"},
+        "bounded_results": {
+          "type": "array",
+          "minItems": 5,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 10}
+        }
+      }
+    },
+    "authorized_certification_targets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algebraic", "planar_geometry"],
+      "properties": {
+        "algebraic": {"type": "array", "minItems": 5, "uniqueItems": true, "items": {"type": "string", "minLength": 10}},
+        "planar_geometry": {"type": "array", "minItems": 5, "uniqueItems": true, "items": {"type": "string", "minLength": 10}}
+      }
+    },
+    "downstream_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "may_prepare_active_solve_campaign_manifest",
+        "may_prepare_content_addressed_cert_handoff",
+        "may_prepare_target_specific_mathcert_routes",
+        "may_adjudicate",
+        "may_issue_certificate_output",
+        "may_create_promotion_record"
+      ],
+      "properties": {
+        "may_prepare_active_solve_campaign_manifest": {"const": true},
+        "may_prepare_content_addressed_cert_handoff": {"const": true},
+        "may_prepare_target_specific_mathcert_routes": {"const": true},
+        "may_adjudicate": {"const": false},
+        "may_issue_certificate_output": {"const": false},
+        "may_create_promotion_record": {"const": false}
+      }
+    },
+    "activation_prerequisites": {
+      "type": "array",
+      "const": [
+        "protected_active_solve_campaign_manifest",
+        "protected_content_addressed_cert_handoff",
+        "protected_target_specific_mathcert_route_registration",
+        "programme_governed_campaign_registry_update",
+        "programme_mathsolve_routing_audit_update",
+        "programme_runtime_contract_update",
+        "intellect_repin_if_consumed_artifact_identity_changes",
+        "exact_head_ci",
+        "independent_non_author_review",
+        "human_steward_exact_head_authorization",
+        "protected_merge"
+      ]
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "five_root_theorem_certified",
+        "t_embedding_equivalence_certified",
+        "continuous_rigid_foldability_certified",
+        "collision_freedom_certified",
+        "finite_thickness_certified",
+        "manufacturability_certified",
+        "product_performance_certified",
+        "novelty_authorized",
+        "priority_authorized",
+        "patentability_authorized",
+        "commercial_value_authorized"
+      ],
+      "properties": {
+        "five_root_theorem_certified": {"const": false},
+        "t_embedding_equivalence_certified": {"const": false},
+        "continuous_rigid_foldability_certified": {"const": false},
+        "collision_freedom_certified": {"const": false},
+        "finite_thickness_certified": {"const": false},
+        "manufacturability_certified": {"const": false},
+        "product_performance_certified": {"const": false},
+        "novelty_authorized": {"const": false},
+        "priority_authorized": {"const": false},
+        "patentability_authorized": {"const": false},
+        "commercial_value_authorized": {"const": false}
+      }
+    },
+    "rollback": {"type": "string", "minLength": 50}
+  }
+}
