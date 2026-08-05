@@ -40,7 +40,11 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          python ci/prepare_administrative_candidate.py --apply --report administrative-maintenance-candidate.json
+          python ci/prepare_administrative_candidate_v2.py --apply --report administrative-maintenance-candidate.json || {
+            rc=$?
+            test -f administrative-maintenance-candidate.json || printf '%s\n' '{"schema_version":"1.0.0","state":"CANDIDATE_PREPARATION_FAILED_CLOSED","authority_created":false}' > administrative-maintenance-candidate.json
+            exit "$rc"
+          }
       - name: Preserve preparation evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
