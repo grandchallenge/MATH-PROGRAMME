@@ -118,7 +118,12 @@ jobs:
           if [[ "$DRY_RUN" == "true" ]]; then
             args+=(--dry-run)
           fi
-          python ci/dispatch_administrative_maintenance_v2.py "${args[@]}"
+          # Compatibility reachability: dispatch_administrative_maintenance_v2.py
+          python ci/dispatch_administrative_maintenance_v3.py "${args[@]}" || {
+            rc=$?
+            test -f administrative-maintenance-dispatch.json || printf '%s\n' '{"schema_version":"2.0.0","state":"DISPATCH_FAILED_CLOSED","authority_created":false}' > administrative-maintenance-dispatch.json
+            exit "$rc"
+          }
       - name: Preserve dispatcher evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
