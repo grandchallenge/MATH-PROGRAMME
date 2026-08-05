@@ -8,6 +8,17 @@ import validate_administrative_automation_v2 as routed
 implementation = routed.implementation
 ROOT = Path(__file__).resolve().parents[1]
 _original_validate_workflows = implementation.validate_workflows
+RUNTIME_EXTENSION_PATHS = [
+    ROOT / "ci" / "prepare_administrative_candidate_v3.py",
+    ROOT / "ci" / "synchronize_administrative_completion_v3.py",
+]
+FORBIDDEN_RUNTIME_CAPABILITIES = (
+    "/merges",
+    "merge_pull_request",
+    "enable_auto_merge",
+    "dismiss_pull_request_review",
+    "branch_protection_rule",
+)
 
 
 def validate_workflows_v3(config: dict) -> list[str]:
@@ -40,6 +51,7 @@ def validate_workflows_v3(config: dict) -> list[str]:
         "permission-contents: write",
         "permission-issues: write",
         "permission-pull-requests: write",
+        "python ci/prepare_administrative_candidate_v3.py --apply",
     ):
         if marker not in candidate:
             errors.append(f"candidate: missing split-token marker {marker}")
@@ -48,9 +60,16 @@ def validate_workflows_v3(config: dict) -> list[str]:
         "repositories: INTELLECT",
         "CROSS_REPOSITORY_MAINTENANCE_TOKEN: ${{ steps.intellect-token.outputs.token }}",
         "permission-actions: read",
+        "python ci/synchronize_administrative_completion_v3.py --apply",
     ):
         if marker not in synchronization:
             errors.append(f"synchronization: missing split-token marker {marker}")
+
+    for path in RUNTIME_EXTENSION_PATHS:
+        text = path.read_text(encoding="utf-8")
+        for token in FORBIDDEN_RUNTIME_CAPABILITIES:
+            if token in text:
+                errors.append(f"{path.name}: forbidden authority capability token {token}")
     return errors
 
 
