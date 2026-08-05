@@ -31,6 +31,21 @@ EXPECTED_BOUNDARY_FALSE = {
     "priority_assessed",
     "new_irrationality_conclusion",
 }
+EXPECTED_SOURCE_BLOBS = {
+    "PROGRAM_CLOSEOUT.md": "e293c6610ba4c39c84799caddd4413233ee41001",
+    "papers_out/companions_survey/main.tex": "a126ee897f7719ded6a445b870da143d7b1e075d",
+    "papers_out/modular_anchors/main.tex": "9cc4f83fdbb829dc972aff4afeedc894df6e6e39",
+    "papers_out/sharp12/sharp12.tex": "6a347e2a483ec781afac98016635ce1d73b3c38e",
+    "work/DENOMINATOR_HARVEST.md": "237c56df62593a56613d74d5bfef4dd8c22d76d5",
+    "work/DENSITY_PROBE.md": "5999ecb12b8e7d3e7d75bd72dc6fe2f3c5097d49",
+    "work/Z5_MODULARITY_PROBE.md": "17af21c391fa5ba10d2bd7646f9b4ab1dcb11ea8",
+    "lean/lean-toolchain": "fd85b262bf1c734663aa8292b0101f672168788f",
+    "lean/lake-manifest.json": "8a3f441359ee64dfeb3d027a297d2a0ca98f5dce",
+    "lean/ZetaLucas.lean": "feb40994f119e8729755350d7ab3283b2702227c",
+    "lean/ZetaLucas/FranelClosedForm.lean": "fd34e447fd836310f3a3f56288a1704461ba83b8",
+    "lean/ZetaLucas/CatalanEndpoint.lean": "d94131f40cadbd52e06da26afe1b6fc9c47efc83",
+    "lean/ZetaLucas/ZagierBEndpoint.lean": "a05fd9ba43b58cd4009a3e7713af4067d115bf54",
+}
 
 
 def load_json(path: Path) -> Any:
@@ -73,6 +88,10 @@ def validation_errors(record: dict[str, Any], root: Path = ROOT) -> list[str]:
         for claim in claims
     ):
         errors.append("claim register must preserve bounded negative evidence")
+
+    source_loci = {item.get("path"): item.get("blob") for item in record.get("source_loci", [])}
+    if source_loci != EXPECTED_SOURCE_BLOBS:
+        errors.append("source_loci must equal the exact closed source-blob manifest")
 
     t3 = load_json(T3_PATH)
     concordance = record.get("t1_top_t3_concordance", {})
@@ -144,10 +163,31 @@ def validation_errors(record: dict[str, Any], root: Path = ROOT) -> list[str]:
         if lean.get("formal_promotion_allowed") is not False:
             errors.append("formal promotion must remain prohibited before replay")
     elif execution_state == "CLOSED":
-        if archive_state != "EXACT_REPLAY_BOUND" or not isinstance(archive_sha, str):
-            errors.append("closed state requires an exact archive digest")
+        if archive_state != "EXACT_REPLAY_BOUND":
+            errors.append("closed state requires an exact archive state")
+        if archive_sha != "5591905e8ca81a2a40ef29e7d63d572f97f49d8e2a2f409fecfd54370d576b69":
+            errors.append("closed state archive digest does not match exact replay")
         if record.get("required_closure_updates"):
             errors.append("closed state may not retain unresolved closure updates")
+        lean = record.get("lean_replay", {})
+        if lean.get("aggregate_build") != "PARTIAL_SUCCESS_RESOURCE_TIMEOUT":
+            errors.append("closed state must preserve the aggregate resource-timeout boundary")
+        if lean.get("formal_promotion_allowed") is not False:
+            errors.append("partial Lean replay may not authorize formal promotion")
+        if lean.get("placeholder_scan_state") != (
+            "KNOWN_BZCLOSEDFORM_AND_BZSTAR_SORRYAX_QUARANTINES_PRESERVED"
+        ):
+            errors.append("known Brown-Zudilin Lean quarantines must remain explicit")
+        executable = record.get("executable_replay", {})
+        if executable.get("state") != "PARTIAL_EXACT_REPLAY_WITH_HEAVY_LANES_UNEXECUTED":
+            errors.append("closed state must preserve the unexecuted heavy-lane boundary")
+    else:
+        errors.append("unknown execution_state")
+
+    if record.get("disposition") != "SOURCE_REVISION_PARTIALLY_ADMITTED_WITH_BLOCKERS":
+        errors.append("this evidence supports only partial source admission with blockers")
+    if record.get("promotion_effect") != "NONE":
+        errors.append("source intake may not promote a claim")
 
     return errors
 
@@ -161,7 +201,12 @@ def main() -> int:
         print(f"OZ source revision delta validation failed with {len(errors)} error(s)")
         return 1
     print(
-        "OZ source revision delta package is fail-closed: source admission is pending, "
-        "T1-top and T3 remain distinct, DEPTH remains unproved, and no claim is promoted"
+        "OZ source revision delta is closed with partial admission: exact source identities "
+        "are bound, T1-top and T3 remain distinct, DEPTH remains unproved, heavy symbolic "
+        "lanes remain unexecuted, known Lean quarantines remain explicit, and no claim is promoted"
     )
     return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
