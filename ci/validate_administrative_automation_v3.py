@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -25,6 +27,9 @@ FORBIDDEN_RUNTIME_CAPABILITIES = (
 )
 ATTESTATION_PATH = ROOT / "governance" / "administrative_maintenance_automation_post_merge_attestation.json"
 ATTESTATION_SCHEMA_PATH = ROOT / "schemas" / "administrative_maintenance_automation_post_merge_attestation.schema.json"
+TERMINAL_CLOSURE_PATH = ROOT / "governance" / "administrative_maintenance_automation_terminal_closure.json"
+TERMINAL_CLOSURE_SCHEMA_PATH = ROOT / "schemas" / "administrative_maintenance_automation_terminal_closure.schema.json"
+COMPLETION_STATE_PATH = ROOT / "governance" / "administrative_maintenance_completion_state.json"
 
 
 def validate_workflows_v3(config: dict) -> list[str]:
@@ -85,25 +90,110 @@ def validate_workflows_v3(config: dict) -> list[str]:
     return errors
 
 
-def validate_post_merge_attestation() -> list[str]:
+def schema_errors(schema_path: Path, record_path: Path, prefix: str) -> tuple[list[str], dict]:
     errors: list[str] = []
+    record: dict = {}
     try:
-        schema = json.loads(ATTESTATION_SCHEMA_PATH.read_text(encoding="utf-8"))
-        record = json.loads(ATTESTATION_PATH.read_text(encoding="utf-8"))
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+        record = json.loads(record_path.read_text(encoding="utf-8"))
         Draft202012Validator.check_schema(schema)
         validator = Draft202012Validator(schema, format_checker=FormatChecker())
         for failure in sorted(validator.iter_errors(record), key=lambda item: list(item.absolute_path)):
             location = ".".join(str(part) for part in failure.absolute_path) or "$"
-            errors.append(f"post_merge_attestation:{location}: {failure.message}")
-        detail = record.get("failure_detail", "")
-        if "release-trust" not in detail or "GCL_RELEASE_TRUST_APP_ID" not in detail:
-            errors.append("post_merge_attestation: failure detail must bind the protected environment and unavailable App ID")
-        if record.get("remediation_state") != "PENDING_PROTECTED_REMEDIATION_MERGE":
-            errors.append("post_merge_attestation: pre-merge remediation record may not declare protected completion")
-        if record.get("protected_completion_declared") is not False:
-            errors.append("post_merge_attestation: protected completion must remain false before corrective protected merge and replay")
+            errors.append(f"{prefix}:{location}: {failure.message}")
     except (OSError, json.JSONDecodeError) as exc:
-        errors.append(f"post_merge_attestation: unreadable record or schema: {exc}")
+        errors.append(f"{prefix}: unreadable record or schema: {exc}")
+    return errors, record
+
+
+def validate_post_merge_attestation() -> list[str]:
+    errors, record = schema_errors(ATTESTATION_SCHEMA_PATH, ATTESTATION_PATH, "post_merge_attestation")
+    if errors:
+        return errors
+    detail = record.get("failure_detail", "")
+    if "release-trust" not in detail or "GCL_RELEASE_TRUST_APP_ID" not in detail:
+        errors.append("post_merge_attestation: failure detail must bind the protected environment and unavailable App ID")
+    if record.get("remediation_state") != "PENDING_PROTECTED_REMEDIATION_MERGE":
+        errors.append("post_merge_attestation: historical remediation record must preserve its pending state")
+    if record.get("protected_completion_declared") is not False:
+        errors.append("post_merge_attestation: historical protected completion must remain false")
+    return errors
+
+
+def git_blob_sha(path: Path) -> str:
+    payload = path.read_bytes()
+    return hashlib.sha1(f"blob {len(payload)}\0".encode("ascii") + payload).hexdigest()
+
+
+def is_ancestor(ancestor: str, descendant: str) -> bool:
+    completed = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", ancestor, descendant],
+        cwd=ROOT,
+        check=False,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    return completed.returncode == 0
+
+
+def validate_terminal_closure() -> list[str]:
+    errors, record = schema_errors(
+        TERMINAL_CLOSURE_SCHEMA_PATH,
+        TERMINAL_CLOSURE_PATH,
+        "terminal_closure",
+    )
+    if errors:
+        return errors
+
+    try:
+        historical = json.loads(ATTESTATION_PATH.read_text(encoding="utf-8"))
+        completion = json.loads(COMPLETION_STATE_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"terminal_closure: dependency unreadable: {exc}"]
+
+    historical_ref = record["historical_attestation"]
+    if historical_ref["blob_sha"] != git_blob_sha(ATTESTATION_PATH):
+        errors.append("terminal_closure: historical attestation blob mismatch")
+    if historical.get("disposition_timing") != historical_ref["disposition_timing"]:
+        errors.append("terminal_closure: historical disposition timing drift")
+    if historical.get("protected_completion_declared") is not historical_ref["historical_protected_completion_declared"]:
+        errors.append("terminal_closure: historical completion state drift")
+
+    evidence = record["post_merge_evidence"]
+    if evidence["completion_derivation_head"] != completion.get("derived_from_protected_head"):
+        errors.append("terminal_closure: completion derivation head does not match protected state")
+    if evidence["completion_semantics_changed"] is not False:
+        errors.append("terminal_closure: fixed-point readback must report unchanged semantics")
+    if evidence["completion_state_pull_request"] is not None:
+        errors.append("terminal_closure: terminal readback must not create a completion-state PR")
+    if evidence["open_successor_completion_state_prs"] != 0:
+        errors.append("terminal_closure: successor completion-state PR count must be zero")
+    if evidence["mirrors_current"] is not True:
+        errors.append("terminal_closure: all configured mirrors must be current")
+    if record.get("protected_completion_declared") is not True:
+        errors.append("terminal_closure: protected completion must be declared")
+
+    if (ROOT / ".git").exists():
+        current_head = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=ROOT,
+            check=True,
+            text=True,
+            capture_output=True,
+        ).stdout.strip()
+        observed = evidence["observed_protected_head"]
+        if not is_ancestor(observed, current_head):
+            errors.append("terminal_closure: observed protected head is not ancestral to validation head")
+        for field in (
+            "environment_binding_remediation",
+            "completion_state_transition",
+            "fixed_point_remediation",
+        ):
+            merge_commit = record[field]["merge_commit"]
+            if not is_ancestor(merge_commit, observed):
+                errors.append(f"terminal_closure: {field} merge is not ancestral to observed protected head")
+        if not is_ancestor(evidence["completion_derivation_head"], observed):
+            errors.append("terminal_closure: retained derivation head is not ancestral to observed protected head")
     return errors
 
 
@@ -115,13 +205,13 @@ def main() -> int:
     result = routed.main()
     if result:
         return result
-    errors = validate_post_merge_attestation()
+    errors = [*validate_post_merge_attestation(), *validate_terminal_closure()]
     if errors:
         for error in errors:
             print(error, file=sys.stderr)
-        print(f"administrative automation post-merge attestation failed with {len(errors)} error(s)", file=sys.stderr)
+        print(f"administrative automation closure validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print("administrative automation post-merge attestation is valid and remains pending protected remediation merge")
+    print("administrative automation historical attestation and terminal closure overlay are valid")
     return 0
 
 
