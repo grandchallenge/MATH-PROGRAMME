@@ -95,7 +95,7 @@ def automation_workflow_errors(texts: dict[str, str]) -> list[str]:
         "CROSS_REPOSITORY_MAINTENANCE_TOKEN: ${{ steps.intellect-token.outputs.token }}",
         "github.event.workflow_run.head_branch == 'main'",
         "github.event.workflow_run.conclusion == 'success'",
-        "python ci/synchronize_administrative_completion_v2.py --apply",
+        "python ci/synchronize_administrative_completion_v3.py --apply",
         "SYNCHRONIZATION_FAILED_CLOSED",
     )
     for marker in sync_markers:
@@ -107,9 +107,12 @@ def automation_workflow_errors(texts: dict[str, str]) -> list[str]:
         errors.append("administrative-maintenance-synchronization.yml: issue writes must be split between MATH-PROGRAMME and INTELLECT tokens")
 
     for marker in (
-        "python ci/validate_administrative_automation_v2.py",
+        "python ci/validate_administrative_automation_v3.py",
+        "python ci/validate_workflow_coverage_v2.py",
+        "python ci/test_workflow_coverage_v2.py",
         "tests.test_administrative_automation",
         "tests.test_administrative_receipts",
+        "tests.test_administrative_synchronization_wait",
     ):
         if marker not in validation_text:
             errors.append(f"administrative-maintenance-automation-validation.yml: missing validation marker {marker}")
