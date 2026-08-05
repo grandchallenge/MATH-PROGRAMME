@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0.0",
+  "automation_id": "MP-ADMIN-AUTOMATION-CLOSURE-001",
+  "control_id": "MP-ADMIN-MAINT-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "evidence_repositories": [
+    "grandchallenge/MATH-PROGRAMME",
+    "grandchallenge/MATHFORGE",
+    "grandchallenge/MATHSOLVE",
+    "grandchallenge/MATHCERT",
+    "grandchallenge/INTELLECT"
+  ],
+  "procedures": {
+    "structural_sweep": {
+      "lead_minutes": 360,
+      "freeze_minutes": 90,
+      "record_globs": ["governance/administrative_structural_sweeps/*.json"],
+      "due_fields": ["scheduled_due_at"],
+      "receipt_floor_utc": "2026-08-05T06:09:00Z"
+    },
+    "administrative_review": {
+      "lead_minutes": 720,
+      "freeze_minutes": 180,
+      "record_globs": ["governance/administrative_reviews/*.json"],
+      "due_fields": ["scheduled_due_at", "review_due_at"],
+      "receipt_floor_utc": "2026-08-07T01:21:00Z"
+    },
+    "deep_conformance_review": {
+      "lead_minutes": 1440,
+      "freeze_minutes": 360,
+      "record_globs": ["governance/administrative_deep_conformance_reviews/*.json"],
+      "due_fields": ["scheduled_due_at", "review_due_at"],
+      "receipt_floor_utc": "2026-08-10T01:21:00Z"
+    },
+    "pilot_review": {
+      "lead_minutes": 1440,
+      "freeze_minutes": 360,
+      "record_globs": ["governance/administrative_pilot_reviews/*.json"],
+      "due_fields": ["scheduled_due_at", "review_due_at"],
+      "receipt_floor_utc": "2026-08-10T01:21:00Z"
+    },
+    "constitutional_review": {
+      "lead_minutes": 4320,
+      "freeze_minutes": 720,
+      "record_globs": ["governance/administrative_constitutional_reviews/*.json"],
+      "due_fields": ["scheduled_due_at", "review_due_at"],
+      "receipt_floor_utc": "2026-09-06T13:21:00Z"
+    }
+  },
+  "bootstrap_receipts": [
+    {
+      "procedure_id": "administrative_review",
+      "scheduled_due_at": "2026-08-04T01:21:00Z",
+      "record_path": "governance/administrative_cadence_reconciliation_post_merge_closure.json",
+      "record_sha256": "3dc7e4d107e1d6a3476f4d3c0367c1ef421e3150",
+      "merge_commit": "cc30c7766f9d738dadb3df20ef7a30c78e98ec1c",
+      "reviewed_head": "0b7bbf206e0a6c6e0fbcf63f88f09d5f5670a851",
+      "pull_request": 226,
+      "disposition": "PROTECTED_RECONCILIATION_COMPLETE",
+      "receipt_state": "PROTECTED_COMPLETE"
+    }
+  ],
+  "preparation_crons_utc": [
+    "57 16 5 8 *",
+    "45 9 6 8 *",
+    "21 13 6 8 *",
+    "33 2 7 8 *",
+    "21 19 7 8 *",
+    "9 12 8 8 *",
+    "57 4 9 8 *",
+    "21 1 9 8 *",
+    "21 13 3 9 *"
+  ],
+  "hourly_refresh_cron_utc": "17 * * * *",
+  "mirrors": [
+    {"repository": "grandchallenge/MATH-PROGRAMME", "issue": 182},
+    {"repository": "grandchallenge/MATH-PROGRAMME", "issue": 183},
+    {"repository": "grandchallenge/INTELLECT", "issue": 21}
+  ],
+  "workflow_permissions": {
+    "dispatcher": {"contents": "read"},
+    "candidate_preparation": {"contents": "write", "issues": "write", "pull-requests": "write"},
+    "completion_synchronization": {"contents": "write", "issues": "write", "pull-requests": "write", "actions": "read"}
+  },
+  "authority_boundary": {
+    "automated_approval": false,
+    "automated_human_steward_disposition": false,
+    "automated_merge": false,
+    "automated_auto_merge": false,
+    "branch_protection_bypass": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "cert_route_registered": false,
+    "adjudication_authorized": false,
+    "certificate_issued": false,
+    "external_claim_authorized": false
+  }
+}
