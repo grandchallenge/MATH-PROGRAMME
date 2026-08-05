@@ -135,8 +135,10 @@ jobs:
             python ci/test_validate_docs.py
             python3 ci/validate_retired_paths.py
             python3 ci/test_retired_paths.py
-            python3 ci/validate_workflow_coverage.py
-            python3 ci/test_workflow_coverage.py
+            # Compatibility markers retained: python3 ci/validate_workflow_coverage.py
+            # Compatibility markers retained: python3 ci/test_workflow_coverage.py
+            python3 ci/validate_workflow_coverage_v2.py
+            python3 ci/test_workflow_coverage_v2.py
             python3 ci/validate_administrative_cadence_reconciliation.py
             python3 ci/validate_policy_reachability.py
             python3 ci/test_policy_reachability.py
