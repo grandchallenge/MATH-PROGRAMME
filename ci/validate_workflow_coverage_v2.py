@@ -94,14 +94,20 @@ def automation_workflow_errors(texts: dict[str, str]) -> list[str]:
         "permission-pull-requests: write",
         "repositories: INTELLECT",
         "CROSS_REPOSITORY_MAINTENANCE_TOKEN: ${{ steps.intellect-token.outputs.token }}",
+        "github.event.workflow_run.event == 'push'",
         "github.event.workflow_run.head_branch == 'main'",
+        "github.event.workflow_run.head_repository.full_name == github.repository",
         "github.event.workflow_run.conclusion == 'success'",
+        "github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || 'refs/heads/main'",
+        "github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha",
         "python ci/synchronize_administrative_completion_v3.py --apply",
         "SYNCHRONIZATION_FAILED_CLOSED",
     )
     for marker in sync_markers:
         if marker not in synchronization_text:
             errors.append(f"administrative-maintenance-synchronization.yml: missing bounded synchronization marker {marker}")
+    if "inputs.head_sha" in synchronization_text:
+        errors.append("administrative-maintenance-synchronization.yml: manual arbitrary-SHA checkout is forbidden")
     if synchronization_text.count("permission-contents: write") != 1:
         errors.append("administrative-maintenance-synchronization.yml: exactly one MATH-PROGRAMME contents write token is required")
     if synchronization_text.count("permission-issues: write") != 2:
@@ -135,7 +141,7 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"workflow coverage v2 validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print("workflow coverage v2: registered read-only workflows, scoped app tokens, manual authority gates, and protected receipt paths are valid")
+    print("workflow coverage v2: registered read-only workflows, scoped app tokens, protected-main-only synchronization, manual authority gates, and protected receipt paths are valid")
     return 0
 
 
