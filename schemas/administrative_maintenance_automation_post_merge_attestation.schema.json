@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_maintenance_automation_post_merge_attestation.schema.json",
+  "title": "Administrative Maintenance Automation Post-Merge Attestation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "attestation_id",
+    "operation_id",
+    "original_issue",
+    "original_pull_request",
+    "reviewed_head",
+    "merge_commit",
+    "independent_review_id",
+    "human_steward_comment_id",
+    "human_steward_disposition",
+    "disposition_timing",
+    "disposition_preceded_merge",
+    "failed_synchronization_run",
+    "successful_dispatcher_run",
+    "failure_class",
+    "failure_detail",
+    "remediation_issue",
+    "remediation_state",
+    "protected_completion_declared",
+    "authority_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "attestation_id": {"const": "MP-ADMIN-AUTOMATION-CLOSURE-001-POST-MERGE-ATTESTATION-001"},
+    "operation_id": {"const": "MP-ADMIN-AUTOMATION-CLOSURE-001"},
+    "original_issue": {"const": 229},
+    "original_pull_request": {"const": 230},
+    "reviewed_head": {"const": "d8a285c1d0c499a39f9034bd3dd9ccb46cf187c6"},
+    "merge_commit": {"const": "ec6a9afa815ebaa1e7a6167ec8c3a4712750451d"},
+    "independent_review_id": {"const": 4861127811},
+    "human_steward_comment_id": {"const": 5187772630},
+    "human_steward_disposition": {"const": "AUTOMATION_CLOSURE_ADMITTED_WITH_POST_MERGE_REMEDIATION_REQUIRED"},
+    "disposition_timing": {"const": "POST_MERGE_RETROSPECTIVE"},
+    "disposition_preceded_merge": {"const": false},
+    "failed_synchronization_run": {"const": 30976863746},
+    "successful_dispatcher_run": {"const": 30976863718},
+    "failure_class": {"const": "RELEASE_TRUST_ENVIRONMENT_NOT_BOUND"},
+    "failure_detail": {"type": "string", "minLength": 1},
+    "remediation_issue": {"const": 231},
+    "remediation_state": {"enum": ["PENDING_PROTECTED_REMEDIATION_MERGE", "PROTECTED_REMEDIATION_MERGED_PENDING_SYNCHRONIZATION", "PROTECTED_SYNCHRONIZATION_COMPLETE"]},
+    "protected_completion_declared": {"type": "boolean"},
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["history_rewritten", "premerge_disposition_claimed", "automated_approval", "automated_human_steward_disposition", "automated_merge", "claim_promotion"],
+      "properties": {
+        "history_rewritten": {"const": false},
+        "premerge_disposition_claimed": {"const": false},
+        "automated_approval": {"const": false},
+        "automated_human_steward_disposition": {"const": false},
+        "automated_merge": {"const": false},
+        "claim_promotion": {"const": false}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"remediation_state": {"const": "PROTECTED_SYNCHRONIZATION_COMPLETE"}}},
+      "then": {"properties": {"protected_completion_declared": {"const": true}}},
+      "else": {"properties": {"protected_completion_declared": {"const": false}}}
+    }
+  ]
+}

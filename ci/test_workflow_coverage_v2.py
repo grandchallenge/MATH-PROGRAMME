@@ -46,6 +46,22 @@ def main() -> int:
     )
     assert any("bounded candidate marker" in error or "exactly one repository-scoped" in error for error in workflow_coverage_errors(texts=broad_candidate_scope, evidence=evidence))
 
+    candidate_environment_removed = dict(texts)
+    candidate_environment_removed["administrative-maintenance-candidate.yml"] = candidate_environment_removed["administrative-maintenance-candidate.yml"].replace(
+        "    environment: release-trust\n",
+        "",
+        1,
+    )
+    assert any("write job must bind protected environment release-trust" in error for error in workflow_coverage_errors(texts=candidate_environment_removed, evidence=evidence))
+
+    synchronization_environment_renamed = dict(texts)
+    synchronization_environment_renamed["administrative-maintenance-synchronization.yml"] = synchronization_environment_renamed["administrative-maintenance-synchronization.yml"].replace(
+        "    environment: release-trust\n",
+        "    environment: production\n",
+        1,
+    )
+    assert any("write job must bind protected environment release-trust" in error for error in workflow_coverage_errors(texts=synchronization_environment_renamed, evidence=evidence))
+
     removed_main_gate = dict(texts)
     removed_main_gate["administrative-maintenance-synchronization.yml"] = removed_main_gate["administrative-maintenance-synchronization.yml"].replace(
         "github.event.workflow_run.head_branch == 'main'",

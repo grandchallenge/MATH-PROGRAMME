@@ -12,11 +12,11 @@ on:
       - 'ci/validate_administrative_automation*.py'
       - 'ci/validate_workflow_coverage_v2.py'
       - 'ci/test_workflow_coverage_v2.py'
-      - 'governance/administrative_maintenance_automation.json'
+      - 'governance/administrative_maintenance_automation*.json'
       - 'governance/administrative_maintenance_completion_state.json'
-      - 'schemas/administrative_maintenance_automation.schema.json'
+      - 'schemas/administrative_maintenance_automation*.schema.json'
       - 'schemas/administrative_maintenance_completion_state.schema.json'
-      - 'tests/test_administrative_automation.py'
+      - 'tests/test_administrative_automation*.py'
       - 'tests/test_administrative_receipts.py'
       - 'tests/test_administrative_synchronization_wait.py'
   push:
@@ -31,11 +31,11 @@ on:
       - 'ci/validate_administrative_automation*.py'
       - 'ci/validate_workflow_coverage_v2.py'
       - 'ci/test_workflow_coverage_v2.py'
-      - 'governance/administrative_maintenance_automation.json'
+      - 'governance/administrative_maintenance_automation*.json'
       - 'governance/administrative_maintenance_completion_state.json'
-      - 'schemas/administrative_maintenance_automation.schema.json'
+      - 'schemas/administrative_maintenance_automation*.schema.json'
       - 'schemas/administrative_maintenance_completion_state.schema.json'
-      - 'tests/test_administrative_automation.py'
+      - 'tests/test_administrative_automation*.py'
       - 'tests/test_administrative_receipts.py'
       - 'tests/test_administrative_synchronization_wait.py'
   workflow_dispatch:
@@ -75,5 +75,6 @@ jobs:
           python ci/test_workflow_coverage_v2.py
           python -m unittest \
             tests.test_administrative_automation \
+            tests.test_administrative_automation_remediation \
             tests.test_administrative_receipts \
             tests.test_administrative_synchronization_wait

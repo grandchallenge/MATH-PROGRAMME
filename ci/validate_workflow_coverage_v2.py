@@ -17,10 +17,19 @@ legacy.EXPECTED_WORKFLOWS = set(legacy.EXPECTED_WORKFLOWS) | EXTRA_WORKFLOWS
 APP_ACTION = "actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1"
 APP_ID = "app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}"
 APP_KEY = "private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}"
+PROTECTED_ENVIRONMENT = "release-trust"
 
 
 def _trigger(workflow: dict[str, Any]) -> dict[str, Any]:
     value = workflow.get("on", {})
+    return value if isinstance(value, dict) else {}
+
+
+def _job(workflow: dict[str, Any], job_name: str) -> dict[str, Any]:
+    jobs = workflow.get("jobs", {})
+    if not isinstance(jobs, dict):
+        return {}
+    value = jobs.get(job_name, {})
     return value if isinstance(value, dict) else {}
 
 
@@ -47,6 +56,14 @@ def automation_workflow_errors(texts: dict[str, str]) -> list[str]:
     validation_trigger = _trigger(validation)
     if set(validation_trigger) != {"pull_request", "push", "workflow_dispatch"}:
         errors.append("administrative-maintenance-automation-validation.yml: triggers must cover pull_request, push, and workflow_dispatch only")
+
+    protected_jobs = (
+        ("administrative-maintenance-candidate.yml", _job(candidate, "prepare")),
+        ("administrative-maintenance-synchronization.yml", _job(synchronization, "synchronize")),
+    )
+    for workflow_name, job in protected_jobs:
+        if job.get("environment") != PROTECTED_ENVIRONMENT:
+            errors.append(f"{workflow_name}: write job must bind protected environment {PROTECTED_ENVIRONMENT}")
 
     for workflow_name, text in (
         ("administrative-maintenance-candidate.yml", candidate_text),
@@ -141,7 +158,7 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"workflow coverage v2 validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print("workflow coverage v2: registered read-only workflows, scoped app tokens, protected-main-only synchronization, manual authority gates, and protected receipt paths are valid")
+    print("workflow coverage v2: registered read-only workflows, protected Release Trust environment, scoped app tokens, protected-main-only synchronization, manual authority gates, and protected receipt paths are valid")
     return 0
 
 

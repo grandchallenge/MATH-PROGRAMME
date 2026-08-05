@@ -25,6 +25,7 @@ jobs:
   prepare:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    environment: release-trust
     steps:
       - name: Mint bounded MATH-PROGRAMME write token
         id: write-token
