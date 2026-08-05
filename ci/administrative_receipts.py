@@ -45,9 +45,11 @@ def receipt_for_record(
     if ancestry.returncode != 0:
         raise aa.AutomationError(f"{relative}: introduction commit is not ancestral to protected head")
     parents = git_runner(["show", "-s", "--format=%P", merge_commit]).split()
-    message = git_runner(["show", "-s", "--format=%B", merge_commit])
     if len(parents) < 2:
-        raise aa.AutomationError(f"{relative}: protected receipt is not a merge commit")
+        # A review branch may contain a final-form COMPLETE record before protected
+        # merge. It remains an unprotected candidate and cannot advance completion.
+        return None
+    message = git_runner(["show", "-s", "--format=%B", merge_commit])
     pr_match = re.search(r"Merge PR #(\d+)", message)
     head_match = re.search(r"exact head ([0-9a-f]{40})", message)
     disposition_match = re.search(r"Disposition:\s*([A-Z0-9_]+)", message)
