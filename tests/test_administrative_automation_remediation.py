@@ -37,6 +37,7 @@ class AdministrativeAutomationRemediationTests(unittest.TestCase):
         self,
         record: dict,
         completion_state: dict | None = None,
+        ancestry_result: bool = True,
     ) -> list[str]:
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
@@ -50,6 +51,7 @@ class AdministrativeAutomationRemediationTests(unittest.TestCase):
                 patch.object(validator, "TERMINAL_CLOSURE_SCHEMA_PATH", terminal_schema_path),
                 patch.object(validator, "TERMINAL_CLOSURE_PATH", terminal_record_path),
                 patch.object(validator, "COMPLETION_STATE_PATH", completion_path),
+                patch.object(validator, "is_ancestor", return_value=ancestry_result),
             ):
                 return validator.validate_terminal_closure()
 
@@ -114,6 +116,14 @@ class AdministrativeAutomationRemediationTests(unittest.TestCase):
         completion = copy.deepcopy(self.completion_state)
         completion["derived_from_protected_head"] = "0" * 40
         self.assertTrue(self.validate_terminal(copy.deepcopy(self.terminal_record), completion_state=completion))
+
+    def test_terminal_nonancestral_receipts_rejected(self) -> None:
+        self.assertTrue(
+            self.validate_terminal(
+                copy.deepcopy(self.terminal_record),
+                ancestry_result=False,
+            )
+        )
 
 
 if __name__ == "__main__":
