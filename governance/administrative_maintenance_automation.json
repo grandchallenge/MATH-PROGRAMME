@@ -79,8 +79,31 @@
   ],
   "workflow_permissions": {
     "dispatcher": {"contents": "read"},
-    "candidate_preparation": {"contents": "write", "issues": "write", "pull-requests": "write"},
-    "completion_synchronization": {"contents": "write", "issues": "write", "pull-requests": "write", "actions": "read"}
+    "candidate_preparation": {"contents": "read"},
+    "completion_synchronization": {"contents": "read"},
+    "automation_validation": {"contents": "read"}
+  },
+  "credential_contract": {
+    "provider": "GCL Release Trust GitHub App",
+    "action": "actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1",
+    "app_id_secret": "GCL_RELEASE_TRUST_APP_ID",
+    "private_key_secret": "GCL_RELEASE_TRUST_PRIVATE_KEY",
+    "candidate_write_scope": {
+      "repositories": ["MATH-PROGRAMME"],
+      "permissions": {"contents": "write", "issues": "write", "pull-requests": "write"}
+    },
+    "candidate_evidence_scope": {
+      "repositories": ["MATHFORGE", "MATHSOLVE", "MATHCERT", "INTELLECT"],
+      "permissions": {"contents": "read", "pull-requests": "read"}
+    },
+    "synchronization_write_scope": {
+      "repositories": ["MATH-PROGRAMME"],
+      "permissions": {"actions": "read", "contents": "write", "issues": "write", "pull-requests": "write"}
+    },
+    "intellect_mirror_scope": {
+      "repositories": ["INTELLECT"],
+      "permissions": {"issues": "write"}
+    }
   },
   "authority_boundary": {
     "automated_approval": false,
