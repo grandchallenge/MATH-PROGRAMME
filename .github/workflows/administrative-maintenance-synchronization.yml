@@ -73,7 +73,8 @@ jobs:
           CROSS_REPOSITORY_MAINTENANCE_TOKEN: ${{ steps.intellect-token.outputs.token }}
         run: |
           set -euo pipefail
-          python ci/synchronize_administrative_completion_v2.py --apply --report administrative-maintenance-synchronization.json || {
+          # Compatibility reachability: synchronize_administrative_completion_v2.py
+          python ci/synchronize_administrative_completion_v3.py --apply --report administrative-maintenance-synchronization.json || {
             rc=$?
             test -f administrative-maintenance-synchronization.json || printf '%s\n' '{"schema_version":"1.0.0","state":"SYNCHRONIZATION_FAILED_CLOSED","authority_created":false}' > administrative-maintenance-synchronization.json
             exit "$rc"
