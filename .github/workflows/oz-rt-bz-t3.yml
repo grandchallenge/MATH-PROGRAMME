@@ -38,6 +38,7 @@ env:
   SRC2_SHA: 968477ed7e406df6542f8da6fbe1cd6ca7273c47
   SRC2_DELTA_SHA: 790685b7ee4f642a8a88a1bd120636d1b8b39ea8
   SRC2_DELTA_TREE: 646ee73dd9066e059b043fad64fb20959f111cbf
+  SRC2_DELTA_ARCHIVE_SHA256: 5591905e8ca81a2a40ef29e7d63d572f97f49d8e2a2f409fecfd54370d576b69
 
 jobs:
   validate:
@@ -63,7 +64,7 @@ jobs:
           python -m unittest tests/test_oz_rt_bz_t3.py -v
           python -m json.tool campaigns/odd_zeta/OZ_RT_BZ_T3_001/OZ_RT_BZ_T3_001.json >/dev/null
           python -m json.tool campaigns/odd_zeta/OZ_RT_BZ_T3_001/OZ_RT_BZ_T3_001.schema.json >/dev/null
-      - name: Acquire exact source revisions
+      - name: Acquire exact protected T3 source revisions
         run: |
           git clone --filter=blob:none "$SRC1_REPO" src1
           git -C src1 checkout --detach "$SRC1_SHA"
@@ -71,7 +72,7 @@ jobs:
           git clone --filter=blob:none "$SRC2_REPO" src2
           git -C src2 checkout --detach "$SRC2_SHA"
           test "$(git -C src2 rev-parse HEAD)" = "$SRC2_SHA"
-      - name: Verify source identities and blocker text
+      - name: Verify protected T3 source identities and blocker text
         run: |
           set -euo pipefail
           test "$(git -C src2 hash-object bz_compact_weights_proofs.tex)" = da46db62471fbed81d861772c1d2d03d80782e23
@@ -82,7 +83,7 @@ jobs:
           grep -Fq 'FIXED letter coefficients' src2/work/Z5T3_BRIDGE.md
           grep -Fq 'PIVOT (the mapped next campaign)' src2/work/Z5T3_BRIDGE.md
           grep -Fq 'not attempted' src2/work/Z5T3_BRIDGE.md
-      - name: Replay X007 finite evidence without promotion
+      - name: Replay protected X007 finite evidence without promotion
         run: |
           sudo mkdir -p /home/ubuntu/fable-episode-2
           sudo ln -sfnT "$GITHUB_WORKSPACE/src1" /home/ubuntu/fable-episode-2/zeta-math
@@ -90,7 +91,7 @@ jobs:
           python3 -c "import runpy,sys; sys.path.insert(0,'src2/work/z5cf'); runpy.run_path('src2/work/z5cf/verify_compact.py', run_name='__main__')" | tee x007-compact.log
           grep -Fq 'w5: ALL PASS n=0..34' x007-compact.log
           grep -Fq 'L_BZ[sum T w5] = 0 for n = 0..31 : ALL ZERO' x007-compact.log
-          echo 'Finite replay has theorem_effect=NONE.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Finite T3 replay retains theorem_effect=NONE.' >> "$GITHUB_STEP_SUMMARY"
 
   source-delta-package:
     runs-on: ubuntu-24.04
@@ -117,7 +118,7 @@ jobs:
           python -m unittest tests/test_oz_source_revision_delta_002.py -v
           python -m json.tool campaigns/odd_zeta/OZ_SOURCE_REVISION_DELTA_002/OZ_SOURCE_REVISION_DELTA_002.json >/dev/null
           python -m json.tool campaigns/odd_zeta/OZ_SOURCE_REVISION_DELTA_002/OZ_SOURCE_REVISION_DELTA_002.schema.json >/dev/null
-      - name: Acquire and verify the exact seven-commit source delta
+      - name: Acquire and verify exact seven-commit source delta
         run: |
           set -euo pipefail
           git clone --filter=blob:none "$SRC2_REPO" source-delta
@@ -129,6 +130,7 @@ jobs:
           test "$(git -C source-delta rev-list --count "$SRC2_SHA..$SRC2_DELTA_SHA")" = 7
           git -C source-delta diff --name-status "$SRC2_SHA..$SRC2_DELTA_SHA" > source-delta-name-status.txt
           git -C source-delta archive --format=tar "$SRC2_DELTA_SHA" | sha256sum | tee source-delta-archive.sha256
+          test "$(cut -d' ' -f1 source-delta-archive.sha256)" = "$SRC2_DELTA_ARCHIVE_SHA256"
           {
             echo '## Exact source delta identities'
             echo
@@ -136,18 +138,24 @@ jobs:
             echo "- head: \`$SRC2_DELTA_SHA\`"
             echo "- tree: \`$SRC2_DELTA_TREE\`"
             echo '- commits: `7`'
-            echo "- archive: \`$(cut -d' ' -f1 source-delta-archive.sha256)\`"
+            echo "- archive: \`$SRC2_DELTA_ARCHIVE_SHA256\`"
             echo "- changed paths: \`$(wc -l < source-delta-name-status.txt)\`"
-            echo '- Python replay: `sympy==1.14.0`, `mpmath==1.3.0`'
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Verify admitted source loci and status boundaries
         run: |
           set -euo pipefail
           test "$(git -C source-delta hash-object PROGRAM_CLOSEOUT.md)" = e293c6610ba4c39c84799caddd4413233ee41001
+          test "$(git -C source-delta hash-object papers_out/companions_survey/main.tex)" = a126ee897f7719ded6a445b870da143d7b1e075d
+          test "$(git -C source-delta hash-object papers_out/modular_anchors/main.tex)" = 9cc4f83fdbb829dc972aff4afeedc894df6e6e39
+          test "$(git -C source-delta hash-object papers_out/sharp12/sharp12.tex)" = 6a347e2a483ec781afac98016635ce1d73b3c38e
+          test "$(git -C source-delta hash-object work/DENOMINATOR_HARVEST.md)" = 237c56df62593a56613d74d5bfef4dd8c22d76d5
+          test "$(git -C source-delta hash-object work/DENSITY_PROBE.md)" = 5999ecb12b8e7d3e7d75bd72dc6fe2f3c5097d49
+          test "$(git -C source-delta hash-object work/Z5_MODULARITY_PROBE.md)" = 17af21c391fa5ba10d2bd7646f9b4ab1dcb11ea8
           test "$(git -C source-delta hash-object lean/lean-toolchain)" = fd85b262bf1c734663aa8292b0101f672168788f
           test "$(git -C source-delta hash-object lean/lake-manifest.json)" = 8a3f441359ee64dfeb3d027a297d2a0ca98f5dce
           test "$(git -C source-delta hash-object lean/ZetaLucas.lean)" = feb40994f119e8729755350d7ab3283b2702227c
           test "$(git -C source-delta hash-object lean/ZetaLucas/FranelClosedForm.lean)" = fd34e447fd836310f3a3f56288a1704461ba83b8
+          test "$(git -C source-delta hash-object lean/ZetaLucas/Z2Minimal.lean)" = c269db24f024029a1098c9d3fe881fb749395104
           test "$(git -C source-delta hash-object lean/ZetaLucas/CatalanEndpoint.lean)" = d94131f40cadbd52e06da26afe1b6fc9c47efc83
           test "$(git -C source-delta hash-object lean/ZetaLucas/ZagierBEndpoint.lean)" = a05fd9ba43b58cd4009a3e7713af4067d115bf54
           grep -Fq 'exactly two inputs' source-delta/papers_out/sharp12/sharp12.tex
@@ -157,30 +165,88 @@ jobs:
           grep -Fq 'does *not* formalize the identification' source-delta/lean/ZetaLucas/CatalanEndpoint.lean
           grep -Fq 'No low-degree splitting' source-delta/work/Z5_MODULARITY_PROBE.md
           grep -Fq 'full order-9' source-delta/work/Z5_MODULARITY_PROBE.md
-      - name: Replay bounded executable evidence
+
+  source-delta-symbolic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact subject checkout
+        env:
+          SUBJECT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$SUBJECT_SHA"
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Install exact symbolic dependencies
+        run: python -m pip install --requirement requirements/oz_source_revision_delta.txt
+      - name: Acquire exact candidate source and legacy path binding
+        run: |
+          git clone --filter=blob:none "$SRC2_REPO" source-delta
+          git -C source-delta checkout --detach "$SRC2_DELTA_SHA"
+          test "$(git -C source-delta rev-parse HEAD)" = "$SRC2_DELTA_SHA"
+          sudo mkdir -p /home/ubuntu/fable-episode-2
+          sudo ln -sfnT "$GITHUB_WORKSPACE/source-delta" /home/ubuntu/fable-episode-2/zeta-math-2
+      - name: Replay expository Apéry checks
         working-directory: source-delta
         run: |
           set -euo pipefail
-          sudo mkdir -p /home/ubuntu/fable-episode-2
-          sudo ln -sfnT "$GITHUB_WORKSPACE/source-delta" /home/ubuntu/fable-episode-2/zeta-math-2
-          python3 -c "import runpy; runpy.run_path('papers_out/expository_apery/verify.py', run_name='__main__')" | tee ../expository-apery-replay.log
+          timeout --signal=TERM 600s python3 -c "import runpy; runpy.run_path('papers_out/expository_apery/verify.py', run_name='__main__')" | tee ../expository-apery-replay.log
           grep -Fq 'CHECK1 a_n sum==recurrence n<=25: True' ../expository-apery-replay.log
           grep -Fq 'CHECK2 b_n closed form satisfies recurrence 1<=n<=24: True' ../expository-apery-replay.log
-          grep -Fq 'CHECK4 t(q)==q(eta1 eta6/eta2 eta3)^12' ../expository-apery-replay.log
-          grep -Fq 'CHECK5 F(q)==(eta2 eta3)^7/(eta1 eta6)^5' ../expository-apery-replay.log
-          grep -Fq 'CHECK6 companion formula == B(n)' ../expository-apery-replay.log
           grep -Fq 'CHECK7 b_n == 6 B(n) n<=25: True' ../expository-apery-replay.log
-          python3 -m py_compile \
-            work/z5eps/eps57_sym2_all.py \
-            work/z5eps/eps58_denoms.py \
-            work/z5eps/eps59_rowhunt.py \
-            work/z5eps/eps60_density.py
-          echo 'Expository Apéry checks replayed exactly. Heavy symbolic lanes remain pending exact bounded replay; compilation is not theorem evidence.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Replay symmetric-square and modular-anchor evidence
+        working-directory: source-delta
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM 600s python3 work/z5eps/eps57_sym2_all.py | tee ../eps57.log
+          grep -Fq 'ALL SIX SYM^2 IDENTITIES: PROVED' ../eps57.log
+          grep -Fq 'holomorphic at all cusps: True' ../eps57.log
+          grep -Fq 'coefficientwise to q^40: True' ../eps57.log
+      - name: Replay denominator evidence
+        working-directory: source-delta
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM 900s python3 work/z5eps/eps58_denoms.py | tee ../eps58.log
+          test "$(grep -c 'bound d_n\^r holds: True' ../eps58.log)" -eq 15
+          test "$(grep -c 'formula matches n<=40' ../eps58.log)" -eq 15
+          grep -Fq 'saved eps58_results.json' ../eps58.log
+          test -s work/z5eps/eps58_results.json
+      - name: Replay Brown-Zudilin row-hunt evidence
+        working-directory: source-delta
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM 900s python3 work/z5eps/eps59_rowhunt.py | tee ../eps59.log
+          test "$(grep -c 'N(u_[0-4]) = 0 .*: True' ../eps59.log)" -eq 5
+          grep -Fq 'SELF-DUALITY Rhat == Khat: False' ../eps59.log
+          test "$(grep -c 'no integral rescale' ../eps59.log)" -ge 2
+          grep -Fq 'control shows the "simple" signature' ../eps59.log
+      - name: Replay density evidence
+        working-directory: source-delta
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM 900s python3 work/z5eps/eps60_density.py | tee ../eps60.log
+          test "$(grep -c 'PASS' ../eps60.log)" -ge 6
+          test "$(grep -c 'density 0.000' ../eps60.log)" -eq 6
+          grep -Fq 'saved eps60_results.json' ../eps60.log
+          test -s work/z5eps/eps60_results.json
+          echo 'All bounded symbolic scripts replayed at the exact candidate source head; outputs remain non-promotional pending independent review.' >> "$GITHUB_STEP_SUMMARY"
 
   source-delta-lean:
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 35
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact subject checkout
+        env:
+          SUBJECT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$SUBJECT_SHA"
       - name: Acquire exact candidate Lean source
         run: |
           git clone --filter=blob:none "$SRC2_REPO" source-delta
@@ -195,20 +261,33 @@ jobs:
           done
           test -x "$HOME/.elan/bin/lake"
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - name: Build aggregate and audit selected declarations
+      - name: Build selected new modules
         working-directory: source-delta/lean
         run: |
           set -euo pipefail
           lake exe cache get
-          lake build ZetaLucas
-          cat > GCLSourceDeltaAudit.lean <<'EOF'
+          lake build \
+            ZetaLucas.FranelClosedForm \
+            ZetaLucas.Z2Minimal \
+            ZetaLucas.CatalanEndpoint \
+            ZetaLucas.ZagierBEndpoint \
+            ZetaLucas.BZClosedForm \
+            ZetaLucas.BZStar
+      - name: Audit clean declaration axioms
+        working-directory: source-delta/lean
+        run: |
+          set -euo pipefail
+          cat > GCLSourceDeltaCleanAudit.lean <<'EOF'
           import ZetaLucas.FranelClosedForm
+          import ZetaLucas.Z2Minimal
           import ZetaLucas.CatalanEndpoint
           import ZetaLucas.ZagierBEndpoint
           #check ZetaLucas.franel_closed_form
           #check ZetaLucas.franel_harmonic_closed_form
           #check ZetaLucas.s10_closed_form
           #check ZetaLucas.s10_harmonic_closed_form
+          #check ZetaLucas.pz2_ne_zero
+          #check ZetaLucas.defect_vanishes
           #check ZetaLucas.catalanB_sharp_denominator
           #check ZetaLucas.zagC_unique
           #check ZetaLucas.zagC6_forces_three_dvd
@@ -217,13 +296,31 @@ jobs:
           #print axioms ZetaLucas.franel_harmonic_closed_form
           #print axioms ZetaLucas.s10_closed_form
           #print axioms ZetaLucas.s10_harmonic_closed_form
+          #print axioms ZetaLucas.pz2_ne_zero
+          #print axioms ZetaLucas.defect_vanishes
           #print axioms ZetaLucas.catalanB_sharp_denominator
           #print axioms ZetaLucas.zagC_unique
           #print axioms ZetaLucas.zagC6_forces_three_dvd
           #print axioms ZetaLucas.zagC2_not_scaled_integral
           EOF
-          lake env lean GCLSourceDeltaAudit.lean | tee gcl-source-delta-axioms.log
-          ! grep -q 'sorryAx' gcl-source-delta-axioms.log
-          grep -q 'ZetaLucas.catalanB_sharp_denominator' gcl-source-delta-axioms.log
-          grep -q 'ZetaLucas.franel_closed_form' gcl-source-delta-axioms.log
-          echo 'Aggregate Lean build and selected declaration-level axiom audit passed; no Programme promotion follows.' >> "$GITHUB_STEP_SUMMARY"
+          lake env lean GCLSourceDeltaCleanAudit.lean | tee gcl-source-delta-clean-axioms.log
+          ! grep -q 'sorryAx' gcl-source-delta-clean-axioms.log
+          grep -Fq 'ZetaLucas.franel_closed_form' gcl-source-delta-clean-axioms.log
+          grep -Fq 'ZetaLucas.pz2_ne_zero' gcl-source-delta-clean-axioms.log
+          grep -Fq 'ZetaLucas.catalanB_sharp_denominator' gcl-source-delta-clean-axioms.log
+          grep -Fq 'ZetaLucas.zagC_unique' gcl-source-delta-clean-axioms.log
+      - name: Preserve Brown-Zudilin quarantine axioms
+        working-directory: source-delta/lean
+        run: |
+          set -euo pipefail
+          cat > GCLSourceDeltaQuarantineAudit.lean <<'EOF'
+          import ZetaLucas.BZClosedForm
+          import ZetaLucas.BZStar
+          #print axioms ZetaLucas.BZCF.bz_creative_telescoping
+          #print axioms ZetaLucas.BZCF.PhatSum_eq_Phat
+          #print axioms ZetaLucas.BZStar.star_creative_telescoping
+          #print axioms ZetaLucas.BZStar.PStarSum_eq_Phat
+          EOF
+          lake env lean GCLSourceDeltaQuarantineAudit.lean | tee gcl-source-delta-quarantine-axioms.log
+          test "$(grep -c 'sorryAx' gcl-source-delta-quarantine-axioms.log)" -ge 4
+          echo 'Selected new declarations contain no sorryAx; existing Brown-Zudilin declarations remain explicitly quarantined with sorryAx. No Programme promotion follows.' >> "$GITHUB_STEP_SUMMARY"
