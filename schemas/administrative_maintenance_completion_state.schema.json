@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_maintenance_completion_state.schema.json",
+  "title": "Administrative Maintenance Completion State",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "control_id", "derived_from_protected_head", "state", "procedures", "authority_boundary"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "derived_from_protected_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "state": {"const": "PROTECTED_RECEIPT_DERIVED"},
+    "procedures": {
+      "type": "object",
+      "minProperties": 5,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["completed_through_utc", "receipt_count", "receipts"],
+        "properties": {
+          "completed_through_utc": {"type": ["string", "null"], "format": "date-time"},
+          "receipt_count": {"type": "integer", "minimum": 0},
+          "receipts": {"type": "array", "items": {"$ref": "administrative_maintenance_automation.schema.json#/$defs/receipt"}}
+        }
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issues_are_authority", "workflow_artifacts_are_authority", "draft_pull_requests_are_authority", "unmerged_branches_are_authority", "protected_merge_receipts_required"],
+      "properties": {
+        "issues_are_authority": {"const": false},
+        "workflow_artifacts_are_authority": {"const": false},
+        "draft_pull_requests_are_authority": {"const": false},
+        "unmerged_branches_are_authority": {"const": false},
+        "protected_merge_receipts_required": {"const": true}
+      }
+    }
+  }
+}
