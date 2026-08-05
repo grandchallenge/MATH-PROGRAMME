@@ -6,6 +6,7 @@ from typing import Any
 
 import validate_workflow_coverage as legacy
 
+ROOT = legacy.ROOT
 EXTRA_WORKFLOWS = {
     "administrative-maintenance-automation-validation.yml",
     "administrative-maintenance-candidate.yml",
