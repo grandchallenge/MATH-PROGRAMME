@@ -1,0 +1,123 @@
+from __future__ import annotations
+
+import json
+import re
+from pathlib import Path
+
+from administrative_automation import derive_completion_state, load_json, validate_completion_state, validate_config
+
+ROOT = Path(__file__).resolve().parents[1]
+CONFIG_PATH = ROOT / "governance" / "administrative_maintenance_automation.json"
+STATE_PATH = ROOT / "governance" / "administrative_maintenance_completion_state.json"
+CANDIDATE_WORKFLOW = ROOT / ".github" / "workflows" / "administrative-maintenance-candidate.yml"
+SYNC_WORKFLOW = ROOT / ".github" / "workflows" / "administrative-maintenance-synchronization.yml"
+DISPATCH_WORKFLOW = ROOT / ".github" / "workflows" / "administrative-maintenance-dispatch.yml"
+VALIDATION_WORKFLOW = ROOT / ".github" / "workflows" / "administrative-maintenance-automation-validation.yml"
+SCRIPT_PATHS = [
+    ROOT / "ci" / "administrative_automation.py",
+    ROOT / "ci" / "prepare_administrative_candidate.py",
+    ROOT / "ci" / "synchronize_administrative_completion.py",
+    ROOT / "ci" / "dispatch_administrative_maintenance_v2.py",
+]
+SCHEMA_PATHS = [
+    ROOT / "schemas" / "administrative_maintenance_automation.schema.json",
+    ROOT / "schemas" / "administrative_maintenance_completion_state.schema.json",
+]
+
+
+def workflow_permissions(text: str) -> dict[str, str]:
+    match = re.search(r"(?m)^permissions:\s*\n((?:  [a-z-]+:\s*[a-z]+\s*\n)+)", text)
+    if not match:
+        return {}
+    return {key: value for key, value in re.findall(r"(?m)^  ([a-z-]+):\s*([a-z]+)\s*$", match.group(1))}
+
+
+def validate_workflows(config: dict) -> list[str]:
+    errors: list[str] = []
+    candidate = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
+    sync = SYNC_WORKFLOW.read_text(encoding="utf-8")
+    dispatch = DISPATCH_WORKFLOW.read_text(encoding="utf-8")
+    validation = VALIDATION_WORKFLOW.read_text(encoding="utf-8")
+    expected_permissions = config["workflow_permissions"]
+    observed = {
+        "candidate_preparation": workflow_permissions(candidate),
+        "completion_synchronization": workflow_permissions(sync),
+        "dispatcher": workflow_permissions(dispatch),
+        "automation_validation": workflow_permissions(validation),
+    }
+    for key, expected in expected_permissions.items():
+        if observed.get(key) != expected:
+            errors.append(f"{key}: workflow permission drift: {observed.get(key)} != {expected}")
+    for cron in [*config["preparation_crons_utc"], config["hourly_refresh_cron_utc"]]:
+        if f"cron: '{cron}'" not in candidate:
+            errors.append(f"candidate workflow missing protected preparation cron: {cron}")
+    if "pull_request:" in candidate or "pull_request_target:" in candidate:
+        errors.append("write-capable candidate workflow must not execute pull-request code")
+    if "pull_request:" in sync or "pull_request_target:" in sync:
+        errors.append("write-capable synchronizer must not execute pull-request code")
+    if "dispatch_administrative_maintenance_v2.py" not in dispatch:
+        errors.append("dispatcher does not consume receipt-derived completion")
+    if "validate_administrative_automation.py" not in validation:
+        errors.append("automation validator is not workflow-reachable")
+    for path, text in ((CANDIDATE_WORKFLOW, candidate), (SYNC_WORKFLOW, sync), (DISPATCH_WORKFLOW, dispatch), (VALIDATION_WORKFLOW, validation)):
+        for action in re.findall(r"(?m)^\s*-?\s*uses:\s*([^\s]+)\s*$", text):
+            if "@" not in action or not re.fullmatch(r"[^@]+@[0-9a-f]{40}", action):
+                errors.append(f"{path.name}: unpinned action {action}")
+        if "set -euo pipefail" not in text:
+            errors.append(f"{path.name}: shell path is not fail closed")
+    forbidden_permissions = {"administration", "checks", "deployments", "packages", "security-events"}
+    for key, permissions in observed.items():
+        extra = forbidden_permissions & set(permissions)
+        if extra:
+            errors.append(f"{key}: excessive permissions {sorted(extra)}")
+    return errors
+
+
+def validate_scripts() -> list[str]:
+    errors: list[str] = []
+    forbidden = ("/merges", "merge_pull_request", "enable_auto_merge", "merge_method", "dismiss_pull_request_review", "branch_protection_rule")
+    for path in SCRIPT_PATHS:
+        text = path.read_text(encoding="utf-8")
+        for token in forbidden:
+            if token in text:
+                errors.append(f"{path.name}: forbidden authority capability token {token}")
+    sync = (ROOT / "ci" / "synchronize_administrative_completion.py").read_text(encoding="utf-8")
+    if "CREDENTIAL_MISSING_PATCH_RETAINED" not in sync:
+        errors.append("cross-repository credential absence is not explicit and fail closed")
+    candidate = (ROOT / "ci" / "prepare_administrative_candidate.py").read_text(encoding="utf-8")
+    if '"draft": True' not in candidate:
+        errors.append("candidate PR creation is not draft-only")
+    return errors
+
+
+def main() -> int:
+    errors: list[str] = []
+    config = load_json(CONFIG_PATH)
+    state = load_json(STATE_PATH)
+    errors.extend(validate_config(config))
+    errors.extend(validate_completion_state(state))
+    errors.extend(validate_workflows(config))
+    errors.extend(validate_scripts())
+    for schema in SCHEMA_PATHS:
+        try:
+            json.loads(schema.read_text(encoding="utf-8"))
+        except Exception as exc:
+            errors.append(f"{schema.name}: invalid JSON schema: {exc}")
+    if (ROOT / ".git").exists():
+        import subprocess
+        head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, check=True, text=True, capture_output=True).stdout.strip()
+        try:
+            derived = derive_completion_state(ROOT, config, head)
+            errors.extend(validate_completion_state(derived, state))
+        except Exception as exc:
+            errors.append(f"protected receipt derivation failed: {exc}")
+    if errors:
+        for error in errors:
+            print(error)
+        return 1
+    print("MP-ADMIN-AUTOMATION-CLOSURE-001: valid")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

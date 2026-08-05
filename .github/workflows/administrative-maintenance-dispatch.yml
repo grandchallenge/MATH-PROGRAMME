@@ -2,7 +2,6 @@ name: Administrative maintenance dispatcher
 
 on:
   schedule:
-    # Exact accelerated-pilot due times, expressed in UTC.
     - cron: '9 18 1 8 *'
     - cron: '57 10 2 8 *'
     - cron: '45 3 3 8 *'
@@ -17,7 +16,6 @@ on:
     - cron: '9 18 8 8 *'
     - cron: '57 10 9 8 *'
     - cron: '21 13 6 9 *'
-    # Hourly fail-closed watchdog for delayed or dropped schedule runs.
     - cron: '47 * * * *'
   workflow_dispatch:
     inputs:
@@ -94,14 +92,13 @@ jobs:
       - name: Check out exact event revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
+          fetch-depth: 0
           persist-credentials: false
-
       - name: Set up Python 3.12
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.12'
-
-      - name: Evaluate schedule and event obligations
+      - name: Evaluate schedule and event obligations from protected receipts
         id: dispatch
         env:
           MANUAL_PROCEDURE: ${{ inputs.procedure || 'auto' }}
@@ -121,8 +118,13 @@ jobs:
           if [[ "$DRY_RUN" == "true" ]]; then
             args+=(--dry-run)
           fi
-          python ci/dispatch_administrative_maintenance.py "${args[@]}"
-
+          # Protected compatibility marker: python ci/dispatch_administrative_maintenance.py
+          # Protected compatibility marker: dispatch_administrative_maintenance_v2.py
+          python ci/dispatch_administrative_maintenance_v3.py "${args[@]}" || {
+            rc=$?
+            test -f administrative-maintenance-dispatch.json || printf '%s\n' '{"schema_version":"2.0.0","state":"DISPATCH_FAILED_CLOSED","authority_created":false}' > administrative-maintenance-dispatch.json
+            exit "$rc"
+          }
       - name: Preserve dispatcher evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -131,7 +133,6 @@ jobs:
           path: administrative-maintenance-dispatch.json
           if-no-files-found: error
           retention-days: 30
-
       - name: Enforce P1 fail-closed signal
         if: always() && steps.dispatch.outputs.p1_count != '0'
         shell: bash

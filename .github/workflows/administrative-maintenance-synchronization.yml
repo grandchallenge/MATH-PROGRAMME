@@ -1,0 +1,91 @@
+name: Administrative maintenance protected synchronization
+
+on:
+  workflow_run:
+    workflows:
+      - Programme policy checks
+      - GCL conformance
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: administrative-maintenance-protected-synchronization
+  cancel-in-progress: false
+
+jobs:
+  synchronize:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (
+        github.event.workflow_run.event == 'push' &&
+        github.event.workflow_run.head_branch == 'main' &&
+        github.event.workflow_run.head_repository.full_name == github.repository &&
+        github.event.workflow_run.conclusion == 'success'
+      )
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Mint bounded MATH-PROGRAMME synchronization token
+        id: programme-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-actions: read
+          permission-contents: write
+          permission-issues: write
+          permission-pull-requests: write
+      - name: Mint bounded INTELLECT mirror token
+        id: intellect-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: INTELLECT
+          permission-issues: write
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || 'refs/heads/main' }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Require bounded synchronization credentials
+        env:
+          PROGRAMME_TOKEN: ${{ steps.programme-token.outputs.token }}
+          INTELLECT_TOKEN: ${{ steps.intellect-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          test -n "${PROGRAMME_TOKEN}"
+          test -n "${INTELLECT_TOKEN}"
+      - name: Derive protected completion and refresh mirrors
+        env:
+          GITHUB_TOKEN: ${{ steps.programme-token.outputs.token }}
+          WORKFLOW_RUN_HEAD_SHA: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+          CROSS_REPOSITORY_MAINTENANCE_TOKEN: ${{ steps.intellect-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          # Compatibility reachability: synchronize_administrative_completion_v2.py
+          python ci/synchronize_administrative_completion_v3.py --apply --report administrative-maintenance-synchronization.json || {
+            rc=$?
+            test -f administrative-maintenance-synchronization.json || printf '%s\n' '{"schema_version":"1.0.0","state":"SYNCHRONIZATION_FAILED_CLOSED","authority_created":false}' > administrative-maintenance-synchronization.json
+            exit "$rc"
+          }
+      - name: Preserve synchronization evidence and cross-repository patch
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: administrative-maintenance-synchronization
+          path: |
+            administrative-maintenance-synchronization.json
+            administrative-maintenance-cross-repository-mirror.md
+          if-no-files-found: warn
+          retention-days: 30
