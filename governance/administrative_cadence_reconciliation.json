@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0.0",
+  "reconciliation_id": "MP-ADMIN-CADENCE-RECONCILIATION-001",
+  "control_id": "MP-ADMIN-MAINT-001",
+  "issue": 224,
+  "status": "IMPLEMENTED_PENDING_PROTECTED_REVIEW",
+  "opened_at": "2026-08-04T16:42:38-07:00",
+  "base_head": "b98d5ba79439e7ef7ee6493604bcfc40f9422dd8",
+  "branch": "governance/mp-admin-cadence-reconciliation-001",
+  "structural_sweep_records": [
+    "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-02-002.json",
+    "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-02-003.json",
+    "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-03-004.json",
+    "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-04-005.json"
+  ],
+  "portfolio_review_record": "governance/administrative_portfolio_reviews/MP-ADMIN-PORTFOLIO-REVIEW-2026-08-03-001.json",
+  "dispatcher_evidence": {
+    "scheduled_runs_observed": 37,
+    "latest_successful_schedule_run_id": 30957604897,
+    "latest_successful_schedule_run_at": "2026-08-04T22:45:41Z",
+    "dispatch_is_not_authority": true
+  },
+  "evidence_classification": {
+    "contemporaneous": [
+      "GitHub Actions retained scheduled dispatcher runs at the missed loci and after them",
+      "protected repository commit and merge histories existed independently at each original deadline"
+    ],
+    "retrospective": [
+      "Programme heads at each missed deadline were reconstructed with commit queries bounded by the original UTC deadline",
+      "five-repository material movement was reconstructed by exact compare ranges from the first-sweep heads to the reconciliation heads"
+    ],
+    "limitation": "The reconstructed records do not claim that a Human Steward or delegated administrator performed the required substantive sweep at the original locus; they record the surviving evidence and the missed protected-record obligation."
+  },
+  "repository_change_inventory": [
+    {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "first_sweep_head": "fb8e215d56714f595f328cb22b2b3f5e9410cc7b",
+      "reconciliation_head": "b98d5ba79439e7ef7ee6493604bcfc40f9422dd8",
+      "commits_since_first_sweep": 245
+    },
+    {
+      "repository": "grandchallenge/MATHFORGE",
+      "first_sweep_head": "0ea98866de3066e6a44ea1ca2cf93ade8a9e1c15",
+      "reconciliation_head": "da79f89388099749d6a93e03c4364fc018a19197",
+      "commits_since_first_sweep": 5
+    },
+    {
+      "repository": "grandchallenge/MATHSOLVE",
+      "first_sweep_head": "443daf537dc7e4ee34ab43aeb01508d9177816ab",
+      "reconciliation_head": "1ebc9ace360e453fbc3707f6b23032b1c3c561eb",
+      "commits_since_first_sweep": 37
+    },
+    {
+      "repository": "grandchallenge/MATHCERT",
+      "first_sweep_head": "e8d1e34509e640d82902ad0195560740b52bec0e",
+      "reconciliation_head": "92e3e56fda50267a241e120eb337dbbc520e900f",
+      "commits_since_first_sweep": 232
+    },
+    {
+      "repository": "grandchallenge/INTELLECT",
+      "first_sweep_head": "d26d673efffbe0874e1440450322869ff70be9d1",
+      "reconciliation_head": "c8629942e96ad52df5beede0b80a5909b2561b05",
+      "commits_since_first_sweep": 74
+    }
+  ],
+  "disposition": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 5,
+    "repeated_cadence_failure": true,
+    "pilot_level_escalation_required": true,
+    "waiver_used": false,
+    "cadence_anchor_reset": false
+  },
+  "mirror_refresh_targets": [
+    "grandchallenge/MATH-PROGRAMME#182",
+    "grandchallenge/MATH-PROGRAMME#183",
+    "grandchallenge/INTELLECT#21"
+  ],
+  "next_deadlines": {
+    "structural_sweep": "2026-08-04T23:09:00-07:00",
+    "pilot_and_deep_conformance_review": "2026-08-09T18:21:00-07:00"
+  },
+  "pilot_review_options": [
+    "RETAIN_FACTOR_AND_CADENCE",
+    "RELAX_PROCEDURAL_RECORD_CADENCE_ONLY",
+    "MACHINE_GENERATED_CANDIDATE_RECORDS_WITH_PROTECTED_RATIFICATION"
+  ],
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "cert_route_registered": false,
+    "adjudication_authorized": false,
+    "cert_output_issued": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "publication_claim_authorized": false,
+    "patentability_claim_authorized": false,
+    "mechanical_claim_authorized": false,
+    "manufacturing_claim_authorized": false,
+    "product_claim_authorized": false,
+    "commercial_claim_authorized": false
+  }
+}

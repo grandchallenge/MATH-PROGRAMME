@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_portfolio_review.schema.json",
+  "title": "Administrative portfolio review",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "review_id",
+    "control_id",
+    "reconciliation_id",
+    "status",
+    "scheduled_due_at",
+    "execution_started_at",
+    "lateness_minutes_at_start",
+    "evidence_mode",
+    "review_period",
+    "repository_inventory",
+    "portfolio_checks",
+    "findings",
+    "pilot_escalation",
+    "pilot_review_options",
+    "next_structural_due_at",
+    "pilot_review_due_at",
+    "waiver_used",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "review_id": {"const": "MP-ADMIN-PORTFOLIO-REVIEW-2026-08-03-001"},
+    "control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "reconciliation_id": {"const": "MP-ADMIN-CADENCE-RECONCILIATION-001"},
+    "status": {"const": "COMPLETE_BELATED_RECONSTRUCTED_P2"},
+    "scheduled_due_at": {"const": "2026-08-03T18:21:00-07:00"},
+    "execution_started_at": {"const": "2026-08-04T16:42:38-07:00"},
+    "lateness_minutes_at_start": {"const": 1341},
+    "evidence_mode": {"const": "RETROSPECTIVE_RECONSTRUCTION_WITH_CURRENT_EXACT_HEAD_INVENTORY"},
+    "review_period": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "through"],
+      "properties": {
+        "from": {"const": "2026-08-01T21:36:00-07:00"},
+        "through": {"const": "2026-08-04T16:42:38-07:00"}
+      }
+    },
+    "repository_inventory": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["repository", "first_sweep_head", "reconciliation_head", "commits_since_first_sweep", "material_change_summary"],
+        "properties": {
+          "repository": {
+            "enum": [
+              "grandchallenge/MATH-PROGRAMME",
+              "grandchallenge/MATHFORGE",
+              "grandchallenge/MATHSOLVE",
+              "grandchallenge/MATHCERT",
+              "grandchallenge/INTELLECT"
+            ]
+          },
+          "first_sweep_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "reconciliation_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "commits_since_first_sweep": {"type": "integer", "minimum": 0},
+          "material_change_summary": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    },
+    "portfolio_checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["active_campaign_coverage", "candidate_and_archived_state", "provider_and_waiver_status", "solve_cert_concordance", "workflow_coverage", "tracker_freshness", "unresolved_p1", "unresolved_p2"],
+      "properties": {
+        "active_campaign_coverage": {"const": "PASS_WITH_MATERIAL_TRANSITIONS"},
+        "candidate_and_archived_state": {"const": "PASS"},
+        "provider_and_waiver_status": {"const": "PASS_NO_WAIVER_USED"},
+        "solve_cert_concordance": {"const": "PASS_WITH_PENDING_EVIDENCE_ROUTES_PRESERVED"},
+        "workflow_coverage": {"const": "PASS_DISPATCH_OPERATIONAL"},
+        "tracker_freshness": {"const": "P2_STALE_REPAIR_INITIATED"},
+        "unresolved_p1": {"const": 0},
+        "unresolved_p2": {"const": 5}
+      }
+    },
+    "findings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["P0", "P1", "P2", "P3"],
+      "properties": {
+        "P0": {"type": "array", "maxItems": 0},
+        "P1": {"type": "array", "maxItems": 0},
+        "P2": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"type": "string", "minLength": 1}},
+        "P3": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "pilot_escalation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "classification", "immediate_p1", "reason"],
+      "properties": {
+        "required": {"const": true},
+        "classification": {"const": "PILOT_LEVEL_DECISION_REQUIRED_AT_SCHEDULED_REVIEW"},
+        "immediate_p1": {"const": false},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "pilot_review_options": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"enum": ["RETAIN_FACTOR_AND_CADENCE", "RELAX_PROCEDURAL_RECORD_CADENCE_ONLY", "MACHINE_GENERATED_CANDIDATE_RECORDS_WITH_PROTECTED_RATIFICATION"]}
+    },
+    "next_structural_due_at": {"const": "2026-08-04T23:09:00-07:00"},
+    "pilot_review_due_at": {"const": "2026-08-09T18:21:00-07:00"},
+    "waiver_used": {"const": false},
+    "claim_boundaries": {"type": "object", "minProperties": 13, "additionalProperties": {"const": false}}
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_cadence_reconciliation_post_merge_closure.schema.json",
+  "title": "Administrative cadence reconciliation post-merge closure",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "closure_id",
+    "reconciliation_id",
+    "control_id",
+    "issue",
+    "status",
+    "predecessor",
+    "source_pull_request",
+    "protected_merge",
+    "human_steward_disposition",
+    "closure_disposition",
+    "retained_deadlines",
+    "issue_effect",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "closure_id": {"const": "MP-ADMIN-CADENCE-RECONCILIATION-CLOSURE-001"},
+    "reconciliation_id": {"const": "MP-ADMIN-CADENCE-RECONCILIATION-001"},
+    "control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "issue": {"const": 224},
+    "status": {"const": "PROTECTED_RECONCILIATION_COMPLETE"},
+    "predecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "blob", "historical_status", "preserved_without_rewrite", "successor_closure_is_non_cyclic"],
+      "properties": {
+        "path": {"const": "governance/administrative_cadence_reconciliation.json"},
+        "blob": {"const": "efd43878e1dae9a1154945b23062c14a45871d0c"},
+        "historical_status": {"const": "IMPLEMENTED_PENDING_PROTECTED_REVIEW"},
+        "preserved_without_rewrite": {"const": true},
+        "successor_closure_is_non_cyclic": {"const": true}
+      }
+    },
+    "source_pull_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "number", "base_head", "reviewed_head", "reviewer", "review_id", "review_state", "approved_at", "programme_policy_run", "gcl_conformance_run", "administrative_dispatcher_run", "all_exact_head_checks_successful"],
+      "properties": {
+        "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+        "number": {"const": 225},
+        "base_head": {"const": "b98d5ba79439e7ef7ee6493604bcfc40f9422dd8"},
+        "reviewed_head": {"const": "55acabde79b03f04a06d0c21c6b50c04e47da14b"},
+        "reviewer": {"const": "jimsteeg"},
+        "review_id": {"const": 4859944140},
+        "review_state": {"const": "APPROVED"},
+        "approved_at": {"const": "2026-08-04T17:07:28-07:00"},
+        "programme_policy_run": {"const": 30961485093},
+        "gcl_conformance_run": {"const": 30961485542},
+        "administrative_dispatcher_run": {"const": 30961485050},
+        "all_exact_head_checks_successful": {"const": true}
+      }
+    },
+    "protected_merge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["merge_commit", "merged_at", "verified_signature", "verified_at", "merged_head_matches_reviewed_head"],
+      "properties": {
+        "merge_commit": {"const": "59385cb01b07b029860b843b5cd16326b23acee8"},
+        "merged_at": {"const": "2026-08-04T17:07:52-07:00"},
+        "verified_signature": {"const": true},
+        "verified_at": {"const": "2026-08-04T17:08:11-07:00"},
+        "merged_head_matches_reviewed_head": {"const": true}
+      }
+    },
+    "human_steward_disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition", "recorded_in_governing_interaction", "github_exact_head_comment_present", "documentary_cure_required", "successor_closure_supplies_exact_identity_binding"],
+      "properties": {
+        "disposition": {"const": "APPROVED_AND_MERGED"},
+        "recorded_in_governing_interaction": {"const": true},
+        "github_exact_head_comment_present": {"const": false},
+        "documentary_cure_required": {"const": true},
+        "successor_closure_supplies_exact_identity_binding": {"const": true}
+      }
+    },
+    "closure_disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["original_p2_findings_preserved", "waiver_used", "cadence_anchor_reset", "substantive_reexecution_required", "pilot_level_escalation_remains_required", "reason"],
+      "properties": {
+        "original_p2_findings_preserved": {"const": 5},
+        "waiver_used": {"const": false},
+        "cadence_anchor_reset": {"const": false},
+        "substantive_reexecution_required": {"const": false},
+        "pilot_level_escalation_remains_required": {"const": true},
+        "reason": {"type": "string", "minLength": 80}
+      }
+    },
+    "retained_deadlines": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["next_structural_sweep", "pilot_and_deep_conformance_review"],
+      "properties": {
+        "next_structural_sweep": {"const": "2026-08-04T23:09:00-07:00"},
+        "pilot_and_deep_conformance_review": {"const": "2026-08-09T18:21:00-07:00"}
+      }
+    },
+    "issue_effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["close_issue_224_after_closure_merge", "refresh_navigation_mirrors_after_closure_merge"],
+      "properties": {
+        "close_issue_224_after_closure_merge": {"const": true},
+        "refresh_navigation_mirrors_after_closure_merge": {"const": true}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "minProperties": 13,
+      "additionalProperties": {"const": false}
+    }
+  }
+}
