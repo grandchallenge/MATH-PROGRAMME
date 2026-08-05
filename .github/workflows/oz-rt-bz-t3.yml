@@ -183,12 +183,16 @@ jobs:
           python-version: '3.12'
       - name: Install exact symbolic dependencies
         run: python -m pip install --requirement requirements/oz_source_revision_delta.txt
-      - name: Acquire exact candidate source and legacy path binding
+      - name: Acquire exact source revisions and legacy path bindings
         run: |
+          git clone --filter=blob:none "$SRC1_REPO" source-base
+          git -C source-base checkout --detach "$SRC1_SHA"
+          test "$(git -C source-base rev-parse HEAD)" = "$SRC1_SHA"
           git clone --filter=blob:none "$SRC2_REPO" source-delta
           git -C source-delta checkout --detach "$SRC2_DELTA_SHA"
           test "$(git -C source-delta rev-parse HEAD)" = "$SRC2_DELTA_SHA"
           sudo mkdir -p /home/ubuntu/fable-episode-2
+          sudo ln -sfnT "$GITHUB_WORKSPACE/source-base" /home/ubuntu/fable-episode-2/zeta-math
           sudo ln -sfnT "$GITHUB_WORKSPACE/source-delta" /home/ubuntu/fable-episode-2/zeta-math-2
       - name: Replay expository Apéry checks
         working-directory: source-delta
@@ -220,7 +224,7 @@ jobs:
         run: |
           set -euo pipefail
           timeout --signal=TERM 900s python3 work/z5eps/eps59_rowhunt.py | tee ../eps59.log
-          test "$(grep -c 'N(u_[0-4]) = 0 .*: True' ../eps59.log)" -eq 5
+          test "$(grep -Ec 'N\(u_[0-4]\) = 0 .*: True' ../eps59.log)" -eq 5
           grep -Fq 'SELF-DUALITY Rhat == Khat: False' ../eps59.log
           test "$(grep -c 'no integral rescale' ../eps59.log)" -ge 2
           grep -Fq 'control shows the "simple" signature' ../eps59.log
