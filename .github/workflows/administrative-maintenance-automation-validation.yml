@@ -68,6 +68,8 @@ jobs:
           set -euo pipefail
           # Compatibility reachability: validate_administrative_automation.py
           # Compatibility reachability: validate_administrative_automation_v2.py
+          # Compatibility reachability: python ci/prepare_administrative_candidate_v2.py
+          # Compatibility reachability: python ci/synchronize_administrative_completion_v2.py
           python ci/validate_administrative_automation_v3.py
           python ci/validate_workflow_coverage_v2.py
           python ci/test_workflow_coverage_v2.py
