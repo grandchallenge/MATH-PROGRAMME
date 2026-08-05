@@ -1,0 +1,51 @@
+name: Administrative maintenance candidate preparation
+
+on:
+  schedule:
+    - cron: '57 16 5 8 *'
+    - cron: '45 9 6 8 *'
+    - cron: '21 13 6 8 *'
+    - cron: '33 2 7 8 *'
+    - cron: '21 19 7 8 *'
+    - cron: '9 12 8 8 *'
+    - cron: '57 4 9 8 *'
+    - cron: '21 1 9 8 *'
+    - cron: '21 13 3 9 *'
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: administrative-maintenance-candidate-preparation
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Prepare idempotent non-authoritative candidates
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python ci/prepare_administrative_candidate.py --apply --report administrative-maintenance-candidate.json
+      - name: Preserve preparation evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: administrative-maintenance-candidate
+          path: administrative-maintenance-candidate.json
+          if-no-files-found: error
+          retention-days: 30
