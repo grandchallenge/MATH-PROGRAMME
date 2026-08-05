@@ -9,6 +9,9 @@ from typing import Any, Callable
 import administrative_automation as aa
 
 GitRunner = Callable[[list[str]], str]
+SYNTHETIC_PULL_REQUEST_MERGE_RE = re.compile(
+    r"^Merge ([0-9a-f]{40}) into ([0-9a-f]{40})$"
+)
 
 
 def default_git_runner(args: list[str]) -> str:
@@ -45,13 +48,24 @@ def receipt_for_record(
     if ancestry.returncode != 0:
         raise aa.AutomationError(f"{relative}: introduction commit is not ancestral to protected head")
     parents = git_runner(["show", "-s", "--format=%P", merge_commit]).split()
-    message = git_runner(["show", "-s", "--format=%B", merge_commit])
     if len(parents) < 2:
-        raise aa.AutomationError(f"{relative}: protected receipt is not a merge commit")
+        # A review branch may contain a final-form COMPLETE record before protected
+        # merge. It remains an unprotected candidate and cannot advance completion.
+        return None
+    message = git_runner(["show", "-s", "--format=%B", merge_commit]).strip()
     pr_match = re.search(r"Merge PR #(\d+)", message)
     head_match = re.search(r"exact head ([0-9a-f]{40})", message)
     disposition_match = re.search(r"Disposition:\s*([A-Z0-9_]+)", message)
     if not (pr_match and head_match and disposition_match):
+        synthetic = SYNTHETIC_PULL_REQUEST_MERGE_RE.fullmatch(message)
+        if (
+            synthetic
+            and merge_commit == head_sha
+            and parents == [synthetic.group(2), synthetic.group(1)]
+        ):
+            # pull_request workflows check out a temporary GitHub merge ref. The
+            # exact two-parent shape above is navigation/evaluation state only.
+            return None
         raise aa.AutomationError(f"{relative}: merge receipt lacks PR, exact head, or disposition")
     return {
         "procedure_id": procedure_id,
