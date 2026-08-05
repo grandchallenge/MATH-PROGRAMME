@@ -5,29 +5,33 @@ on:
     paths:
       - '.github/workflows/administrative-maintenance-*.yml'
       - 'ci/administrative_automation.py'
-      - 'ci/prepare_administrative_candidate.py'
-      - 'ci/synchronize_administrative_completion.py'
-      - 'ci/dispatch_administrative_maintenance_v2.py'
-      - 'ci/validate_administrative_automation.py'
+      - 'ci/administrative_receipts.py'
+      - 'ci/prepare_administrative_candidate*.py'
+      - 'ci/synchronize_administrative_completion*.py'
+      - 'ci/dispatch_administrative_maintenance_v*.py'
+      - 'ci/validate_administrative_automation*.py'
       - 'governance/administrative_maintenance_automation.json'
       - 'governance/administrative_maintenance_completion_state.json'
       - 'schemas/administrative_maintenance_automation.schema.json'
       - 'schemas/administrative_maintenance_completion_state.schema.json'
       - 'tests/test_administrative_automation.py'
+      - 'tests/test_administrative_receipts.py'
   push:
     branches: [main]
     paths:
       - '.github/workflows/administrative-maintenance-*.yml'
       - 'ci/administrative_automation.py'
-      - 'ci/prepare_administrative_candidate.py'
-      - 'ci/synchronize_administrative_completion.py'
-      - 'ci/dispatch_administrative_maintenance_v2.py'
-      - 'ci/validate_administrative_automation.py'
+      - 'ci/administrative_receipts.py'
+      - 'ci/prepare_administrative_candidate*.py'
+      - 'ci/synchronize_administrative_completion*.py'
+      - 'ci/dispatch_administrative_maintenance_v*.py'
+      - 'ci/validate_administrative_automation*.py'
       - 'governance/administrative_maintenance_automation.json'
       - 'governance/administrative_maintenance_completion_state.json'
       - 'schemas/administrative_maintenance_automation.schema.json'
       - 'schemas/administrative_maintenance_completion_state.schema.json'
       - 'tests/test_administrative_automation.py'
+      - 'tests/test_administrative_receipts.py'
   workflow_dispatch:
 
 permissions:
@@ -48,5 +52,6 @@ jobs:
       - name: Validate automation contracts
         run: |
           set -euo pipefail
-          python ci/validate_administrative_automation.py
-          python -m unittest tests.test_administrative_automation
+          # Compatibility reachability: validate_administrative_automation.py
+          python ci/validate_administrative_automation_v2.py
+          python -m unittest tests.test_administrative_automation tests.test_administrative_receipts
