@@ -45,12 +45,13 @@
     "credential_contract": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["provider", "action", "app_id_secret", "private_key_secret", "candidate_write_scope", "candidate_evidence_scope", "synchronization_write_scope", "intellect_mirror_scope"],
+      "required": ["provider", "action", "app_id_secret", "private_key_secret", "environment", "candidate_write_scope", "candidate_evidence_scope", "synchronization_write_scope", "intellect_mirror_scope"],
       "properties": {
         "provider": {"const": "GCL Release Trust GitHub App"},
         "action": {"const": "actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1"},
         "app_id_secret": {"const": "GCL_RELEASE_TRUST_APP_ID"},
         "private_key_secret": {"const": "GCL_RELEASE_TRUST_PRIVATE_KEY"},
+        "environment": {"const": "release-trust"},
         "candidate_write_scope": {"$ref": "#/$defs/tokenScope"},
         "candidate_evidence_scope": {"$ref": "#/$defs/tokenScope"},
         "synchronization_write_scope": {"$ref": "#/$defs/tokenScope"},
