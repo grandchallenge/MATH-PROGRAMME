@@ -54,6 +54,30 @@ def main() -> int:
     )
     assert any("bounded synchronization marker" in error for error in workflow_coverage_errors(texts=removed_main_gate, evidence=evidence))
 
+    removed_push_gate = dict(texts)
+    removed_push_gate["administrative-maintenance-synchronization.yml"] = removed_push_gate["administrative-maintenance-synchronization.yml"].replace(
+        "github.event.workflow_run.event == 'push'",
+        "true",
+        1,
+    )
+    assert any("bounded synchronization marker" in error for error in workflow_coverage_errors(texts=removed_push_gate, evidence=evidence))
+
+    removed_repository_gate = dict(texts)
+    removed_repository_gate["administrative-maintenance-synchronization.yml"] = removed_repository_gate["administrative-maintenance-synchronization.yml"].replace(
+        "github.event.workflow_run.head_repository.full_name == github.repository",
+        "true",
+        1,
+    )
+    assert any("bounded synchronization marker" in error for error in workflow_coverage_errors(texts=removed_repository_gate, evidence=evidence))
+
+    arbitrary_manual_sha = dict(texts)
+    arbitrary_manual_sha["administrative-maintenance-synchronization.yml"] = arbitrary_manual_sha["administrative-maintenance-synchronization.yml"].replace(
+        "  workflow_dispatch:\n",
+        "  workflow_dispatch:\n    inputs:\n      head_sha:\n        required: false\n        type: string\n",
+        1,
+    ) + "\n# inputs.head_sha\n"
+    assert any("manual arbitrary-SHA checkout is forbidden" in error for error in workflow_coverage_errors(texts=arbitrary_manual_sha, evidence=evidence))
+
     merge_capability = dict(texts)
     merge_capability["administrative-maintenance-synchronization.yml"] += "\n# gh pr merge --auto\n"
     assert any("forbidden merge or administration capability" in error for error in workflow_coverage_errors(texts=merge_capability, evidence=evidence))
