@@ -119,6 +119,7 @@ jobs:
             args+=(--dry-run)
           fi
           # Protected compatibility marker: python ci/dispatch_administrative_maintenance.py
+          # Protected compatibility marker: dispatch_administrative_maintenance_v2.py
           python ci/dispatch_administrative_maintenance_v3.py "${args[@]}" || {
             rc=$?
             test -f administrative-maintenance-dispatch.json || printf '%s\n' '{"schema_version":"2.0.0","state":"DISPATCH_FAILED_CLOSED","authority_created":false}' > administrative-maintenance-dispatch.json
