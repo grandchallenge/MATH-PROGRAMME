@@ -44,6 +44,40 @@ class AdministrativeReceiptTests(unittest.TestCase):
             self.assertEqual(state["procedures"]["structural_sweep"]["receipt_count"], 0)
 
     @patch("administrative_receipts.subprocess.run")
+    def test_unmerged_complete_record_remains_candidate_only(self, run_mock) -> None:
+        run_mock.return_value.returncode = 0
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            path = root / "governance" / "records" / "candidate.json"
+            path.parent.mkdir(parents=True)
+            path.write_text(json.dumps({"status": "COMPLETE", "scheduled_due_at": "2026-08-05T22:57:00Z"}))
+            config = {
+                "procedures": {
+                    "structural_sweep": {
+                        "record_globs": ["governance/records/*.json"],
+                        "due_fields": ["scheduled_due_at"],
+                        "receipt_floor_utc": "2026-08-05T00:00:00Z",
+                    }
+                },
+                "bootstrap_receipts": [],
+            }
+            commands: list[list[str]] = []
+
+            def runner(args: list[str]) -> str:
+                commands.append(args)
+                if args[0] == "log":
+                    return MERGE
+                if "--format=%P" in args:
+                    return "d" * 40
+                if "--format=%B" in args:
+                    raise AssertionError("unmerged candidate must not be parsed as a merge receipt")
+                raise AssertionError(args)
+
+            state = receipts.derive_completion_state(root, config, HEAD, runner)
+            self.assertEqual(state["procedures"]["structural_sweep"]["receipt_count"], 0)
+            self.assertTrue(any("--format=%P" in command for command in commands))
+
+    @patch("administrative_receipts.subprocess.run")
     def test_qualifying_record_uses_first_parent_merge_receipt(self, run_mock) -> None:
         run_mock.return_value.returncode = 0
         with tempfile.TemporaryDirectory() as temp:
