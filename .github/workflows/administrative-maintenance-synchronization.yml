@@ -47,7 +47,11 @@ jobs:
           CROSS_REPOSITORY_MAINTENANCE_TOKEN: ${{ secrets.CROSS_REPOSITORY_MAINTENANCE_TOKEN }}
         run: |
           set -euo pipefail
-          python ci/synchronize_administrative_completion.py --apply --report administrative-maintenance-synchronization.json
+          python ci/synchronize_administrative_completion_v2.py --apply --report administrative-maintenance-synchronization.json || {
+            rc=$?
+            test -f administrative-maintenance-synchronization.json || printf '%s\n' '{"schema_version":"1.0.0","state":"SYNCHRONIZATION_FAILED_CLOSED","authority_created":false}' > administrative-maintenance-synchronization.json
+            exit "$rc"
+          }
       - name: Preserve synchronization evidence and cross-repository patch
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
