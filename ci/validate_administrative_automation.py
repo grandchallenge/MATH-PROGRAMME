@@ -43,6 +43,7 @@ def validate_workflows(config: dict) -> list[str]:
         "candidate_preparation": workflow_permissions(candidate),
         "completion_synchronization": workflow_permissions(sync),
         "dispatcher": workflow_permissions(dispatch),
+        "automation_validation": workflow_permissions(validation),
     }
     for key, expected in expected_permissions.items():
         if observed.get(key) != expected:
