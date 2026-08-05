@@ -18,6 +18,7 @@ on:
       - 'schemas/administrative_maintenance_completion_state.schema.json'
       - 'tests/test_administrative_automation.py'
       - 'tests/test_administrative_receipts.py'
+      - 'tests/test_administrative_synchronization_wait.py'
   push:
     branches: [main]
     paths:
@@ -36,6 +37,7 @@ on:
       - 'schemas/administrative_maintenance_completion_state.schema.json'
       - 'tests/test_administrative_automation.py'
       - 'tests/test_administrative_receipts.py'
+      - 'tests/test_administrative_synchronization_wait.py'
   workflow_dispatch:
 
 permissions:
@@ -65,4 +67,7 @@ jobs:
           python ci/validate_administrative_automation_v3.py
           python ci/validate_workflow_coverage_v2.py
           python ci/test_workflow_coverage_v2.py
-          python -m unittest tests.test_administrative_automation tests.test_administrative_receipts
+          python -m unittest \
+            tests.test_administrative_automation \
+            tests.test_administrative_receipts \
+            tests.test_administrative_synchronization_wait
