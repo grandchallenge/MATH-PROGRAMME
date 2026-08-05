@@ -13,10 +13,11 @@ CANDIDATE_WORKFLOW = ROOT / ".github" / "workflows" / "administrative-maintenanc
 SYNC_WORKFLOW = ROOT / ".github" / "workflows" / "administrative-maintenance-synchronization.yml"
 DISPATCH_WORKFLOW = ROOT / ".github" / "workflows" / "administrative-maintenance-dispatch.yml"
 VALIDATION_WORKFLOW = ROOT / ".github" / "workflows" / "administrative-maintenance-automation-validation.yml"
+SYNC_SCRIPT_PATH = ROOT / "ci" / "synchronize_administrative_completion.py"
 SCRIPT_PATHS = [
     ROOT / "ci" / "administrative_automation.py",
     ROOT / "ci" / "prepare_administrative_candidate.py",
-    ROOT / "ci" / "synchronize_administrative_completion.py",
+    SYNC_SCRIPT_PATH,
     ROOT / "ci" / "dispatch_administrative_maintenance_v2.py",
 ]
 SCHEMA_PATHS = [
@@ -73,6 +74,26 @@ def validate_workflows(config: dict) -> list[str]:
     return errors
 
 
+def validate_fixed_point_contract() -> list[str]:
+    text = SYNC_SCRIPT_PATH.read_text(encoding="utf-8")
+    required = {
+        "semantic comparison": "def completion_semantics(",
+        "ancestry verifier": "def git_is_ancestor(",
+        "derivation stabilizer": "def stabilize_completion_derivation(",
+        "semantic equality gate": "if previous is None or completion_semantics(previous) != completion_semantics(completion):",
+        "ancestry enforcement": "if not ancestry_check(root, retained_head, evaluated_head):",
+        "runtime stabilization": "completion = stabilize_completion_derivation(ROOT, derived_completion, previous, head)",
+        "separate evaluation-head evidence": '"protected_head": head',
+        "separate derivation-head evidence": '"completion_derivation_head": completion["derived_from_protected_head"]',
+        "no-successor equality gate": "if current == completion:\n        return None",
+    }
+    return [
+        f"fixed-point contract missing {name}"
+        for name, marker in required.items()
+        if marker not in text
+    ]
+
+
 def validate_scripts() -> list[str]:
     errors: list[str] = []
     forbidden = ("/merges", "merge_pull_request", "enable_auto_merge", "merge_method", "dismiss_pull_request_review", "branch_protection_rule")
@@ -81,12 +102,13 @@ def validate_scripts() -> list[str]:
         for token in forbidden:
             if token in text:
                 errors.append(f"{path.name}: forbidden authority capability token {token}")
-    sync = (ROOT / "ci" / "synchronize_administrative_completion.py").read_text(encoding="utf-8")
+    sync = SYNC_SCRIPT_PATH.read_text(encoding="utf-8")
     if "CREDENTIAL_MISSING_PATCH_RETAINED" not in sync:
         errors.append("cross-repository credential absence is not explicit and fail closed")
     candidate = (ROOT / "ci" / "prepare_administrative_candidate.py").read_text(encoding="utf-8")
     if '"draft": True' not in candidate:
         errors.append("candidate PR creation is not draft-only")
+    errors.extend(validate_fixed_point_contract())
     return errors
 
 
