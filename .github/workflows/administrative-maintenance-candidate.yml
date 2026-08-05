@@ -15,9 +15,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+  contents: read
 
 concurrency:
   group: administrative-maintenance-candidate-preparation
@@ -28,6 +26,31 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
+      - name: Mint bounded MATH-PROGRAMME write token
+        id: write-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-contents: write
+          permission-issues: write
+          permission-pull-requests: write
+      - name: Mint bounded evidence-read token
+        id: evidence-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: |
+            MATHFORGE
+            MATHSOLVE
+            MATHCERT
+            INTELLECT
+          permission-contents: read
+          permission-pull-requests: read
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
@@ -35,12 +58,21 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.12'
-      - name: Prepare idempotent non-authoritative candidates
+      - name: Require bounded automation credentials
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          WRITE_TOKEN: ${{ steps.write-token.outputs.token }}
+          EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
         run: |
           set -euo pipefail
-          python ci/prepare_administrative_candidate_v2.py --apply --report administrative-maintenance-candidate.json || {
+          test -n "${WRITE_TOKEN}"
+          test -n "${EVIDENCE_TOKEN}"
+      - name: Prepare idempotent non-authoritative candidates
+        env:
+          GITHUB_TOKEN: ${{ steps.write-token.outputs.token }}
+          EVIDENCE_GITHUB_TOKEN: ${{ steps.evidence-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          python ci/prepare_administrative_candidate_v3.py --apply --report administrative-maintenance-candidate.json || {
             rc=$?
             test -f administrative-maintenance-candidate.json || printf '%s\n' '{"schema_version":"1.0.0","state":"CANDIDATE_PREPARATION_FAILED_CLOSED","authority_created":false}' > administrative-maintenance-candidate.json
             exit "$rc"
