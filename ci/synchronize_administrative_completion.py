@@ -2,15 +2,18 @@ from __future__ import annotations
 
 import argparse
 import base64
+import copy
 import json
 import os
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from administrative_automation import (
     AutomationError,
+    SHA_RE,
     completion_by_procedure,
     derive_completion_state,
     iso_z,
@@ -30,6 +33,54 @@ PATCH_PATH = ROOT / "administrative-maintenance-cross-repository-mirror.md"
 START = "<!-- administrative-automation-state:start -->"
 END = "<!-- administrative-automation-state:end -->"
 UTC = timezone.utc
+COMPLETION_SEMANTIC_FIELDS = (
+    "schema_version",
+    "control_id",
+    "state",
+    "procedures",
+    "authority_boundary",
+)
+AncestryCheck = Callable[[Path, str, str], bool]
+
+
+def completion_semantics(completion: dict[str, Any]) -> dict[str, Any]:
+    """Return receipt-derived state without the evaluation-head locator."""
+    return {field: copy.deepcopy(completion.get(field)) for field in COMPLETION_SEMANTIC_FIELDS}
+
+
+def git_is_ancestor(root: Path, ancestor: str, descendant: str) -> bool:
+    if not SHA_RE.fullmatch(ancestor) or not SHA_RE.fullmatch(descendant):
+        return False
+    completed = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", ancestor, descendant],
+        cwd=root,
+        check=False,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    return completed.returncode == 0
+
+
+def stabilize_completion_derivation(
+    root: Path,
+    completion: dict[str, Any],
+    previous: dict[str, Any] | None,
+    evaluated_head: str,
+    ancestry_check: AncestryCheck = git_is_ancestor,
+) -> dict[str, Any]:
+    """Retain the protected derivation head when receipt-derived semantics are unchanged."""
+    if previous is None or completion_semantics(previous) != completion_semantics(completion):
+        return completion
+
+    retained_head = str(previous.get("derived_from_protected_head", ""))
+    if not ancestry_check(root, retained_head, evaluated_head):
+        raise AutomationError(
+            "retained completion derivation head is not ancestral to evaluated protected head"
+        )
+
+    stabilized = copy.deepcopy(completion)
+    stabilized["derived_from_protected_head"] = retained_head
+    return stabilized
 
 
 def managed_section(completion: dict[str, Any], registry: dict[str, Any], head: str) -> str:
@@ -151,8 +202,9 @@ def main(argv: list[str] | None = None) -> int:
         raise AutomationError("; ".join(errors))
     registry = load_json(REGISTRY_PATH)
     head = os.environ.get("WORKFLOW_RUN_HEAD_SHA") or os.environ.get("GITHUB_SHA") or subprocess_head()
-    completion = derive_completion_state(ROOT, config, head)
+    derived_completion = derive_completion_state(ROOT, config, head)
     previous = load_json(STATE_PATH) if STATE_PATH.exists() else None
+    completion = stabilize_completion_derivation(ROOT, derived_completion, previous, head)
     errors = validate_completion_state(completion, previous)
     if errors:
         raise AutomationError("; ".join(errors))
@@ -161,6 +213,8 @@ def main(argv: list[str] | None = None) -> int:
         "schema_version": "1.0.0",
         "state": "SYNCHRONIZATION_EVALUATED",
         "protected_head": head,
+        "completion_derivation_head": completion["derived_from_protected_head"],
+        "completion_semantics_changed": previous is None or completion_semantics(previous) != completion_semantics(completion),
         "evaluated_at": iso_z(datetime.now(UTC)),
         "completion_digest": completion,
         "same_repository_mirrors": [],
@@ -211,8 +265,6 @@ def main(argv: list[str] | None = None) -> int:
 
 
 def subprocess_head() -> str:
-    import subprocess
-
     return subprocess.run(["git", "rev-parse", "HEAD"], check=True, text=True, capture_output=True).stdout.strip()
 
 
