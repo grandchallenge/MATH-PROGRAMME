@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_maintenance_automation_terminal_closure.schema.json",
+  "title": "Administrative maintenance automation terminal closure",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "closure_id",
+    "operation_id",
+    "remediation_issue",
+    "closure_state",
+    "protected_completion_declared",
+    "historical_attestation",
+    "environment_binding_remediation",
+    "completion_state_transition",
+    "fixed_point_remediation",
+    "post_merge_evidence",
+    "authority_boundary",
+    "quarantined_nonconvergent_output"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "closure_id": {"const": "MP-ADMIN-AUTOMATION-CLOSURE-001-TERMINAL-CLOSURE-001"},
+    "operation_id": {"const": "MP-ADMIN-AUTOMATION-CLOSURE-001"},
+    "remediation_issue": {"const": 231},
+    "closure_state": {"const": "PROTECTED_AUTOMATION_CLOSURE_COMPLETE"},
+    "protected_completion_declared": {"const": true},
+    "historical_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "blob_sha", "preserved", "disposition_timing", "historical_protected_completion_declared"],
+      "properties": {
+        "path": {"const": "governance/administrative_maintenance_automation_post_merge_attestation.json"},
+        "blob_sha": {"const": "f1e6a83198f8cc2ebcad3e9479a6cefcd84521e6"},
+        "preserved": {"const": true},
+        "disposition_timing": {"const": "POST_MERGE_RETROSPECTIVE"},
+        "historical_protected_completion_declared": {"const": false}
+      }
+    },
+    "environment_binding_remediation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pull_request", "reviewed_head", "merge_commit", "independent_review_id", "human_steward_comment_id", "disposition"],
+      "properties": {
+        "pull_request": {"const": 232},
+        "reviewed_head": {"const": "d5c6e61e344f85ba3ede48d25f3416e8c5499da4"},
+        "merge_commit": {"const": "18b2020685f11e886eec2cc87aa05d5f4a1367de"},
+        "independent_review_id": {"const": 4861226782},
+        "human_steward_comment_id": {"const": 5187857651},
+        "disposition": {"const": "HUMAN_STEWARD_AUTHORIZED_EXACT_HEAD_PROTECTED_REMEDIATION_MERGE"}
+      }
+    },
+    "completion_state_transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pull_request", "reviewed_head", "merge_commit", "independent_review_id", "human_steward_comment_id", "disposition"],
+      "properties": {
+        "pull_request": {"const": 233},
+        "reviewed_head": {"const": "d643752c654db3ae4a5f2139e863f1e6fd8ace38"},
+        "merge_commit": {"const": "8a9b040c9516992b0bf1075584123732771662a3"},
+        "independent_review_id": {"const": 4861705480},
+        "human_steward_comment_id": {"const": 5188530779},
+        "disposition": {"const": "HUMAN_STEWARD_AUTHORIZED_EXACT_HEAD_PROTECTED_COMPLETION_STATE_MERGE"}
+      }
+    },
+    "fixed_point_remediation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pull_request", "reviewed_head", "merge_commit", "independent_review_id", "human_steward_comment_id", "disposition"],
+      "properties": {
+        "pull_request": {"const": 235},
+        "reviewed_head": {"const": "dc486720c870adc7cf2e9cfb56dde28e03ab58d2"},
+        "merge_commit": {"const": "9d42a0d5b5dee624389eaddb63805dd585745bba"},
+        "independent_review_id": {"const": 4861931434},
+        "human_steward_comment_id": {"const": 5188795228},
+        "disposition": {"const": "HUMAN_STEWARD_AUTHORIZED_EXACT_HEAD_FIXED_POINT_REMEDIATION_PROTECTED_MERGE"}
+      }
+    },
+    "post_merge_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observed_protected_head", "programme_policy_run", "gcl_conformance_run", "automation_validation_run", "dispatcher_run", "terminal_synchronization_run", "synchronization_artifact_id", "synchronization_artifact_digest", "evaluated_at", "completion_derivation_head", "completion_semantics_changed", "completion_state_pull_request", "open_successor_completion_state_prs", "math_programme_issue_mirrors", "intellect_issue_mirror", "mirrors_current"],
+      "properties": {
+        "observed_protected_head": {"const": "9d42a0d5b5dee624389eaddb63805dd585745bba"},
+        "programme_policy_run": {"const": 30984661249},
+        "gcl_conformance_run": {"const": 30984661678},
+        "automation_validation_run": {"const": 30984661272},
+        "dispatcher_run": {"const": 30984661261},
+        "terminal_synchronization_run": {"const": 30984839694},
+        "synchronization_artifact_id": {"const": 8921627496},
+        "synchronization_artifact_digest": {"const": "sha256:4eaad954227e503e58a85dd9d1f126a5b57e1f8bc2b11677e7bb3a124bb8cfc9"},
+        "evaluated_at": {"const": "2026-08-05T07:23:43Z"},
+        "completion_derivation_head": {"const": "18b2020685f11e886eec2cc87aa05d5f4a1367de"},
+        "completion_semantics_changed": {"const": false},
+        "completion_state_pull_request": {"type": "null"},
+        "open_successor_completion_state_prs": {"const": 0},
+        "math_programme_issue_mirrors": {"const": [182, 183]},
+        "intellect_issue_mirror": {"const": 21},
+        "mirrors_current": {"const": true}
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["history_rewritten", "retrospective_disposition_recharacterized", "automated_approval", "automated_human_steward_disposition", "automated_merge", "auto_merge_enabled", "branch_protection_bypassed", "waiver_created", "emergency_authority_created", "claim_promotion"],
+      "properties": {
+        "history_rewritten": {"const": false},
+        "retrospective_disposition_recharacterized": {"const": false},
+        "automated_approval": {"const": false},
+        "automated_human_steward_disposition": {"const": false},
+        "automated_merge": {"const": false},
+        "auto_merge_enabled": {"const": false},
+        "branch_protection_bypassed": {"const": false},
+        "waiver_created": {"const": false},
+        "emergency_authority_created": {"const": false},
+        "claim_promotion": {"const": false}
+      }
+    },
+    "quarantined_nonconvergent_output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pull_request", "head", "closed_unmerged", "quarantine_comment_id", "exposed_by_synchronization_run", "synchronization_artifact_id", "synchronization_artifact_digest"],
+      "properties": {
+        "pull_request": {"const": 234},
+        "head": {"const": "0bb585719156234e3770784eef7bd44b2e0ddca2"},
+        "closed_unmerged": {"const": true},
+        "quarantine_comment_id": {"const": 5188582652},
+        "exposed_by_synchronization_run": {"const": 30982983969},
+        "synchronization_artifact_id": {"const": 8920873924},
+        "synchronization_artifact_digest": {"const": "sha256:6573d0b5df7ed8f924119e18ed2b3d07ad7b50be19722ce0a760a0a8bc33833d"}
+      }
+    }
+  }
+}
