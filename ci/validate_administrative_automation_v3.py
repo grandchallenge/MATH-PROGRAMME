@@ -73,6 +73,7 @@ def validate_workflows_v3(config: dict) -> list[str]:
     return errors
 
 
+validate_workflows = validate_workflows_v3
 implementation.validate_workflows = validate_workflows_v3
 
 
