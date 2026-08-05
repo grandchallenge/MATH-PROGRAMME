@@ -6,7 +6,7 @@
   "status": "COMPLETE_WITH_REPAIRED_P2_AND_NONBLOCKING_OPEN_PR",
   "scheduled_due_at": "2026-08-05T15:57:00-07:00",
   "execution_started_at": "2026-08-05T15:24:15-07:00",
-  "evidence_closed_at": "2026-08-05T15:29:15-07:00",
+  "evidence_closed_at": "2026-08-05T15:43:32-07:00",
   "evidence_mode": "CONTEMPORANEOUS",
   "lateness_minutes_at_start": 0,
   "cadence": "PT16H48M",
@@ -189,13 +189,13 @@
         "repository": "grandchallenge/MATH-PROGRAMME",
         "pull_request": 244,
         "author": "gcl-release-trust[bot]",
-        "head": "ea0d21307724deeffd2b83e714a64b47a4dda40e",
+        "head": "8ed70c1fefd8fea1471558eafaf1183217c7a10c",
         "base": "6dd51c29b8bcbac812bcf7a4e803b693ac8be69c",
         "draft": false,
         "merge_authorized": false,
-        "core_run_id": 31048863420,
-        "gcl_run_id": 31048863707,
-        "interference_disposition": "CONTROLLED_MAINTENANCE_CANDIDATE_PENDING_SUCCESSOR_EXACT_HEAD_REVIEW_NO_PROTECTED_EFFECT"
+        "core_run_id": 31053825010,
+        "gcl_run_id": 31053825300,
+        "interference_disposition": "CONTROLLED_MAINTENANCE_FINALIZATION_PENDING_SUCCESSOR_EXACT_HEAD_REVIEW_NO_PROTECTED_EFFECT"
       },
       {
         "repository": "grandchallenge/MATH-PROGRAMME",
@@ -262,6 +262,13 @@
         "observed_at": "2026-08-05T15:27:00-07:00",
         "disposition": "REPAIRED_BY_POST_FREEZE_HUMAN_CONTROLLED_EVIDENCE_REFRESH_AND_VERSIONED_FINAL_RECORD",
         "repair_reference": "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-05-007.json"
+      },
+      {
+        "finding_id": "MP-ADMIN-P2-2026-08-05-007-003",
+        "title": "Receipt derivation treated review-branch introductions and GitHub synthetic pull-request merge refs as protected receipt candidates",
+        "observed_at": "2026-08-05T15:37:56-07:00",
+        "disposition": "REPAIRED_ON_REVIEW_BRANCH_BY_EXCLUDING_SINGLE_PARENT_AND_EXACT_SYNTHETIC_PR_INTRODUCTIONS_WHILE_RETAINING_FAIL_CLOSED_PROTECTED_MERGE_RECEIPT_GATES",
+        "repair_reference": "ci/administrative_receipts.py"
       }
     ],
     "P3": [
@@ -291,13 +298,21 @@
       "status": "COMPLETE_ON_REVIEW_BRANCH"
     },
     {
+      "action": "repair protected-receipt derivation so unmerged branch introductions and exact GitHub synthetic pull-request merge refs cannot advance completion",
+      "status": "COMPLETE_ON_REVIEW_BRANCH"
+    },
+    {
+      "action": "add receipt regressions for unmerged records, exact synthetic merge refs, malformed protected merges, and qualifying protected receipts",
+      "status": "COMPLETE_ON_REVIEW_BRANCH"
+    },
+    {
       "action": "preserve the cadence anchor and the August 6 and August 9 controlled deadlines",
       "status": "COMPLETE"
     }
   ],
   "review_readiness": {
     "protected_review_clear_to_proceed": true,
-    "reason": "No P0 or P1 defect remains. Both P2 process defects are repaired on the review branch. The controlled candidate and failed Dependabot PR are non-authoritative and do not interfere with protected state.",
+    "reason": "No P0 or P1 defect remains. All three P2 process defects are repaired on the review branch. The controlled candidate and failed Dependabot PR are non-authoritative and do not interfere with protected state.",
     "circuit_breaker_triggered": false,
     "waiver_used": false,
     "emergency_authority_used": false,
