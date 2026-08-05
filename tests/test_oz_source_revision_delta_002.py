@@ -28,10 +28,10 @@ class SourceRevisionDeltaMutationTests(unittest.TestCase):
             )
         )
 
-    def test_rejects_premature_archive_binding(self) -> None:
-        def mutate(x):
-            x["authority"]["archive_sha256"] = "0" * 64
-        self.assertRejected(mutate)
+    def test_rejects_archive_drift(self) -> None:
+        self.assertRejected(
+            lambda x: x["authority"].__setitem__("archive_sha256", "0" * 64)
+        )
 
     def test_rejects_t3_promotion(self) -> None:
         self.assertRejected(lambda x: x["boundaries"].__setitem__("t3_proved", True))
@@ -46,16 +46,16 @@ class SourceRevisionDeltaMutationTests(unittest.TestCase):
 
     def test_rejects_silent_t1_t3_equivalence(self) -> None:
         self.assertRejected(
-            lambda x: x["t1_top_t3_concordance"].__setitem__(
-                "relation", "IDENTICAL"
-            )
+            lambda x: x["t1_top_t3_concordance"].__setitem__("relation", "IDENTICAL")
         )
 
     def test_rejects_missing_conjectural_class(self) -> None:
         def mutate(x):
             for claim in x["claim_register"]:
                 if claim["classification"] == "CONJECTURAL":
-                    claim["classification"] = "PROVED_SOURCE_CLAIM_PENDING_INDEPENDENT_REPLAY"
+                    claim["classification"] = (
+                        "PROVED_SOURCE_CLAIM_PENDING_INDEPENDENT_REPLAY"
+                    )
         self.assertRejected(mutate)
 
     def test_rejects_duplicate_claim_id(self) -> None:
@@ -71,6 +71,31 @@ class SourceRevisionDeltaMutationTests(unittest.TestCase):
                 if route["id"] == "OZ-ROUTE-R004":
                     route["state"] = "READY"
         self.assertRejected(mutate)
+
+    def test_rejects_missing_symbolic_replay(self) -> None:
+        self.assertRejected(lambda x: x["executable_replay"]["exact_replays"].pop())
+
+    def test_rejects_symbolic_result_drift(self) -> None:
+        self.assertRejected(
+            lambda x: x["executable_replay"]["exact_replays"][0].__setitem__(
+                "result", "FAIL"
+            )
+        )
+
+    def test_rejects_clean_sorryax_inflation(self) -> None:
+        self.assertRejected(
+            lambda x: x["lean_replay"]["observed_axioms"].append("sorryAx")
+        )
+
+    def test_rejects_removed_quarantine(self) -> None:
+        self.assertRejected(
+            lambda x: x["lean_replay"]["quarantined_declarations"].pop()
+        )
+
+    def test_rejects_replay_run_drift(self) -> None:
+        self.assertRejected(
+            lambda x: x["executable_replay"].__setitem__("workflow_run", 0)
+        )
 
 
 if __name__ == "__main__":

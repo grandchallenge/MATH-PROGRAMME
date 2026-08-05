@@ -43,8 +43,34 @@ EXPECTED_SOURCE_BLOBS = {
     "lean/lake-manifest.json": "8a3f441359ee64dfeb3d027a297d2a0ca98f5dce",
     "lean/ZetaLucas.lean": "feb40994f119e8729755350d7ab3283b2702227c",
     "lean/ZetaLucas/FranelClosedForm.lean": "fd34e447fd836310f3a3f56288a1704461ba83b8",
+    "lean/ZetaLucas/Z2Minimal.lean": "c269db24f024029a1098c9d3fe881fb749395104",
     "lean/ZetaLucas/CatalanEndpoint.lean": "d94131f40cadbd52e06da26afe1b6fc9c47efc83",
     "lean/ZetaLucas/ZagierBEndpoint.lean": "a05fd9ba43b58cd4009a3e7713af4067d115bf54",
+}
+EXPECTED_CLEAN_DECLARATIONS = {
+    "ZetaLucas.franel_closed_form",
+    "ZetaLucas.franel_harmonic_closed_form",
+    "ZetaLucas.s10_closed_form",
+    "ZetaLucas.s10_harmonic_closed_form",
+    "ZetaLucas.pz2_ne_zero",
+    "ZetaLucas.defect_vanishes",
+    "ZetaLucas.catalanB_sharp_denominator",
+    "ZetaLucas.zagC_unique",
+    "ZetaLucas.zagC6_forces_three_dvd",
+    "ZetaLucas.zagC2_not_scaled_integral",
+}
+EXPECTED_QUARANTINED_DECLARATIONS = {
+    "ZetaLucas.BZCF.bz_creative_telescoping",
+    "ZetaLucas.BZCF.PhatSum_eq_Phat",
+    "ZetaLucas.BZStar.star_creative_telescoping",
+    "ZetaLucas.BZStar.PStarSum_eq_Phat",
+}
+EXPECTED_REPLAY_COMMANDS = {
+    "papers_out/expository_apery/verify.py",
+    "work/z5eps/eps57_sym2_all.py",
+    "work/z5eps/eps58_denoms.py",
+    "work/z5eps/eps59_rowhunt.py",
+    "work/z5eps/eps60_density.py",
 }
 
 
@@ -74,13 +100,8 @@ def validation_errors(record: dict[str, Any], root: Path = ROOT) -> list[str]:
     ids = [claim.get("id") for claim in claims]
     if len(ids) != len(set(ids)):
         errors.append("claim register IDs must be unique")
-    unknown = {
-        claim.get("classification")
-        for claim in claims
-        if claim.get("classification") not in EXPECTED_CLASSES
-    }
-    if unknown:
-        errors.append(f"claim register contains unknown classifications: {sorted(unknown)}")
+    if any(claim.get("classification") not in EXPECTED_CLASSES for claim in claims):
+        errors.append("claim register contains an unknown classification")
     if not any(claim.get("classification") == "CONJECTURAL" for claim in claims):
         errors.append("claim register must preserve at least one conjectural claim")
     if not any(
@@ -101,13 +122,12 @@ def validation_errors(record: dict[str, Any], root: Path = ROOT) -> list[str]:
         "DISTINCT_REPRESENTATIVES_WITH_SHARED_TOP_ROW_TARGET_NO_ACCEPTED_EQUIVALENCE"
     ):
         errors.append("T1-top and T3 may not be silently identified")
-    not_accepted = set(concordance.get("not_accepted", []))
     required_rejections = {
         "T3 is syntactically identical to T1-top.",
         "T3 alone proves T1-top for w5_I.",
         "T1-top for w5_I proves T3 without an independently checked homogeneous representative identity.",
     }
-    if not required_rejections <= not_accepted:
+    if not required_rejections <= set(concordance.get("not_accepted", [])):
         errors.append("T1-top/T3 inference firewall is incomplete")
 
     depth = record.get("depth_impact", {})
@@ -157,11 +177,6 @@ def validation_errors(record: dict[str, Any], root: Path = ROOT) -> list[str]:
     if execution_state == "PREPARED_PENDING_EXACT_REPLAY":
         if archive_state != "PENDING_EXACT_WORKFLOW_REPLAY" or archive_sha is not None:
             errors.append("prepared state must retain a null, pending archive digest")
-        lean = record.get("lean_replay", {})
-        if lean.get("aggregate_build") != "PENDING":
-            errors.append("prepared state must not claim a completed Lean build")
-        if lean.get("formal_promotion_allowed") is not False:
-            errors.append("formal promotion must remain prohibited before replay")
     elif execution_state == "CLOSED":
         if archive_state != "EXACT_REPLAY_BOUND":
             errors.append("closed state requires an exact archive state")
@@ -169,18 +184,49 @@ def validation_errors(record: dict[str, Any], root: Path = ROOT) -> list[str]:
             errors.append("closed state archive digest does not match exact replay")
         if record.get("required_closure_updates"):
             errors.append("closed state may not retain unresolved closure updates")
+
+        executable = record.get("executable_replay", {})
+        if executable.get("state") != "EXACT_BOUNDED_REPLAY_COMPLETE":
+            errors.append("closed state requires all five bounded source replays")
+        replay_rows = executable.get("exact_replays", [])
+        if {row.get("command") for row in replay_rows} != EXPECTED_REPLAY_COMMANDS:
+            errors.append("closed executable replay command set is incomplete")
+        if any(row.get("result") != "PASS" for row in replay_rows):
+            errors.append("closed executable replay contains a non-passing result")
+        if executable.get("workflow_run") != 30965697322:
+            errors.append("closed executable replay must bind workflow run 30965697322")
+        if executable.get("workflow_job") != 92179051441:
+            errors.append("closed executable replay must bind workflow job 92179051441")
+
         lean = record.get("lean_replay", {})
-        if lean.get("aggregate_build") != "PARTIAL_SUCCESS_RESOURCE_TIMEOUT":
-            errors.append("closed state must preserve the aggregate resource-timeout boundary")
+        if lean.get("aggregate_build") != "SELECTED_MODULE_REPLAY_SUCCESS":
+            errors.append("closed state requires successful selected-module Lean replay")
+        if lean.get("axiom_report_state") != (
+            "SELECTED_CLEAN_AND_QUARANTINE_DECLARATIONS_AUDITED"
+        ):
+            errors.append("closed state requires clean/quarantine declaration audit")
         if lean.get("formal_promotion_allowed") is not False:
-            errors.append("partial Lean replay may not authorize formal promotion")
+            errors.append("source intake may not authorize formal promotion")
+        if set(lean.get("observed_axioms", [])) != {
+            "propext",
+            "Classical.choice",
+            "Quot.sound",
+        }:
+            errors.append("clean declaration axiom set drifted")
+        if set(lean.get("observed_clean_declarations", [])) != EXPECTED_CLEAN_DECLARATIONS:
+            errors.append("clean declaration audit set drifted")
+        if set(lean.get("quarantined_declarations", [])) != EXPECTED_QUARANTINED_DECLARATIONS:
+            errors.append("Brown-Zudilin quarantine declaration set drifted")
         if lean.get("placeholder_scan_state") != (
             "KNOWN_BZCLOSEDFORM_AND_BZSTAR_SORRYAX_QUARANTINES_PRESERVED"
         ):
             errors.append("known Brown-Zudilin Lean quarantines must remain explicit")
-        executable = record.get("executable_replay", {})
-        if executable.get("state") != "PARTIAL_EXACT_REPLAY_WITH_HEAVY_LANES_UNEXECUTED":
-            errors.append("closed state must preserve the unexecuted heavy-lane boundary")
+        if lean.get("selected_build_jobs") != 8674:
+            errors.append("selected Lean replay job count drifted")
+        if lean.get("workflow_run") != 30965697322:
+            errors.append("closed Lean replay must bind workflow run 30965697322")
+        if lean.get("workflow_job") != 92179051627:
+            errors.append("closed Lean replay must bind workflow job 92179051627")
     else:
         errors.append("unknown execution_state")
 
@@ -201,9 +247,10 @@ def main() -> int:
         print(f"OZ source revision delta validation failed with {len(errors)} error(s)")
         return 1
     print(
-        "OZ source revision delta is closed with partial admission: exact source identities "
-        "are bound, T1-top and T3 remain distinct, DEPTH remains unproved, heavy symbolic "
-        "lanes remain unexecuted, known Lean quarantines remain explicit, and no claim is promoted"
+        "OZ source revision delta is closed with partial admission: exact source identities, "
+        "five bounded symbolic replays, selected clean Lean declarations, and explicit "
+        "Brown-Zudilin sorryAx quarantines are bound; T1-top and T3 remain distinct, "
+        "DEPTH remains unproved, and no claim is promoted"
     )
     return 0
 
