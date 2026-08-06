@@ -209,9 +209,15 @@ class AdministrativeMaintenanceTriggerTests(unittest.TestCase):
             self.assertIn(fragment, workflow)
         self.assertNotIn("issues: write", workflow)
         self.assertNotIn("actions: read", workflow)
-        self.assertIn("actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1", workflow)
-        self.assertIn("actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97", workflow)
-        self.assertIn("actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02", workflow)
+
+        pins = self.load_registry()["workflow"]["pinned_actions"]
+        expected_actions = {
+            "checkout": "actions/checkout",
+            "setup_python": "actions/setup-python",
+            "upload_artifact": "actions/upload-artifact",
+        }
+        for key, action in expected_actions.items():
+            self.assertIn(f"{action}@{pins[key]}", workflow)
 
     def test_mutation_rejects_anchor_reset(self) -> None:
         registry = self.load_registry()
