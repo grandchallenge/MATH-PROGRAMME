@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_autonomy_stabilization_correction.schema.json",
+  "title": "Administrative Autonomy Stabilization Correction",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "correction_id",
+    "transition_id",
+    "repository",
+    "status",
+    "activation_attempt_004",
+    "corrected_control",
+    "manual_review_notification",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../schemas/administrative_autonomy_stabilization_correction.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "correction_id": {
+      "const": "MP-ADMIN-AUTONOMY-STABILIZATION-CORRECTIVE-001"
+    },
+    "transition_id": {
+      "const": "MP-ADMIN-AUTONOMY-TRANSITION-001"
+    },
+    "repository": {
+      "const": "grandchallenge/MATH-PROGRAMME"
+    },
+    "status": {
+      "const": "ARMED_NOT_ACTIVE"
+    },
+    "activation_attempt_004": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workflow_run_id",
+        "artifact_id",
+        "artifact_sha256",
+        "transition_head",
+        "canary_pull_request",
+        "canary_head",
+        "referee_disposition_comment_id",
+        "state",
+        "failure_class",
+        "failure_message",
+        "authority_created",
+        "canary_closed_unmerged",
+        "canary_branch_present_after_failure",
+        "ruleset_bypass_actors_after_failure",
+        "rollback_errors"
+      ],
+      "properties": {
+        "workflow_run_id": {"const": 31073561283},
+        "artifact_id": {"const": 8956623063},
+        "artifact_sha256": {
+          "const": "5acf88b8fb6b2ddc04ba235eaef074b5bf64fc5f2bb0879c46a414dac3b1d737"
+        },
+        "transition_head": {
+          "const": "7274c1c3207423aea4fab3111e2c63a054eb5908"
+        },
+        "canary_pull_request": {"const": 257},
+        "canary_head": {
+          "const": "9b3ebae6f8c13d930bad4f648a16df969c67cf33"
+        },
+        "referee_disposition_comment_id": {"const": 5200676673},
+        "state": {"const": "ACTIVATION_FAILED_CLOSED"},
+        "failure_class": {
+          "const": "TRANSIENT_POST_DISPOSITION_MERGE_STATE_UNSTABLE"
+        },
+        "failure_message": {
+          "const": "Pull request Pull request is in unstable status"
+        },
+        "authority_created": {"const": false},
+        "canary_closed_unmerged": {"const": true},
+        "canary_branch_present_after_failure": {"const": false},
+        "ruleset_bypass_actors_after_failure": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "rollback_errors": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "corrected_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approval_decision_actor",
+        "merge_executor_actor",
+        "merge_executor_required_scope",
+        "referee_disposition_must_precede_merge",
+        "wait_for_all_check_runs_after_disposition",
+        "accepted_check_conclusions",
+        "required_pre_merge_state",
+        "exact_head_revalidated_each_poll",
+        "referee_disposition_revalidated_each_poll",
+        "maximum_stabilization_wait_seconds",
+        "poll_interval_seconds",
+        "merge_method",
+        "merge_api",
+        "auto_merge_authority_retained",
+        "auto_merge_used_for_clean_canary",
+        "canary_bypass_must_not_be_used",
+        "direct_protected_push",
+        "human_steward_impersonation",
+        "sequence"
+      ],
+      "properties": {
+        "approval_decision_actor": {"const": "github-actions[bot]"},
+        "merge_executor_actor": {"const": "gcl-release-trust[bot]"},
+        "merge_executor_required_scope": {"const": "pull_requests:write"},
+        "referee_disposition_must_precede_merge": {"const": true},
+        "wait_for_all_check_runs_after_disposition": {"const": true},
+        "accepted_check_conclusions": {
+          "const": ["success", "neutral", "skipped"]
+        },
+        "required_pre_merge_state": {"const": "CLEAN"},
+        "exact_head_revalidated_each_poll": {"const": true},
+        "referee_disposition_revalidated_each_poll": {"const": true},
+        "maximum_stabilization_wait_seconds": {"const": 300},
+        "poll_interval_seconds": {"const": 5},
+        "merge_method": {"const": "merge"},
+        "merge_api": {"const": "REST exact-head ordinary merge"},
+        "auto_merge_authority_retained": {"const": true},
+        "auto_merge_used_for_clean_canary": {"const": false},
+        "canary_bypass_must_not_be_used": {"const": true},
+        "direct_protected_push": {"const": false},
+        "human_steward_impersonation": {"const": false},
+        "sequence": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "manual_review_notification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reviewer",
+        "request_reviewers_api_required",
+        "explicit_mention_comment_required",
+        "exact_head_required"
+      ],
+      "properties": {
+        "reviewer": {"const": "jimsteeg"},
+        "request_reviewers_api_required": {"const": true},
+        "explicit_mention_comment_required": {"const": true},
+        "exact_head_required": {"const": true}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"const": false}
+    }
+  }
+}
