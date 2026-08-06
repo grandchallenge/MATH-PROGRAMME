@@ -1,0 +1,298 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_receipt_repair_244.schema.json",
+  "title": "MP-ADMIN-RECEIPT-REPAIR-244-001",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "repair_id",
+    "control_id",
+    "repository",
+    "source_issue",
+    "tracking_issue",
+    "procedure_id",
+    "occurrence_key",
+    "scheduled_due_at",
+    "record",
+    "pull_request",
+    "merge",
+    "failure_evidence",
+    "bootstrap",
+    "authority_boundary",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "repair_id": {
+      "const": "MP-ADMIN-RECEIPT-REPAIR-244-001"
+    },
+    "control_id": {
+      "const": "MP-ADMIN-MAINT-001"
+    },
+    "repository": {
+      "const": "grandchallenge/MATH-PROGRAMME"
+    },
+    "source_issue": {
+      "const": 249
+    },
+    "tracking_issue": {
+      "const": 243
+    },
+    "procedure_id": {
+      "const": "structural_sweep"
+    },
+    "occurrence_key": {
+      "const": "structural_sweep:2026-08-05T22:57:00Z"
+    },
+    "scheduled_due_at": {
+      "const": "2026-08-05T22:57:00Z"
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "git_blob",
+        "sweep_id",
+        "status"
+      ],
+      "properties": {
+        "path": {
+          "const": "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-05-007.json"
+        },
+        "git_blob": {
+          "const": "51db3bc72c8f371ace530ad5ce11322cd6af326c"
+        },
+        "sweep_id": {
+          "const": "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-05-007"
+        },
+        "status": {
+          "const": "COMPLETE_WITH_REPAIRED_P2_AND_NONBLOCKING_OPEN_PR"
+        }
+      }
+    },
+    "pull_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "number",
+        "base",
+        "head",
+        "approval",
+        "disposition"
+      ],
+      "properties": {
+        "number": {
+          "const": 244
+        },
+        "base": {
+          "const": "6dd51c29b8bcbac812bcf7a4e803b693ac8be69c"
+        },
+        "head": {
+          "const": "3a5977c2d13d8ece9365dcda356d089e7baefd8e"
+        },
+        "approval": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "review_id",
+            "reviewer",
+            "state",
+            "submitted_at",
+            "exact_head"
+          ],
+          "properties": {
+            "review_id": {
+              "const": 4869603629
+            },
+            "reviewer": {
+              "const": "jimsteeg"
+            },
+            "state": {
+              "const": "APPROVED"
+            },
+            "submitted_at": {
+              "const": "2026-08-05T23:21:12Z"
+            },
+            "exact_head": {
+              "const": "3a5977c2d13d8ece9365dcda356d089e7baefd8e"
+            }
+          }
+        },
+        "disposition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "comment_id",
+            "actor",
+            "posted_at",
+            "exact_head",
+            "token"
+          ],
+          "properties": {
+            "comment_id": {
+              "const": 5198515780
+            },
+            "actor": {
+              "const": "fyremael"
+            },
+            "posted_at": {
+              "const": "2026-08-05T23:23:05Z"
+            },
+            "exact_head": {
+              "const": "3a5977c2d13d8ece9365dcda356d089e7baefd8e"
+            },
+            "token": {
+              "const": "HUMAN_STEWARD_AUTHORIZED_EXACT_HEAD_PROTECTED_MERGE"
+            }
+          }
+        }
+      }
+    },
+    "merge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commit",
+        "committed_at",
+        "parents",
+        "message",
+        "message_receipt_parseable",
+        "signature_verified"
+      ],
+      "properties": {
+        "commit": {
+          "const": "ba89cf1cc253486a70ea832c2db8fca9e81f4a9f"
+        },
+        "committed_at": {
+          "const": "2026-08-05T23:23:25Z"
+        },
+        "parents": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "const": "6dd51c29b8bcbac812bcf7a4e803b693ac8be69c"
+            },
+            {
+              "const": "3a5977c2d13d8ece9365dcda356d089e7baefd8e"
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "message": {
+          "const": "Merge pull request #244 from grandchallenge/automation/maintenance/structural_sweep-20260805T225700Z\n\nMP-ADMIN-STRUCTURAL-SWEEP-2026-08-05-007: record contemporaneous sweep"
+        },
+        "message_receipt_parseable": {
+          "const": false
+        },
+        "signature_verified": {
+          "const": true
+        }
+      }
+    },
+    "failure_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dispatcher_runs",
+        "automation_validation_run",
+        "protected_synchronization_run",
+        "failure",
+        "completion_registry_advanced",
+        "tracking_issue_closed"
+      ],
+      "properties": {
+        "dispatcher_runs": {
+          "const": [
+            31056194799,
+            31056233164,
+            31056385313
+          ]
+        },
+        "automation_validation_run": {
+          "const": 31056194827
+        },
+        "protected_synchronization_run": {
+          "const": 31056385257
+        },
+        "failure": {
+          "const": "MERGE_RECEIPT_LACKS_PR_EXACT_HEAD_OR_DISPOSITION"
+        },
+        "completion_registry_advanced": {
+          "const": false
+        },
+        "tracking_issue_closed": {
+          "const": false
+        }
+      }
+    },
+    "bootstrap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_sha256_mode",
+        "receipt_state",
+        "protected_completion_declared_before_repair_merge"
+      ],
+      "properties": {
+        "record_sha256_mode": {
+          "const": "DERIVE_FROM_IMMUTABLE_RECORD"
+        },
+        "receipt_state": {
+          "const": "PROTECTED_COMPLETE"
+        },
+        "protected_completion_declared_before_repair_merge": {
+          "const": false
+        }
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protected_main_rewritten",
+        "approval_created",
+        "human_steward_disposition_created",
+        "merge_created",
+        "auto_merge_enabled",
+        "branch_protection_bypass",
+        "issue_243_closed_before_readback"
+      ],
+      "properties": {
+        "protected_main_rewritten": {
+          "const": false
+        },
+        "approval_created": {
+          "const": false
+        },
+        "human_steward_disposition_created": {
+          "const": false
+        },
+        "merge_created": {
+          "const": false
+        },
+        "auto_merge_enabled": {
+          "const": false
+        },
+        "branch_protection_bypass": {
+          "const": false
+        },
+        "issue_243_closed_before_readback": {
+          "const": false
+        }
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "const": false
+      }
+    }
+  }
+}
