@@ -27,7 +27,7 @@ def main() -> int:
         "actions/create-github-app-token@v2",
         1,
     )
-    require_error(mutable_app, evidence, "runtime marker")
+    require_error(mutable_app, evidence, "full commit SHA")
 
     referee_removed = dict(texts)
     referee_removed["administrative-maintenance-candidate.yml"] = referee_removed[
