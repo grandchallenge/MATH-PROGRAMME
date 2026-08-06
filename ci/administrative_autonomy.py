@@ -29,7 +29,6 @@ from autonomy_github import (
     wait_merge,
 )
 
-
 ROOT = Path(__file__).resolve().parents[1]
 TRANSITION = ROOT / "governance/administrative_autonomy_transition.json"
 REPORT = ROOT / "administrative-autonomy-activation-report.json"
@@ -87,16 +86,26 @@ def validate_transition(value: dict[str, Any]) -> list[str]:
         errors.append("PR #247 must remain a previous-policy merge")
 
     attempts = value.get("activation_attempts", [])
-    if not attempts:
-        errors.append("activation failure history is missing")
+    expected_attempts = (
+        (31070450361, 8955429470),
+        (31071759797, 8955883591),
+    )
+    if len(attempts) < len(expected_attempts):
+        errors.append("activation failure history is incomplete")
     else:
-        first = attempts[0]
-        if (
-            first.get("state") != "ACTIVATION_FAILED_CLOSED"
-            or first.get("authority_created") is not False
-            or first.get("workflow_run_id") != 31070450361
-        ):
-            errors.append("first activation failure receipt drift")
+        for index, (run_id, artifact_id) in enumerate(expected_attempts):
+            attempt = attempts[index]
+            if (
+                attempt.get("state") != "ACTIVATION_FAILED_CLOSED"
+                or attempt.get("authority_created") is not False
+                or attempt.get("workflow_run_id") != run_id
+                or attempt.get("artifact_id") != artifact_id
+                or attempt.get("canary_created") is not False
+                or attempt.get("ruleset_bypass_actors_after_failure") != []
+            ):
+                errors.append(
+                    f"activation failure receipt {index + 1} drift"
+                )
 
     agents = value.get("agents", {})
     if not all(
@@ -150,10 +159,16 @@ def validate_transition(value: dict[str, Any]) -> list[str]:
 
     bypass = authority.get("branch_protection_bypass", {})
     if (
-        bypass.get("mode") != "pull_request"
+        bypass.get("actor")
+        != "GCL Release Trust Administration Agent GitHub App identity"
+        or bypass.get("mode") != "pull_request"
         or bypass.get("direct_push") is not False
+        or bypass.get("candidate_referee_separation_preserved") is not True
+        or bypass.get("canary_merge_uses_bypass") is not False
     ):
-        errors.append("bypass must be pull-request-only")
+        errors.append(
+            "bypass must use the organization-installed Administration Agent without the canary exercising bypass"
+        )
 
     anchor = authority.get("cadence_anchor_reset", {})
     if (
@@ -217,10 +232,13 @@ def activation_record(
         },
         "ruleset_bypass": {
             "ruleset_id": ruleset_id,
-            "actor_id": referee.app_id,
+            "actor_id": administrator.app_id,
+            "actor_login": administrator.login,
+            "actor_role": "Administration Agent",
             "actor_type": "Integration",
             "mode": "pull_request",
             "direct_push": False,
+            "canary_merge_uses_bypass": False,
         },
         "canary": {
             "branch": (
@@ -239,7 +257,7 @@ def activation_record(
             "automated_merge": True,
             "automated_auto_merge": True,
             "branch_protection_bypass": (
-                "REFEREE_AGENT_PULL_REQUEST_ONLY"
+                "RELEASE_TRUST_ADMINISTRATION_AGENT_PULL_REQUEST_ONLY"
             ),
             "direct_protected_push": False,
         },
@@ -371,7 +389,7 @@ def activate(check_timeout: int, merge_timeout: int) -> int:
             admin,
             repo,
             ruleset_id,
-            referee_identity,
+            administrator_identity,
         )
         rules_changed = (
             live_ruleset.get("bypass_actors")
@@ -456,8 +474,9 @@ def activate(check_timeout: int, merge_timeout: int) -> int:
                     f"- protected merge commit: "
                     f"`{merged['merge_commit_sha']}`;\n"
                     f"- live ruleset ID: `{ruleset_id}`;\n"
-                    "- bypass: Referee Agent integration, "
-                    "`pull_request` only;\n"
+                    "- bypass actor: GCL Release Trust Administration "
+                    "Agent integration, `pull_request` only;\n"
+                    "- canary merge used bypass: `false`;\n"
                     "- protected activation state: `ACTIVE`;\n"
                     "- GitHub approving review used: `false`;\n"
                     "- Human Steward impersonation: prohibited "
@@ -483,6 +502,8 @@ def activate(check_timeout: int, merge_timeout: int) -> int:
             "merge_commit": merged["merge_commit_sha"],
             "readback_comment_id": comment["id"],
             "ruleset_id": ruleset_id,
+            "bypass_actor_id": administrator_identity.app_id,
+            "canary_merge_used_bypass": False,
         }
         REPORT.write_text(
             json.dumps(report, indent=2) + "\n",
