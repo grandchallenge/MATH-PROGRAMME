@@ -1,0 +1,64 @@
+{
+  "$schema": "../schemas/administrative_autonomy_merge_executor_correction.schema.json",
+  "schema_version": "1.0.0",
+  "correction_id": "MP-ADMIN-AUTONOMY-MERGE-EXECUTOR-CORRECTIVE-001",
+  "transition_id": "MP-ADMIN-AUTONOMY-TRANSITION-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "status": "ARMED_NOT_ACTIVE",
+  "superseded_control": {
+    "auto_merge_executor": "Referee Agent through repository GITHUB_TOKEN",
+    "reason": "The repository GITHUB_TOKEN cannot invoke enablePullRequestAutoMerge for this repository."
+  },
+  "activation_attempt_003": {
+    "workflow_run_id": 31072643002,
+    "artifact_id": 8956258495,
+    "transition_merge_commit": "bc7158b3f6f01611066c3893c0ae1d34bb472da0",
+    "canary_pull_request": 255,
+    "canary_head": "12bc32d77fb3c381dcee3ba6aea52536b62507b8",
+    "referee_disposition_comment_id": 5200565977,
+    "started_at": "2026-08-06T04:56:16Z",
+    "failed_at": "2026-08-06T04:59:25Z",
+    "state": "ACTIVATION_FAILED_CLOSED",
+    "failure_gate": "exact-head auto-merge enablement",
+    "cause": "GitHub returned Resource not accessible by integration when the repository GITHUB_TOKEN invoked enablePullRequestAutoMerge.",
+    "authority_created": false,
+    "canary_created": true,
+    "canary_closed_unmerged": true,
+    "ruleset_bypass_actors_after_failure": [],
+    "rollback_errors": []
+  },
+  "corrected_control": {
+    "approval_decision_actor": "github-actions[bot]",
+    "approval_record": "issue_comment",
+    "merge_executor_actor": "gcl-release-trust[bot]",
+    "merge_executor_credential": "Candidate Agent short-lived GitHub App token",
+    "merge_executor_required_scope": "pull_requests:write",
+    "sequence": [
+      "all live required checks succeed",
+      "Referee Agent records exact-head approval disposition",
+      "Candidate Agent enables exact-head auto-merge",
+      "GitHub performs the normal protected merge",
+      "Referee Agent verifies protected activation-record readback"
+    ],
+    "expected_head_required": true,
+    "referee_disposition_must_precede_auto_merge": true,
+    "canary_bypass_must_not_be_used": true,
+    "direct_protected_push": false,
+    "human_steward_impersonation": false
+  },
+  "manual_review_notification": {
+    "reviewer": "jimsteeg",
+    "request_reviewers_api_required": true,
+    "explicit_mention_comment_required": true,
+    "purpose": "Ensure manual approval requests generate both an assigned-review notification and a visible exact-head mention."
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "cert_route_registered": false,
+    "adjudication_authorized": false,
+    "certificate_issued": false,
+    "external_claim_authorized": false
+  }
+}
