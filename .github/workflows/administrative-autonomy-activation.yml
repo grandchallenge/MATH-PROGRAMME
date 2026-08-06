@@ -15,10 +15,6 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
-  issues: write
-  checks: read
-  actions: read
 
 concurrency:
   group: administrative-autonomy-activation
@@ -29,6 +25,12 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 80
     environment: release-trust
+    permissions:
+      actions: read
+      checks: read
+      contents: read
+      issues: write
+      pull-requests: write
     steps:
       - name: Mint Candidate Agent token
         id: candidate-token
