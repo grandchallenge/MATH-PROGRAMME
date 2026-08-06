@@ -88,6 +88,9 @@ jobs:
           CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}
           REFEREE_TOKEN: ${{ github.token }}
           ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.candidate-token.outputs.app-slug) }}
+          ADMIN_LOGIN: ${{ format('{0}[bot]', steps.admin-token.outputs.app-slug) }}
+          REFEREE_LOGIN: 'github-actions[bot]'
           CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           REFEREE_APP_ID: '15368'
         run: |
@@ -95,11 +98,16 @@ jobs:
           test -n "${CANDIDATE_TOKEN}"
           test -n "${REFEREE_TOKEN}"
           test -n "${ADMIN_TOKEN}"
+          test -n "${CANDIDATE_LOGIN}"
+          test -n "${ADMIN_LOGIN}"
+          test -n "${REFEREE_LOGIN}"
           test -n "${CANDIDATE_APP_ID}"
           test -n "${REFEREE_APP_ID}"
           test "${CANDIDATE_TOKEN}" != "${REFEREE_TOKEN}"
           test "${ADMIN_TOKEN}" != "${CANDIDATE_TOKEN}"
           test "${ADMIN_TOKEN}" != "${REFEREE_TOKEN}"
+          test "${CANDIDATE_LOGIN}" = "${ADMIN_LOGIN}"
+          test "${CANDIDATE_LOGIN}" != "${REFEREE_LOGIN}"
           test "${CANDIDATE_APP_ID}" != "${REFEREE_APP_ID}"
 
       - name: Activate through protected canary
@@ -107,6 +115,9 @@ jobs:
           CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}
           REFEREE_TOKEN: ${{ github.token }}
           ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.candidate-token.outputs.app-slug) }}
+          ADMIN_LOGIN: ${{ format('{0}[bot]', steps.admin-token.outputs.app-slug) }}
+          REFEREE_LOGIN: 'github-actions[bot]'
           CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           REFEREE_APP_ID: '15368'
           AUTONOMY_RULESET_ID: '17137629'
