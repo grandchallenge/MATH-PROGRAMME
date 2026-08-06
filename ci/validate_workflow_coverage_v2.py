@@ -7,11 +7,13 @@ from typing import Any
 import validate_workflow_coverage as legacy
 
 ROOT = legacy.ROOT
-EXTRA_WORKFLOWS = {
+MAINTENANCE_AUTOMATION_WORKFLOWS = {
     "administrative-maintenance-automation-validation.yml",
     "administrative-maintenance-candidate.yml",
     "administrative-maintenance-synchronization.yml",
 }
+ACTIVATION_WORKFLOW = "administrative-autonomy-activation.yml"
+EXTRA_WORKFLOWS = MAINTENANCE_AUTOMATION_WORKFLOWS | {ACTIVATION_WORKFLOW}
 legacy.EXPECTED_WORKFLOWS = set(legacy.EXPECTED_WORKFLOWS) | EXTRA_WORKFLOWS
 
 APP_ACTION = "actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1"
@@ -33,9 +35,17 @@ def _job(workflow: dict[str, Any], job_name: str) -> dict[str, Any]:
     return value if isinstance(value, dict) else {}
 
 
+def _as_list(value: Any) -> list[str]:
+    if isinstance(value, list):
+        return [str(item) for item in value]
+    if value is None:
+        return []
+    return [str(value)]
+
+
 def automation_workflow_errors(texts: dict[str, str]) -> list[str]:
     errors: list[str] = []
-    required = EXTRA_WORKFLOWS
+    required = MAINTENANCE_AUTOMATION_WORKFLOWS
     if not required <= set(texts):
         return errors
 
@@ -144,10 +154,78 @@ def automation_workflow_errors(texts: dict[str, str]) -> list[str]:
     return errors
 
 
+def activation_workflow_errors(texts: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    text = texts.get(ACTIVATION_WORKFLOW)
+    if text is None:
+        return errors
+    workflow = legacy.load_yaml_text(text)
+    trigger = _trigger(workflow)
+    if set(trigger) != {"push", "workflow_dispatch"}:
+        errors.append(f"{ACTIVATION_WORKFLOW}: triggers must be exactly push and workflow_dispatch")
+    push = trigger.get("push", {})
+    if "main" not in _as_list(push.get("branches")):
+        errors.append(f"{ACTIVATION_WORKFLOW}: push trigger must cover main")
+    required_paths = {
+        "governance/administrative_autonomy_transition.json",
+        "schemas/administrative_autonomy_transition.schema.json",
+        "schemas/administrative_autonomy_activation.schema.json",
+        "ci/administrative_autonomy.py",
+        "ci/autonomy_github.py",
+        "tests/test_administrative_autonomy.py",
+        ".github/workflows/administrative-autonomy-activation.yml",
+    }
+    if not required_paths <= set(_as_list(push.get("paths"))):
+        errors.append(f"{ACTIVATION_WORKFLOW}: protected transition path trigger is incomplete")
+    jobs = workflow.get("jobs", {})
+    if set(jobs) != {"activate"}:
+        errors.append(f"{ACTIVATION_WORKFLOW}: exactly one activate job is required")
+    job = _job(workflow, "activate")
+    if job.get("environment") != PROTECTED_ENVIRONMENT:
+        errors.append(f"{ACTIVATION_WORKFLOW}: activate job must bind protected environment {PROTECTED_ENVIRONMENT}")
+    expected_permissions = {
+        "actions": "read",
+        "checks": "read",
+        "contents": "read",
+        "issues": "write",
+        "pull-requests": "write",
+    }
+    if job.get("permissions") != expected_permissions:
+        errors.append(f"{ACTIVATION_WORKFLOW}: activate job delegated permissions drift")
+    for marker in (
+        APP_ACTION,
+        APP_ID,
+        APP_KEY,
+        "repositories: MATH-PROGRAMME",
+        "permission-contents: write",
+        "permission-issues: write",
+        "permission-pull-requests: write",
+        "CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}",
+        "REFEREE_TOKEN: ${{ github.token }}",
+        "ADMIN_TOKEN: ${{ secrets.GCL_REPOSITORY_ADMIN_TOKEN }}",
+        "AUTONOMY_RULESET_ID: '17137629'",
+        "python ci/administrative_autonomy.py validate",
+        "python ci/administrative_autonomy.py activate",
+        "name: administrative-autonomy-activation",
+        "retention-days: 90",
+    ):
+        if marker not in text:
+            errors.append(f"{ACTIVATION_WORKFLOW}: missing activation control marker {marker}")
+    for forbidden in ("pull_request_target:", "branches: ['*']", "permission-administration: write"):
+        if forbidden in text:
+            errors.append(f"{ACTIVATION_WORKFLOW}: forbidden activation capability {forbidden}")
+    return errors
+
+
 def workflow_coverage_errors(root=legacy.ROOT, texts=None, evidence=None):
     texts = legacy.workflow_texts(root) if texts is None else texts
     errors = legacy.workflow_coverage_errors(root=root, texts=texts, evidence=evidence)
+    delegated_permission_error = (
+        f"{ACTIVATION_WORKFLOW}:activate: non-Pages job permissions may not exceed contents: read"
+    )
+    errors = [error for error in errors if error != delegated_permission_error]
     errors.extend(automation_workflow_errors(texts))
+    errors.extend(activation_workflow_errors(texts))
     return errors
 
 
@@ -158,7 +236,7 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"workflow coverage v2 validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print("workflow coverage v2: registered read-only workflows, protected Release Trust environment, scoped app tokens, protected-main-only synchronization, manual authority gates, and protected receipt paths are valid")
+    print("workflow coverage v2: registered read-only workflows, protected Release Trust environment, scoped app tokens, protected-main-only synchronization, bounded autonomy activation, delegated Referee permissions, manual transition gates, and protected receipt paths are valid")
     return 0
 
 
