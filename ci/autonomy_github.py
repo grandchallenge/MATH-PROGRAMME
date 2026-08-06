@@ -44,10 +44,8 @@ class Identity:
     def record(self) -> dict[str, Any]:
         return {"login": self.login, "app_id": self.app_id, "token_role": self.token_role}
 
-def identity(client: Client, expected_app_id: int, token_role: str) -> Identity:
-    value = client.get("/user")
-    login = str(value.get("login") or "")
-    if not login or str(value.get("type") or "") != "Bot" or expected_app_id <= 0:
+def identity(login: str, expected_app_id: int, token_role: str) -> Identity:
+    if not login.endswith("[bot]") or expected_app_id <= 0:
         raise AutonomyError(f"{token_role} identity is incomplete")
     return Identity(login, expected_app_id, token_role)
 
@@ -189,7 +187,7 @@ def wait_checks(client: Client, repo: str, sha: str, contexts: list[str], timeou
         time.sleep(15)
     raise AutonomyError(f"required checks timed out: {observed}")
 
-def approve(client: Client, repo: str, pr: int, sha: str) -> dict[str, Any]:
+def approve(client: Client, repo: str, pr: int, sha: str, referee: Identity) -> dict[str, Any]:
     review = client.post(f"/repos/{repo}/pulls/{pr}/reviews", {
         "commit_id": sha, "event": "APPROVE",
         "body": (
@@ -198,16 +196,20 @@ def approve(client: Client, repo: str, pr: int, sha: str) -> dict[str, Any]:
             "Steward disposition. Identity separation, changed-path scope, and live required checks passed."
         ),
     })
-    if review.get("state") != "APPROVED" or review.get("commit_id") != sha:
-        raise AutonomyError("exact-head Referee approval readback failed")
+    if (
+        review.get("state") != "APPROVED"
+        or review.get("commit_id") != sha
+        or review.get("user", {}).get("login") != referee.login
+    ):
+        raise AutonomyError("exact-head Referee approval actor readback failed")
     return review
 
-def auto_merge(client: Client, node_id: str, sha: str) -> None:
+def auto_merge(client: Client, node_id: str, sha: str, referee: Identity) -> None:
     result = client.post("/graphql", {
         "query": (
             "mutation($id:ID!,$oid:GitObjectID!,$h:String!,$b:String!){enablePullRequestAutoMerge("
             "input:{pullRequestId:$id,expectedHeadOid:$oid,mergeMethod:MERGE,commitHeadline:$h,commitBody:$b})"
-            "{pullRequest{number autoMergeRequest{enabledAt}}}}"
+            "{pullRequest{number autoMergeRequest{enabledAt enabledBy{login}}}}}"
         ),
         "variables": {
             "id": node_id, "oid": sha,
@@ -218,8 +220,12 @@ def auto_merge(client: Client, node_id: str, sha: str) -> None:
     if result.get("errors"):
         raise AutonomyError(f"enable auto-merge failed: {result['errors']}")
     request = result.get("data", {}).get("enablePullRequestAutoMerge", {}).get("pullRequest", {}).get("autoMergeRequest")
-    if not request or not request.get("enabledAt"):
-        raise AutonomyError("auto-merge readback is absent")
+    if (
+        not request
+        or not request.get("enabledAt")
+        or request.get("enabledBy", {}).get("login") != referee.login
+    ):
+        raise AutonomyError("auto-merge actor readback is absent")
 
 def wait_merge(client: Client, repo: str, pr: int, sha: str, timeout: int) -> dict[str, Any]:
     deadline = time.monotonic() + timeout
