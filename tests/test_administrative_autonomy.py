@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULE_PATH = ROOT / "ci" / "administrative_autonomy.py"
+sys.path.insert(0, str(ROOT / "ci"))
 SPEC = importlib.util.spec_from_file_location("administrative_autonomy", MODULE_PATH)
 assert SPEC and SPEC.loader
 autonomy = importlib.util.module_from_spec(SPEC)
