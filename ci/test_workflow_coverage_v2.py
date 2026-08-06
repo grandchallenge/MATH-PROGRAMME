@@ -106,6 +106,37 @@ def main() -> int:
     )
     assert any("bounded synchronization marker" in error for error in workflow_coverage_errors(texts=missing_intellect_split, evidence=evidence))
 
+    activation_permissions_drift = dict(texts)
+    activation_permissions_drift["administrative-autonomy-activation.yml"] = activation_permissions_drift["administrative-autonomy-activation.yml"].replace(
+        "      pull-requests: write\n",
+        "      pull-requests: read\n",
+        1,
+    )
+    assert any("activate job delegated permissions drift" in error for error in workflow_coverage_errors(texts=activation_permissions_drift, evidence=evidence))
+
+    activation_environment_removed = dict(texts)
+    activation_environment_removed["administrative-autonomy-activation.yml"] = activation_environment_removed["administrative-autonomy-activation.yml"].replace(
+        "    environment: release-trust\n",
+        "",
+        1,
+    )
+    assert any("activate job must bind protected environment release-trust" in error for error in workflow_coverage_errors(texts=activation_environment_removed, evidence=evidence))
+
+    activation_admin_secret_removed = dict(texts)
+    activation_admin_secret_removed["administrative-autonomy-activation.yml"] = activation_admin_secret_removed["administrative-autonomy-activation.yml"].replace(
+        "${{ secrets.GCL_REPOSITORY_ADMIN_TOKEN }}",
+        "${{ secrets.UNBOUND_ADMIN_TOKEN }}",
+    )
+    assert any("missing activation control marker" in error for error in workflow_coverage_errors(texts=activation_admin_secret_removed, evidence=evidence))
+
+    activation_main_gate_removed = dict(texts)
+    activation_main_gate_removed["administrative-autonomy-activation.yml"] = activation_main_gate_removed["administrative-autonomy-activation.yml"].replace(
+        "    branches: [main]\n",
+        "    branches: [development]\n",
+        1,
+    )
+    assert any("push trigger must cover main" in error for error in workflow_coverage_errors(texts=activation_main_gate_removed, evidence=evidence))
+
     print("workflow coverage v2 adversarial tests passed")
     return 0
 
