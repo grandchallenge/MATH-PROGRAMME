@@ -7,7 +7,6 @@ import sys
 import unittest
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 MODULE_PATH = ROOT / "ci" / "administrative_autonomy.py"
 sys.path.insert(0, str(ROOT / "ci"))
@@ -32,10 +31,7 @@ class AdministrativeAutonomyTests(unittest.TestCase):
         )
 
     def test_transition_is_valid(self) -> None:
-        self.assertEqual(
-            [],
-            autonomy.validate_transition(self.record),
-        )
+        self.assertEqual([], autonomy.validate_transition(self.record))
 
     def test_candidate_and_referee_must_be_distinct(self) -> None:
         mutated = copy.deepcopy(self.record)
@@ -63,7 +59,36 @@ class AdministrativeAutonomyTests(unittest.TestCase):
             "branch_protection_bypass"
         ]["direct_push"] = True
         self.assertIn(
-            "bypass must be pull-request-only",
+            (
+                "bypass must use the organization-installed Administration "
+                "Agent without the canary exercising bypass"
+            ),
+            autonomy.validate_transition(mutated),
+        )
+
+    def test_ineligible_actions_bypass_actor_is_rejected(self) -> None:
+        mutated = copy.deepcopy(self.record)
+        mutated["delegated_authority"][
+            "branch_protection_bypass"
+        ]["actor"] = "Referee Agent GitHub App identity"
+        self.assertIn(
+            (
+                "bypass must use the organization-installed Administration "
+                "Agent without the canary exercising bypass"
+            ),
+            autonomy.validate_transition(mutated),
+        )
+
+    def test_canary_may_not_exercise_bypass(self) -> None:
+        mutated = copy.deepcopy(self.record)
+        mutated["delegated_authority"][
+            "branch_protection_bypass"
+        ]["canary_merge_uses_bypass"] = True
+        self.assertIn(
+            (
+                "bypass must use the organization-installed Administration "
+                "Agent without the canary exercising bypass"
+            ),
             autonomy.validate_transition(mutated),
         )
 
@@ -111,13 +136,19 @@ class AdministrativeAutonomyTests(unittest.TestCase):
             autonomy.validate_transition(mutated),
         )
 
-    def test_failed_attempt_must_remain_fail_closed(self) -> None:
+    def test_first_failed_attempt_must_remain_fail_closed(self) -> None:
         mutated = copy.deepcopy(self.record)
-        mutated["activation_attempts"][0][
-            "authority_created"
-        ] = True
+        mutated["activation_attempts"][0]["authority_created"] = True
         self.assertIn(
-            "first activation failure receipt drift",
+            "activation failure receipt 1 drift",
+            autonomy.validate_transition(mutated),
+        )
+
+    def test_second_failed_attempt_must_remain_fail_closed(self) -> None:
+        mutated = copy.deepcopy(self.record)
+        mutated["activation_attempts"][1]["canary_created"] = True
+        self.assertIn(
+            "activation failure receipt 2 drift",
             autonomy.validate_transition(mutated),
         )
 
