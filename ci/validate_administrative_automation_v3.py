@@ -3,9 +3,11 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
+from typing import Callable
 
 from jsonschema import Draft202012Validator, FormatChecker
 
@@ -30,6 +32,8 @@ ATTESTATION_SCHEMA_PATH = ROOT / "schemas" / "administrative_maintenance_automat
 TERMINAL_CLOSURE_PATH = ROOT / "governance" / "administrative_maintenance_automation_terminal_closure.json"
 TERMINAL_CLOSURE_SCHEMA_PATH = ROOT / "schemas" / "administrative_maintenance_automation_terminal_closure.schema.json"
 COMPLETION_STATE_PATH = ROOT / "governance" / "administrative_maintenance_completion_state.json"
+SHA_RE = re.compile(r"^[0-9a-f]{40}$")
+AncestorCheck = Callable[[str, str], bool]
 
 
 def validate_workflows_v3(config: dict) -> list[str]:
@@ -136,6 +140,35 @@ def is_ancestor(ancestor: str, descendant: str) -> bool:
     return completed.returncode == 0
 
 
+def completion_progression_errors(
+    evidence: dict,
+    completion: dict,
+    validation_head: str,
+    ancestor_check: AncestorCheck,
+) -> list[str]:
+    """Validate forward-only live-state progression from an immutable closure snapshot."""
+    errors: list[str] = []
+    current_derivation = completion.get("derived_from_protected_head")
+    historical_observed = evidence.get("observed_protected_head")
+
+    if not isinstance(current_derivation, str) or not SHA_RE.fullmatch(current_derivation):
+        return ["terminal_closure: current completion derivation head is invalid"]
+    if not isinstance(historical_observed, str) or not SHA_RE.fullmatch(historical_observed):
+        return ["terminal_closure: historical observed protected head is invalid"]
+    if not SHA_RE.fullmatch(validation_head):
+        return ["terminal_closure: validation head is invalid"]
+
+    if not ancestor_check(historical_observed, current_derivation):
+        errors.append(
+            "terminal_closure: current completion derivation head does not descend from the historical terminal head"
+        )
+    if not ancestor_check(current_derivation, validation_head):
+        errors.append(
+            "terminal_closure: current completion derivation head is not ancestral to validation head"
+        )
+    return errors
+
+
 def validate_terminal_closure() -> list[str]:
     errors, record = schema_errors(
         TERMINAL_CLOSURE_SCHEMA_PATH,
@@ -160,8 +193,6 @@ def validate_terminal_closure() -> list[str]:
         errors.append("terminal_closure: historical completion state drift")
 
     evidence = record["post_merge_evidence"]
-    if evidence["completion_derivation_head"] != completion.get("derived_from_protected_head"):
-        errors.append("terminal_closure: completion derivation head does not match protected state")
     if evidence["completion_semantics_changed"] is not False:
         errors.append("terminal_closure: fixed-point readback must report unchanged semantics")
     if evidence["completion_state_pull_request"] is not None:
@@ -182,6 +213,7 @@ def validate_terminal_closure() -> list[str]:
             capture_output=True,
         ).stdout.strip()
         observed = evidence["observed_protected_head"]
+        errors.extend(completion_progression_errors(evidence, completion, current_head, is_ancestor))
         if not is_ancestor(observed, current_head):
             errors.append("terminal_closure: observed protected head is not ancestral to validation head")
         for field in (
