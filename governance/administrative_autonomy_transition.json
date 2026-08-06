@@ -32,8 +32,13 @@
   "agents": {
     "candidate": {
       "office": "Candidate Agent",
-      "credential": "GCL Release Trust GitHub App",
+      "credential": "short-lived GCL Release Trust GitHub App token",
       "expected_login": "gcl-release-trust[bot]",
+      "token_scope": [
+        "contents:write",
+        "issues:write",
+        "pull_requests:write"
+      ],
       "allowed_actions": [
         "create bounded administrative branches",
         "write bounded administrative records",
@@ -42,18 +47,40 @@
       "prohibited_actions": [
         "approve its own pull request",
         "emit a Human Steward disposition",
+        "change repository administration settings",
         "weaken claim boundaries",
         "modify files outside the allowed path set"
+      ]
+    },
+    "administrator": {
+      "office": "Administration Agent",
+      "credential": "separate short-lived GCL Release Trust GitHub App token",
+      "expected_login": "gcl-release-trust[bot]",
+      "token_scope": [
+        "administration:write"
+      ],
+      "allowed_actions": [
+        "enable GitHub Actions pull-request approvals",
+        "install the Referee Agent ruleset bypass actor in pull_request mode",
+        "restore exact prior settings on pre-merge failure"
+      ],
+      "prohibited_actions": [
+        "create or modify candidate branches",
+        "approve pull requests",
+        "merge pull requests",
+        "directly push protected content",
+        "emit a Human Steward disposition"
       ]
     },
     "referee": {
       "office": "Referee Agent",
       "credential": "repository GITHUB_TOKEN",
       "expected_login": "github-actions[bot]",
+      "expected_app_id": 15368,
       "allowed_actions": [
         "verify exact head and required checks",
         "submit a truthfully attributed Referee Agent approval",
-        "enable auto-merge",
+        "enable exact-head auto-merge",
         "perform protected readback"
       ],
       "prohibited_actions": [
@@ -122,6 +149,7 @@
     "previous_policy_human_steward_disposition": true,
     "repository_actions_approval_enabled": true,
     "candidate_identity_verified": true,
+    "administrator_identity_verified": true,
     "referee_identity_verified": true,
     "identity_separation_verified": true,
     "auto_merge_enabled": true,
