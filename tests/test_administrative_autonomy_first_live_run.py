@@ -38,6 +38,17 @@ class AdministrativeAutonomyFirstLiveRunTests(unittest.TestCase):
             receipt["disposition"],
         )
 
+    def test_attestation_identity_and_acceptance_state(self) -> None:
+        self.assertEqual(
+            "MP-ADMIN-AUTONOMY-FIRST-LIVE-RUN-001",
+            self.attestation["attestation_id"],
+        )
+        self.assertEqual(
+            "FIRST_LIVE_RUN_ACCEPTANCE_BOUND_TO_PROTECTED_READBACK_REPAIR",
+            self.attestation["status"],
+        )
+        self.assertEqual(266, self.attestation["repair_issue"])
+
     def test_historical_failures_are_preserved(self) -> None:
         evidence = self.attestation["runtime_evidence"]
         self.assertFalse(evidence["original_terminal_readback_complete"])
@@ -55,5 +66,3 @@ class AdministrativeAutonomyFirstLiveRunTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-# Exact-head CI exercises this file through repository unit-test discovery.
