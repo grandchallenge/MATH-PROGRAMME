@@ -172,6 +172,8 @@ def activation_workflow_errors(texts: dict[str, str]) -> list[str]:
         "schemas/administrative_autonomy_activation.schema.json",
         "ci/administrative_autonomy.py",
         "ci/autonomy_github.py",
+        "ci/validate_workflow_coverage_v2.py",
+        "ci/test_workflow_coverage_v2.py",
         "tests/test_administrative_autonomy.py",
         ".github/workflows/administrative-autonomy-activation.yml",
     }
@@ -200,9 +202,13 @@ def activation_workflow_errors(texts: dict[str, str]) -> list[str]:
         "permission-contents: write",
         "permission-issues: write",
         "permission-pull-requests: write",
+        "id: admin-token",
+        "permission-administration: write",
         "CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}",
         "REFEREE_TOKEN: ${{ github.token }}",
-        "ADMIN_TOKEN: ${{ secrets.GCL_REPOSITORY_ADMIN_TOKEN }}",
+        "ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}",
+        "CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}",
+        "REFEREE_APP_ID: '15368'",
         "AUTONOMY_RULESET_ID: '17137629'",
         "python ci/administrative_autonomy.py validate",
         "python ci/administrative_autonomy.py activate",
@@ -211,7 +217,13 @@ def activation_workflow_errors(texts: dict[str, str]) -> list[str]:
     ):
         if marker not in text:
             errors.append(f"{ACTIVATION_WORKFLOW}: missing activation control marker {marker}")
-    for forbidden in ("pull_request_target:", "branches: ['*']", "permission-administration: write"):
+    if text.count(APP_ACTION) != 2:
+        errors.append(f"{ACTIVATION_WORKFLOW}: exactly two separately scoped Release Trust tokens are required")
+    if text.count("permission-administration: write") != 1:
+        errors.append(f"{ACTIVATION_WORKFLOW}: exactly one administration-write token is required")
+    if text.count("permission-contents: write") != 1:
+        errors.append(f"{ACTIVATION_WORKFLOW}: exactly one candidate contents-write token is required")
+    for forbidden in ("pull_request_target:", "branches: ['*']"):
         if forbidden in text:
             errors.append(f"{ACTIVATION_WORKFLOW}: forbidden activation capability {forbidden}")
     return errors
