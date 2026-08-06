@@ -34,21 +34,22 @@ class Client:
     def post(self, path: str, payload: Any) -> Any: return self.call("POST", path, payload)
     def put(self, path: str, payload: Any) -> Any: return self.call("PUT", path, payload)
     def patch(self, path: str, payload: Any) -> Any: return self.call("PATCH", path, payload)
+    def delete(self, path: str) -> Any: return self.call("DELETE", path)
 
 @dataclass(frozen=True)
 class Identity:
     login: str
-    slug: str
     app_id: int
+    token_role: str
     def record(self) -> dict[str, Any]:
-        return {"login": self.login, "app_slug": self.slug, "app_id": self.app_id}
+        return {"login": self.login, "app_id": self.app_id, "token_role": self.token_role}
 
-def identity(client: Client) -> Identity:
-    value = client.get("/installation")
-    slug, app_id = str(value.get("app_slug") or ""), int(value.get("app_id") or 0)
-    if not slug or app_id <= 0:
-        raise AutonomyError("installation identity is incomplete")
-    return Identity(f"{slug}[bot]", slug, app_id)
+def identity(client: Client, expected_app_id: int, token_role: str) -> Identity:
+    value = client.get("/user")
+    login = str(value.get("login") or "")
+    if not login or str(value.get("type") or "") != "Bot" or expected_app_id <= 0:
+        raise AutonomyError(f"{token_role} identity is incomplete")
+    return Identity(login, expected_app_id, token_role)
 
 def workflow_permissions(admin: Client, repo: str) -> dict[str, Any]:
     return admin.get(f"/repos/{repo}/actions/permissions/workflow")
@@ -75,11 +76,11 @@ def install_bypass(admin: Client, repo: str, ruleset_id: int, referee: Identity)
     if desired not in actors:
         admin.put(path, ruleset_body(before, actors + [desired]))
     after = admin.get(path)
-    readback = [
+    readback_actors = [
         {"actor_id": int(x["actor_id"]), "actor_type": x["actor_type"], "bypass_mode": x["bypass_mode"]}
         for x in after.get("bypass_actors", [])
     ]
-    if desired not in readback:
+    if desired not in readback_actors:
         raise AutonomyError("Referee Agent pull-request bypass readback failed")
     return before, after
 
@@ -89,7 +90,9 @@ def restore_ruleset(admin: Client, repo: str, ruleset_id: int, before: dict[str,
 def required_contexts(ruleset: dict[str, Any]) -> list[str]:
     for rule in ruleset.get("rules", []):
         if rule.get("type") == "required_status_checks":
-            return [x["context"] for x in rule["parameters"]["required_status_checks"]]
+            contexts = [x["context"] for x in rule["parameters"]["required_status_checks"]]
+            if contexts:
+                return contexts
     raise AutonomyError("live ruleset has no required checks")
 
 def branch(client: Client, repo: str, name: str, sha: str) -> None:
@@ -104,12 +107,26 @@ def branch(client: Client, repo: str, name: str, sha: str) -> None:
     if not current:
         client.post(f"/repos/{repo}/git/refs", {"ref": f"refs/heads/{name}", "sha": sha})
 
+def delete_branch(client: Client, repo: str, name: str) -> None:
+    encoded = urllib.parse.quote(name, safe="")
+    try:
+        client.delete(f"/repos/{repo}/git/refs/heads/{encoded}")
+    except AutonomyError as exc:
+        if " 404 " not in str(exc):
+            raise
+
 def content(client: Client, repo: str, path: str, ref: str) -> dict[str, Any] | None:
     try:
         return client.get(f"/repos/{repo}/contents/{path}?ref={urllib.parse.quote(ref, safe='')}")
     except AutonomyError as exc:
         if " 404 " in str(exc): return None
         raise
+
+def json_content(client: Client, repo: str, path: str, ref: str) -> dict[str, Any] | None:
+    value = content(client, repo, path, ref)
+    if not value:
+        return None
+    return json.loads(base64.b64decode(value["content"]))
 
 def put_json(client: Client, repo: str, branch_name: str, path: str, value: dict[str, Any]) -> str:
     old = content(client, repo, path, branch_name)
@@ -126,15 +143,20 @@ def pull(client: Client, repo: str, branch_name: str, transition_head: str) -> d
     owner = repo.split("/", 1)[0]
     query = urllib.parse.urlencode({"state": "all", "head": f"{owner}:{branch_name}"})
     existing = client.get(f"/repos/{repo}/pulls?{query}")
-    if existing: return existing[0]
+    if existing:
+        value = existing[0]
+        if value.get("state") == "closed" and not value.get("merged_at"):
+            value = client.patch(f"/repos/{repo}/pulls/{value['number']}", {"state": "open"})
+        return value
     return client.post(f"/repos/{repo}/pulls", {
         "title": "[autonomy-activation] activate MP-ADMIN-AUTONOMY-TRANSITION-001",
         "head": branch_name, "base": "main", "draft": False, "maintainer_can_modify": False,
         "body": (
             f"Protected canary for transition head `{transition_head}`.\n\n"
             "Candidate Agent: `gcl-release-trust[bot]`; Referee Agent: `github-actions[bot]`; "
-            "auto-merge occurs only after live required checks and exact-head Referee approval. "
-            "Direct protected push and Human Steward impersonation are prohibited."
+            "auto-merge is armed against the exact head before check completion and remains blocked "
+            "until all live required checks and exact-head Referee approval pass. Direct protected "
+            "push and Human Steward impersonation are prohibited."
         ),
     })
 
@@ -147,7 +169,7 @@ def wait_checks(client: Client, repo: str, sha: str, contexts: list[str], timeou
     deadline, observed = time.monotonic() + timeout, {}
     while time.monotonic() < deadline:
         runs = client.get(f"/repos/{repo}/commits/{sha}/check-runs?per_page=100").get("check_runs", [])
-        latest = {}
+        latest: dict[str, dict[str, Any]] = {}
         for run in runs:
             name = run.get("name")
             if name not in latest or str(run.get("started_at") or "") > str(latest[name].get("started_at") or ""):
@@ -183,31 +205,40 @@ def approve(client: Client, repo: str, pr: int, sha: str) -> dict[str, Any]:
 def auto_merge(client: Client, node_id: str, sha: str) -> None:
     result = client.post("/graphql", {
         "query": (
-            "mutation($id:ID!,$h:String!,$b:String!){enablePullRequestAutoMerge("
-            "input:{pullRequestId:$id,mergeMethod:MERGE,commitHeadline:$h,commitBody:$b})"
+            "mutation($id:ID!,$oid:GitObjectID!,$h:String!,$b:String!){enablePullRequestAutoMerge("
+            "input:{pullRequestId:$id,expectedHeadOid:$oid,mergeMethod:MERGE,commitHeadline:$h,commitBody:$b})"
             "{pullRequest{number autoMergeRequest{enabledAt}}}}"
         ),
         "variables": {
-            "id": node_id,
+            "id": node_id, "oid": sha,
             "h": "Activate MP-ADMIN-AUTONOMY-TRANSITION-001",
             "b": f"Exact head {sha}\n\nDisposition: REFEREE_AGENT_AUTHORIZED_EXACT_HEAD_PROTECTED_AUTO_MERGE",
         },
     })
     if result.get("errors"):
         raise AutonomyError(f"enable auto-merge failed: {result['errors']}")
+    request = result.get("data", {}).get("enablePullRequestAutoMerge", {}).get("pullRequest", {}).get("autoMergeRequest")
+    if not request or not request.get("enabledAt"):
+        raise AutonomyError("auto-merge readback is absent")
 
 def wait_merge(client: Client, repo: str, pr: int, sha: str, timeout: int) -> dict[str, Any]:
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
         value = client.get(f"/repos/{repo}/pulls/{pr}")
-        if value["head"]["sha"] != sha: raise AutonomyError("canary head changed after approval")
+        if value["head"]["sha"] != sha: raise AutonomyError("canary head changed after auto-merge authorization")
         if value.get("merged"): return value
         time.sleep(10)
     raise AutonomyError("canary auto-merge timed out")
 
-def readback(client: Client, repo: str, path: str, expected: dict[str, Any]) -> None:
-    value = content(client, repo, path, "main")
-    if not value: raise AutonomyError("protected activation record is absent")
-    actual = json.loads(base64.b64decode(value["content"]))
-    if json.dumps(actual, sort_keys=True) != json.dumps(expected, sort_keys=True):
-        raise AutonomyError("protected activation record readback mismatch")
+def readback(client: Client, repo: str, path: str, expected: dict[str, Any], timeout: int = 300) -> None:
+    deadline, last = time.monotonic() + timeout, "protected activation record is absent"
+    while time.monotonic() < deadline:
+        actual = json_content(client, repo, path, "main")
+        if actual is None:
+            last = "protected activation record is absent"
+        elif json.dumps(actual, sort_keys=True) == json.dumps(expected, sort_keys=True):
+            return
+        else:
+            last = "protected activation record readback mismatch"
+        time.sleep(5)
+    raise AutonomyError(last)
