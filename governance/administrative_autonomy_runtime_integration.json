@@ -1,0 +1,129 @@
+{
+  "$schema": "../schemas/administrative_autonomy_runtime_integration.schema.json",
+  "schema_version": "1.0.0",
+  "runtime_id": "MP-ADMIN-AUTONOMY-RUNTIME-INTEGRATION-001",
+  "transition_id": "MP-ADMIN-AUTONOMY-TRANSITION-001",
+  "activation_id": "MP-ADMIN-AUTONOMY-ACTIVATION-001",
+  "control_id": "MP-ADMIN-MAINT-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "status": "ACTIVE_WHEN_PROTECTED",
+  "issue": 260,
+  "activation_record": "governance/administrative_autonomy_activation.json",
+  "activation_state_required": "ACTIVE",
+  "ruleset_id": 17137629,
+  "candidate_identity": {
+    "login": "gcl-release-trust[bot]",
+    "app_id": 4423678,
+    "token_role": "candidate-and-merge-executor"
+  },
+  "administrator_identity": {
+    "login": "gcl-release-trust[bot]",
+    "app_id": 4423678,
+    "token_role": "ruleset-readback"
+  },
+  "referee_identity": {
+    "login": "github-actions[bot]",
+    "app_id": 15368,
+    "token_role": "referee"
+  },
+  "automated_procedures": [
+    "structural_sweep",
+    "administrative_review",
+    "deep_conformance_review"
+  ],
+  "manual_procedures": [
+    "pilot_review",
+    "constitutional_review"
+  ],
+  "first_production_occurrence": {
+    "procedure_id": "structural_sweep",
+    "occurrence_key": "structural_sweep:2026-08-06T15:45:00Z",
+    "record_id": "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-06-008",
+    "scheduled_due_at": "2026-08-06T15:45:00Z",
+    "candidate_prepare_at": "2026-08-06T09:45:00Z",
+    "evidence_freeze_at": "2026-08-06T14:15:00Z"
+  },
+  "record_layout": {
+    "structural_sweep": {
+      "directory": "governance/administrative_structural_sweeps",
+      "id_prefix": "MP-ADMIN-STRUCTURAL-SWEEP"
+    },
+    "administrative_review": {
+      "directory": "governance/administrative_reviews",
+      "id_prefix": "MP-ADMIN-ADMINISTRATIVE-REVIEW"
+    },
+    "deep_conformance_review": {
+      "directory": "governance/administrative_deep_conformance_reviews",
+      "id_prefix": "MP-ADMIN-DEEP-CONFORMANCE-REVIEW"
+    }
+  },
+  "merge_control": {
+    "required_pre_merge_state": "CLEAN",
+    "merge_method": "merge",
+    "expected_head_required": true,
+    "referee_disposition_required": true,
+    "post_disposition_check_stabilization_required": true,
+    "minimum_post_disposition_settle_seconds": 15,
+    "maximum_check_wait_seconds": 2700,
+    "maximum_stabilization_wait_seconds": 600,
+    "maximum_protected_readback_wait_seconds": 900,
+    "poll_interval_seconds": 5,
+    "accepted_check_conclusions": [
+      "success",
+      "neutral",
+      "skipped"
+    ],
+    "bypass_may_be_exercised": false,
+    "direct_protected_push": false
+  },
+  "scope": {
+    "branch_prefix": "automation/maintenance/",
+    "candidate_title_prefix": "[maintenance-candidate]",
+    "final_title_prefix": "[maintenance-final]",
+    "candidate_manifest_prefix": "governance/administrative_candidates/",
+    "maximum_changed_files": 2,
+    "maximum_additions": 5000,
+    "maximum_deletions": 1000,
+    "recovery_window_minutes_after_due": 180
+  },
+  "mirrors": [
+    {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 182
+    },
+    {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 183
+    },
+    {
+      "repository": "grandchallenge/INTELLECT",
+      "issue": 21
+    }
+  ],
+  "manual_review_notification": {
+    "reviewer": "jimsteeg",
+    "request_reviewers_api_required": true,
+    "explicit_mention_comment_required": true,
+    "applies_to_control_plane_pull_requests_only": true
+  },
+  "authority_boundary": {
+    "routine_bounded_administrative_completion": true,
+    "automated_exact_head_referee_disposition": true,
+    "automated_merge": true,
+    "automated_auto_merge": true,
+    "automated_human_steward_disposition": false,
+    "control_plane_change": false,
+    "scope_expansion": false,
+    "pilot_review_disposition": false,
+    "constitutional_review_disposition": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "cert_route_registered": false,
+    "adjudication_authorized": false,
+    "certificate_issued": false,
+    "external_claim_authorized": false
+  }
+}

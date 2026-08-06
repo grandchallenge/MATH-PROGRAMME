@@ -24,10 +24,16 @@ concurrency:
 jobs:
   prepare:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 80
     environment: release-trust
+    permissions:
+      actions: read
+      checks: read
+      contents: read
+      issues: write
+      pull-requests: write
     steps:
-      - name: Mint bounded MATH-PROGRAMME write token
+      - name: Mint bounded Candidate and merge-executor token
         id: write-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
         with:
@@ -38,7 +44,8 @@ jobs:
           permission-contents: write
           permission-issues: write
           permission-pull-requests: write
-      - name: Mint bounded evidence-read token
+
+      - name: Mint bounded evidence and observability token
         id: evidence-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
         with:
@@ -46,43 +53,95 @@ jobs:
           private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
           owner: grandchallenge
           repositories: |
+            MATH-PROGRAMME
             MATHFORGE
             MATHSOLVE
             MATHCERT
             INTELLECT
+          permission-actions: read
           permission-contents: read
+          permission-issues: read
           permission-pull-requests: read
+
+      - name: Mint bounded ruleset-readback token
+        id: admin-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-administration: write
+
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
+          ref: refs/heads/main
           fetch-depth: 0
           persist-credentials: false
+
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.12'
-      - name: Require bounded automation credentials
+
+      - name: Install governed policy dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --requirement requirements/policy.txt
+
+      - name: Require bounded and separated credentials
         env:
           WRITE_TOKEN: ${{ steps.write-token.outputs.token }}
           EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
+          ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
         run: |
           set -euo pipefail
           test -n "${WRITE_TOKEN}"
           test -n "${EVIDENCE_TOKEN}"
+          test -n "${ADMIN_TOKEN}"
+          test "${ADMIN_TOKEN}" != "${WRITE_TOKEN}"
+
       - name: Prepare idempotent non-authoritative candidates
         env:
           GITHUB_TOKEN: ${{ steps.write-token.outputs.token }}
           EVIDENCE_GITHUB_TOKEN: ${{ steps.evidence-token.outputs.token }}
         run: |
           set -euo pipefail
-          python ci/prepare_administrative_candidate_v3.py --apply --report administrative-maintenance-candidate.json || {
+          python ci/prepare_administrative_candidate_v4.py --apply --report administrative-maintenance-candidate.json || {
             rc=$?
             test -f administrative-maintenance-candidate.json || printf '%s\n' '{"schema_version":"1.0.0","state":"CANDIDATE_PREPARATION_FAILED_CLOSED","authority_created":false}' > administrative-maintenance-candidate.json
             exit "$rc"
           }
-      - name: Preserve preparation evidence
+
+      - name: Validate active autonomy runtime contract
+        run: python ci/administrative_autonomy_runtime.py validate
+
+      - name: Finalize and execute eligible frozen candidate
+        env:
+          CANDIDATE_TOKEN: ${{ steps.write-token.outputs.token }}
+          EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
+          OBSERVABILITY_TOKEN: ${{ steps.evidence-token.outputs.token }}
+          REFEREE_TOKEN: ${{ github.token }}
+          ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.write-token.outputs.app-slug) }}
+          ADMIN_LOGIN: ${{ format('{0}[bot]', steps.write-token.outputs.app-slug) }}
+          REFEREE_LOGIN: 'github-actions[bot]'
+          CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          REFEREE_APP_ID: '15368'
+        run: |
+          set -euo pipefail
+          python ci/administrative_autonomy_runtime.py execute --report administrative-autonomy-runtime-report.json || {
+            rc=$?
+            test -f administrative-autonomy-runtime-report.json || printf '%s\n' '{"schema_version":"1.0.0","state":"AUTONOMOUS_RUNTIME_FAILED_CLOSED","authority_created":false}' > administrative-autonomy-runtime-report.json
+            exit "$rc"
+          }
+
+      - name: Preserve candidate and runtime evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: administrative-maintenance-candidate
-          path: administrative-maintenance-candidate.json
-          if-no-files-found: error
-          retention-days: 30
+          name: administrative-autonomy-runtime
+          path: |
+            administrative-maintenance-candidate.json
+            administrative-autonomy-runtime-report.json
+          if-no-files-found: warn
+          retention-days: 90
