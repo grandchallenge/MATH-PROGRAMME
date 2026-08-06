@@ -1,0 +1,87 @@
+{
+  "$schema": "../schemas/administrative_autonomy_activation.schema.json",
+  "schema_version": "1.0.0",
+  "activation_id": "MP-ADMIN-AUTONOMY-ACTIVATION-001",
+  "transition_id": "MP-ADMIN-AUTONOMY-TRANSITION-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "state": "ACTIVE",
+  "transition_merge_head": "b299b5e2f9d7d9568880ca033fb540687ab85dcd",
+  "activated_at": "2026-08-06T05:33:55Z",
+  "candidate_identity": {
+    "login": "gcl-release-trust[bot]",
+    "app_id": 4423678,
+    "token_role": "candidate"
+  },
+  "administrator_identity": {
+    "login": "gcl-release-trust[bot]",
+    "app_id": 4423678,
+    "token_role": "administrator"
+  },
+  "referee_identity": {
+    "login": "github-actions[bot]",
+    "app_id": 15368,
+    "token_role": "referee"
+  },
+  "identity_separation": true,
+  "referee_disposition": {
+    "mode": "issue_comment",
+    "actor_login": "github-actions[bot]",
+    "github_review_submission_required": false,
+    "organization_actions_approval_setting_required": false,
+    "exact_head_required": true,
+    "required_checks_must_precede_disposition": true,
+    "recorded_before_merge_execution": true
+  },
+  "auto_merge": {
+    "repository_enabled": true,
+    "authority_retained": true,
+    "used_for_canary": false,
+    "reason": "post-disposition checks settle before CLEAN exact-head merge"
+  },
+  "ruleset_bypass": {
+    "ruleset_id": 17137629,
+    "actor_id": 4423678,
+    "actor_login": "gcl-release-trust[bot]",
+    "actor_role": "Administration Agent",
+    "actor_type": "Integration",
+    "mode": "pull_request",
+    "direct_push": false,
+    "canary_merge_uses_bypass": false
+  },
+  "canary": {
+    "branch": "automation/administrative-autonomy-activation-b299b5e2f9d7",
+    "changed_paths": [
+      "governance/administrative_autonomy_activation.json"
+    ],
+    "required_checks_source": "live ruleset 17137629",
+    "protected_merge_required": true,
+    "post_merge_readback_required": true,
+    "post_disposition_check_stabilization_required": true,
+    "required_pre_merge_state": "CLEAN",
+    "merge_executor": "gcl-release-trust[bot]"
+  },
+  "authority_boundary": {
+    "automated_exact_head_approval": true,
+    "automated_referee_disposition": true,
+    "automated_human_steward_disposition": false,
+    "automated_merge": true,
+    "automated_auto_merge": true,
+    "branch_protection_bypass": "RELEASE_TRUST_ADMINISTRATION_AGENT_PULL_REQUEST_ONLY",
+    "direct_protected_push": false
+  },
+  "rollback": {
+    "automatic_activation_failure_reversion": true,
+    "ruleset_prior_state_captured": true,
+    "unmerged_branch_deletion": true,
+    "failure_artifact_required": true
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "cert_route_registered": false,
+    "adjudication_authorized": false,
+    "certificate_issued": false,
+    "external_claim_authorized": false
+  }
+}
