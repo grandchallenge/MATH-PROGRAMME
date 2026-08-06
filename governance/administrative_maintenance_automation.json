@@ -14,36 +14,60 @@
     "structural_sweep": {
       "lead_minutes": 360,
       "freeze_minutes": 90,
-      "record_globs": ["governance/administrative_structural_sweeps/*.json"],
-      "due_fields": ["scheduled_due_at"],
+      "record_globs": [
+        "governance/administrative_structural_sweeps/*.json"
+      ],
+      "due_fields": [
+        "scheduled_due_at"
+      ],
       "receipt_floor_utc": "2026-08-05T06:09:00Z"
     },
     "administrative_review": {
       "lead_minutes": 720,
       "freeze_minutes": 180,
-      "record_globs": ["governance/administrative_reviews/*.json"],
-      "due_fields": ["scheduled_due_at", "review_due_at"],
+      "record_globs": [
+        "governance/administrative_reviews/*.json"
+      ],
+      "due_fields": [
+        "scheduled_due_at",
+        "review_due_at"
+      ],
       "receipt_floor_utc": "2026-08-07T01:21:00Z"
     },
     "deep_conformance_review": {
       "lead_minutes": 1440,
       "freeze_minutes": 360,
-      "record_globs": ["governance/administrative_deep_conformance_reviews/*.json"],
-      "due_fields": ["scheduled_due_at", "review_due_at"],
+      "record_globs": [
+        "governance/administrative_deep_conformance_reviews/*.json"
+      ],
+      "due_fields": [
+        "scheduled_due_at",
+        "review_due_at"
+      ],
       "receipt_floor_utc": "2026-08-10T01:21:00Z"
     },
     "pilot_review": {
       "lead_minutes": 1440,
       "freeze_minutes": 360,
-      "record_globs": ["governance/administrative_pilot_reviews/*.json"],
-      "due_fields": ["scheduled_due_at", "review_due_at"],
+      "record_globs": [
+        "governance/administrative_pilot_reviews/*.json"
+      ],
+      "due_fields": [
+        "scheduled_due_at",
+        "review_due_at"
+      ],
       "receipt_floor_utc": "2026-08-10T01:21:00Z"
     },
     "constitutional_review": {
       "lead_minutes": 4320,
       "freeze_minutes": 720,
-      "record_globs": ["governance/administrative_constitutional_reviews/*.json"],
-      "due_fields": ["scheduled_due_at", "review_due_at"],
+      "record_globs": [
+        "governance/administrative_constitutional_reviews/*.json"
+      ],
+      "due_fields": [
+        "scheduled_due_at",
+        "review_due_at"
+      ],
       "receipt_floor_utc": "2026-09-06T13:21:00Z"
     }
   },
@@ -57,6 +81,30 @@
       "reviewed_head": "0b7bbf206e0a6c6e0fbcf63f88f09d5f5670a851",
       "pull_request": 226,
       "disposition": "PROTECTED_RECONCILIATION_COMPLETE",
+      "receipt_state": "PROTECTED_COMPLETE"
+    },
+    {
+      "repair_id": "MP-ADMIN-RECEIPT-REPAIR-244-001",
+      "repair_record_path": "governance/administrative_receipt_repairs/MP-ADMIN-RECEIPT-REPAIR-244-001.json",
+      "procedure_id": "structural_sweep",
+      "scheduled_due_at": "2026-08-05T22:57:00Z",
+      "record_path": "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-05-007.json",
+      "record_sha256": "DERIVE_FROM_IMMUTABLE_RECORD",
+      "record_git_blob": "51db3bc72c8f371ace530ad5ce11322cd6af326c",
+      "merge_commit": "ba89cf1cc253486a70ea832c2db8fca9e81f4a9f",
+      "merge_parents": [
+        "6dd51c29b8bcbac812bcf7a4e803b693ac8be69c",
+        "3a5977c2d13d8ece9365dcda356d089e7baefd8e"
+      ],
+      "reviewed_head": "3a5977c2d13d8ece9365dcda356d089e7baefd8e",
+      "pull_request": 244,
+      "review_id": 4869603629,
+      "review_state": "APPROVED",
+      "review_submitted_at": "2026-08-05T23:21:12Z",
+      "disposition_comment_id": 5198515780,
+      "disposition_posted_at": "2026-08-05T23:23:05Z",
+      "merge_committed_at": "2026-08-05T23:23:25Z",
+      "disposition": "HUMAN_STEWARD_AUTHORIZED_EXACT_HEAD_PROTECTED_MERGE",
       "receipt_state": "PROTECTED_COMPLETE"
     }
   ],
@@ -73,15 +121,32 @@
   ],
   "hourly_refresh_cron_utc": "17 * * * *",
   "mirrors": [
-    {"repository": "grandchallenge/MATH-PROGRAMME", "issue": 182},
-    {"repository": "grandchallenge/MATH-PROGRAMME", "issue": 183},
-    {"repository": "grandchallenge/INTELLECT", "issue": 21}
+    {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 182
+    },
+    {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 183
+    },
+    {
+      "repository": "grandchallenge/INTELLECT",
+      "issue": 21
+    }
   ],
   "workflow_permissions": {
-    "dispatcher": {"contents": "read"},
-    "candidate_preparation": {"contents": "read"},
-    "completion_synchronization": {"contents": "read"},
-    "automation_validation": {"contents": "read"}
+    "dispatcher": {
+      "contents": "read"
+    },
+    "candidate_preparation": {
+      "contents": "read"
+    },
+    "completion_synchronization": {
+      "contents": "read"
+    },
+    "automation_validation": {
+      "contents": "read"
+    }
   },
   "credential_contract": {
     "provider": "GCL Release Trust GitHub App",
@@ -90,20 +155,45 @@
     "private_key_secret": "GCL_RELEASE_TRUST_PRIVATE_KEY",
     "environment": "release-trust",
     "candidate_write_scope": {
-      "repositories": ["MATH-PROGRAMME"],
-      "permissions": {"contents": "write", "issues": "write", "pull-requests": "write"}
+      "repositories": [
+        "MATH-PROGRAMME"
+      ],
+      "permissions": {
+        "contents": "write",
+        "issues": "write",
+        "pull-requests": "write"
+      }
     },
     "candidate_evidence_scope": {
-      "repositories": ["MATHFORGE", "MATHSOLVE", "MATHCERT", "INTELLECT"],
-      "permissions": {"contents": "read", "pull-requests": "read"}
+      "repositories": [
+        "MATHFORGE",
+        "MATHSOLVE",
+        "MATHCERT",
+        "INTELLECT"
+      ],
+      "permissions": {
+        "contents": "read",
+        "pull-requests": "read"
+      }
     },
     "synchronization_write_scope": {
-      "repositories": ["MATH-PROGRAMME"],
-      "permissions": {"actions": "read", "contents": "write", "issues": "write", "pull-requests": "write"}
+      "repositories": [
+        "MATH-PROGRAMME"
+      ],
+      "permissions": {
+        "actions": "read",
+        "contents": "write",
+        "issues": "write",
+        "pull-requests": "write"
+      }
     },
     "intellect_mirror_scope": {
-      "repositories": ["INTELLECT"],
-      "permissions": {"issues": "write"}
+      "repositories": [
+        "INTELLECT"
+      ],
+      "permissions": {
+        "issues": "write"
+      }
     }
   },
   "authority_boundary": {

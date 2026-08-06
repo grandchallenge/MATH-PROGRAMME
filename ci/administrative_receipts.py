@@ -12,11 +12,246 @@ GitRunner = Callable[[list[str]], str]
 SYNTHETIC_PULL_REQUEST_MERGE_RE = re.compile(
     r"^Merge ([0-9a-f]{40}) into ([0-9a-f]{40})$"
 )
+DEFAULT_PULL_REQUEST_MERGE_RE = re.compile(
+    r"^Merge pull request #(\d+) from [^\n]+(?:\n\n.*)?$",
+    re.DOTALL,
+)
+DERIVE_RECORD_SHA256 = "DERIVE_FROM_IMMUTABLE_RECORD"
 
 
 def default_git_runner(args: list[str]) -> str:
     completed = subprocess.run(["git", *args], check=True, text=True, capture_output=True)
     return completed.stdout.strip()
+
+
+def git_blob_sha(path: Path) -> str:
+    payload = path.read_bytes()
+    header = f"blob {len(payload)}\0".encode("ascii")
+    return hashlib.sha1(header + payload).hexdigest()
+
+
+def require(condition: bool, message: str) -> None:
+    if not condition:
+        raise aa.AutomationError(message)
+
+
+def protected_ancestor(root: Path, ancestor: str, head_sha: str) -> bool:
+    completed = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", ancestor, head_sha],
+        cwd=root,
+        check=False,
+    )
+    return completed.returncode == 0
+
+
+def normalize_legacy_bootstrap_receipt(
+    root: Path,
+    receipt: dict[str, Any],
+    head_sha: str,
+) -> dict[str, Any]:
+    merge_commit = str(receipt.get("merge_commit", ""))
+    if not aa.SHA_RE.fullmatch(merge_commit):
+        raise aa.AutomationError("bootstrap receipt merge commit invalid")
+    if not protected_ancestor(root, merge_commit, head_sha):
+        raise aa.AutomationError("bootstrap receipt is not ancestral to protected head")
+    return dict(receipt)
+
+
+def normalize_repaired_bootstrap_receipt(
+    root: Path,
+    receipt: dict[str, Any],
+    head_sha: str,
+    git_runner: GitRunner,
+) -> dict[str, Any]:
+    repair_id = str(receipt.get("repair_id", ""))
+    require(repair_id == "MP-ADMIN-RECEIPT-REPAIR-244-001", "unsupported bootstrap repair identity")
+
+    repair_record_path = str(receipt.get("repair_record_path", ""))
+    require(
+        repair_record_path
+        == "governance/administrative_receipt_repairs/MP-ADMIN-RECEIPT-REPAIR-244-001.json",
+        "bootstrap repair record path drift",
+    )
+    require(".." not in repair_record_path and not repair_record_path.startswith("/"), "unsafe repair record path")
+    repair_path = root / repair_record_path
+    require(repair_path.is_file(), "bootstrap repair record missing")
+    repair = aa.load_json(repair_path)
+
+    require(repair.get("schema_version") == "1.0.0", "bootstrap repair schema version drift")
+    require(repair.get("repair_id") == repair_id, "bootstrap repair identity mismatch")
+    require(repair.get("control_id") == "MP-ADMIN-MAINT-001", "bootstrap repair control drift")
+    require(repair.get("repository") == "grandchallenge/MATH-PROGRAMME", "bootstrap repair repository drift")
+    require(repair.get("source_issue") == 249, "bootstrap repair source issue drift")
+    require(repair.get("tracking_issue") == 243, "bootstrap repair tracking issue drift")
+    require(
+        repair.get("occurrence_key") == "structural_sweep:2026-08-05T22:57:00Z",
+        "bootstrap repair occurrence drift",
+    )
+
+    procedure_id = str(receipt.get("procedure_id", ""))
+    scheduled_due_at = aa.iso_z(aa.parse_datetime(str(receipt.get("scheduled_due_at", ""))))
+    require(procedure_id == repair.get("procedure_id") == "structural_sweep", "bootstrap repair procedure drift")
+    require(
+        scheduled_due_at
+        == aa.iso_z(aa.parse_datetime(str(repair.get("scheduled_due_at", ""))))
+        == "2026-08-05T22:57:00Z",
+        "bootstrap repair scheduled locus drift",
+    )
+
+    record = repair.get("record", {})
+    record_path = str(receipt.get("record_path", ""))
+    require(
+        record_path
+        == record.get("path")
+        == "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-05-007.json",
+        "bootstrap repair record path mismatch",
+    )
+    require(".." not in record_path and not record_path.startswith("/"), "unsafe bootstrap record path")
+    path = root / record_path
+    require(path.is_file(), "bootstrap record missing")
+    require(
+        record.get("sweep_id") == "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-05-007",
+        "bootstrap sweep identity drift",
+    )
+    require(
+        record.get("status") == "COMPLETE_WITH_REPAIRED_P2_AND_NONBLOCKING_OPEN_PR",
+        "bootstrap sweep status drift",
+    )
+    expected_blob = str(receipt.get("record_git_blob", ""))
+    require(
+        expected_blob == record.get("git_blob") == "51db3bc72c8f371ace530ad5ce11322cd6af326c",
+        "bootstrap immutable record blob drift",
+    )
+    require(git_blob_sha(path) == expected_blob, "bootstrap immutable record content drift")
+    require(
+        receipt.get("record_sha256") == DERIVE_RECORD_SHA256,
+        "bootstrap repair must derive record SHA-256 from immutable content",
+    )
+    record_sha256 = hashlib.sha256(path.read_bytes()).hexdigest()
+
+    pull_request = int(receipt.get("pull_request", 0))
+    reviewed_head = str(receipt.get("reviewed_head", ""))
+    merge_commit = str(receipt.get("merge_commit", ""))
+    disposition = str(receipt.get("disposition", ""))
+    require(pull_request == repair.get("pull_request", {}).get("number") == 244, "bootstrap PR drift")
+    require(
+        reviewed_head
+        == repair.get("pull_request", {}).get("head")
+        == "3a5977c2d13d8ece9365dcda356d089e7baefd8e",
+        "bootstrap reviewed head drift",
+    )
+    require(
+        merge_commit
+        == repair.get("merge", {}).get("commit")
+        == "ba89cf1cc253486a70ea832c2db8fca9e81f4a9f",
+        "bootstrap merge commit drift",
+    )
+    require(
+        disposition
+        == repair.get("pull_request", {}).get("disposition", {}).get("token")
+        == "HUMAN_STEWARD_AUTHORIZED_EXACT_HEAD_PROTECTED_MERGE",
+        "bootstrap disposition drift",
+    )
+    require(aa.SHA_RE.fullmatch(reviewed_head) is not None, "bootstrap reviewed head invalid")
+    require(aa.SHA_RE.fullmatch(merge_commit) is not None, "bootstrap merge commit invalid")
+
+    expected_parents = [
+        "6dd51c29b8bcbac812bcf7a4e803b693ac8be69c",
+        reviewed_head,
+    ]
+    repair_parents = repair.get("merge", {}).get("parents")
+    receipt_parents = receipt.get("merge_parents")
+    require(repair_parents == expected_parents, "bootstrap repair merge parent drift")
+    require(receipt_parents == expected_parents, "bootstrap receipt merge parent drift")
+    observed_parents = git_runner(["show", "-s", "--format=%P", merge_commit]).split()
+    require(observed_parents == expected_parents, "bootstrap merge parent relationship invalid")
+
+    introduction = git_runner(
+        ["log", "--first-parent", "--diff-filter=A", "--format=%H", "-1", head_sha, "--", record_path]
+    )
+    require(introduction == merge_commit, "bootstrap record introduction commit drift")
+    require(protected_ancestor(root, merge_commit, head_sha), "bootstrap repair merge is not protected-ancestral")
+
+    observed_message = git_runner(["show", "-s", "--format=%B", merge_commit]).strip()
+    expected_message = str(repair.get("merge", {}).get("message", "")).strip()
+    require(observed_message == expected_message, "historical malformed merge message drift")
+    default_match = DEFAULT_PULL_REQUEST_MERGE_RE.fullmatch(observed_message)
+    require(default_match is not None and int(default_match.group(1)) == pull_request, "historical merge PR identity drift")
+    require(repair.get("merge", {}).get("message_receipt_parseable") is False, "historical message classification drift")
+    require(re.search(r"Merge PR #\d+", observed_message) is None, "historical message unexpectedly has parser PR marker")
+    require(re.search(r"exact head [0-9a-f]{40}", observed_message) is None, "historical message unexpectedly has exact-head marker")
+    require(re.search(r"Disposition:\s*[A-Z0-9_]+", observed_message) is None, "historical message unexpectedly has disposition marker")
+
+    approval = repair.get("pull_request", {}).get("approval", {})
+    disposition_record = repair.get("pull_request", {}).get("disposition", {})
+    require(approval.get("review_id") == receipt.get("review_id") == 4869603629, "bootstrap approval review drift")
+    require(approval.get("reviewer") == "jimsteeg", "bootstrap approval reviewer drift")
+    require(approval.get("state") == receipt.get("review_state") == "APPROVED", "bootstrap approval state drift")
+    require(approval.get("exact_head") == reviewed_head, "bootstrap approval exact-head drift")
+    require(
+        disposition_record.get("comment_id") == receipt.get("disposition_comment_id") == 5198515780,
+        "bootstrap disposition comment drift",
+    )
+    require(disposition_record.get("actor") == "fyremael", "bootstrap disposition actor drift")
+    require(disposition_record.get("exact_head") == reviewed_head, "bootstrap disposition exact-head drift")
+
+    review_at = aa.parse_datetime(str(approval.get("submitted_at", "")))
+    disposition_at = aa.parse_datetime(str(disposition_record.get("posted_at", "")))
+    merge_at = aa.parse_datetime(str(repair.get("merge", {}).get("committed_at", "")))
+    require(
+        aa.iso_z(review_at) == aa.iso_z(aa.parse_datetime(str(receipt.get("review_submitted_at", "")))),
+        "bootstrap review timestamp drift",
+    )
+    require(
+        aa.iso_z(disposition_at) == aa.iso_z(aa.parse_datetime(str(receipt.get("disposition_posted_at", "")))),
+        "bootstrap disposition timestamp drift",
+    )
+    require(
+        aa.iso_z(merge_at) == aa.iso_z(aa.parse_datetime(str(receipt.get("merge_committed_at", "")))),
+        "bootstrap merge timestamp drift",
+    )
+    require(review_at < disposition_at < merge_at, "bootstrap approval/disposition/merge chronology invalid")
+    observed_committed_at = aa.parse_datetime(git_runner(["show", "-s", "--format=%cI", merge_commit]))
+    require(aa.iso_z(observed_committed_at) == aa.iso_z(merge_at), "bootstrap merge timestamp does not match git")
+
+    bootstrap = repair.get("bootstrap", {})
+    require(bootstrap.get("record_sha256_mode") == DERIVE_RECORD_SHA256, "bootstrap SHA-256 mode drift")
+    require(bootstrap.get("receipt_state") == "PROTECTED_COMPLETE", "bootstrap receipt state drift")
+    require(
+        bootstrap.get("protected_completion_declared_before_repair_merge") is False,
+        "bootstrap repair rewrites pre-repair completion history",
+    )
+    require(
+        repair.get("authority_boundary", {}).get("protected_main_rewritten") is False,
+        "bootstrap repair authorizes protected history rewrite",
+    )
+    require(
+        all(value is False for value in repair.get("claim_boundaries", {}).values()),
+        "bootstrap repair inflates claim authority",
+    )
+
+    return {
+        "procedure_id": procedure_id,
+        "scheduled_due_at": scheduled_due_at,
+        "record_path": record_path,
+        "record_sha256": record_sha256,
+        "merge_commit": merge_commit,
+        "reviewed_head": reviewed_head,
+        "pull_request": pull_request,
+        "disposition": disposition,
+        "receipt_state": "PROTECTED_COMPLETE",
+    }
+
+
+def normalize_bootstrap_receipt(
+    root: Path,
+    receipt: dict[str, Any],
+    head_sha: str,
+    git_runner: GitRunner,
+) -> dict[str, Any]:
+    if receipt.get("repair_id"):
+        return normalize_repaired_bootstrap_receipt(root, receipt, head_sha, git_runner)
+    return normalize_legacy_bootstrap_receipt(root, receipt, head_sha)
 
 
 def receipt_for_record(
@@ -40,17 +275,10 @@ def receipt_for_record(
     )
     if not aa.SHA_RE.fullmatch(merge_commit):
         raise aa.AutomationError(f"{relative}: no protected first-parent introduction commit")
-    ancestry = subprocess.run(
-        ["git", "merge-base", "--is-ancestor", merge_commit, head_sha],
-        cwd=root,
-        check=False,
-    )
-    if ancestry.returncode != 0:
+    if not protected_ancestor(root, merge_commit, head_sha):
         raise aa.AutomationError(f"{relative}: introduction commit is not ancestral to protected head")
     parents = git_runner(["show", "-s", "--format=%P", merge_commit]).split()
     if len(parents) < 2:
-        # A review branch may contain a final-form COMPLETE record before protected
-        # merge. It remains an unprotected candidate and cannot advance completion.
         return None
     message = git_runner(["show", "-s", "--format=%B", merge_commit]).strip()
     pr_match = re.search(r"Merge PR #(\d+)", message)
@@ -58,13 +286,7 @@ def receipt_for_record(
     disposition_match = re.search(r"Disposition:\s*([A-Z0-9_]+)", message)
     if not (pr_match and head_match and disposition_match):
         synthetic = SYNTHETIC_PULL_REQUEST_MERGE_RE.fullmatch(message)
-        if (
-            synthetic
-            and merge_commit == head_sha
-            and parents == [synthetic.group(2), synthetic.group(1)]
-        ):
-            # pull_request workflows check out a temporary GitHub merge ref. The
-            # exact two-parent shape above is navigation/evaluation state only.
+        if synthetic and merge_commit == head_sha and parents == [synthetic.group(2), synthetic.group(1)]:
             return None
         raise aa.AutomationError(f"{relative}: merge receipt lacks PR, exact head, or disposition")
     return {
@@ -88,7 +310,18 @@ def derive_completion_state(
 ) -> dict[str, Any]:
     if not aa.SHA_RE.fullmatch(head_sha):
         raise aa.AutomationError("protected head SHA is invalid")
-    receipts: list[dict[str, Any]] = list(config.get("bootstrap_receipts", []))
+    receipts: list[dict[str, Any]] = [
+        normalize_bootstrap_receipt(root, receipt, head_sha, git_runner)
+        for receipt in config.get("bootstrap_receipts", [])
+    ]
+    bootstrap_coverage = {
+        (
+            receipt["procedure_id"],
+            aa.iso_z(aa.parse_datetime(receipt["scheduled_due_at"])),
+            receipt["record_path"],
+        )
+        for receipt in receipts
+    }
 
     for procedure_id, procedure in config["procedures"].items():
         due_fields = procedure.get("due_fields", ["scheduled_due_at"])
@@ -102,28 +335,16 @@ def derive_completion_state(
                     continue
                 if floor and aa.parse_datetime(due_raw) < floor:
                     continue
-                receipt = receipt_for_record(
-                    root,
-                    path,
+                coverage_key = (
                     procedure_id,
-                    due_fields,
-                    head_sha,
-                    git_runner,
+                    aa.iso_z(aa.parse_datetime(due_raw)),
+                    path.relative_to(root).as_posix(),
                 )
+                if coverage_key in bootstrap_coverage:
+                    continue
+                receipt = receipt_for_record(root, path, procedure_id, due_fields, head_sha, git_runner)
                 if receipt:
                     receipts.append(receipt)
-
-    for receipt in config.get("bootstrap_receipts", []):
-        merge_commit = str(receipt.get("merge_commit", ""))
-        if not aa.SHA_RE.fullmatch(merge_commit):
-            raise aa.AutomationError("bootstrap receipt merge commit invalid")
-        ancestry = subprocess.run(
-            ["git", "merge-base", "--is-ancestor", merge_commit, head_sha],
-            cwd=root,
-            check=False,
-        )
-        if ancestry.returncode != 0:
-            raise aa.AutomationError("bootstrap receipt is not ancestral to protected head")
 
     seen: dict[tuple[str, str], dict[str, Any]] = {}
     for receipt in receipts:
@@ -131,10 +352,7 @@ def derive_completion_state(
             raise aa.AutomationError("non-protected receipt cannot advance completion")
         if not aa.SHA_RE.fullmatch(str(receipt.get("merge_commit", ""))):
             raise aa.AutomationError("receipt merge commit invalid")
-        key = (
-            receipt["procedure_id"],
-            aa.iso_z(aa.parse_datetime(receipt["scheduled_due_at"])),
-        )
+        key = (receipt["procedure_id"], aa.iso_z(aa.parse_datetime(receipt["scheduled_due_at"])))
         normalized = {**receipt, "scheduled_due_at": key[1]}
         previous = seen.get(key)
         if previous and aa.canonical_digest(previous) != aa.canonical_digest(normalized):
