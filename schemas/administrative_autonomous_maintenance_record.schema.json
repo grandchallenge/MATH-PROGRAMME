@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_autonomous_maintenance_record.schema.json",
+  "title": "Autonomous administrative maintenance record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "record_id",
+    "procedure_id",
+    "control_id",
+    "runtime_id",
+    "status",
+    "scheduled_due_at",
+    "execution_started_at",
+    "evidence_closed_at",
+    "evidence_mode",
+    "lateness_minutes_at_start",
+    "source_candidate",
+    "activation_binding",
+    "repository_state",
+    "execution_contract",
+    "tracker_mirrors",
+    "authority_boundary",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"const": "../../schemas/administrative_autonomous_maintenance_record.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "record_id": {"type": "string", "pattern": "^MP-ADMIN-[A-Z0-9-]+-[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{3}$"},
+    "procedure_id": {"enum": ["structural_sweep", "administrative_review", "deep_conformance_review"]},
+    "control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "runtime_id": {"const": "MP-ADMIN-AUTONOMY-RUNTIME-INTEGRATION-001"},
+    "status": {"const": "COMPLETE_AUTONOMOUS"},
+    "scheduled_due_at": {"type": "string", "format": "date-time"},
+    "execution_started_at": {"type": "string", "format": "date-time"},
+    "evidence_closed_at": {"type": "string", "format": "date-time"},
+    "evidence_mode": {"const": "CONTEMPORANEOUS"},
+    "lateness_minutes_at_start": {"type": "integer", "minimum": 0},
+    "source_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "occurrence_key",
+        "manifest_path",
+        "manifest_digest",
+        "prepared_at",
+        "freeze_at",
+        "source_protected_head",
+        "issue_number",
+        "pull_request_number",
+        "branch"
+      ],
+      "properties": {
+        "occurrence_key": {"type": "string", "minLength": 1},
+        "manifest_path": {"type": "string", "pattern": "^governance/administrative_candidates/"},
+        "manifest_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "prepared_at": {"type": "string", "format": "date-time"},
+        "freeze_at": {"type": "string", "format": "date-time"},
+        "source_protected_head": {"$ref": "#/$defs/sha"},
+        "issue_number": {"type": "integer", "minimum": 1},
+        "pull_request_number": {"type": "integer", "minimum": 1},
+        "branch": {"type": "string", "pattern": "^automation/maintenance/"}
+      }
+    },
+    "activation_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activation_id",
+        "state",
+        "transition_merge_head",
+        "ruleset_id",
+        "candidate_identity",
+        "administrator_identity",
+        "referee_identity",
+        "identity_separation"
+      ],
+      "properties": {
+        "activation_id": {"const": "MP-ADMIN-AUTONOMY-ACTIVATION-001"},
+        "state": {"const": "ACTIVE"},
+        "transition_merge_head": {"$ref": "#/$defs/sha"},
+        "ruleset_id": {"const": 17137629},
+        "candidate_identity": {"$ref": "#/$defs/identity"},
+        "administrator_identity": {"$ref": "#/$defs/identity"},
+        "referee_identity": {"$ref": "#/$defs/identity"},
+        "identity_separation": {"const": true}
+      }
+    },
+    "repository_state": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["repository", "default_branch", "protected_head", "open_pull_requests"],
+        "properties": {
+          "repository": {"type": "string", "pattern": "^grandchallenge/"},
+          "default_branch": {"const": "main"},
+          "protected_head": {"$ref": "#/$defs/sha"},
+          "open_pull_requests": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["number", "head", "base", "draft", "author"],
+              "properties": {
+                "number": {"type": "integer", "minimum": 1},
+                "head": {"$ref": "#/$defs/sha"},
+                "base": {"$ref": "#/$defs/sha"},
+                "draft": {"type": "boolean"},
+                "author": {"type": "string", "minLength": 1}
+              }
+            }
+          }
+        }
+      }
+    },
+    "execution_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_author",
+        "referee_actor",
+        "merge_executor",
+        "expected_head_required",
+        "required_checks_source",
+        "referee_disposition_before_merge",
+        "post_disposition_check_stabilization",
+        "clean_state_required",
+        "bypass_used",
+        "direct_protected_push",
+        "human_steward_disposition_required",
+        "human_steward_identity_asserted"
+      ],
+      "properties": {
+        "candidate_author": {"const": "gcl-release-trust[bot]"},
+        "referee_actor": {"const": "github-actions[bot]"},
+        "merge_executor": {"const": "gcl-release-trust[bot]"},
+        "expected_head_required": {"const": true},
+        "required_checks_source": {"const": "live ruleset 17137629"},
+        "referee_disposition_before_merge": {"const": true},
+        "post_disposition_check_stabilization": {"const": true},
+        "clean_state_required": {"const": true},
+        "bypass_used": {"const": false},
+        "direct_protected_push": {"const": false},
+        "human_steward_disposition_required": {"const": false},
+        "human_steward_identity_asserted": {"const": false}
+      }
+    },
+    "tracker_mirrors": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["repository", "issue", "synchronization_required"],
+        "properties": {
+          "repository": {"enum": ["grandchallenge/MATH-PROGRAMME", "grandchallenge/INTELLECT"]},
+          "issue": {"enum": [21, 182, 183]},
+          "synchronization_required": {"const": true}
+        }
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "routine_bounded_administrative_completion",
+        "automated_exact_head_referee_disposition",
+        "automated_merge",
+        "automated_human_steward_disposition",
+        "control_plane_change",
+        "scope_expansion"
+      ],
+      "properties": {
+        "routine_bounded_administrative_completion": {"const": true},
+        "automated_exact_head_referee_disposition": {"const": true},
+        "automated_merge": {"const": true},
+        "automated_human_steward_disposition": {"const": false},
+        "control_plane_change": {"const": false},
+        "scope_expansion": {"const": false}
+      }
+    },
+    "claim_boundaries": {"$ref": "#/$defs/claimBoundaries"}
+  },
+  "$defs": {
+    "sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["login", "app_id", "token_role"],
+      "properties": {
+        "login": {"type": "string", "pattern": "\\[bot\\]$"},
+        "app_id": {"type": "integer", "minimum": 1},
+        "token_role": {"type": "string", "minLength": 1}
+      }
+    },
+    "claimBoundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mathematical_target_proved",
+        "campaign_admitted",
+        "source_verified",
+        "cert_route_registered",
+        "adjudication_authorized",
+        "certificate_issued",
+        "external_claim_authorized"
+      ],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "campaign_admitted": {"const": false},
+        "source_verified": {"const": false},
+        "cert_route_registered": {"const": false},
+        "adjudication_authorized": {"const": false},
+        "certificate_issued": {"const": false},
+        "external_claim_authorized": {"const": false}
+      }
+    }
+  }
+}

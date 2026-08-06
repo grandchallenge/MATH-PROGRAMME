@@ -48,6 +48,7 @@ def validate_workflows_v3(config: dict) -> list[str]:
 
     candidate = (ROOT / ".github" / "workflows" / "administrative-maintenance-candidate.yml").read_text(encoding="utf-8")
     synchronization = (ROOT / ".github" / "workflows" / "administrative-maintenance-synchronization.yml").read_text(encoding="utf-8")
+    active_runtime = "python ci/administrative_autonomy_runtime.py execute --report" in candidate
     credential = config.get("credential_contract", {})
     environment = credential.get("environment", "")
     if environment != "release-trust":
@@ -63,25 +64,41 @@ def validate_workflows_v3(config: dict) -> list[str]:
                 errors.append(f"{workflow_name}: missing credential-contract marker {marker}")
         if text.count(f"environment: {environment}") != 1:
             errors.append(f"{workflow_name}: protected environment must occur exactly once")
-        if "${{ github.token }}" in text:
+        workflow_token_allowed = (
+            workflow_name == "candidate"
+            and active_runtime
+            and text.count("${{ github.token }}") == 1
+            and "REFEREE_TOKEN: ${{ github.token }}" in text
+        )
+        if "${{ github.token }}" in text and not workflow_token_allowed:
             errors.append(f"{workflow_name}: write path may not use workflow token")
 
+    candidate_entrypoint = (
+        "python ci/prepare_administrative_candidate_v4.py --apply"
+        if active_runtime
+        else "python ci/prepare_administrative_candidate_v3.py --apply"
+    )
     for marker in (
         "EVIDENCE_GITHUB_TOKEN: ${{ steps.evidence-token.outputs.token }}",
         "repositories: MATH-PROGRAMME",
         "permission-contents: write",
         "permission-issues: write",
         "permission-pull-requests: write",
-        "python ci/prepare_administrative_candidate_v3.py --apply",
+        candidate_entrypoint,
     ):
         if marker not in candidate:
             errors.append(f"candidate: missing split-token marker {marker}")
 
+    synchronization_entrypoint = (
+        "python ci/synchronize_administrative_completion_v4.py --apply"
+        if active_runtime
+        else "python ci/synchronize_administrative_completion_v3.py --apply"
+    )
     for marker in (
         "repositories: INTELLECT",
         "CROSS_REPOSITORY_MAINTENANCE_TOKEN: ${{ steps.intellect-token.outputs.token }}",
         "permission-actions: read",
-        "python ci/synchronize_administrative_completion_v3.py --apply",
+        synchronization_entrypoint,
     ):
         if marker not in synchronization:
             errors.append(f"synchronization: missing split-token marker {marker}")

@@ -1,0 +1,264 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_autonomy_runtime_integration.schema.json",
+  "title": "Administrative autonomy runtime integration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "runtime_id",
+    "transition_id",
+    "activation_id",
+    "control_id",
+    "repository",
+    "status",
+    "issue",
+    "activation_record",
+    "activation_state_required",
+    "ruleset_id",
+    "candidate_identity",
+    "administrator_identity",
+    "referee_identity",
+    "automated_procedures",
+    "manual_procedures",
+    "first_production_occurrence",
+    "record_layout",
+    "merge_control",
+    "scope",
+    "mirrors",
+    "manual_review_notification",
+    "authority_boundary",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"const": "../schemas/administrative_autonomy_runtime_integration.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "runtime_id": {"const": "MP-ADMIN-AUTONOMY-RUNTIME-INTEGRATION-001"},
+    "transition_id": {"const": "MP-ADMIN-AUTONOMY-TRANSITION-001"},
+    "activation_id": {"const": "MP-ADMIN-AUTONOMY-ACTIVATION-001"},
+    "control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "status": {"const": "ACTIVE_WHEN_PROTECTED"},
+    "issue": {"const": 260},
+    "activation_record": {"const": "governance/administrative_autonomy_activation.json"},
+    "activation_state_required": {"const": "ACTIVE"},
+    "ruleset_id": {"const": 17137629},
+    "candidate_identity": {"$ref": "#/$defs/candidateIdentity"},
+    "administrator_identity": {"$ref": "#/$defs/administratorIdentity"},
+    "referee_identity": {"$ref": "#/$defs/refereeIdentity"},
+    "automated_procedures": {
+      "const": ["structural_sweep", "administrative_review", "deep_conformance_review"]
+    },
+    "manual_procedures": {"const": ["pilot_review", "constitutional_review"]},
+    "first_production_occurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "procedure_id",
+        "occurrence_key",
+        "record_id",
+        "scheduled_due_at",
+        "candidate_prepare_at",
+        "evidence_freeze_at"
+      ],
+      "properties": {
+        "procedure_id": {"const": "structural_sweep"},
+        "occurrence_key": {"const": "structural_sweep:2026-08-06T15:45:00Z"},
+        "record_id": {"const": "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-06-008"},
+        "scheduled_due_at": {"const": "2026-08-06T15:45:00Z"},
+        "candidate_prepare_at": {"const": "2026-08-06T09:45:00Z"},
+        "evidence_freeze_at": {"const": "2026-08-06T14:15:00Z"}
+      }
+    },
+    "record_layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["structural_sweep", "administrative_review", "deep_conformance_review"],
+      "properties": {
+        "structural_sweep": {"$ref": "#/$defs/layout"},
+        "administrative_review": {"$ref": "#/$defs/layout"},
+        "deep_conformance_review": {"$ref": "#/$defs/layout"}
+      }
+    },
+    "merge_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_pre_merge_state",
+        "merge_method",
+        "expected_head_required",
+        "referee_disposition_required",
+        "post_disposition_check_stabilization_required",
+        "minimum_post_disposition_settle_seconds",
+        "maximum_check_wait_seconds",
+        "maximum_stabilization_wait_seconds",
+        "maximum_protected_readback_wait_seconds",
+        "poll_interval_seconds",
+        "accepted_check_conclusions",
+        "bypass_may_be_exercised",
+        "direct_protected_push"
+      ],
+      "properties": {
+        "required_pre_merge_state": {"const": "CLEAN"},
+        "merge_method": {"const": "merge"},
+        "expected_head_required": {"const": true},
+        "referee_disposition_required": {"const": true},
+        "post_disposition_check_stabilization_required": {"const": true},
+        "minimum_post_disposition_settle_seconds": {"type": "integer", "minimum": 10, "maximum": 60},
+        "maximum_check_wait_seconds": {"type": "integer", "minimum": 600, "maximum": 3600},
+        "maximum_stabilization_wait_seconds": {"type": "integer", "minimum": 60, "maximum": 900},
+        "maximum_protected_readback_wait_seconds": {"type": "integer", "minimum": 300, "maximum": 1800},
+        "poll_interval_seconds": {"type": "integer", "minimum": 2, "maximum": 30},
+        "accepted_check_conclusions": {"const": ["success", "neutral", "skipped"]},
+        "bypass_may_be_exercised": {"const": false},
+        "direct_protected_push": {"const": false}
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "branch_prefix",
+        "candidate_title_prefix",
+        "final_title_prefix",
+        "candidate_manifest_prefix",
+        "maximum_changed_files",
+        "maximum_additions",
+        "maximum_deletions",
+        "recovery_window_minutes_after_due"
+      ],
+      "properties": {
+        "branch_prefix": {"const": "automation/maintenance/"},
+        "candidate_title_prefix": {"const": "[maintenance-candidate]"},
+        "final_title_prefix": {"const": "[maintenance-final]"},
+        "candidate_manifest_prefix": {"const": "governance/administrative_candidates/"},
+        "maximum_changed_files": {"const": 2},
+        "maximum_additions": {"const": 5000},
+        "maximum_deletions": {"const": 1000},
+        "recovery_window_minutes_after_due": {"type": "integer", "minimum": 0, "maximum": 360}
+      }
+    },
+    "mirrors": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["repository", "issue"],
+        "properties": {
+          "repository": {"enum": ["grandchallenge/MATH-PROGRAMME", "grandchallenge/INTELLECT"]},
+          "issue": {"enum": [21, 182, 183]}
+        }
+      }
+    },
+    "manual_review_notification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reviewer",
+        "request_reviewers_api_required",
+        "explicit_mention_comment_required",
+        "applies_to_control_plane_pull_requests_only"
+      ],
+      "properties": {
+        "reviewer": {"const": "jimsteeg"},
+        "request_reviewers_api_required": {"const": true},
+        "explicit_mention_comment_required": {"const": true},
+        "applies_to_control_plane_pull_requests_only": {"const": true}
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "routine_bounded_administrative_completion",
+        "automated_exact_head_referee_disposition",
+        "automated_merge",
+        "automated_auto_merge",
+        "automated_human_steward_disposition",
+        "control_plane_change",
+        "scope_expansion",
+        "pilot_review_disposition",
+        "constitutional_review_disposition"
+      ],
+      "properties": {
+        "routine_bounded_administrative_completion": {"const": true},
+        "automated_exact_head_referee_disposition": {"const": true},
+        "automated_merge": {"const": true},
+        "automated_auto_merge": {"const": true},
+        "automated_human_steward_disposition": {"const": false},
+        "control_plane_change": {"const": false},
+        "scope_expansion": {"const": false},
+        "pilot_review_disposition": {"const": false},
+        "constitutional_review_disposition": {"const": false}
+      }
+    },
+    "claim_boundaries": {"$ref": "#/$defs/claimBoundaries"}
+  },
+  "$defs": {
+    "candidateIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["login", "app_id", "token_role"],
+      "properties": {
+        "login": {"const": "gcl-release-trust[bot]"},
+        "app_id": {"const": 4423678},
+        "token_role": {"const": "candidate-and-merge-executor"}
+      }
+    },
+    "administratorIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["login", "app_id", "token_role"],
+      "properties": {
+        "login": {"const": "gcl-release-trust[bot]"},
+        "app_id": {"const": 4423678},
+        "token_role": {"const": "ruleset-readback"}
+      }
+    },
+    "refereeIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["login", "app_id", "token_role"],
+      "properties": {
+        "login": {"const": "github-actions[bot]"},
+        "app_id": {"const": 15368},
+        "token_role": {"const": "referee"}
+      }
+    },
+    "layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["directory", "id_prefix"],
+      "properties": {
+        "directory": {"type": "string", "pattern": "^governance/administrative_[a-z_]+$"},
+        "id_prefix": {"type": "string", "pattern": "^MP-ADMIN-[A-Z-]+$"}
+      }
+    },
+    "claimBoundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mathematical_target_proved",
+        "campaign_admitted",
+        "source_verified",
+        "cert_route_registered",
+        "adjudication_authorized",
+        "certificate_issued",
+        "external_claim_authorized"
+      ],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "campaign_admitted": {"const": false},
+        "source_verified": {"const": false},
+        "cert_route_registered": {"const": false},
+        "adjudication_authorized": {"const": false},
+        "certificate_issued": {"const": false},
+        "external_claim_authorized": {"const": false}
+      }
+    }
+  }
+}
