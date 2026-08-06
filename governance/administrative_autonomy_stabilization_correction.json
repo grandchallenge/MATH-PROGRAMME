@@ -1,0 +1,72 @@
+{
+  "$schema": "../schemas/administrative_autonomy_stabilization_correction.schema.json",
+  "schema_version": "1.0.0",
+  "correction_id": "MP-ADMIN-AUTONOMY-STABILIZATION-CORRECTIVE-001",
+  "transition_id": "MP-ADMIN-AUTONOMY-TRANSITION-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "status": "ARMED_NOT_ACTIVE",
+  "activation_attempt_004": {
+    "workflow_run_id": 31073561283,
+    "artifact_id": 8956623063,
+    "artifact_sha256": "5acf88b8fb6b2ddc04ba235eaef074b5bf64fc5f2bb0879c46a414dac3b1d737",
+    "transition_head": "7274c1c3207423aea4fab3111e2c63a054eb5908",
+    "canary_pull_request": 257,
+    "canary_head": "9b3ebae6f8c13d930bad4f648a16df969c67cf33",
+    "referee_disposition_comment_id": 5200676673,
+    "state": "ACTIVATION_FAILED_CLOSED",
+    "failure_class": "TRANSIENT_POST_DISPOSITION_MERGE_STATE_UNSTABLE",
+    "failure_message": "Pull request Pull request is in unstable status",
+    "authority_created": false,
+    "canary_closed_unmerged": true,
+    "canary_branch_present_after_failure": false,
+    "ruleset_bypass_actors_after_failure": [],
+    "rollback_errors": []
+  },
+  "corrected_control": {
+    "approval_decision_actor": "github-actions[bot]",
+    "merge_executor_actor": "gcl-release-trust[bot]",
+    "merge_executor_required_scope": "pull_requests:write",
+    "referee_disposition_must_precede_merge": true,
+    "wait_for_all_check_runs_after_disposition": true,
+    "accepted_check_conclusions": [
+      "success",
+      "neutral",
+      "skipped"
+    ],
+    "required_pre_merge_state": "CLEAN",
+    "exact_head_revalidated_each_poll": true,
+    "referee_disposition_revalidated_each_poll": true,
+    "maximum_stabilization_wait_seconds": 300,
+    "poll_interval_seconds": 5,
+    "merge_method": "merge",
+    "merge_api": "REST exact-head ordinary merge",
+    "auto_merge_authority_retained": true,
+    "auto_merge_used_for_clean_canary": false,
+    "canary_bypass_must_not_be_used": true,
+    "direct_protected_push": false,
+    "human_steward_impersonation": false,
+    "sequence": [
+      "wait for every live required check",
+      "Referee Agent records exact-head approval disposition",
+      "wait for every check run triggered by the disposition to settle",
+      "revalidate exact head, Referee disposition, and CLEAN merge state",
+      "Candidate Agent performs exact-head ordinary merge",
+      "Referee Agent verifies protected activation record readback"
+    ]
+  },
+  "manual_review_notification": {
+    "reviewer": "jimsteeg",
+    "request_reviewers_api_required": true,
+    "explicit_mention_comment_required": true,
+    "exact_head_required": true
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "cert_route_registered": false,
+    "adjudication_authorized": false,
+    "certificate_issued": false,
+    "external_claim_authorized": false
+  }
+}
