@@ -1,0 +1,135 @@
+name: Administrative autonomy activation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - governance/administrative_autonomy_transition.json
+      - schemas/administrative_autonomy_transition.schema.json
+      - schemas/administrative_autonomy_activation.schema.json
+      - ci/administrative_autonomy.py
+      - ci/autonomy_github.py
+      - ci/validate_workflow_coverage_v2.py
+      - ci/test_workflow_coverage_v2.py
+      - tests/test_administrative_autonomy.py
+      - .github/workflows/administrative-autonomy-activation.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: administrative-autonomy-activation
+  cancel-in-progress: false
+
+jobs:
+  activate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 80
+    environment: release-trust
+    permissions:
+      actions: read
+      checks: read
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Mint Candidate Agent token
+        id: candidate-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-contents: write
+          permission-issues: write
+          permission-pull-requests: write
+
+      - name: Mint Administration Agent token
+        id: admin-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-administration: write
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+
+      - name: Initialize activation evidence
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          Path('administrative-autonomy-activation-report.json').write_text(
+              json.dumps({
+                  'schema_version': '1.0.0',
+                  'state': 'WORKFLOW_STARTED_FAIL_CLOSED',
+                  'transition_head': '${{ github.sha }}',
+              }, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          PY
+
+      - name: Validate transition package
+        run: python ci/administrative_autonomy.py validate
+
+      - name: Require distinct bounded credentials
+        env:
+          CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}
+          REFEREE_TOKEN: ${{ github.token }}
+          ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.candidate-token.outputs.app-slug) }}
+          ADMIN_LOGIN: ${{ format('{0}[bot]', steps.admin-token.outputs.app-slug) }}
+          REFEREE_LOGIN: 'github-actions[bot]'
+          CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          REFEREE_APP_ID: '15368'
+        run: |
+          set -euo pipefail
+          test -n "${CANDIDATE_TOKEN}"
+          test -n "${REFEREE_TOKEN}"
+          test -n "${ADMIN_TOKEN}"
+          test -n "${CANDIDATE_LOGIN}"
+          test -n "${ADMIN_LOGIN}"
+          test -n "${REFEREE_LOGIN}"
+          test -n "${CANDIDATE_APP_ID}"
+          test -n "${REFEREE_APP_ID}"
+          test "${CANDIDATE_TOKEN}" != "${REFEREE_TOKEN}"
+          test "${ADMIN_TOKEN}" != "${CANDIDATE_TOKEN}"
+          test "${ADMIN_TOKEN}" != "${REFEREE_TOKEN}"
+          test "${CANDIDATE_LOGIN}" = "${ADMIN_LOGIN}"
+          test "${CANDIDATE_LOGIN}" != "${REFEREE_LOGIN}"
+          test "${CANDIDATE_APP_ID}" != "${REFEREE_APP_ID}"
+
+      - name: Activate through protected canary
+        env:
+          CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}
+          REFEREE_TOKEN: ${{ github.token }}
+          ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.candidate-token.outputs.app-slug) }}
+          ADMIN_LOGIN: ${{ format('{0}[bot]', steps.admin-token.outputs.app-slug) }}
+          REFEREE_LOGIN: 'github-actions[bot]'
+          CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          REFEREE_APP_ID: '15368'
+          AUTONOMY_RULESET_ID: '17137629'
+        run: |
+          set -euo pipefail
+          python ci/administrative_autonomy.py activate
+
+      - name: Preserve activation evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: administrative-autonomy-activation
+          path: administrative-autonomy-activation-report.json
+          if-no-files-found: error
+          retention-days: 90

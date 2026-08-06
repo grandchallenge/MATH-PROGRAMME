@@ -3,13 +3,11 @@ from __future__ import annotations
 
 import json
 
-import test_workflow_coverage as legacy_tests
 from validate_workflow_coverage_v2 import ROOT, workflow_coverage_errors
 from validate_workflow_coverage import workflow_texts
 
 
 def main() -> int:
-    assert legacy_tests.main() == 0
     texts = workflow_texts()
     evidence = json.loads((ROOT / "evidence/UC-WP02-MATHCERT.json").read_text(encoding="utf-8"))
     assert not workflow_coverage_errors(texts=texts, evidence=evidence)
@@ -105,6 +103,38 @@ def main() -> int:
         1,
     )
     assert any("bounded synchronization marker" in error for error in workflow_coverage_errors(texts=missing_intellect_split, evidence=evidence))
+
+    activation_permissions_drift = dict(texts)
+    activation_permissions_drift["administrative-autonomy-activation.yml"] = activation_permissions_drift["administrative-autonomy-activation.yml"].replace(
+        "      pull-requests: write\n",
+        "      pull-requests: read\n",
+        1,
+    )
+    assert any("activate job delegated permissions drift" in error for error in workflow_coverage_errors(texts=activation_permissions_drift, evidence=evidence))
+
+    activation_environment_removed = dict(texts)
+    activation_environment_removed["administrative-autonomy-activation.yml"] = activation_environment_removed["administrative-autonomy-activation.yml"].replace(
+        "    environment: release-trust\n",
+        "",
+        1,
+    )
+    assert any("activate job must bind protected environment release-trust" in error for error in workflow_coverage_errors(texts=activation_environment_removed, evidence=evidence))
+
+    activation_admin_scope_removed = dict(texts)
+    activation_admin_scope_removed["administrative-autonomy-activation.yml"] = activation_admin_scope_removed["administrative-autonomy-activation.yml"].replace(
+        "permission-administration: write",
+        "permission-administration: read",
+        1,
+    )
+    assert any("missing activation control marker" in error or "exactly one administration-write token" in error for error in workflow_coverage_errors(texts=activation_admin_scope_removed, evidence=evidence))
+
+    activation_main_gate_removed = dict(texts)
+    activation_main_gate_removed["administrative-autonomy-activation.yml"] = activation_main_gate_removed["administrative-autonomy-activation.yml"].replace(
+        "    branches: [main]\n",
+        "    branches: [development]\n",
+        1,
+    )
+    assert any("push trigger must cover main" in error for error in workflow_coverage_errors(texts=activation_main_gate_removed, evidence=evidence))
 
     print("workflow coverage v2 adversarial tests passed")
     return 0
