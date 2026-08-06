@@ -4,7 +4,10 @@ on:
   pull_request:
     paths:
       - '.github/workflows/administrative-maintenance-*.yml'
+      - '.github/workflows/administrative-autonomy-activation.yml'
       - 'ci/administrative_automation.py'
+      - 'ci/administrative_autonomy.py'
+      - 'ci/autonomy_github.py'
       - 'ci/administrative_receipts.py'
       - 'ci/prepare_administrative_candidate*.py'
       - 'ci/synchronize_administrative_completion*.py'
@@ -14,16 +17,22 @@ on:
       - 'ci/test_workflow_coverage_v2.py'
       - 'governance/administrative_maintenance_automation*.json'
       - 'governance/administrative_maintenance_completion_state.json'
+      - 'governance/administrative_autonomy_*.json'
       - 'schemas/administrative_maintenance_automation*.schema.json'
       - 'schemas/administrative_maintenance_completion_state.schema.json'
+      - 'schemas/administrative_autonomy_*.schema.json'
       - 'tests/test_administrative_automation*.py'
+      - 'tests/test_administrative_autonomy.py'
       - 'tests/test_administrative_receipts.py'
       - 'tests/test_administrative_synchronization_wait.py'
   push:
     branches: [main]
     paths:
       - '.github/workflows/administrative-maintenance-*.yml'
+      - '.github/workflows/administrative-autonomy-activation.yml'
       - 'ci/administrative_automation.py'
+      - 'ci/administrative_autonomy.py'
+      - 'ci/autonomy_github.py'
       - 'ci/administrative_receipts.py'
       - 'ci/prepare_administrative_candidate*.py'
       - 'ci/synchronize_administrative_completion*.py'
@@ -33,9 +42,12 @@ on:
       - 'ci/test_workflow_coverage_v2.py'
       - 'governance/administrative_maintenance_automation*.json'
       - 'governance/administrative_maintenance_completion_state.json'
+      - 'governance/administrative_autonomy_*.json'
       - 'schemas/administrative_maintenance_automation*.schema.json'
       - 'schemas/administrative_maintenance_completion_state.schema.json'
+      - 'schemas/administrative_autonomy_*.schema.json'
       - 'tests/test_administrative_automation*.py'
+      - 'tests/test_administrative_autonomy.py'
       - 'tests/test_administrative_receipts.py'
       - 'tests/test_administrative_synchronization_wait.py'
   workflow_dispatch:
@@ -71,10 +83,12 @@ jobs:
           # Compatibility reachability: python ci/prepare_administrative_candidate_v2.py
           # Compatibility reachability: python ci/synchronize_administrative_completion_v2.py
           python ci/validate_administrative_automation_v3.py
+          python ci/administrative_autonomy.py validate
           python ci/validate_workflow_coverage_v2.py
           python ci/test_workflow_coverage_v2.py
           python -m unittest \
             tests.test_administrative_automation \
             tests.test_administrative_automation_remediation \
+            tests.test_administrative_autonomy \
             tests.test_administrative_receipts \
             tests.test_administrative_synchronization_wait
