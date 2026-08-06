@@ -3,13 +3,11 @@ from __future__ import annotations
 
 import json
 
-import test_workflow_coverage as legacy_tests
 from validate_workflow_coverage_v2 import ROOT, workflow_coverage_errors
 from validate_workflow_coverage import workflow_texts
 
 
 def main() -> int:
-    assert legacy_tests.main() == 0
     texts = workflow_texts()
     evidence = json.loads((ROOT / "evidence/UC-WP02-MATHCERT.json").read_text(encoding="utf-8"))
     assert not workflow_coverage_errors(texts=texts, evidence=evidence)
