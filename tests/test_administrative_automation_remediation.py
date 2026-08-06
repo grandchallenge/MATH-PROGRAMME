@@ -112,10 +112,26 @@ class AdministrativeAutomationRemediationTests(unittest.TestCase):
         value["historical_attestation"]["blob_sha"] = "0" * 40
         self.assertTrue(self.validate_terminal(value))
 
-    def test_terminal_completion_derivation_drift_rejected(self) -> None:
+    def test_terminal_invalid_completion_derivation_rejected(self) -> None:
         completion = copy.deepcopy(self.completion_state)
-        completion["derived_from_protected_head"] = "0" * 40
-        self.assertTrue(self.validate_terminal(copy.deepcopy(self.terminal_record), completion_state=completion))
+        completion["derived_from_protected_head"] = "not-a-sha"
+        self.assertTrue(
+            self.validate_terminal(
+                copy.deepcopy(self.terminal_record),
+                completion_state=completion,
+            )
+        )
+
+    def test_terminal_forward_completion_derivation_accepted(self) -> None:
+        completion = copy.deepcopy(self.completion_state)
+        completion["derived_from_protected_head"] = "a7ccabd94c7bf6197a35a2ca75257fb17a864042"
+        self.assertEqual(
+            self.validate_terminal(
+                copy.deepcopy(self.terminal_record),
+                completion_state=completion,
+            ),
+            [],
+        )
 
     def test_terminal_nonancestral_receipts_rejected(self) -> None:
         self.assertTrue(
