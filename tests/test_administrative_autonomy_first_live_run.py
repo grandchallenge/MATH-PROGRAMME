@@ -55,3 +55,5 @@ class AdministrativeAutonomyFirstLiveRunTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# Exact-head CI exercises this file through repository unit-test discovery.
