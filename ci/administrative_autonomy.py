@@ -125,9 +125,9 @@ def activate(check_timeout: int, merge_timeout: int) -> int:
     )
     candidate_app_id = positive_int(os.getenv("CANDIDATE_APP_ID", ""), "CANDIDATE_APP_ID")
     referee_app_id = positive_int(os.getenv("REFEREE_APP_ID", ""), "REFEREE_APP_ID")
-    ci = identity(candidate, candidate_app_id, "candidate")
-    ai = identity(admin, candidate_app_id, "administrator")
-    ri = identity(referee, referee_app_id, "referee")
+    ci = identity(os.getenv("CANDIDATE_LOGIN", ""), candidate_app_id, "candidate")
+    ai = identity(os.getenv("ADMIN_LOGIN", ""), candidate_app_id, "administrator")
+    ri = identity(os.getenv("REFEREE_LOGIN", ""), referee_app_id, "referee")
     expected = t["agents"]
     if ci.login != expected["candidate"]["expected_login"] or ai.login != expected["administrator"]["expected_login"] or ri.login != expected["referee"]["expected_login"]:
         raise AutonomyError(f"agent identity drift: {ci.login}; {ai.login}; {ri.login}")
@@ -163,9 +163,9 @@ def activate(check_timeout: int, merge_timeout: int) -> int:
         if pr["head"]["sha"] != canary_head or pr["user"]["login"] != ci.login:
             raise AutonomyError("Candidate Agent canary identity or head mismatch")
         verify_scope(candidate, repo, pr, ACTIVATION_PATH)
-        auto_merge(referee, pr["node_id"], canary_head)
+        auto_merge(referee, pr["node_id"], canary_head, ri)
         checks = wait_checks(referee, repo, canary_head, required_contexts(live_ruleset), check_timeout)
-        review = approve(referee, repo, pr["number"], canary_head)
+        review = approve(referee, repo, pr["number"], canary_head, ri)
         merged = wait_merge(referee, repo, pr["number"], canary_head, merge_timeout)
         readback(referee, repo, ACTIVATION_PATH, record, timeout=300)
         comment = referee.post(f"/repos/{repo}/issues/{pr['number']}/comments", {"body": (
@@ -175,6 +175,8 @@ def activate(check_timeout: int, merge_timeout: int) -> int:
             "- bypass: Referee Agent integration, `pull_request` only;\n"
             "- protected activation state: `ACTIVE`;\n- Human Steward impersonation: prohibited and not used."
         )})
+        if comment.get("user", {}).get("login") != ri.login:
+            raise AutonomyError("protected readback comment actor mismatch")
         report |= {
             "state": "ACTIVE_PROTECTED_READBACK_COMPLETE", "completed_at": now(),
             "canary_pull_request": pr["number"], "canary_head": canary_head, "checks": checks,
