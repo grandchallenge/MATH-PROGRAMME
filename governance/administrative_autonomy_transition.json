@@ -38,6 +38,21 @@
       "rollback_errors": [],
       "canary_created": false,
       "ruleset_bypass_actors_after_failure": []
+    },
+    {
+      "attempt_id": "MP-ADMIN-AUTONOMY-ACTIVATION-ATTEMPT-002",
+      "transition_merge_commit": "a9a04211c85190486c29382cd8208f01e3143797",
+      "workflow_run_id": 31071759797,
+      "artifact_id": 8955883591,
+      "started_at": "2026-08-06T04:37:17Z",
+      "failed_at": "2026-08-06T04:37:18Z",
+      "state": "ACTIVATION_FAILED_CLOSED",
+      "failure_gate": "ruleset bypass actor installation",
+      "cause": "The platform-wide GitHub Actions integration is not part of the ruleset source repository or owner organization and is therefore ineligible as a bypass actor.",
+      "authority_created": false,
+      "rollback_errors": [],
+      "canary_created": false,
+      "ruleset_bypass_actors_after_failure": []
     }
   ],
   "supersession": {
@@ -65,6 +80,7 @@
         "approve its own pull request",
         "emit a Human Steward disposition",
         "change repository administration settings",
+        "exercise the ruleset bypass outside a separately scoped Administration Agent operation",
         "weaken claim boundaries",
         "modify files outside the allowed path set"
       ]
@@ -77,13 +93,13 @@
         "administration:write"
       ],
       "allowed_actions": [
-        "install the Referee Agent ruleset bypass actor in pull_request mode",
+        "install the organization-installed GCL Release Trust integration as a pull_request-only ruleset bypass actor",
         "restore the exact prior ruleset on pre-merge failure"
       ],
       "prohibited_actions": [
         "create or modify candidate branches",
-        "approve pull requests",
-        "merge pull requests",
+        "record the Referee approval disposition",
+        "enable auto-merge",
         "directly push protected content",
         "emit a Human Steward disposition"
       ]
@@ -125,10 +141,12 @@
     },
     "branch_protection_bypass": {
       "authorized": true,
-      "actor": "Referee Agent GitHub App identity",
+      "actor": "GCL Release Trust Administration Agent GitHub App identity",
       "mode": "pull_request",
       "direct_push": false,
-      "activation_requires_live_ruleset_readback": true
+      "activation_requires_live_ruleset_readback": true,
+      "candidate_referee_separation_preserved": true,
+      "canary_merge_uses_bypass": false
     },
     "cadence_anchor_reset": {
       "authorized": true,
@@ -177,7 +195,7 @@
     "referee_identity_verified": true,
     "identity_separation_verified": true,
     "auto_merge_enabled": true,
-    "pull_request_bypass_actor_verified": true,
+    "organization_installed_pull_request_bypass_actor_verified": true,
     "canary_exact_head_checks_successful": true,
     "canary_referee_disposition_recorded": true,
     "canary_auto_merge_successful": true,
