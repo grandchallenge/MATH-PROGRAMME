@@ -1,0 +1,153 @@
+{
+  "$schema": "../schemas/administrative_autonomy_transition.schema.json",
+  "schema_version": "1.0.0",
+  "transition_id": "MP-ADMIN-AUTONOMY-TRANSITION-001",
+  "control_id": "MP-ADMIN-MAINT-001",
+  "predecessor_automation_id": "MP-ADMIN-AUTOMATION-CLOSURE-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "status": "ARMED_NOT_ACTIVE",
+  "approved_by": {
+    "office": "Human Steward",
+    "login": "fyremael",
+    "approved_at": "2026-08-05T19:09:00-07:00",
+    "authorization": "I approve MP-ADMIN-AUTONOMY-TRANSITION-001."
+  },
+  "previous_policy_closeout": {
+    "pull_request": 247,
+    "reviewed_head": "73e3f1cb52c029047acf3e0a4251d64075eef81a",
+    "independent_review_id": 4870244177,
+    "independent_reviewer": "jimsteeg",
+    "merge_commit": "8997aa05c6c7145b516b651e8eb8c778e9fc2781",
+    "merge_actor": "fyremael",
+    "post_merge_readback_comment_id": 5199795839,
+    "disposition": "PREVIOUS_POLICY_MERGE_COMPLETE_WITH_BOUNDED_DOCUMENTARY_DEVIATION",
+    "automated_authority_used": false
+  },
+  "supersession": {
+    "predecessor_records_remain_immutable": true,
+    "authority_successor": "this record together with governance/administrative_autonomy_activation.json",
+    "effective_rule": "Delegated authority becomes active only when the activation record reaches protected main through the canary pull request and protected readback succeeds.",
+    "historical_human_steward_requirements_remain_controlling_until_activation": true
+  },
+  "agents": {
+    "candidate": {
+      "office": "Candidate Agent",
+      "credential": "GCL Release Trust GitHub App",
+      "expected_login": "gcl-release-trust[bot]",
+      "allowed_actions": [
+        "create bounded administrative branches",
+        "write bounded administrative records",
+        "open bounded administrative pull requests"
+      ],
+      "prohibited_actions": [
+        "approve its own pull request",
+        "emit a Human Steward disposition",
+        "weaken claim boundaries",
+        "modify files outside the allowed path set"
+      ]
+    },
+    "referee": {
+      "office": "Referee Agent",
+      "credential": "repository GITHUB_TOKEN",
+      "expected_login": "github-actions[bot]",
+      "allowed_actions": [
+        "verify exact head and required checks",
+        "submit a truthfully attributed Referee Agent approval",
+        "enable auto-merge",
+        "perform protected readback"
+      ],
+      "prohibited_actions": [
+        "claim to be the Human Steward",
+        "approve a pull request authored by the same identity",
+        "approve changed or stale heads",
+        "promote mathematical or external claims"
+      ]
+    },
+    "identity_separation_required": true
+  },
+  "delegated_authority": {
+    "automated_exact_head_approval": true,
+    "automated_referee_disposition": true,
+    "automated_human_steward_disposition": false,
+    "automated_merge": true,
+    "automated_auto_merge": true,
+    "branch_protection_bypass": {
+      "authorized": true,
+      "actor": "Referee Agent GitHub App identity",
+      "mode": "pull_request",
+      "direct_push": false,
+      "activation_requires_live_ruleset_readback": true
+    },
+    "cadence_anchor_reset": {
+      "authorized": true,
+      "mode": "append_only_transaction",
+      "silent_rewrite": false,
+      "required_fields": [
+        "prior_anchor",
+        "new_anchor",
+        "reason",
+        "triggering_receipt",
+        "effective_at",
+        "actor"
+      ]
+    }
+  },
+  "scope": {
+    "pull_request_title_prefixes": [
+      "[maintenance-candidate]",
+      "[maintenance-final]",
+      "[autonomy-activation]"
+    ],
+    "branch_prefixes": [
+      "automation/maintenance/",
+      "automation/administrative-autonomy-activation-"
+    ],
+    "allowed_paths": [
+      "governance/administrative_candidates/",
+      "governance/administrative_structural_sweeps/",
+      "governance/administrative_portfolio_reviews/",
+      "governance/administrative_deep_conformance_reviews/",
+      "governance/administrative_pilot_reviews/",
+      "governance/administrative_constitutional_reviews/",
+      "governance/administrative_receipt_repairs/",
+      "governance/administrative_autonomy_activation.json"
+    ],
+    "maximum_changed_files": 25,
+    "maximum_additions": 5000,
+    "maximum_deletions": 1000
+  },
+  "activation_gates": {
+    "transition_protected_merge": true,
+    "previous_policy_exact_head_review": true,
+    "previous_policy_human_steward_disposition": true,
+    "repository_actions_approval_enabled": true,
+    "candidate_identity_verified": true,
+    "referee_identity_verified": true,
+    "identity_separation_verified": true,
+    "auto_merge_enabled": true,
+    "pull_request_bypass_actor_verified": true,
+    "canary_exact_head_checks_successful": true,
+    "canary_referee_approval_recorded": true,
+    "canary_auto_merge_successful": true,
+    "protected_activation_record_readback": true,
+    "rollback_path_verified": true
+  },
+  "rollback": {
+    "automatic_on_activation_failure": true,
+    "remove_added_ruleset_bypass_actor": true,
+    "restore_actions_approval_setting": true,
+    "close_unmerged_canary_pull_request": true,
+    "delete_unmerged_canary_branch": true,
+    "preserve_failure_artifact": true,
+    "failure_state": "ARMED_NOT_ACTIVE"
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "cert_route_registered": false,
+    "adjudication_authorized": false,
+    "certificate_issued": false,
+    "external_claim_authorized": false
+  }
+}
