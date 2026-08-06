@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_autonomy_merge_executor_correction.schema.json",
+  "title": "Administrative autonomy merge executor correction",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "correction_id",
+    "transition_id",
+    "repository",
+    "status",
+    "superseded_control",
+    "activation_attempt_003",
+    "corrected_control",
+    "manual_review_notification",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../schemas/administrative_autonomy_merge_executor_correction.schema.json"
+    },
+    "schema_version": {"const": "1.0.0"},
+    "correction_id": {"const": "MP-ADMIN-AUTONOMY-MERGE-EXECUTOR-CORRECTIVE-001"},
+    "transition_id": {"const": "MP-ADMIN-AUTONOMY-TRANSITION-001"},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "status": {"const": "ARMED_NOT_ACTIVE"},
+    "superseded_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["auto_merge_executor", "reason"],
+      "properties": {
+        "auto_merge_executor": {"const": "Referee Agent through repository GITHUB_TOKEN"},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "activation_attempt_003": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workflow_run_id",
+        "artifact_id",
+        "transition_merge_commit",
+        "canary_pull_request",
+        "canary_head",
+        "referee_disposition_comment_id",
+        "started_at",
+        "failed_at",
+        "state",
+        "failure_gate",
+        "cause",
+        "authority_created",
+        "canary_created",
+        "canary_closed_unmerged",
+        "ruleset_bypass_actors_after_failure",
+        "rollback_errors"
+      ],
+      "properties": {
+        "workflow_run_id": {"const": 31072643002},
+        "artifact_id": {"const": 8956258495},
+        "transition_merge_commit": {"const": "bc7158b3f6f01611066c3893c0ae1d34bb472da0"},
+        "canary_pull_request": {"const": 255},
+        "canary_head": {"const": "12bc32d77fb3c381dcee3ba6aea52536b62507b8"},
+        "referee_disposition_comment_id": {"const": 5200565977},
+        "started_at": {"const": "2026-08-06T04:56:16Z"},
+        "failed_at": {"const": "2026-08-06T04:59:25Z"},
+        "state": {"const": "ACTIVATION_FAILED_CLOSED"},
+        "failure_gate": {"const": "exact-head auto-merge enablement"},
+        "cause": {"type": "string", "minLength": 1},
+        "authority_created": {"const": false},
+        "canary_created": {"const": true},
+        "canary_closed_unmerged": {"const": true},
+        "ruleset_bypass_actors_after_failure": {"type": "array", "maxItems": 0},
+        "rollback_errors": {"type": "array", "maxItems": 0}
+      }
+    },
+    "corrected_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approval_decision_actor",
+        "approval_record",
+        "merge_executor_actor",
+        "merge_executor_credential",
+        "merge_executor_required_scope",
+        "sequence",
+        "expected_head_required",
+        "referee_disposition_must_precede_auto_merge",
+        "canary_bypass_must_not_be_used",
+        "direct_protected_push",
+        "human_steward_impersonation"
+      ],
+      "properties": {
+        "approval_decision_actor": {"const": "github-actions[bot]"},
+        "approval_record": {"const": "issue_comment"},
+        "merge_executor_actor": {"const": "gcl-release-trust[bot]"},
+        "merge_executor_credential": {"const": "Candidate Agent short-lived GitHub App token"},
+        "merge_executor_required_scope": {"const": "pull_requests:write"},
+        "sequence": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "expected_head_required": {"const": true},
+        "referee_disposition_must_precede_auto_merge": {"const": true},
+        "canary_bypass_must_not_be_used": {"const": true},
+        "direct_protected_push": {"const": false},
+        "human_steward_impersonation": {"const": false}
+      }
+    },
+    "manual_review_notification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reviewer",
+        "request_reviewers_api_required",
+        "explicit_mention_comment_required",
+        "purpose"
+      ],
+      "properties": {
+        "reviewer": {"const": "jimsteeg"},
+        "request_reviewers_api_required": {"const": true},
+        "explicit_mention_comment_required": {"const": true},
+        "purpose": {"type": "string", "minLength": 1}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "patternProperties": {
+        "^[a-z][a-z0-9_]*$": {"const": false}
+      }
+    }
+  }
+}

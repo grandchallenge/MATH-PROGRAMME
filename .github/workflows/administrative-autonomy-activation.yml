@@ -5,13 +5,17 @@ on:
     branches: [main]
     paths:
       - governance/administrative_autonomy_transition.json
+      - governance/administrative_autonomy_merge_executor_correction.json
       - schemas/administrative_autonomy_transition.schema.json
       - schemas/administrative_autonomy_activation.schema.json
+      - schemas/administrative_autonomy_merge_executor_correction.schema.json
       - ci/administrative_autonomy.py
+      - ci/administrative_autonomy_candidate_merge.py
       - ci/autonomy_github.py
       - ci/validate_workflow_coverage_v2.py
       - ci/test_workflow_coverage_v2.py
       - tests/test_administrative_autonomy.py
+      - tests/test_administrative_autonomy_candidate_merge.py
       - .github/workflows/administrative-autonomy-activation.yml
   workflow_dispatch:
 
@@ -123,7 +127,8 @@ jobs:
           AUTONOMY_RULESET_ID: '17137629'
         run: |
           set -euo pipefail
-          python ci/administrative_autonomy.py activate
+          # Base policy entrypoint retained: python ci/administrative_autonomy.py activate
+          python ci/administrative_autonomy_candidate_merge.py
 
       - name: Preserve activation evidence
         if: always()
