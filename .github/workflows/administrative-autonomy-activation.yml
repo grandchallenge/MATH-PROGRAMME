@@ -9,6 +9,8 @@ on:
       - schemas/administrative_autonomy_activation.schema.json
       - ci/administrative_autonomy.py
       - ci/autonomy_github.py
+      - ci/validate_workflow_coverage_v2.py
+      - ci/test_workflow_coverage_v2.py
       - tests/test_administrative_autonomy.py
       - .github/workflows/administrative-autonomy-activation.yml
   workflow_dispatch:
@@ -44,6 +46,16 @@ jobs:
           permission-issues: write
           permission-pull-requests: write
 
+      - name: Mint Administration Agent token
+        id: admin-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-administration: write
+
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
@@ -53,6 +65,21 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Initialize activation evidence
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          Path('administrative-autonomy-activation-report.json').write_text(
+              json.dumps({
+                  'schema_version': '1.0.0',
+                  'state': 'WORKFLOW_STARTED_FAIL_CLOSED',
+                  'transition_head': '${{ github.sha }}',
+              }, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          PY
+
       - name: Validate transition package
         run: python ci/administrative_autonomy.py validate
 
@@ -60,21 +87,28 @@ jobs:
         env:
           CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}
           REFEREE_TOKEN: ${{ github.token }}
-          ADMIN_TOKEN: ${{ secrets.GCL_REPOSITORY_ADMIN_TOKEN }}
+          ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          REFEREE_APP_ID: '15368'
         run: |
           set -euo pipefail
           test -n "${CANDIDATE_TOKEN}"
           test -n "${REFEREE_TOKEN}"
           test -n "${ADMIN_TOKEN}"
+          test -n "${CANDIDATE_APP_ID}"
+          test -n "${REFEREE_APP_ID}"
           test "${CANDIDATE_TOKEN}" != "${REFEREE_TOKEN}"
           test "${ADMIN_TOKEN}" != "${CANDIDATE_TOKEN}"
           test "${ADMIN_TOKEN}" != "${REFEREE_TOKEN}"
+          test "${CANDIDATE_APP_ID}" != "${REFEREE_APP_ID}"
 
       - name: Activate through protected canary
         env:
           CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}
           REFEREE_TOKEN: ${{ github.token }}
-          ADMIN_TOKEN: ${{ secrets.GCL_REPOSITORY_ADMIN_TOKEN }}
+          ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          REFEREE_APP_ID: '15368'
           AUTONOMY_RULESET_ID: '17137629'
         run: |
           set -euo pipefail
