@@ -122,12 +122,13 @@ def main() -> int:
     )
     assert any("activate job must bind protected environment release-trust" in error for error in workflow_coverage_errors(texts=activation_environment_removed, evidence=evidence))
 
-    activation_admin_secret_removed = dict(texts)
-    activation_admin_secret_removed["administrative-autonomy-activation.yml"] = activation_admin_secret_removed["administrative-autonomy-activation.yml"].replace(
-        "${{ secrets.GCL_REPOSITORY_ADMIN_TOKEN }}",
-        "${{ secrets.UNBOUND_ADMIN_TOKEN }}",
+    activation_admin_scope_removed = dict(texts)
+    activation_admin_scope_removed["administrative-autonomy-activation.yml"] = activation_admin_scope_removed["administrative-autonomy-activation.yml"].replace(
+        "permission-administration: write",
+        "permission-administration: read",
+        1,
     )
-    assert any("missing activation control marker" in error for error in workflow_coverage_errors(texts=activation_admin_secret_removed, evidence=evidence))
+    assert any("missing activation control marker" in error or "exactly one administration-write token" in error for error in workflow_coverage_errors(texts=activation_admin_scope_removed, evidence=evidence))
 
     activation_main_gate_removed = dict(texts)
     activation_main_gate_removed["administrative-autonomy-activation.yml"] = activation_main_gate_removed["administrative-autonomy-activation.yml"].replace(
