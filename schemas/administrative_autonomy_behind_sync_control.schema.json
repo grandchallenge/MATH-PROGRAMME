@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_autonomy_behind_sync_control.schema.json",
+  "title": "Administrative autonomy BEHIND synchronization control",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "control_id",
+    "runtime_id",
+    "repository",
+    "issue",
+    "status",
+    "classification",
+    "trigger_evidence",
+    "synchronization",
+    "sequence",
+    "fail_closed_conditions",
+    "authority_boundary",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"const": "../schemas/administrative_autonomy_behind_sync_control.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-ADMIN-AUTONOMY-BEHIND-SYNC-001"},
+    "runtime_id": {"const": "MP-ADMIN-AUTONOMY-RUNTIME-INTEGRATION-001"},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "issue": {"const": 270},
+    "status": {"const": "ACTIVE_WHEN_PROTECTED"},
+    "classification": {"const": "P2_RUNTIME_RESILIENCE"},
+    "trigger_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_pull_request",
+        "failed_run",
+        "failure_state",
+        "manual_recovery_run",
+        "protected_record_merge",
+        "protected_receipt_merge"
+      ],
+      "properties": {
+        "candidate_pull_request": {"const": 265},
+        "failed_run": {"const": 31139890464},
+        "failure_state": {"const": "BEHIND"},
+        "manual_recovery_run": {"const": 31140917971},
+        "protected_record_merge": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "protected_receipt_merge": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "synchronization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "branch_prefix",
+        "base_branch",
+        "expected_head_required",
+        "maximum_attempts_per_run",
+        "merge_state_wait_seconds",
+        "head_change_wait_seconds",
+        "poll_interval_seconds",
+        "fresh_exact_head_checks_required",
+        "fresh_referee_disposition_required",
+        "ordinary_protected_merge_required"
+      ],
+      "properties": {
+        "enabled": {"const": true},
+        "branch_prefix": {"const": "automation/maintenance/"},
+        "base_branch": {"const": "main"},
+        "expected_head_required": {"const": true},
+        "maximum_attempts_per_run": {"type": "integer", "minimum": 1, "maximum": 2},
+        "merge_state_wait_seconds": {"type": "integer", "minimum": 10, "maximum": 180},
+        "head_change_wait_seconds": {"type": "integer", "minimum": 30, "maximum": 300},
+        "poll_interval_seconds": {"type": "integer", "minimum": 2, "maximum": 30},
+        "fresh_exact_head_checks_required": {"const": true},
+        "fresh_referee_disposition_required": {"const": true},
+        "ordinary_protected_merge_required": {"const": true}
+      }
+    },
+    "sequence": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {"type": "string", "minLength": 10},
+      "uniqueItems": true
+    },
+    "fail_closed_conditions": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {"type": "string", "minLength": 5},
+      "uniqueItems": true
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "control_plane_change",
+        "scope_expansion",
+        "routine_bounded_administrative_completion_only",
+        "human_steward_identity_asserted",
+        "bypass_may_be_exercised",
+        "direct_protected_push"
+      ],
+      "properties": {
+        "control_plane_change": {"const": true},
+        "scope_expansion": {"const": false},
+        "routine_bounded_administrative_completion_only": {"const": true},
+        "human_steward_identity_asserted": {"const": false},
+        "bypass_may_be_exercised": {"const": false},
+        "direct_protected_push": {"const": false}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mathematical_target_proved",
+        "campaign_admitted",
+        "source_verified",
+        "cert_route_registered",
+        "adjudication_authorized",
+        "certificate_issued",
+        "external_claim_authorized"
+      ],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "campaign_admitted": {"const": false},
+        "source_verified": {"const": false},
+        "cert_route_registered": {"const": false},
+        "adjudication_authorized": {"const": false},
+        "certificate_issued": {"const": false},
+        "external_claim_authorized": {"const": false}
+      }
+    }
+  }
+}

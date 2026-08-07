@@ -1,0 +1,70 @@
+{
+  "$schema": "../schemas/administrative_autonomy_behind_sync_control.schema.json",
+  "schema_version": "1.0.0",
+  "control_id": "MP-ADMIN-AUTONOMY-BEHIND-SYNC-001",
+  "runtime_id": "MP-ADMIN-AUTONOMY-RUNTIME-INTEGRATION-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "issue": 270,
+  "status": "ACTIVE_WHEN_PROTECTED",
+  "classification": "P2_RUNTIME_RESILIENCE",
+  "trigger_evidence": {
+    "candidate_pull_request": 265,
+    "failed_run": 31139890464,
+    "failure_state": "BEHIND",
+    "manual_recovery_run": 31140917971,
+    "protected_record_merge": "50ce5cb027f0e01d1ebd80b6e1a1e7348695321f",
+    "protected_receipt_merge": "983a7a4356a5d702e629135f58a9d0823ff4b714"
+  },
+  "synchronization": {
+    "enabled": true,
+    "branch_prefix": "automation/maintenance/",
+    "base_branch": "main",
+    "expected_head_required": true,
+    "maximum_attempts_per_run": 2,
+    "merge_state_wait_seconds": 60,
+    "head_change_wait_seconds": 180,
+    "poll_interval_seconds": 5,
+    "fresh_exact_head_checks_required": true,
+    "fresh_referee_disposition_required": true,
+    "ordinary_protected_merge_required": true
+  },
+  "sequence": [
+    "identify exactly one eligible frozen bounded maintenance candidate",
+    "verify repository, pull request, branch prefix, manifest branch, and main base",
+    "read GitHub merge state",
+    "when and only when the state is BEHIND, call update-branch with expected_head_sha",
+    "wait for a changed candidate head and revalidate bounded scope",
+    "rerun every required check against the changed exact head",
+    "record a fresh exact-head Referee disposition",
+    "require stable CLEAN state before ordinary expected-head protected merge"
+  ],
+  "fail_closed_conditions": [
+    "multiple eligible candidates",
+    "branch or base scope drift",
+    "head repository drift",
+    "invalid or changed expected head",
+    "update-branch conflict",
+    "head-change readback timeout",
+    "attempt limit exhausted",
+    "non-BEHIND dirty merge state",
+    "required check failure",
+    "missing fresh Referee disposition"
+  ],
+  "authority_boundary": {
+    "control_plane_change": true,
+    "scope_expansion": false,
+    "routine_bounded_administrative_completion_only": true,
+    "human_steward_identity_asserted": false,
+    "bypass_may_be_exercised": false,
+    "direct_protected_push": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "cert_route_registered": false,
+    "adjudication_authorized": false,
+    "certificate_issued": false,
+    "external_claim_authorized": false
+  }
+}
