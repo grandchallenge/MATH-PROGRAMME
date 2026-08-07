@@ -7,7 +7,9 @@ from administrative_autonomy_runtime_contract import (
 )
 from administrative_autonomy_runtime_github import check_runs_state
 from autonomy_github import AutonomyError
-from administrative_autonomy_runtime_execute import execute, main, validate_command
+from administrative_autonomy_runtime_behind_sync import (
+    execute, main, validate_command,
+)
 
 __all__ = [
     "ALLOWED_REPOSITORIES", "ROOT", "RUNTIME_PATH", "AutonomyError",
