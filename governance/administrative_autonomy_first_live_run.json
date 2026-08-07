@@ -1,0 +1,110 @@
+{
+  "$schema": "../schemas/administrative_autonomy_first_live_run.schema.json",
+  "schema_version": "1.0.0",
+  "attestation_id": "MP-ADMIN-AUTONOMY-FIRST-LIVE-RUN-001",
+  "runtime_id": "MP-ADMIN-AUTONOMY-RUNTIME-INTEGRATION-001",
+  "activation_chain": {
+    "transition_control_merge": "b299b5e2f9d7d9568880ca033fb540687ab85dcd",
+    "activation_canary_merge": "936bbf509a1dbddd6879f6c20616b79c4d66b0e4",
+    "runtime_integration_merge": "52cca4fdb9eb9965483a007600d40229124cc0d0",
+    "activation_state": "ACTIVE"
+  },
+  "repair_issue": 266,
+  "status": "FIRST_LIVE_RUN_ACCEPTANCE_BOUND_TO_PROTECTED_READBACK_REPAIR",
+  "production_operation": {
+    "record_id": "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-06-008",
+    "execution_issue": 262,
+    "pull_request": 263,
+    "scheduled_due_at": "2026-08-06T15:45:00Z",
+    "prepared_at": "2026-08-06T09:50:50Z",
+    "evidence_freeze_at": "2026-08-06T14:15:00Z",
+    "execution_started_at": "2026-08-06T15:27:41Z",
+    "referee_disposition_at": "2026-08-06T15:34:14Z",
+    "merged_at": "2026-08-06T15:34:38Z",
+    "lateness_minutes_at_start": 0
+  },
+  "protected_receipts": {
+    "candidate_actor": "gcl-release-trust[bot]",
+    "referee_actor": "github-actions[bot]",
+    "merge_actor": "gcl-release-trust[bot]",
+    "exact_finalized_head": "a9522f87cad6ddfeaaf371b30a45664292907026",
+    "referee_disposition_comment_id": 5207004755,
+    "protected_merge_commit": "1fc9f9f3a5083c3654964cb3b597aae27656daa6",
+    "record_path": "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-06-008.json",
+    "record_git_blob": "57d7e82ebf274c631a6034089d684cfee638614e",
+    "record_sha256": "4ef5fc00e58effed1b54eb03970a56fc1b2bfd507afcc42a955aa0b9302dff44",
+    "ruleset_id": 17137629,
+    "ruleset_actor_id": 4423678,
+    "ruleset_actor_mode": "pull_request",
+    "bypass_used": false,
+    "direct_protected_push": false
+  },
+  "required_checks": {
+    "Replay LOG-GCD-001 in Lean": "success",
+    "Replay PC-WP04 bounded certificate": "success",
+    "Replay pinned Union-Closed MATHCERT evidence": "success",
+    "policy / policy": "success",
+    "security / action-policy": "success",
+    "validate-json": "success"
+  },
+  "runtime_evidence": {
+    "execution_run": 31116400040,
+    "artifact_id": 8973966049,
+    "artifact_digest": "sha256:974a8ef0c8ffa4fd34e9b7d16f786973239b7f7e4e37be50b2058129751429bb",
+    "preserved_failure_comments": [
+      5206932513,
+      5207148968
+    ],
+    "preserved_failures": [
+      "finalized maintenance head readback mismatch",
+      "protected mirror synchronization readback timed out"
+    ],
+    "original_terminal_readback_complete": false,
+    "successful_record_merge_preserved": true
+  },
+  "repair_contract": {
+    "eventual_consistency_polling_required": true,
+    "separate_completion_receipt_pull_request_required": true,
+    "receipt_recovery_required": true,
+    "mirror_synchronization_after_receipt_merge_required": true,
+    "execution_issue_closure_after_protected_readback_only": true,
+    "control_plane_issue_closure_after_first_run_acceptance_only": true
+  },
+  "documentary_closure": {
+    "completion_ledger_path": "governance/administrative_maintenance_completion_state.json",
+    "completed_through_utc": "2026-08-06T15:45:00Z",
+    "execution_issue": 262,
+    "runtime_control_issue": 260,
+    "mirror_targets": [
+      {
+        "repository": "grandchallenge/MATH-PROGRAMME",
+        "issue": 182
+      },
+      {
+        "repository": "grandchallenge/MATH-PROGRAMME",
+        "issue": 183
+      },
+      {
+        "repository": "grandchallenge/INTELLECT",
+        "issue": 21
+      }
+    ],
+    "closure_requires_protected_repair_merge": true,
+    "historical_fail_closed_receipts_preserved": true
+  },
+  "authority_boundary": {
+    "routine_bounded_administrative_completion": true,
+    "automated_human_steward_disposition": false,
+    "control_plane_change_delegated": false,
+    "scope_expansion_delegated": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "cert_route_registered": false,
+    "adjudication_authorized": false,
+    "certificate_issued": false,
+    "external_claim_authorized": false
+  }
+}
