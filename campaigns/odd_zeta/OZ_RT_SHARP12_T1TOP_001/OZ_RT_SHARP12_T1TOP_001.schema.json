@@ -1,0 +1,37 @@
+{
+  "$id": "https://grandchallenge.ai/schemas/oz-rt-sharp12-t1top-001.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OZ-RT-SHARP12-T1TOP-001",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema","schema_version","record_id","campaign_id","programme_issue","umbrella_issue","authority","target_lock","execution_state","terminal_disposition","proof_effect","promotion_effect","source_evidence","certificate_search","missing_objects","reopening_requirements","admissible_future_outcomes","nonclaims"],
+  "properties": {
+    "$schema": {"const": "OZ_RT_SHARP12_T1TOP_001.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "record_id": {"const": "OZ-RT-SHARP12-T1TOP-001"},
+    "campaign_id": {"const": "OZ-001"},
+    "programme_issue": {"const": 306},
+    "umbrella_issue": {"const": 113},
+    "authority": {"type": "object", "additionalProperties": false, "required": ["programme_base_commit","upstream_repository","source_commit","source_tree","sharp12_path","sharp12_blob","later_source_head_audited","later_source_changes_target_locus"], "properties": {
+      "programme_base_commit": {"pattern": "^[0-9a-f]{40}$"},
+      "upstream_repository": {"const": "rain-1/-odd-zeta-values-moremath"},
+      "source_commit": {"const": "790685b7ee4f642a8a88a1bd120636d1b8b39ea8"},
+      "source_tree": {"const": "646ee73dd9066e059b043fad64fb20959f111cbf"},
+      "sharp12_path": {"const": "papers_out/sharp12/sharp12.tex"},
+      "sharp12_blob": {"const": "6a347e2a483ec781afac98016635ce1d73b3c38e"},
+      "later_source_head_audited": {"const": "6cc0bf07137815ceeef0d9f340559f85352391e5"},
+      "later_source_changes_target_locus": {"const": false}
+    }},
+    "target_lock": {"type": "object"},
+    "execution_state": {"const": "CERTIFICATE_SEARCH_CHARACTERIZED"},
+    "terminal_disposition": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"},
+    "proof_effect": {"const": "NONE"},
+    "promotion_effect": {"const": "NONE"},
+    "source_evidence": {"type": "array", "minItems": 7, "items": {"type": "object"}},
+    "certificate_search": {"type": "object", "required": ["preferred_class","result","proof_certificate_present","counterexample_present","deterministic_t1_producer_present","independent_verifier_input_present","finite_evidence_is_proof","t3_is_substitute","later_delta_supplies_certificate","interpretation"]},
+    "missing_objects": {"type": "array", "minItems": 8, "maxItems": 8, "items": {"type": "object", "required": ["id","state","description"]}},
+    "reopening_requirements": {"type": "array", "minItems": 7, "maxItems": 7, "items": {"type": "object", "required": ["id","requirement"], "properties": {"id": {"pattern": "^T1-REOPEN-0[1-7]$"}, "requirement": {"type": "string", "minLength": 20}}}},
+    "admissible_future_outcomes": {"type": "array", "minItems": 3, "uniqueItems": true},
+    "nonclaims": {"type": "object"}
+  }
+}
