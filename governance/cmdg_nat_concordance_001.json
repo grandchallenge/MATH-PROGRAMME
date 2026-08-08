@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0.0",
+  "concordance_id": "CMDG-NAT-CONCORDANCE-001",
+  "operation_id": "CMDG-NAT-CONCORDANCE-001",
+  "protected_baseline": "f518ae19aa46733c77727ee353983721aa8ffa85",
+  "foundational_profile": {
+    "profile_id": "CMDG-NAT-CONCORDANCE-FOUNDATIONS-PROFILE-001",
+    "schema_version": "1.0.0",
+    "protected_merge": "f518ae19aa46733c77727ee353983721aa8ffa85",
+    "artifact_ref": "governance/cmdg_nat_concordance_foundations_profile_001.json"
+  },
+  "proof_environment": {
+    "lean_toolchain": "leanprover/lean4:v4.33.0-rc1",
+    "lean_commit": "62eed1db4d67327ec8120be05f1a1b0847d74561",
+    "mathlib_commit": "79d0395a1825a6264ad5d269e35e60537518955e",
+    "fixture_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+    "toolchain_blob_sha1": "fd85b262bf1c734663aa8292b0101f672168788f",
+    "lake_manifest_blob_sha1": "9e478e09f622406970dc9613f6cf323ade82f787"
+  },
+  "realizations": {
+    "N_DTT": {
+      "identity": "N_DTT",
+      "kind": "DTT_KERNEL_OBJECT",
+      "formal_locator": "Nat",
+      "profile_ref": "CMDG-NAT-CONCORDANCE-FOUNDATIONS-PROFILE-001:dtt_nat_profile",
+      "definitional_identity_to_other_foundations": false
+    },
+    "N_ZFC": {
+      "identity": "N_ZFC",
+      "kind": "FINITE_VON_NEUMANN_ZFSET_IMAGE",
+      "formal_locator": "CMDG.NatConcordance.zNat",
+      "profile_ref": "CMDG-NAT-CONCORDANCE-FOUNDATIONS-PROFILE-001:semantic_set_realization_profile",
+      "definitional_identity_to_other_foundations": false
+    },
+    "N_NNO": {
+      "identity": "N_NNO",
+      "kind": "TYPE_CATEGORY_NNO",
+      "formal_locator": "CMDG.NatConcordance.natTypeNNO",
+      "profile_ref": "CMDG-NAT-CONCORDANCE-FOUNDATIONS-PROFILE-001:categorical_nno_profile",
+      "definitional_identity_to_other_foundations": false
+    }
+  },
+  "transport_maps": [
+    {
+      "map_id": "CMDG:NAT:MAP:DTT_TO_ZFC",
+      "source": "N_DTT",
+      "target": "N_ZFC",
+      "direction": "SOURCE_TO_TARGET",
+      "formal_locator": "CMDG.NatConcordance.zNat",
+      "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"
+    },
+    {
+      "map_id": "CMDG:NAT:MAP:DTT_TO_NNO",
+      "source": "N_DTT",
+      "target": "N_NNO",
+      "direction": "SOURCE_TO_TARGET",
+      "formal_locator": "CMDG.NatConcordance.dttToNNO",
+      "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"
+    },
+    {
+      "map_id": "CMDG:NAT:MAP:NNO_TO_ZFC",
+      "source": "N_NNO",
+      "target": "N_ZFC",
+      "direction": "SOURCE_TO_TARGET",
+      "formal_locator": "CMDG.NatConcordance.nnoToZfc",
+      "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"
+    }
+  ],
+  "operation_matrix": [
+    {"map_id": "CMDG:NAT:MAP:DTT_TO_ZFC", "operation": "ZERO", "theorem": "CMDG.NatConcordance.zNat_zero", "evidence_kind": "CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:DTT_TO_ZFC", "operation": "SUCCESSOR", "theorem": "CMDG.NatConcordance.zNat_succ", "evidence_kind": "CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:DTT_TO_ZFC", "operation": "ADDITION", "theorem": "CMDG.NatConcordance.zAdd_zNat", "evidence_kind": "CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:DTT_TO_ZFC", "operation": "MULTIPLICATION", "theorem": "CMDG.NatConcordance.zMul_zNat", "evidence_kind": "CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:DTT_TO_ZFC", "operation": "ORDER", "theorem": "CMDG.NatConcordance.zLe_zNat", "evidence_kind": "CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:DTT_TO_ZFC", "operation": "DIVISIBILITY", "theorem": "CMDG.NatConcordance.zDvd_zNat", "evidence_kind": "CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+
+    {"map_id": "CMDG:NAT:MAP:DTT_TO_NNO", "operation": "ZERO", "theorem": "CMDG.NatConcordance.dttToNNO_zero", "evidence_kind": "DEFINITIONAL_CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:DTT_TO_NNO", "operation": "SUCCESSOR", "theorem": "CMDG.NatConcordance.dttToNNO_succ", "evidence_kind": "DEFINITIONAL_CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:DTT_TO_NNO", "operation": "ADDITION", "theorem": "CMDG.NatConcordance.dttToNNO_add", "evidence_kind": "DEFINITIONAL_CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:DTT_TO_NNO", "operation": "MULTIPLICATION", "theorem": "CMDG.NatConcordance.dttToNNO_mul", "evidence_kind": "DEFINITIONAL_CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:DTT_TO_NNO", "operation": "ORDER", "theorem": "CMDG.NatConcordance.dttToNNO_le", "evidence_kind": "DEFINITIONAL_CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:DTT_TO_NNO", "operation": "DIVISIBILITY", "theorem": "CMDG.NatConcordance.dttToNNO_dvd", "evidence_kind": "DEFINITIONAL_CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+
+    {"map_id": "CMDG:NAT:MAP:NNO_TO_ZFC", "operation": "ZERO", "theorem": "CMDG.NatConcordance.nnoToZfc_zero", "evidence_kind": "CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:NNO_TO_ZFC", "operation": "SUCCESSOR", "theorem": "CMDG.NatConcordance.nnoToZfc_succ", "evidence_kind": "CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:NNO_TO_ZFC", "operation": "ADDITION", "theorem": "CMDG.NatConcordance.nnoToZfc_add", "evidence_kind": "CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:NNO_TO_ZFC", "operation": "MULTIPLICATION", "theorem": "CMDG.NatConcordance.nnoToZfc_mul", "evidence_kind": "CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:NNO_TO_ZFC", "operation": "ORDER", "theorem": "CMDG.NatConcordance.nnoToZfc_le", "evidence_kind": "CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"},
+    {"map_id": "CMDG:NAT:MAP:NNO_TO_ZFC", "operation": "DIVISIBILITY", "theorem": "CMDG.NatConcordance.nnoToZfc_dvd", "evidence_kind": "CHECKED_THEOREM", "status": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"}
+  ],
+  "formal_evidence": {
+    "module": "CMDGNatConcordance",
+    "root_theorem": "CMDG.NatConcordance.bounded_concordance",
+    "lean_source": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGNatConcordance.lean",
+    "extractor_config": "fixtures/cmdg/extractor_001/nat_concordance.json",
+    "expected_axioms": ["Classical.choice", "Quot.sound", "propext"]
+  },
+  "graph_authority": {
+    "node_records": "fixtures/cmdg/nat_concordance_001/nodes.json",
+    "edge_records": "fixtures/cmdg/nat_concordance_001/edges.json",
+    "edge_authority_state": "PROPOSED",
+    "direct_semantic_authority_conferred": false,
+    "realizes_as_conferred_by_artifact_alone": false
+  },
+  "claim_boundary": {
+    "bounded_foundational_concordance_candidate": true,
+    "conferred_by_artifact_alone": false,
+    "independent_review_required": true,
+    "protected_admission_required": true,
+    "foundational_equivalence_conferred": false,
+    "consistency_claim": false,
+    "standard_model_claim": false,
+    "graph_certified_conferred": false,
+    "global_dependency_completeness_claim": false,
+    "c04_c05_c06_unchanged": true
+  }
+}
