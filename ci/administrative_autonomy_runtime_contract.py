@@ -115,7 +115,9 @@ def record_path_for(runtime: dict[str, Any], manifest: dict[str, Any], existing_
         layout = runtime["record_layout"][manifest["procedure_id"]]
         date = parse_datetime(manifest["scheduled_due_at"]).strftime("%Y-%m-%d")
         prefix = layout["id_prefix"]
-        pattern = re.compile(rf"^{re.escape(prefix)}-[0-9]{{4}}-[0-9]{{2}}-[0-9]{{2}}-([0-9]{{3}})\\.json$")
+        pattern = re.compile(
+            rf"^{re.escape(prefix)}-{re.escape(date)}-([0-9]{{3}})[.]json$"
+        )
         sequence = 1
         for name in existing_names:
             match = pattern.fullmatch(name)
