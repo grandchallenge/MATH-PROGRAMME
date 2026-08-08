@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0.0",
+  "volume_id": "euclid_book_vii_micro",
+  "campaign_id": "EUCLID-ELEMENTS-BOOK-VII-MICRO-001",
+  "title": "Measure, Common Measure, and the Road to gcd",
+  "subtitle": "A source-locked Book VII micro-edition",
+  "status": "Source-locked historical documentary; no new theorem claim",
+  "documentary_tier": "micro",
+  "claim_boundary": "This edition presents exactly eight admitted Book VII loci and a bounded historical-to-modern concordance. It does not establish historical-modern equivalence, attribute the modern remainder algorithm, extended Euclid, Bezout identity, or linear Diophantine solvability verbatim to Euclid, add another historical locus, create MATHSOLVE or MATHCERT authority, or claim novelty, priority, or first formalization.",
+  "source_reference": "sources/euclid_book_vii_micro.source.json",
+  "web_page": "euclid_book_vii_micro.md",
+  "schema": "euclid_book_vii_micro.edition.schema.json",
+  "asset_base": "docs_root",
+  "palette": {
+    "navy": "#071A36",
+    "parchment": "#FAF5E8",
+    "gold": "#B78935",
+    "ink": "#1D2940"
+  },
+  "admitted_loci": [
+    "VII.def.1",
+    "VII.def.2",
+    "VII.def.3",
+    "VII.def.5",
+    "VII.def.12",
+    "VII.def.14",
+    "VII.1",
+    "VII.2"
+  ],
+  "attached_material": {"VII.2": ["VII.2.porism"]},
+  "plates": [
+    {
+      "id": "anthyphairesis",
+      "label": "Plate I",
+      "title": "252 and 105 by Repeated Subtraction",
+      "asset": "assets/documentaries/euclid_book_vii/plate_anthyphairesis.svg",
+      "alt": "A vertical repeated-subtraction trace for 252 and 105 ending at common measure 21, explicitly distinguished from modern quotient-remainder notation.",
+      "authority": "pedagogical_orientation_only"
+    },
+    {
+      "id": "concordance",
+      "label": "Plate II",
+      "title": "From Measuring to Modern gcd",
+      "asset": "assets/documentaries/euclid_book_vii/plate_concordance.svg",
+      "alt": "A three-column concordance linking Euclidean measuring and common-measure language to bounded modern gcd interpretation while separating later extended Euclid, Bezout, and Diophantine results.",
+      "authority": "pedagogical_orientation_only"
+    }
+  ],
+  "sections": [
+    "begin-with-252-and-105",
+    "the-historical-objects",
+    "the-construction",
+    "modern-remainder-normalization-explicitly-later",
+    "object-construction-witness-certificate",
+    "historical-to-modern-concordance",
+    "claim-labels",
+    "technical-appendix"
+  ],
+  "protected_authority": {
+    "forge_source_lock_merge": "49071febcacd9c84fe4ff268d4e11d7e0c4ff0e5",
+    "source_transcription_blob": "778718006a60e780ad996e72189bc413c92dc48c",
+    "source_transcription_sha256": "66d3d62cb75cccc0d705fa06c8845f3d9c2c61952f9994862d54c7679517e6d0",
+    "source_concordance_blob": "287126ea40b30cdbb66bd2e489bde6076a51bcf7",
+    "provider_manifest_blob": "d3f3a36177cef3962fc8b320302e8cea6bb5bd86",
+    "stage1_programme_closeout": "183ff2a0adfbe5bd0ffd5f2e638089b94b868c54",
+    "stage2_programme_closeout": "6dd51c29b8bcbac812bcf7a4e803b693ac8be69c",
+    "stage1_cert_merge": "78b69e6a3461a83f4893d61c421b1570c08a9ba6",
+    "stage2_cert_merge": "cd69013cf55d4ee96539d28ee27eadef64cca06f"
+  },
+  "authority_flags": {
+    "historical_modern_equivalence": false,
+    "plates_have_source_authority": false,
+    "plates_have_proof_authority": false,
+    "plates_have_certification_authority": false,
+    "remainder_algorithm_verbatim_euclid": false,
+    "extended_euclid_verbatim_euclid": false,
+    "bezout_verbatim_euclid": false,
+    "linear_diophantine_verbatim_euclid": false,
+    "novelty_claim": false,
+    "priority_claim": false,
+    "first_formalization_claim": false
+  },
+  "target_disposition": "EUCLID_BOOK_VII_MICRO_EDITION_SOURCE_LOCKED_AND_ATOMICALLY_ADMITTED"
+}

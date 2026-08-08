@@ -3,6 +3,7 @@
 | Artifact ID | Type | Pillar | Authoritative integrated artifact | Status / disposition | Decision records | Terminology registry | Review record | Last integrated | Amanuensis state |
 |---|---|---|---|---|---|---|---|---|---|
 | GOV-AGENT-COUNCIL-001 | governance bundle | MATH-PROGRAMME | `docs/MATH_PROGRAMME_AGENT_COUNCIL.md` | active | `ADR-0001`; `ADR-0007`; `ADR-0008`; `ADR-0009`; `ADR-0010`; `ADR-0011`; `ADR-0012`; `ADR-0013`; `ADR-0014`; `ADR-0015` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `templates/agent_review.yaml` | 2026-07-27 | reviewed |
+| CMDG-COUNCIL-AUTHORITY-001 | programme authority bundle | MATH-PROGRAMME | `governance/cmdg_council_authority_closure_001.json` | Human Steward ratified with Council corrections; protected authority active; C01-C08 remain stage-bounded | `ADR-0017` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `docs/CMDG_COUNCIL_DELIBERATION_001.md`; PR #289 comment `5225270603`; issue #290 | 2026-08-08 | reviewed |
 | DOCS-PUBLIC-001 | documentation bundle | MATH-PROGRAMME | `docs/domains/index.md` | completed; eight-domain public coverage | `ADR-0008`; `ADR-0009`; `ADR-0014` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml` | 2026-07-26 | reviewed |
 | PROMOTION-REGISTER-001 | documentary promotion register | MATH-PROGRAMME | `docs/CAMPAIGN_PROMOTION_REGISTER.md` | active; records promoted WP00 entries and retained blockers | `ADR-0009`; `ADR-0010`; `ADR-0011` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml` | 2026-07-26 | reviewed |
 | DOCS-DOCUMENTARY-001 | documentary library | MATH-PROGRAMME | `docs/documentaries/ARTIFACT_MANIFEST.json` | eight manifest-discovered browser-native editions; one reference, two full, five orientation; release-class artifacts remain `metadata_only` | `ADR-0010`; `ADR-0015` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml`; `reviews/union_closed/UC-DOC-WP01.agent_review.yaml` | 2026-07-27 | reviewed |
@@ -55,7 +56,7 @@
 6. Mathematical promotion is never inferred from ledger status alone.
 7. Publication status changes visibility and editorial readiness; it does not change claim status.
 8. Schema-bound lifecycle tokens and campaign-specific dispositions remain distinct.
-9. Public documentation, workflow, and campaign authority follow ADR-0008 through ADR-0015 and their explicit records.
+9. Public documentation, workflow, and campaign authority follow ADR-0008 through ADR-0017 and their explicit records.
 10. Repository merge, tests, and CI success do not override an explicit blocking review.
 11. Campaign, CI, test, and experiment Python surfaces require governed discovery and execution routes.
 12. Pages may deploy only the exact policy-produced site artifact for a validated commit that remains current `main`.

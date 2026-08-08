@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import copy
+from pathlib import Path
 
 from validate_documentaries import (
     ROOT,
@@ -17,12 +18,12 @@ from validate_documentaries import (
     discovered_edition_records,
     discovered_source_records,
     discovered_web_pages,
-    documentary_contract_errors,
     load_json,
     manifest_semantic_errors,
     schema_errors,
     web_edition_errors,
 )
+from validate_documentary_library import documentary_contract_errors
 
 
 def volume_by_slug(manifest: dict, slug: str) -> dict:
@@ -68,25 +69,58 @@ def run_rejection_tests() -> None:
     candidate_schema = load_json(
         ROOT / "schemas/documentary_candidate_registry.schema.json"
     )
-    discovered_editions = discovered_edition_records()
-    discovered_pages = discovered_web_pages()
+
+    # The legacy rejection suite protects the original reference/full/orientation
+    # contract. Historical micro-editions are validated by the class adapter and
+    # their dedicated fail-closed suite, so catalogue growth must not invalidate
+    # these legacy fixtures.
+    legacy_manifest = copy.deepcopy(manifest)
+    legacy_manifest["volumes"] = [
+        volume
+        for volume in manifest["volumes"]
+        if volume.get("documentary_tier") != "micro"
+    ]
+    micro_volumes = [
+        volume
+        for volume in manifest["volumes"]
+        if volume.get("documentary_tier") == "micro"
+    ]
+
+    micro_editions = {volume["edition_record"] for volume in micro_volumes}
+    micro_pages = {volume["web_page"] for volume in micro_volumes}
+    micro_assets: set[str] = set()
+    micro_dirs: set[str] = set()
+    for volume in micro_volumes:
+        edition = load_json(ROOT / "docs/documentaries" / volume["edition_record"])
+        for plate in edition.get("plates", []):
+            asset = str(plate.get("asset", ""))
+            if not asset:
+                continue
+            micro_assets.add(asset)
+            parts = Path(asset).parts
+            if len(parts) >= 3 and parts[0] == "assets" and parts[1] == "documentaries":
+                micro_dirs.add(parts[2])
+
+    discovered_editions = discovered_edition_records() - micro_editions
+    discovered_pages = discovered_web_pages() - micro_pages
     discovered_sources = discovered_source_records()
-    discovered_assets = discovered_documentary_assets()
-    discovered_dirs = discovered_asset_directories()
+    discovered_assets = discovered_documentary_assets() - micro_assets
+    discovered_dirs = discovered_asset_directories() - micro_dirs
     discovered_locks = discovered_candidate_locks()
 
-    assert len(manifest["volumes"]) == 8
+    assert len(legacy_manifest["volumes"]) == 8
+    assert any(volume["slug"] == "euclid_book_vii_micro" for volume in micro_volumes)
     assert candidates["candidates"] == []
     assert not schema_errors(candidates, candidate_schema, "candidates")
     assert not documentary_contract_errors()
 
-    duplicate_slug = copy.deepcopy(manifest)
+    duplicate_slug = copy.deepcopy(legacy_manifest)
     duplicate_slug["volumes"][1]["slug"] = duplicate_slug["volumes"][0]["slug"]
     assert any(
         "duplicate slug" in error for error in manifest_semantic_errors(duplicate_slug)
     )
 
-    omitted_volume = copy.deepcopy(manifest)
+    omitted_volume = copy.deepcopy(legacy_manifest)
     omitted_volume["volumes"] = [
         volume for volume in omitted_volume["volumes"] if volume["slug"] != "riemann"
     ]
@@ -109,7 +143,7 @@ def run_rejection_tests() -> None:
     assert any(
         "orphaned edition record" in error
         for error in collection_discovery_errors(
-            manifest, candidates=candidates, discovered_records=orphaned_record
+            legacy_manifest, candidates=candidates, discovered_records=orphaned_record
         )
     )
 
@@ -118,7 +152,9 @@ def run_rejection_tests() -> None:
     assert any(
         "manifest edition record is missing" in error
         for error in collection_discovery_errors(
-            manifest, candidates=candidates, discovered_records=incomplete_discovery
+            legacy_manifest,
+            candidates=candidates,
+            discovered_records=incomplete_discovery,
         )
     )
 
@@ -127,7 +163,7 @@ def run_rejection_tests() -> None:
     assert any(
         "orphaned web page" in error
         for error in collection_discovery_errors(
-            manifest, candidates=candidates, discovered_pages=orphaned_page
+            legacy_manifest, candidates=candidates, discovered_pages=orphaned_page
         )
     )
 
@@ -136,7 +172,7 @@ def run_rejection_tests() -> None:
     assert any(
         "admitted source record is missing" in error
         for error in collection_discovery_errors(
-            manifest, candidates=candidates, discovered_sources=missing_source
+            legacy_manifest, candidates=candidates, discovered_sources=missing_source
         )
     )
 
@@ -145,7 +181,7 @@ def run_rejection_tests() -> None:
     assert any(
         "orphaned admitted source record" in error
         for error in collection_discovery_errors(
-            manifest, candidates=candidates, discovered_sources=orphaned_source
+            legacy_manifest, candidates=candidates, discovered_sources=orphaned_source
         )
     )
 
@@ -154,7 +190,7 @@ def run_rejection_tests() -> None:
     assert any(
         "orphaned documentary asset" in error
         for error in collection_discovery_errors(
-            manifest, candidates=candidates, discovered_assets=orphaned_asset
+            legacy_manifest, candidates=candidates, discovered_assets=orphaned_asset
         )
     )
 
@@ -163,7 +199,7 @@ def run_rejection_tests() -> None:
     assert any(
         "asset directory is missing" in error
         for error in collection_discovery_errors(
-            manifest, candidates=candidates, discovered_asset_dirs=missing_dir
+            legacy_manifest, candidates=candidates, discovered_asset_dirs=missing_dir
         )
     )
 
@@ -172,7 +208,7 @@ def run_rejection_tests() -> None:
     assert any(
         "orphaned asset directory" in error
         for error in collection_discovery_errors(
-            manifest, candidates=candidates, discovered_asset_dirs=orphaned_dir
+            legacy_manifest, candidates=candidates, discovered_asset_dirs=orphaned_dir
         )
     )
 
@@ -181,24 +217,24 @@ def run_rejection_tests() -> None:
     assert any(
         "orphaned source lock" in error
         for error in collection_discovery_errors(
-            manifest,
+            legacy_manifest,
             candidates=candidates,
             discovered_candidate_records=orphaned_lock,
         )
     )
 
     missing_lock = set(discovered_locks)
-    missing_lock.remove(volume_by_slug(manifest, "union_closed")["source_lock"])
+    missing_lock.remove(volume_by_slug(legacy_manifest, "union_closed")["source_lock"])
     assert any(
         "registered source lock is missing" in error
         for error in collection_discovery_errors(
-            manifest,
+            legacy_manifest,
             candidates=candidates,
             discovered_candidate_records=missing_lock,
         )
     )
 
-    missing_provenance = copy.deepcopy(manifest)
+    missing_provenance = copy.deepcopy(legacy_manifest)
     volume_by_slug(missing_provenance, "union_closed").pop("source_lock")
     assert any(
         "orphaned source lock" in error
@@ -209,7 +245,7 @@ def run_rejection_tests() -> None:
         )
     )
 
-    drifted_provenance = copy.deepcopy(manifest)
+    drifted_provenance = copy.deepcopy(legacy_manifest)
     volume_by_slug(drifted_provenance, "union_closed")["display_status"] = (
         "Different open label"
     )
@@ -221,7 +257,7 @@ def run_rejection_tests() -> None:
     assert any(
         "forbidden root static file POINCARE_WEB_EDITION_README.txt" in error
         for error in collection_discovery_errors(
-            manifest,
+            legacy_manifest,
             candidates=candidates,
             root_files={
                 "ARTIFACT_MANIFEST.json",
@@ -229,8 +265,8 @@ def run_rejection_tests() -> None:
                 "documentary_web.schema.json",
                 "index.md",
                 "POINCARE_WEB_EDITION_README.txt",
-                *(volume["edition_record"] for volume in manifest["volumes"]),
-                *(volume["web_page"] for volume in manifest["volumes"]),
+                *(volume["edition_record"] for volume in legacy_manifest["volumes"]),
+                *(volume["web_page"] for volume in legacy_manifest["volumes"]),
             },
         )
     )
@@ -240,7 +276,7 @@ def run_rejection_tests() -> None:
     assert any(
         "orphaned shared CSS" in error
         for error in collection_discovery_errors(
-            manifest,
+            legacy_manifest,
             candidates=candidates,
             discovered_css=extra_css,
             discovered_js=set(SHARED_JS),
@@ -252,21 +288,21 @@ def run_rejection_tests() -> None:
     assert any(
         "orphaned shared JavaScript" in error
         for error in collection_discovery_errors(
-            manifest,
+            legacy_manifest,
             candidates=candidates,
             discovered_css=set(SHARED_CSS),
             discovered_js=extra_js,
         )
     )
 
-    topic_drift = copy.deepcopy(manifest)
+    topic_drift = copy.deepcopy(legacy_manifest)
     volume_by_slug(topic_drift, "hodge")["topic"] = "Integral Hodge Conjecture"
     assert any(
         "source record subject" in error and "does not match manifest" in error
         for error in manifest_semantic_errors(topic_drift)
     )
 
-    invalid_scope = copy.deepcopy(manifest)
+    invalid_scope = copy.deepcopy(legacy_manifest)
     volume_by_slug(invalid_scope, "poincare")["scope_relation"] = (
         "campaign_documentary"
     )
@@ -275,7 +311,7 @@ def run_rejection_tests() -> None:
         for error in manifest_semantic_errors(invalid_scope)
     )
 
-    authority_mismatch = copy.deepcopy(manifest)
+    authority_mismatch = copy.deepcopy(legacy_manifest)
     volume_by_slug(authority_mismatch, "hodge")["claim_authority"] = (
         "RH-WP00-source-normalization-equivalence-audit.md"
     )
@@ -284,7 +320,7 @@ def run_rejection_tests() -> None:
         for error in manifest_semantic_errors(authority_mismatch)
     )
 
-    false_publication = copy.deepcopy(manifest)
+    false_publication = copy.deepcopy(legacy_manifest)
     volume_by_slug(false_publication, "poincare")["rendered_pdf"]["availability"] = (
         "published_release"
     )
@@ -293,7 +329,7 @@ def run_rejection_tests() -> None:
         for error in schema_errors(false_publication, manifest_schema, "manifest")
     )
 
-    invalid_status_pair = copy.deepcopy(manifest)
+    invalid_status_pair = copy.deepcopy(legacy_manifest)
     volume_by_slug(invalid_status_pair, "bsd")["problem_class"] = (
         "solved_classical_theorem"
     )
@@ -302,7 +338,7 @@ def run_rejection_tests() -> None:
         for error in schema_errors(invalid_status_pair, manifest_schema, "manifest")
     )
 
-    union_volume = volume_by_slug(manifest, "union_closed")
+    union_volume = volume_by_slug(legacy_manifest, "union_closed")
     candidate_overlap = copy.deepcopy(candidates)
     candidate_overlap["candidates"] = [synthetic_candidate_from_admitted(union_volume)]
     assert not schema_errors(candidate_overlap, candidate_schema, "candidates")
@@ -329,7 +365,7 @@ def run_rejection_tests() -> None:
         for error in schema_errors(candidate_wrong_status, candidate_schema, "candidates")
     )
 
-    bsd_volume = volume_by_slug(manifest, "bsd")
+    bsd_volume = volume_by_slug(legacy_manifest, "bsd")
     bsd_edition = load_json(ROOT / "docs/documentaries" / bsd_volume["edition_record"])
     bsd_page = (ROOT / "docs/documentaries" / bsd_volume["web_page"]).read_text(
         encoding="utf-8"
