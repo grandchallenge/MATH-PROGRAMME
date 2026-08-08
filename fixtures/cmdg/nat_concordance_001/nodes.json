@@ -1,0 +1,42 @@
+[
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:NAT:N_DTT",
+    "node_type": "Structure",
+    "engagement_mode": "REUSED",
+    "canonical_label": "N_DTT — Lean natural numbers",
+    "description": "Lean Nat at the protected proof-environment pin, used as the DTT-side natural-number realization.",
+    "foundational_profile_ref": "CMDG-NAT-CONCORDANCE-FOUNDATIONS-PROFILE-001:dtt_nat_profile",
+    "provenance_refs": [
+      "governance/cmdg_nat_concordance_foundations_profile_001.json",
+      "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGNatConcordance.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:NAT:N_ZFC",
+    "node_type": "Construction",
+    "engagement_mode": "RECONSTRUCTED",
+    "canonical_label": "N_ZFC — finite von Neumann ordinals in ZFSet",
+    "description": "Finite von Neumann ordinal image n ↦ ((n : Ordinal).toZFSet) inside the retained pinned ZFSet implementation.",
+    "foundational_profile_ref": "CMDG-NAT-CONCORDANCE-FOUNDATIONS-PROFILE-001:semantic_set_realization_profile",
+    "provenance_refs": [
+      "governance/cmdg_nat_concordance_foundations_profile_001.json",
+      "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGNatConcordance.lean",
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/SetTheory/ZFC/Ordinal.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:NAT:N_NNO",
+    "node_type": "Structure",
+    "engagement_mode": "RECONSTRUCTED",
+    "canonical_label": "N_NNO — Nat as a natural-numbers object in Type",
+    "description": "Nat equipped with zero and successor and a directly checked recursor universal property in the category of types and functions, with Unit as terminal object.",
+    "foundational_profile_ref": "CMDG-NAT-CONCORDANCE-FOUNDATIONS-PROFILE-001:categorical_nno_profile",
+    "provenance_refs": [
+      "governance/cmdg_nat_concordance_foundations_profile_001.json",
+      "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGNatConcordance.lean"
+    ]
+  }
+]
