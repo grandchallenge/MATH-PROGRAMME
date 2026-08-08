@@ -1,0 +1,115 @@
+{
+  "package_schema_version": "1.0.0",
+  "package_id": "CMDG-PACKAGE-VALIDATOR-001-FIXTURE",
+  "manifest_path": "fixtures/cmdg/schema_001/valid_manifest.json",
+  "manifest_git_blob_sha1": "8738caab8403b5cbaaad92db5fd9805e1d494b5c",
+  "required_schema_versions": {
+    "node": "1.0.0",
+    "edge": "1.0.0",
+    "manifest": "1.0.0",
+    "package": "1.0.0",
+    "report": "1.0.0"
+  },
+  "nodes": [
+    {
+      "schema_version": "1.0.0",
+      "node_id": "CMDG:ARITH.GCD",
+      "node_type": "Theorem",
+      "engagement_mode": "RECONSTRUCTED",
+      "canonical_label": "Euclidean GCD exemplar",
+      "provenance_refs": ["EUCLID-GCD-E2E-001", "CMDG-SCHEMA-001"]
+    },
+    {
+      "schema_version": "1.0.0",
+      "node_id": "CMDG:ARITH.NAT_DIVISIBILITY",
+      "node_type": "Definition",
+      "engagement_mode": "REUSED",
+      "canonical_label": "Natural-number divisibility",
+      "provenance_refs": ["CMDG-SCHEMA-001:fixture-boundary-review"]
+    },
+    {
+      "schema_version": "1.0.0",
+      "node_id": "CMDG:NAT.DTT",
+      "node_type": "Structure",
+      "engagement_mode": "CONCORDANT",
+      "canonical_label": "Natural numbers in the DTT realization lane",
+      "provenance_refs": ["CMDG-SCHEMA-001:fixture-equivalence"]
+    },
+    {
+      "schema_version": "1.0.0",
+      "node_id": "CMDG:NAT.NNO",
+      "node_type": "Structure",
+      "engagement_mode": "CONCORDANT",
+      "canonical_label": "Natural-number object exemplar",
+      "provenance_refs": ["CMDG-SCHEMA-001:fixture-equivalence"]
+    }
+  ],
+  "additional_edges": [
+    {
+      "schema_version": "1.0.0",
+      "edge_id": "CMDG:E:GCD-PROOF-USES-NATGCD",
+      "layer": "G_proof",
+      "relation": "PROOF_USES_DECLARATION",
+      "source": {
+        "identity": "GrandChallenge.Euclid.gcd_exists",
+        "kind": "FORMAL_DECLARATION",
+        "locator": "fixtures/formal/LOG-GCD-001"
+      },
+      "target": {
+        "identity": "Mathlib.Nat.gcd",
+        "kind": "FORMAL_DECLARATION",
+        "locator": "mathlib"
+      },
+      "authority_state": "OBSERVED"
+    },
+    {
+      "schema_version": "1.0.0",
+      "edge_id": "CMDG:E:GCD-IMPL-MATHLIB",
+      "layer": "G_implementation",
+      "relation": "IMPLEMENTATION_IMPORT",
+      "source": {
+        "identity": "fixtures/formal/LOG-GCD-001",
+        "kind": "IMPLEMENTATION_ARTIFACT",
+        "locator": "fixtures/formal/LOG-GCD-001"
+      },
+      "target": {
+        "identity": "mathlib",
+        "kind": "IMPLEMENTATION_ARTIFACT",
+        "locator": "https://github.com/leanprover-community/mathlib4"
+      },
+      "authority_state": "OBSERVED"
+    },
+    {
+      "schema_version": "1.0.0",
+      "edge_id": "CMDG:E:GCD-PROV-CHARTER",
+      "layer": "G_provenance",
+      "relation": "CITES_SOURCE",
+      "source": {"identity": "CMDG:ARITH.GCD", "kind": "SEMANTIC_NODE"},
+      "target": {"identity": "CMDG_CHARTER.md", "kind": "SOURCE", "locator": "CMDG_CHARTER.md"},
+      "authority_state": "OBSERVED"
+    }
+  ],
+  "retained_evidence": {
+    "proof_environment": {
+      "environment_id": "lean-fixture-env",
+      "prover": "Lean 4",
+      "toolchain": "pinned-by-fixture",
+      "pins": ["lean-toolchain:fixture-pin", "mathlib:fixture-pin"],
+      "clean_replay_command": "lake build GrandChallenge.Euclid"
+    },
+    "replay": {
+      "route_id": "CMDG-SCHEMA-001-FIXTURE-REPLAY",
+      "exact_environment_ref": "lean-fixture-env",
+      "command": "lake build GrandChallenge.Euclid",
+      "artifact_refs": ["fixtures/formal/LOG-GCD-001"]
+    },
+    "implementation_pins": {
+      "mathlib": "fixture-pin"
+    }
+  },
+  "requested_terminal_state": "VALIDATOR_ACCEPTED_PRECONDITIONS",
+  "claim_boundary": {
+    "graph_certified_conferred": false,
+    "global_completeness_claim": false
+  }
+}
