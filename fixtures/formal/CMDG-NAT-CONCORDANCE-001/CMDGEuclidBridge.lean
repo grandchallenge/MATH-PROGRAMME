@@ -43,7 +43,8 @@ theorem dtt_to_nno_gcd {a b d : Nat} :
         (by simpa [dttToNNO, nnoDvd] using hkb)
   · rintro ⟨hp, ha, hb, hg⟩
     refine ⟨?_, ?_, ?_, ?_⟩
-    · change 0 < d
+    · have hp' : 1 ≤ d := by
+        simpa [dttToNNO, nnoLe, nnoSucc, nnoZero] using hp
       omega
     · simpa [dttToNNO, nnoDvd] using ha
     · simpa [dttToNNO, nnoDvd] using hb
