@@ -12,7 +12,7 @@ from typing import Any, Iterable
 import yaml
 from jsonschema import Draft202012Validator, FormatChecker
 
-from validate_documentaries import documentary_contract_errors
+from validate_documentary_library import documentary_contract_errors
 from openai_ten_proofs_intake_control import validation_errors as openai_ten_proofs_intake_errors
 
 ROOT = Path(__file__).resolve().parents[1]
