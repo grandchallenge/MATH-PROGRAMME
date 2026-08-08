@@ -27,6 +27,8 @@ jobs:
           python-version: "3.12"
       - name: Install policy dependencies
         run: python -m pip install --requirement requirements/policy.txt
+      - name: Compile V0 validator
+        run: python -m py_compile ci/validate_cmdg_vertical_spine_v0.py
       - name: Validate V0 manifest and graph contracts
         run: python3 ci/validate_cmdg_vertical_spine_v0.py
       - name: Run V0 adversarial mutations
@@ -45,9 +47,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Reject V0 placeholders and local axioms
-        shell: bash
         run: |
-          set -euo pipefail
           if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGVerticalSpineV0.lean; then
             echo "CMDG-VERTICAL-SPINE-V0-001 interface probe must contain neither sorry nor local axioms."
             exit 1
@@ -65,7 +65,6 @@ jobs:
           use-mathlib-cache: true
       - name: Check V0 interface declarations
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
-        shell: bash
         env:
           LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}
         run: |
