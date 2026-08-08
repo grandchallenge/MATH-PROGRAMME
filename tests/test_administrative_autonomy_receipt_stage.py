@@ -29,19 +29,40 @@ class PullHeadClient:
 
 class ReceiptStageTests(unittest.TestCase):
     def setUp(self) -> None:
-        self.current = json.loads(
-            (
-                ROOT
-                / "governance"
-                / "administrative_maintenance_completion_state.json"
-            ).read_text(encoding="utf-8")
-        )
-        self.current = copy.deepcopy(self.current)
-        structural = self.current["procedures"]["structural_sweep"]
-        structural["receipts"] = structural["receipts"][:-1]
-        structural["receipt_count"] = len(structural["receipts"])
-        structural["completed_through_utc"] = "2026-08-05T22:57:00Z"
-        self.current["derived_from_protected_head"] = "a" * 40
+        baseline_receipt = {
+            "procedure_id": "structural_sweep",
+            "scheduled_due_at": "2026-08-05T22:57:00Z",
+            "record_path": (
+                "governance/administrative_structural_sweeps/"
+                "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-05-007.json"
+            ),
+            "record_sha256": "1" * 64,
+            "merge_commit": "2" * 40,
+            "reviewed_head": "3" * 40,
+            "pull_request": 250,
+            "disposition": module.DISPOSITION,
+            "receipt_state": "PROTECTED_COMPLETE",
+        }
+        self.current = {
+            "schema_version": "1.0.0",
+            "control_id": "MP-ADMIN-MAINT-001",
+            "derived_from_protected_head": "a" * 40,
+            "state": "PROTECTED_RECEIPT_DERIVED",
+            "procedures": {
+                "structural_sweep": {
+                    "completed_through_utc": baseline_receipt["scheduled_due_at"],
+                    "receipt_count": 1,
+                    "receipts": [baseline_receipt],
+                }
+            },
+            "authority_boundary": {
+                "issues_are_authority": False,
+                "workflow_artifacts_are_authority": False,
+                "draft_pull_requests_are_authority": False,
+                "unmerged_branches_are_authority": False,
+                "protected_merge_receipts_required": True,
+            },
+        }
         self.receipt = {
             "procedure_id": "structural_sweep",
             "scheduled_due_at": "2026-08-06T15:45:00Z",
@@ -63,7 +84,7 @@ class ReceiptStageTests(unittest.TestCase):
         )
         structural = value["procedures"]["structural_sweep"]
         self.assertEqual("2026-08-06T15:45:00Z", structural["completed_through_utc"])
-        self.assertEqual(3, structural["receipt_count"])
+        self.assertEqual(2, structural["receipt_count"])
         self.assertTrue(module.completion_has_receipt(value, self.receipt))
         self.assertEqual("c" * 40, value["derived_from_protected_head"])
 
