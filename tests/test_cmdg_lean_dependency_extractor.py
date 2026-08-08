@@ -8,14 +8,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 MODULE_PATH = ROOT / "ci" / "extract_cmdg_lean_dependencies.py"
 spec = importlib.util.spec_from_file_location("cmdg_lean_extractor", MODULE_PATH)
 assert spec is not None and spec.loader is not None
 extractor = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(extractor)
-
 
 BASE_CONFIG = {
     "schema_version": "1.0.0",
@@ -74,17 +72,33 @@ class CMDGLeanDependencyExtractorTests(unittest.TestCase):
             config["expected_lake_manifest_git_blob_sha1"] = extractor.git_blob_sha1(project / "lake-manifest.json")
             self.assert_code("STALE_TOOLCHAIN_PIN", extractor.validate_pins, config, project)
 
-    def test_probe_ordering_is_fail_closed(self):
+    def test_probe_order_is_canonicalized(self):
         stdout = "\n".join([
             "CMDG|ROOT|T.r",
             "CMDG|KIND|theorem",
             "CMDG|MODULE|T",
             "CMDG|DIRECT|z",
             "CMDG|DIRECT|a",
+            "CMDG|AXIOM|propext",
+            "CMDG|IMPORT|T.Base",
             "CMDG|SEMANTIC_AUTHORITY|false",
             "CMDG|GRAPH_CERTIFIED|false",
         ])
-        self.assert_code("NONDETERMINISTIC_ORDERING", extractor.parse_probe, stdout, "")
+        parsed = extractor.parse_probe(stdout, "")
+        self.assertEqual(["a", "z"], parsed["direct"])
+        self.assertEqual(["propext"], parsed["axioms"])
+        self.assertEqual(["T.Base"], parsed["imports"])
+
+    def test_duplicate_scalar_rejected(self):
+        stdout = "\n".join([
+            "CMDG|ROOT|T.r",
+            "CMDG|ROOT|T.s",
+            "CMDG|KIND|theorem",
+            "CMDG|MODULE|T",
+            "CMDG|SEMANTIC_AUTHORITY|false",
+            "CMDG|GRAPH_CERTIFIED|false",
+        ])
+        self.assert_code("PROBE_OUTPUT_DUPLICATE_SCALAR", extractor.parse_probe, stdout, "")
 
     def test_probe_authority_promotion_rejected(self):
         stdout = "\n".join([
