@@ -32,12 +32,14 @@ def errors(record=None, result=None):
     if search.get('strongest_frontier')!={'degree':9,'n_max':15,'equations':135,'unknowns':110,'rank':110,'nullity':0}: out.append('strongest frontier drift')
     if search.get('degree_ladder')!=list(range(10)): out.append('degree ladder drift')
     if result.get('terminal')!='NO_CERTIFICATE_IN_BOUNDED_CLASS' or result.get('proof_effect')!='NONE': out.append('search result inflation')
-    spec=importlib.util.spec_from_file_location('oz_t3_002_verify',HERE/'verify.py'); mod=importlib.util.module_from_spec(spec); assert spec.loader; spec.loader.exec_module(mod)
-    out.extend('independent verifier: '+x for x in mod.verify(result))
     disp=record.get('disposition',{})
     if disp.get('status')!='OPEN_WITH_CHARACTERIZED_BLOCKER' or disp.get('proof_found') or disp.get('counterexample_found'): out.append('disposition inflation')
     if disp.get('characterized_blocker',{}).get('newly_exhausted_class')!='FIRST_ORDER_FIBRE_RATIONAL_Q_TOTAL_DEGREE_LE_9': out.append('exhausted-class drift')
     if any(record.get('nonclaims',{}).values()): out.append('nonclaim promoted')
+    if out:
+        return out
+    spec=importlib.util.spec_from_file_location('oz_t3_002_verify',HERE/'verify.py'); mod=importlib.util.module_from_spec(spec); assert spec.loader; spec.loader.exec_module(mod)
+    out.extend('independent verifier: '+x for x in mod.verify(result))
     return out
 
 def main():
