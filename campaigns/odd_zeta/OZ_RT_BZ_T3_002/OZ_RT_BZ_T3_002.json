@@ -37,14 +37,14 @@
     "route":"TWO_STAGE_FIBRE_FIRST_ORDER_RATIONAL_TELESCOPER",
     "ansatz":"G(n,k)=q(n,k)V(n,k), q=N/D, total-degree(N),total-degree(D)<=d",
     "normalization":"homogeneous D*G-N*V=0; any nonzero polynomial pair (N,D) is admissible",
-    "sample_domain":{"n_min":1,"n_max":10,"equation_count":65},
-    "degree_ladder":[0,1,2,3,4,5,6],
+    "sample_domain":{"n_min":1,"k":"0..n","stage_specific_n_max":{"degree_0_through_6":10,"degree_7":12,"degree_8":14,"degree_9":15}},
+    "degree_ladder":[0,1,2,3,4,5,6,7,8,9],
     "result_file":"SEARCH_RESULT.json",
-    "result_sha256":"f0f343f34d0b1b36fd943783643114df8d7c5713a9cb9bcbb8d5ebec67fe41e1",
+    "result_sha256":"02727c66d9ff0f01ff386bd8f1e467593ff69f7e3738dab222cbd81f7769aece",
     "terminal":"NO_CERTIFICATE_IN_BOUNDED_CLASS",
-    "strongest_frontier":{"degree":6,"equations":65,"unknowns":56,"rank":56,"nullity":0},
+    "strongest_frontier":{"degree":9,"n_max":15,"equations":135,"unknowns":110,"rank":110,"nullity":0},
     "classification":"INCONSISTENT_ANSATZ",
-    "mathematical_scope":"No nonzero N,D of total degree at most 6 satisfy the required first-order fibre quotient relation on the exact sample grid; therefore no uniform certificate in this bounded ansatz class exists."
+    "mathematical_scope":"No nonzero N,D of total degree at most 9 satisfy the required first-order fibre quotient relation: exact full-column-rank subsystems have been exhibited stagewise through degree 9. Therefore no uniform certificate exists in this bounded ansatz class."
   },
   "independent_verification": {
     "producer":"producer.py",
@@ -52,7 +52,7 @@
     "producer_solver_reused_by_verifier":false,
     "shared_component":"target.py contains only the locked exact target evaluator",
     "verification":"PASS",
-    "finite_t3_replay_range":{"n_min":1,"n_max":10},
+    "finite_t3_replay_range":{"n_min":1,"n_max":15},
     "proof_effect":"NONE"
   },
   "disposition": {
@@ -62,7 +62,7 @@
     "proof_effect":"NONE",
     "promotion_effect":"NONE",
     "characterized_blocker": {
-      "newly_exhausted_class":"FIRST_ORDER_FIBRE_RATIONAL_Q_TOTAL_DEGREE_LE_6",
+      "newly_exhausted_class":"FIRST_ORDER_FIBRE_RATIONAL_Q_TOTAL_DEGREE_LE_9",
       "predecessor_exhausted_classes_preserved":true,
       "next_admissible_routes":["DIRECT_2D_DELTA_CERTIFICATE_OVER_Q_N_K_L","FIBRE_TELESCOPER_WITH_SHIFT_MODULE_OR_HARMONIC_BASIS","HIGHER_DEGREE_FIRST_ORDER_FIBRE_RATIONAL_Q_WITH_PREDECLARED_RESOURCE_CEILING"]
     }
