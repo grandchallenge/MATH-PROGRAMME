@@ -40,11 +40,12 @@
     "sample_domain":{"n_min":1,"k":"0..n","stage_specific_n_max":{"degree_0_through_6":10,"degree_7":12,"degree_8":14,"degree_9":15}},
     "degree_ladder":[0,1,2,3,4,5,6,7,8,9],
     "result_file":"SEARCH_RESULT.json",
-    "result_sha256":"02727c66d9ff0f01ff386bd8f1e467593ff69f7e3738dab222cbd81f7769aece",
+    "result_sha256":"692cdf6002f5eee8310a0e1d95b07499d39f49c938e1b863ce600ab84f811af2",
+    "rank_certificate":{"method":"MODULAR_NONZERO_MINOR","prime":1000003,"denominator_condition":"all exact rational entry denominators are coprime to the rank prime","exact_Q_implication":"full column rank modulo p exhibits a nonzero square minor modulo p, hence the corresponding rational minor is nonzero and the matrix has full column rank over Q"},
     "terminal":"NO_CERTIFICATE_IN_BOUNDED_CLASS",
     "strongest_frontier":{"degree":9,"n_max":15,"equations":135,"unknowns":110,"rank":110,"nullity":0},
     "classification":"INCONSISTENT_ANSATZ",
-    "mathematical_scope":"No nonzero N,D of total degree at most 9 satisfy the required first-order fibre quotient relation: exact full-column-rank subsystems have been exhibited stagewise through degree 9. Therefore no uniform certificate exists in this bounded ansatz class."
+    "mathematical_scope":"No nonzero N,D of total degree at most 9 satisfy the required first-order fibre quotient relation. Stagewise full-column-rank certificates modulo p=1000003 prove full column rank over Q through degree 9. Therefore no uniform certificate exists in this bounded ansatz class."
   },
   "independent_verification": {
     "producer":"producer.py",
@@ -52,6 +53,7 @@
     "producer_solver_reused_by_verifier":false,
     "shared_component":"target.py contains only the locked exact target evaluator",
     "verification":"PASS",
+    "verification_method":"INDEPENDENT_MODULAR_NONZERO_MINOR_REPLAY_WITH_EXACT_Q_RANK_IMPLICATION",
     "finite_t3_replay_range":{"n_min":1,"n_max":15},
     "proof_effect":"NONE"
   },
