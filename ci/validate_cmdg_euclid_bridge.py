@@ -13,7 +13,7 @@ NODE_SCHEMA=P("schemas","cmdg_node.schema.json"); EDGE_SCHEMA=P("schemas","cmdg_
 SOURCE=P("fixtures","formal","CMDG-NAT-CONCORDANCE-001","CMDGEuclidBridge.lean"); TOOL=P("fixtures","formal","CMDG-NAT-CONCORDANCE-001","lean-toolchain"); MAN=P("fixtures","formal","CMDG-NAT-CONCORDANCE-001","lake-manifest.json")
 CLOSE=P("governance","euclid_gcd_e2e_001_closeout.json"); OCFG=P("fixtures","cmdg","extractor_001","euclid_gcd_original.json"); BCFG=P("fixtures","cmdg","extractor_001","euclid_bridge.json"); WF=P(".github","workflows","cmdg-euclid-bridge.yml")
 BASE="25f5fef222433f60f28b375d6ea814b844b5b062"; CLOSE_BLOB="a5e390ee01b23862a79d53a7cac1c0d6f0930608"; MC="78b69e6a3461a83f4893d61c421b1570c08a9ba6"; MC_SRC="bf0ab5bac117490299ff5bffb8ca59263ec3f2a3"
-OT="dd1256f68cc62a04c1fb9599a7cd0582f1e6d016"; OM="2abef608042abe9569085042bf3d1ac64ec1c6b7"; BT="fd85b262bf1c734663aa8292b0101f672168788f"; BM="9e478e09f622406970dc9613f6cf323ade82f787"; ML="79d0395a1825a6264ad5d269e35e60537518955e"
+OT="33e0c088939ad08c9f2b1befa3118a423b06ad7d"; OM="4d92c79ff638dceb6c44472e1e96bbac9cebcdfd"; BT="fd85b262bf1c734663aa8292b0101f672168788f"; BM="9e478e09f622406970dc9613f6cf323ade82f787"; ML="79d0395a1825a6264ad5d269e35e60537518955e"
 ROOTS=["MathCert.NumberTheory.acceptedGCDCertificate_sound","MathCert.NumberTheory.euclidTrace252105","MathCert.NumberTheory.bezout252105","MathCert.NumberTheory.gcd252105","MathCert.NumberTheory.accepted252105","MathCert.NumberTheory.accepted252105_sound"]
 BROOT="CMDG.EuclidBridge.euclid_gcd_relational_bridge"; OPS=["ZERO","SUCCESSOR","ADDITION","MULTIPLICATION","ORDER","DIVISIBILITY"]
 

@@ -1,12 +1,12 @@
 import CMDGNatConcordance
+import Mathlib.Tactic
 
 namespace CMDG.EuclidBridge
 
 open CMDG.NatConcordance
 open ZFSet
 
-/-- Relational greatest-common-divisor specification over the Lean/DTT natural numbers.
-This deliberately avoids identifying the `Nat.gcd` function across foundations. -/
+/-- Relational greatest-common-divisor specification over the Lean/DTT natural numbers. -/
 def DTTIsGCD (a b d : Nat) : Prop :=
   0 < d ∧ d ∣ a ∧ d ∣ b ∧ ∀ k : Nat, k ∣ a → k ∣ b → k ∣ d
 
@@ -16,27 +16,61 @@ def NNOIsGCD (a b d : NNOCarrier) : Prop :=
   nnoDvd d a ∧ nnoDvd d b ∧
   ∀ k : NNOCarrier, nnoDvd k a → nnoDvd k b → nnoDvd k d
 
-/-- Greatest-common-divisor specification only on the admitted finite von Neumann image.
-The quantified common divisors are themselves encoded natural numbers; this is not a full
-syntactic-ZFC arithmetic or model-theoretic claim. -/
+/-- Greatest-common-divisor specification on the admitted finite von Neumann image at `ZFSet.{0}`.
+The common divisors quantified here are encoded naturals. This is not a full syntactic-ZFC
+arithmetic or model-theoretic claim. -/
 def ZFCFiniteImageIsGCD (a b d : NNOCarrier) : Prop :=
-  zLe (nnoToZfc (nnoSucc nnoZero)) (nnoToZfc d) ∧
-  zDvd (nnoToZfc d) (nnoToZfc a) ∧
-  zDvd (nnoToZfc d) (nnoToZfc b) ∧
+  zLe (nnoToZfc.{0} (nnoSucc nnoZero)) (nnoToZfc.{0} d) ∧
+  zDvd (nnoToZfc.{0} d) (nnoToZfc.{0} a) ∧
+  zDvd (nnoToZfc.{0} d) (nnoToZfc.{0} b) ∧
   ∀ k : NNOCarrier,
-    zDvd (nnoToZfc k) (nnoToZfc a) →
-    zDvd (nnoToZfc k) (nnoToZfc b) →
-    zDvd (nnoToZfc k) (nnoToZfc d)
+    zDvd (nnoToZfc.{0} k) (nnoToZfc.{0} a) →
+    zDvd (nnoToZfc.{0} k) (nnoToZfc.{0} b) →
+    zDvd (nnoToZfc.{0} k) (nnoToZfc.{0} d)
 
 /-- Operation-level NAT concordance transports the relational gcd specification from DTT to NNO. -/
 theorem dtt_to_nno_gcd {a b d : Nat} :
     DTTIsGCD a b d ↔ NNOIsGCD (dttToNNO a) (dttToNNO b) (dttToNNO d) := by
-  simp [DTTIsGCD, NNOIsGCD, dttToNNO, nnoZero, nnoSucc, nnoLe, nnoDvd]
+  constructor
+  · rintro ⟨hp, ha, hb, hg⟩
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · simpa [dttToNNO, nnoLe, nnoSucc, nnoZero] using hp
+    · simpa [dttToNNO, nnoDvd] using ha
+    · simpa [dttToNNO, nnoDvd] using hb
+    · intro k hka hkb
+      simpa [dttToNNO, nnoDvd] using hg k (by simpa [dttToNNO, nnoDvd] using hka)
+        (by simpa [dttToNNO, nnoDvd] using hkb)
+  · rintro ⟨hp, ha, hb, hg⟩
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · simpa [dttToNNO, nnoLe, nnoSucc, nnoZero] using hp
+    · simpa [dttToNNO, nnoDvd] using ha
+    · simpa [dttToNNO, nnoDvd] using hb
+    · intro k hka hkb
+      simpa [dttToNNO, nnoDvd] using hg k (by simpa [dttToNNO, nnoDvd] using hka)
+        (by simpa [dttToNNO, nnoDvd] using hkb)
 
 /-- The admitted NNO-to-ZFSet operation transports give the finite-image relational gcd spec. -/
 theorem nno_to_zfc_finite_image_gcd {a b d : NNOCarrier} :
     NNOIsGCD a b d ↔ ZFCFiniteImageIsGCD a b d := by
-  simp [NNOIsGCD, ZFCFiniteImageIsGCD]
+  constructor
+  · rintro ⟨hp, ha, hb, hg⟩
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · exact (nnoToZfc_le (m := nnoSucc nnoZero) (n := d)).2 hp
+    · exact (nnoToZfc_dvd (m := d) (n := a)).2 ha
+    · exact (nnoToZfc_dvd (m := d) (n := b)).2 hb
+    · intro k hka hkb
+      exact (nnoToZfc_dvd (m := k) (n := d)).2
+        (hg k ((nnoToZfc_dvd (m := k) (n := a)).1 hka)
+          ((nnoToZfc_dvd (m := k) (n := b)).1 hkb))
+  · rintro ⟨hp, ha, hb, hg⟩
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · exact (nnoToZfc_le (m := nnoSucc nnoZero) (n := d)).1 hp
+    · exact (nnoToZfc_dvd (m := d) (n := a)).1 ha
+    · exact (nnoToZfc_dvd (m := d) (n := b)).1 hb
+    · intro k hka hkb
+      exact (nnoToZfc_dvd (m := k) (n := d)).1
+        (hg k ((nnoToZfc_dvd (m := k) (n := a)).2 hka)
+          ((nnoToZfc_dvd (m := k) (n := b)).2 hkb))
 
 /-- Relational recovery of the protected Euclid fixture at the DTT natural-number locus. -/
 theorem dtt_gcd_252_105_21 : DTTIsGCD 252 105 21 := by
@@ -60,12 +94,13 @@ theorem nno_trace_252_105 :
     dttToNNO 42 = nnoAdd (nnoMul (dttToNNO 2) (dttToNNO 21)) (dttToNNO 0) := by
   norm_num [dttToNNO, nnoAdd, nnoMul]
 
-/-- Trace represented on the admitted finite von Neumann image. -/
+/-- Trace represented on the admitted `ZFSet.{0}` finite von Neumann image. -/
 theorem zfc_finite_image_trace_252_105 :
-    nnoToZfc 252 = zAdd (zMul (nnoToZfc 2) (nnoToZfc 105)) (nnoToZfc 42) ∧
-    nnoToZfc 105 = zAdd (zMul (nnoToZfc 2) (nnoToZfc 42)) (nnoToZfc 21) ∧
-    nnoToZfc 42 = zAdd (zMul (nnoToZfc 2) (nnoToZfc 21)) (nnoToZfc 0) := by
-  simp [nnoToZfc, zAdd, zMul, zNat]
+    nnoToZfc.{0} 252 = zAdd (zMul (nnoToZfc.{0} 2) (nnoToZfc.{0} 105)) (nnoToZfc.{0} 42) ∧
+    nnoToZfc.{0} 105 = zAdd (zMul (nnoToZfc.{0} 2) (nnoToZfc.{0} 42)) (nnoToZfc.{0} 21) ∧
+    nnoToZfc.{0} 42 = zAdd (zMul (nnoToZfc.{0} 2) (nnoToZfc.{0} 21)) (nnoToZfc.{0} 0) := by
+  simp only [nnoToZfc_mul, nnoToZfc_add, nnoMul, nnoAdd]
+  norm_num
 
 /-- The theorem-bearing bridge root. It transports only the relational natural-number gcd
 specification and Euclidean trace. The original `Nat.gcd` functional theorem remains bound to its
