@@ -1,0 +1,395 @@
+{
+  "$id": "https://grandchallenge.ai/schemas/oz-rt-sharp12-depth-001.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OZ-RT-SHARP12-DEPTH-001 governed blocker record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "record_id",
+    "programme_issue",
+    "terminal_disposition",
+    "target_lock",
+    "audit_scope",
+    "source_observations",
+    "unrecoverable_producer_order_artifacts",
+    "downstream_certificate_blockers",
+    "reopening_requirements",
+    "nonclaims",
+    "disposition"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "OZ_RT_SHARP12_DEPTH_001.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "record_id": {
+      "const": "OZ-RT-SHARP12-DEPTH-001"
+    },
+    "programme_issue": {
+      "const": 222
+    },
+    "terminal_disposition": {
+      "const": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+    },
+    "target_lock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "programme_repository",
+        "branch",
+        "authorized_base_commit",
+        "upstream_repository",
+        "upstream_commit",
+        "upstream_tree",
+        "sharp12_source"
+      ],
+      "properties": {
+        "programme_repository": {
+          "const": "grandchallenge/MATH-PROGRAMME"
+        },
+        "branch": {
+          "const": "feature/oz-rt-sharp12-depth-001"
+        },
+        "authorized_base_commit": {
+          "const": "fc70687dfd4967145ebe748ff0d0ae708b62f243"
+        },
+        "upstream_repository": {
+          "const": "rain-1/-odd-zeta-values-moremath"
+        },
+        "upstream_commit": {
+          "const": "790685b7ee4f642a8a88a1bd120636d1b8b39ea8"
+        },
+        "upstream_tree": {
+          "const": "646ee73dd9066e059b043fad64fb20959f111cbf"
+        },
+        "sharp12_source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "blob"
+          ],
+          "properties": {
+            "path": {
+              "const": "papers_out/sharp12/sharp12.tex"
+            },
+            "blob": {
+              "const": "6a347e2a483ec781afac98016635ce1d73b3c38e"
+            }
+          }
+        }
+      }
+    },
+    "audit_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "tree_listing_examined",
+        "authority_rule",
+        "admitted_replays_examined",
+        "sharp12_source_role",
+        "non_authoritative_candidates"
+      ],
+      "properties": {
+        "result": {
+          "const": "CANONICAL_DEPTH_PRODUCER_AND_ORDER_ARTIFACTS_NOT_RECOVERABLE_FROM_EXACT_TREE"
+        },
+        "tree_listing_examined": {
+          "const": true
+        },
+        "authority_rule": {
+          "type": "string",
+          "minLength": 80
+        },
+        "admitted_replays_examined": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "enum": [
+              "papers_out/expository_apery/verify.py",
+              "work/z5eps/eps57_sym2_all.py",
+              "work/z5eps/eps58_denoms.py",
+              "work/z5eps/eps59_rowhunt.py",
+              "work/z5eps/eps60_density.py"
+            ]
+          }
+        },
+        "sharp12_source_role": {
+          "type": "string",
+          "minLength": 80
+        },
+        "non_authoritative_candidates": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "reason"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 30
+              }
+            }
+          }
+        }
+      }
+    },
+    "source_observations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_effect",
+        "programme_state",
+        "variables",
+        "fitting_equations_n",
+        "raw_depth_condition_rows",
+        "independent_depth_conditions",
+        "fitting_rank",
+        "joint_rank",
+        "augmented_joint_rank",
+        "source_reported_solution_dimension",
+        "additional_independent_depth_conditions_beyond_fitting",
+        "auxiliary_primes",
+        "rational_certificate_independently_replayable"
+      ],
+      "properties": {
+        "claim_effect": {
+          "const": "NONE"
+        },
+        "programme_state": {
+          "const": "UNPROVED_INPUT"
+        },
+        "variables": {
+          "const": 448
+        },
+        "fitting_equations_n": {
+          "const": 600
+        },
+        "raw_depth_condition_rows": {
+          "const": 68
+        },
+        "independent_depth_conditions": {
+          "const": 42
+        },
+        "fitting_rank": {
+          "const": 313
+        },
+        "joint_rank": {
+          "const": 324
+        },
+        "augmented_joint_rank": {
+          "const": 324
+        },
+        "source_reported_solution_dimension": {
+          "const": 124
+        },
+        "additional_independent_depth_conditions_beyond_fitting": {
+          "const": 11
+        },
+        "auxiliary_primes": {
+          "const": [
+            33554393,
+            33554467
+          ]
+        },
+        "rational_certificate_independently_replayable": {
+          "const": false
+        }
+      }
+    },
+    "unrecoverable_producer_order_artifacts": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "artifact",
+          "required_content",
+          "absence_effect"
+        ],
+        "properties": {
+          "id": {
+            "pattern": "^DEPTH-[A-Z-]+-001$",
+            "type": "string"
+          },
+          "artifact": {
+            "type": "string"
+          },
+          "required_content": {
+            "type": "string",
+            "minLength": 30
+          },
+          "absence_effect": {
+            "type": "string",
+            "minLength": 30
+          }
+        }
+      }
+    },
+    "downstream_certificate_blockers": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "state",
+          "required"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "required": {
+            "type": "string",
+            "minLength": 30
+          }
+        }
+      }
+    },
+    "reopening_requirements": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "requirement"
+        ],
+        "properties": {
+          "id": {
+            "pattern": "^REOPEN-0[1-7]$"
+          },
+          "requirement": {
+            "type": "string",
+            "minLength": 80
+          }
+        }
+      }
+    },
+    "nonclaims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "depth_certified",
+        "t1_top_proved",
+        "sharp12_proved",
+        "t3_proved",
+        "t3_refuted",
+        "quarantined_lean_repaired",
+        "prime_2_covered",
+        "prime_3_covered",
+        "mathcert_adjudicated",
+        "new_irrationality_claim",
+        "novelty_assessed",
+        "priority_assessed",
+        "publication_claim",
+        "patentability_claim",
+        "product_claim",
+        "commercial_claim",
+        "sharp12_gate_open"
+      ],
+      "properties": {
+        "depth_certified": {
+          "const": false
+        },
+        "t1_top_proved": {
+          "const": false
+        },
+        "sharp12_proved": {
+          "const": false
+        },
+        "t3_proved": {
+          "const": false
+        },
+        "t3_refuted": {
+          "const": false
+        },
+        "quarantined_lean_repaired": {
+          "const": false
+        },
+        "prime_2_covered": {
+          "const": false
+        },
+        "prime_3_covered": {
+          "const": false
+        },
+        "mathcert_adjudicated": {
+          "const": false
+        },
+        "new_irrationality_claim": {
+          "const": false
+        },
+        "novelty_assessed": {
+          "const": false
+        },
+        "priority_assessed": {
+          "const": false
+        },
+        "publication_claim": {
+          "const": false
+        },
+        "patentability_claim": {
+          "const": false
+        },
+        "product_claim": {
+          "const": false
+        },
+        "commercial_claim": {
+          "const": false
+        },
+        "sharp12_gate_open": {
+          "const": false
+        }
+      }
+    },
+    "disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "proof_effect",
+        "promotion_effect",
+        "reopen_only_on_requirements_satisfied"
+      ],
+      "properties": {
+        "status": {
+          "const": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+        },
+        "proof_effect": {
+          "const": "NONE"
+        },
+        "promotion_effect": {
+          "const": "NONE"
+        },
+        "reopen_only_on_requirements_satisfied": {
+          "const": true
+        }
+      }
+    }
+  }
+}
