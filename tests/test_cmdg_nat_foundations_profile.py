@@ -58,7 +58,7 @@ class CMDGNatFoundationsProfileTests(unittest.TestCase):
         entry = artifact["syntactic_zfc_profile"]["zf_axiom_inventory"][-2]
         entry["kind"] = "SINGLE_AXIOM"
         entry.pop("schema_parameterization")
-        self.assert_rejected(artifact, "SCHEMA_AXIOM_MISCLASSIFIED")
+        self.assert_rejected(artifact, "INCOMPLETE_ZF_AXIOM_INVENTORY")
 
     def test_replacement_schema_requires_parameterization(self):
         artifact = load_profile()
