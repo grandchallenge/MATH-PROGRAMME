@@ -1,0 +1,137 @@
+{
+  "$schema": "OZ_RT_SHARP12_T1TOP_001.schema.json",
+  "schema_version": "1.0.0",
+  "record_id": "OZ-RT-SHARP12-T1TOP-001",
+  "campaign_id": "OZ-001",
+  "programme_issue": 306,
+  "umbrella_issue": 113,
+  "authority": {
+    "programme_base_commit": "0533e8b35c94b25f378af89063aaf840aecd4045",
+    "upstream_repository": "rain-1/-odd-zeta-values-moremath",
+    "source_commit": "790685b7ee4f642a8a88a1bd120636d1b8b39ea8",
+    "source_tree": "646ee73dd9066e059b043fad64fb20959f111cbf",
+    "sharp12_path": "papers_out/sharp12/sharp12.tex",
+    "sharp12_blob": "6a347e2a483ec781afac98016635ce1d73b3c38e",
+    "later_source_head_audited": "6cc0bf07137815ceeef0d9f340559f85352391e5",
+    "later_source_changes_target_locus": false
+  },
+  "target_lock": {
+    "label": "T1-top",
+    "quantifier": "for every integer n >= 0",
+    "identity": "P_n = sum_{k=0}^n sum_{l=0}^n T(n,k,l) * w5_I(n,k,l)",
+    "kernel": "T(n,k,l)=binom(n+k,n)*binom(n,k)^2*binom(n+l,n)*binom(n,l)^2*binom(n+k+l,n)",
+    "representative": "w5_I",
+    "representative_must_not_be_substituted": ["w5_sym", "compact w5 without an independently verified bridge", "T3 zero-form"],
+    "summation_domain": "0 <= k,l <= n",
+    "coefficient_field": "Q",
+    "harmonic_convention": "source-locked Sharp-12 convention",
+    "recurrence_target": "L_BZ order 3 with source-normalized P_n initial data"
+  },
+  "execution_state": "CERTIFICATE_SEARCH_CHARACTERIZED",
+  "terminal_disposition": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "source_evidence": [
+    {
+      "id": "T1-EVIDENCE-001",
+      "path": "papers_out/sharp12/sharp12.tex",
+      "blob": "6a347e2a483ec781afac98016635ce1d73b3c38e",
+      "classification": "FINITE_EXACT_AND_MODULAR_EVIDENCE_ONLY",
+      "finding": "Primary source explicitly labels T1-top open; it reports exact agreement through n<=34, wider ladder agreement, and long modular recurrence evidence, but does not provide a machine-certified unbounded proof object."
+    },
+    {
+      "id": "T1-EVIDENCE-002",
+      "path": "work/z5la/t_w5.py",
+      "blob": "826bcdbc2de5cb82b6c95eda30396b8b081fee5f",
+      "classification": "FINITE_MODULAR_COMPONENT_CHECK",
+      "finding": "The script fixes p=4194301 and tests n in {5,9}; it verifies closed-form top cofactors on the support of the compact weight at sampled points and does not emit an unbounded T1-top certificate."
+    },
+    {
+      "id": "T1-EVIDENCE-003",
+      "path": "work/z5la/t_w5.log",
+      "blob": "72badf10e33596aabb9e70f45ae7806d09e3bae8",
+      "classification": "FINITE_MODULAR_LOG",
+      "finding": "The retained log records only n=5 and n=9 support-component checks; theorem effect is NONE."
+    },
+    {
+      "id": "T1-EVIDENCE-004",
+      "path": "work/Z5CF_CERT.md",
+      "classification": "CHARACTERIZED_COMPUTATIONAL_WALL",
+      "finding": "The source reports that the weight-5 harmonic annihilator timed out after 1800 seconds and that the weight-5 RISC elimination/certificate was not obtained; it expressly classifies the route as NOT MEASURED rather than proved or excluded."
+    },
+    {
+      "id": "T1-EVIDENCE-005",
+      "path": "work/Z5CF_TELESCOPER.md",
+      "classification": "INCOMPATIBLE_WEIGHT3_SUCCESS",
+      "finding": "A complete minimal order-7 telescoper is reported for the weight-3 companion. That success is not a certificate for T1-top and must not be promoted across representatives or weights."
+    },
+    {
+      "id": "T1-EVIDENCE-006",
+      "path": "work/z5la/t_full.py",
+      "blob": "b556955e97e1a4054b87bedc3f9ebe3bc5f5b095",
+      "classification": "INCOMPATIBLE_EXPLORATORY_SYSTEM",
+      "finding": "The script works with PointData('w3') at fixed n and p and is not a deterministic producer for the source-locked w5_I T1-top identity."
+    },
+    {
+      "id": "T1-EVIDENCE-007",
+      "path": "work/z5la/o_areco.py",
+      "blob": "f1fd33f0dd924a013331d0feb491114932f7dac6",
+      "classification": "INCOMPATIBLE_SAMPLE_RECONSTRUCTION",
+      "finding": "The script reconstructs sampled modular rational-function directions for w3 and cannot serve as a source-normalized T1-top proof object."
+    }
+  ],
+  "certificate_search": {
+    "preferred_class": "RECURRENCE_OR_TWO_DIMENSIONAL_CREATIVE_TELESCOPING",
+    "result": "UNBOUNDED_T1TOP_CERTIFICATE_NOT_PRESENT_IN_GOVERNED_SOURCE",
+    "proof_certificate_present": false,
+    "counterexample_present": false,
+    "deterministic_t1_producer_present": false,
+    "independent_verifier_input_present": false,
+    "finite_evidence_is_proof": false,
+    "t3_is_substitute": false,
+    "later_delta_supplies_certificate": false,
+    "interpretation": "The governed source contains exploratory and finite modular certificate work, and a successful weight-3 certificate programme, but no emitted source-locked w5_I telescoper/direct certificate sufficient for independent exact replay. The 20-commit DELTA-003 source delta changes neither Sharp-12 nor work/z5la, so it does not repair this absence."
+  },
+  "missing_objects": [
+    {"id": "T1-PRODUCER-001", "state": "ABSENT", "description": "Deterministic producer bound to the exact w5_I target that emits a uniform proof object rather than finite sampled evidence."},
+    {"id": "T1-TELESCOPER-001", "state": "ABSENT", "description": "Exact source-normalized telescoper or equivalent symbolic identity sufficient to identify S_n with P_n for all n."},
+    {"id": "T1-CERTIFICATE-001", "state": "ABSENT", "description": "Rational certificate functions or equivalent proof terms with canonical serialization and digest."},
+    {"id": "T1-SINGULARITY-001", "state": "ABSENT", "description": "Complete denominator-clearing and removable-singularity manifest over the symbolic summation domain."},
+    {"id": "T1-BOUNDARY-001", "state": "ABSENT", "description": "Exact cancellation certificates for all four finite-sum edges and corners under the locked endpoint convention."},
+    {"id": "T1-RECURRENCE-COMPARE-001", "state": "ABSENT", "description": "Independent exact comparison showing the emitted recurrence equals L_BZ or implies it sufficiently, with nonvanishing propagation conditions."},
+    {"id": "T1-INITIAL-001", "state": "ABSENT", "description": "Sufficient exact initial-value witness tied to the certified recurrence and source-normalized P_n."},
+    {"id": "T1-VERIFIER-001", "state": "ABSENT", "description": "Independent verifier that checks the emitted rational identities directly without invoking the producer's solver or creative-telescoping implementation."}
+  ],
+  "reopening_requirements": [
+    {"id": "T1-REOPEN-01", "requirement": "Supply a deterministic producer locked to source commit/tree/path/blob, exact T, exact w5_I, endpoints, field, and normalization."},
+    {"id": "T1-REOPEN-02", "requirement": "Emit a canonical unbounded symbolic proof object: exact telescoper plus certificates, direct two-dimensional certificate, or mathematically equivalent exact object."},
+    {"id": "T1-REOPEN-03", "requirement": "Lock and verify denominator clearing, exceptional loci, removable singularities, all four boundary edges, and all corners."},
+    {"id": "T1-REOPEN-04", "requirement": "For a recurrence route, prove exact recurrence equality or implication to L_BZ, sufficient initial values, and nonvanishing propagation on the claimed domain."},
+    {"id": "T1-REOPEN-05", "requirement": "Provide an independently implemented verifier that consumes the proof object and does not call the producer's recurrence, solving, rank, or creative-telescoping engine."},
+    {"id": "T1-REOPEN-06", "requirement": "Provide canonical digests, producer/verifier separation tests, and mutations rejecting coefficient, endpoint, boundary, denominator, recurrence, initial-value, representative, and source drift."},
+    {"id": "T1-REOPEN-07", "requirement": "Pass governed replay, exact-head CI, independent non-author review, applicable Human Steward approval/disposition automation, protected merge, and post-merge readback."}
+  ],
+  "admissible_future_outcomes": ["T1_TOP_PROVED", "T1_TOP_REFUTED", "OPEN_WITH_CHARACTERIZED_BLOCKER"],
+  "nonclaims": {
+    "t1_top_proved": false,
+    "t1_top_refuted": false,
+    "depth_certified": false,
+    "depth_reopened": false,
+    "sharp12_proved": false,
+    "t3_proved": false,
+    "t3_refuted": false,
+    "representative_equivalence_proved": false,
+    "quarantined_lean_repaired": false,
+    "prime_2_covered": false,
+    "prime_3_covered": false,
+    "mathcert_adjudicated": false,
+    "new_irrationality_theorem": false,
+    "new_infinitude_theorem": false,
+    "novelty_assessed": false,
+    "priority_assessed": false,
+    "publication_claim": false,
+    "patentability_claim": false,
+    "product_claim": false,
+    "commercial_claim": false
+  }
+}
