@@ -1,0 +1,122 @@
+[
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:EUCLID:GCD:DTT_TO_NNO",
+    "layer": "G_semantic",
+    "relation": "TRANSPORTS_ALONG",
+    "source": {"identity": "CMDG:EUCLID:GCD:DTTREL", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:EUCLID:GCD:NNOREL", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "evidence_refs": ["CMDG.EuclidBridge.dtt_to_nno_gcd"],
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "MATH-PROGRAMME#314"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:EUCLID:GCD:NNO_TO_ZFCFINITEIMAGE",
+    "layer": "G_semantic",
+    "relation": "TRANSPORTS_ALONG",
+    "source": {"identity": "CMDG:EUCLID:GCD:NNOREL", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:EUCLID:GCD:ZFCFINITEIMAGEREL", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "evidence_refs": ["CMDG.EuclidBridge.nno_to_zfc_finite_image_gcd"],
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "MATH-PROGRAMME#314"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:EUCLID:TRACE:DTT_TO_NNO",
+    "layer": "G_semantic",
+    "relation": "TRANSPORTS_ALONG",
+    "source": {"identity": "CMDG:EUCLID:TRACE:DTT252105", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:EUCLID:TRACE:NNO252105", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "evidence_refs": ["CMDG.EuclidBridge.nno_trace_252_105"],
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "MATH-PROGRAMME#314"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:EUCLID:TRACE:NNO_TO_ZFCFINITEIMAGE",
+    "layer": "G_semantic",
+    "relation": "TRANSPORTS_ALONG",
+    "source": {"identity": "CMDG:EUCLID:TRACE:NNO252105", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:EUCLID:TRACE:ZFCFINITEIMAGE252105", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "evidence_refs": ["CMDG.EuclidBridge.zfc_finite_image_trace_252_105"],
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "MATH-PROGRAMME#314"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:EUCLID:GCD:FUNCTIONAL_FORM",
+    "layer": "G_semantic",
+    "relation": "REQUIRES_DEFINITION",
+    "source": {"identity": "CMDG:EUCLID:GCD:E2E001", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:EUCLID:GCD:NATGCD252105", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "evidence_refs": ["MathCert.NumberTheory.accepted252105_sound", "MathCert.NumberTheory.gcd252105"],
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "MATH-PROGRAMME#314"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:EUCLID:GCD:DTT_REALIZATION",
+    "layer": "CROSS_LAYER",
+    "relation": "REALIZES_AS",
+    "source": {"identity": "CMDG:EUCLID:GCD:DTTREL", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG.EuclidBridge.DTTIsGCD", "kind": "FORMAL_DECLARATION", "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGEuclidBridge.lean"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "MATH-PROGRAMME#314"},
+    "realization": {
+      "realization_kind": "LEAN_DECLARATION",
+      "correspondence_scope": "Relational positive greatest-common-divisor specification over Lean Nat",
+      "evidence_refs": ["CMDG.EuclidBridge.dtt_gcd_252_105_21"],
+      "target_locator": "CMDG.EuclidBridge.DTTIsGCD",
+      "proof_environment_ref": "CMDG-EUCLID-BRIDGE-001:bridge_proof_environment",
+      "restrictions": ["No claim of cross-foundation Nat.gcd function identity"],
+      "automatic_claims": {"definitional_equality": false, "mathematical_equivalence": false, "source_faithful_identity": false, "foundational_concordance": false}
+    }
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:EUCLID:PROOF:ACCEPTED_SOUND",
+    "layer": "G_proof",
+    "relation": "PROOF_USES_DECLARATION",
+    "source": {"identity": "MathCert.NumberTheory.accepted252105_sound", "kind": "FORMAL_DECLARATION"},
+    "target": {"identity": "MathCert.NumberTheory.acceptedGCDCertificate_sound", "kind": "FORMAL_DECLARATION"},
+    "authority_state": "OBSERVED",
+    "evidence_refs": ["CMDG-LEAN-EXTRACTOR-EUCLID-GCD-ORIGINAL-001"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:EUCLID:IMPLEMENTATION:MATHLIB",
+    "layer": "G_implementation",
+    "relation": "IMPLEMENTATION_IMPORT",
+    "source": {"identity": "MathCert.Domains.NumberTheory.EuclidGCD", "kind": "IMPLEMENTATION_ARTIFACT"},
+    "target": {"identity": "Mathlib", "kind": "IMPLEMENTATION_ARTIFACT"},
+    "authority_state": "OBSERVED"
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:EUCLID:IMPLEMENTATION:NATCONCORDANCE",
+    "layer": "G_implementation",
+    "relation": "IMPLEMENTATION_IMPORT",
+    "source": {"identity": "CMDGEuclidBridge", "kind": "IMPLEMENTATION_ARTIFACT"},
+    "target": {"identity": "CMDGNatConcordance", "kind": "IMPLEMENTATION_ARTIFACT"},
+    "authority_state": "OBSERVED"
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:EUCLID:PROVENANCE:CLOSEOUT",
+    "layer": "G_provenance",
+    "relation": "EVIDENCED_BY",
+    "source": {"identity": "CMDG:EUCLID:GCD:E2E001", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "governance/euclid_gcd_e2e_001_closeout.json", "kind": "SOURCE"},
+    "authority_state": "OBSERVED"
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:EUCLID:PROVENANCE:MATHCERT",
+    "layer": "G_provenance",
+    "relation": "EVIDENCED_BY",
+    "source": {"identity": "CMDG:EUCLID:GCD:E2E001", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "MATHCERT@78b69e6a3461a83f4893d61c421b1570c08a9ba6:EuclidGCD.lean", "kind": "SOURCE"},
+    "authority_state": "OBSERVED"
+  }
+]
