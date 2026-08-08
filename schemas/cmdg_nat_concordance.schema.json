@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_nat_concordance.schema.json",
+  "title": "CMDG bounded natural-number concordance contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "concordance_id",
+    "operation_id",
+    "protected_baseline",
+    "foundational_profile",
+    "proof_environment",
+    "realizations",
+    "transport_maps",
+    "operation_matrix",
+    "formal_evidence",
+    "graph_authority",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "concordance_id": {"const": "CMDG-NAT-CONCORDANCE-001"},
+    "operation_id": {"const": "CMDG-NAT-CONCORDANCE-001"},
+    "protected_baseline": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "foundational_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile_id", "schema_version", "protected_merge", "artifact_ref"],
+      "properties": {
+        "profile_id": {"const": "CMDG-NAT-CONCORDANCE-FOUNDATIONS-PROFILE-001"},
+        "schema_version": {"const": "1.0.0"},
+        "protected_merge": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "artifact_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "proof_environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lean_toolchain", "lean_commit", "mathlib_commit", "fixture_dir", "toolchain_blob_sha1", "lake_manifest_blob_sha1"],
+      "properties": {
+        "lean_toolchain": {"const": "leanprover/lean4:v4.33.0-rc1"},
+        "lean_commit": {"const": "62eed1db4d67327ec8120be05f1a1b0847d74561"},
+        "mathlib_commit": {"const": "79d0395a1825a6264ad5d269e35e60537518955e"},
+        "fixture_dir": {"const": "fixtures/formal/CMDG-NAT-CONCORDANCE-001"},
+        "toolchain_blob_sha1": {"const": "fd85b262bf1c734663aa8292b0101f672168788f"},
+        "lake_manifest_blob_sha1": {"const": "9e478e09f622406970dc9613f6cf323ade82f787"}
+      }
+    },
+    "realizations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["N_DTT", "N_ZFC", "N_NNO"],
+      "properties": {
+        "N_DTT": {"$ref": "#/$defs/realization"},
+        "N_ZFC": {"$ref": "#/$defs/realization"},
+        "N_NNO": {"$ref": "#/$defs/realization"}
+      }
+    },
+    "transport_maps": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/transportMap"}
+    },
+    "operation_matrix": {
+      "type": "array",
+      "minItems": 18,
+      "maxItems": 18,
+      "items": {"$ref": "#/$defs/operationEvidence"}
+    },
+    "formal_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["module", "root_theorem", "lean_source", "extractor_config", "expected_axioms"],
+      "properties": {
+        "module": {"const": "CMDGNatConcordance"},
+        "root_theorem": {"const": "CMDG.NatConcordance.bounded_concordance"},
+        "lean_source": {"const": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGNatConcordance.lean"},
+        "extractor_config": {"const": "fixtures/cmdg/extractor_001/nat_concordance.json"},
+        "expected_axioms": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"enum": ["Classical.choice", "Quot.sound", "propext"]}
+        }
+      }
+    },
+    "graph_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_records", "edge_records", "edge_authority_state", "direct_semantic_authority_conferred", "realizes_as_conferred_by_artifact_alone"],
+      "properties": {
+        "node_records": {"const": "fixtures/cmdg/nat_concordance_001/nodes.json"},
+        "edge_records": {"const": "fixtures/cmdg/nat_concordance_001/edges.json"},
+        "edge_authority_state": {"const": "PROPOSED"},
+        "direct_semantic_authority_conferred": {"const": false},
+        "realizes_as_conferred_by_artifact_alone": {"const": false}
+      }
+    },
+    "claim_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bounded_foundational_concordance_candidate",
+        "conferred_by_artifact_alone",
+        "independent_review_required",
+        "protected_admission_required",
+        "foundational_equivalence_conferred",
+        "consistency_claim",
+        "standard_model_claim",
+        "graph_certified_conferred",
+        "global_dependency_completeness_claim",
+        "c04_c05_c06_unchanged"
+      ],
+      "properties": {
+        "bounded_foundational_concordance_candidate": {"const": true},
+        "conferred_by_artifact_alone": {"const": false},
+        "independent_review_required": {"const": true},
+        "protected_admission_required": {"const": true},
+        "foundational_equivalence_conferred": {"const": false},
+        "consistency_claim": {"const": false},
+        "standard_model_claim": {"const": false},
+        "graph_certified_conferred": {"const": false},
+        "global_dependency_completeness_claim": {"const": false},
+        "c04_c05_c06_unchanged": {"const": true}
+      }
+    }
+  },
+  "$defs": {
+    "realization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identity", "kind", "formal_locator", "profile_ref", "definitional_identity_to_other_foundations"],
+      "properties": {
+        "identity": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["DTT_KERNEL_OBJECT", "FINITE_VON_NEUMANN_ZFSET_IMAGE", "TYPE_CATEGORY_NNO"]},
+        "formal_locator": {"type": "string", "minLength": 1},
+        "profile_ref": {"type": "string", "minLength": 1},
+        "definitional_identity_to_other_foundations": {"const": false}
+      }
+    },
+    "transportMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["map_id", "source", "target", "direction", "formal_locator", "status"],
+      "properties": {
+        "map_id": {"type": "string", "pattern": "^CMDG:NAT:MAP:[A-Z0-9_]+$"},
+        "source": {"enum": ["N_DTT", "N_ZFC", "N_NNO"]},
+        "target": {"enum": ["N_DTT", "N_ZFC", "N_NNO"]},
+        "direction": {"const": "SOURCE_TO_TARGET"},
+        "formal_locator": {"type": "string", "minLength": 1},
+        "status": {"const": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"}
+      }
+    },
+    "operationEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["map_id", "operation", "theorem", "evidence_kind", "status"],
+      "properties": {
+        "map_id": {"type": "string", "pattern": "^CMDG:NAT:MAP:[A-Z0-9_]+$"},
+        "operation": {"enum": ["ZERO", "SUCCESSOR", "ADDITION", "MULTIPLICATION", "ORDER", "DIVISIBILITY"]},
+        "theorem": {"type": "string", "pattern": "^CMDG\\.NatConcordance\\.[A-Za-z0-9_]+$"},
+        "evidence_kind": {"enum": ["CHECKED_THEOREM", "DEFINITIONAL_CHECKED_THEOREM"]},
+        "status": {"const": "MACHINE_CHECKED_CANDIDATE_PENDING_PROTECTED_ADMISSION"}
+      }
+    }
+  }
+}
