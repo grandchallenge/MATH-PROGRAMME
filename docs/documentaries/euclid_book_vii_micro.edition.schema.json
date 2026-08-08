@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/documentaries/euclid_book_vii_micro.edition.schema.json",
+  "title": "EUCLID-ELEMENTS-BOOK-VII-MICRO-001 edition record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version","volume_id","campaign_id","title","subtitle","status","documentary_tier","claim_boundary","source_reference","web_page","schema","asset_base","palette","admitted_loci","attached_material","plates","sections","protected_authority","authority_flags","target_disposition"],
+  "properties": {
+    "schema_version": {"const":"1.0.0"},
+    "volume_id": {"const":"euclid_book_vii_micro"},
+    "campaign_id": {"const":"EUCLID-ELEMENTS-BOOK-VII-MICRO-001"},
+    "title": {"type":"string","minLength":1},
+    "subtitle": {"type":"string","minLength":1},
+    "status": {"type":"string","minLength":1},
+    "documentary_tier": {"const":"micro"},
+    "claim_boundary": {"type":"string","minLength":80},
+    "source_reference": {"const":"sources/euclid_book_vii_micro.source.json"},
+    "web_page": {"const":"euclid_book_vii_micro.md"},
+    "schema": {"const":"euclid_book_vii_micro.edition.schema.json"},
+    "asset_base": {"const":"docs_root"},
+    "palette": {
+      "type":"object","additionalProperties":false,"required":["navy","parchment","gold","ink"],
+      "properties":{"navy":{"const":"#071A36"},"parchment":{"const":"#FAF5E8"},"gold":{"const":"#B78935"},"ink":{"const":"#1D2940"}}
+    },
+    "admitted_loci": {
+      "type":"array","prefixItems":[
+        {"const":"VII.def.1"},{"const":"VII.def.2"},{"const":"VII.def.3"},{"const":"VII.def.5"},{"const":"VII.def.12"},{"const":"VII.def.14"},{"const":"VII.1"},{"const":"VII.2"}
+      ],"minItems":8,"maxItems":8
+    },
+    "attached_material": {
+      "type":"object","additionalProperties":false,"required":["VII.2"],
+      "properties":{"VII.2":{"type":"array","prefixItems":[{"const":"VII.2.porism"}],"minItems":1,"maxItems":1}}
+    },
+    "plates": {
+      "type":"array","minItems":2,"maxItems":2,
+      "items":{"type":"object","additionalProperties":false,"required":["id","label","title","asset","alt","authority"],"properties":{"id":{"enum":["anthyphairesis","concordance"]},"label":{"type":"string"},"title":{"type":"string"},"asset":{"type":"string"},"alt":{"type":"string","minLength":50},"authority":{"const":"pedagogical_orientation_only"}}}
+    },
+    "sections": {"type":"array","minItems":8,"maxItems":8,"items":{"type":"string"}},
+    "protected_authority": {
+      "type":"object","additionalProperties":false,
+      "required":["forge_source_lock_merge","source_transcription_blob","source_transcription_sha256","source_concordance_blob","provider_manifest_blob","stage1_programme_closeout","stage2_programme_closeout","stage1_cert_merge","stage2_cert_merge"],
+      "properties": {
+        "forge_source_lock_merge":{"const":"49071febcacd9c84fe4ff268d4e11d7e0c4ff0e5"},
+        "source_transcription_blob":{"const":"778718006a60e780ad996e72189bc413c92dc48c"},
+        "source_transcription_sha256":{"const":"66d3d62cb75cccc0d705fa06c8845f3d9c2c61952f9994862d54c7679517e6d0"},
+        "source_concordance_blob":{"const":"287126ea40b30cdbb66bd2e489bde6076a51bcf7"},
+        "provider_manifest_blob":{"const":"d3f3a36177cef3962fc8b320302e8cea6bb5bd86"},
+        "stage1_programme_closeout":{"const":"183ff2a0adfbe5bd0ffd5f2e638089b94b868c54"},
+        "stage2_programme_closeout":{"const":"6dd51c29b8bcbac812bcf7a4e803b693ac8be69c"},
+        "stage1_cert_merge":{"const":"78b69e6a3461a83f4893d61c421b1570c08a9ba6"},
+        "stage2_cert_merge":{"const":"cd69013cf55d4ee96539d28ee27eadef64cca06f"}
+      }
+    },
+    "authority_flags": {
+      "type":"object","additionalProperties":false,
+      "required":["historical_modern_equivalence","plates_have_source_authority","plates_have_proof_authority","plates_have_certification_authority","remainder_algorithm_verbatim_euclid","extended_euclid_verbatim_euclid","bezout_verbatim_euclid","linear_diophantine_verbatim_euclid","novelty_claim","priority_claim","first_formalization_claim"],
+      "properties": {
+        "historical_modern_equivalence":{"const":false},"plates_have_source_authority":{"const":false},"plates_have_proof_authority":{"const":false},"plates_have_certification_authority":{"const":false},"remainder_algorithm_verbatim_euclid":{"const":false},"extended_euclid_verbatim_euclid":{"const":false},"bezout_verbatim_euclid":{"const":false},"linear_diophantine_verbatim_euclid":{"const":false},"novelty_claim":{"const":false},"priority_claim":{"const":false},"first_formalization_claim":{"const":false}
+      }
+    },
+    "target_disposition": {"const":"EUCLID_BOOK_VII_MICRO_EDITION_SOURCE_LOCKED_AND_ATOMICALLY_ADMITTED"}
+  }
+}

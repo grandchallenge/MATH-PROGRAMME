@@ -27,7 +27,7 @@ class UnionClosedDocumentaryAdmissionTests(unittest.TestCase):
         cls.page = (DOCS / cls.volume["web_page"]).read_text(encoding="utf-8")
 
     def test_atomic_manifest_admission(self) -> None:
-        self.assertEqual(8, len(self.manifest["volumes"]))
+        self.assertEqual(1, sum(volume.get("slug") == "union_closed" for volume in self.manifest["volumes"]))
         self.assertEqual("UC", self.volume["domain_id"])
         self.assertEqual("UC", self.volume["campaign_id"])
         self.assertEqual("campaign_documentary", self.volume["scope_relation"])
