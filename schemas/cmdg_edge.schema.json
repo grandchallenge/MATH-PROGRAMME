@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_edge.schema.json",
+  "title": "CMDG dependency and realization edge contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "edge_id",
+    "layer",
+    "relation",
+    "source",
+    "target",
+    "authority_state"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "edge_id": {"type": "string", "pattern": "^CMDG:E:[A-Z0-9][A-Z0-9._:-]*$"},
+    "layer": {"enum": ["G_semantic", "G_proof", "G_implementation", "G_provenance", "CROSS_LAYER"]},
+    "relation": {
+      "enum": [
+        "REQUIRES_DEFINITION", "USES_THEOREM", "CONSTRUCTS", "INSTANTIATES", "GENERALIZES",
+        "INTERPRETS", "MODELS", "EQUIVALENT_TO", "TRANSPORTS_ALONG", "USES_AXIOM",
+        "USES_CLASSICALITY", "SOURCE_DERIVED", "PROOF_USES_DECLARATION", "PROOF_USES_AXIOM",
+        "PROOF_USES_CLASSICALITY", "PROOF_USES_CERTIFICATE", "IMPLEMENTATION_IMPORT",
+        "TOOLCHAIN_DEPENDENCY", "BUILD_DEPENDENCY", "CITES_SOURCE", "EVIDENCED_BY",
+        "REVIEWED_BY", "REALIZES_AS"
+      ]
+    },
+    "source": {"$ref": "#/$defs/endpoint"},
+    "target": {"$ref": "#/$defs/endpoint"},
+    "authority_state": {"enum": ["REVIEWED_DIRECT", "PROPOSED", "DERIVED", "OBSERVED"]},
+    "evidence_refs": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "review": {"$ref": "#/$defs/review"},
+    "proposal_origin": {"$ref": "#/$defs/proposalOrigin"},
+    "derivation": {"$ref": "#/$defs/derivation"},
+    "realization": {"$ref": "#/$defs/realization"},
+    "equivalence": {"$ref": "#/$defs/equivalence"}
+  },
+  "$defs": {
+    "endpoint": {
+      "type": "object", "additionalProperties": false, "required": ["identity"],
+      "properties": {
+        "identity": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["SEMANTIC_NODE", "FORMAL_DECLARATION", "COMPUTATIONAL_ARTIFACT", "SOURCE", "IMPLEMENTATION_ARTIFACT"]},
+        "locator": {"type": "string", "minLength": 1}
+      }
+    },
+    "review": {
+      "type": "object", "additionalProperties": false,
+      "required": ["reviewer", "disposition", "artifact_ref"],
+      "properties": {
+        "reviewer": {"type": "string", "minLength": 1},
+        "disposition": {"type": "string", "minLength": 1},
+        "artifact_ref": {"type": "string", "minLength": 1},
+        "independent_of_proposal_origin": {"type": "boolean"}
+      }
+    },
+    "proposalOrigin": {
+      "type": "object", "additionalProperties": false, "required": ["origin"],
+      "properties": {
+        "origin": {"enum": ["HUMAN", "SEMANTIC_GRAPH_RECONCILER", "OTHER_TOOL"]},
+        "tool": {"type": "string", "minLength": 1},
+        "artifact_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "derivation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["method", "input_edge_ids", "non_authoritative"],
+      "properties": {
+        "method": {"type": "string", "minLength": 1},
+        "input_edge_ids": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "non_authoritative": {"const": true}
+      }
+    },
+    "realization": {
+      "type": "object", "additionalProperties": false,
+      "required": ["realization_kind", "correspondence_scope", "evidence_refs", "target_locator", "restrictions", "automatic_claims"],
+      "properties": {
+        "realization_kind": {"enum": ["LEAN_DECLARATION", "CHECKED_CERTIFICATE", "COMPUTATIONAL_REALIZATION", "OTHER_FORMAL_REALIZATION"]},
+        "correspondence_scope": {"type": "string", "minLength": 1},
+        "evidence_refs": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "target_locator": {"type": "string", "minLength": 1},
+        "proof_environment_ref": {"type": "string", "minLength": 1},
+        "restrictions": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "automatic_claims": {
+          "type": "object", "additionalProperties": false,
+          "required": ["definitional_equality", "mathematical_equivalence", "source_faithful_identity", "foundational_concordance"],
+          "properties": {
+            "definitional_equality": {"const": false},
+            "mathematical_equivalence": {"const": false},
+            "source_faithful_identity": {"const": false},
+            "foundational_concordance": {"const": false}
+          }
+        }
+      }
+    },
+    "equivalence": {
+      "type": "object", "additionalProperties": false, "required": ["quotient_admissibility"],
+      "properties": {
+        "quotient_admissibility": {"enum": ["NOT_ADMISSIBLE", "CERTIFIED_GENERATOR"]},
+        "certification_ref": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"quotient_admissibility": {"const": "CERTIFIED_GENERATOR"}}},
+          "then": {"required": ["certification_ref"]}
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"layer": {"const": "G_semantic"}}, "required": ["layer"]},
+      "then": {
+        "properties": {"relation": {"enum": ["REQUIRES_DEFINITION", "USES_THEOREM", "CONSTRUCTS", "INSTANTIATES", "GENERALIZES", "INTERPRETS", "MODELS", "EQUIVALENT_TO", "TRANSPORTS_ALONG", "USES_AXIOM", "USES_CLASSICALITY", "SOURCE_DERIVED"]}},
+        "not": {"properties": {"authority_state": {"const": "OBSERVED"}}, "required": ["authority_state"]}
+      }
+    },
+    {
+      "if": {"properties": {"layer": {"const": "G_proof"}}, "required": ["layer"]},
+      "then": {"properties": {"relation": {"enum": ["PROOF_USES_DECLARATION", "PROOF_USES_AXIOM", "PROOF_USES_CLASSICALITY", "PROOF_USES_CERTIFICATE"]}}}
+    },
+    {
+      "if": {"properties": {"layer": {"const": "G_implementation"}}, "required": ["layer"]},
+      "then": {"properties": {"relation": {"enum": ["IMPLEMENTATION_IMPORT", "TOOLCHAIN_DEPENDENCY", "BUILD_DEPENDENCY"]}}}
+    },
+    {
+      "if": {"properties": {"layer": {"const": "G_provenance"}}, "required": ["layer"]},
+      "then": {"properties": {"relation": {"enum": ["CITES_SOURCE", "EVIDENCED_BY", "REVIEWED_BY"]}}}
+    },
+    {
+      "if": {"properties": {"layer": {"const": "CROSS_LAYER"}}, "required": ["layer"]},
+      "then": {"properties": {"relation": {"const": "REALIZES_AS"}}, "required": ["realization"]}
+    },
+    {
+      "if": {"properties": {"relation": {"const": "REALIZES_AS"}}, "required": ["relation"]},
+      "then": {"properties": {"layer": {"const": "CROSS_LAYER"}}, "required": ["realization"]}
+    },
+    {
+      "if": {"properties": {"authority_state": {"const": "REVIEWED_DIRECT"}}, "required": ["authority_state"]},
+      "then": {"required": ["evidence_refs", "review"]}
+    },
+    {
+      "if": {"properties": {"authority_state": {"const": "PROPOSED"}}, "required": ["authority_state"]},
+      "then": {"required": ["proposal_origin"]}
+    },
+    {
+      "if": {"properties": {"authority_state": {"const": "DERIVED"}}, "required": ["authority_state"]},
+      "then": {"required": ["derivation"]}
+    },
+    {
+      "if": {"properties": {"relation": {"const": "EQUIVALENT_TO"}}, "required": ["relation"]},
+      "then": {"required": ["equivalence"]}
+    },
+    {
+      "if": {"properties": {"equivalence": {"properties": {"quotient_admissibility": {"const": "CERTIFIED_GENERATOR"}}, "required": ["quotient_admissibility"]}}, "required": ["equivalence"]},
+      "then": {"properties": {"relation": {"const": "EQUIVALENT_TO"}, "authority_state": {"const": "REVIEWED_DIRECT"}}}
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_node.schema.json",
+  "title": "CMDG node contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "node_id",
+    "node_type",
+    "engagement_mode",
+    "canonical_label",
+    "provenance_refs"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "node_id": {
+      "type": "string",
+      "pattern": "^CMDG:[A-Z0-9][A-Z0-9._:-]*$"
+    },
+    "node_type": {
+      "enum": [
+        "Definition",
+        "Theory",
+        "Structure",
+        "Construction",
+        "Theorem",
+        "Equivalence",
+        "Model"
+      ]
+    },
+    "engagement_mode": {
+      "enum": [
+        "REUSED",
+        "RECONSTRUCTED",
+        "CONCORDANT"
+      ]
+    },
+    "canonical_label": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "foundational_profile_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provenance_refs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

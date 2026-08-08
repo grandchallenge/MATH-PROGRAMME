@@ -1,0 +1,182 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_id": "CMDG-MANIFEST-SCHEMA-001-FIXTURE",
+  "manifest_version": "1.0.0",
+  "intent": "PRODUCTION_INTENT",
+  "root": {
+    "node_id": "CMDG:ARITH.GCD",
+    "root_kind": "THEOREM",
+    "programme_level": 5,
+    "replayable_certificate_equivalent": false
+  },
+  "ontology_version": "CMDG-CHARTER-001",
+  "schema_versions": {
+    "node": "1.0.0",
+    "edge": "1.0.0",
+    "manifest": "1.0.0"
+  },
+  "semantic_scope": {
+    "description": "Bounded schema fixture for manifest-relative dependency accounting.",
+    "included_node_ids": [
+      "CMDG:ARITH.GCD",
+      "CMDG:ARITH.NAT_DIVISIBILITY",
+      "CMDG:NAT.DTT",
+      "CMDG:NAT.NNO"
+    ],
+    "completeness_semantics": "MANIFEST_RELATIVE_ONLY",
+    "global_completeness_claim": false
+  },
+  "direct_semantic_edges": [
+    {
+      "schema_version": "1.0.0",
+      "edge_id": "CMDG:E:GCD-REQ-NAT-DIV",
+      "layer": "G_semantic",
+      "relation": "REQUIRES_DEFINITION",
+      "source": {"identity": "CMDG:ARITH.GCD", "kind": "SEMANTIC_NODE"},
+      "target": {"identity": "CMDG:ARITH.NAT_DIVISIBILITY", "kind": "SEMANTIC_NODE"},
+      "authority_state": "REVIEWED_DIRECT",
+      "evidence_refs": ["CMDG-SCHEMA-001:fixture:semantic-edge"],
+      "review": {
+        "reviewer": "schema-fixture-reviewer",
+        "disposition": "FIXTURE_REVIEWED_DIRECT",
+        "artifact_ref": "CMDG-SCHEMA-001:fixture-review"
+      }
+    },
+    {
+      "schema_version": "1.0.0",
+      "edge_id": "CMDG:E:NAT-EQUIV-NNO",
+      "layer": "G_semantic",
+      "relation": "EQUIVALENT_TO",
+      "source": {"identity": "CMDG:NAT.DTT", "kind": "SEMANTIC_NODE"},
+      "target": {"identity": "CMDG:NAT.NNO", "kind": "SEMANTIC_NODE"},
+      "authority_state": "REVIEWED_DIRECT",
+      "evidence_refs": ["CMDG-SCHEMA-001:fixture:equivalence"],
+      "review": {
+        "reviewer": "schema-fixture-reviewer",
+        "disposition": "FIXTURE_EQUIVALENCE_GENERATOR",
+        "artifact_ref": "CMDG-SCHEMA-001:fixture-equivalence-review"
+      },
+      "equivalence": {
+        "quotient_admissibility": "CERTIFIED_GENERATOR",
+        "certification_ref": "CMDG-SCHEMA-001:fixture-equivalence-certificate"
+      }
+    }
+  ],
+  "closure_policy": {
+    "policy_id": "CMDG-CLOSURE-SCHEMA-FIXTURE",
+    "policy_version": "1.0.0",
+    "traversable_semantic_relations": [
+      "REQUIRES_DEFINITION",
+      "USES_THEOREM",
+      "EQUIVALENT_TO"
+    ],
+    "direction": "DEPENDENT_TO_PREREQUISITE",
+    "boundary_behavior": "TERMINATE_AT_DECLARED_BOUNDARY",
+    "realization_crossing": "EXPLICIT_REALIZES_AS_ONLY",
+    "equivalence_handling": "CERTIFIED_QUOTIENT_PROJECTION_ALLOWED",
+    "derived_closure_authoritative": false,
+    "quotient_requires_certified_generators": true
+  },
+  "boundaries": [
+    {
+      "node_id": "CMDG:ARITH.NAT_DIVISIBILITY",
+      "rationale": "Retained fixture boundary; reconstruction is outside this schema-only operation.",
+      "trust_class": "REUSED_LIBRARY",
+      "authority_refs": ["CMDG-SCHEMA-001:fixture-boundary-review"],
+      "allowed_traversal_purposes": ["SEMANTIC", "PROOF", "IMPLEMENTATION", "PROVENANCE"]
+    }
+  ],
+  "realizations": [
+    {
+      "schema_version": "1.0.0",
+      "edge_id": "CMDG:E:GCD-REALIZES-LEAN",
+      "layer": "CROSS_LAYER",
+      "relation": "REALIZES_AS",
+      "source": {"identity": "CMDG:ARITH.GCD", "kind": "SEMANTIC_NODE"},
+      "target": {
+        "identity": "GrandChallenge.Euclid.gcd_exists",
+        "kind": "FORMAL_DECLARATION",
+        "locator": "fixtures/formal/LOG-GCD-001"
+      },
+      "authority_state": "REVIEWED_DIRECT",
+      "evidence_refs": ["CMDG-SCHEMA-001:fixture:realization-edge"],
+      "review": {
+        "reviewer": "schema-fixture-reviewer",
+        "disposition": "FIXTURE_REALIZATION_REVIEWED",
+        "artifact_ref": "CMDG-SCHEMA-001:fixture-realization-review"
+      },
+      "realization": {
+        "realization_kind": "LEAN_DECLARATION",
+        "correspondence_scope": "Schema fixture only: maps the semantic exemplar identity to a pinned Lean declaration locator.",
+        "evidence_refs": ["CMDG-SCHEMA-001:fixture:realization-evidence"],
+        "target_locator": "fixtures/formal/LOG-GCD-001",
+        "proof_environment_ref": "lean-fixture-env",
+        "restrictions": [
+          "No foundational concordance claim.",
+          "No definitional-equality or mathematical-equivalence claim."
+        ],
+        "automatic_claims": {
+          "definitional_equality": false,
+          "mathematical_equivalence": false,
+          "source_faithful_identity": false,
+          "foundational_concordance": false
+        }
+      }
+    }
+  ],
+  "proof_environment": {
+    "environment_id": "lean-fixture-env",
+    "prover": "Lean 4",
+    "toolchain": "pinned-by-fixture",
+    "pins": ["lean-toolchain:fixture-pin", "mathlib:fixture-pin"],
+    "clean_replay_command": "lake build GrandChallenge.Euclid"
+  },
+  "axiom_footprint": {
+    "operational_substrate": ["Lean kernel fixture substrate"],
+    "imported_formal_declarations": [],
+    "root_proof": [],
+    "object_theory_assumptions": [],
+    "boundary_trust": ["CMDG:ARITH.NAT_DIVISIBILITY"]
+  },
+  "classicality_footprint": {
+    "operational_substrate": [],
+    "imported_formal_declarations": [],
+    "root_proof": [],
+    "object_theory_assumptions": [],
+    "boundary_trust": []
+  },
+  "implementation_dependencies": [
+    {
+      "dependency_id": "mathlib",
+      "locator": "https://github.com/leanprover-community/mathlib4",
+      "pin": "fixture-pin",
+      "purpose": "PROOF_REPLAY"
+    }
+  ],
+  "provenance_references": ["CMDG_CHARTER.md", "ADR-0017", "issue:#298"],
+  "replay": {
+    "route_id": "CMDG-SCHEMA-001-FIXTURE-REPLAY",
+    "clean_environment_required": true,
+    "exact_environment_ref": "lean-fixture-env",
+    "command": "lake build GrandChallenge.Euclid",
+    "artifact_refs": ["fixtures/formal/LOG-GCD-001"]
+  },
+  "unresolved_obligations": [
+    {
+      "obligation_id": "fixture-outside-boundary-note",
+      "scope": "OUTSIDE_BOUNDARY",
+      "description": "Schema fixture does not reconstruct the declared reused boundary.",
+      "status": "OPEN"
+    }
+  ],
+  "quotient_projection": {
+    "enabled": true,
+    "generator_edge_ids": ["CMDG:E:NAT-EQUIV-NNO"],
+    "traceability_required": true
+  },
+  "claim_boundary": {
+    "schema_validation_only": true,
+    "graph_certified_conferred": false,
+    "global_completeness_claim": false
+  }
+}
