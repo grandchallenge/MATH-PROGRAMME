@@ -1,0 +1,126 @@
+name: CMDG Euclid bridge
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cmdg-euclid-bridge-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    name: Validate CMDG Euclid bridge
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Validate bounded Euclid bridge contract
+        run: python3 ci/validate_cmdg_euclid_bridge.py
+      - name: Run Euclid bridge mutation tests
+        run: python -m unittest tests.test_cmdg_euclid_bridge
+
+  bridge-lean:
+    name: Replay concordant Euclid bridge in Lean
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Reject bridge placeholders and local axioms
+        run: |
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGEuclidBridge.lean; then
+            echo "CMDG-EUCLID-BRIDGE-001 must contain neither sorry nor local axioms."
+            exit 1
+          fi
+      - name: Set up pinned Lean and mathlib cache
+        id: lean-setup
+        continue-on-error: true
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Build concordant bridge fixture
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        env:
+          LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}
+        run: |
+          set -euo pipefail
+          echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+          lake build CMDGEuclidBridge
+      - name: Extract checked bridge dependencies
+        run: python3 ci/extract_cmdg_lean_dependencies.py fixtures/cmdg/extractor_001/euclid_bridge.json --output cmdg-euclid-bridge-dependencies.json
+      - name: Preserve bridge failure evidence
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: cmdg-euclid-bridge-lean-failure
+          path: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+          if-no-files-found: warn
+
+  original-mathcert:
+    name: Replay and extract original Euclid MATHCERT authority
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Checkout exact protected MATHCERT theorem source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: grandchallenge/MATHCERT
+          ref: 78b69e6a3461a83f4893d61c421b1570c08a9ba6
+          path: external/MATHCERT
+          persist-credentials: false
+      - name: Verify exact theorem source identity
+        run: |
+          set -euo pipefail
+          test "$(git -C external/MATHCERT rev-parse HEAD)" = "78b69e6a3461a83f4893d61c421b1570c08a9ba6"
+          test "$(git -C external/MATHCERT hash-object MathCert/Domains/NumberTheory/EuclidGCD.lean)" = "bf0ab5bac117490299ff5bffb8ca59263ec3f2a3"
+      - name: Set up original pinned Lean and mathlib cache
+        id: original-lean-setup
+        continue-on-error: true
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: external/MATHCERT
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Build and replay exact original theorem module
+        working-directory: external/MATHCERT
+        env:
+          LEAN_SETUP_OUTCOME: ${{ steps.original-lean-setup.outcome }}
+        run: |
+          set -euo pipefail
+          echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+          lake build MathCert.Domains.NumberTheory.EuclidGCD
+          lake env lean MathCert/Domains/NumberTheory/EuclidGCD.lean
+      - name: Extract original theorem proof dependencies
+        run: python3 ci/extract_cmdg_lean_dependencies.py fixtures/cmdg/extractor_001/euclid_gcd_original.json --output cmdg-euclid-original-dependencies.json
+      - name: Preserve original replay failure evidence
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: cmdg-euclid-original-replay-failure
+          path: external/MATHCERT
+          if-no-files-found: warn

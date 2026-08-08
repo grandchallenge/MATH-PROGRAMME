@@ -3,6 +3,7 @@ import validate_workflow_coverage_v3 as v3
 
 v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "cmdg-nat-concordance.yml",
+    "cmdg-euclid-bridge.yml",
 }
 
 ROOT = v3.ROOT
