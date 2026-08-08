@@ -9,6 +9,9 @@ if str(HERE) not in sys.path:
 RECORD=HERE/'OZ_RT_BZ_T3_002.json'; SCHEMA=HERE/'OZ_RT_BZ_T3_002.schema.json'; RESULT=HERE/'SEARCH_RESULT.json'
 
 def load(p): return json.loads(p.read_text(encoding='utf-8'))
+def canonical_sha256(value):
+    raw=json.dumps(value,sort_keys=True,separators=(',',':')).encode('utf-8')
+    return hashlib.sha256(raw).hexdigest()
 def errors(record=None, result=None):
     record=load(RECORD) if record is None else record; result=load(RESULT) if result is None else result
     out=[f'schema{e.json_path}: {e.message}' for e in Draft202012Validator(load(SCHEMA)).iter_errors(record)]
@@ -24,7 +27,7 @@ def errors(record=None, result=None):
     if 'W1(k,l)+2*w5_sym(n,k,l)' not in target.get('normalized_zero_form',''): out.append('T3 representative drift')
     if target.get('finite_evidence_theorem_effect')!='NONE': out.append('finite evidence promoted')
     search=record.get('search_execution',{})
-    digest=hashlib.sha256(RESULT.read_bytes()).hexdigest()
+    digest=canonical_sha256(result)
     if search.get('result_sha256')!=digest: out.append('search result digest drift')
     if search.get('strongest_frontier')!={'degree':6,'equations':65,'unknowns':56,'rank':56,'nullity':0}: out.append('strongest frontier drift')
     if result.get('terminal')!='NO_CERTIFICATE_IN_BOUNDED_CLASS' or result.get('proof_effect')!='NONE': out.append('search result inflation')
