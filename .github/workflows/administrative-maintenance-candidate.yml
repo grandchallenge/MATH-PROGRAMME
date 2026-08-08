@@ -11,7 +11,10 @@ on:
     - cron: '57 4 9 8 *'
     - cron: '21 1 9 8 *'
     - cron: '21 13 3 9 *'
+    - cron: '7 * * * *'
     - cron: '17 * * * *'
+    - cron: '27 * * * *'
+    - cron: '47 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -88,6 +91,34 @@ jobs:
           set -euo pipefail
           python -m pip install --requirement requirements/policy.txt
 
+      - name: Record trigger provenance
+        env:
+          GCL_EVENT_SCHEDULE: ${{ github.event.schedule || '' }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          value = {
+              "schema_version": "1.0.0",
+              "event_name": os.environ.get("GITHUB_EVENT_NAME"),
+              "event_schedule": os.environ.get("GCL_EVENT_SCHEDULE") or None,
+              "run_id": int(os.environ["GITHUB_RUN_ID"]),
+              "run_attempt": int(os.environ["GITHUB_RUN_ATTEMPT"]),
+              "workflow_ref": os.environ.get("GITHUB_WORKFLOW_REF"),
+              "sha": os.environ.get("GITHUB_SHA"),
+              "observed_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
+              "authority_created": False,
+          }
+          Path("administrative-maintenance-trigger.json").write_text(
+              json.dumps(value, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
       - name: Require bounded and separated credentials
         env:
           WRITE_TOKEN: ${{ steps.write-token.outputs.token }}
@@ -141,6 +172,7 @@ jobs:
         with:
           name: administrative-autonomy-runtime
           path: |
+            administrative-maintenance-trigger.json
             administrative-maintenance-candidate.json
             administrative-autonomy-runtime-report.json
           if-no-files-found: warn
