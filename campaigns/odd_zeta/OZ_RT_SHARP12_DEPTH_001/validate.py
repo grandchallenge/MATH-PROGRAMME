@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 from jsonschema import Draft202012Validator
 
@@ -21,8 +23,10 @@ EXPECTED_ARTIFACT_IDS = {
 }
 EXPECTED_REOPEN_IDS = {f"REOPEN-{i:02d}" for i in range(1, 8)}
 
+
 def load_record() -> dict:
     return json.loads(RECORD.read_text(encoding="utf-8"))
+
 
 def errors(record: dict | None = None) -> list[str]:
     record = load_record() if record is None else record
@@ -90,10 +94,19 @@ def errors(record: dict | None = None) -> list[str]:
     nonclaims = record.get("nonclaims", {})
     if any(value is not False for value in nonclaims.values()):
         out.append("nonclaim boundary opened")
-    for required in ("depth_certified", "t1_top_proved", "sharp12_proved", "t3_proved",
-                     "t3_refuted", "quarantined_lean_repaired", "prime_2_covered",
-                     "prime_3_covered", "mathcert_adjudicated", "new_irrationality_claim",
-                     "sharp12_gate_open"):
+    for required in (
+        "depth_certified",
+        "t1_top_proved",
+        "sharp12_proved",
+        "t3_proved",
+        "t3_refuted",
+        "quarantined_lean_repaired",
+        "prime_2_covered",
+        "prime_3_covered",
+        "mathcert_adjudicated",
+        "new_irrationality_claim",
+        "sharp12_gate_open",
+    ):
         if nonclaims.get(required) is not False:
             out.append(f"required nonclaim drift: {required}")
 
@@ -107,3 +120,22 @@ def errors(record: dict | None = None) -> list[str]:
     if disposition.get("reopen_only_on_requirements_satisfied") is not True:
         out.append("reopening gate weakened")
     return out
+
+
+def main() -> int:
+    found = errors()
+    if found:
+        for item in found:
+            print(item, file=sys.stderr)
+        print(f"OZ Sharp-12 DEPTH blocker validation failed with {len(found)} error(s)", file=sys.stderr)
+        return 1
+    print(
+        "OZ Sharp-12 DEPTH exact-tree absence audit is valid: canonical producer/order artifacts "
+        "remain unrecoverable, all nonclaims remain closed, and disposition is "
+        "OPEN_WITH_CHARACTERIZED_BLOCKER"
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
