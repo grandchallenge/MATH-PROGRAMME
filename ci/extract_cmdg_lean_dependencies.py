@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Deterministic checked-environment Lean dependency extractor for CMDG.
 
-The extractor emits evidence for G_proof, G_implementation, and G_provenance.
-It never emits authoritative G_semantic edges, REALIZES_AS claims, foundational
-concordance, dependency minimality, or GRAPH_CERTIFIED.
+Emits observed G_proof/G_implementation/G_provenance evidence only. It never
+confers G_semantic authority, REALIZES_AS, foundational concordance, dependency
+minimality, global completeness, or GRAPH_CERTIFIED.
 """
-
 from __future__ import annotations
 
 import argparse
@@ -18,9 +17,8 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[1]
-EXTRACTOR_VERSION = "1.0.2"
+EXTRACTOR_VERSION = "1.0.3"
 NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_'.]*(?:\.[A-Za-z_][A-Za-z0-9_']*)*$")
 COMMON_AXIOMS = ("propext", "Classical.choice", "Quot.sound")
 EXPECTED_BOUNDARY = {
@@ -57,9 +55,7 @@ def git_blob_sha1(path: Path) -> str:
 
 
 def git_head() -> str:
-    proc = subprocess.run(
-        ["git", "rev-parse", "HEAD"], cwd=ROOT, check=False, capture_output=True, text=True
-    )
+    proc = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True)
     if proc.returncode != 0:
         reject("REPOSITORY_IDENTITY_UNAVAILABLE", proc.stderr.strip() or "git rev-parse HEAD failed")
     head = proc.stdout.strip()
@@ -73,9 +69,9 @@ def candidate_head() -> str:
     if event_path:
         try:
             event = json.loads(Path(event_path).read_text(encoding="utf-8"))
-            value = event.get("pull_request", {}).get("head", {}).get("sha")
-            if isinstance(value, str) and re.fullmatch(r"[0-9a-f]{40}", value):
-                return value
+            sha = event.get("pull_request", {}).get("head", {}).get("sha")
+            if isinstance(sha, str) and re.fullmatch(r"[0-9a-f]{40}", sha):
+                return sha
         except (OSError, json.JSONDecodeError):
             pass
     return git_head()
@@ -106,9 +102,8 @@ def load_config(path: Path) -> dict[str, Any]:
     for root in roots:
         if not isinstance(root, str) or not NAME_RE.fullmatch(root):
             reject("MALFORMED_DECLARATION_NAME", f"malformed declaration name: {root!r}")
-    module = value["module"]
-    if not isinstance(module, str) or not NAME_RE.fullmatch(module):
-        reject("MALFORMED_MODULE_NAME", f"malformed module name: {module!r}")
+    if not isinstance(value["module"], str) or not NAME_RE.fullmatch(value["module"]):
+        reject("MALFORMED_MODULE_NAME", f"malformed module name: {value['module']!r}")
     if value["claim_boundary"] != EXPECTED_BOUNDARY:
         reject("PROHIBITED_AUTHORITY_PROMOTION", "extractor claim boundary is not fail-closed")
     return value
@@ -137,11 +132,8 @@ import {module}
 
 open Lean Elab Command
 
-private def sortedSet (s : NameSet) : Array Name :=
-  s.toArray.qsort Name.lt
-
-private def sortedArray (a : Array Name) : Array Name :=
-  a.qsort Name.lt
+private def sortedSet (s : NameSet) : Array Name := s.toArray.qsort Name.lt
+private def sortedArray (a : Array Name) : Array Name := a.qsort Name.lt
 
 private def mergeNames (a b : Array Name) : Array Name := Id.run do
   let mut s : NameSet := {{}}
@@ -150,16 +142,16 @@ private def mergeNames (a b : Array Name) : Array Name := Id.run do
   return sortedSet s
 
 private def parts (ci : ConstantInfo) : Array Name × Array Name :=
-  let typeDeps (e : Expr) := sortedArray e.getUsedConstants
+  let deps (e : Expr) := sortedArray e.getUsedConstants
   match ci with
-  | .axiomInfo v  => (typeDeps v.type, #[])
-  | .defnInfo v   => (typeDeps v.type, typeDeps v.value)
-  | .thmInfo v    => (typeDeps v.type, typeDeps v.value)
-  | .opaqueInfo v => (typeDeps v.type, typeDeps v.value)
+  | .axiomInfo v  => (deps v.type, #[])
+  | .defnInfo v   => (deps v.type, deps v.value)
+  | .thmInfo v    => (deps v.type, deps v.value)
+  | .opaqueInfo v => (deps v.type, deps v.value)
   | .quotInfo _   => (#[], #[])
-  | .ctorInfo v   => (typeDeps v.type, #[])
-  | .recInfo v    => (typeDeps v.type, #[])
-  | .inductInfo v => (typeDeps v.type, sortedArray v.ctors.toArray)
+  | .ctorInfo v   => (deps v.type, #[])
+  | .recInfo v    => (deps v.type, #[])
+  | .inductInfo v => (deps v.type, sortedArray v.ctors.toArray)
 
 private def kindString (ci : ConstantInfo) : String :=
   match ci with
@@ -189,25 +181,20 @@ private partial def visit
     (env : Environment) (rootModule : Name) (n : Name)
     (seen frontier : NameSet) (edges : Array (Name × Name)) :
     NameSet × NameSet × Array (Name × Name) :=
-  if seen.contains n then
-    (seen, frontier, edges)
-  else
+  if seen.contains n then (seen, frontier, edges) else
     let seen := seen.insert n
     match env.find? n with
     | none => (seen, frontier.insert n, edges)
     | some ci =>
-        let p := parts ci
-        let deps := mergeNames p.1 p.2
-        deps.foldl (init := (seen, frontier, edges)) fun state dep =>
-          let (seen, frontier, edges) := state
-          let edges := edges.push (n, dep)
-          match moduleOf? env dep with
-          | some modName =>
-              if modName == rootModule then
-                visit env rootModule dep seen frontier edges
-              else
-                (seen, frontier.insert dep, edges)
-          | none => (seen, frontier.insert dep, edges)
+      let p := parts ci
+      (mergeNames p.1 p.2).foldl (init := (seen, frontier, edges)) fun state dep =>
+        let (seen, frontier, edges) := state
+        let edges := edges.push (n, dep)
+        match moduleOf? env dep with
+        | some modName =>
+          if modName == rootModule then visit env rootModule dep seen frontier edges
+          else (seen, frontier.insert dep, edges)
+        | none => (seen, frontier.insert dep, edges)
 
 private def edgeLt (a b : Name × Name) : Bool :=
   if a.1 == b.1 then Name.lt a.2 b.2 else Name.lt a.1 b.1
@@ -216,43 +203,46 @@ syntax (name := cmdgExtract) "#cmdg_extract" ident : command
 
 elab_rules : command
   | `(#cmdg_extract $id:ident) => do
-      let env ← getEnv
-      let root := id.getId
-      let some ci := env.find? root
-        | throwError "CMDG_ROOT_NOT_FOUND|{{root}}"
-      let some rootModule := moduleOf? env root
-        | throwError "CMDG_ROOT_MODULE_UNKNOWN|{{root}}"
-      let p := parts ci
-      let direct := mergeNames p.1 p.2
-      let axioms ← Lean.collectAxioms root
-      let (seen, frontier, edges) := visit env rootModule root {{}} {{}} #[]
-      let localClosure := (sortedSet seen).filter (fun n => n != root)
-      let edges := edges.qsort edgeLt
-      let imports := directImports env root
-      liftIO <| IO.println s!"CMDG|ROOT|{{root}}"
-      liftIO <| IO.println s!"CMDG|KIND|{{kindString ci}}"
-      liftIO <| IO.println s!"CMDG|MODULE|{{rootModule}}"
-      for n in p.1 do liftIO <| IO.println s!"CMDG|DIRECT_SIGNATURE|{{n}}"
-      for n in p.2 do liftIO <| IO.println s!"CMDG|DIRECT_BODY|{{n}}"
-      for n in direct do liftIO <| IO.println s!"CMDG|DIRECT|{{n}}"
-      for n in localClosure do
-        let kind := match env.find? n with | some c => kindString c | none => "unknown"
-        let modName := (moduleOf? env n).getD `_unknown
-        liftIO <| IO.println s!"CMDG|LOCAL_DECL|{{n}}|{{kind}}|{{modName}}"
-      for edge in edges do
-        let modName := (moduleOf? env edge.2).getD `_unknown
-        liftIO <| IO.println s!"CMDG|EDGE|{{edge.1}}|{{edge.2}}|{{modName}}"
-      for n in sortedSet frontier do
-        let kind := match env.find? n with | some c => kindString c | none => "unknown"
-        let modName := (moduleOf? env n).getD `_unknown
-        liftIO <| IO.println s!"CMDG|FRONTIER|{{n}}|{{kind}}|{{modName}}"
-      for ax in axioms do liftIO <| IO.println s!"CMDG|AXIOM|{{ax}}"
-      for imp in imports do liftIO <| IO.println s!"CMDG|IMPORT|{{imp}}"
-      liftIO <| IO.println "CMDG|SEMANTIC_AUTHORITY|false"
-      liftIO <| IO.println "CMDG|GRAPH_CERTIFIED|false"
+    let env ← getEnv
+    let root := id.getId
+    let some ci := env.find? root | throwError "CMDG_ROOT_NOT_FOUND|{{root}}"
+    let some rootModule := moduleOf? env root | throwError "CMDG_ROOT_MODULE_UNKNOWN|{{root}}"
+    let p := parts ci
+    let direct := mergeNames p.1 p.2
+    let axioms ← Lean.collectAxioms root
+    let (seen, frontier, edges) := visit env rootModule root {{}} {{}} #[]
+    let localClosure := (sortedSet seen).filter (fun n => n != root)
+    let edges := edges.qsort edgeLt
+    let imports := directImports env root
+    liftIO <| IO.println s!"CMDG|ROOT|{{root}}"
+    liftIO <| IO.println s!"CMDG|KIND|{{kindString ci}}"
+    liftIO <| IO.println s!"CMDG|MODULE|{{rootModule}}"
+    for n in p.1 do liftIO <| IO.println s!"CMDG|DIRECT_SIGNATURE|{{n}}"
+    for n in p.2 do liftIO <| IO.println s!"CMDG|DIRECT_BODY|{{n}}"
+    for n in direct do liftIO <| IO.println s!"CMDG|DIRECT|{{n}}"
+    for n in localClosure do
+      let kind := match env.find? n with | some c => kindString c | none => "unknown"
+      let modName := (moduleOf? env n).getD `_unknown
+      liftIO <| IO.println s!"CMDG|LOCAL_DECL|{{n}}|{{kind}}|{{modName}}"
+    for edge in edges do
+      let modName := (moduleOf? env edge.2).getD `_unknown
+      liftIO <| IO.println s!"CMDG|EDGE|{{edge.1}}|{{edge.2}}|{{modName}}"
+    for n in sortedSet frontier do
+      let kind := match env.find? n with | some c => kindString c | none => "unknown"
+      let modName := (moduleOf? env n).getD `_unknown
+      liftIO <| IO.println s!"CMDG|FRONTIER|{{n}}|{{kind}}|{{modName}}"
+    for ax in axioms do liftIO <| IO.println s!"CMDG|AXIOM|{{ax}}"
+    for imp in imports do liftIO <| IO.println s!"CMDG|IMPORT|{{imp}}"
+    liftIO <| IO.println "CMDG|SEMANTIC_AUTHORITY|false"
+    liftIO <| IO.println "CMDG|GRAPH_CERTIFIED|false"
 
 #cmdg_extract {root}
 '''
+
+
+def _unique_dicts(values: list[dict[str, str]], keys: tuple[str, ...]) -> list[dict[str, str]]:
+    unique = {tuple(value[key] for key in keys): value for value in values}
+    return [unique[key] for key in sorted(unique)]
 
 
 def parse_probe(stdout: str, stderr: str) -> dict[str, Any]:
@@ -264,12 +254,16 @@ def parse_probe(stdout: str, stderr: str) -> dict[str, Any]:
         "local_declarations": [], "edges": [], "frontier": [],
         "axioms": [], "imports": [],
     }
+    scalar_seen: set[str] = set()
     for line in lines:
         parts = line.split("|")
         tag = parts[1]
         if tag in {"ROOT", "KIND", "MODULE", "SEMANTIC_AUTHORITY", "GRAPH_CERTIFIED"}:
             if len(parts) != 3:
                 reject("PROBE_OUTPUT_MALFORMED", line)
+            if tag in scalar_seen:
+                reject("PROBE_OUTPUT_DUPLICATE_SCALAR", tag)
+            scalar_seen.add(tag)
             result[tag.lower()] = parts[2]
         elif tag in {"DIRECT_SIGNATURE", "DIRECT_BODY", "DIRECT", "AXIOM", "IMPORT"}:
             if len(parts) != 3:
@@ -279,26 +273,24 @@ def parse_probe(stdout: str, stderr: str) -> dict[str, Any]:
         elif tag in {"LOCAL_DECL", "FRONTIER"}:
             if len(parts) != 5:
                 reject("PROBE_OUTPUT_MALFORMED", line)
-            result["local_declarations" if tag == "LOCAL_DECL" else "frontier"].append(
-                {"declaration": parts[2], "kind": parts[3], "module": parts[4]}
-            )
+            key = "local_declarations" if tag == "LOCAL_DECL" else "frontier"
+            result[key].append({"declaration": parts[2], "kind": parts[3], "module": parts[4]})
         elif tag == "EDGE":
             if len(parts) != 5:
                 reject("PROBE_OUTPUT_MALFORMED", line)
             result["edges"].append({"source": parts[2], "target": parts[3], "target_module": parts[4]})
         else:
             reject("PROBE_OUTPUT_UNKNOWN_TAG", line)
+
+    required_scalars = {"ROOT", "KIND", "MODULE", "SEMANTIC_AUTHORITY", "GRAPH_CERTIFIED"}
+    if scalar_seen != required_scalars:
+        reject("PROBE_OUTPUT_MISSING_SCALAR", ", ".join(sorted(required_scalars - scalar_seen)))
     for key in ("direct_signature", "direct_body", "direct", "axioms", "imports"):
-        values = result[key]
-        if values != sorted(set(values)):
-            reject("NONDETERMINISTIC_ORDERING", f"{key} is not sorted and unique")
-    for key in ("local_declarations", "frontier"):
-        values = result[key]
-        if values != sorted(values, key=lambda v: (v["declaration"], v["kind"], v["module"])):
-            reject("NONDETERMINISTIC_ORDERING", f"{key} is not sorted")
-    if result["edges"] != sorted(result["edges"], key=lambda v: (v["source"], v["target"])):
-        reject("NONDETERMINISTIC_ORDERING", "edge records are not sorted")
-    if result.get("semantic_authority") != "false" or result.get("graph_certified") != "false":
+        result[key] = sorted(set(result[key]))
+    result["local_declarations"] = _unique_dicts(result["local_declarations"], ("declaration", "kind", "module"))
+    result["frontier"] = _unique_dicts(result["frontier"], ("declaration", "kind", "module"))
+    result["edges"] = _unique_dicts(result["edges"], ("source", "target", "target_module"))
+    if result["semantic_authority"] != "false" or result["graph_certified"] != "false":
         reject("PROHIBITED_AUTHORITY_PROMOTION", "Lean probe attempted authority promotion")
     return result
 
@@ -306,16 +298,12 @@ def parse_probe(stdout: str, stderr: str) -> dict[str, Any]:
 def run_probe(project_dir: Path, module: str, root: str) -> dict[str, Any]:
     probe_path: Path | None = None
     try:
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".lean", prefix="CMDGExtract_", dir=project_dir,
-            encoding="utf-8", delete=False,
-        ) as handle:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".lean", prefix="CMDGExtract_", dir=project_dir, encoding="utf-8", delete=False) as handle:
             handle.write(lean_probe_source(module, root))
             probe_path = Path(handle.name)
         proc = subprocess.run(
             ["lake", "env", "lean", probe_path.name], cwd=project_dir,
-            check=False, capture_output=True, text=True,
-            env={**os.environ, "LC_ALL": "C.UTF-8"},
+            capture_output=True, text=True, env={**os.environ, "LC_ALL": "C.UTF-8"},
         )
         if proc.returncode != 0:
             combined = (proc.stdout + "\n" + proc.stderr).strip()
@@ -326,10 +314,6 @@ def run_probe(project_dir: Path, module: str, root: str) -> dict[str, Any]:
     finally:
         if probe_path is not None:
             probe_path.unlink(missing_ok=True)
-
-
-def normalized_probe(probe: dict[str, Any]) -> dict[str, Any]:
-    return json.loads(json.dumps(probe, sort_keys=True))
 
 
 def build_root_report(root: str, probe: dict[str, Any]) -> dict[str, Any]:
@@ -344,13 +328,7 @@ def build_root_report(root: str, probe: dict[str, Any]) -> dict[str, Any]:
         "direct_body_dependencies": probe["direct_body"],
         "direct_dependencies": probe["direct"],
         "observed_direct_proof_edges": [
-            {
-                **edge,
-                "layer": "G_proof",
-                "relation": "PROOF_USES_DECLARATION",
-                "authority_state": "OBSERVED",
-                "semantic_authority": False,
-            }
+            {**edge, "layer": "G_proof", "relation": "PROOF_USES_DECLARATION", "authority_state": "OBSERVED", "semantic_authority": False}
             for edge in probe["edges"]
         ],
         "derived_local_transitive_closure": [v["declaration"] for v in probe["local_declarations"]],
@@ -385,8 +363,8 @@ def extract(config_path: Path) -> dict[str, Any]:
     for root in config["roots"]:
         first = run_probe(project_dir, config["module"], root)
         second = run_probe(project_dir, config["module"], root)
-        if normalized_probe(first) != normalized_probe(second):
-            reject("NONDETERMINISTIC_PROBE_OUTPUT", f"repeated extraction differs for {root}")
+        if first != second:
+            reject("NONDETERMINISTIC_PROBE_CONTENT", f"repeated canonical extraction differs for {root}")
         roots.append(build_root_report(root, first))
         imports.update(first["imports"])
     validate_expected_axioms(config, roots)
