@@ -1,0 +1,20 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["$schema","schema_version","record_id","campaign_id","programme_issue","umbrella_issue","authority","target_lock","search_execution","independent_verification","disposition","nonclaims"],
+  "properties":{
+    "$schema":{"const":"OZ_RT_BZ_T3_002.schema.json"},
+    "schema_version":{"const":"1.0.0"},
+    "record_id":{"const":"OZ-RT-BZ-T3-002"},
+    "campaign_id":{"const":"OZ-001"},
+    "programme_issue":{"const":315},
+    "umbrella_issue":{"const":113},
+    "authority":{"type":"object","additionalProperties":true,"required":["programme_base_commit","predecessor_merge","upstream_repository","admitted_source_head","admitted_source_tree","source_loci"]},
+    "target_lock":{"type":"object","additionalProperties":false,"required":["label","quantifier","normalized_zero_form","kernel","representative","domain","finite_evidence_theorem_effect"],"properties":{"label":{"const":"T3"},"quantifier":{"const":"for every integer n >= 0"},"normalized_zero_form":{"type":"string"},"kernel":{"type":"string"},"representative":{"const":"w5_sym"},"domain":{"type":"string"},"finite_evidence_theorem_effect":{"const":"NONE"}}},
+    "search_execution":{"type":"object","additionalProperties":false,"required":["state","route","ansatz","normalization","sample_domain","degree_ladder","result_file","result_sha256","terminal","strongest_frontier","classification","mathematical_scope"],"properties":{"state":{"const":"PHASE_1_EXECUTED"},"route":{"const":"TWO_STAGE_FIBRE_FIRST_ORDER_RATIONAL_TELESCOPER"},"ansatz":{"type":"string"},"normalization":{"type":"string"},"sample_domain":{"type":"object"},"degree_ladder":{"const":[0,1,2,3,4,5,6]},"result_file":{"const":"SEARCH_RESULT.json"},"result_sha256":{"pattern":"^[0-9a-f]{64}$"},"terminal":{"const":"NO_CERTIFICATE_IN_BOUNDED_CLASS"},"strongest_frontier":{"type":"object"},"classification":{"const":"INCONSISTENT_ANSATZ"},"mathematical_scope":{"type":"string"}}},
+    "independent_verification":{"type":"object","additionalProperties":false,"required":["producer","verifier","producer_solver_reused_by_verifier","shared_component","verification","finite_t3_replay_range","proof_effect"],"properties":{"producer":{"const":"producer.py"},"verifier":{"const":"verify.py"},"producer_solver_reused_by_verifier":{"const":false},"shared_component":{"type":"string"},"verification":{"const":"PASS"},"finite_t3_replay_range":{"type":"object"},"proof_effect":{"const":"NONE"}}},
+    "disposition":{"type":"object","additionalProperties":false,"required":["status","proof_found","counterexample_found","proof_effect","promotion_effect","characterized_blocker"],"properties":{"status":{"const":"OPEN_WITH_CHARACTERIZED_BLOCKER"},"proof_found":{"const":false},"counterexample_found":{"const":false},"proof_effect":{"const":"NONE"},"promotion_effect":{"const":"NONE"},"characterized_blocker":{"type":"object"}}},
+    "nonclaims":{"type":"object","minProperties":10,"additionalProperties":{"const":false}}
+  }
+}
