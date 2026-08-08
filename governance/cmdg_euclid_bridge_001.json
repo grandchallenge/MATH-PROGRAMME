@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0.0",
+  "operation_id": "CMDG-EUCLID-BRIDGE-001",
+  "protected_baseline": "25f5fef222433f60f28b375d6ea814b844b5b062",
+  "euclid_authority": {
+    "programme_closeout": "governance/euclid_gcd_e2e_001_closeout.json",
+    "programme_closeout_blob_sha1": "a5e390ee01b23862a79d53a7cac1c0d6f0930608",
+    "mathforge_commit": "6b58a95e5ca9fda5630e17b58fbdb596ba35dee2",
+    "mathsolve_commit": "e11ccf495602486d97c4f5f2abdfa79351726881",
+    "mathcert_artifact_commit": "99dc136bc9972f2a8ad99b428375f08c3a0eaf95",
+    "mathcert_merge_commit": "78b69e6a3461a83f4893d61c421b1570c08a9ba6",
+    "mathcert_source": "MathCert/Domains/NumberTheory/EuclidGCD.lean",
+    "mathcert_source_blob_sha1": "bf0ab5bac117490299ff5bffb8ca59263ec3f2a3",
+    "roots": [
+      "MathCert.NumberTheory.acceptedGCDCertificate_sound",
+      "MathCert.NumberTheory.euclidTrace252105",
+      "MathCert.NumberTheory.bezout252105",
+      "MathCert.NumberTheory.gcd252105",
+      "MathCert.NumberTheory.accepted252105",
+      "MathCert.NumberTheory.accepted252105_sound"
+    ]
+  },
+  "original_proof_environment": {
+    "lean_toolchain": "leanprover/lean4:v4.29.1",
+    "toolchain_blob_sha1": "33e0c088939ad08c9f2b1befa3118a423b06ad7d",
+    "lake_manifest_blob_sha1": "4d92c79ff638dceb6c44472e1e96bbac9cebcdfd",
+    "mathcert_commit": "78b69e6a3461a83f4893d61c421b1570c08a9ba6"
+  },
+  "bridge_proof_environment": {
+    "lean_toolchain": "leanprover/lean4:v4.33.0-rc1",
+    "toolchain_blob_sha1": "fd85b262bf1c734663aa8292b0101f672168788f",
+    "lake_manifest_blob_sha1": "9e478e09f622406970dc9613f6cf323ade82f787",
+    "mathlib_commit": "79d0395a1825a6264ad5d269e35e60537518955e",
+    "root": "CMDG.EuclidBridge.euclid_gcd_relational_bridge"
+  },
+  "semantic_scope": {
+    "transport_route": ["N_DTT", "N_NNO", "N_ZFC"],
+    "admitted_operation_dependencies": ["ZERO", "SUCCESSOR", "ADDITION", "MULTIPLICATION", "ORDER", "DIVISIBILITY"],
+    "transported_objects": ["RELATIONAL_GCD_SPECIFICATION", "EUCLIDEAN_TRACE_252_105"],
+    "gcd_function_transport": "NOT_ADMITTED",
+    "bezout_integer_transport": "OUT_OF_SCOPE_PENDING_INTEGER_CONCORDANCE",
+    "zfc_scope": "FINITE_VON_NEUMANN_IMAGE_ONLY"
+  },
+  "formal_bridge": {
+    "source": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGEuclidBridge.lean",
+    "dtt_relation": "CMDG.EuclidBridge.DTTIsGCD",
+    "nno_relation": "CMDG.EuclidBridge.NNOIsGCD",
+    "zfc_relation": "CMDG.EuclidBridge.ZFCFiniteImageIsGCD",
+    "dtt_to_nno_transport": "CMDG.EuclidBridge.dtt_to_nno_gcd",
+    "nno_to_zfc_transport": "CMDG.EuclidBridge.nno_to_zfc_finite_image_gcd",
+    "root": "CMDG.EuclidBridge.euclid_gcd_relational_bridge"
+  },
+  "graph": {
+    "nodes": "fixtures/cmdg/euclid_bridge_001/nodes.json",
+    "edges": "fixtures/cmdg/euclid_bridge_001/edges.json",
+    "semantic_edge_authority": "PROPOSED",
+    "derived_closure_authoritative": false
+  },
+  "claim_boundary": {
+    "original_euclid_certification_modified": false,
+    "new_or_stronger_gcd_theorem_conferred": false,
+    "nat_gcd_function_transport_conferred": false,
+    "integer_bezout_transport_conferred": false,
+    "syntactic_zfc_realization_conferred": false,
+    "foundational_equivalence_conferred": false,
+    "dependency_minimality_claim": false,
+    "global_dependency_completeness_claim": false,
+    "graph_certified_conferred": false,
+    "independent_review_required": true,
+    "protected_admission_required": true,
+    "c04_c05_c06_unchanged": true
+  }
+}
