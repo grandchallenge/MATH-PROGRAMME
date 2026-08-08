@@ -7,6 +7,7 @@ import target
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE / 'SEARCH_RESULT.json'
+STAGES = [(d, 10) for d in range(7)] + [(7, 12), (8, 14), (9, 15)]
 
 def monomials(d: int) -> list[tuple[int,int]]:
     return [(i,j) for i in range(d+1) for j in range(d+1-i)]
@@ -34,23 +35,25 @@ def rank(a: list[list[Q]]) -> int:
         if r == len(m): break
     return r
 
-def build_matrix(d: int, n_max: int=10) -> list[list[Q]]:
+def build_matrix(d: int, n_max: int) -> list[list[Q]]:
     rows=[]
     for n in range(1,n_max+1):
         g=Q(0)
         for k,v in enumerate(target.fibre_values(n)):
             rows.append(row(n,k,v,g,d))
             g += v
+        if g != 0:
+            raise AssertionError(f'finite T3 replay drift at n={n}')
     return rows
 
 def main() -> int:
     stages=[]
-    for d in range(7):
-        a=build_matrix(d)
+    for d,n_max in STAGES:
+        a=build_matrix(d,n_max)
         unknowns=2*len(monomials(d))
         rk=rank(a)
-        stages.append({'route_id':f'FIBRE_Q_TOTAL_DEGREE_{d}','degree':d,'equations':len(a),'unknowns':unknowns,'rank':rk,'nullity':unknowns-rk,'classification':'INCONSISTENT_ANSATZ' if rk==unknowns else 'CANDIDATE_SPACE_REMAINS'})
-    result={'schema_version':'1.0.0','search_class':'FIRST_ORDER_FIBRE_RATIONAL_TELESCOPER_G_EQUALS_Q_TIMES_V','sample_domain':{'n_min':1,'n_max':10,'k':'0..n'},'normalization':'homogeneous equation D(n,k)G(n,k)-N(n,k)V(n,k)=0; nonzero (N,D) required','stages':stages,'proof_effect':'NONE','terminal':'NO_CERTIFICATE_IN_BOUNDED_CLASS'}
+        stages.append({'route_id':f'FIBRE_Q_TOTAL_DEGREE_{d}','degree':d,'n_max':n_max,'equations':len(a),'unknowns':unknowns,'rank':rk,'nullity':unknowns-rk,'classification':'INCONSISTENT_ANSATZ' if rk==unknowns else 'CANDIDATE_SPACE_REMAINS'})
+    result={'schema_version':'1.0.0','search_class':'FIRST_ORDER_FIBRE_RATIONAL_TELESCOPER_G_EQUALS_Q_TIMES_V','sample_domain':{'n_min':1,'k':'0..n','stage_specific_n_max':True},'normalization':'homogeneous equation D(n,k)G(n,k)-N(n,k)V(n,k)=0; nonzero (N,D) required','stages':stages,'proof_effect':'NONE','terminal':'NO_CERTIFICATE_IN_BOUNDED_CLASS'}
     OUT.write_text(json.dumps(result,indent=2,sort_keys=True)+'\n',encoding='utf-8')
     print(json.dumps(result,sort_keys=True))
     return 0
