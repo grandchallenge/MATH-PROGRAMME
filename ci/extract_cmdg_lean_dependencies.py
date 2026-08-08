@@ -20,7 +20,7 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXTRACTOR_VERSION = "1.0.1"
+EXTRACTOR_VERSION = "1.0.2"
 NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_'.]*(?:\.[A-Za-z_][A-Za-z0-9_']*)*$")
 COMMON_AXIOMS = ("propext", "Classical.choice", "Quot.sound")
 EXPECTED_BOUNDARY = {
@@ -274,7 +274,8 @@ def parse_probe(stdout: str, stderr: str) -> dict[str, Any]:
         elif tag in {"DIRECT_SIGNATURE", "DIRECT_BODY", "DIRECT", "AXIOM", "IMPORT"}:
             if len(parts) != 3:
                 reject("PROBE_OUTPUT_MALFORMED", line)
-            result[tag.lower()].append(parts[2])
+            key = {"AXIOM": "axioms", "IMPORT": "imports"}.get(tag, tag.lower())
+            result[key].append(parts[2])
         elif tag in {"LOCAL_DECL", "FRONTIER"}:
             if len(parts) != 5:
                 reject("PROBE_OUTPUT_MALFORMED", line)
