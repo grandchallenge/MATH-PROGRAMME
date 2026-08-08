@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/documentary_historical_micro.schema.json",
+  "title": "MATH-PROGRAMME source-locked historical documentary micro-edition manifest member",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "slug",
+    "domain_id",
+    "campaign_id",
+    "scope_relation",
+    "documentary_tier",
+    "title",
+    "topic",
+    "claim_status",
+    "problem_class",
+    "display_status",
+    "pages",
+    "source_record",
+    "source_lock",
+    "web_page",
+    "edition_record",
+    "claim_authority",
+    "plates_authority",
+    "governed_transcription",
+    "rendered_pdf",
+    "latex_source",
+    "authoritative_source_bundle"
+  ],
+  "properties": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "domain_id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9-]*$"
+    },
+    "campaign_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope_relation": {
+      "const": "source_locked_historical_microedition"
+    },
+    "documentary_tier": {
+      "const": "micro"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "topic": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim_status": {
+      "const": "historical_source_locked"
+    },
+    "problem_class": {
+      "const": "classical_historical_documentary"
+    },
+    "display_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pages": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "source_record": {
+      "type": "string",
+      "pattern": "^sources/[A-Za-z0-9_./-]+\\.source\\.json$"
+    },
+    "source_lock": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@[0-9a-f]{40}$"
+    },
+    "web_page": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+\\.md$"
+    },
+    "edition_record": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+\\.edition\\.json$"
+    },
+    "claim_authority": {
+      "type": "string",
+      "pattern": "^(?:\\.\\./)?governance/[A-Za-z0-9_./-]+\\.json$"
+    },
+    "plates_authority": {
+      "const": "pedagogical_orientation_only"
+    },
+    "governed_transcription": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["git_blob_sha1", "bytes", "sha256", "availability"],
+      "properties": {
+        "git_blob_sha1": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "availability": {
+          "const": "protected_cross_repository_reference"
+        }
+      }
+    },
+    "rendered_pdf": {
+      "$ref": "#/$defs/not_applicable_web_artifact"
+    },
+    "latex_source": {
+      "$ref": "#/$defs/not_applicable_web_artifact"
+    },
+    "authoritative_source_bundle": {
+      "$ref": "#/$defs/protected_reference_artifact"
+    }
+  },
+  "$defs": {
+    "not_applicable_web_artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bytes", "sha256", "availability", "release_locator"],
+      "properties": {
+        "bytes": {"type": "null"},
+        "sha256": {"type": "null"},
+        "availability": {"const": "not_applicable_web_microedition"},
+        "release_locator": {"type": "null"}
+      }
+    },
+    "protected_reference_artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bytes", "sha256", "availability", "release_locator"],
+      "properties": {
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "availability": {
+          "const": "protected_cross_repository_reference"
+        },
+        "release_locator": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@[0-9a-f]{40}$"
+        }
+      }
+    }
+  }
+}
