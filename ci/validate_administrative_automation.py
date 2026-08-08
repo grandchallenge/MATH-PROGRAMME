@@ -43,6 +43,28 @@ def workflow_permissions(text: str) -> dict[str, str]:
     return {key: value for key, value in re.findall(r"(?m)^  ([a-z-]+):\s*([a-z]+)\s*$", match.group(1))}
 
 
+def validate_refresh_trigger_redundancy(text: str) -> list[str]:
+    errors: list[str] = []
+    minutes: set[int] = set()
+    for cron in re.findall(r"cron:\s*'([^']+)'", text):
+        match = re.fullmatch(r"([0-5]?\d)\s+\*\s+\*\s+\*\s+\*", cron.strip())
+        if match:
+            minutes.add(int(match.group(1)))
+    ordered = sorted(minutes)
+    if len(ordered) < 4:
+        errors.append(
+            "candidate workflow requires at least four distinct recurring hourly trigger offsets"
+        )
+        return errors
+    gaps = [later - earlier for earlier, later in zip(ordered, ordered[1:])]
+    gaps.append(ordered[0] + 60 - ordered[-1])
+    if max(gaps) > 20:
+        errors.append(
+            f"candidate workflow recurring trigger gap exceeds 20 minutes: {ordered}"
+        )
+    return errors
+
+
 def validate_workflows(config: dict) -> list[str]:
     errors: list[str] = []
     candidate = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
@@ -62,6 +84,19 @@ def validate_workflows(config: dict) -> list[str]:
     for cron in [*config["preparation_crons_utc"], config["hourly_refresh_cron_utc"]]:
         if f"cron: '{cron}'" not in candidate:
             errors.append(f"candidate workflow missing protected preparation cron: {cron}")
+    errors.extend(validate_refresh_trigger_redundancy(candidate))
+    if "workflow_dispatch:" not in candidate:
+        errors.append("candidate workflow missing explicit workflow_dispatch recovery path")
+    provenance_markers = (
+        "administrative-maintenance-trigger.json",
+        "github.event.schedule",
+        "GITHUB_EVENT_NAME",
+        "GITHUB_RUN_ID",
+        "GITHUB_RUN_ATTEMPT",
+    )
+    for marker in provenance_markers:
+        if marker not in candidate:
+            errors.append(f"candidate workflow missing trigger provenance marker: {marker}")
     if "pull_request:" in candidate or "pull_request_target:" in candidate:
         errors.append("write-capable candidate workflow must not execute pull-request code")
     if "pull_request:" in sync or "pull_request_target:" in sync:
