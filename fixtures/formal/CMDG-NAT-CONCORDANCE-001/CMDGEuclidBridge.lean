@@ -34,7 +34,8 @@ theorem dtt_to_nno_gcd {a b d : Nat} :
   constructor
   · rintro ⟨hp, ha, hb, hg⟩
     refine ⟨?_, ?_, ?_, ?_⟩
-    · simpa [dttToNNO, nnoLe, nnoSucc, nnoZero] using hp
+    · change 1 ≤ d
+      omega
     · simpa [dttToNNO, nnoDvd] using ha
     · simpa [dttToNNO, nnoDvd] using hb
     · intro k hka hkb
@@ -42,7 +43,8 @@ theorem dtt_to_nno_gcd {a b d : Nat} :
         (by simpa [dttToNNO, nnoDvd] using hkb)
   · rintro ⟨hp, ha, hb, hg⟩
     refine ⟨?_, ?_, ?_, ?_⟩
-    · simpa [dttToNNO, nnoLe, nnoSucc, nnoZero] using hp
+    · change 0 < d
+      omega
     · simpa [dttToNNO, nnoDvd] using ha
     · simpa [dttToNNO, nnoDvd] using hb
     · intro k hka hkb
