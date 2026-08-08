@@ -231,6 +231,9 @@ jobs:
           cat lean-build.log
           exit "$status"
 
+      - name: Extract CMDG LOG-GCD Lean dependencies
+        run: python3 ci/extract_cmdg_lean_dependencies.py fixtures/cmdg/extractor_001/log_gcd.json --output cmdg-log-gcd-dependencies.json
+
       - name: Preserve Lean failure log
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -287,6 +290,9 @@ jobs:
           lake --version
           test -f lake-manifest.json
           lake build
+
+      - name: Extract CMDG PC-WP04 Lean dependencies
+        run: python3 ci/extract_cmdg_lean_dependencies.py fixtures/cmdg/extractor_001/pc_wp04.json --output cmdg-pc-wp04-dependencies.json
 
   union-closed-mathcert:
     name: Replay pinned Union-Closed MATHCERT evidence
