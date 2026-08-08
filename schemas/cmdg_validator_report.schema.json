@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_validator_report.schema.json",
+  "title": "CMDG deterministic runtime validator report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "validator_version", "package_id", "package_digest_sha256",
+    "manifest_id", "manifest_version", "manifest_git_blob_sha1", "root_node_id",
+    "authoritative_direct_semantic_edge_ids", "traversed_direct_semantic_edge_ids",
+    "derived_reachable_node_ids", "boundary_exits", "realization_checks",
+    "quotient_generator_checks", "pin_checks", "footprint_summary",
+    "unresolved_obligations", "rejection_codes", "terminal_state", "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "validator_version": {"const": "1.0.0"},
+    "package_id": {"type": "string", "minLength": 1},
+    "package_digest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "manifest_id": {"type": "string"},
+    "manifest_version": {"type": "string"},
+    "manifest_git_blob_sha1": {"type": "string", "pattern": "^$|^[0-9a-f]{40}$"},
+    "root_node_id": {"type": "string"},
+    "authoritative_direct_semantic_edge_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "traversed_direct_semantic_edge_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "derived_reachable_node_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "boundary_exits": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["node_id", "trust_class", "authority_refs", "allowed_traversal_purposes"],
+        "properties": {
+          "node_id": {"type": "string", "minLength": 1},
+          "trust_class": {"type": "string", "minLength": 1},
+          "authority_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+          "allowed_traversal_purposes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    },
+    "realization_checks": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["edge_id", "status", "proof_environment_ref"],
+        "properties": {
+          "edge_id": {"type": "string", "minLength": 1},
+          "status": {"enum": ["ACCEPTED", "REJECTED", "NOT_CHECKED"]},
+          "proof_environment_ref": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "quotient_generator_checks": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["edge_id", "status", "certification_ref"],
+        "properties": {
+          "edge_id": {"type": "string", "minLength": 1},
+          "status": {"enum": ["ACCEPTED", "REJECTED", "NOT_CHECKED"]},
+          "certification_ref": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "pin_checks": {
+      "type": "object", "additionalProperties": false,
+      "required": ["manifest_identity", "proof_environment", "replay", "implementation_dependencies"],
+      "properties": {
+        "manifest_identity": {"enum": ["MATCH", "MISMATCH", "NOT_CHECKED"]},
+        "proof_environment": {"enum": ["MATCH", "MISMATCH", "NOT_CHECKED"]},
+        "replay": {"enum": ["MATCH", "MISMATCH", "NOT_CHECKED"]},
+        "implementation_dependencies": {"enum": ["MATCH", "MISMATCH", "NOT_CHECKED"]}
+      }
+    },
+    "footprint_summary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["axiom_entries", "classicality_entries", "boundary_trust_entries"],
+      "properties": {
+        "axiom_entries": {"type": "integer", "minimum": 0},
+        "classicality_entries": {"type": "integer", "minimum": 0},
+        "boundary_trust_entries": {"type": "integer", "minimum": 0}
+      }
+    },
+    "unresolved_obligations": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "rejection_codes": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"}},
+    "terminal_state": {"enum": ["VALIDATOR_ACCEPTED_PRECONDITIONS", "VALIDATOR_REJECTED"]},
+    "claim_boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["graph_certified_conferred", "global_completeness_claim", "derived_closure_authoritative"],
+      "properties": {
+        "graph_certified_conferred": {"const": false},
+        "global_completeness_claim": {"const": false},
+        "derived_closure_authoritative": {"const": false}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"terminal_state": {"const": "VALIDATOR_ACCEPTED_PRECONDITIONS"}}, "required": ["terminal_state"]},
+      "then": {
+        "properties": {
+          "rejection_codes": {"maxItems": 0},
+          "pin_checks": {
+            "properties": {
+              "manifest_identity": {"const": "MATCH"},
+              "proof_environment": {"const": "MATCH"},
+              "replay": {"const": "MATCH"},
+              "implementation_dependencies": {"const": "MATCH"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"terminal_state": {"const": "VALIDATOR_REJECTED"}}, "required": ["terminal_state"]},
+      "then": {"properties": {"rejection_codes": {"minItems": 1}}}
+    }
+  ]
+}

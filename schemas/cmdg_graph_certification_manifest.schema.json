@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_graph_certification_manifest.schema.json",
+  "title": "CMDG manifest-relative graph-certification candidate contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "manifest_id", "manifest_version", "intent", "root", "ontology_version",
+    "schema_versions", "semantic_scope", "direct_semantic_edges", "closure_policy", "boundaries",
+    "realizations", "proof_environment", "axiom_footprint", "classicality_footprint",
+    "implementation_dependencies", "provenance_references", "replay", "unresolved_obligations",
+    "quotient_projection", "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "manifest_id": {"type": "string", "pattern": "^CMDG-MANIFEST-[A-Z0-9][A-Z0-9._-]*$"},
+    "manifest_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "intent": {"enum": ["CANDIDATE", "PRODUCTION_INTENT"]},
+    "root": {"$ref": "#/$defs/root"},
+    "ontology_version": {"type": "string", "minLength": 1},
+    "schema_versions": {
+      "type": "object", "additionalProperties": false, "required": ["node", "edge", "manifest"],
+      "properties": {"node": {"const": "1.0.0"}, "edge": {"const": "1.0.0"}, "manifest": {"const": "1.0.0"}}
+    },
+    "semantic_scope": {"$ref": "#/$defs/semanticScope"},
+    "direct_semantic_edges": {"type": "array", "items": {"$ref": "https://grandchallenge.ai/schemas/cmdg_edge.schema.json"}},
+    "closure_policy": {"$ref": "#/$defs/closurePolicy"},
+    "boundaries": {"type": "array", "items": {"$ref": "#/$defs/boundary"}},
+    "realizations": {"type": "array", "items": {"$ref": "https://grandchallenge.ai/schemas/cmdg_edge.schema.json"}},
+    "proof_environment": {"$ref": "#/$defs/proofEnvironment"},
+    "axiom_footprint": {"$ref": "#/$defs/footprint"},
+    "classicality_footprint": {"$ref": "#/$defs/footprint"},
+    "implementation_dependencies": {"type": "array", "items": {"$ref": "#/$defs/implementationDependency"}},
+    "provenance_references": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "replay": {"$ref": "#/$defs/replay"},
+    "unresolved_obligations": {"type": "array", "items": {"$ref": "#/$defs/obligation"}},
+    "quotient_projection": {"$ref": "#/$defs/quotientProjection"},
+    "claim_boundary": {"$ref": "#/$defs/claimBoundary"}
+  },
+  "$defs": {
+    "root": {
+      "type": "object", "additionalProperties": false,
+      "required": ["node_id", "root_kind", "programme_level", "replayable_certificate_equivalent"],
+      "properties": {
+        "node_id": {"type": "string", "minLength": 1},
+        "root_kind": {"enum": ["THEOREM", "CERTIFICATE", "NON_THEOREM"]},
+        "programme_level": {"type": "integer", "minimum": 0, "maximum": 5},
+        "replayable_certificate_equivalent": {"type": "boolean"},
+        "equivalence_admission_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "semanticScope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["description", "included_node_ids", "completeness_semantics", "global_completeness_claim"],
+      "properties": {
+        "description": {"type": "string", "minLength": 1},
+        "included_node_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "completeness_semantics": {"const": "MANIFEST_RELATIVE_ONLY"},
+        "global_completeness_claim": {"const": false}
+      }
+    },
+    "closurePolicy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["policy_id", "policy_version", "traversable_semantic_relations", "direction", "boundary_behavior", "realization_crossing", "equivalence_handling", "derived_closure_authoritative", "quotient_requires_certified_generators"],
+      "properties": {
+        "policy_id": {"type": "string", "minLength": 1},
+        "policy_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "traversable_semantic_relations": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": {"enum": ["REQUIRES_DEFINITION", "USES_THEOREM", "CONSTRUCTS", "INSTANTIATES", "GENERALIZES", "INTERPRETS", "MODELS", "EQUIVALENT_TO", "TRANSPORTS_ALONG", "USES_AXIOM", "USES_CLASSICALITY", "SOURCE_DERIVED"]}
+        },
+        "direction": {"const": "DEPENDENT_TO_PREREQUISITE"},
+        "boundary_behavior": {"enum": ["TERMINATE_AT_DECLARED_BOUNDARY", "TRAVERSE_ONLY_AS_DECLARED"]},
+        "realization_crossing": {"enum": ["EXPLICIT_REALIZES_AS_ONLY", "DISABLED"]},
+        "equivalence_handling": {"enum": ["PRESERVE_MULTIGRAPH", "CERTIFIED_QUOTIENT_PROJECTION_ALLOWED"]},
+        "derived_closure_authoritative": {"const": false},
+        "quotient_requires_certified_generators": {"const": true}
+      }
+    },
+    "boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["node_id", "rationale", "trust_class", "authority_refs", "allowed_traversal_purposes"],
+      "properties": {
+        "node_id": {"type": "string", "minLength": 1},
+        "rationale": {"type": "string", "minLength": 1},
+        "trust_class": {"enum": ["REUSED_LIBRARY", "EXTERNAL_CERTIFICATE", "OBJECT_THEORY_ASSUMPTION", "DECLARED_SERVICE", "OTHER_REVIEWED_BOUNDARY"]},
+        "authority_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "allowed_traversal_purposes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["SEMANTIC", "PROOF", "IMPLEMENTATION", "PROVENANCE"]}}
+      }
+    },
+    "proofEnvironment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["environment_id", "prover", "toolchain", "pins", "clean_replay_command"],
+      "properties": {
+        "environment_id": {"type": "string", "minLength": 1},
+        "prover": {"type": "string", "minLength": 1},
+        "toolchain": {"type": "string", "minLength": 1},
+        "pins": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "clean_replay_command": {"type": "string", "minLength": 1}
+      }
+    },
+    "footprint": {
+      "type": "object", "additionalProperties": false,
+      "required": ["operational_substrate", "imported_formal_declarations", "root_proof", "object_theory_assumptions", "boundary_trust"],
+      "properties": {
+        "operational_substrate": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "imported_formal_declarations": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "root_proof": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "object_theory_assumptions": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "boundary_trust": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "implementationDependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["dependency_id", "locator", "pin", "purpose"],
+      "properties": {
+        "dependency_id": {"type": "string", "minLength": 1},
+        "locator": {"type": "string", "minLength": 1},
+        "pin": {"type": "string", "minLength": 1},
+        "purpose": {"enum": ["PROOF_REPLAY", "VALIDATION", "BUILD", "TOOLCHAIN"]}
+      }
+    },
+    "replay": {
+      "type": "object", "additionalProperties": false,
+      "required": ["route_id", "clean_environment_required", "exact_environment_ref", "command", "artifact_refs"],
+      "properties": {
+        "route_id": {"type": "string", "minLength": 1},
+        "clean_environment_required": {"const": true},
+        "exact_environment_ref": {"type": "string", "minLength": 1},
+        "command": {"type": "string", "minLength": 1},
+        "artifact_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "obligation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["obligation_id", "scope", "description", "status"],
+      "properties": {
+        "obligation_id": {"type": "string", "minLength": 1},
+        "scope": {"enum": ["INSIDE_BOUNDARY", "OUTSIDE_BOUNDARY"]},
+        "description": {"type": "string", "minLength": 1},
+        "status": {"const": "OPEN"}
+      }
+    },
+    "quotientProjection": {
+      "type": "object", "additionalProperties": false,
+      "required": ["enabled", "generator_edge_ids", "traceability_required"],
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "generator_edge_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "traceability_required": {"const": true}
+      }
+    },
+    "claimBoundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_validation_only", "graph_certified_conferred", "global_completeness_claim"],
+      "properties": {
+        "schema_validation_only": {"const": true},
+        "graph_certified_conferred": {"const": false},
+        "global_completeness_claim": {"const": false}
+      }
+    }
+  }
+}
