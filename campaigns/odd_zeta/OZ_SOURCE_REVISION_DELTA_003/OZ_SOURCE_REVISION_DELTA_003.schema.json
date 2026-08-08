@@ -1,0 +1,47 @@
+{
+  "$id": "https://grandchallenge.ai/schemas/oz-source-revision-delta-003.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OZ-SOURCE-REVISION-DELTA-003",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema","schema_version","record_id","campaign_id","programme_issue","umbrella_issue","authority","execution_state","candidate_disposition","promotion_effect","changed_files","delta_scope","source_loci","depth_reopening_audit","claim_classes","claim_register","executable_replay","lean_replay","route_recommendations","nonclaims"],
+  "properties": {
+    "$schema": {"const": "OZ_SOURCE_REVISION_DELTA_003.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "record_id": {"const": "OZ-SOURCE-REVISION-DELTA-003"},
+    "campaign_id": {"const": "OZ-001"},
+    "programme_issue": {"const": 305},
+    "umbrella_issue": {"const": 113},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["programme_base_commit","upstream_repository","governed_source_head","governed_source_tree","candidate_source_head","candidate_tree","ahead_by","changed_file_count","sharp12_path","sharp12_blob","sharp12_changed"],
+      "properties": {
+        "programme_base_commit": {"pattern": "^[0-9a-f]{40}$"},
+        "upstream_repository": {"const": "rain-1/-odd-zeta-values-moremath"},
+        "governed_source_head": {"const": "790685b7ee4f642a8a88a1bd120636d1b8b39ea8"},
+        "governed_source_tree": {"const": "646ee73dd9066e059b043fad64fb20959f111cbf"},
+        "candidate_source_head": {"const": "6cc0bf07137815ceeef0d9f340559f85352391e5"},
+        "candidate_tree": {"const": "be780558454b704bdd016a3070d698c2e106e2b8"},
+        "ahead_by": {"const": 20},
+        "changed_file_count": {"const": 44},
+        "sharp12_path": {"const": "papers_out/sharp12/sharp12.tex"},
+        "sharp12_blob": {"const": "6a347e2a483ec781afac98016635ce1d73b3c38e"},
+        "sharp12_changed": {"const": false}
+      }
+    },
+    "execution_state": {"enum": ["STATIC_AUDIT_COMPLETE_PENDING_INDEPENDENT_REPLAY","REVIEW_READY","CLOSED"]},
+    "candidate_disposition": {"enum": ["SOURCE_REVISION_ADMITTED_NO_PROMOTION","SOURCE_REVISION_PARTIALLY_ADMITTED_WITH_BLOCKERS","SOURCE_REVISION_REJECTED_IDENTITY_OR_REPLAY_FAILURE"]},
+    "promotion_effect": {"const": "NONE"},
+    "changed_files": {"type": "array", "minItems": 44, "maxItems": 44, "uniqueItems": true, "items": {"type": "string"}},
+    "delta_scope": {"type": "object"},
+    "source_loci": {"type": "array", "minItems": 6, "items": {"type": "object"}},
+    "depth_reopening_audit": {"type": "array", "minItems": 7, "maxItems": 7, "items": {"type": "object", "required": ["id","state","finding"], "properties": {"id": {"pattern": "^REOPEN-0[1-7]$"}, "state": {"enum": ["SATISFIED","PARTIALLY_PRESENT_NONAUTHORITATIVE","ABSENT"]}, "finding": {"type": "string", "minLength": 20}}}},
+    "claim_classes": {"type": "array", "minItems": 6, "uniqueItems": true},
+    "claim_register": {"type": "array", "minItems": 10, "items": {"type": "object"}},
+    "executable_replay": {"type": "object"},
+    "lean_replay": {"type": "object"},
+    "route_recommendations": {"type": "array", "minItems": 5},
+    "nonclaims": {"type": "object"}
+  }
+}
