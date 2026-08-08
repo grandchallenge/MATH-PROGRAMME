@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+import yaml
 from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -51,6 +52,17 @@ def load(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def nav_contains(node: Any, target: str) -> bool:
+    """Return whether a parsed MkDocs nav tree contains the exact target path."""
+    if isinstance(node, str):
+        return node == target
+    if isinstance(node, list):
+        return any(nav_contains(item, target) for item in node)
+    if isinstance(node, dict):
+        return any(nav_contains(value, target) for value in node.values())
+    return False
+
+
 def semantic_errors() -> list[str]:
     errors: list[str] = []
     required = [PAGE, SOURCE, EDITION, SCHEMA, MANIFEST, ADMISSION, MKDOCS, CSS, *PLATES]
@@ -71,6 +83,11 @@ def semantic_errors() -> list[str]:
     manifest = load(MANIFEST)
     page = PAGE.read_text(encoding="utf-8")
     mkdocs = MKDOCS.read_text(encoding="utf-8")
+    try:
+        mkdocs_config = yaml.safe_load(mkdocs)
+    except yaml.YAMLError:
+        mkdocs_config = {}
+        errors.append("MkDocs configuration is invalid YAML")
     css = CSS.read_text(encoding="utf-8")
 
     if source.get("source_lock_merge") != SOURCE_LOCK:
@@ -166,7 +183,10 @@ def semantic_errors() -> list[str]:
         if v.get("plates_authority") != "pedagogical_orientation_only":
             errors.append("documentary manifest plate authority inflation")
 
-    if "Euclid, Book VII: Measure and Common Measure: documentaries/euclid_book_vii_micro.md" not in mkdocs:
+    if not nav_contains(
+        mkdocs_config.get("nav", []) if isinstance(mkdocs_config, dict) else [],
+        "documentaries/euclid_book_vii_micro.md",
+    ):
         errors.append("MkDocs navigation admission missing")
     if "stylesheets/euclid-book-vii.css" not in mkdocs:
         errors.append("Euclid documentary stylesheet not registered")
