@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from __future__ import annotations
 from fractions import Fraction as Q
 from functools import lru_cache
