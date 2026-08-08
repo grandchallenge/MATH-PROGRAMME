@@ -81,7 +81,11 @@ class EuclidBookVIIMicroTests(unittest.TestCase):
             self.assertTrue(any("manifest" in e for e in validator.validate()))
 
     def test_navigation_deletion_rejected(self) -> None:
-        text = validator.MKDOCS.read_text(encoding="utf-8").replace("          - Euclid, Book VII: Measure and Common Measure: documentaries/euclid_book_vii_micro.md\n", "")
+        text = validator.MKDOCS.read_text(encoding="utf-8").replace(
+            "documentaries/euclid_book_vii_micro.md",
+            "documentaries/removed_euclid_book_vii_micro.md",
+            1,
+        )
         with tempfile.NamedTemporaryFile(mode="w", suffix=".yml", encoding="utf-8", delete=False) as tmp:
             tmp.write(text); path = Path(tmp.name)
         self.addCleanup(lambda: path.unlink(missing_ok=True))
