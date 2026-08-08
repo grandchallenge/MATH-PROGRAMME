@@ -3,16 +3,18 @@
 ## Status
 
 **Council consensus:** `RATIFY_WITH_CORRECTIONS` on 2026-08-08.  
-**Human Steward disposition:** pending.  
-**Protected authority:** none until Human Steward approval, final exact-head review, protected merge, and post-merge readback.
+**Human Steward disposition:** `HUMAN_STEWARD_RATIFIED_WITH_COUNCIL_CORRECTIONS`.  
+**Human Steward evidence:** PR #289 top-level comment `5225270603`, binding exact reviewed head `11ed37d35825a381ce75bcc935bb87d2273eed53`.  
+**Protected admission:** PR #289 merged as `076bcdf1631b6f39b8ac84046c301344a43310da` on 2026-08-08.  
+**Protected authority:** active subject to the stage-bounded corrections `CMDG-C01` through `CMDG-C08`; documentary closure is recorded by `CMDG-COUNCIL-AUTHORITY-CLOSURE-001`.
 
 ## Context
 
 The Euclid end-to-end exemplars demonstrated that MATH-PROGRAMME can carry a bounded mathematical statement from source reconstruction through formalization and certification. The Human Steward then approved a broader successor conception: rather than immediately select another isolated advanced theorem, reconstruct and certify the dependency architecture that permits modern mathematics to stand.
 
-The motivating conception is preserved in `docs/CMDG_GRAND_CHALLENGE_PROGRAMME_MEMORIAL.md` as Sections I–XIX. Council docket #288 requested ratification of the programme architecture, foundation policy, typed dependency graph, certification semantics, execution order, cross-foundational natural-number experiment, and Condensed Mathematics frontier.
+The motivating conception is preserved verbatim in `records/CMDG_GRAND_CHALLENGE_PROGRAMME_MEMORIAL.md`, with a rendered pointer at `docs/CMDG_GRAND_CHALLENGE_PROGRAMME_MEMORIAL.md`. Council docket #288 requested ratification of the programme architecture, foundation policy, typed dependency graph, certification semantics, execution order, cross-foundational natural-number experiment, and Condensed Mathematics frontier.
 
-The Agent Council reviewed the docket under `docs/AGENT_COUNCIL_GOVERNANCE.md`, `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`, and `schemas/agent_review.schema.json`. All fifteen schema-required offices recorded findings. The complete deliberation is `docs/CMDG_COUNCIL_DELIBERATION_001.md`; the machine-readable candidate record is `governance/cmdg_council_review_candidate.json`.
+The Agent Council reviewed the docket under `docs/AGENT_COUNCIL_GOVERNANCE.md`, `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`, and `schemas/agent_review.schema.json`. All fifteen schema-required offices recorded findings. The complete historical deliberation is `docs/CMDG_COUNCIL_DELIBERATION_001.md`; the machine-readable pre-ratification candidate record is `governance/cmdg_council_review_candidate.json`.
 
 ## Council finding
 
@@ -24,17 +26,21 @@ Quorum was defined for this docket as completion of all fifteen schema-required 
 - `REJECT`: 0;
 - Referee synthesis: `RATIFY_WITH_CORRECTIONS`.
 
-Council finds CMDG coherent, technically feasible, aligned with the existing MATHFORGE → MATHSOLVE → MATHCERT authority split, and suitable as an overarching MATH-PROGRAMME Grand Challenge.
+Council found CMDG coherent, technically feasible, aligned with the existing MATHFORGE → MATHSOLVE → MATHCERT authority split, and suitable as an overarching MATH-PROGRAMME Grand Challenge.
 
-## Proposed Human Steward decision
+## Human Steward decision
 
-If approved, MATH-PROGRAMME shall adopt:
+The Human Steward ratified the Council disposition at PR #289 exact head `11ed37d35825a381ce75bcc935bb87d2273eed53` and adopted:
 
 > **CMDG — Certified Reconstruction of the Mathematical Dependency Graph**
 
 with the mission to construct a machine-readable, machine-checked, provenance-bearing reconstruction of the dependency architecture of modern mathematics, from formal logic and foundational systems through structural mathematics, category theory, topology, analysis, sheaf/homological machinery, and a demanding modern frontier such as Condensed Mathematics.
 
-Adoption shall preserve the following core decisions:
+The binding disposition is:
+
+`HUMAN_STEWARD_RATIFIED_WITH_COUNCIL_CORRECTIONS`
+
+Adoption preserves the following core decisions:
 
 1. CMDG is not a project to re-formalize all mathematics from scratch.
 2. CMDG separates semantic mathematical dependency, checked-proof dependency, implementation/import dependency, and provenance dependency.
@@ -49,7 +55,7 @@ Adoption shall preserve the following core decisions:
 
 ## Council correction register
 
-Human Steward approval is recommended subject to the following stage-bounded corrections.
+The Human Steward adopted the following stage-bounded corrections as binding obligations.
 
 ### CMDG-C01 — Manifest-relative graph certification
 
@@ -79,11 +85,13 @@ Before the first production `GRAPH_CERTIFIED` artifact, install retained fixture
 
 Before protected CMDG authority activation, preserve the memorial, full Council deliberation, machine-readable review, Human Steward disposition, this ADR and index entry, artifact-ledger and terminology updates, exact-head review evidence, protected merge receipt, and post-merge readback.
 
+`CMDG-COUNCIL-AUTHORITY-CLOSURE-001` is the dedicated closure operation for this correction. Its protected receipt binds the Human Steward disposition, PR #289 exact head, protected merge, protected-main readback, and pre/post-merge workflow evidence. The historical Council deliberation and candidate review remain unchanged as pre-ratification records.
+
 ### CMDG-C08 — Spine terminology
 
 Use `demonstration spine` or `certified spine` for V0/V1/V2 unless minimality or uniqueness is separately proved.
 
-## Consequences if approved
+## Consequences of ratification
 
 - `CMDG-CHARTER-001` is authorized immediately and must incorporate C01, C02, C08, and the controlled terminology identified by Council.
 - Schema and validator work may proceed only after the charter fixes the manifest-relative certification contract.
@@ -91,6 +99,27 @@ Use `demonstration spine` or `certified spine` for V0/V1/V2 unless minimality or
 - Condensed frontier promotion may not proceed past the corresponding C04/C05 gates.
 - No theorem becomes `GRAPH_CERTIFIED` until C01, C02, and C06 are operational.
 - The I–XIX memorial remains a stable motivating reference; later architectural departures require explicit decision deltas rather than silent rewriting.
+
+## Protected admission evidence
+
+PR #289 was admitted from the exact reviewed head named by the Human Steward disposition:
+
+- reviewed PR: `#289`;
+- exact reviewed head: `11ed37d35825a381ce75bcc935bb87d2273eed53`;
+- Human Steward top-level comment: `5225270603`;
+- pre-merge Programme policy: run `31247672054`, success;
+- pre-merge GCL conformance: run `31247672257`, success;
+- pre-merge administrative dispatcher: run `31247672063`, success;
+- ready-for-review dispatcher: run `31247891459`, success;
+- protected merge commit: `076bcdf1631b6f39b8ac84046c301344a43310da`;
+- protected-main readback: `076bcdf1631b6f39b8ac84046c301344a43310da`;
+- post-merge Programme policy: run `31247906697`, success;
+- post-merge GCL conformance: run `31247906944`, success;
+- post-merge administrative dispatcher: run `31247906696`, success;
+- post-merge protected synchronization: run `31247924635`, success;
+- post-merge workflow-run dispatcher: run `31247924653`, success.
+
+The machine-readable closure record is `governance/cmdg_council_authority_closure_001.json`.
 
 ## Rejected alternatives
 
@@ -116,7 +145,7 @@ Rejected. Exact target identity and any concordance must be stated and checked.
 
 ## Claim boundary
 
-This ADR, if approved, authorizes a programme architecture and controlled implementation route. It does not:
+This ADR authorizes a programme architecture and controlled implementation route. It does not:
 
 - prove a new mathematical theorem;
 - establish consistency or relative consistency of ZFC or another foundation;
@@ -125,10 +154,6 @@ This ADR, if approved, authorizes a programme architecture and controlled implem
 - claim independent reproval of Clausen–Scholze results;
 - authorize novelty, priority, publication, patentability, product, deployment, or commercial claims.
 
-## Required Human Steward disposition
+## Authority record
 
-The recommended disposition is:
-
-`HUMAN_STEWARD_RATIFIED_WITH_COUNCIL_CORRECTIONS`
-
-The disposition should name the final reviewed PR head after all Council records are frozen. Protected merge and readback remain separate completion gates.
+The Human Steward disposition, exact-head validation, protected merge, and protected-main workflow evidence are bound by `CMDG-COUNCIL-AUTHORITY-CLOSURE-001`. The original Council deliberation and candidate review remain historical evidence of the pre-ratification state and are not rewritten by this closure record.
