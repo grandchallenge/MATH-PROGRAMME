@@ -17,7 +17,7 @@ Take two positive numbers, `252` and `105`. A source-faithful repeated-subtracti
 
 At this point `21` measures `42`, and it also measures the original two numbers. The Book VII language is about measuring, common measure, and repeated subtraction. It is not the modern quotient/remainder notation used below.
 
-![Repeated-subtraction plate for 252 and 105](assets/documentaries/euclid_book_vii/plate_anthyphairesis.svg){ .euclid-plate }
+![Repeated-subtraction plate for 252 and 105](../assets/documentaries/euclid_book_vii/plate_anthyphairesis.svg){ .euclid-plate }
 
 **Interpretation.** This plate is `pedagogical_orientation_only`. The authoritative historical statements are the source-locked transcriptions below.
 
@@ -93,7 +93,7 @@ The mathematical output is the modern object `gcd(252,105) = 21`. Stage 1 then s
 
 Stage 2 uses that witness to certify the later linear Diophantine criterion. Neither the Bézout identity nor the linear Diophantine theorem is attributed to Euclid in this edition.
 
-![Historical-to-modern concordance plate](assets/documentaries/euclid_book_vii/plate_concordance.svg){ .euclid-plate }
+![Historical-to-modern concordance plate](../assets/documentaries/euclid_book_vii/plate_concordance.svg){ .euclid-plate }
 
 ## Object, construction, witness, certificate
 
