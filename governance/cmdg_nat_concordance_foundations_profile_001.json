@@ -1,0 +1,253 @@
+{
+  "schema_version": "1.0.0",
+  "profile_id": "CMDG-NAT-CONCORDANCE-FOUNDATIONS-PROFILE-001",
+  "operation_id": "CMDG-NAT-CONCORDANCE-FOUNDATIONS-PROFILE-001",
+  "protected_baseline": "0533e8b35c94b25f378af89063aaf840aecd4045",
+  "proof_environment": {
+    "lean_toolchain": "leanprover/lean4:v4.33.0-rc1",
+    "lean_commit": "62eed1db4d67327ec8120be05f1a1b0847d74561",
+    "mathlib": {
+      "repository": "leanprover-community/mathlib4",
+      "commit": "79d0395a1825a6264ad5d269e35e60537518955e"
+    },
+    "evidence_refs": [
+      "fixtures/formal/LOG-GCD-001/lean-toolchain@fd85b262bf1c734663aa8292b0101f672168788f",
+      "fixtures/formal/LOG-GCD-001/lake-manifest.json@99d43177d509c4ceb340c8b2e6330e9c75233169"
+    ]
+  },
+  "syntactic_zfc_profile": {
+    "profile_kind": "SYNTACTIC_FIRST_ORDER_OBJECT_THEORY",
+    "zf_theory_id": "CMDG:OT:ZF_MEMBERSHIP_FOL:1.0.0",
+    "zfc_theory_id": "CMDG:OT:ZFC_MEMBERSHIP_FOL:1.0.0",
+    "language": {
+      "sorts": ["SET"],
+      "primitive_relation_symbols": [
+        {"symbol": "MEMBERSHIP", "arity": 2}
+      ],
+      "primitive_function_symbols": [],
+      "primitive_constant_symbols": [],
+      "equality": "BUILTIN_LOGICAL_EQUALITY"
+    },
+    "logic": {
+      "system": "CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY",
+      "classicality_explicit": true,
+      "equality_logic": "IDENTITY_WITH_SUBSTITUTION"
+    },
+    "zf_axiom_inventory": [
+      {"axiom_id": "EXTENSIONALITY", "kind": "SINGLE_AXIOM", "status": "OBJECT_THEORY_POSTULATE"},
+      {"axiom_id": "PAIRING", "kind": "SINGLE_AXIOM", "status": "OBJECT_THEORY_POSTULATE"},
+      {"axiom_id": "UNION", "kind": "SINGLE_AXIOM", "status": "OBJECT_THEORY_POSTULATE"},
+      {"axiom_id": "POWER_SET", "kind": "SINGLE_AXIOM", "status": "OBJECT_THEORY_POSTULATE"},
+      {"axiom_id": "INFINITY", "kind": "SINGLE_AXIOM", "status": "OBJECT_THEORY_POSTULATE"},
+      {"axiom_id": "FOUNDATION", "kind": "SINGLE_AXIOM", "status": "OBJECT_THEORY_POSTULATE"},
+      {
+        "axiom_id": "SEPARATION_SCHEMA",
+        "kind": "AXIOM_SCHEMA",
+        "status": "OBJECT_THEORY_POSTULATE",
+        "schema_parameterization": "ONE_INSTANCE_FOR_EACH_FIRST_ORDER_FORMULA_IN_THE_MEMBERSHIP_LANGUAGE_WITH_PARAMETERS"
+      },
+      {
+        "axiom_id": "REPLACEMENT_SCHEMA",
+        "kind": "AXIOM_SCHEMA",
+        "status": "OBJECT_THEORY_POSTULATE",
+        "schema_parameterization": "ONE_INSTANCE_FOR_EACH_FIRST_ORDER_FORMULA_DEFINING_A_FUNCTIONAL_RELATION_IN_THE_MEMBERSHIP_LANGUAGE_WITH_PARAMETERS"
+      }
+    ],
+    "choice_extension": {
+      "axiom_id": "CHOICE",
+      "kind": "SINGLE_AXIOM",
+      "formulation_id": "CHOICE_FUNCTION_FOR_SET_OF_NONEMPTY_SETS",
+      "family_condition": "FOR_EVERY_SET_A_EACH_MEMBER_X_OF_A_IS_NONEMPTY",
+      "conclusion": "THERE_EXISTS_A_FUNCTION_F_WITH_DOMAIN_A_AND_F_X_MEMBER_OF_X_FOR_EACH_X_MEMBER_OF_A",
+      "encoding_language": "MEMBERSHIP_ONLY_WITH_DEFINED_FUNCTION_AND_DOMAIN_PREDICATES"
+    },
+    "derived_theorems": [
+      {"theorem_id": "EMPTY_SET", "status": "DERIVED_NOT_PRIMITIVE_AXIOM"}
+    ],
+    "substrate_separation": {
+      "lean_is_proof_substrate": true,
+      "object_theory_is_represented_inside_lean": true,
+      "conflation_prohibited": true
+    },
+    "nonclaims": {
+      "consistency": false,
+      "standard_model": false,
+      "foundational_equivalence": false,
+      "definitional_identity": false,
+      "foundational_concordance": false,
+      "graph_certified": false,
+      "global_dependency_completeness": false
+    }
+  },
+  "semantic_set_realization_profile": {
+    "implementation_status": "RETAINED_IMPLEMENTATION_AVAILABLE",
+    "programme_realizes_as_status": "NOT_ADMITTED",
+    "carrier": {
+      "declaration": "ZFSet",
+      "type_signature": "ZFSet : Type (u + 1)",
+      "construction": "Quotient PSet.setoid.{u}",
+      "source": {
+        "repository": "leanprover-community/mathlib4",
+        "commit": "79d0395a1825a6264ad5d269e35e60537518955e",
+        "path": "Mathlib/SetTheory/ZFC/Basic.lean"
+      }
+    },
+    "upstream_model_scope": "MATHLIB_MODULE_DOCUMENTATION_DESCRIBES_ZFSET_AS_A_MODEL_OF_ZF_PLUS_CHOICE",
+    "object_theory_obligation_status": [
+      {"object_theory_item": "EXTENSIONALITY", "upstream_model_documentation": "MODULE_LEVEL_MODEL_CLAIM", "programme_formula_crosswalk": "NOT_YET_ADMITTED"},
+      {"object_theory_item": "PAIRING", "upstream_model_documentation": "MODULE_LEVEL_MODEL_CLAIM", "programme_formula_crosswalk": "NOT_YET_ADMITTED"},
+      {"object_theory_item": "UNION", "upstream_model_documentation": "MODULE_LEVEL_MODEL_CLAIM", "programme_formula_crosswalk": "NOT_YET_ADMITTED"},
+      {"object_theory_item": "POWER_SET", "upstream_model_documentation": "MODULE_LEVEL_MODEL_CLAIM", "programme_formula_crosswalk": "NOT_YET_ADMITTED"},
+      {"object_theory_item": "INFINITY", "upstream_model_documentation": "MODULE_LEVEL_MODEL_CLAIM", "programme_formula_crosswalk": "NOT_YET_ADMITTED"},
+      {"object_theory_item": "FOUNDATION", "upstream_model_documentation": "MODULE_LEVEL_MODEL_CLAIM", "programme_formula_crosswalk": "NOT_YET_ADMITTED"},
+      {"object_theory_item": "SEPARATION_SCHEMA", "upstream_model_documentation": "MODULE_LEVEL_MODEL_CLAIM", "programme_formula_crosswalk": "NOT_YET_ADMITTED"},
+      {"object_theory_item": "REPLACEMENT_SCHEMA", "upstream_model_documentation": "MODULE_LEVEL_MODEL_CLAIM", "programme_formula_crosswalk": "NOT_YET_ADMITTED"},
+      {"object_theory_item": "CHOICE", "upstream_model_documentation": "MODULE_LEVEL_MODEL_CLAIM", "programme_formula_crosswalk": "DIRECT_DECLARATION_IDENTIFIED"}
+    ],
+    "choice_support": {
+      "declaration": "ZFSet.choice",
+      "source_statement": "PROVED_FROM_LEANS_AXIOM_OF_CHOICE",
+      "programme_proof_dependency_status": "SOURCE_DOCUMENTED_NOT_YET_INDEPENDENTLY_CROSSWALKED"
+    },
+    "universe_size_profile": {
+      "carrier_universe": "Type (u + 1)",
+      "member_smallness_declaration": "ZFSet.small_coe : Small.{u} x",
+      "universe_equivalence_claim": false
+    },
+    "future_realizes_as_requirements": [
+      "SOURCE_AND_TARGET_IDENTITIES",
+      "DIRECTIONAL_CORRESPONDENCE_SCOPE",
+      "FORMULA_TO_DECLARATION_CROSSWALK_FOR_EACH_RELIED_ON_OBJECT_THEORY_OBLIGATION",
+      "EXACT_PROOF_ENVIRONMENT_PIN",
+      "AXIOM_AND_CLASSICALITY_FOOTPRINT",
+      "INDEPENDENT_REVIEWED_EVIDENCE",
+      "AUTOMATIC_STRONGER_CLAIMS_ALL_FALSE"
+    ],
+    "nonclaims": {
+      "consistency": false,
+      "standard_model": false,
+      "foundational_equivalence": false,
+      "definitional_identity": false,
+      "foundational_concordance": false,
+      "graph_certified": false,
+      "global_dependency_completeness": false
+    }
+  },
+  "categorical_nno_profile": {
+    "profile_kind": "ABSTRACT_CATEGORICAL_NATURAL_NUMBERS_OBJECT",
+    "binding_status": "NO_CONCRETE_IMPLEMENTATION_BOUND",
+    "ambient_category": {
+      "category_assumption": "CATEGORY_C_WITH_OBJECT_UNIVERSE_u_AND_HOM_UNIVERSE_v",
+      "chosen_terminal_object_required": true,
+      "binary_coproducts_required": false
+    },
+    "structure": {
+      "object": "N",
+      "terminal_object": "1",
+      "zero": "zero : 1 ⟶ N",
+      "successor": "succ : N ⟶ N"
+    },
+    "universal_property": {
+      "property_kind": "RECURSOR_UNIVERSAL_PROPERTY",
+      "quantification": "FOR_EVERY_OBJECT_X_POINT_x0_1_TO_X_AND_ENDOMORPHISM_s_X_TO_X",
+      "mediator": "EXISTS_h_N_TO_X",
+      "equations": ["zero ≫ h = x0", "succ ≫ h = h ≫ s"],
+      "uniqueness": "h_IS_UNIQUE_AMONG_MORPHISMS_SATISFYING_BOTH_EQUATIONS"
+    },
+    "initial_algebra_reformulation": {
+      "used_as_defining_requirement": false,
+      "binary_coproduct_requirement_introduced": false
+    },
+    "uniqueness_status": {
+      "claim": "ANY_TWO_NNO_STRUCTURES_SATISFYING_THIS_PROFILE_ARE_UNIQUE_UP_TO_UNIQUE_ISOMORPHISM",
+      "status": "DERIVED_THEOREM_OBLIGATION_NOT_PROFILE_DEFINITIONAL_IDENTITY",
+      "definitional_identity": false
+    },
+    "universe_size_profile": {
+      "object_universe_symbol": "u",
+      "hom_universe_symbol": "v",
+      "smallness_claim": "NONE_BEYOND_EXPLICIT_AMBIENT_CATEGORY_PROFILE"
+    },
+    "future_realizes_as_requirements": [
+      "CONCRETE_CATEGORY_AND_NNO_OBJECT_IDENTITY",
+      "TERMINAL_OBJECT_AND_STRUCTURE_MORPHISM_BINDINGS",
+      "CHECKED_UNIVERSAL_PROPERTY_EVIDENCE",
+      "UNIVERSE_AND_SIZE_BINDING",
+      "DIRECTIONAL_CORRESPONDENCE_SCOPE",
+      "INDEPENDENT_REVIEWED_EVIDENCE"
+    ],
+    "nonclaims": {
+      "consistency": false,
+      "standard_model": false,
+      "foundational_equivalence": false,
+      "definitional_identity": false,
+      "foundational_concordance": false,
+      "graph_certified": false,
+      "global_dependency_completeness": false
+    }
+  },
+  "dtt_nat_profile": {
+    "substrate": "LEAN4_DEPENDENT_TYPE_THEORY_KERNEL_SUBSTRATE",
+    "declaration": "Nat",
+    "type_signature": "Nat : Type",
+    "constructors": ["Nat.zero", "Nat.succ"],
+    "eliminator": {
+      "declaration": "Nat.rec",
+      "role": "GENERATED_DEPENDENT_RECURSOR_AND_INDUCTION_INTERFACE"
+    },
+    "source": {
+      "repository": "leanprover/lean4",
+      "commit": "62eed1db4d67327ec8120be05f1a1b0847d74561",
+      "path": "src/Init/Prelude.lean"
+    },
+    "runtime_note": "COMPILER_OR_RUNTIME_SPECIAL_CASING_DOES_NOT_CHANGE_KERNEL_LOGICAL_IDENTITY",
+    "future_realizes_as_requirements": [
+      "EXACT_DECLARATION_AND_PROOF_ENVIRONMENT_PIN",
+      "DIRECTIONAL_CORRESPONDENCE_SCOPE",
+      "OPERATION_BY_OPERATION_TRANSPORT_EVIDENCE",
+      "INDEPENDENT_REVIEWED_EVIDENCE",
+      "NO_DEFINITIONAL_IDENTITY_ASSUMPTION"
+    ],
+    "nonclaims": {
+      "consistency": false,
+      "standard_model": false,
+      "foundational_equivalence": false,
+      "definitional_identity": false,
+      "foundational_concordance": false,
+      "graph_certified": false,
+      "global_dependency_completeness": false
+    }
+  },
+  "cross_foundational_relation_policy": {
+    "node_identities": ["N_DTT", "N_ZFC", "N_NNO"],
+    "permitted_future_edge_relations": ["REALIZES_AS", "INTERPRETS", "EQUIVALENT_TO", "TRANSPORTS_ALONG"],
+    "permitted_future_record_kinds": ["FOUNDATIONAL_CONCORDANCE"],
+    "evidence_requirements": [
+      "EXPLICIT_SOURCE_IDENTITY",
+      "EXPLICIT_TARGET_IDENTITY",
+      "EXPLICIT_DIRECTION",
+      "EXACT_PROFILE_VERSION_BINDINGS",
+      "EVIDENCE_REFERENCES",
+      "INDEPENDENT_REVIEW",
+      "PROOF_ENVIRONMENT_WHERE_FORMAL_EVIDENCE_IS_USED",
+      "LIMITATIONS_AND_NONCLAIMS",
+      "NO_AUTOMATIC_DEFINITIONAL_IDENTITY",
+      "NO_AUTHORITY_FROM_IMPLEMENTATION_IMPORTS_ALONE"
+    ],
+    "current_promoted_edges": [],
+    "foundational_concordance_status": "NOT_ESTABLISHED",
+    "successor_gate": "CMDG_NAT_CONCORDANCE_001_BLOCKED_UNTIL_PROTECTED_ADMISSION_OF_THIS_PROFILE"
+  },
+  "claim_boundary": {
+    "profile_definition_only": true,
+    "profile_prerequisite_satisfied_by_artifact_alone": false,
+    "realizes_as_conferred": false,
+    "nat_concordance_conferred": false,
+    "foundational_equivalence_conferred": false,
+    "graph_certified_conferred": false,
+    "global_dependency_completeness_claim": false,
+    "consistency_claim": false,
+    "standard_model_claim": false,
+    "c04_c05_c06_unchanged": true
+  }
+}

@@ -74,6 +74,9 @@ jobs:
       - name: Validate CMDG runtime graph package
         run: python3 ci/validate_cmdg_graph_package.py --report cmdg-validator-report.json
 
+      - name: Validate CMDG NAT concordance foundational profile
+        run: python3 ci/validate_cmdg_nat_foundations_profile.py
+
       - name: Run repository unit tests
         run: python -m unittest discover -s tests -p 'test_*.py'
 

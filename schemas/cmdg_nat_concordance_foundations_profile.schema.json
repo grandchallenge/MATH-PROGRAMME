@@ -1,0 +1,464 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_nat_concordance_foundations_profile.schema.json",
+  "title": "CMDG natural-number concordance foundational profile prerequisite",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "profile_id",
+    "operation_id",
+    "protected_baseline",
+    "proof_environment",
+    "syntactic_zfc_profile",
+    "semantic_set_realization_profile",
+    "categorical_nno_profile",
+    "dtt_nat_profile",
+    "cross_foundational_relation_policy",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile_id": {"const": "CMDG-NAT-CONCORDANCE-FOUNDATIONS-PROFILE-001"},
+    "operation_id": {"const": "CMDG-NAT-CONCORDANCE-FOUNDATIONS-PROFILE-001"},
+    "protected_baseline": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "proof_environment": {"$ref": "#/$defs/proofEnvironment"},
+    "syntactic_zfc_profile": {"$ref": "#/$defs/syntacticZfc"},
+    "semantic_set_realization_profile": {"$ref": "#/$defs/setRealization"},
+    "categorical_nno_profile": {"$ref": "#/$defs/categoricalNno"},
+    "dtt_nat_profile": {"$ref": "#/$defs/dttNat"},
+    "cross_foundational_relation_policy": {"$ref": "#/$defs/relationPolicy"},
+    "claim_boundary": {"$ref": "#/$defs/claimBoundary"}
+  },
+  "$defs": {
+    "sourcePin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit", "path"],
+      "properties": {
+        "repository": {"type": "string", "minLength": 1},
+        "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "path": {"type": "string", "minLength": 1}
+      }
+    },
+    "proofEnvironment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lean_toolchain", "lean_commit", "mathlib", "evidence_refs"],
+      "properties": {
+        "lean_toolchain": {"const": "leanprover/lean4:v4.33.0-rc1"},
+        "lean_commit": {"const": "62eed1db4d67327ec8120be05f1a1b0847d74561"},
+        "mathlib": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["repository", "commit"],
+          "properties": {
+            "repository": {"const": "leanprover-community/mathlib4"},
+            "commit": {"const": "79d0395a1825a6264ad5d269e35e60537518955e"}
+          }
+        },
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "axiomEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["axiom_id", "kind", "status"],
+      "properties": {
+        "axiom_id": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"},
+        "kind": {"enum": ["SINGLE_AXIOM", "AXIOM_SCHEMA"]},
+        "status": {"const": "OBJECT_THEORY_POSTULATE"},
+        "schema_parameterization": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"kind": {"const": "AXIOM_SCHEMA"}}, "required": ["kind"]},
+          "then": {"required": ["schema_parameterization"]}
+        },
+        {
+          "if": {"properties": {"kind": {"const": "SINGLE_AXIOM"}}, "required": ["kind"]},
+          "then": {"not": {"required": ["schema_parameterization"]}}
+        }
+      ]
+    },
+    "nonclaimFlags": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "consistency",
+        "standard_model",
+        "foundational_equivalence",
+        "definitional_identity",
+        "foundational_concordance",
+        "graph_certified",
+        "global_dependency_completeness"
+      ],
+      "properties": {
+        "consistency": {"const": false},
+        "standard_model": {"const": false},
+        "foundational_equivalence": {"const": false},
+        "definitional_identity": {"const": false},
+        "foundational_concordance": {"const": false},
+        "graph_certified": {"const": false},
+        "global_dependency_completeness": {"const": false}
+      }
+    },
+    "syntacticZfc": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile_kind",
+        "zf_theory_id",
+        "zfc_theory_id",
+        "language",
+        "logic",
+        "zf_axiom_inventory",
+        "choice_extension",
+        "derived_theorems",
+        "substrate_separation",
+        "nonclaims"
+      ],
+      "properties": {
+        "profile_kind": {"const": "SYNTACTIC_FIRST_ORDER_OBJECT_THEORY"},
+        "zf_theory_id": {"const": "CMDG:OT:ZF_MEMBERSHIP_FOL:1.0.0"},
+        "zfc_theory_id": {"const": "CMDG:OT:ZFC_MEMBERSHIP_FOL:1.0.0"},
+        "language": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "sorts",
+            "primitive_relation_symbols",
+            "primitive_function_symbols",
+            "primitive_constant_symbols",
+            "equality"
+          ],
+          "properties": {
+            "sorts": {"const": ["SET"]},
+            "primitive_relation_symbols": {"const": [{"symbol": "MEMBERSHIP", "arity": 2}]},
+            "primitive_function_symbols": {"const": []},
+            "primitive_constant_symbols": {"const": []},
+            "equality": {"const": "BUILTIN_LOGICAL_EQUALITY"}
+          }
+        },
+        "logic": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["system", "classicality_explicit", "equality_logic"],
+          "properties": {
+            "system": {"const": "CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY"},
+            "classicality_explicit": {"const": true},
+            "equality_logic": {"const": "IDENTITY_WITH_SUBSTITUTION"}
+          }
+        },
+        "zf_axiom_inventory": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/axiomEntry"}
+        },
+        "choice_extension": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["axiom_id", "kind", "formulation_id", "family_condition", "conclusion", "encoding_language"],
+          "properties": {
+            "axiom_id": {"const": "CHOICE"},
+            "kind": {"const": "SINGLE_AXIOM"},
+            "formulation_id": {"const": "CHOICE_FUNCTION_FOR_SET_OF_NONEMPTY_SETS"},
+            "family_condition": {"const": "FOR_EVERY_SET_A_EACH_MEMBER_X_OF_A_IS_NONEMPTY"},
+            "conclusion": {"const": "THERE_EXISTS_A_FUNCTION_F_WITH_DOMAIN_A_AND_F_X_MEMBER_OF_X_FOR_EACH_X_MEMBER_OF_A"},
+            "encoding_language": {"const": "MEMBERSHIP_ONLY_WITH_DEFINED_FUNCTION_AND_DOMAIN_PREDICATES"}
+          }
+        },
+        "derived_theorems": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["theorem_id", "status"],
+            "properties": {
+              "theorem_id": {"type": "string", "minLength": 1},
+              "status": {"const": "DERIVED_NOT_PRIMITIVE_AXIOM"}
+            }
+          }
+        },
+        "substrate_separation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["lean_is_proof_substrate", "object_theory_is_represented_inside_lean", "conflation_prohibited"],
+          "properties": {
+            "lean_is_proof_substrate": {"const": true},
+            "object_theory_is_represented_inside_lean": {"const": true},
+            "conflation_prohibited": {"const": true}
+          }
+        },
+        "nonclaims": {"$ref": "#/$defs/nonclaimFlags"}
+      }
+    },
+    "obligationStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["object_theory_item", "upstream_model_documentation", "programme_formula_crosswalk"],
+      "properties": {
+        "object_theory_item": {"type": "string", "minLength": 1},
+        "upstream_model_documentation": {"const": "MODULE_LEVEL_MODEL_CLAIM"},
+        "programme_formula_crosswalk": {"enum": ["NOT_YET_ADMITTED", "DIRECT_DECLARATION_IDENTIFIED"]}
+      }
+    },
+    "setRealization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "implementation_status",
+        "programme_realizes_as_status",
+        "carrier",
+        "upstream_model_scope",
+        "object_theory_obligation_status",
+        "choice_support",
+        "universe_size_profile",
+        "future_realizes_as_requirements",
+        "nonclaims"
+      ],
+      "properties": {
+        "implementation_status": {"const": "RETAINED_IMPLEMENTATION_AVAILABLE"},
+        "programme_realizes_as_status": {"const": "NOT_ADMITTED"},
+        "carrier": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["declaration", "type_signature", "construction", "source"],
+          "properties": {
+            "declaration": {"const": "ZFSet"},
+            "type_signature": {"const": "ZFSet : Type (u + 1)"},
+            "construction": {"const": "Quotient PSet.setoid.{u}"},
+            "source": {"$ref": "#/$defs/sourcePin"}
+          }
+        },
+        "upstream_model_scope": {"const": "MATHLIB_MODULE_DOCUMENTATION_DESCRIBES_ZFSET_AS_A_MODEL_OF_ZF_PLUS_CHOICE"},
+        "object_theory_obligation_status": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/obligationStatus"}
+        },
+        "choice_support": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["declaration", "source_statement", "programme_proof_dependency_status"],
+          "properties": {
+            "declaration": {"const": "ZFSet.choice"},
+            "source_statement": {"const": "PROVED_FROM_LEANS_AXIOM_OF_CHOICE"},
+            "programme_proof_dependency_status": {"const": "SOURCE_DOCUMENTED_NOT_YET_INDEPENDENTLY_CROSSWALKED"}
+          }
+        },
+        "universe_size_profile": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["carrier_universe", "member_smallness_declaration", "universe_equivalence_claim"],
+          "properties": {
+            "carrier_universe": {"const": "Type (u + 1)"},
+            "member_smallness_declaration": {"const": "ZFSet.small_coe : Small.{u} x"},
+            "universe_equivalence_claim": {"const": false}
+          }
+        },
+        "future_realizes_as_requirements": {
+          "type": "array",
+          "minItems": 6,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "nonclaims": {"$ref": "#/$defs/nonclaimFlags"}
+      }
+    },
+    "categoricalNno": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile_kind",
+        "binding_status",
+        "ambient_category",
+        "structure",
+        "universal_property",
+        "initial_algebra_reformulation",
+        "uniqueness_status",
+        "universe_size_profile",
+        "future_realizes_as_requirements",
+        "nonclaims"
+      ],
+      "properties": {
+        "profile_kind": {"const": "ABSTRACT_CATEGORICAL_NATURAL_NUMBERS_OBJECT"},
+        "binding_status": {"const": "NO_CONCRETE_IMPLEMENTATION_BOUND"},
+        "ambient_category": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["category_assumption", "chosen_terminal_object_required", "binary_coproducts_required"],
+          "properties": {
+            "category_assumption": {"const": "CATEGORY_C_WITH_OBJECT_UNIVERSE_u_AND_HOM_UNIVERSE_v"},
+            "chosen_terminal_object_required": {"const": true},
+            "binary_coproducts_required": {"const": false}
+          }
+        },
+        "structure": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["object", "terminal_object", "zero", "successor"],
+          "properties": {
+            "object": {"const": "N"},
+            "terminal_object": {"const": "1"},
+            "zero": {"const": "zero : 1 ⟶ N"},
+            "successor": {"const": "succ : N ⟶ N"}
+          }
+        },
+        "universal_property": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["property_kind", "quantification", "mediator", "equations", "uniqueness"],
+          "properties": {
+            "property_kind": {"const": "RECURSOR_UNIVERSAL_PROPERTY"},
+            "quantification": {"const": "FOR_EVERY_OBJECT_X_POINT_x0_1_TO_X_AND_ENDOMORPHISM_s_X_TO_X"},
+            "mediator": {"const": "EXISTS_h_N_TO_X"},
+            "equations": {"const": ["zero ≫ h = x0", "succ ≫ h = h ≫ s"]},
+            "uniqueness": {"const": "h_IS_UNIQUE_AMONG_MORPHISMS_SATISFYING_BOTH_EQUATIONS"}
+          }
+        },
+        "initial_algebra_reformulation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["used_as_defining_requirement", "binary_coproduct_requirement_introduced"],
+          "properties": {
+            "used_as_defining_requirement": {"const": false},
+            "binary_coproduct_requirement_introduced": {"const": false}
+          }
+        },
+        "uniqueness_status": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["claim", "status", "definitional_identity"],
+          "properties": {
+            "claim": {"const": "ANY_TWO_NNO_STRUCTURES_SATISFYING_THIS_PROFILE_ARE_UNIQUE_UP_TO_UNIQUE_ISOMORPHISM"},
+            "status": {"const": "DERIVED_THEOREM_OBLIGATION_NOT_PROFILE_DEFINITIONAL_IDENTITY"},
+            "definitional_identity": {"const": false}
+          }
+        },
+        "universe_size_profile": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["object_universe_symbol", "hom_universe_symbol", "smallness_claim"],
+          "properties": {
+            "object_universe_symbol": {"const": "u"},
+            "hom_universe_symbol": {"const": "v"},
+            "smallness_claim": {"const": "NONE_BEYOND_EXPLICIT_AMBIENT_CATEGORY_PROFILE"}
+          }
+        },
+        "future_realizes_as_requirements": {
+          "type": "array",
+          "minItems": 5,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "nonclaims": {"$ref": "#/$defs/nonclaimFlags"}
+      }
+    },
+    "dttNat": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "substrate",
+        "declaration",
+        "type_signature",
+        "constructors",
+        "eliminator",
+        "source",
+        "runtime_note",
+        "future_realizes_as_requirements",
+        "nonclaims"
+      ],
+      "properties": {
+        "substrate": {"const": "LEAN4_DEPENDENT_TYPE_THEORY_KERNEL_SUBSTRATE"},
+        "declaration": {"const": "Nat"},
+        "type_signature": {"const": "Nat : Type"},
+        "constructors": {"const": ["Nat.zero", "Nat.succ"]},
+        "eliminator": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["declaration", "role"],
+          "properties": {
+            "declaration": {"const": "Nat.rec"},
+            "role": {"const": "GENERATED_DEPENDENT_RECURSOR_AND_INDUCTION_INTERFACE"}
+          }
+        },
+        "source": {"$ref": "#/$defs/sourcePin"},
+        "runtime_note": {"const": "COMPILER_OR_RUNTIME_SPECIAL_CASING_DOES_NOT_CHANGE_KERNEL_LOGICAL_IDENTITY"},
+        "future_realizes_as_requirements": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "nonclaims": {"$ref": "#/$defs/nonclaimFlags"}
+      }
+    },
+    "relationPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_identities",
+        "permitted_future_edge_relations",
+        "permitted_future_record_kinds",
+        "evidence_requirements",
+        "current_promoted_edges",
+        "foundational_concordance_status",
+        "successor_gate"
+      ],
+      "properties": {
+        "node_identities": {"const": ["N_DTT", "N_ZFC", "N_NNO"]},
+        "permitted_future_edge_relations": {"const": ["REALIZES_AS", "INTERPRETS", "EQUIVALENT_TO", "TRANSPORTS_ALONG"]},
+        "permitted_future_record_kinds": {"const": ["FOUNDATIONAL_CONCORDANCE"]},
+        "evidence_requirements": {
+          "type": "array",
+          "minItems": 8,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "current_promoted_edges": {"const": []},
+        "foundational_concordance_status": {"const": "NOT_ESTABLISHED"},
+        "successor_gate": {"const": "CMDG_NAT_CONCORDANCE_001_BLOCKED_UNTIL_PROTECTED_ADMISSION_OF_THIS_PROFILE"}
+      }
+    },
+    "claimBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile_definition_only",
+        "profile_prerequisite_satisfied_by_artifact_alone",
+        "realizes_as_conferred",
+        "nat_concordance_conferred",
+        "foundational_equivalence_conferred",
+        "graph_certified_conferred",
+        "global_dependency_completeness_claim",
+        "consistency_claim",
+        "standard_model_claim",
+        "c04_c05_c06_unchanged"
+      ],
+      "properties": {
+        "profile_definition_only": {"const": true},
+        "profile_prerequisite_satisfied_by_artifact_alone": {"const": false},
+        "realizes_as_conferred": {"const": false},
+        "nat_concordance_conferred": {"const": false},
+        "foundational_equivalence_conferred": {"const": false},
+        "graph_certified_conferred": {"const": false},
+        "global_dependency_completeness_claim": {"const": false},
+        "consistency_claim": {"const": false},
+        "standard_model_claim": {"const": false},
+        "c04_c05_c06_unchanged": {"const": true}
+      }
+    }
+  }
+}
