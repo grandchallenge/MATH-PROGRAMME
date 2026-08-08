@@ -1,0 +1,188 @@
+{
+  "$schema": "OZ_RT_SHARP12_DEPTH_001.schema.json",
+  "schema_version": "1.0.0",
+  "record_id": "OZ-RT-SHARP12-DEPTH-001",
+  "programme_issue": 222,
+  "terminal_disposition": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+  "target_lock": {
+    "programme_repository": "grandchallenge/MATH-PROGRAMME",
+    "branch": "feature/oz-rt-sharp12-depth-001",
+    "authorized_base_commit": "fc70687dfd4967145ebe748ff0d0ae708b62f243",
+    "upstream_repository": "rain-1/-odd-zeta-values-moremath",
+    "upstream_commit": "790685b7ee4f642a8a88a1bd120636d1b8b39ea8",
+    "upstream_tree": "646ee73dd9066e059b043fad64fb20959f111cbf",
+    "sharp12_source": {
+      "path": "papers_out/sharp12/sharp12.tex",
+      "blob": "6a347e2a483ec781afac98016635ce1d73b3c38e"
+    }
+  },
+  "audit_scope": {
+    "result": "CANONICAL_DEPTH_PRODUCER_AND_ORDER_ARTIFACTS_NOT_RECOVERABLE_FROM_EXACT_TREE",
+    "tree_listing_examined": true,
+    "authority_rule": "Only artifacts recoverable from the bound exact tree and admitted source-revision evidence may support DEPTH certification. Unrelated exploratory work files are not promoted into producer authority by resemblance.",
+    "admitted_replays_examined": [
+      "papers_out/expository_apery/verify.py",
+      "work/z5eps/eps57_sym2_all.py",
+      "work/z5eps/eps58_denoms.py",
+      "work/z5eps/eps59_rowhunt.py",
+      "work/z5eps/eps60_density.py"
+    ],
+    "sharp12_source_role": "Records the conditional DEPTH rank data and modular evidence; it does not provide the canonical 448-variable matrix producer, deterministic order manifests, or independently replayable rational certificate.",
+    "non_authoritative_candidates": [
+      {
+        "path": "work/z5la/t_full.py",
+        "reason": "Exploratory modular row reduction with a different small hard-coded system; it does not define the 448-variable Sharp-12 DEPTH system."
+      },
+      {
+        "path": "work/Z5CF_LINALG.md",
+        "reason": "Describes a distinct 14-to-4 / 16-column coefficient-table calculation; it does not define the 448-variable Sharp-12 DEPTH system."
+      }
+    ]
+  },
+  "source_observations": {
+    "claim_effect": "NONE",
+    "programme_state": "UNPROVED_INPUT",
+    "variables": 448,
+    "fitting_equations_n": 600,
+    "raw_depth_condition_rows": 68,
+    "independent_depth_conditions": 42,
+    "fitting_rank": 313,
+    "joint_rank": 324,
+    "augmented_joint_rank": 324,
+    "source_reported_solution_dimension": 124,
+    "additional_independent_depth_conditions_beyond_fitting": 11,
+    "auxiliary_primes": [
+      33554393,
+      33554467
+    ],
+    "rational_certificate_independently_replayable": false
+  },
+  "unrecoverable_producer_order_artifacts": [
+    {
+      "id": "DEPTH-PRODUCER-001",
+      "artifact": "canonical sparse-matrix producer",
+      "required_content": "Deterministic source-to-matrix generator for the 448-variable N=600 fitting plus raw DEPTH system.",
+      "absence_effect": "Canonical rows and columns cannot be regenerated."
+    },
+    {
+      "id": "DEPTH-VARIABLE-ORDER-001",
+      "artifact": "448-variable order manifest",
+      "required_content": "Complete deterministic ordered list of all 448 basis variables/monomials with source definitions.",
+      "absence_effect": "Column identities and rank-certificate coordinates are not locked."
+    },
+    {
+      "id": "DEPTH-FITTING-ROW-ORDER-001",
+      "artifact": "fitting-row order manifest",
+      "required_content": "Complete deterministic ordering and source identity for the N=600 fitting rows used in the reported fitting rank 313.",
+      "absence_effect": "The reported fitting matrix cannot be identified exactly."
+    },
+    {
+      "id": "DEPTH-RAW-ROW-ORDER-001",
+      "artifact": "raw DEPTH-condition row order manifest",
+      "required_content": "Complete deterministic ordering and source identity for all 68 raw DEPTH condition rows before independence reduction.",
+      "absence_effect": "The 42 independent conditions and 11 new directions cannot be tied to canonical rows."
+    },
+    {
+      "id": "DEPTH-NORMALIZATION-001",
+      "artifact": "normalization and coefficient-convention manifest",
+      "required_content": "Exact normalization, coefficient field, sign/scaling, RHS, and source-to-row conventions used by the producer.",
+      "absence_effect": "Numerically matching ranks would not establish matrix identity."
+    },
+    {
+      "id": "DEPTH-FITTING-MATRIX-001",
+      "artifact": "exact fitting matrix identity",
+      "required_content": "Canonical emitted fitting matrix with immutable digest under the locked variable and fitting-row orders.",
+      "absence_effect": "Fitting rank 313 is not independently attributable to a unique rational matrix."
+    },
+    {
+      "id": "DEPTH-DEPTH-MATRIX-001",
+      "artifact": "exact DEPTH matrix identity",
+      "required_content": "Canonical emitted 68-row DEPTH constraint matrix with immutable digest under the locked orders.",
+      "absence_effect": "Condition rank 42 is not independently attributable to a unique rational matrix."
+    },
+    {
+      "id": "DEPTH-JOINT-MATRIX-001",
+      "artifact": "exact joint matrix identity",
+      "required_content": "Canonical fitting-plus-DEPTH matrix with immutable digest.",
+      "absence_effect": "Joint rank 324 cannot be independently certified over Q."
+    },
+    {
+      "id": "DEPTH-AUGMENTED-MATRIX-001",
+      "artifact": "exact augmented joint matrix and RHS identity",
+      "required_content": "Canonical augmented matrix/RHS with immutable digest and locked normalization.",
+      "absence_effect": "Equality of augmented and joint rank, hence consistency, cannot be independently certified over Q."
+    }
+  ],
+  "downstream_certificate_blockers": [
+    {
+      "id": "DEPTH-RATIONAL-CONSISTENCY-001",
+      "state": "ABSENT_PENDING_CANONICAL_SYSTEM",
+      "required": "Exact rational consistency witness for the canonical augmented system."
+    },
+    {
+      "id": "DEPTH-RATIONAL-RANK-001",
+      "state": "ABSENT_PENDING_CANONICAL_SYSTEM",
+      "required": "Independent exact-Q rank certificate proving fitting rank 313 and joint/augmented rank 324."
+    },
+    {
+      "id": "DEPTH-MODULAR-PIVOTS-001",
+      "state": "NOT_RECOVERABLE_AS_EXACT_TRANSCRIPTS",
+      "required": "Exact pivot transcripts for q=33554393 and q=33554467 tied to the canonical matrices and ordering manifests."
+    }
+  ],
+  "reopening_requirements": [
+    {
+      "id": "REOPEN-01",
+      "requirement": "Admit an immutable exact source deposit, or a separately governed successor source revision, containing the canonical DEPTH producer and all missing order/normalization artifacts; bind repository, commit, tree, path, and blob identities."
+    },
+    {
+      "id": "REOPEN-02",
+      "requirement": "The producer must deterministically emit exactly 448 ordered variables, the N=600 fitting rows, all 68 raw DEPTH rows, and the locked normalization/RHS conventions without reliance on unstable container, set, hash, or dictionary ordering."
+    },
+    {
+      "id": "REOPEN-03",
+      "requirement": "Emit and digest the variable-order, fitting-row-order, raw-DEPTH-row-order, normalization, fitting-matrix, DEPTH-matrix, joint-matrix, and augmented-matrix artifacts; an independent process must reproduce the same identities."
+    },
+    {
+      "id": "REOPEN-04",
+      "requirement": "Produce an exact rational consistency witness and an independent exact-Q rank certificate establishing fitting rank 313, joint rank 324, augmented rank 324, and solution dimension 448-324=124."
+    },
+    {
+      "id": "REOPEN-05",
+      "requirement": "Provide exact modular pivot transcripts for q=33554393 and q=33554467 and replay them against the canonical matrices; modular agreement may corroborate but may not substitute for the rational certificate."
+    },
+    {
+      "id": "REOPEN-06",
+      "requirement": "Use an independent checker that does not invoke the producer's rank or solver implementation and that fails closed on row/column reorder, normalization drift, stale digests, rank drift, inconsistent augmentation, false modular-to-rational lifting, and malformed witnesses."
+    },
+    {
+      "id": "REOPEN-07",
+      "requirement": "Add the producer/verifier separation tests, required mutation suite, closed-schema validation, governed replay registration, and exact-head CI; then obtain the issue-required independent non-author review and exact-head authorization before protected merge."
+    }
+  ],
+  "nonclaims": {
+    "depth_certified": false,
+    "t1_top_proved": false,
+    "sharp12_proved": false,
+    "t3_proved": false,
+    "t3_refuted": false,
+    "quarantined_lean_repaired": false,
+    "prime_2_covered": false,
+    "prime_3_covered": false,
+    "mathcert_adjudicated": false,
+    "new_irrationality_claim": false,
+    "novelty_assessed": false,
+    "priority_assessed": false,
+    "publication_claim": false,
+    "patentability_claim": false,
+    "product_claim": false,
+    "commercial_claim": false,
+    "sharp12_gate_open": false
+  },
+  "disposition": {
+    "status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "reopen_only_on_requirements_satisfied": true
+  }
+}
