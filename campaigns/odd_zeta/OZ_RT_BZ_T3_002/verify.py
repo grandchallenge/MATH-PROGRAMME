@@ -6,6 +6,7 @@ from pathlib import Path
 import target
 HERE=Path(__file__).resolve().parent
 RESULT=HERE/'SEARCH_RESULT.json'
+STAGES=[(d,10) for d in range(7)]+[(7,12),(8,14),(9,15)]
 
 def mons(d): return [(i,j) for i in range(d+1) for j in range(d+1-i)]
 
@@ -30,9 +31,9 @@ def exact_rank(rows):
         if nr==len(a): break
     return nr
 
-def matrix(d):
+def matrix(d,n_max):
     mm=mons(d); out=[]
-    for n in range(1,11):
+    for n in range(1,n_max+1):
         vals=target.fibre_values(n); g=Q(0)
         for k,v in enumerate(vals):
             p=[Q(n**i*k**j) for i,j in mm]
@@ -48,10 +49,11 @@ def verify(data=None):
     if data.get('search_class')!='FIRST_ORDER_FIBRE_RATIONAL_TELESCOPER_G_EQUALS_Q_TIMES_V': errors.append('search class drift')
     if data.get('proof_effect')!='NONE' or data.get('terminal')!='NO_CERTIFICATE_IN_BOUNDED_CLASS': errors.append('result inflation')
     stages=data.get('stages',[])
-    if [s.get('degree') for s in stages] != list(range(7)): errors.append('degree ladder drift')
+    if [(s.get('degree'),s.get('n_max')) for s in stages] != STAGES: errors.append('degree/sample ladder drift')
     for s in stages:
-        d=s.get('degree'); a=matrix(d); u=2*len(mons(d)); r=exact_rank(a)
-        if s.get('equations')!=65 or s.get('unknowns')!=u or s.get('rank')!=r or s.get('nullity')!=u-r: errors.append(f'rank record drift d={d}')
+        d=s.get('degree'); n_max=s.get('n_max'); a=matrix(d,n_max); u=2*len(mons(d)); r=exact_rank(a)
+        expected_eq=sum(n+1 for n in range(1,n_max+1))
+        if s.get('equations')!=expected_eq or s.get('unknowns')!=u or s.get('rank')!=r or s.get('nullity')!=u-r: errors.append(f'rank record drift d={d}')
         if r != u or s.get('classification')!='INCONSISTENT_ANSATZ': errors.append(f'bounded class not closed d={d}')
     return errors
 
@@ -59,6 +61,6 @@ def main():
     e=verify()
     if e:
         print('\n'.join(e)); return 1
-    print('independent exact fibre-rational search verification passed')
+    print('independent exact fibre-rational search verification passed through degree 9')
     return 0
 if __name__=='__main__': raise SystemExit(main())
