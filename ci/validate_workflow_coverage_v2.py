@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
-from validate_workflow_coverage_v3 import ROOT, main, workflow_coverage_errors
+import validate_workflow_coverage_v3 as v3
+
+v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
+    "cmdg-nat-concordance.yml",
+    "cmdg-euclid-bridge.yml",
+}
+
+ROOT = v3.ROOT
+workflow_coverage_errors = v3.workflow_coverage_errors
+main = v3.main
 
 __all__ = ["ROOT", "workflow_coverage_errors", "main"]
 

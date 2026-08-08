@@ -1,0 +1,78 @@
+[
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:EUCLID:GCD:E2E001",
+    "node_type": "Theorem",
+    "engagement_mode": "REUSED",
+    "canonical_label": "EUCLID-GCD-E2E-001 protected theorem authority",
+    "description": "Protected concrete theorem package for gcd(252,105)=21 with exact Euclidean trace, accepted certificate, and separately scoped integer Bezout witness.",
+    "provenance_refs": ["MATH-PROGRAMME#240", "MATHCERT@78b69e6a3461a83f4893d61c421b1570c08a9ba6:MathCert/Domains/NumberTheory/EuclidGCD.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:EUCLID:GCD:NATGCD252105",
+    "node_type": "Theorem",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Nat.gcd 252 105 = 21",
+    "description": "Original MATHCERT functional gcd theorem; no cross-foundation transport of the Nat.gcd function is admitted by this bridge.",
+    "provenance_refs": ["MathCert.NumberTheory.gcd252105"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:EUCLID:GCD:DTTREL",
+    "node_type": "Definition",
+    "engagement_mode": "RECONSTRUCTED",
+    "canonical_label": "DTT relational greatest-common-divisor specification",
+    "provenance_refs": ["CMDG.EuclidBridge.DTTIsGCD", "MATHCERT:MathCert.NumberTheory.AcceptedGCDCertificate"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:EUCLID:GCD:NNOREL",
+    "node_type": "Definition",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "Categorical-NNO-carrier relational greatest-common-divisor specification",
+    "provenance_refs": ["CMDG.EuclidBridge.NNOIsGCD", "CMDG-NAT-CONCORDANCE-001"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:EUCLID:GCD:ZFCFINITEIMAGEREL",
+    "node_type": "Definition",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "ZFSet finite-von-Neumann-image relational greatest-common-divisor specification",
+    "description": "Quantification is restricted to encoded natural numbers in the admitted finite image; not a complete syntactic-ZFC arithmetic definition.",
+    "provenance_refs": ["CMDG.EuclidBridge.ZFCFiniteImageIsGCD", "CMDG-NAT-CONCORDANCE-001"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:EUCLID:TRACE:DTT252105",
+    "node_type": "Theorem",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Euclidean trace 252,105 on DTT naturals",
+    "provenance_refs": ["MathCert.NumberTheory.euclidTrace252105", "CMDG.EuclidBridge.dtt_trace_252_105"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:EUCLID:TRACE:NNO252105",
+    "node_type": "Theorem",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "Euclidean trace 252,105 on the NNO carrier",
+    "provenance_refs": ["CMDG.EuclidBridge.nno_trace_252_105"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:EUCLID:TRACE:ZFCFINITEIMAGE252105",
+    "node_type": "Theorem",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "Euclidean trace 252,105 on the ZFSet finite image",
+    "provenance_refs": ["CMDG.EuclidBridge.zfc_finite_image_trace_252_105"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:EUCLID:BEZOUT:INT252105",
+    "node_type": "Theorem",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Integer Bezout witness for 252 and 105",
+    "description": "Protected original theorem retained as provenance only; transport is outside the natural-number concordance scope.",
+    "provenance_refs": ["MathCert.NumberTheory.bezout252105"]
+  }
+]

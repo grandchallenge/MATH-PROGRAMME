@@ -1,0 +1,89 @@
+name: CMDG NAT concordance
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cmdg-nat-concordance-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    name: Validate CMDG NAT concordance
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Validate bounded concordance contract
+        run: python3 ci/validate_cmdg_nat_concordance.py
+      - name: Run bounded concordance mutation tests
+        run: python -m unittest tests.test_cmdg_nat_concordance
+
+  lean:
+    name: Replay CMDG NAT concordance in Lean
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Reject proof placeholders and local axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGNatConcordance.lean; then
+            echo "CMDG-NAT-CONCORDANCE-001 must contain neither sorry nor local axioms."
+            exit 1
+          fi
+      - name: Set up pinned Lean and mathlib cache
+        id: lean-setup
+        continue-on-error: true
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Build CMDG NAT concordance fixture
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        shell: bash
+        env:
+          LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}
+        run: |
+          set +e
+          {
+            echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+            command -v elan
+            command -v lake
+            elan --version
+            lake --version
+            test -f lake-manifest.json
+            lake build
+          } > lean-build.log 2>&1
+          status=$?
+          cat lean-build.log
+          exit "$status"
+      - name: Extract checked CMDG NAT concordance dependencies
+        run: python3 ci/extract_cmdg_lean_dependencies.py fixtures/cmdg/extractor_001/nat_concordance.json --output cmdg-nat-concordance-dependencies.json
+      - name: Preserve Lean failure log
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: cmdg-nat-concordance-lean-failure
+          path: fixtures/formal/CMDG-NAT-CONCORDANCE-001/lean-build.log
+          if-no-files-found: warn
