@@ -68,7 +68,7 @@ def zDvd (x y : ZFSet) : Prop :=
       simpa using hk
     exact ⟨k, (zNat_injective hencoded).symm⟩
   · rintro ⟨k, rfl⟩
-    exact ⟨k, by simp [zDvd]⟩
+    exact ⟨k, by simp⟩
 
 /-- A concrete Type-category NNO contract. `Unit` is the chosen terminal object;
 composition in `Type` is ordinary function composition. -/
@@ -139,7 +139,9 @@ def nnoDvd (m n : NNOCarrier) : Prop := m ∣ n
 theorem nat_type_nno_universal {X : Type} (x0 : Unit → X) (s : X → X) :
     ∃! h : NNOCarrier → X,
       h ∘ natZero = x0 ∧ h ∘ nnoSucc = s ∘ h := by
-  simpa [NNOCarrier, nnoSucc] using natTypeNNO.universal x0 s
+  refine ⟨natFold x0 s, ⟨natFold_zero x0 s, natFold_succ x0 s⟩, ?_⟩
+  intro h hh
+  exact natFold_unique x0 s h hh.1 hh.2
 
 def dttToNNO (n : Nat) : NNOCarrier := n
 
