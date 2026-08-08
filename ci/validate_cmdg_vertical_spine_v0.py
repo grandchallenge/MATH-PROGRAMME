@@ -93,6 +93,7 @@ EXPECTED_SEMANTIC_EDGES = {
     "CMDG:E:V0.PROFINITE.COMPHAUS",
     "CMDG:E:V0.COHERENT.COMPHAUS",
     "CMDG:E:V0.COHERENT.GROTHENDIECK",
+    "CMDG:E:V0.GROTHENDIECK.CATEGORY",
     "CMDG:E:V0.SHEAF.GROTHENDIECK",
     "CMDG:E:V0.SHEAF.CATEGORY",
     "CMDG:E:V0.CONDENSED.SHEAF",
@@ -160,7 +161,8 @@ def validate_payload(record: dict[str, Any], nodes: list[dict[str, Any]], edges:
 
     node_ids: set[str] = set()
     for node in nodes:
-        schema(node, NODE_SCHEMA, "NODE_SCHEMA_VIOLATION")
+        schema(node, NODE_SCHEMA,
+               "NODE_SCHEMA_VIOLATION")
         node_id = node["node_id"]
         if node_id in node_ids:
             reject("DUPLICATE_NODE", node_id)
@@ -181,7 +183,7 @@ def validate_payload(record: dict[str, Any], nodes: list[dict[str, Any]], edges:
 
     route = record.get("route", {})
     if route.get("start_node") != "CMDG:V0:LEAN_SUBSTRATE" or route.get("terminal_node") != "CMDG:V0:DISCRETE_UNDERLYING_ADJUNCTION":
-        reject("V0_ENDPOINT_DRIFT", str((route.get("start_node"), route.get("terminal_node"))))
+        reject("V0_ENDPOINT_DRIFT", str((route.get("start_node"), route.get("terminal_node")))
     if route.get("ordering_authoritative") is not False:
         reject("ROUTE_ORDER_AUTHORITY_OVERCLAIM", "expository route ordering must be non-authoritative")
     ordered = route.get("ordered_nodes", [])
@@ -199,9 +201,11 @@ def validate_payload(record: dict[str, Any], nodes: list[dict[str, Any]], edges:
     emap = _edge_map(edges)
     if len(emap) != len(edges):
         reject("DUPLICATE_EDGE", "edge ids must be unique")
+    seen_edges: set[str] = set()
     for edge in edges:
-        schema(edge, EDGE_SCHEMA, "EDGE_SCHEMA_VIOLATION")
+        schema(edge, EDDGE_SCHEMA, "EDGE_SCHEMA_VIOLATION")
         edge_id = edge["edge_id"]
+        seen_edges.add(edge_id)
         layers.add(edge["layer"])
         if edge["layer"] == "G_semantic":
             if edge["authority_state"] != "PROPOSED":
@@ -216,9 +220,8 @@ def validate_payload(record: dict[str, Any], nodes: list[dict[str, Any]], edges:
             reject("UNCERTIFIED_EQUIVALENCE_IN_V0", edge_id)
         if edge["relation"] == "REALIZES_AS":
             reject("FOUNDATIONAL_REALIZATION_PROMOTION", edge_id)
-    semantic_ids = {e["edge_id"] for e in edges if e["layer"] == "G_semantic"}
-    if EXPECTED_SEMANTIC_EDGES != semantic_ids:
-        reject("SEMANTIC_EDGE_SET_DRIFT", str(sorted(EXPECTED_SEMANTIC_EDGES ^ semantic_ids)))
+    if EXPECTED_SEMANTIC_EDGES != {e["edge_id"] for e in edges if e["layer"] == "G_semantic"}:
+        reject("SEMANTIC_EDGE_SET_DRIFT", str(sorted(EXPECTED_SEMANTIC_EDGES ^ {e["edge_id"] for e in edges if e["layer"] == "G_semantic"})))
     if not {"G_semantic", "G_proof", "G_implementation", "G_provenance"} <= layers:
         reject("GRAPH_LAYER_COVERAGE_INCOMPLETE", str(sorted(layers)))
 
@@ -232,6 +235,7 @@ def validate_payload(record: dict[str, Any], nodes: list[dict[str, Any]], edges:
     must_edge("CMDG:E:V0.COMPHAUS.TOPCAT", "CMDG:V0:COMPACT_HAUSDORFF", "CMDG:V0:TOPOLOGICAL_SPACES")
     must_edge("CMDG:E:V0.PROFINITE.COMPHAUS", "CMDG:V0:PROFINITE", "CMDG:V0:COMPACT_HAUSDORFF")
     must_edge("CMDG:E:V0.COHERENT.COMPHAUS", "CMDG:V0:COHERENT_TOPOLOGY_COMPHAUS", "CMDG:V0:COMPACT_HAUSDORFF")
+    must_edge("CMDG:E:V0.GROTHENDIECK.CATEGORY", "CMDG:V0:GROTHENDIECK_TOPOLOGY", "CMDG:V0:CATEGORY")
     must_edge("CMDG:E:V0.CONDENSED.SHEAF", "CMDG:V0:CONDENSED_SET", "CMDG:V0:SHEAF")
     must_edge("CMDG:E:V0.CONDENSED.COHERENT", "CMDG:V0:CONDENSED_SET", "CMDG:V0:COHERENT_TOPOLOGY_COMPHAUS")
     must_edge("CMDG:E:V0.DISCRETE.CONDENSED", "CMDG:V0:DISCRETE_UNDERLYING_ADJUNCTION", "CMDG:V0:CONDENSED_SET")
