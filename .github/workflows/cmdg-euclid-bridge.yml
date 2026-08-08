@@ -106,13 +106,14 @@ jobs:
           test: false
           use-github-cache: false
           use-mathlib-cache: true
-      - name: Replay exact original theorem module
+      - name: Build and replay exact original theorem module
         working-directory: external/MATHCERT
         env:
           LEAN_SETUP_OUTCOME: ${{ steps.original-lean-setup.outcome }}
         run: |
           set -euo pipefail
           echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+          lake build MathCert.Domains.NumberTheory.EuclidGCD
           lake env lean MathCert/Domains/NumberTheory/EuclidGCD.lean
       - name: Extract original theorem proof dependencies
         run: python3 ci/extract_cmdg_lean_dependencies.py fixtures/cmdg/extractor_001/euclid_gcd_original.json --output cmdg-euclid-original-dependencies.json
