@@ -6,8 +6,10 @@
 **Operation:** `CMDG-CHARTER-001`  
 **Authority:** ADR-0017; `HUMAN_STEWARD_RATIFIED_WITH_COUNCIL_CORRECTIONS`  
 **Council disposition:** `RATIFY_WITH_CORRECTIONS`  
-**Charter state:** proposed for protected admission under issue #292  
-**Protected authority baseline:** `e456df8741b707af94012ec45b0341424e44157a`
+**Charter state:** protected and active  
+**Protected authority baseline:** `e456df8741b707af94012ec45b0341424e44157a`  
+**Protected admission:** PR #293 at reviewed head `86238812d6b130378abd1da5bce06e8be5607769`; merge `799a6161f2700c6ffb52848cbf6d007c988398a8`  
+**Independent review:** `jimsteeg` — `APPROVED` — 2026-08-08
 
 This charter translates the ratified CMDG conception into the governing programme contract for implementation. It does not replace the protected I–XIX programme memorial or ADR-0017. The memorial preserves the originating conception; ADR-0017 records the ratified decision and Council corrections; this charter governs execution under that authority.
 
