@@ -1,0 +1,122 @@
+[
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:NAT.DTT_TO_ZFC.TRANSPORT",
+    "layer": "G_semantic",
+    "relation": "TRANSPORTS_ALONG",
+    "source": {"identity": "CMDG:NAT:N_DTT", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:NAT:N_ZFC", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {
+      "origin": "HUMAN",
+      "artifact_ref": "governance/cmdg_nat_concordance_001.json"
+    }
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:NAT.DTT_TO_NNO.TRANSPORT",
+    "layer": "G_semantic",
+    "relation": "TRANSPORTS_ALONG",
+    "source": {"identity": "CMDG:NAT:N_DTT", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:NAT:N_NNO", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {
+      "origin": "HUMAN",
+      "artifact_ref": "governance/cmdg_nat_concordance_001.json"
+    }
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:NAT.NNO_TO_ZFC.TRANSPORT",
+    "layer": "G_semantic",
+    "relation": "TRANSPORTS_ALONG",
+    "source": {"identity": "CMDG:NAT:N_NNO", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:NAT:N_ZFC", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {
+      "origin": "HUMAN",
+      "artifact_ref": "governance/cmdg_nat_concordance_001.json"
+    }
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:NAT.N_DTT.REALIZES_AS.LEAN_NAT",
+    "layer": "CROSS_LAYER",
+    "relation": "REALIZES_AS",
+    "source": {"identity": "CMDG:NAT:N_DTT", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "Nat", "kind": "FORMAL_DECLARATION", "locator": "leanprover/lean4@62eed1db4d67327ec8120be05f1a1b0847d74561:src/Init/Prelude.lean#Nat"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {
+      "origin": "HUMAN",
+      "artifact_ref": "governance/cmdg_nat_concordance_001.json"
+    },
+    "realization": {
+      "realization_kind": "LEAN_DECLARATION",
+      "correspondence_scope": "Lean Nat with zero, successor, addition, multiplication, order, and divisibility interfaces used by the bounded concordance.",
+      "evidence_refs": ["governance/cmdg_nat_concordance_foundations_profile_001.json", "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGNatConcordance.lean"],
+      "target_locator": "Nat",
+      "proof_environment_ref": "CMDG-NAT-CONCORDANCE-001:proof_environment",
+      "restrictions": ["No cross-foundational definitional identity follows from this realization record."],
+      "automatic_claims": {
+        "definitional_equality": false,
+        "mathematical_equivalence": false,
+        "source_faithful_identity": false,
+        "foundational_concordance": false
+      }
+    }
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:NAT.N_ZFC.REALIZES_AS.ZNAT",
+    "layer": "CROSS_LAYER",
+    "relation": "REALIZES_AS",
+    "source": {"identity": "CMDG:NAT:N_ZFC", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG.NatConcordance.zNat", "kind": "FORMAL_DECLARATION", "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGNatConcordance.lean#CMDG.NatConcordance.zNat"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {
+      "origin": "HUMAN",
+      "artifact_ref": "governance/cmdg_nat_concordance_001.json"
+    },
+    "realization": {
+      "realization_kind": "LEAN_DECLARATION",
+      "correspondence_scope": "Finite von Neumann ordinal image inside the retained pinned ZFSet implementation; arithmetic is restricted to the checked finite-ordinal image induced through ordinal rank.",
+      "evidence_refs": ["governance/cmdg_nat_concordance_foundations_profile_001.json", "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGNatConcordance.lean", "fixtures/cmdg/extractor_001/nat_concordance.json"],
+      "target_locator": "CMDG.NatConcordance.zNat",
+      "proof_environment_ref": "CMDG-NAT-CONCORDANCE-001:proof_environment",
+      "restrictions": ["Not a standard-model claim.", "Not a consistency claim.", "Not a formula-by-formula admission of the full syntactic ZFC object theory."],
+      "automatic_claims": {
+        "definitional_equality": false,
+        "mathematical_equivalence": false,
+        "source_faithful_identity": false,
+        "foundational_concordance": false
+      }
+    }
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:NAT.N_NNO.REALIZES_AS.TYPE_NNO",
+    "layer": "CROSS_LAYER",
+    "relation": "REALIZES_AS",
+    "source": {"identity": "CMDG:NAT:N_NNO", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG.NatConcordance.natTypeNNO", "kind": "FORMAL_DECLARATION", "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGNatConcordance.lean#CMDG.NatConcordance.natTypeNNO"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {
+      "origin": "HUMAN",
+      "artifact_ref": "governance/cmdg_nat_concordance_001.json"
+    },
+    "realization": {
+      "realization_kind": "LEAN_DECLARATION",
+      "correspondence_scope": "Nat in Type with Unit as terminal object, zero and successor maps, and a directly proved unique recursor mediator for every target type, point, and endomorphism.",
+      "evidence_refs": ["governance/cmdg_nat_concordance_foundations_profile_001.json", "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGNatConcordance.lean", "fixtures/cmdg/extractor_001/nat_concordance.json"],
+      "target_locator": "CMDG.NatConcordance.natTypeNNO",
+      "proof_environment_ref": "CMDG-NAT-CONCORDANCE-001:proof_environment",
+      "restrictions": ["This realizes the admitted NNO recursor profile in Type; it is not a blanket equivalence of categorical foundations and DTT."],
+      "automatic_claims": {
+        "definitional_equality": false,
+        "mathematical_equivalence": false,
+        "source_faithful_identity": false,
+        "foundational_concordance": false
+      }
+    }
+  }
+]
