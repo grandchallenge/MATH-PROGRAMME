@@ -75,9 +75,27 @@ noncomputable def measurePresheafFunctor : Profinite.{u} ⥤ PresheafModule wher
   obj := measurePresheafObj
   map f := (MonoidalClosed.pre (discreteContinuousPresheaf.map f.op)).app coefficientPresheaf
   map_id S := by
+    change
+      (MonoidalClosed.pre (discreteContinuousPresheaf.map ((𝟙 S).op))).app coefficientPresheaf =
+        𝟙 (measurePresheafObj S)
+    have h :
+        discreteContinuousPresheaf.map ((𝟙 S).op) =
+          𝟙 (discreteContinuousPresheaf.obj (op S)) := by
+      simpa using discreteContinuousPresheaf.map_id (op S)
+    rw [h]
     simp [measurePresheafObj]
   map_comp f g := by
-    simp [measurePresheafObj]
+    change
+      (MonoidalClosed.pre (discreteContinuousPresheaf.map ((f ≫ g).op))).app
+          coefficientPresheaf =
+        (MonoidalClosed.pre (discreteContinuousPresheaf.map f.op)).app coefficientPresheaf ≫
+          (MonoidalClosed.pre (discreteContinuousPresheaf.map g.op)).app coefficientPresheaf
+    have h :
+        discreteContinuousPresheaf.map ((f ≫ g).op) =
+          discreteContinuousPresheaf.map g.op ≫ discreteContinuousPresheaf.map f.op := by
+      simpa using discreteContinuousPresheaf.map_comp g.op f.op
+    rw [h]
+    simp
 
 /-- The canonical measure/dual condensed-module functor attached to profinite sets. -/
 noncomputable def measureFunctor : Profinite.{u} ⥤ CondensedMod.{u} R :=
