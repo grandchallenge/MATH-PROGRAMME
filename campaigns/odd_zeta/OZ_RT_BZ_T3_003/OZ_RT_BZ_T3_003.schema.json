@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {"const": "OZ_RT_BZ_T3_003.schema.json"},
+    "authority": {"type": "object"},
+    "disposition": {"type": "object"},
+    "fixture": {"const": "PARAMETER_LIFT_ORDER2_001"},
+    "nonclaims": {"type": "object"},
+    "operation": {"const": "OZ-RT-BZ-T3-003"},
+    "parameter_lift": {"type": "object"},
+    "schema_version": {"const": "1.0.0"},
+    "search_execution": {"type": "object"}
+  },
+  "required": ["$schema", "schema_version", "operation", "fixture", "authority", "parameter_lift", "search_execution", "disposition", "nonclaims"],
+  "title": "OZ-RT-BZ-T3-003 record",
+  "type": "object"
+}
