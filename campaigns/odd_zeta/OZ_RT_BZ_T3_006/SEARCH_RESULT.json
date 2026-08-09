@@ -1,67 +1,23 @@
 {
-  "schema_version": "1.0.0",
-  "operation": "OZ-RT-BZ-T3-006",
-  "route": "COUPLED_WEIGHT5_RAW_JET_ORDER2_SEARCH_001",
-  "prime": 1000003,
-  "target": "sum_{k,l=0}^n T(n,k,l)*(W1(k,l)+2*w5_sym(n,k,l))=0",
-  "predecessor": {
-    "issue": 341,
-    "pull_request": 344,
-    "merge_commit": "e99defaabbc0d971e6299360ac03084e516c31c3",
-    "merge_tree": "041b4f7afa647fec06d3303503b53fa0fc65350d"
+  "basis": {
+    "basis_sha256": "cbdfe5798d360cb98f2d64743907a06ddc0612f88d17ef4bcef65c81c74e1438",
+    "distinct_atom_count": 41,
+    "k_l_swap_invariant": true,
+    "max_nested_atoms_per_monomial": 1,
+    "monomial_count": 198,
+    "one_body_only_count": 158,
+    "one_nested_atom_count": 40,
+    "source": "OZ-RT-BZ-T3-005 linear raw-jet coefficient map"
   },
+  "certificate_denominator": "(l+1)^3*(k+l+1)",
+  "denominator_condition": "all exact rational matrix-entry denominators are nonzero modulo p on every declared sample",
+  "denominator_provenance": "exact undeformed T(n,k,l+1)/T(n,k,l) shift-ratio denominator",
+  "exact_target_cross_checks": 135,
   "execution_intake": {
     "protected_head": "d2cdd1cfb57feb648bdd624a3362dae646a8b72f",
     "protected_tree": "3b7cc40fbf7f82cb1c219aef6b9733429e83e54f"
   },
-  "basis": {
-    "source": "OZ-RT-BZ-T3-005 linear raw-jet coefficient map",
-    "monomial_count": 198,
-    "one_body_only_count": 158,
-    "one_nested_atom_count": 40,
-    "distinct_atom_count": 41,
-    "basis_sha256": "cbdfe5798d360cb98f2d64743907a06ddc0612f88d17ef4bcef65c81c74e1438",
-    "k_l_swap_invariant": true,
-    "max_nested_atoms_per_monomial": 1
-  },
-  "search_equation": "sum_{j=0}^2 a_j(n,k) F(n,k+j,l) = Delta_l Q(n,k,l)",
-  "certificate_denominator": "(l+1)^3*(k+l+1)",
-  "denominator_provenance": "exact undeformed T(n,k,l+1)/T(n,k,l) shift-ratio denominator",
-  "stage_a_scalar_envelope": {
-    "classification": "EXACT_BOUNDED_EXHAUSTION",
-    "description": "Q is a rational polynomial multiple of the complete extracted T3 cell",
-    "stages": [
-      {"a_degree": 0, "q_degree": 2, "n_max": 8, "equations": 166, "unknowns": 13, "rank": 13, "nullity": 0},
-      {"a_degree": 1, "q_degree": 3, "n_max": 8, "equations": 166, "unknowns": 29, "rank": 29, "nullity": 0},
-      {"a_degree": 2, "q_degree": 4, "n_max": 8, "equations": 166, "unknowns": 53, "rank": 53, "nullity": 0},
-      {"a_degree": 3, "q_degree": 5, "n_max": 8, "equations": 166, "unknowns": 86, "rank": 86, "nullity": 0},
-      {"a_degree": 4, "q_degree": 6, "n_max": 9, "equations": 238, "unknowns": 129, "rank": 129, "nullity": 0},
-      {"a_degree": 5, "q_degree": 7, "n_max": 10, "equations": 328, "unknowns": 183, "rank": 183, "nullity": 0},
-      {"a_degree": 6, "q_degree": 8, "n_max": 11, "equations": 438, "unknowns": 249, "rank": 249, "nullity": 0}
-    ],
-    "strongest_frontier": "ORDER2_EXTRACTED_SCALAR_ENVELOPE_ADEG_LE_6_QDEG_LE_8",
-    "terminal": "NO_NONZERO_ORDER2_SCALAR_ENVELOPE_CERTIFICATE_IN_DECLARED_CLASS"
-  },
-  "stage_b_full_weight5_module": {
-    "classification": "EXACT_BOUNDED_EXHAUSTION",
-    "a_degree": 2,
-    "certificate_basis": "all 198 locked weight-five monomials with independent polynomial coefficients",
-    "stages": [
-      {"q_coefficient_degree": 0, "n_max": 10, "full_grid_rows": 328, "rank_witness_rows": 216, "telescoper_unknowns": 18, "certificate_unknowns": 198, "unknowns": 216, "rank": 216, "nullity": 0},
-      {"q_coefficient_degree": 1, "n_max": 15, "full_grid_rows": 1118, "rank_witness_rows": 810, "telescoper_unknowns": 18, "certificate_unknowns": 792, "unknowns": 810, "rank": 810, "nullity": 0},
-      {"q_coefficient_degree": 2, "n_max": 19, "full_grid_rows": 2278, "rank_witness_rows": 1998, "telescoper_unknowns": 18, "certificate_unknowns": 1980, "unknowns": 1998, "rank": 1998, "nullity": 0}
-    ],
-    "producer_witness_selection": "first unknowns rows of the lexicographic exact grid",
-    "independent_verifier_witness_selection": "last unknowns rows of the same declared exact grid with reversed basis ordering",
-    "strongest_frontier": "COUPLED_WEIGHT5_RAW_JET_ORDER2_ADEG_LE_2_QCOEFFDEG_LE_2",
-    "terminal": "NO_NONZERO_ORDER2_FIBRE_CERTIFICATE_IN_COMPLETE_WEIGHT5_MODULE_DECLARED_CLASS"
-  },
-  "rank_certificate": "FULL_COLUMN_RANK_MOD_P_EXHIBITS_NONZERO_MAXIMAL_MINOR_AND_IMPLIES_FULL_COLUMN_RANK_OVER_Q",
-  "denominator_condition": "all exact rational matrix-entry denominators are nonzero modulo p on every declared sample",
   "mirror_status": "EXACTLY_EQUIVALENT_BY_K_L_SWAP",
-  "proof_effect": "NONE",
-  "promotion_effect": "NONE",
-  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
   "next_distinct_routes": [
     "COUPLED_WEIGHT5_RAW_JET_ORDER3_4_SEARCH_001",
     "SYMMETRIC_2D_RAW_JET_DIVERGENCE_001",
@@ -74,5 +30,136 @@
     "T1-top is not substituted for T3",
     "DEPTH and Sharp-12 are unchanged",
     "MATHCERT and GRAPH_CERTIFIED are unchanged"
-  ]
+  ],
+  "operation": "OZ-RT-BZ-T3-006",
+  "predecessor": {
+    "issue": 341,
+    "merge_commit": "e99defaabbc0d971e6299360ac03084e516c31c3",
+    "merge_tree": "041b4f7afa647fec06d3303503b53fa0fc65350d",
+    "pull_request": 344
+  },
+  "prime": 1000003,
+  "promotion_effect": "NONE",
+  "proof_effect": "NONE",
+  "rank_certificate": "FULL_COLUMN_RANK_MOD_P_EXHIBITS_NONZERO_MAXIMAL_MINOR_AND_IMPLIES_FULL_COLUMN_RANK_OVER_Q",
+  "route": "COUPLED_WEIGHT5_RAW_JET_ORDER2_SEARCH_001",
+  "schema_version": "1.0.0",
+  "search_equation": "sum_{j=0}^2 a_j(n,k) F(n,k+j,l) = Delta_l Q(n,k,l)",
+  "stage_a_scalar_envelope": {
+    "classification": "EXACT_BOUNDED_EXHAUSTION",
+    "stages": [
+      {
+        "a_degree": 0,
+        "equations": 166,
+        "n_max": 8,
+        "nullity": 0,
+        "q_degree": 2,
+        "rank": 13,
+        "unknowns": 13
+      },
+      {
+        "a_degree": 1,
+        "equations": 166,
+        "n_max": 8,
+        "nullity": 0,
+        "q_degree": 3,
+        "rank": 29,
+        "unknowns": 29
+      },
+      {
+        "a_degree": 2,
+        "equations": 166,
+        "n_max": 8,
+        "nullity": 0,
+        "q_degree": 4,
+        "rank": 53,
+        "unknowns": 53
+      },
+      {
+        "a_degree": 3,
+        "equations": 166,
+        "n_max": 8,
+        "nullity": 0,
+        "q_degree": 5,
+        "rank": 86,
+        "unknowns": 86
+      },
+      {
+        "a_degree": 4,
+        "equations": 238,
+        "n_max": 9,
+        "nullity": 0,
+        "q_degree": 6,
+        "rank": 129,
+        "unknowns": 129
+      },
+      {
+        "a_degree": 5,
+        "equations": 328,
+        "n_max": 10,
+        "nullity": 0,
+        "q_degree": 7,
+        "rank": 183,
+        "unknowns": 183
+      },
+      {
+        "a_degree": 6,
+        "equations": 438,
+        "n_max": 11,
+        "nullity": 0,
+        "q_degree": 8,
+        "rank": 249,
+        "unknowns": 249
+      }
+    ],
+    "strongest_frontier": "ORDER2_EXTRACTED_SCALAR_ENVELOPE_ADEG_LE_6_QDEG_LE_8",
+    "terminal": "NO_NONZERO_ORDER2_SCALAR_ENVELOPE_CERTIFICATE_IN_DECLARED_CLASS"
+  },
+  "stage_b_full_weight5_module": {
+    "a_degree": 2,
+    "certificate_basis": "all 198 locked weight-five monomials with independent polynomial coefficients",
+    "classification": "EXACT_BOUNDED_EXHAUSTION",
+    "independent_verifier_witness_selection": "last unknowns rows of the same declared exact grid with reversed basis ordering",
+    "producer_witness_selection": "first unknowns rows of the lexicographic exact grid",
+    "stages": [
+      {
+        "certificate_unknowns": 198,
+        "full_grid_rows": 328,
+        "n_max": 10,
+        "nullity": 0,
+        "q_coefficient_degree": 0,
+        "rank": 216,
+        "rank_witness_rows": 216,
+        "telescoper_unknowns": 18,
+        "unknowns": 216
+      },
+      {
+        "certificate_unknowns": 792,
+        "full_grid_rows": 1118,
+        "n_max": 15,
+        "nullity": 0,
+        "q_coefficient_degree": 1,
+        "rank": 810,
+        "rank_witness_rows": 810,
+        "telescoper_unknowns": 18,
+        "unknowns": 810
+      },
+      {
+        "certificate_unknowns": 1980,
+        "full_grid_rows": 2278,
+        "n_max": 19,
+        "nullity": 0,
+        "q_coefficient_degree": 2,
+        "rank": 1998,
+        "rank_witness_rows": 1998,
+        "telescoper_unknowns": 18,
+        "unknowns": 1998
+      }
+    ],
+    "strongest_frontier": "COUPLED_WEIGHT5_RAW_JET_ORDER2_ADEG_LE_2_QCOEFFDEG_LE_2",
+    "terminal": "NO_NONZERO_ORDER2_FIBRE_CERTIFICATE_IN_COMPLETE_WEIGHT5_MODULE_DECLARED_CLASS"
+  },
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+  "target": "sum_{k,l=0}^n T(n,k,l)*(W1(k,l)+2*w5_sym(n,k,l))=0",
+  "terminal": "ORDER2_COMPLETE_WEIGHT5_MODULE_BOUNDED_CLASS_EXHAUSTED"
 }
