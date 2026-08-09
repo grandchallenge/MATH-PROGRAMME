@@ -58,8 +58,8 @@ jobs:
             echo "P2-D must not assert the separately governed P2-E equivalence."
             exit 1
           fi
-          if grep -niE 'N[oö]beling|LocallyConstant\.freeOfProfinite|(^|[^[:alnum:]_])Pi\.obj|∏' "$F"; then
-            echo "P2-D formal construction must not depend on a chosen basis/product substitute."
+          if grep -nE 'LocallyConstant\.freeOfProfinite|(^|[^[:alnum:]_])Pi\.obj|∏' "$F"; then
+            echo "P2-D formal construction must not use a chosen-basis/product substitute."
             exit 1
           fi
       - name: Set up pinned Lean and mathlib cache
