@@ -2,6 +2,7 @@
 import validate_workflow_coverage_v3 as v3
 
 v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
+    "aether-controls-admin.yml",
     "cmdg-nat-concordance.yml",
     "cmdg-euclid-bridge.yml",
     "cmdg-vertical-spine-v0.yml",
