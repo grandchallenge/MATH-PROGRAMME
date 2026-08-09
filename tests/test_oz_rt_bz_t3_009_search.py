@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
 import unittest
 from pathlib import Path
 
@@ -9,8 +11,14 @@ HERE=ROOT/"campaigns"/"odd_zeta"/"OZ_RT_BZ_T3_009"
 
 
 class T3009SearchTests(unittest.TestCase):
-    def setUp(self):
-        self.r=json.loads((HERE/"SEARCH_RESULT.json").read_text())
+    @classmethod
+    def setUpClass(cls):
+        cls.r=json.loads((HERE/"SEARCH_RESULT.json").read_text())
+
+    def test_exact_rank_search_replays(self):
+        cp=subprocess.run([sys.executable,str(HERE/"search.py")],check=True,capture_output=True,text=True,timeout=120)
+        self.assertIn('"augmented_rank":199',cp.stdout)
+        self.assertIn('"augmented_rank":793',cp.stdout)
 
     def test_declared_bounded_negative(self):
         self.assertEqual([(x["coefficient_rank"],x["augmented_rank"]) for x in self.r["stages"]],[(198,199),(792,793)])
