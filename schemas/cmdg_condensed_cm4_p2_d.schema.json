@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_condensed_cm4_p2_d.schema.json",
+  "title": "CMDG-CONDENSED-CM4-P2-D-001 reconstruction candidate record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation_id",
+    "parent_operation_id",
+    "parent_issue",
+    "issue",
+    "implementation_pr",
+    "scope",
+    "repository_baseline",
+    "repository_baseline_tree",
+    "protected_predecessor",
+    "environment",
+    "exact_tree_audit",
+    "construction",
+    "source_concordance",
+    "adversarial_guards",
+    "stage_result",
+    "claim_boundary",
+    "disposition"
+  ],
+  "properties": {
+    "operation_id": {"const": "CMDG-CONDENSED-CM4-P2-D-001"},
+    "parent_operation_id": {"const": "CMDG-CONDENSED-CM4-P2-001"},
+    "parent_issue": {"const": 363},
+    "issue": {"const": 369},
+    "implementation_pr": {"const": 371},
+    "scope": {"type": "string", "minLength": 1},
+    "repository_baseline": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "repository_baseline_tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "protected_predecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["implementation_pr", "reviewed_head", "protected_tree", "protected_merge", "protected_replay_run", "terminal_disposition"],
+      "properties": {
+        "implementation_pr": {"const": 364},
+        "reviewed_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "protected_tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "protected_merge": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "protected_replay_run": {"type": "integer", "minimum": 1},
+        "terminal_disposition": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"}
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lean_image", "lean_commit", "mathlib_commit", "mathlib_tree", "coefficient_ring"],
+      "properties": {
+        "lean_image": {"const": "leanprover/lean4:v4.33.0-rc1"},
+        "lean_commit": {"const": "62eed1db4d67327ec8120be05f1a1b0847d74561"},
+        "mathlib_commit": {"const": "79d0395a1825a6264ad5d269e35e60537518955e"},
+        "mathlib_tree": {"const": "d76f5e09b832a08949f6d8ad4fb80ce30527da64"},
+        "coefficient_ring": {"const": "ULift.{u + 1} Z"}
+      }
+    },
+    "exact_tree_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observed_sources", "dedicated_measure_locus_present", "dedicated_measure_locus", "result"],
+      "properties": {
+        "observed_sources": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "blob", "declarations", "role"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "blob": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+              "declarations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+              "role": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "dedicated_measure_locus_present": {"const": false},
+        "dedicated_measure_locus": {"const": "Mathlib/Condensed/Measure"},
+        "result": {"const": "RECONSTRUCTIBLE_FROM_GENERAL_CLOSED_MONOIDAL_AND_SHEAF_INTERFACES"}
+      }
+    },
+    "construction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fixture", "coefficient_presheaf", "continuous_functions_functor",
+        "discrete_continuous_presheaf", "measure_object", "sheaf_proof",
+        "presheaf_functor", "condensed_functor", "duality_interface",
+        "basis_dependency", "objectwise_product_definition", "variance"
+      ],
+      "properties": {
+        "fixture": {"const": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2D.lean"},
+        "coefficient_presheaf": {"type": "string", "minLength": 1},
+        "continuous_functions_functor": {"type": "string", "minLength": 1},
+        "discrete_continuous_presheaf": {"type": "string", "minLength": 1},
+        "measure_object": {"type": "string", "minLength": 1},
+        "sheaf_proof": {"type": "string", "minLength": 1},
+        "presheaf_functor": {"type": "string", "minLength": 1},
+        "condensed_functor": {"type": "string", "minLength": 1},
+        "duality_interface": {"type": "string", "minLength": 1},
+        "basis_dependency": {"const": false},
+        "objectwise_product_definition": {"const": false},
+        "variance": {"const": "COVARIANT_PROFINITE_BY_PULLBACK_THEN_INTERNAL_HOM_PRECOMPOSITION"}
+      }
+    },
+    "source_concordance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_formula", "underlying_measure_group", "product_after_basis_only", "interpretation"],
+      "properties": {
+        "source_formula": {"type": "string", "minLength": 1},
+        "underlying_measure_group": {"type": "string", "minLength": 1},
+        "product_after_basis_only": {"const": true},
+        "interpretation": {"type": "string", "minLength": 1}
+      }
+    },
+    "adversarial_guards": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chosen_basis_substitute_rejected", "objectwise_product_substitute_rejected", "variance_reversal_rejected", "p2_e_promotion_rejected", "placeholder_rejected"],
+      "properties": {
+        "chosen_basis_substitute_rejected": {"const": true},
+        "objectwise_product_substitute_rejected": {"const": true},
+        "variance_reversal_rejected": {"const": true},
+        "p2_e_promotion_rejected": {"const": true},
+        "placeholder_rejected": {"const": true}
+      }
+    },
+    "stage_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["p2_d_candidate_reconstructed", "p2_d_protected_available", "p2_e_available", "p2_closed", "candidate_disposition"],
+      "properties": {
+        "p2_d_candidate_reconstructed": {"const": true},
+        "p2_d_protected_available": {"const": false},
+        "p2_e_available": {"const": false},
+        "p2_closed": {"const": false},
+        "candidate_disposition": {"const": "P2_D_RECONSTRUCTED_PENDING_PROTECTED_ADMISSION"}
+      }
+    },
+    "claim_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "p2_e_natural_equivalence_established", "p2_closed", "cm4_theorem_certified",
+        "p3_closed", "p4_closed", "p5_closed", "p6_closed", "derived_complex_form_certified",
+        "arbitrary_ring_generalization_certified", "c04_broadened", "c06_discharged",
+        "graph_certified", "dependency_minimality_claim", "dependency_uniqueness_claim",
+        "cm5_authorized", "global_cmdg_completeness_claim"
+      ],
+      "properties": {
+        "p2_e_natural_equivalence_established": {"const": false},
+        "p2_closed": {"const": false},
+        "cm4_theorem_certified": {"const": false},
+        "p3_closed": {"const": false},
+        "p4_closed": {"const": false},
+        "p5_closed": {"const": false},
+        "p6_closed": {"const": false},
+        "derived_complex_form_certified": {"const": false},
+        "arbitrary_ring_generalization_certified": {"const": false},
+        "c04_broadened": {"const": false},
+        "c06_discharged": {"const": false},
+        "graph_certified": {"const": false},
+        "dependency_minimality_claim": {"const": false},
+        "dependency_uniqueness_claim": {"const": false},
+        "cm5_authorized": {"const": false},
+        "global_cmdg_completeness_claim": {"const": false}
+      }
+    },
+    "disposition": {"const": "P2_D_RECONSTRUCTED_PENDING_PROTECTED_ADMISSION"}
+  }
+}
