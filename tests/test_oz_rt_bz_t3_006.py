@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import importlib.util
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +19,22 @@ def has(errors, text):
 
 def test_baseline_is_valid():
     assert v.errors() == []
+
+
+def test_protected_raw_jet_normalization_is_invertible_mod_rank_prime():
+    mapping = json.loads(
+        (
+            ROOT
+            / "campaigns"
+            / "odd_zeta"
+            / "OZ_RT_BZ_T3_005"
+            / "JET_COEFFICIENT_MAP.json"
+        ).read_text(encoding="utf-8")
+    )
+    multipliers = [item["raw_derivative_multiplier"] for item in mapping["monomials"]]
+    assert len(multipliers) == 198
+    assert all(isinstance(x, int) and x != 0 for x in multipliers)
+    assert all(x % 1000003 != 0 for x in multipliers)
 
 
 def test_rejects_dropped_weight_five_monomial():
