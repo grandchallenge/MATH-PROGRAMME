@@ -1,0 +1,101 @@
+[
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM3:PINNED_CONDENSED_MODEL",
+    "node_type": "Model",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "Pinned no-cardinality-bound condensed formal model",
+    "description": "The exact protected CM2 formal environment reused for the CM3 module-valued extension; cardinality/smallness concordance remains local.",
+    "provenance_refs": ["governance/cmdg_condensed_cm2_001.json"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM3:MODULECAT_COEFFICIENT",
+    "node_type": "Structure",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Module category over R",
+    "description": "The coefficient abelian category ModuleCat R used to define condensed R-modules.",
+    "provenance_refs": ["leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Algebra/Category/ModuleCat/AB.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM3:CONDENSED_MOD",
+    "node_type": "Definition",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "Condensed R-modules",
+    "description": "CondensedMod R, defined as sheaves of R-modules on CompHaus for the coherent topology in the exact pinned model.",
+    "provenance_refs": ["leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/Module.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM3:SHEAF_ABELIAN_TRANSFER",
+    "node_type": "Theorem",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Abelian structure transferred to sheaves",
+    "description": "The generic sheafIsAbelian construction transferring abelian structure through sheafification.",
+    "provenance_refs": ["leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Sites/Abelian.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM3:ABELIAN_CONDENSED_MOD",
+    "node_type": "Theorem",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "Condensed modules form an abelian category",
+    "description": "The materialized Abelian (CondensedMod R) witness in the pinned environment.",
+    "provenance_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM3.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM3:CONDENSED_AB",
+    "node_type": "Definition",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "Condensed abelian groups",
+    "description": "CondensedAb, the specialization CondensedMod (ULift ℤ), with inherited abelian and AB witnesses.",
+    "provenance_refs": ["leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/Module.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM3:EXACT_COLIMIT_TRANSPORT",
+    "node_type": "Construction",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Exact-colimit transport for condensed modules",
+    "description": "The sheaf-level exact-colimit transport used by the pinned Condensed AB5 instance.",
+    "provenance_refs": ["leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/AB.lean", "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Abelian/GrothendieckAxioms/Sheaf.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM3:AB5_CONDENSED_MOD",
+    "node_type": "Theorem",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "AB5 for condensed modules",
+    "description": "The materialized AB5 (CondensedMod R) witness in the exact pinned environment.",
+    "provenance_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM3.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM3:AB4_CONDENSED_MOD",
+    "node_type": "Theorem",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "AB4 for condensed modules",
+    "description": "The materialized AB4 witness derived from AB5 in the pinned implementation.",
+    "provenance_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM3.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM3:EXACT_LIMIT_TRANSPORT",
+    "node_type": "Construction",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Exact-limit transport for condensed modules",
+    "description": "The sheaf-level exact-limit transport used by the pinned AB4* instance.",
+    "provenance_refs": ["leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/AB.lean", "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Abelian/GrothendieckAxioms/Sheaf.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM3:AB4STAR_CONDENSED_MOD",
+    "node_type": "Theorem",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "AB4* for condensed modules",
+    "description": "The materialized AB4Star witness in the pinned environment.",
+    "provenance_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM3.lean"]
+  }
+]

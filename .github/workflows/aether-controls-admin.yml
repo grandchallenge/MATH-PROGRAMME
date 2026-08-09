@@ -1,0 +1,80 @@
+name: AETHER controls administration
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Stage replacement controls or retire verified classic protection
+        required: true
+        type: choice
+        options:
+          - stage
+          - retire
+      expected_sha:
+        description: Exact AETHER PR head for stage or protected main head for retire
+        required: true
+        type: string
+      pr_number:
+        description: Exact AETHER pull request number used by stage
+        required: true
+        default: '59'
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aether-controls-administration
+  cancel-in-progress: false
+
+jobs:
+  administer:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: release-trust
+    steps:
+      - name: Mint bounded Release Trust administration token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: AETHER
+          permission-actions: read
+          permission-administration: write
+          permission-contents: read
+          permission-pull-requests: read
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Validate bounded administration contract
+        run: python ci/aether_controls_admin.py --mode validate
+      - name: Stage or retire exact AETHER controls
+        env:
+          GCL_REPOSITORY_ADMIN_TOKEN: ${{ steps.app-token.outputs.token }}
+          ADMIN_MODE: ${{ inputs.mode }}
+          EXPECTED_SHA: ${{ inputs.expected_sha }}
+          PR_NUMBER: ${{ inputs.pr_number }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${GCL_REPOSITORY_ADMIN_TOKEN}"
+          test -n "${EXPECTED_SHA}"
+          python ci/aether_controls_admin.py \
+            --mode "${ADMIN_MODE}" \
+            --expected-sha "${EXPECTED_SHA}" \
+            --pr-number "${PR_NUMBER}" \
+            --evidence aether-controls-evidence.json
+      - name: Preserve exact AETHER controls evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: aether-controls-evidence-${{ inputs.mode }}
+          path: aether-controls-evidence.json
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 0

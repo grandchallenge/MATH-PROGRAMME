@@ -5,6 +5,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
 
 permissions:
   contents: read
@@ -15,6 +17,7 @@ concurrency:
 
 jobs:
   validate-json:
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -67,6 +70,9 @@ jobs:
 
       - name: Install policy dependencies
         run: python -m pip install --requirement requirements/policy.txt
+
+      - name: Validate formal replay content-addressing policy
+        run: python3 ci/formal_replay_attestation.py check-policy
 
       - name: Validate CMDG schema contracts
         run: python3 ci/validate_cmdg_schema_contracts.py
@@ -201,8 +207,29 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-
+          fetch-depth: 0
+      - name: Validate formal replay policy
+        run: python3 ci/formal_replay_attestation.py check-policy
+      - name: Compute formal replay identity
+        id: identity
+        run: python3 ci/formal_replay_attestation.py digest --lane log-gcd --github-output "$GITHUB_OUTPUT"
+      - name: Restore protected formal replay receipt
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: .formal-replay/log-gcd
+          key: ${{ steps.identity.outputs.cache_prefix }}probe-${{ github.run_id }}
+          restore-keys: |
+            ${{ steps.identity.outputs.cache_prefix }}
+      - name: Decide replay or attestation reuse
+        id: reuse
+        run: python3 ci/formal_replay_attestation.py decide --lane log-gcd --receipt .formal-replay/log-gcd/receipt.json --github-output "$GITHUB_OUTPUT"
+      - name: Report reused formal attestation
+        if: steps.reuse.outputs.reuse == 'true'
+        run: |
+          echo "REUSED_BIT_IDENTICAL_FORMAL_ATTESTATION"
+          cat .formal-replay/log-gcd/receipt.json
       - name: Set up pinned Lean and mathlib cache
+        if: steps.reuse.outputs.reuse != 'true'
         id: lean-setup
         continue-on-error: true
         uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
@@ -213,8 +240,8 @@ jobs:
           test: false
           use-github-cache: false
           use-mathlib-cache: true
-
       - name: Build LOG-GCD fixture
+        if: steps.reuse.outputs.reuse != 'true'
         working-directory: fixtures/formal/LOG-GCD-001
         shell: bash
         env:
@@ -233,12 +260,30 @@ jobs:
           status=$?
           cat lean-build.log
           exit "$status"
-
       - name: Extract CMDG LOG-GCD Lean dependencies
+        if: steps.reuse.outputs.reuse != 'true'
         run: python3 ci/extract_cmdg_lean_dependencies.py fixtures/cmdg/extractor_001/log_gcd.json --output cmdg-log-gcd-dependencies.json
-
+      - name: Emit successful full-replay receipt
+        if: steps.reuse.outputs.reuse != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          python3 ci/formal_replay_attestation.py emit-receipt \
+            --lane log-gcd \
+            --output .formal-replay/log-gcd/receipt.json \
+            --origin-commit "${GITHUB_SHA}" \
+            --origin-run-id "${GITHUB_RUN_ID}" \
+            --origin-run-attempt "${GITHUB_RUN_ATTEMPT}" \
+            --origin-event "${GITHUB_EVENT_NAME}" \
+            --origin-ref "${GITHUB_REF}" \
+            --result-file fixtures/formal/LOG-GCD-001/lean-build.log \
+            --result-file cmdg-log-gcd-dependencies.json
+      - name: Save protected formal replay receipt
+        if: steps.reuse.outputs.reuse != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: .formal-replay/log-gcd
+          key: ${{ steps.identity.outputs.cache_prefix }}${{ github.run_id }}
       - name: Preserve Lean failure log
-        if: failure()
+        if: failure() && steps.reuse.outputs.reuse != 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: log-gcd-lean-failure
@@ -253,6 +298,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: "3.12"
@@ -268,7 +314,28 @@ jobs:
             echo "PC-WP04 must contain neither sorry nor local axioms."
             exit 1
           fi
+      - name: Validate formal replay policy
+        run: python3 ci/formal_replay_attestation.py check-policy
+      - name: Compute formal replay identity
+        id: identity
+        run: python3 ci/formal_replay_attestation.py digest --lane pc-wp04 --github-output "$GITHUB_OUTPUT"
+      - name: Restore protected formal replay receipt
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: .formal-replay/pc-wp04
+          key: ${{ steps.identity.outputs.cache_prefix }}probe-${{ github.run_id }}
+          restore-keys: |
+            ${{ steps.identity.outputs.cache_prefix }}
+      - name: Decide replay or attestation reuse
+        id: reuse
+        run: python3 ci/formal_replay_attestation.py decide --lane pc-wp04 --receipt .formal-replay/pc-wp04/receipt.json --github-output "$GITHUB_OUTPUT"
+      - name: Report reused formal attestation
+        if: steps.reuse.outputs.reuse == 'true'
+        run: |
+          echo "REUSED_BIT_IDENTICAL_FORMAL_ATTESTATION"
+          cat .formal-replay/pc-wp04/receipt.json
       - name: Set up pinned Lean and mathlib cache
+        if: steps.reuse.outputs.reuse != 'true'
         id: lean-setup
         continue-on-error: true
         uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
@@ -280,22 +347,44 @@ jobs:
           use-github-cache: false
           use-mathlib-cache: true
       - name: Build PC-WP04 fixture
+        if: steps.reuse.outputs.reuse != 'true'
         working-directory: fixtures/formal/PC-WP04
         shell: bash
         env:
           LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}
         run: |
           set -euo pipefail
-          echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
-          command -v elan
-          command -v lake
-          elan --version
-          lake --version
-          test -f lake-manifest.json
-          lake build
-
+          {
+            echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+            command -v elan
+            command -v lake
+            elan --version
+            lake --version
+            test -f lake-manifest.json
+            lake build
+          } 2>&1 | tee pc-wp04-lean-build.log
       - name: Extract CMDG PC-WP04 Lean dependencies
+        if: steps.reuse.outputs.reuse != 'true'
         run: python3 ci/extract_cmdg_lean_dependencies.py fixtures/cmdg/extractor_001/pc_wp04.json --output cmdg-pc-wp04-dependencies.json
+      - name: Emit successful full-replay receipt
+        if: steps.reuse.outputs.reuse != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          python3 ci/formal_replay_attestation.py emit-receipt \
+            --lane pc-wp04 \
+            --output .formal-replay/pc-wp04/receipt.json \
+            --origin-commit "${GITHUB_SHA}" \
+            --origin-run-id "${GITHUB_RUN_ID}" \
+            --origin-run-attempt "${GITHUB_RUN_ATTEMPT}" \
+            --origin-event "${GITHUB_EVENT_NAME}" \
+            --origin-ref "${GITHUB_REF}" \
+            --result-file fixtures/formal/PC-WP04/pc-wp04-lean-build.log \
+            --result-file cmdg-pc-wp04-dependencies.json
+      - name: Save protected formal replay receipt
+        if: steps.reuse.outputs.reuse != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: .formal-replay/pc-wp04
+          key: ${{ steps.identity.outputs.cache_prefix }}${{ github.run_id }}
 
   union-closed-mathcert:
     name: Replay pinned Union-Closed MATHCERT evidence
@@ -305,6 +394,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: "3.12"
@@ -325,7 +415,28 @@ jobs:
                   raise SystemExit(f"external evidence {key} drift: {evidence.get(key)!r} != {value!r}")
           print("external MATHCERT evidence matches workflow pin")
           PY
+      - name: Validate formal replay policy
+        run: python3 ci/formal_replay_attestation.py check-policy
+      - name: Compute formal replay identity
+        id: identity
+        run: python3 ci/formal_replay_attestation.py digest --lane union-closed-mathcert --github-output "$GITHUB_OUTPUT"
+      - name: Restore protected formal replay receipt
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: .formal-replay/union-closed-mathcert
+          key: ${{ steps.identity.outputs.cache_prefix }}probe-${{ github.run_id }}
+          restore-keys: |
+            ${{ steps.identity.outputs.cache_prefix }}
+      - name: Decide replay or attestation reuse
+        id: reuse
+        run: python3 ci/formal_replay_attestation.py decide --lane union-closed-mathcert --receipt .formal-replay/union-closed-mathcert/receipt.json --github-output "$GITHUB_OUTPUT"
+      - name: Report reused formal attestation
+        if: steps.reuse.outputs.reuse == 'true'
+        run: |
+          echo "REUSED_BIT_IDENTICAL_FORMAL_ATTESTATION"
+          cat .formal-replay/union-closed-mathcert/receipt.json
       - name: Checkout pinned MATHCERT repository
+        if: steps.reuse.outputs.reuse != 'true'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: grandchallenge/MATHCERT
@@ -333,6 +444,7 @@ jobs:
           path: external/MATHCERT
           persist-credentials: false
       - name: Set up pinned Lean and mathlib cache
+        if: steps.reuse.outputs.reuse != 'true'
         id: mathcert-lean-setup
         continue-on-error: true
         uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
@@ -344,15 +456,36 @@ jobs:
           use-github-cache: false
           use-mathlib-cache: true
       - name: Replay external certification gate
+        if: steps.reuse.outputs.reuse != 'true'
         working-directory: external/MATHCERT
         env:
           LEAN_SETUP_OUTCOME: ${{ steps.mathcert-lean-setup.outcome }}
         run: |
           set -euo pipefail
-          echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
-          command -v elan
-          command -v lake
-          elan --version
-          lake --version
-          test -f lake-manifest.json
-          bash ci/check_lean.sh
+          {
+            echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+            command -v elan
+            command -v lake
+            elan --version
+            lake --version
+            test -f lake-manifest.json
+            bash ci/check_lean.sh
+          } 2>&1 | tee union-closed-mathcert-replay.log
+      - name: Emit successful full-replay receipt
+        if: steps.reuse.outputs.reuse != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          python3 ci/formal_replay_attestation.py emit-receipt \
+            --lane union-closed-mathcert \
+            --output .formal-replay/union-closed-mathcert/receipt.json \
+            --origin-commit "${GITHUB_SHA}" \
+            --origin-run-id "${GITHUB_RUN_ID}" \
+            --origin-run-attempt "${GITHUB_RUN_ATTEMPT}" \
+            --origin-event "${GITHUB_EVENT_NAME}" \
+            --origin-ref "${GITHUB_REF}" \
+            --result-file external/MATHCERT/union-closed-mathcert-replay.log
+      - name: Save protected formal replay receipt
+        if: steps.reuse.outputs.reuse != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: .formal-replay/union-closed-mathcert
+          key: ${{ steps.identity.outputs.cache_prefix }}${{ github.run_id }}

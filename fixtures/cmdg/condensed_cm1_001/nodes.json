@@ -1,0 +1,72 @@
+[
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM1:FORMAL_CONDENSED_SET_MODEL",
+    "node_type": "Model",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "Pinned no-cardinality-bound condensed-set formal model",
+    "description": "The exact mathlib CondensedSet model: Type-valued sheaves on CompHaus with the coherent topology. It is only a partial-interface concordance target because the pinned source deliberately omits cardinality bounds and describes the construction as closer to pyknotic objects.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/Basic.lean",
+      "governance/cmdg_vertical_spine_v0_001.json"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM1:DISCRETE_FUNCTOR",
+    "node_type": "Construction",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Discrete constant-sheaf functor",
+    "description": "The pinned Condensed.discrete functor, definitionally the constant-sheaf functor for the coherent topology on CompHaus.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/Discrete/Basic.lean",
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Sites/ConstantSheaf.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM1:UNDERLYING_FUNCTOR",
+    "node_type": "Construction",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Underlying evaluation-at-a-point functor",
+    "description": "The pinned Condensed.underlying functor, evaluating a condensed object at the one-point compact Hausdorff space.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/Discrete/Basic.lean",
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Sites/Sheaf.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM1:TERMINAL_POINT",
+    "node_type": "Theorem",
+    "engagement_mode": "REUSED",
+    "canonical_label": "One-point compact Hausdorff terminal object",
+    "description": "The pinned CompHaus.isTerminalPUnit witness that the one-point compact Hausdorff space is terminal.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Topology/Category/CompHaus/Limits.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM1:CONSTANT_SHEAF_ADJUNCTION",
+    "node_type": "Theorem",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Constant-sheaf/evaluation adjunction",
+    "description": "The general pinned CategoryTheory.constantSheafAdj theorem: constant sheaf is left adjoint to evaluation at a terminal object.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Sites/ConstantSheaf.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM1:DISCRETE_UNDERLYING_ADJUNCTION",
+    "node_type": "Theorem",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "CM1 discrete/underlying adjunction",
+    "description": "The checked Condensed.discreteUnderlyingAdj theorem specialized to Type-valued condensed objects, with its Hom-equivalence, unit, and counit exposed by a Programme-local replay fixture. Concordance is limited to the exact pinned formal model.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/Discrete/Basic.lean",
+      "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean"
+    ]
+  }
+]

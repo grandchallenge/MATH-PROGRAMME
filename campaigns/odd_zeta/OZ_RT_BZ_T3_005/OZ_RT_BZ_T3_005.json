@@ -1,0 +1,133 @@
+{
+  "$schema": "OZ_RT_BZ_T3_005.schema.json",
+  "artifacts": {
+    "independent_verifier": "verify.py",
+    "jet_coefficient_map": "JET_COEFFICIENT_MAP.json",
+    "jet_coefficient_map_sha256": "c7408f49732c8bcdbabe83f442db3476153a4f99619dcab159236c0556e6edd2",
+    "producer": "producer.py",
+    "search_result": "SEARCH_RESULT.json",
+    "search_result_sha256": "690db8372fc054518d5c0ac8fe88e03f3a3424071562b7b7c68c3b138a33dd84",
+    "validator": "validate.py"
+  },
+  "authority": {
+    "admitted_source_head": "6cc0bf07137815ceeef0d9f340559f85352391e5",
+    "admitted_source_tree": "be780558454b704bdd016a3070d698c2e106e2b8",
+    "issue": 341,
+    "predecessor_issue": 332,
+    "predecessor_merge": "941fa3b2003327fc6f540d8da73b329baf7340ae",
+    "predecessor_pr": 337,
+    "programme_base_commit": "941fa3b2003327fc6f540d8da73b329baf7340ae",
+    "programme_base_tree": "2353d13de3cf3a0fe28758da17204766344c52bf",
+    "source_loci": {
+      "bridge": {"blob": "002c96d28123e5949c38656f26677ae5a723ee93", "path": "work/Z5T3_BRIDGE.md"},
+      "finite_verifier": {"blob": "be458d969e1f8c989c8007a2b181506f84fd7f48", "path": "work/z5cf/verify_compact.py"},
+      "recurrence": {"blob": "9495275bc31e5a8f535c68f027f3b24d12c07ae1", "path": "work/lb5/core.py"},
+      "statement": {"blob": "da46db62471fbed81d861772c1d2d03d80782e23", "path": "bz_compact_weights_proofs.tex"}
+    }
+  },
+  "coverage": {
+    "covered": [
+      "mirror U(l,k,r,m)/ES(l,r,m) triangular-domain auxiliary module in the declared order-2 eta-linear bounded class",
+      "independently replayed full-column-rank mirror exhaustion through polynomial degree 4",
+      "linear raw mixed-parameter one-body power-sum jet through total weight five",
+      "complete 198-monomial coefficient map for W1+2*w5_sym",
+      "explicit coupling metadata for both nested orientations"
+    ],
+    "full_t3_certificate": false,
+    "not_yet_covered": [
+      "common parameter-dependent telescoper for the complete weight-five raw-jet module",
+      "exact differentiated finite-boundary certificate for the complete locked T3 operator"
+    ]
+  },
+  "disposition": {
+    "characterized_blocker": {
+      "extraction_architecture_constructed": true,
+      "mirror_exhausted_class": "PARAMETER_DEPENDENT_ORDER2_LSIDE_U_ES_SAUX_ETADEG_LE_1_POLYDEG_LE_4",
+      "next_distinct_route": "COUPLED_WEIGHT5_RAW_JET_ORDER2_SEARCH_001",
+      "not_a_refutation": true,
+      "remaining_blocker": "No exact common order-2 parent telescoper has yet been produced for the complete weight-five raw mixed-jet module, so there is no differentiated boundary-clean certificate for T3."
+    },
+    "counterexample_found": false,
+    "promotion_effect": "NONE",
+    "proof_effect": "NONE",
+    "proof_found": false,
+    "status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  },
+  "fixture": "MIRROR_AUXILIARY_THEN_LINEAR_RAW_JET_001",
+  "nonclaims": {
+    "depth_proved": false,
+    "mathcert_authority": false,
+    "new_odd_zeta_irrationality_or_infinitude_theorem": false,
+    "sharp12_proved": false,
+    "t1top_proved": false,
+    "t3_proved": false,
+    "t3_refuted": false
+  },
+  "operation": "OZ-RT-BZ-T3-005",
+  "schema_version": "1.0.0",
+  "stage_a_mirror_auxiliary": {
+    "ES_parent": "T(n,k,l)*s^(-r)*Q(s,0;eta)",
+    "U_parent": "T(n,k,l)*s^(-r)*Q(s+k,0;eta)",
+    "auxiliary_coordinate": "s",
+    "components": ["U_R1","U_R2","ES_R1","ES_R2"],
+    "degree_ladder": [0,1,2,3,4],
+    "differences": ["k","s"],
+    "eta_coefficient_degree": 1,
+    "exact_shift_ratio_checks": 2556,
+    "external_shift": "l",
+    "mirror_nested_cumulant_checks": 360,
+    "proof_effect": "NONE",
+    "qk_boundary_factor": "k*(n+1-k)",
+    "qs_boundary_factor": "(s-1)*(l+1-s)",
+    "rank_prime": 1000003,
+    "search_class": "PARAMETER_DEPENDENT_ORDER2_LSIDE_U_ES_SAUX_ETADEG_LE_1_POLYDEG_LE_4",
+    "strongest_frontier": {
+      "certificate_unknowns_per_component": 280,
+      "classification": "INCONSISTENT_ANSATZ",
+      "component_certificate_ranks": {"ES_R1":280,"ES_R2":280,"U_R1":280,"U_R2":280},
+      "components": ["U_R1","U_R2","ES_R1","ES_R2"],
+      "degree": 4,
+      "equations": 3540,
+      "eta_degree": 1,
+      "eta_samples": ["0","1/2","1"],
+      "n_max": 8,
+      "n_min": 4,
+      "nullity": 0,
+      "rank": 1210,
+      "rank_certificate": "COMPONENT_CERTIFICATE_BLOCKS_PLUS_SHARED_TELESCOPER_QUOTIENT_FULL_RANK_MOD_P_IMPLIES_FULL_COLUMN_RANK_OVER_Q",
+      "shared_telescoper_rank": 90,
+      "shared_telescoper_unknowns": 90,
+      "unknowns": 1210
+    },
+    "terminal": "NO_COMMON_PARAMETER_DEPENDENT_ORDER2_CERTIFICATE_IN_BOUNDED_MIRROR_AUXILIARY_CLASS"
+  },
+  "stage_b_one_body_linear_jet": {
+    "all_monomials_weight_five": true,
+    "isolator": "P_r(L,o;z)=prod_{i=1}^L(1-(-z/(o+i))^r)",
+    "jet_map": "JET_COEFFICIENT_MAP.json",
+    "jet_map_sha256": "c7408f49732c8bcdbabe83f442db3476153a4f99619dcab159236c0556e6edd2",
+    "linearity_property": "raw mixed derivatives are linear operations on a parent telescoping relation; logarithmic cumulants are not used as proof-producing operators",
+    "map_exact_sample_checks": 135,
+    "max_atomic_arity": 4,
+    "max_one_body_parameter_slots": 4,
+    "monomial_count": 198,
+    "raw_derivative_rule": "d^r/dz^r P_r(L,o;z)|_0=(-1)^(r+1)*r!*(H_(o+L)^(r)-H_o^(r))",
+    "raw_jet_atom_checks": 3526
+  },
+  "stage_c_nested_orientation_coupling": {
+    "both_nested_orientations_present": true,
+    "certified_parent_telescoper_for_full_jet": false,
+    "coefficient_map_complete_for_locked_weight_five_summand": true,
+    "differentiated_boundary_certificate_complete": false,
+    "k_side_source": "protected OZ-RT-BZ-T3-004 auxiliary-t module",
+    "l_side_source": "stage A mirror auxiliary-s module",
+    "nested_atom_count_max_per_weight_five_monomial": 1,
+    "one_body_only_monomials": 158,
+    "single_nested_atom_monomials": 40
+  },
+  "target_lock": {
+    "finite_evidence_theorem_effect": "NONE",
+    "normalized_zero_form": "sum_{k=0}^n sum_{l=0}^n T(n,k,l) * (W1(k,l)+2*w5_sym(n,k,l)) = 0",
+    "t1top_substitution_forbidden": true
+  }
+}

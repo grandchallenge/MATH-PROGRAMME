@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OZ_RT_BZ_T3_006.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "operation", "authority", "target_lock", "search", "artifacts", "disposition", "nonclaims"],
+  "properties": {
+    "$schema": {"const": "OZ_RT_BZ_T3_006.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "operation": {"const": "OZ-RT-BZ-T3-006"},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue", "predecessor_issue", "predecessor_pr", "predecessor_merge", "predecessor_tree", "programme_base_commit", "programme_base_tree"],
+      "properties": {
+        "issue": {"const": 356},
+        "predecessor_issue": {"const": 341},
+        "predecessor_pr": {"const": 344},
+        "predecessor_merge": {"const": "e99defaabbc0d971e6299360ac03084e516c31c3"},
+        "predecessor_tree": {"const": "041b4f7afa647fec06d3303503b53fa0fc65350d"},
+        "programme_base_commit": {"const": "d2cdd1cfb57feb648bdd624a3362dae646a8b72f"},
+        "programme_base_tree": {"const": "3b7cc40fbf7f82cb1c219aef6b9733429e83e54f"}
+      }
+    },
+    "target_lock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["normalized_zero_form", "t1top_substitution_forbidden", "finite_evidence_theorem_effect"],
+      "properties": {
+        "normalized_zero_form": {"const": "sum_{k=0}^n sum_{l=0}^n T(n,k,l) * (W1(k,l)+2*w5_sym(n,k,l)) = 0"},
+        "t1top_substitution_forbidden": {"const": true},
+        "finite_evidence_theorem_effect": {"const": "NONE"}
+      }
+    },
+    "search": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["route", "order", "rank_prime", "basis_monomials", "basis_sha256", "certificate_denominator", "strongest_frontier", "strongest_rank", "strongest_unknowns", "strongest_nullity", "mirror_equivalence"],
+      "properties": {
+        "route": {"const": "COUPLED_WEIGHT5_RAW_JET_ORDER2_SEARCH_001"},
+        "order": {"const": 2},
+        "rank_prime": {"const": 1000003},
+        "basis_monomials": {"const": 198},
+        "basis_sha256": {"const": "cbdfe5798d360cb98f2d64743907a06ddc0612f88d17ef4bcef65c81c74e1438"},
+        "certificate_denominator": {"const": "(l+1)^3*(k+l+1)"},
+        "strongest_frontier": {"const": "COUPLED_WEIGHT5_RAW_JET_ORDER2_ADEG_LE_2_QCOEFFDEG_LE_2"},
+        "strongest_rank": {"const": 1998},
+        "strongest_unknowns": {"const": 1998},
+        "strongest_nullity": {"const": 0},
+        "mirror_equivalence": {"const": "EXACTLY_EQUIVALENT_BY_K_L_SWAP"}
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["producer", "independent_verifier", "validator", "rank_kernel", "search_result", "search_result_sha256"],
+      "properties": {
+        "producer": {"const": "producer.py"},
+        "independent_verifier": {"const": "verify.py"},
+        "validator": {"const": "validate.py"},
+        "rank_kernel": {"const": "rank_mod.c"},
+        "search_result": {"const": "SEARCH_RESULT.json"},
+        "search_result_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "proof_found", "counterexample_found", "proof_effect", "promotion_effect", "not_a_refutation", "remaining_blocker", "next_distinct_route"],
+      "properties": {
+        "status": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"},
+        "proof_found": {"const": false},
+        "counterexample_found": {"const": false},
+        "proof_effect": {"const": "NONE"},
+        "promotion_effect": {"const": "NONE"},
+        "not_a_refutation": {"const": true},
+        "remaining_blocker": {"type": "string", "minLength": 20},
+        "next_distinct_route": {"const": "COUPLED_WEIGHT5_RAW_JET_ORDER3_4_SEARCH_001"}
+      }
+    },
+    "nonclaims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["t3_proved", "t3_refuted", "t1top_proved", "depth_proved", "sharp12_proved", "mathcert_authority", "graph_certified"],
+      "properties": {
+        "t3_proved": {"const": false},
+        "t3_refuted": {"const": false},
+        "t1top_proved": {"const": false},
+        "depth_proved": {"const": false},
+        "sharp12_proved": {"const": false},
+        "mathcert_authority": {"const": false},
+        "graph_certified": {"const": false}
+      }
+    }
+  }
+}
