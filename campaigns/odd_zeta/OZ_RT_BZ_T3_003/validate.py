@@ -31,19 +31,23 @@ def errors(record=None,result=None):
     if pl.get('proof_effect')!='NONE': out.append('parameter-lift fixture promoted')
     search=record.get('search_execution',{})
     if search.get('result_sha256')!=canonical_sha256(result): out.append('search result digest drift')
-    if search.get('search_class')!='UNDEFORMED_HYPERGEOMETRIC_PARENT_ORDER2_K_SHIFT_WITH_L_CERTIFICATE': out.append('search-class drift')
+    if search.get('orders')!=[2,3,4] or search.get('stage_count')!=21: out.append('higher-order ladder drift')
+    if search.get('a_total_degree_max')!=6 or search.get('q_numerator_total_degree_max')!=8: out.append('degree ceiling drift')
+    if search.get('search_class')!='UNDEFORMED_HYPERGEOMETRIC_PARENT_ORDERS_2_TO_4_K_SHIFT_WITH_L_CERTIFICATE': out.append('search-class drift')
     if 'F(n,k+j,l)' not in search.get('relation','') or 'Delta_l' not in search.get('relation',''): out.append('creative-telescoping orientation drift')
     if search.get('q_denominator')!='(l+1)^3*(k+l+1)': out.append('denominator-family drift')
-    expected_front={'a_total_degree':4,'q_numerator_total_degree':6,'n_max':11,'equations':432,'unknowns':129,'rank':129,'nullity':0}
+    expected_front={'order':4,'a_total_degree':6,'q_numerator_total_degree':8,'n_max':15,'equations':870,'unknowns':305,'rank':305,'nullity':0}
     if search.get('strongest_frontier')!=expected_front: out.append('strongest frontier drift')
-    if result.get('strongest_frontier',{}).get('rank')!=129 or result.get('strongest_frontier',{}).get('nullity')!=0: out.append('retained result frontier drift')
-    if result.get('terminal')!='NO_ORDER2_CERTIFICATE_IN_BOUNDED_UNDEFORMED_PARENT_CLASS': out.append('search terminal drift')
+    if len(result.get('stages',[]))!=21: out.append('retained stage ledger drift')
+    if result.get('strongest_frontier',{}).get('rank')!=305 or result.get('strongest_frontier',{}).get('nullity')!=0: out.append('retained result frontier drift')
+    if result.get('terminal')!='NO_ORDER2_TO_ORDER4_CERTIFICATE_IN_BOUNDED_UNDEFORMED_PARENT_CLASSES': out.append('search terminal drift')
+    if result.get('next_distinct_route')!='PARAMETER_DEPENDENT_ORDER2_WITH_AUXILIARY_T_DIMENSION': out.append('result next-route drift')
     if result.get('proof_effect')!='NONE' or result.get('promotion_effect')!='NONE': out.append('search effect inflation')
     d=record.get('disposition',{}); blocker=d.get('characterized_blocker',{})
     if d.get('status')!='OPEN_WITH_CHARACTERIZED_BLOCKER' or d.get('proof_found') or d.get('counterexample_found'): out.append('disposition inflation')
-    if blocker.get('newly_exhausted_class')!='UNDEFORMED_PARENT_ORDER2_K_SHIFT_DSHIFT_DENOM_ADEG_LE_4_QDEG_LE_6': out.append('exhausted-class drift')
+    if blocker.get('newly_exhausted_class')!='UNDEFORMED_PARENT_ORDERS_2_TO_4_K_SHIFT_DSHIFT_DENOM_ADEG_LE_6_QDEG_LE_8': out.append('exhausted-class drift')
     if not blocker.get('not_a_refutation'): out.append('negative search inflated toward refutation')
-    if blocker.get('next_distinct_route')!='PARAMETER_DEPENDENT_ORDER2_WITH_AUXILIARY_T_DIMENSION_THEN_ORDER3_ORDER4': out.append('next-route drift')
+    if blocker.get('next_distinct_route')!='PARAMETER_DEPENDENT_ORDER2_WITH_AUXILIARY_T_DIMENSION': out.append('next-route drift')
     if d.get('proof_effect')!='NONE' or d.get('promotion_effect')!='NONE': out.append('disposition effect inflation')
     if any(record.get('nonclaims',{}).values()): out.append('nonclaim promoted')
     if out: return out
@@ -53,5 +57,5 @@ def errors(record=None,result=None):
 def main():
     e=errors()
     if e: print('\n'.join(e),file=sys.stderr); return 1
-    print('OZ-RT-BZ-T3-003 parameter lift, order-2 search frontier, and independent verification are valid'); return 0
+    print('OZ-RT-BZ-T3-003 parameter lift, order-2-to-4 search frontier, and independent verification are valid'); return 0
 if __name__=='__main__': raise SystemExit(main())
