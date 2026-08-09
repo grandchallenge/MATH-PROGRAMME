@@ -139,8 +139,7 @@ def rank_rows(
         for rix, row in enumerate(rows):
             if len(row) != nc - (1 if target is not None else 0):
                 raise AssertionError("ragged rank matrix")
-            values = (x % P for x in row)
-            a = array("I", values)
+            a = array("I", (x % P for x in row))
             if target is not None:
                 a.append(target[rix] % P)
             if a.itemsize != 4:
@@ -149,9 +148,9 @@ def rank_rows(
     return int(subprocess.check_output([str(exe), str(path)], text=True).strip())
 
 
-def flux_column_value(mon: tuple[str, ...], ex: tuple[int, int, int], n: int, k: int, l: int) -> int:
-    i, j, h = ex
-    tc = base.Tm(n, k, l)
+def matrix_row(n: int, k: int, l: int, qdeg: int, reverse_basis: bool = False) -> list[int]:
+    mons = list(reversed(MONOMS)) if reverse_basis else MONOMS
+    exps = list(reversed(mon3(qdeg))) if reverse_basis else mon3(qdeg)
 
     dk0 = d_k(k, l) % P
     dk1 = d_k(k + 1, l) % P
@@ -160,33 +159,31 @@ def flux_column_value(mon: tuple[str, ...], ex: tuple[int, int, int], n: int, k:
     if 0 in (dk0, dk1, dl0, dl1):
         raise AssertionError("flux denominator collision")
 
-    p0 = pow(n, i, P) * pow(k, j, P) * pow(l, h, P) % P
-    p1 = pow(n, i, P) * pow(k + 1, j, P) * pow(l, h, P) % P
-    q0 = pow(n, i, P) * pow(l, j, P) * pow(k, h, P) % P
-    q1 = pow(n, i, P) * pow(l + 1, j, P) * pow(k, h, P) % P
-
+    tc = base.Tm(n, k, l)
     pk0 = tc * (boundary(n, k) % P) * pow(dk0, -1, P) % P
     pk1 = base.Tm(n, k + 1, l) * (boundary(n, k + 1) % P) * pow(dk1, -1, P) % P
     ql0 = tc * (boundary(n, l) % P) * pow(dl0, -1, P) % P
     ql1 = base.Tm(n, k, l + 1) * (boundary(n, l + 1) % P) * pow(dl1, -1, P) % P
 
-    vpk0 = base.monomial_mod(mon, n, k, l)
-    vpk1 = base.monomial_mod(mon, n, k + 1, l)
-    vql0 = base.monomial_mod(mon, n, l, k)
-    vql1 = base.monomial_mod(mon, n, l + 1, k)
+    poly = []
+    for i, j, h in exps:
+        ni = pow(n, i, P)
+        poly.append((
+            ni * pow(k, j, P) % P * pow(l, h, P) % P,
+            ni * pow(k + 1, j, P) % P * pow(l, h, P) % P,
+            ni * pow(l, j, P) % P * pow(k, h, P) % P,
+            ni * pow(l + 1, j, P) % P * pow(k, h, P) % P,
+        ))
 
-    return (
-        pk0 * vpk0 % P * p0
-        - pk1 * vpk1 % P * p1
-        + ql0 * vql0 % P * q0
-        - ql1 * vql1 % P * q1
-    ) % P
-
-
-def matrix_row(n: int, k: int, l: int, qdeg: int, reverse_basis: bool = False) -> list[int]:
-    mons = list(reversed(MONOMS)) if reverse_basis else MONOMS
-    exps = list(reversed(mon3(qdeg))) if reverse_basis else mon3(qdeg)
-    return [flux_column_value(mon, ex, n, k, l) for mon in mons for ex in exps]
+    row: list[int] = []
+    for mon in mons:
+        a0 = pk0 * base.monomial_mod(mon, n, k, l) % P
+        a1 = pk1 * base.monomial_mod(mon, n, k + 1, l) % P
+        b0 = ql0 * base.monomial_mod(mon, n, l, k) % P
+        b1 = ql1 * base.monomial_mod(mon, n, l + 1, k) % P
+        for p0, p1, q0, q1 in poly:
+            row.append((a0 * p0 - a1 * p1 + b0 * q0 - b1 * q1) % P)
+    return row
 
 
 def stage(qdeg: int, nmax: int, exe: Path, tmp: Path) -> dict:
