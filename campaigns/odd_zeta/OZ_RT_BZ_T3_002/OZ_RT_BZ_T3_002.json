@@ -1,0 +1,75 @@
+{
+  "$schema": "OZ_RT_BZ_T3_002.schema.json",
+  "schema_version": "1.0.0",
+  "record_id": "OZ-RT-BZ-T3-002",
+  "campaign_id": "OZ-001",
+  "programme_issue": 315,
+  "umbrella_issue": 113,
+  "authority": {
+    "programme_base_commit": "bb4bf555e4569e08818a1fb06017ad97543e884d",
+    "predecessor_issue": 157,
+    "predecessor_merge": "b98d5ba79439e7ef7ee6493604bcfc40f9422dd8",
+    "upstream_repository": "rain-1/-odd-zeta-values-moremath",
+    "admitted_source_head": "6cc0bf07137815ceeef0d9f340559f85352391e5",
+    "admitted_source_tree": "be780558454b704bdd016a3070d698c2e106e2b8",
+    "source_loci": {
+      "statement": {"path":"bz_compact_weights_proofs.tex","blob":"da46db62471fbed81d861772c1d2d03d80782e23"},
+      "bridge": {"path":"work/Z5T3_BRIDGE.md","blob":"002c96d28123e5949c38656f26677ae5a723ee93"},
+      "finite_verifier": {"path":"work/z5cf/verify_compact.py","blob":"be458d969e1f8c989c8007a2b181506f84fd7f48"},
+      "recurrence": {"path":"work/lb5/core.py","blob":"9495275bc31e5a8f535c68f027f3b24d12c07ae1"},
+      "weights": {"path":"work/z5ord0/weights.py","blob":"b6129348c96ff061441403445ca9a278be252afd"},
+      "rational_part": {"path":"work/z5ord0/t_euler.py","blob":"a54fabc29f910eada2ecf17fbbdc99f4c22aa06b"},
+      "nested_sums": {"path":"work/z5ord0/alpha.py","blob":"a31d36d291fcc4efc42c210f4b524f1f265cdeab"},
+      "exact_evaluator": {"path":"work/z5ord0/evalq.py","blob":"80abbb21e4133a19d12b510c1a4d6b962e030e24"}
+    }
+  },
+  "target_lock": {
+    "label":"T3",
+    "quantifier":"for every integer n >= 0",
+    "normalized_zero_form":"sum_{k=0}^n sum_{l=0}^n T(n,k,l)*(W1(k,l)+2*w5_sym(n,k,l)) = 0",
+    "kernel":"binom(n+k,n)*binom(n,k)^2*binom(n+l,n)*binom(n,l)^2*binom(n+k+l,n)",
+    "representative":"w5_sym",
+    "domain":"0 <= k,l <= n; empty harmonic sums are zero; all four edges and corners retained",
+    "finite_evidence_theorem_effect":"NONE"
+  },
+  "search_execution": {
+    "state":"PHASE_1_EXECUTED",
+    "route":"TWO_STAGE_FIBRE_FIRST_ORDER_RATIONAL_TELESCOPER",
+    "ansatz":"G(n,k)=q(n,k)V(n,k), q=N/D, total-degree(N),total-degree(D)<=d",
+    "normalization":"homogeneous D*G-N*V=0; any nonzero polynomial pair (N,D) is admissible",
+    "sample_domain":{"n_min":1,"k":"0..n","stage_specific_n_max":{"degree_0_through_6":10,"degree_7":12,"degree_8":14,"degree_9":15}},
+    "degree_ladder":[0,1,2,3,4,5,6,7,8,9],
+    "result_file":"SEARCH_RESULT.json",
+    "result_sha256":"692cdf6002f5eee8310a0e1d95b07499d39f49c938e1b863ce600ab84f811af2",
+    "rank_certificate":{"method":"MODULAR_NONZERO_MINOR","prime":1000003,"denominator_condition":"all exact rational entry denominators are coprime to the rank prime","exact_Q_implication":"full column rank modulo p exhibits a nonzero square minor modulo p, hence the corresponding rational minor is nonzero and the matrix has full column rank over Q"},
+    "terminal":"NO_CERTIFICATE_IN_BOUNDED_CLASS",
+    "strongest_frontier":{"degree":9,"n_max":15,"equations":135,"unknowns":110,"rank":110,"nullity":0},
+    "classification":"INCONSISTENT_ANSATZ",
+    "mathematical_scope":"No nonzero N,D of total degree at most 9 satisfy the required first-order fibre quotient relation. Stagewise full-column-rank certificates modulo p=1000003 prove full column rank over Q through degree 9. Therefore no uniform certificate exists in this bounded ansatz class."
+  },
+  "independent_verification": {
+    "producer":"producer.py",
+    "verifier":"verify.py",
+    "producer_solver_reused_by_verifier":false,
+    "shared_component":"target.py contains only the locked exact target evaluator",
+    "verification":"PASS",
+    "verification_method":"INDEPENDENT_MODULAR_NONZERO_MINOR_REPLAY_WITH_EXACT_Q_RANK_IMPLICATION",
+    "finite_t3_replay_range":{"n_min":1,"n_max":15},
+    "proof_effect":"NONE"
+  },
+  "disposition": {
+    "status":"OPEN_WITH_CHARACTERIZED_BLOCKER",
+    "proof_found":false,
+    "counterexample_found":false,
+    "proof_effect":"NONE",
+    "promotion_effect":"NONE",
+    "characterized_blocker": {
+      "newly_exhausted_class":"FIRST_ORDER_FIBRE_RATIONAL_Q_TOTAL_DEGREE_LE_9",
+      "predecessor_exhausted_classes_preserved":true,
+      "next_admissible_routes":["DIRECT_2D_DELTA_CERTIFICATE_OVER_Q_N_K_L","FIBRE_TELESCOPER_WITH_SHIFT_MODULE_OR_HARMONIC_BASIS","HIGHER_DEGREE_FIRST_ORDER_FIBRE_RATIONAL_Q_WITH_PREDECLARED_RESOURCE_CEILING"]
+    }
+  },
+  "nonclaims": {
+    "t3_proved":false,"t3_refuted":false,"t1_top_proved":false,"t1_top_equivalent_to_t3":false,"depth_certified":false,"sharp12_proved":false,"prime_2_covered":false,"prime_3_covered":false,"mathcert_adjudicated":false,"new_irrationality_theorem":false,"novelty_assessed":false,"priority_assessed":false,"publication_claim":false,"patentability_claim":false,"product_claim":false,"commercial_claim":false
+  }
+}

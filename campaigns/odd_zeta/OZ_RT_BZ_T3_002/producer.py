@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+import json
+from fractions import Fraction as Q
+from pathlib import Path
+import target
+
+HERE = Path(__file__).resolve().parent
+OUT = HERE / 'SEARCH_RESULT.json'
+STAGES = [(d, 10) for d in range(7)] + [(7, 12), (8, 14), (9, 15)]
+P = 1000003
+
+def monomials(d: int) -> list[tuple[int,int]]:
+    return [(i,j) for i in range(d+1) for j in range(d+1-i)]
+
+def row(n: int, k: int, v: Q, g: Q, d: int) -> list[Q]:
+    mons = monomials(d)
+    p = [Q(n**i * k**j) for i,j in mons]
+    return [v*x for x in p] + [-g*x for x in p]
+
+def modq(x: Q) -> int:
+    den=x.denominator % P
+    if den == 0:
+        raise AssertionError(f'entry denominator divisible by rank prime {P}')
+    return (x.numerator % P) * pow(den,-1,P) % P
+
+def rank_mod_q(a: list[list[Q]]) -> int:
+    m=[[modq(x) for x in row] for row in a]
+    if not m:return 0
+    r=0; nc=len(m[0])
+    for c in range(nc):
+        pivot=next((i for i in range(r,len(m)) if m[i][c] % P),None)
+        if pivot is None:continue
+        m[r],m[pivot]=m[pivot],m[r]
+        inv=pow(m[r][c],-1,P)
+        m[r]=[(x*inv)%P for x in m[r]]
+        for i in range(r+1,len(m)):
+            f=m[i][c] % P
+            if f:
+                m[i]=[(x-f*y)%P for x,y in zip(m[i],m[r])]
+        r+=1
+        if r==len(m):break
+    return r
+
+def build_matrix(d: int, n_max: int) -> list[list[Q]]:
+    rows=[]
+    for n in range(1,n_max+1):
+        g=Q(0)
+        for k,v in enumerate(target.fibre_values(n)):
+            rows.append(row(n,k,v,g,d))
+            g += v
+        if g != 0:
+            raise AssertionError(f'finite T3 replay drift at n={n}')
+    return rows
+
+def main() -> int:
+    stages=[]
+    for d,n_max in STAGES:
+        a=build_matrix(d,n_max)
+        unknowns=2*len(monomials(d))
+        rk=rank_mod_q(a)
+        stages.append({'route_id':f'FIBRE_Q_TOTAL_DEGREE_{d}','degree':d,'n_max':n_max,'equations':len(a),'unknowns':unknowns,'rank':rk,'nullity':unknowns-rk,'rank_certificate':'FULL_COLUMN_RANK_MOD_P_IMPLIES_FULL_COLUMN_RANK_OVER_Q','classification':'INCONSISTENT_ANSATZ' if rk==unknowns else 'CANDIDATE_SPACE_REMAINS'})
+    result={'schema_version':'1.1.0','search_class':'FIRST_ORDER_FIBRE_RATIONAL_TELESCOPER_G_EQUALS_Q_TIMES_V','sample_domain':{'n_min':1,'k':'0..n','stage_specific_n_max':True},'normalization':'homogeneous equation D(n,k)G(n,k)-N(n,k)V(n,k)=0; nonzero (N,D) required','rank_certificate':{'prime':P,'denominator_condition':'all exact rational entry denominators are coprime to p','implication':'full column rank after reduction mod p certifies full column rank over Q via a nonzero square minor'},'stages':stages,'proof_effect':'NONE','terminal':'NO_CERTIFICATE_IN_BOUNDED_CLASS'}
+    OUT.write_text(json.dumps(result,indent=2,sort_keys=True)+'\n',encoding='utf-8')
+    print(json.dumps(result,sort_keys=True))
+    return 0
+if __name__=='__main__': raise SystemExit(main())
