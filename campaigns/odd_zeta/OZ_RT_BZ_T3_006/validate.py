@@ -36,9 +36,11 @@ def errors(record=R, result=S):
         out.append("canonical search-result digest drift")
     if record.get("artifacts", {}).get("search_result_sha256") != digest(result):
         out.append("record/result digest mismatch")
+    if result.get("certificate_denominator") != "(l+1)^3*(k+l+1)" or record.get("search", {}).get("certificate_denominator") != result.get("certificate_denominator"):
+        out.append("certificate denominator drift")
     if result.get("basis", {}).get("basis_sha256") != "cbdfe5798d360cb98f2d64743907a06ddc0612f88d17ef4bcef65c81c74e1438":
         out.append("raw-jet basis drift")
-    if result.get("basis", {}).get("monomial_count") != 198 or result.get("basis", {}).get("one_nested_atom_count") != 40:
+    if result.get("basis", {}).get("monomial_count") != 198 or result.get("basis", {}).get("one_nested_atom_count") != 40 or result.get("basis", {}).get("one_body_only_count") != 158:
         out.append("raw-jet basis cardinality drift")
     if not result.get("basis", {}).get("k_l_swap_invariant") or result.get("mirror_status") != "EXACTLY_EQUIVALENT_BY_K_L_SWAP":
         out.append("mirror-equivalence drift")
@@ -47,12 +49,18 @@ def errors(record=R, result=S):
     scalar = result.get("stage_a_scalar_envelope", {}).get("stages", [])
     if len(scalar) != 7 or [(x.get("a_degree"), x.get("q_degree")) for x in scalar] != [(d, d + 2) for d in range(7)]:
         out.append("scalar ladder drift")
+    if [x.get("equations") for x in scalar] != [166, 166, 166, 166, 238, 328, 438]:
+        out.append("scalar sample-grid contraction")
     if any(x.get("rank") != x.get("unknowns") or x.get("nullity") != 0 for x in scalar):
         out.append("scalar rank inflation/drift")
     module = result.get("stage_b_full_weight5_module", {}).get("stages", [])
     expected_module = [(0, 216), (1, 810), (2, 1998)]
     if [(x.get("q_coefficient_degree"), x.get("unknowns")) for x in module] != expected_module:
         out.append("weight-five module ladder drift")
+    if [x.get("full_grid_rows") for x in module] != [328, 1118, 2278] or [x.get("rank_witness_rows") for x in module] != [216, 810, 1998]:
+        out.append("weight-five sample-grid contraction")
+    if [x.get("certificate_unknowns") for x in module] != [198, 792, 1980]:
+        out.append("weight-five certificate-dimension drift")
     if any(x.get("rank") != x.get("unknowns") or x.get("nullity") != 0 for x in module):
         out.append("weight-five module rank inflation/drift")
     if result.get("stage_b_full_weight5_module", {}).get("strongest_frontier") != "COUPLED_WEIGHT5_RAW_JET_ORDER2_ADEG_LE_2_QCOEFFDEG_LE_2":
