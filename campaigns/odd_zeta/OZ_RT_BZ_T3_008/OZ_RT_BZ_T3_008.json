@@ -1,0 +1,73 @@
+{
+  "$schema": "OZ_RT_BZ_T3_008.schema.json",
+  "schema_version": "1.0.0",
+  "operation": "OZ-RT-BZ-T3-008",
+  "authority": {
+    "issue": 365,
+    "predecessor_issue": 359,
+    "predecessor_pr": 360,
+    "predecessor_merge": "5233b37506f28e80959139cbc0f89b7ad400b658",
+    "predecessor_tree": "5f5fc435927888fbdf84c1ba15044c347506fbd0",
+    "programme_base_commit": "5233b37506f28e80959139cbc0f89b7ad400b658",
+    "programme_base_tree": "5f5fc435927888fbdf84c1ba15044c347506fbd0"
+  },
+  "target_lock": {
+    "normalized_zero_form": "sum_{k=0}^n sum_{l=0}^n T(n,k,l) * (W1(k,l)+2*w5_sym(n,k,l)) = 0",
+    "t1top_substitution_forbidden": true,
+    "finite_evidence_theorem_effect": "NONE"
+  },
+  "search": {
+    "route": "SYMMETRIC_2D_RAW_JET_DIVERGENCE_001",
+    "coefficient_degrees": [0, 1, 2],
+    "rank_prime": 1000003,
+    "basis_monomials": 198,
+    "basis_sha256": "cbdfe5798d360cb98f2d64743907a06ddc0612f88d17ef4bcef65c81c74e1438",
+    "normalization_sha256": "69738508f28433f9090f93621c8da3bc6b18279fd70941a31d07fb96b607700b",
+    "symmetry_complete": true,
+    "k_denominator": "(k+1)^3*(k+l+1)",
+    "l_denominator": "(l+1)^3*(k+l+1)",
+    "k_boundary_factor": "k*(n+1-k)",
+    "l_boundary_factor": "l*(n+1-l)",
+    "degree0_rank": [198, 199],
+    "degree1_rank": [792, 793],
+    "degree2_rank": [1980, 1981],
+    "degree2_witness_indices_sha256": "d0bb330deff059c2afdc4e1a994d7c544c42ce7ec497e1c6490ca9f2781dc57f"
+  },
+  "artifacts": {
+    "producer": "producer.py",
+    "independent_verifier": "verify.py",
+    "validator": "validate.py",
+    "rank_kernel": "rank_mod.c",
+    "search_result": "SEARCH_RESULT.json",
+    "degree2_rank_witness": "Q2_RANK_WITNESS.json",
+    "search_result_sha256": "4f37b83be6b83663246c4dd0a7d24190709c9f7bc4b43ea411d29f742450101b",
+    "degree2_rank_witness_sha256": "7d82b0088b6629c92bbb5c2457c5c520120ef275109503614b28910fe34eddc5"
+  },
+  "disposition": {
+    "status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+    "bounded_search_terminal": "SYMMETRIC_2D_WEIGHT5_DIVERGENCE_BOUNDED_CLASS_EXHAUSTED",
+    "proof_found": false,
+    "counterexample_found": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "not_a_refutation": true,
+    "remaining_blocker": "The complete declared swap-closed symmetric two-dimensional weight-five raw-jet divergence class is exactly inconsistent through coefficient degree two; no T3 sequence recurrence or other complete proof certificate has yet been produced.",
+    "next_distinct_route": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001"
+  },
+  "nonclaims": {
+    "t3_proved": false,
+    "t3_refuted": false,
+    "t1top_proved": false,
+    "depth_proved": false,
+    "sharp12_proved": false,
+    "mathcert_authority": false,
+    "graph_certified": false,
+    "source_authority": false,
+    "novelty_claim": false,
+    "priority_claim": false,
+    "publication_claim": false,
+    "patentability_claim": false,
+    "deployment_claim": false,
+    "commercial_claim": false
+  }
+}

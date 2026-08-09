@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OZ_RT_BZ_T3_007.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "operation", "authority", "target_lock", "search", "artifacts", "disposition", "nonclaims"],
+  "properties": {
+    "$schema": {"const": "OZ_RT_BZ_T3_007.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "operation": {"const": "OZ-RT-BZ-T3-007"},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue", "predecessor_issue", "predecessor_pr", "predecessor_merge", "predecessor_tree", "programme_base_commit", "programme_base_tree"],
+      "properties": {
+        "issue": {"const": 359},
+        "predecessor_issue": {"const": 356},
+        "predecessor_pr": {"const": 357},
+        "predecessor_merge": {"const": "d9b9ed1a3a4c7ab56d25091e724fa585fbcea071"},
+        "predecessor_tree": {"const": "2a7bd5d53af76b6705ebd526dae667a381860374"},
+        "programme_base_commit": {"const": "d9b9ed1a3a4c7ab56d25091e724fa585fbcea071"},
+        "programme_base_tree": {"const": "2a7bd5d53af76b6705ebd526dae667a381860374"}
+      }
+    },
+    "target_lock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["normalized_zero_form", "t1top_substitution_forbidden", "finite_evidence_theorem_effect"],
+      "properties": {
+        "normalized_zero_form": {"const": "sum_{k=0}^n sum_{l=0}^n T(n,k,l) * (W1(k,l)+2*w5_sym(n,k,l)) = 0"},
+        "t1top_substitution_forbidden": {"const": true},
+        "finite_evidence_theorem_effect": {"const": "NONE"}
+      }
+    },
+    "search": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["route", "orders", "a_degree", "certificate_coefficient_degrees", "rank_prime", "basis_monomials", "basis_sha256", "normalization_sha256", "certificate_denominator", "order3_strongest_frontier", "order3_strongest_rank", "order4_strongest_frontier", "order4_strongest_rank", "strongest_nullity", "mirror_equivalence"],
+      "properties": {
+        "route": {"const": "COUPLED_WEIGHT5_RAW_JET_ORDER3_4_SEARCH_001"},
+        "orders": {"const": [3, 4]},
+        "a_degree": {"const": 2},
+        "certificate_coefficient_degrees": {"const": [0, 1, 2]},
+        "rank_prime": {"const": 1000003},
+        "basis_monomials": {"const": 198},
+        "basis_sha256": {"const": "cbdfe5798d360cb98f2d64743907a06ddc0612f88d17ef4bcef65c81c74e1438"},
+        "normalization_sha256": {"const": "69738508f28433f9090f93621c8da3bc6b18279fd70941a31d07fb96b607700b"},
+        "certificate_denominator": {"const": "(l+1)^3*(k+l+1)"},
+        "order3_strongest_frontier": {"const": "COUPLED_WEIGHT5_RAW_JET_ORDER3_ADEG_LE_2_QCOEFFDEG_LE_2"},
+        "order3_strongest_rank": {"const": 2004},
+        "order4_strongest_frontier": {"const": "COUPLED_WEIGHT5_RAW_JET_ORDER4_ADEG_LE_2_QCOEFFDEG_LE_2"},
+        "order4_strongest_rank": {"const": 2010},
+        "strongest_nullity": {"const": 0},
+        "mirror_equivalence": {"const": "EXACTLY_EQUIVALENT_BY_K_L_SWAP"}
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["producer", "independent_verifier", "validator", "rank_kernel", "search_result", "search_result_sha256"],
+      "properties": {
+        "producer": {"const": "producer.py"},
+        "independent_verifier": {"const": "verify.py"},
+        "validator": {"const": "validate.py"},
+        "rank_kernel": {"const": "rank_mod.c"},
+        "search_result": {"const": "SEARCH_RESULT.json"},
+        "search_result_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "bounded_search_terminal", "proof_found", "counterexample_found", "proof_effect", "promotion_effect", "not_a_refutation", "remaining_blocker", "next_distinct_route", "alternative_route"],
+      "properties": {
+        "status": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"},
+        "bounded_search_terminal": {"const": "ORDER3_4_COMPLETE_WEIGHT5_MODULE_BOUNDED_CLASS_EXHAUSTED"},
+        "proof_found": {"const": false},
+        "counterexample_found": {"const": false},
+        "proof_effect": {"const": "NONE"},
+        "promotion_effect": {"const": "NONE"},
+        "not_a_refutation": {"const": true},
+        "remaining_blocker": {"type": "string", "minLength": 20},
+        "next_distinct_route": {"const": "SYMMETRIC_2D_RAW_JET_DIVERGENCE_001"},
+        "alternative_route": {"const": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001"}
+      }
+    },
+    "nonclaims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["t3_proved", "t3_refuted", "t1top_proved", "depth_proved", "sharp12_proved", "mathcert_authority", "graph_certified", "source_authority", "novelty_claim", "priority_claim", "publication_claim", "patentability_claim", "deployment_claim", "commercial_claim"],
+      "properties": {
+        "t3_proved": {"const": false},
+        "t3_refuted": {"const": false},
+        "t1top_proved": {"const": false},
+        "depth_proved": {"const": false},
+        "sharp12_proved": {"const": false},
+        "mathcert_authority": {"const": false},
+        "graph_certified": {"const": false},
+        "source_authority": {"const": false},
+        "novelty_claim": {"const": false},
+        "priority_claim": {"const": false},
+        "publication_claim": {"const": false},
+        "patentability_claim": {"const": false},
+        "deployment_claim": {"const": false},
+        "commercial_claim": {"const": false}
+      }
+    }
+  }
+}

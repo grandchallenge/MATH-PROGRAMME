@@ -1,0 +1,72 @@
+{
+  "$schema": "OZ_RT_BZ_T3_007.schema.json",
+  "schema_version": "1.0.0",
+  "operation": "OZ-RT-BZ-T3-007",
+  "authority": {
+    "issue": 359,
+    "predecessor_issue": 356,
+    "predecessor_pr": 357,
+    "predecessor_merge": "d9b9ed1a3a4c7ab56d25091e724fa585fbcea071",
+    "predecessor_tree": "2a7bd5d53af76b6705ebd526dae667a381860374",
+    "programme_base_commit": "d9b9ed1a3a4c7ab56d25091e724fa585fbcea071",
+    "programme_base_tree": "2a7bd5d53af76b6705ebd526dae667a381860374"
+  },
+  "target_lock": {
+    "normalized_zero_form": "sum_{k=0}^n sum_{l=0}^n T(n,k,l) * (W1(k,l)+2*w5_sym(n,k,l)) = 0",
+    "t1top_substitution_forbidden": true,
+    "finite_evidence_theorem_effect": "NONE"
+  },
+  "search": {
+    "route": "COUPLED_WEIGHT5_RAW_JET_ORDER3_4_SEARCH_001",
+    "orders": [3, 4],
+    "a_degree": 2,
+    "certificate_coefficient_degrees": [0, 1, 2],
+    "rank_prime": 1000003,
+    "basis_monomials": 198,
+    "basis_sha256": "cbdfe5798d360cb98f2d64743907a06ddc0612f88d17ef4bcef65c81c74e1438",
+    "normalization_sha256": "69738508f28433f9090f93621c8da3bc6b18279fd70941a31d07fb96b607700b",
+    "certificate_denominator": "(l+1)^3*(k+l+1)",
+    "order3_strongest_frontier": "COUPLED_WEIGHT5_RAW_JET_ORDER3_ADEG_LE_2_QCOEFFDEG_LE_2",
+    "order3_strongest_rank": 2004,
+    "order4_strongest_frontier": "COUPLED_WEIGHT5_RAW_JET_ORDER4_ADEG_LE_2_QCOEFFDEG_LE_2",
+    "order4_strongest_rank": 2010,
+    "strongest_nullity": 0,
+    "mirror_equivalence": "EXACTLY_EQUIVALENT_BY_K_L_SWAP"
+  },
+  "artifacts": {
+    "producer": "producer.py",
+    "independent_verifier": "verify.py",
+    "validator": "validate.py",
+    "rank_kernel": "rank_mod.c",
+    "search_result": "SEARCH_RESULT.json",
+    "search_result_sha256": "921564abff65b1cd8e42946be4d853c34680bf65cbbe0aa45211152c58f3c1ba"
+  },
+  "disposition": {
+    "status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+    "bounded_search_terminal": "ORDER3_4_COMPLETE_WEIGHT5_MODULE_BOUNDED_CLASS_EXHAUSTED",
+    "proof_found": false,
+    "counterexample_found": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "not_a_refutation": true,
+    "remaining_blocker": "The complete locked weight-five raw-jet fibre certificate classes are now exactly exhausted at external orders 2, 3, and 4 only within the retained polynomial envelopes; no symmetric two-dimensional raw-jet divergence certificate or sequence-recurrence proof has yet been produced.",
+    "next_distinct_route": "SYMMETRIC_2D_RAW_JET_DIVERGENCE_001",
+    "alternative_route": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001"
+  },
+  "nonclaims": {
+    "t3_proved": false,
+    "t3_refuted": false,
+    "t1top_proved": false,
+    "depth_proved": false,
+    "sharp12_proved": false,
+    "mathcert_authority": false,
+    "graph_certified": false,
+    "source_authority": false,
+    "novelty_claim": false,
+    "priority_claim": false,
+    "publication_claim": false,
+    "patentability_claim": false,
+    "deployment_claim": false,
+    "commercial_claim": false
+  }
+}
