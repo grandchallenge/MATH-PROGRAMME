@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import importlib.util
-import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -11,6 +11,10 @@ spec = importlib.util.spec_from_file_location("oz_t3_006_validate", PATH)
 assert spec is not None and spec.loader is not None
 v = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(v)
+
+T3005 = ROOT / "campaigns" / "odd_zeta" / "OZ_RT_BZ_T3_005"
+sys.path.insert(0, str(T3005))
+import jet_map as protected_jet_map  # type: ignore  # protected predecessor implementation
 
 
 def has(errors, text):
@@ -22,15 +26,7 @@ def test_baseline_is_valid():
 
 
 def test_protected_raw_jet_normalization_is_invertible_mod_rank_prime():
-    mapping = json.loads(
-        (
-            ROOT
-            / "campaigns"
-            / "odd_zeta"
-            / "OZ_RT_BZ_T3_005"
-            / "JET_COEFFICIENT_MAP.json"
-        ).read_text(encoding="utf-8")
-    )
+    mapping = protected_jet_map.coefficient_map()
     multipliers = [item["raw_derivative_multiplier"] for item in mapping["monomials"]]
     assert len(multipliers) == 198
     assert all(isinstance(x, int) and x != 0 for x in multipliers)
