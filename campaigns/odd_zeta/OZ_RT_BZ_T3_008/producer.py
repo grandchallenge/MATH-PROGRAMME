@@ -4,11 +4,13 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+import math
 import os
 import struct
 import subprocess
 import tempfile
 from array import array
+from fractions import Fraction as Q
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -65,10 +67,10 @@ def d_l(k: int, l: int) -> int:
     return (l + 1) ** 3 * (k + l + 1)
 
 
-def grid(nmax: int):
+def grid(nmax: int, nmin: int = 2):
     return [
         (n, k, l)
-        for n in range(2, nmax + 1)
+        for n in range(nmin, nmax + 1)
         for k in range(n + 1)
         for l in range(n + 1)
     ]
@@ -237,6 +239,203 @@ def stage(qdeg: int, nmax: int, exe: Path, tmp: Path) -> dict:
     }
 
 
+def solve_mod(rows: list[list[int]], target: list[int]) -> tuple[list[int], int, list[int]]:
+    if not rows or len(rows) != len(target):
+        raise AssertionError("invalid modular solve system")
+    nc = len(rows[0])
+    a = [[x % P for x in row] + [target[i] % P] for i, row in enumerate(rows)]
+    nr = len(a)
+    pivots: list[int] = []
+    r = 0
+    for c in range(nc):
+        pivot = next((i for i in range(r, nr) if a[i][c]), None)
+        if pivot is None:
+            continue
+        a[r], a[pivot] = a[pivot], a[r]
+        inv = pow(a[r][c], -1, P)
+        a[r][c:] = [(v * inv) % P for v in a[r][c:]]
+        for i in range(r + 1, nr):
+            f = a[i][c]
+            if not f:
+                continue
+            rowi = a[i]
+            rowr = a[r]
+            rowi[c] = 0
+            for j in range(c + 1, nc + 1):
+                rowi[j] = (rowi[j] - f * rowr[j]) % P
+        pivots.append(c)
+        r += 1
+        if r == nr:
+            break
+    for i in range(r, nr):
+        if all(a[i][j] == 0 for j in range(nc)) and a[i][nc] != 0:
+            raise AssertionError("modular system became inconsistent")
+    x = [0] * nc
+    for i in range(r - 1, -1, -1):
+        c = pivots[i]
+        rhs = a[i][nc]
+        for j in range(c + 1, nc):
+            rhs = (rhs - a[i][j] * x[j]) % P
+        x[c] = rhs
+    for row, rhs in zip(rows, target):
+        if sum((v * z for v, z in zip(row, x)), 0) % P != rhs % P:
+            raise AssertionError("canonical modular particular solution failed reconstruction grid")
+    return x, r, pivots
+
+
+def rational_reconstruct(x: int) -> Q | None:
+    x %= P
+    if x == 0:
+        return Q(0)
+    bound = math.isqrt((P - 1) // 2)
+    r0, r1 = P, x
+    s0, s1 = 0, 1
+    while abs(r1) > bound and r1 != 0:
+        q = r0 // r1
+        r0, r1 = r1, r0 - q * r1
+        s0, s1 = s1, s0 - q * s1
+    if s1 == 0:
+        return None
+    num, den = r1, s1
+    if den < 0:
+        num, den = -num, -den
+    g = math.gcd(abs(num), den)
+    num //= g
+    den //= g
+    if abs(num) > bound or den > bound or (num - x * den) % P != 0:
+        return None
+    return Q(num, den)
+
+
+def atom_exact(name: str, n: int, k: int, l: int) -> Q:
+    p = name.split("_")
+    t = base.target002
+    if name.startswith("H_k_"):
+        return t.H(k, int(p[-1]))
+    if name.startswith("H_l_"):
+        return t.H(l, int(p[-1]))
+    if name.startswith("H_kl_"):
+        return t.H(k + l, int(p[-1]))
+    if name.startswith("H_nk_"):
+        return t.H(n + k, int(p[-1]))
+    if name.startswith("H_nl_"):
+        return t.H(n + l, int(p[-1]))
+    if name.startswith("A_k_"):
+        return t.A(n, k, int(p[-1]))
+    if name.startswith("A_l_"):
+        return t.A(n, l, int(p[-1]))
+    if name.startswith("B_k_"):
+        return t.B(n, k, int(p[-1]))
+    if name.startswith("B_l_"):
+        return t.B(n, l, int(p[-1]))
+    if name.startswith("C_"):
+        return t.C(n, k, l, int(p[-1]))
+    if name.startswith("U_k_l_"):
+        r, m = map(int, p[-2:]); return t.U(k, l, r, m)
+    if name.startswith("U_l_k_"):
+        r, m = map(int, p[-2:]); return t.U(l, k, r, m)
+    if name.startswith("ES_k_"):
+        r, m = map(int, p[-2:]); return t.ES(k, r, m)
+    if name.startswith("ES_l_"):
+        r, m = map(int, p[-2:]); return t.ES(l, r, m)
+    raise ValueError(name)
+
+
+def monomial_exact(mon: tuple[str, ...], n: int, k: int, l: int) -> Q:
+    out = Q(1)
+    for name in mon:
+        out *= atom_exact(name, n, k, l)
+    return out
+
+
+def exact_degree0_value(coeffs: list[Q], n: int, k: int, l: int) -> Q:
+    t = base.target002
+    pk0 = Q(t.T(n, k, l) * boundary(n, k), d_k(k, l))
+    pk1 = Q(t.T(n, k + 1, l) * boundary(n, k + 1), d_k(k + 1, l))
+    ql0 = Q(t.T(n, k, l) * boundary(n, l), d_l(k, l))
+    ql1 = Q(t.T(n, k, l + 1) * boundary(n, l + 1), d_l(k, l + 1))
+    value = Q(0)
+    for coeff, mon in zip(coeffs, MONOMS):
+        if coeff == 0:
+            continue
+        value += coeff * (
+            pk0 * monomial_exact(mon, n, k, l)
+            - pk1 * monomial_exact(mon, n, k + 1, l)
+            + ql0 * monomial_exact(mon, n, l, k)
+            - ql1 * monomial_exact(mon, n, l + 1, k)
+        )
+    return value
+
+
+def degree0_reconstruction_probe(exe: Path, tmp: Path) -> dict:
+    extended_nmax = 20
+    g = grid(extended_nmax)
+    rows = [matrix_row(n, k, l, 0) for n, k, l in g]
+    target = [base.Fm(n, k, l) for n, k, l in g]
+    rank_coeff = rank_rows(rows, exe, tmp, "q0_extended_coeff")
+    rank_aug = rank_rows(rows, exe, tmp, "q0_extended_aug", target)
+    out = {
+        "extended_n_max": extended_nmax,
+        "extended_grid_rows": len(g),
+        "coefficient_rank": rank_coeff,
+        "augmented_rank": rank_aug,
+        "modular_candidate_survives": rank_coeff == rank_aug,
+    }
+    if rank_coeff != rank_aug:
+        return out
+
+    coeffs_mod, solve_rank, pivots = solve_mod(rows, target)
+    holdout = grid(24, 21)
+    holdout_failures = []
+    for n, k, l in holdout:
+        row = matrix_row(n, k, l, 0)
+        lhs = sum((v * z for v, z in zip(row, coeffs_mod)), 0) % P
+        rhs = base.Fm(n, k, l)
+        if lhs != rhs:
+            holdout_failures.append([n, k, l])
+            if len(holdout_failures) >= 5:
+                break
+
+    reconstructed = [rational_reconstruct(x) for x in coeffs_mod]
+    rr_complete = all(x is not None for x in reconstructed)
+    exact_checks = 0
+    exact_failure = None
+    if rr_complete:
+        coeffs_q = [x if x is not None else Q(0) for x in reconstructed]
+        for n in range(2, 10):
+            for k in range(n + 1):
+                for l in range(n + 1):
+                    if exact_degree0_value(coeffs_q, n, k, l) != base.target002.cell(n, k, l):
+                        exact_failure = [n, k, l]
+                        break
+                    exact_checks += 1
+                if exact_failure is not None:
+                    break
+            if exact_failure is not None:
+                break
+
+    centered = [x if x <= P // 2 else x - P for x in coeffs_mod]
+    nonzero = [x for x in centered if x]
+    out.update({
+        "canonical_particular_solution_rank": solve_rank,
+        "pivot_count": len(pivots),
+        "free_variable_count": len(MONOMS) - len(pivots),
+        "candidate_vector_sha256": hashlib.sha256(
+            json.dumps(coeffs_mod, separators=(",", ":")).encode("utf-8")
+        ).hexdigest(),
+        "nonzero_coefficient_count": len(nonzero),
+        "max_abs_centered_residue": max((abs(x) for x in nonzero), default=0),
+        "holdout_n_range": [21, 24],
+        "holdout_cell_count": len(holdout),
+        "holdout_failures": holdout_failures,
+        "rational_reconstruction_bound": math.isqrt((P - 1) // 2),
+        "rational_reconstruction_complete": rr_complete,
+        "rational_reconstruction_exact_checks": exact_checks,
+        "rational_reconstruction_first_exact_failure": exact_failure,
+    })
+    return out
+
+
 def compute_result() -> dict:
     basis = base.basis_lock()
     norm = normalization_lock()
@@ -247,13 +446,17 @@ def compute_result() -> dict:
         tmp = Path(td)
         exe = compile_rank(tmp)
         stages = [stage(q, configs[q], exe, tmp) for q in (0, 1, 2)]
+        reconstruction = degree0_reconstruction_probe(exe, tmp)
 
-    if all(x["classification"] == "EXACT_AFFINE_INCONSISTENCY" for x in stages):
-        terminal = "SYMMETRIC_2D_WEIGHT5_DIVERGENCE_BOUNDED_CLASS_EXHAUSTED"
-        next_route = "T3_SEQUENCE_RECURRENCE_EXTRACTION_001"
-    elif any(x["classification"] == "MODULAR_CANDIDATE_SPACE_REMAINS" for x in stages):
+    if reconstruction.get("rational_reconstruction_complete") and not reconstruction.get("rational_reconstruction_first_exact_failure"):
+        terminal = "EXACT_DEGREE0_DIVERGENCE_CANDIDATE_RECONSTRUCTED_REQUIRING_INDEPENDENT_PROOF_REPLAY"
+        next_route = "EXACT_SYMMETRIC_2D_DIVERGENCE_CERTIFICATE_VERIFICATION_001"
+    elif reconstruction.get("modular_candidate_survives"):
         terminal = "CANDIDATE_SPACE_REMAINS_REQUIRING_RATIONAL_RECONSTRUCTION"
         next_route = "RATIONAL_RECONSTRUCTION_OF_SYMMETRIC_2D_DIVERGENCE_CANDIDATE"
+    elif all(x["classification"] == "EXACT_AFFINE_INCONSISTENCY" for x in stages):
+        terminal = "SYMMETRIC_2D_WEIGHT5_DIVERGENCE_BOUNDED_CLASS_EXHAUSTED"
+        next_route = "T3_SEQUENCE_RECURRENCE_EXTRACTION_001"
     else:
         terminal = "OPEN_WITH_CHARACTERIZED_BLOCKER"
         next_route = "SYMMETRIC_2D_RAW_JET_DIVERGENCE_001"
@@ -297,6 +500,7 @@ def compute_result() -> dict:
             "symmetric_subspace_complete_for_declared_swap_closed_two_flux_class": True,
         },
         "stages": stages,
+        "degree0_reconstruction_probe": reconstruction,
         "producer_witness_selection": "first unknowns+1 rows of the lexicographic finite-square grid",
         "candidate_survival_rule": "only full-grid coefficient/augmented rank equality retains a modular candidate space; this remains discovery only",
         "negative_certificate_condition": "full-grid coefficient rank equals unknown count and full-grid augmented rank equals unknown count plus one modulo p",
@@ -307,10 +511,10 @@ def compute_result() -> dict:
         "next_distinct_route": next_route,
         "alternative_route_retained": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001",
         "nonclaims": [
-            "T3 is not proved unless an exact rational divergence certificate is reconstructed and boundary telescoping is verified",
+            "T3 is not proved unless an exact rational divergence certificate is independently reconstructed, symbolically verified, and boundary telescoping is proved",
             "T3 is not refuted",
             "modular candidate survival does not establish rational consistency",
-            "bounded symmetric 2D divergence exhaustion is not evidence that T3 is false",
+            "finite exact sample verification does not establish the symbolic divergence identity",
             "T1-top is not substituted for T3",
             "DEPTH and Sharp-12 are unchanged",
             "MATHCERT and GRAPH_CERTIFIED are unchanged",
