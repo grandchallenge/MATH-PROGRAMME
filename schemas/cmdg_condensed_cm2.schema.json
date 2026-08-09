@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_condensed_cm2.schema.json",
+  "title": "CMDG-CONDENSED-CM2-001 record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "operation_id", "issue", "protected_baseline", "protected_baseline_tree", "predecessor_disposition", "environment", "protected_cm1", "formal_target", "construction_lineage", "source_lineage", "formal_evidence", "graph", "regression_anchors", "claim_boundary", "candidate_disposition"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "operation_id": {"const": "CMDG-CONDENSED-CM2-001"},
+    "issue": {"const": "MATH-PROGRAMME#338"},
+    "protected_baseline": {"const": "2b9013b2947acfa092666214d49b6d4a661f6a12"},
+    "protected_baseline_tree": {"const": "f843f7501da2f052904d4a760fb8d37eafcae110"},
+    "predecessor_disposition": {"const": "CMDG_CONDENSED_CM1_001_PROTECTED_CLOSED"},
+    "environment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["lean_toolchain", "lean_commit", "toolchain_blob_sha1", "lake_manifest_blob_sha1", "mathlib_repository", "mathlib_commit"],
+      "properties": {
+        "lean_toolchain": {"const": "leanprover/lean4:v4.33.0-rc1"},
+        "lean_commit": {"const": "62eed1db4d67327ec8120be05f1a1b0847d74561"},
+        "toolchain_blob_sha1": {"const": "fd85b262bf1c734663aa8292b0101f672168788f"},
+        "lake_manifest_blob_sha1": {"const": "9e478e09f622406970dc9613f6cf323ade82f787"},
+        "mathlib_repository": {"const": "leanprover-community/mathlib4"},
+        "mathlib_commit": {"const": "79d0395a1825a6264ad5d269e35e60537518955e"}
+      }
+    },
+    "protected_cm1": {
+      "type": "object", "additionalProperties": false,
+      "required": ["operation", "issue", "pull_request", "reviewed_head", "reviewed_tree", "independent_review_id", "merge_commit", "merge_tree", "post_merge_cm1_workflow_run", "post_merge_policy_workflow_run", "terminal_comment_id", "terminal_disposition", "record_ref", "record_blob_sha1", "nodes_ref", "nodes_blob_sha1", "edges_ref", "edges_blob_sha1", "formal_probe_ref", "formal_probe_blob_sha1", "authority"],
+      "properties": {
+        "operation": {"const": "CMDG-CONDENSED-CM1-001"},
+        "issue": {"const": "MATH-PROGRAMME#330"},
+        "pull_request": {"const": "MATH-PROGRAMME#331"},
+        "reviewed_head": {"const": "df310ff10bb4a3e85ec5208a5ef6e38486ec6747"},
+        "reviewed_tree": {"const": "f843f7501da2f052904d4a760fb8d37eafcae110"},
+        "independent_review_id": {"const": "4890432951"},
+        "merge_commit": {"const": "2b9013b2947acfa092666214d49b6d4a661f6a12"},
+        "merge_tree": {"const": "f843f7501da2f052904d4a760fb8d37eafcae110"},
+        "post_merge_cm1_workflow_run": {"const": "31292695153"},
+        "post_merge_policy_workflow_run": {"const": "31292695180"},
+        "terminal_comment_id": {"const": "5229604968"},
+        "terminal_disposition": {"const": "CMDG_CONDENSED_CM1_001_PROTECTED_CLOSED"},
+        "record_ref": {"const": "governance/cmdg_condensed_cm1_001.json"},
+        "record_blob_sha1": {"const": "d85305fe900eeb10f3857f82635841a5f175b222"},
+        "nodes_ref": {"const": "fixtures/cmdg/condensed_cm1_001/nodes.json"},
+        "nodes_blob_sha1": {"const": "8cfb190a53d4438876ec573e259f94957486090c"},
+        "edges_ref": {"const": "fixtures/cmdg/condensed_cm1_001/edges.json"},
+        "edges_blob_sha1": {"const": "a1c0ca35457da4831a261e8235eac34a1de184b0"},
+        "formal_probe_ref": {"const": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean"},
+        "formal_probe_blob_sha1": {"const": "6cf27a35aa2f90197117690f0865bc2bb70b9966"},
+        "authority": {"const": "PROTECTED_REUSE_NO_REDEFINITION"}
+      }
+    },
+    "formal_target": {
+      "type": "object", "additionalProperties": false,
+      "required": ["formal_model", "formal_cardinality_policy", "formal_source_characterization", "programme_mathematical_target", "concordance_status", "concordance_gap", "cm_scope", "c04_candidate_judgment", "c04_authority_status"],
+      "properties": {
+        "formal_model": {"type": "string", "minLength": 1},
+        "formal_cardinality_policy": {"const": "NO_CARDINALITY_BOUND"},
+        "formal_source_characterization": {"const": "CLOSER_TO_PYKNOTIC_OBJECTS"},
+        "programme_mathematical_target": {"type": "string", "minLength": 1},
+        "concordance_status": {"const": "PARTIAL_INTERFACE_ONLY"},
+        "concordance_gap": {"type": "string", "minLength": 1},
+        "cm_scope": {"const": "CM2_CARTESIAN_CLOSEDNESS_ONLY"},
+        "c04_candidate_judgment": {"const": "SATISFIED_FOR_CM2_INTERFACE_IF_PROTECTED_ADMITTED"},
+        "c04_authority_status": {"const": "NOT_YET_CONFERRED_PENDING_INDEPENDENT_REVIEW_AND_PROTECTED_ADMISSION"}
+      }
+    },
+    "construction_lineage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["condensed_model", "cartesian_product_structure", "sheafification_contract", "generic_sheaf_closed_instance", "reflective_closed_constructor", "closed_object", "right_adjoint", "checked_adjunction", "hom_equivalence", "unit", "counit_evaluation"],
+      "properties": {
+        "condensed_model": {"type": "string", "minLength": 1},
+        "cartesian_product_structure": {"type": "string", "minLength": 1},
+        "sheafification_contract": {"type": "string", "minLength": 1},
+        "generic_sheaf_closed_instance": {"type": "string", "minLength": 1},
+        "reflective_closed_constructor": {"type": "string", "minLength": 1},
+        "closed_object": {"type": "string", "minLength": 1},
+        "right_adjoint": {"type": "string", "minLength": 1},
+        "checked_adjunction": {"type": "string", "minLength": 1},
+        "hom_equivalence": {"type": "string", "minLength": 1},
+        "unit": {"type": "string", "minLength": 1},
+        "counit_evaluation": {"type": "string", "minLength": 1}
+      }
+    },
+    "source_lineage": {
+      "type": "array", "minItems": 10, "maxItems": 10, "uniqueItems": true,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["declaration", "path", "git_blob_sha1"],
+        "properties": {
+          "declaration": {"type": "string", "minLength": 1},
+          "path": {"type": "string", "minLength": 1},
+          "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+        }
+      }
+    },
+    "formal_evidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["project_dir", "module", "source_ref", "root_declaration", "extractor_config_ref", "required_declarations", "evidence_strength", "triangle_law_authority", "cartesian_interpretation_authority", "expected_axioms"],
+      "properties": {
+        "project_dir": {"const": "fixtures/formal/CMDG-NAT-CONCORDANCE-001"},
+        "module": {"const": "CMDGCondensedCM2"},
+        "source_ref": {"const": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean"},
+        "root_declaration": {"const": "CMDG.CondensedCM2.cm2Adj"},
+        "extractor_config_ref": {"const": "fixtures/cmdg/extractor_001/condensed_cm2.json"},
+        "required_declarations": {"type": "array", "minItems": 11, "maxItems": 11, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "evidence_strength": {"const": "CHECKED_CARTESIAN_CLOSED_ADJUNCTION_WITH_PRODUCT_WITNESS_HOM_EQUIV_UNIT_COUNIT_EVALUATION"},
+        "triangle_law_authority": {"type": "string", "minLength": 1},
+        "cartesian_interpretation_authority": {"const": "CategoryTheory.CartesianMonoidalCategory.tensorProductIsBinaryProduct"},
+        "expected_axioms": {"type": "array", "uniqueItems": true, "items": {"enum": ["Classical.choice", "Quot.sound", "propext"]}}
+      }
+    },
+    "graph": {
+      "type": "object", "additionalProperties": false,
+      "required": ["node_fixture", "edge_fixture", "semantic_edge_authority", "proof_implementation_provenance_authority", "graph_certified"],
+      "properties": {
+        "node_fixture": {"const": "fixtures/cmdg/condensed_cm2_001/nodes.json"},
+        "edge_fixture": {"const": "fixtures/cmdg/condensed_cm2_001/edges.json"},
+        "semantic_edge_authority": {"const": "PROPOSED_PENDING_INDEPENDENT_EXACT_HEAD_REVIEW_AND_PROTECTED_ADMISSION"},
+        "proof_implementation_provenance_authority": {"const": "OBSERVED_ONLY"},
+        "graph_certified": {"const": false}
+      }
+    },
+    "regression_anchors": {
+      "type": "object", "additionalProperties": false,
+      "required": ["condensed_cm1", "vertical_spine_v0", "nat_concordance", "euclid_bridge"],
+      "properties": {
+        "condensed_cm1": {"$ref": "#/$defs/regression"},
+        "vertical_spine_v0": {"$ref": "#/$defs/regression"},
+        "nat_concordance": {"$ref": "#/$defs/regression"},
+        "euclid_bridge": {"$ref": "#/$defs/regression"}
+      }
+    },
+    "claim_boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["cm2_cartesian_closed_candidate", "c04_cm2_interface_candidate_satisfied", "cm2_semantic_authority_conferred", "deprecated_import_shim_sufficient_proof", "full_clausen_scholze_concordance_conferred", "pyknotic_cardinal_bounded_equivalence_conferred", "internal_hom_pointwise_function_space_claim", "underlying_preserves_exponentials_claim", "discrete_preserves_exponentials_claim", "cm3_or_stronger_conferred", "solid_or_liquid_conferred", "global_dependency_completeness_claim", "dependency_minimality_or_uniqueness_claim", "graph_certified_conferred", "c04_discharged_beyond_cm2", "c05_discharged", "c06_discharged", "semantic_authority_conferred_by_artifact_alone", "independent_review_required", "protected_admission_required"],
+      "properties": {
+        "cm2_cartesian_closed_candidate": {"const": true},
+        "c04_cm2_interface_candidate_satisfied": {"const": true},
+        "cm2_semantic_authority_conferred": {"const": false},
+        "deprecated_import_shim_sufficient_proof": {"const": false},
+        "full_clausen_scholze_concordance_conferred": {"const": false},
+        "pyknotic_cardinal_bounded_equivalence_conferred": {"const": false},
+        "internal_hom_pointwise_function_space_claim": {"const": false},
+        "underlying_preserves_exponentials_claim": {"const": false},
+        "discrete_preserves_exponentials_claim": {"const": false},
+        "cm3_or_stronger_conferred": {"const": false},
+        "solid_or_liquid_conferred": {"const": false},
+        "global_dependency_completeness_claim": {"const": false},
+        "dependency_minimality_or_uniqueness_claim": {"const": false},
+        "graph_certified_conferred": {"const": false},
+        "c04_discharged_beyond_cm2": {"const": false},
+        "c05_discharged": {"const": false},
+        "c06_discharged": {"const": false},
+        "semantic_authority_conferred_by_artifact_alone": {"const": false},
+        "independent_review_required": {"const": true},
+        "protected_admission_required": {"const": true}
+      }
+    },
+    "candidate_disposition": {"const": "CM2_CANDIDATE_PENDING_INDEPENDENT_REVIEW_AND_PROTECTED_ADMISSION"}
+  },
+  "$defs": {
+    "regression": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_ref", "workflow"],
+      "properties": {
+        "artifact_ref": {"type": "string", "minLength": 1},
+        "workflow": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
