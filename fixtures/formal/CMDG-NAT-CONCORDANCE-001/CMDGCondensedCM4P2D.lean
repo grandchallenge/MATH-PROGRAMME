@@ -91,4 +91,9 @@ noncomputable def dualityHomEquiv (S : Profinite.{u}) (F : PresheafModule) :
 #check Presheaf.isSheaf_functorEnrichedHom
 #check ModuleCat.monoidalClosedHomEquiv
 
+#print axioms measurePresheafObj_isSheaf
+#print axioms measurePresheafFunctor
+#print axioms measureFunctor
+#print axioms dualityHomEquiv
+
 end CMDG.CondensedCM4P2D
