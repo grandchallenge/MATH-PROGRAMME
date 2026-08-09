@@ -68,11 +68,15 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["path", "blob", "declarations", "role"],
+            "required": ["path", "blob", "declarations", "signature", "variance", "universe_behavior", "evidence_class", "role"],
             "properties": {
               "path": {"type": "string", "minLength": 1},
               "blob": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
               "declarations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+              "signature": {"type": "string", "minLength": 1},
+              "variance": {"type": "string", "minLength": 1},
+              "universe_behavior": {"type": "string", "minLength": 1},
+              "evidence_class": {"enum": ["FORMAL_REACHABILITY", "SOURCE_CONCORDANCE", "BOTH"]},
               "role": {"type": "string", "minLength": 1}
             }
           }
