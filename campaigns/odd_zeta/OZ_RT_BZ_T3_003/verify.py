@@ -9,7 +9,7 @@ import target
 HERE=Path(__file__).resolve().parent
 RESULT=HERE/'SEARCH_RESULT.json'
 P=1000003
-STAGES=[(0,2,7),(1,3,8),(2,4,9),(3,5,10),(4,6,11)]
+STAGES=[(order,ad,ad+2,base+ad) for order,base in ((2,7),(3,8),(4,9)) for ad in range(7)]
 
 def poly_moments(length,offset,max_order):
     coeff=[Q(1)]+[Q(0)]*max_order
@@ -67,13 +67,15 @@ def rl(n,k,l): return Q((n+l+1)*(n-l)**2*(n+k+l+1),(l+1)**3*(k+l+1))
 def den(n,k,l): return (l+1)**3*(k+l+1)
 def mons2(d): return list(reversed([(i,j) for i in range(d+1) for j in range(d+1-i)]))
 def mons3(d): return list(reversed([(i,j,h0) for i in range(d+1) for j in range(d+1-i) for h0 in range(d+1-i-j)]))
-def matrix(ad,qd,nmax):
+def matrix(order,ad,qd,nmax):
     ma=mons2(ad); mq=mons3(qd); rows=[]
-    for nv in range(4,nmax+1):
-        for kv in range(nv-1):
+    for nv in range(order+2,nmax+1):
+        for kv in range(nv-order+1):
             for lv in range(nv):
-                r0=rk(nv,kv,lv); r1=rk(nv,kv+1,lv); row=[]
-                for rat in (Q(1),r0,r0*r1): row.extend(rat*Q(nv**i*kv**j) for i,j in ma)
+                ratios=[Q(1)]; ratio=Q(1)
+                for j in range(order): ratio*=rk(nv,kv+j,lv); ratios.append(ratio)
+                row=[]
+                for rat in ratios: row.extend(rat*Q(nv**i*kv**j) for i,j in ma)
                 rr=rl(nv,kv,lv); dl=Q(den(nv,kv,lv)); dp=Q(den(nv,kv,lv+1))
                 for i,j,h0 in mq: row.append(Q(nv**i*kv**j)*(Q(lv**h0,dl)-rr*Q((lv+1)**h0,dp)))
                 rows.append(row)
@@ -106,20 +108,21 @@ def rank_mod(rows):
 def verify(result=None):
     result=json.loads(RESULT.read_text()) if result is None else result; out=verify_lift()
     if out: return out
-    if result.get('fixture')!='PARAMETER_LIFT_ORDER2_001': out.append('fixture drift')
-    if result.get('search_class')!='UNDEFORMED_HYPERGEOMETRIC_PARENT_ORDER2_K_SHIFT_WITH_L_CERTIFICATE': out.append('search-class drift')
+    if result.get('fixture')!='PARAMETER_LIFT_HIGHER_ORDER_001': out.append('fixture drift')
+    if result.get('search_class')!='UNDEFORMED_HYPERGEOMETRIC_PARENT_ORDERS_2_TO_4_K_SHIFT_WITH_L_CERTIFICATE': out.append('search-class drift')
     got=result.get('stages',[])
     if len(got)!=len(STAGES): return out+['stage count drift']
-    for rec,(ad,qd,nmax) in zip(got,STAGES):
-        rows=matrix(ad,qd,nmax); rank=rank_mod(rows); unknowns=len(rows[0])
-        if rec.get('rank')!=rank or rec.get('unknowns')!=unknowns or rec.get('equations')!=len(rows): out.append(f'independent rank replay drift at a={ad},q={qd}')
-        if rank!=unknowns: out.append(f'bounded class not excluded at a={ad},q={qd}')
-    if result.get('terminal')!='NO_ORDER2_CERTIFICATE_IN_BOUNDED_UNDEFORMED_PARENT_CLASS': out.append('terminal drift')
+    for rec,(order,ad,qd,nmax) in zip(got,STAGES):
+        rows=matrix(order,ad,qd,nmax); rank=rank_mod(rows); unknowns=len(rows[0])
+        if rec.get('order')!=order or rec.get('rank')!=rank or rec.get('unknowns')!=unknowns or rec.get('equations')!=len(rows): out.append(f'independent rank replay drift at r={order},a={ad},q={qd}')
+        if rank!=unknowns: out.append(f'bounded class not excluded at r={order},a={ad},q={qd}')
+    if result.get('terminal')!='NO_ORDER2_TO_ORDER4_CERTIFICATE_IN_BOUNDED_UNDEFORMED_PARENT_CLASSES': out.append('terminal drift')
+    if result.get('next_distinct_route')!='PARAMETER_DEPENDENT_ORDER2_WITH_AUXILIARY_T_DIMENSION': out.append('next-route drift')
     if result.get('proof_effect')!='NONE' or result.get('promotion_effect')!='NONE': out.append('effect inflation')
     return out
 
 def main():
     e=verify()
     if e: print('\n'.join(e)); return 1
-    print('OZ-RT-BZ-T3-003 parameter lift and independent order-2 negative frontier verified'); return 0
+    print('OZ-RT-BZ-T3-003 parameter lift and independent order-2-to-4 negative frontier verified'); return 0
 if __name__=='__main__': raise SystemExit(main())
