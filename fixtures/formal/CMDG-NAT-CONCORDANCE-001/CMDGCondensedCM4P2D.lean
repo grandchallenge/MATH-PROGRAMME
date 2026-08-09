@@ -20,6 +20,7 @@ universe u
 open CategoryTheory Opposite
 open CategoryTheory.Enriched.FunctorCategory
 open CategoryTheory.MonoidalCategory
+open scoped CategoryTheory.MonoidalClosed
 
 /-- The exact lifted integral coefficient ring used by the pinned condensed construction. -/
 abbrev R := ULift.{u + 1} ℤ
@@ -41,17 +42,27 @@ noncomputable abbrev discreteContinuousPresheaf :
     Profinite.{u}ᵒᵖ ⥤ PresheafModule :=
   continuousFunctions ⋙ CondensedMod.LocallyConstant.functorToPresheaves R
 
+noncomputable local instance : MonoidalClosed PresheafModule :=
+  MonoidalClosed.FunctorCategory.monoidalClosed
+
 /--
 The canonical basis-free internal-Hom presheaf
-`underline Hom(C(S,R)_disc, R_disc)`.
+`underline Hom(C(S,R)_disc, R_disc)`, using the exact internal Hom selected by the
+functor-category closed structure.
 -/
 noncomputable def measurePresheafObj (S : Profinite.{u}) : PresheafModule :=
-  functorEnrichedHom (ModuleCat.{u + 1} R)
-    (discreteContinuousPresheaf.obj (op S)) coefficientPresheaf
+  (MonoidalClosed.ihom (discreteContinuousPresheaf.obj (op S))).obj coefficientPresheaf
+
+/-- The selected internal-Hom object is definitionally the enriched-Hom presheaf. -/
+lemma measurePresheafObj_eq_functorEnrichedHom (S : Profinite.{u}) :
+    measurePresheafObj S =
+      functorEnrichedHom (ModuleCat.{u + 1} R)
+        (discreteContinuousPresheaf.obj (op S)) coefficientPresheaf := rfl
 
 /-- The internal-Hom presheaf is already a sheaf because its target is a sheaf. -/
 theorem measurePresheafObj_isSheaf (S : Profinite.{u}) :
     Presheaf.IsSheaf (coherentTopology CompHaus.{u}) (measurePresheafObj S) := by
+  rw [measurePresheafObj_eq_functorEnrichedHom]
   apply Presheaf.isSheaf_functorEnrichedHom
   exact ((CondensedMod.LocallyConstant.functor R).obj (ModuleCat.of R R)).2
 
@@ -59,19 +70,13 @@ theorem measurePresheafObj_isSheaf (S : Profinite.{u}) :
 The canonical measure/dual presheaf functor. A map `S ⟶ T` acts by pullback
 `C(T,R) ⟶ C(S,R)` followed by contravariance of internal Hom in its first argument.
 -/
-noncomputable def measurePresheafFunctor : Profinite.{u} ⥤ PresheafModule := by
-  letI : MonoidalClosed PresheafModule :=
-    MonoidalClosed.FunctorCategory.monoidalClosed
-  exact
-    { obj := measurePresheafObj
-      map := fun f ↦
-        (MonoidalClosed.pre (discreteContinuousPresheaf.map f.op)).app coefficientPresheaf
-      map_id := by
-        intro S
-        simp [measurePresheafObj]
-      map_comp := by
-        intro S T U f g
-        simp [measurePresheafObj] }
+noncomputable def measurePresheafFunctor : Profinite.{u} ⥤ PresheafModule where
+  obj := measurePresheafObj
+  map f := (MonoidalClosed.pre (discreteContinuousPresheaf.map f.op)).app coefficientPresheaf
+  map_id S := by
+    simp [measurePresheafObj]
+  map_comp f g := by
+    simp [measurePresheafObj]
 
 /-- The canonical measure/dual condensed-module functor attached to profinite sets. -/
 noncomputable def measureFunctor : Profinite.{u} ⥤ CondensedMod.{u} R :=
@@ -83,8 +88,9 @@ without choosing a Nöbeling basis or replacing the internal Hom by an objectwis
 -/
 noncomputable def dualityHomEquiv (S : Profinite.{u}) (F : PresheafModule) :
     (discreteContinuousPresheaf.obj (op S) ⊗ F ⟶ coefficientPresheaf) ≃
-      (F ⟶ measurePresheafObj S) :=
-  MonoidalClosed.FunctorCategory.homEquiv
+      (F ⟶ measurePresheafObj S) := by
+  rw [measurePresheafObj_eq_functorEnrichedHom]
+  exact MonoidalClosed.FunctorCategory.homEquiv
 
 #check measureFunctor
 #check dualityHomEquiv
