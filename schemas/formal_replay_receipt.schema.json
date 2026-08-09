@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/formal_replay_receipt.schema.json",
+  "title": "Formal Replay Attestation Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "lane", "status", "input_digest", "repository", "origin_commit", "origin_run_id", "origin_run_attempt", "origin_event", "origin_ref", "policy_operation", "command", "proof_semantic_tcb", "result_digest", "result_files", "created_at"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "lane": {"type": "string", "minLength": 1},
+    "status": {"const": "FULL_FORMAL_REPLAY_SUCCEEDED"},
+    "input_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "origin_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "origin_run_id": {"type": "string", "pattern": "^[1-9][0-9]*$"},
+    "origin_run_attempt": {"type": "string", "pattern": "^[1-9][0-9]*$"},
+    "origin_event": {"const": "push"},
+    "origin_ref": {"const": "refs/heads/main"},
+    "policy_operation": {"const": "MP-FORMAL-REPLAY-CONTENT-ADDRESSING-001"},
+    "command": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "proof_semantic_tcb": {"type": "object", "minProperties": 1},
+    "result_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "result_files": {"type": "array", "items": {"type": "string"}},
+    "created_at": {"type": "string", "format": "date-time"}
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "schema_version": "1.0.0",
+  "operation_id": "CMDG-SOLID-C05-001",
+  "issue": "MATH-PROGRAMME#348",
+  "repository_baseline": "e99defaabbc0d971e6299360ac03084e516c31c3",
+  "repository_baseline_tree": "041b4f7afa647fec06d3303503b53fa0fc65350d",
+  "predecessor_disposition": "CMDG_CONDENSED_CM3_001_PROTECTED_CLOSED",
+  "protected_cm3": {
+    "operation": "CMDG-CONDENSED-CM3-001",
+    "issue": "MATH-PROGRAMME#342",
+    "pull_request": "MATH-PROGRAMME#343",
+    "reviewed_head": "c902351323c20a72b96a9e5fbb9b4dec6af841fd",
+    "reviewed_tree": "f319f50b28ef9292992f178e8d740e6d2875cd38",
+    "merge_commit": "4d8cd462f2836349704b4325766bcff679574404",
+    "merge_tree": "f319f50b28ef9292992f178e8d740e6d2875cd38",
+    "post_merge_cm3_workflow_run": "31298163935",
+    "terminal_comment_id": "5230101523",
+    "terminal_disposition": "CMDG_CONDENSED_CM3_001_PROTECTED_CLOSED",
+    "record_ref": "governance/cmdg_condensed_cm3_001.json",
+    "authority": "PROTECTED_REUSE_NO_REDEFINITION"
+  },
+  "environment": {
+    "lean_toolchain": "leanprover/lean4:v4.33.0-rc1",
+    "lean_commit": "62eed1db4d67327ec8120be05f1a1b0847d74561",
+    "mathlib_repository": "leanprover-community/mathlib4",
+    "mathlib_commit": "79d0395a1825a6264ad5d269e35e60537518955e",
+    "mathlib_tree": "d76f5e09b832a08949f6d8ad4fb80ce30527da64"
+  },
+  "formal_target": {
+    "formal_model": "CondensedMod.{u} R := Condensed.{u} (ModuleCat.{u+1} R)",
+    "formal_cardinality_policy": "NO_CARDINALITY_BOUND",
+    "programme_mathematical_target": "Clausen-Scholze solid/analytic condensed modules with ring hypotheses and smallness profile explicit",
+    "concordance_status": "DEFINITION_BOUNDARY_RECONSTRUCTED_PENDING_PROTECTED_ADMISSION",
+    "c04_status": "PRESERVE_CM3_LOCAL_ONLY_NO_BROADENING",
+    "c05_candidate_judgment": "SATISFIED_IF_EXACT_RESTRICTED_AND_RECONSTRUCTED_DEFINITIONS_PASS_REVIEW_AND_PROTECTED_ADMISSION"
+  },
+  "source_authority": {
+    "primary_source": "Peter Scholze, Lectures on Condensed Mathematics",
+    "source_id": "arXiv:2605.03658v1",
+    "source_profile": "finitely generated commutative Z-algebras / analytic-ring setting",
+    "general_discrete_ring_warning": "ANALOGOUS_MEASURE_THEORY_NEED_NOT_DEFINE_ANALYTIC_RING",
+    "authority_boundary": "DO_NOT_IDENTIFY_SOURCE_CONSTRUCTION_WITH_UNRESTRICTED_PINNED_RING_PREDICATE"
+  },
+  "source_lineage": [
+    {"path": "Mathlib/Condensed/Solid.lean", "git_blob_sha1": "f5214433f91ee87fc8fbe7e2746e0bd227faed2a", "role": "pinned solidification construction and self-recorded general-ring definition defect"},
+    {"path": "Mathlib/Condensed/Module.lean", "git_blob_sha1": "f5834efa0d5bf1289187abe3319536186d67a405", "role": "CondensedMod model"},
+    {"path": "Mathlib/Condensed/Functors.lean", "git_blob_sha1": "0b8bd8424c85a13d4bae96b65caf4945384650d1", "role": "condensed functor infrastructure"},
+    {"path": "Mathlib/Condensed/Limits.lean", "git_blob_sha1": "f1c0ca716ec0e51058ff22e6041ecc101cba491a", "role": "limit infrastructure used by solidification"},
+    {"path": "Mathlib/CategoryTheory/Functor/KanExtension/Pointwise.lean", "git_blob_sha1": "eca4f781a97fc9948e726bb4b89a9ab1bc255f96", "role": "pointwise right Kan extension authority"},
+    {"path": "Mathlib/Algebra/Category/ModuleCat/ChangeOfRings.lean", "git_blob_sha1": "ecd029ee9db7e00298e2414a152e528f8cd18763", "role": "restriction of scalars"},
+    {"path": "Mathlib/CategoryTheory/Sites/Whiskering.lean", "git_blob_sha1": "f61b46c2fa0f12c60f02fb9fee498c5251b0919c", "role": "lift change-of-rings functor to sheaves"},
+    {"path": "Mathlib/Algebra/Polynomial/Eval/Defs.lean", "git_blob_sha1": "c42ff574f952192ec1f14d4e4c4091432ab0aec7", "role": "bundled polynomial evaluation ring hom"},
+    {"path": "Mathlib/RingTheory/FiniteType.lean", "git_blob_sha1": "346c6ccb601fa6f310793b7d986012a054ed6563", "role": "finite-type algebra profile"},
+    {"path": "Mathlib/Algebra/Ring/ULift.lean", "git_blob_sha1": "97e348e52e05a800a60c8c2469bd3041c15613c4", "role": "universe-lifted polynomial coefficient ring"}
+  ],
+  "pinned_defect": {
+    "predicate": "CondensedMod.IsSolid",
+    "library_signature": "arbitrary Lean [Ring R]",
+    "defect_recorded_in_source": true,
+    "defect": "PINNED_SOURCE_STATES_CURRENT_PREDICATE_IS_NOT_CORRECT_GENERAL_RING_DEFINITION",
+    "recommended_reconstruction": "FOR_EVERY_r_IN_R_RESTRICT_ALONG_ZX_TO_R_X_MAPS_TO_r_AND_REQUIRE_ZX_SOLIDITY",
+    "semantic_effect": "UNRESTRICTED_LIBRARY_SIGNATURE_IS_NOT_GENERAL_RING_SEMANTIC_AUTHORITY"
+  },
+  "definition_layers": {
+    "PINNED_MATHLIB_IS_SOLID": {
+      "ring_profile": "arbitrary Lean [Ring R] signature",
+      "definition": "CondensedMod.IsSolid",
+      "authority": "FORMAL_IMPLEMENTATION_ONLY_GENERAL_RING_SEMANTICS_WITHHELD"
+    },
+    "FINITE_TYPE_Z_ALGEBRA_SOLID": {
+      "ring_profile": "[CommRing R] [Algebra Z R] [Algebra.FiniteType Z R]",
+      "definition": "CMDG.SolidC05.FiniteTypeZAlgebraSolid",
+      "authority": "RESTRICTED_SOURCE_CONCORDANT_CANDIDATE"
+    },
+    "GENERAL_COMM_RING_SOLID_RECONSTRUCTED": {
+      "ring_profile": "arbitrary commutative ring R at supported universe",
+      "definition": "CMDG.SolidC05.GeneralCommRingSolidReconstructed",
+      "authority": "RECONSTRUCTED_FROM_PINNED_TODO_AND_SOURCE_GUIDANCE_EQUIVALENCE_NOT_PRESUMED",
+      "quantification": "FOR_ALL_ELEMENTS",
+      "bridge_ring": "ULift (Polynomial Z)",
+      "restriction": "sheafCompose of ModuleCat.restrictScalars along evaluation hom"
+    }
+  },
+  "formal_evidence": {
+    "project_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+    "module": "CMDGSolidC05",
+    "source_ref": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGSolidC05.lean",
+    "extractor_config_ref": "fixtures/cmdg/extractor_001/solid_c05.json",
+    "required_declarations": [
+      "CMDG.SolidC05.c05ProfiniteSolid",
+      "CMDG.SolidC05.c05PointwiseRightKan",
+      "CMDG.SolidC05.c05Solidification",
+      "CMDG.SolidC05.pinnedSolidField",
+      "CMDG.SolidC05.FiniteTypeZAlgebraSolid",
+      "CMDG.SolidC05.ZX",
+      "CMDG.SolidC05.evalZXAt",
+      "CMDG.SolidC05.restrictCondensedScalars",
+      "CMDG.SolidC05.GeneralCommRingSolidReconstructed"
+    ],
+    "root_declarations": [
+      "CMDG.SolidC05.FiniteTypeZAlgebraSolid",
+      "CMDG.SolidC05.GeneralCommRingSolidReconstructed"
+    ],
+    "evidence_strength": "CHECKED_DEFINITION_AND_CHANGE_OF_RINGS_RECONSTRUCTION_ONLY_NO_SOLID_OBJECT_THEOREMS"
+  },
+  "concordance_matrix": [
+    {"layer": "SCHOLZE_SOURCE", "ring_profile": "finitely generated commutative Z-algebra / analytic-ring setting", "definition_object": "A_square and complete/solid module interface", "relationship": "SOURCE_AUTHORITY"},
+    {"layer": "PINNED_MATHLIB", "ring_profile": "arbitrary Lean [Ring R] signature", "definition_object": "CondensedMod.IsSolid", "relationship": "UNPROVED_GENERAL_RING_SEMANTICS_SELF_RECORDED_DEFECT"},
+    {"layer": "CMDG_RESTRICTED", "ring_profile": "finite-type commutative Z-algebra", "definition_object": "FiniteTypeZAlgebraSolid", "relationship": "RESTRICTED_REALIZATION"},
+    {"layer": "CMDG_RECONSTRUCTED", "ring_profile": "arbitrary commutative ring", "definition_object": "GeneralCommRingSolidReconstructed", "relationship": "RECONSTRUCTED_FROM_SOURCE_GUIDANCE"},
+    {"layer": "PINNED_VS_RECONSTRUCTED", "ring_profile": "arbitrary commutative ring", "definition_object": "comparison", "relationship": "UNPROVED_EQUIVALENCE"},
+    {"layer": "NONCOMMUTATIVE_GENERAL_RING", "ring_profile": "arbitrary noncommutative ring", "definition_object": "none admitted", "relationship": "OUT_OF_SCOPE"}
+  ],
+  "graph": {
+    "node_fixture": "fixtures/cmdg/solid_c05_001/nodes.json",
+    "edge_fixture": "fixtures/cmdg/solid_c05_001/edges.json",
+    "semantic_edge_authority": "PROPOSED_PENDING_INDEPENDENT_EXACT_HEAD_REVIEW_AND_PROTECTED_ADMISSION",
+    "proof_implementation_provenance_authority": "OBSERVED_ONLY",
+    "graph_certified": false
+  },
+  "regression_anchors": {
+    "condensed_cm3": {"artifact_ref": "governance/cmdg_condensed_cm3_001.json", "workflow": ".github/workflows/cmdg-condensed-cm3.yml"},
+    "condensed_cm2": {"artifact_ref": "governance/cmdg_condensed_cm2_001.json", "workflow": ".github/workflows/cmdg-condensed-cm2.yml"},
+    "condensed_cm1": {"artifact_ref": "governance/cmdg_condensed_cm1_001.json", "workflow": ".github/workflows/cmdg-condensed-cm1.yml"},
+    "vertical_spine_v0": {"artifact_ref": "governance/cmdg_vertical_spine_v0_001.json", "workflow": ".github/workflows/cmdg-vertical-spine-v0.yml"},
+    "nat_concordance": {"artifact_ref": "governance/cmdg_nat_concordance_001.json", "workflow": ".github/workflows/cmdg-nat-concordance.yml"},
+    "euclid_bridge": {"artifact_ref": "governance/cmdg_euclid_bridge_001.json", "workflow": ".github/workflows/cmdg-euclid-bridge.yml"}
+  },
+  "claim_boundary": {
+    "definition_boundary_candidate": true,
+    "c05_candidate_satisfied": true,
+    "c05_semantic_authority_conferred": false,
+    "pinned_general_ring_semantics_conferred": false,
+    "pinned_reconstructed_equivalence_conferred": false,
+    "noncommutative_general_ring_reconstruction_conferred": false,
+    "nontrivial_solid_object_conferred": false,
+    "profinite_solid_object_is_solid_conferred": false,
+    "solid_subcategory_abelian_conferred": false,
+    "solidification_reflector_conferred": false,
+    "tensor_or_internal_hom_closure_conferred": false,
+    "derived_solid_conferred": false,
+    "liquid_conferred": false,
+    "cm4_conferred": false,
+    "c04_broadened": false,
+    "c06_discharged": false,
+    "graph_certified_conferred": false,
+    "dependency_minimality_or_uniqueness_claim": false,
+    "global_dependency_completeness_claim": false,
+    "independent_review_required": true,
+    "protected_admission_required": true
+  },
+  "candidate_disposition": "C05_CANDIDATE_PENDING_INDEPENDENT_REVIEW_AND_PROTECTED_ADMISSION"
+}

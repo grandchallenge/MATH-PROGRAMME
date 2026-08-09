@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {"const": "OZ_RT_BZ_T3_005.schema.json"},
+    "artifacts": {"type": "object"},
+    "authority": {"type": "object"},
+    "coverage": {"type": "object"},
+    "disposition": {"type": "object"},
+    "fixture": {"const": "MIRROR_AUXILIARY_THEN_LINEAR_RAW_JET_001"},
+    "nonclaims": {
+      "additionalProperties": {"const": false},
+      "required": ["t3_proved","t3_refuted","t1top_proved","depth_proved","sharp12_proved","mathcert_authority","new_odd_zeta_irrationality_or_infinitude_theorem"],
+      "type": "object"
+    },
+    "operation": {"const": "OZ-RT-BZ-T3-005"},
+    "schema_version": {"const": "1.0.0"},
+    "stage_a_mirror_auxiliary": {"type": "object"},
+    "stage_b_one_body_linear_jet": {"type": "object"},
+    "stage_c_nested_orientation_coupling": {"type": "object"},
+    "target_lock": {"type": "object"}
+  },
+  "required": ["$schema","schema_version","operation","fixture","authority","target_lock","stage_a_mirror_auxiliary","stage_b_one_body_linear_jet","stage_c_nested_orientation_coupling","artifacts","coverage","disposition","nonclaims"],
+  "title": "OZ-RT-BZ-T3-005 governed record",
+  "type": "object"
+}

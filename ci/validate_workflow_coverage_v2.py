@@ -8,6 +8,8 @@ v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "cmdg-vertical-spine-v0.yml",
     "cmdg-condensed-cm1.yml",
     "cmdg-condensed-cm2.yml",
+    "cmdg-condensed-cm3.yml",
+    "cmdg-solid-c05.yml",
 }
 
 ROOT = v3.ROOT

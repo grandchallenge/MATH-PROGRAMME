@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_condensed_cm3.schema.json",
+  "title": "CMDG-CONDENSED-CM3-001 candidate record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "operation_id", "issue", "repository_baseline", "repository_baseline_tree",
+    "predecessor_disposition", "protected_cm2", "environment", "formal_target", "source_lineage",
+    "formal_evidence", "graph", "regression_anchors", "claim_boundary", "candidate_disposition"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "operation_id": {"const": "CMDG-CONDENSED-CM3-001"},
+    "issue": {"const": "MATH-PROGRAMME#342"},
+    "repository_baseline": {"pattern": "^[0-9a-f]{40}$"},
+    "repository_baseline_tree": {"pattern": "^[0-9a-f]{40}$"},
+    "predecessor_disposition": {"const": "CMDG_CONDENSED_CM2_001_PROTECTED_CLOSED"},
+    "protected_cm2": {"type": "object"},
+    "environment": {
+      "type": "object",
+      "required": ["lean_toolchain", "lean_commit", "toolchain_blob_sha1", "lake_manifest_blob_sha1", "mathlib_repository", "mathlib_commit"],
+      "properties": {
+        "lean_toolchain": {"const": "leanprover/lean4:v4.33.0-rc1"},
+        "lean_commit": {"const": "62eed1db4d67327ec8120be05f1a1b0847d74561"},
+        "toolchain_blob_sha1": {"const": "fd85b262bf1c734663aa8292b0101f672168788f"},
+        "lake_manifest_blob_sha1": {"const": "9e478e09f622406970dc9613f6cf323ade82f787"},
+        "mathlib_repository": {"const": "leanprover-community/mathlib4"},
+        "mathlib_commit": {"const": "79d0395a1825a6264ad5d269e35e60537518955e"}
+      },
+      "additionalProperties": false
+    },
+    "formal_target": {"type": "object"},
+    "source_lineage": {"type": "array", "minItems": 5},
+    "formal_evidence": {"type": "object"},
+    "graph": {"type": "object"},
+    "regression_anchors": {"type": "object"},
+    "claim_boundary": {"type": "object"},
+    "candidate_disposition": {"const": "CM3_CANDIDATE_PENDING_INDEPENDENT_REVIEW_AND_PROTECTED_ADMISSION"}
+  }
+}
