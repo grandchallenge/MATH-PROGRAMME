@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "blob": {"additionalProperties": false, "properties": {"blob": {"pattern": "^[0-9a-f]{40}$", "type": "string"}}, "required": ["blob"], "type": "object"}
+  },
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {"const": "OZ_RT_BZ_T3_003.schema.json"},
+    "authority": {
+      "additionalProperties": false,
+      "properties": {
+        "admitted_source_head": {"pattern": "^[0-9a-f]{40}$", "type": "string"},
+        "admitted_source_tree": {"pattern": "^[0-9a-f]{40}$", "type": "string"},
+        "issue": {"const": 328},
+        "predecessor_merge": {"pattern": "^[0-9a-f]{40}$", "type": "string"},
+        "programme_base_commit": {"pattern": "^[0-9a-f]{40}$", "type": "string"},
+        "source_loci": {"additionalProperties": false, "properties": {"bridge": {"$ref": "#/$defs/blob"}, "finite_verifier": {"$ref": "#/$defs/blob"}, "recurrence": {"$ref": "#/$defs/blob"}, "statement": {"$ref": "#/$defs/blob"}}, "required": ["statement", "bridge", "finite_verifier", "recurrence"], "type": "object"}
+      },
+      "required": ["issue", "programme_base_commit", "predecessor_merge", "admitted_source_head", "admitted_source_tree", "source_loci"],
+      "type": "object"
+    },
+    "disposition": {
+      "additionalProperties": false,
+      "properties": {
+        "characterized_blocker": {"additionalProperties": false, "properties": {"interpretation": {"type": "string"}, "newly_exhausted_class": {"const": "UNDEFORMED_PARENT_ORDERS_2_TO_4_K_SHIFT_DSHIFT_DENOM_ADEG_LE_6_QDEG_LE_8"}, "next_distinct_route": {"const": "PARAMETER_DEPENDENT_ORDER2_WITH_AUXILIARY_T_DIMENSION"}, "not_a_refutation": {"const": true}}, "required": ["interpretation", "newly_exhausted_class", "next_distinct_route", "not_a_refutation"], "type": "object"},
+        "counterexample_found": {"const": false}, "proof_effect": {"const": "NONE"}, "proof_found": {"const": false}, "promotion_effect": {"const": "NONE"}, "status": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"}
+      },
+      "required": ["status", "proof_found", "counterexample_found", "proof_effect", "promotion_effect", "characterized_blocker"],
+      "type": "object"
+    },
+    "fixture": {"const": "PARAMETER_LIFT_HIGHER_ORDER_001"},
+    "nonclaims": {
+      "additionalProperties": false,
+      "properties": {"depth_proved": {"const": false}, "mathcert_authority": {"const": false}, "new_odd_zeta_irrationality_or_infinitude_theorem": {"const": false}, "sharp12_proved": {"const": false}, "t1top_proved": {"const": false}, "t3_proved": {"const": false}, "t3_refuted": {"const": false}},
+      "required": ["depth_proved", "mathcert_authority", "new_odd_zeta_irrationality_or_infinitude_theorem", "sharp12_proved", "t1top_proved", "t3_proved", "t3_refuted"],
+      "type": "object"
+    },
+    "operation": {"const": "OZ-RT-BZ-T3-003"},
+    "parameter_lift": {
+      "additionalProperties": false,
+      "properties": {"auxiliary_nested_parent": {"type": "string"}, "cumulant_rule": {"type": "string"}, "fixture_domain": {"type": "string"}, "one_body_parent": {"type": "string"}, "proof_effect": {"const": "NONE"}, "status": {"const": "FULL_LOCKED_CELL_RECONSTRUCTED_ON_RETAINED_EXACT_FIXTURE"}, "supported_atoms": {"const": ["H", "A", "B", "C", "ES", "U", "W1", "w5sym", "full_locked_cell"]}},
+      "required": ["status", "one_body_parent", "cumulant_rule", "auxiliary_nested_parent", "fixture_domain", "supported_atoms", "proof_effect"],
+      "type": "object"
+    },
+    "schema_version": {"const": "1.1.0"},
+    "search_execution": {
+      "additionalProperties": false,
+      "properties": {
+        "a_total_degree_max": {"const": 6},
+        "denominator_derivation": {"type": "string"},
+        "orders": {"const": [2, 3, 4]},
+        "q_denominator": {"const": "(l+1)^3*(k+l+1)"},
+        "q_numerator_total_degree_max": {"const": 8},
+        "relation": {"type": "string"},
+        "result_sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"},
+        "search_class": {"const": "UNDEFORMED_HYPERGEOMETRIC_PARENT_ORDERS_2_TO_4_K_SHIFT_WITH_L_CERTIFICATE"},
+        "stage_count": {"const": 21},
+        "strongest_frontier": {"additionalProperties": false, "properties": {"a_total_degree": {"const": 6}, "equations": {"const": 870}, "n_max": {"const": 15}, "nullity": {"const": 0}, "order": {"const": 4}, "q_numerator_total_degree": {"const": 8}, "rank": {"const": 305}, "unknowns": {"const": 305}}, "required": ["order", "a_total_degree", "q_numerator_total_degree", "n_max", "equations", "unknowns", "rank", "nullity"], "type": "object"}
+      },
+      "required": ["orders", "a_total_degree_max", "q_numerator_total_degree_max", "stage_count", "search_class", "relation", "denominator_derivation", "q_denominator", "strongest_frontier", "result_sha256"],
+      "type": "object"
+    },
+    "target_lock": {"additionalProperties": false, "properties": {"finite_evidence_theorem_effect": {"const": "NONE"}, "normalized_zero_form": {"type": "string"}, "t1top_substitution_forbidden": {"const": true}}, "required": ["normalized_zero_form", "t1top_substitution_forbidden", "finite_evidence_theorem_effect"], "type": "object"}
+  },
+  "required": ["$schema", "schema_version", "operation", "fixture", "authority", "target_lock", "parameter_lift", "search_execution", "disposition", "nonclaims"],
+  "title": "OZ-RT-BZ-T3-003 record",
+  "type": "object"
+}
