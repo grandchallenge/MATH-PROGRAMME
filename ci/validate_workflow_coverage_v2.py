@@ -5,6 +5,7 @@ v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "cmdg-nat-concordance.yml",
     "cmdg-euclid-bridge.yml",
     "cmdg-vertical-spine-v0.yml",
+    "cmdg-condensed-cm1.yml",
 }
 
 ROOT = v3.ROOT

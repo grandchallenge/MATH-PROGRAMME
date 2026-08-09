@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0.0",
+  "operation_id": "CMDG-CONDENSED-CM1-001",
+  "issue": "MATH-PROGRAMME#330",
+  "protected_baseline": "9d305f836a208c987cd351bc22b899d39c6fc472",
+  "protected_baseline_tree": "4f2fb47171a10e66cb4ec5841fdf3098b9a1fcb2",
+  "predecessor_disposition": "CMDG_VERTICAL_SPINE_V0_001_PROTECTED_CLOSED",
+  "environment": {
+    "lean_toolchain": "leanprover/lean4:v4.33.0-rc1",
+    "lean_commit": "62eed1db4d67327ec8120be05f1a1b0847d74561",
+    "toolchain_blob_sha1": "fd85b262bf1c734663aa8292b0101f672168788f",
+    "lake_manifest_blob_sha1": "9e478e09f622406970dc9613f6cf323ade82f787",
+    "mathlib_repository": "leanprover-community/mathlib4",
+    "mathlib_commit": "79d0395a1825a6264ad5d269e35e60537518955e"
+  },
+  "protected_v0": {
+    "operation": "CMDG-VERTICAL-SPINE-V0-001",
+    "issue": "MATH-PROGRAMME#323",
+    "pull_request": "MATH-PROGRAMME#324",
+    "merge_commit": "9d305f836a208c987cd351bc22b899d39c6fc472",
+    "merge_tree": "4f2fb47171a10e66cb4ec5841fdf3098b9a1fcb2",
+    "terminal_disposition": "CMDG_VERTICAL_SPINE_V0_001_PROTECTED_CLOSED",
+    "record_ref": "governance/cmdg_vertical_spine_v0_001.json",
+    "record_blob_sha1": "8192f82b64de901d4f980b0981127244a1fa531d",
+    "nodes_ref": "fixtures/cmdg/vertical_spine_v0_001/nodes.json",
+    "nodes_blob_sha1": "77cd1b6a9aab8dcb098b11421a1d4c7b848d6623",
+    "edges_ref": "fixtures/cmdg/vertical_spine_v0_001/edges.json",
+    "edges_blob_sha1": "71d698f7e5896a35b7dcf2c5e5d4e72358a458fa",
+    "formal_probe_ref": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGVerticalSpineV0.lean",
+    "formal_probe_blob_sha1": "46fac24748c11593a839a066dc0fde00648838ea",
+    "terminal_node": "CMDG:V0:DISCRETE_UNDERLYING_ADJUNCTION",
+    "authority": "PROTECTED_REUSE_NO_REDEFINITION"
+  },
+  "formal_target": {
+    "formal_model": "CondensedSet.{u} := Sheaf (coherentTopology CompHaus.{u}) (Type (u + 1))",
+    "formal_cardinality_policy": "NO_CARDINALITY_BOUND",
+    "formal_source_characterization": "CLOSER_TO_PYKNOTIC_OBJECTS",
+    "programme_mathematical_target": "Clausen–Scholze condensed sets with cardinality/smallness profile explicit.",
+    "concordance_status": "PARTIAL_INTERFACE_ONLY",
+    "concordance_gap": "The pinned mathlib definition omits cardinality bounds and manages universes instead; CM1 certifies the adjunction only in that exact formal model.",
+    "cm_scope": "CM1_DISCRETE_UNDERLYING_ADJUNCTION_ONLY",
+    "c04_status": "SATISFIED_FOR_CM1_INTERFACE_ONLY_NOT_CM2_PLUS"
+  },
+  "construction_lineage": {
+    "discrete": "Condensed.discrete",
+    "discrete_definition": "CategoryTheory.constantSheaf",
+    "underlying": "Condensed.underlying",
+    "underlying_definition": "CategoryTheory.sheafSections evaluated at CompHaus.of PUnit",
+    "terminal_point": "CompHaus.isTerminalPUnit",
+    "general_adjunction": "CategoryTheory.constantSheafAdj",
+    "cm1_adjunction": "Condensed.discreteUnderlyingAdj",
+    "hom_equivalence": "CategoryTheory.Adjunction.homEquiv"
+  },
+  "source_lineage": [
+    {"declaration": "CondensedSet", "path": "Mathlib/Condensed/Basic.lean", "git_blob_sha1": "926e02ac2875d912631dac221bca13990c7d9506"},
+    {"declaration": "CategoryTheory.sheafSections", "path": "Mathlib/CategoryTheory/Sites/Sheaf.lean", "git_blob_sha1": "d247c155dd0f59d8b63520b06795bed1fce6b1bc"},
+    {"declaration": "CategoryTheory.constantSheaf", "path": "Mathlib/CategoryTheory/Sites/ConstantSheaf.lean", "git_blob_sha1": "bc580cbb21f0458c7cae2f432310a7f27ee9192b"},
+    {"declaration": "CategoryTheory.constantSheafAdj", "path": "Mathlib/CategoryTheory/Sites/ConstantSheaf.lean", "git_blob_sha1": "bc580cbb21f0458c7cae2f432310a7f27ee9192b"},
+    {"declaration": "CompHaus.isTerminalPUnit", "path": "Mathlib/Topology/Category/CompHaus/Limits.lean", "git_blob_sha1": "908ec21388ee0a7d2d6dfdb9c62fbb564a09e41e"},
+    {"declaration": "Condensed.discrete", "path": "Mathlib/Condensed/Discrete/Basic.lean", "git_blob_sha1": "064c024b17326bd1bf33f932ca3292f1fe6fcf17"},
+    {"declaration": "Condensed.underlying", "path": "Mathlib/Condensed/Discrete/Basic.lean", "git_blob_sha1": "064c024b17326bd1bf33f932ca3292f1fe6fcf17"},
+    {"declaration": "Condensed.discreteUnderlyingAdj", "path": "Mathlib/Condensed/Discrete/Basic.lean", "git_blob_sha1": "064c024b17326bd1bf33f932ca3292f1fe6fcf17"},
+    {"declaration": "CategoryTheory.Adjunction.homEquiv", "path": "Mathlib/CategoryTheory/Adjunction/Basic.lean", "git_blob_sha1": "f0e132087a6b1ffa3b39f9dea236a59173e8ce9b"}
+  ],
+  "formal_evidence": {
+    "project_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+    "module": "CMDGCondensedCM1",
+    "source_ref": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean",
+    "root_declaration": "CMDG.CondensedCM1.cm1Adj",
+    "extractor_config_ref": "fixtures/cmdg/extractor_001/condensed_cm1.json",
+    "required_declarations": [
+      "CMDG.CondensedCM1.cm1Discrete",
+      "CMDG.CondensedCM1.cm1Underlying",
+      "CMDG.CondensedCM1.cm1Adj",
+      "CMDG.CondensedCM1.cm1HomEquiv",
+      "CMDG.CondensedCM1.cm1Unit",
+      "CMDG.CondensedCM1.cm1Counit"
+    ],
+    "evidence_strength": "CHECKED_ADJUNCTION_OBJECT_WITH_HOM_EQUIV_UNIT_COUNIT",
+    "triangle_law_authority": "CategoryTheory.Adjunction.left_triangle_components and right_triangle_components fields of the checked adjunction object",
+    "expected_axioms": ["Classical.choice", "Quot.sound", "propext"]
+  },
+  "graph": {
+    "node_fixture": "fixtures/cmdg/condensed_cm1_001/nodes.json",
+    "edge_fixture": "fixtures/cmdg/condensed_cm1_001/edges.json",
+    "semantic_edge_authority": "PROPOSED_PENDING_INDEPENDENT_EXACT_HEAD_REVIEW_AND_PROTECTED_ADMISSION",
+    "proof_implementation_provenance_authority": "OBSERVED_ONLY",
+    "graph_certified": false
+  },
+  "regression_anchors": {
+    "vertical_spine_v0": {"artifact_ref": "governance/cmdg_vertical_spine_v0_001.json", "workflow": ".github/workflows/cmdg-vertical-spine-v0.yml"},
+    "nat_concordance": {"artifact_ref": "governance/cmdg_nat_concordance_001.json", "workflow": ".github/workflows/cmdg-nat-concordance.yml"},
+    "euclid_bridge": {"artifact_ref": "governance/cmdg_euclid_bridge_001.json", "workflow": ".github/workflows/cmdg-euclid-bridge.yml"}
+  },
+  "claim_boundary": {
+    "cm1_adjunction_candidate": true,
+    "c04_cm1_interface_satisfied": true,
+    "full_clausen_scholze_concordance_conferred": false,
+    "discrete_fully_faithful_conferred": false,
+    "every_condensed_object_discrete_claim": false,
+    "cm2_or_stronger_conferred": false,
+    "global_dependency_completeness_claim": false,
+    "dependency_minimality_or_uniqueness_claim": false,
+    "graph_certified_conferred": false,
+    "c04_discharged_beyond_cm1": false,
+    "c05_discharged": false,
+    "c06_discharged": false,
+    "semantic_authority_conferred_by_artifact_alone": false,
+    "independent_review_required": true,
+    "protected_admission_required": true
+  },
+  "candidate_disposition": "CM1_CANDIDATE_PENDING_INDEPENDENT_REVIEW"
+}

@@ -1,0 +1,214 @@
+[
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.MODEL.V0",
+    "layer": "G_semantic",
+    "relation": "INTERPRETS",
+    "source": {"identity": "CMDG:CM1:FORMAL_CONDENSED_SET_MODEL", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:V0:CONDENSED_SET", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm1_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.DISCRETE.MODEL",
+    "layer": "G_semantic",
+    "relation": "REQUIRES_DEFINITION",
+    "source": {"identity": "CMDG:CM1:DISCRETE_FUNCTOR", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM1:FORMAL_CONDENSED_SET_MODEL", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm1_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.UNDERLYING.MODEL",
+    "layer": "G_semantic",
+    "relation": "REQUIRES_DEFINITION",
+    "source": {"identity": "CMDG:CM1:UNDERLYING_FUNCTOR", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM1:FORMAL_CONDENSED_SET_MODEL", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm1_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.UNDERLYING.TERMINAL",
+    "layer": "G_semantic",
+    "relation": "REQUIRES_DEFINITION",
+    "source": {"identity": "CMDG:CM1:UNDERLYING_FUNCTOR", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM1:TERMINAL_POINT", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm1_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.CONSTANT_ADJ.DISCRETE",
+    "layer": "G_semantic",
+    "relation": "REQUIRES_DEFINITION",
+    "source": {"identity": "CMDG:CM1:CONSTANT_SHEAF_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM1:DISCRETE_FUNCTOR", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm1_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.CONSTANT_ADJ.TERMINAL",
+    "layer": "G_semantic",
+    "relation": "REQUIRES_DEFINITION",
+    "source": {"identity": "CMDG:CM1:CONSTANT_SHEAF_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM1:TERMINAL_POINT", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm1_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.ADJ.DISCRETE",
+    "layer": "G_semantic",
+    "relation": "REQUIRES_DEFINITION",
+    "source": {"identity": "CMDG:CM1:DISCRETE_UNDERLYING_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM1:DISCRETE_FUNCTOR", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm1_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.ADJ.UNDERLYING",
+    "layer": "G_semantic",
+    "relation": "REQUIRES_DEFINITION",
+    "source": {"identity": "CMDG:CM1:DISCRETE_UNDERLYING_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM1:UNDERLYING_FUNCTOR", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm1_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.ADJ.CONSTANT_ADJ",
+    "layer": "G_semantic",
+    "relation": "USES_THEOREM",
+    "source": {"identity": "CMDG:CM1:DISCRETE_UNDERLYING_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM1:CONSTANT_SHEAF_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm1_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.ADJ.V0",
+    "layer": "G_semantic",
+    "relation": "INTERPRETS",
+    "source": {"identity": "CMDG:CM1:DISCRETE_UNDERLYING_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:V0:DISCRETE_UNDERLYING_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm1_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.PROOF.ADJ",
+    "layer": "G_proof",
+    "relation": "PROOF_USES_DECLARATION",
+    "source": {"identity": "CMDG:CM1:DISCRETE_UNDERLYING_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG.CondensedCM1.cm1Adj", "kind": "FORMAL_DECLARATION", "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean#CMDG.CondensedCM1.cm1Adj"},
+    "authority_state": "OBSERVED",
+    "evidence_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.PROOF.HOMEQUIV",
+    "layer": "G_proof",
+    "relation": "PROOF_USES_DECLARATION",
+    "source": {"identity": "CMDG:CM1:DISCRETE_UNDERLYING_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG.CondensedCM1.cm1HomEquiv", "kind": "FORMAL_DECLARATION", "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean#CMDG.CondensedCM1.cm1HomEquiv"},
+    "authority_state": "OBSERVED",
+    "evidence_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.PROOF.UNIT",
+    "layer": "G_proof",
+    "relation": "PROOF_USES_DECLARATION",
+    "source": {"identity": "CMDG:CM1:DISCRETE_UNDERLYING_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG.CondensedCM1.cm1Unit", "kind": "FORMAL_DECLARATION", "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean#CMDG.CondensedCM1.cm1Unit"},
+    "authority_state": "OBSERVED",
+    "evidence_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.PROOF.COUNIT",
+    "layer": "G_proof",
+    "relation": "PROOF_USES_DECLARATION",
+    "source": {"identity": "CMDG:CM1:DISCRETE_UNDERLYING_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG.CondensedCM1.cm1Counit", "kind": "FORMAL_DECLARATION", "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean#CMDG.CondensedCM1.cm1Counit"},
+    "authority_state": "OBSERVED",
+    "evidence_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.IMPORT.DISCRETE.CONSTANT_SHEAF",
+    "layer": "G_implementation",
+    "relation": "IMPLEMENTATION_IMPORT",
+    "source": {"identity": "Mathlib.Condensed.Discrete.Basic", "kind": "IMPLEMENTATION_ARTIFACT", "locator": "Mathlib/Condensed/Discrete/Basic.lean"},
+    "target": {"identity": "Mathlib.CategoryTheory.Sites.ConstantSheaf", "kind": "IMPLEMENTATION_ARTIFACT", "locator": "Mathlib/CategoryTheory/Sites/ConstantSheaf.lean"},
+    "authority_state": "OBSERVED"
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.IMPORT.DISCRETE.CONDENSED",
+    "layer": "G_implementation",
+    "relation": "IMPLEMENTATION_IMPORT",
+    "source": {"identity": "Mathlib.Condensed.Discrete.Basic", "kind": "IMPLEMENTATION_ARTIFACT", "locator": "Mathlib/Condensed/Discrete/Basic.lean"},
+    "target": {"identity": "Mathlib.Condensed.Basic", "kind": "IMPLEMENTATION_ARTIFACT", "locator": "Mathlib/Condensed/Basic.lean"},
+    "authority_state": "OBSERVED"
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.CITES.MODEL",
+    "layer": "G_provenance",
+    "relation": "CITES_SOURCE",
+    "source": {"identity": "CMDG:CM1:FORMAL_CONDENSED_SET_MODEL", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "mathlib4@79d0395a:Mathlib/Condensed/Basic.lean", "kind": "SOURCE", "locator": "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/Basic.lean"},
+    "authority_state": "OBSERVED"
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.CITES.DISCRETE",
+    "layer": "G_provenance",
+    "relation": "CITES_SOURCE",
+    "source": {"identity": "CMDG:CM1:DISCRETE_FUNCTOR", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "mathlib4@79d0395a:Mathlib/Condensed/Discrete/Basic.lean", "kind": "SOURCE", "locator": "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/Discrete/Basic.lean"},
+    "authority_state": "OBSERVED"
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.CITES.UNDERLYING",
+    "layer": "G_provenance",
+    "relation": "CITES_SOURCE",
+    "source": {"identity": "CMDG:CM1:UNDERLYING_FUNCTOR", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "mathlib4@79d0395a:Mathlib/Condensed/Discrete/Basic.lean", "kind": "SOURCE", "locator": "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/Discrete/Basic.lean"},
+    "authority_state": "OBSERVED"
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.CITES.TERMINAL",
+    "layer": "G_provenance",
+    "relation": "CITES_SOURCE",
+    "source": {"identity": "CMDG:CM1:TERMINAL_POINT", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "mathlib4@79d0395a:Mathlib/Topology/Category/CompHaus/Limits.lean", "kind": "SOURCE", "locator": "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Topology/Category/CompHaus/Limits.lean"},
+    "authority_state": "OBSERVED"
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.CITES.CONSTANT_ADJ",
+    "layer": "G_provenance",
+    "relation": "CITES_SOURCE",
+    "source": {"identity": "CMDG:CM1:CONSTANT_SHEAF_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "mathlib4@79d0395a:Mathlib/CategoryTheory/Sites/ConstantSheaf.lean", "kind": "SOURCE", "locator": "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Sites/ConstantSheaf.lean"},
+    "authority_state": "OBSERVED"
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM1.CITES.ADJ",
+    "layer": "G_provenance",
+    "relation": "CITES_SOURCE",
+    "source": {"identity": "CMDG:CM1:DISCRETE_UNDERLYING_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "mathlib4@79d0395a:Mathlib/Condensed/Discrete/Basic.lean", "kind": "SOURCE", "locator": "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/Discrete/Basic.lean"},
+    "authority_state": "OBSERVED"
+  }
+]
