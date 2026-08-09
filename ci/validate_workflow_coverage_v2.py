@@ -11,6 +11,7 @@ v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "cmdg-condensed-cm3.yml",
     "cmdg-solid-c05.yml",
     "cmdg-condensed-cm4.yml",
+    "cmdg-condensed-cm4-p2.yml",
 }
 
 ROOT = v3.ROOT
