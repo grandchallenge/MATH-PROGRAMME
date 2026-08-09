@@ -1,0 +1,68 @@
+name: CMDG condensed CM4 P2-D
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cmdg-condensed-cm4-p2-d-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  formal-audit:
+    name: Replay canonical measure-dual model
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Reject placeholders and P2-E authority
+        run: |
+          set -euo pipefail
+          F=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2D.lean
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F"; then
+            echo "P2-D fixture must contain neither sorry nor local axioms."
+            exit 1
+          fi
+          if grep -niE 'profiniteSolid.*≅|≅.*profiniteSolid|profiniteSolid.*Iso|Iso.*profiniteSolid' "$F"; then
+            echo "P2-D must not assert the separately governed P2-E equivalence."
+            exit 1
+          fi
+      - name: Set up pinned Lean and mathlib cache
+        id: lean-setup
+        continue-on-error: true
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Verify exact pinned dependencies
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          ML=".lake/packages/mathlib"
+          test "$(git -C "$ML" rev-parse HEAD)" = "79d0395a1825a6264ad5d269e35e60537518955e"
+          test "$(git -C "$ML" rev-parse HEAD^{tree})" = "d76f5e09b832a08949f6d8ad4fb80ce30527da64"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Sites/Monoidal.lean)" = "64b111b39f9f44dcab88a7fbe60411ef5008532c"
+          test "$(git -C "$ML" hash-object Mathlib/Algebra/Category/ModuleCat/Monoidal/Closed.lean)" = "119610224bb253a976b03764f4e24fd3f662dc6c"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Discrete/Module.lean)" = "b3ba358aa6b01b2de4cfedf6480ac22e863241d3"
+          grep -Fq 'lemma isSheaf_functorEnrichedHom' "$ML/Mathlib/CategoryTheory/Sites/Monoidal.lean"
+          grep -Fq 'instance : MonoidalClosed (ModuleCat' "$ML/Mathlib/Algebra/Category/ModuleCat/Monoidal/Closed.lean"
+      - name: Build and replay P2-D fixture
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        env:
+          LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}
+        run: |
+          set -euo pipefail
+          echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+          lake build CMDGCondensedCM4P2D
+          lake env lean CMDGCondensedCM4P2D.lean
