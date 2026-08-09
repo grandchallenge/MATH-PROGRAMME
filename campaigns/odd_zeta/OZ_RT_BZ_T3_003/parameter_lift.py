@@ -1,7 +1,7 @@
 from __future__ import annotations
 from fractions import Fraction as Q
 from math import factorial
-import target
+import t3_003_target as target
 
 def cumulant_pochhammer(length: int, offset: int, order: int) -> Q:
     if length < 0 or offset < 0 or order < 1:
