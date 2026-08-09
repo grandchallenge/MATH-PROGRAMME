@@ -186,34 +186,52 @@ def matrix_row(n: int, k: int, l: int, qdeg: int, reverse_basis: bool = False) -
     return row
 
 
+def classify_affine(rank_coeff: int, rank_aug: int, unknowns: int) -> tuple[str, str]:
+    if rank_coeff == unknowns and rank_aug == unknowns + 1:
+        return (
+            "EXACT_AFFINE_INCONSISTENCY",
+            "FULL_COLUMN_RANK_COEFFICIENT_MATRIX_AND_ONE_HIGHER_AUGMENTED_RANK_MOD_P_IMPLIES_NO_RATIONAL_SOLUTION",
+        )
+    if rank_aug == rank_coeff:
+        return (
+            "MODULAR_CANDIDATE_SPACE_REMAINS",
+            "EQUAL_MODULAR_RANKS_ARE_DISCOVERY_ONLY_AND_DO_NOT_ESTABLISH_RATIONAL_CONSISTENCY",
+        )
+    return (
+        "INCONCLUSIVE_MODULAR_RANK_RELATION",
+        "MODULAR_RANK_GAP_WITHOUT_FULL_COLUMN_RANK_DOES_NOT_CERTIFY_RATIONAL_INCONSISTENCY",
+    )
+
+
 def stage(qdeg: int, nmax: int, exe: Path, tmp: Path) -> dict:
     unknowns = len(MONOMS) * len(mon3(qdeg))
     g = grid(nmax)
     need = unknowns + 1
     if len(g) < need:
         raise AssertionError("insufficient affine inconsistency witness rows")
-    witness = g[:need]
-    rows = [matrix_row(n, k, l, qdeg) for n, k, l in witness]
-    target = [base.Fm(n, k, l) for n, k, l in witness]
-    rank_coeff = rank_rows(rows, exe, tmp, f"q{qdeg}_coeff")
-    rank_aug = rank_rows(rows, exe, tmp, f"q{qdeg}_aug", target)
-    if rank_coeff == unknowns and rank_aug == unknowns + 1:
-        classification = "EXACT_AFFINE_INCONSISTENCY"
-        certificate = "FULL_COLUMN_RANK_COEFFICIENT_MATRIX_AND_ONE_HIGHER_AUGMENTED_RANK_MOD_P_IMPLIES_NO_RATIONAL_SOLUTION"
-    elif rank_aug == rank_coeff:
-        classification = "MODULAR_CANDIDATE_SPACE_REMAINS"
-        certificate = "NO_NEGATIVE_CERTIFICATE"
-    else:
-        classification = "INCONCLUSIVE_MODULAR_RANK_RELATION"
-        certificate = "NO_RATIONAL_CONCLUSION_WITHOUT_ADDITIONAL_WITNESS"
+
+    rows = [matrix_row(n, k, l, qdeg) for n, k, l in g]
+    target = [base.Fm(n, k, l) for n, k, l in g]
+
+    witness_rows = rows[:need]
+    witness_target = target[:need]
+    witness_coeff = rank_rows(witness_rows, exe, tmp, f"q{qdeg}_witness_coeff")
+    witness_aug = rank_rows(witness_rows, exe, tmp, f"q{qdeg}_witness_aug", witness_target)
+
+    full_coeff = rank_rows(rows, exe, tmp, f"q{qdeg}_full_coeff")
+    full_aug = rank_rows(rows, exe, tmp, f"q{qdeg}_full_aug", target)
+    classification, certificate = classify_affine(full_coeff, full_aug, unknowns)
+
     return {
         "q_coefficient_degree": qdeg,
         "n_max": nmax,
         "full_grid_rows": len(g),
         "rank_witness_rows": need,
         "unknowns": unknowns,
-        "coefficient_rank": rank_coeff,
-        "augmented_rank": rank_aug,
+        "witness_coefficient_rank": witness_coeff,
+        "witness_augmented_rank": witness_aug,
+        "full_grid_coefficient_rank": full_coeff,
+        "full_grid_augmented_rank": full_aug,
         "classification": classification,
         "rank_certificate": certificate,
     }
@@ -280,7 +298,8 @@ def compute_result() -> dict:
         },
         "stages": stages,
         "producer_witness_selection": "first unknowns+1 rows of the lexicographic finite-square grid",
-        "negative_certificate_condition": "coefficient rank equals unknown count and augmented rank equals unknown count plus one modulo p",
+        "candidate_survival_rule": "only full-grid coefficient/augmented rank equality retains a modular candidate space; this remains discovery only",
+        "negative_certificate_condition": "full-grid coefficient rank equals unknown count and full-grid augmented rank equals unknown count plus one modulo p",
         "terminal": terminal,
         "proof_effect": "NONE",
         "promotion_effect": "NONE",
@@ -290,6 +309,7 @@ def compute_result() -> dict:
         "nonclaims": [
             "T3 is not proved unless an exact rational divergence certificate is reconstructed and boundary telescoping is verified",
             "T3 is not refuted",
+            "modular candidate survival does not establish rational consistency",
             "bounded symmetric 2D divergence exhaustion is not evidence that T3 is false",
             "T1-top is not substituted for T3",
             "DEPTH and Sharp-12 are unchanged",
