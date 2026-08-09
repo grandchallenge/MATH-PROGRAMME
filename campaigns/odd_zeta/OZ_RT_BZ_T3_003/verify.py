@@ -4,7 +4,7 @@ import json
 from fractions import Fraction as Q
 from math import comb, factorial
 from pathlib import Path
-import target
+import t3_003_target as target
 
 HERE=Path(__file__).resolve().parent
 RESULT=HERE/'SEARCH_RESULT.json'
