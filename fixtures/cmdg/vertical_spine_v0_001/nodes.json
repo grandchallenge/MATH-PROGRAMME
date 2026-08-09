@@ -1,0 +1,135 @@
+[
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:V0:LEAN_SUBSTRATE",
+    "node_type": "Theory",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Lean dependent type theoretic formal substrate",
+    "description": "Pinned Lean 4 proof substrate used by the existing CMDG NAT concordance and the V0 formal-library evidence.",
+    "provenance_refs": [
+      "leanprover/lean4@62eed1db4d67327ec8120be05f1a1b0847d74561",
+      "fixtures/formal/CMDG-NAT-CONCORDANCE-001/lean-toolchain"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:V0:FOL_SEMANTICS",
+    "node_type": "Theory",
+    "engagement_mode": "REUSED",
+    "canonical_label": "First-order syntax and semantics interface",
+    "description": "Pinned mathlib first-order semantics surface; represented as a foundational branch and not asserted as a semantic prerequisite of Lean Nat.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/ModelTheory/Semantics.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:V0:ALGEBRA_RING_INTERFACE",
+    "node_type": "Structure",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Bundled semiring and ring category interface",
+    "description": "Pinned mathlib structural algebra interface containing SemiRingCat and RingCat; no claim that the NAT concordance already supplies an integer or ring concordance.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Algebra/Category/Ring/Basic.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:V0:CATEGORY",
+    "node_type": "Structure",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Category interface",
+    "description": "Pinned mathlib Category structure and categorical composition laws.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Category/Basic.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:V0:TOPOLOGICAL_SPACES",
+    "node_type": "Structure",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Topological spaces as TopCat",
+    "description": "Bundled category of topological spaces and continuous maps.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Topology/Category/TopCat/Basic.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:V0:COMPACT_HAUSDORFF",
+    "node_type": "Structure",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Compact Hausdorff spaces as CompHaus",
+    "description": "Full subcategory of TopCat consisting of compact Hausdorff spaces.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Topology/Category/CompHaus/Basic.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:V0:PROFINITE",
+    "node_type": "Structure",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Profinite spaces",
+    "description": "Compact Hausdorff totally disconnected spaces; retained as a structural specialization and not substituted for the CompHaus site used by Condensed.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Topology/Category/Profinite/Basic.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:V0:GROTHENDIECK_TOPOLOGY",
+    "node_type": "Structure",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Grothendieck topology",
+    "description": "Grothendieck topology structure on a category, with covering sieves and closure axioms.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Sites/Grothendieck.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:V0:COHERENT_TOPOLOGY_COMPHAUS",
+    "node_type": "Construction",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Coherent Grothendieck topology on CompHaus",
+    "description": "The coherent topology on CompHaus used by the pinned mathlib Condensed definition.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/Basic.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:V0:SHEAF",
+    "node_type": "Definition",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Category-valued sheaf on a Grothendieck site",
+    "description": "Pinned mathlib sheaf interface over a Grothendieck topology.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Sites/Sheaf.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:V0:CONDENSED_SET",
+    "node_type": "Definition",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "V0 condensed-set interface",
+    "description": "Pinned mathlib CondensedSet interface: Type (u+1)-valued sheaves on CompHaus with the coherent topology. This is only concordant with the Programme's Clausen–Scholze target because the pinned library intentionally omits cardinality bounds and describes the result as closer to pyknotic objects.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/Basic.lean"
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:V0:DISCRETE_UNDERLYING_ADJUNCTION",
+    "node_type": "Construction",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "Condensed discrete/underlying adjunction interface",
+    "description": "Pinned discrete constant-sheaf functor, underlying evaluation-at-a-point functor, and their adjunction, interpreted only inside the V0 pyknotic-like formal target.",
+    "provenance_refs": [
+      "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/Discrete/Basic.lean"
+    ]
+  }
+]
