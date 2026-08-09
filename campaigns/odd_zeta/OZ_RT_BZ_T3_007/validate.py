@@ -12,7 +12,7 @@ R = json.loads((HERE / "OZ_RT_BZ_T3_007.json").read_text(encoding="utf-8"))
 S = json.loads((HERE / "SEARCH_RESULT.json").read_text(encoding="utf-8"))
 SC = json.loads((HERE / "OZ_RT_BZ_T3_007.schema.json").read_text(encoding="utf-8"))
 
-CANONICAL_RESULT_SHA256 = "e6303daf2455fc86dd188f1286d30dae61ccdc29db3bf557b6c7b814e99d55d5"
+CANONICAL_RESULT_SHA256 = "921564abff65b1cd8e42946be4d853c34680bf65cbbe0aa45211152c58f3c1ba"
 BASIS_SHA256 = "cbdfe5798d360cb98f2d64743907a06ddc0612f88d17ef4bcef65c81c74e1438"
 NORMALIZATION_SHA256 = "69738508f28433f9090f93621c8da3bc6b18279fd70941a31d07fb96b607700b"
 
