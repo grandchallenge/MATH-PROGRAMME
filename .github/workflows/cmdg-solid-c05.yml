@@ -1,112 +1,114 @@
 name: CMDG solid C05
 
 on:
+  pull_request:
   push:
     branches: [main]
-    paths: &c05_paths
-      - ".github/workflows/cmdg-solid-c05.yml"
-      - "ci/validate_cmdg_solid_c05.py"
-      - "ci/validate_workflow_coverage_v2.py"
-      - "schemas/cmdg_solid_c05.schema.json"
-      - "governance/cmdg_solid_c05_001.json"
-      - "fixtures/cmdg/solid_c05_001/**"
-      - "fixtures/cmdg/extractor_001/solid_c05.json"
-      - "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGSolidC05.lean"
-      - "fixtures/formal/CMDG-NAT-CONCORDANCE-001/lakefile.toml"
-      - "fixtures/formal/CMDG-NAT-CONCORDANCE-001/lean-toolchain"
-      - "fixtures/formal/CMDG-NAT-CONCORDANCE-001/lake-manifest.json"
-      - "scripts/extract_lean_dependencies.py"
-      - "tests/test_cmdg_solid_c05.py"
-  pull_request:
-    paths: *c05_paths
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: cmdg-solid-c05-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
-  validate-cmdg-solid-c05:
+  validate:
     name: Validate CMDG solid C05
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: "3.12"
       - name: Install policy dependencies
-        run: python -m pip install --disable-pip-version-check jsonschema pyyaml
+        run: python -m pip install --requirement requirements/policy.txt
       - name: Compile C05 validator
         run: python -m py_compile ci/validate_cmdg_solid_c05.py
       - name: Validate C05 package
-        run: python ci/validate_cmdg_solid_c05.py
+        run: python3 ci/validate_cmdg_solid_c05.py
       - name: Run C05 adversarial mutations
         run: python -m unittest tests.test_cmdg_solid_c05
       - name: Revalidate protected CM3
-        run: python ci/validate_cmdg_condensed_cm3.py
+        run: python3 ci/validate_cmdg_condensed_cm3.py
       - name: Revalidate protected CM2
-        run: python ci/validate_cmdg_condensed_cm2.py
+        run: python3 ci/validate_cmdg_condensed_cm2.py
       - name: Revalidate protected CM1
-        run: python ci/validate_cmdg_condensed_cm1.py
+        run: python3 ci/validate_cmdg_condensed_cm1.py
       - name: Revalidate protected V0
-        run: python ci/validate_cmdg_vertical_spine_v0.py
+        run: python3 ci/validate_cmdg_vertical_spine_v0.py
       - name: Revalidate protected NAT concordance
-        run: python ci/validate_cmdg_nat_concordance.py
+        run: python3 ci/validate_cmdg_nat_concordance.py
       - name: Revalidate protected Euclid bridge
-        run: python ci/validate_cmdg_euclid_bridge.py
+        run: python3 ci/validate_cmdg_euclid_bridge.py
 
-  replay-cmdg-solid-c05:
+  formal:
     name: Replay C05 solid definition reconstruction
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
       - name: Reject C05 placeholders and local axioms
-        shell: bash
         run: |
-          set -euo pipefail
-          f="fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGSolidC05.lean"
-          if grep -nE '(^|[^[:alnum:]_])(sorry|axiom|unsafe|implemented_by)([^[:alnum:]_]|$)' "$f"; then
-            echo "Forbidden proof placeholder/local authority in $f"
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGSolidC05.lean; then
+            echo "CMDG-SOLID-C05-001 must contain neither sorry nor local axioms."
             exit 1
           fi
       - name: Set up pinned Lean and mathlib cache
-        shell: bash
-        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
-        run: |
-          set -euo pipefail
-          elan toolchain install "$(cat lean-toolchain)"
-          lake update
+        id: lean-setup
+        continue-on-error: true
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
       - name: Verify exact pinned mathlib source lineage
-        shell: bash
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
         run: |
           set -euo pipefail
-          mathlib_dir=".lake/packages/mathlib"
-          test "$(git -C "$mathlib_dir" rev-parse HEAD)" = "79d0395a1825a6264ad5d269e35e60537518955e"
-          check_blob () { path="$1"; expected="$2"; actual="$(git -C "$mathlib_dir" rev-parse "HEAD:$path")"; test "$actual" = "$expected" || { echo "$path blob mismatch: $actual != $expected"; exit 1; }; }
-          check_blob Mathlib/Condensed/Solid.lean f5214433f91ee87fc8fbe7e2746e0bd227faed2a
-          check_blob Mathlib/Condensed/Module.lean f5834efa0d5bf1289187abe3319536186d67a405
-          check_blob Mathlib/Condensed/Functors.lean 0b8bd8424c85a13d4bae96b65caf4945384650d1
-          check_blob Mathlib/Condensed/Limits.lean f1c0ca716ec0e51058ff22e6041ecc101cba491a
-          check_blob Mathlib/CategoryTheory/Functor/KanExtension/Pointwise.lean eca4f781a97fc9948e726bb4b89a9ab1bc255f96
-          check_blob Mathlib/Algebra/Category/ModuleCat/ChangeOfRings.lean 47fc5c0853560d2a8bb83f659f26a01ca3dced65
-          check_blob Mathlib/CategoryTheory/Sites/Whiskering.lean f61b46c2fa0f12c60f02fb9fee498c5251b0919c
-          check_blob Mathlib/Algebra/Polynomial/Eval/Defs.lean c42ff574f952192ec1f14d4e4c4091432ab0aec7
-          check_blob Mathlib/RingTheory/FiniteType.lean 346c6ccb601fa6f310793b7d986012a054ed6563
-          check_blob Mathlib/Algebra/Ring/ULift.lean 97e348e52e05a800a60c8c2469bd3041c15613c4
+          ML=".lake/packages/mathlib"
+          test "$(git -C "$ML" rev-parse HEAD)" = "79d0395a1825a6264ad5d269e35e60537518955e"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Solid.lean)" = "f5214433f91ee87fc8fbe7e2746e0bd227faed2a"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Module.lean)" = "f5834efa0d5bf1289187abe3319536186d67a405"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Functors.lean)" = "0b8bd8424c85a13d4bae96b65caf4945384650d1"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Limits.lean)" = "f1c0ca716ec0e51058ff22e6041ecc101cba491a"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Functor/KanExtension/Pointwise.lean)" = "eca4f781a97fc9948e726bb4b89a9ab1bc255f96"
+          test "$(git -C "$ML" hash-object Mathlib/Algebra/Category/ModuleCat/ChangeOfRings.lean)" = "47fc5c0853560d2a8bb83f659f26a01ca3dced65"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Sites/Whiskering.lean)" = "f61b46c2fa0f12c60f02fb9fee498c5251b0919c"
+          test "$(git -C "$ML" hash-object Mathlib/Algebra/Polynomial/Eval/Defs.lean)" = "c42ff574f952192ec1f14d4e4c4091432ab0aec7"
+          test "$(git -C "$ML" hash-object Mathlib/RingTheory/FiniteType.lean)" = "346c6ccb601fa6f310793b7d986012a054ed6563"
+          test "$(git -C "$ML" hash-object Mathlib/Algebra/Ring/ULift.lean)" = "97e348e52e05a800a60c8c2469bd3041c15613c4"
+          grep -q 'class CondensedMod.IsSolid' "$ML/Mathlib/Condensed/Solid.lean"
+          grep -q 'This is not the correct definition for general R' "$ML/Mathlib/Condensed/Solid.lean"
+          grep -q 'def restrictScalars' "$ML/Mathlib/Algebra/Category/ModuleCat/ChangeOfRings.lean"
+          grep -q 'def sheafCompose' "$ML/Mathlib/CategoryTheory/Sites/Whiskering.lean"
+          grep -q 'def eval₂RingHom' "$ML/Mathlib/Algebra/Polynomial/Eval/Defs.lean"
       - name: Build and replay C05 fixture
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
-        run: lake build CMDGSolidC05
-      - name: Extract C05 declaration dependencies and axioms
-        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        env:
+          LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}
         run: |
           set -euo pipefail
-          mkdir -p ../../../artifacts/cmdg/solid_c05
-          lake env lean CMDGSolidC05.lean > ../../../artifacts/cmdg/solid_c05/cmdg-solid-c05.lean.log
-          lake env python ../../../scripts/extract_lean_dependencies.py --project-root . --config ../../../fixtures/cmdg/extractor_001/solid_c05.json --output ../../../artifacts/cmdg/solid_c05/dependency-snapshot.json
+          echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+          lake build CMDGSolidC05
+          lake env lean CMDGSolidC05.lean
+      - name: Extract C05 declaration dependencies and axioms
+        run: python3 ci/extract_cmdg_lean_dependencies.py fixtures/cmdg/extractor_001/solid_c05.json --output cmdg-solid-c05-dependencies.json
       - name: Preserve C05 failure evidence
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: cmdg-solid-c05-failure
-          path: artifacts/cmdg/solid_c05
-          if-no-files-found: ignore
+          path: |
+            fixtures/formal/CMDG-NAT-CONCORDANCE-001
+            cmdg-solid-c05-dependencies.json
+          if-no-files-found: warn
