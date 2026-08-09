@@ -1,0 +1,83 @@
+[
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM2:FORMAL_CONDENSED_SET_MODEL",
+    "node_type": "Model",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "Pinned no-cardinality-bound condensed-set formal model",
+    "description": "The exact CM1-protected mathlib CondensedSet model reused for CM2. Concordance remains local because the pinned model omits cardinality bounds and is described upstream as closer to pyknotic objects.",
+    "provenance_refs": ["governance/cmdg_condensed_cm1_001.json", "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/Condensed/Basic.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM2:CARTESIAN_MONOIDAL_STRUCTURE",
+    "node_type": "Structure",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Chosen Cartesian monoidal structure on condensed sets",
+    "description": "The chosen finite-product structure on the sheaf category, with tensor product certified as a binary product.",
+    "provenance_refs": ["leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Sites/CartesianMonoidal.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM2:SHEAFIFICATION_REFLECTION",
+    "node_type": "Construction",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Left-exact reflective sheafification",
+    "description": "The HasSheafify contract and reflective sheafification used by the generic sheaf Cartesian-closed construction.",
+    "provenance_refs": ["leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Sites/Sheafification.lean", "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Sites/LeftExact.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM2:GENERIC_SHEAF_CARTESIAN_CLOSED",
+    "node_type": "Theorem",
+    "engagement_mode": "REUSED",
+    "canonical_label": "Generic Cartesian-closed construction for sheaf categories",
+    "description": "The pinned generic MonoidalClosed instance for sheaves, constructed from reflective sheafification, chosen Cartesian products, and closedness of the presheaf category.",
+    "provenance_refs": ["leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Sites/CartesianClosed.lean", "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Monoidal/Closed/Ideal.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM2:ARBITRARY_CONDENSED_OBJECT",
+    "node_type": "Definition",
+    "engagement_mode": "RECONSTRUCTED",
+    "canonical_label": "Arbitrary condensed object X",
+    "description": "The universally quantified object parameter used to expose closedness for every object in the pinned condensed-set category.",
+    "provenance_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM2:TENSOR_LEFT_PRODUCT_FUNCTOR",
+    "node_type": "Construction",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "Cartesian product with X",
+    "description": "The functor tensorLeft X, interpreted as X times minus under the chosen CartesianMonoidalCategory structure, with a binary-product witness recorded separately.",
+    "provenance_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean", "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Monoidal/Cartesian/Basic.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM2:INTERNAL_HOM_RIGHT_ADJOINT",
+    "node_type": "Construction",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "Selected internal-hom right adjoint",
+    "description": "The right adjoint selected by the Closed X structure. No pointwise-function-space identification is asserted.",
+    "provenance_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean", "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Monoidal/Closed/Basic.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM2:CARTESIAN_CLOSED_ADJUNCTION",
+    "node_type": "Theorem",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "CM2 Cartesian-closed adjunction",
+    "description": "For arbitrary condensed X, the checked adjunction between product-with-X and the selected internal-hom right adjoint.",
+    "provenance_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean", "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Monoidal/Closed/Basic.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "node_id": "CMDG:CM2:EXPONENTIAL_UNIVERSAL_INTERFACE",
+    "node_type": "Theorem",
+    "engagement_mode": "CONCORDANT",
+    "canonical_label": "Exponential universal-property interface",
+    "description": "The Hom-equivalence, unit, and counit/evaluation induced by the checked adjunction, serving as the machine-checked universal-property interface for exponentials.",
+    "provenance_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean"]
+  }
+]
