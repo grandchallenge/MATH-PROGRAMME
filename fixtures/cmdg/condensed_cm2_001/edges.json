@@ -1,0 +1,227 @@
+[
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.MODEL.CM1",
+    "layer": "G_semantic",
+    "relation": "INTERPRETS",
+    "source": {"identity": "CMDG:CM2:FORMAL_CONDENSED_SET_MODEL", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM1:FORMAL_CONDENSED_SET_MODEL", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm2_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.CARTESIAN.MODEL",
+    "layer": "G_semantic",
+    "relation": "REQUIRES_DEFINITION",
+    "source": {"identity": "CMDG:CM2:CARTESIAN_MONOIDAL_STRUCTURE", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM2:FORMAL_CONDENSED_SET_MODEL", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm2_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.SHEAFIFY.MODEL",
+    "layer": "G_semantic",
+    "relation": "REQUIRES_DEFINITION",
+    "source": {"identity": "CMDG:CM2:SHEAFIFICATION_REFLECTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM2:FORMAL_CONDENSED_SET_MODEL", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm2_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.GENERIC.CARTESIAN",
+    "layer": "G_semantic",
+    "relation": "USES_THEOREM",
+    "source": {"identity": "CMDG:CM2:GENERIC_SHEAF_CARTESIAN_CLOSED", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM2:CARTESIAN_MONOIDAL_STRUCTURE", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm2_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.GENERIC.SHEAFIFY",
+    "layer": "G_semantic",
+    "relation": "USES_THEOREM",
+    "source": {"identity": "CMDG:CM2:GENERIC_SHEAF_CARTESIAN_CLOSED", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM2:SHEAFIFICATION_REFLECTION", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm2_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.TENSOR.OBJECT",
+    "layer": "G_semantic",
+    "relation": "REQUIRES_DEFINITION",
+    "source": {"identity": "CMDG:CM2:TENSOR_LEFT_PRODUCT_FUNCTOR", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM2:ARBITRARY_CONDENSED_OBJECT", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm2_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.TENSOR.CARTESIAN",
+    "layer": "G_semantic",
+    "relation": "INTERPRETS",
+    "source": {"identity": "CMDG:CM2:TENSOR_LEFT_PRODUCT_FUNCTOR", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM2:CARTESIAN_MONOIDAL_STRUCTURE", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm2_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.RIGHTADJ.GENERIC",
+    "layer": "G_semantic",
+    "relation": "INSTANTIATES",
+    "source": {"identity": "CMDG:CM2:INTERNAL_HOM_RIGHT_ADJOINT", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM2:GENERIC_SHEAF_CARTESIAN_CLOSED", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm2_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.ADJ.TENSOR",
+    "layer": "G_semantic",
+    "relation": "REQUIRES_DEFINITION",
+    "source": {"identity": "CMDG:CM2:CARTESIAN_CLOSED_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM2:TENSOR_LEFT_PRODUCT_FUNCTOR", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm2_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.ADJ.RIGHTADJ",
+    "layer": "G_semantic",
+    "relation": "REQUIRES_DEFINITION",
+    "source": {"identity": "CMDG:CM2:CARTESIAN_CLOSED_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM2:INTERNAL_HOM_RIGHT_ADJOINT", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm2_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.UNIVERSAL.ADJ",
+    "layer": "G_semantic",
+    "relation": "USES_THEOREM",
+    "source": {"identity": "CMDG:CM2:EXPONENTIAL_UNIVERSAL_INTERFACE", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG:CM2:CARTESIAN_CLOSED_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "authority_state": "PROPOSED",
+    "proposal_origin": {"origin": "HUMAN", "artifact_ref": "governance/cmdg_condensed_cm2_001.json"}
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.PROOF.PRODUCT",
+    "layer": "G_proof",
+    "relation": "PROOF_USES_DECLARATION",
+    "source": {"identity": "CMDG:CM2:CARTESIAN_MONOIDAL_STRUCTURE", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG.CondensedCM2.cm2ProductWitness", "kind": "FORMAL_DECLARATION", "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean#CMDG.CondensedCM2.cm2ProductWitness"},
+    "authority_state": "OBSERVED",
+    "evidence_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.PROOF.CLOSED",
+    "layer": "G_proof",
+    "relation": "PROOF_USES_DECLARATION",
+    "source": {"identity": "CMDG:CM2:GENERIC_SHEAF_CARTESIAN_CLOSED", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG.CondensedCM2.cm2Closed", "kind": "FORMAL_DECLARATION", "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean#CMDG.CondensedCM2.cm2Closed"},
+    "authority_state": "OBSERVED",
+    "evidence_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.PROOF.RIGHTADJ",
+    "layer": "G_proof",
+    "relation": "PROOF_USES_DECLARATION",
+    "source": {"identity": "CMDG:CM2:INTERNAL_HOM_RIGHT_ADJOINT", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG.CondensedCM2.cm2RightAdj", "kind": "FORMAL_DECLARATION", "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean#CMDG.CondensedCM2.cm2RightAdj"},
+    "authority_state": "OBSERVED",
+    "evidence_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.PROOF.ADJ",
+    "layer": "G_proof",
+    "relation": "PROOF_USES_DECLARATION",
+    "source": {"identity": "CMDG:CM2:CARTESIAN_CLOSED_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG.CondensedCM2.cm2Adj", "kind": "FORMAL_DECLARATION", "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean#CMDG.CondensedCM2.cm2Adj"},
+    "authority_state": "OBSERVED",
+    "evidence_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.PROOF.HOMEQUIV",
+    "layer": "G_proof",
+    "relation": "PROOF_USES_DECLARATION",
+    "source": {"identity": "CMDG:CM2:EXPONENTIAL_UNIVERSAL_INTERFACE", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG.CondensedCM2.cm2HomEquiv", "kind": "FORMAL_DECLARATION", "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean#CMDG.CondensedCM2.cm2HomEquiv"},
+    "authority_state": "OBSERVED",
+    "evidence_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.PROOF.UNIT",
+    "layer": "G_proof",
+    "relation": "PROOF_USES_DECLARATION",
+    "source": {"identity": "CMDG:CM2:EXPONENTIAL_UNIVERSAL_INTERFACE", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG.CondensedCM2.cm2Unit", "kind": "FORMAL_DECLARATION", "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean#CMDG.CondensedCM2.cm2Unit"},
+    "authority_state": "OBSERVED",
+    "evidence_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.PROOF.COUNIT",
+    "layer": "G_proof",
+    "relation": "PROOF_USES_DECLARATION",
+    "source": {"identity": "CMDG:CM2:EXPONENTIAL_UNIVERSAL_INTERFACE", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "CMDG.CondensedCM2.cm2Counit", "kind": "FORMAL_DECLARATION", "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean#CMDG.CondensedCM2.cm2Counit"},
+    "authority_state": "OBSERVED",
+    "evidence_refs": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean"]
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.IMPORT.SHIM.GENERIC",
+    "layer": "G_implementation",
+    "relation": "IMPLEMENTATION_IMPORT",
+    "source": {"identity": "Mathlib.Condensed.CartesianClosed", "kind": "IMPLEMENTATION_ARTIFACT", "locator": "Mathlib/Condensed/CartesianClosed.lean"},
+    "target": {"identity": "Mathlib.CategoryTheory.Sites.CartesianClosed", "kind": "IMPLEMENTATION_ARTIFACT", "locator": "Mathlib/CategoryTheory/Sites/CartesianClosed.lean"},
+    "authority_state": "OBSERVED"
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.IMPORT.GENERIC.CARTESIAN",
+    "layer": "G_implementation",
+    "relation": "IMPLEMENTATION_IMPORT",
+    "source": {"identity": "Mathlib.CategoryTheory.Sites.CartesianClosed", "kind": "IMPLEMENTATION_ARTIFACT", "locator": "Mathlib/CategoryTheory/Sites/CartesianClosed.lean"},
+    "target": {"identity": "Mathlib.CategoryTheory.Sites.CartesianMonoidal", "kind": "IMPLEMENTATION_ARTIFACT", "locator": "Mathlib/CategoryTheory/Sites/CartesianMonoidal.lean"},
+    "authority_state": "OBSERVED"
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.CITES.GENERIC",
+    "layer": "G_provenance",
+    "relation": "CITES_SOURCE",
+    "source": {"identity": "CMDG:CM2:GENERIC_SHEAF_CARTESIAN_CLOSED", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "mathlib4@79d0395a:Mathlib/CategoryTheory/Sites/CartesianClosed.lean", "kind": "SOURCE", "locator": "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Sites/CartesianClosed.lean"},
+    "authority_state": "OBSERVED"
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.CITES.CLOSED",
+    "layer": "G_provenance",
+    "relation": "CITES_SOURCE",
+    "source": {"identity": "CMDG:CM2:CARTESIAN_CLOSED_ADJUNCTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "mathlib4@79d0395a:Mathlib/CategoryTheory/Monoidal/Closed/Basic.lean", "kind": "SOURCE", "locator": "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Monoidal/Closed/Basic.lean"},
+    "authority_state": "OBSERVED"
+  },
+  {
+    "schema_version": "1.0.0",
+    "edge_id": "CMDG:E:CM2.CITES.SHEAFIFY",
+    "layer": "G_provenance",
+    "relation": "CITES_SOURCE",
+    "source": {"identity": "CMDG:CM2:SHEAFIFICATION_REFLECTION", "kind": "SEMANTIC_NODE"},
+    "target": {"identity": "mathlib4@79d0395a:Mathlib/CategoryTheory/Sites/Sheafification.lean", "kind": "SOURCE", "locator": "leanprover-community/mathlib4@79d0395a1825a6264ad5d269e35e60537518955e:Mathlib/CategoryTheory/Sites/Sheafification.lean"},
+    "authority_state": "OBSERVED"
+  }
+]
