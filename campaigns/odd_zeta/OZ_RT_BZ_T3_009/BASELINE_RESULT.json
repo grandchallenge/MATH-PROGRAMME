@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "operation": "OZ-RT-BZ-T3-009",
   "route": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001",
   "execution_intake": {
@@ -34,8 +34,9 @@
   },
   "moving_support": {
     "common_square": "0<=k,l<=n+3",
-    "zero_extension_candidate": "T(n+j,k,l)=0 outside 0<=k,l<=n+j by binomial support; harmonic convention remains finite",
-    "uniform_support_proof_complete": false
+    "uniform_zero_extension_lemma": "For each j in {0,1,2,3}, if k>n+j or l>n+j then binom(n+j,k)^2 or binom(n+j,l)^2 in T(n+j,k,l) is zero. Every protected weight atom is finite under H(m,r)=0 for m<=0 and finite U/ES sums over positive t. Therefore the shifted weighted summand extends by exact zero to the common square.",
+    "uniform_support_proof_complete": true,
+    "shell_omission": false
   },
   "source_artifact_audit": {
     "RFD_ann.m": {
@@ -51,5 +52,5 @@
   "proof_effect": "NONE",
   "promotion_effect": "NONE",
   "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
-  "terminal": "RECURRENCE_INTERFACE_LOCKED_FINITE_COMPONENT_BASELINE_REPLAYED"
+  "terminal": "RECURRENCE_INTERFACE_LOCKED_NONVACUOUS_BASELINE_AND_MOVING_SUPPORT_CERTIFIED"
 }
