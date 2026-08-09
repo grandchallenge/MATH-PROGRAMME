@@ -1,0 +1,75 @@
+name: CMDG vertical spine V0
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cmdg-vertical-spine-v0-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    name: Validate CMDG vertical spine V0
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Compile V0 validator
+        run: python -m py_compile ci/validate_cmdg_vertical_spine_v0.py
+      - name: Validate V0 manifest and graph contracts
+        run: python3 ci/validate_cmdg_vertical_spine_v0.py
+      - name: Run V0 adversarial mutations
+        run: python -m unittest tests.test_cmdg_vertical_spine_v0
+      - name: Revalidate protected NAT concordance anchor
+        run: python3 ci/validate_cmdg_nat_concordance.py
+      - name: Revalidate protected Euclid bridge anchor
+        run: python3 ci/validate_cmdg_euclid_bridge.py
+
+  formal-interface:
+    name: Replay V0 formal interface on pinned mathlib
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Reject V0 placeholders and local axioms
+        run: |
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGVerticalSpineV0.lean; then
+            echo "CMDG-VERTICAL-SPINE-V0-001 interface probe must contain neither sorry nor local axioms."
+            exit 1
+          fi
+      - name: Set up pinned Lean and mathlib cache
+        id: lean-setup
+        continue-on-error: true
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Check V0 interface declarations
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        env:
+          LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}
+        run: |
+          set -euo pipefail
+          echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+          test -f lake-manifest.json
+          test "$(python -c 'import json; print(next(p["rev"] for p in json.load(open("lake-manifest.json"))["packages"] if p["name"] == "mathlib"))')" = "79d0395a1825a6264ad5d269e35e60537518955e"
+          lake env lean CMDGVerticalSpineV0.lean
