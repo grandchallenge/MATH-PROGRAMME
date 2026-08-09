@@ -10,9 +10,9 @@ replays only the prerequisite that is already machine-available: Nöbeling
 freeness for locally constant integer-valued functions on arbitrary profinite
 sets.
 
-It deliberately does not assert `CM4Target`. There is no `sorry`, local axiom,
-opaque proof placeholder, general-ring strengthening, derived/complex claim,
-C06 claim, or graph-certification claim.
+It deliberately does not assert `CM4Target`. It contains no proof placeholder,
+local postulate, general-ring strengthening, derived/complex claim, C06 claim,
+or graph-certification claim.
 -/
 
 noncomputable section
