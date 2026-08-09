@@ -1,4 +1,7 @@
-import Mathlib.Condensed.CartesianClosed
+import Mathlib.CategoryTheory.Monoidal.Closed.Types
+import Mathlib.CategoryTheory.Sites.CartesianClosed
+import Mathlib.Condensed.Basic
+import Mathlib.CategoryTheory.Sites.LeftExact
 
 /-!
 CMDG-CONDENSED-CM2-001 checked Cartesian-closedness fixture.
