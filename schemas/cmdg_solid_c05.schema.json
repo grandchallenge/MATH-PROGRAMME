@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_solid_c05.schema.json",
+  "title": "CMDG solid C05 definition/concordance record",
+  "type": "object",
+  "required": ["schema_version", "operation_id", "issue", "repository_baseline", "repository_baseline_tree", "predecessor_disposition", "protected_cm3", "environment", "source_authority", "source_lineage", "pinned_defect", "definition_layers", "formal_evidence", "concordance_matrix", "graph", "regression_anchors", "claim_boundary", "candidate_disposition"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "operation_id": {"const": "CMDG-SOLID-C05-001"},
+    "issue": {"const": "MATH-PROGRAMME#348"},
+    "candidate_disposition": {"const": "C05_CANDIDATE_PENDING_INDEPENDENT_REVIEW_AND_PROTECTED_ADMISSION"},
+    "graph": {"type": "object", "required": ["graph_certified"], "properties": {"graph_certified": {"const": false}}},
+    "claim_boundary": {
+      "type": "object",
+      "required": ["definition_boundary_candidate", "c05_candidate_satisfied", "c05_semantic_authority_conferred", "pinned_general_ring_semantics_conferred", "pinned_reconstructed_equivalence_conferred", "noncommutative_general_ring_reconstruction_conferred", "nontrivial_solid_object_conferred", "profinite_solid_object_is_solid_conferred", "solid_subcategory_abelian_conferred", "solidification_reflector_conferred", "tensor_or_internal_hom_closure_conferred", "derived_solid_conferred", "liquid_conferred", "cm4_conferred", "c04_broadened", "c06_discharged", "graph_certified_conferred", "dependency_minimality_or_uniqueness_claim", "global_dependency_completeness_claim", "independent_review_required", "protected_admission_required"],
+      "properties": {
+        "definition_boundary_candidate": {"const": true},
+        "c05_candidate_satisfied": {"const": true},
+        "c05_semantic_authority_conferred": {"const": false},
+        "pinned_general_ring_semantics_conferred": {"const": false},
+        "pinned_reconstructed_equivalence_conferred": {"const": false},
+        "noncommutative_general_ring_reconstruction_conferred": {"const": false},
+        "nontrivial_solid_object_conferred": {"const": false},
+        "profinite_solid_object_is_solid_conferred": {"const": false},
+        "solid_subcategory_abelian_conferred": {"const": false},
+        "solidification_reflector_conferred": {"const": false},
+        "tensor_or_internal_hom_closure_conferred": {"const": false},
+        "derived_solid_conferred": {"const": false},
+        "liquid_conferred": {"const": false},
+        "cm4_conferred": {"const": false},
+        "c04_broadened": {"const": false},
+        "c06_discharged": {"const": false},
+        "graph_certified_conferred": {"const": false},
+        "dependency_minimality_or_uniqueness_claim": {"const": false},
+        "global_dependency_completeness_claim": {"const": false},
+        "independent_review_required": {"const": true},
+        "protected_admission_required": {"const": true}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}
