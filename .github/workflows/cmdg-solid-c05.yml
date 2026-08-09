@@ -87,11 +87,11 @@ jobs:
           test "$(git -C "$ML" hash-object Mathlib/Algebra/Polynomial/Eval/Defs.lean)" = "c42ff574f952192ec1f14d4e4c4091432ab0aec7"
           test "$(git -C "$ML" hash-object Mathlib/RingTheory/FiniteType.lean)" = "346c6ccb601fa6f310793b7d986012a054ed6563"
           test "$(git -C "$ML" hash-object Mathlib/Algebra/Ring/ULift.lean)" = "97e348e52e05a800a60c8c2469bd3041c15613c4"
-          grep -q 'class CondensedMod.IsSolid' "$ML/Mathlib/Condensed/Solid.lean"
-          grep -q 'This is not the correct definition for general R' "$ML/Mathlib/Condensed/Solid.lean"
-          grep -q 'def restrictScalars' "$ML/Mathlib/Algebra/Category/ModuleCat/ChangeOfRings.lean"
-          grep -q 'def sheafCompose' "$ML/Mathlib/CategoryTheory/Sites/Whiskering.lean"
-          grep -q 'def eval₂RingHom' "$ML/Mathlib/Algebra/Polynomial/Eval/Defs.lean"
+          grep -Fq 'class CondensedMod.IsSolid' "$ML/Mathlib/Condensed/Solid.lean"
+          grep -Fq 'This is not the correct definition of solid `R`-modules for a general `R`.' "$ML/Mathlib/Condensed/Solid.lean"
+          grep -Fq 'def restrictScalars' "$ML/Mathlib/Algebra/Category/ModuleCat/ChangeOfRings.lean"
+          grep -Fq 'def sheafCompose' "$ML/Mathlib/CategoryTheory/Sites/Whiskering.lean"
+          grep -Fq 'def eval₂RingHom' "$ML/Mathlib/Algebra/Polynomial/Eval/Defs.lean"
       - name: Build and replay C05 fixture
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
         env:
