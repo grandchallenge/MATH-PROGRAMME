@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CMDG-CONDENSED-CM4-P2-001 characterized blocker record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation_id",
+    "parent_operation_id",
+    "parent_issue",
+    "issue",
+    "scope",
+    "repository_baseline",
+    "repository_baseline_tree",
+    "parent_protected_state",
+    "environment",
+    "target",
+    "exact_tree_audit",
+    "interface_matrix",
+    "stage_result",
+    "claim_boundary",
+    "disposition"
+  ],
+  "properties": {
+    "operation_id": {"const": "CMDG-CONDENSED-CM4-P2-001"},
+    "parent_operation_id": {"const": "CMDG-CONDENSED-CM4-001"},
+    "parent_issue": {"const": 355},
+    "issue": {"const": 363},
+    "scope": {"type": "string", "minLength": 1},
+    "repository_baseline": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "repository_baseline_tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "parent_protected_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blocker_pr", "reviewed_head", "protected_merge", "protected_replay_run", "terminal_disposition"],
+      "properties": {
+        "blocker_pr": {"const": 358},
+        "reviewed_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "protected_merge": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "protected_replay_run": {"type": "integer", "minimum": 1},
+        "terminal_disposition": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"}
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lean_image", "lean_commit", "mathlib_commit", "mathlib_tree"],
+      "properties": {
+        "lean_image": {"type": "string", "minLength": 1},
+        "lean_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "mathlib_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "mathlib_tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["semantic_target", "objectwise_product_role"],
+      "properties": {
+        "semantic_target": {"type": "string", "minLength": 1},
+        "objectwise_product_role": {"type": "string", "minLength": 1}
+      }
+    },
+    "exact_tree_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observed_sources", "absent_plausible_loci", "absence_interpretation"],
+      "properties": {
+        "observed_sources": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "blob", "declarations"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "blob": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+              "declarations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+            }
+          }
+        },
+        "absent_plausible_loci": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "absence_interpretation": {"type": "string", "minLength": 1}
+      }
+    },
+    "interface_matrix": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "status", "reopen_condition"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^CM4-P2-[A-F]$"},
+          "name": {"type": "string", "minLength": 1},
+          "status": {"enum": ["AVAILABLE", "BLOCKING", "PARTIAL"]},
+          "reopen_condition": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "stage_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["p2_bridge_closed", "canonical_kan_presentation_available", "locally_constant_interface_available", "canonical_measure_dual_functor_available", "natural_equivalence_available", "terminal_operational_disposition"],
+      "properties": {
+        "p2_bridge_closed": {"type": "boolean"},
+        "canonical_kan_presentation_available": {"type": "boolean"},
+        "locally_constant_interface_available": {"type": "boolean"},
+        "canonical_measure_dual_functor_available": {"type": "boolean"},
+        "natural_equivalence_available": {"type": "boolean"},
+        "terminal_operational_disposition": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"}
+      }
+    },
+    "claim_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "p2_blocker_characterized", "p2_closed", "cm4_theorem_certified", "cm4_protected_closed",
+        "p3_closed", "p4_closed", "p5_closed", "p6_closed", "derived_complex_form_certified",
+        "arbitrary_ring_generalization_certified", "c04_broadened", "c06_discharged", "graph_certified",
+        "dependency_minimality_claim", "dependency_uniqueness_claim", "cm5_authorized", "global_cmdg_completeness_claim"
+      ],
+      "properties": {
+        "p2_blocker_characterized": {"type": "boolean"},
+        "p2_closed": {"type": "boolean"},
+        "cm4_theorem_certified": {"type": "boolean"},
+        "cm4_protected_closed": {"type": "boolean"},
+        "p3_closed": {"type": "boolean"},
+        "p4_closed": {"type": "boolean"},
+        "p5_closed": {"type": "boolean"},
+        "p6_closed": {"type": "boolean"},
+        "derived_complex_form_certified": {"type": "boolean"},
+        "arbitrary_ring_generalization_certified": {"type": "boolean"},
+        "c04_broadened": {"type": "boolean"},
+        "c06_discharged": {"type": "boolean"},
+        "graph_certified": {"type": "boolean"},
+        "dependency_minimality_claim": {"type": "boolean"},
+        "dependency_uniqueness_claim": {"type": "boolean"},
+        "cm5_authorized": {"type": "boolean"},
+        "global_cmdg_completeness_claim": {"type": "boolean"}
+      }
+    },
+    "disposition": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"}
+  }
+}
