@@ -1,0 +1,106 @@
+name: CMDG condensed CM2
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cmdg-condensed-cm2-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    name: Validate CMDG condensed CM2
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Compile CM2 validator
+        run: python -m py_compile ci/validate_cmdg_condensed_cm2.py
+      - name: Validate CM2 package
+        run: python3 ci/validate_cmdg_condensed_cm2.py
+      - name: Run CM2 adversarial mutations
+        run: python -m unittest tests.test_cmdg_condensed_cm2
+      - name: Revalidate protected CM1
+        run: python3 ci/validate_cmdg_condensed_cm1.py
+      - name: Revalidate protected V0
+        run: python3 ci/validate_cmdg_vertical_spine_v0.py
+      - name: Revalidate protected NAT concordance
+        run: python3 ci/validate_cmdg_nat_concordance.py
+      - name: Revalidate protected Euclid bridge
+        run: python3 ci/validate_cmdg_euclid_bridge.py
+
+  formal:
+    name: Replay CM2 Cartesian closedness
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Reject CM2 placeholders and local axioms
+        run: |
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean; then
+            echo "CMDG-CONDENSED-CM2-001 must contain neither sorry nor local axioms."
+            exit 1
+          fi
+      - name: Set up pinned Lean and mathlib cache
+        id: lean-setup
+        continue-on-error: true
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Verify exact pinned mathlib source lineage
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          ML=".lake/packages/mathlib"
+          test "$(git -C "$ML" rev-parse HEAD)" = "79d0395a1825a6264ad5d269e35e60537518955e"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Basic.lean)" = "926e02ac2875d912631dac221bca13990c7d9506"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/CartesianClosed.lean)" = "0ce243384482c50191f8e4426baebe38bb21fd10"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Sites/CartesianMonoidal.lean)" = "c161990e16c398e0b6f09cebec717cb7050bd3af"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Monoidal/Cartesian/Basic.lean)" = "5c0fb0d708fde466348ad1fc79d4547be0daf5d0"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Sites/CartesianClosed.lean)" = "6d1e5cc05246533221dab116dc065341830bbaf3"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Sites/Sheafification.lean)" = "231e46274c7217803239cd2052697018edbf7ef0"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Sites/LeftExact.lean)" = "6b6033102820772cdbd2d75694b3f5b67965aae9"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Monoidal/Closed/Ideal.lean)" = "b85d7de5f231fd1328583508dc4500467c9d596f"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Monoidal/Closed/Basic.lean)" = "57dd533860e4be3957c13211f275b6f75441787c"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Monoidal/Closed/Types.lean)" = "1e3a030a37164fcc34b31ad5dee6d771bd7d38ef"
+          grep -q 'deprecated_module' "$ML/Mathlib/Condensed/CartesianClosed.lean"
+      - name: Build and replay CM2 fixture
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        env:
+          LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}
+        run: |
+          set -euo pipefail
+          echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+          lake build CMDGCondensedCM2
+          lake env lean CMDGCondensedCM2.lean
+      - name: Extract CM2 declaration dependencies and axioms
+        run: python3 ci/extract_cmdg_lean_dependencies.py fixtures/cmdg/extractor_001/condensed_cm2.json --output cmdg-condensed-cm2-dependencies.json
+      - name: Preserve CM2 failure evidence
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: cmdg-condensed-cm2-failure
+          path: |
+            fixtures/formal/CMDG-NAT-CONCORDANCE-001
+            cmdg-condensed-cm2-dependencies.json
+          if-no-files-found: warn
