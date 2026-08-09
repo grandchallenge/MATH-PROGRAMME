@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "operation_id": "CMDG-SOLID-C05-001",
+  "edges": [
+    {"source": "CMDG:C05:CM3_PROTECTED_BOUNDARY", "target": "CMDG:C05:DEFINITION_AUTHORITY_BOUNDARY", "layer": "provenance", "relation": "predecessor_authority"},
+    {"source": "CMDG:C05:PINNED_SOLID_PREDICATE", "target": "CMDG:C05:MATHLIB_GENERAL_RING_DEFECT", "layer": "provenance", "relation": "source_records_limitation"},
+    {"source": "CMDG:C05:MATHLIB_GENERAL_RING_DEFECT", "target": "CMDG:C05:FINITE_TYPE_Z_ALGEBRA_PROFILE", "layer": "semantic", "relation": "requires_restriction"},
+    {"source": "CMDG:C05:FINITE_TYPE_Z_ALGEBRA_PROFILE", "target": "CMDG:C05:FINITE_TYPE_Z_ALGEBRA_SOLID", "layer": "semantic", "relation": "scopes"},
+    {"source": "CMDG:C05:PINNED_SOLID_PREDICATE", "target": "CMDG:C05:FINITE_TYPE_Z_ALGEBRA_SOLID", "layer": "implementation", "relation": "wrapped_under_restricted_profile"},
+    {"source": "CMDG:C05:ZX", "target": "CMDG:C05:EVALUATION_RING_HOM", "layer": "proof", "relation": "domain"},
+    {"source": "CMDG:C05:EVALUATION_RING_HOM", "target": "CMDG:C05:RESTRICTION_OF_SCALARS", "layer": "implementation", "relation": "parameterizes"},
+    {"source": "CMDG:C05:GENERAL_COMM_RING_OBJECT", "target": "CMDG:C05:ELEMENTWISE_RESTRICTED_OBJECT", "layer": "proof", "relation": "restrict_for_each_element"},
+    {"source": "CMDG:C05:RESTRICTION_OF_SCALARS", "target": "CMDG:C05:ELEMENTWISE_RESTRICTED_OBJECT", "layer": "implementation", "relation": "constructs"},
+    {"source": "CMDG:C05:ELEMENTWISE_RESTRICTED_OBJECT", "target": "CMDG:C05:GENERAL_COMM_RING_SOLID_RECONSTRUCTED", "layer": "semantic", "relation": "universal_solidity_condition"},
+    {"source": "CMDG:C05:FINITE_TYPE_Z_ALGEBRA_SOLID", "target": "CMDG:C05:CONCORDANCE_MATRIX", "layer": "provenance", "relation": "classified_as_restricted_realization"},
+    {"source": "CMDG:C05:GENERAL_COMM_RING_SOLID_RECONSTRUCTED", "target": "CMDG:C05:CONCORDANCE_MATRIX", "layer": "provenance", "relation": "classified_as_reconstruction"},
+    {"source": "CMDG:C05:CONCORDANCE_MATRIX", "target": "CMDG:C05:DEFINITION_AUTHORITY_BOUNDARY", "layer": "provenance", "relation": "binds_non_equivalence"}
+  ]
+}
