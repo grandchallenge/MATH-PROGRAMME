@@ -4,7 +4,7 @@ import json
 from fractions import Fraction as Q
 from pathlib import Path
 import parameter_lift as lift
-import target
+import t3_003_target as target
 
 HERE=Path(__file__).resolve().parent
 OUT=HERE/'SEARCH_RESULT.json'
