@@ -38,14 +38,40 @@ class T3009Tests(unittest.TestCase):
         self.assertFalse(d["moving_support"]["shell_omission"])
         self.assertIn("binom(n+j,k)^2", d["moving_support"]["uniform_zero_extension_lemma"])
 
+    def test_qrow_replay_is_exact_and_risc_free(self):
+        d = json.loads((HERE / "QROW_REPLAY_RESULT.json").read_text())
+        self.assertEqual(d["replay"]["arithmetic"], "EXACT_RATIONAL")
+        self.assertFalse(d["replay"]["risc_loaded"])
+        self.assertTrue(d["replay"]["cleared_numerator_identically_zero"])
+        self.assertFalse(d["replay"]["finite_sampling_used_as_proof"])
+        self.assertFalse(d["replay"]["syntactic_cancel_used_as_proof"])
+
+    def test_qrow_shell_regularization_is_explicit(self):
+        d = json.loads((HERE / "QROW_REPLAY_RESULT.json").read_text())
+        b = d["boundary_and_poles"]
+        self.assertEqual(b["nonnegative_shell_offsets"], [1,2,3])
+        self.assertEqual(b["candidate_shell_pole_order"], 2)
+        self.assertEqual(b["kernel_reciprocal_gamma_zero_order"], 2)
+        self.assertEqual(b["kernel_zero_leading_coefficients_offsets_1_2_3"], [1,1,4])
+        self.assertTrue(all(b["rho_shell_regularized_coefficients_finite"]))
+        self.assertTrue(all(b["sigma_shell_regularized_coefficients_finite"]))
+        self.assertTrue(b["finite_box_telescoping_boundary_complete"])
+
+    def test_reduced_residual_is_locked_but_not_solved(self):
+        d = json.loads((HERE / "REDUCED_WEIGHT5_RESIDUAL.json").read_text())
+        self.assertEqual(d["protected_weight_instantiations"]["E_D"]["v"], "W1+2*w5_sym")
+        self.assertEqual(d["protected_weight_instantiations"]["E_D"]["linearity"], "E_D=E_W+2*E_P5")
+        self.assertFalse(d["residual_sum_zero_proved"])
+        self.assertEqual(d["proof_effect"], "NONE")
+
     def test_middle_row_checkpoint_is_not_t3_certificate(self):
         d = json.loads((HERE / "BASELINE_RESULT.json").read_text())
         self.assertEqual(d["source_artifact_audit"]["RFD_ann.m"]["relevance"], "NOT_A_T3_CERTIFICATE")
 
     def test_no_proof_promotion(self):
-        d = json.loads((HERE / "BASELINE_RESULT.json").read_text())
-        s = json.loads((HERE / "SEARCH_RESULT.json").read_text())
-        for x in (d,s):
+        paths = ["BASELINE_RESULT.json", "SEARCH_RESULT.json", "QROW_PRODUCT_RULE.json", "QROW_REPLAY_RESULT.json", "REDUCED_WEIGHT5_RESIDUAL.json"]
+        for path in paths:
+            x = json.loads((HERE / path).read_text())
             self.assertEqual(x["proof_effect"], "NONE")
             self.assertEqual(x["promotion_effect"], "NONE")
             self.assertEqual(x["t3_status"], "OPEN_WITH_CHARACTERIZED_BLOCKER")
