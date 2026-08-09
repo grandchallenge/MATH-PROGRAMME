@@ -8,6 +8,7 @@ HERE = Path(__file__).resolve().parent
 LOCK = HERE / "RECURRENCE_LOCK.json"
 BASELINE = HERE / "BASELINE_RESULT.json"
 SEARCH = HERE / "SEARCH_RESULT.json"
+QROW = HERE / "QROW_PRODUCT_RULE.json"
 
 EXPECTED_A0 = "41218*n^3+198849*n^2+320790*n+173057"
 EXPECTED_C3 = "2*(n+3)^5*(2*n+5)*a0(n)"
@@ -18,7 +19,8 @@ def validate() -> None:
     lock = json.loads(LOCK.read_text(encoding="utf-8"))
     result = json.loads(BASELINE.read_text(encoding="utf-8"))
     search = json.loads(SEARCH.read_text(encoding="utf-8"))
-    if any(x["operation"] != "OZ-RT-BZ-T3-009" for x in (lock,result,search)):
+    qrow = json.loads(QROW.read_text(encoding="utf-8"))
+    if any(x["operation"] != "OZ-RT-BZ-T3-009" for x in (lock,result,search,qrow)):
         raise AssertionError("operation drift")
     if any(x["route"] != "T3_SEQUENCE_RECURRENCE_EXTRACTION_001" for x in (lock,result,search)):
         raise AssertionError("route drift")
@@ -70,11 +72,24 @@ def validate() -> None:
             raise AssertionError(f"bounded recurrence classification drift: {kind}")
     if search["bounded_terminal"] != "LOCKED_LBZ_NPLUS3_SYMMETRIC_RAW_JET_DIVERGENCE_DEG_LE_2_EXHAUSTED_FOR_D_P5_W":
         raise AssertionError("bounded recurrence terminal drift")
+    src=qrow["source_certificate"]
+    if src["blob_sha1"] != "61f12f412726887f506e1d423b7ee183a22116e5":
+        raise AssertionError("Q-row source blob drift")
+    if src["present_identically_at_commits"] != ["968477ed7e406df6542f8da6fbe1cd6ca7273c47","790685b7ee4f642a8a88a1bd120636d1b8b39ea8"]:
+        raise AssertionError("Q-row source-head concordance drift")
+    if src["programme_reverification_status"] != "PENDING_EXACT_RATIONAL_REPLAY" or src["upstream_certified_label_is_programme_authority"]:
+        raise AssertionError("Q-row upstream authority inflation")
+    if not qrow["product_rule"]["conditional_algebraic_reduction_proved"]:
+        raise AssertionError("Q-row product-rule reduction lost")
+    if not qrow["moving_support"]["programme_uniform_zero_extension_already_proved"] or not qrow["moving_support"]["qrow_boundary_recheck_required"]:
+        raise AssertionError("Q-row boundary status drift")
+    if qrow["terminal"] != "QROW_SOURCE_LOCKED_PRODUCT_RULE_REDUCTION_DERIVED_REVERIFICATION_PENDING":
+        raise AssertionError("Q-row route terminal drift")
     if result["source_artifact_audit"]["RFD_ann.m"]["relevance"] != "NOT_A_T3_CERTIFICATE":
         raise AssertionError("middle-row checkpoint promoted into T3")
-    if any(x["proof_effect"] != "NONE" or x["promotion_effect"] != "NONE" for x in (result,search)):
+    if any(x["proof_effect"] != "NONE" or x["promotion_effect"] != "NONE" for x in (result,search,qrow)):
         raise AssertionError("proof or promotion inflation")
-    if result["t3_status"] != "OPEN_WITH_CHARACTERIZED_BLOCKER" or search["t3_status"] != result["t3_status"]:
+    if any(x["t3_status"] != "OPEN_WITH_CHARACTERIZED_BLOCKER" for x in (result,search,qrow)):
         raise AssertionError("T3 status inflation")
     if result["terminal"] != "RECURRENCE_INTERFACE_LOCKED_NONVACUOUS_BASELINE_AND_MOVING_SUPPORT_CERTIFIED":
         raise AssertionError("baseline terminal drift")
@@ -82,7 +97,7 @@ def validate() -> None:
 
 def main() -> int:
     validate()
-    print("OZ-RT-BZ-T3-009 locked recurrence, support, and bounded negative package is valid")
+    print("OZ-RT-BZ-T3-009 locked recurrence, support, bounded negative, and Q-row reduction package is valid")
     return 0
 
 if __name__ == "__main__":
