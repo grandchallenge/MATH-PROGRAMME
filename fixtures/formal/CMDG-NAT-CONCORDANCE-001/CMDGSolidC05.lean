@@ -47,7 +47,7 @@ noncomputable def c05Solidification
 
 noncomputable def pinnedSolidField
     (R : Type (u + 1)) [Ring R]
-    (A : CondensedMod.{u} R) [hA : CondensedMod.IsSolid A] :
+    (A : CondensedMod.{u} R) [hA : CondensedMod.IsSolid R A] :
     ∀ X : Profinite.{u},
       IsIso ((yoneda.obj A).map
         ((Condensed.profiniteSolidification R).app X).op) :=
@@ -57,7 +57,7 @@ noncomputable def pinnedSolidField
 def FiniteTypeZAlgebraSolid
     (R : Type (u + 1)) [CommRing R] [Algebra ℤ R]
     [Algebra.FiniteType ℤ R] (A : CondensedMod.{u} R) : Prop :=
-  CondensedMod.IsSolid A
+  CondensedMod.IsSolid R A
 
 /-- Universe-lifted implementation representative of `ℤ[X]`. -/
 abbrev ZX : Type (u + 1) := ULift.{u + 1} (Polynomial ℤ)
@@ -83,7 +83,7 @@ pinned solidification-map condition. This is a definition, not an equivalence th
 def GeneralCommRingSolidReconstructed
     (R : Type (u + 1)) [CommRing R] (A : CondensedMod.{u} R) : Prop :=
   ∀ r : R,
-    CondensedMod.IsSolid
+    CondensedMod.IsSolid ZX
       ((restrictCondensedScalars (evalZXAt R r)).obj A)
 
 end CMDG.SolidC05
