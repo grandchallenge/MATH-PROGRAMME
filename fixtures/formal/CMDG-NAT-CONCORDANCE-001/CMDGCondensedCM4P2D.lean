@@ -51,7 +51,8 @@ The canonical basis-free internal-Hom presheaf
 functor-category closed structure.
 -/
 noncomputable def measurePresheafObj (S : Profinite.{u}) : PresheafModule :=
-  (MonoidalClosed.ihom (discreteContinuousPresheaf.obj (op S))).obj coefficientPresheaf
+  (MonoidalClosed.internalHom.obj (op (discreteContinuousPresheaf.obj (op S)))).obj
+    coefficientPresheaf
 
 /-- The selected internal-Hom object is definitionally the enriched-Hom presheaf. -/
 lemma measurePresheafObj_eq_functorEnrichedHom (S : Profinite.{u}) :
