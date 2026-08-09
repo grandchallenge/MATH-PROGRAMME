@@ -1,0 +1,107 @@
+name: CMDG condensed CM4
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cmdg-condensed-cm4-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    name: Validate CM4 characterized blocker
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Compile CM4 validator
+        run: python -m py_compile ci/validate_cmdg_condensed_cm4.py
+      - name: Validate CM4 blocker package
+        run: python3 ci/validate_cmdg_condensed_cm4.py
+      - name: Run CM4 adversarial mutations
+        run: python -m unittest tests.test_cmdg_condensed_cm4
+      - name: Revalidate protected C05
+        run: python3 ci/validate_cmdg_solid_c05.py
+      - name: Revalidate protected CM3
+        run: python3 ci/validate_cmdg_condensed_cm3.py
+      - name: Revalidate protected CM2
+        run: python3 ci/validate_cmdg_condensed_cm2.py
+      - name: Revalidate protected CM1
+        run: python3 ci/validate_cmdg_condensed_cm1.py
+      - name: Revalidate protected V0
+        run: python3 ci/validate_cmdg_vertical_spine_v0.py
+      - name: Revalidate protected NAT concordance
+        run: python3 ci/validate_cmdg_nat_concordance.py
+      - name: Revalidate protected Euclid bridge
+        run: python3 ci/validate_cmdg_euclid_bridge.py
+
+  formal-audit:
+    name: Replay CM4 target and exact-tree prerequisite audit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Reject theorem placeholders and accidental authority
+        run: |
+          set -euo pipefail
+          F=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F"; then
+            echo "CM4 blocker fixture must contain neither sorry nor local axioms."
+            exit 1
+          fi
+          if grep -niE 'theorem[[:space:]]+CM4Target' "$F"; then
+            echo "Blocker package must not assert the CM4 target theorem."
+            exit 1
+          fi
+      - name: Set up pinned Lean and mathlib cache
+        id: lean-setup
+        continue-on-error: true
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Verify exact pinned dependency evidence
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          ML=".lake/packages/mathlib"
+          test "$(git -C "$ML" rev-parse HEAD)" = "79d0395a1825a6264ad5d269e35e60537518955e"
+          test "$(git -C "$ML" rev-parse HEAD^{tree})" = "d76f5e09b832a08949f6d8ad4fb80ce30527da64"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Solid.lean)" = "f5214433f91ee87fc8fbe7e2746e0bd227faed2a"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Module.lean)" = "f5834efa0d5bf1289187abe3319536186d67a405"
+          test "$(git -C "$ML" hash-object Mathlib/Topology/Category/Profinite/Nobeling/Induction.lean)" = "2989eac53e537e47fd9ac93cba92d50856573173"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Light/InternallyProjective.lean)" = "91b0b495e708368b0d5f58bb2865490d18d90657"
+          grep -Fq 'TODO (hard): prove that `((profiniteSolid ℤ).obj S).IsSolid`' "$ML/Mathlib/Condensed/Solid.lean"
+          grep -Fq 'instance LocallyConstant.freeOfProfinite' "$ML/Mathlib/Topology/Category/Profinite/Nobeling/Induction.lean"
+          test ! -e "$ML/Mathlib/Condensed/Derived"
+          test ! -e "$ML/Mathlib/Condensed/Measure"
+          test ! -e "$ML/Mathlib/Condensed/Real"
+          test ! -e "$ML/Mathlib/Condensed/Circle"
+      - name: Build and replay CM4 blocker fixture
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        env:
+          LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}
+        run: |
+          set -euo pipefail
+          echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+          lake build CMDGCondensedCM4Blocker
+          lake env lean CMDGCondensedCM4Blocker.lean
