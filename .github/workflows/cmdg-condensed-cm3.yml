@@ -1,0 +1,107 @@
+name: CMDG condensed CM3
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cmdg-condensed-cm3-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    name: Validate CMDG condensed CM3
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Compile CM3 validator
+        run: python -m py_compile ci/validate_cmdg_condensed_cm3.py
+      - name: Validate CM3 package
+        run: python3 ci/validate_cmdg_condensed_cm3.py
+      - name: Run CM3 adversarial mutations
+        run: python -m unittest tests.test_cmdg_condensed_cm3
+      - name: Revalidate protected CM2
+        run: python3 ci/validate_cmdg_condensed_cm2.py
+      - name: Revalidate protected CM1
+        run: python3 ci/validate_cmdg_condensed_cm1.py
+      - name: Revalidate protected V0
+        run: python3 ci/validate_cmdg_vertical_spine_v0.py
+      - name: Revalidate protected NAT concordance
+        run: python3 ci/validate_cmdg_nat_concordance.py
+      - name: Revalidate protected Euclid bridge
+        run: python3 ci/validate_cmdg_euclid_bridge.py
+
+  formal:
+    name: Replay CM3 abelian and AB exactness
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Reject CM3 placeholders and local axioms
+        run: |
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM3.lean; then
+            echo "CMDG-CONDENSED-CM3-001 must contain neither sorry nor local axioms."
+            exit 1
+          fi
+      - name: Set up pinned Lean and mathlib cache
+        id: lean-setup
+        continue-on-error: true
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Verify exact pinned mathlib source lineage
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          ML=".lake/packages/mathlib"
+          test "$(git -C "$ML" rev-parse HEAD)" = "79d0395a1825a6264ad5d269e35e60537518955e"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Module.lean)" = "f5834efa0d5bf1289187abe3319536186d67a405"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/AB.lean)" = "4c731d5cb9005146b522c23c19a9d81f536f57c1"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Sites/Abelian.lean)" = "d5250edfc56c2d79c7dae942fe0ab1e8a93ac707"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Abelian/GrothendieckAxioms/Sheaf.lean)" = "2601697678b5ed6ea3c0c95c2a074e39732a1c66"
+          test "$(git -C "$ML" hash-object Mathlib/Algebra/Category/ModuleCat/AB.lean)" = "183a3dd6be8be75c2dacefa46e496207184e7e1c"
+          grep -q 'abbrev CondensedMod' "$ML/Mathlib/Condensed/Module.lean"
+          grep -q 'sheafIsAbelian' "$ML/Mathlib/Condensed/Module.lean"
+          grep -q 'instance : AB5' "$ML/Mathlib/Condensed/AB.lean"
+          grep -q 'instance : AB4' "$ML/Mathlib/Condensed/AB.lean"
+          grep -q 'instance : AB4Star' "$ML/Mathlib/Condensed/AB.lean"
+      - name: Build and replay CM3 fixture
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        env:
+          LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}
+        run: |
+          set -euo pipefail
+          echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+          lake build CMDGCondensedCM3
+          lake env lean CMDGCondensedCM3.lean
+      - name: Extract CM3 declaration dependencies and axioms
+        run: python3 ci/extract_cmdg_lean_dependencies.py fixtures/cmdg/extractor_001/condensed_cm3.json --output cmdg-condensed-cm3-dependencies.json
+      - name: Preserve CM3 failure evidence
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: cmdg-condensed-cm3-failure
+          path: |
+            fixtures/formal/CMDG-NAT-CONCORDANCE-001
+            cmdg-condensed-cm3-dependencies.json
+          if-no-files-found: warn
