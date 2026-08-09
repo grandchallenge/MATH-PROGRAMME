@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OZ_RT_BZ_T3_008.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "operation", "authority", "target_lock", "search", "artifacts", "disposition", "nonclaims"],
+  "properties": {
+    "$schema": {"const": "OZ_RT_BZ_T3_008.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "operation": {"const": "OZ-RT-BZ-T3-008"},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue", "predecessor_issue", "predecessor_pr", "predecessor_merge", "predecessor_tree", "programme_base_commit", "programme_base_tree"],
+      "properties": {
+        "issue": {"const": 365},
+        "predecessor_issue": {"const": 359},
+        "predecessor_pr": {"const": 360},
+        "predecessor_merge": {"const": "5233b37506f28e80959139cbc0f89b7ad400b658"},
+        "predecessor_tree": {"const": "5f5fc435927888fbdf84c1ba15044c347506fbd0"},
+        "programme_base_commit": {"const": "5233b37506f28e80959139cbc0f89b7ad400b658"},
+        "programme_base_tree": {"const": "5f5fc435927888fbdf84c1ba15044c347506fbd0"}
+      }
+    },
+    "target_lock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["normalized_zero_form", "t1top_substitution_forbidden", "finite_evidence_theorem_effect"],
+      "properties": {
+        "normalized_zero_form": {"const": "sum_{k=0}^n sum_{l=0}^n T(n,k,l) * (W1(k,l)+2*w5_sym(n,k,l)) = 0"},
+        "t1top_substitution_forbidden": {"const": true},
+        "finite_evidence_theorem_effect": {"const": "NONE"}
+      }
+    },
+    "search": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["route", "coefficient_degrees", "rank_prime", "basis_monomials", "basis_sha256", "normalization_sha256", "symmetry_complete", "k_denominator", "l_denominator", "k_boundary_factor", "l_boundary_factor", "degree0_rank", "degree1_rank", "degree2_rank", "degree2_witness_indices_sha256"],
+      "properties": {
+        "route": {"const": "SYMMETRIC_2D_RAW_JET_DIVERGENCE_001"},
+        "coefficient_degrees": {"const": [0, 1, 2]},
+        "rank_prime": {"const": 1000003},
+        "basis_monomials": {"const": 198},
+        "basis_sha256": {"const": "cbdfe5798d360cb98f2d64743907a06ddc0612f88d17ef4bcef65c81c74e1438"},
+        "normalization_sha256": {"const": "69738508f28433f9090f93621c8da3bc6b18279fd70941a31d07fb96b607700b"},
+        "symmetry_complete": {"const": true},
+        "k_denominator": {"const": "(k+1)^3*(k+l+1)"},
+        "l_denominator": {"const": "(l+1)^3*(k+l+1)"},
+        "k_boundary_factor": {"const": "k*(n+1-k)"},
+        "l_boundary_factor": {"const": "l*(n+1-l)"},
+        "degree0_rank": {"const": [198, 199]},
+        "degree1_rank": {"const": [792, 793]},
+        "degree2_rank": {"const": [1980, 1981]},
+        "degree2_witness_indices_sha256": {"const": "d0bb330deff059c2afdc4e1a994d7c544c42ce7ec497e1c6490ca9f2781dc57f"}
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["producer", "independent_verifier", "validator", "rank_kernel", "search_result", "degree2_rank_witness", "search_result_sha256", "degree2_rank_witness_sha256"],
+      "properties": {
+        "producer": {"const": "producer.py"},
+        "independent_verifier": {"const": "verify.py"},
+        "validator": {"const": "validate.py"},
+        "rank_kernel": {"const": "rank_mod.c"},
+        "search_result": {"const": "SEARCH_RESULT.json"},
+        "degree2_rank_witness": {"const": "Q2_RANK_WITNESS.json"},
+        "search_result_sha256": {"const": "4f37b83be6b83663246c4dd0a7d24190709c9f7bc4b43ea411d29f742450101b"},
+        "degree2_rank_witness_sha256": {"const": "7d82b0088b6629c92bbb5c2457c5c520120ef275109503614b28910fe34eddc5"}
+      }
+    },
+    "disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "bounded_search_terminal", "proof_found", "counterexample_found", "proof_effect", "promotion_effect", "not_a_refutation", "remaining_blocker", "next_distinct_route"],
+      "properties": {
+        "status": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"},
+        "bounded_search_terminal": {"const": "SYMMETRIC_2D_WEIGHT5_DIVERGENCE_BOUNDED_CLASS_EXHAUSTED"},
+        "proof_found": {"const": false},
+        "counterexample_found": {"const": false},
+        "proof_effect": {"const": "NONE"},
+        "promotion_effect": {"const": "NONE"},
+        "not_a_refutation": {"const": true},
+        "remaining_blocker": {"type": "string", "minLength": 20},
+        "next_distinct_route": {"const": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001"}
+      }
+    },
+    "nonclaims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["t3_proved", "t3_refuted", "t1top_proved", "depth_proved", "sharp12_proved", "mathcert_authority", "graph_certified", "source_authority", "novelty_claim", "priority_claim", "publication_claim", "patentability_claim", "deployment_claim", "commercial_claim"],
+      "properties": {
+        "t3_proved": {"const": false}, "t3_refuted": {"const": false}, "t1top_proved": {"const": false}, "depth_proved": {"const": false}, "sharp12_proved": {"const": false}, "mathcert_authority": {"const": false}, "graph_certified": {"const": false}, "source_authority": {"const": false}, "novelty_claim": {"const": false}, "priority_claim": {"const": false}, "publication_claim": {"const": false}, "patentability_claim": {"const": false}, "deployment_claim": {"const": false}, "commercial_claim": {"const": false}
+      }
+    }
+  }
+}
