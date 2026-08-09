@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_condensed_cm4.schema.json",
+  "title": "CMDG condensed CM4 characterized blocker record",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "operation_id",
+    "issue",
+    "repository_baseline",
+    "repository_baseline_tree",
+    "protected_predecessor",
+    "environment",
+    "formal_target",
+    "exact_tree_audit",
+    "prerequisite_matrix",
+    "stage_a_result",
+    "regression_anchors",
+    "claim_boundary",
+    "reopening_rule",
+    "disposition"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "operation_id": {"const": "CMDG-CONDENSED-CM4-001"},
+    "issue": {"const": "MATH-PROGRAMME#355"},
+    "disposition": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"},
+    "stage_a_result": {
+      "type": "object",
+      "required": ["dependency_closure_sufficient", "theorem_attempt_authorized", "terminal_operational_disposition"],
+      "properties": {
+        "dependency_closure_sufficient": {"const": false},
+        "theorem_attempt_authorized": {"const": false},
+        "terminal_operational_disposition": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"}
+      },
+      "additionalProperties": true
+    },
+    "prerequisite_matrix": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["id", "ingredient", "status", "reachability", "semantic_concordance", "evidence", "reopen_condition"]
+      }
+    },
+    "claim_boundary": {
+      "type": "object",
+      "required": [
+        "blocker_characterized",
+        "cm4_theorem_certified",
+        "cm4_protected_closed",
+        "derived_complex_form_certified",
+        "arbitrary_finite_type_z_algebra_free_solid_certified",
+        "arbitrary_commutative_ring_certified",
+        "noncommutative_ring_certified",
+        "pinned_reconstructed_c05_equivalence_certified",
+        "solid_subcategory_abelian_certified",
+        "solidification_reflector_certified",
+        "tensor_internal_hom_closure_certified",
+        "liquid_mathematics_certified",
+        "c04_broadened",
+        "c06_discharged",
+        "graph_certified",
+        "dependency_minimality_claim",
+        "dependency_uniqueness_claim",
+        "global_cmdg_completeness_claim"
+      ],
+      "properties": {
+        "blocker_characterized": {"const": true},
+        "cm4_theorem_certified": {"const": false},
+        "cm4_protected_closed": {"const": false},
+        "derived_complex_form_certified": {"const": false},
+        "arbitrary_finite_type_z_algebra_free_solid_certified": {"const": false},
+        "arbitrary_commutative_ring_certified": {"const": false},
+        "noncommutative_ring_certified": {"const": false},
+        "pinned_reconstructed_c05_equivalence_certified": {"const": false},
+        "solid_subcategory_abelian_certified": {"const": false},
+        "solidification_reflector_certified": {"const": false},
+        "tensor_internal_hom_closure_certified": {"const": false},
+        "liquid_mathematics_certified": {"const": false},
+        "c04_broadened": {"const": false},
+        "c06_discharged": {"const": false},
+        "graph_certified": {"const": false},
+        "dependency_minimality_claim": {"const": false},
+        "dependency_uniqueness_claim": {"const": false},
+        "global_cmdg_completeness_claim": {"const": false}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}
