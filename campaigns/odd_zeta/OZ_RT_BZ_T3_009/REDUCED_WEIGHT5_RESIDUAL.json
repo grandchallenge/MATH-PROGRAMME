@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "operation": "OZ-RT-BZ-T3-009",
+  "route": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001",
+  "subroute": "QROW_PRODUCT_RULE_REDUCTION_001",
+  "kernel_certificate": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/QROW_REPLAY_RESULT.json",
+  "flux_normalization": {
+    "R_k": "Reg[rho(n,k,l)*T(n,k,l)]",
+    "R_l": "Reg[sigma(n,k,l)*T(n,k,l)]",
+    "reason": "The regularized products are finite on the n+1,n+2,n+3 shells. Weights are multiplied only after this cancellation, so no infinity-times-zero or analytic-continuation convention is introduced into the protected discrete target."
+  },
+  "general_residual": {
+    "sequence": "Y_v(n)=sum_{k,l} T(n,k,l)*v(n,k,l)",
+    "temporal_part": "sum_{j=1}^3 c_j(n)*T(n+j,k,l)*(v(n+j,k,l)-v(n,k,l))",
+    "k_part": "-R_k(n,k+1,l)*(v(n,k+1,l)-v(n,k,l))",
+    "l_part": "-R_l(n,k,l+1)*(v(n,k,l+1)-v(n,k,l))",
+    "E_v": "temporal_part+k_part+l_part",
+    "summation_identity": "L_BZ[Y_v](n)=sum_{k,l} E_v(n,k,l)",
+    "summation_identity_status": "EXACT_DISCRETE_PRODUCT_RULE_WITH_REVERIFIED_QROW_AND_ZERO_BOUNDARY_FLUX"
+  },
+  "protected_weight_instantiations": {
+    "E_P5": {
+      "v": "w5_sym",
+      "source": "campaigns/odd_zeta/OZ_RT_BZ_T3_002/target.py:w5sym"
+    },
+    "E_W": {
+      "v": "W1",
+      "source": "campaigns/odd_zeta/OZ_RT_BZ_T3_002/target.py:W1"
+    },
+    "E_D": {
+      "v": "W1+2*w5_sym",
+      "source": "campaigns/odd_zeta/OZ_RT_BZ_T3_002/target.py:cell",
+      "linearity": "E_D=E_W+2*E_P5"
+    }
+  },
+  "selection_policy": "Canonicalize the direct E_D residual first because it preserves any cross-component cancellation. Retain E_P5 and E_W as independent diagnostic projections; do not replace E_D by component proof obligations unless that decomposition is advantageous and exactly verified.",
+  "next_exact_obligation": "Construct a pole-free canonical representation of E_D over the protected weight-five atom basis, verify it independently against the defining residual at exact points and by coefficient identity, then search/certify sum_{k,l} E_D=0 without returning to the exhausted generic 198-dimensional raw-flux ansatz.",
+  "residual_sum_zero_proved": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+  "terminal": "QROW_REVERIFIED_REDUCED_WEIGHT5_RESIDUAL_INTERFACE_LOCKED"
+}
