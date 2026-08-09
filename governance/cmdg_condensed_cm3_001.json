@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0.0",
+  "operation_id": "CMDG-CONDENSED-CM3-001",
+  "issue": "MATH-PROGRAMME#342",
+  "repository_baseline": "941fa3b2003327fc6f540d8da73b329baf7340ae",
+  "repository_baseline_tree": "2353d13de3cf3a0fe28758da17204766344c52bf",
+  "predecessor_disposition": "CMDG_CONDENSED_CM2_001_PROTECTED_CLOSED",
+  "protected_cm2": {
+    "operation": "CMDG-CONDENSED-CM2-001",
+    "issue": "MATH-PROGRAMME#338",
+    "pull_request": "MATH-PROGRAMME#339",
+    "reviewed_head": "3bbdaafcc8af364d3a2735698b9422d6b70dfeaa",
+    "reviewed_tree": "b67e4e8e2c53126c9fc8f8a50d20126d4728e59b",
+    "merge_commit": "9122d5f6765b552df1e491bad01df6fbbb96a6d1",
+    "merge_tree": "b67e4e8e2c53126c9fc8f8a50d20126d4728e59b",
+    "post_merge_cm2_workflow_run": "31294785060",
+    "terminal_comment_id": "5229782011",
+    "terminal_disposition": "CMDG_CONDENSED_CM2_001_PROTECTED_CLOSED",
+    "record_ref": "governance/cmdg_condensed_cm2_001.json",
+    "record_blob_sha1": "11ceaa9577add91a1fa231cab9f403b5d4df2db0",
+    "nodes_ref": "fixtures/cmdg/condensed_cm2_001/nodes.json",
+    "nodes_blob_sha1": "956f10d335c7c9ffb3d17cb121eef7b28f4e998a",
+    "edges_ref": "fixtures/cmdg/condensed_cm2_001/edges.json",
+    "edges_blob_sha1": "cdb9e903c93c3daafa4fe5b514bcb7759e608cff",
+    "formal_probe_ref": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean",
+    "formal_probe_blob_sha1": "d97aceabb4e2ef9db474745192a45a6cc8d7cc00",
+    "authority": "PROTECTED_REUSE_NO_REDEFINITION"
+  },
+  "environment": {
+    "lean_toolchain": "leanprover/lean4:v4.33.0-rc1",
+    "lean_commit": "62eed1db4d67327ec8120be05f1a1b0847d74561",
+    "toolchain_blob_sha1": "fd85b262bf1c734663aa8292b0101f672168788f",
+    "lake_manifest_blob_sha1": "9e478e09f622406970dc9613f6cf323ade82f787",
+    "mathlib_repository": "leanprover-community/mathlib4",
+    "mathlib_commit": "79d0395a1825a6264ad5d269e35e60537518955e"
+  },
+  "formal_target": {
+    "formal_model": "CondensedMod.{u} R := Condensed.{u} (ModuleCat.{u+1} R)",
+    "condensed_ab_model": "CondensedAb.{u} := CondensedMod.{u} (ULift ℤ)",
+    "formal_cardinality_policy": "NO_CARDINALITY_BOUND",
+    "formal_source_characterization": "MODULE_VALUED_EXTENSION_OF_PINNED_PYKNOTIC_LIKE_CONDENSED_MODEL",
+    "programme_mathematical_target": "Clausen–Scholze condensed mathematics with cardinality/smallness profile explicit",
+    "concordance_status": "PARTIAL_INTERFACE_ONLY",
+    "cm_scope": "CM3_ABELIAN_AB5_AB4_AB4STAR_ONLY",
+    "c04_candidate_judgment": "SATISFIED_FOR_CM3_AB_INTERFACE_IF_PROTECTED_ADMITTED",
+    "c04_authority_status": "NOT_YET_CONFERRED_PENDING_INDEPENDENT_REVIEW_AND_PROTECTED_ADMISSION"
+  },
+  "source_lineage": [
+    {"declaration": "CondensedMod / CondensedAb / Abelian instance", "path": "Mathlib/Condensed/Module.lean", "git_blob_sha1": "f5834efa0d5bf1289187abe3319536186d67a405"},
+    {"declaration": "Condensed AB5 / AB4 / AB4Star instances", "path": "Mathlib/Condensed/AB.lean", "git_blob_sha1": "4c731d5cb9005146b522c23c19a9d81f536f57c1"},
+    {"declaration": "CategoryTheory.sheafIsAbelian", "path": "Mathlib/CategoryTheory/Sites/Abelian.lean", "git_blob_sha1": "d5250edfc56c2d79c7dae942fe0ab1e8a93ac707"},
+    {"declaration": "Sheaf exact-colimit/exact-limit machinery", "path": "Mathlib/CategoryTheory/Abelian/GrothendieckAxioms/Sheaf.lean", "git_blob_sha1": "2601697678b5ed6ea3c0c95c2a074e39732a1c66"},
+    {"declaration": "ModuleCat AB5 / AB4 / AB4Star source instances", "path": "Mathlib/Algebra/Category/ModuleCat/AB.lean", "git_blob_sha1": "183a3dd6be8be75c2dacefa46e496207184e7e1c"}
+  ],
+  "formal_evidence": {
+    "project_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+    "module": "CMDGCondensedCM3",
+    "source_ref": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM3.lean",
+    "extractor_config_ref": "fixtures/cmdg/extractor_001/condensed_cm3.json",
+    "required_declarations": [
+      "CMDG.CondensedCM3.cm3Abelian",
+      "CMDG.CondensedCM3.cm3AB5",
+      "CMDG.CondensedCM3.cm3AB4",
+      "CMDG.CondensedCM3.cm3AB4Star",
+      "CMDG.CondensedCM3.cm3CondensedAbAbelian",
+      "CMDG.CondensedCM3.cm3CondensedAbAB5",
+      "CMDG.CondensedCM3.cm3CondensedAbAB4",
+      "CMDG.CondensedCM3.cm3CondensedAbAB4Star"
+    ],
+    "root_declarations": [
+      "CMDG.CondensedCM3.cm3CondensedAbAbelian",
+      "CMDG.CondensedCM3.cm3CondensedAbAB5",
+      "CMDG.CondensedCM3.cm3CondensedAbAB4",
+      "CMDG.CondensedCM3.cm3CondensedAbAB4Star"
+    ],
+    "evidence_strength": "CHECKED_ABELIAN_AND_AB5_AB4_AB4STAR_WITNESSES_FOR_CONDENSED_MODULES_AND_CONDENSED_AB"
+  },
+  "graph": {
+    "node_fixture": "fixtures/cmdg/condensed_cm3_001/nodes.json",
+    "edge_fixture": "fixtures/cmdg/condensed_cm3_001/edges.json",
+    "semantic_edge_authority": "PROPOSED_PENDING_INDEPENDENT_EXACT_HEAD_REVIEW_AND_PROTECTED_ADMISSION",
+    "proof_implementation_provenance_authority": "OBSERVED_ONLY",
+    "graph_certified": false
+  },
+  "regression_anchors": {
+    "condensed_cm2": {"artifact_ref": "governance/cmdg_condensed_cm2_001.json", "workflow": ".github/workflows/cmdg-condensed-cm2.yml"},
+    "condensed_cm1": {"artifact_ref": "governance/cmdg_condensed_cm1_001.json", "workflow": ".github/workflows/cmdg-condensed-cm1.yml"},
+    "vertical_spine_v0": {"artifact_ref": "governance/cmdg_vertical_spine_v0_001.json", "workflow": ".github/workflows/cmdg-vertical-spine-v0.yml"},
+    "nat_concordance": {"artifact_ref": "governance/cmdg_nat_concordance_001.json", "workflow": ".github/workflows/cmdg-nat-concordance.yml"},
+    "euclid_bridge": {"artifact_ref": "governance/cmdg_euclid_bridge_001.json", "workflow": ".github/workflows/cmdg-euclid-bridge.yml"}
+  },
+  "claim_boundary": {
+    "cm3_abelian_ab_candidate": true,
+    "c04_cm3_interface_candidate_satisfied": true,
+    "cm3_semantic_authority_conferred": false,
+    "is_grothendieck_abelian_conferred": false,
+    "separator_or_generator_conferred": false,
+    "derived_category_or_ext_or_cohomology_conferred": false,
+    "enough_injectives_or_projectives_conferred": false,
+    "full_clausen_scholze_concordance_conferred": false,
+    "pyknotic_cardinal_bounded_equivalence_conferred": false,
+    "solid_or_liquid_conferred": false,
+    "c04_discharged_beyond_cm3": false,
+    "c05_discharged": false,
+    "c06_discharged": false,
+    "graph_certified_conferred": false,
+    "dependency_minimality_or_uniqueness_claim": false,
+    "global_dependency_completeness_claim": false,
+    "semantic_authority_conferred_by_artifact_alone": false,
+    "independent_review_required": true,
+    "protected_admission_required": true
+  },
+  "candidate_disposition": "CM3_CANDIDATE_PENDING_INDEPENDENT_REVIEW_AND_PROTECTED_ADMISSION"
+}
