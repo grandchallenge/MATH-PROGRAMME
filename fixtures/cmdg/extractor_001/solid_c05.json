@@ -1,22 +1,23 @@
 {
   "schema_version": "1.0.0",
-  "operation_id": "CMDG-SOLID-C05-001",
-  "lean_project_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
-  "lean_module": "CMDGSolidC05",
-  "root_declarations": [
+  "fixture_id": "CMDG-LEAN-EXTRACTOR-SOLID-C05-001",
+  "project_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+  "module": "CMDGSolidC05",
+  "roots": [
     "CMDG.SolidC05.FiniteTypeZAlgebraSolid",
     "CMDG.SolidC05.GeneralCommRingSolidReconstructed"
   ],
-  "required_declarations": [
-    "CMDG.SolidC05.c05ProfiniteSolid",
-    "CMDG.SolidC05.c05PointwiseRightKan",
-    "CMDG.SolidC05.c05Solidification",
-    "CMDG.SolidC05.pinnedSolidField",
-    "CMDG.SolidC05.FiniteTypeZAlgebraSolid",
-    "CMDG.SolidC05.ZX",
-    "CMDG.SolidC05.evalZXAt",
-    "CMDG.SolidC05.restrictCondensedScalars",
-    "CMDG.SolidC05.GeneralCommRingSolidReconstructed"
-  ],
-  "forbidden_axioms": ["sorryAx"]
+  "expected_toolchain_git_blob_sha1": "fd85b262bf1c734663aa8292b0101f672168788f",
+  "expected_lake_manifest_git_blob_sha1": "9e478e09f622406970dc9613f6cf323ade82f787",
+  "expected_axioms": {
+    "CMDG.SolidC05.FiniteTypeZAlgebraSolid": ["Classical.choice", "Quot.sound", "propext"],
+    "CMDG.SolidC05.GeneralCommRingSolidReconstructed": ["Classical.choice", "Quot.sound", "propext"]
+  },
+  "claim_boundary": {
+    "semantic_authority_conferred": false,
+    "realizes_as_conferred": false,
+    "foundational_concordance_conferred": false,
+    "graph_certified_conferred": false,
+    "dependency_minimality_claim": false
+  }
 }
