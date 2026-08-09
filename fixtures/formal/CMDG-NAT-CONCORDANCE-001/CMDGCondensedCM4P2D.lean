@@ -78,13 +78,14 @@ noncomputable def measurePresheafFunctor : Profinite.{u} ⥤ PresheafModule wher
     change
       (MonoidalClosed.pre (discreteContinuousPresheaf.map ((𝟙 S).op))).app coefficientPresheaf =
         𝟙 (measurePresheafObj S)
-    rw [measurePresheafObj_eq_functorEnrichedHom]
     have h :
         discreteContinuousPresheaf.map ((𝟙 S).op) =
           𝟙 (discreteContinuousPresheaf.obj (op S)) := by
       simpa using discreteContinuousPresheaf.map_id (op S)
-    rw [h, MonoidalClosed.pre_id]
-    rfl
+    rw [h]
+    have hp := congrArg (fun η => η.app coefficientPresheaf)
+      (MonoidalClosed.pre_id (discreteContinuousPresheaf.obj (op S)))
+    simpa [measurePresheafObj, MonoidalClosed.internalHom] using hp
   map_comp f g := by
     change
       (MonoidalClosed.pre (discreteContinuousPresheaf.map ((f ≫ g).op))).app
