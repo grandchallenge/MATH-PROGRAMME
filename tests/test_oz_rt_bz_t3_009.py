@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import importlib.util
 import json
-import tempfile
 import unittest
 from pathlib import Path
 
@@ -18,7 +17,7 @@ spec.loader.exec_module(val)
 
 
 class T3009Tests(unittest.TestCase):
-    def test_baseline_validates(self):
+    def test_package_validates(self):
         val.validate()
 
     def test_nonvacuity_is_explicit(self):
@@ -26,15 +25,18 @@ class T3009Tests(unittest.TestCase):
         self.assertTrue(d["nonvacuity"]["scalar_D_recurrence_fitting_forbidden"])
         self.assertFalse(d["nonvacuity"]["finite_residuals_are_proof"])
         self.assertNotEqual(d["finite_component_baseline"][1]["P5"], [0,1])
+        self.assertNotEqual(d["finite_component_baseline"][1]["W"], [0,1])
 
     def test_operator_normalization_is_locked(self):
         d = json.loads((HERE / "RECURRENCE_LOCK.json").read_text())
         self.assertEqual(d["coefficients"]["c3"], "2*(n+3)^5*(2*n+5)*a0(n)")
         self.assertFalse(d["normalization_drift_allowed"])
 
-    def test_moving_support_not_prematurely_certified(self):
+    def test_moving_support_is_uniformly_certified(self):
         d = json.loads((HERE / "BASELINE_RESULT.json").read_text())
-        self.assertFalse(d["moving_support"]["uniform_support_proof_complete"])
+        self.assertTrue(d["moving_support"]["uniform_support_proof_complete"])
+        self.assertFalse(d["moving_support"]["shell_omission"])
+        self.assertIn("binom(n+j,k)^2", d["moving_support"]["uniform_zero_extension_lemma"])
 
     def test_middle_row_checkpoint_is_not_t3_certificate(self):
         d = json.loads((HERE / "BASELINE_RESULT.json").read_text())
@@ -42,9 +44,11 @@ class T3009Tests(unittest.TestCase):
 
     def test_no_proof_promotion(self):
         d = json.loads((HERE / "BASELINE_RESULT.json").read_text())
-        self.assertEqual(d["proof_effect"], "NONE")
-        self.assertEqual(d["promotion_effect"], "NONE")
-        self.assertEqual(d["t3_status"], "OPEN_WITH_CHARACTERIZED_BLOCKER")
+        s = json.loads((HERE / "SEARCH_RESULT.json").read_text())
+        for x in (d,s):
+            self.assertEqual(x["proof_effect"], "NONE")
+            self.assertEqual(x["promotion_effect"], "NONE")
+            self.assertEqual(x["t3_status"], "OPEN_WITH_CHARACTERIZED_BLOCKER")
 
 
 if __name__ == "__main__":
