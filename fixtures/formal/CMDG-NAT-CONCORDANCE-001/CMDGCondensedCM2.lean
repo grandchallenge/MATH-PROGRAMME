@@ -55,20 +55,20 @@ noncomputable def cm2Adj (X : CondensedSet.{u}) :
   exact (cm2Closed X).adj
 
 noncomputable def cm2HomEquiv (X Y Z : CondensedSet.{u}) :
-    (cm2TensorLeft X |>.obj Y ⟶ Z) ≃
-      (Y ⟶ cm2RightAdj X |>.obj Z) :=
+    ((cm2TensorLeft X).obj Y ⟶ Z) ≃
+      (Y ⟶ (cm2RightAdj X).obj Z) :=
   (cm2Adj X).homEquiv Y Z
 
 noncomputable def cm2Unit (X Y : CondensedSet.{u}) :
-    Y ⟶ cm2RightAdj X |>.obj (cm2TensorLeft X |>.obj Y) :=
+    Y ⟶ (cm2RightAdj X).obj ((cm2TensorLeft X).obj Y) :=
   (cm2Adj X).unit.app Y
 
 noncomputable def cm2Counit (X Z : CondensedSet.{u}) :
-    cm2TensorLeft X |>.obj (cm2RightAdj X |>.obj Z) ⟶ Z :=
+    (cm2TensorLeft X).obj ((cm2RightAdj X).obj Z) ⟶ Z :=
   (cm2Adj X).counit.app Z
 
 noncomputable def cm2Evaluation (X Z : CondensedSet.{u}) :
-    cm2TensorLeft X |>.obj (cm2RightAdj X |>.obj Z) ⟶ Z :=
+    (cm2TensorLeft X).obj ((cm2RightAdj X).obj Z) ⟶ Z :=
   cm2Counit X Z
 
 theorem cm2TensorLeft_source (X : CondensedSet.{u}) :
