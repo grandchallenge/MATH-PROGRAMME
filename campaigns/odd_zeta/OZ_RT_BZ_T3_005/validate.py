@@ -22,14 +22,16 @@ def errors(record=R,result=S,mapping=None,run_independent=True):
  sa=result.get('stage_a',{}); sr=sa.get('search',{})
  if sa.get('newly_exhausted_class')!='PARAMETER_DEPENDENT_ORDER2_LSIDE_U_ES_SAUX_ETADEG_LE_1_POLYDEG_LE_4': out.append('mirror class drift')
  if sr.get('external_shift')!='l' or sr.get('differences')!=['k','s'] or sr.get('strongest_frontier')!=f: out.append('retained mirror result drift')
+ if result.get('next_distinct_route')!='COUPLED_WEIGHT5_RAW_JET_ORDER2_SEARCH_001': out.append('next route drift')
  B=record.get('stage_b_one_body_linear_jet',{})
  if B.get('isolator')!='P_r(L,o;z)=prod_{i=1}^L(1-(-z/(o+i))^r)' or B.get('monomial_count')!=198: out.append('linear jet drift')
  if digest(mapping)!='c7408f49732c8bcdbabe83f442db3476153a4f99619dcab159236c0556e6edd2': out.append('jet map digest drift')
- if digest(result)!='403d3605549cb476bf6114f67ab9d0bdea0d6dfab230eb07256f3655d0b432b3': out.append('search digest drift')
+ if digest(result)!='690db8372fc054518d5c0ac8fe88e03f3a3424071562b7b7c68c3b138a33dd84': out.append('search digest drift')
  C=record.get('stage_c_nested_orientation_coupling',{})
  if not C.get('both_nested_orientations_present') or C.get('certified_parent_telescoper_for_full_jet') or C.get('differentiated_boundary_certificate_complete'): out.append('coupling/proof boundary drift')
  d=record.get('disposition',{})
  if d.get('status')!='OPEN_WITH_CHARACTERIZED_BLOCKER' or d.get('proof_effect')!='NONE' or d.get('promotion_effect')!='NONE' or d.get('proof_found') or d.get('counterexample_found'): out.append('disposition inflation')
+ if d.get('characterized_blocker',{}).get('next_distinct_route')!='COUPLED_WEIGHT5_RAW_JET_ORDER2_SEARCH_001': out.append('record next route drift')
  if any(record.get('nonclaims',{}).values()): out.append('nonclaim promoted')
  if run_independent and not out:
   for got,(deg,nmax) in zip(sr.get('stages',[]),((0,6),(1,6),(2,6),(3,7),(4,8))):
