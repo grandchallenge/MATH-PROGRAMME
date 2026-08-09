@@ -168,10 +168,15 @@ def validate_payload(record, nodes, edges, lean_text, extractor) -> None:
     if re.search(r"(?m)^[ \t]*(sorry|axiom)(?:[ \t]|$)", lean_text):
         reject("FORMAL_PLACEHOLDER_OR_LOCAL_AXIOM", "sorry/axiom")
     for surface in [
-        "import Mathlib.Condensed.AB", "noncomputable def cm3Abelian", "noncomputable def cm3AB5",
-        "noncomputable def cm3AB4", "noncomputable def cm3AB4Star",
-        "noncomputable def cm3CondensedAbAbelian", "noncomputable def cm3CondensedAbAB5",
-        "noncomputable def cm3CondensedAbAB4", "noncomputable def cm3CondensedAbAB4Star",
+        "import Mathlib.Condensed.AB",
+        "noncomputable def cm3Abelian (",
+        "noncomputable def cm3AB5 (",
+        "noncomputable def cm3AB4 (",
+        "noncomputable def cm3AB4Star (",
+        "noncomputable def cm3CondensedAbAbelian",
+        "noncomputable def cm3CondensedAbAB5",
+        "noncomputable def cm3CondensedAbAB4 :",
+        "noncomputable def cm3CondensedAbAB4Star :",
     ]:
         if surface not in lean_text:
             reject("FORMAL_EVIDENCE_SURFACE_MISSING", surface)
