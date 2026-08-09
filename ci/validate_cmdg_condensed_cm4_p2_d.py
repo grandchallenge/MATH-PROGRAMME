@@ -28,6 +28,7 @@ EXPECTED_SOURCES = {
     "Mathlib/CategoryTheory/Sites/Monoidal.lean": "64b111b39f9f44dcab88a7fbe60411ef5008532c",
     "Mathlib/CategoryTheory/Monoidal/Closed/FunctorCategory/Basic.lean": "6f3c9a844bc5f98ef1754263de2e2c54496356ea",
     "Mathlib/CategoryTheory/Monoidal/Closed/Basic.lean": "57dd533860e4be3957c13211f275b6f75441787c",
+    "Mathlib/CategoryTheory/Monoidal/Closed/Enrichment.lean": "6083cfbfd92a9e274a6559de438d43e2a3ac600d",
 }
 
 FORBIDDEN_TRUE = {
@@ -108,6 +109,10 @@ def validate(data=None):
             "MonoidalClosed.pre_map",
             "MonoidalClosed.internalHom",
         },
+        "Mathlib/CategoryTheory/Monoidal/Closed/Enrichment.lean": {
+            "MonoidalClosed.enrichedCategorySelf",
+            "MonoidalClosed.enrichedOrdinaryCategorySelf",
+        },
     }
     for path, decls in required_decls.items():
         assert decls <= set(sources[path]["declarations"])
@@ -154,6 +159,7 @@ def validate(data=None):
         "measureFunctor : Profinite.{u} ⥤ CondensedMod.{u} R",
         "dualityHomEquiv",
         "MonoidalClosed.FunctorCategory.homEquiv",
+        "open scoped CategoryTheory.MonoidalClosed",
     ):
         assert snippet in lean, snippet
 
@@ -194,6 +200,7 @@ def mutation_tests():
 
     mut(("repository_baseline",), "0" * 40)
     mut(("environment", "mathlib_commit"), "0" * 40)
+    mut(("exact_tree_audit", "observed_sources"), base["exact_tree_audit"]["observed_sources"][:-1])
     mut(("construction", "basis_dependency"), True)
     mut(("construction", "objectwise_product_definition"), True)
     mut(("construction", "variance"), "CONTRAVARIANT_PROFINITE")
