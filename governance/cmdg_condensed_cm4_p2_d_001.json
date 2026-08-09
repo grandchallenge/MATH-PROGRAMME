@@ -33,6 +33,10 @@
           "CondensedMod.LocallyConstant.functorIsoDiscrete",
           "CondensedMod.LocallyConstant.adjunction"
         ],
+        "signature": "functorToPresheaves : ModuleCat.{u+1} R -> (CompHaus.{u}^op -> ModuleCat R); functor : ModuleCat R -> CondensedMod.{u} R; functorIsoDiscrete : functor R ~= discrete _; adjunction : functor R |- underlying (ModuleCat R)",
+        "variance": "Covariant in the input R-module; the CompHaus site variable is contravariant by locally-constant pullback/comap; functor is left adjoint to underlying.",
+        "universe_behavior": "R : Type (u+1); source ModuleCat.{u+1} R; site CompHaus.{u}; output CondensedMod.{u} R.",
+        "evidence_class": "FORMAL_REACHABILITY",
         "role": "construct C(S,R) and its discrete condensed-module presentation"
       },
       {
@@ -42,6 +46,10 @@
           "ModuleCat.monoidalClosed",
           "ModuleCat.monoidalClosedHomEquiv"
         ],
+        "signature": "monoidalClosedHomEquiv (M N P : ModuleCat.{v} R) : (M tensor N -> P) ~= (N -> internalHom(M,P)); instance : MonoidalClosed (ModuleCat.{v} R)",
+        "variance": "Internal Hom is contravariant in its first module argument and covariant in its target; tensorLeft M is left adjoint to internalHom(M,-).",
+        "universe_behavior": "Generic R : Type v; instantiated with v = u+1 and R = ULift.{u+1} Z in P2-D.",
+        "evidence_class": "FORMAL_REACHABILITY",
         "role": "closed-monoidal internal Hom for R-modules"
       },
       {
@@ -50,6 +58,10 @@
         "declarations": [
           "Presheaf.isSheaf_functorEnrichedHom"
         ],
+        "signature": "isSheaf_functorEnrichedHom (F G : C^op -> A) (hG : IsSheaf J G) [HasFunctorEnrichedHom A F G] : IsSheaf J (functorEnrichedHom A F G)",
+        "variance": "F is the fixed source of enriched Hom; G is the target sheaf. The result preserves the target sheaf condition while retaining internal-Hom contravariance in F.",
+        "universe_behavior": "Polymorphic in site C and closed monoidal target A; instantiated at C = CompHaus.{u}, A = ModuleCat.{u+1} R.",
+        "evidence_class": "FORMAL_REACHABILITY",
         "role": "prove the enriched internal-Hom presheaf is already a sheaf when the target is a sheaf"
       },
       {
@@ -59,6 +71,10 @@
           "MonoidalClosed.FunctorCategory.homEquiv",
           "MonoidalClosed.FunctorCategory.monoidalClosed"
         ],
+        "signature": "homEquiv : (F1 tensor F2 -> F3) ~= (F2 -> functorEnrichedHom C F1 F3); scoped instance monoidalClosed : MonoidalClosed (J -> C)",
+        "variance": "The enriched internal Hom is contravariant in F1 and covariant in F3; the Hom equivalence is natural in the tensor/Hom variables.",
+        "universe_behavior": "Polymorphic in J : Type u2 and C : Type u1; instantiated at J = CompHaus.{u}^op and C = ModuleCat.{u+1} R.",
+        "evidence_class": "FORMAL_REACHABILITY",
         "role": "closed structure and defining Hom equivalence in the presheaf category"
       },
       {
@@ -70,6 +86,10 @@
           "MonoidalClosed.pre_map",
           "MonoidalClosed.internalHom"
         ],
+        "signature": "pre (f : B -> A) : ihom A -> ihom B; pre_id; pre_map; internalHom [MonoidalClosed C] : C^op -> C -> C",
+        "variance": "Explicit contravariance in the first internal-Hom argument; pre_map reverses composition, yielding covariance of the P2-D measure functor after pullback on C(S,R).",
+        "universe_behavior": "Generic closed monoidal category C; no extra universe lift beyond that of C. Instantiated at the presheaf category over ModuleCat.{u+1} R.",
+        "evidence_class": "FORMAL_REACHABILITY",
         "role": "contravariance of internal Hom in the source and functor-law support"
       },
       {
@@ -79,6 +99,10 @@
           "MonoidalClosed.enrichedCategorySelf",
           "MonoidalClosed.enrichedOrdinaryCategorySelf"
         ],
+        "signature": "scoped instance enrichedCategorySelf : EnrichedCategory C C; scoped instance enrichedOrdinaryCategorySelf : EnrichedOrdinaryCategory C C",
+        "variance": "Self-enrichment identifies enriched hom-objects with the closed internal Hom; ordinary morphisms map into those hom-objects through the closed adjunction.",
+        "universe_behavior": "C : Type u with Category.{v} C, MonoidalCategory C, MonoidalClosed C; activated for ModuleCat.{u+1} R and its functor category.",
+        "evidence_class": "FORMAL_REACHABILITY",
         "role": "activate the closed category self-enrichment required by functorEnrichedHom"
       }
     ],
