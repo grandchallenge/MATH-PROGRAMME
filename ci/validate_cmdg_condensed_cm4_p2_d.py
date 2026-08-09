@@ -87,7 +87,12 @@ def validate(data=None):
     sources = {row["path"]: row for row in audit["observed_sources"]}
     assert set(EXPECTED_SOURCES) <= set(sources)
     for path, blob in EXPECTED_SOURCES.items():
-        assert sources[path]["blob"] == blob
+        row = sources[path]
+        assert row["blob"] == blob
+        assert row["signature"].strip()
+        assert row["variance"].strip()
+        assert row["universe_behavior"].strip()
+        assert row["evidence_class"] == "FORMAL_REACHABILITY"
 
     required_decls = {
         "Mathlib/Condensed/Discrete/Module.lean": {
@@ -201,6 +206,12 @@ def mutation_tests():
     mut(("repository_baseline",), "0" * 40)
     mut(("environment", "mathlib_commit"), "0" * 40)
     mut(("exact_tree_audit", "observed_sources"), base["exact_tree_audit"]["observed_sources"][:-1])
+    bad_signature = copy.deepcopy(base["exact_tree_audit"]["observed_sources"])
+    bad_signature[0]["signature"] = ""
+    mut(("exact_tree_audit", "observed_sources"), bad_signature)
+    bad_class = copy.deepcopy(base["exact_tree_audit"]["observed_sources"])
+    bad_class[0]["evidence_class"] = "SOURCE_CONCORDANCE"
+    mut(("exact_tree_audit", "observed_sources"), bad_class)
     mut(("construction", "basis_dependency"), True)
     mut(("construction", "objectwise_product_definition"), True)
     mut(("construction", "variance"), "CONTRAVARIANT_PROFINITE")
