@@ -22,27 +22,10 @@ open scoped CategoryTheory.MonoidalClosed
 lemma rankOneEvaluation_multiplication (X : CompHaus.{u}) :
     rankOneEvaluationApp X ≫ rankOneMultiplicationApp X =
       𝟙 (rankOneInternalHom.obj (op X)) := by
-  change
-    rankOneEvaluationApp X ≫ rankOneMultiplicationApp X =
-      𝟙 (end_ (diagram
-        (ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R)
-        (Under.forget (op X) ⋙ coefficientPresheaf)
-        (Under.forget (op X) ⋙ coefficientPresheaf)))
+  unfold rankOneMultiplicationApp
   apply end_.hom_ext
   intro k
-  change
-    (rankOneEvaluationApp X ≫ rankOneMultiplicationApp X) ≫
-        enrichedHomπ
-          (ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R)
-          (Under.forget (op X) ⋙ coefficientPresheaf)
-          (Under.forget (op X) ⋙ coefficientPresheaf)
-          k =
-      enrichedHomπ
-        (ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R)
-        (Under.forget (op X) ⋙ coefficientPresheaf)
-        (Under.forget (op X) ⋙ coefficientPresheaf)
-        k
-  rw [Category.assoc, rankOneMultiplicationApp_projection]
+  rw [Category.assoc, end_.lift_π, Category.id_comp]
   apply ModuleCat.hom_injective
   ext φ
   change
