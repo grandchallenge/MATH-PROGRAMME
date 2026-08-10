@@ -12,6 +12,7 @@ namespace CMDG.CondensedCM4P2E.Algebraic
 universe u
 
 open CategoryTheory
+open scoped BigOperators
 
 attribute [local instance] FintypeCat.fintype
 
@@ -65,6 +66,13 @@ noncomputable def finiteSmallFreeModule :
     ext a z
     simp [Finsupp.lmapDomain_apply]
 
+/-- Explicit formula for the inverse finite dual/free equivalence. -/
+lemma finiteFunctionDualFreeEquiv_symm_apply
+    (X : FintypeCat.{u}) (a : X →₀ R.{u}) (h : X → R.{u}) :
+    ((CMDG.CondensedCM4P2E.finiteFunctionDualFreeEquiv.{u, u} X).symm a) h =
+      ∑ x, h x * a x := by
+  rfl
+
 /-- The inverse finite duality map is natural on free generators. -/
 noncomputable def finiteSmallFreeDualNatIso :
     finiteSmallFreeModule ≅ finiteFunctionDualModule :=
@@ -78,9 +86,12 @@ noncomputable def finiteSmallFreeDualNatIso :
       intro x r
       apply LinearMap.ext
       intro h
-      simp [finiteSmallFreeModule, finiteFunctionDualModule, finiteFunctionPullback,
-        CMDG.CondensedCM4P2E.finiteFunctionDualFreeEquiv,
-        CMDG.CondensedCM4P2E.finiteFunctionDualEquiv])
+      change
+        ((CMDG.CondensedCM4P2E.finiteFunctionDualFreeEquiv.{u, u} Y).symm
+          (Finsupp.lmapDomain R.{u} R.{u} (fun x => f x) (Finsupp.single x r))) h =
+        ((CMDG.CondensedCM4P2E.finiteFunctionDualFreeEquiv.{u, u} X).symm
+          (Finsupp.single x r)) (fun y => h (f y))
+      simp [finiteFunctionDualFreeEquiv_symm_apply, Finsupp.lmapDomain_apply])
 
 /-- Canonical natural algebraic dual/free comparison on finite sets. -/
 noncomputable def finiteFunctionDualFreeNatIso :
@@ -90,12 +101,14 @@ noncomputable def finiteFunctionDualFreeNatIso :
 #check finiteFunctionPullback
 #check finiteFunctionDualModule
 #check finiteSmallFreeModule
+#check finiteFunctionDualFreeEquiv_symm_apply
 #check finiteSmallFreeDualNatIso
 #check finiteFunctionDualFreeNatIso
 
 #print axioms finiteFunctionPullback
 #print axioms finiteFunctionDualModule
 #print axioms finiteSmallFreeModule
+#print axioms finiteFunctionDualFreeEquiv_symm_apply
 #print axioms finiteSmallFreeDualNatIso
 #print axioms finiteFunctionDualFreeNatIso
 
