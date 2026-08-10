@@ -142,11 +142,43 @@ def validate_workflows_v4(config: dict) -> list[str]:
         "candidate_mutation_allowed",
         "frozen_occurrence_snapshot",
         "runtime_finalization_pending",
+        "successor_transition_mutation_allowed",
+        'TRANSITION_OCCURRENCE_KEY = "structural_sweep:2026-08-10T03:45:00Z"',
+        "now >= occurrence.due_at",
+        "administrative_maintenance_steady_state_0_1.json",
     ):
         if marker not in frozen_wrapper:
             errors.append(
-                f"prepare_administrative_candidate_v4.py: missing freeze marker {marker}"
+                f"prepare_administrative_candidate_v4.py: missing freeze/transition marker {marker}"
             )
+
+    steady_state_record = (
+        ROOT / "governance" / "administrative_maintenance_steady_state_0_1.json"
+    )
+    steady_state_schema = (
+        ROOT / "schemas" / "administrative_maintenance_steady_state.schema.json"
+    )
+    steady_state_test = ROOT / "tests" / "test_administrative_steady_state.py"
+    for path in (steady_state_record, steady_state_schema, steady_state_test):
+        if not path.exists():
+            errors.append(f"steady-state successor artifact missing: {path.relative_to(ROOT)}")
+
+    if steady_state_record.exists():
+        import json
+        record = json.loads(steady_state_record.read_text(encoding="utf-8"))
+        if record.get("successor_id") != "MP-ADMIN-STEADY-STATE-0.1-001":
+            errors.append("steady-state successor id drift")
+        if record.get("acceleration_factor") != 0.1:
+            errors.append("steady-state acceleration factor drift")
+        bridge = record.get("transition_bridge", {})
+        if bridge.get("occurrence_key") != "structural_sweep:2026-08-10T03:45:00Z":
+            errors.append("steady-state transition occurrence drift")
+        if bridge.get("deadline_reset") is not False:
+            errors.append("steady-state transition may not reset deadline")
+        if bridge.get("required_checks_weakened") is not False:
+            errors.append("steady-state transition may not weaken required checks")
+        if bridge.get("exact_head_gate_weakened") is not False:
+            errors.append("steady-state transition may not weaken exact-head gate")
 
     sync_wrapper = (
         ROOT / "ci" / "synchronize_administrative_completion_v4.py"
