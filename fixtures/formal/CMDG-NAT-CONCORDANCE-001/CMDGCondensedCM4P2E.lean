@@ -92,6 +92,34 @@ noncomputable def finiteFunctionDualFreeEquiv (X : Type u) [Fintype X] :
     ((X → R) →ₗ[R] R) ≃ₗ[R] (X →₀ R) :=
   (finiteFunctionDualEquiv X).trans (Finsupp.linearEquivFunOnFinite R R X).symm
 
+/-- On a discrete space, locally constant `R`-valued maps are canonically all functions. -/
+noncomputable def locallyConstantLinearEquivFunOfDiscrete
+    (X : Type u) [TopologicalSpace X] [DiscreteTopology X] :
+    LocallyConstant X R ≃ₗ[R] (X → R) where
+  toFun f := f
+  invFun f := ⟨f, IsLocallyConstant.of_discrete f⟩
+  left_inv f := by
+    ext x
+    rfl
+  right_inv f := by
+    funext x
+    rfl
+  map_add' f g := by
+    funext x
+    rfl
+  map_smul' c f := by
+    funext x
+    rfl
+
+/-- For a finite profinite set, the P2-D continuous-function module is canonically the ordinary
+finite function module. -/
+noncomputable def finiteContinuousFunctionsIso (X : FintypeCat.{u}) :
+    CMDG.CondensedCM4P2D.continuousFunctions.obj
+        (Opposite.op (FintypeCat.toProfinite.obj X)) ≅
+      ModuleCat.of R (X → R) := by
+  letI : DiscreteTopology X := FintypeCat.discreteTopology X
+  exact (locallyConstantLinearEquivFunOfDiscrete X).toModuleIso
+
 noncomputable def discreteSetFreeAdj :
     (Condensed.discrete (Type (u + 1)) ⋙ Condensed.free R) ⊣
       (Condensed.forget R ⋙ Condensed.underlying (Type (u + 1))) :=
@@ -231,6 +259,8 @@ noncomputable def finiteFreeDiscreteIso :
 #check compHausTopULiftNatIso
 #check finiteRepresentableCondensedIso
 #check finiteFreeDiscreteIso
+#check locallyConstantLinearEquivFunOfDiscrete
+#check finiteContinuousFunctionsIso
 #check TopCat.uliftFunctor
 #check TopCat.uliftFunctorObjHomeo
 #check CompHausLike.LocallyConstant.functorIso
@@ -253,6 +283,8 @@ noncomputable def finiteFreeDiscreteIso :
 
 #print axioms finiteFunctionDualEquiv
 #print axioms finiteFunctionDualFreeEquiv
+#print axioms locallyConstantLinearEquivFunOfDiscrete
+#print axioms finiteContinuousFunctionsIso
 #print axioms discreteFreeIso
 #print axioms finiteDiscreteULiftIso
 #print axioms discreteTopCondensedIso
