@@ -105,6 +105,7 @@ noncomputable def finiteCoefficientFamilyCovariantFunctor :
         (finiteFamilyExtension _ ≫ finiteFamilyInternalHomMap f ≫ finiteFamilyEvaluation _) ≫
           finiteFamilyExtension _ ≫ finiteFamilyInternalHomMap g ≫ finiteFamilyEvaluation _
     rw [finiteFamilyInternalHomMap_comp]
+    simp only [Category.assoc]
     rw [finiteFamilyEvaluation_extension_assoc]
 
 /-- Naturality package for the certified fixed-finite-set internal-dual isomorphisms. -/
