@@ -8,6 +8,7 @@ import Mathlib.CategoryTheory.Functor.KanExtension.Basic
 import Mathlib.CategoryTheory.Functor.KanExtension.Pointwise
 import Mathlib.LinearAlgebra.Finsupp.Pi
 import Mathlib.Algebra.BigOperators.Pi
+import Mathlib.Topology.Category.TopCat.ULift
 
 /-!
 # CMDG CM4-P2-E comparison reconstruction
@@ -141,6 +142,28 @@ noncomputable def discreteFreeIso :
     (Condensed.discrete (Type (u + 1)) ⋙ Condensed.free R) ≅
       (ModuleCat.free R ⋙ Condensed.discrete (ModuleCat.{u + 1} R)) :=
   discreteSetFreeAdj.leftAdjointUniq freeDiscreteModuleAdj
+
+/-!
+## E1 finite-discrete universe bridge probe
+
+`FintypeCat.toProfinite` installs the bottom topology.  The following definitional equality is the
+first exact interface required to compare the finite representable condensed set with the discrete
+condensed set.  The ULift functor records the unavoidable target-universe increase in
+`CondensedSet.{u}`.
+-/
+
+noncomputable abbrev finiteUnderlyingULift : FintypeCat.{u} ⥤ Type (u + 1) :=
+  FintypeCat.incl ⋙ CategoryTheory.uliftFunctor.{u + 1, u}
+
+example :
+    FintypeCat.toProfinite ⋙ Profinite.toTopCat =
+      FintypeCat.incl ⋙ TopCat.discrete := rfl
+
+#check finiteUnderlyingULift
+#check TopCat.uliftFunctor
+#check TopCat.uliftFunctorObjHomeo
+#check CompHausLike.LocallyConstant.functorIso
+#check CondensedSet.LocallyConstant.iso
 
 #check CMDG.CondensedCM4P2D.measureFunctor
 #check CMDG.CondensedCM4P2D.dualityHomEquiv
