@@ -10,6 +10,7 @@ import jsonschema
 ROOT = Path(__file__).resolve().parents[1]
 import sys
 sys.path.insert(0, str(ROOT / "ci"))
+import policy_impact  # noqa: E402
 import validate_cmdg_workflow_impact_gating as gate  # noqa: E402
 
 
@@ -75,6 +76,26 @@ class CMDGWorkflowImpactGatingTests(unittest.TestCase):
         mutated["authority_boundary"]["bypass_created"] = True
         errors = gate.validation_errors(mutated, self.texts)
         self.assertTrue(any("control/schema invalid" in error or "authority" in error for error in errors), errors)
+
+    def test_large_unrelated_pr_remains_allowed(self):
+        paths = [f"docs/generated-{index:04d}.md" for index in range(301)]
+        result = policy_impact.classify_paths(paths, event_name="pull_request")
+        self.assertEqual(result["event_mode"], "transition")
+        self.assertEqual(result["unknown_paths"], [])
+        self.assertEqual(set(result["policy_shards"]), {"core", "docs"})
+
+    def test_large_cmdg_relevant_pr_fails_protected_policy(self):
+        paths = [f"docs/generated-{index:04d}.md" for index in range(300)]
+        paths.append("fixtures/cmdg/condensed_cm1_001/nodes.json")
+        with self.assertRaises(policy_impact.ImpactError) as context:
+            policy_impact.classify_paths(paths, event_name="pull_request")
+        self.assertIn("split the PR", str(context.exception))
+
+    def test_guard_does_not_apply_to_push(self):
+        paths = [f"docs/generated-{index:04d}.md" for index in range(300)]
+        paths.append("fixtures/cmdg/condensed_cm1_001/nodes.json")
+        result = policy_impact.classify_paths(paths, event_name="push")
+        self.assertEqual(result["event_mode"], "transition")
 
 
 if __name__ == "__main__":

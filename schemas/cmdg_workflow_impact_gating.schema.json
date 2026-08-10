@@ -14,6 +14,7 @@
     "pull_request_paths",
     "negative_examples",
     "positive_examples",
+    "native_path_filter_guard",
     "event_semantics",
     "routing_boundary",
     "authority_boundary",
@@ -47,6 +48,17 @@
       "type": "array",
       "minItems": 1,
       "items": {"type": "string", "minLength": 1}
+    },
+    "native_path_filter_guard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event", "max_changed_files", "relevant_large_pr_behavior", "unrelated_large_pr_behavior"],
+      "properties": {
+        "event": {"const": "pull_request"},
+        "max_changed_files": {"const": 300},
+        "relevant_large_pr_behavior": {"const": "FAIL_PROTECTED_PROGRAMME_POLICY__SPLIT_PR_REQUIRED"},
+        "unrelated_large_pr_behavior": {"const": "ALLOW"}
+      }
     },
     "event_semantics": {
       "type": "object",

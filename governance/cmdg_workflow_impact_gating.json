@@ -54,6 +54,12 @@
     "requirements/policy.txt",
     "evidence/UC-WP02-MATHCERT.json"
   ],
+  "native_path_filter_guard": {
+    "event": "pull_request",
+    "max_changed_files": 300,
+    "relevant_large_pr_behavior": "FAIL_PROTECTED_PROGRAMME_POLICY__SPLIT_PR_REQUIRED",
+    "unrelated_large_pr_behavior": "ALLOW"
+  },
   "event_semantics": {
     "pull_request": "PATH_GATED_SHARED_CMDG_CLOSURE",
     "push_main": "PRESERVED_UNCONDITIONAL",
