@@ -223,11 +223,24 @@ noncomputable def continuousULiftSectionEquiv (S X : CompHaus.{u}) :
     ext s
     simp
 
+/-- Presheaf-level natural identification of the Yoneda/ULift condensed set with the sheaf of
+ continuous maps into the topological ULift of the represented compact Hausdorff space. -/
+noncomputable def compHausTopULiftPresheafIso (X : CompHaus.{u}) :
+    (compHausToCondensed.obj X).obj ≅
+      (topCatToCondensedSet.obj (TopCat.uliftFunctor.obj X.toTop)).obj :=
+  NatIso.ofComponents
+    (fun S => equivEquivIso (continuousULiftSectionEquiv (unop S) X))
+    (by
+      intro S T f
+      ext g s
+      rfl)
+
 #check finiteUnderlyingULift
 #check finiteDiscreteULiftIso
 #check discreteTopCondensedIso
 #check finiteDiscreteCondensedIso
 #check continuousULiftSectionEquiv
+#check compHausTopULiftPresheafIso
 #check TopCat.uliftFunctor
 #check TopCat.uliftFunctorObjHomeo
 #check CompHausLike.LocallyConstant.functorIso
@@ -256,5 +269,6 @@ noncomputable def continuousULiftSectionEquiv (S X : CompHaus.{u}) :
 #print axioms discreteTopCondensedIso
 #print axioms finiteDiscreteCondensedIso
 #print axioms continuousULiftSectionEquiv
+#print axioms compHausTopULiftPresheafIso
 
 end CMDG.CondensedCM4P2E
