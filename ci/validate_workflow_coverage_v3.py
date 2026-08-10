@@ -81,7 +81,7 @@ def candidate_workflow_errors(texts: dict[str, str]) -> list[str]:
         "id: admin-token",
         "permission-administration: write",
         "EVIDENCE_GITHUB_TOKEN: ${{ steps.evidence-token.outputs.token }}",
-        "python ci/prepare_administrative_candidate_v4.py --apply",
+        "python ci/prepare_administrative_candidate_v5.py --apply",
         "python ci/administrative_autonomy_runtime.py validate",
         "python ci/administrative_autonomy_runtime.py execute --report",
         "CANDIDATE_TOKEN: ${{ steps.write-token.outputs.token }}",
@@ -187,6 +187,8 @@ def validation_workflow_errors(texts: dict[str, str]) -> list[str]:
         "python ci/test_workflow_coverage_v2.py",
         "tests.test_administrative_autonomy_runtime",
         "tests.test_administrative_automation",
+        "tests.test_administrative_steady_state",
+        "tests.test_administrative_transition_recovery_candidate",
         "tests.test_administrative_receipts",
         "tests.test_administrative_synchronization_wait",
     ):
