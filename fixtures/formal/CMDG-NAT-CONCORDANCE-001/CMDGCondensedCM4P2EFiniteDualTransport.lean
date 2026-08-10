@@ -5,7 +5,7 @@ import Mathlib.Algebra.Category.ModuleCat.Biproducts
 # CMDG CM4-P2-E finite dual transport
 
 This auxiliary fixture transports the accepted rank-one internal-Hom natural isomorphism across
-canonical finite coordinate decompositions.  The first checkpoint certifies only the coordinate
+canonical finite coordinate decompositions. The first checkpoint certifies only the coordinate
 calculus and the induced rank-one restriction/extension maps.
 
 No finite measure/free comparison, right-Kan-extension claim, or P2-E global equivalence is
@@ -36,21 +36,28 @@ noncomputable def finiteFamilyInternalHom (X : FintypeCat.{u}) :
 noncomputable def finiteCoordinateInclusion
     (X : FintypeCat.{u}) (x : X.obj) :
     CMDG.CondensedCM4P2D.coefficientPresheaf ⟶
-      CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X where
-  app S := ModuleCat.ofHom
-    { toFun := fun h y => if y = x then h else 0
-      map_add' := by
-        intro a b
-        funext y
-        by_cases hy : y = x <;> simp [hy]
-      map_smul' := by
-        intro c a
-        funext y
-        by_cases hy : y = x <;> simp [hy] }
-  naturality S T f := by
+      CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X := by
+  classical
+  refine
+    { app := fun S => ModuleCat.ofHom
+        { toFun := fun h y => if y = x then h else 0
+          map_add' := ?_
+          map_smul' := ?_ }
+      naturality := ?_ }
+  · intro a b
+    funext y
+    by_cases hy : y = x <;> simp [hy]
+  · intro c a
+    funext y
+    by_cases hy : y = x <;> simp [hy]
+  · intro S T f
     apply ModuleCat.hom_ext
-    ext h y s
-    by_cases hy : y = x <;> simp [hy, CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf]
+    ext h
+    funext y
+    by_cases hy : y = x
+    · subst y
+      rfl
+    · simp [hy, CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf]
 
 /-- Canonical projection from the finite coefficient family to one coordinate. -/
 noncomputable def finiteCoordinateProjection
@@ -75,18 +82,22 @@ lemma finiteCoordinateInclusion_projection
     (X : FintypeCat.{u}) (x y : X.obj) :
     finiteCoordinateInclusion X x ≫ finiteCoordinateProjection X y =
       if x = y then 𝟙 CMDG.CondensedCM4P2D.coefficientPresheaf else 0 := by
-  ext S h s
+  classical
+  ext S h
   by_cases hxy : x = y
   · subst y
     simp [finiteCoordinateInclusion, finiteCoordinateProjection]
-  · simp [finiteCoordinateInclusion, finiteCoordinateProjection, hxy]
+  · have hyx : y ≠ x := fun h => hxy h.symm
+    simp [finiteCoordinateInclusion, finiteCoordinateProjection, hxy, hyx]
 
 /-- The canonical coordinates resolve the identity of the finite family. -/
 lemma finiteCoordinate_resolution
     (X : FintypeCat.{u}) :
     (∑ x, finiteCoordinateProjection X x ≫ finiteCoordinateInclusion X x) =
       𝟙 (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X) := by
-  ext S a y s
+  classical
+  ext S a
+  funext y
   simp [finiteCoordinateInclusion, finiteCoordinateProjection]
 
 /-- Restrict a finite-family functional to one canonical rank-one coordinate, then use the
