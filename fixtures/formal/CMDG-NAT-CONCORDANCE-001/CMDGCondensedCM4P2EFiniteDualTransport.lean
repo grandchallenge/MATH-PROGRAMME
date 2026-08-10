@@ -51,13 +51,15 @@ noncomputable def finiteCoordinateInclusion
     funext y
     by_cases hy : y = x <;> simp [hy]
   · intro S T f
-    apply ModuleCat.hom_ext
-    ext h
-    funext y
-    by_cases hy : y = x
-    · subst y
-      rfl
-    · simp [hy, CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf]
+    apply ModuleCat.hom_injective
+    ext h y
+    change
+      CMDG.CondensedCM4P2D.coefficientPresheaf.map f
+          (if y = x then h else 0) =
+        if y = x then
+          CMDG.CondensedCM4P2D.coefficientPresheaf.map f h
+        else 0
+    by_cases hy : y = x <;> simp [hy]
 
 /-- Canonical projection from the finite coefficient family to one coordinate. -/
 noncomputable def finiteCoordinateProjection
@@ -77,18 +79,25 @@ noncomputable def finiteCoordinateProjection
     ext a s
     rfl
 
-/-- Coordinate inclusions and projections satisfy the Kronecker relation. -/
-lemma finiteCoordinateInclusion_projection
-    (X : FintypeCat.{u}) (x y : X.obj) :
-    finiteCoordinateInclusion X x ≫ finiteCoordinateProjection X y =
-      if x = y then 𝟙 CMDG.CondensedCM4P2D.coefficientPresheaf else 0 := by
+/-- A coordinate inclusion followed by its matching projection is the identity. -/
+lemma finiteCoordinateInclusion_projection_self
+    (X : FintypeCat.{u}) (x : X.obj) :
+    finiteCoordinateInclusion X x ≫ finiteCoordinateProjection X x =
+      𝟙 CMDG.CondensedCM4P2D.coefficientPresheaf := by
   classical
   ext S h
-  by_cases hxy : x = y
-  · subst y
-    simp [finiteCoordinateInclusion, finiteCoordinateProjection]
-  · have hyx : y ≠ x := fun h => hxy h.symm
-    simp [finiteCoordinateInclusion, finiteCoordinateProjection, hxy, hyx]
+  change (if x = x then h else 0) = h
+  simp
+
+/-- Distinct coordinate inclusion/projection composites vanish. -/
+lemma finiteCoordinateInclusion_projection_ne
+    (X : FintypeCat.{u}) {x y : X.obj} (hxy : x ≠ y) :
+    finiteCoordinateInclusion X x ≫ finiteCoordinateProjection X y = 0 := by
+  classical
+  have hyx : y ≠ x := fun h => hxy h.symm
+  ext S h
+  change (if y = x then h else 0) = 0
+  simp [hyx]
 
 /-- The canonical coordinates resolve the identity of the finite family. -/
 lemma finiteCoordinate_resolution
@@ -98,7 +107,8 @@ lemma finiteCoordinate_resolution
   classical
   ext S a
   funext y
-  simp [finiteCoordinateInclusion, finiteCoordinateProjection]
+  change (∑ c : X.obj, if y = c then a c else 0) = a y
+  simp
 
 /-- Restrict a finite-family functional to one canonical rank-one coordinate, then use the
 accepted rank-one natural isomorphism. -/
@@ -121,7 +131,8 @@ noncomputable def finiteCoordinateExtension
 #check finiteFamilyInternalHom
 #check finiteCoordinateInclusion
 #check finiteCoordinateProjection
-#check finiteCoordinateInclusion_projection
+#check finiteCoordinateInclusion_projection_self
+#check finiteCoordinateInclusion_projection_ne
 #check finiteCoordinate_resolution
 #check finiteCoordinateEvaluation
 #check finiteCoordinateExtension
@@ -129,7 +140,8 @@ noncomputable def finiteCoordinateExtension
 
 #print axioms finiteCoordinateInclusion
 #print axioms finiteCoordinateProjection
-#print axioms finiteCoordinateInclusion_projection
+#print axioms finiteCoordinateInclusion_projection_self
+#print axioms finiteCoordinateInclusion_projection_ne
 #print axioms finiteCoordinate_resolution
 #print axioms finiteCoordinateEvaluation
 #print axioms finiteCoordinateExtension
