@@ -144,11 +144,11 @@ noncomputable def discreteFreeIso :
   discreteSetFreeAdj.leftAdjointUniq freeDiscreteModuleAdj
 
 /-!
-## E1 finite-discrete universe bridge probe
+## E1 finite-discrete universe bridge
 
-`FintypeCat.toProfinite` installs the bottom topology.  The following definitional equality is the
-first exact interface required to compare the finite representable condensed set with the discrete
-condensed set.  The ULift functor records the unavoidable target-universe increase in
+`FintypeCat.toProfinite` installs the bottom topology. The first equality below confirms that its
+underlying topological functor is definitionally the finite-type inclusion followed by the discrete
+topology functor. The ULift functor records the unavoidable target-universe increase in
 `CondensedSet.{u}`.
 -/
 
@@ -159,7 +159,17 @@ example :
     FintypeCat.toProfinite ⋙ Profinite.toTopCat =
       FintypeCat.incl ⋙ TopCat.discrete := rfl
 
+/-- A discrete topological space and its locally constant sheaf define the same condensed set. -/
+noncomputable def discreteTopCondensedIso :
+    TopCat.discrete.{u + 1} ⋙ topCatToCondensedSet ≅
+      Condensed.discrete (Type (u + 1)) :=
+  (CompHausLike.LocallyConstant.functorIso
+      (fun _ : TopCat.{u} => True)
+      (fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 0 2).mp)).symm ≪≫
+    CondensedSet.LocallyConstant.iso
+
 #check finiteUnderlyingULift
+#check discreteTopCondensedIso
 #check TopCat.uliftFunctor
 #check TopCat.uliftFunctorObjHomeo
 #check CompHausLike.LocallyConstant.functorIso
@@ -184,5 +194,6 @@ example :
 #print axioms finiteFunctionDualEquiv
 #print axioms finiteFunctionDualFreeEquiv
 #print axioms discreteFreeIso
+#print axioms discreteTopCondensedIso
 
 end CMDG.CondensedCM4P2E
