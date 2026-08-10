@@ -57,11 +57,21 @@
     "sum_formula": "sum E_D = sum_{k,l}[c1*T(n+1)*Delta_n1(Dweight)+c2*T(n+2)*Delta_n2(Dweight)+c3*T(n+3)*Delta_n3(Dweight)-2*Rk_sym(n,k+1,l)*Delta_k(Dweight)]",
     "status": "EXACT_SYMMETRY_REDUCTION_OF_THE_REVERIFIED_RESIDUAL_SUM"
   },
-  "selection_policy": "Use direct E_D and its symmetric one-orientation form first because it preserves cross-component and k<->l cancellation. Retain E_P5 and E_W only as diagnostic projections unless an exact decomposition is later advantageous.",
-  "next_exact_obligation": "Certify or precisely characterize the four-channel one-orientation sum residual over the canonical protected atom system, without returning to the exhausted generic 198-dimensional raw-flux ansatz.",
+  "nested_skeleton": {
+    "artifact": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/NESTED_SKELETON_REDUCTION.json",
+    "dimension": 3,
+    "basis": ["N11","N12k","N12l"],
+    "N11": "U(k,l;1,2)+U(l,k;1,2)",
+    "N12k": "2*ES(l;1,3)-U(k,l;2,2)",
+    "N12l": "2*ES(k;1,3)-U(l,k;2,2)",
+    "all_weight4_weight5_r22_nested_coordinates_eliminated_from_shift_differences": true,
+    "status": "DIRECT_ED_NESTED_SECTOR_REDUCED_TO_THREE_PROTECTED_COMBINATIONS"
+  },
+  "selection_policy": "Use direct E_D and its symmetric one-orientation form first because it preserves cross-component and k<->l cancellation. Within that form, separate the exact three-combination nested skeleton from the complementary one-body sector. Retain E_P5 and E_W only as diagnostic projections unless an exact decomposition is later advantageous.",
+  "next_exact_obligation": "Attempt natural auxiliary-sum certificates for N11, N12k, and N12l together with the complementary one-body sector in the four-channel one-orientation residual; do not return to the exhausted generic 198-dimensional raw-flux ansatz.",
   "residual_sum_zero_proved": false,
   "proof_effect": "NONE",
   "promotion_effect": "NONE",
   "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
-  "terminal": "QROW_REVERIFIED_DIRECT_ED_CANONICALIZED_SYMMETRIC_ONE_ORIENTATION_REDUCTION_LOCKED"
+  "terminal": "QROW_REVERIFIED_DIRECT_ED_CANONICALIZED_ONE_ORIENTATION_THREE_NESTED_SKELETON_LOCKED"
 }
