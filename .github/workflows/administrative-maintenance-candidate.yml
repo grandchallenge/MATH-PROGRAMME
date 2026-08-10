@@ -137,7 +137,7 @@ jobs:
           EVIDENCE_GITHUB_TOKEN: ${{ steps.evidence-token.outputs.token }}
         run: |
           set -euo pipefail
-          python ci/prepare_administrative_candidate_v4.py --apply --report administrative-maintenance-candidate.json || {
+          python ci/prepare_administrative_candidate_v5.py --apply --report administrative-maintenance-candidate.json || {
             rc=$?
             test -f administrative-maintenance-candidate.json || printf '%s\n' '{"schema_version":"1.0.0","state":"CANDIDATE_PREPARATION_FAILED_CLOSED","authority_created":false}' > administrative-maintenance-candidate.json
             exit "$rc"
