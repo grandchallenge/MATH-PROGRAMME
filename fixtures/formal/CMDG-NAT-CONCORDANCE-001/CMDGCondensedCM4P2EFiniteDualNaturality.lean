@@ -76,6 +76,14 @@ noncomputable def finiteFamilyInternalHomFunctor :
   map_id X := finiteFamilyInternalHomMap_id X
   map_comp f g := finiteFamilyInternalHomMap_comp f g
 
+/-- Reassociated form of the certified family evaluation/extension triangle. -/
+lemma finiteFamilyEvaluation_extension_assoc
+    (X : FintypeCat.{u})
+    {Z : CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u}}
+    (h : finiteFamilyInternalHom X ⟶ Z) :
+    finiteFamilyEvaluation X ≫ finiteFamilyExtension X ≫ h = h := by
+  rw [← Category.assoc, finiteFamilyEvaluation_extension, Category.id_comp]
+
 /-- The coefficient-family objects equipped with the covariant action transported through the
 certified fixed-finite-set internal-dual isomorphisms. This is not yet identified with canonical
 finite-free pushforward. -/
@@ -97,7 +105,7 @@ noncomputable def finiteCoefficientFamilyCovariantFunctor :
         (finiteFamilyExtension _ ≫ finiteFamilyInternalHomMap f ≫ finiteFamilyEvaluation _) ≫
           finiteFamilyExtension _ ≫ finiteFamilyInternalHomMap g ≫ finiteFamilyEvaluation _
     rw [finiteFamilyInternalHomMap_comp]
-    simp only [Category.assoc, finiteFamilyEvaluation_extension, Category.id_comp]
+    rw [finiteFamilyEvaluation_extension_assoc]
 
 /-- Naturality package for the certified fixed-finite-set internal-dual isomorphisms. -/
 noncomputable def finiteFamilyInternalHomNatIso :
@@ -116,6 +124,7 @@ noncomputable def finiteFamilyInternalHomNatIso :
 #check finiteFamilyInternalHomMap_id
 #check finiteFamilyInternalHomMap_comp
 #check finiteFamilyInternalHomFunctor
+#check finiteFamilyEvaluation_extension_assoc
 #check finiteCoefficientFamilyCovariantFunctor
 #check finiteFamilyInternalHomNatIso
 
@@ -123,6 +132,7 @@ noncomputable def finiteFamilyInternalHomNatIso :
 #print axioms finiteFamilyInternalHomMap_id
 #print axioms finiteFamilyInternalHomMap_comp
 #print axioms finiteFamilyInternalHomFunctor
+#print axioms finiteFamilyEvaluation_extension_assoc
 #print axioms finiteCoefficientFamilyCovariantFunctor
 #print axioms finiteFamilyInternalHomNatIso
 
