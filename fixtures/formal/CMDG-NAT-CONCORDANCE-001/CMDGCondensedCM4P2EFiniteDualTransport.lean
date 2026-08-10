@@ -90,11 +90,35 @@ lemma finiteCoordinate_resolution
   apply LinearMap.ext
   intro a
   rw [ModuleCat.hom_sum]
-  rw [sum_apply]
   simp only [ModuleCat.hom_id, LinearMap.id_apply]
+  let evalAtA :
+      (↑((CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X).obj S) →ₗ[
+        CMDG.CondensedCM4P2D.R.{u}]
+        ↑((CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X).obj S)) →+
+        ↑((CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X).obj S) :=
+    { toFun := fun f => f a
+      map_zero' := rfl
+      map_add' := by intro f g; rfl }
+  change
+    evalAtA
+        (∑ i : X.obj,
+          ModuleCat.Hom.hom
+            ((finiteCoordinateProjection X i ≫ finiteCoordinateInclusion X i).app S)) = a
+  rw [map_sum]
   simp_rw [NatTrans.comp_app, ModuleCat.hom_comp, LinearMap.comp_apply]
   funext y
-  rw [sum_apply]
+  let evalAtY :
+      (X.obj → LocallyConstant S.unop CMDG.CondensedCM4P2D.R.{u}) →+
+        LocallyConstant S.unop CMDG.CondensedCM4P2D.R.{u} :=
+    { toFun := fun b => b y
+      map_zero' := rfl
+      map_add' := by intro b c; rfl }
+  change
+    evalAtY
+        (∑ c : X.obj,
+          (ModuleCat.Hom.hom ((finiteCoordinateInclusion X c).app S))
+            ((ModuleCat.Hom.hom ((finiteCoordinateProjection X c).app S)) a)) = a y
+  rw [map_sum]
   change (∑ c : X.obj, if y = c then a c else 0) = a y
   rw [Finset.sum_eq_single y]
   · simp
