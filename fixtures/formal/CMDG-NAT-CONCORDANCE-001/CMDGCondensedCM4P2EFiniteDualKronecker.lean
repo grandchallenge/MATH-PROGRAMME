@@ -11,6 +11,7 @@ noncomputable local instance : MonoidalClosed
     (CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u}) :=
   MonoidalClosed.FunctorCategory.monoidalClosed
 
+@[reassoc]
 lemma finiteCoordinatePre_projection_inclusion_self
     (X : FintypeCat.{u}) (x : X.obj) :
     (MonoidalClosed.pre (finiteCoordinateProjection X x)).app
@@ -24,6 +25,7 @@ lemma finiteCoordinatePre_projection_inclusion_self
   unfold CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHom
   rfl
 
+@[reassoc]
 lemma finiteCoordinatePre_projection_inclusion_ne
     (X : FintypeCat.{u}) {x y : X.obj} (hxy : x ≠ y) :
     (MonoidalClosed.pre (finiteCoordinateProjection X y)).app
@@ -36,7 +38,9 @@ lemma finiteCoordinatePre_projection_inclusion_ne
   rfl
 
 #check finiteCoordinatePre_projection_inclusion_self
+#check finiteCoordinatePre_projection_inclusion_self_assoc
 #check finiteCoordinatePre_projection_inclusion_ne
+#check finiteCoordinatePre_projection_inclusion_ne_assoc
 
 #print axioms finiteCoordinatePre_projection_inclusion_self
 #print axioms finiteCoordinatePre_projection_inclusion_ne
