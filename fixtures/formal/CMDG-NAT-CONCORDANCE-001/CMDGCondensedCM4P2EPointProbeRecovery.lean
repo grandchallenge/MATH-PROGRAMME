@@ -79,12 +79,40 @@ lemma rankOnePointProbe_constant_recovery
   rw [← rankOnePointProbe_identity_naturality X k y φ] at hprobe
   exact hprobe
 
+lemma rankOneProjection_point_value
+    (X : CompHaus.{u}) (k : Under (op X))
+    (φ : rankOneInternalHom.obj (op X))
+    (h : coefficientPresheaf.obj k.right) (y : k.right.unop) :
+    (show LocallyConstant k.right.unop R from
+      rankOneProjectionEndomorphism X k φ h) y =
+      (show LocallyConstant X R from rankOneEvaluationApp X φ) (k.hom.unop y) *
+        (show LocallyConstant k.right.unop R from h) y := by
+  have hconst := rankOnePointProbe_constant_recovery X k y φ h
+  change
+    LocallyConstant.const (rankOnePointProbeObject X k y).right.unop
+        ((show LocallyConstant k.right.unop R from
+          rankOneProjectionEndomorphism X k φ h) y) =
+      ((show LocallyConstant k.right.unop R from h) y) •
+        LocallyConstant.const (rankOnePointProbeObject X k y).right.unop
+          ((show LocallyConstant X R from rankOneEvaluationApp X φ) (k.hom.unop y)) at hconst
+  have hv := congrArg
+    (fun q : LocallyConstant (rankOnePointProbeObject X k y).right.unop R => q y)
+    hconst
+  change
+    (show LocallyConstant k.right.unop R from
+      rankOneProjectionEndomorphism X k φ h) y =
+      (show LocallyConstant k.right.unop R from h) y *
+        (show LocallyConstant X R from rankOneEvaluationApp X φ) (k.hom.unop y) at hv
+  simpa only [mul_comm] using hv
+
 #check rankOnePointProbe_naturality
 #check rankOnePointProbe_identity_naturality
 #check rankOnePointProbe_constant_recovery
+#check rankOneProjection_point_value
 
 #print axioms rankOnePointProbe_naturality
 #print axioms rankOnePointProbe_identity_naturality
 #print axioms rankOnePointProbe_constant_recovery
+#print axioms rankOneProjection_point_value
 
 end CMDG.CondensedCM4P2E.InternalHom
