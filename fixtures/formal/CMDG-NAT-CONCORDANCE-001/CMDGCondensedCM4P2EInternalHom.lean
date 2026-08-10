@@ -16,7 +16,7 @@ namespace CMDG.CondensedCM4P2E.InternalHom
 
 universe u
 
-open CategoryTheory Opposite
+open CategoryTheory Limits Opposite
 open CategoryTheory.Enriched.FunctorCategory
 open scoped CategoryTheory.MonoidalClosed
 
@@ -71,23 +71,26 @@ noncomputable def rankOneMultiplicationToEndomorphism
       (ihom (coefficientPresheaf.obj k.right)).obj (coefficientPresheaf.obj k.right) :=
   ModuleCat.ofHom
     { toFun := fun a =>
-        { toFun := fun h => (coefficientPresheaf.map k.hom a) * h
-          map_add' := by
-            intro h₁ h₂
-            ext y
-            simp [mul_add]
-          map_smul' := by
-            intro c h
-            ext y
-            simp [mul_assoc, mul_comm, mul_left_comm] }
+        ModuleCat.ofHom
+          { toFun := fun h => (coefficientPresheaf.map k.hom a) * h
+            map_add' := by
+              intro h₁ h₂
+              ext y
+              simp [mul_add]
+            map_smul' := by
+              intro c h
+              ext y
+              simp [mul_comm, mul_left_comm] }
       map_add' := by
         intro a b
+        apply ModuleCat.hom_ext
         ext h y
         simp [add_mul]
       map_smul' := by
         intro c a
+        apply ModuleCat.hom_ext
         ext h y
-        simp [mul_assoc, mul_comm, mul_left_comm] }
+        simp [mul_assoc] }
 
 /-- A base section acts on every object over the base by multiplication after pullback. -/
 noncomputable def rankOneMultiplicationApp (X : CompHaus.{u}) :
