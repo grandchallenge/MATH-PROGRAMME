@@ -30,7 +30,19 @@ lemma rankOneEvaluation_multiplication (X : CompHaus.{u}) :
         (Under.forget (op X) ⋙ coefficientPresheaf)))
   apply end_.hom_ext
   intro k
-  rw [Category.assoc, rankOneMultiplicationApp_projection, Category.id_comp]
+  change
+    (rankOneEvaluationApp X ≫ rankOneMultiplicationApp X) ≫
+        enrichedHomπ
+          (ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R)
+          (Under.forget (op X) ⋙ coefficientPresheaf)
+          (Under.forget (op X) ⋙ coefficientPresheaf)
+          k =
+      enrichedHomπ
+        (ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R)
+        (Under.forget (op X) ⋙ coefficientPresheaf)
+        (Under.forget (op X) ⋙ coefficientPresheaf)
+        k
+  rw [Category.assoc, rankOneMultiplicationApp_projection]
   apply ModuleCat.hom_injective
   ext φ
   change
