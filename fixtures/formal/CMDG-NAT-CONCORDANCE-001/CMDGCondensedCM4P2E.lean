@@ -148,8 +148,8 @@ noncomputable def discreteFreeIso :
 
 `FintypeCat.toProfinite` installs the bottom topology. The first equality below confirms that its
 underlying topological functor is definitionally the finite-type inclusion followed by the discrete
-topology functor. The ULift functor records the unavoidable target-universe increase in
-`CondensedSet.{u}`.
+topology functor. ULifting that topology is only canonically isomorphic, not definitionally equal,
+to the discrete topology on the ULifted finite type.
 -/
 
 noncomputable abbrev finiteUnderlyingULift : FintypeCat.{u} ⥤ Type (u + 1) :=
@@ -159,9 +159,19 @@ example :
     FintypeCat.toProfinite ⋙ Profinite.toTopCat =
       FintypeCat.incl ⋙ TopCat.discrete := rfl
 
-example :
-    FintypeCat.toProfinite ⋙ Profinite.toTopCat ⋙ TopCat.uliftFunctor.{u + 1, u} =
-      finiteUnderlyingULift ⋙ TopCat.discrete := rfl
+/-- Canonical natural identification of the ULifted finite discrete topology with the discrete
+ topology on the ULifted finite type. -/
+noncomputable def finiteDiscreteULiftIso :
+    FintypeCat.toProfinite ⋙ Profinite.toTopCat ⋙ TopCat.uliftFunctor.{u + 1, u} ≅
+      finiteUnderlyingULift ⋙ TopCat.discrete :=
+  NatIso.ofComponents
+    (fun X => TopCat.isoOfHomeo
+      ((TopCat.uliftFunctorObjHomeo (TopCat.discrete.obj X)).symm.trans
+        (Homeomorph.ofDiscrete Equiv.ulift.symm)))
+    (by
+      intro X Y f
+      ext x
+      rfl)
 
 /-- A discrete topological space and its locally constant sheaf define the same condensed set. -/
 noncomputable def discreteTopCondensedIso :
@@ -173,6 +183,7 @@ noncomputable def discreteTopCondensedIso :
     CondensedSet.LocallyConstant.iso
 
 #check finiteUnderlyingULift
+#check finiteDiscreteULiftIso
 #check discreteTopCondensedIso
 #check TopCat.uliftFunctor
 #check TopCat.uliftFunctorObjHomeo
@@ -198,6 +209,7 @@ noncomputable def discreteTopCondensedIso :
 #print axioms finiteFunctionDualEquiv
 #print axioms finiteFunctionDualFreeEquiv
 #print axioms discreteFreeIso
+#print axioms finiteDiscreteULiftIso
 #print axioms discreteTopCondensedIso
 
 end CMDG.CondensedCM4P2E
