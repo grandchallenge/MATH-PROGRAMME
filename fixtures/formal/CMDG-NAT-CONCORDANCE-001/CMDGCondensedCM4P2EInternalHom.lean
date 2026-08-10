@@ -7,9 +7,9 @@ import CMDGCondensedCM4P2EAlgebraic
 This auxiliary fixture isolates the sole remaining E1 construction: comparison of the protected
 P2-D sheaf-level internal Hom with the discrete algebraic dual on finite modules.
 
-The current checkpoint develops the canonical evaluation and multiplication directions for the
-rank-one internal Hom. It does not yet assert the rank-one isomorphism or the final finite
-comparison.
+The current checkpoint develops the canonical evaluation direction and the pointwise multiplication
+operator needed for its inverse. It does not yet assert the enriched-end lift, the rank-one
+isomorphism, or the final finite comparison.
 -/
 
 namespace CMDG.CondensedCM4P2E.InternalHom
@@ -64,6 +64,15 @@ noncomputable def rankOneEvaluationApp (X : CompHaus.{u}) :
   rw [rankOneInternalHom_eq_functorEnrichedHom]
   exact rankOneIdentityProjection X ≫ rankOneEndomorphismEvalOne X
 
+/-- Pointwise multiplication after pulling the coefficient section to a slice object. -/
+noncomputable def rankOneSectionMul
+    (X : CompHaus.{u}) (k : Under (op X))
+    (a : coefficientAt X) (h : coefficientPresheaf.obj k.right) :
+    coefficientPresheaf.obj k.right := by
+  let a' : LocallyConstant (unop k.right) R := coefficientPresheaf.map k.hom a
+  let h' : LocallyConstant (unop k.right) R := h
+  exact a' * h'
+
 /-- Multiplication by a section pulled back from the base of a slice object. -/
 noncomputable def rankOneMultiplicationToEndomorphism
     (X : CompHaus.{u}) (k : Under (op X)) :
@@ -72,37 +81,25 @@ noncomputable def rankOneMultiplicationToEndomorphism
   ModuleCat.ofHom
     { toFun := fun a =>
         ModuleCat.ofHom
-          { toFun := fun h => (coefficientPresheaf.map k.hom a) * h
+          { toFun := rankOneSectionMul X k a
             map_add' := by
               intro h₁ h₂
               ext y
-              simp [mul_add]
+              simp [rankOneSectionMul, mul_add]
             map_smul' := by
               intro c h
               ext y
-              simp [mul_comm, mul_left_comm] }
+              simp [rankOneSectionMul, mul_comm, mul_left_comm] }
       map_add' := by
         intro a b
         apply ModuleCat.hom_ext
         ext h y
-        simp [add_mul]
+        simp [rankOneSectionMul, add_mul]
       map_smul' := by
         intro c a
         apply ModuleCat.hom_ext
         ext h y
-        simp [mul_assoc] }
-
-/-- A base section acts on every object over the base by multiplication after pullback. -/
-noncomputable def rankOneMultiplicationApp (X : CompHaus.{u}) :
-    coefficientAt X ⟶ rankOneInternalHom.obj (op X) := by
-  rw [rankOneInternalHom_eq_functorEnrichedHom]
-  exact end_.lift
-    (fun k => rankOneMultiplicationToEndomorphism X k)
-    (by
-      intro i j f
-      apply ModuleCat.hom_ext
-      ext a h y
-      rfl)
+        simp [rankOneSectionMul, mul_assoc] }
 
 #check rankOneInternalHom
 #check rankOneInternalHom_eq_functorEnrichedHom
@@ -111,19 +108,23 @@ noncomputable def rankOneMultiplicationApp (X : CompHaus.{u}) :
 #check rankOneIdentityProjection
 #check rankOneEndomorphismEvalOne
 #check rankOneEvaluationApp
+#check rankOneSectionMul
 #check rankOneMultiplicationToEndomorphism
-#check rankOneMultiplicationApp
 #check CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
 #check CategoryTheory.Presheaf.functorEnrichedHomCoyonedaObjEquiv
 #check CategoryTheory.presheafHom
 #check CondensedMod.LocallyConstant.fullyFaithfulFunctor
 #check CondensedMod.LocallyConstant.functorIsoDiscrete
+#check MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerLeft
+#check MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight
+#check ModuleCat.ihom_map_apply
+#check ModuleCat.monoidalClosed_pre_app
 
 #print axioms rankOneInternalHom_eq_functorEnrichedHom
 #print axioms rankOneIdentityProjection
 #print axioms rankOneEndomorphismEvalOne
 #print axioms rankOneEvaluationApp
+#print axioms rankOneSectionMul
 #print axioms rankOneMultiplicationToEndomorphism
-#print axioms rankOneMultiplicationApp
 
 end CMDG.CondensedCM4P2E.InternalHom
