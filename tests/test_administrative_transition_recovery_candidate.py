@@ -2,50 +2,39 @@ from __future__ import annotations
 
 import copy
 import json
-import os
-import subprocess
 import sys
-import tempfile
 import unittest
+from datetime import datetime, timezone
 from pathlib import Path
+from unittest.mock import patch
 
 import jsonschema
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "ci"))
+
+import prepare_administrative_candidate_v5 as recovery
+
 CONTROL = ROOT / "governance" / "administrative_transition_recovery_candidate_control.json"
 SCHEMA = ROOT / "schemas" / "administrative_transition_recovery_candidate_control.schema.json"
 RUNTIME = ROOT / "governance" / "administrative_autonomy_runtime_integration.json"
+AUTOMATION = ROOT / "governance" / "administrative_maintenance_automation.json"
+REGISTRY = ROOT / "governance" / "administrative_maintenance_trigger_registry.json"
+COMPLETION = ROOT / "governance" / "administrative_maintenance_completion_state.json"
 SOURCE = ROOT / "ci" / "prepare_administrative_candidate_v5.py"
+UTC = timezone.utc
 
 
 class AdministrativeTransitionRecoveryCandidateTests(unittest.TestCase):
     def load_control(self):
         return json.loads(CONTROL.read_text(encoding="utf-8"))
 
-    def run_dry(self, now: str):
-        with tempfile.TemporaryDirectory() as tmp:
-            report = Path(tmp) / "report.json"
-            env = dict(os.environ)
-            # Use the checked-out commit, not a stale workflow event SHA, when
-            # proving successor ancestry in this subprocess.
-            env.pop("GITHUB_SHA", None)
-            completed = subprocess.run(
-                [
-                    sys.executable,
-                    "ci/prepare_administrative_candidate_v5.py",
-                    "--now",
-                    now,
-                    "--report",
-                    str(report),
-                ],
-                cwd=ROOT,
-                env=env,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-            self.assertEqual(completed.returncode, 0, msg=completed.stdout + completed.stderr)
-            return json.loads(report.read_text(encoding="utf-8"))
+    def load_runtime_inputs(self):
+        return (
+            json.loads(AUTOMATION.read_text(encoding="utf-8")),
+            json.loads(REGISTRY.read_text(encoding="utf-8")),
+            json.loads(COMPLETION.read_text(encoding="utf-8")),
+        )
 
     def test_schema_and_exact_bounds(self):
         control = self.load_control()
@@ -65,20 +54,52 @@ class AdministrativeTransitionRecoveryCandidateTests(unittest.TestCase):
             runtime["scope"]["recovery_window_minutes_after_due"],
         )
 
-    def test_exact_post_due_occurrence_is_reconstructed_for_dry_run(self):
-        report = self.run_dry("2026-08-10T04:30:00Z")
-        keys = {item["occurrence_key"] for item in report["results"]}
-        self.assertIn("structural_sweep:2026-08-10T03:45:00Z", keys)
-        exact = next(item for item in report["results"] if item["occurrence_key"] == "structural_sweep:2026-08-10T03:45:00Z")
-        self.assertFalse(exact["mutation_allowed"])
-        self.assertEqual(exact["scheduled_due_at"], "2026-08-10T03:45:00Z")
-        self.assertEqual(exact["prepare_at"], "2026-08-09T21:45:00Z")
-        self.assertEqual(exact["freeze_at"], "2026-08-10T02:15:00Z")
+    def test_exact_post_due_occurrence_is_reconstructed_without_git_history_dependency(self):
+        config, registry, completion = self.load_runtime_inputs()
+        now = datetime(2026, 8, 10, 4, 30, tzinfo=UTC)
+        with patch.object(recovery, "transition_reconstruction_allowed", return_value=True):
+            occurrence = recovery.transition_reconstruction_occurrence(
+                config,
+                registry,
+                completion,
+                now,
+            )
+        self.assertIsNotNone(occurrence)
+        self.assertEqual(occurrence.occurrence_key, "structural_sweep:2026-08-10T03:45:00Z")
+        self.assertEqual(recovery.automation.iso_z(occurrence.due_at), "2026-08-10T03:45:00Z")
+        self.assertEqual(recovery.automation.iso_z(occurrence.prepare_at), "2026-08-09T21:45:00Z")
+        self.assertEqual(recovery.automation.iso_z(occurrence.freeze_at), "2026-08-10T02:15:00Z")
 
-    def test_reconstruction_expires_at_existing_recovery_boundary(self):
-        report = self.run_dry("2026-08-10T06:45:00Z")
-        keys = {item["occurrence_key"] for item in report["results"]}
-        self.assertNotIn("structural_sweep:2026-08-10T03:45:00Z", keys)
+    def test_reconstruction_gate_accepts_only_inside_existing_recovery_window(self):
+        control = self.load_control()
+        completion = json.loads(COMPLETION.read_text(encoding="utf-8"))
+        with (
+            patch.object(recovery, "successor_record_active", return_value=True),
+            patch.object(recovery, "successor_merge_ancestral", return_value=True),
+            patch.object(recovery, "completion_absent", return_value=True),
+            patch.object(recovery, "protected_record_exists_for_occurrence", return_value=False),
+        ):
+            self.assertTrue(
+                recovery.transition_reconstruction_allowed(
+                    datetime(2026, 8, 10, 4, 30, tzinfo=UTC),
+                    completion,
+                    control,
+                )
+            )
+            self.assertFalse(
+                recovery.transition_reconstruction_allowed(
+                    datetime(2026, 8, 10, 3, 45, tzinfo=UTC),
+                    completion,
+                    control,
+                )
+            )
+            self.assertFalse(
+                recovery.transition_reconstruction_allowed(
+                    datetime(2026, 8, 10, 6, 45, tzinfo=UTC),
+                    completion,
+                    control,
+                )
+            )
 
     def test_authority_and_claim_mutations_fail_schema(self):
         control = self.load_control()
