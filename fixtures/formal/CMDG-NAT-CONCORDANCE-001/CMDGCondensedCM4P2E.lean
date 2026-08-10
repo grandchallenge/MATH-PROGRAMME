@@ -3,6 +3,7 @@ import Mathlib.Condensed.Solid
 import Mathlib.Condensed.Discrete.Colimit
 import Mathlib.Condensed.Discrete.Basic
 import Mathlib.CategoryTheory.Adjunction.Unique
+import Mathlib.CategoryTheory.Whiskering
 import Mathlib.Algebra.Category.ModuleCat.Adjunctions
 import Mathlib.CategoryTheory.Functor.KanExtension.Basic
 import Mathlib.CategoryTheory.Functor.KanExtension.Pointwise
