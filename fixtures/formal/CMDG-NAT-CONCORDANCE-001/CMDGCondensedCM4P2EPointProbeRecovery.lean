@@ -60,10 +60,46 @@ lemma rankOnePointProbe_identity_naturality
   rw [← rankOneEvaluationApp_apply X φ] at hnat
   exact hnat
 
+lemma rankOnePointProbe_constant_recovery
+    (X : CompHaus.{u}) (k : Under (op X)) (y : k.right.unop)
+    (φ : rankOneInternalHom.obj (op X))
+    (h : coefficientPresheaf.obj k.right) :
+    (show coefficientPresheaf.obj (rankOnePointProbeObject X k y).right from
+      LocallyConstant.const (rankOnePointProbeObject X k y).right.unop
+        ((show LocallyConstant k.right.unop R from
+          rankOneProjectionEndomorphism X k φ h) y)) =
+      ((show LocallyConstant k.right.unop R from h) y) •
+        (show coefficientPresheaf.obj (rankOnePointProbeObject X k y).right from
+          LocallyConstant.const (rankOnePointProbeObject X k y).right.unop
+            ((show LocallyConstant X R from rankOneEvaluationApp X φ) (k.hom.unop y))) := by
+  let P : Under (op X) := rankOnePointProbeObject X k y
+  let r : R := (show LocallyConstant k.right.unop R from h) y
+  calc
+    (show coefficientPresheaf.obj P.right from
+      LocallyConstant.const P.right.unop
+        ((show LocallyConstant k.right.unop R from
+          rankOneProjectionEndomorphism X k φ h) y)) =
+        rankOneProjectionEndomorphism X P φ
+          (show coefficientPresheaf.obj P.right from
+            LocallyConstant.const P.right.unop r) :=
+      rankOnePointProbe_naturality X k y φ h
+    _ = r • rankOneProjectionEndomorphism X P φ
+          (show coefficientPresheaf.obj P.right from
+            LocallyConstant.const P.right.unop (1 : R)) :=
+      rankOneProjectionEndomorphism_const X P φ r
+    _ = r •
+          (show coefficientPresheaf.obj P.right from
+            LocallyConstant.const P.right.unop
+              ((show LocallyConstant X R from rankOneEvaluationApp X φ) (k.hom.unop y))) := by
+      exact congrArg (fun q => r • q)
+        (rankOnePointProbe_identity_naturality X k y φ).symm
+
 #check rankOnePointProbe_naturality
 #check rankOnePointProbe_identity_naturality
+#check rankOnePointProbe_constant_recovery
 
 #print axioms rankOnePointProbe_naturality
 #print axioms rankOnePointProbe_identity_naturality
+#print axioms rankOnePointProbe_constant_recovery
 
 end CMDG.CondensedCM4P2E.InternalHom
