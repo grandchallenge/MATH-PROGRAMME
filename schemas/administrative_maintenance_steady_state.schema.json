@@ -18,6 +18,7 @@
     "council_packet",
     "terminal_evidence",
     "cadences",
+    "transition_bridge",
     "hardening_conditions",
     "protected_invariants",
     "historical_evidence_policy",
@@ -84,6 +85,23 @@
         "administrative_review": {"const": "P3D"},
         "deep_conformance_review": {"const": "P9D"},
         "constitutional_review": {"const": "P36DT12H"}
+      }
+    },
+    "transition_bridge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["occurrence_key", "normal_prepare_at_utc", "normal_freeze_at_utc", "due_at_utc", "bounded_mutation_until_utc", "reason", "deadline_reset", "required_checks_weakened", "exact_head_gate_weakened", "one_time_only"],
+      "properties": {
+        "occurrence_key": {"const": "structural_sweep:2026-08-10T03:45:00Z"},
+        "normal_prepare_at_utc": {"const": "2026-08-09T21:45:00Z"},
+        "normal_freeze_at_utc": {"const": "2026-08-10T02:15:00Z"},
+        "due_at_utc": {"const": "2026-08-10T03:45:00Z"},
+        "bounded_mutation_until_utc": {"const": "2026-08-10T03:45:00Z"},
+        "reason": {"const": "FIRST_POST_PILOT_OCCURRENCE_PREPARATION_WINDOW_PRECEDES_SUCCESSOR_AUTHORITY"},
+        "deadline_reset": {"const": false},
+        "required_checks_weakened": {"const": false},
+        "exact_head_gate_weakened": {"const": false},
+        "one_time_only": {"const": true}
       }
     },
     "hardening_conditions": {
