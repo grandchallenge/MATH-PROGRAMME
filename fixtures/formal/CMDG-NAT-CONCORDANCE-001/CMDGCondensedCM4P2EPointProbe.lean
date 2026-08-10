@@ -28,37 +28,50 @@ lemma coefficientPullback_const
     (fun q => q (show LocallyConstant Z R from h))
     (LocallyConstant.comap_const f.hom.hom z hf)
 
+lemma coefficientPullback_const_op
+    {Y Z : CompHaus.{u}ᵒᵖ} (f : Y ⟶ Z) (y : Y.unop)
+    (hf : ∀ z : Z.unop, f.unop z = y)
+    (h : coefficientPresheaf.obj Y) :
+    coefficientPresheaf.map f h =
+      (show coefficientPresheaf.obj Z from
+        LocallyConstant.const Z.unop
+          ((show LocallyConstant Y.unop R from h) y)) := by
+  change
+    LocallyConstant.comap f.unop.hom.hom (show LocallyConstant Y.unop R from h) =
+      LocallyConstant.const Z.unop ((show LocallyConstant Y.unop R from h) y)
+  exact congrArg
+    (fun q => q (show LocallyConstant Y.unop R from h))
+    (LocallyConstant.comap_const f.unop.hom.hom y hf)
+
 lemma coefficientPullback_pointProbe
     (X : CompHaus.{u}) (k : Under (op X)) (y : k.right.unop)
     (h : coefficientPresheaf.obj k.right) :
     coefficientPresheaf.map (rankOnePointProbeFrom X k y).right h =
       (show coefficientPresheaf.obj (rankOnePointProbeObject X k y).right from
-        LocallyConstant.const k.right.unop
+        LocallyConstant.const (rankOnePointProbeObject X k y).right.unop
           ((show LocallyConstant k.right.unop R from h) y)) := by
-  let f : k.right.unop ⟶ k.right.unop := (rankOnePointProbeFrom X k y).right.unop
-  have hf : ∀ x, f x = y := by
-    intro x
-    rfl
-  simpa only [f] using coefficientPullback_const f y hf h
+  apply coefficientPullback_const_op
+  intro z
+  rfl
 
 lemma coefficientPullback_pointProbeFromIdentity
     (X : CompHaus.{u}) (k : Under (op X)) (y : k.right.unop)
     (h : coefficientAt X) :
     coefficientPresheaf.map (rankOnePointProbeFromIdentity X k y).right h =
       (show coefficientPresheaf.obj (rankOnePointProbeObject X k y).right from
-        LocallyConstant.const k.right.unop
+        LocallyConstant.const (rankOnePointProbeObject X k y).right.unop
           ((show LocallyConstant X R from h) (k.hom.unop y))) := by
-  let f : k.right.unop ⟶ X := (rankOnePointProbeFromIdentity X k y).right.unop
-  have hf : ∀ x, f x = k.hom.unop y := by
-    intro x
-    rfl
-  simpa only [f] using coefficientPullback_const f (k.hom.unop y) hf h
+  apply coefficientPullback_const_op
+  intro z
+  rfl
 
 #check coefficientPullback_const
+#check coefficientPullback_const_op
 #check coefficientPullback_pointProbe
 #check coefficientPullback_pointProbeFromIdentity
 
 #print axioms coefficientPullback_const
+#print axioms coefficientPullback_const_op
 #print axioms coefficientPullback_pointProbe
 #print axioms coefficientPullback_pointProbeFromIdentity
 
