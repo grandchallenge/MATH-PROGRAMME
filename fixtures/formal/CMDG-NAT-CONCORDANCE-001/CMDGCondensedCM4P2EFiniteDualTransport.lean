@@ -107,7 +107,7 @@ lemma finiteCoordinate_resolution
   rw [map_sum]
   funext y
   let evalAtY :
-      (X.obj → LocallyConstant S.unop CMDG.CondensedCM4P2D.R.{u}) →+
+      ↑((CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X).obj S) →+
         LocallyConstant S.unop CMDG.CondensedCM4P2D.R.{u} :=
     { toFun := fun b => b y
       map_zero' := rfl
