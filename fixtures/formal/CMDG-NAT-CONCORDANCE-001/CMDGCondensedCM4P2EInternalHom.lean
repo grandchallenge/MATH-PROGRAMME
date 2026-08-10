@@ -88,7 +88,10 @@ noncomputable def rankOneMultiplicationToEndomorphism
   let mul : A →ₗ[R] A →ₗ[R] A := LinearMap.mul R A
   let pack : (A →ₗ[R] A) →ₗ[R]
       (coefficientPresheaf.obj k.right ⟶ coefficientPresheaf.obj k.right) :=
-    ModuleCat.homLinearEquiv.symm.toLinearMap
+    (ModuleCat.homLinearEquiv
+      (R := R) (S := R)
+      (M := coefficientPresheaf.obj k.right)
+      (N := coefficientPresheaf.obj k.right)).symm.toLinearMap
   exact ModuleCat.ofHom (pack.comp (mul.comp pull))
 
 #check rankOneInternalHom
