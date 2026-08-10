@@ -48,9 +48,8 @@ noncomputable def finiteFamilyInternalHomFunctor :
         CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap
             (𝟙 X).op =
           𝟙 (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X) := by
-      simpa using
-        CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafFunctor.map_id
-          (op X)
+      ext S a x s
+      rfl
     rw [h, MonoidalClosed.pre_id]
     rfl
   map_comp f g := by
@@ -64,16 +63,10 @@ noncomputable def finiteFamilyInternalHomFunctor :
             (f ≫ g).op =
           CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap g.op ≫
             CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op := by
-      simpa using
-        CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafFunctor.map_comp
-          g.op f.op
-    rw [h]
-    have hpre := congrArg
-      (fun η => η.app CMDG.CondensedCM4P2D.coefficientPresheaf)
-      (MonoidalClosed.pre_map
-        (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap g.op)
-        (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op))
-    simpa only [finiteFamilyInternalHomMap, NatTrans.comp_app] using hpre
+      ext S a z s
+      rfl
+    rw [h, MonoidalClosed.pre_map]
+    rfl
 
 /-- The coefficient-family objects equipped with the covariant action transported through the
 certified fixed-finite-set internal-dual isomorphisms. This is not yet identified with canonical
@@ -87,9 +80,26 @@ noncomputable def finiteCoefficientFamilyCovariantFunctor :
       finiteFamilyInternalHomFunctor.map f ≫
       (finiteFamilyInternalHomIso Y).hom
   map_id X := by
-    simp
+    change
+      (finiteFamilyInternalHomIso X).inv ≫
+          𝟙 (finiteFamilyInternalHomFunctor.obj X) ≫
+          (finiteFamilyInternalHomIso X).hom =
+        𝟙 (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X)
+    rw [Category.comp_id]
+    exact (finiteFamilyInternalHomIso X).inv_hom_id
   map_comp f g := by
-    simp [Category.assoc]
+    change
+      (finiteFamilyInternalHomIso _).inv ≫
+          finiteFamilyInternalHomFunctor.map (f ≫ g) ≫
+          (finiteFamilyInternalHomIso _).hom =
+        ((finiteFamilyInternalHomIso _).inv ≫
+            finiteFamilyInternalHomFunctor.map f ≫
+            (finiteFamilyInternalHomIso _).hom) ≫
+          (finiteFamilyInternalHomIso _).inv ≫
+            finiteFamilyInternalHomFunctor.map g ≫
+            (finiteFamilyInternalHomIso _).hom
+    rw [finiteFamilyInternalHomFunctor.map_comp]
+    simp only [Category.assoc, Iso.hom_inv_id_assoc]
 
 /-- Naturality package for the certified fixed-finite-set internal-dual isomorphisms. -/
 noncomputable def finiteFamilyInternalHomNatIso :
@@ -98,7 +108,13 @@ noncomputable def finiteFamilyInternalHomNatIso :
     (fun X => finiteFamilyInternalHomIso X)
     (by
       intro X Y f
-      simp [finiteCoefficientFamilyCovariantFunctor, Category.assoc])
+      change
+        finiteFamilyInternalHomFunctor.map f ≫ (finiteFamilyInternalHomIso Y).hom =
+          (finiteFamilyInternalHomIso X).hom ≫
+            (finiteFamilyInternalHomIso X).inv ≫
+              finiteFamilyInternalHomFunctor.map f ≫
+                (finiteFamilyInternalHomIso Y).hom
+      simp only [Iso.hom_inv_id_assoc])
 
 #check finiteFamilyInternalHomMap
 #check finiteFamilyInternalHomFunctor
