@@ -1,9 +1,7 @@
-#!/usr/bin/env python3
 from __future__ import annotations
 
-import json
-from pathlib import Path
 import importlib.util
+from pathlib import Path
 
 HERE=Path(__file__).resolve().parent
 RC=HERE/"residual_canonical.py"
@@ -14,7 +12,6 @@ rc=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(rc)
 
 NESTED_PREFIX=("U_k_l_","U_l_k_","ES_k_","ES_l_")
-SHIFTS={"n1":(1,0,0),"n2":(2,0,0),"n3":(3,0,0),"k1":(0,1,0),"l1":(0,0,1)}
 
 
 def is_nested(name:str)->bool:
@@ -54,7 +51,7 @@ def delta_combo(name:str,shift):
 
 
 def build():
-    base,deltas=rc.build_all()
+    _,deltas=rc.build_all()
     one={lab:one_body_projection(poly) for lab,poly in deltas.items()}
     transfer={}
     for name in ("N11","N12k","N12l"):
@@ -64,7 +61,7 @@ def build():
                 raise AssertionError(f"nested atom survived Abel transfer difference {name}:{orient}")
             transfer[f"Delta_{orient}_{name}"]=p
     union_atoms=sorted(set().union(*(set(atom_set(p)) for p in one.values()),*(set(atom_set(p)) for p in transfer.values())))
-    result={
+    return {
         "schema_version":"1.0.0",
         "operation":"OZ-RT-BZ-T3-009",
         "route":"T3_SEQUENCE_RECURRENCE_EXTRACTION_001",
@@ -75,19 +72,10 @@ def build():
         "union_one_body_atoms":union_atoms,
         "union_one_body_atom_count":len(union_atoms),
         "nested_atoms_remaining":0,
-        "coefficient_layer":"Exact Q-row regularized differentiated fluxes remain external scalar/hypergeometric coefficient functions; this producer canonicalizes only the harmonic/nested algebra and never expands the Q-row certificate into it.",
-        "sum_reduction":"sum E_D equals the sum of the canonical one-body projection plus the six Abel-transfer terms -J_orientation(f)(shifted)*Delta_orientation(N), with f=A,Lk,Ll paired to N11,N12k,N12l; all six Delta(N) objects are retained here and contain no U/ES atom.",
+        "coefficient_layer":"Exact Q-row regularized differentiated fluxes remain external scalar/hypergeometric coefficient functions; this builder canonicalizes only the harmonic/nested algebra and never expands the Q-row certificate into it.",
+        "sum_reduction":"sum E_D equals the sum of the canonical one-body projection plus the six Abel-transfer terms -J_orientation(f)(shifted)*Delta_orientation(N), with f=A,Lk,Ll paired to N11,N12k,N12l; all six Delta(N) objects retained here contain no U/ES atom.",
         "residual_sum_zero_proved":False,
         "proof_effect":"NONE",
         "promotion_effect":"NONE",
         "t3_status":"OPEN_WITH_CHARACTERIZED_BLOCKER",
     }
-    return result
-
-
-def main()->int:
-    print(json.dumps(build(),sort_keys=True,separators=(",",":")))
-    return 0
-
-if __name__=="__main__":
-    raise SystemExit(main())
