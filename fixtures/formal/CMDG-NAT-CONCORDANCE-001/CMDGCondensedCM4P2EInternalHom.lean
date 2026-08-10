@@ -197,6 +197,7 @@ noncomputable def rankOneMultiplicationApp (X : CompHaus.{u}) :
   exact end_.lift
     (fun k => rankOneMultiplicationToEndomorphism X k)
     (fun i j f => by
+      dsimp [CategoryTheory.Enriched.FunctorCategory.diagram]
       simpa only [
         MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerLeft,
         MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight] using
