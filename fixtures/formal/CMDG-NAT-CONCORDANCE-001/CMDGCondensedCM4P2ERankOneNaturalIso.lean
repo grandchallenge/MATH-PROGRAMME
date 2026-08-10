@@ -55,7 +55,6 @@ lemma rankOneInternalHom_map_identityProjection
     Iso.refl_hom, eHomWhiskerLeft_id, Category.comp_id, Category.id_comp]
   congr 1
   simp [Under.map, Comma.mapLeft]
-  rfl
 
 lemma coefficientPullback_one
     {X Y : CompHaus.{u}} (f : X ⟶ Y) :
