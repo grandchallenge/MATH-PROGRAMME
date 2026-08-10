@@ -50,7 +50,7 @@ noncomputable def rankOneIdentityProjection (X : CompHaus.{u}) :=
 noncomputable def rankOneEndomorphismEvalOne (X : CompHaus.{u}) :
     (ihom (coefficientAt X)).obj (coefficientAt X) ⟶ coefficientAt X :=
   ModuleCat.ofHom
-    { toFun := fun φ => φ (1 : coefficientAt X)
+    { toFun := fun φ => φ (show coefficientAt X from LocallyConstant.const X (1 : R))
       map_add' := by
         intro φ ψ
         rfl
