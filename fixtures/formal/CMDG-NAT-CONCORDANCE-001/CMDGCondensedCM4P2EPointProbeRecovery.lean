@@ -27,6 +27,11 @@ lemma rankOnePointProbe_naturality
           LocallyConstant.const (rankOnePointProbeObject X k y).right.unop
             ((show LocallyConstant k.right.unop R from h) y)) := by
   have hnat := rankOneProjection_naturality X (rankOnePointProbeFrom X k y) φ h
+  change
+    coefficientPresheaf.map (rankOnePointProbeFrom X k y).right
+        (rankOneProjectionEndomorphism X k φ h) =
+      rankOneProjectionEndomorphism X (rankOnePointProbeObject X k y) φ
+        (coefficientPresheaf.map (rankOnePointProbeFrom X k y).right h) at hnat
   rw [coefficientPullback_pointProbe X k y
         (rankOneProjectionEndomorphism X k φ h),
       coefficientPullback_pointProbe X k y h] at hnat
@@ -44,11 +49,15 @@ lemma rankOnePointProbe_identity_naturality
   let one : coefficientAt X := LocallyConstant.const X (1 : R)
   have hnat := rankOneProjection_naturality X
     (rankOnePointProbeFromIdentity X k y) φ one
+  change
+    coefficientPresheaf.map (rankOnePointProbeFromIdentity X k y).right
+        (rankOneProjectionEndomorphism X (Under.mk (𝟙 (op X))) φ one) =
+      rankOneProjectionEndomorphism X (rankOnePointProbeObject X k y) φ
+        (coefficientPresheaf.map (rankOnePointProbeFromIdentity X k y).right one) at hnat
   rw [coefficientPullback_pointProbeFromIdentity X k y
         (rankOneProjectionEndomorphism X (Under.mk (𝟙 (op X))) φ one),
       coefficientPullback_pointProbeFromIdentity_one X k y] at hnat
-  have heval := rankOneEvaluationApp_apply X φ
-  rw [heval] at *
+  rw [← rankOneEvaluationApp_apply X φ] at hnat
   exact hnat
 
 #check rankOnePointProbe_naturality
