@@ -169,10 +169,22 @@ lemma rankOneMultiplication_condition
           (coefficientPresheaf.obj j.right) := by
   apply ModuleCat.hom_injective
   ext a
+  let gi : coefficientPresheaf.obj i.right ⟶ coefficientPresheaf.obj i.right :=
+    show coefficientPresheaf.obj i.right ⟶ coefficientPresheaf.obj i.right from
+      rankOneMultiplicationToEndomorphism X i a
+  let gj : coefficientPresheaf.obj j.right ⟶ coefficientPresheaf.obj j.right :=
+    show coefficientPresheaf.obj j.right ⟶ coefficientPresheaf.obj j.right from
+      rankOneMultiplicationToEndomorphism X j a
+  change
+    ((ihom (coefficientPresheaf.obj i.right)).map
+      (coefficientPresheaf.map f.right)) gi =
+      ((MonoidalClosed.pre (coefficientPresheaf.map f.right)).app
+        (coefficientPresheaf.obj j.right)) gj
+  rw [ModuleCat.ihom_map_apply, monoidalClosed_pre_apply]
   apply ModuleCat.hom_injective
   ext h
-  simpa only [ModuleCat.comp_apply, ModuleCat.ihom_map_apply,
-    rankOneMultiplicationToEndomorphism_apply, monoidalClosed_pre_apply] using
+  simpa only [ModuleCat.comp_apply, gi, gj,
+    rankOneMultiplicationToEndomorphism_apply] using
       rankOneSectionMul_naturality X f a h
 
 #check rankOneInternalHom
