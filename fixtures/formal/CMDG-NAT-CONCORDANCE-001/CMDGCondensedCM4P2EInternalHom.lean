@@ -194,7 +194,8 @@ lemma rankOneMultiplicationApp_projection
           (Under.forget (op X) ⋙ coefficientPresheaf)
           k =
       rankOneMultiplicationToEndomorphism X k := by
-  simp [rankOneMultiplicationApp]
+  unfold rankOneMultiplicationApp
+  exact end_.lift_π _ _ k
 
 #check rankOneInternalHom
 #check rankOneInternalHom_eq_functorEnrichedHom
