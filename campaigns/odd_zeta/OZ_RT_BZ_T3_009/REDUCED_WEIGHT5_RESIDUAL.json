@@ -19,19 +19,9 @@
     "summation_identity_status": "EXACT_DISCRETE_PRODUCT_RULE_WITH_REVERIFIED_QROW_AND_ZERO_BOUNDARY_FLUX"
   },
   "protected_weight_instantiations": {
-    "E_P5": {
-      "v": "w5_sym",
-      "source": "campaigns/odd_zeta/OZ_RT_BZ_T3_002/target.py:w5sym"
-    },
-    "E_W": {
-      "v": "W1",
-      "source": "campaigns/odd_zeta/OZ_RT_BZ_T3_002/target.py:W1"
-    },
-    "E_D": {
-      "v": "W1+2*w5_sym",
-      "source": "campaigns/odd_zeta/OZ_RT_BZ_T3_002/target.py:cell",
-      "linearity": "E_D=E_W+2*E_P5"
-    }
+    "E_P5": {"v": "w5_sym", "source": "campaigns/odd_zeta/OZ_RT_BZ_T3_002/target.py:w5sym"},
+    "E_W": {"v": "W1", "source": "campaigns/odd_zeta/OZ_RT_BZ_T3_002/target.py:W1"},
+    "E_D": {"v": "W1+2*w5_sym", "source": "campaigns/odd_zeta/OZ_RT_BZ_T3_002/target.py:cell", "linearity": "E_D=E_W+2*E_P5"}
   },
   "canonicalization": {
     "result": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/RESIDUAL_CANONICAL_RESULT.json",
@@ -40,13 +30,7 @@
     "closure_only_atoms": [],
     "target_max_atomic_arity": 4,
     "difference_max_atomic_arity": 3,
-    "shift_monomial_counts": {
-      "n1": 102,
-      "n2": 102,
-      "n3": 102,
-      "k1": 134,
-      "l1": 134
-    }
+    "shift_monomial_counts": {"n1": 102, "n2": 102, "n3": 102, "k1": 134, "l1": 134}
   },
   "symmetric_gauge_reduction": {
     "artifact": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/QROW_SYMMETRIC_GAUGE.json",
@@ -67,11 +51,19 @@
     "all_weight4_weight5_r22_nested_coordinates_eliminated_from_shift_differences": true,
     "status": "DIRECT_ED_NESTED_SECTOR_REDUCED_TO_THREE_PROTECTED_COMBINATIONS"
   },
-  "selection_policy": "Use direct E_D and its symmetric one-orientation form first because it preserves cross-component and k<->l cancellation. Within that form, separate the exact three-combination nested skeleton from the complementary one-body sector. Retain E_P5 and E_W only as diagnostic projections unless an exact decomposition is later advantageous.",
-  "next_exact_obligation": "Attempt natural auxiliary-sum certificates for N11, N12k, and N12l together with the complementary one-body sector in the four-channel one-orientation residual; do not return to the exhausted generic 198-dimensional raw-flux ansatz.",
+  "nested_derivative_certificates": {
+    "artifact": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/NESTED_DERIVATIVE_CERTIFICATE_ROUTE.json",
+    "interior_identifications": ["Lk=-partial_k log(T)", "Ll=-partial_l log(T)", "Lk*Ll-C2=(partial_k partial_l T)/T"],
+    "interior_certificate_status": "EXACT_BY_DIFFERENTIATING_REVERIFIED_QROW",
+    "abel_transfer_target": "Move the differentiated divergences onto N11/N12k/N12l; their finite differences are one-body, so the interior nested sector reduces to the one-body sector.",
+    "global_status": "SHELL_RECONCILIATION_REQUIRED",
+    "shell_obstruction": "The symmetric Q-row coefficients have exact order-two shell poles; a coordinate derivative has an exact cubic-pole witness at k=n+1, while T has only a double zero. The generic-field differentiated flux therefore cannot be admitted on the protected discrete shells without explicit regularized correction."
+  },
+  "selection_policy": "Use direct E_D. Use the symmetric gauge for module analysis and the one-orientation form for summed spatial economy. Reduce the nested sector through the differentiated Q-row certificates before any new telescoper search. Retain E_P5 and E_W only as diagnostics.",
+  "next_exact_obligation": "Construct shell-corrected differentiated Q-row fluxes for offsets 1,2,3 in both orientations and prove finite discrete boundary behavior. Then Abel-transfer N11/N12k/N12l to the complementary one-body residual. Do not return to the exhausted generic 198-dimensional raw-flux ansatz.",
   "residual_sum_zero_proved": false,
   "proof_effect": "NONE",
   "promotion_effect": "NONE",
   "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
-  "terminal": "QROW_REVERIFIED_DIRECT_ED_CANONICALIZED_ONE_ORIENTATION_THREE_NESTED_SKELETON_LOCKED"
+  "terminal": "QROW_REVERIFIED_DIRECT_ED_CANONICALIZED_NESTED_INTERIOR_CERTIFIED_SHELL_RECONCILIATION_OPEN"
 }
