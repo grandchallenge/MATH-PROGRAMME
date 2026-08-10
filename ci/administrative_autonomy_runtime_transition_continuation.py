@@ -96,7 +96,7 @@ def eligible_candidates(
     control = load_control()
     if control.get("control_id") != "MP-ADMIN-RECOVERY-QUEUE-STARVATION-001":
         raise AutonomyError("transition-continuation control identity drift")
-    if control.get("status") != "PROPOSED_CONTROL_PLANE_CORRECTION":
+    if control.get("status") != "ACTIVE_ON_PROTECTED_MERGE":
         return []
 
     original_expiry = parse_datetime(
