@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/administrative_transition_recovery_candidate_control.schema.json",
+  "title": "Administrative transition recovery candidate control",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "control_id",
+    "status",
+    "issue",
+    "recovery_issue",
+    "repository",
+    "successor",
+    "occurrence",
+    "implementation",
+    "timing_policy",
+    "authority_boundary",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-ADMIN-TRANSITION-RECOVERY-CANDIDATE-001"},
+    "status": {"const": "ACTIVE_ON_PROTECTED_MERGE"},
+    "issue": {"const": 382},
+    "recovery_issue": {"const": 381},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "successor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["successor_id", "record_path", "required_status", "protected_merge"],
+      "properties": {
+        "successor_id": {"const": "MP-ADMIN-STEADY-STATE-0.1-001"},
+        "record_path": {"const": "governance/administrative_maintenance_steady_state_0_1.json"},
+        "required_status": {"const": "ACTIVE_ON_PROTECTED_MERGE"},
+        "protected_merge": {"const": "0b1a295547184cd9e768b30c6234f1cc4c034d49"}
+      }
+    },
+    "occurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "procedure_id",
+        "occurrence_key",
+        "scheduled_due_at",
+        "original_prepare_at",
+        "original_freeze_at",
+        "reconstruction_not_before_utc",
+        "reconstruction_expires_at_utc",
+        "recovery_window_minutes_after_due"
+      ],
+      "properties": {
+        "procedure_id": {"const": "structural_sweep"},
+        "occurrence_key": {"const": "structural_sweep:2026-08-10T03:45:00Z"},
+        "scheduled_due_at": {"const": "2026-08-10T03:45:00Z"},
+        "original_prepare_at": {"const": "2026-08-09T21:45:00Z"},
+        "original_freeze_at": {"const": "2026-08-10T02:15:00Z"},
+        "reconstruction_not_before_utc": {"const": "2026-08-10T03:45:00Z"},
+        "reconstruction_expires_at_utc": {"const": "2026-08-10T06:45:00Z"},
+        "recovery_window_minutes_after_due": {"const": 180}
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_preparer",
+        "ordinary_preparer_preserved",
+        "candidate_branch",
+        "candidate_manifest",
+        "post_due_reconstruction_exact_occurrence_only",
+        "ordinary_preparation_semantics_unchanged",
+        "completion_must_be_absent",
+        "conflicting_partial_artifacts_fail_closed"
+      ],
+      "properties": {
+        "candidate_preparer": {"const": "ci/prepare_administrative_candidate_v5.py"},
+        "ordinary_preparer_preserved": {"const": "ci/prepare_administrative_candidate_v4.py"},
+        "candidate_branch": {"const": "automation/maintenance/structural_sweep-20260810T034500Z"},
+        "candidate_manifest": {"const": "governance/administrative_candidates/structural_sweep-20260810T034500Z.json"},
+        "post_due_reconstruction_exact_occurrence_only": {"const": true},
+        "ordinary_preparation_semantics_unchanged": {"const": true},
+        "completion_must_be_absent": {"const": true},
+        "conflicting_partial_artifacts_fail_closed": {"const": true}
+      }
+    },
+    "timing_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_deadline_preserved",
+        "actual_reconstruction_time_recorded",
+        "lateness_preserved",
+        "cadence_anchor_reset",
+        "eventual_recovery_relabels_on_time"
+      ],
+      "properties": {
+        "original_deadline_preserved": {"const": true},
+        "actual_reconstruction_time_recorded": {"const": true},
+        "lateness_preserved": {"const": true},
+        "cadence_anchor_reset": {"const": false},
+        "eventual_recovery_relabels_on_time": {"const": false}
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_is_authority",
+        "control_branch_is_authority",
+        "human_steward_exact_head_disposition_required_for_control",
+        "automated_human_steward_disposition",
+        "required_checks_weakened",
+        "exact_head_gate_weakened",
+        "referee_separation_weakened",
+        "bypass_created",
+        "emergency_authority_created",
+        "direct_protected_push"
+      ],
+      "properties": {
+        "candidate_is_authority": {"const": false},
+        "control_branch_is_authority": {"const": false},
+        "human_steward_exact_head_disposition_required_for_control": {"const": true},
+        "automated_human_steward_disposition": {"const": false},
+        "required_checks_weakened": {"const": false},
+        "exact_head_gate_weakened": {"const": false},
+        "referee_separation_weakened": {"const": false},
+        "bypass_created": {"const": false},
+        "emergency_authority_created": {"const": false},
+        "direct_protected_push": {"const": false}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mathematical_target_proved",
+        "campaign_admitted",
+        "source_verified",
+        "certificate_issued",
+        "novelty_claim",
+        "priority_claim",
+        "publication_claim",
+        "deployment_claim",
+        "product_claim",
+        "release_claim",
+        "commercial_claim"
+      ],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "campaign_admitted": {"const": false},
+        "source_verified": {"const": false},
+        "certificate_issued": {"const": false},
+        "novelty_claim": {"const": false},
+        "priority_claim": {"const": false},
+        "publication_claim": {"const": false},
+        "deployment_claim": {"const": false},
+        "product_claim": {"const": false},
+        "release_claim": {"const": false},
+        "commercial_claim": {"const": false}
+      }
+    }
+  }
+}
