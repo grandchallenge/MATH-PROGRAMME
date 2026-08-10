@@ -32,41 +32,49 @@ noncomputable def finiteFamilyInternalHomMap
       (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)).app
     CMDG.CondensedCM4P2D.coefficientPresheaf
 
+lemma finiteFamilyInternalHomMap_id (X : FintypeCat.{u}) :
+    finiteFamilyInternalHomMap (𝟙 X) = 𝟙 (finiteFamilyInternalHom X) := by
+  change
+    (MonoidalClosed.pre
+        (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap
+          (𝟙 X).op)).app CMDG.CondensedCM4P2D.coefficientPresheaf =
+      𝟙 (finiteFamilyInternalHom X)
+  have h :
+      CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap
+          (𝟙 X).op =
+        𝟙 (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X) := by
+    ext S a x s
+    rfl
+  rw [h, MonoidalClosed.pre_id]
+  rfl
+
+lemma finiteFamilyInternalHomMap_comp
+    {X Y Z : FintypeCat.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) :
+    finiteFamilyInternalHomMap (f ≫ g) =
+      finiteFamilyInternalHomMap f ≫ finiteFamilyInternalHomMap g := by
+  change
+    (MonoidalClosed.pre
+        (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap
+          (f ≫ g).op)).app CMDG.CondensedCM4P2D.coefficientPresheaf =
+      finiteFamilyInternalHomMap f ≫ finiteFamilyInternalHomMap g
+  have h :
+      CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap
+          (f ≫ g).op =
+        CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap g.op ≫
+          CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op := by
+    ext S a z s
+    rfl
+  rw [h, MonoidalClosed.pre_map]
+  rfl
+
 /-- The finite internal duals form a covariant functor of finite sets. -/
 noncomputable def finiteFamilyInternalHomFunctor :
     FintypeCat.{u} ⥤
       (CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u}) where
   obj X := finiteFamilyInternalHom X
   map f := finiteFamilyInternalHomMap f
-  map_id X := by
-    change
-      (MonoidalClosed.pre
-          (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap
-            (𝟙 X).op)).app CMDG.CondensedCM4P2D.coefficientPresheaf =
-        𝟙 (finiteFamilyInternalHom X)
-    have h :
-        CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap
-            (𝟙 X).op =
-          𝟙 (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X) := by
-      ext S a x s
-      rfl
-    rw [h, MonoidalClosed.pre_id]
-    rfl
-  map_comp f g := by
-    change
-      (MonoidalClosed.pre
-          (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap
-            (f ≫ g).op)).app CMDG.CondensedCM4P2D.coefficientPresheaf =
-        finiteFamilyInternalHomMap f ≫ finiteFamilyInternalHomMap g
-    have h :
-        CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap
-            (f ≫ g).op =
-          CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap g.op ≫
-            CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op := by
-      ext S a z s
-      rfl
-    rw [h, MonoidalClosed.pre_map]
-    rfl
+  map_id X := finiteFamilyInternalHomMap_id X
+  map_comp f g := finiteFamilyInternalHomMap_comp f g
 
 /-- The coefficient-family objects equipped with the covariant action transported through the
 certified fixed-finite-set internal-dual isomorphisms. This is not yet identified with canonical
@@ -76,15 +84,20 @@ noncomputable def finiteCoefficientFamilyCovariantFunctor :
       (CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u}) where
   obj X := CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X
   map {X Y} f :=
-    (finiteFamilyInternalHomIso X).inv ≫
-      finiteFamilyInternalHomFunctor.map f ≫
-      (finiteFamilyInternalHomIso Y).hom
+    finiteFamilyExtension X ≫ finiteFamilyInternalHomMap f ≫ finiteFamilyEvaluation Y
   map_id X := by
-    rw [finiteFamilyInternalHomFunctor.map_id]
-    simp
+    change
+      finiteFamilyExtension X ≫ finiteFamilyInternalHomMap (𝟙 X) ≫ finiteFamilyEvaluation X =
+        𝟙 (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X)
+    rw [finiteFamilyInternalHomMap_id, Category.id_comp]
+    exact finiteFamilyExtension_evaluation X
   map_comp f g := by
-    rw [finiteFamilyInternalHomFunctor.map_comp]
-    simp [Category.assoc]
+    change
+      finiteFamilyExtension _ ≫ finiteFamilyInternalHomMap (f ≫ g) ≫ finiteFamilyEvaluation _ =
+        (finiteFamilyExtension _ ≫ finiteFamilyInternalHomMap f ≫ finiteFamilyEvaluation _) ≫
+          finiteFamilyExtension _ ≫ finiteFamilyInternalHomMap g ≫ finiteFamilyEvaluation _
+    rw [finiteFamilyInternalHomMap_comp]
+    simp only [Category.assoc, finiteFamilyEvaluation_extension, Category.id_comp]
 
 /-- Naturality package for the certified fixed-finite-set internal-dual isomorphisms. -/
 noncomputable def finiteFamilyInternalHomNatIso :
@@ -94,19 +107,21 @@ noncomputable def finiteFamilyInternalHomNatIso :
     (by
       intro X Y f
       change
-        finiteFamilyInternalHomFunctor.map f ≫ (finiteFamilyInternalHomIso Y).hom =
-          (finiteFamilyInternalHomIso X).hom ≫
-            (finiteFamilyInternalHomIso X).inv ≫
-              finiteFamilyInternalHomFunctor.map f ≫
-                (finiteFamilyInternalHomIso Y).hom
-      simp [Category.assoc])
+        finiteFamilyInternalHomMap f ≫ finiteFamilyEvaluation Y =
+          finiteFamilyEvaluation X ≫
+            finiteFamilyExtension X ≫ finiteFamilyInternalHomMap f ≫ finiteFamilyEvaluation Y
+      rw [← Category.assoc, finiteFamilyEvaluation_extension, Category.id_comp])
 
 #check finiteFamilyInternalHomMap
+#check finiteFamilyInternalHomMap_id
+#check finiteFamilyInternalHomMap_comp
 #check finiteFamilyInternalHomFunctor
 #check finiteCoefficientFamilyCovariantFunctor
 #check finiteFamilyInternalHomNatIso
 
 #print axioms finiteFamilyInternalHomMap
+#print axioms finiteFamilyInternalHomMap_id
+#print axioms finiteFamilyInternalHomMap_comp
 #print axioms finiteFamilyInternalHomFunctor
 #print axioms finiteCoefficientFamilyCovariantFunctor
 #print axioms finiteFamilyInternalHomNatIso
