@@ -95,7 +95,7 @@ noncomputable def finiteFunctionDualFreeEquiv (X : Type u) [Fintype X] :
 /-- On a discrete space, locally constant `R`-valued maps are canonically all functions. -/
 noncomputable def locallyConstantLinearEquivFunOfDiscrete
     (X : Type u) [TopologicalSpace X] [DiscreteTopology X] :
-    LocallyConstant X R ≃ₗ[R] (X → R) where
+    LocallyConstant X R.{u} ≃ₗ[R.{u}] (X → R.{u}) where
   toFun f := f
   invFun f := ⟨f, IsLocallyConstant.of_discrete f⟩
   left_inv f := by
@@ -116,7 +116,7 @@ finite function module. -/
 noncomputable def finiteContinuousFunctionsIso (X : FintypeCat.{u}) :
     CMDG.CondensedCM4P2D.continuousFunctions.obj
         (Opposite.op (FintypeCat.toProfinite.obj X)) ≅
-      ModuleCat.of R (X → R) := by
+      ModuleCat.of R.{u} (X → R.{u}) := by
   letI : DiscreteTopology X := FintypeCat.discreteTopology X
   exact (locallyConstantLinearEquivFunOfDiscrete X).toModuleIso
 
