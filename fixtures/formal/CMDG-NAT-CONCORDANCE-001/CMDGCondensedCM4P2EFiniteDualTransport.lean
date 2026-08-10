@@ -1,38 +1,24 @@
 import CMDGCondensedCM4P2EFiniteTransport
 import Mathlib.Algebra.Category.ModuleCat.Biproducts
-
-/-!
-# CMDG CM4-P2-E finite dual transport
-
-This auxiliary fixture transports the accepted rank-one internal-Hom natural isomorphism across
-canonical finite coordinate decompositions. The first checkpoint certifies only the coordinate
-calculus and the induced rank-one restriction/extension maps.
-
-No finite measure/free comparison, right-Kan-extension claim, or P2-E global equivalence is
-asserted here.
--/
+import Mathlib.CategoryTheory.Preadditive.FunctorCategory
 
 namespace CMDG.CondensedCM4P2E.FiniteDualTransport
 
 universe u
-
 open CategoryTheory Opposite
 open scoped CategoryTheory.MonoidalClosed BigOperators
-
 attribute [local instance] FintypeCat.fintype
 
 noncomputable local instance : MonoidalClosed
     (CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u}) :=
   MonoidalClosed.FunctorCategory.monoidalClosed
 
-/-- Internal Hom from the canonical finite coefficient family to the coefficient presheaf. -/
 noncomputable def finiteFamilyInternalHom (X : FintypeCat.{u}) :
     CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u} :=
   (MonoidalClosed.internalHom.obj
       (op (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X))).obj
     CMDG.CondensedCM4P2D.coefficientPresheaf
 
-/-- Canonical inclusion of one coefficient coordinate into the finite family. -/
 noncomputable def finiteCoordinateInclusion
     (X : FintypeCat.{u}) (x : X.obj) :
     CMDG.CondensedCM4P2D.coefficientPresheaf ⟶
@@ -56,33 +42,24 @@ noncomputable def finiteCoordinateInclusion
     intro h
     funext y
     change
-      (if y = x then
-          CMDG.CondensedCM4P2D.coefficientPresheaf.map f h
-        else 0) =
-      CMDG.CondensedCM4P2D.coefficientPresheaf.map f
-        (if y = x then h else 0)
+      (if y = x then CMDG.CondensedCM4P2D.coefficientPresheaf.map f h else 0) =
+        CMDG.CondensedCM4P2D.coefficientPresheaf.map f (if y = x then h else 0)
     by_cases hy : y = x <;> simp [hy]
 
-/-- Canonical projection from the finite coefficient family to one coordinate. -/
 noncomputable def finiteCoordinateProjection
     (X : FintypeCat.{u}) (x : X.obj) :
     CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X ⟶
       CMDG.CondensedCM4P2D.coefficientPresheaf where
   app S := ModuleCat.ofHom
     { toFun := fun a => a x
-      map_add' := by
-        intro a b
-        rfl
-      map_smul' := by
-        intro c a
-        rfl }
+      map_add' := by intro a b; rfl
+      map_smul' := by intro c a; rfl }
   naturality S T f := by
     apply ModuleCat.hom_injective
     apply LinearMap.ext
     intro a
     rfl
 
-/-- A coordinate inclusion followed by its matching projection is the identity. -/
 lemma finiteCoordinateInclusion_projection_self
     (X : FintypeCat.{u}) (x : X.obj) :
     finiteCoordinateInclusion X x ≫ finiteCoordinateProjection X x =
@@ -92,7 +69,6 @@ lemma finiteCoordinateInclusion_projection_self
   change (if x = x then h else 0) = h
   simp
 
-/-- Distinct coordinate inclusion/projection composites vanish. -/
 lemma finiteCoordinateInclusion_projection_ne
     (X : FintypeCat.{u}) {x y : X.obj} (hxy : x ≠ y) :
     finiteCoordinateInclusion X x ≫ finiteCoordinateProjection X y = 0 := by
@@ -102,7 +78,6 @@ lemma finiteCoordinateInclusion_projection_ne
   change (if y = x then h else 0) = 0
   simp [hyx]
 
-/-- The canonical coordinates resolve the identity of the finite family. -/
 lemma finiteCoordinate_resolution
     (X : FintypeCat.{u}) :
     (∑ x, finiteCoordinateProjection X x ≫ finiteCoordinateInclusion X x) =
@@ -110,15 +85,15 @@ lemma finiteCoordinate_resolution
   classical
   apply NatTrans.ext
   funext S
+  simp only [NatTrans.app_sum, NatTrans.id_app]
   apply ModuleCat.hom_injective
   apply LinearMap.ext
   intro a
   funext y
+  simp only [ModuleCat.comp_apply, Finset.sum_apply]
   change (∑ c : X.obj, if y = c then a c else 0) = a y
   simpa using (Finset.sum_ite_eq (Finset.univ) y a)
 
-/-- Restrict a finite-family functional to one canonical rank-one coordinate, then use the
-accepted rank-one natural isomorphism. -/
 noncomputable def finiteCoordinateEvaluation
     (X : FintypeCat.{u}) (x : X.obj) :
     finiteFamilyInternalHom X ⟶ CMDG.CondensedCM4P2D.coefficientPresheaf :=
@@ -126,8 +101,6 @@ noncomputable def finiteCoordinateEvaluation
       CMDG.CondensedCM4P2D.coefficientPresheaf ≫
     CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHomNatIso.hom
 
-/-- Extend one coefficient section to a finite-family functional through its coordinate
-projection, using the accepted inverse rank-one natural isomorphism. -/
 noncomputable def finiteCoordinateExtension
     (X : FintypeCat.{u}) (x : X.obj) :
     CMDG.CondensedCM4P2D.coefficientPresheaf ⟶ finiteFamilyInternalHom X :=
