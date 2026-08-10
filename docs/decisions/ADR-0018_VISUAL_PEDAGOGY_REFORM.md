@@ -117,21 +117,31 @@ The pilot must not silently overwrite existing documentary plate identities. Eac
 
 ## Bounded pilot
 
-The first pilot should contain approximately six to ten materially different cases. The Council identified the following as strong candidates:
+The bounded reference set contains eight materially different cases:
 
-- Poincaré surgery;
-- Ricci-flow geometry/evolution;
-- Navier–Stokes vortex stretching;
-- Riemann critical strip and zero structure;
-- Birch–Swinnerton-Dyer arithmetic visualization;
-- Hodge cycle/class visualization;
-- a deliberately simple diagrammatic positive control such as P-vs-NP reduction.
+- Poincaré Ricci-flow geometry/evolution — `REPLACE`;
+- Poincaré controlled surgery — `REPLACE`;
+- Navier–Stokes vortex stretching — `REPLACE`;
+- Riemann critical strip and zero structure — `REPLACE`;
+- Birch–Swinnerton-Dyer arithmetic curve example — `REDRAW`;
+- Hodge cycle/class visualization — `REDRAW`;
+- P-vs-NP reduction — `KEEP`, exact diagrammatic SVG positive control;
+- Euclid Book VII repeated subtraction — `KEEP`, exact discrete/historical-concordance SVG positive control.
 
-The pilot deliberately includes a positive SVG control so that reform cannot collapse into a blanket rasterization policy.
+The pilot deliberately includes positive SVG controls so that reform cannot collapse into a blanket rasterization policy.
+
+## Implemented first-stage evidence
+
+The first-stage governance and contract layer has now closed two authorized obligations without closing the pilot itself:
+
+1. `governance/documentary_visual_pedagogy_pilot_audit.json` enumerates all 45 current documentary visual assets at baseline protected `main` `839e04e1b862ffddfe5ce1d4d733ba954cd45d96`, binds exact predecessor Git blob identities, and records 19 `KEEP`, 21 `REDRAW`, 5 `REPLACE`, and 0 `RETIRE` dispositions. The record distinguishes rendered visual review from source/context-only first-pass classification and does not misstate either as independent domain review.
+2. Eight machine-readable pilot contracts under `governance/visual_pedagogy/plates/` are schema-bound by `schemas/documentary_visual_plate.schema.json`. `ci/validate_documentary_visual_pedagogy.py`, its adversarial unit tests, and integration through the governed documentation-policy root enforce inventory identity, contract shape, provenance declarations, accessibility declarations, positive-control presence, and the hard `visual_is_evidence: false` boundary.
+
+These mechanical controls establish auditable documentary state. They do not establish mathematical visual fidelity.
 
 ## Review and propagation gate
 
-Pilot completion requires independent visual-semantic and domain-sensitive review. Programme-wide migration remains unauthorized until a later governed disposition confirms that the pilot demonstrates:
+Pilot completion still requires implementation of the six corrective successor visuals and independent visual-semantic and domain-sensitive review of all eight pilot cases. Programme-wide migration remains unauthorized until a later governed disposition confirms that the pilot demonstrates:
 
 1. mathematical fidelity;
 2. pedagogical utility;
@@ -157,11 +167,11 @@ This ADR changes how the Programme governs visual exposition. It does not:
 
 The bounded operation must leave behind:
 
-- a whole-library plate audit;
-- the visual-semantic standard;
-- machine-readable plate metadata/schema;
-- reproducibility and provenance rules;
-- the bounded pilot assets and their source/generator records;
-- independent review evidence;
-- Amanuensis continuity evidence;
-- a final pilot disposition controlling any proposed propagation.
+- a whole-library plate audit — **first-pass identity/disposition audit complete**;
+- the visual-semantic standard — **complete for bounded pilot**;
+- machine-readable plate metadata/schema — **complete for the eight-case pilot set**;
+- reproducibility and provenance rules — **contract established; successor renderer records still required where applicable**;
+- the bounded pilot successor assets and their source/generator records — **pending for six corrective cases; two exact SVG controls retained**;
+- independent review evidence — **pending**;
+- Amanuensis continuity evidence — **active; final ledger/terminology/cross-document integration pending**;
+- a final pilot disposition controlling any proposed propagation — **pending**.
