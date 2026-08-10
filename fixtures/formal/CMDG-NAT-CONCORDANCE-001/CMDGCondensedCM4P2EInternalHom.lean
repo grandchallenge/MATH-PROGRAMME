@@ -75,9 +75,10 @@ noncomputable def rankOneSectionMul
   let h' : LocallyConstant Y R := h
   exact LinearMap.mul R (LocallyConstant Y R) a' h'
 
-/-- Multiplication by a section pulled back from the base of a slice object, packaged canonically
-using the bilinear multiplication map and the linear equivalence between `ModuleCat` morphisms and
-linear maps. -/
+/-- Multiplication by a section pulled back from the base of a slice object, packaged directly in
+the categorical Hom carrier underlying the internal Hom. This uses the ambient `R`-linear category
+structure and therefore does not introduce a second scalar-action requirement on the coefficient
+module. -/
 noncomputable def rankOneMultiplicationToEndomorphism
     (X : CompHaus.{u}) (k : Under (op X)) :
     coefficientAt X ⟶
@@ -86,15 +87,16 @@ noncomputable def rankOneMultiplicationToEndomorphism
   let A := LocallyConstant Y R
   let pull : coefficientAt X →ₗ[R] A := (coefficientPresheaf.map k.hom).hom
   let mul : A →ₗ[R] A →ₗ[R] A := LinearMap.mul R A
-  letI : SMulCommClass R R ↑(coefficientPresheaf.obj k.right) :=
-    ⟨fun r s x => by
-      rw [smul_smul, smul_smul, mul_comm r s]⟩
   let pack : (A →ₗ[R] A) →ₗ[R]
       (coefficientPresheaf.obj k.right ⟶ coefficientPresheaf.obj k.right) :=
-    (ModuleCat.homLinearEquiv
-      (R := R) (S := R)
-      (M := coefficientPresheaf.obj k.right)
-      (N := coefficientPresheaf.obj k.right)).symm.toLinearMap
+    { toFun := fun f => ModuleCat.ofHom f
+      map_add' := by
+        intro f g
+        rfl
+      map_smul' := by
+        intro r f
+        apply ModuleCat.hom_injective
+        rfl }
   exact ModuleCat.ofHom (pack.comp (mul.comp pull))
 
 #check rankOneInternalHom
