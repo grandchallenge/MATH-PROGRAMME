@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "plate_id": "PC-RICCI-FLOW-PLATE-II",
+  "documentary_id": "PC-001",
+  "title": "When geometry becomes an engine",
+  "representation_class": "schematic",
+  "mathematical_role": "Orient the reader to metric evolution under Ricci flow and the distinction between smoothing and curvature concentration.",
+  "learning_objective": "Recognize that Ricci flow is a time-dependent evolution of the metric and that singular behavior is associated with concentrated curvature rather than a decorative marker on a static shape.",
+  "literal_semantics": [
+    "The plate is intended only to indicate that geometry changes and that curvature concentration is a distinct event requiring analysis."
+  ],
+  "nonliteral_semantics": [
+    "The drawn surface is not a literal three-manifold or metric realization.",
+    "The grid spacing is not a curvature scale.",
+    "The highlighted point is not a computed singularity.",
+    "The lower waveform is not a Ricci-flow solution or curvature trace."
+  ],
+  "source": {
+    "kind": "conceptual-specification",
+    "reference": "docs/documentaries/poincare.md#geometry",
+    "digest": null,
+    "notes": ["Current predecessor contract only; successor rendering remains to be implemented under ADR-0018."]
+  },
+  "renderer": {
+    "mode": "manual-vector",
+    "generator_ref": null,
+    "version_or_environment": null,
+    "parameters_ref": null,
+    "reproducible": false,
+    "reproducibility_notes": ["The committed SVG bytes are preserved, but no domain renderer or mathematical evolution source is bound to the predecessor image."]
+  },
+  "derivatives": [
+    {"format":"svg","path":"docs/assets/documentaries/poincare/plate_geometry.svg","role":"current predecessor web plate","digest":"git-blob:d02d5650b002a2f5d47290f579f980a026462160"}
+  ],
+  "accessibility": {
+    "alt_text": "A curved geometry smoothing under Ricci flow while concentrated curvature signals a possible singularity.",
+    "long_description": "The current predecessor is a schematic static plate. It gestures toward metric smoothing and curvature concentration but does not show a time-indexed metric, curvature field, scale, or computed singularity. The replacement must make the temporal and curvature semantics explicit.",
+    "static_fallback": null
+  },
+  "claim_boundary": {
+    "visual_is_evidence": false,
+    "strongest_visual_claim": "Pedagogical orientation to the roles of smoothing and curvature concentration in the Ricci-flow narrative.",
+    "not_claimed": ["A Ricci-flow solution", "A numerical simulation", "A singularity certificate", "A proof of any Hamilton-Perelman theorem"],
+    "mathematical_authority_ref": "docs/documentaries/poincare.md#geometry"
+  },
+  "audit_disposition": "REPLACE",
+  "predecessor": null,
+  "supersession_reason": "The current static schematic does not encode the time-dependent geometric semantics asserted by its teaching role.",
+  "independent_review": {"status":"pending","evidence_refs":[]}
+}

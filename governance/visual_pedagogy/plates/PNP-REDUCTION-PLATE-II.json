@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "plate_id": "PNP-REDUCTION-PLATE-II",
+  "documentary_id": "PNP-001",
+  "title": "The grammar of reduction",
+  "representation_class": "exact",
+  "mathematical_role": "Show the direction and membership-preserving contract of a polynomial-time many-one reduction from A to B.",
+  "learning_objective": "Read A <=_p B in the correct direction and understand that an efficient solver for B can be used after f to solve A.",
+  "literal_semantics": [
+    "A and B denote decision problems/languages.",
+    "The directed arrow denotes the reduction map f from instances of A to instances of B.",
+    "The displayed relation x in A iff f(x) in B is the membership-preservation contract."
+  ],
+  "nonliteral_semantics": [
+    "Circle size and spacing carry no complexity measure.",
+    "The drawing does not encode the running-time polynomial or a concrete reduction algorithm."
+  ],
+  "source": {
+    "kind": "programme-record",
+    "reference": "docs/documentaries/p_vs_np.md#reductions",
+    "digest": null,
+    "notes": ["This plate is retained as the primary positive control demonstrating that representation-first governance does not reject SVG when the object is intrinsically diagrammatic."]
+  },
+  "renderer": {
+    "mode": "manual-vector",
+    "generator_ref": "docs/assets/documentaries/p_vs_np/reduction.svg",
+    "version_or_environment": null,
+    "parameters_ref": null,
+    "reproducible": true,
+    "reproducibility_notes": ["The committed SVG is itself the complete vector source and is bound by exact Git blob identity."]
+  },
+  "derivatives": [
+    {"format":"svg","path":"docs/assets/documentaries/p_vs_np/reduction.svg","role":"canonical current web plate and vector source","digest":"git-blob:e351902a073e9fdb41d0953400992d1732fd0fd4"}
+  ],
+  "accessibility": {
+    "alt_text": "Directed gateways map one decision problem into another while preserving yes and no instances.",
+    "long_description": "A directed diagram maps problem A to problem B by f and states x in A if and only if f(x) is in B. The direction matters: a solver for B combined with the reduction yields a solver for A. The geometry of the circles is purely presentational.",
+    "static_fallback": null
+  },
+  "claim_boundary": {
+    "visual_is_evidence": false,
+    "strongest_visual_claim": "Exact diagrammatic statement of the membership-preserving direction of a polynomial-time many-one reduction as already stated in the documentary text.",
+    "not_claimed": ["A concrete reduction between named NP-complete problems", "NP-hardness of an unspecified language", "P equals NP", "P differs from NP"],
+    "mathematical_authority_ref": "docs/documentaries/p_vs_np.md#reductions"
+  },
+  "audit_disposition": "KEEP",
+  "predecessor": null,
+  "supersession_reason": null,
+  "independent_review": {"status":"pending","evidence_refs":[]}
+}

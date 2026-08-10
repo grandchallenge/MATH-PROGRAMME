@@ -19,6 +19,7 @@
 | ADR-0015 | 2026-07-27 | Accepted | Admit the Union-Closed full-tier documentary as the Wave Two pilot while retaining Frankl's conjecture as open and preserving UC-DOC-WP00 source-lock provenance. | [`ADR-0015_UNION_CLOSED_DOCUMENTARY_ADMISSION.md`](decisions/ADR-0015_UNION_CLOSED_DOCUMENTARY_ADMISSION.md) |
 | ADR-0016 | 2026-07-31 | Accepted for protected-merge activation | Adopt Core Clarity maintenance, resolve D1–D8, apply the 0.1 accelerated time scale, and require protected INTELLECT adoption. | [`ADR-0016_ACCELERATED_CORE_CLARITY_MAINTENANCE.md`](decisions/ADR-0016_ACCELERATED_CORE_CLARITY_MAINTENANCE.md) |
 | ADR-0017 | 2026-08-08 | Human Steward ratified with Council corrections; protected authority active | Adopt CMDG as the overarching certified mathematical dependency-graph Grand Challenge, subject to binding stage-bounded corrections CMDG-C01 through CMDG-C08. | [`ADR-0017_CMDG_CERTIFIED_MATHEMATICAL_DEPENDENCY_GRAPH.md`](decisions/ADR-0017_CMDG_CERTIFIED_MATHEMATICAL_DEPENDENCY_GRAPH.md) |
+| ADR-0018 | 2026-08-09 | Human Steward strongly approved for bounded pilot; protected merge pending | Replace SVG-first documentary production with governed representation-first visual pedagogy for `MP-DOC-VISUAL-PEDAGOGY-001`; full-library migration remains unauthorized. | [`ADR-0018_VISUAL_PEDAGOGY_REFORM.md`](decisions/ADR-0018_VISUAL_PEDAGOGY_REFORM.md) |
 
 ## Identifier rule
 
