@@ -158,6 +158,23 @@ lemma monoidalClosed_pre_apply
   rw [ModuleCat.monoidalClosed_pre_app]
   rfl
 
+/-- The multiplication family satisfies the dinaturality equation defining the enriched end:
+postcomposition along coefficient pullback agrees with precomposition along the same pullback. -/
+lemma rankOneMultiplication_condition
+    (X : CompHaus.{u}) {i j : Under (op X)} (f : i ⟶ j) :
+    rankOneMultiplicationToEndomorphism X i ≫
+        (ihom (coefficientPresheaf.obj i.right)).map (coefficientPresheaf.map f.right) =
+      rankOneMultiplicationToEndomorphism X j ≫
+        (MonoidalClosed.pre (coefficientPresheaf.map f.right)).app
+          (coefficientPresheaf.obj j.right) := by
+  apply ModuleCat.hom_injective
+  ext a
+  apply ModuleCat.hom_injective
+  ext h
+  simpa only [ModuleCat.comp_apply, ModuleCat.ihom_map_apply,
+    rankOneMultiplicationToEndomorphism_apply, monoidalClosed_pre_apply] using
+      rankOneSectionMul_naturality X f a h
+
 #check rankOneInternalHom
 #check rankOneInternalHom_eq_functorEnrichedHom
 #check RankOneTarget
@@ -171,6 +188,7 @@ lemma monoidalClosed_pre_apply
 #check rankOneMultiplicationToEndomorphism
 #check rankOneMultiplicationToEndomorphism_apply
 #check monoidalClosed_pre_apply
+#check rankOneMultiplication_condition
 #check LinearMap.mul
 #check ModuleCat.homLinearEquiv
 #check CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
@@ -193,5 +211,6 @@ lemma monoidalClosed_pre_apply
 #print axioms rankOneMultiplicationToEndomorphism
 #print axioms rankOneMultiplicationToEndomorphism_apply
 #print axioms monoidalClosed_pre_apply
+#print axioms rankOneMultiplication_condition
 
 end CMDG.CondensedCM4P2E.InternalHom
