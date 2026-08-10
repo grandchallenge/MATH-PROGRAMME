@@ -204,6 +204,18 @@ noncomputable def rankOneMultiplicationApp (X : CompHaus.{u}) :
         MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight] using
         rankOneMultiplication_condition X f)
 
+/-- Projection of the enriched-end lift recovers the original slice multiplication family. -/
+lemma rankOneMultiplicationApp_projection
+    (X : CompHaus.{u}) (k : Under (op X)) :
+    rankOneMultiplicationApp X ≫
+        CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+          (ModuleCat.{u + 1} R)
+          (Under.forget (op X) ⋙ coefficientPresheaf)
+          (Under.forget (op X) ⋙ coefficientPresheaf)
+          k =
+      rankOneMultiplicationToEndomorphism X k := by
+  simp [rankOneMultiplicationApp]
+
 #check rankOneInternalHom
 #check rankOneInternalHom_eq_functorEnrichedHom
 #check RankOneTarget
@@ -219,6 +231,7 @@ noncomputable def rankOneMultiplicationApp (X : CompHaus.{u}) :
 #check monoidalClosed_pre_apply
 #check rankOneMultiplication_condition
 #check rankOneMultiplicationApp
+#check rankOneMultiplicationApp_projection
 #check LinearMap.mul
 #check ModuleCat.homLinearEquiv
 #check CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
@@ -245,5 +258,6 @@ noncomputable def rankOneMultiplicationApp (X : CompHaus.{u}) :
 #print axioms monoidalClosed_pre_apply
 #print axioms rankOneMultiplication_condition
 #print axioms rankOneMultiplicationApp
+#print axioms rankOneMultiplicationApp_projection
 
 end CMDG.CondensedCM4P2E.InternalHom
