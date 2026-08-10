@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_recovery_queue_starvation_control.schema.json",
+  "title": "Administrative recovery queue starvation control",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "control_id",
+    "status",
+    "problem",
+    "correction",
+    "evidence",
+    "authority_boundary",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-ADMIN-RECOVERY-QUEUE-STARVATION-001"},
+    "status": {"const": "PROPOSED_CONTROL_PLANE_CORRECTION"},
+    "problem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["starving_occurrence","starving_pull_request","starving_issue","starving_receipt_present","starved_occurrence","starved_issue","starved_pull_request","candidate_reconstructed_at_utc","original_recovery_expires_at_utc"],
+      "properties": {
+        "starving_occurrence": {"const": "administrative_review:2026-08-10T01:21:00Z"},
+        "starving_pull_request": {"const": 362},
+        "starving_issue": {"const": 361},
+        "starving_receipt_present": {"const": true},
+        "starved_occurrence": {"const": "structural_sweep:2026-08-10T03:45:00Z"},
+        "starved_issue": {"const": 384},
+        "starved_pull_request": {"const": 385},
+        "candidate_reconstructed_at_utc": {"const": "2026-08-10T06:20:52Z"},
+        "original_recovery_expires_at_utc": {"const": "2026-08-10T06:45:00Z"}
+      }
+    },
+    "correction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt_complete_closures_do_not_block_candidate_selection","exact_candidate_continuation_enabled","continuation_occurrence_key","continuation_issue","continuation_pull_request","required_source_protected_head","continuation_expires_at_utc","continuation_bound","ordinary_recovery_window_minutes_unchanged","cadence_anchor_reset","deadline_reset","eventual_recovery_relabels_on_time"],
+      "properties": {
+        "receipt_complete_closures_do_not_block_candidate_selection": {"const": true},
+        "exact_candidate_continuation_enabled": {"const": true},
+        "continuation_occurrence_key": {"const": "structural_sweep:2026-08-10T03:45:00Z"},
+        "continuation_issue": {"const": 384},
+        "continuation_pull_request": {"const": 385},
+        "required_source_protected_head": {"const": "de8e30dc6c23eca5ff2a0607b179c67a6a90eecc"},
+        "continuation_expires_at_utc": {"const": "2026-08-10T20:33:00Z"},
+        "continuation_bound": {"const": "next_structural_occurrence"},
+        "ordinary_recovery_window_minutes_unchanged": {"const": 180},
+        "cadence_anchor_reset": {"const": false},
+        "deadline_reset": {"const": false},
+        "eventual_recovery_relabels_on_time": {"const": false}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reconstruction_run","second_in_window_run","failure","runtime_selected_pull_request","protected_completion_state_proves_pull_362_receipt_complete"],
+      "properties": {
+        "reconstruction_run": {"const": 31361580371},
+        "second_in_window_run": {"const": 31361684963},
+        "failure": {"const": "protected mirror synchronization producer readback timed out"},
+        "runtime_selected_pull_request": {"const": 362},
+        "protected_completion_state_proves_pull_362_receipt_complete": {"const": true}
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["human_steward_exact_head_authorization_required","candidate_branch_is_authority","bypass_created","emergency_authority_created","required_checks_weakened","referee_gate_weakened","direct_protected_push_authorized"],
+      "properties": {
+        "human_steward_exact_head_authorization_required": {"const": true},
+        "candidate_branch_is_authority": {"const": false},
+        "bypass_created": {"const": false},
+        "emergency_authority_created": {"const": false},
+        "required_checks_weakened": {"const": false},
+        "referee_gate_weakened": {"const": false},
+        "direct_protected_push_authorized": {"const": false}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mathematical_target_proved","source_authority_created","certification_authority_created","external_claim_authorized"],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "source_authority_created": {"const": false},
+        "certification_authority_created": {"const": false},
+        "external_claim_authorized": {"const": false}
+      }
+    }
+  }
+}
