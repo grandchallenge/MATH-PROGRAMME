@@ -69,8 +69,9 @@ noncomputable def rankOneSectionMul
     (X : CompHaus.{u}) (k : Under (op X))
     (a : coefficientAt X) (h : coefficientPresheaf.obj k.right) :
     coefficientPresheaf.obj k.right := by
-  let a' : LocallyConstant (unop k.right) R := coefficientPresheaf.map k.hom a
-  let h' : LocallyConstant (unop k.right) R := h
+  let Y : CompHaus.{u} := k.right.unop
+  let a' : LocallyConstant Y R := coefficientPresheaf.map k.hom a
+  let h' : LocallyConstant Y R := h
   exact a' * h'
 
 /-- Multiplication by a section pulled back from the base of a slice object. -/
