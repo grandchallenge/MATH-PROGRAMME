@@ -215,7 +215,8 @@ lemma rankOneMultiplication_identity_evalOne (X : CompHaus.{u}) :
         LocallyConstant.const X (1 : R) =
       (show LocallyConstant X R from a)
   rw [coefficientPresheaf.map_id, ModuleCat.id_apply]
-  simpa using (mul_one (show LocallyConstant X R from a))
+  ext x
+  simp
 
 lemma rankOneMultiplication_evaluation (X : CompHaus.{u}) :
     rankOneMultiplicationApp X ≫ rankOneEvaluationApp X = 𝟙 (coefficientAt X) := by
