@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_workflow_impact_gating.schema.json",
+  "title": "CMDG standalone workflow impact gating control",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "control_id",
+    "status",
+    "protected_baseline",
+    "phase",
+    "workflow_roster",
+    "pull_request_paths",
+    "negative_examples",
+    "positive_examples",
+    "event_semantics",
+    "routing_boundary",
+    "authority_boundary",
+    "terminal_target"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-CMDG-WORKFLOW-IMPACT-GATING-001"},
+    "status": {"const": "ACTIVE_ON_PROTECTED_MERGE"},
+    "protected_baseline": {"const": "fad9cff9f8f73b78bfed94fb1aab9763f63d00ab"},
+    "phase": {"const": "CONSERVATIVE_SHARED_CLOSURE"},
+    "workflow_roster": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {"type": "string", "pattern": "^cmdg-.*\\.yml$"}
+    },
+    "pull_request_paths": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 10,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "negative_examples": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "positive_examples": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "event_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pull_request", "push_main", "workflow_dispatch"],
+      "properties": {
+        "pull_request": {"const": "PATH_GATED_SHARED_CMDG_CLOSURE"},
+        "push_main": {"const": "PRESERVED_UNCONDITIONAL"},
+        "workflow_dispatch": {"const": "PRESERVED"}
+      }
+    },
+    "routing_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unrelated_pr_standalone_cmdg_instantiation",
+        "cmdg_relevant_pr_full_standalone_family",
+        "within_cmdg_lane_reduction",
+        "protected_required_check_identity_changed"
+      ],
+      "properties": {
+        "unrelated_pr_standalone_cmdg_instantiation": {"const": false},
+        "cmdg_relevant_pr_full_standalone_family": {"const": true},
+        "within_cmdg_lane_reduction": {"const": false},
+        "protected_required_check_identity_changed": {"const": false}
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mathematical_authority_conferred",
+        "source_authority_conferred",
+        "certification_authority_conferred",
+        "publication_or_deployment_authority_conferred",
+        "release_or_commercial_authority_conferred",
+        "bypass_created",
+        "emergency_authority_created",
+        "direct_protected_push_authorized",
+        "human_steward_impersonation_authorized"
+      ],
+      "properties": {
+        "mathematical_authority_conferred": {"const": false},
+        "source_authority_conferred": {"const": false},
+        "certification_authority_conferred": {"const": false},
+        "publication_or_deployment_authority_conferred": {"const": false},
+        "release_or_commercial_authority_conferred": {"const": false},
+        "bypass_created": {"const": false},
+        "emergency_authority_created": {"const": false},
+        "direct_protected_push_authorized": {"const": false},
+        "human_steward_impersonation_authorized": {"const": false}
+      }
+    },
+    "terminal_target": {"const": "CMDG_WORKFLOW_IMPACT_GATING_PROTECTED__UNRELATED_PR_FANOUT_SUPPRESSED__CMDG_CLOSURE_PRESERVED"}
+  }
+}
