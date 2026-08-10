@@ -64,6 +64,22 @@ class TestCMDGCondensedCM4P2E(unittest.TestCase):
             lambda d: d["proof_architecture"]["finite_level_comparison"].__setitem__(
                 "state", "FORMALLY_AVAILABLE"))
 
+    def test_reject_duality_implies_reconstruction_scope_drift(self):
+        self.assert_rejected(
+            lambda d: d.__setitem__(
+                "scope",
+                "CM4-P2-E only: natural equivalence between measureFunctor and profiniteSolid"))
+
+    def test_reject_p2d_role_promotion(self):
+        def mutate_role(d):
+            for row in d["exact_tree_audit"]["observed_sources"]:
+                if row["path"].endswith("CMDGCondensedCM4P2D.lean"):
+                    row["role"] = "protected P2-D functor already sufficient for equivalence"
+                    return
+            raise AssertionError("P2-D source row missing")
+
+        self.assert_rejected(mutate_role)
+
 
 if __name__ == "__main__":
     unittest.main()
