@@ -21,7 +21,12 @@ open CategoryTheory.Enriched.FunctorCategory
 lemma rankOneEvaluation_multiplication (X : CompHaus.{u}) :
     rankOneEvaluationApp X ≫ rankOneMultiplicationApp X =
       𝟙 (rankOneInternalHom.obj (op X)) := by
-  rw [rankOneInternalHom_eq_functorEnrichedHom]
+  change
+    rankOneEvaluationApp X ≫ rankOneMultiplicationApp X =
+      𝟙 (end_ (diagram
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op X) ⋙ coefficientPresheaf)
+        (Under.forget (op X) ⋙ coefficientPresheaf)))
   apply end_.hom_ext
   intro k
   rw [Category.assoc, rankOneMultiplicationApp_projection, Category.id_comp]
