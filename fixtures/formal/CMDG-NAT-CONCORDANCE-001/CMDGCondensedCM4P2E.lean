@@ -28,7 +28,7 @@ universe u
 open CategoryTheory
 open scoped BigOperators
 
-abbrev R := CMDG.CondensedCM4P2D.R
+abbrev R := CMDG.CondensedCM4P2D.R.{u}
 
 noncomputable abbrev measureFunctor : Profinite.{u} ⥤ CondensedMod.{u} R :=
   CMDG.CondensedCM4P2D.measureFunctor
