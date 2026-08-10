@@ -49,15 +49,19 @@ jobs:
       - name: Reject placeholders and chosen-basis substitution
         run: |
           set -euo pipefail
-          F=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2E.lean
-          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F"; then
-            echo "P2-E fixture must contain neither sorry nor local axioms."
-            exit 1
-          fi
-          if grep -nE 'LocallyConstant\.freeOfProfinite|Nobeling|Nöbeling' "$F"; then
-            echo "P2-E must not use a chosen Nöbeling-basis substitute."
-            exit 1
-          fi
+          for F in \
+            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2E.lean \
+            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EAlgebraic.lean
+          do
+            if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F"; then
+              echo "P2-E fixtures must contain neither sorry nor local axioms."
+              exit 1
+            fi
+            if grep -nE 'LocallyConstant\.freeOfProfinite|Nobeling|Nöbeling' "$F"; then
+              echo "P2-E must not use a chosen Nöbeling-basis substitute."
+              exit 1
+            fi
+          done
       - name: Set up pinned Lean and mathlib cache
         id: lean-setup
         continue-on-error: true
@@ -87,12 +91,13 @@ jobs:
           grep -Fq 'lemma IsPointwiseRightKanExtension.isRightKanExtension' "$ML/Mathlib/CategoryTheory/Functor/KanExtension/Pointwise.lean"
           grep -Fq 'noncomputable def isColimitLocallyConstantPresheafDiagram' "$ML/Mathlib/Condensed/Discrete/Colimit.lean"
           grep -Fq 'def lanPresheafNatIso' "$ML/Mathlib/Condensed/Discrete/Colimit.lean"
-      - name: Build and replay P2-E comparison target
+      - name: Build and replay P2-E comparison targets
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
         env:
           LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}
         run: |
           set -euo pipefail
           echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
-          lake build CMDGCondensedCM4P2E
+          lake build CMDGCondensedCM4P2E CMDGCondensedCM4P2EAlgebraic
           lake env lean CMDGCondensedCM4P2E.lean
+          lake env lean CMDGCondensedCM4P2EAlgebraic.lean
