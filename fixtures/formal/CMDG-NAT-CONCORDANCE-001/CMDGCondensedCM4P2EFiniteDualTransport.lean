@@ -55,13 +55,12 @@ noncomputable def finiteCoordinateInclusion
     apply LinearMap.ext
     intro h
     funext y
-    simp only [ModuleCat.comp_apply]
     change
-      CMDG.CondensedCM4P2D.coefficientPresheaf.map f
-          (if y = x then h else 0) =
-        if y = x then
+      (if y = x then
           CMDG.CondensedCM4P2D.coefficientPresheaf.map f h
-        else 0
+        else 0) =
+      CMDG.CondensedCM4P2D.coefficientPresheaf.map f
+        (if y = x then h else 0)
     by_cases hy : y = x <;> simp [hy]
 
 /-- Canonical projection from the finite coefficient family to one coordinate. -/
@@ -115,9 +114,8 @@ lemma finiteCoordinate_resolution
   apply LinearMap.ext
   intro a
   funext y
-  simp only [ModuleCat.comp_apply]
   change (∑ c : X.obj, if y = c then a c else 0) = a y
-  simp
+  simpa using (Finset.sum_ite_eq (Finset.univ) y a)
 
 /-- Restrict a finite-family functional to one canonical rank-one coordinate, then use the
 accepted rank-one natural isomorphism. -/
