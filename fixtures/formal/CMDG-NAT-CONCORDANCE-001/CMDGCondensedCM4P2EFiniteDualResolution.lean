@@ -15,7 +15,7 @@ lemma monoidalClosed_pre_finset_sum
     {ι : Type*}
     (A B : CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u})
     (s : Finset ι) (f : ι → (B ⟶ A)) :
-    MonoidalClosed.pre (∑ i in s, f i) = ∑ i in s, MonoidalClosed.pre (f i) := by
+    MonoidalClosed.pre (∑ i ∈ s, f i) = ∑ i ∈ s, MonoidalClosed.pre (f i) := by
   classical
   induction s using Finset.induction_on with
   | empty =>
