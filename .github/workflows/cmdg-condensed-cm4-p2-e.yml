@@ -105,5 +105,6 @@ jobs:
           lake env lean CMDGCondensedCM4P2E.lean
           lake env lean CMDGCondensedCM4P2EAlgebraic.lean
           lake env lean CMDGCondensedCM4P2EInternalHom.lean
-          lake env lean CMDGCondensedCM4P2EPointProbe.lean
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EPointProbe.olean CMDGCondensedCM4P2EPointProbe.lean
           lake env lean CMDGCondensedCM4P2EPointProbeRecovery.lean
