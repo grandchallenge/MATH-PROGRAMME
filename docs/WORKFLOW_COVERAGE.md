@@ -102,3 +102,7 @@ MATH-PROGRAMME issue #6 may close only when:
 5. `operational_release_complete` is `true`.
 
 Merge state, workflow success, test success, witness identity, certification, publication visibility, and mathematical theorem support remain separate facts.
+
+## Temporary impact-gating demonstration
+
+This line exists only on the unmerged post-merge demonstration branch for `MP-CMDG-WORKFLOW-IMPACT-GATING-001`. Its purpose is to create an ordinary documentation-only pull-request transition and verify that standalone CMDG workflows do not instantiate for an unrelated documentation change.
