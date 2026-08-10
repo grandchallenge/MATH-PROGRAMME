@@ -203,14 +203,15 @@ lemma rankOneProjection_condition
           (Under.forget (op X) ⋙ coefficientPresheaf)
           (Under.forget (op X) ⋙ coefficientPresheaf)
           i ≫
-        (ihom (coefficientPresheaf.obj i.right)).map (coefficientPresheaf.map f.right) =
+        (ihom ((Under.forget (op X) ⋙ coefficientPresheaf).obj i)).map
+          ((Under.forget (op X) ⋙ coefficientPresheaf).map f) =
       CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
           (ModuleCat.{u + 1} R)
           (Under.forget (op X) ⋙ coefficientPresheaf)
           (Under.forget (op X) ⋙ coefficientPresheaf)
           j ≫
-        (MonoidalClosed.pre (coefficientPresheaf.map f.right)).app
-          (coefficientPresheaf.obj j.right) := by
+        (MonoidalClosed.pre ((Under.forget (op X) ⋙ coefficientPresheaf).map f)).app
+          ((Under.forget (op X) ⋙ coefficientPresheaf).obj j) := by
   simpa only [
       MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerLeft,
       MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight] using
