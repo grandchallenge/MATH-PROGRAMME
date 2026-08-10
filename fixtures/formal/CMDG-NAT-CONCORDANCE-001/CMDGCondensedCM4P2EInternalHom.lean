@@ -62,7 +62,6 @@ noncomputable def rankOneEndomorphismEvalOne (X : CompHaus.{u}) :
 
 noncomputable def rankOneEvaluationApp (X : CompHaus.{u}) :
     rankOneInternalHom.obj (op X) ⟶ coefficientAt X := by
-  rw [rankOneInternalHom_eq_functorEnrichedHom]
   exact rankOneIdentityProjection X ≫ rankOneEndomorphismEvalOne X
 
 noncomputable def rankOneSectionMul
@@ -211,7 +210,12 @@ lemma rankOneMultiplication_identity_evalOne (X : CompHaus.{u}) :
           LocallyConstant.const X (1 : R)) =
       (show coefficientPresheaf.obj (Under.mk (𝟙 (op X))).right from a)
   rw [rankOneMultiplicationToEndomorphism_apply]
-  simp [rankOneSectionMul]
+  change
+    (show LocallyConstant X R from coefficientPresheaf.map (𝟙 (op X)) a) *
+        LocallyConstant.const X (1 : R) =
+      (show LocallyConstant X R from a)
+  rw [coefficientPresheaf.map_id]
+  simpa using (mul_one (show LocallyConstant X R from a))
 
 lemma rankOneMultiplication_evaluation (X : CompHaus.{u}) :
     rankOneMultiplicationApp X ≫ rankOneEvaluationApp X = 𝟙 (coefficientAt X) := by
