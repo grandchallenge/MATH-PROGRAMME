@@ -4,7 +4,7 @@
   "parent_issue": 363,
   "issue": 370,
   "implementation_pr": 376,
-  "scope": "CM4-P2-E only: natural equivalence between protected canonical measure/dual functor and pinned Condensed.profiniteSolid",
+  "scope": "CM4-P2-E only: RECONSTRUCTION/EQUIVALENCE of the protected P2-D REPRESENTATION; duality alone carries no reconstruction authority; certify the natural equivalence between the protected canonical measure/dual functor and pinned Condensed.profiniteSolid",
   "repository_baseline": "839e04e1b862ffddfe5ce1d4d733ba954cd45d96",
   "repository_baseline_tree": "ac1e21d2746ad951a9aa3c747895b28f56092bf8",
   "protected_predecessor": {
@@ -95,7 +95,7 @@
         "variance": "Covariant in Profinite by pullback of C(S,R) followed by contravariant internal-Hom precomposition.",
         "universe_behavior": "R := ULift.{u+1} Z; target CondensedMod.{u} R.",
         "evidence_class": "FORMAL_REACHABILITY",
-        "role": "protected P2-D functor and duality interface consumed by P2-E"
+        "role": "protected P2-D REPRESENTATION and duality interface consumed by P2-E; no reconstruction/equivalence authority is inherited merely from this duality"
       }
     ],
     "result": "FORMAL_ROUTE_REACHABLE_WITH_TWO_CONSTRUCTION_OBLIGATIONS"
@@ -111,15 +111,15 @@
   "proof_architecture": {
     "finite_level_comparison": {
       "state": "OPEN_CONSTRUCTION",
-      "requirement": "Construct a canonical natural iso on FintypeCat, using evaluation/Kronecker duality and no chosen Nobeling basis."
+      "requirement": "E1: construct a canonical natural iso on FintypeCat, using evaluation/Kronecker duality and no chosen Nobeling basis; this is comparison data, not an inference from duality alone."
     },
     "measure_right_kan_extension": {
       "state": "OPEN_CONSTRUCTION",
-      "requirement": "Dualize the finite-quotient colimit presentation of locally constant functions into a pointwise/right Kan extension for measureFunctor."
+      "requirement": "E2: prove the protected P2-D REPRESENTATION reconstructs from finite quotients by dualizing the locally-constant colimit into a pointwise/right Kan extension for measureFunctor."
     },
     "kan_extension_uniqueness": {
       "state": "FORMALLY_AVAILABLE",
-      "requirement": "After the first two obligations, transport the finite source through its natural iso and apply rightKanExtensionUniqueOfIso/rightKanExtensionUnique."
+      "requirement": "E3: after E1 and E2, transport the finite source through its natural iso and apply rightKanExtensionUniqueOfIso/rightKanExtensionUnique to certify the P2-E RECONSTRUCTION/EQUIVALENCE."
     }
   },
   "adversarial_guards": {
