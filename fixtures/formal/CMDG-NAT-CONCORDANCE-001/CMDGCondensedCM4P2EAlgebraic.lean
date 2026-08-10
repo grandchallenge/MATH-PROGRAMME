@@ -19,7 +19,7 @@ abbrev R := CMDG.CondensedCM4P2E.R.{u}
 
 /-- Pullback of finite functions along a map of finite sets. -/
 noncomputable def finiteFunctionPullback {X Y : FintypeCat.{u}} (f : X ⟶ Y) :
-    (Y → R) →ₗ[R] (X → R) where
+    (Y → R.{u}) →ₗ[R.{u}] (X → R.{u}) where
   toFun h := fun x => h (f x)
   map_add' h k := by
     funext x
@@ -30,8 +30,8 @@ noncomputable def finiteFunctionPullback {X Y : FintypeCat.{u}} (f : X ⟶ Y) :
 
 /-- The algebraic dual of finite function modules with its canonical covariant functoriality. -/
 noncomputable def finiteFunctionDualModule :
-    FintypeCat.{u} ⥤ ModuleCat.{u + 1} R where
-  obj X := ModuleCat.of R ((X → R) →ₗ[R] R)
+    FintypeCat.{u} ⥤ ModuleCat.{u + 1} R.{u} where
+  obj X := ModuleCat.of R.{u} ((X → R.{u}) →ₗ[R.{u}] R.{u})
   map f := ModuleCat.ofHom
     { toFun := fun φ => φ.comp (finiteFunctionPullback f)
       map_add' := by
@@ -53,9 +53,9 @@ noncomputable def finiteFunctionDualModule :
 
 /-- Small-universe finite free modules, with morphisms given by pushforward of generators. -/
 noncomputable def finiteSmallFreeModule :
-    FintypeCat.{u} ⥤ ModuleCat.{u + 1} R where
-  obj X := ModuleCat.of R (X →₀ R)
-  map f := ModuleCat.ofHom (Finsupp.lmapDomain R R f)
+    FintypeCat.{u} ⥤ ModuleCat.{u + 1} R.{u} where
+  obj X := ModuleCat.of R.{u} (X →₀ R.{u})
+  map f := ModuleCat.ofHom (Finsupp.lmapDomain R.{u} R.{u} (fun x => f x))
   map_id X := by
     apply ModuleCat.hom_ext
     ext a x
@@ -69,7 +69,8 @@ noncomputable def finiteSmallFreeModule :
 noncomputable def finiteSmallFreeDualNatIso :
     finiteSmallFreeModule ≅ finiteFunctionDualModule :=
   NatIso.ofComponents
-    (fun X => (CMDG.CondensedCM4P2E.finiteFunctionDualFreeEquiv X).symm.toModuleIso)
+    (fun X =>
+      (CMDG.CondensedCM4P2E.finiteFunctionDualFreeEquiv.{u, u} X).symm.toModuleIso)
     (by
       intro X Y f
       apply ModuleCat.hom_ext
