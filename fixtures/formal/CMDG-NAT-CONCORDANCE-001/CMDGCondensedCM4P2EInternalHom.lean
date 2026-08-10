@@ -221,6 +221,50 @@ lemma rankOneProjection_condition
       (Under.forget (op X) ⋙ coefficientPresheaf)
       f)
 
+noncomputable def rankOneProjectionEndomorphism
+    (X : CompHaus.{u}) (k : Under (op X))
+    (φ : rankOneInternalHom.obj (op X)) :
+    (Under.forget (op X) ⋙ coefficientPresheaf).obj k ⟶
+      (Under.forget (op X) ⋙ coefficientPresheaf).obj k := by
+  exact show
+    (Under.forget (op X) ⋙ coefficientPresheaf).obj k ⟶
+      (Under.forget (op X) ⋙ coefficientPresheaf).obj k from
+    (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+      (ModuleCat.{u + 1} R)
+      (Under.forget (op X) ⋙ coefficientPresheaf)
+      (Under.forget (op X) ⋙ coefficientPresheaf)
+      k) φ
+
+lemma rankOneProjectionEndomorphism_naturality
+    (X : CompHaus.{u}) {i j : Under (op X)} (f : i ⟶ j)
+    (φ : rankOneInternalHom.obj (op X)) :
+    rankOneProjectionEndomorphism X i φ ≫
+        (Under.forget (op X) ⋙ coefficientPresheaf).map f =
+      (Under.forget (op X) ⋙ coefficientPresheaf).map f ≫
+        rankOneProjectionEndomorphism X j φ := by
+  have hcond := congrArg (fun q => q φ) (rankOneProjection_condition X f)
+  change
+    ((ihom ((Under.forget (op X) ⋙ coefficientPresheaf).obj i)).map
+      ((Under.forget (op X) ⋙ coefficientPresheaf).map f))
+        (rankOneProjectionEndomorphism X i φ) =
+      ((MonoidalClosed.pre ((Under.forget (op X) ⋙ coefficientPresheaf).map f)).app
+        ((Under.forget (op X) ⋙ coefficientPresheaf).obj j))
+        (rankOneProjectionEndomorphism X j φ) at hcond
+  rw [ModuleCat.ihom_map_apply, monoidalClosed_pre_apply] at hcond
+  exact hcond
+
+lemma rankOneProjection_naturality
+    (X : CompHaus.{u}) {i j : Under (op X)} (f : i ⟶ j)
+    (φ : rankOneInternalHom.obj (op X))
+    (h : coefficientPresheaf.obj i.right) :
+    coefficientPresheaf.map f.right
+        ((rankOneProjectionEndomorphism X i φ).hom h) =
+      (rankOneProjectionEndomorphism X j φ).hom
+        (coefficientPresheaf.map f.right h) := by
+  have hnat := rankOneProjectionEndomorphism_naturality X f φ
+  have happ := congrArg (fun q => q h) hnat
+  simpa only [ModuleCat.comp_apply] using happ
+
 lemma rankOneMultiplication_identity_evalOne (X : CompHaus.{u}) :
     rankOneMultiplicationToEndomorphism X (Under.mk (𝟙 (op X))) ≫
         rankOneEndomorphismEvalOne X =
@@ -276,6 +320,9 @@ lemma rankOneMultiplication_evaluation (X : CompHaus.{u}) :
 #check rankOneMultiplicationApp
 #check rankOneMultiplicationApp_projection
 #check rankOneProjection_condition
+#check rankOneProjectionEndomorphism
+#check rankOneProjectionEndomorphism_naturality
+#check rankOneProjection_naturality
 #check rankOneMultiplication_identity_evalOne
 #check rankOneMultiplication_evaluation
 #check Limits.end_.lift
@@ -295,6 +342,9 @@ lemma rankOneMultiplication_evaluation (X : CompHaus.{u}) :
 #print axioms rankOneMultiplicationApp
 #print axioms rankOneMultiplicationApp_projection
 #print axioms rankOneProjection_condition
+#print axioms rankOneProjectionEndomorphism
+#print axioms rankOneProjectionEndomorphism_naturality
+#print axioms rankOneProjection_naturality
 #print axioms rankOneMultiplication_identity_evalOne
 #print axioms rankOneMultiplication_evaluation
 
