@@ -1,0 +1,160 @@
+{
+  "operation_id": "CMDG-CONDENSED-CM4-P2-E-001",
+  "parent_operation_id": "CMDG-CONDENSED-CM4-P2-001",
+  "parent_issue": 363,
+  "issue": 370,
+  "implementation_pr": 376,
+  "scope": "CM4-P2-E only: natural equivalence between protected canonical measure/dual functor and pinned Condensed.profiniteSolid",
+  "repository_baseline": "839e04e1b862ffddfe5ce1d4d733ba954cd45d96",
+  "repository_baseline_tree": "ac1e21d2746ad951a9aa3c747895b28f56092bf8",
+  "protected_predecessor": {
+    "operation_id": "CMDG-CONDENSED-CM4-P2-D-001",
+    "issue": 369,
+    "implementation_pr": 371,
+    "reviewed_head": "358466932fde181c927cd428613f4578f38bfc1c",
+    "protected_tree": "ac1e21d2746ad951a9aa3c747895b28f56092bf8",
+    "protected_merge": "839e04e1b862ffddfe5ce1d4d733ba954cd45d96",
+    "protected_replay_run": 31342558880,
+    "programme_policy_run": 31342558852,
+    "gcl_conformance_run": 31342559115,
+    "state": "AVAILABLE"
+  },
+  "environment": {
+    "lean_image": "leanprover/lean4:v4.33.0-rc1",
+    "lean_commit": "62eed1db4d67327ec8120be05f1a1b0847d74561",
+    "mathlib_commit": "79d0395a1825a6264ad5d269e35e60537518955e",
+    "mathlib_tree": "d76f5e09b832a08949f6d8ad4fb80ce30527da64",
+    "coefficient_ring": "ULift.{u + 1} Z"
+  },
+  "exact_tree_audit": {
+    "observed_sources": [
+      {
+        "path": "Mathlib/Condensed/Solid.lean",
+        "blob": "f5214433f91ee87fc8fbe7e2746e0bd227faed2a",
+        "declarations": [
+          "Condensed.finFree",
+          "Condensed.profiniteSolid",
+          "Condensed.profiniteSolidCounit",
+          "Condensed.profiniteSolidIsPointwiseRightKanExtension"
+        ],
+        "signature": "profiniteSolid R is the right Kan extension of finFree R along FintypeCat.toProfinite; profiniteSolidCounit supplies the comparison on finite sets.",
+        "variance": "Covariant FintypeCat/Profinite functors; the counit has type FintypeCat.toProfinite ⋙ profiniteSolid R ⟶ finFree R.",
+        "universe_behavior": "R : Type (u+1); FintypeCat.{u}, Profinite.{u}, CondensedMod.{u} R.",
+        "evidence_class": "FORMAL_REACHABILITY",
+        "role": "pinned right-Kan-extension side of the P2-E comparison"
+      },
+      {
+        "path": "Mathlib/CategoryTheory/Functor/KanExtension/Basic.lean",
+        "blob": "1d8ed3b224af14a8d909ada051de840ae3d5c59c",
+        "declarations": [
+          "Functor.IsRightKanExtension",
+          "Functor.rightKanExtensionUniqueOfIso",
+          "Functor.rightKanExtensionUnique"
+        ],
+        "signature": "rightKanExtensionUniqueOfIso identifies right Kan extensions whose source functors are naturally isomorphic; rightKanExtensionUnique is the identity-source specialization.",
+        "variance": "Comparison is between covariant extensions D ⥤ H with counits L ⋙ F' ⟶ F.",
+        "universe_behavior": "Universe-polymorphic in source, target, and extension categories.",
+        "evidence_class": "FORMAL_REACHABILITY",
+        "role": "canonical promotion from finite-level comparison plus RKE proofs to the global natural equivalence"
+      },
+      {
+        "path": "Mathlib/CategoryTheory/Functor/KanExtension/Pointwise.lean",
+        "blob": "eca4f781a97fc9948e726bb4b89a9ab1bc255f96",
+        "declarations": [
+          "Functor.RightExtension.IsPointwiseRightKanExtension",
+          "Functor.RightExtension.IsPointwiseRightKanExtension.isRightKanExtension",
+          "Functor.isPointwiseRightKanExtensionOfIsRightKanExtension"
+        ],
+        "signature": "Pointwise right Kan extensions are limit cones over StructuredArrow diagrams and induce ordinary IsRightKanExtension instances.",
+        "variance": "Right-extension convention uses counits L ⋙ F' ⟶ F and limits over StructuredArrow Y L.",
+        "universe_behavior": "Universe-polymorphic; applicable to FintypeCat.{u} -> Profinite.{u} and CondensedMod.{u} R.",
+        "evidence_class": "FORMAL_REACHABILITY",
+        "role": "route for proving the protected P2-D measure functor is the required right Kan extension"
+      },
+      {
+        "path": "Mathlib/Condensed/Discrete/Colimit.lean",
+        "blob": "7579e7ecc282d20d4c61d4e5d0e3e37994069e11",
+        "declarations": [
+          "Condensed.isColimitLocallyConstantPresheafDiagram",
+          "Condensed.lanPresheafNatIso"
+        ],
+        "signature": "Locally constant functions on a profinite limit are a colimit over its finite quotient diagram; lanPresheafNatIso promotes objectwise colimit data to a natural left-Kan-extension identification.",
+        "variance": "Locally constant functions are contravariant on Profinite, so finite-quotient limits become colimits after op; P2-D duality must reverse this into the P2-E limit/RKE statement.",
+        "universe_behavior": "Profinite.{u}^op -> Type (u+1); compatible with the lifted coefficient universe after module enrichment.",
+        "evidence_class": "FORMAL_REACHABILITY",
+        "role": "finite-quotient colimit input that must be dualized into the measure-functor right-Kan-extension proof"
+      },
+      {
+        "path": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2D.lean",
+        "blob": "7515583c1b56308bbd48c2c690addd3b432eba09",
+        "declarations": [
+          "CMDG.CondensedCM4P2D.measureFunctor",
+          "CMDG.CondensedCM4P2D.dualityHomEquiv"
+        ],
+        "signature": "measureFunctor : Profinite.{u} ⥤ CondensedMod.{u} R; dualityHomEquiv realizes the closed-monoidal Hom characterization.",
+        "variance": "Covariant in Profinite by pullback of C(S,R) followed by contravariant internal-Hom precomposition.",
+        "universe_behavior": "R := ULift.{u+1} Z; target CondensedMod.{u} R.",
+        "evidence_class": "FORMAL_REACHABILITY",
+        "role": "protected P2-D functor and duality interface consumed by P2-E"
+      }
+    ],
+    "result": "FORMAL_ROUTE_REACHABLE_WITH_TWO_CONSTRUCTION_OBLIGATIONS"
+  },
+  "theorem_target": {
+    "fixture": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2E.lean",
+    "finite_comparison": "FintypeCat.toProfinite ⋙ measureFunctor ≅ Condensed.finFree R",
+    "global_comparison": "measureFunctor ≅ Condensed.profiniteSolid R",
+    "basis_dependency": false,
+    "objectwise_only_allowed": false,
+    "variance": "COVARIANT_PROFINITE_NATURAL_ISO"
+  },
+  "proof_architecture": {
+    "finite_level_comparison": {
+      "state": "OPEN_CONSTRUCTION",
+      "requirement": "Construct a canonical natural iso on FintypeCat, using evaluation/Kronecker duality and no chosen Nobeling basis."
+    },
+    "measure_right_kan_extension": {
+      "state": "OPEN_CONSTRUCTION",
+      "requirement": "Dualize the finite-quotient colimit presentation of locally constant functions into a pointwise/right Kan extension for measureFunctor."
+    },
+    "kan_extension_uniqueness": {
+      "state": "FORMALLY_AVAILABLE",
+      "requirement": "After the first two obligations, transport the finite source through its natural iso and apply rightKanExtensionUniqueOfIso/rightKanExtensionUnique."
+    }
+  },
+  "adversarial_guards": {
+    "chosen_basis_substitute_rejected": true,
+    "objectwise_only_substitute_rejected": true,
+    "variance_reversal_rejected": true,
+    "universe_shift_substitute_rejected": true,
+    "premature_parent_p2_closure_rejected": true,
+    "placeholder_rejected": true
+  },
+  "stage_result": {
+    "p2_d_protected_available": true,
+    "p2_e_theorem_target_frozen": true,
+    "p2_e_natural_equivalence_established": false,
+    "p2_e_protected_available": false,
+    "p2_closed": false,
+    "candidate_disposition": "P2_E_COMPARISON_AUDIT_COMPLETE_RECONSTRUCTION_ACTIVE"
+  },
+  "claim_boundary": {
+    "p2_e_protected_available": false,
+    "p2_closed": false,
+    "cm4_theorem_certified": false,
+    "p3_closed": false,
+    "p4_closed": false,
+    "p5_closed": false,
+    "p6_closed": false,
+    "derived_complex_form_certified": false,
+    "arbitrary_ring_generalization_certified": false,
+    "c04_broadened": false,
+    "c06_discharged": false,
+    "graph_certified": false,
+    "dependency_minimality_claim": false,
+    "dependency_uniqueness_claim": false,
+    "cm5_authorized": false,
+    "global_cmdg_completeness_claim": false
+  },
+  "disposition": "P2_E_COMPARISON_AUDIT_COMPLETE_RECONSTRUCTION_ACTIVE"
+}

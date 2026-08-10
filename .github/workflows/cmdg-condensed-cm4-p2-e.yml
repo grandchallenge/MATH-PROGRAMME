@@ -14,6 +14,30 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  validate:
+    name: Validate P2-E governed comparison state
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Compile P2-E validator
+        run: python -m py_compile ci/validate_cmdg_condensed_cm4_p2_e.py
+      - name: Validate P2-E governed record
+        run: python3 ci/validate_cmdg_condensed_cm4_p2_e.py
+      - name: Run P2-E adversarial mutations
+        run: python -m unittest tests.test_cmdg_condensed_cm4_p2_e
+      - name: Revalidate parent P2 blocker
+        run: python3 ci/validate_cmdg_condensed_cm4_p2.py
+      - name: Revalidate workflow coverage
+        run: python3 ci/validate_workflow_coverage_v2.py
+
   formal-audit:
     name: Replay P2-E comparison audit
     runs-on: ubuntu-24.04
@@ -54,10 +78,13 @@ jobs:
           test "$(git -C "$ML" rev-parse HEAD^{tree})" = "d76f5e09b832a08949f6d8ad4fb80ce30527da64"
           test "$(git -C "$ML" hash-object Mathlib/Condensed/Solid.lean)" = "f5214433f91ee87fc8fbe7e2746e0bd227faed2a"
           test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Functor/KanExtension/Basic.lean)" = "1d8ed3b224af14a8d909ada051de840ae3d5c59c"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Functor/KanExtension/Pointwise.lean)" = "eca4f781a97fc9948e726bb4b89a9ab1bc255f96"
           test "$(git -C "$ML" hash-object Mathlib/Condensed/Discrete/Colimit.lean)" = "7579e7ecc282d20d4c61d4e5d0e3e37994069e11"
+          test "$(git hash-object CMDGCondensedCM4P2D.lean)" = "7515583c1b56308bbd48c2c690addd3b432eba09"
           grep -Fq 'def profiniteSolid : Profinite' "$ML/Mathlib/Condensed/Solid.lean"
           grep -Fq 'def profiniteSolidIsPointwiseRightKanExtension' "$ML/Mathlib/Condensed/Solid.lean"
           grep -Fq 'noncomputable def rightKanExtensionUniqueOfIso' "$ML/Mathlib/CategoryTheory/Functor/KanExtension/Basic.lean"
+          grep -Fq 'lemma IsPointwiseRightKanExtension.isRightKanExtension' "$ML/Mathlib/CategoryTheory/Functor/KanExtension/Pointwise.lean"
           grep -Fq 'noncomputable def isColimitLocallyConstantPresheafDiagram' "$ML/Mathlib/Condensed/Discrete/Colimit.lean"
           grep -Fq 'def lanPresheafNatIso' "$ML/Mathlib/Condensed/Discrete/Colimit.lean"
       - name: Build and replay P2-E comparison target
