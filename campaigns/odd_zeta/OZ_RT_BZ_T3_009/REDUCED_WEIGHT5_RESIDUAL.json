@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "operation": "OZ-RT-BZ-T3-009",
   "route": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001",
   "subroute": "QROW_PRODUCT_RULE_REDUCTION_001",
@@ -54,16 +54,29 @@
   "nested_derivative_certificates": {
     "artifact": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/NESTED_DERIVATIVE_CERTIFICATE_ROUTE.json",
     "interior_identifications": ["Lk=-partial_k log(T)", "Ll=-partial_l log(T)", "Lk*Ll-C2=(partial_k partial_l T)/T"],
-    "interior_certificate_status": "EXACT_BY_DIFFERENTIATING_REVERIFIED_QROW",
-    "abel_transfer_target": "Move the differentiated divergences onto N11/N12k/N12l; their finite differences are one-body, so the interior nested sector reduces to the one-body sector.",
-    "global_status": "SHELL_RECONCILIATION_REQUIRED",
-    "shell_obstruction": "The symmetric Q-row coefficients have exact order-two shell poles; a coordinate derivative has an exact cubic-pole witness at k=n+1, while T has only a double zero. The generic-field differentiated flux therefore cannot be admitted on the protected discrete shells without explicit regularized correction."
+    "certificate_status": "GLOBAL_REGULARIZED_DERIVATIVE_CERTIFICATES_COMPLETE",
+    "shell_status": "RECONCILED_BY_DIFFERENTIATING_REGULARIZED_PRODUCTS_BEFORE_LATTICE_SPECIALIZATION",
+    "regularized_flux_rule": "Differentiate Fk=Reg[rho_sym*T] and Fl=Reg[sigma_sym*T] directly; do not replace the resulting flux by a generic-field T*partial(rho) simplification on shell points.",
+    "boundary_status": "FINITE_AND_ZERO_ON_LOWER_AND_UPPER_FINITE_BOX_BOUNDARIES",
+    "abel_transfer": "The three nested divergences transfer onto Delta N11, Delta N12k, and Delta N12l. Those differences are purely one-body; hence the entire nested sector reduces exactly to a one-body residual.",
+    "nested_sector_globally_reduced_to_one_body": true
   },
-  "selection_policy": "Use direct E_D. Use the symmetric gauge for module analysis and the one-orientation form for summed spatial economy. Reduce the nested sector through the differentiated Q-row certificates before any new telescoper search. Retain E_P5 and E_W only as diagnostics.",
-  "next_exact_obligation": "Construct shell-corrected differentiated Q-row fluxes for offsets 1,2,3 in both orientations and prove finite discrete boundary behavior. Then Abel-transfer N11/N12k/N12l to the complementary one-body residual. Do not return to the exhausted generic 198-dimensional raw-flux ansatz.",
+  "one_body_reduction": {
+    "status": "MATHEMATICALLY_JUSTIFIED_CONSTRUCTION_NEXT",
+    "source_terms": [
+      "the existing one-body projection of the canonical direct E_D residual",
+      "the Abel-transfer corrections from N11 against E[A]",
+      "the Abel-transfer corrections from N12k against E[Lk]",
+      "the Abel-transfer corrections from N12l against E[Ll]"
+    ],
+    "nested_atoms_remaining_after_transfer": 0,
+    "next_object": "pole-free canonical one-body residual whose finite double sum equals sum E_D"
+  },
+  "selection_policy": "Use direct E_D. The generic 198-dimensional flux classes are exhausted and are not to be reopened. The next proof object is the exact one-body residual produced after the globally valid differentiated-Q-row Abel transfer.",
+  "next_exact_obligation": "Construct and independently verify the pole-free canonical one-body residual after Abel transfer; then certify or characterize its double sum. No theorem promotion occurs until that final residual sum is proved zero and recurrence propagation obligations are discharged.",
   "residual_sum_zero_proved": false,
   "proof_effect": "NONE",
   "promotion_effect": "NONE",
   "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
-  "terminal": "QROW_REVERIFIED_DIRECT_ED_CANONICALIZED_NESTED_INTERIOR_CERTIFIED_SHELL_RECONCILIATION_OPEN"
+  "terminal": "QROW_REVERIFIED_DIRECT_ED_CANONICALIZED_NESTED_GLOBALLY_REDUCED_ONE_BODY_RESIDUAL_NEXT"
 }
