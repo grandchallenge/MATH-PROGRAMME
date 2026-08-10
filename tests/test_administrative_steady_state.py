@@ -12,8 +12,10 @@ ROOT = Path(__file__).resolve().parents[1]
 RECORD = ROOT / "governance/administrative_maintenance_steady_state_0_1.json"
 SCHEMA = ROOT / "schemas/administrative_maintenance_steady_state.schema.json"
 REGISTRY = ROOT / "governance/administrative_maintenance_trigger_registry.json"
+COMPLETION_STATE = ROOT / "governance/administrative_maintenance_completion_state.json"
 DISPATCH = ROOT / ".github/workflows/administrative-maintenance-dispatch.yml"
 PREPARE_V4 = ROOT / "ci/prepare_administrative_candidate_v4.py"
+DISPATCH_V2 = ROOT / "ci/dispatch_administrative_maintenance_v2.py"
 
 EXPECTED_RECURRENT_CRONS = {
     "9 18 * * 6",
@@ -45,7 +47,7 @@ class AdministrativeSteadyStateTests(unittest.TestCase):
         self.assertFalse(record["historical_evidence_policy"]["eventual_recovery_rewrites_failure"])
         self.assertTrue(all(value is False for value in record["claim_boundaries"].values()))
 
-    def test_successor_horizon_and_completion_floor(self):
+    def test_successor_horizon_preserves_static_completion_baselines(self):
         registry = json.loads(REGISTRY.read_text(encoding="utf-8"))
         rows = {row["id"]: row for row in registry["procedures"]}
         horizon = "2026-09-06T13:21:00Z"
@@ -54,10 +56,22 @@ class AdministrativeSteadyStateTests(unittest.TestCase):
         self.assertEqual(rows["structural_sweep"]["interval_minutes"], 1008)
         self.assertEqual(rows["administrative_review"]["interval_minutes"], 4320)
         self.assertEqual(rows["deep_conformance_review"]["interval_minutes"], 12960)
-        self.assertEqual(rows["structural_sweep"]["completed_through_utc"], "2026-08-09T10:57:00Z")
-        self.assertEqual(rows["administrative_review"]["completed_through_utc"], "2026-08-10T01:21:00Z")
-        self.assertEqual(rows["deep_conformance_review"]["completed_through_utc"], "2026-08-10T01:21:00Z")
+        # Static trigger baselines remain historical/replay-compatible. Current
+        # protected completion is overlaid dynamically by dispatcher v2/v3.
+        self.assertEqual(rows["structural_sweep"]["completed_through_utc"], "2026-08-01T18:09:00Z")
+        self.assertIsNone(rows["administrative_review"]["completed_through_utc"])
+        self.assertIsNone(rows["deep_conformance_review"]["completed_through_utc"])
         self.assertEqual(rows["pilot_review"]["active_through_utc"], "2026-08-10T01:21:00Z")
+
+    def test_protected_completion_state_is_runtime_authority(self):
+        state = json.loads(COMPLETION_STATE.read_text(encoding="utf-8"))
+        procedures = state["procedures"]
+        self.assertEqual(procedures["structural_sweep"]["completed_through_utc"], "2026-08-09T10:57:00Z")
+        self.assertEqual(procedures["administrative_review"]["completed_through_utc"], "2026-08-10T01:21:00Z")
+        self.assertEqual(procedures["deep_conformance_review"]["completed_through_utc"], "2026-08-10T01:21:00Z")
+        source = DISPATCH_V2.read_text(encoding="utf-8")
+        self.assertIn("derive_completion_state", source)
+        self.assertIn("apply_completion_to_registry", source)
 
     def test_exact_recurrence_is_bound_in_registry_and_workflow(self):
         registry = json.loads(REGISTRY.read_text(encoding="utf-8"))
