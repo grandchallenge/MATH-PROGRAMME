@@ -142,6 +142,21 @@ noncomputable def rankOneMultiplicationToEndomorphism
         rfl }
   exact ModuleCat.ofHom (pack.comp (mul.comp pull))
 
+/-- The packaged multiplication morphism acts by the pointwise operation used to construct it. -/
+lemma rankOneMultiplicationToEndomorphism_apply
+    (X : CompHaus.{u}) (k : Under (op X))
+    (a : coefficientAt X) (h : coefficientPresheaf.obj k.right) :
+    (rankOneMultiplicationToEndomorphism X k a) h = rankOneSectionMul X k a h := by
+  rfl
+
+/-- In the closed structure on `ModuleCat`, contravariance of internal Hom is ordinary
+precomposition. -/
+lemma monoidalClosed_pre_apply
+    {M N P : ModuleCat.{u + 1} R} (f : N ⟶ M) (g : M ⟶ P) :
+    ((MonoidalClosed.pre f).app P) g = f ≫ g := by
+  rw [ModuleCat.monoidalClosed_pre_app]
+  rfl
+
 #check rankOneInternalHom
 #check rankOneInternalHom_eq_functorEnrichedHom
 #check RankOneTarget
@@ -153,6 +168,8 @@ noncomputable def rankOneMultiplicationToEndomorphism
 #check coefficientPullback_triangle
 #check rankOneSectionMul_naturality
 #check rankOneMultiplicationToEndomorphism
+#check rankOneMultiplicationToEndomorphism_apply
+#check monoidalClosed_pre_apply
 #check LinearMap.mul
 #check ModuleCat.homLinearEquiv
 #check CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
@@ -173,5 +190,7 @@ noncomputable def rankOneMultiplicationToEndomorphism
 #print axioms coefficientPullback_triangle
 #print axioms rankOneSectionMul_naturality
 #print axioms rankOneMultiplicationToEndomorphism
+#print axioms rankOneMultiplicationToEndomorphism_apply
+#print axioms monoidalClosed_pre_apply
 
 end CMDG.CondensedCM4P2E.InternalHom
