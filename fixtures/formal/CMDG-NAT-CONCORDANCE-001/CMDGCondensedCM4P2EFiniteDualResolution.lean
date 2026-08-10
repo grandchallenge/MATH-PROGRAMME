@@ -51,41 +51,38 @@ lemma finiteFamilyPre_resolution
     (∑ x, finiteCoordinatePreInclusionNamed X x ≫ finiteCoordinatePreProjectionNamed X x) =
       𝟙 (finiteFamilyInternalHom X) := by
   classical
-  calc
-    (∑ x, finiteCoordinatePreInclusionNamed X x ≫ finiteCoordinatePreProjectionNamed X x) =
+  have hterm :
+      (∑ x,
+          finiteCoordinatePreInclusionNamed X x ≫ finiteCoordinatePreProjectionNamed X x) =
         ∑ x,
           (MonoidalClosed.pre
               (finiteCoordinateProjection X x ≫ finiteCoordinateInclusion X x)).app
             CMDG.CondensedCM4P2D.coefficientPresheaf := by
-              apply Finset.sum_congr rfl
-              intro x hx
-              exact finiteCoordinatePre_inclusion_projection X x
-    _ =
-        (∑ x,
-          MonoidalClosed.pre
-            (finiteCoordinateProjection X x ≫ finiteCoordinateInclusion X x)).app
-          CMDG.CondensedCM4P2D.coefficientPresheaf := by
-            rw [NatTrans.app_sum]
-    _ =
+    apply Finset.sum_congr rfl
+    intro x hx
+    exact finiteCoordinatePre_inclusion_projection X x
+  have hpre := monoidalClosed_pre_finset_sum
+    (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X)
+    (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X)
+    Finset.univ
+    (fun x => finiteCoordinateProjection X x ≫ finiteCoordinateInclusion X x)
+  have happ := congrArg
+    (fun η => η.app CMDG.CondensedCM4P2D.coefficientPresheaf) hpre
+  have hsum :
+      (∑ x,
+          (MonoidalClosed.pre
+              (finiteCoordinateProjection X x ≫ finiteCoordinateInclusion X x)).app
+            CMDG.CondensedCM4P2D.coefficientPresheaf) =
         (MonoidalClosed.pre
           (∑ x, finiteCoordinateProjection X x ≫ finiteCoordinateInclusion X x)).app
           CMDG.CondensedCM4P2D.coefficientPresheaf := by
-            have h := monoidalClosed_pre_finset_sum
-              (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X)
-              (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X)
-              Finset.univ
-              (fun x => finiteCoordinateProjection X x ≫ finiteCoordinateInclusion X x)
-            exact congrArg
-              (fun η => η.app CMDG.CondensedCM4P2D.coefficientPresheaf) h.symm
-    _ =
-        (MonoidalClosed.pre
-          (𝟙 (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X))).app
-          CMDG.CondensedCM4P2D.coefficientPresheaf := by
-            rw [finiteCoordinate_resolution]
-    _ = 𝟙 (finiteFamilyInternalHom X) := by
-          rw [MonoidalClosed.pre_id]
-          unfold finiteFamilyInternalHom
-          rfl
+    rw [← NatTrans.app_sum]
+    exact happ.symm
+  rw [hterm, hsum]
+  rw [finiteCoordinate_resolution]
+  rw [MonoidalClosed.pre_id]
+  unfold finiteFamilyInternalHom
+  rfl
 
 #check monoidalClosed_pre_finset_sum
 #check finiteCoordinatePre_inclusion_projection
