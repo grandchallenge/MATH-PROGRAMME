@@ -2,6 +2,7 @@
 """Validate retired repository paths and their bounded historical references."""
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 from typing import Any
@@ -12,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RETIRED_PATH = "DOMAIN_04_POINCARE_RECONSTRUCTION_MASTER_PLAN.md"
 CANONICAL_PATH = "DOMAIN_05_POINCARE_RECONSTRUCTION_MASTER_PLAN.md"
 CROSSWALK_PATH = "reviews/poincare/HISTORICAL_IDENTITY_CROSSWALK.yaml"
+POLICY_SHARD_REGISTRY = "governance/policy_shard_registry.json"
 REFERENCE_MARKERS = {
     "FILE_MANIFEST.md": "was removed in PR #96",
     "docs/REPOSITORY_DOCS.md": "was removed in PR #96",
@@ -61,18 +63,46 @@ def load_crosswalk(root: Path = ROOT) -> dict[str, Any]:
     return data if isinstance(data, dict) else {}
 
 
+def load_policy_registry(root: Path = ROOT) -> dict[str, Any]:
+    path = root / POLICY_SHARD_REGISTRY
+    if not path.is_file():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def policy_registry_commands(registry: dict[str, Any]) -> set[str]:
+    commands: set[str] = set()
+    shards = registry.get("shards", {})
+    if not isinstance(shards, dict):
+        return commands
+    for entries in shards.values():
+        if not isinstance(entries, list):
+            continue
+        for entry in entries:
+            if isinstance(entry, list) and entry and all(isinstance(part, str) for part in entry):
+                commands.add(" ".join(entry))
+    return commands
+
+
 def retired_path_errors(
     root: Path = ROOT,
     texts: dict[str, str] | None = None,
     policy_text: str | None = None,
     crosswalk: dict[str, Any] | None = None,
+    policy_registry: dict[str, Any] | None = None,
 ) -> list[str]:
     errors: list[str] = []
     texts = repository_texts(root) if texts is None else texts
     crosswalk = load_crosswalk(root) if crosswalk is None else crosswalk
+    policy_registry = load_policy_registry(root) if policy_registry is None else policy_registry
     if policy_text is None:
         policy_path = root / ".github" / "workflows" / "ci.yml"
         policy_text = policy_path.read_text(encoding="utf-8") if policy_path.is_file() else ""
+    policy_surface = policy_text + "\n" + "\n".join(sorted(policy_registry_commands(policy_registry)))
 
     if (root / RETIRED_PATH).exists():
         errors.append(f"retired path must not exist in current tree: {RETIRED_PATH}")
@@ -135,7 +165,7 @@ def retired_path_errors(
             errors.append(f"{relative}: missing retirement marker {marker!r}")
 
     for marker in POLICY_MARKERS:
-        if marker not in policy_text:
+        if marker not in policy_surface:
             errors.append(f"global policy is missing retired-path check: {marker}")
 
     return errors
