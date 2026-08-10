@@ -117,7 +117,9 @@ noncomputable def finiteContinuousFunctionsIso (X : FintypeCat.{u}) :
     CMDG.CondensedCM4P2D.continuousFunctions.obj
         (Opposite.op (FintypeCat.toProfinite.obj X)) ≅
       ModuleCat.of R.{u} (X → R.{u}) := by
+  letI : TopologicalSpace X := FintypeCat.botTopology X
   letI : DiscreteTopology X := FintypeCat.discreteTopology X
+  change ModuleCat.of R.{u} (LocallyConstant X R.{u}) ≅ ModuleCat.of R.{u} (X → R.{u})
   exact (locallyConstantLinearEquivFunOfDiscrete X).toModuleIso
 
 noncomputable def discreteSetFreeAdj :
