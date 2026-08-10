@@ -24,7 +24,7 @@ lemma rankOneEvaluation_multiplication (X : CompHaus.{u}) :
   change
     rankOneEvaluationApp X ≫ rankOneMultiplicationApp X =
       𝟙 (end_ (diagram
-        (ModuleCat.{u + 1} R)
+        (ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R)
         (Under.forget (op X) ⋙ coefficientPresheaf)
         (Under.forget (op X) ⋙ coefficientPresheaf)))
   apply end_.hom_ext
