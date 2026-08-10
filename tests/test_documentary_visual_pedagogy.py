@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import sys
 import unittest
@@ -68,6 +69,44 @@ class DocumentaryVisualPedagogyTests(unittest.TestCase):
         contracts = [json.loads(path.read_text(encoding="utf-8")) for path in contract_dir.glob("*.json")]
         self.assertEqual(8, len(contracts))
         self.assertTrue(all(contract["independent_review"]["status"] == "pending" for contract in contracts))
+
+    def test_successor_renderer_compiles(self) -> None:
+        generator_path = ROOT / "tools/render_visual_pedagogy_successors.py"
+        source = generator_path.read_text(encoding="utf-8")
+        compile(source, str(generator_path), "exec")
+
+    def test_successor_derivative_sha256_digests_are_bound(self) -> None:
+        contract_dir = ROOT / "governance/visual_pedagogy/plates"
+        checked = 0
+        for contract_path in sorted(contract_dir.glob("*.json")):
+            contract = json.loads(contract_path.read_text(encoding="utf-8"))
+            for derivative in contract.get("derivatives", []):
+                digest = derivative.get("digest")
+                if not isinstance(digest, str) or not digest.startswith("sha256:"):
+                    continue
+                path = ROOT / derivative["path"]
+                self.assertTrue(path.is_file(), derivative["path"])
+                actual = hashlib.sha256(path.read_bytes()).hexdigest()
+                self.assertEqual(digest.removeprefix("sha256:"), actual, derivative["path"])
+                checked += 1
+        self.assertEqual(7, checked)
+
+    def test_successor_manifest_preserves_authority_boundary_and_controls(self) -> None:
+        manifest = load_json(ROOT / "governance/visual_pedagogy/successor_render_manifest.json")
+        self.assertEqual("MP-DOC-VISUAL-PILOT-SUCCESSORS-001", manifest["operation_id"])
+        self.assertEqual("3b79b35fadc6805775246c03124deb3e1425ef86", manifest["protected_base_commit"])
+        self.assertFalse(manifest["authority_boundary"]["visual_is_evidence"])
+        self.assertFalse(manifest["authority_boundary"]["programme_wide_migration_authorized"])
+        self.assertFalse(manifest["authority_boundary"]["mathematical_claim_promoted"])
+        controls = {item["path"]: item["git_blob"] for item in manifest["positive_controls"]}
+        self.assertEqual(
+            "e351902a073e9fdb41d0953400992d1732fd0fd4",
+            controls["docs/assets/documentaries/p_vs_np/reduction.svg"],
+        )
+        self.assertEqual(
+            "6bcddb97bcd31d99575cfbbe1f6698b9c6eb3cd1",
+            controls["docs/assets/documentaries/euclid_book_vii/plate_anthyphairesis.svg"],
+        )
 
 
 if __name__ == "__main__":
