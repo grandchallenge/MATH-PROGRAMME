@@ -264,6 +264,26 @@ lemma rankOneProjection_naturality
   simpa only [CategoryTheory.comp_apply] using
     ConcreteCategory.congr_hom (rankOneProjectionEndomorphism_naturality X f φ) h
 
+noncomputable def rankOnePointProbeMap
+    (Y : CompHaus.{u}) (y : Y) : Y ⟶ Y :=
+  ConcreteCategory.ofHom
+    { toFun := fun _ => y
+      continuous_toFun := continuous_const }
+
+noncomputable def rankOnePointProbeObject
+    (X : CompHaus.{u}) (k : Under (op X)) (y : k.right.unop) : Under (op X) :=
+  Under.mk (k.hom ≫ (rankOnePointProbeMap k.right.unop y).op)
+
+noncomputable def rankOnePointProbeFrom
+    (X : CompHaus.{u}) (k : Under (op X)) (y : k.right.unop) :
+    k ⟶ rankOnePointProbeObject X k y :=
+  Under.homMk (rankOnePointProbeMap k.right.unop y).op
+
+noncomputable def rankOnePointProbeFromIdentity
+    (X : CompHaus.{u}) (k : Under (op X)) (y : k.right.unop) :
+    Under.mk (𝟙 (op X)) ⟶ rankOnePointProbeObject X k y :=
+  Under.homMk (k.hom ≫ (rankOnePointProbeMap k.right.unop y).op)
+
 lemma rankOneMultiplication_identity_evalOne (X : CompHaus.{u}) :
     rankOneMultiplicationToEndomorphism X (Under.mk (𝟙 (op X))) ≫
         rankOneEndomorphismEvalOne X =
@@ -322,6 +342,10 @@ lemma rankOneMultiplication_evaluation (X : CompHaus.{u}) :
 #check rankOneProjectionEndomorphism
 #check rankOneProjectionEndomorphism_naturality
 #check rankOneProjection_naturality
+#check rankOnePointProbeMap
+#check rankOnePointProbeObject
+#check rankOnePointProbeFrom
+#check rankOnePointProbeFromIdentity
 #check rankOneMultiplication_identity_evalOne
 #check rankOneMultiplication_evaluation
 #check Limits.end_.lift
@@ -344,6 +368,10 @@ lemma rankOneMultiplication_evaluation (X : CompHaus.{u}) :
 #print axioms rankOneProjectionEndomorphism
 #print axioms rankOneProjectionEndomorphism_naturality
 #print axioms rankOneProjection_naturality
+#print axioms rankOnePointProbeMap
+#print axioms rankOnePointProbeObject
+#print axioms rankOnePointProbeFrom
+#print axioms rankOnePointProbeFromIdentity
 #print axioms rankOneMultiplication_identity_evalOne
 #print axioms rankOneMultiplication_evaluation
 
