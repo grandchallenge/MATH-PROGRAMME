@@ -131,12 +131,29 @@ lemma rankOneProjection_recovery_apply
   rw [hm]
   exact congrArg ULift.down hp
 
+lemma rankOneProjection_recovery
+    (X : CompHaus.{u}) (k : Under (op X))
+    (φ : rankOneInternalHom.obj (op X)) :
+    rankOneProjectionEndomorphism X k φ =
+      (show (Under.forget (op X) ⋙ coefficientPresheaf).obj k ⟶
+          (Under.forget (op X) ⋙ coefficientPresheaf).obj k from
+        rankOneMultiplicationToEndomorphism X k (rankOneEvaluationApp X φ)) := by
+  apply ModuleCat.hom_injective
+  ext h
+  change
+    rankOneProjectionEndomorphism X k φ h =
+      (show coefficientPresheaf.obj k.right ⟶ coefficientPresheaf.obj k.right from
+        rankOneMultiplicationToEndomorphism X k (rankOneEvaluationApp X φ)).hom h
+  rw [rankOneMultiplicationToEndomorphism_apply]
+  exact rankOneProjection_recovery_apply X k φ h
+
 #check rankOnePointProbe_naturality
 #check rankOnePointProbe_identity_naturality
 #check rankOnePointProbe_constant_recovery
 #check rankOneProjection_point_value
 #check rankOneSectionMul_apply_point
 #check rankOneProjection_recovery_apply
+#check rankOneProjection_recovery
 
 #print axioms rankOnePointProbe_naturality
 #print axioms rankOnePointProbe_identity_naturality
@@ -144,5 +161,6 @@ lemma rankOneProjection_recovery_apply
 #print axioms rankOneProjection_point_value
 #print axioms rankOneSectionMul_apply_point
 #print axioms rankOneProjection_recovery_apply
+#print axioms rankOneProjection_recovery
 
 end CMDG.CondensedCM4P2E.InternalHom
