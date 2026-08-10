@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "control_id": "MP-ADMIN-RECOVERY-QUEUE-STARVATION-001",
+  "status": "ACTIVE_ON_PROTECTED_MERGE",
+  "problem": {
+    "starving_occurrence": "administrative_review:2026-08-10T01:21:00Z",
+    "starving_pull_request": 362,
+    "starving_issue": 361,
+    "starving_receipt_present": true,
+    "starved_occurrence": "structural_sweep:2026-08-10T03:45:00Z",
+    "starved_issue": 384,
+    "starved_pull_request": 385,
+    "candidate_reconstructed_at_utc": "2026-08-10T06:20:52Z",
+    "original_recovery_expires_at_utc": "2026-08-10T06:45:00Z"
+  },
+  "correction": {
+    "receipt_complete_closures_do_not_block_candidate_selection": true,
+    "exact_candidate_continuation_enabled": true,
+    "continuation_occurrence_key": "structural_sweep:2026-08-10T03:45:00Z",
+    "continuation_issue": 384,
+    "continuation_pull_request": 385,
+    "required_source_protected_head": "de8e30dc6c23eca5ff2a0607b179c67a6a90eecc",
+    "continuation_expires_at_utc": "2026-08-10T20:33:00Z",
+    "continuation_bound": "next_structural_occurrence",
+    "ordinary_recovery_window_minutes_unchanged": 180,
+    "cadence_anchor_reset": false,
+    "deadline_reset": false,
+    "eventual_recovery_relabels_on_time": false
+  },
+  "evidence": {
+    "reconstruction_run": 31361580371,
+    "second_in_window_run": 31361684963,
+    "failure": "protected mirror synchronization producer readback timed out",
+    "runtime_selected_pull_request": 362,
+    "protected_completion_state_proves_pull_362_receipt_complete": true
+  },
+  "authority_boundary": {
+    "human_steward_exact_head_authorization_required": true,
+    "candidate_branch_is_authority": false,
+    "bypass_created": false,
+    "emergency_authority_created": false,
+    "required_checks_weakened": false,
+    "referee_gate_weakened": false,
+    "direct_protected_push_authorized": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "source_authority_created": false,
+    "certification_authority_created": false,
+    "external_claim_authorized": false
+  }
+}
