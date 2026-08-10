@@ -194,10 +194,36 @@ noncomputable def finiteDiscreteCondensedIso :
   Functor.isoWhiskerRight finiteDiscreteULiftIso topCatToCondensedSet ≪≫
     Functor.isoWhiskerLeft finiteUnderlyingULift discreteTopCondensedIso
 
+/-!
+## E1 representable/Yoneda bridge: pointwise core
+
+The Yoneda/ULift presentation has sections `ULift (S ⟶ X)`. The topological presentation on the
+ULifted target has sections `C(S, ULift X)`. The canonical homeomorphism from `X` to its topological
+ULift gives the required sectionwise equivalence.
+-/
+
+noncomputable def continuousULiftSectionEquiv (S X : CompHaus.{u}) :
+    ULift.{u + 1} (S ⟶ X) ≃ C(S, ↑(TopCat.uliftFunctor.obj X.toTopCat)) where
+  toFun f :=
+    (TopCat.uliftFunctorObjHomeo X.toTopCat).toContinuousMap.comp
+      (ConcreteCategory.hom f.down)
+  invFun g :=
+    ULift.up (ConcreteCategory.ofHom
+      ((TopCat.uliftFunctorObjHomeo X.toTopCat).symm.toContinuousMap.comp g))
+  left_inv f := by
+    apply ULift.ext
+    apply ConcreteCategory.hom_ext
+    intro s
+    simp
+  right_inv g := by
+    ext s
+    simp
+
 #check finiteUnderlyingULift
 #check finiteDiscreteULiftIso
 #check discreteTopCondensedIso
 #check finiteDiscreteCondensedIso
+#check continuousULiftSectionEquiv
 #check TopCat.uliftFunctor
 #check TopCat.uliftFunctorObjHomeo
 #check CompHausLike.LocallyConstant.functorIso
@@ -225,5 +251,6 @@ noncomputable def finiteDiscreteCondensedIso :
 #print axioms finiteDiscreteULiftIso
 #print axioms discreteTopCondensedIso
 #print axioms finiteDiscreteCondensedIso
+#print axioms continuousULiftSectionEquiv
 
 end CMDG.CondensedCM4P2E
