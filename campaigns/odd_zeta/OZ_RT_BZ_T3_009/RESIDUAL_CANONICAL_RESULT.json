@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0.0",
+  "operation": "OZ-RT-BZ-T3-009",
+  "route": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001",
+  "subroute": "QROW_PRODUCT_RULE_REDUCTION_001",
+  "object": "DIRECT_E_D_WEIGHT_DIFFERENCE_CANONICALIZATION",
+  "producer": {
+    "path": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/residual_canonical.py",
+    "git_blob_sha1": "72c7ff8c24a119022cb41ebf65e7f1ecd136e6e8"
+  },
+  "protected_target": {
+    "source": "campaigns/odd_zeta/OZ_RT_BZ_T3_005/jet_map.py:target_polynomial",
+    "target": "W1+2*w5_sym",
+    "monomial_count": 198,
+    "atom_count": 41,
+    "max_atomic_arity": 4,
+    "basis_sha256": "cbdfe5798d360cb98f2d64743907a06ddc0612f88d17ef4bcef65c81c74e1438"
+  },
+  "canonical_coefficient_ring": "Q-linear Laurent monomials in integer-affine forms a*n+b*k+c*l+d",
+  "shift_differences": {
+    "n1": {
+      "meaning": "Dweight(n+1,k,l)-Dweight(n,k,l)",
+      "canonical_monomials": 102,
+      "atom_count": 27,
+      "max_atomic_arity": 3,
+      "sha256": "ad46afea7d769dcba9d9c8a7b7842bcf72adfa1df0ae05f0734ec25432772655"
+    },
+    "n2": {
+      "meaning": "Dweight(n+2,k,l)-Dweight(n,k,l)",
+      "canonical_monomials": 102,
+      "atom_count": 27,
+      "max_atomic_arity": 3,
+      "sha256": "9c7a4849b95b1ab33670bbc8c2eb218df883cbf19add702f9228b4503b6b2b0e"
+    },
+    "n3": {
+      "meaning": "Dweight(n+3,k,l)-Dweight(n,k,l)",
+      "canonical_monomials": 102,
+      "atom_count": 27,
+      "max_atomic_arity": 3,
+      "sha256": "1e6f8e8ce6cf37b71dd741299c2ce5d1927225c5f08927b66c832a1687814a69"
+    },
+    "k1": {
+      "meaning": "Dweight(n,k+1,l)-Dweight(n,k,l)",
+      "canonical_monomials": 134,
+      "atom_count": 28,
+      "max_atomic_arity": 3,
+      "sha256": "ba7fa0176dc782b6c0747a71a9a0e13c3c5cf3d0c6077efe6f99c2a461c34780"
+    },
+    "l1": {
+      "meaning": "Dweight(n,k,l+1)-Dweight(n,k,l)",
+      "canonical_monomials": 134,
+      "atom_count": 28,
+      "max_atomic_arity": 3,
+      "sha256": "4fd7277655900f62a9f3676fd1d54614205cf8142cf26c04a4ef74eb8dfdc4c6"
+    }
+  },
+  "closure": {
+    "closure_only_atoms": [],
+    "closed_inside_original_41_atom_system": true,
+    "max_atomic_arity_reduces_from": 4,
+    "max_atomic_arity_reduces_to": 3,
+    "interpretation": "Exact cancellations remove all apparent shift-generated atom extensions. The reduced residual does not require enlargement of the protected harmonic/nested atom alphabet."
+  },
+  "producer_cross_checks": {
+    "exact_atom_shift_and_full_target_checks": 840,
+    "sample_points": [[6,1,2],[7,2,1],[8,3,2],[9,2,4]],
+    "finite_sampling_used_as_symbolic_proof": false,
+    "bundle_sha256": "a8b2bc4f905f58d03f0151e19e28e4ff0c1e217fbeb5721d38fe09bcd697b0e1"
+  },
+  "symmetry_reduction": {
+    "artifact": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/QROW_SYMMETRIC_GAUGE.json",
+    "spatial_orientations_after_sum": 1,
+    "structured_channels": ["n1","n2","n3","k1"],
+    "one_orientation_formula": "sum E_D = sum_{k,l}[c1*T(n+1)*Delta_n1(Dweight)+c2*T(n+2)*Delta_n2(Dweight)+c3*T(n+3)*Delta_n3(Dweight)-2*Rk_sym(n,k+1,l)*Delta_k(Dweight)]"
+  },
+  "classification": "DIRECT_ED_WEIGHT_DIFFERENCES_CANONICALIZED_IN_PROTECTED_ATOM_SYSTEM",
+  "next_exact_obligation": "Independently reconstruct and verify the canonical shift maps, then certify or characterize the four-channel one-orientation sum residual without returning to the exhausted generic 198-dimensional raw-flux ansatz.",
+  "residual_sum_zero_proved": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+}
