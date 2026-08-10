@@ -75,14 +75,6 @@ noncomputable def rankOneSectionMul
   let h' : LocallyConstant Y R := h
   exact LinearMap.mul R (LocallyConstant Y R) a' h'
 
-/-- Pullback along the coefficient presheaf preserves pointwise multiplication. -/
-lemma coefficientMap_mul
-    {A B : CompHaus.{u}ᵒᵖ} (f : A ⟶ B)
-    (x y : coefficientPresheaf.obj A) :
-    coefficientPresheaf.map f (x * y) =
-      coefficientPresheaf.map f x * coefficientPresheaf.map f y := by
-  rfl
-
 /-- Pullback along a morphism in the slice carries the coefficient pulled back from the base to the
 same coefficient section pulled back along the target leg. -/
 lemma coefficientPullback_triangle
@@ -92,24 +84,39 @@ lemma coefficientPullback_triangle
   rw [← coefficientPresheaf.map_comp, Under.w f]
 
 /-- Pointwise multiplication by a coefficient section pulled back from the slice base is natural
-under every morphism of the slice. -/
+under every morphism of the slice. The proof is carried out on the explicit locally constant
+function carriers, because the enclosing `ModuleCat` objects intentionally expose only the module
+structure. -/
 lemma rankOneSectionMul_naturality
     (X : CompHaus.{u}) {i j : Under (op X)} (f : i ⟶ j)
     (a : coefficientAt X) (h : coefficientPresheaf.obj i.right) :
     coefficientPresheaf.map f.right (rankOneSectionMul X i a h) =
       rankOneSectionMul X j a (coefficientPresheaf.map f.right h) := by
-  have ha :
+  let Yi : CompHaus.{u} := i.right.unop
+  let Yj : CompHaus.{u} := j.right.unop
+  let pull : LocallyConstant Yi R →ₗ[R] LocallyConstant Yj R :=
+    LocallyConstant.comapₗ R f.right.unop.hom.hom
+  have haBundled :
       coefficientPresheaf.map f.right (coefficientPresheaf.map i.hom a) =
         coefficientPresheaf.map j.hom a := by
     have htriangle := congrArg
       (fun q : coefficientAt X ⟶ coefficientPresheaf.obj j.right => q a)
       (coefficientPullback_triangle X f)
     simpa only [ModuleCat.comp_apply] using htriangle
+  have ha :
+      pull (show LocallyConstant Yi R from coefficientPresheaf.map i.hom a) =
+        (show LocallyConstant Yj R from coefficientPresheaf.map j.hom a) := by
+    simpa [pull, Yi, Yj] using haBundled
+  have hmul (x y : LocallyConstant Yi R) :
+      pull (x * y) = pull x * pull y := by
+    rfl
   change
-    coefficientPresheaf.map f.right
-        (coefficientPresheaf.map i.hom a * h) =
-      coefficientPresheaf.map j.hom a * coefficientPresheaf.map f.right h
-  rw [coefficientMap_mul, ha]
+    pull
+        ((show LocallyConstant Yi R from coefficientPresheaf.map i.hom a) *
+          (show LocallyConstant Yi R from h)) =
+      (show LocallyConstant Yj R from coefficientPresheaf.map j.hom a) *
+        pull (show LocallyConstant Yi R from h)
+  rw [hmul, ha]
 
 /-- Multiplication by a section pulled back from the base of a slice object, packaged directly in
 the categorical Hom carrier underlying the internal Hom. This uses the ambient `R`-linear category
@@ -143,7 +150,6 @@ noncomputable def rankOneMultiplicationToEndomorphism
 #check rankOneEndomorphismEvalOne
 #check rankOneEvaluationApp
 #check rankOneSectionMul
-#check coefficientMap_mul
 #check coefficientPullback_triangle
 #check rankOneSectionMul_naturality
 #check rankOneMultiplicationToEndomorphism
@@ -164,7 +170,6 @@ noncomputable def rankOneMultiplicationToEndomorphism
 #print axioms rankOneEndomorphismEvalOne
 #print axioms rankOneEvaluationApp
 #print axioms rankOneSectionMul
-#print axioms coefficientMap_mul
 #print axioms coefficientPullback_triangle
 #print axioms rankOneSectionMul_naturality
 #print axioms rankOneMultiplicationToEndomorphism
