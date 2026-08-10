@@ -217,9 +217,9 @@ lemma rankOneMultiplication_identity_evalOne (X : CompHaus.{u}) :
   rw [coefficientPresheaf.map_id, ModuleCat.id_apply]
   ext x
   change
-    (show LocallyConstant X R from a) x * (1 : R) =
-      (show LocallyConstant X R from a) x
-  exact mul_one _
+    (((show LocallyConstant X R from a) x) * (1 : R)).down =
+      ((show LocallyConstant X R from a) x).down
+  exact congrArg ULift.down (mul_one ((show LocallyConstant X R from a) x))
 
 lemma rankOneMultiplication_evaluation (X : CompHaus.{u}) :
     rankOneMultiplicationApp X ≫ rankOneEvaluationApp X = 𝟙 (coefficientAt X) := by
