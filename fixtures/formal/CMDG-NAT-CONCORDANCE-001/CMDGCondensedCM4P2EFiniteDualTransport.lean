@@ -90,6 +90,9 @@ lemma finiteCoordinate_resolution
   apply LinearMap.ext
   intro a
   funext y
+  rw [ModuleCat.hom_sum]
+  simp only [Finset.sum_apply, ModuleCat.hom_comp, LinearMap.comp_apply,
+    ModuleCat.hom_id, LinearMap.id_apply]
   change (∑ c : X.obj, if y = c then a c else 0) = a y
   rw [Finset.sum_eq_single y]
   · simp
