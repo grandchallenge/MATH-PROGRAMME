@@ -92,7 +92,12 @@ lemma finiteCoordinate_resolution
   funext y
   simp only [ModuleCat.comp_apply, Finset.sum_apply]
   change (∑ c : X.obj, if y = c then a c else 0) = a y
-  simpa using (Finset.sum_ite_eq (Finset.univ) y a)
+  rw [Finset.sum_eq_single y]
+  · simp
+  · intro c _ hcy
+    have hyc : y ≠ c := fun h => hcy h.symm
+    simp [hyc]
+  · simp
 
 noncomputable def finiteCoordinateEvaluation
     (X : FintypeCat.{u}) (x : X.obj) :
