@@ -59,7 +59,9 @@ coordinates and makes no arbitrary basis choice.
 /-- Canonical self-duality of a finite function module, by delta evaluation and finite summation. -/
 noncomputable def finiteFunctionDualEquiv (X : Type u) [Fintype X] :
     ((X → R) →ₗ[R] R) ≃ₗ[R] (X → R) where
-  toFun φ x := φ (Pi.single x 1)
+  toFun φ := by
+    classical
+    exact fun x => φ (Pi.single x (1 : R))
   invFun a :=
     { toFun := fun h => ∑ x, h x * a x
       map_add' := by
@@ -70,30 +72,33 @@ noncomputable def finiteFunctionDualEquiv (X : Type u) [Fintype X] :
         simp [Finset.mul_sum, mul_assoc] }
   left_inv φ := by
     classical
-    ext h
-    change (∑ x, h x * φ (Pi.single x 1)) = φ h
+    apply LinearMap.ext
+    intro h
+    change (∑ x, h x * φ (Pi.single x (1 : R))) = φ h
     calc
-      (∑ x, h x * φ (Pi.single x 1)) =
-          ∑ x, φ (h x • Pi.single x (1 : R)) := by
+      (∑ x, h x * φ (Pi.single x (1 : R))) =
+          ∑ x, φ (h x • (Pi.single x (1 : R) : X → R)) := by
             apply Finset.sum_congr rfl
             intro x _
-            simpa using (φ.map_smul (h x) (Pi.single x (1 : R))).symm
-      _ = φ (∑ x, h x • Pi.single x (1 : R)) := by
+            simpa using (φ.map_smul (h x) (Pi.single x (1 : R) : X → R)).symm
+      _ = φ (∑ x, h x • (Pi.single x (1 : R) : X → R)) := by
             rw [map_sum]
       _ = φ h := by
             congr 1
-            ext y
+            funext y
             simp
   right_inv a := by
     classical
-    ext x
-    change (∑ y, Pi.single x (1 : R) y * a y) = a x
+    funext x
+    change (∑ y, (Pi.single x (1 : R) : X → R) y * a y) = a x
     simp
   map_add' φ ψ := by
-    ext x
+    classical
+    funext x
     simp
   map_smul' c φ := by
-    ext x
+    classical
+    funext x
     simp
 
 /-- Canonical finite-free form of the algebraic dual, using finite-support/function equivalence. -/
