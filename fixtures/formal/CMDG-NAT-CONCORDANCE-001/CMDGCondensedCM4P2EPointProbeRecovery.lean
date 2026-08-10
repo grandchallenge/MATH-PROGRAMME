@@ -140,8 +140,8 @@ lemma rankOneProjection_recovery
         rankOneMultiplicationToEndomorphism X k (rankOneEvaluationApp X φ)) := by
   apply ModuleCat.hom_injective
   ext h
-  simpa only [rankOneMultiplicationToEndomorphism_apply] using
-    rankOneProjection_recovery_apply X k φ h
+  exact (rankOneProjection_recovery_apply X k φ h).trans
+    (rankOneMultiplicationToEndomorphism_apply X k (rankOneEvaluationApp X φ) h).symm
 
 #check rankOnePointProbe_naturality
 #check rankOnePointProbe_identity_naturality
