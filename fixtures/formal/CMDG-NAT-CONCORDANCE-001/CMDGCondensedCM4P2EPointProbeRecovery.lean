@@ -105,14 +105,44 @@ lemma rankOneProjection_point_value
         (show LocallyConstant X R from rankOneEvaluationApp X φ) (k.hom.unop y) at hv
   simpa only [mul_comm] using hv
 
+lemma rankOneSectionMul_apply_point
+    (X : CompHaus.{u}) (k : Under (op X))
+    (a : coefficientAt X) (h : coefficientPresheaf.obj k.right)
+    (y : k.right.unop) :
+    (show LocallyConstant k.right.unop R from rankOneSectionMul X k a h) y =
+      (show LocallyConstant X R from a) (k.hom.unop y) *
+        (show LocallyConstant k.right.unop R from h) y := by
+  rfl
+
+lemma rankOneProjection_recovery_apply
+    (X : CompHaus.{u}) (k : Under (op X))
+    (φ : rankOneInternalHom.obj (op X))
+    (h : coefficientPresheaf.obj k.right) :
+    rankOneProjectionEndomorphism X k φ h =
+      rankOneSectionMul X k (rankOneEvaluationApp X φ) h := by
+  change
+    (show LocallyConstant k.right.unop R from
+      rankOneProjectionEndomorphism X k φ h) =
+      (show LocallyConstant k.right.unop R from
+        rankOneSectionMul X k (rankOneEvaluationApp X φ) h)
+  ext y
+  have hp := rankOneProjection_point_value X k φ h y
+  have hm := rankOneSectionMul_apply_point X k (rankOneEvaluationApp X φ) h y
+  rw [hm]
+  exact congrArg ULift.down hp
+
 #check rankOnePointProbe_naturality
 #check rankOnePointProbe_identity_naturality
 #check rankOnePointProbe_constant_recovery
 #check rankOneProjection_point_value
+#check rankOneSectionMul_apply_point
+#check rankOneProjection_recovery_apply
 
 #print axioms rankOnePointProbe_naturality
 #print axioms rankOnePointProbe_identity_naturality
 #print axioms rankOnePointProbe_constant_recovery
 #print axioms rankOneProjection_point_value
+#print axioms rankOneSectionMul_apply_point
+#print axioms rankOneProjection_recovery_apply
 
 end CMDG.CondensedCM4P2E.InternalHom
