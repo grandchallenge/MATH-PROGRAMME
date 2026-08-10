@@ -88,6 +88,20 @@ lemma locallyConstant_const_eq_smul_one
   change r.down = (r * (1 : R)).down
   exact (congrArg ULift.down (mul_one r)).symm
 
+lemma rankOneProjectionEndomorphism_const
+    (X : CompHaus.{u}) (k : Under (op X))
+    (φ : rankOneInternalHom.obj (op X)) (r : R) :
+    rankOneProjectionEndomorphism X k φ
+        (show (Under.forget (op X) ⋙ coefficientPresheaf).obj k from
+          LocallyConstant.const k.right.unop r) =
+      r • rankOneProjectionEndomorphism X k φ
+        (show (Under.forget (op X) ⋙ coefficientPresheaf).obj k from
+          LocallyConstant.const k.right.unop (1 : R)) := by
+  rw [locallyConstant_const_eq_smul_one]
+  exact (rankOneProjectionEndomorphism X k φ).hom.map_smul r
+    (show (Under.forget (op X) ⋙ coefficientPresheaf).obj k from
+      LocallyConstant.const k.right.unop (1 : R))
+
 #check coefficientPullback_const
 #check coefficientPullback_const_op
 #check coefficientPullback_pointProbe
@@ -95,6 +109,7 @@ lemma locallyConstant_const_eq_smul_one
 #check rankOneEvaluationApp_apply
 #check coefficientPullback_pointProbeFromIdentity_one
 #check locallyConstant_const_eq_smul_one
+#check rankOneProjectionEndomorphism_const
 
 #print axioms coefficientPullback_const
 #print axioms coefficientPullback_const_op
@@ -103,5 +118,6 @@ lemma locallyConstant_const_eq_smul_one
 #print axioms rankOneEvaluationApp_apply
 #print axioms coefficientPullback_pointProbeFromIdentity_one
 #print axioms locallyConstant_const_eq_smul_one
+#print axioms rankOneProjectionEndomorphism_const
 
 end CMDG.CondensedCM4P2E.InternalHom
