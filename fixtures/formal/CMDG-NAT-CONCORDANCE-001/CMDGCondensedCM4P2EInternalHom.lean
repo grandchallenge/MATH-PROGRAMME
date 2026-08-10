@@ -65,7 +65,6 @@ noncomputable def rankOneEvaluationApp (X : CompHaus.{u}) :
   rw [rankOneInternalHom_eq_functorEnrichedHom]
   exact rankOneIdentityProjection X ≫ rankOneEndomorphismEvalOne X
 
-/-- Pointwise multiplication after pulling the coefficient section to a slice object. -/
 noncomputable def rankOneSectionMul
     (X : CompHaus.{u}) (k : Under (op X))
     (a : coefficientAt X) (h : coefficientPresheaf.obj k.right) :
@@ -75,18 +74,12 @@ noncomputable def rankOneSectionMul
   let h' : LocallyConstant Y R := h
   exact LinearMap.mul R (LocallyConstant Y R) a' h'
 
-/-- Pullback along a morphism in the slice carries the coefficient pulled back from the base to the
-same coefficient section pulled back along the target leg. -/
 lemma coefficientPullback_triangle
     (X : CompHaus.{u}) {i j : Under (op X)} (f : i ⟶ j) :
     coefficientPresheaf.map i.hom ≫ coefficientPresheaf.map f.right =
       coefficientPresheaf.map j.hom := by
   rw [← coefficientPresheaf.map_comp, Under.w f]
 
-/-- Pointwise multiplication by a coefficient section pulled back from the slice base is natural
-under every morphism of the slice. The proof is carried out on the explicit locally constant
-function carriers, because the enclosing `ModuleCat` objects intentionally expose only the module
-structure. -/
 lemma rankOneSectionMul_naturality
     (X : CompHaus.{u}) {i j : Under (op X)} (f : i ⟶ j)
     (a : coefficientAt X) (h : coefficientPresheaf.obj i.right) :
@@ -118,10 +111,6 @@ lemma rankOneSectionMul_naturality
         pull (show LocallyConstant Yi R from h)
   rw [hmul, ha]
 
-/-- Multiplication by a section pulled back from the base of a slice object, packaged directly in
-the categorical Hom carrier underlying the internal Hom. This uses the ambient `R`-linear category
-structure and therefore does not introduce a second scalar-action requirement on the coefficient
-module. -/
 noncomputable def rankOneMultiplicationToEndomorphism
     (X : CompHaus.{u}) (k : Under (op X)) :
     coefficientAt X ⟶
@@ -142,7 +131,6 @@ noncomputable def rankOneMultiplicationToEndomorphism
         rfl }
   exact ModuleCat.ofHom (pack.comp (mul.comp pull))
 
-/-- The packaged multiplication morphism acts by the pointwise operation used to construct it. -/
 lemma rankOneMultiplicationToEndomorphism_apply
     (X : CompHaus.{u}) (k : Under (op X))
     (a : coefficientAt X) (h : coefficientPresheaf.obj k.right) :
@@ -150,16 +138,12 @@ lemma rankOneMultiplicationToEndomorphism_apply
       rankOneMultiplicationToEndomorphism X k a).hom h = rankOneSectionMul X k a h := by
   rfl
 
-/-- In the closed structure on `ModuleCat`, contravariance of internal Hom is ordinary
-precomposition. -/
 lemma monoidalClosed_pre_apply
     {M N P : ModuleCat.{u + 1} R} (f : N ⟶ M) (g : M ⟶ P) :
     ((MonoidalClosed.pre f).app P) g = f ≫ g := by
   rw [ModuleCat.monoidalClosed_pre_app]
   rfl
 
-/-- The multiplication family satisfies the dinaturality equation defining the enriched end:
-postcomposition along coefficient pullback agrees with precomposition along the same pullback. -/
 lemma rankOneMultiplication_condition
     (X : CompHaus.{u}) {i j : Under (op X)} (f : i ⟶ j) :
     rankOneMultiplicationToEndomorphism X i ≫
@@ -189,11 +173,8 @@ lemma rankOneMultiplication_condition
   simpa only [gi, gj, rankOneMultiplicationToEndomorphism_apply] using
     rankOneSectionMul_naturality X f a h
 
-/-- The canonical multiplication family, lifted through the enriched end, gives the inverse
-direction from coefficient sections to the rank-one internal Hom. -/
 noncomputable def rankOneMultiplicationApp (X : CompHaus.{u}) :
     coefficientAt X ⟶ rankOneInternalHom.obj (op X) := by
-  rw [rankOneInternalHom_eq_functorEnrichedHom]
   exact end_.lift
     (fun k => rankOneMultiplicationToEndomorphism X k)
     (fun i j f => by
@@ -204,7 +185,6 @@ noncomputable def rankOneMultiplicationApp (X : CompHaus.{u}) :
         MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight] using
         rankOneMultiplication_condition X f)
 
-/-- Projection of the enriched-end lift recovers the original slice multiplication family. -/
 lemma rankOneMultiplicationApp_projection
     (X : CompHaus.{u}) (k : Under (op X)) :
     rankOneMultiplicationApp X ≫
@@ -232,17 +212,6 @@ lemma rankOneMultiplicationApp_projection
 #check rankOneMultiplication_condition
 #check rankOneMultiplicationApp
 #check rankOneMultiplicationApp_projection
-#check LinearMap.mul
-#check ModuleCat.homLinearEquiv
-#check CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
-#check CategoryTheory.Presheaf.functorEnrichedHomCoyonedaObjEquiv
-#check CategoryTheory.presheafHom
-#check CondensedMod.LocallyConstant.fullyFaithfulFunctor
-#check CondensedMod.LocallyConstant.functorIsoDiscrete
-#check MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerLeft
-#check MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight
-#check ModuleCat.ihom_map_apply
-#check ModuleCat.monoidalClosed_pre_app
 #check Limits.end_.lift
 #check Limits.end_.lift_π
 
