@@ -15,17 +15,31 @@ lemma finiteCoordinateExtension_evaluation_self
     (X : FintypeCat.{u}) (x : X.obj) :
     finiteCoordinateExtension X x ≫ finiteCoordinateEvaluation X x =
       𝟙 CMDG.CondensedCM4P2D.coefficientPresheaf := by
-  simp only [finiteCoordinateExtension, finiteCoordinateEvaluation]
-  rw [Category.assoc]
-  rw [finiteCoordinatePre_projection_inclusion_self_assoc]
+  have hExt :
+      finiteCoordinateExtension X x =
+        CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHomNatIso.inv ≫
+          finiteCoordinatePreProjectionNamed X x := rfl
+  have hEval :
+      finiteCoordinateEvaluation X x =
+        finiteCoordinatePreInclusionNamed X x ≫
+          CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHomNatIso.hom := rfl
+  rw [hExt, hEval, Category.assoc]
+  rw [finiteCoordinatePreNamed_self_assoc]
   simp
 
 lemma finiteCoordinateExtension_evaluation_ne
     (X : FintypeCat.{u}) {x y : X.obj} (hxy : x ≠ y) :
     finiteCoordinateExtension X y ≫ finiteCoordinateEvaluation X x = 0 := by
-  simp only [finiteCoordinateExtension, finiteCoordinateEvaluation]
-  rw [Category.assoc]
-  rw [finiteCoordinatePre_projection_inclusion_ne_assoc X hxy]
+  have hExt :
+      finiteCoordinateExtension X y =
+        CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHomNatIso.inv ≫
+          finiteCoordinatePreProjectionNamed X y := rfl
+  have hEval :
+      finiteCoordinateEvaluation X x =
+        finiteCoordinatePreInclusionNamed X x ≫
+          CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHomNatIso.hom := rfl
+  rw [hExt, hEval, Category.assoc]
+  rw [finiteCoordinatePreNamed_ne_assoc X hxy]
   simp
 
 #check finiteCoordinateExtension_evaluation_self
