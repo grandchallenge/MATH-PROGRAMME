@@ -148,14 +148,10 @@ noncomputable def finiteCoefficientFamilyPresheafFunctor :
   obj X := finiteCoefficientFamilyPresheaf X.unop
   map f := finiteCoefficientFamilyPresheafMap f
   map_id X := by
-    ext S
-    apply ModuleCat.hom_ext
-    ext a x s
+    ext S a x s
     rfl
   map_comp f g := by
-    ext S
-    apply ModuleCat.hom_ext
-    ext a z s
+    ext S a z s
     rfl
 
 /-- The `flip/unflip` source decomposition is natural in the finite set. -/
@@ -165,9 +161,7 @@ noncomputable def finiteFunctionPresheafFamilyNatIso :
     (fun X => finiteFunctionPresheafFamilyIso X.unop)
     (by
       intro X Y f
-      ext S
-      apply ModuleCat.hom_ext
-      ext h y s
+      ext S h y s
       rfl)
 
 /-- Restriction of the P2-D source presheaf to finite profinite sets. -/
