@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 from fractions import Fraction
+from functools import lru_cache
 from math import comb
 
 # Representatives after exact k<->l symmetry at the sequence level.
@@ -21,10 +22,12 @@ WEIGHT_BLOCKS = {
 }
 
 
+@lru_cache(maxsize=None)
 def harmonic(m: int, r: int) -> Fraction:
     return sum((Fraction(1, j**r) for j in range(1, m + 1)), Fraction(0))
 
 
+@lru_cache(maxsize=None)
 def kernel(n: int, k: int, l: int) -> int:
     return (
         comb(n + k, n) * comb(n, k) ** 2
@@ -33,6 +36,7 @@ def kernel(n: int, k: int, l: int) -> int:
     )
 
 
+@lru_cache(maxsize=None)
 def recurrence_coefficients(n: int) -> tuple[int, int, int, int]:
     a0 = lambda x: 41218*x**3 + 198849*x**2 + 320790*x + 173057
     b8 = lambda x: (
@@ -64,6 +68,7 @@ def letter_value(n: int, k: int, l: int, family: str, r: int) -> Fraction:
     return harmonic(m, r)
 
 
+@lru_cache(maxsize=None)
 def sequence(n: int, family: str, r: int) -> Fraction:
     total = Fraction(0)
     for k in range(n + 1):
@@ -72,6 +77,7 @@ def sequence(n: int, family: str, r: int) -> Fraction:
     return total
 
 
+@lru_cache(maxsize=None)
 def defect(n: int, family: str, r: int) -> Fraction:
     return sum(
         Fraction(c) * sequence(n + j, family, r)
