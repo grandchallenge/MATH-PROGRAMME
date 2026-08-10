@@ -15,6 +15,29 @@ noncomputable local instance : MonoidalClosed
     (CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u}) :=
   MonoidalClosed.FunctorCategory.monoidalClosed
 
+local instance : MonoidalPreadditive
+    (CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u}) where
+  whiskerLeft_zero := by
+    intro X Y Z
+    apply NatTrans.ext
+    funext j
+    simp
+  zero_whiskerRight := by
+    intro X Y Z
+    apply NatTrans.ext
+    funext j
+    simp
+  whiskerLeft_add := by
+    intro X Y Z f g
+    apply NatTrans.ext
+    funext j
+    simp
+  add_whiskerRight := by
+    intro X Y Z f g
+    apply NatTrans.ext
+    funext j
+    simp
+
 noncomputable def finiteFamilyInternalHom (X : FintypeCat.{u}) :
     CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u} :=
   (MonoidalClosed.internalHom.obj
