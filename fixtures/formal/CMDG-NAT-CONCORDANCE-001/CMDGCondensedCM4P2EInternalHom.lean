@@ -1,5 +1,6 @@
 import CMDGCondensedCM4P2E
 import CMDGCondensedCM4P2EAlgebraic
+import Mathlib.Algebra.Algebra.Bilinear
 
 /-!
 # CMDG CM4-P2-E internal-Hom bridge
@@ -72,35 +73,23 @@ noncomputable def rankOneSectionMul
   let Y : CompHaus.{u} := k.right.unop
   let a' : LocallyConstant Y R := coefficientPresheaf.map k.hom a
   let h' : LocallyConstant Y R := h
-  exact a' * h'
+  exact LinearMap.mul R (LocallyConstant Y R) a' h'
 
-/-- Multiplication by a section pulled back from the base of a slice object. -/
+/-- Multiplication by a section pulled back from the base of a slice object, packaged canonically
+using the bilinear multiplication map and the linear equivalence between `ModuleCat` morphisms and
+linear maps. -/
 noncomputable def rankOneMultiplicationToEndomorphism
     (X : CompHaus.{u}) (k : Under (op X)) :
     coefficientAt X ⟶
-      (ihom (coefficientPresheaf.obj k.right)).obj (coefficientPresheaf.obj k.right) :=
-  ModuleCat.ofHom
-    { toFun := fun a =>
-        ModuleCat.ofHom
-          { toFun := rankOneSectionMul X k a
-            map_add' := by
-              intro h₁ h₂
-              ext y
-              simp [rankOneSectionMul, mul_add]
-            map_smul' := by
-              intro c h
-              ext y
-              simp [rankOneSectionMul, mul_comm, mul_left_comm] }
-      map_add' := by
-        intro a b
-        apply ModuleCat.hom_ext
-        ext h y
-        simp [rankOneSectionMul, add_mul]
-      map_smul' := by
-        intro c a
-        apply ModuleCat.hom_ext
-        ext h y
-        simp [rankOneSectionMul, mul_assoc] }
+      (ihom (coefficientPresheaf.obj k.right)).obj (coefficientPresheaf.obj k.right) := by
+  let Y : CompHaus.{u} := k.right.unop
+  let A := LocallyConstant Y R
+  let pull : coefficientAt X →ₗ[R] A := (coefficientPresheaf.map k.hom).hom
+  let mul : A →ₗ[R] A →ₗ[R] A := LinearMap.mul R A
+  let pack : (A →ₗ[R] A) →ₗ[R]
+      (coefficientPresheaf.obj k.right ⟶ coefficientPresheaf.obj k.right) :=
+    ModuleCat.homLinearEquiv.symm.toLinearMap
+  exact ModuleCat.ofHom (pack.comp (mul.comp pull))
 
 #check rankOneInternalHom
 #check rankOneInternalHom_eq_functorEnrichedHom
@@ -111,6 +100,8 @@ noncomputable def rankOneMultiplicationToEndomorphism
 #check rankOneEvaluationApp
 #check rankOneSectionMul
 #check rankOneMultiplicationToEndomorphism
+#check LinearMap.mul
+#check ModuleCat.homLinearEquiv
 #check CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
 #check CategoryTheory.Presheaf.functorEnrichedHomCoyonedaObjEquiv
 #check CategoryTheory.presheafHom
