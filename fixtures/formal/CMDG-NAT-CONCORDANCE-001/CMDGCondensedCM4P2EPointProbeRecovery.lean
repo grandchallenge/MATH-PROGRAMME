@@ -72,27 +72,12 @@ lemma rankOnePointProbe_constant_recovery
         (show coefficientPresheaf.obj (rankOnePointProbeObject X k y).right from
           LocallyConstant.const (rankOnePointProbeObject X k y).right.unop
             ((show LocallyConstant X R from rankOneEvaluationApp X φ) (k.hom.unop y))) := by
-  let P : Under (op X) := rankOnePointProbeObject X k y
-  let r : R := (show LocallyConstant k.right.unop R from h) y
-  calc
-    (show coefficientPresheaf.obj P.right from
-      LocallyConstant.const P.right.unop
-        ((show LocallyConstant k.right.unop R from
-          rankOneProjectionEndomorphism X k φ h) y)) =
-        rankOneProjectionEndomorphism X P φ
-          (show coefficientPresheaf.obj P.right from
-            LocallyConstant.const P.right.unop r) :=
-      rankOnePointProbe_naturality X k y φ h
-    _ = r • rankOneProjectionEndomorphism X P φ
-          (show coefficientPresheaf.obj P.right from
-            LocallyConstant.const P.right.unop (1 : R)) :=
-      rankOneProjectionEndomorphism_const X P φ r
-    _ = r •
-          (show coefficientPresheaf.obj P.right from
-            LocallyConstant.const P.right.unop
-              ((show LocallyConstant X R from rankOneEvaluationApp X φ) (k.hom.unop y))) := by
-      exact congrArg (fun q => r • q)
-        (rankOnePointProbe_identity_naturality X k y φ).symm
+  have hprobe := rankOnePointProbe_naturality X k y φ h
+  rw [rankOneProjectionEndomorphism_const X
+        (rankOnePointProbeObject X k y) φ
+        ((show LocallyConstant k.right.unop R from h) y)] at hprobe
+  rw [← rankOnePointProbe_identity_naturality X k y φ] at hprobe
+  exact hprobe
 
 #check rankOnePointProbe_naturality
 #check rankOnePointProbe_identity_naturality
