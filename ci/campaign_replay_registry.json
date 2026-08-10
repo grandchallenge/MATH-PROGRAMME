@@ -2,384 +2,73 @@
   "$schema": "../schemas/campaign_replay_registry.schema.json",
   "schema_version": "2.0.0",
   "entries": [
-    {
-      "id": "WORKFLOW-COVERAGE-AUDIT-VALIDATION",
-      "command": ["python3", "ci/validate_workflow_coverage_audit.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate complete CI contract coverage, preserve explicit Pages release blockers, and prevent premature closure of umbrella issue #6."
-    },
-    {
-      "id": "WORKFLOW-COVERAGE-AUDIT-ADVERSARIAL",
-      "command": ["python3", "tests/test_workflow_coverage_audit.py"],
-      "timeout_seconds": 60,
-      "scope": "Reject omitted workflow coverage areas, silently removed Pages blockers, missing audited controls, and premature umbrella closure."
-    },
-    {
-      "id": "CROSS-PILLAR-LANE-PACKAGE-VALIDATION",
-      "command": ["python3", "ci/validate_cross_pillar_lane_packages.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate the five reusable lane packages, including doctrine, schemas, toy fixtures, statuses, rejection policies, and MATHCERT routes."
-    },
-    {
-      "id": "CROSS-PILLAR-LANE-PACKAGE-ADVERSARIAL",
-      "command": ["python3", "tests/test_cross_pillar_lane_packages.py"],
-      "timeout_seconds": 60,
-      "scope": "Reject missing doctrine, invalid fixtures, orphan packages, status drift, incomplete rejection policies, malformed schemas, and toy certification inflation."
-    },
-    {
-      "id": "SYMBOLIC-RESOURCE-BUDGET-VALIDATION",
-      "command": ["python3", "ci/validate_symbolic_resource_budgets.py"],
-      "timeout_seconds": 60,
-      "scope": "Discover every marked expensive symbolic lane and fail closed on missing registration, budgets, execution state, or preserved failure evidence."
-    },
-    {
-      "id": "SYMBOLIC-RESOURCE-BUDGET-ADVERSARIAL",
-      "command": ["python3", "tests/test_symbolic_resource_budgets.py"],
-      "timeout_seconds": 60,
-      "scope": "Reject omitted budgets, unregistered lanes, orphan registry records, suppressed failures, and completed runs without result artifacts."
-    },
-    {
-      "id": "MATHFORGE-PROVIDER-IMPORT-VALIDATION",
-      "command": ["python3", "ci/validate_mathforge_provider_imports.py"],
-      "timeout_seconds": 60,
-      "scope": "Fail closed on missing active-domain provider coverage, provider commit drift, manifest identity drift, or malformed waivers."
-    },
-    {
-      "id": "MATHSOLVE-ROUTING-VALIDATION",
-      "command": ["python3", "ci/validate_mathsolve_routing.py"],
-      "timeout_seconds": 60,
-      "scope": "Fail closed on missing Solve routes, provider or manifest drift, Programme-embedded future promotion, and missing MATHCERT handoffs."
-    },
-    {
-      "id": "BSD-WP01-REPLAY",
-      "command": ["python3", "campaigns/birch_swinnerton_dyer/WP01_FALSE_PROOF_ATLAS/replay.py"],
-      "timeout_seconds": 60,
-      "scope": "Deterministic replay of the BSD false-proof atlas."
-    },
-    {
-      "id": "BSD-WP01-WP02-CROSS-VALIDATION",
-      "command": ["python3", "campaigns/birch_swinnerton_dyer/validate_wp01_wp02.py"],
-      "timeout_seconds": 60,
-      "scope": "Cross-validate BSD fixtures, sources, theorem interfaces, and closed gates."
-    },
-    {
-      "id": "BSD-WP01-WP02-ADVERSARIAL",
-      "command": ["python3", "campaigns/birch_swinnerton_dyer/test_validate_wp01_wp02.py"],
-      "timeout_seconds": 60,
-      "scope": "Reject BSD theorem-interface, dependency-debt, and gate-opening mutations."
-    },
-    {
-      "id": "BSD-WP03-SUBSTRATE-REPLAY",
-      "command": ["python3", "campaigns/birch_swinnerton_dyer/WP03_COMPUTATIONAL_FORMAL_SUBSTRATE/replay.py"],
-      "timeout_seconds": 60,
-      "scope": "Replay BSD computational and formal substrate firewalls."
-    },
-    {
-      "id": "BSD-WP04-TARGET-REPLAY",
-      "command": ["python3", "campaigns/birch_swinnerton_dyer/WP04_RESTRICTED_TARGET_SCORECARD/replay.py"],
-      "timeout_seconds": 60,
-      "scope": "Replay BSD restricted-target scorecard and claim firewall."
-    },
-    {
-      "id": "OZ-WP00-INTAKE-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/tools/validate_intake_manifest.py", "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/01_INTAKE_SOURCE_LOCK.yaml"],
-      "timeout_seconds": 60,
-      "scope": "Validate the historical OZ-WP00 intake manifest without promoting its source-bound classifications."
-    },
-    {
-      "id": "OZ-NEXT-004-REVIEW-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/review/OZ_NEXT_004/tools/validate_review_package.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate the complete, independent and fail-closed OZ-NEXT-004 role-review package without promoting mathematical claims."
-    },
-    {
-      "id": "OZ-WP01-FALSE-PROOF-ATLAS-REPLAY",
-      "command": ["python3", "campaigns/odd_zeta/OZ_WP01_FALSE_PROOF_ATLAS/replay.py"],
-      "timeout_seconds": 60,
-      "scope": "Replay the OZ false-proof atlas and reject normalization, scope, conditional-theorem, formalization, novelty, and irrationality inference inflation."
-    },
-    {
-      "id": "OZ-WP02-PROOF-OBLIGATION-LEDGER-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_WP02_THEOREM_OBLIGATION_LEDGER/validate.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate the OZ theorem statements, normalization locks, proof-obligation DAGs, false-proof controls, and ordered research gates without promoting an open claim."
-    },
-    {
-      "id": "OZ-RT-APERY-BROW-001-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_APERY_BROW_001/validate.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate the independently audited single-digit Apéry B-row proof, exact source identities, manuscript-to-Lean correspondence, formalization boundary, and fail-closed promotion gate."
-    },
-    {
-      "id": "OZ-RT-LB-INSTANCE-001-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_LB_INSTANCE_001/validate.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate the complete Franel H1-H5 discharge, exact explicit-sum statement, pinned source identities, recurrence-equivalence boundary, and fail-closed successor gate."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-001-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_001/validate.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate the exact T3 target lock, finite-evidence boundary, source-characterized failed certificate classes, resource blocker, absent proof or counterexample certificates, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-002-PRODUCER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_002/producer.py"],
-      "timeout_seconds": 180,
-      "scope": "Regenerate the exact bounded first-order fibre rational-telescoper search over the locked T3 target for total degrees zero through nine."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-002-VERIFIER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_002/verify.py"],
-      "timeout_seconds": 180,
-      "scope": "Independently reconstruct the exact fibre search matrices, replay finite T3 sums, and verify the retained full-rank negative frontier through degree nine without invoking the producer solver."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-002-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_002/validate.py"],
-      "timeout_seconds": 180,
-      "scope": "Validate source and target locks, canonical search digest, independent verification, degree-nine bounded negative certificate-class result, nonclaim firewall, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."
-    },
-    {
-      "id": "OZ-SOURCE-REVISION-DELTA-002-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_SOURCE_REVISION_DELTA_002/validate.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate the exact seven-commit OZ source revision intake, archive and source identities, claim classifications, T1-top/T3 inference firewall, DEPTH non-promotion, partial replay boundaries, known Lean quarantines, and SOURCE_REVISION_PARTIALLY_ADMITTED_WITH_BLOCKERS disposition."
-    },
-    {
-      "id": "OZ-RT-SHARP12-DEPTH-001-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_SHARP12_DEPTH_001/validate.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate the exact-tree DEPTH absence audit, exact upstream commit/tree and Sharp-12 source lock, complete unrecoverable producer/order ledger, reopening requirements, nonclaim firewall, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."
-    },
-    {
-      "id": "OZ-SOURCE-REVISION-DELTA-003-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_SOURCE_REVISION_DELTA_003/validate.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate the exact 20-commit OZ source delta, 44-file closed manifest, unchanged Sharp-12/z5la/Lean loci, seven unsatisfied DEPTH reopening requirements, source-claim classifications, and no-promotion boundary."
-    },
-    {
-      "id": "OZ-RT-SHARP12-T1TOP-001-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_SHARP12_T1TOP_001/validate.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate the exact source-locked T1-top target, finite-evidence firewall, characterized missing unbounded certificate objects, representative non-substitution rule, reopening requirements, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."
-    },
-    {
-      "id": "PNP-WP01-REPLAY",
-      "command": ["python3", "campaigns/p_vs_np/WP01_FALSE_PROOF_ATLAS/replay.py"],
-      "timeout_seconds": 60,
-      "scope": "Deterministic replay of the P-versus-NP false-proof atlas."
-    },
-    {
-      "id": "PNP-WP01-WP02-CROSS-VALIDATION",
-      "command": ["python3", "campaigns/p_vs_np/validate_wp01_wp02.py"],
-      "timeout_seconds": 60,
-      "scope": "Cross-validate P-versus-NP fixtures, sources, theorem interfaces, frontier debt, and closed gates."
-    },
-    {
-      "id": "PNP-WP01-WP02-ADVERSARIAL",
-      "command": ["python3", "campaigns/p_vs_np/tests/test_validate_wp01_wp02.py"],
-      "timeout_seconds": 60,
-      "scope": "Reject P-versus-NP identifier, source, terminal-state, barrier, frontier-debt, and gate-opening mutations."
-    },
-    {
-      "id": "RH-WP01-REPLAY",
-      "command": ["python3", "campaigns/riemann_hypothesis/WP01_FALSE_PROOF_ATLAS/replay.py"],
-      "timeout_seconds": 60,
-      "scope": "Deterministic replay of the RH false-proof atlas."
-    },
-    {
-      "id": "RH-WP01-WP02-CROSS-VALIDATION",
-      "command": ["python3", "campaigns/riemann_hypothesis/validate_wp01_wp02.py"],
-      "timeout_seconds": 60,
-      "scope": "Cross-validate RH fixtures, sources, theorem interfaces, debt, and closed gates."
-    },
-    {
-      "id": "YM-WP01-REPLAY",
-      "command": ["python3", "campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/replay.py"],
-      "timeout_seconds": 60,
-      "scope": "Deterministic replay of the Yang-Mills false-proof atlas."
-    },
-    {
-      "id": "YM-WP01-WP02-CROSS-VALIDATION",
-      "command": ["python3", "campaigns/yang_mills/validate_wp01_wp02.py"],
-      "timeout_seconds": 60,
-      "scope": "Cross-validate Yang-Mills fixtures, sources, theorem interfaces, dependency debt, unverified claims, and closed gates."
-    },
-    {
-      "id": "YM-WP01-WP02-ADVERSARIAL",
-      "command": ["python3", "campaigns/yang_mills/test_validate_wp01_wp02.py"],
-      "timeout_seconds": 60,
-      "scope": "Reject Yang-Mills source, interface, audit-state, status, debt, and gate-opening mutations."
-    },
-    {
-      "id": "PC-WP03-HISTORY-REPLAY",
-      "command": ["python3", "campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/05_ADVERSARIAL_HISTORIES/validate_histories.py"],
-      "timeout_seconds": 60,
-      "scope": "Replay all valid and malformed Poincare surgery histories."
-    },
-    {
-      "id": "PC-WP04-POLICY",
-      "command": ["python3", "ci/validate_pc_wp04_fixture.py", "fixtures/formal/PC-WP04"],
-      "timeout_seconds": 60,
-      "scope": "Validate the bounded PC-WP04 certificate policy."
-    },
-    {
-      "id": "PC-WP04-ADVERSARIAL",
-      "command": ["python3", "ci/test_pc_wp04_fixture.py"],
-      "timeout_seconds": 60,
-      "scope": "Reject PC-WP04 certificate-policy mutations."
-    },
-    {
-      "id": "PC-WP05-ARCHIVE-POLICY",
-      "command": ["python3", "ci/validate_pc_wp05_archive.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate the qualified Poincare archival manifest and trust matrix."
-    },
-    {
-      "id": "PC-WP05-ADVERSARIAL",
-      "command": ["python3", "ci/test_pc_wp05_archive.py"],
-      "timeout_seconds": 60,
-      "scope": "Reject PC-WP05 archival-policy mutations."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-003-PRODUCER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_003/producer.py"],
-      "timeout_seconds": 180,
-      "scope": "Regenerate the exact parameter-lift fixture and bounded undeformed-parent order-2-to-4 external-k-shift/l-difference search through a-degree 6 and q-numerator degree 8."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-003-VERIFIER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_003/verify.py"],
-      "timeout_seconds": 180,
-      "scope": "Independently reconstruct Pochhammer cumulants, nested auxiliary-sum letters, full locked T3 cells, and all 21 retained order-2-to-4 rank systems without invoking the producer."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-003-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_003/validate.py"],
-      "timeout_seconds": 180,
-      "scope": "Validate exact target/source locks, canonical higher-order search digest, creative-telescoping orientation, independent replay, nonclaims, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-004-PRODUCER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_004/producer.py"],
-      "timeout_seconds": 180,
-      "scope": "Regenerate the exact eta-dependent order-2 k-side U/ES auxiliary-t search through polynomial degree four with finite-boundary-clean l/t certificate bases."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-004-VERIFIER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_004/verify.py"],
-      "timeout_seconds": 180,
-      "scope": "Independently reconstruct the auxiliary parents, exact eta-dependent shift ratios, and the five retained block-rank systems using different component and monomial orderings."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-004-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_004/validate.py"],
-      "timeout_seconds": 180,
-      "scope": "Validate exact source and target locks, retained parameter/t dimensions, finite-boundary factors, canonical result digest, independent replay, coverage blockers, nonclaims, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-005-PRODUCER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_005/producer.py"],
-      "timeout_seconds": 180,
-      "scope": "Regenerate the exact mirror l-shift/k-s-divergence order-2 U/ES search and the complete linear raw weight-five jet coefficient map."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-005-VERIFIER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_005/verify.py"],
-      "timeout_seconds": 180,
-      "scope": "Independently replay the mirror block-rank frontier and verify the retained complete weight-five raw-jet map structure."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-005-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_005/validate.py"],
-      "timeout_seconds": 180,
-      "scope": "Validate exact authority locks, mirror bounded exhaustion, linear raw-jet extraction, two-orientation coupling, nonclaims, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-006-PRODUCER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_006/producer.py"],
-      "timeout_seconds": 300,
-      "scope": "Regenerate the exact scalar-envelope and complete 198-dimensional normalized weight-five raw-jet order-2 fibre search through certificate coefficient degree two."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-006-VERIFIER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_006/verify.py"],
-      "timeout_seconds": 300,
-      "scope": "Independently reconstruct the source-locked T3 target and replay alternate full-rank witnesses for the retained order-2 raw-jet search."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-006-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_006/validate.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate exact authority locks, raw-jet basis and normalization boundary, canonical bounded rank result, nonclaims, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-007-PRODUCER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_007/producer.py"],
-      "timeout_seconds": 300,
-      "scope": "Regenerate the exact complete 198-dimensional normalized weight-five raw-jet fibre searches at external orders three and four through certificate coefficient degree two."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-007-VERIFIER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_007/verify.py"],
-      "timeout_seconds": 300,
-      "scope": "Independently reconstruct the source-locked T3 target and replay alternate full-rank witnesses for the retained order-three and order-four raw-jet searches."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-007-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_007/validate.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate exact authority and order locks, raw-jet basis and normalization boundary, canonical bounded rank result, nonclaims, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-008-PRODUCER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_008/producer.py"],
-      "timeout_seconds": 300,
-      "scope": "Regenerate the exact symmetric two-dimensional complete 198-monomial weight-five raw-jet affine-divergence exhaustion through coefficient degree two, including the retained degree-two maximal-minor witness."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-008-VERIFIER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_008/verify.py"],
-      "timeout_seconds": 300,
-      "scope": "Independently reconstruct the source-locked T3 cell, reverse the basis and grid order, and replay the symmetric two-dimensional affine-rank inconsistency certificates."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-008-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_008/validate.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate authority, symmetry completeness, basis and normalization locks, finite-grid alias provenance, final affine ranks, degree-two witness identity, nonclaims, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-009-PRODUCER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_009/producer.py"],
-      "timeout_seconds": 180,
-      "scope": "Regenerate the locked order-three recurrence baseline, nonvacuity evidence, moving-support certificate, and T3-009 source-normalized package."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-009-SEARCH",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_009/search.py"],
-      "timeout_seconds": 300,
-      "scope": "Replay the exact bounded symmetric raw-jet recurrence-divergence search for D, P5, and W through coefficient degree two."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-009-RESIDUAL-CANONICAL",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_009/residual_canonical.py"],
-      "timeout_seconds": 300,
-      "scope": "Regenerate the exact canonical n1, n2, n3, k1, and l1 weight differences for direct E_D and verify closure inside the protected 41-atom system."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-009-VERIFIER",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_009/verify.py"],
-      "timeout_seconds": 300,
-      "scope": "Independently replay the locked recurrence and canonical direct E_D maps against the T3-002 discrete target, including independent nested partial-fraction reconstruction."
-    },
-    {
-      "id": "OZ-RT-BZ-T3-009-VALIDATION",
-      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_009/validate.py"],
-      "timeout_seconds": 60,
-      "scope": "Validate recurrence authority, Q-row replay and regularized boundary, canonical direct E_D closure, symmetric one-orientation reduction, bounded negative frontier, and no-promotion boundary."
-    }
+    {"id":"WORKFLOW-COVERAGE-AUDIT-VALIDATION","command":["python3","ci/validate_workflow_coverage_audit.py"],"timeout_seconds":60,"scope":"Validate complete CI contract coverage, preserve explicit Pages release blockers, and prevent premature closure of umbrella issue #6."},
+    {"id":"WORKFLOW-COVERAGE-AUDIT-ADVERSARIAL","command":["python3","tests/test_workflow_coverage_audit.py"],"timeout_seconds":60,"scope":"Reject omitted workflow coverage areas, silently removed Pages blockers, missing audited controls, and premature umbrella closure."},
+    {"id":"CROSS-PILLAR-LANE-PACKAGE-VALIDATION","command":["python3","ci/validate_cross_pillar_lane_packages.py"],"timeout_seconds":60,"scope":"Validate the five reusable lane packages, including doctrine, schemas, toy fixtures, statuses, rejection policies, and MATHCERT routes."},
+    {"id":"CROSS-PILLAR-LANE-PACKAGE-ADVERSARIAL","command":["python3","tests/test_cross_pillar_lane_packages.py"],"timeout_seconds":60,"scope":"Reject missing doctrine, invalid fixtures, orphan packages, status drift, incomplete rejection policies, malformed schemas, and toy certification inflation."},
+    {"id":"SYMBOLIC-RESOURCE-BUDGET-VALIDATION","command":["python3","ci/validate_symbolic_resource_budgets.py"],"timeout_seconds":60,"scope":"Discover every marked expensive symbolic lane and fail closed on missing registration, budgets, execution state, or preserved failure evidence."},
+    {"id":"SYMBOLIC-RESOURCE-BUDGET-ADVERSARIAL","command":["python3","tests/test_symbolic_resource_budgets.py"],"timeout_seconds":60,"scope":"Reject omitted budgets, unregistered lanes, orphan registry records, suppressed failures, and completed runs without result artifacts."},
+    {"id":"MATHFORGE-PROVIDER-IMPORT-VALIDATION","command":["python3","ci/validate_mathforge_provider_imports.py"],"timeout_seconds":60,"scope":"Fail closed on missing active-domain provider coverage, provider commit drift, manifest identity drift, or malformed waivers."},
+    {"id":"MATHSOLVE-ROUTING-VALIDATION","command":["python3","ci/validate_mathsolve_routing.py"],"timeout_seconds":60,"scope":"Fail closed on missing Solve routes, provider or manifest drift, Programme-embedded future promotion, and missing MATHCERT handoffs."},
+    {"id":"BSD-WP01-REPLAY","command":["python3","campaigns/birch_swinnerton_dyer/WP01_FALSE_PROOF_ATLAS/replay.py"],"timeout_seconds":60,"scope":"Deterministic replay of the BSD false-proof atlas."},
+    {"id":"BSD-WP01-WP02-CROSS-VALIDATION","command":["python3","campaigns/birch_swinnerton_dyer/validate_wp01_wp02.py"],"timeout_seconds":60,"scope":"Cross-validate BSD fixtures, sources, theorem interfaces, and closed gates."},
+    {"id":"BSD-WP01-WP02-ADVERSARIAL","command":["python3","campaigns/birch_swinnerton_dyer/test_validate_wp01_wp02.py"],"timeout_seconds":60,"scope":"Reject BSD theorem-interface, dependency-debt, and gate-opening mutations."},
+    {"id":"BSD-WP03-SUBSTRATE-REPLAY","command":["python3","campaigns/birch_swinnerton_dyer/WP03_COMPUTATIONAL_FORMAL_SUBSTRATE/replay.py"],"timeout_seconds":60,"scope":"Replay BSD computational and formal substrate firewalls."},
+    {"id":"BSD-WP04-TARGET-REPLAY","command":["python3","campaigns/birch_swinnerton_dyer/WP04_RESTRICTED_TARGET_SCORECARD/replay.py"],"timeout_seconds":60,"scope":"Replay BSD restricted-target scorecard and claim firewall."},
+    {"id":"OZ-WP00-INTAKE-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/tools/validate_intake_manifest.py","campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/01_INTAKE_SOURCE_LOCK.yaml"],"timeout_seconds":60,"scope":"Validate the historical OZ-WP00 intake manifest without promoting its source-bound classifications."},
+    {"id":"OZ-NEXT-004-REVIEW-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/review/OZ_NEXT_004/tools/validate_review_package.py"],"timeout_seconds":60,"scope":"Validate the complete, independent and fail-closed OZ-NEXT-004 role-review package without promoting mathematical claims."},
+    {"id":"OZ-WP01-FALSE-PROOF-ATLAS-REPLAY","command":["python3","campaigns/odd_zeta/OZ_WP01_FALSE_PROOF_ATLAS/replay.py"],"timeout_seconds":60,"scope":"Replay the OZ false-proof atlas and reject normalization, scope, conditional-theorem, formalization, novelty, and irrationality inference inflation."},
+    {"id":"OZ-WP02-PROOF-OBLIGATION-LEDGER-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_WP02_THEOREM_OBLIGATION_LEDGER/validate.py"],"timeout_seconds":60,"scope":"Validate the OZ theorem statements, normalization locks, proof-obligation DAGs, false-proof controls, and ordered research gates without promoting an open claim."},
+    {"id":"OZ-RT-APERY-BROW-001-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_RT_APERY_BROW_001/validate.py"],"timeout_seconds":60,"scope":"Validate the independently audited single-digit Apéry B-row proof, exact source identities, manuscript-to-Lean correspondence, formalization boundary, and fail-closed promotion gate."},
+    {"id":"OZ-RT-LB-INSTANCE-001-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_RT_LB_INSTANCE_001/validate.py"],"timeout_seconds":60,"scope":"Validate the complete Franel H1-H5 discharge, exact explicit-sum statement, pinned source identities, recurrence-equivalence boundary, and fail-closed successor gate."},
+    {"id":"OZ-RT-BZ-T3-001-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_001/validate.py"],"timeout_seconds":60,"scope":"Validate the exact T3 target lock, finite-evidence boundary, source-characterized failed certificate classes, resource blocker, absent proof or counterexample certificates, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."},
+    {"id":"OZ-RT-BZ-T3-002-PRODUCER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_002/producer.py"],"timeout_seconds":180,"scope":"Regenerate the exact bounded first-order fibre rational-telescoper search over the locked T3 target for total degrees zero through nine."},
+    {"id":"OZ-RT-BZ-T3-002-VERIFIER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_002/verify.py"],"timeout_seconds":180,"scope":"Independently reconstruct the exact fibre search matrices, replay finite T3 sums, and verify the retained full-rank negative frontier through degree nine without invoking the producer solver."},
+    {"id":"OZ-RT-BZ-T3-002-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_002/validate.py"],"timeout_seconds":180,"scope":"Validate source and target locks, canonical search digest, independent verification, degree-nine bounded negative certificate-class result, nonclaim firewall, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."},
+    {"id":"OZ-SOURCE-REVISION-DELTA-002-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_SOURCE_REVISION_DELTA_002/validate.py"],"timeout_seconds":60,"scope":"Validate the exact seven-commit OZ source revision intake, archive and source identities, claim classifications, T1-top/T3 inference firewall, DEPTH non-promotion, partial replay boundaries, known Lean quarantines, and SOURCE_REVISION_PARTIALLY_ADMITTED_WITH_BLOCKERS disposition."},
+    {"id":"OZ-RT-SHARP12-DEPTH-001-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_RT_SHARP12_DEPTH_001/validate.py"],"timeout_seconds":60,"scope":"Validate the exact-tree DEPTH absence audit, exact upstream commit/tree and Sharp-12 source lock, complete unrecoverable producer/order ledger, reopening requirements, nonclaim firewall, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."},
+    {"id":"OZ-SOURCE-REVISION-DELTA-003-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_SOURCE_REVISION_DELTA_003/validate.py"],"timeout_seconds":60,"scope":"Validate the exact 20-commit OZ source delta, 44-file closed manifest, unchanged Sharp-12/z5la/Lean loci, seven unsatisfied DEPTH reopening requirements, source-claim classifications, and no-promotion boundary."},
+    {"id":"OZ-RT-SHARP12-T1TOP-001-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_RT_SHARP12_T1TOP_001/validate.py"],"timeout_seconds":60,"scope":"Validate the exact source-locked T1-top target, finite-evidence firewall, characterized missing unbounded certificate objects, representative non-substitution rule, reopening requirements, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."},
+    {"id":"PNP-WP01-REPLAY","command":["python3","campaigns/p_vs_np/WP01_FALSE_PROOF_ATLAS/replay.py"],"timeout_seconds":60,"scope":"Deterministic replay of the P-versus-NP false-proof atlas."},
+    {"id":"PNP-WP01-WP02-CROSS-VALIDATION","command":["python3","campaigns/p_vs_np/validate_wp01_wp02.py"],"timeout_seconds":60,"scope":"Cross-validate P-versus-NP fixtures, sources, theorem interfaces, frontier debt, and closed gates."},
+    {"id":"PNP-WP01-WP02-ADVERSARIAL","command":["python3","campaigns/p_vs_np/tests/test_validate_wp01_wp02.py"],"timeout_seconds":60,"scope":"Reject P-versus-NP identifier, source, terminal-state, barrier, frontier-debt, and gate-opening mutations."},
+    {"id":"RH-WP01-REPLAY","command":["python3","campaigns/riemann_hypothesis/WP01_FALSE_PROOF_ATLAS/replay.py"],"timeout_seconds":60,"scope":"Deterministic replay of the RH false-proof atlas."},
+    {"id":"RH-WP01-WP02-CROSS-VALIDATION","command":["python3","campaigns/riemann_hypothesis/validate_wp01_wp02.py"],"timeout_seconds":60,"scope":"Cross-validate RH fixtures, sources, theorem interfaces, debt, and closed gates."},
+    {"id":"YM-WP01-REPLAY","command":["python3","campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/replay.py"],"timeout_seconds":60,"scope":"Deterministic replay of the Yang-Mills false-proof atlas."},
+    {"id":"YM-WP01-WP02-CROSS-VALIDATION","command":["python3","campaigns/yang_mills/validate_wp01_wp02.py"],"timeout_seconds":60,"scope":"Cross-validate Yang-Mills fixtures, sources, theorem interfaces, dependency debt, unverified claims, and closed gates."},
+    {"id":"YM-WP01-WP02-ADVERSARIAL","command":["python3","campaigns/yang_mills/test_validate_wp01_wp02.py"],"timeout_seconds":60,"scope":"Reject Yang-Mills source, interface, audit-state, status, debt, and gate-opening mutations."},
+    {"id":"PC-WP03-HISTORY-REPLAY","command":["python3","campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/05_ADVERSARIAL_HISTORIES/validate_histories.py"],"timeout_seconds":60,"scope":"Replay all valid and malformed Poincare surgery histories."},
+    {"id":"PC-WP04-POLICY","command":["python3","ci/validate_pc_wp04_fixture.py","fixtures/formal/PC-WP04"],"timeout_seconds":60,"scope":"Validate the bounded PC-WP04 certificate policy."},
+    {"id":"PC-WP04-ADVERSARIAL","command":["python3","ci/test_pc_wp04_fixture.py"],"timeout_seconds":60,"scope":"Reject PC-WP04 certificate-policy mutations."},
+    {"id":"PC-WP05-ARCHIVE-POLICY","command":["python3","ci/validate_pc_wp05_archive.py"],"timeout_seconds":60,"scope":"Validate the qualified Poincare archival manifest and trust matrix."},
+    {"id":"PC-WP05-ADVERSARIAL","command":["python3","ci/test_pc_wp05_archive.py"],"timeout_seconds":60,"scope":"Reject PC-WP05 archival-policy mutations."},
+    {"id":"OZ-RT-BZ-T3-003-PRODUCER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_003/producer.py"],"timeout_seconds":180,"scope":"Regenerate the exact parameter-lift fixture and bounded undeformed-parent order-2-to-4 external-k-shift/l-difference search through a-degree 6 and q-numerator degree 8."},
+    {"id":"OZ-RT-BZ-T3-003-VERIFIER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_003/verify.py"],"timeout_seconds":180,"scope":"Independently reconstruct Pochhammer cumulants, nested auxiliary-sum letters, full locked T3 cells, and all 21 retained order-2-to-4 rank systems without invoking the producer."},
+    {"id":"OZ-RT-BZ-T3-003-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_003/validate.py"],"timeout_seconds":180,"scope":"Validate exact target/source locks, canonical higher-order search digest, creative-telescoping orientation, independent replay, nonclaims, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."},
+    {"id":"OZ-RT-BZ-T3-004-PRODUCER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_004/producer.py"],"timeout_seconds":180,"scope":"Regenerate the exact eta-dependent order-2 k-side U/ES auxiliary-t search through polynomial degree four with finite-boundary-clean l/t certificate bases."},
+    {"id":"OZ-RT-BZ-T3-004-VERIFIER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_004/verify.py"],"timeout_seconds":180,"scope":"Independently reconstruct the auxiliary parents, exact eta-dependent shift ratios, and the five retained block-rank systems using different component and monomial orderings."},
+    {"id":"OZ-RT-BZ-T3-004-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_004/validate.py"],"timeout_seconds":180,"scope":"Validate exact source and target locks, retained parameter/t dimensions, finite-boundary factors, canonical result digest, independent replay, coverage blockers, nonclaims, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."},
+    {"id":"OZ-RT-BZ-T3-005-PRODUCER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_005/producer.py"],"timeout_seconds":180,"scope":"Regenerate the exact mirror l-shift/k-s-divergence order-2 U/ES search and the complete linear raw weight-five jet coefficient map."},
+    {"id":"OZ-RT-BZ-T3-005-VERIFIER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_005/verify.py"],"timeout_seconds":180,"scope":"Independently replay the mirror block-rank frontier and verify the retained complete weight-five raw-jet map structure."},
+    {"id":"OZ-RT-BZ-T3-005-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_005/validate.py"],"timeout_seconds":180,"scope":"Validate exact authority locks, mirror bounded exhaustion, linear raw-jet extraction, two-orientation coupling, nonclaims, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."},
+    {"id":"OZ-RT-BZ-T3-006-PRODUCER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_006/producer.py"],"timeout_seconds":300,"scope":"Regenerate the exact scalar-envelope and complete 198-dimensional normalized weight-five raw-jet order-2 fibre search through certificate coefficient degree two."},
+    {"id":"OZ-RT-BZ-T3-006-VERIFIER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_006/verify.py"],"timeout_seconds":300,"scope":"Independently reconstruct the source-locked T3 target and replay alternate full-rank witnesses for the retained order-2 raw-jet search."},
+    {"id":"OZ-RT-BZ-T3-006-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_006/validate.py"],"timeout_seconds":60,"scope":"Validate exact authority locks, raw-jet basis and normalization boundary, canonical bounded rank result, nonclaims, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."},
+    {"id":"OZ-RT-BZ-T3-007-PRODUCER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_007/producer.py"],"timeout_seconds":300,"scope":"Regenerate the exact complete 198-dimensional normalized weight-five raw-jet fibre searches at external orders three and four through certificate coefficient degree two."},
+    {"id":"OZ-RT-BZ-T3-007-VERIFIER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_007/verify.py"],"timeout_seconds":300,"scope":"Independently reconstruct the source-locked T3 target and replay alternate full-rank witnesses for the retained order-three and order-four raw-jet searches."},
+    {"id":"OZ-RT-BZ-T3-007-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_007/validate.py"],"timeout_seconds":60,"scope":"Validate exact authority and order locks, raw-jet basis and normalization boundary, canonical bounded rank result, nonclaims, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."},
+    {"id":"OZ-RT-BZ-T3-008-PRODUCER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_008/producer.py"],"timeout_seconds":300,"scope":"Regenerate the exact symmetric two-dimensional complete 198-monomial weight-five raw-jet affine-divergence exhaustion through coefficient degree two, including the retained degree-two maximal-minor witness."},
+    {"id":"OZ-RT-BZ-T3-008-VERIFIER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_008/verify.py"],"timeout_seconds":300,"scope":"Independently reconstruct the source-locked T3 cell, reverse the basis and grid order, and replay the symmetric two-dimensional affine-rank inconsistency certificates."},
+    {"id":"OZ-RT-BZ-T3-008-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_008/validate.py"],"timeout_seconds":60,"scope":"Validate authority, symmetry completeness, basis and normalization locks, finite-grid alias provenance, final affine ranks, degree-two witness identity, nonclaims, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."},
+    {"id":"OZ-RT-BZ-T3-009-PRODUCER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_009/producer.py"],"timeout_seconds":180,"scope":"Regenerate the locked order-three recurrence baseline, nonvacuity evidence, moving-support certificate, and T3-009 source-normalized package."},
+    {"id":"OZ-RT-BZ-T3-009-SEARCH","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_009/search.py"],"timeout_seconds":300,"scope":"Replay the exact bounded symmetric raw-jet recurrence-divergence search for D, P5, and W through coefficient degree two."},
+    {"id":"OZ-RT-BZ-T3-009-RESIDUAL-CANONICAL","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_009/residual_canonical.py"],"timeout_seconds":300,"scope":"Regenerate the exact canonical n1, n2, n3, k1, and l1 weight differences for direct E_D and verify closure inside the protected 41-atom system."},
+    {"id":"OZ-RT-BZ-T3-009-DEFORMATION-SPAN","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_009/deformation_span.py"],"timeout_seconds":300,"scope":"Replay the exact small-parameter Gamma-deformation tangent-space analysis and fixed-Q-row obstruction without promoting T3."},
+    {"id":"OZ-RT-BZ-T3-009-LETTER-SPLIT","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_009/letter_split.py"],"timeout_seconds":300,"scope":"Replay the exact k-l symmetry quotient, harmonic weight blocks, and diagnostic defect matrix used only to structure the one-body certificate lane."},
+    {"id":"OZ-RT-BZ-T3-009-ONE-BODY-COEFFICIENT-PRODUCER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_009/one_body_coefficient_layer.py"],"timeout_seconds":300,"scope":"Regenerate the complete 122-row pole-free 22-atom one-body coefficient object after global Abel transfer, including protected moving-shell reciprocal semantics."},
+    {"id":"OZ-RT-BZ-T3-009-ONE-BODY-COEFFICIENT-VERIFIER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_009/one_body_coefficient_verify.py"],"timeout_seconds":300,"scope":"Independently reconstruct the full pole-free one-body coefficient object, source locks, shell-safe harmonic shifts, nested skeleton, Abel sign convention, and canonical digest."},
+    {"id":"OZ-RT-BZ-T3-009-VERIFIER","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_009/verify.py"],"timeout_seconds":300,"scope":"Independently replay the locked recurrence and canonical direct E_D maps against the T3-002 discrete target, including independent nested partial-fraction reconstruction."},
+    {"id":"OZ-RT-BZ-T3-009-VALIDATION","command":["python3","campaigns/odd_zeta/OZ_RT_BZ_T3_009/validate.py"],"timeout_seconds":60,"scope":"Validate recurrence authority, Q-row replay and regularized boundary, canonical direct E_D closure, symmetric one-orientation reduction, bounded negative frontier, and no-promotion boundary."}
   ],
   "exemptions": []
 }
