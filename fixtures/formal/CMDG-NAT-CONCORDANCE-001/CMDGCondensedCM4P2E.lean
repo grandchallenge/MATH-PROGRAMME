@@ -4,6 +4,7 @@ import Mathlib.Condensed.Discrete.Colimit
 import Mathlib.CategoryTheory.Functor.KanExtension.Basic
 import Mathlib.CategoryTheory.Functor.KanExtension.Pointwise
 import Mathlib.LinearAlgebra.Finsupp.Pi
+import Mathlib.Algebra.BigOperators.Pi
 
 /-!
 # CMDG CM4-P2-E comparison reconstruction
@@ -84,13 +85,12 @@ noncomputable def finiteFunctionDualEquiv (X : Type u) [Fintype X] :
       _ = φ (∑ x, h x • (Pi.single x (1 : R) : X → R)) := by
             rw [map_sum]
       _ = φ h := by
-            congr 1
-            funext y
-            simp
+            rw [← pi_eq_sum_univ' h]
   right_inv a := by
     classical
     funext x
     change (∑ y, (Pi.single x (1 : R) : X → R) y * a y) = a x
+    rw [Fintype.sum_eq_single x (fun y hy => by simp [Pi.single, hy])]
     simp
   map_add' φ ψ := by
     classical
