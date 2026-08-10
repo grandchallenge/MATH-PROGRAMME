@@ -4,7 +4,7 @@ import CMDGCondensedCM4P2ERankOneNaturalIso
 # CMDG CM4-P2-E finite comparison transport
 
 This auxiliary fixture begins the transport-only closure of E1 after certification of the
-rank-one internal-Hom natural isomorphism.  It first decomposes the discrete finite-function
+rank-one internal-Hom natural isomorphism. It first decomposes the discrete finite-function
 presheaf canonically as a finite family of copies of the coefficient presheaf.
 
 No finite measure/free comparison, right-Kan-extension claim, or P2-E global equivalence is
@@ -19,20 +19,20 @@ open CategoryTheory Opposite
 
 attribute [local instance] FintypeCat.fintype
 
-abbrev R := CMDG.CondensedCM4P2E.R.{u}
-abbrev PresheafModule := CMDG.CondensedCM4P2D.PresheafModule.{u}
+abbrev R := CMDG.CondensedCM4P2D.R.{u}
+abbrev PresheafModule := CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} R
 
 noncomputable abbrev coefficientPresheaf : PresheafModule :=
   CMDG.CondensedCM4P2D.coefficientPresheaf
 
-/-- The discrete presheaf attached to the ordinary finite function module `X → R`. -/
+/-- The discrete presheaf attached to the ordinary finite function module `X.obj → R`. -/
 noncomputable abbrev finiteFunctionPresheaf (X : FintypeCat.{u}) : PresheafModule :=
   (CondensedMod.LocallyConstant.functorToPresheaves R).obj
-    (ModuleCat.of R (X → R))
+    (ModuleCat.of R (X.obj → R))
 
 /-- A finite family of copies of the coefficient presheaf, written pointwise. -/
 noncomputable def finiteCoefficientFamilyPresheaf (X : FintypeCat.{u}) : PresheafModule where
-  obj S := ModuleCat.of R (X → LocallyConstant S.unop R)
+  obj S := ModuleCat.of R (X.obj → LocallyConstant S.unop R)
   map f := ModuleCat.ofHom
     { toFun := fun a x => coefficientPresheaf.map f (a x)
       map_add' := by
@@ -52,11 +52,11 @@ noncomputable def finiteCoefficientFamilyPresheaf (X : FintypeCat.{u}) : Preshea
     ext a x s
     rfl
 
-/-- For finite `X`, locally constant maps into `X → R` are canonically finite families of
+/-- For finite `X`, locally constant maps into `X.obj → R` are canonically finite families of
 locally constant `R`-valued maps. -/
 noncomputable def locallyConstantPiLinearEquiv
     (S : CompHaus.{u}) (X : FintypeCat.{u}) :
-    LocallyConstant S (X → R) ≃ₗ[R] (X → LocallyConstant S R) where
+    LocallyConstant S (X.obj → R) ≃ₗ[R] (X.obj → LocallyConstant S R) where
   toFun f := f.flip
   invFun f := LocallyConstant.unflip f
   left_inv f := LocallyConstant.unflip_flip f
@@ -72,7 +72,11 @@ noncomputable def locallyConstantPiLinearEquiv
 noncomputable def finiteFunctionPresheafFamilyIso (X : FintypeCat.{u}) :
     finiteFunctionPresheaf X ≅ finiteCoefficientFamilyPresheaf X :=
   NatIso.ofComponents
-    (fun S => (locallyConstantPiLinearEquiv S.unop X).toModuleIso)
+    (fun S => by
+      change
+        ModuleCat.of R (LocallyConstant S.unop (X.obj → R)) ≅
+          ModuleCat.of R (X.obj → LocallyConstant S.unop R)
+      exact (locallyConstantPiLinearEquiv S.unop X).toModuleIso)
     (by
       intro S T f
       apply ModuleCat.hom_ext
@@ -84,9 +88,16 @@ locally-constant/discrete presheaf functor. -/
 noncomputable def finiteDiscreteContinuousPresheafIso (X : FintypeCat.{u}) :
     CMDG.CondensedCM4P2D.discreteContinuousPresheaf.obj
         (op (FintypeCat.toProfinite.obj X)) ≅
-      finiteFunctionPresheaf X :=
-  (CondensedMod.LocallyConstant.functorToPresheaves R).mapIso
-    (CMDG.CondensedCM4P2E.finiteContinuousFunctionsIso X)
+      finiteFunctionPresheaf X := by
+  change
+    (CondensedMod.LocallyConstant.functorToPresheaves R).obj
+        (CMDG.CondensedCM4P2D.continuousFunctions.obj
+          (op (FintypeCat.toProfinite.obj X))) ≅
+      (CondensedMod.LocallyConstant.functorToPresheaves R).obj
+        (ModuleCat.of R (X.obj → R))
+  exact
+    (CondensedMod.LocallyConstant.functorToPresheaves R).mapIso
+      (CMDG.CondensedCM4P2E.finiteContinuousFunctionsIso X)
 
 /-- Canonical source decomposition for the finite E1 transport. -/
 noncomputable def finiteDiscreteContinuousPresheafFamilyIso (X : FintypeCat.{u}) :
