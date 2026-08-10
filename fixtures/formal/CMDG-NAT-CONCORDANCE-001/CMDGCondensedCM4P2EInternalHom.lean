@@ -7,8 +7,8 @@ import CMDGCondensedCM4P2EAlgebraic
 This auxiliary fixture isolates the sole remaining E1 construction: comparison of the protected
 P2-D sheaf-level internal Hom with the discrete algebraic dual on finite modules.
 
-The first checkpoint freezes only the rank-one target and the identity-arrow projection from the
-enriched end. It does not assert the rank-one isomorphism or the final finite comparison.
+The current checkpoint develops only the rank-one direction from the internal Hom to the
+coefficient presheaf. It does not assert the rank-one isomorphism or the final finite comparison.
 -/
 
 namespace CMDG.CondensedCM4P2E.InternalHom
@@ -39,6 +39,9 @@ lemma rankOneInternalHom_eq_functorEnrichedHom :
 /-- The rank-one theorem target. This is a type alias only; no inhabitant is asserted here. -/
 abbrev RankOneTarget := rankOneInternalHom ≅ coefficientPresheaf
 
+noncomputable abbrev coefficientAt (X : CompHaus.{u}) : ModuleCat.{u + 1} R :=
+  coefficientPresheaf.obj (op X)
+
 /-- At a test object `X`, project the enriched end defining the internal Hom to the identity object
 of `Under (op X)`. This is the canonical observation point for the evaluation-at-one inverse. -/
 noncomputable def rankOneIdentityProjection (X : CompHaus.{u}) :=
@@ -48,10 +51,33 @@ noncomputable def rankOneIdentityProjection (X : CompHaus.{u}) :=
     (Under.forget (op X) ⋙ coefficientPresheaf)
     (Under.mk (𝟙 (op X)))
 
+/-- Evaluation of a linear endomorphism of `LocallyConstant(X,R)` at the canonical constant
+section `1`. -/
+noncomputable def rankOneEndomorphismEvalOne (X : CompHaus.{u}) :
+    (coefficientAt X ⟶[ModuleCat.{u + 1} R] coefficientAt X) ⟶ coefficientAt X :=
+  ModuleCat.ofHom
+    { toFun := fun φ => φ (1 : coefficientAt X)
+      map_add' := by
+        intro φ ψ
+        rfl
+      map_smul' := by
+        intro c φ
+        rfl }
+
+/-- Objectwise candidate for the inverse direction of the rank-one comparison: project the
+enriched end at the identity arrow, then evaluate the resulting endomorphism at `1`. -/
+noncomputable def rankOneEvaluationApp (X : CompHaus.{u}) :
+    rankOneInternalHom.obj (op X) ⟶ coefficientAt X := by
+  rw [rankOneInternalHom_eq_functorEnrichedHom]
+  exact rankOneIdentityProjection X ≫ rankOneEndomorphismEvalOne X
+
 #check rankOneInternalHom
 #check rankOneInternalHom_eq_functorEnrichedHom
 #check RankOneTarget
+#check coefficientAt
 #check rankOneIdentityProjection
+#check rankOneEndomorphismEvalOne
+#check rankOneEvaluationApp
 #check CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
 #check CategoryTheory.Presheaf.functorEnrichedHomCoyonedaObjEquiv
 #check CategoryTheory.presheafHom
@@ -60,5 +86,7 @@ noncomputable def rankOneIdentityProjection (X : CompHaus.{u}) :=
 
 #print axioms rankOneInternalHom_eq_functorEnrichedHom
 #print axioms rankOneIdentityProjection
+#print axioms rankOneEndomorphismEvalOne
+#print axioms rankOneEvaluationApp
 
 end CMDG.CondensedCM4P2E.InternalHom
