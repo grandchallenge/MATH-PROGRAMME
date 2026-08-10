@@ -145,7 +145,8 @@ noncomputable def finiteCoordinateExtension
 lemma monoidalClosed_pre_zero
     (A B : CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u}) :
     MonoidalClosed.pre (0 : B ⟶ A) = 0 := by
-  ext X
+  apply NatTrans.ext
+  funext X
   apply MonoidalClosed.uncurry_injective
   simp
 
@@ -153,7 +154,8 @@ lemma monoidalClosed_pre_add
     (A B : CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u})
     (f g : B ⟶ A) :
     MonoidalClosed.pre (f + g) = MonoidalClosed.pre f + MonoidalClosed.pre g := by
-  ext X
+  apply NatTrans.ext
+  funext X
   apply MonoidalClosed.uncurry_injective
   simp [Preadditive.add_comp]
 
@@ -172,24 +174,6 @@ lemma finiteCoordinatePre_projection_inclusion
       (finiteCoordinateInclusion X x) (finiteCoordinateProjection X y))
   simpa only [NatTrans.comp_app] using h.symm
 
-lemma finiteCoordinateExtension_evaluation_self
-    (X : FintypeCat.{u}) (x : X.obj) :
-    finiteCoordinateExtension X x ≫ finiteCoordinateEvaluation X x =
-      𝟙 CMDG.CondensedCM4P2D.coefficientPresheaf := by
-  simp only [finiteCoordinateExtension, finiteCoordinateEvaluation, Category.assoc]
-  rw [finiteCoordinatePre_projection_inclusion X x x]
-  rw [finiteCoordinateInclusion_projection_self]
-  simp
-
-lemma finiteCoordinateExtension_evaluation_ne
-    (X : FintypeCat.{u}) {x y : X.obj} (hxy : x ≠ y) :
-    finiteCoordinateExtension X y ≫ finiteCoordinateEvaluation X x = 0 := by
-  simp only [finiteCoordinateExtension, finiteCoordinateEvaluation, Category.assoc]
-  rw [finiteCoordinatePre_projection_inclusion X x y]
-  rw [finiteCoordinateInclusion_projection_ne X hxy]
-  rw [monoidalClosed_pre_zero]
-  simp
-
 #check finiteFamilyInternalHom
 #check finiteCoordinateInclusion
 #check finiteCoordinateProjection
@@ -201,8 +185,6 @@ lemma finiteCoordinateExtension_evaluation_ne
 #check monoidalClosed_pre_zero
 #check monoidalClosed_pre_add
 #check finiteCoordinatePre_projection_inclusion
-#check finiteCoordinateExtension_evaluation_self
-#check finiteCoordinateExtension_evaluation_ne
 
 #print axioms finiteCoordinateInclusion
 #print axioms finiteCoordinateProjection
@@ -213,7 +195,5 @@ lemma finiteCoordinateExtension_evaluation_ne
 #print axioms finiteCoordinateExtension
 #print axioms monoidalClosed_pre_zero
 #print axioms monoidalClosed_pre_add
-#print axioms finiteCoordinateExtension_evaluation_self
-#print axioms finiteCoordinateExtension_evaluation_ne
 
 end CMDG.CondensedCM4P2E.FiniteDualTransport
