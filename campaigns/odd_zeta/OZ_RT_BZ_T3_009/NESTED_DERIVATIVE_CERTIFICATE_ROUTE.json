@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "operation": "OZ-RT-BZ-T3-009",
+  "route": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001",
+  "subroute": "QROW_PRODUCT_RULE_REDUCTION_001",
+  "parent": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/NESTED_SKELETON_REDUCTION.json",
+  "status": "INTERIOR_DERIVATIVE_CERTIFICATES_DERIVED_SHELL_RECONCILIATION_REQUIRED",
+  "interior_gamma_extension": {
+    "domain": "0<=k,l<=n, interpreted through the Gamma/digamma extension before restricting to integer lattice points",
+    "Lk_identity": "Lk=-partial_k log(T)",
+    "Ll_identity": "Ll=-partial_l log(T)",
+    "cross_log_identity": "partial_k partial_l log(T)=-C2",
+    "A_identity": "A:=Lk*Ll-C2=(partial_k partial_l T)/T",
+    "derivation": "Differentiate the Gamma-product logarithm of T. On the interior, psi(m+1)=H_m-gamma and psi1(m+1)=zeta(2)-H_m^(2); the Euler/zeta constants cancel in the displayed differences."
+  },
+  "nested_weight_decomposition": {
+    "nested_Dweight": "r22_nested + Lk*N12k + Ll*N12l + A*N11",
+    "N11": "U(k,l;1,2)+U(l,k;1,2)",
+    "N12k": "2*ES(l;1,3)-U(k,l;2,2)",
+    "N12l": "2*ES(k;1,3)-U(l,k;2,2)",
+    "consequence": "The nested-coordinate part of E_D is E[A]*N11 + E[Lk]*N12k + E[Ll]*N12l; all increments of N11/N12k/N12l are one-body."
+  },
+  "differentiated_qrow_certificates": {
+    "base": "L_BZ[T]=Delta_k(Rk)+Delta_l(Rl), with Rk=Reg[rho*T], Rl=Reg[sigma*T] away from shell specialization",
+    "for_Lk": {
+      "identity": "E[Lk]=Delta_k(Jk_Lk)+Delta_l(Jl_Lk)",
+      "Jk_Lk": "-partial_k(rho*T)-(rho*T)*Lk",
+      "Jl_Lk": "-partial_k(sigma*T)-(sigma*T)*Lk",
+      "generic_field_simplification": "J*_Lk=-T*partial_k(certificate_coefficient)"
+    },
+    "for_Ll": {
+      "identity": "E[Ll]=Delta_k(Jk_Ll)+Delta_l(Jl_Ll)",
+      "Jk_Ll": "-partial_l(rho*T)-(rho*T)*Ll",
+      "Jl_Ll": "-partial_l(sigma*T)-(sigma*T)*Ll",
+      "generic_field_simplification": "J*_Ll=-T*partial_l(certificate_coefficient)"
+    },
+    "for_A": {
+      "identity": "E[A]=Delta_k(Jk_A)+Delta_l(Jl_A)",
+      "Jk_A": "partial_k partial_l(rho*T)-(rho*T)*A",
+      "Jl_A": "partial_k partial_l(sigma*T)-(sigma*T)*A",
+      "generic_field_simplification": "J*_A=T*(partial_k partial_l certificate - Ll*partial_k certificate - Lk*partial_l certificate)"
+    },
+    "reason": "L_BZ has coefficients depending only on n, and continuous partial derivatives commute with the k/l shift differences on the interior Gamma extension."
+  },
+  "abel_transfer": {
+    "principle": "For each nested basis element N and coefficient certificate E[f]=Delta_k Jk+Delta_l Jl, summation by parts transfers the differences from J onto N. Since every Delta_k/Delta_l of N11, N12k, and N12l is one-body, the interior nested sector is reducible to the one-body sector plus boundary/shell terms.",
+    "example_differences": {
+      "Delta_k_N12k": "-H_(k+l+1)^(2)/(k+1)^2",
+      "Delta_l_N12l": "-H_(k+l+1)^(2)/(l+1)^2",
+      "Delta_k_N11": "H_(k+l+1)^(2)/(k+1) + H_l/(k+1)^2 - (H_(k+l+1)-H_(k+1))/(k+1)^2 - (H_(k+l+1)^(2)-H_(k+1)^(2))/(k+1)",
+      "Delta_l_N11": "k<->l mirror of Delta_k_N11"
+    }
+  },
+  "shell_blocker": {
+    "why_interior_is_not_global": "The protected discrete target uses finite H(m<=0)=0 values on shifted support shells, whereas Lk/Ll as coordinate derivatives of the Gamma extension have poles there. The differentiated certificate therefore cannot be substituted on shell points without a separate reconciliation proof.",
+    "undifferentiated_symmetric_certificate_shell_order": 2,
+    "exact_representative_derivative_witness": {
+      "object": "partial_k rho_sym at k=n+1+x",
+      "denominator_divisible_by_x_cubed": true,
+      "denominator_divisible_by_x_fourth": false,
+      "numerator_nonzero_at_x_zero": true,
+      "conclusion": "partial_k rho_sym has an exact cubic pole at the first k-shell"
+    },
+    "kernel_zero_order": 2,
+    "consequence": "The generic-field simplification T*partial_k(rho_sym) can retain a simple shell pole. No differentiated-flux boundary claim is admitted until the combined regularized discrete shell values are constructed explicitly."
+  },
+  "next_exact_obligation": "Construct shell-corrected differentiated Q-row fluxes for offsets 1,2,3 in both orientations, prove their finite discrete values and outer-boundary cancellation, then Abel-transfer N11/N12k/N12l to a purely one-body residual. If that closes, only the one-body residual remains for final telescoping/recurrence certification.",
+  "nested_sector_globally_eliminated": false,
+  "residual_sum_zero_proved": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+  "terminal": "NESTED_INTERIOR_CERTIFICATE_EXACT_SHELL_CORRECTION_OPEN"
+}
