@@ -20,7 +20,8 @@ lemma finiteCoordinatePre_projection_inclusion_self
       𝟙 CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHom := by
   rw [finiteCoordinatePre_projection_inclusion]
   rw [finiteCoordinateInclusion_projection_self]
-  simp
+  unfold CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHom
+  rfl
 
 lemma finiteCoordinatePre_projection_inclusion_ne
     (X : FintypeCat.{u}) {x y : X.obj} (hxy : x ≠ y) :
