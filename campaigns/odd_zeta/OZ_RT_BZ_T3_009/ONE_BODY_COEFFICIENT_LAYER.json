@@ -1,10 +1,10 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "operation": "OZ-RT-BZ-T3-009",
   "execution_boundary": "FULL_POLE_FREE_ONE_BODY_RESIDUAL_COEFFICIENT_LAYER_001",
   "route": "DIRECT_T3_DISCRETE_RESIDUAL_CERT_001",
   "subroute": "STRUCTURED_ONE_BODY_LETTER_SPLIT_HOLONOMIC_001",
-  "status": "FULL_POLE_FREE_ONE_BODY_RESIDUAL_COEFFICIENT_LAYER_CONSTRUCTED",
+  "status": "FULL_POLE_FREE_ONE_BODY_RESIDUAL_COEFFICIENT_LAYER_INDEPENDENTLY_REPLAYED",
   "source_locks": {
     "residual_canonical_result_blob": "3bce6acbc601e2b6ba6f880b8a78854e242e2f88",
     "one_body_structure_result_blob": "9b94915d18016d3d903d04217eadb7b10e69c7dd",
@@ -13,6 +13,7 @@
   },
   "coefficient_object": {
     "producer": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/one_body_coefficient_layer.py",
+    "independent_verifier": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/one_body_coefficient_verify.py",
     "representation": "Sparse 22-atom harmonic monomials with coefficients in finite Q-linear combinations of ordinary affine Laurent factors and protected positive reciprocals, tensored with an exact 11-element regularized Q-row scalar basis.",
     "scalar_basis": {
       "TN1": "c1(n)*T(n+1,k,l)",
@@ -99,6 +100,23 @@
     "sha256": "90d067ae59790fab8648d006635c14950359b66eb8b57361e61d5b47b2b3af40",
     "rows_retained_by": "Deterministic producer output; the digest binds the complete canonical 122-row sparse coefficient object without duplicating the rows in this summary artifact."
   },
+  "independent_replay": {
+    "status": "INDEPENDENT_FULL_POLE_FREE_ONE_BODY_COEFFICIENT_REPLAY_COMPLETE",
+    "monomials": 122,
+    "atoms": 22,
+    "max_atomic_arity": 3,
+    "scalar_basis_size": 11,
+    "sha256": "90d067ae59790fab8648d006635c14950359b66eb8b57361e61d5b47b2b3af40",
+    "protected_factor_count": 8,
+    "exact_atom_shift_checks": 38950,
+    "exact_full_target_shift_checks": 950,
+    "checks_touching_moving_shell": 800,
+    "nested_skeleton_channels_verified": 5,
+    "abel_exact_checks": 9,
+    "full_rows_reconstructed_independently": true,
+    "producer_module_imported": false,
+    "finite_sampling_used_as_sum_proof": false
+  },
   "sum_identity": {
     "direct_decomposition": "E_D=E_D_one+E[A]*N11+E[Lk]*N12k+E[Ll]*N12l",
     "abel_rule": "sum N*Delta_i(J_i)=-sum J_i(shifted)*Delta_i(N), with the already-certified zero regularized finite-box boundary",
@@ -106,9 +124,9 @@
     "difference_from_direct_cell_residual": "a sum of the three certified regularized divergences Delta_k(Jk_f*N_f)+Delta_l(Jl_f*N_f), f in {A,Lk,Ll}"
   },
   "pole_semantics": "Q-row F/J scalars are regularized before lattice specialization. B_k/B_l harmonic shifts use protected positive reciprocals, so no coefficient evaluates infinity on the common n+3 finite box.",
-  "independent_replay_status": "PENDING_EXACT_RECONSTRUCTION",
-  "holonomic_search_admitted": false,
-  "next_exact_obligation": "Independently reconstruct the complete pole-free coefficient layer, recover the same 122/22/3/11 profile and SHA256 digest, replay Abel sign/shift and source locks, then admit the symmetry-reduced shift-channel x harmonic-block certificate calculation.",
+  "independent_replay_status": "INDEPENDENT_FULL_POLE_FREE_ONE_BODY_COEFFICIENT_REPLAY_COMPLETE",
+  "holonomic_search_admitted": true,
+  "next_exact_obligation": "Execute SYMMETRY_REDUCED_CHANNEL_HARMONIC_BLOCK_WITH_SHELL_STRATA_001: split only the eight protected positive reciprocals into interior-rational and finite moving-shell strata, preserve the n1/n2/n3/k1 channel decomposition with l1 by k<->l mirror, use the 5+4+2+2 harmonic blocks for bounded correction-flux viability probes, and recombine before any final n-holonomic elimination.",
   "finite_sampling_used_as_sum_proof": false,
   "residual_sum_zero_proved": false,
   "proof_effect": "NONE",
