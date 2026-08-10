@@ -210,6 +210,12 @@ lemma rankOneMultiplication_identity_evalOne (X : CompHaus.{u}) :
   rw [rankOneMultiplicationToEndomorphism_apply]
   simp [rankOneSectionMul]
 
+lemma rankOneMultiplication_evaluation (X : CompHaus.{u}) :
+    rankOneMultiplicationApp X ≫ rankOneEvaluationApp X = 𝟙 (coefficientAt X) := by
+  unfold rankOneEvaluationApp
+  rw [← Category.assoc, rankOneMultiplicationApp_projection]
+  exact rankOneMultiplication_identity_evalOne X
+
 #check rankOneInternalHom
 #check rankOneInternalHom_eq_functorEnrichedHom
 #check RankOneTarget
@@ -227,6 +233,7 @@ lemma rankOneMultiplication_identity_evalOne (X : CompHaus.{u}) :
 #check rankOneMultiplicationApp
 #check rankOneMultiplicationApp_projection
 #check rankOneMultiplication_identity_evalOne
+#check rankOneMultiplication_evaluation
 #check Limits.end_.lift
 #check Limits.end_.lift_π
 
@@ -244,5 +251,6 @@ lemma rankOneMultiplication_identity_evalOne (X : CompHaus.{u}) :
 #print axioms rankOneMultiplicationApp
 #print axioms rankOneMultiplicationApp_projection
 #print axioms rankOneMultiplication_identity_evalOne
+#print axioms rankOneMultiplication_evaluation
 
 end CMDG.CondensedCM4P2E.InternalHom
