@@ -184,9 +184,19 @@ noncomputable def discreteTopCondensedIso :
       (fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 0 2).mp)).symm ≪≫
     CondensedSet.LocallyConstant.iso
 
+/-- Finite discrete topological realization followed by the condensed-set comparison is canonically
+ the discrete condensed set on the ULifted underlying finite type. -/
+noncomputable def finiteDiscreteCondensedIso :
+    (FintypeCat.toProfinite ⋙ Profinite.toTopCat ⋙ TopCat.uliftFunctor.{u + 1, u} ⋙
+        topCatToCondensedSet) ≅
+      (finiteUnderlyingULift ⋙ Condensed.discrete (Type (u + 1))) :=
+  isoWhiskerRight finiteDiscreteULiftIso topCatToCondensedSet ≪≫
+    isoWhiskerLeft finiteUnderlyingULift discreteTopCondensedIso
+
 #check finiteUnderlyingULift
 #check finiteDiscreteULiftIso
 #check discreteTopCondensedIso
+#check finiteDiscreteCondensedIso
 #check TopCat.uliftFunctor
 #check TopCat.uliftFunctorObjHomeo
 #check CompHausLike.LocallyConstant.functorIso
@@ -213,5 +223,6 @@ noncomputable def discreteTopCondensedIso :
 #print axioms discreteFreeIso
 #print axioms finiteDiscreteULiftIso
 #print axioms discreteTopCondensedIso
+#print axioms finiteDiscreteCondensedIso
 
 end CMDG.CondensedCM4P2E
