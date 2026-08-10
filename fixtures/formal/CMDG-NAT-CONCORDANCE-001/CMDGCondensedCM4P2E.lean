@@ -165,9 +165,11 @@ noncomputable def finiteDiscreteULiftIso :
     FintypeCat.toProfinite ⋙ Profinite.toTopCat ⋙ TopCat.uliftFunctor.{u + 1, u} ≅
       finiteUnderlyingULift ⋙ TopCat.discrete :=
   NatIso.ofComponents
-    (fun X => TopCat.isoOfHomeo
-      ((TopCat.uliftFunctorObjHomeo (TopCat.discrete.obj X)).symm.trans
-        (Homeomorph.ofDiscrete Equiv.ulift.symm)))
+    (fun X => by
+      letI : DiscreteTopology ↑((finiteUnderlyingULift ⋙ TopCat.discrete).obj X) := ⟨rfl⟩
+      exact TopCat.isoOfHomeo
+        ((TopCat.uliftFunctorObjHomeo (TopCat.discrete.obj X)).symm.trans
+          (Homeomorph.ofDiscrete Equiv.ulift.symm)))
     (by
       intro X Y f
       ext x
