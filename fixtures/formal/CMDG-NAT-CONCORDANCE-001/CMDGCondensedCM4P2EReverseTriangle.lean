@@ -23,19 +23,6 @@ lemma rankOneEvaluation_multiplication (X : CompHaus.{u}) :
       𝟙 (rankOneInternalHom.obj (op X)) := by
   apply end_.hom_ext
   intro k
-  change
-    (rankOneEvaluationApp X ≫ rankOneMultiplicationApp X) ≫
-        CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
-          (ModuleCat.{u + 1} R)
-          (Under.forget (op X) ⋙ coefficientPresheaf)
-          (Under.forget (op X) ⋙ coefficientPresheaf)
-          k =
-      (𝟙 (rankOneInternalHom.obj (op X))) ≫
-        CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
-          (ModuleCat.{u + 1} R)
-          (Under.forget (op X) ⋙ coefficientPresheaf)
-          (Under.forget (op X) ⋙ coefficientPresheaf)
-          k
   rw [Category.assoc, rankOneMultiplicationApp_projection, Category.id_comp]
   apply ModuleCat.hom_injective
   ext φ
