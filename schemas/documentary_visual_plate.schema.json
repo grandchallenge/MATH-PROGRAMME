@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/documentary_visual_plate.schema.json",
+  "title": "Documentary Visual Plate Contract",
+  "description": "Machine-readable visual-semantic, provenance, accessibility, and authority-boundary contract. Schema validity does not certify mathematical visual fidelity.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "plate_id",
+    "documentary_id",
+    "title",
+    "representation_class",
+    "mathematical_role",
+    "learning_objective",
+    "literal_semantics",
+    "nonliteral_semantics",
+    "source",
+    "renderer",
+    "derivatives",
+    "accessibility",
+    "claim_boundary",
+    "audit_disposition"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "minLength": 1},
+    "plate_id": {"type": "string", "pattern": "^[A-Z0-9][A-Z0-9._-]*$"},
+    "documentary_id": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "representation_class": {
+      "type": "string",
+      "enum": ["exact", "data-derived", "simulation-derived", "schematic", "metaphorical", "historical"]
+    },
+    "mathematical_role": {"type": "string", "minLength": 1},
+    "learning_objective": {"type": "string", "minLength": 1},
+    "literal_semantics": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "nonliteral_semantics": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "reference"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["exact-object", "dataset", "simulation", "programme-record", "external-source", "historical-witness", "conceptual-specification"]
+        },
+        "reference": {"type": "string", "minLength": 1},
+        "digest": {"type": ["string", "null"]},
+        "notes": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "renderer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "reproducible"],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["manual-vector", "programmatic-vector", "programmatic-raster", "three-dimensional-render", "simulation-render", "facsimile", "photographic", "composed", "interactive"]
+        },
+        "generator_ref": {"type": ["string", "null"]},
+        "version_or_environment": {"type": ["string", "null"]},
+        "parameters_ref": {"type": ["string", "null"]},
+        "reproducible": {"type": "boolean"},
+        "reproducibility_notes": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "derivatives": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["format", "path", "role"],
+        "properties": {
+          "format": {"type": "string", "enum": ["svg", "png", "webp", "jpg", "pdf", "video", "interactive"]},
+          "path": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1},
+          "digest": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "accessibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alt_text", "long_description"],
+      "properties": {
+        "alt_text": {"type": "string", "minLength": 1},
+        "long_description": {"type": "string", "minLength": 1},
+        "static_fallback": {"type": ["string", "null"]}
+      }
+    },
+    "claim_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["visual_is_evidence", "strongest_visual_claim", "not_claimed"],
+      "properties": {
+        "visual_is_evidence": {"const": false},
+        "strongest_visual_claim": {"type": "string", "minLength": 1},
+        "not_claimed": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "mathematical_authority_ref": {"type": ["string", "null"]}
+      }
+    },
+    "audit_disposition": {"type": "string", "enum": ["KEEP", "REDRAW", "REPLACE", "RETIRE"]},
+    "predecessor": {"type": ["string", "null"]},
+    "supersession_reason": {"type": ["string", "null"]},
+    "independent_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evidence_refs"],
+      "properties": {
+        "status": {"type": "string", "enum": ["pending", "reviewed", "blocked"]},
+        "evidence_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      }
+    }
+  }
+}
