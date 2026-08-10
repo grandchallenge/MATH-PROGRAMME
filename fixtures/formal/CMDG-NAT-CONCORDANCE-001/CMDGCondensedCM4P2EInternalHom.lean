@@ -75,6 +75,14 @@ noncomputable def rankOneSectionMul
   let h' : LocallyConstant Y R := h
   exact LinearMap.mul R (LocallyConstant Y R) a' h'
 
+/-- Pullback along a morphism in the slice carries the coefficient pulled back from the base to the
+same coefficient section pulled back along the target leg. -/
+lemma coefficientPullback_triangle
+    (X : CompHaus.{u}) {i j : Under (op X)} (f : i ⟶ j) :
+    coefficientPresheaf.map i.hom ≫ coefficientPresheaf.map f.right =
+      coefficientPresheaf.map j.hom := by
+  rw [← coefficientPresheaf.map_comp, Under.w f]
+
 /-- Multiplication by a section pulled back from the base of a slice object, packaged directly in
 the categorical Hom carrier underlying the internal Hom. This uses the ambient `R`-linear category
 structure and therefore does not introduce a second scalar-action requirement on the coefficient
@@ -107,6 +115,7 @@ noncomputable def rankOneMultiplicationToEndomorphism
 #check rankOneEndomorphismEvalOne
 #check rankOneEvaluationApp
 #check rankOneSectionMul
+#check coefficientPullback_triangle
 #check rankOneMultiplicationToEndomorphism
 #check LinearMap.mul
 #check ModuleCat.homLinearEquiv
@@ -125,6 +134,7 @@ noncomputable def rankOneMultiplicationToEndomorphism
 #print axioms rankOneEndomorphismEvalOne
 #print axioms rankOneEvaluationApp
 #print axioms rankOneSectionMul
+#print axioms coefficientPullback_triangle
 #print axioms rankOneMultiplicationToEndomorphism
 
 end CMDG.CondensedCM4P2E.InternalHom
