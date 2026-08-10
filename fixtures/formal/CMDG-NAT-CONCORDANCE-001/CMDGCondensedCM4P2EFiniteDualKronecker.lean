@@ -20,6 +20,7 @@ lemma finiteCoordinatePre_projection_inclusion_self
       𝟙 CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHom := by
   rw [finiteCoordinatePre_projection_inclusion]
   rw [finiteCoordinateInclusion_projection_self]
+  rw [MonoidalClosed.pre_id]
   unfold CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHom
   rfl
 
