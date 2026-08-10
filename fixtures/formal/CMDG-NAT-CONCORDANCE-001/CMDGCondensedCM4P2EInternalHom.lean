@@ -86,6 +86,9 @@ noncomputable def rankOneMultiplicationToEndomorphism
   let A := LocallyConstant Y R
   let pull : coefficientAt X →ₗ[R] A := (coefficientPresheaf.map k.hom).hom
   let mul : A →ₗ[R] A →ₗ[R] A := LinearMap.mul R A
+  letI : SMulCommClass R R (coefficientPresheaf.obj k.right) :=
+    ⟨fun r s x => by
+      rw [smul_smul, smul_smul, mul_comm r s]⟩
   let pack : (A →ₗ[R] A) →ₗ[R]
       (coefficientPresheaf.obj k.right ⟶ coefficientPresheaf.obj k.right) :=
     (ModuleCat.homLinearEquiv
