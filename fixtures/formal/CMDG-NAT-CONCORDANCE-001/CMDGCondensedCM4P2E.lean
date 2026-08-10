@@ -169,74 +169,6 @@ noncomputable def finiteContinuousFunctionsNatIso :
       ext h y
       rfl)
 
-/-- Pullback of finite functions along a map of finite sets. -/
-noncomputable def finiteFunctionPullback {X Y : FintypeCat.{u}} (f : X ⟶ Y) :
-    (Y → R.{u}) →ₗ[R.{u}] (X → R.{u}) where
-  toFun h := fun x => h (f x)
-  map_add' h k := by
-    funext x
-    rfl
-  map_smul' c h := by
-    funext x
-    rfl
-
-/-- The algebraic dual of finite function modules, now with its canonical covariant functoriality. -/
-noncomputable def finiteFunctionDualModule :
-    FintypeCat.{u} ⥤ ModuleCat.{u + 1} R.{u} where
-  obj X := ModuleCat.of R.{u} ((X → R.{u}) →ₗ[R.{u}] R.{u})
-  map f := ModuleCat.ofHom
-    { toFun := fun φ => φ.comp (finiteFunctionPullback f)
-      map_add' := by
-        intro φ ψ
-        ext h
-        rfl
-      map_smul' := by
-        intro c φ
-        ext h
-        rfl }
-  map_id X := by
-    apply ModuleCat.hom_ext
-    ext φ h
-    rfl
-  map_comp f g := by
-    apply ModuleCat.hom_ext
-    ext φ h
-    rfl
-
-/-- The small-universe finite free module functor, with maps given by pushforward of generators. -/
-noncomputable def finiteSmallFreeModule :
-    FintypeCat.{u} ⥤ ModuleCat.{u + 1} R.{u} where
-  obj X := ModuleCat.of R.{u} (X →₀ R.{u})
-  map f := ModuleCat.ofHom (Finsupp.lmapDomain R.{u} R.{u} (f : X → Y))
-  map_id X := by
-    apply ModuleCat.hom_ext
-    ext a x
-    simp [Finsupp.lmapDomain_apply]
-  map_comp f g := by
-    apply ModuleCat.hom_ext
-    ext a z
-    simp [Finsupp.lmapDomain_apply, Finsupp.mapDomain_comp]
-
-/-- The inverse algebraic duality map is natural on finite free generators. -/
-noncomputable def finiteSmallFreeDualNatIso :
-    finiteSmallFreeModule ≅ finiteFunctionDualModule :=
-  NatIso.ofComponents
-    (fun X => (finiteFunctionDualFreeEquiv X).symm.toModuleIso)
-    (by
-      intro X Y f
-      apply ModuleCat.hom_ext
-      apply Finsupp.lhom_ext
-      intro x r
-      apply LinearMap.ext
-      intro h
-      simp [finiteSmallFreeModule, finiteFunctionDualModule, finiteFunctionPullback,
-        finiteFunctionDualFreeEquiv, finiteFunctionDualEquiv])
-
-/-- Canonical natural algebraic dual/free comparison on finite sets. -/
-noncomputable def finiteFunctionDualFreeNatIso :
-    finiteFunctionDualModule ≅ finiteSmallFreeModule :=
-  finiteSmallFreeDualNatIso.symm
-
 noncomputable def discreteSetFreeAdj :
     (Condensed.discrete (Type (u + 1)) ⋙ Condensed.free R) ⊣
       (Condensed.forget R ⋙ Condensed.underlying (Type (u + 1))) :=
@@ -381,11 +313,6 @@ noncomputable def finiteFreeDiscreteIso :
 #check finiteContinuousFunctions
 #check finiteFunctionModule
 #check finiteContinuousFunctionsNatIso
-#check finiteFunctionPullback
-#check finiteFunctionDualModule
-#check finiteSmallFreeModule
-#check finiteSmallFreeDualNatIso
-#check finiteFunctionDualFreeNatIso
 #check TopCat.uliftFunctor
 #check TopCat.uliftFunctorObjHomeo
 #check CompHausLike.LocallyConstant.functorIso
@@ -412,11 +339,6 @@ noncomputable def finiteFreeDiscreteIso :
 #print axioms finiteContinuousFunctionsIso
 #print axioms finiteFunctionModule
 #print axioms finiteContinuousFunctionsNatIso
-#print axioms finiteFunctionPullback
-#print axioms finiteFunctionDualModule
-#print axioms finiteSmallFreeModule
-#print axioms finiteSmallFreeDualNatIso
-#print axioms finiteFunctionDualFreeNatIso
 #print axioms discreteFreeIso
 #print axioms finiteDiscreteULiftIso
 #print axioms discreteTopCondensedIso
