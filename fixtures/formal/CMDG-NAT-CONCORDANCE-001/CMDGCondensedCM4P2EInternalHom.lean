@@ -256,14 +256,13 @@ lemma rankOneProjectionEndomorphism_naturality
 lemma rankOneProjection_naturality
     (X : CompHaus.{u}) {i j : Under (op X)} (f : i ⟶ j)
     (φ : rankOneInternalHom.obj (op X))
-    (h : coefficientPresheaf.obj i.right) :
-    coefficientPresheaf.map f.right
-        ((rankOneProjectionEndomorphism X i φ).hom h) =
-      (rankOneProjectionEndomorphism X j φ).hom
-        (coefficientPresheaf.map f.right h) := by
-  have hnat := rankOneProjectionEndomorphism_naturality X f φ
-  have happ := congrArg (fun q => q h) hnat
-  simpa only [ModuleCat.comp_apply] using happ
+    (h : (Under.forget (op X) ⋙ coefficientPresheaf).obj i) :
+    ((Under.forget (op X) ⋙ coefficientPresheaf).map f)
+        (rankOneProjectionEndomorphism X i φ h) =
+      rankOneProjectionEndomorphism X j φ
+        (((Under.forget (op X) ⋙ coefficientPresheaf).map f) h) := by
+  simpa only [CategoryTheory.comp_apply] using
+    ConcreteCategory.congr_hom (rankOneProjectionEndomorphism_naturality X f φ) h
 
 lemma rankOneMultiplication_identity_evalOne (X : CompHaus.{u}) :
     rankOneMultiplicationToEndomorphism X (Under.mk (𝟙 (op X))) ≫
