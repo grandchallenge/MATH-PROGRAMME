@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/policy_impact_gating.schema.json",
+  "title": "Programme policy impact gating control",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version","control_id","status","issue","protected_required_contexts","classifier","formal_replay","policy_dag","authority_boundary","claim_boundaries"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-POLICY-IMPACT-GATING-001"},
+    "status": {"const": "ACTIVE_ON_PROTECTED_MERGE"},
+    "issue": {"const": 391},
+    "protected_required_contexts": {"type": "array", "minItems": 6, "uniqueItems": true},
+    "classifier": {"type": "object"},
+    "formal_replay": {"type": "object"},
+    "policy_dag": {"type": "object"},
+    "authority_boundary": {"type": "object"},
+    "claim_boundaries": {"type": "object"}
+  }
+}

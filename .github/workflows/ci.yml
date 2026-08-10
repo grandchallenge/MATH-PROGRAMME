@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "17 */6 * * *"
+    - cron: "43 8 * * *"
 
 permissions:
   contents: read
@@ -16,169 +17,88 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  validate-json:
-    if: github.event_name != 'schedule'
+  impact:
+    name: Classify policy impact
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 5
+    outputs:
+      event_mode: ${{ steps.classify.outputs.event_mode }}
+      policy_shards: ${{ steps.classify.outputs.policy_shards }}
+      unknown_count: ${{ steps.classify.outputs.unknown_count }}
+      log_gcd_dirty: ${{ steps.classify.outputs.log_gcd_dirty }}
+      pc_wp04_dirty: ${{ steps.classify.outputs.pc_wp04_dirty }}
+      union_closed_dirty: ${{ steps.classify.outputs.union_closed_dirty }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+          fetch-depth: 0
+      - name: Classify exact transition impact
+        id: classify
+        env:
+          GCL_EVENT_SCHEDULE: ${{ github.event.schedule || '' }}
+        run: python3 ci/policy_impact.py classify --github-output "$GITHUB_OUTPUT"
+      - name: Preserve classifier report
+        if: always()
+        run: |
+          printf '%s\n' \
+            "event_mode=${{ steps.classify.outputs.event_mode }}" \
+            "policy_shards=${{ steps.classify.outputs.policy_shards }}" \
+            "unknown_count=${{ steps.classify.outputs.unknown_count }}" \
+            "log_gcd_dirty=${{ steps.classify.outputs.log_gcd_dirty }}" \
+            "pc_wp04_dirty=${{ steps.classify.outputs.pc_wp04_dirty }}" \
+            "union_closed_dirty=${{ steps.classify.outputs.union_closed_dirty }}" \
+            > policy-impact-report.txt
+      - name: Upload classifier evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: policy-impact-report
+          path: policy-impact-report.txt
+          if-no-files-found: error
+          retention-days: 30
+
+  policy-shard:
+    name: Policy shard / ${{ matrix.shard }}
+    needs: impact
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [core, fixtures, cmdg, administrative, campaigns, contracts, docs]
+    steps:
+      - name: Fail closed if impact classification failed
+        if: needs.impact.result != 'success'
+        run: |
+          echo "policy impact classification failed; shard execution cannot be trusted"
+          exit 1
+      - name: Verified irrelevant-shard no-op
+        if: needs.impact.result == 'success' && !contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard)
+        run: echo "VERIFIED_POLICY_SHARD_NO_OP ${{ matrix.shard }}"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: needs.impact.result == 'success' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard)
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        if: needs.impact.result == 'success' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard)
         with:
           python-version: "3.12"
-
-      - name: Parse schemas
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          for path in Path("schemas").glob("*.json"):
-              json.loads(path.read_text(encoding="utf-8"))
-              print(f"valid json: {path}")
-          PY
-
-      - name: Check exact algebraic fixture
-        run: python3 ci/check_algebraic_fixture.py fixtures/algebraic/UF-INV-001
-
-      - name: Run adversarial fixture tests
-        run: python3 ci/test_algebraic_fixture.py
-
-      - name: Check radical membership fixture
-        run: python3 ci/check_radical_fixture.py fixtures/algebraic/RAD-NIL-002
-
-      - name: Run adversarial radical tests
-        run: python3 ci/test_radical_fixture.py
-
-      - name: Check application manifest
-        run: python3 ci/validate_grobner_manifest.py
-
-      - name: Run adversarial manifest tests
-        run: python3 ci/test_grobner_manifest.py
-
-      - name: Check Chaidez pedagogy contract
-        run: python3 ci/validate_chaidez_pedagogy.py
-
-      - name: Run adversarial pedagogy tests
-        run: python3 ci/test_chaidez_pedagogy.py
-
-      - name: Check ResearchMath intake fixture
-        run: python3 ci/validate_researchmath_fixture.py
-
-      - name: Run adversarial ResearchMath intake tests
-        run: python3 ci/test_researchmath_fixture.py
-
-      - name: Install policy dependencies
+      - name: Install governed policy dependencies
+        if: needs.impact.result == 'success' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard)
         run: python -m pip install --requirement requirements/policy.txt
-
-      - name: Validate formal replay content-addressing policy
-        run: python3 ci/formal_replay_attestation.py check-policy
-
-      - name: Validate CMDG schema contracts
-        run: python3 ci/validate_cmdg_schema_contracts.py
-
-      - name: Validate CMDG runtime graph package
-        run: python3 ci/validate_cmdg_graph_package.py --report cmdg-validator-report.json
-
-      - name: Validate CMDG NAT concordance foundational profile
-        run: python3 ci/validate_cmdg_nat_foundations_profile.py
-
-      - name: Run repository unit tests
-        run: python -m unittest discover -s tests -p 'test_*.py'
-
-      - name: Validate administrative structural sweep
-        run: python3 ci/validate_administrative_structural_sweep.py
-
-      - name: Validate candidate campaign admission
-        run: python3 ci/campaign_admission_control.py
-
-      - name: Validate and replay governed campaigns
-        run: |
-          set -o pipefail
-          {
-            python3 ci/validate_campaign_replays.py
-            python3 ci/test_campaign_replays.py
-          } 2>&1 | tee campaign-replays.log
-
-      - name: Preserve campaign replay failure
-        if: failure()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: campaign-replay-failure
-          path: campaign-replays.log
-          if-no-files-found: warn
-
-      - name: Check LOG-GCD formal fixture
-        run: |
-          set -o pipefail
-          python3 ci/validate_log_gcd_fixture.py fixtures/formal/LOG-GCD-001 2>&1 | tee log-gcd-policy.log
-
-      - name: Preserve LOG-GCD policy failure
-        if: failure()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: log-gcd-policy-failure
-          path: log-gcd-policy.log
-          if-no-files-found: error
-
-      - name: Run adversarial LOG-GCD fixture tests
-        run: python3 ci/test_log_gcd_fixture.py
-
-      - name: Check LOG-GCD published result
-        run: |
-          set -o pipefail
-          python3 ci/validate_log_gcd_publication.py fixtures/formal/LOG-GCD-001 2>&1 | tee log-gcd-publication-policy.log
-
-      - name: Preserve LOG-GCD publication-policy failure
-        if: failure()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: log-gcd-publication-policy-failure
-          path: log-gcd-publication-policy.log
-          if-no-files-found: error
-
-      - name: Run adversarial LOG-GCD publication tests
-        run: python3 ci/test_log_gcd_publication.py
-
-      - name: Validate programme contracts
-        run: |
-          set -o pipefail
-          {
-            python ci/validate_programme.py
-            python ci/test_validate_programme.py
-            python ci/validate_docs.py
-            python ci/test_validate_docs.py
-            python3 ci/validate_retired_paths.py
-            python3 ci/test_retired_paths.py
-            # Compatibility markers retained: python3 ci/validate_workflow_coverage.py
-            # Compatibility markers retained: python3 ci/test_workflow_coverage.py
-            python3 ci/validate_workflow_coverage_v2.py
-            python3 ci/test_workflow_coverage_v2.py
-            python3 ci/validate_administrative_cadence_reconciliation.py
-            python3 ci/validate_policy_reachability.py
-            python3 ci/test_policy_reachability.py
-            python3 ci/validate_repository_execution.py
-            python3 ci/test_repository_execution.py
-            python3 ci/validate_workflow_semantics.py
-            python3 ci/test_workflow_semantics.py
-          } 2>&1 | tee programme-contracts.log
-
-      - name: Preserve programme contract failure
-        if: failure()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: programme-contract-failure
-          path: programme-contracts.log
-          if-no-files-found: error
-
       - name: Install documentation dependencies
+        if: needs.impact.result == 'success' && matrix.shard == 'docs' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard)
         run: python -m pip install --requirement requirements/docs.txt
-
-      - name: Build documentation
-        run: mkdocs build --strict
-
+      - name: Execute governed policy shard
+        if: needs.impact.result == 'success' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard)
+        shell: bash
+        env:
+          SHARD: ${{ matrix.shard }}
+        run: python3 ci/run_policy_shard.py --shard "${SHARD}" --log "policy-shard-${SHARD}.log"
       - name: Package policy-validated site
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: needs.impact.result == 'success' && matrix.shard == 'docs' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard) && github.event_name == 'push' && github.ref == 'refs/heads/main'
         shell: bash
         run: |
           set -euo pipefail
@@ -186,9 +106,8 @@ jobs:
           tar --sort=name --mtime="@${source_date_epoch}" --owner=0 --group=0 --numeric-owner \
             -czf validated-site.tar.gz -C site .
           sha256sum validated-site.tar.gz > validated-site.tar.gz.sha256
-
       - name: Upload policy-validated site
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: needs.impact.result == 'success' && matrix.shard == 'docs' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard) && github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: validated-site
@@ -198,12 +117,36 @@ jobs:
           if-no-files-found: error
           retention-days: 1
           compression-level: 0
+      - name: Preserve policy shard failure
+        if: failure() && needs.impact.result == 'success' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard)
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: policy-shard-${{ matrix.shard }}-failure
+          path: policy-shard-${{ matrix.shard }}.log
+          if-no-files-found: warn
+          retention-days: 30
+
+  validate-json:
+    needs: [impact, policy-shard]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Aggregate routed Programme policy
+        run: |
+          test "${{ needs.impact.result }}" = "success"
+          test "${{ needs.policy-shard.result }}" = "success"
+          echo "POLICY_IMPACT_GATING_AGGREGATE_SUCCESS"
 
   log-gcd-lean:
     name: Replay LOG-GCD-001 in Lean
+    needs: impact
+    if: always()
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
+      - name: Require impact classification
+        run: test "${{ needs.impact.result }}" = "success"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
@@ -220,9 +163,16 @@ jobs:
           key: ${{ steps.identity.outputs.cache_prefix }}probe-${{ github.run_id }}
           restore-keys: |
             ${{ steps.identity.outputs.cache_prefix }}
-      - name: Decide replay or attestation reuse
+      - name: Decide bit-dirty replay or protected attestation
         id: reuse
-        run: python3 ci/formal_replay_attestation.py decide --lane log-gcd --receipt .formal-replay/log-gcd/receipt.json --github-output "$GITHUB_OUTPUT"
+        shell: bash
+        env:
+          EVENT_MODE: ${{ needs.impact.outputs.event_mode }}
+          DIRTY: ${{ needs.impact.outputs.log_gcd_dirty }}
+        run: |
+          MODE="clean"
+          if [[ "${EVENT_MODE}" == "formal_sentinel" || "${EVENT_MODE}" == "manual_full" ]]; then MODE="sentinel"; elif [[ "${DIRTY}" == "true" ]]; then MODE="dirty"; fi
+          python3 ci/formal_replay_gate.py decide --lane log-gcd --receipt .formal-replay/log-gcd/receipt.json --mode "${MODE}" --github-output "$GITHUB_OUTPUT"
       - name: Report reused formal attestation
         if: steps.reuse.outputs.reuse == 'true'
         run: |
@@ -263,21 +213,21 @@ jobs:
       - name: Extract CMDG LOG-GCD Lean dependencies
         if: steps.reuse.outputs.reuse != 'true'
         run: python3 ci/extract_cmdg_lean_dependencies.py fixtures/cmdg/extractor_001/log_gcd.json --output cmdg-log-gcd-dependencies.json
-      - name: Emit successful full-replay receipt
-        if: steps.reuse.outputs.reuse != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Emit successful protected full-replay receipt
+        if: steps.reuse.outputs.reuse != 'true' && ((github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'schedule' && github.event.schedule == '17 */6 * * *'))
         run: |
-          python3 ci/formal_replay_attestation.py emit-receipt \
+          python3 ci/formal_replay_gate.py emit-receipt \
             --lane log-gcd \
             --output .formal-replay/log-gcd/receipt.json \
             --origin-commit "${GITHUB_SHA}" \
             --origin-run-id "${GITHUB_RUN_ID}" \
             --origin-run-attempt "${GITHUB_RUN_ATTEMPT}" \
             --origin-event "${GITHUB_EVENT_NAME}" \
-            --origin-ref "${GITHUB_REF}" \
+            --origin-ref "refs/heads/main" \
             --result-file fixtures/formal/LOG-GCD-001/lean-build.log \
             --result-file cmdg-log-gcd-dependencies.json
       - name: Save protected formal replay receipt
-        if: steps.reuse.outputs.reuse != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: steps.reuse.outputs.reuse != 'true' && ((github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'schedule' && github.event.schedule == '17 */6 * * *'))
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: .formal-replay/log-gcd
@@ -292,9 +242,13 @@ jobs:
 
   pc-wp04-lean:
     name: Replay PC-WP04 bounded certificate
+    needs: impact
+    if: always()
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
+      - name: Require impact classification
+        run: test "${{ needs.impact.result }}" = "success"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
@@ -326,9 +280,16 @@ jobs:
           key: ${{ steps.identity.outputs.cache_prefix }}probe-${{ github.run_id }}
           restore-keys: |
             ${{ steps.identity.outputs.cache_prefix }}
-      - name: Decide replay or attestation reuse
+      - name: Decide bit-dirty replay or protected attestation
         id: reuse
-        run: python3 ci/formal_replay_attestation.py decide --lane pc-wp04 --receipt .formal-replay/pc-wp04/receipt.json --github-output "$GITHUB_OUTPUT"
+        shell: bash
+        env:
+          EVENT_MODE: ${{ needs.impact.outputs.event_mode }}
+          DIRTY: ${{ needs.impact.outputs.pc_wp04_dirty }}
+        run: |
+          MODE="clean"
+          if [[ "${EVENT_MODE}" == "formal_sentinel" || "${EVENT_MODE}" == "manual_full" ]]; then MODE="sentinel"; elif [[ "${DIRTY}" == "true" ]]; then MODE="dirty"; fi
+          python3 ci/formal_replay_gate.py decide --lane pc-wp04 --receipt .formal-replay/pc-wp04/receipt.json --mode "${MODE}" --github-output "$GITHUB_OUTPUT"
       - name: Report reused formal attestation
         if: steps.reuse.outputs.reuse == 'true'
         run: |
@@ -366,21 +327,21 @@ jobs:
       - name: Extract CMDG PC-WP04 Lean dependencies
         if: steps.reuse.outputs.reuse != 'true'
         run: python3 ci/extract_cmdg_lean_dependencies.py fixtures/cmdg/extractor_001/pc_wp04.json --output cmdg-pc-wp04-dependencies.json
-      - name: Emit successful full-replay receipt
-        if: steps.reuse.outputs.reuse != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Emit successful protected full-replay receipt
+        if: steps.reuse.outputs.reuse != 'true' && ((github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'schedule' && github.event.schedule == '17 */6 * * *'))
         run: |
-          python3 ci/formal_replay_attestation.py emit-receipt \
+          python3 ci/formal_replay_gate.py emit-receipt \
             --lane pc-wp04 \
             --output .formal-replay/pc-wp04/receipt.json \
             --origin-commit "${GITHUB_SHA}" \
             --origin-run-id "${GITHUB_RUN_ID}" \
             --origin-run-attempt "${GITHUB_RUN_ATTEMPT}" \
             --origin-event "${GITHUB_EVENT_NAME}" \
-            --origin-ref "${GITHUB_REF}" \
+            --origin-ref "refs/heads/main" \
             --result-file fixtures/formal/PC-WP04/pc-wp04-lean-build.log \
             --result-file cmdg-pc-wp04-dependencies.json
       - name: Save protected formal replay receipt
-        if: steps.reuse.outputs.reuse != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: steps.reuse.outputs.reuse != 'true' && ((github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'schedule' && github.event.schedule == '17 */6 * * *'))
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: .formal-replay/pc-wp04
@@ -388,9 +349,13 @@ jobs:
 
   union-closed-mathcert:
     name: Replay pinned Union-Closed MATHCERT evidence
+    needs: impact
+    if: always()
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     steps:
+      - name: Require impact classification
+        run: test "${{ needs.impact.result }}" = "success"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
@@ -427,9 +392,16 @@ jobs:
           key: ${{ steps.identity.outputs.cache_prefix }}probe-${{ github.run_id }}
           restore-keys: |
             ${{ steps.identity.outputs.cache_prefix }}
-      - name: Decide replay or attestation reuse
+      - name: Decide bit-dirty replay or protected attestation
         id: reuse
-        run: python3 ci/formal_replay_attestation.py decide --lane union-closed-mathcert --receipt .formal-replay/union-closed-mathcert/receipt.json --github-output "$GITHUB_OUTPUT"
+        shell: bash
+        env:
+          EVENT_MODE: ${{ needs.impact.outputs.event_mode }}
+          DIRTY: ${{ needs.impact.outputs.union_closed_dirty }}
+        run: |
+          MODE="clean"
+          if [[ "${EVENT_MODE}" == "formal_sentinel" || "${EVENT_MODE}" == "manual_full" ]]; then MODE="sentinel"; elif [[ "${DIRTY}" == "true" ]]; then MODE="dirty"; fi
+          python3 ci/formal_replay_gate.py decide --lane union-closed-mathcert --receipt .formal-replay/union-closed-mathcert/receipt.json --mode "${MODE}" --github-output "$GITHUB_OUTPUT"
       - name: Report reused formal attestation
         if: steps.reuse.outputs.reuse == 'true'
         run: |
@@ -471,20 +443,20 @@ jobs:
             test -f lake-manifest.json
             bash ci/check_lean.sh
           } 2>&1 | tee union-closed-mathcert-replay.log
-      - name: Emit successful full-replay receipt
-        if: steps.reuse.outputs.reuse != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Emit successful protected full-replay receipt
+        if: steps.reuse.outputs.reuse != 'true' && ((github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'schedule' && github.event.schedule == '17 */6 * * *'))
         run: |
-          python3 ci/formal_replay_attestation.py emit-receipt \
+          python3 ci/formal_replay_gate.py emit-receipt \
             --lane union-closed-mathcert \
             --output .formal-replay/union-closed-mathcert/receipt.json \
             --origin-commit "${GITHUB_SHA}" \
             --origin-run-id "${GITHUB_RUN_ID}" \
             --origin-run-attempt "${GITHUB_RUN_ATTEMPT}" \
             --origin-event "${GITHUB_EVENT_NAME}" \
-            --origin-ref "${GITHUB_REF}" \
+            --origin-ref "refs/heads/main" \
             --result-file external/MATHCERT/union-closed-mathcert-replay.log
       - name: Save protected formal replay receipt
-        if: steps.reuse.outputs.reuse != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: steps.reuse.outputs.reuse != 'true' && ((github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'schedule' && github.event.schedule == '17 */6 * * *'))
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: .formal-replay/union-closed-mathcert

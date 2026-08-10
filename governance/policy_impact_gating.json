@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "control_id": "MP-POLICY-IMPACT-GATING-001",
+  "status": "ACTIVE_ON_PROTECTED_MERGE",
+  "issue": 391,
+  "protected_required_contexts": [
+    "validate-json",
+    "Replay LOG-GCD-001 in Lean",
+    "Replay PC-WP04 bounded certificate",
+    "Replay pinned Union-Closed MATHCERT evidence",
+    "policy / policy",
+    "security / action-policy"
+  ],
+  "classifier": {
+    "implementation": "ci/policy_impact.py",
+    "shard_registry": "governance/policy_shard_registry.json",
+    "unknown_path_behavior": "FULL_FANOUT",
+    "classifier_change_behavior": "FULL_FANOUT"
+  },
+  "formal_replay": {
+    "policy": "governance/formal_replay_policy.json",
+    "clean_transition": {
+      "full_replay_allowed": false,
+      "protected_attestation_required": true,
+      "max_attestation_age_hours": 24,
+      "stale_behavior": "FAIL_FAST_FORMAL_REPLAY_SENTINEL_STALE"
+    },
+    "dirty_transition": {
+      "content_addressed_reuse": true,
+      "full_replay_if_unattested": true
+    },
+    "sentinel": {
+      "cron": "17 */6 * * *",
+      "time_based_replay_repair_allowed": true
+    }
+  },
+  "policy_dag": {
+    "shards": ["core", "fixtures", "cmdg", "administrative", "campaigns", "contracts", "docs"],
+    "final_aggregator": "validate-json",
+    "full_policy_sentinel_cron": "43 8 * * *",
+    "irrelevant_shard_behavior": "VERIFIED_NO_OP",
+    "protected_main_docs_build_required": true
+  },
+  "authority_boundary": {
+    "human_steward_exact_head_authorization_required": true,
+    "required_checks_removed_or_renamed": false,
+    "formal_proof_closure_weakened": false,
+    "formal_semantic_tcb_weakened": false,
+    "bypass_created": false,
+    "emergency_authority_created": false,
+    "direct_protected_push_authorized": false,
+    "human_steward_impersonation_authorized": false
+  },
+  "claim_boundaries": {
+    "mathematical_authority_created": false,
+    "source_authority_created": false,
+    "certification_authority_created": false,
+    "novelty_or_priority_claim_created": false,
+    "publication_authority_created": false,
+    "deployment_authority_created": false,
+    "product_or_release_authority_created": false,
+    "commercial_authority_created": false
+  }
+}

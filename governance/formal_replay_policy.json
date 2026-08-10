@@ -10,6 +10,10 @@
     "inputs": [
       ".github/workflows/ci.yml",
       "ci/formal_replay_attestation.py",
+      "ci/formal_replay_gate.py",
+      "ci/policy_impact.py",
+      "governance/policy_impact_gating.json",
+      "governance/policy_shard_registry.json",
       "schemas/formal_replay_receipt.schema.json"
     ]
   },
@@ -24,12 +28,7 @@
       "roots": ["fixtures/formal/LOG-GCD-001"],
       "files": ["fixtures/cmdg/extractor_001/log_gcd.json", "ci/extract_cmdg_lean_dependencies.py", "ci/validate_log_gcd_fixture.py", "ci/test_log_gcd_fixture.py", "ci/validate_log_gcd_publication.py", "ci/test_log_gcd_publication.py"],
       "command": ["lake", "build"],
-      "proof_semantic_tcb": {
-        "runner": "ubuntu-24.04",
-        "lean_action_sha": "138a564e38a62ce545e8d47d86a97628463aced4",
-        "toolchain_source": "fixtures/formal/LOG-GCD-001/lean-toolchain",
-        "dependency_lock": "fixtures/formal/LOG-GCD-001/lake-manifest.json"
-      },
+      "proof_semantic_tcb": {"runner": "ubuntu-24.04", "lean_action_sha": "138a564e38a62ce545e8d47d86a97628463aced4", "toolchain_source": "fixtures/formal/LOG-GCD-001/lean-toolchain", "dependency_lock": "fixtures/formal/LOG-GCD-001/lake-manifest.json"},
       "forbidden_source_patterns": ["(^|[^A-Za-z])(sorry|axiom)([^A-Za-z]|$)"]
     },
     "pc-wp04": {
@@ -37,12 +36,7 @@
       "roots": ["fixtures/formal/PC-WP04"],
       "files": ["fixtures/cmdg/extractor_001/pc_wp04.json", "ci/extract_cmdg_lean_dependencies.py", "ci/validate_pc_wp04_fixture.py", "ci/test_pc_wp04_fixture.py", "requirements/policy.txt"],
       "command": ["lake", "build"],
-      "proof_semantic_tcb": {
-        "runner": "ubuntu-24.04",
-        "lean_action_sha": "138a564e38a62ce545e8d47d86a97628463aced4",
-        "toolchain_source": "fixtures/formal/PC-WP04/lean-toolchain",
-        "dependency_lock": "fixtures/formal/PC-WP04/lake-manifest.json"
-      },
+      "proof_semantic_tcb": {"runner": "ubuntu-24.04", "lean_action_sha": "138a564e38a62ce545e8d47d86a97628463aced4", "toolchain_source": "fixtures/formal/PC-WP04/lean-toolchain", "dependency_lock": "fixtures/formal/PC-WP04/lake-manifest.json"},
       "forbidden_source_patterns": ["(^|[^A-Za-z])(sorry|axiom)([^A-Za-z]|$)"]
     },
     "union-closed-mathcert": {
@@ -50,12 +44,7 @@
       "roots": [],
       "files": ["evidence/UC-WP02-MATHCERT.json", "requirements/policy.txt"],
       "command": ["bash", "ci/check_lean.sh"],
-      "proof_semantic_tcb": {
-        "runner": "ubuntu-24.04",
-        "lean_action_sha": "138a564e38a62ce545e8d47d86a97628463aced4",
-        "external_repository": "grandchallenge/MATHCERT",
-        "external_commit": "d59173899dcd1a67dbe8f31de0b9f0917cd1459a"
-      },
+      "proof_semantic_tcb": {"runner": "ubuntu-24.04", "lean_action_sha": "138a564e38a62ce545e8d47d86a97628463aced4", "external_repository": "grandchallenge/MATHCERT", "external_commit": "d59173899dcd1a67dbe8f31de0b9f0917cd1459a"},
       "forbidden_source_patterns": []
     }
   }
