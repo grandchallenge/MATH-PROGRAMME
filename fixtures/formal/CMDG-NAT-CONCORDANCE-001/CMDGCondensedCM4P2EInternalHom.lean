@@ -204,9 +204,12 @@ lemma rankOneMultiplication_identity_evalOne (X : CompHaus.{u}) :
   apply ModuleCat.hom_injective
   ext a
   change
-    (show coefficientAt X ⟶ coefficientAt X from
+    (show coefficientPresheaf.obj (Under.mk (𝟙 (op X))).right ⟶
+        coefficientPresheaf.obj (Under.mk (𝟙 (op X))).right from
       rankOneMultiplicationToEndomorphism X (Under.mk (𝟙 (op X))) a).hom
-        (LocallyConstant.const X (1 : R)) = a
+        (show coefficientPresheaf.obj (Under.mk (𝟙 (op X))).right from
+          LocallyConstant.const X (1 : R)) =
+      (show coefficientPresheaf.obj (Under.mk (𝟙 (op X))).right from a)
   rw [rankOneMultiplicationToEndomorphism_apply]
   simp [rankOneSectionMul]
 
