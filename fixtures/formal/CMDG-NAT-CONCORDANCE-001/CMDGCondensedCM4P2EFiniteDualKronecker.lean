@@ -7,6 +7,10 @@ open CategoryTheory Opposite
 open scoped CategoryTheory.MonoidalClosed BigOperators
 attribute [local instance] FintypeCat.fintype
 
+noncomputable local instance : MonoidalClosed
+    (CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u}) :=
+  MonoidalClosed.FunctorCategory.monoidalClosed
+
 lemma finiteCoordinatePre_projection_inclusion_self
     (X : FintypeCat.{u}) (x : X.obj) :
     (MonoidalClosed.pre (finiteCoordinateProjection X x)).app
