@@ -95,7 +95,7 @@ lemma rankOneSectionMul_naturality
   let Yi : CompHaus.{u} := i.right.unop
   let Yj : CompHaus.{u} := j.right.unop
   let pull : LocallyConstant Yi R →ₗ[R] LocallyConstant Yj R :=
-    LocallyConstant.comapₗ R f.right.unop.hom.hom
+    (coefficientPresheaf.map f.right).hom
   have haBundled :
       coefficientPresheaf.map f.right (coefficientPresheaf.map i.hom a) =
         coefficientPresheaf.map j.hom a := by
@@ -106,7 +106,7 @@ lemma rankOneSectionMul_naturality
   have ha :
       pull (show LocallyConstant Yi R from coefficientPresheaf.map i.hom a) =
         (show LocallyConstant Yj R from coefficientPresheaf.map j.hom a) := by
-    simpa [pull, Yi, Yj] using haBundled
+    exact haBundled
   have hmul (x y : LocallyConstant Yi R) :
       pull (x * y) = pull x * pull y := by
     rfl
