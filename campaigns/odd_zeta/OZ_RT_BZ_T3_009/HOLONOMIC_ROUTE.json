@@ -1,0 +1,42 @@
+{
+  "operation": "OZ-RT-BZ-T3-009",
+  "route": "DIRECT_T3_DISCRETE_RESIDUAL_CERT_001",
+  "subroute": "STRUCTURED_ONE_BODY_LETTER_SPLIT_HOLONOMIC_001",
+  "status": "STRUCTURED_HOLONOMIC_ROUTE_LOCKED_AFTER_DEFORMATION_REJECTION",
+  "predecessor_negative": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/DEFORMATION_SPAN_RESULT.json",
+  "module_profile": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/LETTER_SPLIT_RESULT.json",
+  "exact_prerequisite": "Construct and independently verify the full pole-free one-body residual coefficient layer after the global nested Abel transfer. The 22-atom support profile alone is not a certificate forcing.",
+  "channel_decomposition": {
+    "protected_channels": ["n1", "n2", "n3", "k1", "l1"],
+    "symmetry_reduced_channels": ["n1", "n2", "n3", "k1"],
+    "mirror_rule": "l1 is the k<->l image of k1 in the symmetric Q-row gauge",
+    "policy": "Keep shift-channel labels through the first elimination so rational shift increments remain local and auditable."
+  },
+  "letter_decomposition": {
+    "input_atoms": 22,
+    "k_l_orbit_representatives": 13,
+    "weight_block_sizes": [5, 4, 2, 2],
+    "rationale": "Every ordinary harmonic letter has rational finite differences under n, k, and l shifts. After coefficientwise splitting, those increments reduce the correction forcing to rational/hypergeometric terms.",
+    "first_block": "weight1",
+    "first_block_representatives": ["H_k_1", "H_kl_1", "H_nk_1", "H_nmk_1", "H_nkl_1"]
+  },
+  "certificate_architecture": {
+    "base": "Use the reverified pole-free symmetric Q-row fluxes and their differentiated regularized products already admitted inside T3-009.",
+    "step_1": "For each symmetry-reduced shift channel, express the verified one-body forcing coefficientwise in the smallest harmonic-letter block that is closed under its rational shift increments.",
+    "step_2": "Solve exact rational/hypergeometric correction-flux equations for those coefficient classes; use bounded support ladders and exact modular/rational rank tests before expensive holonomic elimination.",
+    "step_3": "Recombine the corrected channel/letter pieces before the final n-holonomic elimination.",
+    "step_4": "Independently replay the assembled certificate, including regularized shell behavior and finite-box boundaries."
+  },
+  "anti_oversplitting_rule": "Do not require each letter or shift piece to possess its own low-order n-recurrence. Splitting is an algebraic device for constructing correction certificates; the final holonomic operator may exist only after recombination.",
+  "bounded_search_policy": {
+    "generic_198_raw_jet_reopen_forbidden": true,
+    "unbounded_creative_telescoping_forbidden_as_first_move": true,
+    "support_or_rank_viability_probe_required": true,
+    "positive_candidate_requires_exact_reconstruction_and_substitution": true,
+    "finite_sampling_is_not_proof": true
+  },
+  "next_execution_boundary": "FULL_POLE_FREE_ONE_BODY_RESIDUAL_COEFFICIENT_LAYER_001",
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+}
