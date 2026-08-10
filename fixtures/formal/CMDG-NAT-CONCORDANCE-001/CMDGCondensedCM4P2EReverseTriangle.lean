@@ -17,6 +17,7 @@ universe u
 
 open CategoryTheory Limits Opposite
 open CategoryTheory.Enriched.FunctorCategory
+open scoped CategoryTheory.MonoidalClosed
 
 lemma rankOneEvaluation_multiplication (X : CompHaus.{u}) :
     rankOneEvaluationApp X ≫ rankOneMultiplicationApp X =
