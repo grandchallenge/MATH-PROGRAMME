@@ -62,6 +62,7 @@ noncomputable def rankOneEndomorphismEvalOne (X : CompHaus.{u}) :
 
 noncomputable def rankOneEvaluationApp (X : CompHaus.{u}) :
     rankOneInternalHom.obj (op X) ⟶ coefficientAt X := by
+  rw [rankOneInternalHom_eq_functorEnrichedHom]
   exact rankOneIdentityProjection X ≫ rankOneEndomorphismEvalOne X
 
 noncomputable def rankOneSectionMul
@@ -196,33 +197,6 @@ lemma rankOneMultiplicationApp_projection
   unfold rankOneMultiplicationApp
   exact end_.lift_π _ _ k
 
-lemma rankOneMultiplication_identity_evalOne (X : CompHaus.{u}) :
-    rankOneMultiplicationToEndomorphism X (Under.mk (𝟙 (op X))) ≫
-        rankOneEndomorphismEvalOne X =
-      𝟙 (coefficientAt X) := by
-  apply ModuleCat.hom_injective
-  ext a
-  change
-    (show coefficientPresheaf.obj (Under.mk (𝟙 (op X))).right ⟶
-        coefficientPresheaf.obj (Under.mk (𝟙 (op X))).right from
-      rankOneMultiplicationToEndomorphism X (Under.mk (𝟙 (op X))) a).hom
-        (show coefficientPresheaf.obj (Under.mk (𝟙 (op X))).right from
-          LocallyConstant.const X (1 : R)) =
-      (show coefficientPresheaf.obj (Under.mk (𝟙 (op X))).right from a)
-  rw [rankOneMultiplicationToEndomorphism_apply]
-  change
-    (show LocallyConstant X R from coefficientPresheaf.map (𝟙 (op X)) a) *
-        LocallyConstant.const X (1 : R) =
-      (show LocallyConstant X R from a)
-  rw [coefficientPresheaf.map_id]
-  simpa using (mul_one (show LocallyConstant X R from a))
-
-lemma rankOneMultiplication_evaluation (X : CompHaus.{u}) :
-    rankOneMultiplicationApp X ≫ rankOneEvaluationApp X = 𝟙 (coefficientAt X) := by
-  unfold rankOneEvaluationApp
-  rw [← Category.assoc, rankOneMultiplicationApp_projection]
-  exact rankOneMultiplication_identity_evalOne X
-
 #check rankOneInternalHom
 #check rankOneInternalHom_eq_functorEnrichedHom
 #check RankOneTarget
@@ -239,8 +213,6 @@ lemma rankOneMultiplication_evaluation (X : CompHaus.{u}) :
 #check rankOneMultiplication_condition
 #check rankOneMultiplicationApp
 #check rankOneMultiplicationApp_projection
-#check rankOneMultiplication_identity_evalOne
-#check rankOneMultiplication_evaluation
 #check Limits.end_.lift
 #check Limits.end_.lift_π
 
@@ -257,7 +229,5 @@ lemma rankOneMultiplication_evaluation (X : CompHaus.{u}) :
 #print axioms rankOneMultiplication_condition
 #print axioms rankOneMultiplicationApp
 #print axioms rankOneMultiplicationApp_projection
-#print axioms rankOneMultiplication_identity_evalOne
-#print axioms rankOneMultiplication_evaluation
 
 end CMDG.CondensedCM4P2E.InternalHom
