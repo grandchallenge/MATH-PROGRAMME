@@ -28,7 +28,6 @@ noncomputable abbrev coefficientPresheaf : PresheafModule :=
 noncomputable local instance : MonoidalClosed PresheafModule :=
   MonoidalClosed.FunctorCategory.monoidalClosed
 
-/-- Rank-one specialization of the protected P2-D internal-Hom construction. -/
 noncomputable def rankOneInternalHom : PresheafModule :=
   (MonoidalClosed.internalHom.obj (op coefficientPresheaf)).obj coefficientPresheaf
 
@@ -36,14 +35,11 @@ lemma rankOneInternalHom_eq_functorEnrichedHom :
     rankOneInternalHom =
       functorEnrichedHom (ModuleCat.{u + 1} R) coefficientPresheaf coefficientPresheaf := rfl
 
-/-- The rank-one theorem target. This is a type alias only; no inhabitant is asserted here. -/
 abbrev RankOneTarget := rankOneInternalHom ≅ coefficientPresheaf
 
 noncomputable abbrev coefficientAt (X : CompHaus.{u}) : ModuleCat.{u + 1} R :=
   coefficientPresheaf.obj (op X)
 
-/-- At a test object `X`, project the enriched end defining the internal Hom to the identity object
-of `Under (op X)`. This is the canonical observation point for the evaluation-at-one inverse. -/
 noncomputable def rankOneIdentityProjection (X : CompHaus.{u}) :=
   CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
     (ModuleCat.{u + 1} R)
@@ -51,10 +47,8 @@ noncomputable def rankOneIdentityProjection (X : CompHaus.{u}) :=
     (Under.forget (op X) ⋙ coefficientPresheaf)
     (Under.mk (𝟙 (op X)))
 
-/-- Evaluation of a linear endomorphism of `LocallyConstant(X,R)` at the canonical constant
-section `1`. -/
 noncomputable def rankOneEndomorphismEvalOne (X : CompHaus.{u}) :
-    (coefficientAt X ⟶[ModuleCat.{u + 1} R] coefficientAt X) ⟶ coefficientAt X :=
+    (ihom (coefficientAt X)).obj (coefficientAt X) ⟶ coefficientAt X :=
   ModuleCat.ofHom
     { toFun := fun φ => φ (1 : coefficientAt X)
       map_add' := by
@@ -64,8 +58,6 @@ noncomputable def rankOneEndomorphismEvalOne (X : CompHaus.{u}) :
         intro c φ
         rfl }
 
-/-- Objectwise candidate for the inverse direction of the rank-one comparison: project the
-enriched end at the identity arrow, then evaluate the resulting endomorphism at `1`. -/
 noncomputable def rankOneEvaluationApp (X : CompHaus.{u}) :
     rankOneInternalHom.obj (op X) ⟶ coefficientAt X := by
   rw [rankOneInternalHom_eq_functorEnrichedHom]
