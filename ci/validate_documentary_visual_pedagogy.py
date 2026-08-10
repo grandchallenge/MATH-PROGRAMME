@@ -55,7 +55,14 @@ def discovered_contract_paths(root: Path = ROOT) -> list[Path]:
 
 
 def audit_inventory(audit: dict[str, Any]) -> list[dict[str, Any]]:
-    return [asset for family in audit.get("families", []) for asset in family.get("assets", [])]
+    inventory: list[dict[str, Any]] = []
+    for family in audit.get("families", []):
+        documentary_id = family.get("documentary_id")
+        for asset in family.get("assets", []):
+            item = dict(asset)
+            item["documentary_id"] = documentary_id
+            inventory.append(item)
+    return inventory
 
 
 def visual_pedagogy_errors(root: Path = ROOT) -> list[str]:
