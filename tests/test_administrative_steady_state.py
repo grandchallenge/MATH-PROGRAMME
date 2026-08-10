@@ -1,0 +1,90 @@
+from __future__ import annotations
+
+import copy
+import json
+import unittest
+from pathlib import Path
+
+import jsonschema
+import yaml
+
+ROOT = Path(__file__).resolve().parents[1]
+RECORD = ROOT / "governance/administrative_maintenance_steady_state_0_1.json"
+SCHEMA = ROOT / "schemas/administrative_maintenance_steady_state.schema.json"
+REGISTRY = ROOT / "governance/administrative_maintenance_trigger_registry.json"
+DISPATCH = ROOT / ".github/workflows/administrative-maintenance-dispatch.yml"
+
+EXPECTED_RECURRENT_CRONS = {
+    "9 18 * * 6",
+    "57 10 * * 0",
+    "45 3 * * 1",
+    "33 20 * * 1",
+    "21 13 * * 2",
+    "9 6 * * 3",
+    "57 22 * * 3",
+    "45 15 * * 4",
+    "33 8 * * 5",
+    "21 1 * * *",
+}
+
+
+class AdministrativeSteadyStateTests(unittest.TestCase):
+    def load_record(self):
+        return json.loads(RECORD.read_text(encoding="utf-8"))
+
+    def test_schema_and_authority_boundary(self):
+        record = self.load_record()
+        jsonschema.validate(record, json.loads(SCHEMA.read_text(encoding="utf-8")))
+        self.assertEqual(record["successor_id"], "MP-ADMIN-STEADY-STATE-0.1-001")
+        self.assertEqual(record["acceleration_factor"], 0.1)
+        self.assertEqual(record["cadence_anchor_utc"], "2026-08-01T01:21:00Z")
+        self.assertTrue(record["authority_boundary"]["successor_requires_human_steward_exact_head_disposition"])
+        self.assertFalse(record["authority_boundary"]["candidate_branch_is_authority"])
+        self.assertFalse(record["authority_boundary"]["future_control_plane_changes_pre_authorized"])
+        self.assertFalse(record["historical_evidence_policy"]["eventual_recovery_rewrites_failure"])
+        self.assertTrue(all(value is False for value in record["claim_boundaries"].values()))
+
+    def test_successor_horizon_and_completion_floor(self):
+        registry = json.loads(REGISTRY.read_text(encoding="utf-8"))
+        rows = {row["id"]: row for row in registry["procedures"]}
+        horizon = "2026-09-06T13:21:00Z"
+        for procedure in ("structural_sweep", "administrative_review", "deep_conformance_review"):
+            self.assertEqual(rows[procedure]["active_through_utc"], horizon)
+        self.assertEqual(rows["structural_sweep"]["interval_minutes"], 1008)
+        self.assertEqual(rows["administrative_review"]["interval_minutes"], 4320)
+        self.assertEqual(rows["deep_conformance_review"]["interval_minutes"], 12960)
+        self.assertEqual(rows["structural_sweep"]["completed_through_utc"], "2026-08-09T10:57:00Z")
+        self.assertEqual(rows["administrative_review"]["completed_through_utc"], "2026-08-10T01:21:00Z")
+        self.assertEqual(rows["deep_conformance_review"]["completed_through_utc"], "2026-08-10T01:21:00Z")
+        self.assertEqual(rows["pilot_review"]["active_through_utc"], "2026-08-10T01:21:00Z")
+
+    def test_exact_recurrence_is_bound_in_registry_and_workflow(self):
+        registry = json.loads(REGISTRY.read_text(encoding="utf-8"))
+        registry_crons = set(registry["schedule"]["exact_pilot_crons_utc"])
+        self.assertTrue(EXPECTED_RECURRENT_CRONS <= registry_crons)
+        workflow = yaml.safe_load(DISPATCH.read_text(encoding="utf-8"))
+        # PyYAML 1.1 parses the key 'on' as boolean True.
+        on_block = workflow.get("on", workflow.get(True))
+        workflow_crons = {row["cron"] for row in on_block["schedule"]}
+        self.assertTrue(EXPECTED_RECURRENT_CRONS <= workflow_crons)
+        self.assertIn("47 * * * *", workflow_crons)
+
+    def test_mutations_fail_schema_or_invariants(self):
+        record = self.load_record()
+        schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
+        mutated = copy.deepcopy(record)
+        mutated["acceleration_factor"] = 1.0
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate(mutated, schema)
+        mutated = copy.deepcopy(record)
+        mutated["authority_boundary"]["waiver_created"] = True
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate(mutated, schema)
+        mutated = copy.deepcopy(record)
+        mutated["claim_boundaries"]["external_claim_authorized"] = True
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate(mutated, schema)
+
+
+if __name__ == "__main__":
+    unittest.main()
