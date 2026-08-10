@@ -13,6 +13,7 @@ QROW_REPLAY = HERE / "QROW_REPLAY_RESULT.json"
 QROW_SYM = HERE / "QROW_SYMMETRIC_GAUGE.json"
 REDUCED = HERE / "REDUCED_WEIGHT5_RESIDUAL.json"
 CANON = HERE / "RESIDUAL_CANONICAL_RESULT.json"
+NESTED = HERE / "NESTED_SKELETON_REDUCTION.json"
 
 EXPECTED_A0 = "41218*n^3+198849*n^2+320790*n+173057"
 EXPECTED_C3 = "2*(n+3)^5*(2*n+5)*a0(n)"
@@ -30,6 +31,10 @@ EXPECTED_CANONICAL = {
     "l1": (134,28,3,"4fd7277655900f62a9f3676fd1d54614205cf8142cf26c04a4ef74eb8dfdc4c6"),
 }
 EXPECTED_CANON_BUNDLE = "a8b2bc4f905f58d03f0151e19e28e4ff0c1e217fbeb5721d38fe09bcd697b0e1"
+EXPECTED_NESTED_ELIMINATED = [
+    "U_k_l_1_4","U_l_k_1_4","U_k_l_2_3","U_l_k_2_3",
+    "ES_k_1_4","ES_l_1_4","ES_k_2_3","ES_l_2_3",
+]
 
 
 def validate() -> None:
@@ -41,8 +46,9 @@ def validate() -> None:
     gauge = json.loads(QROW_SYM.read_text(encoding="utf-8"))
     reduced = json.loads(REDUCED.read_text(encoding="utf-8"))
     canon = json.loads(CANON.read_text(encoding="utf-8"))
+    nested = json.loads(NESTED.read_text(encoding="utf-8"))
 
-    objs=(lock,result,search,qrow,replay,gauge,reduced,canon)
+    objs=(lock,result,search,qrow,replay,gauge,reduced,canon,nested)
     if any(x["operation"] != "OZ-RT-BZ-T3-009" for x in objs):
         raise AssertionError("operation drift")
     if any(x.get("route","T3_SEQUENCE_RECURRENCE_EXTRACTION_001") != "T3_SEQUENCE_RECURRENCE_EXTRACTION_001" for x in objs):
@@ -139,6 +145,22 @@ def validate() -> None:
     if canon["classification"] != "DIRECT_ED_WEIGHT_DIFFERENCES_CANONICALIZED_IN_PROTECTED_ATOM_SYSTEM" or canon["residual_sum_zero_proved"]:
         raise AssertionError("canonical result classification/promotion drift")
 
+    if nested["parent"] != "campaigns/odd_zeta/OZ_RT_BZ_T3_009/RESIDUAL_CANONICAL_RESULT.json":
+        raise AssertionError("nested skeleton parent drift")
+    nb=nested["basis"]
+    if nb != {
+        "N11":"U(k,l;1,2)+U(l,k;1,2)",
+        "N12k":"2*ES(l;1,3)-U(k,l;2,2)",
+        "N12l":"2*ES(k;1,3)-U(l,k;2,2)"}:
+        raise AssertionError("nested skeleton basis drift")
+    nr=nested["coordinate_relations"]
+    if not all(nr.values()):
+        raise AssertionError("nested coordinate relation drift")
+    if nested["eliminated_nested_coordinates"] != EXPECTED_NESTED_ELIMINATED:
+        raise AssertionError("nested eliminated-coordinate drift")
+    if nested["terminal"] != "DIRECT_ED_NESTED_SECTOR_REDUCED_TO_THREE_PROTECTED_COMBINATIONS" or nested["residual_sum_zero_proved"]:
+        raise AssertionError("nested skeleton terminal/promotion drift")
+
     if reduced["kernel_certificate"] != "campaigns/odd_zeta/OZ_RT_BZ_T3_009/QROW_REPLAY_RESULT.json" or reduced["general_residual"]["summation_identity_status"] != "EXACT_DISCRETE_PRODUCT_RULE_WITH_REVERIFIED_QROW_AND_ZERO_BOUNDARY_FLUX":
         raise AssertionError("reduced residual derivation drift")
     if reduced["protected_weight_instantiations"]["E_D"]["v"] != "W1+2*w5_sym" or reduced["protected_weight_instantiations"]["E_D"]["linearity"] != "E_D=E_W+2*E_P5":
@@ -149,14 +171,17 @@ def validate() -> None:
     sg=reduced["symmetric_gauge_reduction"]
     if sg["spatial_sum_orientations_after_index_swap"] != 1 or sg["four_channels"] != ["n1","n2","n3","k1"]:
         raise AssertionError("one-orientation residual reduction drift")
-    if reduced["residual_sum_zero_proved"] or reduced["terminal"] != "QROW_REVERIFIED_DIRECT_ED_CANONICALIZED_SYMMETRIC_ONE_ORIENTATION_REDUCTION_LOCKED":
+    ns=reduced["nested_skeleton"]
+    if ns["dimension"] != 3 or ns["basis"] != ["N11","N12k","N12l"] or not ns["all_weight4_weight5_r22_nested_coordinates_eliminated_from_shift_differences"]:
+        raise AssertionError("reduced nested skeleton binding drift")
+    if reduced["residual_sum_zero_proved"] or reduced["terminal"] != "QROW_REVERIFIED_DIRECT_ED_CANONICALIZED_ONE_ORIENTATION_THREE_NESTED_SKELETON_LOCKED":
         raise AssertionError("reduced residual terminal/promotion drift")
 
     if result["source_artifact_audit"]["RFD_ann.m"]["relevance"] != "NOT_A_T3_CERTIFICATE":
         raise AssertionError("middle-row checkpoint promoted into T3")
-    if any(x["proof_effect"] != "NONE" or x["promotion_effect"] != "NONE" for x in (result,search,qrow,replay,gauge,reduced,canon)):
+    if any(x["proof_effect"] != "NONE" or x["promotion_effect"] != "NONE" for x in (result,search,qrow,replay,gauge,reduced,canon,nested)):
         raise AssertionError("proof or promotion inflation")
-    if any(x["t3_status"] != "OPEN_WITH_CHARACTERIZED_BLOCKER" for x in (result,search,qrow,replay,gauge,reduced,canon)):
+    if any(x["t3_status"] != "OPEN_WITH_CHARACTERIZED_BLOCKER" for x in (result,search,qrow,replay,gauge,reduced,canon,nested)):
         raise AssertionError("T3 status inflation")
     if result["terminal"] != "RECURRENCE_INTERFACE_LOCKED_NONVACUOUS_BASELINE_AND_MOVING_SUPPORT_CERTIFIED":
         raise AssertionError("baseline terminal drift")
@@ -164,7 +189,7 @@ def validate() -> None:
 
 def main() -> int:
     validate()
-    print("OZ-RT-BZ-T3-009 recurrence, Q-row, canonical direct E_D, and symmetric one-orientation package is valid")
+    print("OZ-RT-BZ-T3-009 recurrence, Q-row, canonical direct E_D, one-orientation, and three-nested-skeleton package is valid")
     return 0
 
 if __name__ == "__main__":
