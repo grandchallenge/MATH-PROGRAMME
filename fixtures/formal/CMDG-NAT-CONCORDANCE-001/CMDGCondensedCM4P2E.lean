@@ -28,41 +28,23 @@ universe u
 open CategoryTheory
 open scoped BigOperators
 
-/-- The exact lifted integral coefficient ring inherited from protected P2-D. -/
 abbrev R := CMDG.CondensedCM4P2D.R
 
-/-- The protected P2-D canonical measure/dual functor. -/
 noncomputable abbrev measureFunctor : Profinite.{u} ⥤ CondensedMod.{u} R :=
   CMDG.CondensedCM4P2D.measureFunctor
 
-/-- The pinned solid functor to which P2-E must compare the protected P2-D functor. -/
 noncomputable abbrev solidFunctor : Profinite.{u} ⥤ CondensedMod.{u} R :=
   Condensed.profiniteSolid R
 
-/-- Restriction of the protected measure/dual functor to finite profinite sets. -/
 noncomputable abbrev finiteMeasure : FintypeCat.{u} ⥤ CondensedMod.{u} R :=
   FintypeCat.toProfinite ⋙ measureFunctor
 
-/-- The exact finite-free functor used by `Condensed.profiniteSolid`. -/
 noncomputable abbrev finiteFree : FintypeCat.{u} ⥤ CondensedMod.{u} R :=
   Condensed.finFree R
 
-/-- The finite comparison that P2-E must construct canonically and naturally. -/
 abbrev FiniteComparisonTarget := finiteMeasure ≅ finiteFree
-
-/-- The final P2-E theorem target. -/
 abbrev ComparisonTarget := measureFunctor ≅ solidFunctor
 
-/-!
-## E1 algebraic core
-
-For a finite type `X`, the dual of the finite function module `X → R` is canonically the same
-finite function module. The forward map evaluates a functional on the canonical delta functions;
-the inverse is the finite dot product. This uses only the elements of `X` themselves as canonical
-coordinates and makes no arbitrary basis choice.
--/
-
-/-- Canonical self-duality of a finite function module, by delta evaluation and finite summation. -/
 noncomputable def finiteFunctionDualEquiv (X : Type u) [Fintype X] :
     ((X → R) →ₗ[R] R) ≃ₗ[R] (X → R) where
   toFun φ := by
@@ -106,19 +88,9 @@ noncomputable def finiteFunctionDualEquiv (X : Type u) [Fintype X] :
     funext x
     simp
 
-/-- Canonical finite-free form of the algebraic dual, using finite-support/function equivalence. -/
 noncomputable def finiteFunctionDualFreeEquiv (X : Type u) [Fintype X] :
     ((X → R) →ₗ[R] R) ≃ₗ[R] (X →₀ R) :=
   (finiteFunctionDualEquiv X).trans (Finsupp.linearEquivFunOnFinite R R X).symm
-
-/-!
-## E1 functor-level discrete/free bridge
-
-The two composites below are left adjoints obtained by applying discreteness and freeness in the
-two possible orders. Their right adjoints are definitionally the same underlying-set functor, so
-left-adjoint uniqueness yields a canonical natural isomorphism. This is the categorical bridge
-needed before specializing to finite profinite sets.
--/
 
 noncomputable def discreteSetFreeAdj :
     (Condensed.discrete (Type (u + 1)) ⋙ Condensed.free R) ⊣
@@ -138,20 +110,10 @@ example :
       Condensed.underlying (ModuleCat.{u + 1} R) ⋙
         CategoryTheory.forget (ModuleCat.{u + 1} R) := rfl
 
-/-- Canonical natural compatibility of free condensed modules with the discrete embedding. -/
 noncomputable def discreteFreeIso :
     (Condensed.discrete (Type (u + 1)) ⋙ Condensed.free R) ≅
       (ModuleCat.free R ⋙ Condensed.discrete (ModuleCat.{u + 1} R)) :=
   discreteSetFreeAdj.leftAdjointUniq freeDiscreteModuleAdj
-
-/-!
-## E1 finite-discrete universe bridge
-
-`FintypeCat.toProfinite` installs the bottom topology. The first equality below confirms that its
-underlying topological functor is definitionally the finite-type inclusion followed by the discrete
-topology functor. ULifting that topology is only canonically isomorphic, not definitionally equal,
-to the discrete topology on the ULifted finite type.
--/
 
 noncomputable abbrev finiteUnderlyingULift : FintypeCat.{u} ⥤ Type (u + 1) :=
   FintypeCat.incl ⋙ CategoryTheory.uliftFunctor.{u + 1, u}
@@ -160,8 +122,6 @@ example :
     FintypeCat.toProfinite ⋙ Profinite.toTopCat =
       FintypeCat.incl ⋙ TopCat.discrete := rfl
 
-/-- Canonical natural identification of the ULifted finite discrete topology with the discrete
- topology on the ULifted finite type. -/
 noncomputable def finiteDiscreteULiftIso :
     FintypeCat.toProfinite ⋙ Profinite.toTopCat ⋙ TopCat.uliftFunctor.{u + 1, u} ≅
       finiteUnderlyingULift ⋙ TopCat.discrete :=
@@ -176,7 +136,6 @@ noncomputable def finiteDiscreteULiftIso :
       ext x
       rfl)
 
-/-- A discrete topological space and its locally constant sheaf define the same condensed set. -/
 noncomputable def discreteTopCondensedIso :
     TopCat.discrete.{u + 1} ⋙ topCatToCondensedSet ≅
       Condensed.discrete (Type (u + 1)) :=
@@ -185,22 +144,12 @@ noncomputable def discreteTopCondensedIso :
       (fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 0 2).mp)).symm ≪≫
     CondensedSet.LocallyConstant.iso
 
-/-- Finite discrete topological realization followed by the condensed-set comparison is canonically
- the discrete condensed set on the ULifted underlying finite type. -/
 noncomputable def finiteDiscreteCondensedIso :
     (FintypeCat.toProfinite ⋙ Profinite.toTopCat ⋙ TopCat.uliftFunctor.{u + 1, u} ⋙
         topCatToCondensedSet) ≅
       (finiteUnderlyingULift ⋙ Condensed.discrete (Type (u + 1))) :=
   Functor.isoWhiskerRight finiteDiscreteULiftIso topCatToCondensedSet ≪≫
     Functor.isoWhiskerLeft finiteUnderlyingULift discreteTopCondensedIso
-
-/-!
-## E1 representable/Yoneda bridge: pointwise core
-
-The Yoneda/ULift presentation has sections `ULift (S ⟶ X)`. The topological presentation on the
-ULifted target has sections `C(S, ULift X)`. The canonical homeomorphism from `X` to its topological
-ULift gives the required sectionwise equivalence.
--/
 
 noncomputable def continuousULiftSectionEquiv (S X : CompHaus.{u}) :
     ULift.{u + 1} (S ⟶ X) ≃ C(S, ↑(TopCat.uliftFunctor.{u + 1, u}.obj X.toTop)) where
@@ -223,14 +172,12 @@ noncomputable def continuousULiftSectionEquiv (S X : CompHaus.{u}) :
     ext s
     simp
 
-/-- Presheaf-level natural identification of the Yoneda/ULift condensed set with the sheaf of
- continuous maps into the topological ULift of the represented compact Hausdorff space. -/
 noncomputable def compHausTopULiftPresheafIso (X : CompHaus.{u}) :
     (compHausToCondensed.obj X).obj ≅
       (topCatToCondensedSet.obj (TopCat.uliftFunctor.{u + 1, u}.obj X.toTop)).obj :=
   NatIso.ofComponents
     (fun (S : CompHaus.{u}ᵒᵖ) =>
-      equivEquivIso.{u + 1} (continuousULiftSectionEquiv (unop S) X))
+      equivEquivIso.{u + 1} (continuousULiftSectionEquiv S.unop X))
     (by
       intro S T f
       ext g s
@@ -246,7 +193,6 @@ noncomputable def compHausTopULiftPresheafIso (X : CompHaus.{u}) :
 #check TopCat.uliftFunctorObjHomeo
 #check CompHausLike.LocallyConstant.functorIso
 #check CondensedSet.LocallyConstant.iso
-
 #check CMDG.CondensedCM4P2D.measureFunctor
 #check CMDG.CondensedCM4P2D.dualityHomEquiv
 #check finiteFunctionDualEquiv
