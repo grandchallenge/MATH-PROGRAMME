@@ -19,22 +19,21 @@ open CategoryTheory Opposite
 
 attribute [local instance] FintypeCat.fintype
 
-abbrev R := CMDG.CondensedCM4P2D.R.{u}
-abbrev PresheafModule := CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} R
-
-noncomputable abbrev coefficientPresheaf : PresheafModule :=
-  CMDG.CondensedCM4P2D.coefficientPresheaf
-
 /-- The discrete presheaf attached to the ordinary finite function module `X.obj → R`. -/
-noncomputable abbrev finiteFunctionPresheaf (X : FintypeCat.{u}) : PresheafModule :=
-  (CondensedMod.LocallyConstant.functorToPresheaves R).obj
-    (ModuleCat.of R (X.obj → R))
+noncomputable abbrev finiteFunctionPresheaf (X : FintypeCat.{u}) :
+    CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u} :=
+  (CondensedMod.LocallyConstant.functorToPresheaves CMDG.CondensedCM4P2D.R.{u}).obj
+    (ModuleCat.of CMDG.CondensedCM4P2D.R.{u}
+      (X.obj → CMDG.CondensedCM4P2D.R.{u}))
 
 /-- A finite family of copies of the coefficient presheaf, written pointwise. -/
-noncomputable def finiteCoefficientFamilyPresheaf (X : FintypeCat.{u}) : PresheafModule where
-  obj S := ModuleCat.of R (X.obj → LocallyConstant S.unop R)
+noncomputable def finiteCoefficientFamilyPresheaf (X : FintypeCat.{u}) :
+    CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u} where
+  obj S := ModuleCat.of CMDG.CondensedCM4P2D.R.{u}
+    (X.obj → LocallyConstant S.unop CMDG.CondensedCM4P2D.R.{u})
   map f := ModuleCat.ofHom
-    { toFun := fun a x => coefficientPresheaf.map f (a x)
+    { toFun := fun a x =>
+        CMDG.CondensedCM4P2D.coefficientPresheaf.map f (a x)
       map_add' := by
         intro a b
         funext x
@@ -56,7 +55,9 @@ noncomputable def finiteCoefficientFamilyPresheaf (X : FintypeCat.{u}) : Preshea
 locally constant `R`-valued maps. -/
 noncomputable def locallyConstantPiLinearEquiv
     (S : CompHaus.{u}) (X : FintypeCat.{u}) :
-    LocallyConstant S (X.obj → R) ≃ₗ[R] (X.obj → LocallyConstant S R) where
+    LocallyConstant S (X.obj → CMDG.CondensedCM4P2D.R.{u}) ≃ₗ[
+      CMDG.CondensedCM4P2D.R.{u}]
+      (X.obj → LocallyConstant S CMDG.CondensedCM4P2D.R.{u}) where
   toFun f := f.flip
   invFun f := LocallyConstant.unflip f
   left_inv f := LocallyConstant.unflip_flip f
@@ -74,8 +75,10 @@ noncomputable def finiteFunctionPresheafFamilyIso (X : FintypeCat.{u}) :
   NatIso.ofComponents
     (fun S => by
       change
-        ModuleCat.of R (LocallyConstant S.unop (X.obj → R)) ≅
-          ModuleCat.of R (X.obj → LocallyConstant S.unop R)
+        ModuleCat.of CMDG.CondensedCM4P2D.R.{u}
+            (LocallyConstant S.unop (X.obj → CMDG.CondensedCM4P2D.R.{u})) ≅
+          ModuleCat.of CMDG.CondensedCM4P2D.R.{u}
+            (X.obj → LocallyConstant S.unop CMDG.CondensedCM4P2D.R.{u})
       exact (locallyConstantPiLinearEquiv S.unop X).toModuleIso)
     (by
       intro S T f
@@ -90,13 +93,17 @@ noncomputable def finiteDiscreteContinuousPresheafIso (X : FintypeCat.{u}) :
         (op (FintypeCat.toProfinite.obj X)) ≅
       finiteFunctionPresheaf X := by
   change
-    (CondensedMod.LocallyConstant.functorToPresheaves R).obj
+    (CondensedMod.LocallyConstant.functorToPresheaves
+        CMDG.CondensedCM4P2D.R.{u}).obj
         (CMDG.CondensedCM4P2D.continuousFunctions.obj
           (op (FintypeCat.toProfinite.obj X))) ≅
-      (CondensedMod.LocallyConstant.functorToPresheaves R).obj
-        (ModuleCat.of R (X.obj → R))
+      (CondensedMod.LocallyConstant.functorToPresheaves
+        CMDG.CondensedCM4P2D.R.{u}).obj
+        (ModuleCat.of CMDG.CondensedCM4P2D.R.{u}
+          (X.obj → CMDG.CondensedCM4P2D.R.{u}))
   exact
-    (CondensedMod.LocallyConstant.functorToPresheaves R).mapIso
+    (CondensedMod.LocallyConstant.functorToPresheaves
+      CMDG.CondensedCM4P2D.R.{u}).mapIso
       (CMDG.CondensedCM4P2E.finiteContinuousFunctionsIso X)
 
 /-- Canonical source decomposition for the finite E1 transport. -/
