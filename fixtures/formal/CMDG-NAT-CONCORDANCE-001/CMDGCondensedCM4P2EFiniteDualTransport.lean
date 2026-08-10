@@ -105,7 +105,6 @@ lemma finiteCoordinate_resolution
           ModuleCat.Hom.hom
             ((finiteCoordinateProjection X i ≫ finiteCoordinateInclusion X i).app S)) = a
   rw [map_sum]
-  simp_rw [NatTrans.comp_app, ModuleCat.hom_comp, LinearMap.comp_apply]
   funext y
   let evalAtY :
       (X.obj → LocallyConstant S.unop CMDG.CondensedCM4P2D.R.{u}) →+
