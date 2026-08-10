@@ -122,6 +122,9 @@ amanuensis_control:
       - governance/mp_doc_visual_pedagogy_001_authorization.json
       - docs/decisions/ADR-0018_VISUAL_PEDAGOGY_REFORM.md
       - governance/documentary_visual_pedagogy_pilot_audit.json
+      - governance/visual_pedagogy/plates
+      - ci/validate_documentary_visual_pedagogy.py
+      - tests/test_documentary_visual_pedagogy.py
   cross_document_consistency:
     status: pending
     checked_against:
@@ -135,28 +138,28 @@ amanuensis_control:
   final_editorial_integration:
     status: pending
     integrated_artifact_ref: null
-    integration_notes: [Whole-library audit, reference pilot implementation, independent review, terminology/ledger integration, and final propagation disposition remain open.]
+    integration_notes: [Whole-library identity/disposition audit and mechanical validation binding are complete. Reference successor implementation, independent review, terminology/ledger integration, and final propagation disposition remain open.]
 
-unresolved_obligations:
+resolved_obligations:
   - id: VP-OBL-001
     owner: Typesetter
-    description: Enumerate every current reader-facing documentary visual and assign KEEP, REDRAW, REPLACE, or RETIRE with exact predecessor identity.
-    severity: high
-    blocking: true
+    resolution: governance/documentary_visual_pedagogy_pilot_audit.json now enumerates all 45 current documentary SVG assets at baseline main 839e04e1b862ffddfe5ce1d4d733ba954cd45d96, binds exact predecessor Git blobs, and assigns KEEP, REDRAW, REPLACE, or RETIRE to each.
+    resolved_at: '2026-08-09'
+  - id: VP-OBL-004
+    owner: Verifier
+    resolution: The plate schema, eight pilot contracts, ci/validate_documentary_visual_pedagogy.py, tests/test_documentary_visual_pedagogy.py, and validate_docs.py integration mechanically enforce identity, inventory, contract, provenance, accessibility, and non-evidence boundaries while expressly excluding mathematical-fidelity certification.
+    resolved_at: '2026-08-09'
+
+unresolved_obligations:
   - id: VP-OBL-002
     owner: Mechanist
-    description: Implement approximately six to ten reference pilot plates with reproducible source or renderer records appropriate to each representation class.
+    description: Implement the six corrective reference-pilot successors and retain the two exact SVG positive controls, with reproducible source or renderer records appropriate to each representation class.
     severity: high
     blocking: true
   - id: VP-OBL-003
     owner: Referee
     description: Obtain independent visual-semantic and domain-sensitive review of every pilot plate before any propagation recommendation.
     severity: critical
-    blocking: true
-  - id: VP-OBL-004
-    owner: Verifier
-    description: Bind mechanically checkable visual-contract and audit obligations into repository validation without misrepresenting schema validity as mathematical fidelity.
-    severity: high
     blocking: true
   - id: VP-OBL-005
     owner: Amanuensis
@@ -167,9 +170,8 @@ unresolved_obligations:
 promotion:
   ready_for_next_stage: false
   blockers:
-    - Complete the whole-library visual inventory audit.
-    - Complete the bounded six-to-ten-plate reference implementation.
-    - Complete independent visual-semantic and domain-sensitive review.
-    - Complete repository validation binding and Amanuensis ledger/terminology/final integration.
+    - Complete the six corrective reference-pilot successor implementations while retaining the two exact positive controls.
+    - Complete independent visual-semantic and domain-sensitive review of all eight pilot cases.
+    - Complete Amanuensis artifact-ledger, terminology, cross-document consistency, and final integration.
     - Record a separate governed disposition before any programme-wide migration.
   certification_route: null
