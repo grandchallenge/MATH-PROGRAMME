@@ -146,7 +146,8 @@ noncomputable def rankOneMultiplicationToEndomorphism
 lemma rankOneMultiplicationToEndomorphism_apply
     (X : CompHaus.{u}) (k : Under (op X))
     (a : coefficientAt X) (h : coefficientPresheaf.obj k.right) :
-    (rankOneMultiplicationToEndomorphism X k a) h = rankOneSectionMul X k a h := by
+    (show coefficientPresheaf.obj k.right ⟶ coefficientPresheaf.obj k.right from
+      rankOneMultiplicationToEndomorphism X k a).hom h = rankOneSectionMul X k a h := by
   rfl
 
 /-- In the closed structure on `ModuleCat`, contravariance of internal Hom is ordinary
