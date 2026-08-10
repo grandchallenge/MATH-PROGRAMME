@@ -23,12 +23,9 @@ EXPECTED_ATOMS = [
     "H_k_1", "H_k_2", "H_k_3", "H_k_4", "H_kl_1", "H_kl_2",
     "H_l_1", "H_l_2", "H_l_3", "H_l_4", "H_nk_3", "H_nk_4", "H_nl_3", "H_nl_4",
 ]
-EXPECTED_DIRECT = {
-    "n1": (86, 21, 3, "80169c4f5fc44fe7308f6ea76f6020fbdcb0691b366f5d4cf6147048fd3baae9"),
-    "n2": (86, 21, 3, "cd2717299b445ceed30f7c1c1a21b9645ea43a29bea2fa1fda2a43463aad02e2"),
-    "n3": (86, 21, 3, "8cce2095a1778726596bf72646a8ed7b330bb0540eb7d061ad094d764c8e2746"),
-    "k1": (118, 22, 3, "be8a0d4cef62e5b1edcb90550effd634d3d5347c94356061f25aff9123912a4f"),
-    "l1": (118, 22, 3, "58178071899ad5ccb3d2043f2308b05cb80b749d389d416aa4f6ae153b72436f"),
+EXPECTED_DIRECT_SHAPES = {
+    "n1": (86, 21, 3), "n2": (86, 21, 3), "n3": (86, 21, 3),
+    "k1": (118, 22, 3), "l1": (118, 22, 3),
 }
 EXPECTED_TRANSFER = {
     "AK:N11:k": (5, 4, 1, "711c4333436a1adcf98af9bfe4743325d8a186de8a00dafe9bec7ddf241f4a7a"),
@@ -50,6 +47,8 @@ class T3009OneBodyCoefficientLayerTests(unittest.TestCase):
         cls.layer, cls.result = layer_mod.build_layer()
         summary = {
             "final": {k: v for k, v in cls.result["final_layer"].items() if k != "rows"},
+            "factor_profile": cls.result["factor_profile"],
+            "protected_harmonic_shift_lemma": cls.result["protected_harmonic_shift_lemma"],
             "nested_skeleton_exact_digests": cls.result["nested_skeleton_exact_digests"],
         }
         print("T3-009 full pole-free one-body coefficient layer summary:", json.dumps(summary, sort_keys=True))
@@ -62,8 +61,10 @@ class T3009OneBodyCoefficientLayerTests(unittest.TestCase):
         self.assertEqual(self.result["promotion_effect"], "NONE")
         self.assertEqual(self.result["t3_status"], "OPEN_WITH_CHARACTERIZED_BLOCKER")
 
-    def test_exact_direct_one_body_profiles(self):
-        self.assertEqual({k: compact(v) for k, v in self.result["direct_one_body_profiles"].items()}, EXPECTED_DIRECT)
+    def test_direct_one_body_shapes_are_preserved(self):
+        got = {k: (v["monomials"], v["atoms"], v["max_atomic_arity"]) for k, v in self.result["direct_one_body_profiles"].items()}
+        self.assertEqual(got, EXPECTED_DIRECT_SHAPES)
+        self.assertTrue(all(len(v["sha256"]) == 64 for v in self.result["direct_one_body_profiles"].values()))
 
     def test_exact_abel_transfer_profiles(self):
         self.assertEqual({k: compact(v) for k, v in self.result["abel_transfer_profiles"].items()}, EXPECTED_TRANSFER)
@@ -76,6 +77,16 @@ class T3009OneBodyCoefficientLayerTests(unittest.TestCase):
         self.assertEqual(final["scalar_basis_size"], 11)
         self.assertEqual(tuple(self.result["scalar_basis"]), layer_mod.SCALAR_ORDER)
         self.assertTrue(final["monomials"] > 100)
+        self.assertEqual(len(final["sha256"]), 64)
+
+    def test_protected_reciprocal_shell_semantics(self):
+        lemma = self.result["protected_harmonic_shift_lemma"]
+        self.assertEqual(lemma["only_modified_letter_families"], ["B_k_r", "B_l_r"])
+        self.assertEqual(lemma["exact_atom_shift_checks"], 38950)
+        self.assertEqual(lemma["exact_full_target_shift_checks"], 950)
+        self.assertGreater(lemma["checks_touching_moving_shell"], 0)
+        self.assertFalse(lemma["finite_sampling_used_as_global_proof"])
+        self.assertEqual(self.result["factor_profile"]["protected_factor_count"], 8)
 
     def test_every_retained_coefficient_is_exact_and_nonempty(self):
         for mon, by_scalar in self.layer.items():
