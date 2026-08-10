@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+import copy
 import policy_impact as impact
 
 def main()->int:
@@ -20,5 +21,28 @@ def main()->int:
     sentinel=impact.classify_paths([],event_name='schedule',schedule=control['policy_dag']['full_policy_sentinel_cron']);assert sentinel['event_mode']=='full_policy_sentinel';assert sentinel['policy_shards']==list(impact.ALL_SHARDS)
     manual=impact.classify_paths([],event_name='workflow_dispatch');assert manual['event_mode']=='manual_full';assert all(manual['formal_dirty'].values())
     pushed=impact.classify_paths(['ci/validate_cmdg_schema_contracts.py'],event_name='push');assert 'docs' in pushed['policy_shards']
+
+    original_loader=impact.load_json
+    protected_control=original_loader(impact.CONTROL_PATH);protected_formal=original_loader(impact.FORMAL_PATH);protected_registry=original_loader(impact.REGISTRY_PATH)
+    mutations=[]
+    m=copy.deepcopy(protected_control);m['classifier']['unknown_path_behavior']='IGNORE';mutations.append(m)
+    m=copy.deepcopy(protected_control);m['formal_replay']['clean_transition']['full_replay_allowed']=True;mutations.append(m)
+    m=copy.deepcopy(protected_control);m['formal_replay']['clean_transition']['max_attestation_age_hours']=168;mutations.append(m)
+    m=copy.deepcopy(protected_control);m['authority_boundary']['required_checks_removed_or_renamed']=True;mutations.append(m)
+    m=copy.deepcopy(protected_control);m['claim_boundaries']['mathematical_authority_created']=True;mutations.append(m)
+    for mutated in mutations:
+        def loader(path,mutated=mutated):
+            if path==impact.CONTROL_PATH:return mutated
+            if path==impact.FORMAL_PATH:return protected_formal
+            if path==impact.REGISTRY_PATH:return protected_registry
+            if path==impact.CONTROL_SCHEMA:return original_loader(path)
+            if path==impact.REGISTRY_SCHEMA:return original_loader(path)
+            return original_loader(path)
+        impact.load_json=loader
+        try:impact.validate_control()
+        except (impact.ImpactError,impact.jsonschema.ValidationError):pass
+        else:raise AssertionError('unsafe policy-impact control mutation was accepted')
+        finally:impact.load_json=original_loader
+
     print('policy impact gating rejection tests passed');return 0
 if __name__=='__main__':raise SystemExit(main())
