@@ -183,12 +183,50 @@ noncomputable def compHausTopULiftPresheafIso (X : CompHaus.{u}) :
       ext g s
       rfl)
 
+/-- Lift the sectionwise representable/topological comparison to the sheaf category itself. -/
+noncomputable def compHausTopULiftIso (X : CompHaus.{u}) :
+    compHausToCondensed.obj X ≅
+      topCatToCondensedSet.obj (TopCat.uliftFunctor.{u + 1, u}.obj X.toTop) where
+  hom := ObjectProperty.homMk (compHausTopULiftPresheafIso X).hom
+  inv := ObjectProperty.homMk (compHausTopULiftPresheafIso X).inv
+  hom_inv_id := by
+    ext
+    exact (compHausTopULiftPresheafIso X).hom_inv_id
+  inv_hom_id := by
+    ext
+    exact (compHausTopULiftPresheafIso X).inv_hom_id
+
+/-- On finite profinite spaces, the representable condensed set is canonically the discrete
+condensed set on the ULifted underlying finite type. -/
+noncomputable def finiteRepresentableCondensedIso :
+    (FintypeCat.toProfinite ⋙ profiniteToCondensed) ≅
+      (finiteUnderlyingULift ⋙ Condensed.discrete (Type (u + 1))) :=
+  NatIso.ofComponents
+    (fun X =>
+      compHausTopULiftIso ((FintypeCat.toProfinite.obj X).toCompHaus) ≪≫
+        finiteDiscreteCondensedIso.app X)
+    (by
+      intro X Y f
+      ext S x
+      rfl)
+
+/-- Consequently the finite free condensed module is canonically a discrete finite free module. -/
+noncomputable def finiteFreeDiscreteIso :
+    finiteFree ≅
+      (finiteUnderlyingULift ⋙ ModuleCat.free R ⋙
+        Condensed.discrete (ModuleCat.{u + 1} R)) :=
+  Functor.isoWhiskerRight finiteRepresentableCondensedIso (Condensed.free R) ≪≫
+    Functor.isoWhiskerLeft finiteUnderlyingULift discreteFreeIso
+
 #check finiteUnderlyingULift
 #check finiteDiscreteULiftIso
 #check discreteTopCondensedIso
 #check finiteDiscreteCondensedIso
 #check continuousULiftSectionEquiv
 #check compHausTopULiftPresheafIso
+#check compHausTopULiftIso
+#check finiteRepresentableCondensedIso
+#check finiteFreeDiscreteIso
 #check TopCat.uliftFunctor
 #check TopCat.uliftFunctorObjHomeo
 #check CompHausLike.LocallyConstant.functorIso
@@ -217,5 +255,8 @@ noncomputable def compHausTopULiftPresheafIso (X : CompHaus.{u}) :
 #print axioms finiteDiscreteCondensedIso
 #print axioms continuousULiftSectionEquiv
 #print axioms compHausTopULiftPresheafIso
+#print axioms compHausTopULiftIso
+#print axioms finiteRepresentableCondensedIso
+#print axioms finiteFreeDiscreteIso
 
 end CMDG.CondensedCM4P2E
