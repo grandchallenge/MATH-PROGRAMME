@@ -55,7 +55,8 @@ jobs:
             fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EInternalHom.lean \
             fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EPointProbe.lean \
             fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EPointProbeRecovery.lean \
-            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EReverseTriangle.lean
+            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EReverseTriangle.lean \
+            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2ERankOneNaturalIso.lean
           do
             if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F"; then
               echo "P2-E fixtures must contain neither sorry nor local axioms."
@@ -109,4 +110,5 @@ jobs:
           mkdir -p .lake/build/lib/lean
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EPointProbe.olean CMDGCondensedCM4P2EPointProbe.lean
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EPointProbeRecovery.olean CMDGCondensedCM4P2EPointProbeRecovery.lean
-          lake env lean CMDGCondensedCM4P2EReverseTriangle.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EReverseTriangle.olean CMDGCondensedCM4P2EReverseTriangle.lean
+          lake env lean CMDGCondensedCM4P2ERankOneNaturalIso.lean
