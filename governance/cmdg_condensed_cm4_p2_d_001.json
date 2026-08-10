@@ -1,0 +1,166 @@
+{
+  "operation_id": "CMDG-CONDENSED-CM4-P2-D-001",
+  "parent_operation_id": "CMDG-CONDENSED-CM4-P2-001",
+  "parent_issue": 363,
+  "issue": 369,
+  "implementation_pr": 371,
+  "scope": "CM4-P2-D only: canonical functorial measure/dual condensed-module model associated to C(S,Z)",
+  "repository_baseline": "fa283a283c4584c79af86fec632d50aa49e6d640",
+  "repository_baseline_tree": "49f644c8ff4462015833d6477dfb6fde5b847970",
+  "protected_predecessor": {
+    "implementation_pr": 364,
+    "reviewed_head": "0892a8ed137013822d910a4212ce024da6997dc5",
+    "protected_tree": "90b8640fc3c75f35fff143be0e2be08ae6231a17",
+    "protected_merge": "baeee7329e12c73b422251edfb88a643108d7667",
+    "protected_replay_run": 31317585106,
+    "terminal_disposition": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  },
+  "environment": {
+    "lean_image": "leanprover/lean4:v4.33.0-rc1",
+    "lean_commit": "62eed1db4d67327ec8120be05f1a1b0847d74561",
+    "mathlib_commit": "79d0395a1825a6264ad5d269e35e60537518955e",
+    "mathlib_tree": "d76f5e09b832a08949f6d8ad4fb80ce30527da64",
+    "coefficient_ring": "ULift.{u + 1} Z"
+  },
+  "exact_tree_audit": {
+    "observed_sources": [
+      {
+        "path": "Mathlib/Condensed/Discrete/Module.lean",
+        "blob": "b3ba358aa6b01b2de4cfedf6480ac22e863241d3",
+        "declarations": [
+          "CondensedMod.LocallyConstant.functorToPresheaves",
+          "CondensedMod.LocallyConstant.functor",
+          "CondensedMod.LocallyConstant.functorIsoDiscrete",
+          "CondensedMod.LocallyConstant.adjunction"
+        ],
+        "signature": "functorToPresheaves : ModuleCat.{u+1} R -> (CompHaus.{u}^op -> ModuleCat R); functor : ModuleCat R -> CondensedMod.{u} R; functorIsoDiscrete : functor R ~= discrete _; adjunction : functor R |- underlying (ModuleCat R)",
+        "variance": "Covariant in the input R-module; the CompHaus site variable is contravariant by locally-constant pullback/comap; functor is left adjoint to underlying.",
+        "universe_behavior": "R : Type (u+1); source ModuleCat.{u+1} R; site CompHaus.{u}; output CondensedMod.{u} R.",
+        "evidence_class": "FORMAL_REACHABILITY",
+        "role": "construct C(S,R) and its discrete condensed-module presentation"
+      },
+      {
+        "path": "Mathlib/Algebra/Category/ModuleCat/Monoidal/Closed.lean",
+        "blob": "119610224bb253a976b03764f4e24fd3f662dc6c",
+        "declarations": [
+          "ModuleCat.monoidalClosed",
+          "ModuleCat.monoidalClosedHomEquiv"
+        ],
+        "signature": "monoidalClosedHomEquiv (M N P : ModuleCat.{v} R) : (M tensor N -> P) ~= (N -> internalHom(M,P)); instance : MonoidalClosed (ModuleCat.{v} R)",
+        "variance": "Internal Hom is contravariant in its first module argument and covariant in its target; tensorLeft M is left adjoint to internalHom(M,-).",
+        "universe_behavior": "Generic R : Type v; instantiated with v = u+1 and R = ULift.{u+1} Z in P2-D.",
+        "evidence_class": "FORMAL_REACHABILITY",
+        "role": "closed-monoidal internal Hom for R-modules"
+      },
+      {
+        "path": "Mathlib/CategoryTheory/Sites/Monoidal.lean",
+        "blob": "64b111b39f9f44dcab88a7fbe60411ef5008532c",
+        "declarations": [
+          "Presheaf.isSheaf_functorEnrichedHom"
+        ],
+        "signature": "isSheaf_functorEnrichedHom (F G : C^op -> A) (hG : IsSheaf J G) [HasFunctorEnrichedHom A F G] : IsSheaf J (functorEnrichedHom A F G)",
+        "variance": "F is the fixed source of enriched Hom; G is the target sheaf. The result preserves the target sheaf condition while retaining internal-Hom contravariance in F.",
+        "universe_behavior": "Polymorphic in site C and closed monoidal target A; instantiated at C = CompHaus.{u}, A = ModuleCat.{u+1} R.",
+        "evidence_class": "FORMAL_REACHABILITY",
+        "role": "prove the enriched internal-Hom presheaf is already a sheaf when the target is a sheaf"
+      },
+      {
+        "path": "Mathlib/CategoryTheory/Monoidal/Closed/FunctorCategory/Basic.lean",
+        "blob": "6f3c9a844bc5f98ef1754263de2e2c54496356ea",
+        "declarations": [
+          "MonoidalClosed.FunctorCategory.homEquiv",
+          "MonoidalClosed.FunctorCategory.monoidalClosed"
+        ],
+        "signature": "homEquiv : (F1 tensor F2 -> F3) ~= (F2 -> functorEnrichedHom C F1 F3); scoped instance monoidalClosed : MonoidalClosed (J -> C)",
+        "variance": "The enriched internal Hom is contravariant in F1 and covariant in F3; the Hom equivalence is natural in the tensor/Hom variables.",
+        "universe_behavior": "Polymorphic in J : Type u2 and C : Type u1; instantiated at J = CompHaus.{u}^op and C = ModuleCat.{u+1} R.",
+        "evidence_class": "FORMAL_REACHABILITY",
+        "role": "closed structure and defining Hom equivalence in the presheaf category"
+      },
+      {
+        "path": "Mathlib/CategoryTheory/Monoidal/Closed/Basic.lean",
+        "blob": "57dd533860e4be3957c13211f275b6f75441787c",
+        "declarations": [
+          "MonoidalClosed.pre",
+          "MonoidalClosed.pre_id",
+          "MonoidalClosed.pre_map",
+          "MonoidalClosed.internalHom"
+        ],
+        "signature": "pre (f : B -> A) : ihom A -> ihom B; pre_id; pre_map; internalHom [MonoidalClosed C] : C^op -> C -> C",
+        "variance": "Explicit contravariance in the first internal-Hom argument; pre_map reverses composition, yielding covariance of the P2-D measure functor after pullback on C(S,R).",
+        "universe_behavior": "Generic closed monoidal category C; no extra universe lift beyond that of C. Instantiated at the presheaf category over ModuleCat.{u+1} R.",
+        "evidence_class": "FORMAL_REACHABILITY",
+        "role": "contravariance of internal Hom in the source and functor-law support"
+      },
+      {
+        "path": "Mathlib/CategoryTheory/Monoidal/Closed/Enrichment.lean",
+        "blob": "6083cfbfd92a9e274a6559de438d43e2a3ac600d",
+        "declarations": [
+          "MonoidalClosed.enrichedCategorySelf",
+          "MonoidalClosed.enrichedOrdinaryCategorySelf"
+        ],
+        "signature": "scoped instance enrichedCategorySelf : EnrichedCategory C C; scoped instance enrichedOrdinaryCategorySelf : EnrichedOrdinaryCategory C C",
+        "variance": "Self-enrichment identifies enriched hom-objects with the closed internal Hom; ordinary morphisms map into those hom-objects through the closed adjunction.",
+        "universe_behavior": "C : Type u with Category.{v} C, MonoidalCategory C, MonoidalClosed C; activated for ModuleCat.{u+1} R and its functor category.",
+        "evidence_class": "FORMAL_REACHABILITY",
+        "role": "activate the closed category self-enrichment required by functorEnrichedHom"
+      }
+    ],
+    "dedicated_measure_locus_present": false,
+    "dedicated_measure_locus": "Mathlib/Condensed/Measure",
+    "result": "RECONSTRUCTIBLE_FROM_GENERAL_CLOSED_MONOIDAL_AND_SHEAF_INTERFACES"
+  },
+  "construction": {
+    "fixture": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2D.lean",
+    "coefficient_presheaf": "coefficientPresheaf",
+    "continuous_functions_functor": "continuousFunctions : Profinite^op -> ModuleCat R",
+    "discrete_continuous_presheaf": "discreteContinuousPresheaf",
+    "measure_object": "measurePresheafObj S = functorEnrichedHom (ModuleCat R) (C(S,R)_disc) R_disc",
+    "sheaf_proof": "measurePresheafObj_isSheaf",
+    "presheaf_functor": "measurePresheafFunctor : Profinite -> PresheafModule",
+    "condensed_functor": "measureFunctor : Profinite -> CondensedMod R",
+    "duality_interface": "dualityHomEquiv : (C(S,R)_disc tensor F -> R_disc) ~= (F -> measurePresheafObj S)",
+    "basis_dependency": false,
+    "objectwise_product_definition": false,
+    "variance": "COVARIANT_PROFINITE_BY_PULLBACK_THEN_INTERNAL_HOM_PRECOMPOSITION"
+  },
+  "source_concordance": {
+    "source_formula": "Z[S]^square = internalHom(C(S,Z), Z)",
+    "underlying_measure_group": "Hom(C(S,Z), Z)",
+    "product_after_basis_only": true,
+    "interpretation": "The reconstruction formalizes the canonical basis-free internal-dual model at the exact lifted integral coefficients; a Nobeling-basis product is downstream and noncanonical."
+  },
+  "adversarial_guards": {
+    "chosen_basis_substitute_rejected": true,
+    "objectwise_product_substitute_rejected": true,
+    "variance_reversal_rejected": true,
+    "p2_e_promotion_rejected": true,
+    "placeholder_rejected": true
+  },
+  "stage_result": {
+    "p2_d_candidate_reconstructed": true,
+    "p2_d_protected_available": false,
+    "p2_e_available": false,
+    "p2_closed": false,
+    "candidate_disposition": "P2_D_RECONSTRUCTED_PENDING_PROTECTED_ADMISSION"
+  },
+  "claim_boundary": {
+    "p2_e_natural_equivalence_established": false,
+    "p2_closed": false,
+    "cm4_theorem_certified": false,
+    "p3_closed": false,
+    "p4_closed": false,
+    "p5_closed": false,
+    "p6_closed": false,
+    "derived_complex_form_certified": false,
+    "arbitrary_ring_generalization_certified": false,
+    "c04_broadened": false,
+    "c06_discharged": false,
+    "graph_certified": false,
+    "dependency_minimality_claim": false,
+    "dependency_uniqueness_claim": false,
+    "cm5_authorized": false,
+    "global_cmdg_completeness_claim": false
+  },
+  "disposition": "P2_D_RECONSTRUCTED_PENDING_PROTECTED_ADMISSION"
+}
