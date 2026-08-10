@@ -21,22 +21,22 @@ local instance : MonoidalPreadditive
     intro X Y Z
     apply NatTrans.ext'
     funext j
-    simp
+    simp <;> rfl
   zero_whiskerRight := by
     intro X Y Z
     apply NatTrans.ext'
     funext j
-    simp
+    simp <;> rfl
   whiskerLeft_add := by
     intro X Y Z f g
     apply NatTrans.ext'
     funext j
-    simp
+    simp <;> rfl
   add_whiskerRight := by
     intro X Y Z f g
     apply NatTrans.ext'
     funext j
-    simp
+    simp <;> rfl
 
 noncomputable def finiteFamilyInternalHom (X : FintypeCat.{u}) :
     CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u} :=
