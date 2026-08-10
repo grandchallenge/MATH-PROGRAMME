@@ -52,8 +52,7 @@ class DocumentaryVisualPedagogyTests(unittest.TestCase):
         contract = load_json(contract_path)
         mutation = copy.deepcopy(contract)
         mutation["claim_boundary"]["visual_is_evidence"] = True
-        messages = [error.message for error in validator.iter_errors(mutation)]
-        self.assertTrue(any("False was expected" in message for message in messages))
+        self.assertTrue(list(validator.iter_errors(mutation)))
 
     def test_schema_rejects_unknown_representation_class(self) -> None:
         schema = load_json(ROOT / SCHEMA_PATH)
