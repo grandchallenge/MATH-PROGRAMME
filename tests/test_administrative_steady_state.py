@@ -13,6 +13,7 @@ RECORD = ROOT / "governance/administrative_maintenance_steady_state_0_1.json"
 SCHEMA = ROOT / "schemas/administrative_maintenance_steady_state.schema.json"
 REGISTRY = ROOT / "governance/administrative_maintenance_trigger_registry.json"
 DISPATCH = ROOT / ".github/workflows/administrative-maintenance-dispatch.yml"
+PREPARE_V4 = ROOT / "ci/prepare_administrative_candidate_v4.py"
 
 EXPECTED_RECURRENT_CRONS = {
     "9 18 * * 6",
@@ -69,6 +70,21 @@ class AdministrativeSteadyStateTests(unittest.TestCase):
         self.assertTrue(EXPECTED_RECURRENT_CRONS <= workflow_crons)
         self.assertIn("47 * * * *", workflow_crons)
 
+    def test_transition_bridge_is_exact_and_bounded(self):
+        record = self.load_record()
+        bridge = record["transition_bridge"]
+        self.assertEqual(bridge["occurrence_key"], "structural_sweep:2026-08-10T03:45:00Z")
+        self.assertEqual(bridge["normal_freeze_at_utc"], "2026-08-10T02:15:00Z")
+        self.assertEqual(bridge["bounded_mutation_until_utc"], bridge["due_at_utc"])
+        self.assertTrue(bridge["one_time_only"])
+        self.assertFalse(bridge["deadline_reset"])
+        self.assertFalse(bridge["required_checks_weakened"])
+        self.assertFalse(bridge["exact_head_gate_weakened"])
+        source = PREPARE_V4.read_text(encoding="utf-8")
+        self.assertIn('TRANSITION_OCCURRENCE_KEY = "structural_sweep:2026-08-10T03:45:00Z"', source)
+        self.assertIn("now >= occurrence.due_at", source)
+        self.assertIn("successor_transition_mutation_allowed", source)
+
     def test_mutations_fail_schema_or_invariants(self):
         record = self.load_record()
         schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
@@ -82,6 +98,10 @@ class AdministrativeSteadyStateTests(unittest.TestCase):
             jsonschema.validate(mutated, schema)
         mutated = copy.deepcopy(record)
         mutated["claim_boundaries"]["external_claim_authorized"] = True
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate(mutated, schema)
+        mutated = copy.deepcopy(record)
+        mutated["transition_bridge"]["deadline_reset"] = True
         with self.assertRaises(jsonschema.ValidationError):
             jsonschema.validate(mutated, schema)
 
