@@ -62,7 +62,8 @@ jobs:
             fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EFiniteDualKronecker.lean \
             fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EFiniteDualTriangles.lean \
             fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EFiniteDualResolution.lean \
-            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EFiniteDualFamilyIso.lean
+            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EFiniteDualFamilyIso.lean \
+            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EFiniteDualNaturality.lean
           do
             if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F"; then
               echo "P2-E fixtures must contain neither sorry nor local axioms."
@@ -123,4 +124,5 @@ jobs:
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteDualKronecker.olean CMDGCondensedCM4P2EFiniteDualKronecker.lean
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteDualTriangles.olean CMDGCondensedCM4P2EFiniteDualTriangles.lean
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteDualResolution.olean CMDGCondensedCM4P2EFiniteDualResolution.lean
-          lake env lean CMDGCondensedCM4P2EFiniteDualFamilyIso.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteDualFamilyIso.olean CMDGCondensedCM4P2EFiniteDualFamilyIso.lean
+          lake env lean CMDGCondensedCM4P2EFiniteDualNaturality.lean
