@@ -8,9 +8,9 @@ import Mathlib.Algebra.Algebra.Bilinear
 This auxiliary fixture isolates the sole remaining E1 construction: comparison of the protected
 P2-D sheaf-level internal Hom with the discrete algebraic dual on finite modules.
 
-The current checkpoint develops the canonical evaluation direction and the pointwise multiplication
-operator needed for its inverse. It does not yet assert the enriched-end lift, the rank-one
-isomorphism, or the final finite comparison.
+The current checkpoint develops the canonical evaluation direction and the canonical multiplication
+map into the enriched end needed for its inverse. It does not yet assert the rank-one isomorphism or
+the final finite comparison.
 -/
 
 namespace CMDG.CondensedCM4P2E.InternalHom
@@ -189,6 +189,19 @@ lemma rankOneMultiplication_condition
   simpa only [gi, gj, rankOneMultiplicationToEndomorphism_apply] using
     rankOneSectionMul_naturality X f a h
 
+/-- The canonical multiplication family, lifted through the enriched end, gives the inverse
+direction from coefficient sections to the rank-one internal Hom. -/
+noncomputable def rankOneMultiplicationApp (X : CompHaus.{u}) :
+    coefficientAt X ⟶ rankOneInternalHom.obj (op X) := by
+  rw [rankOneInternalHom_eq_functorEnrichedHom]
+  exact end_.lift
+    (fun k => rankOneMultiplicationToEndomorphism X k)
+    (fun i j f => by
+      simpa only [
+        MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerLeft,
+        MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight] using
+        rankOneMultiplication_condition X f)
+
 #check rankOneInternalHom
 #check rankOneInternalHom_eq_functorEnrichedHom
 #check RankOneTarget
@@ -203,6 +216,7 @@ lemma rankOneMultiplication_condition
 #check rankOneMultiplicationToEndomorphism_apply
 #check monoidalClosed_pre_apply
 #check rankOneMultiplication_condition
+#check rankOneMultiplicationApp
 #check LinearMap.mul
 #check ModuleCat.homLinearEquiv
 #check CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
@@ -214,6 +228,8 @@ lemma rankOneMultiplication_condition
 #check MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight
 #check ModuleCat.ihom_map_apply
 #check ModuleCat.monoidalClosed_pre_app
+#check Limits.end_.lift
+#check Limits.end_.lift_π
 
 #print axioms rankOneInternalHom_eq_functorEnrichedHom
 #print axioms rankOneIdentityProjection
@@ -226,5 +242,6 @@ lemma rankOneMultiplication_condition
 #print axioms rankOneMultiplicationToEndomorphism_apply
 #print axioms monoidalClosed_pre_apply
 #print axioms rankOneMultiplication_condition
+#print axioms rankOneMultiplicationApp
 
 end CMDG.CondensedCM4P2E.InternalHom
