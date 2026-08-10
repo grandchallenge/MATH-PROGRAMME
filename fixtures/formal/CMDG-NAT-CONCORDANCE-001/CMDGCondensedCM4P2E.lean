@@ -203,7 +203,7 @@ ULift gives the required sectionwise equivalence.
 -/
 
 noncomputable def continuousULiftSectionEquiv (S X : CompHaus.{u}) :
-    ULift.{u + 1} (S ⟶ X) ≃ C(S, ↑(TopCat.uliftFunctor.obj X.toTop)) where
+    ULift.{u + 1} (S ⟶ X) ≃ C(S, ↑(TopCat.uliftFunctor.{u + 1, u}.obj X.toTop)) where
   toFun f :=
     { toFun := fun s => (TopCat.uliftFunctorObjHomeo X.toTop) ((ConcreteCategory.hom f.down) s)
       continuous_toFun :=
@@ -227,9 +227,10 @@ noncomputable def continuousULiftSectionEquiv (S X : CompHaus.{u}) :
  continuous maps into the topological ULift of the represented compact Hausdorff space. -/
 noncomputable def compHausTopULiftPresheafIso (X : CompHaus.{u}) :
     (compHausToCondensed.obj X).obj ≅
-      (topCatToCondensedSet.obj (TopCat.uliftFunctor.obj X.toTop)).obj :=
+      (topCatToCondensedSet.obj (TopCat.uliftFunctor.{u + 1, u}.obj X.toTop)).obj :=
   NatIso.ofComponents
-    (fun S => equivEquivIso (continuousULiftSectionEquiv (unop S) X))
+    (fun (S : CompHaus.{u}ᵒᵖ) =>
+      equivEquivIso.{u + 1} (continuousULiftSectionEquiv (unop S) X))
     (by
       intro S T f
       ext g s
