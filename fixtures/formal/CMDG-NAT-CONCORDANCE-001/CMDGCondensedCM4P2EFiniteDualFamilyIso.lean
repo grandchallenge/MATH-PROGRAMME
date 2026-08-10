@@ -66,7 +66,7 @@ lemma finiteCoordinateInclusion_familyExtension
   · rw [← Category.assoc, finiteCoordinateInclusion_projection_self]
     simp
   · intro y hy hxy
-    rw [← Category.assoc, finiteCoordinateInclusion_projection_ne X hxy]
+    rw [← Category.assoc, finiteCoordinateInclusion_projection_ne X (Ne.symm hxy)]
     simp
   · simp
 
