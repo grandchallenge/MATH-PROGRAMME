@@ -65,14 +65,43 @@ lemma coefficientPullback_pointProbeFromIdentity
   intro z
   rfl
 
+lemma rankOneEvaluationApp_apply
+    (X : CompHaus.{u}) (φ : rankOneInternalHom.obj (op X)) :
+    rankOneEvaluationApp X φ =
+      rankOneProjectionEndomorphism X (Under.mk (𝟙 (op X))) φ
+        (show coefficientAt X from LocallyConstant.const X (1 : R)) := by
+  rfl
+
+lemma coefficientPullback_pointProbeFromIdentity_one
+    (X : CompHaus.{u}) (k : Under (op X)) (y : k.right.unop) :
+    coefficientPresheaf.map (rankOnePointProbeFromIdentity X k y).right
+        (show coefficientAt X from LocallyConstant.const X (1 : R)) =
+      (show coefficientPresheaf.obj (rankOnePointProbeObject X k y).right from
+        LocallyConstant.const (rankOnePointProbeObject X k y).right.unop (1 : R)) := by
+  simpa using coefficientPullback_pointProbeFromIdentity X k y
+    (show coefficientAt X from LocallyConstant.const X (1 : R))
+
+lemma locallyConstant_const_eq_smul_one
+    (Y : CompHaus.{u}) (r : R) :
+    LocallyConstant.const Y r = r • LocallyConstant.const Y (1 : R) := by
+  ext y
+  change r.down = (r * (1 : R)).down
+  exact (congrArg ULift.down (mul_one r)).symm
+
 #check coefficientPullback_const
 #check coefficientPullback_const_op
 #check coefficientPullback_pointProbe
 #check coefficientPullback_pointProbeFromIdentity
+#check rankOneEvaluationApp_apply
+#check coefficientPullback_pointProbeFromIdentity_one
+#check locallyConstant_const_eq_smul_one
 
 #print axioms coefficientPullback_const
 #print axioms coefficientPullback_const_op
 #print axioms coefficientPullback_pointProbe
 #print axioms coefficientPullback_pointProbeFromIdentity
+#print axioms rankOneEvaluationApp_apply
+#print axioms coefficientPullback_pointProbeFromIdentity_one
+#print axioms locallyConstant_const_eq_smul_one
 
 end CMDG.CondensedCM4P2E.InternalHom
