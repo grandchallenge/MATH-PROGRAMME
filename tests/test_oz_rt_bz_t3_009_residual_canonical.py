@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import unittest
+from fractions import Fraction as Q
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -20,6 +21,30 @@ EXPECTED={
     "k1":(134,28,3,"ba7fa0176dc782b6c0747a71a9a0e13c3c5cf3d0c6077efe6f99c2a461c34780"),
     "l1":(134,28,3,"4fd7277655900f62a9f3676fd1d54614205cf8142cf26c04a4ef74eb8dfdc4c6"),
 }
+NESTED={
+    "U_k_l_1_2","U_l_k_1_2","U_k_l_2_2","U_l_k_2_2","ES_k_1_3","ES_l_1_3",
+    "U_k_l_1_4","U_l_k_1_4","U_k_l_2_3","U_l_k_2_3","ES_k_1_4","ES_l_1_4","ES_k_2_3","ES_l_2_3",
+}
+SURVIVING={"U_k_l_1_2","U_l_k_1_2","U_k_l_2_2","U_l_k_2_2","ES_k_1_3","ES_l_1_3"}
+
+
+def scaled_rat(x,c):
+    c=Q(c)
+    return {s:c*v for s,v in x.items() if c*v}
+
+
+def nested_projection(poly,name):
+    out={}
+    for mon,coeff in poly.items():
+        if name not in mon:
+            continue
+        if sum(1 for a in mon if a in NESTED) != 1:
+            raise AssertionError(f"more than one nested atom in {mon}")
+        rest=list(mon); rest.remove(name); rest=tuple(rest)
+        if rest in out:
+            raise AssertionError(f"duplicate nested projection monomial {name}:{rest}")
+        out[rest]=coeff
+    return out
 
 
 class T3009ResidualCanonicalTests(unittest.TestCase):
@@ -48,6 +73,24 @@ class T3009ResidualCanonicalTests(unittest.TestCase):
         self.assertEqual(self.result["protected_atom_count"],41)
         self.assertEqual(len(self.result["protected_atoms"]),41)
         self.assertEqual(max(x["max_atomic_arity"] for x in self.result["shifts"].values()),3)
+
+    def test_nested_sector_is_exact_three_combination_skeleton(self):
+        # Every canonical shift difference has nested coordinates only in
+        # N11=Ukl12+Ulk12,
+        # N12k=2*ESl13-Ukl22,
+        # N12l=2*ESk13-Ulk22.
+        for label,poly in self.deltas.items():
+            present={a for mon in poly for a in mon if a in NESTED}
+            self.assertTrue(present <= SURVIVING, label)
+            p_ukl12=nested_projection(poly,"U_k_l_1_2")
+            p_ulk12=nested_projection(poly,"U_l_k_1_2")
+            self.assertEqual(p_ukl12,p_ulk12,label)
+            p_ukl22=nested_projection(poly,"U_k_l_2_2")
+            p_esl13=nested_projection(poly,"ES_l_1_3")
+            self.assertEqual(p_esl13,{m:scaled_rat(c,-2) for m,c in p_ukl22.items()},label)
+            p_ulk22=nested_projection(poly,"U_l_k_2_2")
+            p_esk13=nested_projection(poly,"ES_k_1_3")
+            self.assertEqual(p_esk13,{m:scaled_rat(c,-2) for m,c in p_ulk22.items()},label)
 
 
 if __name__ == "__main__":
