@@ -1,6 +1,9 @@
 import CMDGCondensedCM4P2D
 import Mathlib.Condensed.Solid
 import Mathlib.Condensed.Discrete.Colimit
+import Mathlib.Condensed.Discrete.Basic
+import Mathlib.CategoryTheory.Adjunction.Unique
+import Mathlib.Algebra.Category.ModuleCat.Adjunctions
 import Mathlib.CategoryTheory.Functor.KanExtension.Basic
 import Mathlib.CategoryTheory.Functor.KanExtension.Pointwise
 import Mathlib.LinearAlgebra.Finsupp.Pi
@@ -106,10 +109,46 @@ noncomputable def finiteFunctionDualFreeEquiv (X : Type u) [Fintype X] :
     ((X → R) →ₗ[R] R) ≃ₗ[R] (X →₀ R) :=
   (finiteFunctionDualEquiv X).trans (Finsupp.linearEquivFunOnFinite R R X).symm
 
+/-!
+## E1 functor-level discrete/free bridge
+
+The two composites below are left adjoints obtained by applying discreteness and freeness in the
+two possible orders. Their right adjoints are definitionally the same underlying-set functor, so
+left-adjoint uniqueness yields a canonical natural isomorphism. This is the categorical bridge
+needed before specializing to finite profinite sets.
+-/
+
+noncomputable def discreteSetFreeAdj :
+    (Condensed.discrete (Type (u + 1)) ⋙ Condensed.free R) ⊣
+      (Condensed.forget R ⋙ Condensed.underlying (Type (u + 1))) :=
+  (Condensed.discreteUnderlyingAdj (Type (u + 1))).comp
+    (Condensed.freeForgetAdjunction R)
+
+noncomputable def freeDiscreteModuleAdj :
+    (ModuleCat.free R ⋙ Condensed.discrete (ModuleCat.{u + 1} R)) ⊣
+      (Condensed.underlying (ModuleCat.{u + 1} R) ⋙
+        CategoryTheory.forget (ModuleCat.{u + 1} R)) :=
+  (ModuleCat.adj R).comp
+    (Condensed.discreteUnderlyingAdj (ModuleCat.{u + 1} R))
+
+example :
+    Condensed.forget R ⋙ Condensed.underlying (Type (u + 1)) =
+      Condensed.underlying (ModuleCat.{u + 1} R) ⋙
+        CategoryTheory.forget (ModuleCat.{u + 1} R) := rfl
+
+/-- Canonical natural compatibility of free condensed modules with the discrete embedding. -/
+noncomputable def discreteFreeIso :
+    (Condensed.discrete (Type (u + 1)) ⋙ Condensed.free R) ≅
+      (ModuleCat.free R ⋙ Condensed.discrete (ModuleCat.{u + 1} R)) :=
+  discreteSetFreeAdj.leftAdjointUniq freeDiscreteModuleAdj
+
 #check CMDG.CondensedCM4P2D.measureFunctor
 #check CMDG.CondensedCM4P2D.dualityHomEquiv
 #check finiteFunctionDualEquiv
 #check finiteFunctionDualFreeEquiv
+#check discreteSetFreeAdj
+#check freeDiscreteModuleAdj
+#check discreteFreeIso
 #check Condensed.finFree
 #check Condensed.profiniteSolid
 #check Condensed.profiniteSolidCounit
@@ -121,5 +160,6 @@ noncomputable def finiteFunctionDualFreeEquiv (X : Type u) [Fintype X] :
 
 #print axioms finiteFunctionDualEquiv
 #print axioms finiteFunctionDualFreeEquiv
+#print axioms discreteFreeIso
 
 end CMDG.CondensedCM4P2E
