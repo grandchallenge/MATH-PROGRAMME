@@ -70,6 +70,12 @@ def validate(data=None):
     assert record["repository_baseline"] == EXPECTED_BASE
     assert record["repository_baseline_tree"] == EXPECTED_BASE_TREE
 
+    scope = record["scope"]
+    assert "P2-E only" in scope
+    assert "RECONSTRUCTION/EQUIVALENCE" in scope
+    assert "P2-D REPRESENTATION" in scope
+    assert "duality alone carries no reconstruction authority" in scope
+
     pred = record["protected_predecessor"]
     assert pred["operation_id"] == "CMDG-CONDENSED-CM4-P2-D-001"
     assert pred["issue"] == 369
@@ -101,6 +107,12 @@ def validate(data=None):
         assert row["evidence_class"] == "FORMAL_REACHABILITY"
         assert row["role"].strip()
 
+    p2d_role = sources[
+        "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2D.lean"
+    ]["role"]
+    assert "P2-D REPRESENTATION" in p2d_role
+    assert "no reconstruction/equivalence authority" in p2d_role
+
     target = record["theorem_target"]
     assert target["fixture"] == \
         "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2E.lean"
@@ -116,6 +128,10 @@ def validate(data=None):
     assert arch["finite_level_comparison"]["state"] == "OPEN_CONSTRUCTION"
     assert arch["measure_right_kan_extension"]["state"] == "OPEN_CONSTRUCTION"
     assert arch["kan_extension_uniqueness"]["state"] == "FORMALLY_AVAILABLE"
+    assert "comparison data, not an inference from duality alone" in \
+        arch["finite_level_comparison"]["requirement"]
+    assert "P2-D REPRESENTATION" in arch["measure_right_kan_extension"]["requirement"]
+    assert "P2-E RECONSTRUCTION/EQUIVALENCE" in arch["kan_extension_uniqueness"]["requirement"]
 
     guards = record["adversarial_guards"]
     assert all(guards.values())
@@ -153,6 +169,10 @@ def validate(data=None):
 
     report = REPORT.read_text(encoding="utf-8")
     for token in (
+        "Programme semantic boundary — representation versus reconstruction",
+        "P2-D — `REPRESENTATION`",
+        "P2-E — `RECONSTRUCTION/EQUIVALENCE`",
+        "duality does not imply reconstruction",
         "FORMAL_ROUTE_REACHABLE_WITH_TWO_CONSTRUCTION_OBLIGATIONS",
         "E1 — canonical finite comparison",
         "E2 — measure functor as right Kan extension",
