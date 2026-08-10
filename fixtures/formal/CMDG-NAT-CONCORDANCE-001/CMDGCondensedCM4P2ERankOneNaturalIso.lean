@@ -26,6 +26,7 @@ noncomputable def rankOneObjectIso (X : CompHaus.{u}) :
   hom_inv_id := rankOneEvaluation_multiplication X
   inv_hom_id := rankOneMultiplication_evaluation X
 
+set_option backward.isDefEq.respectTransparency false in
 lemma rankOneInternalHom_map_identityProjection
     {X Y : CompHaus.{u}} (f : X ⟶ Y) :
     rankOneInternalHom.map f.op ≫ rankOneIdentityProjection X =
@@ -95,12 +96,13 @@ lemma rankOneProjection_evalOne_naturality
   rw [coefficientPullback_one f] at h
   exact h.symm
 
+set_option backward.isDefEq.respectTransparency false in
 lemma rankOneEvaluationApp_naturality
     {X Y : CompHaus.{u}} (f : X ⟶ Y) :
     rankOneInternalHom.map f.op ≫ rankOneEvaluationApp X =
       rankOneEvaluationApp Y ≫ coefficientPresheaf.map f.op := by
   unfold rankOneEvaluationApp
-  rw [rankOneInternalHom_map_identityProjection f]
+  rw [← Category.assoc, rankOneInternalHom_map_identityProjection f]
   exact rankOneProjection_evalOne_naturality f
 
 noncomputable def rankOneInternalHomNatIso : RankOneTarget :=
