@@ -51,7 +51,8 @@ jobs:
           set -euo pipefail
           for F in \
             fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2E.lean \
-            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EAlgebraic.lean
+            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EAlgebraic.lean \
+            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EInternalHom.lean
           do
             if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F"; then
               echo "P2-E fixtures must contain neither sorry nor local axioms."
@@ -98,6 +99,7 @@ jobs:
         run: |
           set -euo pipefail
           echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
-          lake build CMDGCondensedCM4P2E CMDGCondensedCM4P2EAlgebraic
+          lake build CMDGCondensedCM4P2E CMDGCondensedCM4P2EAlgebraic CMDGCondensedCM4P2EInternalHom
           lake env lean CMDGCondensedCM4P2E.lean
           lake env lean CMDGCondensedCM4P2EAlgebraic.lean
+          lake env lean CMDGCondensedCM4P2EInternalHom.lean
