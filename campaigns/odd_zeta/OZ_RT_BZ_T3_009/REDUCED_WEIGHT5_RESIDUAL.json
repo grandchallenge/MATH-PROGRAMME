@@ -33,11 +33,35 @@
       "linearity": "E_D=E_W+2*E_P5"
     }
   },
-  "selection_policy": "Canonicalize the direct E_D residual first because it preserves any cross-component cancellation. Retain E_P5 and E_W as independent diagnostic projections; do not replace E_D by component proof obligations unless that decomposition is advantageous and exactly verified.",
-  "next_exact_obligation": "Construct a pole-free canonical representation of E_D over the protected weight-five atom basis, verify it independently against the defining residual at exact points and by coefficient identity, then search/certify sum_{k,l} E_D=0 without returning to the exhausted generic 198-dimensional raw-flux ansatz.",
+  "canonicalization": {
+    "result": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/RESIDUAL_CANONICAL_RESULT.json",
+    "status": "DIRECT_ED_WEIGHT_DIFFERENCES_CANONICALIZED_IN_PROTECTED_ATOM_SYSTEM",
+    "protected_atom_count": 41,
+    "closure_only_atoms": [],
+    "target_max_atomic_arity": 4,
+    "difference_max_atomic_arity": 3,
+    "shift_monomial_counts": {
+      "n1": 102,
+      "n2": 102,
+      "n3": 102,
+      "k1": 134,
+      "l1": 134
+    }
+  },
+  "symmetric_gauge_reduction": {
+    "artifact": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/QROW_SYMMETRIC_GAUGE.json",
+    "rho_sigma_relation": "rho_sym(n,k,l)=sigma_sym(n,l,k)",
+    "direct_D_weight_symmetric": true,
+    "spatial_sum_orientations_after_index_swap": 1,
+    "four_channels": ["n1","n2","n3","k1"],
+    "sum_formula": "sum E_D = sum_{k,l}[c1*T(n+1)*Delta_n1(Dweight)+c2*T(n+2)*Delta_n2(Dweight)+c3*T(n+3)*Delta_n3(Dweight)-2*Rk_sym(n,k+1,l)*Delta_k(Dweight)]",
+    "status": "EXACT_SYMMETRY_REDUCTION_OF_THE_REVERIFIED_RESIDUAL_SUM"
+  },
+  "selection_policy": "Use direct E_D and its symmetric one-orientation form first because it preserves cross-component and k<->l cancellation. Retain E_P5 and E_W only as diagnostic projections unless an exact decomposition is later advantageous.",
+  "next_exact_obligation": "Certify or precisely characterize the four-channel one-orientation sum residual over the canonical protected atom system, without returning to the exhausted generic 198-dimensional raw-flux ansatz.",
   "residual_sum_zero_proved": false,
   "proof_effect": "NONE",
   "promotion_effect": "NONE",
   "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
-  "terminal": "QROW_REVERIFIED_REDUCED_WEIGHT5_RESIDUAL_INTERFACE_LOCKED"
+  "terminal": "QROW_REVERIFIED_DIRECT_ED_CANONICALIZED_SYMMETRIC_ONE_ORIENTATION_REDUCTION_LOCKED"
 }
