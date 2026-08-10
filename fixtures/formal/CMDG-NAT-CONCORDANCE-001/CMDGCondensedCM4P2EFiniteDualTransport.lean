@@ -52,7 +52,8 @@ noncomputable def finiteCoordinateInclusion
     by_cases hy : y = x <;> simp [hy]
   · intro S T f
     apply ModuleCat.hom_injective
-    funext h
+    apply LinearMap.ext
+    intro h
     funext y
     change
       CMDG.CondensedCM4P2D.coefficientPresheaf.map f
@@ -77,7 +78,8 @@ noncomputable def finiteCoordinateProjection
         rfl }
   naturality S T f := by
     apply ModuleCat.hom_injective
-    funext a
+    apply LinearMap.ext
+    intro a
     rfl
 
 /-- A coordinate inclusion followed by its matching projection is the identity. -/
@@ -106,9 +108,11 @@ lemma finiteCoordinate_resolution
     (∑ x, finiteCoordinateProjection X x ≫ finiteCoordinateInclusion X x) =
       𝟙 (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X) := by
   classical
-  ext S
+  apply NatTrans.ext
+  funext S
   apply ModuleCat.hom_injective
-  funext a
+  apply LinearMap.ext
+  intro a
   funext y
   simp [finiteCoordinateInclusion, finiteCoordinateProjection]
 
