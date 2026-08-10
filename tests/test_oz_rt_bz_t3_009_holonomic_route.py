@@ -15,7 +15,7 @@ class T3009HolonomicRouteTests(unittest.TestCase):
 
     def test_route_follows_deformation_negative(self):
         self.assertEqual(cls_route := self.route["predecessor_negative"],"campaigns/odd_zeta/OZ_RT_BZ_T3_009/DEFORMATION_SPAN_RESULT.json")
-        self.assertEqual(self.route["status"],"STRUCTURED_HOLONOMIC_ROUTE_LOCKED_AFTER_DEFORMATION_REJECTION")
+        self.assertEqual(self.route["status"],"STRUCTURED_HOLONOMIC_ROUTE_ADMITTED_AFTER_INDEPENDENT_POLE_FREE_COEFFICIENT_REPLAY")
 
     def test_symmetry_reduced_channel_and_letter_blocks(self):
         self.assertEqual(self.route["channel_decomposition"]["symmetry_reduced_channels"],["n1","n2","n3","k1"])
@@ -31,7 +31,7 @@ class T3009HolonomicRouteTests(unittest.TestCase):
         self.assertTrue(policy["finite_sampling_is_not_proof"])
 
     def test_next_boundary_and_claim_firewall(self):
-        self.assertEqual(self.route["next_execution_boundary"],"FULL_POLE_FREE_ONE_BODY_RESIDUAL_COEFFICIENT_LAYER_001")
+        self.assertEqual(self.route["next_execution_boundary"],"SYMMETRY_REDUCED_CHANNEL_HARMONIC_BLOCK_WITH_SHELL_STRATA_001")
         self.assertEqual(self.route["proof_effect"],"NONE")
         self.assertEqual(self.route["promotion_effect"],"NONE")
         self.assertEqual(self.route["t3_status"],"OPEN_WITH_CHARACTERIZED_BLOCKER")
