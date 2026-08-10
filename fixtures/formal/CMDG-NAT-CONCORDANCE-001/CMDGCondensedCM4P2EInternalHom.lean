@@ -216,7 +216,9 @@ lemma rankOneMultiplication_identity_evalOne (X : CompHaus.{u}) :
       (show LocallyConstant X R from a)
   rw [coefficientPresheaf.map_id, ModuleCat.id_apply]
   ext x
-  change a x * (1 : R) = a x
+  change
+    (show LocallyConstant X R from a) x * (1 : R) =
+      (show LocallyConstant X R from a) x
   exact mul_one _
 
 lemma rankOneMultiplication_evaluation (X : CompHaus.{u}) :
