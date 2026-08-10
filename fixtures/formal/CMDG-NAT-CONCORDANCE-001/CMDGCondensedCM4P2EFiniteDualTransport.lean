@@ -148,7 +148,7 @@ lemma monoidalClosed_pre_zero
   apply NatTrans.ext
   funext X
   apply MonoidalClosed.uncurry_injective
-  simp
+  simp [MonoidalClosed.uncurry_eq]
 
 lemma monoidalClosed_pre_add
     (A B : CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u})
@@ -157,7 +157,7 @@ lemma monoidalClosed_pre_add
   apply NatTrans.ext
   funext X
   apply MonoidalClosed.uncurry_injective
-  simp [Preadditive.add_comp]
+  simp [MonoidalClosed.uncurry_eq]
 
 lemma finiteCoordinatePre_projection_inclusion
     (X : FintypeCat.{u}) (x y : X.obj) :
