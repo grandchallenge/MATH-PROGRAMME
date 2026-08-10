@@ -9,6 +9,46 @@ between the protected P2-D canonical measure/dual functor and the pinned
 The P2-D predecessor is now protected authority. This operation therefore begins from the exact
 protected merge rather than from the pre-merge P2-D candidate.
 
+## Programme semantic boundary — representation versus reconstruction
+
+CM4-P2-D and CM4-P2-E are intentionally different claim kinds.
+
+**P2-D — `REPRESENTATION`.** The protected predecessor constructs the canonical, basis-free,
+functorial measure/dual condensed-module model associated to `C(S,ℤ)`, together with its
+Hom/duality interface. Its admitted output is the protected `measureFunctor` representation. P2-D
+does **not** assert that this representation is `profiniteSolid`, and the existence of the duality
+interface does not itself carry reconstruction or equivalence authority.
+
+**P2-E — `RECONSTRUCTION/EQUIVALENCE`.** Starting only from that protected representation, P2-E
+must construct the comparison data and universal-property proof that recover the canonical
+`profiniteSolid` functor naturally. The terminal P2-E mathematical object is the natural
+isomorphism
+
+```lean
+measureFunctor ≅ Condensed.profiniteSolid R
+```
+
+not merely the existence of `measureFunctor`, an objectwise equivalence, or a duality pairing.
+
+The governed construction hierarchy is therefore
+
+```text
+P2-D representation / duality
+  → finite natural comparison
+  → measure-side right-Kan reconstruction
+  → canonical right-Kan uniqueness
+  → P2-E natural equivalence
+```
+
+This is a proof architecture, not a universal implication chain in category theory. In particular,
+**duality does not imply reconstruction**. P2-E becomes available only when the global natural
+comparison is actually constructed and replayed. Identity is recovered only in the categorical
+sense that the reconstruction loop is naturally isomorphic to the canonical target; no literal
+object equality or chosen-basis identification is claimed.
+
+This semantic boundary is fail-closed for the operation: no downstream record may promote P2-D
+availability into P2-E availability without discharging E1, E2, and E3 below.
+
 ## Protected predecessor
 
 - operation: `CMDG-CONDENSED-CM4-P2-D-001`
@@ -167,6 +207,7 @@ The operation rejects:
 
 - a chosen Nöbeling basis;
 - an objectwise product identification without naturality;
+- inference of reconstruction/equivalence merely from P2-D duality;
 - reversed variance;
 - an unexplained universe shift;
 - `sorry`, local axioms, or opaque semantic placeholders;
