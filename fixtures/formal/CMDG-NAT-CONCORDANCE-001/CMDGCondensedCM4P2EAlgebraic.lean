@@ -91,7 +91,12 @@ noncomputable def finiteSmallFreeDualNatIso :
           (Finsupp.lmapDomain R.{u} R.{u} (fun x => f x) (Finsupp.single x r))) h =
         ((CMDG.CondensedCM4P2E.finiteFunctionDualFreeEquiv.{u, u} X).symm
           (Finsupp.single x r)) (fun y => h (f y))
-      simp [finiteFunctionDualFreeEquiv_symm_apply, Finsupp.lmapDomain_apply])
+      rw [finiteFunctionDualFreeEquiv_symm_apply,
+        finiteFunctionDualFreeEquiv_symm_apply]
+      simp only [Finsupp.lmapDomain_apply, Finsupp.mapDomain_single]
+      rw [Fintype.sum_eq_single (f x) (fun y hy => by simp [hy])]
+      rw [Fintype.sum_eq_single x (fun y hy => by simp [hy])]
+      simp)
 
 /-- Canonical natural algebraic dual/free comparison on finite sets. -/
 noncomputable def finiteFunctionDualFreeNatIso :
