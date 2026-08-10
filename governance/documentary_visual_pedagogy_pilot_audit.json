@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0.0",
+  "docket": "MP-DOC-VISUAL-PEDAGOGY-001",
+  "status": "INITIAL_AUDIT_SEED_INCOMPLETE",
+  "canonical_tracker": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/377",
+  "full_inventory_audit_complete": false,
+  "scope_note": "This seed records the representative plates examined during Council deliberation. It must not be represented as the required whole-library audit. Whole-library enumeration and classification remain a blocking pilot obligation.",
+  "audited_at": "2026-08-09T18:59:00-07:00",
+  "dispositions": [
+    {
+      "documentary_id": "PC-001",
+      "asset": "docs/assets/documentaries/poincare/plate_geometry.svg",
+      "title": "When geometry becomes an engine",
+      "current_representation": "schematic",
+      "disposition": "REPLACE",
+      "finding": "The static distorted surface/grid and isolated signal do not visibly encode Ricci-flow evolution, metric smoothing, curvature scale, or a sequence approaching singularity.",
+      "target_representation": "simulation-derived or data-derived staged rendering with explicit time, curvature encoding, and vector annotation",
+      "preferred_delivery": ["png", "webp", "pdf", "video"]
+    },
+    {
+      "documentary_id": "PC-001",
+      "asset": "docs/assets/documentaries/poincare/plate_surgery.svg",
+      "title": "The craft of controlled surgery",
+      "current_representation": "schematic",
+      "disposition": "REPLACE",
+      "finding": "The planar cut-and-wedge grammar risks teaching a two-dimensional cut rather than a controlled three-dimensional neck modeled on S^2 x I, cutting two-spheres, and attachment of standard caps.",
+      "target_representation": "staged three-dimensional geometric reconstruction with explicit neck, cutting spheres, scale cue, and smooth cap geometry",
+      "preferred_delivery": ["png", "webp", "pdf", "video"]
+    },
+    {
+      "documentary_id": "RH-001",
+      "asset": "docs/assets/documentaries/riemann/strip.svg",
+      "title": "The critical strip",
+      "current_representation": "schematic",
+      "disposition": "REPLACE",
+      "finding": "The plate description promises trivial zeros, the pole, symmetry, and nontrivial zeros, but the visible encoding is only a strip, central line, and generic points. Axes, sigma=0/1/1/2, the pole, trivial zeros, symmetry, and the provenance of nontrivial-zero positions are not carried by the image.",
+      "target_representation": "verified complex-plane/data-derived visualization with exact axes and analytic annotations; optional field view separated from zero-location data",
+      "preferred_delivery": ["png", "webp", "svg", "pdf"]
+    },
+    {
+      "documentary_id": "NS-CI-001",
+      "asset": "docs/assets/documentaries/navier_stokes/vorticity.svg",
+      "title": "Energy guards; vorticity stretches",
+      "current_representation": "schematic",
+      "disposition": "REPLACE",
+      "finding": "The present closed-loop/line motif does not depict a three-dimensional vortex tube, lengthening and thinning, vorticity magnitude, the stretching term, or an energy cascade despite the alt text and caption inviting those readings.",
+      "target_representation": "three-stage vortex-tube rendering or controlled simulation-derived sequence; keep the energy identity and vortex-stretching equation as separately labeled analytic panels",
+      "preferred_delivery": ["png", "webp", "pdf", "video"]
+    },
+    {
+      "documentary_id": "HC-001",
+      "asset": "docs/assets/documentaries/hodge/cycles.svg",
+      "title": "From subvarieties to classes",
+      "current_representation": "schematic",
+      "disposition": "REDRAW",
+      "finding": "The circle-to-arrow-to-H^(p,p) grammar is not materially false but is too content-poor to teach the cycle-class map, codimension, rationality, many-to-one behavior, or the conjectural surjectivity boundary.",
+      "target_representation": "rich vector conceptual diagram or worked geometric example with an explicit cycle-class map, coefficient field, codimension, image, and open surjectivity boundary",
+      "preferred_delivery": ["svg", "pdf", "png"]
+    },
+    {
+      "documentary_id": "BSD-001",
+      "asset": "docs/assets/documentaries/bsd/plate_curve.svg",
+      "title": "The ancient question of rational solutions",
+      "current_representation": "schematic",
+      "disposition": "REDRAW",
+      "finding": "The documentary prose supplies an exact congruent-number example, but the illustrated cubic and points are presented as visual analogy rather than a verified plot. A reader can mistake aesthetically placed points or curve geometry for literal arithmetic data.",
+      "target_representation": "exact computational plot of E_5: y^2=x^3-25x with verified rational points, including (25/4,75/8), and the genuine rational 5-area triangle with labeled sides 3/2, 20/3, 41/6",
+      "preferred_delivery": ["svg", "png", "webp", "pdf"]
+    },
+    {
+      "documentary_id": "PNP-001",
+      "asset": "docs/assets/documentaries/p_vs_np/reduction.svg",
+      "title": "The grammar of reduction",
+      "current_representation": "schematic",
+      "disposition": "KEEP",
+      "finding": "A directed mapping between decision problems is intrinsically diagrammatic and the nearby manuscript states the exact relation x in A iff f(x) in B. SVG is an appropriate medium for this representation class, subject to explicit reduction-direction labeling and the new semantic contract.",
+      "target_representation": "retain SVG as the positive-control case; enrich labels only if independent review identifies a concrete pedagogical defect",
+      "preferred_delivery": ["svg", "pdf"]
+    }
+  ],
+  "blocking_next_step": "Enumerate every current reader-facing documentary visual from the manifest-discovered editions, bind exact asset identities, and assign KEEP, REDRAW, REPLACE, or RETIRE before the pilot is eligible for completion."
+}
