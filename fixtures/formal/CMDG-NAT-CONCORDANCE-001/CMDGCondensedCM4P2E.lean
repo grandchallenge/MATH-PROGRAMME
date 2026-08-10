@@ -187,21 +187,31 @@ noncomputable def compHausTopULiftPresheafIso (X : CompHaus.{u}) :
 noncomputable def compHausTopULiftIso (X : CompHaus.{u}) :
     compHausToCondensed.obj X ≅
       topCatToCondensedSet.obj (TopCat.uliftFunctor.{u + 1, u}.obj X.toTop) :=
-  ObjectProperty.isoMk (compHausTopULiftPresheafIso X)
+  ObjectProperty.isoMk
+    (Presheaf.IsSheaf (coherentTopology CompHaus.{u}))
+    (compHausTopULiftPresheafIso X)
+
+/-- The representable/topological ULift comparison is natural in the represented compact
+Hausdorff space, not merely objectwise. -/
+noncomputable def compHausTopULiftNatIso :
+    compHausToCondensed ≅
+      (compHausToTop ⋙ TopCat.uliftFunctor.{u + 1, u} ⋙ topCatToCondensedSet) :=
+  NatIso.ofComponents
+    (fun X => compHausTopULiftIso X)
+    (by
+      intro X Y f
+      apply ObjectProperty.hom_ext
+      ext S x
+      rfl)
 
 /-- On finite profinite spaces, the representable condensed set is canonically the discrete
 condensed set on the ULifted underlying finite type. -/
 noncomputable def finiteRepresentableCondensedIso :
     (FintypeCat.toProfinite ⋙ profiniteToCondensed) ≅
       (finiteUnderlyingULift ⋙ Condensed.discrete (Type (u + 1))) :=
-  NatIso.ofComponents
-    (fun X =>
-      compHausTopULiftIso (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj X)) ≪≫
-        finiteDiscreteCondensedIso.app X)
-    (by
-      intro X Y f
-      ext S x
-      rfl)
+  Functor.isoWhiskerLeft
+      (FintypeCat.toProfinite ⋙ profiniteToCompHaus) compHausTopULiftNatIso ≪≫
+    finiteDiscreteCondensedIso
 
 /-- Consequently the finite free condensed module is canonically a discrete finite free module. -/
 noncomputable def finiteFreeDiscreteIso :
@@ -218,6 +228,7 @@ noncomputable def finiteFreeDiscreteIso :
 #check continuousULiftSectionEquiv
 #check compHausTopULiftPresheafIso
 #check compHausTopULiftIso
+#check compHausTopULiftNatIso
 #check finiteRepresentableCondensedIso
 #check finiteFreeDiscreteIso
 #check TopCat.uliftFunctor
@@ -249,6 +260,7 @@ noncomputable def finiteFreeDiscreteIso :
 #print axioms continuousULiftSectionEquiv
 #print axioms compHausTopULiftPresheafIso
 #print axioms compHausTopULiftIso
+#print axioms compHausTopULiftNatIso
 #print axioms finiteRepresentableCondensedIso
 #print axioms finiteFreeDiscreteIso
 
