@@ -140,12 +140,8 @@ lemma rankOneProjection_recovery
         rankOneMultiplicationToEndomorphism X k (rankOneEvaluationApp X φ)) := by
   apply ModuleCat.hom_injective
   ext h
-  change
-    rankOneProjectionEndomorphism X k φ h =
-      (show coefficientPresheaf.obj k.right ⟶ coefficientPresheaf.obj k.right from
-        rankOneMultiplicationToEndomorphism X k (rankOneEvaluationApp X φ)).hom h
-  rw [rankOneMultiplicationToEndomorphism_apply]
-  exact rankOneProjection_recovery_apply X k φ h
+  simpa only [rankOneMultiplicationToEndomorphism_apply] using
+    rankOneProjection_recovery_apply X k φ h
 
 #check rankOnePointProbe_naturality
 #check rankOnePointProbe_identity_naturality
