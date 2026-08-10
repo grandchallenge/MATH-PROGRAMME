@@ -186,15 +186,8 @@ noncomputable def compHausTopULiftPresheafIso (X : CompHaus.{u}) :
 /-- Lift the sectionwise representable/topological comparison to the sheaf category itself. -/
 noncomputable def compHausTopULiftIso (X : CompHaus.{u}) :
     compHausToCondensed.obj X ≅
-      topCatToCondensedSet.obj (TopCat.uliftFunctor.{u + 1, u}.obj X.toTop) where
-  hom := ObjectProperty.homMk (compHausTopULiftPresheafIso X).hom
-  inv := ObjectProperty.homMk (compHausTopULiftPresheafIso X).inv
-  hom_inv_id := by
-    ext
-    exact (compHausTopULiftPresheafIso X).hom_inv_id
-  inv_hom_id := by
-    ext
-    exact (compHausTopULiftPresheafIso X).inv_hom_id
+      topCatToCondensedSet.obj (TopCat.uliftFunctor.{u + 1, u}.obj X.toTop) :=
+  ObjectProperty.isoMk (compHausTopULiftPresheafIso X)
 
 /-- On finite profinite spaces, the representable condensed set is canonically the discrete
 condensed set on the ULifted underlying finite type. -/
@@ -203,7 +196,7 @@ noncomputable def finiteRepresentableCondensedIso :
       (finiteUnderlyingULift ⋙ Condensed.discrete (Type (u + 1))) :=
   NatIso.ofComponents
     (fun X =>
-      compHausTopULiftIso ((FintypeCat.toProfinite.obj X).toCompHaus) ≪≫
+      compHausTopULiftIso (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj X)) ≪≫
         finiteDiscreteCondensedIso.app X)
     (by
       intro X Y f
