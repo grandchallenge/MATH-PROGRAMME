@@ -125,14 +125,14 @@ noncomputable def finiteContinuousFunctionsIso (X : FintypeCat.{u}) :
 /-- Restriction of P2-D continuous functions to finite profinite sets, retaining its natural
 contravariance. -/
 noncomputable abbrev finiteContinuousFunctions :
-    FintypeCat.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} R :=
+    FintypeCat.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} R.{u} :=
   FintypeCat.toProfinite.op ⋙ CMDG.CondensedCM4P2D.continuousFunctions
 
 /-- The ordinary finite-function module functor; a map in `FintypeCatᵒᵖ` acts by
 precomposition with its unop. -/
 noncomputable def finiteFunctionModule :
-    FintypeCat.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} R where
-  obj X := ModuleCat.of R (X.unop → R)
+    FintypeCat.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} R.{u} where
+  obj X := ModuleCat.of R.{u} (X.unop → R.{u})
   map f := ModuleCat.ofHom
     { toFun := fun h y => h (f.unop y)
       map_add' := by
@@ -157,7 +157,12 @@ precomposition. -/
 noncomputable def finiteContinuousFunctionsNatIso :
     finiteContinuousFunctions ≅ finiteFunctionModule :=
   NatIso.ofComponents
-    (fun X => finiteContinuousFunctionsIso X.unop)
+    (fun X => by
+      change
+        CMDG.CondensedCM4P2D.continuousFunctions.obj
+            (Opposite.op (FintypeCat.toProfinite.obj X.unop)) ≅
+          ModuleCat.of R.{u} (X.unop → R.{u})
+      exact finiteContinuousFunctionsIso X.unop)
     (by
       intro X Y f
       apply ModuleCat.hom_ext
