@@ -349,6 +349,36 @@
       "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_008/validate.py"],
       "timeout_seconds": 60,
       "scope": "Validate authority, symmetry completeness, basis and normalization locks, finite-grid alias provenance, final affine ranks, degree-two witness identity, nonclaims, and OPEN_WITH_CHARACTERIZED_BLOCKER disposition."
+    },
+    {
+      "id": "OZ-RT-BZ-T3-009-PRODUCER",
+      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_009/producer.py"],
+      "timeout_seconds": 180,
+      "scope": "Regenerate the locked order-three recurrence baseline, nonvacuity evidence, moving-support certificate, and T3-009 source-normalized package."
+    },
+    {
+      "id": "OZ-RT-BZ-T3-009-SEARCH",
+      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_009/search.py"],
+      "timeout_seconds": 300,
+      "scope": "Replay the exact bounded symmetric raw-jet recurrence-divergence search for D, P5, and W through coefficient degree two."
+    },
+    {
+      "id": "OZ-RT-BZ-T3-009-RESIDUAL-CANONICAL",
+      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_009/residual_canonical.py"],
+      "timeout_seconds": 300,
+      "scope": "Regenerate the exact canonical n1, n2, n3, k1, and l1 weight differences for direct E_D and verify closure inside the protected 41-atom system."
+    },
+    {
+      "id": "OZ-RT-BZ-T3-009-VERIFIER",
+      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_009/verify.py"],
+      "timeout_seconds": 300,
+      "scope": "Independently replay the locked recurrence and canonical direct E_D maps against the T3-002 discrete target, including independent nested partial-fraction reconstruction."
+    },
+    {
+      "id": "OZ-RT-BZ-T3-009-VALIDATION",
+      "command": ["python3", "campaigns/odd_zeta/OZ_RT_BZ_T3_009/validate.py"],
+      "timeout_seconds": 60,
+      "scope": "Validate recurrence authority, Q-row replay and regularized boundary, canonical direct E_D closure, symmetric one-orientation reduction, bounded negative frontier, and no-promotion boundary."
     }
   ],
   "exemptions": []
