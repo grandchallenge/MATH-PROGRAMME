@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.1.0",
+  "operation": "OZ-RT-BZ-T3-009",
+  "route": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001",
+  "subroute": "QROW_PRODUCT_RULE_REDUCTION_001",
+  "parent": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/NESTED_SKELETON_REDUCTION.json",
+  "status": "GLOBAL_REGULARIZED_DERIVATIVE_CERTIFICATES_COMPLETE",
+  "interior_gamma_extension": {
+    "domain": "0<=k,l<=n before shell extension",
+    "Lk_identity": "Lk=-partial_k log(T)",
+    "Ll_identity": "Ll=-partial_l log(T)",
+    "cross_log_identity": "partial_k partial_l log(T)=-C2",
+    "A_identity": "A:=Lk*Ll-C2=(partial_k partial_l T)/T",
+    "derivation": "Differentiate the Gamma-product logarithm of T. On interior integer points psi(m+1)=H_m-gamma and psi1(m+1)=zeta(2)-H_m^(2); the constants cancel."
+  },
+  "lattice_extension": {
+    "protected_shell_convention": "H(m,r)=0 for m<=0 in the protected discrete target",
+    "T_times_Lk": "T*Lk_disc=-partial_k T on every integer point of 0<=k,l<=n+3",
+    "T_times_Ll": "T*Ll_disc=-partial_l T on every integer point of 0<=k,l<=n+3",
+    "T_times_A": "T*A_disc=partial_k partial_l T on every integer point of 0<=k,l<=n+3",
+    "reason": "On interior points the identities are the Gamma/digamma formulas. On any moving-support shell T has an exact double zero in each out-of-support coordinate. A single derivative in that coordinate still vanishes at the integer shell, so both sides are zero; the mixed derivative likewise retains at least a simple zero in every shell coordinate."
+  },
+  "nested_weight_decomposition": {
+    "nested_Dweight": "r22_nested + Lk*N12k + Ll*N12l + A*N11",
+    "N11": "U(k,l;1,2)+U(l,k;1,2)",
+    "N12k": "2*ES(l;1,3)-U(k,l;2,2)",
+    "N12l": "2*ES(k;1,3)-U(l,k;2,2)",
+    "consequence": "The nested-coordinate part of E_D is E[A]*N11 + E[Lk]*N12k + E[Ll]*N12l; all finite differences of N11/N12k/N12l are one-body."
+  },
+  "regularized_derivative_certificates": {
+    "base": "L_BZ[T]=Delta_k(Fk)+Delta_l(Fl), Fk=Reg[rho_sym*T], Fl=Reg[sigma_sym*T]",
+    "for_Lk": {
+      "identity": "E[Lk]=Delta_k(Jk_Lk)+Delta_l(Jl_Lk)",
+      "Jk_Lk": "-partial_k(Fk)-Fk*Lk_disc",
+      "Jl_Lk": "-partial_k(Fl)-Fl*Lk_disc"
+    },
+    "for_Ll": {
+      "identity": "E[Ll]=Delta_k(Jk_Ll)+Delta_l(Jl_Ll)",
+      "Jk_Ll": "-partial_l(Fk)-Fk*Ll_disc",
+      "Jl_Ll": "-partial_l(Fl)-Fl*Ll_disc"
+    },
+    "for_A": {
+      "identity": "E[A]=Delta_k(Jk_A)+Delta_l(Jl_A)",
+      "Jk_A": "partial_k partial_l(Fk)-Fk*A_disc",
+      "Jl_A": "partial_k partial_l(Fl)-Fl*A_disc"
+    },
+    "derivation": "Differentiate the reverified analytic Q-row identity before specializing to the integer lattice. Replace the differentiated kernels by T*Lk_disc, T*Ll_disc, and T*A_disc using the lattice-extension identities. One application of the discrete product rule cancels the F_shift*Delta(f) terms already present in E[f], leaving the displayed pure divergences."
+  },
+  "shell_reconciliation": {
+    "shell_offsets": [1,2,3],
+    "base_certificate_pole_order": 2,
+    "kernel_zero_order": 2,
+    "regularized_product_statement": "rho_sym*T and sigma_sym*T have removable singularities and therefore holomorphic extensions Fk,Fl across every shell and their intersections. Their first and mixed coordinate derivatives are finite there.",
+    "generic_field_simplification_forbidden_on_shells": "Do not replace -partial(F)-F*L_disc by -T*partial(rho), or the mixed analogue, at shell points. Such cancellation uses the singular analytic logarithmic derivative rather than the protected discrete L_disc and can manufacture a spurious pole.",
+    "historical_cubic_pole_witness": {
+      "object": "partial_k rho_sym at k=n+1+x",
+      "denominator_divisible_by_x_cubed": true,
+      "denominator_divisible_by_x_fourth": false,
+      "numerator_nonzero_at_x_zero": true,
+      "interpretation": "This witnesses only that the simplified coefficient derivative is shell-singular; it does not obstruct the unsimplified derivative of the regularized product Fk."
+    },
+    "lower_boundary": {
+      "rho_sym_at_k_zero": true,
+      "partial_k_rho_sym_at_k_zero": true,
+      "sigma_sym_at_l_zero": true,
+      "partial_l_sigma_sym_at_l_zero": true,
+      "consequence": "Fk and the derivatives needed by Jk vanish at k=0; Fl and the derivatives needed by Jl vanish at l=0. Mixed derivatives retain the coordinate zero."
+    },
+    "upper_boundary": "At K+1>=n+4 the Q-row coefficients have no moving-support pole. T retains an exact double zero in the exiting coordinate; one derivative leaves at least a simple zero. Hence every regularized differentiated flux above vanishes on the upper finite-box boundary.",
+    "joint_shell_intersections": "The pole/zero cancellation is coordinatewise of order two, so Fk and Fl extend holomorphically across joint shell intersections; one derivative in each coordinate remains finite.",
+    "finite_box_boundary_complete": true
+  },
+  "abel_transfer": {
+    "principle": "For each nested basis element N and exact global coefficient certificate E[f]=Delta_k Jk+Delta_l Jl, finite summation by parts transfers the differences from J onto N. Boundary terms vanish by the reconciled differentiated-flux boundary certificate. Since Delta_k/Delta_l of N11, N12k, and N12l are one-body, the entire nested sector reduces exactly to the one-body sector.",
+    "example_differences": {
+      "Delta_k_N12k": "-H_(k+l+1)^(2)/(k+1)^2",
+      "Delta_l_N12l": "-H_(k+l+1)^(2)/(l+1)^2",
+      "Delta_k_N11": "H_(k+l+1)^(2)/(k+1) + H_l/(k+1)^2 - (H_(k+l+1)-H_(k+1))/(k+1)^2 - (H_(k+l+1)^(2)-H_(k+1)^(2))/(k+1)",
+      "Delta_l_N11": "k<->l mirror of Delta_k_N11"
+    },
+    "nested_sector_reduced_to_one_body": true
+  },
+  "next_exact_obligation": "Construct the resulting purely one-body residual after Abel transfer, independently verify its equality to the summed direct E_D residual, then seek a structured one-body telescoping or recurrence certificate. Do not return to the exhausted generic 198-dimensional raw-flux ansatz.",
+  "nested_sector_globally_reduced_to_one_body": true,
+  "residual_sum_zero_proved": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+  "terminal": "NESTED_GLOBAL_REGULARIZED_DERIVATIVE_CERTIFICATE_COMPLETE_ONE_BODY_REDUCTION_NEXT"
+}

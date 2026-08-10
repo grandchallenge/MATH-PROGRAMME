@@ -1,0 +1,38 @@
+{
+  "operation": "OZ-RT-BZ-T3-009",
+  "route": "DIRECT_T3_DISCRETE_RESIDUAL_CERT_001",
+  "subroute": "STRUCTURED_ONE_BODY_LETTER_SPLIT_HOLONOMIC_001",
+  "status": "ONE_BODY_SYMMETRY_QUOTIENT_AND_WEIGHT_BLOCKS_CONSTRUCTED",
+  "input_atom_count": 22,
+  "k_l_symmetry_orbit_representative_count": 13,
+  "weight_blocks": {
+    "weight1": ["H_k_1", "H_kl_1", "H_nk_1", "H_nmk_1", "H_nkl_1"],
+    "weight2": ["H_k_2", "H_kl_2", "H_nk_2", "H_nkl_2"],
+    "weight3": ["H_k_3", "H_nk_3"],
+    "weight4": ["H_k_4", "H_nk_4"]
+  },
+  "diagnostic_defect_matrix": {
+    "rows_n": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "columns": [
+      "H_k_1", "H_kl_1", "H_nk_1", "H_nmk_1", "H_nkl_1",
+      "H_k_2", "H_kl_2", "H_nk_2", "H_nkl_2",
+      "H_k_3", "H_nk_3", "H_k_4", "H_nk_4"
+    ],
+    "exact_rank_over_Q": 12,
+    "rank_is_lower_bound_on_functional_defect_dimension": true,
+    "finite_samples_used_as_global_zero_proof": false
+  },
+  "unique_sampled_null_direction": {
+    "coordinates_first_five_weight1_columns": [-3, -1, 1, 2, 1],
+    "expression": "-3*H_k_1-H_kl_1+H_nk_1+2*H_nmk_1+H_nkl_1",
+    "identification": "partial_k log(T)",
+    "sampled_defect_zero_n_0_through_12": true,
+    "global_zero_not_claimed_from_sampling": true
+  },
+  "search_order": ["weight1", "weight2", "weight3", "weight4"],
+  "certificate_architecture": "Use the reverified regularized Q-row fluxes as the base. For each small harmonic-letter block, exploit rational shift increments of its letters and solve only the correction flux needed to cancel the resulting rational residual; preserve k<->l symmetry. Do not reopen the exhausted generic 198-dimensional raw-jet ansatz.",
+  "first_lane": "WEIGHT1_FIVE_ORBIT_SEPARATED_LETTER_CERT_001",
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+}

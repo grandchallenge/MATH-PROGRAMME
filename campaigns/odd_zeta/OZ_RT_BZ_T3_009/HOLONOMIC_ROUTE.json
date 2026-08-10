@@ -1,0 +1,65 @@
+{
+  "operation": "OZ-RT-BZ-T3-009",
+  "route": "DIRECT_T3_DISCRETE_RESIDUAL_CERT_001",
+  "subroute": "STRUCTURED_ONE_BODY_LETTER_SPLIT_HOLONOMIC_001",
+  "status": "STRUCTURED_HOLONOMIC_ROUTE_ADMITTED_AFTER_INDEPENDENT_POLE_FREE_COEFFICIENT_REPLAY",
+  "predecessor_negative": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/DEFORMATION_SPAN_RESULT.json",
+  "module_profile": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/LETTER_SPLIT_RESULT.json",
+  "coefficient_layer": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/ONE_BODY_COEFFICIENT_LAYER.json",
+  "exact_prerequisite": {
+    "status": "SATISFIED",
+    "execution_boundary": "FULL_POLE_FREE_ONE_BODY_RESIDUAL_COEFFICIENT_LAYER_001",
+    "independent_replay": "INDEPENDENT_FULL_POLE_FREE_ONE_BODY_COEFFICIENT_REPLAY_COMPLETE",
+    "profile": {"monomials": 122, "atoms": 22, "max_atomic_arity": 3, "scalar_basis_size": 11},
+    "sha256": "90d067ae59790fab8648d006635c14950359b66eb8b57361e61d5b47b2b3af40",
+    "protected_positive_reciprocal_factor_count": 8,
+    "abel_exact_checks": 9
+  },
+  "channel_decomposition": {
+    "protected_channels": ["n1", "n2", "n3", "k1", "l1"],
+    "symmetry_reduced_channels": ["n1", "n2", "n3", "k1"],
+    "mirror_rule": "l1 is the k<->l image of k1 in the symmetric Q-row gauge",
+    "policy": "Keep shift-channel labels through the correction-flux construction; recombine before the final n-holonomic elimination."
+  },
+  "shell_stratification": {
+    "required": true,
+    "reason": "The exact protected lattice convention replaces only B_k/B_l moving-support reciprocals by pinv_r(x)=x^-r for x>0 and 0 for x<=0. Feeding pinv directly to ordinary rational holonomic machinery would erase this discrete shell semantics.",
+    "protected_factors": [
+      "n-k", "n-k+1", "n-k+2", "n-k+3",
+      "n-l", "n-l+1", "n-l+2", "n-l+3"
+    ],
+    "interior_piece": "On strata where every active protected argument is positive, replace pinv_r(x) by the ordinary rational x^-r and use rational/hypergeometric correction algebra.",
+    "shell_piece": "Retain the finitely many moving top-row/top-column strata on which one or more protected arguments are nonpositive as separate finite-support contributions.",
+    "mirror_reduction": "k-shell and l-shell strata are exchanged by the exact k<->l symmetry.",
+    "shell_terms_must_be_recombined": true
+  },
+  "letter_decomposition": {
+    "input_atoms": 22,
+    "k_l_orbit_representatives": 13,
+    "weight_block_sizes": [5, 4, 2, 2],
+    "rationale": "Within each interior or shell stratum, ordinary harmonic finite differences reduce to rational forcing; the block split is used to build correction certificates, not to demand separate recurrences.",
+    "first_block": "weight1",
+    "first_block_representatives": ["H_k_1", "H_kl_1", "H_nk_1", "H_nmk_1", "H_nkl_1"]
+  },
+  "certificate_architecture": {
+    "base": "Use the independently replayed 122-row pole-free coefficient layer and the reverified regularized Q-row F/J scalar basis.",
+    "step_1": "Stratify the eight protected positive reciprocals into an interior rational piece and finitely-supported moving-shell pieces, preserving exact k<->l mirror data.",
+    "step_2": "For each symmetry-reduced shift channel and harmonic weight block, construct the coefficientwise rational/hypergeometric correction-flux system; test bounded support/rank viability before any expensive elimination.",
+    "step_3": "Reconstruct any positive correction candidate exactly and substitute it into the complete coefficient layer, including shell strata and regularized finite-box boundary terms.",
+    "step_4": "Recombine all channel, letter-block, and shell pieces before seeking the final n-holonomic operator.",
+    "step_5": "Independently replay the assembled certificate and recurrence propagation obligations before any theorem promotion."
+  },
+  "anti_oversplitting_rule": "Do not require each letter, shift channel, or shell stratum to possess its own low-order n-recurrence. Splitting is a certificate-construction device; the low-order operator may exist only after exact recombination.",
+  "bounded_search_policy": {
+    "generic_198_raw_jet_reopen_forbidden": true,
+    "unbounded_creative_telescoping_forbidden_as_first_move": true,
+    "support_or_rank_viability_probe_required": true,
+    "positive_candidate_requires_exact_reconstruction_and_substitution": true,
+    "shell_semantics_must_be_preserved": true,
+    "finite_sampling_is_not_proof": true
+  },
+  "next_execution_boundary": "SYMMETRY_REDUCED_CHANNEL_HARMONIC_BLOCK_WITH_SHELL_STRATA_001",
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+}
