@@ -36,7 +36,7 @@ EXPECTED_NESTED_ELIMINATED = [
     "U_k_l_1_4","U_l_k_1_4","U_k_l_2_3","U_l_k_2_3",
     "ES_k_1_4","ES_l_1_4","ES_k_2_3","ES_l_2_3",
 ]
-EXPECTED_REDUCED_TERMINAL = "QROW_REVERIFIED_DIRECT_ED_CANONICALIZED_NESTED_INTERIOR_CERTIFIED_SHELL_RECONCILIATION_OPEN"
+EXPECTED_REDUCED_TERMINAL = "QROW_REVERIFIED_DIRECT_ED_CANONICALIZED_NESTED_GLOBALLY_REDUCED_ONE_BODY_RESIDUAL_NEXT"
 
 
 def validate() -> None:
@@ -164,33 +164,43 @@ def validate() -> None:
 
     if deriv["parent"] != "campaigns/odd_zeta/OZ_RT_BZ_T3_009/NESTED_SKELETON_REDUCTION.json":
         raise AssertionError("differentiated certificate parent drift")
-    if deriv["status"] != "INTERIOR_DERIVATIVE_CERTIFICATES_DERIVED_SHELL_RECONCILIATION_REQUIRED":
+    if deriv["status"] != "GLOBAL_REGULARIZED_DERIVATIVE_CERTIFICATES_COMPLETE":
         raise AssertionError("differentiated certificate status drift")
     ie=deriv["interior_gamma_extension"]
     if ie["Lk_identity"] != "Lk=-partial_k log(T)" or ie["Ll_identity"] != "Ll=-partial_l log(T)":
         raise AssertionError("interior first-derivative identity drift")
     if ie["cross_log_identity"] != "partial_k partial_l log(T)=-C2" or ie["A_identity"] != "A:=Lk*Ll-C2=(partial_k partial_l T)/T":
         raise AssertionError("interior mixed-derivative identity drift")
+    le=deriv["lattice_extension"]
+    if le["T_times_Lk"] != "T*Lk_disc=-partial_k T on every integer point of 0<=k,l<=n+3":
+        raise AssertionError("Lk lattice extension drift")
+    if le["T_times_Ll"] != "T*Ll_disc=-partial_l T on every integer point of 0<=k,l<=n+3":
+        raise AssertionError("Ll lattice extension drift")
+    if le["T_times_A"] != "T*A_disc=partial_k partial_l T on every integer point of 0<=k,l<=n+3":
+        raise AssertionError("A lattice extension drift")
     nd=deriv["nested_weight_decomposition"]
     if nd["nested_Dweight"] != "r22_nested + Lk*N12k + Ll*N12l + A*N11":
         raise AssertionError("nested differentiated decomposition drift")
-    dc=deriv["differentiated_qrow_certificates"]
+    dc=deriv["regularized_derivative_certificates"]
     if dc["for_Lk"]["identity"] != "E[Lk]=Delta_k(Jk_Lk)+Delta_l(Jl_Lk)":
         raise AssertionError("Lk differentiated certificate drift")
     if dc["for_Ll"]["identity"] != "E[Ll]=Delta_k(Jk_Ll)+Delta_l(Jl_Ll)":
         raise AssertionError("Ll differentiated certificate drift")
     if dc["for_A"]["identity"] != "E[A]=Delta_k(Jk_A)+Delta_l(Jl_A)":
         raise AssertionError("A differentiated certificate drift")
-    sb=deriv["shell_blocker"]
-    witness=sb["exact_representative_derivative_witness"]
-    if sb["undifferentiated_symmetric_certificate_shell_order"] != 2 or sb["kernel_zero_order"] != 2:
-        raise AssertionError("differentiated shell order drift")
+    sr=deriv["shell_reconciliation"]
+    lower=sr["lower_boundary"]
+    if sr["base_certificate_pole_order"] != 2 or sr["kernel_zero_order"] != 2 or not sr["finite_box_boundary_complete"]:
+        raise AssertionError("regularized differentiated shell/boundary drift")
+    if not all(lower[x] for x in ("rho_sym_at_k_zero","partial_k_rho_sym_at_k_zero","sigma_sym_at_l_zero","partial_l_sigma_sym_at_l_zero")):
+        raise AssertionError("regularized differentiated lower-boundary drift")
+    witness=sr["historical_cubic_pole_witness"]
     if not witness["denominator_divisible_by_x_cubed"] or witness["denominator_divisible_by_x_fourth"] or not witness["numerator_nonzero_at_x_zero"]:
-        raise AssertionError("differentiated cubic-pole witness drift")
-    if deriv["nested_sector_globally_eliminated"] or deriv["residual_sum_zero_proved"]:
-        raise AssertionError("differentiated certificate globally promoted")
-    if deriv["terminal"] != "NESTED_INTERIOR_CERTIFICATE_EXACT_SHELL_CORRECTION_OPEN":
-        raise AssertionError("differentiated certificate terminal drift")
+        raise AssertionError("historical generic-field pole witness drift")
+    if not deriv["abel_transfer"]["nested_sector_reduced_to_one_body"] or not deriv["nested_sector_globally_reduced_to_one_body"]:
+        raise AssertionError("global nested-to-one-body reduction lost")
+    if deriv["residual_sum_zero_proved"] or deriv["terminal"] != "NESTED_GLOBAL_REGULARIZED_DERIVATIVE_CERTIFICATE_COMPLETE_ONE_BODY_REDUCTION_NEXT":
+        raise AssertionError("differentiated certificate terminal/promotion drift")
 
     if reduced["kernel_certificate"] != "campaigns/odd_zeta/OZ_RT_BZ_T3_009/QROW_REPLAY_RESULT.json" or reduced["general_residual"]["summation_identity_status"] != "EXACT_DISCRETE_PRODUCT_RULE_WITH_REVERIFIED_QROW_AND_ZERO_BOUNDARY_FLUX":
         raise AssertionError("reduced residual derivation drift")
@@ -208,8 +218,11 @@ def validate() -> None:
     ndc=reduced["nested_derivative_certificates"]
     if ndc["artifact"] != "campaigns/odd_zeta/OZ_RT_BZ_T3_009/NESTED_DERIVATIVE_CERTIFICATE_ROUTE.json":
         raise AssertionError("reduced differentiated certificate binding drift")
-    if ndc["interior_certificate_status"] != "EXACT_BY_DIFFERENTIATING_REVERIFIED_QROW" or ndc["global_status"] != "SHELL_RECONCILIATION_REQUIRED":
-        raise AssertionError("reduced differentiated certificate status drift")
+    if ndc["certificate_status"] != "GLOBAL_REGULARIZED_DERIVATIVE_CERTIFICATES_COMPLETE" or not ndc["nested_sector_globally_reduced_to_one_body"]:
+        raise AssertionError("reduced global differentiated status drift")
+    obr=reduced["one_body_reduction"]
+    if obr["nested_atoms_remaining_after_transfer"] != 0 or obr["status"] != "MATHEMATICALLY_JUSTIFIED_CONSTRUCTION_NEXT":
+        raise AssertionError("one-body reduction boundary drift")
     if reduced["residual_sum_zero_proved"] or reduced["terminal"] != EXPECTED_REDUCED_TERMINAL:
         raise AssertionError("reduced residual terminal/promotion drift")
 
@@ -225,7 +238,7 @@ def validate() -> None:
 
 def main() -> int:
     validate()
-    print("OZ-RT-BZ-T3-009 recurrence, Q-row, canonical direct E_D, nested interior certificates, and open shell blocker package is valid")
+    print("OZ-RT-BZ-T3-009 recurrence, Q-row, canonical direct E_D, globally reconciled nested certificates, and one-body reduction boundary is valid")
     return 0
 
 if __name__ == "__main__":
