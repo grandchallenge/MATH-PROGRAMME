@@ -183,9 +183,11 @@ lemma rankOneMultiplication_condition
   rw [ModuleCat.ihom_map_apply, monoidalClosed_pre_apply]
   apply ModuleCat.hom_injective
   ext h
-  simpa only [ModuleCat.comp_apply, gi, gj,
-    rankOneMultiplicationToEndomorphism_apply] using
-      rankOneSectionMul_naturality X f a h
+  change
+    (coefficientPresheaf.map f.right).hom (gi.hom h) =
+      gj.hom ((coefficientPresheaf.map f.right).hom h)
+  simpa only [gi, gj, rankOneMultiplicationToEndomorphism_apply] using
+    rankOneSectionMul_naturality X f a h
 
 #check rankOneInternalHom
 #check rankOneInternalHom_eq_functorEnrichedHom
