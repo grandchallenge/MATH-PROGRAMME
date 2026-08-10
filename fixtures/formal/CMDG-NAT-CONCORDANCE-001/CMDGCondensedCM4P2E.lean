@@ -122,6 +122,48 @@ noncomputable def finiteContinuousFunctionsIso (X : FintypeCat.{u}) :
   change ModuleCat.of R.{u} (LocallyConstant X R.{u}) ≅ ModuleCat.of R.{u} (X → R.{u})
   exact (locallyConstantLinearEquivFunOfDiscrete X).toModuleIso
 
+/-- Restriction of P2-D continuous functions to finite profinite sets, retaining its natural
+contravariance. -/
+noncomputable abbrev finiteContinuousFunctions :
+    FintypeCat.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} R :=
+  FintypeCat.toProfinite.op ⋙ CMDG.CondensedCM4P2D.continuousFunctions
+
+/-- The ordinary finite-function module functor; a map in `FintypeCatᵒᵖ` acts by
+precomposition with its unop. -/
+noncomputable def finiteFunctionModule :
+    FintypeCat.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} R where
+  obj X := ModuleCat.of R (X.unop → R)
+  map f := ModuleCat.ofHom
+    { toFun := fun h y => h (f.unop y)
+      map_add' := by
+        intro h k
+        ext y
+        rfl
+      map_smul' := by
+        intro c h
+        ext y
+        rfl }
+  map_id X := by
+    apply ModuleCat.hom_ext
+    ext h y
+    rfl
+  map_comp f g := by
+    apply ModuleCat.hom_ext
+    ext h z
+    rfl
+
+/-- The finite continuous-function comparison is natural: both functors pull functions back by
+precomposition. -/
+noncomputable def finiteContinuousFunctionsNatIso :
+    finiteContinuousFunctions ≅ finiteFunctionModule :=
+  NatIso.ofComponents
+    (fun X => finiteContinuousFunctionsIso X.unop)
+    (by
+      intro X Y f
+      apply ModuleCat.hom_ext
+      ext h y
+      rfl)
+
 noncomputable def discreteSetFreeAdj :
     (Condensed.discrete (Type (u + 1)) ⋙ Condensed.free R) ⊣
       (Condensed.forget R ⋙ Condensed.underlying (Type (u + 1))) :=
@@ -263,6 +305,9 @@ noncomputable def finiteFreeDiscreteIso :
 #check finiteFreeDiscreteIso
 #check locallyConstantLinearEquivFunOfDiscrete
 #check finiteContinuousFunctionsIso
+#check finiteContinuousFunctions
+#check finiteFunctionModule
+#check finiteContinuousFunctionsNatIso
 #check TopCat.uliftFunctor
 #check TopCat.uliftFunctorObjHomeo
 #check CompHausLike.LocallyConstant.functorIso
@@ -287,6 +332,8 @@ noncomputable def finiteFreeDiscreteIso :
 #print axioms finiteFunctionDualFreeEquiv
 #print axioms locallyConstantLinearEquivFunOfDiscrete
 #print axioms finiteContinuousFunctionsIso
+#print axioms finiteFunctionModule
+#print axioms finiteContinuousFunctionsNatIso
 #print axioms discreteFreeIso
 #print axioms finiteDiscreteULiftIso
 #print axioms discreteTopCondensedIso
