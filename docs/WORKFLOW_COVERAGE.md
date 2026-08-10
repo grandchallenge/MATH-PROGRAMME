@@ -91,6 +91,14 @@ The admitted administration record states:
 - bypass actors or explicit absence of bypass;
 - effective date and verification method.
 
+## Policy impact gating demonstration
+
+`MP-POLICY-IMPACT-GATING-001` was protected at merge `fad9cff9f8f73b78bfed94fb1aab9763f63d00ab`. Issue #390 requires a post-merge proof-clean pull request to demonstrate the reduced path.
+
+The demonstration is non-authoritative. For a documentation-only transition, the expected policy impact is `core` plus `docs`, with all three formal lanes clean. Each clean formal lane must reuse a fresh protected content-addressed attestation and must skip Lean setup, fixture replay, and protected receipt creation. Inactive policy shards must complete through the governed verified-no-op path. `validate-json` remains the final required aggregator.
+
+Demonstration workflow evidence does not create mathematical, source, certification, external-claim, publication, deployment, product, release, commercial, bypass, emergency, direct-protected-push, or Human Steward authority.
+
 ## Closure rule
 
 MATH-PROGRAMME issue #6 may close only when:
