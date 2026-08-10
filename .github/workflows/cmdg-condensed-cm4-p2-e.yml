@@ -1,0 +1,71 @@
+name: CMDG condensed CM4 P2-E
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cmdg-condensed-cm4-p2-e-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  formal-audit:
+    name: Replay P2-E comparison audit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Reject placeholders and chosen-basis substitution
+        run: |
+          set -euo pipefail
+          F=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2E.lean
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F"; then
+            echo "P2-E fixture must contain neither sorry nor local axioms."
+            exit 1
+          fi
+          if grep -nE 'LocallyConstant\.freeOfProfinite|Nobeling|Nöbeling' "$F"; then
+            echo "P2-E must not use a chosen Nöbeling-basis substitute."
+            exit 1
+          fi
+      - name: Set up pinned Lean and mathlib cache
+        id: lean-setup
+        continue-on-error: true
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Verify exact pinned comparison dependencies
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          ML=".lake/packages/mathlib"
+          test "$(git -C "$ML" rev-parse HEAD)" = "79d0395a1825a6264ad5d269e35e60537518955e"
+          test "$(git -C "$ML" rev-parse HEAD^{tree})" = "d76f5e09b832a08949f6d8ad4fb80ce30527da64"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Solid.lean)" = "f5214433f91ee87fc8fbe7e2746e0bd227faed2a"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Functor/KanExtension/Basic.lean)" = "1d8ed3b224af14a8d909ada051de840ae3d5c59c"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Discrete/Colimit.lean)" = "7579e7ecc282d20d4c61d4e5d0e3e37994069e11"
+          grep -Fq 'def profiniteSolid : Profinite' "$ML/Mathlib/Condensed/Solid.lean"
+          grep -Fq 'def profiniteSolidIsPointwiseRightKanExtension' "$ML/Mathlib/Condensed/Solid.lean"
+          grep -Fq 'noncomputable def rightKanExtensionUniqueOfIso' "$ML/Mathlib/CategoryTheory/Functor/KanExtension/Basic.lean"
+          grep -Fq 'noncomputable def isColimitLocallyConstantPresheafDiagram' "$ML/Mathlib/Condensed/Discrete/Colimit.lean"
+          grep -Fq 'def lanPresheafNatIso' "$ML/Mathlib/Condensed/Discrete/Colimit.lean"
+      - name: Build and replay P2-E comparison target
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        env:
+          LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}
+        run: |
+          set -euo pipefail
+          echo "lean-action setup outcome: ${LEAN_SETUP_OUTCOME}"
+          lake build CMDGCondensedCM4P2E
+          lake env lean CMDGCondensedCM4P2E.lean
