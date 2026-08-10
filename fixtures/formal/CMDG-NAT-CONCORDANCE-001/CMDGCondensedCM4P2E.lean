@@ -159,6 +159,10 @@ example :
     FintypeCat.toProfinite ⋙ Profinite.toTopCat =
       FintypeCat.incl ⋙ TopCat.discrete := rfl
 
+example :
+    FintypeCat.toProfinite ⋙ Profinite.toTopCat ⋙ TopCat.uliftFunctor.{u + 1, u} =
+      finiteUnderlyingULift ⋙ TopCat.discrete := rfl
+
 /-- A discrete topological space and its locally constant sheaf define the same condensed set. -/
 noncomputable def discreteTopCondensedIso :
     TopCat.discrete.{u + 1} ⋙ topCatToCondensedSet ≅
