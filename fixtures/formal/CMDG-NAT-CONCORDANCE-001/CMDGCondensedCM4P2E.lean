@@ -205,11 +205,15 @@ ULift gives the required sectionwise equivalence.
 noncomputable def continuousULiftSectionEquiv (S X : CompHaus.{u}) :
     ULift.{u + 1} (S ⟶ X) ≃ C(S, ↑(TopCat.uliftFunctor.obj X.toTop)) where
   toFun f :=
-    (TopCat.uliftFunctorObjHomeo X.toTop).toContinuousMap.comp
-      (ConcreteCategory.hom f.down)
+    { toFun := fun s => (TopCat.uliftFunctorObjHomeo X.toTop) ((ConcreteCategory.hom f.down) s)
+      continuous_toFun :=
+        (TopCat.uliftFunctorObjHomeo X.toTop).continuous.comp
+          (ConcreteCategory.hom f.down).continuous }
   invFun g :=
     ULift.up (ConcreteCategory.ofHom
-      ((TopCat.uliftFunctorObjHomeo X.toTop).symm.toContinuousMap.comp g))
+      { toFun := fun s => (TopCat.uliftFunctorObjHomeo X.toTop).symm (g s)
+        continuous_toFun :=
+          (TopCat.uliftFunctorObjHomeo X.toTop).symm.continuous.comp g.continuous })
   left_inv f := by
     apply ULift.ext
     apply ConcreteCategory.hom_ext
