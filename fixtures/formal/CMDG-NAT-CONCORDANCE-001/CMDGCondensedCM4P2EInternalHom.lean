@@ -7,8 +7,9 @@ import CMDGCondensedCM4P2EAlgebraic
 This auxiliary fixture isolates the sole remaining E1 construction: comparison of the protected
 P2-D sheaf-level internal Hom with the discrete algebraic dual on finite modules.
 
-The current checkpoint develops only the rank-one direction from the internal Hom to the
-coefficient presheaf. It does not assert the rank-one isomorphism or the final finite comparison.
+The current checkpoint develops the canonical evaluation and multiplication directions for the
+rank-one internal Hom. It does not yet assert the rank-one isomorphism or the final finite
+comparison.
 -/
 
 namespace CMDG.CondensedCM4P2E.InternalHom
@@ -63,6 +64,43 @@ noncomputable def rankOneEvaluationApp (X : CompHaus.{u}) :
   rw [rankOneInternalHom_eq_functorEnrichedHom]
   exact rankOneIdentityProjection X ≫ rankOneEndomorphismEvalOne X
 
+/-- Multiplication by a section pulled back from the base of a slice object. -/
+noncomputable def rankOneMultiplicationToEndomorphism
+    (X : CompHaus.{u}) (k : Under (op X)) :
+    coefficientAt X ⟶
+      (ihom (coefficientPresheaf.obj k.right)).obj (coefficientPresheaf.obj k.right) :=
+  ModuleCat.ofHom
+    { toFun := fun a =>
+        { toFun := fun h => (coefficientPresheaf.map k.hom a) * h
+          map_add' := by
+            intro h₁ h₂
+            ext y
+            simp [mul_add]
+          map_smul' := by
+            intro c h
+            ext y
+            simp [mul_assoc, mul_comm, mul_left_comm] }
+      map_add' := by
+        intro a b
+        ext h y
+        simp [add_mul]
+      map_smul' := by
+        intro c a
+        ext h y
+        simp [mul_assoc, mul_comm, mul_left_comm] }
+
+/-- A base section acts on every object over the base by multiplication after pullback. -/
+noncomputable def rankOneMultiplicationApp (X : CompHaus.{u}) :
+    coefficientAt X ⟶ rankOneInternalHom.obj (op X) := by
+  rw [rankOneInternalHom_eq_functorEnrichedHom]
+  exact end_.lift
+    (fun k => rankOneMultiplicationToEndomorphism X k)
+    (by
+      intro i j f
+      apply ModuleCat.hom_ext
+      ext a h y
+      rfl)
+
 #check rankOneInternalHom
 #check rankOneInternalHom_eq_functorEnrichedHom
 #check RankOneTarget
@@ -70,6 +108,8 @@ noncomputable def rankOneEvaluationApp (X : CompHaus.{u}) :
 #check rankOneIdentityProjection
 #check rankOneEndomorphismEvalOne
 #check rankOneEvaluationApp
+#check rankOneMultiplicationToEndomorphism
+#check rankOneMultiplicationApp
 #check CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
 #check CategoryTheory.Presheaf.functorEnrichedHomCoyonedaObjEquiv
 #check CategoryTheory.presheafHom
@@ -80,5 +120,7 @@ noncomputable def rankOneEvaluationApp (X : CompHaus.{u}) :
 #print axioms rankOneIdentityProjection
 #print axioms rankOneEndomorphismEvalOne
 #print axioms rankOneEvaluationApp
+#print axioms rankOneMultiplicationToEndomorphism
+#print axioms rankOneMultiplicationApp
 
 end CMDG.CondensedCM4P2E.InternalHom
