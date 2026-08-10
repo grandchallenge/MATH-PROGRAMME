@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import administrative_autonomy_receipt_stage as receipt_stage
 import administrative_autonomy_runtime_github as runtime_github
 from administrative_autonomy_runtime_contract import (
     ALLOWED_REPOSITORIES, ROOT, RUNTIME_PATH, build_record, load_json,
@@ -7,15 +8,19 @@ from administrative_autonomy_runtime_contract import (
     validate_runtime_contract,
 )
 from administrative_autonomy_runtime_github import check_runs_state
-from administrative_autonomy_runtime_late_recovery import (
-    eligible_candidates as late_recovery_eligible_candidates,
-)
 from administrative_autonomy_runtime_mirror_sync import (
     wait_mirror_sync as provenance_bound_wait_mirror_sync,
 )
+from administrative_autonomy_runtime_queue_starvation import (
+    pending_closures as nonblocking_pending_closures,
+)
+from administrative_autonomy_runtime_transition_continuation import (
+    eligible_candidates as transition_continuation_eligible_candidates,
+)
 from autonomy_github import AutonomyError
 
-runtime_github.eligible_candidates = late_recovery_eligible_candidates
+receipt_stage.pending_closures = nonblocking_pending_closures
+runtime_github.eligible_candidates = transition_continuation_eligible_candidates
 runtime_github.wait_mirror_sync = provenance_bound_wait_mirror_sync
 
 from administrative_autonomy_runtime_behind_sync import (
