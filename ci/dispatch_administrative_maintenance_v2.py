@@ -6,6 +6,7 @@ import sys
 from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 
 import dispatch_administrative_maintenance as legacy
 from administrative_automation import (
@@ -22,6 +23,77 @@ ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "governance" / "administrative_maintenance_automation.json"
 STATE_PATH = ROOT / "governance" / "administrative_maintenance_completion_state.json"
 UTC = timezone.utc
+
+
+def superseded_cancelled_pr_run(run: dict[str, Any]) -> tuple[bool, list[str]]:
+    """Return true only when the event payload proves a cancelled PR run is obsolete."""
+    if str(run.get("conclusion") or "").lower() != "cancelled":
+        return False, []
+
+    run_head = str(run.get("head_sha") or "").strip()
+    pull_requests = run.get("pull_requests")
+    if not run_head or not isinstance(pull_requests, list) or not pull_requests:
+        return False, []
+
+    current_heads = sorted(
+        {
+            str((pull_request.get("head") or {}).get("sha") or "").strip()
+            for pull_request in pull_requests
+            if isinstance(pull_request, dict)
+        }
+        - {""}
+    )
+    if not current_heads:
+        return False, []
+
+    return all(current_head != run_head for current_head in current_heads), current_heads
+
+
+def reconcile_workflow_run_liveness(
+    event_name: str,
+    event: dict[str, Any],
+    dispatches: list[legacy.Dispatch],
+    now: datetime,
+) -> list[legacy.Dispatch]:
+    """Replace only demonstrably superseded cancellation P1s with evidence-only P3s."""
+    if event_name != "workflow_run":
+        return dispatches
+
+    run = event.get("workflow_run") or {}
+    superseded, current_heads = superseded_cancelled_pr_run(run)
+    if not superseded:
+        return dispatches
+
+    run_id = str(run.get("id") or "unknown")
+    workflow_name = str(run.get("name") or "required workflow")
+    run_head = str(run.get("head_sha") or "unknown")
+    failure_key = f"event:workflow-failure:{run_id}"
+    filtered = [dispatch for dispatch in dispatches if dispatch.key != failure_key]
+    current_head_text = ", ".join(f"`{head}`" for head in current_heads)
+    body = f"""## Superseded required-workflow cancellation evidence
+
+- workflow: `{workflow_name}`
+- run id: `{run_id}`
+- conclusion: `cancelled`
+- cancelled run head: `{run_head}`
+- associated current PR head(s): {current_head_text}
+- observed at: `{legacy.iso_z(now)}`
+- classification: `P3` evidence only; the cancelled exact head is no longer the live PR evidence lane
+
+This downgrade is permitted only because the workflow-run payload itself proves that every associated current PR head differs from the cancelled run head. It does not treat a current-head cancellation, an unbound cancellation, or any other non-success conclusion as non-failing.
+"""
+    filtered.append(
+        legacy.Dispatch(
+            kind="event",
+            key=f"event:workflow-superseded-cancellation:{run_id}",
+            title=f"superseded required-workflow cancellation {workflow_name} #{run_id}",
+            body=body,
+            severity="P3",
+            due_at=None,
+            source_event=event_name,
+        )
+    )
+    return legacy.deduplicate(filtered)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -46,6 +118,7 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit(f"unsupported procedure: {args.procedure}")
 
     dispatches = legacy.build_dispatches(registry, event_name, event, now, args.procedure)
+    dispatches = reconcile_workflow_run_liveness(event_name, event, dispatches, now)
     disposition = "dry_run" if args.dry_run else "emitted"
     results = [{**asdict(dispatch), "disposition": disposition} for dispatch in dispatches]
     severity_counts = {
