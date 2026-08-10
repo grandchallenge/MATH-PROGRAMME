@@ -2,12 +2,15 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import sys
 import unittest
 from fractions import Fraction
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / "campaigns" / "odd_zeta" / "OZ_RT_BZ_T3_009"
+if str(HERE) not in sys.path:
+    sys.path.insert(0, str(HERE))
 MOD = HERE / "one_body_coefficient_layer.py"
 spec = importlib.util.spec_from_file_location("t3_009_one_body_coefficient_layer", MOD)
 if spec is None or spec.loader is None:
