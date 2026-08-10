@@ -191,8 +191,8 @@ noncomputable def finiteDiscreteCondensedIso :
     (FintypeCat.toProfinite ⋙ Profinite.toTopCat ⋙ TopCat.uliftFunctor.{u + 1, u} ⋙
         topCatToCondensedSet) ≅
       (finiteUnderlyingULift ⋙ Condensed.discrete (Type (u + 1))) :=
-  isoWhiskerRight finiteDiscreteULiftIso topCatToCondensedSet ≪≫
-    isoWhiskerLeft finiteUnderlyingULift discreteTopCondensedIso
+  Functor.isoWhiskerRight finiteDiscreteULiftIso topCatToCondensedSet ≪≫
+    Functor.isoWhiskerLeft finiteUnderlyingULift discreteTopCondensedIso
 
 #check finiteUnderlyingULift
 #check finiteDiscreteULiftIso
