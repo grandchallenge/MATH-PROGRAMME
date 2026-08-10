@@ -16,6 +16,20 @@ on:
     - cron: '9 18 8 8 *'
     - cron: '57 10 9 8 *'
     - cron: '21 13 6 9 *'
+    # Factor-0.1 steady-state recurrence. The daily 01:21 trigger covers
+    # the Saturday structural locus and all P3D/P9D review loci; the
+    # protected evaluator remains responsible for deciding whether a
+    # procedure is actually due.
+    - cron: '9 18 * * 6'
+    - cron: '57 10 * * 0'
+    - cron: '45 3 * * 1'
+    - cron: '33 20 * * 1'
+    - cron: '21 13 * * 2'
+    - cron: '9 6 * * 3'
+    - cron: '57 22 * * 3'
+    - cron: '45 15 * * 4'
+    - cron: '33 8 * * 5'
+    - cron: '21 1 * * *'
     - cron: '47 * * * *'
   workflow_dispatch:
     inputs:

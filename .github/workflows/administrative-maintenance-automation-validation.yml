@@ -17,14 +17,17 @@ on:
       - 'ci/validate_workflow_coverage_v*.py'
       - 'ci/test_workflow_coverage_v*.py'
       - 'governance/administrative_maintenance_automation*.json'
+      - 'governance/administrative_maintenance_steady_state*.json'
       - 'governance/administrative_maintenance_completion_state.json'
       - 'governance/administrative_autonomy_*.json'
       - 'schemas/administrative_maintenance_automation*.schema.json'
+      - 'schemas/administrative_maintenance_steady_state*.schema.json'
       - 'schemas/administrative_maintenance_completion_state.schema.json'
       - 'schemas/administrative_autonomy_*.schema.json'
       - 'schemas/administrative_autonomous_maintenance_record.schema.json'
       - 'tests/test_administrative_automation*.py'
       - 'tests/test_administrative_autonomy*.py'
+      - 'tests/test_administrative_steady_state.py'
       - 'tests/test_administrative_receipts.py'
       - 'tests/test_administrative_synchronization_wait.py'
   push:
@@ -44,14 +47,17 @@ on:
       - 'ci/validate_workflow_coverage_v*.py'
       - 'ci/test_workflow_coverage_v*.py'
       - 'governance/administrative_maintenance_automation*.json'
+      - 'governance/administrative_maintenance_steady_state*.json'
       - 'governance/administrative_maintenance_completion_state.json'
       - 'governance/administrative_autonomy_*.json'
       - 'schemas/administrative_maintenance_automation*.schema.json'
+      - 'schemas/administrative_maintenance_steady_state*.schema.json'
       - 'schemas/administrative_maintenance_completion_state.schema.json'
       - 'schemas/administrative_autonomy_*.schema.json'
       - 'schemas/administrative_autonomous_maintenance_record.schema.json'
       - 'tests/test_administrative_automation*.py'
       - 'tests/test_administrative_autonomy*.py'
+      - 'tests/test_administrative_steady_state.py'
       - 'tests/test_administrative_receipts.py'
       - 'tests/test_administrative_synchronization_wait.py'
   workflow_dispatch:
@@ -98,5 +104,6 @@ jobs:
             tests.test_administrative_automation_remediation \
             tests.test_administrative_autonomy \
             tests.test_administrative_autonomy_runtime \
+            tests.test_administrative_steady_state \
             tests.test_administrative_receipts \
             tests.test_administrative_synchronization_wait
