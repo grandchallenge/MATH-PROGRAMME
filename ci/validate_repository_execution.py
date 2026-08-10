@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Validate repository-wide experiment and unit-test execution coverage."""
-
 from __future__ import annotations
 
 import ast
+import json
 import re
 import sys
 from pathlib import Path
@@ -12,8 +12,16 @@ from typing import Any
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-UNIT_TEST_COMMAND = "python -m unittest discover -s tests -p 'test_*.py'"
+UNIT_TEST_COMMAND = "python -m unittest discover -s tests -p test_*.py"
 MAIN_GUARD = re.compile(r"if\s+__name__\s*==\s*['\"]__main__['\"]\s*:")
+
+
+def normalize_command(value: str) -> str:
+    return (
+        value.strip()
+        .replace("'test_*.py'", "test_*.py")
+        .replace('"test_*.py"', "test_*.py")
+    )
 
 
 def load_workflow(root: Path = ROOT) -> dict[str, Any]:
@@ -31,10 +39,17 @@ def workflow_commands(root: Path = ROOT) -> set[str]:
         for step in job.get("steps", []):
             run = str(step.get("run", ""))
             commands.update(
-                line.strip()
+                normalize_command(line)
                 for line in run.splitlines()
                 if line.strip() and not line.lstrip().startswith("#")
             )
+    registry_path = root / "governance" / "policy_shard_registry.json"
+    if registry_path.is_file():
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+        for shard_commands in registry.get("shards", {}).values():
+            for command in shard_commands:
+                if isinstance(command, list) and command:
+                    commands.add(normalize_command(" ".join(str(part) for part in command)))
     return commands
 
 
@@ -71,8 +86,7 @@ def test_contract_errors(path: Path, tree: ast.Module) -> list[str]:
         if not isinstance(node, ast.ClassDef):
             continue
         is_test_case = any(
-            (isinstance(base, ast.Attribute) and isinstance(base.value, ast.Name)
-             and base.value.id == "unittest" and base.attr == "TestCase")
+            (isinstance(base, ast.Attribute) and isinstance(base.value, ast.Name) and base.value.id == "unittest" and base.attr == "TestCase")
             or (isinstance(base, ast.Name) and base.id == "TestCase")
             for base in node.bases
         )
@@ -80,8 +94,7 @@ def test_contract_errors(path: Path, tree: ast.Module) -> list[str]:
             continue
         test_cases += 1
         test_methods += sum(
-            isinstance(member, (ast.FunctionDef, ast.AsyncFunctionDef))
-            and member.name.startswith("test")
+            isinstance(member, (ast.FunctionDef, ast.AsyncFunctionDef)) and member.name.startswith("test")
             for member in node.body
         )
     if test_cases == 0 or test_methods == 0:
@@ -99,8 +112,10 @@ def repository_execution_errors(root: Path = ROOT) -> list[str]:
         "python3 ci/validate_repository_execution.py",
         "python3 ci/test_repository_execution.py",
     ):
-        if required not in commands:
-            errors.append(f"ci.yml: missing repository execution command {required}")
+        if normalize_command(required) not in commands:
+            errors.append(
+                f"governed policy execution is missing repository execution command {required}"
+            )
 
     tests_root = root / "tests"
     test_paths = sorted(tests_root.rglob("test_*.py")) if tests_root.is_dir() else []
@@ -108,11 +123,15 @@ def repository_execution_errors(root: Path = ROOT) -> list[str]:
         errors.append("repository execution: no tests/test_*.py modules are present")
 
     experiment_root = root / "experiments"
-    experiment_paths = sorted(
-        path
-        for path in experiment_root.rglob("*.py")
-        if path.is_file() and path.name != "__init__.py"
-    ) if experiment_root.is_dir() else []
+    experiment_paths = (
+        sorted(
+            path
+            for path in experiment_root.rglob("*.py")
+            if path.is_file() and path.name != "__init__.py"
+        )
+        if experiment_root.is_dir()
+        else []
+    )
     if not experiment_paths:
         errors.append("repository execution: no governed experiment modules are present")
 
@@ -166,7 +185,8 @@ def repository_execution_errors(root: Path = ROOT) -> list[str]:
 
     for module in sorted(set(module_paths) - reachable):
         errors.append(
-            f"repository execution: experiment module is unreachable from discovered tests: {module_paths[module].relative_to(root).as_posix()}"
+            "repository execution: experiment module is unreachable from discovered tests: "
+            + module_paths[module].relative_to(root).as_posix()
         )
     return errors
 
@@ -176,7 +196,10 @@ def main() -> int:
     if errors:
         for error in errors:
             print(error, file=sys.stderr)
-        print(f"repository execution validation failed with {len(errors)} error(s)", file=sys.stderr)
+        print(
+            f"repository execution validation failed with {len(errors)} error(s)",
+            file=sys.stderr,
+        )
         return 1
     print("repository tests and experiment modules have complete governed execution routes")
     return 0

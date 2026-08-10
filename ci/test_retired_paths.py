@@ -10,17 +10,32 @@ from validate_retired_paths import (
     RETIRED_PATH,
     ROOT,
     load_crosswalk,
+    load_policy_registry,
     repository_texts,
     retired_path_errors,
 )
 
 
+def remove_policy_command(registry: dict, marker: str) -> dict:
+    mutated = copy.deepcopy(registry)
+    parts = marker.split()
+    for entries in mutated.get("shards", {}).values():
+        if parts in entries:
+            entries.remove(parts)
+            return mutated
+    raise AssertionError(f"policy command not found in registry: {marker}")
+
+
 def main() -> int:
     texts = repository_texts(ROOT)
     crosswalk = load_crosswalk(ROOT)
+    policy_registry = load_policy_registry(ROOT)
     policy_text = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
     assert not retired_path_errors(
-        texts=texts, policy_text=policy_text, crosswalk=crosswalk
+        texts=texts,
+        policy_text=policy_text,
+        crosswalk=crosswalk,
+        policy_registry=policy_registry,
     )
 
     rogue_reference = copy.deepcopy(texts)
@@ -28,7 +43,10 @@ def main() -> int:
     assert any(
         "ungoverned reference to retired path" in error
         for error in retired_path_errors(
-            texts=rogue_reference, policy_text=policy_text, crosswalk=crosswalk
+            texts=rogue_reference,
+            policy_text=policy_text,
+            crosswalk=crosswalk,
+            policy_registry=policy_registry,
         )
     )
 
@@ -40,7 +58,10 @@ def main() -> int:
     assert any(
         "missing retirement marker" in error
         for error in retired_path_errors(
-            texts=missing_marker, policy_text=policy_text, crosswalk=crosswalk
+            texts=missing_marker,
+            policy_text=policy_text,
+            crosswalk=crosswalk,
+            policy_registry=policy_registry,
         )
     )
 
@@ -52,7 +73,10 @@ def main() -> int:
     assert any(
         "missing retirement marker" in error
         for error in retired_path_errors(
-            texts=missing_adr_marker, policy_text=policy_text, crosswalk=crosswalk
+            texts=missing_adr_marker,
+            policy_text=policy_text,
+            crosswalk=crosswalk,
+            policy_registry=policy_registry,
         )
     )
 
@@ -64,7 +88,10 @@ def main() -> int:
     assert any(
         "missing retired path identity" in error
         for error in retired_path_errors(
-            texts=missing_identity, policy_text=policy_text, crosswalk=crosswalk
+            texts=missing_identity,
+            policy_text=policy_text,
+            crosswalk=crosswalk,
+            policy_registry=policy_registry,
         )
     )
 
@@ -75,7 +102,10 @@ def main() -> int:
     assert any(
         "duplicate path" in error
         for error in retired_path_errors(
-            texts=texts, policy_text=policy_text, crosswalk=duplicate_crosswalk
+            texts=texts,
+            policy_text=policy_text,
+            crosswalk=duplicate_crosswalk,
+            policy_registry=policy_registry,
         )
     )
 
@@ -84,7 +114,10 @@ def main() -> int:
     assert any(
         "unsupported historical identity relation" in error
         for error in retired_path_errors(
-            texts=texts, policy_text=policy_text, crosswalk=bad_relation
+            texts=texts,
+            policy_text=policy_text,
+            crosswalk=bad_relation,
+            policy_registry=policy_registry,
         )
     )
 
@@ -99,14 +132,29 @@ def main() -> int:
             texts=missing_crosswalk_marker,
             policy_text=policy_text,
             crosswalk=crosswalk,
+            policy_registry=policy_registry,
         )
     )
 
-    missing_policy_check = policy_text.replace(POLICY_MARKERS[0], "python3 -c 'pass'", 1)
+    missing_policy_route = remove_policy_command(policy_registry, POLICY_MARKERS[0])
     assert any(
         "global policy is missing retired-path check" in error
         for error in retired_path_errors(
-            texts=texts, policy_text=missing_policy_check, crosswalk=crosswalk
+            texts=texts,
+            policy_text=policy_text,
+            crosswalk=crosswalk,
+            policy_registry=missing_policy_route,
+        )
+    )
+
+    missing_policy_test_route = remove_policy_command(policy_registry, POLICY_MARKERS[1])
+    assert any(
+        "global policy is missing retired-path check" in error
+        for error in retired_path_errors(
+            texts=texts,
+            policy_text=policy_text,
+            crosswalk=crosswalk,
+            policy_registry=missing_policy_test_route,
         )
     )
 
