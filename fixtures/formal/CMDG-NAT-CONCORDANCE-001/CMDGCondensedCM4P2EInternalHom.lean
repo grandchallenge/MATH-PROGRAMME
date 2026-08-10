@@ -196,6 +196,30 @@ lemma rankOneMultiplicationApp_projection
   unfold rankOneMultiplicationApp
   exact end_.lift_π _ _ k
 
+lemma rankOneProjection_condition
+    (X : CompHaus.{u}) {i j : Under (op X)} (f : i ⟶ j) :
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+          (ModuleCat.{u + 1} R)
+          (Under.forget (op X) ⋙ coefficientPresheaf)
+          (Under.forget (op X) ⋙ coefficientPresheaf)
+          i ≫
+        (ihom (coefficientPresheaf.obj i.right)).map (coefficientPresheaf.map f.right) =
+      CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+          (ModuleCat.{u + 1} R)
+          (Under.forget (op X) ⋙ coefficientPresheaf)
+          (Under.forget (op X) ⋙ coefficientPresheaf)
+          j ≫
+        (MonoidalClosed.pre (coefficientPresheaf.map f.right)).app
+          (coefficientPresheaf.obj j.right) := by
+  simpa only [
+      MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerLeft,
+      MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight] using
+    (CategoryTheory.Enriched.FunctorCategory.enrichedHom_condition
+      (ModuleCat.{u + 1} R)
+      (Under.forget (op X) ⋙ coefficientPresheaf)
+      (Under.forget (op X) ⋙ coefficientPresheaf)
+      f)
+
 lemma rankOneMultiplication_identity_evalOne (X : CompHaus.{u}) :
     rankOneMultiplicationToEndomorphism X (Under.mk (𝟙 (op X))) ≫
         rankOneEndomorphismEvalOne X =
@@ -250,6 +274,7 @@ lemma rankOneMultiplication_evaluation (X : CompHaus.{u}) :
 #check rankOneMultiplication_condition
 #check rankOneMultiplicationApp
 #check rankOneMultiplicationApp_projection
+#check rankOneProjection_condition
 #check rankOneMultiplication_identity_evalOne
 #check rankOneMultiplication_evaluation
 #check Limits.end_.lift
@@ -268,6 +293,7 @@ lemma rankOneMultiplication_evaluation (X : CompHaus.{u}) :
 #print axioms rankOneMultiplication_condition
 #print axioms rankOneMultiplicationApp
 #print axioms rankOneMultiplicationApp_projection
+#print axioms rankOneProjection_condition
 #print axioms rankOneMultiplication_identity_evalOne
 #print axioms rankOneMultiplication_evaluation
 
