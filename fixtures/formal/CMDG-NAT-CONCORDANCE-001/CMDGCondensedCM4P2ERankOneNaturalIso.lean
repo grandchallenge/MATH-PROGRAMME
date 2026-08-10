@@ -48,8 +48,10 @@ lemma rankOneInternalHom_map_identityProjection
         (Under.forget (op Y) ⋙ coefficientPresheaf)
         (Under.forget (op Y) ⋙ coefficientPresheaf)
         (Under.mk f.op)
-  simp only [functorEnrichedHom_map, end_.lift_π, Iso.refl_inv, NatTrans.id_app,
-    eHomWhiskerRight_id, Iso.refl_hom, eHomWhiskerLeft_id, comp_id]
+  dsimp [functorEnrichedHom]
+  simp only [diagram_obj_obj, Functor.comp_obj, Under.forget_obj, end_.lift_π,
+    Under.map_obj_right, Iso.refl_inv, NatTrans.id_app, eHomWhiskerRight_id,
+    Iso.refl_hom, eHomWhiskerLeft_id, Category.comp_id, Category.id_comp]
   congr 1
   simp [Under.map, Comma.mapLeft]
   rfl
@@ -83,6 +85,13 @@ lemma rankOneProjection_evalOne_naturality
     (Under.homMk f.op : Under.mk (𝟙 (op Y)) ⟶ Under.mk f.op)
     φ
     (show coefficientPresheaf.obj (op Y) from LocallyConstant.const Y (1 : R))
+  change
+    coefficientPresheaf.map f.op
+        (rankOneProjectionEndomorphism Y (Under.mk (𝟙 (op Y))) φ
+          (show coefficientPresheaf.obj (op Y) from LocallyConstant.const Y (1 : R))) =
+      rankOneProjectionEndomorphism Y (Under.mk f.op) φ
+        (coefficientPresheaf.map f.op
+          (show coefficientPresheaf.obj (op Y) from LocallyConstant.const Y (1 : R))) at h
   rw [coefficientPullback_one f] at h
   exact h.symm
 
@@ -91,7 +100,7 @@ lemma rankOneEvaluationApp_naturality
     rankOneInternalHom.map f.op ≫ rankOneEvaluationApp X =
       rankOneEvaluationApp Y ≫ coefficientPresheaf.map f.op := by
   unfold rankOneEvaluationApp
-  rw [Category.assoc, rankOneInternalHom_map_identityProjection]
+  rw [rankOneInternalHom_map_identityProjection f]
   exact rankOneProjection_evalOne_naturality f
 
 noncomputable def rankOneInternalHomNatIso : RankOneTarget :=
@@ -99,6 +108,9 @@ noncomputable def rankOneInternalHomNatIso : RankOneTarget :=
     (fun X => rankOneObjectIso X.unop)
     (by
       intro X Y f
+      change
+        rankOneInternalHom.map f ≫ rankOneEvaluationApp Y.unop =
+          rankOneEvaluationApp X.unop ≫ coefficientPresheaf.map f
       simpa using rankOneEvaluationApp_naturality f.unop)
 
 #check rankOneObjectIso
