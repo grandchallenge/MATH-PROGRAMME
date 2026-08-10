@@ -19,22 +19,22 @@ local instance : MonoidalPreadditive
     (CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u}) where
   whiskerLeft_zero := by
     intro X Y Z
-    apply NatTrans.ext
+    apply NatTrans.ext'
     funext j
     simp
   zero_whiskerRight := by
     intro X Y Z
-    apply NatTrans.ext
+    apply NatTrans.ext'
     funext j
     simp
   whiskerLeft_add := by
     intro X Y Z f g
-    apply NatTrans.ext
+    apply NatTrans.ext'
     funext j
     simp
   add_whiskerRight := by
     intro X Y Z f g
-    apply NatTrans.ext
+    apply NatTrans.ext'
     funext j
     simp
 
@@ -168,7 +168,7 @@ noncomputable def finiteCoordinateExtension
 lemma monoidalClosed_pre_zero
     (A B : CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u}) :
     MonoidalClosed.pre (0 : B ⟶ A) = 0 := by
-  apply NatTrans.ext
+  apply NatTrans.ext'
   funext X
   apply MonoidalClosed.uncurry_injective
   simp [MonoidalClosed.uncurry_eq]
@@ -177,7 +177,7 @@ lemma monoidalClosed_pre_add
     (A B : CompHaus.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} CMDG.CondensedCM4P2D.R.{u})
     (f g : B ⟶ A) :
     MonoidalClosed.pre (f + g) = MonoidalClosed.pre f + MonoidalClosed.pre g := by
-  apply NatTrans.ext
+  apply NatTrans.ext'
   funext X
   apply MonoidalClosed.uncurry_injective
   simp [MonoidalClosed.uncurry_eq]
