@@ -80,6 +80,7 @@ lemma finiteCoordinateInclusion_apply
     let a : X.obj → LocallyConstant S.unop R :=
       (ConcreteCategory.hom ((finiteCoordinateInclusion X x).app S)) h
     a y s = if y = x then h s else 0 := by
+  classical
   rfl
 
 /-- The family/free comparison sends the canonical coordinate inclusion to `Finsupp.single`. -/
