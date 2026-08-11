@@ -1,0 +1,60 @@
+{
+  "$schema": "../schemas/administrative_structural_2033_late_recovery_control.schema.json",
+  "schema_version": "1.0.0",
+  "control_id": "MP-ADMIN-STRUCTURAL-2033-LATE-RECOVERY-001",
+  "status": "ACTIVE_ON_PROTECTED_MERGE",
+  "issue": 404,
+  "occurrence": {
+    "procedure_id": "structural_sweep",
+    "occurrence_key": "structural_sweep:2026-08-10T20:33:00Z",
+    "due_at_utc": "2026-08-10T20:33:00Z",
+    "prepare_at_utc": "2026-08-10T14:33:00Z",
+    "freeze_at_utc": "2026-08-10T19:03:00Z",
+    "candidate_issue": 400,
+    "candidate_pull_request": 401,
+    "candidate_branch": "automation/maintenance/structural_sweep-20260810T203300Z",
+    "original_source_protected_head": "fad9cff9f8f73b78bfed94fb1aab9763f63d00ab",
+    "ordinary_recovery_expires_at_utc": "2026-08-10T23:33:00Z",
+    "bounded_recovery_expires_at_utc": "2026-08-11T13:21:00Z"
+  },
+  "root_cause": {
+    "pre_due_runtime_run": 31428910873,
+    "pre_due_evaluated_at_utc": "2026-08-10T20:25:10Z",
+    "candidate_frozen": true,
+    "runtime_finalization_pending": true,
+    "blocking_pull_request": 392,
+    "failure": "candidate manifest missing: governance/administrative_candidates/receipt-structural_sweep-20260810T034500Z.json",
+    "blocking_receipt_protected_merge": "1fbba68ccde0a654e676a30279eac36711cb3d28"
+  },
+  "correction": {
+    "global_recovery_window_minutes_unchanged": 180,
+    "exact_occurrence_only": true,
+    "behind_sync_reconciliation_required": true,
+    "completion_must_be_absent": true,
+    "source_ancestry_required": true,
+    "deadline_reset": false,
+    "cadence_anchor_reset": false,
+    "eventual_recovery_relabels_on_time": false
+  },
+  "authority_boundary": {
+    "human_steward_exact_head_authorization_required": true,
+    "candidate_branch_is_authority": false,
+    "bypass_created": false,
+    "emergency_authority_created": false,
+    "required_checks_weakened": false,
+    "referee_gate_weakened": false,
+    "direct_protected_push_authorized": false,
+    "general_late_recovery_authority_created": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "source_authority_created": false,
+    "certification_authority_created": false,
+    "external_claim_authorized": false,
+    "novelty_or_priority_claim_authorized": false,
+    "publication_authorized": false,
+    "deployment_authorized": false,
+    "product_or_release_authorized": false,
+    "commercial_authority_created": false
+  }
+}
