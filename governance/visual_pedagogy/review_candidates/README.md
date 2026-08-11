@@ -1,44 +1,59 @@
-# MP-DOC Visual-Pedagogy Pilot — Review Gallery
+# MP-DOC Visual-Pedagogy Pilot — Representation-Repair Review Gallery
 
 Status: **review candidates only**. These assets are not live documentary plates, theorem evidence, or certification authority.
 
-Quality reference: `governance/visual_pedagogy/quality_reference_pc001.json` (`PC-001-VISUAL-QUALITY-REFERENCE`). Review the candidates for both visual-semantic fidelity and literary-pedagogical quality. The reference governs qualities of composition and teaching; it does not require imitation of a particular palette, ornament, typography, or artwork.
+The first frozen SVG realization was rejected by independent review because the medium did not carry sufficient detail for the required pedagogy. The current review set is therefore a representation-layer repair using deterministic high-resolution raster, 3D, and hybrid scientific rendering. The rejected SVG realization remains in Git history as documentary evidence and is not the current review target.
 
-## Poincaré — Ricci-flow geometry
+Quality reference: `governance/visual_pedagogy/quality_reference_pc001.json` (`PC-001-VISUAL-QUALITY-REFERENCE`). Provenance and exact candidate identities are bound by `governance/visual_pedagogy/representation_repair_manifest.json`.
 
-![Ricci-flow geometry candidate](poincare/plate_geometry_successor.svg)
+## Single review entry
 
-## Poincaré — controlled surgery
+![Representation-repair contact sheet](contact_sheet.png)
 
-![Controlled surgery candidate](poincare/plate_surgery_successor.svg)
+## Individual current candidates
 
-Print/review derivative: [SVG](poincare/plate_surgery_successor_print.svg)
+### Poincaré — Ricci-flow geometry
 
-## Riemann — critical strip
+![Ricci-flow geometry raster candidate](poincare/plate_geometry_successor.png)
 
-![Critical-strip candidate](riemann/critical_strip_successor.svg)
+### Poincaré — controlled surgery
 
-## Navier–Stokes — vorticity stretching
+![Controlled-surgery 3D raster candidate](poincare/plate_surgery_successor.png)
 
-![Vorticity-stretching candidate](navier_stokes/vorticity_stretching_successor.svg)
+Print/review derivative: [PNG](poincare/plate_surgery_successor_print.png)
 
-## BSD — congruent-number example
+### Riemann — critical strip
 
-![BSD curve and area-five triangle candidate](bsd/plate_curve_successor.svg)
+![Critical-strip data-derived raster candidate](riemann/critical_strip_successor.png)
 
-## Hodge — cycle-class map
+### Navier–Stokes — vorticity stretching
 
-![Hodge cycle-class candidate](hodge/cycle_class_successor.svg)
+![Vorticity-stretching 3D raster candidate](navier_stokes/vorticity_stretching_successor.png)
+
+### BSD — congruent-number example
+
+![BSD exact/data-derived raster candidate](bsd/plate_curve_successor.png)
+
+### Hodge — cycle-class map
+
+![Hodge 3D hybrid raster candidate](hodge/cycle_class_successor.png)
+
+## Automated reproducibility
+
+`tools/render_visual_pedagogy_raster_successors.py` deterministically reconstructs all seven PNG derivatives and the contact sheet under the versions pinned in `requirements/visual-pedagogy-render.txt`.
+
+`.github/workflows/visual-pedagogy-representation-repair.yml` rerenders the candidates in an isolated temporary directory, verifies byte-for-byte identity against the committed manifest-bound assets, and publishes the review bundle as a workflow artifact.
 
 ## Review boundary
 
 Review should answer, at minimum:
 
 1. Does each image give a memorable substantially true mental model within its declared representation class?
-2. Are literal and nonliteral features visually distinguishable before they can mislead?
-3. Does the composition reveal the intended mathematical relation rather than merely decorate it?
-4. Are exact/data-derived elements genuinely bound to the stated source or renderer?
-5. Are accessibility, provenance, print/web behavior, and predecessor continuity satisfactory?
-6. Does the image remain clearly expository rather than evidentiary?
+2. Is the chosen representation rich enough for the pedagogical burden, rather than merely more detailed than the rejected SVG?
+3. Are literal, data-derived, schematic, and nonliteral features visually distinguishable before they can mislead?
+4. Does the composition reveal the intended mathematical relation rather than decorate it?
+5. Are data-derived elements genuinely bound to the stated renderer and finite numerical procedure?
+6. Are accessibility, provenance, print/web behavior, and predecessor continuity satisfactory?
+7. Does the image remain clearly expository rather than evidentiary?
 
-Any candidate that fails either semantic fidelity or literary-pedagogical quality remains unadmitted.
+Any candidate that fails semantic fidelity, representation adequacy, or literary-pedagogical quality remains unadmitted.
