@@ -169,6 +169,16 @@ noncomputable def finiteCoefficientFamilyCovariantFreeNatIso :
       intro X Y f
       apply finiteCoefficientFamily_hom_ext
       intro x
+      have hy :
+          finiteCoordinateInclusion Y (f x) ≫
+              (finiteCoefficientFamilyFreeIso Y).hom =
+            finiteSmallFreeCoordinateInclusion Y (f x) :=
+        finiteCoordinateInclusion_freeIso Y (f x)
+      have hx :
+          finiteCoordinateInclusion X x ≫
+              (finiteCoefficientFamilyFreeIso X).hom =
+            finiteSmallFreeCoordinateInclusion X x :=
+        finiteCoordinateInclusion_freeIso X x
       calc
         finiteCoordinateInclusion X x ≫
             (finiteCoefficientFamilyCovariantFunctor.map f ≫
@@ -180,8 +190,7 @@ noncomputable def finiteCoefficientFamilyCovariantFreeNatIso :
         _ = finiteCoordinateInclusion Y (f x) ≫
               (finiteCoefficientFamilyFreeIso Y).hom := by
               rw [finiteCoordinateInclusion_covariant_map]
-        _ = finiteSmallFreeCoordinateInclusion Y (f x) := by
-              rfl
+        _ = finiteSmallFreeCoordinateInclusion Y (f x) := hy
         _ = finiteSmallFreeCoordinateInclusion X x ≫
               finiteSmallFreePresheafFunctor.map f :=
               (finiteSmallFreeCoordinateInclusion_naturality f x).symm
@@ -190,7 +199,7 @@ noncomputable def finiteCoefficientFamilyCovariantFreeNatIso :
               finiteSmallFreePresheafFunctor.map f := by
               exact congrArg
                 (fun q => q ≫ finiteSmallFreePresheafFunctor.map f)
-                (finiteCoordinateInclusion_freeIso X x).symm
+                hx.symm
         _ = finiteCoordinateInclusion X x ≫
               ((finiteCoefficientFamilyFreeIso X).hom ≫
                 finiteSmallFreePresheafFunctor.map f) :=
