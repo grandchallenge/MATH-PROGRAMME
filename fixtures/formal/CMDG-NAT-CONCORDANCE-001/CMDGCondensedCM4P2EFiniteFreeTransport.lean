@@ -165,7 +165,8 @@ noncomputable def finiteCoefficientFamilyCovariantPushforwardNatIso :
     (fun X => Iso.refl _)
     (by
       intro X Y f
-      simpa using finiteCoefficientFamilyCovariant_map_eq_pushforward f)
+      rw [Category.comp_id, Category.id_comp]
+      exact finiteCoefficientFamilyCovariant_map_eq_pushforward f)
 
 /-- The finite coefficient-family/free comparison is natural. The proof is generatorwise and uses
 the certified coordinate resolution rather than any chosen basis. -/
@@ -177,11 +178,30 @@ noncomputable def finiteCoefficientFamilyFreeNatIso :
       intro X Y f
       apply finiteCoefficientFamily_hom_ext
       intro x
-      simp only [← Category.assoc]
-      rw [finiteCoordinateInclusion_pushforwardFunctor_map]
-      rw [finiteCoordinateInclusion_freeIso]
-      rw [finiteCoordinateInclusion_freeIso]
-      exact (finiteSmallFreeCoordinateInclusion_naturality f x).symm)
+      calc
+        finiteCoordinateInclusion X x ≫
+            (finiteCoefficientFamilyPushforwardFunctor.map f ≫
+              (finiteCoefficientFamilyFreeIso Y).hom) =
+          (finiteCoordinateInclusion X x ≫
+              finiteCoefficientFamilyPushforwardFunctor.map f) ≫
+            (finiteCoefficientFamilyFreeIso Y).hom := by
+              rw [← Category.assoc]
+        _ = finiteCoordinateInclusion Y (f x) ≫
+              (finiteCoefficientFamilyFreeIso Y).hom := by
+              rw [finiteCoordinateInclusion_pushforwardFunctor_map]
+        _ = finiteSmallFreeCoordinateInclusion Y (f x) := by
+              rw [finiteCoordinateInclusion_freeIso]
+        _ = finiteSmallFreeCoordinateInclusion X x ≫
+              finiteSmallFreePresheafFunctor.map f := by
+              exact (finiteSmallFreeCoordinateInclusion_naturality f x).symm
+        _ = (finiteCoordinateInclusion X x ≫
+              (finiteCoefficientFamilyFreeIso X).hom) ≫
+              finiteSmallFreePresheafFunctor.map f := by
+              rw [finiteCoordinateInclusion_freeIso]
+        _ = finiteCoordinateInclusion X x ≫
+              ((finiteCoefficientFamilyFreeIso X).hom ≫
+                finiteSmallFreePresheafFunctor.map f) := by
+              rw [Category.assoc])
 
 /-- Presheaf-level finite E1 comparison: the actual P2-D finite measure presheaf is naturally the
 locally-constant presheaf of the canonical small finite free module. -/
