@@ -209,18 +209,61 @@ noncomputable def discreteContinuousPresheafOpIsLimit (S : Profinite.{u}) :
           S.asLimitCone.op)) :=
   isLimitConeRightOpOfCocone _ (discreteContinuousPresheafIsColimit S)
 
+/-- Internal Hom into the protected coefficient presheaf, viewed as a right adjoint in the source
+variable. -/
+noncomputable abbrev internalHomIntoCoefficient : PresheafModuleᵒᵖ ⥤ PresheafModule :=
+  MonoidalClosed.internalHom.flip.obj CMDG.CondensedCM4P2D.coefficientPresheaf
+
+/-- The P2-D measure presheaf functor is exactly the contravariant internal Hom of the protected
+nested locally-constant source into the coefficient presheaf. -/
+noncomputable def measurePresheafInternalHomNatIso :
+    CMDG.CondensedCM4P2D.discreteContinuousPresheaf.rightOp ⋙
+        internalHomIntoCoefficient ≅
+      CMDG.CondensedCM4P2D.measurePresheafFunctor :=
+  NatIso.ofComponents (fun _ => Iso.refl _) (by
+    intro X Y f
+    rfl)
+
+/-- On the canonical finite-quotient diagram, the opposite-source/internal-Hom presentation and
+the protected measure-presheaf presentation are canonically the same diagram. -/
+noncomputable def finiteQuotientMeasureDiagramIso (S : Profinite.{u}) :
+    (S.diagram.op ⋙ CMDG.CondensedCM4P2D.discreteContinuousPresheaf).rightOp ⋙
+        internalHomIntoCoefficient ≅
+      S.diagram ⋙ CMDG.CondensedCM4P2D.measurePresheafFunctor :=
+  NatIso.ofComponents (fun _ => Iso.refl _) (by
+    intro X Y f
+    rfl)
+
+/-- The dualized finite-quotient cone is the protected measure cone transported across the explicit
+diagram identification. -/
+noncomputable def finiteQuotientMeasureConeIso (S : Profinite.{u}) :
+    internalHomIntoCoefficient.mapCone
+        (coneRightOpOfCocone
+          (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.mapCocone
+            S.asLimitCone.op)) ≅
+      (Cone.postcompose (finiteQuotientMeasureDiagramIso S).inv).obj
+        (CMDG.CondensedCM4P2D.measurePresheafFunctor.mapCone S.asLimitCone) :=
+  Cone.ext (Iso.refl _) (by
+    intro j
+    rfl)
+
 /-- Internal Hom into the protected coefficient presheaf turns the finite-quotient source colimit
 into the required limit cone for the protected measure presheaf functor. -/
 noncomputable def measurePresheafFunctorMapConeIsLimit (S : Profinite.{u}) :
     IsLimit
       (CMDG.CondensedCM4P2D.measurePresheafFunctor.mapCone S.asLimitCone) := by
-  have hdual :=
-    isLimitOfPreserves
-      (MonoidalClosed.internalHom.flip.obj
-        CMDG.CondensedCM4P2D.coefficientPresheaf)
+  have hdual :
+      IsLimit
+        (internalHomIntoCoefficient.mapCone
+          (coneRightOpOfCocone
+            (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.mapCocone
+              S.asLimitCone.op))) :=
+    isLimitOfPreserves internalHomIntoCoefficient
       (discreteContinuousPresheafOpIsLimit S)
-  simpa [CMDG.CondensedCM4P2D.measurePresheafFunctor,
-    CMDG.CondensedCM4P2D.measurePresheafObj] using hdual
+  apply (IsLimit.postcomposeInvEquiv
+    (finiteQuotientMeasureDiagramIso S)
+    (CMDG.CondensedCM4P2D.measurePresheafFunctor.mapCone S.asLimitCone)).mp
+  exact hdual.ofIsoLimit (finiteQuotientMeasureConeIso S)
 
 #check continuousFunctionsIsColimit
 #check discreteContinuousCondensedMappedIsColimit
@@ -231,6 +274,9 @@ noncomputable def measurePresheafFunctorMapConeIsLimit (S : Profinite.{u}) :
 #check discreteContinuousPresheafAtIsColimit
 #check discreteContinuousPresheafIsColimit
 #check discreteContinuousPresheafOpIsLimit
+#check measurePresheafInternalHomNatIso
+#check finiteQuotientMeasureDiagramIso
+#check finiteQuotientMeasureConeIso
 #check measurePresheafFunctorMapConeIsLimit
 
 #print axioms continuousFunctionsIsColimit
@@ -242,6 +288,9 @@ noncomputable def measurePresheafFunctorMapConeIsLimit (S : Profinite.{u}) :
 #print axioms discreteContinuousPresheafAtIsColimit
 #print axioms discreteContinuousPresheafIsColimit
 #print axioms discreteContinuousPresheafOpIsLimit
+#print axioms measurePresheafInternalHomNatIso
+#print axioms finiteQuotientMeasureDiagramIso
+#print axioms finiteQuotientMeasureConeIso
 #print axioms measurePresheafFunctorMapConeIsLimit
 
 end CMDG.CondensedCM4P2E.RightKanReconstruction
