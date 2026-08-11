@@ -1,0 +1,120 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": "fyremael",
+      "comment_id": 5250900346,
+      "commit_sha": "05f27aae01b847e39a88e0b75f89e3f65de55d03",
+      "disposition": "HUMAN_STEWARD_AUTHORIZED_EXACT_HEAD_PROTECTED_MERGE",
+      "required": true,
+      "state": "AUTHORIZED"
+    },
+    "independent_review": {
+      "actor": "jimsteeg",
+      "commit_sha": "05f27aae01b847e39a88e0b75f89e3f65de55d03",
+      "required": true,
+      "review_id": 4904349683,
+      "state": "APPROVED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": "success",
+      "head_sha": "05f27aae01b847e39a88e0b75f89e3f65de55d03",
+      "name": "Programme policy checks",
+      "required": true,
+      "run_id": 31470073731,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "05f27aae01b847e39a88e0b75f89e3f65de55d03",
+      "name": "GCL conformance",
+      "required": true,
+      "run_id": 31470074045,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "05f27aae01b847e39a88e0b75f89e3f65de55d03",
+      "name": "Administrative maintenance dispatcher",
+      "required": true,
+      "run_id": 31470073683,
+      "status": "completed"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "PROTECTED_COMPLETE",
+    "reasons": []
+  },
+  "history": [
+    {
+      "at": "2026-08-11T08:34:02Z",
+      "event": "independent_review",
+      "outcome": "APPROVED_EXACT_HEAD"
+    },
+    {
+      "at": "2026-08-11T08:38:49Z",
+      "event": "human_steward_disposition",
+      "outcome": "DOCUMENTARY_RECONCILIATION_AUTHORIZED"
+    },
+    {
+      "at": "2026-08-11T08:41:42Z",
+      "event": "protected_merge",
+      "outcome": "d02d4843fd405e51d82adfd002a0138ba6fd9400"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "05f27aae01b847e39a88e0b75f89e3f65de55d03",
+    "exact_head_sha": "05f27aae01b847e39a88e0b75f89e3f65de55d03",
+    "pr_number": 425,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "ADR-0019: reconcile post-admission authority status (#415)"
+  },
+  "integration": {
+    "merge_commit_sha": "d02d4843fd405e51d82adfd002a0138ba6fd9400",
+    "merge_state": "MERGED",
+    "protected_readback": {
+      "main_sha": "d02d4843fd405e51d82adfd002a0138ba6fd9400",
+      "required": true,
+      "state": "COMPLETE"
+    }
+  },
+  "modules": {
+    "evidence": {
+      "codeql_check": 93711376530,
+      "human_steward_comment": 5250900346
+    },
+    "historical_snapshot_policy": "PRESERVE_PRE_RATIFICATION_SNAPSHOTS",
+    "pilot": {
+      "case_id": "PRVSR-P03",
+      "category": "documentary_governed_migration"
+    }
+  },
+  "nonclaims": [
+    "No new pilot scope or implementation authority.",
+    "No mandatory reporting requirement or merge gate.",
+    "Historical pre-ratification snapshots are retained rather than rewritten."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-08-11T11:42:07Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "d1cdba1192bf8bf6461f98e0b715030d5e2f720ad7f3806f96ce20d50602ac14"
+  },
+  "report_id": "PRVSR-P03-001",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "formal_disposition",
+      "governance_or_control_plane"
+    ]
+  }
+}

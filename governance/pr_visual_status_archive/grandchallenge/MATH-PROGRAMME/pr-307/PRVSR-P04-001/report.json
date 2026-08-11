@@ -1,0 +1,147 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": "fyremael",
+      "comment_id": 5226166621,
+      "commit_sha": "e89e52c3b44706bf11df45a81e639e91faefabbc",
+      "disposition": "SOURCE_REVISION_PARTIALLY_ADMITTED_WITH_BLOCKERS",
+      "required": true,
+      "state": "AUTHORIZED"
+    },
+    "independent_review": {
+      "actor": "jimsteeg",
+      "commit_sha": "e89e52c3b44706bf11df45a81e639e91faefabbc",
+      "required": true,
+      "review_id": 4888824978,
+      "state": "APPROVED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": "success",
+      "head_sha": "e89e52c3b44706bf11df45a81e639e91faefabbc",
+      "name": "Programme policy checks",
+      "required": true,
+      "run_id": 31257700675,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "e89e52c3b44706bf11df45a81e639e91faefabbc",
+      "name": "GCL conformance",
+      "required": true,
+      "run_id": 31257700851,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "e89e52c3b44706bf11df45a81e639e91faefabbc",
+      "name": "Administrative maintenance dispatcher",
+      "required": true,
+      "run_id": 31257700684,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "e89e52c3b44706bf11df45a81e639e91faefabbc",
+      "name": "OZ-RT-BZ-T3 blocker closure",
+      "required": true,
+      "run_id": 31257700676,
+      "status": "completed"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "PROTECTED_COMPLETE",
+    "reasons": []
+  },
+  "history": [
+    {
+      "at": "2026-08-08T12:35:55Z",
+      "event": "human_steward_disposition",
+      "outcome": "EARLIER_HEAD_AUTHORITY_SUPERSEDED"
+    },
+    {
+      "at": "2026-08-08T12:39:14Z",
+      "event": "head_synchronization",
+      "outcome": "NEW_EXACT_HEAD_REQUIRES_RENEWED_AUTHORITY"
+    },
+    {
+      "at": "2026-08-08T12:44:48Z",
+      "event": "independent_review",
+      "outcome": "RENEWED_APPROVED_EXACT_HEAD"
+    },
+    {
+      "at": "2026-08-08T12:47:05Z",
+      "event": "human_steward_disposition",
+      "outcome": "RENEWED_SOURCE_REVISION_PARTIALLY_ADMITTED_WITH_BLOCKERS"
+    },
+    {
+      "at": "2026-08-08T12:47:25Z",
+      "event": "protected_merge",
+      "outcome": "d5f6b8babd385c13eca09accef5f14087e29d5aa"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "e89e52c3b44706bf11df45a81e639e91faefabbc",
+    "exact_head_sha": "e89e52c3b44706bf11df45a81e639e91faefabbc",
+    "pr_number": 307,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "OZ-SOURCE-REVISION-DELTA-003: audit 20-commit upstream source delta"
+  },
+  "integration": {
+    "merge_commit_sha": "d5f6b8babd385c13eca09accef5f14087e29d5aa",
+    "merge_state": "MERGED",
+    "protected_readback": {
+      "main_sha": "d5f6b8babd385c13eca09accef5f14087e29d5aa",
+      "required": true,
+      "state": "COMPLETE"
+    }
+  },
+  "modules": {
+    "claim_residuals": {
+      "DEPTH_reopen_requirements": "REOPEN-01_THROUGH_REOPEN-07_ABSENT",
+      "promotion_effect": "NONE",
+      "proof_effect": "NONE"
+    },
+    "evidence": {
+      "human_steward_comment": 5226166621
+    },
+    "pilot": {
+      "case_id": "PRVSR-P04",
+      "category": "source_claim_classification"
+    },
+    "source_delta": {
+      "candidate_source": "6cc0bf07137815ceeef0d9f340559f85352391e5",
+      "changed_paths": 44,
+      "commits_ahead": 20,
+      "governed_source": "790685b7ee4f642a8a88a1bd120636d1b8b39ea8"
+    }
+  },
+  "nonclaims": [
+    "DEPTH is not certified or reopened.",
+    "T1-top, Sharp-12, and T3 are not proved by this intake.",
+    "No new irrationality/infinitude, novelty, priority, publication, patentability, product, or commercial claim is admitted."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-08-11T11:42:07Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "3376dba39f0fbf68c450a979b4bb188edf56dae09dcc7c96b1a44fc33cdd25e1"
+  },
+  "report_id": "PRVSR-P04-001",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification",
+      "material_nonclaims_blockers_or_residuals"
+    ]
+  }
+}
