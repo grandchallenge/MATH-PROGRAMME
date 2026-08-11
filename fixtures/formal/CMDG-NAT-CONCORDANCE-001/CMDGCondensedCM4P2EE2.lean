@@ -267,10 +267,10 @@ noncomputable def measurePresheafFunctorMapConeIsLimit (S : Profinite.{u}) :
       (CMDG.CondensedCM4P2D.measurePresheafFunctor.mapCone S.asLimitCone))
       (hdual.ofIsoLimit (finiteQuotientMeasureConeIso S))
 
-/-- Forget a condensed `R`-module to its underlying presheaf. The functor is fully faithful and
-therefore reflects limits. -/
+/-- Forget a condensed `R`-module to its underlying presheaf. This is exactly the inclusion of the
+full subcategory of sheaves and therefore reflects limits without introducing an extra universe. -/
 noncomputable abbrev condensedModuleToPresheaf : CondensedMod.{u} R ⥤ PresheafModule :=
-  sheafToPresheaf (coherentTopology CompHaus.{u}) (ModuleCat.{u + 1} R)
+  ObjectProperty.ι (Presheaf.IsSheaf (coherentTopology CompHaus.{u}))
 
 /-- The protected P2-D measure functor preserves the canonical finite-quotient limit after lifting
 from the presheaf calculation to condensed modules. -/
@@ -310,7 +310,13 @@ noncomputable def structuredArrowMeasureConeIso (S : Profinite.{u}) :
         (measureRightExtension.coneAt S) :=
   Cone.ext (Iso.refl _) (by
     intro j
-    simp [measureRightExtension, structuredArrowFiniteComparisonIso])
+    change
+      CMDG.CondensedCM4P2D.measureFunctor.map j.hom =
+        𝟙 _ ≫
+          (CMDG.CondensedCM4P2D.measureFunctor.map j.hom ≫
+            CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.hom.app j.right) ≫
+          CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.inv.app j.right
+    simp)
 
 /-- E2 pointwise form: at every profinite set the E1-counit right-extension cone is limiting. -/
 noncomputable def measureRightExtensionIsPointwiseAt (S : Profinite.{u}) :
@@ -333,7 +339,7 @@ noncomputable def measureRightExtensionIsPointwise :
 
 /-- E2 ordinary form: the protected P2-D measure functor is a right Kan extension of the pinned
 finite-free functor along `FintypeCat.toProfinite`, using the certified E1 comparison as counit. -/
-noncomputable def measureFunctorIsRightKanExtension :
+theorem measureFunctorIsRightKanExtension :
     CMDG.CondensedCM4P2D.measureFunctor.IsRightKanExtension
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.hom :=
   measureRightExtensionIsPointwise.isRightKanExtension
