@@ -33,31 +33,39 @@ lemma finiteCoefficientFamilyPresheafMap_projection
   ext S a s
   rfl
 
+/-- The named coordinate `pre` map is covariantly natural under the finite internal-dual map. -/
+lemma finiteCoordinatePreProjectionNamed_internalHomMap
+    {X Y : FintypeCat.{u}} (f : X ⟶ Y) (x : X.obj) :
+    finiteCoordinatePreProjectionNamed X x ≫ finiteFamilyInternalHomMap f =
+      finiteCoordinatePreProjectionNamed Y (f x) := by
+  change
+    (MonoidalClosed.pre (finiteCoordinateProjection X x)).app
+          CMDG.CondensedCM4P2D.coefficientPresheaf ≫
+        (MonoidalClosed.pre
+          (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)).app
+          CMDG.CondensedCM4P2D.coefficientPresheaf =
+      (MonoidalClosed.pre (finiteCoordinateProjection Y (f x))).app
+        CMDG.CondensedCM4P2D.coefficientPresheaf
+  have hpre := congrArg
+    (fun η => η.app CMDG.CondensedCM4P2D.coefficientPresheaf)
+    (MonoidalClosed.pre_map
+      (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)
+      (finiteCoordinateProjection X x))
+  rw [← hpre, finiteCoefficientFamilyPresheafMap_projection]
+
 /-- The canonical coordinate extension is covariantly natural under the finite internal-dual
 map. -/
 lemma finiteCoordinateExtension_internalHomMap
     {X Y : FintypeCat.{u}} (f : X ⟶ Y) (x : X.obj) :
     finiteCoordinateExtension X x ≫ finiteFamilyInternalHomMap f =
       finiteCoordinateExtension Y (f x) := by
-  have hpre :
-      (MonoidalClosed.pre (finiteCoordinateProjection X x)).app
-            CMDG.CondensedCM4P2D.coefficientPresheaf ≫
-          (MonoidalClosed.pre
-            (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)).app
-            CMDG.CondensedCM4P2D.coefficientPresheaf =
-        (MonoidalClosed.pre
-          (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op ≫
-            finiteCoordinateProjection X x)).app
-          CMDG.CondensedCM4P2D.coefficientPresheaf := by
-    have h := congrArg
-      (fun η => η.app CMDG.CondensedCM4P2D.coefficientPresheaf)
-      (MonoidalClosed.pre_map
-        (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)
-        (finiteCoordinateProjection X x))
-    simpa only [NatTrans.comp_app] using h.symm
-  unfold finiteCoordinateExtension finiteFamilyInternalHomMap
-  simp only [Category.assoc]
-  rw [hpre, finiteCoefficientFamilyPresheafMap_projection]
+  change
+    (CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHomNatIso.inv ≫
+        finiteCoordinatePreProjectionNamed X x) ≫
+      finiteFamilyInternalHomMap f =
+    CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHomNatIso.inv ≫
+      finiteCoordinatePreProjectionNamed Y (f x)
+  rw [Category.assoc, finiteCoordinatePreProjectionNamed_internalHomMap]
 
 /-- The transported covariant action sends the canonical delta generator at `x` to the canonical
 delta generator at `f x`. -/
@@ -67,12 +75,12 @@ lemma finiteCoordinateInclusion_covariant_map
       finiteCoordinateInclusion Y (f x) := by
   change
     finiteCoordinateInclusion X x ≫
-        (finiteFamilyExtension X ≫ finiteFamilyInternalHomMap f ≫ finiteFamilyEvaluation Y) =
+        (finiteFamilyExtension X ≫
+          (finiteFamilyInternalHomMap f ≫ finiteFamilyEvaluation Y)) =
       finiteCoordinateInclusion Y (f x)
-  simp only [Category.assoc]
-  rw [finiteCoordinateInclusion_familyExtension,
-    finiteCoordinateExtension_internalHomMap,
-    finiteCoordinateExtension_familyEvaluation]
+  rw [← Category.assoc, finiteCoordinateInclusion_familyExtension]
+  rw [← Category.assoc, finiteCoordinateExtension_internalHomMap]
+  exact finiteCoordinateExtension_familyEvaluation Y (f x)
 
 /-- Canonical pushforward of a finite coefficient family, defined without a chosen basis: resolve
 into its canonical coordinates and send each coordinate at `x` to the coordinate at `f x`. -/
@@ -149,6 +157,16 @@ noncomputable def finiteCoefficientFamilyPushforwardFunctor :
       finiteCoordinateInclusion_pushforwardMap]
     rfl
 
+/-- Generator law with the pushforward packaged as a functor map. -/
+lemma finiteCoordinateInclusion_pushforwardFunctor_map
+    {X Y : FintypeCat.{u}} (f : X ⟶ Y) (x : X.obj) :
+    finiteCoordinateInclusion X x ≫ finiteCoefficientFamilyPushforwardFunctor.map f =
+      finiteCoordinateInclusion Y (f x) := by
+  change
+    finiteCoordinateInclusion X x ≫ finiteCoefficientFamilyPushforwardMap f =
+      finiteCoordinateInclusion Y (f x)
+  exact finiteCoordinateInclusion_pushforwardMap f x
+
 /-- The transported internal-dual action is exactly the canonical finite pushforward. -/
 lemma finiteCoefficientFamilyCovariant_map_eq_pushforward
     {X Y : FintypeCat.{u}} (f : X ⟶ Y) :
@@ -156,36 +174,50 @@ lemma finiteCoefficientFamilyCovariant_map_eq_pushforward
       finiteCoefficientFamilyPushforwardFunctor.map f := by
   apply finiteCoefficientFamily_hom_ext
   intro x
-  rw [finiteCoordinateInclusion_covariant_map,
-    finiteCoordinateInclusion_pushforwardMap]
+  calc
+    finiteCoordinateInclusion X x ≫ finiteCoefficientFamilyCovariantFunctor.map f =
+        finiteCoordinateInclusion Y (f x) := finiteCoordinateInclusion_covariant_map f x
+    _ = finiteCoordinateInclusion X x ≫ finiteCoefficientFamilyPushforwardFunctor.map f :=
+      (finiteCoordinateInclusion_pushforwardFunctor_map f x).symm
 
 /-- Natural identification of the transported coefficient-family action with canonical finite
 pushforward. -/
 noncomputable def finiteCoefficientFamilyCovariantPushforwardNatIso :
     finiteCoefficientFamilyCovariantFunctor ≅ finiteCoefficientFamilyPushforwardFunctor :=
   NatIso.ofComponents
-    (fun X => Iso.refl _)
+    (fun X => Iso.refl
+      (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X))
     (by
       intro X Y f
-      simpa using finiteCoefficientFamilyCovariant_map_eq_pushforward f)
+      change
+        finiteCoefficientFamilyCovariantFunctor.map f ≫
+            𝟙 (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf Y) =
+          𝟙 (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X) ≫
+            finiteCoefficientFamilyPushforwardFunctor.map f
+      rw [Category.comp_id, Category.id_comp]
+      exact finiteCoefficientFamilyCovariant_map_eq_pushforward f)
 
 #check finiteCoefficientFamilyPresheafMap_projection
+#check finiteCoordinatePreProjectionNamed_internalHomMap
 #check finiteCoordinateExtension_internalHomMap
 #check finiteCoordinateInclusion_covariant_map
 #check finiteCoefficientFamilyPushforwardMap
 #check finiteCoordinateInclusion_pushforwardMap
 #check finiteCoefficientFamily_hom_ext
 #check finiteCoefficientFamilyPushforwardFunctor
+#check finiteCoordinateInclusion_pushforwardFunctor_map
 #check finiteCoefficientFamilyCovariant_map_eq_pushforward
 #check finiteCoefficientFamilyCovariantPushforwardNatIso
 
 #print axioms finiteCoefficientFamilyPresheafMap_projection
+#print axioms finiteCoordinatePreProjectionNamed_internalHomMap
 #print axioms finiteCoordinateExtension_internalHomMap
 #print axioms finiteCoordinateInclusion_covariant_map
 #print axioms finiteCoefficientFamilyPushforwardMap
 #print axioms finiteCoordinateInclusion_pushforwardMap
 #print axioms finiteCoefficientFamily_hom_ext
 #print axioms finiteCoefficientFamilyPushforwardFunctor
+#print axioms finiteCoordinateInclusion_pushforwardFunctor_map
 #print axioms finiteCoefficientFamilyCovariant_map_eq_pushforward
 #print axioms finiteCoefficientFamilyCovariantPushforwardNatIso
 
