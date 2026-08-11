@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 403,
+  "operation": "SYMMETRY_REDUCED_CHANNEL_HARMONIC_BLOCK_WITH_SHELL_STRATA_001",
+  "stage": "T3_010_A_EXACT_SHELL_CHANNEL_BLOCK_DECOMPOSITION_AND_VIABILITY_GATE",
+  "branch_base": "170395009fcdf8114621c321624d78a4384b6237",
+  "mathematical_predecessor": {
+    "protected_merge": "6b4761859174c39ea95438ea415948c16db91745",
+    "tree": "eeecb37d5f8f55f67aee740efe41923e59c769e6",
+    "coefficient_layer_sha256": "90d067ae59790fab8648d006635c14950359b66eb8b57361e61d5b47b2b3af40"
+  },
+  "protected_positive_reciprocal_factors": [
+    "n-k", "n-k+1", "n-k+2", "n-k+3",
+    "n-l", "n-l+1", "n-l+2", "n-l+3"
+  ],
+  "pinv_semantics": "pinv_r(x)=x^(-r) for integer x>0; 0 for integer x<=0",
+  "coordinate_classes": [
+    {"id": "interior", "offset": null, "condition": "coordinate<=n-1", "activation": [true, true, true, true]},
+    {"id": "edge0", "offset": 0, "condition": "coordinate=n", "activation": [false, true, true, true]},
+    {"id": "shell1", "offset": 1, "condition": "coordinate=n+1", "activation": [false, false, true, true]},
+    {"id": "shell2", "offset": 2, "condition": "coordinate=n+2", "activation": [false, false, false, true]},
+    {"id": "shell3", "offset": 3, "condition": "coordinate=n+3", "activation": [false, false, false, false]}
+  ],
+  "shell_partition": {
+    "construction": "Cartesian product of the five exact coordinate activation classes",
+    "shell_stratum_count": 25,
+    "ordinary_rational_interior_count": 1,
+    "moving_boundary_or_shell_count": 24,
+    "mirror_rule": "swap the k and l coordinate classes",
+    "exactness": "The classes are exhaustive and disjoint on the common n+3 box and make all eight protected pinv activation predicates constant."
+  },
+  "channel_manifest": {
+    "protected_channels": ["n1", "n2", "n3", "k1", "l1"],
+    "independent_channels": ["n1", "n2", "n3", "k1"],
+    "scalar_partition": {
+      "n1": ["TN1"],
+      "n2": ["TN2"],
+      "n3": ["TN3"],
+      "k1": ["SK", "AK", "LKK", "LLK"],
+      "l1": ["SL", "AL", "LLL", "LKL"]
+    },
+    "l1_policy": "exact k<->l mirror of k1 only",
+    "mirror_scalar_map": {"SK": "SL", "AK": "AL", "LKK": "LLL", "LLK": "LKL"}
+  },
+  "harmonic_blocks": {
+    "weight1": ["H_k_1", "H_kl_1", "H_nk_1", "H_nmk_1", "H_nkl_1"],
+    "weight2": ["H_k_2", "H_kl_2", "H_nk_2", "H_nkl_2"],
+    "weight3": ["H_k_3", "H_nk_3"],
+    "weight4": ["H_k_4", "H_nk_4"]
+  },
+  "harmonic_block_sizes": [5, 4, 2, 2],
+  "probe_envelope": {
+    "independent_probe_cell_count": 1300,
+    "formula": "4 independent channels * 4 harmonic blocks * 25 shell strata",
+    "mirrored_l1_cell_count": 100,
+    "rank_kind": "exact rank over Q of the 0/1 scalar-support incidence matrix after exact shell specialization",
+    "rank_scope": "forcing-side structural viability only",
+    "correction_flux_elimination_rank": false,
+    "correction_candidate_admitted": false
+  },
+  "execution_discipline": {
+    "blind_or_unbounded_creative_telescoping": false,
+    "recurrence_fitting_to_zero_Dn": false,
+    "generic_198_raw_jet_reopen": false,
+    "generic_laurent_continuation_across_shell": false,
+    "final_n_holonomic_search": false,
+    "finite_grid_cancellation_as_proof": false
+  },
+  "next_gate": "Declare bounded correction-flux unknown bases only for structurally active cells and compute exact coefficient-matrix rank/consistency before any elimination.",
+  "finite_sampling_used_as_sum_proof": false,
+  "residual_sum_zero_proved": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+  "terminal_if_stage_passes": "T3_010_A_COMPLETE__CORRECTION_FLUX_MATRIX_RANK_GATE_PENDING"
+}
