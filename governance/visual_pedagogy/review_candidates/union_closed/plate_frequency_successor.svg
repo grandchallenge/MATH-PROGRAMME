@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+<title id="title">The Half-Way Balance — exact review candidate</title>
+<desc id="desc">Frequency bars and an incidence matrix show a appears in four of six sets, b in three, c in two; the half threshold is three and both sides of the incidence double-count equal nine.</desc>
+<style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#111}
+.h1{font-size:34px;font-weight:700} .h2{font-size:22px;font-weight:700}
+.body{font-size:19px} .small{font-size:16px} .mono{font-family:monospace;font-size:18px}
+.box{fill:white;stroke:#222;stroke-width:2} .soft{fill:#f4f4f4;stroke:#444;stroke-width:2}
+.line{stroke:#222;stroke-width:2;fill:none} .dash{stroke:#444;stroke-width:2;stroke-dasharray:8 7;fill:none}
+</style>
+<rect width="1200" height="900" fill="white"/>
+
+<text x="40" y="55" class="h1">The half-way balance as exact incidence counting</text>
+<text x="40" y="92" class="body">F = {∅, {a}, {b}, {a,b}, {a,c}, {a,b,c}}, so |F| = 6 and |F|/2 = 3.</text>
+<text x="55" y="155" class="h2">Frequency bars</text>
+<text x="55" y="210" class="body">a</text><rect x="90" y="182" width="232" height="38" class="soft"/><text x="335" y="210" class="body">4 / 6</text>
+<text x="55" y="285" class="body">b</text><rect x="90" y="257" width="174" height="38" class="soft"/><text x="277" y="285" class="body">3 / 6</text>
+<text x="55" y="360" class="body">c</text><rect x="90" y="332" width="116" height="38" class="soft"/><text x="219" y="360" class="body">2 / 6</text>
+<line x1="264" y1="165" x2="264" y2="390" class="dash"/>
+<text x="275" y="405" class="small">threshold = 3 occurrences</text>
+<text x="55" y="465" class="small">Bar length encodes count; labels retain the meaning without color.</text>
+<text x="525" y="155" class="h2">Incidence matrix</text>
+<text x="710" y="195" text-anchor="middle" class="h2">a</text><text x="805" y="195" text-anchor="middle" class="h2">b</text><text x="900" y="195" text-anchor="middle" class="h2">c</text><text x="1035" y="195" text-anchor="middle" class="h2">|A|</text>
+<text x="535" y="240" class="mono">∅</text><text x="710" y="240" text-anchor="middle" class="body">○</text><text x="805" y="240" text-anchor="middle" class="body">○</text><text x="900" y="240" text-anchor="middle" class="body">○</text><text x="1035" y="240" text-anchor="middle" class="body">0</text><text x="535" y="308" class="mono">{a}</text><text x="710" y="308" text-anchor="middle" class="body">●</text><text x="805" y="308" text-anchor="middle" class="body">○</text><text x="900" y="308" text-anchor="middle" class="body">○</text><text x="1035" y="308" text-anchor="middle" class="body">1</text><text x="535" y="376" class="mono">{b}</text><text x="710" y="376" text-anchor="middle" class="body">○</text><text x="805" y="376" text-anchor="middle" class="body">●</text><text x="900" y="376" text-anchor="middle" class="body">○</text><text x="1035" y="376" text-anchor="middle" class="body">1</text><text x="535" y="444" class="mono">{a,b}</text><text x="710" y="444" text-anchor="middle" class="body">●</text><text x="805" y="444" text-anchor="middle" class="body">●</text><text x="900" y="444" text-anchor="middle" class="body">○</text><text x="1035" y="444" text-anchor="middle" class="body">2</text><text x="535" y="512" class="mono">{a,c}</text><text x="710" y="512" text-anchor="middle" class="body">●</text><text x="805" y="512" text-anchor="middle" class="body">○</text><text x="900" y="512" text-anchor="middle" class="body">●</text><text x="1035" y="512" text-anchor="middle" class="body">2</text><text x="535" y="580" class="mono">{a,b,c}</text><text x="710" y="580" text-anchor="middle" class="body">●</text><text x="805" y="580" text-anchor="middle" class="body">●</text><text x="900" y="580" text-anchor="middle" class="body">●</text><text x="1035" y="580" text-anchor="middle" class="body">3</text>
+<text x="525" y="690" class="body">Column sums: 4 + 3 + 2 = 9</text>
+<text x="525" y="730" class="body">Row-size sum: 0 + 1 + 1 + 2 + 2 + 3 = 9</text>
+<text x="525" y="775" class="h2">Σₓ freq_F(x) = Σ_A |A|</text>
+<text x="55" y="805" class="small">The identity controls an average; by itself it does not prove the universal half-frequency conjecture.</text>
+
+<text x="40" y="872" class="small">Review candidate · documentary exposition only · visual_is_evidence: false</text>
+</svg>
