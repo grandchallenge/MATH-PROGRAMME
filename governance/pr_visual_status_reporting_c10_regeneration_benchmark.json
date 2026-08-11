@@ -1,0 +1,75 @@
+{
+  "evidence_id": "PRVSR-C10-REGEN-EVIDENCE-001",
+  "protocol_id": "PRVSR-C10-MEASUREMENT-PROTOCOL-001",
+  "benchmark_id": "PRVSR-C10-REGEN-BENCH-001",
+  "authority": {
+    "adr": "ADR-0019",
+    "execution_docket": 426,
+    "scope": "advisory bounded pilot only",
+    "propagation_authority_created": false
+  },
+  "measurement_provenance": {
+    "source_pr": 441,
+    "source_candidate_head": "c7890852e769d86cb594da8b6d63f9d1a99955c3",
+    "programme_policy_run": 31547628072,
+    "contracts_job": 93963424950,
+    "checkout_pr_merge_ref": "b12d72a4437ea64087dffa9ef7f239f03232ba3c",
+    "result_marker": "PRVSR_C10_REGEN_BENCHMARK_JSON=",
+    "result_retained_verbatim_from_terminal_success_log": true
+  },
+  "result": {
+    "aggregate": {
+      "deterministic_equivalence_failures": 0,
+      "max_ms": 0.555226,
+      "median_ms": 0.4672675,
+      "p95_ms": 0.538335,
+      "sample_count": 240
+    },
+    "benchmark_id": "PRVSR-C10-REGEN-BENCH-001",
+    "cases": [
+      {"deterministic_equivalence_failures":0,"max_ms":0.500975,"measured_iterations":30,"median_ms":0.471319,"operative_state":"PROTECTED_COMPLETE","p95_ms":0.496988,"pr_number":242,"report_id":"PRVSR-P05-001"},
+      {"deterministic_equivalence_failures":0,"max_ms":0.511063,"measured_iterations":30,"median_ms":0.47419,"operative_state":"BLOCKED","p95_ms":0.494012,"pr_number":274,"report_id":"PRVSR-P06-001"},
+      {"deterministic_equivalence_failures":0,"max_ms":0.491067,"measured_iterations":30,"median_ms":0.44856700000000005,"operative_state":"PROTECTED_COMPLETE","p95_ms":0.47151,"pr_number":282,"report_id":"PRVSR-P08-001"},
+      {"deterministic_equivalence_failures":0,"max_ms":0.555226,"measured_iterations":30,"median_ms":0.5372725,"operative_state":"PROTECTED_COMPLETE","p95_ms":0.554084,"pr_number":307,"report_id":"PRVSR-P04-001"},
+      {"deterministic_equivalence_failures":0,"max_ms":0.52521,"measured_iterations":30,"median_ms":0.498791,"operative_state":"STALE","p95_ms":0.517165,"pr_number":324,"report_id":"PRVSR-P07-001"},
+      {"deterministic_equivalence_failures":0,"max_ms":0.525641,"measured_iterations":30,"median_ms":0.474421,"operative_state":"PROTECTED_COMPLETE","p95_ms":0.507267,"pr_number":414,"report_id":"PRVSR-P02-001"},
+      {"deterministic_equivalence_failures":0,"max_ms":0.503399,"measured_iterations":30,"median_ms":0.444705,"operative_state":"PROTECTED_COMPLETE","p95_ms":0.470147,"pr_number":418,"report_id":"PRVSR-P01-001"},
+      {"deterministic_equivalence_failures":0,"max_ms":0.476659,"measured_iterations":30,"median_ms":0.4469885,"operative_state":"PROTECTED_COMPLETE","p95_ms":0.4715,"pr_number":425,"report_id":"PRVSR-P03-001"}
+    ],
+    "generator_version": "0.1.0-pilot",
+    "measured_iterations_per_case": 30,
+    "network_latency_included": false,
+    "p95_method": "nearest_rank",
+    "platform": "Linux-6.17.0-1020-azure-x86_64-with-glibc2.39",
+    "protocol_id": "PRVSR-C10-MEASUREMENT-PROTOCOL-001",
+    "python_version": "3.12.13",
+    "report_schema_version": "1.0.0",
+    "runner": {
+      "github_actions": "true",
+      "github_job": "policy-shard",
+      "github_run_id": "31547628072",
+      "github_sha": "b12d72a4437ea64087dffa9ef7f239f03232ba3c",
+      "image_os": "ubuntu24",
+      "image_version": "20260720.247.2",
+      "runner_arch": "X64",
+      "runner_name": "GitHub Actions 1000044070",
+      "runner_os": "Linux"
+    },
+    "scope": "isolated deterministic canonical-report derivation plus text/SVG regeneration",
+    "warmup_iterations_per_case": 3,
+    "whole_repository_ci_fanout_included": false
+  },
+  "interpretation": {
+    "regeneration_latency_directly_observed": true,
+    "all_eight_cases_measured": true,
+    "deterministic_equivalence_failures": 0,
+    "human_review_metrics_satisfied": false,
+    "c10_discharged": false
+  },
+  "nonclaims": [
+    "This measurement does not satisfy the direct human reviewer metrics.",
+    "This measurement does not discharge PRVSR-C10.",
+    "This measurement does not constitute independent pilot adjudication.",
+    "This measurement does not authorize programme-wide propagation, mandatory reporting, or a merge gate."
+  ]
+}
