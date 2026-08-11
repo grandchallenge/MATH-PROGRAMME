@@ -14,13 +14,13 @@ from administrative_autonomy_runtime_mirror_sync import (
 from administrative_autonomy_runtime_queue_starvation import (
     pending_closures as nonblocking_pending_closures,
 )
-from administrative_autonomy_runtime_transition_continuation import (
-    eligible_candidates as transition_continuation_eligible_candidates,
+from administrative_autonomy_runtime_structural_2033_recovery import (
+    eligible_candidates as structural_2033_recovery_eligible_candidates,
 )
 from autonomy_github import AutonomyError
 
 receipt_stage.pending_closures = nonblocking_pending_closures
-runtime_github.eligible_candidates = transition_continuation_eligible_candidates
+runtime_github.eligible_candidates = structural_2033_recovery_eligible_candidates
 runtime_github.wait_mirror_sync = provenance_bound_wait_mirror_sync
 
 from administrative_autonomy_runtime_behind_sync import (
