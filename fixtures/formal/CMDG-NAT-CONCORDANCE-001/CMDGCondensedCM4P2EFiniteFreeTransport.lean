@@ -4,10 +4,10 @@ import CMDGCondensedCM4P2EAlgebraic
 /-!
 # CMDG CM4-P2-E finite free-presheaf transport
 
-This auxiliary fixture starts the free-side closure of E1. It identifies the canonical finite
-coefficient-family presheaf with the locally-constant presheaf of the small finite free module.
-The comparison uses only the canonical finite `Pi`/`Finsupp` equivalence and records its action
-on the canonical delta generators.
+This auxiliary fixture closes the finite presheaf-level free-side comparison required by E1. It
+identifies the canonical finite coefficient-family presheaf with the locally-constant presheaf of
+the small finite free module, proves the comparison natural on canonical delta generators, and
+composes it with the already-certified finite measure/internal-dual transport.
 
 No sheaf-level finite comparison or global P2-E equivalence is asserted here.
 -/
@@ -128,6 +128,70 @@ lemma finiteCoordinateInclusion_freeIso
   · rw [finiteCoordinateInclusion_apply_ne X hy S h' s]
     simp [hy]
 
+/-- Pushforward of a canonical small-free generator follows the finite map. -/
+lemma finiteSmallFreeCoordinateModuleMap_naturality
+    {X Y : FintypeCat.{u}} (f : X ⟶ Y) (x : X.obj) :
+    finiteSmallFreeCoordinateModuleMap X x ≫
+        CMDG.CondensedCM4P2E.Algebraic.finiteSmallFreeModule.map f =
+      finiteSmallFreeCoordinateModuleMap Y (f x) := by
+  apply ModuleCat.hom_ext
+  apply LinearMap.ext
+  intro r
+  change
+    Finsupp.lmapDomain R R (fun z => f z) (Finsupp.single x r) =
+      Finsupp.single (f x) r
+  simp only [Finsupp.lmapDomain_apply, Finsupp.mapDomain_single]
+
+/-- The locally-constant presheaf realization preserves the free-generator naturality square. -/
+lemma finiteSmallFreeCoordinateInclusion_naturality
+    {X Y : FintypeCat.{u}} (f : X ⟶ Y) (x : X.obj) :
+    finiteSmallFreeCoordinateInclusion X x ≫ finiteSmallFreePresheafFunctor.map f =
+      finiteSmallFreeCoordinateInclusion Y (f x) := by
+  change
+    (CondensedMod.LocallyConstant.functorToPresheaves R).map
+          (finiteSmallFreeCoordinateModuleMap X x) ≫
+        (CondensedMod.LocallyConstant.functorToPresheaves R).map
+          (CMDG.CondensedCM4P2E.Algebraic.finiteSmallFreeModule.map f) =
+      (CondensedMod.LocallyConstant.functorToPresheaves R).map
+        (finiteSmallFreeCoordinateModuleMap Y (f x))
+  rw [← Functor.map_comp]
+  rw [finiteSmallFreeCoordinateModuleMap_naturality]
+
+/-- The transported internal-dual action and the explicit pushforward action are naturally
+isomorphic by identity components, because their maps were already certified equal. -/
+noncomputable def finiteCoefficientFamilyCovariantPushforwardNatIso :
+    finiteCoefficientFamilyCovariantFunctor ≅ finiteCoefficientFamilyPushforwardFunctor :=
+  NatIso.ofComponents
+    (fun X => Iso.refl _)
+    (by
+      intro X Y f
+      simpa using finiteCoefficientFamilyCovariant_map_eq_pushforward f)
+
+/-- The finite coefficient-family/free comparison is natural. The proof is generatorwise and uses
+the certified coordinate resolution rather than any chosen basis. -/
+noncomputable def finiteCoefficientFamilyFreeNatIso :
+    finiteCoefficientFamilyPushforwardFunctor ≅ finiteSmallFreePresheafFunctor :=
+  NatIso.ofComponents
+    (fun X => finiteCoefficientFamilyFreeIso X)
+    (by
+      intro X Y f
+      apply finiteCoefficientFamily_hom_ext
+      intro x
+      simp only [← Category.assoc]
+      rw [finiteCoordinateInclusion_pushforwardFunctor_map]
+      rw [finiteCoordinateInclusion_freeIso]
+      rw [finiteCoordinateInclusion_freeIso]
+      exact (finiteSmallFreeCoordinateInclusion_naturality f x).symm)
+
+/-- Presheaf-level finite E1 comparison: the actual P2-D finite measure presheaf is naturally the
+locally-constant presheaf of the canonical small finite free module. -/
+noncomputable def finiteMeasureSmallFreePresheafNatIso :
+    finiteMeasurePresheafFunctor ≅ finiteSmallFreePresheafFunctor :=
+  finiteMeasurePresheafFamilyNatIso ≪≫
+    finiteFamilyInternalHomNatIso ≪≫
+    finiteCoefficientFamilyCovariantPushforwardNatIso ≪≫
+    finiteCoefficientFamilyFreeNatIso
+
 #check finiteSmallFreePresheafFunctor
 #check finiteCoefficientFamilyFreeIso
 #check finiteSmallFreeCoordinateModuleMap
@@ -138,6 +202,11 @@ lemma finiteCoordinateInclusion_freeIso
 #check finiteCoordinateInclusion_apply_self
 #check finiteCoordinateInclusion_apply_ne
 #check finiteCoordinateInclusion_freeIso
+#check finiteSmallFreeCoordinateModuleMap_naturality
+#check finiteSmallFreeCoordinateInclusion_naturality
+#check finiteCoefficientFamilyCovariantPushforwardNatIso
+#check finiteCoefficientFamilyFreeNatIso
+#check finiteMeasureSmallFreePresheafNatIso
 
 #print axioms finiteCoefficientFamilyFreeIso
 #print axioms finiteSmallFreeCoordinateModuleMap
@@ -148,5 +217,10 @@ lemma finiteCoordinateInclusion_freeIso
 #print axioms finiteCoordinateInclusion_apply_self
 #print axioms finiteCoordinateInclusion_apply_ne
 #print axioms finiteCoordinateInclusion_freeIso
+#print axioms finiteSmallFreeCoordinateModuleMap_naturality
+#print axioms finiteSmallFreeCoordinateInclusion_naturality
+#print axioms finiteCoefficientFamilyCovariantPushforwardNatIso
+#print axioms finiteCoefficientFamilyFreeNatIso
+#print axioms finiteMeasureSmallFreePresheafNatIso
 
 end CMDG.CondensedCM4P2E.FiniteDualTransport
