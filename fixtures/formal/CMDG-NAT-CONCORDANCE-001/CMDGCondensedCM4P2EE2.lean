@@ -98,12 +98,22 @@ noncomputable def locallyConstantSwapLinearEquiv (T S : CompHaus.{u}) :
     ext s t
     rw [locallyConstantSwap_apply, locallyConstantSwap_apply]
   map_add' f g := by
-    ext s t
+    apply LocallyConstant.ext
+    intro s
+    apply LocallyConstant.ext
+    intro t
+    change locallyConstantSwap T S (f + g) s t =
+      (locallyConstantSwap T S f + locallyConstantSwap T S g) s t
     rw [locallyConstantSwap_apply, locallyConstantSwap_apply,
       locallyConstantSwap_apply]
     rfl
   map_smul' r f := by
-    ext s t
+    apply LocallyConstant.ext
+    intro s
+    apply LocallyConstant.ext
+    intro t
+    change locallyConstantSwap T S (r • f) s t =
+      (r • locallyConstantSwap T S f) s t
     rw [locallyConstantSwap_apply, locallyConstantSwap_apply]
     rfl
 
