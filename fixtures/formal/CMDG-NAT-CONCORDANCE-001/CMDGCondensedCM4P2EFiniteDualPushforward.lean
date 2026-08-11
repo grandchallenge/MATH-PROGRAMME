@@ -51,7 +51,8 @@ lemma finiteCoordinatePreProjectionNamed_internalHomMap
     (MonoidalClosed.pre_map
       (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)
       (finiteCoordinateProjection X x))
-  rw [← hpre, finiteCoefficientFamilyPresheafMap_projection]
+  rw [← finiteCoefficientFamilyPresheafMap_projection f x]
+  simpa only [NatTrans.comp_app] using hpre.symm
 
 /-- The canonical coordinate extension is covariantly natural under the finite internal-dual
 map. -/
@@ -167,35 +168,28 @@ lemma finiteCoordinateInclusion_pushforwardFunctor_map
       finiteCoordinateInclusion Y (f x)
   exact finiteCoordinateInclusion_pushforwardMap f x
 
-/-- The transported internal-dual action is exactly the canonical finite pushforward. -/
+/-- The transported internal-dual action is exactly the canonical finite pushforward. The proof
+is made at the raw-morphism level to avoid any dependence on reducibility of the two functor
+object presentations. -/
 lemma finiteCoefficientFamilyCovariant_map_eq_pushforward
     {X Y : FintypeCat.{u}} (f : X ⟶ Y) :
     finiteCoefficientFamilyCovariantFunctor.map f =
       finiteCoefficientFamilyPushforwardFunctor.map f := by
+  change
+    (finiteFamilyExtension X ≫
+      (finiteFamilyInternalHomMap f ≫ finiteFamilyEvaluation Y)) =
+      finiteCoefficientFamilyPushforwardMap f
   apply finiteCoefficientFamily_hom_ext
   intro x
-  calc
-    finiteCoordinateInclusion X x ≫ finiteCoefficientFamilyCovariantFunctor.map f =
-        finiteCoordinateInclusion Y (f x) := finiteCoordinateInclusion_covariant_map f x
-    _ = finiteCoordinateInclusion X x ≫ finiteCoefficientFamilyPushforwardFunctor.map f :=
-      (finiteCoordinateInclusion_pushforwardFunctor_map f x).symm
-
-/-- Natural identification of the transported coefficient-family action with canonical finite
-pushforward. -/
-noncomputable def finiteCoefficientFamilyCovariantPushforwardNatIso :
-    finiteCoefficientFamilyCovariantFunctor ≅ finiteCoefficientFamilyPushforwardFunctor :=
-  NatIso.ofComponents
-    (fun X => Iso.refl
-      (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X))
-    (by
-      intro X Y f
-      change
-        finiteCoefficientFamilyCovariantFunctor.map f ≫
-            𝟙 (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf Y) =
-          𝟙 (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf X) ≫
-            finiteCoefficientFamilyPushforwardFunctor.map f
-      rw [Category.comp_id, Category.id_comp]
-      exact finiteCoefficientFamilyCovariant_map_eq_pushforward f)
+  change
+    finiteCoordinateInclusion X x ≫
+        (finiteFamilyExtension X ≫
+          (finiteFamilyInternalHomMap f ≫ finiteFamilyEvaluation Y)) =
+      finiteCoordinateInclusion X x ≫ finiteCoefficientFamilyPushforwardMap f
+  rw [← Category.assoc, finiteCoordinateInclusion_familyExtension]
+  rw [← Category.assoc, finiteCoordinateExtension_internalHomMap]
+  rw [finiteCoordinateExtension_familyEvaluation,
+    finiteCoordinateInclusion_pushforwardMap]
 
 #check finiteCoefficientFamilyPresheafMap_projection
 #check finiteCoordinatePreProjectionNamed_internalHomMap
@@ -207,7 +201,6 @@ noncomputable def finiteCoefficientFamilyCovariantPushforwardNatIso :
 #check finiteCoefficientFamilyPushforwardFunctor
 #check finiteCoordinateInclusion_pushforwardFunctor_map
 #check finiteCoefficientFamilyCovariant_map_eq_pushforward
-#check finiteCoefficientFamilyCovariantPushforwardNatIso
 
 #print axioms finiteCoefficientFamilyPresheafMap_projection
 #print axioms finiteCoordinatePreProjectionNamed_internalHomMap
@@ -219,6 +212,5 @@ noncomputable def finiteCoefficientFamilyCovariantPushforwardNatIso :
 #print axioms finiteCoefficientFamilyPushforwardFunctor
 #print axioms finiteCoordinateInclusion_pushforwardFunctor_map
 #print axioms finiteCoefficientFamilyCovariant_map_eq_pushforward
-#print axioms finiteCoefficientFamilyCovariantPushforwardNatIso
 
 end CMDG.CondensedCM4P2E.FiniteDualTransport
