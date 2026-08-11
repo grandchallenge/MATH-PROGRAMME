@@ -1,0 +1,84 @@
+{
+  "schema_version": "2.0.0",
+  "operation_id": "MP-DOC-VISUAL-PILOT-SUCCESSORS-001",
+  "repair_id": "MP-DOC-VISUAL-PILOT-REPRESENTATION-REPAIR-001",
+  "protected_base_commit": "5d6f70b3677571ca2d812b8381ff2d11d7caab89",
+  "supersedes_review_head": "ad38c4352121c2e7170d56eb02f1bf52356e19d3",
+  "review_rejection": {
+    "review_id": 4901258988,
+    "disposition": "REJECTED_REPRESENTATION_LAYER_INADEQUATE",
+    "finding": "SVG plates do not capture the detail necessary for the required pedagogy. Reject."
+  },
+  "quality_reference": "governance/visual_pedagogy/quality_reference_pc001.json",
+  "renderer": "tools/render_visual_pedagogy_raster_successors.py",
+  "requirements": "requirements/visual-pedagogy-render.txt",
+  "candidate_namespace": "governance/visual_pedagogy/review_candidates",
+  "review_entry": {
+    "path": "governance/visual_pedagogy/review_candidates/contact_sheet.png",
+    "sha256": "29dcf90f0097a0d09ddac08a0f8cdb5be1876878daa2d609b4d3c51feb29d92c"
+  },
+  "outputs": [
+    {
+      "plate_id": "PC-RICCI-FLOW-PLATE-II",
+      "representation_class": "schematic",
+      "renderer_mode": "three-dimensional-render",
+      "derivatives": [
+        {"path": "governance/visual_pedagogy/review_candidates/poincare/plate_geometry_successor.png", "format": "png", "sha256": "593cb7d7ef7fc31239cb19eb7991c6d0baf499101c2f89f5d672aa14cb23399a"}
+      ]
+    },
+    {
+      "plate_id": "PC-SURGERY-PLATE-III",
+      "representation_class": "schematic",
+      "renderer_mode": "three-dimensional-render",
+      "derivatives": [
+        {"path": "governance/visual_pedagogy/review_candidates/poincare/plate_surgery_successor.png", "format": "png", "sha256": "7c394188cdee145bf7d61f11185971ed958909a46115eb9adb320f9afbab5ece"},
+        {"path": "governance/visual_pedagogy/review_candidates/poincare/plate_surgery_successor_print.png", "format": "png", "sha256": "22a80c58cf43d67121b11502b0d587c9ddc94e9f7bf345b57cfc50697626f37f"}
+      ]
+    },
+    {
+      "plate_id": "RH-CRITICAL-STRIP-PLATE-II",
+      "representation_class": "data-derived",
+      "renderer_mode": "programmatic-raster",
+      "derivatives": [
+        {"path": "governance/visual_pedagogy/review_candidates/riemann/critical_strip_successor.png", "format": "png", "sha256": "1231d3667a88e2f6c6473c50a1e255310c7345e65e91aba41cc5e9908ae52e8b"}
+      ]
+    },
+    {
+      "plate_id": "NS-VORTICITY-PLATE-II",
+      "representation_class": "schematic",
+      "renderer_mode": "three-dimensional-render",
+      "derivatives": [
+        {"path": "governance/visual_pedagogy/review_candidates/navier_stokes/vorticity_stretching_successor.png", "format": "png", "sha256": "715c8dceec5b9ffbcaa615c83efbd8c1f3cb3bd83ae1fcf1cc4c70337abe316a"}
+      ]
+    },
+    {
+      "plate_id": "BSD-CURVE-PLATE-I",
+      "representation_class": "data-derived",
+      "renderer_mode": "programmatic-raster",
+      "derivatives": [
+        {"path": "governance/visual_pedagogy/review_candidates/bsd/plate_curve_successor.png", "format": "png", "sha256": "971106fe6dba55335e707d4cb5c49a6ef32414ccd8d3ea2ffbe64c9e87cca13f"}
+      ]
+    },
+    {
+      "plate_id": "HC-CYCLE-CLASS-PLATE-III",
+      "representation_class": "schematic",
+      "renderer_mode": "three-dimensional-render",
+      "derivatives": [
+        {"path": "governance/visual_pedagogy/review_candidates/hodge/cycle_class_successor.png", "format": "png", "sha256": "17c4d75f11f090220f4ee6caad3661cfbe28c60b3b3caa846c6d9e6b77d67245"}
+      ]
+    }
+  ],
+  "automation": {
+    "workflow": ".github/workflows/visual-pedagogy-representation-repair.yml",
+    "verification": "Read-only exact-head replay renders the full candidate set into an isolated temporary root and requires byte-for-byte equality with every manifest-bound repository derivative.",
+    "review_bundle": "Upload the deterministic contact sheet and candidate directory as a review artifact.",
+    "self_push_authorized": false
+  },
+  "authority_boundary": {
+    "visual_is_evidence": false,
+    "mathematical_claim_promoted": false,
+    "live_documentary_assets_replaced": false,
+    "programme_wide_migration_authorized": false,
+    "independent_review_required": true
+  }
+}
