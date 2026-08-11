@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "operation": "OZ-RT-BZ-T3-009",
+  "route": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001",
+  "subroute": "QROW_PRODUCT_RULE_REDUCTION_001",
+  "predecessor_certificate": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/QROW_REPLAY_RESULT.json",
+  "construction": {
+    "swap": "s[f](n,k,l)=f(n,l,k)",
+    "rho_sym": "(rho+s[sigma])/2",
+    "sigma_sym": "(sigma+s[rho])/2",
+    "proof": "The locked kernel T and L_BZ[T] are exactly k<->l symmetric. The swapped Q-row certificate is therefore a second exact certificate. Their average is an exact certificate by linearity."
+  },
+  "exact_replay": {
+    "rho_sym_equals_swapped_sigma_sym": true,
+    "rho_sym_at_k_zero": true,
+    "sigma_sym_at_l_zero": true,
+    "cleared_kernel_identity_numerator_zero": true,
+    "arithmetic": "EXACT_RATIONAL",
+    "finite_sampling_used_as_proof": false,
+    "wolfram_replay_observed": {
+      "raw_average_leaf_counts": [12377, 12377],
+      "together_leaf_counts": [14259, 14259]
+    }
+  },
+  "regularized_flux": {
+    "Rk_sym": "Reg[rho_sym*T]",
+    "Rl_sym": "Reg[sigma_sym*T]",
+    "relation": "Rl_sym(n,k,l)=Rk_sym(n,l,k)",
+    "boundary_and_shell_semantics": "Inherited by linearity from the original and swapped regularized Q-row fluxes. No new poles are admitted by averaging."
+  },
+  "direct_D_reduction": {
+    "weight_symmetry": "Dweight(n,k,l)=Dweight(n,l,k), where Dweight=W1+2*w5_sym",
+    "spatial_sum_equality": "sum_{k,l} Rl_sym(n,k,l+1)*(Dweight(n,k,l+1)-Dweight(n,k,l)) = sum_{k,l} Rk_sym(n,k+1,l)*(Dweight(n,k+1,l)-Dweight(n,k,l))",
+    "one_orientation_formula": "sum E_D = sum_{k,l}[sum_{j=1}^3 c_j*T(n+j,k,l)*(Dweight(n+j,k,l)-Dweight(n,k,l)) - 2*Rk_sym(n,k+1,l)*(Dweight(n,k+1,l)-Dweight(n,k,l))]",
+    "status": "EXACT_SYMMETRY_REDUCTION_OF_THE_REVERIFIED_RESIDUAL_SUM"
+  },
+  "purpose": "Reduce the proof search to the temporal defect plus one spatial orientation before any further telescoper/certificate search.",
+  "residual_sum_zero_proved": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.1.0",
+  "operation": "OZ-RT-BZ-T3-009",
+  "route": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001",
+  "subroute": "QROW_PRODUCT_RULE_REDUCTION_001",
+  "kernel_certificate": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/QROW_REPLAY_RESULT.json",
+  "flux_normalization": {
+    "R_k": "Reg[rho(n,k,l)*T(n,k,l)]",
+    "R_l": "Reg[sigma(n,k,l)*T(n,k,l)]",
+    "reason": "The regularized products are finite on the n+1,n+2,n+3 shells. Weights are multiplied only after this cancellation, so no infinity-times-zero or analytic-continuation convention is introduced into the protected discrete target."
+  },
+  "general_residual": {
+    "sequence": "Y_v(n)=sum_{k,l} T(n,k,l)*v(n,k,l)",
+    "temporal_part": "sum_{j=1}^3 c_j(n)*T(n+j,k,l)*(v(n+j,k,l)-v(n,k,l))",
+    "k_part": "-R_k(n,k+1,l)*(v(n,k+1,l)-v(n,k,l))",
+    "l_part": "-R_l(n,k,l+1)*(v(n,k,l+1)-v(n,k,l))",
+    "E_v": "temporal_part+k_part+l_part",
+    "summation_identity": "L_BZ[Y_v](n)=sum_{k,l} E_v(n,k,l)",
+    "summation_identity_status": "EXACT_DISCRETE_PRODUCT_RULE_WITH_REVERIFIED_QROW_AND_ZERO_BOUNDARY_FLUX"
+  },
+  "protected_weight_instantiations": {
+    "E_P5": {"v": "w5_sym", "source": "campaigns/odd_zeta/OZ_RT_BZ_T3_002/target.py:w5sym"},
+    "E_W": {"v": "W1", "source": "campaigns/odd_zeta/OZ_RT_BZ_T3_002/target.py:W1"},
+    "E_D": {"v": "W1+2*w5_sym", "source": "campaigns/odd_zeta/OZ_RT_BZ_T3_002/target.py:cell", "linearity": "E_D=E_W+2*E_P5"}
+  },
+  "canonicalization": {
+    "result": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/RESIDUAL_CANONICAL_RESULT.json",
+    "status": "DIRECT_ED_WEIGHT_DIFFERENCES_CANONICALIZED_IN_PROTECTED_ATOM_SYSTEM",
+    "protected_atom_count": 41,
+    "closure_only_atoms": [],
+    "target_max_atomic_arity": 4,
+    "difference_max_atomic_arity": 3,
+    "shift_monomial_counts": {"n1": 102, "n2": 102, "n3": 102, "k1": 134, "l1": 134}
+  },
+  "symmetric_gauge_reduction": {
+    "artifact": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/QROW_SYMMETRIC_GAUGE.json",
+    "rho_sigma_relation": "rho_sym(n,k,l)=sigma_sym(n,l,k)",
+    "direct_D_weight_symmetric": true,
+    "spatial_sum_orientations_after_index_swap": 1,
+    "four_channels": ["n1","n2","n3","k1"],
+    "sum_formula": "sum E_D = sum_{k,l}[c1*T(n+1)*Delta_n1(Dweight)+c2*T(n+2)*Delta_n2(Dweight)+c3*T(n+3)*Delta_n3(Dweight)-2*Rk_sym(n,k+1,l)*Delta_k(Dweight)]",
+    "status": "EXACT_SYMMETRY_REDUCTION_OF_THE_REVERIFIED_RESIDUAL_SUM"
+  },
+  "nested_skeleton": {
+    "artifact": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/NESTED_SKELETON_REDUCTION.json",
+    "dimension": 3,
+    "basis": ["N11","N12k","N12l"],
+    "N11": "U(k,l;1,2)+U(l,k;1,2)",
+    "N12k": "2*ES(l;1,3)-U(k,l;2,2)",
+    "N12l": "2*ES(k;1,3)-U(l,k;2,2)",
+    "all_weight4_weight5_r22_nested_coordinates_eliminated_from_shift_differences": true,
+    "status": "DIRECT_ED_NESTED_SECTOR_REDUCED_TO_THREE_PROTECTED_COMBINATIONS"
+  },
+  "nested_derivative_certificates": {
+    "artifact": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/NESTED_DERIVATIVE_CERTIFICATE_ROUTE.json",
+    "interior_identifications": ["Lk=-partial_k log(T)", "Ll=-partial_l log(T)", "Lk*Ll-C2=(partial_k partial_l T)/T"],
+    "certificate_status": "GLOBAL_REGULARIZED_DERIVATIVE_CERTIFICATES_COMPLETE",
+    "shell_status": "RECONCILED_BY_DIFFERENTIATING_REGULARIZED_PRODUCTS_BEFORE_LATTICE_SPECIALIZATION",
+    "regularized_flux_rule": "Differentiate Fk=Reg[rho_sym*T] and Fl=Reg[sigma_sym*T] directly; do not replace the resulting flux by a generic-field T*partial(rho) simplification on shell points.",
+    "boundary_status": "FINITE_AND_ZERO_ON_LOWER_AND_UPPER_FINITE_BOX_BOUNDARIES",
+    "abel_transfer": "The three nested divergences transfer onto Delta N11, Delta N12k, and Delta N12l. Those differences are purely one-body; hence the entire nested sector reduces exactly to a one-body residual.",
+    "nested_sector_globally_reduced_to_one_body": true
+  },
+  "one_body_reduction": {
+    "status": "MATHEMATICALLY_JUSTIFIED_CONSTRUCTION_NEXT",
+    "source_terms": [
+      "the existing one-body projection of the canonical direct E_D residual",
+      "the Abel-transfer corrections from N11 against E[A]",
+      "the Abel-transfer corrections from N12k against E[Lk]",
+      "the Abel-transfer corrections from N12l against E[Ll]"
+    ],
+    "nested_atoms_remaining_after_transfer": 0,
+    "next_object": "pole-free canonical one-body residual whose finite double sum equals sum E_D"
+  },
+  "selection_policy": "Use direct E_D. The generic 198-dimensional flux classes are exhausted and are not to be reopened. The next proof object is the exact one-body residual produced after the globally valid differentiated-Q-row Abel transfer.",
+  "next_exact_obligation": "Construct and independently verify the pole-free canonical one-body residual after Abel transfer; then certify or characterize its double sum. No theorem promotion occurs until that final residual sum is proved zero and recurrence propagation obligations are discharged.",
+  "residual_sum_zero_proved": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+  "terminal": "QROW_REVERIFIED_DIRECT_ED_CANONICALIZED_NESTED_GLOBALLY_REDUCED_ONE_BODY_RESIDUAL_NEXT"
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "operation": "OZ-RT-BZ-T3-009",
+  "route": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001",
+  "subroute": "QROW_PRODUCT_RULE_REDUCTION_001",
+  "object": "ONE_BODY_RESIDUAL_HARMONIC_MODULE",
+  "producer": {
+    "path": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/one_body_structure.py",
+    "git_blob_sha1": "62f83f765cbacf12e14fdc544c163c525f40c221",
+    "execution": "TEST_BACKED_LIBRARY_MODULE"
+  },
+  "canonical_weight_difference_one_body": {
+    "n1": {"monomials": 86, "atoms": 21, "max_atomic_arity": 3, "sha256": "80169c4f5fc44fe7308f6ea76f6020fbdcb0691b366f5d4cf6147048fd3baae9"},
+    "n2": {"monomials": 86, "atoms": 21, "max_atomic_arity": 3, "sha256": "cd2717299b445ceed30f7c1c1a21b9645ea43a29bea2fa1fda2a43463aad02e2"},
+    "n3": {"monomials": 86, "atoms": 21, "max_atomic_arity": 3, "sha256": "8cce2095a1778726596bf72646a8ed7b330bb0540eb7d061ad094d764c8e2746"},
+    "k1": {"monomials": 118, "atoms": 22, "max_atomic_arity": 3, "sha256": "be8a0d4cef62e5b1edcb90550effd634d3d5347c94356061f25aff9123912a4f"},
+    "l1": {"monomials": 118, "atoms": 22, "max_atomic_arity": 3, "sha256": "58178071899ad5ccb3d2043f2308b05cb80b749d389d416aa4f6ae153b72436f"}
+  },
+  "abel_transfer_differences": {
+    "Delta_k_N11": {"monomials": 5, "atoms": 4, "max_atomic_arity": 1, "sha256": "711c4333436a1adcf98af9bfe4743325d8a186de8a00dafe9bec7ddf241f4a7a"},
+    "Delta_l_N11": {"monomials": 5, "atoms": 4, "max_atomic_arity": 1, "sha256": "26253f0590043819f3124894bea8337492a9bf748c6f5da7267e015db0adfe95"},
+    "Delta_k_N12k": {"monomials": 2, "atoms": 1, "max_atomic_arity": 1, "sha256": "0d0f27a5d0d0e086954639e8632ef29b6e951f0024bed5aef822c5c2974b9762"},
+    "Delta_l_N12k": {"monomials": 8, "atoms": 7, "max_atomic_arity": 1, "sha256": "d16b61c8440ecc2c95a6a6bcf7d42d17d1e55b3b8dfd7c574bfd1244401f490f"},
+    "Delta_k_N12l": {"monomials": 8, "atoms": 7, "max_atomic_arity": 1, "sha256": "78fbc01b3996ef5dc258eb1e3df22bcfad3e47ed43a40609f3825d128582547b"},
+    "Delta_l_N12l": {"monomials": 2, "atoms": 1, "max_atomic_arity": 1, "sha256": "6945e74ffd98dddf10287c9c4ed5f56bd4f1178020f7edbcd7070d2300329dd8"}
+  },
+  "union_one_body_atoms": [
+    "A_k_1", "A_k_2", "A_l_1", "A_l_2", "B_k_1", "B_l_1", "C_1", "C_2",
+    "H_k_1", "H_k_2", "H_k_3", "H_k_4", "H_kl_1", "H_kl_2",
+    "H_l_1", "H_l_2", "H_l_3", "H_l_4", "H_nk_3", "H_nk_4", "H_nl_3", "H_nl_4"
+  ],
+  "union_one_body_atom_count": 22,
+  "nested_atoms_remaining": 0,
+  "structural_contraction": {
+    "original_target_monomials": 198,
+    "original_target_atoms": 41,
+    "original_nested_atoms": 14,
+    "final_one_body_atom_universe": 22,
+    "weight_difference_max_atomic_arity": 3,
+    "abel_transfer_max_atomic_arity": 1,
+    "interpretation": "The globally valid differentiated-Q-row Abel transfer eliminates every U/ES coordinate. The remaining summed residual is a genuine one-body harmonic summation problem over 22 protected atoms; it is not pointwise zero."
+  },
+  "coefficient_layer": "Exact Q-row regularized differentiated fluxes remain external scalar/hypergeometric coefficient functions. The harmonic module is canonicalized independently of expanding the 10k-leaf certificate coefficients into the atom algebra.",
+  "pointwise_zero": false,
+  "pointwise_nonzero_exact_interior_probe": true,
+  "finite_sampling_used_as_sum_proof": false,
+  "next_exact_obligation": "Construct the full pole-free one-body residual with the regularized differentiated Q-row coefficient layer, independently replay it against direct E_D at exact points and by module coefficients, then seek a structured one-body differential/holonomic certificate for its finite double sum.",
+  "residual_sum_zero_proved": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+  "terminal": "NESTED_ELIMINATED_ONE_BODY_22_ATOM_MODULE_CHARACTERIZED"
+}

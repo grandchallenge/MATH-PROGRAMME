@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fail-closed impact classifier for Programme policy and formal replay lanes."""
 from __future__ import annotations
-import argparse, json, os, subprocess, sys
+import argparse, fnmatch, json, os, subprocess, sys
 from pathlib import Path
 from typing import Iterable
 import jsonschema
@@ -9,6 +9,7 @@ ROOT=Path(__file__).resolve().parents[1]
 CONTROL_PATH=ROOT/'governance/policy_impact_gating.json'; CONTROL_SCHEMA=ROOT/'schemas/policy_impact_gating.schema.json'
 FORMAL_PATH=ROOT/'governance/formal_replay_policy.json'
 REGISTRY_PATH=ROOT/'governance/policy_shard_registry.json'; REGISTRY_SCHEMA=ROOT/'schemas/policy_shard_registry.schema.json'
+CMDG_GATE_PATH=ROOT/'governance/cmdg_workflow_impact_gating.json'
 ALL_SHARDS=('core','fixtures','cmdg','administrative','campaigns','contracts','docs'); ALL_LANES=('log-gcd','pc-wp04','union-closed-mathcert')
 FULL_FANOUT_PATHS={'.github/workflows/ci.yml','ci/policy_impact.py','ci/test_policy_impact.py','ci/run_policy_shard.py','ci/validate_policy_reachability.py','ci/test_policy_reachability.py','ci/validate_repository_execution.py','ci/test_repository_execution.py','ci/validate_workflow_semantics.py','ci/test_workflow_semantics.py','governance/policy_impact_gating.json','governance/policy_shard_registry.json','schemas/policy_impact_gating.schema.json','schemas/policy_shard_registry.schema.json'}
 ZERO_SHA='0'*40
@@ -27,6 +28,22 @@ def normalize_paths(paths:Iterable[str])->list[str]:
     return sorted(set(out))
 def matches_root(path:str,root:str)->bool:
     root=root.rstrip('/');return path==root or path.startswith(root+'/')
+def matches_pattern(path:str,pattern:str)->bool:return fnmatch.fnmatchcase(path,pattern)
+def enforce_cmdg_native_filter_guard(changed:list[str],event_name:str)->None:
+    if event_name!='pull_request' or not CMDG_GATE_PATH.is_file():return
+    control=load_json(CMDG_GATE_PATH)
+    if control.get('control_id')!='MP-CMDG-WORKFLOW-IMPACT-GATING-001' or control.get('status')!='ACTIVE_ON_PROTECTED_MERGE':raise ImpactError('CMDG workflow impact gating control identity/status drift')
+    guard=control.get('native_path_filter_guard')
+    patterns=control.get('pull_request_paths')
+    if not isinstance(guard,dict) or guard.get('event')!='pull_request':raise ImpactError('CMDG native path-filter guard contract drift')
+    if not isinstance(patterns,list) or not patterns or not all(isinstance(x,str) and x for x in patterns):raise ImpactError('CMDG pull-request path closure missing')
+    try:limit=int(guard.get('max_changed_files',0))
+    except (TypeError,ValueError):raise ImpactError('CMDG native path-filter guard limit invalid')
+    if limit!=300:raise ImpactError('CMDG native path-filter guard must remain at conservative 300-file bound')
+    if len(changed)<=limit:return
+    relevant=[p for p in changed if any(matches_pattern(p,pattern) for pattern in patterns)]
+    if relevant:
+        raise ImpactError(f'CMDG native path-filter guard: {len(changed)} changed files exceeds conservative {limit}-file bound and includes governed CMDG dependencies; split the PR')
 def formal_lane_impacts(paths:list[str],formal:dict,force_full:bool)->dict[str,bool]:
     if force_full:return {lane:True for lane in ALL_LANES}
     globals_={str(x) for x in formal.get('global',{}).get('inputs',[])}
@@ -62,7 +79,7 @@ def shard_impacts(paths:list[str])->tuple[list[str],list[str]]:
     if unknown:return list(ALL_SHARDS),unknown
     return [s for s in ALL_SHARDS if s in active],[]
 def classify_paths(paths:Iterable[str],*,event_name:str='pull_request',schedule:str|None=None)->dict:
-    changed=normalize_paths(paths);control=load_json(CONTROL_PATH);formal=load_json(FORMAL_PATH);formal_cron=str(control['formal_replay']['sentinel']['cron']);full_cron=str(control['policy_dag']['full_policy_sentinel_cron']);clean={lane:False for lane in ALL_LANES}
+    changed=normalize_paths(paths);enforce_cmdg_native_filter_guard(changed,event_name);control=load_json(CONTROL_PATH);formal=load_json(FORMAL_PATH);formal_cron=str(control['formal_replay']['sentinel']['cron']);full_cron=str(control['policy_dag']['full_policy_sentinel_cron']);clean={lane:False for lane in ALL_LANES}
     if event_name=='schedule':
         if schedule==formal_cron:return {'event_mode':'formal_sentinel','changed_paths':[],'unknown_paths':[],'policy_shards':['core'],'formal_dirty':clean}
         if schedule==full_cron:return {'event_mode':'full_policy_sentinel','changed_paths':[],'unknown_paths':[],'policy_shards':list(ALL_SHARDS),'formal_dirty':clean}

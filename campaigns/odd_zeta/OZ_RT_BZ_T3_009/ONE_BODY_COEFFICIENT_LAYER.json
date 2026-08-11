@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.2.0",
+  "operation": "OZ-RT-BZ-T3-009",
+  "execution_boundary": "FULL_POLE_FREE_ONE_BODY_RESIDUAL_COEFFICIENT_LAYER_001",
+  "route": "DIRECT_T3_DISCRETE_RESIDUAL_CERT_001",
+  "subroute": "STRUCTURED_ONE_BODY_LETTER_SPLIT_HOLONOMIC_001",
+  "status": "FULL_POLE_FREE_ONE_BODY_RESIDUAL_COEFFICIENT_LAYER_INDEPENDENTLY_REPLAYED",
+  "source_locks": {
+    "residual_canonical_result_blob": "3bce6acbc601e2b6ba6f880b8a78854e242e2f88",
+    "one_body_structure_result_blob": "9b94915d18016d3d903d04217eadb7b10e69c7dd",
+    "nested_derivative_certificate_route_blob": "d0129e6a8245bf4846d18e1e3130fead2b963086",
+    "qrow_symmetric_gauge_blob": "90ced05b422ef30186e6ead2abb4d1fd78614197"
+  },
+  "coefficient_object": {
+    "producer": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/one_body_coefficient_layer.py",
+    "independent_verifier": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/one_body_coefficient_verify.py",
+    "representation": "Sparse 22-atom harmonic monomials with coefficients in finite Q-linear combinations of ordinary affine Laurent factors and protected positive reciprocals, tensored with an exact 11-element regularized Q-row scalar basis.",
+    "scalar_basis": {
+      "TN1": "c1(n)*T(n+1,k,l)",
+      "TN2": "c2(n)*T(n+2,k,l)",
+      "TN3": "c3(n)*T(n+3,k,l)",
+      "SK": "-Rk_sym(n,k+1,l)",
+      "SL": "-Rl_sym(n,k,l+1)",
+      "AK": "-Jk_A(n,k+1,l)",
+      "AL": "-Jl_A(n,k,l+1)",
+      "LKK": "-Jk_Lk(n,k+1,l)",
+      "LKL": "-Jl_Lk(n,k,l+1)",
+      "LLK": "-Jk_Ll(n,k+1,l)",
+      "LLL": "-Jl_Ll(n,k,l+1)"
+    }
+  },
+  "regularized_scalar_semantics": {
+    "Fk": "Reg[rho_sym(n,k,l)*T(n,k,l)]",
+    "Fl": "Reg[sigma_sym(n,k,l)*T(n,k,l)]",
+    "Rk_sym": "Fk",
+    "Rl_sym": "Fl",
+    "Jk_Lk": "-partial_k(Fk)-Fk*Lk_disc",
+    "Jl_Lk": "-partial_k(Fl)-Fl*Lk_disc",
+    "Jk_Ll": "-partial_l(Fk)-Fk*Ll_disc",
+    "Jl_Ll": "-partial_l(Fl)-Fl*Ll_disc",
+    "Jk_A": "partial_k partial_l(Fk)-Fk*A_disc",
+    "Jl_A": "partial_k partial_l(Fl)-Fl*A_disc"
+  },
+  "protected_harmonic_shift_lemma": {
+    "H_convention": "H(m,r)=0 for integer m<=0",
+    "pinv_definition": "pinv_r(x)=x^(-r) for integer x>0 and 0 for integer x<=0",
+    "forward_identity": "H(m+j,r)-H(m,r)=sum_{s=1}^j pinv_r(m+s)",
+    "backward_identity": "H(m-1,r)-H(m,r)=-pinv_r(m)",
+    "only_modified_letter_families": ["B_k_r", "B_l_r"],
+    "exact_atom_shift_checks": 38950,
+    "exact_full_target_shift_checks": 950,
+    "checks_touching_moving_shell": 800,
+    "finite_sampling_used_as_global_proof": false
+  },
+  "factor_profile": {
+    "ordinary_affine_factors": [
+      [0,0,1,1], [0,1,0,1], [0,1,1,1],
+      [1,0,1,1], [1,0,1,2], [1,0,1,3],
+      [1,1,0,1], [1,1,0,2], [1,1,0,3],
+      [1,1,1,1], [1,1,1,2], [1,1,1,3]
+    ],
+    "protected_positive_reciprocal_factors": [
+      [1,-1,0,0], [1,-1,0,1], [1,-1,0,2], [1,-1,0,3],
+      [1,0,-1,0], [1,0,-1,1], [1,0,-1,2], [1,0,-1,3]
+    ],
+    "protected_factor_count": 8
+  },
+  "direct_one_body_shapes": {
+    "n1": {"monomials": 86, "atoms": 21, "max_atomic_arity": 3},
+    "n2": {"monomials": 86, "atoms": 21, "max_atomic_arity": 3},
+    "n3": {"monomials": 86, "atoms": 21, "max_atomic_arity": 3},
+    "k1": {"monomials": 118, "atoms": 22, "max_atomic_arity": 3},
+    "l1": {"monomials": 118, "atoms": 22, "max_atomic_arity": 3}
+  },
+  "abel_transfer_profiles": {
+    "AK:N11:k": {"monomials": 5, "atoms": 4, "max_atomic_arity": 1, "sha256": "711c4333436a1adcf98af9bfe4743325d8a186de8a00dafe9bec7ddf241f4a7a"},
+    "AL:N11:l": {"monomials": 5, "atoms": 4, "max_atomic_arity": 1, "sha256": "26253f0590043819f3124894bea8337492a9bf748c6f5da7267e015db0adfe95"},
+    "LKK:N12k:k": {"monomials": 2, "atoms": 1, "max_atomic_arity": 1, "sha256": "0d0f27a5d0d0e086954639e8632ef29b6e951f0024bed5aef822c5c2974b9762"},
+    "LKL:N12k:l": {"monomials": 8, "atoms": 7, "max_atomic_arity": 1, "sha256": "d16b61c8440ecc2c95a6a6bcf7d42d17d1e55b3b8dfd7c574bfd1244401f490f"},
+    "LLK:N12l:k": {"monomials": 8, "atoms": 7, "max_atomic_arity": 1, "sha256": "78fbc01b3996ef5dc258eb1e3df22bcfad3e47ed43a40609f3825d128582547b"},
+    "LLL:N12l:l": {"monomials": 2, "atoms": 1, "max_atomic_arity": 1, "sha256": "6945e74ffd98dddf10287c9c4ed5f56bd4f1178020f7edbcd7070d2300329dd8"}
+  },
+  "nested_skeleton_exact_digests": {
+    "n1": "9dfa80aefc04b16be69f7236d82e99d68579932f3333270dc1efa9d2313c58b0",
+    "n2": "5a9a466c3c549e79c7b32801c4953034788b0763757ff32f9201de2e469a941e",
+    "n3": "9d30b3d3e574037ace513acb8798ff1c855643fde3dfe1157d32d1598db0784e",
+    "k1": "029e24fbe33c92fa252bcf49c6e782609c5911a113934fc62b824987a4f6f5b7",
+    "l1": "0d936537328f2098dc74adabd2ca41b72e2c9f5f59d1c16adba46803179cd5e8"
+  },
+  "final_layer": {
+    "monomials": 122,
+    "atoms": 22,
+    "atom_names": [
+      "A_k_1", "A_k_2", "A_l_1", "A_l_2", "B_k_1", "B_l_1", "C_1", "C_2",
+      "H_k_1", "H_k_2", "H_k_3", "H_k_4", "H_kl_1", "H_kl_2",
+      "H_l_1", "H_l_2", "H_l_3", "H_l_4", "H_nk_3", "H_nk_4", "H_nl_3", "H_nl_4"
+    ],
+    "max_atomic_arity": 3,
+    "scalar_basis_size": 11,
+    "sha256": "90d067ae59790fab8648d006635c14950359b66eb8b57361e61d5b47b2b3af40",
+    "rows_retained_by": "Deterministic producer output; the digest binds the complete canonical 122-row sparse coefficient object without duplicating the rows in this summary artifact."
+  },
+  "independent_replay": {
+    "status": "INDEPENDENT_FULL_POLE_FREE_ONE_BODY_COEFFICIENT_REPLAY_COMPLETE",
+    "monomials": 122,
+    "atoms": 22,
+    "max_atomic_arity": 3,
+    "scalar_basis_size": 11,
+    "sha256": "90d067ae59790fab8648d006635c14950359b66eb8b57361e61d5b47b2b3af40",
+    "protected_factor_count": 8,
+    "exact_atom_shift_checks": 38950,
+    "exact_full_target_shift_checks": 950,
+    "checks_touching_moving_shell": 800,
+    "nested_skeleton_channels_verified": 5,
+    "abel_exact_checks": 9,
+    "full_rows_reconstructed_independently": true,
+    "producer_module_imported": false,
+    "finite_sampling_used_as_sum_proof": false
+  },
+  "sum_identity": {
+    "direct_decomposition": "E_D=E_D_one+E[A]*N11+E[Lk]*N12k+E[Ll]*N12l",
+    "abel_rule": "sum N*Delta_i(J_i)=-sum J_i(shifted)*Delta_i(N), with the already-certified zero regularized finite-box boundary",
+    "result": "sum E_D=sum R_one, where R_one is the canonical 122-row one-body coefficient object bound above",
+    "difference_from_direct_cell_residual": "a sum of the three certified regularized divergences Delta_k(Jk_f*N_f)+Delta_l(Jl_f*N_f), f in {A,Lk,Ll}"
+  },
+  "pole_semantics": "Q-row F/J scalars are regularized before lattice specialization. B_k/B_l harmonic shifts use protected positive reciprocals, so no coefficient evaluates infinity on the common n+3 finite box.",
+  "independent_replay_status": "INDEPENDENT_FULL_POLE_FREE_ONE_BODY_COEFFICIENT_REPLAY_COMPLETE",
+  "holonomic_search_admitted": true,
+  "next_exact_obligation": "Execute SYMMETRY_REDUCED_CHANNEL_HARMONIC_BLOCK_WITH_SHELL_STRATA_001: split only the eight protected positive reciprocals into interior-rational and finite moving-shell strata, preserve the n1/n2/n3/k1 channel decomposition with l1 by k<->l mirror, use the 5+4+2+2 harmonic blocks for bounded correction-flux viability probes, and recombine before any final n-holonomic elimination.",
+  "finite_sampling_used_as_sum_proof": false,
+  "residual_sum_zero_proved": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+}
