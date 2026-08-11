@@ -1,18 +1,28 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "operation_id": "MP-DOC-VISUAL-PILOT-REPRESENTATION-REPAIR-001",
   "materialized_commit": "456ba788c3cfd9adf7f36637966a95a09b2f1de6",
-  "protected_main_at_receipt": "6b4761859174c39ea95438ea415948c16db91745",
+  "protected_main_at_materialization": "6b4761859174c39ea95438ea415948c16db91745",
   "renderer": "tools/render_visual_pedagogy_raster_successors.py",
   "manifest": "governance/visual_pedagogy/representation_repair_manifest.json",
   "review_entry": "governance/visual_pedagogy/review_candidates/contact_sheet.png",
   "materialization_workflow_run": 31446529514,
   "materialization_result": "success",
-  "automation_note": "This connector-authored receipt follows the GITHUB_TOKEN materialization commit so the final repository-backed candidate state receives a fresh pull-request workflow suite. The dedicated workflow now checks out the actual PR head branch rather than the synthetic merge ref.",
+  "historical_materialization_note": "The first successful automation run materialized the deterministic PNG bytes onto the PR branch. Subsequent workflow-coverage validation established that ordinary validation workflows must remain read-only, use explicit concurrency, and disable persisted checkout credentials. That write-capable workflow state is retained in Git history but is superseded operationally.",
+  "current_automation_model": {
+    "mode": "read_only_deterministic_replay_and_review_bundle",
+    "workflow": ".github/workflows/visual-pedagogy-representation-repair.yml",
+    "top_level_permissions": "contents: read",
+    "checkout_persist_credentials": false,
+    "self_push_authorized": false,
+    "materialization_authority": "explicit governed repository commit outside validation workflow",
+    "review_bundle_generated": true
+  },
   "authority_boundary": {
     "visual_is_evidence": false,
     "merge_authorized": false,
     "independent_review_required": true,
-    "live_documentary_assets_replaced": false
+    "live_documentary_assets_replaced": false,
+    "programme_wide_migration_authorized": false
   }
 }
