@@ -1,0 +1,91 @@
+name: OZ T3-010-C ledger recovery
+
+on:
+  push:
+    branches:
+      - agent/oz-rt-bz-t3-010-c-ledger-recovery
+
+permissions:
+  contents: read
+
+jobs:
+  recover-ledger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout diagnostic branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Assert exact C mathematical source is unchanged
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=ca02bb6dad2970c169eb9b8745c871d4332447fb
+          test "$(git rev-parse HEAD^)" = "$BASE"
+          git diff --exit-code "$BASE" HEAD -- \
+            campaigns/odd_zeta/OZ_RT_BZ_T3_010 \
+            ci/campaign_replay_registry.json \
+            tests/test_oz_rt_bz_t3_010_c.py
+
+      - name: Run exact C producer
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 campaigns/odd_zeta/OZ_RT_BZ_T3_010/t3_010_c.py > t3_010_c_ledger.json
+          python3 -m json.tool t3_010_c_ledger.json >/dev/null
+
+      - name: Run independent C verifier
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 campaigns/odd_zeta/OZ_RT_BZ_T3_010/verify_t3_010_c.py > t3_010_c_verifier.log 2>&1
+          cat t3_010_c_verifier.log
+
+      - name: Emit compact exact summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('t3_010_c_ledger.json').read_text())
+          keys=(
+              'globally_consistent_independent_channel_count',
+              'globally_inconsistent_independent_channel_count',
+              'exact_solution_extracted_channel_count',
+              'all_independent_channels_globally_consistent',
+              'terminal',
+          )
+          out={k:d.get(k) for k in keys}
+          out['channel_systems']=[{
+              k:r.get(k) for k in (
+                  'channel','unknown_count','active_cell_count','structural_zero_cell_count',
+                  'local_classification_histogram','coefficient_rank','augmented_rank','nullity',
+                  'classification','exact_solution_extracted','exact_substitution_checks',
+                  'canonical_solution_sha256'
+              )
+          } for r in d['channel_systems']]
+          for key in (
+              'mirror_derived_channel_system',
+              'mirror_derived_channel',
+              'k1_l1_mirror',
+              'mirrored_k1_solution_exactly_satisfies_l1',
+          ):
+              if key in d:
+                  out[key]=d[key]
+          Path('t3_010_c_summary.json').write_text(json.dumps(out,sort_keys=True,indent=2)+'\n')
+          print(json.dumps(out,sort_keys=True,separators=(',',':')))
+          PY
+
+      - name: Upload exact recovery artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: oz-t3-010-c-ledger-recovery
+          path: |
+            t3_010_c_ledger.json
+            t3_010_c_summary.json
+            t3_010_c_verifier.log
+          if-no-files-found: error
+          retention-days: 30
