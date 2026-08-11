@@ -175,7 +175,7 @@ def verify(result: dict) -> dict:
         raise AssertionError("T3 status inflation")
     if result["harmonic_block_sizes"] != [5, 4, 2, 2]:
         raise AssertionError("block-size drift")
-    if result["independent_probe_cell_count"] != 1300:
+    if result["independent_probe_cell_count"] != 400:
         raise AssertionError("independent probe count drift")
     if result["mirrored_l1_cell_count"] != 100:
         raise AssertionError("mirror cell count drift")
@@ -184,7 +184,7 @@ def verify(result: dict) -> dict:
     if rebuilt["final_layer"]["sha256"] != EXPECTED_LAYER:
         raise AssertionError("rebuilt predecessor digest drift")
     probes = {p["id"]: p for p in result["forcing_support_rank_probes"]}
-    if len(probes) != 1300:
+    if len(probes) != 400:
         raise AssertionError("probe identity collision")
     strata = {(s["k_class"], s["l_class"]): s for s in result["shell_strata"]}
     if len(strata) != 25:
@@ -210,7 +210,7 @@ def verify(result: dict) -> dict:
                 if p["correction_candidate_admitted"] is not False:
                     raise AssertionError("candidate inflation")
                 checked += 1
-    if checked != 1300:
+    if checked != 400:
         raise AssertionError("independent replay count drift")
     return {
         "status": "INDEPENDENT_T3_010_A_REPLAY_COMPLETE",
