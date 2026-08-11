@@ -48,6 +48,23 @@ noncomputable def finiteSmallFreeCoordinateInclusion
   (CondensedMod.LocallyConstant.functorToPresheaves R).map
     (finiteSmallFreeCoordinateModuleMap X x)
 
+/-- Sectionwise action of the family/free comparison: unflip the finite family, then apply the
+canonical finite `Pi`/`Finsupp` equivalence pointwise. -/
+lemma finiteCoefficientFamilyFreeIso_hom_apply
+    (X : FintypeCat.{u}) (S : CompHaus.{u}ᵒᵖ)
+    (a : X.obj → LocallyConstant (unop S) R) (s : unop S) :
+    ((ConcreteCategory.hom ((finiteCoefficientFamilyFreeIso X).hom.app S)) a) s =
+      (Finsupp.linearEquivFunOnFinite R R X.obj).symm (fun y => a y s) := by
+  rfl
+
+/-- Sectionwise action of a free coordinate inclusion is the canonical `Finsupp.single`. -/
+lemma finiteSmallFreeCoordinateInclusion_apply
+    (X : FintypeCat.{u}) (x : X.obj) (S : CompHaus.{u}ᵒᵖ)
+    (h : LocallyConstant (unop S) R) (s : unop S) :
+    ((ConcreteCategory.hom ((finiteSmallFreeCoordinateInclusion X x).app S)) h) s =
+      Finsupp.single x (h s) := by
+  rfl
+
 /-- The family/free comparison sends the canonical coordinate inclusion to `Finsupp.single`. -/
 lemma finiteCoordinateInclusion_freeIso
     (X : FintypeCat.{u}) (x : X.obj) :
@@ -55,30 +72,36 @@ lemma finiteCoordinateInclusion_freeIso
       finiteSmallFreeCoordinateInclusion X x := by
   classical
   ext S h
+  let h' : LocallyConstant (unop S) R := h
   apply LocallyConstant.ext
   intro s
+  rw [finiteSmallFreeCoordinateInclusion_apply X x S h' s]
+  change
+    ((ConcreteCategory.hom ((finiteCoefficientFamilyFreeIso X).hom.app S))
+      ((ConcreteCategory.hom ((finiteCoordinateInclusion X x).app S)) h')) s =
+      Finsupp.single x (h' s)
+  rw [finiteCoefficientFamilyFreeIso_hom_apply X S _ s]
   apply Finsupp.ext
   intro y
+  change (if y = x then h' s else 0) = (Finsupp.single x (h' s)) y
   by_cases hy : y = x
   · subst y
-    simp [finiteCoordinateInclusion, finiteCoefficientFamilyFreeIso,
-      finiteSmallFreeCoordinateInclusion, finiteSmallFreeCoordinateModuleMap,
-      CMDG.CondensedCM4P2E.FiniteTransport.finiteFunctionPresheafFamilyIso,
-      CMDG.CondensedCM4P2E.FiniteTransport.locallyConstantPiLinearEquiv]
-  · simp [finiteCoordinateInclusion, finiteCoefficientFamilyFreeIso,
-      finiteSmallFreeCoordinateInclusion, finiteSmallFreeCoordinateModuleMap,
-      CMDG.CondensedCM4P2E.FiniteTransport.finiteFunctionPresheafFamilyIso,
-      CMDG.CondensedCM4P2E.FiniteTransport.locallyConstantPiLinearEquiv, hy]
+    simp
+  · simp [hy]
 
 #check finiteSmallFreePresheafFunctor
 #check finiteCoefficientFamilyFreeIso
 #check finiteSmallFreeCoordinateModuleMap
 #check finiteSmallFreeCoordinateInclusion
+#check finiteCoefficientFamilyFreeIso_hom_apply
+#check finiteSmallFreeCoordinateInclusion_apply
 #check finiteCoordinateInclusion_freeIso
 
 #print axioms finiteCoefficientFamilyFreeIso
 #print axioms finiteSmallFreeCoordinateModuleMap
 #print axioms finiteSmallFreeCoordinateInclusion
+#print axioms finiteCoefficientFamilyFreeIso_hom_apply
+#print axioms finiteSmallFreeCoordinateInclusion_apply
 #print axioms finiteCoordinateInclusion_freeIso
 
 end CMDG.CondensedCM4P2E.FiniteDualTransport
