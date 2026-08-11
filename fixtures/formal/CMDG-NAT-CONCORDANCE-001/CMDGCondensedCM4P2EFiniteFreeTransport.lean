@@ -53,16 +53,18 @@ canonical finite `Pi`/`Finsupp` equivalence pointwise. -/
 lemma finiteCoefficientFamilyFreeIso_hom_apply
     (X : FintypeCat.{u}) (S : CompHaus.{u}ᵒᵖ)
     (a : X.obj → LocallyConstant S.unop R) (s : ↑S.unop.toTop) :
-    ((ConcreteCategory.hom ((finiteCoefficientFamilyFreeIso X).hom.app S)) a) s =
-      (Finsupp.linearEquivFunOnFinite R R X.obj).symm (fun y => a y s) := by
+    let b : LocallyConstant S.unop (X.obj →₀ R) :=
+      (ConcreteCategory.hom ((finiteCoefficientFamilyFreeIso X).hom.app S)) a
+    b s = (Finsupp.linearEquivFunOnFinite R R X.obj).symm (fun y => a y s) := by
   rfl
 
 /-- Sectionwise action of a free coordinate inclusion is the canonical `Finsupp.single`. -/
 lemma finiteSmallFreeCoordinateInclusion_apply
     (X : FintypeCat.{u}) (x : X.obj) (S : CompHaus.{u}ᵒᵖ)
     (h : LocallyConstant S.unop R) (s : ↑S.unop.toTop) :
-    ((ConcreteCategory.hom ((finiteSmallFreeCoordinateInclusion X x).app S)) h) s =
-      Finsupp.single x (h s) := by
+    let b : LocallyConstant S.unop (X.obj →₀ R) :=
+      (ConcreteCategory.hom ((finiteSmallFreeCoordinateInclusion X x).app S)) h
+    b s = Finsupp.single x (h s) := by
   rfl
 
 /-- The family/free comparison sends the canonical coordinate inclusion to `Finsupp.single`. -/
@@ -73,14 +75,21 @@ lemma finiteCoordinateInclusion_freeIso
   classical
   ext S h
   let h' : LocallyConstant S.unop R := h
+  let a : X.obj → LocallyConstant S.unop R :=
+    (ConcreteCategory.hom ((finiteCoordinateInclusion X x).app S)) h'
+  let b : LocallyConstant S.unop (X.obj →₀ R) :=
+    (ConcreteCategory.hom ((finiteCoefficientFamilyFreeIso X).hom.app S)) a
+  let c : LocallyConstant S.unop (X.obj →₀ R) :=
+    (ConcreteCategory.hom ((finiteSmallFreeCoordinateInclusion X x).app S)) h'
+  change b = c
   apply LocallyConstant.ext
   intro s
-  rw [finiteSmallFreeCoordinateInclusion_apply X x S h' s]
-  change
-    ((ConcreteCategory.hom ((finiteCoefficientFamilyFreeIso X).hom.app S))
-      ((ConcreteCategory.hom ((finiteCoordinateInclusion X x).app S)) h')) s =
-      Finsupp.single x (h' s)
-  rw [finiteCoefficientFamilyFreeIso_hom_apply X S _ s]
+  have hb :
+      b s = (Finsupp.linearEquivFunOnFinite R R X.obj).symm (fun y => a y s) := by
+    exact finiteCoefficientFamilyFreeIso_hom_apply X S a s
+  have hc : c s = Finsupp.single x (h' s) := by
+    exact finiteSmallFreeCoordinateInclusion_apply X x S h' s
+  rw [hb, hc]
   apply Finsupp.ext
   intro y
   change (if y = x then h' s else 0) = (Finsupp.single x (h' s)) y
