@@ -54,7 +54,11 @@ lemma finiteCoordinateInclusion_freeIso
     finiteCoordinateInclusion X x ≫ (finiteCoefficientFamilyFreeIso X).hom =
       finiteSmallFreeCoordinateInclusion X x := by
   classical
-  ext S h s y
+  ext S h
+  apply LocallyConstant.ext
+  intro s
+  apply Finsupp.ext
+  intro y
   by_cases hy : y = x
   · subst y
     simp [finiteCoefficientFamilyFreeIso, finiteSmallFreeCoordinateInclusion,
