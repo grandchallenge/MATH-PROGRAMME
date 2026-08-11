@@ -27,8 +27,8 @@ class DocumentaryVisualPedagogyTests(unittest.TestCase):
         self.assertEqual(inv[rel]["blob_sha"],git_blob_sha(ROOT/rel))
     def test_schema_rejects_visual_evidence_promotion(self):
         v=Draft202012Validator(load_json(ROOT/SCHEMA_PATH)); c=load_json(ROOT/"governance/visual_pedagogy/plates/PNP-REDUCTION-PLATE-II.json"); m=copy.deepcopy(c); m["claim_boundary"]["visual_is_evidence"]=True; self.assertTrue(list(v.iter_errors(m)))
-    def test_all_pilot_contracts_keep_independent_review_explicit(self):
-        cs=[load_json(p) for p in (ROOT/"governance/visual_pedagogy/plates").glob("*.json")]; self.assertEqual(8,len(cs)); self.assertTrue(all(c["independent_review"]["status"]=="pending" for c in cs))
+    def test_all_pilot_contracts_bind_completed_independent_review(self):
+        cs=[load_json(p) for p in (ROOT/"governance/visual_pedagogy/plates").glob("*.json")]; self.assertEqual(8,len(cs)); self.assertTrue(all(c["independent_review"]["status"]=="reviewed" and c["independent_review"]["evidence_refs"] for c in cs))
     def test_rejected_svg_candidate_git_blobs_remain_historical(self):
         m=load_json(ROOT/"governance/visual_pedagogy/successor_render_manifest.json")
         for o in m["outputs"]:
