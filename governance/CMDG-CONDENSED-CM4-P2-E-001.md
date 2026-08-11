@@ -10,7 +10,7 @@ The P2-D predecessor is protected authority. P2-E begins from that exact protect
 
 **P2-D — `REPRESENTATION`.** The protected predecessor constructs the canonical, basis-free, functorial measure/dual condensed-module model and its Hom/duality interface. It does not identify that model with `profiniteSolid`.
 
-**P2-E — `RECONSTRUCTION/EQUIVALENCE`.** P2-E must construct the finite comparison, prove the protected measure functor has the required right-Kan universal property, and then use canonical right-Kan uniqueness to obtain
+**P2-E — `RECONSTRUCTION/EQUIVALENCE`.** P2-E constructs the finite comparison, proves the protected measure functor has the required right-Kan universal property, and uses canonical right-Kan uniqueness to obtain
 
 ```lean
 measureFunctor ≅ Condensed.profiniteSolid R
@@ -18,7 +18,7 @@ measureFunctor ≅ Condensed.profiniteSolid R
 
 The governing rule remains: **duality does not imply reconstruction**.
 
-The proof architecture is
+The completed mathematical proof architecture is
 
 ```text
 P2-D representation / duality
@@ -38,7 +38,7 @@ P2-D representation / duality
 - mathlib: `79d0395a1825a6264ad5d269e35e60537518955e`, tree `d76f5e09b832a08949f6d8ad4fb80ce30527da64`
 - coefficient ring: `ULift.{u + 1} ℤ`
 
-The historical Stage-A exact-tree result remains `FORMAL_ROUTE_REACHABLE_WITH_TWO_CONSTRUCTION_OBLIGATIONS`. It records the route as audited before E1/E2 construction; it is not the current completion state.
+The historical Stage-A exact-tree result remains `FORMAL_ROUTE_REACHABLE_WITH_TWO_CONSTRUCTION_OBLIGATIONS`. It records the route as audited before E1/E2/E3 construction; it is not the current completion state.
 
 ## E1 — canonical finite comparison
 
@@ -54,13 +54,13 @@ finiteComparisonNatIso :
 
 The construction is canonical and basis-free. Exact synchronized E1 head `a7ab8c2fc26bc1c8e9d62f184d7779c8a48e14f8` replayed successfully in dedicated run `31457490712`. Declaration-level axiom dependencies are `[propext, Classical.choice, Quot.sound]`.
 
-E1 remains frozen throughout E2.
+E1 remains frozen through E2 and E3.
 
 ## E2 — measure functor as right Kan extension
 
 State: `CLOSED_MACHINE_CERTIFIED`.
 
-The certified construction is now complete:
+The certified construction is complete:
 
 ```text
 canonical finite-quotient colimit of the nested locally-constant source
@@ -94,43 +94,76 @@ Dedicated P2-E run:
 
 `31493933246` — **SUCCESS**
 
-Both jobs succeeded:
-
-- formal replay / exact pinned dependency verification;
-- governed comparison-state validation and adversarial mutation tests.
-
 The E2 declarations retain the standard admitted axiom footprint `[propext, Classical.choice, Quot.sound]`; no `sorry`, local axiom, Nöbeling basis, or objectwise-only substitute is admitted.
 
-E2 therefore certifies the protected `measureFunctor` as a right Kan extension of `Condensed.finFree R` along `FintypeCat.toProfinite`, using the certified E1 comparison as counit.
+E2 certifies the protected `measureFunctor` as a right Kan extension of `Condensed.finFree R` along `FintypeCat.toProfinite`, using the certified E1 comparison as counit.
 
 ## E3 — canonical uniqueness
 
-State: `FORMALLY_AVAILABLE`.
+State: `CLOSED_MACHINE_CERTIFIED`.
 
-E3 has **not** yet been executed. The next mathematically distinct operation is to compare the certified E2 right extension with the pinned
+E3 is isolated in `CMDGCondensedCM4P2EE3.lean`. It performs the exact terminal comparison rather than deriving equivalence from the P2-D duality statement.
 
-`Condensed.profiniteSolidIsPointwiseRightKanExtension`
+The certified route is:
 
-and apply `rightKanExtensionUniqueOfIso` / `rightKanExtensionUnique` after transporting the finite source through certified E1.
+```text
+Condensed.profiniteSolidIsPointwiseRightKanExtension
+  → IsPointwiseRightKanExtension.isRightKanExtension
+  → pinned profiniteSolid right-Kan certificate over Condensed.finFree R
 
-Only that step may establish the terminal natural isomorphism
+certified E1 finiteComparisonNatIso.hom
+  + certified E2 measureFunctorIsRightKanExtension
+  → measureFunctor right-Kan certificate over the same Condensed.finFree R
+
+same finite source after E1 alignment
+  → rightKanExtensionUniqueOfIso with Iso.refl (Condensed.finFree R)
+  → rightKanExtensionUnique
+  → measureFunctor ≅ Condensed.profiniteSolid R
+```
+
+The identity source isomorphism in `rightKanExtensionUniqueOfIso` is legitimate precisely because E2 already uses the certified E1 map
 
 ```lean
-measureFunctor ≅ Condensed.profiniteSolid R
+finiteComparisonNatIso.hom :
+  FintypeCat.toProfinite ⋙ measureFunctor ⟶ Condensed.finFree R
 ```
+
+as its right-extension counit. The identity therefore occurs **after** E1 alignment; it is not a substitute for that alignment.
+
+Terminal declarations:
+
+```lean
+measureProfiniteSolidNatIsoOfIso :
+  CMDG.CondensedCM4P2D.measureFunctor ≅ Condensed.profiniteSolid R
+
+measureProfiniteSolidNatIso :
+  CMDG.CondensedCM4P2D.measureFunctor ≅ Condensed.profiniteSolid R
+```
+
+Exact synchronized E3 proof head:
+
+`58e4aaf77e9965dbb2552376a7433ba4ccfc8657`
+
+Dedicated P2-E run:
+
+`31542402818` — **SUCCESS**
+
+Both the governed-state job and the formal replay job succeeded. The formal job pinned the exact Lean/mathlib environment, verified the Kan-extension declarations, rejected `sorry`, local axioms, and chosen-basis substitution, and replayed `CMDGCondensedCM4P2EE3.lean`.
+
+All E3 terminal declarations report only `[propext, Classical.choice, Quot.sound]` under `#print axioms`.
+
+E3 therefore establishes the mathematical P2-E natural equivalence target.
 
 ## Current disposition
 
-`P2_E_COMPARISON_AUDIT_COMPLETE_RECONSTRUCTION_ACTIVE`
+`P2_E_NATURAL_EQUIVALENCE_ESTABLISHED_PENDING_PROTECTED_ADMISSION`
 
-E1 and E2 are certified. E3 remains open. The disposition therefore remains active rather than available/closed.
+E1, E2, and E3 are machine-certified, and the terminal natural equivalence is established. This changes the mathematical candidate state but does **not** establish protected P2-E availability. Protected admission remains a separate governance transition.
 
 ## Explicit nonclaims
 
-This stage does **not** establish:
+This stage does **not** establish protected P2-E availability or any of the following broader claims:
 
-- the terminal P2-E natural equivalence;
-- protected availability of CM4-P2-E;
 - closure of parent P2 issue #363;
 - CM4 theorem certification (#355);
 - P3, P4, P5, or P6;
@@ -142,4 +175,4 @@ This stage does **not** establish:
 - CM5;
 - global CMDG completeness.
 
-The next execution boundary is E3 canonical right-Kan uniqueness, and nothing beyond E3 is promoted by the E2 certificate.
+The next distinct boundary is protected admission of the now-certified P2-E candidate. No parent-P2 or broader CM4 authority is created by E3 itself.
