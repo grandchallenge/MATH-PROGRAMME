@@ -160,14 +160,39 @@ lemma finiteMeasurePresheafFamilyHom_naturality
           iX.inv =
         iY.inv ≫ finiteMeasureSourcePresheafMap f := by
     exact finiteMeasureSourceFamilyInv_naturality f
-  have hleft := congrArg
-    (fun η => η.app CMDG.CondensedCM4P2D.coefficientPresheaf)
-    (MonoidalClosed.pre_map iY.inv (finiteMeasureSourcePresheafMap f))
-  have hright := congrArg
-    (fun η => η.app CMDG.CondensedCM4P2D.coefficientPresheaf)
-    (MonoidalClosed.pre_map
-      (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)
-      iX.inv)
+  have hleft' :
+      (MonoidalClosed.pre (finiteMeasureSourcePresheafMap f)).app
+            CMDG.CondensedCM4P2D.coefficientPresheaf ≫
+          (MonoidalClosed.pre iY.inv).app CMDG.CondensedCM4P2D.coefficientPresheaf =
+        (MonoidalClosed.pre (iY.inv ≫ finiteMeasureSourcePresheafMap f)).app
+          CMDG.CondensedCM4P2D.coefficientPresheaf := by
+    have hleft := congrArg
+      (fun η => η.app CMDG.CondensedCM4P2D.coefficientPresheaf)
+      (MonoidalClosed.pre_map iY.inv (finiteMeasureSourcePresheafMap f))
+    simpa only [NatTrans.comp_app] using hleft.symm
+  have hmid :
+      (MonoidalClosed.pre (iY.inv ≫ finiteMeasureSourcePresheafMap f)).app
+          CMDG.CondensedCM4P2D.coefficientPresheaf =
+        (MonoidalClosed.pre
+          (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op ≫
+            iX.inv)).app CMDG.CondensedCM4P2D.coefficientPresheaf := by
+    exact congrArg
+      (fun k => (MonoidalClosed.pre k).app CMDG.CondensedCM4P2D.coefficientPresheaf)
+      hnat.symm
+  have hright' :
+      (MonoidalClosed.pre
+          (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op ≫
+            iX.inv)).app CMDG.CondensedCM4P2D.coefficientPresheaf =
+        (MonoidalClosed.pre iX.inv).app CMDG.CondensedCM4P2D.coefficientPresheaf ≫
+          (MonoidalClosed.pre
+            (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)).app
+              CMDG.CondensedCM4P2D.coefficientPresheaf := by
+    have hright := congrArg
+      (fun η => η.app CMDG.CondensedCM4P2D.coefficientPresheaf)
+      (MonoidalClosed.pre_map
+        (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)
+        iX.inv)
+    simpa only [NatTrans.comp_app] using hright
   change
     (MonoidalClosed.pre (finiteMeasureSourcePresheafMap f)).app
           CMDG.CondensedCM4P2D.coefficientPresheaf ≫
@@ -176,24 +201,7 @@ lemma finiteMeasurePresheafFamilyHom_naturality
         (MonoidalClosed.pre
           (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)).app
             CMDG.CondensedCM4P2D.coefficientPresheaf
-  calc
-    (MonoidalClosed.pre (finiteMeasureSourcePresheafMap f)).app
-          CMDG.CondensedCM4P2D.coefficientPresheaf ≫
-        (MonoidalClosed.pre iY.inv).app CMDG.CondensedCM4P2D.coefficientPresheaf =
-      (MonoidalClosed.pre (iY.inv ≫ finiteMeasureSourcePresheafMap f)).app
-          CMDG.CondensedCM4P2D.coefficientPresheaf := by
-            simpa only [NatTrans.comp_app] using hleft.symm
-    _ = (MonoidalClosed.pre
-          (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op ≫
-            iX.inv)).app CMDG.CondensedCM4P2D.coefficientPresheaf := by
-          exact congrArg
-            (fun k => (MonoidalClosed.pre k).app CMDG.CondensedCM4P2D.coefficientPresheaf)
-            hnat.symm
-    _ = (MonoidalClosed.pre iX.inv).app CMDG.CondensedCM4P2D.coefficientPresheaf ≫
-          (MonoidalClosed.pre
-            (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)).app
-              CMDG.CondensedCM4P2D.coefficientPresheaf := by
-            simpa only [NatTrans.comp_app] using hright
+  exact hleft'.trans (hmid.trans hright')
 
 /-- The fixed-finite-set comparison is natural in finite maps. -/
 noncomputable def finiteMeasurePresheafFamilyNatIso :
