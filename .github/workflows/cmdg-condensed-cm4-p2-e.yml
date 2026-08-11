@@ -91,7 +91,8 @@ jobs:
             fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EFiniteFreeTransport.lean \
             fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EE1.lean \
             fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EE2Core.lean \
-            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EE2.lean
+            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EE2.lean \
+            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EE3.lean
           do
             if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F"; then
               echo "P2-E fixtures must contain neither sorry nor local axioms."
@@ -129,6 +130,7 @@ jobs:
           grep -Fq 'def profiniteSolid : Profinite' "$ML/Mathlib/Condensed/Solid.lean"
           grep -Fq 'def profiniteSolidIsPointwiseRightKanExtension' "$ML/Mathlib/Condensed/Solid.lean"
           grep -Fq 'noncomputable def rightKanExtensionUniqueOfIso' "$ML/Mathlib/CategoryTheory/Functor/KanExtension/Basic.lean"
+          grep -Fq 'noncomputable def rightKanExtensionUnique' "$ML/Mathlib/CategoryTheory/Functor/KanExtension/Basic.lean"
           grep -Fq 'lemma IsPointwiseRightKanExtension.isRightKanExtension' "$ML/Mathlib/CategoryTheory/Functor/KanExtension/Pointwise.lean"
           grep -Fq 'noncomputable def isColimitLocallyConstantPresheafDiagram' "$ML/Mathlib/Condensed/Discrete/Colimit.lean"
           grep -Fq 'theorem isDiscrete_tfae' "$ML/Mathlib/Condensed/Discrete/Characterization.lean"
@@ -163,3 +165,4 @@ jobs:
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EE1.olean CMDGCondensedCM4P2EE1.lean
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EE2Core.olean CMDGCondensedCM4P2EE2Core.lean
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EE2.olean CMDGCondensedCM4P2EE2.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EE3.olean CMDGCondensedCM4P2EE3.lean
