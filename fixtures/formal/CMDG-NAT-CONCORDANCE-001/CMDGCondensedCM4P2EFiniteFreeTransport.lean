@@ -157,21 +157,12 @@ lemma finiteSmallFreeCoordinateInclusion_naturality
   rw [← Functor.map_comp]
   rw [finiteSmallFreeCoordinateModuleMap_naturality]
 
-/-- The transported internal-dual action and the explicit pushforward action are naturally
-isomorphic by identity components, because their maps were already certified equal. -/
-noncomputable def finiteCoefficientFamilyCovariantPushforwardNatIso :
-    finiteCoefficientFamilyCovariantFunctor ≅ finiteCoefficientFamilyPushforwardFunctor :=
-  NatIso.ofComponents
-    (fun X => Iso.refl _)
-    (by
-      intro X Y f
-      rw [Category.comp_id, Category.id_comp]
-      exact finiteCoefficientFamilyCovariant_map_eq_pushforward f)
-
-/-- The finite coefficient-family/free comparison is natural. The proof is generatorwise and uses
-the certified coordinate resolution rather than any chosen basis. -/
-noncomputable def finiteCoefficientFamilyFreeNatIso :
-    finiteCoefficientFamilyPushforwardFunctor ≅ finiteSmallFreePresheafFunctor :=
+/-- The finite coefficient-family/free comparison is natural for the certified covariant action.
+The proof is generatorwise and uses the canonical coordinate resolution, not a chosen basis. The
+separately certified theorem `finiteCoefficientFamilyCovariant_map_eq_pushforward` identifies this
+same action with explicit finite pushforward. -/
+noncomputable def finiteCoefficientFamilyCovariantFreeNatIso :
+    finiteCoefficientFamilyCovariantFunctor ≅ finiteSmallFreePresheafFunctor :=
   NatIso.ofComponents
     (fun X => finiteCoefficientFamilyFreeIso X)
     (by
@@ -180,28 +171,30 @@ noncomputable def finiteCoefficientFamilyFreeNatIso :
       intro x
       calc
         finiteCoordinateInclusion X x ≫
-            (finiteCoefficientFamilyPushforwardFunctor.map f ≫
+            (finiteCoefficientFamilyCovariantFunctor.map f ≫
               (finiteCoefficientFamilyFreeIso Y).hom) =
           (finiteCoordinateInclusion X x ≫
-              finiteCoefficientFamilyPushforwardFunctor.map f) ≫
-            (finiteCoefficientFamilyFreeIso Y).hom := by
-              rw [← Category.assoc]
+              finiteCoefficientFamilyCovariantFunctor.map f) ≫
+            (finiteCoefficientFamilyFreeIso Y).hom :=
+              (Category.assoc _ _ _).symm
         _ = finiteCoordinateInclusion Y (f x) ≫
               (finiteCoefficientFamilyFreeIso Y).hom := by
-              rw [finiteCoordinateInclusion_pushforwardFunctor_map]
-        _ = finiteSmallFreeCoordinateInclusion Y (f x) := by
-              rw [finiteCoordinateInclusion_freeIso]
+              rw [finiteCoordinateInclusion_covariant_map]
+        _ = finiteSmallFreeCoordinateInclusion Y (f x) :=
+              finiteCoordinateInclusion_freeIso Y (f x)
         _ = finiteSmallFreeCoordinateInclusion X x ≫
-              finiteSmallFreePresheafFunctor.map f := by
-              exact (finiteSmallFreeCoordinateInclusion_naturality f x).symm
+              finiteSmallFreePresheafFunctor.map f :=
+              (finiteSmallFreeCoordinateInclusion_naturality f x).symm
         _ = (finiteCoordinateInclusion X x ≫
               (finiteCoefficientFamilyFreeIso X).hom) ≫
               finiteSmallFreePresheafFunctor.map f := by
-              rw [finiteCoordinateInclusion_freeIso]
+              exact congrArg
+                (fun q => q ≫ finiteSmallFreePresheafFunctor.map f)
+                (finiteCoordinateInclusion_freeIso X x).symm
         _ = finiteCoordinateInclusion X x ≫
               ((finiteCoefficientFamilyFreeIso X).hom ≫
-                finiteSmallFreePresheafFunctor.map f) := by
-              rw [Category.assoc])
+                finiteSmallFreePresheafFunctor.map f) :=
+              Category.assoc _ _ _)
 
 /-- Presheaf-level finite E1 comparison: the actual P2-D finite measure presheaf is naturally the
 locally-constant presheaf of the canonical small finite free module. -/
@@ -209,8 +202,7 @@ noncomputable def finiteMeasureSmallFreePresheafNatIso :
     finiteMeasurePresheafFunctor ≅ finiteSmallFreePresheafFunctor :=
   finiteMeasurePresheafFamilyNatIso ≪≫
     finiteFamilyInternalHomNatIso ≪≫
-    finiteCoefficientFamilyCovariantPushforwardNatIso ≪≫
-    finiteCoefficientFamilyFreeNatIso
+    finiteCoefficientFamilyCovariantFreeNatIso
 
 #check finiteSmallFreePresheafFunctor
 #check finiteCoefficientFamilyFreeIso
@@ -224,8 +216,7 @@ noncomputable def finiteMeasureSmallFreePresheafNatIso :
 #check finiteCoordinateInclusion_freeIso
 #check finiteSmallFreeCoordinateModuleMap_naturality
 #check finiteSmallFreeCoordinateInclusion_naturality
-#check finiteCoefficientFamilyCovariantPushforwardNatIso
-#check finiteCoefficientFamilyFreeNatIso
+#check finiteCoefficientFamilyCovariantFreeNatIso
 #check finiteMeasureSmallFreePresheafNatIso
 
 #print axioms finiteCoefficientFamilyFreeIso
@@ -239,8 +230,7 @@ noncomputable def finiteMeasureSmallFreePresheafNatIso :
 #print axioms finiteCoordinateInclusion_freeIso
 #print axioms finiteSmallFreeCoordinateModuleMap_naturality
 #print axioms finiteSmallFreeCoordinateInclusion_naturality
-#print axioms finiteCoefficientFamilyCovariantPushforwardNatIso
-#print axioms finiteCoefficientFamilyFreeNatIso
+#print axioms finiteCoefficientFamilyCovariantFreeNatIso
 #print axioms finiteMeasureSmallFreePresheafNatIso
 
 end CMDG.CondensedCM4P2E.FiniteDualTransport
