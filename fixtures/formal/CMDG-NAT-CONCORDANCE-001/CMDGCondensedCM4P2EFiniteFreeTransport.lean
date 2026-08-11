@@ -67,6 +67,21 @@ lemma finiteSmallFreeCoordinateInclusion_apply
     b s = Finsupp.single x (h s) := by
   rfl
 
+/-- Evaluation of the canonical inverse finite `Pi`/`Finsupp` equivalence. -/
+lemma finitePiFinsuppSymm_apply
+    (X : FintypeCat.{u}) (v : X.obj → R) (y : X.obj) :
+    ((Finsupp.linearEquivFunOnFinite R R X.obj).symm v) y = v y := by
+  rw [Finsupp.linearEquivFunOnFinite_symm_apply]
+
+/-- Pointwise action of the canonical coefficient-family coordinate inclusion. -/
+lemma finiteCoordinateInclusion_apply
+    (X : FintypeCat.{u}) (x y : X.obj) (S : CompHaus.{u}ᵒᵖ)
+    (h : LocallyConstant S.unop R) (s : ↑S.unop.toTop) :
+    let a : X.obj → LocallyConstant S.unop R :=
+      (ConcreteCategory.hom ((finiteCoordinateInclusion X x).app S)) h
+    a y s = if y = x then h s else 0 := by
+  rfl
+
 /-- The family/free comparison sends the canonical coordinate inclusion to `Finsupp.single`. -/
 lemma finiteCoordinateInclusion_freeIso
     (X : FintypeCat.{u}) (x : X.obj) :
@@ -92,7 +107,8 @@ lemma finiteCoordinateInclusion_freeIso
   rw [hb, hc]
   apply Finsupp.ext
   intro y
-  change (if y = x then h' s else 0) = (Finsupp.single x (h' s)) y
+  rw [finitePiFinsuppSymm_apply X _ y]
+  rw [finiteCoordinateInclusion_apply X x y S h' s]
   by_cases hy : y = x
   · subst y
     simp
@@ -104,6 +120,8 @@ lemma finiteCoordinateInclusion_freeIso
 #check finiteSmallFreeCoordinateInclusion
 #check finiteCoefficientFamilyFreeIso_hom_apply
 #check finiteSmallFreeCoordinateInclusion_apply
+#check finitePiFinsuppSymm_apply
+#check finiteCoordinateInclusion_apply
 #check finiteCoordinateInclusion_freeIso
 
 #print axioms finiteCoefficientFamilyFreeIso
@@ -111,6 +129,8 @@ lemma finiteCoordinateInclusion_freeIso
 #print axioms finiteSmallFreeCoordinateInclusion
 #print axioms finiteCoefficientFamilyFreeIso_hom_apply
 #print axioms finiteSmallFreeCoordinateInclusion_apply
+#print axioms finitePiFinsuppSymm_apply
+#print axioms finiteCoordinateInclusion_apply
 #print axioms finiteCoordinateInclusion_freeIso
 
 end CMDG.CondensedCM4P2E.FiniteDualTransport
