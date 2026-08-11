@@ -90,6 +90,7 @@ jobs:
             fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EFiniteMeasureTransport.lean \
             fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EFiniteFreeTransport.lean \
             fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EE1.lean \
+            fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EE2Core.lean \
             fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EE2.lean
           do
             if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F"; then
@@ -160,4 +161,5 @@ jobs:
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteMeasureTransport.olean CMDGCondensedCM4P2EFiniteMeasureTransport.lean
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteFreeTransport.olean CMDGCondensedCM4P2EFiniteFreeTransport.lean
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EE1.olean CMDGCondensedCM4P2EE1.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EE2Core.olean CMDGCondensedCM4P2EE2Core.lean
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EE2.olean CMDGCondensedCM4P2EE2.lean
