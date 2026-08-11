@@ -7,7 +7,8 @@ import Mathlib.CategoryTheory.Monoidal.Closed.Braided
 
 This fixture is separate from the certified E1 layer. It starts the E2 reconstruction by
 identifying the P2-D continuous-function source as the filtered colimit of its finite quotients,
-then prepares the objectwise nested locally-constant transport needed for the protected presheaf.
+then proves the corresponding objectwise nested locally-constant transport needed for the protected
+presheaf.
 
 No E3 uniqueness statement or final comparison with `Condensed.profiniteSolid` is asserted here.
 -/
@@ -113,14 +114,98 @@ noncomputable def locallyConstantSwapLinearEquiv (T S : CompHaus.{u}) :
     change r • f t s = r • locallyConstantSwap T S f s t
     rw [locallyConstantSwap_apply]
 
+/-- For a fixed test compactum `T`, the target coefficient module is itself a discrete condensed
+module. -/
+noncomputable abbrev coefficientAtCondensed (T : CompHaus.{u}) : CondensedMod.{u} R :=
+  (CondensedMod.LocallyConstant.functor R).obj
+    (CMDG.CondensedCM4P2D.coefficientPresheaf.obj (op T))
+
+lemma coefficientAtCondensed_mem_locallyConstant (T : CompHaus.{u}) :
+    (CondensedMod.LocallyConstant.functor R).essImage (coefficientAtCondensed T) :=
+  ⟨CMDG.CondensedCM4P2D.coefficientPresheaf.obj (op T), ⟨Iso.refl _⟩⟩
+
+/-- The finite-quotient source after transposing the two compact variables. -/
+noncomputable abbrev transposedContinuousFunctions (T : CompHaus.{u}) :
+    Profinite.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} R :=
+  profiniteToCompHaus.op ⋙
+    (CondensedMod.LocallyConstant.functorToPresheaves R).obj
+      (CMDG.CondensedCM4P2D.coefficientPresheaf.obj (op T))
+
+/-- Evaluation of the protected nested P2-D presheaf at a fixed test compactum. -/
+noncomputable abbrev discreteContinuousPresheafAt (T : CompHaus.{u}) :
+    Profinite.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} R :=
+  CMDG.CondensedCM4P2D.discreteContinuousPresheaf ⋙
+    evaluation (CompHaus.{u}ᵒᵖ) (ModuleCat.{u + 1} R) (op T)
+
+/-- Swapping the two compact variables identifies the discrete finite-quotient source with the
+objectwise evaluation of the protected nested presheaf. -/
+noncomputable def transposedContinuousFunctionsNatIso (T : CompHaus.{u}) :
+    transposedContinuousFunctions T ≅ discreteContinuousPresheafAt T :=
+  NatIso.ofComponents
+    (fun S =>
+      (locallyConstantSwapLinearEquiv
+        (profiniteToCompHaus.obj S.unop) T).toModuleIso)
+    (by
+      intro X Y f
+      apply ModuleCat.hom_ext
+      apply LinearMap.ext
+      intro h
+      apply LocallyConstant.ext
+      intro t
+      apply LocallyConstant.ext
+      intro s
+      simp only [Functor.comp_map]
+      rw [locallyConstantSwap_apply, locallyConstantSwap_apply]
+      rfl)
+
+/-- The transposed objectwise source is a finite-quotient filtered colimit. -/
+noncomputable def transposedContinuousFunctionsIsColimit
+    (T : CompHaus.{u}) (S : Profinite.{u}) :
+    IsColimit ((transposedContinuousFunctions T).mapCocone S.asLimitCone.op) := by
+  have h :=
+    ((CondensedMod.isDiscrete_tfae R (coefficientAtCondensed T)).out 3 6).mp
+      (coefficientAtCondensed_mem_locallyConstant T)
+  change IsColimit
+    ((profiniteToCompHaus.op ⋙ (coefficientAtCondensed T).obj).mapCocone
+      S.asLimitCone.op)
+  exact (h S).some
+
+/-- Hence every evaluation of the protected nested P2-D presheaf is the same finite-quotient
+filtered colimit. -/
+noncomputable def discreteContinuousPresheafAtIsColimit
+    (T : CompHaus.{u}) (S : Profinite.{u}) :
+    IsColimit ((discreteContinuousPresheafAt T).mapCocone S.asLimitCone.op) := by
+  exact IsColimit.mapCoconeEquiv
+    (transposedContinuousFunctionsNatIso T)
+    (transposedContinuousFunctionsIsColimit T S)
+
+/-- The complete protected nested P2-D source presheaf is reconstructed from the canonical finite
+quotients of every profinite set. -/
+noncomputable def discreteContinuousPresheafIsColimit (S : Profinite.{u}) :
+    IsColimit
+      (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.mapCocone
+        S.asLimitCone.op) := by
+  apply evaluationJointlyReflectsColimits
+  intro T
+  simpa [discreteContinuousPresheafAt] using
+    (discreteContinuousPresheafAtIsColimit T.unop S)
+
 #check continuousFunctionsIsColimit
 #check discreteContinuousCondensedMappedIsColimit
 #check locallyConstantSwap
 #check locallyConstantSwapLinearEquiv
+#check transposedContinuousFunctionsNatIso
+#check transposedContinuousFunctionsIsColimit
+#check discreteContinuousPresheafAtIsColimit
+#check discreteContinuousPresheafIsColimit
 
 #print axioms continuousFunctionsIsColimit
 #print axioms discreteContinuousCondensedMappedIsColimit
 #print axioms locallyConstantSwap
 #print axioms locallyConstantSwapLinearEquiv
+#print axioms transposedContinuousFunctionsNatIso
+#print axioms transposedContinuousFunctionsIsColimit
+#print axioms discreteContinuousPresheafAtIsColimit
+#print axioms discreteContinuousPresheafIsColimit
 
 end CMDG.CondensedCM4P2E.RightKanReconstruction
