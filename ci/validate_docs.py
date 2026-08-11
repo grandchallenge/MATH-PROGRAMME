@@ -9,6 +9,8 @@ from typing import Any
 
 import yaml
 
+from validate_documentary_visual_pedagogy import visual_pedagogy_errors
+
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 
@@ -274,6 +276,7 @@ def validate_documents() -> list[str]:
     registry = yaml.safe_load((ROOT / "DOMAIN_REGISTRY.yaml").read_text(encoding="utf-8"))
     errors.extend(domain_contract_errors(registry, nav))
     errors.extend(authority_contract_errors())
+    errors.extend(visual_pedagogy_errors())
     return errors
 
 
@@ -284,7 +287,7 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"documentation validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print("documentation navigation, authority, and domain coverage contracts are valid")
+    print("documentation navigation, authority, domain coverage, and visual-pedagogy contracts are valid")
     return 0
 
 

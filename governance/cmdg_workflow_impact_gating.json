@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0.0",
+  "control_id": "MP-CMDG-WORKFLOW-IMPACT-GATING-001",
+  "status": "ACTIVE_ON_PROTECTED_MERGE",
+  "protected_baseline": "fad9cff9f8f73b78bfed94fb1aab9763f63d00ab",
+  "phase": "CONSERVATIVE_SHARED_CLOSURE",
+  "workflow_roster": [
+    "cmdg-condensed-cm1.yml",
+    "cmdg-condensed-cm2.yml",
+    "cmdg-condensed-cm3.yml",
+    "cmdg-condensed-cm4-p2-d.yml",
+    "cmdg-condensed-cm4-p2-e.yml",
+    "cmdg-condensed-cm4-p2.yml",
+    "cmdg-condensed-cm4.yml",
+    "cmdg-euclid-bridge.yml",
+    "cmdg-nat-concordance.yml",
+    "cmdg-solid-c05.yml",
+    "cmdg-vertical-spine-v0.yml"
+  ],
+  "pull_request_paths": [
+    ".github/workflows/**",
+    "ci/*cmdg*.py",
+    "ci/validate_workflow_coverage*.py",
+    "ci/validate_rh_continuity.py",
+    "governance/cmdg_*.json",
+    "governance/policy_shard_registry.json",
+    "schemas/cmdg_*.json",
+    "schemas/cross_repository_evidence.schema.json",
+    "fixtures/cmdg/**",
+    "fixtures/formal/CMDG-NAT-CONCORDANCE-001/**",
+    "tests/test_cmdg*.py",
+    "tests/**/test_cmdg*.py",
+    "requirements/policy.txt",
+    "evidence/UC-WP02-MATHCERT.json",
+    "campaigns/riemann_hypothesis/RH_WP01_WP02_POST_MERGE_DISPOSITION.md",
+    "docs/domains/riemann_hypothesis.md",
+    "docs/domains/index.md",
+    "docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md",
+    "docs/CAMPAIGN_PROMOTION_REGISTER.md",
+    "reviews/riemann_hypothesis/RH-WP01.agent_review.yaml",
+    "reviews/riemann_hypothesis/RH-WP02.agent_review.yaml"
+  ],
+  "negative_examples": [
+    "docs/WORKFLOW_COVERAGE.md",
+    "docs/index.md",
+    "README.md"
+  ],
+  "positive_examples": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/cmdg-condensed-cm1.yml",
+    "ci/validate_cmdg_condensed_cm1.py",
+    "ci/extract_cmdg_lean_dependencies.py",
+    "ci/validate_workflow_coverage_v2.py",
+    "ci/validate_rh_continuity.py",
+    "governance/cmdg_condensed_cm1_001.json",
+    "governance/policy_shard_registry.json",
+    "schemas/cmdg_condensed_cm1.schema.json",
+    "schemas/cross_repository_evidence.schema.json",
+    "fixtures/cmdg/condensed_cm1_001/nodes.json",
+    "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean",
+    "tests/test_cmdg_condensed_cm1.py",
+    "requirements/policy.txt",
+    "evidence/UC-WP02-MATHCERT.json",
+    "campaigns/riemann_hypothesis/RH_WP01_WP02_POST_MERGE_DISPOSITION.md",
+    "docs/domains/riemann_hypothesis.md",
+    "docs/domains/index.md",
+    "docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md",
+    "docs/CAMPAIGN_PROMOTION_REGISTER.md",
+    "reviews/riemann_hypothesis/RH-WP01.agent_review.yaml",
+    "reviews/riemann_hypothesis/RH-WP02.agent_review.yaml"
+  ],
+  "native_path_filter_guard": {
+    "event": "pull_request",
+    "max_changed_files": 300,
+    "relevant_large_pr_behavior": "FAIL_PROTECTED_PROGRAMME_POLICY__SPLIT_PR_REQUIRED",
+    "unrelated_large_pr_behavior": "ALLOW"
+  },
+  "event_semantics": {
+    "pull_request": "PATH_GATED_SHARED_CMDG_CLOSURE",
+    "push_main": "PRESERVED_UNCONDITIONAL",
+    "workflow_dispatch": "PRESERVED"
+  },
+  "routing_boundary": {
+    "unrelated_pr_standalone_cmdg_instantiation": false,
+    "cmdg_relevant_pr_full_standalone_family": true,
+    "within_cmdg_lane_reduction": false,
+    "protected_required_check_identity_changed": false
+  },
+  "authority_boundary": {
+    "mathematical_authority_conferred": false,
+    "source_authority_conferred": false,
+    "certification_authority_conferred": false,
+    "publication_or_deployment_authority_conferred": false,
+    "release_or_commercial_authority_conferred": false,
+    "bypass_created": false,
+    "emergency_authority_created": false,
+    "direct_protected_push_authorized": false,
+    "human_steward_impersonation_authorized": false
+  },
+  "terminal_target": "CMDG_WORKFLOW_IMPACT_GATING_PROTECTED__UNRELATED_PR_FANOUT_SUPPRESSED__CMDG_CLOSURE_PRESERVED"
+}

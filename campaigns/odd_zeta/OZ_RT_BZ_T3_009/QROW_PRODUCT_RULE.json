@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "operation": "OZ-RT-BZ-T3-009",
+  "subroute": "QROW_PRODUCT_RULE_REDUCTION_001",
+  "source_certificate": {
+    "repository": "rain-1/-odd-zeta-values-moremath",
+    "path": "work/lb5/Qrow_rhosigma.m",
+    "blob_sha1": "61f12f412726887f506e1d423b7ee183a22116e5",
+    "present_identically_at_commits": [
+      "968477ed7e406df6542f8da6fbe1cd6ca7273c47",
+      "790685b7ee4f642a8a88a1bd120636d1b8b39ea8"
+    ],
+    "upstream_claim": "L_BZ*T = Delta_k(rho*T) + Delta_l(sigma*T)",
+    "upstream_risc_free_verifier": "work/lb5/verifycore.wl",
+    "programme_reverification_status": "EXACT_RATIONAL_REPLAY_COMPLETE_WITH_REGULARIZED_BOUNDARY_FLUX",
+    "programme_replay_record": "QROW_REPLAY_RESULT.json",
+    "upstream_certified_label_is_programme_authority": false
+  },
+  "product_rule": {
+    "kernel_identity_reverified": true,
+    "delta_convention": "Delta_k F(n,k,l)=F(n,k+1,l)-F(n,k,l); analogously for l",
+    "for_any_protected_discrete_weight_v": "L_BZ[sum T*v] = sum E_v after exact finite-boundary cancellation",
+    "regularized_fluxes": "R_k=Reg[rho*T], R_l=Reg[sigma*T] before multiplication by a weight",
+    "E_v": "sum_{j=1}^3 c_j(n) T(n+j,k,l)*(v(n+j,k,l)-v(n,k,l)) - R_k(n,k+1,l)*(v(n,k+1,l)-v(n,k,l)) - R_l(n,k,l+1)*(v(n,k,l+1)-v(n,k,l))",
+    "derivation": "split L_BZ[T*v] into v*L_BZ[T] plus temporal weight differences; substitute the reverified Q-row identity; apply finite discrete summation by parts to the regularized k/l fluxes",
+    "algebraic_reduction_proved": true
+  },
+  "moving_support": {
+    "programme_uniform_zero_extension_already_proved": true,
+    "common_square": "0<=k,l<=n+3",
+    "qrow_boundary_recheck_required": false,
+    "qrow_boundary_recheck_complete": true,
+    "regularization": "The only nonnegative shell poles are order two at offsets n+1,n+2,n+3 and are cancelled by the kernel's order-two reciprocal-Gamma zeros before weights are applied.",
+    "outer_flux_vanishes_for_K_ge_n_plus_3": true
+  },
+  "t3_instantiations": {
+    "P5": "v=w5_sym",
+    "W": "v=W1",
+    "D": "v=W1+2*w5_sym",
+    "canonical_residual_record": "REDUCED_WEIGHT5_RESIDUAL.json"
+  },
+  "next_exact_obligation": "canonicalize the direct pole-free E_D residual over the protected weight-five atom basis and prove or characterize sum E_D; retain E_P5 and E_W as diagnostic projections",
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+  "terminal": "QROW_KERNEL_CERTIFICATE_REVERIFIED_REDUCED_WEIGHT5_RESIDUAL_LOCKED"
+}

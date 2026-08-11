@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "plate_id": "RH-CRITICAL-STRIP-PLATE-II",
+  "documentary_id": "RH-001",
+  "title": "The critical strip",
+  "representation_class": "schematic",
+  "mathematical_role": "Orient the reader to the critical strip, critical line, trivial/nontrivial zero distinction, pole at one, and functional-equation symmetry.",
+  "learning_objective": "Read the complex-plane geometry of the Riemann hypothesis without confusing generic decorative points with verified zero data.",
+  "literal_semantics": [
+    "The predecessor intends the central vertical line to stand for the critical line inside a vertical strip."
+  ],
+  "nonliteral_semantics": [
+    "The generic dots are not source-bound nontrivial-zero coordinates.",
+    "The plate does not encode the pole at s=1.",
+    "The plate does not encode the negative-even trivial zeros.",
+    "The horizontal and vertical positions are not a calibrated complex-plane plot."
+  ],
+  "source": {
+    "kind": "conceptual-specification",
+    "reference": "docs/documentaries/riemann.md#zeros",
+    "digest": null,
+    "notes": ["A successor may use exact axes and source-bound zero data, but any finite zero set must remain visibly finite and provenance-bound."]
+  },
+  "renderer": {
+    "mode": "manual-vector",
+    "generator_ref": null,
+    "version_or_environment": null,
+    "parameters_ref": null,
+    "reproducible": false,
+    "reproducibility_notes": ["The predecessor is a hand-authored schematic rather than a plot generated from analytic or zero-location data."]
+  },
+  "derivatives": [
+    {"format":"svg","path":"docs/assets/documentaries/riemann/strip.svg","role":"current predecessor web plate","digest":"git-blob:6684dbd8281e2768e42084e8ef04c05eef794d15"}
+  ],
+  "accessibility": {
+    "alt_text": "Trivial zeros, the pole, symmetry, and nontrivial zeros are arranged around the critical line.",
+    "long_description": "The predecessor visually contains a strip, a central line, and generic dots, but does not actually display several structures named by its alternative text. The replacement must label Re(s), Im(s), Re(s)=0, Re(s)=1, Re(s)=1/2, the pole at one, trivial zeros, functional symmetry, and the provenance of any plotted nontrivial zeros.",
+    "static_fallback": null
+  },
+  "claim_boundary": {
+    "visual_is_evidence": false,
+    "strongest_visual_claim": "Pedagogical orientation to the analytic geography in which the Riemann hypothesis is stated.",
+    "not_claimed": ["Verification of any zero", "Completeness of a zero list", "A zero-free region", "The Riemann hypothesis", "The generalized Riemann hypothesis"],
+    "mathematical_authority_ref": "docs/documentaries/riemann.md#zeros"
+  },
+  "audit_disposition": "REPLACE",
+  "predecessor": null,
+  "supersession_reason": "The predecessor's visible semantics do not match the structures promised by its title and description.",
+  "independent_review": {"status":"pending","evidence_refs":[]}
+}

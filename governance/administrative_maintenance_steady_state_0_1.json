@@ -1,0 +1,99 @@
+{
+  "$schema": "../schemas/administrative_maintenance_steady_state.schema.json",
+  "schema_version": "1.0.0",
+  "successor_id": "MP-ADMIN-STEADY-STATE-0.1-001",
+  "predecessor_control": "MP-ADMIN-MAINT-001",
+  "status": "ACTIVE_ON_PROTECTED_MERGE",
+  "activation": "EXACT_HEAD_HUMAN_STEWARD_DISPOSITION_AND_PROTECTED_MERGE",
+  "pilot_boundary_utc": "2026-08-10T01:21:00Z",
+  "steady_state_horizon_utc": "2026-09-06T13:21:00Z",
+  "acceleration_factor": 0.1,
+  "cadence_anchor_utc": "2026-08-01T01:21:00Z",
+  "council_packet": {
+    "issue": 320,
+    "comment_id": 5235087147,
+    "quorum": "8/8",
+    "consensus": "UNANIMOUS",
+    "recommendation": "RETAIN_ACCELERATION_0_1_WITH_AUTONOMY_HARDENING_CONDITIONS"
+  },
+  "terminal_evidence": {
+    "deliberation_base": "839e04e1b862ffddfe5ce1d4d733ba954cd45d96",
+    "deliberation_tree": "ac1e21d2746ad951a9aa3c747895b28f56092bf8",
+    "pilot_freeze_digest": "739cb95971eb7a7b24636ef6402c81a4ed03f8d63e00e2517050cad1eabc5dbd",
+    "checkered_flag_blocker_digest": "6b5a904a1058c91a3e1e31f955d7dc28b028b7cda4af4a0cf973f2877cfd0701",
+    "administrative_review_head": "6afb1513c1948887568f177d290ee246f36c2746",
+    "administrative_review_merge": "6dda2efea68da8e6b0ae721a5028b5a23af8caf8",
+    "administrative_review_record_sha256": "b16111dfb34d6f2c27f6a257ca61c173e20d14d7984b49d675db3d86f4609cf8",
+    "administrative_receipt_merge": "f8cf5a24028b8d3497ddcf16d8bb2b03f32d100f",
+    "deep_conformance_head": "860d5537543e9c33b94bc9bc84ee5ab4aa2f091e",
+    "deep_conformance_merge": "ec604382f75d11a931d64bd776da6e05ffb322c8"
+  },
+  "cadences": {
+    "structural_sweep": "PT16H48M",
+    "administrative_review": "P3D",
+    "deep_conformance_review": "P9D",
+    "constitutional_review": "P36DT12H"
+  },
+  "transition_bridge": {
+    "occurrence_key": "structural_sweep:2026-08-10T03:45:00Z",
+    "normal_prepare_at_utc": "2026-08-09T21:45:00Z",
+    "normal_freeze_at_utc": "2026-08-10T02:15:00Z",
+    "due_at_utc": "2026-08-10T03:45:00Z",
+    "bounded_mutation_until_utc": "2026-08-10T03:45:00Z",
+    "reason": "FIRST_POST_PILOT_OCCURRENCE_PREPARATION_WINDOW_PRECEDES_SUCCESSOR_AUTHORITY",
+    "deadline_reset": false,
+    "required_checks_weakened": false,
+    "exact_head_gate_weakened": false,
+    "one_time_only": true
+  },
+  "hardening_conditions": [
+    "AUTONOMOUS_REQUIRED_CHECK_STABILIZATION",
+    "DETERMINISTIC_HIGH_CHURN_CANDIDATE_MAIN_RECONCILIATION",
+    "BOUNDED_SAME_OCCURRENCE_RECOVERY_WITHOUT_CADENCE_RESET",
+    "PROTECTED_RECEIPT_READBACK_PROVENANCE_INTEGRITY",
+    "PROTECTED_MIRROR_PRODUCER_PROVENANCE_AND_TIMEOUT_OBSERVABILITY",
+    "ADVERSARIAL_REPEATED_SAME_DAY_AND_MOVING_MAIN_COVERAGE",
+    "SCHEDULER_AND_DELIVERY_LATENCY_OBSERVABILITY",
+    "NO_REQUIRED_CHECK_OR_EXACT_HEAD_GATE_WEAKENING"
+  ],
+  "protected_invariants": {
+    "cadence_anchor_preserved": true,
+    "exact_head_required": true,
+    "referee_separation_required": true,
+    "protected_merge_required": true,
+    "protected_readback_required": true,
+    "direct_protected_push_forbidden": true,
+    "bypass_forbidden": true,
+    "human_steward_control_plane_authority_preserved": true
+  },
+  "historical_evidence_policy": {
+    "preserve_lateness": true,
+    "preserve_failed_closed_attempts": true,
+    "preserve_recovery_records": true,
+    "preserve_freeze_blocker": true,
+    "preserve_mirror_timeouts": true,
+    "eventual_recovery_rewrites_failure": false
+  },
+  "authority_boundary": {
+    "candidate_branch_is_authority": false,
+    "council_packet_is_human_steward_authority": false,
+    "successor_requires_human_steward_exact_head_disposition": true,
+    "future_control_plane_changes_pre_authorized": false,
+    "waiver_created": false,
+    "emergency_authority_created": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "certificate_issued": false,
+    "novelty_claim": false,
+    "priority_claim": false,
+    "publication_claim": false,
+    "patentability_claim": false,
+    "deployment_claim": false,
+    "product_claim": false,
+    "release_claim": false,
+    "commercial_claim": false
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0.0",
+  "registry_id": "MP-POLICY-SHARDS-001",
+  "shards": {
+    "core": [
+      ["python3", "ci/validate_schema_json.py"],
+      ["python3", "ci/policy_impact.py", "validate"],
+      ["python3", "ci/test_policy_impact.py"],
+      ["python3", "ci/formal_replay_attestation.py", "check-policy"],
+      ["python3", "ci/test_formal_replay_gate.py"]
+    ],
+    "fixtures": [
+      ["python3", "ci/check_algebraic_fixture.py", "fixtures/algebraic/UF-INV-001"],
+      ["python3", "ci/test_algebraic_fixture.py"],
+      ["python3", "ci/check_radical_fixture.py", "fixtures/algebraic/RAD-NIL-002"],
+      ["python3", "ci/test_radical_fixture.py"],
+      ["python3", "ci/validate_grobner_manifest.py"],
+      ["python3", "ci/test_grobner_manifest.py"],
+      ["python3", "ci/validate_chaidez_pedagogy.py"],
+      ["python3", "ci/test_chaidez_pedagogy.py"],
+      ["python3", "ci/validate_researchmath_fixture.py"],
+      ["python3", "ci/test_researchmath_fixture.py"],
+      ["python3", "ci/validate_log_gcd_fixture.py", "fixtures/formal/LOG-GCD-001"],
+      ["python3", "ci/test_log_gcd_fixture.py"],
+      ["python3", "ci/validate_log_gcd_publication.py", "fixtures/formal/LOG-GCD-001"],
+      ["python3", "ci/test_log_gcd_publication.py"]
+    ],
+    "cmdg": [
+      ["python3", "ci/validate_cmdg_schema_contracts.py"],
+      ["python3", "ci/validate_cmdg_graph_package.py", "--report", "cmdg-validator-report.json"],
+      ["python3", "ci/validate_cmdg_nat_foundations_profile.py"],
+      ["python3", "ci/validate_cmdg_workflow_impact_gating.py"],
+      ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_cmdg*.py"]
+    ],
+    "administrative": [
+      ["python3", "ci/validate_administrative_structural_sweep.py"],
+      ["python3", "ci/validate_administrative_cadence_reconciliation.py"],
+      ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_administrative*.py"]
+    ],
+    "campaigns": [
+      ["python3", "ci/campaign_admission_control.py"],
+      ["python3", "ci/validate_campaign_replays.py"],
+      ["python3", "ci/test_campaign_replays.py"],
+      ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_campaign*.py"]
+    ],
+    "contracts": [
+      ["python", "ci/validate_programme.py"],
+      ["python", "ci/test_validate_programme.py"],
+      ["python3", "ci/validate_retired_paths.py"],
+      ["python3", "ci/test_retired_paths.py"],
+      ["python3", "ci/validate_workflow_coverage_v2.py"],
+      ["python3", "ci/test_workflow_coverage_v2.py"],
+      ["python3", "ci/test_workflow_coverage.py"],
+      ["python3", "ci/validate_policy_reachability.py"],
+      ["python3", "ci/test_policy_reachability.py"],
+      ["python3", "ci/validate_repository_execution.py"],
+      ["python3", "ci/test_repository_execution.py"],
+      ["python3", "ci/validate_workflow_semantics.py"],
+      ["python3", "ci/test_workflow_semantics.py"],
+      ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"]
+    ],
+    "docs": [
+      ["python", "ci/validate_docs.py"],
+      ["python", "ci/test_validate_docs.py"],
+      ["mkdocs", "build", "--strict"]
+    ]
+  }
+}

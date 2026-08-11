@@ -19,6 +19,7 @@ from typing import Iterable
 DEFAULT_POLICY = Path("governance/formal_replay_policy.json")
 RECEIPT_STATUS = "FULL_FORMAL_REPLAY_SUCCEEDED"
 REUSE_STATUS = "REUSED_BIT_IDENTICAL_FORMAL_ATTESTATION"
+PROTECTED_RECEIPT_EVENTS = {"push", "schedule"}
 SHA40 = re.compile(r"^[0-9a-f]{40}$")
 
 
@@ -136,13 +137,14 @@ def validate_receipt(repo: Path, policy: dict, lane: str, receipt: dict, *, now:
         "status": RECEIPT_STATUS,
         "input_digest": expected_digest,
         "repository": policy["global"]["repository"],
-        "origin_event": "push",
         "origin_ref": "refs/heads/main",
         "policy_operation": policy.get("operation"),
     }
     for key, value in required.items():
         if receipt.get(key) != value:
             return False, f"receipt_{key}_mismatch"
+    if receipt.get("origin_event") not in PROTECTED_RECEIPT_EVENTS:
+        return False, "receipt_origin_event_not_protected"
     origin_commit = receipt.get("origin_commit", "")
     if not SHA40.fullmatch(origin_commit):
         return False, "receipt_origin_commit_invalid"
@@ -178,8 +180,8 @@ def result_digest(paths: Iterable[Path]) -> str:
 
 
 def emit_receipt(repo: Path, policy: dict, lane: str, output: Path, *, origin_commit: str, origin_run_id: str, origin_run_attempt: str, origin_event: str, origin_ref: str, result_files: list[Path], created_at: dt.datetime | None = None) -> dict:
-    if origin_event != "push" or origin_ref != "refs/heads/main":
-        raise PolicyError("reusable receipts may be emitted only for protected-main push executions")
+    if origin_event not in PROTECTED_RECEIPT_EVENTS or origin_ref != "refs/heads/main":
+        raise PolicyError("reusable receipts may be emitted only for protected-main push or schedule executions")
     if origin_commit != git_head(repo):
         raise PolicyError("receipt origin commit must equal checked-out HEAD")
     if not str(origin_run_id).isdigit() or int(origin_run_id) <= 0:

@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "plate_id": "BSD-CURVE-PLATE-I",
+  "documentary_id": "BSD-001",
+  "title": "The ancient question of rational solutions",
+  "representation_class": "schematic",
+  "mathematical_role": "Connect the congruent-number example, the elliptic curve E_5, rational points, and the limits of finite search.",
+  "learning_objective": "Distinguish literal arithmetic data from visual analogy and recognize how a verified rational point on E_5 corresponds to a rational right triangle of area five.",
+  "literal_semantics": [
+    "The predecessor names the equation y^2 = x^3 - 25x and intends to connect it to rational points and the area-five congruent-number example."
+  ],
+  "nonliteral_semantics": [
+    "The drawn cubic is not a verified plot of y^2 = x^3 - 25x.",
+    "The displayed point locations are not verified rational coordinates unless separately labeled.",
+    "The triangle proportions are not the exact 3/2, 20/3, 41/6 triangle.",
+    "The lower search constellation is illustrative and not a completeness computation."
+  ],
+  "source": {
+    "kind": "exact-object",
+    "reference": "docs/documentaries/bsd.md#rational-points",
+    "digest": null,
+    "notes": ["The successor should use E_5: y^2=x^3-25x, the verified point (25/4,75/8), and the rational triangle with sides 3/2, 20/3, 41/6."]
+  },
+  "renderer": {
+    "mode": "manual-vector",
+    "generator_ref": null,
+    "version_or_environment": null,
+    "parameters_ref": null,
+    "reproducible": false,
+    "reproducibility_notes": ["The predecessor is illustrative rather than generated from the stated elliptic curve and rational-point data."]
+  },
+  "derivatives": [
+    {"format":"svg","path":"docs/assets/documentaries/bsd/plate_curve.svg","role":"current predecessor web plate","digest":"git-blob:88b010f956744a4303dfbfd04b9f95062dbdfe04"}
+  ],
+  "accessibility": {
+    "alt_text": "An illustrated map from rational right triangles and cubic curves to sparse rational points, torsion, rank, and the limits of finite search.",
+    "long_description": "The predecessor compresses exact arithmetic into an illustrated panorama. The successor must make the curve geometry and selected rational coordinates literal, label the exact area-five triangle, and keep the inability of finite search to certify the complete Mordell-Weil group explicit.",
+    "static_fallback": null
+  },
+  "claim_boundary": {
+    "visual_is_evidence": false,
+    "strongest_visual_claim": "Pedagogical exposition of a source-stated exact congruent-number example and the distinction between finding rational points and proving completeness.",
+    "not_claimed": ["A complete rational-point search", "The rank of every elliptic curve", "The Birch-Swinnerton-Dyer conjecture", "Finiteness of the Tate-Shafarevich group"],
+    "mathematical_authority_ref": "docs/documentaries/bsd.md#rational-points"
+  },
+  "audit_disposition": "REDRAW",
+  "predecessor": null,
+  "supersession_reason": "The conceptual role is sound, but literal arithmetic should be rendered from the stated exact curve and verified rational data.",
+  "independent_review": {"status":"pending","evidence_refs":[]}
+}
