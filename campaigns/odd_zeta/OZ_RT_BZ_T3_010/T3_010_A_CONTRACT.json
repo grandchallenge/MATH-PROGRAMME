@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "issue": 403,
   "operation": "SYMMETRY_REDUCED_CHANNEL_HARMONIC_BLOCK_WITH_SHELL_STRATA_001",
   "stage": "T3_010_A_EXACT_SHELL_CHANNEL_BLOCK_DECOMPOSITION_AND_VIABILITY_GATE",
@@ -13,7 +13,7 @@
     "n-k", "n-k+1", "n-k+2", "n-k+3",
     "n-l", "n-l+1", "n-l+2", "n-l+3"
   ],
-  "pinv_semantics": "pinv_r(x)=x^(-r) for integer x>0; 0 for integer x<=0",
+  "pinv_semantics": "pinv_r(x)=x^(-r) for integer x>0 and 0 for integer x<=0",
   "coordinate_classes": [
     {"id": "interior", "offset": null, "condition": "coordinate<=n-1", "activation": [true, true, true, true]},
     {"id": "edge0", "offset": 0, "condition": "coordinate=n", "activation": [false, true, true, true]},
@@ -39,8 +39,9 @@
       "k1": ["SK", "AK", "LKK", "LLK"],
       "l1": ["SL", "AL", "LLL", "LKL"]
     },
-    "l1_policy": "exact k<->l mirror of k1 only",
-    "mirror_scalar_map": {"SK": "SL", "AK": "AL", "LKK": "LLL", "LLK": "LKL"}
+    "l1_policy": "derive l1 only after exact coefficient-layer k<->l mirror verification on every mirrored shell stratum",
+    "mirror_scalar_map": {"SK": "SL", "AK": "AL", "LKK": "LLL", "LLK": "LKL"},
+    "exact_mirror_strata_required": 25
   },
   "harmonic_blocks": {
     "weight1": ["H_k_1", "H_kl_1", "H_nk_1", "H_nmk_1", "H_nkl_1"],
@@ -49,11 +50,16 @@
     "weight4": ["H_k_4", "H_nk_4"]
   },
   "harmonic_block_sizes": [5, 4, 2, 2],
+  "letter_orientation_policy": {
+    "inside_independent_channels": "Preserve distinct k- and l-oriented primitive harmonic letters.",
+    "sequence_level_quotient": "Use the protected 13 k<->l orbit representatives only to assign oriented letters to the four harmonic weight blocks.",
+    "forbidden": "Do not identify an l-oriented letter with its k-oriented representative as an algebraic equality inside an individual shift channel."
+  },
   "probe_envelope": {
     "independent_probe_cell_count": 400,
     "formula": "4 independent channels * 4 harmonic blocks * 25 shell strata",
     "mirrored_l1_cell_count": 100,
-    "rank_kind": "exact rank over Q of the 0/1 scalar-support incidence matrix after exact shell specialization",
+    "rank_kind": "exact rank over Q of the 0/1 scalar-support incidence matrix on oriented primitive letters after exact shell specialization",
     "rank_scope": "forcing-side structural viability only",
     "correction_flux_elimination_rank": false,
     "correction_candidate_admitted": false
