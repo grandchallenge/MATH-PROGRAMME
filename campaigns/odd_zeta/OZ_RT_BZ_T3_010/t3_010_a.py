@@ -45,12 +45,7 @@ CHANNEL_SCALARS = {
     "l1": ["SL", "AL", "LLL", "LKL"],
 }
 INDEPENDENT_CHANNELS = ["n1", "n2", "n3", "k1"]
-MIRROR_SCALAR = {
-    "SK": "SL",
-    "AK": "AL",
-    "LKK": "LLL",
-    "LLK": "LKL",
-}
+MIRROR_SCALAR = {"SK": "SL", "AK": "AL", "LKK": "LLL", "LLK": "LKL"}
 
 COORDINATE_CLASSES = [
     {"id": "interior", "offset": None, "condition": "coordinate<=n-1"},
@@ -60,31 +55,53 @@ COORDINATE_CLASSES = [
     {"id": "shell3", "offset": 3, "condition": "coordinate=n+3"},
 ]
 
-# Exact k<->l quotient expansion of the protected 22 one-body atoms into
-# the 13 letter representatives retained by LETTER_SPLIT_RESULT.json.
+# The 22 atoms are expanded into oriented primitive harmonic letters.
+# k/l orientation is preserved here.  The T3-009 13-letter quotient is
+# applied only through ORBIT_REP when assigning letters to weight blocks.
 ATOM_EXPANSION = {
     "A_k_1": {"H_nk_1": 1, "H_k_1": -1},
-    "A_l_1": {"H_nk_1": 1, "H_k_1": -1},
+    "A_l_1": {"H_nl_1": 1, "H_l_1": -1},
     "A_k_2": {"H_nk_2": 1, "H_k_2": -1},
-    "A_l_2": {"H_nk_2": 1, "H_k_2": -1},
+    "A_l_2": {"H_nl_2": 1, "H_l_2": -1},
     "B_k_1": {"H_nmk_1": 1, "H_k_1": -1},
-    "B_l_1": {"H_nmk_1": 1, "H_k_1": -1},
+    "B_l_1": {"H_nml_1": 1, "H_l_1": -1},
     "C_1": {"H_nkl_1": 1, "H_kl_1": -1},
     "C_2": {"H_nkl_2": 1, "H_kl_2": -1},
-    "H_k_1": {"H_k_1": 1},
-    "H_l_1": {"H_k_1": 1},
-    "H_k_2": {"H_k_2": 1},
-    "H_l_2": {"H_k_2": 1},
-    "H_k_3": {"H_k_3": 1},
-    "H_l_3": {"H_k_3": 1},
-    "H_k_4": {"H_k_4": 1},
-    "H_l_4": {"H_k_4": 1},
-    "H_kl_1": {"H_kl_1": 1},
-    "H_kl_2": {"H_kl_2": 1},
-    "H_nk_3": {"H_nk_3": 1},
-    "H_nl_3": {"H_nk_3": 1},
-    "H_nk_4": {"H_nk_4": 1},
-    "H_nl_4": {"H_nk_4": 1},
+    "H_k_1": {"H_k_1": 1}, "H_l_1": {"H_l_1": 1},
+    "H_k_2": {"H_k_2": 1}, "H_l_2": {"H_l_2": 1},
+    "H_k_3": {"H_k_3": 1}, "H_l_3": {"H_l_3": 1},
+    "H_k_4": {"H_k_4": 1}, "H_l_4": {"H_l_4": 1},
+    "H_kl_1": {"H_kl_1": 1}, "H_kl_2": {"H_kl_2": 1},
+    "H_nk_3": {"H_nk_3": 1}, "H_nl_3": {"H_nl_3": 1},
+    "H_nk_4": {"H_nk_4": 1}, "H_nl_4": {"H_nl_4": 1},
+}
+
+ORBIT_REP = {
+    "H_k_1": "H_k_1", "H_l_1": "H_k_1",
+    "H_kl_1": "H_kl_1",
+    "H_nk_1": "H_nk_1", "H_nl_1": "H_nk_1",
+    "H_nmk_1": "H_nmk_1", "H_nml_1": "H_nmk_1",
+    "H_nkl_1": "H_nkl_1",
+    "H_k_2": "H_k_2", "H_l_2": "H_k_2",
+    "H_kl_2": "H_kl_2",
+    "H_nk_2": "H_nk_2", "H_nl_2": "H_nk_2",
+    "H_nkl_2": "H_nkl_2",
+    "H_k_3": "H_k_3", "H_l_3": "H_k_3",
+    "H_nk_3": "H_nk_3", "H_nl_3": "H_nk_3",
+    "H_k_4": "H_k_4", "H_l_4": "H_k_4",
+    "H_nk_4": "H_nk_4", "H_nl_4": "H_nk_4",
+}
+
+MIRROR_ATOM = {
+    "A_k_1": "A_l_1", "A_l_1": "A_k_1",
+    "A_k_2": "A_l_2", "A_l_2": "A_k_2",
+    "B_k_1": "B_l_1", "B_l_1": "B_k_1",
+    "H_k_1": "H_l_1", "H_l_1": "H_k_1",
+    "H_k_2": "H_l_2", "H_l_2": "H_k_2",
+    "H_k_3": "H_l_3", "H_l_3": "H_k_3",
+    "H_k_4": "H_l_4", "H_l_4": "H_k_4",
+    "H_nk_3": "H_nl_3", "H_nl_3": "H_nk_3",
+    "H_nk_4": "H_nl_4", "H_nl_4": "H_nk_4",
 }
 
 
@@ -96,8 +113,7 @@ def git_blob_sha1(path: Path) -> str:
 def assert_source_locks() -> dict[str, str]:
     got = {}
     for name, want in SOURCE_BLOBS.items():
-        path = PREDECESSOR / name
-        sha = git_blob_sha1(path)
+        sha = git_blob_sha1(PREDECESSOR / name)
         if sha != want:
             raise AssertionError(f"source lock drift: {name}: {sha} != {want}")
         got[name] = sha
@@ -125,6 +141,8 @@ def validate_architecture() -> None:
         raise AssertionError("5+4+2+2 harmonic block drift")
     if [len(WEIGHT_BLOCKS[k]) for k in ("weight1", "weight2", "weight3", "weight4")] != [5, 4, 2, 2]:
         raise AssertionError("harmonic block size drift")
+    if set(ORBIT_REP.values()) != set(letter["diagnostic_defect_matrix"]["columns"]):
+        raise AssertionError("13-orbit representative drift")
     cd = route["channel_decomposition"]
     if cd["symmetry_reduced_channels"] != INDEPENDENT_CHANNELS:
         raise AssertionError("independent channel drift")
@@ -133,8 +151,6 @@ def validate_architecture() -> None:
     structure = json.loads((PREDECESSOR / "ONE_BODY_STRUCTURE_RESULT.json").read_text())
     if sorted(ATOM_EXPANSION) != sorted(structure["union_one_body_atoms"]):
         raise AssertionError("22-atom expansion domain drift")
-    if set().union(*map(set, WEIGHT_BLOCKS.values())) != set(letter["diagnostic_defect_matrix"]["columns"]):
-        raise AssertionError("13-orbit representative drift")
     covered = [x for values in CHANNEL_SCALARS.values() for x in values]
     if sorted(covered) != sorted(pcl.SCALAR_ORDER):
         raise AssertionError("11 scalar basis is not partitioned by protected channels")
@@ -151,15 +167,11 @@ def coordinate_activation(offset: int | None) -> tuple[bool, bool, bool, bool]:
 def shell_strata() -> list[dict]:
     out = []
     for kcls, lcls in product(COORDINATE_CLASSES, repeat=2):
-        ka = coordinate_activation(kcls["offset"])
-        la = coordinate_activation(lcls["offset"])
-        sid = f"k_{kcls['id']}__l_{lcls['id']}"
+        ka, la = coordinate_activation(kcls["offset"]), coordinate_activation(lcls["offset"])
         out.append({
-            "id": sid,
-            "k_class": kcls["id"],
-            "l_class": lcls["id"],
-            "k_offset": kcls["offset"],
-            "l_offset": lcls["offset"],
+            "id": f"k_{kcls['id']}__l_{lcls['id']}",
+            "k_class": kcls["id"], "l_class": lcls["id"],
+            "k_offset": kcls["offset"], "l_offset": lcls["offset"],
             "protected_factor_activation": {
                 **{f"n-k+{s}": ka[s] for s in range(4)},
                 **{f"n-l+{s}": la[s] for s in range(4)},
@@ -175,9 +187,7 @@ def shell_strata() -> list[dict]:
 def specialize_rat(rat: rc.Rat, k_offset: int | None, l_offset: int | None) -> rc.Rat:
     out: rc.Rat = {}
     for sig, coeff in rat.items():
-        new_coeff = coeff
-        new_sig = []
-        killed = False
+        new_coeff, new_sig, killed = coeff, [], False
         for factor, exponent in sig:
             if len(factor) == 5 and factor[0] == pcl.PINV_TAG:
                 _, a, b, c, d = factor
@@ -210,13 +220,56 @@ def specialize_rat(rat: rc.Rat, k_offset: int | None, l_offset: int | None) -> r
 def specialize_layer(layer: pcl.Layer, k_offset: int | None, l_offset: int | None) -> pcl.Layer:
     out: pcl.Layer = {}
     for mon, by_scalar in layer.items():
-        terms = {}
-        for scalar, rat in by_scalar.items():
-            got = specialize_rat(rat, k_offset, l_offset)
-            if got:
-                terms[scalar] = got
+        terms = {s: r for s, rat in by_scalar.items() if (r := specialize_rat(rat, k_offset, l_offset))}
         if terms:
             out[mon] = terms
+    return out
+
+
+def channel_projection(layer: pcl.Layer, channel: str) -> pcl.Layer:
+    allowed = set(CHANNEL_SCALARS[channel])
+    out: pcl.Layer = {}
+    for mon, terms in layer.items():
+        kept = {s: r for s, r in terms.items() if s in allowed}
+        if kept:
+            out[mon] = kept
+    return out
+
+
+def mirror_factor(factor):
+    if len(factor) == 5 and factor[0] == pcl.PINV_TAG:
+        tag, a, b, c, d = factor
+        return (tag, a, c, b, d)
+    a, b, c, d = factor
+    return (a, c, b, d)
+
+
+def mirror_rat(rat: rc.Rat) -> rc.Rat:
+    out: rc.Rat = {}
+    for sig, coeff in rat.items():
+        msig = tuple(sorted((mirror_factor(f), e) for f, e in sig))
+        out[msig] = out.get(msig, Q(0)) + coeff
+        if out[msig] == 0:
+            del out[msig]
+    return out
+
+
+def mirror_layer(layer: pcl.Layer) -> pcl.Layer:
+    out: pcl.Layer = {}
+    for mon, terms in layer.items():
+        mmon = tuple(sorted(MIRROR_ATOM.get(a, a) for a in mon))
+        target = out.setdefault(mmon, {})
+        for scalar, rat in terms.items():
+            if scalar not in MIRROR_SCALAR:
+                raise AssertionError(f"unexpected k1 scalar in mirror: {scalar}")
+            ms = MIRROR_SCALAR[scalar]
+            merged = rc.r_add(target.get(ms, {}), mirror_rat(rat))
+            if merged:
+                target[ms] = merged
+            elif ms in target:
+                del target[ms]
+        if not target:
+            del out[mmon]
     return out
 
 
@@ -234,16 +287,14 @@ def mul_formal(a: dict[tuple[str, ...], int], b: dict[tuple[str, ...], int]):
 def expand_atom_monomial(mon: tuple[str, ...]) -> dict[tuple[str, ...], int]:
     out = {(): 1}
     for atom in mon:
-        atom_poly = {(rep,): coeff for rep, coeff in ATOM_EXPANSION[atom].items()}
-        out = mul_formal(out, atom_poly)
+        out = mul_formal(out, {(rep,): coeff for rep, coeff in ATOM_EXPANSION[atom].items()})
     return out
 
 
-def primitive_layer(layer: pcl.Layer) -> pcl.Layer:
+def primitive_oriented_layer(layer: pcl.Layer) -> pcl.Layer:
     out: pcl.Layer = {}
     for mon, by_scalar in layer.items():
-        expansion = expand_atom_monomial(mon)
-        for pmon, mult in expansion.items():
+        for pmon, mult in expand_atom_monomial(mon).items():
             if mult == 0:
                 continue
             target = out.setdefault(pmon, {})
@@ -262,8 +313,7 @@ def rank_q(matrix: list[list[int]]) -> int:
     if not matrix:
         return 0
     a = [[Q(x) for x in row] for row in matrix]
-    m, n = len(a), len(a[0])
-    r = 0
+    m, n, r = len(a), len(a[0]), 0
     for c in range(n):
         pivot = next((i for i in range(r, m) if a[i][c]), None)
         if pivot is None:
@@ -282,26 +332,21 @@ def rank_q(matrix: list[list[int]]) -> int:
 
 
 def support_probe(layer: pcl.Layer, channel: str, block: str, stratum_id: str) -> dict:
-    reps = set(WEIGHT_BLOCKS[block])
-    scalars = CHANNEL_SCALARS[channel]
-    rows = []
+    reps, scalars, rows = set(WEIGHT_BLOCKS[block]), CHANNEL_SCALARS[channel], []
     for mon in sorted(layer):
-        if not reps.intersection(mon):
+        if not any(ORBIT_REP[a] in reps for a in mon):
             continue
-        row = [1 if layer[mon].get(scalar) else 0 for scalar in scalars]
+        row = [1 if layer[mon].get(s) else 0 for s in scalars]
         if any(row):
             rows.append(row)
-    rank = rank_q(rows)
     return {
         "id": f"{channel}:{block}:{stratum_id}",
-        "channel": channel,
-        "block": block,
-        "stratum": stratum_id,
+        "channel": channel, "block": block, "stratum": stratum_id,
         "scalar_columns": scalars,
         "forcing_row_count": len(rows),
-        "support_incidence_rank_over_Q": rank,
+        "support_incidence_rank_over_Q": rank_q(rows),
         "status": "STRUCTURALLY_ACTIVE_FORCING_SUPPORT" if rows else "ZERO_FORCING_SUPPORT",
-        "rank_scope": "Exact rank of the 0/1 scalar-support incidence matrix after exact shell specialization; not the rank of a correction-flux elimination matrix.",
+        "rank_scope": "Exact rank of the 0/1 scalar-support incidence matrix on oriented primitive letters after exact shell specialization; the 13-letter quotient is used only for weight-block membership.",
         "correction_candidate_admitted": False,
     }
 
@@ -312,27 +357,46 @@ def build() -> dict:
     layer, predecessor = pcl.build_layer()
     if predecessor["final_layer"]["sha256"] != PREDECESSOR_LAYER_SHA256:
         raise AssertionError("independently rebuilt predecessor layer digest drift")
+
     strata = shell_strata()
+    specialized = {st["id"]: specialize_layer(layer, st["k_offset"], st["l_offset"]) for st in strata}
+    strata_by_id = {st["id"]: st for st in strata}
+    mirror_checks = []
     probes = []
     strata_records = []
+
     for st in strata:
-        specialized = specialize_layer(layer, st["k_offset"], st["l_offset"])
-        primitive = primitive_layer(specialized)
+        slayer = specialized[st["id"]]
+        primitive = primitive_oriented_layer(slayer)
+        k_part = channel_projection(slayer, "k1")
+        mirror_target = channel_projection(specialized[st["mirror"]], "l1")
+        mirrored = mirror_layer(k_part)
+        if mirrored != mirror_target:
+            raise AssertionError(f"exact k1/l1 coefficient mirror failed: {st['id']} -> {st['mirror']}")
+        mirror_checks.append({
+            "stratum": st["id"], "mirror_stratum": st["mirror"],
+            "k1_layer_sha256": pcl.layer_digest(k_part),
+            "mirrored_l1_layer_sha256": pcl.layer_digest(mirrored),
+            "target_l1_layer_sha256": pcl.layer_digest(mirror_target),
+            "exact_equal": True,
+        })
         strata_records.append({
             **st,
-            "specialized_atom_monomials": len(specialized),
-            "primitive_orbit_monomials": len(primitive),
-            "specialized_layer_sha256": pcl.layer_digest(specialized),
+            "specialized_atom_monomials": len(slayer),
+            "oriented_primitive_monomials": len(primitive),
+            "specialized_layer_sha256": pcl.layer_digest(slayer),
         })
         for channel in INDEPENDENT_CHANNELS:
             for block in ("weight1", "weight2", "weight3", "weight4"):
                 probes.append(support_probe(primitive, channel, block, st["id"]))
-    expected_probe_count = 25 * len(INDEPENDENT_CHANNELS) * len(WEIGHT_BLOCKS)
-    if len(probes) != expected_probe_count:
+
+    if len(probes) != 400:
         raise AssertionError("probe count drift")
-    mirror_cells = 25 * len(WEIGHT_BLOCKS)
+    if len(mirror_checks) != 25:
+        raise AssertionError("mirror check count drift")
+
     return {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "issue": 403,
         "operation": OPERATION,
         "stage": STAGE,
@@ -344,33 +408,36 @@ def build() -> dict:
             "coefficient_layer_sha256": PREDECESSOR_LAYER_SHA256,
             "source_blobs": source_locks,
         },
-        "pinv_semantics": "pinv_r(x)=x^(-r) for integer x>0; 0 for integer x<=0",
+        "pinv_semantics": "pinv_r(x)=x^(-r) for integer x>0 and 0 for integer x<=0",
         "coordinate_classes": COORDINATE_CLASSES,
         "shell_strata": strata_records,
-        "shell_stratum_count": len(strata_records),
+        "shell_stratum_count": 25,
         "interior_stratum_count": 1,
         "moving_boundary_or_shell_stratum_count": 24,
         "channel_manifest": {
             "protected_channels": ["n1", "n2", "n3", "k1", "l1"],
             "independent_channels": INDEPENDENT_CHANNELS,
             "channel_scalar_partition": CHANNEL_SCALARS,
-            "l1_policy": "derived only as exact k<->l mirror of k1",
+            "l1_policy": "derived only after exact coefficient-layer k<->l mirror verification",
             "mirror_scalar_map": MIRROR_SCALAR,
+            "exact_mirror_strata_verified": 25,
+            "mirror_checks": mirror_checks,
         },
         "harmonic_blocks": WEIGHT_BLOCKS,
         "harmonic_block_sizes": [5, 4, 2, 2],
-        "independent_probe_cell_count": len(probes),
-        "mirrored_l1_cell_count": mirror_cells,
+        "oriented_letter_policy": "Preserve k/l orientation inside independent channel algebra; use the 13 sequence-level orbit representatives only for harmonic-block membership.",
+        "independent_probe_cell_count": 400,
+        "mirrored_l1_cell_count": 100,
         "forcing_support_rank_probes": probes,
         "viability_interpretation": {
             "scope": "T3-010-A forcing-side structural screen only",
-            "exact": "Shell specialization, source locks, orbit expansion, 0/1 support incidence ranks, channel partition, and mirror architecture are exact.",
+            "exact": "Source locks, shell specialization, oriented atom expansion, block assignment, support-incidence ranks, and all 25 coefficient-layer k1/l1 mirror checks are exact.",
             "not_yet_admitted": "No correction-flux unknown basis, degree bound, candidate coefficient, elimination result, or n-holonomic recurrence is admitted by this stage.",
-            "next_gate": "Instantiate bounded correction-flux bases only for structurally active cells, then compute exact coefficient-matrix ranks/consistency before elimination.",
+            "next_gate": "Declare bounded correction-flux unknown bases only for structurally active cells and compute exact coefficient-matrix rank/consistency before elimination.",
         },
         "shell_recombination": {
             "status": "EXACT_PIECEWISE_PARTITION_COMPLETE",
-            "reason": "The five coordinate classes are exhaustive and disjoint on the common n+3 box, and each protected factor has constant pinv activation on each class; specialization is the exact definition of pinv on that stratum.",
+            "reason": "The five coordinate classes are exhaustive and disjoint on the common n+3 box and make every protected pinv activation predicate constant.",
             "full_correction_layer_recombined": False,
         },
         "finite_sampling_used_as_sum_proof": False,
