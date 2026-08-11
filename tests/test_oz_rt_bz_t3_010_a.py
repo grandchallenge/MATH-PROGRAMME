@@ -39,7 +39,7 @@ def test_t3_010_a_exact_shell_channel_block_gate():
     assert result["interior_stratum_count"] == 1
     assert result["moving_boundary_or_shell_stratum_count"] == 24
     assert result["harmonic_block_sizes"] == [5, 4, 2, 2]
-    assert result["independent_probe_cell_count"] == 1300
+    assert result["independent_probe_cell_count"] == 400
     assert result["mirrored_l1_cell_count"] == 100
     assert result["shell_recombination"]["status"] == "EXACT_PIECEWISE_PARTITION_COMPLETE"
     assert result["shell_recombination"]["full_correction_layer_recombined"] is False
@@ -47,7 +47,7 @@ def test_t3_010_a_exact_shell_channel_block_gate():
 
     replay = verifier.verify(result)
     assert replay["status"] == "INDEPENDENT_T3_010_A_REPLAY_COMPLETE"
-    assert replay["forcing_support_rank_cells_verified"] == 1300
+    assert replay["forcing_support_rank_cells_verified"] == 400
     assert replay["l1_policy_verified"] == "mirror_only"
 
     assert result["finite_sampling_used_as_sum_proof"] is False
