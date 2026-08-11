@@ -59,16 +59,11 @@ lemma finiteCoordinateInclusion_freeIso
   intro s
   apply Finsupp.ext
   intro y
+  change (if y = x then h s else 0) = (Finsupp.single x (h s)) y
   by_cases hy : y = x
   · subst y
-    simp [finiteCoefficientFamilyFreeIso, finiteSmallFreeCoordinateInclusion,
-      finiteSmallFreeCoordinateModuleMap,
-      CMDG.CondensedCM4P2E.FiniteTransport.finiteFunctionPresheafFamilyIso,
-      CMDG.CondensedCM4P2E.FiniteTransport.locallyConstantPiLinearEquiv]
-  · simp [finiteCoefficientFamilyFreeIso, finiteSmallFreeCoordinateInclusion,
-      finiteSmallFreeCoordinateModuleMap,
-      CMDG.CondensedCM4P2E.FiniteTransport.finiteFunctionPresheafFamilyIso,
-      CMDG.CondensedCM4P2E.FiniteTransport.locallyConstantPiLinearEquiv, hy]
+    simp
+  · simp [hy]
 
 #check finiteSmallFreePresheafFunctor
 #check finiteCoefficientFamilyFreeIso
