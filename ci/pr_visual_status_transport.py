@@ -115,12 +115,7 @@ def build_archive_bundle(
     return {**artifacts, "receipt.json": receipt_bytes}
 
 
-def verify_archive_bundle(bundle_dir: Path) -> dict[str, Any]:
-    receipt_path = bundle_dir / "receipt.json"
-    try:
-        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        raise TransportError(f"cannot read archive receipt: {exc}") from exc
+def _validate_receipt_metadata(receipt: dict[str, Any]) -> None:
     if not isinstance(receipt, dict):
         raise TransportError("archive receipt must be an object")
     if receipt.get("schema_version") != ARCHIVE_SCHEMA_VERSION:
@@ -134,6 +129,23 @@ def verify_archive_bundle(bundle_dir: Path) -> dict[str, Any]:
         receipt.get("target_head_after"),
         receipt.get("exact_head_sha"),
     )
+    expected_boundary = {
+        "advisory_only": True,
+        "visual_is_authoritative": False,
+        "new_merge_gate": False,
+        "propagation_authority_created": False,
+    }
+    if receipt.get("authority_boundary") != expected_boundary:
+        raise TransportError("archive receipt authority boundary is invalid")
+
+
+def verify_archive_bundle(bundle_dir: Path) -> dict[str, Any]:
+    receipt_path = bundle_dir / "receipt.json"
+    try:
+        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise TransportError(f"cannot read archive receipt: {exc}") from exc
+    _validate_receipt_metadata(receipt)
     artifacts = receipt.get("artifacts")
     if not isinstance(artifacts, dict) or set(artifacts) != {
         "report.json",
@@ -167,8 +179,7 @@ def verify_archive_bundle(bundle_dir: Path) -> dict[str, Any]:
 
 
 def render_pr_comment(receipt: dict[str, Any]) -> str:
-    if receipt.get("schema_version") != ARCHIVE_SCHEMA_VERSION:
-        raise TransportError("cannot render transport comment from incompatible receipt")
+    _validate_receipt_metadata(receipt)
     exact = receipt["exact_head_sha"]
     digest = receipt["source_snapshot_sha256"]
     archive_dir = receipt["archive_dir"]
