@@ -1,0 +1,163 @@
+{
+  "$schema": "../schemas/administrative_pilot_adjudication.schema.json",
+  "schema_version": "1.0.0",
+  "adjudication_id": "MP-ADMIN-PILOT-ADJUDICATION-2026-08-10-001",
+  "control_id": "MP-ADMIN-MAINT-001",
+  "docket": 320,
+  "pilot_review_occurrence": "pilot_review:2026-08-10T01:21:00Z",
+  "pilot_boundary_utc": "2026-08-10T01:21:00Z",
+  "status": "PILOT_ADJUDICATION_OPTION_C__EFFECTIVE_ON_AUTHORIZED_PROTECTED_MERGE",
+  "prepared_from_protected_head": "194630609bd57aa25788e0cbff7bd070a16fa214",
+  "council": {
+    "terminal_comment": 5235087147,
+    "packet_state": "QUORUM_ACHIEVED__CONSENSUS_OPTION_C__HUMAN_STEWARD_AUTHORITY_PENDING",
+    "deliberation_protected_head": "839e04e1b862ffddfe5ce1d4d733ba954cd45d96",
+    "deliberation_tree": "ac1e21d2746ad951a9aa3c747895b28f56092bf8",
+    "pilot_freeze_comment": 5231279470,
+    "pilot_freeze_digest": "739cb95971eb7a7b24636ef6402c81a4ed03f8d63e00e2517050cad1eabc5dbd",
+    "checkered_flag_blocker_digest": "6b5a904a1058c91a3e1e31f955d7dc28b028b7cda4af4a0cf973f2877cfd0701",
+    "quorum": "8/8",
+    "consensus": "UNANIMOUS",
+    "recommendation": "RETAIN_ACCELERATION_0_1_WITH_AUTONOMY_HARDENING_CONDITIONS",
+    "recommendatory_only": true
+  },
+  "pilot_evidence": {
+    "administrative_review": {
+      "occurrence": "administrative_review:2026-08-10T01:21:00Z",
+      "finalized_head": "6afb1513c1948887568f177d290ee246f36c2746",
+      "record_pull_request": 362,
+      "record_merge": "6dda2efea68da8e6b0ae721a5028b5a23af8caf8",
+      "record_sha256": "b16111dfb34d6f2c27f6a257ca61c173e20d14d7984b49d675db3d86f4609cf8",
+      "receipt_pull_request": 375,
+      "receipt_merge": "f8cf5a24028b8d3497ddcf16d8bb2b03f32d100f",
+      "protected_before_due": true,
+      "terminal_mirror_issue": 361,
+      "terminal_mirror_state": "PROTECTED_COMPLETE_ON_TIME__MIRROR_SYNC_TIMEOUT_HISTORY_PRESERVED"
+    },
+    "deep_conformance": {
+      "reviewed_head": "860d5537543e9c33b94bc9bc84ee5ab4aa2f091e",
+      "record_merge": "ec604382f75d11a931d64bd776da6e05ffb322c8",
+      "protected_complete": true
+    },
+    "freeze_reconciliation": {
+      "issue": 374,
+      "observed_blocker_was_real": true,
+      "freeze_gate_produced_review_ready_final_record": false,
+      "resolved_before_due": true,
+      "terminal_state": "RESOLVED_BEFORE_DUE__FREEZE_RECONCILIATION_BLOCKER_PRESERVED"
+    },
+    "failure_pattern": {
+      "allocator_and_queue_pressure_observed": true,
+      "moving_main_reconciliation_defects_observed": true,
+      "scheduler_latency_observed": true,
+      "formal_replay_failures_observed": true,
+      "protected_mirror_readback_timeouts_observed": true,
+      "unauthorized_promotion_observed": false,
+      "required_check_weakening_observed": false,
+      "p0_or_p1_authority_escape_established": false,
+      "fail_closed_controls_prevented_stale_or_unauthorized_promotion": true
+    }
+  },
+  "post_pilot_corroboration": {
+    "classification_rule": "POST_PILOT_EVENTS_ARE_CORROBORATIVE_HARDENING_EVIDENCE_AND_NOT_RETROACTIVE_PILOT_EVENTS",
+    "first_transition_occurrence": {
+      "occurrence": "structural_sweep:2026-08-10T03:45:00Z",
+      "classification": "POST_PILOT",
+      "late": true,
+      "record_pull_request": 385,
+      "record_merge": "6796e55749d6a89f0aadf68274d80c74863d4a54",
+      "receipt_pull_request": 392,
+      "receipt_merge": "1fbba68ccde0a654e676a30279eac36711cb3d28",
+      "terminal_state": "PROTECTED_COMPLETE_LATE__TRANSITION_GAP_PRESERVED"
+    },
+    "steady_state_2033_occurrence": {
+      "occurrence": "structural_sweep:2026-08-10T20:33:00Z",
+      "classification": "POST_PILOT",
+      "late": true,
+      "root_cause": "STALE_RECEIPT_BRANCH_ENTERED_CANDIDATE_SCANNER",
+      "bounded_recovery_control_issue": 404,
+      "bounded_recovery_control_pull_request": 405,
+      "bounded_recovery_control_merge": "f00e34ccefe38477d3d189d745cb3192200d60a0",
+      "record_pull_request": 401,
+      "record_merge": "5d6f70b3677571ca2d812b8381ff2d11d7caab89",
+      "receipt_pull_request": 406,
+      "receipt_merge": "194630609bd57aa25788e0cbff7bd070a16fa214",
+      "terminal_state": "PROTECTED_COMPLETE_LATE__STRUCTURAL_2033_RUNTIME_COLLISION_PRESERVED"
+    }
+  },
+  "decision": {
+    "selected_option": "C",
+    "disposition": "RETAIN_ACCELERATION_0_1_WITH_AUTONOMY_HARDENING_CONDITIONS",
+    "acceleration_factor": 0.1,
+    "cadence_anchor_utc": "2026-08-01T01:21:00Z",
+    "option_a_rejected_reason": "PILOT_EXPOSED_MULTIPLE_P2_RUNTIME_AND_RELIABILITY_DEFECTS_SO_UNCONDITIONED_RETENTION_IS_NOT_SUPPORTED",
+    "option_b_rejected_reason": "DEFECTS_ARE_IMPLEMENTATION_AND_RELIABILITY_FAILURES_NOT_EVIDENCE_THAT_THE_ACCELERATED_CADENCE_ITSELF_IS_UNGOVERNABLE",
+    "option_d_rejected_reason": "NO_P0_OR_P1_AUTHORITY_ESCAPE_OR_PROTECTION_WEAKENING_WAS_ESTABLISHED_AND_TERMINAL_ROUTINE_OBLIGATIONS_REACHED_PROTECTED_COMPLETION",
+    "steady_state_successor": "MP-ADMIN-STEADY-STATE-0.1-001",
+    "successor_already_separately_protected": true,
+    "this_adjudication_activates_successor": false,
+    "pilot_historical_status_remains": "APPROVED_ACCELERATED_PILOT"
+  },
+  "hardening": {
+    "required_conditions": [
+      "AUTONOMOUS_REQUIRED_CHECK_STABILIZATION",
+      "DETERMINISTIC_HIGH_CHURN_CANDIDATE_MAIN_RECONCILIATION",
+      "BOUNDED_SAME_OCCURRENCE_RECOVERY_WITHOUT_CADENCE_RESET",
+      "PROTECTED_RECEIPT_READBACK_PROVENANCE_INTEGRITY",
+      "PROTECTED_MIRROR_PRODUCER_PROVENANCE_AND_TIMEOUT_OBSERVABILITY",
+      "ADVERSARIAL_REPEATED_SAME_DAY_AND_MOVING_MAIN_COVERAGE",
+      "SCHEDULER_AND_DELIVERY_LATENCY_OBSERVABILITY",
+      "NO_REQUIRED_CHECK_OR_EXACT_HEAD_GATE_WEAKENING"
+    ],
+    "residual_open_issue": 407,
+    "residual_open_issue_state": "OPEN_HARDENING_OBLIGATION__NO_AUTHORITY_CREATED",
+    "hardening_complete": false,
+    "steady_state_may_continue_while_hardening_open": true,
+    "hardening_noncompletion_is_not_waived": true
+  },
+  "retired_stale_candidate": {
+    "issue": 335,
+    "pull_request": 336,
+    "candidate_head": "22beffc5425c77de76ba66f47a47c54361c07aec",
+    "candidate_is_authority": false,
+    "pull_request_merged": false,
+    "terminal_state": "SUPERSEDED_NONAUTHORITATIVE_STALE_CANDIDATE__FRESH_320_ADJUDICATION_REQUIRED"
+  },
+  "historical_evidence_policy": {
+    "preserve_pilot_failures": true,
+    "preserve_post_pilot_failures": true,
+    "preserve_lateness": true,
+    "preserve_freeze_blocker": true,
+    "preserve_mirror_timeouts": true,
+    "preserve_failed_closed_attempts": true,
+    "eventual_recovery_rewrites_failure": false,
+    "post_pilot_events_reclassified_as_pilot_events": false
+  },
+  "authority_boundary": {
+    "council_packet_is_binding_human_steward_authority": false,
+    "human_steward_exact_head_authorization_required": true,
+    "stale_candidate_336_is_authority": false,
+    "future_control_plane_changes_pre_authorized": false,
+    "hardening_issue_407_is_implementation_authority": false,
+    "waiver_created": false,
+    "emergency_authority_created": false,
+    "direct_protected_push_authorized": false,
+    "required_checks_weakened": false,
+    "referee_separation_weakened": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "certificate_issued": false,
+    "external_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "publication_authorized": false,
+    "patentability_claim_authorized": false,
+    "deployment_authorized": false,
+    "product_or_release_authorized": false,
+    "commercial_authority_created": false
+  },
+  "target_terminal_state_after_protected_merge_and_receipt": "PILOT_ADJUDICATED_OPTION_C__RETAIN_0_1_WITH_HARDENING_CONDITIONS"
+}
