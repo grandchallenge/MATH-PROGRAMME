@@ -135,7 +135,7 @@ noncomputable abbrev transposedContinuousFunctions (T : CompHaus.{u}) :
 noncomputable abbrev discreteContinuousPresheafAt (T : CompHaus.{u}) :
     Profinite.{u}ᵒᵖ ⥤ ModuleCat.{u + 1} R :=
   CMDG.CondensedCM4P2D.discreteContinuousPresheaf ⋙
-    evaluation (CompHaus.{u}ᵒᵖ) (ModuleCat.{u + 1} R) (op T)
+    (evaluation (CompHaus.{u}ᵒᵖ) (ModuleCat.{u + 1} R)).obj (op T)
 
 /-- Swapping the two compact variables identifies the discrete finite-quotient source with the
 objectwise evaluation of the protected nested presheaf. -/
