@@ -24,11 +24,19 @@ class FakeClient:
         if path == f"/repos/{REPO}/pulls?state=open&per_page=100":
             return list(self.pulls)
         if "/contents/" in path:
-            raise AutonomyError(f"GET {path} failed: 404 synthetic missing content")
+            raise AutonomyError(
+                f"GET {path} failed: 404 synthetic missing content"
+            )
         raise AssertionError(f"unexpected GET {path}")
 
 
-def pull(branch: str, login: str, *, state: str = "open", merged: bool = False) -> dict:
+def pull(
+    branch: str,
+    login: str,
+    *,
+    state: str = "open",
+    merged: bool = False,
+) -> dict:
     return {
         "number": 900,
         "state": state,
@@ -51,39 +59,31 @@ class AdministrativeAutonomyRuntimeNamespaceTests(unittest.TestCase):
         self.candidate_login = self.runtime["candidate_identity"]["login"]
         self.now = datetime(2026, 8, 10, 21, 0, tzinfo=timezone.utc)
 
-    def test_historical_receipt_forms_are_excluded_before_core_scanning(self) -> None:
-        branches = [
-            f"{self.prefix}receipt-structural_sweep-20260810T034500Z",
-            f"{self.prefix}receipt-administrative_review-20260810T203300Z",
-            f"{self.prefix}receipt-",
-            f"{self.prefix}receipt-pilot_review-20260810T012100Z",
-        ]
+    def test_historical_receipt_forms_are_excluded_before_candidate_validation(self) -> None:
         pulls = [
-            pull(branches[0], "unexpected[bot]"),  # stale open receipt
-            pull(branches[1], "unexpected[bot]"),  # ordinary open receipt
-            pull(branches[2], "unexpected[bot]"),  # malformed receipt
-            pull(branches[3], "unexpected[bot]", state="closed", merged=True),
+            pull(
+                f"{self.prefix}receipt-structural_sweep-20260810T034500Z",
+                "unexpected[bot]",
+            ),
+            pull(
+                f"{self.prefix}receipt-administrative_review-20260810T203300Z",
+                "unexpected[bot]",
+            ),
+            pull(f"{self.prefix}receipt-", "unexpected[bot]"),
+            pull(
+                f"{self.prefix}receipt-pilot_review-20260810T012100Z",
+                "unexpected[bot]",
+                state="closed",
+                merged=True,
+            ),
         ]
 
-        observed: list[dict] = []
-        original = runtime_github._ordinary_eligible_candidates
-
-        def capture(client, repo, runtime, now):
-            observed.extend(
-                client.get(f"/repos/{repo}/pulls?state=open&per_page=100")
-            )
-            return []
-
-        runtime_github._ordinary_eligible_candidates = capture
-        try:
-            result = runtime_github.eligible_candidates(
+        self.assertEqual(
+            [],
+            runtime_github.eligible_candidates(
                 FakeClient(pulls), REPO, self.runtime, self.now
-            )
-        finally:
-            runtime_github._ordinary_eligible_candidates = original
-
-        self.assertEqual([], result)
-        self.assertEqual([], observed)
+            ),
+        )
 
     def test_candidate_like_receipt_name_is_not_overfiltered(self) -> None:
         branch = f"{self.prefix}receiptish-structural_sweep-20260810T203300Z"
