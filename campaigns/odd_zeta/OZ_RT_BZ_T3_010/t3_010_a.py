@@ -55,9 +55,9 @@ COORDINATE_CLASSES = [
     {"id": "shell3", "offset": 3, "condition": "coordinate=n+3"},
 ]
 
-# The 22 atoms are expanded into oriented primitive harmonic letters.
-# k/l orientation is preserved here.  The T3-009 13-letter quotient is
-# applied only through ORBIT_REP when assigning letters to weight blocks.
+# Expand the protected 22 atoms into oriented primitive harmonic letters.
+# k/l orientation is retained.  ORBIT_REP is used only for weight-block
+# membership; it is not an algebraic identification inside a shift channel.
 ATOM_EXPANSION = {
     "A_k_1": {"H_nk_1": 1, "H_k_1": -1},
     "A_l_1": {"H_nl_1": 1, "H_l_1": -1},
@@ -77,15 +77,11 @@ ATOM_EXPANSION = {
 }
 
 ORBIT_REP = {
-    "H_k_1": "H_k_1", "H_l_1": "H_k_1",
-    "H_kl_1": "H_kl_1",
+    "H_k_1": "H_k_1", "H_l_1": "H_k_1", "H_kl_1": "H_kl_1",
     "H_nk_1": "H_nk_1", "H_nl_1": "H_nk_1",
-    "H_nmk_1": "H_nmk_1", "H_nml_1": "H_nmk_1",
-    "H_nkl_1": "H_nkl_1",
-    "H_k_2": "H_k_2", "H_l_2": "H_k_2",
-    "H_kl_2": "H_kl_2",
-    "H_nk_2": "H_nk_2", "H_nl_2": "H_nk_2",
-    "H_nkl_2": "H_nkl_2",
+    "H_nmk_1": "H_nmk_1", "H_nml_1": "H_nmk_1", "H_nkl_1": "H_nkl_1",
+    "H_k_2": "H_k_2", "H_l_2": "H_k_2", "H_kl_2": "H_kl_2",
+    "H_nk_2": "H_nk_2", "H_nl_2": "H_nk_2", "H_nkl_2": "H_nkl_2",
     "H_k_3": "H_k_3", "H_l_3": "H_k_3",
     "H_nk_3": "H_nk_3", "H_nl_3": "H_nk_3",
     "H_k_4": "H_k_4", "H_l_4": "H_k_4",
@@ -139,7 +135,7 @@ def validate_architecture() -> None:
     route = json.loads((PREDECESSOR / "HOLONOMIC_ROUTE.json").read_text())
     if letter["weight_blocks"] != WEIGHT_BLOCKS:
         raise AssertionError("5+4+2+2 harmonic block drift")
-    if [len(WEIGHT_BLOCKS[k]) for k in ("weight1", "weight2", "weight3", "weight4")] != [5, 4, 2, 2]:
+    if [len(WEIGHT_BLOCKS[x]) for x in ("weight1", "weight2", "weight3", "weight4")] != [5, 4, 2, 2]:
         raise AssertionError("harmonic block size drift")
     if set(ORBIT_REP.values()) != set(letter["diagnostic_defect_matrix"]["columns"]):
         raise AssertionError("13-orbit representative drift")
@@ -167,7 +163,8 @@ def coordinate_activation(offset: int | None) -> tuple[bool, bool, bool, bool]:
 def shell_strata() -> list[dict]:
     out = []
     for kcls, lcls in product(COORDINATE_CLASSES, repeat=2):
-        ka, la = coordinate_activation(kcls["offset"]), coordinate_activation(lcls["offset"])
+        ka = coordinate_activation(kcls["offset"])
+        la = coordinate_activation(lcls["offset"])
         out.append({
             "id": f"k_{kcls['id']}__l_{lcls['id']}",
             "k_class": kcls["id"], "l_class": lcls["id"],
@@ -184,34 +181,69 @@ def shell_strata() -> list[dict]:
     return out
 
 
+def restrict_affine(factor: tuple[int, int, int, int], k_offset: int | None, l_offset: int | None):
+    """Restrict a*n+b*k+c*l+d to k=n+ko and/or l=n+lo exactly."""
+    a, b, c, d = factor
+    if k_offset is not None:
+        a, d, b = a + b, d + b * k_offset, 0
+    if l_offset is not None:
+        a, d, c = a + c, d + c * l_offset, 0
+    return (a, b, c, d)
+
+
+def _insert_factor(powers: dict, factor, exponent: int) -> None:
+    if exponent == 0:
+        return
+    powers[factor] = powers.get(factor, 0) + exponent
+    if powers[factor] == 0:
+        del powers[factor]
+
+
 def specialize_rat(rat: rc.Rat, k_offset: int | None, l_offset: int | None) -> rc.Rat:
+    """Exact stratum restriction.  Only protected tagged factors use pinv zero semantics."""
     out: rc.Rat = {}
     for sig, coeff in rat.items():
-        new_coeff, new_sig, killed = coeff, [], False
+        c = coeff
+        powers: dict[tuple[int, int, int, int], int] = {}
+        killed = False
         for factor, exponent in sig:
             if len(factor) == 5 and factor[0] == pcl.PINV_TAG:
-                _, a, b, c, d = factor
-                ordinary = (a, b, c, d)
+                _, a, b, cc, d = factor
+                ordinary = (a, b, cc, d)
                 if ordinary[:3] == (1, -1, 0):
                     off = k_offset
                 elif ordinary[:3] == (1, 0, -1):
                     off = l_offset
                 else:
                     raise AssertionError(f"unexpected protected factor {ordinary}")
-                if off is None:
-                    new_sig.append((ordinary, exponent))
-                else:
+                if off is not None:
                     z = d - off
                     if z <= 0:
                         killed = True
                         break
-                    new_coeff *= Q(z) ** exponent
+                    c *= Q(z) ** exponent
+                    continue
+                restricted = restrict_affine(ordinary, k_offset, l_offset)
             else:
-                new_sig.append((factor, exponent))
-        if killed or new_coeff == 0:
+                if len(factor) != 4:
+                    raise AssertionError(f"unexpected rational factor shape: {factor}")
+                restricted = restrict_affine(factor, k_offset, l_offset)
+
+            a, b, cc, d = restricted
+            if (a, b, cc) == (0, 0, 0):
+                if d == 0:
+                    if exponent < 0:
+                        raise AssertionError("ordinary denominator pole on exact shell restriction")
+                    killed = True
+                    break
+                c *= Q(d) ** exponent
+            else:
+                _insert_factor(powers, restricted, exponent)
+
+        if killed or c == 0:
             continue
-        key = tuple(sorted(new_sig))
-        out[key] = out.get(key, Q(0)) + new_coeff
+        key = tuple(sorted(powers.items()))
+        out[key] = out.get(key, Q(0)) + c
         if out[key] == 0:
             del out[key]
     return out
@@ -237,9 +269,6 @@ def channel_projection(layer: pcl.Layer, channel: str) -> pcl.Layer:
 
 
 def mirror_factor(factor):
-    if len(factor) == 5 and factor[0] == pcl.PINV_TAG:
-        tag, a, b, c, d = factor
-        return (tag, a, c, b, d)
     a, b, c, d = factor
     return (a, c, b, d)
 
@@ -247,7 +276,10 @@ def mirror_factor(factor):
 def mirror_rat(rat: rc.Rat) -> rc.Rat:
     out: rc.Rat = {}
     for sig, coeff in rat.items():
-        msig = tuple(sorted((mirror_factor(f), e) for f, e in sig))
+        powers = {}
+        for factor, exponent in sig:
+            _insert_factor(powers, mirror_factor(factor), exponent)
+        msig = tuple(sorted(powers.items()))
         out[msig] = out.get(msig, Q(0)) + coeff
         if out[msig] == 0:
             del out[msig]
@@ -313,26 +345,28 @@ def rank_q(matrix: list[list[int]]) -> int:
     if not matrix:
         return 0
     a = [[Q(x) for x in row] for row in matrix]
-    m, n, r = len(a), len(a[0]), 0
-    for c in range(n):
-        pivot = next((i for i in range(r, m) if a[i][c]), None)
+    m, n, rank = len(a), len(a[0]), 0
+    for col in range(n):
+        pivot = next((i for i in range(rank, m) if a[i][col]), None)
         if pivot is None:
             continue
-        a[r], a[pivot] = a[pivot], a[r]
-        p = a[r][c]
-        a[r] = [x / p for x in a[r]]
+        a[rank], a[pivot] = a[pivot], a[rank]
+        p = a[rank][col]
+        a[rank] = [x / p for x in a[rank]]
         for i in range(m):
-            if i != r and a[i][c]:
-                q = a[i][c]
-                a[i] = [x - q * y for x, y in zip(a[i], a[r])]
-        r += 1
-        if r == m:
+            if i != rank and a[i][col]:
+                q = a[i][col]
+                a[i] = [x - q * y for x, y in zip(a[i], a[rank])]
+        rank += 1
+        if rank == m:
             break
-    return r
+    return rank
 
 
 def support_probe(layer: pcl.Layer, channel: str, block: str, stratum_id: str) -> dict:
-    reps, scalars, rows = set(WEIGHT_BLOCKS[block]), CHANNEL_SCALARS[channel], []
+    reps = set(WEIGHT_BLOCKS[block])
+    scalars = CHANNEL_SCALARS[channel]
+    rows = []
     for mon in sorted(layer):
         if not any(ORBIT_REP[a] in reps for a in mon):
             continue
@@ -341,12 +375,14 @@ def support_probe(layer: pcl.Layer, channel: str, block: str, stratum_id: str) -
             rows.append(row)
     return {
         "id": f"{channel}:{block}:{stratum_id}",
-        "channel": channel, "block": block, "stratum": stratum_id,
+        "channel": channel,
+        "block": block,
+        "stratum": stratum_id,
         "scalar_columns": scalars,
         "forcing_row_count": len(rows),
         "support_incidence_rank_over_Q": rank_q(rows),
         "status": "STRUCTURALLY_ACTIVE_FORCING_SUPPORT" if rows else "ZERO_FORCING_SUPPORT",
-        "rank_scope": "Exact rank of the 0/1 scalar-support incidence matrix on oriented primitive letters after exact shell specialization; the 13-letter quotient is used only for weight-block membership.",
+        "rank_scope": "Exact Q-rank of the 0/1 scalar-support incidence matrix after exact full rational shell restriction; oriented primitive letters are mapped to the 13 sequence-level representatives only for block membership.",
         "correction_candidate_admitted": False,
     }
 
@@ -360,7 +396,6 @@ def build() -> dict:
 
     strata = shell_strata()
     specialized = {st["id"]: specialize_layer(layer, st["k_offset"], st["l_offset"]) for st in strata}
-    strata_by_id = {st["id"]: st for st in strata}
     mirror_checks = []
     probes = []
     strata_records = []
@@ -374,7 +409,8 @@ def build() -> dict:
         if mirrored != mirror_target:
             raise AssertionError(f"exact k1/l1 coefficient mirror failed: {st['id']} -> {st['mirror']}")
         mirror_checks.append({
-            "stratum": st["id"], "mirror_stratum": st["mirror"],
+            "stratum": st["id"],
+            "mirror_stratum": st["mirror"],
             "k1_layer_sha256": pcl.layer_digest(k_part),
             "mirrored_l1_layer_sha256": pcl.layer_digest(mirrored),
             "target_l1_layer_sha256": pcl.layer_digest(mirror_target),
@@ -395,8 +431,15 @@ def build() -> dict:
     if len(mirror_checks) != 25:
         raise AssertionError("mirror check count drift")
 
+    active = [p for p in probes if p["status"] == "STRUCTURALLY_ACTIVE_FORCING_SUPPORT"]
+    zero = [p for p in probes if p["status"] == "ZERO_FORCING_SUPPORT"]
+    rank_histogram: dict[str, int] = {}
+    for p in probes:
+        key = str(p["support_incidence_rank_over_Q"])
+        rank_histogram[key] = rank_histogram.get(key, 0) + 1
+
     return {
-        "schema_version": "1.1.0",
+        "schema_version": "1.2.0",
         "issue": 403,
         "operation": OPERATION,
         "stage": STAGE,
@@ -409,6 +452,7 @@ def build() -> dict:
             "source_blobs": source_locks,
         },
         "pinv_semantics": "pinv_r(x)=x^(-r) for integer x>0 and 0 for integer x<=0",
+        "shell_restriction_semantics": "On a fixed shell coordinate=n+offset, every ordinary affine rational factor is exactly substituted; only the eight tagged protected factors use pinv zero semantics. Constant factors are absorbed exactly and an ordinary restricted denominator pole fails closed.",
         "coordinate_classes": COORDINATE_CLASSES,
         "shell_strata": strata_records,
         "shell_stratum_count": 25,
@@ -428,16 +472,21 @@ def build() -> dict:
         "oriented_letter_policy": "Preserve k/l orientation inside independent channel algebra; use the 13 sequence-level orbit representatives only for harmonic-block membership.",
         "independent_probe_cell_count": 400,
         "mirrored_l1_cell_count": 100,
+        "forcing_support_summary": {
+            "active_cell_count": len(active),
+            "zero_cell_count": len(zero),
+            "rank_histogram": dict(sorted(rank_histogram.items(), key=lambda x: int(x[0]))),
+        },
         "forcing_support_rank_probes": probes,
         "viability_interpretation": {
             "scope": "T3-010-A forcing-side structural screen only",
-            "exact": "Source locks, shell specialization, oriented atom expansion, block assignment, support-incidence ranks, and all 25 coefficient-layer k1/l1 mirror checks are exact.",
+            "exact": "Source locks, exact full rational shell restriction, oriented atom expansion, block assignment, support-incidence ranks, and all 25 coefficient-layer k1/l1 mirror checks are exact.",
             "not_yet_admitted": "No correction-flux unknown basis, degree bound, candidate coefficient, elimination result, or n-holonomic recurrence is admitted by this stage.",
             "next_gate": "Declare bounded correction-flux unknown bases only for structurally active cells and compute exact coefficient-matrix rank/consistency before elimination.",
         },
         "shell_recombination": {
             "status": "EXACT_PIECEWISE_PARTITION_COMPLETE",
-            "reason": "The five coordinate classes are exhaustive and disjoint on the common n+3 box and make every protected pinv activation predicate constant.",
+            "reason": "The five coordinate classes are exhaustive and disjoint on the common n+3 box; every ordinary factor is restricted algebraically and every protected pinv activation predicate is constant on each stratum.",
             "full_correction_layer_recombined": False,
         },
         "finite_sampling_used_as_sum_proof": False,
