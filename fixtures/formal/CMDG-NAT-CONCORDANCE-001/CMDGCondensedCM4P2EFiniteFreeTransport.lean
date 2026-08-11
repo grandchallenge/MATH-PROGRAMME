@@ -55,11 +55,12 @@ lemma finiteCoordinateInclusion_freeIso
       finiteSmallFreeCoordinateInclusion X x := by
   classical
   ext S h
+  let h' : LocallyConstant (↑(unop S).toTop) R := h
   apply LocallyConstant.ext
   intro s
   apply Finsupp.ext
   intro y
-  change (if y = x then h s else 0) = (Finsupp.single x (h s)) y
+  change (if y = x then h' s else 0) = (Finsupp.single x (h' s)) y
   by_cases hy : y = x
   · subst y
     simp
