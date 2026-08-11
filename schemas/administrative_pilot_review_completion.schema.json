@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "administrative_pilot_review_completion.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "schema_version", "record_id", "procedure_id", "control_id", "status",
+    "scheduled_due_at", "protected_effective_at", "lateness_minutes", "adjudication",
+    "receipt_contract", "historical_evidence_policy", "authority_boundary", "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"const": "../../schemas/administrative_pilot_review_completion.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "record_id": {"const": "MP-ADMIN-PILOT-REVIEW-2026-08-10-001"},
+    "procedure_id": {"const": "pilot_review"},
+    "control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "status": {"const": "PROTECTED_COMPLETE"},
+    "scheduled_due_at": {"const": "2026-08-10T01:21:00Z"},
+    "protected_effective_at": {"const": "2026-08-11T03:04:18Z"},
+    "lateness_minutes": {"const": 1543},
+    "adjudication": {
+      "type": "object", "additionalProperties": false,
+      "required": ["docket", "adjudication_id", "record_path", "reviewed_head", "protected_merge", "protected_tree", "human_steward_disposition", "decision", "terminal_state", "residual_hardening_issue"],
+      "properties": {
+        "docket": {"const": 320},
+        "adjudication_id": {"const": "MP-ADMIN-PILOT-ADJUDICATION-2026-08-10-001"},
+        "record_path": {"const": "governance/administrative_pilot_adjudication_2026_08_10.json"},
+        "reviewed_head": {"const": "a6f13d6140a234e9fbe456daffb399568004e2e3"},
+        "protected_merge": {"const": "5ee3dff275b58ad0d58add76ff0ed6bb760c1636"},
+        "protected_tree": {"const": "2cbe21a4bc4a2c3b99cb6e5cd26a580ec8753fd5"},
+        "human_steward_disposition": {"const": "HUMAN_STEWARD_AUTHORIZED_EXACT_HEAD_PROTECTED_MERGE__PILOT_OPTION_C_FINAL_ADJUDICATION_001__SYNCHRONIZED_SUCCESSOR"},
+        "decision": {"const": "RETAIN_ACCELERATION_0_1_WITH_AUTONOMY_HARDENING_CONDITIONS"},
+        "terminal_state": {"const": "PILOT_ADJUDICATED_OPTION_C__RETAIN_0_1_WITH_HARDENING_CONDITIONS"},
+        "residual_hardening_issue": {"const": 407}
+      }
+    },
+    "receipt_contract": {
+      "type": "object", "additionalProperties": false,
+      "required": ["separate_protected_receipt_required", "completion_ledger_path", "receipt_source_is_this_record", "binds_actual_adjudication_merge", "premerge_candidate_head_is_not_completion_authority"],
+      "properties": {
+        "separate_protected_receipt_required": {"const": true},
+        "completion_ledger_path": {"const": "governance/administrative_maintenance_completion_state.json"},
+        "receipt_source_is_this_record": {"const": true},
+        "binds_actual_adjudication_merge": {"const": true},
+        "premerge_candidate_head_is_not_completion_authority": {"const": true}
+      }
+    },
+    "historical_evidence_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["preserve_pilot_failures", "preserve_post_pilot_failures", "preserve_lateness", "preserve_freeze_blocker", "preserve_mirror_timeouts", "preserve_failed_closed_attempts"],
+      "properties": {
+        "preserve_pilot_failures": {"const": true},
+        "preserve_post_pilot_failures": {"const": true},
+        "preserve_lateness": {"const": true},
+        "preserve_freeze_blocker": {"const": true},
+        "preserve_mirror_timeouts": {"const": true},
+        "preserve_failed_closed_attempts": {"const": true}
+      }
+    },
+    "authority_boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["new_human_steward_authority_created", "future_control_plane_change_authorized", "hardening_issue_407_is_implementation_authority", "waiver_created", "required_checks_weakened", "direct_protected_push_authorized"],
+      "properties": {
+        "new_human_steward_authority_created": {"const": false},
+        "future_control_plane_change_authorized": {"const": false},
+        "hardening_issue_407_is_implementation_authority": {"const": false},
+        "waiver_created": {"const": false},
+        "required_checks_weakened": {"const": false},
+        "direct_protected_push_authorized": {"const": false}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mathematical_target_proved", "campaign_admitted", "source_verified", "certificate_issued", "external_claim_authorized", "novelty_claim_authorized", "publication_authorized", "deployment_authorized", "commercial_authority_created"],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "campaign_admitted": {"const": false},
+        "source_verified": {"const": false},
+        "certificate_issued": {"const": false},
+        "external_claim_authorized": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "publication_authorized": {"const": false},
+        "deployment_authorized": {"const": false},
+        "commercial_authority_created": {"const": false}
+      }
+    }
+  }
+}
