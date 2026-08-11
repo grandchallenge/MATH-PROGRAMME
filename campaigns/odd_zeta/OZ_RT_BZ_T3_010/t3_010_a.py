@@ -113,7 +113,7 @@ def assert_source_locks() -> dict[str, str]:
     if summary["factor_profile"]["protected_positive_reciprocal_factors"] != expected:
         raise AssertionError("protected reciprocal identity drift")
     if summary["protected_harmonic_shift_lemma"]["pinv_definition"] != \
-            "pinv_r(x)=x^(-r) for integer x>0; 0 for integer x<=0":
+            "pinv_r(x)=x^(-r) for integer x>0 and 0 for integer x<=0":
         raise AssertionError("pinv semantics drift")
     return got
 
