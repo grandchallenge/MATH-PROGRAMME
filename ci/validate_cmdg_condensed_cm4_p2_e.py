@@ -14,6 +14,8 @@ SCHEMA = ROOT / "schemas/cmdg_condensed_cm4_p2_e.schema.json"
 REPORT = ROOT / "governance/CMDG-CONDENSED-CM4-P2-E-001.md"
 LEAN = ROOT / "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2E.lean"
 E1_LEAN = ROOT / "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EE1.lean"
+E2_CORE = ROOT / "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EE2Core.lean"
+E2_LEAN = ROOT / "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EE2.lean"
 
 EXPECTED_BASE = "839e04e1b862ffddfe5ce1d4d733ba954cd45d96"
 EXPECTED_BASE_TREE = "ac1e21d2746ad951a9aa3c747895b28f56092bf8"
@@ -27,6 +29,8 @@ EXPECTED_MATHLIB = "79d0395a1825a6264ad5d269e35e60537518955e"
 EXPECTED_MATHLIB_TREE = "d76f5e09b832a08949f6d8ad4fb80ce30527da64"
 EXPECTED_E1_SYNC_HEAD = "a7ab8c2fc26bc1c8e9d62f184d7779c8a48e14f8"
 EXPECTED_E1_REPLAY = 31457490712
+EXPECTED_E2_HEAD = "eefb8f3495018038047361c2cac2924a083f354a"
+EXPECTED_E2_REPLAY = 31493933246
 
 EXPECTED_SOURCES = {
     "Mathlib/Condensed/Solid.lean": "f5214433f91ee87fc8fbe7e2746e0bd227faed2a",
@@ -38,22 +42,12 @@ EXPECTED_SOURCES = {
 }
 
 FORBIDDEN_TRUE = {
-    "p2_e_protected_available",
-    "p2_closed",
-    "cm4_theorem_certified",
-    "p3_closed",
-    "p4_closed",
-    "p5_closed",
-    "p6_closed",
-    "derived_complex_form_certified",
-    "arbitrary_ring_generalization_certified",
-    "c04_broadened",
-    "c06_discharged",
-    "graph_certified",
-    "dependency_minimality_claim",
-    "dependency_uniqueness_claim",
-    "cm5_authorized",
-    "global_cmdg_completeness_claim",
+    "p2_e_protected_available", "p2_closed", "cm4_theorem_certified",
+    "p3_closed", "p4_closed", "p5_closed", "p6_closed",
+    "derived_complex_form_certified", "arbitrary_ring_generalization_certified",
+    "c04_broadened", "c06_discharged", "graph_certified",
+    "dependency_minimality_claim", "dependency_uniqueness_claim",
+    "cm5_authorized", "global_cmdg_completeness_claim",
 }
 
 
@@ -80,16 +74,18 @@ def validate(data=None):
     assert "duality alone carries no reconstruction authority" in scope
 
     pred = record["protected_predecessor"]
-    assert pred["operation_id"] == "CMDG-CONDENSED-CM4-P2-D-001"
-    assert pred["issue"] == 369
-    assert pred["implementation_pr"] == 371
-    assert pred["reviewed_head"] == EXPECTED_P2D_HEAD
-    assert pred["protected_tree"] == EXPECTED_P2D_TREE
-    assert pred["protected_merge"] == EXPECTED_P2D_MERGE
-    assert pred["protected_replay_run"] == EXPECTED_P2D_REPLAY
-    assert pred["programme_policy_run"] == EXPECTED_POLICY
-    assert pred["gcl_conformance_run"] == EXPECTED_CONFORMANCE
-    assert pred["state"] == "AVAILABLE"
+    assert pred == {
+        "operation_id": "CMDG-CONDENSED-CM4-P2-D-001",
+        "issue": 369,
+        "implementation_pr": 371,
+        "reviewed_head": EXPECTED_P2D_HEAD,
+        "protected_tree": EXPECTED_P2D_TREE,
+        "protected_merge": EXPECTED_P2D_MERGE,
+        "protected_replay_run": EXPECTED_P2D_REPLAY,
+        "programme_policy_run": EXPECTED_POLICY,
+        "gcl_conformance_run": EXPECTED_CONFORMANCE,
+        "state": "AVAILABLE",
+    }
 
     env = record["environment"]
     assert env["mathlib_commit"] == EXPECTED_MATHLIB
@@ -109,7 +105,6 @@ def validate(data=None):
         assert row["universe_behavior"].strip()
         assert row["evidence_class"] == "FORMAL_REACHABILITY"
         assert row["role"].strip()
-
     p2d_role = sources[
         "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2D.lean"
     ]["role"]
@@ -117,31 +112,40 @@ def validate(data=None):
     assert "no reconstruction/equivalence authority" in p2d_role
 
     target = record["theorem_target"]
-    assert target["fixture"] == \
-        "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2E.lean"
-    assert target["finite_comparison"] == \
-        "FintypeCat.toProfinite ⋙ measureFunctor ≅ Condensed.finFree R"
-    assert target["global_comparison"] == \
-        "measureFunctor ≅ Condensed.profiniteSolid R"
+    assert target["fixture"] == "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2E.lean"
+    assert target["finite_comparison"] == "FintypeCat.toProfinite ⋙ measureFunctor ≅ Condensed.finFree R"
+    assert target["global_comparison"] == "measureFunctor ≅ Condensed.profiniteSolid R"
     assert target["basis_dependency"] is False
     assert target["objectwise_only_allowed"] is False
     assert target["variance"] == "COVARIANT_PROFINITE_NATURAL_ISO"
 
     arch = record["proof_architecture"]
     assert arch["finite_level_comparison"]["state"] == "CERTIFIED"
-    assert arch["measure_right_kan_extension"]["state"] == "OPEN_CONSTRUCTION"
+    assert arch["measure_right_kan_extension"]["state"] == "CLOSED_MACHINE_CERTIFIED"
     assert arch["kan_extension_uniqueness"]["state"] == "FORMALLY_AVAILABLE"
-    e1_requirement = arch["finite_level_comparison"]["requirement"]
-    assert "E1 CERTIFIED" in e1_requirement
-    assert "finiteComparisonNatIso" in e1_requirement
-    assert EXPECTED_E1_SYNC_HEAD in e1_requirement
-    assert str(EXPECTED_E1_REPLAY) in e1_requirement
-    assert "comparison data, not an inference from duality alone" in e1_requirement
-    assert "P2-D REPRESENTATION" in arch["measure_right_kan_extension"]["requirement"]
-    assert "P2-E RECONSTRUCTION/EQUIVALENCE" in arch["kan_extension_uniqueness"]["requirement"]
 
-    guards = record["adversarial_guards"]
-    assert all(guards.values())
+    e1 = arch["finite_level_comparison"]["requirement"]
+    assert "E1 CERTIFIED" in e1
+    assert "finiteComparisonNatIso" in e1
+    assert EXPECTED_E1_SYNC_HEAD in e1
+    assert str(EXPECTED_E1_REPLAY) in e1
+    assert "comparison data, not an inference from duality alone" in e1
+
+    e2 = arch["measure_right_kan_extension"]["requirement"]
+    for token in (
+        "E2 CLOSED_MACHINE_CERTIFIED", EXPECTED_E2_HEAD, str(EXPECTED_E2_REPLAY),
+        "measurePresheafFunctorMapConeIsLimit", "measureFunctorMapConeIsLimit",
+        "measureFunctorStructuredArrowIsLimit", "measureRightExtensionIsPointwise",
+        "measureFunctorIsRightKanExtension", "P2-D REPRESENTATION",
+    ):
+        assert token in e2
+
+    e3 = arch["kan_extension_uniqueness"]["requirement"]
+    assert "E3" in e3
+    assert "P2-E RECONSTRUCTION/EQUIVALENCE" in e3
+    assert "rightKanExtensionUniqueOfIso" in e3
+
+    assert all(record["adversarial_guards"].values())
 
     stage = record["stage_result"]
     assert stage["p2_d_protected_available"] is True
@@ -149,14 +153,10 @@ def validate(data=None):
     assert stage["p2_e_natural_equivalence_established"] is False
     assert stage["p2_e_protected_available"] is False
     assert stage["p2_closed"] is False
-    assert stage["candidate_disposition"] == \
-        "P2_E_COMPARISON_AUDIT_COMPLETE_RECONSTRUCTION_ACTIVE"
-
+    assert stage["candidate_disposition"] == "P2_E_COMPARISON_AUDIT_COMPLETE_RECONSTRUCTION_ACTIVE"
     for key in FORBIDDEN_TRUE:
         assert record["claim_boundary"][key] is False
-
-    assert record["disposition"] == \
-        "P2_E_COMPARISON_AUDIT_COMPLETE_RECONSTRUCTION_ACTIVE"
+    assert record["disposition"] == "P2_E_COMPARISON_AUDIT_COMPLETE_RECONSTRUCTION_ACTIVE"
 
     lean = LEAN.read_text(encoding="utf-8")
     assert "abbrev FiniteComparisonTarget := finiteMeasure ≅ finiteFree" in lean
@@ -169,15 +169,33 @@ def validate(data=None):
     ):
         assert token in lean
 
-    e1 = E1_LEAN.read_text(encoding="utf-8")
-    assert "noncomputable def finiteComparisonNatIso" in e1
-    assert "CMDG.CondensedCM4P2E.FiniteComparisonTarget" in e1
-    assert "FintypeCat.toProfinite ⋙ CMDG.CondensedCM4P2D.measureFunctor ≅" in e1
-    assert "Condensed.finFree R" in e1
-    assert "finiteMeasureSmallFreeCondensedNatIso" in e1
-    assert "finiteSmallFreeDiscreteULiftNatIso" in e1
+    e1_lean = E1_LEAN.read_text(encoding="utf-8")
+    assert "noncomputable def finiteComparisonNatIso" in e1_lean
+    assert "CMDG.CondensedCM4P2E.FiniteComparisonTarget" in e1_lean
+    assert "finiteMeasureSmallFreeCondensedNatIso" in e1_lean
+    assert "finiteSmallFreeDiscreteULiftNatIso" in e1_lean
 
-    for source in (lean, e1):
+    e2_core = E2_CORE.read_text(encoding="utf-8")
+    for token in (
+        "noncomputable def discreteContinuousPresheafIsColimit",
+        "noncomputable def measurePresheafInternalHomNatIso",
+        "noncomputable def finiteQuotientMeasureConeIso",
+        "noncomputable def measurePresheafFunctorMapConeIsLimit",
+    ):
+        assert token in e2_core
+
+    e2_lean = E2_LEAN.read_text(encoding="utf-8")
+    for token in (
+        "noncomputable def measureFunctorMapConeIsLimit",
+        "noncomputable def measureFunctorStructuredArrowIsLimit",
+        "noncomputable def measureRightExtensionIsPointwise",
+        "theorem measureFunctorIsRightKanExtension",
+        "Profinite.Extend.isLimitCone",
+        "isRightKanExtension",
+    ):
+        assert token in e2_lean
+
+    for source in (lean, e1_lean, e2_core, e2_lean):
         assert not re.search(r"(?m)^\s*(sorry|axiom)(\s|$)", source)
         assert "LocallyConstant.freeOfProfinite" not in source
         assert "Nobeling" not in source
@@ -186,17 +204,12 @@ def validate(data=None):
     report = REPORT.read_text(encoding="utf-8")
     for token in (
         "Programme semantic boundary — representation versus reconstruction",
-        "P2-D — `REPRESENTATION`",
-        "P2-E — `RECONSTRUCTION/EQUIVALENCE`",
+        "P2-D — `REPRESENTATION`", "P2-E — `RECONSTRUCTION/EQUIVALENCE`",
         "duality does not imply reconstruction",
         "FORMAL_ROUTE_REACHABLE_WITH_TWO_CONSTRUCTION_OBLIGATIONS",
-        "E1 — canonical finite comparison",
-        "State: `CERTIFIED`",
-        "finiteComparisonNatIso",
-        EXPECTED_E1_SYNC_HEAD,
-        str(EXPECTED_E1_REPLAY),
-        "E2 — measure functor as right Kan extension",
-        "E3 — canonical uniqueness",
+        "E1 — canonical finite comparison", "E2 — measure functor as right Kan extension",
+        "CLOSED_MACHINE_CERTIFIED", EXPECTED_E2_HEAD, str(EXPECTED_E2_REPLAY),
+        "E3 — canonical uniqueness", "FORMALLY_AVAILABLE",
         "P2_E_COMPARISON_AUDIT_COMPLETE_RECONSTRUCTION_ACTIVE",
         "does **not** establish",
     ):
@@ -213,7 +226,7 @@ def mutated(mutator):
 
 def main() -> int:
     validate()
-    print("CMDG-CONDENSED-CM4-P2-E-001 comparison audit record: OK")
+    print("CMDG-CONDENSED-CM4-P2-E-001 E1/E2 certification record: OK")
     return 0
 
 

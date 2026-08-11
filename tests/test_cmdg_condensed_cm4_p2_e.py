@@ -32,43 +32,37 @@ class TestCMDGCondensedCM4P2E(unittest.TestCase):
         MOD.validate(copy.deepcopy(self.base))
 
     def test_reject_predecessor_merge_drift(self):
-        self.assert_rejected(
-            lambda d: d["protected_predecessor"].__setitem__(
-                "protected_merge", "0" * 40))
+        self.assert_rejected(lambda d: d["protected_predecessor"].__setitem__("protected_merge", "0" * 40))
 
     def test_reject_source_blob_drift(self):
-        self.assert_rejected(
-            lambda d: d["exact_tree_audit"]["observed_sources"][0].__setitem__(
-                "blob", "0" * 40))
+        self.assert_rejected(lambda d: d["exact_tree_audit"]["observed_sources"][0].__setitem__("blob", "0" * 40))
 
     def test_reject_premature_equivalence_claim(self):
-        self.assert_rejected(
-            lambda d: d["stage_result"].__setitem__(
-                "p2_e_natural_equivalence_established", True))
+        self.assert_rejected(lambda d: d["stage_result"].__setitem__("p2_e_natural_equivalence_established", True))
 
     def test_reject_premature_protected_availability(self):
-        self.assert_rejected(
-            lambda d: d["claim_boundary"].__setitem__(
-                "p2_e_protected_available", True))
+        self.assert_rejected(lambda d: d["claim_boundary"].__setitem__("p2_e_protected_available", True))
 
     def test_reject_premature_parent_closure(self):
-        self.assert_rejected(
-            lambda d: d["claim_boundary"].__setitem__("p2_closed", True))
+        self.assert_rejected(lambda d: d["claim_boundary"].__setitem__("p2_closed", True))
 
     def test_reject_basis_dependency(self):
-        self.assert_rejected(
-            lambda d: d["theorem_target"].__setitem__("basis_dependency", True))
+        self.assert_rejected(lambda d: d["theorem_target"].__setitem__("basis_dependency", True))
 
-    def test_reject_loss_of_finite_obligation(self):
-        self.assert_rejected(
-            lambda d: d["proof_architecture"]["finite_level_comparison"].__setitem__(
-                "state", "FORMALLY_AVAILABLE"))
+    def test_reject_loss_of_e1_certification(self):
+        self.assert_rejected(lambda d: d["proof_architecture"]["finite_level_comparison"].__setitem__("state", "FORMALLY_AVAILABLE"))
+
+    def test_reject_loss_of_e2_certification(self):
+        self.assert_rejected(lambda d: d["proof_architecture"]["measure_right_kan_extension"].__setitem__("state", "OPEN_CONSTRUCTION"))
+
+    def test_reject_e2_exact_head_drift(self):
+        self.assert_rejected(lambda d: d["proof_architecture"]["measure_right_kan_extension"].__setitem__("requirement", "E2 CLOSED_MACHINE_CERTIFIED"))
+
+    def test_reject_premature_e3_promotion(self):
+        self.assert_rejected(lambda d: d["proof_architecture"]["kan_extension_uniqueness"].__setitem__("state", "CERTIFIED"))
 
     def test_reject_duality_implies_reconstruction_scope_drift(self):
-        self.assert_rejected(
-            lambda d: d.__setitem__(
-                "scope",
-                "CM4-P2-E only: natural equivalence between measureFunctor and profiniteSolid"))
+        self.assert_rejected(lambda d: d.__setitem__("scope", "CM4-P2-E only: natural equivalence between measureFunctor and profiniteSolid"))
 
     def test_reject_p2d_role_promotion(self):
         def mutate_role(d):
@@ -77,7 +71,6 @@ class TestCMDGCondensedCM4P2E(unittest.TestCase):
                     row["role"] = "protected P2-D functor already sufficient for equivalence"
                     return
             raise AssertionError("P2-D source row missing")
-
         self.assert_rejected(mutate_role)
 
 
