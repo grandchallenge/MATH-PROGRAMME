@@ -1,0 +1,83 @@
+name: Visual pedagogy representation repair
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/visual-pedagogy-representation-repair.yml"
+      - "ci/verify_visual_pedagogy_raster_successors.py"
+      - "governance/visual_pedagogy/**"
+      - "requirements/visual-pedagogy-render.txt"
+      - "tools/render_visual_pedagogy_raster_successors.py"
+      - "tests/test_documentary_visual_pedagogy.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deterministic-representation-repair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements/visual-pedagogy-render.txt
+      - name: Install pinned rendering environment
+        run: python -m pip install -r requirements/visual-pedagogy-render.txt
+      - name: Rerender current review candidates into isolation
+        run: python tools/render_visual_pedagogy_raster_successors.py --root "$RUNNER_TEMP/visual-pedagogy-rendered" --hashes
+      - name: Verify isolated hashes against repair manifest
+        env:
+          RENDERED_ROOT: ${{ runner.temp }}/visual-pedagogy-rendered
+        run: |
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          repo=Path('.')
+          rendered=Path(os.environ['RENDERED_ROOT'])
+          m=json.loads((repo/'governance/visual_pedagogy/representation_repair_manifest.json').read_text())
+          refs=[m['review_entry']]+[d for o in m['outputs'] for d in o['derivatives']]
+          errors=[]
+          for item in refs:
+              p=rendered/item['path']
+              if not p.is_file(): errors.append(f'missing rerendered candidate: {item["path"]}'); continue
+              got=hashlib.sha256(p.read_bytes()).hexdigest()
+              if got != item['sha256']: errors.append(f'digest mismatch {item["path"]}: {got} != {item["sha256"]}')
+          if errors: raise SystemExit('\n'.join(errors))
+          print(f'isolated render matches {len(refs)} manifest-bound derivatives')
+          PY
+      - name: Materialize generated review assets in working tree
+        env:
+          RENDERED_ROOT: ${{ runner.temp }}/visual-pedagogy-rendered
+        run: |
+          cp -R "$RENDERED_ROOT/governance/visual_pedagogy/review_candidates/." governance/visual_pedagogy/review_candidates/
+      - name: Verify committed-or-materialized byte identity
+        run: python ci/verify_visual_pedagogy_raster_successors.py --repository-root . --rendered-root "$RUNNER_TEMP/visual-pedagogy-rendered"
+      - name: Commit generated review assets to same-repository PR branch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          git add governance/visual_pedagogy/review_candidates/**/*.png governance/visual_pedagogy/review_candidates/contact_sheet.png
+          if git diff --cached --quiet; then
+            echo "Generated review assets already match the committed branch."
+            exit 0
+          fi
+          git config user.name "gcl-visual-pedagogy-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "MP-DOC-VISUAL-PILOT-REPRESENTATION-REPAIR-001: materialize deterministic review plates"
+          git push origin "HEAD:${HEAD_REF}"
+      - name: Upload review bundle
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: visual-pedagogy-representation-repair-review-bundle
+          path: |
+            governance/visual_pedagogy/review_candidates/contact_sheet.png
+            governance/visual_pedagogy/review_candidates/**/*.png
+          if-no-files-found: error
+          retention-days: 30
