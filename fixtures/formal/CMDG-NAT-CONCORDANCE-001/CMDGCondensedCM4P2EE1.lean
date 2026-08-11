@@ -20,8 +20,6 @@ universe u
 open CategoryTheory Opposite
 attribute [local instance] FintypeCat.fintype
 
-abbrev R := CMDG.CondensedCM4P2D.R.{u}
-
 /-- The canonical small finite free module, realized directly as a condensed module of locally
 constant sections. -/
 noncomputable abbrev finiteSmallFreeCondensedFunctor :
@@ -120,7 +118,7 @@ noncomputable def finiteComparisonNatIso :
     finiteSmallFreeDiscreteULiftNatIso ≪≫
     CMDG.CondensedCM4P2E.finiteFreeDiscreteIso.symm
 
-example :
+noncomputable example :
     FintypeCat.toProfinite ⋙ CMDG.CondensedCM4P2D.measureFunctor ≅
       Condensed.finFree R :=
   finiteComparisonNatIso
