@@ -37,8 +37,8 @@ class TestCMDGCondensedCM4P2E(unittest.TestCase):
     def test_reject_source_blob_drift(self):
         self.assert_rejected(lambda d: d["exact_tree_audit"]["observed_sources"][0].__setitem__("blob", "0" * 40))
 
-    def test_reject_premature_equivalence_claim(self):
-        self.assert_rejected(lambda d: d["stage_result"].__setitem__("p2_e_natural_equivalence_established", True))
+    def test_reject_loss_of_terminal_equivalence(self):
+        self.assert_rejected(lambda d: d["stage_result"].__setitem__("p2_e_natural_equivalence_established", False))
 
     def test_reject_premature_protected_availability(self):
         self.assert_rejected(lambda d: d["claim_boundary"].__setitem__("p2_e_protected_available", True))
@@ -58,8 +58,11 @@ class TestCMDGCondensedCM4P2E(unittest.TestCase):
     def test_reject_e2_exact_head_drift(self):
         self.assert_rejected(lambda d: d["proof_architecture"]["measure_right_kan_extension"].__setitem__("requirement", "E2 CLOSED_MACHINE_CERTIFIED"))
 
-    def test_reject_premature_e3_promotion(self):
-        self.assert_rejected(lambda d: d["proof_architecture"]["kan_extension_uniqueness"].__setitem__("state", "CERTIFIED"))
+    def test_reject_loss_of_e3_certification(self):
+        self.assert_rejected(lambda d: d["proof_architecture"]["kan_extension_uniqueness"].__setitem__("state", "FORMALLY_AVAILABLE"))
+
+    def test_reject_e3_exact_head_drift(self):
+        self.assert_rejected(lambda d: d["proof_architecture"]["kan_extension_uniqueness"].__setitem__("requirement", "E3 CLOSED_MACHINE_CERTIFIED"))
 
     def test_reject_duality_implies_reconstruction_scope_drift(self):
         self.assert_rejected(lambda d: d.__setitem__("scope", "CM4-P2-E only: natural equivalence between measureFunctor and profiniteSolid"))
