@@ -55,16 +55,20 @@ lemma finiteCoordinateInclusion_freeIso
       finiteSmallFreeCoordinateInclusion X x := by
   classical
   ext S h
-  let h' : LocallyConstant (↑(unop S).toTop) R := h
   apply LocallyConstant.ext
   intro s
   apply Finsupp.ext
   intro y
-  change (if y = x then h' s else 0) = (Finsupp.single x (h' s)) y
   by_cases hy : y = x
   · subst y
-    simp
-  · simp [hy]
+    simp [finiteCoordinateInclusion, finiteCoefficientFamilyFreeIso,
+      finiteSmallFreeCoordinateInclusion, finiteSmallFreeCoordinateModuleMap,
+      CMDG.CondensedCM4P2E.FiniteTransport.finiteFunctionPresheafFamilyIso,
+      CMDG.CondensedCM4P2E.FiniteTransport.locallyConstantPiLinearEquiv]
+  · simp [finiteCoordinateInclusion, finiteCoefficientFamilyFreeIso,
+      finiteSmallFreeCoordinateInclusion, finiteSmallFreeCoordinateModuleMap,
+      CMDG.CondensedCM4P2E.FiniteTransport.finiteFunctionPresheafFamilyIso,
+      CMDG.CondensedCM4P2E.FiniteTransport.locallyConstantPiLinearEquiv, hy]
 
 #check finiteSmallFreePresheafFunctor
 #check finiteCoefficientFamilyFreeIso
