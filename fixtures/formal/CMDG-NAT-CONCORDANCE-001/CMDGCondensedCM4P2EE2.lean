@@ -1,14 +1,16 @@
 import CMDGCondensedCM4P2EE1
 import Mathlib.Condensed.Discrete.Characterization
 import Mathlib.CategoryTheory.Monoidal.Closed.Braided
+import Mathlib.CategoryTheory.Limits.Opposites
+import Mathlib.Topology.Category.Profinite.Extend
+import Mathlib.CategoryTheory.Functor.KanExtension.Pointwise
 
 /-!
 # CMDG CM4-P2-E E2 — measure-side right Kan reconstruction
 
-This fixture is separate from the certified E1 layer. It starts the E2 reconstruction by
-identifying the P2-D continuous-function source as the filtered colimit of its finite quotients,
-then proves the corresponding objectwise nested locally-constant transport needed for the protected
-presheaf.
+This fixture is separate from the certified E1 layer. It identifies the P2-D continuous-function
+source as the filtered colimit of its finite quotients and dualizes that colimit into the limit
+data needed for the protected measure functor.
 
 No E3 uniqueness statement or final comparison with `Condensed.profiniteSolid` is asserted here.
 -/
@@ -18,9 +20,13 @@ namespace CMDG.CondensedCM4P2E.RightKanReconstruction
 universe u
 
 open CategoryTheory Limits Opposite
+open scoped CategoryTheory.MonoidalClosed
 
 abbrev R := CMDG.CondensedCM4P2D.R.{u}
 abbrev PresheafModule := CMDG.CondensedCM4P2D.PresheafModule
+
+noncomputable local instance : MonoidalClosed PresheafModule :=
+  MonoidalClosed.FunctorCategory.monoidalClosed
 
 /-- The coefficient condensed module whose underlying presheaf is the protected P2-D coefficient
 presheaf. -/
@@ -194,6 +200,28 @@ noncomputable def discreteContinuousPresheafIsColimit (S : Profinite.{u}) :
       (H := CMDG.CondensedCM4P2D.discreteContinuousPresheaf)
       (H' := E) S.asLimitCone.op).symm
 
+/-- Opposing the certified finite-quotient colimit produces the corresponding limit cone in the
+opposite presheaf category. -/
+noncomputable def discreteContinuousPresheafOpIsLimit (S : Profinite.{u}) :
+    IsLimit
+      (coneRightOpOfCocone
+        (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.mapCocone
+          S.asLimitCone.op)) :=
+  isLimitConeRightOpOfCocone _ (discreteContinuousPresheafIsColimit S)
+
+/-- Internal Hom into the protected coefficient presheaf turns the finite-quotient source colimit
+into the required limit cone for the protected measure presheaf functor. -/
+noncomputable def measurePresheafFunctorMapConeIsLimit (S : Profinite.{u}) :
+    IsLimit
+      (CMDG.CondensedCM4P2D.measurePresheafFunctor.mapCone S.asLimitCone) := by
+  have hdual :=
+    isLimitOfPreserves
+      (MonoidalClosed.internalHom.flip.obj
+        CMDG.CondensedCM4P2D.coefficientPresheaf)
+      (discreteContinuousPresheafOpIsLimit S)
+  simpa [CMDG.CondensedCM4P2D.measurePresheafFunctor,
+    CMDG.CondensedCM4P2D.measurePresheafObj] using hdual
+
 #check continuousFunctionsIsColimit
 #check discreteContinuousCondensedMappedIsColimit
 #check locallyConstantSwap
@@ -202,6 +230,8 @@ noncomputable def discreteContinuousPresheafIsColimit (S : Profinite.{u}) :
 #check transposedContinuousFunctionsIsColimit
 #check discreteContinuousPresheafAtIsColimit
 #check discreteContinuousPresheafIsColimit
+#check discreteContinuousPresheafOpIsLimit
+#check measurePresheafFunctorMapConeIsLimit
 
 #print axioms continuousFunctionsIsColimit
 #print axioms discreteContinuousCondensedMappedIsColimit
@@ -211,5 +241,7 @@ noncomputable def discreteContinuousPresheafIsColimit (S : Profinite.{u}) :
 #print axioms transposedContinuousFunctionsIsColimit
 #print axioms discreteContinuousPresheafAtIsColimit
 #print axioms discreteContinuousPresheafIsColimit
+#print axioms discreteContinuousPresheafOpIsLimit
+#print axioms measurePresheafFunctorMapConeIsLimit
 
 end CMDG.CondensedCM4P2E.RightKanReconstruction
