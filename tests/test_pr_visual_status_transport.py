@@ -178,6 +178,19 @@ class PRVisualStatusTransportTests(unittest.TestCase):
         self.assertIn("derived, advisory", comment)
         self.assertIn("target PR head was not modified", comment)
 
+    def test_tampered_receipt_cannot_reach_comment_transport(self) -> None:
+        bundle = transport.build_archive_bundle(
+            base_report(),
+            target_head_before=HEAD,
+            target_head_after=HEAD,
+        )
+        receipt = json.loads(bundle["receipt.json"])
+        receipt["target_pr_head_mutated"] = True
+        with self.assertRaisesRegex(
+            transport.TransportError, "non-mutating target invariant"
+        ):
+            transport.render_pr_comment(receipt)
+
     def test_tampered_artifact_fails_verification(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             bundle_dir = transport.write_archive_bundle(
