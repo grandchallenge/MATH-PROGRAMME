@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.1.0",
+  "operation": "OZ-RT-BZ-T3-009",
+  "route": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001",
+  "execution_intake": {
+    "protected_head": "fa283a283c4584c79af86fec632d50aa49e6d640",
+    "protected_tree": "49f644c8ff4462015833d6477dfb6fde5b847970"
+  },
+  "authority": {
+    "issue": 372,
+    "predecessor_issue": 365,
+    "predecessor_pr": 366
+  },
+  "finite_component_baseline": [
+    {"n":0,"P5":[0,1],"W":[0,1],"D":[0,1]},
+    {"n":1,"P5":[87,4],"W":[-87,2],"D":[0,1]},
+    {"n":2,"P5":[1190161,384],"W":[-1190161,192],"D":[0,1]},
+    {"n":3,"P5":[7682021239,10368],"W":[-7682021239,5184],"D":[0,1]},
+    {"n":4,"P5":[24943788950905,110592],"W":[-24943788950905,55296],"D":[0,1]},
+    {"n":5,"P5":[81875586674776013003,1036800000],"W":[-81875586674776013003,518400000],"D":[0,1]},
+    {"n":6,"P5":[282653756112686336975107,9331200000],"W":[-282653756112686336975107,4665600000],"D":[0,1]}
+  ],
+  "finite_residual_baseline": [
+    {"n":0,"L_P5":[0,1],"L_W":[0,1],"L_D":[0,1]},
+    {"n":1,"L_P5":[0,1],"L_W":[0,1],"L_D":[0,1]},
+    {"n":2,"L_P5":[0,1],"L_W":[0,1],"L_D":[0,1]},
+    {"n":3,"L_P5":[0,1],"L_W":[0,1],"L_D":[0,1]}
+  ],
+  "nonvacuity": {
+    "scalar_D_recurrence_fitting_forbidden": true,
+    "P5_nonzero_on_retained_range": true,
+    "W_nonzero_on_retained_range": true,
+    "finite_residuals_are_proof": false
+  },
+  "moving_support": {
+    "common_square": "0<=k,l<=n+3",
+    "uniform_zero_extension_lemma": "For each j in {0,1,2,3}, if k>n+j or l>n+j then binom(n+j,k)^2 or binom(n+j,l)^2 in T(n+j,k,l) is zero. Every protected weight atom is finite under H(m,r)=0 for m<=0 and finite U/ES sums over positive t. Therefore the shifted weighted summand extends by exact zero to the common square.",
+    "uniform_support_proof_complete": true,
+    "shell_omission": false
+  },
+  "source_artifact_audit": {
+    "RFD_ann.m": {
+      "relevance": "NOT_A_T3_CERTIFICATE",
+      "present_at_968477ed": false,
+      "present_at_790685b7": false
+    },
+    "Qrow_rhosigma.m": {
+      "relevance": "KERNEL_METHOD_ONLY_UNTIL_REBOUND_TO_T3_SEQUENCE_CERTIFICATE",
+      "present_at_790685b7": true
+    }
+  },
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+  "terminal": "RECURRENCE_INTERFACE_LOCKED_NONVACUOUS_BASELINE_AND_MOVING_SUPPORT_CERTIFIED"
+}

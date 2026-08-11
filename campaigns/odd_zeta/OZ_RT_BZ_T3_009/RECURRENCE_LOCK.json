@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "operation": "OZ-RT-BZ-T3-009",
+  "route": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001",
+  "order": 3,
+  "source": {
+    "repository": "rain-1/-odd-zeta-values-moremath",
+    "commit": "968477ed7e406df6542f8da6fbe1cd6ca7273c47",
+    "path": "work/lb5/core.py",
+    "programme_lock": "campaigns/odd_zeta/OZ_RT_BZ_T3_001/OZ_RT_BZ_T3_001.json"
+  },
+  "a0": "41218*n^3+198849*n^2+320790*n+173057",
+  "B8": "3874492*n^8+59373972*n^7+394148190*n^6+1481084196*n^5+3447878810*n^4+5095855458*n^3+4673546679*n^2+2433871008*n+551502039",
+  "B9": "48802112*n^9+967468896*n^8+8488000862*n^7+43246197636*n^6+140983768422*n^5+304912330849*n^4+437406946975*n^3+401272692378*n^2+213593890911*n+50257929339",
+  "coefficients": {
+    "c0": "(n+1)^5*(n+2)*a0(n+1)",
+    "c1": "-2*(n+2)*B8(n)",
+    "c2": "-2*B9(n)",
+    "c3": "2*(n+3)^5*(2*n+5)*a0(n)"
+  },
+  "forward_coefficient": {
+    "name": "c3",
+    "strictly_positive_for_integer_n_ge_0": true,
+    "proof": "a0 has strictly positive coefficients; 2, (n+3)^5, (2*n+5), and a0(n) are strictly positive for integer n>=0"
+  },
+  "normalization_drift_allowed": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+}

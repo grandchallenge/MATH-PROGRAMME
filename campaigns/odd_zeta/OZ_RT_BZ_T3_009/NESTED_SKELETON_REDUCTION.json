@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "operation": "OZ-RT-BZ-T3-009",
+  "route": "T3_SEQUENCE_RECURRENCE_EXTRACTION_001",
+  "subroute": "QROW_PRODUCT_RULE_REDUCTION_001",
+  "parent": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/RESIDUAL_CANONICAL_RESULT.json",
+  "statement": "For each canonical weight difference Delta_n1(Dweight), Delta_n2(Dweight), Delta_n3(Dweight), Delta_k(Dweight), and Delta_l(Dweight), every nested coordinate lies in the span of exactly three protected combinations N11, N12k, N12l.",
+  "basis": {
+    "N11": "U(k,l;1,2)+U(l,k;1,2)",
+    "N12k": "2*ES(l;1,3)-U(k,l;2,2)",
+    "N12l": "2*ES(k;1,3)-U(l,k;2,2)"
+  },
+  "coordinate_relations": {
+    "coeff_U_k_l_1_2_equals_coeff_U_l_k_1_2": true,
+    "coeff_ES_l_1_3_equals_minus_2_coeff_U_k_l_2_2": true,
+    "coeff_ES_k_1_3_equals_minus_2_coeff_U_l_k_2_2": true,
+    "all_other_nested_coordinates_zero": true
+  },
+  "eliminated_nested_coordinates": [
+    "U_k_l_1_4",
+    "U_l_k_1_4",
+    "U_k_l_2_3",
+    "U_l_k_2_3",
+    "ES_k_1_4",
+    "ES_l_1_4",
+    "ES_k_2_3",
+    "ES_l_2_3"
+  ],
+  "derivation": {
+    "direct_D_nested_form": "r22_nested + Lk*N12k + Ll*N12l + (Lk*Ll-C2)*N11",
+    "n_shift_reason": "The nested atoms depend only on k,l, so r22_nested cancels in every n-shift difference; only the n-dependent one-body coefficients of N11/N12k/N12l change.",
+    "spatial_shift_reason": "Every protected U/ES shift is the same nested atom plus a one-body rational/harmonic increment. Therefore r22_nested contributes only to the one-body sector after subtraction, while the surviving nested coordinates remain N11/N12k/N12l.",
+    "exact_canonical_map_test": "tests/test_oz_rt_bz_t3_009_residual_canonical.py:test_nested_sector_is_exact_three_combination_skeleton"
+  },
+  "full_residual_consequence": "Multiplication by the temporal rational coefficients and by the regularized symmetric Q-row flux cannot enlarge the nested coordinate span. Hence the nested part of the four-channel direct E_D residual lies in span{N11,N12k,N12l}.",
+  "corrected_probe_note": "An earlier exploratory Wolfram probe omitted explicit multiplication signs and was discarded. The retained statement rests on exact canonical-map coefficient relations, not that probe.",
+  "next_exact_obligation": "Exploit the three nested auxiliary modules and the complementary one-body sector separately, beginning with natural inner-sum certificates for N11, N12k, and N12l; do not return to the generic 198-dimensional flux ansatz.",
+  "residual_sum_zero_proved": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+  "terminal": "DIRECT_ED_NESTED_SECTOR_REDUCED_TO_THREE_PROTECTED_COMBINATIONS"
+}
