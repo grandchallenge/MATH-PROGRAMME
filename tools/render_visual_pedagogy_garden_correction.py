@@ -19,6 +19,8 @@ text{font-family:"DejaVu Sans","Segoe UI Symbol",Arial,sans-serif;fill:#111}
 <text x="40" y="92" class="body math">F = {∅, {a}, {b}, {a,b}, {a,c}, {a,b,c}}</text>
 <text x="40" y="126" class="small">Edges show cover relations only (strict Hasse-style inclusion diagram).</text>
 <text x="950" y="126" class="small">visual_is_evidence: false</text>
+
+<!-- strict cover relations only -->
 <path d="M565 680 L385 618" class="line"/>
 <path d="M565 680 L665 618" class="line"/>
 <path d="M385 560 L515 448" class="line"/>
@@ -26,6 +28,7 @@ text{font-family:"DejaVu Sans","Segoe UI Symbol",Arial,sans-serif;fill:#111}
 <path d="M665 560 L825 448" class="line"/>
 <path d="M515 390 L665 268" class="line"/>
 <path d="M825 390 L665 268" class="line"/>
+
 <rect x="500" y="680" width="130" height="58" rx="8" class="box"/>
 <g aria-label="empty set">
   <circle cx="565" cy="709" r="12" fill="none" stroke="#111" stroke-width="2"/>
@@ -36,6 +39,7 @@ text{font-family:"DejaVu Sans","Segoe UI Symbol",Arial,sans-serif;fill:#111}
 <rect x="450" y="390" width="130" height="58" rx="8" class="box"/><text x="515" y="426" text-anchor="middle" class="body">{a,b}</text>
 <rect x="760" y="390" width="130" height="58" rx="8" class="box"/><text x="825" y="426" text-anchor="middle" class="body">{a,c}</text>
 <rect x="600" y="210" width="130" height="58" rx="8" class="box"/><text x="665" y="246" text-anchor="middle" class="body">{a,b,c}</text>
+
 <rect x="950" y="150" width="210" height="300" rx="12" class="soft"/>
 <text x="970" y="190" class="h2">Frequency ledger</text>
 <text x="970" y="235" class="body">freq(a) = 4</text>
@@ -44,6 +48,7 @@ text{font-family:"DejaVu Sans","Segoe UI Symbol",Arial,sans-serif;fill:#111}
 <text x="970" y="370" class="body">|F| / 2 = 3</text>
 <text x="970" y="410" class="small">a exceeds and b meets</text>
 <text x="970" y="435" class="small">the half threshold.</text>
+
 <text x="55" y="775" class="h2">Selected unions</text>
 <text x="55" y="810" class="body">{a} union {b} = {a,b};  {b} union {a,c} = {a,b,c}.</text>
 <text x="55" y="842" class="small">These examples illustrate closure; the full six-set family is checked separately as union-closed.</text>
