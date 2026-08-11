@@ -22,8 +22,10 @@ open CategoryTheory Limits Opposite
 noncomputable abbrev condensedModuleToPresheaf : CondensedMod.{u} R ⥤ PresheafModule :=
   ObjectProperty.ι (Presheaf.IsSheaf (coherentTopology CompHaus.{u}))
 
+set_option backward.isDefEq.respectTransparency.types false in
 /-- Lift the certified presheaf limit explicitly through the fully faithful sheaf inclusion.
-This avoids invoking the universe-polymorphic global reflection instance. -/
+This is the pinned fully-faithful reflection construction specialized to the exact finite-quotient
+diagram, avoiding the universe-polymorphic global reflection instance. -/
 noncomputable def measureFunctorMapConeIsLimit (S : Profinite.{u}) :
     IsLimit (CMDG.CondensedCM4P2D.measureFunctor.mapCone S.asLimitCone) := by
   let U : CondensedMod.{u} R ⥤ PresheafModule := condensedModuleToPresheaf
@@ -32,17 +34,17 @@ noncomputable def measureFunctorMapConeIsLimit (S : Profinite.{u}) :
     change IsLimit
       (CMDG.CondensedCM4P2D.measurePresheafFunctor.mapCone S.asLimitCone)
     exact measurePresheafFunctorMapConeIsLimit S
-  exact IsLimit.mkConeMorphism
-    (fun s =>
+  exact
+    (IsLimit.mkConeMorphism fun _ =>
       (Cone.functoriality
         (S.diagram ⋙ CMDG.CondensedCM4P2D.measureFunctor) U).preimage
-          (hU.liftConeMorphism (U.mapCone s)))
-    (by
+          (hU.liftConeMorphism _)) <| by
+      apply fun s m =>
+        (Cone.functoriality
+          (S.diagram ⋙ CMDG.CondensedCM4P2D.measureFunctor) U).map_injective _
       intro s m
-      apply (Cone.functoriality
-        (S.diagram ⋙ CMDG.CondensedCM4P2D.measureFunctor) U).map_injective
       rw [Functor.map_preimage]
-      exact hU.uniq_cone_morphism)
+      apply hU.uniq_cone_morphism
 
 /-- Extend the canonical finite-quotient limit to the full structured-arrow finite diagram. -/
 noncomputable def measureFunctorStructuredArrowIsLimit (S : Profinite.{u}) :
