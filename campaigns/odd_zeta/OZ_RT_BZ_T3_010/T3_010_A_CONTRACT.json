@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "issue": 403,
   "operation": "SYMMETRY_REDUCED_CHANNEL_HARMONIC_BLOCK_WITH_SHELL_STRATA_001",
   "stage": "T3_010_A_EXACT_SHELL_CHANNEL_BLOCK_DECOMPOSITION_AND_VIABILITY_GATE",
@@ -28,6 +28,12 @@
     "moving_boundary_or_shell_count": 24,
     "mirror_rule": "swap the k and l coordinate classes",
     "exactness": "The classes are exhaustive and disjoint on the common n+3 box and make all eight protected pinv activation predicates constant."
+  },
+  "shell_restriction_policy": {
+    "ordinary_factors": "On k=n+offset and/or l=n+offset, substitute the shell equality into every ordinary affine rational factor exactly; absorb nonzero constants and remove identically zero numerator terms.",
+    "protected_factors": "Only the eight tagged n-k+s and n-l+s reciprocal factors use the protected pinv zero rule.",
+    "ordinary_denominator_pole": "FAIL_CLOSED",
+    "generic_laurent_continuation": false
   },
   "channel_manifest": {
     "protected_channels": ["n1", "n2", "n3", "k1", "l1"],
@@ -59,7 +65,7 @@
     "independent_probe_cell_count": 400,
     "formula": "4 independent channels * 4 harmonic blocks * 25 shell strata",
     "mirrored_l1_cell_count": 100,
-    "rank_kind": "exact rank over Q of the 0/1 scalar-support incidence matrix on oriented primitive letters after exact shell specialization",
+    "rank_kind": "exact rank over Q of the 0/1 scalar-support incidence matrix on oriented primitive letters after exact full rational shell restriction",
     "rank_scope": "forcing-side structural viability only",
     "correction_flux_elimination_rank": false,
     "correction_candidate_admitted": false
