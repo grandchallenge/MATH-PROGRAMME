@@ -71,7 +71,7 @@ def test_batch1_source_pages_keep_exact_rollback_references():
 
 def test_batch1_scope_does_not_activate_later_assets():
     runtime = RUNTIME.read_text(encoding="utf-8")
-    assert runtime.count("data.visualPedagogyActivation") == 1
+    assert runtime.count("dataset.visualPedagogyActivation") == 1
     assert runtime.count("visualPedagogyActivation = 'batch1'") == 1
     assert "plate_vorticity_v2" not in runtime
     assert "plate_geometry_v2" not in runtime
