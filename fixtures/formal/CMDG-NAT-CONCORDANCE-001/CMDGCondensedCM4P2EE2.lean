@@ -102,20 +102,16 @@ noncomputable def locallyConstantSwapLinearEquiv (T S : CompHaus.{u}) :
     intro s
     apply LocallyConstant.ext
     intro t
-    change locallyConstantSwap T S (f + g) s t =
-      (locallyConstantSwap T S f + locallyConstantSwap T S g) s t
-    rw [locallyConstantSwap_apply, locallyConstantSwap_apply,
-      locallyConstantSwap_apply]
-    rfl
+    change f t s + g t s =
+      locallyConstantSwap T S f s t + locallyConstantSwap T S g s t
+    rw [locallyConstantSwap_apply, locallyConstantSwap_apply]
   map_smul' r f := by
     apply LocallyConstant.ext
     intro s
     apply LocallyConstant.ext
     intro t
-    change locallyConstantSwap T S (r • f) s t =
-      (r • locallyConstantSwap T S f) s t
-    rw [locallyConstantSwap_apply, locallyConstantSwap_apply]
-    rfl
+    change r • f t s = r • locallyConstantSwap T S f s t
+    rw [locallyConstantSwap_apply]
 
 #check continuousFunctionsIsColimit
 #check discreteContinuousCondensedMappedIsColimit
