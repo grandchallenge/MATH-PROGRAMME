@@ -83,7 +83,7 @@ lemma locallyConstantSwap_apply (T S : CompHaus.{u})
     (f : LocallyConstant T (LocallyConstant S R)) (s : S) (t : T) :
     locallyConstantSwap T S f s t = f t s := by
   classical
-  simp [locallyConstantSwap, Function.comp_def]
+  rfl
 
 /-- The transpose is linear in the coefficient module and involutive. -/
 noncomputable def locallyConstantSwapLinearEquiv (T S : CompHaus.{u}) :
@@ -93,16 +93,19 @@ noncomputable def locallyConstantSwapLinearEquiv (T S : CompHaus.{u}) :
   invFun := locallyConstantSwap S T
   left_inv f := by
     ext t s
-    simp
+    rw [locallyConstantSwap_apply, locallyConstantSwap_apply]
   right_inv f := by
     ext s t
-    simp
+    rw [locallyConstantSwap_apply, locallyConstantSwap_apply]
   map_add' f g := by
     ext s t
-    simp
+    rw [locallyConstantSwap_apply, locallyConstantSwap_apply,
+      locallyConstantSwap_apply]
+    rfl
   map_smul' r f := by
     ext s t
-    simp
+    rw [locallyConstantSwap_apply, locallyConstantSwap_apply]
+    rfl
 
 #check continuousFunctionsIsColimit
 #check discreteContinuousCondensedMappedIsColimit
