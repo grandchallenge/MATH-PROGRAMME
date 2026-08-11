@@ -56,6 +56,16 @@ class AdministrativeTransitionRecoveryCandidateTests(unittest.TestCase):
 
     def test_exact_post_due_occurrence_is_reconstructed_without_git_history_dependency(self):
         config, registry, completion = self.load_runtime_inputs()
+        completion = copy.deepcopy(completion)
+        completion["procedures"]["structural_sweep"]["completed_through_utc"] = "2026-08-09T10:57:00Z"
+        completion["procedures"]["structural_sweep"]["receipts"] = [
+            receipt
+            for receipt in completion["procedures"]["structural_sweep"]["receipts"]
+            if receipt["scheduled_due_at"] <= "2026-08-09T10:57:00Z"
+        ]
+        completion["procedures"]["structural_sweep"]["receipt_count"] = len(
+            completion["procedures"]["structural_sweep"]["receipts"]
+        )
         now = datetime(2026, 8, 10, 4, 30, tzinfo=UTC)
         with patch.object(recovery, "transition_reconstruction_allowed", return_value=True):
             occurrence = recovery.transition_reconstruction_occurrence(
