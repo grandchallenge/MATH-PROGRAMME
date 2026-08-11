@@ -32,13 +32,27 @@ noncomputable abbrev finiteMeasurePresheafFunctor :
 noncomputable abbrev finiteMeasureSourceFamilyIso (X : FintypeCat.{u}) :=
   CMDG.CondensedCM4P2E.FiniteTransport.finiteDiscreteContinuousPresheafFamilyNatIso.app (op X)
 
+/-- The raw source-presheaf morphism induced by a finite map after promotion to profinite spaces. -/
+noncomputable def finiteMeasureSourcePresheafMap
+    {X Y : FintypeCat.{u}} (f : X ⟶ Y) :
+    CMDG.CondensedCM4P2D.discreteContinuousPresheaf.obj
+        (op (FintypeCat.toProfinite.obj Y)) ⟶
+      CMDG.CondensedCM4P2D.discreteContinuousPresheaf.obj
+        (op (FintypeCat.toProfinite.obj X)) :=
+  CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map
+    (FintypeCat.toProfinite.map f).op
+
 /-- The raw morphism of the actual finite P2-D measure-presheaf restriction. -/
 noncomputable def finiteMeasurePresheafMap
     {X Y : FintypeCat.{u}} (f : X ⟶ Y) :
     finiteMeasurePresheafFunctor.obj X ⟶ finiteMeasurePresheafFunctor.obj Y :=
-  (MonoidalClosed.pre
-      (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op)).app
+  (MonoidalClosed.pre (finiteMeasureSourcePresheafMap f)).app
     CMDG.CondensedCM4P2D.coefficientPresheaf
+
+lemma finiteMeasurePresheafFunctor_map_eq
+    {X Y : FintypeCat.{u}} (f : X ⟶ Y) :
+    finiteMeasurePresheafFunctor.map f = finiteMeasurePresheafMap f := by
+  rfl
 
 /-- Forward closed-Hom transport through the inverse finite source comparison. -/
 noncomputable def finiteMeasurePresheafFamilyHom (X : FintypeCat.{u}) :
@@ -96,6 +110,26 @@ noncomputable def finiteMeasurePresheafFamilyIso (X : FintypeCat.{u}) :
             rw [i.inv_hom_id]
       _ = 𝟙 _ := by simp
 
+lemma finiteMeasurePresheafFamilyIso_hom (X : FintypeCat.{u}) :
+    (finiteMeasurePresheafFamilyIso X).hom = finiteMeasurePresheafFamilyHom X := by
+  rfl
+
+lemma finiteFamilyInternalHomFunctor_map_eq
+    {X Y : FintypeCat.{u}} (f : X ⟶ Y) :
+    finiteFamilyInternalHomFunctor.map f = finiteFamilyInternalHomMap f := by
+  rfl
+
+/-- Raw naturality of the accepted finite source-family inverse, expressed against the actual
+P2-D source-presheaf map. -/
+lemma finiteMeasureSourceFamilyInv_naturality
+    {X Y : FintypeCat.{u}} (f : X ⟶ Y) :
+    CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op ≫
+        (finiteMeasureSourceFamilyIso X).inv =
+      (finiteMeasureSourceFamilyIso Y).inv ≫ finiteMeasureSourcePresheafMap f := by
+  simpa only [Functor.comp_map] using
+    CMDG.CondensedCM4P2E.FiniteTransport.finiteDiscreteContinuousPresheafFamilyNatIso.inv.naturality
+      f.op
+
 /-- Raw naturality of the forward finite measure/source-family transport. Keeping this statement
 at the morphism level avoids expensive reduction of the two composite functor presentations. -/
 lemma finiteMeasurePresheafFamilyHom_naturality
@@ -104,39 +138,32 @@ lemma finiteMeasurePresheafFamilyHom_naturality
       finiteMeasurePresheafFamilyHom X ≫ finiteFamilyInternalHomMap f := by
   let iX := finiteMeasureSourceFamilyIso X
   let iY := finiteMeasureSourceFamilyIso Y
+  have hnat :
+      CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op ≫
+          iX.inv =
+        iY.inv ≫ finiteMeasureSourcePresheafMap f := by
+    exact finiteMeasureSourceFamilyInv_naturality f
+  have hleft := congrArg
+    (fun η => η.app CMDG.CondensedCM4P2D.coefficientPresheaf)
+    (MonoidalClosed.pre_map iY.inv (finiteMeasureSourcePresheafMap f))
+  have hright := congrArg
+    (fun η => η.app CMDG.CondensedCM4P2D.coefficientPresheaf)
+    (MonoidalClosed.pre_map
+      (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)
+      iX.inv)
   change
-    (MonoidalClosed.pre
-        (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op)).app
+    (MonoidalClosed.pre (finiteMeasureSourcePresheafMap f)).app
           CMDG.CondensedCM4P2D.coefficientPresheaf ≫
         (MonoidalClosed.pre iY.inv).app CMDG.CondensedCM4P2D.coefficientPresheaf =
       (MonoidalClosed.pre iX.inv).app CMDG.CondensedCM4P2D.coefficientPresheaf ≫
         (MonoidalClosed.pre
           (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)).app
             CMDG.CondensedCM4P2D.coefficientPresheaf
-  have hnat0 :=
-    CMDG.CondensedCM4P2E.FiniteTransport.finiteDiscreteContinuousPresheafFamilyNatIso.inv.naturality
-      f.op
-  have hnat :
-      CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op ≫
-          iX.inv =
-        iY.inv ≫ CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op := by
-    simpa only [Functor.comp_map] using hnat0
-  have hleft := congrArg
-    (fun η => η.app CMDG.CondensedCM4P2D.coefficientPresheaf)
-    (MonoidalClosed.pre_map iY.inv
-      (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op))
-  have hright := congrArg
-    (fun η => η.app CMDG.CondensedCM4P2D.coefficientPresheaf)
-    (MonoidalClosed.pre_map
-      (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)
-      iX.inv)
   calc
-    (MonoidalClosed.pre
-        (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op)).app
+    (MonoidalClosed.pre (finiteMeasureSourcePresheafMap f)).app
           CMDG.CondensedCM4P2D.coefficientPresheaf ≫
         (MonoidalClosed.pre iY.inv).app CMDG.CondensedCM4P2D.coefficientPresheaf =
-      (MonoidalClosed.pre
-        (iY.inv ≫ CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op)).app
+      (MonoidalClosed.pre (iY.inv ≫ finiteMeasureSourcePresheafMap f)).app
           CMDG.CondensedCM4P2D.coefficientPresheaf := by
             simpa only [NatTrans.comp_app] using hleft.symm
     _ = (MonoidalClosed.pre
@@ -151,34 +178,42 @@ lemma finiteMeasurePresheafFamilyHom_naturality
               CMDG.CondensedCM4P2D.coefficientPresheaf := by
             simpa only [NatTrans.comp_app] using hright
 
-/-- The fixed-finite-set comparison is natural in finite maps. This packages the already-typed raw
-morphism naturality without asking the elaborator to normalize the full composite functors inside
-the proof itself. -/
-set_option maxHeartbeats 800000 in
+/-- The fixed-finite-set comparison is natural in finite maps. -/
 noncomputable def finiteMeasurePresheafFamilyNatIso :
     finiteMeasurePresheafFunctor ≅ finiteFamilyInternalHomFunctor :=
   NatIso.ofComponents
     (fun X => finiteMeasurePresheafFamilyIso X)
     (by
       intro X Y f
-      change
-        finiteMeasurePresheafMap f ≫ finiteMeasurePresheafFamilyHom Y =
-          finiteMeasurePresheafFamilyHom X ≫ finiteFamilyInternalHomMap f
+      rw [finiteMeasurePresheafFunctor_map_eq,
+        finiteMeasurePresheafFamilyIso_hom,
+        finiteMeasurePresheafFamilyIso_hom,
+        finiteFamilyInternalHomFunctor_map_eq]
       exact finiteMeasurePresheafFamilyHom_naturality f)
 
 #check finiteMeasurePresheafFunctor
 #check finiteMeasureSourceFamilyIso
+#check finiteMeasureSourcePresheafMap
 #check finiteMeasurePresheafMap
+#check finiteMeasurePresheafFunctor_map_eq
 #check finiteMeasurePresheafFamilyHom
 #check finiteMeasurePresheafFamilyInv
 #check finiteMeasurePresheafFamilyIso
+#check finiteMeasurePresheafFamilyIso_hom
+#check finiteFamilyInternalHomFunctor_map_eq
+#check finiteMeasureSourceFamilyInv_naturality
 #check finiteMeasurePresheafFamilyHom_naturality
 #check finiteMeasurePresheafFamilyNatIso
 
+#print axioms finiteMeasureSourcePresheafMap
 #print axioms finiteMeasurePresheafMap
+#print axioms finiteMeasurePresheafFunctor_map_eq
 #print axioms finiteMeasurePresheafFamilyHom
 #print axioms finiteMeasurePresheafFamilyInv
 #print axioms finiteMeasurePresheafFamilyIso
+#print axioms finiteMeasurePresheafFamilyIso_hom
+#print axioms finiteFamilyInternalHomFunctor_map_eq
+#print axioms finiteMeasureSourceFamilyInv_naturality
 #print axioms finiteMeasurePresheafFamilyHom_naturality
 #print axioms finiteMeasurePresheafFamilyNatIso
 
