@@ -119,6 +119,20 @@ lemma finiteFamilyInternalHomFunctor_map_eq
     finiteFamilyInternalHomFunctor.map f = finiteFamilyInternalHomMap f := by
   rfl
 
+/-- The coefficient-family composite functor map is definitionally the named pullback map. -/
+lemma finiteCoefficientFamilyPresheafFunctor_map_eq
+    {X Y : FintypeCat.{u}} (f : X ⟶ Y) :
+    CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafFunctor.map f.op =
+      CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op := by
+  rfl
+
+/-- The finite P2-D source composite functor map is definitionally the named promoted source map. -/
+lemma finiteDiscreteContinuousPresheafFunctor_map_eq
+    {X Y : FintypeCat.{u}} (f : X ⟶ Y) :
+    CMDG.CondensedCM4P2E.FiniteTransport.finiteDiscreteContinuousPresheafFunctor.map f.op =
+      finiteMeasureSourcePresheafMap f := by
+  rfl
+
 /-- Raw naturality of the accepted finite source-family inverse, expressed against the actual
 P2-D source-presheaf map. -/
 lemma finiteMeasureSourceFamilyInv_naturality
@@ -126,9 +140,12 @@ lemma finiteMeasureSourceFamilyInv_naturality
     CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op ≫
         (finiteMeasureSourceFamilyIso X).inv =
       (finiteMeasureSourceFamilyIso Y).inv ≫ finiteMeasureSourcePresheafMap f := by
-  simpa only [Functor.comp_map] using
+  have h :=
     CMDG.CondensedCM4P2E.FiniteTransport.finiteDiscreteContinuousPresheafFamilyNatIso.inv.naturality
       f.op
+  rw [finiteCoefficientFamilyPresheafFunctor_map_eq f,
+    finiteDiscreteContinuousPresheafFunctor_map_eq f] at h
+  exact h
 
 /-- Raw naturality of the forward finite measure/source-family transport. Keeping this statement
 at the morphism level avoids expensive reduction of the two composite functor presentations. -/
@@ -201,6 +218,8 @@ noncomputable def finiteMeasurePresheafFamilyNatIso :
 #check finiteMeasurePresheafFamilyIso
 #check finiteMeasurePresheafFamilyIso_hom
 #check finiteFamilyInternalHomFunctor_map_eq
+#check finiteCoefficientFamilyPresheafFunctor_map_eq
+#check finiteDiscreteContinuousPresheafFunctor_map_eq
 #check finiteMeasureSourceFamilyInv_naturality
 #check finiteMeasurePresheafFamilyHom_naturality
 #check finiteMeasurePresheafFamilyNatIso
@@ -213,6 +232,8 @@ noncomputable def finiteMeasurePresheafFamilyNatIso :
 #print axioms finiteMeasurePresheafFamilyIso
 #print axioms finiteMeasurePresheafFamilyIso_hom
 #print axioms finiteFamilyInternalHomFunctor_map_eq
+#print axioms finiteCoefficientFamilyPresheafFunctor_map_eq
+#print axioms finiteDiscreteContinuousPresheafFunctor_map_eq
 #print axioms finiteMeasureSourceFamilyInv_naturality
 #print axioms finiteMeasurePresheafFamilyHom_naturality
 #print axioms finiteMeasurePresheafFamilyNatIso
