@@ -187,12 +187,19 @@ lemma finiteMeasurePresheafFamilyHom_naturality
           (MonoidalClosed.pre
             (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)).app
               CMDG.CondensedCM4P2D.coefficientPresheaf := by
-    have hright := congrArg
+    change
+      (MonoidalClosed.pre
+          (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op ≫
+            iX.inv)).app CMDG.CondensedCM4P2D.coefficientPresheaf =
+        ((MonoidalClosed.pre iX.inv) ≫
+          MonoidalClosed.pre
+            (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)).app
+              CMDG.CondensedCM4P2D.coefficientPresheaf
+    exact congrArg
       (fun η => η.app CMDG.CondensedCM4P2D.coefficientPresheaf)
       (MonoidalClosed.pre_map
         (CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheafMap f.op)
         iX.inv)
-    simpa only [NatTrans.comp_app] using hright
   change
     (MonoidalClosed.pre (finiteMeasureSourcePresheafMap f)).app
           CMDG.CondensedCM4P2D.coefficientPresheaf ≫
