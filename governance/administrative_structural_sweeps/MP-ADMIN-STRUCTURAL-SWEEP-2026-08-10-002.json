@@ -1,0 +1,156 @@
+{
+  "$schema": "../../schemas/administrative_autonomous_maintenance_record.schema.json",
+  "schema_version": "1.0.0",
+  "record_id": "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-10-002",
+  "procedure_id": "structural_sweep",
+  "control_id": "MP-ADMIN-MAINT-001",
+  "runtime_id": "MP-ADMIN-AUTONOMY-RUNTIME-INTEGRATION-001",
+  "status": "COMPLETE_AUTONOMOUS",
+  "scheduled_due_at": "2026-08-10T20:33:00Z",
+  "execution_started_at": "2026-08-11T01:12:24Z",
+  "evidence_closed_at": "2026-08-11T01:12:24Z",
+  "evidence_mode": "CONTEMPORANEOUS",
+  "lateness_minutes_at_start": 279,
+  "source_candidate": {
+    "occurrence_key": "structural_sweep:2026-08-10T20:33:00Z",
+    "manifest_path": "governance/administrative_candidates/structural_sweep-20260810T203300Z.json",
+    "manifest_digest": "0bcde3e5d71e461dd3fb81373b271fc1d77c8e9da77ab171883b79bc6508a527",
+    "prepared_at": "2026-08-10T15:13:22Z",
+    "freeze_at": "2026-08-10T19:03:00Z",
+    "source_protected_head": "fad9cff9f8f73b78bfed94fb1aab9763f63d00ab",
+    "issue_number": 400,
+    "pull_request_number": 401,
+    "branch": "automation/maintenance/structural_sweep-20260810T203300Z"
+  },
+  "activation_binding": {
+    "activation_id": "MP-ADMIN-AUTONOMY-ACTIVATION-001",
+    "state": "ACTIVE",
+    "transition_merge_head": "b299b5e2f9d7d9568880ca033fb540687ab85dcd",
+    "ruleset_id": 17137629,
+    "candidate_identity": {
+      "login": "gcl-release-trust[bot]",
+      "app_id": 4423678,
+      "token_role": "candidate-and-merge-executor"
+    },
+    "administrator_identity": {
+      "login": "gcl-release-trust[bot]",
+      "app_id": 4423678,
+      "token_role": "ruleset-readback"
+    },
+    "referee_identity": {
+      "login": "github-actions[bot]",
+      "app_id": 15368,
+      "token_role": "referee"
+    },
+    "identity_separation": true
+  },
+  "repository_state": [
+    {
+      "repository": "grandchallenge/INTELLECT",
+      "default_branch": "main",
+      "protected_head": "5714e81f3f03767f309b069f32a89fed0cfa165e",
+      "open_pull_requests": []
+    },
+    {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "default_branch": "main",
+      "protected_head": "f00e34ccefe38477d3d189d745cb3192200d60a0",
+      "open_pull_requests": [
+        {
+          "number": 401,
+          "head": "bbf84fa7497e16b888f41859f51753f745401238",
+          "base": "f00e34ccefe38477d3d189d745cb3192200d60a0",
+          "draft": true,
+          "author": "gcl-release-trust[bot]"
+        },
+        {
+          "number": 389,
+          "head": "bef6bdc7f17aae47a697b9fd1c6724bb696c8013",
+          "base": "6b4761859174c39ea95438ea415948c16db91745",
+          "draft": true,
+          "author": "fyremael"
+        },
+        {
+          "number": 376,
+          "head": "a54b27cfe7280b795e02d89af6d6c6a30f0351e0",
+          "base": "f00e34ccefe38477d3d189d745cb3192200d60a0",
+          "draft": true,
+          "author": "fyremael"
+        },
+        {
+          "number": 336,
+          "head": "22beffc5425c77de76ba66f47a47c54361c07aec",
+          "base": "baeee7329e12c73b422251edfb88a643108d7667",
+          "draft": true,
+          "author": "gcl-release-trust[bot]"
+        }
+      ]
+    },
+    {
+      "repository": "grandchallenge/MATHCERT",
+      "default_branch": "main",
+      "protected_head": "cd69013cf55d4ee96539d28ee27eadef64cca06f",
+      "open_pull_requests": []
+    },
+    {
+      "repository": "grandchallenge/MATHFORGE",
+      "default_branch": "main",
+      "protected_head": "5978b5f707b33fee662fbff5464da50b0db5d36e",
+      "open_pull_requests": []
+    },
+    {
+      "repository": "grandchallenge/MATHSOLVE",
+      "default_branch": "main",
+      "protected_head": "66d54d375ae4dfc148888325b6093818669e7c02",
+      "open_pull_requests": []
+    }
+  ],
+  "execution_contract": {
+    "candidate_author": "gcl-release-trust[bot]",
+    "referee_actor": "github-actions[bot]",
+    "merge_executor": "gcl-release-trust[bot]",
+    "expected_head_required": true,
+    "required_checks_source": "live ruleset 17137629",
+    "referee_disposition_before_merge": true,
+    "post_disposition_check_stabilization": true,
+    "clean_state_required": true,
+    "bypass_used": false,
+    "direct_protected_push": false,
+    "human_steward_disposition_required": false,
+    "human_steward_identity_asserted": false
+  },
+  "tracker_mirrors": [
+    {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 182,
+      "synchronization_required": true
+    },
+    {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 183,
+      "synchronization_required": true
+    },
+    {
+      "repository": "grandchallenge/INTELLECT",
+      "issue": 21,
+      "synchronization_required": true
+    }
+  ],
+  "authority_boundary": {
+    "routine_bounded_administrative_completion": true,
+    "automated_exact_head_referee_disposition": true,
+    "automated_merge": true,
+    "automated_human_steward_disposition": false,
+    "control_plane_change": false,
+    "scope_expansion": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "cert_route_registered": false,
+    "adjudication_authorized": false,
+    "certificate_issued": false,
+    "external_claim_authorized": false
+  }
+}
