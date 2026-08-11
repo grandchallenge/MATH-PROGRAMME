@@ -2,6 +2,28 @@ name: CMDG condensed CM4 P2-E
 
 on:
   pull_request:
+    paths:
+      - ".github/workflows/**"
+      - "ci/*cmdg*.py"
+      - "ci/validate_workflow_coverage*.py"
+      - "ci/validate_rh_continuity.py"
+      - "governance/cmdg_*.json"
+      - "governance/policy_shard_registry.json"
+      - "schemas/cmdg_*.json"
+      - "schemas/cross_repository_evidence.schema.json"
+      - "fixtures/cmdg/**"
+      - "fixtures/formal/CMDG-NAT-CONCORDANCE-001/**"
+      - "tests/test_cmdg*.py"
+      - "tests/**/test_cmdg*.py"
+      - "requirements/policy.txt"
+      - "evidence/UC-WP02-MATHCERT.json"
+      - "campaigns/riemann_hypothesis/RH_WP01_WP02_POST_MERGE_DISPOSITION.md"
+      - "docs/domains/riemann_hypothesis.md"
+      - "docs/domains/index.md"
+      - "docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md"
+      - "docs/CAMPAIGN_PROMOTION_REGISTER.md"
+      - "reviews/riemann_hypothesis/RH-WP01.agent_review.yaml"
+      - "reviews/riemann_hypothesis/RH-WP02.agent_review.yaml"
   push:
     branches: [main]
   workflow_dispatch:
