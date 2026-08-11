@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 403,
+  "operation": "SYMMETRY_REDUCED_CHANNEL_HARMONIC_BLOCK_WITH_SHELL_STRATA_001",
+  "stage": "T3_010_C_BOUNDED_EXACT_SHARED_COEFFICIENT_SOLUTION_EXTRACTION_GATE",
+  "t3_010_b_checkpoint": {
+    "validated_head": "3a6cfba4d8fc5f44d0b9f17e9521e9df43e83fc8",
+    "producer_blob": "11ce437f2a26d73d3362df3e923f6cf9c4cf91f9",
+    "contract_blob": "d6eae2adbd34d4d3d61e985d42d6e3d01ffcefd0",
+    "verifier_blob": "89e4100e7750ccc8b86c8ddb2e28b97a8e15b7cd",
+    "required_status": "EXACT_CORRECTION_FLUX_COEFFICIENT_MATRIX_RANK_CONSISTENCY_GATE_COMPLETE"
+  },
+  "bounded_correction_class": {
+    "id": "SUPPORT_LOCKED_ORIENTED_ONE_BODY_DEGREE0_WEIGHT_CORRECTION_001",
+    "coefficient_degree": 0,
+    "new_harmonic_monomials": false,
+    "adaptive_basis_growth": false,
+    "rational_prefactor_search": false,
+    "generic_198_raw_jet_reopened": false
+  },
+  "shared_coefficient_system": {
+    "field": "Q",
+    "unknown_identity": "scalar-family x support-locked oriented primitive correction weight",
+    "sharing_rule": "The same exact rational unknown is used in every structurally active shell stratum and every overlapping harmonic-block projection belonging to its independent shift channel.",
+    "independent_channels": [
+      "n1",
+      "n2",
+      "n3",
+      "k1"
+    ],
+    "mirror_derived_channel": "l1",
+    "row_namespace": "local cell id x exact coefficient coordinate",
+    "row_namespace_reason": "Retaining the local cell id forbids cancellation between logically separate shell/block equations when constructing the global compatibility system.",
+    "global_consistency": "rank_Q([A_global|b_global]) = rank_Q(A_global)",
+    "global_inconsistency": "rank_Q([A_global|b_global]) > rank_Q(A_global)"
+  },
+  "solution_extraction": {
+    "admitted_only_for_globally_consistent_channel": true,
+    "exact_field": "Q",
+    "canonical_policy": "deterministic sparse elimination in declared unknown order with nonpivot/free coefficients set to zero",
+    "required_check": "direct exact substitution into every active local B equation",
+    "affine_solution_is_certificate": false,
+    "channelwise_solution_is_full_flux_certificate": false
+  },
+  "mirror_policy": {
+    "l1_independent_search": false,
+    "required_check": "Reconstruct the complete l1 global system independently, mirror the extracted k1 coefficient map exactly, and require exact substitution into all active l1 shell/block equations."
+  },
+  "negative_boundary": {
+    "meaning": "A globally inconsistent independent-channel system exactly excludes a complete shared-coefficient realization only for the declared support-locked degree-zero correction class.",
+    "higher_degree_excluded": false,
+    "expanded_support_excluded": false,
+    "other_correction_architectures_excluded": false,
+    "t3_refuted": false
+  },
+  "positive_boundary": {
+    "meaning": "Global channelwise compatibility plus exact coefficient extraction authorizes full correction-layer recombination as the next gate only.",
+    "full_correction_layer_recombined": false,
+    "full_symbolic_flux_identity_substituted": false,
+    "finite_boundary_assembly_completed": false,
+    "candidate_certificate": false,
+    "final_n_holonomic_search": false
+  },
+  "required_outputs": {
+    "global_exact_rank_and_augmented_rank_per_independent_channel": true,
+    "exact_solution_for_each_globally_consistent_channel": true,
+    "exact_local_substitution_replay": true,
+    "exact_k1_l1_solution_mirror": true,
+    "independent_verifier": true,
+    "mutation_tests": true
+  },
+  "finite_sampling_used_as_sum_proof": false,
+  "residual_sum_zero_proved": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+}
