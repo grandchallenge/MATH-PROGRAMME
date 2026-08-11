@@ -63,6 +63,15 @@ def assert_target_head_unchanged(before_sha: str, after_sha: str, exact_sha: str
         raise TransportError("target PR head changed during archive/transport operation")
 
 
+def _expected_artifacts(report: dict[str, Any]) -> dict[str, bytes]:
+    policy.verify_report(report)
+    return {
+        "report.json": _json_bytes(report),
+        "report.txt": policy.render_text(report).encode("utf-8"),
+        "report.svg": policy.render_svg(report).encode("utf-8"),
+    }
+
+
 def build_archive_bundle(
     report: dict[str, Any],
     *,
@@ -73,16 +82,8 @@ def build_archive_bundle(
     exact_sha = report["identity"]["exact_head_sha"]
     assert_target_head_unchanged(target_head_before, target_head_after, exact_sha)
 
-    report_bytes = _json_bytes(report)
-    text_bytes = policy.render_text(report).encode("utf-8")
-    svg_bytes = policy.render_svg(report).encode("utf-8")
+    artifacts = _expected_artifacts(report)
     archive_dir = archive_relative_dir(report)
-
-    artifacts = {
-        "report.json": report_bytes,
-        "report.txt": text_bytes,
-        "report.svg": svg_bytes,
-    }
     receipt = {
         "schema_version": ARCHIVE_SCHEMA_VERSION,
         "transport_version": TRANSPORT_VERSION,
@@ -111,8 +112,7 @@ def build_archive_bundle(
             "propagation_authority_created": False,
         },
     }
-    receipt_bytes = _json_bytes(receipt)
-    return {**artifacts, "receipt.json": receipt_bytes}
+    return {**artifacts, "receipt.json": _json_bytes(receipt)}
 
 
 def _validate_receipt_metadata(receipt: dict[str, Any]) -> None:
@@ -146,6 +146,34 @@ def verify_archive_bundle(bundle_dir: Path) -> dict[str, Any]:
     except (OSError, json.JSONDecodeError) as exc:
         raise TransportError(f"cannot read archive receipt: {exc}") from exc
     _validate_receipt_metadata(receipt)
+
+    try:
+        report_bytes = (bundle_dir / "report.json").read_bytes()
+        report = json.loads(report_bytes.decode("utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise TransportError(f"cannot read archived canonical report: {exc}") from exc
+    if not isinstance(report, dict):
+        raise TransportError("archived canonical report must be an object")
+    policy.verify_report(report)
+
+    expected_dir = archive_relative_dir(report)
+    if receipt.get("archive_dir") != expected_dir:
+        raise TransportError("archive receipt path does not match report identity")
+    if receipt.get("report_id") != report["report_id"]:
+        raise TransportError("archive receipt report identity does not match report")
+    if receipt.get("repository") != report["identity"]["repository"]:
+        raise TransportError("archive receipt repository does not match report")
+    if receipt.get("pr_number") != report["identity"]["pr_number"]:
+        raise TransportError("archive receipt PR number does not match report")
+    if receipt.get("exact_head_sha") != report["identity"]["exact_head_sha"]:
+        raise TransportError("archive receipt exact head does not match report")
+    if receipt.get("source_snapshot_sha256") != report["provenance"]["source_snapshot_sha256"]:
+        raise TransportError("archive receipt source digest does not match report")
+    if receipt.get("operative_state") != report["derived"]["operative_state"]:
+        raise TransportError("archive receipt operative state does not match report")
+    if receipt.get("freshness") != report["derived"]["freshness"]:
+        raise TransportError("archive receipt freshness does not match report")
+
     artifacts = receipt.get("artifacts")
     if not isinstance(artifacts, dict) or set(artifacts) != {
         "report.json",
@@ -153,33 +181,30 @@ def verify_archive_bundle(bundle_dir: Path) -> dict[str, Any]:
         "report.svg",
     }:
         raise TransportError("archive receipt artifact set is invalid")
-    for name, metadata in artifacts.items():
+
+    expected_artifacts = _expected_artifacts(report)
+    for name, expected_data in expected_artifacts.items():
+        metadata = artifacts.get(name)
         if not isinstance(metadata, dict):
             raise TransportError(f"archive metadata for {name} is invalid")
+        expected_path = f"{expected_dir}/{name}"
+        if metadata.get("path") != expected_path:
+            raise TransportError(f"archive artifact path mismatch: {name}")
         artifact_path = bundle_dir / name
         try:
-            data = artifact_path.read_bytes()
+            actual_data = artifact_path.read_bytes()
         except OSError as exc:
             raise TransportError(f"cannot read archived artifact {name}: {exc}") from exc
-        if metadata.get("sha256") != _sha256_bytes(data):
+        if actual_data != expected_data:
+            raise TransportError(f"archived artifact is not deterministic source derivative: {name}")
+        expected_digest = _sha256_bytes(expected_data)
+        if metadata.get("sha256") != expected_digest:
             raise TransportError(f"archived artifact digest mismatch: {name}")
 
-    report = json.loads((bundle_dir / "report.json").read_text(encoding="utf-8"))
-    policy.verify_report(report)
-    expected_dir = archive_relative_dir(report)
-    if receipt.get("archive_dir") != expected_dir:
-        raise TransportError("archive receipt path does not match report identity")
-    if receipt.get("source_snapshot_sha256") != report["provenance"]["source_snapshot_sha256"]:
-        raise TransportError("archive receipt source digest does not match report")
-    if receipt.get("operative_state") != report["derived"]["operative_state"]:
-        raise TransportError("archive receipt operative state does not match report")
-    if receipt.get("freshness") != report["derived"]["freshness"]:
-        raise TransportError("archive receipt freshness does not match report")
     return receipt
 
 
-def render_pr_comment(receipt: dict[str, Any]) -> str:
-    _validate_receipt_metadata(receipt)
+def _render_pr_comment(receipt: dict[str, Any]) -> str:
     exact = receipt["exact_head_sha"]
     digest = receipt["source_snapshot_sha256"]
     archive_dir = receipt["archive_dir"]
@@ -197,6 +222,11 @@ def render_pr_comment(receipt: dict[str, Any]) -> str:
         "It does not create review, authorization, merge, certification, or propagation authority. "
         "The target PR head was not modified by archive or transport generation.\n"
     )
+
+
+def render_verified_pr_comment(bundle_dir: Path) -> str:
+    receipt = verify_archive_bundle(bundle_dir)
+    return _render_pr_comment(receipt)
 
 
 def write_archive_bundle(
@@ -244,7 +274,7 @@ def main() -> int:
     verify.add_argument("bundle_dir")
 
     comment = sub.add_parser("comment")
-    comment.add_argument("receipt")
+    comment.add_argument("bundle_dir")
 
     args = parser.parse_args()
     try:
@@ -262,8 +292,7 @@ def main() -> int:
             verify_archive_bundle(Path(args.bundle_dir))
             print("PR visual status archive: verified")
             return 0
-        receipt = json.loads(Path(args.receipt).read_text(encoding="utf-8"))
-        print(render_pr_comment(receipt), end="")
+        print(render_verified_pr_comment(Path(args.bundle_dir)), end="")
         return 0
     except (OSError, json.JSONDecodeError, policy.ReportError, TransportError) as exc:
         print(f"PR visual status transport error: {exc}", file=sys.stderr)
