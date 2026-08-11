@@ -260,10 +260,11 @@ noncomputable def measurePresheafFunctorMapConeIsLimit (S : Profinite.{u}) :
               S.asLimitCone.op))) :=
     isLimitOfPreserves internalHomIntoCoefficient
       (discreteContinuousPresheafOpIsLimit S)
-  apply (IsLimit.postcomposeInvEquiv
-    (finiteQuotientMeasureDiagramIso S)
-    (CMDG.CondensedCM4P2D.measurePresheafFunctor.mapCone S.asLimitCone)).mp
-  exact hdual.ofIsoLimit (finiteQuotientMeasureConeIso S)
+  exact
+    (IsLimit.postcomposeInvEquiv
+      (finiteQuotientMeasureDiagramIso S)
+      (CMDG.CondensedCM4P2D.measurePresheafFunctor.mapCone S.asLimitCone))
+      (hdual.ofIsoLimit (finiteQuotientMeasureConeIso S))
 
 #check continuousFunctionsIsColimit
 #check discreteContinuousCondensedMappedIsColimit
