@@ -1,0 +1,112 @@
+{
+  "protocol_id": "PRVSR-C10-MEASUREMENT-PROTOCOL-001",
+  "pilot_id": "PR-VISUAL-STATUS-REPORTING-001",
+  "status": "READY_FOR_EXECUTION__NO_RESULTS_YET",
+  "authority": {
+    "adr": "ADR-0019",
+    "execution_docket": 426,
+    "scope": "advisory bounded pilot measurement only",
+    "propagation_authority_created": false
+  },
+  "purpose": "Close the direct-measurement gaps identified by PRVSR-C10-EVAL-001 without substituting approval latency, workflow duration, or mechanical renderer correctness for human reviewer performance.",
+  "human_review_experiment": {
+    "target_metrics": [
+      "reviewer_time_to_operative_state",
+      "factual_state_identification_accuracy",
+      "blocker_residual_detection",
+      "stale_report_detection"
+    ],
+    "cases": [
+      "PRVSR-P01",
+      "PRVSR-P02",
+      "PRVSR-P03",
+      "PRVSR-P04",
+      "PRVSR-P05",
+      "PRVSR-P06",
+      "PRVSR-P07",
+      "PRVSR-P08"
+    ],
+    "minimum_independent_reviewers": 2,
+    "design": "balanced crossover without repeated exposure to the same case by the same reviewer",
+    "conditions": [
+      {
+        "condition": "REPORT_FIRST",
+        "surface": "retained deterministic report text/SVG with source identifiers available for follow-through"
+      },
+      {
+        "condition": "SOURCE_ONLY_CONTROL",
+        "surface": "authoritative PR/governance source records without the retained visual-status report"
+      }
+    ],
+    "assignment_rule": "Randomize case order per reviewer and balance each case across REPORT_FIRST and SOURCE_ONLY_CONTROL across reviewers.",
+    "task_questions": [
+      "What is the operative repository lifecycle state?",
+      "What exact head or historical head is the state bound to?",
+      "What review/Human-Steward authority is present, pending, not required, or stale?",
+      "What repository blocker or orthogonal residual remains, if any?",
+      "Is the report current or stale?",
+      "Is it safe to advance at the captured decision point?"
+    ],
+    "timing": {
+      "start_event": "first exposure to assigned review surface",
+      "stop_event": "submission of all task answers",
+      "target_seconds": 60,
+      "timeout_policy": "Do not truncate; retain actual elapsed time and flag observations over 60 seconds."
+    },
+    "scoring": {
+      "operative_state_accuracy": "exact match to retained governed ground truth",
+      "factual_error_rate": "incorrect required answers divided by total required answers",
+      "blocker_residual_detection_rate": "correctly identified designed blocker/residual cases divided by designed blocker/residual cases presented",
+      "stale_detection_rate": "correctly identified stale cases divided by stale cases presented",
+      "time_summary": "retain per-observation elapsed seconds; report median and p95 by condition",
+      "preference": "secondary descriptive metric only; never substitutes for accuracy or time"
+    },
+    "retention": {
+      "required_fields": [
+        "reviewer_pseudonymous_id",
+        "case_id",
+        "condition",
+        "started_at",
+        "submitted_at",
+        "elapsed_seconds",
+        "answers",
+        "scored_answers",
+        "factual_error_count"
+      ],
+      "privacy_rule": "Do not retain unnecessary personal data; reviewer identity may be pseudonymized while preserving independence classification."
+    }
+  },
+  "regeneration_latency_benchmark": {
+    "target_metric": "regeneration_latency",
+    "unit": "milliseconds",
+    "scope": "isolated deterministic canonical-report derivation plus text/SVG regeneration; exclude GitHub network latency and whole-repository CI fanout",
+    "environment_requirements": [
+      "record runner image or machine class",
+      "record Python/runtime version",
+      "record generator version",
+      "record report schema version",
+      "record warmup count and measured repetition count"
+    ],
+    "minimum_warmup_iterations_per_case": 3,
+    "minimum_measured_iterations_per_case": 30,
+    "summary_statistics": ["median_ms", "p95_ms", "max_ms"],
+    "failure_rule": "Any regeneration that changes canonical semantics or fails deterministic equivalence is a correctness failure and must not be averaged away as latency."
+  },
+  "operational_cost_followup": {
+    "retain": [
+      "archive byte size by case and total",
+      "generation CPU/wall time from isolated benchmark",
+      "number of repository artifacts",
+      "number of PR/comment transport operations",
+      "reviewer time by experimental condition"
+    ],
+    "rule": "Keep storage, compute, transport, and human-review costs distinct rather than reporting a single blended number."
+  },
+  "completion_rule": "The protocol is complete only when the direct human metrics and isolated regeneration-latency result are retained with provenance and the C10 evaluation is updated. Completion does not itself discharge C10 or authorize propagation.",
+  "nonclaims": [
+    "This protocol contains no human-study results.",
+    "This protocol does not make report-first review mandatory.",
+    "This protocol does not create a merge gate or propagation authority.",
+    "A later independent Referee/pilot adjudication remains required after measurement."
+  ]
+}
