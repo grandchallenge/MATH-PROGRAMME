@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "operation": "MP-DOC-VISUAL-BATCH1-GARDEN-CORRECTION-001",
+  "issue": 435,
+  "plate_id": "UC-GARDEN-PLATE-I",
+  "parent": 416,
+  "trigger_merge": "1e72441a95ba9b8c17675e58c38551bc9f7c9e25",
+  "historical_live_successor": {
+    "path": "docs/assets/visual_pedagogy/batch1/union_closed/plate_garden.svg",
+    "review_candidate_path": "governance/visual_pedagogy/review_candidates/union_closed/plate_garden_successor.svg",
+    "sha256": "a70b8af6df46589d0df3d2c5c508e54933dd8c01259711e75640821f2188cef7",
+    "status": "deployed_preserved_pending_correction"
+  },
+  "correction_candidate": {
+    "path": "governance/visual_pedagogy/review_candidates/union_closed/plate_garden_successor_r2.svg",
+    "renderer": "tools/render_visual_pedagogy_garden_correction.py",
+    "sha256": "2931b423942ac079002b37233e4a42a1f4a6da462f096938393b2715dd71d296",
+    "review_status": "pending",
+    "live_switch_authorized": false
+  },
+  "defects_cured": [
+    "robust_empty_set_rendering",
+    "no_font_dependent_union_operator_in_selected_examples",
+    "strict_hasse_cover_edges_only",
+    "no_transitive_b_to_abc_edge",
+    "threshold_wording_distinguishes_exceeds_from_meets",
+    "selected_unions_not_presented_as_complete_closure_certificate",
+    "frankl_statement_excludes_empty-only_family"
+  ],
+  "exact_family": [[], ["a"], ["b"], ["a", "b"], ["a", "c"], ["a", "b", "c"]],
+  "cover_edges": [
+    [[], ["a"]],
+    [[], ["b"]],
+    [["a"], ["a", "b"]],
+    [["a"], ["a", "c"]],
+    [["b"], ["a", "b"]],
+    [["a", "b"], ["a", "b", "c"]],
+    [["a", "c"], ["a", "b", "c"]]
+  ],
+  "frequencies": {"a": 4, "b": 3, "c": 2},
+  "half_threshold": 3,
+  "batch2_paused": true,
+  "visual_is_evidence": false
+}
