@@ -16,13 +16,13 @@ permissions:
 
 jobs:
   deterministic-representation-repair:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: "3.13"
           cache: pip
@@ -73,10 +73,11 @@ jobs:
           git commit -m "MP-DOC-VISUAL-PILOT-REPRESENTATION-REPAIR-001: materialize deterministic review plates"
           git push origin "HEAD:${HEAD_REF}"
       - name: Upload review bundle
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: visual-pedagogy-representation-repair-review-bundle
           path: |
             governance/visual_pedagogy/review_candidates/contact_sheet.png
             governance/visual_pedagogy/review_candidates/**/*.png
           if-no-files-found: error
+          retention-days: 30
