@@ -11,6 +11,7 @@ AUDIT_PATH = ROOT / "governance" / "documentary_visual_pedagogy_pilot_audit.json
 CONTRACT_DIR = ROOT / "governance" / "visual_pedagogy" / "plates"
 CANDIDATE_DIR = ROOT / "governance" / "visual_pedagogy" / "review_candidates" / "union_closed"
 GENERATOR_PATH = ROOT / "tools" / "render_visual_pedagogy_batch1_svg_candidates.py"
+REVIEW_REF = "https://github.com/grandchallenge/MATH-PROGRAMME/issues/429#issuecomment-5252274813"
 
 EXPECTED_PLATES = [
     "UC-GARDEN-PLATE-I",
@@ -165,7 +166,7 @@ class VisualPedagogyBatch1CandidateTests(unittest.TestCase):
         q = {x: 1 - (1 - p[x]) ** 2 for x in p}
         self.assertEqual(q, {"a": Fraction(8, 9), "b": Fraction(3, 4), "c": Fraction(5, 9)})
 
-    def test_union_closed_contracts_bind_semantics_accessibility_and_pending_review(self):
+    def test_union_closed_contracts_bind_semantics_accessibility_and_completed_review(self):
         for plate_id in UC_PLATES:
             record = self.by_id[plate_id]
             contract = json.loads((ROOT / record["contract_path"]).read_text(encoding="utf-8"))
@@ -173,7 +174,8 @@ class VisualPedagogyBatch1CandidateTests(unittest.TestCase):
             self.assertEqual(contract["audit_disposition"], "REDRAW")
             self.assertEqual(contract["predecessor"], record["predecessor_path"])
             self.assertFalse(contract["claim_boundary"]["visual_is_evidence"])
-            self.assertEqual(contract["independent_review"], {"status": "pending", "evidence_refs": []})
+            self.assertEqual(contract["independent_review"]["status"], "reviewed")
+            self.assertIn(REVIEW_REF, contract["independent_review"]["evidence_refs"])
             self.assertTrue(contract["renderer"]["reproducible"])
             self.assertEqual(contract["renderer"]["mode"], "programmatic-vector")
             self.assertTrue(contract["accessibility"]["alt_text"])
@@ -190,6 +192,7 @@ class VisualPedagogyBatch1CandidateTests(unittest.TestCase):
         self.assertTrue(record["batch_confirmation_required"])
         contract = json.loads((ROOT / record["contract_path"]).read_text(encoding="utf-8"))
         self.assertEqual(contract["independent_review"]["status"], "reviewed")
+        self.assertIn(REVIEW_REF, contract["independent_review"]["evidence_refs"])
         self.assertFalse(contract["claim_boundary"]["visual_is_evidence"])
         derivatives = {item["path"]: item for item in contract["derivatives"]}
         self.assertIn(record["candidate_path"], derivatives)
