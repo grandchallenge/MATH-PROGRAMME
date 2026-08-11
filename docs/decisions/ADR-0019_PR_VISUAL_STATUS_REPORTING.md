@@ -1,9 +1,17 @@
 # ADR-0019 — Significant-PR visual status reporting
 
-**Date:** 2026-08-10  
-**Status:** Council approved with corrections for advisory bounded pilot; Human Steward and protected admission pending  
-**Docket:** `COUNCIL-PR-VISUAL-STATUS-REPORTING-001` / issue #415  
-**Council disposition:** `PR_VISUAL_STATUS_REPORTING_APPROVED_WITH_CORRECTIONS_FOR_ADVISORY_BOUNDED_PILOT__HUMAN_STEWARD_AUTHORITY_PENDING`
+## Status
+
+**Council consensus:** `APPROVE_WITH_CORRECTIONS_FOR_BOUNDED_PILOT` on 2026-08-10.  
+**Council controlled disposition:** `PR_VISUAL_STATUS_REPORTING_APPROVED_WITH_CORRECTIONS_FOR_ADVISORY_BOUNDED_PILOT`.  
+**Human Steward disposition:** `HUMAN_STEWARD_RATIFIED_WITH_COUNCIL_CORRECTIONS__ADVISORY_BOUNDED_PILOT_AUTHORIZED`.  
+**Human Steward evidence:** PR #418 top-level comment `5250305687`, binding exact independently reviewed head `cd43118fb7d7e0477e1e3b28d8508590c07f339c`.  
+**Independent review:** `jimsteeg` review `4903838994`, `APPROVED` at that exact head.  
+**Protected admission:** PR #418 merged as `da1f9a4faec07d03795bc877390b636740882900` on 2026-08-11.  
+**Protected authority:** active only for the advisory bounded pilot, subject to binding conditions `PRVSR-C01` through `PRVSR-C10`; no programme-wide mandatory reporting or merge gate is authorized.  
+**Docket:** `COUNCIL-PR-VISUAL-STATUS-REPORTING-001` / issue #415.
+
+The complete historical Council deliberation is `docs/PR_VISUAL_STATUS_REPORTING_COUNCIL_DELIBERATION_001.md`; the machine-readable pre-ratification candidate review is `governance/pr_visual_status_reporting_council_review_candidate.json`. Those records intentionally preserve their pre-ratification recommendation state and are not the current authority surface.
 
 ## Context
 
@@ -13,7 +21,7 @@ The #407 / PR #414 namespace-hardening closure demonstrated a useful one-page vi
 
 ## Council decision
 
-Council supports an **advisory bounded pilot**, subject to corrections `PRVSR-C01` through `PRVSR-C10`.
+Council supports an **advisory bounded pilot**, subject to corrections `PRVSR-C01` through `PRVSR-C10`. The Human Steward ratified that recommendation at the exact reviewed head identified above.
 
 The report is a **derived non-authoritative documentary interface**. It must never create review, merge, mathematical, source, certification, deployment, or programme authority. Authoritative state remains in protected repository/governance records and the live GitHub objects from which the report is derived.
 
@@ -57,7 +65,7 @@ Unconstrained generative text or image output must not be the canonical source o
 
 ## Pilot boundary
 
-If authorized by the Human Steward, the pilot should cover approximately 8–12 materially different significant PRs, including governance/control-plane, administrative automation, source/claim classification, theorem/certification/formal replay, documentary migration, a blocked/changes-requested case, a moving-head stale-report adversarial case, and at least one low-complexity positive control.
+The Human Steward-authorized pilot should cover approximately 8–12 materially different significant PRs, including governance/control-plane, administrative automation, source/claim classification, theorem/certification/formal replay, documentary migration, a blocked/changes-requested case, a moving-head stale-report adversarial case, and at least one low-complexity positive control.
 
 The pilot is **advisory**. Absence or failure of the report generator is not a new merge blocker unless a later governed disposition makes it one.
 
@@ -92,15 +100,17 @@ Exact ownership and severity are recorded in `governance/pr_visual_status_report
 
 ## Authority boundary
 
-This ADR candidate does not itself:
+Protected admission of this ADR authorizes only the advisory bounded pilot described above and the separately governed work needed to discharge its binding pilot conditions. It does not itself authorize any particular implementation head or protected merge.
 
-- authorize the pilot;
-- create implementation authority;
+It does not:
+
 - require reports on any current PR;
+- make report absence or renderer failure a merge blocker;
 - modify required checks, review rules, branch protection, or merge authority;
 - make a visual report a governance authority source;
 - make visualization mathematical evidence or certification;
 - authorize programme-wide rollout;
+- authorize a mandatory reporting policy or new merge gate;
 - authorize product, deployment, release, publication, novelty, priority, patentability, or commercial claims.
 
-Protected authority remains pending explicit Human Steward exact-head disposition and protected admission.
+Any implementation package remains subject to the applicable `PRVSR-C01` through `PRVSR-C10` conditions, ordinary exact-head review and protected integration. Programme-wide mandatory adoption or merge-blocking semantics require a separate post-pilot Council and Human Steward disposition.
