@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "administrative_pilot_adjudication.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "schema_version", "adjudication_id", "control_id", "docket",
+    "pilot_review_occurrence", "pilot_boundary_utc", "status",
+    "prepared_from_protected_head", "council", "pilot_evidence",
+    "post_pilot_corroboration", "decision", "hardening",
+    "retired_stale_candidate", "historical_evidence_policy",
+    "authority_boundary", "claim_boundaries",
+    "target_terminal_state_after_protected_merge_and_receipt"
+  ],
+  "properties": {
+    "$schema": {"const": "../schemas/administrative_pilot_adjudication.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "adjudication_id": {"const": "MP-ADMIN-PILOT-ADJUDICATION-2026-08-10-001"},
+    "control_id": {"const": "MP-ADMIN-MAINT-001"},
+    "docket": {"const": 320},
+    "pilot_review_occurrence": {"const": "pilot_review:2026-08-10T01:21:00Z"},
+    "pilot_boundary_utc": {"const": "2026-08-10T01:21:00Z"},
+    "status": {"const": "PILOT_ADJUDICATION_OPTION_C__EFFECTIVE_ON_AUTHORIZED_PROTECTED_MERGE"},
+    "prepared_from_protected_head": {"const": "194630609bd57aa25788e0cbff7bd070a16fa214"},
+    "council": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["terminal_comment", "packet_state", "deliberation_protected_head", "deliberation_tree", "pilot_freeze_comment", "pilot_freeze_digest", "checkered_flag_blocker_digest", "quorum", "consensus", "recommendation", "recommendatory_only"],
+      "properties": {
+        "terminal_comment": {"const": 5235087147},
+        "packet_state": {"const": "QUORUM_ACHIEVED__CONSENSUS_OPTION_C__HUMAN_STEWARD_AUTHORITY_PENDING"},
+        "deliberation_protected_head": {"const": "839e04e1b862ffddfe5ce1d4d733ba954cd45d96"},
+        "deliberation_tree": {"const": "ac1e21d2746ad951a9aa3c747895b28f56092bf8"},
+        "pilot_freeze_comment": {"const": 5231279470},
+        "pilot_freeze_digest": {"const": "739cb95971eb7a7b24636ef6402c81a4ed03f8d63e00e2517050cad1eabc5dbd"},
+        "checkered_flag_blocker_digest": {"const": "6b5a904a1058c91a3e1e31f955d7dc28b028b7cda4af4a0cf973f2877cfd0701"},
+        "quorum": {"const": "8/8"},
+        "consensus": {"const": "UNANIMOUS"},
+        "recommendation": {"const": "RETAIN_ACCELERATION_0_1_WITH_AUTONOMY_HARDENING_CONDITIONS"},
+        "recommendatory_only": {"const": true}
+      }
+    },
+    "pilot_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["administrative_review", "deep_conformance", "freeze_reconciliation", "failure_pattern"],
+      "properties": {
+        "administrative_review": {
+          "type": "object", "additionalProperties": false,
+          "required": ["occurrence", "finalized_head", "record_pull_request", "record_merge", "record_sha256", "receipt_pull_request", "receipt_merge", "protected_before_due", "terminal_mirror_issue", "terminal_mirror_state"],
+          "properties": {
+            "occurrence": {"const": "administrative_review:2026-08-10T01:21:00Z"},
+            "finalized_head": {"const": "6afb1513c1948887568f177d290ee246f36c2746"},
+            "record_pull_request": {"const": 362},
+            "record_merge": {"const": "6dda2efea68da8e6b0ae721a5028b5a23af8caf8"},
+            "record_sha256": {"const": "b16111dfb34d6f2c27f6a257ca61c173e20d14d7984b49d675db3d86f4609cf8"},
+            "receipt_pull_request": {"const": 375},
+            "receipt_merge": {"const": "f8cf5a24028b8d3497ddcf16d8bb2b03f32d100f"},
+            "protected_before_due": {"const": true},
+            "terminal_mirror_issue": {"const": 361},
+            "terminal_mirror_state": {"const": "PROTECTED_COMPLETE_ON_TIME__MIRROR_SYNC_TIMEOUT_HISTORY_PRESERVED"}
+          }
+        },
+        "deep_conformance": {
+          "type": "object", "additionalProperties": false,
+          "required": ["reviewed_head", "record_merge", "protected_complete"],
+          "properties": {
+            "reviewed_head": {"const": "860d5537543e9c33b94bc9bc84ee5ab4aa2f091e"},
+            "record_merge": {"const": "ec604382f75d11a931d64bd776da6e05ffb322c8"},
+            "protected_complete": {"const": true}
+          }
+        },
+        "freeze_reconciliation": {
+          "type": "object", "additionalProperties": false,
+          "required": ["issue", "observed_blocker_was_real", "freeze_gate_produced_review_ready_final_record", "resolved_before_due", "terminal_state"],
+          "properties": {
+            "issue": {"const": 374},
+            "observed_blocker_was_real": {"const": true},
+            "freeze_gate_produced_review_ready_final_record": {"const": false},
+            "resolved_before_due": {"const": true},
+            "terminal_state": {"const": "RESOLVED_BEFORE_DUE__FREEZE_RECONCILIATION_BLOCKER_PRESERVED"}
+          }
+        },
+        "failure_pattern": {
+          "type": "object", "additionalProperties": false,
+          "required": ["allocator_and_queue_pressure_observed", "moving_main_reconciliation_defects_observed", "scheduler_latency_observed", "formal_replay_failures_observed", "protected_mirror_readback_timeouts_observed", "unauthorized_promotion_observed", "required_check_weakening_observed", "p0_or_p1_authority_escape_established", "fail_closed_controls_prevented_stale_or_unauthorized_promotion"],
+          "properties": {
+            "allocator_and_queue_pressure_observed": {"const": true},
+            "moving_main_reconciliation_defects_observed": {"const": true},
+            "scheduler_latency_observed": {"const": true},
+            "formal_replay_failures_observed": {"const": true},
+            "protected_mirror_readback_timeouts_observed": {"const": true},
+            "unauthorized_promotion_observed": {"const": false},
+            "required_check_weakening_observed": {"const": false},
+            "p0_or_p1_authority_escape_established": {"const": false},
+            "fail_closed_controls_prevented_stale_or_unauthorized_promotion": {"const": true}
+          }
+        }
+      }
+    },
+    "post_pilot_corroboration": {
+      "type": "object", "additionalProperties": false,
+      "required": ["classification_rule", "first_transition_occurrence", "steady_state_2033_occurrence"],
+      "properties": {
+        "classification_rule": {"const": "POST_PILOT_EVENTS_ARE_CORROBORATIVE_HARDENING_EVIDENCE_AND_NOT_RETROACTIVE_PILOT_EVENTS"},
+        "first_transition_occurrence": {
+          "type": "object", "additionalProperties": false,
+          "required": ["occurrence", "classification", "late", "record_pull_request", "record_merge", "receipt_pull_request", "receipt_merge", "terminal_state"],
+          "properties": {
+            "occurrence": {"const": "structural_sweep:2026-08-10T03:45:00Z"},
+            "classification": {"const": "POST_PILOT"},
+            "late": {"const": true},
+            "record_pull_request": {"const": 385},
+            "record_merge": {"const": "6796e55749d6a89f0aadf68274d80c74863d4a54"},
+            "receipt_pull_request": {"const": 392},
+            "receipt_merge": {"const": "1fbba68ccde0a654e676a30279eac36711cb3d28"},
+            "terminal_state": {"const": "PROTECTED_COMPLETE_LATE__TRANSITION_GAP_PRESERVED"}
+          }
+        },
+        "steady_state_2033_occurrence": {
+          "type": "object", "additionalProperties": false,
+          "required": ["occurrence", "classification", "late", "root_cause", "bounded_recovery_control_issue", "bounded_recovery_control_pull_request", "bounded_recovery_control_merge", "record_pull_request", "record_merge", "receipt_pull_request", "receipt_merge", "terminal_state"],
+          "properties": {
+            "occurrence": {"const": "structural_sweep:2026-08-10T20:33:00Z"},
+            "classification": {"const": "POST_PILOT"},
+            "late": {"const": true},
+            "root_cause": {"const": "STALE_RECEIPT_BRANCH_ENTERED_CANDIDATE_SCANNER"},
+            "bounded_recovery_control_issue": {"const": 404},
+            "bounded_recovery_control_pull_request": {"const": 405},
+            "bounded_recovery_control_merge": {"const": "f00e34ccefe38477d3d189d745cb3192200d60a0"},
+            "record_pull_request": {"const": 401},
+            "record_merge": {"const": "5d6f70b3677571ca2d812b8381ff2d11d7caab89"},
+            "receipt_pull_request": {"const": 406},
+            "receipt_merge": {"const": "194630609bd57aa25788e0cbff7bd070a16fa214"},
+            "terminal_state": {"const": "PROTECTED_COMPLETE_LATE__STRUCTURAL_2033_RUNTIME_COLLISION_PRESERVED"}
+          }
+        }
+      }
+    },
+    "decision": {
+      "type": "object", "additionalProperties": false,
+      "required": ["selected_option", "disposition", "acceleration_factor", "cadence_anchor_utc", "option_a_rejected_reason", "option_b_rejected_reason", "option_d_rejected_reason", "steady_state_successor", "successor_already_separately_protected", "this_adjudication_activates_successor", "pilot_historical_status_remains"],
+      "properties": {
+        "selected_option": {"const": "C"},
+        "disposition": {"const": "RETAIN_ACCELERATION_0_1_WITH_AUTONOMY_HARDENING_CONDITIONS"},
+        "acceleration_factor": {"const": 0.1},
+        "cadence_anchor_utc": {"const": "2026-08-01T01:21:00Z"},
+        "option_a_rejected_reason": {"const": "PILOT_EXPOSED_MULTIPLE_P2_RUNTIME_AND_RELIABILITY_DEFECTS_SO_UNCONDITIONED_RETENTION_IS_NOT_SUPPORTED"},
+        "option_b_rejected_reason": {"const": "DEFECTS_ARE_IMPLEMENTATION_AND_RELIABILITY_FAILURES_NOT_EVIDENCE_THAT_THE_ACCELERATED_CADENCE_ITSELF_IS_UNGOVERNABLE"},
+        "option_d_rejected_reason": {"const": "NO_P0_OR_P1_AUTHORITY_ESCAPE_OR_PROTECTION_WEAKENING_WAS_ESTABLISHED_AND_TERMINAL_ROUTINE_OBLIGATIONS_REACHED_PROTECTED_COMPLETION"},
+        "steady_state_successor": {"const": "MP-ADMIN-STEADY-STATE-0.1-001"},
+        "successor_already_separately_protected": {"const": true},
+        "this_adjudication_activates_successor": {"const": false},
+        "pilot_historical_status_remains": {"const": "APPROVED_ACCELERATED_PILOT"}
+      }
+    },
+    "hardening": {
+      "type": "object", "additionalProperties": false,
+      "required": ["required_conditions", "residual_open_issue", "residual_open_issue_state", "hardening_complete", "steady_state_may_continue_while_hardening_open", "hardening_noncompletion_is_not_waived"],
+      "properties": {
+        "required_conditions": {
+          "type": "array", "minItems": 8, "maxItems": 8, "uniqueItems": true,
+          "prefixItems": [
+            {"const": "AUTONOMOUS_REQUIRED_CHECK_STABILIZATION"},
+            {"const": "DETERMINISTIC_HIGH_CHURN_CANDIDATE_MAIN_RECONCILIATION"},
+            {"const": "BOUNDED_SAME_OCCURRENCE_RECOVERY_WITHOUT_CADENCE_RESET"},
+            {"const": "PROTECTED_RECEIPT_READBACK_PROVENANCE_INTEGRITY"},
+            {"const": "PROTECTED_MIRROR_PRODUCER_PROVENANCE_AND_TIMEOUT_OBSERVABILITY"},
+            {"const": "ADVERSARIAL_REPEATED_SAME_DAY_AND_MOVING_MAIN_COVERAGE"},
+            {"const": "SCHEDULER_AND_DELIVERY_LATENCY_OBSERVABILITY"},
+            {"const": "NO_REQUIRED_CHECK_OR_EXACT_HEAD_GATE_WEAKENING"}
+          ],
+          "items": false
+        },
+        "residual_open_issue": {"const": 407},
+        "residual_open_issue_state": {"const": "OPEN_HARDENING_OBLIGATION__NO_AUTHORITY_CREATED"},
+        "hardening_complete": {"const": false},
+        "steady_state_may_continue_while_hardening_open": {"const": true},
+        "hardening_noncompletion_is_not_waived": {"const": true}
+      }
+    },
+    "retired_stale_candidate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["issue", "pull_request", "candidate_head", "candidate_is_authority", "pull_request_merged", "terminal_state"],
+      "properties": {
+        "issue": {"const": 335},
+        "pull_request": {"const": 336},
+        "candidate_head": {"const": "22beffc5425c77de76ba66f47a47c54361c07aec"},
+        "candidate_is_authority": {"const": false},
+        "pull_request_merged": {"const": false},
+        "terminal_state": {"const": "SUPERSEDED_NONAUTHORITATIVE_STALE_CANDIDATE__FRESH_320_ADJUDICATION_REQUIRED"}
+      }
+    },
+    "historical_evidence_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["preserve_pilot_failures", "preserve_post_pilot_failures", "preserve_lateness", "preserve_freeze_blocker", "preserve_mirror_timeouts", "preserve_failed_closed_attempts", "eventual_recovery_rewrites_failure", "post_pilot_events_reclassified_as_pilot_events"],
+      "properties": {
+        "preserve_pilot_failures": {"const": true},
+        "preserve_post_pilot_failures": {"const": true},
+        "preserve_lateness": {"const": true},
+        "preserve_freeze_blocker": {"const": true},
+        "preserve_mirror_timeouts": {"const": true},
+        "preserve_failed_closed_attempts": {"const": true},
+        "eventual_recovery_rewrites_failure": {"const": false},
+        "post_pilot_events_reclassified_as_pilot_events": {"const": false}
+      }
+    },
+    "authority_boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["council_packet_is_binding_human_steward_authority", "human_steward_exact_head_authorization_required", "stale_candidate_336_is_authority", "future_control_plane_changes_pre_authorized", "hardening_issue_407_is_implementation_authority", "waiver_created", "emergency_authority_created", "direct_protected_push_authorized", "required_checks_weakened", "referee_separation_weakened"],
+      "properties": {
+        "council_packet_is_binding_human_steward_authority": {"const": false},
+        "human_steward_exact_head_authorization_required": {"const": true},
+        "stale_candidate_336_is_authority": {"const": false},
+        "future_control_plane_changes_pre_authorized": {"const": false},
+        "hardening_issue_407_is_implementation_authority": {"const": false},
+        "waiver_created": {"const": false},
+        "emergency_authority_created": {"const": false},
+        "direct_protected_push_authorized": {"const": false},
+        "required_checks_weakened": {"const": false},
+        "referee_separation_weakened": {"const": false}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mathematical_target_proved", "campaign_admitted", "source_verified", "certificate_issued", "external_claim_authorized", "novelty_claim_authorized", "priority_claim_authorized", "publication_authorized", "patentability_claim_authorized", "deployment_authorized", "product_or_release_authorized", "commercial_authority_created"],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "campaign_admitted": {"const": false},
+        "source_verified": {"const": false},
+        "certificate_issued": {"const": false},
+        "external_claim_authorized": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "priority_claim_authorized": {"const": false},
+        "publication_authorized": {"const": false},
+        "patentability_claim_authorized": {"const": false},
+        "deployment_authorized": {"const": false},
+        "product_or_release_authorized": {"const": false},
+        "commercial_authority_created": {"const": false}
+      }
+    },
+    "target_terminal_state_after_protected_merge_and_receipt": {"const": "PILOT_ADJUDICATED_OPTION_C__RETAIN_0_1_WITH_HARDENING_CONDITIONS"}
+  }
+}
