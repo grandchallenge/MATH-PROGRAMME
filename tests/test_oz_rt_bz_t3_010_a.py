@@ -33,12 +33,29 @@ class T3010AContractTests(unittest.TestCase):
         self.assertEqual(producer.coordinate_activation(2), (False, False, False, True))
         self.assertEqual(producer.coordinate_activation(3), (False, False, False, False))
 
+        # Ordinary factors are algebraically restricted on shell strata.
+        ordinary = {(((1, 1, 0, 0), 1),): producer.Q(1)}
+        self.assertEqual(
+            producer.specialize_rat(ordinary, 1, None),
+            {(((2, 0, 0, 1), 1),): producer.Q(1)},
+        )
+        ordinary_zero_numerator = {(((1, -1, 0, 0), 1),): producer.Q(1)}
+        self.assertEqual(producer.specialize_rat(ordinary_zero_numerator, 0, None), {})
+        ordinary_zero_denominator = {(((1, -1, 0, 0), -1),): producer.Q(1)}
+        with self.assertRaisesRegex(AssertionError, "ordinary denominator pole"):
+            producer.specialize_rat(ordinary_zero_denominator, 0, None)
+
+        # Only protected tagged reciprocals receive pinv zero semantics.
+        protected = {(((producer.pcl.PINV_TAG, 1, -1, 0, 0), -1),): producer.Q(1)}
+        self.assertEqual(producer.specialize_rat(protected, 0, None), {})
+
         result = producer.build()
         self.assertEqual(
             result["mathematical_predecessor"]["coefficient_layer_sha256"],
             contract["mathematical_predecessor"]["coefficient_layer_sha256"],
         )
         self.assertEqual(result["pinv_semantics"], "pinv_r(x)=x^(-r) for integer x>0 and 0 for integer x<=0")
+        self.assertIn("every ordinary affine rational factor is exactly substituted", result["shell_restriction_semantics"])
         self.assertEqual(result["shell_stratum_count"], 25)
         self.assertEqual(result["interior_stratum_count"], 1)
         self.assertEqual(result["moving_boundary_or_shell_stratum_count"], 24)
@@ -50,12 +67,17 @@ class T3010AContractTests(unittest.TestCase):
         self.assertIn("Preserve k/l orientation", result["oriented_letter_policy"])
         self.assertEqual(result["shell_recombination"]["status"], "EXACT_PIECEWISE_PARTITION_COMPLETE")
         self.assertFalse(result["shell_recombination"]["full_correction_layer_recombined"])
+        self.assertEqual(
+            result["forcing_support_summary"]["active_cell_count"] + result["forcing_support_summary"]["zero_cell_count"],
+            400,
+        )
         self.assertTrue(all(not p["correction_candidate_admitted"] for p in result["forcing_support_rank_probes"]))
 
         replay = verifier.verify(result)
         self.assertEqual(replay["status"], "INDEPENDENT_T3_010_A_REPLAY_COMPLETE")
         self.assertEqual(replay["forcing_support_rank_cells_verified"], 400)
         self.assertEqual(replay["exact_coefficient_mirror_strata_verified"], 25)
+        self.assertEqual(replay["forcing_support_summary"], result["forcing_support_summary"])
         self.assertEqual(replay["l1_policy_verified"], "exact_coefficient_mirror_only")
 
         self.assertFalse(result["finite_sampling_used_as_sum_proof"])
