@@ -52,7 +52,7 @@ noncomputable def finiteSmallFreeCoordinateInclusion
 canonical finite `Pi`/`Finsupp` equivalence pointwise. -/
 lemma finiteCoefficientFamilyFreeIso_hom_apply
     (X : FintypeCat.{u}) (S : CompHaus.{u}ᵒᵖ)
-    (a : X.obj → LocallyConstant (unop S) R) (s : unop S) :
+    (a : X.obj → LocallyConstant S.unop R) (s : ↑S.unop.toTop) :
     ((ConcreteCategory.hom ((finiteCoefficientFamilyFreeIso X).hom.app S)) a) s =
       (Finsupp.linearEquivFunOnFinite R R X.obj).symm (fun y => a y s) := by
   rfl
@@ -60,7 +60,7 @@ lemma finiteCoefficientFamilyFreeIso_hom_apply
 /-- Sectionwise action of a free coordinate inclusion is the canonical `Finsupp.single`. -/
 lemma finiteSmallFreeCoordinateInclusion_apply
     (X : FintypeCat.{u}) (x : X.obj) (S : CompHaus.{u}ᵒᵖ)
-    (h : LocallyConstant (unop S) R) (s : unop S) :
+    (h : LocallyConstant S.unop R) (s : ↑S.unop.toTop) :
     ((ConcreteCategory.hom ((finiteSmallFreeCoordinateInclusion X x).app S)) h) s =
       Finsupp.single x (h s) := by
   rfl
@@ -72,7 +72,7 @@ lemma finiteCoordinateInclusion_freeIso
       finiteSmallFreeCoordinateInclusion X x := by
   classical
   ext S h
-  let h' : LocallyConstant (unop S) R := h
+  let h' : LocallyConstant S.unop R := h
   apply LocallyConstant.ext
   intro s
   rw [finiteSmallFreeCoordinateInclusion_apply X x S h' s]
