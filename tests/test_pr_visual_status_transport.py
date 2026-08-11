@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 import tempfile
@@ -164,34 +165,7 @@ class PRVisualStatusTransportTests(unittest.TestCase):
         self.assertEqual("STALE", receipt["operative_state"])
         self.assertEqual("STALE", receipt["freshness"])
 
-    def test_transport_comment_uses_full_sha_digest_and_advisory_boundary(self) -> None:
-        bundle = transport.build_archive_bundle(
-            base_report(),
-            target_head_before=HEAD,
-            target_head_after=HEAD,
-        )
-        receipt = json.loads(bundle["receipt.json"])
-        comment = transport.render_pr_comment(receipt)
-        self.assertIn(HEAD, comment)
-        self.assertIn(receipt["source_snapshot_sha256"], comment)
-        self.assertIn(receipt["archive_dir"], comment)
-        self.assertIn("derived, advisory", comment)
-        self.assertIn("target PR head was not modified", comment)
-
-    def test_tampered_receipt_cannot_reach_comment_transport(self) -> None:
-        bundle = transport.build_archive_bundle(
-            base_report(),
-            target_head_before=HEAD,
-            target_head_after=HEAD,
-        )
-        receipt = json.loads(bundle["receipt.json"])
-        receipt["target_pr_head_mutated"] = True
-        with self.assertRaisesRegex(
-            transport.TransportError, "non-mutating target invariant"
-        ):
-            transport.render_pr_comment(receipt)
-
-    def test_tampered_artifact_fails_verification(self) -> None:
+    def test_transport_comment_requires_verified_bundle(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             bundle_dir = transport.write_archive_bundle(
                 base_report(),
@@ -199,8 +173,72 @@ class PRVisualStatusTransportTests(unittest.TestCase):
                 target_head_before=HEAD,
                 target_head_after=HEAD,
             )
-            (bundle_dir / "report.txt").write_text("tampered\n", encoding="utf-8")
-            with self.assertRaisesRegex(transport.TransportError, "digest mismatch"):
+            receipt = transport.verify_archive_bundle(bundle_dir)
+            comment = transport.render_verified_pr_comment(bundle_dir)
+            self.assertIn(HEAD, comment)
+            self.assertIn(receipt["source_snapshot_sha256"], comment)
+            self.assertIn(receipt["archive_dir"], comment)
+            self.assertIn("derived, advisory", comment)
+            self.assertIn("target PR head was not modified", comment)
+
+    def test_tampered_receipt_state_cannot_reach_comment_transport(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            bundle_dir = transport.write_archive_bundle(
+                base_report(),
+                Path(tmp),
+                target_head_before=HEAD,
+                target_head_after=HEAD,
+            )
+            receipt_path = bundle_dir / "receipt.json"
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            receipt["operative_state"] = "PROTECTED_COMPLETE"
+            receipt_path.write_text(
+                json.dumps(receipt, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(transport.TransportError, "operative state"):
+                transport.render_verified_pr_comment(bundle_dir)
+
+    def test_tampered_derivative_and_updated_hash_still_fail(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            bundle_dir = transport.write_archive_bundle(
+                base_report(),
+                Path(tmp),
+                target_head_before=HEAD,
+                target_head_after=HEAD,
+            )
+            tampered = b"fabricated green derivative\n"
+            (bundle_dir / "report.txt").write_bytes(tampered)
+            receipt_path = bundle_dir / "receipt.json"
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            receipt["artifacts"]["report.txt"]["sha256"] = hashlib.sha256(
+                tampered
+            ).hexdigest()
+            receipt_path.write_text(
+                json.dumps(receipt, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(
+                transport.TransportError, "not deterministic source derivative"
+            ):
+                transport.verify_archive_bundle(bundle_dir)
+
+    def test_tampered_artifact_path_fails_verification(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            bundle_dir = transport.write_archive_bundle(
+                base_report(),
+                Path(tmp),
+                target_head_before=HEAD,
+                target_head_after=HEAD,
+            )
+            receipt_path = bundle_dir / "receipt.json"
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            receipt["artifacts"]["report.svg"]["path"] = "elsewhere/report.svg"
+            receipt_path.write_text(
+                json.dumps(receipt, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(transport.TransportError, "artifact path"):
                 transport.verify_archive_bundle(bundle_dir)
 
     def test_unsafe_report_id_cannot_escape_archive_root(self) -> None:
