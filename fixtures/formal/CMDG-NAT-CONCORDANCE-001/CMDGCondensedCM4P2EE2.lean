@@ -2,6 +2,7 @@ import CMDGCondensedCM4P2EE1
 import Mathlib.Condensed.Discrete.Characterization
 import Mathlib.CategoryTheory.Monoidal.Closed.Braided
 import Mathlib.CategoryTheory.Limits.Opposites
+import Mathlib.CategoryTheory.Sites.Limits
 import Mathlib.Topology.Category.Profinite.Extend
 import Mathlib.CategoryTheory.Functor.KanExtension.Pointwise
 
@@ -266,6 +267,77 @@ noncomputable def measurePresheafFunctorMapConeIsLimit (S : Profinite.{u}) :
       (CMDG.CondensedCM4P2D.measurePresheafFunctor.mapCone S.asLimitCone))
       (hdual.ofIsoLimit (finiteQuotientMeasureConeIso S))
 
+/-- Forget a condensed `R`-module to its underlying presheaf. The functor is fully faithful and
+therefore reflects limits. -/
+noncomputable abbrev condensedModuleToPresheaf : CondensedMod.{u} R ⥤ PresheafModule :=
+  sheafToPresheaf (coherentTopology CompHaus.{u}) (ModuleCat.{u + 1} R)
+
+/-- The protected P2-D measure functor preserves the canonical finite-quotient limit after lifting
+from the presheaf calculation to condensed modules. -/
+noncomputable def measureFunctorMapConeIsLimit (S : Profinite.{u}) :
+    IsLimit (CMDG.CondensedCM4P2D.measureFunctor.mapCone S.asLimitCone) := by
+  apply isLimitOfReflects condensedModuleToPresheaf
+  change IsLimit
+    (CMDG.CondensedCM4P2D.measurePresheafFunctor.mapCone S.asLimitCone)
+  exact measurePresheafFunctorMapConeIsLimit S
+
+/-- Extend the finite-quotient limit to the full structured-arrow diagram of finite quotients. -/
+noncomputable def measureFunctorStructuredArrowIsLimit (S : Profinite.{u}) :
+    IsLimit (Profinite.Extend.cone CMDG.CondensedCM4P2D.measureFunctor S) :=
+  Profinite.Extend.isLimitCone S.asLimitCone CMDG.CondensedCM4P2D.measureFunctor
+    S.asLimit (measureFunctorMapConeIsLimit S)
+
+/-- The right-extension object whose counit is exactly the certified E1 finite comparison. -/
+noncomputable def measureRightExtension :
+    Functor.RightExtension FintypeCat.toProfinite (Condensed.finFree R) :=
+  Functor.RightExtension.mk CMDG.CondensedCM4P2D.measureFunctor
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.hom
+
+/-- Whisker the certified E1 comparison over the structured-arrow finite diagram. -/
+noncomputable def structuredArrowFiniteComparisonIso (S : Profinite.{u}) :
+    StructuredArrow.proj S FintypeCat.toProfinite ⋙
+        (FintypeCat.toProfinite ⋙ CMDG.CondensedCM4P2D.measureFunctor) ≅
+      StructuredArrow.proj S FintypeCat.toProfinite ⋙ Condensed.finFree R :=
+  Functor.isoWhiskerLeft
+    (StructuredArrow.proj S FintypeCat.toProfinite)
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso
+
+/-- Pulling the pointwise right-extension cone back across E1 recovers exactly the structured-arrow
+measure cone. -/
+noncomputable def structuredArrowMeasureConeIso (S : Profinite.{u}) :
+    Profinite.Extend.cone CMDG.CondensedCM4P2D.measureFunctor S ≅
+      (Cone.postcompose (structuredArrowFiniteComparisonIso S).inv).obj
+        (measureRightExtension.coneAt S) :=
+  Cone.ext (Iso.refl _) (by
+    intro j
+    simp [measureRightExtension, structuredArrowFiniteComparisonIso])
+
+/-- E2 pointwise form: at every profinite set the E1-counit right-extension cone is limiting. -/
+noncomputable def measureRightExtensionIsPointwiseAt (S : Profinite.{u}) :
+    measureRightExtension.IsPointwiseRightKanExtensionAt S := by
+  have hpost :
+      IsLimit
+        ((Cone.postcompose (structuredArrowFiniteComparisonIso S).inv).obj
+          (measureRightExtension.coneAt S)) :=
+    (measureFunctorStructuredArrowIsLimit S).ofIsoLimit
+      (structuredArrowMeasureConeIso S)
+  exact
+    (IsLimit.postcomposeInvEquiv
+      (structuredArrowFiniteComparisonIso S)
+      (measureRightExtension.coneAt S)) hpost
+
+/-- E2 pointwise certificate. -/
+noncomputable def measureRightExtensionIsPointwise :
+    measureRightExtension.IsPointwiseRightKanExtension :=
+  fun S => measureRightExtensionIsPointwiseAt S
+
+/-- E2 ordinary form: the protected P2-D measure functor is a right Kan extension of the pinned
+finite-free functor along `FintypeCat.toProfinite`, using the certified E1 comparison as counit. -/
+noncomputable def measureFunctorIsRightKanExtension :
+    CMDG.CondensedCM4P2D.measureFunctor.IsRightKanExtension
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.hom :=
+  measureRightExtensionIsPointwise.isRightKanExtension
+
 #check continuousFunctionsIsColimit
 #check discreteContinuousCondensedMappedIsColimit
 #check locallyConstantSwap
@@ -279,6 +351,14 @@ noncomputable def measurePresheafFunctorMapConeIsLimit (S : Profinite.{u}) :
 #check finiteQuotientMeasureDiagramIso
 #check finiteQuotientMeasureConeIso
 #check measurePresheafFunctorMapConeIsLimit
+#check measureFunctorMapConeIsLimit
+#check measureFunctorStructuredArrowIsLimit
+#check measureRightExtension
+#check structuredArrowFiniteComparisonIso
+#check structuredArrowMeasureConeIso
+#check measureRightExtensionIsPointwiseAt
+#check measureRightExtensionIsPointwise
+#check measureFunctorIsRightKanExtension
 
 #print axioms continuousFunctionsIsColimit
 #print axioms discreteContinuousCondensedMappedIsColimit
@@ -293,5 +373,13 @@ noncomputable def measurePresheafFunctorMapConeIsLimit (S : Profinite.{u}) :
 #print axioms finiteQuotientMeasureDiagramIso
 #print axioms finiteQuotientMeasureConeIso
 #print axioms measurePresheafFunctorMapConeIsLimit
+#print axioms measureFunctorMapConeIsLimit
+#print axioms measureFunctorStructuredArrowIsLimit
+#print axioms measureRightExtension
+#print axioms structuredArrowFiniteComparisonIso
+#print axioms structuredArrowMeasureConeIso
+#print axioms measureRightExtensionIsPointwiseAt
+#print axioms measureRightExtensionIsPointwise
+#print axioms measureFunctorIsRightKanExtension
 
 end CMDG.CondensedCM4P2E.RightKanReconstruction
