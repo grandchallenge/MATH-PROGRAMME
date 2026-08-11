@@ -155,7 +155,6 @@ noncomputable def transposedContinuousFunctionsNatIso (T : CompHaus.{u}) :
       apply LocallyConstant.ext
       intro s
       simp only [Functor.comp_map]
-      rw [locallyConstantSwap_apply, locallyConstantSwap_apply]
       rfl)
 
 /-- The transposed objectwise source is a finite-quotient filtered colimit. -/
@@ -187,8 +186,13 @@ noncomputable def discreteContinuousPresheafIsColimit (S : Profinite.{u}) :
         S.asLimitCone.op) := by
   apply evaluationJointlyReflectsColimits
   intro T
-  simpa [discreteContinuousPresheafAt] using
-    (discreteContinuousPresheafAtIsColimit T.unop S)
+  let E :=
+    (evaluation (CompHaus.{u}ᵒᵖ) (ModuleCat.{u + 1} R)).obj T
+  have h := discreteContinuousPresheafAtIsColimit T.unop S
+  exact h.ofIsoColimit
+    (Functor.mapCoconeMapCocone
+      (H := CMDG.CondensedCM4P2D.discreteContinuousPresheaf)
+      (H' := E) S.asLimitCone.op).symm
 
 #check continuousFunctionsIsColimit
 #check discreteContinuousCondensedMappedIsColimit
