@@ -38,12 +38,16 @@ class T3010AContractTests(unittest.TestCase):
             result["mathematical_predecessor"]["coefficient_layer_sha256"],
             contract["mathematical_predecessor"]["coefficient_layer_sha256"],
         )
+        self.assertEqual(result["pinv_semantics"], "pinv_r(x)=x^(-r) for integer x>0 and 0 for integer x<=0")
         self.assertEqual(result["shell_stratum_count"], 25)
         self.assertEqual(result["interior_stratum_count"], 1)
         self.assertEqual(result["moving_boundary_or_shell_stratum_count"], 24)
         self.assertEqual(result["harmonic_block_sizes"], [5, 4, 2, 2])
         self.assertEqual(result["independent_probe_cell_count"], 400)
         self.assertEqual(result["mirrored_l1_cell_count"], 100)
+        self.assertEqual(result["channel_manifest"]["exact_mirror_strata_verified"], 25)
+        self.assertTrue(all(x["exact_equal"] for x in result["channel_manifest"]["mirror_checks"]))
+        self.assertIn("Preserve k/l orientation", result["oriented_letter_policy"])
         self.assertEqual(result["shell_recombination"]["status"], "EXACT_PIECEWISE_PARTITION_COMPLETE")
         self.assertFalse(result["shell_recombination"]["full_correction_layer_recombined"])
         self.assertTrue(all(not p["correction_candidate_admitted"] for p in result["forcing_support_rank_probes"]))
@@ -51,7 +55,8 @@ class T3010AContractTests(unittest.TestCase):
         replay = verifier.verify(result)
         self.assertEqual(replay["status"], "INDEPENDENT_T3_010_A_REPLAY_COMPLETE")
         self.assertEqual(replay["forcing_support_rank_cells_verified"], 400)
-        self.assertEqual(replay["l1_policy_verified"], "mirror_only")
+        self.assertEqual(replay["exact_coefficient_mirror_strata_verified"], 25)
+        self.assertEqual(replay["l1_policy_verified"], "exact_coefficient_mirror_only")
 
         self.assertFalse(result["finite_sampling_used_as_sum_proof"])
         self.assertFalse(result["residual_sum_zero_proved"])
