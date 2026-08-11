@@ -5,31 +5,31 @@
   const plateActivations = {
     union_closed: {
       '../../assets/documentaries/union_closed/plate_garden.svg': {
-        src: '../../assets/documentaries/union_closed/plate_garden_v2.svg',
+        src: '../../assets/visual_pedagogy/batch1/union_closed/plate_garden.svg',
         alt: 'Exact six-set union-closed family arranged by inclusion, with a frequency ledger showing a in four sets, b in three, c in two, and the half threshold at three.',
         title: 'The Garden That Closes',
         note: 'An exact six-set family makes closure, frequencies, and the half-threshold witness question visible.'
       },
       '../../assets/documentaries/union_closed/plate_frequency.svg': {
-        src: '../../assets/documentaries/union_closed/plate_frequency_v2.svg',
+        src: '../../assets/visual_pedagogy/batch1/union_closed/plate_frequency.svg',
         alt: 'Frequency bars and a six-row incidence matrix show counts four, three, and two against a half threshold of three; column and row-size sums both equal nine.',
         title: 'The Half-Way Balance',
         note: 'Exact incidence counts expose the half threshold and the double-count identity.'
       },
       '../../assets/documentaries/union_closed/plate_lattice.svg': {
-        src: '../../assets/documentaries/union_closed/plate_lattice_v2.svg',
+        src: '../../assets/visual_pedagogy/batch1/union_closed/plate_lattice.svg',
         alt: 'Six-set join-semilattice under inclusion with join equal to union; {a}, {b}, and {a,c} are marked join-irreducible and two exact joins are written.',
         title: 'The Lattice Mirror',
         note: 'Join is union in one exact finite example; general translation theorems retain their hypotheses.'
       },
       '../../assets/documentaries/union_closed/plate_entropy.svg': {
-        src: '../../assets/documentaries/union_closed/plate_entropy_v2.svg',
+        src: '../../assets/visual_pedagogy/batch1/union_closed/plate_entropy.svg',
         alt: 'Uniform random set from the six-set family has marginals two thirds, one half, and one third; independent copies have union marginals eight ninths, three quarters, and five ninths, with a guardrail separating the example from source-specific entropy theorems.',
         title: 'The Entropy Bridge',
         note: 'An exact independent-copy calculation illustrates the entropy terrain without claiming the universal one-half theorem.'
       },
       '../../assets/documentaries/union_closed/plate_frontier.svg': {
-        src: '../../assets/documentaries/union_closed/plate_frontier_v2.svg',
+        src: '../../assets/visual_pedagogy/batch1/union_closed/plate_frontier.svg',
         alt: 'Status map places elementary, bounded exact, imported positive-bound, and formal structural results below a dashed line labeled open universal boundary one half.',
         title: 'Islands of Theorem',
         note: 'Established partial terrain remains visibly below the open universal one-half boundary.'
@@ -37,7 +37,7 @@
     },
     bsd: {
       '../../assets/documentaries/bsd/plate_curve.svg': {
-        src: '../../assets/documentaries/bsd/plate_curve_v2.png',
+        src: '../../assets/visual_pedagogy/batch1/bsd/plate_curve.png',
         alt: 'An exact real plot of E5, y squared equals x cubed minus 25x, marks P equals 25 over 4 comma 75 over 8 and is paired with a right triangle whose exact rational sides give area five.',
         title: 'A Rational Point Opens a Door',
         note: 'The point and area-five triangle are exact; the finite plot is not a rank computation or a proof of BSD.'
