@@ -180,8 +180,8 @@ noncomputable def finiteCoefficientFamilyCovariantFreeNatIso :
         _ = finiteCoordinateInclusion Y (f x) ≫
               (finiteCoefficientFamilyFreeIso Y).hom := by
               rw [finiteCoordinateInclusion_covariant_map]
-        _ = finiteSmallFreeCoordinateInclusion Y (f x) :=
-              finiteCoordinateInclusion_freeIso Y (f x)
+        _ = finiteSmallFreeCoordinateInclusion Y (f x) := by
+              rfl
         _ = finiteSmallFreeCoordinateInclusion X x ≫
               finiteSmallFreePresheafFunctor.map f :=
               (finiteSmallFreeCoordinateInclusion_naturality f x).symm
