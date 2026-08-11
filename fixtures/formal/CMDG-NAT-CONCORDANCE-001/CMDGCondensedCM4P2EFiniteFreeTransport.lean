@@ -73,15 +73,27 @@ lemma finitePiFinsuppSymm_apply
     ((Finsupp.linearEquivFunOnFinite R R X.obj).symm v) y = v y := by
   rw [Finsupp.linearEquivFunOnFinite_symm_apply]
 
-/-- Pointwise action of the canonical coefficient-family coordinate inclusion. -/
-lemma finiteCoordinateInclusion_apply
-    (X : FintypeCat.{u}) (x y : X.obj) (S : CompHaus.{u}ᵒᵖ)
+/-- The canonical coefficient-family coordinate has its input section in its own coordinate. -/
+lemma finiteCoordinateInclusion_apply_self
+    (X : FintypeCat.{u}) (x : X.obj) (S : CompHaus.{u}ᵒᵖ)
     (h : LocallyConstant S.unop R) (s : ↑S.unop.toTop) :
     let a : X.obj → LocallyConstant S.unop R :=
       (ConcreteCategory.hom ((finiteCoordinateInclusion X x).app S)) h
-    a y s = if y = x then h s else 0 := by
+    a x s = h s := by
   classical
-  rfl
+  change (if x = x then h else 0) s = h s
+  simp
+
+/-- Off the chosen coordinate, the canonical coefficient-family coordinate is zero. -/
+lemma finiteCoordinateInclusion_apply_ne
+    (X : FintypeCat.{u}) {x y : X.obj} (hy : y ≠ x) (S : CompHaus.{u}ᵒᵖ)
+    (h : LocallyConstant S.unop R) (s : ↑S.unop.toTop) :
+    let a : X.obj → LocallyConstant S.unop R :=
+      (ConcreteCategory.hom ((finiteCoordinateInclusion X x).app S)) h
+    a y s = 0 := by
+  classical
+  change (if y = x then h else 0) s = 0
+  simp [hy]
 
 /-- The family/free comparison sends the canonical coordinate inclusion to `Finsupp.single`. -/
 lemma finiteCoordinateInclusion_freeIso
@@ -109,11 +121,12 @@ lemma finiteCoordinateInclusion_freeIso
   apply Finsupp.ext
   intro y
   rw [finitePiFinsuppSymm_apply X _ y]
-  rw [finiteCoordinateInclusion_apply X x y S h' s]
   by_cases hy : y = x
   · subst y
+    rw [finiteCoordinateInclusion_apply_self X x S h' s]
     simp
-  · simp [hy]
+  · rw [finiteCoordinateInclusion_apply_ne X hy S h' s]
+    simp [hy]
 
 #check finiteSmallFreePresheafFunctor
 #check finiteCoefficientFamilyFreeIso
@@ -122,7 +135,8 @@ lemma finiteCoordinateInclusion_freeIso
 #check finiteCoefficientFamilyFreeIso_hom_apply
 #check finiteSmallFreeCoordinateInclusion_apply
 #check finitePiFinsuppSymm_apply
-#check finiteCoordinateInclusion_apply
+#check finiteCoordinateInclusion_apply_self
+#check finiteCoordinateInclusion_apply_ne
 #check finiteCoordinateInclusion_freeIso
 
 #print axioms finiteCoefficientFamilyFreeIso
@@ -131,7 +145,8 @@ lemma finiteCoordinateInclusion_freeIso
 #print axioms finiteCoefficientFamilyFreeIso_hom_apply
 #print axioms finiteSmallFreeCoordinateInclusion_apply
 #print axioms finitePiFinsuppSymm_apply
-#print axioms finiteCoordinateInclusion_apply
+#print axioms finiteCoordinateInclusion_apply_self
+#print axioms finiteCoordinateInclusion_apply_ne
 #print axioms finiteCoordinateInclusion_freeIso
 
 end CMDG.CondensedCM4P2E.FiniteDualTransport
