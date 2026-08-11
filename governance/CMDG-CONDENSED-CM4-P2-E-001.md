@@ -6,8 +6,8 @@ This operation is restricted to **CM4-P2-E**: construct a machine-replayable nat
 between the protected P2-D canonical measure/dual functor and the pinned
 `Condensed.profiniteSolid` functor.
 
-The P2-D predecessor is now protected authority. This operation therefore begins from the exact
-protected merge rather than from the pre-merge P2-D candidate.
+The P2-D predecessor is protected authority. This operation begins from its exact protected merge
+rather than from the pre-merge P2-D candidate.
 
 ## Programme semantic boundary — representation versus reconstruction
 
@@ -72,7 +72,7 @@ availability into P2-E availability without discharging E1, E2, and E3 below.
 
 ## Frozen theorem targets
 
-The Stage-A fixture freezes, without proving, the two exact natural-isomorphism targets:
+The Stage-A fixture freezes the two exact natural-isomorphism targets:
 
 ```lean
 FintypeCat.toProfinite ⋙ measureFunctor ≅ Condensed.finFree R
@@ -153,13 +153,13 @@ Material declarations:
 - `CMDG.CondensedCM4P2D.measureFunctor`
 - `CMDG.CondensedCM4P2D.dualityHomEquiv`
 
-These are now protected inputs. P2-E may use them directly; it may not replace them by a
-chosen-basis product model.
+These are protected inputs. P2-E uses them directly; it does not replace them by a chosen-basis
+product model.
 
 ## Mathematical decomposition
 
-The natural equivalence is not a single opaque step. The exact-tree audit resolves it into two
-constructive obligations followed by a formally available uniqueness step.
+The natural equivalence is not a single opaque step. The Stage-A exact-tree audit resolved it into
+two constructive obligations followed by a formally available uniqueness step.
 
 ### E1 — canonical finite comparison
 
@@ -167,10 +167,33 @@ For finite `X`, construct naturally in `X` the evaluation/Kronecker identificati
 dual of `C(X,R)` and the finite free module on `X`, and transport that identification through the
 protected condensed-module realization.
 
-This must be canonical. No Nöbeling basis enters because a finite set already carries its
-canonical delta generators.
+State: `CERTIFIED`.
 
-State: `OPEN_CONSTRUCTION`.
+The terminal declaration is
+
+```lean
+finiteComparisonNatIso :
+  FintypeCat.toProfinite ⋙ CMDG.CondensedCM4P2D.measureFunctor ≅
+    Condensed.finFree R
+```
+
+The construction is basis-free and proceeds through the certified finite delta generators,
+finite-family/internal-Hom naturality, canonical pushforward, finite-family-to-`Finsupp`
+naturality, sheaf lifting through the full subcategory, locally-constant/discrete comparison, and
+the canonical `ULift` domain transport for finite free modules.
+
+Exact certification evidence:
+
+- pre-synchronization theorem head: `2ef30acd056ca8e6cab36e963a82c3a1f5d1b71c`;
+- pre-synchronization dedicated run: `31457027769` — success;
+- synchronized exact head: `a7ab8c2fc26bc1c8e9d62f184d7779c8a48e14f8`;
+- synchronized dedicated run: `31457490712` — success;
+- synchronized head is zero commits behind protected `main` at `170395009fcdf8114621c321624d78a4384b6237`;
+- declaration-level axiom dependencies remain `[propext, Classical.choice, Quot.sound]`;
+- fail-closed source guard rejects `sorry`, local axioms, and Nöbeling/chosen-basis substitutes.
+
+E1 is comparison data, not an inference from duality alone. Its certification does not establish
+the global P2-E equivalence.
 
 ### E2 — measure functor as right Kan extension
 
@@ -184,22 +207,27 @@ the pointwise-to-universal theorem.
 
 State: `OPEN_CONSTRUCTION`.
 
+This is now the sole remaining constructive obligation from the Stage-A comparison audit.
+
 ### E3 — canonical uniqueness
 
-Transport the finite source along E1 and apply `rightKanExtensionUniqueOfIso` (or the
+Transport the finite source along certified E1 and apply `rightKanExtensionUniqueOfIso` (or the
 identity-source specialization `rightKanExtensionUnique`) to E2 and the pinned
 `profiniteSolid` extension.
 
-State: `FORMALLY_AVAILABLE` once E1 and E2 are discharged.
+State: `FORMALLY_AVAILABLE` once E2 is discharged.
 
 ## Audit result
 
-`FORMAL_ROUTE_REACHABLE_WITH_TWO_CONSTRUCTION_OBLIGATIONS`
+The historical Stage-A audit result remains
 
-This is not a characterized blocker. The pinned tree contains the universal-property machinery
-needed for the comparison. The remaining work is constructive proof work inside P2-E.
+`FORMAL_ROUTE_REACHABLE_WITH_TWO_CONSTRUCTION_OBLIGATIONS`.
 
-It is also not a theorem-completion claim. At this stage neither E1 nor E2 has been discharged.
+That result records the route as audited before construction began. E1 has now been discharged by
+machine replay. E2 remains the one open constructive obligation; E3 remains the formally available
+uniqueness step downstream of E2.
+
+This is still not a P2-E theorem-completion claim.
 
 ## Fail-closed substitutions
 
@@ -235,5 +263,5 @@ This stage does **not** establish:
 - CM5;
 - global CMDG completeness.
 
-The next implementation step inside this same operation is E1: construct and replay the canonical
-finite-level natural comparison, then E2, then E3.
+The next mathematically distinct implementation step is E2: certify the protected measure functor
+as the right Kan extension of its now-certified finite restriction. E3 may follow only after E2.

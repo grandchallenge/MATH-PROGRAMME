@@ -13,6 +13,7 @@ RECORD = ROOT / "governance/cmdg_condensed_cm4_p2_e_001.json"
 SCHEMA = ROOT / "schemas/cmdg_condensed_cm4_p2_e.schema.json"
 REPORT = ROOT / "governance/CMDG-CONDENSED-CM4-P2-E-001.md"
 LEAN = ROOT / "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2E.lean"
+E1_LEAN = ROOT / "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EE1.lean"
 
 EXPECTED_BASE = "839e04e1b862ffddfe5ce1d4d733ba954cd45d96"
 EXPECTED_BASE_TREE = "ac1e21d2746ad951a9aa3c747895b28f56092bf8"
@@ -24,6 +25,8 @@ EXPECTED_POLICY = 31342558852
 EXPECTED_CONFORMANCE = 31342559115
 EXPECTED_MATHLIB = "79d0395a1825a6264ad5d269e35e60537518955e"
 EXPECTED_MATHLIB_TREE = "d76f5e09b832a08949f6d8ad4fb80ce30527da64"
+EXPECTED_E1_SYNC_HEAD = "a7ab8c2fc26bc1c8e9d62f184d7779c8a48e14f8"
+EXPECTED_E1_REPLAY = 31457490712
 
 EXPECTED_SOURCES = {
     "Mathlib/Condensed/Solid.lean": "f5214433f91ee87fc8fbe7e2746e0bd227faed2a",
@@ -125,11 +128,15 @@ def validate(data=None):
     assert target["variance"] == "COVARIANT_PROFINITE_NATURAL_ISO"
 
     arch = record["proof_architecture"]
-    assert arch["finite_level_comparison"]["state"] == "OPEN_CONSTRUCTION"
+    assert arch["finite_level_comparison"]["state"] == "CERTIFIED"
     assert arch["measure_right_kan_extension"]["state"] == "OPEN_CONSTRUCTION"
     assert arch["kan_extension_uniqueness"]["state"] == "FORMALLY_AVAILABLE"
-    assert "comparison data, not an inference from duality alone" in \
-        arch["finite_level_comparison"]["requirement"]
+    e1_requirement = arch["finite_level_comparison"]["requirement"]
+    assert "E1 CERTIFIED" in e1_requirement
+    assert "finiteComparisonNatIso" in e1_requirement
+    assert EXPECTED_E1_SYNC_HEAD in e1_requirement
+    assert str(EXPECTED_E1_REPLAY) in e1_requirement
+    assert "comparison data, not an inference from duality alone" in e1_requirement
     assert "P2-D REPRESENTATION" in arch["measure_right_kan_extension"]["requirement"]
     assert "P2-E RECONSTRUCTION/EQUIVALENCE" in arch["kan_extension_uniqueness"]["requirement"]
 
@@ -162,10 +169,19 @@ def validate(data=None):
     ):
         assert token in lean
 
-    assert not re.search(r"(?m)^\s*(sorry|axiom)(\s|$)", lean)
-    assert "LocallyConstant.freeOfProfinite" not in lean
-    assert "Nobeling" not in lean
-    assert "Nöbeling" not in lean
+    e1 = E1_LEAN.read_text(encoding="utf-8")
+    assert "noncomputable def finiteComparisonNatIso" in e1
+    assert "CMDG.CondensedCM4P2E.FiniteComparisonTarget" in e1
+    assert "FintypeCat.toProfinite ⋙ CMDG.CondensedCM4P2D.measureFunctor ≅" in e1
+    assert "Condensed.finFree R" in e1
+    assert "finiteMeasureSmallFreeCondensedNatIso" in e1
+    assert "finiteSmallFreeDiscreteULiftNatIso" in e1
+
+    for source in (lean, e1):
+        assert not re.search(r"(?m)^\s*(sorry|axiom)(\s|$)", source)
+        assert "LocallyConstant.freeOfProfinite" not in source
+        assert "Nobeling" not in source
+        assert "Nöbeling" not in source
 
     report = REPORT.read_text(encoding="utf-8")
     for token in (
@@ -175,6 +191,10 @@ def validate(data=None):
         "duality does not imply reconstruction",
         "FORMAL_ROUTE_REACHABLE_WITH_TWO_CONSTRUCTION_OBLIGATIONS",
         "E1 — canonical finite comparison",
+        "State: `CERTIFIED`",
+        "finiteComparisonNatIso",
+        EXPECTED_E1_SYNC_HEAD,
+        str(EXPECTED_E1_REPLAY),
         "E2 — measure functor as right Kan extension",
         "E3 — canonical uniqueness",
         "P2_E_COMPARISON_AUDIT_COMPLETE_RECONSTRUCTION_ACTIVE",
