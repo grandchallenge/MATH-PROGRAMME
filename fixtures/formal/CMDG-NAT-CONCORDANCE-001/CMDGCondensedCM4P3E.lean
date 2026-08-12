@@ -62,21 +62,8 @@ noncomputable def finiteCoefficientFamilyLift
     (s : Fan (fun _ : X.obj => CMDG.CondensedCM4P3D.coefficientObject.{u})) :
     s.pt ⟶ finiteCoefficientFamilyCondensed X :=
   ObjectProperty.homMk
-    { app := fun S => ModuleCat.ofHom
-        { toFun := fun a x => (s.proj x).hom.app S a
-          map_add' := by
-            intro a b
-            funext x
-            change
-              (ConcreteCategory.hom ((s.proj x).hom.app S)) (a + b) =
-                (ConcreteCategory.hom ((s.proj x).hom.app S)) a +
-                  (ConcreteCategory.hom ((s.proj x).hom.app S)) b
-            exact (ConcreteCategory.hom ((s.proj x).hom.app S)).map_add a b
-          map_smul' := by
-            intro r a
-            funext x
-            simpa only [Pi.smul_apply, RingHom.id_apply] using
-              (ConcreteCategory.hom ((s.proj x).hom.app S)).map_smul r a }
+    { app := fun S => ModuleCat.ofHom <|
+        LinearMap.pi fun x => ConcreteCategory.hom ((s.proj x).hom.app S)
       naturality := by
         intro S T f
         apply ModuleCat.hom_ext
