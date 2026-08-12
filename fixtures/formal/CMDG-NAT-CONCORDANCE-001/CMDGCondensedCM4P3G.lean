@@ -65,6 +65,11 @@ theorem lowerHomSectionsEquiv_precomp {X Y : Profinite.{u}}
       ((Condensed.forget R).obj coefficientObject).obj.map
         ((profiniteToCompHaus).map q).op (lowerHomSectionsEquiv Y g) := by
   rw [lowerHomSectionsEquiv_apply X, lowerHomSectionsEquiv_apply Y]
+  have hfree :
+      (Condensed.profiniteFree R).map q =
+        (Condensed.free R).map ((profiniteToCondensed).map q) := by
+    rfl
+  rw [hfree]
   rw [(Condensed.freeForgetAdjunction R).homEquiv_naturality_left]
   simpa [GrothendieckTopology.uliftYoneda, profiniteToCondensed,
     compHausToCondensed, compHausToCondensed', Condensed.ulift, Functor.comp_map] using
