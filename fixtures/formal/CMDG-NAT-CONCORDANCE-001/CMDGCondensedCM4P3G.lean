@@ -172,11 +172,11 @@ theorem coefficient_homPrecomp_surjective (X : Profinite.{u}) :
 theorem locallyConstant_free_liftedInt (X : Profinite.{u}) :
     Module.Free R (LocallyConstant X R) := by
   let e : ℤ ≃+* R := ULift.ringEquiv.symm
-  letI : RingHomInvPair e.toRingHom e.symm.toRingHom :=
+  letI : RingHomInvPair (e : ℤ →+* R) (e.symm : R →+* ℤ) :=
     RingHomInvPair.of_ringEquiv e
-  letI : RingHomInvPair e.symm.toRingHom e.toRingHom :=
-    RingHomInvPair.symm e.toRingHom e.symm.toRingHom
-  let E : LocallyConstant X ℤ ≃ₛₗ[e.toRingHom] LocallyConstant X R :=
+  letI : RingHomInvPair (e.symm : R →+* ℤ) (e : ℤ →+* R) :=
+    RingHomInvPair.of_ringEquiv_symm e
+  let E : LocallyConstant X ℤ ≃ₛₗ[(e : ℤ →+* R)] LocallyConstant X R :=
     { (LocallyConstant.congrRightRingEquiv (X := X) e).toAddEquiv with
       map_smul' := by
         intro r f
