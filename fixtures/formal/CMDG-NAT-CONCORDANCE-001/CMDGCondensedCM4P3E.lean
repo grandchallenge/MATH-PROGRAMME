@@ -74,7 +74,7 @@ noncomputable def finiteCoefficientFamilyLift
           (ConcreteCategory.hom ((s.proj x).hom.app T))
               ((ConcreteCategory.hom (s.pt.obj.map f)) a) =
             (ConcreteCategory.hom
-                (CMDG.CondensedCM4P2D.coefficientPresheaf.map f))
+                (CMDG.CondensedCM4P3D.coefficientObject.{u}.obj.map f))
               ((ConcreteCategory.hom ((s.proj x).hom.app S)) a)
         have h := congrArg (fun q => (ConcreteCategory.hom q) a)
           ((s.proj x).hom.naturality f)
