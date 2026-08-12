@@ -1,15 +1,25 @@
 {
   "protocol_id": "PRVSR-C10-MEASUREMENT-PROTOCOL-001",
   "pilot_id": "PR-VISUAL-STATUS-REPORTING-001",
-  "status": "READY_FOR_EXECUTION__NO_RESULTS_YET",
+  "status": "SUPERSEDED_AS_CRITICAL_PATH_REQUIREMENT__OPTIONAL_FOLLOWUP",
   "authority": {
     "adr": "ADR-0019",
     "execution_docket": 426,
     "scope": "advisory bounded pilot measurement only",
     "propagation_authority_created": false
   },
-  "purpose": "Close the direct-measurement gaps identified by PRVSR-C10-EVAL-001 without substituting approval latency, workflow duration, or mechanical renderer correctness for human reviewer performance.",
+  "scope_correction": {
+    "authority": "Human Steward",
+    "issue": 442,
+    "documentary_comment": 5262225521,
+    "disposition": "DIRECT_HUMAN_MEASUREMENT_REQUIREMENT_OVERRIDDEN__CLOSED_NOT_PLANNED",
+    "critical_path_required": false,
+    "rule": "The direct-human crossover experiment is retained as an optional follow-up design, not a prerequisite to PRVSR-C10 completion or pilot adjudication. No missing human result may be fabricated or inferred from proxy observations."
+  },
+  "purpose": "Retain the original direct-measurement design and the completed regeneration benchmark while preserving the Human Steward correction that direct-human crossover measurement is not on the critical path.",
   "human_review_experiment": {
+    "execution_state": "OPTIONAL_DEFERRED__NOT_EXECUTED",
+    "critical_path_required": false,
     "target_metrics": [
       "reviewer_time_to_operative_state",
       "factual_state_identification_accuracy",
@@ -26,7 +36,7 @@
       "PRVSR-P07",
       "PRVSR-P08"
     ],
-    "minimum_independent_reviewers": 2,
+    "minimum_independent_reviewers_if_executed": 2,
     "design": "balanced crossover without repeated exposure to the same case by the same reviewer",
     "conditions": [
       {
@@ -38,7 +48,7 @@
         "surface": "authoritative PR/governance source records without the retained visual-status report"
       }
     ],
-    "assignment_rule": "Randomize case order per reviewer and balance each case across REPORT_FIRST and SOURCE_ONLY_CONTROL across reviewers.",
+    "assignment_rule": "If later executed, randomize case order per reviewer and balance each case across REPORT_FIRST and SOURCE_ONLY_CONTROL across reviewers.",
     "task_questions": [
       "What is the operative repository lifecycle state?",
       "What exact head or historical head is the state bound to?",
@@ -62,7 +72,7 @@
       "preference": "secondary descriptive metric only; never substitutes for accuracy or time"
     },
     "retention": {
-      "required_fields": [
+      "required_fields_if_executed": [
         "reviewer_pseudonymous_id",
         "case_id",
         "condition",
@@ -77,6 +87,7 @@
     }
   },
   "regeneration_latency_benchmark": {
+    "execution_state": "PROTECTED_ADMITTED",
     "target_metric": "regeneration_latency",
     "unit": "milliseconds",
     "scope": "isolated deterministic canonical-report derivation plus text/SVG regeneration; exclude GitHub network latency and whole-repository CI fanout",
@@ -98,15 +109,16 @@
       "generation CPU/wall time from isolated benchmark",
       "number of repository artifacts",
       "number of PR/comment transport operations",
-      "reviewer time by experimental condition"
+      "reviewer time by experimental condition if the optional human experiment is later executed"
     ],
-    "rule": "Keep storage, compute, transport, and human-review costs distinct rather than reporting a single blended number."
+    "rule": "Keep storage, compute, transport, and any later human-review costs distinct rather than reporting a single blended number."
   },
-  "completion_rule": "The protocol is complete only when the direct human metrics and isolated regeneration-latency result are retained with provenance and the C10 evaluation is updated. Completion does not itself discharge C10 or authorize propagation.",
+  "completion_rule": "For the bounded pilot, C10 may advance to independent pilot adjudication with the direct-human metrics explicitly NOT_DIRECTLY_OBSERVED under Human Steward scope correction. The optional human experiment may be executed later but is not a prerequisite. No proxy or synthetic dataset may be promoted to a direct human measurement.",
   "nonclaims": [
     "This protocol contains no human-study results.",
+    "Issue #442 was closed not_planned by Human Steward scope correction; no second dataset is claimed.",
     "This protocol does not make report-first review mandatory.",
     "This protocol does not create a merge gate or propagation authority.",
-    "A later independent Referee/pilot adjudication remains required after measurement."
+    "Independent pilot adjudication remains required after C10 documentary reconciliation."
   ]
 }
