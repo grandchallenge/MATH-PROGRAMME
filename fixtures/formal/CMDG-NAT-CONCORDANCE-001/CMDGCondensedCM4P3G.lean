@@ -7,8 +7,9 @@ import Mathlib.Topology.Category.Profinite.AsLimit
 # CMDG CM4-P3-G — coefficient finite-stage mapping-out attack
 
 This fixture attacks the single coefficient-object residual left by protected P3-D.
-The current exact-head bisection retains the machine-certified lower-Hom naturality
-and adds only the canonical finite quotient projection and its surjectivity.
+It retains the machine-certified lower-Hom naturality, identifies the canonical finite
+quotient projections, and proves that every lower/free-side coefficient morphism factors
+through one finite quotient. No coefficient solidity or solid-side mapping-out theorem is assumed.
 -/
 
 namespace CMDG.CondensedCM4P3G
@@ -87,6 +88,17 @@ theorem finiteQuotientMap_surjective (X : Profinite.{u}) (j : DiscreteQuotient X
   change Function.Surjective j.proj
   exact j.proj_surjective
 
+/-- Every lower/free-side coefficient morphism already factors through one finite quotient. -/
+theorem lowerHom_factors_finite (X : Profinite.{u}) (g : LowerHom X) :
+    ∃ (j : DiscreteQuotient X) (gQ : LowerHom (X.diagram.obj j)),
+      g = (Condensed.profiniteFree R).map (finiteQuotientMap X j) ≫ gQ := by
+  obtain ⟨j, fQ, hf⟩ :=
+    Profinite.exists_locallyConstant X.asLimitCone X.asLimit (lowerHomEquiv X g)
+  refine ⟨j, (lowerHomEquiv (X.diagram.obj j)).symm fQ, ?_⟩
+  apply (lowerHomEquiv X).injective
+  rw [lowerHomEquiv_precomp]
+  simpa [finiteQuotientMap] using hf
+
 @[reassoc]
 theorem finiteSolidification_counit (Q : FintypeCat.{u}) :
     (Condensed.profiniteSolidification R).app (FintypeCat.toProfinite.obj Q) ≫
@@ -102,10 +114,12 @@ theorem finiteSolidification_counit (Q : FintypeCat.{u}) :
 #check lowerHomEquiv_precomp
 #check finiteQuotientMap
 #check finiteQuotientMap_surjective
+#check lowerHom_factors_finite
 #check finiteSolidification_counit
 
 #print axioms lowerHomEquiv_precomp
 #print axioms finiteQuotientMap_surjective
+#print axioms lowerHom_factors_finite
 #print axioms finiteSolidification_counit
 
 end CMDG.CondensedCM4P3G
