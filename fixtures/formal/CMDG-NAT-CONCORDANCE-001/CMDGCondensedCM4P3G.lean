@@ -10,6 +10,9 @@ This fixture attacks the single coefficient-object residual left by protected P3
 It starts from the machine-certified lower-Hom identification, then certifies the
 naturality needed for finite-quotient factorization. No coefficient solidity or
 injectivity theorem is assumed.
+
+The present head is an intentional compiler-bisection probe: G0 plus lower-Hom
+naturality plus the already-certified finite-stage right-Kan triangle only.
 -/
 
 namespace CMDG.CondensedCM4P3G
