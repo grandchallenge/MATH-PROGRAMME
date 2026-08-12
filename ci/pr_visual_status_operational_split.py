@@ -7,6 +7,8 @@ import json
 import os
 import re
 import sys
+import urllib.error
+import urllib.request
 from pathlib import Path
 from typing import Any
 
@@ -16,18 +18,56 @@ import pr_visual_status_policy as policy
 import pr_visual_status_transport as transport
 
 
+class PublicReadClient:
+    """Unauthenticated GET-only client for public-repository fallback reads."""
+
+    def __init__(self, api: str = "https://api.github.com"):
+        self.api = api.rstrip("/")
+
+    def get(self, path: str) -> Any:
+        req = urllib.request.Request(
+            self.api + path,
+            method="GET",
+            headers={
+                "Accept": "application/vnd.github+json",
+                "X-GitHub-Api-Version": "2022-11-28",
+                "User-Agent": "gcl-prvsr-public-read-fallback",
+            },
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=60) as response:
+                body = response.read()
+                return json.loads(body) if body else None
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode(errors="replace")
+            raise AutonomyError(f"GET {path} failed: {exc.code} {detail}") from exc
+
+
 class SplitCredentialClient:
     """Route reads and writes through least-authority credentials."""
 
-    def __init__(self, source: Client, administration: Client, publisher: Client | None):
+    def __init__(
+        self,
+        source: Client,
+        administration: Client,
+        publisher: Client | None,
+        public_read: PublicReadClient | None = None,
+    ):
         self.source = source
         self.administration = administration
         self.publisher = publisher
+        self.public_read = public_read or PublicReadClient()
 
     def get(self, path: str) -> Any:
         if "/rulesets" in path:
             return self.administration.get(path)
-        return self.source.get(path)
+        try:
+            return self.source.get(path)
+        except AutonomyError as exc:
+            text = str(exc)
+            if " 403 " not in text and " 404 " not in text:
+                raise
+            return self.public_read.get(path)
 
     def post(self, path: str, payload: dict[str, Any]) -> Any:
         if self.publisher is None:
