@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 RECORD = ROOT / "governance/visual_pedagogy/batch1_live_switch.json"
 RUNTIME = ROOT / "docs/javascripts/documentary.js"
+GARDEN_CORRECTION = ROOT / "governance/visual_pedagogy/garden_live_correction_r2.json"
 REVIEW_REF = "https://github.com/grandchallenge/MATH-PROGRAMME/issues/429#issuecomment-5252274813"
 
 
@@ -18,6 +19,11 @@ class VisualPedagogyBatch1LiveSwitchTests(unittest.TestCase):
     def setUpClass(cls):
         cls.data = json.loads(RECORD.read_text(encoding="utf-8"))
         cls.runtime = RUNTIME.read_text(encoding="utf-8")
+        cls.superseded_runtime_refs = {}
+        if GARDEN_CORRECTION.is_file():
+            correction = json.loads(GARDEN_CORRECTION.read_text(encoding="utf-8"))
+            if correction.get("state") == "LIVE_CORRECTION_CANDIDATE__NO_MERGE_AUTHORITY":
+                cls.superseded_runtime_refs["UC-GARDEN-PLATE-I"] = correction["activation"]["r2_runtime_reference"]
 
     def test_batch1_live_switch_is_exact_and_review_bound(self):
         data = self.data
@@ -59,7 +65,12 @@ class VisualPedagogyBatch1LiveSwitchTests(unittest.TestCase):
             self.assertEqual(sha256(live), plate["reviewed_digest"])
 
             self.assertEqual(self.runtime.count(repr(plate["source_reference"])), 1)
-            self.assertEqual(self.runtime.count(repr(plate["live_reference"])), 1)
+            current_ref = self.superseded_runtime_refs.get(plate["plate_id"])
+            if current_ref is None:
+                self.assertEqual(self.runtime.count(repr(plate["live_reference"])), 1)
+            else:
+                self.assertEqual(self.runtime.count(repr(plate["live_reference"])), 0)
+                self.assertEqual(self.runtime.count(repr(current_ref)), 1)
 
             contract_path = (
                 ROOT / "governance/visual_pedagogy/plates" / f"{plate['plate_id']}.json"
