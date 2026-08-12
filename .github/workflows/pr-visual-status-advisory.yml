@@ -36,11 +36,6 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     environment: release-trust
-    permissions:
-      checks: read
-      contents: read
-      issues: read
-      pull-requests: read
     steps:
       - name: Mint bounded PRVSR publisher token
         id: publisher-token
