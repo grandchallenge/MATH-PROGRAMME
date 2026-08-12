@@ -89,6 +89,9 @@ def validate(data=None):
         assert rows[path]["blob"] == blob
         assert rows[path]["classification"] == classification
         assert rows[path]["declarations"]
+    assert set(rows["Mathlib/Algebra/Homology/DerivedCategory/Ext/Basic.lean"]["declarations"]) == {
+        "CategoryTheory.Abelian.Ext", "CategoryTheory.HasExt"
+    }
     assert len(audit["not_found_in_bounded_audit"]) >= 6
 
     route = record["route_assessment"]
@@ -112,6 +115,7 @@ def validate(data=None):
 
     lean = LEAN.read_text(encoding="utf-8")
     required = (
+        "CategoryTheory.HasExt",
         "CategoryTheory.Abelian.Ext.subsingleton_of_injective",
         "CategoryTheory.Abelian.Ext.subsingleton_of_projective",
         "CategoryTheory.hasExt_of_enoughInjectives",
