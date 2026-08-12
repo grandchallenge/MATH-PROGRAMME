@@ -2,6 +2,7 @@ import CMDGCondensedCM4P3D
 import Mathlib.Condensed.Discrete.Colimit
 import Mathlib.CategoryTheory.Sites.Subcanonical
 import Mathlib.Topology.Category.Profinite.AsLimit
+import Mathlib.Topology.Category.Profinite.Nobeling.Induction
 
 /-!
 # CMDG CM4-P3-G — coefficient finite-stage mapping-out attack
@@ -167,6 +168,22 @@ theorem coefficient_homPrecomp_surjective (X : Profinite.{u}) :
   rw [finiteStageExtension_precomp]
   exact hg.symm
 
+/-- Nöbeling freeness transported from integral coefficients to the exact lifted coefficient ring. -/
+theorem locallyConstant_free_liftedInt (X : Profinite.{u}) :
+    Module.Free R (LocallyConstant X R) := by
+  let e : ℤ ≃+* R := ULift.ringEquiv.symm
+  letI : RingHomInvPair e.toRingHom e.symm.toRingHom :=
+    RingHomInvPair.of_ringEquiv e
+  letI : RingHomInvPair e.symm.toRingHom e.toRingHom :=
+    RingHomInvPair.symm e.toRingHom e.symm.toRingHom
+  let E : LocallyConstant X ℤ ≃ₛₗ[e.toRingHom] LocallyConstant X R :=
+    { (LocallyConstant.congrRightRingEquiv (X := X) e).toAddEquiv with
+      map_smul' := by
+        intro r f
+        ext x
+        exact e.map_mul r (f x) }
+  exact Module.Free.of_equiv E
+
 /-- A locally constant map on a Boolean product is determined at the all-true point by its
 finite-coordinate truncations. -/
 theorem locallyConstant_boolPi_allTrue_of_finsetPiecewise
@@ -317,6 +334,7 @@ theorem coefficientFiniteStageMappingOut_iff_isSolid :
 #check finiteSolidification_counit
 #check finiteStageExtension_precomp
 #check coefficient_homPrecomp_surjective
+#check locallyConstant_free_liftedInt
 #check locallyConstant_boolPi_allTrue_of_finsetPiecewise
 #check coefficientPointProbeMap
 #check coefficient_hom_ext_point
@@ -334,6 +352,7 @@ theorem coefficientFiniteStageMappingOut_iff_isSolid :
 #print axioms finiteSolidification_counit
 #print axioms finiteStageExtension_precomp
 #print axioms coefficient_homPrecomp_surjective
+#print axioms locallyConstant_free_liftedInt
 #print axioms locallyConstant_boolPi_allTrue_of_finsetPiecewise
 #print axioms coefficient_hom_ext_point
 #print axioms coefficientFiniteStageMappingOut_iff_injectivity
