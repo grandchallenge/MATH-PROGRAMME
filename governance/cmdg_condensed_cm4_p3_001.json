@@ -1,0 +1,165 @@
+{
+  "operation_id": "CMDG-CONDENSED-CM4-P3-001",
+  "parent_operation_id": "CMDG-CONDENSED-CM4-001",
+  "parent_issue": 355,
+  "issue": 448,
+  "implementation_pr": 453,
+  "repository_baseline": "bc2eb8757a89cfee96f57d724480d9deb9135b4a",
+  "repository_baseline_tree": "49f7fd4c6a10e6067139f01ea6437400100dae71",
+  "protected_predecessor": {
+    "operation": "CMDG-CONDENSED-CM4-001",
+    "issue": 355,
+    "reconciliation_pr": 451,
+    "reviewed_head": "24b7a9084c4a753176fd0ba7ab91145e6bdd9022",
+    "protected_merge": "bc2eb8757a89cfee96f57d724480d9deb9135b4a",
+    "protected_tree": "49f7fd4c6a10e6067139f01ea6437400100dae71",
+    "p3_selected": true,
+    "protected_p2_receipt": {
+      "operation": "CMDG-CONDENSED-CM4-P2-001",
+      "issue": 363,
+      "reconciliation_pr": 443,
+      "reviewed_head": "36d29b4dea3b3049016e3a7277923cb37a7579f4",
+      "protected_merge": "2abad244b57ab148184b3033524b7ec636cb7c7f",
+      "protected_tree": "6c8c6ba86306571ed75294977842af8b3beeb245",
+      "protected_replay_run": 31549886295,
+      "terminal_readback": "CM4_P2_PROTECTED_CLOSED",
+      "p2_closed": true
+    }
+  },
+  "environment": {
+    "lean_image": "leanprover/lean4:v4.33.0-rc1",
+    "lean_commit": "62eed1db4d67327ec8120be05f1a1b0847d74561",
+    "mathlib_commit": "79d0395a1825a6264ad5d269e35e60537518955e",
+    "mathlib_tree": "d76f5e09b832a08949f6d8ad4fb80ce30527da64",
+    "coefficient_ring": "ULift.{u + 1} Z"
+  },
+  "exact_tree_audit": {
+    "result": "BLOCKER_NARROWED_TO_PROFINITE_DISCRETE_ACYCLICITY_OR_CERTIFIED_UNDERIVED_REDUCTION",
+    "observed_sources": [
+      {
+        "path": "Mathlib/Algebra/Homology/DerivedCategory/Ext/Basic.lean",
+        "blob": "2ee4d31030b25e6886bf6884046b33727385e0d3",
+        "classification": "AVAILABLE_GENERIC_EXT",
+        "declarations": ["CategoryTheory.Abelian.Ext", "CategoryTheory.Abelian.HasExt"]
+      },
+      {
+        "path": "Mathlib/Algebra/Homology/DerivedCategory/Ext/EnoughInjectives.lean",
+        "blob": "d7b9f8c1a97059c57b9902e5e5e910310c863777",
+        "classification": "AVAILABLE_INJECTIVE_VANISHING",
+        "declarations": ["CategoryTheory.Abelian.Ext.eq_zero_of_injective", "CategoryTheory.Abelian.Ext.subsingleton_of_injective", "CategoryTheory.hasExt_of_enoughInjectives"]
+      },
+      {
+        "path": "Mathlib/Algebra/Homology/DerivedCategory/Ext/EnoughProjectives.lean",
+        "blob": "2dc52050bd2d7dc83315085de972962ca79522ed",
+        "classification": "AVAILABLE_PROJECTIVE_VANISHING",
+        "declarations": ["CategoryTheory.Abelian.Ext.eq_zero_of_projective", "CategoryTheory.Abelian.Ext.subsingleton_of_projective"]
+      },
+      {
+        "path": "Mathlib/CategoryTheory/Sites/Abelian.lean",
+        "blob": "d5250edfc56c2d79c7dae942fe0ab1e8a93ac707",
+        "classification": "AVAILABLE_SHEAF_ABELIAN_STRUCTURE",
+        "declarations": ["CategoryTheory.sheafIsAbelian", "CategoryTheory.presheafToSheaf_additive"]
+      },
+      {
+        "path": "Mathlib/CategoryTheory/Sites/GlobalSections.lean",
+        "blob": "9d1bb0ed58be3f99e96ba5ddaf8a33abdd9a72d7",
+        "classification": "AVAILABLE_GLOBAL_SECTIONS_RIGHT_ADJOINT",
+        "declarations": ["CategoryTheory.Sheaf.Γ", "CategoryTheory.Sheaf.ΓNatIsoSheafSections", "CategoryTheory.Sheaf.ΓNatIsoLim", "CategoryTheory.Sheaf.isLimitConeΓ"]
+      },
+      {
+        "path": "Mathlib/CategoryTheory/Sites/SheafCohomology/Basic.lean",
+        "blob": "c2f49b4e071c5e5e30b7a7aaaa1fc2656d4ef7e5",
+        "classification": "AVAILABLE_SHEAF_COHOMOLOGY_AS_EXT",
+        "declarations": ["CategoryTheory.Sheaf.H", "CategoryTheory.Sheaf.cohomologyPresheaf", "CategoryTheory.Sheaf.H'"]
+      },
+      {
+        "path": "Mathlib/CategoryTheory/Sites/SheafCohomology/Cech.lean",
+        "blob": "fa984791594387b9f3e2e435f88390e21e83ea1b",
+        "classification": "AVAILABLE_CECH_COMPLEX_INFRASTRUCTURE",
+        "declarations": ["CategoryTheory.Limits.FormalCoproduct.cochainComplexFunctor", "CategoryTheory.cechComplexFunctor"]
+      },
+      {
+        "path": "Mathlib/Condensed/Discrete/Module.lean",
+        "blob": "b3ba358aa6b01b2de4cfedf6480ac22e863241d3",
+        "classification": "AVAILABLE_DISCRETE_LOCALLY_CONSTANT_MODEL",
+        "declarations": ["CondensedMod.LocallyConstant.functor", "CondensedMod.LocallyConstant.functorIsoDiscrete", "CondensedMod.LocallyConstant.adjunction"]
+      },
+      {
+        "path": "Mathlib/Condensed/Discrete/Characterization.lean",
+        "blob": "50046d821d15f9eb651d6b1dc91a3df94f951c79",
+        "classification": "AVAILABLE_DISCRETE_CHARACTERIZATION",
+        "declarations": ["CondensedMod.isDiscrete_tfae"]
+      },
+      {
+        "path": "Mathlib/Condensed/Epi.lean",
+        "blob": "566eb699008b5158d79c743317383b4b9de6455d",
+        "classification": "AVAILABLE_ORDINARY_CONDENSED_EPI",
+        "declarations": ["CondensedMod.epi_iff_locallySurjective_on_compHaus", "CondensedMod.epi_iff_surjective_on_stonean"]
+      },
+      {
+        "path": "Mathlib/CategoryTheory/Preadditive/Projective/Internal.lean",
+        "blob": "ee04c3c01d315f763caca98563b19079c625fd76",
+        "classification": "AVAILABLE_GENERIC_INTERNAL_PROJECTIVITY",
+        "declarations": ["CategoryTheory.InternallyProjective"]
+      },
+      {
+        "path": "Mathlib/Condensed/Light/InternallyProjective.lean",
+        "blob": "91b0b495e708368b0d5f58bb2865490d18d90657",
+        "classification": "AVAILABLE_LIGHT_CONDENSED_ANALOGUE_ONLY",
+        "declarations": ["LightCondensed.internallyProjective_iff_tensor_condition"]
+      },
+      {
+        "path": "Mathlib/Topology/Category/Profinite/Projective.lean",
+        "blob": "4a0091b41978cc737b5e7c3455570628a37ac361",
+        "classification": "AVAILABLE_PROFINITE_ENOUGH_PROJECTIVES",
+        "declarations": ["Profinite.projective_ultrafilter", "Profinite.projectivePresentation"]
+      },
+      {
+        "path": "Mathlib/Topology/Separation/Profinite.lean",
+        "blob": "1bc259a4f9b82065f51d4c7f5d3c6fd7396ef122",
+        "classification": "AVAILABLE_CLOPEN_REFINEMENT",
+        "declarations": ["isTopologicalBasis_isClopen", "exists_clopen_partition_of_clopen_cover"]
+      }
+    ],
+    "not_found_in_bounded_audit": [
+      "higher Sheaf.H' vanishing for arbitrary profinite S with the required discrete integral coefficient object",
+      "injectivity or other acyclicity of the required discrete integral coefficient sheaf sufficient to invoke available injective-Ext vanishing",
+      "projectivity of the free abelian sheaf representing evaluation at arbitrary profinite S",
+      "ordinary CondensedMod specialization turning internal projectivity into the required CM4 vanishing",
+      "Cech-to-derived comparison plus zero-dimensional acyclicity theorem sufficient for the target",
+      "complete machine-level P2 measure-model reduction directly to CondensedMod.IsSolid"
+    ]
+  },
+  "route_assessment": {
+    "source_path": "PARTIAL_INFRASTRUCTURE_AVAILABLE_BLOCKING_SPECIALIZATION_MISSING",
+    "p2_underived_bypass": "NOT_ESTABLISHED",
+    "light_condensed_analogue_is_authority": false,
+    "absence_of_condensed_derived_directory_is_blocker": false
+  },
+  "stage_result": {
+    "p3_state": "BLOCKING",
+    "audit_complete": true,
+    "p3_theorem_certified": false,
+    "p3_nonblocking_bypass_certified": false,
+    "candidate_disposition": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  },
+  "reopening_condition": "Construct or locate, at the exact pin, a machine-checked profinite/discrete acyclicity theorem composable with CM4, or certify a complete underived reduction from protected P2-E to the actual CondensedMod.IsSolid solidification-precomposition isomorphism.",
+  "claim_boundary": {
+    "p3_available": false,
+    "p3_nonblocking_source_auxiliary": false,
+    "p4_available": false,
+    "p5_available": false,
+    "p6_available": false,
+    "cm4_theorem_certified": false,
+    "derived_complex_form_certified": false,
+    "arbitrary_ring_generalization_certified": false,
+    "c04_broadened": false,
+    "c06_discharged": false,
+    "graph_certified": false,
+    "dependency_minimality_claim": false,
+    "dependency_uniqueness_claim": false,
+    "cm5_authorized": false,
+    "global_cmdg_completeness_claim": false
+  },
+  "disposition": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+}
