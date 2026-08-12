@@ -23,6 +23,7 @@ namespace CMDG.CondensedCM4P3G
 universe u
 
 open CategoryTheory Limits Opposite
+open scoped Topology
 
 abbrev R := CMDG.CondensedCM4P3D.R.{u}
 
@@ -166,6 +167,24 @@ theorem coefficient_homPrecomp_surjective (X : Profinite.{u}) :
   rw [finiteStageExtension_precomp]
   exact hg.symm
 
+/-- A locally constant map on a Boolean product is determined at the all-true point by its
+finite-coordinate truncations. -/
+theorem locallyConstant_boolPi_allTrue_of_finsetPiecewise
+    {ι β : Type*} [DecidableEq ι]
+    (f : LocallyConstant (ι → Bool) β) (c : β)
+    (h : ∀ I : Finset ι,
+      f (I.piecewise (fun _ => true) (fun _ => false)) = c) :
+    f (fun _ => true) = c := by
+  have hs :
+      {x : ι → Bool | f x = f (fun _ => true)} ∈ 𝓝 (fun _ => true) :=
+    f.isLocallyConstant.eventually_eq (fun _ => true)
+  obtain ⟨I, hI⟩ :=
+    exists_finset_piecewise_mem_of_mem_nhds hs (fun _ => false)
+  change
+    f (I.piecewise (fun _ => true) (fun _ => false)) =
+      f (fun _ => true) at hI
+  exact hI.symm.trans (h I)
+
 /-- The exact remaining mathematical boundary: every solid-side coefficient morphism is already
 visible at one finite discrete quotient stage. This proposition is deliberately not asserted. -/
 def CoefficientFiniteStageMappingOut : Prop :=
@@ -253,6 +272,7 @@ theorem coefficientFiniteStageMappingOut_iff_isSolid :
 #check finiteSolidification_counit
 #check finiteStageExtension_precomp
 #check coefficient_homPrecomp_surjective
+#check locallyConstant_boolPi_allTrue_of_finsetPiecewise
 #check CoefficientFiniteStageMappingOut
 #check CoefficientMappingOutInjectivity
 #check coefficientFiniteStageMappingOut_iff_injectivity
@@ -267,6 +287,7 @@ theorem coefficientFiniteStageMappingOut_iff_isSolid :
 #print axioms finiteSolidification_counit
 #print axioms finiteStageExtension_precomp
 #print axioms coefficient_homPrecomp_surjective
+#print axioms locallyConstant_boolPi_allTrue_of_finsetPiecewise
 #print axioms coefficientFiniteStageMappingOut_iff_injectivity
 #print axioms coefficientResidualHomTheorem_iff_injectivity
 #print axioms coefficientFiniteStageMappingOut_iff_isSolid
