@@ -40,7 +40,8 @@ noncomputable def lowerHomSectionsEquiv (X : Profinite.{u}) :
   change
     (((Condensed.free R).obj ((profiniteToCondensed).obj X) ⟶ coefficientObject) ≃
       CoefficientSections X)
-  refine (Condensed.freeForgetAdjunction R).homEquiv.trans ?_
+  refine ((Condensed.freeForgetAdjunction R).homEquiv
+    ((profiniteToCondensed).obj X) coefficientObject).trans ?_
   change
     (((coherentTopology CompHaus.{u}).uliftYoneda.obj ((profiniteToCompHaus).obj X) ⟶
       (Condensed.forget R).obj coefficientObject) ≃ CoefficientSections X)
