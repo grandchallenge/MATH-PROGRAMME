@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+<title id="title">From prime counts to the central point — Batch-2 review candidate</title>
+<desc id="desc">A literal pipeline maps a good-prime point count to a local Euler factor, then to the global elliptic-curve L-function, and finally to its order of vanishing at s equals one. The claim boundary states that no single prime determines rank and BSD equality remains conjectural.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#222"/></marker>
+</defs>
+<style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#111}
+.h1{font-size:34px;font-weight:700} .h2{font-size:22px;font-weight:700}
+.body{font-size:19px} .small{font-size:16px} .tiny{font-size:14px}
+.mono{font-family:"DejaVu Sans Mono",monospace;font-size:17px}
+.box{fill:white;stroke:#222;stroke-width:2} .soft{fill:#f2f2f2;stroke:#444;stroke-width:2}
+.open{fill:white;stroke:#222;stroke-width:2;stroke-dasharray:9 7}
+.line{stroke:#222;stroke-width:2;fill:none} .arrow{stroke:#222;stroke-width:2.5;fill:none;marker-end:url(#arrow)}
+.sep{stroke:#777;stroke-width:1.5} .label{font-size:15px;font-weight:700;letter-spacing:1px}
+</style>
+<rect width="1200" height="900" fill="white"/>
+
+<text x="40" y="55" class="h1">From local point counts to the central point</text>
+<text x="40" y="92" class="body">The analytic ledger is assembled prime by prime; no single local factor determines the Mordell-Weil rank.</text>
+
+<rect x="45" y="145" width="335" height="255" rx="12" class="box"/>
+<text x="70" y="185" class="h2">At a good prime p</text>
+<text x="70" y="230" class="mono">a_p = p + 1 - #E(F_p)</text>
+<text x="70" y="278" class="mono">L_p(E,s)^(-1)</text>
+<text x="70" y="308" class="mono">= 1 - a_p p^(-s) + p^(1-2s)</text>
+<text x="70" y="355" class="small">Bad primes use their separately defined</text>
+<text x="70" y="378" class="small">local factors; they are not omitted.</text>
+
+<path d="M395 270 L520 270" class="arrow"/>
+<text x="420" y="245" class="small">assemble all</text>
+<text x="430" y="265" class="small">local factors</text>
+
+<rect x="535" y="145" width="280" height="255" rx="12" class="soft"/>
+<text x="560" y="185" class="h2">Global L-function</text>
+<text x="560" y="240" class="mono">L(E,s) = product_p L_p(E,s)</text>
+<text x="560" y="292" class="small">Initially an Euler product in its</text>
+<text x="560" y="315" class="small">half-plane of convergence.</text>
+<text x="560" y="355" class="small">Modularity supplies analytic continuation</text>
+<text x="560" y="378" class="small">and a functional equation centered at s=1.</text>
+
+<path d="M830 270 L945 270" class="arrow"/>
+<text x="850" y="245" class="small">continue, then</text>
+<text x="865" y="265" class="small">inspect s=1</text>
+
+<rect x="960" y="145" width="195" height="255" rx="12" class="box"/>
+<text x="985" y="185" class="h2">Central order</text>
+<text x="985" y="240" class="mono">r_an = ord_(s=1)</text>
+<text x="985" y="270" class="mono">       L(E,s)</text>
+<text x="985" y="320" class="small">Count how many</text>
+<text x="985" y="343" class="small">Taylor terms vanish</text>
+<text x="985" y="366" class="small">before the first</text>
+<text x="985" y="389" class="small">nonzero coefficient.</text>
+
+<rect x="45" y="485" width="1110" height="275" rx="12" class="box"/>
+<text x="70" y="530" class="h2">Claim boundary</text>
+<text x="70" y="575" class="body">1. Local point counts determine local coefficients; they do not individually reveal rank.</text>
+<text x="70" y="615" class="body">2. The Euler product and its continuation define the analytic side of BSD.</text>
+<text x="70" y="655" class="body">3. BSD conjectures r_alg = r_an; this plate does not assert that equality.</text>
+<text x="70" y="705" class="small">The displayed formulas are structural. No numerical point-count dataset or curve-specific rank is inferred here.</text>
+
+<text x="40" y="872" class="small">Review candidate · documentary exposition only · visual_is_evidence: false</text>
+</svg>

@@ -332,16 +332,30 @@ def list_directory_names(client: Client, repo: str, directory: str) -> list[str]
     return [str(item.get("name") or "") for item in values]
 
 
+RECEIPT_BRANCH_SLUG_PREFIX = "receipt-"
+
+
+def maintenance_branch_namespace(branch: str, branch_prefix: str) -> str:
+    """Classify maintenance branches before candidate validation."""
+    if not branch.startswith(branch_prefix):
+        return "outside"
+    slug = branch.removeprefix(branch_prefix)
+    if slug.startswith(RECEIPT_BRANCH_SLUG_PREFIX):
+        return "receipt"
+    return "candidate"
+
+
 def eligible_candidates(candidate: Client, repo: str, runtime: dict[str, Any], now: datetime) -> list[tuple[dict[str, Any], dict[str, Any]]]:
     pulls = candidate.get(f"/repos/{repo}/pulls?state=open&per_page=100")
     result: list[tuple[dict[str, Any], dict[str, Any]]] = []
+    branch_prefix = str(runtime["scope"]["branch_prefix"])
     for pull in pulls:
         branch = str(pull.get("head", {}).get("ref") or "")
-        if not branch.startswith(runtime["scope"]["branch_prefix"]):
+        if maintenance_branch_namespace(branch, branch_prefix) != "candidate":
             continue
         if pull.get("user", {}).get("login") != runtime["candidate_identity"]["login"]:
             raise AutonomyError("maintenance branch is not authored by Candidate Agent")
-        slug = branch.removeprefix(runtime["scope"]["branch_prefix"])
+        slug = branch.removeprefix(branch_prefix)
         manifest_path = f"{runtime['scope']['candidate_manifest_prefix']}{slug}.json"
         manifest = json_content(candidate, repo, manifest_path, branch)
         if not manifest:
