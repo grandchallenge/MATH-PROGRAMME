@@ -70,10 +70,15 @@ noncomputable def finiteCoefficientFamilyLift
         apply LinearMap.ext
         intro a
         funext x
-        simpa [finiteCoefficientFamilyCondensed,
-          CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf,
-          ModuleCat.comp_apply] using
-          (congrArg (fun q => q a) ((s.proj x).hom.naturality f)).symm }
+        change
+          (ConcreteCategory.hom ((s.proj x).hom.app T))
+              ((ConcreteCategory.hom (s.pt.obj.map f)) a) =
+            (ConcreteCategory.hom
+                (CMDG.CondensedCM4P2D.coefficientPresheaf.map f))
+              ((ConcreteCategory.hom ((s.proj x).hom.app S)) a)
+        have h := congrArg (fun q => (ConcreteCategory.hom q) a)
+          ((s.proj x).hom.naturality f)
+        simpa only [ModuleCat.comp_apply] using h }
 
 /-- The explicit finite coefficient-family cone satisfies the categorical
 product universal property in `CondensedMod`. -/
@@ -104,10 +109,8 @@ noncomputable def finiteCoefficientFamilyConeIsLimit (X : FintypeCat.{u}) :
           ((m ≫ (finiteCoefficientFamilyCone X).proj x).hom.app S) a =
             (m.hom.app S a) x := by
         rfl
-      calc
-        (m.hom.app S a) x =
-            ((m ≫ (finiteCoefficientFamilyCone X).proj x).hom.app S) a := hcoord.symm
-        _ = (s.proj x).hom.app S a := h')
+      rw [← hcoord]
+      exact h')
 
 /-- Lift the protected finite family/free presheaf isomorphism to condensed
 modules. -/
