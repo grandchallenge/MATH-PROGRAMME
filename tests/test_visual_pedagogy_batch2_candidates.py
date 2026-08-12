@@ -74,7 +74,7 @@ class Batch2CandidateTests(unittest.TestCase):
             self.assertFalse(r["live_switch_eligibility"])
             self.assertFalse(r["visual_is_evidence"])
 
-    def test_contracts_bind_exact_review_evidence(self):
+    def test_contracts_bind_exact_review_evidence_within_schema(self):
         for r in self.m["plates"]:
             c = json.loads((ROOT / r["contract_path"]).read_text())
             self.assertEqual(c["predecessor"], r["predecessor_path"])
@@ -82,17 +82,15 @@ class Batch2CandidateTests(unittest.TestCase):
             self.assertTrue(c["renderer"]["reproducible"])
             self.assertEqual(c["derivatives"][0]["path"], r["candidate_path"])
             self.assertEqual(c["derivatives"][0]["digest"], r["candidate_digest"])
+            self.assertEqual(c["independent_review"]["status"], "reviewed")
+            self.assertNotIn("reviewer", c["independent_review"])
+            self.assertNotIn("batch2_adoption_review", c)
+            refs = c["independent_review"]["evidence_refs"]
+            self.assertIn(REVIEW, refs)
             if r["candidate_origin"] == "batch2_new":
-                self.assertEqual(c["independent_review"]["status"], "reviewed")
-                self.assertEqual(c["independent_review"]["reviewer"], "jimsteeg")
-                self.assertEqual(c["independent_review"]["evidence_refs"], [REVIEW])
+                self.assertEqual(refs, [REVIEW])
             else:
-                self.assertEqual(c["independent_review"]["status"], "reviewed")
-                self.assertIn("batch2_adoption_review", c)
-                self.assertEqual(c["batch2_adoption_review"]["status"], "reviewed")
-                self.assertEqual(c["batch2_adoption_review"]["reviewer"], "jimsteeg")
-                self.assertEqual(c["batch2_adoption_review"]["evidence_refs"], [REVIEW])
-                self.assertEqual(c["batch2_adoption_review"]["matrix_ref"], MATRIX)
+                self.assertIn(MATRIX, refs)
 
     def test_generator_and_superseded_history(self):
         generated = {str(p.relative_to(ROOT)): c for p, c in renderer().OUTPUTS.items()}
