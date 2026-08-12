@@ -5,10 +5,10 @@
   const plateActivations = {
     union_closed: {
       '../../assets/documentaries/union_closed/plate_garden.svg': {
-        src: '../../assets/visual_pedagogy/batch1/union_closed/plate_garden.svg',
-        alt: 'Exact six-set union-closed family arranged by inclusion, with a frequency ledger showing a in four sets, b in three, c in two, and the half threshold at three.',
+        src: '../../assets/visual_pedagogy/batch1/union_closed/plate_garden_r2.svg',
+        alt: 'Exact six-set union-closed family shown as a strict Hasse-style cover diagram, with frequencies a in four sets, b in three, c in two, and half threshold three.',
         title: 'The Garden That Closes',
-        note: 'An exact six-set family makes closure, frequencies, and the half-threshold witness question visible.'
+        note: 'Exact cover relations, selected unions, and frequencies expose this example without claiming the general Frankl conjecture.'
       },
       '../../assets/documentaries/union_closed/plate_frequency.svg': {
         src: '../../assets/visual_pedagogy/batch1/union_closed/plate_frequency.svg',

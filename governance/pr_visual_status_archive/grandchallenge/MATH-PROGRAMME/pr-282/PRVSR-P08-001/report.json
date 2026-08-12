@@ -1,0 +1,121 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "NOT_REQUIRED"
+    },
+    "independent_review": {
+      "actor": "jimsteeg",
+      "commit_sha": "f6b441d4911a92c518ad3133548a018ca7375392",
+      "required": true,
+      "review_id": 4887042325,
+      "state": "APPROVED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": "success",
+      "head_sha": "f6b441d4911a92c518ad3133548a018ca7375392",
+      "name": "Programme policy checks",
+      "required": true,
+      "run_id": 31223534281,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "f6b441d4911a92c518ad3133548a018ca7375392",
+      "name": "GCL conformance",
+      "required": true,
+      "run_id": 31223534516,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "f6b441d4911a92c518ad3133548a018ca7375392",
+      "name": "Administrative maintenance automation validation",
+      "required": true,
+      "run_id": 31223534244,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "f6b441d4911a92c518ad3133548a018ca7375392",
+      "name": "Administrative maintenance dispatcher",
+      "required": true,
+      "run_id": 31224144600,
+      "status": "completed"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "PROTECTED_COMPLETE",
+    "reasons": []
+  },
+  "history": [
+    {
+      "at": "2026-08-07T22:30:38Z",
+      "event": "independent_review",
+      "outcome": "APPROVED_EXACT_HEAD"
+    },
+    {
+      "at": "2026-08-07T22:31:53Z",
+      "event": "protected_merge",
+      "outcome": "4feaa250bf151ee412a4e2ea6a1b2b5b8d569c4a"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "f6b441d4911a92c518ad3133548a018ca7375392",
+    "exact_head_sha": "f6b441d4911a92c518ad3133548a018ca7375392",
+    "pr_number": 282,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "[maintenance-receipt] MP-ADMIN-STRUCTURAL-SWEEP-2026-08-07-001 r2"
+  },
+  "integration": {
+    "merge_commit_sha": "4feaa250bf151ee412a4e2ea6a1b2b5b8d569c4a",
+    "merge_state": "MERGED",
+    "protected_readback": {
+      "main_sha": "4feaa250bf151ee412a4e2ea6a1b2b5b8d569c4a",
+      "required": true,
+      "state": "COMPLETE"
+    }
+  },
+  "modules": {
+    "continuity": {
+      "changed_path_count": 1,
+      "supersedes_pr": 274
+    },
+    "pilot": {
+      "case_id": "PRVSR-P08",
+      "category": "low_complexity_positive_control"
+    }
+  },
+  "nonclaims": [
+    "Human Steward disposition is not required and is not asserted for this bounded routine receipt.",
+    "Substantive claim authority is excluded.",
+    "Branch-protection bypass is prohibited."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-08-11T11:42:07Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "c0a01dffcc729187099b3e18b0d9f1f9c6308fcb7bb51ce7d102b52d6d23c068"
+  },
+  "report_id": "PRVSR-P08-001",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "administrative_automation"
+    ]
+  }
+}

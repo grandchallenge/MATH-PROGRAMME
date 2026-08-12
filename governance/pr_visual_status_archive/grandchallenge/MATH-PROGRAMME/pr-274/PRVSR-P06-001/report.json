@@ -1,0 +1,130 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "NOT_REQUIRED"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": true,
+      "review_id": null,
+      "state": "PENDING"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": "failure",
+      "head_sha": "6308a7b3f8009d1d5ce6bdce520c636b36e23b80",
+      "name": "Programme policy checks",
+      "required": true,
+      "run_id": 31161571891,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "6308a7b3f8009d1d5ce6bdce520c636b36e23b80",
+      "name": "GCL conformance",
+      "required": true,
+      "run_id": 31161572366,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "6308a7b3f8009d1d5ce6bdce520c636b36e23b80",
+      "name": "Administrative maintenance automation validation",
+      "required": true,
+      "run_id": 31161571875,
+      "status": "completed"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "required check Programme policy checks completed without success"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-08-07T20:41:18Z",
+      "event": "non_independent_review",
+      "outcome": "CHANGES_REQUESTED__CI_CHECKS_FAILING"
+    },
+    {
+      "at": "2026-08-07T20:41:18Z",
+      "event": "programme_policy",
+      "outcome": "FAILURE__RUN_31161571891"
+    },
+    {
+      "at": "2026-08-07T22:21:57Z",
+      "event": "closed_unmerged",
+      "outcome": "SUPERSEDED_BY_PR_282"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "6308a7b3f8009d1d5ce6bdce520c636b36e23b80",
+    "exact_head_sha": "6308a7b3f8009d1d5ce6bdce520c636b36e23b80",
+    "pr_number": 274,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "[maintenance-receipt] MP-ADMIN-STRUCTURAL-SWEEP-2026-08-07-001"
+  },
+  "integration": {
+    "merge_commit_sha": null,
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "continuity": {
+      "later_head": "74bbec0eaaaf457fce993c2fe85afd3f8b3b9b36",
+      "successor_pr": 282
+    },
+    "pilot": {
+      "capture_mode": "HISTORICAL_STAGE",
+      "case_id": "PRVSR-P06",
+      "category": "blocked_or_changes_requested"
+    },
+    "review_signal": {
+      "actor": "fyremael",
+      "commit_sha": "6308a7b3f8009d1d5ce6bdce520c636b36e23b80",
+      "review_id": 4886412482,
+      "role": "NON_INDEPENDENT_HUMAN_REVIEW",
+      "state": "CHANGES_REQUESTED"
+    },
+    "source_limitation": "Top-level independent_review remains PENDING; CHANGES_REQUESTED source was non-independent and is retained in modules/history rather than mislabeled."
+  },
+  "nonclaims": [
+    "This failed receipt does not invalidate the underlying protected structural-sweep authority.",
+    "No Human Steward disposition is required for the bounded routine receipt.",
+    "The failed receipt is superseded rather than rewritten as successful."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-08-07T20:41:18Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "716b819cd6722d6ed8a3cfb8cb544fc2a9717a47bda08dbed44f3af24f42db6c"
+  },
+  "report_id": "PRVSR-P06-001",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "administrative_automation",
+      "material_nonclaims_blockers_or_residuals"
+    ]
+  }
+}
