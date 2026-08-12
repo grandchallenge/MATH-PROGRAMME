@@ -62,8 +62,8 @@ theorem lowerHomSectionsEquiv_precomp {X Y : Profinite.{u}}
         ((profiniteToCondensed).obj X) coefficientObject
         ((Condensed.free R).map ((profiniteToCondensed).map q) ≫ g)) = _
   rw [(Condensed.freeForgetAdjunction R).homEquiv_naturality_left]
-  simpa [profiniteToCondensed, compHausToCondensed, compHausToCondensed', Condensed.ulift,
-    Functor.comp_map] using
+  simpa [lowerHomSectionsEquiv, profiniteToCondensed, compHausToCondensed,
+    compHausToCondensed', Condensed.ulift, Functor.comp_map] using
     ((coherentTopology CompHaus.{u}).uliftYonedaEquiv_naturality
       ((Condensed.freeForgetAdjunction R).homEquiv
         ((profiniteToCondensed).obj Y) coefficientObject g)
