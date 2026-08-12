@@ -107,7 +107,7 @@ theorem lowerHom_factors_finite (X : Profinite.{u})
 set_option backward.isDefEq.respectTransparency false in
 /-- On a finite profinite object, solidification followed by the right-Kan
 counit is the identity on the finite free module. -/
-theorem finiteSolidification_counit (Q : FintypeCat.{u}) :
+@[reassoc (attr := simp)] theorem finiteSolidification_counit (Q : FintypeCat.{u}) :
     (Condensed.profiniteSolidification R).app (FintypeCat.toProfinite.obj Q) ≫
         (Condensed.profiniteSolidCounit R).app Q =
       𝟙 ((Condensed.finFree R).obj Q) := by
@@ -142,9 +142,7 @@ theorem homPrecomp_finiteQuotientLift
           (Condensed.profiniteSolidCounit R).app (X.fintypeDiagram.obj j) ≫ hQ) =
       (Condensed.profiniteFree R).map q ≫ hQ
   rw [← Category.assoc,
-    ← (Condensed.profiniteSolidification R).naturality q,
-    Category.assoc, Category.assoc,
-    finiteSolidification_counit]
+    ← (Condensed.profiniteSolidification R).naturality q]
   simp
 
 /-- SECOND: every lower-Hom morphism has a finite-quotient lift through
