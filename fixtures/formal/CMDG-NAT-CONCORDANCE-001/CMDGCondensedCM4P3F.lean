@@ -1,5 +1,4 @@
 import CMDGCondensedCM4P3D
-import CMDGCondensedCM4P2EE3
 import Mathlib.CategoryTheory.Sites.Subcanonical
 import Mathlib.Topology.Category.Profinite.CofilteredLimit
 
