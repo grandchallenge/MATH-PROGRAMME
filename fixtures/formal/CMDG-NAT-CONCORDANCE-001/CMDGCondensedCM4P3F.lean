@@ -8,7 +8,8 @@ import Mathlib.Topology.Category.Profinite.CofilteredLimit
 This successor isolates the single coefficient-object residual left by P3-E.
 The first certified layer identifies the lower Hom set with locally constant
 lifted-integer-valued functions on the profinite source. The second layer
-factors every such lower-Hom morphism through a canonical finite quotient.
+factors every such lower-Hom morphism through a canonical finite quotient and
+lifts it through the finite right-Kan counit.
 No coefficient solidity or P3 availability is asserted by this file unless
 and until the terminal declarations are proved.
 -/
@@ -103,12 +104,70 @@ theorem lowerHom_factors_finite (X : Profinite.{u})
   rw [lowerHomEquiv_naturality, Equiv.apply_symm_apply]
   simpa [q] using hg
 
+set_option backward.isDefEq.respectTransparency false in
+/-- On a finite profinite object, solidification followed by the right-Kan
+counit is the identity on the finite free module. -/
+theorem finiteSolidification_counit (Q : FintypeCat.{u}) :
+    (Condensed.profiniteSolidification R).app (FintypeCat.toProfinite.obj Q) ≫
+        (Condensed.profiniteSolidCounit R).app Q =
+      𝟙 ((Condensed.finFree R).obj Q) := by
+  simpa [Condensed.profiniteSolidification] using
+    ((Condensed.profiniteSolid R).liftOfIsRightKanExtension_fac_app
+      (Condensed.profiniteSolidCounit R)
+      (Condensed.profiniteFree R)
+      (𝟙 (Condensed.finFree R)) Q)
+
+/-- Lift a lower-Hom morphism on a canonical finite quotient through the
+solid finite value and pull it back along the solid functor. -/
+noncomputable def finiteQuotientLift
+    (X : Profinite.{u}) (j : DiscreteQuotient X)
+    (hQ : (Condensed.profiniteFree R).obj (X.diagram.obj j) ⟶ coefficientObject) :
+    (Condensed.profiniteSolid R).obj X ⟶ coefficientObject :=
+  (Condensed.profiniteSolid R).map (X.asLimitCone.π.app j) ≫
+    (Condensed.profiniteSolidCounit R).app (X.fintypeDiagram.obj j) ≫ hQ
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The finite-quotient lift is a genuine preimage under coefficient
+solidification. -/
+theorem homPrecomp_finiteQuotientLift
+    (X : Profinite.{u}) (j : DiscreteQuotient X)
+    (hQ : (Condensed.profiniteFree R).obj (X.diagram.obj j) ⟶ coefficientObject) :
+    CMDG.CondensedCM4P3D.homPrecomp coefficientObject X
+        (finiteQuotientLift X j hQ) =
+      (Condensed.profiniteFree R).map (X.asLimitCone.π.app j) ≫ hQ := by
+  let q : X ⟶ X.diagram.obj j := X.asLimitCone.π.app j
+  change
+    (Condensed.profiniteSolidification R).app X ≫
+        ((Condensed.profiniteSolid R).map q ≫
+          (Condensed.profiniteSolidCounit R).app (X.fintypeDiagram.obj j) ≫ hQ) =
+      (Condensed.profiniteFree R).map q ≫ hQ
+  rw [← Category.assoc,
+    ← (Condensed.profiniteSolidification R).naturality q,
+    Category.assoc, Category.assoc,
+    finiteSolidification_counit]
+  simp
+
+/-- SECOND: every lower-Hom morphism has a finite-quotient lift through
+`profiniteSolidification`. -/
+theorem homPrecomp_surjective (X : Profinite.{u}) :
+    Function.Surjective
+      (CMDG.CondensedCM4P3D.homPrecomp coefficientObject X) := by
+  intro h
+  obtain ⟨j, hQ, hfac⟩ := lowerHom_factors_finite X h
+  refine ⟨finiteQuotientLift X j hQ, ?_⟩
+  rw [homPrecomp_finiteQuotientLift]
+  exact hfac.symm
+
 #check lowerHomAdjunctionEquiv
 #check lowerHomYonedaEquiv
 #check lowerHomEquiv
 #check lowerHomYonedaEquiv_naturality
 #check lowerHomEquiv_naturality
 #check lowerHom_factors_finite
+#check finiteSolidification_counit
+#check finiteQuotientLift
+#check homPrecomp_finiteQuotientLift
+#check homPrecomp_surjective
 
 #print axioms lowerHomAdjunctionEquiv
 #print axioms lowerHomYonedaEquiv
@@ -116,5 +175,9 @@ theorem lowerHom_factors_finite (X : Profinite.{u})
 #print axioms lowerHomYonedaEquiv_naturality
 #print axioms lowerHomEquiv_naturality
 #print axioms lowerHom_factors_finite
+#print axioms finiteSolidification_counit
+#print axioms finiteQuotientLift
+#print axioms homPrecomp_finiteQuotientLift
+#print axioms homPrecomp_surjective
 
 end CMDG.CondensedCM4P3F
