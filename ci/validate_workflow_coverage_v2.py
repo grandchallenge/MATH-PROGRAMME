@@ -19,6 +19,7 @@ v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "cmdg-condensed-cm4-p2-d.yml",
     "cmdg-condensed-cm4-p2-e.yml",
     "cmdg-condensed-cm4-p3.yml",
+    "cmdg-postmerge.yml",
     "visual-pedagogy-representation-repair.yml",
     "pr-visual-status-advisory.yml",
 }
