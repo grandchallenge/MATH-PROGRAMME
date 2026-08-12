@@ -23,6 +23,7 @@ namespace CMDG.CondensedCM4P3G
 universe u
 
 open CategoryTheory Limits Opposite
+open Filter
 
 abbrev R := CMDG.CondensedCM4P3D.R.{u}
 
@@ -169,11 +170,11 @@ theorem coefficient_homPrecomp_surjective (X : Profinite.{u}) :
 /-- A locally constant function on a Boolean product is determined at the all-true point by its
 finite-coordinate truncations. This is the compact-product separation mechanism needed for F2. -/
 theorem locallyConstant_boolPi_allTrue_of_finsetPiecewise
-    {ι β : Type*} (f : LocallyConstant (ι → Bool) β) (c : β)
+    {ι β : Type*} [DecidableEq ι]
+    (f : LocallyConstant (ι → Bool) β) (c : β)
     (h : ∀ I : Finset ι,
       f (I.piecewise (fun _ => true) (fun _ => false)) = c) :
     f (fun _ => true) = c := by
-  classical
   have hs :
       {x : ι → Bool | f x = f (fun _ => true)} ∈ 𝓝 (fun _ => true) :=
     f.isLocallyConstant.eventually_eq (fun _ => true)
