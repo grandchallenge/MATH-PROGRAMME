@@ -85,6 +85,7 @@ theorem lowerHomEquiv_naturality {X Y : Profinite.{u}} (q : X ⟶ Y)
   rw [hadj]
   exact lowerHomYonedaEquiv_naturality q (lowerHomAdjunctionEquiv Y h)
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Every lower-Hom morphism factors through one of the canonical finite
 quotients of the profinite source. -/
 theorem lowerHom_factors_finite (X : Profinite.{u})
