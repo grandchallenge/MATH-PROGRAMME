@@ -124,7 +124,7 @@ jobs:
         env:
           GITHUB_PUBLISH_TOKEN: ${{ steps.publisher-token.outputs.token }}
         run: |
-          python3 ci/pr_visual_status_operator_surface.py \
+          python3 ci/pr_visual_status_workflow_operator_surface.py \
             --repo "$GITHUB_REPOSITORY" \
             --summary "$RUNNER_TEMP/prvsr-operator-summary.json"
 

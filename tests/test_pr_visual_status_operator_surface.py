@@ -8,7 +8,7 @@ from unittest import mock
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "ci"))
 
-import pr_visual_status_operator_surface as operator  # noqa: E402
+import pr_visual_status_workflow_operator_surface as operator  # noqa: E402
 
 ARCHIVE_SHA = "a" * 40
 NEW_ARCHIVE_SHA = "b" * 40
