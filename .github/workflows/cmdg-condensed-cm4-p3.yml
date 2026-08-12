@@ -72,7 +72,8 @@ jobs:
           F=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3Audit.lean
           C=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3C.lean
           D=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3D.lean
-          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D"; then
+          E=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3E.lean
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$E"; then
             echo "P3 fixtures must contain neither sorry nor local axioms."
             exit 1
           fi
@@ -85,7 +86,10 @@ jobs:
           grep -Fq 'isSolid_iff_isLocal' "$D"
           grep -Fq 'isSolid_of_isLimit' "$D"
           grep -Fq 'residualHomTheorem_of_product_and_coefficientResidual' "$D"
-          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D"; then
+          grep -Fq 'finiteCoefficientFamilyConeIsLimit' "$E"
+          grep -Fq 'measureFunctor_isSolid_of_coefficient' "$E"
+          grep -Fq 'residualHomTheorem_of_coefficientResidual' "$E"
+          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$E"; then
             echo "P3 reduction fixtures must not install an unconditional IsSolid instance."
             exit 1
           fi
@@ -123,6 +127,8 @@ jobs:
           test "$(git -C "$ML" hash-object Mathlib/Topology/Separation/Profinite.lean)" = "1bc259a4f9b82065f51d4c7f5d3c6fd7396ef122"
           test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/ObjectProperty/Local.lean)" = "cc67ec637bca601e193f366a874f80e3d668c625"
           test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/ObjectProperty/LimitsOfShape.lean)" = "75ddb590f7b1172110a65f4b2798a4422d6273f0"
+          test "$(git -C "$ML" hash-object Mathlib/Topology/Category/Profinite/Nobeling/Induction.lean)" = "2989eac53e537e47fd9ac93cba92d50856573173"
+          test "$(git -C "$ML" hash-object Mathlib/CategoryTheory/Monoidal/Closed/Braided.lean)" = "bca870349e566c9c5f6ff4386724bffeca361a60"
           test "$(git hash-object CMDGCondensedCM4P2D.lean)" = "7515583c1b56308bbd48c2c690addd3b432eba09"
           test "$(git hash-object CMDGCondensedCM4P2EE3.lean)" = "24913aa4c1b2616fea244e2d73d912f99aae5921"
       - name: Build and replay formal audit
@@ -170,3 +176,9 @@ jobs:
           set -euo pipefail
           lake build CMDGCondensedCM4P3D
           lake env lean CMDGCondensedCM4P3D.lean
+      - name: Build and replay P3-E canonical finite-limit reduction
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          lake build CMDGCondensedCM4P3E
+          lake env lean CMDGCondensedCM4P3E.lean
