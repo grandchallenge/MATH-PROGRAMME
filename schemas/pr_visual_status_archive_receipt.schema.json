@@ -1,0 +1,189 @@
+{
+  "$id": "https://grandchallenge.ai/schemas/pr_visual_status_archive_receipt.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "archive_dir": {
+      "pattern": "^governance/pr_visual_status_archive/[A-Za-z0-9._-]+/[A-Za-z0-9._-]+/pr-[1-9][0-9]*/[A-Za-z0-9._-]+$",
+      "type": "string"
+    },
+    "artifacts": {
+      "additionalProperties": false,
+      "properties": {
+        "report.json": {
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "sha256": {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "type": "object"
+        },
+        "report.svg": {
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "sha256": {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "type": "object"
+        },
+        "report.txt": {
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "sha256": {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "report.json",
+        "report.txt",
+        "report.svg"
+      ],
+      "type": "object"
+    },
+    "authority_boundary": {
+      "additionalProperties": false,
+      "properties": {
+        "advisory_only": {
+          "const": true,
+          "type": "boolean"
+        },
+        "new_merge_gate": {
+          "const": false,
+          "type": "boolean"
+        },
+        "propagation_authority_created": {
+          "const": false,
+          "type": "boolean"
+        },
+        "visual_is_authoritative": {
+          "const": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "advisory_only",
+        "visual_is_authoritative",
+        "new_merge_gate",
+        "propagation_authority_created"
+      ],
+      "type": "object"
+    },
+    "exact_head_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "freshness": {
+      "enum": [
+        "CURRENT",
+        "STALE",
+        "UNKNOWN"
+      ],
+      "type": "string"
+    },
+    "operative_state": {
+      "enum": [
+        "STALE",
+        "UNKNOWN",
+        "BLOCKED",
+        "CHANGES_REQUESTED",
+        "CHECKS_PENDING",
+        "REVIEW_PENDING",
+        "AUTHORIZATION_PENDING",
+        "READY_FOR_MERGE",
+        "AUTHORIZED_FOR_PROTECTED_MERGE",
+        "MERGED_READBACK_PENDING",
+        "PROTECTED_COMPLETE",
+        "MERGED",
+        "CLOSED_UNMERGED"
+      ],
+      "type": "string"
+    },
+    "pr_number": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "report_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "repository": {
+      "pattern": "^[^/\\s]+/[^/\\s]+$",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "type": "string"
+    },
+    "source_snapshot_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "target_head_after": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "target_head_before": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "target_pr_head_mutated": {
+      "const": false,
+      "type": "boolean"
+    },
+    "transport_version": {
+      "const": "0.1.0-pilot",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "transport_version",
+    "report_id",
+    "repository",
+    "pr_number",
+    "exact_head_sha",
+    "target_head_before",
+    "target_head_after",
+    "target_pr_head_mutated",
+    "archive_dir",
+    "source_snapshot_sha256",
+    "operative_state",
+    "freshness",
+    "artifacts",
+    "authority_boundary"
+  ],
+  "title": "PR Visual Status Archive Receipt",
+  "type": "object"
+}

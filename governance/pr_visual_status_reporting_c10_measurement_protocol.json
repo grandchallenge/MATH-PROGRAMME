@@ -1,0 +1,124 @@
+{
+  "protocol_id": "PRVSR-C10-MEASUREMENT-PROTOCOL-001",
+  "pilot_id": "PR-VISUAL-STATUS-REPORTING-001",
+  "status": "SUPERSEDED_AS_CRITICAL_PATH_REQUIREMENT__OPTIONAL_FOLLOWUP",
+  "authority": {
+    "adr": "ADR-0019",
+    "execution_docket": 426,
+    "scope": "advisory bounded pilot measurement only",
+    "propagation_authority_created": false
+  },
+  "scope_correction": {
+    "authority": "Human Steward",
+    "issue": 442,
+    "documentary_comment": 5262225521,
+    "disposition": "DIRECT_HUMAN_MEASUREMENT_REQUIREMENT_OVERRIDDEN__CLOSED_NOT_PLANNED",
+    "critical_path_required": false,
+    "rule": "The direct-human crossover experiment is retained as an optional follow-up design, not a prerequisite to PRVSR-C10 completion or pilot adjudication. No missing human result may be fabricated or inferred from proxy observations."
+  },
+  "purpose": "Retain the original direct-measurement design and the completed regeneration benchmark while preserving the Human Steward correction that direct-human crossover measurement is not on the critical path.",
+  "human_review_experiment": {
+    "execution_state": "OPTIONAL_DEFERRED__NOT_EXECUTED",
+    "critical_path_required": false,
+    "target_metrics": [
+      "reviewer_time_to_operative_state",
+      "factual_state_identification_accuracy",
+      "blocker_residual_detection",
+      "stale_report_detection"
+    ],
+    "cases": [
+      "PRVSR-P01",
+      "PRVSR-P02",
+      "PRVSR-P03",
+      "PRVSR-P04",
+      "PRVSR-P05",
+      "PRVSR-P06",
+      "PRVSR-P07",
+      "PRVSR-P08"
+    ],
+    "minimum_independent_reviewers_if_executed": 2,
+    "design": "balanced crossover without repeated exposure to the same case by the same reviewer",
+    "conditions": [
+      {
+        "condition": "REPORT_FIRST",
+        "surface": "retained deterministic report text/SVG with source identifiers available for follow-through"
+      },
+      {
+        "condition": "SOURCE_ONLY_CONTROL",
+        "surface": "authoritative PR/governance source records without the retained visual-status report"
+      }
+    ],
+    "assignment_rule": "If later executed, randomize case order per reviewer and balance each case across REPORT_FIRST and SOURCE_ONLY_CONTROL across reviewers.",
+    "task_questions": [
+      "What is the operative repository lifecycle state?",
+      "What exact head or historical head is the state bound to?",
+      "What review/Human-Steward authority is present, pending, not required, or stale?",
+      "What repository blocker or orthogonal residual remains, if any?",
+      "Is the report current or stale?",
+      "Is it safe to advance at the captured decision point?"
+    ],
+    "timing": {
+      "start_event": "first exposure to assigned review surface",
+      "stop_event": "submission of all task answers",
+      "target_seconds": 60,
+      "timeout_policy": "Do not truncate; retain actual elapsed time and flag observations over 60 seconds."
+    },
+    "scoring": {
+      "operative_state_accuracy": "exact match to retained governed ground truth",
+      "factual_error_rate": "incorrect required answers divided by total required answers",
+      "blocker_residual_detection_rate": "correctly identified designed blocker/residual cases divided by designed blocker/residual cases presented",
+      "stale_detection_rate": "correctly identified stale cases divided by stale cases presented",
+      "time_summary": "retain per-observation elapsed seconds; report median and p95 by condition",
+      "preference": "secondary descriptive metric only; never substitutes for accuracy or time"
+    },
+    "retention": {
+      "required_fields_if_executed": [
+        "reviewer_pseudonymous_id",
+        "case_id",
+        "condition",
+        "started_at",
+        "submitted_at",
+        "elapsed_seconds",
+        "answers",
+        "scored_answers",
+        "factual_error_count"
+      ],
+      "privacy_rule": "Do not retain unnecessary personal data; reviewer identity may be pseudonymized while preserving independence classification."
+    }
+  },
+  "regeneration_latency_benchmark": {
+    "execution_state": "PROTECTED_ADMITTED",
+    "target_metric": "regeneration_latency",
+    "unit": "milliseconds",
+    "scope": "isolated deterministic canonical-report derivation plus text/SVG regeneration; exclude GitHub network latency and whole-repository CI fanout",
+    "environment_requirements": [
+      "record runner image or machine class",
+      "record Python/runtime version",
+      "record generator version",
+      "record report schema version",
+      "record warmup count and measured repetition count"
+    ],
+    "minimum_warmup_iterations_per_case": 3,
+    "minimum_measured_iterations_per_case": 30,
+    "summary_statistics": ["median_ms", "p95_ms", "max_ms"],
+    "failure_rule": "Any regeneration that changes canonical semantics or fails deterministic equivalence is a correctness failure and must not be averaged away as latency."
+  },
+  "operational_cost_followup": {
+    "retain": [
+      "archive byte size by case and total",
+      "generation CPU/wall time from isolated benchmark",
+      "number of repository artifacts",
+      "number of PR/comment transport operations",
+      "reviewer time by experimental condition if the optional human experiment is later executed"
+    ],
+    "rule": "Keep storage, compute, transport, and any later human-review costs distinct rather than reporting a single blended number."
+  },
+  "completion_rule": "For the bounded pilot, C10 may advance to independent pilot adjudication with the direct-human metrics explicitly NOT_DIRECTLY_OBSERVED under Human Steward scope correction. The optional human experiment may be executed later but is not a prerequisite. No proxy or synthetic dataset may be promoted to a direct human measurement.",
+  "nonclaims": [
+    "This protocol contains no human-study results.",
+    "Issue #442 was closed not_planned by Human Steward scope correction; no second dataset is claimed.",
+    "This protocol does not make report-first review mandatory.",
+    "This protocol does not create a merge gate or propagation authority.",
+    "Independent pilot adjudication remains required after C10 documentary reconciliation."
+  ]
+}

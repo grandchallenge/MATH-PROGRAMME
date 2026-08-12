@@ -1,0 +1,138 @@
+name: Advisory PR visual status
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
+  pull_request_review:
+    types: [submitted, dismissed]
+  issue_comment:
+    types: [created, edited]
+  workflow_run:
+    workflows:
+      - Programme policy checks
+      - GCL conformance
+      - Administrative maintenance dispatcher
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: Pull request number to refresh
+        required: true
+        type: number
+
+permissions:
+  contents: read
+
+concurrency:
+  group: prvsr-advisory-${{ github.event.pull_request.number || github.event.issue.number || github.event.workflow_run.pull_requests[0].number || inputs.pr_number || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  advisory-report:
+    if: >-
+      github.event_name != 'issue_comment' ||
+      (github.event.issue.pull_request != null &&
+      !contains(github.event.comment.body, '<!-- prvsr-phase1:pr-'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: release-trust
+    steps:
+      - name: Mint bounded PRVSR publisher token
+        id: publisher-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-contents: write
+          permission-issues: write
+          permission-pull-requests: write
+
+      - name: Mint bounded PRVSR administration token
+        id: admin-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-administration: read
+
+      - name: Checkout trusted protected implementation
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up governed Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+
+      - name: Resolve target pull request without executing target code
+        id: target
+        env:
+          INPUT_PR_NUMBER: ${{ inputs.pr_number }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text(encoding="utf-8"))
+          name = os.environ["GITHUB_EVENT_NAME"]
+          number = None
+          if name in {"pull_request_target", "pull_request_review"}:
+              number = event.get("pull_request", {}).get("number")
+          elif name == "issue_comment" and event.get("issue", {}).get("pull_request"):
+              number = event.get("issue", {}).get("number")
+          elif name == "workflow_run":
+              pulls = event.get("workflow_run", {}).get("pull_requests") or []
+              if pulls:
+                  number = pulls[0].get("number")
+          elif name == "workflow_dispatch":
+              raw = os.environ.get("INPUT_PR_NUMBER", "").strip()
+              number = int(raw) if raw else None
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
+              fh.write(f"pr_number={number or ''}\n")
+          PY
+
+      - name: Publish bounded advisory report
+        id: collector
+        if: steps.target.outputs.pr_number != ''
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          GITHUB_PUBLISH_TOKEN: ${{ steps.publisher-token.outputs.token }}
+          GITHUB_PUBLISHER_LOGIN: ${{ format('{0}[bot]', steps.publisher-token.outputs.app-slug) }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/prvsr"
+          python3 ci/pr_visual_status_operational_split.py \
+            --repo "$GITHUB_REPOSITORY" \
+            --pr "${{ steps.target.outputs.pr_number }}" \
+            --publish \
+            --output-root "$RUNNER_TEMP/prvsr" \
+            --summary "$RUNNER_TEMP/prvsr-summary.json"
+
+      - name: Record advisory outcome without creating a merge gate
+        if: always()
+        env:
+          PR_NUMBER: ${{ steps.target.outputs.pr_number }}
+          COLLECTOR_OUTCOME: ${{ steps.collector.outcome }}
+          PUBLISHER_LOGIN: ${{ format('{0}[bot]', steps.publisher-token.outputs.app-slug) }}
+        run: |
+          echo "## Advisory PR visual status" >> "$GITHUB_STEP_SUMMARY"
+          echo >> "$GITHUB_STEP_SUMMARY"
+          echo "Target PR: ${PR_NUMBER:-none}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Collector outcome: ${COLLECTOR_OUTCOME:-skipped}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Publisher: ${PUBLISHER_LOGIN:-unavailable}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Authority boundary: ADVISORY_FAILURE__NO_MERGE_BLOCKER_CREATED" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$RUNNER_TEMP/prvsr-summary.json" ]; then
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            cat "$RUNNER_TEMP/prvsr-summary.json" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "PRVSR reporting is derived and advisory; failure does not create a required check or merge blocker."

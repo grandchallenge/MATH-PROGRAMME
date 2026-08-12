@@ -1,0 +1,119 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": "fyremael",
+      "comment_id": 5250305687,
+      "commit_sha": "cd43118fb7d7e0477e1e3b28d8508590c07f339c",
+      "disposition": "HUMAN_STEWARD_RATIFIED_WITH_COUNCIL_CORRECTIONS__ADVISORY_BOUNDED_PILOT_AUTHORIZED",
+      "required": true,
+      "state": "AUTHORIZED"
+    },
+    "independent_review": {
+      "actor": "jimsteeg",
+      "commit_sha": "cd43118fb7d7e0477e1e3b28d8508590c07f339c",
+      "required": true,
+      "review_id": 4903838994,
+      "state": "APPROVED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": "success",
+      "head_sha": "cd43118fb7d7e0477e1e3b28d8508590c07f339c",
+      "name": "Programme policy checks",
+      "required": true,
+      "run_id": 31467930368,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "cd43118fb7d7e0477e1e3b28d8508590c07f339c",
+      "name": "GCL conformance",
+      "required": true,
+      "run_id": 31467930753,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "cd43118fb7d7e0477e1e3b28d8508590c07f339c",
+      "name": "Administrative maintenance dispatcher",
+      "required": true,
+      "run_id": 31468597283,
+      "status": "completed"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "PROTECTED_COMPLETE",
+    "reasons": []
+  },
+  "history": [
+    {
+      "at": "2026-08-11T07:21:13Z",
+      "event": "independent_review",
+      "outcome": "APPROVED_EXACT_HEAD"
+    },
+    {
+      "at": "2026-08-11T07:32:21Z",
+      "event": "human_steward_disposition",
+      "outcome": "ADVISORY_BOUNDED_PILOT_AUTHORIZED"
+    },
+    {
+      "at": "2026-08-11T07:33:48Z",
+      "event": "protected_merge",
+      "outcome": "da1f9a4faec07d03795bc877390b636740882900"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "cd43118fb7d7e0477e1e3b28d8508590c07f339c",
+    "exact_head_sha": "cd43118fb7d7e0477e1e3b28d8508590c07f339c",
+    "pr_number": 418,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "Council: admit PR visual status reporting deliberation (#415)"
+  },
+  "integration": {
+    "merge_commit_sha": "da1f9a4faec07d03795bc877390b636740882900",
+    "merge_state": "MERGED",
+    "protected_readback": {
+      "main_sha": "da1f9a4faec07d03795bc877390b636740882900",
+      "required": true,
+      "state": "COMPLETE"
+    }
+  },
+  "modules": {
+    "evidence": {
+      "codeql_check": 93704785999,
+      "human_steward_comment": 5250305687
+    },
+    "pilot": {
+      "case_id": "PRVSR-P01",
+      "category": "governance_control_plane"
+    }
+  },
+  "nonclaims": [
+    "No programme-wide mandatory visual-status reporting authority.",
+    "No new required check or merge gate.",
+    "Visual reports remain derived and non-authoritative governance representations."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-08-11T11:42:07Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "082b2600fb4c62e40fcbcd8347bac6f180f60821420ad4602ee73102fda8c169"
+  },
+  "report_id": "PRVSR-P01-001",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "formal_disposition",
+      "governance_or_control_plane"
+    ]
+  }
+}
