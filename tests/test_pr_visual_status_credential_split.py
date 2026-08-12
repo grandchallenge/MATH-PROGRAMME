@@ -102,6 +102,7 @@ class PRVisualStatusCredentialSplitTests(unittest.TestCase):
         self.assertNotIn("permissions:", job_header)
         self.assertIn("permission-contents: write", text)
         self.assertIn("permission-issues: write", text)
+        self.assertIn("permission-pull-requests: write", text)
         self.assertIn("permission-administration: read", text)
         self.assertIn("GITHUB_ADMIN_TOKEN:", text)
         self.assertIn("GITHUB_PUBLISH_TOKEN:", text)
@@ -114,7 +115,7 @@ class PRVisualStatusCredentialSplitTests(unittest.TestCase):
         self.assertNotIn("permission-checks:", text)
         self.assertNotIn("permission-administration: write", text)
 
-    def test_protected_workflow_keeps_app_tokens_distinct(self) -> None:
+    def test_protected_workflow_keeps_app_tokens_distinct_and_bounded(self) -> None:
         text = (ROOT / ".github" / "workflows" / "pr-visual-status-advisory.yml").read_text(
             encoding="utf-8"
         )
@@ -124,12 +125,25 @@ class PRVisualStatusCredentialSplitTests(unittest.TestCase):
         admin = text.split("- name: Mint bounded PRVSR administration token", 1)[1].split(
             "- name: Checkout trusted protected implementation", 1
         )[0]
-        self.assertIn("permission-contents: write", publisher)
-        self.assertIn("permission-issues: write", publisher)
-        self.assertNotIn("permission-administration", publisher)
-        self.assertEqual(1, admin.count("permission-administration: read"))
-        self.assertNotIn("permission-contents: write", admin)
-        self.assertNotIn("permission-issues: write", admin)
+        publisher_permissions = {
+            line.strip()
+            for line in publisher.splitlines()
+            if line.strip().startswith("permission-")
+        }
+        admin_permissions = {
+            line.strip()
+            for line in admin.splitlines()
+            if line.strip().startswith("permission-")
+        }
+        self.assertEqual(
+            {
+                "permission-contents: write",
+                "permission-issues: write",
+                "permission-pull-requests: write",
+            },
+            publisher_permissions,
+        )
+        self.assertEqual({"permission-administration: read"}, admin_permissions)
 
 
 if __name__ == "__main__":
