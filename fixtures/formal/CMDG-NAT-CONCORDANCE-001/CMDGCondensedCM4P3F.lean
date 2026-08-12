@@ -12,7 +12,8 @@ lifted-integer-valued functions on the profinite source. The second layer
 factors every such lower-Hom morphism through a canonical finite quotient and
 lifts it through the finite right-Kan counit. The third layer constructs the
 canonical double-internal-dual evaluation whose surjectivity is the remaining
-mapping-out theorem.
+mapping-out theorem and gives an operational finite-dependence section whose
+surjectivity is exactly equivalent to injectivity of solidification precomposition.
 No coefficient solidity or P3 availability is asserted by this file unless
 and until the terminal declarations are proved.
 -/
@@ -213,37 +214,107 @@ noncomputable def canonicalBidualEvaluation
     (Condensed.profiniteSolid R).obj X ⟶ coefficientObject :=
   (CMDG.CondensedCM4P3C.targetIso X).inv ≫ bidualEvaluationMeasureMap X f
 
-/-- THIRD: the exact condensed finite-dependence / mapping-out residual.
-Every global morphism from the double internal dual to the coefficient object
-must be evaluation at a locally constant section. -/
+/-- THIRD, semantic form: every global morphism from the double internal dual
+to the coefficient object is evaluation at a locally constant section. -/
 def GlobalSectionsDoubleInternalDualSurjectivity (X : Profinite.{u}) : Prop :=
   Function.Surjective (canonicalBidualEvaluation X)
 
-#check lowerHomAdjunctionEquiv
-#check lowerHomYonedaEquiv
+/-- Choose the canonical-diagram finite quotient supplied by the certified
+lower-Hom factorization. The choice is used only to expose an operational
+section of `homPrecomp`; the resulting surjectivity proposition is independent
+of the choice because it is proved equivalent below to injectivity. -/
+noncomputable def finiteFactorIndex (X : Profinite.{u})
+    (h : (Condensed.profiniteFree R).obj X ⟶ coefficientObject) :
+    DiscreteQuotient X :=
+  Classical.choose (lowerHom_factors_finite X h)
+
+noncomputable def finiteFactorMap (X : Profinite.{u})
+    (h : (Condensed.profiniteFree R).obj X ⟶ coefficientObject) :
+    (Condensed.profiniteFree R).obj (X.diagram.obj (finiteFactorIndex X h)) ⟶
+      coefficientObject :=
+  Classical.choose (Classical.choose_spec (lowerHom_factors_finite X h))
+
+theorem finiteFactor_eq (X : Profinite.{u})
+    (h : (Condensed.profiniteFree R).obj X ⟶ coefficientObject) :
+    h = (Condensed.profiniteFree R).map
+          (X.asLimitCone.π.app (finiteFactorIndex X h)) ≫
+        finiteFactorMap X h := by
+  exact Classical.choose_spec (Classical.choose_spec (lowerHom_factors_finite X h))
+
+/-- The certified finite-quotient right inverse to `homPrecomp`. -/
+noncomputable def finiteDependenceSection (X : Profinite.{u})
+    (h : (Condensed.profiniteFree R).obj X ⟶ coefficientObject) :
+    (Condensed.profiniteSolid R).obj X ⟶ coefficientObject :=
+  finiteQuotientLift X (finiteFactorIndex X h) (finiteFactorMap X h)
+
+@[simp]
+theorem homPrecomp_finiteDependenceSection (X : Profinite.{u})
+    (h : (Condensed.profiniteFree R).obj X ⟶ coefficientObject) :
+    CMDG.CondensedCM4P3D.homPrecomp coefficientObject X
+        (finiteDependenceSection X h) = h := by
+  rw [finiteDependenceSection, homPrecomp_finiteQuotientLift]
+  exact (finiteFactor_eq X h).symm
+
+/-- THIRD, operational finite-dependence form: every global upper-Hom
+morphism is one of the certified finite-quotient lifts of its lower-Hom
+restriction. -/
+def FiniteDependenceMappingOut (X : Profinite.{u}) : Prop :=
+  Function.Surjective (finiteDependenceSection X)
+
+/-- FOURTH boundary: because `finiteDependenceSection` is already a certified
+right inverse, its surjectivity is exactly injectivity of solidification
+precomposition. -/
+theorem finiteDependenceMappingOut_iff_homPrecomp_injective
+    (X : Profinite.{u}) :
+    FiniteDependenceMappingOut X ↔
+      Function.Injective
+        (CMDG.CondensedCM4P3D.homPrecomp coefficientObject X) := by
+  constructor
+  · intro hs g₁ g₂ hg
+    obtain ⟨h₁, rfl⟩ := hs g₁
+    obtain ⟨h₂, rfl⟩ := hs g₂
+    have hh : h₁ = h₂ := by
+      simpa only [homPrecomp_finiteDependenceSection] using hg
+    subst h₂
+    rfl
+  · intro hi g
+    let h := CMDG.CondensedCM4P3D.homPrecomp coefficientObject X g
+    refine ⟨h, ?_⟩
+    apply hi
+    rw [homPrecomp_finiteDependenceSection]
+    rfl
+
+/-- FIFTH boundary: after SECOND, the terminal coefficient theorem is exactly
+the all-profinite finite-dependence/mapping-out theorem. -/
+theorem coefficientResidualHomTheorem_iff_finiteDependence :
+    CMDG.CondensedCM4P3D.CoefficientResidualHomTheorem.{u} ↔
+      ∀ X : Profinite.{u}, FiniteDependenceMappingOut X := by
+  constructor
+  · intro h X
+    exact (finiteDependenceMappingOut_iff_homPrecomp_injective X).2 (h X).1
+  · intro h X
+    exact ⟨(finiteDependenceMappingOut_iff_homPrecomp_injective X).1 (h X),
+      homPrecomp_surjective X⟩
+
 #check lowerHomEquiv
-#check lowerHomYonedaEquiv_naturality
-#check lowerHomEquiv_naturality
 #check lowerHom_factors_finite
-#check finiteSolidification_counit
 #check finiteQuotientLift
-#check homPrecomp_finiteQuotientLift
 #check homPrecomp_surjective
-#check rankOneContinuousMap
-#check rankOnePresheafMap
-#check bidualEvaluationPresheaf
-#check bidualEvaluationMeasureMap
 #check canonicalBidualEvaluation
 #check GlobalSectionsDoubleInternalDualSurjectivity
+#check finiteDependenceSection
+#check FiniteDependenceMappingOut
+#check finiteDependenceMappingOut_iff_homPrecomp_injective
+#check coefficientResidualHomTheorem_iff_finiteDependence
 
 #print axioms lowerHomEquiv
 #print axioms lowerHom_factors_finite
 #print axioms homPrecomp_surjective
-#print axioms rankOneContinuousMap
-#print axioms rankOnePresheafMap
-#print axioms bidualEvaluationPresheaf
-#print axioms bidualEvaluationMeasureMap
 #print axioms canonicalBidualEvaluation
 #print axioms GlobalSectionsDoubleInternalDualSurjectivity
+#print axioms finiteDependenceSection
+#print axioms FiniteDependenceMappingOut
+#print axioms finiteDependenceMappingOut_iff_homPrecomp_injective
+#print axioms coefficientResidualHomTheorem_iff_finiteDependence
 
 end CMDG.CondensedCM4P3F
