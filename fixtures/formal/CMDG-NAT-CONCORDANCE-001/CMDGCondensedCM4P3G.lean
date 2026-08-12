@@ -106,7 +106,7 @@ theorem lowerHom_factors_finite (X : Profinite.{u}) (g : LowerHom X) :
   refine ⟨j, (lowerHomEquiv (X.diagram.obj j)).symm fQ, ?_⟩
   apply (lowerHomEquiv X).injective
   rw [lowerHomEquiv_precomp]
-  exact hf
+  simpa using hf
 
 /-- Precomposition on lower Hom is injective along any surjective profinite map. -/
 theorem lowerHom_precomp_injective_of_surjective {X Y : Profinite.{u}}
@@ -240,7 +240,7 @@ theorem coefficientResidualHomTheorem_iff_injectivity :
 than the protected P3-D coefficient-solidity blocker. -/
 theorem coefficientFiniteStageMappingOut_iff_isSolid :
     CoefficientFiniteStageMappingOut.{u} ↔
-      CondensedMod.IsSolid R coefficientObject := by
+      CondensedMod.IsSolid.{u} R coefficientObject := by
   exact coefficientFiniteStageMappingOut_iff_injectivity.{u}.trans
     (coefficientResidualHomTheorem_iff_injectivity.{u}.symm.trans
       CMDG.CondensedCM4P3D.coefficientResidualHomTheorem_iff_isSolid.{u})
