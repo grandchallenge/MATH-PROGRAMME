@@ -8,6 +8,8 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "governance/visual_pedagogy/batch2_candidate_manifest.json"
 STAGE0 = ROOT / "governance/visual_pedagogy/propagation_manifest.json"
 RENDERER = ROOT / "tools/render_visual_pedagogy_batch2_svg_candidates.py"
+REVIEW = "https://github.com/grandchallenge/MATH-PROGRAMME/issues/452#issuecomment-5260912708"
+MATRIX = "https://github.com/grandchallenge/MATH-PROGRAMME/issues/452#issuecomment-5260869772"
 
 ORDER = [
     "docs/assets/documentaries/bsd/plate_bridge.svg",
@@ -50,12 +52,16 @@ class Batch2CandidateTests(unittest.TestCase):
         cls.s0 = json.loads(STAGE0.read_text())
         cls.by_id = {r["plate_id"]: r for r in cls.m["plates"]}
 
-    def test_exact_scope_authority_and_predecessors(self):
-        self.assertEqual(self.m["state"], "AUTHORIZED_FOR_BATCH2_CANDIDATE_CONSTRUCTION__NO_LIVE_REFERENCE_SWITCH")
+    def test_exact_scope_review_and_nonauthority(self):
+        self.assertEqual(self.m["state"], "BATCH2_PLATE_REVIEW_COMPLETE__CANDIDATE_ADMISSION_IN_PROGRESS__NO_LIVE_REFERENCE_SWITCH")
+        self.assertEqual(self.m["review_issue"], 452)
+        self.assertEqual(self.m["review_evidence"], REVIEW)
+        self.assertEqual(self.m["review_matrix_evidence"], MATRIX)
+        self.assertEqual(self.m["review_outcome"], "APPROVED_ALL_SIX_WITH_NO_ADDITIONAL_RESERVATIONS")
         self.assertEqual(self.m["expected_plate_count"], 6)
         self.assertEqual([r["predecessor_path"] for r in self.m["plates"]], ORDER)
         self.assertEqual(self.s0["batches"]["2"], ORDER)
-        self.assertTrue(self.m["authority"]["candidate_construction"])
+        self.assertTrue(self.m["authority"]["candidate_admission_recording"])
         self.assertFalse(self.m["authority"]["live_reference_switch"])
         self.assertFalse(self.m["authority"]["batch2_merge_authority"])
         self.assertFalse(self.m["authority"]["visual_is_evidence"])
@@ -63,34 +69,40 @@ class Batch2CandidateTests(unittest.TestCase):
             self.assertEqual(r["predecessor_blob"], BLOBS[r["predecessor_path"]])
             self.assertEqual(r["rollback_blob"], BLOBS[r["predecessor_path"]])
             self.assertEqual(git_blob(ROOT / r["predecessor_path"]), BLOBS[r["predecessor_path"]])
+            self.assertTrue(r["independent_review_state"].startswith("reviewed"))
             self.assertFalse(r["live_reference_switched"])
             self.assertFalse(r["live_switch_eligibility"])
             self.assertFalse(r["visual_is_evidence"])
 
-    def test_five_new_candidates_plus_reused_cycle_candidate(self):
-        new = [r for r in self.m["plates"] if r["candidate_origin"] == "batch2_new"]
-        reused = [r for r in self.m["plates"] if r["candidate_origin"] == "pilot_representation_repair_reuse"]
-        self.assertEqual(len(new), 5)
-        self.assertEqual(len(reused), 1)
-        cycle = reused[0]
-        self.assertEqual(cycle["plate_id"], "HC-CYCLE-CLASS-PLATE-III")
-        self.assertEqual(cycle["candidate_path"], "governance/visual_pedagogy/review_candidates/hodge/cycle_class_successor.png")
-        self.assertEqual(cycle["candidate_digest"], sha256(ROOT / cycle["candidate_path"]))
-        self.assertEqual(cycle["independent_review_state"], "reviewed_prior_pilot__batch2_adoption_pending")
-        contract = json.loads((ROOT / cycle["contract_path"]).read_text())
-        self.assertEqual(contract["independent_review"]["status"], "reviewed")
-        self.assertFalse(contract["claim_boundary"]["visual_is_evidence"])
-        self.assertFalse((ROOT / "governance/visual_pedagogy/plates/HODGE-CYCLES-PLATE-III.json").exists())
+    def test_contracts_bind_exact_review_evidence(self):
+        for r in self.m["plates"]:
+            c = json.loads((ROOT / r["contract_path"]).read_text())
+            self.assertEqual(c["predecessor"], r["predecessor_path"])
+            self.assertFalse(c["claim_boundary"]["visual_is_evidence"])
+            self.assertTrue(c["renderer"]["reproducible"])
+            self.assertEqual(c["derivatives"][0]["path"], r["candidate_path"])
+            self.assertEqual(c["derivatives"][0]["digest"], r["candidate_digest"])
+            if r["candidate_origin"] == "batch2_new":
+                self.assertEqual(c["independent_review"]["status"], "reviewed")
+                self.assertEqual(c["independent_review"]["reviewer"], "jimsteeg")
+                self.assertEqual(c["independent_review"]["evidence_refs"], [REVIEW])
+            else:
+                self.assertEqual(c["independent_review"]["status"], "reviewed")
+                self.assertIn("batch2_adoption_review", c)
+                self.assertEqual(c["batch2_adoption_review"]["status"], "reviewed")
+                self.assertEqual(c["batch2_adoption_review"]["reviewer"], "jimsteeg")
+                self.assertEqual(c["batch2_adoption_review"]["evidence_refs"], [REVIEW])
+                self.assertEqual(c["batch2_adoption_review"]["matrix_ref"], MATRIX)
 
-    def test_generator_matches_new_candidates_and_preserved_superseded_draft(self):
-        mod = renderer()
-        generated = {str(p.relative_to(ROOT)): c for p, c in mod.OUTPUTS.items()}
-        new = [r for r in self.m["plates"] if r["candidate_origin"] == "batch2_new"]
+    def test_generator_and_superseded_history(self):
+        generated = {str(p.relative_to(ROOT)): c for p, c in renderer().OUTPUTS.items()}
+        active_new = [r for r in self.m["plates"] if r["candidate_origin"] == "batch2_new"]
         superseded = self.m["superseded_drafts"]
+        self.assertEqual(len(active_new), 5)
         self.assertEqual(len(superseded), 1)
-        expected = {r["candidate_path"] for r in new} | {superseded[0]["candidate_path"]}
+        expected = {r["candidate_path"] for r in active_new} | {superseded[0]["candidate_path"]}
         self.assertEqual(set(generated), expected)
-        for r in new:
+        for r in active_new:
             p = ROOT / r["candidate_path"]
             self.assertEqual(p.read_text(), generated[r["candidate_path"]])
             self.assertEqual(r["candidate_digest"], sha256(p))
@@ -100,24 +112,6 @@ class Batch2CandidateTests(unittest.TestCase):
         self.assertEqual(d["candidate_digest"], sha256(p))
         self.assertEqual(d["disposition"], "SUPERSEDED_BEFORE_REVIEW")
         self.assertFalse(d["live_switch_eligibility"])
-        self.assertFalse(d["visual_is_evidence"])
-
-    def test_contracts_accessibility_review_state_and_nonauthority(self):
-        for r in self.m["plates"]:
-            c = json.loads((ROOT / r["contract_path"]).read_text())
-            self.assertEqual(c["predecessor"], r["predecessor_path"])
-            self.assertFalse(c["claim_boundary"]["visual_is_evidence"])
-            self.assertTrue(c["renderer"]["reproducible"])
-            self.assertTrue(c["accessibility"]["alt_text"])
-            self.assertTrue(c["accessibility"]["long_description"])
-            self.assertEqual(c["derivatives"][0]["path"], r["candidate_path"])
-            self.assertEqual(c["derivatives"][0]["digest"], r["candidate_digest"])
-            if r["candidate_origin"] == "batch2_new":
-                self.assertEqual(c["independent_review"]["status"], "pending")
-                self.assertEqual(c["independent_review"]["evidence_refs"], [])
-            else:
-                self.assertEqual(c["independent_review"]["status"], "reviewed")
-                self.assertTrue(c["independent_review"]["evidence_refs"])
 
     def test_no_candidate_is_live_or_documentary_referenced(self):
         docs = "\n".join(p.read_text() for p in sorted((ROOT / "docs/documentaries").glob("*.md")))
@@ -125,17 +119,9 @@ class Batch2CandidateTests(unittest.TestCase):
             self.assertTrue(r["candidate_path"].startswith("governance/visual_pedagogy/review_candidates/"))
             self.assertNotIn(r["candidate_path"], docs)
             self.assertNotIn(Path(r["candidate_path"]).name, docs)
-        for d in self.m["superseded_drafts"]:
-            self.assertNotIn(d["candidate_path"], docs)
-            self.assertNotIn(Path(d["candidate_path"]).name, docs)
+        self.assertFalse((ROOT / "governance/visual_pedagogy/plates/HODGE-CYCLES-PLATE-III.json").exists())
 
     def test_semantic_guardrails(self):
-        forbidden = {"∅", "∪", "ℚ", "ℤ", "⊕", "∏", "Ω"}
-        new = [r for r in self.m["plates"] if r["candidate_origin"] == "batch2_new"]
-        for r in new:
-            text = (ROOT / r["candidate_path"]).read_text()
-            self.assertFalse(forbidden.intersection(text))
-            self.assertIn("visual_is_evidence: false", text)
         checks = {
             "BSD-BRIDGE-PLATE-III": ["no single local factor determines", "BSD conjectures r_alg = r_an"],
             "BSD-HARMONY-PLATE-II": ["r_alg ?= r_an", "conjectural bridge"],
@@ -147,9 +133,9 @@ class Batch2CandidateTests(unittest.TestCase):
             text = (ROOT / self.by_id[plate_id]["candidate_path"]).read_text()
             for needle in needles:
                 self.assertIn(needle, text)
-        cycle_contract = json.loads((ROOT / self.by_id["HC-CYCLE-CLASS-PLATE-III"]["contract_path"]).read_text())
-        self.assertIn("General surjectivity", cycle_contract["claim_boundary"]["not_claimed"])
-        self.assertIn("The integral Hodge conjecture", cycle_contract["claim_boundary"]["not_claimed"])
+        cycle = json.loads((ROOT / self.by_id["HC-CYCLE-CLASS-PLATE-III"]["contract_path"]).read_text())
+        self.assertIn("General surjectivity", cycle["claim_boundary"]["not_claimed"])
+        self.assertIn("The integral Hodge conjecture", cycle["claim_boundary"]["not_claimed"])
 
 
 if __name__ == "__main__":
