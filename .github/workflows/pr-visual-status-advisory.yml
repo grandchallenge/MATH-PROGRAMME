@@ -21,11 +21,7 @@ on:
         type: number
 
 permissions:
-  contents: write
-  issues: write
-  pull-requests: read
-  checks: read
-  actions: read
+  contents: read
 
 concurrency:
   group: prvsr-advisory-${{ github.event.pull_request.number || github.event.issue.number || github.event.workflow_run.id || inputs.pr_number || github.run_id }}
@@ -39,7 +35,23 @@ jobs:
       !contains(github.event.comment.body, '<!-- prvsr-phase1:pr-'))
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    environment: release-trust
     steps:
+      - name: Mint bounded PRVSR publisher token
+        id: publisher-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-actions: read
+          permission-administration: read
+          permission-checks: read
+          permission-contents: write
+          permission-issues: write
+          permission-pull-requests: read
+
       - name: Checkout trusted protected implementation
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -85,7 +97,7 @@ jobs:
         if: steps.target.outputs.pr_number != ''
         continue-on-error: true
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ steps.publisher-token.outputs.token }}
         run: |
           mkdir -p "$RUNNER_TEMP/prvsr"
           python3 ci/pr_visual_status_operational.py \
@@ -100,11 +112,13 @@ jobs:
         env:
           PR_NUMBER: ${{ steps.target.outputs.pr_number }}
           COLLECTOR_OUTCOME: ${{ steps.collector.outcome }}
+          PUBLISHER_LOGIN: ${{ format('{0}[bot]', steps.publisher-token.outputs.app-slug) }}
         run: |
           echo "## Advisory PR visual status" >> "$GITHUB_STEP_SUMMARY"
           echo >> "$GITHUB_STEP_SUMMARY"
           echo "Target PR: ${PR_NUMBER:-none}" >> "$GITHUB_STEP_SUMMARY"
           echo "Collector outcome: ${COLLECTOR_OUTCOME:-skipped}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Publisher: ${PUBLISHER_LOGIN:-unavailable}" >> "$GITHUB_STEP_SUMMARY"
           echo "Authority boundary: ADVISORY_FAILURE__NO_MERGE_BLOCKER_CREATED" >> "$GITHUB_STEP_SUMMARY"
           if [ -f "$RUNNER_TEMP/prvsr-summary.json" ]; then
             echo '```json' >> "$GITHUB_STEP_SUMMARY"
