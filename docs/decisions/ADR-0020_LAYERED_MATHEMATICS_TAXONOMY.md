@@ -6,7 +6,9 @@
 **Human Steward disposition:** `HUMAN_STEWARD_RATIFIED__LAYERED_MSC2020_CORE_WITH_CONTROLLED_FACETS__MATH_TAX_C01_THROUGH_C10_BINDING__BOUNDED_IMPLEMENTATION_AUTHORIZED`.  
 **Authority evidence:** issue #468, Council comment `5266563332` (SHA-256 `b4c750e0bfa9407fde92eaebc0590757fd60e86651a4f602880ed44870da76b7`) and Human Steward comment `5266922480` (SHA-256 `973a6eaad02a3c7caa2626c375e72b88e0899111a9f3dd021855aa95028f1a83`).  
 **Implementation docket:** issue #469.  
-**Protected authority:** pending independent qualification, protected merge, and protected-main readback.
+**Independent qualification:** `jimsteeg` approved candidate head `630f103c752c37ad668eeb52cef61fc25ed8a45a` in PR #470 review `4916844784`; exact-head reapproval of the qualification receipt remains pending.
+
+**Protected authority:** pending exact-head reapproval, Human Steward protected-merge authorization, protected merge, and protected-main readback.
 
 ## Decision
 
