@@ -28,12 +28,23 @@ class RecordingClient:
         return {"client": self.name, "id": 1}
 
 
+class DeniedReadClient(RecordingClient):
+    def __init__(self, name: str, status: int):
+        super().__init__(name)
+        self.status = status
+
+    def get(self, path: str):
+        self.calls.append(("GET", path))
+        raise split.AutonomyError(f"GET {path} failed: {self.status} denied")
+
+
 class PRVisualStatusCredentialSplitTests(unittest.TestCase):
     def test_rulesets_route_only_to_administration_client(self) -> None:
         source = RecordingClient("source")
         admin = RecordingClient("admin")
         publisher = RecordingClient("publisher")
-        client = split.SplitCredentialClient(source, admin, publisher)
+        public = RecordingClient("public")
+        client = split.SplitCredentialClient(source, admin, publisher, public)
 
         self.assertEqual("admin", client.get("/repos/grandchallenge/MATH-PROGRAMME/rulesets")["client"])
         self.assertEqual("admin", client.get("/repos/grandchallenge/MATH-PROGRAMME/rulesets/123")["client"])
@@ -41,12 +52,33 @@ class PRVisualStatusCredentialSplitTests(unittest.TestCase):
         self.assertEqual("source", client.get("/repos/grandchallenge/MATH-PROGRAMME/pulls/465")["client"])
         self.assertEqual(2, len(admin.calls))
         self.assertEqual(2, len(source.calls))
+        self.assertEqual([], public.calls)
+
+    def test_public_repository_read_falls_back_on_permission_denial(self) -> None:
+        source = DeniedReadClient("source", 403)
+        public = RecordingClient("public")
+        client = split.SplitCredentialClient(
+            source, RecordingClient("admin"), RecordingClient("publisher"), public
+        )
+        result = client.get("/repos/grandchallenge/MATH-PROGRAMME/commits/abc/check-runs")
+        self.assertEqual("public", result["client"])
+        self.assertEqual(1, len(source.calls))
+        self.assertEqual(1, len(public.calls))
+
+    def test_public_repository_read_falls_back_on_permission_masked_404(self) -> None:
+        source = DeniedReadClient("source", 404)
+        public = RecordingClient("public")
+        client = split.SplitCredentialClient(
+            source, RecordingClient("admin"), RecordingClient("publisher"), public
+        )
+        result = client.get("/repos/grandchallenge/MATH-PROGRAMME/pulls/465/reviews")
+        self.assertEqual("public", result["client"])
 
     def test_mutations_route_only_to_publisher_client(self) -> None:
         source = RecordingClient("source")
         admin = RecordingClient("admin")
         publisher = RecordingClient("publisher")
-        client = split.SplitCredentialClient(source, admin, publisher)
+        client = split.SplitCredentialClient(source, admin, publisher, RecordingClient("public"))
 
         self.assertEqual("publisher", client.post("/repos/grandchallenge/MATH-PROGRAMME/git/blobs", {})["client"])
         self.assertEqual("publisher", client.patch("/repos/grandchallenge/MATH-PROGRAMME/issues/comments/1", {})["client"])
@@ -56,7 +88,7 @@ class PRVisualStatusCredentialSplitTests(unittest.TestCase):
 
     def test_missing_publisher_fails_closed_on_mutation(self) -> None:
         client = split.SplitCredentialClient(
-            RecordingClient("source"), RecordingClient("admin"), None
+            RecordingClient("source"), RecordingClient("admin"), None, RecordingClient("public")
         )
         with self.assertRaisesRegex(Exception, "publisher credential is unavailable"):
             client.post("/repos/grandchallenge/MATH-PROGRAMME/git/blobs", {})
@@ -65,6 +97,9 @@ class PRVisualStatusCredentialSplitTests(unittest.TestCase):
         text = (ROOT / ".github" / "workflows" / "pr-visual-status-advisory.yml").read_text(
             encoding="utf-8"
         )
+        self.assertIn("permissions:\n  contents: read", text)
+        job_header = text.split("jobs:\n  advisory-report:", 1)[1].split("    steps:", 1)[0]
+        self.assertNotIn("permissions:", job_header)
         self.assertIn("permission-contents: write", text)
         self.assertIn("permission-issues: write", text)
         self.assertIn("permission-administration: read", text)
@@ -72,9 +107,9 @@ class PRVisualStatusCredentialSplitTests(unittest.TestCase):
         self.assertIn("GITHUB_PUBLISH_TOKEN:", text)
         self.assertIn("GITHUB_TOKEN: ${{ github.token }}", text)
         self.assertIn("python3 ci/pr_visual_status_operational_split.py", text)
-        self.assertIn("checks: read", text)
-        self.assertIn("issues: read", text)
-        self.assertIn("pull-requests: read", text)
+        self.assertNotIn("checks: read", job_header)
+        self.assertNotIn("issues: read", job_header)
+        self.assertNotIn("pull-requests: read", job_header)
         self.assertNotIn("permission-actions:", text)
         self.assertNotIn("permission-checks:", text)
         self.assertNotIn("permission-administration: write", text)
