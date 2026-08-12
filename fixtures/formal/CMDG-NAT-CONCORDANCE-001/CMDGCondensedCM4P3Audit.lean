@@ -24,6 +24,7 @@ a separately governed blocking obligation.
 
 namespace CMDG.CondensedCM4P3Audit
 
+#check CategoryTheory.HasExt
 #check CategoryTheory.Abelian.Ext.eq_zero_of_injective
 #check CategoryTheory.Abelian.Ext.subsingleton_of_injective
 #check CategoryTheory.Abelian.Ext.eq_zero_of_projective
