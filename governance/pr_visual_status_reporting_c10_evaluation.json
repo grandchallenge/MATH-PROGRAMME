@@ -1,13 +1,19 @@
 {
   "evaluation_id": "PRVSR-C10-EVAL-001",
   "pilot_id": "PR-VISUAL-STATUS-REPORTING-001",
-  "evaluation_state": "MEASURED_WITH_HUMAN_GAP_REMAINING",
+  "evaluation_state": "MEASURED_WITH_CHARACTERIZED_HUMAN_LIMITATIONS__READY_FOR_ADJUDICATION",
   "authority": {
     "adr": "ADR-0019",
     "council_docket": 415,
     "execution_docket": 426,
     "scope": "advisory bounded pilot only",
     "propagation_authority_created": false
+  },
+  "human_steward_scope_correction": {
+    "issue": 442,
+    "documentary_comment": 5262225521,
+    "disposition": "DIRECT_HUMAN_MEASUREMENT_REQUIREMENT_OVERRIDDEN__CLOSED_NOT_PLANNED",
+    "effect": "The direct-human crossover dataset is removed from the C10 critical path. Missing human-performance metrics remain explicit limitations and are not inferred from proxies."
   },
   "source_boundary": {
     "protected_capture_merge": "3c42d517a69e7e9c2684bf1cc0de506a2833c645",
@@ -17,11 +23,12 @@
     "post_merge_programme_policy_conclusion": "success",
     "post_merge_failed_workflows": 0,
     "post_merge_in_progress_workflows": 0,
-    "post_merge_queued_workflows": 0
+    "post_merge_queued_workflows": 0,
+    "regeneration_measurement_protected_merge": "2348bf237afc303266818c735786d199ac94a9ca"
   },
   "measurement_classes": {
     "DIRECT_RETROSPECTIVE_MEASUREMENT": "The retained record directly supports the metric without substituting a different quantity.",
-    "DIRECT_EXECUTED_MEASUREMENT": "The governed measurement protocol was executed on a declared environment and its direct result was retained as a governed candidate.",
+    "DIRECT_EXECUTED_MEASUREMENT": "The governed measurement protocol was executed on a declared environment and its direct result was retained and protected-admitted.",
     "RETROSPECTIVE_MECHANICAL_VERIFICATION": "Deterministic archive/render structure supports the metric mechanically, but the result is not a human-performance measure.",
     "PROXY_OBSERVATION": "A related quantity is observable but must not be represented as the required metric.",
     "NOT_DIRECTLY_OBSERVED": "The governed record does not contain the required measurement; no value is inferred."
@@ -40,19 +47,21 @@
     "reviewer_time_to_operative_state": {
       "measurement_class": "NOT_DIRECTLY_OBSERVED",
       "result": null,
+      "critical_path_required": false,
       "proxy_observation": {
         "name": "PR_433_review_request_state_to_approval",
         "observed_request_state_at": "2026-08-11T12:27:04Z",
         "approval_submitted_at": "2026-08-11T12:28:55Z",
         "elapsed_seconds": 111
       },
-      "limitation": "Review-request-to-approval latency does not measure the time required to identify operative state from the report and must not be substituted for that governed metric."
+      "limitation": "Direct reviewer orientation time was not measured. The Human Steward removed that measurement from the critical path; review-request-to-approval latency remains a proxy only and is not promoted to a direct measurement."
     },
     "factual_state_identification_accuracy": {
       "measurement_class": "NOT_DIRECTLY_OBSERVED",
       "result": null,
+      "critical_path_required": false,
       "mechanical_proxy": {"case_state_matches":8,"case_count":8},
-      "limitation": "Mechanical agreement between retained case classification and rendered state is not a timed human factual-error measurement."
+      "limitation": "Timed human factual-state accuracy was not measured. The Human Steward removed that measurement from the critical path; mechanical agreement is retained only as a proxy."
     },
     "blocker_residual_detection": {
       "measurement_class": "DIRECT_RETROSPECTIVE_MEASUREMENT",
@@ -77,6 +86,7 @@
         "source_candidate_head": "c7890852e769d86cb594da8b6d63f9d1a99955c3",
         "programme_policy_run": 31547628072,
         "contracts_job": 93963424950,
+        "protected_merge": "2348bf237afc303266818c735786d199ac94a9ca",
         "case_count": 8,
         "warmup_iterations_per_case": 3,
         "measured_iterations_per_case": 30,
@@ -86,15 +96,14 @@
         "max_ms": 0.555226,
         "deterministic_equivalence_failures": 0,
         "python_version": "3.12.13",
-        "runner_image": "ubuntu-24.04 / 20260720.247.2",
-        "admission_state_at_measurement_retention": "CANDIDATE"
+        "runner_image": "ubuntu-24.04 / 20260720.247.2"
       },
       "interpretation": "Isolated canonical report resealing plus deterministic text/SVG regeneration completed across all eight retained cases with no semantic or derivative mismatch. GitHub network latency and whole-repository CI fanout were excluded."
     },
     "operational_cost": {
       "measurement_class": "DIRECT_RETROSPECTIVE_MEASUREMENT",
       "result": {"case_bundles":8,"archive_artifacts":32,"capture_pr_changed_files":33,"capture_pr_additions":1579,"capture_pr_deletions":1,"capture_pr_executable_schema_policy_or_workflow_changes":0},
-      "limitation": "These are repository/storage and change-surface costs. They do not by themselves quantify reviewer cognitive cost; isolated regeneration compute cost is now separately measured."
+      "limitation": "These are repository/storage and change-surface costs. They do not quantify reviewer cognitive cost; isolated regeneration compute cost is measured separately."
     },
     "accessibility_text_equivalence_fidelity": {
       "measurement_class": "RETROSPECTIVE_MECHANICAL_VERIFICATION",
@@ -109,29 +118,32 @@
     "The moving-head control P07 failed closed to STALE and preserved the old review as historical.",
     "The source/claim case P04 demonstrated that repository lifecycle completion and mathematical residuals are orthogonal and must remain separately visible.",
     "Deterministic JSON/text/SVG/receipt bundles provide strong source-to-render and accessibility-structure evidence.",
-    "Isolated deterministic regeneration is directly measured at aggregate median 0.4672675 ms and p95 0.538335 ms over 240 samples, with zero deterministic-equivalence failures; admission state at retention was candidate.",
-    "The governed record still does not directly measure human time-to-operative-state or human factual error rate."
+    "Isolated deterministic regeneration is protected-admitted at aggregate median 0.4672675 ms and p95 0.538335 ms over 240 samples, with zero deterministic-equivalence failures.",
+    "Human time-to-operative-state and human factual-error rate remain unobserved and are retained as explicit nonblocking limitations under Human Steward scope correction."
   ],
-  "characterized_gaps": [
+  "characterized_limitations": [
     {
-      "gap_id": "C10-GAP-01",
+      "limitation_id": "C10-LIMITATION-01",
       "metrics": ["reviewer_time_to_operative_state","factual_state_identification_accuracy"],
-      "required_action": "Execute and retain issue #442 with at least two genuine independent human reviewers under the balanced report-first/source-only crossover protocol."
+      "state": "NOT_DIRECTLY_OBSERVED__NONBLOCKING_BY_HUMAN_STEWARD_SCOPE_CORRECTION",
+      "issue": 442,
+      "documentary_comment": 5262225521
     }
   ],
-  "measurement_candidates": [
+  "measurement_evidence": [
     {
-      "gap_id": "C10-GAP-02",
-      "metrics": ["regeneration_latency"],
+      "metric": "regeneration_latency",
       "evidence": "governance/pr_visual_status_reporting_c10_regeneration_benchmark.json",
-      "status_at_retention": "DIRECT_MEASUREMENT_RETAINED_CANDIDATE"
+      "status": "DIRECT_MEASUREMENT_PROTECTED_ADMITTED",
+      "protected_merge": "2348bf237afc303266818c735786d199ac94a9ca"
     }
   ],
-  "c10_status_recommendation": "PARTIAL",
-  "pilot_adjudication_readiness": "NOT_READY__DIRECT_HUMAN_MEASUREMENTS_REQUIRED",
+  "c10_status_recommendation": "DISCHARGED_WITH_CHARACTERIZED_LIMITATIONS",
+  "pilot_adjudication_readiness": "READY_FOR_INDEPENDENT_PILOT_ADJUDICATION",
   "nonclaims": [
-    "This evaluation does not discharge PRVSR-C10.",
-    "This evaluation does not constitute independent pilot adjudication.",
+    "No direct-human dataset is claimed or fabricated.",
+    "The two unobserved human-performance metrics remain explicit limitations.",
+    "This evaluation does not itself constitute independent pilot adjudication.",
     "This evaluation does not authorize programme-wide propagation, mandatory reporting, or a merge gate.",
     "Proxy observations are not promoted to direct measurements."
   ]
