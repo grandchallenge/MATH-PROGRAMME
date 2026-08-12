@@ -41,6 +41,44 @@
         alt: 'An exact real plot of E5, y squared equals x cubed minus 25x, marks P equals 25 over 4 comma 75 over 8 and is paired with a right triangle whose exact rational sides give area five.',
         title: 'A Rational Point Opens a Door',
         note: 'The point and area-five triangle are exact; the finite plot is not a rank computation or a proof of BSD.'
+      },
+      '../../assets/documentaries/bsd/plate_bridge.svg': {
+        src: '../../assets/visual_pedagogy/batch2/bsd/plate_bridge.svg',
+        alt: 'A literal pipeline goes from a good-prime point count and local Euler factor to the global elliptic-curve L-function and then to its order of vanishing at s equals one, with BSD rank equality explicitly left conjectural.',
+        title: 'From Local Counts to the Central Point',
+        note: 'Local factors assemble the analytic ledger; no single prime determines rank, and r algebraic equals r analytic remains conjectural.'
+      },
+      '../../assets/documentaries/bsd/plate_harmony.svg': {
+        src: '../../assets/visual_pedagogy/batch2/bsd/plate_harmony.svg',
+        alt: 'Two labelled ledgers separate arithmetic rank and regulator data from analytic Euler-product and central-zero data, with a dashed BSD box asking whether r algebraic equals r analytic.',
+        title: 'Two Distinct Ledgers',
+        note: 'Arithmetic and analytic ranks are independently constructed invariants; BSD conjectures their equality.'
+      },
+      '../../assets/documentaries/bsd/plate_frontier.svg': {
+        src: '../../assets/visual_pedagogy/batch2/bsd/plate_frontier.svg',
+        alt: 'A six-row BSD status matrix marks Mordell-Weil, modularity, and analytic rank zero or one as established terrain, and universal rank equality, universal finiteness of Sha, and the complete leading-term formula as open.',
+        title: 'The Exact BSD Theorem Frontier',
+        note: 'Established low-rank terrain is kept separate from the still-open universal BSD obligations.'
+      },
+      '../../assets/documentaries/bsd/plate_overture.svg': {
+        src: '../../assets/visual_pedagogy/batch2/bsd/plate_overture.svg',
+        alt: 'The strong BSD leading-term formula sits above labelled boxes for the period, regulator, Tate-Shafarevich order, Tamagawa factors, and torsion denominator, with rank equality, Sha finiteness, and leading-term equality listed as distinct obligations.',
+        title: 'The Strong BSD Ledger',
+        note: 'The factor ledger is mnemonic; normalization matters, and the three strong-BSD obligations remain logically distinct.'
+      }
+    },
+    hodge: {
+      '../../assets/documentaries/hodge/cycles.svg': {
+        src: '../../assets/visual_pedagogy/batch2/hodge/cycles.png',
+        alt: 'A rendered geometric variety with highlighted cycle ribbons maps by cl superscript p into a layered cohomology chamber for rational Hodge classes; established direction and open converse are separated below.',
+        title: 'From Subvarieties to Classes',
+        note: 'The cycle-class direction is established; general rational surjectivity is the open converse, and injectivity is not claimed.'
+      },
+      '../../assets/documentaries/hodge/diamond.svg': {
+        src: '../../assets/visual_pedagogy/batch2/hodge/diamond.svg',
+        alt: 'A schematic Hodge bidegree diamond shows the direct-sum decomposition, conjugation between p,q and q,p, and a labelled p,p diagonal box, without assigning numerical Hodge numbers.',
+        title: 'Hodge Decomposition: Type and Symmetry',
+        note: 'Algebraic-cycle classes have p,p type; rational p,p type is necessary but does not prove algebraicity in general.'
       }
     }
   };
