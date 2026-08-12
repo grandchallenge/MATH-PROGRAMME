@@ -28,7 +28,12 @@ def load_workflow_texts() -> dict[str, str]:
     return {
         path.name: path.read_text(encoding="utf-8")
         for path in sorted(WORKFLOW_DIR.glob("cmdg-*.yml"))
+        if path.name != "cmdg-postmerge.yml"
     }
+
+
+def load_dispatcher_text() -> str:
+    return (WORKFLOW_DIR / "cmdg-postmerge.yml").read_text(encoding="utf-8")
 
 
 def path_matches(path: str, patterns: list[str]) -> bool:
@@ -46,6 +51,7 @@ def _as_list(value: Any) -> list[str]:
 def validation_errors(
     control: dict[str, Any] | None = None,
     workflow_texts: dict[str, str] | None = None,
+    dispatcher_text: str | None = None,
 ) -> list[str]:
     errors: list[str] = []
     try:
@@ -89,11 +95,43 @@ def validation_errors(
         pr = trigger.get("pull_request")
         if not isinstance(pr, dict) or _as_list(pr.get("paths")) != paths:
             errors.append(f"{name}: pull_request paths must equal the governed shared closure")
-        push = trigger.get("push")
-        if not isinstance(push, dict) or "main" not in _as_list(push.get("branches")):
-            errors.append(f"{name}: push trigger must preserve main")
+        if "push" in trigger:
+            errors.append(f"{name}: direct push trigger must be absent; protected pushes route through dispatcher")
+        if "workflow_call" not in trigger:
+            errors.append(f"{name}: workflow_call trigger missing")
         if "workflow_dispatch" not in trigger:
             errors.append(f"{name}: workflow_dispatch trigger missing")
+
+    try:
+        dispatcher_text = load_dispatcher_text() if dispatcher_text is None else dispatcher_text
+        dispatcher = yaml.load(dispatcher_text, Loader=yaml.BaseLoader)
+        trigger = dispatcher.get("on", {}) if isinstance(dispatcher, dict) else {}
+        push = trigger.get("push", {}) if isinstance(trigger, dict) else {}
+        if "main" not in _as_list(push.get("branches")) or push.get("paths") is not None:
+            errors.append("dispatcher: every protected-main push must reach classifier without native paths")
+        schedules = trigger.get("schedule", []) if isinstance(trigger, dict) else []
+        crons = [item.get("cron") for item in schedules if isinstance(item, dict)]
+        if crons != [control.get("scheduled_current_head_sentinel", {}).get("cron")]:
+            errors.append("dispatcher: daily current-head sentinel cron drift")
+        if "workflow_dispatch" not in trigger:
+            errors.append("dispatcher: workflow_dispatch trigger missing")
+        jobs = dispatcher.get("jobs", {}) if isinstance(dispatcher, dict) else {}
+        calls = {
+            str(job.get("uses", "")).removeprefix("./.github/workflows/")
+            for job in jobs.values() if isinstance(job, dict) and "uses" in job
+        }
+        if calls != set(expected):
+            errors.append(f"dispatcher: reusable-workflow roster drift: expected={expected} actual={sorted(calls)}")
+        for job_id, job in jobs.items():
+            if isinstance(job, dict) and "uses" in job:
+                condition = str(job.get("if", ""))
+                if "policy_shards" not in condition or "cmdg" not in condition:
+                    errors.append(f"dispatcher: {job_id} is not gated by fail-closed CMDG classification")
+        for marker in ("ci/policy_impact.py classify", "ci/cmdg_postmerge_readback.py", "Enforce downstream hold"):
+            if marker not in dispatcher_text:
+                errors.append(f"dispatcher: required marker missing: {marker}")
+    except (OSError, yaml.YAMLError, AttributeError) as exc:
+        errors.append(f"dispatcher invalid: {exc}")
 
     for path in control.get("negative_examples", []):
         if path_matches(str(path), paths):
@@ -105,8 +143,12 @@ def validation_errors(
     routing = control.get("routing_boundary", {})
     if routing.get("unrelated_pr_standalone_cmdg_instantiation") is not False:
         errors.append("unrelated PR standalone CMDG instantiation must remain false")
+    if routing.get("unrelated_main_push_standalone_cmdg_instantiation") is not False:
+        errors.append("unrelated main-push standalone CMDG instantiation must remain false")
     if routing.get("cmdg_relevant_pr_full_standalone_family") is not True:
         errors.append("CMDG-relevant PR full-family fanout must remain true")
+    if routing.get("cmdg_relevant_main_push_full_standalone_family") is not True:
+        errors.append("CMDG-relevant main-push full-family fanout must remain true")
     if routing.get("within_cmdg_lane_reduction") is not False:
         errors.append("Phase 1 may not reduce within-CMDG lane fanout")
     if routing.get("protected_required_check_identity_changed") is not False:
@@ -126,8 +168,8 @@ def main() -> int:
         print(f"CMDG workflow impact gating failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
     print(
-        "CMDG workflow impact gating: exact roster, shared conservative PR closure, "
-        "unconditional protected-main push, manual dispatch, and authority boundaries are valid"
+        "CMDG workflow impact gating: exact reusable roster, conservative PR closure, "
+        "always-classified protected pushes, exact-SHA readback, daily current-head sentinel, manual dispatch, and authority boundaries are valid"
     )
     return 0
 

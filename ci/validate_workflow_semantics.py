@@ -7,7 +7,7 @@ from typing import Any
 import yaml
 ROOT=Path(__file__).resolve().parents[1]
 EXPECTED_NAMES={'bsd-wp03-substrate.yml':'BSD WP03 substrate replay','bsd-wp04-target.yml':'BSD WP04 target scorecard','ci.yml':'Programme policy checks','pages.yml':'Deploy documentation site','pc-wp04.yml':'PC-WP04 certificate checks','pc-wp05.yml':'PC-WP05 archival checks'}
-PYTHON_MINOR_LINE='3.12';POLICY_REQUIREMENTS=('jsonschema==4.26.0','PyYAML==6.0.3');DOCS_REQUIREMENTS=('mkdocs==1.6.1','mkdocs-material==9.7.7','pymdown-extensions==11.0.1','PyYAML==6.0.3');POLICY_INSTALL='python -m pip install --requirement requirements/policy.txt';DOCS_INSTALL='python -m pip install --requirement requirements/docs.txt';EXTERNAL_POLICY_INSTALL='python -m pip install --requirement "$GITHUB_WORKSPACE/requirements/policy.txt"';PINNED_REUSABLE_WORKFLOW=re.compile(r'^[^@\s]+/\.github/workflows/[^@\s]+@[0-9a-f]{40}$');SHARDS=('core','fixtures','cmdg','administrative','campaigns','contracts','docs')
+PYTHON_MINOR_LINE='3.12';POLICY_REQUIREMENTS=('jsonschema==4.26.0','PyYAML==6.0.3');DOCS_REQUIREMENTS=('mkdocs==1.6.1','mkdocs-material==9.7.7','pymdown-extensions==11.0.1','PyYAML==6.0.3');POLICY_INSTALL='python -m pip install --requirement requirements/policy.txt';DOCS_INSTALL='python -m pip install --requirement requirements/docs.txt';EXTERNAL_POLICY_INSTALL='python -m pip install --requirement "$GITHUB_WORKSPACE/requirements/policy.txt"';PINNED_REUSABLE_WORKFLOW=re.compile(r'^[^@\s]+/\.github/workflows/[^@\s]+@[0-9a-f]{40}$');LOCAL_REUSABLE_WORKFLOW=re.compile(r'^\./\.github/workflows/[^@\s]+[.]ya?ml$');SHARDS=('core','fixtures','cmdg','administrative','campaigns','contracts','docs')
 def load_workflows(root:Path=ROOT)->dict[str,dict[str,Any]]:
     out={}
     for p in sorted((root/'.github/workflows').glob('*.y*ml')):
@@ -39,7 +39,7 @@ def workflow_semantic_errors(root:Path=ROOT,workflows:dict[str,dict[str,Any]]|No
         for jid,j in w.get('jobs',{}).items():
             reusable=str(j.get('uses',''))
             if reusable:
-                if not PINNED_REUSABLE_WORKFLOW.fullmatch(reusable):e.append(f'{f}:{jid}: reusable workflow must use a full commit SHA')
+                if not (LOCAL_REUSABLE_WORKFLOW.fullmatch(reusable) or PINNED_REUSABLE_WORKFLOW.fullmatch(reusable)):e.append(f'{f}:{jid}: reusable workflow must be same-repository local or use a full commit SHA')
                 continue
             if str(j.get('runs-on',''))!='ubuntu-24.04':e.append(f'{f}:{jid}: runs-on must be pinned to ubuntu-24.04')
             for s in j.get('steps',[]):
