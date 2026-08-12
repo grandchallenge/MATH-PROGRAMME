@@ -2,6 +2,107 @@
   const reader = document.querySelector('[data-gcl-reader]');
   if (!reader) return;
 
+  const plateActivations = {
+    union_closed: {
+      '../../assets/documentaries/union_closed/plate_garden.svg': {
+        src: '../../assets/visual_pedagogy/batch1/union_closed/plate_garden_r2.svg',
+        alt: 'Exact six-set union-closed family shown as a strict Hasse-style cover diagram, with frequencies a in four sets, b in three, c in two, and half threshold three.',
+        title: 'The Garden That Closes',
+        note: 'Exact cover relations, selected unions, and frequencies expose this example without claiming the general Frankl conjecture.'
+      },
+      '../../assets/documentaries/union_closed/plate_frequency.svg': {
+        src: '../../assets/visual_pedagogy/batch1/union_closed/plate_frequency.svg',
+        alt: 'Frequency bars and a six-row incidence matrix show counts four, three, and two against a half threshold of three; column and row-size sums both equal nine.',
+        title: 'The Half-Way Balance',
+        note: 'Exact incidence counts expose the half threshold and the double-count identity.'
+      },
+      '../../assets/documentaries/union_closed/plate_lattice.svg': {
+        src: '../../assets/visual_pedagogy/batch1/union_closed/plate_lattice.svg',
+        alt: 'Six-set join-semilattice under inclusion with join equal to union; {a}, {b}, and {a,c} are marked join-irreducible and two exact joins are written.',
+        title: 'The Lattice Mirror',
+        note: 'Join is union in one exact finite example; general translation theorems retain their hypotheses.'
+      },
+      '../../assets/documentaries/union_closed/plate_entropy.svg': {
+        src: '../../assets/visual_pedagogy/batch1/union_closed/plate_entropy.svg',
+        alt: 'Uniform random set from the six-set family has marginals two thirds, one half, and one third; independent copies have union marginals eight ninths, three quarters, and five ninths, with a guardrail separating the example from source-specific entropy theorems.',
+        title: 'The Entropy Bridge',
+        note: 'An exact independent-copy calculation illustrates the entropy terrain without claiming the universal one-half theorem.'
+      },
+      '../../assets/documentaries/union_closed/plate_frontier.svg': {
+        src: '../../assets/visual_pedagogy/batch1/union_closed/plate_frontier.svg',
+        alt: 'Status map places elementary, bounded exact, imported positive-bound, and formal structural results below a dashed line labeled open universal boundary one half.',
+        title: 'Islands of Theorem',
+        note: 'Established partial terrain remains visibly below the open universal one-half boundary.'
+      }
+    },
+    bsd: {
+      '../../assets/documentaries/bsd/plate_curve.svg': {
+        src: '../../assets/visual_pedagogy/batch1/bsd/plate_curve.png',
+        alt: 'An exact real plot of E5, y squared equals x cubed minus 25x, marks P equals 25 over 4 comma 75 over 8 and is paired with a right triangle whose exact rational sides give area five.',
+        title: 'A Rational Point Opens a Door',
+        note: 'The point and area-five triangle are exact; the finite plot is not a rank computation or a proof of BSD.'
+      },
+      '../../assets/documentaries/bsd/plate_bridge.svg': {
+        src: '../../assets/visual_pedagogy/batch2/bsd/plate_bridge.svg',
+        alt: 'A literal pipeline goes from a good-prime point count and local Euler factor to the global elliptic-curve L-function and then to its order of vanishing at s equals one, with BSD rank equality explicitly left conjectural.',
+        title: 'From Local Counts to the Central Point',
+        note: 'Local factors assemble the analytic ledger; no single prime determines rank, and r algebraic equals r analytic remains conjectural.'
+      },
+      '../../assets/documentaries/bsd/plate_harmony.svg': {
+        src: '../../assets/visual_pedagogy/batch2/bsd/plate_harmony.svg',
+        alt: 'Two labelled ledgers separate arithmetic rank and regulator data from analytic Euler-product and central-zero data, with a dashed BSD box asking whether r algebraic equals r analytic.',
+        title: 'Two Distinct Ledgers',
+        note: 'Arithmetic and analytic ranks are independently constructed invariants; BSD conjectures their equality.'
+      },
+      '../../assets/documentaries/bsd/plate_frontier.svg': {
+        src: '../../assets/visual_pedagogy/batch2/bsd/plate_frontier.svg',
+        alt: 'A six-row BSD status matrix marks Mordell-Weil, modularity, and analytic rank zero or one as established terrain, and universal rank equality, universal finiteness of Sha, and the complete leading-term formula as open.',
+        title: 'The Exact BSD Theorem Frontier',
+        note: 'Established low-rank terrain is kept separate from the still-open universal BSD obligations.'
+      },
+      '../../assets/documentaries/bsd/plate_overture.svg': {
+        src: '../../assets/visual_pedagogy/batch2/bsd/plate_overture.svg',
+        alt: 'The strong BSD leading-term formula sits above labelled boxes for the period, regulator, Tate-Shafarevich order, Tamagawa factors, and torsion denominator, with rank equality, Sha finiteness, and leading-term equality listed as distinct obligations.',
+        title: 'The Strong BSD Ledger',
+        note: 'The factor ledger is mnemonic; normalization matters, and the three strong-BSD obligations remain logically distinct.'
+      }
+    },
+    hodge: {
+      '../../assets/documentaries/hodge/cycles.svg': {
+        src: '../../assets/visual_pedagogy/batch2/hodge/cycles.png',
+        alt: 'A rendered geometric variety with highlighted cycle ribbons maps by cl superscript p into a layered cohomology chamber for rational Hodge classes; established direction and open converse are separated below.',
+        title: 'From Subvarieties to Classes',
+        note: 'The cycle-class direction is established; general rational surjectivity is the open converse, and injectivity is not claimed.'
+      },
+      '../../assets/documentaries/hodge/diamond.svg': {
+        src: '../../assets/visual_pedagogy/batch2/hodge/diamond.svg',
+        alt: 'A schematic Hodge bidegree diamond shows the direct-sum decomposition, conjugation between p,q and q,p, and a labelled p,p diagonal box, without assigning numerical Hodge numbers.',
+        title: 'Hodge Decomposition: Type and Symmetry',
+        note: 'Algebraic-cycle classes have p,p type; rational p,p type is necessary but does not prove algebraicity in general.'
+      }
+    }
+  };
+
+  const activateReviewedPlates = () => {
+    const mapping = plateActivations[reader.dataset.gclReader];
+    if (!mapping) return;
+    reader.querySelectorAll('.monograph-plate img').forEach((image) => {
+      const original = image.getAttribute('src');
+      const activation = mapping[original];
+      if (!activation) return;
+      image.src = activation.src;
+      image.alt = activation.alt;
+      image.dataset.visualPedagogyActivation = 'batch1';
+      const figure = image.closest('[data-plate]');
+      const title = figure?.querySelector('figcaption strong');
+      const note = figure?.querySelector('figcaption small');
+      if (title) title.textContent = activation.title;
+      if (note) note.textContent = activation.note;
+    });
+  };
+
+  activateReviewedPlates();
+
   const storageKey = `gcl-documentary:${reader.dataset.gclReader}:scroll`;
   const focusKey = `gcl-documentary:${reader.dataset.gclReader}:focus`;
   const progressOutput = reader.querySelector('[data-reader-progress]');

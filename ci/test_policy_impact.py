@@ -9,6 +9,7 @@ def main()->int:
     cmdg=impact.classify_paths(['fixtures/cmdg/extractor_001/log_gcd.json']);assert 'cmdg' in cmdg['policy_shards'];assert cmdg['formal_dirty']['log-gcd'] is True;assert cmdg['formal_dirty']['pc-wp04'] is False
     req=impact.classify_paths(['requirements/policy.txt']);assert 'contracts' in req['policy_shards'];assert req['formal_dirty']['pc-wp04'] and req['formal_dirty']['union-closed-mathcert']
     admin=impact.classify_paths(['ci/administrative_autonomy_runtime.py']);assert admin['policy_shards']==['core','administrative']
+    visual=impact.classify_paths(['tools/render_visual_pedagogy_batch3_svg_candidates.py']);assert visual['policy_shards']==['core','contracts','docs'];assert not visual['unknown_paths'];assert not any(visual['formal_dirty'].values())
     full=impact.classify_paths(['.github/workflows/ci.yml']);assert full['policy_shards']==list(impact.ALL_SHARDS);assert all(full['formal_dirty'].values())
     unknown=impact.classify_paths(['brand-new-policy-domain/data.bin']);assert unknown['policy_shards']==list(impact.ALL_SHARDS);assert unknown['unknown_paths'];assert all(unknown['formal_dirty'].values())
     assert impact.normalize_paths(['./docs/x.md'])==['docs/x.md']

@@ -1,0 +1,128 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": "fyremael",
+      "comment_id": 5249297957,
+      "commit_sha": "702b45368a61c482410b882fd790ea665cbcf93f",
+      "disposition": "HUMAN_STEWARD_AUTHORIZED_EXACT_HEAD_PROTECTED_MERGE",
+      "required": true,
+      "state": "AUTHORIZED"
+    },
+    "independent_review": {
+      "actor": "jimsteeg",
+      "commit_sha": "702b45368a61c482410b882fd790ea665cbcf93f",
+      "required": true,
+      "review_id": 4903127167,
+      "state": "APPROVED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": "success",
+      "head_sha": "702b45368a61c482410b882fd790ea665cbcf93f",
+      "name": "Programme policy checks",
+      "required": true,
+      "run_id": 31460904423,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "702b45368a61c482410b882fd790ea665cbcf93f",
+      "name": "GCL conformance",
+      "required": true,
+      "run_id": 31460904779,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "702b45368a61c482410b882fd790ea665cbcf93f",
+      "name": "Administrative maintenance automation validation",
+      "required": true,
+      "run_id": 31460904410,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "702b45368a61c482410b882fd790ea665cbcf93f",
+      "name": "Administrative maintenance dispatcher",
+      "required": true,
+      "run_id": 31460904419,
+      "status": "completed"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "PROTECTED_COMPLETE",
+    "reasons": []
+  },
+  "history": [
+    {
+      "at": "2026-08-11T05:18:03Z",
+      "event": "independent_review",
+      "outcome": "APPROVED_EXACT_HEAD"
+    },
+    {
+      "at": "2026-08-11T05:22:13Z",
+      "event": "human_steward_disposition",
+      "outcome": "AUTHORIZED_EXACT_HEAD_PROTECTED_MERGE"
+    },
+    {
+      "at": "2026-08-11T05:23:02Z",
+      "event": "protected_merge",
+      "outcome": "a92860e801068761648e26f69855ac8573e8a93c"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "702b45368a61c482410b882fd790ea665cbcf93f",
+    "exact_head_sha": "702b45368a61c482410b882fd790ea665cbcf93f",
+    "pr_number": 414,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "MP-ADMIN: harden receipt/candidate namespace separation (#407)"
+  },
+  "integration": {
+    "merge_commit_sha": "a92860e801068761648e26f69855ac8573e8a93c",
+    "merge_state": "MERGED",
+    "protected_readback": {
+      "main_sha": "a92860e801068761648e26f69855ac8573e8a93c",
+      "required": true,
+      "state": "COMPLETE"
+    }
+  },
+  "modules": {
+    "evidence": {
+      "codeql_check": 93684153060,
+      "human_steward_comment": 5249297957
+    },
+    "pilot": {
+      "case_id": "PRVSR-P02",
+      "category": "administrative_automation"
+    },
+    "terminal_docket_state": "CLOSED_HARDENING_COMPLETE__NO_AUTHORITY_EXPANDED"
+  },
+  "nonclaims": [
+    "No generalized late-recovery authority.",
+    "No cadence or recovery-window change.",
+    "No mathematical, source-verification, certification, migration, or programme-wide authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-08-11T11:42:07Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "cd5b1e117db2e0673b8c70152b27d22005403fc772cfcb35ac6c780c538f4b4f"
+  },
+  "report_id": "PRVSR-P02-001",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane",
+      "administrative_automation"
+    ]
+  }
+}

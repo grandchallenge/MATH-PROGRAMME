@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the bounded documentary visual-pedagogy pilot contract.
+"""Validate documentary visual-pedagogy contracts across pilot and propagation phases.
 
 This validator checks identity, completeness, schema shape, provenance declarations,
 and authority boundaries. It deliberately does not claim to validate mathematical
@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 AUDIT_PATH = Path("governance/documentary_visual_pedagogy_pilot_audit.json")
 CONTRACT_ROOT = Path("governance/visual_pedagogy/plates")
 SCHEMA_PATH = Path("schemas/documentary_visual_plate.schema.json")
+PROPAGATION_MANIFEST_PATH = Path("governance/visual_pedagogy/propagation_manifest.json")
 ASSET_ROOT = Path("docs/assets/documentaries")
 VISUAL_SUFFIXES = {".svg", ".png", ".webp", ".jpg", ".jpeg", ".pdf", ".mp4", ".webm"}
 DISPOSITIONS = {"KEEP", "REDRAW", "REPLACE", "RETIRE"}
@@ -63,6 +64,19 @@ def audit_inventory(audit: dict[str, Any]) -> list[dict[str, Any]]:
             item["documentary_id"] = documentary_id
             inventory.append(item)
     return inventory
+
+
+def contract_asset_candidates(contract: dict[str, Any]) -> set[str]:
+    """Return repository paths by which a contract can bind its audited visual."""
+    paths = {
+        str(item.get("path", ""))
+        for item in contract.get("derivatives", [])
+        if item.get("path")
+    }
+    predecessor = contract.get("predecessor")
+    if isinstance(predecessor, str) and predecessor:
+        paths.add(predecessor)
+    return paths
 
 
 def visual_pedagogy_errors(root: Path = ROOT) -> list[str]:
@@ -113,6 +127,7 @@ def visual_pedagogy_errors(root: Path = ROOT) -> list[str]:
             )
 
     audited_assets = set(asset_paths)
+    inventory_by_path = {str(item.get("asset", "")): item for item in inventory}
     for item in inventory:
         relative = str(item.get("asset", ""))
         path = root / relative
@@ -135,9 +150,9 @@ def visual_pedagogy_errors(root: Path = ROOT) -> list[str]:
     if not 6 <= len(selected) <= 10:
         errors.append(f"visual pedagogy: reference pilot must contain 6-10 cases, found {len(selected)}")
     selected_paths = [str(item.get("asset", "")) for item in selected]
-    if len(selected_paths) != len(set(selected_paths)):
+    selected_set = set(selected_paths)
+    if len(selected_paths) != len(selected_set):
         errors.append("visual pedagogy: duplicate asset in reference-pilot selection")
-    inventory_by_path = {str(item.get("asset", "")): item for item in inventory}
     for item in selected:
         relative = str(item.get("asset", ""))
         audited = inventory_by_path.get(relative)
@@ -150,6 +165,34 @@ def visual_pedagogy_errors(root: Path = ROOT) -> list[str]:
         errors.append("visual pedagogy: pilot lacks a KEEP positive control")
     if selected and not any(item.get("disposition") in {"REDRAW", "REPLACE"} for item in selected):
         errors.append("visual pedagogy: pilot lacks a corrective REDRAW/REPLACE case")
+
+    propagation_manifest: dict[str, Any] | None = None
+    propagation_file = root / PROPAGATION_MANIFEST_PATH
+    if propagation_file.is_file():
+        try:
+            loaded = load_json(propagation_file)
+            if isinstance(loaded, dict):
+                propagation_manifest = loaded
+            else:
+                errors.append("visual pedagogy: propagation manifest must be a JSON object")
+        except json.JSONDecodeError as exc:
+            errors.append(f"visual pedagogy: invalid propagation manifest JSON: {exc}")
+
+    propagation_assets: set[str] = set()
+    propagation_migration_assets: set[str] = set()
+    if propagation_manifest is not None:
+        assets = propagation_manifest.get("assets", {})
+        migration = propagation_manifest.get("migration", {})
+        if not isinstance(assets, dict):
+            errors.append("visual pedagogy: propagation manifest assets must be an object")
+        else:
+            propagation_assets = set(map(str, assets))
+        if not isinstance(migration, dict):
+            errors.append("visual pedagogy: propagation manifest migration must be an object")
+        else:
+            propagation_migration_assets = set(map(str, migration))
+        if propagation_assets and propagation_assets != audited_assets:
+            errors.append("visual pedagogy: propagation manifest asset population disagrees with audited inventory")
 
     contracts: list[tuple[Path, dict[str, Any]]] = []
     plate_ids: list[str] = []
@@ -175,37 +218,54 @@ def visual_pedagogy_errors(root: Path = ROOT) -> list[str]:
             errors.append(f"visual pedagogy: {path.name} must declare independent_review status")
 
     if len(plate_ids) != len(set(plate_ids)):
-        errors.append("visual pedagogy: duplicate plate_id across pilot contracts")
-    if len(contracts) != len(selected):
-        errors.append(
-            f"visual pedagogy: expected one visual contract per selected pilot case; "
-            f"selected {len(selected)}, contracts {len(contracts)}"
-        )
+        errors.append("visual pedagogy: duplicate plate_id across visual contracts")
 
-    accounted_contract_assets: set[str] = set()
+    accounted_pilot_assets: set[str] = set()
+    bound_assets: list[str] = []
     for path, contract in contracts:
-        derivative_paths = {
-            str(item.get("path", "")) for item in contract.get("derivatives", []) if item.get("path")
-        }
-        predecessor = contract.get("predecessor")
-        if isinstance(predecessor, str) and predecessor:
-            derivative_paths.add(predecessor)
-        matched = derivative_paths & set(selected_paths)
-        if len(matched) != 1:
+        candidates = contract_asset_candidates(contract)
+        matched_audit = candidates & audited_assets
+        if len(matched_audit) != 1:
             errors.append(
-                f"visual pedagogy: {path.name} must bind exactly one selected predecessor asset; "
-                f"matched {sorted(matched)}"
+                f"visual pedagogy: {path.name} must bind exactly one audited visual asset; "
+                f"matched {sorted(matched_audit)}"
             )
             continue
-        selected_asset = next(iter(matched))
-        accounted_contract_assets.add(selected_asset)
-        audited = inventory_by_path[selected_asset]
+
+        bound_asset = next(iter(matched_audit))
+        bound_assets.append(bound_asset)
+        audited = inventory_by_path[bound_asset]
         if contract.get("documentary_id") != audited.get("documentary_id"):
             errors.append(f"visual pedagogy: {path.name} documentary_id disagrees with audit")
         if contract.get("audit_disposition") != audited.get("disposition"):
             errors.append(f"visual pedagogy: {path.name} audit_disposition disagrees with audit")
 
-    for missing in sorted(set(selected_paths) - accounted_contract_assets):
+        if bound_asset in selected_set:
+            accounted_pilot_assets.add(bound_asset)
+            continue
+
+        # Contracts outside the original bounded pilot are valid only as governed
+        # propagation contracts. They must bind an audited non-KEEP migration asset
+        # admitted by the protected Stage-0 propagation manifest.
+        if propagation_manifest is None:
+            errors.append(
+                f"visual pedagogy: {path.name} is outside the reference pilot but no protected propagation manifest exists"
+            )
+            continue
+        if bound_asset not in propagation_assets or bound_asset not in propagation_migration_assets:
+            errors.append(
+                f"visual pedagogy: {path.name} binds non-pilot asset not admitted to staged migration: {bound_asset}"
+            )
+        if audited.get("disposition") == "KEEP":
+            errors.append(
+                f"visual pedagogy: {path.name} cannot create propagation contract for KEEP asset: {bound_asset}"
+            )
+
+    duplicate_bindings = duplicate_values(bound_assets)
+    for duplicate in sorted(duplicate_bindings):
+        errors.append(f"visual pedagogy: audited visual asset has multiple contracts: {duplicate}")
+
+    for missing in sorted(selected_set - accounted_pilot_assets):
         errors.append(f"visual pedagogy: selected pilot asset has no unique contract: {missing}")
 
     discovered_assets = discovered_visual_assets(root)
@@ -220,6 +280,16 @@ def visual_pedagogy_errors(root: Path = ROOT) -> list[str]:
         errors.append(f"visual pedagogy: unaccounted documentary visual asset: {relative}")
 
     return errors
+
+
+def duplicate_values(values: list[Any]) -> set[Any]:
+    seen: set[Any] = set()
+    duplicates: set[Any] = set()
+    for value in values:
+        if value in seen:
+            duplicates.add(value)
+        seen.add(value)
+    return duplicates
 
 
 def main() -> int:

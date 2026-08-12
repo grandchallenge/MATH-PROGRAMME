@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://grandchallenge.ai/schemas/cmdg_condensed_cm4.schema.json",
-  "title": "CMDG condensed CM4 characterized blocker record",
+  "title": "CMDG condensed CM4 dependency reconciliation record",
   "type": "object",
   "required": [
     "schema_version",
@@ -13,6 +13,7 @@
     "environment",
     "formal_target",
     "exact_tree_audit",
+    "dependency_reconciliation",
     "prerequisite_matrix",
     "stage_a_result",
     "regression_anchors",
@@ -21,26 +22,108 @@
     "disposition"
   ],
   "properties": {
-    "schema_version": {"const": "1.0.0"},
+    "schema_version": {"const": "1.1.0"},
     "operation_id": {"const": "CMDG-CONDENSED-CM4-001"},
     "issue": {"const": "MATH-PROGRAMME#355"},
-    "disposition": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"},
+    "disposition": {"const": "CM4_DEPENDENCY_RECONCILIATION_READY__P3_NEXT_PENDING_PROTECTED_ADMISSION"},
+    "dependency_reconciliation": {
+      "type": "object",
+      "required": [
+        "reconciliation_baseline",
+        "reconciliation_baseline_tree",
+        "protected_p2_receipt",
+        "remaining_root_blockers",
+        "source_route_edges",
+        "selected_next_lane",
+        "selection_class",
+        "selection_rationale",
+        "p4_route_rule",
+        "p2_effect"
+      ],
+      "properties": {
+        "reconciliation_baseline": {"const": "2abad244b57ab148184b3033524b7ec636cb7c7f"},
+        "reconciliation_baseline_tree": {"const": "6c8c6ba86306571ed75294977842af8b3beeb245"},
+        "selected_next_lane": {"const": "CM4-P3"},
+        "remaining_root_blockers": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "contains": {"const": "CM4-P3"}
+        },
+        "protected_p2_receipt": {
+          "type": "object",
+          "required": [
+            "operation",
+            "issue",
+            "pull_request",
+            "reviewed_head",
+            "protected_merge",
+            "protected_tree",
+            "protected_p2_replay",
+            "protected_p2_e_replay",
+            "programme_policy",
+            "gcl_conformance",
+            "state"
+          ],
+          "properties": {
+            "operation": {"const": "CMDG-CONDENSED-CM4-P2-001"},
+            "issue": {"const": "MATH-PROGRAMME#363"},
+            "pull_request": {"const": "MATH-PROGRAMME#443"},
+            "reviewed_head": {"const": "36d29b4dea3b3049016e3a7277923cb37a7579f4"},
+            "protected_merge": {"const": "2abad244b57ab148184b3033524b7ec636cb7c7f"},
+            "protected_tree": {"const": "6c8c6ba86306571ed75294977842af8b3beeb245"},
+            "protected_p2_replay": {"const": 31549886295},
+            "protected_p2_e_replay": {"const": 31549886166},
+            "programme_policy": {"const": 31549886179},
+            "gcl_conformance": {"const": 31549886679},
+            "state": {"const": "PROTECTED_CLOSED"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": true
+    },
     "stage_a_result": {
       "type": "object",
-      "required": ["dependency_closure_sufficient", "theorem_attempt_authorized", "terminal_operational_disposition"],
+      "required": [
+        "dependency_reconciliation_complete",
+        "dependency_closure_sufficient",
+        "theorem_attempt_authorized",
+        "p2_protected_closed",
+        "p2_blocks_cm4",
+        "selected_next_lane",
+        "next_lane_opening_authorized",
+        "terminal_operational_disposition"
+      ],
       "properties": {
+        "dependency_reconciliation_complete": {"const": true},
         "dependency_closure_sufficient": {"const": false},
         "theorem_attempt_authorized": {"const": false},
-        "terminal_operational_disposition": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"}
+        "p2_protected_closed": {"const": true},
+        "p2_blocks_cm4": {"const": false},
+        "selected_next_lane": {"const": "CM4-P3"},
+        "next_lane_opening_authorized": {"const": false},
+        "terminal_operational_disposition": {"const": "CM4_DEPENDENCY_RECONCILIATION_READY__P3_NEXT_PENDING_PROTECTED_ADMISSION"}
       },
       "additionalProperties": true
     },
     "prerequisite_matrix": {
       "type": "array",
       "minItems": 6,
+      "maxItems": 6,
       "items": {
         "type": "object",
-        "required": ["id", "ingredient", "status", "reachability", "semantic_concordance", "evidence", "reopen_condition"]
+        "required": [
+          "id",
+          "ingredient",
+          "status",
+          "route_role",
+          "depends_on",
+          "reachability",
+          "semantic_concordance",
+          "evidence",
+          "reopen_condition"
+        ]
       }
     },
     "claim_boundary": {
