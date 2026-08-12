@@ -94,10 +94,13 @@ theorem lowerHom_factors_finite (X : Profinite.{u})
       h = (Condensed.profiniteFree R).map (X.asLimitCone.π.app j) ≫ hQ := by
   obtain ⟨j, g, hg⟩ :=
     Profinite.exists_locallyConstant X.asLimitCone X.asLimit (lowerHomEquiv X h)
+  let q : X ⟶ X.diagram.obj j := X.asLimitCone.π.app j
   refine ⟨j, (lowerHomEquiv (X.diagram.obj j)).symm g, ?_⟩
+  change h = (Condensed.profiniteFree R).map q ≫
+    (lowerHomEquiv (X.diagram.obj j)).symm g
   apply (lowerHomEquiv X).injective
   rw [lowerHomEquiv_naturality, Equiv.apply_symm_apply]
-  exact hg
+  simpa [q] using hg
 
 #check lowerHomAdjunctionEquiv
 #check lowerHomYonedaEquiv
