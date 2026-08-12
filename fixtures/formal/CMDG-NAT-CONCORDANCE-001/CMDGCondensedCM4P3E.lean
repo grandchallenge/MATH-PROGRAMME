@@ -70,12 +70,10 @@ noncomputable def finiteCoefficientFamilyLift
         apply LinearMap.ext
         intro a
         funext x
-        change
-          CMDG.CondensedCM4P2D.coefficientPresheaf.map f
-              ((s.proj x).hom.app S a) =
-            (s.proj x).hom.app T (s.pt.obj.map f a)
-        simpa only [ModuleCat.comp_apply] using
-          congrArg (fun q => q a) ((s.proj x).hom.naturality f).symm }
+        simpa [finiteCoefficientFamilyCondensed,
+          CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf,
+          ModuleCat.comp_apply] using
+          (congrArg (fun q => q a) ((s.proj x).hom.naturality f)).symm }
 
 /-- The explicit finite coefficient-family cone satisfies the categorical
 product universal property in `CondensedMod`. -/
@@ -100,13 +98,16 @@ noncomputable def finiteCoefficientFamilyConeIsLimit (X : FintypeCat.{u}) :
       apply LinearMap.ext
       intro a
       funext x
-      change
-        (m.hom.app S a) x = (s.proj x).hom.app S a
       have h := congrArg (fun q => q.hom.app S) (hm x)
       have h' := congrArg (fun q => q a) h
-      simpa only [finiteCoefficientFamilyCone, finiteCoefficientFamilyProjection,
-        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoordinateProjection,
-        ModuleCat.comp_apply] using h')
+      have hcoord :
+          ((m ≫ (finiteCoefficientFamilyCone X).proj x).hom.app S) a =
+            (m.hom.app S a) x := by
+        rfl
+      calc
+        (m.hom.app S a) x =
+            ((m ≫ (finiteCoefficientFamilyCone X).proj x).hom.app S) a := hcoord.symm
+        _ = (s.proj x).hom.app S a := h')
 
 /-- Lift the protected finite family/free presheaf isomorphism to condensed
 modules. -/
