@@ -62,11 +62,12 @@ theorem lowerHomSectionsEquiv_precomp {X Y : Profinite.{u}}
         ((profiniteToCondensed).obj X) coefficientObject
         ((Condensed.free R).map ((profiniteToCondensed).map q) ≫ g)) = _
   rw [(Condensed.freeForgetAdjunction R).homEquiv_naturality_left]
-  symm
-  exact (coherentTopology CompHaus.{u}).uliftYonedaEquiv_naturality
-    ((Condensed.freeForgetAdjunction R).homEquiv
-      ((profiniteToCondensed).obj Y) coefficientObject g)
-    ((profiniteToCompHaus).map q)
+  simpa [profiniteToCondensed, compHausToCondensed, compHausToCondensed', Condensed.ulift,
+    Functor.comp_map] using
+    ((coherentTopology CompHaus.{u}).uliftYonedaEquiv_naturality
+      ((Condensed.freeForgetAdjunction R).homEquiv
+        ((profiniteToCondensed).obj Y) coefficientObject g)
+      ((profiniteToCompHaus).map q)).symm
 
 /-- Naturality of G0: precomposition along a profinite map is exactly restriction of
 locally constant functions. -/
