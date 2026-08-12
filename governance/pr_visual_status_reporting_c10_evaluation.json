@@ -1,7 +1,7 @@
 {
   "evaluation_id": "PRVSR-C10-EVAL-001",
   "pilot_id": "PR-VISUAL-STATUS-REPORTING-001",
-  "evaluation_state": "MEASURED_WITH_CHARACTERIZED_GAPS",
+  "evaluation_state": "MEASURED_WITH_HUMAN_GAP_REMAINING",
   "authority": {
     "adr": "ADR-0019",
     "council_docket": 415,
@@ -21,75 +21,20 @@
   },
   "measurement_classes": {
     "DIRECT_RETROSPECTIVE_MEASUREMENT": "The retained record directly supports the metric without substituting a different quantity.",
+    "DIRECT_EXECUTED_MEASUREMENT": "The governed measurement protocol was executed on a declared environment and its direct result was retained as a governed candidate.",
     "RETROSPECTIVE_MECHANICAL_VERIFICATION": "Deterministic archive/render structure supports the metric mechanically, but the result is not a human-performance measure.",
     "PROXY_OBSERVATION": "A related quantity is observable but must not be represented as the required metric.",
     "NOT_DIRECTLY_OBSERVED": "The governed record does not contain the required measurement; no value is inferred."
   },
   "case_evaluations": [
-    {
-      "case_id": "PRVSR-P01",
-      "pr_number": 418,
-      "expected_operative_state": "PROTECTED_COMPLETE",
-      "observed_operative_state": "PROTECTED_COMPLETE",
-      "result": "MATCH",
-      "note": "Governance/control-plane case retains exact-head review, Human Steward authority, successful checks, protected merge and readback."
-    },
-    {
-      "case_id": "PRVSR-P02",
-      "pr_number": 414,
-      "expected_operative_state": "PROTECTED_COMPLETE",
-      "observed_operative_state": "PROTECTED_COMPLETE",
-      "result": "MATCH",
-      "note": "Administrative-automation case retains terminal docket state and bounded nonclaims without expanding authority."
-    },
-    {
-      "case_id": "PRVSR-P03",
-      "pr_number": 425,
-      "expected_operative_state": "PROTECTED_COMPLETE",
-      "observed_operative_state": "PROTECTED_COMPLETE",
-      "result": "MATCH",
-      "note": "Documentary-governed migration case preserves pre-ratification historical snapshots rather than rewriting them."
-    },
-    {
-      "case_id": "PRVSR-P04",
-      "pr_number": 307,
-      "expected_operative_state": "PROTECTED_COMPLETE",
-      "observed_operative_state": "PROTECTED_COMPLETE",
-      "result": "MATCH_WITH_ORTHOGONAL_CLAIM_RESIDUAL",
-      "note": "Repository integration is complete while DEPTH reopening requirements and mathematical nonclaims remain explicitly separate claim-layer residuals."
-    },
-    {
-      "case_id": "PRVSR-P05",
-      "pr_number": 242,
-      "expected_operative_state": "PROTECTED_COMPLETE",
-      "observed_operative_state": "PROTECTED_COMPLETE",
-      "result": "MATCH",
-      "note": "Theorem/certification case retains its certification chain and distinct Human Steward source shape."
-    },
-    {
-      "case_id": "PRVSR-P06",
-      "pr_number": 274,
-      "expected_operative_state": "BLOCKED",
-      "observed_operative_state": "BLOCKED",
-      "result": "MATCH_ADVERSE_CONTROL",
-      "note": "The failed required Programme-policy check remains visible despite two other required checks succeeding; the non-independent CHANGES_REQUESTED signal remains history rather than being mislabeled as independent review."
-    },
-    {
-      "case_id": "PRVSR-P07",
-      "pr_number": 324,
-      "expected_operative_state": "STALE",
-      "observed_operative_state": "STALE",
-      "result": "MATCH_ADVERSE_CONTROL_WITH_SOURCE_DISAGREEMENT_RETAINED",
-      "note": "Head movement invalidates the old review boundary. The governed review-body binding and conflicting raw REST review commit_id are both preserved rather than silently reconciled."
-    },
-    {
-      "case_id": "PRVSR-P08",
-      "pr_number": 282,
-      "expected_operative_state": "PROTECTED_COMPLETE",
-      "observed_operative_state": "PROTECTED_COMPLETE",
-      "result": "MATCH_POSITIVE_CONTROL",
-      "note": "Low-complexity one-file receipt correctly represents Human Steward authorization as not required rather than missing."
-    }
+    {"case_id":"PRVSR-P01","pr_number":418,"expected_operative_state":"PROTECTED_COMPLETE","observed_operative_state":"PROTECTED_COMPLETE","result":"MATCH","note":"Governance/control-plane case retains exact-head review, Human Steward authority, successful checks, protected merge and readback."},
+    {"case_id":"PRVSR-P02","pr_number":414,"expected_operative_state":"PROTECTED_COMPLETE","observed_operative_state":"PROTECTED_COMPLETE","result":"MATCH","note":"Administrative-automation case retains terminal docket state and bounded nonclaims without expanding authority."},
+    {"case_id":"PRVSR-P03","pr_number":425,"expected_operative_state":"PROTECTED_COMPLETE","observed_operative_state":"PROTECTED_COMPLETE","result":"MATCH","note":"Documentary-governed migration case preserves pre-ratification historical snapshots rather than rewriting them."},
+    {"case_id":"PRVSR-P04","pr_number":307,"expected_operative_state":"PROTECTED_COMPLETE","observed_operative_state":"PROTECTED_COMPLETE","result":"MATCH_WITH_ORTHOGONAL_CLAIM_RESIDUAL","note":"Repository integration is complete while DEPTH reopening requirements and mathematical nonclaims remain explicitly separate claim-layer residuals."},
+    {"case_id":"PRVSR-P05","pr_number":242,"expected_operative_state":"PROTECTED_COMPLETE","observed_operative_state":"PROTECTED_COMPLETE","result":"MATCH","note":"Theorem/certification case retains its certification chain and distinct Human Steward source shape."},
+    {"case_id":"PRVSR-P06","pr_number":274,"expected_operative_state":"BLOCKED","observed_operative_state":"BLOCKED","result":"MATCH_ADVERSE_CONTROL","note":"The failed required Programme-policy check remains visible despite two other required checks succeeding; the non-independent CHANGES_REQUESTED signal remains history rather than being mislabeled as independent review."},
+    {"case_id":"PRVSR-P07","pr_number":324,"expected_operative_state":"STALE","observed_operative_state":"STALE","result":"MATCH_ADVERSE_CONTROL_WITH_SOURCE_DISAGREEMENT_RETAINED","note":"Head movement invalidates the old review boundary. The governed review-body binding and conflicting raw REST review commit_id are both preserved rather than silently reconciled."},
+    {"case_id":"PRVSR-P08","pr_number":282,"expected_operative_state":"PROTECTED_COMPLETE","observed_operative_state":"PROTECTED_COMPLETE","result":"MATCH_POSITIVE_CONTROL","note":"Low-complexity one-file receipt correctly represents Human Steward authorization as not required rather than missing."}
   ],
   "metrics": {
     "reviewer_time_to_operative_state": {
@@ -106,65 +51,54 @@
     "factual_state_identification_accuracy": {
       "measurement_class": "NOT_DIRECTLY_OBSERVED",
       "result": null,
-      "mechanical_proxy": {
-        "case_state_matches": 8,
-        "case_count": 8
-      },
+      "mechanical_proxy": {"case_state_matches":8,"case_count":8},
       "limitation": "Mechanical agreement between retained case classification and rendered state is not a timed human factual-error measurement."
     },
     "blocker_residual_detection": {
       "measurement_class": "DIRECT_RETROSPECTIVE_MEASUREMENT",
-      "result": {
-        "designed_blocker_or_residual_controls": 2,
-        "correctly_distinguished": 2,
-        "rate": 1.0,
-        "cases": ["PRVSR-P04", "PRVSR-P06"]
-      },
+      "result": {"designed_blocker_or_residual_controls":2,"correctly_distinguished":2,"rate":1.0,"cases":["PRVSR-P04","PRVSR-P06"]},
       "interpretation": "P06 is correctly blocked by a failed required repository check; P04 remains repository-complete while scientific reopening requirements and nonclaims remain visible as orthogonal residuals."
     },
     "stale_report_detection": {
       "measurement_class": "DIRECT_RETROSPECTIVE_MEASUREMENT",
-      "result": {
-        "designed_stale_controls": 1,
-        "correctly_detected": 1,
-        "rate": 1.0,
-        "case": "PRVSR-P07"
-      },
+      "result": {"designed_stale_controls":1,"correctly_detected":1,"rate":1.0,"case":"PRVSR-P07"},
       "interpretation": "The report fails closed to STALE when exact head and current head diverge."
     },
     "source_render_disagreement_rate": {
       "measurement_class": "RETROSPECTIVE_MECHANICAL_VERIFICATION",
-      "result": {
-        "retained_bundles": 8,
-        "known_renderer_disagreements": 0,
-        "rate": 0.0
-      },
+      "result": {"retained_bundles":8,"known_renderer_disagreements":0,"rate":0.0},
       "limitation": "This measures deterministic canonical-source to derivative consistency under the C09 bundle contract. P07 contains a retained disagreement between two source records; that source-source discrepancy is intentionally not counted as a renderer disagreement."
     },
     "regeneration_latency": {
-      "measurement_class": "NOT_DIRECTLY_OBSERVED",
-      "result": null,
-      "limitation": "The retained capture operation did not preserve isolated generator/regenerator wall-clock timing. Whole-workflow duration is not a valid substitute."
+      "measurement_class": "DIRECT_EXECUTED_MEASUREMENT",
+      "result": {
+        "benchmark_id": "PRVSR-C10-REGEN-BENCH-001",
+        "evidence": "governance/pr_visual_status_reporting_c10_regeneration_benchmark.json",
+        "source_candidate_head": "c7890852e769d86cb594da8b6d63f9d1a99955c3",
+        "programme_policy_run": 31547628072,
+        "contracts_job": 93963424950,
+        "case_count": 8,
+        "warmup_iterations_per_case": 3,
+        "measured_iterations_per_case": 30,
+        "sample_count": 240,
+        "median_ms": 0.4672675,
+        "p95_ms": 0.538335,
+        "max_ms": 0.555226,
+        "deterministic_equivalence_failures": 0,
+        "python_version": "3.12.13",
+        "runner_image": "ubuntu-24.04 / 20260720.247.2",
+        "admission_state_at_measurement_retention": "CANDIDATE"
+      },
+      "interpretation": "Isolated canonical report resealing plus deterministic text/SVG regeneration completed across all eight retained cases with no semantic or derivative mismatch. GitHub network latency and whole-repository CI fanout were excluded."
     },
     "operational_cost": {
       "measurement_class": "DIRECT_RETROSPECTIVE_MEASUREMENT",
-      "result": {
-        "case_bundles": 8,
-        "archive_artifacts": 32,
-        "capture_pr_changed_files": 33,
-        "capture_pr_additions": 1579,
-        "capture_pr_deletions": 1,
-        "capture_pr_executable_schema_policy_or_workflow_changes": 0
-      },
-      "limitation": "These are repository/storage and change-surface costs. They do not by themselves quantify reviewer cognitive cost or isolated generator compute cost."
+      "result": {"case_bundles":8,"archive_artifacts":32,"capture_pr_changed_files":33,"capture_pr_additions":1579,"capture_pr_deletions":1,"capture_pr_executable_schema_policy_or_workflow_changes":0},
+      "limitation": "These are repository/storage and change-surface costs. They do not by themselves quantify reviewer cognitive cost; isolated regeneration compute cost is now separately measured."
     },
     "accessibility_text_equivalence_fidelity": {
       "measurement_class": "RETROSPECTIVE_MECHANICAL_VERIFICATION",
-      "result": {
-        "bundles_with_canonical_json_text_svg_and_receipt": 8,
-        "bundle_count": 8,
-        "structural_fidelity_rate": 1.0
-      },
+      "result": {"bundles_with_canonical_json_text_svg_and_receipt":8,"bundle_count":8,"structural_fidelity_rate":1.0},
       "interpretation": "Each retained case has a textual equivalent and deterministic SVG derivative from the same canonical report input; SVG status is textual and carries an image role/aria label rather than relying on color alone.",
       "limitation": "This is structural and deterministic equivalence evidence, not a user study of assistive-technology usability."
     }
@@ -175,22 +109,26 @@
     "The moving-head control P07 failed closed to STALE and preserved the old review as historical.",
     "The source/claim case P04 demonstrated that repository lifecycle completion and mathematical residuals are orthogonal and must remain separately visible.",
     "Deterministic JSON/text/SVG/receipt bundles provide strong source-to-render and accessibility-structure evidence.",
-    "The retrospective record does not directly measure human time-to-operative-state, human factual error rate, or isolated regeneration latency."
+    "Isolated deterministic regeneration is directly measured at aggregate median 0.4672675 ms and p95 0.538335 ms over 240 samples, with zero deterministic-equivalence failures; admission state at retention was candidate.",
+    "The governed record still does not directly measure human time-to-operative-state or human factual error rate."
   ],
   "characterized_gaps": [
     {
       "gap_id": "C10-GAP-01",
-      "metrics": ["reviewer_time_to_operative_state", "factual_state_identification_accuracy"],
-      "required_action": "Execute the retained timed human-review protocol with balanced report-first and source-only control conditions."
-    },
+      "metrics": ["reviewer_time_to_operative_state","factual_state_identification_accuracy"],
+      "required_action": "Execute and retain issue #442 with at least two genuine independent human reviewers under the balanced report-first/source-only crossover protocol."
+    }
+  ],
+  "measurement_candidates": [
     {
       "gap_id": "C10-GAP-02",
       "metrics": ["regeneration_latency"],
-      "required_action": "Instrument isolated deterministic regeneration and retain median and p95 latency on a declared runner/environment."
+      "evidence": "governance/pr_visual_status_reporting_c10_regeneration_benchmark.json",
+      "status_at_retention": "DIRECT_MEASUREMENT_RETAINED_CANDIDATE"
     }
   ],
   "c10_status_recommendation": "PARTIAL",
-  "pilot_adjudication_readiness": "NOT_READY__DIRECT_HUMAN_AND_REGENERATION_LATENCY_MEASUREMENTS_REQUIRED",
+  "pilot_adjudication_readiness": "NOT_READY__DIRECT_HUMAN_MEASUREMENTS_REQUIRED",
   "nonclaims": [
     "This evaluation does not discharge PRVSR-C10.",
     "This evaluation does not constitute independent pilot adjudication.",
