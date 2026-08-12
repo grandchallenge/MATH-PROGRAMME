@@ -68,12 +68,12 @@ noncomputable def finiteCoefficientFamilyLift
             intro a b
             funext x
             simpa only [Pi.add_apply] using
-              ((s.proj x).hom.app S).map_add a b
+              ((s.proj x).hom.app S).hom.map_add a b
           map_smul' := by
             intro r a
             funext x
             simpa only [Pi.smul_apply, RingHom.id_apply] using
-              ((s.proj x).hom.app S).map_smul r a }
+              ((s.proj x).hom.app S).hom.map_smul r a }
       naturality := by
         intro S T f
         apply ModuleCat.hom_ext
