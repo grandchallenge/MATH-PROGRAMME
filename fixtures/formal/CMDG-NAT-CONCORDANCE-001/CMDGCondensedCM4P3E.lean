@@ -75,10 +75,8 @@ noncomputable def finiteCoefficientFamilyLift
           map_smul' := by
             intro r a
             funext x
-            change
-              (ConcreteCategory.hom ((s.proj x).hom.app S)) (r • a) =
-                r • (ConcreteCategory.hom ((s.proj x).hom.app S)) a
-            exact (ConcreteCategory.hom ((s.proj x).hom.app S)).map_smul r a }
+            simpa only [Pi.smul_apply, RingHom.id_apply] using
+              (ConcreteCategory.hom ((s.proj x).hom.app S)).map_smul r a }
       naturality := by
         intro S T f
         apply ModuleCat.hom_ext
