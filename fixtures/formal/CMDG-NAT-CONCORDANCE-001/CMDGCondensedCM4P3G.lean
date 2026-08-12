@@ -185,6 +185,51 @@ theorem locallyConstant_boolPi_allTrue_of_finsetPiecewise
       f (fun _ => true) at hI
   exact hI.symm.trans (h I)
 
+/-- The constant map from the one-point compact Hausdorff space to a chosen point. -/
+noncomputable def coefficientPointProbeMap
+    (T : CompHaus.{u}) (t : T) : CompHaus.of PUnit.{u + 1} ⟶ T :=
+  ConcreteCategory.ofHom
+    { toFun := fun _ => t
+      continuous_toFun := continuous_const }
+
+/-- A morphism into the discrete coefficient object is determined by its one-point component. -/
+theorem coefficient_hom_ext_point
+    {A : CondensedMod.{u} R} {f g : A ⟶ coefficientObject}
+    (hpoint :
+      f.hom.app (op (CompHaus.of PUnit.{u + 1})) =
+        g.hom.app (op (CompHaus.of PUnit.{u + 1}))) :
+    f = g := by
+  apply ObjectProperty.hom_ext
+  apply NatTrans.ext'
+  funext T
+  apply ModuleCat.hom_ext
+  apply LinearMap.ext
+  intro a
+  change
+    (show LocallyConstant T.unop R from f.hom.app T a) =
+      (show LocallyConstant T.unop R from g.hom.app T a)
+  ext t
+  let p : CompHaus.of PUnit.{u + 1} ⟶ T.unop :=
+    coefficientPointProbeMap T.unop t
+  have hf := ConcreteCategory.congr_hom (f.hom.naturality p.op) a
+  have hg := ConcreteCategory.congr_hom (g.hom.naturality p.op) a
+  have hp := ConcreteCategory.congr_hom hpoint (A.obj.map p.op a)
+  change
+    f.hom.app (op (CompHaus.of PUnit.{u + 1})) (A.obj.map p.op a) =
+      LocallyConstant.comap p.hom.hom
+        (show LocallyConstant T.unop R from f.hom.app T a) at hf
+  change
+    g.hom.app (op (CompHaus.of PUnit.{u + 1})) (A.obj.map p.op a) =
+      LocallyConstant.comap p.hom.hom
+        (show LocallyConstant T.unop R from g.hom.app T a) at hg
+  have hf' := congrArg
+    (fun q : LocallyConstant (CompHaus.of PUnit.{u + 1}) R => q PUnit.unit) hf
+  have hg' := congrArg
+    (fun q : LocallyConstant (CompHaus.of PUnit.{u + 1}) R => q PUnit.unit) hg
+  have hp' := congrArg
+    (fun q : LocallyConstant (CompHaus.of PUnit.{u + 1}) R => q PUnit.unit) hp
+  exact hf'.symm.trans (hp'.trans hg')
+
 /-- The exact remaining mathematical boundary: every solid-side coefficient morphism is already
 visible at one finite discrete quotient stage. This proposition is deliberately not asserted. -/
 def CoefficientFiniteStageMappingOut : Prop :=
@@ -273,6 +318,8 @@ theorem coefficientFiniteStageMappingOut_iff_isSolid :
 #check finiteStageExtension_precomp
 #check coefficient_homPrecomp_surjective
 #check locallyConstant_boolPi_allTrue_of_finsetPiecewise
+#check coefficientPointProbeMap
+#check coefficient_hom_ext_point
 #check CoefficientFiniteStageMappingOut
 #check CoefficientMappingOutInjectivity
 #check coefficientFiniteStageMappingOut_iff_injectivity
@@ -288,6 +335,7 @@ theorem coefficientFiniteStageMappingOut_iff_isSolid :
 #print axioms finiteStageExtension_precomp
 #print axioms coefficient_homPrecomp_surjective
 #print axioms locallyConstant_boolPi_allTrue_of_finsetPiecewise
+#print axioms coefficient_hom_ext_point
 #print axioms coefficientFiniteStageMappingOut_iff_injectivity
 #print axioms coefficientResidualHomTheorem_iff_injectivity
 #print axioms coefficientFiniteStageMappingOut_iff_isSolid
