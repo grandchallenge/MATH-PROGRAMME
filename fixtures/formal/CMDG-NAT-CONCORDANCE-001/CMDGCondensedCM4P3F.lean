@@ -282,7 +282,6 @@ theorem finiteDependenceMappingOut_iff_homPrecomp_injective
     refine ⟨h, ?_⟩
     apply hi
     rw [homPrecomp_finiteDependenceSection]
-    rfl
 
 /-- FIFTH boundary: after SECOND, the terminal coefficient theorem is exactly
 the all-profinite finite-dependence/mapping-out theorem. -/
