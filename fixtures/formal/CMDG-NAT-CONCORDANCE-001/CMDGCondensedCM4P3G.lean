@@ -101,10 +101,12 @@ theorem lowerHom_factors_finite (X : Profinite.{u}) (g : LowerHom X) :
       g = (Condensed.profiniteFree R).map (finiteQuotientMap X j) ≫ gQ := by
   obtain ⟨j, fQ, hf⟩ :=
     Profinite.exists_locallyConstant X.asLimitCone X.asLimit (lowerHomEquiv X g)
+  change lowerHomEquiv X g =
+    LocallyConstant.comap (finiteQuotientMap X j).hom.hom fQ at hf
   refine ⟨j, (lowerHomEquiv (X.diagram.obj j)).symm fQ, ?_⟩
   apply (lowerHomEquiv X).injective
   rw [lowerHomEquiv_precomp]
-  simpa [finiteQuotientMap] using hf
+  exact hf
 
 /-- Precomposition on lower Hom is injective along any surjective profinite map. -/
 theorem lowerHom_precomp_injective_of_surjective {X Y : Profinite.{u}}
@@ -145,7 +147,12 @@ theorem finiteStageExtension_precomp
       (Condensed.profiniteFree R).map (finiteQuotientMap X j) ≫ gQ := by
   unfold finiteStageExtension
   rw [← (Condensed.profiniteSolidification R).naturality_assoc]
-  rw [finiteSolidification_counit_assoc]
+  have hfin :
+      (Condensed.profiniteSolidification R).app (X.diagram.obj j) ≫
+          (Condensed.profiniteSolidCounit R).app (X.fintypeDiagram.obj j) ≫ gQ = gQ := by
+    simpa only [Functor.comp_obj] using
+      (finiteSolidification_counit_assoc (X.fintypeDiagram.obj j) gQ)
+  rw [hfin]
 
 /-- The coefficient precomposition map is already surjective; only injectivity remains. -/
 theorem coefficient_homPrecomp_surjective (X : Profinite.{u}) :
@@ -174,8 +181,8 @@ def CoefficientMappingOutInjectivity : Prop :=
 
 /-- Finite-stage mapping-out implies the remaining injectivity theorem. -/
 theorem coefficientMappingOutInjectivity_of_finiteStage
-    (hstage : CoefficientFiniteStageMappingOut) :
-    CoefficientMappingOutInjectivity := by
+    (hstage : CoefficientFiniteStageMappingOut.{u}) :
+    CoefficientMappingOutInjectivity.{u} := by
   intro X h₁ h₂ hh
   change
     (Condensed.profiniteSolidification R).app X ≫ h₁ =
@@ -200,8 +207,8 @@ theorem coefficientMappingOutInjectivity_of_finiteStage
 
 /-- Conversely, injectivity makes the lower/free finite factorization unique on the solid side. -/
 theorem coefficientFiniteStageMappingOut_of_injectivity
-    (hinj : CoefficientMappingOutInjectivity) :
-    CoefficientFiniteStageMappingOut := by
+    (hinj : CoefficientMappingOutInjectivity.{u}) :
+    CoefficientFiniteStageMappingOut.{u} := by
   intro X h
   obtain ⟨j, gQ, hg⟩ := lowerHom_factors_finite X
     (CMDG.CondensedCM4P3D.homPrecomp coefficientObject X h)
@@ -214,7 +221,7 @@ theorem coefficientFiniteStageMappingOut_of_injectivity
   exact hg
 
 theorem coefficientFiniteStageMappingOut_iff_injectivity :
-    CoefficientFiniteStageMappingOut ↔ CoefficientMappingOutInjectivity := by
+    CoefficientFiniteStageMappingOut.{u} ↔ CoefficientMappingOutInjectivity.{u} := by
   constructor
   · exact coefficientMappingOutInjectivity_of_finiteStage
   · exact coefficientFiniteStageMappingOut_of_injectivity
@@ -222,7 +229,7 @@ theorem coefficientFiniteStageMappingOut_iff_injectivity :
 /-- Since surjectivity is already proved, the protected coefficient residual is exactly injectivity. -/
 theorem coefficientResidualHomTheorem_iff_injectivity :
     CMDG.CondensedCM4P3D.CoefficientResidualHomTheorem.{u} ↔
-      CoefficientMappingOutInjectivity := by
+      CoefficientMappingOutInjectivity.{u} := by
   constructor
   · intro h X
     exact (h X).1
@@ -232,10 +239,10 @@ theorem coefficientResidualHomTheorem_iff_injectivity :
 /-- Exact terminal characterization: the new finite-stage boundary is neither stronger nor weaker
 than the protected P3-D coefficient-solidity blocker. -/
 theorem coefficientFiniteStageMappingOut_iff_isSolid :
-    CoefficientFiniteStageMappingOut ↔
+    CoefficientFiniteStageMappingOut.{u} ↔
       CondensedMod.IsSolid R coefficientObject := by
-  exact coefficientFiniteStageMappingOut_iff_injectivity.trans
-    (coefficientResidualHomTheorem_iff_injectivity.symm.trans
+  exact coefficientFiniteStageMappingOut_iff_injectivity.{u}.trans
+    (coefficientResidualHomTheorem_iff_injectivity.{u}.symm.trans
       CMDG.CondensedCM4P3D.coefficientResidualHomTheorem_iff_isSolid.{u})
 
 #check lowerHomEquiv
