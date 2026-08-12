@@ -11,8 +11,8 @@ It starts from the machine-certified lower-Hom identification, then certifies th
 naturality needed for finite-quotient factorization. No coefficient solidity or
 injectivity theorem is assumed.
 
-The present head is an intentional compiler-bisection probe: G0 plus lower-Hom
-naturality plus the already-certified finite-stage right-Kan triangle only.
+The present head separates categorical section-level naturality from the final
+`LocallyConstant.comap` definitional reduction.
 -/
 
 namespace CMDG.CondensedCM4P3G
@@ -49,18 +49,32 @@ noncomputable def lowerHomEquiv (X : Profinite.{u}) :
     LowerHom X ≃ LocallyConstant X R := by
   exact lowerHomSectionsEquiv X
 
-/-- Naturality of G0: precomposition along a profinite map is exactly restriction of
-locally constant functions. -/
-theorem lowerHomEquiv_precomp {X Y : Profinite.{u}} (q : X ⟶ Y) (g : LowerHom Y) :
-    lowerHomEquiv X ((Condensed.profiniteFree R).map q ≫ g) =
-      (lowerHomEquiv Y g).comap q.hom.hom := by
+/-- The categorical part of lower-Hom naturality, before unfolding the concrete
+locally-constant coefficient presheaf. -/
+theorem lowerHomSectionsEquiv_precomp {X Y : Profinite.{u}}
+    (q : X ⟶ Y) (g : LowerHom Y) :
+    lowerHomSectionsEquiv X ((Condensed.profiniteFree R).map q ≫ g) =
+      ((Condensed.forget R).obj coefficientObject).obj.map
+        ((profiniteToCompHaus).map q).op (lowerHomSectionsEquiv Y g) := by
   change
     (coherentTopology CompHaus.{u}).uliftYonedaEquiv
       ((Condensed.freeForgetAdjunction R).homEquiv
         ((profiniteToCondensed).obj X) coefficientObject
         ((Condensed.free R).map ((profiniteToCondensed).map q) ≫ g)) = _
   rw [(Condensed.freeForgetAdjunction R).homEquiv_naturality_left]
-  rw [← (coherentTopology CompHaus.{u}).uliftYonedaEquiv_naturality]
+  symm
+  exact (coherentTopology CompHaus.{u}).uliftYonedaEquiv_naturality
+    ((Condensed.freeForgetAdjunction R).homEquiv
+      ((profiniteToCondensed).obj Y) coefficientObject g)
+    ((profiniteToCompHaus).map q)
+
+/-- Naturality of G0: precomposition along a profinite map is exactly restriction of
+locally constant functions. -/
+theorem lowerHomEquiv_precomp {X Y : Profinite.{u}} (q : X ⟶ Y) (g : LowerHom Y) :
+    lowerHomEquiv X ((Condensed.profiniteFree R).map q ≫ g) =
+      (lowerHomEquiv Y g).comap q.hom.hom := by
+  change lowerHomSectionsEquiv X ((Condensed.profiniteFree R).map q ≫ g) = _
+  rw [lowerHomSectionsEquiv_precomp]
   rfl
 
 @[reassoc]
@@ -77,11 +91,13 @@ theorem finiteSolidification_counit (Q : FintypeCat.{u}) :
 
 #check lowerHomSectionsEquiv
 #check lowerHomEquiv
+#check lowerHomSectionsEquiv_precomp
 #check lowerHomEquiv_precomp
 #check finiteSolidification_counit
 
 #print axioms lowerHomSectionsEquiv
 #print axioms lowerHomEquiv
+#print axioms lowerHomSectionsEquiv_precomp
 #print axioms lowerHomEquiv_precomp
 #print axioms finiteSolidification_counit
 
