@@ -10,6 +10,7 @@ import Mathlib.Condensed.Epi
 import Mathlib.Condensed.Light.InternallyProjective
 import Mathlib.Topology.Category.Profinite.Projective
 import Mathlib.Topology.Separation.Profinite
+import CMDGCondensedCM4P3F
 
 /-!
 # CMDG CM4-P3 exact-tree audit probe
@@ -47,5 +48,6 @@ namespace CMDG.CondensedCM4P3Audit
 #check LightCondensed.internallyProjective_iff_tensor_condition
 #check Profinite.projectivePresentation
 #check exists_clopen_partition_of_clopen_cover
+#check CMDG.CondensedCM4P3F.lowerHomEquiv
 
 end CMDG.CondensedCM4P3Audit
