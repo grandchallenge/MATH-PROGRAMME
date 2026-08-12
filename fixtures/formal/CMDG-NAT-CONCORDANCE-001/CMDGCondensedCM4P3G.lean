@@ -49,6 +49,14 @@ noncomputable def lowerHomEquiv (X : Profinite.{u}) :
     LowerHom X ≃ LocallyConstant X R := by
   exact lowerHomSectionsEquiv X
 
+/-- A transparent application formula for the composite adjunction/Yoneda equivalence. -/
+theorem lowerHomSectionsEquiv_apply (X : Profinite.{u}) (g : LowerHom X) :
+    lowerHomSectionsEquiv X g =
+      (coherentTopology CompHaus.{u}).uliftYonedaEquiv
+        ((Condensed.freeForgetAdjunction R).homEquiv
+          ((profiniteToCondensed).obj X) coefficientObject g) := by
+  rfl
+
 /-- The categorical part of lower-Hom naturality, before unfolding the concrete
 locally-constant coefficient presheaf. -/
 theorem lowerHomSectionsEquiv_precomp {X Y : Profinite.{u}}
@@ -56,15 +64,10 @@ theorem lowerHomSectionsEquiv_precomp {X Y : Profinite.{u}}
     lowerHomSectionsEquiv X ((Condensed.profiniteFree R).map q ≫ g) =
       ((Condensed.forget R).obj coefficientObject).obj.map
         ((profiniteToCompHaus).map q).op (lowerHomSectionsEquiv Y g) := by
-  change
-    (coherentTopology CompHaus.{u}).uliftYonedaEquiv
-      ((Condensed.freeForgetAdjunction R).homEquiv
-        ((profiniteToCondensed).obj X) coefficientObject
-        ((Condensed.free R).map ((profiniteToCondensed).map q) ≫ g)) = _
+  rw [lowerHomSectionsEquiv_apply X, lowerHomSectionsEquiv_apply Y]
   rw [(Condensed.freeForgetAdjunction R).homEquiv_naturality_left]
-  simpa [lowerHomSectionsEquiv, GrothendieckTopology.uliftYoneda,
-    profiniteToCondensed, compHausToCondensed, compHausToCondensed',
-    Condensed.ulift, Functor.comp_map] using
+  simpa [GrothendieckTopology.uliftYoneda, profiniteToCondensed,
+    compHausToCondensed, compHausToCondensed', Condensed.ulift, Functor.comp_map] using
     ((coherentTopology CompHaus.{u}).uliftYonedaEquiv_naturality
       ((Condensed.freeForgetAdjunction R).homEquiv
         ((profiniteToCondensed).obj Y) coefficientObject g)
@@ -93,12 +96,14 @@ theorem finiteSolidification_counit (Q : FintypeCat.{u}) :
 
 #check lowerHomSectionsEquiv
 #check lowerHomEquiv
+#check lowerHomSectionsEquiv_apply
 #check lowerHomSectionsEquiv_precomp
 #check lowerHomEquiv_precomp
 #check finiteSolidification_counit
 
 #print axioms lowerHomSectionsEquiv
 #print axioms lowerHomEquiv
+#print axioms lowerHomSectionsEquiv_apply
 #print axioms lowerHomSectionsEquiv_precomp
 #print axioms lowerHomEquiv_precomp
 #print axioms finiteSolidification_counit
