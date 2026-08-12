@@ -73,7 +73,8 @@ jobs:
           C=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3C.lean
           D=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3D.lean
           E=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3E.lean
-          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$E"; then
+          G=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3F.lean
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$E" "$G"; then
             echo "P3 fixtures must contain neither sorry nor local axioms."
             exit 1
           fi
@@ -89,7 +90,11 @@ jobs:
           grep -Fq 'finiteCoefficientFamilyConeIsLimit' "$E"
           grep -Fq 'measureFunctor_isSolid_of_coefficient' "$E"
           grep -Fq 'residualHomTheorem_of_coefficientResidual' "$E"
-          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$E"; then
+          grep -Fq 'lowerHomEquiv' "$G"
+          grep -Fq 'homPrecomp_surjective' "$G"
+          grep -Fq 'GlobalSectionsDoubleInternalDualSurjectivity' "$G"
+          grep -Fq 'coefficientResidualHomTheorem_iff_finiteDependence' "$G"
+          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$E" "$G"; then
             echo "P3 reduction fixtures must not install an unconditional IsSolid instance."
             exit 1
           fi
@@ -180,3 +185,9 @@ jobs:
           set -euo pipefail
           lake build CMDGCondensedCM4P3E
           lake env lean CMDGCondensedCM4P3E.lean
+      - name: Build and replay P3-F coefficient residual reduction
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          lake build CMDGCondensedCM4P3F
+          lake env lean CMDGCondensedCM4P3F.lean
