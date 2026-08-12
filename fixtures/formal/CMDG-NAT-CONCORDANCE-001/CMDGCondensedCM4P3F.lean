@@ -1,4 +1,5 @@
 import CMDGCondensedCM4P3D
+import CMDGCondensedCM4P2ERankOneNaturalIso
 import Mathlib.CategoryTheory.Sites.Subcanonical
 import Mathlib.Topology.Category.Profinite.CofilteredLimit
 
@@ -9,7 +10,9 @@ This successor isolates the single coefficient-object residual left by P3-E.
 The first certified layer identifies the lower Hom set with locally constant
 lifted-integer-valued functions on the profinite source. The second layer
 factors every such lower-Hom morphism through a canonical finite quotient and
-lifts it through the finite right-Kan counit.
+lifts it through the finite right-Kan counit. The third layer constructs the
+canonical double-internal-dual evaluation whose surjectivity is the remaining
+mapping-out theorem.
 No coefficient solidity or P3 availability is asserted by this file unless
 and until the terminal declarations are proved.
 -/
@@ -19,11 +22,16 @@ namespace CMDG.CondensedCM4P3F
 universe u
 
 open CategoryTheory Opposite
+open scoped CategoryTheory.MonoidalClosed
 
 abbrev R := CMDG.CondensedCM4P3D.R.{u}
+abbrev PresheafModule := CMDG.CondensedCM4P2D.PresheafModule.{u}
 
 noncomputable abbrev coefficientObject : CondensedMod.{u} R :=
   CMDG.CondensedCM4P3D.coefficientObject.{u}
+
+noncomputable local instance : MonoidalClosed PresheafModule :=
+  MonoidalClosed.FunctorCategory.monoidalClosed
 
 /-- The free-forgetful half of the lower-Hom identification. -/
 noncomputable def lowerHomAdjunctionEquiv (X : Profinite.{u}) :
@@ -156,6 +164,61 @@ theorem homPrecomp_surjective (X : Profinite.{u}) :
   rw [homPrecomp_finiteQuotientLift]
   exact hfac.symm
 
+/-- A section `f ∈ C(X,R)` determines the rank-one map `R → C(X,R)`. -/
+noncomputable def rankOneContinuousMap
+    (X : Profinite.{u}) (f : LocallyConstant X R) :
+    ModuleCat.of R R ⟶ CMDG.CondensedCM4P2D.continuousFunctions.obj (op X) :=
+  ModuleCat.ofHom
+    { toFun := fun r => r • f
+      map_add' := by
+        intro a b
+        exact add_smul a b f
+      map_smul' := by
+        intro a b
+        change (a * b) • f = a • b • f
+        exact mul_smul a b f }
+
+/-- Apply the protected locally-constant presheaf functor to the rank-one map. -/
+noncomputable def rankOnePresheafMap
+    (X : Profinite.{u}) (f : LocallyConstant X R) :
+    CMDG.CondensedCM4P2D.coefficientPresheaf ⟶
+      CMDG.CondensedCM4P2D.discreteContinuousPresheaf.obj (op X) := by
+  change
+    (CondensedMod.LocallyConstant.functorToPresheaves R).obj (ModuleCat.of R R) ⟶
+      (CondensedMod.LocallyConstant.functorToPresheaves R).obj
+        (CMDG.CondensedCM4P2D.continuousFunctions.obj (op X))
+  exact (CondensedMod.LocallyConstant.functorToPresheaves R).map
+    (rankOneContinuousMap X f)
+
+/-- The canonical double-internal-dual evaluation attached to `f`, before
+lifting from presheaves to condensed modules. -/
+noncomputable def bidualEvaluationPresheaf
+    (X : Profinite.{u}) (f : LocallyConstant X R) :
+    CMDG.CondensedCM4P2D.measurePresheafObj X ⟶
+      CMDG.CondensedCM4P2D.coefficientPresheaf :=
+  (MonoidalClosed.pre (rankOnePresheafMap X f)).app
+      CMDG.CondensedCM4P2D.coefficientPresheaf ≫
+    CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHomNatIso.hom
+
+/-- The same canonical evaluation as a morphism of condensed modules. -/
+noncomputable def bidualEvaluationMeasureMap
+    (X : Profinite.{u}) (f : LocallyConstant X R) :
+    CMDG.CondensedCM4P2D.measureFunctor.obj X ⟶ coefficientObject :=
+  ObjectProperty.homMk (bidualEvaluationPresheaf X f)
+
+/-- Canonical global double-dual evaluation, transported from the protected
+P2-D measure model to `profiniteSolid` by protected P2-E. -/
+noncomputable def canonicalBidualEvaluation
+    (X : Profinite.{u}) (f : LocallyConstant X R) :
+    (Condensed.profiniteSolid R).obj X ⟶ coefficientObject :=
+  (CMDG.CondensedCM4P3C.targetIso X).inv ≫ bidualEvaluationMeasureMap X f
+
+/-- THIRD: the exact condensed finite-dependence / mapping-out residual.
+Every global morphism from the double internal dual to the coefficient object
+must be evaluation at a locally constant section. -/
+def GlobalSectionsDoubleInternalDualSurjectivity (X : Profinite.{u}) : Prop :=
+  Function.Surjective (canonicalBidualEvaluation X)
+
 #check lowerHomAdjunctionEquiv
 #check lowerHomYonedaEquiv
 #check lowerHomEquiv
@@ -166,16 +229,21 @@ theorem homPrecomp_surjective (X : Profinite.{u}) :
 #check finiteQuotientLift
 #check homPrecomp_finiteQuotientLift
 #check homPrecomp_surjective
+#check rankOneContinuousMap
+#check rankOnePresheafMap
+#check bidualEvaluationPresheaf
+#check bidualEvaluationMeasureMap
+#check canonicalBidualEvaluation
+#check GlobalSectionsDoubleInternalDualSurjectivity
 
-#print axioms lowerHomAdjunctionEquiv
-#print axioms lowerHomYonedaEquiv
 #print axioms lowerHomEquiv
-#print axioms lowerHomYonedaEquiv_naturality
-#print axioms lowerHomEquiv_naturality
 #print axioms lowerHom_factors_finite
-#print axioms finiteSolidification_counit
-#print axioms finiteQuotientLift
-#print axioms homPrecomp_finiteQuotientLift
 #print axioms homPrecomp_surjective
+#print axioms rankOneContinuousMap
+#print axioms rankOnePresheafMap
+#print axioms bidualEvaluationPresheaf
+#print axioms bidualEvaluationMeasureMap
+#print axioms canonicalBidualEvaluation
+#print axioms GlobalSectionsDoubleInternalDualSurjectivity
 
 end CMDG.CondensedCM4P3F
