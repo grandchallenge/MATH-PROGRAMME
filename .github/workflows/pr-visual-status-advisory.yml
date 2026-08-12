@@ -45,12 +45,19 @@ jobs:
           private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
           owner: grandchallenge
           repositories: MATH-PROGRAMME
-          permission-actions: read
-          permission-administration: read
-          permission-checks: read
           permission-contents: write
           permission-issues: write
-          permission-pull-requests: read
+          permission-pull-requests: write
+
+      - name: Mint bounded PRVSR administration token
+        id: admin-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-administration: read
 
       - name: Checkout trusted protected implementation
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -97,10 +104,13 @@ jobs:
         if: steps.target.outputs.pr_number != ''
         continue-on-error: true
         env:
-          GITHUB_TOKEN: ${{ steps.publisher-token.outputs.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          GITHUB_PUBLISH_TOKEN: ${{ steps.publisher-token.outputs.token }}
+          GITHUB_PUBLISHER_LOGIN: ${{ format('{0}[bot]', steps.publisher-token.outputs.app-slug) }}
         run: |
           mkdir -p "$RUNNER_TEMP/prvsr"
-          python3 ci/pr_visual_status_operational.py \
+          python3 ci/pr_visual_status_operational_split.py \
             --repo "$GITHUB_REPOSITORY" \
             --pr "${{ steps.target.outputs.pr_number }}" \
             --publish \

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_postmerge_readback.schema.json",
+  "title": "CMDG protected-merge readback receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "receipt_id", "repository", "protected_ref", "merge_sha", "observed_sha", "transition_base", "origin_event", "origin_run", "classifier_digest", "changed_paths", "policy_shards", "unknown_count", "cmdg_required", "suite_results", "terminal_state", "authority_boundary"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "receipt_id": {"type": "string", "pattern": "^MP-CMDG-READBACK-[0-9a-f]{64}$"},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "protected_ref": {"const": "refs/heads/main"},
+    "merge_sha": {"$ref": "#/$defs/sha"},
+    "observed_sha": {"$ref": "#/$defs/sha"},
+    "transition_base": {"anyOf": [{"$ref": "#/$defs/sha"}, {"type": "null"}]},
+    "origin_event": {"enum": ["push", "schedule", "workflow_dispatch"]},
+    "origin_run": {"type": "object", "additionalProperties": false, "required": ["run_id", "run_attempt"], "properties": {"run_id": {"type": "string", "minLength": 1}, "run_attempt": {"type": "integer", "minimum": 1}}},
+    "classifier_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "changed_paths": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "policy_shards": {"type": "array", "uniqueItems": true, "items": {"enum": ["core", "fixtures", "cmdg", "administrative", "campaigns", "contracts", "docs"]}},
+    "unknown_count": {"type": "integer", "minimum": 0},
+    "cmdg_required": {"type": "boolean"},
+    "suite_results": {"type": "object", "minProperties": 12, "maxProperties": 12, "additionalProperties": {"enum": ["success", "failure", "cancelled", "skipped"]}},
+    "terminal_state": {"enum": ["observed_pass_no_further_governance_action", "downstream_hold_requires_compensation"]},
+    "authority_boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["integration_facts_only", "approval_created", "activation_created", "ratification_created", "certification_created", "promotion_created"],
+      "properties": {
+        "integration_facts_only": {"const": true},
+        "approval_created": {"const": false},
+        "activation_created": {"const": false},
+        "ratification_created": {"const": false},
+        "certification_created": {"const": false},
+        "promotion_created": {"const": false}
+      }
+    }
+  },
+  "$defs": {"sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"}}
+}
