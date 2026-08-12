@@ -1,0 +1,96 @@
+name: CMDG condensed CM4 P3-F
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/cmdg-condensed-cm4-p3-f.yml"
+      - "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3F.lean"
+      - "fixtures/formal/CMDG-NAT-CONCORDANCE-001/lakefile.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cmdg-condensed-cm4-p3-f-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  formal-replay:
+    name: Replay P3-F coefficient residual
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Reject proof placeholders and accidental promotion
+        run: |
+          set -euo pipefail
+          F=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3F.lean
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F"; then
+            echo "P3-F must contain neither sorry nor local axioms."
+            exit 1
+          fi
+          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$F"; then
+            echo "P3-F must not install an unconditional IsSolid instance before certification."
+            exit 1
+          fi
+      - name: Set up pinned Lean and mathlib cache
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Verify exact pinned dependencies
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          ML=".lake/packages/mathlib"
+          test "$(git -C "$ML" rev-parse HEAD)" = "79d0395a1825a6264ad5d269e35e60537518955e"
+          test "$(git -C "$ML" rev-parse HEAD^{tree})" = "d76f5e09b832a08949f6d8ad4fb80ce30527da64"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Module.lean)" = "f5834efa0d5bf1289187abe3319536186d67a405"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Solid.lean)" = "f5214433f91ee87fc8fbe7e2746e0bd227faed2a"
+          test "$(git -C "$ML" hash-object Mathlib/Condensed/Discrete/Module.lean)" = "b3ba358aa6b01b2de4cfedf6480ac22e863241d3"
+          test "$(git -C "$ML" hash-object Mathlib/Topology/Category/Profinite/CofilteredLimit.lean)" = "ec025ce5116a93026dac83f17926a30fa01447af"
+          test "$(git hash-object CMDGCondensedCM4P2D.lean)" = "7515583c1b56308bbd48c2c690addd3b432eba09"
+          test "$(git hash-object CMDGCondensedCM4P2EE3.lean)" = "24913aa4c1b2616fea244e2d73d912f99aae5921"
+          test "$(git hash-object CMDGCondensedCM4P3D.lean)" = "af8a209cc91c027d47eb8a0553e7ce15180afd98"
+      - name: Materialize protected P2-E terminal chain
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          lake build CMDGCondensedCM4P2E CMDGCondensedCM4P2EAlgebraic CMDGCondensedCM4P2EInternalHom
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EPointProbe.olean CMDGCondensedCM4P2EPointProbe.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EPointProbeRecovery.olean CMDGCondensedCM4P2EPointProbeRecovery.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EReverseTriangle.olean CMDGCondensedCM4P2EReverseTriangle.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2ERankOneNaturalIso.olean CMDGCondensedCM4P2ERankOneNaturalIso.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteTransport.olean CMDGCondensedCM4P2EFiniteTransport.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteDualTransport.olean CMDGCondensedCM4P2EFiniteDualTransport.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteDualKronecker.olean CMDGCondensedCM4P2EFiniteDualKronecker.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteDualTriangles.olean CMDGCondensedCM4P2EFiniteDualTriangles.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteDualResolution.olean CMDGCondensedCM4P2EFiniteDualResolution.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteDualFamilyIso.olean CMDGCondensedCM4P2EFiniteDualFamilyIso.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteDualNaturality.olean CMDGCondensedCM4P2EFiniteDualNaturality.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteDualPushforward.olean CMDGCondensedCM4P2EFiniteDualPushforward.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteMeasureTransport.olean CMDGCondensedCM4P2EFiniteMeasureTransport.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EFiniteFreeTransport.olean CMDGCondensedCM4P2EFiniteFreeTransport.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EE1.olean CMDGCondensedCM4P2EE1.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EE2Core.olean CMDGCondensedCM4P2EE2Core.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EE2.olean CMDGCondensedCM4P2EE2.lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P2EE3.olean CMDGCondensedCM4P2EE3.lean
+      - name: Materialize protected P3 predecessors
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          lake build CMDGCondensedCM4P3C CMDGCondensedCM4P3D
+      - name: Build and replay P3-F
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          lake build CMDGCondensedCM4P3F
+          lake env lean CMDGCondensedCM4P3F.lean
