@@ -1,0 +1,77 @@
+{
+  "mapping_set_id": "NSCI-CLASSIFICATION-MAPPINGS",
+  "mapping_set_version": "1.0.0",
+  "mapping_set_status": "CANDIDATE",
+  "domain_id": "NSCI",
+  "mappings": [
+    {
+      "mapping_id": "NSCI-MAP-MSC-35Q30",
+      "target_type": "DOMAIN",
+      "internal_ref": "NSCI",
+      "scheme": "MSC",
+      "scheme_version": "2020",
+      "identifier": "35Q30",
+      "label": "Navier-Stokes equations",
+      "mapping_relation": "EXACT",
+      "role": "PRIMARY_SUBJECT",
+      "provenance": {
+        "source_id": "msc2020_normative",
+        "source_artifact_id": "MSC2020-OFFICIAL-PDF-2020",
+        "assignment_method": "HUMAN_CURATED",
+        "assigned_by": "MATH-TAXONOMY-IMPLEMENTATION-001",
+        "assigned_at": "2026-08-12",
+        "evidence": ["The campaign is formulated around the Navier-Stokes PDE and critical integrability; MSC2020 35Q30 is the direct equation classification."]
+      },
+      "confidence": 0.99,
+      "review_status": "PROPOSED",
+      "supersedes": [],
+      "superseded_by": null
+    },
+    {
+      "mapping_id": "NSCI-MAP-MSC-76D05",
+      "target_type": "DOMAIN",
+      "internal_ref": "NSCI",
+      "scheme": "MSC",
+      "scheme_version": "2020",
+      "identifier": "76D05",
+      "label": "Navier-Stokes equations for incompressible viscous fluids",
+      "mapping_relation": "RELATED",
+      "role": "SECONDARY_SUBJECT",
+      "provenance": {
+        "source_id": "msc2020_normative",
+        "source_artifact_id": "MSC2020-OFFICIAL-PDF-2020",
+        "assignment_method": "HUMAN_CURATED",
+        "assigned_by": "MATH-TAXONOMY-IMPLEMENTATION-001",
+        "assigned_at": "2026-08-12",
+        "evidence": ["The physical equation is an incompressible viscous-fluid model; MSC2020 cross-references 76D05 and 35Q30."]
+      },
+      "confidence": 0.98,
+      "review_status": "PROPOSED",
+      "supersedes": [],
+      "superseded_by": null
+    },
+    {
+      "mapping_id": "NSCI-MAP-ARXIV-MATH-AP",
+      "target_type": "DOMAIN",
+      "internal_ref": "NSCI",
+      "scheme": "ARXIV",
+      "scheme_version": "current-as-of-2026-08-12",
+      "identifier": "math.AP",
+      "label": "Analysis of PDEs",
+      "mapping_relation": "CLOSE",
+      "role": "DISCOVERY_FACET",
+      "provenance": {
+        "source_id": "arxiv",
+        "source_artifact_id": "ARXIV-CATEGORY-CURRENT-2026-08-12",
+        "assignment_method": "HUMAN_CURATED",
+        "assigned_by": "MATH-TAXONOMY-IMPLEMENTATION-001",
+        "assigned_at": "2026-08-12",
+        "evidence": ["Analysis of PDEs is the principal arXiv current-awareness category for this analytic campaign."]
+      },
+      "confidence": 0.95,
+      "review_status": "PROPOSED",
+      "supersedes": [],
+      "superseded_by": null
+    }
+  ]
+}
