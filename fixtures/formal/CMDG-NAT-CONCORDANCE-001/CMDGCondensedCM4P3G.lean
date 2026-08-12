@@ -228,7 +228,7 @@ theorem coefficient_hom_ext_point
     (fun q : LocallyConstant (CompHaus.of PUnit.{u + 1}) R => q PUnit.unit) hg
   have hp' := congrArg
     (fun q : LocallyConstant (CompHaus.of PUnit.{u + 1}) R => q PUnit.unit) hp
-  exact hf'.symm.trans (hp'.trans hg')
+  exact congrArg ULift.down (hf'.symm.trans (hp'.trans hg'))
 
 /-- The exact remaining mathematical boundary: every solid-side coefficient morphism is already
 visible at one finite discrete quotient stage. This proposition is deliberately not asserted. -/
