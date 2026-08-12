@@ -54,9 +54,18 @@ theorem lowerHomYonedaEquiv_naturality {X Y : Profinite.{u}} (q : X ⟶ Y)
     (h : Y.toCondensed ⟶ (Condensed.forget R).obj coefficientObject) :
     lowerHomYonedaEquiv X (profiniteToCondensed.map q ≫ h) =
       (lowerHomYonedaEquiv Y h).comap q.hom.hom := by
-  simpa [lowerHomYonedaEquiv] using
+  have hy :=
     ((coherentTopology CompHaus.{u}).uliftYonedaEquiv_naturality
       h (profiniteToCompHaus.map q)).symm
+  change
+    (coherentTopology CompHaus.{u}).uliftYonedaEquiv
+        ((coherentTopology CompHaus.{u}).uliftYoneda.map
+          (profiniteToCompHaus.map q) ≫ h) =
+      (ConcreteCategory.hom
+        (((Condensed.forget R).obj coefficientObject).obj.map
+          (profiniteToCompHaus.map q).op))
+        ((coherentTopology CompHaus.{u}).uliftYonedaEquiv h)
+  exact hy
 
 /-- The complete lower-Hom equivalence is contravariantly natural in the
 profinite source. -/
@@ -84,7 +93,7 @@ theorem lowerHom_factors_finite (X : Profinite.{u})
       (hQ : (Condensed.profiniteFree R).obj (X.diagram.obj j) ⟶ coefficientObject),
       h = (Condensed.profiniteFree R).map (X.asLimitCone.π.app j) ≫ hQ := by
   obtain ⟨j, g, hg⟩ :=
-    Profinite.exists_locallyConstant X.asLimit (lowerHomEquiv X h)
+    Profinite.exists_locallyConstant X.asLimitCone X.asLimit (lowerHomEquiv X h)
   refine ⟨j, (lowerHomEquiv (X.diagram.obj j)).symm g, ?_⟩
   apply (lowerHomEquiv X).injective
   rw [lowerHomEquiv_naturality, Equiv.apply_symm_apply]
