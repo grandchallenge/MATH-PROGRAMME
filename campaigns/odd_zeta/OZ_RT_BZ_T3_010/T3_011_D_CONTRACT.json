@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 498,
+  "operation": "OZ-RT-BZ-T3-011-D",
+  "stage": "T3_011_D_MINIMAL_COKERNEL_BREAKING_POLYNOMIAL_DEGREE_EXTENSION",
+  "predecessor": {
+    "reviewed_head": "a24b1f4aa17e2b42e2288d3e6a19d0c636f42060",
+    "merge_commit": "6ee10e932c696cc327e6470748c10790dc8ca7d3",
+    "required_terminal": "T3_011_B_LIFTED_RESPONSE_GENERATOR_SEMANTICS_CERTIFIED"
+  },
+  "clean_question": "does polynomial degree, by itself, break the cokernel obstruction while everything else remains frozen?",
+  "bounded_extension_class": {
+    "id": "SUPPORT_LOCKED_SINGLE_CHANNEL_QUADRATIC_NONZERO_RESPONSE_LIFT_001",
+    "only_changed_dimension": "coordinate_multiplier_polynomial_degree",
+    "predecessor_degree": 1,
+    "admitted_degree": 2,
+    "coordinate_multiplier": "x_c^2",
+    "direct_finite_difference": "(x_c+h_c)^2 S_c(G)-x_c^2 G",
+    "product_rule": "x_c^2 Delta_c(G)+(2 h_c x_c+h_c^2)S_c(G)",
+    "expected_candidate_counts": {"n1": 67, "n2": 67, "n3": 67, "k1": 110},
+    "expected_independent_trials": 311,
+    "mirror_derived_l1_checks": 110,
+    "channel_coordinate_increment": {"n1": 1, "n2": 2, "n3": 3, "k1": 1, "l1": 1},
+    "stop_at_first_nonzero_pairing": true
+  },
+  "frozen_structure": {
+    "source_objects": true,
+    "candidate_order": true,
+    "support_atoms": true,
+    "harmonic_blocks": true,
+    "shell_specialization": true,
+    "single_channel_trials": true,
+    "normalized_cokernel_witness": true,
+    "l1_mirror_derived": true
+  },
+  "terminals": {
+    "positive": "MINIMAL_SINGLE_CHANNEL_QUADRATIC_COKERNEL_BREAKING_DIRECTION_FOUND",
+    "negative": "SINGLE_CHANNEL_QUADRATIC_RESPONSE_CLASS_COKERNEL_INVISIBLE"
+  },
+  "claim_firewall": {
+    "pairs_or_two_lifts_authorized": false,
+    "mixed_channel_monomials_authorized": false,
+    "arbitrary_polynomial_envelope_authorized": false,
+    "degree_gt_2_authorized": false,
+    "support_or_harmonic_enlargement_authorized": false,
+    "rational_prefactors_authorized": false,
+    "adaptive_basis_growth_authorized": false,
+    "raw_jet_reopening_authorized": false,
+    "recurrence_search_authorized": false,
+    "correction_layer_recombination_authorized": false,
+    "theorem_promotion_authorized": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}
