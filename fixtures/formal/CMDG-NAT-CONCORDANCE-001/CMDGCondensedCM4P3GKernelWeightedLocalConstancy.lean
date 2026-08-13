@@ -100,8 +100,31 @@ theorem finiteDeltaPullbackR_fiber_sum_apply
             finiteDeltaPullbackR X j p
           else 0) =
       (LocallyConstant.evalRingHom x) (finiteDeltaPullbackR X k q)
-  rw [map_sum]
-  simpa [finiteDeltaPullbackR] using finiteDeltaFiberScalar_sum X f q x
+  calc
+    (LocallyConstant.evalRingHom x)
+        (∑ p : j,
+          if finiteQuotientTransition X f p = q then
+            finiteDeltaPullbackR X j p
+          else 0) =
+        ∑ p : j,
+          (LocallyConstant.evalRingHom x)
+            (if finiteQuotientTransition X f p = q then
+              finiteDeltaPullbackR X j p
+            else 0) := by
+              rw [map_sum]
+    _ = ∑ p : j,
+          if finiteQuotientTransition X f p = q then
+            if j.proj x = p then (1 : R.{u}) else 0
+          else 0 := by
+            apply Finset.sum_congr rfl
+            intro p _
+            by_cases hpq : finiteQuotientTransition X f p = q
+            · simp [hpq, finiteDeltaPullbackR]
+            · simp [hpq]
+    _ = if k.proj x = q then (1 : R.{u}) else 0 :=
+      finiteDeltaFiberScalar_sum X f q x
+    _ = (LocallyConstant.evalRingHom x) (finiteDeltaPullbackR X k q) := by
+      simp [finiteDeltaPullbackR]
 
 /-- Extensional form of finite-delta compatibility. -/
 theorem finiteDeltaPullbackR_fiber_sum
