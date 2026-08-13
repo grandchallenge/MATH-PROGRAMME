@@ -200,31 +200,61 @@ jobs:
           lake env lean CMDGCondensedCM4P3G.lean
       - name: Replay P3-G finite window
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
-        run: lake env lean CMDGCondensedCM4P3GFiniteWindow.lean
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFiniteWindow.olean CMDGCondensedCM4P3GFiniteWindow.lean
       - name: Replay P3-G finite support
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
-        run: lake env lean CMDGCondensedCM4P3GFiniteSupport.lean
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFiniteSupport.olean CMDGCondensedCM4P3GFiniteSupport.lean
       - name: Replay P3-G basis separation
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
-        run: lake env lean CMDGCondensedCM4P3GBasisSeparation.lean
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GBasisSeparation.olean CMDGCondensedCM4P3GBasisSeparation.lean
       - name: Replay P3-G Boolean pairing
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
-        run: lake env lean CMDGCondensedCM4P3GBasisBooleanPairing.lean
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GBasisBooleanPairing.olean CMDGCondensedCM4P3GBasisBooleanPairing.lean
       - name: Replay P3-G free sections
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
-        run: lake env lean CMDGCondensedCM4P3GFreeSections.lean
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFreeSections.olean CMDGCondensedCM4P3GFreeSections.lean
       - name: Replay P3-G Boolean cube
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
-        run: lake env lean CMDGCondensedCM4P3GBooleanCube.lean
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GBooleanCube.olean CMDGCondensedCM4P3GBooleanCube.lean
       - name: Replay P3-G lifted Boolean pairing
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
-        run: lake env lean CMDGCondensedCM4P3GBasisBooleanPairingR.lean
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GBasisBooleanPairingR.olean CMDGCondensedCM4P3GBasisBooleanPairingR.lean
       - name: Replay P3-G finite Boolean measure
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
-        run: lake env lean CMDGCondensedCM4P3GFiniteBooleanMeasure.lean
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFiniteBooleanMeasure.olean CMDGCondensedCM4P3GFiniteBooleanMeasure.lean
       - name: Replay P3-G finite Boolean measure morphism
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
-        run: lake env lean CMDGCondensedCM4P3GFiniteBooleanMeasureHom.lean
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFiniteBooleanMeasureHom.olean CMDGCondensedCM4P3GFiniteBooleanMeasureHom.lean
       - name: Replay P3-G point functional
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
-        run: lake env lean CMDGCondensedCM4P3GPointFunctional.lean
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GPointFunctional.olean CMDGCondensedCM4P3GPointFunctional.lean
