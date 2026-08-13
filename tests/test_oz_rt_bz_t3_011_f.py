@@ -79,6 +79,19 @@ class T3011FMixedChannelAuditTests(unittest.TestCase):
         self.assertEqual(moved_n2, producer.rc.r_factor((1, 1, 0, 2), exponent=-2))
         self.assertEqual(moved_k1, producer.rc.r_factor((1, 1, 0, 1), exponent=-2))
 
+        tagged = (producer.a.pcl.PINV_TAG, 1, -1, 0, 0)
+        protected = producer.rc.r_factor(tagged, exponent=-2)
+        protected_n2 = producer.translate_rat(protected, producer.a.pcl.SHIFTS["n2"])
+        protected_k1 = producer.translate_rat(protected, producer.a.pcl.SHIFTS["k1"])
+        self.assertEqual(
+            protected_n2,
+            producer.rc.r_factor((producer.a.pcl.PINV_TAG, 1, -1, 0, 2), exponent=-2),
+        )
+        self.assertEqual(
+            protected_k1,
+            producer.rc.r_factor((producer.a.pcl.PINV_TAG, 1, -1, 0, -1), exponent=-2),
+        )
+
     def test_e_source_lock_mutation_fails_closed(self):
         name = "t3_011_e.py"
         old = producer.E_BLOBS[name]
