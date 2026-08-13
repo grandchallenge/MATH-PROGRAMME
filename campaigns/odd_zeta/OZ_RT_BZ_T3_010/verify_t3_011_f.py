@@ -142,6 +142,26 @@ def _independent_raw_bundle(mon, left, right):
     return direct, product, direct_reverse
 
 
+def _frozen_residual(cols, target):
+    _basis, selected, pivots = vd._forward_echelon(cols)
+    if not selected:
+        return {k: Q(q) for k, q in target.items() if q}
+    matrix = [[cols[j].get(pivot, Q(0)) for j in selected] for pivot in pivots]
+    alpha = vd._solve_square_forward(
+        matrix,
+        [target.get(pivot, Q(0)) for pivot in pivots],
+    )
+    residual = {k: Q(q) for k, q in target.items() if q}
+    for coeff, j in zip(alpha, selected):
+        vd._add_scaled(residual, cols[j], -coeff)
+    for pivot in pivots:
+        if residual.get(pivot, Q(0)):
+            raise AssertionError("independent F target residual pivot drift")
+    if not residual:
+        raise AssertionError("independent F target unexpectedly entered frozen base span")
+    return residual
+
+
 def _reconstruct_banks(strata, specialized, supports):
     banks = {}
     k1_candidates = None
@@ -165,12 +185,67 @@ def _reconstruct_banks(strata, specialized, supports):
         if va.pairing(witness, target) != 1:
             raise AssertionError(f"independent F witness normalization drift: {channel}")
         active = vd.independent_active_namespace(channel, strata, specialized, supports)
+        residual = _frozen_residual(cols, target)
         banks[channel] = {
             "candidates": candidates,
             "active": active,
             "witness": witness,
+            "residual": residual,
         }
     return banks
+
+
+def _independent_bank_ledgers(banks):
+    out = {}
+    for channel, bank in banks.items():
+        out[channel] = {
+            "candidate_count": len(bank["candidates"]),
+            "candidate_order_sha256": producer.sha(
+                [producer.unknown_json(uid) for uid in bank["candidates"]]
+            ),
+            "active_cell_count": len(bank["active"]),
+            "active_cell_sha256": producer.sha(sorted(bank["active"])),
+            "cokernel_witness_sha256": producer.p.sha(
+                producer.p.witness_rows(bank["witness"])
+            ),
+            "target_quotient_residual_sha256": c.global_vector_digest(bank["residual"]),
+        }
+    return out
+
+
+def _verify_predecessor_ledgers(result, e_result, bank_ledgers):
+    emitted = result.get("bank_ledgers")
+    if not isinstance(emitted, dict) or set(emitted) != set(bank_ledgers):
+        raise AssertionError("T3-011-F emitted bank-ledger channel drift")
+    for channel, actual in bank_ledgers.items():
+        for field in producer.E_LEDGER_FIELDS:
+            if emitted[channel].get(field) != actual[field]:
+                raise AssertionError(f"T3-011-F emitted bank-ledger drift: {channel}:{field}")
+
+    rows = e_result.get("channel_ledgers")
+    if not isinstance(rows, list):
+        raise AssertionError("independent F E channel ledgers missing")
+    expected = {row.get("channel"): row for row in rows}
+    if None in expected or set(expected) != set(bank_ledgers):
+        raise AssertionError("independent F E channel set drift")
+
+    canonical = []
+    for row in rows:
+        channel = row["channel"]
+        actual = bank_ledgers[channel]
+        for field in producer.E_LEDGER_FIELDS:
+            if row.get(field) != actual[field]:
+                raise AssertionError(f"independent F frozen E ledger drift: {channel}:{field}")
+        canonical.append(
+            {"channel": channel, **{field: actual[field] for field in producer.E_LEDGER_FIELDS}}
+        )
+    digest = producer.sha(canonical)
+    checkpoint = result.get("predecessor_checkpoint", {})
+    if checkpoint.get("channel_ledgers_exactly_matched") is not True:
+        raise AssertionError("T3-011-F predecessor ledger match flag missing")
+    if checkpoint.get("channel_ledgers_sha256") != digest:
+        raise AssertionError("T3-011-F predecessor ledger digest drift")
+    return digest
 
 
 def _independent_record(pair, endpoint, uid, strata, bank):
@@ -246,6 +321,9 @@ def verify(result: dict) -> dict:
 
     strata, specialized, supports = vd.reconstruct_context()
     banks = _reconstruct_banks(strata, specialized, supports)
+    bank_ledgers = _independent_bank_ledgers(banks)
+    predecessor_ledger_digest = _verify_predecessor_ledgers(result, e_result, bank_ledgers)
+
     expected_records = result.get("tested_records", [])
     cursor = 0
     first_breaking = None
@@ -356,6 +434,8 @@ def verify(result: dict) -> dict:
         "expected_full_record_count": full_count,
         "first_cokernel_breaking_direction": first_breaking,
         "first_semantic_functional_ambiguity": first_ambiguity,
+        "predecessor_channel_ledgers_exactly_matched": True,
+        "predecessor_channel_ledgers_sha256": predecessor_ledger_digest,
         "semantic_normal_form": semantic.SEMANTIC_NORMAL_FORM,
         "finite_sampling_used": False,
         "residual_sum_zero_proved": False,
