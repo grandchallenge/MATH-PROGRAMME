@@ -68,12 +68,14 @@ theorem finiteFunctionalCoefficients_apply_mem
     {i : IntegralBasisIndex X} (hi : i ∈ I) :
     finiteFunctionalCoefficients X L I i = L (intIndicator i) := by
   classical
-  simp only [finiteFunctionalCoefficients, Finset.sum_apply]
+  change (Finsupp.lapply i) (∑ j ∈ I, Finsupp.single j (L (intIndicator j))) =
+    L (intIndicator i)
+  rw [map_sum]
   apply Finset.sum_eq_single i
-  · simp
   · intro j hj hji
     simp [Ne.symm hji]
-  · simp [hi]
+  · intro hnot
+    exact (hnot hi).elim
 
 /-- Terminal algebraic kernel-annihilation lemma. If `L` is controlled by one finite coordinate
 set `I`, and the Nöbeling combination whose coefficients are `L` on the standard coordinate
