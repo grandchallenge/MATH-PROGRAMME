@@ -43,6 +43,101 @@ def verifier_global_column(channel, uid, strata, active):
     return semantic.direct_global_column_from_poly(raw, scalar, channel, strata, active)
 
 
+def _add_scaled(dst: dict, src: dict, factor: Q) -> None:
+    if not factor:
+        return
+    for key, value in src.items():
+        z = dst.get(key, Q(0)) + factor * value
+        if z:
+            dst[key] = z
+        elif key in dst:
+            del dst[key]
+
+
+def _forward_echelon(cols: list[dict]):
+    basis = {}
+    selected = []
+    pivots = []
+    for idx, source in enumerate(cols):
+        vec = {k: Q(q) for k, q in source.items() if q}
+        while vec:
+            pivot = min(vec, key=va.gkey)
+            if pivot in basis:
+                _add_scaled(vec, basis[pivot], -vec[pivot])
+                continue
+            scale = vec[pivot]
+            vec = {k: q / scale for k, q in vec.items() if q}
+            basis[pivot] = vec
+            selected.append(idx)
+            pivots.append(pivot)
+            break
+    return basis, selected, pivots
+
+
+def _solve_square_forward(matrix: list[list[Q]], rhs: list[Q]) -> list[Q]:
+    n = len(matrix)
+    if len(rhs) != n or any(len(row) != n for row in matrix):
+        raise ValueError("forward square solve shape drift")
+    aug = [[Q(x) for x in row] + [Q(rhs[i])] for i, row in enumerate(matrix)]
+    for col in range(n):
+        pivot = next((r for r in range(col, n) if aug[r][col]), None)
+        if pivot is None:
+            raise AssertionError("singular forward canonical pivot matrix")
+        if pivot != col:
+            aug[col], aug[pivot] = aug[pivot], aug[col]
+        scale = aug[col][col]
+        aug[col] = [x / scale for x in aug[col]]
+        for row in range(n):
+            if row == col or not aug[row][col]:
+                continue
+            factor = aug[row][col]
+            aug[row] = [x - factor * y for x, y in zip(aug[row], aug[col])]
+    return [aug[i][-1] for i in range(n)]
+
+
+def frozen_canonical_witness(cols: list[dict], target: dict) -> dict:
+    """Independently reproduce the predecessor's smallest-coordinate normalized witness."""
+    basis, selected, pivots = _forward_echelon(cols)
+    rank = vb.rank_reverse(cols)
+    if len(selected) != rank:
+        raise AssertionError("forward frozen witness rank drift")
+    if not selected:
+        qcoord = min(target, key=va.gkey)
+        return {qcoord: Q(1) / target[qcoord]}
+
+    matrix = [[cols[j].get(pivot, Q(0)) for j in selected] for pivot in pivots]
+    alpha = _solve_square_forward(matrix, [target.get(pivot, Q(0)) for pivot in pivots])
+    residual = {k: Q(q) for k, q in target.items() if q}
+    for coeff, j in zip(alpha, selected):
+        _add_scaled(residual, cols[j], -coeff)
+    for pivot in pivots:
+        if residual.get(pivot, Q(0)):
+            raise AssertionError("frozen witness target projection pivot drift")
+    if not residual:
+        raise AssertionError("frozen witness target unexpectedly entered base span")
+    qcoord = min(residual, key=va.gkey)
+
+    transpose = [[matrix[row][col] for row in range(len(selected))] for col in range(len(selected))]
+    qrow = [cols[j].get(qcoord, Q(0)) for j in selected]
+    gamma = _solve_square_forward(transpose, [-x for x in qrow])
+    witness = {qcoord: Q(1)}
+    for pivot, coeff in zip(pivots, gamma):
+        if coeff:
+            witness[pivot] = witness.get(pivot, Q(0)) + coeff
+            if not witness[pivot]:
+                del witness[pivot]
+    for col in cols:
+        if va.pairing(witness, col):
+            raise AssertionError("frozen canonical witness fails base annihilation")
+    value = va.pairing(witness, target)
+    if not value:
+        raise AssertionError("frozen canonical witness misses target")
+    witness = {k: q / value for k, q in witness.items() if q}
+    if va.pairing(witness, target) != 1:
+        raise AssertionError("frozen canonical witness normalization drift")
+    return witness
+
+
 def reconstruct_context():
     a.assert_source_locks()
     a.validate_architecture()
@@ -63,6 +158,20 @@ def reconstruct_context():
         for block in vc.BLOCK_ORDER
     }
     return strata, specialized, supports
+
+
+def _verified_pairing(witness: dict, prod: dict, alt: dict, channel: str, uid) -> Q:
+    sem = semantic.semantic_bundle([prod, alt])
+    if not sem["equals_direct"][1]:
+        raise AssertionError(f"quadratic finite-difference/product-rule mismatch: {channel}:{uid}")
+    prod_pairing = va.pairing(witness, prod)
+    alt_pairing = va.pairing(witness, alt)
+    if alt_pairing != prod_pairing:
+        raise AssertionError(
+            f"quadratic cokernel pairing is representation-dependent: {channel}:{uid}: "
+            f"direct={prod_pairing} product_rule={alt_pairing}"
+        )
+    return prod_pairing
 
 
 def verify(result: dict) -> dict:
@@ -108,9 +217,9 @@ def verify(result: dict) -> dict:
             raise AssertionError(f"independent candidate bank drift: {channel}")
         if channel == "k1":
             k1_candidates = list(candidates)
-        witness = va.independent_cokernel_witness(cols, target)
+        witness = frozen_canonical_witness(cols, target)
         if va.pairing(witness, target) != 1:
-            raise AssertionError(f"independent witness normalization drift: {channel}")
+            raise AssertionError(f"independent frozen witness normalization drift: {channel}")
         active = {rec["id"] for rec in base["active_cells"]}
 
         for uid in candidates:
@@ -121,12 +230,9 @@ def verify(result: dict) -> dict:
                 break
             prod = producer.quadratic_global_column(channel, uid, strata, active)
             alt = verifier_global_column(channel, uid, strata, active)
-            sem = semantic.semantic_bundle([prod, alt])
-            if not sem["equals_direct"][1]:
-                raise AssertionError(f"quadratic finite-difference/product-rule mismatch: {channel}:{uid}")
+            pairing = _verified_pairing(witness, prod, alt, channel, uid)
             if row["quadratic_response_sha256"] != c.global_vector_digest(prod):
                 raise AssertionError(f"quadratic response digest drift: {channel}:{uid}")
-            pairing = va.pairing(witness, prod)
             if row["obstruction_pairing"] != producer.qjson(pairing):
                 raise AssertionError(f"quadratic obstruction pairing drift: {channel}:{uid}")
             if row["obstruction_pairing_nonzero"] != bool(pairing):
@@ -148,7 +254,7 @@ def verify(result: dict) -> dict:
         if k1_candidates is None:
             raise AssertionError("k1 source bank absent")
         base, ids, cols, target = vc.reconstruct_channel("l1", strata, specialized, supports)
-        witness = va.independent_cokernel_witness(cols, target)
+        witness = frozen_canonical_witness(cols, target)
         active = {rec["id"] for rec in base["active_cells"]}
         mirrored = [vc.mirror_unknown_k_to_l(uid) for uid in k1_candidates]
         for source, uid in zip(k1_candidates, mirrored):
@@ -161,10 +267,7 @@ def verify(result: dict) -> dict:
                 raise AssertionError("l1 mirror source marker drift")
             prod = producer.quadratic_global_column("l1", uid, strata, active)
             alt = verifier_global_column("l1", uid, strata, active)
-            sem = semantic.semantic_bundle([prod, alt])
-            if not sem["equals_direct"][1]:
-                raise AssertionError(f"l1 quadratic semantic mismatch: {uid}")
-            pairing = va.pairing(witness, prod)
+            pairing = _verified_pairing(witness, prod, alt, "l1", uid)
             if row["obstruction_pairing"] != producer.qjson(pairing):
                 raise AssertionError(f"l1 quadratic pairing drift: {uid}")
             mirror_index += 1
@@ -204,6 +307,7 @@ def verify(result: dict) -> dict:
         "first_cokernel_breaking_direction": first,
         "polynomial_degree_alone_breaks_cokernel_obstruction": first is not None,
         "semantic_normal_form": semantic.SEMANTIC_NORMAL_FORM,
+        "pairing_representation_invariance_checked": True,
         "finite_sampling_used": False,
         "proof_effect": "NONE",
         "promotion_effect": "NONE",
