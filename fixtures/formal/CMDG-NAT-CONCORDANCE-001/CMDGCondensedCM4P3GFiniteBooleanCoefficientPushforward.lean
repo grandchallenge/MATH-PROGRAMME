@@ -1,13 +1,17 @@
 import CMDGCondensedCM4P3GKernelWeightedLocalConstancy
 import CMDGCondensedCM4P2EFiniteDualPushforward
+import CMDGCondensedCM4P2EFiniteMeasureTransport
 
 /-!
-# CMDG CM4-P3-G stage 22: finite Boolean coefficient-family pushforward
+# CMDG CM4-P3-G stages 22-23: finite Boolean pushforward transport
 
-This successor fixture transports the certified stage-21 Boolean coefficient fiber identity through
-the already-certified P2-E canonical finite coefficient-family pushforward. It stops before finite
-measure transport, right-Kan cone assembly, kernel local constancy, mapping-out injectivity, or any
-solidity claim.
+Stage 22 transports the certified stage-21 Boolean coefficient fiber identity through the
+already-certified P2-E canonical finite coefficient-family pushforward. Stage 23 then transports
+that compatibility through the certified finite internal-dual and measure-family isomorphisms to
+the actual finite P2-D measure-presheaf section.
+
+This fixture still stops before finite measure-morphism compatibility, right-Kan cone assembly,
+kernel probing, mapping-out injectivity, or any solidity claim.
 -/
 
 namespace CMDG.CondensedCM4P3G.FiniteBooleanCoefficientPushforward
@@ -193,12 +197,86 @@ theorem finiteBooleanCoefficientFamily_pushforward
     _ = finiteBooleanCoefficient X k q :=
       finiteBooleanCoefficient_fiber_sum X f q
 
+/-- The two certified inverse finite transports commute with canonical coefficient-family
+pushforward and the actual finite P2-D measure-presheaf map. -/
+theorem finiteCoefficientToMeasure_pushforward
+    {A B : FintypeCat.{u}} (g : A ⟶ B) :
+    (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyPushforwardMap g ≫
+        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso B).inv) ≫
+      (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso B).inv =
+    ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso A).inv ≫
+        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso A).inv) ≫
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafMap g := by
+  have hFamily :=
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomNatIso.inv.naturality g
+  rw [CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyCovariant_map_eq_pushforward g,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomFunctor_map_eq g] at hFamily
+  change
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyPushforwardMap g ≫
+        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso B).inv =
+      (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso A).inv ≫
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomMap g at hFamily
+  have hMeasure :=
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyNatIso.inv.naturality g
+  rw [CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomFunctor_map_eq g,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFunctor_map_eq g] at hMeasure
+  change
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomMap g ≫
+        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso B).inv =
+      (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso A).inv ≫
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafMap g at hMeasure
+  calc
+    (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyPushforwardMap g ≫
+        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso B).inv) ≫
+        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso B).inv =
+      ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso A).inv ≫
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomMap g) ≫
+        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso B).inv := by
+          rw [hFamily]
+    _ =
+      (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso A).inv ≫
+        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomMap g ≫
+          (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso B).inv) :=
+      Category.assoc _ _ _
+    _ =
+      (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso A).inv ≫
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso A).inv ≫
+          CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafMap g) := by
+            rw [hMeasure]
+    _ =
+      ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso A).inv ≫
+        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso A).inv) ≫
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafMap g :=
+      (Category.assoc _ _ _).symm
+
+/-- Stage-23 terminal theorem. The finite Boolean measure section is covariantly compatible under
+finite quotient refinement. This is still a section-level claim, not a right-Kan cone. -/
+theorem finiteBooleanMeasureSection_pushforward
+    (X : Profinite.{u}) {j k : DiscreteQuotient X} (f : j ⟶ k) :
+    (ConcreteCategory.hom
+      ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafMap
+        (X.fintypeDiagram.map f)).app
+        (op ((profiniteToCompHaus).obj (basisBooleanCube X)))))
+      (finiteBooleanMeasureSection X j) =
+      finiteBooleanMeasureSection X k := by
+  let S := op ((profiniteToCompHaus).obj (basisBooleanCube X))
+  let g := X.fintypeDiagram.map f
+  have hcomp := finiteCoefficientToMeasure_pushforward g
+  have hpoint := congrArg
+    (fun η =>
+      (ConcreteCategory.hom (η.app S))
+        (finiteBooleanCoefficientFamily X j)) hcomp
+  have hCoeff := finiteBooleanCoefficientFamily_pushforward X f
+  simpa [finiteBooleanMeasureSection, S, g, hCoeff, NatTrans.comp_app] using hpoint.symm
+
 #check fintypeDiagram_map_eq_finiteQuotientTransition
 #check finiteCoefficientFamilyFiberPushforward
 #check finiteCoordinateInclusion_fiberPushforward
 #check finiteCoefficientFamilyPushforwardMap_eq_fiberPushforward
 #check finiteCoefficientFamilyPushforwardMap_apply
 #check finiteBooleanCoefficientFamily_pushforward
+#check finiteCoefficientToMeasure_pushforward
+#check finiteBooleanMeasureSection_pushforward
 
 #print axioms fintypeDiagram_map_eq_finiteQuotientTransition
 #print axioms finiteCoefficientFamilyFiberPushforward
@@ -206,5 +284,7 @@ theorem finiteBooleanCoefficientFamily_pushforward
 #print axioms finiteCoefficientFamilyPushforwardMap_eq_fiberPushforward
 #print axioms finiteCoefficientFamilyPushforwardMap_apply
 #print axioms finiteBooleanCoefficientFamily_pushforward
+#print axioms finiteCoefficientToMeasure_pushforward
+#print axioms finiteBooleanMeasureSection_pushforward
 
 end CMDG.CondensedCM4P3G.FiniteBooleanCoefficientPushforward
