@@ -1,9 +1,13 @@
 # Post-Pilot Operating Plan — Agent-Cadence Revision
 
-**Plan ID:** `MP-OPERATING-PLAN-2026-08-POST-PILOT-001-R2`  
-**Plan window:** `P9D` from protected activation (`T0`)  
-**Source:** *Full-System Follow-up Report: Post-Pilot Transition and Operating Consolidation*, reporting cut-off 2026-08-12 18:04 PDT  
-**Status:** Council-review candidate; activates only after the reserved exact-revision Human Steward disposition and protected merge  
+**Plan ID:** `MP-OPERATING-PLAN-2026-08-POST-PILOT-001-R2`
+
+**Plan window:** `P9D` from protected activation (`T0`)
+
+**Source:** *Full-System Follow-up Report: Post-Pilot Transition and Operating Consolidation*, reporting cut-off 2026-08-12 18:04 PDT
+
+**Status:** Council-review candidate; activates only after the reserved exact-revision Human Steward disposition and protected merge
+
 **Primary coordinating repository:** `grandchallenge/MATH-PROGRAMME`
 
 ## 1. Operating outcome
