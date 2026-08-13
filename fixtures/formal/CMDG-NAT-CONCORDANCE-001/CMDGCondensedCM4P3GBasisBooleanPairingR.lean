@@ -22,6 +22,18 @@ noncomputable def locallyConstantIntegralDownEquiv (X : Profinite.{u}) :
     LocallyConstant X R ≃+* LocallyConstant X ℤ :=
   (CMDG.CondensedCM4P3G.locallyConstantIntegralLiftEquiv X).symm
 
+/-- The already-certified Boolean pairing, bundled as an additive homomorphism. -/
+noncomputable def basisBooleanPairingAddHom (X : Profinite.{u}) :
+    LocallyConstant X ℤ →+ LocallyConstant (IntegralBasisIndex X → Bool) ℤ where
+  toFun := basisBooleanPairing X
+  map_zero' := basisBooleanPairing_zero X
+  map_add' := basisBooleanPairing_add X
+
+/-- The Boolean pairing as a canonical integral linear map. -/
+noncomputable def basisBooleanPairingIntLinear (X : Profinite.{u}) :
+    LocallyConstant X ℤ →ₗ[ℤ] LocallyConstant (IntegralBasisIndex X → Bool) ℤ :=
+  (basisBooleanPairingAddHom X).toIntLinearMap
+
 /-- The Nöbeling Boolean pairing, transported to the actual lifted coefficient ring. -/
 noncomputable def basisBooleanPairingR (X : Profinite.{u}) :
     LocallyConstant X R →ₗ[R]
@@ -29,17 +41,17 @@ noncomputable def basisBooleanPairingR (X : Profinite.{u}) :
   toFun v :=
     CMDG.CondensedCM4P3G.locallyConstantIntegralLiftEquiv
       (CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X)
-      (basisBooleanPairing X (locallyConstantIntegralDownEquiv X v))
+      (basisBooleanPairingIntLinear X (locallyConstantIntegralDownEquiv X v))
   map_add' v w := by
     rw [map_add, map_add, map_add]
   map_smul' r v := by
     ext t
     change
       ULift.up
-          (basisBooleanPairing X
+          (basisBooleanPairingIntLinear X
             (locallyConstantIntegralDownEquiv X (r • v)) t) =
         r * ULift.up
-          (basisBooleanPairing X
+          (basisBooleanPairingIntLinear X
             (locallyConstantIntegralDownEquiv X v) t)
     have hdown :
         locallyConstantIntegralDownEquiv X (r • v) =
@@ -50,6 +62,8 @@ noncomputable def basisBooleanPairingR (X : Profinite.{u}) :
     rfl
 
 #print locallyConstantIntegralDownEquiv
+#print basisBooleanPairingAddHom
+#print basisBooleanPairingIntLinear
 #print basisBooleanPairingR
 #print axioms basisBooleanPairingR
 
