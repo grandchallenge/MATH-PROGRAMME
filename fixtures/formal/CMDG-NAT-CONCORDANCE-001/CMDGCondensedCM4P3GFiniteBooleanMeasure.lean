@@ -19,7 +19,7 @@ open CategoryTheory Opposite
 
 open CMDG.CondensedCM4P3G.BooleanCube
 open CMDG.CondensedCM4P3G.BasisSeparation
-open CMDG.CondensedCM4P3G.BasisBooleanPairingR
+open CMDG.CondensedCM4P3G.BasisBooleanPairing
 
 abbrev R := CMDG.CondensedCM4P3G.R.{u}
 
@@ -40,13 +40,22 @@ noncomputable def finiteDeltaPullbackR
           (fun y => if y = q then (1 : R) else 0) }
 
 /-- The Boolean basis-coordinate function attached to one finite-quotient point: pull the finite
-delta back to `X`, then apply the lifted Nöbeling Boolean pairing. -/
+delta back to `X`, descend coefficients to `ℤ`, apply the integral Nöbeling Boolean pairing,
+and lift coefficients through the explicitly pinned ring equivalence `ℤ ≃+* R`. -/
 noncomputable def finiteBooleanCoefficient
     (X : Profinite.{u}) (j : DiscreteQuotient X)
     (q : (FiniteQuotientObject X j).obj) :
     LocallyConstant (basisBooleanCube X) R := by
   change LocallyConstant (IntegralBasisIndex X → Bool) R
-  exact basisBooleanPairingR X (finiteDeltaPullbackR X j q)
+  exact
+    (LocallyConstant.congrRightRingEquiv
+      (X := IntegralBasisIndex X → Bool)
+      (ULift.ringEquiv.symm : ℤ ≃+* R))
+      (basisBooleanPairing X
+        ((LocallyConstant.congrRightRingEquiv
+          (X := X)
+          (ULift.ringEquiv : R ≃+* ℤ))
+          (finiteDeltaPullbackR X j q)))
 
 /-- The whole finite family of Boolean coefficient functions at one finite quotient. -/
 noncomputable def finiteBooleanCoefficientFamily
