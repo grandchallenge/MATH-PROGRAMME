@@ -36,27 +36,7 @@ noncomputable def freeHomSectionsEquiv (T : Profinite.{u}) (A : CondensedMod.{u}
       (Condensed.forget R).obj A) ≃ Sections T A)
   exact (coherentTopology CompHaus.{u}).uliftYonedaEquiv
 
-/-- Naturality in the target condensed module. -/
-theorem freeHomSectionsEquiv_postcomp
-    (T : Profinite.{u}) {A B : CondensedMod.{u} R}
-    (g : FreeHom T A) (f : A ⟶ B) :
-    freeHomSectionsEquiv T B (g ≫ f) =
-      ((Condensed.forget R).map f).obj.app
-        (op ((profiniteToCompHaus).obj T))
-        (freeHomSectionsEquiv T A g) := by
-  change
-    (coherentTopology CompHaus.{u}).uliftYonedaEquiv
-      ((Condensed.freeForgetAdjunction R).homEquiv
-        ((profiniteToCondensed).obj T) B (g ≫ f)) = _
-  rw [(Condensed.freeForgetAdjunction R).homEquiv_naturality_right]
-  exact (coherentTopology CompHaus.{u}).uliftYonedaEquiv_naturality_right
-    ((Condensed.freeForgetAdjunction R).homEquiv
-      ((profiniteToCondensed).obj T) A g)
-    ((Condensed.forget R).map f)
-
 #print freeHomSectionsEquiv
-#print freeHomSectionsEquiv_postcomp
 #print axioms freeHomSectionsEquiv
-#print axioms freeHomSectionsEquiv_postcomp
 
 end CMDG.CondensedCM4P3G.FreeSections
