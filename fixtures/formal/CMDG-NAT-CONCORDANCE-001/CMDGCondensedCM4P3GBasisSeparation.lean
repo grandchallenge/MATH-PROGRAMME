@@ -52,6 +52,23 @@ theorem basisCoefficients_eq_zero_of_pointwise_zero
   ext x
   simpa using h x
 
+/-- Kronecker lookup for a finite sum of integer `Finsupp.single` terms. Keeping this fact
+separate prevents the terminal Nöbeling wrapper from depending on evaluator elaboration. -/
+theorem intFinsupp_sum_single_apply_mem
+    {ι : Type*} [DecidableEq ι]
+    (I : Finset ι) (a : ι → ℤ) {i : ι} (hi : i ∈ I) :
+    (∑ j ∈ I, Finsupp.single j (a j) : ι →₀ ℤ) i = a i := by
+  rw [Finset.sum_apply]
+  calc
+    ∑ j ∈ I, (Finsupp.single j (a j) : ι →₀ ℤ) i =
+        (Finsupp.single i (a i) : ι →₀ ℤ) i := by
+      apply Finset.sum_eq_single i
+      · intro j hj hji
+        exact Finsupp.single_eq_of_ne (Ne.symm hji)
+      · intro hnot
+        exact (hnot hi).elim
+    _ = a i := Finsupp.single_eq_same
+
 /-- Package the coordinate values of an additive functional on one finite index set as a
 finitely supported Nöbeling coefficient vector. -/
 noncomputable def finiteFunctionalCoefficients
@@ -68,24 +85,8 @@ theorem finiteFunctionalCoefficients_apply_mem
     {i : IntegralBasisIndex X} (hi : i ∈ I) :
     finiteFunctionalCoefficients X L I i = L (intIndicator i) := by
   classical
-  let ev : (IntegralBasisIndex X →₀ ℤ) →+ ℤ :=
-    { toFun := fun c => c i
-      map_zero' := rfl
-      map_add' := by
-        intro a b
-        rfl }
-  change ev (∑ j ∈ I, Finsupp.single j (L (intIndicator j))) =
-    L (intIndicator i)
-  rw [map_sum]
-  have hself :
-      ev (Finsupp.single i (L (intIndicator i))) = L (intIndicator i) := by
-    simp [ev]
-  rw [← hself]
-  apply Finset.sum_eq_single i
-  · intro j hj hji
-    simp [ev, hji]
-  · intro hnot
-    exact (hnot hi).elim
+  simpa [finiteFunctionalCoefficients] using
+    (intFinsupp_sum_single_apply_mem I (fun j => L (intIndicator j)) hi)
 
 /-- Terminal algebraic kernel-annihilation lemma. If `L` is controlled by one finite coordinate
 set `I`, and the Nöbeling combination whose coefficients are `L` on the standard coordinate
@@ -131,9 +132,11 @@ theorem additiveFunctional_eq_zero_of_finiteDependence_and_basisCombination
 #print integralBasis
 #print basisCombination
 #print basisCoefficients_eq_zero_of_pointwise_zero
+#print intFinsupp_sum_single_apply_mem
 #print finiteFunctionalCoefficients
 #print additiveFunctional_eq_zero_of_finiteDependence_and_basisCombination
 #print axioms basisCoefficients_eq_zero_of_pointwise_zero
+#print axioms intFinsupp_sum_single_apply_mem
 #print axioms additiveFunctional_eq_zero_of_finiteDependence_and_basisCombination
 
 end CMDG.CondensedCM4P3G.BasisSeparation
