@@ -76,7 +76,8 @@ jobs:
           K=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteWindow.lean
           L=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteSupport.lean
           M=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GBasisSeparation.lean
-          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$G" "$H" "$K" "$L" "$M"; then
+          N=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GBasisBooleanPairing.lean
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$G" "$H" "$K" "$L" "$M" "$N"; then
             echo "P3 fixtures must contain neither sorry nor local axioms."
             exit 1
           fi
@@ -95,7 +96,8 @@ jobs:
           grep -Fq 'locallyConstant_boolPi_zero_finiteWindow' "$K"
           grep -Fq 'finite_support_of_bool_locallyConstant' "$L"
           grep -Fq 'basisCoefficients_eq_zero_of_pointwise_zero' "$M"
-          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$G" "$H" "$K" "$L" "$M"; then
+          grep -Fq 'basisBooleanPairing' "$N"
+          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$G" "$H" "$K" "$L" "$M" "$N"; then
             echo "P3 reduction fixtures must not install an unconditional IsSolid instance."
             exit 1
           fi
@@ -190,3 +192,4 @@ jobs:
           lake env lean CMDGCondensedCM4P3GFiniteWindow.lean
           lake env lean CMDGCondensedCM4P3GFiniteSupport.lean
           lake env lean CMDGCondensedCM4P3GBasisSeparation.lean
+          lake env lean CMDGCondensedCM4P3GBasisBooleanPairing.lean
