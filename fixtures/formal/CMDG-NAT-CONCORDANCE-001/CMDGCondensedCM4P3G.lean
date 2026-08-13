@@ -168,24 +168,23 @@ theorem coefficient_homPrecomp_surjective (X : Profinite.{u}) :
   rw [finiteStageExtension_precomp]
   exact hg.symm
 
-/-- Nöbeling freeness transported from integral coefficients to the exact lifted coefficient ring. -/
-theorem locallyConstant_free_liftedInt (X : Profinite.{u}) :
-    Module.Free R (LocallyConstant X R) := by
-  let e : ℤ ≃+* R := ULift.ringEquiv.symm
-  letI : RingHomInvPair (e : ℤ →+* R) (e.symm : R →+* ℤ) :=
-    RingHomInvPair.of_ringEquiv e
-  letI : RingHomInvPair (e.symm : R →+* ℤ) (e : ℤ →+* R) :=
-    RingHomInvPair.of_ringEquiv_symm e
-  let E : LocallyConstant X ℤ ≃ₛₗ[(e : ℤ →+* R)] LocallyConstant X R :=
-    { (LocallyConstant.congrRightRingEquiv (X := X) e).toAddEquiv with
-      map_smul' := by
-        intro r f
-        ext x
-        rfl }
-  exact Module.Free.of_equiv
-    (R := ℤ) (R' := R)
-    (M := LocallyConstant X ℤ) (M' := LocallyConstant X R)
-    (σ := (e : ℤ →+* R)) (σ' := (e.symm : R →+* ℤ)) E
+/-- Pointwise scalar extension from integral locally constant functions to the lifted ring. -/
+noncomputable def locallyConstantIntegralLiftEquiv (X : Profinite.{u}) :
+    LocallyConstant X ℤ ≃+* LocallyConstant X R :=
+  LocallyConstant.congrRightRingEquiv (X := X)
+    (ULift.ringEquiv.symm : ℤ ≃+* R)
+
+/-- Transport an `R`-linear scalar functional back to integral coefficients. This is the
+narrow coefficient change needed for the Nöbeling argument; no global lifted freeness instance
+is required. -/
+noncomputable def liftedIntFunctionalDown (X : Profinite.{u})
+    (μ : LocallyConstant X R →ₗ[R] R) :
+    LocallyConstant X ℤ →ₗ[ℤ] ℤ where
+  toFun f := (μ (locallyConstantIntegralLiftEquiv X f)).down
+  map_add' f g := by
+    simp [locallyConstantIntegralLiftEquiv]
+  map_smul' r f := by
+    simp [locallyConstantIntegralLiftEquiv, smul_eq_mul]
 
 /-- A locally constant map on a Boolean product is determined at the all-true point by its
 finite-coordinate truncations. -/
@@ -337,7 +336,8 @@ theorem coefficientFiniteStageMappingOut_iff_isSolid :
 #check finiteSolidification_counit
 #check finiteStageExtension_precomp
 #check coefficient_homPrecomp_surjective
-#check locallyConstant_free_liftedInt
+#check locallyConstantIntegralLiftEquiv
+#check liftedIntFunctionalDown
 #check locallyConstant_boolPi_allTrue_of_finsetPiecewise
 #check coefficientPointProbeMap
 #check coefficient_hom_ext_point
@@ -355,7 +355,8 @@ theorem coefficientFiniteStageMappingOut_iff_isSolid :
 #print axioms finiteSolidification_counit
 #print axioms finiteStageExtension_precomp
 #print axioms coefficient_homPrecomp_surjective
-#print axioms locallyConstant_free_liftedInt
+#print axioms locallyConstantIntegralLiftEquiv
+#print axioms liftedIntFunctionalDown
 #print axioms locallyConstant_boolPi_allTrue_of_finsetPiecewise
 #print axioms coefficient_hom_ext_point
 #print axioms coefficientFiniteStageMappingOut_iff_injectivity
