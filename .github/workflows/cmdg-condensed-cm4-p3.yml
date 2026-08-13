@@ -271,6 +271,15 @@ jobs:
       - name: Replay P3-G finite Boolean coefficient-family pushforward
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
         run: |
-          set -euo pipefail
+          set -uo pipefail
           mkdir -p .lake/build/lib/lean
-          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFiniteBooleanCoefficientPushforward.olean CMDGCondensedCM4P3GFiniteBooleanCoefficientPushforward.lean
+          set +e
+          output=$(lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFiniteBooleanCoefficientPushforward.olean CMDGCondensedCM4P3GFiniteBooleanCoefficientPushforward.lean 2>&1)
+          status=$?
+          set -e
+          printf '%s\n' "$output"
+          if [ "$status" -ne 0 ]; then
+            diagnostic=$(printf '%s\n' "$output" | tail -n 80 | base64 -w0)
+            echo "::error title=stage22-lean-diagnostic::$diagnostic"
+            exit "$status"
+          fi
