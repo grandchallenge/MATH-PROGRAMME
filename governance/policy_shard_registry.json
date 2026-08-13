@@ -23,14 +23,18 @@
       ["python3", "ci/validate_log_gcd_fixture.py", "fixtures/formal/LOG-GCD-001"],
       ["python3", "ci/test_log_gcd_fixture.py"],
       ["python3", "ci/validate_log_gcd_publication.py", "fixtures/formal/LOG-GCD-001"],
-      ["python3", "ci/test_log_gcd_publication.py"]
+      ["python3", "ci/test_log_gcd_publication.py"],
+      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_*fixture*.py", "--report-json", "fixture-test-timing.json"]
     ],
     "cmdg": [
       ["python3", "ci/validate_cmdg_schema_contracts.py"],
       ["python3", "ci/validate_cmdg_graph_package.py", "--report", "cmdg-validator-report.json"],
       ["python3", "ci/validate_cmdg_nat_foundations_profile.py"],
       ["python3", "ci/validate_cmdg_workflow_impact_gating.py"],
-      ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_cmdg*.py"]
+      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_cmdg*.py", "--report-json", "cmdg-test-timing.json"]
+    ],
+    "oz": [
+      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_oz*.py", "--report-json", "oz-test-timing.json"]
     ],
     "administrative": [
       ["python3", "ci/validate_administrative_structural_sweep.py"],
@@ -60,12 +64,15 @@
       ["python3", "ci/test_repository_execution.py"],
       ["python3", "ci/validate_workflow_semantics.py"],
       ["python3", "ci/test_workflow_semantics.py"],
-      ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"]
+      ["python3", "ci/run_unittest_modules.py", "--manifest", "governance/contract_test_manifest.json", "--report-json", "contract-test-timing.json"]
     ],
     "docs": [
       ["python", "ci/validate_docs.py"],
       ["python", "ci/test_validate_docs.py"],
       ["mkdocs", "build", "--strict"]
+    ],
+    "repository-regression": [
+      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_*.py", "--report-json", "repository-regression-timing.json"]
     ]
   }
 }
