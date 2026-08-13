@@ -45,11 +45,8 @@ noncomputable def finiteBooleanCoefficient
     (X : Profinite.{u}) (j : DiscreteQuotient X)
     (q : (FiniteQuotientObject X j).obj) :
     LocallyConstant (basisBooleanCube X) R := by
-  let pulled : LocallyConstant X R := finiteDeltaPullbackR X j q
-  let paired : LocallyConstant (IntegralBasisIndex X → Bool) R :=
-    basisBooleanPairingR X pulled
   change LocallyConstant (IntegralBasisIndex X → Bool) R
-  exact paired
+  exact basisBooleanPairingR X (finiteDeltaPullbackR X j q)
 
 /-- The whole finite family of Boolean coefficient functions at one finite quotient. -/
 noncomputable def finiteBooleanCoefficientFamily
