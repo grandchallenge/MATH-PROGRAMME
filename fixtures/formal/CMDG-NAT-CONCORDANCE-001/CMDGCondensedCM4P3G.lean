@@ -182,9 +182,23 @@ noncomputable def liftedIntFunctionalDown (X : Profinite.{u})
     LocallyConstant X ℤ →ₗ[ℤ] ℤ where
   toFun f := (μ (locallyConstantIntegralLiftEquiv X f)).down
   map_add' f g := by
-    simp [locallyConstantIntegralLiftEquiv]
+    change
+      (μ (locallyConstantIntegralLiftEquiv X (f + g))).down =
+        (μ (locallyConstantIntegralLiftEquiv X f)).down +
+          (μ (locallyConstantIntegralLiftEquiv X g)).down
+    rw [map_add, μ.map_add]
+    rfl
   map_smul' r f := by
-    simp [locallyConstantIntegralLiftEquiv, smul_eq_mul]
+    change
+      (μ (locallyConstantIntegralLiftEquiv X (r • f))).down =
+        r • (μ (locallyConstantIntegralLiftEquiv X f)).down
+    have h :
+        locallyConstantIntegralLiftEquiv X (r • f) =
+          (ULift.up r : R) • locallyConstantIntegralLiftEquiv X f := by
+      ext x
+      rfl
+    rw [h, μ.map_smul]
+    rfl
 
 /-- A locally constant map on a Boolean product is determined at the all-true point by its
 finite-coordinate truncations. -/
