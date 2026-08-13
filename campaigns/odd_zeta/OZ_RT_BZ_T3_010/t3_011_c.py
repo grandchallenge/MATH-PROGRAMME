@@ -24,6 +24,7 @@ OPERATION = "OZ-RT-BZ-T3-011-C"
 STAGE = "T3_011_C_DIRECT_DISCRETE_PRODUCT_RULE_RESPONSE_GENERATOR_SEMANTICS_AUDIT"
 AUDIT_ID = "DIRECT_DISCRETE_PRODUCT_RULE_RESPONSE_GENERATOR_AUDIT_001"
 DIRECT_AUTHORITY_ID = "EXPLICIT_PRIMITIVE_SHIFT_RAW_FINITE_DIFFERENCE_V1"
+SEMANTIC_NORMAL_FORM = "COMMON_DENOMINATOR_EXPANDED_Q_N_K_L_NUMERATOR_V1"
 B_REVIEWED_HEAD = "7876a44286f3c958bf03ce120117c2cd689b2379"
 B_MERGE_COMMIT = "f8dc03a4e546a47b7a2b6d77a96d689f47e4d9a3"
 B_REQUIRED_TERMINAL = "BOUNDED_SINGLE_CHANNEL_LINEAR_NONZERO_RESPONSE_LIFT_CLASS_EXHAUSTED"
@@ -37,6 +38,7 @@ CHANNEL_INCREMENT = {"n1": 1, "n2": 2, "n3": 3, "k1": 1, "l1": 1}
 CHANNEL_COORDINATE = {"n1": "n", "n2": "n", "n3": "n", "k1": "k", "l1": "l"}
 Unknown = p.Unknown
 GlobalVector = p.GlobalVector
+Poly3 = dict[tuple[int, int, int], Q]
 
 
 def sha(obj: object) -> str:
@@ -146,7 +148,6 @@ def direct_coordinate_rat(channel: str):
 
 
 def direct_shifted_coordinate_rat(channel: str, increment_override: int | None = None):
-    """Represent x+step additively, not as an opaque affine multiplicative atom."""
     step = CHANNEL_INCREMENT[channel] if increment_override is None else int(increment_override)
     return a.rc.r_add(direct_coordinate_rat(channel), a.rc.r_const(step))
 
@@ -223,13 +224,130 @@ def direct_global_column_from_poly(raw, scalar: str, channel: str, strata: list[
     return out
 
 
-def vector_digest(vec: GlobalVector) -> str:
+# Exact semantic normal form for Laurent rational coefficients.  No sampling:
+# every affine factor is expanded as a linear polynomial in Q[n,k,l], all
+# compared paths are lifted to one common denominator, and numerators are
+# compared coefficient-for-coefficient.
+def _p3_add(x: Poly3, y: Poly3) -> Poly3:
+    out = dict(x)
+    for m, q in y.items():
+        z = out.get(m, Q(0)) + q
+        if z:
+            out[m] = z
+        elif m in out:
+            del out[m]
+    return out
+
+
+def _p3_mul(x: Poly3, y: Poly3) -> Poly3:
+    out: Poly3 = {}
+    for (an, ak, al), qx in x.items():
+        for (bn, bk, bl), qy in y.items():
+            m = (an + bn, ak + bk, al + bl)
+            z = out.get(m, Q(0)) + qx * qy
+            if z:
+                out[m] = z
+            elif m in out:
+                del out[m]
+    return out
+
+
+def _p3_scale(x: Poly3, q: Q) -> Poly3:
+    return {m: q * v for m, v in x.items() if q * v}
+
+
+def _linear_poly(factor) -> Poly3:
+    an, ak, al, d = factor
+    out: Poly3 = {}
+    for mon, coeff in (((1, 0, 0), an), ((0, 1, 0), ak), ((0, 0, 1), al), ((0, 0, 0), d)):
+        if coeff:
+            out[mon] = Q(coeff)
+    return out
+
+
+def _p3_pow_linear(factor, exponent: int) -> Poly3:
+    if exponent < 0:
+        raise AssertionError("negative exponent entered polynomial numerator")
+    out: Poly3 = {(0, 0, 0): Q(1)}
+    base = _linear_poly(factor)
+    for _ in range(exponent):
+        out = _p3_mul(out, base)
+    return out
+
+
+def _joint_denominator(rats: list[dict]) -> dict:
+    den = {}
+    for rat in rats:
+        for sig in rat:
+            for factor, exponent in sig:
+                if exponent < 0:
+                    den[factor] = max(den.get(factor, 0), -exponent)
+    return den
+
+
+def _rat_common_numerator(rat: dict, den: dict) -> Poly3:
+    out: Poly3 = {}
+    for sig, coeff in rat.items():
+        exp = dict(sig)
+        term: Poly3 = {(0, 0, 0): Q(coeff)}
+        for factor in sorted(set(den) | set(exp)):
+            power = exp.get(factor, 0) + den.get(factor, 0)
+            if power < 0:
+                raise AssertionError(f"common denominator underflow at {factor}: {power}")
+            if power:
+                term = _p3_mul(term, _p3_pow_linear(factor, power))
+        out = _p3_add(out, term)
+    return out
+
+
+def _poly3_rows(poly: Poly3) -> list[list[int]]:
+    return [[an, ak, al, q.numerator, q.denominator] for (an, ak, al), q in sorted(poly.items())]
+
+
+def _den_rows(den: dict) -> list[list]:
+    return [[list(f), e] for f, e in sorted(den.items()) if e]
+
+
+def _vector_rat_map(vec: GlobalVector) -> dict:
+    out = {}
+    for (cell_id, coord), q in vec.items():
+        scalar, mon, sig = coord
+        base = (cell_id, scalar, mon)
+        rat = out.setdefault(base, {})
+        z = rat.get(sig, Q(0)) + q
+        if z:
+            rat[sig] = z
+        elif sig in rat:
+            del rat[sig]
+    return out
+
+
+def semantic_bundle(vectors: list[GlobalVector]) -> dict:
+    maps = [_vector_rat_map(v) for v in vectors]
+    bases = sorted(set().union(*(set(m) for m in maps)), key=repr)
+    rows = [[] for _ in vectors]
+    mismatches = [[] for _ in vectors]
+    for base in bases:
+        rats = [m.get(base, {}) for m in maps]
+        den = _joint_denominator(rats)
+        nums = [_rat_common_numerator(rat, den) for rat in rats]
+        cell_id, scalar, mon = base
+        drows = _den_rows(den)
+        for i, num in enumerate(nums):
+            rows[i].append([cell_id, scalar, list(mon), drows, _poly3_rows(num)])
+            if i and num != nums[0]:
+                mismatches[i].append(repr(base))
+    return {
+        "normal_form": SEMANTIC_NORMAL_FORM,
+        "semantic_sha256": [sha(r) for r in rows],
+        "equals_direct": [not x for x in mismatches],
+        "mismatch_base_coordinates": mismatches,
+        "base_coordinate_count": len(bases),
+    }
+
+
+def representation_digest(vec: GlobalVector) -> str:
     return c.global_vector_digest(vec)
-
-
-def mismatch_coordinates(left: GlobalVector, right: GlobalVector) -> list[str]:
-    keys = sorted(set(left) | set(right), key=c.gkey)
-    return [repr(k) for k in keys if left.get(k, Q(0)) != right.get(k, Q(0))]
 
 
 def candidate_record(channel: str, uid: Unknown, strata: list[dict], active_cell_ids: set[str]):
@@ -240,30 +358,40 @@ def candidate_record(channel: str, uid: Unknown, strata: list[dict], active_cell
     direct_product = direct_global_column_from_poly(raw_product, scalar, channel, strata, active_cell_ids)
     producer = p.lifted_global_column(channel, uid, strata, active_cell_ids)
     verifier = va.lifted_global_column(channel, uid, strata, active_cell_ids)
-    fd_eq_product = direct_fd == direct_product
-    fd_eq_producer = direct_fd == producer
-    fd_eq_verifier = direct_fd == verifier
+    sem = semantic_bundle([direct_fd, direct_product, producer, verifier])
+    fd_eq_product = sem["equals_direct"][1]
+    fd_eq_producer = sem["equals_direct"][2]
+    fd_eq_verifier = sem["equals_direct"][3]
     all_equal = fd_eq_product and fd_eq_producer and fd_eq_verifier
     mismatch_kind = None
     mismatch = []
     if not fd_eq_product:
         mismatch_kind = "DIRECT_FINITE_DIFFERENCE_VS_PRODUCT_RULE"
-        mismatch = mismatch_coordinates(direct_fd, direct_product)
+        mismatch = sem["mismatch_base_coordinates"][1]
     elif not fd_eq_producer:
         mismatch_kind = "DIRECT_VS_T3_011_B_PRODUCER"
-        mismatch = mismatch_coordinates(direct_fd, producer)
+        mismatch = sem["mismatch_base_coordinates"][2]
     elif not fd_eq_verifier:
         mismatch_kind = "DIRECT_VS_T3_011_B_VERIFIER"
-        mismatch = mismatch_coordinates(direct_fd, verifier)
+        mismatch = sem["mismatch_base_coordinates"][3]
+    labels = [
+        "direct_finite_difference",
+        "direct_product_rule",
+        "t3_011_b_producer",
+        "t3_011_b_verifier",
+    ]
+    vectors = [direct_fd, direct_product, producer, verifier]
+    digests = {f"{label}_sha256": sem["semantic_sha256"][i] for i, label in enumerate(labels)}
+    repr_digests = {f"{label}_representation_sha256": representation_digest(vectors[i]) for i, label in enumerate(labels)}
     return {
         "candidate": unknown_json(uid),
         "channel": channel,
         "coordinate": CHANNEL_COORDINATE[channel],
         "coordinate_increment": CHANNEL_INCREMENT[channel],
-        "direct_finite_difference_sha256": vector_digest(direct_fd),
-        "direct_product_rule_sha256": vector_digest(direct_product),
-        "t3_011_b_producer_sha256": vector_digest(producer),
-        "t3_011_b_verifier_sha256": vector_digest(verifier),
+        "semantic_normal_form": SEMANTIC_NORMAL_FORM,
+        "semantic_base_coordinate_count": sem["base_coordinate_count"],
+        **digests,
+        **repr_digests,
         "direct_finite_difference_equals_product_rule": fd_eq_product,
         "direct_equals_t3_011_b_producer": fd_eq_producer,
         "direct_equals_t3_011_b_verifier": fd_eq_verifier,
@@ -361,7 +489,10 @@ def build() -> dict:
         "direct_reconstruction": {
             "authority_id": DIRECT_AUTHORITY_ID,
             "raw_definition": "(x_c + Delta_c x_c) S_c(G) - x_c G",
-            "coordinate_shift_normalization": "x_c + step is represented additively in the Laurent coefficient ring; affine factors are not treated as distributively canonical multiplicative atoms",
+            "coordinate_shift_normalization": "x_c + step is represented additively in the direct path",
+            "semantic_normal_form": SEMANTIC_NORMAL_FORM,
+            "semantic_normal_form_definition": "group coefficient signatures by cell/scalar/harmonic monomial; lift all compared Laurent rational functions to one exact common denominator; expand each affine factor into Q[n,k,l]; compare expanded numerator polynomials coefficient-for-coefficient",
+            "finite_sampling_used": False,
             "product_rule": "x_c(S_c(G)-G)+(Delta_c x_c)S_c(G)",
             "channel_coordinate_increment": CHANNEL_INCREMENT,
             "uses_t3_011_b_generator_as_direct_authority": False,
