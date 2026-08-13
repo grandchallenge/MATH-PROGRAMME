@@ -31,12 +31,21 @@ def _assert_e_locks_independent():
     return got
 
 
-def _moved_signature(sig, shift):
+def _moved_factor(factor, shift):
     dn, dk, dl = shift
+    if len(factor) == 5 and factor[0] == a.pcl.PINV_TAG:
+        tag, an, ak, al, constant = factor
+        return (tag, an, ak, al, constant + dn * an + dk * ak + dl * al)
+    if len(factor) != 4:
+        raise AssertionError(f"independent unexpected rational factor shape: {factor}")
+    an, ak, al, constant = factor
+    return (an, ak, al, constant + dn * an + dk * ak + dl * al)
+
+
+def _moved_signature(sig, shift):
     moved = {}
     for factor, exponent in reversed(sig):
-        an, ak, al, constant = factor
-        translated = (an, ak, al, constant + dn * an + dk * ak + dl * al)
+        translated = _moved_factor(factor, shift)
         moved[translated] = moved.get(translated, 0) + int(exponent)
         if moved[translated] == 0:
             del moved[translated]
