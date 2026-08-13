@@ -46,6 +46,14 @@ ADMITTED_PAIRS = (
 POSITIVE_TERMINAL = "MINIMAL_MIXED_CHANNEL_QUADRATIC_COKERNEL_BREAKING_DIRECTION_FOUND"
 NEGATIVE_TERMINAL = "MIXED_CHANNEL_QUADRATIC_RESPONSE_CLASS_COKERNEL_INVISIBLE"
 AMBIGUITY_TERMINAL = "MIXED_CHANNEL_SEMANTIC_FUNCTIONAL_AMBIGUITY"
+E_LEDGER_FIELDS = (
+    "candidate_count",
+    "candidate_order_sha256",
+    "active_cell_count",
+    "active_cell_sha256",
+    "cokernel_witness_sha256",
+    "target_quotient_residual_sha256",
+)
 
 
 def sha(obj: object) -> str:
@@ -240,6 +248,39 @@ def _channel_banks(primitive_full, strata, specialized, supports):
     return banks
 
 
+def _bank_ledger(bank) -> dict:
+    candidates = bank["candidates"]
+    return {
+        "candidate_count": len(candidates),
+        "candidate_order_sha256": sha([unknown_json(uid) for uid in candidates]),
+        "active_cell_count": len(bank["active"]),
+        "active_cell_sha256": sha(sorted(bank["active"])),
+        "cokernel_witness_sha256": p.sha(p.witness_rows(bank["witness"])),
+        "target_quotient_residual_sha256": c.global_vector_digest(bank["residual"]),
+    }
+
+
+def assert_predecessor_channel_ledgers(predecessor: dict, bank_ledgers: dict[str, dict]) -> str:
+    rows = predecessor.get("channel_ledgers")
+    if not isinstance(rows, list):
+        raise AssertionError("T3-011-F E channel ledger missing")
+    expected = {row.get("channel"): row for row in rows}
+    if None in expected or set(expected) != set(bank_ledgers):
+        raise AssertionError("T3-011-F E channel set drift")
+    canonical = []
+    for row in rows:
+        channel = row["channel"]
+        actual = bank_ledgers[channel]
+        for field in E_LEDGER_FIELDS:
+            if actual.get(field) != row.get(field):
+                raise AssertionError(
+                    f"T3-011-F frozen E ledger drift: {channel}:{field}: "
+                    f"{actual.get(field)} != {row.get(field)}"
+                )
+        canonical.append({"channel": channel, **{field: actual[field] for field in E_LEDGER_FIELDS}})
+    return sha(canonical)
+
+
 def _candidate_record(pair, endpoint, uid, strata, bank):
     left, right = pair
     scalar, mon = uid
@@ -315,18 +356,8 @@ def build() -> dict:
 
     primitive_full, strata, specialized, supports = d.build_context()
     banks = _channel_banks(primitive_full, strata, specialized, supports)
-
-    bank_ledgers = {}
-    for channel, bank in banks.items():
-        candidates = bank["candidates"]
-        bank_ledgers[channel] = {
-            "candidate_count": len(candidates),
-            "candidate_order_sha256": sha([unknown_json(uid) for uid in candidates]),
-            "active_cell_count": len(bank["active"]),
-            "active_cell_sha256": sha(sorted(bank["active"])),
-            "cokernel_witness_sha256": p.sha(p.witness_rows(bank["witness"])),
-            "target_quotient_residual_sha256": c.global_vector_digest(bank["residual"]),
-        }
+    bank_ledgers = {channel: _bank_ledger(bank) for channel, bank in banks.items()}
+    predecessor_channel_ledger_sha256 = assert_predecessor_channel_ledgers(predecessor, bank_ledgers)
 
     records = []
     pair_ledgers = []
@@ -405,6 +436,8 @@ def build() -> dict:
             "candidate_record_count": predecessor["candidate_record_count"],
             "semantic_functional_ambiguity": predecessor["semantic_functional_ambiguity"],
             "higher_degree_set": predecessor["higher_degree_set"],
+            "channel_ledgers_exactly_matched": True,
+            "channel_ledgers_sha256": predecessor_channel_ledger_sha256,
         },
         "mixed_class": {
             "total_degree": 2,
