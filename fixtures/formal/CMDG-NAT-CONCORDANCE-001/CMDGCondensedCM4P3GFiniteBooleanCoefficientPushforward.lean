@@ -188,7 +188,8 @@ theorem finiteBooleanCoefficientFamily_pushforward
           else 0 := by
             apply Finset.sum_congr rfl
             intro p _
-            simpa only [fintypeDiagram_map_eq_finiteQuotientTransition X f p]
+            rw [fintypeDiagram_map_eq_finiteQuotientTransition X f p]
+            rfl
     _ = finiteBooleanCoefficient X k q :=
       finiteBooleanCoefficient_fiber_sum X f q
 
