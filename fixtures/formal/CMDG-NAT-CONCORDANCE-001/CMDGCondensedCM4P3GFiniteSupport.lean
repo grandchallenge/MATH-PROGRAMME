@@ -55,9 +55,12 @@ theorem finite_support_of_bool_locallyConstant
       subst j
       exact hi hj
     simp [boolIndicator, hji]
-  rw [hf, hf] at hzero
-  rw [boolToInt_boolIndicator, boolToInt_zero, map_zero] at hzero
-  exact hzero
+  have hzero' :
+      L (boolToInt (boolIndicator i)) =
+        L (boolToInt (fun _ : ι => false)) := by
+    rw [← hf (boolIndicator i), ← hf (fun _ => false)]
+    exact hzero
+  simpa [boolToInt_boolIndicator, boolToInt_zero] using hzero'
 
 #print finite_support_of_bool_locallyConstant
 #print axioms finite_support_of_bool_locallyConstant
