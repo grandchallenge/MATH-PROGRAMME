@@ -37,6 +37,12 @@ This registry preserves canonical governance terms used across Agent Council doc
 | Governed root campaign artifact | An integrated root-level WP00 dossier with explicit identity and claim class. | Registration does not certify mathematics. |
 | Campaign promotion register | The current documentary disposition record for integrated campaign artifacts. | Not a theorem ledger or certificate register. |
 | Public status taxonomy | The public mapping among claim status, artifact lifecycle, and campaign disposition. | Does not replace machine schemas. |
+| Subject spine | The primary external literature classification used to orient and retrieve mathematical work; currently MSC2020. | Does not define concepts, proof, truth, priority, certification, or programme state. |
+| Subject mapping | A versioned reviewed assertion from a programme domain or graph node to an external subject identifier. | Similar labels do not establish concept identity or theorem equivalence. |
+| Discovery facet | A non-authoritative category or provider signal used for retrieval and current awareness. | Provider assignment begins as proposed evidence and cannot self-promote. |
+| Concept ontology | A vocabulary of mathematical concepts and semantic relations used as a design reference or crosswalk. | Is not the programme knowledge graph or subject spine. |
+| Programme knowledge graph | The programme-owned graph of governed concepts and relationships. | External taxonomy edges do not silently become internal assertions. |
+| Machine serialization | One encoded artifact representing an external vocabulary at an exact revision and digest. | A resolvable pin does not prove completeness, canonicality, or runtime authority. |
 | Global programme policy gate | The repository-wide workflow running shared contracts, campaigns, repository tests, formal fixtures, and external evidence. | A green gate is execution evidence, not theorem support. |
 | Governed campaign replay registry | The command authority for campaign replay and validation executables. | Does not define its own discovery boundary or infer correctness from exit status. |
 | Code-owned executable discovery | Validator-owned classification of executable Python files by shebang or `__main__` guard. | Does not decide arguments or prove correctness. |
