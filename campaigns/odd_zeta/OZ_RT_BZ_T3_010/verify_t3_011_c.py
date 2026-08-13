@@ -175,8 +175,17 @@ def verifier_global_column(raw, scalar, channel, strata, active):
     return out
 
 
-def complete_active_namespace(channel, strata):
-    return {f"{channel}:{block}:{st['id']}" for st in strata for block in vc.BLOCK_ORDER}
+def independent_active_namespace(channel, strata, specialized, supports):
+    active = set()
+    for st in reversed(strata):
+        primitive = specialized[st["id"]]
+        for block in reversed(vc.BLOCK_ORDER):
+            rec, _target, _cols, _ids = vb.cell(
+                primitive, supports[(channel, block)], channel, block, st
+            )
+            if rec["classification"] != "STRUCTURAL_ZERO":
+                active.add(f"{channel}:{block}:{st['id']}")
+    return active
 
 
 def verify_candidate(row, channel, uid, strata, active):
@@ -213,10 +222,8 @@ def verify_candidate(row, channel, uid, strata, active):
 
 
 def verify(result: dict) -> dict:
-    if result.get("stage") != STAGE:
-        raise AssertionError("T3-011-C stage drift")
-    if result.get("audit_class") != AUDIT_ID:
-        raise AssertionError("T3-011-C audit class drift")
+    if result.get("stage") != STAGE or result.get("audit_class") != AUDIT_ID:
+        raise AssertionError("T3-011-C identity drift")
     checkpoint = result.get("predecessor_checkpoint", {})
     if checkpoint.get("reviewed_head") != B_REVIEWED_HEAD:
         raise AssertionError("T3-011-B reviewed-head drift")
@@ -229,6 +236,7 @@ def verify(result: dict) -> dict:
             raise AssertionError(f"T3-011-B source blob drift in C verifier: {name}")
         if checkpoint.get("source_blobs", {}).get(name) != want:
             raise AssertionError(f"T3-011-C reported source blob drift: {name}")
+
     contract = json.loads((HERE / "T3_011_C_CONTRACT.json").read_text())
     if contract["stage"] != STAGE or contract["audit_class"]["id"] != AUDIT_ID:
         raise AssertionError("T3-011-C contract identity drift")
@@ -246,6 +254,7 @@ def verify(result: dict) -> dict:
         raise AssertionError("T3-011-C contract coordinate increments drift")
     if contract["direct_response"]["direct_authority_id"] != DIRECT_AUTHORITY_ID:
         raise AssertionError("T3-011-C direct authority identity drift")
+
     direct_meta = result.get("direct_reconstruction", {})
     if direct_meta.get("authority_id") != DIRECT_AUTHORITY_ID:
         raise AssertionError("T3-011-C result direct authority drift")
@@ -255,9 +264,7 @@ def verify(result: dict) -> dict:
         raise AssertionError("T3-011-C producer generator imported as direct authority")
     if direct_meta.get("uses_t3_011_b_verifier_generator_as_direct_authority"):
         raise AssertionError("T3-011-C verifier generator imported as direct authority")
-    mirror_pre = result.get("mirror_l1_audit", {})
-    if mirror_pre.get("candidate_count") != 110:
-        raise AssertionError("T3-011-C l1 mirror count drift")
+
     for key in (
         "new_candidates_authorized", "pairs_or_two_lifts_authorized",
         "arbitrary_linear_combination_search_authorized", "generic_degree1_envelope_authorized",
@@ -268,12 +275,11 @@ def verify(result: dict) -> dict:
     ):
         if result.get(key) is not False:
             raise AssertionError(f"T3-011-C claim firewall drift: {key}")
-    if result.get("proof_effect") != "NONE":
-        raise AssertionError("T3-011-C proof effect inflation")
-    if result.get("promotion_effect") != "NONE":
-        raise AssertionError("T3-011-C promotion effect inflation")
+    if result.get("proof_effect") != "NONE" or result.get("promotion_effect") != "NONE":
+        raise AssertionError("T3-011-C proof/promotion effect inflation")
     if result.get("t3_status") != "OPEN_WITH_CHARACTERIZED_BLOCKER":
         raise AssertionError("T3-011-C T3 status inflation")
+
     source_independence = assert_direct_authority_independence()
     predecessor_producer.assert_a_locks()
     p.assert_c_locks()
@@ -285,7 +291,8 @@ def verify(result: dict) -> dict:
         raise AssertionError("T3-009 layer drift in C verifier")
     primitive_full = a.primitive_oriented_layer(layer)
     strata = a.shell_strata()
-    if direct_meta.get("strata_semantics_sha256") != sha([[st["id"], st["k_offset"], st["l_offset"]] for st in strata]):
+    strata_digest = sha([[st["id"], st["k_offset"], st["l_offset"]] for st in strata])
+    if direct_meta.get("strata_semantics_sha256") != strata_digest:
         raise AssertionError("T3-011-C shell/strata semantics drift")
     specialized = {
         st["id"]: a.primitive_oriented_layer(a.specialize_layer(layer, st["k_offset"], st["l_offset"]))
@@ -296,6 +303,7 @@ def verify(result: dict) -> dict:
         for channel in a.CHANNEL_SCALARS
         for block in vc.BLOCK_ORDER
     }
+
     records = {rec["channel"]: rec for rec in result.get("channel_audits", [])}
     if set(records) != set(a.INDEPENDENT_CHANNELS):
         raise AssertionError("T3-011-C channel audit cardinality drift")
@@ -309,19 +317,23 @@ def verify(result: dict) -> dict:
         candidates = [uid for uid, col in zip(ids, cols) if col]
         if len(candidates) != EXPECTED_COUNTS[channel]:
             raise AssertionError(f"T3-011-C reverse candidate count drift: {channel}")
+        active = independent_active_namespace(channel, strata, specialized, supports)
         rec = records[channel]
         if rec.get("candidate_count") != len(candidates):
             raise AssertionError(f"T3-011-C reported candidate count drift: {channel}")
         if rec.get("candidate_order_sha256") != sha([unknown_json(uid) for uid in candidates]):
             raise AssertionError(f"T3-011-C candidate order digest drift: {channel}")
+        if rec.get("active_cell_count") != len(active):
+            raise AssertionError(f"T3-011-C active-cell count drift: {channel}")
+        if rec.get("active_cell_sha256") != sha(sorted(active)):
+            raise AssertionError(f"T3-011-C active-cell namespace drift: {channel}")
         rows = rec.get("candidates", [])
         if len(rows) != len(candidates):
             raise AssertionError(f"T3-011-C candidate ledger count drift: {channel}")
-        active = complete_active_namespace(channel, strata)
-        local_mismatch = 0
-        for row, uid in zip(rows, candidates):
-            if not verify_candidate(row, channel, uid, strata, active):
-                local_mismatch += 1
+        local_mismatch = sum(
+            not verify_candidate(row, channel, uid, strata, active)
+            for row, uid in zip(rows, candidates)
+        )
         if rec.get("mismatch_count") != local_mismatch:
             raise AssertionError(f"T3-011-C mismatch count drift: {channel}")
         if rec.get("all_candidates_concordant") != (local_mismatch == 0):
@@ -330,19 +342,27 @@ def verify(result: dict) -> dict:
         mismatches += local_mismatch
         if channel == "k1":
             k1_candidates = candidates
+
     if total != 311 or result.get("independent_candidate_count") != 311:
         raise AssertionError("T3-011-C aggregate independent count drift")
     if result.get("independent_mismatch_count") != mismatches:
         raise AssertionError("T3-011-C aggregate mismatch count drift")
     if k1_candidates is None:
         raise AssertionError("T3-011-C k1 candidate bank absent")
+
     mirror = result.get("mirror_l1_audit", {})
+    if mirror.get("candidate_count") != 110:
+        raise AssertionError("T3-011-C l1 mirror count drift")
     if mirror.get("source_k1_order_sha256") != sha([unknown_json(uid) for uid in k1_candidates]):
         raise AssertionError("T3-011-C k1 mirror source order drift")
     mirror_rows = mirror.get("candidates", [])
     if len(mirror_rows) != 110:
         raise AssertionError("T3-011-C l1 mirror ledger cardinality drift")
-    lactive = complete_active_namespace("l1", strata)
+    lactive = independent_active_namespace("l1", strata, specialized, supports)
+    if mirror.get("active_cell_count") != len(lactive):
+        raise AssertionError("T3-011-C l1 active-cell count drift")
+    if mirror.get("active_cell_sha256") != sha(sorted(lactive)):
+        raise AssertionError("T3-011-C l1 active-cell namespace drift")
     mirror_mismatch = 0
     for row, kuid in zip(mirror_rows, k1_candidates):
         if row.get("source_k1_candidate") != unknown_json(kuid):
@@ -354,6 +374,7 @@ def verify(result: dict) -> dict:
         raise AssertionError("T3-011-C l1 mismatch count drift")
     if mirror.get("all_candidates_concordant") != (mirror_mismatch == 0):
         raise AssertionError("T3-011-C l1 concordance drift")
+
     all_concordant = mismatches == 0 and mirror_mismatch == 0
     if result.get("all_frozen_responses_concordant") != all_concordant:
         raise AssertionError("T3-011-C aggregate concordance terminal drift")
