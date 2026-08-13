@@ -1,13 +1,15 @@
 import CMDGCondensedCM4P3GFiniteBooleanMeasure
 
 /-!
-# CMDG CM4-P3-G finite quotient delta compatibility
+# CMDG CM4-P3-G finite quotient coefficient compatibility
 
 This successor fixture isolates the finite quotient-refinement calculation required before any
-right-Kan assembly or kernel-local-constancy argument. It proves only that the delta pulled back
-from a coarser finite quotient is the fiberwise sum of the deltas from a finer quotient.
+right-Kan assembly or kernel-local-constancy argument. It proves that a delta pulled back from a
+coarser finite quotient is the fiberwise sum of the deltas from a finer quotient, then transports
+that identity through the already-certified lifted Nöbeling Boolean pairing.
 
-No Boolean-pairing, injectivity, coefficient-solidity, or broader P3 closure claim is asserted here.
+No finite-measure cone, right-Kan assembly, injectivity, coefficient-solidity, or broader P3 closure
+claim is asserted here.
 -/
 
 namespace CMDG.CondensedCM4P3G.KernelWeightedLocalConstancy
@@ -18,6 +20,7 @@ open CategoryTheory
 open scoped BigOperators
 
 open CMDG.CondensedCM4P3G.FiniteBooleanMeasure
+open CMDG.CondensedCM4P3G.BasisBooleanPairingR
 
 abbrev R := CMDG.CondensedCM4P3G.R.{u}
 
@@ -139,15 +142,67 @@ theorem finiteDeltaPullbackR_fiber_sum
   intro x
   exact finiteDeltaPullbackR_fiber_sum_apply X f q x
 
+/-- Linearity of the lifted Nöbeling Boolean pairing transports finite-delta compatibility to the
+Boolean coefficient functions. -/
+theorem basisBooleanPairingR_fiber_sum
+    (X : Profinite.{u}) {j k : DiscreteQuotient X} (f : j ⟶ k)
+    (q : k) :
+    (∑ p : j,
+      if finiteQuotientTransition X f p = q then
+        basisBooleanPairingR X (finiteDeltaPullbackR X j p)
+      else 0) =
+      basisBooleanPairingR X (finiteDeltaPullbackR X k q) := by
+  calc
+    (∑ p : j,
+      if finiteQuotientTransition X f p = q then
+        basisBooleanPairingR X (finiteDeltaPullbackR X j p)
+      else 0) =
+        basisBooleanPairingR X
+          (∑ p : j,
+            if finiteQuotientTransition X f p = q then
+              finiteDeltaPullbackR X j p
+            else 0) := by
+              rw [map_sum]
+              apply Finset.sum_congr rfl
+              intro p _
+              by_cases hpq : finiteQuotientTransition X f p = q
+              · simp [hpq]
+              · simp [hpq]
+    _ = basisBooleanPairingR X (finiteDeltaPullbackR X k q) := by
+      rw [finiteDeltaPullbackR_fiber_sum X f q]
+
+/-- The concrete Boolean coefficient family therefore satisfies the same refinement law. This is
+the coefficient-level compatibility required before transport through the finite measure-family
+isomorphisms and right-Kan assembly. -/
+theorem finiteBooleanCoefficient_fiber_sum
+    (X : Profinite.{u}) {j k : DiscreteQuotient X} (f : j ⟶ k)
+    (q : k) :
+    (∑ p : j,
+      if finiteQuotientTransition X f p = q then
+        finiteBooleanCoefficient X j p
+      else 0) =
+      finiteBooleanCoefficient X k q := by
+  change
+    (∑ p : j,
+      if finiteQuotientTransition X f p = q then
+        basisBooleanPairingR X (finiteDeltaPullbackR X j p)
+      else 0) =
+      basisBooleanPairingR X (finiteDeltaPullbackR X k q)
+  exact basisBooleanPairingR_fiber_sum X f q
+
 #check finiteQuotientTransition
 #check finiteQuotientTransition_proj
 #check finiteDeltaFiberScalar_sum
 #check finiteDeltaPullbackR_fiber_sum_apply
 #check finiteDeltaPullbackR_fiber_sum
+#check basisBooleanPairingR_fiber_sum
+#check finiteBooleanCoefficient_fiber_sum
 
 #print axioms finiteQuotientTransition_proj
 #print axioms finiteDeltaFiberScalar_sum
 #print axioms finiteDeltaPullbackR_fiber_sum_apply
 #print axioms finiteDeltaPullbackR_fiber_sum
+#print axioms basisBooleanPairingR_fiber_sum
+#print axioms finiteBooleanCoefficient_fiber_sum
 
 end CMDG.CondensedCM4P3G.KernelWeightedLocalConstancy
