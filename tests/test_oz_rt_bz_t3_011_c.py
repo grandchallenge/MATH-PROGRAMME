@@ -5,6 +5,7 @@ import importlib.util
 import json
 import sys
 import unittest
+from fractions import Fraction as Q
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -43,20 +44,45 @@ class T3011CResponseGeneratorSemanticsAuditTests(unittest.TestCase):
         self.assertEqual(self.result["terminal"], "T3_011_B_LIFTED_RESPONSE_GENERATOR_SEMANTICS_CERTIFIED")
         self.assertEqual(self.replay["status"], "INDEPENDENT_T3_011_C_RESPONSE_GENERATOR_SEMANTICS_AUDIT_REPLAY_COMPLETE")
         self.assertEqual(self.replay["mismatch_count"], 0)
+        self.assertEqual(self.replay["semantic_normal_form"], "COMMON_DENOMINATOR_EXPANDED_Q_N_K_L_NUMERATOR_V1")
+        self.assertFalse(self.replay["finite_sampling_used"])
 
-    def test_all_421_response_checks_are_exactly_concordant(self):
+    def test_all_421_response_checks_are_exactly_semantically_concordant(self):
         rows = []
         for rec in self.result["channel_audits"]:
             rows.extend(rec["candidates"])
         rows.extend(self.result["mirror_l1_audit"]["candidates"])
         self.assertEqual(len(rows), 421)
         for row in rows:
+            self.assertEqual(row["semantic_normal_form"], "COMMON_DENOMINATOR_EXPANDED_Q_N_K_L_NUMERATOR_V1")
             self.assertTrue(row["direct_finite_difference_equals_product_rule"])
             self.assertTrue(row["direct_equals_t3_011_b_producer"])
             self.assertTrue(row["direct_equals_t3_011_b_verifier"])
             self.assertEqual(row["direct_finite_difference_sha256"], row["direct_product_rule_sha256"])
             self.assertEqual(row["direct_finite_difference_sha256"], row["t3_011_b_producer_sha256"])
             self.assertEqual(row["direct_finite_difference_sha256"], row["t3_011_b_verifier_sha256"])
+
+    def test_semantic_normalizer_handles_affine_distribution_exactly(self):
+        cell = "n1:weight1:synthetic"
+        scalar = "TN1"
+        mon = ("H_k_1",)
+        opaque_n_plus_1 = {
+            (cell, (scalar, mon, (((1, 0, 0, 1), 1),))): Q(1),
+        }
+        additive_n_plus_1 = {
+            (cell, (scalar, mon, (((1, 0, 0, 0), 1),))): Q(1),
+            (cell, (scalar, mon, ())): Q(1),
+        }
+        additive_n_plus_2 = {
+            (cell, (scalar, mon, (((1, 0, 0, 0), 1),))): Q(1),
+            (cell, (scalar, mon, ())): Q(2),
+        }
+        equal_bundle = self.producer.semantic_bundle([additive_n_plus_1, opaque_n_plus_1])
+        unequal_bundle = self.producer.semantic_bundle([additive_n_plus_2, opaque_n_plus_1])
+        self.assertTrue(equal_bundle["equals_direct"][1])
+        self.assertEqual(equal_bundle["semantic_sha256"][0], equal_bundle["semantic_sha256"][1])
+        self.assertFalse(unequal_bundle["equals_direct"][1])
+        self.assertNotEqual(unequal_bundle["semantic_sha256"][0], unequal_bundle["semantic_sha256"][1])
 
     def test_direct_authority_is_source_independent(self):
         evidence = self.verifier.assert_direct_authority_independence()
@@ -99,6 +125,12 @@ class T3011CResponseGeneratorSemanticsAuditTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             self.verifier.verify(mutated)
 
+    def test_mutated_semantic_normal_form_fails_closed(self):
+        mutated = copy.deepcopy(self.result)
+        mutated["direct_reconstruction"]["semantic_normal_form"] = "REPRESENTATION_ONLY"
+        with self.assertRaises(AssertionError):
+            self.verifier.verify(mutated)
+
     def test_claim_firewall_inflation_fails_closed(self):
         mutated = copy.deepcopy(self.result)
         mutated["theorem_promotion_authorized"] = True
@@ -106,6 +138,10 @@ class T3011CResponseGeneratorSemanticsAuditTests(unittest.TestCase):
             self.verifier.verify(mutated)
 
     def test_contract_preserves_no_widening_boundary(self):
+        direct = self.contract["direct_response"]
+        self.assertEqual(direct["semantic_normal_form"], "COMMON_DENOMINATOR_EXPANDED_Q_N_K_L_NUMERATOR_V1")
+        self.assertFalse(direct["finite_sampling_allowed_for_equality"])
+        self.assertTrue(direct["representation_digest_is_not_semantic_authority"])
         firewall = self.contract["claim_firewall"]
         for key in (
             "new_candidates_authorized", "pairs_or_two_lifts_authorized",
