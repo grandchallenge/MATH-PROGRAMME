@@ -11,7 +11,7 @@ FORMAL_PATH=ROOT/'governance/formal_replay_policy.json'
 REGISTRY_PATH=ROOT/'governance/policy_shard_registry.json'; REGISTRY_SCHEMA=ROOT/'schemas/policy_shard_registry.schema.json'
 CMDG_GATE_PATH=ROOT/'governance/cmdg_workflow_impact_gating.json'
 ALL_SHARDS=('core','fixtures','cmdg','administrative','campaigns','contracts','docs'); ALL_LANES=('log-gcd','pc-wp04','union-closed-mathcert')
-FULL_FANOUT_PATHS={'.github/workflows/ci.yml','ci/policy_impact.py','ci/test_policy_impact.py','ci/run_policy_shard.py','ci/validate_policy_reachability.py','ci/test_policy_reachability.py','ci/validate_repository_execution.py','ci/test_repository_execution.py','ci/validate_workflow_semantics.py','ci/test_workflow_semantics.py','governance/policy_impact_gating.json','governance/policy_shard_registry.json','schemas/policy_impact_gating.schema.json','schemas/policy_shard_registry.schema.json'}
+FULL_FANOUT_PATHS={'.github/workflows/ci.yml','.github/workflows/cmdg-postmerge.yml','ci/policy_impact.py','ci/test_policy_impact.py','ci/cmdg_postmerge_readback.py','ci/run_policy_shard.py','ci/validate_policy_reachability.py','ci/test_policy_reachability.py','ci/validate_repository_execution.py','ci/test_repository_execution.py','ci/validate_workflow_semantics.py','ci/test_workflow_semantics.py','governance/policy_impact_gating.json','governance/policy_shard_registry.json','governance/cmdg_workflow_impact_gating.json','schemas/policy_impact_gating.schema.json','schemas/policy_shard_registry.schema.json','schemas/cmdg_workflow_impact_gating.schema.json','schemas/cmdg_postmerge_readback.schema.json'}
 ZERO_SHA='0'*40
 class ImpactError(RuntimeError):pass
 def load_json(path:Path)->dict:
@@ -61,6 +61,8 @@ def shard_impacts(paths:list[str])->tuple[list[str],list[str]]:
     for p in paths:
         lower=p.lower();matched=False
         if p.startswith('docs/') or p in {'mkdocs.yml','requirements/docs.txt'}:active.add('docs');matched=True
+        if p.startswith('tools/render_visual_pedagogy') and p.endswith('.py'):
+            active.update({'contracts','docs'});matched=True
         if p.startswith('fixtures/algebraic/') or p.startswith('fixtures/formal/') or any(t in lower for t in ('grobner','chaidez','researchmath','log_gcd')):active.add('fixtures');matched=True
         if p.startswith('fixtures/cmdg/') or 'cmdg' in lower:active.add('cmdg');matched=True
         if any(t in lower for t in ('administrative','maintenance','autonomy')):active.add('administrative');matched=True

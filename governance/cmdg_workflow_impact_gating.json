@@ -2,8 +2,10 @@
   "schema_version": "1.0.0",
   "control_id": "MP-CMDG-WORKFLOW-IMPACT-GATING-001",
   "status": "ACTIVE_ON_PROTECTED_MERGE",
-  "protected_baseline": "fad9cff9f8f73b78bfed94fb1aab9763f63d00ab",
-  "phase": "CONSERVATIVE_SHARED_CLOSURE",
+  "origin_baseline": "fad9cff9f8f73b78bfed94fb1aab9763f63d00ab",
+  "phase": "CLASSIFIER_ORCHESTRATED_PROTECTED_MERGE",
+  "dispatcher_workflow": "cmdg-postmerge.yml",
+  "receipt_schema": "schemas/cmdg_postmerge_readback.schema.json",
   "workflow_roster": [
     "cmdg-condensed-cm1.yml",
     "cmdg-condensed-cm2.yml",
@@ -77,13 +79,22 @@
     "unrelated_large_pr_behavior": "ALLOW"
   },
   "event_semantics": {
-    "pull_request": "PATH_GATED_SHARED_CMDG_CLOSURE",
-    "push_main": "PRESERVED_UNCONDITIONAL",
-    "workflow_dispatch": "PRESERVED"
+    "pull_request": "NATIVE_PATH_GATED_SHARED_CMDG_CLOSURE",
+    "push_main": "ALWAYS_CLASSIFY_THEN_CALL_FULL_FAMILY_IF_CMDG_OR_UNKNOWN",
+    "schedule": "DAILY_CURRENT_HEAD_SENTINEL_FULL_FAMILY",
+    "workflow_dispatch": "PRESERVED_FULL_FAMILY"
+  },
+  "scheduled_current_head_sentinel": {
+    "cron": "47 11 * * *",
+    "terminal_identity": "REPOSITORY_REF_SHA_CLASSIFIER_DIGEST",
+    "duplicate_delivery_creates_new_decision": false,
+    "missed_intermediate_merge_replay": false
   },
   "routing_boundary": {
     "unrelated_pr_standalone_cmdg_instantiation": false,
+    "unrelated_main_push_standalone_cmdg_instantiation": false,
     "cmdg_relevant_pr_full_standalone_family": true,
+    "cmdg_relevant_main_push_full_standalone_family": true,
     "within_cmdg_lane_reduction": false,
     "protected_required_check_identity_changed": false
   },
@@ -98,5 +109,5 @@
     "direct_protected_push_authorized": false,
     "human_steward_impersonation_authorized": false
   },
-  "terminal_target": "CMDG_WORKFLOW_IMPACT_GATING_PROTECTED__UNRELATED_PR_FANOUT_SUPPRESSED__CMDG_CLOSURE_PRESERVED"
+  "terminal_target": "CMDG_WORKFLOW_IMPACT_GATING_PROTECTED__UNRELATED_PR_AND_MAIN_EXPENSIVE_FANOUT_SUPPRESSED__EXACT_SHA_READBACK__CMDG_CLOSURE_PRESERVED"
 }
