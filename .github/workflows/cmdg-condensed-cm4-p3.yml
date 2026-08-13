@@ -82,7 +82,8 @@ jobs:
           Q=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GBasisBooleanPairingR.lean
           R=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteBooleanMeasure.lean
           S=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteBooleanMeasureHom.lean
-          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S"; then
+          T=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GKernelWeightedLocalConstancy.lean
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S" "$T"; then
             echo "P3 fixtures must contain neither sorry nor local axioms."
             exit 1
           fi
@@ -107,7 +108,8 @@ jobs:
           grep -Fq 'basisBooleanPairingR' "$Q"
           grep -Fq 'finiteBooleanMeasureSection' "$R"
           grep -Fq 'finiteBooleanMeasureHom' "$S"
-          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S"; then
+          grep -Fq 'finiteBooleanCoefficient_fiber_sum' "$T"
+          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S" "$T"; then
             echo "P3 reduction fixtures must not install an unconditional IsSolid instance."
             exit 1
           fi
@@ -258,3 +260,9 @@ jobs:
           set -euo pipefail
           mkdir -p .lake/build/lib/lean
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GPointFunctional.olean CMDGCondensedCM4P3GPointFunctional.lean
+      - name: Replay P3-G kernel weighted local constancy
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GKernelWeightedLocalConstancy.olean CMDGCondensedCM4P3GKernelWeightedLocalConstancy.lean
