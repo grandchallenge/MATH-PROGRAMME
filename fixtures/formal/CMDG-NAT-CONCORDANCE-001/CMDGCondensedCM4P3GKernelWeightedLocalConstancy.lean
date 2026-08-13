@@ -230,6 +230,18 @@ abbrev R := CMDG.CondensedCM4P3G.R.{u}
 
 attribute [local instance] FintypeCat.fintype
 
+noncomputable local instance fintypeCatObjDecidableEq
+    (A : FintypeCat.{u}) : DecidableEq A.obj :=
+  Classical.decEq A.obj
+
+noncomputable local instance stage22DiscreteQuotientFintype
+    (X : Profinite.{u}) (j : DiscreteQuotient X) : Fintype j :=
+  Fintype.ofFinite j
+
+noncomputable local instance stage22DiscreteQuotientDecidableEq
+    (X : Profinite.{u}) (j : DiscreteQuotient X) : DecidableEq j :=
+  Classical.decEq j
+
 /-- The finite-set map used by the profinite quotient diagram is definitionally the certified
 quotient transition from stage 21. -/
 theorem fintypeDiagram_map_eq_finiteQuotientTransition
