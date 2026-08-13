@@ -58,8 +58,10 @@ def _discover(root: str, pattern: str) -> list[Path]:
 
 
 def _suite_for(path: Path) -> unittest.TestSuite:
+    # Match `python -m unittest discover -s <dir> -p <file>` semantics: the
+    # start directory need not be an importable package.
     rel_parent = path.parent.relative_to(ROOT)
-    return unittest.defaultTestLoader.discover(str(rel_parent), pattern=path.name, top_level_dir=str(ROOT))
+    return unittest.defaultTestLoader.discover(str(rel_parent), pattern=path.name)
 
 
 def main() -> int:
@@ -92,7 +94,7 @@ def main() -> int:
             report_path = ROOT / args.report_json
             report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         return 1 if failures else 0
-    except (OSError, RuntimeError, ValueError, json.JSONDecodeError) as exc:
+    except (OSError, RuntimeError, ValueError, json.JSONDecodeError, ImportError) as exc:
         print(f"timed unittest runner error: {exc}", file=sys.stderr)
         return 2
 
