@@ -74,7 +74,8 @@ jobs:
           D=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3D.lean
           E=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3E.lean
           G=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3F.lean
-          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$E" "$G"; then
+          H=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3FSectionInterface.lean
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$E" "$G" "$H"; then
             echo "P3 fixtures must contain neither sorry nor local axioms."
             exit 1
           fi
@@ -94,7 +95,8 @@ jobs:
           grep -Fq 'homPrecomp_surjective' "$G"
           grep -Fq 'GlobalSectionsDoubleInternalDualSurjectivity' "$G"
           grep -Fq 'coefficientResidualHomTheorem_iff_finiteDependence' "$G"
-          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$E" "$G"; then
+          grep -Fq 'measureSectionFamilyIso' "$H"
+          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$E" "$G" "$H"; then
             echo "P3 reduction fixtures must not install an unconditional IsSolid instance."
             exit 1
           fi
@@ -189,5 +191,6 @@ jobs:
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
         run: |
           set -euo pipefail
-          lake build CMDGCondensedCM4P3F
+          lake build CMDGCondensedCM4P3F CMDGCondensedCM4P3FSectionInterface
           lake env lean CMDGCondensedCM4P3F.lean
+          lake env lean CMDGCondensedCM4P3FSectionInterface.lean
