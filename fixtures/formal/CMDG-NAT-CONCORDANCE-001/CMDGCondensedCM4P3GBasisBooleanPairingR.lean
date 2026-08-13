@@ -5,7 +5,7 @@ import CMDGCondensedCM4P3GBooleanCube
 
 The integral Boolean pairing is transported through the exact coefficient-ring equivalence
 `ℤ ≃+* R`. This yields the `R`-linear map needed to construct actual finite-stage measure
-sections.
+sections. The same transport applies to every integer-weighted Boolean pairing.
 -/
 
 namespace CMDG.CondensedCM4P3G.BasisBooleanPairingR
@@ -50,9 +50,32 @@ noncomputable def basisBooleanPairingR (X : Profinite.{u}) :
     ext t
     rfl
 
+/-- The arbitrary integer-weighted Nöbeling Boolean pairing, transported to the lifted
+coefficient ring. -/
+noncomputable def weightedBasisBooleanPairingR (X : Profinite.{u})
+    (a : IntegralBasisIndex X → ℤ) :
+    LocallyConstant X R →ₗ[R]
+      LocallyConstant (IntegralBasisIndex X → Bool) R where
+  toFun v :=
+    basisBooleanIntegralLiftEquiv X
+      (weightedBasisBooleanPairing X a (locallyConstantIntegralDownEquiv X v))
+  map_add' v w := by
+    rw [map_add, map_add, map_add]
+  map_smul' r v := by
+    have hdown :
+        locallyConstantIntegralDownEquiv X (r • v) =
+          r.down • locallyConstantIntegralDownEquiv X v := by
+      ext x
+      rfl
+    rw [hdown, map_smul]
+    ext t
+    rfl
+
 #print locallyConstantIntegralDownEquiv
 #print basisBooleanIntegralLiftEquiv
 #print basisBooleanPairingR
+#print weightedBasisBooleanPairingR
 #print axioms basisBooleanPairingR
+#print axioms weightedBasisBooleanPairingR
 
 end CMDG.CondensedCM4P3G.BasisBooleanPairingR
