@@ -32,27 +32,26 @@ packaged quotient topology: `j.proj` is already certified locally constant by `D
 noncomputable def finiteDeltaPullbackR
     (X : Profinite.{u}) (j : DiscreteQuotient X)
     (q : (FiniteQuotientObject X j).obj) :
-    LocallyConstant X R := by
+    LocallyConstant X R.{u} := by
   classical
   exact
     { toFun := fun x => if j.proj x = q then 1 else 0
       isLocallyConstant :=
         j.proj_isLocallyConstant.comp
-          (fun y => if y = q then (1 : R) else 0) }
+          (fun y => if y = q then (1 : R.{u}) else 0) }
 
 /-- The Boolean basis-coordinate function attached to one finite-quotient point: pull the finite
 delta back to `X` and apply the already-certified lifted Nöbeling Boolean pairing. -/
 noncomputable def finiteBooleanCoefficient
     (X : Profinite.{u}) (j : DiscreteQuotient X)
     (q : (FiniteQuotientObject X j).obj) :
-    LocallyConstant (basisBooleanCube X) R := by
-  change LocallyConstant (IntegralBasisIndex X → Bool) R
-  let δ : LocallyConstant X R := finiteDeltaPullbackR X j q
-  let pairing :
-      LocallyConstant X R →ₗ[R]
-        LocallyConstant (IntegralBasisIndex X → Bool) R :=
-    basisBooleanPairingR X
-  exact pairing δ
+    LocallyConstant (basisBooleanCube X) R.{u} := by
+  change LocallyConstant (IntegralBasisIndex X → Bool) R.{u}
+  exact
+    (basisBooleanPairingR X :
+      LocallyConstant X R.{u} →ₗ[R.{u}]
+        LocallyConstant (IntegralBasisIndex X → Bool) R.{u})
+      (finiteDeltaPullbackR X j q)
 
 /-- The whole finite family of Boolean coefficient functions at one finite quotient. -/
 noncomputable def finiteBooleanCoefficientFamily
