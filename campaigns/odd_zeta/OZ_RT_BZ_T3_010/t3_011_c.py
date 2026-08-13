@@ -24,7 +24,6 @@ OPERATION = "OZ-RT-BZ-T3-011-C"
 STAGE = "T3_011_C_DIRECT_DISCRETE_PRODUCT_RULE_RESPONSE_GENERATOR_SEMANTICS_AUDIT"
 AUDIT_ID = "DIRECT_DISCRETE_PRODUCT_RULE_RESPONSE_GENERATOR_AUDIT_001"
 DIRECT_AUTHORITY_ID = "EXPLICIT_PRIMITIVE_SHIFT_RAW_FINITE_DIFFERENCE_V1"
-
 B_REVIEWED_HEAD = "7876a44286f3c958bf03ce120117c2cd689b2379"
 B_MERGE_COMMIT = "f8dc03a4e546a47b7a2b6d77a96d689f47e4d9a3"
 B_REQUIRED_TERMINAL = "BOUNDED_SINGLE_CHANNEL_LINEAR_NONZERO_RESPONSE_LIFT_CLASS_EXHAUSTED"
@@ -36,7 +35,6 @@ B_BLOBS = {
 EXPECTED_COUNTS = {"n1": 67, "n2": 67, "n3": 67, "k1": 110}
 CHANNEL_INCREMENT = {"n1": 1, "n2": 2, "n3": 3, "k1": 1, "l1": 1}
 CHANNEL_COORDINATE = {"n1": "n", "n2": "n", "n3": "n", "k1": "k", "l1": "l"}
-
 Unknown = p.Unknown
 GlobalVector = p.GlobalVector
 
@@ -75,7 +73,7 @@ def _const_poly(rat):
 
 
 def direct_delta_atom(name: str, shift: tuple[int, int, int]):
-    """Third-path primitive shift increment, independent of both 011-B generators."""
+    """Primitive shifted harmonic increment; no predecessor response helper is authority."""
     dn, dk, dl = shift
     if sum(int(x != 0) for x in shift) != 1:
         raise ValueError(f"unsupported compound audit shift {shift}")
@@ -111,17 +109,11 @@ def direct_delta_atom(name: str, shift: tuple[int, int, int]):
             return _const_poly(a.rc.inv(a.rc.lin_nl(1), r))
         return {}
     if name.startswith("H_kl_"):
-        if dk or dl:
-            return _const_poly(a.rc.inv(a.rc.lin_kl(1), r))
-        return {}
+        return _const_poly(a.rc.inv(a.rc.lin_kl(1), r)) if (dk or dl) else {}
     if name.startswith("H_k_"):
-        if dk:
-            return _const_poly(a.rc.inv(a.rc.lin_k(1), r))
-        return {}
+        return _const_poly(a.rc.inv(a.rc.lin_k(1), r)) if dk else {}
     if name.startswith("H_l_"):
-        if dl:
-            return _const_poly(a.rc.inv(a.rc.lin_l(1), r))
-        return {}
+        return _const_poly(a.rc.inv(a.rc.lin_l(1), r)) if dl else {}
     raise ValueError(f"unknown oriented primitive audit letter {name}")
 
 
@@ -149,26 +141,25 @@ def coordinate_factor(channel: str):
     raise ValueError(channel)
 
 
-def shifted_coordinate_factor(channel: str, increment_override: int | None = None):
+def direct_coordinate_rat(channel: str):
+    return a.rc.r_factor(coordinate_factor(channel), exponent=1)
+
+
+def direct_shifted_coordinate_rat(channel: str, increment_override: int | None = None):
+    """Represent x+step additively, not as an opaque affine multiplicative atom."""
     step = CHANNEL_INCREMENT[channel] if increment_override is None else int(increment_override)
-    if channel in ("n1", "n2", "n3"):
-        return (1, 0, 0, step)
-    if channel == "k1":
-        return (0, 1, 0, step)
-    if channel == "l1":
-        return (0, 0, 1, step)
-    raise ValueError(channel)
+    return a.rc.r_add(direct_coordinate_rat(channel), a.rc.r_const(step))
 
 
 def direct_finite_difference_poly(mon: tuple[str, ...], channel: str, increment_override: int | None = None):
     shift = a.pcl.SHIFTS[channel]
     original = direct_original_monomial(mon)
     shifted = direct_shifted_monomial(mon, shift)
-    f0 = coordinate_factor(channel)
-    f1 = shifted_coordinate_factor(channel, increment_override)
+    x0 = direct_coordinate_rat(channel)
+    x1 = direct_shifted_coordinate_rat(channel, increment_override)
     return a.rc.p_add(
-        a.rc.p_scale(shifted, a.rc.r_factor(f1, exponent=1)),
-        a.rc.p_scale(original, a.rc.r_factor(f0, exponent=1, scale=-1)),
+        a.rc.p_scale(shifted, x1),
+        a.rc.p_scale(original, a.rc.r_scale(x0, -1)),
     )
 
 
@@ -179,7 +170,7 @@ def direct_product_rule_poly(mon: tuple[str, ...], channel: str, increment_overr
     shifted = direct_shifted_monomial(mon, shift)
     delta_g = a.rc.p_add(shifted, a.rc.p_scale(original, -1))
     return a.rc.p_add(
-        a.rc.p_scale(delta_g, a.rc.r_factor(coordinate_factor(channel), exponent=1)),
+        a.rc.p_scale(delta_g, direct_coordinate_rat(channel)),
         a.rc.p_scale(shifted, Q(step)),
     )
 
@@ -335,6 +326,7 @@ def build() -> dict:
             k1_candidates = candidates
     if total != 311 or k1_candidates is None:
         raise AssertionError("T3-011-C independent candidate cardinality drift")
+
     lbase, _lids, _lcols, _ltarget = c.build_channel_system("l1", primitive_full, strata, specialized, supports)
     lactive = {rec["id"] for rec in lbase["active_cells"]}
     mirror_rows = []
@@ -346,6 +338,7 @@ def build() -> dict:
     mirror_mismatch = sum(not row["all_three_existing_paths_plus_product_rule_concordant"] for row in mirror_rows)
     if len(mirror_rows) != 110:
         raise AssertionError("T3-011-C l1 mirror audit cardinality drift")
+
     all_concordant = total_mismatch == 0 and mirror_mismatch == 0
     terminal = (
         "T3_011_B_LIFTED_RESPONSE_GENERATOR_SEMANTICS_CERTIFIED"
@@ -368,6 +361,7 @@ def build() -> dict:
         "direct_reconstruction": {
             "authority_id": DIRECT_AUTHORITY_ID,
             "raw_definition": "(x_c + Delta_c x_c) S_c(G) - x_c G",
+            "coordinate_shift_normalization": "x_c + step is represented additively in the Laurent coefficient ring; affine factors are not treated as distributively canonical multiplicative atoms",
             "product_rule": "x_c(S_c(G)-G)+(Delta_c x_c)S_c(G)",
             "channel_coordinate_increment": CHANNEL_INCREMENT,
             "uses_t3_011_b_generator_as_direct_authority": False,
