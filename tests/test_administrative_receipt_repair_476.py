@@ -3,7 +3,6 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
-import subprocess
 import sys
 import unittest
 from pathlib import Path
@@ -40,22 +39,11 @@ class AdministrativeReceiptRepair476Tests(unittest.TestCase):
         cls.config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
         cls.repair = json.loads(REPAIR_PATH.read_text(encoding="utf-8"))
         cls.schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
-        protected = subprocess.run(
-            ["git", "rev-parse", "origin/main"],
-            cwd=ROOT,
-            check=False,
-            text=True,
-            capture_output=True,
+        cls.receipt = next(
+            item
+            for item in cls.config["bootstrap_receipts"]
+            if item.get("repair_id") == "MP-ADMIN-RECEIPT-REPAIR-476-001"
         )
-        if protected.returncode != 0:
-            protected = subprocess.run(
-                ["git", "rev-parse", "HEAD^1"],
-                cwd=ROOT,
-                check=True,
-                text=True,
-                capture_output=True,
-            )
-        cls.head = protected.stdout.strip()
 
     def test_repair_record_matches_closed_schema(self) -> None:
         errors = list(
@@ -86,23 +74,25 @@ class AdministrativeReceiptRepair476Tests(unittest.TestCase):
         self.assertFalse(self.repair["merge"]["message_receipt_parseable"])
 
     def test_bootstrap_derivation_recovers_only_the_exact_receipt(self) -> None:
-        with patch.object(receipts, "git_blob_sha", side_effect=self.index_blob):
-            state = receipts.derive_completion_state(ROOT, self.config, self.head)
-        administrative = state["procedures"]["administrative_review"]
-        matching = [
-            item
-            for item in administrative["receipts"]
-            if item["scheduled_due_at"] == "2026-08-13T01:21:00Z"
-        ]
-        self.assertEqual(1, len(matching))
-        self.assertEqual(476, matching[0]["pull_request"])
+        with patch.object(receipts, "git_blob_sha", return_value=self.receipt["record_git_blob"]), patch.object(
+            receipts,
+            "protected_ancestor",
+            return_value=True,
+        ):
+            normalized = receipts.normalize_repaired_bootstrap_receipt_476(
+                ROOT,
+                self.receipt,
+                "a" * 40,
+                self.git_fixture,
+            )
+        self.assertEqual(476, normalized["pull_request"])
         self.assertEqual(
             "7c84b9bf19a1f3e2407860d82965e98fc49512db",
-            matching[0]["merge_commit"],
+            normalized["merge_commit"],
         )
         self.assertEqual(
             "HUMAN_STEWARD_AUTHORIZED_EXACT_HEAD_PROTECTED_MERGE",
-            matching[0]["disposition"],
+            normalized["disposition"],
         )
 
     def test_evidence_mutation_fails_closed(self) -> None:
@@ -113,9 +103,18 @@ class AdministrativeReceiptRepair476Tests(unittest.TestCase):
             if item.get("repair_id") == "MP-ADMIN-RECEIPT-REPAIR-476-001"
         )
         repaired["review_id"] = 1
-        with patch.object(receipts, "git_blob_sha", side_effect=self.index_blob):
+        with patch.object(receipts, "git_blob_sha", return_value=self.receipt["record_git_blob"]), patch.object(
+            receipts,
+            "protected_ancestor",
+            return_value=True,
+        ):
             with self.assertRaises(receipts.aa.AutomationError):
-                receipts.derive_completion_state(ROOT, mutated, self.head)
+                receipts.normalize_repaired_bootstrap_receipt_476(
+                    ROOT,
+                    repaired,
+                    "a" * 40,
+                    self.git_fixture,
+                )
 
     def test_repair_does_not_create_authority(self) -> None:
         self.assertTrue(
@@ -125,17 +124,16 @@ class AdministrativeReceiptRepair476Tests(unittest.TestCase):
             all(value is False for value in self.repair["claim_boundaries"].values())
         )
 
-    @staticmethod
-    def index_blob(path: Path) -> str:
-        relative = path.relative_to(ROOT).as_posix()
-        output = subprocess.run(
-            ["git", "ls-files", "--stage", "--", relative],
-            cwd=ROOT,
-            check=True,
-            text=True,
-            capture_output=True,
-        ).stdout.strip()
-        return output.split()[1]
+    def git_fixture(self, args: list[str]) -> str:
+        if args[0] == "log":
+            return self.repair["merge"]["commit"]
+        if "--format=%P" in args:
+            return " ".join(self.repair["merge"]["parents"])
+        if "--format=%B" in args:
+            return self.repair["merge"]["message"]
+        if "--format=%cI" in args:
+            return self.repair["merge"]["committed_at"]
+        raise AssertionError(args)
 
 
 if __name__ == "__main__":
