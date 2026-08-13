@@ -117,17 +117,30 @@ jobs:
             --output-root "$RUNNER_TEMP/prvsr" \
             --summary "$RUNNER_TEMP/prvsr-summary.json"
 
+      - name: Refresh bounded PRVSR operator index
+        id: operator-index
+        if: steps.collector.outcome == 'success'
+        continue-on-error: true
+        env:
+          GITHUB_PUBLISH_TOKEN: ${{ steps.publisher-token.outputs.token }}
+        run: |
+          python3 ci/pr_visual_status_workflow_operator_surface.py \
+            --repo "$GITHUB_REPOSITORY" \
+            --summary "$RUNNER_TEMP/prvsr-operator-summary.json"
+
       - name: Record advisory outcome without creating a merge gate
         if: always()
         env:
           PR_NUMBER: ${{ steps.target.outputs.pr_number }}
           COLLECTOR_OUTCOME: ${{ steps.collector.outcome }}
+          OPERATOR_INDEX_OUTCOME: ${{ steps.operator-index.outcome }}
           PUBLISHER_LOGIN: ${{ format('{0}[bot]', steps.publisher-token.outputs.app-slug) }}
         run: |
           echo "## Advisory PR visual status" >> "$GITHUB_STEP_SUMMARY"
           echo >> "$GITHUB_STEP_SUMMARY"
           echo "Target PR: ${PR_NUMBER:-none}" >> "$GITHUB_STEP_SUMMARY"
           echo "Collector outcome: ${COLLECTOR_OUTCOME:-skipped}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Operator index outcome: ${OPERATOR_INDEX_OUTCOME:-skipped}" >> "$GITHUB_STEP_SUMMARY"
           echo "Publisher: ${PUBLISHER_LOGIN:-unavailable}" >> "$GITHUB_STEP_SUMMARY"
           echo "Authority boundary: ADVISORY_FAILURE__NO_MERGE_BLOCKER_CREATED" >> "$GITHUB_STEP_SUMMARY"
           if [ -f "$RUNNER_TEMP/prvsr-summary.json" ]; then
@@ -135,4 +148,9 @@ jobs:
             cat "$RUNNER_TEMP/prvsr-summary.json" >> "$GITHUB_STEP_SUMMARY"
             echo '```' >> "$GITHUB_STEP_SUMMARY"
           fi
-          echo "PRVSR reporting is derived and advisory; failure does not create a required check or merge blocker."
+          if [ -f "$RUNNER_TEMP/prvsr-operator-summary.json" ]; then
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            cat "$RUNNER_TEMP/prvsr-operator-summary.json" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "PRVSR reporting and operator indexing are derived and advisory; failure does not create a required check or merge blocker."
