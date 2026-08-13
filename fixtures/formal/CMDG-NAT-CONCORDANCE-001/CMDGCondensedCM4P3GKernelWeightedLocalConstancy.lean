@@ -93,6 +93,14 @@ theorem finiteDeltaPullbackR_fiber_sum_apply
         finiteDeltaPullbackR X j p
       else 0) x =
       finiteDeltaPullbackR X k q x := by
+  change
+    (LocallyConstant.evalRingHom x)
+        (∑ p : j,
+          if finiteQuotientTransition X f p = q then
+            finiteDeltaPullbackR X j p
+          else 0) =
+      (LocallyConstant.evalRingHom x) (finiteDeltaPullbackR X k q)
+  rw [map_sum]
   simpa [finiteDeltaPullbackR] using finiteDeltaFiberScalar_sum X f q x
 
 /-- Extensional form of finite-delta compatibility. -/
