@@ -10,6 +10,9 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+ROOT_STR = str(ROOT)
+if ROOT_STR not in sys.path:
+    sys.path.insert(0, ROOT_STR)
 
 
 def _safe_repo_path(raw: str, *, suffix: str | None = None) -> Path:
@@ -58,8 +61,11 @@ def _discover(root: str, pattern: str) -> list[Path]:
 
 
 def _suite_for(path: Path) -> unittest.TestSuite:
-    # Match `python -m unittest discover -s <dir> -p <file>` semantics: the
-    # start directory need not be an importable package.
+    # Preserve ordinary repository unittest imports (for example `ci.*` and
+    # `experiments.*`) while retaining discovery semantics for test roots that
+    # are not Python packages.
+    if ROOT_STR not in sys.path:
+        sys.path.insert(0, ROOT_STR)
     rel_parent = path.parent.relative_to(ROOT)
     return unittest.defaultTestLoader.discover(str(rel_parent), pattern=path.name)
 
