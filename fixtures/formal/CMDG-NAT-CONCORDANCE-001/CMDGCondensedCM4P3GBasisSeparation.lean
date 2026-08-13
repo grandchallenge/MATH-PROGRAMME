@@ -68,8 +68,9 @@ theorem finiteFunctionalCoefficients_apply_mem
     {i : IntegralBasisIndex X} (hi : i ∈ I) :
     finiteFunctionalCoefficients X L I i = L (intIndicator i) := by
   classical
-  change (Finsupp.lapply i) (∑ j ∈ I, Finsupp.single j (L (intIndicator j))) =
-    L (intIndicator i)
+  change
+    ((Finsupp.lapply i : (IntegralBasisIndex X →₀ ℤ) →ₗ[ℤ] ℤ)
+      (∑ j ∈ I, Finsupp.single j (L (intIndicator j)))) = L (intIndicator i)
   rw [map_sum]
   apply Finset.sum_eq_single i
   · intro j hj hji
