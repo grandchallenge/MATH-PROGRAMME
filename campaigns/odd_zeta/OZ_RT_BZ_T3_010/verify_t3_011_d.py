@@ -160,6 +160,19 @@ def reconstruct_context():
     return strata, specialized, supports
 
 
+def independent_active_namespace(channel, strata, specialized, supports):
+    active = set()
+    for st in reversed(strata):
+        primitive = specialized[st["id"]]
+        for block in reversed(vc.BLOCK_ORDER):
+            rec, _target, _cols, _ids = vb.cell(
+                primitive, supports[(channel, block)], channel, block, st
+            )
+            if rec["classification"] != "STRUCTURAL_ZERO":
+                active.add(f"{channel}:{block}:{st['id']}")
+    return active
+
+
 def _verified_pairing(witness: dict, prod: dict, alt: dict, channel: str, uid) -> Q:
     sem = semantic.semantic_bundle([prod, alt])
     if not sem["equals_direct"][1]:
@@ -220,7 +233,7 @@ def verify(result: dict) -> dict:
         witness = frozen_canonical_witness(cols, target)
         if va.pairing(witness, target) != 1:
             raise AssertionError(f"independent frozen witness normalization drift: {channel}")
-        active = {rec["id"] for rec in base["active_cells"]}
+        active = independent_active_namespace(channel, strata, specialized, supports)
 
         for uid in candidates:
             if row_index >= len(rows):
@@ -255,7 +268,7 @@ def verify(result: dict) -> dict:
             raise AssertionError("k1 source bank absent")
         base, ids, cols, target = vc.reconstruct_channel("l1", strata, specialized, supports)
         witness = frozen_canonical_witness(cols, target)
-        active = {rec["id"] for rec in base["active_cells"]}
+        active = independent_active_namespace("l1", strata, specialized, supports)
         mirrored = [vc.mirror_unknown_k_to_l(uid) for uid in k1_candidates]
         for source, uid in zip(k1_candidates, mirrored):
             if mirror_index >= len(mirror_rows):
