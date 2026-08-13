@@ -149,15 +149,15 @@ theorem basisBooleanPairingR_fiber_sum
     (q : k) :
     (∑ p : j,
       if finiteQuotientTransition X f p = q then
-        basisBooleanPairingR X (finiteDeltaPullbackR X j p)
+        basisBooleanPairingR.{u, u, u, u} X (finiteDeltaPullbackR X j p)
       else 0) =
-      basisBooleanPairingR X (finiteDeltaPullbackR X k q) := by
+      basisBooleanPairingR.{u, u, u, u} X (finiteDeltaPullbackR X k q) := by
   calc
     (∑ p : j,
       if finiteQuotientTransition X f p = q then
-        basisBooleanPairingR X (finiteDeltaPullbackR X j p)
+        basisBooleanPairingR.{u, u, u, u} X (finiteDeltaPullbackR X j p)
       else 0) =
-        basisBooleanPairingR X
+        basisBooleanPairingR.{u, u, u, u} X
           (∑ p : j,
             if finiteQuotientTransition X f p = q then
               finiteDeltaPullbackR X j p
@@ -167,8 +167,9 @@ theorem basisBooleanPairingR_fiber_sum
               intro p _
               by_cases hpq : finiteQuotientTransition X f p = q
               · rw [if_pos hpq, if_pos hpq]
+                rfl
               · rw [if_neg hpq, if_neg hpq, map_zero]
-    _ = basisBooleanPairingR X (finiteDeltaPullbackR X k q) := by
+    _ = basisBooleanPairingR.{u, u, u, u} X (finiteDeltaPullbackR X k q) := by
       rw [finiteDeltaPullbackR_fiber_sum X f q]
 
 /-- The concrete Boolean coefficient family therefore satisfies the same refinement law. This is
@@ -185,10 +186,10 @@ theorem finiteBooleanCoefficient_fiber_sum
   change
     (∑ p : j,
       if finiteQuotientTransition X f p = q then
-        basisBooleanPairingR X (finiteDeltaPullbackR X j p)
+        basisBooleanPairingR.{u, u, u, u} X (finiteDeltaPullbackR X j p)
       else 0) =
-      basisBooleanPairingR X (finiteDeltaPullbackR X k q)
-  exact basisBooleanPairingR_fiber_sum.{u, u, u, u} X f q
+      basisBooleanPairingR.{u, u, u, u} X (finiteDeltaPullbackR X k q)
+  exact basisBooleanPairingR_fiber_sum X f q
 
 #check finiteQuotientTransition
 #check finiteQuotientTransition_proj
