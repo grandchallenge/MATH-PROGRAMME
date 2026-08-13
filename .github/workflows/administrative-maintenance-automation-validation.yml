@@ -20,12 +20,14 @@ on:
       - 'governance/administrative_maintenance_steady_state*.json'
       - 'governance/administrative_transition_recovery*.json'
       - 'governance/administrative_recovery_queue*.json'
+      - 'governance/administrative_structural_*_late_recovery_control.json'
       - 'governance/administrative_maintenance_completion_state.json'
       - 'governance/administrative_autonomy_*.json'
       - 'schemas/administrative_maintenance_automation*.schema.json'
       - 'schemas/administrative_maintenance_steady_state*.schema.json'
       - 'schemas/administrative_transition_recovery*.schema.json'
       - 'schemas/administrative_recovery_queue*.schema.json'
+      - 'schemas/administrative_structural_*_late_recovery_control.schema.json'
       - 'schemas/administrative_maintenance_completion_state.schema.json'
       - 'schemas/administrative_autonomy_*.schema.json'
       - 'schemas/administrative_autonomous_maintenance_record.schema.json'
@@ -33,6 +35,7 @@ on:
       - 'tests/test_administrative_autonomy*.py'
       - 'tests/test_administrative_steady_state.py'
       - 'tests/test_administrative_transition_recovery*.py'
+      - 'tests/test_administrative_structural_*_late_recovery.py'
       - 'tests/test_administrative_receipts.py'
       - 'tests/test_administrative_synchronization_wait.py'
   push:
@@ -55,12 +58,14 @@ on:
       - 'governance/administrative_maintenance_steady_state*.json'
       - 'governance/administrative_transition_recovery*.json'
       - 'governance/administrative_recovery_queue*.json'
+      - 'governance/administrative_structural_*_late_recovery_control.json'
       - 'governance/administrative_maintenance_completion_state.json'
       - 'governance/administrative_autonomy_*.json'
       - 'schemas/administrative_maintenance_automation*.schema.json'
       - 'schemas/administrative_maintenance_steady_state*.schema.json'
       - 'schemas/administrative_transition_recovery*.schema.json'
       - 'schemas/administrative_recovery_queue*.schema.json'
+      - 'schemas/administrative_structural_*_late_recovery_control.schema.json'
       - 'schemas/administrative_maintenance_completion_state.schema.json'
       - 'schemas/administrative_autonomy_*.schema.json'
       - 'schemas/administrative_autonomous_maintenance_record.schema.json'
@@ -68,6 +73,7 @@ on:
       - 'tests/test_administrative_autonomy*.py'
       - 'tests/test_administrative_steady_state.py'
       - 'tests/test_administrative_transition_recovery*.py'
+      - 'tests/test_administrative_structural_*_late_recovery.py'
       - 'tests/test_administrative_receipts.py'
       - 'tests/test_administrative_synchronization_wait.py'
   workflow_dispatch:
@@ -117,6 +123,8 @@ jobs:
             tests.test_administrative_autonomy \
             tests.test_administrative_autonomy_runtime \
             tests.test_administrative_autonomy_queue_starvation \
+            tests.test_administrative_structural_2033_late_recovery \
+            tests.test_administrative_structural_2257_late_recovery \
             tests.test_administrative_steady_state \
             tests.test_administrative_transition_recovery_candidate \
             tests.test_administrative_receipts \
