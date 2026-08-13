@@ -2,7 +2,7 @@
 
 **Plan ID:** `MP-OPERATING-PLAN-2026-08-POST-PILOT-001-R2`
 
-**Plan window:** `P9D` from protected activation (`T0`)
+**Plan window:** half-open interval `[T0, T0 + P9D)`
 
 **Source:** *Full-System Follow-up Report: Post-Pilot Transition and Operating Consolidation*, reporting cut-off 2026-08-12 18:04 PDT
 
@@ -20,7 +20,7 @@ Over nine days, Grand Challenge should convert the report's seven recommendation
 
 CMDG, odd-zeta, PRVSR, and visual pedagogy continue as bounded workstreams. Their purpose in this plan is to produce exact research or operator value, not to expand the institution's authority surface.
 
-The deadline transform is exactly `0.1` of the predecessor plan. Evidence, review, claim, protection, and authority requirements are not compressed away. Where the shorter window cannot produce terminal evidence, the correct output is an exact blocker, negative result, or owned continuation packet.
+The deadline transform is exactly `0.1` of the predecessor plan as frozen in `governance/agent_cadence_operating_plan_transform.json` and checked by `ci/validate_agent_cadence_operating_plan.py`. Evidence, review, claim, protection, and authority requirements are not compressed away. Where the shorter window cannot produce terminal evidence, the correct output is an exact blocker, negative result, or owned continuation packet.
 
 ## 2. Baseline and revalidation rule
 
@@ -38,6 +38,18 @@ Other live observations at drafting were:
 
 These are observations, not permanent plan assumptions. `OPS-00` must refresh them before execution begins. Every later decision packet must bind the then-current protected heads and exact evidence. A green workflow, branch tip, dashboard state, or issue description alone is not completion evidence.
 
+### 2.1 Non-retrospective activation clock
+
+`T0` is the timestamp written by the successful protected-main activation readback after all of the following have completed:
+
+1. Council review of one exact plan candidate;
+2. one authenticated Human Steward disposition binding that exact candidate;
+3. successful required checks at the authorized candidate head;
+4. ordinary protected merge without bypass; and
+5. readback proving the protected plan bytes and merge identity.
+
+The protected merge timestamp is evidence but is not `T0`. No deadline begins retrospectively. Events between merge and activation readback remain governed by the pre-existing rules. A failed or missing readback leaves the candidate inactive.
+
 ## 3. Non-negotiable boundaries
 
 The plan inherits the authority model in the [Administrative Maintenance Plan](governance/ADMINISTRATIVE_MAINTENANCE_PLAN.md), the active [steady-state contract](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/administrative_maintenance_steady_state_0_1.json), and the [PRVSR decision](decisions/ADR-0019_PR_VISUAL_STATUS_REPORTING.md).
@@ -54,7 +66,7 @@ The plan inherits the authority model in the [Administrative Maintenance Plan](g
 
 ### 3.1 Human-action budget
 
-Standard operation has a human-action budget of zero. Agents prepare candidates, dispatch work, validate evidence, perform independent office or Referee review, reconcile exact heads, publish receipts, and maintain mirrors within already granted authority.
+Routine plan execution has a required human-action budget of zero. Agents prepare candidates, dispatch work, validate evidence, perform independent office or Referee review, reconcile exact heads, publish receipts, and maintain mirrors within already granted authority.
 
 Human participation is reserved to:
 
@@ -62,6 +74,14 @@ Human participation is reserved to:
 2. a later Human Steward, Council, constitutional, production, certification, publication, or commercial decision only if a terminal packet actually requests an authority change reserved to that office.
 
 Silence is not approval. If the activation disposition is absent, current rules remain effective and the candidate does not activate. Routine status, scheduling, dispatch, retry, no-op classification, evidence collation, and non-authoritative reporting must not be routed to a human.
+
+The scorecard records these categories separately:
+
+- `reserved_human_steward_actions`: target `1` for activation;
+- `routine_human_operating_actions`: target `0`;
+- `human_merge_executor_actions`: `0` when ordinary automation merges, otherwise observed separately and never represented as routine programme review;
+- `external_human_participant_actions`: target `0`; independent agent exercise is sufficient unless a separately authorized external commitment requires a human; and
+- `terminal_reserved_human_actions`: target `0` unless the terminal packet requests a reserved authority change.
 
 ## 4. Delivery model
 
@@ -71,10 +91,12 @@ All deadlines are measured from the protected activation time `T0`. The phase of
 
 | Phase | Deadline from `T0` | Purpose | Exit condition |
 |---|---|---|---|
-| 0 — Rebaseline | `T0 + PT4H48M` | Bind the plan to live protected state and assign accountable agent roles | `OPS-00` packet is exact-head bound; owners and evidence locations are named |
-| 1 — Stabilize and specify | `T0 + P2DT12H` | Observe steady-state maintenance, specify high-water semantics, freeze bounded research work, and baseline PRVSR usability | Gates A1, B1, C1, D1, and E1 have evidence |
-| 2 — Deliver bounded increments | `T0 + P5DT9H36M` | Implement high-water recovery, admit bounded research results, migrate one reviewed visual tranche, and build the selected flagship packet | Gates B2, C2, D2, F1, and G2 pass or carry explicit owned blockers |
-| 3 — Independent use and disposition | `T0 + P9D` | Exercise recovery, conduct independent reproduction/use, and decide continuation, repair, consolidation, or retirement | Terminal nine-day review preserves results, failures, residuals, and next authority gate |
+| 0 — Rebaseline | `T0 + PT4H48M` | Bind the plan to live protected state and assign accountable agent roles | `OPS-A` passes; `OPS-B` ledger is active |
+| 1 — Stabilize and specify | `T0 + P2DT12H` | Observe steady-state maintenance, specify high-water semantics, freeze bounded research work, and baseline PRVSR usability | `ADM-A`, `HWM-A`, `CMDG-A`, `OZ-A`, `PRV-A`, and `EXT-A` pass or carry explicit blockers |
+| 2 — Deliver bounded increments | `T0 + P5DT9H36M` | Implement high-water recovery, admit bounded research results, migrate one reviewed visual tranche, and build the selected flagship packet | `HWM-B`, `HWM-C`, `CMDG-B`, `OZ-B`, `PRV-B`, `VIS-A`, and `EXT-B` pass or carry explicit blockers |
+| 3 — Independent use and disposition | `T0 + P9D` | Close the observation set, exercise recovery, conduct independent reproduction/use, and decide continuation, repair, consolidation, or retirement | `ADM-B`, `PRV-C`, `VIS-B`, and `EXT-C` have terminal records; the nine-day review preserves every blocker and residual |
+
+`OPS-A` is a hard predecessor. No downstream implementation, migration, or experiment may begin before `OPS-A`; only evidence gathering needed to construct and verify `OPS-00` is permitted.
 
 ### 4.2 Work-in-progress controls
 
@@ -156,11 +178,11 @@ Derive, rather than manually type, due-time reliability and each latency interva
 
 #### `ADM-02` — run the predeclared observation window
 
-Use the full `P9D` plan window as the primary observation window while preserving the existing maintenance cadence anchor. Do not reset the cadence anchor or erase a failed occurrence. The window evaluates every occurrence that actually falls due during `T0/P9D`; it does not manufacture additional authoritative occurrences merely to increase sample size.
+Use `[T0, T0 + P8DT4H48M)` as the primary due-occurrence observation interval while preserving the existing maintenance cadence anchor. Do not reset the cadence anchor or erase a failed occurrence. The interval evaluates every occurrence whose due time falls inside the half-open interval; it does not manufacture additional authoritative occurrences merely to increase sample size. The remaining `PT19H12M` is reserved for terminal receipts, readback, reconciliation, and compilation.
 
-**Gate `ADM-A`:** every due occurrence in the window has a terminal, exact record; no occurrence is silently absent.
+**Gate `ADM-A`:** by the stability gate, every occurrence already due has a current exact state and no occurrence is silently absent.
 
-**Gate `ADM-B`:** the window completes without bespoke recovery and without weakening exact-head, review, protected-merge, or readback requirements.
+**Gate `ADM-B`:** by `T0 + P9D`, every occurrence due in the primary observation interval has either a terminal exact receipt/readback or an explicit `PENDING_AT_CUTOFF`/`FAILED_AT_CUTOFF` record with owner, last proven state, and continuation route. The window records whether bespoke recovery occurred and never weakens exact-head, review, protected-merge, or readback requirements.
 
 If `ADM-B` fails, preserve the failure, repair it through a separately reviewed change, and predeclare one new `P9D` confirmation window. Eventual success does not rewrite the primary-window result.
 
@@ -356,7 +378,7 @@ The packet must contain:
 - an accessible explanation surface; and
 - a feedback/defect route.
 
-**Gate `EXT-B`:** a person outside the original authoring path can run or use the packet without private oral context.
+**Gate `EXT-B`:** an independent actor outside the original authoring path can run or use the packet without private oral context. The actor may be an agent; a human is required only for a separately reserved external commitment.
 
 #### `EXT-03` — preserve the external result
 

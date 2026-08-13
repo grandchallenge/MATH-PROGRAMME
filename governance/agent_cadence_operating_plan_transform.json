@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0.0",
+  "transform_id": "MP-OPERATING-PLAN-DEADLINE-TRANSFORM-001",
+  "source_plan_id": "MP-OPERATING-PLAN-2026-08-POST-PILOT-001",
+  "target_plan_id": "MP-OPERATING-PLAN-2026-08-POST-PILOT-001-R2",
+  "factor": "0.1",
+  "source_total": {
+    "duration": "P90D",
+    "seconds": 7776000
+  },
+  "target_total": {
+    "duration": "P9D",
+    "seconds": 777600
+  },
+  "phase_durations": [
+    {
+      "phase": "rebaseline",
+      "source_duration": "P2D",
+      "source_seconds": 172800,
+      "target_duration": "PT4H48M",
+      "target_seconds": 17280,
+      "target_cumulative_duration": "PT4H48M",
+      "target_cumulative_seconds": 17280
+    },
+    {
+      "phase": "stabilize_and_specify",
+      "source_duration": "P23D",
+      "source_seconds": 1987200,
+      "target_duration": "P2DT7H12M",
+      "target_seconds": 198720,
+      "target_cumulative_duration": "P2DT12H",
+      "target_cumulative_seconds": 216000
+    },
+    {
+      "phase": "deliver_bounded_increments",
+      "source_duration": "P29D",
+      "source_seconds": 2505600,
+      "target_duration": "P2DT21H36M",
+      "target_seconds": 250560,
+      "target_cumulative_duration": "P5DT9H36M",
+      "target_cumulative_seconds": 466560
+    },
+    {
+      "phase": "independent_use_and_disposition",
+      "source_duration": "P36D",
+      "source_seconds": 3110400,
+      "target_duration": "P3DT14H24M",
+      "target_seconds": 311040,
+      "target_cumulative_duration": "P9D",
+      "target_cumulative_seconds": 777600
+    }
+  ],
+  "milestone_offsets": [
+    {
+      "gate": "A",
+      "source_duration": "P2D",
+      "source_seconds": 172800,
+      "target_duration": "PT4H48M",
+      "target_seconds": 17280
+    },
+    {
+      "gate": "B",
+      "source_duration": "P25D",
+      "source_seconds": 2160000,
+      "target_duration": "P2DT12H",
+      "target_seconds": 216000
+    },
+    {
+      "gate": "C",
+      "source_duration": "P54D",
+      "source_seconds": 4665600,
+      "target_duration": "P5DT9H36M",
+      "target_seconds": 466560
+    },
+    {
+      "gate": "D",
+      "source_duration": "P82D",
+      "source_seconds": 7084800,
+      "target_duration": "P8DT4H48M",
+      "target_seconds": 708480
+    },
+    {
+      "gate": "E",
+      "source_duration": "P90D",
+      "source_seconds": 7776000,
+      "target_duration": "P9D",
+      "target_seconds": 777600
+    }
+  ],
+  "cadence_offsets": [
+    {
+      "name": "status_digest_max_interval",
+      "source_duration": "P1D",
+      "source_seconds": 86400,
+      "target_duration": "PT2H24M",
+      "target_seconds": 8640
+    },
+    {
+      "name": "operating_review",
+      "source_duration": "P7D",
+      "source_seconds": 604800,
+      "target_duration": "PT16H48M",
+      "target_seconds": 60480
+    },
+    {
+      "name": "retirement_review",
+      "source_duration": "P28D",
+      "source_seconds": 2419200,
+      "target_duration": "P2DT19H12M",
+      "target_seconds": 241920
+    },
+    {
+      "name": "initial_action_window",
+      "source_duration": "P7D",
+      "source_seconds": 604800,
+      "target_duration": "PT16H48M",
+      "target_seconds": 60480
+    }
+  ],
+  "noncompressed_requirements": [
+    "exact_head_review",
+    "independent_review",
+    "required_checks",
+    "protected_merge",
+    "protected_main_readback",
+    "adverse_evidence_retention",
+    "claim_boundaries",
+    "reserved_human_authority"
+  ]
+}
