@@ -52,27 +52,21 @@ theorem basisCoefficients_eq_zero_of_pointwise_zero
   ext x
   simpa using h x
 
-/-- Kronecker lookup for a finite sum of integer `Finsupp.single` terms. Keeping this fact
-separate prevents the terminal Nöbeling wrapper from depending on evaluator elaboration. -/
-theorem intFinsupp_sum_single_apply_mem
-    {ι : Type*} [DecidableEq ι]
-    (I : Finset ι) (a : ι → ℤ) {i : ι} (hi : i ∈ I) :
-    (∑ j ∈ I, Finsupp.single j (a j) : ι →₀ ℤ) i = a i := by
-  change (∑ j ∈ I, (Finsupp.single j (a j) : ι →₀ ℤ) i) = a i
-  apply Finset.sum_eq_single i
-  · intro j hj hji
-    exact Finsupp.single_eq_of_ne (Ne.symm hji)
-  · intro hnot
-    exact (hnot hi).elim
-
 /-- Package the coordinate values of an additive functional on one finite index set as a
-finitely supported Nöbeling coefficient vector. -/
+finitely supported Nöbeling coefficient vector. This direct finite-coordinate compression avoids
+any evaluator interaction with a `Finsupp`-valued finite sum. -/
 noncomputable def finiteFunctionalCoefficients
     (X : Profinite.{u})
     (L : (IntegralBasisIndex X → ℤ) →+ ℤ)
     (I : Finset (IntegralBasisIndex X)) :
-    IntegralBasisIndex X →₀ ℤ :=
-  ∑ i ∈ I, Finsupp.single i (L (intIndicator i))
+    IntegralBasisIndex X →₀ ℤ := by
+  classical
+  exact Finsupp.onFinset I
+    (fun i => if i ∈ I then L (intIndicator i) else 0)
+    (by
+      intro i hi
+      by_contra hnot
+      simpa [hnot] using hi)
 
 theorem finiteFunctionalCoefficients_apply_mem
     (X : Profinite.{u})
@@ -81,8 +75,7 @@ theorem finiteFunctionalCoefficients_apply_mem
     {i : IntegralBasisIndex X} (hi : i ∈ I) :
     finiteFunctionalCoefficients X L I i = L (intIndicator i) := by
   classical
-  simpa [finiteFunctionalCoefficients] using
-    (intFinsupp_sum_single_apply_mem I (fun j => L (intIndicator j)) hi)
+  simp [finiteFunctionalCoefficients, hi]
 
 /-- Terminal algebraic kernel-annihilation lemma. If `L` is controlled by one finite coordinate
 set `I`, and the Nöbeling combination whose coefficients are `L` on the standard coordinate
@@ -128,11 +121,9 @@ theorem additiveFunctional_eq_zero_of_finiteDependence_and_basisCombination
 #print integralBasis
 #print basisCombination
 #print basisCoefficients_eq_zero_of_pointwise_zero
-#print intFinsupp_sum_single_apply_mem
 #print finiteFunctionalCoefficients
 #print additiveFunctional_eq_zero_of_finiteDependence_and_basisCombination
 #print axioms basisCoefficients_eq_zero_of_pointwise_zero
-#print axioms intFinsupp_sum_single_apply_mem
 #print axioms additiveFunctional_eq_zero_of_finiteDependence_and_basisCombination
 
 end CMDG.CondensedCM4P3G.BasisSeparation
