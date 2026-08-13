@@ -80,6 +80,42 @@
         title: 'Hodge Decomposition: Type and Symmetry',
         note: 'Algebraic-cycle classes have p,p type; rational p,p type is necessary but does not prove algebraicity in general.'
       }
+    },
+    navier_stokes: {
+      '../../assets/documentaries/navier_stokes/field.svg': {
+        src: '../../assets/visual_pedagogy/batch3/navier_stokes/field.svg',
+        alt: 'A schematic velocity-vector field is paired with the incompressible Navier-Stokes equation, with transport, pressure, viscosity, and divergence-free constraint labeled separately.',
+        title: 'A Fluid Has a Velocity Everywhere',
+        note: 'The field is schematic rather than simulation output; the PDE roles are separated, and no global-regularity or singularity claim is made.'
+      },
+      '../../assets/documentaries/navier_stokes/frontier.svg': {
+        src: '../../assets/visual_pedagogy/batch3/navier_stokes/frontier.svg',
+        alt: 'A status ladder separates the scaling-critical line, continuation criteria, partial regularity, and the open universal three-dimensional Navier-Stokes problem.',
+        title: 'The Critical Regularity Frontier',
+        note: 'Critical scaling, continuation criteria, partial regularity, and the open universal problem remain distinct; conditional results do not settle the Clay problem.'
+      }
+    },
+    poincare: {
+      '../../assets/documentaries/poincare/plate_extinction.svg': {
+        src: '../../assets/visual_pedagogy/batch3/poincare/plate_extinction.svg',
+        alt: 'A four-stage event graph shows an initial closed three-manifold, Ricci flow with surgery, finite extinction under theorem hypotheses, and reverse topological bookkeeping.',
+        title: 'Finite Extinction and Reverse Bookkeeping',
+        note: 'The event graph separates geometric evolution from reverse topological bookkeeping; schematic extinction is not itself proof.'
+      }
+    },
+    riemann: {
+      '../../assets/documentaries/riemann/euler.svg': {
+        src: '../../assets/visual_pedagogy/batch3/riemann/euler.svg',
+        alt: 'Prime-indexed Euler factors for p equals 2, 3, 5, and all primes assemble into the zeta Euler product, with Re(s) greater than 1 marked as the absolute-convergence domain.',
+        title: 'The Euler Product and Its Convergence Boundary',
+        note: 'The Euler product is shown with its Re(s) greater than 1 absolute-convergence domain; termwise critical-strip use and RH are not claimed.'
+      },
+      '../../assets/documentaries/riemann/evidence.svg': {
+        src: '../../assets/visual_pedagogy/batch3/riemann/evidence.svg',
+        alt: 'Four panels distinguish finite zero verification, partial critical-line results, heuristic evidence, and the universal Riemann hypothesis, which remains open.',
+        title: 'Evidence Does Not Remove the Infinite Quantifier',
+        note: 'Finite, partial, heuristic, and universal statements remain logically distinct; bounded evidence does not become a proof of RH.'
+      }
     }
   };
 
