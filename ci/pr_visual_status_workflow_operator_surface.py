@@ -117,13 +117,13 @@ def _optional_content_bytes(
 def _branch_tip(client: Client, repo: str, branch: str) -> str | None:
     try:
         value = client.get(
-            f"/repos/{repo}/branches/{urllib.parse.quote(branch, safe='')}"
+            f"/repos/{repo}/git/ref/heads/{urllib.parse.quote(branch, safe='')}"
         )
     except AutonomyError as exc:
         if " 404 " in str(exc):
             return None
         raise
-    sha = str((value or {}).get("commit", {}).get("sha") or "")
+    sha = str((value or {}).get("object", {}).get("sha") or "")
     if not SHA_RE.fullmatch(sha):
         raise OperatorSurfaceError(f"branch {branch} has invalid tip")
     return sha
