@@ -91,7 +91,7 @@ class AdministrativeReceiptRepair476Tests(unittest.TestCase):
             normalized["merge_commit"],
         )
         self.assertEqual(
-            "HUMAN_STEWARD_AUTHORIZED_EXACT_HEAD_PROTECTED_MERGE",
+            "AUTHORIZE_EXACT_HEAD_PROTECTED_MERGE__NO_OTHER_AUTHORITY",
             normalized["disposition"],
         )
 

@@ -135,7 +135,7 @@ def normalize_repaired_bootstrap_receipt_476(
     require(receipt.get("pull_request") == pull.get("number") == 476, "administrative-review PR drift")
     require(receipt.get("reviewed_head") == pull.get("head") == reviewed_head, "administrative-review exact head drift")
     require(receipt.get("merge_commit") == repair.get("merge", {}).get("commit") == merge_commit, "administrative-review merge commit drift")
-    disposition = "HUMAN_STEWARD_AUTHORIZED_EXACT_HEAD_PROTECTED_MERGE"
+    disposition = "AUTHORIZE_EXACT_HEAD_PROTECTED_MERGE__NO_OTHER_AUTHORITY"
     require(receipt.get("disposition") == pull.get("disposition", {}).get("token") == disposition, "administrative-review disposition drift")
 
     require(receipt.get("merge_parents") == repair.get("merge", {}).get("parents") == expected_parents, "administrative-review merge parent drift")
