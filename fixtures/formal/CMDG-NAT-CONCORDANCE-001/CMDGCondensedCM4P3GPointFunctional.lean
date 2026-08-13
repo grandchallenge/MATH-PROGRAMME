@@ -1,5 +1,5 @@
 import CMDGCondensedCM4P3G
-import CMDGCondensedCM4P3GBasisBooleanPairingR
+import CMDGCondensedCM4P3GFiniteBooleanMeasure
 
 /-!
 # CMDG CM4-P3-G point-functional bridge
