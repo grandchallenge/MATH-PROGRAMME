@@ -40,13 +40,22 @@ class AdministrativeReceiptRepair476Tests(unittest.TestCase):
         cls.config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
         cls.repair = json.loads(REPAIR_PATH.read_text(encoding="utf-8"))
         cls.schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
-        cls.head = subprocess.run(
+        protected = subprocess.run(
             ["git", "rev-parse", "origin/main"],
             cwd=ROOT,
-            check=True,
+            check=False,
             text=True,
             capture_output=True,
-        ).stdout.strip()
+        )
+        if protected.returncode != 0:
+            protected = subprocess.run(
+                ["git", "rev-parse", "HEAD^1"],
+                cwd=ROOT,
+                check=True,
+                text=True,
+                capture_output=True,
+            )
+        cls.head = protected.stdout.strip()
 
     def test_repair_record_matches_closed_schema(self) -> None:
         errors = list(
