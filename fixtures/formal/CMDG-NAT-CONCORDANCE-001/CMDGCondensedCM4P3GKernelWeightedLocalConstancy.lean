@@ -167,7 +167,6 @@ theorem basisBooleanPairingR_fiber_sum
               intro p _
               by_cases hpq : finiteQuotientTransition X f p = q
               · rw [if_pos hpq, if_pos hpq]
-                rfl
               · rw [if_neg hpq, if_neg hpq, map_zero]
     _ = basisBooleanPairingR.{u, u, u, u} X (finiteDeltaPullbackR X k q) := by
       rw [finiteDeltaPullbackR_fiber_sum X f q]
