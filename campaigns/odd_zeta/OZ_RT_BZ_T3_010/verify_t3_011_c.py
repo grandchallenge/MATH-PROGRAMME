@@ -62,16 +62,10 @@ def assert_direct_authority_independence(source_text: str | None = None) -> dict
     if not direct_functions:
         raise AssertionError("T3-011-C direct authority functions absent")
     banned = {
-        "b.primitive_shift_atom",
-        "b.specialize_poly",
-        "b.response_vector",
-        "p.lifted_delta_monomial",
-        "p.lifted_global_column",
-        "va.lifted_delta",
-        "va.lifted_global_column",
-        "vb.delta_atom",
-        "vb.sp",
-        "vb.response",
+        "b.primitive_shift_atom", "b.specialize_poly", "b.response_vector",
+        "p.lifted_delta_monomial", "p.lifted_global_column",
+        "va.lifted_delta", "va.lifted_global_column",
+        "vb.delta_atom", "vb.sp", "vb.response",
     }
 
     def dotted(node):
@@ -124,24 +118,23 @@ def coordinate_factor(channel):
     raise ValueError(channel)
 
 
-def shifted_coordinate_factor(channel):
-    step = CHANNEL_INCREMENT[channel]
-    if channel in ("n1", "n2", "n3"):
-        return (1, 0, 0, step)
-    if channel == "k1":
-        return (0, 1, 0, step)
-    if channel == "l1":
-        return (0, 0, 1, step)
-    raise ValueError(channel)
+def verifier_coordinate_rat(channel):
+    return a.rc.r_factor(coordinate_factor(channel), exponent=1)
+
+
+def verifier_shifted_coordinate_rat(channel):
+    return a.rc.r_add(verifier_coordinate_rat(channel), a.rc.r_const(CHANNEL_INCREMENT[channel]))
 
 
 def verifier_fd_poly(mon, channel):
     shift = a.pcl.SHIFTS[channel]
     original = verifier_original_monomial(mon)
     shifted = verifier_shifted_monomial(mon, shift)
+    x0 = verifier_coordinate_rat(channel)
+    x1 = verifier_shifted_coordinate_rat(channel)
     return a.rc.p_add(
-        a.rc.p_scale(shifted, a.rc.r_factor(shifted_coordinate_factor(channel), exponent=1)),
-        a.rc.p_scale(original, a.rc.r_factor(coordinate_factor(channel), exponent=1, scale=-1)),
+        a.rc.p_scale(shifted, x1),
+        a.rc.p_scale(original, a.rc.r_scale(x0, -1)),
     )
 
 
@@ -151,7 +144,7 @@ def verifier_product_rule_poly(mon, channel):
     shifted = verifier_shifted_monomial(mon, shift)
     delta = a.rc.p_add(shifted, a.rc.p_scale(original, -1))
     return a.rc.p_add(
-        a.rc.p_scale(delta, a.rc.r_factor(coordinate_factor(channel), exponent=1)),
+        a.rc.p_scale(delta, verifier_coordinate_rat(channel)),
         a.rc.p_scale(shifted, Q(CHANNEL_INCREMENT[channel])),
     )
 
@@ -323,9 +316,7 @@ def verify(result: dict) -> dict:
             raise AssertionError(f"T3-011-C reported candidate count drift: {channel}")
         if rec.get("candidate_order_sha256") != sha([unknown_json(uid) for uid in candidates]):
             raise AssertionError(f"T3-011-C candidate order digest drift: {channel}")
-        if rec.get("active_cell_count") != len(active):
-            raise AssertionError(f"T3-011-C active-cell count drift: {channel}")
-        if rec.get("active_cell_sha256") != sha(sorted(active)):
+        if rec.get("active_cell_count") != len(active) or rec.get("active_cell_sha256") != sha(sorted(active)):
             raise AssertionError(f"T3-011-C active-cell namespace drift: {channel}")
         rows = rec.get("candidates", [])
         if len(rows) != len(candidates):
@@ -359,9 +350,7 @@ def verify(result: dict) -> dict:
     if len(mirror_rows) != 110:
         raise AssertionError("T3-011-C l1 mirror ledger cardinality drift")
     lactive = independent_active_namespace("l1", strata, specialized, supports)
-    if mirror.get("active_cell_count") != len(lactive):
-        raise AssertionError("T3-011-C l1 active-cell count drift")
-    if mirror.get("active_cell_sha256") != sha(sorted(lactive)):
+    if mirror.get("active_cell_count") != len(lactive) or mirror.get("active_cell_sha256") != sha(sorted(lactive)):
         raise AssertionError("T3-011-C l1 active-cell namespace drift")
     mirror_mismatch = 0
     for row, kuid in zip(mirror_rows, k1_candidates):
