@@ -18,7 +18,7 @@ abbrev IntegralBasisIndex (X : Profinite.{u}) :=
 
 /-- A concrete basis supplied by the pinned Nöbeling freeness instance. -/
 noncomputable def integralBasis (X : Profinite.{u}) :
-    Basis (IntegralBasisIndex X) ℤ (LocallyConstant X ℤ) :=
+    Module.Basis (IntegralBasisIndex X) ℤ (LocallyConstant X ℤ) :=
   Module.Free.chooseBasis ℤ (LocallyConstant X ℤ)
 
 /-- Reconstruct a locally constant integral function from a finite basis-coordinate vector. -/
