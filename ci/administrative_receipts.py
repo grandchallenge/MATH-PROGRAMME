@@ -57,6 +57,139 @@ def normalize_legacy_bootstrap_receipt(
     return dict(receipt)
 
 
+def normalize_repaired_bootstrap_receipt_476(
+    root: Path,
+    receipt: dict[str, Any],
+    head_sha: str,
+    git_runner: GitRunner,
+) -> dict[str, Any]:
+    repair_id = "MP-ADMIN-RECEIPT-REPAIR-476-001"
+    repair_record_path = (
+        "governance/administrative_receipt_repairs/"
+        "MP-ADMIN-RECEIPT-REPAIR-476-001.json"
+    )
+    record_path = (
+        "governance/administrative_reviews/"
+        "MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-08-13-001.json"
+    )
+    reviewed_head = "1eb3c2cf8375beecc6d84d788ac891402b33757f"
+    merge_commit = "7c84b9bf19a1f3e2407860d82965e98fc49512db"
+    expected_parents = [
+        "cd0d91b4c1b9e3c3ff2eced0c79c104d97af66e2",
+        reviewed_head,
+    ]
+    expected_message = (
+        "Merge PR #476: MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-08-13-001\n\n"
+        "Exact-head protected administrative merge.\n\n"
+        "Candidate head: 1eb3c2cf8375beecc6d84d788ac891402b33757f\n"
+        "Protected base: cd0d91b4c1b9e3c3ff2eced0c79c104d97af66e2\n"
+        "Independent approval: jimsteeg review 4923702298\n"
+        "Human Steward disposition: issue comment 5276363695\n\n"
+        "No mathematical, certification, activation, external-claim, direct-push, "
+        "or bypass authority is asserted."
+    )
+
+    require(receipt.get("repair_id") == repair_id, "administrative-review repair identity drift")
+    require(
+        receipt.get("repair_record_path") == repair_record_path,
+        "administrative-review repair record path drift",
+    )
+    require(".." not in repair_record_path and not repair_record_path.startswith("/"), "unsafe repair record path")
+    repair_path = root / repair_record_path
+    require(repair_path.is_file(), "administrative-review repair record missing")
+    repair = aa.load_json(repair_path)
+
+    require(repair.get("schema_version") == "1.0.0", "administrative-review repair schema drift")
+    require(repair.get("repair_id") == repair_id, "administrative-review repair record identity mismatch")
+    require(repair.get("control_id") == "MP-ADMIN-MAINT-001", "administrative-review repair control drift")
+    require(repair.get("repository") == "grandchallenge/MATH-PROGRAMME", "administrative-review repair repository drift")
+    require(repair.get("source_issue") == 475, "administrative-review repair source issue drift")
+    require(
+        repair.get("occurrence_key") == "administrative_review:2026-08-13T01:21:00Z",
+        "administrative-review repair occurrence drift",
+    )
+
+    procedure_id = str(receipt.get("procedure_id", ""))
+    scheduled_due_at = aa.iso_z(aa.parse_datetime(str(receipt.get("scheduled_due_at", ""))))
+    require(procedure_id == repair.get("procedure_id") == "administrative_review", "administrative-review repair procedure drift")
+    require(
+        scheduled_due_at
+        == aa.iso_z(aa.parse_datetime(str(repair.get("scheduled_due_at", ""))))
+        == "2026-08-13T01:21:00Z",
+        "administrative-review repair scheduled locus drift",
+    )
+
+    record = repair.get("record", {})
+    require(receipt.get("record_path") == record.get("path") == record_path, "administrative-review record path drift")
+    path = root / record_path
+    require(path.is_file(), "administrative-review protected record missing")
+    require(record.get("record_id") == "MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-08-13-001", "administrative-review record identity drift")
+    require(record.get("status") == "COMPLETE_AUTONOMOUS", "administrative-review record status drift")
+    expected_blob = "608c973a61312a4fe4ef8b269c2788d27c650e1f"
+    require(receipt.get("record_git_blob") == record.get("git_blob") == expected_blob, "administrative-review immutable record blob drift")
+    require(git_blob_sha(path) == expected_blob, "administrative-review immutable record content drift")
+    require(receipt.get("record_sha256") == DERIVE_RECORD_SHA256, "administrative-review repair must derive SHA-256")
+    record_sha256 = hashlib.sha256(path.read_bytes()).hexdigest()
+
+    pull = repair.get("pull_request", {})
+    require(receipt.get("pull_request") == pull.get("number") == 476, "administrative-review PR drift")
+    require(receipt.get("reviewed_head") == pull.get("head") == reviewed_head, "administrative-review exact head drift")
+    require(receipt.get("merge_commit") == repair.get("merge", {}).get("commit") == merge_commit, "administrative-review merge commit drift")
+    disposition = "AUTHORIZE_EXACT_HEAD_PROTECTED_MERGE__NO_OTHER_AUTHORITY"
+    require(receipt.get("disposition") == pull.get("disposition", {}).get("token") == disposition, "administrative-review disposition drift")
+
+    require(receipt.get("merge_parents") == repair.get("merge", {}).get("parents") == expected_parents, "administrative-review merge parent drift")
+    observed_parents = git_runner(["show", "-s", "--format=%P", merge_commit]).split()
+    require(observed_parents == expected_parents, "administrative-review merge parent relationship invalid")
+    introduction = git_runner(["log", "--first-parent", "--diff-filter=A", "--format=%H", "-1", head_sha, "--", record_path])
+    require(introduction == merge_commit, "administrative-review record introduction drift")
+    require(protected_ancestor(root, merge_commit, head_sha), "administrative-review merge is not protected-ancestral")
+
+    observed_message = git_runner(["show", "-s", "--format=%B", merge_commit]).strip()
+    require(observed_message == repair.get("merge", {}).get("message") == expected_message, "administrative-review malformed message drift")
+    require(repair.get("merge", {}).get("message_receipt_parseable") is False, "administrative-review malformed classification drift")
+    require(re.search(r"Merge PR #476", observed_message) is not None, "administrative-review PR marker missing")
+    require(re.search(r"exact head [0-9a-f]{40}", observed_message) is None, "administrative-review message unexpectedly parseable")
+    require(re.search(r"Disposition:\s*[A-Z0-9_]+", observed_message) is None, "administrative-review message unexpectedly has disposition token")
+
+    approval = pull.get("approval", {})
+    disposition_record = pull.get("disposition", {})
+    require(approval.get("review_id") == receipt.get("review_id") == 4923702298, "administrative-review approval drift")
+    require(approval.get("reviewer") == "jimsteeg", "administrative-review reviewer drift")
+    require(approval.get("state") == receipt.get("review_state") == "APPROVED", "administrative-review review state drift")
+    require(approval.get("exact_head") == reviewed_head, "administrative-review approval head drift")
+    require(disposition_record.get("comment_id") == receipt.get("disposition_comment_id") == 5276363695, "administrative-review disposition comment drift")
+    require(disposition_record.get("actor") == "fyremael", "administrative-review disposition actor drift")
+    require(disposition_record.get("exact_head") == reviewed_head, "administrative-review disposition head drift")
+
+    review_at = aa.parse_datetime(str(approval.get("submitted_at", "")))
+    disposition_at = aa.parse_datetime(str(disposition_record.get("posted_at", "")))
+    merge_at = aa.parse_datetime(str(repair.get("merge", {}).get("committed_at", "")))
+    require(aa.iso_z(review_at) == aa.iso_z(aa.parse_datetime(str(receipt.get("review_submitted_at", "")))), "administrative-review review timestamp drift")
+    require(aa.iso_z(disposition_at) == aa.iso_z(aa.parse_datetime(str(receipt.get("disposition_posted_at", "")))), "administrative-review disposition timestamp drift")
+    require(aa.iso_z(merge_at) == aa.iso_z(aa.parse_datetime(str(receipt.get("merge_committed_at", "")))), "administrative-review merge timestamp drift")
+    require(review_at < disposition_at < merge_at, "administrative-review gate chronology invalid")
+    observed_committed_at = aa.parse_datetime(git_runner(["show", "-s", "--format=%cI", merge_commit]))
+    require(aa.iso_z(observed_committed_at) == aa.iso_z(merge_at), "administrative-review merge timestamp mismatch")
+
+    require(repair.get("bootstrap", {}).get("record_sha256_mode") == DERIVE_RECORD_SHA256, "administrative-review bootstrap mode drift")
+    require(repair.get("bootstrap", {}).get("receipt_state") == "PROTECTED_COMPLETE", "administrative-review bootstrap state drift")
+    require(repair.get("authority_boundary", {}).get("protected_main_rewritten") is False, "administrative-review repair rewrites history")
+    require(all(value is False for value in repair.get("claim_boundaries", {}).values()), "administrative-review repair inflates claims")
+
+    return {
+        "procedure_id": procedure_id,
+        "scheduled_due_at": scheduled_due_at,
+        "record_path": record_path,
+        "record_sha256": record_sha256,
+        "merge_commit": merge_commit,
+        "reviewed_head": reviewed_head,
+        "pull_request": 476,
+        "disposition": disposition,
+        "receipt_state": "PROTECTED_COMPLETE",
+    }
+
+
 def normalize_repaired_bootstrap_receipt(
     root: Path,
     receipt: dict[str, Any],
@@ -64,6 +197,13 @@ def normalize_repaired_bootstrap_receipt(
     git_runner: GitRunner,
 ) -> dict[str, Any]:
     repair_id = str(receipt.get("repair_id", ""))
+    if repair_id == "MP-ADMIN-RECEIPT-REPAIR-476-001":
+        return normalize_repaired_bootstrap_receipt_476(
+            root,
+            receipt,
+            head_sha,
+            git_runner,
+        )
     require(repair_id == "MP-ADMIN-RECEIPT-REPAIR-244-001", "unsupported bootstrap repair identity")
 
     repair_record_path = str(receipt.get("repair_record_path", ""))
