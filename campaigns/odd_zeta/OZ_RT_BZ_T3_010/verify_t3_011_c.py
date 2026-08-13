@@ -26,6 +26,7 @@ vb = predecessor_verifier.vb
 STAGE = "T3_011_C_DIRECT_DISCRETE_PRODUCT_RULE_RESPONSE_GENERATOR_SEMANTICS_AUDIT"
 AUDIT_ID = "DIRECT_DISCRETE_PRODUCT_RULE_RESPONSE_GENERATOR_AUDIT_001"
 DIRECT_AUTHORITY_ID = "EXPLICIT_PRIMITIVE_SHIFT_RAW_FINITE_DIFFERENCE_V1"
+SEMANTIC_NORMAL_FORM = "COMMON_DENOMINATOR_EXPANDED_Q_N_K_L_NUMERATOR_V1"
 B_REVIEWED_HEAD = "7876a44286f3c958bf03ce120117c2cd689b2379"
 B_MERGE_COMMIT = "f8dc03a4e546a47b7a2b6d77a96d689f47e4d9a3"
 B_REQUIRED_TERMINAL = "BOUNDED_SINGLE_CHANNEL_LINEAR_NONZERO_RESPONSE_LIFT_CLASS_EXHAUSTED"
@@ -36,6 +37,7 @@ B_BLOBS = {
 }
 EXPECTED_COUNTS = {"n1": 67, "n2": 67, "n3": 67, "k1": 110}
 CHANNEL_INCREMENT = {"n1": 1, "n2": 2, "n3": 3, "k1": 1, "l1": 1}
+Poly3 = dict[tuple[int, int, int], Q]
 
 
 def sha(obj: object) -> str:
@@ -46,7 +48,7 @@ def unknown_json(uid) -> list:
     return [uid[0], list(uid[1])]
 
 
-def vector_digest(vec: dict) -> str:
+def representation_digest(vec: dict) -> str:
     return vc.global_vector_digest(vec)
 
 
@@ -181,29 +183,148 @@ def independent_active_namespace(channel, strata, specialized, supports):
     return active
 
 
+# Independent implementation of the exact rational-function normal form used
+# for comparison.  It does not import the C producer or sample numeric points.
+def _p3_add(x: Poly3, y: Poly3) -> Poly3:
+    out = dict(x)
+    for m, q in y.items():
+        z = out.get(m, Q(0)) + q
+        if z:
+            out[m] = z
+        elif m in out:
+            del out[m]
+    return out
+
+
+def _p3_mul(x: Poly3, y: Poly3) -> Poly3:
+    out: Poly3 = {}
+    for (an, ak, al), qx in x.items():
+        for (bn, bk, bl), qy in y.items():
+            m = (an + bn, ak + bk, al + bl)
+            z = out.get(m, Q(0)) + qx * qy
+            if z:
+                out[m] = z
+            elif m in out:
+                del out[m]
+    return out
+
+
+def _linear_poly(factor) -> Poly3:
+    an, ak, al, d = factor
+    out: Poly3 = {}
+    for mon, coeff in (((1, 0, 0), an), ((0, 1, 0), ak), ((0, 0, 1), al), ((0, 0, 0), d)):
+        if coeff:
+            out[mon] = Q(coeff)
+    return out
+
+
+def _p3_pow_linear(factor, exponent: int) -> Poly3:
+    if exponent < 0:
+        raise AssertionError("negative exponent entered verifier polynomial numerator")
+    out: Poly3 = {(0, 0, 0): Q(1)}
+    base = _linear_poly(factor)
+    for _ in range(exponent):
+        out = _p3_mul(out, base)
+    return out
+
+
+def _joint_denominator(rats: list[dict]) -> dict:
+    den = {}
+    for rat in rats:
+        for sig in rat:
+            for factor, exponent in sig:
+                if exponent < 0:
+                    den[factor] = max(den.get(factor, 0), -exponent)
+    return den
+
+
+def _rat_common_numerator(rat: dict, den: dict) -> Poly3:
+    out: Poly3 = {}
+    for sig, coeff in rat.items():
+        exp = dict(sig)
+        term: Poly3 = {(0, 0, 0): Q(coeff)}
+        for factor in sorted(set(den) | set(exp)):
+            power = exp.get(factor, 0) + den.get(factor, 0)
+            if power < 0:
+                raise AssertionError(f"verifier common denominator underflow at {factor}: {power}")
+            if power:
+                term = _p3_mul(term, _p3_pow_linear(factor, power))
+        out = _p3_add(out, term)
+    return out
+
+
+def _poly3_rows(poly: Poly3) -> list[list[int]]:
+    return [[an, ak, al, q.numerator, q.denominator] for (an, ak, al), q in sorted(poly.items())]
+
+
+def _den_rows(den: dict) -> list[list]:
+    return [[list(f), e] for f, e in sorted(den.items()) if e]
+
+
+def _vector_rat_map(vec: dict) -> dict:
+    out = {}
+    for (cell_id, coord), q in vec.items():
+        scalar, mon, sig = coord
+        base = (cell_id, scalar, mon)
+        rat = out.setdefault(base, {})
+        z = rat.get(sig, Q(0)) + q
+        if z:
+            rat[sig] = z
+        elif sig in rat:
+            del rat[sig]
+    return out
+
+
+def semantic_bundle(vectors: list[dict]) -> dict:
+    maps = [_vector_rat_map(v) for v in vectors]
+    bases = sorted(set().union(*(set(m) for m in maps)), key=repr)
+    rows = [[] for _ in vectors]
+    mismatches = [[] for _ in vectors]
+    for base in bases:
+        rats = [m.get(base, {}) for m in maps]
+        den = _joint_denominator(rats)
+        nums = [_rat_common_numerator(rat, den) for rat in rats]
+        cell_id, scalar, mon = base
+        drows = _den_rows(den)
+        for i, num in enumerate(nums):
+            rows[i].append([cell_id, scalar, list(mon), drows, _poly3_rows(num)])
+            if i and num != nums[0]:
+                mismatches[i].append(repr(base))
+    return {
+        "normal_form": SEMANTIC_NORMAL_FORM,
+        "semantic_sha256": [sha(r) for r in rows],
+        "equals_direct": [not x for x in mismatches],
+        "mismatch_base_coordinates": mismatches,
+        "base_coordinate_count": len(bases),
+    }
+
+
 def verify_candidate(row, channel, uid, strata, active):
     if row.get("candidate") != unknown_json(uid):
         raise AssertionError(f"T3-011-C candidate order drift: {channel}")
     if row.get("coordinate_increment") != CHANNEL_INCREMENT[channel]:
         raise AssertionError(f"T3-011-C per-candidate increment drift: {channel}:{uid}")
+    if row.get("semantic_normal_form") != SEMANTIC_NORMAL_FORM:
+        raise AssertionError(f"T3-011-C semantic normal form drift: {channel}:{uid}")
     scalar, mon = uid
     fd = verifier_global_column(verifier_fd_poly(mon, channel), scalar, channel, strata, active)
     product = verifier_global_column(verifier_product_rule_poly(mon, channel), scalar, channel, strata, active)
     producer = p.lifted_global_column(channel, uid, strata, active)
     old_verifier = va.lifted_global_column(channel, uid, strata, active)
-    values = {
-        "direct_finite_difference_sha256": vector_digest(fd),
-        "direct_product_rule_sha256": vector_digest(product),
-        "t3_011_b_producer_sha256": vector_digest(producer),
-        "t3_011_b_verifier_sha256": vector_digest(old_verifier),
-    }
-    for key, want in values.items():
-        if row.get(key) != want:
-            raise AssertionError(f"T3-011-C response digest drift: {channel}:{uid}:{key}")
+    vectors = [fd, product, producer, old_verifier]
+    sem = semantic_bundle(vectors)
+    labels = ["direct_finite_difference", "direct_product_rule", "t3_011_b_producer", "t3_011_b_verifier"]
+    for i, label in enumerate(labels):
+        if row.get(f"{label}_sha256") != sem["semantic_sha256"][i]:
+            raise AssertionError(f"T3-011-C semantic response digest drift: {channel}:{uid}:{label}")
+        if row.get(f"{label}_representation_sha256") != representation_digest(vectors[i]):
+            raise AssertionError(f"T3-011-C representation digest drift: {channel}:{uid}:{label}")
+    if row.get("semantic_base_coordinate_count") != sem["base_coordinate_count"]:
+        raise AssertionError(f"T3-011-C semantic coordinate count drift: {channel}:{uid}")
     flags = {
-        "direct_finite_difference_equals_product_rule": fd == product,
-        "direct_equals_t3_011_b_producer": fd == producer,
-        "direct_equals_t3_011_b_verifier": fd == old_verifier,
+        "direct_finite_difference_equals_product_rule": sem["equals_direct"][1],
+        "direct_equals_t3_011_b_producer": sem["equals_direct"][2],
+        "direct_equals_t3_011_b_verifier": sem["equals_direct"][3],
     }
     for key, want in flags.items():
         if row.get(key) != want:
@@ -233,30 +354,28 @@ def verify(result: dict) -> dict:
     contract = json.loads((HERE / "T3_011_C_CONTRACT.json").read_text())
     if contract["stage"] != STAGE or contract["audit_class"]["id"] != AUDIT_ID:
         raise AssertionError("T3-011-C contract identity drift")
-    if contract["predecessor"]["reviewed_head"] != B_REVIEWED_HEAD:
-        raise AssertionError("T3-011-C contract reviewed head drift")
-    if contract["predecessor"]["merge_commit"] != B_MERGE_COMMIT:
-        raise AssertionError("T3-011-C contract merge drift")
+    if contract["predecessor"]["reviewed_head"] != B_REVIEWED_HEAD or contract["predecessor"]["merge_commit"] != B_MERGE_COMMIT:
+        raise AssertionError("T3-011-C contract predecessor drift")
     if contract["candidate_bank"]["expected_candidate_counts"] != EXPECTED_COUNTS:
         raise AssertionError("T3-011-C contract candidate counts drift")
-    if contract["candidate_bank"]["expected_independent_trials"] != 311:
-        raise AssertionError("T3-011-C contract trial count drift")
-    if contract["candidate_bank"]["expected_mirror_l1_checks"] != 110:
-        raise AssertionError("T3-011-C contract mirror count drift")
+    if contract["candidate_bank"]["expected_independent_trials"] != 311 or contract["candidate_bank"]["expected_mirror_l1_checks"] != 110:
+        raise AssertionError("T3-011-C contract audit cardinality drift")
     if contract["direct_response"]["channel_coordinate_increment"] != CHANNEL_INCREMENT:
         raise AssertionError("T3-011-C contract coordinate increments drift")
     if contract["direct_response"]["direct_authority_id"] != DIRECT_AUTHORITY_ID:
         raise AssertionError("T3-011-C direct authority identity drift")
+    if contract["direct_response"].get("semantic_normal_form") != SEMANTIC_NORMAL_FORM:
+        raise AssertionError("T3-011-C contract semantic normal form drift")
 
     direct_meta = result.get("direct_reconstruction", {})
     if direct_meta.get("authority_id") != DIRECT_AUTHORITY_ID:
         raise AssertionError("T3-011-C result direct authority drift")
     if direct_meta.get("channel_coordinate_increment") != CHANNEL_INCREMENT:
         raise AssertionError("T3-011-C result increment drift")
-    if direct_meta.get("uses_t3_011_b_generator_as_direct_authority"):
-        raise AssertionError("T3-011-C producer generator imported as direct authority")
-    if direct_meta.get("uses_t3_011_b_verifier_generator_as_direct_authority"):
-        raise AssertionError("T3-011-C verifier generator imported as direct authority")
+    if direct_meta.get("semantic_normal_form") != SEMANTIC_NORMAL_FORM or direct_meta.get("finite_sampling_used") is not False:
+        raise AssertionError("T3-011-C result exact semantic normal form drift")
+    if direct_meta.get("uses_t3_011_b_generator_as_direct_authority") or direct_meta.get("uses_t3_011_b_verifier_generator_as_direct_authority"):
+        raise AssertionError("T3-011-C predecessor response generator imported as direct authority")
 
     for key in (
         "new_candidates_authorized", "pairs_or_two_lifts_authorized",
@@ -268,10 +387,8 @@ def verify(result: dict) -> dict:
     ):
         if result.get(key) is not False:
             raise AssertionError(f"T3-011-C claim firewall drift: {key}")
-    if result.get("proof_effect") != "NONE" or result.get("promotion_effect") != "NONE":
-        raise AssertionError("T3-011-C proof/promotion effect inflation")
-    if result.get("t3_status") != "OPEN_WITH_CHARACTERIZED_BLOCKER":
-        raise AssertionError("T3-011-C T3 status inflation")
+    if result.get("proof_effect") != "NONE" or result.get("promotion_effect") != "NONE" or result.get("t3_status") != "OPEN_WITH_CHARACTERIZED_BLOCKER":
+        raise AssertionError("T3-011-C claim status inflation")
 
     source_independence = assert_direct_authority_independence()
     predecessor_producer.assert_a_locks()
@@ -284,8 +401,7 @@ def verify(result: dict) -> dict:
         raise AssertionError("T3-009 layer drift in C verifier")
     primitive_full = a.primitive_oriented_layer(layer)
     strata = a.shell_strata()
-    strata_digest = sha([[st["id"], st["k_offset"], st["l_offset"]] for st in strata])
-    if direct_meta.get("strata_semantics_sha256") != strata_digest:
+    if direct_meta.get("strata_semantics_sha256") != sha([[st["id"], st["k_offset"], st["l_offset"]] for st in strata]):
         raise AssertionError("T3-011-C shell/strata semantics drift")
     specialized = {
         st["id"]: a.primitive_oriented_layer(a.specialize_layer(layer, st["k_offset"], st["l_offset"]))
@@ -321,31 +437,22 @@ def verify(result: dict) -> dict:
         rows = rec.get("candidates", [])
         if len(rows) != len(candidates):
             raise AssertionError(f"T3-011-C candidate ledger count drift: {channel}")
-        local_mismatch = sum(
-            not verify_candidate(row, channel, uid, strata, active)
-            for row, uid in zip(rows, candidates)
-        )
-        if rec.get("mismatch_count") != local_mismatch:
-            raise AssertionError(f"T3-011-C mismatch count drift: {channel}")
-        if rec.get("all_candidates_concordant") != (local_mismatch == 0):
-            raise AssertionError(f"T3-011-C channel concordance drift: {channel}")
+        local_mismatch = sum(not verify_candidate(row, channel, uid, strata, active) for row, uid in zip(rows, candidates))
+        if rec.get("mismatch_count") != local_mismatch or rec.get("all_candidates_concordant") != (local_mismatch == 0):
+            raise AssertionError(f"T3-011-C channel mismatch ledger drift: {channel}")
         total += len(candidates)
         mismatches += local_mismatch
         if channel == "k1":
             k1_candidates = candidates
 
-    if total != 311 or result.get("independent_candidate_count") != 311:
-        raise AssertionError("T3-011-C aggregate independent count drift")
-    if result.get("independent_mismatch_count") != mismatches:
-        raise AssertionError("T3-011-C aggregate mismatch count drift")
+    if total != 311 or result.get("independent_candidate_count") != 311 or result.get("independent_mismatch_count") != mismatches:
+        raise AssertionError("T3-011-C aggregate independent ledger drift")
     if k1_candidates is None:
         raise AssertionError("T3-011-C k1 candidate bank absent")
 
     mirror = result.get("mirror_l1_audit", {})
-    if mirror.get("candidate_count") != 110:
-        raise AssertionError("T3-011-C l1 mirror count drift")
-    if mirror.get("source_k1_order_sha256") != sha([unknown_json(uid) for uid in k1_candidates]):
-        raise AssertionError("T3-011-C k1 mirror source order drift")
+    if mirror.get("candidate_count") != 110 or mirror.get("source_k1_order_sha256") != sha([unknown_json(uid) for uid in k1_candidates]):
+        raise AssertionError("T3-011-C l1 mirror source drift")
     mirror_rows = mirror.get("candidates", [])
     if len(mirror_rows) != 110:
         raise AssertionError("T3-011-C l1 mirror ledger cardinality drift")
@@ -359,10 +466,8 @@ def verify(result: dict) -> dict:
         luid = vc.mirror_unknown_k_to_l(kuid)
         if not verify_candidate(row, "l1", luid, strata, lactive):
             mirror_mismatch += 1
-    if mirror.get("mismatch_count") != mirror_mismatch:
-        raise AssertionError("T3-011-C l1 mismatch count drift")
-    if mirror.get("all_candidates_concordant") != (mirror_mismatch == 0):
-        raise AssertionError("T3-011-C l1 concordance drift")
+    if mirror.get("mismatch_count") != mirror_mismatch or mirror.get("all_candidates_concordant") != (mirror_mismatch == 0):
+        raise AssertionError("T3-011-C l1 mismatch ledger drift")
 
     all_concordant = mismatches == 0 and mirror_mismatch == 0
     if result.get("all_frozen_responses_concordant") != all_concordant:
@@ -379,6 +484,8 @@ def verify(result: dict) -> dict:
         "independent_candidate_count": total,
         "mirror_l1_check_count": len(mirror_rows),
         "mismatch_count": mismatches + mirror_mismatch,
+        "semantic_normal_form": SEMANTIC_NORMAL_FORM,
+        "finite_sampling_used": False,
         "terminal": expected_terminal,
         "direct_authority_source_independence": source_independence,
         "audit_producer_imported_as_authority": False,
