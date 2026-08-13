@@ -166,8 +166,8 @@ theorem basisBooleanPairingR_fiber_sum
               apply Finset.sum_congr rfl
               intro p _
               by_cases hpq : finiteQuotientTransition X f p = q
-              · simp [hpq]
-              · simp [hpq]
+              · rw [if_pos hpq, if_pos hpq]
+              · rw [if_neg hpq, if_neg hpq, map_zero]
     _ = basisBooleanPairingR X (finiteDeltaPullbackR X k q) := by
       rw [finiteDeltaPullbackR_fiber_sum X f q]
 
@@ -188,7 +188,7 @@ theorem finiteBooleanCoefficient_fiber_sum
         basisBooleanPairingR X (finiteDeltaPullbackR X j p)
       else 0) =
       basisBooleanPairingR X (finiteDeltaPullbackR X k q)
-  exact basisBooleanPairingR_fiber_sum X f q
+  exact basisBooleanPairingR_fiber_sum.{u, u, u, u} X f q
 
 #check finiteQuotientTransition
 #check finiteQuotientTransition_proj
