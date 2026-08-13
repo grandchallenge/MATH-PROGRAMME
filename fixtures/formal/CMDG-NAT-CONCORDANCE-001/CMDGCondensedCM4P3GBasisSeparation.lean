@@ -58,16 +58,12 @@ theorem intFinsupp_sum_single_apply_mem
     {ι : Type*} [DecidableEq ι]
     (I : Finset ι) (a : ι → ℤ) {i : ι} (hi : i ∈ I) :
     (∑ j ∈ I, Finsupp.single j (a j) : ι →₀ ℤ) i = a i := by
-  rw [Finset.sum_apply]
-  calc
-    ∑ j ∈ I, (Finsupp.single j (a j) : ι →₀ ℤ) i =
-        (Finsupp.single i (a i) : ι →₀ ℤ) i := by
-      apply Finset.sum_eq_single i
-      · intro j hj hji
-        exact Finsupp.single_eq_of_ne (Ne.symm hji)
-      · intro hnot
-        exact (hnot hi).elim
-    _ = a i := Finsupp.single_eq_same
+  change (∑ j ∈ I, (Finsupp.single j (a j) : ι →₀ ℤ) i) = a i
+  apply Finset.sum_eq_single i
+  · intro j hj hji
+    exact Finsupp.single_eq_of_ne (Ne.symm hji)
+  · intro hnot
+    exact (hnot hi).elim
 
 /-- Package the coordinate values of an additive functional on one finite index set as a
 finitely supported Nöbeling coefficient vector. -/
