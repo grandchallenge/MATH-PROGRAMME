@@ -246,7 +246,7 @@ noncomputable local instance stage22DiscreteQuotientDecidableEq
 quotient transition from stage 21. -/
 theorem fintypeDiagram_map_eq_finiteQuotientTransition
     (X : Profinite.{u}) {j k : DiscreteQuotient X} (f : j ⟶ k) (p : j) :
-    (X.fintypeDiagram.map f) p = finiteQuotientTransition X f p := by
+    (ConcreteCategory.hom (X.fintypeDiagram.map f)) p = finiteQuotientTransition X f p := by
   rfl
 
 /-- Pointwise action of the existing P2-E canonical coefficient-family pushforward: the target
@@ -262,7 +262,15 @@ theorem finiteCoefficientFamilyPushforwardMap_apply
       ∑ x : A.obj, if g x = y then a x else 0 := by
   classical
   unfold CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyPushforwardMap
-  rw [NatTrans.app_sum, ModuleCat.hom_sum]
+  rw [NatTrans.app_sum]
+  change
+    (ModuleCat.Hom.hom
+      (∑ x : A.obj,
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoordinateProjection A x) ≫
+          CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoordinateInclusion B (g x)).app S))
+        a y =
+      ∑ x : A.obj, if g x = y then a x else 0
+  rw [ModuleCat.hom_sum]
   let evalAtA :
       (↑((CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf A).obj S) →ₗ[
           R.{u}]
@@ -317,7 +325,7 @@ theorem finiteBooleanCoefficientFamily_pushforward
   rw [finiteCoefficientFamilyPushforwardMap_apply]
   change
     (∑ p : j,
-      if (X.fintypeDiagram.map f) p = q then
+      if (ConcreteCategory.hom (X.fintypeDiagram.map f)) p = q then
         finiteBooleanCoefficient X j p
       else 0) =
       finiteBooleanCoefficient X k q
