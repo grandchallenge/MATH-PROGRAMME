@@ -181,8 +181,11 @@ theorem locallyConstant_free_liftedInt (X : Profinite.{u}) :
       map_smul' := by
         intro r f
         ext x
-        exact e.map_mul r (f x) }
-  exact Module.Free.of_equiv E
+        rfl }
+  exact Module.Free.of_equiv
+    (R := ℤ) (R' := R)
+    (M := LocallyConstant X ℤ) (M' := LocallyConstant X R)
+    (σ := (e : ℤ →+* R)) (σ' := (e.symm : R →+* ℤ)) E
 
 /-- A locally constant map on a Boolean product is determined at the all-true point by its
 finite-coordinate truncations. -/
