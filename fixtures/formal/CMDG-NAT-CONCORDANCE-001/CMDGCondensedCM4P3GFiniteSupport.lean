@@ -78,6 +78,7 @@ theorem finiteTruncation_eq_sum {ι : Type*} [DecidableEq ι]
     finiteTruncation a I = ∑ i ∈ I, (a i) • intIndicator i := by
   induction I using Finset.induction_on with
   | empty =>
+      funext k
       simp [finiteTruncation]
   | @insert i I hi ih =>
       rw [finiteTruncation_insert a I i hi, ih]
@@ -140,15 +141,20 @@ theorem finite_coordinate_dependence_of_weighted_bool_locallyConstant
     intro J
     induction J using Finset.induction_on with
     | empty =>
-        simp [finiteTruncation]
+        have hz : finiteTruncation a ∅ = 0 := by
+          funext k
+          simp [finiteTruncation]
+        rw [hz, map_zero]
     | @insert i J hi ih =>
         rw [finiteTruncation_insert a J i hi, map_add, ih, add_zero]
         by_cases hiI : i ∈ I
         · have hai : a i = 0 := ha i hiI
-          simp [hai]
+          have hz : (a i) • intIndicator i = 0 := by
+            simp [hai]
+          rw [hz, map_zero]
         · calc
             L ((a i) • intIndicator i) = (a i) • L (intIndicator i) :=
-              map_zsmul L (intIndicator i) (a i)
+              AddMonoidHom.map_zsmul L (a i) (intIndicator i)
             _ = 0 := by simp [hI i hiI]
   obtain ⟨f, hf⟩ := hLC a
   have hpieces :
