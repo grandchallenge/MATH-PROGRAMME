@@ -72,7 +72,8 @@ jobs:
           C=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3C.lean
           D=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3D.lean
           G=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3G.lean
-          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$G"; then
+          H=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$G" "$H"; then
             echo "P3 fixtures must contain neither sorry nor local axioms."
             exit 1
           fi
@@ -87,7 +88,8 @@ jobs:
           grep -Fq 'residualHomTheorem_of_product_and_coefficientResidual' "$D"
           grep -Fq 'lowerHomEquiv' "$G"
           grep -Fq 'finiteSolidification_counit' "$G"
-          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$G"; then
+          grep -Fq 'measurePointFunctional' "$H"
+          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$G" "$H"; then
             echo "P3 reduction fixtures must not install an unconditional IsSolid instance."
             exit 1
           fi
@@ -178,3 +180,4 @@ jobs:
           set -euo pipefail
           lake build CMDGCondensedCM4P3G
           lake env lean CMDGCondensedCM4P3G.lean
+          lake env lean CMDGCondensedCM4P3GPointFunctional.lean
