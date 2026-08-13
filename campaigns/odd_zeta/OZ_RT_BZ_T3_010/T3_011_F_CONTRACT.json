@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 509,
+  "operation": "OZ-RT-BZ-T3-011-F",
+  "stage": "T3_011_F_MINIMAL_MIXED_CHANNEL_COKERNEL_ESCAPE_AUDIT",
+  "predecessor": {
+    "reviewed_head": "18d6e84c59f5585f65d824f7d4c2a99fffa9f893",
+    "merge_commit": "cd967335c55bd9899e1e51647d294d128be33fcd",
+    "required_terminal": "POLYNOMIAL_MULTIPLIER_COKERNEL_CLOSURE_CERTIFIED",
+    "expected_candidate_records": 421,
+    "expected_semantic_functional_ambiguity": null,
+    "expected_higher_degree_set": []
+  },
+  "mixed_class": {
+    "total_degree": 2,
+    "multiplier": "x_c*x_d",
+    "unordered_pair_order": [
+      ["n1", "k1"],
+      ["n1", "l1"],
+      ["n2", "k1"],
+      ["n2", "l1"],
+      ["n3", "k1"],
+      ["n3", "l1"],
+      ["k1", "l1"]
+    ],
+    "same_coordinate_pairs_excluded_as_E_reducible": true,
+    "candidate_semantics": "ENDPOINT_ANCHORED_FROZEN_BANK_AND_SCALAR_NAMESPACE",
+    "direct_identity": "(x_c+h_c)(x_d+h_d)S_cS_d(G)-(x_c+h_c)x_dS_c(G)-x_c(x_d+h_d)S_d(G)+x_cx_dG",
+    "product_rule": "x_cx_d Delta_cDelta_d(G)+h_c x_d S_c(Delta_dG)+h_d x_c S_d(Delta_cG)+h_ch_d S_cS_d(G)",
+    "semantic_normal_form": "COMMON_DENOMINATOR_EXPANDED_Q_N_K_L_NUMERATOR_V1",
+    "decisive_observable": "EXACT_NORMALIZED_ENDPOINT_COKERNEL_PAIRING",
+    "stop_at_first_nonzero_pairing": true
+  },
+  "terminals": {
+    "positive": "MINIMAL_MIXED_CHANNEL_QUADRATIC_COKERNEL_BREAKING_DIRECTION_FOUND",
+    "negative": "MIXED_CHANNEL_QUADRATIC_RESPONSE_CLASS_COKERNEL_INVISIBLE",
+    "semantic_ambiguity": "MIXED_CHANNEL_SEMANTIC_FUNCTIONAL_AMBIGUITY"
+  },
+  "claim_firewall": {
+    "square_terms_authorized": false,
+    "degree_gt_2_authorized": false,
+    "arbitrary_bivariate_polynomials_authorized": false,
+    "same_coordinate_pairs_authorized": false,
+    "cross_channel_scalar_identification_authorized": false,
+    "multiple_lift_linear_combinations_authorized": false,
+    "support_or_harmonic_enlargement_authorized": false,
+    "rational_prefactors_authorized": false,
+    "raw_jet_reopening_authorized": false,
+    "recurrence_search_authorized": false,
+    "correction_layer_recombination_authorized": false,
+    "theorem_promotion_authorized": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}
