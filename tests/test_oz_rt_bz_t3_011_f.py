@@ -26,6 +26,8 @@ class T3011FMixedChannelAuditTests(unittest.TestCase):
             "expected_full_record_count": cls.result["expected_full_record_count"],
             "first_cokernel_breaking_direction": cls.result["first_cokernel_breaking_direction"],
             "first_semantic_functional_ambiguity": cls.result["first_semantic_functional_ambiguity"],
+            "predecessor_channel_ledgers_exactly_matched": cls.result["predecessor_checkpoint"]["channel_ledgers_exactly_matched"],
+            "predecessor_channel_ledgers_sha256": cls.result["predecessor_checkpoint"]["channel_ledgers_sha256"],
         }, sort_keys=True, separators=(",", ":")))
 
     def test_terminal_and_independent_replay_agree(self):
@@ -37,6 +39,11 @@ class T3011FMixedChannelAuditTests(unittest.TestCase):
         self.assertIn(self.result["terminal"], allowed)
         self.assertEqual(self.replay["terminal"], self.result["terminal"])
         self.assertEqual(self.replay["tested_record_count"], self.result["tested_record_count"])
+        self.assertTrue(self.replay["predecessor_channel_ledgers_exactly_matched"])
+        self.assertEqual(
+            self.replay["predecessor_channel_ledgers_sha256"],
+            self.result["predecessor_checkpoint"]["channel_ledgers_sha256"],
+        )
 
     def test_admitted_pair_class_is_exactly_the_genuinely_mixed_degree_two_class(self):
         self.assertEqual(
@@ -102,6 +109,28 @@ class T3011FMixedChannelAuditTests(unittest.TestCase):
         finally:
             producer.E_BLOBS[name] = old
         producer.assert_e_locks()
+
+    def test_predecessor_channel_ledger_mutation_fails_closed(self):
+        rows = [
+            {"channel": channel, **ledger}
+            for channel, ledger in self.result["bank_ledgers"].items()
+        ]
+        synthetic = {"channel_ledgers": rows}
+        digest = producer.assert_predecessor_channel_ledgers(
+            synthetic,
+            self.result["bank_ledgers"],
+        )
+        self.assertEqual(
+            digest,
+            self.result["predecessor_checkpoint"]["channel_ledgers_sha256"],
+        )
+        mutated_rows = [dict(row) for row in rows]
+        mutated_rows[0]["candidate_count"] += 1
+        with self.assertRaises(AssertionError):
+            producer.assert_predecessor_channel_ledgers(
+                {"channel_ledgers": mutated_rows},
+                self.result["bank_ledgers"],
+            )
 
     def test_terminal_stop_rule_and_semantic_functional_gate(self):
         records = self.result["tested_records"]
