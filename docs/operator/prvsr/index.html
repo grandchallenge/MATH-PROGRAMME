@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>GCL PRVSR Operator Surface</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Grand Challenge Labs · Mathematics Programme</p>
+      <h1>PRVSR Operator Surface</h1>
+      <p class="lede">Deterministic operator review over retained PR Visual Status Reports.</p>
+    </div>
+    <nav aria-label="Operator surface links">
+      <a href="../../">Programme site</a>
+      <a href="https://github.com/grandchallenge/MATH-PROGRAMME">Repository</a>
+      <a href="https://raw.githubusercontent.com/grandchallenge/MATH-PROGRAMME/prvsr-operator-index/governance/pr_visual_status_operator/latest.json">Manifest JSON</a>
+      <a href="https://raw.githubusercontent.com/grandchallenge/MATH-PROGRAMME/prvsr-operator-index/governance/pr_visual_status_operator/project-triage.json">Project projection</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="boundary" aria-label="Authority boundary">
+      <strong>Authority boundary:</strong>
+      This surface is derived, advisory, and non-authoritative. It creates no review, merge,
+      mathematical, source, certification, deployment, propagation, or programme authority.
+      Authoritative state remains in protected GitHub and governance records.
+    </section>
+
+    <noscript>
+      <section class="failure">
+        JavaScript is disabled. Use the <a href="https://raw.githubusercontent.com/grandchallenge/MATH-PROGRAMME/prvsr-operator-index/governance/pr_visual_status_operator/latest.json">latest manifest JSON</a>
+        and each retained <code>report.txt</code>/<code>receipt.json</code> as the accessible textual surface.
+      </section>
+    </noscript>
+
+    <section id="fetch-failure" class="failure" hidden>
+      <strong>Manifest unavailable.</strong>
+      The operator index could not be loaded. This does not imply any PR is ready, blocked, or complete.
+      Inspect the <a href="https://raw.githubusercontent.com/grandchallenge/MATH-PROGRAMME/prvsr-operator-index/governance/pr_visual_status_operator/latest.json">raw manifest</a>
+      or the source PR directly.
+    </section>
+
+    <section class="summary" aria-labelledby="summary-title">
+      <div class="summary-heading">
+        <div>
+          <p class="eyebrow">Current derived view</p>
+          <h2 id="summary-title">Portfolio status</h2>
+        </div>
+        <div id="manifest-meta" class="manifest-meta" aria-live="polite">Loading retained PRVSR state…</div>
+      </div>
+      <div id="summary-cards" class="summary-cards" aria-live="polite"></div>
+    </section>
+
+    <section class="controls" aria-label="Dashboard controls">
+      <label>
+        View
+        <select id="view-filter">
+          <option value="attention">Needs operator attention</option>
+          <option value="all">All retained PRVSRs</option>
+          <option value="current">Current only</option>
+          <option value="stale">Stale only</option>
+          <option value="complete">Protected complete</option>
+        </select>
+      </label>
+      <label class="search">
+        Search
+        <input id="search" type="search" autocomplete="off" placeholder="PR, title, state, SHA">
+      </label>
+    </section>
+
+    <section aria-labelledby="queue-title">
+      <div class="queue-heading">
+        <h2 id="queue-title">Operator queue</h2>
+        <p id="queue-count" aria-live="polite"></p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">PR</th>
+              <th scope="col">State</th>
+              <th scope="col">Freshness</th>
+              <th scope="col">Checks</th>
+              <th scope="col">Review</th>
+              <th scope="col">Human Steward</th>
+              <th scope="col">Merge / readback</th>
+              <th scope="col">Blockers</th>
+              <th scope="col">Observed</th>
+              <th scope="col">Evidence</th>
+            </tr>
+          </thead>
+          <tbody id="queue-body"></tbody>
+        </table>
+      </div>
+      <p id="empty-state" class="empty" hidden>No retained PRVSRs match this view.</p>
+    </section>
+
+    <section id="index-errors-section" class="errors" hidden aria-labelledby="errors-title">
+      <h2 id="errors-title">Unverifiable retained state</h2>
+      <p>
+        These archive tips could not be verified into operator entries. They are intentionally excluded
+        from positive status counts.
+      </p>
+      <ul id="index-errors"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      PRVSR operator surface · latest-per-PR manifest on
+      <code>prvsr-operator-index</code> · Pages shell admitted through the ordinary protected documentation pipeline.
+    </p>
+  </footer>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
