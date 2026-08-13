@@ -55,21 +55,80 @@ def main() -> int:
     multiple_primary = copy.deepcopy(mappings)
     second_primary = copy.deepcopy(multiple_primary["mappings"][1])
     second_primary["mapping_id"] = "UC-MAP-MSC-06A12-PRIMARY"
-    second_primary["role"] = "PRIMARY"
+    second_primary["role"] = "PRIMARY_SUBJECT"
     multiple_primary["mappings"].append(second_primary)
+    multiple_primary_domains = copy.deepcopy(domains)
+    multiple_primary_domains["domains"][0]["classification_mapping_refs"].append(
+        second_primary["mapping_id"]
+    )
     assert any(
-        "multiple primary MSC mappings" in error
+        "requires exactly one primary MSC mapping" in error
         for error in validate_documents(
-            source_registry, graph, multiple_primary, domains, [candidate]
+            source_registry, graph, multiple_primary, multiple_primary_domains, [candidate]
         )
     )
 
     unaudited_primary = copy.deepcopy(mappings)
     unaudited_primary["mappings"][0]["review_status"] = "PROPOSED"
     assert any(
-        "primary mapping must be AUDITED" in error
+        "qualified primary mapping must be AUDITED" in error
         for error in validate_documents(
             source_registry, graph, unaudited_primary, domains, [candidate]
+        )
+    )
+
+    automated_audited = copy.deepcopy(mappings)
+    automated_audited["mappings"][0]["provenance"]["assignment_method"] = "PROVIDER_AUTOMATED"
+    assert any(
+        "provider-automated mapping cannot be AUDITED" in error
+        for error in validate_documents(
+            source_registry, graph, automated_audited, domains, [candidate]
+        )
+    )
+
+    unqualified_normative_source = copy.deepcopy(source_registry)
+    for source in unqualified_normative_source["sources"]:
+        if source["source_id"] == "msc2020_normative":
+            source["qualification_status"] = "UNQUALIFIED_CANDIDATE"
+    assert any(
+        "must cite the qualified normative subject source" in error
+        for error in validate_documents(
+            unqualified_normative_source, graph, mappings, domains, [candidate]
+        )
+    )
+
+    missing_primary = copy.deepcopy(mappings)
+    missing_primary["mappings"][0]["role"] = "SECONDARY_SUBJECT"
+    assert any(
+        "requires exactly one primary MSC mapping" in error
+        for error in validate_documents(
+            source_registry, graph, missing_primary, domains, [candidate]
+        )
+    )
+
+    waiver_conflict_domains = copy.deepcopy(domains)
+    waiver_conflict_domains["domains"][0]["classification_waiver"] = {
+        "waiver_id": "UC-MAP-WAIVER-001",
+        "owner": "Human Steward",
+        "rationale": "Synthetic waiver used to exercise the mutual-exclusion gate.",
+        "compensating_control": "Retain visible unresolved state until a mapping is independently reviewed.",
+        "expires_at": "2026-12-31",
+        "next_review": "2026-10-01",
+    }
+    assert any(
+        "cannot use mappings and a classification waiver together" in error
+        for error in validate_documents(
+            source_registry, graph, mappings, waiver_conflict_domains, [candidate]
+        )
+    )
+
+    wrong_domain_mappings = copy.deepcopy(mappings)
+    wrong_domain_mappings["mappings"][0]["target_type"] = "DOMAIN"
+    wrong_domain_mappings["mappings"][0]["internal_ref"] = "RH"
+    assert any(
+        "does not match mapping-set domain" in error
+        for error in validate_documents(
+            source_registry, graph, wrong_domain_mappings, domains, [candidate]
         )
     )
 

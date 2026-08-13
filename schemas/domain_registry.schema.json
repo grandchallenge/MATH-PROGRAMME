@@ -107,6 +107,24 @@
               "type": "string",
               "minLength": 1
             }
+          },
+          "classification_waiver": {
+            "oneOf": [
+              {"type": "null"},
+              {
+                "type": "object",
+                "required": ["waiver_id", "owner", "rationale", "compensating_control", "expires_at", "next_review"],
+                "properties": {
+                  "waiver_id": {"type": "string", "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+$"},
+                  "owner": {"type": "string", "minLength": 1},
+                  "rationale": {"type": "string", "minLength": 20},
+                  "compensating_control": {"type": "string", "minLength": 20},
+                  "expires_at": {"type": "string", "format": "date"},
+                  "next_review": {"type": "string", "format": "date"}
+                },
+                "additionalProperties": false
+              }
+            ]
           }
         },
         "additionalProperties": false

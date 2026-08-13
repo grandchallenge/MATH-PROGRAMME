@@ -21,6 +21,7 @@
 | ADR-0017 | 2026-08-08 | Human Steward ratified with Council corrections; protected authority active | Adopt CMDG as the overarching certified mathematical dependency-graph Grand Challenge, subject to binding stage-bounded corrections CMDG-C01 through CMDG-C08. | [`ADR-0017_CMDG_CERTIFIED_MATHEMATICAL_DEPENDENCY_GRAPH.md`](decisions/ADR-0017_CMDG_CERTIFIED_MATHEMATICAL_DEPENDENCY_GRAPH.md) |
 | ADR-0018 | 2026-08-09 | Human Steward strongly approved for bounded pilot; protected merge pending | Replace SVG-first documentary production with governed representation-first visual pedagogy for `MP-DOC-VISUAL-PEDAGOGY-001`; full-library migration remains unauthorized. | [`ADR-0018_VISUAL_PEDAGOGY_REFORM.md`](decisions/ADR-0018_VISUAL_PEDAGOGY_REFORM.md) |
 | ADR-0019 | 2026-08-10 | Human Steward ratified with Council corrections; advisory bounded-pilot authority active | Pilot deterministic, provenance-bound visual status reports for significant pull requests subject to PRVSR-C01 through PRVSR-C10; no mandatory gate or programme-wide rollout is authorized. | [`ADR-0019_PR_VISUAL_STATUS_REPORTING.md`](decisions/ADR-0019_PR_VISUAL_STATUS_REPORTING.md) |
+| ADR-0020 | 2026-08-12 | Human Steward ratified architecture; implementation and protected admission pending | Adopt layered MSC2020 subject authority with controlled facets, separate machine serialization qualification, and one primary mapping or waiver per active domain. | [`ADR-0020_LAYERED_MATHEMATICS_TAXONOMY.md`](decisions/ADR-0020_LAYERED_MATHEMATICS_TAXONOMY.md) |
 
 ## Identifier rule
 
