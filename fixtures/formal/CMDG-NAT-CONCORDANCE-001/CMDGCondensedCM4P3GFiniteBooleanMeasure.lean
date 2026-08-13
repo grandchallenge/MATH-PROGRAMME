@@ -26,17 +26,18 @@ abbrev R := CMDG.CondensedCM4P3G.R.{u}
 abbrev FiniteQuotientObject (X : Profinite.{u}) (j : DiscreteQuotient X) :=
   X.fintypeDiagram.obj j
 
-/-- Delta function at a point of a finite quotient. The quotient topology is definitionally
-`⊥`, but its `DiscreteTopology` instance is local to the construction of
-`FintypeCat.toProfinite`, so we restore that instance explicitly here. -/
-noncomputable def finiteDeltaR (X : Profinite.{u}) (j : DiscreteQuotient X)
+/-- Pull the delta at a finite-quotient point directly back to `X`. This avoids re-exposing the
+packaged quotient topology: `j.proj` is already certified locally constant by `DiscreteQuotient`. -/
+noncomputable def finiteDeltaPullbackR
+    (X : Profinite.{u}) (j : DiscreteQuotient X)
     (q : (FiniteQuotientObject X j).obj) :
-    LocallyConstant (X.diagram.obj j) R := by
+    LocallyConstant X R := by
   classical
-  letI : DiscreteTopology (X.diagram.obj j) := ⟨rfl⟩
   exact
-    { toFun := fun y => if y = q then 1 else 0
-      isLocallyConstant := IsLocallyConstant.of_discrete _ }
+    { toFun := fun x => if j.proj x = q then 1 else 0
+      isLocallyConstant :=
+        j.proj_isLocallyConstant.comp
+          (fun y => if y = q then (1 : R) else 0) }
 
 /-- The Boolean basis-coordinate function attached to one finite-quotient point: pull the finite
 delta back to `X`, then apply the lifted Nöbeling Boolean pairing. -/
@@ -44,12 +45,11 @@ noncomputable def finiteBooleanCoefficient
     (X : Profinite.{u}) (j : DiscreteQuotient X)
     (q : (FiniteQuotientObject X j).obj) :
     LocallyConstant (basisBooleanCube X) R := by
+  let pulled : LocallyConstant X R := finiteDeltaPullbackR X j q
+  let paired : LocallyConstant (IntegralBasisIndex X → Bool) R :=
+    basisBooleanPairingR X pulled
   change LocallyConstant (IntegralBasisIndex X → Bool) R
-  exact
-    basisBooleanPairingR X
-      (LocallyConstant.comap
-        (CMDG.CondensedCM4P3G.finiteQuotientMap X j).hom.hom
-        (finiteDeltaR X j q))
+  exact paired
 
 /-- The whole finite family of Boolean coefficient functions at one finite quotient. -/
 noncomputable def finiteBooleanCoefficientFamily
@@ -75,7 +75,7 @@ noncomputable def finiteBooleanMeasureSection
     (ConcreteCategory.hom
       ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso Q).inv.app S)) b
 
-#print finiteDeltaR
+#print finiteDeltaPullbackR
 #print finiteBooleanCoefficient
 #print finiteBooleanCoefficientFamily
 #print finiteBooleanMeasureSection
