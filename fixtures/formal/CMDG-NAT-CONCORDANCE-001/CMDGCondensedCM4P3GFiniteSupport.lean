@@ -12,7 +12,7 @@ when every weighted Boolean restriction is locally constant.
 
 namespace CMDG.CondensedCM4P3G.FiniteSupport
 
-open scoped Topology
+open scoped Topology BigOperators
 
 /-- Embed a Boolean coordinate vector into the corresponding `0/1` integer vector. -/
 def boolToInt {ι : Type*} (x : ι → Bool) : ι → ℤ :=
@@ -71,6 +71,17 @@ theorem finiteTruncation_insert {ι : Type*} [DecidableEq ι]
   · subst k
     simp [finiteTruncation, intIndicator, hi]
   · simp [finiteTruncation, intIndicator, hki]
+
+/-- A finite truncation is literally the finite sum of its weighted standard-coordinate vectors. -/
+theorem finiteTruncation_eq_sum {ι : Type*} [DecidableEq ι]
+    (a : ι → ℤ) (I : Finset ι) :
+    finiteTruncation a I = ∑ i ∈ I, (a i) • intIndicator i := by
+  induction I using Finset.induction_on with
+  | empty =>
+      simp [finiteTruncation]
+  | @insert i I hi ih =>
+      rw [finiteTruncation_insert a I i hi, ih]
+      simp [hi]
 
 /-- Boolean local constancy forces finite standard-coordinate support for an additive functional
 on the full integer product. -/
@@ -161,8 +172,10 @@ theorem finite_coordinate_dependence_of_weighted_bool_locallyConstant
     _ = f (fun _ => true) := (hf _).symm
     _ = 0 := hall
 
+#print finiteTruncation_eq_sum
 #print finite_support_of_bool_locallyConstant
 #print finite_coordinate_dependence_of_weighted_bool_locallyConstant
+#print axioms finiteTruncation_eq_sum
 #print axioms finite_support_of_bool_locallyConstant
 #print axioms finite_coordinate_dependence_of_weighted_bool_locallyConstant
 
