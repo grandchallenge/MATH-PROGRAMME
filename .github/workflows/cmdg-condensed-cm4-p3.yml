@@ -83,7 +83,8 @@ jobs:
           R=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteBooleanMeasure.lean
           S=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteBooleanMeasureHom.lean
           T=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GKernelWeightedLocalConstancy.lean
-          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S" "$T"; then
+          U=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteBooleanCoefficientPushforward.lean
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S" "$T" "$U"; then
             echo "P3 fixtures must contain neither sorry nor local axioms."
             exit 1
           fi
@@ -109,7 +110,8 @@ jobs:
           grep -Fq 'finiteBooleanMeasureSection' "$R"
           grep -Fq 'finiteBooleanMeasureHom' "$S"
           grep -Fq 'finiteDeltaPullbackR_fiber_sum' "$T"
-          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S" "$T"; then
+          grep -Fq 'finiteBooleanCoefficientFamily_pushforward' "$U"
+          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S" "$T" "$U"; then
             echo "P3 reduction fixtures must not install an unconditional IsSolid instance."
             exit 1
           fi
@@ -266,3 +268,9 @@ jobs:
           set -euo pipefail
           mkdir -p .lake/build/lib/lean
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GKernelWeightedLocalConstancy.olean CMDGCondensedCM4P3GKernelWeightedLocalConstancy.lean
+      - name: Replay P3-G finite Boolean coefficient-family pushforward
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFiniteBooleanCoefficientPushforward.olean CMDGCondensedCM4P3GFiniteBooleanCoefficientPushforward.lean
