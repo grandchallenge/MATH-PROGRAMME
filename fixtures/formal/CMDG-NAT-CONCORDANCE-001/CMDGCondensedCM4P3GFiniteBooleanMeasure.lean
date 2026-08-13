@@ -18,6 +18,7 @@ universe u
 open CategoryTheory Opposite
 
 open CMDG.CondensedCM4P3G.BooleanCube
+open CMDG.CondensedCM4P3G.BasisSeparation
 open CMDG.CondensedCM4P3G.BasisBooleanPairingR
 
 abbrev R := CMDG.CondensedCM4P3G.R.{u}
@@ -25,23 +26,30 @@ abbrev R := CMDG.CondensedCM4P3G.R.{u}
 abbrev FiniteQuotientObject (X : Profinite.{u}) (j : DiscreteQuotient X) :=
   X.fintypeDiagram.obj j
 
-/-- Delta function at a point of a finite quotient. -/
-def finiteDeltaR (X : Profinite.{u}) (j : DiscreteQuotient X)
+/-- Delta function at a point of a finite quotient. The quotient topology is definitionally
+`⊥`, but its `DiscreteTopology` instance is local to the construction of
+`FintypeCat.toProfinite`, so we restore that instance explicitly here. -/
+noncomputable def finiteDeltaR (X : Profinite.{u}) (j : DiscreteQuotient X)
     (q : (FiniteQuotientObject X j).obj) :
-    LocallyConstant (X.diagram.obj j) R where
-  toFun y := if y = q then 1 else 0
-  isLocallyConstant := IsLocallyConstant.of_discrete _
+    LocallyConstant (X.diagram.obj j) R := by
+  classical
+  letI : DiscreteTopology (X.diagram.obj j) := ⟨rfl⟩
+  exact
+    { toFun := fun y => if y = q then 1 else 0
+      isLocallyConstant := IsLocallyConstant.of_discrete _ }
 
 /-- The Boolean basis-coordinate function attached to one finite-quotient point: pull the finite
 delta back to `X`, then apply the lifted Nöbeling Boolean pairing. -/
 noncomputable def finiteBooleanCoefficient
     (X : Profinite.{u}) (j : DiscreteQuotient X)
     (q : (FiniteQuotientObject X j).obj) :
-    LocallyConstant (basisBooleanCube X) R :=
-  basisBooleanPairingR X
-    (LocallyConstant.comap
-      (CMDG.CondensedCM4P3G.finiteQuotientMap X j).hom.hom
-      (finiteDeltaR X j q))
+    LocallyConstant (basisBooleanCube X) R := by
+  change LocallyConstant (IntegralBasisIndex X → Bool) R
+  exact
+    basisBooleanPairingR X
+      (LocallyConstant.comap
+        (CMDG.CondensedCM4P3G.finiteQuotientMap X j).hom.hom
+        (finiteDeltaR X j q))
 
 /-- The whole finite family of Boolean coefficient functions at one finite quotient. -/
 noncomputable def finiteBooleanCoefficientFamily
