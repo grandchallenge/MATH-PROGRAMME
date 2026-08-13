@@ -107,12 +107,21 @@ def validate_scope(
             raise AssertionError("T3-011-F forbids same-coordinate channel pairs closed by E")
 
 
-def _translate_sig(sig, shift: tuple[int, int, int]):
+def _translate_factor(factor, shift: tuple[int, int, int]):
     dn, dk, dl = shift
+    if len(factor) == 5 and factor[0] == a.pcl.PINV_TAG:
+        tag, an, ak, al, constant = factor
+        return (tag, an, ak, al, constant + an * dn + ak * dk + al * dl)
+    if len(factor) != 4:
+        raise AssertionError(f"unexpected rational factor shape during shift: {factor}")
+    an, ak, al, constant = factor
+    return (an, ak, al, constant + an * dn + ak * dk + al * dl)
+
+
+def _translate_sig(sig, shift: tuple[int, int, int]):
     powers = {}
     for factor, exponent in sig:
-        an, ak, al, constant = factor
-        moved = (an, ak, al, constant + an * dn + ak * dk + al * dl)
+        moved = _translate_factor(factor, shift)
         powers[moved] = powers.get(moved, 0) + int(exponent)
         if not powers[moved]:
             del powers[moved]
