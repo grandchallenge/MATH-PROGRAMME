@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0.0",
+  "source_schedule_id": "MP-OPERATING-PLAN-2026-08-POST-PILOT-001-SCHEDULE",
+  "source_plan_id": "MP-OPERATING-PLAN-2026-08-POST-PILOT-001",
+  "status": "RECONSTRUCTED_AND_FROZEN_SOURCE_SCHEDULE",
+  "provenance": "Schedule reconstructed from the predecessor 90-day operating-plan draft before the requested 0.1 compression. This record is the explicit source schedule for the R2 transform; it does not claim that the uncommitted predecessor prose had a Git identity.",
+  "total": {
+    "duration": "P90D",
+    "seconds": 7776000
+  },
+  "phase_durations": [
+    {
+      "phase": "rebaseline",
+      "duration": "P2D",
+      "seconds": 172800
+    },
+    {
+      "phase": "stabilize_and_specify",
+      "duration": "P23D",
+      "seconds": 1987200
+    },
+    {
+      "phase": "deliver_bounded_increments",
+      "duration": "P29D",
+      "seconds": 2505600
+    },
+    {
+      "phase": "independent_use_and_disposition",
+      "duration": "P36D",
+      "seconds": 3110400
+    }
+  ],
+  "milestone_offsets": [
+    {"gate": "A", "duration": "P2D", "seconds": 172800},
+    {"gate": "B", "duration": "P25D", "seconds": 2160000},
+    {"gate": "C", "duration": "P54D", "seconds": 4665600},
+    {"gate": "D", "duration": "P82D", "seconds": 7084800},
+    {"gate": "E", "duration": "P90D", "seconds": 7776000}
+  ],
+  "cadence_offsets": [
+    {"name": "status_digest_max_interval", "duration": "P1D", "seconds": 86400},
+    {"name": "operating_review", "duration": "P7D", "seconds": 604800},
+    {"name": "retirement_review", "duration": "P28D", "seconds": 2419200},
+    {"name": "initial_action_window", "duration": "P7D", "seconds": 604800}
+  ],
+  "requirements_not_subject_to_time_compression": [
+    "exact_head_review",
+    "independent_review",
+    "required_checks",
+    "protected_merge",
+    "protected_main_readback",
+    "adverse_evidence_retention",
+    "claim_boundaries",
+    "reserved_human_authority"
+  ]
+}
