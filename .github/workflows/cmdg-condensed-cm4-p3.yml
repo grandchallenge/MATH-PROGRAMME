@@ -108,7 +108,7 @@ jobs:
           grep -Fq 'basisBooleanPairingR' "$Q"
           grep -Fq 'finiteBooleanMeasureSection' "$R"
           grep -Fq 'finiteBooleanMeasureHom' "$S"
-          grep -Fq 'finiteBooleanCoefficient_fiber_sum' "$T"
+          grep -Fq 'finiteDeltaPullbackR_fiber_sum' "$T"
           if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S" "$T"; then
             echo "P3 reduction fixtures must not install an unconditional IsSolid instance."
             exit 1
