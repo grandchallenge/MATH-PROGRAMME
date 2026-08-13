@@ -88,13 +88,13 @@ noncomputable def finiteCoefficientFamilyFiberPushforward
     intro a
     funext y
     change
+      (∑ x : A.obj,
+        if (ConcreteCategory.hom g) x = y then
+          (ModuleCat.Hom.hom (CMDG.CondensedCM4P2D.coefficientPresheaf.map h)) (a x)
+        else 0) =
       (ModuleCat.Hom.hom (CMDG.CondensedCM4P2D.coefficientPresheaf.map h))
-          (∑ x : A.obj,
-            if (ConcreteCategory.hom g) x = y then a x else 0) =
-        ∑ x : A.obj,
-          if (ConcreteCategory.hom g) x = y then
-            (ModuleCat.Hom.hom (CMDG.CondensedCM4P2D.coefficientPresheaf.map h)) (a x)
-          else 0
+        (∑ x : A.obj,
+          if (ConcreteCategory.hom g) x = y then a x else 0)
     rw [map_sum]
     apply Finset.sum_congr rfl
     intro x _
@@ -109,7 +109,8 @@ theorem finiteCoordinateInclusion_fiberPushforward
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoordinateInclusion B
         ((ConcreteCategory.hom g) x) := by
   classical
-  ext S h y
+  ext S h
+  funext y
   change
     (∑ z : A.obj,
       if (ConcreteCategory.hom g) z = y then
@@ -166,6 +167,7 @@ theorem finiteBooleanCoefficientFamily_pushforward
         (op ((profiniteToCompHaus).obj (basisBooleanCube X)))))
       (finiteBooleanCoefficientFamily X j) =
       finiteBooleanCoefficientFamily X k := by
+  classical
   rw [finiteCoefficientFamilyPushforwardMap_eq_fiberPushforward
     (X.fintypeDiagram.map f)]
   funext q
