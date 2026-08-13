@@ -47,7 +47,16 @@ noncomputable def finiteBooleanCoefficient
     (q : (FiniteQuotientObject X j).obj) :
     LocallyConstant (basisBooleanCube X) R := by
   change LocallyConstant (IntegralBasisIndex X → Bool) R
-  exact basisBooleanPairingR X (finiteDeltaPullbackR X j q)
+  let δ : LocallyConstant X R := finiteDeltaPullbackR X j q
+  let down : LocallyConstant X R ≃+* LocallyConstant X ℤ :=
+    (CMDG.CondensedCM4P3G.locallyConstantIntegralLiftEquiv X).symm
+  let lift :
+      LocallyConstant (IntegralBasisIndex X → Bool) ℤ ≃+*
+        LocallyConstant (IntegralBasisIndex X → Bool) R :=
+    LocallyConstant.congrRightRingEquiv
+      (X := IntegralBasisIndex X → Bool)
+      (ULift.ringEquiv.symm : ℤ ≃+* R)
+  exact lift (basisBooleanPairing X (down δ))
 
 /-- The whole finite family of Boolean coefficient functions at one finite quotient. -/
 noncomputable def finiteBooleanCoefficientFamily
