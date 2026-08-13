@@ -4,6 +4,14 @@
   "source_plan_id": "MP-OPERATING-PLAN-2026-08-POST-PILOT-001",
   "target_plan_id": "MP-OPERATING-PLAN-2026-08-POST-PILOT-001-R2",
   "factor": "0.1",
+  "source_evidence": {
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "commit": "da753cfd7f0128fb78948a240de336c58db9a50d",
+    "path": "governance/agent_cadence_operating_plan_predecessor_90d.json",
+    "git_blob": "a02ccc6ae3b9cb8c335fe7a2f2766e314bf11d42",
+    "sha256": "0bf778e1737abedf1bf5f9214418f1f9af8707310be155d0ff2ab52ae8a02bbc",
+    "source_schedule_id": "MP-OPERATING-PLAN-2026-08-POST-PILOT-001-SCHEDULE"
+  },
   "source_total": {
     "duration": "P90D",
     "seconds": 7776000
@@ -117,6 +125,55 @@
       "target_seconds": 60480
     }
   ],
+  "dependency_contract": {
+    "hard_predecessor": "OPS-A",
+    "execution_gates": [
+      "ADM-A",
+      "ADM-B",
+      "HWM-A",
+      "HWM-B",
+      "HWM-C",
+      "CMDG-A",
+      "CMDG-B",
+      "OZ-A",
+      "OZ-B",
+      "PRV-A",
+      "PRV-B",
+      "PRV-C",
+      "VIS-A",
+      "VIS-B",
+      "EXT-A",
+      "EXT-B",
+      "EXT-C"
+    ],
+    "dependencies": {
+      "ADM-A": ["OPS-A"],
+      "ADM-B": ["OPS-A", "ADM-A"],
+      "HWM-A": ["OPS-A"],
+      "HWM-B": ["OPS-A", "HWM-A"],
+      "HWM-C": ["OPS-A", "HWM-A", "HWM-B"],
+      "CMDG-A": ["OPS-A"],
+      "CMDG-B": ["OPS-A", "CMDG-A"],
+      "OZ-A": ["OPS-A"],
+      "OZ-B": ["OPS-A", "OZ-A"],
+      "PRV-A": ["OPS-A"],
+      "PRV-B": ["OPS-A", "PRV-A"],
+      "PRV-C": ["OPS-A", "PRV-A", "PRV-B"],
+      "VIS-A": ["OPS-A"],
+      "VIS-B": ["OPS-A", "VIS-A"],
+      "EXT-A": ["OPS-A"],
+      "EXT-B": ["OPS-A", "EXT-A"],
+      "EXT-C": ["OPS-A", "EXT-A", "EXT-B"]
+    }
+  },
+  "terminal_sequence": [
+    {"state": "observation_cutoff", "offset": "P8DT4H48M", "seconds": 708480},
+    {"state": "ADM-B", "offset": "P8DT12H", "seconds": 734400},
+    {"state": "ADM-03", "offset": "P8DT16H", "seconds": 748800},
+    {"state": "terminal_packet", "offset": "P9D", "seconds": 777600}
+  ],
+  "activation_receipt_schema": "schemas/agent_cadence_operating_plan_activation.schema.json",
+  "plan_path": "docs/POST_PILOT_OPERATING_PLAN_2026_08_12.md",
   "noncompressed_requirements": [
     "exact_head_review",
     "independent_review",

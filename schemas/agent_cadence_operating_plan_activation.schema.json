@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.dev/math-programme/schemas/agent_cadence_operating_plan_activation.schema.json",
+  "title": "Agent-cadence operating-plan activation receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "plan_id",
+    "plan_candidate_head",
+    "plan_file_sha256",
+    "transform_file_sha256",
+    "council_matter_sha256",
+    "council_disposition_sha256",
+    "human_steward_evidence",
+    "protected_merge_sha",
+    "protected_main_plan_blob",
+    "protected_main_plan_sha256",
+    "protected_main_transform_sha256",
+    "readback_run",
+    "readback_completed_at_utc",
+    "t0_utc",
+    "authority_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "plan_id": {"const": "MP-OPERATING-PLAN-2026-08-POST-PILOT-001-R2"},
+    "plan_candidate_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "plan_file_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "transform_file_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "council_matter_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "council_disposition_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "human_steward_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actor", "source_url", "source_id", "created_at_utc", "bound_plan_head", "bound_council_matter_sha256"],
+      "properties": {
+        "actor": {"type": "string", "minLength": 1},
+        "source_url": {"type": "string", "minLength": 1},
+        "source_id": {"type": ["string", "integer"]},
+        "created_at_utc": {"type": "string", "format": "date-time"},
+        "bound_plan_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "bound_council_matter_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "protected_merge_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "protected_main_plan_blob": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "protected_main_plan_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "protected_main_transform_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "readback_run": {"type": "string", "minLength": 1},
+    "readback_completed_at_utc": {"type": "string", "format": "date-time"},
+    "t0_utc": {"type": "string", "format": "date-time"},
+    "authority_boundary": {
+      "const": "ACTIVATES_ONLY_THIS_P9D_OPERATING_PLAN__NO_AUTHORITY_EXPANSION__NO_MATHEMATICAL_CERTIFICATION"
+    }
+  }
+}

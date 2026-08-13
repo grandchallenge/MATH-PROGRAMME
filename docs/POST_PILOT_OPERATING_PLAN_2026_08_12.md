@@ -20,7 +20,7 @@ Over nine days, Grand Challenge should convert the report's seven recommendation
 
 CMDG, odd-zeta, PRVSR, and visual pedagogy continue as bounded workstreams. Their purpose in this plan is to produce exact research or operator value, not to expand the institution's authority surface.
 
-The deadline transform is exactly `0.1` of the predecessor plan as frozen in `governance/agent_cadence_operating_plan_transform.json` and checked by `ci/validate_agent_cadence_operating_plan.py`. Evidence, review, claim, protection, and authority requirements are not compressed away. Where the shorter window cannot produce terminal evidence, the correct output is an exact blocker, negative result, or owned continuation packet.
+The deadline transform is exactly `0.1` of the source schedule frozen at commit `da753cfd7f0128fb78948a240de336c58db9a50d` in `governance/agent_cadence_operating_plan_predecessor_90d.json`. The binding transform is `governance/agent_cadence_operating_plan_transform.json` and its validator is `ci/validate_agent_cadence_operating_plan.py`. Evidence, review, claim, protection, and authority requirements are not compressed away. Where the shorter window cannot produce terminal evidence, the correct output is an exact blocker, negative result, or owned continuation packet.
 
 ## 2. Baseline and revalidation rule
 
@@ -46,7 +46,7 @@ These are observations, not permanent plan assumptions. `OPS-00` must refresh th
 2. one authenticated Human Steward disposition binding that exact candidate;
 3. successful required checks at the authorized candidate head;
 4. ordinary protected merge without bypass; and
-5. readback proving the protected plan bytes and merge identity.
+5. a receipt conforming to `schemas/agent_cadence_operating_plan_activation.schema.json`, including readback that proves the protected plan bytes and merge identity.
 
 The protected merge timestamp is evidence but is not `T0`. No deadline begins retrospectively. Events between merge and activation readback remain governed by the pre-existing rules. A failed or missing readback leaves the candidate inactive.
 
@@ -87,7 +87,7 @@ The scorecard records these categories separately:
 
 ### 4.1 Phases
 
-All deadlines are measured from the protected activation time `T0`. The phase offsets are the exact `0.1` transform of the predecessor 90-day plan.
+All deadlines are measured from the protected activation time `T0`. The phase offsets are the exact `0.1` transform of the frozen predecessor schedule.
 
 | Phase | Deadline from `T0` | Purpose | Exit condition |
 |---|---|---|---|
@@ -118,7 +118,7 @@ These are management controls, not governance authority:
 
 ## 5. Workstream register
 
-| ID | Workstream | Accountable role | Independent role | 90-day result |
+| ID | Workstream | Accountable role | Independent role | Nine-day result |
 |---|---|---|---|---|
 | `OPS` | Portfolio control | Programme Operations Lead | non-author operating reviewer | One exact plan ledger, current owners, current heads, and no contradictory status mirrors |
 | `ADM` | Steady-state reliability | Administrative Maintenance Owner | non-author Referee where control semantics change | Ordinary factor-`0.1` evidence window completed or an exact failure-and-repair record retained |
@@ -127,7 +127,7 @@ These are management controls, not governance authority:
 | `OZ` | Bounded odd-zeta/T3 search | Odd-Zeta Campaign Lead | independent mathematical reviewer | At least one predeclared finite class receives an exact, replayable disposition |
 | `PRV` | PRVSR operator evaluation | Operator Surface Maintainer | reviewer not involved in implementation | Measured advisory utility with no false authority signal |
 | `VIS` | Reviewed visual migration | Documentary/Visualization Lead | domain-sensitive semantic reviewer | One additional tranche reaches a separate, reversible live-switch decision |
-| `EXT` | External-value flagship | named human sponsor | independent user or reproducer | One externally legible packet is exercised outside its original authoring path |
+| `EXT` | External-value flagship | authorized accountable sponsor | independent user or reproducer | One externally legible packet is exercised outside its original authoring path |
 
 Named people may fill these roles, but a role must never be inferred from automation identity.
 
@@ -155,7 +155,7 @@ Maintain one compact ledger with these states only:
 
 `NOT_STARTED`, `CANDIDATE`, `EXECUTING`, `EVIDENCE_READY`, `INDEPENDENTLY_REVIEWED`, `PROTECTED`, `EXTERNALLY_EXERCISED`, `BLOCKED`, `PARKED`.
 
-The ledger links to canonical evidence; it does not replace it. Update it after material transitions and at the weekly review.
+The ledger links to canonical evidence; it does not replace it. Update it after material transitions and at the `PT16H48M` operating review.
 
 **Gate `OPS-B`:** no plan item is marked complete unless its acceptance gate and exact evidence are linked.
 
@@ -182,13 +182,13 @@ Use `[T0, T0 + P8DT4H48M)` as the primary due-occurrence observation interval wh
 
 **Gate `ADM-A`:** by the stability gate, every occurrence already due has a current exact state and no occurrence is silently absent.
 
-**Gate `ADM-B`:** by `T0 + P9D`, every occurrence due in the primary observation interval has either a terminal exact receipt/readback or an explicit `PENDING_AT_CUTOFF`/`FAILED_AT_CUTOFF` record with owner, last proven state, and continuation route. The window records whether bespoke recovery occurred and never weakens exact-head, review, protected-merge, or readback requirements.
+**Gate `ADM-B`:** by `T0 + P8DT12H`, every occurrence due in the primary observation interval has either a terminal exact receipt/readback or an explicit `PENDING_AT_CUTOFF`/`FAILED_AT_CUTOFF` record with owner, last proven state, and continuation route. The window records whether bespoke recovery occurred and never weakens exact-head, review, protected-merge, or readback requirements.
 
 If `ADM-B` fails, preserve the failure, repair it through a separately reviewed change, and predeclare one new `P9D` confirmation window. Eventual success does not rewrite the primary-window result.
 
 #### `ADM-03` — dispose the reliability evidence
 
-At the end of the observation window, issue one of:
+By `T0 + P8DT16H`, after `ADM-B`, issue one of:
 
 - `ORDINARY_STEADY_STATE_WINDOW_CONFIRMED`;
 - `STEADY_STATE_OPERATIONAL_WITH_OWNED_RELIABILITY_RESIDUALS`; or
@@ -454,6 +454,8 @@ The nine-day review should fit in one compact exact-revision packet with appendi
 11. one recommended next action per workstream: continue, repair, narrow, park, consolidate, retire, or seek a separately authorized expansion.
 
 The terminal packet may recommend a later Council or Human Steward decision. It does not itself approve, ratify, merge, certify, activate, publish, deploy, or commercially promote anything.
+
+The terminal sequence is strict and machine-checked: observation cutoff, `ADM-B`, `ADM-03`, then terminal packet. A later step cannot be marked complete while an earlier step is absent.
 
 ## 11. Immediate first `PT16H48M`
 
