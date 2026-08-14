@@ -186,6 +186,21 @@ noncomputable def reconstructedSection
       (fun s : LocallyConstant k.right.unop R.{u} => s y') hpull
     exact hpullPoint.trans hLy'
 
+set_option pp.universes true in
+#check coefficientPresheaf
+
+set_option pp.universes true in
+#check discretePresheaf
+
+set_option pp.universes true in
+#check familyModule
+
+set_option pp.universes true in
+#check reconstructedSection
+
+set_option pp.universes true in
+#check @reconstructedSection
+
 noncomputable def reconstructedLinearMap
     (A : ModuleCat.{u + 1} R.{u}) (T : CompHaus.{u})
     (L : familyModule A T) (k : Under (op T)) :
