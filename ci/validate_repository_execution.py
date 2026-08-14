@@ -12,7 +12,10 @@ from typing import Any
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-UNIT_TEST_COMMAND = "python -m unittest discover -s tests -p test_*.py"
+REPOSITORY_REGRESSION_COMMAND = (
+    "python3 ci/run_unittest_modules.py --discover-root tests --pattern test_*.py "
+    "--report-json repository-regression-timing.json"
+)
 MAIN_GUARD = re.compile(r"if\s+__name__\s*==\s*['\"]__main__['\"]\s*:")
 
 
@@ -32,6 +35,17 @@ def load_workflow(root: Path = ROOT) -> dict[str, Any]:
     return value if isinstance(value, dict) else {}
 
 
+def load_shard_registry(root: Path = ROOT) -> dict[str, Any]:
+    path = root / "governance" / "policy_shard_registry.json"
+    if not path.is_file():
+        return {}
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return value if isinstance(value, dict) else {}
+
+
 def workflow_commands(root: Path = ROOT) -> set[str]:
     workflow = load_workflow(root)
     commands: set[str] = set()
@@ -43,14 +57,34 @@ def workflow_commands(root: Path = ROOT) -> set[str]:
                 for line in run.splitlines()
                 if line.strip() and not line.lstrip().startswith("#")
             )
-    registry_path = root / "governance" / "policy_shard_registry.json"
-    if registry_path.is_file():
-        registry = json.loads(registry_path.read_text(encoding="utf-8"))
-        for shard_commands in registry.get("shards", {}).values():
-            for command in shard_commands:
-                if isinstance(command, list) and command:
-                    commands.add(normalize_command(" ".join(str(part) for part in command)))
+    registry = load_shard_registry(root)
+    for shard_commands in registry.get("shards", {}).values():
+        if not isinstance(shard_commands, list):
+            continue
+        for command in shard_commands:
+            if isinstance(command, list) and command:
+                commands.add(normalize_command(" ".join(str(part) for part in command)))
     return commands
+
+
+def repository_regression_route_errors(root: Path = ROOT) -> list[str]:
+    errors: list[str] = []
+    registry = load_shard_registry(root)
+    shards = registry.get("shards", {}) if isinstance(registry.get("shards", {}), dict) else {}
+    regression = shards.get("repository-regression")
+    if not isinstance(regression, list):
+        return ["governed policy execution is missing repository-regression shard"]
+    commands = {
+        normalize_command(" ".join(str(part) for part in command))
+        for command in regression
+        if isinstance(command, list) and command
+    }
+    if normalize_command(REPOSITORY_REGRESSION_COMMAND) not in commands:
+        errors.append(
+            "governed policy execution is missing repository-regression command "
+            + REPOSITORY_REGRESSION_COMMAND
+        )
+    return errors
 
 
 def python_module_name(path: Path, root: Path) -> str:
@@ -107,8 +141,8 @@ def test_contract_errors(path: Path, tree: ast.Module) -> list[str]:
 def repository_execution_errors(root: Path = ROOT) -> list[str]:
     errors: list[str] = []
     commands = workflow_commands(root)
+    errors.extend(repository_regression_route_errors(root))
     for required in (
-        UNIT_TEST_COMMAND,
         "python3 ci/validate_repository_execution.py",
         "python3 ci/test_repository_execution.py",
     ):

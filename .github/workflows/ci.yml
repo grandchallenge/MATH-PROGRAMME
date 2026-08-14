@@ -67,7 +67,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [core, fixtures, cmdg, administrative, campaigns, contracts, docs]
+        shard: [core, fixtures, cmdg, oz, administrative, campaigns, contracts, docs, repository-regression]
     steps:
       - name: Fail closed if impact classification failed
         if: needs.impact.result != 'success'
