@@ -132,7 +132,8 @@ noncomputable def evaluationFamily
 noncomputable def sectionToFamily
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u}) :
     (internalDualPresheaf A).obj (op T) ⟶ familyModule A T := by
-  let f : AddHom ((internalDualPresheaf A).obj (op T)) (familyModule A T) :=
+  let f : AddHom ((internalDualPresheaf A).obj (op T))
+      (A →ₗ[R] LocallyConstant T R) :=
     { toFun := fun φ => evaluationFamily A T φ
       map_add' := by
         intro φ ψ
@@ -189,7 +190,8 @@ noncomputable def reconstructedLinearMap
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
     (L : familyModule A T) (k : Under (op T)) :
     (discretePresheaf A).obj k.right ⟶ coefficientPresheaf.obj k.right := by
-  let f : AddHom ((discretePresheaf A).obj k.right) (coefficientPresheaf.obj k.right) :=
+  let f : AddHom (LocallyConstant k.right.unop A)
+      (LocallyConstant k.right.unop R) :=
     { toFun := fun h => reconstructedSection A T L k h
       map_add' := by
         intro h₁ h₂
