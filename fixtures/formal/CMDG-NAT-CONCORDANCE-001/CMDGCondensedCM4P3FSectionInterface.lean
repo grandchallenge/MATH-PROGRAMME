@@ -158,22 +158,22 @@ noncomputable def reconstructedSection
     LocallyConstant k.right.unop R.{u} where
   toFun := fun y =>
     (show LocallyConstant k.right.unop R.{u} from
-      coefficientPresheaf.map k.hom (L ((show LocallyConstant k.right.unop A from h) y))) y
+      (LocallyConstant.comapₗ R.{u} k.hom.unop.hom.hom) (L ((show LocallyConstant k.right.unop A from h) y))) y
   isLocallyConstant := by
     rw [IsLocallyConstant.iff_eventually_eq]
     intro y
     have hh := (show LocallyConstant k.right.unop A from h).isLocallyConstant.eventually_eq y
     have hL :=
       (show LocallyConstant k.right.unop R.{u} from
-        coefficientPresheaf.map k.hom
+        (LocallyConstant.comapₗ R.{u} k.hom.unop.hom.hom)
           (L ((show LocallyConstant k.right.unop A from h) y))).isLocallyConstant.eventually_eq y
     filter_upwards [hh, hL] with y' hy' hLy'
     change
       (show LocallyConstant k.right.unop R.{u} from
-        coefficientPresheaf.map k.hom
+        (LocallyConstant.comapₗ R.{u} k.hom.unop.hom.hom)
           (L ((show LocallyConstant k.right.unop A from h) y'))) y' =
         (show LocallyConstant k.right.unop R.{u} from
-          coefficientPresheaf.map k.hom
+          (LocallyConstant.comapₗ R.{u} k.hom.unop.hom.hom)
             (L ((show LocallyConstant k.right.unop A from h) y))) y
     have harg :
         L ((show LocallyConstant k.right.unop A from h) y') =
@@ -181,7 +181,7 @@ noncomputable def reconstructedSection
       congrArg (fun a : A => L a) hy'
     have hpull := congrArg
       (fun s : LocallyConstant T R.{u} =>
-        (show LocallyConstant k.right.unop R.{u} from coefficientPresheaf.map k.hom s)) harg
+        (show LocallyConstant k.right.unop R.{u} from (LocallyConstant.comapₗ R.{u} k.hom.unop.hom.hom) s)) harg
     have hpullPoint := congrArg
       (fun s : LocallyConstant k.right.unop R.{u} => s y') hpull
     exact hpullPoint.trans hLy'
