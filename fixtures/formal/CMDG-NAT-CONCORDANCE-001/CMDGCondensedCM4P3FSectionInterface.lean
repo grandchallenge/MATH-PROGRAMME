@@ -80,35 +80,17 @@ noncomputable def evaluationFamily
 /-- The forward linear map from test-object sections to `R`-linear locally constant families. -/
 noncomputable def sectionToFamily
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u}) :
-    (internalDualPresheaf A).obj (op T) ⟶ familyModule A T :=
-  ModuleCat.ofHom
-    { toFun := evaluationFamily A T
-      map_add' := by
-        intro φ ψ
-        apply LinearMap.ext
-        intro a
-        apply LocallyConstant.ext
-        intro t
-        have hp := map_add (identityProjection A T).hom φ ψ
-        have ha := congrArg
-          (fun q => (ModuleCat.Hom.hom q) (LocallyConstant.const T a)) hp
-        have ht := congrArg
-          (fun q : coefficientPresheaf.obj (op T) =>
-            (show LocallyConstant T R from q) t) ha
-        simpa [evaluationFamily, projectionLinearMap, identityProjection] using ht
-      map_smul' := by
-        intro r φ
-        apply LinearMap.ext
-        intro a
-        apply LocallyConstant.ext
-        intro t
-        have hp := map_smul (identityProjection A T).hom r φ
-        have ha := congrArg
-          (fun q => (ModuleCat.Hom.hom q) (LocallyConstant.const T a)) hp
-        have ht := congrArg
-          (fun q : coefficientPresheaf.obj (op T) =>
-            (show LocallyConstant T R from q) t) ha
-        simpa [evaluationFamily, projectionLinearMap, identityProjection] using ht }
+    (internalDualPresheaf A).obj (op T) ⟶ familyModule A T := by
+  let c : A ⟶ (discretePresheaf A).obj (op T) :=
+    ModuleCat.ofHom (LocallyConstant.constₗ R)
+  let unpack :
+      (ihom A).obj (coefficientPresheaf.obj (op T)) ⟶ familyModule A T :=
+    ModuleCat.ofHom
+      (show ((ihom A).obj (coefficientPresheaf.obj (op T))) →ₗ[R]
+          (A →ₗ[R] LocallyConstant T R) from
+        ModuleCat.homLinearEquiv.toLinearMap)
+  exact identityProjection A T ≫
+    (MonoidalClosed.pre c).app (coefficientPresheaf.obj (op T)) ≫ unpack
 
 /-- Pointwise reconstruction of a slice map from an `R`-linear family on `T`. -/
 noncomputable def reconstructedSection
@@ -149,38 +131,28 @@ noncomputable def reconstructedSection
 noncomputable def reconstructedLinearMap
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
     (L : familyModule A T) (k : Under (op T)) :
-    (discretePresheaf A).obj k.right ⟶ coefficientPresheaf.obj k.right :=
-  ModuleCat.ofHom
-    (show ((discretePresheaf A).obj k.right) →ₗ[R]
-        (coefficientPresheaf.obj k.right) from
-      { toFun := reconstructedSection A T L k
-        map_add' := by
-          intro h₁ h₂
-          apply LocallyConstant.ext
-          intro y
-          change
-            (show LocallyConstant k.right.unop R from
-              coefficientPresheaf.map k.hom
-                (L ((show LocallyConstant k.right.unop A from h₁) y +
-                  (show LocallyConstant k.right.unop A from h₂) y))) y =
-              (show LocallyConstant k.right.unop R from
-                (coefficientPresheaf.map k.hom
-                  (L ((show LocallyConstant k.right.unop A from h₁) y)) +
-                coefficientPresheaf.map k.hom
-                  (L ((show LocallyConstant k.right.unop A from h₂) y)))) y
-          simp only [map_add, LocallyConstant.add_apply]
-        map_smul' := by
-          intro r h
-          apply LocallyConstant.ext
-          intro y
-          change
-            (show LocallyConstant k.right.unop R from
-              coefficientPresheaf.map k.hom
-                (L (r • (show LocallyConstant k.right.unop A from h) y))) y =
-              (show LocallyConstant k.right.unop R from
-                r • coefficientPresheaf.map k.hom
-                  (L ((show LocallyConstant k.right.unop A from h) y))) y
-          simp only [map_smul, LocallyConstant.smul_apply] })
+    (discretePresheaf A).obj k.right ⟶ coefficientPresheaf.obj k.right := by
+  let Y : CompHaus.{u} := k.right.unop
+  let pull : LocallyConstant T R →ₗ[R] LocallyConstant Y R :=
+    (coefficientPresheaf.map k.hom).hom
+  let f : LocallyConstant Y A →ₗ[R] LocallyConstant Y R :=
+    { toFun := fun h => reconstructedSection A T L k h
+      map_add' := by
+        intro h₁ h₂
+        apply LocallyConstant.ext
+        intro y
+        change pull (L (h₁ y + h₂ y)) y =
+          (pull (L (h₁ y)) + pull (L (h₂ y))) y
+        rw [map_add, map_add]
+      map_smul' := by
+        intro r h
+        apply LocallyConstant.ext
+        intro y
+        change pull (L (r • h y)) y =
+          (r • pull (L (h y))) y
+        rw [map_smul, map_smul]
+        rfl }
+  exact ModuleCat.ofHom f
 
 lemma coefficientPullback_triangle
     (T : CompHaus.{u}) {i j : Under (op T)} (f : i ⟶ j) :
@@ -203,9 +175,12 @@ lemma reconstructedLinearMap_naturality
     reconstructedLinearMap A T L i ≫ coefficientPresheaf.map f.right =
       (discretePresheaf A).map f.right ≫ reconstructedLinearMap A T L j := by
   apply ModuleCat.hom_injective
-  ext h
+  apply LinearMap.ext
+  intro h
   apply LocallyConstant.ext
   intro y
+  simp only [ModuleCat.hom_comp, LinearMap.comp_apply,
+    reconstructedLinearMap, ModuleCat.hom_ofHom]
   change
     (show LocallyConstant j.right.unop R from
       coefficientPresheaf.map f.right
@@ -252,16 +227,7 @@ noncomputable def reconstructionToIhom
           intro h
           apply LocallyConstant.ext
           intro y
-          change
-            (show LocallyConstant k.right.unop R from
-              coefficientPresheaf.map k.hom
-                ((L₁ + L₂) ((show LocallyConstant k.right.unop A from h) y))) y =
-              (show LocallyConstant k.right.unop R from
-                coefficientPresheaf.map k.hom
-                    (L₁ ((show LocallyConstant k.right.unop A from h) y)) +
-                  coefficientPresheaf.map k.hom
-                    (L₂ ((show LocallyConstant k.right.unop A from h) y))) y
-          simp only [LinearMap.add_apply, map_add, LocallyConstant.add_apply]
+          simp [reconstructedLinearMap, reconstructedSection]
         map_smul' := by
           intro r L
           apply ModuleCat.hom_injective
@@ -269,34 +235,27 @@ noncomputable def reconstructionToIhom
           intro h
           apply LocallyConstant.ext
           intro y
-          change
-            (show LocallyConstant k.right.unop R from
-              coefficientPresheaf.map k.hom
-                ((r • L) ((show LocallyConstant k.right.unop A from h) y))) y =
-              (show LocallyConstant k.right.unop R from
-                r • coefficientPresheaf.map k.hom
-                  (L ((show LocallyConstant k.right.unop A from h) y))) y
-          simp only [LinearMap.smul_apply, map_smul, LocallyConstant.smul_apply] })
+          simp [reconstructedLinearMap, reconstructedSection] })
 
 set_option backward.isDefEq.respectTransparency false in
 lemma reconstructionToIhom_condition
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
     {i j : Under (op T)} (f : i ⟶ j) :
     reconstructionToIhom A T i ≫
-        (ihom ((Under.forget (op T) ⋙ discretePresheaf A).obj i)).map
-          ((Under.forget (op T) ⋙ coefficientPresheaf).map f) =
+        (ihom ((discretePresheaf A).obj i.right)).map
+          (coefficientPresheaf.map f.right) =
       reconstructionToIhom A T j ≫
-        (MonoidalClosed.pre ((Under.forget (op T) ⋙ discretePresheaf A).map f)).app
-          ((Under.forget (op T) ⋙ coefficientPresheaf).obj j) := by
+        (MonoidalClosed.pre ((discretePresheaf A).map f.right)).app
+          (coefficientPresheaf.obj j.right) := by
   apply ModuleCat.hom_injective
   apply LinearMap.ext
-  intro L
+  intro (L : familyModule A T)
   change
-    ((ihom ((Under.forget (op T) ⋙ discretePresheaf A).obj i)).map
-      ((Under.forget (op T) ⋙ coefficientPresheaf).map f))
+    ((ihom ((discretePresheaf A).obj i.right)).map
+      (coefficientPresheaf.map f.right))
         (reconstructedLinearMap A T L i) =
-      ((MonoidalClosed.pre ((Under.forget (op T) ⋙ discretePresheaf A).map f)).app
-        ((Under.forget (op T) ⋙ coefficientPresheaf).obj j))
+      ((MonoidalClosed.pre ((discretePresheaf A).map f.right)).app
+        (coefficientPresheaf.obj j.right))
         (reconstructedLinearMap A T L j)
   rw [ModuleCat.ihom_map_apply,
     CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply]
@@ -354,7 +313,8 @@ lemma familyToSection_sectionToFamily
     (fun q : coefficientPresheaf.obj (op T) =>
       (show LocallyConstant T R from q) t) ha
   simpa [sectionToFamily, evaluationFamily, projectionLinearMap,
-    reconstructionToIhom, reconstructedLinearMap, reconstructedSection] using ht
+    reconstructionToIhom, reconstructedLinearMap, reconstructedSection,
+    CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] using ht
 
 -- Enriched-end naturality of every projected slice.
 set_option backward.isDefEq.respectTransparency false in
@@ -549,7 +509,7 @@ lemma sectionToFamily_familyToSection
       𝟙 ((internalDualPresheaf A).obj (op T)) := by
   rw [← cancel_mono (internalDualAtIso A T).hom]
   apply end_.hom_ext
-  intro k
+  intro (k : Under (op T))
   change
     ((sectionToFamily A T ≫ familyToSection A T) ≫
         (internalDualAtIso A T).hom) ≫
@@ -569,10 +529,16 @@ lemma sectionToFamily_familyToSection
     internalDualAtIso_hom_projection,
     familyToSection_projection]
   apply ModuleCat.hom_injective
-  ext φ
+  apply LinearMap.ext
+  intro (φ : (internalDualPresheaf A).obj (op T))
   change
-    reconstructedLinearMap A T (evaluationFamily A T φ) k =
+    reconstructedLinearMap A T ((sectionToFamily A T) φ) k =
       projectionLinearMap A T k φ
+  have hEval : (sectionToFamily A T) φ = evaluationFamily A T φ := by
+    apply LinearMap.ext
+    intro a
+    rfl
+  rw [hEval]
   exact (projection_recovery A T k φ).symm
 
 /-- Exact test-object equivalence for the internal dual of a discrete module. -/
