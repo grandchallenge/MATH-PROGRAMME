@@ -152,27 +152,27 @@ noncomputable def sectionToFamily
 
 /-- Pointwise reconstruction of a slice map from an `R`-linear family on `T`. -/
 noncomputable def reconstructedSection
-    (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
+    (A : ModuleCat.{u + 1} R.{u}) (T : CompHaus.{u})
     (L : familyModule A T) (k : Under (op T))
     (h : LocallyConstant k.right.unop A) :
-    LocallyConstant k.right.unop R where
+    LocallyConstant k.right.unop R.{u} where
   toFun := fun y =>
-    (show LocallyConstant k.right.unop R from
+    (show LocallyConstant k.right.unop R.{u} from
       coefficientPresheaf.map k.hom (L ((show LocallyConstant k.right.unop A from h) y))) y
   isLocallyConstant := by
     rw [IsLocallyConstant.iff_eventually_eq]
     intro y
     have hh := (show LocallyConstant k.right.unop A from h).isLocallyConstant.eventually_eq y
     have hL :=
-      (show LocallyConstant k.right.unop R from
+      (show LocallyConstant k.right.unop R.{u} from
         coefficientPresheaf.map k.hom
           (L ((show LocallyConstant k.right.unop A from h) y))).isLocallyConstant.eventually_eq y
     filter_upwards [hh, hL] with y' hy' hLy'
     change
-      (show LocallyConstant k.right.unop R from
+      (show LocallyConstant k.right.unop R.{u} from
         coefficientPresheaf.map k.hom
           (L ((show LocallyConstant k.right.unop A from h) y'))) y' =
-        (show LocallyConstant k.right.unop R from
+        (show LocallyConstant k.right.unop R.{u} from
           coefficientPresheaf.map k.hom
             (L ((show LocallyConstant k.right.unop A from h) y))) y
     have harg :
@@ -180,10 +180,10 @@ noncomputable def reconstructedSection
           L ((show LocallyConstant k.right.unop A from h) y) :=
       congrArg (fun a : A => L a) hy'
     have hpull := congrArg
-      (fun s : LocallyConstant T R =>
-        (show LocallyConstant k.right.unop R from coefficientPresheaf.map k.hom s)) harg
+      (fun s : LocallyConstant T R.{u} =>
+        (show LocallyConstant k.right.unop R.{u} from coefficientPresheaf.map k.hom s)) harg
     have hpullPoint := congrArg
-      (fun s : LocallyConstant k.right.unop R => s y') hpull
+      (fun s : LocallyConstant k.right.unop R.{u} => s y') hpull
     exact hpullPoint.trans hLy'
 
 noncomputable def reconstructedLinearMap
@@ -281,6 +281,7 @@ noncomputable def reconstructionToIhom
         intro h
         apply LocallyConstant.ext
         intro y
+        rw [ModuleCat.hom_add]
         simp [reconstructedLinearMap, reconstructedSection] }
   exact ModuleCat.ofHom (uliftIntLinearMapOfAddHom f)
 
