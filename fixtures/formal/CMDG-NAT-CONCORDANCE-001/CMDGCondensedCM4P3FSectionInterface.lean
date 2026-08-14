@@ -271,8 +271,8 @@ noncomputable def reconstructionToIhom
       (ihom ((Under.forget (op T) ⋙ discretePresheaf A).obj k)).obj
         ((Under.forget (op T) ⋙ coefficientPresheaf).obj k) := by
   let f : AddHom (familyModule A T)
-      ((ihom ((Under.forget (op T) ⋙ discretePresheaf A).obj k)).obj
-        ((Under.forget (op T) ⋙ coefficientPresheaf).obj k)) :=
+      ((discretePresheaf A).obj k.right ⟶
+        coefficientPresheaf.obj k.right) :=
     { toFun := fun L => reconstructedLinearMap A T L k
       map_add' := by
         intro L₁ L₂
