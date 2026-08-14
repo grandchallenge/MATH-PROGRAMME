@@ -54,9 +54,10 @@ lemma uliftInt_smul_eq_zsmul
     {M : Type (u + 1)} [AddCommGroup M] (mM : Module R M) (r : R) (x : M) :
     @SMul.smul R M mM.toSMul r x = r.down • x := by
   letI : Module R M := mM
-  letI : SMul R M := mM.toSMul
   obtain ⟨z⟩ := r
-  simpa using (Int.cast_smul_eq_zsmul R z x)
+  change @SMul.smul R M mM.toSMul (ULift.up z) x = z • x
+  rw [ULift.up_intCast]
+  exact Int.cast_smul_eq_zsmul R z x
 
 /-- Over `R = ULift ℤ`, every additive homomorphism between `R`-modules is automatically
 `R`-linear. This packages the propositionally unique scalar action without requiring the
@@ -94,6 +95,30 @@ noncomputable def projectionLinearMap
       (Under.forget (op T) ⋙ coefficientPresheaf)
       k) φ
 
+lemma projectionLinearMap_add
+    (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
+    (k : Under (op T))
+    (φ ψ : (internalDualPresheaf A).obj (op T)) :
+    projectionLinearMap A T k (φ + ψ) =
+      projectionLinearMap A T k φ + projectionLinearMap A T k ψ := by
+  change
+    (enrichedHomπ
+      (ModuleCat.{u + 1} R)
+      (Under.forget (op T) ⋙ discretePresheaf A)
+      (Under.forget (op T) ⋙ coefficientPresheaf)
+      k) (φ + ψ) =
+    (enrichedHomπ
+      (ModuleCat.{u + 1} R)
+      (Under.forget (op T) ⋙ discretePresheaf A)
+      (Under.forget (op T) ⋙ coefficientPresheaf)
+      k) φ +
+    (enrichedHomπ
+      (ModuleCat.{u + 1} R)
+      (Under.forget (op T) ⋙ discretePresheaf A)
+      (Under.forget (op T) ⋙ coefficientPresheaf)
+      k) ψ
+  exact map_add _ φ ψ
+
 /-- Evaluate an enriched-end section on constant `A`-sections at the identity object over `T`. -/
 noncomputable def evaluationFamily
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
@@ -114,7 +139,15 @@ noncomputable def sectionToFamily
         intro a
         apply LocallyConstant.ext
         intro t
-        simp [evaluationFamily, projectionLinearMap] }
+        change
+          ((projectionLinearMap A T (Under.mk (𝟙 (op T))) (φ + ψ)).hom
+            ((LocallyConstant.constₗ R) a)) t =
+          (((projectionLinearMap A T (Under.mk (𝟙 (op T))) φ).hom
+              ((LocallyConstant.constₗ R) a)) +
+            ((projectionLinearMap A T (Under.mk (𝟙 (op T))) ψ).hom
+              ((LocallyConstant.constₗ R) a))) t
+        rw [projectionLinearMap_add]
+        rfl }
   exact ModuleCat.ofHom (uliftIntLinearMapOfAddHom f)
 
 /-- Pointwise reconstruction of a slice map from an `R`-linear family on `T`. -/
