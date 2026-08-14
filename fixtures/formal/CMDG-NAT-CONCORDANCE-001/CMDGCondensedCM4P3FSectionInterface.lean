@@ -388,7 +388,7 @@ lemma familyToSection_sectionToFamily
       exact ht
     _ = (L a) t := by
       change
-        (L a) ((TopCat.Hom.hom (𝟙 T).hom) t) =
+        (L a) ((𝟙 T : T ⟶ T) t) =
           (L a) t
       rfl
 
