@@ -51,8 +51,10 @@ noncomputable abbrev familyModule (A : ModuleCat.{u + 1} R) (T : CompHaus.{u}) :
 /-- Scalar multiplication by the lifted integer `r` is forced by the underlying additive group,
 independently of the particular `R`-module instance selected by elaboration. -/
 lemma uliftInt_smul_eq_zsmul
-    {M : Type*} [AddCommGroup M] [Module R M] (r : R) (x : M) :
-    r • x = r.down • x := by
+    {M : Type (u + 1)} [AddCommGroup M] (mM : Module R M) (r : R) (x : M) :
+    @SMul.smul R M mM.toSMul r x = r.down • x := by
+  letI : Module R M := mM
+  letI : SMul R M := mM.toSMul
   obtain ⟨z⟩ := r
   simpa using (Int.cast_smul_eq_zsmul R z x)
 
@@ -60,17 +62,16 @@ lemma uliftInt_smul_eq_zsmul
 `R`-linear. This packages the propositionally unique scalar action without requiring the
 competing module instances to be definitionally equal. -/
 def uliftIntLinearMapOfAddHom
-    {M N : Type*} [AddCommGroup M] [Module R M]
-    [AddCommGroup N] [Module R N] (f : AddHom M N) : M →ₗ[R] N where
+    {M N : Type (u + 1)} [AddCommGroup M] [mM : Module R M]
+    [AddCommGroup N] [mN : Module R N] (f : AddHom M N) : M →ₗ[R] N where
   toFun := f
   map_add' := f.map_add
   map_smul' := by
     intro r x
-    calc
-      f (r • x) = f (r.down • x) :=
-        congrArg (fun y => f y) (uliftInt_smul_eq_zsmul r x)
-      _ = r.down • f x := map_zsmul f r.down x
-      _ = r • f x := (uliftInt_smul_eq_zsmul r (f x)).symm
+    change f (@SMul.smul R M mM.toSMul r x) =
+      @SMul.smul R N mN.toSMul r (f x)
+    rw [uliftInt_smul_eq_zsmul mM r x,
+      uliftInt_smul_eq_zsmul mN r (f x), map_zsmul]
 
 noncomputable def identityProjection
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u}) :=
@@ -113,7 +114,7 @@ noncomputable def sectionToFamily
         intro a
         apply LocallyConstant.ext
         intro t
-        rfl }
+        simp [evaluationFamily, projectionLinearMap] }
   exact ModuleCat.ofHom (uliftIntLinearMapOfAddHom f)
 
 /-- Pointwise reconstruction of a slice map from an `R`-linear family on `T`. -/
@@ -164,12 +165,16 @@ noncomputable def reconstructedLinearMap
         intro y
         change
           (show LocallyConstant k.right.unop R from
-            coefficientPresheaf.map k.hom (L (h₁ y + h₂ y))) y =
+            coefficientPresheaf.map k.hom
+              (L (((show LocallyConstant k.right.unop A from h₁) y) +
+                ((show LocallyConstant k.right.unop A from h₂) y)))) y =
           ((show LocallyConstant k.right.unop R from
-              coefficientPresheaf.map k.hom (L (h₁ y))) +
+              coefficientPresheaf.map k.hom
+                (L ((show LocallyConstant k.right.unop A from h₁) y))) +
             (show LocallyConstant k.right.unop R from
-              coefficientPresheaf.map k.hom (L (h₂ y)))) y
-        rw [map_add, map_add] }
+              coefficientPresheaf.map k.hom
+                (L ((show LocallyConstant k.right.unop A from h₂) y)))) y
+        rw [L.map_add, (coefficientPresheaf.map k.hom).hom.map_add] }
   exact ModuleCat.ofHom (uliftIntLinearMapOfAddHom f)
 
 lemma coefficientPullback_triangle
