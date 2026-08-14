@@ -207,7 +207,7 @@ noncomputable def reconstructedLinearMap
               (L ((show LocallyConstant k.right.unop A from h₂) y)))) y
         rw [L.map_add,
           (LocallyConstant.comapₗ R.{u} k.hom.unop.hom.hom).map_add] }
-  exact ModuleCat.ofHom (uliftIntLinearMapOfAddHom f)
+  exact (ModuleCat.homAddEquiv (R := R.{u})).symm (uliftIntLinearMapOfAddHom f)
 
 lemma coefficientPullback_triangle
     (T : CompHaus.{u}) {i j : Under (op T)} (f : i ⟶ j) :
@@ -276,14 +276,14 @@ noncomputable def reconstructionToIhom
     { toFun := fun L => reconstructedLinearMap A T L k
       map_add' := by
         intro L₁ L₂
-        apply ModuleCat.hom_injective
-        simp only [ModuleCat.hom_add]
+        apply (ModuleCat.homAddEquiv (R := R.{u})).injective
+        rw [(ModuleCat.homAddEquiv (R := R.{u})).map_add]
+        simp only [reconstructedLinearMap, AddEquiv.apply_symm_apply]
         apply LinearMap.ext
         intro h
         apply LocallyConstant.ext
         intro y
-        simp [reconstructedLinearMap, reconstructedSection,
-          uliftIntLinearMapOfAddHom] }
+        simp [reconstructedSection, uliftIntLinearMapOfAddHom] }
   exact ModuleCat.ofHom (uliftIntLinearMapOfAddHom f)
 
 set_option backward.isDefEq.respectTransparency false in
