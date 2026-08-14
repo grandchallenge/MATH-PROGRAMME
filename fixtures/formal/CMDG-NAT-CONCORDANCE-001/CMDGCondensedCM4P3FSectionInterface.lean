@@ -373,9 +373,10 @@ lemma familyToSection_sectionToFamily
     (fun q : coefficientPresheaf.obj (op T) =>
       (show LocallyConstant T R from q) t) ha
   change
-    (projectionLinearMap A T (Under.mk (𝟙 (op T)))
-      ((familyToSection A T) L)
-      (LocallyConstant.const T a)) t =
+    (show LocallyConstant T R from
+      projectionLinearMap A T (Under.mk (𝟙 (op T)))
+        ((familyToSection A T) L)
+        (LocallyConstant.const T a)) t =
       (L a) t
   simpa [projectionLinearMap, reconstructionToIhom,
     reconstructedLinearMap, reconstructedSection,
