@@ -335,6 +335,7 @@ noncomputable def familyToSection
       dsimp [CategoryTheory.Enriched.FunctorCategory.diagram, CategoryTheory.eHomFunctor,
         CategoryTheory.Functor.whiskerLeft]
       simpa only [
+        MonoidalClosed.enrichedCategorySelf_hom,
         MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerLeft,
         MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight] using
         reconstructionToIhom_condition A T f)
