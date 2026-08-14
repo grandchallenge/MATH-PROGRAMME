@@ -372,11 +372,16 @@ lemma familyToSection_sectionToFamily
   have ht := congrArg
     (fun q : coefficientPresheaf.obj (op T) =>
       (show LocallyConstant T R from q) t) ha
-  simpa [sectionToFamily, evaluationFamily, projectionLinearMap,
-    reconstructionToIhom, reconstructedLinearMap, reconstructedSection,
+  change
+    (projectionLinearMap A T (Under.mk (𝟙 (op T)))
+      ((familyToSection A T) L)
+      (LocallyConstant.const T a)) t =
+      (L a) t
+  simpa [projectionLinearMap, reconstructionToIhom,
+    reconstructedLinearMap, reconstructedSection,
     uliftIntLinearMapOfAddHom,
-    LinearMap.comp_apply, LocallyConstant.constₗ,
     ModuleCat.homAddEquiv, ModuleCat.homEquiv,
+    ModuleCat.ofHom_apply,
     CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] using ht
 
 -- Enriched-end naturality of every projected slice.
