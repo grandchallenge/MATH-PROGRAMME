@@ -89,7 +89,7 @@ noncomputable def sectionToFamily
         intro a
         apply LocallyConstant.ext
         intro t
-        have hp := map_add (identityProjection A T) φ ψ
+        have hp := map_add (identityProjection A T).hom φ ψ
         have ha := congrArg
           (fun q => q (LocallyConstant.const T a)) hp
         have ht := congrArg
@@ -102,7 +102,7 @@ noncomputable def sectionToFamily
         intro a
         apply LocallyConstant.ext
         intro t
-        have hp := map_smul (identityProjection A T) r φ
+        have hp := map_smul (identityProjection A T).hom r φ
         have ha := congrArg
           (fun q => q (LocallyConstant.const T a)) hp
         have ht := congrArg
@@ -113,7 +113,7 @@ noncomputable def sectionToFamily
 /-- Pointwise reconstruction of a slice map from an `R`-linear family on `T`. -/
 noncomputable def reconstructedSection
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
-    (L : A →ₗ[R] LocallyConstant T R) (k : Under (op T))
+    (L : familyModule A T) (k : Under (op T))
     (h : (discretePresheaf A).obj k.right) :
     coefficientPresheaf.obj k.right where
   toFun := fun y =>
@@ -129,16 +129,18 @@ noncomputable def reconstructedSection
           (L ((show LocallyConstant k.right.unop A from h) y))).isLocallyConstant.eventually_eq y
     filter_upwards [hh, hL] with y' hy' hLy'
     change
-      (coefficientPresheaf.map k.hom
+      (show LocallyConstant k.right.unop R from
+        coefficientPresheaf.map k.hom
           (L ((show LocallyConstant k.right.unop A from h) y'))) y' =
-        (coefficientPresheaf.map k.hom
-          (L ((show LocallyConstant k.right.unop A from h) y))) y
+        (show LocallyConstant k.right.unop R from
+          coefficientPresheaf.map k.hom
+            (L ((show LocallyConstant k.right.unop A from h) y))) y
     rw [hy']
     exact hLy'
 
 noncomputable def reconstructedLinearMap
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
-    (L : A →ₗ[R] LocallyConstant T R) (k : Under (op T)) :
+    (L : familyModule A T) (k : Under (op T)) :
     (discretePresheaf A).obj k.right ⟶ coefficientPresheaf.obj k.right :=
   ModuleCat.ofHom
     { toFun := reconstructedSection A T L k
@@ -147,23 +149,27 @@ noncomputable def reconstructedLinearMap
         apply LocallyConstant.ext
         intro y
         change
-          (coefficientPresheaf.map k.hom)
+          (show LocallyConstant k.right.unop R from
+            coefficientPresheaf.map k.hom
               (L ((show LocallyConstant k.right.unop A from h₁) y +
-                (show LocallyConstant k.right.unop A from h₂) y)) y =
-            ((coefficientPresheaf.map k.hom)
+                (show LocallyConstant k.right.unop A from h₂) y))) y =
+            (show LocallyConstant k.right.unop R from
+              (coefficientPresheaf.map k.hom
                 (L ((show LocallyConstant k.right.unop A from h₁) y)) +
-              (coefficientPresheaf.map k.hom)
-                (L ((show LocallyConstant k.right.unop A from h₂) y))) y
+              coefficientPresheaf.map k.hom
+                (L ((show LocallyConstant k.right.unop A from h₂) y)))) y
         simp only [map_add, LocallyConstant.add_apply]
       map_smul' := by
         intro r h
         apply LocallyConstant.ext
         intro y
         change
-          (coefficientPresheaf.map k.hom)
-              (L (r • (show LocallyConstant k.right.unop A from h) y)) y =
-            (r • (coefficientPresheaf.map k.hom)
-              (L ((show LocallyConstant k.right.unop A from h) y))) y
+          (show LocallyConstant k.right.unop R from
+            coefficientPresheaf.map k.hom
+              (L (r • (show LocallyConstant k.right.unop A from h) y))) y =
+            (show LocallyConstant k.right.unop R from
+              r • coefficientPresheaf.map k.hom
+                (L ((show LocallyConstant k.right.unop A from h) y))) y
         simp only [map_smul, LocallyConstant.smul_apply] }
 
 lemma coefficientPullback_triangle
@@ -182,7 +188,7 @@ lemma discretePullback_triangle
 /-- The reconstructed slice maps are natural in the under-category variable. -/
 lemma reconstructedLinearMap_naturality
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
-    (L : A →ₗ[R] LocallyConstant T R)
+    (L : familyModule A T)
     {i j : Under (op T)} (f : i ⟶ j) :
     reconstructedLinearMap A T L i ≫ coefficientPresheaf.map f.right =
       (discretePresheaf A).map f.right ≫ reconstructedLinearMap A T L j := by
@@ -221,7 +227,7 @@ noncomputable def reconstructionToIhom
       (ihom ((Under.forget (op T) ⋙ discretePresheaf A).obj k)).obj
         ((Under.forget (op T) ⋙ coefficientPresheaf).obj k) :=
   ModuleCat.ofHom
-    { toFun := fun (L : A →ₗ[R] LocallyConstant T R) => reconstructedLinearMap A T L k
+    { toFun := fun L => reconstructedLinearMap A T L k
       map_add' := by
         intro L₁ L₂
         apply ModuleCat.hom_injective
@@ -276,7 +282,7 @@ noncomputable def familyToSection
     (fun i j f => by
       dsimp [CategoryTheory.Enriched.FunctorCategory.diagram, CategoryTheory.eHomFunctor,
         CategoryTheory.Functor.whiskerLeft]
-      simpa only [
+      simpa only [Functor.comp_obj, Functor.comp_map, Under.forget_obj, Under.forget_map,
         MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerLeft,
         MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight] using
         reconstructionToIhom_condition A T f)
@@ -333,7 +339,6 @@ lemma projectionLinearMap_naturality
       f)
   dsimp [CategoryTheory.Enriched.FunctorCategory.diagram, CategoryTheory.eHomFunctor,
     CategoryTheory.Functor.whiskerLeft] at hcond
-  apply ModuleCat.hom_injective
   simpa only [
     MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerLeft,
     MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight,
@@ -445,11 +450,8 @@ lemma projection_recovery
   intro h
   apply LocallyConstant.ext
   intro y
-  change
-    (show LocallyConstant k.right.unop R from projectionLinearMap A T k φ h) y =
-      evaluationFamily A T φ ((show LocallyConstant k.right.unop A from h) y)
-        (k.hom.unop y)
-  exact projection_point_value A T k φ h y
+  simpa [reconstructedLinearMap, reconstructedSection] using
+    projection_point_value A T k φ h y
 
 lemma internalDualPresheaf_obj_eq_enrichedHom
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u}) :
