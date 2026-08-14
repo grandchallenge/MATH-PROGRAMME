@@ -44,7 +44,7 @@ lemma internalDualPresheaf_eq_functorEnrichedHom (A : ModuleCat.{u + 1} R) :
 noncomputable abbrev coefficientAt (T : CompHaus.{u}) : ModuleCat.{u + 1} R :=
   coefficientPresheaf.obj (op T)
 
-noncomputable def familyModule (A : ModuleCat.{u + 1} R) (T : CompHaus.{u}) :
+noncomputable abbrev familyModule (A : ModuleCat.{u + 1} R) (T : CompHaus.{u}) :
     ModuleCat.{u + 1} R :=
   ModuleCat.of R (A →ₗ[R] LocallyConstant T R)
 
@@ -89,14 +89,14 @@ noncomputable def sectionToFamily
         intro a
         apply LocallyConstant.ext
         intro t
-        rfl
+        simp [evaluationFamily, projectionLinearMap]
       map_smul' := by
         intro r φ
         apply LinearMap.ext
         intro a
         apply LocallyConstant.ext
         intro t
-        rfl }
+        simp [evaluationFamily, projectionLinearMap] }
 
 /-- Pointwise reconstruction of a slice map from an `R`-linear family on `T`. -/
 noncomputable def reconstructedSection
@@ -116,12 +116,7 @@ noncomputable def reconstructedSection
         coefficientPresheaf.map k.hom
           (L ((show LocallyConstant k.right.unop A from h) y))).isLocallyConstant.eventually_eq y
     filter_upwards [hh, hL] with y' hy' hLy'
-    change
-      (show LocallyConstant k.right.unop R from
-        coefficientPresheaf.map k.hom
-          (L ((show LocallyConstant k.right.unop A from h) y'))) y' = _
-    rw [hy']
-    exact hLy'
+    simpa only [hy'] using hLy'
 
 noncomputable def reconstructedLinearMap
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
@@ -208,14 +203,14 @@ noncomputable def reconstructionToIhom
         ext h
         apply LocallyConstant.ext
         intro y
-        rfl
+        simp [reconstructedLinearMap, reconstructedSection]
       map_smul' := by
         intro r L
         apply ModuleCat.hom_injective
         ext h
         apply LocallyConstant.ext
         intro y
-        rfl }
+        simp [reconstructedLinearMap, reconstructedSection] }
 
 lemma reconstructionToIhom_condition
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
@@ -272,6 +267,7 @@ lemma familyToSection_projection
   exact end_.lift_π _ _ k
 
 /-- Easy triangle: reconstructing a family and re-evaluating it returns the original family. -/
+set_option backward.isDefEq.respectTransparency false in
 lemma familyToSection_sectionToFamily
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u}) :
     familyToSection A T ≫ sectionToFamily A T = 𝟙 (familyModule A T) := by
@@ -281,9 +277,18 @@ lemma familyToSection_sectionToFamily
   intro a
   apply LocallyConstant.ext
   intro t
-  rfl
+  have hp := ConcreteCategory.congr_hom
+    (familyToSection_projection A T (Under.mk (𝟙 (op T)))) L
+  have ha := ConcreteCategory.congr_hom hp
+    (show (discretePresheaf A).obj (op T) from LocallyConstant.const T a)
+  have ht := congrArg
+    (fun q : coefficientPresheaf.obj (op T) =>
+      (show LocallyConstant T R from q) t) ha
+  simpa [sectionToFamily, evaluationFamily, projectionLinearMap,
+    reconstructionToIhom, reconstructedLinearMap, reconstructedSection] using ht
 
 /-- Enriched-end naturality of every projected slice. -/
+set_option backward.isDefEq.respectTransparency false in
 lemma projectionLinearMap_naturality
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
     {i j : Under (op T)} (f : i ⟶ j)
@@ -298,17 +303,15 @@ lemma projectionLinearMap_naturality
       (Under.forget (op T) ⋙ discretePresheaf A)
       (Under.forget (op T) ⋙ coefficientPresheaf)
       f)
-  change
-    ((ihom ((Under.forget (op T) ⋙ discretePresheaf A).obj i)).map
-      ((Under.forget (op T) ⋙ coefficientPresheaf).map f))
-        (projectionLinearMap A T i φ) =
-      ((MonoidalClosed.pre ((Under.forget (op T) ⋙ discretePresheaf A).map f)).app
-        ((Under.forget (op T) ⋙ coefficientPresheaf).obj j))
-        (projectionLinearMap A T j φ) at hcond
-  rw [ModuleCat.ihom_map_apply,
-    CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] at hcond
-  exact hcond
+  dsimp [CategoryTheory.Enriched.FunctorCategory.diagram, CategoryTheory.eHomFunctor,
+    CategoryTheory.Functor.whiskerLeft] at hcond
+  simpa only [
+    MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerLeft,
+    MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight,
+    ModuleCat.ihom_map_apply,
+    CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] using hcond
 
+set_option backward.isDefEq.respectTransparency false in
 lemma projectionLinearMap_naturality_apply
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
     {i j : Under (op T)} (f : i ⟶ j)
@@ -318,8 +321,12 @@ lemma projectionLinearMap_naturality_apply
         (projectionLinearMap A T i φ h)) =
       projectionLinearMap A T j φ
         (((Under.forget (op T) ⋙ discretePresheaf A).map f) h) := by
-  simpa only [CategoryTheory.comp_apply] using
-    ConcreteCategory.congr_hom (projectionLinearMap_naturality A T f φ) h
+  change
+    (projectionLinearMap A T i φ ≫
+      (Under.forget (op T) ⋙ coefficientPresheaf).map f) h =
+    ((Under.forget (op T) ⋙ discretePresheaf A).map f ≫
+      projectionLinearMap A T j φ) h
+  exact ConcreteCategory.congr_hom (projectionLinearMap_naturality A T f φ) h
 
 noncomputable abbrev pointProbeObject
     (T : CompHaus.{u}) (k : Under (op T)) (y : k.right.unop) : Under (op T) :=
@@ -362,6 +369,7 @@ lemma discretePullback_pointProbeFromIdentity
 
 /-- Point-probe recovery: every slice value is determined by identity-slice evaluation
 on the pointwise value of the source section. -/
+set_option backward.isDefEq.respectTransparency false in
 lemma projection_point_value
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
     (k : Under (op T)) (φ : (internalDualPresheaf A).obj (op T))
@@ -397,6 +405,7 @@ lemma projection_point_value
       (show LocallyConstant P.right.unop R from q) y) hk
   exact hv
 
+set_option backward.isDefEq.respectTransparency false in
 lemma projection_recovery
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
     (k : Under (op T)) (φ : (internalDualPresheaf A).obj (op T)) :
@@ -487,7 +496,7 @@ noncomputable def sectionFamilyIso
 `C(X,R) → LocallyConstant T R`. -/
 noncomputable def measureSectionFamilyIso
     (X : Profinite.{u}) (T : CompHaus.{u}) :
-    CMDG.CondensedCM4P2D.measurePresheafObj X |>.obj (op T) ≅
+    (CMDG.CondensedCM4P2D.measurePresheafObj X).obj (op T) ≅
       familyModule (CMDG.CondensedCM4P2D.continuousFunctions.obj (op X)) T := by
   change
     (internalDualPresheaf (CMDG.CondensedCM4P2D.continuousFunctions.obj (op X))).obj (op T) ≅ _
