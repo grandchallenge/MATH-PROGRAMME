@@ -282,9 +282,10 @@ noncomputable def reconstructionToIhom
         intro h
         apply LocallyConstant.ext
         intro y
-        simp [reconstructedLinearMap, reconstructedSection,
-          uliftIntLinearMapOfAddHom, ModuleCat.homAddEquiv,
-          ModuleCat.homEquiv] }
+        simp only [reconstructedLinearMap, ModuleCat.homAddEquiv,
+          ModuleCat.homEquiv]
+        rw [ModuleCat.hom_add]
+        simp [reconstructedSection, uliftIntLinearMapOfAddHom] }
   exact ModuleCat.ofHom (uliftIntLinearMapOfAddHom f)
 
 set_option backward.isDefEq.respectTransparency false in
