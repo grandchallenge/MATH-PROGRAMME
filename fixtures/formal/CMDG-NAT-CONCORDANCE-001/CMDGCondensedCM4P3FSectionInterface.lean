@@ -277,11 +277,11 @@ noncomputable def reconstructionToIhom
       map_add' := by
         intro L₁ L₂
         apply ModuleCat.hom_injective
+        simp only [ModuleCat.hom_add]
         apply LinearMap.ext
         intro h
         apply LocallyConstant.ext
         intro y
-        rw [ModuleCat.hom_add]
         simp [reconstructedLinearMap, reconstructedSection] }
   exact ModuleCat.ofHom (uliftIntLinearMapOfAddHom f)
 
