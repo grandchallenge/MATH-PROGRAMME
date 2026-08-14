@@ -154,8 +154,8 @@ noncomputable def sectionToFamily
 noncomputable def reconstructedSection
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
     (L : familyModule A T) (k : Under (op T))
-    (h : (discretePresheaf A).obj k.right) :
-    coefficientPresheaf.obj k.right where
+    (h : LocallyConstant k.right.unop A) :
+    LocallyConstant k.right.unop R where
   toFun := fun y =>
     (show LocallyConstant k.right.unop R from
       coefficientPresheaf.map k.hom (L ((show LocallyConstant k.right.unop A from h) y))) y
