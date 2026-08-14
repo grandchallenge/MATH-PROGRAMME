@@ -187,27 +187,27 @@ noncomputable def reconstructedSection
     exact hpullPoint.trans hLy'
 
 noncomputable def reconstructedLinearMap
-    (A : ModuleCat.{u + 1} R) (T : CompHaus.{u})
+    (A : ModuleCat.{u + 1} R.{u}) (T : CompHaus.{u})
     (L : familyModule A T) (k : Under (op T)) :
     (discretePresheaf A).obj k.right ⟶ coefficientPresheaf.obj k.right := by
   let f : AddHom (LocallyConstant k.right.unop A)
-      (LocallyConstant k.right.unop R) :=
+      (LocallyConstant k.right.unop R.{u}) :=
     { toFun := fun h => reconstructedSection A T L k h
       map_add' := by
         intro h₁ h₂
         apply LocallyConstant.ext
         intro y
         change
-          (LocallyConstant.comapₗ R k.hom.unop.hom.hom
+          (LocallyConstant.comapₗ R.{u} k.hom.unop.hom.hom
             (L (((show LocallyConstant k.right.unop A from h₁) y) +
               ((show LocallyConstant k.right.unop A from h₂) y)))) y =
-          ((LocallyConstant.comapₗ R k.hom.unop.hom.hom
+          ((LocallyConstant.comapₗ R.{u} k.hom.unop.hom.hom
               (L ((show LocallyConstant k.right.unop A from h₁) y))) +
-            (LocallyConstant.comapₗ R k.hom.unop.hom.hom
+            (LocallyConstant.comapₗ R.{u} k.hom.unop.hom.hom
               (L ((show LocallyConstant k.right.unop A from h₂) y)))) y
         rw [L.map_add,
-          (LocallyConstant.comapₗ R k.hom.unop.hom.hom).map_add] }
-  exact (ModuleCat.homEquiv (R := R)).symm (uliftIntLinearMapOfAddHom f)
+          (LocallyConstant.comapₗ R.{u} k.hom.unop.hom.hom).map_add] }
+  exact (ModuleCat.homEquiv (R := R.{u})).symm (uliftIntLinearMapOfAddHom f)
 
 lemma coefficientPullback_triangle
     (T : CompHaus.{u}) {i j : Under (op T)} (f : i ⟶ j) :
