@@ -320,7 +320,6 @@ lemma reconstructionToIhom_condition
   exact reconstructedLinearMap_naturality A T L f
 
 /-- Reconstruct an enriched-end section from an `R`-linear locally constant family. -/
-set_option backward.isDefEq.respectTransparency false in
 noncomputable def familyToSection
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u}) :
     familyModule A T ⟶ (internalDualPresheaf A).obj (op T) := by
@@ -335,6 +334,7 @@ noncomputable def familyToSection
     (fun i j f => by
       dsimp [CategoryTheory.Enriched.FunctorCategory.diagram, CategoryTheory.eHomFunctor,
         CategoryTheory.Functor.whiskerLeft]
+      set_option backward.isDefEq.respectTransparency false in
       simpa only [
         MonoidalClosed.enrichedCategorySelf_hom,
         MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerLeft,
