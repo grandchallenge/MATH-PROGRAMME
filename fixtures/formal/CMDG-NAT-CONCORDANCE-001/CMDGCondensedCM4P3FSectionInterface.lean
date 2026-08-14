@@ -55,7 +55,10 @@ lemma uliftInt_smul_eq_zsmul
     @SMul.smul R M mM.toSMul r x = r.down • x := by
   letI : Module R M := mM
   obtain ⟨z⟩ := r
-  simpa using (Int.cast_smul_eq_zsmul R z x)
+  have hcast : (ULift.up z : R) = (z : R) := by
+    simpa using (ULift.up_intCast (R := ℤ) z)
+  rw [hcast]
+  exact Int.cast_smul_eq_zsmul R z x
 
 /-- Over `R = ULift ℤ`, every additive homomorphism between `R`-modules is automatically
 `R`-linear. This packages the propositionally unique scalar action without requiring the
@@ -135,10 +138,15 @@ noncomputable def sectionToFamily
         intro φ ψ
         apply LinearMap.ext
         intro a
+        apply LocallyConstant.ext
+        intro t
         have hadd := ConcreteCategory.congr_hom
           (projectionLinearMap_add A T (Under.mk (𝟙 (op T))) φ ψ)
           (show (discretePresheaf A).obj (op T) from LocallyConstant.const T a)
-        simpa [evaluationFamily] using hadd }
+        have haddPoint := congrArg
+          (fun q : coefficientPresheaf.obj (op T) =>
+            (show LocallyConstant T R from q) t) hadd
+        simpa [evaluationFamily] using haddPoint }
   exact ModuleCat.ofHom (uliftIntLinearMapOfAddHom f)
 
 /-- Pointwise reconstruction of a slice map from an `R`-linear family on `T`. -/
@@ -188,25 +196,15 @@ noncomputable def reconstructedLinearMap
         apply LocallyConstant.ext
         intro y
         change
-          (show LocallyConstant k.right.unop R from
-            coefficientPresheaf.map k.hom
-              (L (((show LocallyConstant k.right.unop A from h₁) y) +
-                ((show LocallyConstant k.right.unop A from h₂) y)))) y =
-          ((show LocallyConstant k.right.unop R from
-              coefficientPresheaf.map k.hom
-                (L ((show LocallyConstant k.right.unop A from h₁) y))) +
-            (show LocallyConstant k.right.unop R from
-              coefficientPresheaf.map k.hom
-                (L ((show LocallyConstant k.right.unop A from h₂) y)))) y
-        rw [L.map_add]
-        have hmap :=
-          (coefficientPresheaf.map k.hom).hom.map_add
-            (L ((show LocallyConstant k.right.unop A from h₁) y))
-            (L ((show LocallyConstant k.right.unop A from h₂) y))
-        have hmapPoint := congrArg
-          (fun q : coefficientPresheaf.obj k.right =>
-            (show LocallyConstant k.right.unop R from q) y) hmap
-        simpa using hmapPoint }
+          (LocallyConstant.comapₗ R k.hom.unop.hom.hom
+            (L (((show LocallyConstant k.right.unop A from h₁) y) +
+              ((show LocallyConstant k.right.unop A from h₂) y)))) y =
+          ((LocallyConstant.comapₗ R k.hom.unop.hom.hom
+              (L ((show LocallyConstant k.right.unop A from h₁) y))) +
+            (LocallyConstant.comapₗ R k.hom.unop.hom.hom
+              (L ((show LocallyConstant k.right.unop A from h₂) y)))) y
+        rw [L.map_add,
+          (LocallyConstant.comapₗ R k.hom.unop.hom.hom).map_add] }
   exact ModuleCat.ofHom (uliftIntLinearMapOfAddHom f)
 
 lemma coefficientPullback_triangle
