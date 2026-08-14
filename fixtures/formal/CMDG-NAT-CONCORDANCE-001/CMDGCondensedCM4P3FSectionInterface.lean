@@ -375,6 +375,8 @@ lemma familyToSection_sectionToFamily
   simpa [sectionToFamily, evaluationFamily, projectionLinearMap,
     reconstructionToIhom, reconstructedLinearMap, reconstructedSection,
     uliftIntLinearMapOfAddHom,
+    LinearMap.comp_apply, LocallyConstant.constₗ,
+    ModuleCat.homAddEquiv, ModuleCat.homEquiv,
     CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] using ht
 
 -- Enriched-end naturality of every projected slice.
