@@ -44,9 +44,9 @@ lemma internalDualPresheaf_eq_functorEnrichedHom (A : ModuleCat.{u + 1} R) :
 noncomputable abbrev coefficientAt (T : CompHaus.{u}) : ModuleCat.{u + 1} R :=
   coefficientPresheaf.obj (op T)
 
-noncomputable abbrev familyModule (A : ModuleCat.{u + 1} R) (T : CompHaus.{u}) :
-    ModuleCat.{u + 1} R :=
-  ModuleCat.of R (A →ₗ[R] LocallyConstant T R)
+noncomputable abbrev familyModule (A : ModuleCat.{u + 1} R.{u}) (T : CompHaus.{u}) :
+    ModuleCat.{u + 1} R.{u} :=
+  ModuleCat.of R.{u} (A →ₗ[R.{u}] LocallyConstant T R.{u})
 
 /-- Scalar multiplication by the lifted integer `r` is forced by the underlying additive group,
 independently of the particular `R`-module instance selected by elaboration. -/
@@ -185,21 +185,6 @@ noncomputable def reconstructedSection
     have hpullPoint := congrArg
       (fun s : LocallyConstant k.right.unop R.{u} => s y') hpull
     exact hpullPoint.trans hLy'
-
-set_option pp.universes true in
-#check coefficientPresheaf
-
-set_option pp.universes true in
-#check discretePresheaf
-
-set_option pp.universes true in
-#check familyModule
-
-set_option pp.universes true in
-#check reconstructedSection
-
-set_option pp.universes true in
-#check @reconstructedSection
 
 noncomputable def reconstructedLinearMap
     (A : ModuleCat.{u + 1} R.{u}) (T : CompHaus.{u})
