@@ -138,15 +138,17 @@ noncomputable def sectionToFamily
         intro φ ψ
         apply LinearMap.ext
         intro a
-        apply LocallyConstant.ext
-        intro t
+        change
+          projectionLinearMap A T (Under.mk (𝟙 (op T))) (φ + ψ)
+              (LocallyConstant.const T a) =
+            projectionLinearMap A T (Under.mk (𝟙 (op T))) φ
+                (LocallyConstant.const T a) +
+              projectionLinearMap A T (Under.mk (𝟙 (op T))) ψ
+                (LocallyConstant.const T a)
         have hadd := ConcreteCategory.congr_hom
           (projectionLinearMap_add A T (Under.mk (𝟙 (op T))) φ ψ)
           (show (discretePresheaf A).obj (op T) from LocallyConstant.const T a)
-        have haddPoint := congrArg
-          (fun q : coefficientPresheaf.obj (op T) =>
-            (show LocallyConstant T R from q) t) hadd
-        simpa [evaluationFamily] using haddPoint }
+        simpa only [ModuleCat.hom_add, LinearMap.add_apply] using hadd }
   exact ModuleCat.ofHom (uliftIntLinearMapOfAddHom f)
 
 /-- Pointwise reconstruction of a slice map from an `R`-linear family on `T`. -/
@@ -205,6 +207,10 @@ noncomputable def reconstructedLinearMap
               (L ((show LocallyConstant k.right.unop A from h₂) y)))) y
         rw [L.map_add,
           (LocallyConstant.comapₗ R k.hom.unop.hom.hom).map_add] }
+  letI : Module R ((discretePresheaf A).obj k.right) :=
+    ModuleCat.isModule ((discretePresheaf A).obj k.right)
+  letI : Module R (coefficientPresheaf.obj k.right) :=
+    ModuleCat.isModule (coefficientPresheaf.obj k.right)
   exact ModuleCat.ofHom (uliftIntLinearMapOfAddHom f)
 
 lemma coefficientPullback_triangle
