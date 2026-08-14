@@ -378,12 +378,19 @@ lemma familyToSection_sectionToFamily
         ((familyToSection A T) L)
         (LocallyConstant.const T a)) t =
       (L a) t
-  simpa [projectionLinearMap, reconstructionToIhom,
-    reconstructedLinearMap, reconstructedSection,
-    uliftIntLinearMapOfAddHom,
-    ModuleCat.homAddEquiv, ModuleCat.homEquiv,
-    ModuleCat.ofHom_apply,
-    CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] using ht
+  calc
+    _ =
+        (show LocallyConstant T R from
+          (ConcreteCategory.hom
+            ((ConcreteCategory.hom
+              (reconstructionToIhom A T (Under.mk (𝟙 (op T))))) L))
+            (LocallyConstant.const T a)) t := by
+      exact ht
+    _ = (L a) t := by
+      change
+        (L a) ((TopCat.Hom.hom (𝟙 T).hom) t) =
+          (L a) t
+      rfl
 
 -- Enriched-end naturality of every projected slice.
 set_option backward.isDefEq.respectTransparency false in
