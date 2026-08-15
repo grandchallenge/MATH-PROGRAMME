@@ -242,13 +242,20 @@ theorem finiteCoefficientToMeasure_pushforward
       (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso A).inv ≫
         ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso A).inv ≫
           CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafMap g) := by
-            rw [hMeasure]
+            exact congrArg
+              (fun q =>
+                (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso A).inv ≫ q)
+              hMeasure
     _ =
       ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso A).inv ≫
         (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso A).inv) ≫
         CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafMap g :=
       by
-        simpa only [Category.assoc]
+        exact
+          (Category.assoc
+            (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso A).inv
+            (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso A).inv
+            (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafMap g)).symm
 
 /-- Stage-23 terminal theorem. The finite Boolean measure section is covariantly compatible under
 finite quotient refinement. This is still a section-level claim, not a right-Kan cone. -/
