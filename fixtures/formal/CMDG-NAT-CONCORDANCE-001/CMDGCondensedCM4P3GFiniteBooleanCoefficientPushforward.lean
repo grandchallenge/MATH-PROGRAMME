@@ -269,14 +269,67 @@ theorem finiteBooleanMeasureSection_pushforward
       finiteBooleanMeasureSection X k := by
   let S := op ((profiniteToCompHaus).obj (basisBooleanCube X))
   let g := X.fintypeDiagram.map f
+  let Tj :=
+    (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso
+      (X.fintypeDiagram.obj j)).inv ≫
+      (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso
+        (X.fintypeDiagram.obj j)).inv
+  let Tk :=
+    (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso
+      (X.fintypeDiagram.obj k)).inv ≫
+      (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso
+        (X.fintypeDiagram.obj k)).inv
   have hcomp := finiteCoefficientToMeasure_pushforward g
-  have hpoint := congrArg
-    (fun η =>
-      (ConcreteCategory.hom (η.app S))
-        (finiteBooleanCoefficientFamily X j)) hcomp
-  have hCoeff := finiteBooleanCoefficientFamily_pushforward X f
-  simpa [finiteBooleanMeasureSection, S, g, hCoeff, NatTrans.comp_app,
-    ModuleCat.comp_apply] using hpoint.symm
+  have hcomp' :
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyPushforwardMap g ≫ Tk =
+        Tj ≫
+          CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafMap g := by
+    calc
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyPushforwardMap g ≫ Tk =
+          (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyPushforwardMap g ≫
+            (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso
+              (X.fintypeDiagram.obj k)).inv) ≫
+            (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso
+              (X.fintypeDiagram.obj k)).inv := by
+                dsimp [Tk]
+                exact (Category.assoc _ _ _).symm
+      _ =
+          ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso
+              (X.fintypeDiagram.obj j)).inv ≫
+            (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso
+              (X.fintypeDiagram.obj j)).inv) ≫
+            CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafMap g :=
+        hcomp
+      _ =
+          Tj ≫
+            CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafMap g := by
+              rfl
+  have hcompS := congrArg (fun η => η.app S) hcomp'
+  simp only [NatTrans.comp_app] at hcompS
+  have hpoint :=
+    ConcreteCategory.congr_hom hcompS
+      (finiteBooleanCoefficientFamily X j)
+  simp only [ConcreteCategory.comp_apply] at hpoint
+  have hCoeff' :
+      (ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyPushforwardMap
+          g).app S))
+        (finiteBooleanCoefficientFamily X j) =
+      finiteBooleanCoefficientFamily X k := by
+    simpa [S, g] using finiteBooleanCoefficientFamily_pushforward X f
+  rw [hCoeff'] at hpoint
+  have hSectionJ :
+      (ConcreteCategory.hom (Tj.app S))
+          (finiteBooleanCoefficientFamily X j) =
+        finiteBooleanMeasureSection X j := by
+    rfl
+  have hSectionK :
+      (ConcreteCategory.hom (Tk.app S))
+          (finiteBooleanCoefficientFamily X k) =
+        finiteBooleanMeasureSection X k := by
+    rfl
+  rw [hSectionK, hSectionJ] at hpoint
+  simpa [S, g] using hpoint.symm
 
 #check fintypeDiagram_map_eq_finiteQuotientTransition
 #check finiteCoefficientFamilyFiberPushforward
