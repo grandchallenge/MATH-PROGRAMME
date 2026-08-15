@@ -542,9 +542,14 @@ lemma projection_recovery
   intro h
   apply LocallyConstant.ext
   intro y
-  simpa [reconstructedLinearMap, reconstructedSection,
-    uliftIntLinearMapOfAddHom] using
-    projection_point_value A T k φ h y
+  calc
+    _ =
+        evaluationFamily A T φ
+          ((show LocallyConstant k.right.unop A from h) y)
+          (k.hom.unop y) := by
+      exact projection_point_value A T k φ h y
+    _ = _ := by
+      rfl
 
 lemma internalDualPresheaf_obj_eq_enrichedHom
     (A : ModuleCat.{u + 1} R) (T : CompHaus.{u}) :
