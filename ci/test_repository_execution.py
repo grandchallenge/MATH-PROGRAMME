@@ -3,10 +3,14 @@
 
 from __future__ import annotations
 
+import json
 import tempfile
 from pathlib import Path
 
-from validate_repository_execution import repository_execution_errors
+from validate_repository_execution import (
+    REPOSITORY_REGRESSION_COMMAND,
+    repository_execution_errors,
+)
 
 
 WORKFLOW = """name: Synthetic policy
@@ -15,11 +19,24 @@ jobs:
   validate-json:
     runs-on: ubuntu-24.04
     steps:
-      - run: python -m unittest discover -s tests -p 'test_*.py'
       - run: |
           python3 ci/validate_repository_execution.py
           python3 ci/test_repository_execution.py
 """
+
+REGISTRY = {
+    "schema_version": "1.0.0",
+    "registry_id": "MP-POLICY-SHARDS-001",
+    "shards": {
+        "contracts": [
+            ["python3", "ci/validate_repository_execution.py"],
+            ["python3", "ci/test_repository_execution.py"],
+        ],
+        "repository-regression": [
+            REPOSITORY_REGRESSION_COMMAND.split(),
+        ],
+    },
+}
 
 TEST_MODULE = """import unittest
 from experiments.sample import value
@@ -36,9 +53,13 @@ EXPERIMENT_MODULE = """def value():
 
 def write_valid_root(root: Path) -> None:
     (root / ".github" / "workflows").mkdir(parents=True)
+    (root / "governance").mkdir()
     (root / "tests").mkdir()
     (root / "experiments").mkdir()
     (root / ".github" / "workflows" / "ci.yml").write_text(WORKFLOW, encoding="utf-8")
+    (root / "governance" / "policy_shard_registry.json").write_text(
+        json.dumps(REGISTRY), encoding="utf-8"
+    )
     (root / "tests" / "test_sample.py").write_text(TEST_MODULE, encoding="utf-8")
     (root / "experiments" / "__init__.py").write_text("", encoding="utf-8")
     (root / "experiments" / "sample.py").write_text(EXPERIMENT_MODULE, encoding="utf-8")
@@ -68,19 +89,15 @@ def main() -> int:
         )
         (root / "experiments" / "sample.py").write_text(EXPERIMENT_MODULE, encoding="utf-8")
 
-        workflow_path = root / ".github" / "workflows" / "ci.yml"
-        workflow_path.write_text(
-            WORKFLOW.replace(
-                "python -m unittest discover -s tests -p 'test_*.py'",
-                "echo tests skipped",
-            ),
-            encoding="utf-8",
-        )
+        registry_path = root / "governance" / "policy_shard_registry.json"
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+        registry["shards"]["repository-regression"] = []
+        registry_path.write_text(json.dumps(registry), encoding="utf-8")
         assert any(
-            "missing repository execution command" in error
+            "missing repository-regression command" in error
             for error in repository_execution_errors(root)
         )
-        workflow_path.write_text(WORKFLOW, encoding="utf-8")
+        registry_path.write_text(json.dumps(REGISTRY), encoding="utf-8")
 
         (root / "tests" / "test_sample.py").write_text(
             "from experiments.sample import value\n",

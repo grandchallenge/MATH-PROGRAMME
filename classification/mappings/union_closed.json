@@ -1,18 +1,23 @@
 {
   "mapping_set_id": "UC-CLASSIFICATION-MAPPINGS",
-  "mapping_set_version": "1.0.0",
+  "mapping_set_version": "2.0.0",
+  "mapping_set_status": "QUALIFIED",
   "domain_id": "UC",
   "mappings": [
     {
       "mapping_id": "UC-MAP-MSC-05D05",
+      "target_type": "GRAPH_NODE",
       "internal_ref": "UC-DOMAIN",
       "scheme": "MSC",
       "scheme_version": "2020",
       "identifier": "05D05",
+      "label": "Extremal set theory",
       "mapping_relation": "EXACT",
-      "role": "PRIMARY",
+      "role": "PRIMARY_SUBJECT",
       "provenance": {
-        "source_id": "msc2020_skos",
+        "source_id": "msc2020_normative",
+        "source_artifact_id": "MSC2020-OFFICIAL-PDF-2020",
+        "assignment_method": "IMPORTED_EXISTING",
         "assigned_by": "programme-maintainer",
         "assigned_at": "2026-06-14",
         "evidence": [
@@ -20,18 +25,27 @@
         ]
       },
       "confidence": 1.0,
-      "review_status": "AUDITED"
+      "review_status": "AUDITED",
+      "reviewed_by": "programme-maintainer",
+      "reviewed_at": "2026-06-14",
+      "review_ref": "classification/mappings/union_closed.json@1.0.0",
+      "supersedes": [],
+      "superseded_by": null
     },
     {
       "mapping_id": "UC-MAP-MSC-06A12",
+      "target_type": "GRAPH_NODE",
       "internal_ref": "UC-DOMAIN",
       "scheme": "MSC",
       "scheme_version": "2020",
       "identifier": "06A12",
+      "label": "Semilattices",
       "mapping_relation": "RELATED",
-      "role": "SECONDARY",
+      "role": "SECONDARY_SUBJECT",
       "provenance": {
-        "source_id": "msc2020_skos",
+        "source_id": "msc2020_normative",
+        "source_artifact_id": "MSC2020-OFFICIAL-PDF-2020",
+        "assignment_method": "IMPORTED_EXISTING",
         "assigned_by": "programme-maintainer",
         "assigned_at": "2026-06-14",
         "evidence": [
@@ -39,18 +53,27 @@
         ]
       },
       "confidence": 0.95,
-      "review_status": "AUDITED"
+      "review_status": "AUDITED",
+      "reviewed_by": "programme-maintainer",
+      "reviewed_at": "2026-06-14",
+      "review_ref": "classification/mappings/union_closed.json@1.0.0",
+      "supersedes": [],
+      "superseded_by": null
     },
     {
       "mapping_id": "UC-MAP-ARXIV-MATH-CO",
+      "target_type": "GRAPH_NODE",
       "internal_ref": "UC-DOMAIN",
       "scheme": "ARXIV",
       "scheme_version": "current-as-of-2026-06-14",
       "identifier": "math.CO",
+      "label": "Combinatorics",
       "mapping_relation": "CLOSE",
-      "role": "FACET",
+      "role": "DISCOVERY_FACET",
       "provenance": {
         "source_id": "arxiv",
+        "source_artifact_id": "ARXIV-CATEGORY-CURRENT-2026-06-14",
+        "assignment_method": "IMPORTED_EXISTING",
         "assigned_by": "programme-maintainer",
         "assigned_at": "2026-06-14",
         "evidence": [
@@ -58,7 +81,12 @@
         ]
       },
       "confidence": 1.0,
-      "review_status": "AUDITED"
+      "review_status": "AUDITED",
+      "reviewed_by": "programme-maintainer",
+      "reviewed_at": "2026-06-14",
+      "review_ref": "classification/mappings/union_closed.json@1.0.0",
+      "supersedes": [],
+      "superseded_by": null
     }
   ]
 }

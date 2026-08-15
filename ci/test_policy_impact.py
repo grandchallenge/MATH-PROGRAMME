@@ -6,10 +6,14 @@ import policy_impact as impact
 def main()->int:
     impact.validate_control()
     docs=impact.classify_paths(['docs/governance/example.md']);assert docs['policy_shards']==['core','docs'];assert not any(docs['formal_dirty'].values())
-    cmdg=impact.classify_paths(['fixtures/cmdg/extractor_001/log_gcd.json']);assert 'cmdg' in cmdg['policy_shards'];assert cmdg['formal_dirty']['log-gcd'] is True;assert cmdg['formal_dirty']['pc-wp04'] is False
+    cmdg=impact.classify_paths(['fixtures/cmdg/extractor_001/log_gcd.json']);assert 'cmdg' in cmdg['policy_shards'];assert 'repository-regression' not in cmdg['policy_shards'];assert cmdg['formal_dirty']['log-gcd'] is True;assert cmdg['formal_dirty']['pc-wp04'] is False
+    oz=impact.classify_paths(['tests/test_oz_rt_bz_t3.py']);assert oz['policy_shards']==['core','oz'];assert not oz['unknown_paths']
+    fixture_test=impact.classify_paths(['tests/test_ns_wp06_halting_gate_fixture.py']);assert fixture_test['policy_shards']==['core','fixtures'];assert not fixture_test['unknown_paths']
+    contract_test=impact.classify_paths(['tests/test_documentary_visual_pedagogy.py']);assert contract_test['policy_shards']==['core','contracts','docs'];assert not contract_test['unknown_paths']
+    unknown_test=impact.classify_paths(['tests/test_new_unclassified_research.py']);assert unknown_test['policy_shards']==list(impact.ALL_SHARDS);assert unknown_test['unknown_paths']==['tests/test_new_unclassified_research.py']
     req=impact.classify_paths(['requirements/policy.txt']);assert 'contracts' in req['policy_shards'];assert req['formal_dirty']['pc-wp04'] and req['formal_dirty']['union-closed-mathcert']
     admin=impact.classify_paths(['ci/administrative_autonomy_runtime.py']);assert admin['policy_shards']==['core','administrative']
-    visual=impact.classify_paths(['tools/render_visual_pedagogy_batch3_svg_candidates.py']);assert visual['policy_shards']==['core','contracts','docs'];assert not visual['unknown_paths'];assert not any(visual['formal_dirty'].values())
+    visual=impact.classify_paths(['tools/render_visual_pedagogy_batch3_svg_candidates.py']);assert visual['policy_shards']==['core','contracts','docs'];assert 'repository-regression' not in visual['policy_shards'];assert not visual['unknown_paths'];assert not any(visual['formal_dirty'].values())
     full=impact.classify_paths(['.github/workflows/ci.yml']);assert full['policy_shards']==list(impact.ALL_SHARDS);assert all(full['formal_dirty'].values())
     unknown=impact.classify_paths(['brand-new-policy-domain/data.bin']);assert unknown['policy_shards']==list(impact.ALL_SHARDS);assert unknown['unknown_paths'];assert all(unknown['formal_dirty'].values())
     assert impact.normalize_paths(['./docs/x.md'])==['docs/x.md']
@@ -20,8 +24,8 @@ def main()->int:
     control=impact.load_json(impact.CONTROL_PATH)
     formal=impact.classify_paths([],event_name='schedule',schedule=control['formal_replay']['sentinel']['cron']);assert formal['event_mode']=='formal_sentinel';assert formal['policy_shards']==['core']
     sentinel=impact.classify_paths([],event_name='schedule',schedule=control['policy_dag']['full_policy_sentinel_cron']);assert sentinel['event_mode']=='full_policy_sentinel';assert sentinel['policy_shards']==list(impact.ALL_SHARDS)
-    manual=impact.classify_paths([],event_name='workflow_dispatch');assert manual['event_mode']=='manual_full';assert all(manual['formal_dirty'].values())
-    pushed=impact.classify_paths(['ci/validate_cmdg_schema_contracts.py'],event_name='push');assert 'docs' in pushed['policy_shards']
+    manual=impact.classify_paths([],event_name='workflow_dispatch');assert manual['event_mode']=='manual_full';assert manual['policy_shards']==list(impact.ALL_SHARDS);assert all(manual['formal_dirty'].values())
+    pushed=impact.classify_paths(['docs/governance/example.md'],event_name='push');assert 'docs' in pushed['policy_shards'];assert 'repository-regression' in pushed['policy_shards']
 
     original_loader=impact.load_json
     protected_control=original_loader(impact.CONTROL_PATH);protected_formal=original_loader(impact.FORMAL_PATH);protected_registry=original_loader(impact.REGISTRY_PATH)

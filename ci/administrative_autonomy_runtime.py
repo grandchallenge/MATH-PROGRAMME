@@ -17,10 +17,17 @@ from administrative_autonomy_runtime_queue_starvation import (
 from administrative_autonomy_runtime_structural_2033_recovery import (
     eligible_candidates as structural_2033_recovery_eligible_candidates,
 )
+from administrative_autonomy_runtime_structural_2257_recovery import (
+    eligible_candidates as structural_2257_recovery_eligible_candidates,
+)
 from autonomy_github import AutonomyError
 
 receipt_stage.pending_closures = nonblocking_pending_closures
-runtime_github.eligible_candidates = structural_2033_recovery_eligible_candidates
+RECOVERY_ELIGIBILITY_CHAIN = (
+    structural_2033_recovery_eligible_candidates,
+    structural_2257_recovery_eligible_candidates,
+)
+runtime_github.eligible_candidates = RECOVERY_ELIGIBILITY_CHAIN[-1]
 runtime_github.wait_mirror_sync = provenance_bound_wait_mirror_sync
 
 from administrative_autonomy_runtime_behind_sync import (
