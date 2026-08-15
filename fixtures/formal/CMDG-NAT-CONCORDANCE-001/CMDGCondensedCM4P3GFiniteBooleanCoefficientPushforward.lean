@@ -275,7 +275,8 @@ theorem finiteBooleanMeasureSection_pushforward
       (ConcreteCategory.hom (η.app S))
         (finiteBooleanCoefficientFamily X j)) hcomp
   have hCoeff := finiteBooleanCoefficientFamily_pushforward X f
-  simpa [finiteBooleanMeasureSection, S, g, hCoeff, NatTrans.comp_app] using hpoint.symm
+  simpa [finiteBooleanMeasureSection, S, g, hCoeff, NatTrans.comp_app,
+    ModuleCat.comp_apply] using hpoint.symm
 
 #check fintypeDiagram_map_eq_finiteQuotientTransition
 #check finiteCoefficientFamilyFiberPushforward
