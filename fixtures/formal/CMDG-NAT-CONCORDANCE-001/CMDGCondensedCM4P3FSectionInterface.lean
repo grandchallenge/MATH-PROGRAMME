@@ -668,7 +668,6 @@ lemma internalDualPresheaf_map_identityProjection
     eHomWhiskerLeft_id,
     Category.comp_id]
   congr
-  simp [Under.map, Comma.mapLeft]
 
 #check internalDualPresheaf_map_identityProjection
 #print axioms internalDualPresheaf_map_identityProjection
