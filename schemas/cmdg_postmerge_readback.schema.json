@@ -17,7 +17,7 @@
     "origin_run": {"type": "object", "additionalProperties": false, "required": ["run_id", "run_attempt"], "properties": {"run_id": {"type": "string", "minLength": 1}, "run_attempt": {"type": "integer", "minimum": 1}}},
     "classifier_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "changed_paths": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
-    "policy_shards": {"type": "array", "uniqueItems": true, "items": {"enum": ["core", "fixtures", "cmdg", "administrative", "campaigns", "contracts", "docs"]}},
+    "policy_shards": {"type": "array", "uniqueItems": true, "items": {"enum": ["core", "fixtures", "cmdg", "oz", "administrative", "campaigns", "contracts", "docs", "repository-regression"]}},
     "unknown_count": {"type": "integer", "minimum": 0},
     "cmdg_required": {"type": "boolean"},
     "suite_results": {"type": "object", "minProperties": 12, "maxProperties": 12, "additionalProperties": {"enum": ["success", "failure", "cancelled", "skipped"]}},
