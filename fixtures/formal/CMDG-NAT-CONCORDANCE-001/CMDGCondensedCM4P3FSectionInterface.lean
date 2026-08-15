@@ -657,7 +657,6 @@ lemma internalDualPresheaf_map_identityProjection
         (Under.mk f.op)
   simp only [
     functorEnrichedHom_map,
-    diagram_obj_obj,
     Functor.comp_obj,
     Under.forget_obj,
     end_.lift_π,
@@ -667,9 +666,7 @@ lemma internalDualPresheaf_map_identityProjection
     eHomWhiskerRight_id,
     Iso.refl_hom,
     eHomWhiskerLeft_id,
-    comp_id]
-  congr
-  simp [Under.map, Comma.mapLeft]
+    Category.comp_id]
 
 #check internalDualPresheaf_map_identityProjection
 #print axioms internalDualPresheaf_map_identityProjection
