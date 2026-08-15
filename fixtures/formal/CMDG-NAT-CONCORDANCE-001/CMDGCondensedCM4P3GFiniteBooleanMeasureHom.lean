@@ -52,7 +52,8 @@ theorem finiteBooleanMeasureHom_pushforward
         (finiteBooleanMeasureHom X j ≫
           CMDG.CondensedCM4P2D.measureFunctor.map (X.diagram.map f)) =
       finiteBooleanMeasureSection X k
-  simpa [finiteBooleanMeasureHom, freeHomSectionsEquiv] using
+  simpa [finiteBooleanMeasureHom, freeHomSectionsEquiv,
+    Adjunction.homEquiv_naturality_right, uliftYonedaEquiv_comp] using
     finiteBooleanMeasureSection_pushforward X f
 
 #print finiteBooleanMeasureHom
