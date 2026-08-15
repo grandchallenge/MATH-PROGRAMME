@@ -630,6 +630,50 @@ noncomputable def sectionFamilyIso
   hom_inv_id := sectionToFamily_familyToSection A T
   inv_hom_id := familyToSection_sectionToFamily A T
 
+-- External test-object naturality at the identity enriched-end projection.
+set_option backward.isDefEq.respectTransparency false in
+lemma internalDualPresheaf_map_identityProjection
+    (A : ModuleCat.{u + 1} R) {S T : CompHaus.{u}} (f : S ⟶ T) :
+    (internalDualPresheaf A).map f.op ≫ identityProjection A S =
+      enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op T) ⋙ discretePresheaf A)
+        (Under.forget (op T) ⋙ coefficientPresheaf)
+        (Under.mk f.op) := by
+  change
+    (functorEnrichedHom
+        (ModuleCat.{u + 1} R)
+        (discretePresheaf A)
+        coefficientPresheaf).map f.op ≫
+        enrichedHomπ
+          (ModuleCat.{u + 1} R)
+          (Under.forget (op S) ⋙ discretePresheaf A)
+          (Under.forget (op S) ⋙ coefficientPresheaf)
+          (Under.mk (𝟙 (op S))) =
+      enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op T) ⋙ discretePresheaf A)
+        (Under.forget (op T) ⋙ coefficientPresheaf)
+        (Under.mk f.op)
+  simp only [
+    functorEnrichedHom_map,
+    diagram_obj_obj,
+    Functor.comp_obj,
+    Under.forget_obj,
+    end_.lift_π,
+    Under.map_obj_right,
+    Iso.refl_inv,
+    NatTrans.id_app,
+    eHomWhiskerRight_id,
+    Iso.refl_hom,
+    eHomWhiskerLeft_id,
+    comp_id]
+  congr
+  simp [Under.map, Comma.mapLeft]
+
+#check internalDualPresheaf_map_identityProjection
+#print axioms internalDualPresheaf_map_identityProjection
+
 /-- Specialization to the P2-D measure presheaf: a `T`-section is exactly an `R`-linear family
 `C(X,R) → LocallyConstant T R`. -/
 noncomputable def measureSectionFamilyIso
