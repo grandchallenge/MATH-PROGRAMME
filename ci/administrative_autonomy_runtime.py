@@ -14,6 +14,9 @@ from administrative_autonomy_runtime_mirror_sync import (
 from administrative_autonomy_runtime_queue_starvation import (
     pending_closures as nonblocking_pending_closures,
 )
+from administrative_autonomy_runtime_receipt_behind_resume import (
+    stage_completion_receipt as resumable_stage_completion_receipt,
+)
 from administrative_autonomy_runtime_structural_2033_recovery import (
     eligible_candidates as structural_2033_recovery_eligible_candidates,
 )
@@ -26,6 +29,7 @@ from administrative_autonomy_runtime_structural_0833_recovery import (
 from autonomy_github import AutonomyError
 
 receipt_stage.pending_closures = nonblocking_pending_closures
+receipt_stage.stage_completion_receipt = resumable_stage_completion_receipt
 RECOVERY_ELIGIBILITY_CHAIN = (
     structural_2033_recovery_eligible_candidates,
     structural_2257_recovery_eligible_candidates,
