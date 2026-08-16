@@ -13,7 +13,7 @@
     "occurrence": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["procedure_id", "occurrence_key", "due_at_utc", "prepare_at_utc", "freeze_at_utc", "candidate_issue", "candidate_pull_request", "candidate_branch", "original_source_protected_head", "stale_finalized_head", "ordinary_recovery_expires_at_utc", "bounded_recovery_expires_at_utc"],
+      "required": ["procedure_id", "occurrence_key", "due_at_utc", "prepare_at_utc", "freeze_at_utc", "candidate_issue", "candidate_pull_request", "candidate_branch", "record_id", "record_path", "original_source_protected_head", "stale_finalized_head", "ordinary_recovery_expires_at_utc", "bounded_recovery_expires_at_utc"],
       "properties": {
         "procedure_id": {"const": "structural_sweep"},
         "occurrence_key": {"const": "structural_sweep:2026-08-15T01:21:00Z"},
@@ -23,6 +23,8 @@
         "candidate_issue": {"const": 515},
         "candidate_pull_request": {"const": 516},
         "candidate_branch": {"const": "automation/maintenance/structural_sweep-20260815T012100Z"},
+        "record_id": {"const": "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-15-001"},
+        "record_path": {"const": "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-15-001.json"},
         "original_source_protected_head": {"const": "d0daf58cfcc5ca738d9b5c4f4bf712ba4a37b27c"},
         "stale_finalized_head": {"const": "b2094bedbde57cd59ade834341b88d4fba6e7386"},
         "ordinary_recovery_expires_at_utc": {"const": "2026-08-15T04:21:00Z"},
@@ -47,13 +49,14 @@
     "correction": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["global_recovery_window_minutes_unchanged", "exact_occurrence_only", "exact_receipt_absence_is_recovery_condition", "later_completion_frontier_preserved", "historical_receipt_backfill_allowed_for_exact_occurrence", "behind_sync_reconciliation_required", "source_ancestry_required", "deadline_reset", "cadence_anchor_reset", "eventual_recovery_relabels_on_time", "historical_failed_closed_evidence_preserved", "intervening_occurrences_superseded"],
+      "required": ["global_recovery_window_minutes_unchanged", "exact_occurrence_only", "exact_receipt_absence_is_recovery_condition", "later_completion_frontier_preserved", "historical_receipt_backfill_allowed_for_exact_occurrence", "mirror_current_frontier_preserved", "behind_sync_reconciliation_required", "source_ancestry_required", "deadline_reset", "cadence_anchor_reset", "eventual_recovery_relabels_on_time", "historical_failed_closed_evidence_preserved", "intervening_occurrences_superseded"],
       "properties": {
         "global_recovery_window_minutes_unchanged": {"const": 180},
         "exact_occurrence_only": {"const": true},
         "exact_receipt_absence_is_recovery_condition": {"const": true},
         "later_completion_frontier_preserved": {"const": true},
         "historical_receipt_backfill_allowed_for_exact_occurrence": {"const": true},
+        "mirror_current_frontier_preserved": {"const": true},
         "behind_sync_reconciliation_required": {"const": true},
         "source_ancestry_required": {"const": true},
         "deadline_reset": {"const": false},
