@@ -199,7 +199,7 @@ class AdministrativeStructural0833LateRecoveryTests(unittest.TestCase):
         )
         self.assertEqual(result, [])
 
-    def test_ancestry_and_stale_head_drift_fail_closed(self):
+    def test_ancestry_failure_is_closed_but_governed_sync_head_may_advance(self):
         pair = self.expected_pair()
 
         def base(candidate, repo, runtime, now):
@@ -221,12 +221,35 @@ class AdministrativeStructural0833LateRecoveryTests(unittest.TestCase):
             )
 
         pull, manifest = self.expected_pair()
-        drifted_pull = copy.deepcopy(pull)
-        drifted_pull["head"]["sha"] = "0" * 40
+        synchronized_pull = copy.deepcopy(pull)
+        synchronized_pull["head"]["sha"] = "1" * 40
 
-        def drift_base(candidate, repo, runtime, now):
+        def synchronized_base(candidate, repo, runtime, now):
             return (
-                [(drifted_pull, manifest)]
+                [(synchronized_pull, manifest)]
+                if runtime["scope"]["recovery_window_minutes_after_due"] > 180
+                else []
+            )
+
+        result = recovery.eligible_candidates(
+            object(),
+            "grandchallenge/MATH-PROGRAMME",
+            self.runtime(),
+            datetime(2026, 8, 16, 6, 45, tzinfo=UTC),
+            base=synchronized_base,
+            completion_loader=lambda candidate, repo: self.incomplete_ledger(),
+            ancestry_checker=lambda candidate, repo, source: True,
+        )
+        self.assertEqual(result, [(synchronized_pull, manifest)])
+
+    def test_identity_drift_fails_closed(self):
+        pull, manifest = self.expected_pair()
+        drifted = copy.deepcopy(manifest)
+        drifted["pull_request_number"] = 999
+
+        def base(candidate, repo, runtime, now):
+            return (
+                [(pull, drifted)]
                 if runtime["scope"]["recovery_window_minutes_after_due"] > 180
                 else []
             )
@@ -237,7 +260,7 @@ class AdministrativeStructural0833LateRecoveryTests(unittest.TestCase):
                 "grandchallenge/MATH-PROGRAMME",
                 self.runtime(),
                 datetime(2026, 8, 16, 6, 45, tzinfo=UTC),
-                base=drift_base,
+                base=base,
                 completion_loader=lambda candidate, repo: self.incomplete_ledger(),
                 ancestry_checker=lambda candidate, repo, source: True,
             )
