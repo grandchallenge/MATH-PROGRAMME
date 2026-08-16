@@ -91,6 +91,11 @@ def eligible_candidates(
     recovery window. It replays the existing eligibility chain against a
     temporary horizon, then filters to the exact #513 / #514 occurrence.
 
+    Candidate-head movement is intentionally left to the existing BEHIND
+    synchronization and exact-head gates. This wrapper binds the immutable
+    occurrence, issue/PR/branch, and original protected source identity rather
+    than freezing the historical pre-sync head as a runtime invariant.
+
     The historical occurrence remains late. The exception expires at the
     current next anchored structural locus and creates no general backlog
     recovery authority.
@@ -141,7 +146,6 @@ def eligible_candidates(
     expected_issue = int(control["occurrence"]["candidate_issue"])
     expected_pr = int(control["occurrence"]["candidate_pull_request"])
     expected_branch = str(control["occurrence"]["candidate_branch"])
-    expected_stale_head = str(control["occurrence"]["stale_finalized_head"])
     matches: list[tuple[dict[str, Any], dict[str, Any]]] = []
     for pull, manifest in replayed:
         if str(manifest.get("occurrence_key") or "") != expected_occurrence:
@@ -156,9 +160,6 @@ def eligible_candidates(
             raise AutonomyError("08:33 recovery branch identity drift")
         if str(manifest.get("source_protected_head") or "") != source:
             raise AutonomyError("08:33 recovery source-head identity drift")
-        pull_head = str(pull.get("head", {}).get("sha") or "")
-        if pull_head and pull_head != expected_stale_head:
-            raise AutonomyError("08:33 recovery stale finalized-head drift")
         matches.append((pull, manifest))
 
     if len(matches) > 1:
