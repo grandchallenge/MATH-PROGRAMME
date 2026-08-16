@@ -1,0 +1,315 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "NOT_REQUIRED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": "success",
+      "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+      "name": "Replay LOG-GCD-001 in Lean",
+      "required": true,
+      "run_id": 95129814101,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+      "name": "Replay PC-WP04 bounded certificate",
+      "required": true,
+      "run_id": 95129814175,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+      "name": "Replay pinned Union-Closed MATHCERT evidence",
+      "required": true,
+      "run_id": 95129814201,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+      "name": "policy / policy",
+      "required": true,
+      "run_id": 95129797985,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+      "name": "security / action-policy",
+      "required": true,
+      "run_id": 95129797976,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+      "name": "validate-json",
+      "required": true,
+      "run_id": 95129881276,
+      "status": "completed"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "UNKNOWN",
+    "reasons": [
+      "Human Steward requirement/state is inconsistent"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-08-16T05:00:40Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-08-16T06:58:18Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+    "exact_head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+    "pr_number": 526,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "[maintenance-candidate] structural_sweep due 2026-08-16T10:57:00Z"
+  },
+  "integration": {
+    "merge_commit_sha": "a1a3f3263201087278234d80e28b71736c3acdbd",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 1,
+      "collector_limitations": [],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 95129794247,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Analyze (actions)",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129794306,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Analyze (c-cpp)",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129794285,
+          "conclusion": null,
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 95129797317,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Classify policy impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129845588,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "CodeQL",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129797253,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129797896,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129797928,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129814250,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Policy shard / administrative",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129814231,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Policy shard / campaigns",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129814187,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Policy shard / cmdg",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129814298,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Policy shard / contracts",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129814304,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Policy shard / core",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129814244,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Policy shard / docs",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129814237,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Policy shard / fixtures",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129814209,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Policy shard / oz",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129814206,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Policy shard / repository-regression",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129814101,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Replay LOG-GCD-001 in Lean",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129814175,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Replay PC-WP04 bounded certificate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129814201,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "Replay pinned Union-Closed MATHCERT evidence",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129797985,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129797976,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "security / action-policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 95129881276,
+          "conclusion": "success",
+          "head_sha": "f3747b79cc2da9f04e3f1b6546b6f1d1a0e8171c",
+          "name": "validate-json",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [
+        "Replay LOG-GCD-001 in Lean",
+        "Replay PC-WP04 bounded certificate",
+        "Replay pinned Union-Closed MATHCERT evidence",
+        "policy / policy",
+        "security / action-policy",
+        "validate-json"
+      ],
+      "ruleset_source_available": true
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-08-16T06:59:01Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "0634a6c4ab2560a8e27713819a8473e49e89f125b43c80101a6c782811268010"
+  },
+  "report_id": "PRVSR-LIVE-PR526-f3747b79cc2d-20260816065901",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane",
+      "administrative_automation"
+    ]
+  }
+}
