@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "administrative_structural_0833_late_recovery_control.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "control_id", "status", "issue", "occurrence", "root_cause", "correction", "authority_boundary", "claim_boundaries"],
+  "properties": {
+    "$schema": {"const": "../schemas/administrative_structural_0833_late_recovery_control.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-ADMIN-STRUCTURAL-0833-LATE-RECOVERY-001"},
+    "status": {"const": "ACTIVE_ON_PROTECTED_MERGE"},
+    "issue": {"const": 527},
+    "occurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["procedure_id", "occurrence_key", "due_at_utc", "prepare_at_utc", "freeze_at_utc", "candidate_issue", "candidate_pull_request", "candidate_branch", "original_source_protected_head", "stale_finalized_head", "ordinary_recovery_expires_at_utc", "bounded_recovery_expires_at_utc"],
+      "properties": {
+        "procedure_id": {"const": "structural_sweep"},
+        "occurrence_key": {"const": "structural_sweep:2026-08-14T08:33:00Z"},
+        "due_at_utc": {"const": "2026-08-14T08:33:00Z"},
+        "prepare_at_utc": {"const": "2026-08-14T02:33:00Z"},
+        "freeze_at_utc": {"const": "2026-08-14T07:03:00Z"},
+        "candidate_issue": {"const": 513},
+        "candidate_pull_request": {"const": 514},
+        "candidate_branch": {"const": "automation/maintenance/structural_sweep-20260814T083300Z"},
+        "original_source_protected_head": {"const": "d0daf58cfcc5ca738d9b5c4f4bf712ba4a37b27c"},
+        "stale_finalized_head": {"const": "54491f459e086919dc39ae9a3c848a6eecc27bc3"},
+        "ordinary_recovery_expires_at_utc": {"const": "2026-08-14T11:33:00Z"},
+        "bounded_recovery_expires_at_utc": {"const": "2026-08-16T10:57:00Z"}
+      }
+    },
+    "root_cause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_frozen", "runtime_finalized", "referee_authorized", "referee_disposition_comment", "protected_merge_performed", "failure", "environmental_repair_merge", "repair_validation_workflow_run", "repair_validation_deployment"],
+      "properties": {
+        "candidate_frozen": {"const": true},
+        "runtime_finalized": {"const": true},
+        "referee_authorized": {"const": true},
+        "referee_disposition_comment": {"const": 5291277324},
+        "protected_merge_performed": {"const": false},
+        "failure": {"const": "post-disposition check run failed: advisory-report=cancelled"},
+        "environmental_repair_merge": {"const": "1b4d742094d487c7ef503a23ed88e99b733fe0a8"},
+        "repair_validation_workflow_run": {"const": 31927761542},
+        "repair_validation_deployment": {"const": 5927749670}
+      }
+    },
+    "correction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["global_recovery_window_minutes_unchanged", "exact_occurrence_only", "behind_sync_reconciliation_required", "completion_must_be_absent", "source_ancestry_required", "deadline_reset", "cadence_anchor_reset", "eventual_recovery_relabels_on_time", "historical_failed_closed_evidence_preserved", "intervening_occurrences_superseded"],
+      "properties": {
+        "global_recovery_window_minutes_unchanged": {"const": 180},
+        "exact_occurrence_only": {"const": true},
+        "behind_sync_reconciliation_required": {"const": true},
+        "completion_must_be_absent": {"const": true},
+        "source_ancestry_required": {"const": true},
+        "deadline_reset": {"const": false},
+        "cadence_anchor_reset": {"const": false},
+        "eventual_recovery_relabels_on_time": {"const": false},
+        "historical_failed_closed_evidence_preserved": {"const": true},
+        "intervening_occurrences_superseded": {"const": false}
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["human_steward_exact_head_authorization_required", "candidate_branch_is_authority", "bypass_created", "emergency_authority_created", "required_checks_weakened", "referee_gate_weakened", "direct_protected_push_authorized", "general_late_recovery_authority_created"],
+      "properties": {
+        "human_steward_exact_head_authorization_required": {"const": true},
+        "candidate_branch_is_authority": {"const": false},
+        "bypass_created": {"const": false},
+        "emergency_authority_created": {"const": false},
+        "required_checks_weakened": {"const": false},
+        "referee_gate_weakened": {"const": false},
+        "direct_protected_push_authorized": {"const": false},
+        "general_late_recovery_authority_created": {"const": false}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mathematical_target_proved", "source_authority_created", "certification_authority_created", "external_claim_authorized", "novelty_or_priority_claim_authorized", "publication_authorized", "deployment_authorized", "product_or_release_authorized", "commercial_authority_created"],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "source_authority_created": {"const": false},
+        "certification_authority_created": {"const": false},
+        "external_claim_authorized": {"const": false},
+        "novelty_or_priority_claim_authorized": {"const": false},
+        "publication_authorized": {"const": false},
+        "deployment_authorized": {"const": false},
+        "product_or_release_authorized": {"const": false},
+        "commercial_authority_created": {"const": false}
+      }
+    }
+  }
+}
