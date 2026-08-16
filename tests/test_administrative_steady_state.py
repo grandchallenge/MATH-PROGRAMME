@@ -66,7 +66,14 @@ class AdministrativeSteadyStateTests(unittest.TestCase):
     def test_protected_completion_state_is_runtime_authority(self):
         state = json.loads(COMPLETION_STATE.read_text(encoding="utf-8"))
         procedures = state["procedures"]
-        self.assertEqual(procedures["structural_sweep"]["completed_through_utc"], "2026-08-11T13:21:00Z")
+        structural = procedures["structural_sweep"]
+        receipts = structural["receipts"]
+        self.assertTrue(receipts)
+        self.assertEqual(structural["receipt_count"], len(receipts))
+        self.assertEqual(
+            structural["completed_through_utc"],
+            max(item["scheduled_due_at"] for item in receipts),
+        )
         self.assertEqual(procedures["administrative_review"]["completed_through_utc"], "2026-08-10T01:21:00Z")
         self.assertEqual(procedures["deep_conformance_review"]["completed_through_utc"], "2026-08-10T01:21:00Z")
         source = DISPATCH_V2.read_text(encoding="utf-8")
