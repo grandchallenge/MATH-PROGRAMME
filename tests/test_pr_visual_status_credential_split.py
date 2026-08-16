@@ -115,6 +115,19 @@ class PRVisualStatusCredentialSplitTests(unittest.TestCase):
         self.assertNotIn("permission-checks:", text)
         self.assertNotIn("permission-administration: write", text)
 
+    def test_release_trust_concurrency_never_cancels_active_deployment(self) -> None:
+        text = (ROOT / ".github" / "workflows" / "pr-visual-status-advisory.yml").read_text(
+            encoding="utf-8"
+        )
+        concurrency = text.split("concurrency:\n", 1)[1].split("\njobs:\n", 1)[0]
+        job_header = text.split("jobs:\n  advisory-report:", 1)[1].split("    steps:", 1)[0]
+
+        self.assertIn("environment: release-trust", job_header)
+        self.assertIn("group: prvsr-advisory-", concurrency)
+        self.assertIn("cancel-in-progress: false", concurrency)
+        self.assertNotIn("cancel-in-progress: true", concurrency)
+        self.assertIn("replaces older pending members", concurrency)
+
     def test_protected_workflow_keeps_app_tokens_distinct_and_bounded(self) -> None:
         text = (ROOT / ".github" / "workflows" / "pr-visual-status-advisory.yml").read_text(
             encoding="utf-8"
