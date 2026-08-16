@@ -9,6 +9,9 @@ from administrative_autonomy_runtime_contract import (
     validate_runtime_contract,
 )
 from administrative_autonomy_runtime_github import check_runs_state
+from administrative_autonomy_runtime_mirror_sync import (
+    wait_mirror_sync as provenance_bound_wait_mirror_sync,
+)
 from administrative_autonomy_runtime_queue_starvation import (
     pending_closures as nonblocking_pending_closures,
 )
@@ -42,6 +45,7 @@ RECOVERY_ELIGIBILITY_CHAIN = (
     structural_0121_recovery_eligible_candidates,
 )
 runtime_github.eligible_candidates = RECOVERY_ELIGIBILITY_CHAIN[-1]
+runtime_github.wait_mirror_sync = provenance_bound_wait_mirror_sync
 runtime_github.wait_mirror_sync = structural_0121_hole_wait_mirror_sync
 
 from administrative_autonomy_runtime_behind_sync import (
