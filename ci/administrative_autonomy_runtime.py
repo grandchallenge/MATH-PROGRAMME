@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from functools import partial
+
 import administrative_autonomy_receipt_stage as receipt_stage
 import administrative_autonomy_runtime_github as runtime_github
 import administrative_autonomy_runtime_receipt_behind_resume as receipt_resume
@@ -42,6 +44,12 @@ from administrative_autonomy_runtime_post_receipt_current_frontier import (
     stage_completion_receipt as current_frontier_post_receipt_stage_completion_receipt,
     wait_mirror_sync as current_frontier_post_receipt_wait_mirror_sync,
 )
+from administrative_autonomy_runtime_structural_1809_recovery import (
+    advance_completion_state as structural_1809_collision_advance_completion_state,
+    eligible_candidates as structural_1809_recovery_eligible_candidates,
+    synchronize_eligible_candidate as structural_1809_synchronize_eligible_candidate,
+    wait_mirror_sync as structural_1809_collision_wait_mirror_sync,
+)
 from autonomy_github import AutonomyError
 
 receipt_stage.pending_closures = nonblocking_pending_closures
@@ -53,6 +61,7 @@ RECOVERY_ELIGIBILITY_CHAIN = (
     structural_2257_recovery_eligible_candidates,
     structural_0833_recovery_eligible_candidates,
     structural_0121_recovery_eligible_candidates,
+    structural_1809_recovery_eligible_candidates,
 )
 runtime_github.eligible_candidates = RECOVERY_ELIGIBILITY_CHAIN[-1]
 runtime_github.wait_mirror_sync = provenance_bound_wait_mirror_sync
@@ -70,9 +79,28 @@ receipt_stage.pending_closures = current_frontier_post_receipt_pending_closures
 receipt_stage.stage_completion_receipt = current_frontier_post_receipt_stage_completion_receipt
 runtime_github.wait_mirror_sync = current_frontier_post_receipt_wait_mirror_sync
 
-from administrative_autonomy_runtime_behind_sync import (
-    execute, main, validate_command,
+# Exact #520 collision/historical-hole recovery. Ordinary allocator, BEHIND,
+# receipt, and mirror mechanics remain the base; only the exact target path is
+# normalized and re-admitted through the bounded protected control.
+receipt_stage.advance_completion_state = partial(
+    structural_1809_collision_advance_completion_state,
+    base=structural_0121_hole_advance_completion_state,
 )
+receipt_resume.advance_completion_state = receipt_stage.advance_completion_state
+runtime_github.wait_mirror_sync = partial(
+    structural_1809_collision_wait_mirror_sync,
+    base=current_frontier_post_receipt_wait_mirror_sync,
+)
+
+import administrative_autonomy_runtime_behind_sync as behind_sync
+
+behind_sync.synchronize_eligible_candidate = partial(
+    structural_1809_synchronize_eligible_candidate,
+    base=behind_sync.synchronize_eligible_candidate,
+)
+execute = behind_sync.execute
+main = behind_sync.main
+validate_command = behind_sync.validate_command
 
 __all__ = [
     "ALLOWED_REPOSITORIES", "ROOT", "RUNTIME_PATH", "AutonomyError",
