@@ -98,9 +98,14 @@ behind_sync.synchronize_eligible_candidate = partial(
     structural_1809_synchronize_eligible_candidate,
     base=behind_sync.synchronize_eligible_candidate,
 )
-execute = behind_sync.execute
-main = behind_sync.main
-validate_command = behind_sync.validate_command
+
+# Preserve the durable executor-import boundary relied on by predecessor
+# certification tests. The module has already received the exact #520 wrapper
+# above, so these exported callables execute with the bounded synchronization
+# overlay installed.
+from administrative_autonomy_runtime_behind_sync import (
+    execute, main, validate_command,
+)
 
 __all__ = [
     "ALLOWED_REPOSITORIES", "ROOT", "RUNTIME_PATH", "AutonomyError",
