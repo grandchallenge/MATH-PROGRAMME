@@ -30,20 +30,20 @@ EXPECTED_OWNERSHIP = {
     "programme": "cross_repository_current_state_only",
 }
 EXPECTED_QUALIFIED = [
-    ("OTP-F-EHRHART", "MC-ROUTE-OTP-F-EHRHART", "27a855c949b67e71372c7f0d6601d80125d33968"),
-    ("OTP-J1-COMPACTNESS", "MC-ROUTE-OTP-J1-COMPACTNESS", "88531e28951854961e86eec0517356999a391759"),
-    ("OTP-J2-TWO-DEGENERATE", "MC-ROUTE-OTP-J2-TWO-DEGENERATE", "308a2eb7087fb24a07a6ae8c93a83b593468d2f7"),
-    ("OTP-C-PERMANENT", "MC-ROUTE-OTP-C-PERMANENT-FORMULA", "ad10c427270cb1c747ebcacbc5c37e4c1ed1df04"),
+    ("OTP-F-EHRHART", "MC-ROUTE-OTP-F-EHRHART", "27a855c949b67e71372c7f0d6601d80125d33968", "qualified_encoded_targets_only"),
+    ("OTP-J1-COMPACTNESS", "MC-ROUTE-OTP-J1-COMPACTNESS", "88531e28951854961e86eec0517356999a391759", "qualified_encoded_targets_only"),
+    ("OTP-J2-TWO-DEGENERATE", "MC-ROUTE-OTP-J2-TWO-DEGENERATE", "308a2eb7087fb24a07a6ae8c93a83b593468d2f7", "qualified_source_faithful_targets_only"),
+    ("OTP-C-PERMANENT", "MC-ROUTE-OTP-C-PERMANENT-FORMULA", "ad10c427270cb1c747ebcacbc5c37e4c1ed1df04", "qualified_encoded_targets_only"),
 ]
 EXPECTED_QUEUE = [
-    "OTP-A-SPHERE-PACKING",
-    "OTP-H-GAPCVP",
-    "OTP-B1-BINARY-CODES",
-    "OTP-B2-SPHERICAL-CODES",
-    "OTP-I-RAMSEY",
-    "OTP-G-QUANTUM-PARALLEL-REPETITION",
-    "OTP-D-NON-SOFIC",
-    "OTP-E-CONNES-RIGIDITY",
+    ("OTP-A-SPHERE-PACKING", "active_blocked_current_root_dependency_and_source_locus_reaudit", "MATHFORGE#89"),
+    ("OTP-H-GAPCVP", "active_current_root_promise_interface_semantic_reclassification", "MATHFORGE#90"),
+    ("OTP-B1-BINARY-CODES", "queued_current_root_semantic_audit", None),
+    ("OTP-B2-SPHERICAL-CODES", "queued_target_surface_drift_audit", None),
+    ("OTP-I-RAMSEY", "queued_current_root_semantic_audit", None),
+    ("OTP-G-QUANTUM-PARALLEL-REPETITION", "queued_current_root_semantic_audit", None),
+    ("OTP-D-NON-SOFIC", "queued_current_root_semantic_audit", None),
+    ("OTP-E-CONNES-RIGIDITY", "queued_declaration_identity_drift_audit", None),
 ]
 EXPECTED_ORDER = [
     "OTP-A-SPHERE-PACKING_and_OTP-H-GAPCVP",
@@ -110,9 +110,12 @@ def validation_errors(*, record=None, schema=None, predecessor_blob=None, umbrel
     if cert.get("route_registry_blob") != "2d17473b4731aa9d9c630b1e7777ad4bd794d993":
         errors.append("MATHCERT route-registry blob drift")
     qualified = cert.get("qualified_restricted_surfaces", [])
-    observed = [(x.get("family"), x.get("route"), x.get("certificate_blob")) for x in qualified]
+    observed = [
+        (x.get("family"), x.get("route"), x.get("certificate_blob"), x.get("disposition"))
+        for x in qualified
+    ]
     if observed != EXPECTED_QUALIFIED:
-        errors.append("restricted qualification identity or ordering drift")
+        errors.append("restricted qualification identity, disposition or ordering drift")
     if cert.get("aggregate_output_count") != 0:
         errors.append("aggregate output inflation")
     if cert.get("mathematical_targets_marked_proved") != 0:
@@ -122,24 +125,48 @@ def validation_errors(*, record=None, schema=None, predecessor_blob=None, umbrel
     if len(permanent) != 2:
         errors.append("Permanent successor surface count drift")
     else:
-        if permanent[0].get("solve_merge") != "bebc35818c6d3b79ddc7e348c9bffd328279cd24" or permanent[0].get("cert_route_state") != "not_registered":
+        if permanent[0] != {
+            "surface": "full_formula_consequences",
+            "solve_merge": "bebc35818c6d3b79ddc7e348c9bffd328279cd24",
+            "handoff_id": "MC-OTP-HANDOFF-C-PERMANENT-FULL-FORMULA",
+            "target_count": 2,
+            "cert_route_state": "not_registered",
+        }:
             errors.append("Permanent full-formula producer state drift")
-        if permanent[1].get("solve_merge") != "7d1f9edf16558ba4c4396126e24fd2c9ae4826f7" or permanent[1].get("cert_route_state") != "not_registered":
+        if permanent[1] != {
+            "surface": "theorem_1_1_circuit",
+            "solve_merge": "7d1f9edf16558ba4c4396126e24fd2c9ae4826f7",
+            "handoff_id": "MC-OTP-HANDOFF-C-PERMANENT-CIRCUIT",
+            "target_count": 3,
+            "cert_route_state": "not_registered",
+        }:
             errors.append("Permanent circuit producer state drift")
 
     queue = record.get("unresolved_family_queue", [])
-    if [x.get("family") for x in queue] != EXPECTED_QUEUE:
-        errors.append("unresolved-family queue drift")
+    observed_queue = [(x.get("family"), x.get("state"), x.get("tracker")) for x in queue]
+    if observed_queue != EXPECTED_QUEUE:
+        errors.append("unresolved-family queue, state or tracker drift")
     if record.get("execution_order") != EXPECTED_ORDER:
         errors.append("governed execution order drift")
 
     limitations = record.get("preserved_limitations", {})
-    if limitations.get("aggregate_ten_proofs_authority") is not False:
-        errors.append("aggregate Ten Proofs authority inflation")
-    if limitations.get("proof_body_compared_in_full") is not False:
-        errors.append("proof-body comparison inflation")
-    if limitations.get("whole_document_semantic_equivalence") != "not_established":
-        errors.append("whole-document semantic-equivalence inflation")
+    expected_limitations = {
+        "all_lean_state": "separate_integration_debt",
+        "whole_document_byte_equivalence": "not_established_between_all_revisions",
+        "whole_document_semantic_equivalence": "not_established",
+        "proof_body_compared_in_full": False,
+        "aggregate_ten_proofs_authority": False,
+    }
+    if limitations != expected_limitations:
+        errors.append("preserved limitation drift or authority inflation")
+
+    expected_next = [
+        "complete_current_root_Sphere_Packing_dependency_and_source_locus_reaudit",
+        "complete_current_root_GapCVP_promise_and_reduction_semantic_reclassification",
+        "route_new_Permanent_full_formula_and_circuit_handoffs_only_through_independent_MATHCERT_operations",
+    ]
+    if record.get("next_controlled_obligations") != expected_next:
+        errors.append("next controlled obligation drift")
 
     boundary = str(record.get("claim_boundary", ""))
     for token in (
