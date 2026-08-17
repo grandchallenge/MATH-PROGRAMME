@@ -7,6 +7,8 @@ from pathlib import Path
 from typing import Any, Callable
 
 from administrative_automation import parse_datetime
+from administrative_autonomy_runtime_contract import record_path_for
+from administrative_autonomy_runtime_github import list_directory_names
 from administrative_autonomy_runtime_structural_1809_recovery import (
     default_ancestry_checker,
     default_completion_loader,
@@ -28,6 +30,9 @@ EligibleFunction = Callable[
 ]
 CompletionLoader = Callable[[Any, str], dict[str, Any]]
 AncestryChecker = Callable[[Any, str, str], bool]
+RecordIdentityChecker = Callable[
+    [Any, str, dict[str, Any], dict[str, Any], dict[str, Any]], None
+]
 
 
 def load_control() -> dict[str, Any]:
@@ -116,6 +121,34 @@ def bounded_recovery_minutes(runtime: dict[str, Any], control: dict[str, Any]) -
     return bounded
 
 
+def default_record_identity_checker(
+    candidate: Any,
+    repo: str,
+    runtime: dict[str, Any],
+    manifest: dict[str, Any],
+    control: dict[str, Any],
+) -> None:
+    """Require the ordinary protected allocator to preserve the exact #522 identity."""
+
+    occurrence = control["occurrence"]
+    procedure_id = str(occurrence["procedure_id"])
+    layout = runtime.get("record_layout", {}).get(procedure_id)
+    if not isinstance(layout, dict):
+        raise AutonomyError("administrative 01:21 record layout is absent")
+    directory = str(layout.get("directory") or "").rstrip("/")
+    if not directory:
+        raise AutonomyError("administrative 01:21 record directory is absent")
+    names = list_directory_names(candidate, repo, directory)
+    record_id, record_path = record_path_for(runtime, manifest, names)
+    expected_id = str(occurrence["record_id"])
+    expected_path = f"{directory}/{expected_id}.json"
+    if record_id != expected_id or record_path != expected_path:
+        raise AutonomyError(
+            "administrative 01:21 allocator identity drift: "
+            f"derived {record_id} at {record_path}"
+        )
+
+
 def eligible_candidates(
     candidate: Any,
     repo: str,
@@ -124,6 +157,7 @@ def eligible_candidates(
     base: EligibleFunction = existing_eligible_candidates,
     completion_loader: CompletionLoader = default_completion_loader,
     ancestry_checker: AncestryChecker = default_ancestry_checker,
+    record_identity_checker: RecordIdentityChecker = default_record_identity_checker,
 ) -> list[tuple[dict[str, Any], dict[str, Any]]]:
     """Admit only exact #522/#523 inside its bounded administrative-review horizon."""
 
@@ -175,6 +209,7 @@ def eligible_candidates(
             raise AutonomyError("administrative 01:21 manifest-path drift")
         if str(manifest.get("source_protected_head") or "") != source:
             raise AutonomyError("administrative 01:21 source-head identity drift")
+        record_identity_checker(candidate, repo, runtime, manifest, control)
         matches.append((pull, manifest))
 
     if len(matches) > 1:
