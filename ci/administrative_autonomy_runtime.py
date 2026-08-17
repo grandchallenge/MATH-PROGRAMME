@@ -32,6 +32,11 @@ from administrative_autonomy_runtime_structural_0121_recovery import (
     eligible_candidates as structural_0121_recovery_eligible_candidates,
     wait_mirror_sync as structural_0121_hole_wait_mirror_sync,
 )
+from administrative_autonomy_runtime_post_receipt_closure_resume import (
+    pending_closures as resumable_post_receipt_pending_closures,
+    stage_completion_receipt as stable_post_receipt_stage_completion_receipt,
+    wait_mirror_sync as descendant_post_receipt_wait_mirror_sync,
+)
 from autonomy_github import AutonomyError
 
 receipt_stage.pending_closures = nonblocking_pending_closures
@@ -47,6 +52,12 @@ RECOVERY_ELIGIBILITY_CHAIN = (
 runtime_github.eligible_candidates = RECOVERY_ELIGIBILITY_CHAIN[-1]
 runtime_github.wait_mirror_sync = provenance_bound_wait_mirror_sync
 runtime_github.wait_mirror_sync = structural_0121_hole_wait_mirror_sync
+
+# Exact #515 terminal-debt overlay. These assignments deliberately occur after
+# all durable compatibility bindings above and before the executor import below.
+receipt_stage.pending_closures = resumable_post_receipt_pending_closures
+receipt_stage.stage_completion_receipt = stable_post_receipt_stage_completion_receipt
+runtime_github.wait_mirror_sync = descendant_post_receipt_wait_mirror_sync
 
 from administrative_autonomy_runtime_behind_sync import (
     execute, main, validate_command,
