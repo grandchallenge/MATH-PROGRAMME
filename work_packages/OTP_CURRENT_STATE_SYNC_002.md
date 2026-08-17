@@ -57,9 +57,17 @@ Execution order remains:
 → `Non-sofic`
 → `Connes Rigidity`.
 
-Sphere Packing remains blocked pending current-root dependency/source-locus reconstruction under Forge #89.
+### Sphere Packing
 
-GapCVP is no longer characterized by four absent definitions. The current root contains explicit promise-definition bodies, but promise disjointness, source fidelity, nonvacuity, malformed/out-of-promise semantics, reduction direction/type, and NP-hardness scope remain open under Forge #90.
+The exact current-root solution carrier has now been located. `SpherePacking.lean`, blob `e6117934a80142a8249356fdafa797eba030e920`, is a substantive proof-bearing module rather than an empty carrier. It contains the four configured Comparator targets, including the full/radial bridge for the exact limit and binary exponent, the packing upper-bound theorem, and the assembled manuscript-conclusion structure.
+
+Accordingly, Forge #89 is no longer a proof-carrier recovery problem. Its remaining boundary is the explicit source-locus and declaration-level dependency-concordance audit: source theorem/revision, dimensions and normalizations, asymptotic quantifiers, log/exponent conventions, bridge strength, nonvacuity, and target-by-target source relation.
+
+### GapCVP
+
+The exact current-root solution carrier has likewise been located. `GapCVP.lean`, blob `47f3a395e4d9ec3e2892664860f26ed63421b0c9`, is substantive and contains explicit promise-disjointness proofs and the four Comparator-facing NP-hardness theorems. Challenge-side `by sorry` declarations are interface placeholders and must not be read as absence of the solution proofs.
+
+The predecessor's four missing-definition diagnosis remains historical only. The remaining Forge #90 boundary is semantic/reduction/nonvacuity concordance: exact source problem definitions and theorem loci, YES/NO semantics, malformed and out-of-promise behavior, the promise-problem hardness notion, reduction direction/type, dimension-dependent gap-factor transport, finite-`p` scope, and explicit nonvacuity. In particular, `400`, `200`, and `200p` are exponent denominators in dimension/block-length-dependent gap factors rather than constant approximation factors.
 
 B2 target-surface drift and Connes declaration-identity drift remain explicit governed differences, not inferred equivalences.
 
@@ -81,7 +89,7 @@ python -m unittest discover -s tests -v
 git diff --check
 ```
 
-The mutation suite must reject predecessor-record drift, authority collapse, current-root substitution, restricted-certificate inflation or removal, aggregate output, proof promotion, premature Permanent routing, Sphere/GapCVP blocker deletion, execution-order drift, and whole-document-equivalence inflation.
+The mutation suite must reject predecessor-record drift, authority collapse, current-root substitution, restricted-certificate inflation or removal, aggregate output, proof promotion, premature Permanent routing, Sphere/GapCVP state inflation or removal, execution-order drift, and whole-document-equivalence inflation.
 
 ## Publication boundary
 
