@@ -37,6 +37,11 @@ from administrative_autonomy_runtime_post_receipt_closure_resume import (
     stage_completion_receipt as stable_post_receipt_stage_completion_receipt,
     wait_mirror_sync as descendant_post_receipt_wait_mirror_sync,
 )
+from administrative_autonomy_runtime_post_receipt_current_frontier import (
+    pending_closures as current_frontier_post_receipt_pending_closures,
+    stage_completion_receipt as current_frontier_post_receipt_stage_completion_receipt,
+    wait_mirror_sync as current_frontier_post_receipt_wait_mirror_sync,
+)
 from autonomy_github import AutonomyError
 
 receipt_stage.pending_closures = nonblocking_pending_closures
@@ -58,6 +63,12 @@ runtime_github.wait_mirror_sync = structural_0121_hole_wait_mirror_sync
 receipt_stage.pending_closures = resumable_post_receipt_pending_closures
 receipt_stage.stage_completion_receipt = stable_post_receipt_stage_completion_receipt
 runtime_github.wait_mirror_sync = descendant_post_receipt_wait_mirror_sync
+
+# Exact #515 current-frontier successor. The predecessor overlay remains visible
+# as durable history; this later binding changes only the exact target path.
+receipt_stage.pending_closures = current_frontier_post_receipt_pending_closures
+receipt_stage.stage_completion_receipt = current_frontier_post_receipt_stage_completion_receipt
+runtime_github.wait_mirror_sync = current_frontier_post_receipt_wait_mirror_sync
 
 from administrative_autonomy_runtime_behind_sync import (
     execute, main, validate_command,

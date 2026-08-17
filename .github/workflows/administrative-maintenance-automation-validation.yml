@@ -22,6 +22,7 @@ on:
       - 'governance/administrative_recovery_queue*.json'
       - 'governance/administrative_structural_*_late_recovery_control.json'
       - 'governance/administrative_post_receipt_closure_resume_control.json'
+      - 'governance/administrative_post_receipt_current_frontier_control.json'
       - 'governance/administrative_maintenance_completion_state.json'
       - 'governance/administrative_autonomy_*.json'
       - 'schemas/administrative_maintenance_automation*.schema.json'
@@ -30,6 +31,7 @@ on:
       - 'schemas/administrative_recovery_queue*.schema.json'
       - 'schemas/administrative_structural_*_late_recovery_control.schema.json'
       - 'schemas/administrative_post_receipt_closure_resume_control.schema.json'
+      - 'schemas/administrative_post_receipt_current_frontier_control.schema.json'
       - 'schemas/administrative_maintenance_completion_state.schema.json'
       - 'schemas/administrative_autonomy_*.schema.json'
       - 'schemas/administrative_autonomous_maintenance_record.schema.json'
@@ -62,6 +64,7 @@ on:
       - 'governance/administrative_recovery_queue*.json'
       - 'governance/administrative_structural_*_late_recovery_control.json'
       - 'governance/administrative_post_receipt_closure_resume_control.json'
+      - 'governance/administrative_post_receipt_current_frontier_control.json'
       - 'governance/administrative_maintenance_completion_state.json'
       - 'governance/administrative_autonomy_*.json'
       - 'schemas/administrative_maintenance_automation*.schema.json'
@@ -70,6 +73,7 @@ on:
       - 'schemas/administrative_recovery_queue*.schema.json'
       - 'schemas/administrative_structural_*_late_recovery_control.schema.json'
       - 'schemas/administrative_post_receipt_closure_resume_control.schema.json'
+      - 'schemas/administrative_post_receipt_current_frontier_control.schema.json'
       - 'schemas/administrative_maintenance_completion_state.schema.json'
       - 'schemas/administrative_autonomy_*.schema.json'
       - 'schemas/administrative_autonomous_maintenance_record.schema.json'
@@ -129,6 +133,7 @@ jobs:
             tests.test_administrative_autonomy_queue_starvation \
             tests.test_administrative_autonomy_receipt_behind_resume \
             tests.test_administrative_autonomy_post_receipt_closure_resume \
+            tests.test_administrative_autonomy_post_receipt_current_frontier \
             tests.test_administrative_structural_2033_late_recovery \
             tests.test_administrative_structural_2257_late_recovery \
             tests.test_administrative_structural_0833_late_recovery \
