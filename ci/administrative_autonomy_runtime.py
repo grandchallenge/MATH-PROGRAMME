@@ -50,6 +50,9 @@ from administrative_autonomy_runtime_structural_1809_recovery import (
     synchronize_eligible_candidate as structural_1809_synchronize_eligible_candidate,
     wait_mirror_sync as structural_1809_collision_wait_mirror_sync,
 )
+from administrative_autonomy_runtime_administrative_review_0813_receipt_recovery import (
+    pending_closures as administrative_review_0813_receipt_pending_closures,
+)
 from autonomy_github import AutonomyError
 
 receipt_stage.pending_closures = nonblocking_pending_closures
@@ -99,10 +102,17 @@ behind_sync.synchronize_eligible_candidate = partial(
     base=behind_sync.synchronize_eligible_candidate,
 )
 
+# Exact Aug13 administrative-review receipt recovery. The already-protected
+# record is re-admitted only to closure classification; ordinary receipt,
+# protected-merge, readback, and mirror mechanics remain unchanged.
+receipt_stage.pending_closures = partial(
+    administrative_review_0813_receipt_pending_closures,
+    base=receipt_stage.pending_closures,
+)
+
 # Preserve the durable executor-import boundary relied on by predecessor
-# certification tests. The module has already received the exact #520 wrapper
-# above, so these exported callables execute with the bounded synchronization
-# overlay installed.
+# certification tests. The module has already received the exact recovery
+# overlays above, so these exported callables execute with them installed.
 from administrative_autonomy_runtime_behind_sync import (
     execute, main, validate_command,
 )
