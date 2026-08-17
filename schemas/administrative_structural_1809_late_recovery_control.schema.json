@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "administrative_structural_1809_late_recovery_control.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "control_id", "status", "issue", "protected_base_at_opening", "occurrence", "collision", "root_cause", "correction", "authority_boundary", "claim_boundaries"],
+  "properties": {
+    "$schema": {"const": "../schemas/administrative_structural_1809_late_recovery_control.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-ADMIN-STRUCTURAL-1809-COLLISION-RECOVERY-001"},
+    "status": {"const": "ACTIVE_ON_PROTECTED_MERGE"},
+    "issue": {"const": 546},
+    "protected_base_at_opening": {"const": "52f16242b992b0326ca3f6e039b84debe126c17e"},
+    "occurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["procedure_id", "occurrence_key", "due_at_utc", "prepare_at_utc", "freeze_at_utc", "manifest_path", "candidate_issue", "candidate_pull_request", "candidate_branch", "original_source_protected_head", "stale_finalized_head", "ordinary_recovery_expires_at_utc", "bounded_recovery_expires_at_utc"],
+      "properties": {
+        "procedure_id": {"const": "structural_sweep"},
+        "occurrence_key": {"const": "structural_sweep:2026-08-15T18:09:00Z"},
+        "due_at_utc": {"const": "2026-08-15T18:09:00Z"},
+        "prepare_at_utc": {"const": "2026-08-15T12:09:00Z"},
+        "freeze_at_utc": {"const": "2026-08-15T16:39:00Z"},
+        "manifest_path": {"const": "governance/administrative_candidates/structural_sweep-20260815T180900Z.json"},
+        "candidate_issue": {"const": 520},
+        "candidate_pull_request": {"const": 521},
+        "candidate_branch": {"const": "automation/maintenance/structural_sweep-20260815T180900Z"},
+        "original_source_protected_head": {"const": "bfaf3849b7528a1d98317550c8f23d6e323a4f17"},
+        "stale_finalized_head": {"const": "fb3114c6a88a7afa6762cd07ce7d21479a677e1c"},
+        "ordinary_recovery_expires_at_utc": {"const": "2026-08-15T21:09:00Z"},
+        "bounded_recovery_expires_at_utc": {"const": "2026-08-17T20:33:00Z"}
+      }
+    },
+    "collision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stale_record_id", "stale_record_path", "stale_branch_blob_sha", "protected_occupant_blob_sha", "protected_occupant_occurrence_key", "protected_occupant_due_at_utc", "protected_occupant_issue", "protected_occupant_pull_request", "canonical_record_id", "canonical_record_path"],
+      "properties": {
+        "stale_record_id": {"const": "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-15-001"},
+        "stale_record_path": {"const": "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-15-001.json"},
+        "stale_branch_blob_sha": {"const": "78de78817d8ad6d12343717cfee1c2af72fe3a90"},
+        "protected_occupant_blob_sha": {"const": "743b0aa3c414584b4fbb1c7e49fd97ba5f6be2da"},
+        "protected_occupant_occurrence_key": {"const": "structural_sweep:2026-08-15T01:21:00Z"},
+        "protected_occupant_due_at_utc": {"const": "2026-08-15T01:21:00Z"},
+        "protected_occupant_issue": {"const": 515},
+        "protected_occupant_pull_request": {"const": 516},
+        "canonical_record_id": {"const": "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-15-002"},
+        "canonical_record_path": {"const": "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-15-002.json"}
+      }
+    },
+    "root_cause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["failure_class", "target_record_was_never_protected", "protected_same_date_identity_occupied_by_distinct_occurrence", "ordinary_update_branch_conflict_possible", "completion_frontier_now_later_than_target"],
+      "properties": {
+        "failure_class": {"const": "SAME_DATE_RECORD_ID_COLLISION_AFTER_EARLIER_HISTORICAL_RECOVERY"},
+        "target_record_was_never_protected": {"const": true},
+        "protected_same_date_identity_occupied_by_distinct_occurrence": {"const": true},
+        "ordinary_update_branch_conflict_possible": {"const": true},
+        "completion_frontier_now_later_than_target": {"const": true}
+      }
+    },
+    "correction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["global_recovery_window_minutes_unchanged", "exact_occurrence_only", "protected_same_date_occupant_required", "stale_branch_collision_removal_allowed_for_exact_target", "ordinary_behind_sync_required_after_collision_removal", "allocator_derived_identity_required", "allocator_expected_record_id", "exact_receipt_absence_is_recovery_condition", "later_completion_frontier_preserved", "historical_receipt_backfill_allowed_for_exact_occurrence", "mirror_current_frontier_preserved", "source_ancestry_required", "deadline_reset", "cadence_anchor_reset", "general_same_date_renumbering_authority_created", "intervening_occurrences_superseded"],
+      "properties": {
+        "global_recovery_window_minutes_unchanged": {"const": 180},
+        "exact_occurrence_only": {"const": true},
+        "protected_same_date_occupant_required": {"const": true},
+        "stale_branch_collision_removal_allowed_for_exact_target": {"const": true},
+        "ordinary_behind_sync_required_after_collision_removal": {"const": true},
+        "allocator_derived_identity_required": {"const": true},
+        "allocator_expected_record_id": {"const": "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-15-002"},
+        "exact_receipt_absence_is_recovery_condition": {"const": true},
+        "later_completion_frontier_preserved": {"const": true},
+        "historical_receipt_backfill_allowed_for_exact_occurrence": {"const": true},
+        "mirror_current_frontier_preserved": {"const": true},
+        "source_ancestry_required": {"const": true},
+        "deadline_reset": {"const": false},
+        "cadence_anchor_reset": {"const": false},
+        "general_same_date_renumbering_authority_created": {"const": false},
+        "intervening_occurrences_superseded": {"const": false}
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["human_steward_exact_head_authorization_required", "candidate_branch_is_authority", "stale_branch_artifact_is_authority", "bypass_created", "emergency_authority_created", "required_checks_weakened", "referee_gate_weakened", "direct_protected_push_authorized", "general_late_recovery_authority_created", "general_identity_rewrite_authority_created", "issue_522_or_pr_523_authority_created"],
+      "properties": {
+        "human_steward_exact_head_authorization_required": {"const": true},
+        "candidate_branch_is_authority": {"const": false},
+        "stale_branch_artifact_is_authority": {"const": false},
+        "bypass_created": {"const": false},
+        "emergency_authority_created": {"const": false},
+        "required_checks_weakened": {"const": false},
+        "referee_gate_weakened": {"const": false},
+        "direct_protected_push_authorized": {"const": false},
+        "general_late_recovery_authority_created": {"const": false},
+        "general_identity_rewrite_authority_created": {"const": false},
+        "issue_522_or_pr_523_authority_created": {"const": false}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mathematical_target_proved", "source_authority_created", "certification_authority_created", "external_claim_authorized", "novelty_or_priority_claim_authorized", "publication_authorized", "deployment_authorized", "product_or_release_authorized", "commercial_authority_created"],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "source_authority_created": {"const": false},
+        "certification_authority_created": {"const": false},
+        "external_claim_authorized": {"const": false},
+        "novelty_or_priority_claim_authorized": {"const": false},
+        "publication_authorized": {"const": false},
+        "deployment_authorized": {"const": false},
+        "product_or_release_authorized": {"const": false},
+        "commercial_authority_created": {"const": false}
+      }
+    }
+  }
+}
