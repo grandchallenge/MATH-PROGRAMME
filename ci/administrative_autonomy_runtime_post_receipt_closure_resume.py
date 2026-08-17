@@ -13,6 +13,7 @@ from administrative_autonomy_receipt_stage import (
     pending_closures as ordinary_pending_closures,
     receipt_for,
 )
+from administrative_autonomy_runtime_mirror_sync import authoritative_successful_run_id
 from administrative_autonomy_runtime_queue_starvation import (
     pending_closures as nonblocking_pending_closures,
 )
@@ -307,15 +308,16 @@ def stage_completion_receipt(
 
 
 def _successful_sync_run(observability: Any, repo: str, head: str) -> int:
-    runs = observability.get(
+    payload = observability.get(
         f"/repos/{repo}/actions/workflows/"
         "administrative-maintenance-synchronization.yml/runs?"
         f"head_sha={urllib.parse.quote(head, safe='')}&per_page=20"
-    ).get("workflow_runs", [])
-    for run in runs:
-        if run.get("status") == "completed" and run.get("conclusion") == "success":
-            return int(run["id"])
-    return 0
+    )
+    runs = payload.get("workflow_runs", [])
+    if not isinstance(runs, list):
+        raise AutonomyError("post-receipt synchronization workflow-run payload drift")
+    normalized = [run for run in runs if isinstance(run, dict)]
+    return authoritative_successful_run_id(normalized)
 
 
 def _mirrors_current(
