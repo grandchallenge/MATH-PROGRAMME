@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/openai_ten_proofs_current_state_sync_002.schema.json",
+  "title": "OpenAI Ten Proofs current cross-repository state successor 002",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "record_id", "candidate_id", "lifecycle_state", "active_campaign_member",
+    "supersession", "ownership", "protected_heads", "formal_source_authority", "cert_authority",
+    "permanent_successor_surfaces", "unresolved_family_queue", "execution_order", "preserved_limitations",
+    "next_controlled_obligations", "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "record_id": {"const": "MP-OTP-CURRENT-STATE-SYNC-002"},
+    "candidate_id": {"const": "OPENAI-TEN-PROOFS-001"},
+    "lifecycle_state": {"const": "four_restricted_cert_qualifications_two_additional_permanent_solve_surfaces_eight_current_root_unresolved_families"},
+    "active_campaign_member": {"const": false},
+    "supersession": {"type": "object", "additionalProperties": false, "required": ["predecessor_programme_record", "historical_umbrella_record", "effect"], "properties": {
+      "predecessor_programme_record": {"type": "object", "additionalProperties": false, "required": ["path", "git_blob_sha1", "mutation_prohibited"], "properties": {
+        "path": {"const": "governance/openai_ten_proofs_cert_state_sync.json"},
+        "git_blob_sha1": {"const": "ea0826e2d9f5a08f6bd87b7934c5ef71484add12"},
+        "mutation_prohibited": {"const": true}
+      }},
+      "historical_umbrella_record": {"type": "object", "additionalProperties": false, "required": ["path", "git_blob_sha1", "mutation_prohibited"], "properties": {
+        "path": {"const": "governance/openai_ten_proofs_umbrella_sync.json"},
+        "git_blob_sha1": {"const": "710e8949df5f60efee5b2a7ca53b0f4750c2bfa8"},
+        "mutation_prohibited": {"const": true}
+      }},
+      "effect": {"const": "current_cross_repository_state_without_rewriting_historical_programme_records"}
+    }},
+    "ownership": {"const": {
+      "forge": "source_identity_semantic_nonvacuity_and_revision_loci",
+      "solve": "producer_packets_and_handoff_provenance",
+      "cert": "route_adjudication_disposition_and_output",
+      "programme": "cross_repository_current_state_only"
+    }},
+    "protected_heads": {"type": "object", "additionalProperties": false, "required": ["programme_base", "forge_main", "solve_main", "cert_main"], "properties": {
+      "programme_base": {"const": "df4e81fb254ccc585c8ffad80a99798507579863"},
+      "forge_main": {"const": "48e8bf8e0fd157688ae83a8110d63b1e500ee688"},
+      "solve_main": {"const": "7d1f9edf16558ba4c4396126e24fd2c9ae4826f7"},
+      "cert_main": {"const": "5a69fd897f69cc3871f2138d162fb6ec897ef393"}
+    }},
+    "formal_source_authority": {"type": "object"},
+    "cert_authority": {"type": "object"},
+    "permanent_successor_surfaces": {"type": "array", "minItems": 2, "maxItems": 2},
+    "unresolved_family_queue": {"type": "array", "minItems": 8, "maxItems": 8},
+    "execution_order": {"type": "array", "minItems": 7, "maxItems": 7},
+    "preserved_limitations": {"type": "object"},
+    "next_controlled_obligations": {"type": "array", "minItems": 3, "maxItems": 3},
+    "claim_boundary": {"type": "string", "minLength": 700}
+  }
+}
