@@ -1,8 +1,8 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "record_id": "MP-OTP-CURRENT-STATE-SYNC-002",
   "candidate_id": "OPENAI-TEN-PROOFS-001",
-  "lifecycle_state": "four_restricted_cert_qualifications_two_additional_permanent_solve_surfaces_eight_current_root_unresolved_families",
+  "lifecycle_state": "four_restricted_cert_qualifications_two_additional_permanent_solve_surfaces_two_current_root_forge_clearances_six_current_root_unresolved_families",
   "active_campaign_member": false,
   "supersession": {
     "predecessor_programme_record": {
@@ -24,8 +24,8 @@
     "programme": "cross_repository_current_state_only"
   },
   "protected_heads": {
-    "programme_base": "df4e81fb254ccc585c8ffad80a99798507579863",
-    "forge_main": "48e8bf8e0fd157688ae83a8110d63b1e500ee688",
+    "programme_base": "3443dc530a5645f70130afa6a417426a8696135e",
+    "forge_main": "b9dda1a5b958fd1be37a26324a025013a39584c1",
     "solve_main": "7d1f9edf16558ba4c4396126e24fd2c9ae4826f7",
     "cert_main": "5a69fd897f69cc3871f2138d162fb6ec897ef393"
   },
@@ -37,7 +37,7 @@
     "current_tree_for_unresolved_families": "174289e4d4958cb0509874e6e53400e098213de7",
     "deterministic_archive_sha256": "64534bbf7e1a5cc5f8c902d81657fb67c3dd9991d01f8a8b9e6803b163f3f532",
     "predecessor_root_remains_historical": "e62211d28e3a9131950c89caa6542cfe5eff3bca",
-    "unresolved_family_count": 8
+    "unresolved_family_count": 6
   },
   "cert_authority": {
     "route_registry_blob": "2d17473b4731aa9d9c630b1e7777ad4bd794d993",
@@ -91,18 +91,55 @@
       "cert_route_state": "not_registered"
     }
   ],
+  "current_root_completed_families": [
+    {
+      "family": "OTP-A-SPHERE-PACKING",
+      "tracker": "MATHFORGE#89",
+      "forge_merge": "5a0cb9a7b7eef210dd0fce5c527d09b6eef3bc12",
+      "audit_record_path": "sources/OPENAI-TEN-PROOFS-001/semantic/OTP-A-SPHERE-PACKING-BRIDGE/audit_record.json",
+      "audit_record_blob": "7858b156fc4490ecc6e3572dcf449d84dcc99f93",
+      "disposition": "SPHERE_PACKING_CURRENT_ROOT__SEMANTIC_AND_NONVACUITY_CLEAR__SOLVE_HANDOFF_NOT_AUTHORIZED",
+      "solve_handoff_authorized": false,
+      "mathcert_route_authorized": false
+    },
+    {
+      "family": "OTP-H-GAPCVP",
+      "tracker": "MATHFORGE#90",
+      "forge_merge": "b9dda1a5b958fd1be37a26324a025013a39584c1",
+      "audit_record_path": "sources/OPENAI-TEN-PROOFS-001/semantic/OTP-H-GAPCVP/audit_record.json",
+      "audit_record_blob": "673f541fbb552d307cc226c51d2f0fd2916b328d",
+      "disposition": "PROMISE_INTERFACES_CLOSED__SEMANTIC_AND_NONVACUITY_CLEAR_CURRENT_ROOT",
+      "solve_handoff_authorized": false,
+      "mathcert_route_authorized": false
+    }
+  ],
   "unresolved_family_queue": [
-    {"family": "OTP-A-SPHERE-PACKING", "state": "active_current_root_solution_carrier_located_source_locus_and_dependency_concordance_pending", "tracker": "MATHFORGE#89"},
-    {"family": "OTP-H-GAPCVP", "state": "active_current_root_solution_proofs_present_source_semantics_reduction_concordance_and_nonvacuity_pending", "tracker": "MATHFORGE#90"},
-    {"family": "OTP-B1-BINARY-CODES", "state": "queued_current_root_semantic_audit"},
-    {"family": "OTP-B2-SPHERICAL-CODES", "state": "queued_target_surface_drift_audit"},
-    {"family": "OTP-I-RAMSEY", "state": "queued_current_root_semantic_audit"},
-    {"family": "OTP-G-QUANTUM-PARALLEL-REPETITION", "state": "queued_current_root_semantic_audit"},
-    {"family": "OTP-D-NON-SOFIC", "state": "queued_current_root_semantic_audit"},
-    {"family": "OTP-E-CONNES-RIGIDITY", "state": "queued_declaration_identity_drift_audit"}
+    {
+      "family": "OTP-B1-BINARY-CODES",
+      "state": "queued_current_root_semantic_audit"
+    },
+    {
+      "family": "OTP-B2-SPHERICAL-CODES",
+      "state": "queued_target_surface_drift_audit"
+    },
+    {
+      "family": "OTP-I-RAMSEY",
+      "state": "queued_current_root_semantic_audit"
+    },
+    {
+      "family": "OTP-G-QUANTUM-PARALLEL-REPETITION",
+      "state": "queued_current_root_semantic_audit"
+    },
+    {
+      "family": "OTP-D-NON-SOFIC",
+      "state": "queued_current_root_semantic_audit"
+    },
+    {
+      "family": "OTP-E-CONNES-RIGIDITY",
+      "state": "queued_declaration_identity_drift_audit"
+    }
   ],
   "execution_order": [
-    "OTP-A-SPHERE-PACKING_and_OTP-H-GAPCVP",
     "OTP-B1-BINARY-CODES",
     "OTP-B2-SPHERICAL-CODES",
     "OTP-I-RAMSEY",
@@ -118,9 +155,9 @@
     "aggregate_ten_proofs_authority": false
   },
   "next_controlled_obligations": [
-    "complete_current_root_Sphere_Packing_source_locus_and_target_dependency_concordance_audit",
-    "complete_current_root_GapCVP_source_semantics_reduction_concordance_and_nonvacuity_audit",
+    "begin_current_root_Binary_Codes_semantic_and_nonvacuity_audit",
+    "preserve_Spherical_Codes_target_surface_drift_and_Connes_Rigidity_declaration_identity_drift_as_explicit_governed_differences",
     "route_new_Permanent_full_formula_and_circuit_handoffs_only_through_independent_MATHCERT_operations"
   ],
-  "claim_boundary": "This Programme successor records current protected cross-repository OTP state only. It preserves Forge ownership of source identity and semantic/nonvacuity authority, Solve ownership of producer packets and handoff provenance, Cert ownership of routes, adjudications, dispositions and outputs, and Programme ownership only of the cross-repository navigation state. It does not rewrite predecessor source records, infer semantic clearance from isolated replay, broaden any restricted certificate, register the two newer Permanent producer surfaces in MATHCERT, adjudicate or prove any mathematical target, establish whole-document byte or semantic equivalence, compare proof bodies in full, clear any of the eight unresolved families, create an aggregate OpenAI Ten Proofs certification object, or authorize novelty, priority, publication, patentability, product or commercial claims."
+  "claim_boundary": "This Programme successor records current protected cross-repository OTP state only. It preserves Forge ownership of source identity and semantic/nonvacuity authority, Solve ownership of producer packets and handoff provenance, Cert ownership of routes, adjudications, dispositions and outputs, and Programme ownership only of cross-repository navigation state. It records the protected current-root Forge clearances for Sphere Packing and GapCVP without converting either clearance into a Solve handoff, MATHCERT route, adjudication, certificate, mathematical-proof claim or aggregate authority. It does not rewrite predecessor source records, infer semantic clearance from isolated replay, broaden any restricted certificate, register the two newer Permanent producer surfaces in MATHCERT, establish whole-document byte or semantic equivalence, compare proof bodies in full, clear any of the six remaining unresolved families, create an aggregate OpenAI Ten Proofs certification object, or authorize novelty, priority, publication, patentability, product or commercial claims."
 }

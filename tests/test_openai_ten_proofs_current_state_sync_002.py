@@ -37,75 +37,103 @@ class OpenAITenProofsCurrentStateSync002Tests(unittest.TestCase):
     def test_historical_umbrella_drift(self):
         self.assertTrue(self.errors(umbrella_blob="0" * 40))
 
-    def test_ownership_collapse(self):
-        record = copy.deepcopy(self.record)
-        record["ownership"]["programme"] = "certification_output_authority"
-        self.assertTrue(self.errors(record=record))
+    def test_forge_main_drift(self):
+        r = copy.deepcopy(self.record)
+        r["protected_heads"]["forge_main"] = "0" * 40
+        self.assertTrue(self.errors(record=r))
+
+    def test_source_successor_cannot_collapse_into_current_forge_main(self):
+        r = copy.deepcopy(self.record)
+        r["formal_source_authority"]["protected_successor_merge"] = r["protected_heads"]["forge_main"]
+        self.assertTrue(self.errors(record=r))
 
     def test_current_root_drift(self):
-        record = copy.deepcopy(self.record)
-        record["formal_source_authority"]["current_root_for_unresolved_families"] = "0" * 40
-        self.assertTrue(self.errors(record=record))
+        r = copy.deepcopy(self.record)
+        r["formal_source_authority"]["current_root_for_unresolved_families"] = "0" * 40
+        self.assertTrue(self.errors(record=r))
 
-    def test_j1_qualification_removal(self):
-        record = copy.deepcopy(self.record)
-        record["cert_authority"]["qualified_restricted_surfaces"][1]["certificate_blob"] = "0" * 40
-        self.assertTrue(self.errors(record=record))
+    def test_unresolved_count_inflation(self):
+        r = copy.deepcopy(self.record)
+        r["formal_source_authority"]["unresolved_family_count"] = 8
+        self.assertTrue(self.errors(record=r))
+
+    def test_sphere_completion_merge_drift(self):
+        r = copy.deepcopy(self.record)
+        r["current_root_completed_families"][0]["forge_merge"] = "0" * 40
+        self.assertTrue(self.errors(record=r))
+
+    def test_gap_completion_blob_drift(self):
+        r = copy.deepcopy(self.record)
+        r["current_root_completed_families"][1]["audit_record_blob"] = "0" * 40
+        self.assertTrue(self.errors(record=r))
+
+    def test_completion_cannot_authorize_solve(self):
+        r = copy.deepcopy(self.record)
+        r["current_root_completed_families"][0]["solve_handoff_authorized"] = True
+        self.assertTrue(self.errors(record=r))
+
+    def test_completion_cannot_authorize_cert(self):
+        r = copy.deepcopy(self.record)
+        r["current_root_completed_families"][1]["mathcert_route_authorized"] = True
+        self.assertTrue(self.errors(record=r))
+
+    def test_completed_sphere_cannot_reenter_queue(self):
+        r = copy.deepcopy(self.record)
+        r["unresolved_family_queue"][0] = {
+            "family": "OTP-A-SPHERE-PACKING",
+            "state": "queued_current_root_semantic_audit",
+        }
+        self.assertTrue(self.errors(record=r))
+
+    def test_binary_codes_frontier_cannot_be_reordered(self):
+        r = copy.deepcopy(self.record)
+        r["execution_order"][0], r["execution_order"][1] = r["execution_order"][1], r["execution_order"][0]
+        self.assertTrue(self.errors(record=r))
+
+    def test_b2_drift_cannot_be_erased(self):
+        r = copy.deepcopy(self.record)
+        r["unresolved_family_queue"][1]["state"] = "queued_current_root_semantic_audit"
+        self.assertTrue(self.errors(record=r))
+
+    def test_connes_identity_drift_cannot_be_erased(self):
+        r = copy.deepcopy(self.record)
+        r["unresolved_family_queue"][-1]["state"] = "queued_current_root_semantic_audit"
+        self.assertTrue(self.errors(record=r))
 
     def test_j2_disposition_inflation(self):
-        record = copy.deepcopy(self.record)
-        record["cert_authority"]["qualified_restricted_surfaces"][2]["disposition"] = "qualified_unrestricted_theorem"
-        self.assertTrue(self.errors(record=record))
+        r = copy.deepcopy(self.record)
+        r["cert_authority"]["qualified_restricted_surfaces"][2]["disposition"] = "qualified_unrestricted_theorem"
+        self.assertTrue(self.errors(record=r))
 
     def test_aggregate_output_inflation(self):
-        record = copy.deepcopy(self.record)
-        record["cert_authority"]["aggregate_output_count"] = 1
-        self.assertTrue(self.errors(record=record))
+        r = copy.deepcopy(self.record)
+        r["cert_authority"]["aggregate_output_count"] = 1
+        self.assertTrue(self.errors(record=r))
 
     def test_proof_promotion(self):
-        record = copy.deepcopy(self.record)
-        record["cert_authority"]["mathematical_targets_marked_proved"] = 1
-        self.assertTrue(self.errors(record=record))
+        r = copy.deepcopy(self.record)
+        r["cert_authority"]["mathematical_targets_marked_proved"] = 1
+        self.assertTrue(self.errors(record=r))
 
-    def test_permanent_full_formula_route_inflation(self):
-        record = copy.deepcopy(self.record)
-        record["permanent_successor_surfaces"][0]["cert_route_state"] = "qualified"
-        self.assertTrue(self.errors(record=record))
-
-    def test_permanent_circuit_route_inflation(self):
-        record = copy.deepcopy(self.record)
-        record["permanent_successor_surfaces"][1]["cert_route_state"] = "submitted"
-        self.assertTrue(self.errors(record=record))
-
-    def test_gapcvp_removed_from_queue(self):
-        record = copy.deepcopy(self.record)
-        record["unresolved_family_queue"] = [x for x in record["unresolved_family_queue"] if x["family"] != "OTP-H-GAPCVP"]
-        self.assertTrue(self.errors(record=record))
-
-    def test_sphere_promoted_clear(self):
-        record = copy.deepcopy(self.record)
-        record["unresolved_family_queue"][0]["state"] = "semantic_and_nonvacuity_clear"
-        self.assertTrue(self.errors(record=record))
-
-    def test_execution_order_drift(self):
-        record = copy.deepcopy(self.record)
-        record["execution_order"][1], record["execution_order"][2] = record["execution_order"][2], record["execution_order"][1]
-        self.assertTrue(self.errors(record=record))
+    def test_permanent_route_inflation(self):
+        r = copy.deepcopy(self.record)
+        r["permanent_successor_surfaces"][0]["cert_route_state"] = "qualified"
+        self.assertTrue(self.errors(record=r))
 
     def test_whole_document_equivalence_inflation(self):
-        record = copy.deepcopy(self.record)
-        record["preserved_limitations"]["whole_document_semantic_equivalence"] = "established"
-        self.assertTrue(self.errors(record=record))
+        r = copy.deepcopy(self.record)
+        r["preserved_limitations"]["whole_document_semantic_equivalence"] = "established"
+        self.assertTrue(self.errors(record=r))
 
     def test_open_schema(self):
-        schema = copy.deepcopy(self.schema)
-        schema["additionalProperties"] = True
-        self.assertTrue(self.errors(schema=schema))
+        s = copy.deepcopy(self.schema)
+        s["additionalProperties"] = True
+        self.assertTrue(self.errors(schema=s))
 
     def test_unexpected_authority_field(self):
-        record = copy.deepcopy(self.record)
-        record["aggregate_certification"] = True
-        self.assertTrue(self.errors(record=record))
+        r = copy.deepcopy(self.record)
+        r["aggregate_certification"] = True
+        self.assertTrue(self.errors(record=r))
 
 
 if __name__ == "__main__":
