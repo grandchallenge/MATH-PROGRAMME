@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "administrative_structural_0121_late_recovery_control.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "control_id", "status", "issue", "occurrence", "root_cause", "correction", "authority_boundary", "claim_boundaries"],
+  "properties": {
+    "$schema": {"const": "../schemas/administrative_structural_0121_late_recovery_control.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-ADMIN-STRUCTURAL-0121-HOLE-RECOVERY-001"},
+    "status": {"const": "ACTIVE_ON_PROTECTED_MERGE"},
+    "issue": {"const": 534},
+    "occurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["procedure_id", "occurrence_key", "due_at_utc", "prepare_at_utc", "freeze_at_utc", "candidate_issue", "candidate_pull_request", "candidate_branch", "record_id", "record_path", "original_source_protected_head", "stale_finalized_head", "ordinary_recovery_expires_at_utc", "bounded_recovery_expires_at_utc"],
+      "properties": {
+        "procedure_id": {"const": "structural_sweep"},
+        "occurrence_key": {"const": "structural_sweep:2026-08-15T01:21:00Z"},
+        "due_at_utc": {"const": "2026-08-15T01:21:00Z"},
+        "prepare_at_utc": {"const": "2026-08-14T19:21:00Z"},
+        "freeze_at_utc": {"const": "2026-08-14T23:51:00Z"},
+        "candidate_issue": {"const": 515},
+        "candidate_pull_request": {"const": 516},
+        "candidate_branch": {"const": "automation/maintenance/structural_sweep-20260815T012100Z"},
+        "record_id": {"const": "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-15-001"},
+        "record_path": {"const": "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-15-001.json"},
+        "original_source_protected_head": {"const": "d0daf58cfcc5ca738d9b5c4f4bf712ba4a37b27c"},
+        "stale_finalized_head": {"const": "b2094bedbde57cd59ade834341b88d4fba6e7386"},
+        "ordinary_recovery_expires_at_utc": {"const": "2026-08-15T04:21:00Z"},
+        "bounded_recovery_expires_at_utc": {"const": "2026-08-17T03:45:00Z"}
+      }
+    },
+    "root_cause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_frozen", "runtime_finalized", "historical_referee_authorized", "historical_independent_review_approved", "protected_merge_performed", "failure_class", "environmental_repair_merge", "completion_frontier_now_later_than_missing_occurrence"],
+      "properties": {
+        "candidate_frozen": {"const": true},
+        "runtime_finalized": {"const": true},
+        "historical_referee_authorized": {"const": true},
+        "historical_independent_review_approved": {"const": true},
+        "protected_merge_performed": {"const": false},
+        "failure_class": {"const": "POST_DISPOSITION_ADVISORY_CANCELLATION"},
+        "environmental_repair_merge": {"const": "1b4d742094d487c7ef503a23ed88e99b733fe0a8"},
+        "completion_frontier_now_later_than_missing_occurrence": {"const": true}
+      }
+    },
+    "correction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["global_recovery_window_minutes_unchanged", "exact_occurrence_only", "exact_receipt_absence_is_recovery_condition", "later_completion_frontier_preserved", "historical_receipt_backfill_allowed_for_exact_occurrence", "mirror_current_frontier_preserved", "behind_sync_reconciliation_required", "source_ancestry_required", "deadline_reset", "cadence_anchor_reset", "eventual_recovery_relabels_on_time", "historical_failed_closed_evidence_preserved", "intervening_occurrences_superseded"],
+      "properties": {
+        "global_recovery_window_minutes_unchanged": {"const": 180},
+        "exact_occurrence_only": {"const": true},
+        "exact_receipt_absence_is_recovery_condition": {"const": true},
+        "later_completion_frontier_preserved": {"const": true},
+        "historical_receipt_backfill_allowed_for_exact_occurrence": {"const": true},
+        "mirror_current_frontier_preserved": {"const": true},
+        "behind_sync_reconciliation_required": {"const": true},
+        "source_ancestry_required": {"const": true},
+        "deadline_reset": {"const": false},
+        "cadence_anchor_reset": {"const": false},
+        "eventual_recovery_relabels_on_time": {"const": false},
+        "historical_failed_closed_evidence_preserved": {"const": true},
+        "intervening_occurrences_superseded": {"const": false}
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["human_steward_exact_head_authorization_required", "candidate_branch_is_authority", "bypass_created", "emergency_authority_created", "required_checks_weakened", "referee_gate_weakened", "direct_protected_push_authorized", "general_late_recovery_authority_created"],
+      "properties": {
+        "human_steward_exact_head_authorization_required": {"const": true},
+        "candidate_branch_is_authority": {"const": false},
+        "bypass_created": {"const": false},
+        "emergency_authority_created": {"const": false},
+        "required_checks_weakened": {"const": false},
+        "referee_gate_weakened": {"const": false},
+        "direct_protected_push_authorized": {"const": false},
+        "general_late_recovery_authority_created": {"const": false}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mathematical_target_proved", "source_authority_created", "certification_authority_created", "external_claim_authorized", "novelty_or_priority_claim_authorized", "publication_authorized", "deployment_authorized", "product_or_release_authorized", "commercial_authority_created"],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "source_authority_created": {"const": false},
+        "certification_authority_created": {"const": false},
+        "external_claim_authorized": {"const": false},
+        "novelty_or_priority_claim_authorized": {"const": false},
+        "publication_authorized": {"const": false},
+        "deployment_authorized": {"const": false},
+        "product_or_release_authorized": {"const": false},
+        "commercial_authority_created": {"const": false}
+      }
+    }
+  }
+}
