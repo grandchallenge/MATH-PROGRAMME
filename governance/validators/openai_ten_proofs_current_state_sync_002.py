@@ -36,8 +36,8 @@ EXPECTED_QUALIFIED = [
     ("OTP-C-PERMANENT", "MC-ROUTE-OTP-C-PERMANENT-FORMULA", "ad10c427270cb1c747ebcacbc5c37e4c1ed1df04", "qualified_encoded_targets_only"),
 ]
 EXPECTED_QUEUE = [
-    ("OTP-A-SPHERE-PACKING", "active_blocked_current_root_dependency_and_source_locus_reaudit", "MATHFORGE#89"),
-    ("OTP-H-GAPCVP", "active_current_root_promise_interface_semantic_reclassification", "MATHFORGE#90"),
+    ("OTP-A-SPHERE-PACKING", "active_current_root_solution_carrier_located_source_locus_and_dependency_concordance_pending", "MATHFORGE#89"),
+    ("OTP-H-GAPCVP", "active_current_root_solution_proofs_present_source_semantics_reduction_concordance_and_nonvacuity_pending", "MATHFORGE#90"),
     ("OTP-B1-BINARY-CODES", "queued_current_root_semantic_audit", None),
     ("OTP-B2-SPHERICAL-CODES", "queued_target_surface_drift_audit", None),
     ("OTP-I-RAMSEY", "queued_current_root_semantic_audit", None),
@@ -161,8 +161,8 @@ def validation_errors(*, record=None, schema=None, predecessor_blob=None, umbrel
         errors.append("preserved limitation drift or authority inflation")
 
     expected_next = [
-        "complete_current_root_Sphere_Packing_dependency_and_source_locus_reaudit",
-        "complete_current_root_GapCVP_promise_and_reduction_semantic_reclassification",
+        "complete_current_root_Sphere_Packing_source_locus_and_target_dependency_concordance_audit",
+        "complete_current_root_GapCVP_source_semantics_reduction_concordance_and_nonvacuity_audit",
         "route_new_Permanent_full_formula_and_circuit_handoffs_only_through_independent_MATHCERT_operations",
     ]
     if record.get("next_controlled_obligations") != expected_next:
