@@ -158,7 +158,7 @@ class AdministrativePostReceiptCurrentFrontierTests(unittest.TestCase):
         conflict["record_path"] = "conflict.json"
         ledger["procedures"]["structural_sweep"]["receipts"].insert(1, conflict)
         ledger["procedures"]["structural_sweep"]["receipt_count"] = 3
-        with self.assertRaisesRegex(AutonomyError, "absent, conflicting, or ambiguous"):
+        with self.assertRaisesRegex(AutonomyError, "duplicate or unordered"):
             recovery._validated_current_frontier(
                 ledger, self.control(), self.predecessor_control()
             )
