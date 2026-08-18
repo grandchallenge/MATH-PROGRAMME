@@ -23,6 +23,7 @@ VALIDATION_WORKFLOW = (
     / "workflows"
     / "administrative-maintenance-automation-validation.yml"
 )
+MANDATORY_BINDING = ROOT / "tests" / "test_administrative_autonomy_0813_executor_binding.py"
 
 
 class AdministrativeAutonomy0813ClosurePreflightTests(unittest.TestCase):
@@ -145,12 +146,11 @@ class AdministrativeAutonomy0813ClosurePreflightTests(unittest.TestCase):
         self.assertIn("steps.aug13-closure-preflight.outputs.recovered != 'true'", text)
         self.assertIn("administrative-autonomy-0813-closure-preflight.json", text)
 
-    def test_validation_workflow_runs_preflight_regression(self):
-        text = VALIDATION_WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn(
-            "tests.test_administrative_autonomy_0813_closure_preflight",
-            text,
-        )
+    def test_existing_validation_lane_mandatorily_reaches_preflight_regression(self):
+        workflow = VALIDATION_WORKFLOW.read_text(encoding="utf-8")
+        binding = MANDATORY_BINDING.read_text(encoding="utf-8")
+        self.assertIn("tests.test_administrative_autonomy_0813_executor_binding", workflow)
+        self.assertIn("AdministrativeAutonomy0813ClosurePreflightTests", binding)
 
 
 if __name__ == "__main__":
