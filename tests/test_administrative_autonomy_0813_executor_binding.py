@@ -5,6 +5,10 @@ import sys
 import unittest
 from pathlib import Path
 
+from tests.test_administrative_autonomy_0813_closure_preflight import (
+    AdministrativeAutonomy0813ClosurePreflightTests,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
