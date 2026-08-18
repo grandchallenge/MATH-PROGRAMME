@@ -10,6 +10,9 @@ from tests.test_administrative_autonomy_0813_closure_preflight import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
+ACTIVATION_WORKFLOW = (
+    ROOT / ".github" / "workflows" / "administrative-autonomy-activation.yml"
+)
 
 
 class AdministrativeReview0813ExecutorBindingTests(unittest.TestCase):
@@ -51,6 +54,34 @@ raise SystemExit(0 if runtime_execute.pending_closures is receipt_stage.pending_
                 "fresh runtime process did not bind exact Aug13 closure overlay "
                 f"into executor\nstdout:\n{completed.stdout}\nstderr:\n{completed.stderr}"
             ),
+        )
+
+    def test_activation_workflow_self_kicks_exact_aug13_preflight(self):
+        text = ACTIVATION_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("branches: [main]", text)
+        self.assertIn(
+            "- .github/workflows/administrative-autonomy-activation.yml", text
+        )
+        self.assertIn("id: evidence-token", text)
+        self.assertIn("OBSERVABILITY_TOKEN: ${{ steps.evidence-token.outputs.token }}", text)
+        preflight = text.index(
+            "python ci/administrative_autonomy_0813_closure_preflight.py"
+        )
+        canary = text.index("python ci/administrative_autonomy_candidate_merge.py")
+        self.assertLess(preflight, canary)
+        self.assertIn(
+            "if: steps.aug13-closure.outputs.recovered != 'true'", text
+        )
+
+    def test_activation_falls_through_when_exact_target_is_absent(self):
+        text = ACTIVATION_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("echo \"recovered=${recovered}\" >> \"$GITHUB_OUTPUT\"", text)
+        self.assertIn(
+            "state': 'AUG13_CLOSURE_RECOVERED__ACTIVATION_CANARY_NOT_REQUIRED'",
+            text,
+        )
+        self.assertIn(
+            "if: steps.aug13-closure.outputs.recovered == 'true'", text
         )
 
 
