@@ -41,13 +41,88 @@ theorem finiteBooleanMeasureHom_pushforward
     finiteBooleanMeasureHom X j ≫
         CMDG.CondensedCM4P2D.measureFunctor.map (X.diagram.map f) =
       finiteBooleanMeasureHom X k := by
+  let T := basisBooleanCube X
+  let S := op ((profiniteToCompHaus).obj T)
+
+  have hpost :
+      ∀ {A B : CondensedMod.{u} R}
+        (g : (Condensed.profiniteFree R).obj T ⟶ A)
+        (h : A ⟶ B),
+        freeHomSectionsEquiv T B (g ≫ h) =
+          (ConcreteCategory.hom
+            (((Condensed.forget R).map h).hom.app S))
+            (freeHomSectionsEquiv T A g) := by
+
+    intro A B g h
+
+    change
+      (coherentTopology CompHaus.{u}).uliftYonedaEquiv
+        ((Condensed.freeForgetAdjunction R).homEquiv
+          ((profiniteToCondensed).obj T)
+          B
+          (g ≫ h)) =
+        _
+
+    rw [Adjunction.homEquiv_naturality_right]
+
+    rfl
+
+  have hj :
+      freeHomSectionsEquiv
+          (basisBooleanCube X)
+          (CMDG.CondensedCM4P2D.measureFunctor.obj
+            (X.diagram.obj j))
+          (finiteBooleanMeasureHom X j) =
+        finiteBooleanMeasureSection X j := by
+    exact Equiv.apply_symm_apply _ _
+
+  have hk :
+      freeHomSectionsEquiv
+          (basisBooleanCube X)
+          (CMDG.CondensedCM4P2D.measureFunctor.obj
+            (X.diagram.obj k))
+          (finiteBooleanMeasureHom X k) =
+        finiteBooleanMeasureSection X k := by
+    exact Equiv.apply_symm_apply _ _
+
   apply
     (freeHomSectionsEquiv
       (basisBooleanCube X)
-      (CMDG.CondensedCM4P2D.measureFunctor.obj (X.diagram.obj k))).injective
-  simpa [finiteBooleanMeasureHom, freeHomSectionsEquiv,
-    Adjunction.homEquiv_naturality_right, uliftYonedaEquiv_comp] using
-    finiteBooleanMeasureSection_pushforward X f
+      (CMDG.CondensedCM4P2D.measureFunctor.obj
+        (X.diagram.obj k))).injective
+
+  rw [
+    hpost
+      (g := finiteBooleanMeasureHom X j)
+      (h :=
+        CMDG.CondensedCM4P2D.measureFunctor.map
+          (X.diagram.map f)),
+    hj,
+    hk
+  ]
+
+  have hforget :
+      (ConcreteCategory.hom
+        (((Condensed.forget R).map
+          (CMDG.CondensedCM4P2D.measureFunctor.map
+            (X.diagram.map f))).hom.app
+          (op
+            ((profiniteToCompHaus).obj
+              (basisBooleanCube X)))))
+        (finiteBooleanMeasureSection X j) =
+      (ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2D.measureFunctor.map
+          (X.diagram.map f)).hom.app
+          (op
+            ((profiniteToCompHaus).obj
+              (basisBooleanCube X)))))
+        (finiteBooleanMeasureSection X j) := by
+    rfl
+
+  rw [hforget]
+
+  exact finiteBooleanMeasureSection_pushforward X f
+
 
 #print finiteBooleanMeasureHom
 #print axioms finiteBooleanMeasureHom
