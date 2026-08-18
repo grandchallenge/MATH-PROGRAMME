@@ -50,6 +50,9 @@ from administrative_autonomy_runtime_structural_1809_recovery import (
     synchronize_eligible_candidate as structural_1809_synchronize_eligible_candidate,
     wait_mirror_sync as structural_1809_collision_wait_mirror_sync,
 )
+from administrative_autonomy_runtime_administrative_review_0813_receipt_recovery import (
+    pending_closures as administrative_review_0813_receipt_pending_closures,
+)
 from administrative_autonomy_runtime_administrative_review_0121_recovery import (
     eligible_candidates as administrative_review_0121_recovery_eligible_candidates,
 )
@@ -101,6 +104,14 @@ import administrative_autonomy_runtime_behind_sync as behind_sync
 behind_sync.synchronize_eligible_candidate = partial(
     structural_1809_synchronize_eligible_candidate,
     base=behind_sync.synchronize_eligible_candidate,
+)
+
+# Exact Aug13 administrative-review receipt recovery. The already-protected
+# record is re-admitted only to closure classification; ordinary receipt,
+# protected-merge, readback, and mirror mechanics remain unchanged.
+receipt_stage.pending_closures = partial(
+    administrative_review_0813_receipt_pending_closures,
+    base=receipt_stage.pending_closures,
 )
 
 # Exact #522 administrative-review late recovery extends eligibility only. Once
