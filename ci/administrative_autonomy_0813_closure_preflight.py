@@ -101,7 +101,10 @@ def recover_exact_aug13(report_path: Path) -> int:
         "human_steward_identity_asserted": False,
         "bypass_used": False,
     }
-    issue = 0
+    # The control is already bound to exact issue #475. Bind that diagnostic
+    # target before the classifier call so any classifier exception is durable
+    # on the governed issue instead of being visible only in an Actions artifact.
+    issue = int(TARGET["issue_number"])
     try:
         recoveries = runtime_execute.pending_closures(
             candidate,
