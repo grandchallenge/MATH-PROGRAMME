@@ -144,12 +144,19 @@ class AdministrativeAutonomy0813ClosurePreflightTests(unittest.TestCase):
         )
         self.assertLess(runtime_import, executor_import)
 
-    def test_candidate_workflow_runs_preflight_before_preparation_and_stops_on_recovery(self):
+    def test_candidate_workflow_runs_exact_preflight_before_full_runtime(self):
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
-        preflight_index = text.index("Run exact Aug13 protected closure preflight")
-        preparation_index = text.index("Prepare idempotent non-authoritative candidates")
-        self.assertLess(preflight_index, preparation_index)
-        self.assertIn("steps.aug13-closure-preflight.outputs.recovered != 'true'", text)
+        preparation = text.index("Prepare idempotent non-authoritative candidates")
+        preflight_index = text.index(
+            "python ci/administrative_autonomy_0813_closure_preflight.py"
+        )
+        execute_index = text.index(
+            "python ci/administrative_autonomy_runtime.py execute --report"
+        )
+        self.assertLess(preparation, preflight_index)
+        self.assertLess(preflight_index, execute_index)
+        self.assertEqual(text.count("${{ github.token }}"), 1)
+        self.assertIn('if [[ "$recovered" == "true" ]]; then', text)
         self.assertIn("administrative-autonomy-0813-closure-preflight.json", text)
 
     def test_existing_validation_lane_mandatorily_reaches_preflight_regression(self):
