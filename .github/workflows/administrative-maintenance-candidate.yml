@@ -93,7 +93,7 @@ jobs:
 
       - name: Record trigger provenance
         env:
-          GCL_EVENT_SCHEDULE: ${{ inputs.procedure || '' }}
+          GCL_EVENT_SCHEDULE: ${{ github.event.schedule || '' }}
         run: |
           set -euo pipefail
           python - <<'PY'
