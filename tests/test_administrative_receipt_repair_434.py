@@ -55,7 +55,7 @@ class AdministrativeReceiptRepair434Tests(unittest.TestCase):
         self.assertFalse(authority["protected_main_rewritten"])
         self.assertFalse(authority["retrospective_authority_created"])
 
-    def test_repair_binds_exact_current_completion_entry(self) -> None:
+    def test_repair_binds_preserved_completion_entry(self) -> None:
         structural = self.completion["procedures"]["structural_sweep"]
         binding = self.repair["completion_ledger_binding"]
         matching = [
@@ -65,8 +65,14 @@ class AdministrativeReceiptRepair434Tests(unittest.TestCase):
         ]
         self.assertEqual(1, len(matching))
         receipt = matching[0]
-        self.assertEqual(binding["completed_through_utc"], structural["completed_through_utc"])
-        self.assertEqual(binding["receipt_count"], structural["receipt_count"])
+        # The repair binds the completion ledger as it existed when the repair
+        # was admitted. Later protected receipts may legitimately advance the
+        # procedure frontier and increase the receipt count; they must not
+        # invalidate this historical binding.
+        self.assertLessEqual(
+            binding["completed_through_utc"], structural["completed_through_utc"]
+        )
+        self.assertLessEqual(binding["receipt_count"], structural["receipt_count"])
         self.assertEqual(binding["record_path"], receipt["record_path"])
         self.assertEqual(binding["record_sha256"], receipt["record_sha256"])
         self.assertEqual(binding["record_merge_commit"], receipt["merge_commit"])
