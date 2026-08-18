@@ -99,19 +99,19 @@ runtime_github.wait_mirror_sync = partial(
     base=current_frontier_post_receipt_wait_mirror_sync,
 )
 
+# Exact Aug13 administrative-review receipt recovery. This overlay must be
+# installed before importing behind_sync: that import loads the executor, which
+# captures pending_closures from receipt_stage at module-import time.
+receipt_stage.pending_closures = partial(
+    administrative_review_0813_receipt_pending_closures,
+    base=receipt_stage.pending_closures,
+)
+
 import administrative_autonomy_runtime_behind_sync as behind_sync
 
 behind_sync.synchronize_eligible_candidate = partial(
     structural_1809_synchronize_eligible_candidate,
     base=behind_sync.synchronize_eligible_candidate,
-)
-
-# Exact Aug13 administrative-review receipt recovery. The already-protected
-# record is re-admitted only to closure classification; ordinary receipt,
-# protected-merge, readback, and mirror mechanics remain unchanged.
-receipt_stage.pending_closures = partial(
-    administrative_review_0813_receipt_pending_closures,
-    base=receipt_stage.pending_closures,
 )
 
 # Exact #522 administrative-review late recovery extends eligibility only. Once
