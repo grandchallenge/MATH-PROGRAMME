@@ -93,7 +93,7 @@ jobs:
 
       - name: Record trigger provenance
         env:
-          GCL_EVENT_SCHEDULE: ${{ github.event.schedule || '' }}
+          GCL_EVENT_SCHEDULE: ${{ inputs.procedure || '' }}
         run: |
           set -euo pipefail
           python - <<'PY'
@@ -131,7 +131,37 @@ jobs:
           test -n "${ADMIN_TOKEN}"
           test "${ADMIN_TOKEN}" != "${WRITE_TOKEN}"
 
+      - name: Run exact Aug13 protected closure preflight
+        id: aug13-closure-preflight
+        env:
+          CANDIDATE_TOKEN: ${{ steps.write-token.outputs.token }}
+          EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
+          OBSERVABILITY_TOKEN: ${{ steps.evidence-token.outputs.token }}
+          REFEREE_TOKEN: ${{ github.token }}
+          ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.write-token.outputs.app-slug) }}
+          ADMIN_LOGIN: ${{ format('{0}[bot]', steps.write-token.outputs.app-slug) }}
+          REFEREE_LOGIN: 'github-actions[bot]'
+          CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          REFEREE_APP_ID: '15368'
+        run: |
+          set -euo pipefail
+          python ci/administrative_autonomy_0813_closure_preflight.py \
+            --apply \
+            --report administrative-autonomy-0813-closure-preflight.json
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          value = json.loads(
+              Path("administrative-autonomy-0813-closure-preflight.json").read_text(
+                  encoding="utf-8"
+              )
+          )
+          print(f"recovered={'true' if value.get('recovered') is True else 'false'}")
+          PY
+
       - name: Prepare idempotent non-authoritative candidates
+        if: steps.aug13-closure-preflight.outputs.recovered != 'true'
         env:
           GITHUB_TOKEN: ${{ steps.write-token.outputs.token }}
           EVIDENCE_GITHUB_TOKEN: ${{ steps.evidence-token.outputs.token }}
@@ -146,9 +176,11 @@ jobs:
           }
 
       - name: Validate active autonomy runtime contract
+        if: steps.aug13-closure-preflight.outputs.recovered != 'true'
         run: python ci/administrative_autonomy_runtime.py validate
 
       - name: Finalize and execute eligible frozen candidate
+        if: steps.aug13-closure-preflight.outputs.recovered != 'true'
         env:
           CANDIDATE_TOKEN: ${{ steps.write-token.outputs.token }}
           EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
@@ -175,6 +207,7 @@ jobs:
           name: administrative-autonomy-runtime
           path: |
             administrative-maintenance-trigger.json
+            administrative-autonomy-0813-closure-preflight.json
             administrative-maintenance-candidate.json
             administrative-autonomy-runtime-report.json
           if-no-files-found: warn
