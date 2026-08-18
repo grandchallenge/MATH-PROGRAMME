@@ -29,6 +29,10 @@ POLICY_SHARD_REGISTRY = "governance/policy_shard_registry.json"
 ROUTED_MARKER_SUCCESSORS = {
     "python3 ci/validate_workflow_coverage.py": "python3 ci/validate_workflow_coverage_v2.py",
     "python3 ci/test_workflow_coverage.py": "python3 ci/test_workflow_coverage_v2.py",
+    "python -m unittest discover -s tests -p 'test_*.py'": (
+        "python3 ci/run_unittest_modules.py --discover-root tests --pattern test_*.py "
+        "--report-json repository-regression-timing.json"
+    ),
 }
 
 

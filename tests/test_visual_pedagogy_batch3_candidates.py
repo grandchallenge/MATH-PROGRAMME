@@ -7,7 +7,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "governance/visual_pedagogy/batch3_candidate_manifest.json"
 STAGE0 = ROOT / "governance/visual_pedagogy/propagation_manifest.json"
+LIVE_SWITCH = ROOT / "governance/visual_pedagogy/batch3_live_switch.json"
 RENDERER = ROOT / "tools/render_visual_pedagogy_batch3_svg_candidates.py"
+REVIEW_REF = "https://github.com/grandchallenge/MATH-PROGRAMME/issues/483#issuecomment-5272982277"
 ORDER = ['docs/assets/documentaries/navier_stokes/field.svg', 'docs/assets/documentaries/navier_stokes/frontier.svg', 'docs/assets/documentaries/poincare/plate_extinction.svg', 'docs/assets/documentaries/riemann/euler.svg', 'docs/assets/documentaries/riemann/evidence.svg']
 BLOBS = {'docs/assets/documentaries/navier_stokes/field.svg': '93c4b4d5f102217897592f0ff2efb78dbb22243c', 'docs/assets/documentaries/navier_stokes/frontier.svg': 'daff90cadc34999442acd796382917fd92f3c10d', 'docs/assets/documentaries/poincare/plate_extinction.svg': '0c0b57a053b998bdde9f834f588d2a6b77f29e33', 'docs/assets/documentaries/riemann/euler.svg': 'e4d08996162a6bf8a8a78598757fd1653f8c62cd', 'docs/assets/documentaries/riemann/evidence.svg': '17fad1662dc26a7e8b584eceb230606ed9b55c40'}
 
@@ -50,7 +52,8 @@ class Batch3CandidateTests(unittest.TestCase):
             self.assertFalse(r["live_switch_eligibility"])
             self.assertFalse(r["visual_is_evidence"])
 
-    def test_contracts_pending_and_schema_shaped(self):
+    def test_contracts_are_stage_aware_and_schema_shaped(self):
+        review_completed = LIVE_SWITCH.is_file()
         for r in self.m["plates"]:
             c = json.loads((ROOT / r["contract_path"]).read_text())
             self.assertEqual(c["predecessor"], r["predecessor_path"])
@@ -59,8 +62,12 @@ class Batch3CandidateTests(unittest.TestCase):
             self.assertTrue(c["renderer"]["reproducible"])
             self.assertEqual(c["derivatives"][0]["path"], r["candidate_path"])
             self.assertEqual(c["derivatives"][0]["digest"], r["candidate_digest"])
-            self.assertEqual(c["independent_review"]["status"], "pending")
-            self.assertEqual(c["independent_review"]["evidence_refs"], [])
+            if review_completed:
+                self.assertEqual(c["independent_review"]["status"], "reviewed")
+                self.assertEqual(c["independent_review"]["evidence_refs"], [REVIEW_REF])
+            else:
+                self.assertEqual(c["independent_review"]["status"], "pending")
+                self.assertEqual(c["independent_review"]["evidence_refs"], [])
 
     def test_generator_is_byte_exact(self):
         generated = {str(p.relative_to(ROOT)): c for p, c in renderer().OUTPUTS.items()}

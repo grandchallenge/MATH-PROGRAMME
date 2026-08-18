@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+<title id="title">Velocity everywhere — Batch-3 review candidate</title>
+<desc id="desc">A schematic velocity-vector field sits beside the incompressible Navier-Stokes equation. Separate labels identify nonlinear transport, pressure, viscosity, and the divergence-free constraint. A claim boundary states that the drawing is not a simulation and does not prove global smoothness.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#222"/></marker></defs>
+<style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#111} .h1{font-size:34px;font-weight:700} .h2{font-size:22px;font-weight:700} .body{font-size:19px} .small{font-size:16px} .tiny{font-size:14px} .mono{font-family:"DejaVu Sans Mono",monospace;font-size:17px} .box{fill:white;stroke:#222;stroke-width:2} .soft{fill:#f2f2f2;stroke:#444;stroke-width:2} .open{fill:white;stroke:#222;stroke-width:2;stroke-dasharray:9 7} .line{stroke:#222;stroke-width:2;fill:none} .arrow{stroke:#222;stroke-width:2.4;fill:none;marker-end:url(#arrow)} .sep{stroke:#777;stroke-width:1.5} .label{font-size:15px;font-weight:700;letter-spacing:1px}
+</style><rect width="1200" height="900" fill="white"/>
+<text x="40" y="55" class="h1">A fluid assigns a velocity vector to every point</text>
+<text x="40" y="92" class="body">This is a schematic field, not a numerical simulation. The equation separates four distinct mathematical roles.</text>
+<rect x="55" y="145" width="500" height="430" rx="14" class="box"/>
+<text x="80" y="185" class="label">SPATIAL VECTOR FIELD u(x,t)</text>
+<line x1="85" y1="525" x2="515" y2="525" class="sep"/><line x1="85" y1="195" x2="85" y2="525" class="sep"/>
+<line x1="95" y1="205" x2="140" y2="189" class="arrow"/><line x1="185" y1="205" x2="230" y2="192" class="arrow"/><line x1="275" y1="205" x2="320" y2="195" class="arrow"/><line x1="365" y1="205" x2="410" y2="198" class="arrow"/><line x1="455" y1="205" x2="500" y2="201" class="arrow"/><line x1="95" y1="275" x2="144" y2="259" class="arrow"/><line x1="185" y1="275" x2="234" y2="262" class="arrow"/><line x1="275" y1="275" x2="324" y2="265" class="arrow"/><line x1="365" y1="275" x2="414" y2="268" class="arrow"/><line x1="455" y1="275" x2="504" y2="271" class="arrow"/><line x1="95" y1="345" x2="148" y2="329" class="arrow"/><line x1="185" y1="345" x2="238" y2="332" class="arrow"/><line x1="275" y1="345" x2="328" y2="335" class="arrow"/><line x1="365" y1="345" x2="418" y2="338" class="arrow"/><line x1="455" y1="345" x2="508" y2="341" class="arrow"/><line x1="95" y1="415" x2="152" y2="399" class="arrow"/><line x1="185" y1="415" x2="242" y2="402" class="arrow"/><line x1="275" y1="415" x2="332" y2="405" class="arrow"/><line x1="365" y1="415" x2="422" y2="408" class="arrow"/><line x1="455" y1="415" x2="512" y2="411" class="arrow"/><line x1="95" y1="485" x2="156" y2="469" class="arrow"/><line x1="185" y1="485" x2="246" y2="472" class="arrow"/><line x1="275" y1="485" x2="336" y2="475" class="arrow"/><line x1="365" y1="485" x2="426" y2="478" class="arrow"/><line x1="455" y1="485" x2="516" y2="481" class="arrow"/>
+<text x="90" y="555" class="small">Arrow direction and length indicate local velocity schematically.</text>
+<rect x="600" y="145" width="545" height="430" rx="14" class="soft"/>
+<text x="625" y="185" class="h2">Incompressible Navier-Stokes</text>
+<text x="625" y="225" class="mono">d_t u + (u·grad)u = -grad p + nu Delta u + f</text>
+<text x="625" y="260" class="mono">div u = 0</text>
+<line x1="625" y1="285" x2="1120" y2="285" class="sep"/>
+<text x="625" y="330" class="body">Transport: (u·grad)u carries momentum with the flow.</text>
+<text x="625" y="382" class="body">Pressure: -grad p enforces the divergence-free constraint.</text>
+<text x="625" y="434" class="body">Viscosity: nu Delta u diffuses velocity gradients.</text>
+<text x="625" y="486" class="body">Incompressibility: div u = 0 constrains the field globally.</text>
+<rect x="55" y="635" width="1090" height="150" rx="12" class="open"/>
+<text x="80" y="678" class="h2">Claim boundary</text>
+<text x="80" y="718" class="body">A smooth-looking field drawing does not prove global smoothness; no computed trajectory, pressure solve, or singularity test is shown.</text>
+<text x="80" y="755" class="small">The plate teaches the roles of terms in the PDE. Mathematical authority remains in the equation and documentary theorem labels.</text>
+
+<text x="40" y="872" class="small">Review candidate · documentary exposition only · visual_is_evidence: false</text>
+</svg>

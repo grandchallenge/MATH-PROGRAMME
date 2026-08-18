@@ -1,0 +1,86 @@
+{
+  "mapping_set_id": "PNP-CLASSIFICATION-MAPPINGS",
+  "mapping_set_version": "1.0.0",
+  "mapping_set_status": "QUALIFIED",
+  "domain_id": "PNP",
+  "mappings": [
+    {
+      "mapping_id": "PNP-MAP-MSC-68Q15",
+      "target_type": "DOMAIN",
+      "internal_ref": "PNP",
+      "scheme": "MSC",
+      "scheme_version": "2020",
+      "identifier": "68Q15",
+      "label": "Complexity classes (hierarchies, relations among complexity classes, etc.)",
+      "mapping_relation": "EXACT",
+      "role": "PRIMARY_SUBJECT",
+      "provenance": {
+        "source_id": "msc2020_normative",
+        "source_artifact_id": "MSC2020-OFFICIAL-PDF-2020",
+        "assignment_method": "HUMAN_CURATED",
+        "assigned_by": "MATH-TAXONOMY-IMPLEMENTATION-001",
+        "assigned_at": "2026-08-12",
+        "evidence": ["P versus NP is a relation between computational complexity classes, directly matching MSC2020 68Q15."]
+      },
+      "confidence": 1.0,
+      "review_status": "AUDITED",
+      "reviewed_by": "jimsteeg",
+      "reviewed_at": "2026-08-12",
+      "review_ref": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/470#pullrequestreview-4916844784",
+      "supersedes": [],
+      "superseded_by": null
+    },
+    {
+      "mapping_id": "PNP-MAP-MSC-68Q17",
+      "target_type": "DOMAIN",
+      "internal_ref": "PNP",
+      "scheme": "MSC",
+      "scheme_version": "2020",
+      "identifier": "68Q17",
+      "label": "Computational difficulty of problems (lower bounds, completeness, difficulty of approximation, etc.)",
+      "mapping_relation": "RELATED",
+      "role": "SECONDARY_SUBJECT",
+      "provenance": {
+        "source_id": "msc2020_normative",
+        "source_artifact_id": "MSC2020-OFFICIAL-PDF-2020",
+        "assignment_method": "HUMAN_CURATED",
+        "assigned_by": "MATH-TAXONOMY-IMPLEMENTATION-001",
+        "assigned_at": "2026-08-12",
+        "evidence": ["Completeness, reductions, and lower bounds are central secondary objects in the campaign."]
+      },
+      "confidence": 0.99,
+      "review_status": "AUDITED",
+      "reviewed_by": "jimsteeg",
+      "reviewed_at": "2026-08-12",
+      "review_ref": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/470#pullrequestreview-4916844784",
+      "supersedes": [],
+      "superseded_by": null
+    },
+    {
+      "mapping_id": "PNP-MAP-ARXIV-CS-CC",
+      "target_type": "DOMAIN",
+      "internal_ref": "PNP",
+      "scheme": "ARXIV",
+      "scheme_version": "current-as-of-2026-08-12",
+      "identifier": "cs.CC",
+      "label": "Computational Complexity",
+      "mapping_relation": "CLOSE",
+      "role": "DISCOVERY_FACET",
+      "provenance": {
+        "source_id": "arxiv",
+        "source_artifact_id": "ARXIV-CATEGORY-CURRENT-2026-08-12",
+        "assignment_method": "HUMAN_CURATED",
+        "assigned_by": "MATH-TAXONOMY-IMPLEMENTATION-001",
+        "assigned_at": "2026-08-12",
+        "evidence": ["Computational Complexity is the direct arXiv current-awareness category for P versus NP."]
+      },
+      "confidence": 1.0,
+      "review_status": "AUDITED",
+      "reviewed_by": "jimsteeg",
+      "reviewed_at": "2026-08-12",
+      "review_ref": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/470#pullrequestreview-4916844784",
+      "supersedes": [],
+      "superseded_by": null
+    }
+  ]
+}

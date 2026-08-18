@@ -1,0 +1,94 @@
+{
+  "$schema": "../../schemas/administrative_receipt_repair_434.schema.json",
+  "schema_version": "1.0.0",
+  "repair_id": "MP-ADMIN-RECEIPT-REPAIR-434-001",
+  "control_id": "MP-ADMIN-MAINT-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "status": "REPAIR_CANDIDATE_PENDING_PROTECTED_ADMISSION",
+  "occurrence_key": "structural_sweep:2026-08-11T13:21:00Z",
+  "scheduled_due_at": "2026-08-11T13:21:00Z",
+  "source_issue": 422,
+  "malformed_receipt": {
+    "pull_request": 434,
+    "base": "898e83fb35d9ef6418e70317678df4b244853552",
+    "head": "be55befeab38c484eef1e1014669b6b981287cf7",
+    "merge_commit": "ef6f9fe1a0c85ad4c9b1204890018d87192daf47",
+    "merge_parents": [
+      "898e83fb35d9ef6418e70317678df4b244853552",
+      "be55befeab38c484eef1e1014669b6b981287cf7"
+    ],
+    "merged_at": "2026-08-13T01:54:27Z",
+    "merge_message": "Merge pull request #434 from grandchallenge/automation/maintenance/receipt-structural_sweep-20260811T132100Z\n\n[maintenance-receipt] MP-ADMIN-STRUCTURAL-SWEEP-2026-08-11-001",
+    "independent_non_author_reviews": [],
+    "exact_head_disposition_comment_id": null,
+    "receipt_parser_fields": {
+      "pull_request": 434,
+      "exact_head": null,
+      "disposition": null
+    },
+    "classification": "MALFORMED_COMPLETION_RECEIPT_MISSING_EXACT_HEAD_AND_DISPOSITION_WITH_NO_INDEPENDENT_REVIEW"
+  },
+  "underlying_record": {
+    "record_id": "MP-ADMIN-STRUCTURAL-SWEEP-2026-08-11-001",
+    "path": "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-11-001.json",
+    "git_blob": "0f1eb958934fbfbf7630651a0199c72533756dc7",
+    "canonical_sha256": "285d8af35cecfb7131a48b4d8a6b1c7c8994f58634c0a81d52667aad12c6b213",
+    "pull_request": 423,
+    "base": "1e72441a95ba9b8c17675e58c38551bc9f7c9e25",
+    "exact_head": "98b0ee3e205850f09f8c4a20096f0923b271958a",
+    "merge_commit": "5fe08ddfd12d6bef5afff2edb5b2117e56dbf2b2",
+    "referee_disposition_comment_id": 5252948096,
+    "referee_actor": "github-actions[bot]",
+    "referee_disposition": "REFEREE_AGENT_AUTHORIZED_EXACT_HEAD_PROTECTED_MERGE",
+    "protected_record_preserved": true,
+    "underlying_record_invalidated": false
+  },
+  "completion_ledger_binding": {
+    "path": "governance/administrative_maintenance_completion_state.json",
+    "completed_through_utc": "2026-08-11T13:21:00Z",
+    "receipt_count": 10,
+    "record_path": "governance/administrative_structural_sweeps/MP-ADMIN-STRUCTURAL-SWEEP-2026-08-11-001.json",
+    "record_sha256": "285d8af35cecfb7131a48b4d8a6b1c7c8994f58634c0a81d52667aad12c6b213",
+    "record_merge_commit": "5fe08ddfd12d6bef5afff2edb5b2117e56dbf2b2",
+    "record_exact_head": "98b0ee3e205850f09f8c4a20096f0923b271958a",
+    "record_pull_request": 423,
+    "receipt_state": "PROTECTED_COMPLETE"
+  },
+  "repair_contract": {
+    "scope": "SUPERSEDE_PR_434_RECEIPT_ADMISSION_ONLY",
+    "historical_merge_rewritten": false,
+    "underlying_record_replayed": false,
+    "completion_locus_changed": false,
+    "effective_only_after_protected_repair_merge": true,
+    "independent_non_author_exact_head_approval_required": true,
+    "human_steward_exact_head_disposition_required": true,
+    "required_checks_at_unchanged_head_required": true,
+    "expected_head_protected_merge_required": true,
+    "protected_main_readback_required": true,
+    "head_mutation_invalidates_prior_review": true
+  },
+  "authority_boundary": {
+    "approval_created": false,
+    "human_steward_disposition_created": false,
+    "merge_authorized": false,
+    "merge_performed": false,
+    "protected_main_rewritten": false,
+    "branch_protection_bypass": false,
+    "retrospective_authority_created": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "cert_route_registered": false,
+    "adjudication_authorized": false,
+    "certificate_issued": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "publication_claim_authorized": false,
+    "patentability_claim_authorized": false,
+    "product_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "commercial_claim_authorized": false
+  }
+}
