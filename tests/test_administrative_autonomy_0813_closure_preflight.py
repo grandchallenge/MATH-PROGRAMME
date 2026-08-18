@@ -1,0 +1,157 @@
+from __future__ import annotations
+
+import json
+import os
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import Mock, patch
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "ci"))
+
+import administrative_autonomy_0813_closure_preflight as preflight
+
+CANDIDATE_WORKFLOW = (
+    ROOT / ".github" / "workflows" / "administrative-maintenance-candidate.yml"
+)
+VALIDATION_WORKFLOW = (
+    ROOT
+    / ".github"
+    / "workflows"
+    / "administrative-maintenance-automation-validation.yml"
+)
+
+
+class AdministrativeAutonomy0813ClosurePreflightTests(unittest.TestCase):
+    def target(self):
+        return {
+            "manifest": {
+                "occurrence_key": preflight.TARGET["occurrence_key"],
+                "procedure_id": preflight.TARGET["procedure_id"],
+                "scheduled_due_at": preflight.TARGET["scheduled_due_at"],
+                "branch": "automation/maintenance/administrative_review-20260813T012100Z",
+            },
+            "record": {"record_id": preflight.TARGET["record_id"]},
+            "record_id": preflight.TARGET["record_id"],
+            "record_path": "governance/administrative_reviews/MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-08-13-001.json",
+            "issue_number": preflight.TARGET["issue_number"],
+            "pull_request": preflight.TARGET["pull_request"],
+            "exact_head": preflight.TARGET["exact_head"],
+            "record_merge_commit": preflight.TARGET["record_merge_commit"],
+            "record_disposition_comment_id": 5276363695,
+        }
+
+    def env(self):
+        return {
+            "GITHUB_REPOSITORY": "grandchallenge/MATH-PROGRAMME",
+            "GITHUB_REF": "refs/heads/main",
+            "CANDIDATE_TOKEN": "candidate",
+            "REFEREE_TOKEN": "referee",
+            "ADMIN_TOKEN": "admin",
+            "EVIDENCE_TOKEN": "evidence",
+            "OBSERVABILITY_TOKEN": "observability",
+        }
+
+    def identities(self):
+        return (
+            SimpleNamespace(login="gcl-release-trust[bot]"),
+            SimpleNamespace(login="gcl-release-trust[bot]"),
+            SimpleNamespace(login="github-actions[bot]"),
+        )
+
+    def test_exact_target_predicate_rejects_any_identity_drift(self):
+        item = self.target()
+        self.assertTrue(preflight.is_exact_target(item))
+        for field in ("issue_number", "pull_request", "record_id", "exact_head", "record_merge_commit"):
+            mutated = self.target()
+            mutated[field] = "drift"
+            self.assertFalse(preflight.is_exact_target(mutated), field)
+        for field in ("occurrence_key", "procedure_id", "scheduled_due_at"):
+            mutated = self.target()
+            mutated["manifest"][field] = "drift"
+            self.assertFalse(preflight.is_exact_target(mutated), field)
+
+    def test_no_target_is_noop_and_never_finishes_other_closure(self):
+        other = self.target()
+        other["issue_number"] = 999
+        with tempfile.TemporaryDirectory() as directory:
+            report = Path(directory) / "report.json"
+            with (
+                patch.dict(os.environ, self.env(), clear=False),
+                patch.object(preflight, "runtime_identities", return_value=self.identities()),
+                patch.object(preflight, "Client", return_value=Mock()),
+                patch.object(preflight.runtime_execute, "pending_closures", return_value=[other]),
+                patch.object(preflight, "ruleset_actors") as actors,
+                patch.object(preflight, "finish_closure") as finish,
+            ):
+                self.assertEqual(preflight.recover_exact_aug13(report), 0)
+            value = json.loads(report.read_text(encoding="utf-8"))
+        self.assertEqual(value["state"], "AUG13_CLOSURE_PREFLIGHT_NO_TARGET")
+        self.assertFalse(value["recovered"])
+        self.assertFalse(value["authority_created"])
+        actors.assert_not_called()
+        finish.assert_not_called()
+
+    def test_exact_target_uses_existing_finish_closure_once(self):
+        target = self.target()
+        closure = {
+            "receipt": {"scheduled_due_at": preflight.TARGET["scheduled_due_at"]},
+            "receipt_pull_request": 562,
+            "receipt_head": "a" * 40,
+            "receipt_disposition_comment_id": 123,
+            "receipt_merge_commit": "b" * 40,
+            "protected_readback_comment_id": 456,
+            "mirror_synchronization_run": 789,
+            "ruleset_bypass_actors": [],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            report = Path(directory) / "report.json"
+            with (
+                patch.dict(os.environ, self.env(), clear=False),
+                patch.object(preflight, "runtime_identities", return_value=self.identities()),
+                patch.object(preflight, "Client", return_value=Mock()),
+                patch.object(preflight.runtime_execute, "pending_closures", return_value=[target]),
+                patch.object(preflight, "ruleset_actors", return_value=[]) as actors,
+                patch.object(preflight, "finish_closure", return_value=closure) as finish,
+            ):
+                self.assertEqual(preflight.recover_exact_aug13(report), 0)
+            value = json.loads(report.read_text(encoding="utf-8"))
+        self.assertEqual(value["state"], "AUG13_CLOSURE_PREFLIGHT_PROTECTED_COMPLETE")
+        self.assertTrue(value["recovered"])
+        self.assertTrue(value["authority_created"])
+        self.assertFalse(value["human_steward_identity_asserted"])
+        self.assertFalse(value["bypass_used"])
+        actors.assert_called_once()
+        finish.assert_called_once()
+
+    def test_runtime_overlay_is_installed_before_executor_import(self):
+        text = (
+            ROOT / "ci" / "administrative_autonomy_0813_closure_preflight.py"
+        ).read_text(encoding="utf-8")
+        runtime_import = text.index("import administrative_autonomy_runtime  # noqa: F401")
+        executor_import = text.index(
+            "import administrative_autonomy_runtime_execute as runtime_execute"
+        )
+        self.assertLess(runtime_import, executor_import)
+
+    def test_candidate_workflow_runs_preflight_before_preparation_and_stops_on_recovery(self):
+        text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
+        preflight_index = text.index("Run exact Aug13 protected closure preflight")
+        preparation_index = text.index("Prepare idempotent non-authoritative candidates")
+        self.assertLess(preflight_index, preparation_index)
+        self.assertIn("steps.aug13-closure-preflight.outputs.recovered != 'true'", text)
+        self.assertIn("administrative-autonomy-0813-closure-preflight.json", text)
+
+    def test_validation_workflow_runs_preflight_regression(self):
+        text = VALIDATION_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn(
+            "tests.test_administrative_autonomy_0813_closure_preflight",
+            text,
+        )
+
+
+if __name__ == "__main__":
+    unittest.main()
