@@ -102,6 +102,37 @@ class AdministrativeAutonomy0813ClosurePreflightTests(unittest.TestCase):
         actors.assert_not_called()
         finish.assert_not_called()
 
+    def test_classifier_failure_is_reported_on_bound_target_issue(self):
+        candidate = Mock()
+        with tempfile.TemporaryDirectory() as directory:
+            report = Path(directory) / "report.json"
+            with (
+                patch.dict(os.environ, self.env(), clear=False),
+                patch.object(preflight, "runtime_identities", return_value=self.identities()),
+                patch.object(preflight, "Client", return_value=candidate),
+                patch.object(
+                    preflight.runtime_execute,
+                    "pending_closures",
+                    side_effect=preflight.AutonomyError("classifier boom"),
+                ),
+                patch.object(preflight, "ruleset_actors") as actors,
+                patch.object(preflight, "finish_closure") as finish,
+            ):
+                with self.assertRaises(preflight.AutonomyError):
+                    preflight.recover_exact_aug13(report)
+            value = json.loads(report.read_text(encoding="utf-8"))
+        self.assertEqual(value["state"], "AUG13_CLOSURE_PREFLIGHT_FAILED_CLOSED")
+        self.assertEqual(value["error"], "classifier boom")
+        self.assertFalse(value["recovered"])
+        self.assertFalse(value["authority_created"])
+        candidate.post.assert_called_once()
+        path, payload = candidate.post.call_args.args
+        self.assertEqual(path, "/repos/grandchallenge/MATH-PROGRAMME/issues/475/comments")
+        self.assertIn("AUG13_CLOSURE_PREFLIGHT_FAILED_CLOSED", payload["body"])
+        self.assertIn("classifier boom", payload["body"])
+        actors.assert_not_called()
+        finish.assert_not_called()
+
     def test_exact_target_uses_existing_finish_closure_once(self):
         target = self.target()
         closure = {
