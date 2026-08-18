@@ -41,6 +41,7 @@ class FakeClient:
             "merge_commit_sha": occurrence["record_merge_commit"],
         }
         self.review = {
+            "id": occurrence["independent_review"],
             "state": "APPROVED",
             "commit_id": occurrence["reviewed_head"],
             "user": {"login": "jimsteeg"},
@@ -67,9 +68,9 @@ class FakeClient:
             return self.pull
         if path == (
             f"/repos/grandchallenge/MATH-PROGRAMME/pulls/{occurrence['candidate_pull_request']}"
-            f"/reviews/{occurrence['independent_review']}"
+            "/reviews?per_page=100"
         ):
-            return self.review
+            return [self.review]
         if path == (
             f"/repos/grandchallenge/MATH-PROGRAMME/issues/comments/"
             f"{occurrence['human_steward_disposition_comment']}"
@@ -250,6 +251,42 @@ class AdministrativeReview0813ReceiptRecoveryTests(unittest.TestCase):
                     client, "grandchallenge/MATH-PROGRAMME", {}, "github-actions[bot]",
                     base=lambda candidate, repo, runtime, referee: [],
                 )
+
+    def test_review_list_requires_exact_unique_review_id(self):
+        control = self.load_control()
+        client = FakeClient(control)
+        client.review["id"] = int(control["occurrence"]["independent_review"]) + 1
+        with (
+            patch.object(recovery, "json_content", side_effect=self.json_lookup()),
+            patch.object(recovery, "content", return_value=self.raw_record()),
+            self.assertRaisesRegex(AutonomyError, "independent review identity drift"),
+        ):
+            recovery.pending_closures(
+                client, "grandchallenge/MATH-PROGRAMME", {}, "github-actions[bot]",
+                base=lambda candidate, repo, runtime, referee: [],
+            )
+
+        class DuplicateReviewClient(FakeClient):
+            def get(self, path: str):
+                occurrence = self.control["occurrence"]
+                reviews_path = (
+                    f"/repos/grandchallenge/MATH-PROGRAMME/pulls/{occurrence['candidate_pull_request']}"
+                    "/reviews?per_page=100"
+                )
+                if path == reviews_path:
+                    return [self.review, copy.deepcopy(self.review)]
+                return super().get(path)
+
+        duplicate = DuplicateReviewClient(control)
+        with (
+            patch.object(recovery, "json_content", side_effect=self.json_lookup()),
+            patch.object(recovery, "content", return_value=self.raw_record()),
+            self.assertRaisesRegex(AutonomyError, "independent review identity drift"),
+        ):
+            recovery.pending_closures(
+                duplicate, "grandchallenge/MATH-PROGRAMME", {}, "github-actions[bot]",
+                base=lambda candidate, repo, runtime, referee: [],
+            )
 
     def test_ancestry_mutation_fails_closed(self):
         control = self.load_control()
