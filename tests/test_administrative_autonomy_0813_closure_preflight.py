@@ -33,16 +33,18 @@ class AdministrativeAutonomy0813ClosurePreflightTests(unittest.TestCase):
                 "occurrence_key": preflight.TARGET["occurrence_key"],
                 "procedure_id": preflight.TARGET["procedure_id"],
                 "scheduled_due_at": preflight.TARGET["scheduled_due_at"],
-                "branch": "automation/maintenance/administrative_review-20260813T012100Z",
+                "branch": preflight.TARGET["candidate_branch"],
             },
             "record": {"record_id": preflight.TARGET["record_id"]},
             "record_id": preflight.TARGET["record_id"],
-            "record_path": "governance/administrative_reviews/MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-08-13-001.json",
+            "record_path": preflight.TARGET["record_path"],
             "issue_number": preflight.TARGET["issue_number"],
             "pull_request": preflight.TARGET["pull_request"],
             "exact_head": preflight.TARGET["exact_head"],
             "record_merge_commit": preflight.TARGET["record_merge_commit"],
-            "record_disposition_comment_id": 5276363695,
+            "record_disposition_comment_id": preflight.TARGET[
+                "record_disposition_comment_id"
+            ],
         }
 
     def env(self):
@@ -66,11 +68,15 @@ class AdministrativeAutonomy0813ClosurePreflightTests(unittest.TestCase):
     def test_exact_target_predicate_rejects_any_identity_drift(self):
         item = self.target()
         self.assertTrue(preflight.is_exact_target(item))
-        for field in ("issue_number", "pull_request", "record_id", "exact_head", "record_merge_commit"):
+        for field in ("issue_number", "pull_request", "record_disposition_comment_id"):
+            mutated = self.target()
+            mutated[field] = int(mutated[field]) + 1
+            self.assertFalse(preflight.is_exact_target(mutated), field)
+        for field in ("record_id", "record_path", "exact_head", "record_merge_commit"):
             mutated = self.target()
             mutated[field] = "drift"
             self.assertFalse(preflight.is_exact_target(mutated), field)
-        for field in ("occurrence_key", "procedure_id", "scheduled_due_at"):
+        for field in ("occurrence_key", "procedure_id", "scheduled_due_at", "branch"):
             mutated = self.target()
             mutated["manifest"][field] = "drift"
             self.assertFalse(preflight.is_exact_target(mutated), field)
@@ -100,7 +106,7 @@ class AdministrativeAutonomy0813ClosurePreflightTests(unittest.TestCase):
         target = self.target()
         closure = {
             "receipt": {"scheduled_due_at": preflight.TARGET["scheduled_due_at"]},
-            "receipt_pull_request": 562,
+            "receipt_pull_request": 563,
             "receipt_head": "a" * 40,
             "receipt_disposition_comment_id": 123,
             "receipt_merge_commit": "b" * 40,
