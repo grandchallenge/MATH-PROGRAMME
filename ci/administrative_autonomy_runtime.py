@@ -53,6 +53,9 @@ from administrative_autonomy_runtime_structural_1809_recovery import (
 from administrative_autonomy_runtime_administrative_review_0813_receipt_recovery import (
     pending_closures as administrative_review_0813_receipt_pending_closures,
 )
+from administrative_autonomy_runtime_administrative_review_0121_recovery import (
+    eligible_candidates as administrative_review_0121_recovery_eligible_candidates,
+)
 from autonomy_github import AutonomyError
 
 receipt_stage.pending_closures = nonblocking_pending_closures
@@ -65,6 +68,7 @@ RECOVERY_ELIGIBILITY_CHAIN = (
     structural_0833_recovery_eligible_candidates,
     structural_0121_recovery_eligible_candidates,
     structural_1809_recovery_eligible_candidates,
+    administrative_review_0121_recovery_eligible_candidates,
 )
 runtime_github.eligible_candidates = RECOVERY_ELIGIBILITY_CHAIN[-1]
 runtime_github.wait_mirror_sync = provenance_bound_wait_mirror_sync
@@ -109,6 +113,11 @@ receipt_stage.pending_closures = partial(
     administrative_review_0813_receipt_pending_closures,
     base=receipt_stage.pending_closures,
 )
+
+# Exact #522 administrative-review late recovery extends eligibility only. Once
+# admitted, ordinary BEHIND synchronization, record construction, Referee gates,
+# receipt staging, and mirror readback remain unchanged.
+runtime_github.eligible_candidates = administrative_review_0121_recovery_eligible_candidates
 
 # Preserve the durable executor-import boundary relied on by predecessor
 # certification tests. The module has already received the exact recovery
