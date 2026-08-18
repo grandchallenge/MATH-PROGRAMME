@@ -32,9 +32,12 @@ TARGET = {
     "issue_number": 475,
     "pull_request": 476,
     "record_id": "MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-08-13-001",
+    "record_path": "governance/administrative_reviews/MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-08-13-001.json",
+    "record_disposition_comment_id": 5276363695,
     "occurrence_key": "administrative_review:2026-08-13T01:21:00Z",
     "procedure_id": "administrative_review",
     "scheduled_due_at": "2026-08-13T01:21:00Z",
+    "candidate_branch": "automation/maintenance/administrative_review-20260813T012100Z",
     "exact_head": "1eb3c2cf8375beecc6d84d788ac891402b33757f",
     "record_merge_commit": "7c84b9bf19a1f3e2407860d82965e98fc49512db",
 }
@@ -46,6 +49,9 @@ def is_exact_target(item: dict[str, Any]) -> bool:
         int(item.get("issue_number") or 0) == TARGET["issue_number"]
         and int(item.get("pull_request") or 0) == TARGET["pull_request"]
         and str(item.get("record_id") or "") == TARGET["record_id"]
+        and str(item.get("record_path") or "") == TARGET["record_path"]
+        and int(item.get("record_disposition_comment_id") or 0)
+        == TARGET["record_disposition_comment_id"]
         and str(item.get("exact_head") or "") == TARGET["exact_head"]
         and str(item.get("record_merge_commit") or "")
         == TARGET["record_merge_commit"]
@@ -53,6 +59,7 @@ def is_exact_target(item: dict[str, Any]) -> bool:
         and str(manifest.get("procedure_id") or "") == TARGET["procedure_id"]
         and str(manifest.get("scheduled_due_at") or "")
         == TARGET["scheduled_due_at"]
+        and str(manifest.get("branch") or "") == TARGET["candidate_branch"]
     )
 
 
