@@ -80,6 +80,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Install governed policy dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --requirement requirements/policy.txt
+
       - name: Require bounded and separated recovery credentials
         env:
           WRITE_TOKEN: ${{ steps.write-token.outputs.token }}
