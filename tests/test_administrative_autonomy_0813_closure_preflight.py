@@ -118,6 +118,53 @@ class AdministrativeAutonomy0813ClosurePreflightTests(unittest.TestCase):
         )
         candidate.get.assert_not_called()
 
+    def test_steward_field_diagnostic_reports_only_exact_predicate_fields(self):
+        candidate = Mock()
+        body = "\n".join(
+            (
+                "AUTHORIZE_EXACT_HEAD_PROTECTED_MERGE__NO_OTHER_AUTHORITY",
+                preflight.TARGET["occurrence_key"],
+                f"PR: #{preflight.TARGET['pull_request']}",
+                preflight.TARGET["exact_head"],
+                "cd0d91b4c1b9e3c3ff2eced0c79c104d97af66e2",
+                str(preflight.TARGET["independent_review"]),
+            )
+        )
+        candidate.get.return_value = [
+            {
+                "id": preflight.TARGET["record_disposition_comment_id"],
+                "user": {"login": "fyremael"},
+                "author_association": "CONTRIBUTOR",
+                "body": body,
+            }
+        ]
+        error = "Aug13 administrative Human Steward disposition drift"
+        detail = preflight.steward_field_diagnostic(
+            candidate, "grandchallenge/MATH-PROGRAMME", error
+        )
+        self.assertIn("login='fyremael'", detail)
+        self.assertIn("author_association='CONTRIBUTOR'", detail)
+        for marker in (
+            "authorize_marker=True",
+            "occurrence_marker=True",
+            "pr_marker=True",
+            "head_marker=True",
+            "base_marker=True",
+            "review_marker=True",
+        ):
+            self.assertIn(marker, detail)
+        candidate.get.assert_called_once_with(
+            "/repos/grandchallenge/MATH-PROGRAMME/issues/475/comments?per_page=100"
+        )
+
+    def test_steward_field_diagnostic_is_inert_for_other_failures(self):
+        candidate = Mock()
+        self.assertEqual(
+            preflight.steward_field_diagnostic(candidate, "repo", "classifier boom"),
+            "classifier boom",
+        )
+        candidate.get.assert_not_called()
+
     def test_no_target_is_noop_and_never_finishes_other_closure(self):
         other = self.target()
         other["issue_number"] = 999
