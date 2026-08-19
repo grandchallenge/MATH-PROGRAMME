@@ -3,10 +3,9 @@ from __future__ import annotations
 """Typed external-state adapters for generic protected receipts."""
 from administrative_protected_receipt_model import *
 
-
-# --- config_adapter.py ---
 from dataclasses import dataclass
-from typing import Any,Mapping
+from typing import Any, Mapping
+
 @dataclass(frozen=True)
 class RulesetActor:
     actor_id:int; actor_type:str; bypass_mode:str
@@ -46,11 +45,8 @@ class ConfigurationAdapter:
         obs=self.observe(desired,after)
         return obs.state==ConfigState.CONVERGED and obs.non_target_digest==plan.non_target_digest and obs.body_digest==plan.body_digest
 
-
-# --- github_adapter.py ---
-from dataclasses import dataclass
 from enum import Enum
-from typing import Any,Mapping,Protocol,Sequence
+from typing import Protocol, Sequence
 class UpdateBranchState(str,Enum):
     PERMITTED_TO_ATTEMPT="PERMITTED_TO_ATTEMPT"; NOT_NEEDED="NOT_NEEDED"; NOT_PERMITTED_BY_POLICY="NOT_PERMITTED_BY_POLICY"; REJECTED_BY_PROVIDER="REJECTED_BY_PROVIDER"; SUCCEEDED="SUCCEEDED"; UNKNOWN="UNKNOWN"
 class Provider(Protocol):
@@ -94,7 +90,8 @@ class GitHubStateAdapter:
     def classify_pr(self,repository:str,pr_number:int,declared_base_snapshot:str,*,update_control_permitted:bool)->GitHubFacts:
         pr=self.provider.pull_request(repository,pr_number); head=self._head(pr); base_ref=str(pr.get("base",{}).get("ref") if isinstance(pr.get("base"),Mapping) else pr.get("base_ref") or "main"); current=self.provider.branch_sha(repository,base_ref)
         branch=self.classify_branch(repository,declared_base_snapshot,head,current)
-        mergeable=pr.get("mergeable"); conflict=ConflictState.CONFLICT_FREE if mergeable is True else ConflictState.UNKNOWN
+        mergeable=pr.get("mergeable")
+        conflict=(ConflictState.CONFLICT_FREE if mergeable is True else ConflictState.CONFLICTED if mergeable is False else ConflictState.UNKNOWN)
         checks=self.classify_checks(repository,head,tuple(pr.get("required_checks",())))
         update=UpdateBranchState.NOT_NEEDED if branch==BranchState.AT_CURRENT_BASE else (UpdateBranchState.PERMITTED_TO_ATTEMPT if branch==BranchState.BEHIND_CURRENT_BASE and conflict==ConflictState.CONFLICT_FREE and update_control_permitted else UpdateBranchState.NOT_PERMITTED_BY_POLICY)
         return GitHubFacts(current,head,declared_base_snapshot,branch,conflict,checks,update,{"mergeable":mergeable,"mergeable_state":pr.get("mergeable_state")})
