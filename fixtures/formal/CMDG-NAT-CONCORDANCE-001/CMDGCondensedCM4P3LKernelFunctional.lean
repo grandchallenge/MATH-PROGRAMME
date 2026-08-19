@@ -48,13 +48,32 @@ theorem weightedFiniteBooleanMeasureHom_add
         weightedFiniteBooleanMeasureHom X b j := by
   let T := basisBooleanCube X
   let A := CMDG.CondensedCM4P2D.measureFunctor.obj (X.diagram.obj j)
+  have hab :
+      freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X (a + b) j) =
+        weightedFiniteBooleanMeasureSection X (a + b) j := by
+    exact Equiv.apply_symm_apply _ _
+  have ha :
+      freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X a j) =
+        weightedFiniteBooleanMeasureSection X a j := by
+    exact Equiv.apply_symm_apply _ _
+  have hb :
+      freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X b j) =
+        weightedFiniteBooleanMeasureSection X b j := by
+    exact Equiv.apply_symm_apply _ _
   apply (freeHomSectionsEquiv T A).injective
-  rw [freeHomSectionsEquiv_add]
-  change
-    weightedFiniteBooleanMeasureSection X (a + b) j =
-      weightedFiniteBooleanMeasureSection X a j +
-        weightedFiniteBooleanMeasureSection X b j
-  exact weightedFiniteBooleanMeasureSection_add X a b j
+  calc
+    freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X (a + b) j) =
+        weightedFiniteBooleanMeasureSection X (a + b) j := hab
+    _ = weightedFiniteBooleanMeasureSection X a j +
+          weightedFiniteBooleanMeasureSection X b j :=
+      weightedFiniteBooleanMeasureSection_add X a b j
+    _ = freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X a j) +
+          freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X b j) := by
+      rw [ha, hb]
+    _ = freeHomSectionsEquiv T A
+          (weightedFiniteBooleanMeasureHom X a j +
+            weightedFiniteBooleanMeasureHom X b j) := by
+      exact (freeHomSectionsEquiv_add T A _ _).symm
 
 /-- The canonical global weighted Boolean measure family is additive in the weight vector. -/
 theorem weightedFiniteBooleanMeasureLimitLift_add
@@ -65,11 +84,27 @@ theorem weightedFiniteBooleanMeasureLimitLift_add
         weightedFiniteBooleanMeasureLimitLift X b := by
   apply (measureFunctorMapConeIsLimit X).hom_ext
   intro j
-  rw [Preadditive.add_comp,
-    weightedFiniteBooleanMeasureLimitLift_fac X (a + b) j,
-    weightedFiniteBooleanMeasureLimitLift_fac X a j,
-    weightedFiniteBooleanMeasureLimitLift_fac X b j,
-    weightedFiniteBooleanMeasureHom_add X a b j]
+  calc
+    weightedFiniteBooleanMeasureLimitLift X (a + b) ≫
+        (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j =
+      weightedFiniteBooleanMeasureHom X (a + b) j :=
+        weightedFiniteBooleanMeasureLimitLift_fac X (a + b) j
+    _ = weightedFiniteBooleanMeasureHom X a j +
+          weightedFiniteBooleanMeasureHom X b j :=
+      weightedFiniteBooleanMeasureHom_add X a b j
+    _ =
+        (weightedFiniteBooleanMeasureLimitLift X a ≫
+          (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j) +
+        (weightedFiniteBooleanMeasureLimitLift X b ≫
+          (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j) := by
+      exact congrArg₂ (· + ·)
+        (weightedFiniteBooleanMeasureLimitLift_fac X a j).symm
+        (weightedFiniteBooleanMeasureLimitLift_fac X b j).symm
+    _ =
+        (weightedFiniteBooleanMeasureLimitLift X a +
+          weightedFiniteBooleanMeasureLimitLift X b) ≫
+            (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j := by
+      exact (Preadditive.add_comp _ _ _).symm
 
 #check freeHomSectionsEquiv_add
 #check weightedFiniteBooleanMeasureHom_add
