@@ -21,8 +21,17 @@ class AdministrativeReview0813ExecutorBindingTests(unittest.TestCase):
             "receipt_stage.pending_closures = partial(\n"
             "    suspended_pending_closures,"
         )
-        executor_import = source.index("import administrative_autonomy_runtime_behind_sync as behind_sync")
-        self.assertLess(suspension, executor_import)
+        executor_capture = source.index("import administrative_autonomy_runtime_execute as runtime_execute")
+        executor_filter = source.index("runtime_execute.eligible_candidates = partial(")
+        behind_capture = source.index("import administrative_autonomy_runtime_behind_sync as behind_sync")
+        self.assertLess(suspension, executor_capture)
+        self.assertLess(executor_capture, executor_filter)
+        self.assertLess(executor_filter, behind_capture)
+        self.assertEqual(
+            source.count("runtime_github.eligible_candidates = RECOVERY_ELIGIBILITY_CHAIN[-1]"),
+            1,
+        )
+        self.assertNotIn("runtime_github.eligible_candidates = partial(", source)
         self.assertNotIn(
             "import administrative_autonomy_runtime_administrative_review_0813_receipt_recovery",
             source,
@@ -37,7 +46,12 @@ sys.path.insert(0, str(root / 'ci'))
 import administrative_autonomy_runtime  # noqa: F401
 import administrative_autonomy_receipt_stage as receipt_stage
 import administrative_autonomy_runtime_execute as runtime_execute
-raise SystemExit(0 if runtime_execute.pending_closures is receipt_stage.pending_closures else 1)
+import administrative_autonomy_runtime_github as runtime_github
+checks = [
+    runtime_execute.pending_closures is receipt_stage.pending_closures,
+    runtime_execute.eligible_candidates is not runtime_github.eligible_candidates,
+]
+raise SystemExit(0 if all(checks) else 1)
 """
         completed = subprocess.run(
             [sys.executable, "-c", probe],
