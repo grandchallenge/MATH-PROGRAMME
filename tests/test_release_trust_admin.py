@@ -13,9 +13,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "ci"))
 
 from release_trust_admin import (  # noqa: E402
+    EXPECTED_STRICT_STATUS_CHECKS,
     RULESET_NAMES,
     ReleaseTrustError,
     normalize_ruleset,
+    repository_policy,
     ruleset_errors,
     ruleset_payload,
     validate_contract,
@@ -54,6 +56,30 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         with self.assertRaises(ReleaseTrustError):
             validate_contract(contract, self.schema)
 
+    def test_required_strictness_map_is_exact(self) -> None:
+        actual = {
+            entry["repository"]: entry["strict_status_checks"]
+            for entry in self.contract["repositories"]
+        }
+        self.assertEqual(actual, EXPECTED_STRICT_STATUS_CHECKS)
+        self.assertFalse(actual["grandchallenge/MATH-PROGRAMME"])
+        self.assertTrue(actual["grandchallenge/MATHCERT"])
+        self.assertTrue(actual["grandchallenge/MATHSOLVE"])
+        self.assertTrue(actual["grandchallenge/INTELLECT"])
+
+    def test_required_strictness_drift_is_rejected(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        programme = next(
+            entry
+            for entry in contract["repositories"]
+            if entry["repository"] == "grandchallenge/MATH-PROGRAMME"
+        )
+        programme["strict_status_checks"] = True
+        with self.assertRaisesRegex(
+            ReleaseTrustError, "required status-check strictness map drift"
+        ):
+            validate_contract(contract, self.schema)
+
     def test_ruleset_payload_is_fail_closed_without_approval_deadlock(self) -> None:
         policy = self.contract["branch_policy"]
         payload = ruleset_payload("Cert profile - main", policy, ["certify"])
@@ -75,6 +101,37 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         self.assertIn("non_fast_forward", rules)
         self.assertIn("deletion", rules)
 
+    def test_programme_ruleset_is_non_strict_without_removing_checks(self) -> None:
+        entry = next(
+            entry
+            for entry in self.contract["repositories"]
+            if entry["repository"] == "grandchallenge/MATH-PROGRAMME"
+        )
+        policy = repository_policy(self.contract["branch_policy"], entry)
+        payload = ruleset_payload(
+            RULESET_NAMES[entry["repository"]], policy, entry["required_checks"]
+        )
+        rules = {rule["type"]: rule for rule in payload["rules"]}
+        status = rules["required_status_checks"]["parameters"]
+        self.assertFalse(status["strict_required_status_checks_policy"])
+        self.assertEqual(
+            [item["context"] for item in status["required_status_checks"]],
+            entry["required_checks"],
+        )
+        self.assertEqual(len(status["required_status_checks"]), 6)
+        self.assertEqual(payload["bypass_actors"], [])
+
+    def test_repository_policy_does_not_mutate_shared_policy(self) -> None:
+        shared = copy.deepcopy(self.contract["branch_policy"])
+        entry = next(
+            entry
+            for entry in self.contract["repositories"]
+            if entry["repository"] == "grandchallenge/MATH-PROGRAMME"
+        )
+        effective = repository_policy(shared, entry)
+        self.assertTrue(shared["strict_status_checks"])
+        self.assertFalse(effective["strict_status_checks"])
+
     def test_normalized_matching_ruleset_passes(self) -> None:
         raw = ruleset_payload(
             "Cert profile - main", self.contract["branch_policy"], ["certify"]
@@ -87,6 +144,27 @@ class ReleaseTrustAdminTests(unittest.TestCase):
                 self.contract["branch_policy"],
                 ["certify"],
                 "Cert profile - main",
+            ),
+            [],
+        )
+
+    def test_programme_normalized_matching_ruleset_passes(self) -> None:
+        entry = next(
+            entry
+            for entry in self.contract["repositories"]
+            if entry["repository"] == "grandchallenge/MATH-PROGRAMME"
+        )
+        policy = repository_policy(self.contract["branch_policy"], entry)
+        raw = ruleset_payload(
+            RULESET_NAMES[entry["repository"]], policy, entry["required_checks"]
+        )
+        raw["source"] = entry["repository"]
+        self.assertEqual(
+            ruleset_errors(
+                normalize_ruleset(raw),
+                policy,
+                entry["required_checks"],
+                RULESET_NAMES[entry["repository"]],
             ),
             [],
         )
@@ -119,6 +197,29 @@ class ReleaseTrustAdminTests(unittest.TestCase):
             self.contract["branch_policy"],
             ["certify"],
             "Cert profile - main",
+        )
+        self.assertTrue(any("strict_status_checks drift" in error for error in errors))
+
+    def test_programme_strict_status_checks_are_rejected(self) -> None:
+        entry = next(
+            entry
+            for entry in self.contract["repositories"]
+            if entry["repository"] == "grandchallenge/MATH-PROGRAMME"
+        )
+        policy = repository_policy(self.contract["branch_policy"], entry)
+        raw = ruleset_payload(
+            RULESET_NAMES[entry["repository"]], policy, entry["required_checks"]
+        )
+        raw["source"] = entry["repository"]
+        status = next(
+            rule for rule in raw["rules"] if rule["type"] == "required_status_checks"
+        )
+        status["parameters"]["strict_required_status_checks_policy"] = True
+        errors = ruleset_errors(
+            normalize_ruleset(raw),
+            policy,
+            entry["required_checks"],
+            RULESET_NAMES[entry["repository"]],
         )
         self.assertTrue(any("strict_status_checks drift" in error for error in errors))
 
