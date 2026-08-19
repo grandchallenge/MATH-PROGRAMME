@@ -2,8 +2,11 @@
 from __future__ import annotations
 
 import json
+from typing import Any
 
 import validate_workflow_coverage_v3 as v3
+
+RECOVERY_FAILOVER_WORKFLOW = "administrative-maintenance-0813-recovery-failover.yml"
 
 v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "aether-controls-admin.yml",
@@ -22,6 +25,7 @@ v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "cmdg-postmerge.yml",
     "visual-pedagogy-representation-repair.yml",
     "pr-visual-status-advisory.yml",
+    RECOVERY_FAILOVER_WORKFLOW,
 }
 
 ROOT = v3.ROOT
@@ -68,8 +72,141 @@ def _registry_commands(root=ROOT, registry=None) -> set[str]:
     return commands
 
 
+def _trigger(workflow: dict[str, Any]) -> dict[str, Any]:
+    value = workflow.get("on", {})
+    return value if isinstance(value, dict) else {}
+
+
+def _job(workflow: dict[str, Any], name: str) -> dict[str, Any]:
+    jobs = workflow.get("jobs", {})
+    if not isinstance(jobs, dict):
+        return {}
+    value = jobs.get(name, {})
+    return value if isinstance(value, dict) else {}
+
+
+def recovery_failover_errors(texts: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    text = texts.get(RECOVERY_FAILOVER_WORKFLOW)
+    if text is None:
+        return errors
+    workflow = v3.legacy.load_yaml_text(text)
+    trigger = _trigger(workflow)
+    if set(trigger) != {"pull_request"}:
+        errors.append(
+            f"{RECOVERY_FAILOVER_WORKFLOW}: trigger must be exactly pull_request"
+        )
+    pull_request = trigger.get("pull_request", {})
+    types = pull_request.get("types", []) if isinstance(pull_request, dict) else []
+    if types != ["closed"]:
+        errors.append(
+            f"{RECOVERY_FAILOVER_WORKFLOW}: pull_request trigger must be closed only"
+        )
+
+    job = _job(workflow, "recover")
+    if job.get("environment") != v3.PROTECTED_ENVIRONMENT:
+        errors.append(
+            f"{RECOVERY_FAILOVER_WORKFLOW}: recover job must bind protected environment release-trust"
+        )
+    expected_permissions = {
+        "actions": "read",
+        "checks": "read",
+        "contents": "read",
+        "issues": "write",
+        "pull-requests": "write",
+    }
+    if job.get("permissions") != expected_permissions:
+        errors.append(
+            f"{RECOVERY_FAILOVER_WORKFLOW}: delegated Referee permissions drift"
+        )
+
+    required_markers = (
+        "github.event.pull_request.merged == true",
+        "startsWith(github.event.pull_request.head.ref, 'control/mp-admin-0813-')",
+        v3.APP_ACTION,
+        v3.APP_ID,
+        v3.APP_KEY,
+        "id: write-token",
+        "repositories: MATH-PROGRAMME",
+        "permission-contents: write",
+        "permission-issues: write",
+        "permission-pull-requests: write",
+        "id: evidence-token",
+        "MATHFORGE\n            MATHSOLVE\n            MATHCERT\n            INTELLECT",
+        "permission-actions: read",
+        "permission-contents: read",
+        "permission-issues: read",
+        "permission-pull-requests: read",
+        "id: admin-token",
+        "permission-administration: write",
+        "ref: refs/heads/main",
+        "persist-credentials: false",
+        "CANDIDATE_TOKEN: ${{ steps.write-token.outputs.token }}",
+        "EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}",
+        "OBSERVABILITY_TOKEN: ${{ steps.evidence-token.outputs.token }}",
+        "REFEREE_TOKEN: ${{ github.token }}",
+        "ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}",
+        "CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.write-token.outputs.app-slug) }}",
+        "REFEREE_LOGIN: 'github-actions[bot]'",
+        "CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}",
+        "REFEREE_APP_ID: '15368'",
+        "python ci/administrative_autonomy_0813_closure_preflight.py",
+        "--apply",
+        "administrative-autonomy-0813-pr-close-recovery.json",
+        "retention-days: 90",
+    )
+    for marker in required_markers:
+        if marker not in text:
+            errors.append(
+                f"{RECOVERY_FAILOVER_WORKFLOW}: missing bounded recovery marker {marker}"
+            )
+
+    if text.count(v3.APP_ACTION) != 3:
+        errors.append(
+            f"{RECOVERY_FAILOVER_WORKFLOW}: exactly three separately scoped App tokens are required"
+        )
+    if text.count("permission-administration: write") != 1:
+        errors.append(
+            f"{RECOVERY_FAILOVER_WORKFLOW}: exactly one administration-write token is required"
+        )
+    if text.count("permission-contents: write") != 1:
+        errors.append(
+            f"{RECOVERY_FAILOVER_WORKFLOW}: exactly one contents-write token is required"
+        )
+    if text.count("${{ github.token }}") != 1:
+        errors.append(
+            f"{RECOVERY_FAILOVER_WORKFLOW}: workflow token must be used only as the Referee token"
+        )
+
+    for forbidden in (
+        "workflow_dispatch:",
+        "schedule:",
+        "push:",
+        "pull_request_target:",
+        "administrative_autonomy_runtime.py execute",
+        "administrative_maintenance_completion_state.json",
+        "gh pr merge",
+        "git push origin main",
+        "/git/refs/heads/main",
+        "permission-checks: write",
+    ):
+        if forbidden in text:
+            errors.append(
+                f"{RECOVERY_FAILOVER_WORKFLOW}: forbidden recovery capability {forbidden}"
+            )
+    return errors
+
+
 def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None):
+    texts = v3.legacy.workflow_texts(root) if texts is None else texts
     errors = v3.workflow_coverage_errors(root=root, texts=texts, evidence=evidence)
+    delegated_permission_error = (
+        f"{RECOVERY_FAILOVER_WORKFLOW}:recover: "
+        "non-Pages job permissions may not exceed contents: read"
+    )
+    errors = [error for error in errors if error != delegated_permission_error]
+    errors.extend(recovery_failover_errors(texts))
+
     commands = _registry_commands(root=root, registry=registry)
     prefix = "ci.yml: missing workflow coverage marker "
     retained: list[str] = []
@@ -98,13 +235,19 @@ def main() -> int:
     print(
         "workflow coverage v3: direct workflow and governed shard-registry execution roots, "
         "active bounded administrative runtime, separated Candidate and Referee identities, "
-        "protected exact-head merge, mirror-only synchronization, manual control-plane gates, "
-        "and claim boundaries are valid"
+        "protected exact-head merge, exact Aug13 PR-close recovery failover, mirror-only "
+        "synchronization, manual control-plane gates, and claim boundaries are valid"
     )
     return 0
 
 
-__all__ = ["ROOT", "workflow_coverage_errors", "main"]
+__all__ = [
+    "ROOT",
+    "RECOVERY_FAILOVER_WORKFLOW",
+    "recovery_failover_errors",
+    "workflow_coverage_errors",
+    "main",
+]
 
 if __name__ == "__main__":
     raise SystemExit(main())
