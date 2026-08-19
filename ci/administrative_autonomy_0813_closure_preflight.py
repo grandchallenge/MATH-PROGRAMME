@@ -40,6 +40,7 @@ TARGET = {
     "candidate_branch": "automation/maintenance/administrative_review-20260813T012100Z",
     "exact_head": "1eb3c2cf8375beecc6d84d788ac891402b33757f",
     "record_merge_commit": "7c84b9bf19a1f3e2407860d82965e98fc49512db",
+    "independent_review": 4923702298,
 }
 
 
@@ -66,6 +67,38 @@ def is_exact_target(item: dict[str, Any]) -> bool:
 def write_report(path: Path, report: dict[str, Any]) -> None:
     path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
+
+
+def review_field_diagnostic(candidate: Client, repo: str, error: str) -> str:
+    """Expose only the exact historical review fields when that predicate fails.
+
+    This is observability only. It does not change target selection, authority,
+    or any acceptance predicate in the protected recovery classifier.
+    """
+
+    if error != "Aug13 administrative independent review drift":
+        return error
+    try:
+        reviews = candidate.get(
+            f"/repos/{repo}/pulls/{TARGET['pull_request']}/reviews?per_page=100"
+        )
+        matches = [
+            item
+            for item in reviews
+            if int(item.get("id") or 0) == int(TARGET["independent_review"])
+        ]
+        if len(matches) != 1:
+            return f"{error}: exact_review_match_count={len(matches)}"
+        review = matches[0]
+        return (
+            f"{error}: "
+            f"state={str(review.get('state') or '')!r}, "
+            f"commit_id={str(review.get('commit_id') or '')!r}, "
+            f"login={str(review.get('user', {}).get('login') or '')!r}, "
+            f"author_association={str(review.get('author_association') or '')!r}"
+        )
+    except Exception as diagnostic_exc:
+        return f"{error}: diagnostic_failed={type(diagnostic_exc).__name__}"
 
 
 def recover_exact_aug13(report_path: Path) -> int:
@@ -101,7 +134,10 @@ def recover_exact_aug13(report_path: Path) -> int:
         "human_steward_identity_asserted": False,
         "bypass_used": False,
     }
-    issue = 0
+    # The control is already bound to exact issue #475. Bind that diagnostic
+    # target before the classifier call so any classifier exception is durable
+    # on the governed issue instead of being visible only in an Actions artifact.
+    issue = int(TARGET["issue_number"])
     try:
         recoveries = runtime_execute.pending_closures(
             candidate,
@@ -167,10 +203,11 @@ def recover_exact_aug13(report_path: Path) -> int:
         write_report(report_path, report)
         return 0
     except Exception as exc:
+        error = review_field_diagnostic(candidate, repo, str(exc))
         report |= {
             "state": "AUG13_CLOSURE_PREFLIGHT_FAILED_CLOSED",
             "failed_at": iso_z(datetime.now(UTC)),
-            "error": str(exc),
+            "error": error,
             "recovered": False,
             "authority_created": False,
         }
@@ -183,7 +220,7 @@ def recover_exact_aug13(report_path: Path) -> int:
                         "body": (
                             "AUG13_CLOSURE_PREFLIGHT_FAILED_CLOSED\n\n"
                             f"- issue: `#{issue}`;\n"
-                            f"- error: `{str(exc)[:1000]}`;\n"
+                            f"- error: `{error[:1000]}`;\n"
                             "- protected completion receipt merge performed: `false`;\n"
                             "- ordinary candidate execution authorized: `false`;\n"
                             "- Human Steward identity asserted: `false`;\n"

@@ -39,6 +39,12 @@ RULESET_NAMES = {
     "grandchallenge/MATH-PROGRAMME": "Programme profile - main",
     "grandchallenge/INTELLECT": "Constitutional profile - main",
 }
+EXPECTED_STRICT_STATUS_CHECKS = {
+    "grandchallenge/MATHCERT": True,
+    "grandchallenge/MATHSOLVE": True,
+    "grandchallenge/MATH-PROGRAMME": False,
+    "grandchallenge/INTELLECT": True,
+}
 
 
 class ReleaseTrustError(RuntimeError):
@@ -98,6 +104,19 @@ def validate_contract(contract: dict[str, Any], schema: dict[str, Any]) -> None:
     }
     if checks != expected_checks:
         raise ReleaseTrustError("required status-check context set drift")
+    strictness = {
+        entry["repository"]: entry["strict_status_checks"] for entry in repositories
+    }
+    if strictness != EXPECTED_STRICT_STATUS_CHECKS:
+        raise ReleaseTrustError("required status-check strictness map drift")
+
+
+def repository_policy(
+    policy: dict[str, Any], entry: dict[str, Any]
+) -> dict[str, Any]:
+    effective = dict(policy)
+    effective["strict_status_checks"] = entry["strict_status_checks"]
+    return effective
 
 
 def ruleset_payload(
@@ -321,11 +340,12 @@ def apply_contract(client: GitHubClient, contract: dict[str, Any]) -> None:
         repository = entry["repository"]
         current = branch_ruleset(client, repository)
         ruleset_id = current["id"]
+        effective_policy = repository_policy(policy, entry)
         client.request(
             "PUT",
             f"/repos/{repository}/rulesets/{ruleset_id}",
             ruleset_payload(
-                RULESET_NAMES[repository], policy, entry["required_checks"]
+                RULESET_NAMES[repository], effective_policy, entry["required_checks"]
             ),
         )
 
@@ -426,9 +446,10 @@ def verify_contract(client: GitHubClient, contract: dict[str, Any]) -> dict[str,
         repository = entry["repository"]
         raw = branch_ruleset(client, repository)
         normalized = normalize_ruleset(raw)
+        effective_policy = repository_policy(policy, entry)
         current_errors = ruleset_errors(
             normalized,
-            policy,
+            effective_policy,
             entry["required_checks"],
             RULESET_NAMES[repository],
         )
@@ -560,8 +581,9 @@ def close_child_issues(client: GitHubClient, contract: dict[str, Any], evidence:
         repository,
         contract["issues"]["protected_branches"],
         "Release-trust administration passed for MATHCERT, MATHSOLVE, MATH-PROGRAMME, and INTELLECT. "
-        "Strict required checks, pull-request review, admin enforcement, conversation resolution, "
-        f"and zero bypass actors were verified. Evidence SHA-256: `{evidence_sha}`.",
+        "Required checks, repository-specific strictness, pull-request review, admin enforcement, "
+        "conversation resolution, and zero bypass actors were verified. "
+        f"Evidence SHA-256: `{evidence_sha}`.",
     )
     client.request(
         "PATCH",
