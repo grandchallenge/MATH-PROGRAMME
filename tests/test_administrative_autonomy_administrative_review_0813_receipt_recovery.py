@@ -45,7 +45,7 @@ class FakeClient:
             "state": "APPROVED",
             "commit_id": occurrence["reviewed_head"],
             "user": {"login": "jimsteeg"},
-            "author_association": "MEMBER",
+            "author_association": "CONTRIBUTOR",
         }
         self.steward = {
             "user": {"login": "fyremael"},
