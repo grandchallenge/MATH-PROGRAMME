@@ -86,7 +86,8 @@ jobs:
           T=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GKernelWeightedLocalConstancy.lean
           U=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteBooleanCoefficientPushforward.lean
           V=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteBooleanMeasureCone.lean
-          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$E" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S" "$T" "$U" "$V"; then
+          W=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3JWeightedBooleanMeasure.lean
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$E" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S" "$T" "$U" "$V" "$W"; then
             echo "P3 fixtures must contain neither sorry nor local axioms."
             exit 1
           fi
@@ -117,7 +118,8 @@ jobs:
           grep -Fq 'finiteDeltaPullbackR_fiber_sum' "$T"
           grep -Fq 'finiteBooleanCoefficientFamily_pushforward' "$U"
           grep -Fq 'finiteBooleanMeasureLimitLift' "$V"
-          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$E" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S" "$T" "$U" "$V"; then
+          grep -Fq 'weightedFiniteBooleanMeasureLimitLift' "$W"
+          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$E" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S" "$T" "$U" "$V" "$W"; then
             echo "P3 reduction fixtures must not install an unconditional IsSolid instance."
             exit 1
           fi
@@ -286,6 +288,12 @@ jobs:
           set -euo pipefail
           mkdir -p .lake/build/lib/lean
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFiniteBooleanMeasureCone.olean CMDGCondensedCM4P3GFiniteBooleanMeasureCone.lean
+      - name: Replay P3-J weighted Boolean measure family
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3JWeightedBooleanMeasure.olean CMDGCondensedCM4P3JWeightedBooleanMeasure.lean
       - name: Replay P3-G point functional
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
         run: |
