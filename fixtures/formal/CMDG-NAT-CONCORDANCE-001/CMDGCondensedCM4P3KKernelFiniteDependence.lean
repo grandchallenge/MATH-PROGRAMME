@@ -81,9 +81,20 @@ theorem weightedBasisBooleanCombination_reweight_eval
     Finsupp.sum, map_sum]
   apply Finset.sum_congr rfl
   intro i hi
-  cases h : t i <;>
-    simp [evalAt, weightedBasisBooleanCoordinate, basisBooleanCoordinate,
+  cases h : t i
+  · simp [evalAt, weightedBasisBooleanCoordinate, basisBooleanCoordinate,
       weightedBoolToInt, h]
+    right
+    right
+    change (if t i = true then (1 : ℤ) else 0) = 0
+    simp [h]
+  · simp [evalAt, weightedBasisBooleanCoordinate, basisBooleanCoordinate,
+      weightedBoolToInt, h]
+    left
+    left
+    change (if t i = true then (1 : ℤ) else 0) =
+      (if true = true then (1 : ℤ) else 0)
+    simp [h]
 
 /-- The integral weighted Nöbeling pairing is additive in its external weight vector. -/
 theorem weightedBasisBooleanPairing_add
@@ -220,23 +231,8 @@ theorem weightedFiniteBooleanMeasureSection_add
           (weightedFiniteBooleanCoefficientFamily X w j) =
         weightedFiniteBooleanMeasureSection X w j := by
     rfl
-  calc
-    weightedFiniteBooleanMeasureSection X (a + b) j =
-        (ConcreteCategory.hom (T.app S))
-          (weightedFiniteBooleanCoefficientFamily X (a + b) j) :=
-      (hSection (a + b)).symm
-    _ = (ConcreteCategory.hom (T.app S))
-          (weightedFiniteBooleanCoefficientFamily X a j +
-            weightedFiniteBooleanCoefficientFamily X b j) := by
-      rw [weightedFiniteBooleanCoefficientFamily_add X a b j]
-    _ = (ConcreteCategory.hom (T.app S))
-          (weightedFiniteBooleanCoefficientFamily X a j) +
-        (ConcreteCategory.hom (T.app S))
-          (weightedFiniteBooleanCoefficientFamily X b j) := by
-      rw [map_add]
-    _ = weightedFiniteBooleanMeasureSection X a j +
-        weightedFiniteBooleanMeasureSection X b j := by
-      rw [hSection a, hSection b]
+  rw [← hSection (a + b), ← hSection a, ← hSection b,
+    weightedFiniteBooleanCoefficientFamily_add X a b j, map_add]
 
 #check weightedBasisBooleanPairing_add
 #check weightedBasisBooleanPairing_reweight_eval
