@@ -1,0 +1,135 @@
+name: Administrative protected-receipt live qualification
+
+on:
+  workflow_dispatch:
+    inputs:
+      control_id:
+        description: Governed live-qualification control ID
+        required: true
+        type: string
+      control_issue:
+        description: Governed control issue number
+        required: true
+        type: string
+      authorization_comment_id:
+        description: Human Steward authorization comment ID for the one live run
+        required: true
+        type: string
+      receipt_pr:
+        description: Frozen receipt pull request to observe
+        required: true
+        default: '596'
+        type: string
+      integration_merge:
+        description: Protected generic-integration merge that must remain an ancestor
+        required: true
+        default: '8ff752b4f2ac28d87575d4f4ef48f564fb18837b'
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: administrative-protected-receipt-live-qualification
+  cancel-in-progress: false
+
+jobs:
+  qualify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment: release-trust
+    permissions:
+      contents: read
+    steps:
+      - name: Mint read-only Candidate observation token
+        id: candidate-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-checks: read
+          permission-contents: read
+          permission-pull-requests: read
+
+      - name: Mint read-only evidence token
+        id: evidence-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: |
+            MATH-PROGRAMME
+            INTELLECT
+          permission-issues: read
+
+      - name: Mint read-only Administration observation token
+        id: admin-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-administration: read
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: refs/heads/main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+
+      - name: Install governed policy dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --requirement requirements/policy.txt
+
+      - name: Require bounded read-only credentials
+        env:
+          CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}
+          EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
+          ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          test -n "${CANDIDATE_TOKEN}"
+          test -n "${EVIDENCE_TOKEN}"
+          test -n "${ADMIN_TOKEN}"
+          test "${ADMIN_TOKEN}" != "${CANDIDATE_TOKEN}"
+
+      - name: Execute one qualification-only read-only coordinator
+        env:
+          CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}
+          EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
+          ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          GCL_PROTECTED_RECEIPT_DIAGNOSTIC: administrative-protected-receipt-diagnostic.json
+          GCL_LIVE_QUAL_CONTROL_ID: ${{ inputs.control_id }}
+          GCL_LIVE_QUAL_CONTROL_ISSUE: ${{ inputs.control_issue }}
+          GCL_LIVE_QUAL_AUTHORIZATION_COMMENT_ID: ${{ inputs.authorization_comment_id }}
+          GCL_LIVE_QUAL_RECEIPT_PR: ${{ inputs.receipt_pr }}
+          GCL_LIVE_QUAL_INTEGRATION_MERGE: ${{ inputs.integration_merge }}
+        run: |
+          set -euo pipefail
+          python ci/administrative_protected_receipt_live.py qualify \
+            --report administrative-protected-receipt-qualification.json \
+            --control-id "${GCL_LIVE_QUAL_CONTROL_ID}" \
+            --control-issue "${GCL_LIVE_QUAL_CONTROL_ISSUE}" \
+            --authorization-comment-id "${GCL_LIVE_QUAL_AUTHORIZATION_COMMENT_ID}" \
+            --receipt-pr "${GCL_LIVE_QUAL_RECEIPT_PR}" \
+            --integration-merge "${GCL_LIVE_QUAL_INTEGRATION_MERGE}"
+
+      - name: Preserve qualification evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: administrative-protected-receipt-live-qualification
+          path: |
+            administrative-protected-receipt-qualification.json
+            administrative-protected-receipt-diagnostic.json
+          if-no-files-found: warn
+          retention-days: 90

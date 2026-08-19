@@ -4,7 +4,11 @@ from __future__ import annotations
 import copy
 import json
 
-from validate_workflow_coverage_v2 import ROOT, workflow_coverage_errors
+from validate_workflow_coverage_v2 import (
+    QUALIFICATION_ONLY_WORKFLOW,
+    ROOT,
+    workflow_coverage_errors,
+)
 from validate_workflow_coverage import workflow_texts
 
 
@@ -31,6 +35,15 @@ def main() -> int:
         (ROOT / "governance/policy_shard_registry.json").read_text(encoding="utf-8")
     )
     assert not workflow_coverage_errors(texts=texts, evidence=evidence, registry=registry)
+
+    missing_qualification_workflow = dict(texts)
+    missing_qualification_workflow.pop(QUALIFICATION_ONLY_WORKFLOW)
+    require_error(
+        missing_qualification_workflow,
+        evidence,
+        f"missing governed workflow {QUALIFICATION_ONLY_WORKFLOW}",
+        registry=registry,
+    )
 
     missing_repository_route = remove_registry_command(
         registry, ["python3", "ci/validate_repository_execution.py"]
