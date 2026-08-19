@@ -71,7 +71,22 @@ jobs:
           F=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3Audit.lean
           C=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3C.lean
           D=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3D.lean
-          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D"; then
+          E=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3E.lean
+          G=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3G.lean
+          H=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean
+          K=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteWindow.lean
+          L=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteSupport.lean
+          M=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GBasisSeparation.lean
+          N=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GBasisBooleanPairing.lean
+          O=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFreeSections.lean
+          P=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GBooleanCube.lean
+          Q=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GBasisBooleanPairingR.lean
+          R=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteBooleanMeasure.lean
+          S=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteBooleanMeasureHom.lean
+          T=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GKernelWeightedLocalConstancy.lean
+          U=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteBooleanCoefficientPushforward.lean
+          V=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteBooleanMeasureCone.lean
+          if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F" "$C" "$D" "$E" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S" "$T" "$U" "$V"; then
             echo "P3 fixtures must contain neither sorry nor local axioms."
             exit 1
           fi
@@ -84,7 +99,25 @@ jobs:
           grep -Fq 'isSolid_iff_isLocal' "$D"
           grep -Fq 'isSolid_of_isLimit' "$D"
           grep -Fq 'residualHomTheorem_of_product_and_coefficientResidual' "$D"
-          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D"; then
+          grep -Fq 'finiteCoefficientFamilyConeIsLimit' "$E"
+          grep -Fq 'measureFunctor_isSolid_of_coefficient' "$E"
+          grep -Fq 'residualHomTheorem_of_coefficientResidual' "$E"
+          grep -Fq 'lowerHomEquiv' "$G"
+          grep -Fq 'finiteSolidification_counit' "$G"
+          grep -Fq 'measurePointFunctional' "$H"
+          grep -Fq 'locallyConstant_boolPi_zero_finiteWindow' "$K"
+          grep -Fq 'finite_support_of_bool_locallyConstant' "$L"
+          grep -Fq 'basisCoefficients_eq_zero_of_pointwise_zero' "$M"
+          grep -Fq 'basisBooleanPairing' "$N"
+          grep -Fq 'freeHomSectionsEquiv' "$O"
+          grep -Fq 'basisBooleanCube' "$P"
+          grep -Fq 'basisBooleanPairingR' "$Q"
+          grep -Fq 'finiteBooleanMeasureSection' "$R"
+          grep -Fq 'finiteBooleanMeasureHom' "$S"
+          grep -Fq 'finiteDeltaPullbackR_fiber_sum' "$T"
+          grep -Fq 'finiteBooleanCoefficientFamily_pushforward' "$U"
+          grep -Fq 'finiteBooleanMeasureLimitLift' "$V"
+          if grep -nE '(^|[[:space:]])instance[[:space:]].*IsSolid' "$C" "$D" "$E" "$G" "$H" "$K" "$L" "$M" "$N" "$O" "$P" "$Q" "$R" "$S" "$T" "$U" "$V"; then
             echo "P3 reduction fixtures must not install an unconditional IsSolid instance."
             exit 1
           fi
@@ -169,3 +202,93 @@ jobs:
           set -euo pipefail
           lake build CMDGCondensedCM4P3D
           lake env lean CMDGCondensedCM4P3D.lean
+      - name: Build and replay P3-E canonical finite-limit reduction
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          lake build CMDGCondensedCM4P3E
+          lake env lean CMDGCondensedCM4P3E.lean
+      - name: Replay P3-G core
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          lake build CMDGCondensedCM4P3G
+          lake env lean CMDGCondensedCM4P3G.lean
+      - name: Replay P3-G finite window
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFiniteWindow.olean CMDGCondensedCM4P3GFiniteWindow.lean
+      - name: Replay P3-G finite support
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFiniteSupport.olean CMDGCondensedCM4P3GFiniteSupport.lean
+      - name: Replay P3-G basis separation
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GBasisSeparation.olean CMDGCondensedCM4P3GBasisSeparation.lean
+      - name: Replay P3-G Boolean pairing
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GBasisBooleanPairing.olean CMDGCondensedCM4P3GBasisBooleanPairing.lean
+      - name: Replay P3-G free sections
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFreeSections.olean CMDGCondensedCM4P3GFreeSections.lean
+      - name: Replay P3-G Boolean cube
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GBooleanCube.olean CMDGCondensedCM4P3GBooleanCube.lean
+      - name: Replay P3-G lifted Boolean pairing
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GBasisBooleanPairingR.olean CMDGCondensedCM4P3GBasisBooleanPairingR.lean
+      - name: Replay P3-G finite Boolean measure
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFiniteBooleanMeasure.olean CMDGCondensedCM4P3GFiniteBooleanMeasure.lean
+      - name: Replay P3-G kernel weighted local constancy
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GKernelWeightedLocalConstancy.olean CMDGCondensedCM4P3GKernelWeightedLocalConstancy.lean
+      - name: Replay P3-G finite Boolean coefficient-family pushforward
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFiniteBooleanCoefficientPushforward.olean CMDGCondensedCM4P3GFiniteBooleanCoefficientPushforward.lean
+      - name: Replay P3-H finite Boolean measure-morphism compatibility
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFiniteBooleanMeasureHom.olean CMDGCondensedCM4P3GFiniteBooleanMeasureHom.lean
+      - name: Replay P3-I finite Boolean measure cone
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GFiniteBooleanMeasureCone.olean CMDGCondensedCM4P3GFiniteBooleanMeasureCone.lean
+      - name: Replay P3-G point functional
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3GPointFunctional.olean CMDGCondensedCM4P3GPointFunctional.lean

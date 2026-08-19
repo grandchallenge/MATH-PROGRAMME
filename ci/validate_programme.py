@@ -245,19 +245,37 @@ def claim_ledger_semantic_errors(
 
 def validate_documents(
     source_registry: dict[str, Any],
-    graph: dict[str, Any],
-    mappings: dict[str, Any],
+    graph: dict[str, Any] | list[dict[str, Any]],
+    mappings: dict[str, Any] | list[dict[str, Any]],
     domain_registry: dict[str, Any],
     candidates: list[dict[str, Any]],
 ) -> list[str]:
     errors: list[str] = []
     sources = source_registry.get("sources", [])
     source_ids = {source["source_id"] for source in sources}
+    source_by_id = {source["source_id"]: source for source in sources}
     if len(source_ids) != len(sources):
         errors.append("source registry contains duplicate source_id values")
+    normative_sources = [
+        source for source in sources if source.get("role") == "NORMATIVE_SUBJECT_SPINE"
+    ]
+    if len(normative_sources) != 1:
+        errors.append(
+            f"source registry requires exactly one normative subject spine; found {len(normative_sources)}"
+        )
+    for source in sources:
+        if (
+            source.get("role") == "MACHINE_SERIALIZATION_CANDIDATE"
+            and source.get("runtime_authority") is not False
+        ):
+            errors.append(
+                f"{source.get('source_id')}: unqualified machine serialization candidate cannot have runtime authority"
+            )
 
-    nodes = graph.get("nodes", [])
-    edges = graph.get("edges", [])
+    graphs = graph if isinstance(graph, list) else [graph]
+    mapping_sets = mappings if isinstance(mappings, list) else [mappings]
+    nodes = [node for graph_doc in graphs for node in graph_doc.get("nodes", [])]
+    edges = [edge for graph_doc in graphs for edge in graph_doc.get("edges", [])]
     node_ids = [node.get("node_id", "") for node in nodes]
     edge_ids = [edge.get("edge_id", "") for edge in edges]
     for duplicate in sorted(duplicate_values(node_ids)):
@@ -274,36 +292,68 @@ def validate_documents(
             if source_id not in source_ids:
                 errors.append(f"{edge_id}: unknown provenance source_id {source_id}")
 
-    mapping_items = mappings.get("mappings", [])
+    mapping_set_ids = [item.get("mapping_set_id", "") for item in mapping_sets]
+    for duplicate in sorted(duplicate_values(mapping_set_ids)):
+        errors.append(f"duplicate mapping_set_id: {duplicate}")
+    mapping_set_domains = [item.get("domain_id", "") for item in mapping_sets]
+    for duplicate in sorted(duplicate_values(mapping_set_domains)):
+        errors.append(f"multiple mapping sets registered for domain_id: {duplicate}")
+
+    mapping_items = [
+        mapping
+        for mapping_set in mapping_sets
+        for mapping in mapping_set.get("mappings", [])
+    ]
     mapping_ids = [mapping.get("mapping_id", "") for mapping in mapping_items]
     for duplicate in sorted(duplicate_values(mapping_ids)):
         errors.append(f"duplicate mapping_id: {duplicate}")
     mapping_id_set = set(mapping_ids)
-    primary_msc_by_ref: dict[str, list[str]] = {}
+    mapping_by_id = {mapping.get("mapping_id", ""): mapping for mapping in mapping_items}
+    mapping_set_by_mapping_id = {
+        mapping.get("mapping_id", ""): mapping_set
+        for mapping_set in mapping_sets
+        for mapping in mapping_set.get("mappings", [])
+    }
     for mapping in mapping_items:
         mapping_id = mapping.get("mapping_id", "<unknown>")
-        if mapping.get("internal_ref") not in node_id_set:
-            errors.append(f"{mapping_id}: unresolved internal_ref {mapping.get('internal_ref')!r}")
+        target_type = mapping.get("target_type")
+        internal_ref = mapping.get("internal_ref")
+        mapping_domain_id = mapping_set_by_mapping_id.get(mapping_id, {}).get("domain_id")
+        if target_type == "GRAPH_NODE" and internal_ref not in node_id_set:
+            errors.append(f"{mapping_id}: unresolved graph-node internal_ref {internal_ref!r}")
+        if target_type == "DOMAIN" and internal_ref != mapping_domain_id:
+            errors.append(
+                f"{mapping_id}: domain target {internal_ref!r} does not match mapping-set domain {mapping_domain_id!r}"
+            )
         source_id = mapping.get("provenance", {}).get("source_id")
         if source_id not in source_ids:
             errors.append(f"{mapping_id}: unknown provenance source_id {source_id}")
+        source = source_by_id.get(source_id, {})
+        source_artifact_id = mapping.get("provenance", {}).get("source_artifact_id")
+        if source.get("artifact_id") and source_artifact_id != source.get("artifact_id"):
+            errors.append(
+                f"{mapping_id}: source_artifact_id {source_artifact_id!r} does not match registered artifact {source.get('artifact_id')!r}"
+            )
         if not mapping.get("scheme_version"):
             errors.append(f"{mapping_id}: unversioned mapping")
-        if mapping.get("role") == "PRIMARY" and mapping.get("review_status") != "AUDITED":
-            errors.append(f"{mapping_id}: primary mapping must be AUDITED")
+        if (
+            mapping.get("provenance", {}).get("assignment_method") == "PROVIDER_AUTOMATED"
+            and mapping.get("review_status") == "AUDITED"
+        ):
+            errors.append(f"{mapping_id}: provider-automated mapping cannot be AUDITED")
         if mapping.get("scheme") == "MSC":
+            if (
+                source.get("role") != "NORMATIVE_SUBJECT_SPINE"
+                or source.get("qualification_status") != "QUALIFIED_NORMATIVE_REFERENCE"
+                or source.get("runtime_authority") is not True
+            ):
+                errors.append(
+                    f"{mapping_id}: MSC mapping must cite the qualified normative subject source"
+                )
             if mapping.get("scheme_version") != "2020":
                 errors.append(f"{mapping_id}: MSC mapping must use scheme version 2020")
             if not MSC_CODE.fullmatch(str(mapping.get("identifier", ""))):
                 errors.append(f"{mapping_id}: invalid MSC code {mapping.get('identifier')!r}")
-            if mapping.get("role") == "PRIMARY":
-                primary_msc_by_ref.setdefault(mapping["internal_ref"], []).append(mapping_id)
-    for internal_ref, primary_ids in primary_msc_by_ref.items():
-        if len(primary_ids) > 1:
-            errors.append(
-                f"{internal_ref}: multiple primary MSC mappings: "
-                f"{', '.join(sorted(primary_ids))}"
-            )
 
     domain_ids: set[str] = set()
     for domain in domain_registry.get("domains", []):
@@ -317,6 +367,57 @@ def validate_documents(
         for mapping_ref in domain.get("classification_mapping_refs", []):
             if mapping_ref not in mapping_id_set:
                 errors.append(f"{domain_id}: unresolved classification_mapping_ref {mapping_ref}")
+            elif mapping_set_by_mapping_id[mapping_ref].get("domain_id") != domain_id:
+                errors.append(
+                    f"{domain_id}: classification_mapping_ref {mapping_ref} belongs to "
+                    f"{mapping_set_by_mapping_id[mapping_ref].get('domain_id')}"
+                )
+        domain_mapping_items = [
+            mapping_by_id[ref]
+            for ref in domain.get("classification_mapping_refs", [])
+            if ref in mapping_by_id
+        ]
+        primary_msc = [
+            mapping
+            for mapping in domain_mapping_items
+            if mapping.get("scheme") == "MSC"
+            and mapping.get("role") == "PRIMARY_SUBJECT"
+            and mapping.get("review_status") not in {"REJECTED", "SUPERSEDED"}
+        ]
+        waiver = domain.get("classification_waiver")
+        if domain.get("status") == "ACTIVE":
+            if waiver and domain_mapping_items:
+                errors.append(f"{domain_id}: active domain cannot use mappings and a classification waiver together")
+            if not waiver and len(primary_msc) != 1:
+                errors.append(
+                    f"{domain_id}: active domain requires exactly one primary MSC mapping or waiver; found {len(primary_msc)}"
+                )
+            if waiver:
+                if waiver.get("next_review", "") > waiver.get("expires_at", ""):
+                    errors.append(f"{domain_id}: classification waiver review occurs after expiry")
+            for mapping in primary_msc:
+                mapping_set = mapping_set_by_mapping_id[mapping["mapping_id"]]
+                if (
+                    mapping_set.get("mapping_set_status") == "QUALIFIED"
+                    and mapping.get("review_status") != "AUDITED"
+                ):
+                    errors.append(
+                        f"{mapping['mapping_id']}: qualified primary mapping must be AUDITED"
+                    )
+                if (
+                    mapping_set.get("mapping_set_status") == "CANDIDATE"
+                    and mapping.get("review_status") != "PROPOSED"
+                ):
+                    errors.append(
+                        f"{mapping['mapping_id']}: candidate primary mapping must remain PROPOSED pending independent review"
+                    )
+
+    for mapping_set in mapping_sets:
+        if mapping_set.get("domain_id") not in domain_ids:
+            errors.append(
+                f"{mapping_set.get('mapping_set_id', '<unknown>')}: unresolved domain_id "
+                f"{mapping_set.get('domain_id')!r}"
+            )
 
     for candidate in candidates:
         problem_id = candidate.get("problem_id", "<unknown>")
@@ -338,8 +439,6 @@ def validate_documents(
 def main() -> int:
     documents = [
         ("classification/source_registry.json", "classification_source_registry.schema.json"),
-        ("knowledge_graph/union_closed.json", "knowledge_graph.schema.json"),
-        ("classification/mappings/union_closed.json", "external_mapping.schema.json"),
         ("examples/candidate_problem_union_closed.json", "candidate_problem.schema.json"),
     ]
     errors: list[str] = []
@@ -350,6 +449,26 @@ def main() -> int:
         errors.extend(
             f"{relative_path}: {error}"
             for error in schema_errors(instance, schema_name)
+        )
+
+    graph_documents: list[dict[str, Any]] = []
+    for graph_path in sorted((ROOT / "knowledge_graph").glob("*.json")):
+        relative_path = graph_path.relative_to(ROOT).as_posix()
+        instance = load_json(graph_path)
+        graph_documents.append(instance)
+        errors.extend(
+            f"{relative_path}: {error}"
+            for error in schema_errors(instance, "knowledge_graph.schema.json")
+        )
+
+    mapping_documents: list[dict[str, Any]] = []
+    for mapping_path in sorted((ROOT / "classification" / "mappings").glob("*.json")):
+        relative_path = mapping_path.relative_to(ROOT).as_posix()
+        instance = load_json(mapping_path)
+        mapping_documents.append(instance)
+        errors.extend(
+            f"{relative_path}: {error}"
+            for error in schema_errors(instance, "external_mapping.schema.json")
         )
 
     domain_registry = yaml.safe_load(
@@ -382,7 +501,7 @@ def main() -> int:
 
     errors.extend(claim_ledger_registry_errors(SCHEMA_BOUND_CLAIM_LEDGERS))
     graph_ref_set = {
-        node["node_id"] for node in loaded["knowledge_graph/union_closed.json"]["nodes"]
+        node["node_id"] for graph_doc in graph_documents for node in graph_doc["nodes"]
     }
     ledgers: list[tuple[str, dict[str, Any]]] = []
     for relative in SCHEMA_BOUND_CLAIM_LEDGERS:
@@ -403,8 +522,8 @@ def main() -> int:
     errors.extend(
         validate_documents(
             loaded["classification/source_registry.json"],
-            loaded["knowledge_graph/union_closed.json"],
-            loaded["classification/mappings/union_closed.json"],
+            graph_documents,
+            mapping_documents,
             domain_registry,
             [loaded["examples/candidate_problem_union_closed.json"]],
         )

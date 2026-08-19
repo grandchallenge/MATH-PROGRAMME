@@ -13,6 +13,8 @@ on:
       - schemas/administrative_autonomy_stabilization_correction.schema.json
       - ci/administrative_autonomy.py
       - ci/administrative_autonomy_candidate_merge.py
+      - ci/administrative_autonomy_0813_closure_preflight.py
+      - ci/administrative_autonomy_runtime_administrative_review_0813_receipt_recovery.py
       - ci/autonomy_github.py
       - ci/validate_workflow_coverage_v2.py
       - ci/test_workflow_coverage_v2.py
@@ -51,6 +53,24 @@ jobs:
           permission-contents: write
           permission-issues: write
           permission-pull-requests: write
+
+      - name: Mint bounded evidence and observability token
+        id: evidence-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: |
+            MATH-PROGRAMME
+            MATHFORGE
+            MATHSOLVE
+            MATHCERT
+            INTELLECT
+          permission-actions: read
+          permission-contents: read
+          permission-issues: read
+          permission-pull-requests: read
 
       - name: Mint Administration Agent token
         id: admin-token
@@ -92,6 +112,7 @@ jobs:
       - name: Require distinct bounded credentials
         env:
           CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}
+          EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
           REFEREE_TOKEN: ${{ github.token }}
           ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
           CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.candidate-token.outputs.app-slug) }}
@@ -102,6 +123,7 @@ jobs:
         run: |
           set -euo pipefail
           test -n "${CANDIDATE_TOKEN}"
+          test -n "${EVIDENCE_TOKEN}"
           test -n "${REFEREE_TOKEN}"
           test -n "${ADMIN_TOKEN}"
           test -n "${CANDIDATE_LOGIN}"
@@ -109,14 +131,66 @@ jobs:
           test -n "${REFEREE_LOGIN}"
           test -n "${CANDIDATE_APP_ID}"
           test -n "${REFEREE_APP_ID}"
+          test "${CANDIDATE_TOKEN}" != "${EVIDENCE_TOKEN}"
           test "${CANDIDATE_TOKEN}" != "${REFEREE_TOKEN}"
+          test "${EVIDENCE_TOKEN}" != "${REFEREE_TOKEN}"
           test "${ADMIN_TOKEN}" != "${CANDIDATE_TOKEN}"
+          test "${ADMIN_TOKEN}" != "${EVIDENCE_TOKEN}"
           test "${ADMIN_TOKEN}" != "${REFEREE_TOKEN}"
           test "${CANDIDATE_LOGIN}" = "${ADMIN_LOGIN}"
           test "${CANDIDATE_LOGIN}" != "${REFEREE_LOGIN}"
           test "${CANDIDATE_APP_ID}" != "${REFEREE_APP_ID}"
 
+      - name: Recover exact Aug13 closure before activation canary
+        id: aug13-closure
+        env:
+          CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}
+          EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
+          OBSERVABILITY_TOKEN: ${{ steps.evidence-token.outputs.token }}
+          REFEREE_TOKEN: ${{ github.token }}
+          ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.candidate-token.outputs.app-slug) }}
+          ADMIN_LOGIN: ${{ format('{0}[bot]', steps.admin-token.outputs.app-slug) }}
+          REFEREE_LOGIN: 'github-actions[bot]'
+          CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          REFEREE_APP_ID: '15368'
+        run: |
+          set -euo pipefail
+          python ci/administrative_autonomy_0813_closure_preflight.py \
+            --apply \
+            --report administrative-autonomy-0813-closure-preflight.json
+          recovered="$(python - <<'PY'
+          import json
+          from pathlib import Path
+          value = json.loads(
+              Path('administrative-autonomy-0813-closure-preflight.json').read_text(
+                  encoding='utf-8'
+              )
+          )
+          print('true' if value.get('recovered') is True else 'false')
+          PY
+          )"
+          echo "recovered=${recovered}" >> "$GITHUB_OUTPUT"
+
+      - name: Record exact Aug13 recovery handoff
+        if: steps.aug13-closure.outputs.recovered == 'true'
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('administrative-autonomy-activation-report.json')
+          value = json.loads(path.read_text(encoding='utf-8'))
+          value.update({
+              'state': 'AUG13_CLOSURE_RECOVERED__ACTIVATION_CANARY_NOT_REQUIRED',
+              'activation_canary_executed': False,
+              'authority_scope': 'exact Aug13 protected closure only',
+          })
+          path.write_text(json.dumps(value, indent=2) + '\n', encoding='utf-8')
+          PY
+
       - name: Activate through protected canary
+        if: steps.aug13-closure.outputs.recovered != 'true'
         env:
           CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}
           REFEREE_TOKEN: ${{ github.token }}
@@ -137,6 +211,8 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: administrative-autonomy-activation
-          path: administrative-autonomy-activation-report.json
+          path: |
+            administrative-autonomy-activation-report.json
+            administrative-autonomy-0813-closure-preflight.json
           if-no-files-found: error
           retention-days: 90

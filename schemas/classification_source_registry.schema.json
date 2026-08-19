@@ -20,7 +20,10 @@
           "version_policy",
           "license",
           "terms_url",
-          "retrieved_at"
+          "retrieved_at",
+          "qualification_status",
+          "runtime_authority",
+          "license_review"
         ],
         "properties": {
           "source_id": {
@@ -33,12 +36,24 @@
           },
           "role": {
             "enum": [
-              "CANONICAL_CLASSIFICATION",
+              "NORMATIVE_SUBJECT_SPINE",
+              "MACHINE_SERIALIZATION_CANDIDATE",
               "MATH_LITERATURE_DISCOVERY",
               "SEMANTIC_CITATION_DISCOVERY",
               "CURRENT_AWARENESS",
               "DESIGN_REFERENCE"
             ]
+          },
+          "qualification_status": {
+            "enum": [
+              "QUALIFIED_NORMATIVE_REFERENCE",
+              "UNQUALIFIED_CANDIDATE",
+              "PROVIDER_MANAGED",
+              "PROGRAMME_OWNED"
+            ]
+          },
+          "runtime_authority": {
+            "type": "boolean"
           },
           "version_policy": {
             "type": "string",
@@ -70,6 +85,44 @@
           },
           "notes": {
             "type": "string"
+          },
+          "artifact_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "artifact_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "candidate_payloads": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "blocking_findings": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1}
+          },
+          "fallback_behavior": {
+            "type": "string",
+            "minLength": 1
+          },
+          "license_review": {
+            "type": "object",
+            "required": ["status", "reviewed_at", "scope", "evidence"],
+            "properties": {
+              "status": {
+                "enum": [
+                  "REFERENCE_ONLY",
+                  "REVIEW_REQUIRED_BEFORE_REDISTRIBUTION",
+                  "APPROVED_FOR_RECORDED_SCOPE"
+                ]
+              },
+              "reviewed_at": {"type": "string", "format": "date"},
+              "scope": {"type": "string", "minLength": 1},
+              "evidence": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": false
           }
         },
         "additionalProperties": false

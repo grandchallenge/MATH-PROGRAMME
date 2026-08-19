@@ -9,9 +9,10 @@ ROOT=Path(__file__).resolve().parents[1]
 CONTROL_PATH=ROOT/'governance/policy_impact_gating.json'; CONTROL_SCHEMA=ROOT/'schemas/policy_impact_gating.schema.json'
 FORMAL_PATH=ROOT/'governance/formal_replay_policy.json'
 REGISTRY_PATH=ROOT/'governance/policy_shard_registry.json'; REGISTRY_SCHEMA=ROOT/'schemas/policy_shard_registry.schema.json'
+CONTRACT_MANIFEST_PATH=ROOT/'governance/contract_test_manifest.json'
 CMDG_GATE_PATH=ROOT/'governance/cmdg_workflow_impact_gating.json'
-ALL_SHARDS=('core','fixtures','cmdg','administrative','campaigns','contracts','docs'); ALL_LANES=('log-gcd','pc-wp04','union-closed-mathcert')
-FULL_FANOUT_PATHS={'.github/workflows/ci.yml','.github/workflows/cmdg-postmerge.yml','ci/policy_impact.py','ci/test_policy_impact.py','ci/cmdg_postmerge_readback.py','ci/run_policy_shard.py','ci/validate_policy_reachability.py','ci/test_policy_reachability.py','ci/validate_repository_execution.py','ci/test_repository_execution.py','ci/validate_workflow_semantics.py','ci/test_workflow_semantics.py','governance/policy_impact_gating.json','governance/policy_shard_registry.json','governance/cmdg_workflow_impact_gating.json','schemas/policy_impact_gating.schema.json','schemas/policy_shard_registry.schema.json','schemas/cmdg_workflow_impact_gating.schema.json','schemas/cmdg_postmerge_readback.schema.json'}
+ALL_SHARDS=('core','fixtures','cmdg','oz','administrative','campaigns','contracts','docs','repository-regression'); ALL_LANES=('log-gcd','pc-wp04','union-closed-mathcert')
+FULL_FANOUT_PATHS={'.github/workflows/ci.yml','.github/workflows/cmdg-postmerge.yml','ci/policy_impact.py','ci/test_policy_impact.py','ci/cmdg_postmerge_readback.py','ci/run_policy_shard.py','ci/run_unittest_modules.py','ci/validate_policy_reachability.py','ci/test_policy_reachability.py','ci/validate_repository_execution.py','ci/test_repository_execution.py','ci/validate_workflow_semantics.py','ci/test_workflow_semantics.py','governance/policy_impact_gating.json','governance/policy_shard_registry.json','governance/contract_test_manifest.json','governance/cmdg_workflow_impact_gating.json','schemas/policy_impact_gating.schema.json','schemas/policy_shard_registry.schema.json','schemas/cmdg_workflow_impact_gating.schema.json','schemas/cmdg_postmerge_readback.schema.json'}
 ZERO_SHA='0'*40
 class ImpactError(RuntimeError):pass
 def load_json(path:Path)->dict:
@@ -29,21 +30,28 @@ def normalize_paths(paths:Iterable[str])->list[str]:
 def matches_root(path:str,root:str)->bool:
     root=root.rstrip('/');return path==root or path.startswith(root+'/')
 def matches_pattern(path:str,pattern:str)->bool:return fnmatch.fnmatchcase(path,pattern)
+def contract_test_paths()->set[str]:
+    data=load_json(CONTRACT_MANIFEST_PATH)
+    if data.get('manifest_id')!='MP-CONTRACT-TEST-MANIFEST-001':raise ImpactError('contract-test manifest identity drift')
+    rows=data.get('tests')
+    if not isinstance(rows,list) or not rows:raise ImpactError('contract-test manifest empty')
+    out=set()
+    for row in rows:
+        if not isinstance(row,dict) or not isinstance(row.get('path'),str) or not isinstance(row.get('category'),str):raise ImpactError('invalid contract-test manifest row')
+        p=normalize_paths([row['path']])[0]
+        if p in out:raise ImpactError(f'duplicate contract-test path: {p}')
+        out.add(p)
+    return out
 def enforce_cmdg_native_filter_guard(changed:list[str],event_name:str)->None:
     if event_name!='pull_request' or not CMDG_GATE_PATH.is_file():return
-    control=load_json(CMDG_GATE_PATH)
+    control=load_json(CMDG_GATE_PATH); patterns=control.get('pull_request_paths'); guard=control.get('native_path_filter_guard')
     if control.get('control_id')!='MP-CMDG-WORKFLOW-IMPACT-GATING-001' or control.get('status')!='ACTIVE_ON_PROTECTED_MERGE':raise ImpactError('CMDG workflow impact gating control identity/status drift')
-    guard=control.get('native_path_filter_guard')
-    patterns=control.get('pull_request_paths')
     if not isinstance(guard,dict) or guard.get('event')!='pull_request':raise ImpactError('CMDG native path-filter guard contract drift')
     if not isinstance(patterns,list) or not patterns or not all(isinstance(x,str) and x for x in patterns):raise ImpactError('CMDG pull-request path closure missing')
     try:limit=int(guard.get('max_changed_files',0))
     except (TypeError,ValueError):raise ImpactError('CMDG native path-filter guard limit invalid')
     if limit!=300:raise ImpactError('CMDG native path-filter guard must remain at conservative 300-file bound')
-    if len(changed)<=limit:return
-    relevant=[p for p in changed if any(matches_pattern(p,pattern) for pattern in patterns)]
-    if relevant:
-        raise ImpactError(f'CMDG native path-filter guard: {len(changed)} changed files exceeds conservative {limit}-file bound and includes governed CMDG dependencies; split the PR')
+    if len(changed)>limit and any(any(matches_pattern(p,pattern) for pattern in patterns) for p in changed):raise ImpactError(f'CMDG native path-filter guard: {len(changed)} changed files exceeds conservative {limit}-file bound and includes governed CMDG dependencies; split the PR')
 def formal_lane_impacts(paths:list[str],formal:dict,force_full:bool)->dict[str,bool]:
     if force_full:return {lane:True for lane in ALL_LANES}
     globals_={str(x) for x in formal.get('global',{}).get('inputs',[])}
@@ -56,13 +64,12 @@ def formal_lane_impacts(paths:list[str],formal:dict,force_full:bool)->dict[str,b
         result[lane]=any(p in files or any(matches_root(p,r) for r in roots) for p in paths)
     return result
 def shard_impacts(paths:list[str])->tuple[list[str],list[str]]:
-    active={'core'};unknown=[]
+    active={'core'};unknown=[];contract_tests=contract_test_paths()
     if any(p in FULL_FANOUT_PATHS for p in paths):return list(ALL_SHARDS),[]
     for p in paths:
         lower=p.lower();matched=False
         if p.startswith('docs/') or p in {'mkdocs.yml','requirements/docs.txt'}:active.add('docs');matched=True
-        if p.startswith('tools/render_visual_pedagogy') and p.endswith('.py'):
-            active.update({'contracts','docs'});matched=True
+        if p.startswith('tools/render_visual_pedagogy') and p.endswith('.py'):active.update({'contracts','docs'});matched=True
         if p.startswith('fixtures/algebraic/') or p.startswith('fixtures/formal/') or any(t in lower for t in ('grobner','chaidez','researchmath','log_gcd')):active.add('fixtures');matched=True
         if p.startswith('fixtures/cmdg/') or 'cmdg' in lower:active.add('cmdg');matched=True
         if any(t in lower for t in ('administrative','maintenance','autonomy')):active.add('administrative');matched=True
@@ -70,15 +77,20 @@ def shard_impacts(paths:list[str])->tuple[list[str],list[str]]:
         if p=='requirements/policy.txt' or p.startswith('.github/workflows/') or p.startswith('experiments/'):active.add('contracts');matched=True
         if p.startswith('ci/') and any(t in lower for t in ('programme','workflow','policy','repository_execution','retired')):active.add('contracts');matched=True
         if p.startswith('tests/'):
-            if 'administrative' in lower:active.add('administrative')
+            if p in contract_tests:
+                active.add('contracts')
+                if any(t in lower for t in ('documentary','visual_pedagogy')):active.add('docs')
+            elif p.startswith('tests/test_oz'):active.add('oz')
             elif 'cmdg' in lower:active.add('cmdg')
+            elif 'fixture' in lower:active.add('fixtures')
+            elif 'administrative' in lower:active.add('administrative')
             elif 'campaign' in lower:active.add('campaigns')
-            else:active.add('contracts')
+            else:unknown.append(p)
             matched=True
         if p.startswith('schemas/') or p.startswith('governance/') or p.startswith('evidence/'):active.add('contracts');matched=True
         if p.endswith('.md') or p in {'README.md','CONTRIBUTING.md'}:active.add('docs');matched=True
         if not matched:unknown.append(p)
-    if unknown:return list(ALL_SHARDS),unknown
+    if unknown:return list(ALL_SHARDS),sorted(set(unknown))
     return [s for s in ALL_SHARDS if s in active],[]
 def classify_paths(paths:Iterable[str],*,event_name:str='pull_request',schedule:str|None=None)->dict:
     changed=normalize_paths(paths);enforce_cmdg_native_filter_guard(changed,event_name);control=load_json(CONTROL_PATH);formal=load_json(FORMAL_PATH);formal_cron=str(control['formal_replay']['sentinel']['cron']);full_cron=str(control['policy_dag']['full_policy_sentinel_cron']);clean={lane:False for lane in ALL_LANES}
@@ -88,7 +100,7 @@ def classify_paths(paths:Iterable[str],*,event_name:str='pull_request',schedule:
         return {'event_mode':'unknown_schedule','changed_paths':[],'unknown_paths':[f'schedule:{schedule}'],'policy_shards':list(ALL_SHARDS),'formal_dirty':{lane:True for lane in ALL_LANES}}
     if event_name=='workflow_dispatch':return {'event_mode':'manual_full','changed_paths':changed,'unknown_paths':[],'policy_shards':list(ALL_SHARDS),'formal_dirty':{lane:True for lane in ALL_LANES}}
     shards,unknown=shard_impacts(changed);dirty=formal_lane_impacts(changed,formal,bool(unknown))
-    if event_name=='push' and 'docs' not in shards:shards=[s for s in ALL_SHARDS if s in set(shards)|{'docs'}]
+    if event_name=='push':shards=[s for s in ALL_SHARDS if s in set(shards)|{'docs','repository-regression'}]
     return {'event_mode':'transition','changed_paths':changed,'unknown_paths':unknown,'policy_shards':shards,'formal_dirty':dirty}
 def git_changed_paths(base:str,head:str)->list[str]:
     if not base or not head or base==ZERO_SHA:raise ImpactError('transition diff base/head is unavailable')
@@ -106,7 +118,7 @@ def write_output(path:str|None,result:dict)->None:
     with open(path,'a',encoding='utf-8') as h:
         for k,v in vals.items():h.write(f"{k}={'true' if v is True else 'false' if v is False else v}\n")
 def validate_control()->None:
-    c=load_json(CONTROL_PATH);f=load_json(FORMAL_PATH);r=load_json(REGISTRY_PATH)
+    c=load_json(CONTROL_PATH);f=load_json(FORMAL_PATH);r=load_json(REGISTRY_PATH);contract_test_paths()
     jsonschema.validate(c,load_json(CONTROL_SCHEMA));jsonschema.validate(r,load_json(REGISTRY_SCHEMA))
     if c.get('control_id')!='MP-POLICY-IMPACT-GATING-001' or c.get('status')!='ACTIVE_ON_PROTECTED_MERGE':raise ImpactError('policy impact control identity/status drift')
     if c.get('classifier',{}).get('unknown_path_behavior')!='FULL_FANOUT':raise ImpactError('unknown path behavior must remain FULL_FANOUT')
