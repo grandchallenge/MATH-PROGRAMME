@@ -84,15 +84,15 @@ theorem weightedBasisBooleanPairingR_fiber_sum
     {j k : DiscreteQuotient X} (f : j ⟶ k) (q : k) :
     (∑ p : j,
       if finiteQuotientTransition X f p = q then
-        weightedBasisBooleanPairingR X a (finiteDeltaPullbackR X j p)
+        weightedBasisBooleanPairingR.{u, u, u, u} X a (finiteDeltaPullbackR X j p)
       else 0) =
-      weightedBasisBooleanPairingR X a (finiteDeltaPullbackR X k q) := by
+      weightedBasisBooleanPairingR.{u, u, u, u} X a (finiteDeltaPullbackR X k q) := by
   calc
     (∑ p : j,
       if finiteQuotientTransition X f p = q then
-        weightedBasisBooleanPairingR X a (finiteDeltaPullbackR X j p)
+        weightedBasisBooleanPairingR.{u, u, u, u} X a (finiteDeltaPullbackR X j p)
       else 0) =
-        weightedBasisBooleanPairingR X a
+        weightedBasisBooleanPairingR.{u, u, u, u} X a
           (∑ p : j,
             if finiteQuotientTransition X f p = q then
               finiteDeltaPullbackR X j p
@@ -103,7 +103,7 @@ theorem weightedBasisBooleanPairingR_fiber_sum
               by_cases hpq : finiteQuotientTransition X f p = q
               · rw [if_pos hpq, if_pos hpq]
               · rw [if_neg hpq, if_neg hpq, map_zero]
-    _ = weightedBasisBooleanPairingR X a (finiteDeltaPullbackR X k q) := by
+    _ = weightedBasisBooleanPairingR.{u, u, u, u} X a (finiteDeltaPullbackR X k q) := by
       rw [finiteDeltaPullbackR_fiber_sum X f q]
 
 /-- The weighted Boolean coefficient family obeys the same quotient-refinement law. -/
@@ -118,9 +118,9 @@ theorem weightedFiniteBooleanCoefficient_fiber_sum
   change
     (∑ p : j,
       if finiteQuotientTransition X f p = q then
-        weightedBasisBooleanPairingR X a (finiteDeltaPullbackR X j p)
+        weightedBasisBooleanPairingR.{u, u, u, u} X a (finiteDeltaPullbackR X j p)
       else 0) =
-      weightedBasisBooleanPairingR X a (finiteDeltaPullbackR X k q)
+      weightedBasisBooleanPairingR.{u, u, u, u} X a (finiteDeltaPullbackR X k q)
   exact weightedBasisBooleanPairingR_fiber_sum X a f q
 
 /-- Canonical finite coefficient-family pushforward carries the weighted family to the next
@@ -304,7 +304,15 @@ noncomputable def weightedFiniteBooleanMeasureCone
       naturality := by
         intro j k f
         simpa [Functor.comp_map] using
-          (weightedFiniteBooleanMeasureHom_pushforward X a f) }
+          (weightedFiniteBooleanMeasureHom_pushforward X a f).symm }
+
+@[simp]
+theorem weightedFiniteBooleanMeasureCone_π_app
+    (X : Profinite.{u}) (a : IntegralBasisIndex X → ℤ)
+    (j : DiscreteQuotient X) :
+    (weightedFiniteBooleanMeasureCone X a).π.app j =
+      weightedFiniteBooleanMeasureHom X a j := by
+  rfl
 
 /-- The canonical global weighted Boolean measure family. -/
 noncomputable def weightedFiniteBooleanMeasureLimitLift
@@ -320,8 +328,9 @@ theorem weightedFiniteBooleanMeasureLimitLift_fac
     weightedFiniteBooleanMeasureLimitLift X a ≫
         (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j =
       weightedFiniteBooleanMeasureHom X a j := by
-  simpa [weightedFiniteBooleanMeasureLimitLift] using
-    (measureFunctorMapConeIsLimit X).fac (weightedFiniteBooleanMeasureCone X a) j
+  dsimp only [weightedFiniteBooleanMeasureLimitLift]
+  rw [← weightedFiniteBooleanMeasureCone_π_app X a j]
+  exact (measureFunctorMapConeIsLimit X).fac (weightedFiniteBooleanMeasureCone X a) j
 
 #check weightedFiniteBooleanCoefficient
 #check weightedFiniteBooleanMeasureSection
