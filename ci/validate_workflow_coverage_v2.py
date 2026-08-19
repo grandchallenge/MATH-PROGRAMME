@@ -7,6 +7,7 @@ from typing import Any
 import validate_workflow_coverage_v3 as v3
 
 RECOVERY_FAILOVER_WORKFLOW = "administrative-maintenance-0813-recovery-failover.yml"
+QUALIFICATION_ONLY_WORKFLOW = "administrative-protected-receipt-live-qualification.yml"
 
 v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "aether-controls-admin.yml",
@@ -26,6 +27,7 @@ v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "visual-pedagogy-representation-repair.yml",
     "pr-visual-status-advisory.yml",
     RECOVERY_FAILOVER_WORKFLOW,
+    QUALIFICATION_ONLY_WORKFLOW,
 }
 
 ROOT = v3.ROOT
@@ -263,6 +265,7 @@ def main() -> int:
 __all__ = [
     "ROOT",
     "RECOVERY_FAILOVER_WORKFLOW",
+    "QUALIFICATION_ONLY_WORKFLOW",
     "recovery_failover_errors",
     "workflow_coverage_errors",
     "main",
