@@ -53,8 +53,7 @@ theorem weightedBasisBooleanCombination_add
   apply LocallyConstant.ext
   intro t
   simp [weightedBasisBooleanCombination, Finsupp.linearCombination_apply,
-    weightedBasisBooleanCoordinate, basisBooleanCoordinate, add_smul, smul_add,
-    Finset.sum_add_distrib]
+    weightedBasisBooleanCoordinate, basisBooleanCoordinate, add_smul, smul_add]
 
 /-- Evaluating at a Boolean selector is the same as absorbing that selector into the weights and
 then evaluating at the all-true selector. -/
@@ -68,8 +67,10 @@ theorem weightedBasisBooleanCombination_reweight_eval
         (fun _ => true) := by
   classical
   let evalAt (s : IntegralBasisIndex X → Bool) :
-      LocallyConstant (IntegralBasisIndex X → Bool) ℤ →+ ℤ :=
+      LocallyConstant (IntegralBasisIndex X → Bool) ℤ →+* ℤ :=
     { toFun := fun f => f s
+      map_one' := rfl
+      map_mul' := by intro f g; rfl
       map_zero' := rfl
       map_add' := by intro f g; rfl }
   change
@@ -209,17 +210,33 @@ theorem weightedFiniteBooleanMeasureSection_add
     weightedFiniteBooleanMeasureSection X (a + b) j =
       weightedFiniteBooleanMeasureSection X a j +
         weightedFiniteBooleanMeasureSection X b j := by
-  change
-    (ConcreteCategory.hom
-      ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso
-        (FiniteQuotientObject X j)).inv.app
-        (op ((profiniteToCompHaus).obj (basisBooleanCube X)))))
-      ((ConcreteCategory.hom
-        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso
-          (FiniteQuotientObject X j)).inv.app
-          (op ((profiniteToCompHaus).obj (basisBooleanCube X)))))
-        (weightedFiniteBooleanCoefficientFamily X (a + b) j)) = _
-  rw [weightedFiniteBooleanCoefficientFamily_add X a b j, map_add, map_add]
+  let Q := FiniteQuotientObject X j
+  let S := op ((profiniteToCompHaus).obj (basisBooleanCube X))
+  let T :=
+    (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso Q).inv ≫
+      (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso Q).inv
+  have hSection (w : IntegralBasisIndex X → ℤ) :
+      (ConcreteCategory.hom (T.app S))
+          (weightedFiniteBooleanCoefficientFamily X w j) =
+        weightedFiniteBooleanMeasureSection X w j := by
+    rfl
+  calc
+    weightedFiniteBooleanMeasureSection X (a + b) j =
+        (ConcreteCategory.hom (T.app S))
+          (weightedFiniteBooleanCoefficientFamily X (a + b) j) :=
+      (hSection (a + b)).symm
+    _ = (ConcreteCategory.hom (T.app S))
+          (weightedFiniteBooleanCoefficientFamily X a j +
+            weightedFiniteBooleanCoefficientFamily X b j) := by
+      rw [weightedFiniteBooleanCoefficientFamily_add X a b j]
+    _ = (ConcreteCategory.hom (T.app S))
+          (weightedFiniteBooleanCoefficientFamily X a j) +
+        (ConcreteCategory.hom (T.app S))
+          (weightedFiniteBooleanCoefficientFamily X b j) := by
+      rw [map_add]
+    _ = weightedFiniteBooleanMeasureSection X a j +
+        weightedFiniteBooleanMeasureSection X b j := by
+      rw [hSection a, hSection b]
 
 #check weightedBasisBooleanPairing_add
 #check weightedBasisBooleanPairing_reweight_eval
