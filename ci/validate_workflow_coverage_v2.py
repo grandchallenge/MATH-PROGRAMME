@@ -150,6 +150,12 @@ def recovery_failover_errors(texts: dict[str, str]) -> list[str]:
         "REFEREE_LOGIN: 'github-actions[bot]'",
         "CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}",
         "REFEREE_APP_ID: '15368'",
+        "Restore exact PR-only Administration actor",
+        "from autonomy_github import AutonomyError, Client, identity, install_bypass",
+        "ruleset_id = 17137629",
+        "administrator.app_id != 4423678",
+        '"bypass_mode": "pull_request"',
+        "administrative-autonomy-0813-ruleset-actor-restore.json",
         "python ci/administrative_autonomy_0813_closure_preflight.py",
         "--apply",
         "administrative-autonomy-0813-pr-close-recovery.json",
@@ -160,6 +166,19 @@ def recovery_failover_errors(texts: dict[str, str]) -> list[str]:
             errors.append(
                 f"{RECOVERY_FAILOVER_WORKFLOW}: missing bounded recovery marker {marker}"
             )
+
+    restore_index = text.find("Restore exact PR-only Administration actor")
+    preflight_index = text.find(
+        "python ci/administrative_autonomy_0813_closure_preflight.py"
+    )
+    if (
+        restore_index < 0
+        or preflight_index < 0
+        or restore_index > preflight_index
+    ):
+        errors.append(
+            f"{RECOVERY_FAILOVER_WORKFLOW}: exact Administration actor restoration must precede exact Aug13 preflight"
+        )
 
     if text.count(v3.APP_ACTION) != 3:
         errors.append(
