@@ -81,8 +81,8 @@ class GitHubStateAdapter:
         if None in (a_b0_h,a_b0_b1,a_b1_h):return BranchState.UNKNOWN
         return BranchState.DIVERGED_FROM_DECLARED_BASE
     def classify_checks(self,repository:str,head:str,required:tuple[str,...])->CheckState:
-        runs=list(self.provider.check_runs(repository,head)); by={str(x.get("name")):x for x in runs if str(x.get("head_sha") or head)==head}
         if not required:return CheckState.PASSING
+        runs=list(self.provider.check_runs(repository,head)); by={str(x.get("name")):x for x in runs if str(x.get("head_sha") or head)==head}
         if any(n not in by for n in required):return CheckState.NOT_STARTED
         if any(by[n].get("status")!="completed" for n in required):return CheckState.PENDING
         if any(by[n].get("conclusion") not in {"success","neutral","skipped"} for n in required):return CheckState.FAILING
