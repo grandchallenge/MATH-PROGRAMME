@@ -81,6 +81,37 @@ class AdministrativeAutonomy0813ClosurePreflightTests(unittest.TestCase):
             mutated["manifest"][field] = "drift"
             self.assertFalse(preflight.is_exact_target(mutated), field)
 
+    def test_review_field_diagnostic_reports_only_exact_review_fields(self):
+        candidate = Mock()
+        candidate.get.return_value = [
+            {
+                "id": preflight.TARGET["independent_review"],
+                "state": "APPROVED",
+                "commit_id": preflight.TARGET["exact_head"],
+                "user": {"login": "jimsteeg"},
+                "author_association": "COLLABORATOR",
+            }
+        ]
+        error = "Aug13 administrative independent review drift"
+        detail = preflight.review_field_diagnostic(
+            candidate, "grandchallenge/MATH-PROGRAMME", error
+        )
+        self.assertIn("state='APPROVED'", detail)
+        self.assertIn(f"commit_id='{preflight.TARGET['exact_head']}'", detail)
+        self.assertIn("login='jimsteeg'", detail)
+        self.assertIn("author_association='COLLABORATOR'", detail)
+        candidate.get.assert_called_once_with(
+            "/repos/grandchallenge/MATH-PROGRAMME/pulls/476/reviews?per_page=100"
+        )
+
+    def test_review_field_diagnostic_is_inert_for_other_failures(self):
+        candidate = Mock()
+        self.assertEqual(
+            preflight.review_field_diagnostic(candidate, "repo", "classifier boom"),
+            "classifier boom",
+        )
+        candidate.get.assert_not_called()
+
     def test_no_target_is_noop_and_never_finishes_other_closure(self):
         other = self.target()
         other["issue_number"] = 999
