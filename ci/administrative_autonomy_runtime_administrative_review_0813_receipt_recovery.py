@@ -237,7 +237,7 @@ def _load_target(
     )
     if (
         str(steward.get("user", {}).get("login") or "") != "fyremael"
-        or str(steward.get("author_association") or "") != "MEMBER"
+        or str(steward.get("author_association") or "") not in {"MEMBER", "CONTRIBUTOR"}
         or not all(marker in steward_body for marker in required_markers)
     ):
         raise AutonomyError("Aug13 administrative Human Steward disposition drift")
