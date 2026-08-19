@@ -1,3 +1,4 @@
+import CMDGCondensedCM4P3LKernelFunctional
 import CMDGCondensedCM4P3G
 import CMDGCondensedCM4P3GFiniteBooleanMeasureHom
 
