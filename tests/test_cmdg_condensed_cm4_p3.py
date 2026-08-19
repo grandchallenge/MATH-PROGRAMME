@@ -12,7 +12,7 @@ P3E_BLOB = "596d601b6056f2f45b7780fc693f091549c2b316"
 P3I_PATH = ROOT / "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GFiniteBooleanMeasureCone.lean"
 P3I_BLOB = "b40465eb127b7f3a19df72a7227aef3eaaa89035"
 P3J_PATH = ROOT / "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3JWeightedBooleanMeasure.lean"
-P3J_BLOB = "b1d77a541092b3b6637211ca35abe5f689131442"
+P3J_BLOB = "d762dbe30b851f5a108390b2ca9419c3bdd84c59"
 spec = importlib.util.spec_from_file_location("validate_cmdg_condensed_cm4_p3", MODULE_PATH)
 assert spec and spec.loader
 validator = importlib.util.module_from_spec(spec)
