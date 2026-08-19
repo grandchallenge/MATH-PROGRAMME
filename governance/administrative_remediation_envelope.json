@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "envelope_id": "MP-ADMIN-REMEDIATION-ENVELOPE-001",
+  "issue": 615,
+  "state": "OPEN",
+  "human_steward": {
+    "initial_approval_comment_id": 5349149366,
+    "initial_approval_required": true,
+    "intermediate_approval_required": false,
+    "final_closure_or_reactivation_approval_required": true
+  },
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "protected_baseline_at_open": "645c3684c7bf45a7eb1f791f52c2a4653817f17d",
+  "integration_merge": "8ff752b4f2ac28d87575d4f4ef48f564fb18837b",
+  "receipt_pr": 596,
+  "receipt_head": "02bd05312961eb1a61994a28aecc51a978248bac",
+  "ruleset_reconciliation": {
+    "ruleset_id": 17137629,
+    "actor_id": 4423678,
+    "actor_login": "gcl-release-trust[bot]",
+    "actor_type": "Integration",
+    "bypass_mode": "pull_request",
+    "direct_protected_push": false,
+    "bypass_exercise_authorized": false
+  },
+  "delegated_authority": {
+    "diagnose": true,
+    "bounded_control_plane_repair": true,
+    "repair_pull_requests": true,
+    "exact_head_validation": true,
+    "independent_non_author_review": true,
+    "expected_head_protected_merge_after_review": true,
+    "exact_ruleset_actor_reconciliation": true,
+    "qualification_replay": true,
+    "repeat_until_green_or_scope_expansion": true
+  },
+  "allowed_path_prefixes": [
+    ".github/workflows/administrative-",
+    "ci/administrative_",
+    "tests/test_administrative_",
+    "governance/administrative_remediation_"
+  ],
+  "allowed_exact_paths": [
+    "ci/validate_workflow_coverage_v2.py",
+    "ci/test_workflow_coverage_v2.py"
+  ],
+  "hard_exclusions": {
+    "direct_protected_push": true,
+    "bypass_exercise": true,
+    "bypass_mode_widening": true,
+    "other_ruleset_actor_mutation": true,
+    "receipt_pr_596_mutation": true,
+    "receipt_execution_or_staging": true,
+    "completion_ledger_mutation": true,
+    "mirror_advancement": true,
+    "cadence_change": true,
+    "unrelated_protected_resource_mutation": true,
+    "human_steward_identity_synthesis": true,
+    "administrative_review_reactivation": true,
+    "substantive_claim_authority": true
+  },
+  "final_success": {
+    "canonical_qualification_green_required": true,
+    "retained_audit_evidence_required": true,
+    "human_steward_final_closure_or_reactivation_required": true
+  }
+}
