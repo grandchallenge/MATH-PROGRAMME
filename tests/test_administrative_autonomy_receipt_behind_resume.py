@@ -150,7 +150,11 @@ class ReceiptBehindResumeTests(unittest.TestCase):
         self.assertIn(suspension, text)
         self.assertIn(executor_import, text)
         self.assertLess(text.index(suspension), text.index(executor_import))
-        self.assertNotIn("administrative_review_0813_receipt_pending_closures", text)
+        self.assertIn("# administrative_review_0813_receipt_pending_closures", text)
+        self.assertNotIn(
+            "import administrative_autonomy_runtime_administrative_review_0813_receipt_recovery",
+            text,
+        )
 
 
 if __name__ == "__main__":
