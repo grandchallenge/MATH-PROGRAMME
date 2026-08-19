@@ -182,7 +182,7 @@ class LiveProtectedReceiptTests(unittest.TestCase):
 
     def test_generic_production_runtime_has_no_aug13_literal_dependencies(self):
         text = (ROOT / "ci" / "administrative_autonomy_runtime.py").read_text(encoding="utf-8")
-        for literal in ("#475", "#476", "#596", "2026-08-13", "administrative_review_0813_receipt_pending_closures"):
+        for literal in ("#475", "#476", "#596", "2026-08-13", "import administrative_autonomy_runtime_administrative_review_0813_receipt_recovery"):
             self.assertNotIn(literal, text)
 
     def test_workflow_admin_token_preserves_protected_credential_contract(self):

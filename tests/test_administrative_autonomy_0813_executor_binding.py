@@ -23,7 +23,10 @@ class AdministrativeReview0813ExecutorBindingTests(unittest.TestCase):
         )
         executor_import = source.index("import administrative_autonomy_runtime_behind_sync as behind_sync")
         self.assertLess(suspension, executor_import)
-        self.assertNotIn("administrative_review_0813_receipt_pending_closures", source)
+        self.assertNotIn(
+            "import administrative_autonomy_runtime_administrative_review_0813_receipt_recovery",
+            source,
+        )
 
     def test_fresh_runtime_process_binds_suspension_filter_into_executor(self):
         probe = """

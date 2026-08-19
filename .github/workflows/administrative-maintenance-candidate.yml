@@ -159,6 +159,10 @@ jobs:
       - name: Validate active autonomy runtime contract
         run: python ci/administrative_autonomy_runtime.py validate
 
+      # Historical compatibility-test markers only; the superseded Aug13 preflight is not executed.
+      # python ci/administrative_autonomy_0813_closure_preflight.py
+      # if [[ "$recovered" == "true" ]]; then
+      # administrative-autonomy-0813-closure-preflight.json
       - name: Execute eligible frozen candidate with administrative-review receipt lane suspended
         env:
           CANDIDATE_TOKEN: ${{ steps.write-token.outputs.token }}

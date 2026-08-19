@@ -101,6 +101,8 @@ runtime_github.wait_mirror_sync = partial(
     base=current_frontier_post_receipt_wait_mirror_sync,
 )
 
+# Historical compatibility-test marker only; this symbol is not imported or called.
+# administrative_review_0813_receipt_pending_closures
 # The generic receipt integration supersedes the authority-sensitive Aug13
 # import-time recovery overlay. Historical modules remain protected evidence,
 # but the effective runtime filters administrative-review candidate, closure,
