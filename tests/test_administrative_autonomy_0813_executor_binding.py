@@ -13,6 +13,12 @@ ROOT = Path(__file__).resolve().parents[1]
 ACTIVATION_WORKFLOW = (
     ROOT / ".github" / "workflows" / "administrative-autonomy-activation.yml"
 )
+FAILOVER_WORKFLOW = (
+    ROOT
+    / ".github"
+    / "workflows"
+    / "administrative-maintenance-0813-recovery-failover.yml"
+)
 
 
 class AdministrativeReview0813ExecutorBindingTests(unittest.TestCase):
@@ -90,6 +96,16 @@ raise SystemExit(0 if runtime_execute.pending_closures is receipt_stage.pending_
         self.assertIn(
             "if: steps.aug13-closure.outputs.recovered == 'true'", text
         )
+
+    def test_pr_close_failover_installs_governed_dependencies_before_preflight(self):
+        text = FAILOVER_WORKFLOW.read_text(encoding="utf-8")
+        install = text.index(
+            "python -m pip install --requirement requirements/policy.txt"
+        )
+        preflight = text.index(
+            "python ci/administrative_autonomy_0813_closure_preflight.py"
+        )
+        self.assertLess(install, preflight)
 
 
 if __name__ == "__main__":
