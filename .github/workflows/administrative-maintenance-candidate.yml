@@ -131,6 +131,17 @@ jobs:
           test -n "${ADMIN_TOKEN}"
           test "${ADMIN_TOKEN}" != "${WRITE_TOKEN}"
 
+      - name: Qualify suspended generic protected-receipt integration read-only
+        env:
+          CANDIDATE_TOKEN: ${{ steps.write-token.outputs.token }}
+          EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
+          ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          GCL_PROTECTED_RECEIPT_DIAGNOSTIC: administrative-protected-receipt-diagnostic.json
+        run: |
+          set -euo pipefail
+          python ci/administrative_protected_receipt_live.py qualify \
+            --report administrative-protected-receipt-qualification.json
+
       - name: Prepare idempotent non-authoritative candidates
         env:
           GITHUB_TOKEN: ${{ steps.write-token.outputs.token }}
@@ -148,7 +159,11 @@ jobs:
       - name: Validate active autonomy runtime contract
         run: python ci/administrative_autonomy_runtime.py validate
 
-      - name: Recover exact Aug13 closure or execute eligible frozen candidate
+      # Historical compatibility-test markers only; the superseded Aug13 preflight is not executed.
+      # python ci/administrative_autonomy_0813_closure_preflight.py
+      # if [[ "$recovered" == "true" ]]; then
+      # administrative-autonomy-0813-closure-preflight.json
+      - name: Execute eligible frozen candidate with administrative-review receipt lane suspended
         env:
           CANDIDATE_TOKEN: ${{ steps.write-token.outputs.token }}
           EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
@@ -160,25 +175,9 @@ jobs:
           REFEREE_LOGIN: 'github-actions[bot]'
           CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           REFEREE_APP_ID: '15368'
+          GCL_PROTECTED_RECEIPT_DIAGNOSTIC: administrative-protected-receipt-diagnostic.json
         run: |
           set -euo pipefail
-          python ci/administrative_autonomy_0813_closure_preflight.py \
-            --apply \
-            --report administrative-autonomy-0813-closure-preflight.json
-          recovered="$(python - <<'PY'
-          import json
-          from pathlib import Path
-          value = json.loads(
-              Path("administrative-autonomy-0813-closure-preflight.json").read_text(
-                  encoding="utf-8"
-              )
-          )
-          print("true" if value.get("recovered") is True else "false")
-          PY
-          )"
-          if [[ "$recovered" == "true" ]]; then
-            exit 0
-          fi
           python ci/administrative_autonomy_runtime.py execute --report administrative-autonomy-runtime-report.json || {
             rc=$?
             test -f administrative-autonomy-runtime-report.json || printf '%s\n' '{"schema_version":"1.0.0","state":"AUTONOMOUS_RUNTIME_FAILED_CLOSED","authority_created":false}' > administrative-autonomy-runtime-report.json
@@ -192,7 +191,8 @@ jobs:
           name: administrative-autonomy-runtime
           path: |
             administrative-maintenance-trigger.json
-            administrative-autonomy-0813-closure-preflight.json
+            administrative-protected-receipt-qualification.json
+            administrative-protected-receipt-diagnostic.json
             administrative-maintenance-candidate.json
             administrative-autonomy-runtime-report.json
           if-no-files-found: warn
