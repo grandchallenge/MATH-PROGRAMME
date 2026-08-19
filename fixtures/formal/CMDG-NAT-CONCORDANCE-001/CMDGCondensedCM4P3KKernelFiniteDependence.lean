@@ -25,6 +25,7 @@ open CMDG.CondensedCM4P3G.BasisSeparation
 open CMDG.CondensedCM4P3G.BasisBooleanPairing
 open CMDG.CondensedCM4P3G.BasisBooleanPairingR
 open CMDG.CondensedCM4P3G.BooleanCube
+open CMDG.CondensedCM4P3G.FiniteBooleanMeasure
 open CMDG.CondensedCM4P3J.WeightedBooleanMeasure
 open CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness
 
@@ -66,8 +67,22 @@ theorem weightedBasisBooleanCombination_reweight_eval
       weightedBasisBooleanCombination X (weightedBoolToInt a t) c
         (fun _ => true) := by
   classical
-  simp [weightedBasisBooleanCombination, Finsupp.linearCombination_apply,
-    weightedBasisBooleanCoordinate, basisBooleanCoordinate, weightedBoolToInt]
+  let evalAt (s : IntegralBasisIndex X → Bool) :
+      LocallyConstant (IntegralBasisIndex X → Bool) ℤ →+ ℤ :=
+    { toFun := fun f => f s
+      map_zero' := rfl
+      map_add' := by intro f g; rfl }
+  change
+    evalAt t (weightedBasisBooleanCombination X a c) =
+      evalAt (fun _ => true)
+        (weightedBasisBooleanCombination X (weightedBoolToInt a t) c)
+  simp only [weightedBasisBooleanCombination, Finsupp.linearCombination_apply,
+    Finsupp.sum, map_sum]
+  apply Finset.sum_congr rfl
+  intro i hi
+  cases h : t i <;>
+    simp [evalAt, weightedBasisBooleanCoordinate, basisBooleanCoordinate,
+      weightedBoolToInt, h]
 
 /-- The integral weighted Nöbeling pairing is additive in its external weight vector. -/
 theorem weightedBasisBooleanPairing_add
