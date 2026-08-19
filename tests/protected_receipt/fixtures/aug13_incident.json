@@ -1,0 +1,56 @@
+{
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "issue_navigation_state": "CLOSED",
+  "occurrence": {
+    "procedure_id": "administrative_review",
+    "scheduled_due_at": "2026-08-13T01:21:00Z",
+    "protected_record_merge": "7c84b9bf19a1f3e2407860d82965e98fc49512db",
+    "protected_record_digest": "be6fc54ab8569f4e7a92c6aafb36e3ab32c6911d8ee00c795b75d481965e6920"
+  },
+  "protected_record": {
+    "procedure_id": "administrative_review",
+    "scheduled_due_at": "2026-08-13T01:21:00Z",
+    "protected_record_merge": "7c84b9bf19a1f3e2407860d82965e98fc49512db",
+    "record_sha256": "be6fc54ab8569f4e7a92c6aafb36e3ab32c6911d8ee00c795b75d481965e6920"
+  },
+  "authority_objects": {
+    "review_id": 4923702298,
+    "human_steward_comment_id": 5276363695,
+    "reviewed_head": "1eb3c2cf8375beecc6d84d788ac891402b33757f"
+  },
+  "desired_configuration": {"ruleset_id":17137629,"actor_id":4423678,"actor_type":"Integration","bypass_mode":"pull_request"},
+  "observed_configuration": {
+    "id":17137629,"name":"main protection","target":"branch","enforcement":"active","conditions":{},"rules":[{"type":"pull_request"}],
+    "bypass_actors":[{"actor_id":4423678,"actor_type":"Integration","bypass_mode":"pull_request"},{"actor_id":15368,"actor_type":"Integration","bypass_mode":"pull_request"}]
+  },
+  "predecessor_ledger": {
+    "schema_version":"1.0.0","control_id":"MP-ADMIN-MAINT-001","procedures":{"administrative_review":{"completed_through_utc":"2026-08-10T01:21:00Z","receipt_count":3,"receipts":[
+      {"procedure_id":"administrative_review","scheduled_due_at":"2026-08-04T01:21:00Z","record_path":"governance/administrative_cadence_reconciliation_post_merge_closure.json","record_sha256":"3dc7e4d107e1d6a3476f4d3c0367c1ef421e3150","merge_commit":"cc30c7766f9d738dadb3df20ef7a30c78e98ec1c","reviewed_head":"0b7bbf206e0a6c6e0fbcf63f88f09d5f5670a851","pull_request":226,"disposition":"PROTECTED_RECONCILIATION_COMPLETE","receipt_state":"PROTECTED_COMPLETE"},
+      {"procedure_id":"administrative_review","scheduled_due_at":"2026-08-07T01:21:00Z","record_path":"governance/administrative_reviews/MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-08-07-001.json","record_sha256":"7bf759235d2f7ff192e219ffe8631ef63e3fdfb195a3c1bb0a8b2b3cd3cf0b58","merge_commit":"50ce5cb027f0e01d1ebd80b6e1a1e7348695321f","reviewed_head":"a785afb740be3c3c5a999f4fd794f162fd6b951c","pull_request":265,"disposition":"REFEREE_AGENT_AUTHORIZED_EXACT_HEAD_PROTECTED_MERGE","receipt_state":"PROTECTED_COMPLETE"},
+      {"procedure_id":"administrative_review","scheduled_due_at":"2026-08-10T01:21:00Z","record_path":"governance/administrative_reviews/MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-08-10-001.json","record_sha256":"b16111dfb34d6f2c27f6a257ca61c173e20d14d7984b49d675db3d86f4609cf8","merge_commit":"6dda2efea68da8e6b0ae721a5028b5a23af8caf8","reviewed_head":"6afb1513c1948887568f177d290ee246f36c2746","pull_request":362,"disposition":"REFEREE_AGENT_AUTHORIZED_EXACT_HEAD_PROTECTED_MERGE","receipt_state":"PROTECTED_COMPLETE"}
+    ]}}
+  },
+  "receipt_binding": {
+    "record_path":"governance/administrative_reviews/MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-08-13-001.json",
+    "reviewed_head":"1eb3c2cf8375beecc6d84d788ac891402b33757f",
+    "record_pull_request":476,
+    "record_disposition":"REFEREE_AGENT_AUTHORIZED_EXACT_HEAD_PROTECTED_MERGE"
+  },
+  "github": {
+    "pull_request":{"number":596,"base":{"ref":"main"},"head":{"sha":"02bd05312961eb1a61994a28aecc51a978248bac"},"mergeable":true,"mergeable_state":"blocked","required_checks":["Programme policy checks"]},
+    "declared_base_snapshot":"de7d50cc3e93cc3802447821cc3a705ff5e488f0",
+    "initial_candidate_head":"02bd05312961eb1a61994a28aecc51a978248bac",
+    "current_base":"059e002d1d849e4c5d1e464013d20b7d60b9ed1a",
+    "synchronized_head":"1111111111111111111111111111111111111111",
+    "ancestry_true":[["de7d50cc3e93cc3802447821cc3a705ff5e488f0","02bd05312961eb1a61994a28aecc51a978248bac"],["de7d50cc3e93cc3802447821cc3a705ff5e488f0","059e002d1d849e4c5d1e464013d20b7d60b9ed1a"]],
+    "ancestry_false":[["059e002d1d849e4c5d1e464013d20b7d60b9ed1a","02bd05312961eb1a61994a28aecc51a978248bac"]],
+    "check_runs_before_sync":[{"name":"Programme policy checks","head_sha":"02bd05312961eb1a61994a28aecc51a978248bac","status":"completed","conclusion":"failure"}],
+    "check_runs_after_sync":[{"name":"Programme policy checks","head_sha":"1111111111111111111111111111111111111111","status":"completed","conclusion":"success"}]
+  },
+  "identities": {
+    "candidate":{"login":"gcl-release-trust[bot]","app_id":4423678},
+    "administration":{"login":"gcl-release-trust[bot]","app_id":4423678},
+    "referee":{"login":"github-actions[bot]","app_id":15368}
+  },
+  "historical_mirror": {"observed_through_utc":"2026-08-16T01:21:00Z"}
+}
