@@ -136,6 +136,41 @@ def main() -> int:
     ].replace("    environment: release-trust\n", "", 1)
     require_error(activation_environment_removed, evidence, "activate job must bind", registry=registry)
 
+    actor_id_drift = dict(texts)
+    actor_id_drift["administrative-maintenance-0813-recovery-failover.yml"] = actor_id_drift[
+        "administrative-maintenance-0813-recovery-failover.yml"
+    ].replace("ruleset_id = 17137629", "ruleset_id = 17137630", 1)
+    require_error(actor_id_drift, evidence, "ruleset_id = 17137629", registry=registry)
+
+    actor_restore_order_drift = dict(texts)
+    failover = actor_restore_order_drift[
+        "administrative-maintenance-0813-recovery-failover.yml"
+    ].replace(
+        "      - name: Restore exact PR-only Administration actor",
+        "      - name: Deferred Administration actor restoration",
+        1,
+    )
+    actor_restore_order_drift[
+        "administrative-maintenance-0813-recovery-failover.yml"
+    ] = failover + "\n# Restore exact PR-only Administration actor\n"
+    require_error(
+        actor_restore_order_drift,
+        evidence,
+        "must precede exact Aug13 preflight",
+        registry=registry,
+    )
+
+    failover_direct_push = dict(texts)
+    failover_direct_push[
+        "administrative-maintenance-0813-recovery-failover.yml"
+    ] += "\n# git push origin main\n"
+    require_error(
+        failover_direct_push,
+        evidence,
+        "forbidden recovery capability",
+        registry=registry,
+    )
+
     print("workflow coverage v3 adversarial tests passed")
     return 0
 
