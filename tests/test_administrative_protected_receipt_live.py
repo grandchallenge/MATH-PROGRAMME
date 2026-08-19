@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "ci"))
 
-from administrative_protected_receipt_adapters import ConfigurationAdapter, DesiredConfiguration, RulesetActor
+from administrative_protected_receipt_adapters import ConfigurationAdapter, DesiredConfiguration, GitHubStateAdapter, RulesetActor
 from administrative_protected_receipt_engine import AuthoritativeFrontier, DerivedFrontier, MirrorAdapter
 from administrative_protected_receipt_live import (
     ADMINISTRATIVE_REVIEW_PROCEDURE,
@@ -143,6 +143,19 @@ class LiveProtectedReceiptTests(unittest.TestCase):
             provider.update_branch("grandchallenge/MATH-PROGRAMME", 10, client.head)
         self.assertEqual([], client.puts)
 
+    def test_empty_required_checks_do_not_call_check_runs(self):
+        class NoCheckRunsClient(FakeClient):
+            def get(self, path: str):
+                if "/check-runs?" in path:
+                    raise AssertionError("empty required checks must not call check-runs")
+                return super().get(path)
+
+        provider = LiveClientProvider(NoCheckRunsClient())
+        state = GitHubStateAdapter(provider).classify_checks(
+            "grandchallenge/MATH-PROGRAMME", "1" * 40, ()
+        )
+        self.assertEqual("PASSING", state.value)
+
     def test_integration_ancestry_present_and_unknown_are_distinct(self):
         client = FakeClient(); provider = LiveClientProvider(client)
         self.assertTrue(provider.is_ancestor("grandchallenge/MATH-PROGRAMME", client.declared, client.current))
@@ -267,6 +280,7 @@ class LiveProtectedReceiptTests(unittest.TestCase):
         self.assertIn("python -m pip install --requirement requirements/policy.txt", text)
         self.assertIn("permission-administration: read", text)
         self.assertNotIn("permission-administration: write", text)
+        self.assertNotIn("permission-checks:", text)
         self.assertNotIn("permission-contents: write", text)
         self.assertNotIn("prepare_administrative_candidate", text)
         self.assertNotIn("administrative_autonomy_runtime.py execute", text)
