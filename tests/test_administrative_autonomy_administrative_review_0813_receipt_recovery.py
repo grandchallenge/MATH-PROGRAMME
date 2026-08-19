@@ -48,6 +48,7 @@ class FakeClient:
             "author_association": "CONTRIBUTOR",
         }
         self.steward = {
+            "id": occurrence["human_steward_disposition_comment"],
             "user": {"login": "fyremael"},
             "author_association": "MEMBER",
             "body": (
@@ -72,10 +73,10 @@ class FakeClient:
         ):
             return [self.review]
         if path == (
-            f"/repos/grandchallenge/MATH-PROGRAMME/issues/comments/"
-            f"{occurrence['human_steward_disposition_comment']}"
+            f"/repos/grandchallenge/MATH-PROGRAMME/issues/{occurrence['candidate_issue']}"
+            "/comments?per_page=100"
         ):
-            return self.steward
+            return [self.steward]
         prefix = "/repos/grandchallenge/MATH-PROGRAMME/compare/"
         if path.startswith(prefix) and path.endswith("...main"):
             ancestor = path.removeprefix(prefix).removesuffix("...main")
