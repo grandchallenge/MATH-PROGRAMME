@@ -62,6 +62,13 @@ raise SystemExit(0 if runtime_execute.pending_closures is receipt_stage.pending_
         self.assertIn(
             "- .github/workflows/administrative-autonomy-activation.yml", text
         )
+        self.assertIn(
+            "- ci/administrative_autonomy_0813_closure_preflight.py", text
+        )
+        self.assertIn(
+            "- ci/administrative_autonomy_runtime_administrative_review_0813_receipt_recovery.py",
+            text,
+        )
         self.assertIn("id: evidence-token", text)
         self.assertIn("OBSERVABILITY_TOKEN: ${{ steps.evidence-token.outputs.token }}", text)
         preflight = text.index(
