@@ -233,6 +233,7 @@ theorem weightedFiniteBooleanMeasureSection_add
     rfl
   rw [← hSection (a + b), ← hSection a, ← hSection b,
     weightedFiniteBooleanCoefficientFamily_add X a b j, map_add]
+  rfl
 
 #check weightedBasisBooleanPairing_add
 #check weightedBasisBooleanPairing_reweight_eval
