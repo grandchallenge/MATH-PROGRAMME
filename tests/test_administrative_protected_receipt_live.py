@@ -270,23 +270,34 @@ class LiveProtectedReceiptTests(unittest.TestCase):
         text = (ROOT / ".github" / "workflows" / "administrative-maintenance-candidate.yml").read_text(encoding="utf-8")
         self.assertIn("permission-administration: write", text)
 
-    def test_qualification_workflow_is_manual_read_only_and_terminal(self):
+    def test_qualification_workflow_is_delegated_remediation_then_read_only_qualification(self):
         text = (ROOT / ".github" / "workflows" / "administrative-protected-receipt-live-qualification.yml").read_text(encoding="utf-8")
         self.assertIn("workflow_dispatch:", text)
-        for forbidden_trigger in ("schedule:", "push:", "pull_request:", "workflow_run:", "repository_dispatch:"):
+        self.assertIn("pull_request:", text)
+        self.assertIn("types:\n      - closed", text)
+        self.assertIn("startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')", text)
+        for forbidden_trigger in ("schedule:", "push:", "workflow_run:", "repository_dispatch:"):
             self.assertNotIn(forbidden_trigger, text)
         self.assertIn("runs-on: ubuntu-24.04", text)
         self.assertIn("python-version: '3.12'", text)
         self.assertIn("python -m pip install --requirement requirements/policy.txt", text)
+        self.assertIn("permission-administration: write", text)
         self.assertIn("permission-administration: read", text)
-        self.assertNotIn("permission-administration: write", text)
         self.assertNotIn("permission-checks:", text)
         self.assertNotIn("permission-contents: write", text)
+        self.assertNotIn("permission-issues: write", text)
+        self.assertNotIn("permission-pull-requests: write", text)
+        self.assertIn("administrative_remediation_envelope.py validate", text)
+        self.assertIn("administrative_remediation_envelope.py reconcile-actor", text)
+        self.assertIn("administrative_protected_receipt_live.py qualify", text)
+        self.assertIn("--authorization-comment-id 5349149366", text)
         self.assertNotIn("prepare_administrative_candidate", text)
         self.assertNotIn("administrative_autonomy_runtime.py execute", text)
         self.assertNotIn("update-branch", text)
         self.assertNotIn("merge_pull_request", text)
-        self.assertLess(text.index("Execute one qualification-only read-only coordinator"), text.index("Preserve qualification evidence"))
+        self.assertNotIn("administrative_autonomy_0813_closure_preflight.py", text)
+        self.assertLess(text.index("Reconcile exact PR-only Administration actor"), text.index("Execute canonical read-only qualification"))
+        self.assertLess(text.index("Execute canonical read-only qualification"), text.index("Preserve remediation and qualification evidence"))
 
     def test_qualification_coordinator_declares_complete_non_authority_fields(self):
         text = (ROOT / "ci" / "administrative_protected_receipt_live.py").read_text(encoding="utf-8")
