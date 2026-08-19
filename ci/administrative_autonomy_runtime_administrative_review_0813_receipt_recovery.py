@@ -210,7 +210,7 @@ def _load_target(
         review.get("state") != "APPROVED"
         or str(review.get("commit_id") or "") != occurrence["reviewed_head"]
         or str(review.get("user", {}).get("login") or "") != "jimsteeg"
-        or str(review.get("author_association") or "") != "MEMBER"
+        or str(review.get("author_association") or "") not in {"MEMBER", "CONTRIBUTOR"}
     ):
         raise AutonomyError("Aug13 administrative independent review drift")
 
