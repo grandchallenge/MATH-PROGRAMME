@@ -195,10 +195,17 @@ def _load_target(
     ):
         raise AutonomyError("Aug13 administrative protected PR identity drift")
 
-    review = candidate.get(
-        f"/repos/{repo}/pulls/{occurrence['candidate_pull_request']}/reviews/"
-        f"{occurrence['independent_review']}"
+    reviews = candidate.get(
+        f"/repos/{repo}/pulls/{occurrence['candidate_pull_request']}/reviews?per_page=100"
     )
+    review_matches = [
+        item
+        for item in reviews
+        if int(item.get("id") or 0) == int(occurrence["independent_review"])
+    ]
+    if len(review_matches) != 1:
+        raise AutonomyError("Aug13 administrative independent review identity drift")
+    review = review_matches[0]
     if (
         review.get("state") != "APPROVED"
         or str(review.get("commit_id") or "") != occurrence["reviewed_head"]
