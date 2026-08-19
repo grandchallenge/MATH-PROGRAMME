@@ -294,6 +294,12 @@ jobs:
           set -euo pipefail
           mkdir -p .lake/build/lib/lean
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3JWeightedBooleanMeasure.olean CMDGCondensedCM4P3JWeightedBooleanMeasure.lean
+      - name: Replay P3-K kernel functional and weighted finite dependence
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3KKernelFiniteDependence.olean CMDGCondensedCM4P3KKernelFiniteDependence.lean
       - name: Replay P3-G point functional
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
         run: |
