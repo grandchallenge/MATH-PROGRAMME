@@ -99,6 +99,23 @@ class AdministrativeReview0813ReceiptRecoveryTests(unittest.TestCase):
     def load_completion(self):
         return json.loads((ROOT / STATE_PATH).read_text(encoding="utf-8"))
 
+    def predecessor_completion(self):
+        control = self.load_control()
+        prior = control["occurrence"]["expected_prior_frontier_utc"]
+        current = copy.deepcopy(self.load_completion())
+        procedure = current["procedures"]["administrative_review"]
+        receipts = [
+            item
+            for item in procedure["receipts"]
+            if item["scheduled_due_at"] <= prior
+        ]
+        self.assertTrue(receipts)
+        self.assertEqual(max(item["scheduled_due_at"] for item in receipts), prior)
+        procedure["receipts"] = receipts
+        procedure["receipt_count"] = len(receipts)
+        procedure["completed_through_utc"] = prior
+        return current
+
     def raw_record(self, record=None):
         control = self.load_control()
         value = self.load_record() if record is None else record
@@ -109,7 +126,7 @@ class AdministrativeReview0813ReceiptRecoveryTests(unittest.TestCase):
 
     def json_lookup(self, completion=None, manifest=None):
         control = self.load_control()
-        current = self.load_completion() if completion is None else completion
+        current = self.predecessor_completion() if completion is None else completion
         source_manifest = self.load_manifest() if manifest is None else manifest
 
         def lookup(candidate, repo, path, ref):
@@ -169,7 +186,7 @@ class AdministrativeReview0813ReceiptRecoveryTests(unittest.TestCase):
     def test_exact_receipt_present_makes_wrapper_transparent(self):
         control = self.load_control()
         client = FakeClient(control)
-        completion = self.load_completion()
+        completion = self.predecessor_completion()
         procedure = completion["procedures"]["administrative_review"]
         procedure["receipts"].append(self.target_receipt())
         procedure["receipts"].sort(key=lambda item: item["scheduled_due_at"])
@@ -192,7 +209,7 @@ class AdministrativeReview0813ReceiptRecoveryTests(unittest.TestCase):
     def test_predecessor_frontier_drift_fails_closed(self):
         control = self.load_control()
         client = FakeClient(control)
-        completion = self.load_completion()
+        completion = self.predecessor_completion()
         completion["procedures"]["administrative_review"]["completed_through_utc"] = "2026-08-11T01:21:00Z"
         with (
             patch.object(recovery, "json_content", side_effect=self.json_lookup(completion=completion)),
@@ -314,7 +331,7 @@ class AdministrativeReview0813ReceiptRecoveryTests(unittest.TestCase):
 
     def test_ordinary_receipt_advance_changes_only_administrative_frontier(self):
         control = self.load_control()
-        current = self.load_completion()
+        current = self.predecessor_completion()
         structural_before = copy.deepcopy(current["procedures"]["structural_sweep"])
         target = self.target_receipt()
         updated = advance_completion_state(
@@ -330,6 +347,33 @@ class AdministrativeReview0813ReceiptRecoveryTests(unittest.TestCase):
         self.assertEqual(
             administrative["receipts"][-1]["scheduled_due_at"],
             "2026-08-13T01:21:00Z",
+        )
+
+    def test_prospective_aug13_receipt_tree_normalizes_to_predecessor_fixture(self):
+        control = self.load_control()
+        predecessor = self.predecessor_completion()
+        prospective = advance_completion_state(
+            predecessor,
+            self.target_receipt(),
+            control["occurrence"]["record_merge_commit"],
+        )
+        administrative = prospective["procedures"]["administrative_review"]
+        self.assertEqual(administrative["receipt_count"], 4)
+        self.assertEqual(
+            administrative["completed_through_utc"],
+            control["occurrence"]["expected_recovered_frontier_utc"],
+        )
+        with patch.object(self, "load_completion", return_value=prospective):
+            normalized = self.predecessor_completion()
+        normalized_administrative = normalized["procedures"]["administrative_review"]
+        self.assertEqual(normalized_administrative["receipt_count"], 3)
+        self.assertEqual(
+            normalized_administrative["completed_through_utc"],
+            control["occurrence"]["expected_prior_frontier_utc"],
+        )
+        self.assertNotIn(
+            control["occurrence"]["expected_recovered_frontier_utc"],
+            {item["scheduled_due_at"] for item in normalized_administrative["receipts"]},
         )
 
     def test_runtime_wiring_changes_only_pending_closure_classification(self):
