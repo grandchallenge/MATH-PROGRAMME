@@ -1,0 +1,127 @@
+name: Administrative remediation envelope
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types:
+      - closed
+
+permissions:
+  contents: read
+
+concurrency:
+  group: administrative-remediation-envelope
+  cancel-in-progress: false
+
+jobs:
+  remediate:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.pull_request.merged == true &&
+       startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment: release-trust
+    permissions:
+      contents: read
+    steps:
+      - name: Mint read-only Candidate observation token
+        id: candidate-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-contents: read
+          permission-pull-requests: read
+
+      - name: Mint read-only evidence token
+        id: evidence-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: |
+            MATH-PROGRAMME
+            INTELLECT
+          permission-issues: read
+
+      - name: Mint bounded Administration reconciliation token
+        id: admin-write-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-administration: write
+
+      - name: Mint read-only Administration observation token
+        id: admin-read-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-administration: read
+
+      - name: Check out protected main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: refs/heads/main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+
+      - name: Install governed policy dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --requirement requirements/policy.txt
+
+      - name: Validate delegated remediation envelope
+        run: |
+          set -euo pipefail
+          python ci/administrative_remediation_envelope.py validate
+
+      - name: Reconcile exact PR-only Administration actor
+        env:
+          ADMIN_WRITE_TOKEN: ${{ steps.admin-write-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          python ci/administrative_remediation_envelope.py reconcile-actor \
+            --report administrative-remediation-ruleset-reconciliation.json
+
+      - name: Execute canonical read-only qualification
+        env:
+          CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}
+          EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
+          ADMIN_TOKEN: ${{ steps.admin-read-token.outputs.token }}
+          GCL_PROTECTED_RECEIPT_DIAGNOSTIC: administrative-protected-receipt-diagnostic.json
+        run: |
+          set -euo pipefail
+          python ci/administrative_protected_receipt_live.py qualify \
+            --report administrative-protected-receipt-qualification.json \
+            --control-id MP-ADMIN-REMEDIATION-ENVELOPE-001 \
+            --control-issue 615 \
+            --authorization-comment-id 5349149366 \
+            --receipt-pr 596 \
+            --integration-merge 8ff752b4f2ac28d87575d4f4ef48f564fb18837b
+
+      - name: Preserve remediation evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: administrative-remediation-envelope
+          path: |
+            administrative-remediation-ruleset-reconciliation.json
+            administrative-protected-receipt-qualification.json
+            administrative-protected-receipt-diagnostic.json
+          if-no-files-found: warn
+          retention-days: 90
