@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_condensed_cm4_p3.schema.json",
+  "title": "CMDG condensed CM4 P3 audit record",
+  "type": "object",
+  "required": [
+    "operation_id", "parent_operation_id", "parent_issue", "issue", "implementation_pr",
+    "repository_baseline", "repository_baseline_tree", "protected_predecessor", "environment",
+    "exact_tree_audit", "route_assessment", "stage_result", "reopening_condition",
+    "claim_boundary", "disposition"
+  ],
+  "properties": {
+    "operation_id": {"const": "CMDG-CONDENSED-CM4-P3-001"},
+    "parent_operation_id": {"const": "CMDG-CONDENSED-CM4-001"},
+    "parent_issue": {"const": 355},
+    "issue": {"const": 448},
+    "implementation_pr": {"type": ["integer", "null"]},
+    "repository_baseline": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "repository_baseline_tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "protected_predecessor": {"type": "object"},
+    "environment": {"type": "object"},
+    "exact_tree_audit": {
+      "type": "object",
+      "required": ["result", "observed_sources", "not_found_in_bounded_audit"],
+      "properties": {
+        "result": {"const": "BLOCKER_NARROWED_TO_PROFINITE_DISCRETE_ACYCLICITY_OR_CERTIFIED_UNDERIVED_REDUCTION"},
+        "observed_sources": {"type": "array", "minItems": 14},
+        "not_found_in_bounded_audit": {"type": "array", "minItems": 6}
+      }
+    },
+    "route_assessment": {"type": "object"},
+    "stage_result": {
+      "type": "object",
+      "required": ["p3_state", "audit_complete", "p3_theorem_certified", "p3_nonblocking_bypass_certified", "candidate_disposition"],
+      "properties": {
+        "p3_state": {"const": "BLOCKING"},
+        "audit_complete": {"const": true},
+        "p3_theorem_certified": {"const": false},
+        "p3_nonblocking_bypass_certified": {"const": false},
+        "candidate_disposition": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"}
+      }
+    },
+    "reopening_condition": {"type": "string", "minLength": 80},
+    "claim_boundary": {"type": "object"},
+    "disposition": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"}
+  },
+  "additionalProperties": false
+}

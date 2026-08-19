@@ -16,6 +16,7 @@ from validate_rh_continuity import rh_continuity_errors
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW_DIR = ROOT / ".github" / "workflows"
 IMMUTABLE_ACTION = re.compile(r"^[^@\s]+@[0-9a-f]{40}$")
+LOCAL_REUSABLE_WORKFLOW = re.compile(r"^\./\.github/workflows/[^/@\s]+[.]ya?ml$")
 READ_ONLY_PERMISSIONS = {"contents": "read"}
 EXPECTED_WORKFLOWS = {
     "administrative-maintenance-dispatch.yml",
@@ -67,9 +68,12 @@ def _job_hardening_errors(name: str, workflow: dict[str, Any]) -> list[str]:
     for job_id, job in workflow.get("jobs", {}).items():
         if "uses" not in job and "timeout-minutes" not in job:
             errors.append(f"{name}:{job_id}: timeout-minutes is required")
-        if "uses" in job and not IMMUTABLE_ACTION.fullmatch(str(job.get("uses", ""))):
+        if "uses" in job and not (
+            LOCAL_REUSABLE_WORKFLOW.fullmatch(str(job.get("uses", "")))
+            or IMMUTABLE_ACTION.fullmatch(str(job.get("uses", "")))
+        ):
             errors.append(
-                f"{name}:{job_id}: reusable workflow reference must use a full commit SHA"
+                f"{name}:{job_id}: reusable workflow reference must be same-repository local or use a full commit SHA"
             )
         job_permissions = job.get("permissions")
         if name != "pages.yml" and job_permissions not in (None, {}, READ_ONLY_PERMISSIONS):

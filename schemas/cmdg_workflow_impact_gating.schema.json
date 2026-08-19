@@ -8,14 +8,17 @@
     "schema_version",
     "control_id",
     "status",
-    "protected_baseline",
+    "origin_baseline",
     "phase",
+    "dispatcher_workflow",
+    "receipt_schema",
     "workflow_roster",
     "pull_request_paths",
     "negative_examples",
     "positive_examples",
     "native_path_filter_guard",
     "event_semantics",
+    "scheduled_current_head_sentinel",
     "routing_boundary",
     "authority_boundary",
     "terminal_target"
@@ -24,13 +27,15 @@
     "schema_version": {"const": "1.0.0"},
     "control_id": {"const": "MP-CMDG-WORKFLOW-IMPACT-GATING-001"},
     "status": {"const": "ACTIVE_ON_PROTECTED_MERGE"},
-    "protected_baseline": {"const": "fad9cff9f8f73b78bfed94fb1aab9763f63d00ab"},
-    "phase": {"const": "CONSERVATIVE_SHARED_CLOSURE"},
+    "origin_baseline": {"const": "fad9cff9f8f73b78bfed94fb1aab9763f63d00ab"},
+    "phase": {"const": "CLASSIFIER_ORCHESTRATED_PROTECTED_MERGE"},
+    "dispatcher_workflow": {"const": "cmdg-postmerge.yml"},
+    "receipt_schema": {"const": "schemas/cmdg_postmerge_readback.schema.json"},
     "workflow_roster": {
       "type": "array",
       "uniqueItems": true,
       "minItems": 10,
-      "maxItems": 10,
+      "maxItems": 12,
       "items": {"type": "string", "pattern": "^cmdg-.*\\.yml$"}
     },
     "pull_request_paths": {
@@ -63,11 +68,22 @@
     "event_semantics": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["pull_request", "push_main", "workflow_dispatch"],
+      "required": ["pull_request", "push_main", "schedule", "workflow_dispatch"],
       "properties": {
-        "pull_request": {"const": "PATH_GATED_SHARED_CMDG_CLOSURE"},
-        "push_main": {"const": "PRESERVED_UNCONDITIONAL"},
-        "workflow_dispatch": {"const": "PRESERVED"}
+        "pull_request": {"const": "NATIVE_PATH_GATED_SHARED_CMDG_CLOSURE"},
+        "push_main": {"const": "ALWAYS_CLASSIFY_THEN_CALL_FULL_FAMILY_IF_CMDG_OR_UNKNOWN"},
+        "schedule": {"const": "DAILY_CURRENT_HEAD_SENTINEL_FULL_FAMILY"},
+        "workflow_dispatch": {"const": "PRESERVED_FULL_FAMILY"}
+      }
+    },
+    "scheduled_current_head_sentinel": {
+      "type": "object", "additionalProperties": false,
+      "required": ["cron", "terminal_identity", "duplicate_delivery_creates_new_decision", "missed_intermediate_merge_replay"],
+      "properties": {
+        "cron": {"const": "47 11 * * *"},
+        "terminal_identity": {"const": "REPOSITORY_REF_SHA_CLASSIFIER_DIGEST"},
+        "duplicate_delivery_creates_new_decision": {"const": false},
+        "missed_intermediate_merge_replay": {"const": false}
       }
     },
     "routing_boundary": {
@@ -75,13 +91,17 @@
       "additionalProperties": false,
       "required": [
         "unrelated_pr_standalone_cmdg_instantiation",
+        "unrelated_main_push_standalone_cmdg_instantiation",
         "cmdg_relevant_pr_full_standalone_family",
+        "cmdg_relevant_main_push_full_standalone_family",
         "within_cmdg_lane_reduction",
         "protected_required_check_identity_changed"
       ],
       "properties": {
         "unrelated_pr_standalone_cmdg_instantiation": {"const": false},
+        "unrelated_main_push_standalone_cmdg_instantiation": {"const": false},
         "cmdg_relevant_pr_full_standalone_family": {"const": true},
+        "cmdg_relevant_main_push_full_standalone_family": {"const": true},
         "within_cmdg_lane_reduction": {"const": false},
         "protected_required_check_identity_changed": {"const": false}
       }
@@ -112,6 +132,6 @@
         "human_steward_impersonation_authorized": {"const": false}
       }
     },
-    "terminal_target": {"const": "CMDG_WORKFLOW_IMPACT_GATING_PROTECTED__UNRELATED_PR_FANOUT_SUPPRESSED__CMDG_CLOSURE_PRESERVED"}
+    "terminal_target": {"const": "CMDG_WORKFLOW_IMPACT_GATING_PROTECTED__UNRELATED_PR_AND_MAIN_EXPENSIVE_FANOUT_SUPPRESSED__EXACT_SHA_READBACK__CMDG_CLOSURE_PRESERVED"}
   }
 }

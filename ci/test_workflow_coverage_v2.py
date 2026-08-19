@@ -62,6 +62,26 @@ def main() -> int:
     )
     require_error(mutable_app, evidence, "full commit SHA", registry=registry)
 
+    external_reusable_branch = dict(texts)
+    external_reusable_branch["cmdg-postmerge.yml"] = external_reusable_branch[
+        "cmdg-postmerge.yml"
+    ].replace(
+        "./.github/workflows/cmdg-condensed-cm1.yml",
+        "grandchallenge/MATH-PROGRAMME/.github/workflows/cmdg-condensed-cm1.yml@main",
+        1,
+    )
+    require_error(external_reusable_branch, evidence, "full commit SHA", registry=registry)
+
+    escaping_local_reusable = dict(texts)
+    escaping_local_reusable["cmdg-postmerge.yml"] = escaping_local_reusable[
+        "cmdg-postmerge.yml"
+    ].replace(
+        "./.github/workflows/cmdg-condensed-cm1.yml",
+        "./.github/workflows/../cmdg-condensed-cm1.yml",
+        1,
+    )
+    require_error(escaping_local_reusable, evidence, "same-repository local", registry=registry)
+
     referee_removed = dict(texts)
     referee_removed["administrative-maintenance-candidate.yml"] = referee_removed[
         "administrative-maintenance-candidate.yml"

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://grandchallenge.ai/schemas/cmdg_condensed_cm4_p2.schema.json",
-  "title": "CMDG-CONDENSED-CM4-P2-001 characterized blocker record",
+  "title": "CMDG-CONDENSED-CM4-P2-001 reconciliation / closure-candidate record",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -16,6 +16,7 @@
     "environment",
     "target",
     "exact_tree_audit",
+    "reconciliation",
     "interface_matrix",
     "stage_result",
     "claim_boundary",
@@ -84,6 +85,19 @@
         "absence_interpretation": {"type": "string", "minLength": 1}
       }
     },
+    "reconciliation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["baseline_main", "baseline_tree", "p2_d", "p2_e", "p2_f_classification", "p2_f_rationale"],
+      "properties": {
+        "baseline_main": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "baseline_tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "p2_d": {"$ref": "#/$defs/protected_dependency"},
+        "p2_e": {"$ref": "#/$defs/protected_dependency"},
+        "p2_f_classification": {"const": "NON_BLOCKING_AUXILIARY_OBJECTWISE_PRESENTATION"},
+        "p2_f_rationale": {"type": "string", "minLength": 1}
+      }
+    },
     "interface_matrix": {
       "type": "array",
       "minItems": 6,
@@ -91,11 +105,12 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "name", "status", "reopen_condition"],
+        "required": ["id", "name", "status", "closure_role", "reopen_condition"],
         "properties": {
           "id": {"type": "string", "pattern": "^CM4-P2-[A-F]$"},
           "name": {"type": "string", "minLength": 1},
           "status": {"enum": ["AVAILABLE", "BLOCKING", "PARTIAL"]},
+          "closure_role": {"enum": ["REQUIRED", "NON_BLOCKING_AUXILIARY"]},
           "reopen_condition": {"type": "string", "minLength": 1}
         }
       }
@@ -103,25 +118,23 @@
     "stage_result": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["p2_bridge_closed", "canonical_kan_presentation_available", "locally_constant_interface_available", "canonical_measure_dual_functor_available", "natural_equivalence_available", "terminal_operational_disposition"],
+      "required": ["p2_acceptance_reconciled", "p2_closure_candidate", "p2_protected_closed", "canonical_kan_presentation_available", "locally_constant_interface_available", "canonical_measure_dual_functor_available", "natural_equivalence_available", "p2_f_blocks_closure", "terminal_operational_disposition"],
       "properties": {
-        "p2_bridge_closed": {"type": "boolean"},
-        "canonical_kan_presentation_available": {"type": "boolean"},
-        "locally_constant_interface_available": {"type": "boolean"},
-        "canonical_measure_dual_functor_available": {"type": "boolean"},
-        "natural_equivalence_available": {"type": "boolean"},
-        "terminal_operational_disposition": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"}
+        "p2_acceptance_reconciled": {"const": true},
+        "p2_closure_candidate": {"const": true},
+        "p2_protected_closed": {"const": false},
+        "canonical_kan_presentation_available": {"const": true},
+        "locally_constant_interface_available": {"const": true},
+        "canonical_measure_dual_functor_available": {"const": true},
+        "natural_equivalence_available": {"const": true},
+        "p2_f_blocks_closure": {"const": false},
+        "terminal_operational_disposition": {"const": "P2_CLOSURE_READY_PENDING_PROTECTED_ADMISSION"}
       }
     },
     "claim_boundary": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "p2_blocker_characterized", "p2_closed", "cm4_theorem_certified", "cm4_protected_closed",
-        "p3_closed", "p4_closed", "p5_closed", "p6_closed", "derived_complex_form_certified",
-        "arbitrary_ring_generalization_certified", "c04_broadened", "c06_discharged", "graph_certified",
-        "dependency_minimality_claim", "dependency_uniqueness_claim", "cm5_authorized", "global_cmdg_completeness_claim"
-      ],
+      "required": ["p2_blocker_characterized", "p2_closed", "cm4_theorem_certified", "cm4_protected_closed", "p3_closed", "p4_closed", "p5_closed", "p6_closed", "derived_complex_form_certified", "arbitrary_ring_generalization_certified", "c04_broadened", "c06_discharged", "graph_certified", "dependency_minimality_claim", "dependency_uniqueness_claim", "cm5_authorized", "global_cmdg_completeness_claim"],
       "properties": {
         "p2_blocker_characterized": {"type": "boolean"},
         "p2_closed": {"type": "boolean"},
@@ -142,6 +155,24 @@
         "global_cmdg_completeness_claim": {"type": "boolean"}
       }
     },
-    "disposition": {"const": "OPEN_WITH_CHARACTERIZED_BLOCKER"}
+    "disposition": {"const": "P2_CLOSURE_READY_PENDING_PROTECTED_ADMISSION"}
+  },
+  "$defs": {
+    "protected_dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue", "implementation_pr", "reviewed_head", "protected_tree", "protected_merge", "protected_replay_run", "programme_policy_run", "gcl_conformance_run", "state"],
+      "properties": {
+        "issue": {"type": "integer", "minimum": 1},
+        "implementation_pr": {"type": "integer", "minimum": 1},
+        "reviewed_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "protected_tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "protected_merge": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "protected_replay_run": {"type": "integer", "minimum": 1},
+        "programme_policy_run": {"type": "integer", "minimum": 1},
+        "gcl_conformance_run": {"type": "integer", "minimum": 1},
+        "state": {"const": "AVAILABLE"}
+      }
+    }
   }
 }

@@ -24,8 +24,7 @@ on:
       - "docs/CAMPAIGN_PROMOTION_REGISTER.md"
       - "reviews/riemann_hypothesis/RH-WP01.agent_review.yaml"
       - "reviews/riemann_hypothesis/RH-WP02.agent_review.yaml"
-  push:
-    branches: [main]
+  workflow_call:
   workflow_dispatch:
 
 permissions:
@@ -37,7 +36,7 @@ concurrency:
 
 jobs:
   validate:
-    name: Validate CM4 characterized blocker
+    name: Validate CM4 dependency reconciliation
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -51,10 +50,12 @@ jobs:
         run: python -m pip install --requirement requirements/policy.txt
       - name: Compile CM4 validator
         run: python -m py_compile ci/validate_cmdg_condensed_cm4.py
-      - name: Validate CM4 blocker package
+      - name: Validate CM4 reconciled dependency graph
         run: python3 ci/validate_cmdg_condensed_cm4.py
-      - name: Run CM4 adversarial mutations
+      - name: Run CM4 reconciliation adversarial mutations
         run: python -m unittest tests.test_cmdg_condensed_cm4
+      - name: Revalidate protected CM4-P2
+        run: python3 ci/validate_cmdg_condensed_cm4_p2.py
       - name: Revalidate protected C05
         run: python3 ci/validate_cmdg_solid_c05.py
       - name: Revalidate protected CM3
@@ -71,7 +72,7 @@ jobs:
         run: python3 ci/validate_cmdg_euclid_bridge.py
 
   formal-audit:
-    name: Replay CM4 target and exact-tree prerequisite audit
+    name: Replay CM4 target and protected dependency evidence
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     steps:
@@ -83,11 +84,18 @@ jobs:
           set -euo pipefail
           F=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean
           if grep -nE '^[[:space:]]*(sorry|axiom)([[:space:]]|$)' "$F"; then
-            echo "CM4 blocker fixture must contain neither sorry nor local axioms."
+            echo "CM4 reconciliation fixture must contain neither sorry nor local axioms."
             exit 1
           fi
           if grep -niE 'theorem[[:space:]]+CM4Target' "$F"; then
-            echo "Blocker package must not assert the CM4 target theorem."
+            echo "Dependency reconciliation must not assert the CM4 target theorem."
+            exit 1
+          fi
+          E3=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2EE3.lean
+          grep -Fq 'measureProfiniteSolidNatIso' "$E3"
+          grep -Fq 'rightKanExtensionUnique' "$E3"
+          if grep -nE 'LocallyConstant\.freeOfProfinite|Nobeling|Nöbeling' "$E3"; then
+            echo "Protected P2-E terminal comparison must remain independent of a chosen-basis substitute."
             exit 1
           fi
       - name: Set up pinned Lean and mathlib cache
@@ -101,7 +109,7 @@ jobs:
           test: false
           use-github-cache: false
           use-mathlib-cache: true
-      - name: Verify exact pinned dependency evidence
+      - name: Verify exact pinned and protected dependency evidence
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
         run: |
           set -euo pipefail
@@ -112,13 +120,15 @@ jobs:
           test "$(git -C "$ML" hash-object Mathlib/Condensed/Module.lean)" = "f5834efa0d5bf1289187abe3319536186d67a405"
           test "$(git -C "$ML" hash-object Mathlib/Topology/Category/Profinite/Nobeling/Induction.lean)" = "2989eac53e537e47fd9ac93cba92d50856573173"
           test "$(git -C "$ML" hash-object Mathlib/Condensed/Light/InternallyProjective.lean)" = "91b0b495e708368b0d5f58bb2865490d18d90657"
+          test "$(git hash-object CMDGCondensedCM4P2D.lean)" = "7515583c1b56308bbd48c2c690addd3b432eba09"
+          test "$(git hash-object CMDGCondensedCM4P2EE3.lean)" = "24913aa4c1b2616fea244e2d73d912f99aae5921"
           grep -Fq 'TODO (hard): prove that `((profiniteSolid ℤ).obj S).IsSolid`' "$ML/Mathlib/Condensed/Solid.lean"
           grep -Fq 'instance LocallyConstant.freeOfProfinite' "$ML/Mathlib/Topology/Category/Profinite/Nobeling/Induction.lean"
           test ! -e "$ML/Mathlib/Condensed/Derived"
           test ! -e "$ML/Mathlib/Condensed/Measure"
           test ! -e "$ML/Mathlib/Condensed/Real"
           test ! -e "$ML/Mathlib/Condensed/Circle"
-      - name: Build and replay CM4 blocker fixture
+      - name: Build and replay frozen CM4 target fixture
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
         env:
           LEAN_SETUP_OUTCOME: ${{ steps.lean-setup.outcome }}

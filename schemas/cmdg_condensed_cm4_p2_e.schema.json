@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/cmdg_condensed_cm4_p2_e.schema.json",
+  "title": "CMDG-CONDENSED-CM4-P2-E-001 comparison reconstruction record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation_id",
+    "parent_operation_id",
+    "parent_issue",
+    "issue",
+    "implementation_pr",
+    "scope",
+    "repository_baseline",
+    "repository_baseline_tree",
+    "protected_predecessor",
+    "environment",
+    "exact_tree_audit",
+    "theorem_target",
+    "proof_architecture",
+    "adversarial_guards",
+    "stage_result",
+    "claim_boundary",
+    "disposition"
+  ],
+  "properties": {
+    "operation_id": {"const": "CMDG-CONDENSED-CM4-P2-E-001"},
+    "parent_operation_id": {"const": "CMDG-CONDENSED-CM4-P2-001"},
+    "parent_issue": {"const": 363},
+    "issue": {"const": 370},
+    "implementation_pr": {"const": 376},
+    "scope": {"type": "string", "minLength": 1},
+    "repository_baseline": {"const": "839e04e1b862ffddfe5ce1d4d733ba954cd45d96"},
+    "repository_baseline_tree": {"const": "ac1e21d2746ad951a9aa3c747895b28f56092bf8"},
+    "protected_predecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation_id", "issue", "implementation_pr", "reviewed_head", "protected_tree", "protected_merge", "protected_replay_run", "programme_policy_run", "gcl_conformance_run", "state"],
+      "properties": {
+        "operation_id": {"const": "CMDG-CONDENSED-CM4-P2-D-001"},
+        "issue": {"const": 369},
+        "implementation_pr": {"const": 371},
+        "reviewed_head": {"const": "358466932fde181c927cd428613f4578f38bfc1c"},
+        "protected_tree": {"const": "ac1e21d2746ad951a9aa3c747895b28f56092bf8"},
+        "protected_merge": {"const": "839e04e1b862ffddfe5ce1d4d733ba954cd45d96"},
+        "protected_replay_run": {"const": 31342558880},
+        "programme_policy_run": {"const": 31342558852},
+        "gcl_conformance_run": {"const": 31342559115},
+        "state": {"const": "AVAILABLE"}
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lean_image", "lean_commit", "mathlib_commit", "mathlib_tree", "coefficient_ring"],
+      "properties": {
+        "lean_image": {"const": "leanprover/lean4:v4.33.0-rc1"},
+        "lean_commit": {"const": "62eed1db4d67327ec8120be05f1a1b0847d74561"},
+        "mathlib_commit": {"const": "79d0395a1825a6264ad5d269e35e60537518955e"},
+        "mathlib_tree": {"const": "d76f5e09b832a08949f6d8ad4fb80ce30527da64"},
+        "coefficient_ring": {"const": "ULift.{u + 1} Z"}
+      }
+    },
+    "exact_tree_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observed_sources", "result"],
+      "properties": {
+        "observed_sources": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "blob", "declarations", "signature", "variance", "universe_behavior", "evidence_class", "role"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "blob": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+              "declarations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+              "signature": {"type": "string", "minLength": 1},
+              "variance": {"type": "string", "minLength": 1},
+              "universe_behavior": {"type": "string", "minLength": 1},
+              "evidence_class": {"enum": ["FORMAL_REACHABILITY", "SOURCE_CONCORDANCE", "BOTH"]},
+              "role": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "result": {"const": "FORMAL_ROUTE_REACHABLE_WITH_TWO_CONSTRUCTION_OBLIGATIONS"}
+      }
+    },
+    "theorem_target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixture", "finite_comparison", "global_comparison", "basis_dependency", "objectwise_only_allowed", "variance"],
+      "properties": {
+        "fixture": {"const": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2E.lean"},
+        "finite_comparison": {"const": "FintypeCat.toProfinite ⋙ measureFunctor ≅ Condensed.finFree R"},
+        "global_comparison": {"const": "measureFunctor ≅ Condensed.profiniteSolid R"},
+        "basis_dependency": {"const": false},
+        "objectwise_only_allowed": {"const": false},
+        "variance": {"const": "COVARIANT_PROFINITE_NATURAL_ISO"}
+      }
+    },
+    "proof_architecture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["finite_level_comparison", "measure_right_kan_extension", "kan_extension_uniqueness"],
+      "properties": {
+        "finite_level_comparison": {"type": "object", "additionalProperties": false, "required": ["state", "requirement"], "properties": {"state": {"type": "string", "minLength": 1}, "requirement": {"type": "string", "minLength": 1}}},
+        "measure_right_kan_extension": {"type": "object", "additionalProperties": false, "required": ["state", "requirement"], "properties": {"state": {"type": "string", "minLength": 1}, "requirement": {"type": "string", "minLength": 1}}},
+        "kan_extension_uniqueness": {"type": "object", "additionalProperties": false, "required": ["state", "requirement"], "properties": {"state": {"type": "string", "minLength": 1}, "requirement": {"type": "string", "minLength": 1}}}
+      }
+    },
+    "adversarial_guards": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chosen_basis_substitute_rejected", "objectwise_only_substitute_rejected", "variance_reversal_rejected", "universe_shift_substitute_rejected", "premature_parent_p2_closure_rejected", "placeholder_rejected"],
+      "properties": {
+        "chosen_basis_substitute_rejected": {"const": true},
+        "objectwise_only_substitute_rejected": {"const": true},
+        "variance_reversal_rejected": {"const": true},
+        "universe_shift_substitute_rejected": {"const": true},
+        "premature_parent_p2_closure_rejected": {"const": true},
+        "placeholder_rejected": {"const": true}
+      }
+    },
+    "stage_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["p2_d_protected_available", "p2_e_theorem_target_frozen", "p2_e_natural_equivalence_established", "p2_e_protected_available", "p2_closed", "candidate_disposition"],
+      "properties": {
+        "p2_d_protected_available": {"const": true},
+        "p2_e_theorem_target_frozen": {"const": true},
+        "p2_e_natural_equivalence_established": {"const": true},
+        "p2_e_protected_available": {"const": false},
+        "p2_closed": {"const": false},
+        "candidate_disposition": {"const": "P2_E_NATURAL_EQUIVALENCE_ESTABLISHED_PENDING_PROTECTED_ADMISSION"}
+      }
+    },
+    "claim_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["p2_e_protected_available", "p2_closed", "cm4_theorem_certified", "p3_closed", "p4_closed", "p5_closed", "p6_closed", "derived_complex_form_certified", "arbitrary_ring_generalization_certified", "c04_broadened", "c06_discharged", "graph_certified", "dependency_minimality_claim", "dependency_uniqueness_claim", "cm5_authorized", "global_cmdg_completeness_claim"],
+      "properties": {
+        "p2_e_protected_available": {"const": false},
+        "p2_closed": {"const": false},
+        "cm4_theorem_certified": {"const": false},
+        "p3_closed": {"const": false},
+        "p4_closed": {"const": false},
+        "p5_closed": {"const": false},
+        "p6_closed": {"const": false},
+        "derived_complex_form_certified": {"const": false},
+        "arbitrary_ring_generalization_certified": {"const": false},
+        "c04_broadened": {"const": false},
+        "c06_discharged": {"const": false},
+        "graph_certified": {"const": false},
+        "dependency_minimality_claim": {"const": false},
+        "dependency_uniqueness_claim": {"const": false},
+        "cm5_authorized": {"const": false},
+        "global_cmdg_completeness_claim": {"const": false}
+      }
+    },
+    "disposition": {"const": "P2_E_NATURAL_EQUIVALENCE_ESTABLISHED_PENDING_PROTECTED_ADMISSION"}
+  }
+}

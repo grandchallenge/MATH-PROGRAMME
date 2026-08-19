@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "operation": "MP-DOC-VISUAL-BATCH1-GARDEN-LIVE-CORRECTION-001",
+  "issue": 438,
+  "parent_correction_issue": 435,
+  "propagation_issue": 416,
+  "plate_id": "UC-GARDEN-PLATE-I",
+  "candidate_pr": 436,
+  "candidate_admission_merge": "8a9baedd7962cc1311801f180ba728c3091b12eb",
+  "candidate_review": {
+    "reviewer": "jimsteeg",
+    "review_id": 4911355174,
+    "reviewed_commit": "3aa37edca34bf2adc64b03e4b088709d6fc69437",
+    "status": "APPROVED"
+  },
+  "r1_rollback": {
+    "path": "docs/assets/visual_pedagogy/batch1/union_closed/plate_garden.svg",
+    "git_blob": "83554d48df79b0c15d1772ab47918acdcdd77ca4",
+    "sha256": "a70b8af6df46589d0df3d2c5c508e54933dd8c01259711e75640821f2188cef7",
+    "preserved": true
+  },
+  "r2_source": {
+    "path": "governance/visual_pedagogy/review_candidates/union_closed/plate_garden_successor_r2.svg",
+    "git_blob": "36ea19cdb49aa444b533075171e26a1b2fb002d4",
+    "sha256": "2931b423942ac079002b37233e4a42a1f4a6da462f096938393b2715dd71d296"
+  },
+  "r2_live": {
+    "path": "docs/assets/visual_pedagogy/batch1/union_closed/plate_garden_r2.svg",
+    "git_blob": "36ea19cdb49aa444b533075171e26a1b2fb002d4",
+    "sha256": "2931b423942ac079002b37233e4a42a1f4a6da462f096938393b2715dd71d296",
+    "required_byte_identity_with_source": true
+  },
+  "activation": {
+    "runtime": "docs/javascripts/documentary.js",
+    "source_reference": "../../assets/documentaries/union_closed/plate_garden.svg",
+    "r1_runtime_reference": "../../assets/visual_pedagogy/batch1/union_closed/plate_garden.svg",
+    "r2_runtime_reference": "../../assets/visual_pedagogy/batch1/union_closed/plate_garden_r2.svg",
+    "scope": "one_plate_only"
+  },
+  "rollback": {
+    "method": "Restore only the Garden runtime mapping from r2_runtime_reference to r1_runtime_reference.",
+    "deletion_required": false,
+    "r1_remains_addressable": true
+  },
+  "historical_activation_record": "governance/visual_pedagogy/batch1_live_switch.json",
+  "state": "LIVE_CORRECTION_CANDIDATE__NO_MERGE_AUTHORITY",
+  "batch2_paused": true,
+  "visual_is_evidence": false,
+  "non_authority": [
+    "No deletion or overwrite of R1.",
+    "No mutation of any other Batch-1 plate.",
+    "No Batch-2 authority.",
+    "No mathematical, proof, certification, novelty, or evidentiary promotion."
+  ]
+}

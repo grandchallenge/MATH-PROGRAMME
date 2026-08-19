@@ -1,0 +1,36 @@
+{
+  "$schema": "../schemas/routine_reviewer_routing.schema.json",
+  "schema_version": "1.0.0",
+  "control_id": "MP-ROUTINE-REVIEWER-ROUTING-001",
+  "status": "ACTIVE_SUBJECT_TO_GI_STEWARD_0002",
+  "effective_routing": {
+    "mandatory_routine_reviewers": [],
+    "reviewer_request_api_allowed": false,
+    "ordinary_human_steward": "fyremael",
+    "recovery_owner": "jimsteeg",
+    "exact_recovery_operation_required": true
+  },
+  "superseded_historical_fields": [
+    {
+      "path": "governance/administrative_autonomy_merge_executor_correction.json",
+      "json_pointer": "/manual_review_notification",
+      "routing_effect": false
+    },
+    {
+      "path": "governance/administrative_autonomy_runtime_integration.json",
+      "json_pointer": "/manual_review_notification",
+      "routing_effect": false
+    },
+    {
+      "path": "governance/administrative_autonomy_stabilization_correction.json",
+      "json_pointer": "/manual_review_notification",
+      "routing_effect": false
+    }
+  ],
+  "authority_boundary": {
+    "historical_evidence_rewritten": false,
+    "human_steward_authority_changed": false,
+    "recovery_authority_expanded": false,
+    "platform_approval_is_authorization": false
+  }
+}

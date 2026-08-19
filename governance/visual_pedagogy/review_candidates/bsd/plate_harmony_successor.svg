@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+<title id="title">Two ledgers in the same hand — Batch-2 review candidate</title>
+<desc id="desc">Two side-by-side ledgers distinguish the Mordell-Weil arithmetic rank from the analytic order of vanishing of the L-function. A dashed BSD box between them marks the equality as conjectural rather than definitional.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#222"/></marker>
+</defs>
+<style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#111}
+.h1{font-size:34px;font-weight:700} .h2{font-size:22px;font-weight:700}
+.body{font-size:19px} .small{font-size:16px} .tiny{font-size:14px}
+.mono{font-family:"DejaVu Sans Mono",monospace;font-size:17px}
+.box{fill:white;stroke:#222;stroke-width:2} .soft{fill:#f2f2f2;stroke:#444;stroke-width:2}
+.open{fill:white;stroke:#222;stroke-width:2;stroke-dasharray:9 7}
+.line{stroke:#222;stroke-width:2;fill:none} .arrow{stroke:#222;stroke-width:2.5;fill:none;marker-end:url(#arrow)}
+.sep{stroke:#777;stroke-width:1.5} .label{font-size:15px;font-weight:700;letter-spacing:1px}
+</style>
+<rect width="1200" height="900" fill="white"/>
+
+<text x="40" y="55" class="h1">One elliptic curve, two mathematically distinct ledgers</text>
+<text x="40" y="92" class="body">BSD compares invariants built by different constructions; the visual bridge is a conjecture, not an identity by definition.</text>
+
+<rect x="55" y="150" width="470" height="470" rx="14" class="box"/>
+<text x="85" y="195" class="label">ARITHMETIC LEDGER</text>
+<text x="85" y="245" class="mono">E(Q) ~= Z^r_alg + torsion</text>
+<line x1="85" y1="270" x2="495" y2="270" class="sep"/>
+<text x="85" y="315" class="body">Mordell-Weil: finite generation</text>
+<text x="85" y="365" class="body">r_alg = number of free generators</text>
+<text x="85" y="415" class="body">canonical heights -> regulator</text>
+<text x="85" y="465" class="body">torsion subgroup is finite</text>
+<text x="85" y="530" class="small">These are arithmetic constructions on</text>
+<text x="85" y="553" class="small">rational points and their group law.</text>
+
+<rect x="675" y="150" width="470" height="470" rx="14" class="soft"/>
+<text x="705" y="195" class="label">ANALYTIC LEDGER</text>
+<text x="705" y="245" class="mono">L(E,s) = product_p L_p(E,s)</text>
+<line x1="705" y1="270" x2="1115" y2="270" class="sep"/>
+<text x="705" y="315" class="body">prime point counts -> Euler factors</text>
+<text x="705" y="365" class="body">modularity -> continuation + equation</text>
+<text x="705" y="415" class="body">r_an = ord_(s=1) L(E,s)</text>
+<text x="705" y="465" class="body">first nonzero Taylor term at s=1</text>
+<text x="705" y="530" class="small">These are analytic constructions assembled</text>
+<text x="705" y="553" class="small">from local data over all primes.</text>
+
+<path d="M540 320 L660 320" class="line"/>
+<path d="M540 450 L660 450" class="line"/>
+<rect x="535" y="345" width="130" height="82" rx="12" class="open"/>
+<text x="600" y="377" text-anchor="middle" class="label">BSD</text>
+<text x="600" y="405" text-anchor="middle" class="mono">r_alg ?= r_an</text>
+
+<rect x="55" y="690" width="1090" height="105" rx="12" class="box"/>
+<text x="80" y="728" class="h2">Do not collapse the ledgers</text>
+<text x="80" y="762" class="body">Agreement is the conjectural bridge. Neither side is defined by the other, and numerical agreement is not a proof.</text>
+
+<text x="40" y="872" class="small">Review candidate · documentary exposition only · visual_is_evidence: false</text>
+</svg>

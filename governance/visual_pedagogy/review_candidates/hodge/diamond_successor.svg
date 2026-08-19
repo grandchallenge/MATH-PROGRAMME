@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+<title id="title">The Hodge decomposition — Batch-2 review candidate</title>
+<desc id="desc">A schematic bidegree diamond explains the direct-sum Hodge decomposition, complex-conjugation symmetry between p,q and q,p components, and the diagonal p,p component. It explicitly says the picture does not assign Hodge numbers and that p,p type is necessary but not generally known sufficient for rational algebraicity.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#222"/></marker>
+</defs>
+<style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#111}
+.h1{font-size:34px;font-weight:700} .h2{font-size:22px;font-weight:700}
+.body{font-size:19px} .small{font-size:16px} .tiny{font-size:14px}
+.mono{font-family:"DejaVu Sans Mono",monospace;font-size:17px}
+.box{fill:white;stroke:#222;stroke-width:2} .soft{fill:#f2f2f2;stroke:#444;stroke-width:2}
+.open{fill:white;stroke:#222;stroke-width:2;stroke-dasharray:9 7}
+.line{stroke:#222;stroke-width:2;fill:none} .arrow{stroke:#222;stroke-width:2.5;fill:none;marker-end:url(#arrow)}
+.sep{stroke:#777;stroke-width:1.5} .label{font-size:15px;font-weight:700;letter-spacing:1px}
+</style>
+<rect width="1200" height="900" fill="white"/>
+
+<text x="40" y="55" class="h1">Hodge decomposition: type, conjugation, and the diagonal</text>
+<text x="40" y="92" class="body">The diagram is schematic in bidegree: it does not invent Hodge numbers for a particular variety.</text>
+
+<rect x="55" y="150" width="1090" height="120" rx="12" class="soft"/>
+<text x="80" y="195" class="mono">H^k(X,C) = direct sum over p+q=k of H^(p,q)(X)</text>
+<text x="80" y="235" class="mono">complex conjugation: H^(p,q) &lt;-&gt; H^(q,p)</text>
+
+<path d="M600 330 L400 470 L600 610 L800 470 Z" class="line"/>
+<path d="M600 370 L470 470 L600 570 L730 470 Z" class="line"/>
+<line x1="400" y1="470" x2="800" y2="470" class="sep"/>
+<line x1="600" y1="330" x2="600" y2="610" class="sep"/>
+
+<rect x="520" y="440" width="160" height="62" rx="10" class="box"/>
+<text x="600" y="478" text-anchor="middle" class="mono">H^(p,p)</text>
+
+<rect x="265" y="420" width="150" height="62" rx="10" class="soft"/>
+<text x="340" y="458" text-anchor="middle" class="mono">H^(p,q)</text>
+<rect x="785" y="420" width="150" height="62" rx="10" class="soft"/>
+<text x="860" y="458" text-anchor="middle" class="mono">H^(q,p)</text>
+<path d="M425 405 C500 345 700 345 775 405" class="line"/>
+<text x="600" y="350" text-anchor="middle" class="small">conjugate pair when p != q</text>
+
+<rect x="55" y="680" width="1090" height="115" rx="12" class="open"/>
+<text x="80" y="720" class="h2">Where algebraic-cycle classes can live</text>
+<text x="80" y="758" class="body">Algebraic cycle classes have type (p,p). Being a rational (p,p) class is necessary, but the general converse is the Hodge conjecture.</text>
+
+<text x="40" y="872" class="small">Review candidate · documentary exposition only · visual_is_evidence: false</text>
+</svg>

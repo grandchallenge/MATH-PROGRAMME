@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Versioned external classification mappings",
   "type": "object",
-  "required": ["mapping_set_id", "mapping_set_version", "domain_id", "mappings"],
+  "required": ["mapping_set_id", "mapping_set_version", "mapping_set_status", "domain_id", "mappings"],
   "properties": {
     "mapping_set_id": {
       "type": "string",
@@ -16,16 +16,21 @@
       "type": "string",
       "minLength": 1
     },
+    "mapping_set_status": {
+      "enum": ["CANDIDATE", "QUALIFIED", "RETIRED"]
+    },
     "mappings": {
       "type": "array",
       "items": {
         "type": "object",
         "required": [
           "mapping_id",
+          "target_type",
           "internal_ref",
           "scheme",
           "scheme_version",
           "identifier",
+          "label",
           "mapping_relation",
           "role",
           "provenance",
@@ -41,8 +46,11 @@
             "type": "string",
             "minLength": 1
           },
+          "target_type": {
+            "enum": ["DOMAIN", "GRAPH_NODE"]
+          },
           "scheme": {
-            "enum": ["MSC", "ARXIV", "OPENALEX", "ONTOMATHPRO"]
+            "enum": ["MSC", "ARXIV", "OPENALEX", "ONTOMATHPRO", "ACM_CCS", "PHYSH", "WIKIDATA", "OPENMATH"]
           },
           "scheme_version": {
             "type": "string",
@@ -52,19 +60,30 @@
             "type": "string",
             "minLength": 1
           },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
           "mapping_relation": {
             "enum": ["EXACT", "CLOSE", "BROAD", "NARROW", "RELATED"]
           },
           "role": {
-            "enum": ["PRIMARY", "SECONDARY", "FACET"]
+            "enum": ["PRIMARY_SUBJECT", "SECONDARY_SUBJECT", "DISCOVERY_FACET", "DOMAIN_FACET", "CONCEPT_CROSSWALK"]
           },
           "provenance": {
             "type": "object",
-            "required": ["source_id", "assigned_by", "assigned_at", "evidence"],
+            "required": ["source_id", "source_artifact_id", "assignment_method", "assigned_by", "assigned_at", "evidence"],
             "properties": {
               "source_id": {
                 "type": "string",
                 "minLength": 1
+              },
+              "source_artifact_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "assignment_method": {
+                "enum": ["HUMAN_CURATED", "PROVIDER_AUTOMATED", "IMPORTED_EXISTING"]
               },
               "assigned_by": {
                 "type": "string",
@@ -92,9 +111,36 @@
           },
           "review_status": {
             "enum": ["PROPOSED", "AUDITED", "REJECTED", "SUPERSEDED"]
+          },
+          "reviewed_by": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reviewed_at": {
+            "type": "string",
+            "format": "date"
+          },
+          "review_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "supersedes": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "superseded_by": {
+            "type": ["string", "null"],
+            "minLength": 1
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {"properties": {"review_status": {"const": "AUDITED"}}},
+            "then": {"required": ["reviewed_by", "reviewed_at", "review_ref"]}
+          }
+        ]
       }
     }
   },

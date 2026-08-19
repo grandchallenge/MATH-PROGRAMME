@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "operation_id": "CMDG-CONDENSED-CM4-001",
   "issue": "MATH-PROGRAMME#355",
   "repository_baseline": "d9b9ed1a3a4c7ab56d25091e724fa585fbcea071",
@@ -31,114 +31,62 @@
     "method": "EXACT_PINNED_TREE_PLUS_PLAUSIBLE_SOURCE_LOCI_AND_DECLARATION_AUDIT",
     "tree_sha": "d76f5e09b832a08949f6d8ad4fb80ce30527da64",
     "observed_sources": [
-      {
-        "path": "Mathlib/Condensed/Solid.lean",
-        "blob": "f5214433f91ee87fc8fbe7e2746e0bd227faed2a",
-        "declarations": ["Condensed.profiniteSolid", "Condensed.profiniteSolidification", "CondensedMod.IsSolid"],
-        "status": "PARTIAL",
-        "finding": "target theorem is explicitly left as TODO (hard)"
-      },
-      {
-        "path": "Mathlib/Topology/Category/Profinite/Nobeling/Induction.lean",
-        "blob": "2989eac53e537e47fd9ac93cba92d50856573173",
-        "declarations": ["LocallyConstant.freeOfProfinite"],
-        "status": "AVAILABLE",
-        "finding": "Nobeling/Specker freeness for continuous integer-valued functions on arbitrary profinite sets is machine-usable"
-      },
-      {
-        "path": "Mathlib/Condensed/Light/InternallyProjective.lean",
-        "blob": "91b0b495e708368b0d5f58bb2865490d18d90657",
-        "declarations": ["LightCondensed.internallyProjective_iff_tensor_condition", "LightCondensed.free_internallyProjective_iff_tensor_condition"],
-        "status": "ANALOGOUS_ONLY",
-        "finding": "adjacent light-condensed projectivity infrastructure exists but does not close the solidness proof"
-      },
-      {
-        "path": "Mathlib/Condensed/Module.lean",
-        "blob": "f5834efa0d5bf1289187abe3319536186d67a405",
-        "declarations": ["CondensedMod"],
-        "status": "AVAILABLE",
-        "finding": "formal ambient category is present"
-      }
+      {"path":"Mathlib/Condensed/Solid.lean","blob":"f5214433f91ee87fc8fbe7e2746e0bd227faed2a","declarations":["Condensed.profiniteSolid","Condensed.profiniteSolidification","CondensedMod.IsSolid"],"status":"PARTIAL","finding":"target theorem is explicitly left as TODO (hard)"},
+      {"path":"Mathlib/Topology/Category/Profinite/Nobeling/Induction.lean","blob":"2989eac53e537e47fd9ac93cba92d50856573173","declarations":["LocallyConstant.freeOfProfinite"],"status":"AVAILABLE","finding":"Nobeling/Specker freeness for continuous integer-valued functions on arbitrary profinite sets is machine-usable"},
+      {"path":"Mathlib/Condensed/Light/InternallyProjective.lean","blob":"91b0b495e708368b0d5f58bb2865490d18d90657","declarations":["LightCondensed.internallyProjective_iff_tensor_condition","LightCondensed.free_internallyProjective_iff_tensor_condition"],"status":"ANALOGOUS_ONLY","finding":"adjacent light-condensed projectivity infrastructure exists but does not close the solidness proof"},
+      {"path":"Mathlib/Condensed/Module.lean","blob":"f5834efa0d5bf1289187abe3319536186d67a405","declarations":["CondensedMod"],"status":"AVAILABLE","finding":"formal ambient category is present"}
     ],
-    "absent_plausible_loci": [
-      "Mathlib/Condensed/Derived",
-      "Mathlib/Condensed/Measure",
-      "Mathlib/Condensed/Real",
-      "Mathlib/Condensed/Circle"
-    ],
+    "absent_plausible_loci": ["Mathlib/Condensed/Derived","Mathlib/Condensed/Measure","Mathlib/Condensed/Real","Mathlib/Condensed/Circle"],
     "absence_interpretation": "NO_DEDICATED_PINNED_CONDENSED_SUBTREE_EXPOSING_THE_SOURCE_PROOF_CHAIN; DOES_NOT_CLAIM_RELEVANT_CATEGORY_THEORY_IS_GLOBALLY_ABSENT"
   },
+  "dependency_reconciliation": {
+    "reconciliation_baseline": "2abad244b57ab148184b3033524b7ec636cb7c7f",
+    "reconciliation_baseline_tree": "6c8c6ba86306571ed75294977842af8b3beeb245",
+    "protected_p2_receipt": {
+      "operation": "CMDG-CONDENSED-CM4-P2-001",
+      "issue": "MATH-PROGRAMME#363",
+      "pull_request": "MATH-PROGRAMME#443",
+      "reviewed_head": "36d29b4dea3b3049016e3a7277923cb37a7579f4",
+      "protected_merge": "2abad244b57ab148184b3033524b7ec636cb7c7f",
+      "protected_tree": "6c8c6ba86306571ed75294977842af8b3beeb245",
+      "protected_p2_replay": 31549886295,
+      "protected_p2_e_replay": 31549886166,
+      "programme_policy": 31549886179,
+      "gcl_conformance": 31549886679,
+      "state": "PROTECTED_CLOSED"
+    },
+    "remaining_root_blockers": ["CM4-P3","CM4-P5"],
+    "source_route_edges": [
+      {"from":"CM4-P5","to":"CM4-P4","meaning":"source proof machinery for the derived product/RHom calculation"},
+      {"from":"CM4-P3","to":"CM4-P6","meaning":"independent vanishing input required before final IsSolid witness construction"},
+      {"from":"CM4-P4","to":"CM4-P6","meaning":"derived product/RHom input required before final IsSolid witness construction"}
+    ],
+    "selected_next_lane": "CM4-P3",
+    "selection_class": "OPERATIONAL_SELECTION_NOT_MINIMALITY_OR_UNIQUENESS_THEOREM",
+    "selection_rationale": "CM4-P3 is an unresolved root prerequisite that can be investigated and certified independently. CM4-P4 is downstream of CM4-P5 on the source route, while opening CM4-P5 commits the programme to a larger source-route machinery reconstruction. Selecting P3 first closes an independent mandatory input without silently choosing or bypassing the P5-to-P4 route.",
+    "p4_route_rule": "CM4-P4 may proceed after CM4-P5 closes on the source route, or through a separately governed direct alternative proof that explicitly makes CM4-P5 unnecessary and records changed source-concordance accounting.",
+    "p2_effect": "CM4-P2 is discharged and MUST NOT continue to be represented as blocking CM4."
+  },
   "prerequisite_matrix": [
-    {
-      "id": "CM4-P1",
-      "ingredient": "Nobeling/Specker freeness for C(S,Z)",
-      "status": "AVAILABLE",
-      "reachability": "MACHINE_REACHABLE",
-      "semantic_concordance": "SOURCE_CONCORDANT",
-      "evidence": ["Mathlib/Topology/Category/Profinite/Nobeling/Induction.lean::LocallyConstant.freeOfProfinite"],
-      "reopen_condition": "NONE"
-    },
-    {
-      "id": "CM4-P2",
-      "ingredient": "identify pinned profiniteSolid over lifted Z with required measure/product object",
-      "status": "BLOCKING",
-      "reachability": "NOT_CLOSED",
-      "semantic_concordance": "UNESTABLISHED",
-      "evidence": ["Mathlib/Condensed/Solid.lean defines profiniteSolid by pointwise right Kan extension but provides no product/measure identification sufficient for Proposition 0.5.7"],
-      "reopen_condition": "Provide a replayable universe-correct theorem identifying (Condensed.profiniteSolid (ULift Z)).obj S with the required product/measure model, including naturality sufficient for the IsSolid proof."
-    },
-    {
-      "id": "CM4-P3",
-      "ingredient": "higher-cohomology / Ext vanishing for profinite S with discrete Z coefficients",
-      "status": "BLOCKING",
-      "reachability": "NOT_CLOSED",
-      "semantic_concordance": "UNESTABLISHED",
-      "evidence": ["exact pinned Condensed subtree has no dedicated derived/cohomology proof surface closing this source ingredient"],
-      "reopen_condition": "Provide machine-checked vanishing results at the pinned or separately governed revised environment, in a form composable with the CM4 RHom calculation for every profinite S."
-    },
-    {
-      "id": "CM4-P4",
-      "ingredient": "derived RHom(product_J Z,Z) ≃ directSum_J Z calculation",
-      "status": "BLOCKING",
-      "reachability": "NOT_CLOSED",
-      "semantic_concordance": "UNESTABLISHED",
-      "evidence": ["no directly composable condensed derived-Hom theorem located in the exact pinned closure"],
-      "reopen_condition": "Provide a replayable derived-Hom/product theorem, or an equivalent formal lemma set, together with the categorical bridge required by the CM4 object."
-    },
-    {
-      "id": "CM4-P5",
-      "ingredient": "condensed R and R/Z exact-sequence / derived-Hom machinery used by source proof",
-      "status": "BLOCKING",
-      "reachability": "NOT_CLOSED",
-      "semantic_concordance": "UNESTABLISHED",
-      "evidence": ["no Mathlib/Condensed/Real or Mathlib/Condensed/Circle locus exists in the exact tree"],
-      "reopen_condition": "Provide the source-equivalent condensed real/circle machinery, or a separately certified alternative proof of CM4-P4 that makes this source dependency unnecessary and records the changed proof concordance."
-    },
-    {
-      "id": "CM4-P6",
-      "ingredient": "convert reconstructed ingredients into exact CondensedMod.IsSolid IsIso witnesses",
-      "status": "PARTIAL_BLOCKING",
-      "reachability": "PARTIAL",
-      "semantic_concordance": "PENDING_DEPENDENCIES",
-      "evidence": ["CondensedMod.IsSolid and profiniteSolidification are present; adjacent categorical/projectivity infrastructure is present; no proof closes the required witnesses"],
-      "reopen_condition": "After CM4-P2 through CM4-P5 close, construct without assumptions the IsIso witness for ((yoneda.obj A).map ((Condensed.profiniteSolidification _).app X).op) for every profinite X and every target A=(profiniteSolid _).obj S."
-    }
+    {"id":"CM4-P1","ingredient":"Nobeling/Specker freeness for C(S,Z)","status":"AVAILABLE","route_role":"PROTECTED_AVAILABLE","depends_on":[],"reachability":"MACHINE_REACHABLE","semantic_concordance":"SOURCE_CONCORDANT","evidence":["Mathlib/Topology/Category/Profinite/Nobeling/Induction.lean::LocallyConstant.freeOfProfinite"],"reopen_condition":"NONE"},
+    {"id":"CM4-P2","ingredient":"canonical measure/dual representation and natural reconstruction equivalence for pinned profiniteSolid over lifted Z","status":"AVAILABLE","route_role":"PROTECTED_CLOSED","depends_on":[],"reachability":"MACHINE_REACHABLE","semantic_concordance":"SOURCE_CONCORDANT_AT_CANONICAL_MEASURE_DUAL_NATURAL_EQUIVALENCE_BOUNDARY","evidence":["MATH-PROGRAMME#363 / PR #443 / protected merge 2abad244b57ab148184b3033524b7ec636cb7c7f","protected CM4-P2 replay 31549886295 SUCCESS","protected P2-E replay 31549886166 SUCCESS"],"reopen_condition":"NONE"},
+    {"id":"CM4-P3","ingredient":"higher-cohomology / Ext vanishing for profinite S with discrete Z coefficients","status":"BLOCKING","route_role":"READY_NEXT","depends_on":[],"reachability":"NOT_CLOSED","semantic_concordance":"UNESTABLISHED","evidence":["exact pinned Condensed subtree has no dedicated derived/cohomology proof surface closing this source ingredient"],"reopen_condition":"Provide machine-checked vanishing results at the pinned or separately governed revised environment, in a form composable with the CM4 RHom calculation for every profinite S."},
+    {"id":"CM4-P4","ingredient":"derived RHom(product_J Z,Z) ≃ directSum_J Z calculation","status":"BLOCKING","route_role":"WAITS_ON_P5_SOURCE_ROUTE_OR_SEPARATELY_GOVERNED_DIRECT_ALTERNATIVE","depends_on":["CM4-P5"],"reachability":"NOT_CLOSED","semantic_concordance":"UNESTABLISHED","evidence":["no directly composable condensed derived-Hom theorem located in the exact pinned closure"],"reopen_condition":"Close CM4-P5 and then provide the source-route derived-Hom/product theorem, or separately govern and certify a direct alternative P4 proof with explicit changed source-concordance accounting."},
+    {"id":"CM4-P5","ingredient":"condensed R and R/Z exact-sequence / derived-Hom machinery used by source proof","status":"BLOCKING","route_role":"SOURCE_ROUTE_PREREQUISITE_FOR_P4","depends_on":[],"reachability":"NOT_CLOSED","semantic_concordance":"UNESTABLISHED","evidence":["no Mathlib/Condensed/Real or Mathlib/Condensed/Circle locus exists in the exact tree"],"reopen_condition":"Provide the source-equivalent condensed real/circle machinery; alternatively, a separately governed direct proof of CM4-P4 may make this dependency unnecessary only with explicit changed proof-concordance accounting."},
+    {"id":"CM4-P6","ingredient":"convert reconstructed ingredients into exact CondensedMod.IsSolid IsIso witnesses","status":"PARTIAL_BLOCKING","route_role":"WAITS_ON_P3_AND_P4_P2_DISCHARGED","depends_on":["CM4-P3","CM4-P4"],"reachability":"PARTIAL","semantic_concordance":"PENDING_DEPENDENCIES","evidence":["CondensedMod.IsSolid and profiniteSolidification are present; P2 representation/reconstruction is protected-closed; no proof yet closes the final IsIso witnesses"],"reopen_condition":"After CM4-P3 and CM4-P4 close, construct without assumptions the IsIso witness for ((yoneda.obj A).map ((Condensed.profiniteSolidification _).app X).op) for every profinite X and every target A=(profiniteSolid _).obj S."}
   ],
   "stage_a_result": {
+    "dependency_reconciliation_complete": true,
     "dependency_closure_sufficient": false,
     "theorem_attempt_authorized": false,
-    "reason": "CM4-P2 through CM4-P5 are unreconstructed and CM4-P6 depends on them",
-    "terminal_operational_disposition": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+    "p2_protected_closed": true,
+    "p2_blocks_cm4": false,
+    "selected_next_lane": "CM4-P3",
+    "next_lane_opening_authorized": false,
+    "reason": "P2 is protected-closed; P3 and P5 remain unresolved roots, P4 is downstream of P5 on the source route, and P6 waits on P3 and P4. P3 is selected as the next bounded lane pending protected admission of this reconciliation.",
+    "terminal_operational_disposition": "CM4_DEPENDENCY_RECONCILIATION_READY__P3_NEXT_PENDING_PROTECTED_ADMISSION"
   },
-  "regression_anchors": [
-    "CMDG-SOLID-C05-001",
-    "CMDG-CONDENSED-CM3-001",
-    "CMDG-CONDENSED-CM2-001",
-    "CMDG-CONDENSED-CM1-001",
-    "CMDG-VERTICAL-SPINE-V0-001",
-    "CMDG-NAT-CONCORDANCE-001",
-    "CMDG-EUCLID-BRIDGE-001"
-  ],
+  "regression_anchors": ["CMDG-SOLID-C05-001","CMDG-CONDENSED-CM4-P2-001","CMDG-CONDENSED-CM3-001","CMDG-CONDENSED-CM2-001","CMDG-CONDENSED-CM1-001","CMDG-VERTICAL-SPINE-V0-001","CMDG-NAT-CONCORDANCE-001","CMDG-EUCLID-BRIDGE-001"],
   "claim_boundary": {
     "blocker_characterized": true,
     "cm4_theorem_certified": false,
@@ -159,6 +107,6 @@
     "dependency_uniqueness_claim": false,
     "global_cmdg_completeness_claim": false
   },
-  "reopening_rule": "CM4 theorem certification may resume only after every BLOCKING/PARTIAL_BLOCKING prerequisite is replaced by machine-replayable evidence or a separately governed alternative proof path that preserves source-concordance accounting.",
-  "disposition": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  "reopening_rule": "CM4 theorem certification may resume only after every remaining BLOCKING/PARTIAL_BLOCKING prerequisite is replaced by machine-replayable evidence or a separately governed alternative proof path that preserves source-concordance accounting.",
+  "disposition": "CM4_DEPENDENCY_RECONCILIATION_READY__P3_NEXT_PENDING_PROTECTED_ADMISSION"
 }

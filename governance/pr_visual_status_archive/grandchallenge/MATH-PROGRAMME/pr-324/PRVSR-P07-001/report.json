@@ -1,0 +1,142 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": true,
+      "state": "PENDING"
+    },
+    "independent_review": {
+      "actor": "jimsteeg",
+      "commit_sha": "af10830503ed5683e81214e25b1f518cc458c418",
+      "required": true,
+      "review_id": 4890166804,
+      "state": "APPROVED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": "success",
+      "head_sha": "af10830503ed5683e81214e25b1f518cc458c418",
+      "name": "Programme policy checks",
+      "required": true,
+      "run_id": 31285215872,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "af10830503ed5683e81214e25b1f518cc458c418",
+      "name": "GCL conformance",
+      "required": true,
+      "run_id": 31285216027,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "af10830503ed5683e81214e25b1f518cc458c418",
+      "name": "CMDG vertical spine V0",
+      "required": true,
+      "run_id": 31285215886,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "af10830503ed5683e81214e25b1f518cc458c418",
+      "name": "Administrative maintenance dispatcher",
+      "required": true,
+      "run_id": 31285470234,
+      "status": "completed"
+    }
+  ],
+  "derived": {
+    "freshness": "STALE",
+    "operative_state": "STALE",
+    "reasons": [
+      "report exact head no longer equals current PR head"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-08-09T00:23:57Z",
+      "event": "independent_review",
+      "outcome": "BODY_BINDS_REVIEW_TO_AF108305_HEAD"
+    },
+    {
+      "at": "2026-08-09T00:53:18Z",
+      "event": "head_movement",
+      "outcome": "PR_HEAD_CEBE8943__PRIOR_REVIEW_HISTORICAL"
+    },
+    {
+      "at": "2026-08-09T00:58:11Z",
+      "event": "renewed_independent_review",
+      "outcome": "APPROVED_CURRENT_HEAD"
+    },
+    {
+      "at": "2026-08-09T01:00:02Z",
+      "event": "later_protected_merge",
+      "outcome": "9d305f836a208c987cd351bc22b899d39c6fc472"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "cebe8943e83791f5cf78456d1e49a0d827289897",
+    "exact_head_sha": "af10830503ed5683e81214e25b1f518cc458c418",
+    "pr_number": 324,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "Construct CMDG V0 dependency spine"
+  },
+  "integration": {
+    "merge_commit_sha": null,
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "continuity": {
+      "final_head": "cebe8943e83791f5cf78456d1e49a0d827289897",
+      "final_review_id": 4890221448,
+      "merge_commit": "9d305f836a208c987cd351bc22b899d39c6fc472"
+    },
+    "pilot": {
+      "capture_mode": "HISTORICAL_REPLAY__NO_LIVE_PR_COMMENT",
+      "case_id": "PRVSR-P07",
+      "category": "moving_head_stale"
+    },
+    "source_disagreement": {
+      "github_rest_commit_id_returned": "cebe8943e83791f5cf78456d1e49a0d827289897",
+      "resolution": "Use explicit governed review-body binding for stale-case exact head; retain REST discrepancy for C10 evaluation.",
+      "review_body_explicit_head": "af10830503ed5683e81214e25b1f518cc458c418",
+      "review_id": 4890166804
+    }
+  },
+  "nonclaims": [
+    "The prior review does not authorize the synchronized head.",
+    "No dependency minimality or uniqueness claim.",
+    "No full Condensed-Mathematics concordance, GRAPH_CERTIFIED, C05 discharge, or C06 discharge."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-08-09T00:53:18Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "414bd3a64b991a8c660ed571a6342ee7cf78e8211e4ef5ad8d7459ad48ef23bc"
+  },
+  "report_id": "PRVSR-P07-001",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "theorem_certification_or_formal_replay",
+      "repository_policy_or_workflow"
+    ]
+  }
+}

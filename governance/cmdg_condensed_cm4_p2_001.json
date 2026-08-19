@@ -21,7 +21,7 @@
   },
   "target": {
     "semantic_target": "For every profinite S, give a universe-correct canonical measure/dual condensed-module model and a machine-replayable natural equivalence from (Condensed.profiniteSolid (ULift Z)).obj S to that model, sufficient for downstream CM4 Hom/IsSolid composition.",
-    "objectwise_product_role": "A product decomposition obtained after choosing a basis from Nobeling freeness is objectwise and noncanonical; it is not a substitute for the natural bridge."
+    "objectwise_product_role": "A product decomposition obtained after choosing a basis from Nobeling freeness is objectwise and noncanonical; it is not a substitute for the natural bridge and is not an independent CM4-P2 closure requirement once the canonical P2-D/P2-E bridge is protected."
   },
   "exact_tree_audit": {
     "observed_sources": [
@@ -58,51 +58,88 @@
     ],
     "absence_interpretation": "BOUNDED_LOCUS_ABSENCE_ONLY; DOES_NOT_CLAIM_RELEVANT_CATEGORY_THEORY_OR_ALTERNATIVE_CONSTRUCTIONS_ARE_GLOBALLY_ABSENT"
   },
+  "reconciliation": {
+    "baseline_main": "e35f3647f31f7092dec9de192f6b09186b2b1127",
+    "baseline_tree": "015097bae518d16f37fb17e9601fba62c6f8a711",
+    "p2_d": {
+      "issue": 369,
+      "implementation_pr": 371,
+      "reviewed_head": "358466932fde181c927cd428613f4578f38bfc1c",
+      "protected_tree": "ac1e21d2746ad951a9aa3c747895b28f56092bf8",
+      "protected_merge": "839e04e1b862ffddfe5ce1d4d733ba954cd45d96",
+      "protected_replay_run": 31342558880,
+      "programme_policy_run": 31342558852,
+      "gcl_conformance_run": 31342559115,
+      "state": "AVAILABLE"
+    },
+    "p2_e": {
+      "issue": 370,
+      "implementation_pr": 376,
+      "reviewed_head": "1968046f46d3633c640431a9fe82e03055219ab2",
+      "protected_tree": "015097bae518d16f37fb17e9601fba62c6f8a711",
+      "protected_merge": "e35f3647f31f7092dec9de192f6b09186b2b1127",
+      "protected_replay_run": 31547026193,
+      "programme_policy_run": 31547026219,
+      "gcl_conformance_run": 31547026590,
+      "state": "AVAILABLE"
+    },
+    "p2_f_classification": "NON_BLOCKING_AUXILIARY_OBJECTWISE_PRESENTATION",
+    "p2_f_rationale": "P2-F is the basis-dependent product presentation reachable from Nobeling freeness. The original P2 acceptance boundary rejects it as a substitute for naturality; after protected P2-D representation plus protected P2-E reconstruction are available, P2-F carries no remaining independent closure obligation."
+  },
   "interface_matrix": [
     {
       "id": "CM4-P2-A",
       "name": "canonical pointwise right-Kan presentation of profiniteSolid",
       "status": "AVAILABLE",
+      "closure_role": "REQUIRED",
       "reopen_condition": "NONE"
     },
     {
       "id": "CM4-P2-B",
       "name": "Nobeling/Specker freeness of locally constant integer-valued functions",
       "status": "AVAILABLE",
+      "closure_role": "REQUIRED",
       "reopen_condition": "NONE"
     },
     {
       "id": "CM4-P2-C",
       "name": "locally-constant/discrete condensed-module interface",
       "status": "AVAILABLE",
+      "closure_role": "REQUIRED",
       "reopen_condition": "NONE"
     },
     {
       "id": "CM4-P2-D",
       "name": "canonical measure/dual condensed-module functor associated to C(S,Z)",
-      "status": "BLOCKING",
-      "reopen_condition": "Construct or identify without axioms a universe-correct functorial condensed-module realization of the canonical measure/dual model associated to C(S,Z), with the Hom/duality interface required downstream."
+      "status": "AVAILABLE",
+      "closure_role": "REQUIRED",
+      "reopen_condition": "NONE"
     },
     {
       "id": "CM4-P2-E",
       "name": "natural equivalence from profiniteSolid to the canonical measure/dual functor",
-      "status": "BLOCKING",
-      "reopen_condition": "Prove a machine-replayable natural isomorphism/equivalence from pinned profiniteSolid to the P2-D functor, with explicit universe and source-concordance accounting; an objectwise chosen-basis equivalence is insufficient."
+      "status": "AVAILABLE",
+      "closure_role": "REQUIRED",
+      "reopen_condition": "NONE"
     },
     {
       "id": "CM4-P2-F",
       "name": "objectwise product decomposition after a basis choice",
       "status": "PARTIAL",
-      "reopen_condition": "May be derived only after the canonical dual model is formalized; any basis-dependent product is objectwise and must not be promoted to naturality."
+      "closure_role": "NON_BLOCKING_AUXILIARY",
+      "reopen_condition": "NONE_FOR_P2_CLOSURE; may be derived downstream after a basis choice where only objectwise product structure is required; must not be promoted to naturality."
     }
   ],
   "stage_result": {
-    "p2_bridge_closed": false,
+    "p2_acceptance_reconciled": true,
+    "p2_closure_candidate": true,
+    "p2_protected_closed": false,
     "canonical_kan_presentation_available": true,
     "locally_constant_interface_available": true,
-    "canonical_measure_dual_functor_available": false,
-    "natural_equivalence_available": false,
-    "terminal_operational_disposition": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+    "canonical_measure_dual_functor_available": true,
+    "natural_equivalence_available": true,
+    "p2_f_blocks_closure": false,
+    "terminal_operational_disposition": "P2_CLOSURE_READY_PENDING_PROTECTED_ADMISSION"
   },
   "claim_boundary": {
     "p2_blocker_characterized": true,
@@ -123,5 +160,5 @@
     "cm5_authorized": false,
     "global_cmdg_completeness_claim": false
   },
-  "disposition": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  "disposition": "P2_CLOSURE_READY_PENDING_PROTECTED_ADMISSION"
 }

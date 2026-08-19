@@ -1,0 +1,124 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": "fyremael",
+      "comment_id": 4863664242,
+      "commit_sha": "c3d9d5f9038e4b939218b896e009dd2982e62881",
+      "disposition": "HUMAN_STEWARD_AUTHORIZED_EXACT_HEAD_STAGE_1_PROGRAMME_CLOSEOUT_PROTECTED_MERGE",
+      "required": true,
+      "state": "AUTHORIZED"
+    },
+    "independent_review": {
+      "actor": "jimsteeg",
+      "commit_sha": "c3d9d5f9038e4b939218b896e009dd2982e62881",
+      "required": true,
+      "review_id": 4863653888,
+      "state": "APPROVED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": "success",
+      "head_sha": "c3d9d5f9038e4b939218b896e009dd2982e62881",
+      "name": "Programme policy checks",
+      "required": true,
+      "run_id": 30998991024,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "c3d9d5f9038e4b939218b896e009dd2982e62881",
+      "name": "GCL conformance",
+      "required": true,
+      "run_id": 30998991563,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "c3d9d5f9038e4b939218b896e009dd2982e62881",
+      "name": "Administrative maintenance dispatcher",
+      "required": true,
+      "run_id": 30999219890,
+      "status": "completed"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "PROTECTED_COMPLETE",
+    "reasons": []
+  },
+  "history": [
+    {
+      "at": "2026-08-05T10:58:30Z",
+      "event": "independent_review",
+      "outcome": "APPROVED_EXACT_HEAD"
+    },
+    {
+      "at": "2026-08-05T10:59:58Z",
+      "event": "human_steward_disposition",
+      "outcome": "STAGE_1_CLOSEOUT_PROTECTED_MERGE_AUTHORIZED"
+    },
+    {
+      "at": "2026-08-05T11:00:12Z",
+      "event": "protected_merge",
+      "outcome": "183ff2a0adfbe5bd0ffd5f2e638089b94b868c54"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "c3d9d5f9038e4b939218b896e009dd2982e62881",
+    "exact_head_sha": "c3d9d5f9038e4b939218b896e009dd2982e62881",
+    "pr_number": 242,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "EUCLID-GCD-E2E-001: bind protected closeout and publish proof trace"
+  },
+  "integration": {
+    "merge_commit_sha": "183ff2a0adfbe5bd0ffd5f2e638089b94b868c54",
+    "merge_state": "MERGED",
+    "protected_readback": {
+      "main_sha": "183ff2a0adfbe5bd0ffd5f2e638089b94b868c54",
+      "required": true,
+      "state": "COMPLETE"
+    }
+  },
+  "modules": {
+    "certification_chain": {
+      "mathcert_merge": "78b69e6a3461a83f4893d61c421b1570c08a9ba6",
+      "mathforge_merge": "3622bac82a39cdb9e82ec463919d9e6927c1ec0e",
+      "mathsolve_merge": "3a8493aa322f0e640c921b8824c4d7f88a8c057d"
+    },
+    "human_steward_source": {
+      "review_id": 4863664242,
+      "type": "pull_request_review"
+    },
+    "pilot": {
+      "case_id": "PRVSR-P05",
+      "category": "theorem_certification_formal_replay"
+    }
+  },
+  "nonclaims": [
+    "No novelty or priority claim.",
+    "No universal extended-Euclidean implementation correctness claim.",
+    "Linear Diophantine extension and EUCLID-ELEMENTS-BOOK-VII-MICRO-001 are outside this Stage 1 closeout."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-08-11T11:42:07Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "ce3e38c111d4cbd5941651a7d45ce8b7bc713e4595f1548e8747e354c8f13a9c"
+  },
+  "report_id": "PRVSR-P05-001",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "formal_disposition",
+      "theorem_certification_or_formal_replay"
+    ]
+  }
+}

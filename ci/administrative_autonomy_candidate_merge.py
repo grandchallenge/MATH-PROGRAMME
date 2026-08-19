@@ -13,6 +13,7 @@ from autonomy_github import AutonomyError, Client, identity
 ROOT = Path(__file__).resolve().parents[1]
 CORRECTION = ROOT / "governance/administrative_autonomy_merge_executor_correction.json"
 STABILIZATION = ROOT / "governance/administrative_autonomy_stabilization_correction.json"
+ROUTING = ROOT / "governance/routine_reviewer_routing.json"
 
 
 def validate_correction(value: dict[str, Any]) -> list[str]:
@@ -181,6 +182,38 @@ def validate_stabilization(value: dict[str, Any]) -> list[str]:
     return errors
 
 
+def validate_effective_reviewer_routing(value: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    if value.get("control_id") != "MP-ROUTINE-REVIEWER-ROUTING-001":
+        errors.append("routine reviewer routing identity drift")
+    if value.get("status") != "ACTIVE_SUBJECT_TO_GI_STEWARD_0002":
+        errors.append("routine reviewer routing status drift")
+    routing = value.get("effective_routing", {})
+    expected = {
+        "mandatory_routine_reviewers": [],
+        "reviewer_request_api_allowed": False,
+        "ordinary_human_steward": "fyremael",
+        "recovery_owner": "jimsteeg",
+        "exact_recovery_operation_required": True,
+    }
+    if routing != expected:
+        errors.append("effective routine reviewer routing drift")
+    historical = value.get("superseded_historical_fields", [])
+    expected_paths = {
+        "governance/administrative_autonomy_merge_executor_correction.json",
+        "governance/administrative_autonomy_runtime_integration.json",
+        "governance/administrative_autonomy_stabilization_correction.json",
+    }
+    if (
+        {item.get("path") for item in historical if isinstance(item, dict)} != expected_paths
+        or any(item.get("json_pointer") != "/manual_review_notification" or item.get("routing_effect") is not False for item in historical if isinstance(item, dict))
+    ):
+        errors.append("historical reviewer field supersession drift")
+    if any(value.get("authority_boundary", {}).values()):
+        errors.append("routine reviewer routing authority boundary weakened")
+    return errors
+
+
 def _pull_request_snapshot(client: Client, node_id: str) -> dict[str, Any]:
     result = client.post(
         "/graphql",
@@ -317,9 +350,10 @@ def candidate_exact_head_merge(
 ) -> None:
     correction = json.loads(CORRECTION.read_text(encoding="utf-8"))
     stabilization = json.loads(STABILIZATION.read_text(encoding="utf-8"))
+    routing = json.loads(ROUTING.read_text(encoding="utf-8"))
     errors = validate_correction(correction) + validate_stabilization(
         stabilization
-    )
+    ) + validate_effective_reviewer_routing(routing)
     if errors:
         raise AutonomyError("; ".join(errors))
 
@@ -397,9 +431,10 @@ ORIGINAL_ACTIVATION_RECORD = base.activation_record
 def main() -> int:
     correction = json.loads(CORRECTION.read_text(encoding="utf-8"))
     stabilization = json.loads(STABILIZATION.read_text(encoding="utf-8"))
+    routing = json.loads(ROUTING.read_text(encoding="utf-8"))
     errors = validate_correction(correction) + validate_stabilization(
         stabilization
-    )
+    ) + validate_effective_reviewer_routing(routing)
     if errors:
         raise AutonomyError("; ".join(errors))
     base.auto_merge = candidate_exact_head_merge

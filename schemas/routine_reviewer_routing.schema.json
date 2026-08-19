@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/routine_reviewer_routing.schema.json",
+  "title": "Routine reviewer routing supersession",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "control_id", "status", "effective_routing", "superseded_historical_fields", "authority_boundary"],
+  "properties": {
+    "$schema": {"const": "../schemas/routine_reviewer_routing.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-ROUTINE-REVIEWER-ROUTING-001"},
+    "status": {"const": "ACTIVE_SUBJECT_TO_GI_STEWARD_0002"},
+    "effective_routing": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mandatory_routine_reviewers", "reviewer_request_api_allowed", "ordinary_human_steward", "recovery_owner", "exact_recovery_operation_required"],
+      "properties": {
+        "mandatory_routine_reviewers": {"const": []},
+        "reviewer_request_api_allowed": {"const": false},
+        "ordinary_human_steward": {"const": "fyremael"},
+        "recovery_owner": {"const": "jimsteeg"},
+        "exact_recovery_operation_required": {"const": true}
+      }
+    },
+    "superseded_historical_fields": {
+      "type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["path", "json_pointer", "routing_effect"],
+        "properties": {
+          "path": {"enum": ["governance/administrative_autonomy_merge_executor_correction.json", "governance/administrative_autonomy_runtime_integration.json", "governance/administrative_autonomy_stabilization_correction.json"]},
+          "json_pointer": {"const": "/manual_review_notification"},
+          "routing_effect": {"const": false}
+        }
+      }
+    },
+    "authority_boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["historical_evidence_rewritten", "human_steward_authority_changed", "recovery_authority_expanded", "platform_approval_is_authorization"],
+      "properties": {
+        "historical_evidence_rewritten": {"const": false},
+        "human_steward_authority_changed": {"const": false},
+        "recovery_authority_expanded": {"const": false},
+        "platform_approval_is_authorization": {"const": false}
+      }
+    }
+  }
+}

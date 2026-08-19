@@ -120,6 +120,16 @@ class AdministrativeAutonomyCandidateMergeTests(unittest.TestCase):
             candidate_merge.validate_stabilization(mutated),
         )
 
+    def test_effective_routing_has_no_routine_reviewer(self) -> None:
+        routing = json.loads(candidate_merge.ROUTING.read_text(encoding="utf-8"))
+        self.assertEqual(candidate_merge.validate_effective_reviewer_routing(routing), [])
+        mutated = copy.deepcopy(routing)
+        mutated["effective_routing"]["mandatory_routine_reviewers"] = ["jimsteeg"]
+        self.assertIn(
+            "effective routine reviewer routing drift",
+            candidate_merge.validate_effective_reviewer_routing(mutated),
+        )
+
     def test_missing_referee_disposition_fails_closed(self) -> None:
         candidate = SimpleNamespace()
         referee = SimpleNamespace()
