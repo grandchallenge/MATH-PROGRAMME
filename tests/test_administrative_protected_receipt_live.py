@@ -106,8 +106,9 @@ class LiveProtectedReceiptTests(unittest.TestCase):
         self.assertEqual(ConflictState.CONFLICTED, facts.conflict_state)
 
     def test_unknown_ancestry_fails_closed_as_unknown(self):
-        client = FakeClient(); client.declared = "c" * 40
-        facts = classify_receipt_pull_for_sync(client, "grandchallenge/MATH-PROGRAMME", 10, client.declared, update_control_permitted=True)
+        client = FakeClient()
+        unknown_snapshot = "c" * 40
+        facts = classify_receipt_pull_for_sync(client, "grandchallenge/MATH-PROGRAMME", 10, unknown_snapshot, update_control_permitted=True)
         self.assertEqual(BranchState.UNKNOWN, facts.branch_state)
 
     def test_live_provider_is_read_only(self):
