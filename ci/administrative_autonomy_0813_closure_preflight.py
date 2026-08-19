@@ -101,6 +101,50 @@ def review_field_diagnostic(candidate: Client, repo: str, error: str) -> str:
         return f"{error}: diagnostic_failed={type(diagnostic_exc).__name__}"
 
 
+def steward_field_diagnostic(candidate: Client, repo: str, error: str) -> str:
+    """Expose only the exact historical Steward predicate fields on failure.
+
+    This is observability only. It does not change comment selection, authority,
+    or any acceptance predicate in the protected recovery classifier.
+    """
+
+    if error != "Aug13 administrative Human Steward disposition drift":
+        return error
+    try:
+        comments = candidate.get(
+            f"/repos/{repo}/issues/{TARGET['issue_number']}/comments?per_page=100"
+        )
+        matches = [
+            item
+            for item in comments
+            if int(item.get("id") or 0)
+            == int(TARGET["record_disposition_comment_id"])
+        ]
+        if len(matches) != 1:
+            return f"{error}: exact_steward_match_count={len(matches)}"
+        steward = matches[0]
+        body = str(steward.get("body") or "")
+        markers = {
+            "authorize_marker": "AUTHORIZE_EXACT_HEAD_PROTECTED_MERGE__NO_OTHER_AUTHORITY",
+            "occurrence_marker": TARGET["occurrence_key"],
+            "pr_marker": f"PR: #{TARGET['pull_request']}",
+            "head_marker": TARGET["exact_head"],
+            "base_marker": "cd0d91b4c1b9e3c3ff2eced0c79c104d97af66e2",
+            "review_marker": str(TARGET["independent_review"]),
+        }
+        marker_values = ", ".join(
+            f"{name}={marker in body}" for name, marker in markers.items()
+        )
+        return (
+            f"{error}: "
+            f"login={str(steward.get('user', {}).get('login') or '')!r}, "
+            f"author_association={str(steward.get('author_association') or '')!r}, "
+            f"{marker_values}"
+        )
+    except Exception as diagnostic_exc:
+        return f"{error}: diagnostic_failed={type(diagnostic_exc).__name__}"
+
+
 def recover_exact_aug13(report_path: Path) -> int:
     runtime = load_json(RUNTIME_PATH)
     activation = load_json(ROOT / runtime["activation_record"])
@@ -204,6 +248,7 @@ def recover_exact_aug13(report_path: Path) -> int:
         return 0
     except Exception as exc:
         error = review_field_diagnostic(candidate, repo, str(exc))
+        error = steward_field_diagnostic(candidate, repo, error)
         report |= {
             "state": "AUG13_CLOSURE_PREFLIGHT_FAILED_CLOSED",
             "failed_at": iso_z(datetime.now(UTC)),

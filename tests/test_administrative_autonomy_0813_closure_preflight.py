@@ -17,6 +17,12 @@ import administrative_autonomy_0813_closure_preflight as preflight
 CANDIDATE_WORKFLOW = (
     ROOT / ".github" / "workflows" / "administrative-maintenance-candidate.yml"
 )
+FAILOVER_WORKFLOW = (
+    ROOT
+    / ".github"
+    / "workflows"
+    / "administrative-maintenance-0813-recovery-failover.yml"
+)
 VALIDATION_WORKFLOW = (
     ROOT
     / ".github"
@@ -108,6 +114,53 @@ class AdministrativeAutonomy0813ClosurePreflightTests(unittest.TestCase):
         candidate = Mock()
         self.assertEqual(
             preflight.review_field_diagnostic(candidate, "repo", "classifier boom"),
+            "classifier boom",
+        )
+        candidate.get.assert_not_called()
+
+    def test_steward_field_diagnostic_reports_only_exact_predicate_fields(self):
+        candidate = Mock()
+        body = "\n".join(
+            (
+                "AUTHORIZE_EXACT_HEAD_PROTECTED_MERGE__NO_OTHER_AUTHORITY",
+                preflight.TARGET["occurrence_key"],
+                f"PR: #{preflight.TARGET['pull_request']}",
+                preflight.TARGET["exact_head"],
+                "cd0d91b4c1b9e3c3ff2eced0c79c104d97af66e2",
+                str(preflight.TARGET["independent_review"]),
+            )
+        )
+        candidate.get.return_value = [
+            {
+                "id": preflight.TARGET["record_disposition_comment_id"],
+                "user": {"login": "fyremael"},
+                "author_association": "CONTRIBUTOR",
+                "body": body,
+            }
+        ]
+        error = "Aug13 administrative Human Steward disposition drift"
+        detail = preflight.steward_field_diagnostic(
+            candidate, "grandchallenge/MATH-PROGRAMME", error
+        )
+        self.assertIn("login='fyremael'", detail)
+        self.assertIn("author_association='CONTRIBUTOR'", detail)
+        for marker in (
+            "authorize_marker=True",
+            "occurrence_marker=True",
+            "pr_marker=True",
+            "head_marker=True",
+            "base_marker=True",
+            "review_marker=True",
+        ):
+            self.assertIn(marker, detail)
+        candidate.get.assert_called_once_with(
+            "/repos/grandchallenge/MATH-PROGRAMME/issues/475/comments?per_page=100"
+        )
+
+    def test_steward_field_diagnostic_is_inert_for_other_failures(self):
+        candidate = Mock()
+        self.assertEqual(
+            preflight.steward_field_diagnostic(candidate, "repo", "classifier boom"),
             "classifier boom",
         )
         candidate.get.assert_not_called()
@@ -220,6 +273,28 @@ class AdministrativeAutonomy0813ClosurePreflightTests(unittest.TestCase):
         self.assertEqual(text.count("${{ github.token }}"), 1)
         self.assertIn('if [[ "$recovered" == "true" ]]; then', text)
         self.assertIn("administrative-autonomy-0813-closure-preflight.json", text)
+
+    def test_merged_control_pr_failover_runs_exact_preflight_only(self):
+        text = FAILOVER_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("types:\n      - closed", text)
+        self.assertIn("github.event.pull_request.merged == true", text)
+        self.assertIn(
+            "startsWith(github.event.pull_request.head.ref, 'control/mp-admin-0813-')",
+            text,
+        )
+        self.assertIn("environment: release-trust", text)
+        self.assertIn("ref: refs/heads/main", text)
+        self.assertIn(
+            "python ci/administrative_autonomy_0813_closure_preflight.py", text
+        )
+        self.assertIn("--apply", text)
+        self.assertIn("administrative-autonomy-0813-pr-close-recovery.json", text)
+        self.assertEqual(text.count("${{ github.token }}"), 1)
+        self.assertNotIn("administrative_autonomy_runtime.py execute", text)
+        self.assertNotIn("administrative_maintenance_completion_state.json", text)
+        self.assertNotIn("workflow_dispatch:", text)
+        self.assertNotIn("schedule:", text)
+        self.assertNotIn("push:", text)
 
     def test_existing_validation_lane_mandatorily_reaches_preflight_regression(self):
         workflow = VALIDATION_WORKFLOW.read_text(encoding="utf-8")

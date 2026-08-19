@@ -1,0 +1,233 @@
+name: Administrative maintenance Aug13 recovery failover
+
+on:
+  pull_request:
+    types:
+      - closed
+
+permissions:
+  contents: read
+
+concurrency:
+  group: administrative-maintenance-0813-recovery-failover
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    name: Recover exact Aug13 receipt after bounded control merge
+    if: >-
+      github.event.pull_request.merged == true &&
+      startsWith(github.event.pull_request.head.ref, 'control/mp-admin-0813-')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 80
+    environment: release-trust
+    permissions:
+      actions: read
+      checks: read
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Mint bounded Candidate and merge-executor token
+        id: write-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-contents: write
+          permission-issues: write
+          permission-pull-requests: write
+
+      - name: Mint bounded evidence and observability token
+        id: evidence-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: |
+            MATH-PROGRAMME
+            MATHFORGE
+            MATHSOLVE
+            MATHCERT
+            INTELLECT
+          permission-actions: read
+          permission-contents: read
+          permission-issues: read
+          permission-pull-requests: read
+
+      - name: Mint bounded ruleset-readback token
+        id: admin-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-administration: write
+
+      - name: Check out protected main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: refs/heads/main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+
+      - name: Install governed policy dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --requirement requirements/policy.txt
+
+      - name: Require bounded and separated recovery credentials
+        env:
+          WRITE_TOKEN: ${{ steps.write-token.outputs.token }}
+          EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
+          ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          test -n "${WRITE_TOKEN}"
+          test -n "${EVIDENCE_TOKEN}"
+          test -n "${ADMIN_TOKEN}"
+          test "${ADMIN_TOKEN}" != "${WRITE_TOKEN}"
+          test "${EVIDENCE_TOKEN}" != "${WRITE_TOKEN}"
+
+      - name: Restore exact PR-only Administration actor
+        env:
+          ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          ADMIN_LOGIN: ${{ format('{0}[bot]', steps.write-token.outputs.app-slug) }}
+          ADMIN_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          sys.path.insert(0, "ci")
+          from autonomy_github import AutonomyError, Client, identity, install_bypass
+
+          repo = os.environ["GITHUB_REPOSITORY"]
+          ruleset_id = 17137629
+          administrator = identity(
+              os.environ["ADMIN_LOGIN"],
+              int(os.environ["ADMIN_APP_ID"]),
+              "ruleset-actor-restore",
+          )
+          if (
+              administrator.login != "gcl-release-trust[bot]"
+              or administrator.app_id != 4423678
+          ):
+              raise AutonomyError("Administration actor identity drift")
+
+          desired = {
+              "actor_id": 4423678,
+              "actor_type": "Integration",
+              "bypass_mode": "pull_request",
+          }
+
+          def normalized_actors(value):
+              return sorted(
+                  (
+                      int(item["actor_id"]),
+                      str(item["actor_type"]),
+                      str(item["bypass_mode"]),
+                  )
+                  for item in value.get("bypass_actors", [])
+              )
+
+          def preserved_body(value):
+              return {
+                  key: value[key]
+                  for key in ("name", "target", "enforcement", "conditions", "rules")
+              }
+
+          admin = Client(os.environ["ADMIN_TOKEN"])
+          before, after = install_bypass(
+              admin,
+              repo,
+              ruleset_id,
+              administrator,
+          )
+          before_actors = normalized_actors(before)
+          after_actors = normalized_actors(after)
+          desired_tuple = (
+              desired["actor_id"],
+              desired["actor_type"],
+              desired["bypass_mode"],
+          )
+          expected_after = sorted(
+              before_actors
+              if desired_tuple in before_actors
+              else before_actors + [desired_tuple]
+          )
+          if after_actors != expected_after:
+              raise AutonomyError(
+                  "ruleset actor reconciliation changed unexpected actors"
+              )
+          if preserved_body(after) != preserved_body(before):
+              raise AutonomyError(
+                  "ruleset actor reconciliation changed non-actor fields"
+              )
+          if desired_tuple not in after_actors:
+              raise AutonomyError(
+                  "live pull-request-only Administration actor readback failed"
+              )
+
+          report = {
+              "schema_version": "1.0.0",
+              "control_id": "MP-ADMIN-0813-RULESET-ACTOR-RESTORE-001",
+              "ruleset_id": ruleset_id,
+              "actor": desired,
+              "actor_login": administrator.login,
+              "actor_present_before": desired_tuple in before_actors,
+              "actor_present_after": True,
+              "other_ruleset_fields_preserved": True,
+              "existing_bypass_actors_preserved": True,
+              "direct_protected_push": False,
+              "bypass_exercised": False,
+          }
+          Path(
+              "administrative-autonomy-0813-ruleset-actor-restore.json"
+          ).write_text(
+              json.dumps(report, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          print(json.dumps(report, indent=2))
+          PY
+
+      - name: Recover exact Aug13 closure only
+        env:
+          CANDIDATE_TOKEN: ${{ steps.write-token.outputs.token }}
+          EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
+          OBSERVABILITY_TOKEN: ${{ steps.evidence-token.outputs.token }}
+          REFEREE_TOKEN: ${{ github.token }}
+          ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
+          CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.write-token.outputs.app-slug) }}
+          ADMIN_LOGIN: ${{ format('{0}[bot]', steps.write-token.outputs.app-slug) }}
+          REFEREE_LOGIN: 'github-actions[bot]'
+          CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          REFEREE_APP_ID: '15368'
+        run: |
+          set -euo pipefail
+          python ci/administrative_autonomy_0813_closure_preflight.py \
+            --apply \
+            --report administrative-autonomy-0813-pr-close-recovery.json
+
+      - name: Preserve exact failover evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: administrative-autonomy-0813-pr-close-recovery
+          path: |
+            administrative-autonomy-0813-ruleset-actor-restore.json
+            administrative-autonomy-0813-pr-close-recovery.json
+          if-no-files-found: warn
+          retention-days: 90

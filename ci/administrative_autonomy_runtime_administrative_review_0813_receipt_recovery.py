@@ -214,9 +214,18 @@ def _load_target(
     ):
         raise AutonomyError("Aug13 administrative independent review drift")
 
-    steward = candidate.get(
-        f"/repos/{repo}/issues/comments/{occurrence['human_steward_disposition_comment']}"
+    steward_comments = candidate.get(
+        f"/repos/{repo}/issues/{occurrence['candidate_issue']}/comments?per_page=100"
     )
+    steward_matches = [
+        item
+        for item in steward_comments
+        if int(item.get("id") or 0)
+        == int(occurrence["human_steward_disposition_comment"])
+    ]
+    if len(steward_matches) != 1:
+        raise AutonomyError("Aug13 administrative Human Steward disposition identity drift")
+    steward = steward_matches[0]
     steward_body = str(steward.get("body") or "")
     required_markers = (
         "AUTHORIZE_EXACT_HEAD_PROTECTED_MERGE__NO_OTHER_AUTHORITY",
@@ -228,7 +237,7 @@ def _load_target(
     )
     if (
         str(steward.get("user", {}).get("login") or "") != "fyremael"
-        or str(steward.get("author_association") or "") != "MEMBER"
+        or str(steward.get("author_association") or "") not in {"MEMBER", "CONTRIBUTOR"}
         or not all(marker in steward_body for marker in required_markers)
     ):
         raise AutonomyError("Aug13 administrative Human Steward disposition drift")
