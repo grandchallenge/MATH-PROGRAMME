@@ -150,7 +150,7 @@ jobs:
           REFEREE_TOKEN: ${{ github.token }}
           ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
           CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.candidate-token.outputs.app-slug) }}
-          ADMIN_LOGIN: ${{ format('{0}[bot]', steps.candidate-token.outputs.app-slug) }}
+          ADMIN_LOGIN: ${{ format('{0}[bot]', steps.admin-token.outputs.app-slug) }}
           REFEREE_LOGIN: 'github-actions[bot]'
           CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           REFEREE_APP_ID: '15368'
@@ -196,7 +196,7 @@ jobs:
           REFEREE_TOKEN: ${{ github.token }}
           ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}
           CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.candidate-token.outputs.app-slug) }}
-          ADMIN_LOGIN: ${{ format('{0}[bot]', steps.candidate-token.outputs.app-slug) }}
+          ADMIN_LOGIN: ${{ format('{0}[bot]', steps.admin-token.outputs.app-slug) }}
           REFEREE_LOGIN: 'github-actions[bot]'
           CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           REFEREE_APP_ID: '15368'
