@@ -93,9 +93,9 @@ class RemediationEnvelopeTests(unittest.TestCase):
             install.assert_not_called()
 
     def test_workflow_is_audited_bounded_resume_loop(self):
-        text = (ROOT / ".github/workflows/administrative-remediation-envelope.yml").read_text(
-            encoding="utf-8"
-        )
+        text = (
+            ROOT / ".github/workflows/administrative-protected-receipt-live-qualification.yml"
+        ).read_text(encoding="utf-8")
         for required in (
             "workflow_dispatch:",
             "pull_request:",
