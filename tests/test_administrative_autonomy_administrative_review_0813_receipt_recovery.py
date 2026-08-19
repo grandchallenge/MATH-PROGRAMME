@@ -50,7 +50,7 @@ class FakeClient:
         self.steward = {
             "id": occurrence["human_steward_disposition_comment"],
             "user": {"login": "fyremael"},
-            "author_association": "MEMBER",
+            "author_association": "CONTRIBUTOR",
             "body": (
                 "AUTHORIZE_EXACT_HEAD_PROTECTED_MERGE__NO_OTHER_AUTHORITY\n"
                 f"- occurrence: `{occurrence['occurrence_key']}`;\n"
@@ -239,6 +239,7 @@ class AdministrativeReview0813ReceiptRecoveryTests(unittest.TestCase):
         for mutate, expected in (
             (lambda client: client.pull["head"].update({"sha": "0" * 40}), "protected PR identity drift"),
             (lambda client: client.review.update({"commit_id": "0" * 40}), "independent review drift"),
+            (lambda client: client.steward.update({"author_association": "COLLABORATOR"}), "Human Steward disposition drift"),
             (lambda client: client.steward.update({"body": "wrong"}), "Human Steward disposition drift"),
         ):
             client = FakeClient(control)
