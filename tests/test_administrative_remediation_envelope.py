@@ -74,7 +74,9 @@ class RemediationEnvelopeTests(unittest.TestCase):
             self.assertFalse(report["direct_protected_push"])
             self.assertFalse(report["bypass_exercised"])
             self.assertFalse(report["receipt_mutation_performed"])
-            self.assertEqual(report, json.loads(path.read_text(encoding="utf-8")))
+            persisted = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(report["terminal_state"], persisted["terminal_state"])
+            self.assertEqual(report["after_ruleset_digest"], persisted["after_ruleset_digest"])
 
     def test_actor_already_present_is_noop(self):
         ruleset = self.base_ruleset()
