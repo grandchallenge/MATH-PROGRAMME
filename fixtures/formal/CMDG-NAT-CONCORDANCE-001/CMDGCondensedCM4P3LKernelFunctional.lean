@@ -22,6 +22,7 @@ open CMDG.CondensedCM4P3G.BooleanCube
 open CMDG.CondensedCM4P3G.FreeSections
 open CMDG.CondensedCM4P3J.WeightedBooleanMeasure
 open CMDG.CondensedCM4P3K.KernelFiniteDependence
+open CMDG.CondensedCM4P2E.RightKanReconstruction
 
 abbrev R := CMDG.CondensedCM4P3G.R.{u}
 
@@ -29,8 +30,12 @@ abbrev R := CMDG.CondensedCM4P3G.R.{u}
 theorem freeHomSectionsEquiv_add
     (T : Profinite.{u}) (A : CondensedMod.{u} R)
     (f g : (Condensed.profiniteFree R).obj T ⟶ A) :
-    freeHomSectionsEquiv T A (f + g) =
-      freeHomSectionsEquiv T A f + freeHomSectionsEquiv T A g := by
+    (show A.obj.obj (op ((profiniteToCompHaus).obj T)) from
+      freeHomSectionsEquiv T A (f + g)) =
+      (show A.obj.obj (op ((profiniteToCompHaus).obj T)) from
+        freeHomSectionsEquiv T A f) +
+        (show A.obj.obj (op ((profiniteToCompHaus).obj T)) from
+          freeHomSectionsEquiv T A g) := by
   rfl
 
 /-- The finite weighted measure morphism is additive in its external weight vector. -/
