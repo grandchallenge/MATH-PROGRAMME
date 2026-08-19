@@ -17,6 +17,12 @@ import administrative_autonomy_0813_closure_preflight as preflight
 CANDIDATE_WORKFLOW = (
     ROOT / ".github" / "workflows" / "administrative-maintenance-candidate.yml"
 )
+FAILOVER_WORKFLOW = (
+    ROOT
+    / ".github"
+    / "workflows"
+    / "administrative-maintenance-0813-recovery-failover.yml"
+)
 VALIDATION_WORKFLOW = (
     ROOT
     / ".github"
@@ -220,6 +226,28 @@ class AdministrativeAutonomy0813ClosurePreflightTests(unittest.TestCase):
         self.assertEqual(text.count("${{ github.token }}"), 1)
         self.assertIn('if [[ "$recovered" == "true" ]]; then', text)
         self.assertIn("administrative-autonomy-0813-closure-preflight.json", text)
+
+    def test_merged_control_pr_failover_runs_exact_preflight_only(self):
+        text = FAILOVER_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("types:\n      - closed", text)
+        self.assertIn("github.event.pull_request.merged == true", text)
+        self.assertIn(
+            "startsWith(github.event.pull_request.head.ref, 'control/mp-admin-0813-')",
+            text,
+        )
+        self.assertIn("environment: release-trust", text)
+        self.assertIn("ref: refs/heads/main", text)
+        self.assertIn(
+            "python ci/administrative_autonomy_0813_closure_preflight.py", text
+        )
+        self.assertIn("--apply", text)
+        self.assertIn("administrative-autonomy-0813-pr-close-recovery.json", text)
+        self.assertEqual(text.count("${{ github.token }}"), 1)
+        self.assertNotIn("administrative_autonomy_runtime.py execute", text)
+        self.assertNotIn("administrative_maintenance_completion_state.json", text)
+        self.assertNotIn("workflow_dispatch:", text)
+        self.assertNotIn("schedule:", text)
+        self.assertNotIn("push:", text)
 
     def test_existing_validation_lane_mandatorily_reaches_preflight_regression(self):
         workflow = VALIDATION_WORKFLOW.read_text(encoding="utf-8")
