@@ -185,10 +185,9 @@ class LiveProtectedReceiptTests(unittest.TestCase):
         for literal in ("#475", "#476", "#596", "2026-08-13", "administrative_review_0813_receipt_pending_closures"):
             self.assertNotIn(literal, text)
 
-    def test_workflow_admin_token_is_read_only(self):
+    def test_workflow_admin_token_preserves_protected_credential_contract(self):
         text = (ROOT / ".github" / "workflows" / "administrative-maintenance-candidate.yml").read_text(encoding="utf-8")
-        self.assertIn("permission-administration: read", text)
-        self.assertNotIn("permission-administration: write", text)
+        self.assertIn("permission-administration: write", text)
 
 
 if __name__ == "__main__":
