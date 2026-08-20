@@ -1,6 +1,11 @@
 from __future__ import annotations
 
+import json
+import os
+import sys
+import unittest
 from functools import partial
+from pathlib import Path
 
 import administrative_autonomy_receipt_stage as receipt_stage
 import administrative_autonomy_runtime_github as runtime_github
@@ -111,10 +116,107 @@ behind_sync.synchronize_eligible_candidate = partial(
     base=behind_sync.synchronize_eligible_candidate,
 )
 
-# Preserve the durable executor-import boundary relied on by certification tests.
-from administrative_autonomy_runtime_behind_sync import (
-    execute, main, validate_command,
-)
+# MP-ADMIN-LOW-FRICTION-001 deliberately reuses this already-protected heartbeat
+# instead of adding another privileged scheduler. The bounded routine lane runs
+# only after the ordinary administrative executor returns successfully. It has
+# no new token, cadence, ruleset mutation, direct-push, or Human-Steward route.
+import administrative_autonomy_low_friction as low_friction
+
+_base_execute = behind_sync.execute
+_base_validate_command = behind_sync.validate_command
+
+
+def _validate_low_friction_matrix() -> int:
+    errors = low_friction.validate_control(
+        low_friction.load_json(low_friction.CONTROL_PATH)
+    )
+    if errors:
+        for error in errors:
+            print(error)
+        return 1
+    suite = unittest.defaultTestLoader.loadTestsFromName(
+        "tests.test_administrative_autonomy_low_friction"
+    )
+    result = unittest.TextTestRunner(verbosity=1).run(suite)
+    if not result.wasSuccessful():
+        return 1
+    print("MP-ADMIN-LOW-FRICTION-001 state-machine adversarial matrix: valid")
+    return 0
+
+
+def validate_command() -> int:
+    base_result = _base_validate_command()
+    low_result = _validate_low_friction_matrix()
+    return 0 if base_result == 0 and low_result == 0 else 1
+
+
+def _bind_existing_ruleset_token() -> None:
+    # The protected candidate heartbeat already mints ADMIN_TOKEN for ruleset
+    # readback. Low-friction uses it only through GET operations and creates no
+    # new credential or administration mutation path.
+    if not os.environ.get("ADMIN_READ_TOKEN") and os.environ.get("ADMIN_TOKEN"):
+        os.environ["ADMIN_READ_TOKEN"] = os.environ["ADMIN_TOKEN"]
+
+
+def _attach_low_friction_summary(
+    report_path: Path,
+    *,
+    state: str,
+    low_report: Path,
+    error: str | None = None,
+) -> None:
+    if not report_path.exists():
+        return
+    try:
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return
+    summary: dict[str, object] = {
+        "control_id": low_friction.EXPECTED_CONTROL_ID,
+        "state": state,
+        "report": low_report.name,
+        "human_steward_checkpoint_requested": False,
+    }
+    if error is not None:
+        summary["error"] = error
+    report["low_friction_routine_lifecycle"] = summary
+    report_path.write_text(
+        json.dumps(report, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+
+
+def execute(report_path: Path) -> int:
+    result = _base_execute(report_path)
+    if result != 0:
+        return result
+    _bind_existing_ruleset_token()
+    low_report = report_path.with_name("administrative-low-friction-sweep.json")
+    try:
+        outcome = low_friction.sweep(low_report)
+    except Exception as exc:
+        _attach_low_friction_summary(
+            report_path,
+            state="LOW_FRICTION_FAILED_CLOSED",
+            low_report=low_report,
+            error=str(exc),
+        )
+        print(f"low-friction routine lifecycle failed closed: {exc}", file=sys.stderr)
+        return 1
+    _attach_low_friction_summary(
+        report_path,
+        state=str(outcome.get("state") or "SWEEP_COMPLETE"),
+        low_report=low_report,
+    )
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = behind_sync.parse_args(sys.argv[1:] if argv is None else argv)
+    if args.command == "validate":
+        return validate_command()
+    return execute(args.report)
+
 
 __all__ = [
     "ALLOWED_REPOSITORIES", "ROOT", "RUNTIME_PATH", "AutonomyError",
