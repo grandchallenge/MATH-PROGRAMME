@@ -195,6 +195,17 @@ def main() -> int:
         registry=registry,
     )
 
+    remediation_pr_write_permission_drift = dict(texts)
+    remediation_pr_write_permission_drift[QUALIFICATION_ONLY_WORKFLOW] = remediation_pr_write_permission_drift[
+        QUALIFICATION_ONLY_WORKFLOW
+    ].replace("      pull-requests: write", "      pull-requests: read", 1)
+    require_error(
+        remediation_pr_write_permission_drift,
+        evidence,
+        "delegated Referee admission permissions drift",
+        registry=registry,
+    )
+
     remediation_referee_removed = dict(texts)
     remediation_referee_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_referee_removed[
         QUALIFICATION_ONLY_WORKFLOW

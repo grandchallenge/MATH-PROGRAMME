@@ -217,6 +217,7 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         "checks": "read",
         "contents": "read",
         "issues": "write",
+        "pull-requests": "write",
     }
     if admit.get("permissions") != expected_admit_permissions:
         errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: delegated Referee admission permissions drift")
@@ -337,7 +338,6 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         if forbidden in text:
             errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: forbidden remediation capability {forbidden}")
     return errors
-
 
 def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None):
     texts = v3.legacy.workflow_texts(root) if texts is None else texts
