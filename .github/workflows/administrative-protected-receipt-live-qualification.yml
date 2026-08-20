@@ -13,10 +13,6 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: administrative-protected-receipt-remediation
-  cancel-in-progress: false
-
 jobs:
   admit:
     if: >-
@@ -24,6 +20,9 @@ jobs:
       github.event.action != 'closed' &&
       github.event.pull_request.draft == false &&
       startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')
+    concurrency:
+      group: administrative-protected-receipt-admission
+      cancel-in-progress: false
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     environment: release-trust
@@ -104,6 +103,9 @@ jobs:
        github.event.action == 'closed' &&
        github.event.pull_request.merged == true &&
        startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-'))
+    concurrency:
+      group: administrative-protected-receipt-qualification
+      cancel-in-progress: false
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     environment: release-trust
