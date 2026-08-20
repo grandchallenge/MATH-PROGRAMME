@@ -48,27 +48,57 @@ theorem weightedFiniteBooleanMeasureHom_add
         weightedFiniteBooleanMeasureHom X b j := by
   let T := basisBooleanCube X
   let A := CMDG.CondensedCM4P2D.measureFunctor.obj (X.diagram.obj j)
+  let S := op ((profiniteToCompHaus).obj T)
   have hab :
-      freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X (a + b) j) =
-        weightedFiniteBooleanMeasureSection X (a + b) j := by
+      (show A.obj.obj S from
+        freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X (a + b) j)) =
+        (show A.obj.obj S from
+          weightedFiniteBooleanMeasureSection X (a + b) j) := by
     exact Equiv.apply_symm_apply _ _
   have ha :
-      freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X a j) =
-        weightedFiniteBooleanMeasureSection X a j := by
+      (show A.obj.obj S from
+        freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X a j)) =
+        (show A.obj.obj S from
+          weightedFiniteBooleanMeasureSection X a j) := by
     exact Equiv.apply_symm_apply _ _
   have hb :
-      freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X b j) =
-        weightedFiniteBooleanMeasureSection X b j := by
+      (show A.obj.obj S from
+        freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X b j)) =
+        (show A.obj.obj S from
+          weightedFiniteBooleanMeasureSection X b j) := by
     exact Equiv.apply_symm_apply _ _
-  have hsections := weightedFiniteBooleanMeasureSection_add X a b j
-  have hsum := freeHomSectionsEquiv_add T A
-    (weightedFiniteBooleanMeasureHom X a j)
-    (weightedFiniteBooleanMeasureHom X b j)
+  have hsections :
+      (show A.obj.obj S from
+        weightedFiniteBooleanMeasureSection X (a + b) j) =
+        (show A.obj.obj S from
+          weightedFiniteBooleanMeasureSection X a j) +
+          (show A.obj.obj S from
+            weightedFiniteBooleanMeasureSection X b j) := by
+    exact weightedFiniteBooleanMeasureSection_add X a b j
+  have hsum :
+      (show A.obj.obj S from
+        freeHomSectionsEquiv T A
+          (weightedFiniteBooleanMeasureHom X a j +
+            weightedFiniteBooleanMeasureHom X b j)) =
+        (show A.obj.obj S from
+          freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X a j)) +
+          (show A.obj.obj S from
+            freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X b j)) := by
+    exact freeHomSectionsEquiv_add T A
+      (weightedFiniteBooleanMeasureHom X a j)
+      (weightedFiniteBooleanMeasureHom X b j)
+  have hadd :
+      (show A.obj.obj S from
+        freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X a j)) +
+        (show A.obj.obj S from
+          freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X b j)) =
+      (show A.obj.obj S from
+        weightedFiniteBooleanMeasureSection X a j) +
+        (show A.obj.obj S from
+          weightedFiniteBooleanMeasureSection X b j) := by
+    exact congrArg₂ (fun x y : A.obj.obj S => x + y) ha hb
   apply (freeHomSectionsEquiv T A).injective
-  exact
-    hab.trans
-      (hsections.trans
-        ((congrArg₂ (· + ·) ha hb).symm.trans hsum.symm))
+  exact hab.trans (hsections.trans (hadd.symm.trans hsum.symm))
 
 /-- The canonical global weighted Boolean measure family is additive in the weight vector. -/
 theorem weightedFiniteBooleanMeasureLimitLift_add
