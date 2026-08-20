@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "self_test_id": "MP-ADMIN-REMEDIATION-SELF-TEST-003",
+  "envelope_id": "MP-ADMIN-REMEDIATION-ENVELOPE-001",
+  "control_issue": 615,
+  "protected_base": "c1dbe98902e017e6ef7addeacfd70cda3d023ffb",
+  "purpose": "Audit-only proof of steady-state delegated Referee exact-head admission, separated Candidate expected-head protected merge, and automatic post-merge qualification.",
+  "effects": {
+    "receipt_pr_596_mutation": false,
+    "receipt_execution_or_staging": false,
+    "completion_ledger_mutation": false,
+    "mirror_advancement": false,
+    "ruleset_widening": false,
+    "bypass_exercise": false,
+    "direct_protected_push": false,
+    "cadence_change": false,
+    "administrative_review_reactivation": false,
+    "substantive_claim_authority": false
+  },
+  "success_condition": "github-actions[bot] records an exact-head Referee disposition, gcl-release-trust[bot] performs the expected-head protected merge, and the merged-PR path posts LIVE_QUALIFICATION_GREEN__REACTIVATION_NOT_AUTHORIZED without manual merge or intermediate Human Steward action."
+}
