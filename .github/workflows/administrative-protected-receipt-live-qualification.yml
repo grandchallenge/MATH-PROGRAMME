@@ -2,7 +2,7 @@ name: Administrative protected-receipt remediation and qualification
 
 on:
   workflow_dispatch:
-  pull_request:
+  pull_request_target:
     types:
       - closed
       - opened
@@ -20,7 +20,7 @@ concurrency:
 jobs:
   admit:
     if: >-
-      github.event_name == 'pull_request' &&
+      github.event_name == 'pull_request_target' &&
       github.event.action != 'closed' &&
       github.event.pull_request.draft == false &&
       startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')
@@ -43,10 +43,10 @@ jobs:
           repositories: MATH-PROGRAMME
           permission-administration: read
 
-      - name: Check out exact remediation head
+      - name: Check out trusted protected implementation
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: refs/heads/main
           fetch-depth: 0
           persist-credentials: false
 
@@ -88,7 +88,7 @@ jobs:
   qualify:
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'pull_request' &&
+      (github.event_name == 'pull_request_target' &&
        github.event.action == 'closed' &&
        github.event.pull_request.merged == true &&
        startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-'))
