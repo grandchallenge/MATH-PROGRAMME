@@ -213,7 +213,7 @@ def main() -> int:
     require_error(
         remediation_trigger_drift,
         evidence,
-        "pull_request trigger set drift",
+        "pull_request_target trigger set drift",
         registry=registry,
     )
 
