@@ -150,12 +150,26 @@ theorem kernelProductSection_add
   let T := basisBooleanCube X
   let e :=
     CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.hom.app X
+  have hsum := weightedFiniteBooleanMeasureLimitLift_add X a b
+  have he :
+      (weightedFiniteBooleanMeasureLimitLift X a +
+          weightedFiniteBooleanMeasureLimitLift X b) ≫ e =
+        (weightedFiniteBooleanMeasureLimitLift X a ≫ e) +
+          (weightedFiniteBooleanMeasureLimitLift X b ≫ e) := by
+    exact Preadditive.add_comp _ _ _ _ _ _
+  have hh :
+      ((weightedFiniteBooleanMeasureLimitLift X a ≫ e) +
+          (weightedFiniteBooleanMeasureLimitLift X b ≫ e)) ≫ h =
+        (weightedFiniteBooleanMeasureLimitLift X a ≫ e ≫ h) +
+          (weightedFiniteBooleanMeasureLimitLift X b ≫ e ≫ h) := by
+    exact Preadditive.add_comp _ _ _ _ _ _
   have hcomp :
       weightedFiniteBooleanMeasureLimitLift X (a + b) ≫ e ≫ h =
         (weightedFiniteBooleanMeasureLimitLift X a ≫ e ≫ h) +
           (weightedFiniteBooleanMeasureLimitLift X b ≫ e ≫ h) := by
-    rw [weightedFiniteBooleanMeasureLimitLift_add]
-    rw [Preadditive.add_comp, Preadditive.add_comp]
+    exact
+      (congrArg (fun q => q ≫ e ≫ h) hsum).trans
+        ((congrArg (fun q => q ≫ h) he).trans hh)
   change
     (show coefficientObject.obj.obj (op ((profiniteToCompHaus).obj T)) from
       freeHomSectionsEquiv T coefficientObject
@@ -166,8 +180,13 @@ theorem kernelProductSection_add
         (show coefficientObject.obj.obj (op ((profiniteToCompHaus).obj T)) from
           freeHomSectionsEquiv T coefficientObject
             (weightedFiniteBooleanMeasureLimitLift X b ≫ e ≫ h))
-  rw [hcomp]
-  exact freeHomSectionsEquiv_add T coefficientObject _ _
+  exact
+    (congrArg
+      (fun q =>
+        (show coefficientObject.obj.obj (op ((profiniteToCompHaus).obj T)) from
+          freeHomSectionsEquiv T coefficientObject q))
+      hcomp).trans
+        (freeHomSectionsEquiv_add T coefficientObject _ _)
 
 /-- All-true evaluation of the global weighted coefficient section, lowered back to integers,
 forms an additive functional on the full integer product of basis weights. -/
@@ -179,23 +198,29 @@ noncomputable def kernelProductFunctional
   map_zero' := by
     let z := (kernelProductSection X h (0 : IntegralBasisIndex X → ℤ)
       (fun _ => true)).down
-    have hs := congrArg
-      (fun f : LocallyConstant (basisBooleanCube X) R =>
-        (f (fun _ => true)).down)
-      (kernelProductSection_add X h
-        (0 : IntegralBasisIndex X → ℤ) (0 : IntegralBasisIndex X → ℤ))
+    change z = 0
+    have hz0 :
+        (kernelProductSection X h
+          ((0 : IntegralBasisIndex X → ℤ) + 0) (fun _ => true)).down =
+          (kernelProductSection X h (0 : IntegralBasisIndex X → ℤ)
+            (fun _ => true)).down +
+            (kernelProductSection X h (0 : IntegralBasisIndex X → ℤ)
+              (fun _ => true)).down := by
+      rw [kernelProductSection_add]
+      rfl
     have hz : z = z + z := by
-      simpa [z] using hs
-    have hz' : z + z = z + 0 := by
-      simpa using hz.symm
+      simpa [z] using hz0
+    have hz' : z + z = z + 0 :=
+      hz.symm.trans (add_zero z).symm
     exact add_left_cancel hz'
   map_add' := by
     intro a b
-    have hs := congrArg
-      (fun f : LocallyConstant (basisBooleanCube X) R =>
-        (f (fun _ => true)).down)
-      (kernelProductSection_add X h a b)
-    simpa using hs
+    change
+      (kernelProductSection X h (a + b) (fun _ => true)).down =
+        (kernelProductSection X h a (fun _ => true)).down +
+          (kernelProductSection X h b (fun _ => true)).down
+    rw [kernelProductSection_add]
+    rfl
 
 @[simp]
 theorem kernelProductFunctional_apply
