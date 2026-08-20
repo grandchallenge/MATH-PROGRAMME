@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_autonomy_low_friction_control.schema.json",
+  "title": "Administrative low-friction routine PR control",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "control_id",
+    "issue",
+    "state",
+    "repository",
+    "base_branch",
+    "authorization",
+    "identity",
+    "ruleset",
+    "classification",
+    "lifecycle",
+    "hard_exclusions",
+    "terminal_proof"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-ADMIN-LOW-FRICTION-001"},
+    "issue": {"const": 633},
+    "state": {"const": "ACTIVE_WHEN_PROTECTED"},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "base_branch": {"const": "main"},
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "human_steward_login",
+        "authorization_comment_id",
+        "authorization_prefix",
+        "required_slogan",
+        "intermediate_human_steward_checkpoint_required",
+        "terminal_exact_head_human_steward_checkpoint_required",
+        "bounded_terminal_admission_delegated"
+      ],
+      "properties": {
+        "human_steward_login": {"const": "fyremael"},
+        "authorization_comment_id": {"const": 5362883052},
+        "authorization_prefix": {"const": "HUMAN STEWARD AUTHORIZATION — MP-ADMIN-LOW-FRICTION-001"},
+        "required_slogan": {"type": "string", "minLength": 40},
+        "intermediate_human_steward_checkpoint_required": {"const": false},
+        "terminal_exact_head_human_steward_checkpoint_required": {"const": false},
+        "bounded_terminal_admission_delegated": {"const": true}
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_login", "candidate_app_id", "referee_login", "referee_app_id", "roles_must_be_distinct"],
+      "properties": {
+        "candidate_login": {"const": "gcl-release-trust[bot]"},
+        "candidate_app_id": {"const": 4423678},
+        "referee_login": {"const": "github-actions[bot]"},
+        "referee_app_id": {"const": 15368},
+        "roles_must_be_distinct": {"const": true}
+      }
+    },
+    "ruleset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "required_checks_source", "existing_candidate_actor_required", "actor_type", "bypass_mode", "ruleset_mutation_authorized", "direct_protected_push_authorized"],
+      "properties": {
+        "id": {"const": 17137629},
+        "required_checks_source": {"const": "live_ruleset"},
+        "existing_candidate_actor_required": {"const": true},
+        "actor_type": {"const": "Integration"},
+        "bypass_mode": {"const": "pull_request"},
+        "ruleset_mutation_authorized": {"const": false},
+        "direct_protected_push_authorized": {"const": false}
+      }
+    },
+    "classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "opt_in_marker", "branch_prefix", "allowed_candidate_logins",
+        "maximum_changed_files", "maximum_additions", "maximum_deletions",
+        "allowed_exact_paths", "allowed_asset_prefix", "allowed_asset_extensions",
+        "readme_change_mode", "forbidden_path_prefixes", "forbidden_exact_paths"
+      ],
+      "properties": {
+        "opt_in_marker": {"const": "<!-- MP-ADMIN-LOW-FRICTION-001 -->"},
+        "branch_prefix": {"const": "routine/low-friction/"},
+        "allowed_candidate_logins": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "maximum_changed_files": {"type": "integer", "minimum": 1, "maximum": 10},
+        "maximum_additions": {"type": "integer", "minimum": 1, "maximum": 500},
+        "maximum_deletions": {"type": "integer", "minimum": 1, "maximum": 500},
+        "allowed_exact_paths": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "allowed_asset_prefix": {"type": "string", "minLength": 1},
+        "allowed_asset_extensions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^\\.[a-z0-9]+$"}},
+        "readme_change_mode": {"const": "MARKDOWN_LINK_OR_IMAGE_ONLY"},
+        "forbidden_path_prefixes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "forbidden_exact_paths": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximum_internal_head_iterations", "merge_state_wait_seconds", "head_change_wait_seconds",
+        "required_checks_wait_seconds", "post_disposition_stabilization_seconds",
+        "protected_readback_wait_seconds", "poll_interval_seconds", "accepted_check_conclusions",
+        "required_pre_merge_state", "automatic_mark_ready", "automatic_referee_disposition",
+        "automatic_expected_head_merge", "automatic_protected_readback", "automatic_terminal_receipt",
+        "behind_sync", "revalidate_after_head_change", "redisposition_after_head_change"
+      ],
+      "properties": {
+        "maximum_internal_head_iterations": {"type": "integer", "minimum": 2, "maximum": 20},
+        "merge_state_wait_seconds": {"type": "integer", "minimum": 30, "maximum": 900},
+        "head_change_wait_seconds": {"type": "integer", "minimum": 30, "maximum": 900},
+        "required_checks_wait_seconds": {"type": "integer", "minimum": 60, "maximum": 3600},
+        "post_disposition_stabilization_seconds": {"type": "integer", "minimum": 5, "maximum": 120},
+        "protected_readback_wait_seconds": {"type": "integer", "minimum": 30, "maximum": 900},
+        "poll_interval_seconds": {"type": "integer", "minimum": 2, "maximum": 30},
+        "accepted_check_conclusions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["success", "neutral", "skipped"]}},
+        "required_pre_merge_state": {"const": "clean"},
+        "automatic_mark_ready": {"const": true},
+        "automatic_referee_disposition": {"const": true},
+        "automatic_expected_head_merge": {"const": true},
+        "automatic_protected_readback": {"const": true},
+        "automatic_terminal_receipt": {"const": true},
+        "behind_sync": {"const": true},
+        "revalidate_after_head_change": {"const": true},
+        "redisposition_after_head_change": {"const": true}
+      }
+    },
+    "hard_exclusions": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"const": true}
+    },
+    "terminal_proof": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state_machine_exhaustion_required", "exact_head_checks_required", "independent_referee_required",
+        "expected_head_merge_required", "signed_merge_commit_required",
+        "merge_ancestor_of_protected_main_required", "terminal_receipt_required"
+      ],
+      "properties": {
+        "state_machine_exhaustion_required": {"const": true},
+        "exact_head_checks_required": {"const": true},
+        "independent_referee_required": {"const": true},
+        "expected_head_merge_required": {"const": true},
+        "signed_merge_commit_required": {"const": true},
+        "merge_ancestor_of_protected_main_required": {"const": true},
+        "terminal_receipt_required": {"const": true}
+      }
+    }
+  }
+}
