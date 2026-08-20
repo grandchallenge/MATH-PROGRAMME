@@ -211,7 +211,6 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         "checks": "read",
         "contents": "read",
         "issues": "write",
-        "pull-requests": "write",
     }
     if admit.get("permissions") != expected_admit_permissions:
         errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: delegated Referee admission permissions drift")
@@ -230,11 +229,17 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         "github.event.action != 'closed'",
         "github.event.pull_request.draft == false",
         "startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')",
+        "Mint bounded Candidate merge-executor token",
+        "id: candidate-merge-token",
+        "permission-contents: write",
+        "permission-pull-requests: write",
         "permission-administration: read",
         "Check out trusted protected implementation",
         "ref: refs/heads/main",
         "REFEREE_TOKEN: ${{ github.token }}",
         "ADMIN_READ_TOKEN: ${{ steps.admin-read-token.outputs.token }}",
+        "CANDIDATE_MERGE_TOKEN: ${{ steps.candidate-merge-token.outputs.token }}",
+        "CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.candidate-merge-token.outputs.app-slug) }}",
         "administrative_remediation_envelope.py admit-pull-request",
         '--pr "${{ github.event.pull_request.number }}"',
         '--head "${{ github.event.pull_request.head.sha }}"',
@@ -261,6 +266,8 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         if marker not in text:
             errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: missing remediation envelope marker {marker}")
 
+    if text.count(v3.APP_ACTION) != 6:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly six separately scoped App tokens are required")
     if text.count("${{ github.token }}") != 2:
         errors.append(
             f"{QUALIFICATION_ONLY_WORKFLOW}: workflow token must be used exactly for Referee admission and durable status publication"
@@ -269,6 +276,12 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly one actor-reconciliation administration-write token is required")
     if text.count("permission-administration: read") != 2:
         errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly two separately minted administration-read observation tokens are required")
+    if text.count("permission-contents: write") != 1:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly one Candidate contents-write merge token is required")
+    if text.count("permission-pull-requests: write") != 1:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly one Candidate pull-request-write merge token is required")
+    if "permission-issues: write" in text:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: App tokens may not receive issues-write")
 
     admission_index = text.find("administrative_remediation_envelope.py admit-pull-request")
     reconciliation_index = text.find("administrative_remediation_envelope.py reconcile-actor")
@@ -288,9 +301,6 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         "workflow_run:",
         "repository_dispatch:",
         "pull_request:\n",
-        "permission-contents: write",
-        "permission-issues: write",
-        "permission-pull-requests: write",
         "permission-checks: write",
         "administrative_autonomy_runtime.py execute",
         "administrative_autonomy_0813_closure_preflight.py",
@@ -344,9 +354,9 @@ def main() -> int:
     print(
         "workflow coverage v3: direct workflow and governed shard-registry execution roots, "
         "active bounded administrative runtime, separated Candidate and Referee identities, "
-        "protected exact-head merge, exact Aug13 PR-close recovery failover, trusted-main "
-        "delegated remediation Referee admission, post-merge qualification, durable issue-status "
-        "audit, mirror-only synchronization, manual control-plane gates, and claim boundaries are valid"
+        "protected expected-head PR merge, exact Aug13 PR-close recovery failover, trusted-main "
+        "delegated remediation Referee admission, Candidate expected-head merge, post-merge qualification, "
+        "durable issue-status audit, mirror-only synchronization, manual control-plane gates, and claim boundaries are valid"
     )
     return 0
 
