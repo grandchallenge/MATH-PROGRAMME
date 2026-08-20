@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0.0",
+  "attestation_id": "MP-ADMIN-WORKFLOW-REBUILD-EVIDENCE-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "claim": "The rebuilt administrative remediation admission path executed successfully end-to-end without manual/bootstrap merge or intermediate Human Steward action, and then successfully carried a real protected reactivation transition through the same separated Referee/Candidate protected-merge path.",
+  "claim_scope": "administrative workflow operational rebuild only",
+  "control_issue": 615,
+  "human_steward": {
+    "initial_approval_comment_id": 5349149366,
+    "final_disposition_comment_id": 5353520678,
+    "final_disposition": "APPROVED__CLOSE_AND_REACTIVATE"
+  },
+  "steady_state_self_test": {
+    "pull_request": 626,
+    "protected_base": "bf02d620d5d037a315a1169108a3a1347dbe265f",
+    "exact_head": "e40f8ba7c39bf469498a9db0429d368ed24993e7",
+    "referee_actor": "github-actions[bot]",
+    "referee_comment_id": 5353413444,
+    "referee_disposition": "REFEREE_AGENT_AUTHORIZED_EXACT_HEAD_PROTECTED_AUTO_MERGE",
+    "admission_run_id": 32349157243,
+    "admission_comment_id": 5353414322,
+    "admission_state": "REMEDIATION_PR_PROTECTED_MERGE_COMPLETE",
+    "candidate_actor": "gcl-release-trust[bot]",
+    "protected_merge_commit": "ce370735fa05fb55b5e38c19870ff23c91578110",
+    "post_merge_qualification_run_id": 32349281060,
+    "post_merge_qualification_state": "LIVE_QUALIFICATION_GREEN__REACTIVATION_NOT_AUTHORIZED"
+  },
+  "real_transition_confirmation": {
+    "pull_request": 627,
+    "protected_base": "ce370735fa05fb55b5e38c19870ff23c91578110",
+    "exact_head": "f0a6c92aecf35c40e32c2044c7bd9d0e1ef68fb2",
+    "referee_actor": "github-actions[bot]",
+    "referee_comment_id": 5353633935,
+    "referee_disposition": "REFEREE_AGENT_AUTHORIZED_EXACT_HEAD_PROTECTED_AUTO_MERGE",
+    "admission_run_id": 32350965910,
+    "admission_comment_id": 5353634806,
+    "admission_state": "REMEDIATION_PR_PROTECTED_MERGE_COMPLETE",
+    "candidate_actor": "gcl-release-trust[bot]",
+    "protected_merge_commit": "e052be7f100976d25694019b55dfafc0a3bec954",
+    "post_merge_qualification_run_id": 32351044135,
+    "post_merge_qualification_state": "LIVE_QUALIFICATION_GREEN__REACTIVATION_NOT_AUTHORIZED"
+  },
+  "retained_actions_artifacts": {
+    "pre_reactivation": {
+      "artifact_id": 9399225008,
+      "artifact_name": "administrative-protected-receipt-remediation",
+      "archive_sha256": "97079a9e1eb5b5f1d4e6d904bc7fff21672ad62be043c6883f19f87aef8ca021",
+      "qualification_path": "governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/pre_reactivation_qualification.json",
+      "qualification_sha256": "c206c611593eb7b25acf1ded1418e1516f8968e123b19045e78f0d2f37ccf66c",
+      "reconciliation_path": "governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/pre_reactivation_ruleset_reconciliation.json",
+      "reconciliation_sha256": "508cc60218a4ea14243f0f86149e0d3d8fc0b8bd863e64ef6101dd5155bdf9ce"
+    },
+    "post_reactivation": {
+      "artifact_id": 9399866148,
+      "artifact_name": "administrative-protected-receipt-remediation",
+      "archive_sha256": "0f72cc095f33ca21dd2774db27977d5ddf4ae298f354bc67f92e4eb1f7e96203",
+      "qualification_path": "governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/post_reactivation_qualification.json",
+      "qualification_sha256": "cf46f4dc2664afd8a48f8511db50019b32de89fe6da9d1ae730ddd436d5dd5fa",
+      "reconciliation_path": "governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/post_reactivation_ruleset_reconciliation.json",
+      "reconciliation_sha256": "897a4f674ae090c566d982c4e234d48536522c8e045fce121c1453e20aa2ad5d"
+    }
+  },
+  "protected_readback": {
+    "protected_head": "e052be7f100976d25694019b55dfafc0a3bec954",
+    "merge_author": "gcl-release-trust[bot]",
+    "signature_verified": true
+  },
+  "invariants": {
+    "referee_candidate_identity_separation_proved": true,
+    "exact_head_admission_proved": true,
+    "expected_head_protected_merge_proved": true,
+    "automatic_post_merge_qualification_proved": true,
+    "manual_or_bootstrap_merge_used_in_self_test": false,
+    "intermediate_human_steward_action_used_in_self_test": false,
+    "direct_protected_push": false,
+    "bypass_exercised": false,
+    "receipt_pr_596_mutated_or_merged": false,
+    "receipt_execution_or_staging": false,
+    "completion_ledger_mutation": false,
+    "mirror_advancement": false,
+    "ruleset_widening": false,
+    "cadence_change": false,
+    "substantive_claim_authority_created": false
+  }
+}
