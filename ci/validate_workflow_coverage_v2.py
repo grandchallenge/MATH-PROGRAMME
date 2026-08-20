@@ -95,21 +95,15 @@ def recovery_failover_errors(texts: dict[str, str]) -> list[str]:
     workflow = v3.legacy.load_yaml_text(text)
     trigger = _trigger(workflow)
     if set(trigger) != {"pull_request"}:
-        errors.append(
-            f"{RECOVERY_FAILOVER_WORKFLOW}: trigger must be exactly pull_request"
-        )
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: trigger must be exactly pull_request")
     pull_request = trigger.get("pull_request", {})
     types = pull_request.get("types", []) if isinstance(pull_request, dict) else []
     if types != ["closed"]:
-        errors.append(
-            f"{RECOVERY_FAILOVER_WORKFLOW}: pull_request trigger must be closed only"
-        )
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: pull_request trigger must be closed only")
 
     job = _job(workflow, "recover")
     if job.get("environment") != v3.PROTECTED_ENVIRONMENT:
-        errors.append(
-            f"{RECOVERY_FAILOVER_WORKFLOW}: recover job must bind protected environment release-trust"
-        )
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: recover job must bind protected environment release-trust")
     expected_permissions = {
         "actions": "read",
         "checks": "read",
@@ -118,9 +112,7 @@ def recovery_failover_errors(texts: dict[str, str]) -> list[str]:
         "pull-requests": "write",
     }
     if job.get("permissions") != expected_permissions:
-        errors.append(
-            f"{RECOVERY_FAILOVER_WORKFLOW}: delegated Referee permissions drift"
-        )
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: delegated Referee permissions drift")
 
     required_markers = (
         "github.event.pull_request.merged == true",
@@ -165,39 +157,21 @@ def recovery_failover_errors(texts: dict[str, str]) -> list[str]:
     )
     for marker in required_markers:
         if marker not in text:
-            errors.append(
-                f"{RECOVERY_FAILOVER_WORKFLOW}: missing bounded recovery marker {marker}"
-            )
+            errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: missing bounded recovery marker {marker}")
 
     restore_index = text.find("Restore exact PR-only Administration actor")
-    preflight_index = text.find(
-        "python ci/administrative_autonomy_0813_closure_preflight.py"
-    )
-    if (
-        restore_index < 0
-        or preflight_index < 0
-        or restore_index > preflight_index
-    ):
-        errors.append(
-            f"{RECOVERY_FAILOVER_WORKFLOW}: exact Administration actor restoration must precede exact Aug13 preflight"
-        )
+    preflight_index = text.find("python ci/administrative_autonomy_0813_closure_preflight.py")
+    if restore_index < 0 or preflight_index < 0 or restore_index > preflight_index:
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: exact Administration actor restoration must precede exact Aug13 preflight")
 
     if text.count(v3.APP_ACTION) != 3:
-        errors.append(
-            f"{RECOVERY_FAILOVER_WORKFLOW}: exactly three separately scoped App tokens are required"
-        )
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: exactly three separately scoped App tokens are required")
     if text.count("permission-administration: write") != 1:
-        errors.append(
-            f"{RECOVERY_FAILOVER_WORKFLOW}: exactly one administration-write token is required"
-        )
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: exactly one administration-write token is required")
     if text.count("permission-contents: write") != 1:
-        errors.append(
-            f"{RECOVERY_FAILOVER_WORKFLOW}: exactly one contents-write token is required"
-        )
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: exactly one contents-write token is required")
     if text.count("${{ github.token }}") != 1:
-        errors.append(
-            f"{RECOVERY_FAILOVER_WORKFLOW}: workflow token must be used only as the Referee token"
-        )
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: workflow token must be used only as the Referee token")
 
     for forbidden in (
         "workflow_dispatch:",
@@ -212,21 +186,120 @@ def recovery_failover_errors(texts: dict[str, str]) -> list[str]:
         "permission-checks: write",
     ):
         if forbidden in text:
-            errors.append(
-                f"{RECOVERY_FAILOVER_WORKFLOW}: forbidden recovery capability {forbidden}"
-            )
+            errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: forbidden recovery capability {forbidden}")
+    return errors
+
+
+def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    text = texts.get(QUALIFICATION_ONLY_WORKFLOW)
+    if text is None:
+        return errors
+    workflow = v3.legacy.load_yaml_text(text)
+    trigger = _trigger(workflow)
+    if set(trigger) != {"workflow_dispatch", "pull_request_target"}:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: trigger must be workflow_dispatch plus pull_request_target")
+    pull_request_target = trigger.get("pull_request_target", {})
+    types = pull_request_target.get("types", []) if isinstance(pull_request_target, dict) else []
+    expected_types = ["closed", "opened", "reopened", "synchronize", "ready_for_review"]
+    if types != expected_types:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: pull_request_target trigger set drift")
+
+    admit = _job(workflow, "admit")
+    qualify = _job(workflow, "qualify")
+    expected_admit_permissions = {
+        "checks": "read",
+        "contents": "read",
+        "issues": "write",
+        "pull-requests": "write",
+    }
+    if admit.get("permissions") != expected_admit_permissions:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: delegated Referee admission permissions drift")
+    if admit.get("environment") != v3.PROTECTED_ENVIRONMENT:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: admit job must bind protected environment release-trust")
+    if qualify.get("permissions") != {"contents": "read"}:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: qualification job token must remain contents-read only")
+    if qualify.get("environment") != v3.PROTECTED_ENVIRONMENT:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: qualify job must bind protected environment release-trust")
+
+    required_markers = (
+        "github.event_name == 'pull_request_target'",
+        "github.event.action != 'closed'",
+        "github.event.pull_request.draft == false",
+        "startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')",
+        "permission-administration: read",
+        "Check out trusted protected implementation",
+        "ref: refs/heads/main",
+        "REFEREE_TOKEN: ${{ github.token }}",
+        "ADMIN_READ_TOKEN: ${{ steps.admin-read-token.outputs.token }}",
+        "administrative_remediation_envelope.py admit-pull-request",
+        '--pr "${{ github.event.pull_request.number }}"',
+        '--head "${{ github.event.pull_request.head.sha }}"',
+        "administrative-remediation-admission.json",
+        "permission-contents: read",
+        "permission-pull-requests: read",
+        "permission-issues: read",
+        "permission-administration: write",
+        "administrative_remediation_envelope.py reconcile-actor",
+        "administrative_protected_receipt_live.py qualify",
+        "--control-id MP-ADMIN-REMEDIATION-ENVELOPE-001",
+        "--control-issue 615",
+        "--authorization-comment-id 5349149366",
+        "--receipt-pr 596",
+        "--integration-merge 8ff752b4f2ac28d87575d4f4ef48f564fb18837b",
+        "retention-days: 90",
+    )
+    for marker in required_markers:
+        if marker not in text:
+            errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: missing remediation envelope marker {marker}")
+
+    if text.count("${{ github.token }}") != 1:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: workflow token must be used exactly once as delegated Referee token")
+    if text.count("permission-administration: write") != 1:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly one actor-reconciliation administration-write token is required")
+    if text.count("permission-administration: read") != 2:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly two separately minted administration-read observation tokens are required")
+
+    admission_index = text.find("administrative_remediation_envelope.py admit-pull-request")
+    reconciliation_index = text.find("administrative_remediation_envelope.py reconcile-actor")
+    qualification_index = text.find("administrative_protected_receipt_live.py qualify")
+    if admission_index < 0 or reconciliation_index < 0 or qualification_index < 0:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: remediation sequence is incomplete")
+    elif not admission_index < reconciliation_index < qualification_index:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: Referee admission must precede post-merge actor reconciliation and qualification")
+
+    for forbidden in (
+        "schedule:",
+        "push:",
+        "workflow_run:",
+        "repository_dispatch:",
+        "pull_request:\n",
+        "permission-contents: write",
+        "permission-issues: write",
+        "permission-pull-requests: write",
+        "permission-checks: write",
+        "administrative_autonomy_runtime.py execute",
+        "administrative_autonomy_0813_closure_preflight.py",
+        "administrative_maintenance_completion_state.json",
+        "gh pr merge",
+        "git push origin main",
+        "/git/refs/heads/main",
+    ):
+        if forbidden in text:
+            errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: forbidden remediation capability {forbidden}")
     return errors
 
 
 def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None):
     texts = v3.legacy.workflow_texts(root) if texts is None else texts
     errors = v3.workflow_coverage_errors(root=root, texts=texts, evidence=evidence)
-    delegated_permission_error = (
-        f"{RECOVERY_FAILOVER_WORKFLOW}:recover: "
-        "non-Pages job permissions may not exceed contents: read"
-    )
-    errors = [error for error in errors if error != delegated_permission_error]
+    delegated_permission_errors = {
+        f"{RECOVERY_FAILOVER_WORKFLOW}:recover: non-Pages job permissions may not exceed contents: read",
+        f"{QUALIFICATION_ONLY_WORKFLOW}:admit: non-Pages job permissions may not exceed contents: read",
+    }
+    errors = [error for error in errors if error not in delegated_permission_errors]
     errors.extend(recovery_failover_errors(texts))
+    errors.extend(remediation_envelope_errors(texts))
 
     commands = _registry_commands(root=root, registry=registry)
     prefix = "ci.yml: missing workflow coverage marker "
@@ -256,7 +329,8 @@ def main() -> int:
     print(
         "workflow coverage v3: direct workflow and governed shard-registry execution roots, "
         "active bounded administrative runtime, separated Candidate and Referee identities, "
-        "protected exact-head merge, exact Aug13 PR-close recovery failover, mirror-only "
+        "protected exact-head merge, exact Aug13 PR-close recovery failover, trusted-main "
+        "delegated remediation Referee admission, post-merge qualification, mirror-only "
         "synchronization, manual control-plane gates, and claim boundaries are valid"
     )
     return 0
@@ -267,6 +341,7 @@ __all__ = [
     "RECOVERY_FAILOVER_WORKFLOW",
     "QUALIFICATION_ONLY_WORKFLOW",
     "recovery_failover_errors",
+    "remediation_envelope_errors",
     "workflow_coverage_errors",
     "main",
 ]
