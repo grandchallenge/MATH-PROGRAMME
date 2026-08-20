@@ -15,29 +15,28 @@ FAILOVER_WORKFLOW = ROOT / ".github" / "workflows" / "administrative-maintenance
 
 
 class AdministrativeReview0813ExecutorBindingTests(unittest.TestCase):
-    def test_generic_suspension_filter_precedes_executor_import(self):
+    def test_reactivated_generic_runtime_precedes_executor_import(self):
         source = (ROOT / "ci" / "administrative_autonomy_runtime.py").read_text(encoding="utf-8")
-        suspension = source.index(
-            "receipt_stage.pending_closures = partial(\n"
-            "    suspended_pending_closures,"
-        )
         executor_capture = source.index("import administrative_autonomy_runtime_execute as runtime_execute")
-        executor_filter = source.index("runtime_execute.eligible_candidates = partial(")
         behind_capture = source.index("import administrative_autonomy_runtime_behind_sync as behind_sync")
-        self.assertLess(suspension, executor_capture)
-        self.assertLess(executor_capture, executor_filter)
-        self.assertLess(executor_filter, behind_capture)
+        self.assertLess(executor_capture, behind_capture)
         self.assertEqual(
             source.count("runtime_github.eligible_candidates = RECOVERY_ELIGIBILITY_CHAIN[-1]"),
             1,
         )
         self.assertNotIn("runtime_github.eligible_candidates = partial(", source)
+        for suspended in (
+            "suspended_eligible_candidates",
+            "suspended_pending_closures",
+            "suspended_stage_completion_receipt",
+        ):
+            self.assertNotIn(suspended, source)
         self.assertNotIn(
             "import administrative_autonomy_runtime_administrative_review_0813_receipt_recovery",
             source,
         )
 
-    def test_fresh_runtime_process_binds_suspension_filter_into_executor(self):
+    def test_fresh_runtime_process_binds_reactivated_generic_executor(self):
         probe = """
 import sys
 from pathlib import Path
@@ -49,7 +48,7 @@ import administrative_autonomy_runtime_execute as runtime_execute
 import administrative_autonomy_runtime_github as runtime_github
 checks = [
     runtime_execute.pending_closures is receipt_stage.pending_closures,
-    runtime_execute.eligible_candidates is not runtime_github.eligible_candidates,
+    runtime_execute.eligible_candidates is runtime_github.eligible_candidates,
 ]
 raise SystemExit(0 if all(checks) else 1)
 """
@@ -64,8 +63,8 @@ raise SystemExit(0 if all(checks) else 1)
             completed.returncode,
             0,
             msg=(
-                "fresh runtime process did not bind the generic suspension filter "
-                f"into executor\nstdout:\n{completed.stdout}\nstderr:\n{completed.stderr}"
+                "fresh runtime process did not bind the reactivated generic executor "
+                f"path\nstdout:\n{completed.stdout}\nstderr:\n{completed.stderr}"
             ),
         )
 
