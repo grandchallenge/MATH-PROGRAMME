@@ -62,6 +62,10 @@ DEFAULT_RECEIPT_PR = 596
 CONFIG_EVIDENCE_ENV = "GCL_PROTECTED_RECEIPT_CONFIG_EVIDENCE"
 CONFIG_EVIDENCE_CONTRACT = "SAME_RUN_RULESET_ACTOR_READBACK_V1"
 CONFIG_EVIDENCE_BASIS = "SAME_RUN_RECONCILIATION_EVIDENCE"
+IDEMPOTENCY_IGNORED_ADVISORY_FIELDS = (
+    "receipt_pull.facts.conflict_state",
+    "receipt_pull.facts.raw_advisory",
+)
 _FRONTIER_RE = re.compile(r"- `(?P<procedure>[^`]+)` completed through: `(?P<due>[^`]+)`")
 
 
@@ -761,8 +765,40 @@ def collect_live_snapshot(
     }
 
 
+def _stable_snapshot_projection(snapshot: Mapping[str, Any]) -> dict[str, Any]:
+    """Return the idempotency surface, excluding provider-asynchronous PR advisory fields.
+
+    The frozen receipt PR is observation-only and cannot be synchronized or merged in this
+    lane. GitHub computes ``mergeable`` / ``mergeable_state`` asynchronously, so the same
+    immutable head/base pair may transition from UNKNOWN to a terminal mergeability advisory
+    between consecutive reads. Those observations remain in the retained pass records, but
+    they do not define protected-receipt idempotency.
+    """
+
+    projected = copy.deepcopy(dict(snapshot))
+    receipt_pull = projected.get("receipt_pull")
+    if isinstance(receipt_pull, dict):
+        facts = receipt_pull.get("facts")
+        if isinstance(facts, dict):
+            facts.pop("conflict_state", None)
+            facts.pop("raw_advisory", None)
+    return projected
+
+
 def _stable_snapshot_digest(snapshot: Mapping[str, Any]) -> str:
-    return sha256_json(snapshot)
+    return sha256_json(_stable_snapshot_projection(snapshot))
+
+
+def _mergeability_advisory(snapshot: Mapping[str, Any]) -> dict[str, Any]:
+    receipt_pull = snapshot.get("receipt_pull", {})
+    facts = receipt_pull.get("facts", {}) if isinstance(receipt_pull, Mapping) else {}
+    if not isinstance(facts, Mapping):
+        return {"conflict_state": None, "raw_advisory": {}}
+    raw = facts.get("raw_advisory", {})
+    return {
+        "conflict_state": facts.get("conflict_state"),
+        "raw_advisory": dict(raw) if isinstance(raw, Mapping) else {},
+    }
 
 
 def require_stable_protected_head(start_head: str, observed_head: str, phase: str) -> None:
@@ -847,9 +883,14 @@ def live_read_only_qualification(
             "first_digest": first_digest,
             "second_digest": second_digest,
             "stable": first_digest == second_digest,
+            "ignored_advisory_fields": list(IDEMPOTENCY_IGNORED_ADVISORY_FIELDS),
+            "advisory_observation": {
+                "first": _mergeability_advisory(first),
+                "second": _mergeability_advisory(second),
+            },
         }
         if first_digest != second_digest:
-            raise QualificationFailure("IDEMPOTENT_REENTRY_MISMATCH", "first and second read-only snapshots differ")
+            raise QualificationFailure("IDEMPOTENT_REENTRY_MISMATCH", "first and second authoritative read-only snapshots differ")
         report["state"] = "LIVE_QUALIFICATION_GREEN__REACTIVATION_NOT_AUTHORIZED"
         report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         print(json.dumps(report, indent=2, sort_keys=True))
