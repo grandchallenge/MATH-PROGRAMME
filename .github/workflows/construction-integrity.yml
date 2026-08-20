@@ -1,0 +1,39 @@
+name: Construction integrity
+
+on:
+  pull_request:
+    paths:
+      - "ci/construction_integrity.py"
+      - "governance/construction_integrity_contract.json"
+      - "schemas/construction_integrity_contract.schema.json"
+      - "tests/test_construction_integrity.py"
+      - ".github/workflows/construction-integrity.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  construction-integrity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Validate construction-integrity contract schema
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          from jsonschema import Draft202012Validator
+
+          contract = json.loads(Path("governance/construction_integrity_contract.json").read_text())
+          schema = json.loads(Path("schemas/construction_integrity_contract.schema.json").read_text())
+          errors = sorted(Draft202012Validator(schema).iter_errors(contract), key=lambda e: list(e.path))
+          if errors:
+              raise SystemExit("\n".join(f"{list(e.path)}: {e.message}" for e in errors))
+          PY
+      - name: Run construction-integrity adversarial tests
+        run: python3 -m unittest -v tests.test_construction_integrity
