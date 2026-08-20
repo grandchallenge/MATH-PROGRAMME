@@ -31,7 +31,6 @@ jobs:
       checks: read
       contents: read
       issues: write
-      pull-requests: write
     steps:
       - name: Mint read-only Administration ruleset token
         id: admin-read-token
@@ -42,6 +41,17 @@ jobs:
           owner: grandchallenge
           repositories: MATH-PROGRAMME
           permission-administration: read
+
+      - name: Mint bounded Candidate merge-executor token
+        id: candidate-merge-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-contents: write
+          permission-pull-requests: write
 
       - name: Check out trusted protected implementation
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -65,10 +75,12 @@ jobs:
           set -euo pipefail
           python ci/administrative_remediation_envelope.py validate
 
-      - name: Referee exact-head admission and expected-head auto-merge
+      - name: Referee exact-head admission and Candidate expected-head merge
         env:
           REFEREE_TOKEN: ${{ github.token }}
           ADMIN_READ_TOKEN: ${{ steps.admin-read-token.outputs.token }}
+          CANDIDATE_MERGE_TOKEN: ${{ steps.candidate-merge-token.outputs.token }}
+          CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.candidate-merge-token.outputs.app-slug) }}
         run: |
           set -euo pipefail
           python ci/administrative_remediation_envelope.py admit-pull-request \
