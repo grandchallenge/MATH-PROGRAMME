@@ -311,13 +311,21 @@ class LowFrictionTests(unittest.TestCase):
                 pull, commit, {"status": "diverged"}, "a" * 40, low.EXPECTED_CANDIDATE_LOGIN
             )
 
-    def test_workflow_contract_is_self_validating(self):
-        text = low.WORKFLOW_PATH.read_text(encoding="utf-8")
-        self.assertEqual(low.workflow_errors(text), [])
+    def test_existing_heartbeat_is_the_only_scheduler(self):
+        workflow = (ROOT / ".github/workflows/administrative-maintenance-candidate.yml").read_text(encoding="utf-8")
+        self.assertIn("- cron: '7 * * * *'", workflow)
+        self.assertIn("- cron: '17 * * * *'", workflow)
+        self.assertIn("- cron: '27 * * * *'", workflow)
+        self.assertIn("- cron: '47 * * * *'", workflow)
+        self.assertFalse((ROOT / ".github/workflows/administrative-maintenance-low-friction.yml").exists())
 
-    def test_workflow_contract_rejects_direct_push(self):
-        text = low.WORKFLOW_PATH.read_text(encoding="utf-8") + "\n# git push origin main\n"
-        self.assertTrue(any("forbidden" in error for error in low.workflow_errors(text)))
+    def test_runtime_integration_reuses_existing_credentials_and_reports(self):
+        runtime = (ROOT / "ci/administrative_autonomy_runtime.py").read_text(encoding="utf-8")
+        self.assertIn("import administrative_autonomy_low_friction as low_friction", runtime)
+        self.assertIn("low_friction.sweep(low_report)", runtime)
+        self.assertIn("ADMIN_READ_TOKEN", runtime)
+        self.assertIn("ADMIN_TOKEN", runtime)
+        self.assertIn("human_steward_checkpoint_requested", runtime)
 
     def test_full_state_space_has_no_unlisted_state(self):
         self.assertEqual(set(low.ALLOWED_TRANSITIONS), set(low.STATES))
