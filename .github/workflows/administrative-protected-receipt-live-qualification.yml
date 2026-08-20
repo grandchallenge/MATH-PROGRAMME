@@ -97,6 +97,7 @@ jobs:
     environment: release-trust
     permissions:
       contents: read
+      issues: write
     steps:
       - name: Mint read-only Candidate observation token
         id: candidate-token
@@ -186,6 +187,84 @@ jobs:
             --authorization-comment-id 5349149366 \
             --receipt-pr 596 \
             --integration-merge 8ff752b4f2ac28d87575d4f4ef48f564fb18837b
+
+      - name: Publish durable remediation result
+        if: always()
+        env:
+          STATUS_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+          from pathlib import Path
+
+          def read_json(path):
+              p = Path(path)
+              if not p.is_file():
+                  return {}
+              try:
+                  return json.loads(p.read_text(encoding="utf-8"))
+              except Exception:
+                  return {}
+
+          reconciliation = read_json("administrative-remediation-ruleset-reconciliation.json")
+          qualification = read_json("administrative-protected-receipt-qualification.json")
+          diagnostic = read_json("administrative-protected-receipt-diagnostic.json")
+
+          actor_state = (
+              reconciliation.get("terminal_state")
+              or reconciliation.get("state")
+              or "ACTOR_RECONCILIATION_RESULT_UNAVAILABLE"
+          )
+          qualification_state = (
+              qualification.get("state")
+              or diagnostic.get("state")
+              or diagnostic.get("failure_code")
+              or "QUALIFICATION_RESULT_UNAVAILABLE"
+          )
+          protected_head = (
+              qualification.get("protected_head_end")
+              or qualification.get("protected_head_start")
+              or os.environ.get("GITHUB_SHA", "")
+          )
+          failure = qualification.get("failure") or {}
+          failure_text = ""
+          if failure:
+              failure_text = (
+                  f"\nFailure: `{failure.get('code', 'UNKNOWN')}` — "
+                  f"{failure.get('detail', '')}"
+              )
+
+          body = (
+              "DELEGATED REMEDIATION RUN RESULT — MP-ADMIN-REMEDIATION-ENVELOPE-001\n\n"
+              f"Run: `{os.environ.get('GITHUB_RUN_ID', '')}` attempt "
+              f"`{os.environ.get('GITHUB_RUN_ATTEMPT', '')}`.\n"
+              f"Ruleset actor: `{actor_state}`.\n"
+              f"Canonical qualification: `{qualification_state}`.\n"
+              f"Protected head: `{protected_head}`."
+              f"{failure_text}\n\n"
+              "Safety readback: no #596 mutation, receipt execution, ledger or mirror mutation, "
+              "direct protected push, bypass exercise, or administrative-review reactivation is authorized."
+          )
+
+          payload = json.dumps({"body": body}).encode("utf-8")
+          request = urllib.request.Request(
+              "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/615/comments",
+              data=payload,
+              method="POST",
+              headers={
+                  "Authorization": f"Bearer {os.environ['STATUS_TOKEN']}",
+                  "Accept": "application/vnd.github+json",
+                  "X-GitHub-Api-Version": "2022-11-28",
+                  "Content-Type": "application/json",
+              },
+          )
+          with urllib.request.urlopen(request, timeout=30) as response:
+              result = json.loads(response.read().decode("utf-8"))
+          print(json.dumps({"status_comment_id": result.get("id")}, sort_keys=True))
+          PY
 
       - name: Preserve remediation and qualification evidence
         if: always()
