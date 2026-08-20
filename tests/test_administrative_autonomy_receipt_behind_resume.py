@@ -143,13 +143,16 @@ class ReceiptBehindResumeTests(unittest.TestCase):
         with self.assertRaises(module.AutonomyError):
             module.resume_existing_receipt(candidate, "grandchallenge/MATH-PROGRAMME", candidate.branch, self.completion, self.control, completion_loader=self._loader())
 
-    def test_runtime_installs_generic_suspension_before_executor_import(self) -> None:
+    def test_runtime_reactivation_preserves_generic_behind_sync(self) -> None:
         text = (ROOT / "ci" / "administrative_autonomy_runtime.py").read_text(encoding="utf-8")
-        suspension = "receipt_stage.pending_closures = partial(\n    suspended_pending_closures,"
         executor_import = "import administrative_autonomy_runtime_behind_sync as behind_sync"
-        self.assertIn(suspension, text)
         self.assertIn(executor_import, text)
-        self.assertLess(text.index(suspension), text.index(executor_import))
+        for suspended in (
+            "suspended_pending_closures",
+            "suspended_stage_completion_receipt",
+            "suspended_eligible_candidates",
+        ):
+            self.assertNotIn(suspended, text)
         self.assertIn("# administrative_review_0813_receipt_pending_closures", text)
         self.assertNotIn(
             "import administrative_autonomy_runtime_administrative_review_0813_receipt_recovery",
