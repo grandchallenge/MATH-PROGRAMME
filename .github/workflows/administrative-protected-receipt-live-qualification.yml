@@ -14,7 +14,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: administrative-protected-receipt-remediation
+  group: administrative-protected-receipt-${{ (github.event_name == 'workflow_dispatch' || github.event.action == 'closed') && 'qualification' || 'admission' }}
   cancel-in-progress: false
 
 jobs:
