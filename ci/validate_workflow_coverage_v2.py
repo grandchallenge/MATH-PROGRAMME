@@ -197,13 +197,13 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         return errors
     workflow = v3.legacy.load_yaml_text(text)
     trigger = _trigger(workflow)
-    if set(trigger) != {"workflow_dispatch", "pull_request"}:
-        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: trigger must be workflow_dispatch plus pull_request")
-    pull_request = trigger.get("pull_request", {})
-    types = pull_request.get("types", []) if isinstance(pull_request, dict) else []
+    if set(trigger) != {"workflow_dispatch", "pull_request_target"}:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: trigger must be workflow_dispatch plus pull_request_target")
+    pull_request_target = trigger.get("pull_request_target", {})
+    types = pull_request_target.get("types", []) if isinstance(pull_request_target, dict) else []
     expected_types = ["closed", "opened", "reopened", "synchronize", "ready_for_review"]
     if types != expected_types:
-        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: pull_request trigger set drift")
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: pull_request_target trigger set drift")
 
     admit = _job(workflow, "admit")
     qualify = _job(workflow, "qualify")
@@ -223,11 +223,13 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: qualify job must bind protected environment release-trust")
 
     required_markers = (
+        "github.event_name == 'pull_request_target'",
         "github.event.action != 'closed'",
         "github.event.pull_request.draft == false",
         "startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')",
         "permission-administration: read",
-        "ref: ${{ github.event.pull_request.head.sha }}",
+        "Check out trusted protected implementation",
+        "ref: refs/heads/main",
         "REFEREE_TOKEN: ${{ github.token }}",
         "ADMIN_READ_TOKEN: ${{ steps.admin-read-token.outputs.token }}",
         "administrative_remediation_envelope.py admit-pull-request",
@@ -238,7 +240,6 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         "permission-pull-requests: read",
         "permission-issues: read",
         "permission-administration: write",
-        "ref: refs/heads/main",
         "administrative_remediation_envelope.py reconcile-actor",
         "administrative_protected_receipt_live.py qualify",
         "--control-id MP-ADMIN-REMEDIATION-ENVELOPE-001",
@@ -272,7 +273,7 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         "push:",
         "workflow_run:",
         "repository_dispatch:",
-        "pull_request_target:",
+        "pull_request:\n",
         "permission-contents: write",
         "permission-issues: write",
         "permission-pull-requests: write",
@@ -328,9 +329,9 @@ def main() -> int:
     print(
         "workflow coverage v3: direct workflow and governed shard-registry execution roots, "
         "active bounded administrative runtime, separated Candidate and Referee identities, "
-        "protected exact-head merge, exact Aug13 PR-close recovery failover, delegated "
-        "remediation Referee admission, post-merge qualification, mirror-only synchronization, "
-        "manual control-plane gates, and claim boundaries are valid"
+        "protected exact-head merge, exact Aug13 PR-close recovery failover, trusted-main "
+        "delegated remediation Referee admission, post-merge qualification, mirror-only "
+        "synchronization, manual control-plane gates, and claim boundaries are valid"
     )
     return 0
 
