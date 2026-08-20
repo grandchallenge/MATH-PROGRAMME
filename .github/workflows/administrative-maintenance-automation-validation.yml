@@ -14,6 +14,7 @@ on:
       - 'ci/synchronize_administrative_completion*.py'
       - 'ci/dispatch_administrative_maintenance_v*.py'
       - 'ci/validate_administrative_automation*.py'
+      - 'ci/validate_administrative_workflow_rebuild_attestation.py'
       - 'ci/validate_workflow_coverage_v*.py'
       - 'ci/test_workflow_coverage_v*.py'
       - 'governance/administrative_maintenance_automation*.json'
@@ -26,6 +27,7 @@ on:
       - 'governance/administrative_post_receipt_current_frontier_control.json'
       - 'governance/administrative_maintenance_completion_state.json'
       - 'governance/administrative_autonomy_*.json'
+      - 'governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/**'
       - 'schemas/administrative_maintenance_automation*.schema.json'
       - 'schemas/administrative_maintenance_steady_state*.schema.json'
       - 'schemas/administrative_transition_recovery*.schema.json'
@@ -37,6 +39,7 @@ on:
       - 'schemas/administrative_maintenance_completion_state.schema.json'
       - 'schemas/administrative_autonomy_*.schema.json'
       - 'schemas/administrative_autonomous_maintenance_record.schema.json'
+      - 'schemas/administrative_workflow_rebuild_attestation.schema.json'
       - 'tests/test_administrative_automation*.py'
       - 'tests/test_administrative_autonomy*.py'
       - 'tests/test_administrative_steady_state.py'
@@ -59,6 +62,7 @@ on:
       - 'ci/synchronize_administrative_completion*.py'
       - 'ci/dispatch_administrative_maintenance_v*.py'
       - 'ci/validate_administrative_automation*.py'
+      - 'ci/validate_administrative_workflow_rebuild_attestation.py'
       - 'ci/validate_workflow_coverage_v*.py'
       - 'ci/test_workflow_coverage_v*.py'
       - 'governance/administrative_maintenance_automation*.json'
@@ -71,6 +75,7 @@ on:
       - 'governance/administrative_post_receipt_current_frontier_control.json'
       - 'governance/administrative_maintenance_completion_state.json'
       - 'governance/administrative_autonomy_*.json'
+      - 'governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/**'
       - 'schemas/administrative_maintenance_automation*.schema.json'
       - 'schemas/administrative_maintenance_steady_state*.schema.json'
       - 'schemas/administrative_transition_recovery*.schema.json'
@@ -82,6 +87,7 @@ on:
       - 'schemas/administrative_maintenance_completion_state.schema.json'
       - 'schemas/administrative_autonomy_*.schema.json'
       - 'schemas/administrative_autonomous_maintenance_record.schema.json'
+      - 'schemas/administrative_workflow_rebuild_attestation.schema.json'
       - 'tests/test_administrative_automation*.py'
       - 'tests/test_administrative_autonomy*.py'
       - 'tests/test_administrative_steady_state.py'
@@ -127,6 +133,7 @@ jobs:
           # Compatibility reachability: python ci/synchronize_administrative_completion_v2.py
           # Compatibility reachability: python ci/synchronize_administrative_completion_v3.py
           python ci/validate_administrative_automation_v4.py
+          python ci/validate_administrative_workflow_rebuild_attestation.py
           python ci/administrative_autonomy.py validate
           python ci/administrative_autonomy_runtime.py validate
           python ci/validate_workflow_coverage_v2.py
