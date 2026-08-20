@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 import sys
@@ -134,9 +135,16 @@ def _validate_low_friction_matrix() -> int:
         for error in errors:
             print(error)
         return 1
-    suite = unittest.defaultTestLoader.loadTestsFromName(
-        "tests.test_administrative_autonomy_low_friction"
+    test_path = ROOT / "tests" / "test_administrative_autonomy_low_friction.py"
+    spec = importlib.util.spec_from_file_location(
+        "mp_admin_low_friction_matrix", test_path
     )
+    if spec is None or spec.loader is None:
+        print(f"cannot load low-friction adversarial matrix: {test_path}")
+        return 1
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    suite = unittest.defaultTestLoader.loadTestsFromModule(module)
     result = unittest.TextTestRunner(verbosity=1).run(suite)
     if not result.wasSuccessful():
         return 1
