@@ -111,6 +111,11 @@ runtime_github.wait_mirror_sync = partial(
 import administrative_autonomy_runtime_execute as runtime_execute
 
 import administrative_autonomy_runtime_behind_sync as behind_sync
+from administrative_autonomy_runtime_behind_sync import (
+    execute as protected_behind_execute,
+    main as protected_behind_main,
+    validate_command as protected_behind_validate_command,
+)
 
 behind_sync.synchronize_eligible_candidate = partial(
     structural_1809_synchronize_eligible_candidate,
@@ -123,8 +128,8 @@ behind_sync.synchronize_eligible_candidate = partial(
 # no new token, cadence, ruleset mutation, direct-push, or Human-Steward route.
 import administrative_autonomy_low_friction as low_friction
 
-_base_execute = behind_sync.execute
-_base_validate_command = behind_sync.validate_command
+_base_execute = protected_behind_execute
+_base_validate_command = protected_behind_validate_command
 
 
 def _validate_low_friction_matrix() -> int:
