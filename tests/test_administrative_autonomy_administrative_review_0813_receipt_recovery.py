@@ -376,10 +376,15 @@ class AdministrativeReview0813ReceiptRecoveryTests(unittest.TestCase):
             {item["scheduled_due_at"] for item in normalized_administrative["receipts"]},
         )
 
-    def test_runtime_wiring_changes_only_pending_closure_classification(self):
+    def test_runtime_keeps_historical_aug13_overlay_non_effective_after_reactivation(self):
         text = RUNTIME_ENTRY.read_text(encoding="utf-8")
         self.assertIn("administrative_review_0813_receipt_pending_closures", text)
-        self.assertIn("receipt_stage.pending_closures = partial(", text)
+        for suspended in (
+            "suspended_pending_closures",
+            "suspended_stage_completion_receipt",
+            "suspended_eligible_candidates",
+        ):
+            self.assertNotIn(suspended, text)
         self.assertNotIn("administrative_review_0813_receipt_recovery_eligible_candidates", text)
         self.assertNotIn("administrative_review_0813_receipt_advance_completion_state", text)
         self.assertNotIn("administrative_review_0813_receipt_wait_mirror_sync", text)
