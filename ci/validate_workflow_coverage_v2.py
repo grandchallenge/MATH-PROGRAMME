@@ -217,8 +217,11 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: delegated Referee admission permissions drift")
     if admit.get("environment") != v3.PROTECTED_ENVIRONMENT:
         errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: admit job must bind protected environment release-trust")
-    if qualify.get("permissions") != {"contents": "read"}:
-        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: qualification job token must remain contents-read only")
+    expected_qualify_permissions = {"contents": "read", "issues": "write"}
+    if qualify.get("permissions") != expected_qualify_permissions:
+        errors.append(
+            f"{QUALIFICATION_ONLY_WORKFLOW}: qualification job permissions must be contents-read plus issue-status-write only"
+        )
     if qualify.get("environment") != v3.PROTECTED_ENVIRONMENT:
         errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: qualify job must bind protected environment release-trust")
 
@@ -247,14 +250,21 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         "--authorization-comment-id 5349149366",
         "--receipt-pr 596",
         "--integration-merge 8ff752b4f2ac28d87575d4f4ef48f564fb18837b",
+        "Publish durable remediation result",
+        "STATUS_TOKEN: ${{ github.token }}",
+        "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/615/comments",
+        "DELEGATED REMEDIATION RUN RESULT — MP-ADMIN-REMEDIATION-ENVELOPE-001",
+        "Safety readback: no #596 mutation",
         "retention-days: 90",
     )
     for marker in required_markers:
         if marker not in text:
             errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: missing remediation envelope marker {marker}")
 
-    if text.count("${{ github.token }}") != 1:
-        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: workflow token must be used exactly once as delegated Referee token")
+    if text.count("${{ github.token }}") != 2:
+        errors.append(
+            f"{QUALIFICATION_ONLY_WORKFLOW}: workflow token must be used exactly for Referee admission and durable status publication"
+        )
     if text.count("permission-administration: write") != 1:
         errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly one actor-reconciliation administration-write token is required")
     if text.count("permission-administration: read") != 2:
@@ -263,10 +273,14 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
     admission_index = text.find("administrative_remediation_envelope.py admit-pull-request")
     reconciliation_index = text.find("administrative_remediation_envelope.py reconcile-actor")
     qualification_index = text.find("administrative_protected_receipt_live.py qualify")
-    if admission_index < 0 or reconciliation_index < 0 or qualification_index < 0:
+    status_index = text.find("Publish durable remediation result")
+    evidence_index = text.find("Preserve remediation and qualification evidence")
+    if min(admission_index, reconciliation_index, qualification_index, status_index, evidence_index) < 0:
         errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: remediation sequence is incomplete")
-    elif not admission_index < reconciliation_index < qualification_index:
-        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: Referee admission must precede post-merge actor reconciliation and qualification")
+    elif not admission_index < reconciliation_index < qualification_index < status_index < evidence_index:
+        errors.append(
+            f"{QUALIFICATION_ONLY_WORKFLOW}: Referee admission must precede actor reconciliation, qualification, durable status, and retained evidence"
+        )
 
     for forbidden in (
         "schedule:",
@@ -296,6 +310,7 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
     delegated_permission_errors = {
         f"{RECOVERY_FAILOVER_WORKFLOW}:recover: non-Pages job permissions may not exceed contents: read",
         f"{QUALIFICATION_ONLY_WORKFLOW}:admit: non-Pages job permissions may not exceed contents: read",
+        f"{QUALIFICATION_ONLY_WORKFLOW}:qualify: non-Pages job permissions may not exceed contents: read",
     }
     errors = [error for error in errors if error not in delegated_permission_errors]
     errors.extend(recovery_failover_errors(texts))
@@ -330,8 +345,8 @@ def main() -> int:
         "workflow coverage v3: direct workflow and governed shard-registry execution roots, "
         "active bounded administrative runtime, separated Candidate and Referee identities, "
         "protected exact-head merge, exact Aug13 PR-close recovery failover, trusted-main "
-        "delegated remediation Referee admission, post-merge qualification, mirror-only "
-        "synchronization, manual control-plane gates, and claim boundaries are valid"
+        "delegated remediation Referee admission, post-merge qualification, durable issue-status "
+        "audit, mirror-only synchronization, manual control-plane gates, and claim boundaries are valid"
     )
     return 0
 
