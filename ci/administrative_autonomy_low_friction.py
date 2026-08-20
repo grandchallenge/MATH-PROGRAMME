@@ -18,7 +18,6 @@ from autonomy_github import AutonomyError, Client, required_contexts
 ROOT = Path(__file__).resolve().parents[1]
 CONTROL_PATH = ROOT / "governance/administrative_autonomy_low_friction_control.json"
 CONTROL_SCHEMA_PATH = ROOT / "schemas/administrative_autonomy_low_friction_control.schema.json"
-WORKFLOW_PATH = ROOT / ".github/workflows/administrative-maintenance-low-friction.yml"
 EXPECTED_CONTROL_ID = "MP-ADMIN-LOW-FRICTION-001"
 EXPECTED_REPOSITORY = "grandchallenge/MATH-PROGRAMME"
 EXPECTED_ISSUE = 633
@@ -181,66 +180,37 @@ def validate_control(control: Mapping[str, Any]) -> list[str]:
     return errors
 
 
-def workflow_errors(text: str) -> list[str]:
-    required = (
-        "name: Administrative maintenance low-friction routine lifecycle",
-        "pull_request_target:",
-        "schedule:",
-        "workflow_dispatch:",
-        "environment: release-trust",
-        "actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1",
-        "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
-        "actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
-        "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
-        "permission-contents: write",
-        "permission-pull-requests: write",
-        "permission-administration: read",
-        "REFEREE_TOKEN: ${{ github.token }}",
-        "CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}",
-        "ADMIN_READ_TOKEN: ${{ steps.admin-read-token.outputs.token }}",
-        "ref: refs/heads/main",
-        "persist-credentials: false",
-        "python ci/administrative_autonomy_low_friction.py execute",
-        "python ci/administrative_autonomy_low_friction.py sweep",
-        "python ci/administrative_autonomy_low_friction.py validate",
-        "tests.test_administrative_autonomy_low_friction",
-        "retention-days: 90",
-    )
-    errors = [f"low-friction workflow missing marker: {item}" for item in required if item not in text]
-    forbidden = (
-        "git push origin main",
-        "/git/refs/heads/main",
-        "permission-administration: write",
-        "permission-checks: write",
-        "permission-issues: write",
-        "pull_request_review:",
-    )
-    errors.extend(
-        f"low-friction workflow contains forbidden capability: {item}"
-        for item in forbidden
-        if item in text
-    )
-    if text.count("permission-contents: write") != 2:
-        errors.append("low-friction workflow requires exactly two event/sweep Candidate contents-write token scopes")
-    if text.count("permission-pull-requests: write") != 2:
-        errors.append("low-friction workflow requires exactly two event/sweep Candidate pull-request-write token scopes")
-    if text.count("permission-administration: read") != 2:
-        errors.append("low-friction workflow requires exactly two event/sweep administration-read token scopes")
-    return errors
-
-
 def validate_command() -> int:
-    control = load_json(CONTROL_PATH)
-    errors = validate_control(control)
-    if not WORKFLOW_PATH.is_file():
-        errors.append("low-friction workflow is missing")
+    errors = validate_control(load_json(CONTROL_PATH))
+    runtime = (ROOT / "ci/administrative_autonomy_runtime.py")
+    candidate_workflow = ROOT / ".github/workflows/administrative-maintenance-candidate.yml"
+    if not runtime.is_file():
+        errors.append("protected administrative runtime entrypoint is missing")
     else:
-        errors.extend(workflow_errors(WORKFLOW_PATH.read_text(encoding="utf-8")))
+        text = runtime.read_text(encoding="utf-8")
+        for marker in (
+            "import administrative_autonomy_low_friction as low_friction",
+            "low_friction.sweep(low_report)",
+            "ADMIN_READ_TOKEN",
+            "ADMIN_TOKEN",
+            "human_steward_checkpoint_requested",
+        ):
+            if marker not in text:
+                errors.append(f"low-friction runtime integration marker missing: {marker}")
+    if not candidate_workflow.is_file():
+        errors.append("protected candidate heartbeat workflow is missing")
+    else:
+        text = candidate_workflow.read_text(encoding="utf-8")
+        for marker in ("- cron: '7 * * * *'", "- cron: '17 * * * *'", "- cron: '27 * * * *'", "- cron: '47 * * * *'"):
+            if marker not in text:
+                errors.append(f"protected heartbeat marker missing: {marker}")
+    if (ROOT / ".github/workflows/administrative-maintenance-low-friction.yml").exists():
+        errors.append("parallel low-friction privileged workflow must not exist")
     if errors:
         for error in errors:
             print(error)
         return 1
-    print("MP-ADMIN-LOW-FRICTION-001 control and workflow: valid")
+    print("MP-ADMIN-LOW-FRICTION-001 control and embedded runtime: valid")
     return 0
 
 
@@ -816,10 +786,11 @@ def runtime_clients(control: Mapping[str, Any]) -> tuple[Client, Client, Client,
         raise AutonomyError("runtime Referee app id drift")
     if candidate_login == referee_login or candidate_app_id == referee_app_id:
         raise AutonomyError("runtime Candidate/Referee separation failed")
+    admin_token = os.environ.get("ADMIN_READ_TOKEN") or os.environ.get("ADMIN_TOKEN", "")
     return (
         Client(os.environ.get("CANDIDATE_TOKEN", "")),
         Client(os.environ.get("REFEREE_TOKEN", "")),
-        Client(os.environ.get("ADMIN_READ_TOKEN", "")),
+        Client(admin_token),
         candidate_login,
     )
 
