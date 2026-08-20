@@ -5,6 +5,10 @@ on:
   pull_request:
     types:
       - closed
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
 
 permissions:
   contents: read
@@ -14,10 +18,79 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  admit:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.action != 'closed' &&
+      github.event.pull_request.draft == false &&
+      startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    environment: release-trust
+    permissions:
+      checks: read
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Mint read-only Administration ruleset token
+        id: admin-read-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-administration: read
+
+      - name: Check out exact remediation head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+
+      - name: Install governed policy dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --requirement requirements/policy.txt
+
+      - name: Validate delegated remediation envelope
+        run: |
+          set -euo pipefail
+          python ci/administrative_remediation_envelope.py validate
+
+      - name: Referee exact-head admission and expected-head auto-merge
+        env:
+          REFEREE_TOKEN: ${{ github.token }}
+          ADMIN_READ_TOKEN: ${{ steps.admin-read-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          python ci/administrative_remediation_envelope.py admit-pull-request \
+            --pr "${{ github.event.pull_request.number }}" \
+            --head "${{ github.event.pull_request.head.sha }}" \
+            --report administrative-remediation-admission.json
+
+      - name: Preserve exact-head admission evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: administrative-remediation-admission
+          path: administrative-remediation-admission.json
+          if-no-files-found: warn
+          retention-days: 90
+
   qualify:
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      (github.event.pull_request.merged == true &&
+      (github.event_name == 'pull_request' &&
+       github.event.action == 'closed' &&
+       github.event.pull_request.merged == true &&
        startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-'))
     runs-on: ubuntu-24.04
     timeout-minutes: 30
