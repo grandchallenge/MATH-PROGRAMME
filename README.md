@@ -9,6 +9,14 @@ discover       organize       certify
 
 The programme exists to turn mathematical curiosity into checked understanding without confusing evidence, computation, exposition, or certification.
 
+## Programme progress — governed administrative workflow rebuild
+
+The administrative review path has now been demonstrated end-to-end under exact-head governance, separated Referee/Candidate identities, protected merge controls, and automatic post-merge qualification. The proof is retained permanently as the machine-checkable `MP-ADMIN-WORKFLOW-REBUILD-EVIDENCE-001` package under `governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/`.
+
+[![MP-ADMIN-WORKFLOW-REBUILD-001 — working rebuild proof](docs/assets/mp-admin-workflow-rebuild-proof.png)](governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/README.md)
+
+The illustration is a progress view, not an authority grant. The protected attestation, retained payload hashes, validator, and governed records remain authoritative.
+
 ## Core repositories and pillars
 
 - **MATHFORGE** discovers candidate ore: source signals, problem cards, reconnaissance artifacts, finite screens, and route suggestions.
