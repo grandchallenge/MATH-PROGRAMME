@@ -37,6 +37,7 @@ EXPECTED_REFEREE_APP_ID = 15368
 EXPECTED_CANDIDATE_LOGIN = "gcl-release-trust[bot]"
 EXPECTED_REMEDIATION_BRANCH_PREFIX = "remediation/mp-admin-"
 EXPECTED_BASE_BRANCH = "main"
+CONFIGURATION_EVIDENCE_CONTRACT = "SAME_RUN_RULESET_ACTOR_READBACK_V1"
 APPROVAL_PREFIX = "HUMAN STEWARD INITIAL APPROVAL — DELEGATED REMEDIATION ENVELOPE"
 APPROVAL_FINAL_BOUNDARY = "Final administrative-review reactivation/incident closure remains reserved to the Human Steward."
 
@@ -325,11 +326,14 @@ def reconcile_actor(admin_token: str, report_path: Path) -> dict[str, Any]:
     expected_after = sorted(before_actors if desired in before_actors else before_actors + [desired])
     if after_actors != expected_after:
         raise AutonomyError("ruleset actor reconciliation changed unexpected actors")
-    if preserved_body(after) != preserved_body(before):
+    before_body_digest = sha256_json(preserved_body(before))
+    after_body_digest = sha256_json(preserved_body(after))
+    if before_body_digest != after_body_digest:
         raise AutonomyError("ruleset actor reconciliation changed non-actor fields")
 
     report = {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
+        "configuration_evidence_contract": CONFIGURATION_EVIDENCE_CONTRACT,
         "envelope_id": EXPECTED_ENVELOPE_ID,
         "control_issue": EXPECTED_ISSUE,
         "initial_human_steward_approval_comment_id": EXPECTED_AUTHORIZATION_COMMENT_ID,
@@ -348,6 +352,8 @@ def reconcile_actor(admin_token: str, report_path: Path) -> dict[str, Any]:
         "after_actor_set": after_actors,
         "before_ruleset_digest": sha256_json(before),
         "after_ruleset_digest": sha256_json(after),
+        "before_body_digest": before_body_digest,
+        "after_body_digest": after_body_digest,
         "existing_bypass_actors_preserved": True,
         "non_actor_fields_preserved": True,
         "direct_protected_push": False,
