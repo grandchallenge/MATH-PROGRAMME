@@ -61,19 +61,12 @@ theorem weightedFiniteBooleanMeasureHom_add
         weightedFiniteBooleanMeasureSection X b j := by
     exact Equiv.apply_symm_apply _ _
   apply (freeHomSectionsEquiv T A).injective
-  calc
-    freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X (a + b) j) =
-        weightedFiniteBooleanMeasureSection X (a + b) j := hab
-    _ = weightedFiniteBooleanMeasureSection X a j +
-          weightedFiniteBooleanMeasureSection X b j :=
-      weightedFiniteBooleanMeasureSection_add X a b j
-    _ = freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X a j) +
-          freeHomSectionsEquiv T A (weightedFiniteBooleanMeasureHom X b j) := by
-      rw [ha, hb]
-    _ = freeHomSectionsEquiv T A
-          (weightedFiniteBooleanMeasureHom X a j +
-            weightedFiniteBooleanMeasureHom X b j) := by
-      exact (freeHomSectionsEquiv_add T A _ _).symm
+  rw [hab]
+  rw [freeHomSectionsEquiv_add T A
+    (weightedFiniteBooleanMeasureHom X a j)
+    (weightedFiniteBooleanMeasureHom X b j)]
+  rw [ha, hb]
+  exact weightedFiniteBooleanMeasureSection_add X a b j
 
 /-- The canonical global weighted Boolean measure family is additive in the weight vector. -/
 theorem weightedFiniteBooleanMeasureLimitLift_add
@@ -104,7 +97,7 @@ theorem weightedFiniteBooleanMeasureLimitLift_add
         (weightedFiniteBooleanMeasureLimitLift X a +
           weightedFiniteBooleanMeasureLimitLift X b) ≫
             (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j := by
-      exact (Preadditive.add_comp _ _ _).symm
+      rw [Preadditive.add_comp]
 
 #check freeHomSectionsEquiv_add
 #check weightedFiniteBooleanMeasureHom_add
