@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "envelope_id": "MP-ADMIN-REMEDIATION-ENVELOPE-001",
   "issue": 615,
   "state": "OPEN",
@@ -23,13 +23,26 @@
     "direct_protected_push": false,
     "bypass_exercise_authorized": false
   },
+  "delegated_review": {
+    "referee_login": "github-actions[bot]",
+    "referee_app_id": 15368,
+    "mode": "issue_comment",
+    "github_review_submission_required": false,
+    "required_checks_source": "live_ruleset_17137629",
+    "exact_head_required": true,
+    "expected_head_auto_merge_required": true,
+    "post_merge_readback_required": true
+  },
   "delegated_authority": {
     "diagnose": true,
     "bounded_control_plane_repair": true,
     "repair_pull_requests": true,
     "exact_head_validation": true,
     "independent_non_author_review": true,
+    "referee_agent_exact_head_disposition": true,
     "expected_head_protected_merge_after_review": true,
+    "referee_expected_head_auto_merge": true,
+    "automatic_resume_after_merged_remediation_pr": true,
     "exact_ruleset_actor_reconciliation": true,
     "qualification_replay": true,
     "repeat_until_green_or_scope_expansion": true
