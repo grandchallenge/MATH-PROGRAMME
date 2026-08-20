@@ -217,6 +217,54 @@ def main() -> int:
         registry=registry,
     )
 
+    remediation_comment_trigger_removed = dict(texts)
+    remediation_comment_trigger_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_comment_trigger_removed[
+        QUALIFICATION_ONLY_WORKFLOW
+    ].replace("  issue_comment:\n    types:\n      - created\n", "", 1)
+    require_error(
+        remediation_comment_trigger_removed,
+        evidence,
+        "trigger must be workflow_dispatch plus issue_comment plus pull_request_target",
+        registry=registry,
+    )
+
+    remediation_comment_association_removed = dict(texts)
+    remediation_comment_association_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_comment_association_removed[
+        QUALIFICATION_ONLY_WORKFLOW
+    ].replace(
+        "contains(fromJSON('[\"OWNER\",\"MEMBER\",\"COLLABORATOR\"]'), github.event.comment.author_association)",
+        "true",
+        1,
+    )
+    require_error(
+        remediation_comment_association_removed,
+        evidence,
+        "missing remediation envelope marker contains(fromJSON",
+        registry=registry,
+    )
+
+    remediation_comment_command_removed = dict(texts)
+    remediation_comment_command_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_comment_command_removed[
+        QUALIFICATION_ONLY_WORKFLOW
+    ].replace("DELEGATED_REMEDIATION_ADMIT ([0-9a-f]{40})", "DELEGATED_REMEDIATION_ADMIT (.*)", 1)
+    require_error(
+        remediation_comment_command_removed,
+        evidence,
+        "DELEGATED_REMEDIATION_ADMIT ([0-9a-f]{40})",
+        registry=registry,
+    )
+
+    remediation_admission_status_removed = dict(texts)
+    remediation_admission_status_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_admission_status_removed[
+        QUALIFICATION_ONLY_WORKFLOW
+    ].replace("Publish durable admission result", "Admission result unavailable", 1)
+    require_error(
+        remediation_admission_status_removed,
+        evidence,
+        "Publish durable admission result",
+        registry=registry,
+    )
+
     remediation_extra_candidate_contents_write = dict(texts)
     remediation_extra_candidate_contents_write[QUALIFICATION_ONLY_WORKFLOW] += (
         "\n# permission-contents: write\n"
