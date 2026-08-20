@@ -216,9 +216,10 @@ class RemediationEnvelopeTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         for required in (
             "workflow_dispatch:",
-            "pull_request:",
+            "pull_request_target:",
             "types:\n      - closed",
             "      - ready_for_review",
+            "github.event_name == 'pull_request_target'",
             "github.event.action != 'closed'",
             "github.event.pull_request.draft == false",
             "startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')",
@@ -226,6 +227,8 @@ class RemediationEnvelopeTests(unittest.TestCase):
             "issues: write",
             "pull-requests: write",
             "REFEREE_TOKEN: ${{ github.token }}",
+            "Check out trusted protected implementation",
+            "ref: refs/heads/main",
             "administrative_remediation_envelope.py admit-pull-request",
             "environment: release-trust",
             "runs-on: ubuntu-24.04",
