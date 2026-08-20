@@ -14,7 +14,7 @@ sys.path.insert(0, str(ROOT / "ci"))
 import administrative_remediation_envelope as remediation
 
 
-class FakeClient:
+class FakeActorClient:
     def __init__(self, ruleset):
         self.ruleset = copy.deepcopy(ruleset)
 
@@ -22,6 +22,64 @@ class FakeClient:
         if path != "/repos/grandchallenge/MATH-PROGRAMME/rulesets/17137629":
             raise AssertionError(path)
         return copy.deepcopy(self.ruleset)
+
+
+class FakeRefereeClient:
+    def __init__(self, head: str):
+        self.head = head
+
+    def get(self, path):
+        if path == "/repos/grandchallenge/MATH-PROGRAMME/issues/comments/5349149366":
+            return {
+                "id": 5349149366,
+                "user": {"login": "fyremael"},
+                "body": (
+                    "HUMAN STEWARD INITIAL APPROVAL — DELEGATED REMEDIATION ENVELOPE\n\n"
+                    "Final administrative-review reactivation/incident closure remains reserved to the Human Steward."
+                ),
+            }
+        if path == "/repos/grandchallenge/MATH-PROGRAMME/pulls/616":
+            return {
+                "number": 616,
+                "node_id": "PR_node",
+                "state": "open",
+                "draft": False,
+                "base": {"ref": "main"},
+                "head": {
+                    "sha": self.head,
+                    "ref": "remediation/mp-admin-remediation-envelope-001",
+                },
+            }
+        if path == "/repos/grandchallenge/MATH-PROGRAMME/pulls/616/files?per_page=100":
+            return [
+                {"filename": ".github/workflows/administrative-protected-receipt-live-qualification.yml"},
+                {"filename": "ci/administrative_remediation_envelope.py"},
+                {"filename": "governance/administrative_remediation_envelope.json"},
+                {"filename": "tests/test_administrative_remediation_envelope.py"},
+                {"filename": "ci/validate_workflow_coverage_v2.py"},
+                {"filename": "ci/test_workflow_coverage_v2.py"},
+            ]
+        raise AssertionError(path)
+
+
+class FakeAdminReadClient:
+    def get(self, path):
+        if path != "/repos/grandchallenge/MATH-PROGRAMME/rulesets/17137629":
+            raise AssertionError(path)
+        return {
+            "id": 17137629,
+            "rules": [
+                {
+                    "type": "required_status_checks",
+                    "parameters": {
+                        "required_status_checks": [
+                            {"context": "Programme policy checks"},
+                            {"context": "GCL conformance"},
+                        ]
+                    },
+                }
+            ],
+        }
 
 
 class RemediationEnvelopeTests(unittest.TestCase):
@@ -45,9 +103,69 @@ class RemediationEnvelopeTests(unittest.TestCase):
         self.assertFalse(steward["intermediate_approval_required"])
         self.assertTrue(steward["final_closure_or_reactivation_approval_required"])
         self.assertTrue(value["delegated_authority"]["repeat_until_green_or_scope_expansion"])
+        review = value["delegated_review"]
+        self.assertEqual("github-actions[bot]", review["referee_login"])
+        self.assertFalse(review["github_review_submission_required"])
+        self.assertTrue(review["expected_head_auto_merge_required"])
+
+    def test_path_scope_excludes_receipt_and_allows_control_plane(self):
+        value = remediation.load_envelope()
+        self.assertTrue(
+            remediation.path_allowed(
+                "ci/administrative_remediation_envelope.py", value
+            )
+        )
+        self.assertTrue(
+            remediation.path_allowed("ci/validate_workflow_coverage_v2.py", value)
+        )
+        self.assertFalse(
+            remediation.path_allowed(
+                "governance/administrative_maintenance_completion_state.json", value
+            )
+        )
+
+    def test_referee_admission_binds_live_approval_checks_and_expected_head_auto_merge(self):
+        head = "1" * 40
+        referee = FakeRefereeClient(head)
+        admin = FakeAdminReadClient()
+        merged = {
+            "merged": True,
+            "merge_commit_sha": "2" * 40,
+            "head": {"sha": head},
+        }
+        with tempfile.TemporaryDirectory() as td, mock.patch.object(
+            remediation, "Client", side_effect=[referee, admin]
+        ), mock.patch.object(
+            remediation,
+            "wait_checks",
+            return_value={"Programme policy checks": "success", "GCL conformance": "success"},
+        ) as wait_checks, mock.patch.object(
+            remediation, "record_disposition", return_value={"id": 9001}
+        ) as disposition, mock.patch.object(
+            remediation, "auto_merge"
+        ) as auto_merge, mock.patch.object(
+            remediation, "wait_merge", return_value=merged
+        ) as wait_merge:
+            path = Path(td) / "admission.json"
+            report = remediation.admit_pull_request(
+                "referee-token", "admin-token", 616, head, path
+            )
+            self.assertEqual("REMEDIATION_PR_PROTECTED_MERGE_COMPLETE", report["state"])
+            self.assertEqual(head, report["exact_head"])
+            self.assertEqual(9001, report["referee_disposition_comment_id"])
+            self.assertFalse(report["github_review_submission_required"])
+            self.assertFalse(report["direct_protected_push"])
+            self.assertFalse(report["bypass_exercised"])
+            self.assertFalse(report["receipt_mutation_performed"])
+            wait_checks.assert_called_once()
+            disposition.assert_called_once()
+            auto_merge.assert_called_once()
+            wait_merge.assert_called_once()
+            persisted = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(report["merge_commit_sha"], persisted["merge_commit_sha"])
 
     def test_actor_reconciliation_changes_only_exact_actor(self):
-        client = FakeClient(self.base_ruleset())
+        client = FakeActorClient(self.base_ruleset())
 
         def install(fake_client, repository, ruleset_id, administrator):
             self.assertIs(fake_client, client)
@@ -83,7 +201,7 @@ class RemediationEnvelopeTests(unittest.TestCase):
         ruleset["bypass_actors"].append(
             {"actor_id": 4423678, "actor_type": "Integration", "bypass_mode": "pull_request"}
         )
-        client = FakeClient(ruleset)
+        client = FakeActorClient(ruleset)
         with tempfile.TemporaryDirectory() as td, mock.patch.object(
             remediation, "Client", return_value=client
         ), mock.patch.object(remediation, "install_bypass") as install:
@@ -100,7 +218,15 @@ class RemediationEnvelopeTests(unittest.TestCase):
             "workflow_dispatch:",
             "pull_request:",
             "types:\n      - closed",
+            "      - ready_for_review",
+            "github.event.action != 'closed'",
+            "github.event.pull_request.draft == false",
             "startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')",
+            "checks: read",
+            "issues: write",
+            "pull-requests: write",
+            "REFEREE_TOKEN: ${{ github.token }}",
+            "administrative_remediation_envelope.py admit-pull-request",
             "environment: release-trust",
             "runs-on: ubuntu-24.04",
             "python-version: '3.12'",
@@ -122,12 +248,21 @@ class RemediationEnvelopeTests(unittest.TestCase):
             "permission-issues: write",
             "permission-pull-requests: write",
             "git push origin main",
+            "gh pr merge",
             "administrative_autonomy_0813_closure_preflight.py",
             "administrative_maintenance_completion_state.json",
             "receipt-administrative_review",
             "reactivation_authorized: true",
         ):
             self.assertNotIn(forbidden, text)
+        self.assertLess(
+            text.index("administrative_remediation_envelope.py admit-pull-request"),
+            text.index("administrative_remediation_envelope.py reconcile-actor"),
+        )
+        self.assertLess(
+            text.index("administrative_remediation_envelope.py reconcile-actor"),
+            text.index("administrative_protected_receipt_live.py qualify"),
+        )
 
 
 if __name__ == "__main__":
