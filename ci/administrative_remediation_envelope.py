@@ -9,16 +9,15 @@ import sys
 from pathlib import Path
 from typing import Any, Mapping
 
+from administrative_autonomy_runtime_github import exact_head_merge
 from autonomy_github import (
     AutonomyError,
     Client,
-    auto_merge,
     identity,
     install_bypass,
     record_disposition,
     required_contexts,
     wait_checks,
-    wait_merge,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,6 +34,7 @@ EXPECTED_AUTHORIZATION_COMMENT_ID = 5349149366
 EXPECTED_HUMAN_STEWARD_LOGIN = "fyremael"
 EXPECTED_REFEREE_LOGIN = "github-actions[bot]"
 EXPECTED_REFEREE_APP_ID = 15368
+EXPECTED_CANDIDATE_LOGIN = "gcl-release-trust[bot]"
 EXPECTED_REMEDIATION_BRANCH_PREFIX = "remediation/mp-admin-"
 EXPECTED_BASE_BRANCH = "main"
 APPROVAL_PREFIX = "HUMAN STEWARD INITIAL APPROVAL — DELEGATED REMEDIATION ENVELOPE"
@@ -96,7 +96,7 @@ def load_envelope(path: Path = ENVELOPE_PATH) -> dict[str, Any]:
         "github_review_submission_required": False,
         "required_checks_source": "live_ruleset_17137629",
         "exact_head_required": True,
-        "expected_head_auto_merge_required": True,
+        "candidate_expected_head_merge_required": True,
         "post_merge_readback_required": True,
     }
     for key, expected_value in expected_review.items():
@@ -112,7 +112,7 @@ def load_envelope(path: Path = ENVELOPE_PATH) -> dict[str, Any]:
         "independent_non_author_review",
         "referee_agent_exact_head_disposition",
         "expected_head_protected_merge_after_review",
-        "referee_expected_head_auto_merge",
+        "candidate_expected_head_merge",
         "automatic_resume_after_merged_remediation_pr",
         "exact_ruleset_actor_reconciliation",
         "qualification_replay",
@@ -169,6 +169,8 @@ def preserved_body(value: Mapping[str, Any]) -> dict[str, Any]:
 def admit_pull_request(
     referee_token: str,
     admin_read_token: str,
+    candidate_merge_token: str,
+    candidate_login: str,
     pr_number: int,
     expected_head: str,
     report_path: Path,
@@ -176,11 +178,14 @@ def admit_pull_request(
     envelope = load_envelope()
     referee = Client(referee_token)
     administrator = Client(admin_read_token)
+    candidate = Client(candidate_merge_token)
     referee_identity = identity(
         EXPECTED_REFEREE_LOGIN,
         EXPECTED_REFEREE_APP_ID,
         "delegated-remediation-referee",
     )
+    if candidate_login != EXPECTED_CANDIDATE_LOGIN:
+        raise AutonomyError("Candidate merge-executor identity drift")
     approval = require_live_initial_approval(referee)
 
     pull = referee.get(f"/repos/{EXPECTED_REPOSITORY}/pulls/{pr_number}")
@@ -230,26 +235,25 @@ def admit_pull_request(
         referee_identity,
         checks,
     )
-    auto_merge(
-        referee,
-        str(pull.get("node_id") or ""),
-        expected_head,
-        referee_identity,
-    )
-    merged = wait_merge(
-        referee,
+    fresh = referee.get(f"/repos/{EXPECTED_REPOSITORY}/pulls/{pr_number}")
+    if fresh.get("state") != "open" or fresh.get("head", {}).get("sha") != expected_head:
+        raise AutonomyError("remediation pull request changed after Referee disposition")
+
+    merged = exact_head_merge(
+        candidate,
         EXPECTED_REPOSITORY,
         pr_number,
         expected_head,
-        600,
+        EXPECTED_ENVELOPE_ID,
+        candidate_login,
     )
     if merged.get("merged") is not True:
-        raise AutonomyError("remediation expected-head auto-merge did not complete")
+        raise AutonomyError("remediation expected-head Candidate merge did not complete")
     if merged.get("head", {}).get("sha") != expected_head:
         raise AutonomyError("remediation merged head readback mismatch")
 
     report = {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "state": "REMEDIATION_PR_PROTECTED_MERGE_COMPLETE",
         "envelope_id": EXPECTED_ENVELOPE_ID,
         "control_issue": EXPECTED_ISSUE,
@@ -263,7 +267,9 @@ def admit_pull_request(
         "referee_actor": EXPECTED_REFEREE_LOGIN,
         "referee_disposition_comment_id": int(disposition["id"]),
         "github_review_submission_required": False,
-        "expected_head_auto_merge_enabled": True,
+        "merge_executor_actor": candidate_login,
+        "candidate_expected_head_merge": True,
+        "auto_merge_used": False,
         "merge_commit_sha": str(merged.get("merge_commit_sha") or ""),
         "direct_protected_push": False,
         "bypass_exercised": False,
@@ -408,11 +414,17 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "admit-pull-request":
         referee_token = os.environ.get("REFEREE_TOKEN", "")
         admin_read_token = os.environ.get("ADMIN_READ_TOKEN", "")
-        if not referee_token or not admin_read_token:
-            raise AutonomyError("REFEREE_TOKEN and ADMIN_READ_TOKEN are required")
+        candidate_merge_token = os.environ.get("CANDIDATE_MERGE_TOKEN", "")
+        candidate_login = os.environ.get("CANDIDATE_LOGIN", "")
+        if not referee_token or not admin_read_token or not candidate_merge_token or not candidate_login:
+            raise AutonomyError(
+                "REFEREE_TOKEN, ADMIN_READ_TOKEN, CANDIDATE_MERGE_TOKEN, and CANDIDATE_LOGIN are required"
+            )
         admit_pull_request(
             referee_token,
             admin_read_token,
+            candidate_merge_token,
+            candidate_login,
             args.pr,
             args.head,
             args.report,

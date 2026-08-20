@@ -82,6 +82,10 @@ class FakeAdminReadClient:
         }
 
 
+class FakeCandidateClient:
+    pass
+
+
 class RemediationEnvelopeTests(unittest.TestCase):
     def base_ruleset(self):
         return {
@@ -106,35 +110,32 @@ class RemediationEnvelopeTests(unittest.TestCase):
         review = value["delegated_review"]
         self.assertEqual("github-actions[bot]", review["referee_login"])
         self.assertFalse(review["github_review_submission_required"])
-        self.assertTrue(review["expected_head_auto_merge_required"])
+        self.assertTrue(review["candidate_expected_head_merge_required"])
+        self.assertTrue(value["delegated_authority"]["candidate_expected_head_merge"])
 
     def test_path_scope_excludes_receipt_and_allows_control_plane(self):
         value = remediation.load_envelope()
-        self.assertTrue(
-            remediation.path_allowed(
-                "ci/administrative_remediation_envelope.py", value
-            )
-        )
-        self.assertTrue(
-            remediation.path_allowed("ci/validate_workflow_coverage_v2.py", value)
-        )
+        self.assertTrue(remediation.path_allowed("ci/administrative_remediation_envelope.py", value))
+        self.assertTrue(remediation.path_allowed("ci/validate_workflow_coverage_v2.py", value))
         self.assertFalse(
             remediation.path_allowed(
                 "governance/administrative_maintenance_completion_state.json", value
             )
         )
 
-    def test_referee_admission_binds_live_approval_checks_and_expected_head_auto_merge(self):
+    def test_referee_admission_binds_live_approval_checks_and_candidate_expected_head_merge(self):
         head = "1" * 40
         referee = FakeRefereeClient(head)
         admin = FakeAdminReadClient()
+        candidate = FakeCandidateClient()
         merged = {
             "merged": True,
             "merge_commit_sha": "2" * 40,
             "head": {"sha": head},
+            "merged_by": {"login": "gcl-release-trust[bot]"},
         }
         with tempfile.TemporaryDirectory() as td, mock.patch.object(
-            remediation, "Client", side_effect=[referee, admin]
+            remediation, "Client", side_effect=[referee, admin, candidate]
         ), mock.patch.object(
             remediation,
             "wait_checks",
@@ -142,25 +143,38 @@ class RemediationEnvelopeTests(unittest.TestCase):
         ) as wait_checks, mock.patch.object(
             remediation, "record_disposition", return_value={"id": 9001}
         ) as disposition, mock.patch.object(
-            remediation, "auto_merge"
-        ) as auto_merge, mock.patch.object(
-            remediation, "wait_merge", return_value=merged
-        ) as wait_merge:
+            remediation, "exact_head_merge", return_value=merged
+        ) as exact_merge:
             path = Path(td) / "admission.json"
             report = remediation.admit_pull_request(
-                "referee-token", "admin-token", 616, head, path
+                "referee-token",
+                "admin-token",
+                "candidate-token",
+                "gcl-release-trust[bot]",
+                616,
+                head,
+                path,
             )
             self.assertEqual("REMEDIATION_PR_PROTECTED_MERGE_COMPLETE", report["state"])
             self.assertEqual(head, report["exact_head"])
             self.assertEqual(9001, report["referee_disposition_comment_id"])
             self.assertFalse(report["github_review_submission_required"])
+            self.assertTrue(report["candidate_expected_head_merge"])
+            self.assertFalse(report["auto_merge_used"])
+            self.assertEqual("gcl-release-trust[bot]", report["merge_executor_actor"])
             self.assertFalse(report["direct_protected_push"])
             self.assertFalse(report["bypass_exercised"])
             self.assertFalse(report["receipt_mutation_performed"])
             wait_checks.assert_called_once()
             disposition.assert_called_once()
-            auto_merge.assert_called_once()
-            wait_merge.assert_called_once()
+            exact_merge.assert_called_once_with(
+                candidate,
+                "grandchallenge/MATH-PROGRAMME",
+                616,
+                head,
+                "MP-ADMIN-REMEDIATION-ENVELOPE-001",
+                "gcl-release-trust[bot]",
+            )
             persisted = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(report["merge_commit_sha"], persisted["merge_commit_sha"])
 
@@ -225,7 +239,11 @@ class RemediationEnvelopeTests(unittest.TestCase):
             "startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')",
             "checks: read",
             "issues: write",
-            "pull-requests: write",
+            "Mint bounded Candidate merge-executor token",
+            "permission-contents: write",
+            "permission-pull-requests: write",
+            "CANDIDATE_MERGE_TOKEN: ${{ steps.candidate-merge-token.outputs.token }}",
+            "CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.candidate-merge-token.outputs.app-slug) }}",
             "REFEREE_TOKEN: ${{ github.token }}",
             "Check out trusted protected implementation",
             "ref: refs/heads/main",
@@ -243,13 +261,14 @@ class RemediationEnvelopeTests(unittest.TestCase):
             "--control-id MP-ADMIN-REMEDIATION-ENVELOPE-001",
             "--control-issue 615",
             "--authorization-comment-id 5349149366",
+            "Publish durable remediation result",
             "retention-days: 90",
         ):
             self.assertIn(required, text)
+        self.assertEqual(1, text.count("permission-contents: write"))
+        self.assertEqual(1, text.count("permission-pull-requests: write"))
         for forbidden in (
-            "permission-contents: write",
             "permission-issues: write",
-            "permission-pull-requests: write",
             "git push origin main",
             "gh pr merge",
             "administrative_autonomy_0813_closure_preflight.py",

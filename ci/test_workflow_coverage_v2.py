@@ -217,12 +217,34 @@ def main() -> int:
         registry=registry,
     )
 
-    remediation_candidate_write = dict(texts)
-    remediation_candidate_write[QUALIFICATION_ONLY_WORKFLOW] += "\n# permission-contents: write\n"
+    remediation_extra_candidate_contents_write = dict(texts)
+    remediation_extra_candidate_contents_write[QUALIFICATION_ONLY_WORKFLOW] += (
+        "\n# permission-contents: write\n"
+    )
     require_error(
-        remediation_candidate_write,
+        remediation_extra_candidate_contents_write,
         evidence,
-        "forbidden remediation capability permission-contents: write",
+        "exactly one Candidate contents-write merge token",
+        registry=registry,
+    )
+
+    remediation_extra_candidate_pr_write = dict(texts)
+    remediation_extra_candidate_pr_write[QUALIFICATION_ONLY_WORKFLOW] += (
+        "\n# permission-pull-requests: write\n"
+    )
+    require_error(
+        remediation_extra_candidate_pr_write,
+        evidence,
+        "exactly one Candidate pull-request-write merge token",
+        registry=registry,
+    )
+
+    remediation_app_issue_write = dict(texts)
+    remediation_app_issue_write[QUALIFICATION_ONLY_WORKFLOW] += "\n# permission-issues: write\n"
+    require_error(
+        remediation_app_issue_write,
+        evidence,
+        "App tokens may not receive issues-write",
         registry=registry,
     )
 
@@ -238,7 +260,11 @@ def main() -> int:
     remediation_admission_removed = dict(texts)
     remediation_admission_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_admission_removed[
         QUALIFICATION_ONLY_WORKFLOW
-    ].replace("administrative_remediation_envelope.py admit-pull-request", "administrative_remediation_envelope.py validate", 1)
+    ].replace(
+        "administrative_remediation_envelope.py admit-pull-request",
+        "administrative_remediation_envelope.py validate",
+        1,
+    )
     require_error(
         remediation_admission_removed,
         evidence,
