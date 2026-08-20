@@ -273,8 +273,11 @@ class LiveProtectedReceiptTests(unittest.TestCase):
     def test_qualification_workflow_is_delegated_remediation_then_read_only_qualification(self):
         text = (ROOT / ".github" / "workflows" / "administrative-protected-receipt-live-qualification.yml").read_text(encoding="utf-8")
         self.assertIn("workflow_dispatch:", text)
-        self.assertIn("pull_request:", text)
+        self.assertIn("pull_request_target:", text)
+        self.assertNotIn("\n  pull_request:\n", text)
         self.assertIn("types:\n      - closed", text)
+        self.assertIn("Check out trusted protected implementation", text)
+        self.assertIn("ref: refs/heads/main", text)
         self.assertIn("startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')", text)
         for forbidden_trigger in ("schedule:", "push:", "workflow_run:", "repository_dispatch:"):
             self.assertNotIn(forbidden_trigger, text)
@@ -288,6 +291,7 @@ class LiveProtectedReceiptTests(unittest.TestCase):
         self.assertNotIn("permission-issues: write", text)
         self.assertNotIn("permission-pull-requests: write", text)
         self.assertIn("administrative_remediation_envelope.py validate", text)
+        self.assertIn("administrative_remediation_envelope.py admit-pull-request", text)
         self.assertIn("administrative_remediation_envelope.py reconcile-actor", text)
         self.assertIn("administrative_protected_receipt_live.py qualify", text)
         self.assertIn("--authorization-comment-id 5349149366", text)
@@ -296,6 +300,7 @@ class LiveProtectedReceiptTests(unittest.TestCase):
         self.assertNotIn("update-branch", text)
         self.assertNotIn("merge_pull_request", text)
         self.assertNotIn("administrative_autonomy_0813_closure_preflight.py", text)
+        self.assertLess(text.index("Referee exact-head admission and expected-head auto-merge"), text.index("Reconcile exact PR-only Administration actor"))
         self.assertLess(text.index("Reconcile exact PR-only Administration actor"), text.index("Execute canonical read-only qualification"))
         self.assertLess(text.index("Execute canonical read-only qualification"), text.index("Preserve remediation and qualification evidence"))
 
