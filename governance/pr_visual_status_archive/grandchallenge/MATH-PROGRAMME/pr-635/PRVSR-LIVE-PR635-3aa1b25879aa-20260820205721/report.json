@@ -1,0 +1,188 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "NOT_REQUIRED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": null,
+      "head_sha": "3aa1b25879aa0736d950ee51b3c8f926e7f0cb30",
+      "name": "Replay LOG-GCD-001 in Lean",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "3aa1b25879aa0736d950ee51b3c8f926e7f0cb30",
+      "name": "Replay PC-WP04 bounded certificate",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "3aa1b25879aa0736d950ee51b3c8f926e7f0cb30",
+      "name": "Replay pinned Union-Closed MATHCERT evidence",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "3aa1b25879aa0736d950ee51b3c8f926e7f0cb30",
+      "name": "policy / policy",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "3aa1b25879aa0736d950ee51b3c8f926e7f0cb30",
+      "name": "security / action-policy",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "3aa1b25879aa0736d950ee51b3c8f926e7f0cb30",
+      "name": "validate-json",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "CHECKS_PENDING",
+    "reasons": [
+      "6 required check(s) are not complete"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-08-20T20:53:34Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-08-20T20:57:20Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "3aa1b25879aa0736d950ee51b3c8f926e7f0cb30",
+    "exact_head_sha": "3aa1b25879aa0736d950ee51b3c8f926e7f0cb30",
+    "pr_number": 635,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "MP-CONSTRUCTION-INTEGRITY-001: pre-write invariant gate"
+  },
+  "integration": {
+    "merge_commit_sha": "2166a94af699091a23a7d9cd055bfb4aa8c5ab5b",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 5,
+      "collector_limitations": [],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 96579901354,
+          "conclusion": null,
+          "head_sha": "3aa1b25879aa0736d950ee51b3c8f926e7f0cb30",
+          "name": "Analyze (actions)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 96579901782,
+          "conclusion": null,
+          "head_sha": "3aa1b25879aa0736d950ee51b3c8f926e7f0cb30",
+          "name": "Analyze (c-cpp)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 96579901694,
+          "conclusion": null,
+          "head_sha": "3aa1b25879aa0736d950ee51b3c8f926e7f0cb30",
+          "name": "Analyze (python)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 96579898352,
+          "conclusion": null,
+          "head_sha": "3aa1b25879aa0736d950ee51b3c8f926e7f0cb30",
+          "name": "admit",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 96579899394,
+          "conclusion": "skipped",
+          "head_sha": "3aa1b25879aa0736d950ee51b3c8f926e7f0cb30",
+          "name": "qualify",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [
+        "Replay LOG-GCD-001 in Lean",
+        "Replay PC-WP04 bounded certificate",
+        "Replay pinned Union-Closed MATHCERT evidence",
+        "policy / policy",
+        "security / action-policy",
+        "validate-json"
+      ],
+      "ruleset_source_available": true
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-08-20T20:57:21Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "649773d9ccfb3fd8d97e302b33535ea95a8c30f22d8cb799f97ebe5ce77a11bf"
+  },
+  "report_id": "PRVSR-LIVE-PR635-3aa1b25879aa-20260820205721",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane"
+    ]
+  }
+}
