@@ -189,6 +189,7 @@ jobs:
           CANDIDATE_TOKEN: ${{ steps.candidate-token.outputs.token }}
           EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
           ADMIN_TOKEN: ${{ steps.admin-read-token.outputs.token }}
+          GCL_PROTECTED_RECEIPT_CONFIG_EVIDENCE: administrative-remediation-ruleset-reconciliation.json
           GCL_PROTECTED_RECEIPT_DIAGNOSTIC: administrative-protected-receipt-diagnostic.json
         run: |
           set -euo pipefail
