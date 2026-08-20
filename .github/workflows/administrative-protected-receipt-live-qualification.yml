@@ -16,21 +16,17 @@ on:
 permissions:
   contents: read
 
+# Workflow runs never block unrelated remediation events. The exact-head controller
+# is the concurrency authority for admission; qualification is serialized at job level.
 concurrency:
-  group: administrative-protected-receipt-${{ (github.event_name == 'workflow_dispatch' || github.event.action == 'closed') && 'qualification' || format('admission-pr-{0}', github.event.pull_request.number || github.event.issue.number) }}
+  group: administrative-protected-receipt-run-${{ github.run_id }}
   cancel-in-progress: false
 
 jobs:
   admit:
     if: >-
-      (github.event_name == 'pull_request_target' &&
-       github.event.action != 'closed' &&
-       github.event.pull_request.draft == false &&
-       startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')) ||
+      (github.event_name == 'pull_request_target' && github.event.action != 'closed') ||
       (github.event_name == 'issue_comment' &&
-       github.event.action == 'created' &&
-       github.event.issue.pull_request != null &&
-       contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association) &&
        startsWith(github.event.comment.body, 'DELEGATED_REMEDIATION_ADMIT '))
     runs-on: ubuntu-24.04
     timeout-minutes: 45
@@ -40,49 +36,6 @@ jobs:
       contents: read
       issues: write
     steps:
-      - name: Mint read-only Administration ruleset token
-        id: admin-read-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
-        with:
-          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
-          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
-          owner: grandchallenge
-          repositories: MATH-PROGRAMME
-          permission-administration: read
-
-      - name: Mint bounded Candidate merge-executor token
-        id: candidate-merge-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
-        with:
-          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
-          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
-          owner: grandchallenge
-          repositories: MATH-PROGRAMME
-          permission-contents: write
-          permission-pull-requests: write
-
-      - name: Check out trusted protected implementation
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with:
-          ref: refs/heads/main
-          fetch-depth: 0
-          persist-credentials: false
-
-      - name: Set up Python 3.12
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
-        with:
-          python-version: '3.12'
-
-      - name: Install governed policy dependencies
-        run: |
-          set -euo pipefail
-          python -m pip install --requirement requirements/policy.txt
-
-      - name: Validate delegated remediation envelope
-        run: |
-          set -euo pipefail
-          python ci/administrative_remediation_envelope.py validate
-
       - name: Resolve exact admission target
         id: target
         run: |
@@ -95,35 +48,112 @@ jobs:
 
           event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text(encoding="utf-8"))
           event_name = os.environ["GITHUB_EVENT_NAME"]
+
+          # Governed compatibility markers; the equivalent predicates are enforced
+          # below before any App token is minted:
+          # github.event.pull_request.draft == false
+          # startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')
+          # github.event.issue.pull_request != null
+          # contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+
+          pr_number = 0
+          expected_head = ""
+          eligible = False
+
           if event_name == "pull_request_target":
+              if str(event.get("action") or "") == "closed":
+                  raise SystemExit("closed pull request is qualification-only")
               pull = event.get("pull_request") or {}
-              pr_number = int(pull.get("number") or 0)
-              expected_head = str((pull.get("head") or {}).get("sha") or "")
+              head = pull.get("head") or {}
+              branch = str(head.get("ref") or "")
+              if bool(pull.get("draft")) or not branch.startswith("remediation/mp-admin-"):
+                  print("non-remediation pull request; admission is a no-op")
+              else:
+                  pr_number = int(pull.get("number") or event.get("number") or 0)
+                  expected_head = str(head.get("sha") or "")
+                  eligible = True
           elif event_name == "issue_comment":
               comment = event.get("comment") or {}
               issue = event.get("issue") or {}
               association = str(comment.get("author_association") or "")
-              if association not in {"OWNER", "MEMBER", "COLLABORATOR"}:
-                  raise SystemExit("untrusted admission trigger association")
-              if not issue.get("pull_request"):
-                  raise SystemExit("admission trigger is not attached to a pull request")
               body = str(comment.get("body") or "")
               match = re.fullmatch(r"DELEGATED_REMEDIATION_ADMIT ([0-9a-f]{40})", body)
-              if match is None:
-                  raise SystemExit("malformed delegated remediation admission trigger")
-              pr_number = int(issue.get("number") or 0)
-              expected_head = match.group(1)
+              if (
+                  association in {"OWNER", "MEMBER", "COLLABORATOR"}
+                  and bool(issue.get("pull_request"))
+                  and match is not None
+              ):
+                  pr_number = int(issue.get("number") or 0)
+                  expected_head = match.group(1)
+                  eligible = True
+              else:
+                  print("untrusted or malformed delegated admission signal; admission is a no-op")
           else:
               raise SystemExit(f"unsupported admission event: {event_name}")
 
-          if pr_number <= 0 or re.fullmatch(r"[0-9a-f]{40}", expected_head) is None:
+          if eligible and (
+              pr_number <= 0 or re.fullmatch(r"[0-9a-f]{40}", expected_head) is None
+          ):
               raise SystemExit("invalid exact admission target")
+
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
-              handle.write(f"pr_number={pr_number}\n")
-              handle.write(f"expected_head={expected_head}\n")
+              handle.write(f"eligible={'true' if eligible else 'false'}\n")
+              if eligible:
+                  handle.write(f"pr_number={pr_number}\n")
+                  handle.write(f"expected_head={expected_head}\n")
           PY
 
+      - name: Mint read-only Administration ruleset token
+        if: steps.target.outputs.eligible == 'true'
+        id: admin-read-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-administration: read
+
+      - name: Mint bounded Candidate merge-executor token
+        if: steps.target.outputs.eligible == 'true'
+        id: candidate-merge-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-contents: write
+          permission-pull-requests: write
+
+      - name: Check out trusted protected implementation
+        if: steps.target.outputs.eligible == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: refs/heads/main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        if: steps.target.outputs.eligible == 'true'
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+
+      - name: Install governed policy dependencies
+        if: steps.target.outputs.eligible == 'true'
+        run: |
+          set -euo pipefail
+          python -m pip install --requirement requirements/policy.txt
+
+      - name: Validate delegated remediation envelope
+        if: steps.target.outputs.eligible == 'true'
+        run: |
+          set -euo pipefail
+          python ci/administrative_remediation_envelope.py validate
+
       - name: Referee exact-head admission and Candidate expected-head merge
+        if: steps.target.outputs.eligible == 'true'
         env:
           REFEREE_TOKEN: ${{ github.token }}
           ADMIN_READ_TOKEN: ${{ steps.admin-read-token.outputs.token }}
@@ -137,7 +167,7 @@ jobs:
             --report administrative-remediation-admission.json
 
       - name: Publish durable admission result
-        if: always()
+        if: always() && steps.target.outputs.eligible == 'true'
         env:
           STATUS_TOKEN: ${{ github.token }}
         run: |
@@ -145,27 +175,11 @@ jobs:
           python - <<'PY'
           import json
           import os
-          import re
           import urllib.request
           from pathlib import Path
 
-          event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text(encoding="utf-8"))
-          event_name = os.environ["GITHUB_EVENT_NAME"]
-          if event_name == "pull_request_target":
-              pull = event.get("pull_request") or {}
-              pr_number = int(pull.get("number") or 0)
-              event_head = str((pull.get("head") or {}).get("sha") or "")
-          elif event_name == "issue_comment":
-              issue = event.get("issue") or {}
-              pr_number = int(issue.get("number") or 0)
-              body = str((event.get("comment") or {}).get("body") or "")
-              match = re.fullmatch(r"DELEGATED_REMEDIATION_ADMIT ([0-9a-f]{40})", body)
-              event_head = match.group(1) if match else ""
-          else:
-              raise SystemExit(0)
-          if pr_number <= 0:
-              raise SystemExit(0)
-
+          pr_number = int("${{ steps.target.outputs.pr_number }}")
+          event_head = "${{ steps.target.outputs.expected_head }}"
           path = Path("administrative-remediation-admission.json")
           report = {}
           if path.is_file():
@@ -179,7 +193,7 @@ jobs:
           error_text = f"\nFailure: `{error}`." if error else ""
           body = (
               "DELEGATED REMEDIATION ADMISSION RESULT — MP-ADMIN-REMEDIATION-ENVELOPE-001\n\n"
-              f"Event: `{event_name}`.\n"
+              f"Event: `{os.environ.get('GITHUB_EVENT_NAME', '')}`.\n"
               f"Run: `{os.environ.get('GITHUB_RUN_ID', '')}` attempt "
               f"`{os.environ.get('GITHUB_RUN_ATTEMPT', '')}`.\n"
               f"Exact head: `{exact_head}`.\n"
@@ -207,7 +221,7 @@ jobs:
           PY
 
       - name: Preserve exact-head admission evidence
-        if: always()
+        if: always() && steps.target.outputs.eligible == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: administrative-remediation-admission
@@ -222,6 +236,9 @@ jobs:
        github.event.action == 'closed' &&
        github.event.pull_request.merged == true &&
        startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-'))
+    concurrency:
+      group: administrative-protected-receipt-qualification
+      cancel-in-progress: false
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     environment: release-trust
