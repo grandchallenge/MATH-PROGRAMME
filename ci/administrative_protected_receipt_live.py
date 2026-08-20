@@ -59,6 +59,9 @@ DEFAULT_DIAGNOSTIC_PATH = Path("administrative-protected-receipt-diagnostic.json
 DEFAULT_QUALIFICATION_REPORT = Path("administrative-protected-receipt-qualification.json")
 DEFAULT_INTEGRATION_MERGE = "8ff752b4f2ac28d87575d4f4ef48f564fb18837b"
 DEFAULT_RECEIPT_PR = 596
+CONFIG_EVIDENCE_ENV = "GCL_PROTECTED_RECEIPT_CONFIG_EVIDENCE"
+CONFIG_EVIDENCE_CONTRACT = "SAME_RUN_RULESET_ACTOR_READBACK_V1"
+CONFIG_EVIDENCE_BASIS = "SAME_RUN_RECONCILIATION_EVIDENCE"
 _FRONTIER_RE = re.compile(r"- `(?P<procedure>[^`]+)` completed through: `(?P<due>[^`]+)`")
 
 
@@ -218,6 +221,103 @@ def _capability_dict(value: CapabilitySet) -> dict[str, Any]:
     }
 
 
+def _current_run_identity() -> dict[str, str]:
+    return {
+        "github_run_id": os.environ.get("GITHUB_RUN_ID", ""),
+        "github_run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT", ""),
+        "github_sha": os.environ.get("GITHUB_SHA", ""),
+        "github_workflow_ref": os.environ.get("GITHUB_WORKFLOW_REF", ""),
+    }
+
+
+def _ruleset_body_digest(raw: Mapping[str, Any]) -> str:
+    return sha256_json({key: raw.get(key) for key in ConfigurationAdapter.BODY_KEYS})
+
+
+def _load_configuration_evidence() -> Mapping[str, Any] | None:
+    raw_path = os.environ.get(CONFIG_EVIDENCE_ENV, "")
+    if not raw_path:
+        return None
+    path = Path(raw_path)
+    if not path.is_file():
+        raise QualificationFailure("CONFIGURATION_EVIDENCE_ABSENT", f"same-run configuration evidence is absent: {path}")
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise QualificationFailure("CONFIGURATION_EVIDENCE_INVALID", f"cannot read same-run configuration evidence: {type(exc).__name__}") from exc
+    if not isinstance(value, Mapping):
+        raise QualificationFailure("CONFIGURATION_EVIDENCE_INVALID", "same-run configuration evidence is not an object")
+    return value
+
+
+def _evidence_actor_set(value: Any) -> list[tuple[int, str, str]]:
+    if not isinstance(value, list):
+        raise QualificationFailure("CONFIGURATION_EVIDENCE_INVALID", "after_actor_set is not a list")
+    actors: list[tuple[int, str, str]] = []
+    try:
+        for item in value:
+            if not isinstance(item, (list, tuple)) or len(item) != 3:
+                raise ValueError("actor tuple shape")
+            actors.append((int(item[0]), str(item[1]), str(item[2])))
+    except (TypeError, ValueError) as exc:
+        raise QualificationFailure("CONFIGURATION_EVIDENCE_INVALID", "after_actor_set is malformed") from exc
+    return sorted(actors)
+
+
+def _configuration_from_same_run_evidence(
+    desired: DesiredConfiguration,
+    raw: Mapping[str, Any],
+    evidence: Mapping[str, Any],
+) -> ConfigObservation:
+    if evidence.get("configuration_evidence_contract") != CONFIG_EVIDENCE_CONTRACT:
+        raise QualificationFailure("CONFIGURATION_EVIDENCE_INVALID", "configuration evidence contract mismatch")
+    if int(evidence.get("ruleset_id") or -1) != desired.ruleset_id:
+        raise QualificationFailure("CONFIGURATION_EVIDENCE_INVALID", "configuration evidence ruleset mismatch")
+    target = evidence.get("target_actor", {})
+    expected_target = desired.actor.as_dict()
+    for key, expected in expected_target.items():
+        if target.get(key) != expected:
+            raise QualificationFailure("CONFIGURATION_EVIDENCE_INVALID", f"configuration evidence target mismatch: {key}")
+    if evidence.get("actor_present_after") is not True:
+        raise QualificationFailure("CONFIGURATION_EVIDENCE_INVALID", "configuration evidence does not prove target presence")
+    actors = _evidence_actor_set(evidence.get("after_actor_set"))
+    desired_tuple = (desired.actor.actor_id, desired.actor.actor_type, desired.actor.bypass_mode)
+    if desired_tuple not in actors:
+        raise QualificationFailure("CONFIGURATION_EVIDENCE_INVALID", "configuration evidence actor set omits target")
+    for key in ("existing_bypass_actors_preserved", "non_actor_fields_preserved"):
+        if evidence.get(key) is not True:
+            raise QualificationFailure("CONFIGURATION_EVIDENCE_INVALID", f"configuration evidence preservation failure: {key}")
+    for key in (
+        "direct_protected_push",
+        "bypass_exercised",
+        "receipt_mutation_performed",
+        "ledger_mutation_performed",
+        "mirror_mutation_performed",
+        "reactivation_authorized",
+    ):
+        if evidence.get(key) is not False:
+            raise QualificationFailure("CONFIGURATION_EVIDENCE_INVALID", f"configuration evidence safety failure: {key}")
+    expected_identity = _current_run_identity()
+    observed_identity = evidence.get("run_identity", {})
+    if not isinstance(observed_identity, Mapping):
+        raise QualificationFailure("CONFIGURATION_EVIDENCE_INVALID", "configuration evidence run identity is absent")
+    for key, expected in expected_identity.items():
+        if not expected or str(observed_identity.get(key) or "") != expected:
+            raise QualificationFailure("CONFIGURATION_EVIDENCE_INVALID", f"configuration evidence is stale for {key}")
+    body_digest = _ruleset_body_digest(raw)
+    if evidence.get("before_body_digest") != body_digest or evidence.get("after_body_digest") != body_digest:
+        raise QualificationFailure("CONFIGURATION_EVIDENCE_INVALID", "configuration evidence non-actor body mismatch")
+    non_target = [actor for actor in actors if actor != desired_tuple]
+    return ConfigObservation(
+        ConfigState.CONVERGED,
+        str(evidence.get("after_ruleset_digest") or "") or None,
+        True,
+        sha256_json(non_target),
+        body_digest,
+        CONFIG_EVIDENCE_BASIS,
+    )
+
+
 def read_only_configuration_preflight(
     administrator: Client,
     repository: str,
@@ -236,7 +336,20 @@ def read_only_configuration_preflight(
         raw = administrator.get(f"/repos/{repository}/rulesets/{desired.ruleset_id}")
     except Exception:
         raw = None
-    return ConfigurationAdapter().observe(desired, raw)
+    observed = ConfigurationAdapter().observe(desired, raw)
+    if observed.state == ConfigState.CONVERGED or raw is None or "bypass_actors" in raw:
+        return observed
+    evidence = _load_configuration_evidence()
+    if evidence is None:
+        return ConfigObservation(
+            ConfigState.UNKNOWN,
+            observed.observed_digest,
+            False,
+            observed.non_target_digest,
+            observed.body_digest,
+            "bypass actor visibility unavailable and no same-run reconciliation evidence",
+        )
+    return _configuration_from_same_run_evidence(desired, raw, evidence)
 
 
 def authoritative_frontier(
@@ -602,6 +715,7 @@ def collect_live_snapshot(
             "target_present": config.target_present,
             "non_target_digest": config.non_target_digest,
             "body_digest": config.body_digest,
+            "verification_basis": config.reason or "DIRECT_RULESET_ACTOR_VISIBILITY",
             "mutation_performed": False,
         },
         "identities": {
