@@ -53,11 +53,6 @@ from administrative_autonomy_runtime_structural_1809_recovery import (
 from administrative_autonomy_runtime_administrative_review_0121_recovery import (
     eligible_candidates as administrative_review_0121_recovery_eligible_candidates,
 )
-from administrative_protected_receipt_live import (
-    suspended_eligible_candidates,
-    suspended_pending_closures,
-    suspended_stage_completion_receipt,
-)
 from autonomy_github import AutonomyError
 
 receipt_stage.pending_closures = nonblocking_pending_closures
@@ -104,43 +99,19 @@ runtime_github.wait_mirror_sync = partial(
 # Historical compatibility-test marker only; this symbol is not imported or called.
 # administrative_review_0813_receipt_pending_closures
 # The generic receipt integration supersedes the authority-sensitive Aug13
-# import-time recovery overlay. Historical modules remain protected evidence,
-# but the effective runtime filters administrative-review candidate, closure,
-# and receipt transitions before the executor captures any callable.
-receipt_stage.pending_closures = partial(
-    suspended_pending_closures,
-    base=receipt_stage.pending_closures,
-)
-receipt_stage.stage_completion_receipt = partial(
-    suspended_stage_completion_receipt,
-    base=receipt_stage.stage_completion_receipt,
-)
-
-# Preserve the protected runtime_github recovery-chain binding. The ordinary
-# executor imported below captures that approved callable by value; suspend the
-# administrative-review lane on the executor-local binding instead.
+# import-time recovery overlay. Administrative-review candidate, closure, and
+# receipt transitions now use the protected generic runtime without the former
+# qualification-only suspension wrappers.
 import administrative_autonomy_runtime_execute as runtime_execute
-
-runtime_execute.eligible_candidates = partial(
-    suspended_eligible_candidates,
-    base=runtime_execute.eligible_candidates,
-)
 
 import administrative_autonomy_runtime_behind_sync as behind_sync
 
-# The BEHIND wrapper separately captures the approved recovery-chain callable.
-# Filter that executor-local binding without rebinding runtime_github.
-behind_sync.eligible_candidates = partial(
-    suspended_eligible_candidates,
-    base=behind_sync.eligible_candidates,
-)
 behind_sync.synchronize_eligible_candidate = partial(
     structural_1809_synchronize_eligible_candidate,
     base=behind_sync.synchronize_eligible_candidate,
 )
 
 # Preserve the durable executor-import boundary relied on by certification tests.
-# The executor has already captured the generic suspension filters above.
 from administrative_autonomy_runtime_behind_sync import (
     execute, main, validate_command,
 )
