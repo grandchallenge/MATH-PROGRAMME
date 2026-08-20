@@ -127,12 +127,97 @@ theorem weightedFiniteBooleanMeasureLimitLift_add
       (hsum.trans
         ((congrArg₂ (· + ·) ha.symm hb.symm).trans hcomp.symm))
 
+/-- The coefficient section obtained by sending a global weighted measure family through the
+protected measure/solid comparison and then through a chosen solid-side coefficient morphism. -/
+noncomputable def kernelProductSection
+    (X : Profinite.{u})
+    (h : (Condensed.profiniteSolid R).obj X ⟶ coefficientObject)
+    (a : IntegralBasisIndex X → ℤ) :
+    LocallyConstant (basisBooleanCube X) R := by
+  exact
+    freeHomSectionsEquiv (basisBooleanCube X) coefficientObject
+      (weightedFiniteBooleanMeasureLimitLift X a ≫
+        CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.hom.app X ≫
+        h)
+
+/-- The global coefficient section is additive in the external weight vector. -/
+theorem kernelProductSection_add
+    (X : Profinite.{u})
+    (h : (Condensed.profiniteSolid R).obj X ⟶ coefficientObject)
+    (a b : IntegralBasisIndex X → ℤ) :
+    kernelProductSection X h (a + b) =
+      kernelProductSection X h a + kernelProductSection X h b := by
+  let T := basisBooleanCube X
+  let e :=
+    CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.hom.app X
+  have hcomp :
+      weightedFiniteBooleanMeasureLimitLift X (a + b) ≫ e ≫ h =
+        (weightedFiniteBooleanMeasureLimitLift X a ≫ e ≫ h) +
+          (weightedFiniteBooleanMeasureLimitLift X b ≫ e ≫ h) := by
+    rw [weightedFiniteBooleanMeasureLimitLift_add]
+    rw [Preadditive.add_comp, Preadditive.add_comp]
+  change
+    (show coefficientObject.obj.obj (op ((profiniteToCompHaus).obj T)) from
+      freeHomSectionsEquiv T coefficientObject
+        (weightedFiniteBooleanMeasureLimitLift X (a + b) ≫ e ≫ h)) =
+      (show coefficientObject.obj.obj (op ((profiniteToCompHaus).obj T)) from
+        freeHomSectionsEquiv T coefficientObject
+          (weightedFiniteBooleanMeasureLimitLift X a ≫ e ≫ h)) +
+        (show coefficientObject.obj.obj (op ((profiniteToCompHaus).obj T)) from
+          freeHomSectionsEquiv T coefficientObject
+            (weightedFiniteBooleanMeasureLimitLift X b ≫ e ≫ h))
+  rw [hcomp]
+  exact freeHomSectionsEquiv_add T coefficientObject _ _
+
+/-- All-true evaluation of the global weighted coefficient section, lowered back to integers,
+forms an additive functional on the full integer product of basis weights. -/
+noncomputable def kernelProductFunctional
+    (X : Profinite.{u})
+    (h : (Condensed.profiniteSolid R).obj X ⟶ coefficientObject) :
+    (IntegralBasisIndex X → ℤ) →+ ℤ where
+  toFun := fun a => (kernelProductSection X h a (fun _ => true)).down
+  map_zero' := by
+    let z := (kernelProductSection X h (0 : IntegralBasisIndex X → ℤ)
+      (fun _ => true)).down
+    have hs := congrArg
+      (fun f : LocallyConstant (basisBooleanCube X) R =>
+        (f (fun _ => true)).down)
+      (kernelProductSection_add X h
+        (0 : IntegralBasisIndex X → ℤ) (0 : IntegralBasisIndex X → ℤ))
+    have hz : z = z + z := by
+      simpa [z] using hs
+    have hz' : z + z = z + 0 := by
+      simpa using hz.symm
+    exact add_left_cancel hz'
+  map_add' := by
+    intro a b
+    have hs := congrArg
+      (fun f : LocallyConstant (basisBooleanCube X) R =>
+        (f (fun _ => true)).down)
+      (kernelProductSection_add X h a b)
+    simpa using hs
+
+@[simp]
+theorem kernelProductFunctional_apply
+    (X : Profinite.{u})
+    (h : (Condensed.profiniteSolid R).obj X ⟶ coefficientObject)
+    (a : IntegralBasisIndex X → ℤ) :
+    kernelProductFunctional X h a =
+      (kernelProductSection X h a (fun _ => true)).down := by
+  rfl
+
 #check freeHomSectionsEquiv_add
 #check weightedFiniteBooleanMeasureHom_add
 #check weightedFiniteBooleanMeasureLimitLift_add
+#check kernelProductSection
+#check kernelProductSection_add
+#check kernelProductFunctional
+#check kernelProductFunctional_apply
 
 #print axioms freeHomSectionsEquiv_add
 #print axioms weightedFiniteBooleanMeasureHom_add
 #print axioms weightedFiniteBooleanMeasureLimitLift_add
+#print axioms kernelProductSection_add
+#print axioms kernelProductFunctional
 
 end CMDG.CondensedCM4P3L.KernelFunctional
