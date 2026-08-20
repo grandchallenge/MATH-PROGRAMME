@@ -246,7 +246,7 @@ def main() -> int:
     remediation_comment_command_removed = dict(texts)
     remediation_comment_command_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_comment_command_removed[
         QUALIFICATION_ONLY_WORKFLOW
-    ].replace("DELEGATED_REMEDIATION_ADMIT ([0-9a-f]{40})", "DELEGATED_REMEDIATION_ADMIT (.*)", 1)
+    ].replace("DELEGATED_REMEDIATION_ADMIT ([0-9a-f]{40})", "DELEGATED_REMEDIATION_ADMIT (.*)")
     require_error(
         remediation_comment_command_removed,
         evidence,
