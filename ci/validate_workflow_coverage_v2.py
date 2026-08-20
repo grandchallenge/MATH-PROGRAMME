@@ -197,8 +197,14 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         return errors
     workflow = v3.legacy.load_yaml_text(text)
     trigger = _trigger(workflow)
-    if set(trigger) != {"workflow_dispatch", "pull_request_target"}:
-        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: trigger must be workflow_dispatch plus pull_request_target")
+    if set(trigger) != {"workflow_dispatch", "issue_comment", "pull_request_target"}:
+        errors.append(
+            f"{QUALIFICATION_ONLY_WORKFLOW}: trigger must be workflow_dispatch plus issue_comment plus pull_request_target"
+        )
+    issue_comment = trigger.get("issue_comment", {})
+    issue_types = issue_comment.get("types", []) if isinstance(issue_comment, dict) else []
+    if issue_types != ["created"]:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: issue_comment trigger must be created only")
     pull_request_target = trigger.get("pull_request_target", {})
     types = pull_request_target.get("types", []) if isinstance(pull_request_target, dict) else []
     expected_types = ["closed", "opened", "reopened", "synchronize", "ready_for_review"]
@@ -229,6 +235,12 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         "github.event.action != 'closed'",
         "github.event.pull_request.draft == false",
         "startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')",
+        "github.event_name == 'issue_comment'",
+        "github.event.issue.pull_request != null",
+        "contains(fromJSON('[\"OWNER\",\"MEMBER\",\"COLLABORATOR\"]'), github.event.comment.author_association)",
+        "startsWith(github.event.comment.body, 'DELEGATED_REMEDIATION_ADMIT ')",
+        "DELEGATED_REMEDIATION_ADMIT ([0-9a-f]{40})",
+        "Resolve exact admission target",
         "Mint bounded Candidate merge-executor token",
         "id: candidate-merge-token",
         "permission-contents: write",
@@ -241,8 +253,10 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         "CANDIDATE_MERGE_TOKEN: ${{ steps.candidate-merge-token.outputs.token }}",
         "CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.candidate-merge-token.outputs.app-slug) }}",
         "administrative_remediation_envelope.py admit-pull-request",
-        '--pr "${{ github.event.pull_request.number }}"',
-        '--head "${{ github.event.pull_request.head.sha }}"',
+        '--pr "${{ steps.target.outputs.pr_number }}"',
+        '--head "${{ steps.target.outputs.expected_head }}"',
+        "Publish durable admission result",
+        "DELEGATED REMEDIATION ADMISSION RESULT — MP-ADMIN-REMEDIATION-ENVELOPE-001",
         "administrative-remediation-admission.json",
         "permission-contents: read",
         "permission-pull-requests: read",
@@ -250,6 +264,7 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
         "permission-administration: write",
         "administrative_remediation_envelope.py reconcile-actor",
         "administrative_protected_receipt_live.py qualify",
+        "GCL_PROTECTED_RECEIPT_CONFIG_EVIDENCE: administrative-remediation-ruleset-reconciliation.json",
         "--control-id MP-ADMIN-REMEDIATION-ENVELOPE-001",
         "--control-issue 615",
         "--authorization-comment-id 5349149366",
@@ -268,9 +283,9 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
 
     if text.count(v3.APP_ACTION) != 6:
         errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly six separately scoped App tokens are required")
-    if text.count("${{ github.token }}") != 2:
+    if text.count("${{ github.token }}") != 3:
         errors.append(
-            f"{QUALIFICATION_ONLY_WORKFLOW}: workflow token must be used exactly for Referee admission and durable status publication"
+            f"{QUALIFICATION_ONLY_WORKFLOW}: workflow token must be used exactly for Referee admission, admission-status publication, and qualification-status publication"
         )
     if text.count("permission-administration: write") != 1:
         errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly one actor-reconciliation administration-write token is required")
@@ -283,16 +298,26 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
     if "permission-issues: write" in text:
         errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: App tokens may not receive issues-write")
 
+    target_index = text.find("Resolve exact admission target")
     admission_index = text.find("administrative_remediation_envelope.py admit-pull-request")
+    admission_status_index = text.find("Publish durable admission result")
     reconciliation_index = text.find("administrative_remediation_envelope.py reconcile-actor")
     qualification_index = text.find("administrative_protected_receipt_live.py qualify")
     status_index = text.find("Publish durable remediation result")
     evidence_index = text.find("Preserve remediation and qualification evidence")
-    if min(admission_index, reconciliation_index, qualification_index, status_index, evidence_index) < 0:
+    if min(
+        target_index,
+        admission_index,
+        admission_status_index,
+        reconciliation_index,
+        qualification_index,
+        status_index,
+        evidence_index,
+    ) < 0:
         errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: remediation sequence is incomplete")
-    elif not admission_index < reconciliation_index < qualification_index < status_index < evidence_index:
+    elif not target_index < admission_index < admission_status_index < reconciliation_index < qualification_index < status_index < evidence_index:
         errors.append(
-            f"{QUALIFICATION_ONLY_WORKFLOW}: Referee admission must precede actor reconciliation, qualification, durable status, and retained evidence"
+            f"{QUALIFICATION_ONLY_WORKFLOW}: exact target resolution and Referee admission must precede admission audit, actor reconciliation, qualification, durable status, and retained evidence"
         )
 
     for forbidden in (
@@ -355,8 +380,9 @@ def main() -> int:
         "workflow coverage v3: direct workflow and governed shard-registry execution roots, "
         "active bounded administrative runtime, separated Candidate and Referee identities, "
         "protected expected-head PR merge, exact Aug13 PR-close recovery failover, trusted-main "
-        "delegated remediation Referee admission, Candidate expected-head merge, post-merge qualification, "
-        "durable issue-status audit, mirror-only synchronization, manual control-plane gates, and claim boundaries are valid"
+        "delegated remediation Referee admission with trusted comment fallback, Candidate expected-head merge, "
+        "post-merge qualification, durable admission and issue-status audit, mirror-only synchronization, "
+        "manual control-plane gates, and claim boundaries are valid"
     )
     return 0
 
