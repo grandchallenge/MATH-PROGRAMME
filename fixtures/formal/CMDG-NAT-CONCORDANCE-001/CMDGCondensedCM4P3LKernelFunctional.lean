@@ -60,8 +60,18 @@ theorem freeHomSectionsEquiv_precomp
     rfl
   rw [hfree]
   rw [(Condensed.freeForgetAdjunction R).homEquiv_naturality_left]
-  simpa [freeHomSectionsEquiv, GrothendieckTopology.uliftYoneda, profiniteToCondensed,
-    compHausToCondensed, compHausToCondensed', Condensed.ulift, Functor.comp_map] using
+  change
+    (coherentTopology CompHaus.{u}).uliftYonedaEquiv
+        (((coherentTopology CompHaus.{u}).uliftYoneda).map
+          ((profiniteToCompHaus).map q) ≫
+          (Condensed.freeForgetAdjunction R).homEquiv
+            ((profiniteToCondensed).obj U) A g) =
+      ((Condensed.forget R).obj A).obj.map
+        ((profiniteToCompHaus).map q).op
+        ((coherentTopology CompHaus.{u}).uliftYonedaEquiv
+          ((Condensed.freeForgetAdjunction R).homEquiv
+            ((profiniteToCondensed).obj U) A g))
+  exact
     ((coherentTopology CompHaus.{u}).uliftYonedaEquiv_naturality
       ((Condensed.freeForgetAdjunction R).homEquiv
         ((profiniteToCondensed).obj U) A g)
@@ -333,6 +343,20 @@ theorem weightedFiniteBooleanMeasureSection_point_reweight
   have htrue := ConcreteCategory.congr_hom
     (T.naturality ftrue)
       (weightedFiniteBooleanCoefficientFamily X (weightedBoolToInt a t) j)
+  change
+    (ConcreteCategory.hom (T.app U))
+        ((ConcreteCategory.hom (F.map ft))
+          (weightedFiniteBooleanCoefficientFamily X a j)) =
+      (ConcreteCategory.hom (G.map ft))
+        ((ConcreteCategory.hom (T.app S))
+          (weightedFiniteBooleanCoefficientFamily X a j)) at ht
+  change
+    (ConcreteCategory.hom (T.app U))
+        ((ConcreteCategory.hom (F.map ftrue))
+          (weightedFiniteBooleanCoefficientFamily X (weightedBoolToInt a t) j)) =
+      (ConcreteCategory.hom (G.map ftrue))
+        ((ConcreteCategory.hom (T.app S))
+          (weightedFiniteBooleanCoefficientFamily X (weightedBoolToInt a t) j)) at htrue
   rw [hSection a] at ht
   rw [hSection (weightedBoolToInt a t)] at htrue
   have hcoeff := weightedFiniteBooleanCoefficientFamily_point_reweight X a j t
@@ -381,7 +405,6 @@ theorem weightedFiniteBooleanMeasureLimitLift_point_reweight
         weightedFiniteBooleanMeasureLimitLift X (weightedBoolToInt a t) := by
   apply (measureFunctorMapConeIsLimit X).hom_ext
   intro j
-  simp only [Category.assoc]
   rw [weightedFiniteBooleanMeasureLimitLift_fac,
     weightedFiniteBooleanMeasureLimitLift_fac]
   exact weightedFiniteBooleanMeasureHom_point_reweight X a j t
