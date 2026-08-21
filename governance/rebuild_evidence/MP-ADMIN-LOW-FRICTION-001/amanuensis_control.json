@@ -3,9 +3,10 @@
   "artifact_id": "MP-ADMIN-LOW-FRICTION-001",
   "amanuensis_state": "AUTHORITATIVE_WHEN_PROTECTED",
   "artifact_ledger": {
-    "programme": "docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md",
-    "administrative": "governance/administrative_maintenance_artifact_ledger.json",
-    "entry_id": "MP-ADMIN-LOW-FRICTION-001"
+    "programme_parent_ledger": "docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md",
+    "canonical_administrative_subledger": "governance/administrative_maintenance_artifact_ledger.json",
+    "entry_id": "MP-ADMIN-LOW-FRICTION-001",
+    "evidence_entry_id": "MP-ADMIN-LOW-FRICTION-EVIDENCE-001"
   },
   "decision_and_authority_references": [
     "docs/decisions/ADR-0001_AMANUENSIS_CONTINUITY_OFFICE.md",
@@ -34,7 +35,8 @@
     "tests/test_administrative_autonomy_low_friction_base_drift.py",
     "tests/test_administrative_autonomy_low_friction_persistent_sync.py",
     "docs/AGENT_COUNCIL_GOVERNANCE.md",
-    "docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md"
+    "docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md",
+    "governance/administrative_maintenance_artifact_ledger.json"
   ],
   "introduced_or_changed_terms": [],
   "terminology_registry_reference": "docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md",
@@ -47,6 +49,10 @@
     "finding": "The control issue was closed after terminal operational proof but before a canonical evidence package and ledger integration existed.",
     "disposition": "DOCUMENTARY_CONTINUITY_REMEDIATION_REQUIRED_AND_SUPPLIED",
     "future_application": "Do not describe governed work as fully closed until its required durable artifact, provenance, consistency review, and ledger integration are present or explicitly tracked as a remaining obligation."
+  },
+  "review_boundary": {
+    "new_council_deliberation_claimed": false,
+    "ordinary_independent_pr_review_required_before_protected_admission": true
   },
   "claim_boundary": {
     "records_existing_authority_only": true,
