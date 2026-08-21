@@ -60,7 +60,7 @@ theorem freeHomSectionsEquiv_precomp
     rfl
   rw [hfree]
   rw [(Condensed.freeForgetAdjunction R).homEquiv_naturality_left]
-  simpa [GrothendieckTopology.uliftYoneda, profiniteToCondensed,
+  simpa [freeHomSectionsEquiv, GrothendieckTopology.uliftYoneda, profiniteToCondensed,
     compHausToCondensed, compHausToCondensed', Condensed.ulift, Functor.comp_map] using
     ((coherentTopology CompHaus.{u}).uliftYonedaEquiv_naturality
       ((Condensed.freeForgetAdjunction R).homEquiv
@@ -263,7 +263,7 @@ theorem kernelProductFunctional_apply
 /-- The one-point profinite probe selecting a Boolean basis-coordinate vector. -/
 noncomputable def basisBooleanPointProbe
     (X : Profinite.{u}) (t : IntegralBasisIndex X → Bool) :
-    Profinite.of PUnit.{u} ⟶ basisBooleanCube X :=
+    Profinite.of PUnit.{u+1} ⟶ basisBooleanCube X :=
   ConcreteCategory.ofHom
     { toFun := fun _ => t
       continuous_toFun := continuous_const }
@@ -312,7 +312,7 @@ theorem weightedFiniteBooleanMeasureSection_point_reweight
       (weightedFiniteBooleanMeasureSection X (weightedBoolToInt a t) j) := by
   let Q := FiniteQuotientObject X j
   let S := op ((profiniteToCompHaus).obj (basisBooleanCube X))
-  let P := Profinite.of PUnit.{u}
+  let P := Profinite.of PUnit.{u+1}
   let U := op ((profiniteToCompHaus).obj P)
   let qt := basisBooleanPointProbe X t
   let qtrue := basisBooleanPointProbe X (fun _ => true)
@@ -352,7 +352,7 @@ theorem weightedFiniteBooleanMeasureHom_point_reweight
       (Condensed.profiniteFree R).map
           (basisBooleanPointProbe X (fun _ => true)) ≫
         weightedFiniteBooleanMeasureHom X (weightedBoolToInt a t) j := by
-  let P := Profinite.of PUnit.{u}
+  let P := Profinite.of PUnit.{u+1}
   let A := CMDG.CondensedCM4P2D.measureFunctor.obj (X.diagram.obj j)
   apply (freeHomSectionsEquiv P A).injective
   rw [freeHomSectionsEquiv_precomp, freeHomSectionsEquiv_precomp]
@@ -394,7 +394,7 @@ theorem kernelProductSection_reweight_eval_R
     (t : IntegralBasisIndex X → Bool) :
     kernelProductSection X h a t =
       kernelProductSection X h (weightedBoolToInt a t) (fun _ => true) := by
-  let P := Profinite.of PUnit.{u}
+  let P := Profinite.of PUnit.{u+1}
   let qt := basisBooleanPointProbe X t
   let qtrue := basisBooleanPointProbe X (fun _ => true)
   let e :=
