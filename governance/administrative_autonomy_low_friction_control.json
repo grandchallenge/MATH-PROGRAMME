@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0.0",
+  "control_id": "MP-ADMIN-LOW-FRICTION-001",
+  "issue": 633,
+  "state": "ACTIVE_WHEN_PROTECTED",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "base_branch": "main",
+  "authorization": {
+    "human_steward_login": "fyremael",
+    "authorization_comment_id": 5362883052,
+    "authorization_prefix": "HUMAN STEWARD AUTHORIZATION — MP-ADMIN-LOW-FRICTION-001",
+    "required_slogan": "Human Steward once at the authority boundary; machines may iterate internally until terminal proof or a genuinely new authority boundary.",
+    "intermediate_human_steward_checkpoint_required": false,
+    "terminal_exact_head_human_steward_checkpoint_required": false,
+    "bounded_terminal_admission_delegated": true
+  },
+  "identity": {
+    "candidate_login": "gcl-release-trust[bot]",
+    "candidate_app_id": 4423678,
+    "referee_login": "github-actions[bot]",
+    "referee_app_id": 15368,
+    "roles_must_be_distinct": true
+  },
+  "ruleset": {
+    "id": 17137629,
+    "required_checks_source": "live_ruleset",
+    "existing_candidate_actor_required": true,
+    "actor_type": "Integration",
+    "bypass_mode": "pull_request",
+    "ruleset_mutation_authorized": false,
+    "direct_protected_push_authorized": false
+  },
+  "classification": {
+    "opt_in_marker": "<!-- MP-ADMIN-LOW-FRICTION-001 -->",
+    "branch_prefix": "routine/low-friction/",
+    "allowed_candidate_logins": [
+      "fyremael",
+      "gcl-release-trust[bot]"
+    ],
+    "maximum_changed_files": 5,
+    "maximum_additions": 120,
+    "maximum_deletions": 120,
+    "allowed_exact_paths": [
+      "README.md"
+    ],
+    "allowed_asset_prefix": "docs/assets/",
+    "allowed_asset_extensions": [
+      ".png",
+      ".jpg",
+      ".jpeg",
+      ".webp"
+    ],
+    "readme_change_mode": "MARKDOWN_LINK_OR_IMAGE_ONLY",
+    "forbidden_path_prefixes": [
+      ".github/",
+      "ci/",
+      "governance/",
+      "schemas/",
+      "tests/",
+      "fixtures/",
+      "evidence/",
+      "docs/governance/",
+      "docs/decisions/"
+    ],
+    "forbidden_exact_paths": [
+      "CLAIM_LEDGER_STANDARD.md",
+      "CERTIFICATION_LADDER.md",
+      "CLASSIFICATION_DISCOVERY_STANDARD.md",
+      "GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md"
+    ]
+  },
+  "lifecycle": {
+    "maximum_internal_head_iterations": 8,
+    "merge_state_wait_seconds": 180,
+    "head_change_wait_seconds": 180,
+    "required_checks_wait_seconds": 1800,
+    "post_disposition_stabilization_seconds": 20,
+    "protected_readback_wait_seconds": 300,
+    "poll_interval_seconds": 5,
+    "accepted_check_conclusions": [
+      "success",
+      "neutral",
+      "skipped"
+    ],
+    "required_pre_merge_state": "clean",
+    "automatic_mark_ready": true,
+    "automatic_referee_disposition": true,
+    "automatic_expected_head_merge": true,
+    "automatic_protected_readback": true,
+    "automatic_terminal_receipt": true,
+    "behind_sync": true,
+    "revalidate_after_head_change": true,
+    "redisposition_after_head_change": true
+  },
+  "hard_exclusions": {
+    "control_plane_change": true,
+    "governance_change": true,
+    "schema_change": true,
+    "workflow_change": true,
+    "runtime_change": true,
+    "receipt_or_ledger_change": true,
+    "mirror_or_cadence_change": true,
+    "ruleset_mutation": true,
+    "permission_change": true,
+    "bypass_widening_or_exercise": true,
+    "direct_protected_push": true,
+    "mathematical_or_source_status_change": true,
+    "certification_status_change": true,
+    "publication_product_or_external_claim_authority": true,
+    "human_steward_identity_synthesis": true
+  },
+  "terminal_proof": {
+    "state_machine_exhaustion_required": true,
+    "exact_head_checks_required": true,
+    "independent_referee_required": true,
+    "expected_head_merge_required": true,
+    "signed_merge_commit_required": true,
+    "merge_ancestor_of_protected_main_required": true,
+    "terminal_receipt_required": true
+  }
+}

@@ -4,7 +4,11 @@ from __future__ import annotations
 import copy
 import json
 
-from validate_workflow_coverage_v2 import ROOT, workflow_coverage_errors
+from validate_workflow_coverage_v2 import (
+    QUALIFICATION_ONLY_WORKFLOW,
+    ROOT,
+    workflow_coverage_errors,
+)
 from validate_workflow_coverage import workflow_texts
 
 
@@ -31,6 +35,15 @@ def main() -> int:
         (ROOT / "governance/policy_shard_registry.json").read_text(encoding="utf-8")
     )
     assert not workflow_coverage_errors(texts=texts, evidence=evidence, registry=registry)
+
+    missing_qualification_workflow = dict(texts)
+    missing_qualification_workflow.pop(QUALIFICATION_ONLY_WORKFLOW)
+    require_error(
+        missing_qualification_workflow,
+        evidence,
+        f"missing governed workflow {QUALIFICATION_ONLY_WORKFLOW}",
+        registry=registry,
+    )
 
     missing_repository_route = remove_registry_command(
         registry, ["python3", "ci/validate_repository_execution.py"]
@@ -168,6 +181,153 @@ def main() -> int:
         failover_direct_push,
         evidence,
         "forbidden recovery capability",
+        registry=registry,
+    )
+
+    remediation_permission_drift = dict(texts)
+    remediation_permission_drift[QUALIFICATION_ONLY_WORKFLOW] = remediation_permission_drift[
+        QUALIFICATION_ONLY_WORKFLOW
+    ].replace("      issues: write", "      issues: read", 1)
+    require_error(
+        remediation_permission_drift,
+        evidence,
+        "delegated Referee admission permissions drift",
+        registry=registry,
+    )
+
+    remediation_pr_write_permission_drift = dict(texts)
+    remediation_pr_write_permission_drift[QUALIFICATION_ONLY_WORKFLOW] = remediation_pr_write_permission_drift[
+        QUALIFICATION_ONLY_WORKFLOW
+    ].replace("      pull-requests: write", "      pull-requests: read", 1)
+    require_error(
+        remediation_pr_write_permission_drift,
+        evidence,
+        "delegated Referee admission permissions drift",
+        registry=registry,
+    )
+
+    remediation_referee_removed = dict(texts)
+    remediation_referee_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_referee_removed[
+        QUALIFICATION_ONLY_WORKFLOW
+    ].replace("REFEREE_TOKEN: ${{ github.token }}", "REFEREE_TOKEN: missing", 1)
+    require_error(
+        remediation_referee_removed,
+        evidence,
+        "missing remediation envelope marker REFEREE_TOKEN",
+        registry=registry,
+    )
+
+    remediation_trigger_drift = dict(texts)
+    remediation_trigger_drift[QUALIFICATION_ONLY_WORKFLOW] = remediation_trigger_drift[
+        QUALIFICATION_ONLY_WORKFLOW
+    ].replace("      - ready_for_review\n", "", 1)
+    require_error(
+        remediation_trigger_drift,
+        evidence,
+        "pull_request_target trigger set drift",
+        registry=registry,
+    )
+
+    remediation_comment_trigger_removed = dict(texts)
+    remediation_comment_trigger_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_comment_trigger_removed[
+        QUALIFICATION_ONLY_WORKFLOW
+    ].replace("  issue_comment:\n    types:\n      - created\n", "", 1)
+    require_error(
+        remediation_comment_trigger_removed,
+        evidence,
+        "trigger must be workflow_dispatch plus issue_comment plus pull_request_target",
+        registry=registry,
+    )
+
+    remediation_comment_association_removed = dict(texts)
+    remediation_comment_association_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_comment_association_removed[
+        QUALIFICATION_ONLY_WORKFLOW
+    ].replace(
+        "contains(fromJSON('[\"OWNER\",\"MEMBER\",\"COLLABORATOR\"]'), github.event.comment.author_association)",
+        "true",
+        1,
+    )
+    require_error(
+        remediation_comment_association_removed,
+        evidence,
+        "missing remediation envelope marker contains(fromJSON",
+        registry=registry,
+    )
+
+    remediation_comment_command_removed = dict(texts)
+    remediation_comment_command_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_comment_command_removed[
+        QUALIFICATION_ONLY_WORKFLOW
+    ].replace("DELEGATED_REMEDIATION_ADMIT ([0-9a-f]{40})", "DELEGATED_REMEDIATION_ADMIT (.*)")
+    require_error(
+        remediation_comment_command_removed,
+        evidence,
+        "DELEGATED_REMEDIATION_ADMIT ([0-9a-f]{40})",
+        registry=registry,
+    )
+
+    remediation_admission_status_removed = dict(texts)
+    remediation_admission_status_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_admission_status_removed[
+        QUALIFICATION_ONLY_WORKFLOW
+    ].replace("Publish durable admission result", "Admission result unavailable", 1)
+    require_error(
+        remediation_admission_status_removed,
+        evidence,
+        "Publish durable admission result",
+        registry=registry,
+    )
+
+    remediation_extra_candidate_contents_write = dict(texts)
+    remediation_extra_candidate_contents_write[QUALIFICATION_ONLY_WORKFLOW] += (
+        "\n# permission-contents: write\n"
+    )
+    require_error(
+        remediation_extra_candidate_contents_write,
+        evidence,
+        "exactly one Candidate contents-write merge token",
+        registry=registry,
+    )
+
+    remediation_extra_candidate_pr_write = dict(texts)
+    remediation_extra_candidate_pr_write[QUALIFICATION_ONLY_WORKFLOW] += (
+        "\n# permission-pull-requests: write\n"
+    )
+    require_error(
+        remediation_extra_candidate_pr_write,
+        evidence,
+        "exactly one Candidate pull-request-write merge token",
+        registry=registry,
+    )
+
+    remediation_app_issue_write = dict(texts)
+    remediation_app_issue_write[QUALIFICATION_ONLY_WORKFLOW] += "\n# permission-issues: write\n"
+    require_error(
+        remediation_app_issue_write,
+        evidence,
+        "App tokens may not receive issues-write",
+        registry=registry,
+    )
+
+    remediation_direct_merge = dict(texts)
+    remediation_direct_merge[QUALIFICATION_ONLY_WORKFLOW] += "\n# gh pr merge\n"
+    require_error(
+        remediation_direct_merge,
+        evidence,
+        "forbidden remediation capability gh pr merge",
+        registry=registry,
+    )
+
+    remediation_admission_removed = dict(texts)
+    remediation_admission_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_admission_removed[
+        QUALIFICATION_ONLY_WORKFLOW
+    ].replace(
+        "administrative_remediation_envelope.py admit-pull-request",
+        "administrative_remediation_envelope.py validate",
+        1,
+    )
+    require_error(
+        remediation_admission_removed,
+        evidence,
+        "missing remediation envelope marker administrative_remediation_envelope.py admit-pull-request",
         registry=registry,
     )
 
