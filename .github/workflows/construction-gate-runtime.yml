@@ -119,9 +119,15 @@ jobs:
 
           exact_head_evidence=false
           if [[ "$OPERATION" == UPDATE_DEVELOPMENT && -n "$current_head" ]]; then
-            checks="$(gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10' "repos/$REPO/commits/$current_head/check-runs" --jq '.total_count' 2>/dev/null || echo 0)"
-            statuses="$(gh api -H 'X-GitHub-Api-Version: 2026-03-10' "repos/$REPO/commits/$current_head/statuses" --jq 'length' 2>/dev/null || echo 0)"
-            if (( checks > 0 || statuses > 0 )); then exact_head_evidence=true; fi
+            dev_branch="${dev_ref#refs/heads/}"
+            exact_head_evidence=true
+            if check_suites="$(curl --fail --silent --show-error -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10' "https://api.github.com/repos/$REPO/commits/$current_head/check-suites")" &&
+               commit_statuses="$(curl --fail --silent --show-error -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10' "https://api.github.com/repos/$REPO/commits/$current_head/statuses")"; then
+              checks="$(jq --arg branch "$dev_branch" '[.check_suites[]? | select(.head_branch == $branch)] | length' <<<"$check_suites")"
+              statuses="$(jq --arg branch "$dev_branch" '[.[] | select(any(.branches[]?; .name == $branch))] | length' <<<"$commit_statuses")"
+              exact_head_evidence=false
+              if (( checks > 0 || statuses > 0 )); then exact_head_evidence=true; fi
+            fi
           fi
           repository_id="$(gh api -H 'X-GitHub-Api-Version: 2026-03-10' "repos/$REPO" --jq .node_id)"
 
