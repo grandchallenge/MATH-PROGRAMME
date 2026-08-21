@@ -8,6 +8,7 @@ import validate_workflow_coverage_v3 as v3
 
 RECOVERY_FAILOVER_WORKFLOW = "administrative-maintenance-0813-recovery-failover.yml"
 QUALIFICATION_ONLY_WORKFLOW = "administrative-protected-receipt-live-qualification.yml"
+CONSTRUCTION_GATE_WORKFLOW = "construction-gate-runtime.yml"
 
 v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "aether-controls-admin.yml",
@@ -28,6 +29,7 @@ v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "pr-visual-status-advisory.yml",
     RECOVERY_FAILOVER_WORKFLOW,
     QUALIFICATION_ONLY_WORKFLOW,
+    CONSTRUCTION_GATE_WORKFLOW,
 }
 
 ROOT = v3.ROOT

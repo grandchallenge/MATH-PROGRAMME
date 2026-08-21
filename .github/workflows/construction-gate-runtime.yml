@@ -1,0 +1,234 @@
+name: Construction Gate runtime
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Protected construction-integrity target_id
+        required: true
+        type: string
+      operation:
+        description: Governed mutation class
+        required: true
+        type: choice
+        options:
+          - CREATE_DEVELOPMENT
+          - UPDATE_DEVELOPMENT
+          - FREEZE_CANDIDATE
+      proposed_head:
+        description: Exact 40-character proposed commit SHA
+        required: true
+        type: string
+      expect:
+        description: Expected preflight disposition; deny performs no write and succeeds only on denial
+        required: true
+        default: allow
+        type: choice
+        options:
+          - allow
+          - deny
+
+permissions:
+  contents: read
+
+concurrency:
+  group: construction-gate-runtime-${{ inputs.target }}
+  cancel-in-progress: false
+
+jobs:
+  mutate:
+    name: Preflight and atomically mutate governed ref
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: construction-gate-runtime
+    permissions:
+      contents: read
+    steps:
+      - name: Check out exact protected-main dispatch revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+
+      - name: Gather exact Git observation and run protected preflight
+        id: preflight
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: grandchallenge/MATH-PROGRAMME
+          TARGET_ID: ${{ inputs.target }}
+          OPERATION: ${{ inputs.operation }}
+          PROPOSED_HEAD: ${{ inputs.proposed_head }}
+          EXPECT: ${{ inputs.expect }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          export GH_CONFIG_DIR="$RUNNER_TEMP/gh-readonly"
+          mkdir -p "$GH_CONFIG_DIR"
+          CONTRACT=governance/construction_integrity_contract.json
+          [[ "$GITHUB_REF" == "refs/heads/main" ]] || { echo "runtime secrets require protected main" >&2; exit 2; }
+          [[ "$PROPOSED_HEAD" =~ ^[0-9a-f]{40}$ ]] || { echo "proposed_head must be an exact SHA" >&2; exit 2; }
+
+          target_json="$(jq -c --arg id "$TARGET_ID" '.targets[]? | select(.target_id==$id)' "$CONTRACT")"
+          [[ -n "$target_json" ]] || { echo "target has no protected authority row" >&2; exit 2; }
+          predecessor="$(jq -r .authorized_predecessor <<<"$target_json")"
+          dev_ref="$(jq -r .development_ref <<<"$target_json")"
+          candidate_ref="$(jq -r .candidate_ref <<<"$target_json")"
+
+          ref_head() {
+            local ref="$1"
+            gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10' \
+              "repos/$REPO/git/ref/${ref#refs/}" --jq .object.sha 2>/dev/null || true
+          }
+
+          predecessor_exists=false
+          if gh api -H 'X-GitHub-Api-Version: 2026-03-10' "repos/$REPO/commits/$predecessor" >/dev/null 2>&1; then predecessor_exists=true; fi
+          [[ "$predecessor_exists" == true ]] || { echo "protected predecessor does not exist" >&2; exit 2; }
+          gh api -H 'X-GitHub-Api-Version: 2026-03-10' "repos/$REPO/commits/$PROPOSED_HEAD" >/dev/null
+
+          # MATH-PROGRAMME is public; fetch exact objects without persisting any write credential.
+          git fetch --no-tags origin "$predecessor" "$PROPOSED_HEAD" >/dev/null 2>&1
+          merge_base="$(git merge-base "$predecessor" "$PROPOSED_HEAD" || true)"
+          predecessor_is_ancestor=false
+          if git merge-base --is-ancestor "$predecessor" "$PROPOSED_HEAD"; then predecessor_is_ancestor=true; fi
+          mapfile -t changed_paths < <(git diff --name-only "$predecessor" "$PROPOSED_HEAD")
+          printf '%s\n' "${changed_paths[@]:-}" | sed '/^$/d' | jq -R . | jq -s . > changed-paths.json
+
+          dev_head="$(ref_head "$dev_ref")"
+          cand_head="$(ref_head "$candidate_ref")"
+          candidate_exists=false; [[ -n "$cand_head" ]] && candidate_exists=true
+          current_head=""; observed_ref=""; ref_exists=false
+          case "$OPERATION" in
+            CREATE_DEVELOPMENT)
+              observed_ref="$dev_ref"; current_head="$dev_head"; [[ -n "$dev_head" ]] && ref_exists=true ;;
+            UPDATE_DEVELOPMENT)
+              observed_ref="$dev_ref"; current_head="$dev_head"; [[ -n "$dev_head" ]] && ref_exists=true ;;
+            FREEZE_CANDIDATE)
+              observed_ref="$candidate_ref"; current_head="$cand_head"; [[ -n "$cand_head" ]] && ref_exists=true ;;
+            *) echo "unsupported operation" >&2; exit 2 ;;
+          esac
+
+          exact_head_evidence=false
+          if [[ "$OPERATION" == UPDATE_DEVELOPMENT && -n "$current_head" ]]; then
+            checks="$(gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10' "repos/$REPO/commits/$current_head/check-runs" --jq '.total_count' 2>/dev/null || echo 0)"
+            statuses="$(gh api -H 'X-GitHub-Api-Version: 2026-03-10' "repos/$REPO/commits/$current_head/statuses" --jq 'length' 2>/dev/null || echo 0)"
+            if (( checks > 0 || statuses > 0 )); then exact_head_evidence=true; fi
+          fi
+          repository_id="$(gh api -H 'X-GitHub-Api-Version: 2026-03-10' "repos/$REPO" --jq .node_id)"
+
+          jq -n \
+            --arg repository "$REPO" --arg protected_branch main --arg ref "$observed_ref" \
+            --arg current_head "$current_head" --arg proposed_head "$PROPOSED_HEAD" --arg repository_id "$repository_id" \
+            --arg development_head "$dev_head" --arg merge_base "$merge_base" \
+            --argjson ref_exists "$ref_exists" --argjson candidate_ref_exists "$candidate_exists" \
+            --argjson predecessor_exists "$predecessor_exists" --argjson predecessor_is_ancestor "$predecessor_is_ancestor" \
+            --argjson exact_head_evidence_exists "$exact_head_evidence" --slurpfile changed changed-paths.json \
+            '{repository:$repository,protected_branch:$protected_branch,ref:$ref,current_head:$current_head,proposed_head:$proposed_head,repository_id:$repository_id,ref_exists:$ref_exists,candidate_ref_exists:$candidate_ref_exists,development_head:$development_head,predecessor_exists:$predecessor_exists,predecessor_is_ancestor:$predecessor_is_ancestor,merge_base:$merge_base,changed_paths:$changed[0],exact_head_evidence_exists:$exact_head_evidence_exists,force_requested:false}' \
+            > construction-observation.json
+
+          TARGET_ID="$TARGET_ID" OPERATION="$OPERATION" EXPECT="$EXPECT" python3 - <<'PY'
+          import json, os, sys
+          sys.path.insert(0, 'ci')
+          import construction_integrity as gate
+          contract=json.load(open('governance/construction_integrity_contract.json', encoding='utf-8'))
+          obs=json.load(open('construction-observation.json', encoding='utf-8'))
+          decision=gate.preflight(contract, os.environ['TARGET_ID'], os.environ['OPERATION'], obs)
+          json.dump(decision.as_dict(), open('construction-decision.json','w',encoding='utf-8'), indent=2, sort_keys=True); open('construction-decision.json','a').write('\n')
+          expected=os.environ['EXPECT']
+          if expected == 'deny':
+              if decision.allowed:
+                  raise SystemExit('expected preflight denial but operation was allowed')
+              open('preflight-result.txt','w').write('EXPECTED_DENIAL\n')
+              raise SystemExit(0)
+          if not decision.allowed:
+              print(json.dumps(decision.as_dict(), indent=2), file=sys.stderr)
+              raise SystemExit(2)
+          spec=gate.transaction_spec(decision, obs)
+          json.dump(spec, open('construction-transaction.json','w',encoding='utf-8'), indent=2, sort_keys=True); open('construction-transaction.json','a').write('\n')
+          open('preflight-result.txt','w').write('ALLOWED\n')
+          PY
+
+          if [[ "$EXPECT" == deny ]]; then
+            echo "allowed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "allowed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Mint Construction Gate installation token
+        if: steps.preflight.outputs.allowed == 'true'
+        id: gate-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.MP_CONSTRUCTION_GATE_APP_ID }}
+          private-key: ${{ secrets.MP_CONSTRUCTION_GATE_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-contents: write
+
+      - name: Re-read mutable refs and execute exact atomic transaction
+        if: steps.preflight.outputs.allowed == 'true'
+        env:
+          READ_TOKEN: ${{ github.token }}
+          GATE_TOKEN: ${{ steps.gate-token.outputs.token }}
+          REPO: grandchallenge/MATH-PROGRAMME
+          OPERATION: ${{ inputs.operation }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          export GH_CONFIG_DIR="$RUNNER_TEMP/gh-transaction"
+          mkdir -p "$GH_CONFIG_DIR"
+          ref="$(jq -r .ref construction-observation.json)"
+          before="$(jq -r .current_head construction-observation.json)"
+          proposed="$(jq -r .proposed_head construction-observation.json)"
+          original_candidate_exists="$(jq -r .candidate_ref_exists construction-observation.json)"
+          original_dev_head="$(jq -r .development_head construction-observation.json)"
+          target="$(jq -c --arg id "${{ inputs.target }}" '.targets[] | select(.target_id==$id)' governance/construction_integrity_contract.json)"
+          dev_ref="$(jq -r .development_ref <<<"$target")"
+          cand_ref="$(jq -r .candidate_ref <<<"$target")"
+          read_ref() {
+            local r="$1"
+            GH_TOKEN="$READ_TOKEN" gh api -H 'X-GitHub-Api-Version: 2026-03-10' "repos/$REPO/git/ref/${r#refs/}" --jq .object.sha 2>/dev/null || true
+          }
+          now_ref="$(read_ref "$ref")"
+          now_dev="$(read_ref "$dev_ref")"
+          now_cand="$(read_ref "$cand_ref")"
+          case "$OPERATION" in
+            CREATE_DEVELOPMENT)
+              [[ -z "$now_ref" ]] || { echo "TOCTOU: development ref appeared after preflight" >&2; exit 2; }
+              [[ -z "$now_cand" ]] || { echo "TOCTOU: candidate ref appeared after preflight" >&2; exit 2; } ;;
+            UPDATE_DEVELOPMENT)
+              [[ "$now_ref" == "$before" ]] || { echo "TOCTOU: development head moved after preflight" >&2; exit 2; }
+              [[ -z "$now_cand" && "$original_candidate_exists" == false ]] || { echo "TOCTOU: candidate freeze appeared after preflight" >&2; exit 2; } ;;
+            FREEZE_CANDIDATE)
+              [[ -z "$now_ref" ]] || { echo "TOCTOU: candidate ref appeared after preflight" >&2; exit 2; }
+              [[ "$now_dev" == "$original_dev_head" ]] || { echo "TOCTOU: development head moved after preflight" >&2; exit 2; } ;;
+          esac
+
+          jq -n --arg q 'mutation($input:UpdateRefsInput!){updateRefs(input:$input){clientMutationId}}' \
+            --slurpfile tx construction-transaction.json \
+            '{query:$q,variables:{input:{repositoryId:$tx[0].repositoryId,refUpdates:$tx[0].refUpdates}}}' > construction-graphql.json
+          GH_TOKEN="$GATE_TOKEN" gh api graphql --input construction-graphql.json > construction-graphql-response.json
+          final="$(GH_TOKEN="$READ_TOKEN" gh api -H 'X-GitHub-Api-Version: 2026-03-10' "repos/$REPO/git/ref/${ref#refs/}" --jq .object.sha)"
+          [[ "$final" == "$proposed" ]] || { echo "post-transaction readback mismatch" >&2; exit 2; }
+          jq -n --arg ref "$ref" --arg head "$final" '{ref:$ref,head:$head,readback:"EXACT"}' > construction-readback.json
+
+      - name: Preserve construction transaction evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: construction-gate-${{ github.run_id }}
+          path: |
+            construction-observation.json
+            construction-decision.json
+            construction-transaction.json
+            construction-graphql-response.json
+            construction-readback.json
+            preflight-result.txt
+          if-no-files-found: warn
+          retention-days: 90
