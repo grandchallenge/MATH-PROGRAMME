@@ -322,7 +322,7 @@ class LowFrictionTests(unittest.TestCase):
     def test_runtime_integration_reuses_existing_credentials_and_reports(self):
         runtime = (ROOT / "ci/administrative_autonomy_runtime.py").read_text(encoding="utf-8")
         self.assertIn("import administrative_autonomy_low_friction as low_friction", runtime)
-        self.assertIn("low_friction.sweep(low_report)", runtime)
+        self.assertIn("executor.submit(low_friction.sweep, low_report)", runtime)
         self.assertIn("ADMIN_READ_TOKEN", runtime)
         self.assertIn("ADMIN_TOKEN", runtime)
         self.assertIn("human_steward_checkpoint_requested", runtime)
