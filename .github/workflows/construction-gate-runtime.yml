@@ -83,8 +83,11 @@ jobs:
 
           ref_head() {
             local ref="$1"
-            gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10' \
-              "repos/$REPO/git/ref/${ref#refs/}" --jq .object.sha 2>/dev/null || true
+            local head
+            if head="$(gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10' \
+              "repos/$REPO/git/ref/${ref#refs/}" --jq .object.sha 2>/dev/null)"; then
+              printf '%s' "$head"
+            fi
           }
 
           predecessor_exists=false
@@ -193,7 +196,10 @@ jobs:
           cand_ref="$(jq -r .candidate_ref <<<"$target")"
           read_ref() {
             local r="$1"
-            GH_TOKEN="$READ_TOKEN" gh api -H 'X-GitHub-Api-Version: 2026-03-10' "repos/$REPO/git/ref/${r#refs/}" --jq .object.sha 2>/dev/null || true
+            local head
+            if head="$(GH_TOKEN="$READ_TOKEN" gh api -H 'X-GitHub-Api-Version: 2026-03-10' "repos/$REPO/git/ref/${r#refs/}" --jq .object.sha 2>/dev/null)"; then
+              printf '%s' "$head"
+            fi
           }
           now_ref="$(read_ref "$ref")"
           now_dev="$(read_ref "$dev_ref")"
