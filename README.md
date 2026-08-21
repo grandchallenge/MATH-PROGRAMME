@@ -13,7 +13,7 @@ The programme exists to turn mathematical curiosity into checked understanding w
 
 The administrative review path has now been demonstrated end-to-end under exact-head governance, separated Referee/Candidate identities, protected merge controls, and automatic post-merge qualification. The proof is retained permanently as the machine-checkable `MP-ADMIN-WORKFLOW-REBUILD-EVIDENCE-001` package under `governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/`.
 
-[![MP-ADMIN-WORKFLOW-REBUILD-001 — working rebuild proof](https://raw.githubusercontent.com/grandchallenge/MATH-PROGRAMME/main/docs/assets/mp-admin-workflow-rebuild-proof.png)](governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/README.md)
+[![MP-ADMIN-WORKFLOW-REBUILD-001 — working rebuild proof](https://raw.githubusercontent.com/grandchallenge/MATH-PROGRAMME/main/docs/assets/mp-admin-workflow-rebuild-proof.png)](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/README.md)
 
 The illustration is a progress view, not an authority grant. The protected attestation, retained payload hashes, validator, and governed records remain authoritative.
 
