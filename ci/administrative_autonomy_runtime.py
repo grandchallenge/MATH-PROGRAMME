@@ -5,6 +5,7 @@ import json
 import os
 import sys
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 from pathlib import Path
 
@@ -123,9 +124,10 @@ behind_sync.synchronize_eligible_candidate = partial(
 )
 
 # MP-ADMIN-LOW-FRICTION-001 deliberately reuses this already-protected heartbeat
-# instead of adding another privileged scheduler. The bounded routine lane runs
-# only after the ordinary administrative executor returns successfully. It has
-# no new token, cadence, ruleset mutation, direct-push, or Human-Steward route.
+# instead of adding another privileged scheduler. The bounded routine lane and
+# ordinary administrative lane are launched independently inside each heartbeat
+# so failure or latency in either lane cannot make the other lane unreachable.
+# Both still use the existing separated credentials and fail closed together.
 import administrative_autonomy_low_friction as low_friction
 
 _base_execute = protected_behind_execute
@@ -200,27 +202,45 @@ def _attach_low_friction_summary(
 
 
 def execute(report_path: Path) -> int:
-    result = _base_execute(report_path)
-    if result != 0:
-        return result
     _bind_existing_ruleset_token()
     low_report = report_path.with_name("administrative-low-friction-sweep.json")
-    try:
-        outcome = low_friction.sweep(low_report)
-    except Exception as exc:
-        _attach_low_friction_summary(
-            report_path,
-            state="LOW_FRICTION_FAILED_CLOSED",
-            low_report=low_report,
-            error=str(exc),
-        )
-        print(f"low-friction routine lifecycle failed closed: {exc}", file=sys.stderr)
-        return 1
+    low_state = "LOW_FRICTION_NOT_RUN"
+    low_error: str | None = None
+
+    # Liveness invariant: neither administrative lane is downstream of the
+    # other. Each heartbeat starts both lanes before waiting on either result.
+    with ThreadPoolExecutor(
+        max_workers=2,
+        thread_name_prefix="mp-admin-heartbeat",
+    ) as executor:
+        low_future = executor.submit(low_friction.sweep, low_report)
+        base_future = executor.submit(_base_execute, report_path)
+
+        try:
+            outcome = low_future.result()
+            low_state = str(outcome.get("state") or "SWEEP_COMPLETE")
+        except Exception as exc:
+            low_state = "LOW_FRICTION_FAILED_CLOSED"
+            low_error = str(exc)
+            print(
+                f"low-friction routine lifecycle failed closed: {exc}",
+                file=sys.stderr,
+            )
+
+        # Preserve the ordinary lane's historical exception semantics while
+        # ensuring it was already started even if low-friction failed closed.
+        base_result = int(base_future.result())
+
     _attach_low_friction_summary(
         report_path,
-        state=str(outcome.get("state") or "SWEEP_COMPLETE"),
+        state=low_state,
         low_report=low_report,
+        error=low_error,
     )
+    if base_result != 0:
+        return base_result
+    if low_error is not None:
+        return 1
     return 0
 
 
