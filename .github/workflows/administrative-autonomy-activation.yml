@@ -91,6 +91,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Install governed policy dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --requirement requirements/policy.txt
+
       - name: Initialize activation evidence
         run: |
           python - <<'PY'
