@@ -130,8 +130,81 @@ behind_sync.synchronize_eligible_candidate = partial(
 # Both still use the existing separated credentials and fail closed together.
 import administrative_autonomy_low_friction as low_friction
 
+# GitHub's pull-request mergeable_state is not a reliable base-drift signal: a
+# branch can be mergeable/clean while protected main has advanced. Bind the
+# low-friction runtime to exact protected-base ancestry instead. All existing
+# low-friction state-machine checks consume current_pull(), so this one bounded
+# overlay makes base drift visible as BEHIND throughout checking and stabilization.
+_low_friction_current_pull = low_friction.current_pull
+
+
+def _base_aware_low_friction_current_pull(client, pr: int) -> dict[str, object]:
+    pull = _low_friction_current_pull(client, pr)
+    if pull.get("state") != "open" or pull.get("merged") is True:
+        return pull
+    base_ref = str(pull.get("base", {}).get("ref") or "")
+    head_sha = str(pull.get("head", {}).get("sha") or "")
+    if base_ref != low_friction.EXPECTED_BASE or not low_friction.SHA_RE.fullmatch(head_sha):
+        return pull
+
+    branch_path = (
+        f"/repos/{low_friction.EXPECTED_REPOSITORY}/branches/"
+        f"{low_friction.EXPECTED_BASE}"
+    )
+    base = client.get(branch_path)
+    base_sha = str(base.get("commit", {}).get("sha") or "")
+    if not low_friction.SHA_RE.fullmatch(base_sha):
+        raise AutonomyError("low-friction protected-base SHA readback is invalid")
+
+    compare = client.get(
+        f"/repos/{low_friction.EXPECTED_REPOSITORY}/compare/{base_sha}...{head_sha}"
+    )
+    compare_base = str(compare.get("base_commit", {}).get("sha") or base_sha)
+    if compare_base != base_sha:
+        raise AutonomyError("low-friction protected-base comparison identity drift")
+    try:
+        behind_by = int(compare.get("behind_by") or 0)
+    except (TypeError, ValueError) as exc:
+        raise AutonomyError("low-friction protected-base behind count is invalid") from exc
+    if behind_by < 0:
+        raise AutonomyError("low-friction protected-base behind count is negative")
+
+    # Re-read protected main after the comparison. A movement during comparison
+    # is conservatively treated as BEHIND so the state machine re-enters sync.
+    base_after = client.get(branch_path)
+    base_after_sha = str(base_after.get("commit", {}).get("sha") or "")
+    if not low_friction.SHA_RE.fullmatch(base_after_sha):
+        raise AutonomyError("low-friction protected-base post-compare SHA is invalid")
+    base_moved = base_after_sha != base_sha
+
+    if behind_by == 0 and not base_moved:
+        return pull
+    value = dict(pull)
+    value["mergeable_state"] = "behind"
+    value["_low_friction_base_drift"] = {
+        "protected_base_sha": base_sha,
+        "protected_base_sha_after": base_after_sha,
+        "candidate_head": head_sha,
+        "compare_status": str(compare.get("status") or "unknown"),
+        "behind_by": behind_by,
+        "base_moved_during_compare": base_moved,
+    }
+    return value
+
+
+low_friction.current_pull = _base_aware_low_friction_current_pull
+
 _base_execute = protected_behind_execute
 _base_validate_command = protected_behind_validate_command
+
+
+def _load_test_module(path: Path, module_name: str):
+    spec = importlib.util.spec_from_file_location(module_name, path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"cannot load low-friction adversarial matrix: {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def _validate_low_friction_matrix() -> int:
@@ -142,16 +215,20 @@ def _validate_low_friction_matrix() -> int:
         for error in errors:
             print(error)
         return 1
-    test_path = ROOT / "tests" / "test_administrative_autonomy_low_friction.py"
-    spec = importlib.util.spec_from_file_location(
-        "mp_admin_low_friction_matrix", test_path
+    suite = unittest.TestSuite()
+    test_paths = (
+        ROOT / "tests" / "test_administrative_autonomy_low_friction.py",
+        ROOT / "tests" / "test_administrative_autonomy_low_friction_base_drift.py",
     )
-    if spec is None or spec.loader is None:
-        print(f"cannot load low-friction adversarial matrix: {test_path}")
+    try:
+        for index, test_path in enumerate(test_paths):
+            module = _load_test_module(
+                test_path, f"mp_admin_low_friction_matrix_{index}"
+            )
+            suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(module))
+    except Exception as exc:
+        print(exc)
         return 1
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    suite = unittest.defaultTestLoader.loadTestsFromModule(module)
     result = unittest.TextTestRunner(verbosity=1).run(suite)
     if not result.wasSuccessful():
         return 1
