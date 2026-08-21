@@ -37,6 +37,7 @@ The purpose is not to replace mathematical judgment. The purpose is to make resp
 - [ ] Current-schema records validate against `schemas/agent_review.schema.json`.
 - [ ] A review is added to `SCHEMA_BOUND_AGENT_REVIEWS` only after migration to the complete current schema.
 - [ ] Legacy review formats are not described as schema-validated merely because they are committed.
+- [ ] Terminal lifecycle states are checked by `ci/validate_documentary_closure.py` even when `promotion.ready_for_next_stage` is false.
 
 ## Amanuensis continuity control
 
@@ -62,3 +63,17 @@ The purpose is not to replace mathematical judgment. The purpose is to make resp
 - [ ] Cross-document consistency marked reviewed.
 - [ ] Final editorial integration marked reviewed.
 - [ ] No promotion blockers remain.
+
+## Terminal closure gate
+
+Before using `completed`, `certified`, `published`, or `archived`, or before closing the canonical tracker for the governed work:
+
+- [ ] Operational success and documentary completion have been checked separately.
+- [ ] Artifact-ledger identity is present and resolves to the governed artifact.
+- [ ] Review provenance is complete and evidence references are nonempty.
+- [ ] Cross-document consistency is reviewed and has no unresolved hidden conflict.
+- [ ] Final editorial integration is reviewed and names the authoritative artifact.
+- [ ] No unresolved blocking documentary obligation remains.
+- [ ] The authoritative artifact exists in the protected repository or is explicitly bound to the protected admission being reviewed.
+- [ ] If the work does not use a schema-bound Agent Council review, a conforming `closure_contract.json` exists under `governance/rebuild_evidence/<ID>/` and is registered in `governance/governed_closure_registry.json`.
+- [ ] If operational work is complete but any documentary item above is incomplete, the documentary obligation remains explicitly open and the work is not described as fully closed.
