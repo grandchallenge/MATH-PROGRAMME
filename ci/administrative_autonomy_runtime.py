@@ -129,6 +129,7 @@ behind_sync.synchronize_eligible_candidate = partial(
 # so failure or latency in either lane cannot make the other lane unreachable.
 # Both still use the existing separated credentials and fail closed together.
 import administrative_autonomy_low_friction as low_friction
+import administrative_autonomy_low_friction_persistent_sync as low_friction_persistent_sync
 
 # GitHub's pull-request mergeable_state is not a reliable base-drift signal: a
 # branch can be mergeable/clean while protected main has advanced. Bind the
@@ -218,6 +219,12 @@ if _existing_base_aware_current_pull is None:
 else:
     _base_aware_low_friction_current_pull = _existing_base_aware_current_pull
 
+# A synchronization can occur in one protected heartbeat and terminal admission
+# in a later heartbeat. Persist and recover that event history so the final
+# receipt cannot lose already-performed internal head updates when process memory
+# is reset between scheduled runs.
+low_friction_persistent_sync.install(low_friction)
+
 _base_execute = protected_behind_execute
 _base_validate_command = protected_behind_validate_command
 
@@ -243,6 +250,7 @@ def _validate_low_friction_matrix() -> int:
     test_paths = (
         ROOT / "tests" / "test_administrative_autonomy_low_friction.py",
         ROOT / "tests" / "test_administrative_autonomy_low_friction_base_drift.py",
+        ROOT / "tests" / "test_administrative_autonomy_low_friction_persistent_sync.py",
     )
     try:
         for index, test_path in enumerate(test_paths):
