@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "MP-ADMIN-LOW-FRICTION-001",
+  "amanuensis_state": "AUTHORITATIVE_WHEN_PROTECTED",
+  "artifact_ledger": {
+    "programme": "docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md",
+    "administrative": "governance/administrative_maintenance_artifact_ledger.json",
+    "entry_id": "MP-ADMIN-LOW-FRICTION-001"
+  },
+  "decision_and_authority_references": [
+    "docs/decisions/ADR-0001_AMANUENSIS_CONTINUITY_OFFICE.md",
+    "docs/AGENT_COUNCIL_GOVERNANCE.md",
+    "docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md",
+    "MATH-PROGRAMME issue #633",
+    "MATH-PROGRAMME issue #633 comment 5362883052"
+  ],
+  "review_evidence_references": [
+    "MATH-PROGRAMME PR #636",
+    "MATH-PROGRAMME PR #638",
+    "MATH-PROGRAMME PR #646",
+    "MATH-PROGRAMME PR #647",
+    "MATH-PROGRAMME PR #648",
+    "MATH-PROGRAMME PR #649",
+    "MATH-PROGRAMME PR #649 comment 5369472176",
+    "MATH-PROGRAMME PR #649 comment 5369478045",
+    "MATH-PROGRAMME PR #649 comment 5369576204"
+  ],
+  "consistency_checked_against": [
+    "governance/administrative_autonomy_low_friction_control.json",
+    "ci/administrative_autonomy_low_friction.py",
+    "ci/administrative_autonomy_runtime.py",
+    "ci/administrative_autonomy_low_friction_persistent_sync.py",
+    "tests/test_administrative_autonomy_low_friction.py",
+    "tests/test_administrative_autonomy_low_friction_base_drift.py",
+    "tests/test_administrative_autonomy_low_friction_persistent_sync.py",
+    "docs/AGENT_COUNCIL_GOVERNANCE.md",
+    "docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md"
+  ],
+  "introduced_or_changed_terms": [],
+  "terminology_registry_reference": "docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md",
+  "unresolved_conflicts": [],
+  "authoritative_integrated_artifact": "governance/rebuild_evidence/MP-ADMIN-LOW-FRICTION-001/README.md",
+  "machine_manifest": "governance/rebuild_evidence/MP-ADMIN-LOW-FRICTION-001/manifest.json",
+  "terminal_proof": "governance/rebuild_evidence/MP-ADMIN-LOW-FRICTION-001/terminal_qualification.json",
+  "continuity_finding": {
+    "operational_completion_preceded_documentary_integration": true,
+    "finding": "The control issue was closed after terminal operational proof but before a canonical evidence package and ledger integration existed.",
+    "disposition": "DOCUMENTARY_CONTINUITY_REMEDIATION_REQUIRED_AND_SUPPLIED",
+    "future_application": "Do not describe governed work as fully closed until its required durable artifact, provenance, consistency review, and ledger integration are present or explicitly tracked as a remaining obligation."
+  },
+  "claim_boundary": {
+    "records_existing_authority_only": true,
+    "creates_new_authority": false,
+    "creates_mathematical_or_certification_claim": false
+  }
+}
