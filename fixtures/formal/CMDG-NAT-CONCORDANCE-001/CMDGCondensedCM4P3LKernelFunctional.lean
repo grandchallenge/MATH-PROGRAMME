@@ -405,9 +405,18 @@ theorem weightedFiniteBooleanMeasureLimitLift_point_reweight
         weightedFiniteBooleanMeasureLimitLift X (weightedBoolToInt a t) := by
   apply (measureFunctorMapConeIsLimit X).hom_ext
   intro j
-  rw [weightedFiniteBooleanMeasureLimitLift_fac,
-    weightedFiniteBooleanMeasureLimitLift_fac]
-  exact weightedFiniteBooleanMeasureHom_point_reweight X a j t
+  have ha := congrArg
+    (fun q =>
+      (Condensed.profiniteFree R).map (basisBooleanPointProbe X t) ≫ q)
+    (weightedFiniteBooleanMeasureLimitLift_fac X a j)
+  have hb := congrArg
+    (fun q =>
+      (Condensed.profiniteFree R).map
+        (basisBooleanPointProbe X (fun _ => true)) ≫ q)
+    (weightedFiniteBooleanMeasureLimitLift_fac X (weightedBoolToInt a t) j)
+  have hfinite := weightedFiniteBooleanMeasureHom_point_reweight X a j t
+  have hright := ha.trans (hfinite.trans hb.symm)
+  simpa only [Category.assoc] using hright
 
 /-- Global selector reweighting for the coefficient section. -/
 theorem kernelProductSection_reweight_eval_R
