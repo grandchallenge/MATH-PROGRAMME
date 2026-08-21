@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "MP-ADMIN-LOW-FRICTION-CLOSURE-CONTRACT-001",
+  "governed_work_id": "MP-ADMIN-LOW-FRICTION-001",
+  "binding": {
+    "status": "CANONICAL_ON_PROTECTED_MAIN",
+    "policy_refs": [
+      "AGENTS.md",
+      "docs/AGENT_COUNCIL_GOVERNANCE.md",
+      "docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md"
+    ],
+    "legacy_boundary": "This contract binds the already-protected MP-ADMIN-LOW-FRICTION-001 closure prospectively to the general non-Agent-Council documentary closure route; it does not silently migrate unrelated historical governance artifacts."
+  },
+  "artifact_ledger": {
+    "ledger_ref": "governance/administrative_maintenance_artifact_ledger.json",
+    "entry_id": "MP-ADMIN-LOW-FRICTION-EVIDENCE-001"
+  },
+  "review_provenance": {
+    "complete": true,
+    "evidence_refs": [
+      "MATH-PROGRAMME issue #633",
+      "MATH-PROGRAMME PR #636",
+      "MATH-PROGRAMME PR #638",
+      "MATH-PROGRAMME PR #646",
+      "MATH-PROGRAMME PR #647",
+      "MATH-PROGRAMME PR #648",
+      "MATH-PROGRAMME PR #649",
+      "MATH-PROGRAMME PR #654"
+    ]
+  },
+  "cross_document_consistency": {
+    "status": "reviewed",
+    "checked_against": [
+      "governance/administrative_autonomy_low_friction_control.json",
+      "ci/administrative_autonomy_low_friction.py",
+      "ci/administrative_autonomy_runtime.py",
+      "ci/administrative_autonomy_low_friction_persistent_sync.py",
+      "tests/test_administrative_autonomy_low_friction.py",
+      "tests/test_administrative_autonomy_low_friction_base_drift.py",
+      "tests/test_administrative_autonomy_low_friction_persistent_sync.py",
+      "governance/rebuild_evidence/MP-ADMIN-LOW-FRICTION-001/README.md",
+      "governance/rebuild_evidence/MP-ADMIN-LOW-FRICTION-001/manifest.json",
+      "governance/rebuild_evidence/MP-ADMIN-LOW-FRICTION-001/terminal_qualification.json",
+      "governance/rebuild_evidence/MP-ADMIN-LOW-FRICTION-001/amanuensis_control.json",
+      "governance/administrative_maintenance_artifact_ledger.json"
+    ],
+    "conflicts": []
+  },
+  "final_editorial_integration": {
+    "status": "reviewed",
+    "authoritative_artifact_ref": "governance/rebuild_evidence/MP-ADMIN-LOW-FRICTION-001/README.md",
+    "integration_notes": [
+      "PR #654 supplied the previously missing canonical evidence package and ledger integration.",
+      "This closure contract gives future policy checks a discoverable machine binding without changing the already-protected operational authority."
+    ]
+  },
+  "unresolved_documentary_obligations": [],
+  "authority_refs": [
+    "MATH-PROGRAMME issue #633 comment 5362883052"
+  ],
+  "terminal_evidence_refs": [
+    "MATH-PROGRAMME PR #649 comment 5369472176",
+    "MATH-PROGRAMME PR #649 comment 5369478045",
+    "MATH-PROGRAMME PR #649 comment 5369576204",
+    "protected merge 8e169e4bb1f45aced58254406180fb61e1a41b52",
+    "documentary protected merge c9a7f78e35ea383964a3f48d1a3ae3e540bff936"
+  ],
+  "claim_boundary": {
+    "creates_new_authority": false,
+    "creates_mathematical_claim": false,
+    "creates_certification_claim": false,
+    "creates_external_claim_authority": false
+  }
+}
