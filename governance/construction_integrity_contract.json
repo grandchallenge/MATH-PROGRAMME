@@ -3,7 +3,7 @@
   "schema_version": "1.0.0",
   "control_id": "MP-CONSTRUCTION-INTEGRITY-001",
   "issue": 634,
-  "state": "PROPOSED_NOT_ACTIVE",
+  "state": "ACTIVE",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "protected_branch": "main",
   "authority_source": "PROTECTED_MAIN_ONLY",
@@ -24,7 +24,25 @@
     "live_ruleset_readback_required": true,
     "canary_required": true
   },
-  "targets": [],
+  "targets": [
+    {
+      "target_id": "MP-CONSTRUCTION-INTEGRITY-CANARY-001",
+      "authorized_predecessor": "e2993ddb60d38fbe83ae9a6fe8ea06d49140ecbd",
+      "lifecycle_state": "DEVELOPMENT",
+      "development_ref": "refs/heads/gcl/dev/MP-CONSTRUCTION-INTEGRITY-CANARY-001",
+      "candidate_ref": "refs/heads/gcl/candidate/MP-CONSTRUCTION-INTEGRITY-CANARY-001",
+      "allowed_paths": [
+        "governance/construction_integrity_canary.txt"
+      ],
+      "allowed_path_prefixes": [],
+      "forbidden_path_patterns": [
+        "^\\.github/",
+        "^ci/",
+        "^schemas/"
+      ],
+      "deny_update_when_exact_head_evidence_exists": true
+    }
+  ],
   "estate_classification": {
     "mode": "READ_ONLY",
     "classifications": [
