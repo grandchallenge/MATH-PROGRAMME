@@ -24,7 +24,8 @@ The repair deliberately does not rely on one prose reminder.
 4. **Other governed operations.** Non-Agent-Council terminal operations use `closure_contract.json` under their evidence package and register it in `governance/governed_closure_registry.json`.
 5. **Discovery and drift resistance.** The validator compares discovered closure contracts with the registry, validates contract schemas, resolves ledger entries and authoritative artifacts, verifies consistency-reference paths, and checks that the agent/Council instruction bindings remain present.
 6. **CI reachability.** `governance/policy_shard_registry.json` runs the validator and adversarial regression suite in the existing contracts policy shard.
-7. **Self-application.** This hardening operation carries its own evidence package, closure contract, and administrative-ledger registration in PR #656.
+7. **Change ownership.** `.github/CODEOWNERS` binds `AGENTS.md`, Council governance documents, and the documentary-closure validator/tests to Council and Amanuensis review, while governance/schema paths retain their existing Council/Amanuensis ownership.
+8. **Self-application.** This hardening operation carries its own evidence package, closure contract, and administrative-ledger registration in PR #656.
 
 ## Legacy boundary
 
@@ -50,6 +51,7 @@ This mirrors the repository's existing explicit migration boundary for schema-bo
 - tracker: MATH-PROGRAMME issue #655
 - admission PR: MATH-PROGRAMME PR #656
 - agent instructions: `AGENTS.md`
+- ownership controls: `.github/CODEOWNERS`
 - Council policy: `docs/AGENT_COUNCIL_GOVERNANCE.md`
 - Council checklist: `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`
 - Agent-review semantic description: `schemas/agent_review.schema.yaml`
