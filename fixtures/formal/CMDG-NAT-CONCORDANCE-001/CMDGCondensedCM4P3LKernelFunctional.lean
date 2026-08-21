@@ -416,7 +416,9 @@ theorem weightedFiniteBooleanMeasureLimitLift_point_reweight
     (weightedFiniteBooleanMeasureLimitLift_fac X (weightedBoolToInt a t) j)
   have hfinite := weightedFiniteBooleanMeasureHom_point_reweight X a j t
   have hright := ha.trans (hfinite.trans hb.symm)
-  simpa only [Category.assoc] using hright
+  exact
+    (Category.assoc _ _ _).trans
+      (hright.trans (Category.assoc _ _ _).symm)
 
 /-- Global selector reweighting for the coefficient section. -/
 theorem kernelProductSection_reweight_eval_R
