@@ -135,10 +135,26 @@ import administrative_autonomy_low_friction as low_friction
 # low-friction runtime to exact protected-base ancestry instead. All existing
 # low-friction state-machine checks consume current_pull(), so this one bounded
 # overlay makes base drift visible as BEHIND throughout checking and stabilization.
-_low_friction_current_pull = low_friction.current_pull
+# Importing this runtime both as __main__ and as a module is supported by the
+# repository validators; install the overlay idempotently so those imports never
+# stack ancestry wrappers or duplicate protected-main reads.
+_existing_base_aware_current_pull = (
+    low_friction.current_pull
+    if getattr(low_friction.current_pull, "_mp_low_friction_base_aware", False)
+    else None
+)
+_low_friction_current_pull = (
+    getattr(
+        _existing_base_aware_current_pull,
+        "_mp_low_friction_original",
+        low_friction.current_pull,
+    )
+    if _existing_base_aware_current_pull is not None
+    else low_friction.current_pull
+)
 
 
-def _base_aware_low_friction_current_pull(client, pr: int) -> dict[str, object]:
+def _new_base_aware_low_friction_current_pull(client, pr: int) -> dict[str, object]:
     pull = _low_friction_current_pull(client, pr)
     if pull.get("state") != "open" or pull.get("merged") is True:
         return pull
@@ -192,7 +208,15 @@ def _base_aware_low_friction_current_pull(client, pr: int) -> dict[str, object]:
     return value
 
 
-low_friction.current_pull = _base_aware_low_friction_current_pull
+if _existing_base_aware_current_pull is None:
+    _new_base_aware_low_friction_current_pull._mp_low_friction_base_aware = True
+    _new_base_aware_low_friction_current_pull._mp_low_friction_original = (
+        _low_friction_current_pull
+    )
+    low_friction.current_pull = _new_base_aware_low_friction_current_pull
+    _base_aware_low_friction_current_pull = _new_base_aware_low_friction_current_pull
+else:
+    _base_aware_low_friction_current_pull = _existing_base_aware_current_pull
 
 _base_execute = protected_behind_execute
 _base_validate_command = protected_behind_validate_command
