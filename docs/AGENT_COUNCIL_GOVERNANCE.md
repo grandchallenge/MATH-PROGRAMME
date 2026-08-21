@@ -56,6 +56,21 @@ Each governed artifact therefore carries an `amanuensis_control` record. This re
 
 The Amanuensis does not certify mathematical truth. It certifies that the reviewed reasoning and obligations have been faithfully carried into the authoritative artifact and that no known blocking conflict has been hidden by revision.
 
+## Terminal documentary closure boundary
+
+Operational success is necessary but not sufficient for governed completion. A canonical tracker, Work Package, governance operation, or archival operation must not be represented as terminal while its required documentary continuity remains incomplete.
+
+Two closure routes are recognized and machine-checked:
+
+1. **Schema-bound Agent Council route.** A Work Package or other schema-bound review record uses `amanuensis_control`. The lifecycle states `completed`, `certified`, `published`, and `archived` are terminal. Those states require the same continuity conditions as promotion even when `promotion.ready_for_next_stage` is false: artifact-ledger identity, complete review provenance, reviewed cross-document consistency, reviewed final editorial integration, an authoritative integrated artifact, no hidden blocking conflict, and no unresolved blocking documentary obligation.
+2. **Registered governed-operation route.** A governed operation that does not use a schema-bound Agent Council review must provide `governance/rebuild_evidence/<ID>/closure_contract.json`, validate against `schemas/governed_closure_contract.schema.json`, and register that contract in `governance/governed_closure_registry.json`. The contract records the authoritative artifact, ledger identity, review provenance, consistency review, final editorial integration, authority references, terminal evidence, and unresolved documentary obligations.
+
+`ci/validate_documentary_closure.py` enforces these two routes in the contracts policy shard. It also rejects unregistered closure contracts and stale registry entries.
+
+Historical artifacts are not silently reclassified by this rule. Legacy records remain governed by their existing evidence until individually migrated. Any newly completed or materially revised governed work must use one of the two machine-enforced closure routes before it is described as complete.
+
+If the operational objective has succeeded but documentary closure is incomplete, the correct state is **operationally complete, documentary obligation open**. The canonical tracker or an explicitly linked documentary obligation remains open until the continuity record is admitted.
+
 ## Promotion boundary
 
 Promotion requires explicit council review state, unresolved-obligation tracking, a declared evidence or certification route, and Amanuensis continuity control.
