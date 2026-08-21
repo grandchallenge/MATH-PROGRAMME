@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-CLOSURE-CONTRACT-001",
+  "governed_work_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-001",
+  "binding": {
+    "status": "CANONICAL_ON_PROTECTED_MAIN",
+    "policy_refs": [
+      "AGENTS.md",
+      "docs/AGENT_COUNCIL_GOVERNANCE.md",
+      "docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md"
+    ],
+    "legacy_boundary": "This contract binds issue #655 and PR #656 prospectively. It does not silently reinterpret unrelated historical governance artifacts."
+  },
+  "artifact_ledger": {
+    "ledger_ref": "governance/administrative_maintenance_artifact_ledger.json",
+    "entry_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-EVIDENCE-001"
+  },
+  "review_provenance": {
+    "complete": true,
+    "evidence_refs": [
+      "MATH-PROGRAMME issue #655",
+      "MATH-PROGRAMME PR #656",
+      "MATH-PROGRAMME PR #654",
+      "governance/rebuild_evidence/MP-ADMIN-LOW-FRICTION-001/README.md"
+    ]
+  },
+  "cross_document_consistency": {
+    "status": "reviewed",
+    "checked_against": [
+      "AGENTS.md",
+      "docs/AGENT_COUNCIL_GOVERNANCE.md",
+      "docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md",
+      "schemas/agent_review.schema.yaml",
+      "schemas/agent_review.schema.json",
+      "schemas/governed_closure_contract.schema.json",
+      "schemas/governed_closure_registry.schema.json",
+      "ci/validate_documentary_closure.py",
+      "ci/test_documentary_closure.py",
+      "governance/policy_shard_registry.json",
+      "governance/governed_closure_registry.json",
+      "governance/rebuild_evidence/MP-ADMIN-LOW-FRICTION-001/closure_contract.json",
+      "governance/rebuild_evidence/MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-001/README.md",
+      "governance/rebuild_evidence/MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-001/manifest.json",
+      "governance/administrative_maintenance_artifact_ledger.json"
+    ],
+    "conflicts": []
+  },
+  "final_editorial_integration": {
+    "status": "reviewed",
+    "authoritative_artifact_ref": "governance/rebuild_evidence/MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-001/README.md",
+    "integration_notes": [
+      "The policy text, execution instructions, machine validator, adversarial tests, registry, and evidence package express the same two-route closure model.",
+      "PR #656 is the single protected admission vehicle for the hardening and its self-application record."
+    ]
+  },
+  "unresolved_documentary_obligations": [],
+  "authority_refs": [
+    "MATH-PROGRAMME issue #655",
+    "Human Steward execution instruction recorded in issue #655 body"
+  ],
+  "terminal_evidence_refs": [
+    "MATH-PROGRAMME PR #656 exact-head policy and independent-review admission record",
+    "protected merge/readback of PR #656 required before this contract is canonical"
+  ],
+  "claim_boundary": {
+    "creates_new_authority": false,
+    "creates_mathematical_claim": false,
+    "creates_certification_claim": false,
+    "creates_external_claim_authority": false
+  }
+}
