@@ -327,6 +327,29 @@ class LowFrictionTests(unittest.TestCase):
         self.assertIn("ADMIN_TOKEN", runtime)
         self.assertIn("human_steward_checkpoint_requested", runtime)
 
+    def test_runtime_starts_both_lanes_before_waiting_on_either(self):
+        runtime = (ROOT / "ci/administrative_autonomy_runtime.py").read_text(encoding="utf-8")
+        low_submit = "low_future = executor.submit(low_friction.sweep, low_report)"
+        base_submit = "base_future = executor.submit(_base_execute, report_path)"
+        first_wait = "outcome = low_future.result()"
+        self.assertIn("ThreadPoolExecutor", runtime)
+        self.assertIn(low_submit, runtime)
+        self.assertIn(base_submit, runtime)
+        self.assertIn(first_wait, runtime)
+        self.assertLess(runtime.index(low_submit), runtime.index(first_wait))
+        self.assertLess(runtime.index(base_submit), runtime.index(first_wait))
+
+    def test_runtime_has_no_base_success_precondition_for_low_friction(self):
+        runtime = (ROOT / "ci/administrative_autonomy_runtime.py").read_text(encoding="utf-8")
+        old_serial_gate = (
+            "result = _base_execute(report_path)\n"
+            "    if result != 0:\n"
+            "        return result\n"
+        )
+        self.assertNotIn(old_serial_gate, runtime)
+        self.assertIn("if base_result != 0:", runtime)
+        self.assertIn("if low_error is not None:", runtime)
+
     def test_full_state_space_has_no_unlisted_state(self):
         self.assertEqual(set(low.ALLOWED_TRANSITIONS), set(low.STATES))
         self.assertEqual(low.ALLOWED_TRANSITIONS["TERMINAL"], set())
