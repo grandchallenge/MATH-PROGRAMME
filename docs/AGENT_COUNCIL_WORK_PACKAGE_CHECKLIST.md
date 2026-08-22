@@ -75,5 +75,7 @@ Before using `completed`, `certified`, `published`, or `archived`, or before clo
 - [ ] Final editorial integration is reviewed and names the authoritative artifact.
 - [ ] No unresolved blocking documentary obligation remains.
 - [ ] The authoritative artifact exists in the protected repository or is explicitly bound to the protected admission being reviewed.
-- [ ] If the work does not use a schema-bound Agent Council review, a conforming `closure_contract.json` exists under `governance/rebuild_evidence/<ID>/` and is registered in `governance/governed_closure_registry.json`.
+- [ ] If the work does not use a schema-bound Agent Council review, a conforming `closure_contract.json` exists directly under `governance/rebuild_evidence/<ID>/` and is registered in `governance/governed_closure_registry.json`.
+- [ ] A newly created rebuild-evidence package is not treated as legacy merely because its closure contract is absent. The only legacy exemption is the fixed baseline enforced by `ci/validate_documentary_closure.py`; changing that baseline is a governance-control change.
+- [ ] Registry and filesystem agree: no unregistered contract, stale contract registration, uncontracted non-legacy evidence package, unauthorized legacy exemption, missing fixed baseline entry, or legacy/contract overlap remains.
 - [ ] If operational work is complete but any documentary item above is incomplete, the documentary obligation remains explicitly open and the work is not described as fully closed.
