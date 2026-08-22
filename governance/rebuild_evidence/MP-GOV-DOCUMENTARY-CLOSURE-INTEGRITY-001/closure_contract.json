@@ -9,7 +9,7 @@
       "docs/AGENT_COUNCIL_GOVERNANCE.md",
       "docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md"
     ],
-    "legacy_boundary": "This contract binds issue #655 and PR #656 prospectively. It does not silently reinterpret unrelated historical governance artifacts."
+    "legacy_boundary": "This contract binds issue #655 and PR #656 prospectively. It does not silently reinterpret unrelated historical governance artifacts. The only rebuild-evidence exception is the fixed MP-ADMIN-WORKFLOW-REBUILD-001 baseline enforced in validator code and mirrored in the registry; omission of a closure contract is not a new legacy route."
   },
   "artifact_ledger": {
     "ledger_ref": "governance/administrative_maintenance_artifact_ledger.json",
@@ -51,6 +51,7 @@
     "authoritative_artifact_ref": "governance/rebuild_evidence/MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-001/README.md",
     "integration_notes": [
       "The policy text, execution instructions, ownership controls, machine validator, adversarial tests, registry, and evidence package express the same two-route closure model.",
+      "The validator enumerates rebuild-evidence package directories, rejects omission of closure_contract.json outside the fixed legacy baseline, and rejects registry-only expansion or legacy/contract overlap.",
       "PR #656 is the single protected admission vehicle for the hardening and its self-application record."
     ]
   },
