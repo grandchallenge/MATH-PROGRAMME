@@ -33,8 +33,17 @@ Do not close a canonical tracker while a required documentary obligation is
 missing. If operational work is complete but documentary closure is not, keep
 the documentary obligation explicitly open.
 
-Historical artifacts are not silently reclassified. Newly completed or
-materially revised governed work must use one of the two closure routes above.
+Historical artifacts are not silently reclassified. The only rebuild-evidence
+package exempt from a closure contract is the fixed legacy baseline enforced by
+`ci/validate_documentary_closure.py` and declared in
+`governance/governed_closure_registry.json`. Agents must not create a new legacy
+exemption merely to avoid documentary closure. Any change to that fixed
+baseline is itself a governance-control change requiring the same protected
+review path. Every newly created rebuild-evidence package outside that baseline
+must carry a registered closure contract; omission is a CI failure.
+
+Newly completed or materially revised governed work must use one of the two
+closure routes above.
 
 Canonical policy: `docs/AGENT_COUNCIL_GOVERNANCE.md` and
 `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`.
