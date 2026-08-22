@@ -18,6 +18,8 @@ REGISTRY_REL = "governance/governed_closure_registry.json"
 REGISTRY_SCHEMA_REL = "schemas/governed_closure_registry.schema.json"
 CONTRACT_SCHEMA_REL = "schemas/governed_closure_contract.schema.json"
 EVIDENCE_ROOT_REL = "governance/rebuild_evidence"
+CANDIDATE_CLOSURE_STATUS = "CANDIDATE_AWAITING_PROTECTED_ADMISSION"
+CANONICAL_CLOSURE_STATUS = "CANONICAL_ON_PROTECTED_MAIN"
 FIXED_LEGACY_EVIDENCE_PACKAGES = frozenset(
     {"governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001"}
 )
@@ -45,8 +47,7 @@ def safe_repo_path(root: Path, relative: str) -> Path | None:
     path = Path(relative)
     if path.is_absolute() or ".." in path.parts:
         return None
-    resolved = root / path
-    return resolved
+    return root / path
 
 
 def nested_contains_artifact_id(value: Any, artifact_id: str) -> bool:
@@ -250,6 +251,33 @@ def closure_contract_errors(
         checked_path = safe_repo_path(root, checked_ref)
         if checked_path is None or not checked_path.exists():
             errors.append(f"{label}: consistency reference does not resolve: {checked_ref}")
+
+    status = contract["binding"]["status"]
+    admission = contract["admission"]
+    if status == CANONICAL_CLOSURE_STATUS:
+        merge_sha = admission["protected_merge"]
+        readback_sha = admission["protected_main_readback"]
+        if merge_sha != readback_sha:
+            errors.append(
+                f"{label}: protected_main_readback must equal protected_merge for canonical closure"
+            )
+
+        terminal_text = "\n".join(contract["terminal_evidence_refs"])
+        required_terminal_tokens = (
+            admission["exact_reviewed_head"],
+            admission["independent_review_id"],
+            str(admission["programme_policy_run"]),
+            merge_sha,
+            admission["terminal_receipt_ref"],
+        )
+        for token in required_terminal_tokens:
+            if token not in terminal_text:
+                errors.append(
+                    f"{label}: canonical terminal evidence does not bind admission token {token!r}"
+                )
+    elif status == CANDIDATE_CLOSURE_STATUS:
+        if admission.get("phase") != "candidate":
+            errors.append(f"{label}: candidate closure must remain in candidate admission phase")
     return errors
 
 
@@ -351,7 +379,8 @@ def main() -> int:
 
     print(
         "documentary closure integrity is valid: terminal Agent Council records, "
-        "registered governed-operation contracts, and the fixed legacy evidence baseline are continuous"
+        "registered governed-operation contracts, protected admission phases, "
+        "and the fixed legacy evidence baseline are continuous"
     )
     return 0
 
