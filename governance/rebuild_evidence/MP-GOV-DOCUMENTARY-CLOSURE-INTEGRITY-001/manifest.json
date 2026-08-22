@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "artifact_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-EVIDENCE-001",
   "control_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
@@ -15,6 +15,12 @@
   "implementation": {
     "agent_entry_instruction": "AGENTS.md",
     "ownership_control": ".github/CODEOWNERS",
+    "enforceable_documentary_owners": [
+      "@grandchallenge/math-programme-maintainers",
+      "@grandchallenge/amanuensis"
+    ],
+    "github_surface_additional_owner": "@grandchallenge/security",
+    "non_requestable_codeowner_rejected": "@grandchallenge/the-council",
     "terminal_agent_review_gate": "ci/validate_documentary_closure.py",
     "terminal_agent_review_statuses": [
       "completed",
@@ -40,7 +46,7 @@
     "evidence_package_present": true,
     "closure_contract_present": true,
     "ledger_registration_in_same_pr": true,
-    "governance_codeowner_binding_present": true,
+    "enforceable_codeowner_binding_present": true,
     "omitted_contract_guard_present": true,
     "fixed_legacy_baseline_guard_present": true,
     "independent_review_required": true,
