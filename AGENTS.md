@@ -29,9 +29,22 @@ There are two machine-enforced closure routes:
    `schemas/governed_closure_contract.schema.json` and listed in
    `governance/governed_closure_registry.json`.
 
+The registered governed-operation route is explicitly two-phase. Before
+protected admission, the contract must use
+`CANDIDATE_AWAITING_PROTECTED_ADMISSION`, carry no terminal-evidence claim, and
+retain `protected_pr_admission_and_readback` as an unresolved documentary
+obligation. Only a subsequent protected readback seal may use
+`CANONICAL_ON_PROTECTED_MAIN`; that state requires `admission.phase=protected`
+and exact reviewed-head, independent-review, policy-run, protected-merge,
+signature, protected-main-readback, and terminal-receipt evidence. A candidate
+contract is not documentary completion.
+
 Do not close a canonical tracker while a required documentary obligation is
 missing. If operational work is complete but documentary closure is not, keep
-the documentary obligation explicitly open.
+the documentary obligation explicitly open. In particular, merging the primary
+implementation/evidence PR does not by itself permit tracker closure when the
+registered closure contract is still in candidate phase; the protected
+readback seal must be admitted first.
 
 Historical artifacts are not silently reclassified. The only rebuild-evidence
 package exempt from a closure contract is the fixed legacy baseline enforced by
