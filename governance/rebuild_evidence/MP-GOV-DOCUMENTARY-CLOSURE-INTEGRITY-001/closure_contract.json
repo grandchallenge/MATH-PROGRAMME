@@ -1,31 +1,32 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "contract_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-CLOSURE-CONTRACT-001",
   "governed_work_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-001",
   "binding": {
-    "status": "CANONICAL_ON_PROTECTED_MAIN",
+    "status": "CANDIDATE_AWAITING_PROTECTED_ADMISSION",
     "policy_refs": [
       "AGENTS.md",
       "docs/AGENT_COUNCIL_GOVERNANCE.md",
       "docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md"
     ],
-    "legacy_boundary": "This contract binds issue #655 and PR #656 prospectively. It does not silently reinterpret unrelated historical governance artifacts. The only rebuild-evidence exception is the fixed MP-ADMIN-WORKFLOW-REBUILD-001 baseline enforced in validator code and mirrored in the registry; omission of a closure contract is not a new legacy route."
+    "legacy_boundary": "This contract binds issue #655 prospectively. It does not silently reinterpret unrelated historical governance artifacts. The only rebuild-evidence exception is the fixed MP-ADMIN-WORKFLOW-REBUILD-001 baseline enforced in validator code and mirrored in the registry; omission of a closure contract is not a new legacy route."
   },
   "artifact_ledger": {
     "ledger_ref": "governance/administrative_maintenance_artifact_ledger.json",
     "entry_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-EVIDENCE-001"
   },
   "review_provenance": {
-    "complete": true,
+    "complete": false,
     "evidence_refs": [
       "MATH-PROGRAMME issue #655",
       "MATH-PROGRAMME PR #656",
-      "MATH-PROGRAMME PR #654",
+      "MATH-PROGRAMME PR #656 review PRR_kwDOSuWV7M8AAAABKfDukg by jimsteeg",
+      "MATH-PROGRAMME issue #655 comment 5377233642",
       "governance/rebuild_evidence/MP-ADMIN-LOW-FRICTION-001/README.md"
     ]
   },
   "cross_document_consistency": {
-    "status": "reviewed",
+    "status": "pending",
     "checked_against": [
       ".github/CODEOWNERS",
       "AGENTS.md",
@@ -47,23 +48,26 @@
     "conflicts": []
   },
   "final_editorial_integration": {
-    "status": "reviewed",
+    "status": "pending",
     "authoritative_artifact_ref": "governance/rebuild_evidence/MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-001/README.md",
     "integration_notes": [
-      "The policy text, execution instructions, ownership controls, machine validator, adversarial tests, registry, and evidence package express the same two-route closure model.",
-      "The validator enumerates rebuild-evidence package directories, rejects omission of closure_contract.json outside the fixed legacy baseline, and rejects registry-only expansion or legacy/contract overlap.",
-      "PR #656 is the single protected admission vehicle for the hardening and its self-application record."
+      "PR #656 admitted the first documentary-closure hardening and established the protected predecessor.",
+      "Post-merge audit exposed a material phase-model defect: canonical contracts could contain prospective terminal-evidence text because candidate and protected admission were not distinguished.",
+      "The current repair introduces explicit candidate and protected phases. A final documentary-only readback seal remains required after the repair PR is protected."
     ]
   },
-  "unresolved_documentary_obligations": [],
+  "unresolved_documentary_obligations": [
+    "protected_pr_admission_and_readback"
+  ],
   "authority_refs": [
     "MATH-PROGRAMME issue #655",
     "Human Steward execution instruction recorded in issue #655 body"
   ],
-  "terminal_evidence_refs": [
-    "MATH-PROGRAMME PR #656 exact-head policy and independent-review admission record",
-    "protected merge/readback of PR #656 required before this contract is canonical"
-  ],
+  "terminal_evidence_refs": [],
+  "admission": {
+    "phase": "candidate",
+    "required_next_step": "protected_pr_admission_and_readback"
+  },
   "claim_boundary": {
     "creates_new_authority": false,
     "creates_mathematical_claim": false,

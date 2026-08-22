@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/governed_closure_contract.schema.json",
   "title": "Governed Documentary Closure Contract",
-  "description": "Terminal continuity contract for governed operations that do not use a schema-bound Agent Council review record.",
+  "description": "Continuity contract for governed operations that do not use a schema-bound Agent Council review record. Candidate contracts may await protected admission; canonical contracts must carry exact terminal admission evidence.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -17,6 +17,7 @@
     "unresolved_documentary_obligations",
     "authority_refs",
     "terminal_evidence_refs",
+    "admission",
     "claim_boundary"
   ],
   "properties": {
@@ -28,7 +29,12 @@
       "additionalProperties": false,
       "required": ["status", "policy_refs", "legacy_boundary"],
       "properties": {
-        "status": {"const": "CANONICAL_ON_PROTECTED_MAIN"},
+        "status": {
+          "enum": [
+            "CANDIDATE_AWAITING_PROTECTED_ADMISSION",
+            "CANONICAL_ON_PROTECTED_MAIN"
+          ]
+        },
         "policy_refs": {
           "type": "array",
           "minItems": 2,
@@ -52,7 +58,7 @@
       "additionalProperties": false,
       "required": ["complete", "evidence_refs"],
       "properties": {
-        "complete": {"const": true},
+        "complete": {"type": "boolean"},
         "evidence_refs": {
           "type": "array",
           "minItems": 1,
@@ -66,14 +72,14 @@
       "additionalProperties": false,
       "required": ["status", "checked_against", "conflicts"],
       "properties": {
-        "status": {"const": "reviewed"},
+        "status": {"enum": ["pending", "reviewed"]},
         "checked_against": {
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,
           "items": {"type": "string", "minLength": 1}
         },
-        "conflicts": {"type": "array", "maxItems": 0}
+        "conflicts": {"type": "array"}
       }
     },
     "final_editorial_integration": {
@@ -81,7 +87,7 @@
       "additionalProperties": false,
       "required": ["status", "authoritative_artifact_ref", "integration_notes"],
       "properties": {
-        "status": {"const": "reviewed"},
+        "status": {"enum": ["pending", "reviewed"]},
         "authoritative_artifact_ref": {"type": "string", "minLength": 1},
         "integration_notes": {
           "type": "array",
@@ -92,7 +98,7 @@
     },
     "unresolved_documentary_obligations": {
       "type": "array",
-      "maxItems": 0
+      "items": {"type": "string", "minLength": 1}
     },
     "authority_refs": {
       "type": "array",
@@ -102,9 +108,51 @@
     },
     "terminal_evidence_refs": {
       "type": "array",
-      "minItems": 1,
       "uniqueItems": true,
       "items": {"type": "string", "minLength": 1}
+    },
+    "admission": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["phase", "required_next_step"],
+          "properties": {
+            "phase": {"const": "candidate"},
+            "required_next_step": {"const": "protected_pr_admission_and_readback"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "phase",
+            "exact_reviewed_head",
+            "independent_review_id",
+            "independent_reviewer",
+            "programme_policy_run",
+            "programme_policy_conclusion",
+            "protected_merge",
+            "protected_merge_signature_verified",
+            "protected_merge_signature_reason",
+            "protected_main_readback",
+            "terminal_receipt_ref"
+          ],
+          "properties": {
+            "phase": {"const": "protected"},
+            "exact_reviewed_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+            "independent_review_id": {"type": "string", "minLength": 1},
+            "independent_reviewer": {"type": "string", "minLength": 1},
+            "programme_policy_run": {"type": "integer", "minimum": 1},
+            "programme_policy_conclusion": {"const": "success"},
+            "protected_merge": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+            "protected_merge_signature_verified": {"const": true},
+            "protected_merge_signature_reason": {"const": "valid"},
+            "protected_main_readback": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+            "terminal_receipt_ref": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
     },
     "claim_boundary": {
       "type": "object",
@@ -122,5 +170,54 @@
         "creates_external_claim_authority": {"type": "boolean"}
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "binding": {
+            "properties": {"status": {"const": "CANDIDATE_AWAITING_PROTECTED_ADMISSION"}}
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "admission": {"properties": {"phase": {"const": "candidate"}}},
+          "terminal_evidence_refs": {"maxItems": 0},
+          "unresolved_documentary_obligations": {
+            "minItems": 1,
+            "contains": {"const": "protected_pr_admission_and_readback"}
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "binding": {
+            "properties": {"status": {"const": "CANONICAL_ON_PROTECTED_MAIN"}}
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "review_provenance": {
+            "properties": {"complete": {"const": true}}
+          },
+          "cross_document_consistency": {
+            "properties": {
+              "status": {"const": "reviewed"},
+              "conflicts": {"maxItems": 0}
+            }
+          },
+          "final_editorial_integration": {
+            "properties": {"status": {"const": "reviewed"}}
+          },
+          "unresolved_documentary_obligations": {"maxItems": 0},
+          "terminal_evidence_refs": {"minItems": 4},
+          "admission": {"properties": {"phase": {"const": "protected"}}}
+        }
+      }
+    }
+  ]
 }

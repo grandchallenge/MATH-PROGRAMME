@@ -76,6 +76,10 @@ Before using `completed`, `certified`, `published`, or `archived`, or before clo
 - [ ] No unresolved blocking documentary obligation remains.
 - [ ] The authoritative artifact exists in the protected repository or is explicitly bound to the protected admission being reviewed.
 - [ ] If the work does not use a schema-bound Agent Council review, a conforming `closure_contract.json` exists directly under `governance/rebuild_evidence/<ID>/` and is registered in `governance/governed_closure_registry.json`.
+- [ ] Before protected admission, that contract is `CANDIDATE_AWAITING_PROTECTED_ADMISSION`, contains no terminal-evidence claim, and keeps `protected_pr_admission_and_readback` explicitly unresolved.
+- [ ] The canonical tracker remains open while the registered contract is in candidate phase, even if the operational or primary evidence PR has merged.
+- [ ] A contract is changed to `CANONICAL_ON_PROTECTED_MAIN` only by a protected readback seal after exact-head checks, independent approval, protected merge, valid signature, and protected-main readback exist.
+- [ ] Canonical protected phase records the exact reviewed head, independent review ID/reviewer, Programme policy run, protected merge, verified/valid signature, protected-main readback, and terminal receipt; the readback equals the protected merge and terminal references bind those identities.
 - [ ] A newly created rebuild-evidence package is not treated as legacy merely because its closure contract is absent. The only legacy exemption is the fixed baseline enforced by `ci/validate_documentary_closure.py`; changing that baseline is a governance-control change.
 - [ ] Registry and filesystem agree: no unregistered contract, stale contract registration, uncontracted non-legacy evidence package, unauthorized legacy exemption, missing fixed baseline entry, or legacy/contract overlap remains.
 - [ ] If operational work is complete but any documentary item above is incomplete, the documentary obligation remains explicitly open and the work is not described as fully closed.
