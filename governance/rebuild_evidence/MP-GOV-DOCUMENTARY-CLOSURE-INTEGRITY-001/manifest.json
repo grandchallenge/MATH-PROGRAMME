@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.2.0",
+  "artifact_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-EVIDENCE-001",
+  "control_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "control_issue": 655,
+  "admission_pr": 656,
+  "documentary_status": "AUTHORITATIVE_WHEN_PROTECTED",
+  "policy_basis": [
+    "AGENTS.md",
+    "docs/AGENT_COUNCIL_GOVERNANCE.md",
+    "docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md"
+  ],
+  "authoritative_integrated_artifact": "governance/rebuild_evidence/MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-001/README.md",
+  "implementation": {
+    "agent_entry_instruction": "AGENTS.md",
+    "ownership_control": ".github/CODEOWNERS",
+    "enforceable_documentary_owners": [
+      "@grandchallenge/math-programme-maintainers",
+      "@grandchallenge/amanuensis"
+    ],
+    "github_surface_additional_owner": "@grandchallenge/security",
+    "non_requestable_codeowner_rejected": "@grandchallenge/the-council",
+    "terminal_agent_review_gate": "ci/validate_documentary_closure.py",
+    "terminal_agent_review_statuses": [
+      "completed",
+      "certified",
+      "published",
+      "archived"
+    ],
+    "general_closure_contract_schema": "schemas/governed_closure_contract.schema.json",
+    "general_closure_registry_schema": "schemas/governed_closure_registry.schema.json",
+    "general_closure_registry": "governance/governed_closure_registry.json",
+    "evidence_package_root": "governance/rebuild_evidence",
+    "fixed_legacy_evidence_packages": [
+      "governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001"
+    ],
+    "omitted_contract_is_error": true,
+    "registry_only_legacy_expansion_is_error": true,
+    "legacy_contract_overlap_is_error": true,
+    "regression_suite": "ci/test_documentary_closure.py",
+    "policy_shard": "contracts"
+  },
+  "legacy_boundary": "Historical artifacts are not silently reclassified. The only grandfathered rebuild-evidence package is MP-ADMIN-WORKFLOW-REBUILD-001, fixed in validator code and mirrored in the registry. Every other rebuild-evidence package must carry a registered closure contract. Any intentional change to the fixed baseline is a governance-control change.",
+  "self_application": {
+    "evidence_package_present": true,
+    "closure_contract_present": true,
+    "ledger_registration_in_same_pr": true,
+    "enforceable_codeowner_binding_present": true,
+    "omitted_contract_guard_present": true,
+    "fixed_legacy_baseline_guard_present": true,
+    "independent_review_required": true,
+    "protected_readback_required": true
+  },
+  "claim_boundaries": {
+    "new_mathematical_claim": false,
+    "new_certification_claim": false,
+    "new_publication_claim": false,
+    "new_bypass_or_direct_push_authority": false,
+    "new_external_claim_authority": false
+  }
+}

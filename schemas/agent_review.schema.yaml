@@ -6,6 +6,7 @@ purpose: Records Agent Council review state and Amanuensis continuity control fo
 binding:
   rule: CI validates only records explicitly registered in SCHEMA_BOUND_AGENT_REVIEWS in ci/validate_programme.py.
   legacy_boundary: Committed legacy review formats are not schema-bound until migrated and registered.
+  terminal_semantic_gate: ci/validate_documentary_closure.py additionally rejects terminal lifecycle states whose Amanuensis continuity is incomplete.
 
 artifact:
   id: nonempty string
@@ -35,6 +36,11 @@ artifact:
       - certified
       - completed
       - selected
+      - published
+      - archived
+    terminal_for_documentary_closure:
+      - certified
+      - completed
       - published
       - archived
   disposition: optional nonempty campaign-specific qualification; not a lifecycle token
@@ -114,3 +120,4 @@ promotion:
   certification_route: evidence or certification route string, or null
 
 promotion_rule: When ready_for_next_stage is true, the artifact ledger and integrated artifact references must be present, review provenance must be complete, cross-document consistency and final editorial integration must be reviewed, and blockers must be empty.
+terminal_rule: When artifact.status is certified, completed, published, or archived, the same continuity requirements apply even when ready_for_next_stage is false; review evidence and consistency references must be nonempty, no consistency conflicts or promotion blockers may remain, core Council review including Amanuensis and Referee must be reviewed, and no unresolved blocking obligation may remain. This semantic rule is enforced by ci/validate_documentary_closure.py.

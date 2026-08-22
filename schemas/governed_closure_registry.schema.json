@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/governed_closure_registry.schema.json",
+  "title": "Governed Documentary Closure Registry",
+  "description": "Registry of terminal documentary closure contracts for governed operations outside the schema-bound Agent Council review route, with an explicit fixed legacy evidence-package baseline.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "registry_id",
+    "legacy_boundary",
+    "legacy_evidence_packages",
+    "contracts"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "minLength": 1},
+    "registry_id": {"type": "string", "minLength": 1},
+    "legacy_boundary": {"type": "string", "minLength": 1},
+    "legacy_evidence_packages": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^governance/rebuild_evidence/[^/]+$"
+      }
+    },
+    "contracts": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^governance/rebuild_evidence/[^/]+/closure_contract\\.json$"
+      }
+    }
+  }
+}
