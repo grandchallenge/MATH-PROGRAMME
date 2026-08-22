@@ -21,17 +21,21 @@ The repair deliberately does not rely on one prose reminder.
 1. **Agent entry point.** Root `AGENTS.md` now makes documentary closure a terminal execution invariant and points to the canonical Council policy.
 2. **Council doctrine.** `docs/AGENT_COUNCIL_GOVERNANCE.md` defines a terminal documentary closure boundary. The checklist contains an explicit terminal closure gate.
 3. **Schema-bound Council records.** `ci/validate_documentary_closure.py` treats `completed`, `certified`, `published`, and `archived` as terminal even when `promotion.ready_for_next_stage` is false. It requires complete Amanuensis continuity, core Council review, a resolving ledger entry and authoritative artifact, no hidden consistency conflict, and no blocking obligation.
-4. **Other governed operations.** Non-Agent-Council terminal operations use `closure_contract.json` under their evidence package and register it in `governance/governed_closure_registry.json`.
-5. **Discovery and drift resistance.** The validator compares discovered closure contracts with the registry, validates contract schemas, resolves ledger entries and authoritative artifacts, verifies consistency-reference paths, and checks that the agent/Council instruction bindings remain present.
-6. **CI reachability.** `governance/policy_shard_registry.json` runs the validator and adversarial regression suite in the existing contracts policy shard.
-7. **Change ownership.** `.github/CODEOWNERS` binds `AGENTS.md`, Council governance documents, and the documentary-closure validator/tests to Council and Amanuensis review, while governance/schema paths retain their existing Council/Amanuensis ownership.
-8. **Self-application.** This hardening operation carries its own evidence package, closure contract, and administrative-ledger registration in PR #656.
+4. **Other governed operations.** Non-Agent-Council terminal operations use a direct-child `closure_contract.json` under their evidence package and register it in `governance/governed_closure_registry.json`.
+5. **Omission-proof package coverage.** The validator enumerates every direct child of `governance/rebuild_evidence/`. Every package must be covered by a registered direct-child closure contract or by the fixed legacy baseline. A package cannot evade closure merely by omitting `closure_contract.json`.
+6. **Fixed legacy baseline.** The sole grandfathered package is `governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001`. Its exact membership is enforced in `ci/validate_documentary_closure.py` and mirrored in the registry. Registry-only expansion, deletion of the baseline entry, or legacy/contract overlap fails closed.
+7. **Discovery and drift resistance.** The validator compares discovered closure contracts and evidence packages with the registry, validates schemas, resolves ledger entries and authoritative artifacts, verifies consistency-reference paths, and checks that the agent/Council instruction bindings remain present.
+8. **CI reachability.** `governance/policy_shard_registry.json` runs the validator and adversarial regression suite in the existing contracts policy shard.
+9. **Change ownership.** `.github/CODEOWNERS` binds `AGENTS.md`, Council governance documents, and the documentary-closure validator/tests to Council and Amanuensis review, while governance/schema paths retain their existing Council/Amanuensis ownership.
+10. **Self-application.** This hardening operation carries its own evidence package, closure contract, and administrative-ledger registration in PR #656.
 
 ## Legacy boundary
 
-The new machine route is prospective rather than a silent reinterpretation of history. Historical artifacts retain their existing governance evidence until individually migrated. Newly completed or materially revised governed work must use one of the two machine-enforced routes.
+The new machine route is prospective rather than a silent reinterpretation of history. Historical artifacts retain their existing governance evidence until individually migrated. The only rebuild-evidence exception is the fixed `MP-ADMIN-WORKFLOW-REBUILD-001` baseline that predates the closure-contract mechanism. Newly created evidence packages cannot be added to that baseline by registry editing alone; any intentional baseline change is itself a governance-control change requiring protected review.
 
-This mirrors the repository's existing explicit migration boundary for schema-bound Agent Council records.
+Every newly created rebuild-evidence package outside that fixed baseline, and every newly completed or materially revised governed operation, must use one of the two machine-enforced closure routes.
+
+This mirrors the repository's existing explicit migration boundary for schema-bound Agent Council records while preventing future omission from becoming an implicit third route.
 
 ## Regression cases
 
@@ -44,6 +48,10 @@ This mirrors the repository's existing explicit migration boundary for schema-bo
 - a bad artifact-ledger entry;
 - a missing consistency reference;
 - registry/discovery consistency on the protected candidate tree;
+- a newly created evidence package with no closure contract;
+- unauthorized expansion of the legacy baseline;
+- deletion of the required fixed legacy entry;
+- classification of one package as both legacy and contract-bound;
 - preservation of nonterminal working states, which may legitimately retain pending continuity while they remain nonterminal.
 
 ## Relevant artifacts
@@ -57,8 +65,8 @@ This mirrors the repository's existing explicit migration boundary for schema-bo
 - Agent-review semantic description: `schemas/agent_review.schema.yaml`
 - governed closure contract schema: `schemas/governed_closure_contract.schema.json`
 - governed closure registry schema: `schemas/governed_closure_registry.schema.json`
-- closure registry: `governance/governed_closure_registry.json`
-- validator: `ci/validate_documentary_closure.py`
+- closure registry and legacy declaration: `governance/governed_closure_registry.json`
+- validator and fixed legacy baseline: `ci/validate_documentary_closure.py`
 - adversarial regressions: `ci/test_documentary_closure.py`
 - policy reachability: `governance/policy_shard_registry.json`
 - machine summary: `manifest.json`
