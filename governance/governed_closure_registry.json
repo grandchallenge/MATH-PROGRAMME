@@ -1,7 +1,10 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "registry_id": "MP-GOVERNED-CLOSURE-REGISTRY-001",
-  "legacy_boundary": "The registry binds newly completed or materially revised governed operations that do not use a schema-bound Agent Council review. Historical artifacts are not silently reclassified; they enter this registry only when explicitly migrated or materially revised.",
+  "legacy_boundary": "The registry binds newly completed or materially revised governed operations that do not use a schema-bound Agent Council review. Historical artifacts are not silently reclassified. The only grandfathered rebuild-evidence package is the fixed baseline listed in legacy_evidence_packages; every other rebuild-evidence package must carry a registered closure_contract.json.",
+  "legacy_evidence_packages": [
+    "governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001"
+  ],
   "contracts": [
     "governance/rebuild_evidence/MP-ADMIN-LOW-FRICTION-001/closure_contract.json",
     "governance/rebuild_evidence/MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-001/closure_contract.json"
