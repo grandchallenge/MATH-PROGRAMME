@@ -4,78 +4,77 @@ This directory is the authoritative documentary record for MATH-PROGRAMME issue 
 
 ## Purpose
 
-The operation closes a continuity gap exposed by `MP-ADMIN-LOW-FRICTION-001`: operational work could be genuinely complete while the repository still lacked the durable documentary package required by standing Council doctrine.
+This operation closes the continuity gap exposed by `MP-ADMIN-LOW-FRICTION-001`: governed work could be operationally complete while its durable documentary package remained incomplete.
 
 The enforced invariant is:
 
-> Governed work is not complete merely because its operational objective succeeded. Terminal completion requires durable artifact continuity, review provenance, cross-document consistency, final editorial integration, and applicable ledger/Amanuensis registration; otherwise the documentary obligation remains explicitly open.
+> Governed work is not complete merely because its operational objective succeeded. Terminal completion requires durable artifact continuity, review provenance, cross-document consistency, final editorial integration, applicable ledger/Amanuensis registration, and protected-admission evidence.
 
 ## Authority and policy basis
 
-Issue #655 records the Human Steward execution instruction to make all requisite changes required for documentary integrity and consistency over time. This operation implements existing Council continuity doctrine in `docs/AGENT_COUNCIL_GOVERNANCE.md` and `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`; it does not create mathematical, certification, publication, bypass, direct-push, or external-claim authority.
+Issue #655 records the Human Steward instruction to make all requisite changes required for documentary integrity and consistency over time. The implementation applies existing Council doctrine in `docs/AGENT_COUNCIL_GOVERNANCE.md` and `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`; it creates no mathematical, certification, publication, bypass, direct-push, ruleset, or external-claim authority.
 
-## Layered enforcement
+## Enforced architecture
 
-The repair deliberately does not rely on one prose reminder.
+The protection is layered rather than dependent on memory:
 
-1. **Agent entry point.** Root `AGENTS.md` makes documentary closure a terminal execution invariant and points to the canonical Council policy.
-2. **Council doctrine.** `docs/AGENT_COUNCIL_GOVERNANCE.md` defines a terminal documentary closure boundary. The checklist contains an explicit terminal closure gate.
-3. **Schema-bound Council records.** `ci/validate_documentary_closure.py` treats `completed`, `certified`, `published`, and `archived` as terminal even when `promotion.ready_for_next_stage` is false. It requires complete Amanuensis continuity, core Council review, a resolving ledger entry and authoritative artifact, no hidden consistency conflict, and no blocking obligation.
-4. **Other governed operations.** Non-Agent-Council operations use a direct-child `closure_contract.json` under their evidence package and register it in `governance/governed_closure_registry.json`.
-5. **Two-phase governed closure.** A contract is first `CANDIDATE_AWAITING_PROTECTED_ADMISSION`; it carries no terminal-evidence claim and retains `protected_pr_admission_and_readback` as an unresolved obligation. Only a subsequent documentary readback seal may use `CANONICAL_ON_PROTECTED_MAIN`, with exact protected admission evidence.
-6. **Exact canonical admission binding.** Canonical phase requires the exact reviewed head, independent review ID/reviewer, Programme policy run, protected merge, verified/valid signature, protected-main readback, and terminal receipt. The protected-main readback must equal the protected merge and terminal references must bind those exact identities.
-7. **Omission-proof package coverage.** The validator enumerates every direct child of `governance/rebuild_evidence/`. Every package must be covered by a registered direct-child closure contract or by the fixed legacy baseline. A package cannot evade closure merely by omitting `closure_contract.json`.
-8. **Fixed legacy baseline.** The sole grandfathered package is `governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001`. Its exact membership is enforced in `ci/validate_documentary_closure.py` and mirrored in the registry. Registry-only expansion, deletion of the baseline entry, or legacy/contract overlap fails closed.
-9. **Discovery and drift resistance.** The validator compares discovered closure contracts and evidence packages with the registry, validates schemas, resolves ledger entries and authoritative artifacts, verifies consistency-reference paths, and checks that the agent/Council instruction bindings remain present.
-10. **CI reachability.** `governance/policy_shard_registry.json` runs the validator and adversarial regression suite in the existing contracts policy shard.
-11. **Enforceable change ownership.** `.github/CODEOWNERS` binds the documentary instruction, governance, schema, validator, and regression surfaces to the requestable MATH-PROGRAMME Maintainers and Amanuensis teams; `.github/` additionally requires Security. The non-requestable `the-council` team is not used as a CODEOWNER.
-12. **Self-application.** This hardening operation carries its own evidence package, closure contract, and administrative-ledger registration and remains open while its current contract is in candidate phase.
+1. Root `AGENTS.md` states documentary completion as a terminal execution invariant.
+2. Council governance and the Work Package checklist define the same terminal boundary.
+3. Schema-bound Agent Council records cannot use terminal lifecycle states with incomplete Amanuensis continuity.
+4. Other governed operations use a registered direct-child `closure_contract.json` under `governance/rebuild_evidence/<ID>/`.
+5. Evidence-package discovery is authoritative: every non-legacy package must have a registered closure contract.
+6. The sole fixed legacy package is `MP-ADMIN-WORKFLOW-REBUILD-001`; registry-only expansion, baseline deletion, or legacy/contract overlap fails closed.
+7. Closure contracts have two distinct phases:
+   - `CANDIDATE_AWAITING_PROTECTED_ADMISSION`: no terminal-evidence claim; `protected_pr_admission_and_readback` remains unresolved.
+   - `CANONICAL_ON_PROTECTED_MAIN`: exact reviewed head, independent review, successful Programme policy run, protected merge, valid signature, protected-main readback, and terminal receipt are all required and cross-bound.
+8. Canonical readback must equal the protected merge; terminal references must contain the exact structured admission identities.
+9. `ci/test_documentary_closure.py` adversarially tests omission, legacy drift, premature canonicality, readback mismatch, missing evidence binding, and enforceable ownership.
+10. `.github/CODEOWNERS` binds the relevant instruction, governance, schema, validator, and evidence surfaces to requestable Maintainers/Amanuensis ownership, with Security additionally protecting `.github/`.
 
-## Why the two-phase repair was necessary
+## Why the second repair was necessary
 
-PR #656 admitted the first hardening implementation at protected merge `93eaa1f035272e1125dcce9e418d89daf6d1ccf5`. Its exact reviewed head was `fb5ff5ce306fd094172b443c1f90d5b00948a976`, independent review `PRR_kwDOSuWV7M8AAAABKfDukg` was APPROVED by `jimsteeg`, Programme policy run `32542868995` succeeded, the merge signature was verified/valid, and protected-main readback matched the merge. Terminal issue comment `5377233642` recorded those facts.
+PR #656 admitted the first hardening implementation at protected merge `93eaa1f035272e1125dcce9e418d89daf6d1ccf5`. A post-merge audit then found that its closure contract said `CANONICAL_ON_PROTECTED_MAIN` while still describing protected admission/readback as future work. The validator checked only that terminal-evidence strings existed; it did not distinguish a candidate continuity record from a genuinely protected canonical closure.
 
-A post-merge audit then found that the protected closure contract still contained prospective language saying readback was required before canonicality, while its binding status already said `CANONICAL_ON_PROTECTED_MAIN`. The validator allowed this because `terminal_evidence_refs` were checked only for presence, not for protected admission semantics.
+Issue #655 was therefore reopened. PR #658 repaired the model rather than merely editing the stale prose.
 
-That finding re-opened #655. The current repair makes candidate and canonical phases distinct and adversarially tests the distinction. Because this repair materially changes the validator and contract schema, its own closure contract is correctly back in candidate phase. The canonical tracker must remain open until this repair is protected and a final documentary-only readback seal records the repair PR's exact admission evidence.
+## Protected two-phase repair admission
 
-## Legacy boundary
+PR #658 is the material repair that established the final two-phase rule.
 
-Historical artifacts are not silently reclassified. The only rebuild-evidence exception is the fixed `MP-ADMIN-WORKFLOW-REBUILD-001` baseline that predates the closure-contract mechanism. Every other rebuild-evidence package must carry a registered closure contract. Any intentional baseline change is itself a governance-control change requiring protected review.
+- exact reviewed head: `e5ec255122a37dbfbe651854ebca8cfb81bfca8b`
+- independent APPROVED review: `PRR_kwDOSuWV7M8AAAABKfHXPQ` by `jimsteeg`
+- exact-head Programme policy run: `32545953635`, success
+- protected merge: `369b0453198cd31411b75375d04f0a08b0be34df`
+- merge signature: verified=true, reason=valid
+- exact reviewed head is the second merge parent
+- protected-main readback: `369b0453198cd31411b75375d04f0a08b0be34df`
+- protected admission receipt: issue #655 comment `5379296345`
 
-## Regression cases
+The material repair was admitted from protected predecessor `fc40dd732116445e17f9cc3fed8e0b62be88bac1`. The independently protected Construction Gate instructions introduced by PR #657 were preserved during synchronization.
 
-`ci/test_documentary_closure.py` exercises rejection paths including:
+## Final readback seal
 
-- incomplete terminal Agent Council provenance despite a terminal lifecycle state;
-- missing or unresolved documentary artifacts and consistency references;
-- a newly created evidence package with no closure contract;
-- unauthorized legacy-baseline expansion or legacy/contract overlap;
-- a canonical contract whose protected-main readback differs from its protected merge;
-- canonical terminal references that do not bind the exact review/admission identities;
-- a candidate contract attempting to carry terminal evidence;
-- a candidate admission object presented under canonical status;
-- loss of enforceable Maintainers/Amanuensis/Security CODEOWNERS bindings.
+This final documentary-only seal converts the registered #655 contract from candidate phase to `CANONICAL_ON_PROTECTED_MAIN` using the already-protected #658 evidence above. It changes no validator, schema, policy, runtime, workflow, registry, authority, or operational behavior.
+
+The seal is not a new governed operation requiring recursive self-certification. It is the deterministic recording step authorized by the two-phase model: the protected operational/governance admission already exists, and the seal makes the durable contract state agree with that protected fact.
 
 ## Relevant artifacts
 
 - tracker: MATH-PROGRAMME issue #655
-- protected predecessor admission: MATH-PROGRAMME PR #656
-- current material repair: MATH-PROGRAMME PR #658
+- initial hardening admission: PR #656
+- material phase-model repair: PR #658
 - agent instructions: `AGENTS.md`
-- ownership controls: `.github/CODEOWNERS`
 - Council policy: `docs/AGENT_COUNCIL_GOVERNANCE.md`
 - Council checklist: `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`
-- governed closure contract schema: `schemas/governed_closure_contract.schema.json`
-- governed closure registry: `governance/governed_closure_registry.json`
+- closure-contract schema: `schemas/governed_closure_contract.schema.json`
+- closure registry: `governance/governed_closure_registry.json`
 - validator: `ci/validate_documentary_closure.py`
 - adversarial regressions: `ci/test_documentary_closure.py`
-- policy reachability: `governance/policy_shard_registry.json`
 - machine summary: `manifest.json`
-- current continuity binding: `closure_contract.json`
+- canonical continuity binding: `closure_contract.json`
 
-## Current admission boundary
+## Closure state
 
-Current documentary state: `CANDIDATE_AWAITING_PROTECTED_ADMISSION`.
+Documentary state represented by this seal: `CANONICAL_ON_PROTECTED_MAIN`.
 
-The material candidate-phase repair in PR #658 must pass exact-head policy/GCL/formal checks, independent non-author review, protected PR-only merge, and signed protected-main readback. A final documentary-only readback seal must then convert `closure_contract.json` to `CANONICAL_ON_PROTECTED_MAIN` using PR #658's exact admission evidence. Until that seal is protected, issue #655 remains open and this work is not described as fully closed.
+No unresolved documentary obligation remains in the registered contract. Once this seal itself is admitted through the ordinary exact-head review and protected PR path, issue #655 may be closed as completed and the final issue comment may record the seal merge/readback for navigational completeness.
