@@ -17,6 +17,10 @@ TERMINAL_AGENT_REVIEW_STATUSES = {"completed", "certified", "published", "archiv
 REGISTRY_REL = "governance/governed_closure_registry.json"
 REGISTRY_SCHEMA_REL = "schemas/governed_closure_registry.schema.json"
 CONTRACT_SCHEMA_REL = "schemas/governed_closure_contract.schema.json"
+EVIDENCE_ROOT_REL = "governance/rebuild_evidence"
+FIXED_LEGACY_EVIDENCE_PACKAGES = frozenset(
+    {"governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001"}
+)
 REQUIRED_POLICY_BINDINGS = (
     "AGENTS.md",
     "docs/AGENT_COUNCIL_GOVERNANCE.md",
@@ -155,13 +159,61 @@ def agent_review_terminal_errors(
 
 
 def discovered_closure_contracts(root: Path = ROOT) -> set[str]:
-    evidence_root = root / "governance" / "rebuild_evidence"
+    evidence_root = root / EVIDENCE_ROOT_REL
     if not evidence_root.is_dir():
         return set()
     return {
         path.relative_to(root).as_posix()
         for path in evidence_root.rglob("closure_contract.json")
     }
+
+
+def discovered_evidence_packages(root: Path = ROOT) -> set[str]:
+    evidence_root = root / EVIDENCE_ROOT_REL
+    if not evidence_root.is_dir():
+        return set()
+    return {
+        path.relative_to(root).as_posix()
+        for path in evidence_root.iterdir()
+        if path.is_dir()
+    }
+
+
+def evidence_package_coverage_errors(
+    discovered_packages: set[str],
+    registered_contracts: set[str],
+    registered_legacy: set[str],
+) -> list[str]:
+    """Reject evidence packages that evade both closure routes."""
+    errors: list[str] = []
+    expected_legacy = set(FIXED_LEGACY_EVIDENCE_PACKAGES)
+
+    for relative in sorted(expected_legacy - registered_legacy):
+        errors.append(
+            f"documentary closure: fixed legacy evidence baseline entry is missing: {relative}"
+        )
+    for relative in sorted(registered_legacy - expected_legacy):
+        errors.append(
+            f"documentary closure: unauthorized legacy evidence package exemption: {relative}"
+        )
+
+    contract_packages = {Path(relative).parent.as_posix() for relative in registered_contracts}
+    for relative in sorted(contract_packages & registered_legacy):
+        errors.append(
+            f"documentary closure: evidence package cannot be both legacy and contract-bound: {relative}"
+        )
+
+    covered_packages = contract_packages | registered_legacy
+    for relative in sorted(discovered_packages - covered_packages):
+        errors.append(
+            "documentary closure: evidence package lacks a registered closure_contract.json "
+            f"and is not in the fixed legacy baseline: {relative}"
+        )
+    for relative in sorted(registered_legacy - discovered_packages):
+        errors.append(
+            f"documentary closure: fixed legacy evidence package does not resolve: {relative}"
+        )
+    return errors
 
 
 def closure_contract_errors(
@@ -215,11 +267,20 @@ def closure_registry_errors(root: Path = ROOT) -> list[str]:
         return errors
 
     registered = set(registry["contracts"])
+    registered_legacy = set(registry["legacy_evidence_packages"])
     discovered = discovered_closure_contracts(root)
+    discovered_packages = discovered_evidence_packages(root)
     for relative in sorted(discovered - registered):
         errors.append(f"documentary closure: discovered contract is unregistered: {relative}")
     for relative in sorted(registered - discovered):
         errors.append(f"documentary closure: registered contract is missing: {relative}")
+    errors.extend(
+        evidence_package_coverage_errors(
+            discovered_packages,
+            registered,
+            registered_legacy,
+        )
+    )
 
     contract_ids: list[str] = []
     work_ids: list[str] = []
@@ -289,8 +350,8 @@ def main() -> int:
         return 1
 
     print(
-        "documentary closure integrity is valid: terminal Agent Council records and "
-        "registered governed-operation contracts are continuous"
+        "documentary closure integrity is valid: terminal Agent Council records, "
+        "registered governed-operation contracts, and the fixed legacy evidence baseline are continuous"
     )
     return 0
 
