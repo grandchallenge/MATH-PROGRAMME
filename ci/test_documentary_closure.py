@@ -82,6 +82,20 @@ def main() -> int:
     assert not instruction_binding_errors()
     assert not closure_registry_errors()
 
+    codeowners = (ROOT / ".github/CODEOWNERS").read_text(encoding="utf-8")
+    assert "@grandchallenge/the-council" not in codeowners
+    for required_owner_line in (
+        "/AGENTS.md @grandchallenge/math-programme-maintainers @grandchallenge/amanuensis",
+        "/docs/AGENT_COUNCIL_* @grandchallenge/math-programme-maintainers @grandchallenge/amanuensis",
+        "/ci/validate_documentary_closure.py @grandchallenge/math-programme-maintainers @grandchallenge/amanuensis",
+        "/ci/test_documentary_closure.py @grandchallenge/math-programme-maintainers @grandchallenge/amanuensis",
+        "/governance/ @grandchallenge/math-programme-maintainers @grandchallenge/amanuensis",
+        "/schemas/ @grandchallenge/math-programme-maintainers @grandchallenge/amanuensis",
+        "/decisions/ @grandchallenge/math-programme-maintainers @grandchallenge/amanuensis",
+        "/.github/ @grandchallenge/security @grandchallenge/math-programme-maintainers @grandchallenge/amanuensis",
+    ):
+        assert required_owner_line in codeowners
+
     registry = load_json(ROOT / "governance/governed_closure_registry.json")
     registered_contracts = set(registry["contracts"])
     registered_legacy = set(registry["legacy_evidence_packages"])
