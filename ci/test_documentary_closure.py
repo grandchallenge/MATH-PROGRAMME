@@ -181,8 +181,13 @@ def main() -> int:
 
     integrity_path = ROOT / registry["contracts"][1]
     integrity_contract = load_json(integrity_path)
-    assert integrity_contract["binding"]["status"] == CANDIDATE_CLOSURE_STATUS
-    assert integrity_contract["admission"]["phase"] == "candidate"
+    integrity_status = integrity_contract["binding"]["status"]
+    integrity_phase = integrity_contract["admission"]["phase"]
+    assert integrity_status in {CANDIDATE_CLOSURE_STATUS, CANONICAL_CLOSURE_STATUS}
+    if integrity_status == CANDIDATE_CLOSURE_STATUS:
+        assert integrity_phase == "candidate"
+    else:
+        assert integrity_phase == "protected"
     assert not closure_contract_errors(integrity_contract, registry["contracts"][1])
 
     print("documentary closure rejection tests passed")

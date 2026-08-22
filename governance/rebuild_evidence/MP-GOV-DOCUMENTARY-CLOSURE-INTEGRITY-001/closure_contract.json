@@ -3,7 +3,7 @@
   "contract_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-CLOSURE-CONTRACT-001",
   "governed_work_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-001",
   "binding": {
-    "status": "CANDIDATE_AWAITING_PROTECTED_ADMISSION",
+    "status": "CANONICAL_ON_PROTECTED_MAIN",
     "policy_refs": [
       "AGENTS.md",
       "docs/AGENT_COUNCIL_GOVERNANCE.md",
@@ -16,17 +16,18 @@
     "entry_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-EVIDENCE-001"
   },
   "review_provenance": {
-    "complete": false,
+    "complete": true,
     "evidence_refs": [
       "MATH-PROGRAMME issue #655",
-      "MATH-PROGRAMME PR #656",
       "MATH-PROGRAMME PR #656 review PRR_kwDOSuWV7M8AAAABKfDukg by jimsteeg",
       "MATH-PROGRAMME issue #655 comment 5377233642",
+      "MATH-PROGRAMME PR #658 review PRR_kwDOSuWV7M8AAAABKfHXPQ by jimsteeg",
+      "MATH-PROGRAMME issue #655 comment 5379296345",
       "governance/rebuild_evidence/MP-ADMIN-LOW-FRICTION-001/README.md"
     ]
   },
   "cross_document_consistency": {
-    "status": "pending",
+    "status": "reviewed",
     "checked_against": [
       ".github/CODEOWNERS",
       "AGENTS.md",
@@ -48,25 +49,40 @@
     "conflicts": []
   },
   "final_editorial_integration": {
-    "status": "pending",
+    "status": "reviewed",
     "authoritative_artifact_ref": "governance/rebuild_evidence/MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-001/README.md",
     "integration_notes": [
-      "PR #656 admitted the first documentary-closure hardening and established the protected predecessor.",
-      "Post-merge audit exposed a material phase-model defect: canonical contracts could contain prospective terminal-evidence text because candidate and protected admission were not distinguished.",
-      "The current repair introduces explicit candidate and protected phases. A final documentary-only readback seal remains required after the repair PR is protected."
+      "PR #656 admitted the initial documentary-closure hardening and established the protected predecessor.",
+      "Post-merge audit exposed the candidate/canonical phase-model defect and issue #655 was reopened rather than leaving prospective evidence under a canonical status.",
+      "PR #658 admitted the two-phase repair on exact reviewed head e5ec255122a37dbfbe651854ebca8cfb81bfca8b at signed protected merge 369b0453198cd31411b75375d04f0a08b0be34df.",
+      "This documentary-only readback seal records that already-protected admission; it creates no new operational or authority state."
     ]
   },
-  "unresolved_documentary_obligations": [
-    "protected_pr_admission_and_readback"
-  ],
+  "unresolved_documentary_obligations": [],
   "authority_refs": [
     "MATH-PROGRAMME issue #655",
     "Human Steward execution instruction recorded in issue #655 body"
   ],
-  "terminal_evidence_refs": [],
+  "terminal_evidence_refs": [
+    "MATH-PROGRAMME PR #658 exact reviewed head e5ec255122a37dbfbe651854ebca8cfb81bfca8b",
+    "MATH-PROGRAMME PR #658 independent APPROVED review PRR_kwDOSuWV7M8AAAABKfHXPQ by jimsteeg",
+    "MATH-PROGRAMME Programme policy run 32545953635 success on exact reviewed head",
+    "protected documentary merge 369b0453198cd31411b75375d04f0a08b0be34df verified=true reason=valid",
+    "protected main readback 369b0453198cd31411b75375d04f0a08b0be34df",
+    "MATH-PROGRAMME issue #655 comment 5379296345"
+  ],
   "admission": {
-    "phase": "candidate",
-    "required_next_step": "protected_pr_admission_and_readback"
+    "phase": "protected",
+    "exact_reviewed_head": "e5ec255122a37dbfbe651854ebca8cfb81bfca8b",
+    "independent_review_id": "PRR_kwDOSuWV7M8AAAABKfHXPQ",
+    "independent_reviewer": "jimsteeg",
+    "programme_policy_run": 32545953635,
+    "programme_policy_conclusion": "success",
+    "protected_merge": "369b0453198cd31411b75375d04f0a08b0be34df",
+    "protected_merge_signature_verified": true,
+    "protected_merge_signature_reason": "valid",
+    "protected_main_readback": "369b0453198cd31411b75375d04f0a08b0be34df",
+    "terminal_receipt_ref": "MATH-PROGRAMME issue #655 comment 5379296345"
   },
   "claim_boundary": {
     "creates_new_authority": false,

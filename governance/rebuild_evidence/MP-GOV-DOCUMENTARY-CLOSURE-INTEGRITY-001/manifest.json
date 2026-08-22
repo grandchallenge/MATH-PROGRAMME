@@ -1,10 +1,10 @@
 {
-  "schema_version": "1.4.0",
+  "schema_version": "1.5.0",
   "artifact_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-EVIDENCE-001",
   "control_id": "MP-GOV-DOCUMENTARY-CLOSURE-INTEGRITY-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "control_issue": 655,
-  "documentary_status": "CANDIDATE_AWAITING_PROTECTED_ADMISSION",
+  "documentary_status": "CANONICAL_ON_PROTECTED_MAIN",
   "policy_basis": [
     "AGENTS.md",
     "docs/AGENT_COUNCIL_GOVERNANCE.md",
@@ -44,20 +44,34 @@
     "policy_shard": "contracts"
   },
   "legacy_boundary": "Historical artifacts are not silently reclassified. The only grandfathered rebuild-evidence package is MP-ADMIN-WORKFLOW-REBUILD-001, fixed in validator code and mirrored in the registry. Every other rebuild-evidence package must carry a registered closure contract. Any intentional change to the fixed baseline is a governance-control change.",
-  "predecessor_protected_admission": {
+  "initial_protected_admission": {
     "pr": 656,
     "exact_reviewed_head": "fb5ff5ce306fd094172b443c1f90d5b00948a976",
     "independent_review_id": "PRR_kwDOSuWV7M8AAAABKfDukg",
     "programme_policy_run": 32542868995,
     "protected_merge": "93eaa1f035272e1125dcce9e418d89daf6d1ccf5",
     "terminal_closure_comment": 5377233642,
-    "finding_after_admission": "The protected contract still used prospective readback wording and the validator did not distinguish candidate from protected canonical phase."
+    "post_admission_finding": "The protected contract still used prospective readback wording and the validator did not distinguish candidate from protected canonical phase."
   },
-  "current_candidate": {
-    "closure_phase": "candidate",
-    "required_next_step": "protected_pr_admission_and_readback",
-    "tracker_must_remain_open": true,
-    "final_documentary_only_readback_seal_required": true
+  "material_phase_model_repair": {
+    "pr": 658,
+    "exact_reviewed_head": "e5ec255122a37dbfbe651854ebca8cfb81bfca8b",
+    "independent_review_id": "PRR_kwDOSuWV7M8AAAABKfHXPQ",
+    "independent_reviewer": "jimsteeg",
+    "programme_policy_run": 32545953635,
+    "programme_policy_conclusion": "success",
+    "protected_merge": "369b0453198cd31411b75375d04f0a08b0be34df",
+    "protected_merge_signature_verified": true,
+    "protected_merge_signature_reason": "valid",
+    "protected_main_readback": "369b0453198cd31411b75375d04f0a08b0be34df",
+    "protected_admission_receipt_comment": 5379296345
+  },
+  "final_readback_seal": {
+    "purpose": "Record the already-protected PR #658 admission in the registered closure contract without changing operational or authority state.",
+    "closure_phase": "protected",
+    "unresolved_documentary_obligations": 0,
+    "recursive_self_certification_required": false,
+    "tracker_may_close_after_seal_protected_readback": true
   },
   "self_application": {
     "evidence_package_present": true,
@@ -66,9 +80,9 @@
     "enforceable_codeowner_binding_present": true,
     "omitted_contract_guard_present": true,
     "fixed_legacy_baseline_guard_present": true,
-    "independent_review_required": true,
-    "protected_readback_required": true,
-    "protected_readback_recorded_for_current_candidate": false
+    "independent_review_completed_for_material_repair": true,
+    "protected_readback_recorded_for_material_repair": true,
+    "canonical_closure_contract_prepared": true
   },
   "claim_boundaries": {
     "new_mathematical_claim": false,
