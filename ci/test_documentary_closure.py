@@ -4,15 +4,19 @@
 from __future__ import annotations
 
 import copy
+from pathlib import Path
 
 import yaml
 
 from validate_documentary_closure import (
+    FIXED_LEGACY_EVIDENCE_PACKAGES,
     ROOT,
     agent_review_terminal_errors,
     closure_contract_errors,
     closure_registry_errors,
     discovered_closure_contracts,
+    discovered_evidence_packages,
+    evidence_package_coverage_errors,
     instruction_binding_errors,
     load_json,
 )
@@ -79,7 +83,67 @@ def main() -> int:
     assert not closure_registry_errors()
 
     registry = load_json(ROOT / "governance/governed_closure_registry.json")
-    assert set(registry["contracts"]) == discovered_closure_contracts()
+    registered_contracts = set(registry["contracts"])
+    registered_legacy = set(registry["legacy_evidence_packages"])
+    discovered_contracts = discovered_closure_contracts()
+    discovered_packages = discovered_evidence_packages()
+
+    assert registered_contracts == discovered_contracts
+    assert registered_legacy == set(FIXED_LEGACY_EVIDENCE_PACKAGES)
+    assert not evidence_package_coverage_errors(
+        discovered_packages,
+        registered_contracts,
+        registered_legacy,
+    )
+
+    contract_packages = {
+        Path(relative).parent.as_posix() for relative in registered_contracts
+    }
+    assert discovered_packages == contract_packages | registered_legacy
+
+    synthetic_uncontracted = set(discovered_packages)
+    synthetic_uncontracted.add("governance/rebuild_evidence/MP-FUTURE-UNCONTRACTED-001")
+    assert any(
+        "MP-FUTURE-UNCONTRACTED-001" in error
+        and "lacks a registered closure_contract.json" in error
+        for error in evidence_package_coverage_errors(
+            synthetic_uncontracted,
+            registered_contracts,
+            registered_legacy,
+        )
+    )
+
+    synthetic_legacy_expansion = set(registered_legacy)
+    synthetic_legacy_expansion.add("governance/rebuild_evidence/MP-FUTURE-LEGACY-001")
+    assert any(
+        "unauthorized legacy evidence package exemption" in error
+        for error in evidence_package_coverage_errors(
+            discovered_packages | synthetic_legacy_expansion,
+            registered_contracts,
+            synthetic_legacy_expansion,
+        )
+    )
+
+    assert any(
+        "fixed legacy evidence baseline entry is missing" in error
+        for error in evidence_package_coverage_errors(
+            discovered_packages,
+            registered_contracts,
+            set(),
+        )
+    )
+
+    legacy_overlap = set(registered_legacy)
+    contract_package = sorted(contract_packages)[0]
+    legacy_overlap.add(contract_package)
+    assert any(
+        "cannot be both legacy and contract-bound" in error
+        for error in evidence_package_coverage_errors(
+            discovered_packages,
+            registered_contracts,
+            legacy_overlap,
+        )
+    )
 
     low_friction_path = ROOT / registry["contracts"][0]
     low_friction = load_json(low_friction_path)
