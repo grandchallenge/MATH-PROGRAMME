@@ -26,7 +26,7 @@ The repair deliberately does not rely on one prose reminder.
 6. **Fixed legacy baseline.** The sole grandfathered package is `governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001`. Its exact membership is enforced in `ci/validate_documentary_closure.py` and mirrored in the registry. Registry-only expansion, deletion of the baseline entry, or legacy/contract overlap fails closed.
 7. **Discovery and drift resistance.** The validator compares discovered closure contracts and evidence packages with the registry, validates schemas, resolves ledger entries and authoritative artifacts, verifies consistency-reference paths, and checks that the agent/Council instruction bindings remain present.
 8. **CI reachability.** `governance/policy_shard_registry.json` runs the validator and adversarial regression suite in the existing contracts policy shard.
-9. **Change ownership.** `.github/CODEOWNERS` binds `AGENTS.md`, Council governance documents, and the documentary-closure validator/tests to Council and Amanuensis review, while governance/schema paths retain their existing Council/Amanuensis ownership.
+9. **Enforceable change ownership.** `.github/CODEOWNERS` binds the documentary instruction, governance, schema, validator, and regression surfaces to the requestable MATH-PROGRAMME Maintainers and Amanuensis teams; `.github/` additionally requires Security. The previously listed `the-council` team is not used as a CODEOWNER because GitHub cannot currently request it as a repository reviewer. The regression suite rejects reintroduction of that non-requestable owner or loss of the enforceable owner lines.
 10. **Self-application.** This hardening operation carries its own evidence package, closure contract, and administrative-ledger registration in PR #656.
 
 ## Legacy boundary
@@ -52,6 +52,7 @@ This mirrors the repository's existing explicit migration boundary for schema-bo
 - unauthorized expansion of the legacy baseline;
 - deletion of the required fixed legacy entry;
 - classification of one package as both legacy and contract-bound;
+- reintroduction of the currently non-requestable Council team as a CODEOWNER or loss of the enforceable Maintainers/Amanuensis/Security ownership lines;
 - preservation of nonterminal working states, which may legitimately retain pending continuity while they remain nonterminal.
 
 ## Relevant artifacts
