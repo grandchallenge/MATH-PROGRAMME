@@ -47,3 +47,23 @@ closure routes above.
 
 Canonical policy: `docs/AGENT_COUNCIL_GOVERNANCE.md` and
 `docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md`.
+
+## Construction Gate routing
+
+For work that may enter `gcl/dev/*` or `gcl/candidate/*`, follow
+[`docs/governance/CONSTRUCTION_GATE_OPERATING_GUIDE.md`](docs/governance/CONSTRUCTION_GATE_OPERATING_GUIDE.md).
+
+- Do not require the user to know or say `CREATE_DEVELOPMENT`,
+  `UPDATE_DEVELOPMENT`, `FREEZE_CANDIDATE`, "advance", or "freeze".
+- Keep ordinary drafting and revision on an ordinary working branch. The Gate
+  is a one-way admission lane for an exact prepared commit, not the normal
+  editing workflow.
+- Interpret a request to prepare an exact version for governed or formal review
+  as a possible Gate admission. State that interpretation, check whether the
+  target is registered on protected `main`, and stop for protected target
+  registration when it is not.
+- Treat a clear request to lock, finalize, or submit the exact review candidate
+  as authorization to attempt `FREEZE_CANDIDATE`. If finality is ambiguous, ask
+  before freezing because the candidate cannot be updated or replaced in place.
+- Never infer approval, merge authority, mathematical certification,
+  publication authority, or external-claim authority from a Gate operation.
