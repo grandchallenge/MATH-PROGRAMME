@@ -1,5 +1,6 @@
 import CMDGCondensedCM4P3G
 import CMDGCondensedCM4P3GFiniteBooleanMeasureHom
+import CMDGCondensedCM4P3MFiniteQuotientBridge
 
 /-!
 # CMDG CM4-P3-G point-functional bridge
