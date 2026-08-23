@@ -106,6 +106,7 @@ theorem weightedBasisBooleanPairing_evaluationWeight_allTrue
     rw [weightedBasisBooleanPairing_apply, Module.Basis.repr_self]
     simp [weightedBasisBooleanCombination, weightedBasisBooleanCoordinate,
       basisBooleanCoordinate, integralBasisEvaluationWeight]
+    rfl
   have hv := congrArg (fun f : LocallyConstant X ℤ →ₗ[ℤ] ℤ => f v) hlhs
   simpa [lhs] using hv
 
