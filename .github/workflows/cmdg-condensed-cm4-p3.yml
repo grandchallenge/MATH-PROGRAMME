@@ -306,6 +306,12 @@ jobs:
           set -euo pipefail
           mkdir -p .lake/build/lib/lean
           lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3LKernelFunctional.olean CMDGCondensedCM4P3LKernelFunctional.lean
+      - name: Replay P3-M finite basis common discrete quotient discriminator
+        working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/CMDGCondensedCM4P3MFiniteQuotientBridge.olean CMDGCondensedCM4P3MFiniteQuotientBridge.lean
       - name: Replay P3-G point functional
         working-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
         run: |
