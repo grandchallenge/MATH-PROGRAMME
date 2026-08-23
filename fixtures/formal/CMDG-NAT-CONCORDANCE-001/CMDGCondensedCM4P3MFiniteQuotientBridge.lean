@@ -60,8 +60,10 @@ theorem integralBasis_factors_common_discreteQuotient
   intro i
   refine ⟨fQ.flip i, ?_⟩
   ext x
-  simpa [finiteBasisFamily] using
-    congrFun (LocallyConstant.congr_fun hf x) i
+  change
+    (finiteBasisFamily X I) x i =
+      (fQ.comap (finiteQuotientMap X j).hom.hom) x i
+  exact congrFun (LocallyConstant.congr_fun hf x) i
 
 #check finiteBasisFamily_factors_common_discreteQuotient
 #check integralBasis_factors_common_discreteQuotient
