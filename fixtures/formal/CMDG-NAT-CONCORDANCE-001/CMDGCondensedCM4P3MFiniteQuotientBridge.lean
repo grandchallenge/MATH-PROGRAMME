@@ -73,6 +73,7 @@ namespace CMDG.CondensedCM4P3M.KernelPointBridge
 
 universe u
 
+open CategoryTheory
 open CMDG.CondensedCM4P3G
 open CMDG.CondensedCM4P3G.BasisSeparation
 open CMDG.CondensedCM4P3G.BasisBooleanPairing
