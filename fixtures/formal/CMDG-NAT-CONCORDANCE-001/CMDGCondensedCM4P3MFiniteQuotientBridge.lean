@@ -130,9 +130,11 @@ theorem basisCombination_finiteFunctionalCoefficients_apply
   rw [weightedBasisBooleanPairing_apply]
   rw [finiteTruncation_eq_sum, map_sum]
   simp_rw [map_zsmul]
-  simp [basisCombination, weightedBasisBooleanCombination,
-    weightedBasisBooleanCoordinate, basisBooleanCoordinate,
-    finiteFunctionalCoefficients, integralBasisEvaluationWeight, mul_comm]
+  simp only [basisCombination, LinearEquiv.apply_symm_apply,
+    weightedBasisBooleanCombination, finiteFunctionalCoefficients]
+  rw [Finsupp.linearCombination_onFinset]
+  simp [weightedBasisBooleanCoordinate, basisBooleanCoordinate,
+    integralBasisEvaluationWeight, mul_comm]
 
 #check integralBasisEvaluationWeight
 #check weightedBasisBooleanPairing_evaluationWeight_allTrue
