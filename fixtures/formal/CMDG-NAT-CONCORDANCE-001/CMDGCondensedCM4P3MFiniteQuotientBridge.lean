@@ -76,6 +76,7 @@ universe u
 open CMDG.CondensedCM4P3G
 open CMDG.CondensedCM4P3G.BasisSeparation
 open CMDG.CondensedCM4P3G.BasisBooleanPairing
+open CMDG.CondensedCM4P3G.FiniteSupport
 
 /-- At a point `x`, use the values of the chosen Nöbeling basis functions as the external weight
 vector. -/
