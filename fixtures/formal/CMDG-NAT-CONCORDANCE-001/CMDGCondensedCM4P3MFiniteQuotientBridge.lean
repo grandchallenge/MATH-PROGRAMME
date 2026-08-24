@@ -199,12 +199,13 @@ theorem weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
     _ = finiteDeltaPullbackR X j q x := by
       rw [weightedFiniteBooleanCoefficient_evaluationWeight_allTrue]
     _ = if q = j.proj x then 1 else 0 := by
+      let qx : (FiniteQuotientObject X j).obj := j.proj x
       change
-        (if j.proj x = q then 1 else 0) =
-          (if q = j.proj x then 1 else 0)
-      by_cases hq : q = j.proj x
+        (if qx = q then 1 else 0) =
+          (if q = qx then 1 else 0)
+      by_cases hq : q = qx
       · rw [if_pos hq.symm, if_pos hq]
-      · have hxq : j.proj x ≠ q := by
+      · have hxq : qx ≠ q := by
           intro h
           exact hq h.symm
         rw [if_neg hxq, if_neg hq]
