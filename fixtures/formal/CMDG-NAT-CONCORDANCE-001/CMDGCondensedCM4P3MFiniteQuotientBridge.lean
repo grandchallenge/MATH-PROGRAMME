@@ -161,12 +161,43 @@ theorem weightedFiniteBooleanCoefficient_evaluationWeight_allTrue
   rw [weightedBasisBooleanPairing_evaluationWeight_allTrue]
   rfl
 
+/-- Pulling the finite weighted coefficient family for the full evaluation weight to the all-true
+one-point probe gives exactly the canonical coefficient-family coordinate delta at the quotient
+point represented by `x`. -/
+theorem weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
+    (X : Profinite.{u}) (x : X)
+    (j : DiscreteQuotient X) :
+    (ConcreteCategory.hom
+      ((CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf
+        (FiniteQuotientObject X j)).map
+        ((profiniteToCompHaus).map
+          (CMDG.CondensedCM4P3L.KernelFunctional.basisBooleanPointProbe X
+            (fun _ => true))).op))
+      (weightedFiniteBooleanCoefficientFamily X (integralBasisEvaluationWeight X x) j) =
+    (ConcreteCategory.hom
+      ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoordinateInclusion
+        (X.fintypeDiagram.obj j) (j.proj x)).app
+        (Opposite.op
+          ((profiniteToCompHaus).obj (Profinite.of PUnit.{u + 1})))))
+      (1 : LocallyConstant (Profinite.of PUnit.{u + 1}) R) := by
+  funext q
+  apply LocallyConstant.ext
+  intro z
+  change
+    weightedFiniteBooleanCoefficient X (integralBasisEvaluationWeight X x) j q
+        (fun _ => true) =
+      if q = j.proj x then 1 else 0
+  rw [weightedFiniteBooleanCoefficient_evaluationWeight_allTrue]
+  simp [finiteDeltaPullbackR, eq_comm]
+
 #check integralBasisEvaluationWeight
 #check weightedBasisBooleanPairing_evaluationWeight_allTrue
 #check basisCombination_finiteFunctionalCoefficients_apply
 #check weightedFiniteBooleanCoefficient_evaluationWeight_allTrue
+#check weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
 #print axioms weightedBasisBooleanPairing_evaluationWeight_allTrue
 #print axioms basisCombination_finiteFunctionalCoefficients_apply
 #print axioms weightedFiniteBooleanCoefficient_evaluationWeight_allTrue
+#print axioms weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
