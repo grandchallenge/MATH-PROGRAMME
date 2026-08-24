@@ -269,12 +269,10 @@ theorem weightedFiniteBooleanMeasureSection_coefficientFamily_transport
           ((ConcreteCategory.hom (iM.inv.app S))
             ((ConcreteCategory.hom (iF.inv.app S)) c)) =
         (ConcreteCategory.hom (iF.inv.app S)) c := by
-    have h := ConcreteCategory.congr_hom (iM.app S).inv_hom_id
+    exact ConcreteCategory.congr_hom (iM.app S).inv_hom_id
       ((ConcreteCategory.hom (iF.inv.app S)) c)
-    simpa using h
   rw [hMpoint]
-  have h := ConcreteCategory.congr_hom (iF.app S).inv_hom_id c
-  simpa using h
+  exact ConcreteCategory.congr_hom (iF.app S).inv_hom_id c
 
 #check integralBasisEvaluationWeight
 #check weightedBasisBooleanPairing_evaluationWeight_allTrue
