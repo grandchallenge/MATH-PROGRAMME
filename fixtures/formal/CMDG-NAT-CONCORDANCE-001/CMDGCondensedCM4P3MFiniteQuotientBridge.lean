@@ -244,15 +244,18 @@ theorem weightedFiniteBooleanMeasureSection_coefficientFamily_transport
     (ConcreteCategory.hom
       ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso
         (FiniteQuotientObject X j)).hom.app
-        (Opposite.op ((profiniteToCompHaus).obj (basisBooleanCube X)))))
+        (Opposite.op ((profiniteToCompHaus).obj
+          (CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X)))))
       ((ConcreteCategory.hom
         ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso
           (FiniteQuotientObject X j)).hom.app
-          (Opposite.op ((profiniteToCompHaus).obj (basisBooleanCube X)))))
+          (Opposite.op ((profiniteToCompHaus).obj
+            (CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X)))))
         (weightedFiniteBooleanMeasureSection X a j)) =
       weightedFiniteBooleanCoefficientFamily X a j := by
   let Q := FiniteQuotientObject X j
-  let S := Opposite.op ((profiniteToCompHaus).obj (basisBooleanCube X))
+  let S := Opposite.op ((profiniteToCompHaus).obj
+    (CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X))
   let c := weightedFiniteBooleanCoefficientFamily X a j
   let iM := CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso Q
   let iF := CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso Q
