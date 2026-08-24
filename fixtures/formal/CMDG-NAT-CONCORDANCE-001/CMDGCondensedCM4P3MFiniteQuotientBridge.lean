@@ -76,7 +76,10 @@ universe u
 open CMDG.CondensedCM4P3G
 open CMDG.CondensedCM4P3G.BasisSeparation
 open CMDG.CondensedCM4P3G.BasisBooleanPairing
+open CMDG.CondensedCM4P3G.BasisBooleanPairingR
 open CMDG.CondensedCM4P3G.FiniteSupport
+open CMDG.CondensedCM4P3G.FiniteBooleanMeasure
+open CMDG.CondensedCM4P3J.WeightedBooleanMeasure
 
 /-- At a point `x`, use the values of the chosen Nöbeling basis functions as the external weight
 vector. -/
@@ -139,10 +142,31 @@ theorem basisCombination_finiteFunctionalCoefficients_apply
   rw [map_sum]
   simp [LocallyConstant.evalRingHom, basisBooleanCoordinate]
 
+/-- At every finite quotient, the full basis-evaluation weight turns the weighted Boolean
+coefficient at the all-true selector into the literal pulled-back finite delta evaluated at `x`.
+This is the finite-stage Dirac identity needed before any global measure/solid comparison. -/
+theorem weightedFiniteBooleanCoefficient_evaluationWeight_allTrue
+    (X : Profinite.{u}) (x : X)
+    (j : DiscreteQuotient X)
+    (q : (FiniteQuotientObject X j).obj) :
+    weightedFiniteBooleanCoefficient X (integralBasisEvaluationWeight X x) j q
+        (fun _ => true) =
+      finiteDeltaPullbackR X j q x := by
+  change
+    ULift.up
+      (weightedBasisBooleanPairing X (integralBasisEvaluationWeight X x)
+        (locallyConstantIntegralDownEquiv X (finiteDeltaPullbackR X j q))
+        (fun _ => true)) =
+      finiteDeltaPullbackR X j q x
+  rw [weightedBasisBooleanPairing_evaluationWeight_allTrue]
+  rfl
+
 #check integralBasisEvaluationWeight
 #check weightedBasisBooleanPairing_evaluationWeight_allTrue
 #check basisCombination_finiteFunctionalCoefficients_apply
+#check weightedFiniteBooleanCoefficient_evaluationWeight_allTrue
 #print axioms weightedBasisBooleanPairing_evaluationWeight_allTrue
 #print axioms basisCombination_finiteFunctionalCoefficients_apply
+#print axioms weightedFiniteBooleanCoefficient_evaluationWeight_allTrue
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
