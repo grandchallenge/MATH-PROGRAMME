@@ -185,12 +185,29 @@ theorem weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
   funext q
   apply LocallyConstant.ext
   intro z
-  change
-    weightedFiniteBooleanCoefficient X (integralBasisEvaluationWeight X x) j q
-        (fun _ => true) =
-      if q = j.proj x then 1 else 0
-  rw [weightedFiniteBooleanCoefficient_evaluationWeight_allTrue]
-  simp [finiteDeltaPullbackR, eq_comm]
+  calc
+    ((ConcreteCategory.hom
+      ((CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf
+        (FiniteQuotientObject X j)).map
+        ((profiniteToCompHaus).map
+          (CMDG.CondensedCM4P3L.KernelFunctional.basisBooleanPointProbe X
+            (fun _ => true))).op))
+      (weightedFiniteBooleanCoefficientFamily X (integralBasisEvaluationWeight X x) j) q) z =
+        weightedFiniteBooleanCoefficient X (integralBasisEvaluationWeight X x) j q
+          (fun _ => true) := by
+            rfl
+    _ = finiteDeltaPullbackR X j q x := by
+      rw [weightedFiniteBooleanCoefficient_evaluationWeight_allTrue]
+    _ = if q = j.proj x then 1 else 0 := by
+      simp [finiteDeltaPullbackR, eq_comm]
+    _ =
+      ((ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoordinateInclusion
+          (X.fintypeDiagram.obj j) (j.proj x)).app
+          (Opposite.op
+            ((profiniteToCompHaus).obj (Profinite.of PUnit.{u + 1})))))
+        (1 : LocallyConstant (Profinite.of PUnit.{u + 1}) CMDG.CondensedCM4P3G.R.{u}) q) z := by
+      simp [CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoordinateInclusion]
 
 #check integralBasisEvaluationWeight
 #check weightedBasisBooleanPairing_evaluationWeight_allTrue
