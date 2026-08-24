@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/openai_ten_proofs_current_state_sync_003.schema.json",
+  "title": "OpenAI Ten Proofs current cross-repository state successor 003",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "record_id", "candidate_id", "tracker_issue", "lifecycle_state",
+    "active_campaign_member", "supersession", "ownership", "protected_heads", "source_authority",
+    "cert_authority", "a_sphere_packing_frontier", "cert_replay_frontier",
+    "forge_clear_downstream_pending", "closed_or_maintenance_only", "next_controlled_obligations",
+    "preserved_limitations", "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.2.0"},
+    "record_id": {"const": "MP-OTP-CURRENT-STATE-SYNC-003"},
+    "candidate_id": {"const": "OPENAI-TEN-PROOFS-001"},
+    "tracker_issue": {"const": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/673"},
+    "lifecycle_state": {"const": "six_restricted_qualified_surfaces_one_a_adjudication_three_cert_work_packages_four_forge_clear_downstream_pending"},
+    "active_campaign_member": {"const": false},
+    "supersession": {
+      "type": "object", "additionalProperties": false,
+      "required": ["predecessor_current_state_sync", "predecessor_programme_record", "historical_umbrella_record", "effect"],
+      "properties": {
+        "predecessor_current_state_sync": {"$ref": "#/$defs/immutable_record"},
+        "predecessor_programme_record": {"$ref": "#/$defs/immutable_record"},
+        "historical_umbrella_record": {"$ref": "#/$defs/immutable_record"},
+        "effect": {"const": "current_cross_repository_state_without_rewriting_historical_programme_records"}
+      }
+    },
+    "ownership": {
+      "type": "object", "additionalProperties": false,
+      "required": ["forge", "solve", "cert", "programme"],
+      "properties": {
+        "forge": {"const": "source_identity_semantic_nonvacuity_and_revision_loci"},
+        "solve": {"const": "producer_packets_and_handoff_provenance"},
+        "cert": {"const": "route_adjudication_disposition_and_output"},
+        "programme": {"const": "cross_repository_current_state_only"}
+      }
+    },
+    "protected_heads": {
+      "type": "object", "additionalProperties": false,
+      "required": ["programme_base", "forge_main", "solve_main", "cert_main"],
+      "properties": {
+        "programme_base": {"pattern": "^[0-9a-f]{40}$"},
+        "forge_main": {"pattern": "^[0-9a-f]{40}$"},
+        "solve_main": {"pattern": "^[0-9a-f]{40}$"},
+        "cert_main": {"pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "source_authority": {"type": "object"},
+    "cert_authority": {
+      "type": "object", "additionalProperties": false,
+      "required": ["global_route_registry_blob", "restricted_qualified_surfaces", "aggregate_output_count", "mathematical_targets_marked_proved"],
+      "properties": {
+        "global_route_registry_blob": {"pattern": "^[0-9a-f]{40}$"},
+        "restricted_qualified_surfaces": {
+          "type": "array", "minItems": 6, "maxItems": 6,
+          "items": {"$ref": "#/$defs/qualified_surface"}
+        },
+        "aggregate_output_count": {"const": 0},
+        "mathematical_targets_marked_proved": {"const": 0}
+      }
+    },
+    "a_sphere_packing_frontier": {
+      "type": "object", "additionalProperties": false,
+      "required": ["family", "route", "route_state", "adjudication_merge", "adjudication_path", "adjudication_blob", "adjudication_disposition", "cert_output", "mathematical_target_proved", "may_issue_output", "next_boundary"],
+      "properties": {
+        "family": {"const": "OTP-A-SPHERE-PACKING"},
+        "route": {"const": "MC-ROUTE-OTP-A-SPHERE-PACKING"},
+        "route_state": {"const": "submitted"},
+        "adjudication_merge": {"pattern": "^[0-9a-f]{40}$"},
+        "adjudication_path": {"const": "governance/result_family_adjudications/OTP-A-SPHERE-PACKING.json"},
+        "adjudication_blob": {"pattern": "^[0-9a-f]{40}$"},
+        "adjudication_disposition": {"const": "adjudication_clear_protected_four_targets_only"},
+        "cert_output": {"type": "null"},
+        "mathematical_target_proved": {"const": false},
+        "may_issue_output": {"const": false},
+        "next_boundary": {"const": "separately_governed_restricted_output_design"}
+      }
+    },
+    "cert_replay_frontier": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "items": {"$ref": "#/$defs/replay_frontier"}
+    },
+    "forge_clear_downstream_pending": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": {"$ref": "#/$defs/forge_pending"}
+    },
+    "closed_or_maintenance_only": {
+      "type": "array", "minItems": 6, "maxItems": 6, "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "next_controlled_obligations": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": {"type": "string", "minLength": 20}
+    },
+    "preserved_limitations": {"type": "object"},
+    "claim_boundary": {"type": "string", "minLength": 1400}
+  },
+  "$defs": {
+    "immutable_record": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "git_blob_sha1", "mutation_prohibited"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "git_blob_sha1": {"pattern": "^[0-9a-f]{40}$"},
+        "mutation_prohibited": {"const": true}
+      }
+    },
+    "qualified_surface": {
+      "type": "object", "additionalProperties": false,
+      "required": ["family", "surface", "route", "certificate_path", "certificate_blob", "disposition"],
+      "properties": {
+        "family": {"type": "string", "minLength": 1},
+        "surface": {"type": "string", "minLength": 1},
+        "route": {"type": "string", "minLength": 1},
+        "certificate_path": {"type": "string", "minLength": 1},
+        "certificate_blob": {"pattern": "^[0-9a-f]{40}$"},
+        "disposition": {"type": "string", "minLength": 10}
+      }
+    },
+    "replay_frontier": {
+      "type": "object", "additionalProperties": false,
+      "required": ["family", "work_package", "protected_merge", "work_package_blob", "next_boundary"],
+      "properties": {
+        "family": {"enum": ["OTP-H-GAPCVP", "OTP-B1-BINARY-CODES", "OTP-B2-SPHERICAL-CODES"]},
+        "work_package": {"type": "string", "minLength": 1},
+        "protected_merge": {"pattern": "^[0-9a-f]{40}$"},
+        "work_package_blob": {"pattern": "^[0-9a-f]{40}$"},
+        "next_boundary": {"const": "exact_replay_evidence_only"}
+      }
+    },
+    "forge_pending": {
+      "type": "object", "additionalProperties": false,
+      "required": ["family", "forge_merge", "audit_record_path", "audit_record_blob", "state", "next_boundary"],
+      "properties": {
+        "family": {"enum": ["OTP-I-RAMSEY", "OTP-G-QUANTUM-PARALLEL-REPETITION", "OTP-D-NON-SOFIC", "OTP-E-CONNES-RIGIDITY"]},
+        "forge_merge": {"pattern": "^[0-9a-f]{40}$"},
+        "audit_record_path": {"type": "string", "minLength": 1},
+        "audit_record_blob": {"pattern": "^[0-9a-f]{40}$"},
+        "state": {"const": "semantic_and_nonvacuity_clear_current_root"},
+        "next_boundary": {"const": "solve_handoff_requires_separate_authority"}
+      }
+    }
+  }
+}
