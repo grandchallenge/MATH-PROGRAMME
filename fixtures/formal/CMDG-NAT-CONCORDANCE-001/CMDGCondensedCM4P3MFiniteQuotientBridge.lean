@@ -180,7 +180,8 @@ theorem weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
         (X.fintypeDiagram.obj j) (j.proj x)).app
         (Opposite.op
           ((profiniteToCompHaus).obj (Profinite.of PUnit.{u + 1})))))
-      (1 : LocallyConstant (Profinite.of PUnit.{u + 1}) R) := by
+      (1 : LocallyConstant (Profinite.of PUnit.{u + 1}) CMDG.CondensedCM4P3G.R.{u}) := by
+  classical
   funext q
   apply LocallyConstant.ext
   intro z
