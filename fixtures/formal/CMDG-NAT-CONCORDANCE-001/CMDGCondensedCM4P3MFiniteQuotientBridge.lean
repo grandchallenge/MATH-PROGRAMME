@@ -274,16 +274,52 @@ theorem weightedFiniteBooleanMeasureSection_coefficientFamily_transport
   rw [hMpoint]
   exact ConcreteCategory.congr_hom (iF.app S).inv_hom_id c
 
+/-- At a fixed finite quotient, the protected finite measure-to-small-free comparison sends the
+weighted measure section to the canonical finite free image of its coefficient family.  This is
+still purely finite-stage transport; it does not assert any global measure, Dirac, or solid-side
+comparison. -/
+theorem weightedFiniteBooleanMeasureSection_smallFree_transport
+    (X : Profinite.{u}) (a : IntegralBasisIndex X → ℤ)
+    (j : DiscreteQuotient X) :
+    (ConcreteCategory.hom
+      ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreePresheafNatIso.app
+        (FiniteQuotientObject X j)).hom.app
+        (Opposite.op ((profiniteToCompHaus).obj
+          (CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X)))))
+      (weightedFiniteBooleanMeasureSection X a j) =
+    (ConcreteCategory.hom
+      ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyFreeIso
+        (FiniteQuotientObject X j)).hom.app
+        (Opposite.op ((profiniteToCompHaus).obj
+          (CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X)))))
+      (weightedFiniteBooleanCoefficientFamily X a j) := by
+  let Q := FiniteQuotientObject X j
+  let S := Opposite.op ((profiniteToCompHaus).obj
+    (CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X))
+  let m := weightedFiniteBooleanMeasureSection X a j
+  let c := weightedFiniteBooleanCoefficientFamily X a j
+  change
+    (ConcreteCategory.hom
+      (((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso Q).hom ≫
+        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso Q).hom ≫
+        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyFreeIso Q).hom).app S)) m =
+    (ConcreteCategory.hom
+      ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyFreeIso Q).hom.app S)) c
+  simp only [NatTrans.comp_app, ConcreteCategory.comp_apply]
+  rw [weightedFiniteBooleanMeasureSection_coefficientFamily_transport X a j]
+
 #check integralBasisEvaluationWeight
 #check weightedBasisBooleanPairing_evaluationWeight_allTrue
 #check basisCombination_finiteFunctionalCoefficients_apply
 #check weightedFiniteBooleanCoefficient_evaluationWeight_allTrue
 #check weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
 #check weightedFiniteBooleanMeasureSection_coefficientFamily_transport
+#check weightedFiniteBooleanMeasureSection_smallFree_transport
 #print axioms weightedBasisBooleanPairing_evaluationWeight_allTrue
 #print axioms basisCombination_finiteFunctionalCoefficients_apply
 #print axioms weightedFiniteBooleanCoefficient_evaluationWeight_allTrue
 #print axioms weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
 #print axioms weightedFiniteBooleanMeasureSection_coefficientFamily_transport
+#print axioms weightedFiniteBooleanMeasureSection_smallFree_transport
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
