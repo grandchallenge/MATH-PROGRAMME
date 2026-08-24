@@ -234,14 +234,55 @@ theorem weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
             (1 : LocallyConstant (Profinite.of PUnit.{u + 1}) CMDG.CondensedCM4P3G.R.{u}) z
         exact hne.symm
 
+/-- At a fixed finite quotient, transporting the weighted measure section forward through the
+protected finite measure/family and finite internal-dual/family isomorphisms recovers exactly its
+coefficient family.  This is only a cancellation statement for already-protected isomorphisms; it
+does not introduce any global measure or solidification comparison. -/
+theorem weightedFiniteBooleanMeasureSection_coefficientFamily_transport
+    (X : Profinite.{u}) (a : IntegralBasisIndex X → ℤ)
+    (j : DiscreteQuotient X) :
+    (ConcreteCategory.hom
+      ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso
+        (FiniteQuotientObject X j)).hom.app
+        (Opposite.op ((profiniteToCompHaus).obj (basisBooleanCube X)))))
+      ((ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso
+          (FiniteQuotientObject X j)).hom.app
+          (Opposite.op ((profiniteToCompHaus).obj (basisBooleanCube X)))))
+        (weightedFiniteBooleanMeasureSection X a j)) =
+      weightedFiniteBooleanCoefficientFamily X a j := by
+  let Q := FiniteQuotientObject X j
+  let S := Opposite.op ((profiniteToCompHaus).obj (basisBooleanCube X))
+  let c := weightedFiniteBooleanCoefficientFamily X a j
+  let iM := CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFamilyIso Q
+  let iF := CMDG.CondensedCM4P2E.FiniteDualTransport.finiteFamilyInternalHomIso Q
+  change
+    (ConcreteCategory.hom (iF.hom.app S))
+      ((ConcreteCategory.hom (iM.hom.app S))
+        ((ConcreteCategory.hom (iM.inv.app S))
+          ((ConcreteCategory.hom (iF.inv.app S)) c))) = c
+  have hMpoint :
+      (ConcreteCategory.hom (iM.hom.app S))
+          ((ConcreteCategory.hom (iM.inv.app S))
+            ((ConcreteCategory.hom (iF.inv.app S)) c)) =
+        (ConcreteCategory.hom (iF.inv.app S)) c := by
+    have h := ConcreteCategory.congr_hom (iM.app S).inv_hom_id
+      ((ConcreteCategory.hom (iF.inv.app S)) c)
+    simpa using h
+  rw [hMpoint]
+  have h := ConcreteCategory.congr_hom (iF.app S).inv_hom_id c
+  simpa using h
+
 #check integralBasisEvaluationWeight
 #check weightedBasisBooleanPairing_evaluationWeight_allTrue
 #check basisCombination_finiteFunctionalCoefficients_apply
 #check weightedFiniteBooleanCoefficient_evaluationWeight_allTrue
 #check weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
+#check weightedFiniteBooleanMeasureSection_coefficientFamily_transport
 #print axioms weightedBasisBooleanPairing_evaluationWeight_allTrue
 #print axioms basisCombination_finiteFunctionalCoefficients_apply
 #print axioms weightedFiniteBooleanCoefficient_evaluationWeight_allTrue
 #print axioms weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
+#print axioms weightedFiniteBooleanMeasureSection_coefficientFamily_transport
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
