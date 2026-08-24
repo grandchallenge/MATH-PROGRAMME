@@ -110,8 +110,33 @@ theorem weightedBasisBooleanPairing_evaluationWeight_allTrue
   have hv := congrArg (fun f : LocallyConstant X ℤ →ₗ[ℤ] ℤ => f v) hlhs
   simpa [lhs] using hv
 
+/-- Evaluating the finite Nöbeling coefficient combination associated to an additive
+functional `L` at `x` is the same as applying `L` to the finite truncation of the vector of
+basis values at `x`.
+
+This is the explicit finite-support expression required before any kernel/measure comparison:
+it is purely algebraic and introduces no vanishing or separation claim. -/
+theorem basisCombination_finiteFunctionalCoefficients_apply
+    (X : Profinite.{u})
+    (L : (IntegralBasisIndex X → ℤ) →+ ℤ)
+    (I : Finset (IntegralBasisIndex X))
+    (x : X) :
+    basisCombination X (finiteFunctionalCoefficients X L I) x =
+      L (finiteTruncation (integralBasisEvaluationWeight X x) I) := by
+  classical
+  rw [← weightedBasisBooleanPairing_evaluationWeight_allTrue X x
+    (basisCombination X (finiteFunctionalCoefficients X L I))]
+  rw [weightedBasisBooleanPairing_apply]
+  rw [finiteTruncation_eq_sum, map_sum]
+  simp_rw [map_zsmul]
+  simp [basisCombination, weightedBasisBooleanCombination,
+    weightedBasisBooleanCoordinate, basisBooleanCoordinate,
+    finiteFunctionalCoefficients, integralBasisEvaluationWeight, mul_comm]
+
 #check integralBasisEvaluationWeight
 #check weightedBasisBooleanPairing_evaluationWeight_allTrue
+#check basisCombination_finiteFunctionalCoefficients_apply
 #print axioms weightedBasisBooleanPairing_evaluationWeight_allTrue
+#print axioms basisCombination_finiteFunctionalCoefficients_apply
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
