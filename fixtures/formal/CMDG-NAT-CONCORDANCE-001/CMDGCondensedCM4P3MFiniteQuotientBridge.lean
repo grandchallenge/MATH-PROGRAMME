@@ -135,6 +135,9 @@ theorem basisCombination_finiteFunctionalCoefficients_apply
   rw [Finsupp.linearCombination_onFinset]
   simp [weightedBasisBooleanCoordinate, basisBooleanCoordinate,
     integralBasisEvaluationWeight, mul_comm]
+  change (LocallyConstant.evalRingHom (fun _ => true)) _ = _
+  rw [map_sum]
+  simp [LocallyConstant.evalRingHom, basisBooleanCoordinate]
 
 #check integralBasisEvaluationWeight
 #check weightedBasisBooleanPairing_evaluationWeight_allTrue
