@@ -199,13 +199,15 @@ theorem weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
     _ = finiteDeltaPullbackR X j q x := by
       rw [weightedFiniteBooleanCoefficient_evaluationWeight_allTrue]
     _ = if q = j.proj x then 1 else 0 := by
+      change
+        (if j.proj x = q then 1 else 0) =
+          (if q = j.proj x then 1 else 0)
       by_cases hq : q = j.proj x
-      · subst q
-        simp [finiteDeltaPullbackR]
+      · rw [if_pos hq.symm, if_pos hq]
       · have hxq : j.proj x ≠ q := by
           intro h
           exact hq h.symm
-        simp [finiteDeltaPullbackR, hq, hxq]
+        rw [if_neg hxq, if_neg hq]
     _ =
       ((ConcreteCategory.hom
         ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoordinateInclusion
@@ -214,21 +216,22 @@ theorem weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
             ((profiniteToCompHaus).obj (Profinite.of PUnit.{u + 1})))))
         (1 : LocallyConstant (Profinite.of PUnit.{u + 1}) CMDG.CondensedCM4P3G.R.{u}) q) z := by
       by_cases hq : q = j.proj x
-      · subst q
+      · rw [if_pos hq, hq]
         have hself :=
           CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoordinateInclusion_apply_self
             (X.fintypeDiagram.obj j) (j.proj x)
             (Opposite.op
               ((profiniteToCompHaus).obj (Profinite.of PUnit.{u + 1})))
             (1 : LocallyConstant (Profinite.of PUnit.{u + 1}) CMDG.CondensedCM4P3G.R.{u}) z
-        simpa using hself.symm
-      · have hne :=
+        exact hself.symm
+      · rw [if_neg hq]
+        have hne :=
           CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoordinateInclusion_apply_ne
             (X.fintypeDiagram.obj j) hq
             (Opposite.op
               ((profiniteToCompHaus).obj (Profinite.of PUnit.{u + 1})))
             (1 : LocallyConstant (Profinite.of PUnit.{u + 1}) CMDG.CondensedCM4P3G.R.{u}) z
-        simpa [hq] using hne.symm
+        exact hne.symm
 
 #check integralBasisEvaluationWeight
 #check weightedBasisBooleanPairing_evaluationWeight_allTrue
