@@ -306,7 +306,11 @@ theorem weightedFiniteBooleanMeasureSection_smallFree_transport
     (ConcreteCategory.hom
       ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyFreeIso Q).hom.app S)) c
   simp only [NatTrans.comp_app, ConcreteCategory.comp_apply]
-  rw [weightedFiniteBooleanMeasureSection_coefficientFamily_transport X a j]
+  exact congrArg
+    (fun t =>
+      (ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyFreeIso Q).hom.app S)) t)
+    (weightedFiniteBooleanMeasureSection_coefficientFamily_transport X a j)
 
 #check integralBasisEvaluationWeight
 #check weightedBasisBooleanPairing_evaluationWeight_allTrue
