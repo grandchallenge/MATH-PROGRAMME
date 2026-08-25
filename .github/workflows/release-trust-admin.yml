@@ -87,7 +87,7 @@ jobs:
           if [[ "${CLOSE_CHILD_ISSUES}" == "true" ]]; then
             args+=(--close-child-issues)
           fi
-          python ci/release_trust_admin.py "${args[@]}"
+          python ci/release_trust_admin_entry.py "${args[@]}"
       - name: Upload release-trust evidence
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
