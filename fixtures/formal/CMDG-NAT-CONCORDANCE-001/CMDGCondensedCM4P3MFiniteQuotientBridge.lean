@@ -389,6 +389,28 @@ theorem measureSolidification_fac (Q : FintypeCat.{u}) :
       (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u})
       (𝟙 (Condensed.finFree CMDG.CondensedCM4P3G.R.{u})) Q
 
+/-- The measure-side lift is the protected profinite solidification after passage through the
+P2-E canonical right-Kan uniqueness isomorphism.  This is a uniqueness statement for two lifts of
+the same finite identity transformation. -/
+theorem measureSolidification_comp_measureProfiniteSolidNatIso :
+    measureSolidification ≫
+        CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.hom =
+      Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u} := by
+  letI :
+      CMDG.CondensedCM4P2D.measureFunctor.IsRightKanExtension
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.hom :=
+    CMDG.CondensedCM4P2E.RightKanReconstruction.measureFunctorIsRightKanExtension
+  letI :
+      (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).IsRightKanExtension
+        (Condensed.profiniteSolidCounit CMDG.CondensedCM4P3G.R.{u}) :=
+    CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.profiniteSolidIsRightKanExtension
+  apply
+    (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).hom_ext_of_isRightKanExtension
+      (Condensed.profiniteSolidCounit CMDG.CondensedCM4P3G.R.{u})
+  simp [measureSolidification,
+    CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso,
+    Condensed.profiniteSolidification]
+
 #check integralBasisEvaluationWeight
 #check weightedBasisBooleanPairing_evaluationWeight_allTrue
 #check basisCombination_finiteFunctionalCoefficients_apply
@@ -400,6 +422,7 @@ theorem measureSolidification_fac (Q : FintypeCat.{u}) :
 #check weightedFiniteBooleanMeasureSection_smallFree_transport
 #check measureSolidification
 #check measureSolidification_fac
+#check measureSolidification_comp_measureProfiniteSolidNatIso
 #print axioms weightedBasisBooleanPairing_evaluationWeight_allTrue
 #print axioms basisCombination_finiteFunctionalCoefficients_apply
 #print axioms kernelProductFunctional_finiteTruncation_evaluationWeight
@@ -410,5 +433,6 @@ theorem measureSolidification_fac (Q : FintypeCat.{u}) :
 #print axioms weightedFiniteBooleanMeasureSection_smallFree_transport
 #print axioms measureSolidification
 #print axioms measureSolidification_fac
+#print axioms measureSolidification_comp_measureProfiniteSolidNatIso
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
