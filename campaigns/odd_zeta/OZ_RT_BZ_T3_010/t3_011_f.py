@@ -13,6 +13,15 @@ if str(HERE) not in sys.path:
 import t3_011_c as semantic
 import t3_011_d as d
 import t3_011_e as e
+import t3_011_e_factors as e_factor_adapter
+import verify_t3_011_e as e_verifier
+
+e._coordinate_factors = lambda channel, strata: e_factor_adapter.producer_factor_map(
+    e, channel, strata
+)
+e_verifier._factor_map = lambda channel, strata: e_factor_adapter.verifier_factor_map(
+    e_verifier, channel, strata
+)
 
 p = d.p
 c = d.c
