@@ -149,7 +149,7 @@ truncation of the basis-evaluation weight with the full evaluation-weight vector
 that functional.  No solidification-kernel hypothesis is used here. -/
 theorem kernelProductFunctional_finiteTruncation_evaluationWeight
     (X : Profinite.{u})
-    (d : (Condensed.profiniteSolid R).obj X ⟶ coefficientObject)
+    (d : (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X ⟶ coefficientObject)
     (I : Finset (IntegralBasisIndex X))
     (hI :
       ∀ a : IntegralBasisIndex X → ℤ,
@@ -175,7 +175,7 @@ point.  The remaining P3-M question is therefore whether the solidification-kern
 forces this full evaluation-weight value to vanish. -/
 theorem basisCombination_kernelProductFunctional_finiteCoefficients_apply
     (X : Profinite.{u})
-    (d : (Condensed.profiniteSolid R).obj X ⟶ coefficientObject)
+    (d : (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X ⟶ coefficientObject)
     (I : Finset (IntegralBasisIndex X))
     (hI :
       ∀ a : IntegralBasisIndex X → ℤ,
