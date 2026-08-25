@@ -40,7 +40,7 @@ RULESET_NAMES = {
     "grandchallenge/INTELLECT": "Constitutional profile - main",
 }
 EXPECTED_STRICT_STATUS_CHECKS = {
-    "grandchallenge/MATHCERT": True,
+    "grandchallenge/MATHCERT": False,
     "grandchallenge/MATHSOLVE": True,
     "grandchallenge/MATH-PROGRAMME": False,
     "grandchallenge/INTELLECT": True,
