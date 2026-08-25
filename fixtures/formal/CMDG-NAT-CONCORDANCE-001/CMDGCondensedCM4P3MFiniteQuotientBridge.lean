@@ -81,6 +81,7 @@ open CMDG.CondensedCM4P3G.BasisBooleanPairingR
 open CMDG.CondensedCM4P3G.FiniteSupport
 open CMDG.CondensedCM4P3G.FiniteBooleanMeasure
 open CMDG.CondensedCM4P3J.WeightedBooleanMeasure
+open CMDG.CondensedCM4P3L.KernelFunctional
 
 /-- At a point `x`, use the values of the chosen Nöbeling basis functions as the external weight
 vector. -/
@@ -142,6 +143,50 @@ theorem basisCombination_finiteFunctionalCoefficients_apply
   change (LocallyConstant.evalRingHom (fun _ => true)) _ = _
   rw [map_sum]
   simp [LocallyConstant.evalRingHom, basisBooleanCoordinate]
+
+/-- A finite-coordinate kernel witness for the P3-L product functional identifies the finite
+truncation of the basis-evaluation weight with the full evaluation-weight vector after applying
+that functional.  No solidification-kernel hypothesis is used here. -/
+theorem kernelProductFunctional_finiteTruncation_evaluationWeight
+    (X : Profinite.{u})
+    (d : (Condensed.profiniteSolid R).obj X ⟶ coefficientObject)
+    (I : Finset (IntegralBasisIndex X))
+    (hI :
+      ∀ a : IntegralBasisIndex X → ℤ,
+        (∀ i ∈ I, a i = 0) →
+        kernelProductFunctional X d a = 0)
+    (x : X) :
+    kernelProductFunctional X d
+        (finiteTruncation (integralBasisEvaluationWeight X x) I) =
+      kernelProductFunctional X d (integralBasisEvaluationWeight X x) := by
+  have hzero :
+      kernelProductFunctional X d
+          (finiteTruncation (integralBasisEvaluationWeight X x) I -
+            integralBasisEvaluationWeight X x) = 0 := by
+    apply hI
+    intro i hi
+    simp [finiteTruncation, hi]
+  rw [map_sub] at hzero
+  exact sub_eq_zero.mp hzero
+
+/-- Under the same P3-L finite-coordinate kernel witness, the concrete finite Nöbeling
+combination is exactly the product functional evaluated on the full vector of basis values at the
+point.  The remaining P3-M question is therefore whether the solidification-kernel hypothesis
+forces this full evaluation-weight value to vanish. -/
+theorem basisCombination_kernelProductFunctional_finiteCoefficients_apply
+    (X : Profinite.{u})
+    (d : (Condensed.profiniteSolid R).obj X ⟶ coefficientObject)
+    (I : Finset (IntegralBasisIndex X))
+    (hI :
+      ∀ a : IntegralBasisIndex X → ℤ,
+        (∀ i ∈ I, a i = 0) →
+        kernelProductFunctional X d a = 0)
+    (x : X) :
+    basisCombination X
+        (finiteFunctionalCoefficients X (kernelProductFunctional X d) I) x =
+      kernelProductFunctional X d (integralBasisEvaluationWeight X x) := by
+  rw [basisCombination_finiteFunctionalCoefficients_apply]
+  exact kernelProductFunctional_finiteTruncation_evaluationWeight X d I hI x
 
 /-- At every finite quotient, the full basis-evaluation weight turns the weighted Boolean
 coefficient at the all-true selector into the literal pulled-back finite delta evaluated at `x`.
@@ -315,12 +360,16 @@ theorem weightedFiniteBooleanMeasureSection_smallFree_transport
 #check integralBasisEvaluationWeight
 #check weightedBasisBooleanPairing_evaluationWeight_allTrue
 #check basisCombination_finiteFunctionalCoefficients_apply
+#check kernelProductFunctional_finiteTruncation_evaluationWeight
+#check basisCombination_kernelProductFunctional_finiteCoefficients_apply
 #check weightedFiniteBooleanCoefficient_evaluationWeight_allTrue
 #check weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
 #check weightedFiniteBooleanMeasureSection_coefficientFamily_transport
 #check weightedFiniteBooleanMeasureSection_smallFree_transport
 #print axioms weightedBasisBooleanPairing_evaluationWeight_allTrue
 #print axioms basisCombination_finiteFunctionalCoefficients_apply
+#print axioms kernelProductFunctional_finiteTruncation_evaluationWeight
+#print axioms basisCombination_kernelProductFunctional_finiteCoefficients_apply
 #print axioms weightedFiniteBooleanCoefficient_evaluationWeight_allTrue
 #print axioms weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
 #print axioms weightedFiniteBooleanMeasureSection_coefficientFamily_transport
