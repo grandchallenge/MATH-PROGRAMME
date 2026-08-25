@@ -357,6 +357,66 @@ theorem weightedFiniteBooleanMeasureSection_smallFree_transport
         ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyFreeIso Q).hom.app S)) t)
     (weightedFiniteBooleanMeasureSection_coefficientFamily_transport X a j)
 
+/-- Pull the evaluation-weight measure section to the all-true Boolean point and then apply the
+protected measure-to-small-free comparison.  The result is exactly the canonical small-free delta
+at the quotient point represented by `x`.  This is entirely finite-stage. -/
+theorem weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue
+    (X : Profinite.{u}) (x : X) (j : DiscreteQuotient X) :
+    (ConcreteCategory.hom
+      ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreePresheafFunctor
+        (FiniteQuotientObject X j)).map
+        ((profiniteToCompHaus).map
+          (CMDG.CondensedCM4P3L.KernelFunctional.basisBooleanPointProbe X
+            (fun _ => true))).op))
+      ((ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreePresheafNatIso.app
+          (FiniteQuotientObject X j)).hom.app
+          (Opposite.op ((profiniteToCompHaus).obj
+            (CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X)))))
+        (weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j)) =
+    (ConcreteCategory.hom
+      ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion
+        (FiniteQuotientObject X j) (j.proj x)).app
+        (Opposite.op
+          ((profiniteToCompHaus).obj (Profinite.of PUnit.{u + 1})))))
+      (1 : LocallyConstant (Profinite.of PUnit.{u + 1}) CMDG.CondensedCM4P3G.R.{u}) := by
+  let Q := FiniteQuotientObject X j
+  let P := Profinite.of PUnit.{u + 1}
+  let S := Opposite.op ((profiniteToCompHaus).obj
+    (CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X))
+  let U := Opposite.op ((profiniteToCompHaus).obj P)
+  let ftrue := ((profiniteToCompHaus).map
+    (CMDG.CondensedCM4P3L.KernelFunctional.basisBooleanPointProbe X
+      (fun _ => true))).op
+  let c := weightedFiniteBooleanCoefficientFamily X (integralBasisEvaluationWeight X x) j
+  let iF := CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyFreeIso Q
+  have htransport :=
+    weightedFiniteBooleanMeasureSection_smallFree_transport
+      X (integralBasisEvaluationWeight X x) j
+  have hnat := ConcreteCategory.congr_hom (iF.hom.naturality ftrue) c
+  simp only [ConcreteCategory.comp_apply] at hnat
+  have hdelta :
+      (ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf Q).map ftrue)) c =
+        (ConcreteCategory.hom
+          ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoordinateInclusion
+            Q (j.proj x)).app U))
+          (1 : LocallyConstant P CMDG.CondensedCM4P3G.R.{u}) := by
+    simpa [Q, P, U, ftrue, c] using
+      weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue X x j
+  have hdeltaFree := congrArg
+    (fun t => (ConcreteCategory.hom (iF.hom.app U)) t) hdelta
+  have hcoord :=
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoordinateInclusion_freeIso
+      Q (j.proj x)
+  have hcoordU := congrArg (fun η => η.app U) hcoord
+  simp only [NatTrans.comp_app] at hcoordU
+  have hcoordPoint := ConcreteCategory.congr_hom hcoordU
+    (1 : LocallyConstant P CMDG.CondensedCM4P3G.R.{u})
+  simp only [ConcreteCategory.comp_apply] at hcoordPoint
+  rw [htransport]
+  exact hnat.symm.trans (hdeltaFree.trans hcoordPoint)
+
 /-- The measure-side analogue of profinite solidification: lift the identity finite-free
 transformation through the protected measure right-Kan extension.  This is uniquely determined by
 P2-E and introduces no new comparison assumption. -/
@@ -420,6 +480,7 @@ theorem measureSolidification_comp_measureProfiniteSolidNatIso :
 #check weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
 #check weightedFiniteBooleanMeasureSection_coefficientFamily_transport
 #check weightedFiniteBooleanMeasureSection_smallFree_transport
+#check weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue
 #check measureSolidification
 #check measureSolidification_fac
 #check measureSolidification_comp_measureProfiniteSolidNatIso
@@ -431,6 +492,7 @@ theorem measureSolidification_comp_measureProfiniteSolidNatIso :
 #print axioms weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
 #print axioms weightedFiniteBooleanMeasureSection_coefficientFamily_transport
 #print axioms weightedFiniteBooleanMeasureSection_smallFree_transport
+#print axioms weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue
 #print axioms measureSolidification
 #print axioms measureSolidification_fac
 #print axioms measureSolidification_comp_measureProfiniteSolidNatIso
