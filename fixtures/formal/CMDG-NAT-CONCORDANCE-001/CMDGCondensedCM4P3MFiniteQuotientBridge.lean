@@ -357,6 +357,38 @@ theorem weightedFiniteBooleanMeasureSection_smallFree_transport
         ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteCoefficientFamilyFreeIso Q).hom.app S)) t)
     (weightedFiniteBooleanMeasureSection_coefficientFamily_transport X a j)
 
+/-- The measure-side analogue of profinite solidification: lift the identity finite-free
+transformation through the protected measure right-Kan extension.  This is uniquely determined by
+P2-E and introduces no new comparison assumption. -/
+noncomputable def measureSolidification :
+    Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u} ⟶
+      CMDG.CondensedCM4P2D.measureFunctor := by
+  letI :
+      CMDG.CondensedCM4P2D.measureFunctor.IsRightKanExtension
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.hom :=
+    CMDG.CondensedCM4P2E.RightKanReconstruction.measureFunctorIsRightKanExtension
+  exact
+    CMDG.CondensedCM4P2D.measureFunctor.liftOfIsRightKanExtension
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.hom
+      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u})
+      (𝟙 (Condensed.finFree CMDG.CondensedCM4P3G.R.{u}))
+
+/-- On each finite object, the measure-side solidification lift followed by the protected E1
+finite comparison is the identity finite-free map. -/
+theorem measureSolidification_fac (Q : FintypeCat.{u}) :
+    measureSolidification.app (FintypeCat.toProfinite.obj Q) ≫
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.hom.app Q =
+      𝟙 ((Condensed.finFree CMDG.CondensedCM4P3G.R.{u}).obj Q) := by
+  letI :
+      CMDG.CondensedCM4P2D.measureFunctor.IsRightKanExtension
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.hom :=
+    CMDG.CondensedCM4P2E.RightKanReconstruction.measureFunctorIsRightKanExtension
+  exact
+    CMDG.CondensedCM4P2D.measureFunctor.liftOfIsRightKanExtension_fac_app
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.hom
+      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u})
+      (𝟙 (Condensed.finFree CMDG.CondensedCM4P3G.R.{u})) Q
+
 #check integralBasisEvaluationWeight
 #check weightedBasisBooleanPairing_evaluationWeight_allTrue
 #check basisCombination_finiteFunctionalCoefficients_apply
@@ -366,6 +398,8 @@ theorem weightedFiniteBooleanMeasureSection_smallFree_transport
 #check weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
 #check weightedFiniteBooleanMeasureSection_coefficientFamily_transport
 #check weightedFiniteBooleanMeasureSection_smallFree_transport
+#check measureSolidification
+#check measureSolidification_fac
 #print axioms weightedBasisBooleanPairing_evaluationWeight_allTrue
 #print axioms basisCombination_finiteFunctionalCoefficients_apply
 #print axioms kernelProductFunctional_finiteTruncation_evaluationWeight
@@ -374,5 +408,7 @@ theorem weightedFiniteBooleanMeasureSection_smallFree_transport
 #print axioms weightedFiniteBooleanCoefficientFamily_evaluationWeight_allTrue
 #print axioms weightedFiniteBooleanMeasureSection_coefficientFamily_transport
 #print axioms weightedFiniteBooleanMeasureSection_smallFree_transport
+#print axioms measureSolidification
+#print axioms measureSolidification_fac
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
