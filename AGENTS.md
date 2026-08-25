@@ -80,3 +80,27 @@ For work that may enter `gcl/dev/*` or `gcl/candidate/*`, follow
   before freezing because the candidate cannot be updated or replaced in place.
 - Never infer approval, merge authority, mathematical certification,
   publication authority, or external-claim authority from a Gate operation.
+
+## Recoverable diagnostic and tooling failure
+
+For an already authorized bounded MATH operation, follow
+[`docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md`](docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md)
+when ordinary logs, check surfaces, connectors, compiler diagnostics,
+environments, CI, or replay tooling fail.
+
+- Recoverable operational/tooling failure is not by itself an authority
+  boundary. Continue through the applicable bounded recovery routes.
+- Bind recovery, repair, and replay to the current exact head/run/job/artifact
+  whenever those identities matter. Do not patch from stale diagnostics or
+  reuse superseded evidence as current evidence.
+- Repair only the demonstrated failing theorem/module/validator/scope, then
+  require a fresh exact-head replay before relying on the repair.
+- If connected diagnostic surfaces remain unavailable, use the guide's
+  authenticated local extraction route rather than declaring missing logs a
+  terminal blocker.
+- Stop or escalate only at a named governance, authority, authentication,
+  safety, protected-state, materially changed-state, substantive evidentiary,
+  or actual recovery-exhaustion boundary.
+- Fail closed on claims, certification, promotion, publication, protected-state
+  mutation, and authority; do not fail closed merely on authorized evidence
+  gathering and bounded repair.
