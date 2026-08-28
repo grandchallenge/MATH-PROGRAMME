@@ -19,10 +19,10 @@ INTELLECT Constitution, effective amendments, admitted cross-programme
 standards actually adopted by the programme, protected programme policy, and
 MATHCERT's separate certification authority.
 
-The proposed `GCL-GHOS-00` 0.2.0 bounded-execution-continuity successor is a
-coordinated candidate, not current authority until protected admission and
-programme adoption. This guide stands on existing MATH-PROGRAMME authority and
-must remain compatible with superior controls.
+`GCL-GHOS-00` 0.2.0 is admitted and actively adopted by MATH-PROGRAMME. Its
+bounded-execution-continuity invariant is therefore current programme authority.
+This guide is the programme-local recovery ladder permitted by that standard;
+it does not enlarge authority or change MATHCERT certification routes.
 
 ## Continuity rule
 
@@ -59,6 +59,42 @@ If the current head, run, job, artifact, protected predecessor, or governed
 scope has materially changed, earlier diagnostics are stale. Do not patch from
 them as though they described the current operation. Rebind and recover fresh
 evidence.
+
+## Durable checkpoint and session restart
+
+A bounded operation that can span sessions, wait on external evidence, or
+require more than one material transition must carry a registered checkpoint in
+`governance/bounded_operation_checkpoint_registry.json`.
+
+The checkpoint is the durable operational resume surface. Before substantial
+continuation, a new agent/session must:
+
+1. read the registered checkpoint;
+2. read the authoritative issue/PR/policy sources named by the checkpoint;
+3. verify that exact material identities still match;
+4. execute only a permitted action, normally the single recorded `next_action`;
+5. update the checkpoint after a material transition changes phase, exact head,
+   external-evidence state, next action, or genuine boundary.
+
+A conforming live checkpoint sets `resume.fresh_session_safe=true` and
+`resume.requires_chat_history=false`. A chat transcript, conversational summary,
+or operator promise is never an authoritative prerequisite for resume.
+
+When external CI, review, or evidence is pending, record the exact run, job,
+review, artifact, or source identity and the exact status/evidence query to
+perform next. `wait`, `wait for CI`, and equivalent indefinite instructions are
+not valid next actions.
+
+An interaction/session/resource interruption does not create a governance or
+authority boundary. If interruption occurs after a material transition, commit
+or update the durable checkpoint before relying on later conversational
+continuity. If interruption occurs before a transition is durably recorded, the
+next session re-reads authoritative state and records a fresh checkpoint rather
+than assuming that an unrecorded transition occurred.
+
+Checkpoint shape and cross-state semantics are enforced by
+`ci/validate_bounded_operation_continuity.py`. A checkpoint carries no approval,
+merge, certification, publication, protected-bypass, or claim authority.
 
 ## Diagnostic recovery ladder
 
@@ -178,8 +214,8 @@ Recognized categories are:
   the evidence needed for the next bounded action.
 
 A broken log endpoint, empty connector response, ordinary compiler error,
-single failed replay, transient CI failure, or inconvenient environment is not
-by itself one of these boundaries.
+single failed replay, transient CI failure, inconvenient environment, or agent
+session/resource interruption is not by itself one of these boundaries.
 
 ## Human Steward escalation
 

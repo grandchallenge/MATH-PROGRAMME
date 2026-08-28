@@ -39,6 +39,23 @@ The purpose is not to replace mathematical judgment. The purpose is to make resp
 - [ ] Legacy review formats are not described as schema-validated merely because they are committed.
 - [ ] Terminal lifecycle states are checked by `ci/validate_documentary_closure.py` even when `promotion.ready_for_next_stage` is false.
 
+## Bounded-operation continuity gate
+
+For substantial governed work that spans sessions or waits on CI, review, or external evidence:
+
+- [ ] The operation has a checkpoint registered in `governance/bounded_operation_checkpoint_registry.json`.
+- [ ] The checkpoint validates with `ci/validate_bounded_operation_continuity.py`.
+- [ ] Exact protected base and current candidate head are recorded when applicable.
+- [ ] The current terminal condition is explicit and does not depend on conversational interpretation.
+- [ ] `permitted_next_actions` are finite and the checkpoint names exactly one deterministic `next_action` while nonterminal.
+- [ ] `resume.fresh_session_safe` is true and `resume.requires_chat_history` is false.
+- [ ] Authoritative resume sources are repository/GitHub records, not a chat transcript or hand-carried summary.
+- [ ] Pending external evidence names exact run/job/review/artifact/source identities and the next evidence-acquisition action; a vague `wait` is not used.
+- [ ] A blocked operation uses only a recognized genuine boundary category and records the exact evidence for that boundary.
+- [ ] The checkpoint is updated after a material phase, exact-head, external-evidence, next-action, or boundary transition.
+- [ ] If an exact identity no longer matches, the operation is rebound before mutation; stale checkpoint evidence is not reused as current evidence.
+- [ ] The checkpoint grants no merge, approval, certification, publication, protected-bypass, or mathematical-claim authority.
+
 ## Amanuensis continuity control
 
 - [ ] Artifact-ledger reference recorded.

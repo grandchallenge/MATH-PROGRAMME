@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/bounded_operation_checkpoint_registry.schema.json",
+  "title": "Bounded Operation Checkpoint Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "registry_id", "checkpoints"],
+  "properties": {
+    "$schema": {"const": "../schemas/bounded_operation_checkpoint_registry.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "registry_id": {"const": "MP-BOUNDED-OPERATION-CHECKPOINTS-001"},
+    "checkpoints": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^governance/bounded_operation_checkpoints/[A-Za-z0-9._-]+\\.json$"
+      }
+    }
+  }
+}

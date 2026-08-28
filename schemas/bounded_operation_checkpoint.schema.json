@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/bounded_operation_checkpoint.schema.json",
+  "title": "Bounded Operation Checkpoint",
+  "description": "Durable current execution state for one already-authorized bounded governed operation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "schema_version", "checkpoint_id", "governed_work_id", "repository",
+    "authority", "phase", "state", "identities", "terminal_condition",
+    "permitted_next_actions", "next_action", "external_evidence", "blocking_boundary",
+    "last_transition", "resume", "terminal_evidence", "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"const": "../../schemas/bounded_operation_checkpoint.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "checkpoint_id": {"type": "string", "pattern": "^[A-Z0-9][A-Z0-9._-]+$"},
+    "governed_work_id": {"type": "string", "minLength": 3},
+    "repository": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ghos_standard", "ghos_version", "programme_adoption_ref", "governing_issue"],
+      "properties": {
+        "ghos_standard": {"const": "GCL-GHOS-00"},
+        "ghos_version": {"const": "0.2.0"},
+        "programme_adoption_ref": {"const": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml"},
+        "governing_issue": {"type": "string", "minLength": 3}
+      }
+    },
+    "phase": {"type": "string", "minLength": 1},
+    "state": {"enum": ["AUTHORIZED_READY", "IN_PROGRESS", "AWAITING_EXTERNAL_EVIDENCE", "BLOCKED_GENUINE_BOUNDARY", "TERMINAL"]},
+    "identities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protected_base_sha", "candidate_head_sha", "issue_number", "pr_number", "branch", "workflow_runs"],
+      "properties": {
+        "protected_base_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+        "candidate_head_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+        "issue_number": {"type": ["integer", "null"], "minimum": 1},
+        "pr_number": {"type": ["integer", "null"], "minimum": 1},
+        "branch": {"type": ["string", "null"], "minLength": 1},
+        "workflow_runs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id", "name", "status", "conclusion", "job_id"],
+            "properties": {
+              "run_id": {"type": "integer", "minimum": 1},
+              "name": {"type": "string", "minLength": 1},
+              "status": {"enum": ["queued", "in_progress", "completed", "waiting", "requested", "pending"]},
+              "conclusion": {"type": ["string", "null"], "enum": ["success", "failure", "cancelled", "skipped", "neutral", "timed_out", "action_required", "startup_failure", "stale", null]},
+              "job_id": {"type": ["integer", "null"], "minimum": 1}
+            }
+          }
+        }
+      }
+    },
+    "terminal_condition": {"type": "string", "minLength": 1},
+    "permitted_next_actions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$"},
+          "description": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "next_action": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "description", "evidence_targets"],
+          "properties": {
+            "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$"},
+            "description": {"type": "string", "minLength": 1},
+            "evidence_targets": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+          }
+        }
+      ]
+    },
+    "external_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["waiting", "objects"],
+      "properties": {
+        "waiting": {"type": "boolean"},
+        "objects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "identity", "status"],
+            "properties": {
+              "kind": {"enum": ["workflow_run", "workflow_job", "review", "artifact", "external_source"]},
+              "identity": {"type": "string", "minLength": 1},
+              "status": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    },
+    "blocking_boundary": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["category", "reason", "evidence_refs"],
+          "properties": {
+            "category": {"enum": ["governance", "authority", "authentication", "safety", "protected-state", "materially-changed-state", "substantive-evidentiary", "recovery-exhaustion"]},
+            "reason": {"type": "string", "minLength": 1},
+            "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+          }
+        }
+      ]
+    },
+    "last_transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "result", "evidence_refs"],
+      "properties": {
+        "action": {"type": "string", "minLength": 1},
+        "result": {"type": "string", "minLength": 1},
+        "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "resume": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fresh_session_safe", "requires_chat_history", "authoritative_sources", "instructions"],
+      "properties": {
+        "fresh_session_safe": {"const": true},
+        "requires_chat_history": {"const": false},
+        "authoritative_sources": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "instructions": {"type": "string", "minLength": 1}
+      }
+    },
+    "terminal_evidence": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mathematical_claim_authorized", "certification_claim_authorized", "merge_authorized", "publication_authorized", "protected_bypass_authorized"],
+      "properties": {
+        "mathematical_claim_authorized": {"const": false},
+        "certification_claim_authorized": {"const": false},
+        "merge_authorized": {"const": false},
+        "publication_authorized": {"const": false},
+        "protected_bypass_authorized": {"const": false}
+      }
+    }
+  }
+}

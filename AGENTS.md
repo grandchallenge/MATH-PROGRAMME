@@ -104,3 +104,33 @@ environments, CI, or replay tooling fail.
 - Fail closed on claims, certification, promotion, publication, protected-state
   mutation, and authority; do not fail closed merely on authorized evidence
   gathering and bounded repair.
+
+## Durable bounded-operation continuity
+
+For substantial governed work that can span more than one agent/session or can
+wait on CI, review, external evidence, or another asynchronous GitHub surface,
+the repository state, not conversational memory, owns the operational resume
+point.
+
+- Read `governance/bounded_operation_checkpoint_registry.json` before resuming a
+  registered operation. Re-read the named authoritative issue/PR and exact
+  material identities before mutation.
+- A live checkpoint must validate with
+  `ci/validate_bounded_operation_continuity.py`, name one deterministic
+  `next_action`, and set `resume.fresh_session_safe=true` and
+  `resume.requires_chat_history=false`.
+- Update the registered checkpoint after every material transition that changes
+  phase, candidate head, external-evidence state, permitted next action, or
+  genuine blocking boundary. Git history is the durable transition history.
+- Never use a vague `wait` as the resume instruction. If an external object is
+  pending, record its exact run/job/review/artifact identity and the exact
+  evidence-acquisition action to perform next.
+- An agent/session interruption is not a workflow boundary. A fresh agent must
+  be able to continue from protected policy plus the registered checkpoint
+  without a chat transcript or hand-carried prose summary.
+- If a registered exact identity has changed, do not continue from the stale
+  checkpoint. Rebind the operation to current authoritative state and record a
+  fresh checkpoint before mutation.
+- A checkpoint is continuity metadata only. It never grants approval, merge,
+  certification, publication, protected bypass, or mathematical-claim
+  authority.
