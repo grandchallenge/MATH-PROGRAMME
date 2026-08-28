@@ -10,62 +10,64 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATHCERT#227"
   },
-  "phase": "exact-head validation before independent review",
-  "state": "IN_PROGRESS",
+  "phase": "exact-head validation after shared finalizer repair",
+  "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "bb9b88a03f379fc0ea9776a672a098cb73096f0a",
-    "candidate_head_sha": "6d3f64660e40e253d4c9bcbbf9dd64ac5d12b0e7",
+    "candidate_head_sha": "65ac800c36c5e8aa2b6d0d37f42f24663c98bbd6",
     "issue_number": 227,
     "pr_number": 230,
     "branch": "platform/certification/mc-certification-state-architecture-stabilization-003",
     "workflow_runs": [
-      {"run_id": 33154447205, "name": "Cert checks", "status": "completed", "conclusion": "success", "job_id": null},
-      {"run_id": 33154447597, "name": "GCL conformance", "status": "completed", "conclusion": "success", "job_id": null},
-      {"run_id": 33154446969, "name": "OTP A sphere-packing exact replay", "status": "completed", "conclusion": "success", "job_id": null},
-      {"run_id": 33154447259, "name": "OTP A sphere-packing adjudication", "status": "completed", "conclusion": "success", "job_id": null},
-      {"run_id": 33154447195, "name": "OTP family replay", "status": "completed", "conclusion": "success", "job_id": null},
-      {"run_id": 33154447065, "name": "OTP B1 binary-codes exact replay", "status": "completed", "conclusion": "failure", "job_id": 98793842144},
-      {"run_id": 33154447045, "name": "OTP B2 spherical-codes exact replay", "status": "completed", "conclusion": "failure", "job_id": 98793836943},
-      {"run_id": 33154447139, "name": "OTP Ehrhart evidence refresh", "status": "completed", "conclusion": "failure", "job_id": null}
+      {"run_id": 33160228923, "name": "Cert checks", "status": "queued", "conclusion": null, "job_id": null},
+      {"run_id": 33160229322, "name": "GCL conformance", "status": "queued", "conclusion": null, "job_id": null},
+      {"run_id": 33160228922, "name": "OTP B1 binary-codes exact replay", "status": "pending", "conclusion": null, "job_id": null},
+      {"run_id": 33160228925, "name": "OTP B2 spherical-codes exact replay", "status": "pending", "conclusion": null, "job_id": null},
+      {"run_id": 33160228880, "name": "OTP Ehrhart evidence refresh", "status": "pending", "conclusion": null, "job_id": null}
     ]
   },
   "terminal_condition": "Exact-head architecture-relevant validation is green; any unrelated fail-closed source-authority condition is classified without weakening authority; fresh non-author exact-head review is recorded; protected merge occurs only under applicable authority; protected-main readback succeeds; and the required post-protection MATHCERT #224 replay is completed before the declared stabilization exit token is emitted.",
   "permitted_next_actions": [
     {
-      "id": "inspect_b1_b2_evidence_completion_failures",
-      "description": "Recover the exact B1 and B2 failing job diagnostics at candidate head 6d3f64660e40e253d4c9bcbbf9dd64ac5d12b0e7 and classify the evidence-artifact completion failures before making any further code change."
+      "id": "query_b1_b2_exact_replay_status",
+      "description": "Query exact runs 33160228922 and 33160228925 at candidate head 65ac800c36c5e8aa2b6d0d37f42f24663c98bbd6; if settled, inspect only any failed job and otherwise advance exact-head validation."
+    },
+    {
+      "id": "query_canonical_cert_status",
+      "description": "Query exact canonical Cert run 33160228923 at candidate head 65ac800c36c5e8aa2b6d0d37f42f24663c98bbd6; inspect detailed logs only if it settles non-green."
     },
     {
       "id": "classify_ehrhart_fail_closed_boundary",
-      "description": "Confirm whether the Ehrhart refresh failure remains the separately unaudited source-revision authority condition and does not represent a new certification-state architecture defect."
+      "description": "After exact run 33160228880 settles, confirm whether Ehrhart remains the separately unaudited source-revision authority condition and does not represent a new certification-state architecture defect."
     }
   ],
   "next_action": {
-    "id": "inspect_b1_b2_evidence_completion_failures",
-    "description": "Fetch exact logs for jobs 98793842144 and 98793836943, identify the first substantive failure in Complete governed B1/B2 evidence artifact set, and repair only the demonstrated shared/platform defect if one exists.",
+    "id": "query_b1_b2_exact_replay_status",
+    "description": "Query exact B1/B2 replay runs 33160228922 and 33160228925; if either is complete, inspect only a failing job, otherwise query canonical run 33160228923 rather than broad-polling the matrix.",
     "evidence_targets": [
-      "grandchallenge/MATHCERT actions job 98793842144",
-      "grandchallenge/MATHCERT actions job 98793836943",
-      "grandchallenge/MATHCERT PR #230 head 6d3f64660e40e253d4c9bcbbf9dd64ac5d12b0e7"
+      "grandchallenge/MATHCERT actions run 33160228922",
+      "grandchallenge/MATHCERT actions run 33160228925",
+      "grandchallenge/MATHCERT PR #230 head 65ac800c36c5e8aa2b6d0d37f42f24663c98bbd6"
     ]
   },
   "external_evidence": {
-    "waiting": false,
+    "waiting": true,
     "objects": [
-      {"kind": "workflow_job", "identity": "grandchallenge/MATHCERT:98793842144", "status": "completed/failure after replay success at evidence-artifact completion"},
-      {"kind": "workflow_job", "identity": "grandchallenge/MATHCERT:98793836943", "status": "completed/failure after replay success at evidence-artifact completion"}
+      {"kind": "workflow_run", "identity": "grandchallenge/MATHCERT:33160228922", "status": "pending exact B1 replay on 65ac800c36c5e8aa2b6d0d37f42f24663c98bbd6"},
+      {"kind": "workflow_run", "identity": "grandchallenge/MATHCERT:33160228925", "status": "pending exact B2 replay on 65ac800c36c5e8aa2b6d0d37f42f24663c98bbd6"},
+      {"kind": "workflow_run", "identity": "grandchallenge/MATHCERT:33160228923", "status": "queued canonical Cert on 65ac800c36c5e8aa2b6d0d37f42f24663c98bbd6"}
     ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "re-read exact PR head and settled workflow matrix",
-    "result": "Canonical Cert, GCL conformance, A exact replay/adjudication, family replay, J2, Compactness, and other affected lanes are green at 6d3f646; B1/B2 exact replay jobs fail only after their replay step succeeds, at governed evidence-artifact completion. Ehrhart refresh is separately red and must remain fail-closed pending classification.",
+    "action": "repair shared family replay finalizer after exact B1/B2 failure diagnosis",
+    "result": "The finalizer now enforces exact formal-subject, package-source and Lean identities while treating work-package observed_helper_sha256 values as historical observations rather than cross-run compiled-byte authorities. Current helper bytes are hashed and retained with reference-match status. Adversarial tests cover digest drift, exact helper-set coverage and malformed observation maps. No family work package, evidence record, route, adjudication, certificate or theorem artifact was repinned or changed.",
     "evidence_refs": [
-      "grandchallenge/MATHCERT#230",
-      "grandchallenge/MATHCERT actions run 33154447205",
-      "grandchallenge/MATHCERT actions run 33154447597",
-      "grandchallenge/MATHCERT actions run 33154447065 job 98793842144",
-      "grandchallenge/MATHCERT actions run 33154447045 job 98793836943"
+      "grandchallenge/MATHCERT#230 head 65ac800c36c5e8aa2b6d0d37f42f24663c98bbd6",
+      "grandchallenge/MATHCERT actions job 98793842144",
+      "grandchallenge/MATHCERT actions job 98793836943",
+      "ci/otp_finalize_family_replay_evidence.py",
+      "ci/test_otp_finalize_family_replay_evidence.py"
     ]
   },
   "resume": {
@@ -78,7 +80,7 @@
       "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
       "docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md"
     ],
-    "instructions": "Re-read PR #230 and verify its head is still 6d3f64660e40e253d4c9bcbbf9dd64ac5d12b0e7. If it changed, treat this checkpoint as stale and rebind before mutation. If unchanged, inspect jobs 98793842144 and 98793836943 first. Do not request review, merge, repin authority, or infer certification from this checkpoint."
+    "instructions": "Re-read PR #230 and verify its head is still 65ac800c36c5e8aa2b6d0d37f42f24663c98bbd6. If it changed, treat this checkpoint as stale and rebind before mutation. If unchanged, query B1 run 33160228922 and B2 run 33160228925 first, then canonical run 33160228923. Inspect only settled failures. Do not request final review, merge, repin authority, or infer certification from this checkpoint."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
