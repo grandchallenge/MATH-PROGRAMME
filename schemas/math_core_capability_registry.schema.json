@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/math_core_capability_registry.schema.json",
+  "title": "MATH-CORE-01 producer capability registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "protocol_version", "authority_invariants", "producer_classes"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "registry_id": {"const": "MATH-CORE-01-CAPABILITIES"},
+    "protocol_version": {"const": "MATH-CORE-01/0.1.0"},
+    "authority_invariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canonical_claim_promotion_by_protocol_event", "human_steward_authority_may_be_inferred", "producer_self_authorization_allowed"],
+      "properties": {
+        "canonical_claim_promotion_by_protocol_event": {"const": false},
+        "human_steward_authority_may_be_inferred": {"const": false},
+        "producer_self_authorization_allowed": {"const": false}
+      }
+    },
+    "producer_classes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["HUMAN_STEWARD", "INTELLECT", "MATHFORGE", "MATHSOLVE", "MATHCERT", "CHECKER", "EXTERNAL_TOOL"],
+      "properties": {
+        "HUMAN_STEWARD": {"$ref": "#/$defs/capability"},
+        "INTELLECT": {"$ref": "#/$defs/capability"},
+        "MATHFORGE": {"$ref": "#/$defs/capability"},
+        "MATHSOLVE": {"$ref": "#/$defs/capability"},
+        "MATHCERT": {"$ref": "#/$defs/capability"},
+        "CHECKER": {"$ref": "#/$defs/capability"},
+        "EXTERNAL_TOOL": {"$ref": "#/$defs/capability"}
+      }
+    }
+  },
+  "$defs": {
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blackboard_event_types", "theory_proposal_types", "canonical_claim_promotion", "notes"],
+      "properties": {
+        "blackboard_event_types": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"enum": ["ASSERT", "OPEN_OBLIGATION", "PROPAGATE", "CONFLICT", "LEARN", "EQUIVALENCE", "WITNESS", "CERTIFICATE", "SUPERSEDE"]}
+        },
+        "theory_proposal_types": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"enum": ["PROPAGATION", "CONFLICT", "WITNESS", "EQUIVALENCE"]}
+        },
+        "canonical_claim_promotion": {"const": false},
+        "notes": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
