@@ -75,7 +75,9 @@ A claim may be speculative. Its presence on the blackboard has no automatic cert
 
 An explicit goal to be discharged. An obligation states what must be established and what classes of evidence are acceptable.
 
-The obligation, rather than the agent, is the long-lived unit of work.
+The obligation, rather than the agent, is the long-lived unit of work. An obligation is opened exactly once and remains in the materialized `open_obligations` view until an explicit `RESOLVE_OBLIGATION` event moves it to `resolved_obligations` with one of three working outcomes: `DISCHARGED`, `REFUTED`, or `WITHDRAWN`.
+
+`DISCHARGED` and `REFUTED` are reasoning-state outcomes, not canonical claim promotions. They require supporting reasoning objects in addition to the obligation itself. `WITHDRAWN` records deliberate abandonment of the working obligation and does not assert its truth or falsity.
 
 ### 3.3 Conflict
 
@@ -148,15 +150,28 @@ Introduces a working claim.
 
 Introduces a goal and its admissible evidence policy.
 
-An obligation SHOULD be narrow enough that a theory agent can return a concrete propagation, conflict, witness, or `UNKNOWN` response.
+An obligation SHOULD be narrow enough that a theory agent can return a concrete propagation, conflict, witness, or `UNKNOWN` response. Opening an obligation creates the durable working object; subsequent reasoning refers to that object rather than recreating it.
 
-### 4.3 PROPAGATE
+### 4.3 RESOLVE_OBLIGATION
+
+Moves one previously opened obligation from the open view to the resolved view.
+
+`RESOLVE_OBLIGATION` MUST target an existing `OBLIGATION`, MUST include that obligation in its dependency set, and MUST occur at most once for that obligation. Its payload contains:
+
+- `outcome: DISCHARGED` when the working goal has been satisfied;
+- `outcome: REFUTED` when the working goal has been contradicted or shown impossible under the declared interpretation;
+- `outcome: WITHDRAWN` when the Programme deliberately stops pursuing the working goal without asserting truth or falsity;
+- a non-empty `reason` describing the disposition.
+
+`DISCHARGED` and `REFUTED` MUST cite at least one supporting prior reasoning object in addition to the obligation itself. A resolution is a state-management event; it does not certify a canonical claim, create a proof support type, or bypass MATHCERT.
+
+### 4.4 PROPAGATE
 
 Introduces a consequence derived from prior objects.
 
 `PROPAGATE` MUST name a non-empty dependency set and MUST state the consequence. A propagation without dependencies is an assertion and must use `ASSERT` instead.
 
-### 4.4 CONFLICT
+### 4.5 CONFLICT
 
 Records an incompatibility or failure and its explanation.
 
@@ -164,7 +179,7 @@ A conflict MUST name at least one dependency, MUST state why those dependencies 
 
 `REPLAYABLE` and `CHECKED` conflicts MUST carry evidence references. A `CHECKED` conflict MUST be recorded by MATHCERT or a designated `CHECKER`; a heuristic theory agent cannot self-upgrade its conflict by changing the assurance label.
 
-### 4.5 LEARN
+### 4.6 LEARN
 
 Creates a search constraint from an existing conflict.
 
@@ -188,7 +203,7 @@ This rule is essential. In SAT/CDCL, a learned clause is logically entailed by a
 
 Even `HARD_PRUNE` remains an operational search effect. It is not automatic theorem promotion.
 
-### 4.6 EQUIVALENCE
+### 4.7 EQUIVALENCE
 
 Records a scoped identity/equivalence relation over at least two members.
 
@@ -201,19 +216,19 @@ The relation scope MUST be one of:
 
 Only the last category asserts mathematical equivalence; it therefore requires evidence references.
 
-### 4.7 WITNESS
+### 4.8 WITNESS
 
 Attaches a witness to a claim or obligation.
 
 The witness payload MUST state its role, for example `EXAMPLE`, `COUNTEREXAMPLE`, `MODEL`, `EXACT_COMPUTATION`, `SOURCE_OBJECT`, or `PROOF_ARTIFACT`. A witness SHOULD be content-addressed when it is intended for replay or durable comparison.
 
-### 4.8 CERTIFICATE
+### 4.9 CERTIFICATE
 
 Attaches an independent checker result.
 
 A certificate MUST state the checker, certificate kind, immutable artifact reference, SHA-256 artifact identity, result, and target object. `PASS` records evidence; it does not directly edit claim-ledger status. `FAIL` is evidence of a certification conflict and SHOULD normally be accompanied or followed by a `CONFLICT` event.
 
-### 4.9 SUPERSEDE
+### 4.10 SUPERSEDE
 
 Retires a blackboard working object in favor of a replacement without deleting history.
 
@@ -256,7 +271,7 @@ ERROR
 
 The reducer validates a response and decides whether proposed content becomes blackboard events. The producer cannot make an event authoritative merely by returning it.
 
-A response MAY include a heuristic score or confidence estimate for scheduling. Such values are explicitly non-normative and MUST NOT alter claim status, certainty, conflict assurance, pruning enforcement, certification status, or checker outcome.
+A response MAY include a heuristic score or confidence estimate for scheduling. Such values are explicitly non-normative and MUST NOT alter claim status, certainty, conflict assurance, pruning enforcement, obligation outcome, certification status, or checker outcome.
 
 ## 6. Producer classes and capability boundary
 
@@ -269,9 +284,9 @@ The initial allocation is deliberately conservative:
 | Producer class | Intended capability |
 | --- | --- |
 | `HUMAN_STEWARD` | explicit human-directed working assertions/obligations and supersession; governance authority remains external to automatic inference |
-| `INTELLECT` | scheduling, working assertions/obligations, conflict-derived search learning, supersession |
+| `INTELLECT` | scheduling, working assertions/obligations, explicit working-obligation resolution, conflict-derived search learning, supersession |
 | `MATHFORGE` | exploratory assertions, witnesses, working equivalence events and theory proposals |
-| `MATHSOLVE` | obligations, propagations, conflicts, witnesses, search learning, equivalences, supersession |
+| `MATHSOLVE` | obligations, explicit working-obligation resolution, propagations, conflicts, witnesses, search learning, equivalences, supersession |
 | `MATHCERT` | checker-backed conflicts, certificate recording, evidence-bearing equivalence review |
 | `CHECKER` | machine-checker conflict outcomes and certificate production |
 | `EXTERNAL_TOOL` | witness events and theory proposals unless independently wrapped by a checker route |
@@ -327,6 +342,10 @@ Malformed, unauthorized, stale, or insufficiently evidenced events may be reject
 ### I11. Human authority preservation
 
 The protocol does not create, infer, or impersonate Human Steward approval. Existing explicit Human Steward disposition requirements remain outside automatic agent inference.
+
+### I12. Explicit obligation lifecycle
+
+An obligation MUST be opened before it is resolved and MUST NOT be resolved more than once. `DISCHARGED` and `REFUTED` resolutions require at least one supporting prior reasoning object beyond the obligation itself. Resolution changes only the materialized working-obligation state and has no direct canonical claim-ledger effect.
 
 ## 8. Conflict-driven learning semantics
 
@@ -393,6 +412,7 @@ receive proposal
   -> authenticate producer identity externally
   -> check producer capability
   -> resolve dependencies
+  -> enforce obligation lifecycle
   -> enforce conflict-assurance / pruning monotonicity
   -> enforce event-specific semantic invariants
   -> append accepted event
@@ -409,7 +429,7 @@ Implementations MAY materialize indexes for efficiency. At minimum, a useful bla
 ```text
 claims
 open obligations
-resolved obligations
+resolved obligations + outcomes
 conflicts + assurance
 active search constraints + enforcement
 scoped equivalence classes
@@ -448,7 +468,7 @@ Blackboard traces, capability registries, and theory-agent exchanges validate ag
 
 ### C2. Semantic conformance
 
-The reducer enforces invariants I1-I11, including producer capabilities, dependency closure, assurance-bounded conflict learning, certificate independence, scoped equivalence, and deterministic replay.
+The reducer enforces invariants I1-I12, including producer capabilities, dependency closure, explicit obligation lifecycle, assurance-bounded conflict learning, certificate independence, scoped equivalence, and deterministic replay.
 
 ### C3. Governance conformance
 
@@ -474,7 +494,7 @@ MATH-CORE-01 is not:
 The candidate deployment sequence is deliberately narrow:
 
 1. validate the protocol schemas and controlled capability registry;
-2. replay the reference trace deterministically in CI;
+2. replay the reference trace deterministically in CI, including explicit open-to-resolved obligation transitions;
 3. require theory-agent exchanges to be exact-checkpoint-bound and proposal-only;
 4. enforce assurance-bounded learning so heuristic conflicts cannot hard-prune research branches;
 5. pilot one existing MATHSOLVE -> MATHCERT handoff through the protocol without changing its certification semantics;
