@@ -133,6 +133,27 @@ class MathCoreProtocolTests(unittest.TestCase):
         with self.assertRaises(core.ProtocolError):
             core.validate_exchange(exchange, self.trace, self.registry)
 
+    def test_blackboard_wire_rejects_undefined_aether_snapshot_identity(self) -> None:
+        trace = copy.deepcopy(self.trace)
+        trace["base_checkpoint"] = {
+            "kind": "AETHER_SNAPSHOT",
+            "locator": "aether:math-core/reference",
+            "revision": "latest",
+        }
+        with self.assertRaises(core.ProtocolError):
+            core.validate_schema(trace, core.load_json(core.BLACKBOARD_SCHEMA), "AETHER checkpoint regression")
+
+    def test_theory_wire_rejects_undefined_aether_snapshot_identity(self) -> None:
+        exchange = copy.deepcopy(self.exchange)
+        request = next(m for m in exchange["messages"] if m["message_type"] == "REQUEST")
+        request["base_checkpoint"] = {
+            "kind": "AETHER_SNAPSHOT",
+            "locator": "aether:math-core/reference",
+            "revision": "latest",
+        }
+        with self.assertRaises(core.ProtocolError):
+            core.validate_schema(exchange, core.load_json(core.AGENT_SCHEMA), "AETHER theory checkpoint regression")
+
     def test_unprivileged_producer_cannot_submit_theory_proposal(self) -> None:
         exchange = copy.deepcopy(self.exchange)
         response = next(m for m in exchange["messages"] if m["message_type"] == "RESPONSE")
