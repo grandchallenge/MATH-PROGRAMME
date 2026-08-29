@@ -14,6 +14,10 @@ class MathCoreProtocolTests(unittest.TestCase):
         cls.trace = core.load_json(core.REFERENCE_TRACE)
         cls.exchange = core.load_json(core.REFERENCE_EXCHANGE)
 
+    @staticmethod
+    def event(trace: dict, event_type: str) -> dict:
+        return next(e for e in trace["events"] if e["event_type"] == event_type)
+
     def test_reference_semantics(self) -> None:
         core.validate_capabilities(self.registry)
         core.validate_trace(self.trace, self.registry)
@@ -33,8 +37,15 @@ class MathCoreProtocolTests(unittest.TestCase):
 
     def test_unauthorized_certificate_is_rejected(self) -> None:
         trace = copy.deepcopy(self.trace)
-        certificate = next(e for e in trace["events"] if e["event_type"] == "CERTIFICATE")
+        certificate = self.event(trace, "CERTIFICATE")
         certificate["producer"]["class"] = "MATHSOLVE"
+        with self.assertRaises(core.ProtocolError):
+            core.validate_trace(trace, self.registry)
+
+    def test_certificate_requires_digest_identity(self) -> None:
+        trace = copy.deepcopy(self.trace)
+        certificate = self.event(trace, "CERTIFICATE")
+        certificate["payload"]["artifact_sha256"] = "not-a-digest"
         with self.assertRaises(core.ProtocolError):
             core.validate_trace(trace, self.registry)
 
@@ -46,15 +57,58 @@ class MathCoreProtocolTests(unittest.TestCase):
 
     def test_learned_constraint_cannot_escape_search_scope(self) -> None:
         trace = copy.deepcopy(self.trace)
-        learned = next(e for e in trace["events"] if e["event_type"] == "LEARN")
+        learned = self.event(trace, "LEARN")
         learned["payload"]["effect"] = "THEOREM"
         with self.assertRaises(core.ProtocolError):
             core.validate_trace(trace, self.registry)
 
+    def test_heuristic_conflict_cannot_local_prune(self) -> None:
+        trace = copy.deepcopy(self.trace)
+        conflict = self.event(trace, "CONFLICT")
+        learned = self.event(trace, "LEARN")
+        conflict["payload"]["assurance"] = "HEURISTIC"
+        learned["payload"]["enforcement"] = "LOCAL_PRUNE"
+        with self.assertRaises(core.ProtocolError):
+            core.validate_trace(trace, self.registry)
+
+    def test_heuristic_conflict_cannot_hard_prune(self) -> None:
+        trace = copy.deepcopy(self.trace)
+        conflict = self.event(trace, "CONFLICT")
+        learned = self.event(trace, "LEARN")
+        conflict["payload"]["assurance"] = "HEURISTIC"
+        learned["payload"]["enforcement"] = "HARD_PRUNE"
+        with self.assertRaises(core.ProtocolError):
+            core.validate_trace(trace, self.registry)
+
+    def test_replayable_conflict_cannot_hard_prune(self) -> None:
+        trace = copy.deepcopy(self.trace)
+        learned = self.event(trace, "LEARN")
+        learned["payload"]["enforcement"] = "HARD_PRUNE"
+        with self.assertRaises(core.ProtocolError):
+            core.validate_trace(trace, self.registry)
+
+    def test_checked_conflict_requires_certifying_producer(self) -> None:
+        trace = copy.deepcopy(self.trace)
+        conflict = self.event(trace, "CONFLICT")
+        conflict["payload"]["assurance"] = "CHECKED"
+        conflict["producer"]["class"] = "MATHSOLVE"
+        with self.assertRaises(core.ProtocolError):
+            core.validate_trace(trace, self.registry)
+
+    def test_checked_conflict_can_hard_prune_without_becoming_theorem(self) -> None:
+        trace = copy.deepcopy(self.trace)
+        conflict = self.event(trace, "CONFLICT")
+        learned = self.event(trace, "LEARN")
+        conflict["payload"]["assurance"] = "CHECKED"
+        conflict["producer"]["class"] = "MATHCERT"
+        learned["payload"]["enforcement"] = "HARD_PRUNE"
+        self.assertEqual(learned["payload"]["effect"], "SEARCH_ONLY")
+        core.validate_trace(trace, self.registry)
+
     def test_stale_theory_response_is_rejected(self) -> None:
         exchange = copy.deepcopy(self.exchange)
         response = next(m for m in exchange["messages"] if m["message_type"] == "RESPONSE")
-        response["base_checkpoint"]["revision"] = "stale-reference"
+        response["base_checkpoint"]["revision"] = "sha256:" + "f" * 64
         with self.assertRaises(core.ProtocolError):
             core.validate_exchange(exchange, self.trace, self.registry)
 
