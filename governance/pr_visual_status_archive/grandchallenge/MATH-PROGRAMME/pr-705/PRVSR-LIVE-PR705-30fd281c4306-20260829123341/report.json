@@ -1,0 +1,190 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "NOT_REQUIRED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": null,
+      "head_sha": "30fd281c43068ab2da9a884a74abaca57d00911a",
+      "name": "Replay LOG-GCD-001 in Lean",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "30fd281c43068ab2da9a884a74abaca57d00911a",
+      "name": "Replay PC-WP04 bounded certificate",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "30fd281c43068ab2da9a884a74abaca57d00911a",
+      "name": "Replay pinned Union-Closed MATHCERT evidence",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "30fd281c43068ab2da9a884a74abaca57d00911a",
+      "name": "policy / policy",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "30fd281c43068ab2da9a884a74abaca57d00911a",
+      "name": "security / action-policy",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "30fd281c43068ab2da9a884a74abaca57d00911a",
+      "name": "validate-json",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "CHECKS_PENDING",
+    "reasons": [
+      "6 required check(s) are not complete"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-08-29T10:27:45Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-08-29T12:33:39Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "30fd281c43068ab2da9a884a74abaca57d00911a",
+    "exact_head_sha": "30fd281c43068ab2da9a884a74abaca57d00911a",
+    "pr_number": 705,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "MATH-CORE-01: claim blackboard and theory-agent protocol"
+  },
+  "integration": {
+    "merge_commit_sha": "e089459d58fc737d440fa06a4ec3161cb5983e06",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 24,
+      "collector_limitations": [],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 99101311689,
+          "conclusion": null,
+          "head_sha": "30fd281c43068ab2da9a884a74abaca57d00911a",
+          "name": "Analyze (actions)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 99101311653,
+          "conclusion": null,
+          "head_sha": "30fd281c43068ab2da9a884a74abaca57d00911a",
+          "name": "Analyze (c-cpp)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 99101311717,
+          "conclusion": null,
+          "head_sha": "30fd281c43068ab2da9a884a74abaca57d00911a",
+          "name": "Analyze (python)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 99101312596,
+          "conclusion": null,
+          "head_sha": "30fd281c43068ab2da9a884a74abaca57d00911a",
+          "name": "admit",
+          "status": "waiting"
+        },
+        {
+          "check_run_id": 99101313013,
+          "conclusion": "skipped",
+          "head_sha": "30fd281c43068ab2da9a884a74abaca57d00911a",
+          "name": "qualify",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [
+        "Replay LOG-GCD-001 in Lean",
+        "Replay PC-WP04 bounded certificate",
+        "Replay pinned Union-Closed MATHCERT evidence",
+        "policy / policy",
+        "security / action-policy",
+        "validate-json"
+      ],
+      "ruleset_source_available": true
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-08-29T12:33:41Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "46ed7bab05d997e774cee7b77d9b5b6c88dd466cac169175498c1b09fbc7a308"
+  },
+  "report_id": "PRVSR-LIVE-PR705-30fd281c4306-20260829123341",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane",
+      "source_or_claim_classification",
+      "repository_policy_or_workflow"
+    ]
+  }
+}
