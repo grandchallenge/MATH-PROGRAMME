@@ -1,0 +1,131 @@
+{
+  "protocol_version": "MATH-CORE-01/0.1.0",
+  "blackboard_id": "MATH-CORE-01-UC-001-PILOT",
+  "base_checkpoint": {
+    "kind": "CONTENT_SET",
+    "locator": "repo:governance/math_core_01/pilots/UC-001/content_set.json",
+    "revision": "sha256:b3729b4ed0187ed597166bb649dcc7c0feaad59f7bbf5585302e915bc03ff02e"
+  },
+  "events": [
+    {
+      "event_id": "MCORE-UC-E-0001",
+      "event_type": "ASSERT",
+      "producer": {"id": "mathsolve-uc-pilot", "class": "MATHSOLVE", "execution_id": "uc-pilot-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "repo:governance/math_core_01/pilots/UC-001/content_set.json", "revision": "sha256:b3729b4ed0187ed597166bb649dcc7c0feaad59f7bbf5585302e915bc03ff02e"},
+      "subject": {"kind": "CLAIM", "id": "MCORE-UC-C-RESTRICTED"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "UC-001", "work_package": "MS-UC-WP04", "campaign": "UC-001"},
+      "dependencies": [],
+      "evidence_refs": ["repo:governance/math_core_01/pilots/UC-001/artifacts/mathsolve_handoff_snapshot.json"],
+      "payload": {
+        "statement": "A union-closed family containing {a,b} has at least one of a or b in at least half of its members.",
+        "working_class": "EXTERNAL_CANONICAL_REFERENCE",
+        "canonical_claim_ref": "grandchallenge/MATHSOLVE@2a0124051d67b4db63a75f5cc592a02b7553a2c2:campaign_ledgers/UC-001/claim_ledger.json#UC-WP04-L001"
+      },
+      "created_at": "2026-08-29T12:30:00Z"
+    },
+    {
+      "event_id": "MCORE-UC-E-0002",
+      "event_type": "ASSERT",
+      "producer": {"id": "mathsolve-uc-pilot", "class": "MATHSOLVE", "execution_id": "uc-pilot-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "repo:governance/math_core_01/pilots/UC-001/content_set.json", "revision": "sha256:b3729b4ed0187ed597166bb649dcc7c0feaad59f7bbf5585302e915bc03ff02e"},
+      "subject": {"kind": "CLAIM", "id": "MCORE-UC-C-FRANKL"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "UC-001", "work_package": "MS-UC-WP04", "campaign": "UC-001"},
+      "dependencies": [],
+      "evidence_refs": ["repo:governance/math_core_01/pilots/UC-001/artifacts/universal_target_snapshot.json"],
+      "payload": {
+        "statement": "Every finite nontrivial union-closed family is Frankl-abundant.",
+        "working_class": "EXTERNAL_CANONICAL_REFERENCE",
+        "canonical_claim_ref": "grandchallenge/MATHSOLVE@2a0124051d67b4db63a75f5cc592a02b7553a2c2:campaign_ledgers/UC-001/claim_ledger.json#UC-FRANKL"
+      },
+      "created_at": "2026-08-29T12:30:01Z"
+    },
+    {
+      "event_id": "MCORE-UC-E-0003",
+      "event_type": "OPEN_OBLIGATION",
+      "producer": {"id": "mathsolve-uc-pilot", "class": "MATHSOLVE", "execution_id": "uc-pilot-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "repo:governance/math_core_01/pilots/UC-001/content_set.json", "revision": "sha256:b3729b4ed0187ed597166bb649dcc7c0feaad59f7bbf5585302e915bc03ff02e"},
+      "subject": {"kind": "OBLIGATION", "id": "MCORE-UC-O-ROUTE"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "UC-001", "work_package": "MS-UC-WP04", "campaign": "UC-001"},
+      "dependencies": ["MCORE-UC-C-RESTRICTED"],
+      "evidence_refs": ["repo:governance/math_core_01/pilots/UC-001/artifacts/mathsolve_handoff_snapshot.json"],
+      "payload": {
+        "goal": "Represent the existing UC-001 restricted-theorem handoff through MATH-CORE without changing its certification semantics or universal-claim boundary.",
+        "acceptable_evidence": ["SOURCE_OBJECT", "FORMAL_REPRESENTATION"],
+        "completion_condition": "Map the governed MATHSOLVE handoff to its pinned MATHCERT theorem representation while retaining the Frankl bridge as an open obligation."
+      },
+      "created_at": "2026-08-29T12:30:02Z"
+    },
+    {
+      "event_id": "MCORE-UC-E-0004",
+      "event_type": "WITNESS",
+      "producer": {"id": "mathsolve-uc-pilot", "class": "MATHSOLVE", "execution_id": "uc-pilot-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "repo:governance/math_core_01/pilots/UC-001/content_set.json", "revision": "sha256:b3729b4ed0187ed597166bb649dcc7c0feaad59f7bbf5585302e915bc03ff02e"},
+      "subject": {"kind": "WITNESS", "id": "MCORE-UC-W-HANDOFF"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "UC-001", "work_package": "MS-UC-WP04", "campaign": "UC-001"},
+      "dependencies": ["MCORE-UC-C-RESTRICTED", "MCORE-UC-O-ROUTE"],
+      "evidence_refs": ["repo:governance/math_core_01/pilots/UC-001/artifacts/mathsolve_handoff_snapshot.json"],
+      "payload": {
+        "target_id": "MCORE-UC-C-RESTRICTED",
+        "witness_role": "SOURCE_OBJECT",
+        "artifact_ref": "repo:governance/math_core_01/pilots/UC-001/artifacts/mathsolve_handoff_snapshot.json",
+        "artifact_sha256": "5244d3d7ca74a644c7bb23625361fa7c0bb00c7747fbe2215dc338d7cd1f9e2b",
+        "summary": "Content-addressed local descriptor of the existing MATHSOLVE UC-001 handoff, including its restricted claim and explicit no-Frankl-promotion boundary."
+      },
+      "created_at": "2026-08-29T12:30:03Z"
+    },
+    {
+      "event_id": "MCORE-UC-E-0005",
+      "event_type": "EQUIVALENCE",
+      "producer": {"id": "mathsolve-uc-pilot", "class": "MATHSOLVE", "execution_id": "uc-pilot-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "repo:governance/math_core_01/pilots/UC-001/content_set.json", "revision": "sha256:b3729b4ed0187ed597166bb649dcc7c0feaad59f7bbf5585302e915bc03ff02e"},
+      "subject": {"kind": "EQUIVALENCE", "id": "MCORE-UC-Q-LEAN"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "UC-001", "work_package": "MS-UC-WP04", "campaign": "UC-001"},
+      "dependencies": ["MCORE-UC-C-RESTRICTED", "MCORE-UC-W-HANDOFF"],
+      "evidence_refs": ["repo:governance/math_core_01/pilots/UC-001/artifacts/mathcert_theorem_snapshot.json"],
+      "payload": {
+        "members": [
+          "MCORE-UC-C-RESTRICTED",
+          "formal:MathCert.UnionClosed.two_element_case@d59173899dcd1a67dbe8f31de0b9f0917cd1459a"
+        ],
+        "relation_scope": "REPRESENTATION_EQUIVALENT",
+        "explanation": "The pinned MATHCERT theorem is the formal representation associated with the restricted UC-WP04-L001 handoff claim; this relation does not identify it with the universal Frankl target."
+      },
+      "created_at": "2026-08-29T12:30:04Z"
+    },
+    {
+      "event_id": "MCORE-UC-E-0006",
+      "event_type": "OPEN_OBLIGATION",
+      "producer": {"id": "mathsolve-uc-pilot", "class": "MATHSOLVE", "execution_id": "uc-pilot-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "repo:governance/math_core_01/pilots/UC-001/content_set.json", "revision": "sha256:b3729b4ed0187ed597166bb649dcc7c0feaad59f7bbf5585302e915bc03ff02e"},
+      "subject": {"kind": "OBLIGATION", "id": "MCORE-UC-O-UNIVERSAL"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "UC-001", "work_package": "MS-UC-WP04", "campaign": "UC-001"},
+      "dependencies": ["MCORE-UC-C-RESTRICTED", "MCORE-UC-C-FRANKL", "MCORE-UC-Q-LEAN"],
+      "evidence_refs": ["repo:governance/math_core_01/pilots/UC-001/artifacts/universal_target_snapshot.json"],
+      "payload": {
+        "goal": "Bridge the certified restricted and finite UC-001 results to the universal Frankl half-frequency target.",
+        "acceptable_evidence": ["FORMAL_PROOF", "CERTIFIED_REDUCTION"],
+        "completion_condition": "Supply a governed proof or certified reduction covering every finite nontrivial union-closed family."
+      },
+      "created_at": "2026-08-29T12:30:05Z"
+    },
+    {
+      "event_id": "MCORE-UC-E-0007",
+      "event_type": "RESOLVE_OBLIGATION",
+      "producer": {"id": "mathsolve-uc-pilot", "class": "MATHSOLVE", "execution_id": "uc-pilot-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "repo:governance/math_core_01/pilots/UC-001/content_set.json", "revision": "sha256:b3729b4ed0187ed597166bb649dcc7c0feaad59f7bbf5585302e915bc03ff02e"},
+      "subject": {"kind": "OBLIGATION", "id": "MCORE-UC-O-ROUTE"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "UC-001", "work_package": "MS-UC-WP04", "campaign": "UC-001"},
+      "dependencies": ["MCORE-UC-O-ROUTE", "MCORE-UC-W-HANDOFF", "MCORE-UC-Q-LEAN", "MCORE-UC-O-UNIVERSAL"],
+      "evidence_refs": [
+        "repo:governance/math_core_01/pilots/UC-001/artifacts/mathsolve_handoff_snapshot.json",
+        "repo:governance/math_core_01/pilots/UC-001/artifacts/mathcert_theorem_snapshot.json",
+        "repo:governance/math_core_01/pilots/UC-001/artifacts/universal_target_snapshot.json"
+      ],
+      "payload": {
+        "outcome": "DISCHARGED",
+        "reason": "The existing restricted theorem handoff is mapped to its formal representation while the universal Frankl bridge remains explicit and unresolved; no new mathematical certification or promotion is asserted."
+      },
+      "created_at": "2026-08-29T12:30:06Z"
+    }
+  ]
+}
