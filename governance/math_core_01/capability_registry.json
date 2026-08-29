@@ -1,0 +1,54 @@
+{
+  "schema_version": "0.1.0",
+  "registry_id": "MATH-CORE-01-CAPABILITIES",
+  "protocol_version": "MATH-CORE-01/0.1.0",
+  "authority_invariants": {
+    "canonical_claim_promotion_by_protocol_event": false,
+    "human_steward_authority_may_be_inferred": false,
+    "producer_self_authorization_allowed": false
+  },
+  "producer_classes": {
+    "HUMAN_STEWARD": {
+      "blackboard_event_types": ["ASSERT", "OPEN_OBLIGATION", "SUPERSEDE"],
+      "theory_proposal_types": [],
+      "canonical_claim_promotion": false,
+      "notes": "Records explicit human-directed working state only. Human Steward authority is external and must never be inferred from protocol traffic."
+    },
+    "INTELLECT": {
+      "blackboard_event_types": ["ASSERT", "OPEN_OBLIGATION", "LEARN", "SUPERSEDE"],
+      "theory_proposal_types": [],
+      "canonical_claim_promotion": false,
+      "notes": "Coordinates search and may record working obligations and conflict-derived search constraints; it does not manufacture mathematical certification."
+    },
+    "MATHFORGE": {
+      "blackboard_event_types": ["ASSERT", "EQUIVALENCE", "WITNESS"],
+      "theory_proposal_types": ["PROPAGATION", "CONFLICT", "WITNESS", "EQUIVALENCE"],
+      "canonical_claim_promotion": false,
+      "notes": "Exploratory foundry. Blackboard events remain working-state contributions and theory-agent responses remain proposals."
+    },
+    "MATHSOLVE": {
+      "blackboard_event_types": ["ASSERT", "OPEN_OBLIGATION", "PROPAGATE", "CONFLICT", "LEARN", "EQUIVALENCE", "WITNESS", "SUPERSEDE"],
+      "theory_proposal_types": ["PROPAGATION", "CONFLICT", "WITNESS", "EQUIVALENCE"],
+      "canonical_claim_promotion": false,
+      "notes": "Campaign reasoning plane. May derive and diagnose working mathematical state but cannot certify canonical claims."
+    },
+    "MATHCERT": {
+      "blackboard_event_types": ["CONFLICT", "EQUIVALENCE", "WITNESS", "CERTIFICATE"],
+      "theory_proposal_types": ["CONFLICT", "WITNESS", "EQUIVALENCE"],
+      "canonical_claim_promotion": false,
+      "notes": "Records certification evidence and checker-backed rejection. Canonical promotion remains governed by existing MATHCERT and claim-ledger procedures."
+    },
+    "CHECKER": {
+      "blackboard_event_types": ["CONFLICT", "CERTIFICATE"],
+      "theory_proposal_types": ["CONFLICT"],
+      "canonical_claim_promotion": false,
+      "notes": "Machine checker or independently replayable verifier. Result recording is evidence, not direct ledger mutation."
+    },
+    "EXTERNAL_TOOL": {
+      "blackboard_event_types": ["WITNESS"],
+      "theory_proposal_types": ["PROPAGATION", "CONFLICT", "WITNESS", "EQUIVALENCE"],
+      "canonical_claim_promotion": false,
+      "notes": "Untrusted external reasoner or tool. Outputs are proposals or witness artifacts until independently checked."
+    }
+  }
+}
