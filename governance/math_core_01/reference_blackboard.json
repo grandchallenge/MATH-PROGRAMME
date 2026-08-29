@@ -1,0 +1,143 @@
+{
+  "protocol_version": "MATH-CORE-01/0.1.0",
+  "blackboard_id": "MATH-CORE-01-REFERENCE-TRACE",
+  "base_checkpoint": {
+    "kind": "CONTENT_SET",
+    "locator": "reference:MATH-CORE-01",
+    "revision": "reference-v0.1.0"
+  },
+  "events": [
+    {
+      "event_id": "MCORE-E-0001",
+      "event_type": "ASSERT",
+      "producer": {"id": "mathsolve-reference", "class": "MATHSOLVE", "execution_id": "run-reference-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "reference:MATH-CORE-01", "revision": "reference-v0.1.0"},
+      "subject": {"kind": "CLAIM", "id": "MCORE-C-0001"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
+      "dependencies": [],
+      "evidence_refs": [],
+      "payload": {"statement": "The working integer n is divisible by 2.", "working_class": "SPECULATIVE"},
+      "created_at": "2026-08-29T09:00:00Z"
+    },
+    {
+      "event_id": "MCORE-E-0002",
+      "event_type": "ASSERT",
+      "producer": {"id": "mathsolve-reference", "class": "MATHSOLVE", "execution_id": "run-reference-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "reference:MATH-CORE-01", "revision": "reference-v0.1.0"},
+      "subject": {"kind": "CLAIM", "id": "MCORE-C-0002"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
+      "dependencies": [],
+      "evidence_refs": [],
+      "payload": {"statement": "The same working integer n is odd.", "working_class": "SPECULATIVE"},
+      "created_at": "2026-08-29T09:00:01Z"
+    },
+    {
+      "event_id": "MCORE-E-0003",
+      "event_type": "OPEN_OBLIGATION",
+      "producer": {"id": "mathsolve-reference", "class": "MATHSOLVE", "execution_id": "run-reference-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "reference:MATH-CORE-01", "revision": "reference-v0.1.0"},
+      "subject": {"kind": "OBLIGATION", "id": "MCORE-O-0001"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
+      "dependencies": ["MCORE-C-0001", "MCORE-C-0002"],
+      "evidence_refs": [],
+      "payload": {"goal": "Determine whether the two parity assertions can hold simultaneously.", "acceptable_evidence": ["EXACT", "FORMAL", "COUNTEREXAMPLE"], "completion_condition": "Produce a derivation, conflict, or exact witness resolving joint satisfiability."},
+      "created_at": "2026-08-29T09:00:02Z"
+    },
+    {
+      "event_id": "MCORE-E-0004",
+      "event_type": "PROPAGATE",
+      "producer": {"id": "mathsolve-reference", "class": "MATHSOLVE", "execution_id": "run-reference-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "reference:MATH-CORE-01", "revision": "reference-v0.1.0"},
+      "subject": {"kind": "CLAIM", "id": "MCORE-C-0003"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
+      "dependencies": ["MCORE-C-0001"],
+      "evidence_refs": ["artifact:reference/parity-reduction.txt"],
+      "payload": {"conclusion": "n modulo 2 equals 0.", "derivation_kind": "EXACT", "derivation_ref": "artifact:reference/parity-reduction.txt"},
+      "created_at": "2026-08-29T09:00:03Z"
+    },
+    {
+      "event_id": "MCORE-E-0005",
+      "event_type": "CONFLICT",
+      "producer": {"id": "mathsolve-reference", "class": "MATHSOLVE", "execution_id": "run-reference-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "reference:MATH-CORE-01", "revision": "reference-v0.1.0"},
+      "subject": {"kind": "CONFLICT", "id": "MCORE-X-0001"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
+      "dependencies": ["MCORE-C-0002", "MCORE-C-0003", "MCORE-O-0001"],
+      "evidence_refs": ["artifact:reference/parity-conflict.txt"],
+      "payload": {"explanation": "Oddness requires n modulo 2 to equal 1, while the propagated consequence requires it to equal 0.", "conflict_kind": "INCONSISTENCY"},
+      "created_at": "2026-08-29T09:00:04Z"
+    },
+    {
+      "event_id": "MCORE-E-0006",
+      "event_type": "LEARN",
+      "producer": {"id": "intellect-reference", "class": "INTELLECT", "execution_id": "run-reference-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "reference:MATH-CORE-01", "revision": "reference-v0.1.0"},
+      "subject": {"kind": "CONSTRAINT", "id": "MCORE-L-0001"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
+      "dependencies": ["MCORE-X-0001"],
+      "evidence_refs": ["artifact:reference/parity-conflict.txt"],
+      "payload": {"source_conflict_id": "MCORE-X-0001", "constraint": "Do not retain a branch that asserts both evenness and oddness for the same integer under the same interpretation.", "effect": "SEARCH_ONLY"},
+      "created_at": "2026-08-29T09:00:05Z"
+    },
+    {
+      "event_id": "MCORE-E-0007",
+      "event_type": "WITNESS",
+      "producer": {"id": "mathsolve-reference", "class": "MATHSOLVE", "execution_id": "run-reference-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "reference:MATH-CORE-01", "revision": "reference-v0.1.0"},
+      "subject": {"kind": "WITNESS", "id": "MCORE-W-0001"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
+      "dependencies": ["MCORE-C-0002", "MCORE-O-0001"],
+      "evidence_refs": ["artifact:reference/n-equals-3.json"],
+      "payload": {"target_id": "MCORE-C-0002", "witness_role": "EXAMPLE", "artifact_ref": "artifact:reference/n-equals-3.json", "summary": "n=3 witnesses the odd branch alone and does not discharge the contradictory joint branch."},
+      "created_at": "2026-08-29T09:00:06Z"
+    },
+    {
+      "event_id": "MCORE-E-0008",
+      "event_type": "EQUIVALENCE",
+      "producer": {"id": "mathsolve-reference", "class": "MATHSOLVE", "execution_id": "run-reference-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "reference:MATH-CORE-01", "revision": "reference-v0.1.0"},
+      "subject": {"kind": "EQUIVALENCE", "id": "MCORE-Q-0001"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
+      "dependencies": ["MCORE-C-0003"],
+      "evidence_refs": ["artifact:reference/parity-formal-map.json"],
+      "payload": {"members": ["MCORE-C-0003", "formal:Parity.even_mod_two"], "relation_scope": "REPRESENTATION_EQUIVALENT", "explanation": "The formal theorem identifier is the controlled formal representation of the propagated parity statement."},
+      "created_at": "2026-08-29T09:00:07Z"
+    },
+    {
+      "event_id": "MCORE-E-0009",
+      "event_type": "CERTIFICATE",
+      "producer": {"id": "lean-reference-checker", "class": "CHECKER", "execution_id": "run-reference-lean-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "reference:MATH-CORE-01", "revision": "reference-v0.1.0"},
+      "subject": {"kind": "CERTIFICATE", "id": "MCORE-K-0001"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
+      "dependencies": ["MCORE-C-0003", "MCORE-Q-0001"],
+      "evidence_refs": ["artifact:reference/lean/parity-check.receipt.json"],
+      "payload": {"target_id": "MCORE-C-0003", "checker": "Lean kernel reference replay", "certificate_kind": "LEAN", "artifact_ref": "artifact:reference/lean/parity-check.receipt.json", "result": "PASS", "ledger_effect": "NONE_DIRECT"},
+      "created_at": "2026-08-29T09:00:08Z"
+    },
+    {
+      "event_id": "MCORE-E-0010",
+      "event_type": "ASSERT",
+      "producer": {"id": "mathsolve-reference", "class": "MATHSOLVE", "execution_id": "run-reference-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "reference:MATH-CORE-01", "revision": "reference-v0.1.0"},
+      "subject": {"kind": "CLAIM", "id": "MCORE-C-0004"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
+      "dependencies": ["MCORE-C-0001"],
+      "evidence_refs": [],
+      "payload": {"statement": "The working assertion 'n is even' is normalized as: there exists an integer k with n = 2k.", "working_class": "LEDGER_PROPOSAL"},
+      "created_at": "2026-08-29T09:00:09Z"
+    },
+    {
+      "event_id": "MCORE-E-0011",
+      "event_type": "SUPERSEDE",
+      "producer": {"id": "mathsolve-reference", "class": "MATHSOLVE", "execution_id": "run-reference-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "reference:MATH-CORE-01", "revision": "reference-v0.1.0"},
+      "subject": {"kind": "CLAIM", "id": "MCORE-C-0004"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
+      "dependencies": ["MCORE-C-0001", "MCORE-C-0004"],
+      "evidence_refs": [],
+      "payload": {"target_id": "MCORE-C-0001", "replacement_id": "MCORE-C-0004", "reason": "Normalize the working claim to a quantifier-explicit form while retaining the original event history."},
+      "created_at": "2026-08-29T09:00:10Z"
+    }
+  ]
+}
