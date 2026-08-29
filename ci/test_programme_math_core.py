@@ -154,6 +154,18 @@ class MathCoreProtocolTests(unittest.TestCase):
         with self.assertRaises(core.ProtocolError):
             core.validate_schema(exchange, core.load_json(core.AGENT_SCHEMA), "AETHER theory checkpoint regression")
 
+    def test_external_canonical_reference_requires_canonical_claim_ref(self) -> None:
+        trace = copy.deepcopy(self.trace)
+        assertion = self.event(trace, "ASSERT")
+        assertion["payload"]["working_class"] = "EXTERNAL_CANONICAL_REFERENCE"
+        assertion["payload"].pop("canonical_claim_ref", None)
+        with self.assertRaises(core.ProtocolError):
+            core.validate_schema(
+                trace,
+                core.load_json(core.BLACKBOARD_SCHEMA),
+                "external canonical reference regression",
+            )
+
     def test_unprivileged_producer_cannot_submit_theory_proposal(self) -> None:
         exchange = copy.deepcopy(self.exchange)
         response = next(m for m in exchange["messages"] if m["message_type"] == "RESPONSE")
