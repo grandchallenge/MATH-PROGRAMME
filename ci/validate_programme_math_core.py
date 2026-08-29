@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -16,6 +17,7 @@ CAPABILITY_SCHEMA = ROOT / "schemas/math_core_capability_registry.schema.json"
 CAPABILITY_REGISTRY = ROOT / "governance/math_core_01/capability_registry.json"
 REFERENCE_TRACE = ROOT / "governance/math_core_01/reference_blackboard.json"
 REFERENCE_EXCHANGE = ROOT / "governance/math_core_01/reference_agent_exchange.json"
+SHA256_RE = re.compile(r"^[0-9a-fA-F]{64}$")
 
 
 class ProtocolError(RuntimeError):
@@ -90,6 +92,50 @@ def validate_capabilities(registry: dict) -> None:
             raise ProtocolError(f"producer class {name} may not acquire canonical promotion authority")
 
 
+def validate_conflict(event: dict) -> None:
+    event_id = event["event_id"]
+    assurance = event["payload"]["assurance"]
+    producer_class = event["producer"]["class"]
+
+    if assurance in {"REPLAYABLE", "CHECKED"} and not event["evidence_refs"]:
+        raise ProtocolError(f"{assurance.lower()} conflict {event_id} lacks replay evidence")
+    if assurance == "CHECKED" and producer_class not in {"MATHCERT", "CHECKER"}:
+        raise ProtocolError(
+            f"checked conflict {event_id} must be recorded by MATHCERT or CHECKER, not {producer_class}"
+        )
+
+
+def validate_learn(event: dict, conflicts: dict[str, dict]) -> None:
+    event_id = event["event_id"]
+    source = event["payload"]["source_conflict_id"]
+    if source not in conflicts:
+        raise ProtocolError(f"learn event {event_id} does not reference an earlier conflict")
+    if source not in event["dependencies"]:
+        raise ProtocolError(f"learn event {event_id} must depend on its source conflict")
+    if event["payload"]["effect"] != "SEARCH_ONLY":
+        raise ProtocolError(f"learn event {event_id} escaped SEARCH_ONLY scope")
+
+    source_event = conflicts[source]
+    assurance = source_event["payload"]["assurance"]
+    enforcement = event["payload"]["enforcement"]
+
+    if enforcement == "LOCAL_PRUNE" and assurance not in {"REPLAYABLE", "CHECKED"}:
+        raise ProtocolError(
+            f"learn event {event_id} requests LOCAL_PRUNE from {assurance} conflict {source}"
+        )
+    if enforcement == "HARD_PRUNE":
+        if assurance != "CHECKED":
+            raise ProtocolError(
+                f"learn event {event_id} requests HARD_PRUNE without CHECKED conflict assurance"
+            )
+        if source_event["producer"]["class"] not in {"MATHCERT", "CHECKER"}:
+            raise ProtocolError(
+                f"learn event {event_id} requests HARD_PRUNE from non-certifying conflict producer"
+            )
+        if not source_event["evidence_refs"]:
+            raise ProtocolError(f"learn event {event_id} requests HARD_PRUNE without conflict evidence")
+
+
 def validate_trace(trace: dict, registry: dict) -> None:
     if trace.get("protocol_version") != PROTOCOL_VERSION:
         raise ProtocolError("reference trace protocol version drift")
@@ -97,9 +143,9 @@ def validate_trace(trace: dict, registry: dict) -> None:
     allowed = registry["producer_classes"]
     seen_event_ids: set[str] = set()
     seen_objects: dict[str, str] = {}
-    conflicts: set[str] = set()
+    conflicts: dict[str, dict] = {}
 
-    for index, event in enumerate(trace["events"]):
+    for event in trace["events"]:
         event_id = event["event_id"]
         event_type = event["event_type"]
         subject_id = event["subject"]["id"]
@@ -119,14 +165,11 @@ def validate_trace(trace: dict, registry: dict) -> None:
         if unresolved:
             raise ProtocolError(f"event {event_id} has unresolved or forward dependencies: {unresolved}")
 
+        if event_type == "CONFLICT":
+            validate_conflict(event)
+
         if event_type == "LEARN":
-            source = event["payload"]["source_conflict_id"]
-            if source not in conflicts:
-                raise ProtocolError(f"learn event {event_id} does not reference an earlier conflict")
-            if source not in event["dependencies"]:
-                raise ProtocolError(f"learn event {event_id} must depend on its source conflict")
-            if event["payload"]["effect"] != "SEARCH_ONLY":
-                raise ProtocolError(f"learn event {event_id} escaped SEARCH_ONLY scope")
+            validate_learn(event, conflicts)
 
         if event_type == "EQUIVALENCE" and event["payload"]["relation_scope"] == "MATHEMATICALLY_EQUIVALENT":
             if not event["evidence_refs"]:
@@ -145,6 +188,8 @@ def validate_trace(trace: dict, registry: dict) -> None:
                 raise ProtocolError(f"certificate {event_id} targets an unresolved object: {target}")
             if event["payload"]["ledger_effect"] != "NONE_DIRECT":
                 raise ProtocolError(f"certificate {event_id} attempts direct ledger mutation")
+            if not SHA256_RE.fullmatch(event["payload"]["artifact_sha256"]):
+                raise ProtocolError(f"certificate {event_id} lacks a valid artifact SHA-256 identity")
 
         if event_type == "SUPERSEDE":
             target = event["payload"]["target_id"]
@@ -160,7 +205,7 @@ def validate_trace(trace: dict, registry: dict) -> None:
                 raise ProtocolError(f"working object {subject_id} is recreated instead of superseded")
             seen_objects[subject_id] = event["subject"]["kind"]
             if event_type == "CONFLICT":
-                conflicts.add(subject_id)
+                conflicts[subject_id] = event
 
         if event_type == "PROPAGATE" and not event["dependencies"]:
             raise ProtocolError(f"propagation {event_id} lacks dependencies")
@@ -234,6 +279,7 @@ def main() -> int:
         validate_exchange(exchange, trace, registry)
         print("MATH-CORE-01: wire schemas valid")
         print("MATH-CORE-01: capability boundary valid")
+        print("MATH-CORE-01: assurance-graded conflict learning valid")
         print("MATH-CORE-01: reference replay deterministic")
         print("MATH-CORE-01: theory-agent exchange proposal-only and checkpoint-bound")
         return 0
