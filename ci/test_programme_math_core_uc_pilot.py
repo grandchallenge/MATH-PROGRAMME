@@ -19,6 +19,7 @@ class MathCoreUC001PilotTests(unittest.TestCase):
         state = core.materialize(self.trace["events"])
         self.assertEqual(state["resolved_obligations"][pilot.ROUTE_OBLIGATION], "DISCHARGED")
         self.assertIn(pilot.UNIVERSAL_OBLIGATION, state["open_obligations"])
+        self.assertIn(pilot.QUALIFICATION_CERTIFICATE, state["certificates"])
 
     def test_universal_bridge_cannot_be_resolved_by_restricted_mapping(self) -> None:
         trace = copy.deepcopy(self.trace)
@@ -30,16 +31,17 @@ class MathCoreUC001PilotTests(unittest.TestCase):
                 "base_checkpoint": copy.deepcopy(trace["base_checkpoint"]),
                 "subject": {"kind": "OBLIGATION", "id": pilot.UNIVERSAL_OBLIGATION},
                 "scope": {"programme": "MATH-PROGRAMME", "family": "UC-001", "work_package": "MS-UC-WP04", "campaign": "UC-001"},
-                "dependencies": [pilot.UNIVERSAL_OBLIGATION, pilot.RESTRICTED_CLAIM, pilot.LEAN_EQUIVALENCE],
-                "evidence_refs": ["repo:governance/math_core_01/pilots/UC-001/artifacts/mathcert_theorem_snapshot.json"],
-                "payload": {"outcome": "DISCHARGED", "reason": "Negative regression fixture: restricted evidence must not discharge the universal target."},
+                "dependencies": [pilot.UNIVERSAL_OBLIGATION, pilot.RESTRICTED_CLAIM, pilot.QUALIFICATION_CERTIFICATE],
+                "evidence_refs": ["repo:governance/math_core_01/pilots/UC-001/artifacts/mathcert_qualification_snapshot.json"],
+                "payload": {"outcome": "DISCHARGED", "reason": "Negative regression fixture: restricted qualification must not discharge the universal target."},
                 "created_at": "2026-08-29T12:31:00Z",
             }
         )
+        core.validate_trace(trace, self.registry)
         with self.assertRaises(core.ProtocolError):
             pilot.validate_uc_pilot(trace, self.registry)
 
-    def test_pilot_cannot_manufacture_new_certificate(self) -> None:
+    def test_pilot_cannot_manufacture_second_certificate(self) -> None:
         trace = copy.deepcopy(self.trace)
         trace["events"].append(
             {
@@ -56,13 +58,21 @@ class MathCoreUC001PilotTests(unittest.TestCase):
                     "checker": "negative pilot fixture",
                     "certificate_kind": "INDEPENDENT_REPLAY",
                     "artifact_ref": "repo:governance/math_core_01/pilots/UC-001/artifacts/mathcert_theorem_snapshot.json",
-                    "artifact_sha256": "e6ea063fc7f1c5e4be4a0a6aade4e2469db74a7c7498f7f67cde247ccba684e4",
+                    "artifact_sha256": "6a2204501a5461e49853eae4c976549f61e4f3670831bbb926c76b8e19497a07",
                     "result": "PASS",
                     "ledger_effect": "NONE_DIRECT",
                 },
                 "created_at": "2026-08-29T12:31:01Z",
             }
         )
+        core.validate_trace(trace, self.registry)
+        with self.assertRaises(core.ProtocolError):
+            pilot.validate_uc_pilot(trace, self.registry)
+
+    def test_imported_qualification_cannot_be_retargeted_to_frankl(self) -> None:
+        trace = copy.deepcopy(self.trace)
+        certificate = next(e for e in trace["events"] if e["subject"]["id"] == pilot.QUALIFICATION_CERTIFICATE)
+        certificate["payload"]["target_id"] = pilot.UNIVERSAL_CLAIM
         core.validate_trace(trace, self.registry)
         with self.assertRaises(core.ProtocolError):
             pilot.validate_uc_pilot(trace, self.registry)
