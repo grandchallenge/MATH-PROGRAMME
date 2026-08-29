@@ -68,6 +68,20 @@ def file_sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def validate_checkpoint_identity(checkpoint: dict) -> None:
+    if checkpoint["kind"] != "CONTENT_SET":
+        return
+    revision = str(checkpoint["revision"])
+    if not revision.startswith("sha256:"):
+        raise ProtocolError("CONTENT_SET checkpoint is not SHA-256 addressed")
+    artifact = repository_artifact(str(checkpoint["locator"]))
+    if artifact is None:
+        return
+    declared = revision.removeprefix("sha256:").lower()
+    if file_sha256(artifact).lower() != declared:
+        raise ProtocolError(f"CONTENT_SET checkpoint digest mismatch: {checkpoint['locator']}")
+
+
 def materialize(events: list[dict]) -> dict:
     views: dict[str, list[str] | dict[str, str]] = {
         "claims": [],
@@ -163,6 +177,7 @@ def validate_learn(event: dict, conflicts: dict[str, dict]) -> None:
 def validate_trace(trace: dict, registry: dict) -> None:
     if trace.get("protocol_version") != PROTOCOL_VERSION:
         raise ProtocolError("reference trace protocol version drift")
+    validate_checkpoint_identity(trace["base_checkpoint"])
     base = checkpoint_key(trace["base_checkpoint"])
     allowed = registry["producer_classes"]
     seen_event_ids: set[str] = set()
@@ -270,6 +285,7 @@ def validate_exchange(exchange: dict, trace: dict, registry: dict) -> None:
             request_id = message["request_id"]
             if request_id in requests:
                 raise ProtocolError(f"duplicate request id: {request_id}")
+            validate_checkpoint_identity(message["base_checkpoint"])
             if message["obligation_id"] not in trace_objects:
                 raise ProtocolError(f"request {request_id} targets an unknown obligation")
             unknown_refs = [ref for ref in message["context_refs"] + message["assumptions"] if ref not in trace_objects]
@@ -315,7 +331,7 @@ def main() -> int:
         print("MATH-CORE-01: wire schemas valid")
         print("MATH-CORE-01: capability boundary valid")
         print("MATH-CORE-01: assurance-graded conflict learning valid")
-        print("MATH-CORE-01: repository evidence identities valid")
+        print("MATH-CORE-01: checkpoint and repository evidence identities valid")
         print("MATH-CORE-01: reference replay deterministic")
         print("MATH-CORE-01: theory-agent exchange proposal-only and checkpoint-bound")
         return 0
