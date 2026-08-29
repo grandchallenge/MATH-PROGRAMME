@@ -2,6 +2,7 @@
 """Validate the MATH-CORE-01 reference protocol and semantic invariants."""
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import sys
@@ -42,6 +43,29 @@ def validate_schema(instance: dict, schema: dict, label: str) -> None:
 
 def checkpoint_key(value: dict) -> tuple[str, str, str]:
     return (str(value["kind"]), str(value["locator"]), str(value["revision"]))
+
+
+def repository_artifact(ref: str) -> Path | None:
+    if not ref.startswith("repo:"):
+        return None
+    relative = ref.removeprefix("repo:")
+    candidate = (ROOT / relative).resolve()
+    try:
+        candidate.relative_to(ROOT.resolve())
+    except ValueError as exc:
+        raise ProtocolError(f"repository artifact escapes repository root: {ref}") from exc
+    if not candidate.is_file():
+        raise ProtocolError(f"repository artifact does not exist: {ref}")
+    return candidate
+
+
+def validate_repository_refs(refs: list[str]) -> None:
+    for ref in refs:
+        repository_artifact(ref)
+
+
+def file_sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def materialize(events: list[dict]) -> dict:
@@ -161,6 +185,8 @@ def validate_trace(trace: dict, registry: dict) -> None:
         if event_type not in allowed[producer_class]["blackboard_event_types"]:
             raise ProtocolError(f"producer class {producer_class} is not authorized for {event_type}")
 
+        validate_repository_refs(event["evidence_refs"])
+
         unresolved = [dep for dep in event["dependencies"] if dep not in seen_objects]
         if unresolved:
             raise ProtocolError(f"event {event_id} has unresolved or forward dependencies: {unresolved}")
@@ -171,6 +197,9 @@ def validate_trace(trace: dict, registry: dict) -> None:
         if event_type == "LEARN":
             validate_learn(event, conflicts)
 
+        if event_type == "PROPAGATE" and event["payload"].get("derivation_ref"):
+            repository_artifact(event["payload"]["derivation_ref"])
+
         if event_type == "EQUIVALENCE" and event["payload"]["relation_scope"] == "MATHEMATICALLY_EQUIVALENT":
             if not event["evidence_refs"]:
                 raise ProtocolError(f"mathematical equivalence {event_id} lacks evidence")
@@ -179,6 +208,7 @@ def validate_trace(trace: dict, registry: dict) -> None:
             target = event["payload"]["target_id"]
             if target not in seen_objects:
                 raise ProtocolError(f"witness {event_id} targets an unresolved object: {target}")
+            repository_artifact(event["payload"]["artifact_ref"])
 
         if event_type == "CERTIFICATE":
             if producer_class not in {"MATHCERT", "CHECKER"}:
@@ -188,8 +218,12 @@ def validate_trace(trace: dict, registry: dict) -> None:
                 raise ProtocolError(f"certificate {event_id} targets an unresolved object: {target}")
             if event["payload"]["ledger_effect"] != "NONE_DIRECT":
                 raise ProtocolError(f"certificate {event_id} attempts direct ledger mutation")
-            if not SHA256_RE.fullmatch(event["payload"]["artifact_sha256"]):
+            declared_digest = event["payload"]["artifact_sha256"]
+            if not SHA256_RE.fullmatch(declared_digest):
                 raise ProtocolError(f"certificate {event_id} lacks a valid artifact SHA-256 identity")
+            artifact = repository_artifact(event["payload"]["artifact_ref"])
+            if artifact is not None and file_sha256(artifact).lower() != declared_digest.lower():
+                raise ProtocolError(f"certificate {event_id} artifact SHA-256 mismatch")
 
         if event_type == "SUPERSEDE":
             target = event["payload"]["target_id"]
@@ -260,6 +294,7 @@ def validate_exchange(exchange: dict, trace: dict, registry: dict) -> None:
             unresolved = [dep for dep in proposal["dependencies"] if dep not in trace_objects]
             if unresolved:
                 raise ProtocolError(f"response {message_id} proposes from unresolved dependencies: {unresolved}")
+            validate_repository_refs(proposal["evidence_refs"] + proposal["artifact_refs"])
 
 
 def main() -> int:
@@ -280,6 +315,7 @@ def main() -> int:
         print("MATH-CORE-01: wire schemas valid")
         print("MATH-CORE-01: capability boundary valid")
         print("MATH-CORE-01: assurance-graded conflict learning valid")
+        print("MATH-CORE-01: repository evidence identities valid")
         print("MATH-CORE-01: reference replay deterministic")
         print("MATH-CORE-01: theory-agent exchange proposal-only and checkpoint-bound")
         return 0
