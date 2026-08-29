@@ -51,8 +51,8 @@
       "subject": {"kind": "CLAIM", "id": "MCORE-C-0003"},
       "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
       "dependencies": ["MCORE-C-0001"],
-      "evidence_refs": ["artifact:reference/parity-reduction.txt"],
-      "payload": {"conclusion": "n modulo 2 equals 0.", "derivation_kind": "EXACT", "derivation_ref": "artifact:reference/parity-reduction.txt"},
+      "evidence_refs": ["repo:governance/math_core_01/artifacts/parity_reduction.json"],
+      "payload": {"conclusion": "n modulo 2 equals 0.", "derivation_kind": "EXACT", "derivation_ref": "repo:governance/math_core_01/artifacts/parity_reduction.json"},
       "created_at": "2026-08-29T09:00:03Z"
     },
     {
@@ -63,7 +63,7 @@
       "subject": {"kind": "CONFLICT", "id": "MCORE-X-0001"},
       "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
       "dependencies": ["MCORE-C-0002", "MCORE-C-0003", "MCORE-O-0001"],
-      "evidence_refs": ["artifact:reference/parity-conflict.txt"],
+      "evidence_refs": ["repo:governance/math_core_01/artifacts/parity_conflict.json"],
       "payload": {"explanation": "Oddness requires n modulo 2 to equal 1, while the propagated consequence requires it to equal 0.", "conflict_kind": "INCONSISTENCY", "assurance": "REPLAYABLE"},
       "created_at": "2026-08-29T09:00:04Z"
     },
@@ -75,7 +75,7 @@
       "subject": {"kind": "CONSTRAINT", "id": "MCORE-L-0001"},
       "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
       "dependencies": ["MCORE-X-0001"],
-      "evidence_refs": ["artifact:reference/parity-conflict.txt"],
+      "evidence_refs": ["repo:governance/math_core_01/artifacts/parity_conflict.json"],
       "payload": {"source_conflict_id": "MCORE-X-0001", "constraint": "Do not retain a branch that asserts both evenness and oddness for the same integer under the same interpretation.", "effect": "SEARCH_ONLY", "enforcement": "LOCAL_PRUNE"},
       "created_at": "2026-08-29T09:00:05Z"
     },
@@ -87,8 +87,8 @@
       "subject": {"kind": "WITNESS", "id": "MCORE-W-0001"},
       "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
       "dependencies": ["MCORE-C-0002", "MCORE-O-0001"],
-      "evidence_refs": ["artifact:reference/n-equals-3.json"],
-      "payload": {"target_id": "MCORE-C-0002", "witness_role": "EXAMPLE", "artifact_ref": "artifact:reference/n-equals-3.json", "summary": "n=3 witnesses the odd branch alone and does not discharge the contradictory joint branch."},
+      "evidence_refs": ["repo:governance/math_core_01/artifacts/n_equals_3.json"],
+      "payload": {"target_id": "MCORE-C-0002", "witness_role": "EXAMPLE", "artifact_ref": "repo:governance/math_core_01/artifacts/n_equals_3.json", "summary": "n=3 witnesses the odd branch alone and does not discharge the contradictory joint branch."},
       "created_at": "2026-08-29T09:00:06Z"
     },
     {
@@ -99,20 +99,20 @@
       "subject": {"kind": "EQUIVALENCE", "id": "MCORE-Q-0001"},
       "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
       "dependencies": ["MCORE-C-0003"],
-      "evidence_refs": ["artifact:reference/parity-formal-map.json"],
+      "evidence_refs": ["repo:governance/math_core_01/artifacts/parity_formal_map.json"],
       "payload": {"members": ["MCORE-C-0003", "formal:Parity.even_mod_two"], "relation_scope": "REPRESENTATION_EQUIVALENT", "explanation": "The formal theorem identifier is the controlled formal representation of the propagated parity statement."},
       "created_at": "2026-08-29T09:00:07Z"
     },
     {
       "event_id": "MCORE-E-0009",
       "event_type": "CERTIFICATE",
-      "producer": {"id": "lean-reference-checker", "class": "CHECKER", "execution_id": "run-reference-lean-001"},
+      "producer": {"id": "reference-replay-checker", "class": "CHECKER", "execution_id": "run-reference-replay-001"},
       "base_checkpoint": {"kind": "CONTENT_SET", "locator": "reference:MATH-CORE-01", "revision": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"},
       "subject": {"kind": "CERTIFICATE", "id": "MCORE-K-0001"},
       "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
       "dependencies": ["MCORE-C-0003", "MCORE-Q-0001"],
-      "evidence_refs": ["artifact:reference/lean/parity-check.receipt.json"],
-      "payload": {"target_id": "MCORE-C-0003", "checker": "Lean kernel reference replay", "certificate_kind": "LEAN", "artifact_ref": "artifact:reference/lean/parity-check.receipt.json", "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "result": "PASS", "ledger_effect": "NONE_DIRECT"},
+      "evidence_refs": ["repo:governance/math_core_01/artifacts/reference_replay_receipt.json"],
+      "payload": {"target_id": "MCORE-C-0003", "checker": "synthetic deterministic protocol fixture", "certificate_kind": "INDEPENDENT_REPLAY", "artifact_ref": "repo:governance/math_core_01/artifacts/reference_replay_receipt.json", "artifact_sha256": "b48453befb003f8bf6081d90f60aa8514bd67fff8af0a4c4144023421b143bd1", "result": "PASS", "ledger_effect": "NONE_DIRECT"},
       "created_at": "2026-08-29T09:00:08Z"
     },
     {
