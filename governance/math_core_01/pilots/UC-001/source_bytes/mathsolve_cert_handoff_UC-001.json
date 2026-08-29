@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.2.0",
+  "handoff_id": "MC-HANDOFF-UC-001",
+  "campaign_id": "UC-001",
+  "solve_work_package_id": "MS-UC-WP04",
+  "source_commit": "68bbe0ae63c454b0dc63bedd0bc9f5501f8d5c03",
+  "cert_contract": {
+    "repository": "grandchallenge/MATHCERT",
+    "commit_sha": "3854dd1b4f6e162a7e74c3da1993f022ee691e5e",
+    "path": "governance/certification_routes.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "065f0531e4d763b389b207d4922d5a85b4335ee3",
+    "route_id": "MC-ROUTE-UC-001"
+  },
+  "target_claims": [
+    {
+      "claim_id": "UC-WP02-L002",
+      "statement": "A union-closed family containing {a} has a in at least half of its members.",
+      "claim_type": "CHECKED_RESTRICTED_THEOREM",
+      "support_type": "LEAN_FORMALIZATION"
+    },
+    {
+      "claim_id": "UC-WP04-L001",
+      "statement": "A union-closed family containing {a,b} has at least one of a or b in at least half of its members.",
+      "claim_type": "CHECKED_RESTRICTED_THEOREM",
+      "support_type": "LEAN_FORMALIZATION"
+    },
+    {
+      "claim_id": "UC-WP01-C004",
+      "statement": "Exact independent replay finds no nontrivial violation on universes n <= 4.",
+      "claim_type": "FINITE_RANGE_CERTIFICATE",
+      "support_type": "EXACT_RATIONAL_CERTIFICATE"
+    }
+  ],
+  "claim_ledger": {
+    "repository": "grandchallenge/MATHSOLVE",
+    "commit_sha": "2a0124051d67b4db63a75f5cc592a02b7553a2c2",
+    "path": "campaign_ledgers/UC-001/claim_ledger.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "05c5b58f603a923fd6e66b44411ffd7c53559d55",
+    "role": "claim_ledger"
+  },
+  "proof_obligations": {
+    "repository": "grandchallenge/MATHSOLVE",
+    "commit_sha": "7d8ebdddc74b231b2405465259d0b799e6d8f3a0",
+    "path": "campaign_ledgers/UC-001/proof_obligation_dag.json",
+    "digest_algorithm": "git_blob_sha1",
+    "digest": "5cc706c23636dadd83ab859246c412918c605f15",
+    "role": "proof_obligation_dag"
+  },
+  "checker_contract": {
+    "target": "Lean",
+    "inputs": [
+      "Pinned MATHCERT Lean sources for the restricted theorems.",
+      "Exact bounded certificate and independent replay implementation for n <= 4."
+    ],
+    "acceptance": "The exact restricted claims build without placeholders and the bounded certificate replays with its finite range unchanged.",
+    "rejection": "Reject semantic drift, missing hypotheses, failed replay, or promotion to the universal Frankl conjecture."
+  },
+  "requested_modalities": [
+    "LEAN_FORMALIZATION",
+    "EXACT_RATIONAL_CERTIFICATE"
+  ],
+  "claim_boundary": "Restricted Lean theorems and finite replay through n <= 4 do not prove Frankl's conjecture.",
+  "status": "ready",
+  "blockers": [],
+  "reopening_conditions": [
+    "Reopen if a source identity, theorem statement, finite range, checker, or MATHCERT disposition changes."
+  ]
+}

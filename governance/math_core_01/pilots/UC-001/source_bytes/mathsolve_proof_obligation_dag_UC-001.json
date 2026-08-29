@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "dag_id": "MS-UC-WP04-DAG",
+  "campaign_id": "UC-001",
+  "nodes": [
+    {"id": "UC-P00", "statement": "Fix finite nontrivial union-closed family semantics.", "status": "complete"},
+    {"id": "UC-P01", "statement": "Check the singleton-containing restricted theorem.", "status": "complete"},
+    {"id": "UC-P02", "statement": "Check the two-element-member restricted theorem.", "status": "complete"},
+    {"id": "UC-P03", "statement": "Replay exact bounded certificates through n <= 4.", "status": "complete"},
+    {"id": "UC-P04", "statement": "Bridge restricted and finite claims to the universal half-frequency target.", "status": "open"}
+  ],
+  "edges": [
+    ["UC-P00", "UC-P01"],
+    ["UC-P00", "UC-P02"],
+    ["UC-P00", "UC-P03"],
+    ["UC-P01", "UC-P04"],
+    ["UC-P02", "UC-P04"],
+    ["UC-P03", "UC-P04"]
+  ],
+  "terminal_target": {"id": "UC-P04", "status": "OPEN_PROBLEM"}
+}
