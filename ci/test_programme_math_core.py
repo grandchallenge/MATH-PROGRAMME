@@ -42,10 +42,10 @@ class MathCoreProtocolTests(unittest.TestCase):
         with self.assertRaises(core.ProtocolError):
             core.validate_trace(trace, self.registry)
 
-    def test_certificate_requires_digest_identity(self) -> None:
+    def test_certificate_requires_matching_content_digest(self) -> None:
         trace = copy.deepcopy(self.trace)
         certificate = self.event(trace, "CERTIFICATE")
-        certificate["payload"]["artifact_sha256"] = "not-a-digest"
+        certificate["payload"]["artifact_sha256"] = "0" * 64
         with self.assertRaises(core.ProtocolError):
             core.validate_trace(trace, self.registry)
 
@@ -118,6 +118,13 @@ class MathCoreProtocolTests(unittest.TestCase):
         response["producer"]["class"] = "INTELLECT"
         with self.assertRaises(core.ProtocolError):
             core.validate_exchange(exchange, self.trace, self.registry)
+
+    def test_missing_repository_evidence_is_rejected(self) -> None:
+        trace = copy.deepcopy(self.trace)
+        conflict = self.event(trace, "CONFLICT")
+        conflict["evidence_refs"] = ["repo:governance/math_core_01/artifacts/does_not_exist.json"]
+        with self.assertRaises(core.ProtocolError):
+            core.validate_trace(trace, self.registry)
 
     def test_materialization_ignores_provenance_timestamps(self) -> None:
         trace = copy.deepcopy(self.trace)
