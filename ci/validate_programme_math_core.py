@@ -68,6 +68,26 @@ def file_sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def validate_content_set_members(path: Path) -> None:
+    try:
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ProtocolError(f"CONTENT_SET manifest is not valid JSON: {path.relative_to(ROOT)}") from exc
+    members = manifest.get("members") if isinstance(manifest, dict) else None
+    if not isinstance(members, list) or not members:
+        raise ProtocolError(f"CONTENT_SET manifest has no hashed members: {path.relative_to(ROOT)}")
+    for member in members:
+        if not isinstance(member, dict) or set(member) != {"path", "sha256"}:
+            raise ProtocolError(f"CONTENT_SET member is not path+sha256: {path.relative_to(ROOT)}")
+        declared = str(member["sha256"])
+        if not SHA256_RE.fullmatch(declared):
+            raise ProtocolError(f"CONTENT_SET member has invalid SHA-256: {member.get('path')}")
+        artifact = repository_artifact("repo:" + str(member["path"]))
+        assert artifact is not None
+        if file_sha256(artifact).lower() != declared.lower():
+            raise ProtocolError(f"CONTENT_SET member digest mismatch: {member['path']}")
+
+
 def validate_checkpoint_identity(checkpoint: dict) -> None:
     if checkpoint["kind"] != "CONTENT_SET":
         return
@@ -80,12 +100,14 @@ def validate_checkpoint_identity(checkpoint: dict) -> None:
     declared = revision.removeprefix("sha256:").lower()
     if file_sha256(artifact).lower() != declared:
         raise ProtocolError(f"CONTENT_SET checkpoint digest mismatch: {checkpoint['locator']}")
+    validate_content_set_members(artifact)
 
 
 def materialize(events: list[dict]) -> dict:
     views: dict[str, list[str] | dict[str, str]] = {
         "claims": [],
-        "obligations": [],
+        "open_obligations": [],
+        "resolved_obligations": {},
         "conflicts": [],
         "constraints": [],
         "equivalences": [],
@@ -95,7 +117,6 @@ def materialize(events: list[dict]) -> dict:
     }
     kind_to_view = {
         "CLAIM": "claims",
-        "OBLIGATION": "obligations",
         "CONFLICT": "conflicts",
         "CONSTRAINT": "constraints",
         "EQUIVALENCE": "equivalences",
@@ -103,14 +124,30 @@ def materialize(events: list[dict]) -> dict:
         "CERTIFICATE": "certificates",
     }
     for event in events:
-        if event["event_type"] == "SUPERSEDE":
+        event_type = event["event_type"]
+        subject_id = event["subject"]["id"]
+        if event_type == "OPEN_OBLIGATION":
+            open_obligations = views["open_obligations"]
+            assert isinstance(open_obligations, list)
+            open_obligations.append(subject_id)
+            continue
+        if event_type == "RESOLVE_OBLIGATION":
+            open_obligations = views["open_obligations"]
+            resolved = views["resolved_obligations"]
+            assert isinstance(open_obligations, list)
+            assert isinstance(resolved, dict)
+            if subject_id in open_obligations:
+                open_obligations.remove(subject_id)
+            resolved[subject_id] = event["payload"]["outcome"]
+            continue
+        if event_type == "SUPERSEDE":
             superseded = views["superseded"]
             assert isinstance(superseded, dict)
             superseded[event["payload"]["target_id"]] = event["payload"]["replacement_id"]
             continue
         view = views[kind_to_view[event["subject"]["kind"]]]
         assert isinstance(view, list)
-        view.append(event["subject"]["id"])
+        view.append(subject_id)
     return views
 
 
@@ -174,6 +211,21 @@ def validate_learn(event: dict, conflicts: dict[str, dict]) -> None:
             raise ProtocolError(f"learn event {event_id} requests HARD_PRUNE without conflict evidence")
 
 
+def validate_resolution(event: dict, seen_objects: dict[str, str], resolved_obligations: set[str]) -> None:
+    event_id = event["event_id"]
+    obligation_id = event["subject"]["id"]
+    if seen_objects.get(obligation_id) != "OBLIGATION":
+        raise ProtocolError(f"resolution {event_id} targets an unopened obligation: {obligation_id}")
+    if obligation_id in resolved_obligations:
+        raise ProtocolError(f"obligation {obligation_id} is resolved more than once")
+    if obligation_id not in event["dependencies"]:
+        raise ProtocolError(f"resolution {event_id} must depend on its target obligation")
+    outcome = event["payload"]["outcome"]
+    supporting = [dep for dep in event["dependencies"] if dep != obligation_id]
+    if outcome in {"DISCHARGED", "REFUTED"} and not supporting:
+        raise ProtocolError(f"resolution {event_id} outcome {outcome} lacks a supporting reasoning object")
+
+
 def validate_trace(trace: dict, registry: dict) -> None:
     if trace.get("protocol_version") != PROTOCOL_VERSION:
         raise ProtocolError("reference trace protocol version drift")
@@ -183,6 +235,7 @@ def validate_trace(trace: dict, registry: dict) -> None:
     seen_event_ids: set[str] = set()
     seen_objects: dict[str, str] = {}
     conflicts: dict[str, dict] = {}
+    resolved_obligations: set[str] = set()
 
     for event in trace["events"]:
         event_id = event["event_id"]
@@ -205,6 +258,9 @@ def validate_trace(trace: dict, registry: dict) -> None:
         unresolved = [dep for dep in event["dependencies"] if dep not in seen_objects]
         if unresolved:
             raise ProtocolError(f"event {event_id} has unresolved or forward dependencies: {unresolved}")
+
+        if event_type == "RESOLVE_OBLIGATION":
+            validate_resolution(event, seen_objects, resolved_obligations)
 
         if event_type == "CONFLICT":
             validate_conflict(event)
@@ -249,6 +305,8 @@ def validate_trace(trace: dict, registry: dict) -> None:
                 raise ProtocolError(f"supersede event {event_id} references unresolved objects")
             if subject_id != replacement:
                 raise ProtocolError(f"supersede event {event_id} subject must be the replacement object")
+        elif event_type == "RESOLVE_OBLIGATION":
+            resolved_obligations.add(subject_id)
         else:
             if subject_id in seen_objects:
                 raise ProtocolError(f"working object {subject_id} is recreated instead of superseded")
@@ -271,7 +329,11 @@ def validate_exchange(exchange: dict, trace: dict, registry: dict) -> None:
     if exchange.get("protocol_version") != PROTOCOL_VERSION:
         raise ProtocolError("reference exchange protocol version drift")
     allowed = registry["producer_classes"]
-    trace_objects = {e["subject"]["id"] for e in trace["events"] if e["event_type"] != "SUPERSEDE"}
+    trace_objects = {
+        e["subject"]["id"]
+        for e in trace["events"]
+        if e["event_type"] not in {"SUPERSEDE", "RESOLVE_OBLIGATION"}
+    }
     requests: dict[str, dict] = {}
     seen_messages: set[str] = set()
 
@@ -330,6 +392,7 @@ def main() -> int:
         validate_exchange(exchange, trace, registry)
         print("MATH-CORE-01: wire schemas valid")
         print("MATH-CORE-01: capability boundary valid")
+        print("MATH-CORE-01: obligation lifecycle valid")
         print("MATH-CORE-01: assurance-graded conflict learning valid")
         print("MATH-CORE-01: checkpoint and repository evidence identities valid")
         print("MATH-CORE-01: reference replay deterministic")
