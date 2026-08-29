@@ -138,6 +138,18 @@
       "evidence_refs": [],
       "payload": {"target_id": "MCORE-C-0001", "replacement_id": "MCORE-C-0004", "reason": "Normalize the working claim to a quantifier-explicit form while retaining the original event history."},
       "created_at": "2026-08-29T09:00:10Z"
+    },
+    {
+      "event_id": "MCORE-E-0012",
+      "event_type": "RESOLVE_OBLIGATION",
+      "producer": {"id": "intellect-reference", "class": "INTELLECT", "execution_id": "run-reference-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "repo:governance/math_core_01/reference_content_set.json", "revision": "sha256:25049c83c3293776e1b42cef90d83589dc1247252e5f67349416bc39115ee46f"},
+      "subject": {"kind": "OBLIGATION", "id": "MCORE-O-0001"},
+      "scope": {"programme": "MATH-PROGRAMME", "family": "REFERENCE"},
+      "dependencies": ["MCORE-O-0001", "MCORE-X-0001"],
+      "evidence_refs": ["repo:governance/math_core_01/artifacts/parity_conflict.json"],
+      "payload": {"outcome": "DISCHARGED", "reason": "The replayable parity conflict determines that the two assertions cannot hold simultaneously under the declared interpretation."},
+      "created_at": "2026-08-29T09:00:11Z"
     }
   ]
 }
