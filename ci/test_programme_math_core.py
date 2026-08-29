@@ -23,6 +23,27 @@ class MathCoreProtocolTests(unittest.TestCase):
         core.validate_trace(self.trace, self.registry)
         core.validate_exchange(self.exchange, self.trace, self.registry)
 
+    def test_reference_obligation_is_resolved_explicitly(self) -> None:
+        state = core.materialize(self.trace["events"])
+        self.assertEqual(state["open_obligations"], [])
+        self.assertEqual(state["resolved_obligations"], {"MCORE-O-0001": "DISCHARGED"})
+
+    def test_discharge_requires_supporting_reasoning_object(self) -> None:
+        trace = copy.deepcopy(self.trace)
+        resolution = self.event(trace, "RESOLVE_OBLIGATION")
+        resolution["dependencies"] = ["MCORE-O-0001"]
+        with self.assertRaises(core.ProtocolError):
+            core.validate_trace(trace, self.registry)
+
+    def test_obligation_cannot_be_resolved_twice(self) -> None:
+        trace = copy.deepcopy(self.trace)
+        duplicate = copy.deepcopy(self.event(trace, "RESOLVE_OBLIGATION"))
+        duplicate["event_id"] = "MCORE-E-0013"
+        duplicate["created_at"] = "2026-08-29T09:00:12Z"
+        trace["events"].append(duplicate)
+        with self.assertRaises(core.ProtocolError):
+            core.validate_trace(trace, self.registry)
+
     def test_direct_canonical_promotion_is_forbidden(self) -> None:
         registry = copy.deepcopy(self.registry)
         registry["producer_classes"]["MATHCERT"]["canonical_claim_promotion"] = True
