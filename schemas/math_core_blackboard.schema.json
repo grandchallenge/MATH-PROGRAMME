@@ -45,6 +45,10 @@
         {
           "if": {"properties": {"kind": {"const": "GIT_COMMIT"}}, "required": ["kind"]},
           "then": {"properties": {"revision": {"pattern": "^[0-9a-fA-F]{40}$"}}}
+        },
+        {
+          "if": {"properties": {"kind": {"const": "CONTENT_SET"}}, "required": ["kind"]},
+          "then": {"properties": {"revision": {"pattern": "^sha256:[0-9a-fA-F]{64}$"}}}
         }
       ]
     },
@@ -113,21 +117,23 @@
     "conflict_payload": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["explanation", "conflict_kind"],
+      "required": ["explanation", "conflict_kind", "assurance"],
       "properties": {
         "explanation": {"type": "string", "minLength": 1},
         "conflict_kind": {"enum": ["INCONSISTENCY", "COUNTEREXAMPLE", "FAILED_OBLIGATION", "CHECKER_REJECTION", "SOURCE_MISMATCH"]},
+        "assurance": {"enum": ["HEURISTIC", "REPLAYABLE", "CHECKED"]},
         "counterexample_ref": {"type": "string", "minLength": 1}
       }
     },
     "learn_payload": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["source_conflict_id", "constraint", "effect"],
+      "required": ["source_conflict_id", "constraint", "effect", "enforcement"],
       "properties": {
         "source_conflict_id": {"$ref": "#/$defs/id"},
         "constraint": {"type": "string", "minLength": 1},
-        "effect": {"const": "SEARCH_ONLY"}
+        "effect": {"const": "SEARCH_ONLY"},
+        "enforcement": {"enum": ["SOFT_AVOID", "LOCAL_PRUNE", "HARD_PRUNE"]}
       }
     },
     "equivalence_payload": {
@@ -153,18 +159,20 @@
         "target_id": {"$ref": "#/$defs/id"},
         "witness_role": {"enum": ["EXAMPLE", "COUNTEREXAMPLE", "MODEL", "EXACT_COMPUTATION", "SOURCE_OBJECT", "PROOF_ARTIFACT"]},
         "artifact_ref": {"type": "string", "minLength": 1},
+        "artifact_sha256": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"},
         "summary": {"type": "string", "minLength": 1}
       }
     },
     "certificate_payload": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["target_id", "checker", "certificate_kind", "artifact_ref", "result", "ledger_effect"],
+      "required": ["target_id", "checker", "certificate_kind", "artifact_ref", "artifact_sha256", "result", "ledger_effect"],
       "properties": {
         "target_id": {"$ref": "#/$defs/id"},
         "checker": {"type": "string", "minLength": 1},
         "certificate_kind": {"enum": ["LEAN", "COQ", "ISABELLE", "EXACT_COMPUTATION", "ALGEBRAIC", "GROEBNER", "INTERVAL", "SAT_SMT", "INDEPENDENT_REPLAY"]},
         "artifact_ref": {"type": "string", "minLength": 1},
+        "artifact_sha256": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"},
         "result": {"enum": ["PASS", "FAIL", "INCONCLUSIVE"]},
         "ledger_effect": {"const": "NONE_DIRECT"}
       }
