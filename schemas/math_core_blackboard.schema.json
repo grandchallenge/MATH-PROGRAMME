@@ -73,7 +73,13 @@
         "statement": {"type": "string", "minLength": 1},
         "working_class": {"enum": ["SPECULATIVE", "LEDGER_PROPOSAL", "EXTERNAL_CANONICAL_REFERENCE"]},
         "canonical_claim_ref": {"type": "string", "minLength": 1}
-      }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"working_class": {"const": "EXTERNAL_CANONICAL_REFERENCE"}}, "required": ["working_class"]},
+          "then": {"required": ["canonical_claim_ref"]}
+        }
+      ]
     },
     "obligation_payload": {
       "type": "object",
