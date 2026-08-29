@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/math_core_blackboard.schema.json",
+  "title": "MATH-CORE-01 claim blackboard trace",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["protocol_version", "blackboard_id", "base_checkpoint", "events"],
+  "properties": {
+    "protocol_version": {"const": "MATH-CORE-01/0.1.0"},
+    "blackboard_id": {"$ref": "#/$defs/id"},
+    "base_checkpoint": {"$ref": "#/$defs/checkpoint"},
+    "events": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/event"}
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@+-]*$"
+    },
+    "string_list": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "nonempty_string_list": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "locator", "revision"],
+      "properties": {
+        "kind": {"enum": ["GIT_COMMIT", "CONTENT_SET", "AETHER_SNAPSHOT"]},
+        "locator": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"kind": {"const": "GIT_COMMIT"}}, "required": ["kind"]},
+          "then": {"properties": {"revision": {"pattern": "^[0-9a-fA-F]{40}$"}}}
+        }
+      ]
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "class", "execution_id"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "class": {
+          "enum": ["HUMAN_STEWARD", "INTELLECT", "MATHFORGE", "MATHSOLVE", "MATHCERT", "CHECKER", "EXTERNAL_TOOL"]
+        },
+        "execution_id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["programme"],
+      "properties": {
+        "programme": {"type": "string", "minLength": 1},
+        "family": {"type": "string", "minLength": 1},
+        "work_package": {"type": "string", "minLength": 1},
+        "campaign": {"type": "string", "minLength": 1}
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": {"enum": ["CLAIM", "OBLIGATION", "CONFLICT", "CONSTRAINT", "EQUIVALENCE", "WITNESS", "CERTIFICATE"]},
+        "id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "assert_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "working_class"],
+      "properties": {
+        "statement": {"type": "string", "minLength": 1},
+        "working_class": {"enum": ["SPECULATIVE", "LEDGER_PROPOSAL", "EXTERNAL_CANONICAL_REFERENCE"]},
+        "canonical_claim_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "obligation_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["goal", "acceptable_evidence"],
+      "properties": {
+        "goal": {"type": "string", "minLength": 1},
+        "acceptable_evidence": {"$ref": "#/$defs/nonempty_string_list"},
+        "completion_condition": {"type": "string", "minLength": 1}
+      }
+    },
+    "propagate_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conclusion", "derivation_kind"],
+      "properties": {
+        "conclusion": {"type": "string", "minLength": 1},
+        "derivation_kind": {"enum": ["FORMAL", "EXACT", "SYMBOLIC", "HEURISTIC", "SOURCE_DERIVED"]},
+        "derivation_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "conflict_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["explanation", "conflict_kind"],
+      "properties": {
+        "explanation": {"type": "string", "minLength": 1},
+        "conflict_kind": {"enum": ["INCONSISTENCY", "COUNTEREXAMPLE", "FAILED_OBLIGATION", "CHECKER_REJECTION", "SOURCE_MISMATCH"]},
+        "counterexample_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "learn_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_conflict_id", "constraint", "effect"],
+      "properties": {
+        "source_conflict_id": {"$ref": "#/$defs/id"},
+        "constraint": {"type": "string", "minLength": 1},
+        "effect": {"const": "SEARCH_ONLY"}
+      }
+    },
+    "equivalence_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["members", "relation_scope"],
+      "properties": {
+        "members": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "relation_scope": {"enum": ["IDENTIFIER_ALIAS", "SOURCE_EQUIVALENT", "REPRESENTATION_EQUIVALENT", "MATHEMATICALLY_EQUIVALENT"]},
+        "explanation": {"type": "string", "minLength": 1}
+      }
+    },
+    "witness_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_id", "witness_role", "artifact_ref"],
+      "properties": {
+        "target_id": {"$ref": "#/$defs/id"},
+        "witness_role": {"enum": ["EXAMPLE", "COUNTEREXAMPLE", "MODEL", "EXACT_COMPUTATION", "SOURCE_OBJECT", "PROOF_ARTIFACT"]},
+        "artifact_ref": {"type": "string", "minLength": 1},
+        "summary": {"type": "string", "minLength": 1}
+      }
+    },
+    "certificate_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_id", "checker", "certificate_kind", "artifact_ref", "result", "ledger_effect"],
+      "properties": {
+        "target_id": {"$ref": "#/$defs/id"},
+        "checker": {"type": "string", "minLength": 1},
+        "certificate_kind": {"enum": ["LEAN", "COQ", "ISABELLE", "EXACT_COMPUTATION", "ALGEBRAIC", "GROEBNER", "INTERVAL", "SAT_SMT", "INDEPENDENT_REPLAY"]},
+        "artifact_ref": {"type": "string", "minLength": 1},
+        "result": {"enum": ["PASS", "FAIL", "INCONCLUSIVE"]},
+        "ledger_effect": {"const": "NONE_DIRECT"}
+      }
+    },
+    "supersede_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_id", "replacement_id", "reason"],
+      "properties": {
+        "target_id": {"$ref": "#/$defs/id"},
+        "replacement_id": {"$ref": "#/$defs/id"},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "event_type", "producer", "base_checkpoint", "subject", "scope", "dependencies", "evidence_refs", "payload", "created_at"],
+      "properties": {
+        "event_id": {"$ref": "#/$defs/id"},
+        "event_type": {"enum": ["ASSERT", "OPEN_OBLIGATION", "PROPAGATE", "CONFLICT", "LEARN", "EQUIVALENCE", "WITNESS", "CERTIFICATE", "SUPERSEDE"]},
+        "producer": {"$ref": "#/$defs/producer"},
+        "base_checkpoint": {"$ref": "#/$defs/checkpoint"},
+        "subject": {"$ref": "#/$defs/subject"},
+        "scope": {"$ref": "#/$defs/scope"},
+        "dependencies": {"$ref": "#/$defs/string_list"},
+        "evidence_refs": {"$ref": "#/$defs/string_list"},
+        "payload": {"type": "object"},
+        "created_at": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"event_type": {"const": "ASSERT"}}, "required": ["event_type"]},
+          "then": {"properties": {"subject": {"properties": {"kind": {"const": "CLAIM"}}}, "payload": {"$ref": "#/$defs/assert_payload"}}}
+        },
+        {
+          "if": {"properties": {"event_type": {"const": "OPEN_OBLIGATION"}}, "required": ["event_type"]},
+          "then": {"properties": {"subject": {"properties": {"kind": {"const": "OBLIGATION"}}}, "payload": {"$ref": "#/$defs/obligation_payload"}}}
+        },
+        {
+          "if": {"properties": {"event_type": {"const": "PROPAGATE"}}, "required": ["event_type"]},
+          "then": {"properties": {"subject": {"properties": {"kind": {"const": "CLAIM"}}}, "dependencies": {"$ref": "#/$defs/nonempty_string_list"}, "payload": {"$ref": "#/$defs/propagate_payload"}}}
+        },
+        {
+          "if": {"properties": {"event_type": {"const": "CONFLICT"}}, "required": ["event_type"]},
+          "then": {"properties": {"subject": {"properties": {"kind": {"const": "CONFLICT"}}}, "dependencies": {"$ref": "#/$defs/nonempty_string_list"}, "payload": {"$ref": "#/$defs/conflict_payload"}}}
+        },
+        {
+          "if": {"properties": {"event_type": {"const": "LEARN"}}, "required": ["event_type"]},
+          "then": {"properties": {"subject": {"properties": {"kind": {"const": "CONSTRAINT"}}}, "dependencies": {"$ref": "#/$defs/nonempty_string_list"}, "payload": {"$ref": "#/$defs/learn_payload"}}}
+        },
+        {
+          "if": {"properties": {"event_type": {"const": "EQUIVALENCE"}}, "required": ["event_type"]},
+          "then": {"properties": {"subject": {"properties": {"kind": {"const": "EQUIVALENCE"}}}, "payload": {"$ref": "#/$defs/equivalence_payload"}}}
+        },
+        {
+          "if": {"properties": {"event_type": {"const": "WITNESS"}}, "required": ["event_type"]},
+          "then": {"properties": {"subject": {"properties": {"kind": {"const": "WITNESS"}}}, "payload": {"$ref": "#/$defs/witness_payload"}}}
+        },
+        {
+          "if": {"properties": {"event_type": {"const": "CERTIFICATE"}}, "required": ["event_type"]},
+          "then": {"properties": {"subject": {"properties": {"kind": {"const": "CERTIFICATE"}}}, "evidence_refs": {"$ref": "#/$defs/nonempty_string_list"}, "payload": {"$ref": "#/$defs/certificate_payload"}}}
+        },
+        {
+          "if": {"properties": {"event_type": {"const": "SUPERSEDE"}}, "required": ["event_type"]},
+          "then": {"properties": {"payload": {"$ref": "#/$defs/supersede_payload"}}}
+        }
+      ]
+    }
+  }
+}
