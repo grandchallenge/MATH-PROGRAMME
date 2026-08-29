@@ -122,7 +122,7 @@ The three pillars require a shared semantics for live mathematical state. `MATH_
 
 MATH-CORE-01 is event-sourced and proposal-driven. Theory agents do not mutate canonical mathematical authority directly. They propose propagations, conflicts, witnesses, and equivalences against an exact checkpoint. A reducer validates capabilities, dependencies, and evidence boundaries before accepting blackboard events.
 
-Conflict-derived learning is explicitly operational: learned constraints prune search but remain `SEARCH_ONLY` until separately stated, supported, and promoted through the canonical claim-ledger and certification route. Certificates likewise carry evidence but have no direct ledger mutation effect.
+Conflict-derived learning is explicitly operational and assurance-bounded. A heuristic conflict may only bias search; a replayable conflict may support local pruning; hard pruning requires a checked conflict from MATHCERT or a designated checker. Every learned constraint remains `SEARCH_ONLY` until separately stated, supported, and promoted through the canonical claim-ledger and certification route. Certificates are content-addressed evidence carriers and likewise have no direct ledger mutation effect.
 
 The current transport may be GitHub, JSON, CI, and content-addressed artifacts. A future AETHER implementation may carry the same protocol without becoming a semantic dependency.
 
