@@ -22,7 +22,7 @@ heuristic search / discovery
 |       CLAIM BLACKBOARD      |
 | claims and obligations      |
 | dependencies                |
-| conflicts                   |
+| conflicts + assurance       |
 | learned search constraints  |
 | equivalences                |
 | witnesses                   |
@@ -83,17 +83,27 @@ A recorded incompatibility, failed obligation, checker rejection, or counterexam
 
 A conflict MUST identify the finite dependency set sufficient for the reported failure to the precision available. Minimal explanations are preferred but are not required in protocol version 0.1.0.
 
+A conflict also carries an assurance level:
+
+- `HEURISTIC`: a reasoner reports a plausible failure or incompatibility that has not crossed a replay boundary;
+- `REPLAYABLE`: the conflict is backed by an independently repeatable artifact or deterministic calculation, but has not necessarily crossed the Programme's certification boundary;
+- `CHECKED`: the conflict is recorded by MATHCERT or a designated checker and is backed by checker evidence.
+
+The assurance level limits how aggressively the coordinator may learn from the conflict.
+
 ### 3.4 Search constraint
 
-A reusable operational restriction learned from a conflict. Search constraints prune or reprioritize future work.
+A reusable operational restriction learned from a conflict. Search constraints can reprioritize, locally prune, or, under checked conditions, hard-prune future search.
 
-A learned search constraint MUST default to `SEARCH_ONLY`. It MUST NOT be silently reinterpreted as a mathematical theorem. Promotion to a canonical mathematical claim requires the ordinary claim-ledger and certification route.
+Every learned search constraint MUST declare `effect: SEARCH_ONLY`. It MUST NOT be silently reinterpreted as a mathematical theorem. Promotion to a canonical mathematical claim requires the ordinary claim-ledger and certification route.
 
 ### 3.5 Equivalence
 
 A scoped assertion that two or more identifiers denote the same source object, mathematical object, representation, or certified artifact.
 
-Equivalence is provenance-sensitive. `source-equivalent`, `representation-equivalent`, and `mathematically-equivalent` are distinct scopes. A syntactic alias MUST NOT be promoted to mathematical equivalence without appropriate evidence.
+Equivalence is provenance-sensitive. `SOURCE_EQUIVALENT`, `REPRESENTATION_EQUIVALENT`, and `MATHEMATICALLY_EQUIVALENT` are distinct scopes. A syntactic alias MUST NOT be promoted to mathematical equivalence without appropriate evidence.
+
+Only a `MATHEMATICALLY_EQUIVALENT` relation with evidence may be considered for mathematical substitution, and any consumer still applies its own certification and foundational policy. Lower equivalence scopes are navigation/provenance relations, not proof substitution rules.
 
 ### 3.6 Witness
 
@@ -105,7 +115,7 @@ A witness records what exists; it does not imply that the surrounding theorem ha
 
 A reference to an independently replayable or independently checked artifact together with checker identity and result.
 
-Certificates are evidence carriers. MATHCERT and the existing certification ladder determine their governed effect.
+Certificates are evidence carriers. MATHCERT and the existing certification ladder determine their governed effect. A certificate payload MUST carry a SHA-256 artifact identity in addition to its artifact locator.
 
 ## 4. Blackboard event model
 
@@ -125,6 +135,8 @@ Every event carries:
 - `created_at`: provenance timestamp, never a semantic ordering mechanism.
 
 The ordered event list is the semantic input to replay. Timestamps MUST NOT determine replay order.
+
+A `GIT_COMMIT` checkpoint MUST carry an exact 40-hex commit identity. A `CONTENT_SET` checkpoint MUST carry a `sha256:<64-hex>` revision. A future transport may define additional exact identities, but a mutable label is not an exact checkpoint.
 
 ### 4.1 ASSERT
 
@@ -148,13 +160,33 @@ Introduces a consequence derived from prior objects.
 
 Records an incompatibility or failure and its explanation.
 
-A conflict MUST name at least one dependency and MUST state why those dependencies cannot jointly support the attempted branch. A checker failure SHOULD reference the checker artifact in `evidence_refs`.
+A conflict MUST name at least one dependency, MUST state why those dependencies cannot jointly support the attempted branch, and MUST declare `assurance` as `HEURISTIC`, `REPLAYABLE`, or `CHECKED`.
+
+`REPLAYABLE` and `CHECKED` conflicts MUST carry evidence references. A `CHECKED` conflict MUST be recorded by MATHCERT or a designated `CHECKER`; a heuristic theory agent cannot self-upgrade its conflict by changing the assurance label.
 
 ### 4.5 LEARN
 
 Creates a search constraint from an existing conflict.
 
-`LEARN` MUST reference exactly one source conflict in its payload and MUST declare `effect: SEARCH_ONLY` in protocol version 0.1.0. This prevents CDCL-style operational learning from accidentally becoming theorem promotion.
+`LEARN` MUST reference exactly one source conflict, MUST depend on that conflict, and MUST declare `effect: SEARCH_ONLY` in protocol version 0.1.0.
+
+It also declares one enforcement level:
+
+- `SOFT_AVOID`: reprioritize or avoid the branch, but do not treat it as excluded;
+- `LOCAL_PRUNE`: exclude the branch inside the declared search scope/checkpoint; requires source assurance `REPLAYABLE` or `CHECKED`;
+- `HARD_PRUNE`: treat the branch as operationally excluded under the same declared semantics; requires a `CHECKED` source conflict from MATHCERT or a designated checker with evidence.
+
+The enforcement monotonicity rule is:
+
+```text
+HEURISTIC  -> SOFT_AVOID
+REPLAYABLE -> SOFT_AVOID | LOCAL_PRUNE
+CHECKED    -> SOFT_AVOID | LOCAL_PRUNE | HARD_PRUNE
+```
+
+This rule is essential. In SAT/CDCL, a learned clause is logically entailed by a precisely defined formal state. In frontier mathematical research, an agent-reported conflict may be heuristic, incomplete, or based on a mistaken interpretation. MATH-CORE-01 therefore does not allow a weak conflict report to become a hard global exclusion.
+
+Even `HARD_PRUNE` remains an operational search effect. It is not automatic theorem promotion.
 
 ### 4.6 EQUIVALENCE
 
@@ -173,13 +205,13 @@ Only the last category asserts mathematical equivalence; it therefore requires e
 
 Attaches a witness to a claim or obligation.
 
-The witness payload MUST state its role, for example `EXAMPLE`, `COUNTEREXAMPLE`, `MODEL`, `EXACT_COMPUTATION`, `SOURCE_OBJECT`, or `PROOF_ARTIFACT`.
+The witness payload MUST state its role, for example `EXAMPLE`, `COUNTEREXAMPLE`, `MODEL`, `EXACT_COMPUTATION`, `SOURCE_OBJECT`, or `PROOF_ARTIFACT`. A witness SHOULD be content-addressed when it is intended for replay or durable comparison.
 
 ### 4.8 CERTIFICATE
 
 Attaches an independent checker result.
 
-A certificate MUST state the checker, certificate kind, immutable artifact reference, result, and target object. `PASS` records evidence; it does not directly edit claim-ledger status. `FAIL` is evidence of a certification conflict and SHOULD normally be accompanied or followed by a `CONFLICT` event.
+A certificate MUST state the checker, certificate kind, immutable artifact reference, SHA-256 artifact identity, result, and target object. `PASS` records evidence; it does not directly edit claim-ledger status. `FAIL` is evidence of a certification conflict and SHOULD normally be accompanied or followed by a `CONFLICT` event.
 
 ### 4.9 SUPERSEDE
 
@@ -224,7 +256,7 @@ ERROR
 
 The reducer validates a response and decides whether proposed content becomes blackboard events. The producer cannot make an event authoritative merely by returning it.
 
-A response MAY include a heuristic score or confidence estimate for scheduling. Such values are explicitly non-normative and MUST NOT alter claim status, certainty, certification status, or checker outcome.
+A response MAY include a heuristic score or confidence estimate for scheduling. Such values are explicitly non-normative and MUST NOT alter claim status, certainty, conflict assurance, pruning enforcement, certification status, or checker outcome.
 
 ## 6. Producer classes and capability boundary
 
@@ -236,15 +268,17 @@ The initial allocation is deliberately conservative:
 
 | Producer class | Intended capability |
 | --- | --- |
-| `HUMAN_STEWARD` | governance disposition outside automatic inference; may direct work but is not impersonated by agents |
-| `INTELLECT` | scheduling, assertions, obligations, accepted propagations, conflict learning, supersession of working state |
-| `MATHFORGE` | exploratory assertions, witnesses, proposed equivalences |
-| `MATHSOLVE` | obligations, propagations, conflicts, witnesses, search learning, proposed equivalences |
+| `HUMAN_STEWARD` | explicit human-directed working assertions/obligations and supersession; governance authority remains external to automatic inference |
+| `INTELLECT` | scheduling, working assertions/obligations, conflict-derived search learning, supersession |
+| `MATHFORGE` | exploratory assertions, witnesses, working equivalence events and theory proposals |
+| `MATHSOLVE` | obligations, propagations, conflicts, witnesses, search learning, equivalences, supersession |
 | `MATHCERT` | checker-backed conflicts, certificate recording, evidence-bearing equivalence review |
-| `CHECKER` | machine checker outcome and certificate production |
-| `EXTERNAL_TOOL` | proposals and witness artifacts only unless independently wrapped by a checker route |
+| `CHECKER` | machine-checker conflict outcomes and certificate production |
+| `EXTERNAL_TOOL` | witness events and theory proposals unless independently wrapped by a checker route |
 
 No producer class is allowed to promote a canonical claim merely by emitting a protocol message.
+
+Authentication of a concrete producer identity is external to the wire payload. A producer cannot obtain capabilities by writing a more privileged class string into its own message.
 
 ## 7. State invariants
 
@@ -268,31 +302,35 @@ Neither producer identity, natural-language confidence, repeated agreement, nor 
 
 ### I5. Certificate independence
 
-A certificate event MUST identify an independent checker or certification route and an immutable artifact reference. The same heuristic agent that proposed a claim cannot manufacture certification authority by relabeling its own prose as a certificate.
+A certificate event MUST identify an independent checker or certification route and an immutable, content-addressed artifact identity. The same heuristic agent that proposed a claim cannot manufacture certification authority by relabeling its own prose as a certificate.
 
 ### I6. Search/theorem separation
 
 `LEARN` creates operational search constraints only. A learned constraint becomes mathematical content only through a separate claim and ordinary promotion route.
 
-### I7. Scoped equivalence
+### I7. Assurance-bounded pruning
+
+A learned constraint MUST NOT enforce more strongly than its source conflict assurance permits. Heuristic conflicts are advisory; replayable conflicts may support local pruning; hard pruning requires checked evidence from a certifying producer.
+
+### I8. Scoped equivalence
 
 Equivalence is not transitive across incompatible scopes. In particular, identifier aliasing does not imply source equivalence; source equivalence does not imply proof equivalence; representation equivalence does not imply certification equivalence.
 
-### I8. Deterministic replay
+### I9. Deterministic replay
 
 Given the same protocol version, capability registry, external canonical references, and ordered accepted event list, a conforming reducer MUST produce the same materialized blackboard state.
 
-### I9. Fail closed on promotion
+### I10. Fail closed on promotion
 
 Malformed, unauthorized, stale, or insufficiently evidenced events may be rejected or quarantined. They MUST NOT increase governed claim authority.
 
-### I10. Human authority preservation
+### I11. Human authority preservation
 
 The protocol does not create, infer, or impersonate Human Steward approval. Existing explicit Human Steward disposition requirements remain outside automatic agent inference.
 
 ## 8. Conflict-driven learning semantics
 
-The Programme should preserve failure as reusable information.
+The Programme should preserve failure as reusable information without allowing heuristic failure to become unsound global pruning.
 
 Given assumptions or working objects
 
@@ -303,18 +341,30 @@ A = {a1, a2, ..., an}
 an agent may produce a conflict explanation
 
 ```text
-{a2, a7, a9} -> conflict C17
+{a2, a7, a9} -> conflict C17 [assurance = HEURISTIC]
 ```
 
-The coordinator may then create a learned search constraint
+The coordinator may learn:
 
 ```text
-not(all(a2, a7, a9))
+avoid(all(a2, a7, a9)) [SOFT_AVOID]
 ```
 
-for the same declared search scope.
+If independent replay upgrades the conflict to `REPLAYABLE`, a local search scope may use:
 
-This constraint can prevent recurrence of the same failed branch. It is not automatically the theorem `¬(a2 ∧ a7 ∧ a9)` in the public mathematical sense. The distinction is intentional: conflict-driven search can be aggressive while mathematical promotion remains conservative.
+```text
+not(all(a2, a7, a9)) [LOCAL_PRUNE]
+```
+
+Only a `CHECKED` conflict from MATHCERT or a designated checker may justify:
+
+```text
+not(all(a2, a7, a9)) [HARD_PRUNE]
+```
+
+under the same declared semantics.
+
+None of these events automatically creates the public theorem `¬(a2 ∧ a7 ∧ a9)`. The theorem route remains separate. This is where the Z3/CDCL analogy is deliberately weakened to account for open-world, interpretation-sensitive research mathematics.
 
 ## 9. Canonical identity and congruence layer
 
@@ -343,6 +393,7 @@ receive proposal
   -> authenticate producer identity externally
   -> check producer capability
   -> resolve dependencies
+  -> enforce conflict-assurance / pruning monotonicity
   -> enforce event-specific semantic invariants
   -> append accepted event
   -> materialize deterministic views
@@ -359,8 +410,8 @@ Implementations MAY materialize indexes for efficiency. At minimum, a useful bla
 claims
 open obligations
 resolved obligations
-conflicts
-active search constraints
+conflicts + assurance
+active search constraints + enforcement
 scoped equivalence classes
 witnesses
 certificates
@@ -397,7 +448,7 @@ Blackboard traces, capability registries, and theory-agent exchanges validate ag
 
 ### C2. Semantic conformance
 
-The reducer enforces invariants I1-I10, including producer capabilities, dependency closure, conflict-learning scope, certificate independence, and deterministic replay.
+The reducer enforces invariants I1-I11, including producer capabilities, dependency closure, assurance-bounded conflict learning, certificate independence, scoped equivalence, and deterministic replay.
 
 ### C3. Governance conformance
 
@@ -424,9 +475,10 @@ The candidate deployment sequence is deliberately narrow:
 
 1. validate the protocol schemas and controlled capability registry;
 2. replay the reference trace deterministically in CI;
-3. require theory-agent exchanges to be checkpoint-bound and proposal-only;
-4. pilot one existing MATHSOLVE -> MATHCERT handoff through the protocol without changing its certification semantics;
-5. measure whether conflicts and learned search constraints prevent repeated dead branches;
-6. only then generalize the protocol across families or transport it into AETHER.
+3. require theory-agent exchanges to be exact-checkpoint-bound and proposal-only;
+4. enforce assurance-bounded learning so heuristic conflicts cannot hard-prune research branches;
+5. pilot one existing MATHSOLVE -> MATHCERT handoff through the protocol without changing its certification semantics;
+6. measure whether replayable conflicts and learned search constraints prevent repeated dead branches without suppressing viable alternatives;
+7. only then generalize the protocol across families or transport it into AETHER.
 
 The success criterion for MATH-CORE-01 is not more agent activity. It is a smaller gap between what the Programme has actually established, what it is currently trying, why branches failed, and what can be independently replayed.
