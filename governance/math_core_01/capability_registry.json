@@ -15,10 +15,10 @@
       "notes": "Records explicit human-directed working state only. Human Steward authority is external and must never be inferred from protocol traffic."
     },
     "INTELLECT": {
-      "blackboard_event_types": ["ASSERT", "OPEN_OBLIGATION", "LEARN", "SUPERSEDE"],
+      "blackboard_event_types": ["ASSERT", "OPEN_OBLIGATION", "RESOLVE_OBLIGATION", "LEARN", "SUPERSEDE"],
       "theory_proposal_types": [],
       "canonical_claim_promotion": false,
-      "notes": "Coordinates search and may record working obligations and conflict-derived search constraints; it does not manufacture mathematical certification."
+      "notes": "Coordinates search and may record working obligations, explicit working resolutions, and conflict-derived search constraints; it does not manufacture mathematical certification."
     },
     "MATHFORGE": {
       "blackboard_event_types": ["ASSERT", "EQUIVALENCE", "WITNESS"],
@@ -27,10 +27,10 @@
       "notes": "Exploratory foundry. Blackboard events remain working-state contributions and theory-agent responses remain proposals."
     },
     "MATHSOLVE": {
-      "blackboard_event_types": ["ASSERT", "OPEN_OBLIGATION", "PROPAGATE", "CONFLICT", "LEARN", "EQUIVALENCE", "WITNESS", "SUPERSEDE"],
+      "blackboard_event_types": ["ASSERT", "OPEN_OBLIGATION", "RESOLVE_OBLIGATION", "PROPAGATE", "CONFLICT", "LEARN", "EQUIVALENCE", "WITNESS", "SUPERSEDE"],
       "theory_proposal_types": ["PROPAGATION", "CONFLICT", "WITNESS", "EQUIVALENCE"],
       "canonical_claim_promotion": false,
-      "notes": "Campaign reasoning plane. May derive and diagnose working mathematical state but cannot certify canonical claims."
+      "notes": "Campaign reasoning plane. May derive, diagnose, and explicitly resolve working obligations but cannot certify canonical claims."
     },
     "MATHCERT": {
       "blackboard_event_types": ["CONFLICT", "EQUIVALENCE", "WITNESS", "CERTIFICATE"],
