@@ -9,29 +9,12 @@
     "protocol_version": {"const": "MATH-CORE-01/0.1.0"},
     "blackboard_id": {"$ref": "#/$defs/id"},
     "base_checkpoint": {"$ref": "#/$defs/checkpoint"},
-    "events": {
-      "type": "array",
-      "minItems": 1,
-      "items": {"$ref": "#/$defs/event"}
-    }
+    "events": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/event"}}
   },
   "$defs": {
-    "id": {
-      "type": "string",
-      "minLength": 1,
-      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@+-]*$"
-    },
-    "string_list": {
-      "type": "array",
-      "uniqueItems": true,
-      "items": {"type": "string", "minLength": 1}
-    },
-    "nonempty_string_list": {
-      "type": "array",
-      "minItems": 1,
-      "uniqueItems": true,
-      "items": {"type": "string", "minLength": 1}
-    },
+    "id": {"type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@+-]*$"},
+    "string_list": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "nonempty_string_list": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
     "checkpoint": {
       "type": "object",
       "additionalProperties": false,
@@ -58,9 +41,7 @@
       "required": ["id", "class", "execution_id"],
       "properties": {
         "id": {"$ref": "#/$defs/id"},
-        "class": {
-          "enum": ["HUMAN_STEWARD", "INTELLECT", "MATHFORGE", "MATHSOLVE", "MATHCERT", "CHECKER", "EXTERNAL_TOOL"]
-        },
+        "class": {"enum": ["HUMAN_STEWARD", "INTELLECT", "MATHFORGE", "MATHSOLVE", "MATHCERT", "CHECKER", "EXTERNAL_TOOL"]},
         "execution_id": {"$ref": "#/$defs/id"}
       }
     },
@@ -104,6 +85,15 @@
         "completion_condition": {"type": "string", "minLength": 1}
       }
     },
+    "resolution_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome", "reason"],
+      "properties": {
+        "outcome": {"enum": ["DISCHARGED", "REFUTED", "WITHDRAWN"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
     "propagate_payload": {
       "type": "object",
       "additionalProperties": false,
@@ -141,12 +131,7 @@
       "additionalProperties": false,
       "required": ["members", "relation_scope"],
       "properties": {
-        "members": {
-          "type": "array",
-          "minItems": 2,
-          "uniqueItems": true,
-          "items": {"type": "string", "minLength": 1}
-        },
+        "members": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
         "relation_scope": {"enum": ["IDENTIFIER_ALIAS", "SOURCE_EQUIVALENT", "REPRESENTATION_EQUIVALENT", "MATHEMATICALLY_EQUIVALENT"]},
         "explanation": {"type": "string", "minLength": 1}
       }
@@ -193,7 +178,7 @@
       "required": ["event_id", "event_type", "producer", "base_checkpoint", "subject", "scope", "dependencies", "evidence_refs", "payload", "created_at"],
       "properties": {
         "event_id": {"$ref": "#/$defs/id"},
-        "event_type": {"enum": ["ASSERT", "OPEN_OBLIGATION", "PROPAGATE", "CONFLICT", "LEARN", "EQUIVALENCE", "WITNESS", "CERTIFICATE", "SUPERSEDE"]},
+        "event_type": {"enum": ["ASSERT", "OPEN_OBLIGATION", "RESOLVE_OBLIGATION", "PROPAGATE", "CONFLICT", "LEARN", "EQUIVALENCE", "WITNESS", "CERTIFICATE", "SUPERSEDE"]},
         "producer": {"$ref": "#/$defs/producer"},
         "base_checkpoint": {"$ref": "#/$defs/checkpoint"},
         "subject": {"$ref": "#/$defs/subject"},
@@ -211,6 +196,10 @@
         {
           "if": {"properties": {"event_type": {"const": "OPEN_OBLIGATION"}}, "required": ["event_type"]},
           "then": {"properties": {"subject": {"properties": {"kind": {"const": "OBLIGATION"}}}, "payload": {"$ref": "#/$defs/obligation_payload"}}}
+        },
+        {
+          "if": {"properties": {"event_type": {"const": "RESOLVE_OBLIGATION"}}, "required": ["event_type"]},
+          "then": {"properties": {"subject": {"properties": {"kind": {"const": "OBLIGATION"}}}, "dependencies": {"$ref": "#/$defs/nonempty_string_list"}, "payload": {"$ref": "#/$defs/resolution_payload"}}}
         },
         {
           "if": {"properties": {"event_type": {"const": "PROPAGATE"}}, "required": ["event_type"]},
