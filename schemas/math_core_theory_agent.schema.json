@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/math_core_theory_agent.schema.json",
+  "title": "MATH-CORE-01 theory-agent request and response exchange",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["protocol_version", "exchange_id", "messages"],
+  "properties": {
+    "protocol_version": {"const": "MATH-CORE-01/0.1.0"},
+    "exchange_id": {"$ref": "#/$defs/id"},
+    "messages": {
+      "type": "array",
+      "minItems": 2,
+      "items": {"oneOf": [{"$ref": "#/$defs/request"}, {"$ref": "#/$defs/response"}]}
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@+-]*$"
+    },
+    "string_list": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "nonempty_string_list": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "locator", "revision"],
+      "properties": {
+        "kind": {"enum": ["GIT_COMMIT", "CONTENT_SET", "AETHER_SNAPSHOT"]},
+        "locator": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"kind": {"const": "GIT_COMMIT"}}, "required": ["kind"]},
+          "then": {"properties": {"revision": {"pattern": "^[0-9a-fA-F]{40}$"}}}
+        }
+      ]
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "class", "execution_id"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "class": {
+          "enum": ["HUMAN_STEWARD", "INTELLECT", "MATHFORGE", "MATHSOLVE", "MATHCERT", "CHECKER", "EXTERNAL_TOOL"]
+        },
+        "execution_id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "wall_seconds": {"type": "integer", "minimum": 1},
+        "token_budget": {"type": "integer", "minimum": 1},
+        "tool_call_budget": {"type": "integer", "minimum": 1}
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["message_type", "message_id", "request_id", "coordinator", "base_checkpoint", "obligation_id", "requested_capability", "goal", "context_refs", "assumptions", "acceptable_evidence", "created_at"],
+      "properties": {
+        "message_type": {"const": "REQUEST"},
+        "message_id": {"$ref": "#/$defs/id"},
+        "request_id": {"$ref": "#/$defs/id"},
+        "coordinator": {"$ref": "#/$defs/producer"},
+        "base_checkpoint": {"$ref": "#/$defs/checkpoint"},
+        "obligation_id": {"$ref": "#/$defs/id"},
+        "requested_capability": {"enum": ["DERIVE", "CHECK_CONSISTENCY", "FIND_WITNESS", "CHECK_EQUIVALENCE", "CHECK_CERTIFICATE"]},
+        "goal": {"type": "string", "minLength": 1},
+        "context_refs": {"$ref": "#/$defs/string_list"},
+        "assumptions": {"$ref": "#/$defs/string_list"},
+        "acceptable_evidence": {"$ref": "#/$defs/nonempty_string_list"},
+        "budget": {"$ref": "#/$defs/budget"},
+        "created_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "proposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proposal_type", "statement", "dependencies", "evidence_refs", "artifact_refs"],
+      "properties": {
+        "proposal_type": {"enum": ["PROPAGATION", "CONFLICT", "WITNESS", "EQUIVALENCE"]},
+        "statement": {"type": "string", "minLength": 1},
+        "dependencies": {"$ref": "#/$defs/string_list"},
+        "evidence_refs": {"$ref": "#/$defs/string_list"},
+        "artifact_refs": {"$ref": "#/$defs/string_list"},
+        "explanation": {"type": "string", "minLength": 1},
+        "heuristic_score": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"proposal_type": {"const": "CONFLICT"}}, "required": ["proposal_type"]},
+          "then": {"required": ["explanation"], "properties": {"dependencies": {"$ref": "#/$defs/nonempty_string_list"}}}
+        }
+      ]
+    },
+    "response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["message_type", "message_id", "request_id", "producer", "base_checkpoint", "disposition", "proposals", "created_at"],
+      "properties": {
+        "message_type": {"const": "RESPONSE"},
+        "message_id": {"$ref": "#/$defs/id"},
+        "request_id": {"$ref": "#/$defs/id"},
+        "producer": {"$ref": "#/$defs/producer"},
+        "base_checkpoint": {"$ref": "#/$defs/checkpoint"},
+        "disposition": {"enum": ["PROPOSALS", "UNKNOWN", "ERROR"]},
+        "proposals": {"type": "array", "items": {"$ref": "#/$defs/proposal"}},
+        "diagnostic": {"type": "string", "minLength": 1},
+        "created_at": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"disposition": {"const": "PROPOSALS"}}, "required": ["disposition"]},
+          "then": {"properties": {"proposals": {"minItems": 1}}}
+        },
+        {
+          "if": {"properties": {"disposition": {"enum": ["UNKNOWN", "ERROR"]}}, "required": ["disposition"]},
+          "then": {"properties": {"proposals": {"maxItems": 0}}}
+        },
+        {
+          "if": {"properties": {"disposition": {"const": "ERROR"}}, "required": ["disposition"]},
+          "then": {"required": ["diagnostic"]}
+        }
+      ]
+    }
+  }
+}
