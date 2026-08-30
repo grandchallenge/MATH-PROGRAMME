@@ -19,10 +19,14 @@ INTELLECT Constitution, effective amendments, admitted cross-programme
 standards actually adopted by the programme, protected programme policy, and
 MATHCERT's separate certification authority.
 
-The proposed `GCL-GHOS-00` 0.2.0 bounded-execution-continuity successor is a
-coordinated candidate, not current authority until protected admission and
-programme adoption. This guide stands on existing MATH-PROGRAMME authority and
-must remain compatible with superior controls.
+`GCL-GHOS-00` `0.2.0` is current authority for the bounded
+MATH-PROGRAMME pilot. Its exact standards-layer admission is protected at
+`grandchallenge/gcl-standards@87307a0c1fe5ff19b34bb08451e7d6281a7d5dea`,
+and the programme's active adoption is protected at
+`grandchallenge/gcl-standards@1a5e9cb24257be578b091ecd2c99d4119ff73b2c`.
+The adoption is restricted to its recorded pilot scope and does not establish
+organization-wide conformance. This guide stands on existing MATH-PROGRAMME
+authority and must remain compatible with superior controls.
 
 ## Continuity rule
 
