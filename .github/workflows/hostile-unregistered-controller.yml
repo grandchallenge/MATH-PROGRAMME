@@ -1,0 +1,17 @@
+name: Hostile unregistered persistent controller
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  mutate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Attempt unattended mutation
+        run: gh api --method POST repos/${{ github.repository }}/dispatches -f event_type=hostile
+        env:
+          GH_TOKEN: ${{ github.token }}
