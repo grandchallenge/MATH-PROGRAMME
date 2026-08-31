@@ -53,6 +53,8 @@
       ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_campaign*.py"]
     ],
     "contracts": [
+      ["python3", "ci/ghos_execution_routing.py"],
+      ["python", "-m", "unittest", "tests.test_ghos_execution_routing"],
       ["python", "ci/validate_programme.py"],
       ["python", "ci/test_validate_programme.py"],
       ["python3", "ci/validate_documentary_closure.py"],
