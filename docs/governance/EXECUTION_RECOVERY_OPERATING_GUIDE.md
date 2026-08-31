@@ -44,6 +44,35 @@ protected-state mutation, stale evidence, and authority. Do not fail closed
 merely on the mechanics of obtaining the evidence needed to decide those
 matters.
 
+## Mandatory workflow routing
+
+All direct repository workflows are enumerated in
+`.ghos-routing/workflows.json`. The protected routing control derives each
+workflow's autonomous-wake, external-wait, opaque-execution, credential, and
+write-capability features from its bytes, derives the minimum execution
+topology, and requires an admitted compatible controller whenever the workflow
+is not bounded atomic work.
+
+The current admitted persistent controller is repository-bound GitHub Actions.
+Its event queue and exact run/job records survive the conversational executor.
+This controller supplies persistence and observation only; it supplies no
+merge, certification, promotion, publication, or mathematical authority.
+
+The independently required `routing-enforcement` check runs from the protected
+base, treats pull-request content as untrusted data, verifies the externally
+governed gate digest, and rejects:
+
+- an unregistered or stale workflow path;
+- a feature or topology declaration that disagrees with workflow bytes;
+- a missing, invented, or capability-incompatible controller;
+- repository-identity or authority-boundary drift; and
+- candidate modification or removal of the enforcement workflow.
+
+If a proposed persistent workflow cannot use an admitted compatible
+controller, decompose it into independently recoverable bounded workflows
+before admission. A prose assertion that decomposition occurred is not a
+routing record.
+
 ## Exact-identity binding
 
 Before recovery or repair, bind the operation to every exact identity that is
