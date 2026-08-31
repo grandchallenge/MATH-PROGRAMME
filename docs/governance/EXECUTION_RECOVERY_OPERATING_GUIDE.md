@@ -73,6 +73,11 @@ controller, decompose it into independently recoverable bounded workflows
 before admission. A prose assertion that decomposition occurred is not a
 routing record.
 
+Routine care, external gate upgrades, digest rotation, protected
+self-modification, ruleset recovery, controller changes, and hostile proof are
+governed by the
+[`GH-OS routing control runbook`](GHOS_ROUTING_CONTROL_RUNBOOK.md).
+
 ## Exact-identity binding
 
 Before recovery or repair, bind the operation to every exact identity that is

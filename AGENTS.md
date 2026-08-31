@@ -18,6 +18,9 @@ and passing `routing-enforcement`. A bounded conversational agent may perform
 individual authorized transactions, but it may not serve as the sole
 persistent controller for unattended campaign execution.
 
+Control maintenance and emergency recovery follow
+[`docs/governance/GHOS_ROUTING_CONTROL_RUNBOOK.md`](docs/governance/GHOS_ROUTING_CONTROL_RUNBOOK.md).
+
 ## Terminal documentary integrity
 
 Governed work is not complete merely because its operational objective
