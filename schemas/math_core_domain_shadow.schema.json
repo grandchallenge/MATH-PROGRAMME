@@ -5,6 +5,7 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
+    "$schema",
     "schema_version",
     "operation_id",
     "mode",
@@ -18,6 +19,7 @@
     "claim_boundary"
   ],
   "properties": {
+    "$schema": {"const": "../schemas/math_core_domain_shadow.schema.json"},
     "schema_version": {"const": "1.0.0"},
     "operation_id": {"const": "MCORE-DOMAIN-SHADOW-001"},
     "mode": {"const": "READ_ONLY_SHADOW"},
