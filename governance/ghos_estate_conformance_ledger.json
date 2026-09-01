@@ -1,59 +1,117 @@
 {
   "schema_version": "1.0.0",
   "campaign_id": "GHOS-ESTATE-ROLLOUT-001",
-  "state": "CANDIDATE_AWAITING_PROTECTED_ADMISSION",
+  "state": "ACTIVE_PHASE_1_READY",
   "repository_count": 14,
-  "terminal_green_count": 2,
-  "shared_gate_audit_pending_count": 1,
+  "terminal_green_count": 3,
+  "shared_gate_audit_pending_count": 0,
   "applicable_routing_gap_count": 4,
   "baseline_scan_pending_count": 7,
   "blocked_count": 0,
+  "phase_0": {
+    "state": "COMPLETE",
+    "umbrella_checkpoint_comment_id": 5493507033,
+    "terminal_repository_count": 3
+  },
+  "phase_1": {
+    "state": "READY_FOR_REVALIDATION_AND_IMPLEMENTATION",
+    "handoff": "handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/HANDOFF.md",
+    "machine_state": "handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/STATE.json",
+    "glidepath": "handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/GLIDEPATH.md"
+  },
   "repositories": {
     "grandchallenge/.github": {
       "phase": 0,
       "tracker": "grandchallenge/.github#67",
-      "disposition": "PENDING",
-      "current_state": "SHARED_GATE_MULTI_REPOSITORY_IDENTITY_AND_COMMON_DIGEST_PIN_CONFIRMED__FULL_ESTATE_COMPATIBILITY_AUDIT_PENDING",
-      "opening_head": "355e029735961c29bf194985f885b0bda08579be"
+      "disposition": "GHOS_ROUTING_ENFORCED",
+      "tracker_state": "CLOSED_COMPLETED",
+      "current_state": "PHASE0_TERMINAL__SHARED_GATE_SUCCESSOR_ADMITTED_AND_HOSTILE_PROVEN",
+      "opening_head": "355e029735961c29bf194985f885b0bda08579be",
+      "terminal_head": "6a3693fe5a9c6ee6bb420a429f9421801e35457f",
+      "ruleset_id": 17137624,
+      "routing_required": true,
+      "strict": true,
+      "bypass_actors": []
     },
     "grandchallenge/gcl-standards": {
       "phase": 0,
       "disposition": "GHOS_ROUTING_ENFORCED",
-      "current_state": "REFERENCE_IMPLEMENTATION"
+      "current_state": "REFERENCE_IMPLEMENTATION__SUCCESSOR_GATE_PINNED_AND_HOSTILE_PROVEN",
+      "protected_head_at_phase1_handoff": "4467622415530d1abc56784a4d02c1cd1278b836",
+      "ruleset_id": 19962512,
+      "routing_required": true,
+      "strict": true,
+      "bypass_actors": []
     },
     "grandchallenge/MATH-PROGRAMME": {
       "phase": 0,
       "disposition": "GHOS_ROUTING_ENFORCED",
-      "current_state": "REFERENCE_IMPLEMENTATION",
-      "opening_head": "3c7aa5298debd6564e3f93a7a05b4f6821cd3bb2"
+      "current_state": "REFERENCE_IMPLEMENTATION__SUCCESSOR_GATE_PINNED_AND_HOSTILE_PROVEN",
+      "opening_head": "3c7aa5298debd6564e3f93a7a05b4f6821cd3bb2",
+      "phase0_successor_consumer_merge": "d9560df959d4b00eebe69b61a6f8890c50e97e14",
+      "protected_head_at_phase1_handoff": "4b09c2b471f378a4161357c836945296cff15434",
+      "routing_ruleset_id": 21969152,
+      "routing_required": true,
+      "strict": true,
+      "bypass_actors": []
     },
     "grandchallenge/INTELLECT": {
       "phase": 1,
       "tracker": "grandchallenge/INTELLECT#73",
+      "preflight_comment_id": 5491244520,
       "disposition": "PENDING",
-      "current_state": "APPLICABLE_WORKFLOW_SURFACE__ROUTING_REGISTRY_ABSENT",
-      "opening_head": "08a3044e0363fa932012fa642ea15d9153ba876b",
-      "observed_direct_workflow_count": 8
+      "current_state": "APPLICABLE_WORKFLOW_SURFACE__ROUTING_REGISTRY_ABSENT__MANDATORY_ENFORCEMENT_GAP",
+      "protected_head_at_handoff": "08a3044e0363fa932012fa642ea15d9153ba876b",
+      "observed_direct_workflow_count": 8,
+      "ruleset_id": 19964077,
+      "ruleset_strict": true,
+      "ruleset_bypass_actors": [],
+      "routing_required": false,
+      "reference_dependency_path_requirements_policy_txt_present": false
     },
     "grandchallenge/MATHFORGE": {
       "phase": 1,
       "tracker": "grandchallenge/MATHFORGE#117",
+      "preflight_comment_id": 5491246649,
       "disposition": "PENDING",
-      "current_state": "APPLICABLE_WORKFLOW_SURFACE__ROUTING_REGISTRY_ABSENT",
-      "observed_direct_workflow_count": 7
+      "current_state": "APPLICABLE_WORKFLOW_SURFACE__ROUTING_REGISTRY_ABSENT__MANDATORY_ENFORCEMENT_GAP",
+      "protected_head_at_handoff": "ed8a65410336489ea5646808265c44f5387bebb8",
+      "observed_direct_workflow_count": 7,
+      "ruleset_id": 17137626,
+      "ruleset_strict": true,
+      "ruleset_bypass_actors": [],
+      "routing_required": false,
+      "reference_dependency_path_requirements_policy_txt_present": false
     },
     "grandchallenge/MATHSOLVE": {
       "phase": 1,
       "tracker": "grandchallenge/MATHSOLVE#131",
+      "preflight_comment_id": 5491249033,
       "disposition": "PENDING",
-      "current_state": "APPLICABLE_WORKFLOW_SURFACE__ROUTING_REGISTRY_ABSENT",
-      "observed_direct_workflow_count": 11
+      "current_state": "APPLICABLE_WORKFLOW_SURFACE__ROUTING_REGISTRY_ABSENT__MANDATORY_ENFORCEMENT_GAP",
+      "protected_head_at_handoff": "07814c1e28855ff0314737d3666642217da095a1",
+      "observed_direct_workflow_count": 11,
+      "ruleset_id": 17137627,
+      "ruleset_strict": true,
+      "ruleset_bypass_actors": [],
+      "routing_required": false,
+      "reference_dependency_path_requirements_policy_txt_present": false
     },
     "grandchallenge/MATHCERT": {
       "phase": 1,
       "tracker": "grandchallenge/MATHCERT#232",
+      "preflight_comment_id": 5491251973,
       "disposition": "PENDING",
-      "current_state": "APPLICABLE_LARGE_CERTIFICATION_WORKFLOW_SURFACE__ROUTING_REGISTRY_ABSENT"
+      "current_state": "APPLICABLE_LARGE_CERTIFICATION_WORKFLOW_SURFACE__ROUTING_REGISTRY_ABSENT__MANDATORY_ENFORCEMENT_GAP",
+      "protected_head_at_handoff": "bb9b88a03f379fc0ea9776a672a098cb73096f0a",
+      "observed_direct_workflow_count": null,
+      "workflow_count_note": "ENUMERATE_COMPLETE_SURFACE_AFRESH_BEFORE_IMPLEMENTATION",
+      "ruleset_id": 17137628,
+      "ruleset_strict": false,
+      "ruleset_bypass_actors": [],
+      "routing_required": false,
+      "recommended_routing_strategy": "DEDICATED_STRICT_ZERO_BYPASS_ROUTING_RULESET",
+      "reference_dependency_path_requirements_policy_txt_present": false
     },
     "grandchallenge/AETHER": {
       "phase": 2,

@@ -2,8 +2,18 @@
 
 **Identifier:** `GHOS-ESTATE-ROLLOUT-001`  
 **Tracker:** `grandchallenge/MATH-PROGRAMME#724`  
-**State:** Candidate pending protected admission  
-**Canonical manifest:** `governance/ghos_estate_rollout_campaign.json`
+**State:** Active; Phase 0 complete; Phase 1 ready  
+**Canonical manifest:** `governance/ghos_estate_rollout_campaign.json`  
+**Phase-1 handoff:** `handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/HANDOFF.md`
+
+## Protected admission
+
+The campaign definition was admitted through merged PR `#726`:
+
+- exact candidate: `d7888766a01d9e20153376a3c7f3cc4635911610`;
+- protected merge: `06fdcda8c18f395403dc544274fb98fee36ef6ea`.
+
+The earlier `Candidate pending protected admission` projection is superseded.
 
 ## Purpose
 
@@ -30,36 +40,55 @@ No registry entry, README, issue statement, candidate-local validator, or agent 
 
 `workflow bytes -> derived features -> derived topology -> controller compatibility -> candidate-independent routing check -> protected ruleset -> hostile proof -> protected readback`
 
-The shared external gate is hosted in `grandchallenge/.github`; consumers must pin governed gate bytes by immutable identity and digest rather than follow mutable branch state.
+The shared external gate is hosted in `grandchallenge/.github`; consumers pin governed gate bytes by immutable identity and digest rather than following mutable branch state.
+
+Current admitted shared gate:
+
+- commit `ef1cce6029233a68cf46063cea2384772fcae613`;
+- path `scripts/ghos_execution_routing_gate.py`;
+- blob `f9f85937713046eacdc79c532046c676cbb4550c`;
+- SHA-256 `fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17`.
 
 ## Estate phases
 
-### Phase 0: shared control
+### Phase 0: shared control — COMPLETE
 
 Repositories:
 
-- `grandchallenge/.github`
-- `grandchallenge/gcl-standards`
-- `grandchallenge/MATH-PROGRAMME`
+- `grandchallenge/.github`;
+- `grandchallenge/gcl-standards`;
+- `grandchallenge/MATH-PROGRAMME`.
 
-Objective: establish the reusable gate, compatibility contract, consumer pinning model, self-modification procedure, and reference hostile proof. The two reference repositories already have mandatory routing; `.github` requires estate-compatibility confirmation rather than being assumed conformant merely because it supplies the shared gate.
+Phase-0 terminal state is `GHOS_ROUTING_ENFORCED` for all three repositories.
 
-### Phase 1: constitutional and MATH authority chain
+The shared-control tracker `grandchallenge/.github#67` is closed completed. Final protected `.github/main` for Phase 0 is `6a3693fe5a9c6ee6bb420a429f9421801e35457f`; final protected control blob is `21d04288a32321af09b3ee503e9cf4c9f6af5fee`. The classifier deviation `GHOS-CLASSIFIER-PROJECT-MUTATION-001` is closed. Successor-era hostile proofs in `.github`, `gcl-standards`, and `MATH-PROGRAMME` all failed closed and were closed unmerged.
 
-Repositories:
+Umbrella checkpoint: `MATH-PROGRAMME#724` comment `5493507033`.
 
-- `grandchallenge/INTELLECT`
-- `grandchallenge/MATHFORGE`
-- `grandchallenge/MATHSOLVE`
-- `grandchallenge/MATHCERT`
+Do not reopen Phase 0 merely because a later unrelated protected commit advances a reference repository head. Reopen only on a material protected control contradiction or routing regression.
 
-These receive repository-specific hostile proof because routing defects here can affect constitutional policy, provenance, mathematical production, or certification state.
+### Phase 1: constitutional and MATH authority chain — READY
+
+Repositories, in execution order:
+
+1. `grandchallenge/INTELLECT` — tracker `#73`;
+2. `grandchallenge/MATHFORGE` — tracker `#117`;
+3. `grandchallenge/MATHSOLVE` — tracker `#131`;
+4. `grandchallenge/MATHCERT` — tracker `#232`.
+
+All four have applicable direct workflow surfaces, no `.ghos-routing/workflows.json` on the inspected protected baseline, and no mandatory `routing-enforcement` context. Phase 1 requires repository-specific hostile proof because routing defects here can affect constitutional policy, provenance, mathematical production, or certification state.
+
+The complete independent-agent orientation and execution procedure lives in:
+
+- `handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/HANDOFF.md`;
+- `handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/STATE.json`;
+- `handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/GLIDEPATH.md`.
 
 ### Phase 2: persistent agentic coordination
 
 Repository:
 
-- `grandchallenge/AETHER`
+- `grandchallenge/AETHER`.
 
 AETHER is not automatically admitted as its own persistent controller. Its durable wake, state, authorization, replacement, stale-evidence rejection, and recovery semantics must be demonstrated independently. GH-OS correctness must not become dependent on AETHER availability unless a later explicit authority decision says so.
 
@@ -67,10 +96,10 @@ AETHER is not automatically admitted as its own persistent controller. Its durab
 
 Repositories:
 
-- `grandchallenge/MODULUS`
-- `grandchallenge/GLOSS`
-- `grandchallenge/QUANTUM-TECHNOLOGIES`
-- `grandchallenge/TROVE-CURATA`
+- `grandchallenge/MODULUS`;
+- `grandchallenge/GLOSS`;
+- `grandchallenge/QUANTUM-TECHNOLOGIES`;
+- `grandchallenge/TROVE-CURATA`.
 
 Use a common rollout profile where repository topology is genuinely equivalent, but retain repository-specific workflow inventory, ruleset readback, and protected admission evidence.
 
@@ -78,8 +107,8 @@ Use a common rollout profile where repository topology is genuinely equivalent, 
 
 Repositories:
 
-- `grandchallenge/lean-action`
-- `grandchallenge/upload-pages-artifact`
+- `grandchallenge/lean-action`;
+- `grandchallenge/upload-pages-artifact`.
 
 These repositories require local routing conformance plus downstream trust analysis. Consumers must use immutable action identities; local conformance cannot make a floating consumer reference safe.
 
@@ -92,13 +121,19 @@ For each unresolved repository:
 3. Derive execution features from every direct workflow byte-for-byte.
 4. Derive the minimum topology. Do not copy declarations from another repository without re-derivation.
 5. Bind an admitted controller to every non-bounded workflow, or decompose the workflow into independently resumable bounded transactions.
-6. Add repository-local registry, deterministic validator, hostile tests, and protected-base enforcement using the shared pinned gate where compatible.
+6. Add repository-local registry, deterministic validation evidence, and protected-base enforcement using the shared pinned gate where compatible.
 7. Make `routing-enforcement` a required protected context with intended strictness and no unexpected bypass actor.
 8. Run exact-head repository policy/security/conformance checks.
 9. Execute hostile proof. For Phase 1, this is repository-specific. For lower-risk repositories, a shared profile proof may supplement but not replace repository-specific inventory and ruleset evidence.
 10. Obtain required exact-revision review and authorized merge.
 11. Read back protected main, enforcement bytes, registry, ruleset, controller identity, and successful post-merge checks.
 12. Record one terminal repository disposition in the estate ledger.
+
+## Phase-1 implementation note
+
+The Phase-0 MATH-PROGRAMME enforcement workflow installs `protected-base/requirements/policy.txt`. The four Phase-1 repositories do not have that path on their recorded baselines. Therefore the reference enforcement workflow must be adapted rather than copied verbatim. The shared gate imports PyYAML, and protected `.github` routing tests use `PyYAML==6.0.3`; use a repository-appropriate reviewed dependency step while preserving the candidate-independent execution model.
+
+For MATHCERT, existing ruleset `17137628` has non-strict required-status policy. Do not silently change that certification-profile policy. The default Phase-1 strategy is a separate active strict zero-bypass routing ruleset requiring `routing-enforcement`, unless an explicit repository-policy decision authorizes a broader change.
 
 ## Hostile proof
 
