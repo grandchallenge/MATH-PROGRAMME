@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "ledger_id": "MS-UC-WP04-CLAIMS",
+  "campaign_id": "UC-001",
+  "work_package_id": "MS-UC-WP04",
+  "claims": [
+    {
+      "claim_id": "UC-WP02-L002",
+      "statement": "A union-closed family containing {a} has a in at least half of its members.",
+      "support": "Lean-checked restricted theorem",
+      "status": "CERTIFIED_RESTRICTED"
+    },
+    {
+      "claim_id": "UC-WP04-L001",
+      "statement": "A union-closed family containing {a,b} has at least one of a or b in at least half of its members.",
+      "support": "Lean-checked restricted theorem",
+      "status": "CERTIFIED_RESTRICTED"
+    },
+    {
+      "claim_id": "UC-WP01-C004",
+      "statement": "Exact independent replay finds no nontrivial violation on universes n <= 4.",
+      "support": "bounded exact certificate replay",
+      "status": "CERTIFIED_FINITE_RANGE"
+    },
+    {
+      "claim_id": "UC-FRANKL",
+      "statement": "Every finite nontrivial union-closed family is Frankl-abundant.",
+      "support": "open target",
+      "status": "OPEN_PROBLEM"
+    }
+  ],
+  "prohibited_promotion": [
+    "Restricted Lean theorems do not imply Frankl's conjecture.",
+    "Finite replay through n <= 4 does not support a universal claim."
+  ]
+}
