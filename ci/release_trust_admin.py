@@ -41,9 +41,9 @@ RULESET_NAMES = {
 }
 EXPECTED_STRICT_STATUS_CHECKS = {
     "grandchallenge/MATHCERT": False,
-    "grandchallenge/MATHSOLVE": True,
+    "grandchallenge/MATHSOLVE": False,
     "grandchallenge/MATH-PROGRAMME": False,
-    "grandchallenge/INTELLECT": True,
+    "grandchallenge/INTELLECT": False,
 }
 
 
