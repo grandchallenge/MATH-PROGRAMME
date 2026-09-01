@@ -363,7 +363,7 @@ at the quotient point represented by `x`.  This is entirely finite-stage. -/
 theorem weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue
     (X : Profinite.{u}) (x : X) (j : DiscreteQuotient X) :
     (ConcreteCategory.hom
-      ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreePresheafFunctor
+      ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreePresheafFunctor.obj
         (FiniteQuotientObject X j)).map
         ((profiniteToCompHaus).map
           (CMDG.CondensedCM4P3L.KernelFunctional.basisBooleanPointProbe X
