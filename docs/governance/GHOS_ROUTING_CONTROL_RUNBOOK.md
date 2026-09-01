@@ -20,7 +20,8 @@ mathematical-claim, or protected-bypass authority.
 | `tests/test_ghos_execution_routing.py` | Hostile semantic tests |
 | `.github/workflows/ghos-routing-enforcement.yml` | Protected-base candidate-independent enforcement |
 | `grandchallenge/.github/scripts/ghos_execution_routing_gate.py` | External governed gate whose bytes are SHA-256 pinned by the enforcement workflow |
-| Ruleset `17137629` | Protected-main requirement for `routing-enforcement` after activation |
+| Ruleset `21969152` | Dedicated protected-main requirement for `routing-enforcement` |
+| Ruleset `17137629` | Separate Programme profile; not the GH-OS routing ruleset |
 
 ## Routine workflow maintenance
 
@@ -31,7 +32,8 @@ When adding, deleting, renaming, or changing a workflow:
    `.ghos-routing/workflows.json`, or remove the stale entry when deleting a
    workflow.
 3. Use the exact feature list and topology derived from workflow bytes. Do not
-   weaken them manually.
+   weaken them manually and do not over-declare features: the shared gate
+   requires exact equality with its byte-derived result.
 4. For any non-`BOUNDED_ATOMIC` workflow, use the exact admitted controller and
    confirm that all derived features are supported. Otherwise decompose the
    operation into independently recoverable bounded workflows.
@@ -86,28 +88,32 @@ bootstrap; it cannot be completed as an ordinary routing PR.
 
 1. Freeze workflow-control changes and unattended campaign advancement for the
    bootstrap window. Bounded read-only evidence work may continue.
-2. Record the current protected-main SHA, ruleset `17137629` JSON, required
-   contexts, bypass actors, active enforcement-workflow blob, external gate
-   identity, and digest.
+2. Record the current protected-main SHA, dedicated routing ruleset `21969152`
+   JSON, required contexts, bypass actors, active enforcement-workflow blob,
+   external gate identity, and digest. Also read Programme profile `17137629`
+   to prove it is not being modified as an incidental part of the routing
+   bootstrap.
 3. Obtain explicit authorization for the exact successor enforcement blob and
-   for temporarily removing only `routing-enforcement` from the required
-   contexts. Do not add a bypass actor or weaken any other rule.
-4. Remove only the `routing-enforcement` required context. Confirm that the
-   control-upgrade PR remains subject to every other protected check, exact-head
-   review, thread resolution, and merge restriction.
+   for temporarily disabling or removing only the routing requirement supplied
+   by ruleset `21969152`. Do not add a bypass actor or weaken any other rule.
+4. Remove or disable only that routing requirement. Confirm that the
+   control-upgrade PR remains subject to every other protected check,
+   exact-head review, thread resolution, and merge restriction.
 5. Merge only the pre-authorized exact head. A failing self-modification check
    is expected during this bounded bootstrap and supplies no authority.
-6. Immediately restore `routing-enforcement` as a required context, preserving
-   all other rules and actors. Verify the complete ruleset readback.
+6. Immediately restore ruleset `21969152` active with strict required status
+   checks, zero bypass actors, and required context `routing-enforcement`,
+   preserving all unrelated rulesets and actors. Verify the complete readback.
 7. Verify the protected merge commit, parentage, enforcement blob, registry,
    local validator, external gate digest, and post-merge policy results.
 8. Execute the hostile proof before unfreezing unattended campaign advancement.
-9. Record the before/after ruleset identities, authorization, merge, restored
-   protection, hostile PR, and terminal readback in the governing issue.
+9. Record the before/after routing-ruleset identity, unchanged Programme-profile
+   identity, authorization, merge, restored protection, hostile PR, and
+   terminal readback in the governing issue.
 
 If the exact successor, authorization, ruleset snapshot, or restoration route
-is unavailable, stop. Do not leave the context removed while diagnosing an
-unrelated failure.
+is unavailable, stop. Do not leave the routing requirement removed or disabled
+while diagnosing an unrelated failure.
 
 ## Admitted-controller changes
 
@@ -126,12 +132,13 @@ supplies authority.
 
 After activation, periodically and after any ruleset administration:
 
-1. Read ruleset `17137629` from GitHub.
-2. Confirm it is active on the default branch.
-3. Confirm `routing-enforcement` is required with the intended strictness.
-4. Compare all other required contexts and pull-request rules with the last
-   protected snapshot.
-5. Confirm no unexpected bypass actor exists.
+1. Read dedicated routing ruleset `21969152` from GitHub.
+2. Confirm it is active on `refs/heads/main`.
+3. Confirm `routing-enforcement` is required with strict required-status policy.
+4. Confirm its bypass actors remain empty.
+5. Read Programme profile `17137629` separately and compare it with the last
+   protected snapshot so a routing transaction cannot silently weaken legacy
+   Programme protections.
 6. Open a governed repair immediately on drift and pause unattended campaign
    advancement when enforcement is not mandatory.
 
@@ -153,9 +160,8 @@ Use this order when `routing-enforcement` fails:
 4. For an external digest mismatch, verify the shared protected script and
    change history; use the control-upgrade procedure rather than changing the
    pin ad hoc.
-5. For a platform outage, leave the gate required and wait or recover evidence
-   through the execution-recovery guide. Do not infer success from absence of a
-   result.
+5. For a platform outage, leave the gate required and recover evidence through
+   the execution-recovery guide. Do not infer success from absence of a result.
 6. For unexpected ruleset drift or missing enforcement, pause unattended
    campaign advancement until protected enforcement is restored and proven.
 
@@ -171,11 +177,13 @@ existing deep-conformance cadence, retain:
 - current protected-main and enforcement-workflow identities;
 - current workflow count and a successful full-coverage validation;
 - external gate commit/path/digest;
-- ruleset identity, required contexts, and bypass actors;
+- dedicated routing ruleset identity, required context, strictness, and bypass
+  actors;
+- unchanged/unrelated Programme-profile readback where routing administration
+  occurred;
 - focused hostile-test results; and
 - one live hostile PR or equivalent protected fixture demonstrating fail-closed
   behavior outside candidate control.
 
 Routine periods with no workflow, controller, gate, or ruleset change require
 verification, not ceremonial regeneration of unchanged records.
-
