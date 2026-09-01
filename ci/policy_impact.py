@@ -69,6 +69,7 @@ def shard_impacts(paths:list[str])->tuple[list[str],list[str]]:
     for p in paths:
         lower=p.lower();matched=False
         if p.startswith('docs/') or p in {'mkdocs.yml','requirements/docs.txt'}:active.add('docs');matched=True
+        if p.startswith('handoffs/'):active.update({'administrative','campaigns'});matched=True
         if p.startswith('tools/render_visual_pedagogy') and p.endswith('.py'):active.update({'contracts','docs'});matched=True
         if p.startswith('fixtures/algebraic/') or p.startswith('fixtures/formal/') or any(t in lower for t in ('grobner','chaidez','researchmath','log_gcd')):active.add('fixtures');matched=True
         if p.startswith('fixtures/cmdg/') or 'cmdg' in lower:active.add('cmdg');matched=True
