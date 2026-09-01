@@ -66,7 +66,8 @@ noncomputable def weightedFiniteBooleanCoefficientFamily
 noncomputable def weightedFiniteBooleanMeasureSection
     (X : Profinite.{u}) (a : IntegralBasisIndex X → ℤ)
     (j : DiscreteQuotient X) :
-    (CMDG.CondensedCM4P2D.measurePresheafObj (X.diagram.obj j)).obj
+    (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFunctor.obj
+      (FiniteQuotientObject X j)).obj
       (op ((profiniteToCompHaus).obj (basisBooleanCube X))) := by
   let Q := FiniteQuotientObject X j
   let S := op ((profiniteToCompHaus).obj (basisBooleanCube X))
