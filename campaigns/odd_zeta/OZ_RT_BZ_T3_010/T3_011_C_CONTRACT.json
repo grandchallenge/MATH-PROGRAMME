@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 494,
+  "operation": "OZ-RT-BZ-T3-011-C",
+  "stage": "T3_011_C_DIRECT_DISCRETE_PRODUCT_RULE_RESPONSE_GENERATOR_SEMANTICS_AUDIT",
+  "predecessor": {
+    "reviewed_head": "7876a44286f3c958bf03ce120117c2cd689b2379",
+    "merge_commit": "f8dc03a4e546a47b7a2b6d77a96d689f47e4d9a3",
+    "producer_blob": "c0ed8906782bde979c78f0ae2c7655ca2abca0ab",
+    "contract_blob": "3bdba0ef8cba3d975c12053ef1f122cb412ae352",
+    "verifier_blob": "8aa180375b907686326bc802875f457b4422b610",
+    "required_terminal": "BOUNDED_SINGLE_CHANNEL_LINEAR_NONZERO_RESPONSE_LIFT_CLASS_EXHAUSTED"
+  },
+  "audit_class": {
+    "id": "DIRECT_DISCRETE_PRODUCT_RULE_RESPONSE_GENERATOR_AUDIT_001",
+    "implementation_semantics_only": true,
+    "candidate_class_widening": false
+  },
+  "candidate_bank": {
+    "source": "T3-010-C canonical unknown order restricted to complete-global-response-nonzero columns under the frozen T3-011-B source locks",
+    "expected_candidate_counts": {
+      "n1": 67,
+      "n2": 67,
+      "n3": 67,
+      "k1": 110
+    },
+    "expected_independent_trials": 311,
+    "mirror_derived_channel": "l1",
+    "expected_mirror_l1_checks": 110,
+    "order_is_frozen_by_predecessor_source_locks": true
+  },
+  "direct_response": {
+    "direct_authority_id": "EXPLICIT_PRIMITIVE_SHIFT_RAW_FINITE_DIFFERENCE_V1",
+    "raw_definition": "(x_c + Delta_c x_c) S_c(G) - x_c G",
+    "product_rule": "x_c(S_c(G)-G)+(Delta_c x_c)S_c(G)",
+    "equation": "Delta_c(x_c G)=x_c Delta_c(G)+(Delta_c x_c)S_c(G)",
+    "channel_coordinate": {
+      "n1": "n",
+      "n2": "n",
+      "n3": "n",
+      "k1": "k",
+      "l1": "l"
+    },
+    "channel_coordinate_increment": {
+      "n1": 1,
+      "n2": 2,
+      "n3": 3,
+      "k1": 1,
+      "l1": 1
+    },
+    "direct_path_must_not_call_predecessor_response_generators": true,
+    "three_way_concordance_required": true,
+    "exact_field": "Q",
+    "semantic_normal_form": "COMMON_DENOMINATOR_EXPANDED_Q_N_K_L_NUMERATOR_V1",
+    "semantic_normal_form_definition": "After protected shell specialization, group Laurent coefficient signatures by cell/scalar/harmonic monomial; take one exact common denominator across the four compared paths; expand every integer-affine factor into Q[n,k,l]; compare the resulting numerator polynomials coefficient-for-coefficient.",
+    "finite_sampling_allowed_for_equality": false,
+    "representation_digest_is_not_semantic_authority": true,
+    "shell_semantics": "preserve protected pinv shell specialization before coefficient-coordinate assembly"
+  },
+  "required_mutations": {
+    "coordinate_increment": true,
+    "shift_shell_specialization_semantics": true,
+    "support_atom_or_harmonic_monomial": true,
+    "k1_l1_mirror_marker_or_map": true,
+    "accidental_helper_reuse_or_shared_authority": true,
+    "direct_finite_difference_vs_product_rule": true,
+    "predecessor_source_lock_or_candidate_order": true,
+    "claim_firewall_inflation": true
+  },
+  "terminals": {
+    "certified": "T3_011_B_LIFTED_RESPONSE_GENERATOR_SEMANTICS_CERTIFIED",
+    "mismatch": "T3_011_B_LIFTED_RESPONSE_GENERATOR_SEMANTICS_MISMATCH"
+  },
+  "claim_firewall": {
+    "new_candidates_authorized": false,
+    "pairs_or_two_lifts_authorized": false,
+    "arbitrary_linear_combination_search_authorized": false,
+    "generic_degree1_envelope_authorized": false,
+    "support_or_harmonic_enlargement_authorized": false,
+    "rational_prefactors_authorized": false,
+    "adaptive_basis_growth_authorized": false,
+    "raw_jet_reopening_authorized": false,
+    "recurrence_search_authorized": false,
+    "correction_layer_recombination_authorized": false,
+    "theorem_promotion_authorized": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}

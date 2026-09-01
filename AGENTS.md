@@ -5,6 +5,22 @@ cross-programme standards. Agents may propose changes by branch and pull
 request, but may not approve or merge their own work, write to protected
 branches, or promote a mathematical claim.
 
+## Mandatory execution routing
+
+Every direct workflow under `.github/workflows/` must be registered in
+`.ghos-routing/workflows.json`. Workflow bytes determine observed execution
+features and topology; registry prose cannot downgrade them. Any workflow that
+is autonomous, opaque, credential-bearing, waiting, or write-capable must use
+the exact admitted persistent controller with compatible capabilities.
+
+Do not add, remove, or change a workflow without updating the routing registry
+and passing `routing-enforcement`. A bounded conversational agent may perform
+individual authorized transactions, but it may not serve as the sole
+persistent controller for unattended campaign execution.
+
+Control maintenance and emergency recovery follow
+[`docs/governance/GHOS_ROUTING_CONTROL_RUNBOOK.md`](docs/governance/GHOS_ROUTING_CONTROL_RUNBOOK.md).
+
 ## Terminal documentary integrity
 
 Governed work is not complete merely because its operational objective
@@ -80,3 +96,27 @@ For work that may enter `gcl/dev/*` or `gcl/candidate/*`, follow
   before freezing because the candidate cannot be updated or replaced in place.
 - Never infer approval, merge authority, mathematical certification,
   publication authority, or external-claim authority from a Gate operation.
+
+## Recoverable diagnostic and tooling failure
+
+For an already authorized bounded MATH operation, follow
+[`docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md`](docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md)
+when ordinary logs, check surfaces, connectors, compiler diagnostics,
+environments, CI, or replay tooling fail.
+
+- Recoverable operational/tooling failure is not by itself an authority
+  boundary. Continue through the applicable bounded recovery routes.
+- Bind recovery, repair, and replay to the current exact head/run/job/artifact
+  whenever those identities matter. Do not patch from stale diagnostics or
+  reuse superseded evidence as current evidence.
+- Repair only the demonstrated failing theorem/module/validator/scope, then
+  require a fresh exact-head replay before relying on the repair.
+- If connected diagnostic surfaces remain unavailable, use the guide's
+  authenticated local extraction route rather than declaring missing logs a
+  terminal blocker.
+- Stop or escalate only at a named governance, authority, authentication,
+  safety, protected-state, materially changed-state, substantive evidentiary,
+  or actual recovery-exhaustion boundary.
+- Fail closed on claims, certification, promotion, publication, protected-state
+  mutation, and authority; do not fail closed merely on authorized evidence
+  gathering and bounded repair.
