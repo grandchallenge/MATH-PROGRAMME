@@ -1,0 +1,89 @@
+name: Construction Gate issue bridge
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  dispatch:
+    name: Dispatch registered MCORE diagnostic gate operation
+    if: >-
+      github.event.issue.number == 737 &&
+      github.event.comment.user.login == 'fyremael' &&
+      startsWith(github.event.comment.body, '/construction-gate ')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Parse and constrain one-purpose command
+        id: parse
+        env:
+          BODY: ${{ github.event.comment.body }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          read -r command target operation proposed_head expect extra <<<"$BODY"
+          [[ "$command" == "/construction-gate" ]] || { echo "invalid command" >&2; exit 2; }
+          [[ "$target" == "MP-MCORE-DOMAIN-DIAG-001" ]] || { echo "bridge is scoped only to MP-MCORE-DOMAIN-DIAG-001" >&2; exit 2; }
+          [[ "$proposed_head" =~ ^[0-9a-f]{40}$ ]] || { echo "proposed head must be exact SHA" >&2; exit 2; }
+          [[ "$expect" == "allow" || "$expect" == "deny" ]] || { echo "expect must be allow or deny" >&2; exit 2; }
+          [[ -z "${extra:-}" ]] || { echo "unexpected trailing input" >&2; exit 2; }
+
+          case "$operation" in
+            CREATE_DEVELOPMENT)
+              [[ "$proposed_head" == "03ca91bf486d38007799bee0b0552afbfb61245c" ]] || {
+                echo "CREATE_DEVELOPMENT is pinned to the protected predecessor" >&2; exit 2;
+              }
+              ;;
+            UPDATE_DEVELOPMENT|FREEZE_CANDIDATE)
+              [[ "$proposed_head" == "07582227a487a56c21c8604d9e85b99c7b0b6ac2" ]] || {
+                echo "$operation is pinned to the validated diagnostic head" >&2; exit 2;
+              }
+              ;;
+            *) echo "unsupported operation" >&2; exit 2 ;;
+          esac
+
+          printf 'target=%s\noperation=%s\nproposed_head=%s\nexpect=%s\n' \
+            "$target" "$operation" "$proposed_head" "$expect" >> "$GITHUB_OUTPUT"
+
+      - name: Revalidate live issue and pull-request identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: grandchallenge/MATH-PROGRAMME
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$GITHUB_REF" == "refs/heads/main" ]] || { echo "bridge must execute from protected main" >&2; exit 2; }
+          issue_state="$(gh api "repos/$REPO/issues/737" --jq .state)"
+          pr_state="$(gh api "repos/$REPO/pulls/739" --jq .state)"
+          pr_head="$(gh api "repos/$REPO/pulls/739" --jq .head.sha)"
+          [[ "$issue_state" == "open" ]] || { echo "issue #737 is not open" >&2; exit 2; }
+          [[ "$pr_state" == "open" ]] || { echo "PR #739 is not open" >&2; exit 2; }
+          [[ "$pr_head" == "07582227a487a56c21c8604d9e85b99c7b0b6ac2" ]] || { echo "PR #739 head changed" >&2; exit 2; }
+
+      - name: Dispatch unchanged protected Construction Gate runtime
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: grandchallenge/MATH-PROGRAMME
+          TARGET: ${{ steps.parse.outputs.target }}
+          OPERATION: ${{ steps.parse.outputs.operation }}
+          PROPOSED_HEAD: ${{ steps.parse.outputs.proposed_head }}
+          EXPECT: ${{ steps.parse.outputs.expect }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq -n \
+            --arg ref main \
+            --arg target "$TARGET" \
+            --arg operation "$OPERATION" \
+            --arg proposed_head "$PROPOSED_HEAD" \
+            --arg expect "$EXPECT" \
+            '{ref:$ref,inputs:{target:$target,operation:$operation,proposed_head:$proposed_head,expect:$expect}}' \
+            > construction-gate-dispatch.json
+          gh api --method POST \
+            "repos/$REPO/actions/workflows/construction-gate-runtime.yml/dispatches" \
+            --input construction-gate-dispatch.json
+          echo "DISPATCHED_PROTECTED_CONSTRUCTION_GATE"
