@@ -16,7 +16,12 @@ REGISTRY_SCHEMA_REL = "schemas/bounded_operation_checkpoint_registry.schema.json
 CHECKPOINT_SCHEMA_REL = "schemas/bounded_operation_checkpoint.schema.json"
 CHECKPOINT_ROOT_REL = "governance/bounded_operation_checkpoints"
 
-LIVE_STATES = {"AUTHORIZED_READY", "IN_PROGRESS", "AWAITING_EXTERNAL_EVIDENCE"}
+LIVE_STATES = {
+    "AUTHORIZED_READY",
+    "IN_PROGRESS",
+    "AWAITING_EXTERNAL_EVIDENCE",
+    "BLOCKED_GENUINE_BOUNDARY",
+}
 BLOCKED_STATE = "BLOCKED_GENUINE_BOUNDARY"
 TERMINAL_STATE = "TERMINAL"
 RECOGNIZED_BOUNDARIES = {

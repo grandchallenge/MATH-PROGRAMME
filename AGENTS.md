@@ -5,6 +5,22 @@ cross-programme standards. Agents may propose changes by branch and pull
 request, but may not approve or merge their own work, write to protected
 branches, or promote a mathematical claim.
 
+## Mandatory execution routing
+
+Every direct workflow under `.github/workflows/` must be registered in
+`.ghos-routing/workflows.json`. Workflow bytes determine observed execution
+features and topology; registry prose cannot downgrade them. Any workflow that
+is autonomous, opaque, credential-bearing, waiting, or write-capable must use
+the exact admitted persistent controller with compatible capabilities.
+
+Do not add, remove, or change a workflow without updating the routing registry
+and passing `routing-enforcement`. A bounded conversational agent may perform
+individual authorized transactions, but it may not serve as the sole
+persistent controller for unattended campaign execution.
+
+Control maintenance and emergency recovery follow
+[`docs/governance/GHOS_ROUTING_CONTROL_RUNBOOK.md`](docs/governance/GHOS_ROUTING_CONTROL_RUNBOOK.md).
+
 ## Terminal documentary integrity
 
 Governed work is not complete merely because its operational objective

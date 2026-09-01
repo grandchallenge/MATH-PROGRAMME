@@ -62,6 +62,7 @@ class BoundedOperationContinuityTests(unittest.TestCase):
 
     def test_nonblocked_state_cannot_carry_synthetic_boundary(self) -> None:
         def mutate(value):
+            value["state"] = "IN_PROGRESS"
             value["blocking_boundary"] = {
                 "category": "recovery-exhaustion",
                 "reason": "claimed without blocked state",

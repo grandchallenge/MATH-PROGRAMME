@@ -19,10 +19,17 @@ INTELLECT Constitution, effective amendments, admitted cross-programme
 standards actually adopted by the programme, protected programme policy, and
 MATHCERT's separate certification authority.
 
-`GCL-GHOS-00` 0.2.0 is admitted and actively adopted by MATH-PROGRAMME. Its
-bounded-execution-continuity invariant is therefore current programme authority.
-This guide is the programme-local recovery ladder permitted by that standard;
-it does not enlarge authority or change MATHCERT certification routes.
+`GCL-GHOS-00` `0.2.0` is current authority for the bounded
+MATH-PROGRAMME pilot. Its exact standards-layer admission is protected at
+`grandchallenge/gcl-standards@87307a0c1fe5ff19b34bb08451e7d6281a7d5dea`,
+and the programme's active adoption is protected at
+`grandchallenge/gcl-standards@1a5e9cb24257be578b091ecd2c99d4119ff73b2c`.
+The adoption is restricted to its recorded pilot scope and does not establish
+organization-wide conformance. This guide stands on existing MATH-PROGRAMME
+authority and must remain compatible with superior controls. Its
+bounded-execution-continuity invariant is current programme authority within
+that scope; this guide does not enlarge authority or change MATHCERT
+certification routes.
 
 ## Continuity rule
 
@@ -39,6 +46,40 @@ Fail closed on mathematical claims, certification, promotion, publication,
 protected-state mutation, stale evidence, and authority. Do not fail closed
 merely on the mechanics of obtaining the evidence needed to decide those
 matters.
+
+## Mandatory workflow routing
+
+All direct repository workflows are enumerated in
+`.ghos-routing/workflows.json`. The protected routing control derives each
+workflow's autonomous-wake, external-wait, opaque-execution, credential, and
+write-capability features from its bytes, derives the minimum execution
+topology, and requires an admitted compatible controller whenever the workflow
+is not bounded atomic work.
+
+The current admitted persistent controller is repository-bound GitHub Actions.
+Its event queue and exact run/job records survive the conversational executor.
+This controller supplies persistence and observation only; it supplies no
+merge, certification, promotion, publication, or mathematical authority.
+
+The independently required `routing-enforcement` check runs from the protected
+base, treats pull-request content as untrusted data, verifies the externally
+governed gate digest, and rejects:
+
+- an unregistered or stale workflow path;
+- a feature or topology declaration that disagrees with workflow bytes;
+- a missing, invented, or capability-incompatible controller;
+- repository-identity or authority-boundary drift; and
+- candidate modification or removal of the enforcement workflow.
+
+If a proposed persistent workflow cannot use an admitted compatible
+controller, decompose it into independently recoverable bounded workflows
+before admission. A prose assertion that decomposition occurred is not a
+routing record.
+
+Routine care, external gate upgrades, digest rotation, protected
+self-modification, ruleset recovery, controller changes, and hostile proof are
+governed by the
+[`GH-OS routing control runbook`](GHOS_ROUTING_CONTROL_RUNBOOK.md).
 
 ## Exact-identity binding
 
