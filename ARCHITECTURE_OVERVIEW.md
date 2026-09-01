@@ -126,9 +126,75 @@ Conflict-derived learning is explicitly operational and assurance-bounded. A heu
 
 The current transport may be GitHub, JSON, CI, and content-addressed artifacts. A future AETHER implementation may carry the same protocol without becoming a semantic dependency.
 
+## Ratified programme placement
+
+ADR-0021 places the existing three-pillar doctrine inside a larger authority topology. The pillars remain the stable mathematical reasoning institutions; MATH-CORE is horizontal coordination semantics rather than a fourth pillar.
+
+```text
+GOVERNANCE / POLICY
+  Human Steward + MATH-PROGRAMME
+
+CONTROL / COORDINATION
+  INTELLECT
+      |
+      v
+  MATH-CORE claim blackboard / protocol
+
+REASONING INSTITUTIONS
+  MATHFORGE     MATHSOLVE     MATHCERT
+  + governed theory agents and reasoning services
+
+TRUSTED ACCEPTANCE BOUNDARY
+  proof/replay checking
+  + independent assurance
+  + certification ladder
+  + canonical Claim Ledger
+  + policy disposition where required
+
+ORTHOGONAL INFRASTRUCTURE
+  GitHub / JSON / CI / content-addressed artifacts / AETHER
+```
+
+A plane is an authority and responsibility band, not necessarily a literal software hop. The trusted acceptance boundary is likewise plural: proof checking, independent assurance, certification, canonical recording, and policy disposition are separate functions and no one function silently implies the others.
+
+### Stable pillars and services
+
+MATHFORGE retains its broad foundry role: source intake and reconstruction, examples and counterexamples, computational exploration, formal-object production, and speculative candidates. MATHSOLVE remains disciplined campaign reasoning against explicit obligations. MATHCERT remains independent assurance. New capabilities default to governed theory agents or reasoning services rather than new pillars; creation, retirement, or material redefinition of a pillar requires explicit governance.
+
+### Domain programmes are scoped subgraphs
+
+A long-lived mathematical programme such as Condensed Mathematics is represented as a scoped MATH-CORE claim/obligation subgraph with explicit programme or family identity and an explicit migration checkpoint. It is not a fourth pillar and is not literal middleware through which all pillar calls must pass.
+
+Cross-domain dependencies, equivalences, and evidence are represented by typed bridge relations. A bridge must carry explicit evidence and does not transfer certification or canonical status implicitly. Existing historical campaigns are imported as provenance-bound reconstructed/protected state rather than rewritten as fictitious retroactive MATH-CORE event history.
+
+Domain-specific semantic validators may therefore impose stronger obligations than generic MATH-CORE protocol validity. A well-formed event envelope does not by itself discharge a mathematical domain obligation.
+
+### Live coordinator boundary
+
+INTELLECT is the search and routing function: it decides where to reason, while MATH-CORE records exact reasoning state. Before live sustained coordination, authenticated execution identity, exact-checkpoint concurrency, stale-result rejection, deterministic admission receipts, supersession/invalidation, bounded budgets, and no-self-authorization controls are required. Production replayable or checked pruning must bind evidence to exact checkpoints and content-addressed artifacts, content sets, or versioned replay manifests.
+
+Unattended persistent coordination must run under an exact admitted controller compatible with current GH-OS routing. A bounded conversational agent may perform individually authorized transactions but is not represented as the sole unattended persistent controller.
+
+### Condensed migration and blocker classes
+
+The first substantial domain integration is `MCORE-DOMAIN-SHADOW-001`, a read-only shadow materialization of existing protected Condensed/CMDG state. It must preserve distinctions among formal replay, protected dependency state, certification, and canonical claim state; it introduces no retroactive live-event fiction and drives no autonomous allocation or pruning.
+
+Operational blockers are classified at least as:
+
+- `MATHEMATICAL`;
+- `FORMALIZATION`;
+- `GOVERNANCE_EVIDENCE`;
+- `EXECUTION_INFRASTRUCTURE`.
+
+This prevents tooling or runtime failures from being mislabeled as formal or mathematical blockers.
+
+### Transport remains authority-neutral
+
+AETHER is an orthogonal transport and memory fabric. It may eventually carry MATH-CORE and INTELLECT state, but it does not become the reasoning semantics, proof boundary, Claim Ledger, or policy authority. The same rule applies to GitHub, JSON, CI, and other transport mechanisms.
+
 ## Classification and discovery layer
 
-The three-pillar workflow shares a fourth, programme-owned information layer:
+The three-pillar workflow also shares a programme-owned information layer:
 
 ```text
 MSC2020-SKOS          -> versioned subject mappings
