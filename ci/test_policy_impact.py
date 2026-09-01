@@ -26,7 +26,7 @@ def main()->int:
     formal=impact.classify_paths([],event_name='schedule',schedule=control['formal_replay']['sentinel']['cron']);assert formal['event_mode']=='formal_sentinel';assert formal['policy_shards']==['core']
     sentinel=impact.classify_paths([],event_name='schedule',schedule=control['policy_dag']['full_policy_sentinel_cron']);assert sentinel['event_mode']=='full_policy_sentinel';assert sentinel['policy_shards']==list(impact.ALL_SHARDS)
     manual=impact.classify_paths([],event_name='workflow_dispatch');assert manual['event_mode']=='manual_full';assert manual['policy_shards']==list(impact.ALL_SHARDS);assert all(manual['formal_dirty'].values())
-    pushed=impact.classify_paths(['docs/governance/example.md'],event_name='push');assert 'docs' in pushed['policy_shards'];assert 'repository-regression' in pushed['policy_shards']
+    pushed=impact.classify_paths(['docs/governance/example.md'],event_name='push');assert pushed['policy_shards']==['core','docs'];assert not any(pushed['formal_dirty'].values())
 
     original_loader=impact.load_json
     protected_control=original_loader(impact.CONTROL_PATH);protected_formal=original_loader(impact.FORMAL_PATH);protected_registry=original_loader(impact.REGISTRY_PATH)
