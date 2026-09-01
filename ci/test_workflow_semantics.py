@@ -86,8 +86,8 @@ def main() -> int:
         for error in workflow_semantic_errors(workflows=shallow_classifier)
     )
 
-    missing_shard = copy.deepcopy(workflows)
-    missing_shard["ci.yml"]["jobs"]["policy-shard"]["strategy"]["matrix"]["shard"] = [
+    static_matrix = copy.deepcopy(workflows)
+    static_matrix["ci.yml"]["jobs"]["policy-shard"]["strategy"]["matrix"]["shard"] = [
         "core",
         "fixtures",
         "cmdg",
@@ -96,10 +96,11 @@ def main() -> int:
         "campaigns",
         "contracts",
         "docs",
+        "repository-regression",
     ]
     assert any(
-        "every governed shard" in error
-        for error in workflow_semantic_errors(workflows=missing_shard)
+        "classifier-produced dynamic shard matrix" in error
+        for error in workflow_semantic_errors(workflows=static_matrix)
     )
 
     missing_shard_runner = copy.deepcopy(workflows)
@@ -110,16 +111,6 @@ def main() -> int:
     assert any(
         "shard registry runner" in error
         for error in workflow_semantic_errors(workflows=missing_shard_runner)
-    )
-
-    missing_noop = copy.deepcopy(workflows)
-    for step in missing_noop["ci.yml"]["jobs"]["policy-shard"]["steps"]:
-        if "VERIFIED_POLICY_SHARD_NO_OP" in str(step.get("run", "")):
-            step["run"] = "echo skipped"
-            break
-    assert any(
-        "irrelevant shard no-op" in error
-        for error in workflow_semantic_errors(workflows=missing_noop)
     )
 
     missing_aggregate = copy.deepcopy(workflows)
@@ -211,7 +202,7 @@ def main() -> int:
         errors = workflow_semantic_errors(root=root, workflows=workflows)
         assert any("owned only by repository-regression" in error for error in errors), errors
 
-    print("workflow semantic nine-shard rejection tests passed")
+    print("workflow semantic dynamic-shard rejection tests passed")
     return 0
 
 
