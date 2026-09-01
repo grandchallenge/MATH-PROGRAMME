@@ -413,7 +413,6 @@ theorem weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue
   simp only [NatTrans.comp_app] at hcoordU
   have hcoordPoint := ConcreteCategory.congr_hom hcoordU
     (1 : LocallyConstant P CMDG.CondensedCM4P3G.R.{u})
-  simp only [ConcreteCategory.comp_apply] at hcoordPoint
   have htransportMapped := congrArg
     (fun t =>
       (ConcreteCategory.hom
