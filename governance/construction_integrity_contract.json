@@ -64,6 +64,30 @@
         "^governance/construction_integrity_contract\\.json$"
       ],
       "deny_update_when_exact_head_evidence_exists": true
+    },
+    {
+      "target_id": "MP-MCORE-DOMAIN-SHADOW-001",
+      "authorized_predecessor": "a501eef7517ec9a3170ee8190a1d856c050da92c",
+      "lifecycle_state": "DEVELOPMENT",
+      "development_ref": "refs/heads/gcl/dev/MP-MCORE-DOMAIN-SHADOW-001",
+      "candidate_ref": "refs/heads/gcl/candidate/MP-MCORE-DOMAIN-SHADOW-001",
+      "allowed_paths": [
+        "schemas/math_core_domain_shadow.schema.json",
+        "governance/math_core_domain_shadow_condensed_001.json",
+        "governance/policy_shard_registry.json",
+        "ci/validate_math_core_domain_shadow.py",
+        "ci/test_math_core_domain_shadow.py",
+        "docs/MATH_CORE_DOMAIN_SHADOW_001.md",
+        "mkdocs.yml"
+      ],
+      "allowed_path_prefixes": [],
+      "forbidden_path_patterns": [
+        "^\\.github/",
+        "^docs/decisions/",
+        "^docs/AGENT_COUNCIL_",
+        "^governance/construction_integrity_contract\\.json$"
+      ],
+      "deny_update_when_exact_head_evidence_exists": true
     }
   ],
   "estate_classification": {
