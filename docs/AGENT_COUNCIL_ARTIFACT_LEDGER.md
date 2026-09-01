@@ -33,7 +33,7 @@
 | PC-WP00 | work package | MATHSOLVE | `campaigns/poincare_reconstruction/WP00_SOURCE_EQUIVALENCE/00_README.md` | promoted | `ADR-0006` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP00.agent_review.yaml` | 2026-07-24 | reviewed |
 | PC-WP01 | work package | MATHFORGE | `campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/00_README.md` | referee_promoted | `ADR-0006`; `PC-WP01-WP02-INTEGRATION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP01.agent_review.yaml` | 2026-07-24 | reviewed |
 | PC-WP02 | work package | MATHSOLVE | `campaigns/poincare_reconstruction/WP02_HAMILTON_PERELMAN_LEDGER/00_README.md` | referee_promoted_interface_level | `ADR-0006`; `PC-WP01-WP02-INTEGRATION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP02.agent_review.yaml` | 2026-07-24 | reviewed |
-| PC-WP01-WP02-INTEGRATION | integration decision | MATH-PROGRAMME | `campaigns/poincare_reconstruction/PC_WP01_WP02_INTEGRATION_DECISION.md` | referee_promoted_wp03_authorized | `ADR-0006`; `PC-WP01-WP02-INTEGRATION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP01_WP02.integration_review.yaml` | 2026-07-24 | reviewed |
+| PC-WP01-WP02-INTEGRATION | integration decision | MATH-PROGRAMME | `campaigns/poincare_reconstruction/PC_WP01_WP02_INTEGRATION_DECISION.md` | referee_promoted_wp03_authorized | `ADR-0006`; `PC-WP01-WP02-INTEGRATION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC_WP01_WP02.integration_review.yaml` | 2026-07-24 | reviewed |
 | PC-WP03 | work package | MATHCERT | `campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/00_README.md` | referee_promoted_conditional | `ADR-0006`; `PC-WP03-REFEREE-DECISION`; `ADR-0011` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP03.agent_review.yaml`; `ci/campaign_replay_registry.json` | 2026-07-26 | reviewed |
 | PC-WP03-REFEREE-DECISION | promotion decision | MATH-PROGRAMME | `campaigns/poincare_reconstruction/PC_WP03_REFEREE_DECISION.md` | wp04_authorized | `ADR-0006`; `PC-WP03-REFEREE-DECISION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP03.agent_review.yaml` | 2026-07-24 | reviewed |
 | PC-WP04 | formal certificate work package | MATHCERT | `campaigns/poincare_reconstruction/WP04_BOUNDED_CERTIFICATION/00_README.md` | kernel_checked_bounded_evaluator; global Lean replay required | `ADR-0006`; `PC-WP04-REFEREE-DECISION`; `ADR-0011` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/poincare/PC-WP04.agent_review.yaml`; `ci/campaign_replay_registry.json`; `.github/workflows/ci.yml` | 2026-07-26 | reviewed |
@@ -54,3 +54,13 @@
 2. The authoritative reference points to the integrated artifact, not a transient draft.
 3. Superseded references remain recoverable through version control and decision records.
 4. A ledger entry may not be marked reviewed while review provenance is incomplete.
+5. A blocking cross-document conflict changes the Amanuensis state to `blocked`.
+6. Mathematical promotion is never inferred from ledger status alone.
+7. Publication status changes visibility and editorial readiness; it does not change claim status.
+8. Schema-bound lifecycle tokens and campaign-specific dispositions remain distinct.
+9. Public documentation, workflow, and campaign authority follow ADR-0008 through ADR-0017 and their explicit records.
+10. Repository merge, tests, and CI success do not override an explicit blocking review.
+11. Campaign, CI, test, and experiment Python surfaces require governed discovery and execution routes.
+12. Pages may deploy only the exact policy-produced site artifact for a validated commit that remains current `main`.
+13. Exact top-level pins do not assert a complete transitive hash lock.
+14. Bounded interface fixtures remain software evidence and cannot promote continuum or metamathematical claims.
