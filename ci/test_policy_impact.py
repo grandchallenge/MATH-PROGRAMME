@@ -6,6 +6,7 @@ import policy_impact as impact
 def main()->int:
     impact.validate_control()
     docs=impact.classify_paths(['docs/governance/example.md']);assert docs['policy_shards']==['core','docs'];assert not any(docs['formal_dirty'].values())
+    handoff=impact.classify_paths(['handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/HANDOFF.md']);assert handoff['policy_shards']==['core','administrative','campaigns','docs'];assert not handoff['unknown_paths'];assert not any(handoff['formal_dirty'].values())
     cmdg=impact.classify_paths(['fixtures/cmdg/extractor_001/log_gcd.json']);assert 'cmdg' in cmdg['policy_shards'];assert 'repository-regression' not in cmdg['policy_shards'];assert cmdg['formal_dirty']['log-gcd'] is True;assert cmdg['formal_dirty']['pc-wp04'] is False
     oz=impact.classify_paths(['tests/test_oz_rt_bz_t3.py']);assert oz['policy_shards']==['core','oz'];assert not oz['unknown_paths']
     fixture_test=impact.classify_paths(['tests/test_ns_wp06_halting_gate_fixture.py']);assert fixture_test['policy_shards']==['core','fixtures'];assert not fixture_test['unknown_paths']
