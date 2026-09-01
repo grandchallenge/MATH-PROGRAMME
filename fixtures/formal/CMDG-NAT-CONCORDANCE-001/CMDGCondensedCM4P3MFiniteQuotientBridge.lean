@@ -414,8 +414,13 @@ theorem weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue
   have hcoordPoint := ConcreteCategory.congr_hom hcoordU
     (1 : LocallyConstant P CMDG.CondensedCM4P3G.R.{u})
   simp only [ConcreteCategory.comp_apply] at hcoordPoint
-  rw [htransport]
-  exact hnat.symm.trans (hdeltaFree.trans hcoordPoint)
+  have htransportMapped := congrArg
+    (fun t =>
+      (ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreePresheafFunctor.obj
+          Q).map ftrue)) t)
+    htransport
+  exact htransportMapped.trans (hnat.symm.trans (hdeltaFree.trans hcoordPoint))
 
 /-- The measure-side analogue of profinite solidification: lift the identity finite-free
 transformation through the protected measure right-Kan extension.  This is uniquely determined by
