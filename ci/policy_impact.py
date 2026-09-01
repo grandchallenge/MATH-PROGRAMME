@@ -101,7 +101,6 @@ def classify_paths(paths:Iterable[str],*,event_name:str='pull_request',schedule:
         return {'event_mode':'unknown_schedule','changed_paths':[],'unknown_paths':[f'schedule:{schedule}'],'policy_shards':list(ALL_SHARDS),'formal_dirty':{lane:True for lane in ALL_LANES}}
     if event_name=='workflow_dispatch':return {'event_mode':'manual_full','changed_paths':changed,'unknown_paths':[],'policy_shards':list(ALL_SHARDS),'formal_dirty':{lane:True for lane in ALL_LANES}}
     shards,unknown=shard_impacts(changed);dirty=formal_lane_impacts(changed,formal,bool(unknown))
-    if event_name=='push':shards=[s for s in ALL_SHARDS if s in set(shards)|{'docs','repository-regression'}]
     return {'event_mode':'transition','changed_paths':changed,'unknown_paths':unknown,'policy_shards':shards,'formal_dirty':dirty}
 def git_changed_paths(base:str,head:str)->list[str]:
     if not base or not head or base==ZERO_SHA:raise ImpactError('transition diff base/head is unavailable')
