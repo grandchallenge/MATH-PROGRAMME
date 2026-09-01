@@ -1,0 +1,396 @@
+{
+  "$schema": "../schemas/math_core_domain_shadow.schema.json",
+  "schema_version": "1.0.0",
+  "operation_id": "MCORE-DOMAIN-SHADOW-001",
+  "mode": "READ_ONLY_SHADOW",
+  "domain_programme": "Condensed Mathematics",
+  "source_checkpoint": {
+    "kind": "GIT_COMMIT",
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "revision": "a501eef7517ec9a3170ee8190a1d856c050da92c"
+  },
+  "invariants": {
+    "retroactive_live_event_history": false,
+    "autonomous_allocation": false,
+    "autonomous_pruning": false,
+    "canonical_promotion": false,
+    "certificate_issuance": false,
+    "source_mutation": false
+  },
+  "source_records": [
+    {
+      "operation": "CMDG-CONDENSED-CM1-001",
+      "path": "governance/cmdg_condensed_cm1_001.json",
+      "git_blob_sha1": "d85305fe900eeb10f3857f82635841a5f175b222",
+      "historical_record_role": "DEPENDENCY_RECORD",
+      "current_authority_status": "PROTECTED_CLOSED",
+      "status_derived_from": "governance/cmdg_condensed_cm2_001.json::protected_cm1"
+    },
+    {
+      "operation": "CMDG-CONDENSED-CM2-001",
+      "path": "governance/cmdg_condensed_cm2_001.json",
+      "git_blob_sha1": "11ceaa9577add91a1fa231cab9f403b5d4df2db0",
+      "historical_record_role": "DEPENDENCY_RECORD",
+      "current_authority_status": "PROTECTED_CLOSED",
+      "status_derived_from": "governance/cmdg_condensed_cm3_001.json::protected_cm2"
+    },
+    {
+      "operation": "CMDG-CONDENSED-CM3-001",
+      "path": "governance/cmdg_condensed_cm3_001.json",
+      "git_blob_sha1": "301bc288ef54288282fa7287696edba621e98327",
+      "historical_record_role": "DEPENDENCY_RECORD",
+      "current_authority_status": "PROTECTED_CLOSED",
+      "status_derived_from": "governance/cmdg_solid_c05_001.json::protected_cm3"
+    },
+    {
+      "operation": "CMDG-SOLID-C05-001",
+      "path": "governance/cmdg_solid_c05_001.json",
+      "git_blob_sha1": "76f1e0c34da6e5b3da39045c32043f2c7b766b0d",
+      "historical_record_role": "DEFINITION_BOUNDARY_RECORD",
+      "current_authority_status": "PROTECTED_CLOSED",
+      "status_derived_from": "governance/cmdg_condensed_cm4_001.json::protected_predecessor"
+    },
+    {
+      "operation": "CMDG-CONDENSED-CM4-001",
+      "path": "governance/cmdg_condensed_cm4_001.json",
+      "git_blob_sha1": "bde38326e72a7dba3fb65bcd8f7e096c967bd7cd",
+      "historical_record_role": "FRONTIER_RECONCILIATION_RECORD",
+      "current_authority_status": "PROTECTED_OPEN_FRONTIER",
+      "status_derived_from": "governance/cmdg_condensed_cm4_p3_001.json::protected_predecessor"
+    },
+    {
+      "operation": "CMDG-CONDENSED-CM4-P3-001",
+      "path": "governance/cmdg_condensed_cm4_p3_001.json",
+      "git_blob_sha1": "949ea8cc3abd06dfe8da87f6baca0a200a35a300",
+      "historical_record_role": "BLOCKER_AUDIT_RECORD",
+      "current_authority_status": "PROTECTED_OPEN_WITH_CHARACTERIZED_BLOCKER",
+      "status_derived_from": "governance/cmdg_condensed_cm4_p3_001.json::stage_result"
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": "MCORE:CONDENSED:CM1",
+      "source_operation": "CMDG-CONDENSED-CM1-001",
+      "source_ref": "governance/cmdg_condensed_cm1_001.json",
+      "object_kind": "DEPENDENCY_STATE",
+      "authority_class": "PROTECTED_DEPENDENCY_STATE",
+      "current_status": "PROTECTED_CLOSED",
+      "historical_source_status": "CM1_CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+      "blocker_classes": [],
+      "live_event": false,
+      "canonical_claim_effect": "NONE",
+      "notes": "Current protected-close status is derived from the later CM2 protected-predecessor receipt; the historical CM1 record is not rewritten."
+    },
+    {
+      "node_id": "MCORE:CONDENSED:CM1:FORMAL",
+      "source_operation": "CMDG-CONDENSED-CM1-001",
+      "source_ref": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean",
+      "object_kind": "FORMAL_EVIDENCE",
+      "authority_class": "FORMAL_REPLAY_EVIDENCE",
+      "current_status": "CHECKED_ADJUNCTION_INTERFACE",
+      "historical_source_status": "CHECKED_ADJUNCTION_OBJECT_WITH_HOM_EQUIV_UNIT_COUNIT",
+      "blocker_classes": [],
+      "live_event": false,
+      "canonical_claim_effect": "NONE"
+    },
+    {
+      "node_id": "MCORE:CONDENSED:CM2",
+      "source_operation": "CMDG-CONDENSED-CM2-001",
+      "source_ref": "governance/cmdg_condensed_cm2_001.json",
+      "object_kind": "DEPENDENCY_STATE",
+      "authority_class": "PROTECTED_DEPENDENCY_STATE",
+      "current_status": "PROTECTED_CLOSED",
+      "historical_source_status": "CM2_CANDIDATE_PENDING_INDEPENDENT_REVIEW_AND_PROTECTED_ADMISSION",
+      "blocker_classes": [],
+      "live_event": false,
+      "canonical_claim_effect": "NONE"
+    },
+    {
+      "node_id": "MCORE:CONDENSED:CM2:FORMAL",
+      "source_operation": "CMDG-CONDENSED-CM2-001",
+      "source_ref": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean",
+      "object_kind": "FORMAL_EVIDENCE",
+      "authority_class": "FORMAL_REPLAY_EVIDENCE",
+      "current_status": "CHECKED_CARTESIAN_CLOSED_INTERFACE",
+      "historical_source_status": "CHECKED_CARTESIAN_CLOSED_ADJUNCTION_WITH_PRODUCT_WITNESS_HOM_EQUIV_UNIT_COUNIT_EVALUATION",
+      "blocker_classes": [],
+      "live_event": false,
+      "canonical_claim_effect": "NONE"
+    },
+    {
+      "node_id": "MCORE:CONDENSED:CM3",
+      "source_operation": "CMDG-CONDENSED-CM3-001",
+      "source_ref": "governance/cmdg_condensed_cm3_001.json",
+      "object_kind": "DEPENDENCY_STATE",
+      "authority_class": "PROTECTED_DEPENDENCY_STATE",
+      "current_status": "PROTECTED_CLOSED",
+      "historical_source_status": "CM3_CANDIDATE_PENDING_INDEPENDENT_REVIEW_AND_PROTECTED_ADMISSION",
+      "blocker_classes": [],
+      "live_event": false,
+      "canonical_claim_effect": "NONE"
+    },
+    {
+      "node_id": "MCORE:CONDENSED:CM3:FORMAL",
+      "source_operation": "CMDG-CONDENSED-CM3-001",
+      "source_ref": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM3.lean",
+      "object_kind": "FORMAL_EVIDENCE",
+      "authority_class": "FORMAL_REPLAY_EVIDENCE",
+      "current_status": "CHECKED_ABELIAN_AB_INTERFACE",
+      "historical_source_status": "CHECKED_ABELIAN_AND_AB5_AB4_AB4STAR_WITNESSES_FOR_CONDENSED_MODULES_AND_CONDENSED_AB",
+      "blocker_classes": [],
+      "live_event": false,
+      "canonical_claim_effect": "NONE"
+    },
+    {
+      "node_id": "MCORE:CONDENSED:C05",
+      "source_operation": "CMDG-SOLID-C05-001",
+      "source_ref": "governance/cmdg_solid_c05_001.json",
+      "object_kind": "DEFINITION_BOUNDARY",
+      "authority_class": "PROTECTED_DEFINITION_BOUNDARY",
+      "current_status": "PROTECTED_CLOSED_DEFINITION_BOUNDARY",
+      "historical_source_status": "C05_CANDIDATE_PENDING_INDEPENDENT_REVIEW_AND_PROTECTED_ADMISSION",
+      "blocker_classes": [],
+      "live_event": false,
+      "canonical_claim_effect": "NONE",
+      "notes": "Protection of the C05 definition boundary does not confer unrestricted general-ring semantic authority or a nontrivial solid-object theorem."
+    },
+    {
+      "node_id": "MCORE:CONDENSED:C05:FORMAL",
+      "source_operation": "CMDG-SOLID-C05-001",
+      "source_ref": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGSolidC05.lean",
+      "object_kind": "FORMAL_EVIDENCE",
+      "authority_class": "FORMAL_REPLAY_EVIDENCE",
+      "current_status": "CHECKED_DEFINITION_RECONSTRUCTION",
+      "historical_source_status": "CHECKED_DEFINITION_AND_CHANGE_OF_RINGS_RECONSTRUCTION_ONLY_NO_SOLID_OBJECT_THEOREMS",
+      "blocker_classes": [],
+      "live_event": false,
+      "canonical_claim_effect": "NONE"
+    },
+    {
+      "node_id": "MCORE:CONDENSED:CM4",
+      "source_operation": "CMDG-CONDENSED-CM4-001",
+      "source_ref": "governance/cmdg_condensed_cm4_001.json",
+      "object_kind": "FRONTIER_TARGET",
+      "authority_class": "UNRESOLVED_OBLIGATION",
+      "current_status": "OPEN_UNCERTIFIED",
+      "historical_source_status": "CM4_DEPENDENCY_RECONCILIATION_READY__P3_NEXT_PENDING_PROTECTED_ADMISSION",
+      "blocker_classes": ["MATHEMATICAL", "FORMALIZATION"],
+      "live_event": false,
+      "canonical_claim_effect": "NONE"
+    },
+    {
+      "node_id": "MCORE:CONDENSED:CM4:P1",
+      "source_operation": "CMDG-CONDENSED-CM4-001",
+      "source_ref": "governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P1]",
+      "object_kind": "DEPENDENCY_STATE",
+      "authority_class": "PROTECTED_DEPENDENCY_STATE",
+      "current_status": "AVAILABLE",
+      "historical_source_status": "PROTECTED_AVAILABLE",
+      "blocker_classes": [],
+      "live_event": false,
+      "canonical_claim_effect": "NONE"
+    },
+    {
+      "node_id": "MCORE:CONDENSED:CM4:P2",
+      "source_operation": "CMDG-CONDENSED-CM4-001",
+      "source_ref": "governance/cmdg_condensed_cm4_001.json::dependency_reconciliation.protected_p2_receipt",
+      "object_kind": "DEPENDENCY_STATE",
+      "authority_class": "PROTECTED_DEPENDENCY_STATE",
+      "current_status": "PROTECTED_CLOSED",
+      "historical_source_status": "PROTECTED_CLOSED",
+      "blocker_classes": [],
+      "live_event": false,
+      "canonical_claim_effect": "NONE",
+      "notes": "P2 is discharged and must not be represented as blocking CM4."
+    },
+    {
+      "node_id": "MCORE:CONDENSED:CM4:P3",
+      "source_operation": "CMDG-CONDENSED-CM4-P3-001",
+      "source_ref": "governance/cmdg_condensed_cm4_p3_001.json",
+      "object_kind": "BLOCKER",
+      "authority_class": "UNRESOLVED_OBLIGATION",
+      "current_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+      "historical_source_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+      "blocker_classes": ["MATHEMATICAL", "FORMALIZATION"],
+      "live_event": false,
+      "canonical_claim_effect": "NONE",
+      "notes": "The exact-tree audit narrowed the missing bridge to profinite/discrete acyclicity or a certified underived reduction; generic Ext and sheaf-cohomology infrastructure is present."
+    },
+    {
+      "node_id": "MCORE:CONDENSED:CM4:P4",
+      "source_operation": "CMDG-CONDENSED-CM4-001",
+      "source_ref": "governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P4]",
+      "object_kind": "BLOCKER",
+      "authority_class": "UNRESOLVED_OBLIGATION",
+      "current_status": "BLOCKING",
+      "historical_source_status": "WAITS_ON_P5_SOURCE_ROUTE_OR_SEPARATELY_GOVERNED_DIRECT_ALTERNATIVE",
+      "blocker_classes": ["MATHEMATICAL", "FORMALIZATION"],
+      "live_event": false,
+      "canonical_claim_effect": "NONE"
+    },
+    {
+      "node_id": "MCORE:CONDENSED:CM4:P5",
+      "source_operation": "CMDG-CONDENSED-CM4-001",
+      "source_ref": "governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P5]",
+      "object_kind": "BLOCKER",
+      "authority_class": "UNRESOLVED_OBLIGATION",
+      "current_status": "BLOCKING",
+      "historical_source_status": "SOURCE_ROUTE_PREREQUISITE_FOR_P4",
+      "blocker_classes": ["MATHEMATICAL", "FORMALIZATION"],
+      "live_event": false,
+      "canonical_claim_effect": "NONE"
+    },
+    {
+      "node_id": "MCORE:CONDENSED:CM4:P6",
+      "source_operation": "CMDG-CONDENSED-CM4-001",
+      "source_ref": "governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P6]",
+      "object_kind": "BLOCKER",
+      "authority_class": "UNRESOLVED_OBLIGATION",
+      "current_status": "PARTIAL_BLOCKING",
+      "historical_source_status": "WAITS_ON_P3_AND_P4_P2_DISCHARGED",
+      "blocker_classes": ["MATHEMATICAL", "FORMALIZATION"],
+      "live_event": false,
+      "canonical_claim_effect": "NONE"
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "MCORE:CONDENSED:E:CM1-CM2",
+      "relation": "PROTECTED_PREDECESSOR",
+      "from": "MCORE:CONDENSED:CM1",
+      "to": "MCORE:CONDENSED:CM2",
+      "evidence_refs": ["governance/cmdg_condensed_cm2_001.json::protected_cm1"],
+      "authority_effect": "NONE_DIRECT"
+    },
+    {
+      "edge_id": "MCORE:CONDENSED:E:CM2-CM3",
+      "relation": "PROTECTED_PREDECESSOR",
+      "from": "MCORE:CONDENSED:CM2",
+      "to": "MCORE:CONDENSED:CM3",
+      "evidence_refs": ["governance/cmdg_condensed_cm3_001.json::protected_cm2"],
+      "authority_effect": "NONE_DIRECT"
+    },
+    {
+      "edge_id": "MCORE:CONDENSED:E:CM3-C05",
+      "relation": "PROTECTED_PREDECESSOR",
+      "from": "MCORE:CONDENSED:CM3",
+      "to": "MCORE:CONDENSED:C05",
+      "evidence_refs": ["governance/cmdg_solid_c05_001.json::protected_cm3"],
+      "authority_effect": "NONE_DIRECT"
+    },
+    {
+      "edge_id": "MCORE:CONDENSED:E:C05-CM4",
+      "relation": "PROTECTED_PREDECESSOR",
+      "from": "MCORE:CONDENSED:C05",
+      "to": "MCORE:CONDENSED:CM4",
+      "evidence_refs": ["governance/cmdg_condensed_cm4_001.json::protected_predecessor"],
+      "authority_effect": "NONE_DIRECT"
+    },
+    {
+      "edge_id": "MCORE:CONDENSED:E:P3-CM4",
+      "relation": "BLOCKS",
+      "from": "MCORE:CONDENSED:CM4:P3",
+      "to": "MCORE:CONDENSED:CM4",
+      "evidence_refs": ["governance/cmdg_condensed_cm4_p3_001.json::stage_result"],
+      "authority_effect": "NONE_DIRECT"
+    },
+    {
+      "edge_id": "MCORE:CONDENSED:E:P5-P4",
+      "relation": "DEPENDS_ON",
+      "from": "MCORE:CONDENSED:CM4:P4",
+      "to": "MCORE:CONDENSED:CM4:P5",
+      "evidence_refs": ["governance/cmdg_condensed_cm4_001.json::dependency_reconciliation.source_route_edges"],
+      "authority_effect": "NONE_DIRECT"
+    },
+    {
+      "edge_id": "MCORE:CONDENSED:E:P3-P6",
+      "relation": "DEPENDS_ON",
+      "from": "MCORE:CONDENSED:CM4:P6",
+      "to": "MCORE:CONDENSED:CM4:P3",
+      "evidence_refs": ["governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P6]"],
+      "authority_effect": "NONE_DIRECT"
+    },
+    {
+      "edge_id": "MCORE:CONDENSED:E:P4-P6",
+      "relation": "DEPENDS_ON",
+      "from": "MCORE:CONDENSED:CM4:P6",
+      "to": "MCORE:CONDENSED:CM4:P4",
+      "evidence_refs": ["governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P6]"],
+      "authority_effect": "NONE_DIRECT"
+    },
+    {
+      "edge_id": "MCORE:CONDENSED:E:P4-CM4",
+      "relation": "BLOCKS",
+      "from": "MCORE:CONDENSED:CM4:P4",
+      "to": "MCORE:CONDENSED:CM4",
+      "evidence_refs": ["governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P4]"],
+      "authority_effect": "NONE_DIRECT"
+    },
+    {
+      "edge_id": "MCORE:CONDENSED:E:P5-CM4",
+      "relation": "BLOCKS",
+      "from": "MCORE:CONDENSED:CM4:P5",
+      "to": "MCORE:CONDENSED:CM4",
+      "evidence_refs": ["governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P5]"],
+      "authority_effect": "NONE_DIRECT"
+    },
+    {
+      "edge_id": "MCORE:CONDENSED:E:P6-CM4",
+      "relation": "BLOCKS",
+      "from": "MCORE:CONDENSED:CM4:P6",
+      "to": "MCORE:CONDENSED:CM4",
+      "evidence_refs": ["governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P6]"],
+      "authority_effect": "NONE_DIRECT"
+    }
+  ],
+  "current_frontier": {
+    "target": "CMDG-CONDENSED-CM4-001",
+    "target_status": "OPEN_UNCERTIFIED",
+    "cm4_theorem_certified": false,
+    "p1_status": "AVAILABLE",
+    "p2_status": "PROTECTED_CLOSED",
+    "blockers": [
+      {
+        "id": "CM4-P3",
+        "status": "BLOCKING",
+        "blocker_classes": ["MATHEMATICAL", "FORMALIZATION"],
+        "depends_on": [],
+        "source_ref": "governance/cmdg_condensed_cm4_p3_001.json::stage_result"
+      },
+      {
+        "id": "CM4-P4",
+        "status": "BLOCKING",
+        "blocker_classes": ["MATHEMATICAL", "FORMALIZATION"],
+        "depends_on": ["CM4-P5"],
+        "source_ref": "governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P4]"
+      },
+      {
+        "id": "CM4-P5",
+        "status": "BLOCKING",
+        "blocker_classes": ["MATHEMATICAL", "FORMALIZATION"],
+        "depends_on": [],
+        "source_ref": "governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P5]"
+      },
+      {
+        "id": "CM4-P6",
+        "status": "PARTIAL_BLOCKING",
+        "blocker_classes": ["MATHEMATICAL", "FORMALIZATION"],
+        "depends_on": ["CM4-P3", "CM4-P4"],
+        "source_ref": "governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P6]"
+      }
+    ],
+    "c06_discharged": false
+  },
+  "claim_boundary": {
+    "proves_new_mathematics": false,
+    "certifies_theorem": false,
+    "promotes_claim": false,
+    "upgrades_condensed_frontier": false,
+    "graph_certified": false,
+    "dependency_minimality_claim": false,
+    "dependency_uniqueness_claim": false,
+    "global_cmdg_completeness_claim": false,
+    "authorizes_live_allocation": false,
+    "authorizes_live_pruning": false
+  }
+}
