@@ -6,7 +6,10 @@ on:
 
 permissions:
   contents: read
-  actions: write
+
+concurrency:
+  group: construction-gate-issue-bridge-${{ github.event.issue.number }}
+  cancel-in-progress: false
 
 jobs:
   dispatch:
@@ -17,6 +20,11 @@ jobs:
       startsWith(github.event.comment.body, '/construction-gate ')
     runs-on: ubuntu-24.04
     timeout-minutes: 5
+    permissions:
+      actions: write
+      contents: read
+      issues: read
+      pull-requests: read
     steps:
       - name: Parse and constrain one-purpose command
         id: parse
