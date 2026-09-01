@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_autonomy_receipt_behind_resume_control.schema.json",
+  "title": "Administrative autonomy receipt BEHIND resumption control",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "schema_version", "control_id", "runtime_id", "repository",
+    "issue", "status", "classification", "trigger_evidence", "synchronization",
+    "sequence", "fail_closed_conditions", "authority_boundary", "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"const": "../schemas/administrative_autonomy_receipt_behind_resume_control.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-ADMIN-RECEIPT-BEHIND-RESUME-001"},
+    "runtime_id": {"const": "MP-ADMIN-AUTONOMY-RUNTIME-INTEGRATION-001"},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "issue": {"const": 531},
+    "status": {"const": "ACTIVE_WHEN_PROTECTED"},
+    "classification": {"const": "P2_RUNTIME_RESILIENCE"},
+    "trigger_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_issue", "source_pull_request", "protected_record_merge",
+        "receipt_pull_request", "receipt_head", "observed_merge_state",
+        "intervening_protected_merge"
+      ],
+      "properties": {
+        "source_issue": {"const": 513},
+        "source_pull_request": {"const": 514},
+        "protected_record_merge": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "receipt_pull_request": {"const": 529},
+        "receipt_head": {"const": "70cde4c5816f45e67f102f7f71d95de9444cf228"},
+        "observed_merge_state": {"const": "BEHIND"},
+        "intervening_protected_merge": {"const": "3610816f8326e666af0b50b514405413f16f0cb9"}
+      }
+    },
+    "synchronization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "branch_prefix", "base_branch", "state_path", "expected_head_required",
+        "single_open_pull_required", "same_repository_required",
+        "exact_payload_required_before_and_after_sync", "synchronize_only_when_behind",
+        "clean_resume_allowed", "merge_state_wait_seconds", "head_change_wait_seconds",
+        "poll_interval_seconds", "fresh_exact_head_checks_required",
+        "fresh_referee_disposition_required", "ordinary_protected_merge_required"
+      ],
+      "properties": {
+        "branch_prefix": {"const": "automation/maintenance/receipt-"},
+        "base_branch": {"const": "main"},
+        "state_path": {"const": "governance/administrative_maintenance_completion_state.json"},
+        "expected_head_required": {"const": true},
+        "single_open_pull_required": {"const": true},
+        "same_repository_required": {"const": true},
+        "exact_payload_required_before_and_after_sync": {"const": true},
+        "synchronize_only_when_behind": {"const": true},
+        "clean_resume_allowed": {"const": true},
+        "merge_state_wait_seconds": {"type": "integer", "minimum": 10, "maximum": 180},
+        "head_change_wait_seconds": {"type": "integer", "minimum": 30, "maximum": 300},
+        "poll_interval_seconds": {"type": "integer", "minimum": 2, "maximum": 30},
+        "fresh_exact_head_checks_required": {"const": true},
+        "fresh_referee_disposition_required": {"const": true},
+        "ordinary_protected_merge_required": {"const": true}
+      }
+    },
+    "sequence": {
+      "type": "array", "minItems": 8, "maxItems": 8,
+      "items": {"type": "string", "minLength": 10}, "uniqueItems": true
+    },
+    "fail_closed_conditions": {
+      "type": "array", "minItems": 10, "maxItems": 10,
+      "items": {"type": "string", "minLength": 5}, "uniqueItems": true
+    },
+    "authority_boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "control_plane_change", "bounded_receipt_resumption_only",
+        "general_branch_update_authority_created", "human_steward_identity_asserted",
+        "bypass_may_be_exercised", "direct_protected_push"
+      ],
+      "properties": {
+        "control_plane_change": {"const": true},
+        "bounded_receipt_resumption_only": {"const": true},
+        "general_branch_update_authority_created": {"const": false},
+        "human_steward_identity_asserted": {"const": false},
+        "bypass_may_be_exercised": {"const": false},
+        "direct_protected_push": {"const": false}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "mathematical_target_proved", "campaign_admitted", "source_verified",
+        "cert_route_registered", "adjudication_authorized", "certificate_issued",
+        "external_claim_authorized"
+      ],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "campaign_admitted": {"const": false},
+        "source_verified": {"const": false},
+        "cert_route_registered": {"const": false},
+        "adjudication_authorized": {"const": false},
+        "certificate_issued": {"const": false},
+        "external_claim_authorized": {"const": false}
+      }
+    }
+  }
+}

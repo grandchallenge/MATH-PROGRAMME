@@ -21,8 +21,11 @@ providers are versioned mappings or evidence sources only. They do not determine
 claim status, certification, research priority, or internal graph relationships.
 
 `CLASSIFICATION_DISCOVERY_STANDARD.md` is binding for classification and discovery.
-MSC2020-SKOS is the canonical subject spine. zbMATH Open, OpenAlex, and arXiv
-support discovery, while OntoMathPRO is a non-binding design reference.
+MSC2020 is the normative external subject spine; every machine serialization is a
+separate governed artifact and has no runtime authority until qualified. zbMATH
+Open, OpenAlex, and arXiv support discovery, while OntoMathPRO is a non-binding
+design reference. Active-domain mapping candidates require independent audit and
+protected admission before the mapping sets become qualified.
 
 Issues live in the repository that owns the next action. Cross-pillar work is linked
 through immutable commit URLs and stable identifiers. GitHub Projects is an index,

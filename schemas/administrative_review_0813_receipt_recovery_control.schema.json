@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "administrative_review_0813_receipt_recovery_control.schema.json",
+  "title": "Administrative review Aug13 receipt recovery control",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "control_id",
+    "issue",
+    "status",
+    "repository",
+    "protected_base_at_opening",
+    "occurrence",
+    "correction",
+    "authority_boundary",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"const": "../schemas/administrative_review_0813_receipt_recovery_control.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-ADMIN-ADMINISTRATIVE-0813-RECEIPT-RECOVERY-001"},
+    "issue": {"const": 554},
+    "status": {"const": "ACTIVE_ON_PROTECTED_MERGE"},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "protected_base_at_opening": {"const": "39b11cba696f5719c6e7b437d4940d129f762822"},
+    "occurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "procedure_id",
+        "occurrence_key",
+        "due_at_utc",
+        "candidate_issue",
+        "candidate_pull_request",
+        "candidate_branch",
+        "manifest_path",
+        "record_id",
+        "record_path",
+        "record_blob_sha",
+        "original_source_protected_head",
+        "reviewed_head",
+        "record_merge_commit",
+        "independent_review",
+        "human_steward_disposition_comment",
+        "human_steward_bound_base",
+        "expected_prior_frontier_utc",
+        "expected_recovered_frontier_utc"
+      ],
+      "properties": {
+        "procedure_id": {"const": "administrative_review"},
+        "occurrence_key": {"const": "administrative_review:2026-08-13T01:21:00Z"},
+        "due_at_utc": {"const": "2026-08-13T01:21:00Z"},
+        "candidate_issue": {"const": 475},
+        "candidate_pull_request": {"const": 476},
+        "candidate_branch": {"const": "automation/maintenance/administrative_review-20260813T012100Z"},
+        "manifest_path": {"const": "governance/administrative_candidates/administrative_review-20260813T012100Z.json"},
+        "record_id": {"const": "MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-08-13-001"},
+        "record_path": {"const": "governance/administrative_reviews/MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-08-13-001.json"},
+        "record_blob_sha": {"const": "608c973a61312a4fe4ef8b269c2788d27c650e1f"},
+        "original_source_protected_head": {"const": "4f5adc7fb355657e22f5e13e1de3dfb5cc7d2f01"},
+        "reviewed_head": {"const": "1eb3c2cf8375beecc6d84d788ac891402b33757f"},
+        "record_merge_commit": {"const": "7c84b9bf19a1f3e2407860d82965e98fc49512db"},
+        "independent_review": {"const": 4923702298},
+        "human_steward_disposition_comment": {"const": 5276363695},
+        "human_steward_bound_base": {"const": "cd0d91b4c1b9e3c3ff2eced0c79c104d97af66e2"},
+        "expected_prior_frontier_utc": {"const": "2026-08-10T01:21:00Z"},
+        "expected_recovered_frontier_utc": {"const": "2026-08-13T01:21:00Z"}
+      }
+    },
+    "correction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "closed_issue_re_admission_exact_target_only",
+        "protected_record_reuse_required",
+        "record_reexecution_allowed",
+        "record_remerge_allowed",
+        "ordinary_receipt_stage_required",
+        "completion_state_only_receipt_pr_required",
+        "administrative_frontier_advance_exactly_one_locus",
+        "structural_frontier_preserved",
+        "mirror_readback_required",
+        "duplicate_receipt_prohibited",
+        "deadline_reset",
+        "cadence_anchor_reset",
+        "issue_522_or_pr_523_execution_authorized"
+      ],
+      "properties": {
+        "closed_issue_re_admission_exact_target_only": {"const": true},
+        "protected_record_reuse_required": {"const": true},
+        "record_reexecution_allowed": {"const": false},
+        "record_remerge_allowed": {"const": false},
+        "ordinary_receipt_stage_required": {"const": true},
+        "completion_state_only_receipt_pr_required": {"const": true},
+        "administrative_frontier_advance_exactly_one_locus": {"const": true},
+        "structural_frontier_preserved": {"const": true},
+        "mirror_readback_required": {"const": true},
+        "duplicate_receipt_prohibited": {"const": true},
+        "deadline_reset": {"const": false},
+        "cadence_anchor_reset": {"const": false},
+        "issue_522_or_pr_523_execution_authorized": {"const": false}
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "human_steward_exact_head_authorization_required",
+        "historical_record_merge_is_authority_for_new_control",
+        "candidate_branch_is_authority",
+        "direct_protected_push_authorized",
+        "bypass_created",
+        "general_closed_issue_recovery_authority_created",
+        "general_late_recovery_authority_created",
+        "issue_522_or_pr_523_authority_created"
+      ],
+      "properties": {
+        "human_steward_exact_head_authorization_required": {"const": true},
+        "historical_record_merge_is_authority_for_new_control": {"const": false},
+        "candidate_branch_is_authority": {"const": false},
+        "direct_protected_push_authorized": {"const": false},
+        "bypass_created": {"const": false},
+        "general_closed_issue_recovery_authority_created": {"const": false},
+        "general_late_recovery_authority_created": {"const": false},
+        "issue_522_or_pr_523_authority_created": {"const": false}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mathematical_target_proved",
+        "campaign_admitted",
+        "source_verified",
+        "cert_route_registered",
+        "adjudication_authorized",
+        "certificate_issued",
+        "external_claim_authorized"
+      ],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "campaign_admitted": {"const": false},
+        "source_verified": {"const": false},
+        "cert_route_registered": {"const": false},
+        "adjudication_authorized": {"const": false},
+        "certificate_issued": {"const": false},
+        "external_claim_authorized": {"const": false}
+      }
+    }
+  }
+}

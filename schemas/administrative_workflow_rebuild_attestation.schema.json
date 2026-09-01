@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/administrative_workflow_rebuild_attestation.schema.json",
+  "title": "Administrative workflow rebuild attestation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "attestation_id",
+    "repository",
+    "claim",
+    "claim_scope",
+    "control_issue",
+    "human_steward",
+    "steady_state_self_test",
+    "real_transition_confirmation",
+    "retained_actions_artifacts",
+    "protected_readback",
+    "invariants"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "attestation_id": {"const": "MP-ADMIN-WORKFLOW-REBUILD-EVIDENCE-001"},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "claim": {"type": "string", "minLength": 1},
+    "claim_scope": {"const": "administrative workflow operational rebuild only"},
+    "control_issue": {"const": 615},
+    "human_steward": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["initial_approval_comment_id", "final_disposition_comment_id", "final_disposition"],
+      "properties": {
+        "initial_approval_comment_id": {"const": 5349149366},
+        "final_disposition_comment_id": {"const": 5353520678},
+        "final_disposition": {"const": "APPROVED__CLOSE_AND_REACTIVATE"}
+      }
+    },
+    "steady_state_self_test": {"$ref": "#/$defs/proof"},
+    "real_transition_confirmation": {"$ref": "#/$defs/proof"},
+    "retained_actions_artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pre_reactivation", "post_reactivation"],
+      "properties": {
+        "pre_reactivation": {"$ref": "#/$defs/artifact"},
+        "post_reactivation": {"$ref": "#/$defs/artifact"}
+      }
+    },
+    "protected_readback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protected_head", "merge_author", "signature_verified"],
+      "properties": {
+        "protected_head": {"pattern": "^[0-9a-f]{40}$"},
+        "merge_author": {"const": "gcl-release-trust[bot]"},
+        "signature_verified": {"const": true}
+      }
+    },
+    "invariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "referee_candidate_identity_separation_proved",
+        "exact_head_admission_proved",
+        "expected_head_protected_merge_proved",
+        "automatic_post_merge_qualification_proved",
+        "manual_or_bootstrap_merge_used_in_self_test",
+        "intermediate_human_steward_action_used_in_self_test",
+        "direct_protected_push",
+        "bypass_exercised",
+        "receipt_pr_596_mutated_or_merged",
+        "receipt_execution_or_staging",
+        "completion_ledger_mutation",
+        "mirror_advancement",
+        "ruleset_widening",
+        "cadence_change",
+        "substantive_claim_authority_created"
+      ],
+      "properties": {
+        "referee_candidate_identity_separation_proved": {"const": true},
+        "exact_head_admission_proved": {"const": true},
+        "expected_head_protected_merge_proved": {"const": true},
+        "automatic_post_merge_qualification_proved": {"const": true},
+        "manual_or_bootstrap_merge_used_in_self_test": {"const": false},
+        "intermediate_human_steward_action_used_in_self_test": {"const": false},
+        "direct_protected_push": {"const": false},
+        "bypass_exercised": {"const": false},
+        "receipt_pr_596_mutated_or_merged": {"const": false},
+        "receipt_execution_or_staging": {"const": false},
+        "completion_ledger_mutation": {"const": false},
+        "mirror_advancement": {"const": false},
+        "ruleset_widening": {"const": false},
+        "cadence_change": {"const": false},
+        "substantive_claim_authority_created": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "proof": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pull_request",
+        "protected_base",
+        "exact_head",
+        "referee_actor",
+        "referee_comment_id",
+        "referee_disposition",
+        "admission_run_id",
+        "admission_comment_id",
+        "admission_state",
+        "candidate_actor",
+        "protected_merge_commit",
+        "post_merge_qualification_run_id",
+        "post_merge_qualification_state"
+      ],
+      "properties": {
+        "pull_request": {"type": "integer", "minimum": 1},
+        "protected_base": {"pattern": "^[0-9a-f]{40}$"},
+        "exact_head": {"pattern": "^[0-9a-f]{40}$"},
+        "referee_actor": {"const": "github-actions[bot]"},
+        "referee_comment_id": {"type": "integer", "minimum": 1},
+        "referee_disposition": {"const": "REFEREE_AGENT_AUTHORIZED_EXACT_HEAD_PROTECTED_AUTO_MERGE"},
+        "admission_run_id": {"type": "integer", "minimum": 1},
+        "admission_comment_id": {"type": "integer", "minimum": 1},
+        "admission_state": {"const": "REMEDIATION_PR_PROTECTED_MERGE_COMPLETE"},
+        "candidate_actor": {"const": "gcl-release-trust[bot]"},
+        "protected_merge_commit": {"pattern": "^[0-9a-f]{40}$"},
+        "post_merge_qualification_run_id": {"type": "integer", "minimum": 1},
+        "post_merge_qualification_state": {"const": "LIVE_QUALIFICATION_GREEN__REACTIVATION_NOT_AUTHORIZED"}
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_id",
+        "artifact_name",
+        "archive_sha256",
+        "qualification_path",
+        "qualification_sha256",
+        "reconciliation_path",
+        "reconciliation_sha256"
+      ],
+      "properties": {
+        "artifact_id": {"type": "integer", "minimum": 1},
+        "artifact_name": {"const": "administrative-protected-receipt-remediation"},
+        "archive_sha256": {"pattern": "^[0-9a-f]{64}$"},
+        "qualification_path": {"type": "string", "minLength": 1},
+        "qualification_sha256": {"pattern": "^[0-9a-f]{64}$"},
+        "reconciliation_path": {"type": "string", "minLength": 1},
+        "reconciliation_sha256": {"pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

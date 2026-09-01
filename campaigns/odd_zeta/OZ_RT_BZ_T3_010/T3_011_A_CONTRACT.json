@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 444,
+  "operation": "OZ-RT-BZ-T3-011-A",
+  "stage": "T3_011_A_EXACT_COKERNEL_GUIDED_SINGLE_CHANNEL_LINEAR_ZERO_RESPONSE_LIFT_VIABILITY_GATE",
+  "t3_010_c_checkpoint": {
+    "validated_head": "ca02bb6dad2970c169eb9b8745c871d4332447fb",
+    "producer_blob": "c6359f01c12011a22194bfe7ff960aa3e30452d3",
+    "contract_blob": "4f547f29d8bcb734f5e76816c5838d2b095a51b9",
+    "verifier_blob": "e7defaf7fb6fa05128923ecdb1023f07882d3d36",
+    "required_terminal": "BOUNDED_SUPPORT_LOCKED_DEGREE0_CORRECTION_CLASS_GLOBALLY_INCOMPATIBLE"
+  },
+  "bounded_correction_class": {
+    "id": "SUPPORT_LOCKED_SINGLE_CHANNEL_LINEAR_ZERO_RESPONSE_LIFT_001",
+    "base_class": "SUPPORT_LOCKED_ORIENTED_ONE_BODY_DEGREE0_WEIGHT_CORRECTION_001",
+    "independent_channels": ["n1", "n2", "n3", "k1"],
+    "mirror_derived_channel": "l1",
+    "channel_coordinate": {"n1": "n", "n2": "n", "n3": "n", "k1": "k", "l1": "l"},
+    "channel_coordinate_increment": {"n1": 1, "n2": 2, "n3": 3, "k1": 1, "l1": 1},
+    "candidate_bank": "exactly the complete-global-response-zero T3-010-C unknowns",
+    "expected_candidate_counts": {"n1": 49, "n2": 49, "n3": 49, "k1": 48},
+    "expected_independent_trials": 195,
+    "lifts_per_trial": 1,
+    "pairs_admitted": false,
+    "arbitrary_linear_combinations_admitted": false,
+    "new_harmonic_monomials": false,
+    "full_degree1_envelope": false,
+    "rational_prefactor_search": false,
+    "adaptive_basis_growth": false,
+    "generic_198_raw_jet_reopened": false
+  },
+  "lift_response": {
+    "equation": "Delta_c(x_c G)=x_c Delta_c(G)+(Delta_c x_c) S_c(G)",
+    "exact_field": "Q",
+    "coefficient_ring": "existing affine-Laurent Q ring from protected T3-009 residual canonicalization",
+    "shell_semantics": "preserve exact protected pinv specialization before coefficient-coordinate assembly"
+  },
+  "cokernel_gate": {
+    "witness": "deterministic finitely-supported exact row functional lambda_c",
+    "requirements": ["lambda_c A_c = 0", "lambda_c b_c = 1"],
+    "candidate_pairing": "lambda_c v_G",
+    "zero_pairing_rejection": true,
+    "nonzero_pairing_requires_exact_rank_test": true,
+    "rank_method": "exact Q incremental quotient/echelon reduction, with exact full-solver substitution for every rank-consistent candidate"
+  },
+  "canonical_selection": {
+    "candidate_order": "existing C unknown order restricted to zero global response columns",
+    "policy": "first exact-rank-consistent candidate in canonical order",
+    "selected_candidate_requires_exact_solution": true,
+    "selected_k1_requires_exact_l1_mirror_substitution": true
+  },
+  "positive_boundary": {
+    "meaning": "All four independent channels have a canonical single-lift exact solution and the selected k1 lift mirrors exactly to l1.",
+    "full_correction_layer_recombined": false,
+    "finite_boundary_assembly_completed": false,
+    "final_n_holonomic_search": false,
+    "next_gate": "separately governed full correction-layer reconstruction and exact recombination for the selected T3-011-A lift class"
+  },
+  "negative_boundary": {
+    "terminal": "BOUNDED_SINGLE_CHANNEL_LINEAR_ZERO_RESPONSE_LIFT_CLASS_EXHAUSTED",
+    "two_lift_class_authorized": false,
+    "full_degree1_authorized": false,
+    "expanded_support_authorized": false,
+    "rational_prefactor_search_authorized": false,
+    "generic_198_raw_jet_reopened": false
+  },
+  "required_outputs": {
+    "exact_cokernel_witness_per_independent_channel": true,
+    "exact_candidate_pairing_per_trial": true,
+    "exact_rank_classification_per_nonzero_pairing_trial": true,
+    "canonical_survivor_per_channel": true,
+    "exact_solution_and_substitution_for_rank_consistent_candidates": true,
+    "exact_k1_l1_mirror_for_selected_candidate": true,
+    "independent_verifier": true,
+    "mutation_tests": true
+  },
+  "residual_sum_zero_proved": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+}

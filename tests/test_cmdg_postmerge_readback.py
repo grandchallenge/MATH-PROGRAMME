@@ -4,6 +4,7 @@ import unittest
 from unittest.mock import patch
 
 from ci import cmdg_postmerge_readback as readback
+from ci import policy_impact
 
 
 SHA = "1" * 40
@@ -51,6 +52,10 @@ class CMDGPostmergeReadbackTests(unittest.TestCase):
         receipt = self.build(shards=["core"], suites=results("skipped"))
         self.assertTrue(receipt["authority_boundary"]["integration_facts_only"])
         self.assertFalse(any(value for key, value in receipt["authority_boundary"].items() if key != "integration_facts_only"))
+
+    def test_schema_accepts_authoritative_policy_shard_roster(self):
+        receipt = self.build(shards=list(policy_impact.ALL_SHARDS), suites=results("success"))
+        self.assertEqual(receipt["policy_shards"], list(policy_impact.ALL_SHARDS))
 
 
 if __name__ == "__main__":

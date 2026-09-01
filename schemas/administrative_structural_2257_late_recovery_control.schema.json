@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "administrative_structural_2257_late_recovery_control.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "control_id", "status", "issue", "occurrence", "root_cause", "correction", "authority_boundary", "claim_boundaries"],
+  "properties": {
+    "$schema": {"const": "../schemas/administrative_structural_2257_late_recovery_control.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-ADMIN-STRUCTURAL-2257-LATE-RECOVERY-001"},
+    "status": {"const": "ACTIVE_ON_PROTECTED_MERGE"},
+    "issue": {"const": 479},
+    "occurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["procedure_id", "occurrence_key", "due_at_utc", "prepare_at_utc", "freeze_at_utc", "candidate_issue", "candidate_pull_request", "candidate_branch", "original_source_protected_head", "ordinary_recovery_expires_at_utc", "bounded_recovery_expires_at_utc"],
+      "properties": {
+        "procedure_id": {"const": "structural_sweep"},
+        "occurrence_key": {"const": "structural_sweep:2026-08-12T22:57:00Z"},
+        "due_at_utc": {"const": "2026-08-12T22:57:00Z"},
+        "prepare_at_utc": {"const": "2026-08-12T16:57:00Z"},
+        "freeze_at_utc": {"const": "2026-08-12T21:27:00Z"},
+        "candidate_issue": {"const": 479},
+        "candidate_pull_request": {"const": 480},
+        "candidate_branch": {"const": "automation/maintenance/structural_sweep-20260812T225700Z"},
+        "original_source_protected_head": {"const": "4f5adc7fb355657e22f5e13e1de3dfb5cc7d2f01"},
+        "ordinary_recovery_expires_at_utc": {"const": "2026-08-13T01:57:00Z"},
+        "bounded_recovery_expires_at_utc": {"const": "2026-08-13T15:45:00Z"}
+      }
+    },
+    "root_cause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["first_fail_closed_run", "last_in_window_fail_closed_run", "candidate_frozen", "runtime_finalization_pending", "competing_candidate_pull_request", "failure"],
+      "properties": {
+        "first_fail_closed_run": {"const": 31649178979},
+        "last_in_window_fail_closed_run": {"const": 31655457473},
+        "candidate_frozen": {"const": true},
+        "runtime_finalization_pending": {"const": true},
+        "competing_candidate_pull_request": {"const": 476},
+        "failure": {"const": "multiple frozen maintenance candidates require fail-closed triage"}
+      }
+    },
+    "correction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["global_recovery_window_minutes_unchanged", "exact_occurrence_only", "behind_sync_reconciliation_required", "completion_must_be_absent", "source_ancestry_required", "deadline_reset", "cadence_anchor_reset", "eventual_recovery_relabels_on_time"],
+      "properties": {
+        "global_recovery_window_minutes_unchanged": {"const": 180},
+        "exact_occurrence_only": {"const": true},
+        "behind_sync_reconciliation_required": {"const": true},
+        "completion_must_be_absent": {"const": true},
+        "source_ancestry_required": {"const": true},
+        "deadline_reset": {"const": false},
+        "cadence_anchor_reset": {"const": false},
+        "eventual_recovery_relabels_on_time": {"const": false}
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["human_steward_exact_head_authorization_required", "candidate_branch_is_authority", "bypass_created", "emergency_authority_created", "required_checks_weakened", "referee_gate_weakened", "direct_protected_push_authorized", "general_late_recovery_authority_created"],
+      "properties": {
+        "human_steward_exact_head_authorization_required": {"const": true},
+        "candidate_branch_is_authority": {"const": false},
+        "bypass_created": {"const": false},
+        "emergency_authority_created": {"const": false},
+        "required_checks_weakened": {"const": false},
+        "referee_gate_weakened": {"const": false},
+        "direct_protected_push_authorized": {"const": false},
+        "general_late_recovery_authority_created": {"const": false}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mathematical_target_proved", "source_authority_created", "certification_authority_created", "external_claim_authorized", "novelty_or_priority_claim_authorized", "publication_authorized", "deployment_authorized", "product_or_release_authorized", "commercial_authority_created"],
+      "properties": {
+        "mathematical_target_proved": {"const": false},
+        "source_authority_created": {"const": false},
+        "certification_authority_created": {"const": false},
+        "external_claim_authorized": {"const": false},
+        "novelty_or_priority_claim_authorized": {"const": false},
+        "publication_authorized": {"const": false},
+        "deployment_authorized": {"const": false},
+        "product_or_release_authorized": {"const": false},
+        "commercial_authority_created": {"const": false}
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "../schemas/administrative_review_0121_late_recovery_control.schema.json",
+  "schema_version": "1.0.0",
+  "control_id": "MP-ADMIN-ADMINISTRATIVE-0121-LATE-RECOVERY-001",
+  "status": "ACTIVE_ON_PROTECTED_MERGE",
+  "issue": 549,
+  "protected_base_at_opening": "2dfe02c61a5c9b29e40c0df169589e9fe3d69216",
+  "occurrence": {
+    "procedure_id": "administrative_review",
+    "occurrence_key": "administrative_review:2026-08-16T01:21:00Z",
+    "due_at_utc": "2026-08-16T01:21:00Z",
+    "prepare_at_utc": "2026-08-15T13:21:00Z",
+    "freeze_at_utc": "2026-08-15T22:21:00Z",
+    "candidate_issue": 522,
+    "candidate_pull_request": 523,
+    "candidate_branch": "automation/maintenance/administrative_review-20260816T012100Z",
+    "manifest_path": "governance/administrative_candidates/administrative_review-20260816T012100Z.json",
+    "record_id": "MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-08-16-001",
+    "original_source_protected_head": "bfaf3849b7528a1d98317550c8f23d6e323a4f17",
+    "stale_finalized_head": "efaf7ec2dc31270ae6965c1acbdaf916b94705f5",
+    "ordinary_recovery_expires_at_utc": "2026-08-16T04:21:00Z",
+    "bounded_recovery_expires_at_utc": "2026-08-19T01:21:00Z"
+  },
+  "root_cause": {
+    "candidate_frozen": true,
+    "runtime_finalized": true,
+    "referee_authorized_historically": true,
+    "protected_merge_performed": false,
+    "failure": "post-disposition check run failed: advisory-report=cancelled",
+    "environmental_repair_merge": "1b4d742094d487c7ef503a23ed88e99b733fe0a8"
+  },
+  "correction": {
+    "global_recovery_window_minutes_unchanged": 180,
+    "exact_occurrence_only": true,
+    "behind_sync_reconciliation_required": true,
+    "completion_must_be_absent": true,
+    "source_ancestry_required": true,
+    "record_identity_must_be_preserved": true,
+    "fresh_exact_head_referee_required": true,
+    "deadline_reset": false,
+    "cadence_anchor_reset": false,
+    "historical_failed_closed_evidence_preserved": true,
+    "intervening_occurrences_superseded": false,
+    "structural_frontier_mutation_authorized": false
+  },
+  "authority_boundary": {
+    "human_steward_exact_head_authorization_required": true,
+    "candidate_branch_is_authority": false,
+    "stale_referee_approval_is_authority": false,
+    "bypass_created": false,
+    "emergency_authority_created": false,
+    "required_checks_weakened": false,
+    "referee_gate_weakened": false,
+    "direct_protected_push_authorized": false,
+    "general_late_recovery_authority_created": false,
+    "structural_1809_authority_inherited": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "source_authority_created": false,
+    "certification_authority_created": false,
+    "external_claim_authorized": false,
+    "novelty_or_priority_claim_authorized": false,
+    "publication_authorized": false,
+    "deployment_authorized": false,
+    "product_or_release_authorized": false,
+    "commercial_authority_created": false
+  }
+}

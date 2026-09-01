@@ -18,7 +18,7 @@
   ],
   "properties": {
     "$schema": {"type": "string", "minLength": 1},
-    "schema_version": {"const": "1.0.0"},
+    "schema_version": {"const": "1.1.0"},
     "contract_id": {"const": "ORG-REL-TRUST-01"},
     "api_version": {"const": "2022-11-28"},
     "administration_secret": {"const": "GCL_REPOSITORY_ADMIN_TOKEN"},
@@ -57,7 +57,7 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["repository", "branch", "required_checks"],
+        "required": ["repository", "branch", "strict_status_checks", "required_checks"],
         "properties": {
           "repository": {
             "enum": [
@@ -68,6 +68,7 @@
             ]
           },
           "branch": {"const": "main"},
+          "strict_status_checks": {"type": "boolean"},
           "required_checks": {
             "type": "array",
             "minItems": 1,

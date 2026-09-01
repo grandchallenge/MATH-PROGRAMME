@@ -1,0 +1,75 @@
+{
+  "$schema": "../schemas/administrative_autonomy_receipt_behind_resume_control.schema.json",
+  "schema_version": "1.0.0",
+  "control_id": "MP-ADMIN-RECEIPT-BEHIND-RESUME-001",
+  "runtime_id": "MP-ADMIN-AUTONOMY-RUNTIME-INTEGRATION-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "issue": 531,
+  "status": "ACTIVE_WHEN_PROTECTED",
+  "classification": "P2_RUNTIME_RESILIENCE",
+  "trigger_evidence": {
+    "source_issue": 513,
+    "source_pull_request": 514,
+    "protected_record_merge": "cb02950e2b37e1001d829e4fbcb744bbcc80dfe2",
+    "receipt_pull_request": 529,
+    "receipt_head": "70cde4c5816f45e67f102f7f71d95de9444cf228",
+    "observed_merge_state": "BEHIND",
+    "intervening_protected_merge": "3610816f8326e666af0b50b514405413f16f0cb9"
+  },
+  "synchronization": {
+    "branch_prefix": "automation/maintenance/receipt-",
+    "base_branch": "main",
+    "state_path": "governance/administrative_maintenance_completion_state.json",
+    "expected_head_required": true,
+    "single_open_pull_required": true,
+    "same_repository_required": true,
+    "exact_payload_required_before_and_after_sync": true,
+    "synchronize_only_when_behind": true,
+    "clean_resume_allowed": true,
+    "merge_state_wait_seconds": 60,
+    "head_change_wait_seconds": 180,
+    "poll_interval_seconds": 5,
+    "fresh_exact_head_checks_required": true,
+    "fresh_referee_disposition_required": true,
+    "ordinary_protected_merge_required": true
+  },
+  "sequence": [
+    "detect an existing exact autonomous completion-receipt branch",
+    "require exactly one open same-repository receipt pull request targeting main",
+    "verify the branch completion-state payload exactly matches the freshly derived receipt state",
+    "when and only when GitHub reports BEHIND, call update-branch with expected_head_sha",
+    "wait for a changed receipt head and reverify the exact completion-state payload",
+    "rerun every live ruleset-required check against the resulting exact receipt head",
+    "record or reuse exactly one fresh exact-head Referee disposition",
+    "require stable clean state before ordinary expected-head protected merge and readback"
+  ],
+  "fail_closed_conditions": [
+    "multiple or absent open pull requests for an existing receipt branch",
+    "receipt branch, base branch, or repository identity drift",
+    "receipt completion-state payload drift before synchronization",
+    "receipt completion-state payload drift after synchronization",
+    "non-BEHIND dirty merge state",
+    "update-branch conflict or unexpected-head rejection",
+    "receipt head-change readback timeout",
+    "required check failure",
+    "ambiguous exact-head Referee disposition",
+    "protected completion readback failure"
+  ],
+  "authority_boundary": {
+    "control_plane_change": true,
+    "bounded_receipt_resumption_only": true,
+    "general_branch_update_authority_created": false,
+    "human_steward_identity_asserted": false,
+    "bypass_may_be_exercised": false,
+    "direct_protected_push": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "cert_route_registered": false,
+    "adjudication_authorized": false,
+    "certificate_issued": false,
+    "external_claim_authorized": false
+  }
+}

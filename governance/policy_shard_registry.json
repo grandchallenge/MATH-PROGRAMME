@@ -4,6 +4,11 @@
   "shards": {
     "core": [
       ["python3", "ci/validate_schema_json.py"],
+      ["python3", "ci/validate_programme_math_core.py"],
+      ["python3", "ci/test_programme_math_core.py"],
+      ["python3", "ci/validate_programme_math_core_uc_sources.py"],
+      ["python3", "ci/validate_programme_math_core_uc_pilot.py"],
+      ["python3", "ci/test_programme_math_core_uc_pilot.py"],
       ["python3", "ci/policy_impact.py", "validate"],
       ["python3", "ci/test_policy_impact.py"],
       ["python3", "ci/formal_replay_attestation.py", "check-policy"],
@@ -23,14 +28,18 @@
       ["python3", "ci/validate_log_gcd_fixture.py", "fixtures/formal/LOG-GCD-001"],
       ["python3", "ci/test_log_gcd_fixture.py"],
       ["python3", "ci/validate_log_gcd_publication.py", "fixtures/formal/LOG-GCD-001"],
-      ["python3", "ci/test_log_gcd_publication.py"]
+      ["python3", "ci/test_log_gcd_publication.py"],
+      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_*fixture*.py", "--report-json", "fixture-test-timing.json"]
     ],
     "cmdg": [
       ["python3", "ci/validate_cmdg_schema_contracts.py"],
       ["python3", "ci/validate_cmdg_graph_package.py", "--report", "cmdg-validator-report.json"],
       ["python3", "ci/validate_cmdg_nat_foundations_profile.py"],
       ["python3", "ci/validate_cmdg_workflow_impact_gating.py"],
-      ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_cmdg*.py"]
+      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_cmdg*.py", "--report-json", "cmdg-test-timing.json"]
+    ],
+    "oz": [
+      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_oz*.py", "--report-json", "oz-test-timing.json"]
     ],
     "administrative": [
       ["python3", "ci/validate_administrative_structural_sweep.py"],
@@ -44,8 +53,12 @@
       ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_campaign*.py"]
     ],
     "contracts": [
+      ["python3", "ci/ghos_execution_routing.py"],
+      ["python", "-m", "unittest", "tests.test_ghos_execution_routing"],
       ["python", "ci/validate_programme.py"],
       ["python", "ci/test_validate_programme.py"],
+      ["python3", "ci/validate_documentary_closure.py"],
+      ["python3", "ci/test_documentary_closure.py"],
       ["python3", "ci/validate_retired_paths.py"],
       ["python3", "ci/test_retired_paths.py"],
       ["python3", "ci/validate_workflow_coverage_v2.py"],
@@ -54,18 +67,22 @@
       ["python3", "ci/pr_visual_status_policy.py", "--help"],
       ["python3", "ci/pr_visual_status_transport.py", "--help"],
       ["python3", "ci/pr_visual_status_operational.py", "--help"],
+      ["python3", "ci/construction_integrity.py", "--help"],
       ["python3", "ci/validate_policy_reachability.py"],
       ["python3", "ci/test_policy_reachability.py"],
       ["python3", "ci/validate_repository_execution.py"],
       ["python3", "ci/test_repository_execution.py"],
       ["python3", "ci/validate_workflow_semantics.py"],
       ["python3", "ci/test_workflow_semantics.py"],
-      ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"]
+      ["python3", "ci/run_unittest_modules.py", "--manifest", "governance/contract_test_manifest.json", "--report-json", "contract-test-timing.json"]
     ],
     "docs": [
       ["python", "ci/validate_docs.py"],
       ["python", "ci/test_validate_docs.py"],
       ["mkdocs", "build", "--strict"]
+    ],
+    "repository-regression": [
+      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_*.py", "--report-json", "repository-regression-timing.json"]
     ]
   }
 }

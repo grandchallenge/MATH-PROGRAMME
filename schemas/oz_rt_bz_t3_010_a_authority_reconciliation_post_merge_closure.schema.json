@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/oz_rt_bz_t3_010_a_authority_reconciliation_post_merge_closure.schema.json",
+  "title": "OZ T3-010-A post-merge authority reconciliation closure",
+  "const": {
+    "schema_version": "1.0.0",
+    "closure_id": "OZ-RT-BZ-T3-010-A-AUTHORITY-RECONCILIATION-CLOSURE-001",
+    "programme": "OZ-RT-BZ-T3-010-A",
+    "source_pull_request": {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "number": 413,
+      "original_authorized_base": "8381fb2345b7d226064f0d9cce12e73be2c7a584",
+      "original_authorized_head": "26c5736e90954c751fb84eedc6310388d5e09c8d",
+      "original_review": {
+        "reviewer": "jimsteeg",
+        "review_id": 4959047117,
+        "state": "APPROVED",
+        "submitted_at": "2026-08-18T08:38:05Z"
+      },
+      "original_human_steward_disposition": {
+        "comment_id": 5326150351,
+        "posted_at": "2026-08-18T09:17:16Z",
+        "exact_head": "26c5736e90954c751fb84eedc6310388d5e09c8d",
+        "exact_base": "8381fb2345b7d226064f0d9cce12e73be2c7a584",
+        "invalidated_by_head_movement": true
+      }
+    },
+    "synchronization": {
+      "actual_pre_merge_base": "06e62e6f5557ad28e3543680dfbcf0df2959f1d7",
+      "merged_head": "b7dcc667622cc4d9b7996dc03430a10dfdcb59fd",
+      "merged_head_parent_original_authorized_head": "26c5736e90954c751fb84eedc6310388d5e09c8d",
+      "merged_head_parent_protected_main": "06e62e6f5557ad28e3543680dfbcf0df2959f1d7",
+      "synchronized_at": "2026-08-18T09:36:03Z",
+      "t3_payload_byte_preserved": true,
+      "only_additional_content_from_protected_main": true,
+      "additional_protected_main_files": [
+        ".github/workflows/administrative-maintenance-candidate.yml",
+        "ci/administrative_autonomy_0813_closure_preflight.py",
+        "governance/administrative_review_0813_closure_preflight_note.md",
+        "tests/test_administrative_autonomy_0813_closure_preflight.py",
+        "tests/test_administrative_autonomy_0813_executor_binding.py"
+      ]
+    },
+    "actual_head_machine_replay": {
+      "head": "b7dcc667622cc4d9b7996dc03430a10dfdcb59fd",
+      "programme_policy_run": 32122459832,
+      "gcl_conformance_run": 32122460607,
+      "administrative_dispatcher_run": 32122460081,
+      "t3_blocker_closure_run": 32122459806,
+      "apery_brow_review_run": 32122460048,
+      "lb_instance_review_run": 32122459870,
+      "all_named_exact_head_checks_successful": true
+    },
+    "protected_merge": {
+      "merge_commit": "8bbc24421c1b5b37110f608b90c95d57f19af0b2",
+      "merged_at": "2026-08-18T09:52:12Z",
+      "merger": "jimsteeg",
+      "actual_base": "06e62e6f5557ad28e3543680dfbcf0df2959f1d7",
+      "actual_head": "b7dcc667622cc4d9b7996dc03430a10dfdcb59fd",
+      "tree": "7a58ed24a1a7c6af698a0d923cda966f1790cb0c",
+      "verified_signature": true,
+      "post_merge_diff_file_count": 5,
+      "post_merge_diff_files": [
+        "campaigns/odd_zeta/OZ_RT_BZ_T3_010/T3_010_A_CONTRACT.json",
+        "campaigns/odd_zeta/OZ_RT_BZ_T3_010/t3_010_a.py",
+        "campaigns/odd_zeta/OZ_RT_BZ_T3_010/verify_t3_010_a.py",
+        "ci/campaign_replay_registry.json",
+        "tests/test_oz_rt_bz_t3_010_a.py"
+      ],
+      "payload_delta_matches_intended_five_file_package": true
+    },
+    "authority_defect": {
+      "fresh_independent_review_on_actual_head_present": false,
+      "fresh_human_steward_disposition_on_actual_head_present": false,
+      "original_disposition_invalidated_by_head_movement": true,
+      "content_integrity_clean": true,
+      "authority_integrity_clean": false,
+      "historical_status": "PROTECTED_CONTENT_PRESENT__AUTHORITY_RECONCILIATION_REQUIRED"
+    },
+    "successor_reconciliation": {
+      "status_on_protected_merge": "PROTECTED_AUTHORITY_RECONCILIATION_COMPLETE",
+      "historical_merge_reverted": false,
+      "substantive_reexecution_required": false,
+      "waiver_used": false,
+      "history_rewritten": false,
+      "separate_protected_successor_closure_required": true,
+      "fresh_exact_head_machine_gates_required": true,
+      "fresh_independent_non_author_review_required": true,
+      "fresh_human_steward_disposition_required": true,
+      "protected_merge_required": true,
+      "protected_main_readback_required": true,
+      "effect": "A separately protected successor closure supplies exact identity binding for the actual merged head and merge while preserving the historical record. It cures only the authority-chain defect for the already protected, content-clean T3-010-A five-file payload."
+    },
+    "claim_boundaries": {
+      "residual_sum_zero_proved": false,
+      "proof_effect": "NONE",
+      "promotion_effect": "NONE",
+      "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+      "mathematical_certification_created": false,
+      "candidate_admission_created": false,
+      "recurrence_result_created": false,
+      "source_authority_created": false,
+      "novelty_claim_authorized": false,
+      "priority_claim_authorized": false,
+      "publication_claim_authorized": false,
+      "patentability_claim_authorized": false,
+      "product_claim_authorized": false,
+      "deployment_claim_authorized": false,
+      "commercial_claim_authorized": false
+    }
+  }
+}

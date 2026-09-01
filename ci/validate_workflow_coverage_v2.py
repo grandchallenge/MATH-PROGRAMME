@@ -2,8 +2,13 @@
 from __future__ import annotations
 
 import json
+from typing import Any
 
 import validate_workflow_coverage_v3 as v3
+
+RECOVERY_FAILOVER_WORKFLOW = "administrative-maintenance-0813-recovery-failover.yml"
+QUALIFICATION_ONLY_WORKFLOW = "administrative-protected-receipt-live-qualification.yml"
+CONSTRUCTION_GATE_WORKFLOW = "construction-gate-runtime.yml"
 
 v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "aether-controls-admin.yml",
@@ -22,6 +27,10 @@ v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "cmdg-postmerge.yml",
     "visual-pedagogy-representation-repair.yml",
     "pr-visual-status-advisory.yml",
+    RECOVERY_FAILOVER_WORKFLOW,
+    QUALIFICATION_ONLY_WORKFLOW,
+    CONSTRUCTION_GATE_WORKFLOW,
+    "ghos-routing-enforcement.yml",
 }
 
 ROOT = v3.ROOT
@@ -29,6 +38,10 @@ POLICY_SHARD_REGISTRY = "governance/policy_shard_registry.json"
 ROUTED_MARKER_SUCCESSORS = {
     "python3 ci/validate_workflow_coverage.py": "python3 ci/validate_workflow_coverage_v2.py",
     "python3 ci/test_workflow_coverage.py": "python3 ci/test_workflow_coverage_v2.py",
+    "python -m unittest discover -s tests -p 'test_*.py'": (
+        "python3 ci/run_unittest_modules.py --discover-root tests --pattern test_*.py "
+        "--report-json repository-regression-timing.json"
+    ),
 }
 
 
@@ -64,8 +77,283 @@ def _registry_commands(root=ROOT, registry=None) -> set[str]:
     return commands
 
 
+def _trigger(workflow: dict[str, Any]) -> dict[str, Any]:
+    value = workflow.get("on", {})
+    return value if isinstance(value, dict) else {}
+
+
+def _job(workflow: dict[str, Any], name: str) -> dict[str, Any]:
+    jobs = workflow.get("jobs", {})
+    if not isinstance(jobs, dict):
+        return {}
+    value = jobs.get(name, {})
+    return value if isinstance(value, dict) else {}
+
+
+def recovery_failover_errors(texts: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    text = texts.get(RECOVERY_FAILOVER_WORKFLOW)
+    if text is None:
+        return errors
+    workflow = v3.legacy.load_yaml_text(text)
+    trigger = _trigger(workflow)
+    if set(trigger) != {"pull_request"}:
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: trigger must be exactly pull_request")
+    pull_request = trigger.get("pull_request", {})
+    types = pull_request.get("types", []) if isinstance(pull_request, dict) else []
+    if types != ["closed"]:
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: pull_request trigger must be closed only")
+
+    job = _job(workflow, "recover")
+    if job.get("environment") != v3.PROTECTED_ENVIRONMENT:
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: recover job must bind protected environment release-trust")
+    expected_permissions = {
+        "actions": "read",
+        "checks": "read",
+        "contents": "read",
+        "issues": "write",
+        "pull-requests": "write",
+    }
+    if job.get("permissions") != expected_permissions:
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: delegated Referee permissions drift")
+
+    required_markers = (
+        "github.event.pull_request.merged == true",
+        "startsWith(github.event.pull_request.head.ref, 'control/mp-admin-0813-')",
+        v3.APP_ACTION,
+        v3.APP_ID,
+        v3.APP_KEY,
+        "id: write-token",
+        "repositories: MATH-PROGRAMME",
+        "permission-contents: write",
+        "permission-issues: write",
+        "permission-pull-requests: write",
+        "id: evidence-token",
+        "MATHFORGE\n            MATHSOLVE\n            MATHCERT\n            INTELLECT",
+        "permission-actions: read",
+        "permission-contents: read",
+        "permission-issues: read",
+        "permission-pull-requests: read",
+        "id: admin-token",
+        "permission-administration: write",
+        "ref: refs/heads/main",
+        "persist-credentials: false",
+        "CANDIDATE_TOKEN: ${{ steps.write-token.outputs.token }}",
+        "EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}",
+        "OBSERVABILITY_TOKEN: ${{ steps.evidence-token.outputs.token }}",
+        "REFEREE_TOKEN: ${{ github.token }}",
+        "ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}",
+        "CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.write-token.outputs.app-slug) }}",
+        "REFEREE_LOGIN: 'github-actions[bot]'",
+        "CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}",
+        "REFEREE_APP_ID: '15368'",
+        "Restore exact PR-only Administration actor",
+        "from autonomy_github import AutonomyError, Client, identity, install_bypass",
+        "ruleset_id = 17137629",
+        "administrator.app_id != 4423678",
+        '"bypass_mode": "pull_request"',
+        "administrative-autonomy-0813-ruleset-actor-restore.json",
+        "python ci/administrative_autonomy_0813_closure_preflight.py",
+        "--apply",
+        "administrative-autonomy-0813-pr-close-recovery.json",
+        "retention-days: 90",
+    )
+    for marker in required_markers:
+        if marker not in text:
+            errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: missing bounded recovery marker {marker}")
+
+    restore_index = text.find("Restore exact PR-only Administration actor")
+    preflight_index = text.find("python ci/administrative_autonomy_0813_closure_preflight.py")
+    if restore_index < 0 or preflight_index < 0 or restore_index > preflight_index:
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: exact Administration actor restoration must precede exact Aug13 preflight")
+
+    if text.count(v3.APP_ACTION) != 3:
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: exactly three separately scoped App tokens are required")
+    if text.count("permission-administration: write") != 1:
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: exactly one administration-write token is required")
+    if text.count("permission-contents: write") != 1:
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: exactly one contents-write token is required")
+    if text.count("${{ github.token }}") != 1:
+        errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: workflow token must be used only as the Referee token")
+
+    for forbidden in (
+        "workflow_dispatch:",
+        "schedule:",
+        "push:",
+        "pull_request_target:",
+        "administrative_autonomy_runtime.py execute",
+        "administrative_maintenance_completion_state.json",
+        "gh pr merge",
+        "git push origin main",
+        "/git/refs/heads/main",
+        "permission-checks: write",
+    ):
+        if forbidden in text:
+            errors.append(f"{RECOVERY_FAILOVER_WORKFLOW}: forbidden recovery capability {forbidden}")
+    return errors
+
+
+def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    text = texts.get(QUALIFICATION_ONLY_WORKFLOW)
+    if text is None:
+        return errors
+    workflow = v3.legacy.load_yaml_text(text)
+    trigger = _trigger(workflow)
+    if set(trigger) != {"workflow_dispatch", "issue_comment", "pull_request_target"}:
+        errors.append(
+            f"{QUALIFICATION_ONLY_WORKFLOW}: trigger must be workflow_dispatch plus issue_comment plus pull_request_target"
+        )
+    issue_comment = trigger.get("issue_comment", {})
+    issue_types = issue_comment.get("types", []) if isinstance(issue_comment, dict) else []
+    if issue_types != ["created"]:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: issue_comment trigger must be created only")
+    pull_request_target = trigger.get("pull_request_target", {})
+    types = pull_request_target.get("types", []) if isinstance(pull_request_target, dict) else []
+    expected_types = ["closed", "opened", "reopened", "synchronize", "ready_for_review"]
+    if types != expected_types:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: pull_request_target trigger set drift")
+
+    admit = _job(workflow, "admit")
+    qualify = _job(workflow, "qualify")
+    expected_admit_permissions = {
+        "checks": "read",
+        "contents": "read",
+        "issues": "write",
+        "pull-requests": "write",
+    }
+    if admit.get("permissions") != expected_admit_permissions:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: delegated Referee admission permissions drift")
+    if admit.get("environment") != v3.PROTECTED_ENVIRONMENT:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: admit job must bind protected environment release-trust")
+    expected_qualify_permissions = {"contents": "read", "issues": "write"}
+    if qualify.get("permissions") != expected_qualify_permissions:
+        errors.append(
+            f"{QUALIFICATION_ONLY_WORKFLOW}: qualification job permissions must be contents-read plus issue-status-write only"
+        )
+    if qualify.get("environment") != v3.PROTECTED_ENVIRONMENT:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: qualify job must bind protected environment release-trust")
+
+    required_markers = (
+        "github.event_name == 'pull_request_target'",
+        "github.event.action != 'closed'",
+        "github.event.pull_request.draft == false",
+        "startsWith(github.event.pull_request.head.ref, 'remediation/mp-admin-')",
+        "github.event_name == 'issue_comment'",
+        "github.event.issue.pull_request != null",
+        "contains(fromJSON('[\"OWNER\",\"MEMBER\",\"COLLABORATOR\"]'), github.event.comment.author_association)",
+        "startsWith(github.event.comment.body, 'DELEGATED_REMEDIATION_ADMIT ')",
+        "DELEGATED_REMEDIATION_ADMIT ([0-9a-f]{40})",
+        "Resolve exact admission target",
+        "Mint bounded Candidate merge-executor token",
+        "id: candidate-merge-token",
+        "permission-contents: write",
+        "permission-pull-requests: write",
+        "permission-administration: read",
+        "Check out trusted protected implementation",
+        "ref: refs/heads/main",
+        "REFEREE_TOKEN: ${{ github.token }}",
+        "ADMIN_READ_TOKEN: ${{ steps.admin-read-token.outputs.token }}",
+        "CANDIDATE_MERGE_TOKEN: ${{ steps.candidate-merge-token.outputs.token }}",
+        "CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.candidate-merge-token.outputs.app-slug) }}",
+        "administrative_remediation_envelope.py admit-pull-request",
+        '--pr "${{ steps.target.outputs.pr_number }}"',
+        '--head "${{ steps.target.outputs.expected_head }}"',
+        "Publish durable admission result",
+        "DELEGATED REMEDIATION ADMISSION RESULT — MP-ADMIN-REMEDIATION-ENVELOPE-001",
+        "administrative-remediation-admission.json",
+        "permission-contents: read",
+        "permission-pull-requests: read",
+        "permission-issues: read",
+        "permission-administration: write",
+        "administrative_remediation_envelope.py reconcile-actor",
+        "administrative_protected_receipt_live.py qualify",
+        "GCL_PROTECTED_RECEIPT_CONFIG_EVIDENCE: administrative-remediation-ruleset-reconciliation.json",
+        "--control-id MP-ADMIN-REMEDIATION-ENVELOPE-001",
+        "--control-issue 615",
+        "--authorization-comment-id 5349149366",
+        "--receipt-pr 596",
+        "--integration-merge 8ff752b4f2ac28d87575d4f4ef48f564fb18837b",
+        "Publish durable remediation result",
+        "STATUS_TOKEN: ${{ github.token }}",
+        "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/615/comments",
+        "DELEGATED REMEDIATION RUN RESULT — MP-ADMIN-REMEDIATION-ENVELOPE-001",
+        "Safety readback: no #596 mutation",
+        "retention-days: 90",
+    )
+    for marker in required_markers:
+        if marker not in text:
+            errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: missing remediation envelope marker {marker}")
+
+    if text.count(v3.APP_ACTION) != 6:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly six separately scoped App tokens are required")
+    if text.count("${{ github.token }}") != 3:
+        errors.append(
+            f"{QUALIFICATION_ONLY_WORKFLOW}: workflow token must be used exactly for Referee admission, admission-status publication, and qualification-status publication"
+        )
+    if text.count("permission-administration: write") != 1:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly one actor-reconciliation administration-write token is required")
+    if text.count("permission-administration: read") != 2:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly two separately minted administration-read observation tokens are required")
+    if text.count("permission-contents: write") != 1:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly one Candidate contents-write merge token is required")
+    if text.count("permission-pull-requests: write") != 1:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: exactly one Candidate pull-request-write merge token is required")
+    if "permission-issues: write" in text:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: App tokens may not receive issues-write")
+
+    target_index = text.find("Resolve exact admission target")
+    admission_index = text.find("administrative_remediation_envelope.py admit-pull-request")
+    admission_status_index = text.find("Publish durable admission result")
+    reconciliation_index = text.find("administrative_remediation_envelope.py reconcile-actor")
+    qualification_index = text.find("administrative_protected_receipt_live.py qualify")
+    status_index = text.find("Publish durable remediation result")
+    evidence_index = text.find("Preserve remediation and qualification evidence")
+    if min(
+        target_index,
+        admission_index,
+        admission_status_index,
+        reconciliation_index,
+        qualification_index,
+        status_index,
+        evidence_index,
+    ) < 0:
+        errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: remediation sequence is incomplete")
+    elif not target_index < admission_index < admission_status_index < reconciliation_index < qualification_index < status_index < evidence_index:
+        errors.append(
+            f"{QUALIFICATION_ONLY_WORKFLOW}: exact target resolution and Referee admission must precede admission audit, actor reconciliation, qualification, durable status, and retained evidence"
+        )
+
+    for forbidden in (
+        "schedule:",
+        "push:",
+        "workflow_run:",
+        "repository_dispatch:",
+        "pull_request:\n",
+        "permission-checks: write",
+        "administrative_autonomy_runtime.py execute",
+        "administrative_autonomy_0813_closure_preflight.py",
+        "administrative_maintenance_completion_state.json",
+        "gh pr merge",
+        "git push origin main",
+        "/git/refs/heads/main",
+    ):
+        if forbidden in text:
+            errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: forbidden remediation capability {forbidden}")
+    return errors
+
 def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None):
+    texts = v3.legacy.workflow_texts(root) if texts is None else texts
     errors = v3.workflow_coverage_errors(root=root, texts=texts, evidence=evidence)
+    delegated_permission_errors = {
+        f"{RECOVERY_FAILOVER_WORKFLOW}:recover: non-Pages job permissions may not exceed contents: read",
+        f"{QUALIFICATION_ONLY_WORKFLOW}:admit: non-Pages job permissions may not exceed contents: read",
+        f"{QUALIFICATION_ONLY_WORKFLOW}:qualify: non-Pages job permissions may not exceed contents: read",
+    }
+    errors = [error for error in errors if error not in delegated_permission_errors]
+    errors.extend(recovery_failover_errors(texts))
+    errors.extend(remediation_envelope_errors(texts))
+
     commands = _registry_commands(root=root, registry=registry)
     prefix = "ci.yml: missing workflow coverage marker "
     retained: list[str] = []
@@ -94,13 +382,23 @@ def main() -> int:
     print(
         "workflow coverage v3: direct workflow and governed shard-registry execution roots, "
         "active bounded administrative runtime, separated Candidate and Referee identities, "
-        "protected exact-head merge, mirror-only synchronization, manual control-plane gates, "
-        "and claim boundaries are valid"
+        "protected expected-head PR merge, exact Aug13 PR-close recovery failover, trusted-main "
+        "delegated remediation Referee admission with trusted comment fallback, Candidate expected-head merge, "
+        "post-merge qualification, durable admission and issue-status audit, mirror-only synchronization, "
+        "manual control-plane gates, and claim boundaries are valid"
     )
     return 0
 
 
-__all__ = ["ROOT", "workflow_coverage_errors", "main"]
+__all__ = [
+    "ROOT",
+    "RECOVERY_FAILOVER_WORKFLOW",
+    "QUALIFICATION_ONLY_WORKFLOW",
+    "recovery_failover_errors",
+    "remediation_envelope_errors",
+    "workflow_coverage_errors",
+    "main",
+]
 
 if __name__ == "__main__":
     raise SystemExit(main())

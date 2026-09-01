@@ -1,0 +1,59 @@
+{
+  "$schema": "../schemas/administrative_structural_2257_late_recovery_control.schema.json",
+  "schema_version": "1.0.0",
+  "control_id": "MP-ADMIN-STRUCTURAL-2257-LATE-RECOVERY-001",
+  "status": "ACTIVE_ON_PROTECTED_MERGE",
+  "issue": 479,
+  "occurrence": {
+    "procedure_id": "structural_sweep",
+    "occurrence_key": "structural_sweep:2026-08-12T22:57:00Z",
+    "due_at_utc": "2026-08-12T22:57:00Z",
+    "prepare_at_utc": "2026-08-12T16:57:00Z",
+    "freeze_at_utc": "2026-08-12T21:27:00Z",
+    "candidate_issue": 479,
+    "candidate_pull_request": 480,
+    "candidate_branch": "automation/maintenance/structural_sweep-20260812T225700Z",
+    "original_source_protected_head": "4f5adc7fb355657e22f5e13e1de3dfb5cc7d2f01",
+    "ordinary_recovery_expires_at_utc": "2026-08-13T01:57:00Z",
+    "bounded_recovery_expires_at_utc": "2026-08-13T15:45:00Z"
+  },
+  "root_cause": {
+    "first_fail_closed_run": 31649178979,
+    "last_in_window_fail_closed_run": 31655457473,
+    "candidate_frozen": true,
+    "runtime_finalization_pending": true,
+    "competing_candidate_pull_request": 476,
+    "failure": "multiple frozen maintenance candidates require fail-closed triage"
+  },
+  "correction": {
+    "global_recovery_window_minutes_unchanged": 180,
+    "exact_occurrence_only": true,
+    "behind_sync_reconciliation_required": true,
+    "completion_must_be_absent": true,
+    "source_ancestry_required": true,
+    "deadline_reset": false,
+    "cadence_anchor_reset": false,
+    "eventual_recovery_relabels_on_time": false
+  },
+  "authority_boundary": {
+    "human_steward_exact_head_authorization_required": true,
+    "candidate_branch_is_authority": false,
+    "bypass_created": false,
+    "emergency_authority_created": false,
+    "required_checks_weakened": false,
+    "referee_gate_weakened": false,
+    "direct_protected_push_authorized": false,
+    "general_late_recovery_authority_created": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "source_authority_created": false,
+    "certification_authority_created": false,
+    "external_claim_authorized": false,
+    "novelty_or_priority_claim_authorized": false,
+    "publication_authorized": false,
+    "deployment_authorized": false,
+    "product_or_release_authorized": false,
+    "commercial_authority_created": false
+  }
+}

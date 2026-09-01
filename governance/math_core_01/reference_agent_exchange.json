@@ -1,0 +1,41 @@
+{
+  "protocol_version": "MATH-CORE-01/0.1.0",
+  "exchange_id": "MATH-CORE-01-REFERENCE-EXCHANGE",
+  "messages": [
+    {
+      "message_type": "REQUEST",
+      "message_id": "MCORE-M-0001",
+      "request_id": "MCORE-R-0001",
+      "coordinator": {"id": "intellect-reference", "class": "INTELLECT", "execution_id": "run-reference-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "repo:governance/math_core_01/reference_content_set.json", "revision": "sha256:25049c83c3293776e1b42cef90d83589dc1247252e5f67349416bc39115ee46f"},
+      "obligation_id": "MCORE-O-0001",
+      "requested_capability": "CHECK_CONSISTENCY",
+      "goal": "Determine whether the working assertions that n is even and n is odd can hold simultaneously for the same integer n.",
+      "context_refs": ["MCORE-C-0001", "MCORE-C-0002"],
+      "assumptions": ["MCORE-C-0001", "MCORE-C-0002"],
+      "acceptable_evidence": ["EXACT", "FORMAL", "COUNTEREXAMPLE"],
+      "budget": {"wall_seconds": 60, "token_budget": 4096, "tool_call_budget": 8},
+      "created_at": "2026-08-29T09:01:00Z"
+    },
+    {
+      "message_type": "RESPONSE",
+      "message_id": "MCORE-M-0002",
+      "request_id": "MCORE-R-0001",
+      "producer": {"id": "mathsolve-reference", "class": "MATHSOLVE", "execution_id": "run-reference-agent-001"},
+      "base_checkpoint": {"kind": "CONTENT_SET", "locator": "repo:governance/math_core_01/reference_content_set.json", "revision": "sha256:25049c83c3293776e1b42cef90d83589dc1247252e5f67349416bc39115ee46f"},
+      "disposition": "PROPOSALS",
+      "proposals": [
+        {
+          "proposal_type": "CONFLICT",
+          "statement": "The two parity assertions are jointly inconsistent for a single integer under the ordinary parity interpretation.",
+          "dependencies": ["MCORE-C-0001", "MCORE-C-0002"],
+          "evidence_refs": ["repo:governance/math_core_01/artifacts/parity_conflict.json"],
+          "artifact_refs": ["repo:governance/math_core_01/artifacts/parity_reduction.json"],
+          "explanation": "Evenness forces residue 0 modulo 2 while oddness forces residue 1 modulo 2.",
+          "heuristic_score": 1.0
+        }
+      ],
+      "created_at": "2026-08-29T09:01:01Z"
+    }
+  ]
+}

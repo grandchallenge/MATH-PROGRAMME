@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 505,
+  "operation": "OZ-RT-BZ-T3-011-E",
+  "stage": "T3_011_E_POLYNOMIAL_MULTIPLIER_COKERNEL_CLOSURE_AUDIT",
+  "predecessor": {
+    "reviewed_head": "5fecbf600763b5e0e4914000a5c7729213a00393",
+    "merge_commit": "956d5a89a16ec29a369099de049f5e03c98539b0",
+    "required_terminal": "SINGLE_CHANNEL_QUADRATIC_RESPONSE_CLASS_COKERNEL_INVISIBLE"
+  },
+  "clean_question": "does certified degree-0/1/2 annihilation extend structurally to every frozen single-channel polynomial multiplier?",
+  "proof_route": {
+    "direct_higher_degree_response_scan_authorized": false,
+    "polynomial_sampling_authorized": false,
+    "moment_ledgers": [
+      "<w,x^j S(G)>",
+      "<w,x^j G>",
+      "<w,(x+h)^j S(G)>"
+    ],
+    "all_degree_identity": "<w,(x+h)^dS-x^dG>=sum_j binom(d,j)h^(d-j)<w,x^jS>-<w,x^dG>",
+    "semantic_normal_form": "COMMON_DENOMINATOR_EXPANDED_Q_N_K_L_NUMERATOR_V1"
+  },
+  "candidate_bank": {
+    "expected_independent_trials": 311,
+    "expected_mirror_derived_l1": 110,
+    "expected_total_records": 421,
+    "expected_counts": {
+      "n1": 67,
+      "n2": 67,
+      "n3": 67,
+      "k1": 110
+    }
+  },
+  "terminals": {
+    "closure": "POLYNOMIAL_MULTIPLIER_COKERNEL_CLOSURE_CERTIFIED",
+    "finite_residue": "POLYNOMIAL_CLOSURE_REDUCES_TO_FINITE_HIGHER_DEGREE_SET",
+    "semantic_ambiguity": "POLYNOMIAL_CLOSURE_NOT_CERTIFIED__SEMANTIC_FUNCTIONAL_AMBIGUITY",
+    "blocker": "POLYNOMIAL_CLOSURE_NOT_CERTIFIED__CHARACTERIZED_BLOCKER"
+  },
+  "claim_firewall": {
+    "degree_3_or_higher_response_pairing_scan_authorized": false,
+    "pair_or_two_lift_search_authorized": false,
+    "mixed_channel_monomials_authorized": false,
+    "support_or_harmonic_enlargement_authorized": false,
+    "rational_prefactors_authorized": false,
+    "raw_jet_reopening_authorized": false,
+    "recurrence_search_authorized": false,
+    "correction_layer_recombination_authorized": false,
+    "theorem_promotion_authorized": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}

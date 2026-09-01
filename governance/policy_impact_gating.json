@@ -18,7 +18,7 @@
     "dirty_transition": {"content_addressed_reuse": true, "full_replay_if_unattested": true},
     "sentinel": {"cron": "17 */6 * * *", "time_based_replay_repair_allowed": true}
   },
-  "policy_dag": {"shards": ["core", "fixtures", "cmdg", "administrative", "campaigns", "contracts", "docs"], "final_aggregator": "validate-json", "full_policy_sentinel_cron": "43 8 * * *", "irrelevant_shard_behavior": "VERIFIED_NO_OP", "protected_main_docs_build_required": true},
+  "policy_dag": {"shards": ["core", "fixtures", "cmdg", "oz", "administrative", "campaigns", "contracts", "docs", "repository-regression"], "final_aggregator": "validate-json", "full_policy_sentinel_cron": "43 8 * * *", "irrelevant_shard_behavior": "VERIFIED_NO_OP", "protected_main_docs_build_required": true},
   "authority_boundary": {"human_steward_exact_head_authorization_required": true, "required_checks_removed_or_renamed": false, "formal_proof_closure_weakened": false, "formal_semantic_tcb_weakened": false, "bypass_created": false, "emergency_authority_created": false, "direct_protected_push_authorized": false, "human_steward_impersonation_authorized": false},
   "claim_boundaries": {"mathematical_authority_created": false, "source_authority_created": false, "certification_authority_created": false, "novelty_or_priority_claim_created": false, "publication_authority_created": false, "deployment_authority_created": false, "product_or_release_authority_created": false, "commercial_authority_created": false}
 }

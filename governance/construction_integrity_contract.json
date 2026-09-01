@@ -1,0 +1,62 @@
+{
+  "$schema": "../schemas/construction_integrity_contract.schema.json",
+  "schema_version": "1.0.0",
+  "control_id": "MP-CONSTRUCTION-INTEGRITY-001",
+  "issue": 634,
+  "state": "ACTIVE",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "protected_branch": "main",
+  "authority_source": "PROTECTED_MAIN_ONLY",
+  "mutation_protocol": "ATOMIC_REF_COMPARE_AND_SWAP_V1",
+  "namespaces": {
+    "development": "refs/heads/gcl/dev/",
+    "candidate": "refs/heads/gcl/candidate/"
+  },
+  "frozen_candidate_updates_allowed": false,
+  "force_ref_updates_allowed": false,
+  "operator_supplied_authority_allowed": false,
+  "activation_requirements": {
+    "construction_gate_identity_separate": true,
+    "ordinary_agent_write_to_governed_namespaces_prohibited": true,
+    "candidate_namespace_update_prohibited": true,
+    "development_namespace_gate_only_write": true,
+    "protected_main_merge_authority_granted_to_gate": false,
+    "live_ruleset_readback_required": true,
+    "canary_required": true
+  },
+  "targets": [
+    {
+      "target_id": "MP-CONSTRUCTION-INTEGRITY-CANARY-001",
+      "authorized_predecessor": "e2993ddb60d38fbe83ae9a6fe8ea06d49140ecbd",
+      "lifecycle_state": "DEVELOPMENT",
+      "development_ref": "refs/heads/gcl/dev/MP-CONSTRUCTION-INTEGRITY-CANARY-001",
+      "candidate_ref": "refs/heads/gcl/candidate/MP-CONSTRUCTION-INTEGRITY-CANARY-001",
+      "allowed_paths": [
+        "governance/construction_integrity_canary.txt"
+      ],
+      "allowed_path_prefixes": [],
+      "forbidden_path_patterns": [
+        "^\\.github/",
+        "^ci/",
+        "^schemas/"
+      ],
+      "deny_update_when_exact_head_evidence_exists": true
+    }
+  ],
+  "estate_classification": {
+    "mode": "READ_ONLY",
+    "classifications": [
+      "LEGACY_CLEAN",
+      "LEGACY_REQUIRES_RECONSTRUCTION",
+      "OUTSIDE_GOVERNED_SCOPE"
+    ],
+    "classification_creates_merge_authority": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "certificate_issued": false,
+    "publication_authorized": false,
+    "external_claim_authorized": false
+  }
+}

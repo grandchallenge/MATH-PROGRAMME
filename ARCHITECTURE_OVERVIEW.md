@@ -92,6 +92,40 @@ MATHCERT: replays or Lean-checks the certificate before promotion
 
 The lane doctrine lives in `docs/CROSS_PILLAR_LANES.md`.
 
+## MATH-CORE-01 coordination substrate
+
+The three pillars require a shared semantics for live mathematical state. `MATH_CORE_01_CLAIM_BLACKBOARD_PROTOCOL.md` supplies that missing coordination substrate.
+
+```text
+                    INTELLECT
+                 search controller
+                       |
+                       v
+             +-------------------+
+             | CLAIM BLACKBOARD  |
+             | claims            |
+             | obligations       |
+             | conflicts         |
+             | learned search    |
+             | constraints       |
+             | equivalences      |
+             | witnesses         |
+             | certificates      |
+             +---------+---------+
+                       |
+          +------------+-------------+
+          |            |             |
+      MATHFORGE     MATHSOLVE      MATHCERT
+       theory        theory         checker /
+       plugins       plugins        certifier
+```
+
+MATH-CORE-01 is event-sourced and proposal-driven. Theory agents do not mutate canonical mathematical authority directly. They propose propagations, conflicts, witnesses, and equivalences against an exact checkpoint. A reducer validates capabilities, dependencies, and evidence boundaries before accepting blackboard events.
+
+Conflict-derived learning is explicitly operational and assurance-bounded. A heuristic conflict may only bias search; a replayable conflict may support local pruning; hard pruning requires a checked conflict from MATHCERT or a designated checker. Every learned constraint remains `SEARCH_ONLY` until separately stated, supported, and promoted through the canonical claim-ledger and certification route. Certificates are content-addressed evidence carriers and likewise have no direct ledger mutation effect.
+
+The current transport may be GitHub, JSON, CI, and content-addressed artifacts. A future AETHER implementation may carry the same protocol without becoming a semantic dependency.
+
 ## Classification and discovery layer
 
 The three-pillar workflow shares a fourth, programme-owned information layer:

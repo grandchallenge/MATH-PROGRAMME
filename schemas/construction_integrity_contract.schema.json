@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "construction_integrity_contract.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "control_id",
+    "issue",
+    "state",
+    "repository",
+    "protected_branch",
+    "authority_source",
+    "mutation_protocol",
+    "namespaces",
+    "frozen_candidate_updates_allowed",
+    "force_ref_updates_allowed",
+    "operator_supplied_authority_allowed",
+    "activation_requirements",
+    "targets",
+    "estate_classification",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-CONSTRUCTION-INTEGRITY-001"},
+    "issue": {"const": 634},
+    "state": {"enum": ["PROPOSED_NOT_ACTIVE", "ACTIVE"]},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "protected_branch": {"const": "main"},
+    "authority_source": {"const": "PROTECTED_MAIN_ONLY"},
+    "mutation_protocol": {"const": "ATOMIC_REF_COMPARE_AND_SWAP_V1"},
+    "namespaces": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["development", "candidate"],
+      "properties": {
+        "development": {"const": "refs/heads/gcl/dev/"},
+        "candidate": {"const": "refs/heads/gcl/candidate/"}
+      }
+    },
+    "frozen_candidate_updates_allowed": {"const": false},
+    "force_ref_updates_allowed": {"const": false},
+    "operator_supplied_authority_allowed": {"const": false},
+    "activation_requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "construction_gate_identity_separate",
+        "ordinary_agent_write_to_governed_namespaces_prohibited",
+        "candidate_namespace_update_prohibited",
+        "development_namespace_gate_only_write",
+        "protected_main_merge_authority_granted_to_gate",
+        "live_ruleset_readback_required",
+        "canary_required"
+      ],
+      "properties": {
+        "construction_gate_identity_separate": {"const": true},
+        "ordinary_agent_write_to_governed_namespaces_prohibited": {"const": true},
+        "candidate_namespace_update_prohibited": {"const": true},
+        "development_namespace_gate_only_write": {"const": true},
+        "protected_main_merge_authority_granted_to_gate": {"const": false},
+        "live_ruleset_readback_required": {"const": true},
+        "canary_required": {"const": true}
+      }
+    },
+    "targets": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/target"}
+    },
+    "estate_classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "classifications", "classification_creates_merge_authority"],
+      "properties": {
+        "mode": {"const": "READ_ONLY"},
+        "classifications": {
+          "type": "array",
+          "const": [
+            "LEGACY_CLEAN",
+            "LEGACY_REQUIRES_RECONSTRUCTION",
+            "OUTSIDE_GOVERNED_SCOPE"
+          ]
+        },
+        "classification_creates_merge_authority": {"const": false}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": {"const": false},
+      "minProperties": 1
+    }
+  },
+  "$defs": {
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_id",
+        "authorized_predecessor",
+        "lifecycle_state",
+        "development_ref",
+        "candidate_ref",
+        "allowed_paths",
+        "allowed_path_prefixes",
+        "forbidden_path_patterns",
+        "deny_update_when_exact_head_evidence_exists"
+      ],
+      "properties": {
+        "target_id": {"type": "string", "minLength": 1},
+        "authorized_predecessor": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "lifecycle_state": {"enum": ["DEVELOPMENT", "FROZEN_CANDIDATE", "REVIEWED", "ADMITTED"]},
+        "development_ref": {"type": "string", "pattern": "^refs/heads/gcl/dev/.+"},
+        "candidate_ref": {"type": "string", "pattern": "^refs/heads/gcl/candidate/.+"},
+        "allowed_paths": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "allowed_path_prefixes": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "forbidden_path_patterns": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "deny_update_when_exact_head_evidence_exists": {"const": true}
+      },
+      "anyOf": [
+        {"properties": {"allowed_paths": {"minItems": 1}}},
+        {"properties": {"allowed_path_prefixes": {"minItems": 1}}}
+      ]
+    }
+  }
+}

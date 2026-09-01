@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "MP-ADMIN-LOW-FRICTION-EVIDENCE-001",
+  "control_id": "MP-ADMIN-LOW-FRICTION-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "control_issue": 633,
+  "human_steward_authorization_comment": 5362883052,
+  "documentary_basis": [
+    "docs/AGENT_COUNCIL_GOVERNANCE.md",
+    "docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md"
+  ],
+  "authoritative_integrated_artifact": "governance/rebuild_evidence/MP-ADMIN-LOW-FRICTION-001/README.md",
+  "protected_control": "governance/administrative_autonomy_low_friction_control.json",
+  "implementation": {
+    "initial_pr": 636,
+    "exact_head": "5ad99511c60deb38111595533c727f37e7cfcabe",
+    "protected_merge": "6b6838aea2c54044d4aabf221badb386cc4b22c2"
+  },
+  "repairs": [
+    {
+      "kind": "heartbeat_liveness",
+      "pr": 638,
+      "exact_head": "b26ea0f12e09ee822c31edd117da8e6298e4f1f4",
+      "protected_merge": "2cb5bb94095111d979daf29737feeb5df750641e"
+    },
+    {
+      "kind": "ancestry_exact_base_drift",
+      "pr": 646,
+      "exact_head": "653b7c092fa7a823acafccd4e4f70cc6603b968a",
+      "protected_merge": "c67b7be5f4ca27840608088f47f265ebf7d7343a"
+    },
+    {
+      "kind": "persistent_cross_heartbeat_sync_history",
+      "pr": 648,
+      "exact_head": "f6e962d3732757af605182fca98b6a2217728343",
+      "protected_merge": "ca8768a63bc0fd6728c5dcc4cf0ef76aaf59de46"
+    }
+  ],
+  "qualifications": [
+    {
+      "pr": 637,
+      "purpose": "initial live qualification; exposed freshness-classification gap",
+      "protected_merge": "454d60195fa6379e5d2a8a308c072744a789eb92"
+    },
+    {
+      "pr": 647,
+      "purpose": "stale-base synchronization qualification; exposed cross-heartbeat receipt accounting gap",
+      "exact_head": "aeebb92d17e8be553c36ad5781e1ad4e49642cea",
+      "protected_merge": "8fb05f8e0ee96999c0b4d3b9ec8f5c65fccd730e"
+    },
+    {
+      "pr": 649,
+      "purpose": "terminal persistent-history qualification",
+      "initial_head": "4c1269c5421da8a49de9cdccb58f47a6311a89af",
+      "synchronized_head": "dbb9157fbaf4d555c5f7d74f3dc5c23211686709",
+      "sync_event_comment": 5369472176,
+      "referee_disposition_comment": 5369478045,
+      "terminal_receipt_comment": 5369576204,
+      "internal_head_synchronizations": 1,
+      "protected_merge": "8e169e4bb1f45aced58254406180fb61e1a41b52",
+      "signed_merge_verified": true,
+      "merge_ancestor_of_protected_main_verified": true,
+      "lifecycle_terminal": true
+    }
+  ],
+  "claim_boundaries": {
+    "new_authority_created_by_evidence_package": false,
+    "direct_protected_push_authorized": false,
+    "ruleset_mutation_authorized": false,
+    "mathematical_claim_created": false,
+    "certification_claim_created": false,
+    "publication_or_external_claim_authority_created": false
+  },
+  "documentary_status": "AUTHORITATIVE_WHEN_PROTECTED"
+}

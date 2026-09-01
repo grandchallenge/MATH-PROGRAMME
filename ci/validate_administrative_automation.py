@@ -6,7 +6,8 @@ from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
 
-from administrative_automation import derive_completion_state, load_json, validate_completion_state, validate_config
+from administrative_automation import load_json, validate_completion_state, validate_config
+from administrative_receipts import derive_completion_state
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "governance" / "administrative_maintenance_automation.json"
@@ -16,6 +17,18 @@ REPAIR_RECORD_PATH = (
     / "governance"
     / "administrative_receipt_repairs"
     / "MP-ADMIN-RECEIPT-REPAIR-244-001.json"
+)
+REPAIR_476_RECORD_PATH = (
+    ROOT
+    / "governance"
+    / "administrative_receipt_repairs"
+    / "MP-ADMIN-RECEIPT-REPAIR-476-001.json"
+)
+REPAIR_508_RECORD_PATH = (
+    ROOT
+    / "governance"
+    / "administrative_receipt_repairs"
+    / "MP-ADMIN-RECEIPT-REPAIR-508-001.json"
 )
 CANDIDATE_WORKFLOW = ROOT / ".github" / "workflows" / "administrative-maintenance-candidate.yml"
 SYNC_WORKFLOW = ROOT / ".github" / "workflows" / "administrative-maintenance-synchronization.yml"
@@ -33,6 +46,8 @@ SCHEMA_PATHS = [
     ROOT / "schemas" / "administrative_maintenance_automation.schema.json",
     ROOT / "schemas" / "administrative_maintenance_completion_state.schema.json",
     ROOT / "schemas" / "administrative_receipt_repair_244.schema.json",
+    ROOT / "schemas" / "administrative_receipt_repair_476.schema.json",
+    ROOT / "schemas" / "administrative_receipt_repair_508.schema.json",
 ]
 
 
@@ -184,6 +199,56 @@ def validate_repair_record() -> list[str]:
         errors.append("receipt repair rewrites pre-repair completion state")
     if record.get("failure_evidence", {}).get("tracking_issue_closed") is not False:
         errors.append("receipt repair closes issue #243 before protected readback")
+    if not REPAIR_476_RECORD_PATH.is_file():
+        errors.append("MP-ADMIN-RECEIPT-REPAIR-476-001 record missing")
+        return errors
+    schema_476 = load_json(
+        ROOT / "schemas" / "administrative_receipt_repair_476.schema.json"
+    )
+    record_476 = load_json(REPAIR_476_RECORD_PATH)
+    validator_476 = Draft202012Validator(
+        schema_476,
+        format_checker=FormatChecker(),
+    )
+    for error in sorted(
+        validator_476.iter_errors(record_476),
+        key=lambda item: list(item.path),
+    ):
+        location = ".".join(str(part) for part in error.path) or "$"
+        errors.append(
+            f"receipt repair 476 schema violation at {location}: {error.message}"
+        )
+    if record_476.get("bootstrap", {}).get(
+        "protected_completion_declared_before_repair_merge"
+    ) is not False:
+        errors.append("receipt repair 476 rewrites pre-repair completion state")
+    if record_476.get("authority_boundary", {}).get("protected_main_rewritten") is not False:
+        errors.append("receipt repair 476 rewrites protected history")
+    if not REPAIR_508_RECORD_PATH.is_file():
+        errors.append("MP-ADMIN-RECEIPT-REPAIR-508-001 record missing")
+        return errors
+    schema_508 = load_json(
+        ROOT / "schemas" / "administrative_receipt_repair_508.schema.json"
+    )
+    record_508 = load_json(REPAIR_508_RECORD_PATH)
+    validator_508 = Draft202012Validator(
+        schema_508,
+        format_checker=FormatChecker(),
+    )
+    for error in sorted(
+        validator_508.iter_errors(record_508),
+        key=lambda item: list(item.path),
+    ):
+        location = ".".join(str(part) for part in error.path) or "$"
+        errors.append(
+            f"receipt repair 508 schema violation at {location}: {error.message}"
+        )
+    if record_508.get("bootstrap", {}).get(
+        "protected_completion_declared_before_repair_merge"
+    ) is not False:
+        errors.append("receipt repair 508 rewrites pre-repair completion state")
+    if record_508.get("authority_boundary", {}).get("protected_main_rewritten") is not False:
+        errors.append("receipt repair 508 rewrites protected history")
     return errors
 
 
@@ -222,6 +287,8 @@ def main() -> int:
         return 1
     print("MP-ADMIN-AUTOMATION-CLOSURE-001: valid")
     print("MP-ADMIN-RECEIPT-REPAIR-244-001: valid")
+    print("MP-ADMIN-RECEIPT-REPAIR-476-001: valid")
+    print("MP-ADMIN-RECEIPT-REPAIR-508-001: valid")
     return 0
 
 

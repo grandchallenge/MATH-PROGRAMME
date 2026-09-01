@@ -11,15 +11,17 @@
     "shards": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["core", "fixtures", "cmdg", "administrative", "campaigns", "contracts", "docs"],
+      "required": ["core", "fixtures", "cmdg", "oz", "administrative", "campaigns", "contracts", "docs", "repository-regression"],
       "properties": {
         "core": {"$ref": "#/$defs/commands"},
         "fixtures": {"$ref": "#/$defs/commands"},
         "cmdg": {"$ref": "#/$defs/commands"},
+        "oz": {"$ref": "#/$defs/commands"},
         "administrative": {"$ref": "#/$defs/commands"},
         "campaigns": {"$ref": "#/$defs/commands"},
         "contracts": {"$ref": "#/$defs/commands"},
-        "docs": {"$ref": "#/$defs/commands"}
+        "docs": {"$ref": "#/$defs/commands"},
+        "repository-regression": {"$ref": "#/$defs/commands"}
       }
     }
   },

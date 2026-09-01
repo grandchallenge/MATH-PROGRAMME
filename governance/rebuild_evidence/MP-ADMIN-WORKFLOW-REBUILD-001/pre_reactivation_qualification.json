@@ -1,0 +1,341 @@
+{
+  "authority_created": false,
+  "authorization_comment_id": 5349149366,
+  "control_id": "MP-ADMIN-REMEDIATION-ENVELOPE-001",
+  "control_issue": 615,
+  "dependencies": {
+    "jsonschema_version": "4.26.0",
+    "requirements_path": "requirements/policy.txt",
+    "requirements_sha256": "37caf5bff910fbd7dda44433b92df25fbfd989aea829e9bc4ce37e70df1f1782"
+  },
+  "environment": {
+    "distribution": "ubuntu",
+    "distribution_version": "24.04",
+    "image_os": "ubuntu24",
+    "python": "3.12",
+    "python_full": "3.12.13",
+    "runner_arch": "X64",
+    "runner_os": "Linux",
+    "system": "Linux"
+  },
+  "first_pass": {
+    "authoritative_frontier": {
+      "completed_through_utc": "2026-08-10T01:21:00Z",
+      "ledger_digest": "f10a11c6f0c02ddaa344b85d17ecfeb07e2beff603d21a303bfb76552bd0e557",
+      "procedure_id": "administrative_review",
+      "protected_head": "ce370735fa05fb55b5e38c19870ff23c91578110",
+      "receipt_count": 3
+    },
+    "configuration": {
+      "actor_id": 4423678,
+      "actor_type": "Integration",
+      "body_digest": "49e5e3f7b17aba78adaf5e1ef981d79dff0f7e66b19473aaee899057495307f4",
+      "bypass_mode": "pull_request",
+      "mutation_performed": false,
+      "non_target_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "observed_digest": "b984a666bca21ecbe4b4d868d9151948a95af06d9f773f417c9dc822fefe4695",
+      "ruleset_id": 17137629,
+      "state": "CONVERGED",
+      "target_present": true,
+      "verification_basis": "SAME_RUN_RECONCILIATION_EVIDENCE"
+    },
+    "identities": {
+      "administration": {
+        "capabilities": [
+          "READ_CONFIGURATION"
+        ],
+        "identity": {
+          "app_id": 4423678,
+          "login": "gcl-release-trust[bot]",
+          "token_role": "ruleset-readback"
+        },
+        "role": "ADMINISTRATION"
+      },
+      "candidate": {
+        "capabilities": [
+          "MERGE_PULL_REQUEST_EXACT_HEAD",
+          "READ_EVIDENCE",
+          "UPDATE_CANDIDATE_BRANCH",
+          "WRITE_CANDIDATE"
+        ],
+        "identity": {
+          "app_id": 4423678,
+          "login": "gcl-release-trust[bot]",
+          "token_role": "candidate-and-merge-executor"
+        },
+        "role": "CANDIDATE"
+      },
+      "referee": {
+        "capabilities": [
+          "READ_EVIDENCE",
+          "RECORD_REFEREE_DISPOSITION"
+        ],
+        "identity": {
+          "app_id": 15368,
+          "login": "github-actions[bot]",
+          "token_role": "referee"
+        },
+        "role": "REFEREE"
+      },
+      "role_separation_valid": true
+    },
+    "mirror_results": [
+      {
+        "derived_frontier": "2026-08-16T01:21:00Z",
+        "issue": 182,
+        "protected_completion_claim": false,
+        "reason": "mirror ahead of protected ledger",
+        "repository": "grandchallenge/MATH-PROGRAMME",
+        "state": "MIRROR_CONFLICTED"
+      },
+      {
+        "derived_frontier": "2026-08-16T01:21:00Z",
+        "issue": 183,
+        "protected_completion_claim": false,
+        "reason": "mirror ahead of protected ledger",
+        "repository": "grandchallenge/MATH-PROGRAMME",
+        "state": "MIRROR_CONFLICTED"
+      },
+      {
+        "derived_frontier": "2026-08-16T01:21:00Z",
+        "issue": 21,
+        "protected_completion_claim": false,
+        "reason": "mirror ahead of protected ledger",
+        "repository": "grandchallenge/INTELLECT",
+        "state": "MIRROR_CONFLICTED"
+      }
+    ],
+    "protected_head": "ce370735fa05fb55b5e38c19870ff23c91578110",
+    "protected_integration_is_ancestor": true,
+    "protected_integration_merge": "8ff752b4f2ac28d87575d4f4ef48f564fb18837b",
+    "receipt_pull": {
+      "declared_base_sha": "de7d50cc3e93cc3802447821cc3a705ff5e488f0",
+      "disposition_state": "NOT_REQUIRED_BY_CONTROL",
+      "facts": {
+        "branch_state": "BEHIND_CURRENT_BASE",
+        "candidate_head_sha": "02bd05312961eb1a61994a28aecc51a978248bac",
+        "candidate_recorded_base_sha": "de7d50cc3e93cc3802447821cc3a705ff5e488f0",
+        "check_state": "PASSING",
+        "conflict_state": "UNKNOWN",
+        "current_base_sha": "ce370735fa05fb55b5e38c19870ff23c91578110",
+        "raw_advisory": {
+          "mergeable": null,
+          "mergeable_state": "unknown"
+        },
+        "update_branch_state": "NOT_PERMITTED_BY_POLICY"
+      },
+      "head_sha": "02bd05312961eb1a61994a28aecc51a978248bac",
+      "merge_performed": false,
+      "merged": false,
+      "number": 596,
+      "observation_classification": "OBSERVATION_ONLY__NO_MUTATION",
+      "review_state": "PRESENT_FOR_HEAD",
+      "state": "open",
+      "synchronization_performed": false
+    },
+    "safety": {
+      "authority_created": false,
+      "bypass_exercised": false,
+      "direct_protected_push": false,
+      "human_steward_identity_asserted": false,
+      "ledger_mutation_performed": false,
+      "mirror_mutation_performed": false,
+      "mutation_performed": false,
+      "reactivation_authorized": false,
+      "receipt_mutation_performed": false,
+      "ruleset_mutation_performed": false
+    },
+    "suspension_guard_trace": {
+      "bypass_unavailable": true,
+      "candidate_synchronization_unavailable": true,
+      "direct_protected_push_unavailable": true,
+      "eligible_candidate_blocked": true,
+      "human_steward_synthesis_unavailable": true,
+      "ledger_mutation_unavailable": true,
+      "mirror_advancement_unavailable": true,
+      "pending_closure_blocked": true,
+      "protected_merge_unavailable": true,
+      "receipt_staging_blocked": true,
+      "ruleset_mutation_unavailable": true
+    }
+  },
+  "idempotency": {
+    "advisory_observation": {
+      "first": {
+        "conflict_state": "UNKNOWN",
+        "raw_advisory": {
+          "mergeable": null,
+          "mergeable_state": "unknown"
+        }
+      },
+      "second": {
+        "conflict_state": "UNKNOWN",
+        "raw_advisory": {
+          "mergeable": null,
+          "mergeable_state": "unknown"
+        }
+      }
+    },
+    "first_digest": "ced69f8e9badb3f0c4e359e670de2102c3f6ca2b21c81bb28ae3aad9a75863de",
+    "ignored_advisory_fields": [
+      "receipt_pull.facts.conflict_state",
+      "receipt_pull.facts.raw_advisory"
+    ],
+    "second_digest": "ced69f8e9badb3f0c4e359e670de2102c3f6ca2b21c81bb28ae3aad9a75863de",
+    "stable": true
+  },
+  "lane_state": "SUSPENDED",
+  "mutation_performed": false,
+  "protected_head_end": "ce370735fa05fb55b5e38c19870ff23c91578110",
+  "protected_head_start": "ce370735fa05fb55b5e38c19870ff23c91578110",
+  "reactivation_authorized": false,
+  "run_identity": {
+    "github_run_attempt": "1",
+    "github_run_id": "32349281060",
+    "github_sha": "ce370735fa05fb55b5e38c19870ff23c91578110",
+    "github_workflow_ref": "grandchallenge/MATH-PROGRAMME/.github/workflows/administrative-protected-receipt-live-qualification.yml@refs/heads/main"
+  },
+  "schema_version": "2.0.0",
+  "second_pass": {
+    "authoritative_frontier": {
+      "completed_through_utc": "2026-08-10T01:21:00Z",
+      "ledger_digest": "f10a11c6f0c02ddaa344b85d17ecfeb07e2beff603d21a303bfb76552bd0e557",
+      "procedure_id": "administrative_review",
+      "protected_head": "ce370735fa05fb55b5e38c19870ff23c91578110",
+      "receipt_count": 3
+    },
+    "configuration": {
+      "actor_id": 4423678,
+      "actor_type": "Integration",
+      "body_digest": "49e5e3f7b17aba78adaf5e1ef981d79dff0f7e66b19473aaee899057495307f4",
+      "bypass_mode": "pull_request",
+      "mutation_performed": false,
+      "non_target_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "observed_digest": "b984a666bca21ecbe4b4d868d9151948a95af06d9f773f417c9dc822fefe4695",
+      "ruleset_id": 17137629,
+      "state": "CONVERGED",
+      "target_present": true,
+      "verification_basis": "SAME_RUN_RECONCILIATION_EVIDENCE"
+    },
+    "identities": {
+      "administration": {
+        "capabilities": [
+          "READ_CONFIGURATION"
+        ],
+        "identity": {
+          "app_id": 4423678,
+          "login": "gcl-release-trust[bot]",
+          "token_role": "ruleset-readback"
+        },
+        "role": "ADMINISTRATION"
+      },
+      "candidate": {
+        "capabilities": [
+          "MERGE_PULL_REQUEST_EXACT_HEAD",
+          "READ_EVIDENCE",
+          "UPDATE_CANDIDATE_BRANCH",
+          "WRITE_CANDIDATE"
+        ],
+        "identity": {
+          "app_id": 4423678,
+          "login": "gcl-release-trust[bot]",
+          "token_role": "candidate-and-merge-executor"
+        },
+        "role": "CANDIDATE"
+      },
+      "referee": {
+        "capabilities": [
+          "READ_EVIDENCE",
+          "RECORD_REFEREE_DISPOSITION"
+        ],
+        "identity": {
+          "app_id": 15368,
+          "login": "github-actions[bot]",
+          "token_role": "referee"
+        },
+        "role": "REFEREE"
+      },
+      "role_separation_valid": true
+    },
+    "mirror_results": [
+      {
+        "derived_frontier": "2026-08-16T01:21:00Z",
+        "issue": 182,
+        "protected_completion_claim": false,
+        "reason": "mirror ahead of protected ledger",
+        "repository": "grandchallenge/MATH-PROGRAMME",
+        "state": "MIRROR_CONFLICTED"
+      },
+      {
+        "derived_frontier": "2026-08-16T01:21:00Z",
+        "issue": 183,
+        "protected_completion_claim": false,
+        "reason": "mirror ahead of protected ledger",
+        "repository": "grandchallenge/MATH-PROGRAMME",
+        "state": "MIRROR_CONFLICTED"
+      },
+      {
+        "derived_frontier": "2026-08-16T01:21:00Z",
+        "issue": 21,
+        "protected_completion_claim": false,
+        "reason": "mirror ahead of protected ledger",
+        "repository": "grandchallenge/INTELLECT",
+        "state": "MIRROR_CONFLICTED"
+      }
+    ],
+    "protected_head": "ce370735fa05fb55b5e38c19870ff23c91578110",
+    "protected_integration_is_ancestor": true,
+    "protected_integration_merge": "8ff752b4f2ac28d87575d4f4ef48f564fb18837b",
+    "receipt_pull": {
+      "declared_base_sha": "de7d50cc3e93cc3802447821cc3a705ff5e488f0",
+      "disposition_state": "NOT_REQUIRED_BY_CONTROL",
+      "facts": {
+        "branch_state": "BEHIND_CURRENT_BASE",
+        "candidate_head_sha": "02bd05312961eb1a61994a28aecc51a978248bac",
+        "candidate_recorded_base_sha": "de7d50cc3e93cc3802447821cc3a705ff5e488f0",
+        "check_state": "PASSING",
+        "conflict_state": "UNKNOWN",
+        "current_base_sha": "ce370735fa05fb55b5e38c19870ff23c91578110",
+        "raw_advisory": {
+          "mergeable": null,
+          "mergeable_state": "unknown"
+        },
+        "update_branch_state": "NOT_PERMITTED_BY_POLICY"
+      },
+      "head_sha": "02bd05312961eb1a61994a28aecc51a978248bac",
+      "merge_performed": false,
+      "merged": false,
+      "number": 596,
+      "observation_classification": "OBSERVATION_ONLY__NO_MUTATION",
+      "review_state": "PRESENT_FOR_HEAD",
+      "state": "open",
+      "synchronization_performed": false
+    },
+    "safety": {
+      "authority_created": false,
+      "bypass_exercised": false,
+      "direct_protected_push": false,
+      "human_steward_identity_asserted": false,
+      "ledger_mutation_performed": false,
+      "mirror_mutation_performed": false,
+      "mutation_performed": false,
+      "reactivation_authorized": false,
+      "receipt_mutation_performed": false,
+      "ruleset_mutation_performed": false
+    },
+    "suspension_guard_trace": {
+      "bypass_unavailable": true,
+      "candidate_synchronization_unavailable": true,
+      "direct_protected_push_unavailable": true,
+      "eligible_candidate_blocked": true,
+      "human_steward_synthesis_unavailable": true,
+      "ledger_mutation_unavailable": true,
+      "mirror_advancement_unavailable": true,
+      "pending_closure_blocked": true,
+      "protected_merge_unavailable": true,
+      "receipt_staging_blocked": true,
+      "ruleset_mutation_unavailable": true
+    }
+  },
+  "state": "LIVE_QUALIFICATION_GREEN__REACTIVATION_NOT_AUTHORIZED"
+}

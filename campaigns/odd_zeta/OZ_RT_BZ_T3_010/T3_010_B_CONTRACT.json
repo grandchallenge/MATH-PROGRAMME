@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 403,
+  "operation": "SYMMETRY_REDUCED_CHANNEL_HARMONIC_BLOCK_WITH_SHELL_STRATA_001",
+  "stage": "T3_010_B_CORRECTION_FLUX_EXACT_COEFFICIENT_MATRIX_RANK_CONSISTENCY_GATE",
+  "t3_010_a_checkpoint": {
+    "validated_head": "78186e06e3291b7b85d4d78e3a44218890f07dd9",
+    "producer_blob": "d5cdcecb4d0bbdd3e6b71f1df4340928e8ad402e",
+    "contract_blob": "28f6617bca38a96eee3bbc9517874cd6fd07bb14",
+    "required_terminal": "T3_010_A_COMPLETE__CORRECTION_FLUX_MATRIX_RANK_GATE_PENDING"
+  },
+  "mathematical_predecessor": {
+    "protected_merge": "6b4761859174c39ea95438ea415948c16db91745",
+    "tree": "eeecb37d5f8f55f67aee740efe41923e59c769e6",
+    "coefficient_layer_sha256": "90d067ae59790fab8648d006635c14950359b66eb8b57361e61d5b47b2b3af40"
+  },
+  "bounded_correction_class": {
+    "id": "SUPPORT_LOCKED_ORIENTED_ONE_BODY_DEGREE0_WEIGHT_CORRECTION_001",
+    "independent_channels": ["n1", "n2", "n3", "k1"],
+    "mirror_derived_channel": "l1",
+    "harmonic_blocks": ["weight1", "weight2", "weight3", "weight4"],
+    "shell_strata": 25,
+    "candidate_support": "For each scalar family and block, exactly the oriented primitive one-body monomials already present in that scalar's protected T3-009 coefficient support and touching the selected block.",
+    "new_harmonic_monomials": false,
+    "generic_198_raw_jet_reopened": false,
+    "adaptive_basis_growth": false
+  },
+  "coefficient_envelope": {
+    "field": "Q",
+    "degree": 0,
+    "normalization": "one independent rational coefficient per declared scalar-family x support-locked correction weight",
+    "rational_prefactor_search": false,
+    "post_rank_basis_growth": false
+  },
+  "local_correction_response": {
+    "principle": "A correction weight G attached to a protected regularized flux family contributes the exact shifted-scalar product-rule coefficient Delta_channel(G)=G(shift)-G.",
+    "construction_order": "Construct the oriented primitive harmonic shift exactly first, including protected pinv increments, then apply the exact shell-stratum restriction.",
+    "protected_pinv": "pinv_r(x)=x^(-r) for integer x>0 and 0 for integer x<=0",
+    "scope": "Necessary local coefficient response only. Cross-channel shared-coefficient compatibility, cross-block leakage, finite-boundary assembly, and full flux substitution are deferred to later exact solution extraction and recombination."
+  },
+  "block_projection": {
+    "membership": "An exact coefficient coordinate belongs to a block projection when its oriented primitive harmonic monomial contains at least one letter whose protected k<->l orbit representative lies in that block.",
+    "overlap_permitted": true,
+    "interpretation": "The four block systems are local necessary projections, not a disjoint proof decomposition."
+  },
+  "rank_consistency": {
+    "equation": "A_c x = b_c",
+    "coordinate_basis": "scalar label x oriented primitive harmonic monomial x exact affine-Laurent signature",
+    "coefficient_rank": "rank_Q(A_c)",
+    "augmented_rank": "rank_Q([A_c|b_c])",
+    "exactly_inconsistent": "rank_Q([A_c|b_c]) > rank_Q(A_c)",
+    "consistent_unique": "rank_Q([A_c|b_c]) = rank_Q(A_c) = number_of_unknowns",
+    "consistent_affine": "rank_Q([A_c|b_c]) = rank_Q(A_c) < number_of_unknowns",
+    "floating_point": false,
+    "modular_rank": false,
+    "sampled_rank": false
+  },
+  "mirror_policy": {
+    "l1_independent_search": false,
+    "required_exact_check": "Mirror every l1 target coordinate, correction column, scalar label, primitive letter, ordinary affine factor, and protected pinv factor back to k1 and require exact matrix equality on all 100 block x mirrored-stratum cells."
+  },
+  "positive_classification_boundary": {
+    "meaning": "Exact local viability only.",
+    "solution_extraction": false,
+    "candidate_certificate": false,
+    "full_symbolic_substitution": false,
+    "full_recombination": false,
+    "final_n_holonomic_search": false
+  },
+  "negative_classification_boundary": {
+    "meaning": "An EXACTLY_INCONSISTENT cell exactly excludes only SUPPORT_LOCKED_ORIENTED_ONE_BODY_DEGREE0_WEIGHT_CORRECTION_001 for that local projection.",
+    "higher_degree_excluded": false,
+    "expanded_support_excluded": false,
+    "other_correction_architectures_excluded": false,
+    "t3_refuted": false
+  },
+  "execution_discipline": {
+    "blind_or_unbounded_creative_telescoping": false,
+    "recurrence_fitting_to_zero_Dn": false,
+    "generic_198_raw_jet_reopen": false,
+    "adaptive_post_result_basis_growth": false,
+    "solution_extraction_inside_rank_gate": false,
+    "final_n_holonomic_search": false
+  },
+  "required_outputs": {
+    "independent_cells": 400,
+    "mirror_derived_l1_cells": 100,
+    "exact_rank_and_augmented_rank_for_every_structurally_active_independent_cell": true,
+    "independent_verifier": true,
+    "mutation_tests": true
+  },
+  "finite_sampling_used_as_sum_proof": false,
+  "residual_sum_zero_proved": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+}

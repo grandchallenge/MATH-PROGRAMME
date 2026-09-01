@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "administrative_review_0121_late_recovery_control.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "control_id", "status", "issue", "protected_base_at_opening", "occurrence", "root_cause", "correction", "authority_boundary", "claim_boundaries"],
+  "properties": {
+    "$schema": {"const": "../schemas/administrative_review_0121_late_recovery_control.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "control_id": {"const": "MP-ADMIN-ADMINISTRATIVE-0121-LATE-RECOVERY-001"},
+    "status": {"const": "ACTIVE_ON_PROTECTED_MERGE"},
+    "issue": {"const": 549},
+    "protected_base_at_opening": {"const": "2dfe02c61a5c9b29e40c0df169589e9fe3d69216"},
+    "occurrence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["procedure_id", "occurrence_key", "due_at_utc", "prepare_at_utc", "freeze_at_utc", "candidate_issue", "candidate_pull_request", "candidate_branch", "manifest_path", "record_id", "original_source_protected_head", "stale_finalized_head", "ordinary_recovery_expires_at_utc", "bounded_recovery_expires_at_utc"],
+      "properties": {
+        "procedure_id": {"const": "administrative_review"},
+        "occurrence_key": {"const": "administrative_review:2026-08-16T01:21:00Z"},
+        "due_at_utc": {"const": "2026-08-16T01:21:00Z"},
+        "prepare_at_utc": {"const": "2026-08-15T13:21:00Z"},
+        "freeze_at_utc": {"const": "2026-08-15T22:21:00Z"},
+        "candidate_issue": {"const": 522},
+        "candidate_pull_request": {"const": 523},
+        "candidate_branch": {"const": "automation/maintenance/administrative_review-20260816T012100Z"},
+        "manifest_path": {"const": "governance/administrative_candidates/administrative_review-20260816T012100Z.json"},
+        "record_id": {"const": "MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-08-16-001"},
+        "original_source_protected_head": {"const": "bfaf3849b7528a1d98317550c8f23d6e323a4f17"},
+        "stale_finalized_head": {"const": "efaf7ec2dc31270ae6965c1acbdaf916b94705f5"},
+        "ordinary_recovery_expires_at_utc": {"const": "2026-08-16T04:21:00Z"},
+        "bounded_recovery_expires_at_utc": {"const": "2026-08-19T01:21:00Z"}
+      }
+    },
+    "root_cause": {
+      "type": "object", "additionalProperties": false,
+      "required": ["candidate_frozen", "runtime_finalized", "referee_authorized_historically", "protected_merge_performed", "failure", "environmental_repair_merge"],
+      "properties": {
+        "candidate_frozen": {"const": true}, "runtime_finalized": {"const": true},
+        "referee_authorized_historically": {"const": true}, "protected_merge_performed": {"const": false},
+        "failure": {"const": "post-disposition check run failed: advisory-report=cancelled"},
+        "environmental_repair_merge": {"const": "1b4d742094d487c7ef503a23ed88e99b733fe0a8"}
+      }
+    },
+    "correction": {
+      "type": "object", "additionalProperties": false,
+      "required": ["global_recovery_window_minutes_unchanged", "exact_occurrence_only", "behind_sync_reconciliation_required", "completion_must_be_absent", "source_ancestry_required", "record_identity_must_be_preserved", "fresh_exact_head_referee_required", "deadline_reset", "cadence_anchor_reset", "historical_failed_closed_evidence_preserved", "intervening_occurrences_superseded", "structural_frontier_mutation_authorized"],
+      "properties": {
+        "global_recovery_window_minutes_unchanged": {"const": 180}, "exact_occurrence_only": {"const": true},
+        "behind_sync_reconciliation_required": {"const": true}, "completion_must_be_absent": {"const": true},
+        "source_ancestry_required": {"const": true}, "record_identity_must_be_preserved": {"const": true},
+        "fresh_exact_head_referee_required": {"const": true}, "deadline_reset": {"const": false},
+        "cadence_anchor_reset": {"const": false}, "historical_failed_closed_evidence_preserved": {"const": true},
+        "intervening_occurrences_superseded": {"const": false}, "structural_frontier_mutation_authorized": {"const": false}
+      }
+    },
+    "authority_boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["human_steward_exact_head_authorization_required", "candidate_branch_is_authority", "stale_referee_approval_is_authority", "bypass_created", "emergency_authority_created", "required_checks_weakened", "referee_gate_weakened", "direct_protected_push_authorized", "general_late_recovery_authority_created", "structural_1809_authority_inherited"],
+      "properties": {
+        "human_steward_exact_head_authorization_required": {"const": true}, "candidate_branch_is_authority": {"const": false},
+        "stale_referee_approval_is_authority": {"const": false}, "bypass_created": {"const": false},
+        "emergency_authority_created": {"const": false}, "required_checks_weakened": {"const": false},
+        "referee_gate_weakened": {"const": false}, "direct_protected_push_authorized": {"const": false},
+        "general_late_recovery_authority_created": {"const": false}, "structural_1809_authority_inherited": {"const": false}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mathematical_target_proved", "source_authority_created", "certification_authority_created", "external_claim_authorized", "novelty_or_priority_claim_authorized", "publication_authorized", "deployment_authorized", "product_or_release_authorized", "commercial_authority_created"],
+      "properties": {
+        "mathematical_target_proved": {"const": false}, "source_authority_created": {"const": false},
+        "certification_authority_created": {"const": false}, "external_claim_authorized": {"const": false},
+        "novelty_or_priority_claim_authorized": {"const": false}, "publication_authorized": {"const": false},
+        "deployment_authorized": {"const": false}, "product_or_release_authorized": {"const": false},
+        "commercial_authority_created": {"const": false}
+      }
+    }
+  }
+}
