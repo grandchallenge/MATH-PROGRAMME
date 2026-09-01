@@ -5,6 +5,7 @@
 | GOV-AGENT-COUNCIL-001 | governance bundle | MATH-PROGRAMME | `docs/MATH_PROGRAMME_AGENT_COUNCIL.md` | active | `ADR-0001`; `ADR-0007`; `ADR-0008`; `ADR-0009`; `ADR-0010`; `ADR-0011`; `ADR-0012`; `ADR-0013`; `ADR-0014`; `ADR-0015` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `templates/agent_review.yaml` | 2026-07-27 | reviewed |
 | MATH-TAXONOMY-001 | classification authority bundle | MATH-PROGRAMME | `CLASSIFICATION_DISCOVERY_STANDARD.md`; `classification/source_registry.json`; `classification/mappings/` | Seven-domain mappings independently reviewed and qualified; receipt-head reapproval and protected admission pending; TIB serialization remains unqualified | `ADR-0020`; issues #468 and #469 | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | PR #470 review `4916844784` by `jimsteeg` at `630f103c...`; receipt reapproval pending | 2026-08-12 | pending |
 | CMDG-COUNCIL-AUTHORITY-001 | programme authority bundle | MATH-PROGRAMME | `governance/cmdg_council_authority_closure_001.json` | Human Steward ratified with Council corrections; protected authority active; C01-C08 remain stage-bounded | `ADR-0017` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `docs/CMDG_COUNCIL_DELIBERATION_001.md`; PR #289 comment `5225270603`; issue #290 | 2026-08-08 | reviewed |
+| MATH-CORE-ARCH-AUTHORITY-001 | programme architecture authority bundle | MATH-PROGRAMME | `governance/math_core_01_architecture_authority_closure_001.json` | Human Steward ratified with Council corrections; architecture payload protected-admitted; final documentary closure activates fully memorialized authority; C03-C07 remain stage-bounded capability gates | `ADR-0021` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `docs/MATH_CORE_01_COUNCIL_DELIBERATION_001.md`; PR #723; PR #729 review `5073310735`; issue #721 comment `5487797948` | 2026-09-01 | pending closure review |
 | DOCS-PUBLIC-001 | documentation bundle | MATH-PROGRAMME | `docs/domains/index.md` | completed; eight-domain public coverage | `ADR-0008`; `ADR-0009`; `ADR-0014` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml` | 2026-07-26 | reviewed |
 | PROMOTION-REGISTER-001 | documentary promotion register | MATH-PROGRAMME | `docs/CAMPAIGN_PROMOTION_REGISTER.md` | active; records promoted WP00 entries and retained blockers | `ADR-0009`; `ADR-0010`; `ADR-0011` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/documentation/MKDOCS-COVERAGE.agent_review.yaml` | 2026-07-26 | reviewed |
 | DOCS-DOCUMENTARY-001 | documentary library | MATH-PROGRAMME | `docs/documentaries/ARTIFACT_MANIFEST.json` | eight manifest-discovered browser-native editions; one reference, two full, five orientation; release-class artifacts remain `metadata_only` | `ADR-0010`; `ADR-0015` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/documentation/DOCUMENTARY-LIBRARY.agent_review.yaml`; `reviews/union_closed/UC-DOC-WP01.agent_review.yaml` | 2026-07-27 | reviewed |
@@ -53,13 +54,3 @@
 2. The authoritative reference points to the integrated artifact, not a transient draft.
 3. Superseded references remain recoverable through version control and decision records.
 4. A ledger entry may not be marked reviewed while review provenance is incomplete.
-5. A blocking cross-document conflict changes the Amanuensis state to `blocked`.
-6. Mathematical promotion is never inferred from ledger status alone.
-7. Publication status changes visibility and editorial readiness; it does not change claim status.
-8. Schema-bound lifecycle tokens and campaign-specific dispositions remain distinct.
-9. Public documentation, workflow, and campaign authority follow ADR-0008 through ADR-0017 and their explicit records.
-10. Repository merge, tests, and CI success do not override an explicit blocking review.
-11. Campaign, CI, test, and experiment Python surfaces require governed discovery and execution routes.
-12. Pages may deploy only the exact policy-produced site artifact for a validated commit that remains current `main`.
-13. Exact top-level pins do not assert a complete transitive hash lock.
-14. Bounded interface fixtures remain software evidence and cannot promote continuum or metamathematical claims.
