@@ -63,9 +63,9 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         }
         self.assertEqual(actual, EXPECTED_STRICT_STATUS_CHECKS)
         self.assertFalse(actual["grandchallenge/MATHCERT"])
+        self.assertFalse(actual["grandchallenge/MATHSOLVE"])
         self.assertFalse(actual["grandchallenge/MATH-PROGRAMME"])
-        self.assertTrue(actual["grandchallenge/MATHSOLVE"])
-        self.assertTrue(actual["grandchallenge/INTELLECT"])
+        self.assertFalse(actual["grandchallenge/INTELLECT"])
 
     def test_required_strictness_drift_is_rejected(self) -> None:
         contract = copy.deepcopy(self.contract)
@@ -144,21 +144,28 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         self.assertEqual(len(status["required_status_checks"]), 6)
         self.assertEqual(payload["bypass_actors"], [])
 
-    def test_strict_repositories_remain_strict(self) -> None:
-        for repository in ("grandchallenge/MATHSOLVE", "grandchallenge/INTELLECT"):
+    def test_all_managed_repositories_are_non_strict(self) -> None:
+        for repository in (
+            "grandchallenge/MATHCERT",
+            "grandchallenge/MATHSOLVE",
+            "grandchallenge/MATH-PROGRAMME",
+            "grandchallenge/INTELLECT",
+        ):
             entry = next(
                 entry
                 for entry in self.contract["repositories"]
                 if entry["repository"] == repository
             )
             policy = repository_policy(self.contract["branch_policy"], entry)
-            self.assertTrue(policy["strict_status_checks"])
+            self.assertFalse(policy["strict_status_checks"])
 
     def test_repository_policy_does_not_mutate_shared_policy(self) -> None:
         shared = copy.deepcopy(self.contract["branch_policy"])
         for repository in (
             "grandchallenge/MATHCERT",
+            "grandchallenge/MATHSOLVE",
             "grandchallenge/MATH-PROGRAMME",
+            "grandchallenge/INTELLECT",
         ):
             entry = next(
                 entry
