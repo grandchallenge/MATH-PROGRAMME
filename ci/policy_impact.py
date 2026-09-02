@@ -74,6 +74,7 @@ def shard_impacts(paths:list[str])->tuple[list[str],list[str]]:
         if p.startswith('fixtures/algebraic/') or p.startswith('fixtures/formal/') or any(t in lower for t in ('grobner','chaidez','researchmath','log_gcd')):active.add('fixtures');matched=True
         if p.startswith('fixtures/cmdg/') or 'cmdg' in lower:active.add('cmdg');matched=True
         if any(t in lower for t in ('administrative','maintenance','autonomy')):active.add('administrative');matched=True
+        if any(t in lower for t in ('release_trust','intellect_profile')) and (p.startswith('ci/') or p.startswith('tests/') or p.startswith('governance/') or p.startswith('.github/workflows/')):active.update({'administrative','contracts'});matched=True
         if p.startswith('campaigns/') or 'campaign' in lower:active.add('campaigns');matched=True
         if p=='requirements/policy.txt' or p.startswith('.github/workflows/') or p.startswith('experiments/'):active.add('contracts');matched=True
         if p.startswith('ci/') and any(t in lower for t in ('programme','workflow','policy','repository_execution','retired')):active.add('contracts');matched=True
@@ -84,7 +85,7 @@ def shard_impacts(paths:list[str])->tuple[list[str],list[str]]:
             elif p.startswith('tests/test_oz'):active.add('oz')
             elif 'cmdg' in lower:active.add('cmdg')
             elif 'fixture' in lower:active.add('fixtures')
-            elif 'administrative' in lower:active.add('administrative')
+            elif any(t in lower for t in ('administrative','release_trust','intellect_profile')):active.update({'administrative','contracts'})
             elif 'campaign' in lower:active.add('campaigns')
             else:unknown.append(p)
             matched=True
