@@ -12,7 +12,8 @@ REGISTRY_PATH=ROOT/'governance/policy_shard_registry.json'; REGISTRY_SCHEMA=ROOT
 CONTRACT_MANIFEST_PATH=ROOT/'governance/contract_test_manifest.json'
 CMDG_GATE_PATH=ROOT/'governance/cmdg_workflow_impact_gating.json'
 ALL_SHARDS=('core','fixtures','cmdg','oz','administrative','campaigns','contracts','docs','repository-regression'); ALL_LANES=('log-gcd','pc-wp04','union-closed-mathcert')
-FULL_FANOUT_PATHS={'.github/workflows/ci.yml','.github/workflows/cmdg-postmerge.yml','ci/policy_impact.py','ci/test_policy_impact.py','ci/cmdg_postmerge_readback.py','ci/run_policy_shard.py','ci/run_unittest_modules.py','ci/validate_policy_reachability.py','ci/test_policy_reachability.py','ci/validate_repository_execution.py','ci/test_repository_execution.py','ci/validate_workflow_semantics.py','ci/test_workflow_semantics.py','governance/policy_impact_gating.json','governance/policy_shard_registry.json','governance/contract_test_manifest.json','governance/cmdg_workflow_impact_gating.json','schemas/policy_impact_gating.schema.json','schemas/policy_shard_registry.schema.json','schemas/cmdg_workflow_impact_gating.schema.json','schemas/cmdg_postmerge_readback.schema.json'}
+FULL_FANOUT_PATHS={'.github/workflows/ci.yml','.github/workflows/cmdg-postmerge.yml','ci/cmdg_postmerge_readback.py','ci/run_policy_shard.py','ci/validate_policy_reachability.py','ci/test_policy_reachability.py','ci/validate_repository_execution.py','ci/test_repository_execution.py','ci/validate_workflow_semantics.py','ci/test_workflow_semantics.py','governance/policy_impact_gating.json','governance/policy_shard_registry.json','governance/contract_test_manifest.json','governance/cmdg_workflow_impact_gating.json','schemas/policy_impact_gating.schema.json','schemas/policy_shard_registry.schema.json','schemas/cmdg_workflow_impact_gating.schema.json','schemas/cmdg_postmerge_readback.schema.json'}
+CONTROL_PLANE_PATHS={'ci/policy_impact.py','ci/test_policy_impact.py','ci/run_unittest_modules.py'}
 ZERO_SHA='0'*40
 class ImpactError(RuntimeError):pass
 def load_json(path:Path)->dict:
@@ -68,6 +69,7 @@ def shard_impacts(paths:list[str])->tuple[list[str],list[str]]:
     if any(p in FULL_FANOUT_PATHS for p in paths):return list(ALL_SHARDS),[]
     for p in paths:
         lower=p.lower();matched=False
+        if p in CONTROL_PLANE_PATHS:active.add('contracts');matched=True
         if p.startswith('docs/') or p in {'mkdocs.yml','requirements/docs.txt'}:active.add('docs');matched=True
         if p.startswith('handoffs/'):active.update({'administrative','campaigns'});matched=True
         if p.startswith('tools/render_visual_pedagogy') and p.endswith('.py'):active.update({'contracts','docs'});matched=True
