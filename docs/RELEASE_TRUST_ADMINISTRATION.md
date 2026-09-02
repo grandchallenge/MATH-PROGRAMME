@@ -10,7 +10,9 @@ The governed contract is `governance/release_trust_admin_contract.json`. The exe
 
 Each managed repository currently sets `strict_status_checks: false` in its repository entry. This is deliberate: a mergeable candidate whose material closure remains valid does not need an update-branch synchronization merely because protected `main` advanced.
 
-Required status contexts remain exact and repository-specific. In particular, INTELLECT's current Release Trust profile includes `routing-enforcement`. GitHub account-level required approvals remain zero; review-thread resolution and the other admitted protection rules remain enforced.
+Required status contexts in the **checked-in contract** remain exact and repository-specific. The admitted INTELLECT contract includes `routing-enforcement`. GitHub account-level required approvals remain zero; review-thread resolution and the other admitted protection rules remain enforced by the effective repository policy.
+
+A checked-in contract is not proof that live GitHub state already matches it. Always read the live ruleset before asserting application. At the current documentary reconciliation, live INTELLECT ruleset `19964077` is non-strict and zero-bypass but still lacks `routing-enforcement`; this is the outstanding Phase-1 GH-OS protection/readback obligation recorded in the active handoff and campaign guide.
 
 Do not infer the effective strictness from the shared `branch_policy` template alone. `ci/release_trust_admin.py` derives the effective repository policy by applying the repository-specific entry, and the tests require the resulting strictness to be false for every managed repository.
 
@@ -34,7 +36,7 @@ The workflow validates the checked-in contract, applies authorized settings when
 
 ## Branch policy
 
-The effective managed policy requires:
+The effective admitted policy requires:
 
 - exact repository-specific required status contexts;
 - `strict_status_checks: false` for the currently managed repositories;
@@ -44,7 +46,7 @@ The effective managed policy requires:
 - no force pushes or branch deletion;
 - the admitted bypass-actor state read back exactly rather than inferred from prose.
 
-The dedicated GH-OS routing ruleset is separate from the Programme Release Trust profile. For MATH-PROGRAMME, ruleset `21969152` independently requires `routing-enforcement` with non-strict status policy and no bypass actors. For INTELLECT, `routing-enforcement` is included in the Release Trust required-context set.
+The dedicated GH-OS routing ruleset is separate from the Programme Release Trust profile. For MATH-PROGRAMME, ruleset `21969152` independently requires `routing-enforcement` with non-strict status policy and no bypass actors. For INTELLECT, `routing-enforcement` is present in the checked-in Release Trust required-context set; it must not be described as live protection until ruleset readback confirms it.
 
 Council, Adversary, Formalist, Amanuensis, and Referee records remain available where their material jurisdiction applies. They are not replaced by GitHub account-level approval, and they are not universal routine merge gates.
 
@@ -59,6 +61,8 @@ A Release Trust operation should record enough evidence to establish:
 - exact readback from GitHub;
 - publication artifact identity where the Pages contract is being verified;
 - workflow/run identity for the administration transaction.
+
+Contract conformance is established by live readback, not by intent. A mismatch between the checked-in contract and live ruleset is an administrative defect to repair; do not rewrite documentation to pretend it is already applied.
 
 Readback establishes protected administrative state. It does not create a second Human Steward or independent-review cycle.
 
