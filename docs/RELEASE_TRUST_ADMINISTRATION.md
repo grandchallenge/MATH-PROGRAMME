@@ -2,87 +2,69 @@
 
 ## Purpose
 
-This package discharges the two remaining administration obligations under umbrella issue #6:
-
-- issue #7: repository homepage and current-main Pages verification;
-- issue #125: protected-branch enforcement across MATHCERT, MATHSOLVE, MATH-PROGRAMME, and INTELLECT.
+Release Trust maintains the admitted repository-protection and publication contract for MATHCERT, MATHSOLVE, MATH-PROGRAMME, and INTELLECT. The original umbrella issues #7 and #125 are historical closure provenance; the same machinery remains the current administration surface for applying and reading back the admitted contract.
 
 The governed contract is `governance/release_trust_admin_contract.json`. The executor is `ci/release_trust_admin.py`. The workflow is `.github/workflows/release-trust-admin.yml`.
 
+## Current concurrency policy
+
+Each managed repository currently sets `strict_status_checks: false` in its repository entry. This is deliberate: a mergeable candidate whose material closure remains valid does not need an update-branch synchronization merely because protected `main` advanced.
+
+Required status contexts remain exact and repository-specific. In particular, INTELLECT's current Release Trust profile includes `routing-enforcement`. GitHub account-level required approvals remain zero; review-thread resolution and the other admitted protection rules remain enforced.
+
+Do not infer the effective strictness from the shared `branch_policy` template alone. `ci/release_trust_admin.py` derives the effective repository policy by applying the repository-specific entry, and the tests require the resulting strictness to be false for every managed repository.
+
 ## Required credential
 
-Create a fine-grained GitHub personal access token or GitHub App installation token with access only to:
-
-- `grandchallenge/MATHCERT`;
-- `grandchallenge/MATHSOLVE`;
-- `grandchallenge/MATH-PROGRAMME`;
-- `grandchallenge/INTELLECT`.
-
-Required repository permissions are:
-
-- Administration: read and write;
-- Actions: read;
-- Issues: read and write;
-- Metadata: read.
-
-Do not put the token in a file, issue, pull request, workflow input, or command line. Add it to the MATH-PROGRAMME `release-trust` environment as the secret `GCL_REPOSITORY_ADMIN_TOKEN`.
+Use the existing `release-trust` environment secret `GCL_REPOSITORY_ADMIN_TOKEN` with the minimum repository permissions required by the workflow. Do not place the token in files, issues, pull requests, workflow inputs, or command lines.
 
 ## Execution
 
-1. Open **Actions** in MATH-PROGRAMME.
-2. Select **Release trust administration**.
-3. Select **Run workflow**.
-4. Use `mode: apply`.
-5. Keep `close_child_issues: true`.
-6. Run the workflow from `main`.
+For an admitted contract apply/readback:
 
-The workflow:
+1. open **Actions** in MATH-PROGRAMME;
+2. select **Release trust administration**;
+3. select **Run workflow**;
+4. use the workflow mode appropriate to the current contract (`validate` for read-only verification or `apply` for an authorized application);
+5. run from protected `main`.
 
-1. sets the MATH-PROGRAMME homepage;
-2. applies the exact protected-branch contract to all four repositories;
-3. reads every setting back through the GitHub API;
-4. requires strict required checks and pull-request-only changes;
-5. requires admin enforcement and resolved review conversations;
-6. rejects force pushes, branch deletion, and bypass actors;
-7. locates successful policy and Pages runs for current `main`;
-8. downloads and verifies the `validated-site` artifact;
-9. verifies the inner archive checksum;
-10. compares the live Pages `index.html` byte-for-byte with the policy artifact;
-11. uploads `release-trust-evidence.json` for 90 days;
-12. closes issues #7 and #125 only after all checks pass.
+Applying the already-admitted contract is routine repository administration under standing delegation. Changing required contexts, strictness, bypass actors, review semantics, or another security-sensitive protection property is a separate control-plane change and receives the review/authority required by that material change.
 
-The workflow does not close umbrella issue #6.
+The workflow validates the checked-in contract, applies authorized settings when requested, reads settings back through GitHub, verifies current required contexts and repository policy, verifies publication identity where applicable, and emits retained Release Trust evidence. Historical issue-closing behavior remains part of the original umbrella closure; do not treat it as a requirement to reopen or recreate closed historical trackers.
 
 ## Branch policy
 
-The branch contract requires:
+The effective managed policy requires:
 
-- exact required status-check contexts;
-- strict, up-to-date status checks;
+- exact repository-specific required status contexts;
+- `strict_status_checks: false` for the currently managed repositories;
 - changes through pull requests;
-- zero mandatory GitHub approvals, to avoid a single-operator approval deadlock;
-- stale-review dismissal enabled;
-- conversation resolution required;
-- administrators governed by the same rule;
-- no bypass actors;
-- no force pushes;
-- no branch deletion.
+- zero mandatory GitHub approvals, avoiding routine single-operator approval deadlock;
+- stale-review dismissal and conversation resolution as admitted by the contract;
+- no force pushes or branch deletion;
+- the admitted bypass-actor state read back exactly rather than inferred from prose.
 
-Council, Adversary, Formalist, Amanuensis, and Referee review remain governed repository artifacts. They are not replaced by GitHub account-level approval.
+The dedicated GH-OS routing ruleset is separate from the Programme Release Trust profile. For MATH-PROGRAMME, ruleset `21969152` independently requires `routing-enforcement` with non-strict status policy and no bypass actors. For INTELLECT, `routing-enforcement` is included in the Release Trust required-context set.
 
-## Final closure
+Council, Adversary, Formalist, Amanuensis, and Referee records remain available where their material jurisdiction applies. They are not replaced by GitHub account-level approval, and they are not universal routine merge gates.
 
-After issues #7 and #125 close:
+## Evidence and readback
 
-1. download the `release-trust-evidence` workflow artifact;
-2. admit its exact workflow run, artifact identity, and SHA-256 into the umbrella audit;
-3. set `administrative_children_complete: true`;
-4. set `operational_release_complete: true`;
-5. set `operational_release_closure: COMPLETE`;
-6. remove all remaining blockers;
-7. run exact-head Programme policy CI;
-8. merge the audit;
-9. close issue #6.
+A Release Trust operation should record enough evidence to establish:
+
+- checked-in contract identity;
+- target repositories and branches;
+- effective repository-specific strictness and required contexts;
+- review and bypass settings;
+- exact readback from GitHub;
+- publication artifact identity where the Pages contract is being verified;
+- workflow/run identity for the administration transaction.
+
+Readback establishes protected administrative state. It does not create a second Human Steward or independent-review cycle.
+
+## Historical umbrella closure
+
+The original administration package discharged umbrella issue #6 through issues #7 and #125 and retained App-backed Release Trust evidence. Those closure instructions are historical. Current maintenance should not replay the umbrella closure ceremony simply because the protection contract is revalidated or re-applied.
 
 ## Claim boundary
 
