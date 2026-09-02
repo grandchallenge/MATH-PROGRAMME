@@ -1,11 +1,11 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "handoff_id": "GHOS-PHASE0-TO-PHASE1-HANDOFF-001",
   "campaign_id": "GHOS-ESTATE-ROLLOUT-001",
   "umbrella_tracker": "grandchallenge/MATH-PROGRAMME#724",
   "handoff_repository": "grandchallenge/MATH-PROGRAMME",
   "handoff_base_protected_head": "db1a8ac059138e006820600fd9fff71fcbaf42a4",
-  "state": "PHASE_0_COMPLETE__PHASE_1_ACTIVE_AT_INTELLECT_PROTECTION_READBACK",
+  "state": "PHASE_1_COMPLETE__PHASE_2_READY_AT_AETHER",
   "revalidate_before_action": true,
   "evidence_binding": "MATERIAL_EVIDENCE_CLOSURE",
   "routine_execution": "STREAMLINED_DELEGATED_CONCURRENT",
@@ -46,90 +46,138 @@
       "enforcement": "active",
       "strict": false,
       "bypass_actors": [],
-      "required_contexts": ["routing-enforcement"]
+      "required_contexts": [
+        "routing-enforcement"
+      ]
     }
   },
   "phase_1": {
-    "state": "ACTIVE_AT_INTELLECT_PROTECTION_READBACK",
+    "state": "COMPLETE",
+    "completion_checkpoint_comment_id": 5507117244,
+    "terminal_repository_count": 4,
     "order": [
       "grandchallenge/INTELLECT",
       "grandchallenge/MATHFORGE",
       "grandchallenge/MATHSOLVE",
       "grandchallenge/MATHCERT"
     ],
-    "mutation_sequence_rule": "DO_NOT_ADVANCE_PAST_INTELLECT_UNTIL_TERMINAL_ADMISSION__READ_ONLY_PREPARATION_ALLOWED",
+    "mutation_sequence_rule": "PHASE_1_COMPLETE__ADVANCE_TO_AETHER_AFTER_PROTECTED_DOCUMENTARY_CHECKPOINT",
     "targets": {
       "grandchallenge/INTELLECT": {
         "tracker": "grandchallenge/INTELLECT#73",
-        "tracker_state": "OPEN",
+        "tracker_state": "CLOSED_COMPLETED",
         "opening_head": "08a3044e0363fa932012fa642ea15d9153ba876b",
-        "current_protected_head": "565ed31f413b4698f400a260fc4a8ea65e7e1255",
-        "implementation_state": "PROTECTED_ROUTING_IMPLEMENTATION_COMPLETE",
-        "effective_candidate_source": "refs/pull/<number>/merge",
-        "stale_branch_probe_passed_without_rebase": true,
+        "terminal_head": "565ed31f413b4698f400a260fc4a8ea65e7e1255",
+        "state": "TERMINAL__GHOS_ROUTING_ENFORCED",
         "ruleset": {
           "id": 19964077,
           "name": "Constitutional profile - main",
           "strict": false,
           "bypass_actors": [],
-          "required_contexts_live": [
-            "test (3.11.14)",
-            "test (3.12.13)",
-            "policy / policy",
-            "security / action-policy"
-          ],
-          "required_contexts_admitted_contract": [
+          "required_contexts": [
             "test (3.11.14)",
             "test (3.12.13)",
             "policy / policy",
             "security / action-policy",
             "routing-enforcement"
           ],
-          "routing_required_live": false
+          "routing_required": true
         },
-        "next_material_obligation": "APPLY_AND_READ_BACK_ADMITTED_NON_STRICT_ROUTING_REQUIRED_CONTEXT__THEN_TERMINALIZE_TRACKER_IF_GREEN",
+        "hostile_proof": {
+          "pull_request": 80,
+          "head": "205aec8ae4a273e9c3401f6ba2362b68bf6109cb",
+          "workflow_run": 33605665810,
+          "mergeable_state": "blocked"
+        },
         "authority_boundary": "NO_CONSTITUTIONAL_AUTHORITY_ENLARGEMENT"
       },
       "grandchallenge/MATHFORGE": {
         "tracker": "grandchallenge/MATHFORGE#117",
-        "tracker_state": "OPEN",
+        "tracker_state": "CLOSED_COMPLETED",
+        "terminal_head": "44096e1d2d9390bffea799f8609f3752c6ac3946",
+        "state": "TERMINAL__GHOS_ROUTING_ENFORCED",
         "ruleset": {
           "id": 17137626,
+          "name": "Forge profile - main",
           "strict": false,
           "bypass_actors": [],
-          "required_contexts": ["reconnaissance", "policy / policy", "security / action-policy"],
-          "routing_required": false
+          "required_contexts": [
+            "reconnaissance",
+            "policy / policy",
+            "security / action-policy",
+            "routing-enforcement"
+          ],
+          "routing_required": true
         },
-        "state": "DOWNSTREAM_PENDING_INTELLECT_TERMINAL_ADMISSION",
+        "hostile_proof": {
+          "pull_request": 127,
+          "head": "2013e6353b07fb703f99982e15a91a40f4c113be",
+          "workflow_run": 33607687145,
+          "mergeable_state": "blocked"
+        },
         "authority_boundary": "NO_PROVENANCE_OR_SOURCE_AUTHORITY_ENLARGEMENT"
       },
       "grandchallenge/MATHSOLVE": {
         "tracker": "grandchallenge/MATHSOLVE#131",
-        "tracker_state": "OPEN",
+        "tracker_state": "CLOSED_COMPLETED",
+        "terminal_head": "505afed8c51a10bc7857e7d0ec52c499d01f3f8c",
+        "state": "TERMINAL__GHOS_ROUTING_ENFORCED",
         "ruleset": {
           "id": 17137627,
+          "name": "Solve profile - main",
           "strict": false,
           "bypass_actors": [],
-          "required_contexts": ["ledgers", "policy / policy", "security / action-policy"],
-          "routing_required": false
+          "required_contexts": [
+            "ledgers",
+            "policy / policy",
+            "security / action-policy",
+            "routing-enforcement"
+          ],
+          "routing_required": true
         },
-        "state": "DOWNSTREAM_PENDING_INTELLECT_TERMINAL_ADMISSION",
+        "hostile_proof": {
+          "pull_request": 134,
+          "head": "89b52950d140ee0a59c1f0de7a4bbb1fe394495f",
+          "workflow_run": 33609422844,
+          "mergeable_state": "blocked"
+        },
         "authority_boundary": "NO_MATHEMATICAL_PRODUCTION_OR_PROMOTION_AUTHORITY_ENLARGEMENT"
       },
       "grandchallenge/MATHCERT": {
         "tracker": "grandchallenge/MATHCERT#232",
-        "tracker_state": "OPEN",
+        "tracker_state": "CLOSED_COMPLETED",
+        "terminal_head": "8fb55780045cf02e953d474325519f152023bd2c",
+        "state": "TERMINAL__GHOS_ROUTING_ENFORCED",
         "ruleset": {
           "id": 17137628,
+          "name": "Cert profile - main",
           "strict": false,
           "bypass_actors": [],
-          "required_contexts": ["certify", "policy / policy", "security / action-policy"],
-          "routing_required": false
+          "required_contexts": [
+            "certify",
+            "policy / policy",
+            "security / action-policy",
+            "routing-enforcement"
+          ],
+          "routing_required": true
         },
-        "state": "DOWNSTREAM_PENDING_INTELLECT_TERMINAL_ADMISSION",
+        "hostile_proof": {
+          "pull_request": 236,
+          "head": "47bfec69a999fc9693cf034b986eae05af38bd12",
+          "workflow_run": 33611373290,
+          "mergeable_state": "blocked"
+        },
         "routing_policy": "PRESERVE_NON_STRICT_STATUS_POLICY_UNLESS_SEPARATELY_AUTHORIZED",
         "authority_boundary": "NO_CERTIFICATION_OR_CLAIM_AUTHORITY_ENLARGEMENT"
       }
+    },
+    "next_phase": {
+      "phase": 2,
+      "repository": "grandchallenge/AETHER",
+      "tracker": "grandchallenge/AETHER#61",
+      "state": "READY_FOR_EXACT_PROTECTED_PREFLIGHT",
+      "controller_admission_rule": "AETHER_NOT_AUTOMATICALLY_ADMITTED_AS_ITS_OWN_CONTROLLER",
+      "availability_rule": "GHOS_CORRECTNESS_MUST_NOT_DEPEND_ON_AETHER_AVAILABILITY"
     }
   },
   "per_repository_terminal_requirements": [
