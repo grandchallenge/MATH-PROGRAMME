@@ -1,6 +1,35 @@
 {
   "schema_version": "1.0.0",
   "registry_id": "MP-POLICY-SHARDS-001",
+  "execution": {
+    "default_command_timeout_seconds": 900,
+    "timeout_overrides": [
+      {
+        "shard": "oz",
+        "command_index": 1,
+        "command": ["python3", "ci/policy_oz_replay.py", "--mode", "routed", "--report-json", "oz-test-timing.json"],
+        "timeout_seconds": 1680,
+        "reason": "A scheduled or manual full OZ sentinel may replay the measured computational modules; protected evidence is bounded by the existing 27-minute inner envelope plus cleanup."
+      },
+      {
+        "shard": "campaigns",
+        "command_index": 5,
+        "command": ["python3", "ci/policy_oz_replay.py", "--mode", "campaign", "--report-json", "oz-campaign-test-timing.json"],
+        "timeout_seconds": 1680,
+        "reason": "A material Odd Zeta campaign transition may invalidate the full downstream computational replay closure; unrelated campaign transitions exit immediately."
+      }
+    ],
+    "repository_regression_exclusions": {
+      "patterns": [
+        "test_oz*.py",
+        "test_cmdg*.py",
+        "test_*fixture*.py",
+        "test_administrative*.py",
+        "test_campaign*.py"
+      ],
+      "manifests": ["governance/contract_test_manifest.json"]
+    }
+  },
   "shards": {
     "core": [
       ["python3", "ci/validate_schema_json.py"],
@@ -8,11 +37,15 @@
       ["python3", "ci/test_programme_math_core.py"],
       ["python3", "ci/validate_math_core_domain_shadow.py"],
       ["python3", "ci/test_math_core_domain_shadow.py"],
+      ["python3", "ci/validate_math_core_domain_diag.py"],
+      ["python3", "ci/test_math_core_domain_diag.py"],
       ["python3", "ci/validate_programme_math_core_uc_sources.py"],
       ["python3", "ci/validate_programme_math_core_uc_pilot.py"],
       ["python3", "ci/test_programme_math_core_uc_pilot.py"],
       ["python3", "ci/policy_impact.py", "validate"],
       ["python3", "ci/test_policy_impact.py"],
+      ["python3", "ci/test_policy_shard_runtime.py"],
+      ["python3", "ci/test_policy_oz_replay.py"],
       ["python3", "ci/formal_replay_attestation.py", "check-policy"],
       ["python3", "ci/test_formal_replay_gate.py"]
     ],
@@ -41,7 +74,7 @@
       ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_cmdg*.py", "--report-json", "cmdg-test-timing.json"]
     ],
     "oz": [
-      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_oz*.py", "--report-json", "oz-test-timing.json"]
+      ["python3", "ci/policy_oz_replay.py", "--mode", "routed", "--report-json", "oz-test-timing.json"]
     ],
     "administrative": [
       ["python3", "ci/validate_administrative_structural_sweep.py"],
@@ -52,7 +85,8 @@
       ["python3", "ci/campaign_admission_control.py"],
       ["python3", "ci/validate_campaign_replays.py"],
       ["python3", "ci/test_campaign_replays.py"],
-      ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_campaign*.py"]
+      ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_campaign*.py"],
+      ["python3", "ci/policy_oz_replay.py", "--mode", "campaign", "--report-json", "oz-campaign-test-timing.json"]
     ],
     "contracts": [
       ["python3", "ci/ghos_execution_routing.py"],

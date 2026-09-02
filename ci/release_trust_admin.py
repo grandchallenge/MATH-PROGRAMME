@@ -100,6 +100,7 @@ def validate_contract(contract: dict[str, Any], schema: dict[str, Any]) -> None:
             "test (3.12.13)",
             "policy / policy",
             "security / action-policy",
+            "routing-enforcement",
         ],
     }
     if checks != expected_checks:

@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/math_core_domain_diag.schema.json",
+  "title": "MATH-CORE read-only domain diagnostic",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "operation_id",
+    "mode",
+    "domain_programme",
+    "source_checkpoint",
+    "source_shadow",
+    "invariants",
+    "supported_queries",
+    "lineage_view",
+    "frontier_view",
+    "claim_boundary"
+  ],
+  "properties": {
+    "$schema": {"const": "../schemas/math_core_domain_diag.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "operation_id": {"const": "MCORE-DOMAIN-DIAG-001"},
+    "mode": {"const": "READ_ONLY_DIAGNOSTIC"},
+    "domain_programme": {"const": "Condensed Mathematics"},
+    "source_checkpoint": {"$ref": "#/$defs/checkpoint"},
+    "source_shadow": {"$ref": "#/$defs/source_shadow"},
+    "invariants": {"$ref": "#/$defs/invariants"},
+    "supported_queries": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {"enum": ["summary", "frontier", "node", "ancestry", "blockers", "evidence"]}
+    },
+    "lineage_view": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {"$ref": "#/$defs/lineage_entry"}
+    },
+    "frontier_view": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"$ref": "#/$defs/frontier_entry"}
+    },
+    "claim_boundary": {"$ref": "#/$defs/claim_boundary"}
+  },
+  "$defs": {
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "repository", "revision"],
+      "properties": {
+        "kind": {"const": "GIT_COMMIT"},
+        "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+        "revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "source_shadow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation_id", "path", "git_blob_sha1", "authority_effect"],
+      "properties": {
+        "operation_id": {"const": "MCORE-DOMAIN-SHADOW-001"},
+        "path": {"const": "governance/math_core_domain_shadow_condensed_001.json"},
+        "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "authority_effect": {"const": "NONE_DIRECT"}
+      }
+    },
+    "invariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "retroactive_live_event_history",
+        "autonomous_allocation",
+        "autonomous_pruning",
+        "canonical_promotion",
+        "certificate_issuance",
+        "source_mutation",
+        "live_coordinator",
+        "cross_domain_authority_transfer",
+        "persistent_execution"
+      ],
+      "properties": {
+        "retroactive_live_event_history": {"const": false},
+        "autonomous_allocation": {"const": false},
+        "autonomous_pruning": {"const": false},
+        "canonical_promotion": {"const": false},
+        "certificate_issuance": {"const": false},
+        "source_mutation": {"const": false},
+        "live_coordinator": {"const": false},
+        "cross_domain_authority_transfer": {"const": false},
+        "persistent_execution": {"const": false}
+      }
+    },
+    "lineage_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ordinal", "node_id", "current_status", "authority_class", "source_ref"],
+      "properties": {
+        "ordinal": {"type": "integer", "minimum": 1, "maximum": 5},
+        "node_id": {"type": "string", "minLength": 1},
+        "current_status": {"type": "string", "minLength": 1},
+        "authority_class": {"type": "string", "minLength": 1},
+        "source_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "frontier_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "node_id",
+        "current_status",
+        "frontier_role",
+        "blocker_classes",
+        "depends_on",
+        "source_ref"
+      ],
+      "properties": {
+        "id": {"enum": ["CM4-P1", "CM4-P2", "CM4-P3", "CM4-P4", "CM4-P5", "CM4-P6"]},
+        "node_id": {"type": "string", "minLength": 1},
+        "current_status": {"type": "string", "minLength": 1},
+        "frontier_role": {"enum": ["AVAILABLE", "DISCHARGED", "BLOCKING", "PARTIAL_BLOCKING"]},
+        "blocker_classes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"enum": ["MATHEMATICAL", "FORMALIZATION", "GOVERNANCE_EVIDENCE", "EXECUTION_INFRASTRUCTURE"]}
+        },
+        "depends_on": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "source_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "claim_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "proves_new_mathematics",
+        "certifies_theorem",
+        "promotes_claim",
+        "upgrades_condensed_frontier",
+        "graph_completeness_claim",
+        "dependency_minimality_claim",
+        "dependency_uniqueness_claim",
+        "authorizes_live_allocation",
+        "authorizes_live_pruning",
+        "authorizes_persistent_coordinator"
+      ],
+      "properties": {
+        "proves_new_mathematics": {"const": false},
+        "certifies_theorem": {"const": false},
+        "promotes_claim": {"const": false},
+        "upgrades_condensed_frontier": {"const": false},
+        "graph_completeness_claim": {"const": false},
+        "dependency_minimality_claim": {"const": false},
+        "dependency_uniqueness_claim": {"const": false},
+        "authorizes_live_allocation": {"const": false},
+        "authorizes_live_pruning": {"const": false},
+        "authorizes_persistent_coordinator": {"const": false}
+      }
+    }
+  }
+}

@@ -68,12 +68,13 @@ def ruleset_detail(name: str = "Provider profile - main") -> dict:
                 "type": "required_status_checks",
                 "parameters": {
                     "do_not_enforce_on_create": False,
-                    "strict_required_status_checks_policy": True,
+                    "strict_required_status_checks_policy": False,
                     "required_status_checks": [
                         {"context": "test (3.11.14)"},
                         {"context": "test (3.12.13)"},
                         {"context": "policy / policy"},
                         {"context": "security / action-policy"},
+                        {"context": "routing-enforcement"},
                     ],
                 },
             },
@@ -244,7 +245,7 @@ class IntellectProfileAdminTests(unittest.TestCase):
         after = copy.deepcopy(before)
         after["name"] = "Constitutional profile - main"
         self.assertTrue(MODULE.ruleset_equal_except_name(before, after))
-        after["strict_status_checks"] = False
+        after["strict_status_checks"] = True
         self.assertFalse(MODULE.ruleset_equal_except_name(before, after))
 
     def test_verify_post_state_rejects_property_drift(self) -> None:

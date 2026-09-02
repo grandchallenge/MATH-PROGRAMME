@@ -2,104 +2,54 @@
 
 ## Purpose
 
-This guide defines the MATH-PROGRAMME recovery procedure for an already
-authorized bounded operation when the ordinary diagnostic, logging, CI,
-connector, compiler, environment, or replay surface fails.
+This guide defines the MATH-PROGRAMME recovery procedure for an already authorized bounded operation when an ordinary diagnostic, logging, CI, connector, compiler, environment, or replay surface fails.
 
-It does not enlarge authority. It distinguishes a recoverable execution
-problem from a genuine stopping boundary so that fail-closed governance is not
-misapplied as premature abandonment of authorized diagnostic work.
+It does not enlarge authority. It distinguishes recoverable execution failure from a genuine stopping boundary so that fail-closed governance is not misapplied as abandonment of authorized diagnostic work.
 
-The governing issue for this guide is `MP-EXECUTION-RECOVERY-001`.
+The governing issue for this guide is `MP-EXECUTION-RECOVERY-001`. Routine recovery is additionally governed by `MP-STREAMLINED-EXECUTION-001`: exact identities are used where they describe the failing evidence, while unrelated repository-head movement does not invalidate a materially unchanged closure.
 
 ## Authority and precedence
 
-MATH-PROGRAMME owns mathematics-specific operating policy subject to the
-INTELLECT Constitution, effective amendments, admitted cross-programme
-standards actually adopted by the programme, protected programme policy, and
-MATHCERT's separate certification authority.
+MATH-PROGRAMME owns mathematics-specific operating policy subject to the INTELLECT Constitution, effective amendments, admitted cross-programme standards actually adopted by the programme, protected programme policy, and MATHCERT's separate certification authority.
 
-`GCL-GHOS-00` `0.2.0` is current authority for the bounded
-MATH-PROGRAMME pilot. Its exact standards-layer admission is protected at
-`grandchallenge/gcl-standards@87307a0c1fe5ff19b34bb08451e7d6281a7d5dea`,
-and the programme's active adoption is protected at
-`grandchallenge/gcl-standards@1a5e9cb24257be578b091ecd2c99d4119ff73b2c`.
-The adoption is restricted to its recorded pilot scope and does not establish
-organization-wide conformance. This guide stands on existing MATH-PROGRAMME
-authority and must remain compatible with superior controls. Its
-bounded-execution-continuity invariant is current programme authority within
-that scope; this guide does not enlarge authority or change MATHCERT
-certification routes.
+`GCL-GHOS-00` `0.2.0` is current authority for the bounded MATH-PROGRAMME pilot. Its standards-layer and programme adoption records remain protected evidence. This guide stands on existing authority and must remain compatible with superior controls.
 
 ## Continuity rule
 
-For an already authorized bounded MATH operation, a recoverable infrastructure,
-connector, logging, check-surface, compiler-diagnostic, environment, CI, or
-tooling failure is not by itself a stopping condition.
+For an already authorized bounded MATH operation, a recoverable infrastructure, connector, logging, check-surface, compiler-diagnostic, environment, CI, or tooling failure is not by itself a stopping condition.
 
 The operator continues through the applicable recovery ladder until:
 
 1. the authorized objective is completed; or
 2. a genuine boundary is reached and named precisely.
 
-Fail closed on mathematical claims, certification, promotion, publication,
-protected-state mutation, stale evidence, and authority. Do not fail closed
-merely on the mechanics of obtaining the evidence needed to decide those
-matters.
+Fail closed on mathematical claims, certification, promotion, publication, unauthorized protected-state mutation, materially stale evidence, and authority. Do not fail closed merely on the mechanics of obtaining the evidence needed to decide those matters.
 
 ## Mandatory workflow routing
 
-All direct repository workflows are enumerated in
-`.ghos-routing/workflows.json`. The protected routing control derives each
-workflow's autonomous-wake, external-wait, opaque-execution, credential, and
-write-capability features from its bytes, derives the minimum execution
-topology, and requires an admitted compatible controller whenever the workflow
-is not bounded atomic work.
+All direct repository workflows are enumerated in `.ghos-routing/workflows.json`. The protected routing control derives each workflow's autonomous-wake, external-wait, opaque-execution, credential, and write-capability features from its bytes, derives the minimum execution topology, and requires an admitted compatible controller whenever the workflow is not bounded atomic work.
 
-The current admitted persistent controller is repository-bound GitHub Actions.
-Its event queue and exact run/job records survive the conversational executor.
-This controller supplies persistence and observation only; it supplies no
-merge, certification, promotion, publication, or mathematical authority.
+The current admitted persistent controller is repository-bound GitHub Actions. Its event queue and exact run/job records survive the conversational executor. This controller supplies persistence and observation only; it supplies no merge, certification, promotion, publication, or mathematical authority.
 
-The independently required `routing-enforcement` check runs from the protected
-base, treats pull-request content as untrusted data, verifies the externally
-governed gate digest, and rejects:
+The independently required `routing-enforcement` check runs from the protected base, treats pull-request content as untrusted data, verifies the externally governed gate digest, and rejects routing/control drift outside the admitted contract.
 
-- an unregistered or stale workflow path;
-- a feature or topology declaration that disagrees with workflow bytes;
-- a missing, invented, or capability-incompatible controller;
-- repository-identity or authority-boundary drift; and
-- candidate modification or removal of the enforcement workflow.
+Routine care, external gate upgrades, digest rotation, protected self-modification, ruleset recovery, controller changes, and hostile proof are governed by [`GH-OS routing control runbook`](GHOS_ROUTING_CONTROL_RUNBOOK.md).
 
-If a proposed persistent workflow cannot use an admitted compatible
-controller, decompose it into independently recoverable bounded workflows
-before admission. A prose assertion that decomposition occurred is not a
-routing record.
+## Material-identity binding
 
-Routine care, external gate upgrades, digest rotation, protected
-self-modification, ruleset recovery, controller changes, and hostile proof are
-governed by the
-[`GH-OS routing control runbook`](GHOS_ROUTING_CONTROL_RUNBOOK.md).
+Before recovery or repair, bind the operation to every exact identity that is material to the failing evidence route. Depending on the operation, this includes:
 
-## Exact-identity binding
-
-Before recovery or repair, bind the operation to every exact identity that is
-material to the evidence route. Depending on the operation, this includes:
-
-- repository and protected predecessor;
+- repository and relevant protected predecessor or dependency;
 - issue or work-package identifier;
 - pull request and branch;
-- exact current PR head SHA;
+- candidate commit whose bytes produced the diagnostic;
 - workflow run ID;
 - exact job ID and job head SHA;
 - artifact digest or file/blob identity;
 - pinned dependency/toolchain identities;
 - exact theorem, module, check, or failing step.
 
-If the current head, run, job, artifact, protected predecessor, or governed
-scope has materially changed, earlier diagnostics are stale. Do not patch from
-them as though they described the current operation. Rebind and recover fresh
-evidence.
+A diagnostic becomes stale when the repaired bytes, relevant dependency, governed scope, toolchain, authority boundary, or other material input it describes changes. A numerically newer protected `main` is not by itself evidence staleness when that movement is outside the material closure.
 
 ## Durable checkpoint and session restart
 
@@ -149,139 +99,91 @@ decision, not a universal paperwork requirement.
 
 ## Diagnostic recovery ladder
 
-Use the narrowest available exact-current diagnostic surface first. Advance to
-the next route when the prior route is unavailable, empty, truncated,
-inconclusive, or demonstrably broken.
+Use the narrowest available diagnostic surface that is bound to the failing material object. Advance to the next route when the prior route is unavailable, empty, truncated, inconclusive, or demonstrably broken.
 
-### 1. Exact individual Actions job log
+### 1. Individual Actions job log
 
-Recover the log for the exact failing job and verify that its `head_sha`
-matches the current governed PR head. Prefer the smallest failing job rather
-than a broad run archive.
+Recover the exact failing job log and verify which candidate/head SHA it actually executed. Prefer the smallest failing job rather than a broad run archive.
 
 ### 2. Check annotations and job-step surfaces
 
-If the job log cannot provide the diagnostic, inspect check-run annotations,
-job steps, check output, and other exact-head diagnostic surfaces. Recover the
-actual file/line/column and surrounding compiler or validator message when
-available.
+If the job log cannot provide the diagnostic, inspect check-run annotations, job steps, check output, and other subject-bound diagnostic surfaces. Recover the actual file/line/column and surrounding compiler or validator message when available.
 
 ### 3. Complete workflow-run log archive
 
-If individual surfaces fail, retrieve the complete log archive for the exact
-workflow run. Isolate the exact job/step and retain enough surrounding context
-to distinguish the first substantive error from secondary failures.
+If individual surfaces fail, retrieve the complete log archive for the relevant workflow run. Isolate the exact job/step and retain enough surrounding context to distinguish the first substantive error from secondary failures.
 
-### 4. Exact-head pinned replay
+### 4. Pinned local replay
 
-If hosted logs remain unavailable or insufficient, replay the exact current
-head using the workflow-declared toolchain, dependency pins, commands, and
-build order. Narrow the replay to the failing module or step when the workflow
-contract permits that narrowing; do not silently substitute a different
-environment or dependency set.
+If hosted logs remain unavailable or insufficient, replay the relevant candidate bytes using the workflow-declared toolchain, dependency pins, commands, and build order. Narrow the replay to the failing module or step when the workflow contract permits that narrowing; do not silently substitute a different environment or dependency set.
 
 ### 5. Authenticated local extraction
 
-When connected diagnostic surfaces remain unavailable but an authenticated
-operator environment can access GitHub, provide a self-contained `gh`/GitHub
-API extraction route bound to the exact repository, PR, head, run, and job.
+When connected diagnostic surfaces remain unavailable but an authenticated operator environment can access GitHub, provide a self-contained `gh`/GitHub API extraction route bound to the relevant repository, PR, candidate, run, and job.
+
 The extraction should attempt, as applicable:
 
 1. individual job logs;
-2. exact-head check-run annotations;
+2. check-run annotations;
 3. the complete run-log archive;
-4. focused searches for the failing file, theorem/check identifier, and
-   `error:`/equivalent diagnostics;
+4. focused searches for the failing file, theorem/check identifier, and `error:`/equivalent diagnostics;
 5. sufficient surrounding lines to support a narrow repair.
 
-The script must first verify that the live PR, run, and job still bind to the
-expected exact head. A mismatch is a named stale-identity boundary, not a
-license to use old diagnostics.
+The script must verify that the run and job correspond to the candidate bytes whose failure is being repaired. If the candidate changed materially, recover evidence for the new candidate before patching. Do not require a branch update merely because the base repository advanced independently.
 
 ## Shell safety for operator-provided recovery scripts
 
-A recovery snippet intended to be pasted into an operator's existing shell
-must not terminate that shell as a side effect of a recoverable diagnostic
-failure.
+A recovery snippet intended to be pasted into an operator's existing shell must not terminate that shell as a side effect of a recoverable diagnostic failure.
 
 Therefore:
 
 - do not use top-level `exit`;
 - do not use top-level `set -euo pipefail`;
-- use guarded branches, subshells, warnings, and continue/skip behavior for
-  recoverable extraction failures;
-- a hard identity mismatch must print a clear stop condition and avoid mutation
-  or stale evidence use without terminating the parent shell.
+- isolate strict/error-exit behavior inside a subshell;
+- use guarded branches, warnings, and continue/skip behavior for recoverable extraction failures;
+- a hard material-identity mismatch must print a clear stop condition and avoid mutation or stale evidence use without terminating the parent shell.
 
-This shell-safety rule does not weaken fail-closed governance. It prevents a
-diagnostic helper from destroying the operator's working session.
+This shell-safety rule does not weaken fail-closed governance. It prevents a diagnostic helper from destroying the operator's working session.
 
 ## Repair and replay loop
 
-Once a fresh exact-current diagnostic is recovered:
+Once a fresh material diagnostic is recovered:
 
-1. identify the smallest demonstrated failing theorem, statement, module,
-   validator rule, or authorized code surface;
-2. repair only that demonstrated failure unless the governing scope explicitly
-   authorizes a broader change;
-3. do not stack speculative downstream edits while the current exact replay is
-   unresolved;
+1. identify the smallest demonstrated failing theorem, statement, module, validator rule, or authorized code surface;
+2. repair only that demonstrated failure unless the governing scope explicitly authorizes a broader change;
+3. do not stack speculative downstream edits while the current affected replay is unresolved;
 4. commit the repair to the governed working branch;
-5. run a fresh exact-head replay of the applicable pinned workflow;
-6. if the replay fails, discard stale prior diagnostics and repeat the recovery
-   ladder against the new exact head;
-7. continue until the bounded objective is green or a genuine named boundary is
-   reached.
+5. rerun the affected protected check, pinned replay, or policy shard required by the repaired material closure;
+6. if the replay fails, treat diagnostics from superseded candidate bytes as stale and repeat the recovery ladder against the changed object;
+7. continue until the bounded objective is green or a genuine named boundary is reached.
 
-A successful local replay is evidence only for the route it actually exercised.
-It does not replace a required hosted, protected, independent-review, MATHCERT,
-or admission gate.
+Do not rerun unrelated formal, external, repository-wide, or computational lanes merely to obtain a numerically fresh head. Current policy impact routing decides the required protected checks.
+
+A successful local replay is evidence only for the route it actually exercised. It does not replace a required hosted/protected check or a specialist mathematical, certification, security, or admission gate when such a gate genuinely applies.
 
 ## Genuine stopping boundaries
 
-Before stopping, state the boundary by name and identify the rule or condition
-that makes continuation unauthorized or evidentially unsound.
+Before stopping, state the boundary by name and identify the rule or condition that makes continuation unauthorized or evidentially unsound.
 
 Recognized categories are:
 
-- **governance boundary** — the governing process requires a new governed
-  decision or registered scope;
-- **authority boundary** — the next action requires power not delegated to the
-  current actor or operation;
-- **authentication boundary** — the required evidence or mutation cannot be
-  accessed with available authorized credentials and no authorized fallback
-  remains;
+- **governance boundary** — the governing process requires a new governed decision or registered scope;
+- **authority boundary** — the next action requires power not delegated to the current actor or operation;
+- **authentication boundary** — the required evidence or mutation cannot be accessed with available authorized credentials and no authorized fallback remains;
 - **safety boundary** — continuation would violate an applicable safety control;
-- **protected-state boundary** — continuation would require an unauthorized
-  protected mutation, bypass, force update, or equivalent prohibited action;
-- **materially changed-state boundary** — current protected state, exact head,
-  scope, dependency identity, or governed plan has changed so that the existing
-  authorization no longer applies;
-- **substantive evidentiary boundary** — the required claim/certification
-  evidence does not exist or remains insufficient after the authorized evidence
-  routes are exhausted;
-- **recovery exhaustion boundary** — all reasonably available authorized
-  diagnostic/recovery routes have actually been attempted and none can recover
-  the evidence needed for the next bounded action.
+- **protected-state boundary** — continuation would require an unauthorized protected mutation, bypass, force update, or equivalent prohibited action;
+- **materially changed-state boundary** — a relevant protected dependency, material object, scope, toolchain, authority, or claim boundary changed so that existing evidence or authorization no longer applies;
+- **substantive evidentiary boundary** — the required claim/certification evidence does not exist or remains insufficient after authorized evidence routes are exhausted;
+- **recovery exhaustion boundary** — all reasonably available authorized diagnostic/recovery routes have actually been attempted and none can recover the evidence needed for the next bounded action.
 
-A broken log endpoint, empty connector response, ordinary compiler error,
-single failed replay, transient CI failure, inconvenient environment, or agent
-session/resource interruption is not by itself one of these boundaries.
+A broken log endpoint, empty connector response, ordinary compiler error, single failed replay, transient CI failure, behind branch, or unrelated `main` movement is not by itself one of these boundaries.
 
 ## Human Steward escalation
 
-Human Steward intervention is requested only where the governing process
-actually reserves the next decision or authority to the Human Steward. The
-operator must not convert an implementation inconvenience into a synthetic
-approval gate.
+Human Steward intervention is requested only where the governing process actually reserves the next decision or authority to the Human Steward. Standing delegation covers routine bounded execution; an operator must not convert implementation inconvenience, numerical head drift, or an ordinary documentation/engineering transition into a synthetic approval gate.
 
-When escalation is genuinely required, provide the exact current identities,
-evidence already recovered, routes attempted, unresolved condition, and the
-specific decision or authority required.
+When escalation is genuinely required, provide the material identities, evidence already recovered, routes attempted, unresolved condition, and the specific reserved decision or authority required.
 
 ## Claim boundary
 
-This guide authorizes no mathematical claim, MATHCERT disposition, merge,
-publication, protected-branch bypass, or external representation. It governs
-only how already-authorized bounded execution recovers evidence and repairs
-within scope.
+This guide authorizes no mathematical claim, MATHCERT disposition, publication, protected-branch bypass, or external representation. It governs how already-authorized bounded execution recovers evidence and repairs within scope. Routine protected merge authority is supplied only by the standing delegation and repository protection, not by this guide itself.

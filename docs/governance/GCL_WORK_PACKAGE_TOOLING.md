@@ -1,15 +1,21 @@
 # GCL work-package tooling
 
-`GCL-WP-TOOLING-001` is the repository-local command contract for reusable GCL work-package operations. It consumes the institutional truth spine admitted through protected merge `50a2d20a21caa20570042a021842580d31d6d2d4`. It does not create a second authority registry and does not require AETHER or another live service.
+## Current status
+
+`GCL-WP-TOOLING-WP00` Tranche 1 is `TRANCHE_1_PROTECTED_COMPLETE`.
+
+It completed through PR #205 from reviewed candidate `ee1907499c248594ccc19383ee05076698d4d896` and protected merge `9150afcac705a4535b48fbf04fc089c65ea3bc6b`. The tooling consumes the institutional truth spine admitted through protected merge `50a2d20a21caa20570042a021842580d31d6d2d4`. It does not create a second authority registry and does not require AETHER or another live service.
+
+The historical admission sequence included exact candidate validation, delegated review, Human Steward disposition, and protected merge. Those facts remain provenance; routine maintenance now follows `MP-STREAMLINED-EXECUTION-001` and does not reacquire those gates merely because implementation bytes receive an ordinary bounded update.
 
 ## Tranche 1 scope
 
-Two commands are executable candidates:
+Two commands are protected and executable for validating candidate artifacts:
 
 - `validate-manifest` validates a JSON record against its repository-local schema and checks that the selected truth-spine record class permits the named repository and path class.
 - `check-identities` verifies the byte length, SHA-256 digest, and Git blob SHA-1 of repository-local files against a closed identity manifest.
 
-Three required command names are registered but intentionally unavailable:
+Three command names are registered but intentionally unavailable:
 
 - `init-work-package`;
 - `build-review-packet`;
@@ -30,7 +36,7 @@ python ci/gcl.py validate-manifest \
   --relative-path governance/governed_campaign_registry.json
 ```
 
-A valid result confirms only that the candidate record satisfies the supplied schema and the protected truth-spine repository/path rules. It does not promote or activate the record.
+A valid result confirms only that the candidate record satisfies the supplied schema and the protected truth-spine repository/path rules. It does not promote or activate the candidate record.
 
 ## Check local identities
 
@@ -50,14 +56,15 @@ Commands emit JSON containing:
 - explicit errors;
 - an authority boundary.
 
-Every Tranche 1 report states:
+Reports describe their **validated subject** as candidate output where appropriate. That wording refers to the artifact being inspected, not to the protected status of the tooling itself.
 
-- candidate output only;
-- protected records cannot be modified;
-- promotion cannot be authorized;
+Every Tranche 1 report preserves these boundaries:
+
+- validation does not modify protected records;
+- validation cannot authorize promotion;
 - AETHER is not required.
 
-Exit status `0` means the requested validation passed. A nonzero status means the candidate failed validation or the command is not executable in the current tranche.
+Exit status `0` means the requested validation passed. A nonzero status means the candidate subject failed validation or the command is not executable in the current tranche.
 
 ## Adoption fixture
 
@@ -65,6 +72,8 @@ The first end-to-end fixture is `governance/governed_campaign_registry.json`, cl
 
 ## Future tranches
 
-Later reviewed operations may implement work-package generation, exact-subject review packets, promotion verification, reusable Actions, stale-reference detection, orphan detection, and conformance matrices. Each operation requires its own closed schemas, adversarial tests, CI reachability, exact-subject review, and Human Steward disposition before programme-wide adoption.
+Later bounded operations may implement work-package generation, exact-subject review packets, promotion verification, reusable Actions, stale-reference detection, orphan detection, and conformance matrices.
+
+A future tranche receives the checks and review warranted by its material boundary. Ordinary implementation/documentation maintenance remains delegated. A new operation that changes promotion authority, certification semantics, security-sensitive execution, or another reserved boundary receives the specialist or Human Steward disposition required by that specific change. No future tranche inherits a generic fresh-review requirement solely from commit freshness.
 
 No generated candidate, validation report, workflow run, issue, or explanatory document can create protected authority.

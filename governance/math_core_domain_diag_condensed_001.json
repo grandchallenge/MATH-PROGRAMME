@@ -1,0 +1,142 @@
+{
+  "$schema": "../schemas/math_core_domain_diag.schema.json",
+  "schema_version": "1.0.0",
+  "operation_id": "MCORE-DOMAIN-DIAG-001",
+  "mode": "READ_ONLY_DIAGNOSTIC",
+  "domain_programme": "Condensed Mathematics",
+  "source_checkpoint": {
+    "kind": "GIT_COMMIT",
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "revision": "03ca91bf486d38007799bee0b0552afbfb61245c"
+  },
+  "source_shadow": {
+    "operation_id": "MCORE-DOMAIN-SHADOW-001",
+    "path": "governance/math_core_domain_shadow_condensed_001.json",
+    "git_blob_sha1": "c95e5dc79f1138b1066db42fefe4c56b0cc81c84",
+    "authority_effect": "NONE_DIRECT"
+  },
+  "invariants": {
+    "retroactive_live_event_history": false,
+    "autonomous_allocation": false,
+    "autonomous_pruning": false,
+    "canonical_promotion": false,
+    "certificate_issuance": false,
+    "source_mutation": false,
+    "live_coordinator": false,
+    "cross_domain_authority_transfer": false,
+    "persistent_execution": false
+  },
+  "supported_queries": [
+    "summary",
+    "frontier",
+    "node",
+    "ancestry",
+    "blockers",
+    "evidence"
+  ],
+  "lineage_view": [
+    {
+      "ordinal": 1,
+      "node_id": "MCORE:CONDENSED:CM1",
+      "current_status": "PROTECTED_CLOSED",
+      "authority_class": "PROTECTED_DEPENDENCY_STATE",
+      "source_ref": "governance/cmdg_condensed_cm1_001.json"
+    },
+    {
+      "ordinal": 2,
+      "node_id": "MCORE:CONDENSED:CM2",
+      "current_status": "PROTECTED_CLOSED",
+      "authority_class": "PROTECTED_DEPENDENCY_STATE",
+      "source_ref": "governance/cmdg_condensed_cm2_001.json"
+    },
+    {
+      "ordinal": 3,
+      "node_id": "MCORE:CONDENSED:CM3",
+      "current_status": "PROTECTED_CLOSED",
+      "authority_class": "PROTECTED_DEPENDENCY_STATE",
+      "source_ref": "governance/cmdg_condensed_cm3_001.json"
+    },
+    {
+      "ordinal": 4,
+      "node_id": "MCORE:CONDENSED:C05",
+      "current_status": "PROTECTED_CLOSED_DEFINITION_BOUNDARY",
+      "authority_class": "PROTECTED_DEFINITION_BOUNDARY",
+      "source_ref": "governance/cmdg_solid_c05_001.json"
+    },
+    {
+      "ordinal": 5,
+      "node_id": "MCORE:CONDENSED:CM4",
+      "current_status": "OPEN_UNCERTIFIED",
+      "authority_class": "UNRESOLVED_OBLIGATION",
+      "source_ref": "governance/cmdg_condensed_cm4_001.json"
+    }
+  ],
+  "frontier_view": [
+    {
+      "id": "CM4-P1",
+      "node_id": "MCORE:CONDENSED:CM4:P1",
+      "current_status": "AVAILABLE",
+      "frontier_role": "AVAILABLE",
+      "blocker_classes": [],
+      "depends_on": [],
+      "source_ref": "governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P1]"
+    },
+    {
+      "id": "CM4-P2",
+      "node_id": "MCORE:CONDENSED:CM4:P2",
+      "current_status": "PROTECTED_CLOSED",
+      "frontier_role": "DISCHARGED",
+      "blocker_classes": [],
+      "depends_on": [],
+      "source_ref": "governance/cmdg_condensed_cm4_001.json::dependency_reconciliation.protected_p2_receipt"
+    },
+    {
+      "id": "CM4-P3",
+      "node_id": "MCORE:CONDENSED:CM4:P3",
+      "current_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+      "frontier_role": "BLOCKING",
+      "blocker_classes": ["MATHEMATICAL", "FORMALIZATION"],
+      "depends_on": [],
+      "source_ref": "governance/cmdg_condensed_cm4_p3_001.json"
+    },
+    {
+      "id": "CM4-P4",
+      "node_id": "MCORE:CONDENSED:CM4:P4",
+      "current_status": "BLOCKING",
+      "frontier_role": "BLOCKING",
+      "blocker_classes": ["MATHEMATICAL", "FORMALIZATION"],
+      "depends_on": ["CM4-P5"],
+      "source_ref": "governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P4]"
+    },
+    {
+      "id": "CM4-P5",
+      "node_id": "MCORE:CONDENSED:CM4:P5",
+      "current_status": "BLOCKING",
+      "frontier_role": "BLOCKING",
+      "blocker_classes": ["MATHEMATICAL", "FORMALIZATION"],
+      "depends_on": [],
+      "source_ref": "governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P5]"
+    },
+    {
+      "id": "CM4-P6",
+      "node_id": "MCORE:CONDENSED:CM4:P6",
+      "current_status": "PARTIAL_BLOCKING",
+      "frontier_role": "PARTIAL_BLOCKING",
+      "blocker_classes": ["MATHEMATICAL", "FORMALIZATION"],
+      "depends_on": ["CM4-P3", "CM4-P4"],
+      "source_ref": "governance/cmdg_condensed_cm4_001.json::prerequisite_matrix[CM4-P6]"
+    }
+  ],
+  "claim_boundary": {
+    "proves_new_mathematics": false,
+    "certifies_theorem": false,
+    "promotes_claim": false,
+    "upgrades_condensed_frontier": false,
+    "graph_completeness_claim": false,
+    "dependency_minimality_claim": false,
+    "dependency_uniqueness_claim": false,
+    "authorizes_live_allocation": false,
+    "authorizes_live_pruning": false,
+    "authorizes_persistent_coordinator": false
+  }
+}
