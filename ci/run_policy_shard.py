@@ -134,6 +134,7 @@ def _stream_command(
     reader.join(timeout=5)
     if reader.is_alive():
         raise RuntimeError("policy shard output relay did not terminate")
+    proc.stdout.close()
     if reader_errors:
         raise RuntimeError(f"policy shard output relay failed: {reader_errors[0]}")
     return int(returncode), timed_out
