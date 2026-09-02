@@ -90,10 +90,17 @@ def _terminate_process_tree(proc: subprocess.Popen[str]) -> None:
         proc.wait()
 
 
-def _stream_command(cmd: list[str], *, log_handle, timeout_seconds: float) -> tuple[int, bool]:
+def _stream_command(
+    cmd: list[str],
+    *,
+    log_handle,
+    timeout_seconds: float,
+    env: dict[str, str] | None = None,
+) -> tuple[int, bool]:
     proc = subprocess.Popen(
         cmd,
         cwd=ROOT,
+        env=env,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True,
@@ -166,8 +173,16 @@ def main() -> int:
                     )
                 handle.write("$ " + rendered + "\n")
                 handle.flush()
+                child_env = os.environ.copy()
+                child_env["GCL_POLICY_SHARD"] = args.shard
+                child_env["GCL_POLICY_SHARD_OPERATION"] = str(index)
                 started = time.perf_counter()
-                returncode, timed_out = _stream_command(cmd, log_handle=handle, timeout_seconds=timeout)
+                returncode, timed_out = _stream_command(
+                    cmd,
+                    log_handle=handle,
+                    timeout_seconds=timeout,
+                    env=child_env,
+                )
                 elapsed = time.perf_counter() - started
                 if timed_out:
                     timing = (
