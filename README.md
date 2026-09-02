@@ -9,13 +9,21 @@ discover       organize       certify
 
 The programme exists to turn mathematical curiosity into checked understanding without confusing evidence, computation, exposition, or certification.
 
-## Programme progress — governed administrative workflow rebuild
+## Programme progress — protected concurrent execution
 
-The administrative review path has now been demonstrated end-to-end under exact-head governance, separated Referee/Candidate identities, protected merge controls, and automatic post-merge qualification. The proof is retained permanently as the machine-checkable `MP-ADMIN-WORKFLOW-REBUILD-EVIDENCE-001` package under `governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/`.
+The programme now operates under the protected streamlined execution model established by `MP-STREAMLINED-EXECUTION-001`.
+
+Routine bounded administrative, documentation, engineering, workflow, maintenance, routing, synchronization, and campaign-execution work proceeds under standing delegated authority. It does not acquire a fresh Human Steward or independent-review gate merely because a branch head or protected `main` moved. Specialist non-author review remains reserved for substantive mathematical certification, source-semantic adjudication, constitutional authority expansion, security-sensitive protection weakening, and external claim promotion.
+
+Evidence binds to its material evidence closure rather than indiscriminately to the whole repository SHA. Protected branches may therefore develop concurrently when the candidate remains mergeable, relevant dependencies are unchanged, affected checks pass, and scope or authority has not widened.
+
+Programme policy CI is impact-routed. `validate-json` is the stable aggregate required context over selected policy shards; it is not a monolithic instruction to run every suite on every candidate. Expensive formal, external, and computational replays use material-identity routing, protected evidence reuse where valid, and scheduled or explicit full sentinels. `docs/WORKFLOW_COVERAGE.md` records the executable coverage and measured evidence.
+
+The earlier administrative workflow rebuild remains permanent historical evidence under `governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/`; its exact-head/review sequence records how that transition was admitted at the time and is not the current routine execution protocol.
 
 [![MP-ADMIN-WORKFLOW-REBUILD-001 — working rebuild proof](https://raw.githubusercontent.com/grandchallenge/MATH-PROGRAMME/main/docs/assets/mp-admin-workflow-rebuild-proof.png)](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/README.md?plain=1#readme)
 
-The illustration is a progress view, not an authority grant. The protected attestation, retained payload hashes, validator, and governed records remain authoritative.
+The illustration is a historical progress view, not an authority grant. Protected records, retained evidence identities, validators, and current operating policy remain authoritative.
 
 ## Core repositories and pillars
 
@@ -37,6 +45,9 @@ Use these as the current source of truth before opening new doctrine or domain w
 8. `GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md` — Work Package structure and review discipline.
 9. `CLAIM_LEDGER_STANDARD.md` — claim ledger format, support route, and promotion conditions.
 10. `CERTIFICATION_LADDER.md` — promotion gate from mathematical development to certified result.
+11. `docs/governance/STREAMLINED_EXECUTION_AMENDMENT.md` — current delegation, material-closure, concurrency, CI-proportionality, merge, and readback rules.
+12. `docs/WORKFLOW_COVERAGE.md` — current executable CI coverage, bounded replay, routing, and operational evidence.
+13. `docs/governance/AGENT_CADENCE_OPERATING_DESIGN.md` — current event-driven and campaign-local cadence interpretation; no global countdown.
 
 ## Presentation and pedagogy companions
 
@@ -64,7 +75,8 @@ Additional supporting files include schemas, templates, exact finite enumerators
 8. Read `docs/CROSS_PILLAR_LANES.md` when a recurring tactic, witness, or certificate path spans all three pillars.
 9. Treat `CLASSIFICATION_DISCOVERY_STANDARD.md` as binding for subject mappings, knowledge graph assertions, and discovery evidence.
 10. Treat `schemas/foundational_profile.schema.json` as the machine-readable form of the foundation-aware profile.
-11. Begin the first domain with `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`, `WP01_UNION_CLOSED_STATUS_SPINE.md`, and `WP02_UNION_CLOSED_LEAN_HANDOFF.md`.
+11. For routine execution, classify the material closure, run affected checks, exercise delegated disposition, merge through protection, and read back protected state. Do not create synchronization commits, repeat unrelated review, or launch full-estate CI solely because `main` advanced.
+12. Begin the first domain with `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`, `WP01_UNION_CLOSED_STATUS_SPINE.md`, and `WP02_UNION_CLOSED_LEAN_HANDOFF.md`.
 
 ## Claim boundary
 
