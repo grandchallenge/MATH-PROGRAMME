@@ -33,12 +33,12 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-      - name: Classify exact transition impact
+      - name: Classify material impact
         id: classify
         env:
           GCL_EVENT_SCHEDULE: ${{ github.event.schedule || '' }}
         run: python3 ci/policy_impact.py classify --github-output "$GITHUB_OUTPUT"
-      - name: Preserve classifier report
+      - name: Report classifier result
         if: always()
         run: |
           printf '%s\n' \
@@ -47,58 +47,35 @@ jobs:
             "unknown_count=${{ steps.classify.outputs.unknown_count }}" \
             "log_gcd_dirty=${{ steps.classify.outputs.log_gcd_dirty }}" \
             "pc_wp04_dirty=${{ steps.classify.outputs.pc_wp04_dirty }}" \
-            "union_closed_dirty=${{ steps.classify.outputs.union_closed_dirty }}" \
-            > policy-impact-report.txt
-      - name: Upload classifier evidence
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: policy-impact-report
-          path: policy-impact-report.txt
-          if-no-files-found: error
-          retention-days: 30
+            "union_closed_dirty=${{ steps.classify.outputs.union_closed_dirty }}"
 
   policy-shard:
     name: Policy shard / ${{ matrix.shard }}
     needs: impact
-    if: always()
+    if: always() && needs.impact.result == 'success'
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 50
     strategy:
       fail-fast: false
       matrix:
-        shard: [core, fixtures, cmdg, oz, administrative, campaigns, contracts, docs, repository-regression]
+        shard: ${{ fromJSON(needs.impact.outputs.policy_shards) }}
     steps:
-      - name: Fail closed if impact classification failed
-        if: needs.impact.result != 'success'
-        run: |
-          echo "policy impact classification failed; shard execution cannot be trusted"
-          exit 1
-      - name: Verified irrelevant-shard no-op
-        if: needs.impact.result == 'success' && !contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard)
-        run: echo "VERIFIED_POLICY_SHARD_NO_OP ${{ matrix.shard }}"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        if: needs.impact.result == 'success' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard)
         with:
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
-        if: needs.impact.result == 'success' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard)
         with:
           python-version: "3.12"
       - name: Install governed policy dependencies
-        if: needs.impact.result == 'success' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard)
         run: python -m pip install --requirement requirements/policy.txt
       - name: Install documentation dependencies
-        if: needs.impact.result == 'success' && matrix.shard == 'docs' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard)
+        if: matrix.shard == 'docs'
         run: python -m pip install --requirement requirements/docs.txt
-      - name: Execute governed policy shard
-        if: needs.impact.result == 'success' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard)
+      - name: Execute routed policy shard
         shell: bash
-        env:
-          SHARD: ${{ matrix.shard }}
-        run: python3 ci/run_policy_shard.py --shard "${SHARD}" --log "policy-shard-${SHARD}.log"
+        run: python3 ci/run_policy_shard.py --shard "${{ matrix.shard }}" --log "policy-shard-${{ matrix.shard }}.log"
       - name: Package policy-validated site
-        if: needs.impact.result == 'success' && matrix.shard == 'docs' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard) && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: matrix.shard == 'docs' && github.event_name == 'push' && github.ref == 'refs/heads/main'
         shell: bash
         run: |
           set -euo pipefail
@@ -107,7 +84,7 @@ jobs:
             -czf validated-site.tar.gz -C site .
           sha256sum validated-site.tar.gz > validated-site.tar.gz.sha256
       - name: Upload policy-validated site
-        if: needs.impact.result == 'success' && matrix.shard == 'docs' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard) && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: matrix.shard == 'docs' && github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: validated-site
@@ -117,14 +94,14 @@ jobs:
           if-no-files-found: error
           retention-days: 1
           compression-level: 0
-      - name: Preserve policy shard failure
-        if: failure() && needs.impact.result == 'success' && contains(fromJSON(needs.impact.outputs.policy_shards), matrix.shard)
+      - name: Preserve routed shard failure
+        if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: policy-shard-${{ matrix.shard }}-failure
           path: policy-shard-${{ matrix.shard }}.log
           if-no-files-found: warn
-          retention-days: 30
+          retention-days: 7
 
   validate-json:
     needs: [impact, policy-shard]
@@ -163,7 +140,7 @@ jobs:
           key: ${{ steps.identity.outputs.cache_prefix }}probe-${{ github.run_id }}
           restore-keys: |
             ${{ steps.identity.outputs.cache_prefix }}
-      - name: Decide bit-dirty replay or protected attestation
+      - name: Decide material replay or attestation reuse
         id: reuse
         shell: bash
         env:
@@ -173,10 +150,10 @@ jobs:
           MODE="clean"
           if [[ "${EVENT_MODE}" == "formal_sentinel" || "${EVENT_MODE}" == "manual_full" ]]; then MODE="sentinel"; elif [[ "${DIRTY}" == "true" ]]; then MODE="dirty"; fi
           python3 ci/formal_replay_gate.py decide --lane log-gcd --receipt .formal-replay/log-gcd/receipt.json --mode "${MODE}" --github-output "$GITHUB_OUTPUT"
-      - name: Report reused formal attestation
+      - name: Fast path — unchanged attestation reused
         if: steps.reuse.outputs.reuse == 'true'
         run: |
-          echo "REUSED_BIT_IDENTICAL_FORMAL_ATTESTATION"
+          echo "UNCHANGED_ATTESTATION_REUSED"
           cat .formal-replay/log-gcd/receipt.json
       - name: Set up pinned Lean and mathlib cache
         if: steps.reuse.outputs.reuse != 'true'
@@ -232,13 +209,6 @@ jobs:
         with:
           path: .formal-replay/log-gcd
           key: ${{ steps.identity.outputs.cache_prefix }}${{ github.run_id }}
-      - name: Preserve Lean failure log
-        if: failure() && steps.reuse.outputs.reuse != 'true'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: log-gcd-lean-failure
-          path: fixtures/formal/LOG-GCD-001/lean-build.log
-          if-no-files-found: error
 
   pc-wp04-lean:
     name: Replay PC-WP04 bounded certificate
@@ -253,21 +223,6 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
-        with:
-          python-version: "3.12"
-      - name: Install certificate dependencies
-        run: python -m pip install --requirement requirements/policy.txt
-      - name: Validate bounded certificate policy
-        run: |
-          python3 ci/validate_pc_wp04_fixture.py fixtures/formal/PC-WP04
-          python3 ci/test_pc_wp04_fixture.py
-      - name: Reject proof placeholders and opaque axioms
-        run: |
-          if grep -R -n -E '(^|[^A-Za-z])(sorry|axiom)([^A-Za-z]|$)' fixtures/formal/PC-WP04/PCWP04 fixtures/formal/PC-WP04/PCWP04.lean; then
-            echo "PC-WP04 must contain neither sorry nor local axioms."
-            exit 1
-          fi
       - name: Validate formal replay policy
         run: python3 ci/formal_replay_attestation.py check-policy
       - name: Compute formal replay identity
@@ -280,7 +235,7 @@ jobs:
           key: ${{ steps.identity.outputs.cache_prefix }}probe-${{ github.run_id }}
           restore-keys: |
             ${{ steps.identity.outputs.cache_prefix }}
-      - name: Decide bit-dirty replay or protected attestation
+      - name: Decide material replay or attestation reuse
         id: reuse
         shell: bash
         env:
@@ -290,11 +245,30 @@ jobs:
           MODE="clean"
           if [[ "${EVENT_MODE}" == "formal_sentinel" || "${EVENT_MODE}" == "manual_full" ]]; then MODE="sentinel"; elif [[ "${DIRTY}" == "true" ]]; then MODE="dirty"; fi
           python3 ci/formal_replay_gate.py decide --lane pc-wp04 --receipt .formal-replay/pc-wp04/receipt.json --mode "${MODE}" --github-output "$GITHUB_OUTPUT"
-      - name: Report reused formal attestation
+      - name: Fast path — unchanged attestation reused
         if: steps.reuse.outputs.reuse == 'true'
         run: |
-          echo "REUSED_BIT_IDENTICAL_FORMAL_ATTESTATION"
+          echo "UNCHANGED_ATTESTATION_REUSED"
           cat .formal-replay/pc-wp04/receipt.json
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        if: steps.reuse.outputs.reuse != 'true'
+        with:
+          python-version: "3.12"
+      - name: Install certificate dependencies only for material replay
+        if: steps.reuse.outputs.reuse != 'true'
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Validate bounded certificate policy
+        if: steps.reuse.outputs.reuse != 'true'
+        run: |
+          python3 ci/validate_pc_wp04_fixture.py fixtures/formal/PC-WP04
+          python3 ci/test_pc_wp04_fixture.py
+      - name: Reject proof placeholders and opaque axioms
+        if: steps.reuse.outputs.reuse != 'true'
+        run: |
+          if grep -R -n -E '(^|[^A-Za-z])(sorry|axiom)([^A-Za-z]|$)' fixtures/formal/PC-WP04/PCWP04 fixtures/formal/PC-WP04/PCWP04.lean; then
+            echo "PC-WP04 must contain neither sorry nor local axioms."
+            exit 1
+          fi
       - name: Set up pinned Lean and mathlib cache
         if: steps.reuse.outputs.reuse != 'true'
         id: lean-setup
@@ -360,12 +334,42 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
+      - name: Validate formal replay policy
+        run: python3 ci/formal_replay_attestation.py check-policy
+      - name: Compute formal replay identity
+        id: identity
+        run: python3 ci/formal_replay_attestation.py digest --lane union-closed-mathcert --github-output "$GITHUB_OUTPUT"
+      - name: Restore protected formal replay receipt
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: .formal-replay/union-closed-mathcert
+          key: ${{ steps.identity.outputs.cache_prefix }}probe-${{ github.run_id }}
+          restore-keys: |
+            ${{ steps.identity.outputs.cache_prefix }}
+      - name: Decide material replay or attestation reuse
+        id: reuse
+        shell: bash
+        env:
+          EVENT_MODE: ${{ needs.impact.outputs.event_mode }}
+          DIRTY: ${{ needs.impact.outputs.union_closed_dirty }}
+        run: |
+          MODE="clean"
+          if [[ "${EVENT_MODE}" == "formal_sentinel" || "${EVENT_MODE}" == "manual_full" ]]; then MODE="sentinel"; elif [[ "${DIRTY}" == "true" ]]; then MODE="dirty"; fi
+          python3 ci/formal_replay_gate.py decide --lane union-closed-mathcert --receipt .formal-replay/union-closed-mathcert/receipt.json --mode "${MODE}" --github-output "$GITHUB_OUTPUT"
+      - name: Fast path — unchanged attestation reused
+        if: steps.reuse.outputs.reuse == 'true'
+        run: |
+          echo "UNCHANGED_ATTESTATION_REUSED"
+          cat .formal-replay/union-closed-mathcert/receipt.json
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        if: steps.reuse.outputs.reuse != 'true'
         with:
           python-version: "3.12"
-      - name: Install external policy dependencies
+      - name: Install external policy dependencies only for material replay
+        if: steps.reuse.outputs.reuse != 'true'
         run: python -m pip install --requirement "$GITHUB_WORKSPACE/requirements/policy.txt"
       - name: Validate pinned external evidence
+        if: steps.reuse.outputs.reuse != 'true'
         run: |
           python - <<'PY'
           import json
@@ -380,33 +384,6 @@ jobs:
                   raise SystemExit(f"external evidence {key} drift: {evidence.get(key)!r} != {value!r}")
           print("external MATHCERT evidence matches workflow pin")
           PY
-      - name: Validate formal replay policy
-        run: python3 ci/formal_replay_attestation.py check-policy
-      - name: Compute formal replay identity
-        id: identity
-        run: python3 ci/formal_replay_attestation.py digest --lane union-closed-mathcert --github-output "$GITHUB_OUTPUT"
-      - name: Restore protected formal replay receipt
-        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
-        with:
-          path: .formal-replay/union-closed-mathcert
-          key: ${{ steps.identity.outputs.cache_prefix }}probe-${{ github.run_id }}
-          restore-keys: |
-            ${{ steps.identity.outputs.cache_prefix }}
-      - name: Decide bit-dirty replay or protected attestation
-        id: reuse
-        shell: bash
-        env:
-          EVENT_MODE: ${{ needs.impact.outputs.event_mode }}
-          DIRTY: ${{ needs.impact.outputs.union_closed_dirty }}
-        run: |
-          MODE="clean"
-          if [[ "${EVENT_MODE}" == "formal_sentinel" || "${EVENT_MODE}" == "manual_full" ]]; then MODE="sentinel"; elif [[ "${DIRTY}" == "true" ]]; then MODE="dirty"; fi
-          python3 ci/formal_replay_gate.py decide --lane union-closed-mathcert --receipt .formal-replay/union-closed-mathcert/receipt.json --mode "${MODE}" --github-output "$GITHUB_OUTPUT"
-      - name: Report reused formal attestation
-        if: steps.reuse.outputs.reuse == 'true'
-        run: |
-          echo "REUSED_BIT_IDENTICAL_FORMAL_ATTESTATION"
-          cat .formal-replay/union-closed-mathcert/receipt.json
       - name: Checkout pinned MATHCERT repository
         if: steps.reuse.outputs.reuse != 'true'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1

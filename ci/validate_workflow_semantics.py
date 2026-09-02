@@ -43,6 +43,7 @@ SHARDS = (
     "docs",
     "repository-regression",
 )
+DYNAMIC_SHARD_MATRIX = "${{ fromJSON(needs.impact.outputs.policy_shards) }}"
 REPOSITORY_REGRESSION_COMMAND = (
     "python3 ci/run_unittest_modules.py --discover-root tests --pattern test_*.py "
     "--report-json repository-regression-timing.json"
@@ -197,9 +198,9 @@ def workflow_semantic_errors(
         errors.append("ci.yml:impact must use one full-history checkout for exact transition diffing")
 
     shard_job = policy.get("jobs", {}).get("policy-shard", {})
-    matrix = shard_job.get("strategy", {}).get("matrix", {}).get("shard", [])
-    if tuple(str(item) for item in matrix) != SHARDS:
-        errors.append("ci.yml:policy-shard matrix must enumerate every governed shard exactly once")
+    matrix = shard_job.get("strategy", {}).get("matrix", {}).get("shard", "")
+    if str(matrix) != DYNAMIC_SHARD_MATRIX:
+        errors.append("ci.yml:policy-shard must use the classifier-produced dynamic shard matrix")
     shard_runs = job_runs(policy, "policy-shard")
     if not contains_command(shard_runs, POLICY_INSTALL):
         errors.append("ci.yml:policy-shard is missing governed policy dependency command")
@@ -207,8 +208,6 @@ def workflow_semantic_errors(
         errors.append("ci.yml:policy-shard is missing governed docs dependency command")
     if not marker(shard_runs, "ci/run_policy_shard.py --shard"):
         errors.append("ci.yml:policy-shard must execute the governed shard registry runner")
-    if not marker(shard_runs, "VERIFIED_POLICY_SHARD_NO_OP"):
-        errors.append("ci.yml:policy-shard must make irrelevant shard no-op explicit")
 
     routed = registry_shards(root)
     if tuple(routed) != SHARDS:
@@ -337,7 +336,7 @@ def main() -> int:
         print(f"workflow semantic validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
     print(
-        "workflow names, nine-shard impact routing, formal replay gates, runners, dependencies, "
+        "workflow names, dynamic impact routing, formal replay gates, runners, dependencies, "
         "repository-regression ownership, and publication freshness are valid"
     )
     return 0

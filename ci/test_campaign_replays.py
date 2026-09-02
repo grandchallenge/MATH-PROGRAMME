@@ -1,12 +1,22 @@
 #!/usr/bin/env python3
-"""Adversarial rejection tests for governed campaign replay coverage."""
+"""Adversarial rejection tests for governed campaign replay coverage and routing."""
 from __future__ import annotations
 
 import copy
+import json
 import tempfile
 from pathlib import Path
 
-from validate_campaign_replays import ROOT, load_json, registry_errors
+from validate_campaign_replays import (
+    REGISTRY_RELATIVE,
+    ROOT,
+    ReplayRoutingError,
+    affected_replay_ids,
+    changed_registry_entry_ids,
+    load_json,
+    registry_errors,
+    transition_refs_from_event,
+)
 
 
 def main() -> int:
@@ -42,6 +52,82 @@ def main() -> int:
     narrowed_registry = copy.deepcopy(registry)
     narrowed_registry["discovery_globs"] = ["campaigns/riemann_hypothesis/**/replay.py"]
     assert any("additional properties" in error.lower() for error in registry_errors(narrowed_registry))
+
+    # Unrelated full-fanout controls must not execute historical campaign replays.
+    assert affected_replay_ids(
+        registry,
+        ["governance/policy_shard_registry.json"],
+    ) == set()
+
+    # A campaign-family transition selects that family and no others.
+    oz_ids = affected_replay_ids(
+        registry,
+        ["campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/README.md"],
+    )
+    assert oz_ids
+    assert all(
+        str(next(entry for entry in registry["entries"] if entry["id"] == label)["command"][1]).startswith(
+            "campaigns/odd_zeta/"
+        )
+        for label in oz_ids
+    )
+    assert not any(label.startswith("BSD-") for label in oz_ids)
+
+    # A changed registry entry is replayed even when its campaign files are unchanged.
+    base_registry = copy.deepcopy(registry)
+    changed_registry = copy.deepcopy(registry)
+    changed_label = str(changed_registry["entries"][0]["id"])
+    changed_registry["entries"][0]["timeout_seconds"] += 1
+    assert changed_registry_entry_ids(base_registry, changed_registry) == {changed_label}
+    assert affected_replay_ids(
+        changed_registry,
+        [REGISTRY_RELATIVE],
+        base_registry=base_registry,
+    ) == {changed_label}
+
+    # Registry deltas may not be routed without the exact predecessor registry.
+    try:
+        affected_replay_ids(changed_registry, [REGISTRY_RELATIVE])
+    except ReplayRoutingError as exc:
+        assert "predecessor registry is unavailable" in str(exc)
+    else:
+        raise AssertionError("registry delta without predecessor must fail closed")
+
+    # Unknown campaign roots fail closed instead of silently skipping execution.
+    try:
+        affected_replay_ids(registry, ["campaigns/unregistered_family/helper.py"])
+    except ReplayRoutingError as exc:
+        assert "no registered replay entries" in str(exc)
+    else:
+        raise AssertionError("unregistered campaign root must fail closed")
+
+    # GitHub event parsing must preserve exact PR and push transition identities.
+    with tempfile.TemporaryDirectory() as temporary:
+        event_path = Path(temporary) / "event.json"
+        event_path.write_text(
+            json.dumps(
+                {
+                    "pull_request": {
+                        "base": {"sha": "a" * 40},
+                        "head": {"sha": "b" * 40},
+                    }
+                }
+            ),
+            encoding="utf-8",
+        )
+        assert transition_refs_from_event("pull_request", str(event_path)) == (
+            "a" * 40,
+            "b" * 40,
+        )
+        event_path.write_text(
+            json.dumps({"before": "c" * 40, "after": "d" * 40}),
+            encoding="utf-8",
+        )
+        assert transition_refs_from_event("push", str(event_path)) == (
+            "c" * 40,
+            "d" * 40,
+        )
+        assert transition_refs_from_event("schedule", str(event_path)) is None
 
     with tempfile.TemporaryDirectory() as temporary:
         root = Path(temporary)
@@ -89,7 +175,7 @@ def main() -> int:
         ]
         assert any("both registered and exempt" in error for error in registry_errors(overlap, root=root))
 
-    print("campaign replay registry rejection tests passed")
+    print("campaign replay registry and routing rejection tests passed")
     return 0
 
 

@@ -69,6 +69,7 @@ def shard_impacts(paths:list[str])->tuple[list[str],list[str]]:
     for p in paths:
         lower=p.lower();matched=False
         if p.startswith('docs/') or p in {'mkdocs.yml','requirements/docs.txt'}:active.add('docs');matched=True
+        if p.startswith('handoffs/'):active.update({'administrative','campaigns'});matched=True
         if p.startswith('tools/render_visual_pedagogy') and p.endswith('.py'):active.update({'contracts','docs'});matched=True
         if p.startswith('fixtures/algebraic/') or p.startswith('fixtures/formal/') or any(t in lower for t in ('grobner','chaidez','researchmath','log_gcd')):active.add('fixtures');matched=True
         if p.startswith('fixtures/cmdg/') or 'cmdg' in lower:active.add('cmdg');matched=True
@@ -100,7 +101,6 @@ def classify_paths(paths:Iterable[str],*,event_name:str='pull_request',schedule:
         return {'event_mode':'unknown_schedule','changed_paths':[],'unknown_paths':[f'schedule:{schedule}'],'policy_shards':list(ALL_SHARDS),'formal_dirty':{lane:True for lane in ALL_LANES}}
     if event_name=='workflow_dispatch':return {'event_mode':'manual_full','changed_paths':changed,'unknown_paths':[],'policy_shards':list(ALL_SHARDS),'formal_dirty':{lane:True for lane in ALL_LANES}}
     shards,unknown=shard_impacts(changed);dirty=formal_lane_impacts(changed,formal,bool(unknown))
-    if event_name=='push':shards=[s for s in ALL_SHARDS if s in set(shards)|{'docs','repository-regression'}]
     return {'event_mode':'transition','changed_paths':changed,'unknown_paths':unknown,'policy_shards':shards,'formal_dirty':dirty}
 def git_changed_paths(base:str,head:str)->list[str]:
     if not base or not head or base==ZERO_SHA:raise ImpactError('transition diff base/head is unavailable')

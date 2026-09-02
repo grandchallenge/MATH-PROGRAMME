@@ -27,24 +27,92 @@ on:
         options:
           - allow
           - deny
+  issue_comment:
+    types: [created]
 
 permissions:
   contents: read
 
 concurrency:
-  group: construction-gate-runtime-${{ inputs.target }}
+  group: construction-gate-runtime-${{ github.event_name == 'issue_comment' && 'MP-MCORE-DOMAIN-DIAG-001' || inputs.target }}
   cancel-in-progress: false
 
 jobs:
   mutate:
     name: Preflight and atomically mutate governed ref
-    if: github.ref == 'refs/heads/main'
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      (
+        github.event_name == 'workflow_dispatch' ||
+        (
+          github.event_name == 'issue_comment' &&
+          github.event.issue.number == 737 &&
+          github.event.comment.user.login == 'fyremael' &&
+          startsWith(github.event.comment.body, '/construction-gate ')
+        )
+      )
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     environment: construction-gate-runtime
     permissions:
       contents: read
     steps:
+      - name: Resolve and constrain governed request
+        id: request
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          COMMENT_BODY: ${{ github.event.comment.body || '' }}
+          INPUT_TARGET: ${{ inputs.target || '' }}
+          INPUT_OPERATION: ${{ inputs.operation || '' }}
+          INPUT_PROPOSED_HEAD: ${{ inputs.proposed_head || '' }}
+          INPUT_EXPECT: ${{ inputs.expect || '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == workflow_dispatch ]]; then
+            target="$INPUT_TARGET"
+            operation="$INPUT_OPERATION"
+            proposed_head="$INPUT_PROPOSED_HEAD"
+            expect="$INPUT_EXPECT"
+          elif [[ "$EVENT_NAME" == issue_comment ]]; then
+            read -r command target operation proposed_head expect extra <<<"$COMMENT_BODY"
+            [[ "$command" == "/construction-gate" ]] || { echo "invalid issue command" >&2; exit 2; }
+            [[ -z "${extra:-}" ]] || { echo "unexpected trailing issue-command input" >&2; exit 2; }
+            [[ "$target" == "MP-MCORE-DOMAIN-DIAG-001" ]] || { echo "issue-comment entry is scoped only to MP-MCORE-DOMAIN-DIAG-001" >&2; exit 2; }
+            [[ "$expect" == allow ]] || { echo "issue-comment entry accepts only allow disposition" >&2; exit 2; }
+            case "$operation" in
+              CREATE_DEVELOPMENT)
+                [[ "$proposed_head" == "03ca91bf486d38007799bee0b0552afbfb61245c" ]] || {
+                  echo "CREATE_DEVELOPMENT issue command is pinned to protected predecessor" >&2; exit 2;
+                }
+                ;;
+              UPDATE_DEVELOPMENT|FREEZE_CANDIDATE)
+                [[ "$proposed_head" == "07582227a487a56c21c8604d9e85b99c7b0b6ac2" ]] || {
+                  echo "$operation issue command is pinned to exact validated diagnostic head" >&2; exit 2;
+                }
+                ;;
+              *) echo "unsupported issue-command operation" >&2; exit 2 ;;
+            esac
+
+            issue_state="$(curl --fail --silent --show-error -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10' \
+              https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/737 | jq -r .state)"
+            pr_json="$(curl --fail --silent --show-error -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10' \
+              https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/pulls/739)"
+            pr_state="$(jq -r .state <<<"$pr_json")"
+            pr_head="$(jq -r .head.sha <<<"$pr_json")"
+            [[ "$issue_state" == open ]] || { echo "issue #737 is not open" >&2; exit 2; }
+            [[ "$pr_state" == open ]] || { echo "PR #739 is not open" >&2; exit 2; }
+            [[ "$pr_head" == "07582227a487a56c21c8604d9e85b99c7b0b6ac2" ]] || { echo "PR #739 exact head changed" >&2; exit 2; }
+          else
+            echo "unsupported event" >&2
+            exit 2
+          fi
+
+          [[ "$proposed_head" =~ ^[0-9a-f]{40}$ ]] || { echo "proposed_head must be an exact SHA" >&2; exit 2; }
+          [[ "$expect" == allow || "$expect" == deny ]] || { echo "expect must be allow or deny" >&2; exit 2; }
+          printf 'target=%s\noperation=%s\nproposed_head=%s\nexpect=%s\n' \
+            "$target" "$operation" "$proposed_head" "$expect" >> "$GITHUB_OUTPUT"
+
       - name: Check out exact protected-main dispatch revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -62,10 +130,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: grandchallenge/MATH-PROGRAMME
-          TARGET_ID: ${{ inputs.target }}
-          OPERATION: ${{ inputs.operation }}
-          PROPOSED_HEAD: ${{ inputs.proposed_head }}
-          EXPECT: ${{ inputs.expect }}
+          TARGET_ID: ${{ steps.request.outputs.target }}
+          OPERATION: ${{ steps.request.outputs.operation }}
+          PROPOSED_HEAD: ${{ steps.request.outputs.proposed_head }}
+          EXPECT: ${{ steps.request.outputs.expect }}
         shell: bash
         run: |
           set -euo pipefail
@@ -186,7 +254,8 @@ jobs:
           READ_TOKEN: ${{ github.token }}
           GATE_TOKEN: ${{ steps.gate-token.outputs.token }}
           REPO: grandchallenge/MATH-PROGRAMME
-          OPERATION: ${{ inputs.operation }}
+          TARGET_ID: ${{ steps.request.outputs.target }}
+          OPERATION: ${{ steps.request.outputs.operation }}
         shell: bash
         run: |
           set -euo pipefail
@@ -197,7 +266,7 @@ jobs:
           proposed="$(jq -r .proposed_head construction-observation.json)"
           original_candidate_exists="$(jq -r .candidate_ref_exists construction-observation.json)"
           original_dev_head="$(jq -r .development_head construction-observation.json)"
-          target="$(jq -c --arg id "${{ inputs.target }}" '.targets[] | select(.target_id==$id)' governance/construction_integrity_contract.json)"
+          target="$(jq -c --arg id "$TARGET_ID" '.targets[] | select(.target_id==$id)' governance/construction_integrity_contract.json)"
           dev_ref="$(jq -r .development_ref <<<"$target")"
           cand_ref="$(jq -r .candidate_ref <<<"$target")"
           read_ref() {

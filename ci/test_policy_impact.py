@@ -6,6 +6,7 @@ import policy_impact as impact
 def main()->int:
     impact.validate_control()
     docs=impact.classify_paths(['docs/governance/example.md']);assert docs['policy_shards']==['core','docs'];assert not any(docs['formal_dirty'].values())
+    handoff=impact.classify_paths(['handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/HANDOFF.md']);assert handoff['policy_shards']==['core','administrative','campaigns','docs'];assert not handoff['unknown_paths'];assert not any(handoff['formal_dirty'].values())
     cmdg=impact.classify_paths(['fixtures/cmdg/extractor_001/log_gcd.json']);assert 'cmdg' in cmdg['policy_shards'];assert 'repository-regression' not in cmdg['policy_shards'];assert cmdg['formal_dirty']['log-gcd'] is True;assert cmdg['formal_dirty']['pc-wp04'] is False
     oz=impact.classify_paths(['tests/test_oz_rt_bz_t3.py']);assert oz['policy_shards']==['core','oz'];assert not oz['unknown_paths']
     fixture_test=impact.classify_paths(['tests/test_ns_wp06_halting_gate_fixture.py']);assert fixture_test['policy_shards']==['core','fixtures'];assert not fixture_test['unknown_paths']
@@ -25,7 +26,7 @@ def main()->int:
     formal=impact.classify_paths([],event_name='schedule',schedule=control['formal_replay']['sentinel']['cron']);assert formal['event_mode']=='formal_sentinel';assert formal['policy_shards']==['core']
     sentinel=impact.classify_paths([],event_name='schedule',schedule=control['policy_dag']['full_policy_sentinel_cron']);assert sentinel['event_mode']=='full_policy_sentinel';assert sentinel['policy_shards']==list(impact.ALL_SHARDS)
     manual=impact.classify_paths([],event_name='workflow_dispatch');assert manual['event_mode']=='manual_full';assert manual['policy_shards']==list(impact.ALL_SHARDS);assert all(manual['formal_dirty'].values())
-    pushed=impact.classify_paths(['docs/governance/example.md'],event_name='push');assert 'docs' in pushed['policy_shards'];assert 'repository-regression' in pushed['policy_shards']
+    pushed=impact.classify_paths(['docs/governance/example.md'],event_name='push');assert pushed['policy_shards']==['core','docs'];assert not any(pushed['formal_dirty'].values())
 
     original_loader=impact.load_json
     protected_control=original_loader(impact.CONTROL_PATH);protected_formal=original_loader(impact.FORMAL_PATH);protected_registry=original_loader(impact.REGISTRY_PATH)
