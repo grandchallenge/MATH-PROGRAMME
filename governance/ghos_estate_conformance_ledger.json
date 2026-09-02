@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0.0",
   "campaign_id": "GHOS-ESTATE-ROLLOUT-001",
-  "state": "ACTIVE_PHASE_3_AT_MODULUS",
+  "state": "ACTIVE_PHASE_3_AT_GLOSS",
   "repository_count": 14,
-  "terminal_green_count": 8,
+  "terminal_green_count": 9,
   "shared_gate_audit_pending_count": 0,
   "applicable_routing_gap_count": 0,
-  "baseline_scan_pending_count": 6,
+  "baseline_scan_pending_count": 5,
   "blocked_count": 0,
   "phase_0": {
     "state": "COMPLETE",
@@ -275,16 +275,55 @@
     "grandchallenge/MODULUS": {
       "phase": 3,
       "tracker": "grandchallenge/MODULUS#18",
-      "disposition": "PENDING",
-      "current_state": "PHASE3_READY_FOR_EXACT_PROTECTED_PREFLIGHT",
+      "terminal_comment_id": 5508397077,
+      "disposition": "GHOS_ROUTING_ENFORCED",
+      "tracker_state": "CLOSED_COMPLETED",
+      "current_state": "PHASE3_TERMINAL__ROUTING_REQUIRED_AND_HOSTILE_PROVEN",
       "protected_head_at_activation": "2a6fb6f190e52d23a9c65b710d82f9d4527bbe71",
-      "ruleset_id_at_activation": 20266757
+      "terminal_head": "bdc236cb50b25d234451bf05a36ce7da49256870",
+      "observed_direct_workflow_count": 2,
+      "terminal_direct_workflow_count": 3,
+      "routing_registry_blob": "4fb5b81515b4556d7188107dba81df85649b6fcc",
+      "routing_enforcement_blob": "a0ce4332e41be37e87025da71533dec15160aa55",
+      "ruleset_id": 20266757,
+      "ruleset_strict": true,
+      "ruleset_bypass_actors": [],
+      "required_contexts": [
+        "test-and-lint (3.10)",
+        "test-and-lint (3.11)",
+        "test-and-lint (3.12)",
+        "benchmark-report",
+        "policy / policy",
+        "security / action-policy",
+        "routing-enforcement"
+      ],
+      "routing_required": true,
+      "benign_proof": {
+        "pull_request": 21,
+        "head": "18616c63f1af8dc104a2ca60c44f9eba1793c83b",
+        "workflow_run": 33618277566,
+        "job": 100209103877,
+        "result": "SUCCESS",
+        "closed_unmerged": true
+      },
+      "hostile_proof": {
+        "pull_request": 22,
+        "head": "f93aa77c18ed56d27a344be1b924d2ca35955952",
+        "workflow_run": 33621394969,
+        "job": 100218982604,
+        "result": "EXPECTED_FAILURE",
+        "failure_class": "workflow routing coverage mismatch",
+        "mergeable_state": "blocked",
+        "closed_unmerged": true
+      },
+      "tag_ruleset_id": 20334249,
+      "tag_ruleset_unchanged": true
     },
     "grandchallenge/GLOSS": {
       "phase": 3,
       "tracker": "grandchallenge/GLOSS#6",
       "disposition": "PENDING",
-      "current_state": "BASELINE_SCAN_PENDING"
+      "current_state": "PHASE3_READY_FOR_EXACT_PROTECTED_PREFLIGHT"
     },
     "grandchallenge/QUANTUM-TECHNOLOGIES": {
       "phase": 3,
