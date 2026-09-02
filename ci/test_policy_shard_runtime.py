@@ -4,24 +4,18 @@ from __future__ import annotations
 import copy
 import fnmatch
 import json
+import os
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 import run_policy_shard
 import run_unittest_modules
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "governance/policy_shard_registry.json"
-EXCLUDE_PATTERNS = [
-    "test_oz*.py",
-    "test_cmdg*.py",
-    "test_*fixture*.py",
-    "test_administrative*.py",
-    "test_campaign*.py",
-]
-EXCLUDE_MANIFESTS = ["governance/contract_test_manifest.json"]
 
 
 class PolicyShardRuntimeTests(unittest.TestCase):
@@ -53,12 +47,19 @@ class PolicyShardRuntimeTests(unittest.TestCase):
         self.assertTrue(timed_out)
         self.assertEqual(returncode, run_policy_shard.TIMEOUT_EXIT)
 
-    def test_repository_regression_exclusions_are_explicit_and_nonempty(self) -> None:
+    def test_repository_regression_exclusions_are_governed_and_nonempty(self) -> None:
+        data = self.registry()
+        expected = data["execution"]["repository_regression_exclusions"]
+        with patch.dict(os.environ, {"GCL_POLICY_SHARD": "repository-regression"}, clear=False):
+            patterns, manifests = run_unittest_modules._governed_exclusions()
+        self.assertEqual(patterns, expected["patterns"])
+        self.assertEqual(manifests, expected["manifests"])
+
         discovered = run_unittest_modules._discover("tests", "test_*.py")
         selected, excluded = run_unittest_modules._apply_exclusions(
             discovered,
-            exclude_patterns=EXCLUDE_PATTERNS,
-            exclude_manifests=EXCLUDE_MANIFESTS,
+            exclude_patterns=patterns,
+            exclude_manifests=manifests,
         )
         self.assertTrue(selected)
         self.assertTrue(excluded)
@@ -70,10 +71,16 @@ class PolicyShardRuntimeTests(unittest.TestCase):
         for path in selected:
             self.assertNotIn(path, manifest_paths)
             self.assertFalse(
-                any(fnmatch.fnmatchcase(path.name, pattern) for pattern in EXCLUDE_PATTERNS),
+                any(fnmatch.fnmatchcase(path.name, pattern) for pattern in patterns),
                 path,
             )
         self.assertTrue(any(path.name.startswith("test_oz") for path, _ in excluded))
+
+    def test_non_regression_shards_do_not_inherit_repository_exclusions(self) -> None:
+        with patch.dict(os.environ, {"GCL_POLICY_SHARD": "contracts"}, clear=False):
+            patterns, manifests = run_unittest_modules._governed_exclusions()
+        self.assertEqual(patterns, [])
+        self.assertEqual(manifests, [])
 
 
 if __name__ == "__main__":
