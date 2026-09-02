@@ -18,8 +18,13 @@ ROOT_STR = str(ROOT)
 if ROOT_STR not in sys.path:
     sys.path.insert(0, ROOT_STR)
 
-DEFAULT_MODULE_TIMEOUT_SECONDS = 180
-DEFAULT_TOTAL_TIMEOUT_SECONDS = 900
+# Empirical 2026-09-01 protected-run envelope:
+#   heaviest observed module: 356.6 s
+#   OZ suite: 1324.8 s
+#   repository regression: 1446.2 s
+# Preserve legitimate sentinel work while bounding pathological execution below 30 min.
+DEFAULT_MODULE_TIMEOUT_SECONDS = 420
+DEFAULT_TOTAL_TIMEOUT_SECONDS = 1620
 TIMEOUT_EXIT = 124
 
 
@@ -71,12 +76,12 @@ def _discover(root: str, pattern: str) -> list[Path]:
 def _suite_for(path: Path) -> unittest.TestSuite:
     if ROOT_STR not in sys.path:
         sys.path.insert(0, ROOT_STR)
-    rel_parent = path.parent.relative_to(ROOT)
-    return unittest.defaultTestLoader.discover(str(rel_parent), pattern=path.name)
+    return unittest.defaultTestLoader.discover(
+        str(path.parent.relative_to(ROOT)), pattern=path.name
+    )
 
 
-def _record_from_result(path: Path, result: unittest.TestResult, elapsed: float) -> dict[str, object]:
-    ok = result.wasSuccessful()
+def _record(path: Path, result: unittest.TestResult, elapsed: float) -> dict[str, object]:
     return {
         "module": path.relative_to(ROOT).as_posix(),
         "seconds": round(elapsed, 6),
@@ -84,16 +89,17 @@ def _record_from_result(path: Path, result: unittest.TestResult, elapsed: float)
         "failures": len(result.failures),
         "errors": len(result.errors),
         "skipped": len(result.skipped),
-        "status": "PASS" if ok else "FAIL",
+        "status": "PASS" if result.wasSuccessful() else "FAIL",
     }
 
 
 def _single_module(path: Path, result_json: Path) -> int:
     started = time.perf_counter()
     result = unittest.TextTestRunner(verbosity=1).run(_suite_for(path))
-    elapsed = time.perf_counter() - started
-    record = _record_from_result(path, result, elapsed)
-    result_json.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    result_json.write_text(
+        json.dumps(_record(path, result, time.perf_counter() - started), indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
     return 0 if result.wasSuccessful() else 1
 
 
@@ -117,17 +123,16 @@ def _terminate_process_tree(proc: subprocess.Popen[str]) -> str:
         return out or ""
 
 
-def _run_bounded_child(path: Path, result_json: Path, timeout_seconds: float) -> tuple[int, str, bool]:
-    command = [
-        sys.executable,
-        str(Path(__file__).resolve()),
-        "--single-module",
-        path.relative_to(ROOT).as_posix(),
-        "--single-result-json",
-        str(result_json),
-    ]
+def _run_child(path: Path, result_json: Path, timeout_seconds: float) -> tuple[int, str, bool]:
     proc = subprocess.Popen(
-        command,
+        [
+            sys.executable,
+            str(Path(__file__).resolve()),
+            "--single-module",
+            path.relative_to(ROOT).as_posix(),
+            "--single-result-json",
+            str(result_json),
+        ],
         cwd=ROOT,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
@@ -142,15 +147,23 @@ def _run_bounded_child(path: Path, result_json: Path, timeout_seconds: float) ->
 
 
 def _write_report(path: str | None, records: list[dict[str, object]], total: float) -> None:
-    if not path:
-        return
-    report_path = ROOT / path
-    report = {"module_count": len(records), "seconds": round(total, 6), "modules": records}
-    report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    if path:
+        (ROOT / path).write_text(
+            json.dumps(
+                {"module_count": len(records), "seconds": round(total, 6), "modules": records},
+                indent=2,
+                sort_keys=True,
+            ) + "\n",
+            encoding="utf-8",
+        )
 
 
 def _parent_main(args: argparse.Namespace) -> int:
-    paths = _manifest_paths(_safe_repo_path(args.manifest, suffix=".json")) if args.manifest else _discover(args.discover_root, args.pattern)
+    paths = (
+        _manifest_paths(_safe_repo_path(args.manifest, suffix=".json"))
+        if args.manifest
+        else _discover(args.discover_root, args.pattern)
+    )
     records: list[dict[str, object]] = []
     failures = 0
     started = time.perf_counter()
@@ -164,16 +177,11 @@ def _parent_main(args: argparse.Namespace) -> int:
             remaining = None if deadline is None else deadline - now
             if remaining is not None and remaining <= 0:
                 total = now - started
-                record = {
-                    "module": rel,
-                    "seconds": 0.0,
-                    "tests_run": 0,
-                    "failures": 0,
-                    "errors": 1,
-                    "skipped": 0,
+                records.append({
+                    "module": rel, "seconds": 0.0, "tests_run": 0,
+                    "failures": 0, "errors": 1, "skipped": 0,
                     "status": "TOTAL_TIMEOUT",
-                }
-                records.append(record)
+                })
                 print(
                     f"POLICY_TEST_TOTAL_TIMEOUT module={rel} limit_seconds={args.total_timeout_seconds} elapsed_seconds={total:.3f}",
                     flush=True,
@@ -190,23 +198,17 @@ def _parent_main(args: argparse.Namespace) -> int:
                 flush=True,
             )
             module_started = time.perf_counter()
-            returncode, output, timed_out = _run_bounded_child(path, result_path, timeout)
+            returncode, output, timed_out = _run_child(path, result_path, timeout)
             elapsed = time.perf_counter() - module_started
             if output:
                 sys.stdout.write(output)
                 sys.stdout.flush()
 
             if timed_out:
-                record = {
-                    "module": rel,
-                    "seconds": round(elapsed, 6),
-                    "tests_run": 0,
-                    "failures": 0,
-                    "errors": 1,
-                    "skipped": 0,
-                    "status": "TIMEOUT",
-                }
-                records.append(record)
+                records.append({
+                    "module": rel, "seconds": round(elapsed, 6), "tests_run": 0,
+                    "failures": 0, "errors": 1, "skipped": 0, "status": "TIMEOUT",
+                })
                 total = time.perf_counter() - started
                 print(
                     f"POLICY_TEST_TIMEOUT module={rel} seconds={elapsed:.3f} limit_seconds={timeout:.3f}",
@@ -219,13 +221,8 @@ def _parent_main(args: argparse.Namespace) -> int:
                 record = json.loads(result_path.read_text(encoding="utf-8"))
             else:
                 record = {
-                    "module": rel,
-                    "seconds": round(elapsed, 6),
-                    "tests_run": 0,
-                    "failures": 0,
-                    "errors": 1,
-                    "skipped": 0,
-                    "status": "ERROR",
+                    "module": rel, "seconds": round(elapsed, 6), "tests_run": 0,
+                    "failures": 0, "errors": 1, "skipped": 0, "status": "ERROR",
                 }
             records.append(record)
             ok = returncode == 0 and record.get("status") == "PASS"
@@ -260,10 +257,7 @@ def main() -> int:
         if args.single_module:
             if not args.single_result_json:
                 raise RuntimeError("single-module execution requires --single-result-json")
-            return _single_module(
-                _safe_repo_path(args.single_module, suffix=".py"),
-                Path(args.single_result_json),
-            )
+            return _single_module(_safe_repo_path(args.single_module, suffix=".py"), Path(args.single_result_json))
         if not args.manifest and not args.discover_root:
             raise RuntimeError("one of --manifest or --discover-root is required")
         return _parent_main(args)
