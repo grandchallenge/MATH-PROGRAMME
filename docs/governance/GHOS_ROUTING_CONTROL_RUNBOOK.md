@@ -2,13 +2,11 @@
 
 ## Purpose
 
-This runbook governs maintenance of MATH-PROGRAMME's mandatory execution
-routing control. The control is self-policing, not self-authorizing: it detects
-coverage, capability, topology, controller, identity, and enforcement drift,
-but a legitimate change still requires an exact reviewed pull request.
+This runbook governs maintenance of MATH-PROGRAMME's mandatory execution-routing control. The control is self-policing, not self-authorizing: it detects coverage, capability, topology, controller, identity, and enforcement drift.
 
-This runbook grants no merge, certification, promotion, publication,
-mathematical-claim, or protected-bypass authority.
+Routine workflow maintenance follows the standing delegated execution model. A legitimate routine change does not require fresh Human Steward or generic independent approval merely because its commit is new. Security-sensitive weakening, external gate authority changes, controller capability expansion, or temporary removal of protected enforcement remains a reserved control-plane boundary and receives the specialist or Human Steward authority required by that exact action.
+
+This runbook grants no certification, mathematical-claim, publication, external-claim, or protected-bypass authority.
 
 ## Control surface
 
@@ -23,167 +21,107 @@ mathematical-claim, or protected-bypass authority.
 | Ruleset `21969152` | Dedicated protected-main requirement for `routing-enforcement` |
 | Ruleset `17137629` | Separate Programme profile; not the GH-OS routing ruleset |
 
+The dedicated routing ruleset currently requires `routing-enforcement` with `strict_required_status_checks_policy: false` and no bypass actors. Non-strict status policy is deliberate: it permits concurrent mergeable development without update-branch synchronization solely for freshness.
+
 ## Routine workflow maintenance
 
 When adding, deleting, renaming, or changing a workflow:
 
 1. Run `python ci/ghos_execution_routing.py`.
-2. Update exactly one corresponding entry in
-   `.ghos-routing/workflows.json`, or remove the stale entry when deleting a
-   workflow.
-3. Use the exact feature list and topology derived from workflow bytes. Do not
-   weaken them manually and do not over-declare features: the shared gate
-   requires exact equality with its byte-derived result.
-4. For any non-`BOUNDED_ATOMIC` workflow, use the exact admitted controller and
-   confirm that all derived features are supported. Otherwise decompose the
-   operation into independently recoverable bounded workflows.
-5. Run:
+2. Update exactly one corresponding entry in `.ghos-routing/workflows.json`, or remove the stale entry when deleting a workflow.
+3. Use the exact feature list and topology derived from workflow bytes. Do not weaken or over-declare them manually; the shared gate requires equality with its byte-derived result.
+4. For any non-`BOUNDED_ATOMIC` workflow, use the exact admitted controller and confirm that all derived features are supported. Otherwise decompose the operation into independently recoverable bounded workflows.
+5. Run the focused routing/semantic tests needed by the changed control. Current policy impact routing will select the additional protected shards actually affected.
+6. Require `routing-enforcement` on changed workflow bytes and the affected policy/security checks selected by current policy. Do not require repository-wide, campaign-wide, formal, or computational replay when their material inputs are unchanged.
+7. Merge through protected controls under standing delegated authority when the change is routine, mergeable, and does not weaken or expand the protected control boundary.
 
-   ```text
-   python ci/ghos_execution_routing.py
-   python -m unittest tests.test_ghos_execution_routing
-   python ci/validate_policy_reachability.py
-   python ci/validate_workflow_coverage_v2.py
-   python ci/validate_workflow_semantics.py
-   ```
+The expected maintenance burden is one routing-entry update per workflow change plus affected validation. The gate supplies the authoritative diagnostic when the entry drifts.
 
-6. Require fresh exact-head policy, security, repository, campaign, and
-   `routing-enforcement` results. Existing review and check evidence does not
-   carry to changed bytes.
+## Candidate-independent enforcement and concurrency
 
-The expected maintenance burden is one routing-entry update per workflow
-change. The gate supplies the authoritative diagnostic when the entry drifts.
+The enforcement workflow runs from the protected base under `pull_request_target`, treats candidate content as inert data, and must not execute untrusted candidate code. It evaluates the effective candidate represented by GitHub's virtual merge ref `refs/pull/<number>/merge`, so protected-base advances are included without requiring a rebase or synchronization commit.
+
+A candidate may therefore remain valid across unrelated protected-main movement when:
+
+- GitHub can construct the virtual merge candidate;
+- routing-control bytes relevant to the candidate are unchanged or intentionally updated within scope;
+- required affected checks pass;
+- no relevant authority or controller boundary widened.
+
+Do not use raw stale branch snapshots where the control is intended to evaluate the effective merge candidate.
 
 ## External gate and digest rotation
 
-An external gate change is a control-plane upgrade, not routine workflow
-maintenance.
+An external gate semantic change is a control-plane upgrade rather than ordinary workflow maintenance.
 
-1. Change and test the gate in `grandchallenge/.github` through its protected
-   review path.
-2. Record the reviewed and merged gate commit, exact script blob, SHA-256, test
-   evidence, compatibility statement, and affected repositories.
-3. Do not replace the active shared script path without a coordinated consumer
-   plan. Prefer publishing a versioned successor path while the prior pinned
-   path remains available.
-4. Prepare a MATH-PROGRAMME control-upgrade PR containing only the justified
-   enforcement pin/path change and any necessarily synchronized local
-   validator, schema, tests, controller catalog, registry, or documentation.
-5. Obtain fresh independent exact-head review. A prior routing approval cannot
-   authorize the new control bytes.
-6. Follow the protected self-modification procedure below.
-7. After integration, run a hostile candidate that disables local validation,
-   repins a reusable policy caller, and adds an unregistered unattended writer.
-   `routing-enforcement` must fail while unrelated required checks may pass.
+1. Change and test the gate in `grandchallenge/.github` through its protected path.
+2. Record the merged gate commit, exact script blob, SHA-256, test evidence, compatibility statement, and affected repositories.
+3. Prefer a versioned successor path while the prior pinned path remains available when consumers require staged migration.
+4. Prepare the smallest consumer update containing the justified pin/path change and necessarily synchronized local validator, schema, tests, controller catalog, registry, or documentation.
+5. Obtain specialist non-author review when the change alters security-sensitive enforcement semantics, controller authority, or another reserved boundary. A pure content-addressed repin to already-admitted equivalent semantics does not acquire a generic reviewer gate merely because the digest changed.
+6. Follow the protected self-modification procedure only if the active self-protection makes ordinary protected admission impossible.
+7. After a material enforcement upgrade, run focused hostile proof that candidate-controlled local validation cannot bypass the protected external gate.
 
-A digest mismatch is an expected fail-closed condition. Never bypass it by
-removing the digest check, following an unpinned branch, or executing candidate
-code.
+A digest mismatch is an expected fail-closed condition. Never solve it by removing the digest check, following an unpinned branch, or executing candidate code.
 
 ## Protected self-modification procedure
 
-The active enforcement workflow rejects any candidate change to itself. A
-legitimate upgrade therefore requires a bounded Human Steward-authorized
-bootstrap; it cannot be completed as an ordinary routing PR.
+The active enforcement workflow rejects candidate modification of itself. A legitimate successor that therefore requires temporary relaxation of the dedicated routing rule crosses a security-sensitive protection boundary and is not routine delegation.
 
-1. Freeze workflow-control changes and unattended campaign advancement for the
-   bootstrap window. Bounded read-only evidence work may continue.
-2. Record the current protected-main SHA, dedicated routing ruleset `21969152`
-   JSON, required contexts, bypass actors, active enforcement-workflow blob,
-   external gate identity, and digest. Also read Programme profile `17137629`
-   to prove it is not being modified as an incidental part of the routing
-   bootstrap.
-3. Obtain explicit authorization for the exact successor enforcement blob and
-   for temporarily disabling or removing only the routing requirement supplied
-   by ruleset `21969152`. Do not add a bypass actor or weaken any other rule.
-4. Remove or disable only that routing requirement. Confirm that the
-   control-upgrade PR remains subject to every other protected check,
-   exact-head review, thread resolution, and merge restriction.
-5. Merge only the pre-authorized exact head. A failing self-modification check
-   is expected during this bounded bootstrap and supplies no authority.
-6. Immediately restore ruleset `21969152` active with strict required status
-   checks, zero bypass actors, and required context `routing-enforcement`,
-   preserving all unrelated rulesets and actors. Verify the complete readback.
-7. Verify the protected merge commit, parentage, enforcement blob, registry,
-   local validator, external gate digest, and post-merge policy results.
-8. Execute the hostile proof before unfreezing unattended campaign advancement.
-9. Record the before/after routing-ruleset identity, unchanged Programme-profile
-   identity, authorization, merge, restored protection, hostile PR, and
-   terminal readback in the governing issue.
+1. Freeze only the affected workflow-control mutation while preparing the bootstrap; unrelated bounded read-only or disjoint work may continue.
+2. Record protected-main identity, dedicated routing ruleset `21969152`, required context, bypass actors, enforcement-workflow blob, external gate identity/digest, and separate Programme ruleset `17137629`.
+3. Obtain the reserved authorization required for the exact temporary weakening and successor control bytes. Do not add a bypass actor or weaken unrelated rules.
+4. Remove or disable only the routing requirement necessary for the bootstrap. Preserve every other applicable protected rule.
+5. Merge only the authorized material successor after all other affected checks and specialist review required by the security boundary pass.
+6. Immediately restore ruleset `21969152` active with `routing-enforcement`, `strict_required_status_checks_policy: false`, and zero bypass actors. Do not restore obsolete strict/up-to-date synchronization semantics.
+7. Read back the complete ruleset, protected merge, enforcement blob, registry, validator, external digest, and post-merge checks.
+8. Execute focused hostile proof before declaring the control restored.
+9. Record before/after protection identity and the material authorization in the governing issue or protected evidence record.
 
-If the exact successor, authorization, ruleset snapshot, or restoration route
-is unavailable, stop. Do not leave the routing requirement removed or disabled
-while diagnosing an unrelated failure.
+If the successor identity, reserved authorization, ruleset snapshot, or restoration route is unavailable, stop. Do not leave the routing requirement disabled while diagnosing an unrelated failure.
 
 ## Admitted-controller changes
 
-The controller catalog is code-governed in both the local and external gates.
-Adding or changing a controller requires evidence for its durable wake
-mechanism, state store, supported feature classes, repository identity, and
-failure/recovery behavior.
+The controller catalog is code-governed in both local and external gates. Adding or changing a controller requires evidence for its durable wake mechanism, state store, supported feature classes, repository identity, and failure/recovery behavior.
 
-Update the external gate, local validator, schema if necessary, registry,
-hostile tests, and every affected workflow entry together. Demonstrate agent
-replacement, stale evidence rejection, interrupted execution recovery, and
-unauthorized-transition failure before admission. Controller capability never
-supplies authority.
+Controller capability expansion is a material control-plane change. Update the external gate, local validator, schema if necessary, registry, hostile tests, and affected workflow entries together. Demonstrate agent replacement, stale evidence rejection, interrupted execution recovery, and unauthorized-transition failure before admission. Controller capability never supplies authority.
 
 ## Ruleset care
 
-After activation, periodically and after any ruleset administration:
+After routing administration or a material control upgrade:
 
 1. Read dedicated routing ruleset `21969152` from GitHub.
 2. Confirm it is active on `refs/heads/main`.
-3. Confirm `routing-enforcement` is required with strict required-status policy.
-4. Confirm its bypass actors remain empty.
-5. Read Programme profile `17137629` separately and compare it with the last
-   protected snapshot so a routing transaction cannot silently weaken legacy
-   Programme protections.
-6. Open a governed repair immediately on drift and pause unattended campaign
-   advancement when enforcement is not mandatory.
+3. Confirm `routing-enforcement` is required with `strict_required_status_checks_policy: false`.
+4. Confirm bypass actors remain empty.
+5. Read Programme profile `17137629` separately so a routing transaction cannot silently weaken unrelated Programme protections.
+6. Open a bounded repair immediately on material drift. Pause only the affected unattended transition if enforcement is no longer mandatory.
 
-Do not interpret a passing optional routing check as equivalent to a required
-protected context.
+Do not interpret a passing optional routing check as equivalent to a required protected context.
 
 ## Emergency diagnosis
 
 Use this order when `routing-enforcement` fails:
 
-1. Bind the failure to repository, PR, head SHA, workflow run, job, and external
-   gate digest.
-2. Classify the first exact error: missing registry, coverage mismatch, feature
-   drift, topology drift, controller mismatch, repository mismatch,
-   self-modification, external digest failure, dependency failure, or platform
-   outage.
-3. For candidate drift, correct the candidate registry or workflow and require
-   fresh exact-head results.
-4. For an external digest mismatch, verify the shared protected script and
-   change history; use the control-upgrade procedure rather than changing the
-   pin ad hoc.
-5. For a platform outage, leave the gate required and recover evidence through
-   the execution-recovery guide. Do not infer success from absence of a result.
-6. For unexpected ruleset drift or missing enforcement, pause unattended
-   campaign advancement until protected enforcement is restored and proven.
+1. Bind the failure to repository, PR, candidate bytes/effective merge ref, workflow run, job, and external gate digest.
+2. Classify the first exact error: missing registry, coverage mismatch, feature drift, topology drift, controller mismatch, repository mismatch, self-modification, external digest failure, dependency failure, or platform outage.
+3. For candidate drift, correct the changed candidate registry/workflow and rerun the affected routing check. Do not refresh unrelated review or CI evidence.
+4. For an external digest mismatch, verify the protected shared script and change history; use the control-upgrade route rather than changing the pin ad hoc.
+5. For a platform outage, leave the gate required and recover evidence through the execution-recovery guide. Do not infer success from absence of a result.
+6. For unexpected ruleset drift or missing enforcement, pause the affected unattended transition until protected enforcement is restored and proven.
 
-Never solve an emergency by running untrusted candidate code from
-`pull_request_target`, granting write credentials to candidate content,
-removing authority boundaries, or carrying a stale approval to new bytes.
+Never solve an emergency by executing untrusted candidate code under `pull_request_target`, granting write credentials to candidate content, removing authority boundaries, or carrying an approval to materially changed security-control bytes.
 
-## Periodic evidence
+## Periodic and sentinel evidence
 
-At least after every control upgrade, and otherwise during the programme's
-existing deep-conformance cadence, retain:
+After every material control upgrade, and through the programme's existing scheduled/manual assurance rather than a separate timer, retain or verify as appropriate:
 
 - current protected-main and enforcement-workflow identities;
-- current workflow count and a successful full-coverage validation;
+- successful workflow inventory/coverage validation;
 - external gate commit/path/digest;
-- dedicated routing ruleset identity, required context, strictness, and bypass
-  actors;
-- unchanged/unrelated Programme-profile readback where routing administration
-  occurred;
-- focused hostile-test results; and
-- one live hostile PR or equivalent protected fixture demonstrating fail-closed
-  behavior outside candidate control.
+- dedicated routing ruleset identity, required context, strictness, and bypass actors;
+- separate Programme-profile readback where routing administration occurred;
+- focused hostile-test results;
+- live or fixture-based fail-closed proof outside candidate control.
 
-Routine periods with no workflow, controller, gate, or ruleset change require
-verification, not ceremonial regeneration of unchanged records.
+Routine periods with no workflow, controller, gate, or ruleset change require verification or protected evidence reuse, not ceremonial regeneration of unchanged records.
