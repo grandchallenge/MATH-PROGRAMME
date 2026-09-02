@@ -1,5 +1,11 @@
 # GCL Portfolio Pilot
 
+## Current status
+
+`GCL-PORTFOLIO-WP00` Tranche 1 is `TRANCHE_1_PROTECTED_COMPLETE`.
+
+It completed through PR #207 from reviewed candidate `038d2ba2597e0e4dde60679741d7c5f339343114` and protected merge `86a3f551f35aa67bdd0437d060ce786cb3d447fb`. The historical admission sequence included hosted checks, delegated review, Human Steward release, and protected merge. Those facts remain provenance; they do not impose a fresh approval ritual on current routine maintenance.
+
 ## Purpose
 
 The portfolio pilot is a protected decision-support ledger for comparing bounded GCL work without converting a score into institutional authority.
@@ -11,7 +17,7 @@ It addresses four recurring errors:
 3. replacing unknown cost or risk with fabricated precision;
 4. treating an advisory calculation as authorization to allocate, suspend, terminate, publish, or promote.
 
-Issue #190 governs the pilot. Its protected prerequisites are the truth spine, tooling Tranche 1, and negative-knowledge Tranche 1.
+Issue #190 records the pilot admission. Its protected prerequisites are the truth spine, tooling Tranche 1, and negative-knowledge Tranche 1.
 
 ## Authority and files
 
@@ -51,7 +57,7 @@ Tranche 1 contains exactly four umbrella records:
 - `GCL-ASSURANCE-PRODUCT-WP00` under #192;
 - `GCL-DISCLOSURE-WP00` under #193.
 
-This is not an organization-wide portfolio inventory. It does not score mathematical campaigns, experimental programmes, repositories, people, or external opportunities.
+This is not an organization-wide portfolio inventory. It does not score mathematical campaigns, experimental programmes, repositories, people, or external opportunities unless separately admitted.
 
 ## Separate dimensions
 
@@ -86,13 +92,13 @@ The model has three hard boundaries:
 2. output is an interval only, not a rank or disposition;
 3. records are displayed in issue order, never sorted into an automatic priority queue.
 
-The fixed pilot weights are schema-bound. Changing them requires a reviewed contract revision rather than editing a dashboard control.
+The fixed pilot weights are schema-bound. A material change to the decision model or authority boundary requires the review appropriate to that substantive change; routine projection or documentation maintenance uses standing delegated execution.
 
 ## Reversibility and freshness
 
 Every record must include pause, termination, and reopening conditions. Irreversible commitment is prohibited in this tranche.
 
-Current evidence carries no refresh obligation. Stale or unknown evidence must name a concrete refresh obligation or validation fails.
+Evidence freshness is determined by material identity and the registry's declared refresh obligations. Unrelated repository-head movement does not make an unchanged evidence object stale. Stale or unknown material evidence must name a concrete refresh obligation or validation fails.
 
 ## Fail-closed rules
 
@@ -103,7 +109,7 @@ The pilot rejects:
 - mismatched issue mappings;
 - hidden, negative, or malformed cost components;
 - fabricated fractional precision;
-- stale evidence without refresh work;
+- stale material evidence without refresh work;
 - scoring-weight changes outside the schema;
 - blocked work with inflated or unknown readiness;
 - active work retaining blocking dependencies;
@@ -113,8 +119,8 @@ The pilot rejects:
 - automated or machine-authored dispositions;
 - every resource-allocation, execution, suspension, termination, claim, publication, novelty, patentability, product, and commercial authority flag.
 
-## Activation boundary
+## Ongoing operating boundary
 
-The branch is non-authoritative. The declared `active_pilot` state becomes effective only after external exact-head review, explicit Human Steward release, and protected merge.
+The protected `active_pilot` state is already effective. Future routine maintenance follows `MP-STREAMLINED-EXECUTION-001`: classify the material closure, run affected checks, use delegated disposition, merge through protection, and read back protected state. A change that creates resource-allocation authority, alters constitutional decision semantics, or promotes an external claim crosses a reserved boundary and is not routine maintenance.
 
-Validation demonstrates only conformance to the declared pilot contract. It does not determine what GCL should fund or execute, and it does not activate #191–#193.
+Validation demonstrates conformance to the protected pilot contract. It does not determine what GCL should fund or execute, and it does not automatically activate downstream work.

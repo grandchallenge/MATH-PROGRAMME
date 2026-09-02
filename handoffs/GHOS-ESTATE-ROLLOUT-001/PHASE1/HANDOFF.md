@@ -1,196 +1,160 @@
-# GHOS-ESTATE-ROLLOUT-001 — Phase 0 → Phase 1 handoff
+# GHOS-ESTATE-ROLLOUT-001 — Phase 1 handoff
 
-This file is the human-readable entry point for a completely independent successor agent. It is intentionally sufficient to resume the campaign without conversational history.
+This is the human-readable recovery entry point for a replacement agent. Live protected GitHub state always wins over this file.
 
 ## Recovery rule
 
-Never trust this handoff over live protected GitHub state. On every new session, first re-fetch the protected default branch, relevant rulesets, tracker, current PRs, and exact-head checks before acting. If live state differs, live protected state wins and this handoff becomes historical evidence to reconcile.
+At the start of a session, re-fetch:
 
-Source-of-truth order:
+1. MATH-PROGRAMME protected `main`, umbrella tracker #724, and this handoff pack;
+2. the target repository's protected `main`, current rulesets, tracker, open PRs, and relevant checks;
+3. `grandchallenge/.github` shared gate identity;
+4. any material provider/control dependency consumed by the target transition.
 
-1. live protected GitHub refs, rulesets, PR/review/check state;
-2. protected repository artifacts and durable tracker comments;
-3. `STATE.json` in this handoff pack;
-4. campaign manifest/ledger/documentation;
+A protected head change invalidates this handoff only when it changes the material routing/control closure. Do not discard valid evidence or rebase a candidate merely because an unrelated commit advanced `main`.
+
+Source-of-truth order remains:
+
+1. live protected GitHub refs, rulesets, PR/check state, and protected records;
+2. protected repository artifacts and durable tracker records;
+3. this handoff pack;
+4. historical campaign documents;
 5. chat history, which is never authoritative.
 
-## Campaign identity and purpose
+## Current campaign position
 
-Campaign: `GHOS-ESTATE-ROLLOUT-001`.
-Umbrella tracker: `grandchallenge/MATH-PROGRAMME#724`.
-Campaign admission: merged PR `grandchallenge/MATH-PROGRAMME#726`, exact candidate `d7888766a01d9e20153376a3c7f3cc4635911610`, protected merge `06fdcda8c18f395403dc544274fb98fee36ef6ea`.
+Campaign: `GHOS-ESTATE-ROLLOUT-001`.  
+Umbrella: `grandchallenge/MATH-PROGRAMME#724`.  
+Phase 0: complete.  
+Phase 1: active at `grandchallenge/INTELLECT#73`.
 
-Objective: every active repository must terminate as exactly one of:
+Phase-1 order remains:
 
-- `GHOS_ROUTING_ENFORCED`;
-- `GHOS_GOVERNED_NON_APPLICABLE`;
-- `GHOS_BLOCKED_WITH_NAMED_DEFECT`.
+1. INTELLECT #73;
+2. MATHFORGE #117;
+3. MATHSOLVE #131;
+4. MATHCERT #232.
 
-Estate success is only `GHOS_ESTATE_CONFORMANCE_GREEN` after all repositories have terminal evidence. Repository-local success must never be inflated into estate-wide conformance.
+Do not advance the mutation sequence past INTELLECT until its live required-routing protection and terminal readback are complete. Read-only preparation of downstream repositories is permitted.
+
+## Shared gate
+
+Current admitted shared gate:
+
+- repository: `grandchallenge/.github`;
+- commit: `ef1cce6029233a68cf46063cea2384772fcae613`;
+- path: `scripts/ghos_execution_routing_gate.py`;
+- blob: `f9f85937713046eacdc79c532046c676cbb4550c`;
+- SHA-256: `fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17`.
 
 The central invariant is:
 
 `workflow bytes -> derived features -> derived topology -> compatible admitted controller -> candidate-independent routing enforcement -> protected ruleset -> hostile proof -> protected readback`.
 
-## Phase 0 is closed
+The admitted repository-bound GitHub Actions controller supplies persistence and execution topology only. It grants no governance, certification, mathematical, publication, or commercial authority.
 
-Phase-0 shared-control tracker `grandchallenge/.github#67` is closed `completed` with terminal disposition `GHOS_ROUTING_ENFORCED`.
+## Phase 0 reference state
 
-Binding Phase-0 control state:
+Phase 0 is closed. Do not reopen it merely because later protected commits advanced a reference repository.
 
-- final protected `.github/main`: `6a3693fe5a9c6ee6bb420a429f9421801e35457f`;
-- final protected `.github/.ghos-routing/control.json` blob: `21d04288a32321af09b3ee503e9cf4c9f6af5fee`;
-- shared gate commit: `ef1cce6029233a68cf46063cea2384772fcae613`;
-- shared gate path: `scripts/ghos_execution_routing_gate.py`;
-- shared gate blob: `f9f85937713046eacdc79c532046c676cbb4550c`;
-- shared gate SHA-256: `fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17`;
-- classifier defect `GHOS-CLASSIFIER-PROJECT-MUTATION-001` is closed; `gh project item-add` is classified `WRITE_CAPABLE`;
-- `.github` ruleset `17137624` is active, strict, zero-bypass, and requires `policy / policy`, `security / action-policy`, and `routing-enforcement`;
-- `gcl-standards` protected head at handoff: `4467622415530d1abc56784a4d02c1cd1278b836`; ruleset `19962512` is active, strict, zero-bypass, and requires `routing-enforcement` in addition to existing Standards checks;
-- MATH-PROGRAMME Phase-0 successor consumer admission was protected at `d9560df959d4b00eebe69b61a6f8890c50e97e14`; current protected MATH-PROGRAMME head at handoff is `4b09c2b471f378a4161357c836945296cff15434` after unrelated bounded administrative merges;
-- MATH-PROGRAMME routing is supplied by dedicated ruleset `21969152`, active, strict, zero-bypass, requiring only `routing-enforcement` on `main`;
-- Programme ruleset `17137629` is a separate pre-existing profile and is not the routing ruleset.
+MATH-PROGRAMME routing ruleset `21969152` is currently active and requires `routing-enforcement` with `strict_required_status_checks_policy: false` and zero bypass actors. Programme ruleset `17137629` is separate and also uses non-strict status checks for concurrent development.
 
-Successor-era hostile proofs all failed closed on workflow routing coverage and were closed unmerged:
+The old handoff statement that the MATH-PROGRAMME routing ruleset was strict is superseded.
 
-- `.github#72`: head `56c52449cefea143f8c391c291cdac4b52659f0f`, run `33503173626`, job `99840986069`;
-- `gcl-standards#74`: head `825694986aa68ac13feb62e1ec6c04ff6e3d79dd`, run `33503195001`, job `99841052245`;
-- `MATH-PROGRAMME#749`: head `05eb2aa0042f2a5dbd2c239168776d6e5a6df533`, run `33503211601`, job `99841106633`.
+## INTELLECT current state
 
-Failure class: `FAIL_CLOSED_WORKFLOW_ROUTING_COVERAGE_MISMATCH`.
+Opening Phase-1 baseline was `08a3044e0363fa932012fa642ea15d9153ba876b`. Do not use it as the current implementation head.
 
-Umbrella Phase-0 checkpoint: `MATH-PROGRAMME#724` comment `5493507033`.
-Binding `.github#67` terminal-disposition comment: `5493437493`.
+Current protected INTELLECT `main` is `565ed31f413b4698f400a260fc4a8ea65e7e1255`, after the GH-OS routing implementation series through PR #79.
 
-Do not reopen Phase 0 unless a fresh protected read reveals a material contradiction or enforcement regression.
+Important admitted corrections:
 
-## Phase 1 scope
+- the routing workflow YAML parse defect was repaired;
+- candidate evaluation uses the protected-base `pull_request_target` model without executing candidate code;
+- the effective candidate is obtained through GitHub's virtual merge ref `refs/pull/<number>/merge`, not a raw stale branch snapshot;
+- this permits current-base routing evaluation without update-branch/rebase ceremony;
+- repository-specific probe execution demonstrated successful routing on an unchanged stale branch.
 
-Execute in this order unless a genuine dependency or authority boundary requires otherwise:
+MATH-PROGRAMME's checked-in Release Trust contract now expects INTELLECT required contexts:
 
-1. `grandchallenge/INTELLECT#73`;
-2. `grandchallenge/MATHFORGE#117`;
-3. `grandchallenge/MATHSOLVE#131`;
-4. `grandchallenge/MATHCERT#232`.
+- `test (3.11.14)`;
+- `test (3.12.13)`;
+- `policy / policy`;
+- `security / action-policy`;
+- `routing-enforcement`;
 
-Current protected baselines at handoff:
+with `strict_status_checks: false`.
 
-| Repository | Protected main | Direct workflow surface | Registry | Existing main ruleset | Strict | Bypass | Routing required |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `INTELLECT` | `08a3044e0363fa932012fa642ea15d9153ba876b` | 8 workflows | absent | `19964077` Constitutional profile | yes | none | no |
-| `MATHFORGE` | `ed8a65410336489ea5646808265c44f5387bebb8` | 7 workflows | absent | `17137626` Forge profile | yes | none | no |
-| `MATHSOLVE` | `07814c1e28855ff0314737d3666642217da095a1` | 11 workflows | absent | `17137627` Solve profile | yes | none | no |
-| `MATHCERT` | `bb9b88a03f379fc0ea9776a672a098cb73096f0a` | large certification workflow surface; enumerate afresh | absent | `17137628` Cert profile | **no** | none | no |
+Current live INTELLECT ruleset `19964077` is non-strict and zero-bypass but still lacks `routing-enforcement`. Therefore #73 remains open and INTELLECT is not terminally admitted. The next material action is to apply/read back the admitted protection contract, verify `routing-enforcement` is mandatory, record the terminal readback, and close #73 if all terminal conditions are satisfied.
 
-Required existing contexts:
+Do not redesign or rerun the already-protected routing implementation merely because this ruleset application remains outstanding.
 
-- INTELLECT: `test (3.11.14)`, `test (3.12.13)`, `policy / policy`, `security / action-policy`;
-- MATHFORGE: `reconnaissance`, `policy / policy`, `security / action-policy`;
-- MATHSOLVE: `ledgers`, `policy / policy`, `security / action-policy`;
-- MATHCERT: `certify`, `policy / policy`, `security / action-policy`.
+## Remaining Phase-1 ruleset baselines
 
-All four are applicable workflow surfaces. `GHOS_GOVERNED_NON_APPLICABLE` is not available on present evidence.
+Current live repository profiles are non-strict:
 
-## Shared implementation contract
+| Repository | Ruleset | Required contexts before routing admission | Strict | Bypass |
+|---|---|---|:---:|---|
+| INTELLECT | `19964077` | two Python test contexts; policy; security | no | none |
+| MATHFORGE | `17137626` | reconnaissance; policy; security | no | none |
+| MATHSOLVE | `17137627` | ledgers; policy; security | no | none |
+| MATHCERT | `17137628` | certify; policy; security | no | none |
 
-The shared gate is exact and deterministic. It derives features from workflow bytes and requires the registry declaration to equal the derived feature list and topology exactly. Do not over-declare features “for safety”; over-declaration is drift and fails the gate.
+The earlier handoff's `strict: true` values for INTELLECT, MATHFORGE, and MATHSOLVE are superseded by the current concurrent-development policy.
 
-Admitted features are:
-
-`AUTONOMOUS_WAKE`, `EXTERNAL_REUSABLE_JOB`, `EXTERNAL_WAIT`, `NON_RECONCILABLE_MUTATION`, `OPAQUE_EXECUTION`, `SCHEDULED`, `SECRET_CREDENTIAL`, `UNATTENDED_DISPATCH`, `WRITE_CAPABLE`.
-
-Topology rule:
-
-- any `AUTONOMOUS_WAKE`, `NON_RECONCILABLE_MUTATION`, `OPAQUE_EXECUTION`, `SECRET_CREDENTIAL`, or `WRITE_CAPABLE` => `PERSISTENT_CONTROLLER_REQUIRED`;
-- otherwise any `EXTERNAL_REUSABLE_JOB`, `EXTERNAL_WAIT`, or `UNATTENDED_DISPATCH` => `MULTI_SESSION_RESUMABLE`;
-- otherwise => `BOUNDED_ATOMIC`.
-
-The admitted controller catalog currently contains repository-bound `GITHUB_ACTIONS`, executor class `PERSISTENT_CONTROLLER`, supporting all admitted features. Controller capability supplies execution topology, never governance authority.
-
-Reference enforcement workflow: `grandchallenge/MATH-PROGRAMME/.github/workflows/ghos-routing-enforcement.yml`.
-
-Important Phase-1 adaptation: none of the four Phase-1 repositories has `requirements/policy.txt` at the recorded protected baseline. Therefore do **not** copy the reference workflow verbatim. The shared gate imports PyYAML; protected `.github` routing tests pin `PyYAML==6.0.3`. Use a repository-appropriate, reviewed dependency step, with `PyYAML==6.0.3` as the established Phase-0 compatible pin unless fresh evidence requires another governed choice.
-
-The enforcement workflow must remain candidate-independent:
-
-- trigger on `pull_request_target`;
-- permissions `contents: read` only;
-- check out protected base and candidate read-only with `persist-credentials: false`;
-- never execute candidate scripts/workflows;
-- reject ordinary candidate modification of the enforcement workflow once protected;
-- check out the external gate at exact commit `ef1cce6029233a68cf46063cea2384772fcae613`;
-- verify SHA-256 `fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17` before execution;
-- call the gate with the exact target repository identity.
+Routing rollout must preserve this non-strict posture unless a separate material policy decision justifies changing it. Do not create a dedicated strict routing ruleset merely as a default; require routing without reintroducing forced branch synchronization.
 
 ## Repository implementation pattern
 
-For each Phase-1 repository:
+For each unresolved repository after INTELLECT:
 
-1. Re-fetch protected `main`, rulesets, tracker, direct workflow directory, current PRs, and existing checks. If the head differs from this handoff, bind the new head and discard stale byte-derived evidence.
-2. Enumerate every `.github/workflows/*.yml` and `*.yaml` path from protected bytes.
-3. Mechanically derive each workflow's exact feature list using the admitted gate semantics.
-4. Produce `.ghos-routing/workflows.json` with exact repository identity, admitted controller catalog, exact sorted workflow coverage, exact feature lists/topologies, and all claim boundaries false.
-5. Add candidate-independent `.github/workflows/ghos-routing-enforcement.yml` adapted for the repository dependency layout.
-6. Add only the minimum local tests or deterministic helper needed to reproduce the gate locally. Do not create a divergent classifier.
-7. Open a governed PR; request independent exact-head review immediately. Do not treat stale review/checks as transferable after any head change.
-8. Before routing becomes mandatory, prove the candidate implementation passes the external gate against its exact head.
-9. Merge the reviewed implementation under existing protected controls. At this initial Phase-1 bootstrap, `routing-enforcement` is not yet required, so installation of the new enforcement workflow does not require weakening an existing routing rule.
-10. Read back protected main and the exact enforcement/registry bytes.
-11. Add `routing-enforcement` to protected integration without removing or weakening existing rules. Prefer preserving the existing profile and adding only the required context when clean. For MATHCERT, do not silently change Cert-profile strictness: use a dedicated strict, zero-bypass routing ruleset unless an explicit repository-policy decision authorizes a broader Cert-profile change.
-12. Read the complete ruleset back and confirm intended strictness, existing required contexts preserved, and no unexpected bypass actor.
-13. Only after routing is mandatory, open a repository-specific hostile PR containing an inert but structurally unregistered scheduled/write-capable workflow. The hostile candidate must never merge.
-14. Bind the failed `routing-enforcement` run/job and first governed failure class; close the hostile PR unmerged.
-15. Record exact protected head, registry/enforcement identities, ruleset state, hostile proof, independent review/check binding, and terminal `GHOS_ROUTING_ENFORCED` disposition on the repository tracker.
-16. Close the repository tracker only after its durable protected readback is internally consistent.
-17. Update the umbrella ledger/checkpoint before moving to the next repository.
+1. re-fetch protected material state and workflow inventory;
+2. derive every direct workflow's exact feature vector from bytes using the shared gate semantics;
+3. create the repository-local routing registry with exact repository identity, workflow coverage, feature arrays, topology, admitted controller binding, and false claim/authority boundaries;
+4. add candidate-independent `ghos-routing-enforcement` adapted to the repository's dependency layout;
+5. use the pinned shared gate and verify its digest before execution;
+6. never execute candidate scripts/workflows or expose credentials to candidate content;
+7. run affected repository checks and focused routing/security evidence only; do not launch unrelated mathematical or full-estate CI;
+8. obtain specialist review only when the material security/provenance/certification boundary requires it; routine implementation uses standing delegated authority;
+9. merge through existing protected controls and read back exact protected routing bytes;
+10. make `routing-enforcement` mandatory while preserving existing non-strict status policy and unrelated required contexts;
+11. read the complete live ruleset back;
+12. execute the repository-specific hostile proof only after routing is structurally mandatory;
+13. close the hostile PR unmerged and record its exact fail-closed evidence;
+14. record terminal repository disposition and update the umbrella checkpoint.
 
-## Ruleset administration boundary
+## Review and concurrency rule
 
-The connected GitHub interface used during Phase 0 could read rulesets but did not expose a ruleset mutation action. If that remains true, ruleset activation is a bounded administrator/Human transaction through GitHub UI or an authorized local `gh api` path.
+The former generic sequence “fresh exact-head independent review after every head change” is superseded for routine work.
 
-Ruleset administration rules:
+- Review/check evidence binds to the material object it actually covers.
+- Unrelated protected-main movement does not invalidate it.
+- A materially changed enforcement workflow, external gate, controller authority, security boundary, or substantive provenance/certification control requires renewed scrutiny for that changed object.
+- Routine bounded implementation, readback, tracker maintenance, and protected merge proceed under standing delegated authority once affected checks pass.
+- Do not manufacture an approval or represent the author as an independent mathematical/security reviewer where genuine independence is required.
 
-- snapshot exact pre-state first;
-- make the smallest settings delta;
-- never add a bypass actor as a substitute for the routing context;
-- never weaken unrelated required checks;
-- read back the complete post-state independently;
-- if a mutation may have succeeded but post-validation failed, read live state before retrying;
-- do not leave a required context temporarily removed while diagnosing an unrelated failure.
+## Ruleset administration
 
-Future modifications to an already-protected enforcement workflow are self-modifications and must follow the bounded bootstrap procedure in `docs/governance/GHOS_ROUTING_CONTROL_RUNBOOK.md`.
+If the connected interface cannot mutate rulesets, use the authorized GitHub UI or authenticated local administration route. Snapshot exact pre-state; make the smallest settings delta; read back full post-state before retrying an ambiguous mutation; never add a bypass actor; never weaken unrelated required contexts.
 
-## Authority and review
+Applying an already-admitted non-strict required-context contract is routine administration. Removing a required control, introducing bypass, or weakening security is not.
 
-This campaign is control-plane governance, not mathematical/certification promotion. Every claim boundary in routing registries remains false.
+## Stop conditions
 
-Independent review is real, not simulated. Never fabricate an approval or treat the author as an independent reviewer.
+Stop only for a real boundary:
 
-The established streamlined operating policy permits routine exact-head progression when required checks/review are satisfied and no reserved-authority boundary is crossed. Exact-head invariance, independent review, protected rules, and self-modification procedures remain mandatory.
+- material scope/control-plan change;
+- materially changed security argument requiring new specialist review;
+- inability to restore/read back protection;
+- new persistent-controller or capability transition;
+- constitutional, mathematical, certification, provenance, publication, production, commercial, or external-claim authority enlargement;
+- unresolved classifier/control defect;
+- genuine authorization boundary.
 
-Stop for:
+Fresh reads, ordinary affected-check reruns, routine protected merge, readback, and tracker updates are not stop conditions. A behind branch is not a stop condition by itself.
 
-- a material scope/control-plan change;
-- a non-mechanical stale-head or review invalidation that changes the security argument;
-- inability to restore or verify a protection setting;
-- a genuine capability transition requiring a new persistent controller;
-- any requested constitutional, mathematical, certification, publication, production, or commercial authority enlargement;
-- an unresolved classifier/control defect that prevents exact routing derivation;
-- a platform/tool limitation that is a true authorization boundary rather than mere inconvenience.
+## Terminal condition
 
-Do not stop merely because a routine gate requires a fresh read, review request, rerun, merge, readback, or tracker update.
+A repository reaches `GHOS_ROUTING_ENFORCED` only after protected implementation, mandatory candidate-independent routing protection, hostile proof where required, protected readback, and terminal tracker evidence agree.
 
-## Known traps
-
-- `mergeable: true` is Git-level mergeability, not proof that protected rules permit integration.
-- A passing optional `routing-enforcement` check is not equivalent to a required ruleset context.
-- `pull_request_target` is safe here only because candidate content is data and is never executed or given credentials.
-- Feature declarations must equal the shared gate output exactly.
-- Repository identity is part of the gate. Never reuse another repository's registry with only cosmetic edits.
-- MATHCERT's existing Cert profile is non-strict. Do not silently tighten or rely on it for strict routing; separate routing protection is the default handoff recommendation.
-- The older campaign files contained stale `CANDIDATE_AWAITING_PROTECTED_ADMISSION` and Phase-0-pending projections. This handoff candidate reconciles those projections; if this candidate is not protected, treat the stale files as known documentary drift and use live trackers instead.
-- MATH-PROGRAMME routing ruleset is `21969152`; `17137629` is a separate Programme profile.
-
-## Completion condition for this handoff
-
-This handoff is considered operationally admitted only after its PR receives independent exact-head approval, required exact-head checks pass, it is merged to protected `main`, and protected readback confirms `HANDOFF.md`, `STATE.json`, `GLIDEPATH.md`, and the reconciled campaign projections.
+Phase 1 completes only after all four repositories have a permitted terminal disposition. Estate-wide success remains `GHOS_ESTATE_CONFORMANCE_GREEN`; repository-local success must not be inflated into estate conformance.

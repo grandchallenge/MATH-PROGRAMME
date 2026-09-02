@@ -1,5 +1,13 @@
 # GCL Negative-Knowledge Registry
 
+## Current status
+
+`GCL-NEGATIVE-KNOWLEDGE-WP00` Tranche 1 is `TRANCHE_1_PROTECTED_COMPLETE`.
+
+It completed through PR #206 from reviewed candidate `f440f62506b046784720f072716bdba8c25f5738` and protected merge `b3c092c18fa8d6521a7c49d0663d277487d3c9de`. The historical admission record includes successful hosted checks, delegated review, Human Steward release, and protected merge. Those facts establish the original admission; they are not current generic gates for routine record maintenance.
+
+The protected registry's `active_pilot` state is therefore effective on protected `main` within its bounded tranche.
+
 ## Purpose
 
 The negative-knowledge registry preserves bounded failures, obstructions, exhausted searches, counterexamples, and superseded implementation routes as durable institutional records.
@@ -10,7 +18,7 @@ It prevents three recurrent errors:
 2. a finite or assumption-dependent negative result being widened into a universal claim;
 3. an issue comment being treated as authority after the underlying protected evidence changes.
 
-The protected truth-spine record class is `negative_knowledge_record`. Issue #189 governs the pilot implementation.
+The protected truth-spine record class is `negative_knowledge_record`. Issue #189 records the Tranche 1 admission.
 
 ## Authority
 
@@ -32,9 +40,9 @@ Validation runs through:
 python3 ci/validate_negative_knowledge.py
 ```
 
-The validator is reached from the existing Programme policy-reachability lane. A repository with no negative-knowledge surface is unaffected. Once any surface component appears, the complete schema, registry, and validator are required; partial adoption fails closed.
+The validator is reached from Programme policy reachability. A repository with no negative-knowledge surface is unaffected. Once any surface component appears, the complete schema, registry, and validator are required; partial adoption fails closed.
 
-The registry declares the intended protected state `active_pilot`. That declaration has no authority on a feature branch. It becomes effective only after the exact subject receives external exact-head Referee review, explicit Human Steward release, and protected merge. Individual records name the reviewing office and satisfaction mode; they do not contain or simulate their own review disposition.
+Routine semantic-preserving maintenance of the protected pilot uses the standing delegated execution rule and affected checks. A theorem-level refutation, materially widened negative claim, source-semantic change, or other substantive claim-boundary transition still receives the independent specialist review appropriate to that object.
 
 ## Record boundary
 
@@ -44,10 +52,10 @@ Every record binds:
 - assumptions and included scope;
 - explicitly excluded variants;
 - method and execution identity;
-- immutable evidence paths, commits, and Git blob identities;
+- immutable evidence paths, commits, and Git blob identities where applicable;
 - result and smallest known witness where applicable;
 - what the result does not establish;
-- present inactive disposition;
+- present disposition;
 - structured reopening requirements;
 - supersession lineage;
 - review jurisdiction and claim-boundary fields.
@@ -82,9 +90,11 @@ The pilot rejects:
 - incompatible status and failure-kind combinations;
 - silent route reactivation;
 - embedded review self-attestation;
-- theorem-level refutation without Referee jurisdiction;
+- theorem-level refutation without appropriate Referee jurisdiction;
 - any mathematical, certification, novelty, priority, publication, patentability, product, or commercial promotion flag.
 
-## Status boundary
+## Ongoing operating boundary
 
-The pilot is candidate infrastructure until its exact PR head receives the required external review and Human Steward protected disposition. Validation proves only that the registry satisfies its declared contract. It does not prove the recorded mathematical targets, issue certificates, or establish broader impossibility claims.
+A protected record remains valid by its material identity; unrelated `main` movement does not require ceremonial repinning or reapproval. A material scope/evidence change is revalidated for the affected closure. Scheduled/manual assurance may replay broader coverage without converting that sentinel into a per-change requirement.
+
+Validation proves only that the registry satisfies its declared contract. It does not prove the recorded mathematical targets, issue certificates, or establish broader impossibility claims.
