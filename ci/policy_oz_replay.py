@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Run OZ tests while replaying expensive computational modules only when material inputs changed.
+"""Route expensive Odd Zeta computational replays by material input closure.
 
-The fast OZ tests always run when this router is invoked.  The measured expensive
-modules are replayed when their tracked computational closure changes.  Scheduled
-and manual full sentinels replay every expensive module.  No producer/verifier
-state is shared between tests; this is routing only.
+Fast OZ tests always run when this router owns the transition. The measured
+expensive modules replay only when their computational inputs change. Scheduled
+and manual sentinels replay every expensive module. Producer/verifier state is
+never shared; this module changes routing only.
 """
 from __future__ import annotations
 
@@ -13,15 +13,13 @@ import json
 import os
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNNER = ROOT / "ci" / "run_unittest_modules.py"
 COMPUTATIONAL_SUFFIXES = {".py", ".json", ".c", ".h"}
 
-# Protected-run profile 2026-09-02: these 12 modules consumed about 98% of
-# OZ wall time.  Everything else remains on the always-run fast path.
+# Protected-run profile 2026-09-02: these 12 modules consumed ~98% of OZ time.
 HEAVY_MODULES = (
     "tests/test_oz_rt_bz_t3_003.py",
     "tests/test_oz_rt_bz_t3_004.py",
@@ -39,9 +37,9 @@ HEAVY_MODULES = (
 
 T3 = "campaigns/odd_zeta/OZ_RT_BZ_T3_"
 T3_010_DIR = f"{T3}010/"
-T3_009_DIR = f"{T3}009/"
+UPSTREAM_DOWNSTREAM_STAGES = ("002", "005", "006", "009")
 
-# Stage tokens are cumulative execution dependencies inside OZ_RT_BZ_T3_010.
+# Cumulative stage dependencies inside OZ_RT_BZ_T3_010.
 STAGE_TOKENS = {
     "010_a": ("t3_010_a", "T3_010_A"),
     "010_b": ("t3_010_a", "T3_010_A", "t3_010_b", "T3_010_B"),
@@ -53,37 +51,27 @@ STAGE_TOKENS = {
     "011_e": ("t3_010_a", "T3_010_A", "t3_010_b", "T3_010_B", "t3_010_c", "T3_010_C", "t3_011_a", "T3_011_A", "t3_011_b", "T3_011_B", "t3_011_c", "T3_011_C", "t3_011_d", "T3_011_D", "t3_011_e", "T3_011_E"),
     "011_f": ("t3_010_a", "T3_010_A", "t3_010_b", "T3_010_B", "t3_010_c", "T3_010_C", "t3_011_a", "T3_011_A", "t3_011_b", "T3_011_B", "t3_011_c", "T3_011_C", "t3_011_d", "T3_011_D", "t3_011_e", "T3_011_E", "t3_011_f", "T3_011_F"),
 }
-
+ALL_STAGE_TOKENS = tuple(sorted({token for tokens in STAGE_TOKENS.values() for token in tokens}))
 MODULE_STAGE = {
-    "tests/test_oz_rt_bz_t3_010_a.py": "010_a",
-    "tests/test_oz_rt_bz_t3_010_b.py": "010_b",
-    "tests/test_oz_rt_bz_t3_010_c.py": "010_c",
-    "tests/test_oz_rt_bz_t3_011_a.py": "011_a",
-    "tests/test_oz_rt_bz_t3_011_b.py": "011_b",
-    "tests/test_oz_rt_bz_t3_011_c.py": "011_c",
-    "tests/test_oz_rt_bz_t3_011_d.py": "011_d",
-    "tests/test_oz_rt_bz_t3_011_e.py": "011_e",
-    "tests/test_oz_rt_bz_t3_011_f.py": "011_f",
+    f"tests/test_oz_rt_bz_t3_{stage}.py": stage
+    for stage in STAGE_TOKENS
 }
 
 
 def _normalize(paths: list[str]) -> list[str]:
     out: list[str] = []
     for raw in paths:
-        p = raw.replace("\\", "/").removeprefix("./")
-        if not p or p.startswith("/") or p == ".." or p.startswith("../") or "/../" in p:
+        path = raw.replace("\\", "/").removeprefix("./")
+        if not path or path.startswith("/") or path == ".." or path.startswith("../") or "/../" in path:
             raise RuntimeError(f"unsafe changed path: {raw!r}")
-        out.append(p)
+        out.append(path)
     return sorted(set(out))
 
 
 def _git_has_commit(sha: str) -> bool:
     return subprocess.run(
-        ["git", "cat-file", "-e", f"{sha}^{{commit}}"],
-        cwd=ROOT,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-        check=False,
+        ["git", "cat-file", "-e", f"{sha}^{{commit}}"], cwd=ROOT,
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False,
     ).returncode == 0
 
 
@@ -91,13 +79,8 @@ def _fetch_commit(sha: str) -> None:
     if _git_has_commit(sha):
         return
     cp = subprocess.run(
-        ["git", "fetch", "--no-tags", "--depth=1", "origin", sha],
-        cwd=ROOT,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-        timeout=90,
-        check=False,
+        ["git", "fetch", "--no-tags", "--depth=1", "origin", sha], cwd=ROOT,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=90, check=False,
     )
     if cp.returncode:
         raise RuntimeError(f"unable to fetch transition commit {sha}: {cp.stderr.strip()}")
@@ -125,12 +108,8 @@ def _changed_paths() -> tuple[str, list[str] | None]:
     _fetch_commit(base)
     _fetch_commit(head)
     cp = subprocess.run(
-        ["git", "diff", "--name-only", base, head, "--"],
-        cwd=ROOT,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-        check=False,
+        ["git", "diff", "--name-only", base, head, "--"], cwd=ROOT,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=False,
     )
     if cp.returncode:
         raise RuntimeError(f"OZ transition diff failed: {cp.stderr.strip()}")
@@ -141,14 +120,22 @@ def _computational(path: str) -> bool:
     return Path(path).suffix in COMPUTATIONAL_SUFFIXES
 
 
-def _stage_material(path: str, stage: str) -> bool:
+def _under_stage(path: str, stage: str) -> bool:
+    return path.startswith(f"{T3}{stage}/")
+
+
+def _downstream_material(path: str, stage: str) -> bool:
     if not _computational(path):
         return False
-    if path.startswith(T3_009_DIR):
+    if any(_under_stage(path, upstream) for upstream in UPSTREAM_DOWNSTREAM_STAGES):
         return True
     if not path.startswith(T3_010_DIR):
         return False
     name = Path(path).name
+    # A computational helper without a governed stage token is shared by
+    # assumption and therefore invalidates every downstream heavy replay.
+    if not any(token in name for token in ALL_STAGE_TOKENS):
+        return True
     return any(token in name for token in STAGE_TOKENS[stage])
 
 
@@ -156,23 +143,24 @@ def _material(module: str, path: str) -> bool:
     if path == module:
         return True
     if module == "tests/test_oz_rt_bz_t3_003.py":
-        return _computational(path) and path.startswith(f"{T3}003/")
+        return _computational(path) and _under_stage(path, "003")
     if module == "tests/test_oz_rt_bz_t3_004.py":
-        return _computational(path) and path.startswith(f"{T3}004/")
+        return _computational(path) and _under_stage(path, "004")
     if module == "tests/test_oz_rt_bz_t3_009_search.py":
         if path == f"{T3}008/rank_mod.c":
             return True
         return _computational(path) and any(
-            path.startswith(f"{T3}{stage}/") for stage in ("002", "005", "006", "009")
+            _under_stage(path, upstream) for upstream in UPSTREAM_DOWNSTREAM_STAGES
         )
     stage = MODULE_STAGE.get(module)
-    return bool(stage and _stage_material(path, stage))
+    return bool(stage and _downstream_material(path, stage))
 
 
 def select_heavy(changed: list[str] | None) -> list[str]:
     if changed is None:
         return list(HEAVY_MODULES)
-    return [module for module in HEAVY_MODULES if any(_material(module, path) for path in changed)]
+    normalized = _normalize(changed)
+    return [module for module in HEAVY_MODULES if any(_material(module, path) for path in normalized)]
 
 
 def _run(args: list[str]) -> None:
@@ -185,37 +173,58 @@ def _run(args: list[str]) -> None:
 def _load_report(path: Path) -> list[dict[str, object]]:
     if not path.is_file():
         raise RuntimeError(f"OZ test report missing: {path}")
-    data = json.loads(path.read_text(encoding="utf-8"))
-    rows = data.get("modules")
+    rows = json.loads(path.read_text(encoding="utf-8")).get("modules")
     if not isinstance(rows, list):
         raise RuntimeError(f"OZ test report malformed: {path}")
     return rows
 
 
 def _write_report(path: str, records: list[dict[str, object]], event: str, changed: list[str] | None, selected: list[str]) -> None:
-    target = ROOT / path
-    target.write_text(
-        json.dumps(
-            {
-                "event": event,
-                "changed_paths": changed,
-                "heavy_profile_count": len(HEAVY_MODULES),
-                "heavy_selected": selected,
-                "module_count": len(records),
-                "modules": records,
-            },
-            indent=2,
-            sort_keys=True,
-        ) + "\n",
+    (ROOT / path).write_text(
+        json.dumps({
+            "event": event,
+            "changed_paths": changed,
+            "heavy_profile_count": len(HEAVY_MODULES),
+            "heavy_selected": selected,
+            "module_count": len(records),
+            "modules": records,
+        }, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
 
 
+def _run_selected(selected: list[str]) -> list[dict[str, object]]:
+    records: list[dict[str, object]] = []
+    fast_report = ROOT / ".oz-fast-timing.json"
+    fast_cmd = [sys.executable, str(RUNNER), "--discover-root", "tests", "--pattern", "test_oz*.py"]
+    for module in HEAVY_MODULES:
+        fast_cmd.extend(["--exclude-pattern", Path(module).name])
+    fast_cmd.extend(["--report-json", fast_report.relative_to(ROOT).as_posix()])
+    try:
+        _run(fast_cmd)
+        records.extend(_load_report(fast_report))
+    finally:
+        fast_report.unlink(missing_ok=True)
+
+    for index, module in enumerate(selected, 1):
+        report = ROOT / f".oz-heavy-{index}.json"
+        try:
+            _run([
+                sys.executable, str(RUNNER), "--discover-root", "tests",
+                "--pattern", Path(module).name,
+                "--report-json", report.relative_to(ROOT).as_posix(),
+            ])
+            records.extend(_load_report(report))
+        finally:
+            report.unlink(missing_ok=True)
+    return records
+
+
 def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--mode", choices=("routed", "campaign"), default="routed")
-    ap.add_argument("--report-json", default="oz-test-timing.json")
-    args = ap.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mode", choices=("routed", "campaign"), default="routed")
+    parser.add_argument("--report-json", default="oz-test-timing.json")
+    args = parser.parse_args()
     try:
         event, changed = _changed_paths()
         if args.mode == "campaign":
@@ -238,41 +247,9 @@ def main() -> int:
             flush=True,
         )
         for module in HEAVY_MODULES:
-            status = "REPLAY" if module in selected else "UNCHANGED"
-            print(f"OZ_REPLAY_ROUTE module={module} status={status}", flush=True)
+            print(f"OZ_REPLAY_ROUTE module={module} status={'REPLAY' if module in selected else 'UNCHANGED'}", flush=True)
 
-        records: list[dict[str, object]] = []
-        with tempfile.TemporaryDirectory(prefix="gcl-oz-route-") as td:
-            tmp = Path(td)
-            fast_report = tmp / "fast.json"
-            fast_cmd = [
-                sys.executable,
-                str(RUNNER),
-                "--discover-root", "tests",
-                "--pattern", "test_oz*.py",
-            ]
-            for module in HEAVY_MODULES:
-                fast_cmd.extend(["--exclude-pattern", Path(module).name])
-            fast_cmd.extend(["--report-json", str(fast_report.relative_to(ROOT)) if ROOT in fast_report.parents else str(fast_report)])
-            # run_unittest_modules writes report paths relative to ROOT, so use a stable local report instead.
-            fast_report = ROOT / ".oz-fast-timing.json"
-            fast_cmd[-1] = fast_report.relative_to(ROOT).as_posix()
-            _run(fast_cmd)
-            records.extend(_load_report(fast_report))
-            fast_report.unlink(missing_ok=True)
-
-            for index, module in enumerate(selected, 1):
-                report = ROOT / f".oz-heavy-{index}.json"
-                _run([
-                    sys.executable,
-                    str(RUNNER),
-                    "--discover-root", "tests",
-                    "--pattern", Path(module).name,
-                    "--report-json", report.relative_to(ROOT).as_posix(),
-                ])
-                records.extend(_load_report(report))
-                report.unlink(missing_ok=True)
-
+        records = _run_selected(selected)
         _write_report(args.report_json, records, event, changed, selected)
         print(
             f"OZ_REPLAY_COMPLETE fast_modules={len(records) - len(selected)} heavy_replayed={len(selected)} total_modules={len(records)}",
