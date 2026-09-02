@@ -65,9 +65,50 @@ For work that may enter `gcl/dev/*` or `gcl/candidate/*`, follow [`docs/governan
 For an already authorized bounded MATH operation, follow [`docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md`](docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md) when ordinary logs, check surfaces, connectors, compiler diagnostics, environments, CI, or replay tooling fail.
 
 - Recoverable operational/tooling failure is not by itself an authority boundary. Continue through the applicable bounded recovery routes.
-- Bind diagnostics to the exact run/job/artifact and the candidate bytes they actually describe. Do not patch from stale diagnostics.
-- A repository-head change matters only when it changes the material evidence closure, relevant protected dependency, mergeability, scope, or authority boundary. Unrelated `main` movement does not invalidate diagnostic or review evidence.
-- Repair only the demonstrated failing theorem/module/validator/scope, then rerun the affected replay or checks required by that repair. Do not rerun unrelated expensive lanes merely to obtain a numerically fresh repository head.
-- If connected diagnostic surfaces remain unavailable, use the guide's authenticated local extraction route rather than declaring missing logs a terminal blocker.
-- Stop or escalate only at a named governance, authority, authentication, safety, protected-state, materially changed-state, substantive evidentiary, or actual recovery-exhaustion boundary.
+- Bind diagnostics to the exact run/job/artifact and candidate bytes they actually describe. Do not patch from stale diagnostics.
+- A repository-head change matters only when it changes material evidence closure, a relevant protected dependency, mergeability, scope, or authority. Unrelated `main` movement does not invalidate evidence.
+- Repair only the demonstrated failing theorem/module/validator/scope, then rerun the affected replay or checks. Do not rerun unrelated expensive lanes merely for a numerically fresh head.
+- If connected diagnostic surfaces remain unavailable, use the guide's
+  authenticated local extraction route rather than declaring missing logs a
+  terminal blocker.
+- Stop or escalate only at a named governance, authority, authentication,
+  safety, protected-state, materially changed-state, substantive evidentiary,
+  or actual recovery-exhaustion boundary.
 - Fail closed on claims, certification, promotion, publication, protected-state mutation, and authority; do not fail closed merely on authorized evidence gathering and bounded repair.
+
+## Durable bounded-operation continuity
+
+This control applies only to a multi-session governed campaign explicitly
+admitted in `governance/bounded_operation_checkpoint_registry.json`. Routine
+pull requests, ordinary CI waits, bounded repairs, and ordinary drafting are
+excluded. Their absence from the registry never blocks streamlined execution.
+For an admitted campaign, repository state—not conversational memory—owns the
+operational resume point.
+
+- Read `governance/bounded_operation_checkpoint_registry.json` before resuming a
+  registered operation. Re-read the named authoritative issue/PR and exact
+  material identities before mutation.
+- A live checkpoint must validate with
+  `ci/validate_bounded_operation_continuity.py`, name one deterministic
+  `next_action`, and set `resume.fresh_session_safe=true` and
+  `resume.requires_chat_history=false`.
+- Before any permitted transition, run the checkpoint's
+  `freshness.verification_command`. Any exact-head, base, PR-state, or settled
+  failure mismatch requires durable rebinding before mutation.
+- Update the registered checkpoint after every material transition that changes
+  phase, candidate head, external-evidence state, permitted next action, or
+  genuine blocking boundary. Git history is the durable transition history.
+- Mandatory execution routing chooses whether a persistent controller is
+  required; this checkpoint records resumable transaction state for the much
+  smaller set of explicitly admitted campaigns. Neither control substitutes
+  for the other.
+- Never use a vague `wait` as the resume instruction. If an external object is
+  pending, record its exact run/job/review/artifact identity and the exact
+  evidence-acquisition action to perform next.
+- An agent/session interruption is not a workflow boundary. A fresh agent must
+  be able to continue from protected policy plus the registered checkpoint
+  without a chat transcript or hand-carried prose summary.
+- If a registered exact identity has changed, do not continue from the stale
+  checkpoint. Rebind the operation to current authoritative state and record a
+  fresh checkpoint before mutation.
+- A checkpoint is continuity metadata only. It never grants approval, merge, certification, publication, protected bypass, or mathematical-claim authority.

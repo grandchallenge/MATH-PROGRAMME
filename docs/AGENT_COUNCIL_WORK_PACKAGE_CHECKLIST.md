@@ -46,6 +46,26 @@ The following are review responsibilities, not a universal approval quorum. Mark
 - [ ] Expensive formal or computational replay is required only when the material closure invalidates it, on explicit dispatch, or on scheduled assurance; protected evidence reuse remains valid when its material identity is unchanged.
 - [ ] Terminal lifecycle states are checked by `ci/validate_documentary_closure.py` where that control applies, even when `promotion.ready_for_next_stage` is false.
 
+## Bounded-operation continuity gate
+
+Use this gate only when the campaign is explicitly admitted in the registry.
+Do not apply it to routine pull requests, ordinary CI waits, bounded repairs, or
+ordinary drafting:
+
+- [ ] The operation has a checkpoint registered in `governance/bounded_operation_checkpoint_registry.json`.
+- [ ] The checkpoint validates with `ci/validate_bounded_operation_continuity.py`.
+- [ ] Its recorded `freshness.verification_command` succeeds immediately before a permitted transition.
+- [ ] Exact protected base and current candidate head are recorded when applicable.
+- [ ] The current terminal condition is explicit and does not depend on conversational interpretation.
+- [ ] `permitted_next_actions` are finite and the checkpoint names exactly one deterministic `next_action` while nonterminal.
+- [ ] `resume.fresh_session_safe` is true and `resume.requires_chat_history` is false.
+- [ ] Authoritative resume sources are repository/GitHub records, not a chat transcript or hand-carried summary.
+- [ ] Pending external evidence names exact run/job/review/artifact/source identities and the next evidence-acquisition action; a vague `wait` is not used.
+- [ ] A blocked operation uses only a recognized genuine boundary category and records the exact evidence for that boundary.
+- [ ] The checkpoint is updated after a material phase, exact-head, external-evidence, next-action, or boundary transition.
+- [ ] If an exact identity no longer matches, the operation is rebound before mutation; stale checkpoint evidence is not reused as current evidence.
+- [ ] The checkpoint grants no merge, approval, certification, publication, protected-bypass, or mathematical-claim authority.
+
 ## Amanuensis continuity control
 
 - [ ] Artifact-ledger reference recorded where the artifact class requires one.

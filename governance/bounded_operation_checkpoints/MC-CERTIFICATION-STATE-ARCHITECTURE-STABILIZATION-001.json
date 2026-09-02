@@ -1,0 +1,104 @@
+{
+  "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
+  "schema_version": "1.0.0",
+  "checkpoint_id": "MC-CERTIFICATION-STATE-ARCHITECTURE-STABILIZATION-001.CP001",
+  "governed_work_id": "MC-CERTIFICATION-STATE-ARCHITECTURE-STABILIZATION-001",
+  "repository": "grandchallenge/MATHCERT",
+  "admission": {
+    "topology": "MULTI_SESSION_RESUMABLE",
+    "admission_ref": "grandchallenge/MATH-PROGRAMME#701",
+    "routine_work_excluded": true
+  },
+  "authority": {
+    "ghos_standard": "GCL-GHOS-00",
+    "ghos_version": "0.2.0",
+    "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+    "governing_issue": "grandchallenge/MATHCERT#227"
+  },
+  "phase": "exact-head validation settled with three current failures; authority and substantive repair boundaries remain",
+  "state": "BLOCKED_GENUINE_BOUNDARY",
+  "identities": {
+    "protected_base_sha": "bb9b88a03f379fc0ea9776a672a098cb73096f0a",
+    "candidate_head_sha": "65ac800c36c5e8aa2b6d0d37f42f24663c98bbd6",
+    "issue_number": 227,
+    "pr_number": 230,
+    "branch": "platform/certification/mc-certification-state-architecture-stabilization-003",
+    "workflow_runs": [
+      {"run_id": 33160228923, "name": "Cert checks", "status": "completed", "conclusion": "success", "job_id": null},
+      {"run_id": 33160229322, "name": "GCL conformance", "status": "completed", "conclusion": "success", "job_id": null},
+      {"run_id": 33160228922, "name": "OTP B1 binary-codes exact replay", "status": "completed", "conclusion": "success", "job_id": null},
+      {"run_id": 33160228925, "name": "OTP B2 spherical-codes exact replay", "status": "completed", "conclusion": "success", "job_id": null},
+      {"run_id": 33160228880, "name": "OTP Ehrhart evidence refresh", "status": "completed", "conclusion": "failure", "job_id": 98812667087}
+      ,{"run_id": 33160228937, "name": "replay-h-gapcvp", "status": "completed", "conclusion": "failure", "job_id": 98812641855}
+      ,{"run_id": 89862802931, "name": "CodeQL", "status": "completed", "conclusion": "failure", "job_id": 98812793668}
+    ]
+  },
+  "terminal_condition": "Exact-head architecture-relevant validation is green; any unrelated fail-closed source-authority condition is classified without weakening authority; fresh non-author exact-head review is recorded; protected merge occurs only under applicable authority; protected-main readback succeeds; and the required post-protection MATHCERT #224 replay is completed before the declared stabilization exit token is emitted.",
+  "permitted_next_actions": [
+    {
+      "id": "obtain_ehrhart_source_revision_disposition",
+      "description": "Through MATHCERT authority, register or reject manuscript revision sha256 ebc561ab5c53dbd240e17a8fdb6fffeb648591eca85dbfc7466f563638f8c566 before any Ehrhart evidence refresh or exact-head disposition."
+    }
+  ],
+  "next_action": {
+    "id": "obtain_ehrhart_source_revision_disposition",
+    "description": "Obtain a MATHCERT-governed disposition for the unregistered Ehrhart manuscript revision; do not repin, register, approve, or merge from this checkpoint.",
+    "evidence_targets": [
+      "grandchallenge/MATHCERT actions run 33160228880 job 98812667087",
+      "Ehrhart manuscript sha256 ebc561ab5c53dbd240e17a8fdb6fffeb648591eca85dbfc7466f563638f8c566",
+      "grandchallenge/MATHCERT PR #230 head 65ac800c36c5e8aa2b6d0d37f42f24663c98bbd6"
+    ]
+  },
+  "external_evidence": {
+    "waiting": false,
+    "objects": []
+  },
+  "blocking_boundary": {
+    "category": "authority",
+    "reason": "Exact Ehrhart refresh run 33160228880 rejected an unregistered manuscript revision. The same exact head also has failed replay-h-gapcvp run 33160228937 and a CodeQL check reporting three new high-severity alerts. Authority disposition and substantive repair must occur in MATHCERT; this checkpoint cannot treat the head as merge-ready.",
+    "evidence_refs": [
+      "grandchallenge/MATHCERT actions run 33160228880 job 98812667087",
+      "grandchallenge/MATHCERT PR #230 head 65ac800c36c5e8aa2b6d0d37f42f24663c98bbd6",
+      "grandchallenge/MATHCERT actions run 33160228937 job 98812641855",
+      "grandchallenge/MATHCERT check run 98812793668"
+    ]
+  },
+  "last_transition": {
+    "action": "settle exact-head validation and classify the remaining Ehrhart failure",
+    "result": "B1, B2, canonical Cert, and GCL conformance succeeded at the recorded head. Live revalidation found three settled failures: Ehrhart source authority, replay-h-gapcvp, and CodeQL with three new high-severity alerts. The checkpoint remains fail-closed and grants no repair, approval, or merge authority.",
+    "evidence_refs": [
+      "grandchallenge/MATHCERT#230 head 65ac800c36c5e8aa2b6d0d37f42f24663c98bbd6",
+      "grandchallenge/MATHCERT actions run 33160228922",
+      "grandchallenge/MATHCERT actions run 33160228925",
+      "grandchallenge/MATHCERT actions run 33160228923",
+      "grandchallenge/MATHCERT actions run 33160229322",
+      "grandchallenge/MATHCERT actions run 33160228880 job 98812667087"
+    ]
+  },
+  "freshness": {
+    "required_before_transition": true,
+    "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/MC-CERTIFICATION-STATE-ARCHITECTURE-STABILIZATION-001.json",
+    "on_mismatch": "REBIND_BEFORE_MUTATION",
+    "observed_at": "2026-09-02T00:26:03Z"
+  },
+  "resume": {
+    "fresh_session_safe": true,
+    "requires_chat_history": false,
+    "authoritative_sources": [
+      "grandchallenge/MATHCERT#227",
+      "grandchallenge/MATHCERT#230",
+      "grandchallenge/MATH-PROGRAMME#701",
+      "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+      "docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md"
+    ],
+    "instructions": "Run the recorded live verification command before transition. Any head, base, PR-state, or recorded check-result mismatch requires rebinding before mutation. At the current head, preserve the settled successes and route the Ehrhart authority question plus replay-h-gapcvp and CodeQL repairs through MATHCERT. Do not repin, register, approve, merge, or infer certification from this checkpoint."
+  },
+  "terminal_evidence": [],
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false,
+    "protected_bypass_authorized": false
+  }
+}

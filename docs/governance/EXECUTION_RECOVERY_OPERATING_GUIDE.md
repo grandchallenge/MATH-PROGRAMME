@@ -51,6 +51,52 @@ Before recovery or repair, bind the operation to every exact identity that is ma
 
 A diagnostic becomes stale when the repaired bytes, relevant dependency, governed scope, toolchain, authority boundary, or other material input it describes changes. A numerically newer protected `main` is not by itself evidence staleness when that movement is outside the material closure.
 
+## Durable checkpoint and session restart
+
+Only a multi-session governed campaign explicitly admitted in
+`governance/bounded_operation_checkpoint_registry.json` carries this checkpoint.
+Routine pull requests, ordinary CI waits, bounded repairs, and ordinary drafting
+are excluded and continue under the streamlined execution policy. Merely taking
+more than one session or waiting for CI does not admit work to this registry.
+
+The checkpoint is the durable operational resume surface. Before substantial
+continuation, a new agent/session must:
+
+1. read the registered checkpoint;
+2. read the authoritative issue/PR/policy sources named by the checkpoint;
+3. verify that exact material identities still match;
+   mechanically run the recorded `freshness.verification_command` and fail
+   closed on a head, base, PR-state, or settled-result mismatch;
+4. execute only a permitted action, normally the single recorded `next_action`;
+5. update the checkpoint after a material transition changes phase, exact head,
+   external-evidence state, next action, or genuine boundary.
+
+A conforming live checkpoint sets `resume.fresh_session_safe=true` and
+`resume.requires_chat_history=false`. A chat transcript, conversational summary,
+or operator promise is never an authoritative prerequisite for resume.
+
+When external CI, review, or evidence is pending, record the exact run, job,
+review, artifact, or source identity and the exact status/evidence query to
+perform next. `wait`, `wait for CI`, and equivalent indefinite instructions are
+not valid next actions.
+
+An interaction/session/resource interruption does not create a governance or
+authority boundary. If interruption occurs after a material transition, commit
+or update the durable checkpoint before relying on later conversational
+continuity. If interruption occurs before a transition is durably recorded, the
+next session re-reads authoritative state and records a fresh checkpoint rather
+than assuming that an unrecorded transition occurred.
+
+Checkpoint shape and cross-state semantics are enforced by
+`ci/validate_bounded_operation_continuity.py`. A checkpoint carries no approval,
+merge, certification, publication, protected-bypass, or claim authority.
+
+Mandatory routing and checkpoints have different jobs. Routing selects an
+admitted persistent controller when workflow topology requires one. A checkpoint
+stores reconstructible transaction state only for an explicitly admitted
+multi-session campaign. A registry entry is therefore a deliberate governance
+decision, not a universal paperwork requirement.
+
 ## Diagnostic recovery ladder
 
 Use the narrowest available diagnostic surface that is bound to the failing material object. Advance to the next route when the prior route is unavailable, empty, truncated, inconclusive, or demonstrably broken.
