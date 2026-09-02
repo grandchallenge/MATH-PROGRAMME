@@ -4,7 +4,9 @@
 
 Active programme governance doctrine.
 
-The Agent Council replaces informal mnemonic companions. Its roles define responsibility boundaries for rigorous mathematical production. They do not certify mathematics, replace specialist reviewers, or substitute for proof assistants.
+The Agent Council replaces informal mnemonic companions. Its roles define responsibility boundaries for rigorous mathematical production. They do not certify mathematics, replace specialist reviewers, or substitute for proof assistants. They also do not form a universal approval quorum for routine work.
+
+Under `MP-STREAMLINED-EXECUTION-001`, bounded administrative, documentation, engineering, workflow, maintenance, routing, synchronization, and campaign-execution work may proceed through protected merge and readback under standing delegated authority once affected checks pass. Council offices are engaged according to the material boundary. Specialist non-author review remains reserved for substantive mathematical certification, source-semantic adjudication, constitutional authority expansion, security-sensitive protection weakening, and external claim promotion.
 
 ## Programme position
 
@@ -34,7 +36,19 @@ MATHFORGE -> MATHSOLVE -> MATHCERT
 | The Archivist | Literature provenance, attribution, historical record | What is known, by whom, and what is new? |
 | The Mechanist | Algorithms, implementation, benchmarks | What can this mathematics build? |
 | The Typesetter | Figures, layout, visual structure | Does the artifact reveal structure? |
-| The Referee | External standards and readiness | Would a serious reader accept this? |
+| The Referee | Independent specialist scrutiny where required | Would a serious independent reader accept this material claim or control boundary? |
+
+## Review proportionality
+
+The Council is a responsibility map. Applicability follows the material closure rather than ceremony.
+
+- A routine documentation correction may need Amanuensis/editorial consistency and affected CI only.
+- A workflow-control change may need Mechanist, Adversary, and security-sensitive specialist review if it weakens or changes protected enforcement.
+- A mathematical certification or source-semantic adjudication may require independent specialist review and the relevant MATHCERT boundary.
+- Unrelated movement of protected `main` does not invalidate an office disposition attached to unchanged material bytes.
+- A materially changed theorem, evidence source, security control, authority boundary, or external claim does require renewed scrutiny for that changed object.
+
+No office name may be used to manufacture substantive independence where the same actor produced and certifies the same mathematical claim.
 
 ## Exposition and Continuity Kernel
 
@@ -50,16 +64,16 @@ The Amanuensis does not duplicate the Archivist. The Archivist governs external 
 
 ## Amanuensis office
 
-For every governed artifact, the Amanuensis owns:
+For every governed artifact to which continuity control applies, the Amanuensis owns:
 
 1. the artifact-ledger entry and authoritative artifact identity;
 2. decision-record references and rejected alternatives where they affect interpretation;
-3. the terminology-registry reference and all introduced or changed terms;
-4. review provenance, including who reviewed which obligation and where the evidence resides;
-5. cross-document consistency against theorem spines, claim ledgers, Work Packages, schemas, public documentation, navigation, and implementation artifacts;
-6. final editorial integration into one authoritative version after specialist review.
+3. the terminology-registry reference and introduced or changed terms;
+4. applicable review provenance, including who reviewed which obligation and where the evidence resides;
+5. cross-document consistency against materially relevant theorem spines, claim ledgers, Work Packages, schemas, public documentation, navigation, and implementation artifacts;
+6. final editorial integration into one authoritative version where required.
 
-The Amanuensis may not mark an artifact ready for its next stage while review provenance is incomplete, cross-document conflicts remain blocking, the public claim boundary contradicts the canonical artifact, or the authoritative integrated version is unidentified.
+The Amanuensis may not mark an artifact ready for its next stage while applicable review provenance is incomplete, cross-document conflicts remain blocking, the public claim boundary contradicts the canonical artifact, or the authoritative integrated version is unidentified.
 
 ## Public documentation duty
 
@@ -76,10 +90,16 @@ Public documentation is an orientation layer. It must not become an independent 
 
 ## Operating principle
 
-Every artifact should move through:
+Every substantive mathematical artifact should move through the applicable parts of:
 
 ```text
 Define -> Map -> Discover -> Test -> Prove -> Attack -> Explain -> Formalize -> Build -> Integrate -> Review
+```
+
+Routine governance and engineering transactions use the shorter protected sequence defined by the streamlined execution amendment:
+
+```text
+Classify material closure -> Run affected checks -> Delegated disposition -> Protected merge -> Readback
 ```
 
 ## Binding maxim
