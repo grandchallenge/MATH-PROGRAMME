@@ -7,9 +7,16 @@
       {
         "shard": "oz",
         "command_index": 1,
-        "command": ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_oz*.py", "--report-json", "oz-test-timing.json"],
+        "command": ["python3", "ci/policy_oz_replay.py", "--mode", "routed", "--report-json", "oz-test-timing.json"],
         "timeout_seconds": 1680,
-        "reason": "Protected OZ sentinel observed about 1325 seconds; the inner runner is capped at 1620 seconds, leaving 60 seconds for bounded cleanup."
+        "reason": "A scheduled or manual full OZ sentinel may replay the measured computational modules; protected evidence is bounded by the existing 27-minute inner envelope plus cleanup."
+      },
+      {
+        "shard": "campaigns",
+        "command_index": 5,
+        "command": ["python3", "ci/policy_oz_replay.py", "--mode", "campaign", "--report-json", "oz-campaign-test-timing.json"],
+        "timeout_seconds": 1680,
+        "reason": "A material Odd Zeta campaign transition may invalidate the full downstream computational replay closure; unrelated campaign transitions exit immediately."
       }
     ],
     "repository_regression_exclusions": {
@@ -36,6 +43,7 @@
       ["python3", "ci/policy_impact.py", "validate"],
       ["python3", "ci/test_policy_impact.py"],
       ["python3", "ci/test_policy_shard_runtime.py"],
+      ["python3", "ci/test_policy_oz_replay.py"],
       ["python3", "ci/formal_replay_attestation.py", "check-policy"],
       ["python3", "ci/test_formal_replay_gate.py"]
     ],
@@ -64,7 +72,7 @@
       ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_cmdg*.py", "--report-json", "cmdg-test-timing.json"]
     ],
     "oz": [
-      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_oz*.py", "--report-json", "oz-test-timing.json"]
+      ["python3", "ci/policy_oz_replay.py", "--mode", "routed", "--report-json", "oz-test-timing.json"]
     ],
     "administrative": [
       ["python3", "ci/validate_administrative_structural_sweep.py"],
@@ -75,7 +83,8 @@
       ["python3", "ci/campaign_admission_control.py"],
       ["python3", "ci/validate_campaign_replays.py"],
       ["python3", "ci/test_campaign_replays.py"],
-      ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_campaign*.py"]
+      ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_campaign*.py"],
+      ["python3", "ci/policy_oz_replay.py", "--mode", "campaign", "--report-json", "oz-campaign-test-timing.json"]
     ],
     "contracts": [
       ["python3", "ci/ghos_execution_routing.py"],

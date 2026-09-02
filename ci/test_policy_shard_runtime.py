@@ -22,13 +22,14 @@ class PolicyShardRuntimeTests(unittest.TestCase):
     def registry(self) -> dict[str, object]:
         return json.loads(REGISTRY.read_text(encoding="utf-8"))
 
-    def test_execution_policy_has_one_exact_long_running_override(self) -> None:
+    def test_execution_policy_has_exact_long_running_overrides(self) -> None:
         default, overrides = run_policy_shard._execution_policy(self.registry())
         self.assertEqual(default, 900.0)
-        self.assertEqual(set(overrides), {("oz", 1)})
-        timeout, reason = overrides[("oz", 1)]
-        self.assertEqual(timeout, 1680.0)
-        self.assertIn("protected", reason.lower())
+        self.assertEqual(set(overrides), {("oz", 1), ("campaigns", 5)})
+        for key in (("oz", 1), ("campaigns", 5)):
+            timeout, reason = overrides[key]
+            self.assertEqual(timeout, 1680.0)
+            self.assertGreaterEqual(len(reason), 20)
 
     def test_execution_policy_rejects_override_command_drift(self) -> None:
         data = copy.deepcopy(self.registry())
