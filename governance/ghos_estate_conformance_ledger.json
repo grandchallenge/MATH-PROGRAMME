@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0.0",
   "campaign_id": "GHOS-ESTATE-ROLLOUT-001",
-  "state": "ACTIVE_PHASE_3_AT_TROVE_CURATA",
+  "state": "ACTIVE_PHASE_4_AT_LEAN_ACTION",
   "repository_count": 14,
-  "terminal_green_count": 11,
+  "terminal_green_count": 12,
   "shared_gate_audit_pending_count": 0,
   "applicable_routing_gap_count": 0,
-  "baseline_scan_pending_count": 3,
+  "baseline_scan_pending_count": 2,
   "blocked_count": 0,
   "phase_0": {
     "state": "COMPLETE",
@@ -26,6 +26,11 @@
     "state": "COMPLETE",
     "terminal_repository_count": 1,
     "next_phase": "PHASE_3_ACTIVE_TECHNICAL_PROGRAMMES"
+  },
+  "phase_3": {
+    "state": "COMPLETE",
+    "terminal_repository_count": 4,
+    "next_phase": "PHASE_4_SHARED_ACTION_AND_PUBLICATION_TOOLING"
   },
   "repositories": {
     "grandchallenge/.github": {
@@ -411,15 +416,59 @@
     "grandchallenge/TROVE-CURATA": {
       "phase": 3,
       "tracker": "grandchallenge/TROVE-CURATA#2",
-      "disposition": "PENDING",
-      "current_state": "PHASE3_READY_FOR_EXACT_PROTECTED_PREFLIGHT"
+      "terminal_comment_id": 5517764068,
+      "disposition": "GHOS_ROUTING_ENFORCED",
+      "tracker_state": "CLOSED_COMPLETED",
+      "current_state": "PHASE3_TERMINAL__ROUTING_REQUIRED_AND_HOSTILE_PROVEN",
+      "protected_head_at_activation": "aafeecc058cb47d83625ca0a7d37aa2398e07714",
+      "terminal_head": "6a6dd7bf16dadab16405b3be610abb090cf02af1",
+      "observed_direct_workflow_count": 3,
+      "terminal_direct_workflow_count": 4,
+      "routing_registry_blob": "ec5846902e24ff75880cb0103ba8f4fe5181f7db",
+      "routing_enforcement_blob": "a0ce4332e41be37e87025da71533dec15160aa55",
+      "protection_model": "CLASSIC_BRANCH_PROTECTION",
+      "required_status_checks_strict": true,
+      "required_status_checks_app_id": 15368,
+      "required_contexts": [
+        "acceptance (3.11.14)",
+        "acceptance (3.12.13)",
+        "policy / policy",
+        "replay",
+        "security / action-policy",
+        "routing-enforcement"
+      ],
+      "classic_protection_receipt": {
+        "pre_sha256": "23c494b3b1c0d7d3785c4a4461a70f373563e0d69731cf3186b2306d1cbaf456",
+        "post_sha256": "e108a502ad720d2f77d14ec6f795348b698106e9d82bb744b13963eea00a62db",
+        "patch_sha256": "531ba3fbbeb0e73aefe7b099a85a599715f75c0d34a36861cb6d3ba22ce23438",
+        "strict_preserved": true
+      },
+      "routing_required": true,
+      "benign_proof": {
+        "pull_request": 4,
+        "head": "faa51f604781fe5518e5beb74040869f720004bc",
+        "workflow_run": 33641288910,
+        "job": 100284715313,
+        "result": "SUCCESS",
+        "closed_unmerged": true
+      },
+      "hostile_proof": {
+        "pull_request": 5,
+        "head": "83b46ab8a69695d6225841c19183fa2c2b0e88bf",
+        "workflow_run": 33694147849,
+        "job": 100459265660,
+        "result": "EXPECTED_FAILURE",
+        "failure_class": "workflow routing coverage mismatch",
+        "mergeable_state": "blocked",
+        "closed_unmerged": true
+      }
     },
     "grandchallenge/lean-action": {
       "phase": 4,
       "tracker": "grandchallenge/MATH-PROGRAMME#727",
       "tracker_note": "target repository issues disabled",
       "disposition": "PENDING",
-      "current_state": "BASELINE_SCAN_PENDING"
+      "current_state": "PHASE4_READY_FOR_EXACT_PROTECTED_PREFLIGHT"
     },
     "grandchallenge/upload-pages-artifact": {
       "phase": 4,
