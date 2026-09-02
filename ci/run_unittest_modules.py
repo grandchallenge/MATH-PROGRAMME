@@ -15,6 +15,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+REGISTRY = ROOT / "governance/policy_shard_registry.json"
 ROOT_STR = str(ROOT)
 if ROOT_STR not in sys.path:
     sys.path.insert(0, ROOT_STR)
@@ -78,6 +79,27 @@ def _validate_exclude_pattern(pattern: str) -> str:
     if not pattern or "/" in pattern or "\\" in pattern or pattern in {".", ".."}:
         raise RuntimeError(f"unsafe exclusion pattern: {pattern!r}")
     return pattern
+
+
+def _governed_exclusions() -> tuple[list[str], list[str]]:
+    if os.environ.get("GCL_POLICY_SHARD") != "repository-regression":
+        return [], []
+    data = json.loads(REGISTRY.read_text(encoding="utf-8"))
+    if data.get("registry_id") != "MP-POLICY-SHARDS-001":
+        raise RuntimeError("policy shard registry identity drift")
+    execution = data.get("execution")
+    if not isinstance(execution, dict):
+        raise RuntimeError("policy shard execution envelope missing")
+    exclusions = execution.get("repository_regression_exclusions")
+    if not isinstance(exclusions, dict):
+        raise RuntimeError("repository regression exclusions missing")
+    patterns = exclusions.get("patterns")
+    manifests = exclusions.get("manifests")
+    if not isinstance(patterns, list) or not patterns or not all(isinstance(item, str) and item for item in patterns):
+        raise RuntimeError("repository regression exclusion patterns invalid")
+    if not isinstance(manifests, list) or not manifests or not all(isinstance(item, str) and item for item in manifests):
+        raise RuntimeError("repository regression exclusion manifests invalid")
+    return list(patterns), list(manifests)
 
 
 def _apply_exclusions(
@@ -202,10 +224,18 @@ def _parent_main(args: argparse.Namespace) -> int:
         if args.manifest
         else _discover(args.discover_root, args.pattern)
     )
+    governed_patterns, governed_manifests = _governed_exclusions()
+    if governed_patterns or governed_manifests:
+        print(
+            "POLICY_TEST_GOVERNED_EXCLUSIONS shard=repository-regression source=governance/policy_shard_registry.json",
+            flush=True,
+        )
+    patterns = list(dict.fromkeys([*args.exclude_pattern, *governed_patterns]))
+    manifests = list(dict.fromkeys([*args.exclude_manifest, *governed_manifests]))
     paths, excluded = _apply_exclusions(
         paths,
-        exclude_patterns=args.exclude_pattern,
-        exclude_manifests=args.exclude_manifest,
+        exclude_patterns=patterns,
+        exclude_manifests=manifests,
     )
     for path, reason in excluded:
         print(
