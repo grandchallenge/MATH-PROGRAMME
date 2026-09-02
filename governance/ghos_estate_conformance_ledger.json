@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0.0",
   "campaign_id": "GHOS-ESTATE-ROLLOUT-001",
-  "state": "ACTIVE_PHASE_1_READY",
+  "state": "ACTIVE_PHASE_1_AT_MATHFORGE",
   "repository_count": 14,
-  "terminal_green_count": 3,
+  "terminal_green_count": 4,
   "shared_gate_audit_pending_count": 0,
-  "applicable_routing_gap_count": 4,
+  "applicable_routing_gap_count": 3,
   "baseline_scan_pending_count": 7,
   "blocked_count": 0,
   "phase_0": {
@@ -14,7 +14,8 @@
     "terminal_repository_count": 3
   },
   "phase_1": {
-    "state": "READY_FOR_REVALIDATION_AND_IMPLEMENTATION",
+    "state": "ACTIVE_AT_MATHFORGE_REVALIDATION_AND_IMPLEMENTATION",
+    "umbrella_checkpoint_comment_id": 5506350548,
     "handoff": "handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/HANDOFF.md",
     "machine_state": "handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/STATE.json",
     "glidepath": "handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/GLIDEPATH.md"
@@ -59,14 +60,36 @@
       "phase": 1,
       "tracker": "grandchallenge/INTELLECT#73",
       "preflight_comment_id": 5491244520,
-      "disposition": "PENDING",
-      "current_state": "APPLICABLE_WORKFLOW_SURFACE__ROUTING_REGISTRY_ABSENT__MANDATORY_ENFORCEMENT_GAP",
+      "terminal_comment_id": 5506338697,
+      "disposition": "GHOS_ROUTING_ENFORCED",
+      "tracker_state": "CLOSED_COMPLETED",
+      "current_state": "PHASE1_TERMINAL__ROUTING_REQUIRED_AND_HOSTILE_PROVEN",
       "protected_head_at_handoff": "08a3044e0363fa932012fa642ea15d9153ba876b",
+      "terminal_head": "565ed31f413b4698f400a260fc4a8ea65e7e1255",
       "observed_direct_workflow_count": 8,
+      "terminal_direct_workflow_count": 9,
+      "routing_registry_blob": "4ed63a0d3aa5353c32a558007c49541606a3ccd5",
+      "routing_enforcement_blob": "a0ce4332e41be37e87025da71533dec15160aa55",
       "ruleset_id": 19964077,
-      "ruleset_strict": true,
+      "ruleset_strict": false,
       "ruleset_bypass_actors": [],
-      "routing_required": false,
+      "required_contexts": [
+        "test (3.11.14)",
+        "test (3.12.13)",
+        "policy / policy",
+        "security / action-policy",
+        "routing-enforcement"
+      ],
+      "routing_required": true,
+      "hostile_proof": {
+        "pull_request": 80,
+        "head": "205aec8ae4a273e9c3401f6ba2362b68bf6109cb",
+        "workflow_run": 33605665810,
+        "result": "EXPECTED_FAILURE",
+        "failure_class": "workflow routing coverage mismatch",
+        "mergeable_state": "blocked",
+        "closed_unmerged": true
+      },
       "reference_dependency_path_requirements_policy_txt_present": false
     },
     "grandchallenge/MATHFORGE": {
@@ -76,10 +99,16 @@
       "disposition": "PENDING",
       "current_state": "APPLICABLE_WORKFLOW_SURFACE__ROUTING_REGISTRY_ABSENT__MANDATORY_ENFORCEMENT_GAP",
       "protected_head_at_handoff": "ed8a65410336489ea5646808265c44f5387bebb8",
+      "current_protected_head": "ed8a65410336489ea5646808265c44f5387bebb8",
       "observed_direct_workflow_count": 7,
       "ruleset_id": 17137626,
-      "ruleset_strict": true,
+      "ruleset_strict": false,
       "ruleset_bypass_actors": [],
+      "required_contexts": [
+        "reconnaissance",
+        "policy / policy",
+        "security / action-policy"
+      ],
       "routing_required": false,
       "reference_dependency_path_requirements_policy_txt_present": false
     },
