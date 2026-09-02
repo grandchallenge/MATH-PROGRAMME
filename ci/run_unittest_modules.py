@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import json
 import os
 import signal
@@ -71,6 +72,43 @@ def _discover(root: str, pattern: str) -> list[Path]:
     if not paths:
         raise RuntimeError(f"no tests matched {root!r} / {pattern!r}")
     return paths
+
+
+def _validate_exclude_pattern(pattern: str) -> str:
+    if not pattern or "/" in pattern or "\\" in pattern or pattern in {".", ".."}:
+        raise RuntimeError(f"unsafe exclusion pattern: {pattern!r}")
+    return pattern
+
+
+def _apply_exclusions(
+    paths: list[Path],
+    *,
+    exclude_patterns: list[str],
+    exclude_manifests: list[str],
+) -> tuple[list[Path], list[tuple[Path, str]]]:
+    patterns = [_validate_exclude_pattern(pattern) for pattern in exclude_patterns]
+    manifest_members: dict[Path, str] = {}
+    for raw in exclude_manifests:
+        manifest = _safe_repo_path(raw, suffix=".json")
+        for path in _manifest_paths(manifest):
+            manifest_members[path] = manifest.relative_to(ROOT).as_posix()
+
+    selected: list[Path] = []
+    excluded: list[tuple[Path, str]] = []
+    for path in paths:
+        manifest = manifest_members.get(path)
+        if manifest is not None:
+            excluded.append((path, f"manifest:{manifest}"))
+            continue
+        matched = next((pattern for pattern in patterns if fnmatch.fnmatchcase(path.name, pattern)), None)
+        if matched is not None:
+            excluded.append((path, f"pattern:{matched}"))
+            continue
+        selected.append(path)
+
+    if not selected:
+        raise RuntimeError("all selected test modules were excluded")
+    return selected, excluded
 
 
 def _suite_for(path: Path) -> unittest.TestSuite:
@@ -164,6 +202,21 @@ def _parent_main(args: argparse.Namespace) -> int:
         if args.manifest
         else _discover(args.discover_root, args.pattern)
     )
+    paths, excluded = _apply_exclusions(
+        paths,
+        exclude_patterns=args.exclude_pattern,
+        exclude_manifests=args.exclude_manifest,
+    )
+    for path, reason in excluded:
+        print(
+            f"POLICY_TEST_EXCLUDED module={path.relative_to(ROOT).as_posix()} reason={reason}",
+            flush=True,
+        )
+    print(
+        f"POLICY_TEST_SELECTION selected={len(paths)} excluded={len(excluded)}",
+        flush=True,
+    )
+
     records: list[dict[str, object]] = []
     failures = 0
     started = time.perf_counter()
@@ -244,6 +297,8 @@ def main() -> int:
     mode.add_argument("--manifest")
     mode.add_argument("--discover-root")
     ap.add_argument("--pattern", default="test_*.py")
+    ap.add_argument("--exclude-pattern", action="append", default=[])
+    ap.add_argument("--exclude-manifest", action="append", default=[])
     ap.add_argument("--report-json")
     ap.add_argument("--module-timeout-seconds", type=float, default=DEFAULT_MODULE_TIMEOUT_SECONDS)
     ap.add_argument("--total-timeout-seconds", type=float, default=DEFAULT_TOTAL_TIMEOUT_SECONDS)
