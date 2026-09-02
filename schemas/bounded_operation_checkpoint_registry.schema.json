@@ -4,11 +4,13 @@
   "title": "Bounded Operation Checkpoint Registry",
   "type": "object",
   "additionalProperties": false,
-  "required": ["$schema", "schema_version", "registry_id", "checkpoints"],
+  "required": ["$schema", "schema_version", "registry_id", "admission_policy", "routine_work_excluded", "checkpoints"],
   "properties": {
     "$schema": {"const": "../schemas/bounded_operation_checkpoint_registry.schema.json"},
     "schema_version": {"const": "1.0.0"},
     "registry_id": {"const": "MP-BOUNDED-OPERATION-CHECKPOINTS-001"},
+    "admission_policy": {"const": "MULTI_SESSION_GOVERNED_CAMPAIGN_ONLY"},
+    "routine_work_excluded": {"const": true},
     "checkpoints": {
       "type": "array",
       "minItems": 1,

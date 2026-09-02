@@ -103,9 +103,11 @@ evidence.
 
 ## Durable checkpoint and session restart
 
-A bounded operation that can span sessions, wait on external evidence, or
-require more than one material transition must carry a registered checkpoint in
-`governance/bounded_operation_checkpoint_registry.json`.
+Only a multi-session governed campaign explicitly admitted in
+`governance/bounded_operation_checkpoint_registry.json` carries this checkpoint.
+Routine pull requests, ordinary CI waits, bounded repairs, and ordinary drafting
+are excluded and continue under the streamlined execution policy. Merely taking
+more than one session or waiting for CI does not admit work to this registry.
 
 The checkpoint is the durable operational resume surface. Before substantial
 continuation, a new agent/session must:
@@ -113,6 +115,8 @@ continuation, a new agent/session must:
 1. read the registered checkpoint;
 2. read the authoritative issue/PR/policy sources named by the checkpoint;
 3. verify that exact material identities still match;
+   mechanically run the recorded `freshness.verification_command` and fail
+   closed on a head, base, PR-state, or settled-result mismatch;
 4. execute only a permitted action, normally the single recorded `next_action`;
 5. update the checkpoint after a material transition changes phase, exact head,
    external-evidence state, next action, or genuine boundary.
@@ -136,6 +140,12 @@ than assuming that an unrecorded transition occurred.
 Checkpoint shape and cross-state semantics are enforced by
 `ci/validate_bounded_operation_continuity.py`. A checkpoint carries no approval,
 merge, certification, publication, protected-bypass, or claim authority.
+
+Mandatory routing and checkpoints have different jobs. Routing selects an
+admitted persistent controller when workflow topology requires one. A checkpoint
+stores reconstructible transaction state only for an explicitly admitted
+multi-session campaign. A registry entry is therefore a deliberate governance
+decision, not a universal paperwork requirement.
 
 ## Diagnostic recovery ladder
 

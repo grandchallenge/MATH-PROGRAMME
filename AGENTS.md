@@ -123,10 +123,12 @@ environments, CI, or replay tooling fail.
 
 ## Durable bounded-operation continuity
 
-For substantial governed work that can span more than one agent/session or can
-wait on CI, review, external evidence, or another asynchronous GitHub surface,
-the repository state, not conversational memory, owns the operational resume
-point.
+This control applies only to a multi-session governed campaign explicitly
+admitted in `governance/bounded_operation_checkpoint_registry.json`. Routine
+pull requests, ordinary CI waits, bounded repairs, and ordinary drafting are
+excluded. Their absence from the registry never blocks streamlined execution.
+For an admitted campaign, repository state—not conversational memory—owns the
+operational resume point.
 
 - Read `governance/bounded_operation_checkpoint_registry.json` before resuming a
   registered operation. Re-read the named authoritative issue/PR and exact
@@ -135,9 +137,16 @@ point.
   `ci/validate_bounded_operation_continuity.py`, name one deterministic
   `next_action`, and set `resume.fresh_session_safe=true` and
   `resume.requires_chat_history=false`.
+- Before any permitted transition, run the checkpoint's
+  `freshness.verification_command`. Any exact-head, base, PR-state, or settled
+  failure mismatch requires durable rebinding before mutation.
 - Update the registered checkpoint after every material transition that changes
   phase, candidate head, external-evidence state, permitted next action, or
   genuine blocking boundary. Git history is the durable transition history.
+- Mandatory execution routing chooses whether a persistent controller is
+  required; this checkpoint records resumable transaction state for the much
+  smaller set of explicitly admitted campaigns. Neither control substitutes
+  for the other.
 - Never use a vague `wait` as the resume instruction. If an external object is
   pending, record its exact run/job/review/artifact identity and the exact
   evidence-acquisition action to perform next.

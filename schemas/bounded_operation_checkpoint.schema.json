@@ -6,10 +6,10 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "$schema", "schema_version", "checkpoint_id", "governed_work_id", "repository",
+    "$schema", "schema_version", "checkpoint_id", "governed_work_id", "repository", "admission",
     "authority", "phase", "state", "identities", "terminal_condition",
     "permitted_next_actions", "next_action", "external_evidence", "blocking_boundary",
-    "last_transition", "resume", "terminal_evidence", "claim_boundaries"
+    "last_transition", "freshness", "resume", "terminal_evidence", "claim_boundaries"
   ],
   "properties": {
     "$schema": {"const": "../../schemas/bounded_operation_checkpoint.schema.json"},
@@ -17,6 +17,15 @@
     "checkpoint_id": {"type": "string", "pattern": "^[A-Z0-9][A-Z0-9._-]+$"},
     "governed_work_id": {"type": "string", "minLength": 3},
     "repository": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"},
+    "admission": {
+      "type": "object", "additionalProperties": false,
+      "required": ["topology", "admission_ref", "routine_work_excluded"],
+      "properties": {
+        "topology": {"const": "MULTI_SESSION_RESUMABLE"},
+        "admission_ref": {"type": "string", "minLength": 3},
+        "routine_work_excluded": {"const": true}
+      }
+    },
     "authority": {
       "type": "object",
       "additionalProperties": false,
@@ -130,6 +139,16 @@
         "action": {"type": "string", "minLength": 1},
         "result": {"type": "string", "minLength": 1},
         "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "freshness": {
+      "type": "object", "additionalProperties": false,
+      "required": ["required_before_transition", "verification_command", "on_mismatch", "observed_at"],
+      "properties": {
+        "required_before_transition": {"const": true},
+        "verification_command": {"type": "string", "pattern": "^python ci/validate_bounded_operation_continuity.py --verify-live "},
+        "on_mismatch": {"const": "REBIND_BEFORE_MUTATION"},
+        "observed_at": {"type": "string", "format": "date-time"}
       }
     },
     "resume": {

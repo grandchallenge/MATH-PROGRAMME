@@ -41,10 +41,13 @@ The purpose is not to replace mathematical judgment. The purpose is to make resp
 
 ## Bounded-operation continuity gate
 
-For substantial governed work that spans sessions or waits on CI, review, or external evidence:
+Use this gate only when the campaign is explicitly admitted in the registry.
+Do not apply it to routine pull requests, ordinary CI waits, bounded repairs, or
+ordinary drafting:
 
 - [ ] The operation has a checkpoint registered in `governance/bounded_operation_checkpoint_registry.json`.
 - [ ] The checkpoint validates with `ci/validate_bounded_operation_continuity.py`.
+- [ ] Its recorded `freshness.verification_command` succeeds immediately before a permitted transition.
 - [ ] Exact protected base and current candidate head are recorded when applicable.
 - [ ] The current terminal condition is explicit and does not depend on conversational interpretation.
 - [ ] `permitted_next_actions` are finite and the checkpoint names exactly one deterministic `next_action` while nonterminal.

@@ -96,6 +96,14 @@ class BoundedOperationContinuityTests(unittest.TestCase):
         self.assertTrue(any("PR-bound checkpoint requires candidate_head_sha" in error for error in errors))
         self.assertTrue(any("workflow-bound checkpoint requires candidate_head_sha" in error for error in errors))
 
+    def test_routine_work_cannot_be_admitted_through_checkpoint(self) -> None:
+        errors = self.errors(lambda value: value["admission"].update({"routine_work_excluded": False}))
+        self.assertTrue(any("routine bounded work must remain outside" in error for error in errors))
+
+    def test_transition_cannot_disable_live_freshness(self) -> None:
+        errors = self.errors(lambda value: value["freshness"].update({"required_before_transition": False}))
+        self.assertTrue(any("live freshness verification is required" in error for error in errors))
+
 
 if __name__ == "__main__":
     unittest.main()

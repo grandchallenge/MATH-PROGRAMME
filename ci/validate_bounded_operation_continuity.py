@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -154,6 +155,57 @@ def checkpoint_semantic_errors(checkpoint: dict[str, Any], label: str) -> list[s
     if any(claim_boundaries.values()):
         errors.append(f"{label}: checkpoint is continuity state only and cannot authorize claims or protected actions")
 
+    if checkpoint["admission"]["topology"] != "MULTI_SESSION_RESUMABLE":
+        errors.append(f"{label}: only explicitly admitted multi-session resumable campaigns may be registered")
+    if not checkpoint["admission"]["routine_work_excluded"]:
+        errors.append(f"{label}: routine bounded work must remain outside the checkpoint system")
+    if not checkpoint["freshness"]["required_before_transition"]:
+        errors.append(f"{label}: live freshness verification is required before transition")
+
+    return errors
+
+
+def live_freshness_errors(checkpoint: dict[str, Any], label: str) -> list[str]:
+    """Compare the recorded PR identity and settled failures with live GitHub state."""
+    identities = checkpoint["identities"]
+    if identities["pr_number"] is None:
+        return [f"{label}: live verification currently requires a PR-bound checkpoint"]
+    command = [
+        "gh", "pr", "view", str(identities["pr_number"]), "--repo", checkpoint["repository"],
+        "--json", "headRefOid,baseRefOid,state",
+    ]
+    try:
+        live_pr = json.loads(subprocess.run(command, check=True, capture_output=True, text=True).stdout)
+        checks = json.loads(subprocess.run(
+            ["gh", "pr", "checks", str(identities["pr_number"]), "--repo", checkpoint["repository"],
+             "--json", "name,state,bucket"],
+            check=False, capture_output=True, text=True,
+        ).stdout or "[]")
+    except (OSError, subprocess.CalledProcessError, json.JSONDecodeError) as exc:
+        return [f"{label}: live freshness query failed closed: {exc}"]
+
+    errors: list[str] = []
+    comparisons = {
+        "candidate head": (identities["candidate_head_sha"], live_pr["headRefOid"]),
+        "protected base": (identities["protected_base_sha"], live_pr["baseRefOid"]),
+    }
+    for name, (recorded, live) in comparisons.items():
+        if recorded != live:
+            errors.append(f"{label}: stale {name}: recorded {recorded}, live {live}")
+    if live_pr["state"] != "OPEN":
+        errors.append(f"{label}: PR is no longer open: {live_pr['state']}")
+
+    live_failures = {item["name"] for item in checks if item["bucket"] == "fail"}
+    recorded_failures = {
+        item["name"] for item in identities["workflow_runs"] if item["conclusion"] == "failure"
+    }
+    aliases = {"OTP Ehrhart evidence refresh": "refresh-ehrhart"}
+    normalized_recorded = {aliases.get(name, name) for name in recorded_failures}
+    if live_failures != normalized_recorded:
+        errors.append(
+            f"{label}: settled failure set is stale: recorded {sorted(normalized_recorded)}, "
+            f"live {sorted(live_failures)}"
+        )
     return errors
 
 
@@ -215,6 +267,22 @@ def instruction_binding_errors(root: Path = ROOT) -> list[str]:
 
 
 def main() -> int:
+    if len(sys.argv) == 3 and sys.argv[1] == "--verify-live":
+        path = safe_repo_path(sys.argv[2])
+        if path is None or not path.is_file():
+            print("live verification checkpoint path is invalid", file=sys.stderr)
+            return 2
+        checkpoint = load_json(path)
+        errors = schema_errors(checkpoint, ROOT / CHECKPOINT_SCHEMA_REL)
+        if not errors:
+            errors = checkpoint_semantic_errors(checkpoint, sys.argv[2]) + live_freshness_errors(checkpoint, sys.argv[2])
+        if errors:
+            for error in errors:
+                print(error, file=sys.stderr)
+            return 1
+        print("live checkpoint identity and settled failure set match GitHub")
+        return 0
+
     errors = instruction_binding_errors() + registry_errors()
     if errors:
         for error in errors:
