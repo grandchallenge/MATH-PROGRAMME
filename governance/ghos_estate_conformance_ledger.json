@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0.0",
   "campaign_id": "GHOS-ESTATE-ROLLOUT-001",
-  "state": "ACTIVE_PHASE_3_AT_QUANTUM_TECHNOLOGIES",
+  "state": "ACTIVE_PHASE_3_AT_TROVE_CURATA",
   "repository_count": 14,
-  "terminal_green_count": 10,
+  "terminal_green_count": 11,
   "shared_gate_audit_pending_count": 0,
   "applicable_routing_gap_count": 0,
-  "baseline_scan_pending_count": 4,
+  "baseline_scan_pending_count": 3,
   "blocked_count": 0,
   "phase_0": {
     "state": "COMPLETE",
@@ -367,14 +367,52 @@
     "grandchallenge/QUANTUM-TECHNOLOGIES": {
       "phase": 3,
       "tracker": "grandchallenge/QUANTUM-TECHNOLOGIES#116",
-      "disposition": "PENDING",
-      "current_state": "PHASE3_READY_FOR_EXACT_PROTECTED_PREFLIGHT"
+      "terminal_comment_id": 5510775933,
+      "disposition": "GHOS_ROUTING_ENFORCED",
+      "tracker_state": "CLOSED_COMPLETED",
+      "current_state": "PHASE3_TERMINAL__ROUTING_REQUIRED_AND_HOSTILE_PROVEN",
+      "protected_head_at_activation": "aa53dc3c0e99c39f766f4ccb0c0d0629cd9093db",
+      "terminal_head": "4f0e59cfc16322e5949b388b6c34fdb0176e2c07",
+      "observed_direct_workflow_count": 12,
+      "terminal_direct_workflow_count": 13,
+      "routing_registry_blob": "47b2b7d39f0d10a5133917d6060f62cabaf96edf",
+      "routing_enforcement_blob": "a0ce4332e41be37e87025da71533dec15160aa55",
+      "ruleset_id": 20106953,
+      "ruleset_strict": true,
+      "ruleset_bypass_actors": [],
+      "required_contexts": [
+        "validate",
+        "policy",
+        "security / action-policy",
+        "routing-enforcement"
+      ],
+      "routing_required": true,
+      "benign_proof": {
+        "pull_request": 118,
+        "head": "6db6efb5091fa7beb3e59294f16ca29d20e5c7c4",
+        "workflow_run": 33635209117,
+        "job": 100264250877,
+        "result": "SUCCESS",
+        "closed_unmerged": true
+      },
+      "hostile_proof": {
+        "pull_request": 119,
+        "head": "d53844e2897926e6ea72eb203c37ab26c8cbcd30",
+        "workflow_run": 33639284401,
+        "job": 100277970517,
+        "result": "EXPECTED_FAILURE",
+        "failure_class": "workflow routing coverage mismatch",
+        "mergeable_state": "blocked",
+        "closed_unmerged": true
+      },
+      "tag_ruleset_id": 20355165,
+      "tag_ruleset_unchanged": true
     },
     "grandchallenge/TROVE-CURATA": {
       "phase": 3,
       "tracker": "grandchallenge/TROVE-CURATA#2",
       "disposition": "PENDING",
-      "current_state": "BASELINE_SCAN_PENDING"
+      "current_state": "PHASE3_READY_FOR_EXACT_PROTECTED_PREFLIGHT"
     },
     "grandchallenge/lean-action": {
       "phase": 4,
