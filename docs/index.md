@@ -9,7 +9,7 @@ hide:
   <div class="frontispiece__inner">
     <div class="frontispiece__edition">
       <span>Grand Challenge Labs</span>
-      <span>Mathematics Programme · Edition 2026.07</span>
+      <span>Mathematics Programme · Edition 2026.09</span>
     </div>
     <h1>MATH-<br>PROGRAMME</h1>
     <p class="frontispiece__thesis">A public discipline for turning mathematical curiosity into checked understanding.</p>
