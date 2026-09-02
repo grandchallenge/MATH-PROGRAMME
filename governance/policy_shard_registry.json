@@ -11,7 +11,17 @@
         "timeout_seconds": 1680,
         "reason": "Protected OZ sentinel observed about 1325 seconds; the inner runner is capped at 1620 seconds, leaving 60 seconds for bounded cleanup."
       }
-    ]
+    ],
+    "repository_regression_exclusions": {
+      "patterns": [
+        "test_oz*.py",
+        "test_cmdg*.py",
+        "test_*fixture*.py",
+        "test_administrative*.py",
+        "test_campaign*.py"
+      ],
+      "manifests": ["governance/contract_test_manifest.json"]
+    }
   },
   "shards": {
     "core": [
@@ -97,7 +107,7 @@
       ["mkdocs", "build", "--strict"]
     ],
     "repository-regression": [
-      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_*.py", "--exclude-pattern", "test_oz*.py", "--exclude-pattern", "test_cmdg*.py", "--exclude-pattern", "test_*fixture*.py", "--exclude-pattern", "test_administrative*.py", "--exclude-pattern", "test_campaign*.py", "--exclude-manifest", "governance/contract_test_manifest.json", "--report-json", "repository-regression-timing.json"]
+      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_*.py", "--report-json", "repository-regression-timing.json"]
     ]
   }
 }
