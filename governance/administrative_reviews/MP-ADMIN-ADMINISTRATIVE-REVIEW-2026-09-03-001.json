@@ -1,0 +1,187 @@
+{
+  "$schema": "../../schemas/administrative_autonomous_maintenance_record.schema.json",
+  "schema_version": "1.0.0",
+  "record_id": "MP-ADMIN-ADMINISTRATIVE-REVIEW-2026-09-03-001",
+  "procedure_id": "administrative_review",
+  "control_id": "MP-ADMIN-MAINT-001",
+  "runtime_id": "MP-ADMIN-AUTONOMY-RUNTIME-INTEGRATION-001",
+  "status": "COMPLETE_AUTONOMOUS",
+  "scheduled_due_at": "2026-09-03T01:21:00Z",
+  "execution_started_at": "2026-09-02T22:45:43Z",
+  "evidence_closed_at": "2026-09-02T22:45:43Z",
+  "evidence_mode": "CONTEMPORANEOUS",
+  "lateness_minutes_at_start": 0,
+  "source_candidate": {
+    "occurrence_key": "administrative_review:2026-09-03T01:21:00Z",
+    "manifest_path": "governance/administrative_candidates/administrative_review-20260903T012100Z.json",
+    "manifest_digest": "2d3252206ab80b13566a4cf9d3a98536c1e49c79b0f5a299a5e42e0255731aa6",
+    "prepared_at": "2026-09-02T14:25:42Z",
+    "freeze_at": "2026-09-02T22:21:00Z",
+    "source_protected_head": "957ffc0d25ce97133db58b2617020df88d37a4a6",
+    "issue_number": 775,
+    "pull_request_number": 776,
+    "branch": "automation/maintenance/administrative_review-20260903T012100Z"
+  },
+  "activation_binding": {
+    "activation_id": "MP-ADMIN-AUTONOMY-ACTIVATION-001",
+    "state": "ACTIVE",
+    "transition_merge_head": "b299b5e2f9d7d9568880ca033fb540687ab85dcd",
+    "ruleset_id": 17137629,
+    "candidate_identity": {
+      "login": "gcl-release-trust[bot]",
+      "app_id": 4423678,
+      "token_role": "candidate-and-merge-executor"
+    },
+    "administrator_identity": {
+      "login": "gcl-release-trust[bot]",
+      "app_id": 4423678,
+      "token_role": "ruleset-readback"
+    },
+    "referee_identity": {
+      "login": "github-actions[bot]",
+      "app_id": 15368,
+      "token_role": "referee"
+    },
+    "identity_separation": true
+  },
+  "repository_state": [
+    {
+      "repository": "grandchallenge/INTELLECT",
+      "default_branch": "main",
+      "protected_head": "565ed31f413b4698f400a260fc4a8ea65e7e1255",
+      "open_pull_requests": [
+        {
+          "number": 62,
+          "head": "6c5b872344ac68e46506229d8a811158bfc8dff3",
+          "base": "08a3044e0363fa932012fa642ea15d9153ba876b",
+          "draft": false,
+          "author": "fyremael"
+        }
+      ]
+    },
+    {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "default_branch": "main",
+      "protected_head": "f935fe91fd0aa6dd56dd0fde4e379212cd80f2e7",
+      "open_pull_requests": [
+        {
+          "number": 776,
+          "head": "d30c67250128fa3fb14e9a7acc0acfc4ffcab205",
+          "base": "957ffc0d25ce97133db58b2617020df88d37a4a6",
+          "draft": true,
+          "author": "gcl-release-trust[bot]"
+        }
+      ]
+    },
+    {
+      "repository": "grandchallenge/MATHCERT",
+      "default_branch": "main",
+      "protected_head": "8fb55780045cf02e953d474325519f152023bd2c",
+      "open_pull_requests": [
+        {
+          "number": 230,
+          "head": "65ac800c36c5e8aa2b6d0d37f42f24663c98bbd6",
+          "base": "bb9b88a03f379fc0ea9776a672a098cb73096f0a",
+          "draft": false,
+          "author": "fyremael"
+        },
+        {
+          "number": 226,
+          "head": "6d967e399b163237ceaaaa4be68789623d41319c",
+          "base": "7907fbdfe716e6a083b6772b9b3ce9f469d34389",
+          "draft": false,
+          "author": "fyremael"
+        },
+        {
+          "number": 224,
+          "head": "de427be3bd08482bb3fbe9c719d19700fac541be",
+          "base": "18a071271c596d7f0c844fef8d29cccd51b38043",
+          "draft": false,
+          "author": "fyremael"
+        }
+      ]
+    },
+    {
+      "repository": "grandchallenge/MATHFORGE",
+      "default_branch": "main",
+      "protected_head": "44096e1d2d9390bffea799f8609f3752c6ac3946",
+      "open_pull_requests": [
+        {
+          "number": 116,
+          "head": "c4fcc99a0b9d853a96d3a578cff93c932578f00e",
+          "base": "d3f7490a8e28c9a8e426856657506e679d42af4f",
+          "draft": true,
+          "author": "fyremael"
+        },
+        {
+          "number": 114,
+          "head": "a83c6db857e93d231478bfcfeddd1ab07c55ad3b",
+          "base": "ed8a65410336489ea5646808265c44f5387bebb8",
+          "draft": true,
+          "author": "fyremael"
+        },
+        {
+          "number": 112,
+          "head": "d3f7490a8e28c9a8e426856657506e679d42af4f",
+          "base": "ed8a65410336489ea5646808265c44f5387bebb8",
+          "draft": true,
+          "author": "fyremael"
+        }
+      ]
+    },
+    {
+      "repository": "grandchallenge/MATHSOLVE",
+      "default_branch": "main",
+      "protected_head": "505afed8c51a10bc7857e7d0ec52c499d01f3f8c",
+      "open_pull_requests": []
+    }
+  ],
+  "execution_contract": {
+    "candidate_author": "gcl-release-trust[bot]",
+    "referee_actor": "github-actions[bot]",
+    "merge_executor": "gcl-release-trust[bot]",
+    "expected_head_required": true,
+    "required_checks_source": "live ruleset 17137629",
+    "referee_disposition_before_merge": true,
+    "post_disposition_check_stabilization": true,
+    "clean_state_required": true,
+    "bypass_used": false,
+    "direct_protected_push": false,
+    "human_steward_disposition_required": false,
+    "human_steward_identity_asserted": false
+  },
+  "tracker_mirrors": [
+    {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 182,
+      "synchronization_required": true
+    },
+    {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "issue": 183,
+      "synchronization_required": true
+    },
+    {
+      "repository": "grandchallenge/INTELLECT",
+      "issue": 21,
+      "synchronization_required": true
+    }
+  ],
+  "authority_boundary": {
+    "routine_bounded_administrative_completion": true,
+    "automated_exact_head_referee_disposition": true,
+    "automated_merge": true,
+    "automated_human_steward_disposition": false,
+    "control_plane_change": false,
+    "scope_expansion": false
+  },
+  "claim_boundaries": {
+    "mathematical_target_proved": false,
+    "campaign_admitted": false,
+    "source_verified": false,
+    "cert_route_registered": false,
+    "adjudication_authorized": false,
+    "certificate_issued": false,
+    "external_claim_authorized": false
+  }
+}
