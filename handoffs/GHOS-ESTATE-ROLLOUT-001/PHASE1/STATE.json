@@ -1,12 +1,14 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "handoff_id": "GHOS-PHASE0-TO-PHASE1-HANDOFF-001",
   "campaign_id": "GHOS-ESTATE-ROLLOUT-001",
   "umbrella_tracker": "grandchallenge/MATH-PROGRAMME#724",
   "handoff_repository": "grandchallenge/MATH-PROGRAMME",
-  "handoff_base_protected_head": "4b09c2b471f378a4161357c836945296cff15434",
-  "state": "PHASE_0_COMPLETE__PHASE_1_READY_FOR_EXECUTION_AFTER_HANDOFF_ADMISSION",
+  "handoff_base_protected_head": "db1a8ac059138e006820600fd9fff71fcbaf42a4",
+  "state": "PHASE_0_COMPLETE__PHASE_1_ACTIVE_AT_INTELLECT_PROTECTION_READBACK",
   "revalidate_before_action": true,
+  "evidence_binding": "MATERIAL_EVIDENCE_CLOSURE",
+  "routine_execution": "STREAMLINED_DELEGATED_CONCURRENT",
   "source_of_truth_priority": [
     "LIVE_PROTECTED_GITHUB_REFS_RULESETS_PRS_CHECKS",
     "PROTECTED_REPOSITORY_ARTIFACTS_AND_TRACKER_COMMENTS",
@@ -20,286 +22,150 @@
     "protected_merge": "06fdcda8c18f395403dc544274fb98fee36ef6ea",
     "admitted": true
   },
-  "phase_0": {
-    "state": "COMPLETE",
-    "terminal_tracker": "grandchallenge/.github#67",
-    "tracker_state": "CLOSED_COMPLETED",
-    "terminal_disposition": "GHOS_ROUTING_ENFORCED",
-    "terminal_disposition_comment_id": 5493437493,
-    "umbrella_checkpoint_comment_id": 5493507033,
-    "shared_control": {
-      "repository": "grandchallenge/.github",
-      "protected_main": "6a3693fe5a9c6ee6bb420a429f9421801e35457f",
-      "control_json_blob": "21d04288a32321af09b3ee503e9cf4c9f6af5fee",
-      "gate_commit": "ef1cce6029233a68cf46063cea2384772fcae613",
-      "gate_path": "scripts/ghos_execution_routing_gate.py",
-      "gate_blob": "f9f85937713046eacdc79c532046c676cbb4550c",
-      "gate_sha256": "fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17",
-      "ruleset": {
-        "id": 17137624,
-        "name": "Community profile - main",
-        "enforcement": "active",
-        "strict": true,
-        "bypass_actors": [],
-        "required_contexts": [
-          "policy / policy",
-          "security / action-policy",
-          "routing-enforcement"
-        ]
-      }
-    },
-    "reference_consumers": {
-      "grandchallenge/gcl-standards": {
-        "protected_head_at_handoff": "4467622415530d1abc56784a4d02c1cd1278b836",
-        "successor_gate_commit": "ef1cce6029233a68cf46063cea2384772fcae613",
-        "successor_gate_sha256": "fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17",
-        "ruleset": {
-          "id": 19962512,
-          "name": "Standards profile - main",
-          "enforcement": "active",
-          "strict": true,
-          "bypass_actors": [],
-          "required_contexts": [
-            "standards-policy",
-            "policy / policy",
-            "security / action-policy",
-            "routing-enforcement"
-          ]
-        }
-      },
-      "grandchallenge/MATH-PROGRAMME": {
-        "phase0_successor_consumer_protected_merge": "d9560df959d4b00eebe69b61a6f8890c50e97e14",
-        "protected_head_at_handoff": "4b09c2b471f378a4161357c836945296cff15434",
-        "successor_gate_commit": "ef1cce6029233a68cf46063cea2384772fcae613",
-        "successor_gate_sha256": "fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17",
-        "routing_ruleset": {
-          "id": 21969152,
-          "name": "GH-OS universal execution routing",
-          "enforcement": "active",
-          "strict": true,
-          "bypass_actors": [],
-          "required_contexts": [
-            "routing-enforcement"
-          ]
-        },
-        "programme_ruleset": {
-          "id": 17137629,
-          "name": "Programme profile - main",
-          "routing_ruleset": false,
-          "note": "Separate legacy Programme profile; do not use as the routing ruleset."
-        }
-      }
-    },
-    "closed_classifier_defects": [
-      {
-        "id": "GHOS-CLASSIFIER-PROJECT-MUTATION-001",
-        "closure": "gh project item-add classified WRITE_CAPABLE",
-        "protected_gate_commit": "ef1cce6029233a68cf46063cea2384772fcae613"
-      }
-    ],
-    "successor_hostile_proofs": [
-      {
-        "repository": "grandchallenge/.github",
-        "pull_request": 72,
-        "head": "56c52449cefea143f8c391c291cdac4b52659f0f",
-        "run": 33503173626,
-        "job": 99840986069,
-        "result": "FAIL_CLOSED_WORKFLOW_ROUTING_COVERAGE_MISMATCH",
-        "closed_unmerged": true
-      },
-      {
-        "repository": "grandchallenge/gcl-standards",
-        "pull_request": 74,
-        "head": "825694986aa68ac13feb62e1ec6c04ff6e3d79dd",
-        "run": 33503195001,
-        "job": 99841052245,
-        "result": "FAIL_CLOSED_WORKFLOW_ROUTING_COVERAGE_MISMATCH",
-        "closed_unmerged": true
-      },
-      {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "pull_request": 749,
-        "head": "05eb2aa0042f2a5dbd2c239168776d6e5a6df533",
-        "run": 33503211601,
-        "job": 99841106633,
-        "result": "FAIL_CLOSED_WORKFLOW_ROUTING_COVERAGE_MISMATCH",
-        "closed_unmerged": true
-      }
-    ]
-  },
   "shared_gate_contract": {
-    "features": [
-      "AUTONOMOUS_WAKE",
-      "EXTERNAL_REUSABLE_JOB",
-      "EXTERNAL_WAIT",
-      "NON_RECONCILABLE_MUTATION",
-      "OPAQUE_EXECUTION",
-      "SCHEDULED",
-      "SECRET_CREDENTIAL",
-      "UNATTENDED_DISPATCH",
-      "WRITE_CAPABLE"
-    ],
-    "persistent_trigger_features": [
-      "AUTONOMOUS_WAKE",
-      "NON_RECONCILABLE_MUTATION",
-      "OPAQUE_EXECUTION",
-      "SECRET_CREDENTIAL",
-      "WRITE_CAPABLE"
-    ],
-    "multi_session_trigger_features": [
-      "EXTERNAL_REUSABLE_JOB",
-      "EXTERNAL_WAIT",
-      "UNATTENDED_DISPATCH"
-    ],
+    "repository": "grandchallenge/.github",
+    "gate_commit": "ef1cce6029233a68cf46063cea2384772fcae613",
+    "gate_path": "scripts/ghos_execution_routing_gate.py",
+    "gate_blob": "f9f85937713046eacdc79c532046c676cbb4550c",
+    "gate_sha256": "fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17",
+    "candidate_execution_forbidden": true,
     "admitted_controller": {
       "controller_id": "GITHUB_ACTIONS",
       "executor_class": "PERSISTENT_CONTROLLER",
       "provider": "github"
     },
-    "registry_identity_exact": true,
-    "feature_declaration_must_equal_derived_features_exactly": true,
-    "candidate_execution_forbidden": true,
-    "claim_boundaries_all_false": true,
     "established_dependency_pin": "PyYAML==6.0.3"
   },
+  "phase_0": {
+    "state": "COMPLETE",
+    "terminal_disposition": "GHOS_ROUTING_ENFORCED",
+    "reopen_only_on_material_control_regression": true,
+    "math_programme_routing_ruleset": {
+      "id": 21969152,
+      "name": "GH-OS universal execution routing",
+      "enforcement": "active",
+      "strict": false,
+      "bypass_actors": [],
+      "required_contexts": ["routing-enforcement"]
+    }
+  },
   "phase_1": {
-    "state": "READY_FOR_REVALIDATION_AND_IMPLEMENTATION",
+    "state": "ACTIVE_AT_INTELLECT_PROTECTION_READBACK",
     "order": [
       "grandchallenge/INTELLECT",
       "grandchallenge/MATHFORGE",
       "grandchallenge/MATHSOLVE",
       "grandchallenge/MATHCERT"
     ],
-    "repository_specific_hostile_proof_required": true,
+    "mutation_sequence_rule": "DO_NOT_ADVANCE_PAST_INTELLECT_UNTIL_TERMINAL_ADMISSION__READ_ONLY_PREPARATION_ALLOWED",
     "targets": {
       "grandchallenge/INTELLECT": {
         "tracker": "grandchallenge/INTELLECT#73",
-        "preflight_comment_id": 5491244520,
-        "protected_head_at_handoff": "08a3044e0363fa932012fa642ea15d9153ba876b",
-        "direct_workflow_count": 8,
-        "routing_registry_present": false,
-        "classification": "APPLICABLE_WORKFLOW_SURFACE__ROUTING_REGISTRY_ABSENT",
-        "main_ruleset": {
+        "tracker_state": "OPEN",
+        "opening_head": "08a3044e0363fa932012fa642ea15d9153ba876b",
+        "current_protected_head": "565ed31f413b4698f400a260fc4a8ea65e7e1255",
+        "implementation_state": "PROTECTED_ROUTING_IMPLEMENTATION_COMPLETE",
+        "effective_candidate_source": "refs/pull/<number>/merge",
+        "stale_branch_probe_passed_without_rebase": true,
+        "ruleset": {
           "id": 19964077,
           "name": "Constitutional profile - main",
-          "strict": true,
+          "strict": false,
           "bypass_actors": [],
-          "required_contexts": [
+          "required_contexts_live": [
             "test (3.11.14)",
             "test (3.12.13)",
             "policy / policy",
             "security / action-policy"
           ],
-          "routing_required": false
+          "required_contexts_admitted_contract": [
+            "test (3.11.14)",
+            "test (3.12.13)",
+            "policy / policy",
+            "security / action-policy",
+            "routing-enforcement"
+          ],
+          "routing_required_live": false
         },
-        "reference_dependency_path_requirements_policy_txt_present": false,
+        "next_material_obligation": "APPLY_AND_READ_BACK_ADMITTED_NON_STRICT_ROUTING_REQUIRED_CONTEXT__THEN_TERMINALIZE_TRACKER_IF_GREEN",
         "authority_boundary": "NO_CONSTITUTIONAL_AUTHORITY_ENLARGEMENT"
       },
       "grandchallenge/MATHFORGE": {
         "tracker": "grandchallenge/MATHFORGE#117",
-        "preflight_comment_id": 5491246649,
-        "protected_head_at_handoff": "ed8a65410336489ea5646808265c44f5387bebb8",
-        "direct_workflow_count": 7,
-        "routing_registry_present": false,
-        "classification": "APPLICABLE_WORKFLOW_SURFACE__ROUTING_REGISTRY_ABSENT",
-        "main_ruleset": {
+        "tracker_state": "OPEN",
+        "ruleset": {
           "id": 17137626,
-          "name": "Forge profile - main",
-          "strict": true,
+          "strict": false,
           "bypass_actors": [],
-          "required_contexts": [
-            "reconnaissance",
-            "policy / policy",
-            "security / action-policy"
-          ],
+          "required_contexts": ["reconnaissance", "policy / policy", "security / action-policy"],
           "routing_required": false
         },
-        "reference_dependency_path_requirements_policy_txt_present": false,
+        "state": "DOWNSTREAM_PENDING_INTELLECT_TERMINAL_ADMISSION",
         "authority_boundary": "NO_PROVENANCE_OR_SOURCE_AUTHORITY_ENLARGEMENT"
       },
       "grandchallenge/MATHSOLVE": {
         "tracker": "grandchallenge/MATHSOLVE#131",
-        "preflight_comment_id": 5491249033,
-        "protected_head_at_handoff": "07814c1e28855ff0314737d3666642217da095a1",
-        "direct_workflow_count": 11,
-        "routing_registry_present": false,
-        "classification": "APPLICABLE_WORKFLOW_SURFACE__ROUTING_REGISTRY_ABSENT",
-        "main_ruleset": {
+        "tracker_state": "OPEN",
+        "ruleset": {
           "id": 17137627,
-          "name": "Solve profile - main",
-          "strict": true,
+          "strict": false,
           "bypass_actors": [],
-          "required_contexts": [
-            "ledgers",
-            "policy / policy",
-            "security / action-policy"
-          ],
+          "required_contexts": ["ledgers", "policy / policy", "security / action-policy"],
           "routing_required": false
         },
-        "reference_dependency_path_requirements_policy_txt_present": false,
+        "state": "DOWNSTREAM_PENDING_INTELLECT_TERMINAL_ADMISSION",
         "authority_boundary": "NO_MATHEMATICAL_PRODUCTION_OR_PROMOTION_AUTHORITY_ENLARGEMENT"
       },
       "grandchallenge/MATHCERT": {
         "tracker": "grandchallenge/MATHCERT#232",
-        "preflight_comment_id": 5491251973,
-        "protected_head_at_handoff": "bb9b88a03f379fc0ea9776a672a098cb73096f0a",
-        "direct_workflow_count": null,
-        "direct_workflow_surface": "LARGE__ENUMERATE_AFRESH",
-        "routing_registry_present": false,
-        "classification": "APPLICABLE_LARGE_CERTIFICATION_WORKFLOW_SURFACE__ROUTING_REGISTRY_ABSENT",
-        "main_ruleset": {
+        "tracker_state": "OPEN",
+        "ruleset": {
           "id": 17137628,
-          "name": "Cert profile - main",
           "strict": false,
           "bypass_actors": [],
-          "required_contexts": [
-            "certify",
-            "policy / policy",
-            "security / action-policy"
-          ],
+          "required_contexts": ["certify", "policy / policy", "security / action-policy"],
           "routing_required": false
         },
-        "recommended_routing_ruleset_strategy": "ADD_DEDICATED_STRICT_ZERO_BYPASS_ROUTING_RULESET__DO_NOT_SILENTLY_CHANGE_CERT_PROFILE_STRICTNESS",
-        "reference_dependency_path_requirements_policy_txt_present": false,
+        "state": "DOWNSTREAM_PENDING_INTELLECT_TERMINAL_ADMISSION",
+        "routing_policy": "PRESERVE_NON_STRICT_STATUS_POLICY_UNLESS_SEPARATELY_AUTHORIZED",
         "authority_boundary": "NO_CERTIFICATION_OR_CLAIM_AUTHORITY_ENLARGEMENT"
       }
     }
   },
   "per_repository_terminal_requirements": [
-    "EXACT_PROTECTED_REPOSITORY_HEAD_AND_RULESET_PREFLIGHT",
+    "MATERIAL_PROTECTED_REPOSITORY_AND_RULESET_PREFLIGHT",
     "COMPLETE_DIRECT_WORKFLOW_INVENTORY",
-    "EXACT_BYTE_DERIVED_FEATURES",
-    "EXACT_DERIVED_TOPOLOGY",
+    "BYTE_DERIVED_FEATURES_AND_TOPOLOGY",
     "ADMITTED_COMPATIBLE_CONTROLLER_FOR_NON_BOUNDED_WORKFLOWS",
     "CANDIDATE_INDEPENDENT_PROTECTED_BASE_ENFORCEMENT",
-    "INDEPENDENT_EXACT_HEAD_REVIEW_AND_CHECKS",
+    "AFFECTED_REQUIRED_CHECKS",
+    "SPECIALIST_REVIEW_ONLY_WHERE_MATERIAL_BOUNDARY_REQUIRES",
     "PROTECTED_IMPLEMENTATION_MERGE_AND_READBACK",
-    "ROUTING_ENFORCEMENT_MANDATORY_WITH_NO_UNRELATED_WEAKENING",
-    "REPOSITORY_SPECIFIC_HOSTILE_PROOF_FAIL_CLOSED",
-    "HOSTILE_PR_CLOSED_UNMERGED",
+    "ROUTING_ENFORCEMENT_MANDATORY_WITHOUT_UNRELATED_WEAKENING",
+    "REPOSITORY_SPECIFIC_HOSTILE_PROOF_WHERE_REQUIRED",
     "PROTECTED_TERMINAL_READBACK",
     "TRACKER_TERMINAL_DISPOSITION"
   ],
+  "non_stop_routine_actions": [
+    "FRESH_READBACK",
+    "AFFECTED_CI_RERUN",
+    "ROUTINE_PROTECTED_MERGE_WHEN_AUTHORIZED_AND_GATES_SATISFIED",
+    "POST_MERGE_READBACK",
+    "TRACKER_AND_LEDGER_UPDATE",
+    "UNRELATED_PROTECTED_MAIN_MOVEMENT",
+    "BEHIND_BRANCH_WITHOUT_MATERIAL_CONFLICT"
+  ],
   "stop_conditions": [
     "MATERIAL_SCOPE_OR_CONTROL_PLAN_CHANGE",
-    "NON_MECHANICAL_STALE_HEAD_OR_REVIEW_INVALIDATION",
+    "MATERIAL_SECURITY_ARGUMENT_INVALIDATION",
     "PROTECTION_RESTORATION_OR_READBACK_UNAVAILABLE",
     "NEW_PERSISTENT_CONTROLLER_OR_CAPABILITY_TRANSITION_REQUIRED",
-    "CONSTITUTIONAL_MATHEMATICAL_CERTIFICATION_PUBLICATION_PRODUCTION_OR_COMMERCIAL_AUTHORITY_ENLARGEMENT",
+    "RESERVED_AUTHORITY_ENLARGEMENT",
     "UNRESOLVED_CLASSIFIER_OR_CONTROL_DEFECT",
     "TRUE_AUTHORIZATION_BOUNDARY"
   ],
-  "non_stop_routine_actions": [
-    "FRESH_READBACK",
-    "REVIEW_REQUEST",
-    "CI_RERUN_OR_EXACT_HEAD_CHECK",
-    "ROUTINE_PROTECTED_MERGE_WHEN_AUTHORIZED_AND_GATES_SATISFIED",
-    "POST_MERGE_READBACK",
-    "TRACKER_AND_LEDGER_UPDATE"
-  ],
   "claim_boundaries": {
     "constitutional": false,
-    "merge": false,
     "certification": false,
     "production": false,
     "publication": false,
