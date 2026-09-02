@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0.0",
   "campaign_id": "GHOS-ESTATE-ROLLOUT-001",
-  "state": "ACTIVE_PHASE_2_AT_AETHER",
+  "state": "ACTIVE_PHASE_3_AT_MODULUS",
   "repository_count": 14,
-  "terminal_green_count": 7,
+  "terminal_green_count": 8,
   "shared_gate_audit_pending_count": 0,
   "applicable_routing_gap_count": 0,
-  "baseline_scan_pending_count": 7,
+  "baseline_scan_pending_count": 6,
   "blocked_count": 0,
   "phase_0": {
     "state": "COMPLETE",
@@ -21,6 +21,11 @@
     "machine_state": "handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/STATE.json",
     "glidepath": "handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/GLIDEPATH.md",
     "next_phase": "PHASE_2_AETHER"
+  },
+  "phase_2": {
+    "state": "COMPLETE",
+    "terminal_repository_count": 1,
+    "next_phase": "PHASE_3_ACTIVE_TECHNICAL_PROGRAMMES"
   },
   "repositories": {
     "grandchallenge/.github": {
@@ -223,14 +228,57 @@
     "grandchallenge/AETHER": {
       "phase": 2,
       "tracker": "grandchallenge/AETHER#61",
-      "disposition": "PENDING",
-      "current_state": "PHASE2_READY_FOR_EXACT_PROTECTED_PREFLIGHT"
+      "terminal_comment_id": 5507737491,
+      "disposition": "GHOS_ROUTING_ENFORCED",
+      "tracker_state": "CLOSED_COMPLETED",
+      "current_state": "PHASE2_TERMINAL__ROUTING_REQUIRED_AND_HOSTILE_PROVEN",
+      "terminal_head": "c3cc79d5c2848d7732b8529220bda01452efd1dc",
+      "observed_direct_workflow_count": 11,
+      "terminal_direct_workflow_count": 12,
+      "routing_registry_blob": "4669c35c0d40f35b7b3c322cab344ed48a338b98",
+      "routing_enforcement_blob": "a0ce4332e41be37e87025da71533dec15160aa55",
+      "ruleset_id": 20600649,
+      "ruleset_strict": true,
+      "ruleset_bypass_actors": [],
+      "required_contexts": [
+        "Required CI gate",
+        "Required Supply Chain gate",
+        "policy / policy",
+        "security / action-policy",
+        "routing-enforcement"
+      ],
+      "routing_required": true,
+      "benign_proof": {
+        "pull_request": 63,
+        "head": "f977f550dc901a3f54d510460eeaaea623da3659",
+        "workflow_run": 33614115175,
+        "result": "SUCCESS",
+        "closed_unmerged": true
+      },
+      "protected_state_repair": {
+        "incident": "STALE_LOCAL_SHELL_RULESET_PAYLOAD",
+        "detected_before_hostile_proof": true,
+        "repaired_to_governed_provider_profile": true,
+        "terminal_exact_readback": true
+      },
+      "hostile_proof": {
+        "pull_request": 64,
+        "head": "df35cfdc9ffbc44bc3b5cb0c381880a4e6e97df3",
+        "workflow_run": 33616506314,
+        "job": 100203461271,
+        "result": "EXPECTED_FAILURE",
+        "failure_class": "workflow routing coverage mismatch",
+        "mergeable_state": "blocked",
+        "closed_unmerged": true
+      }
     },
     "grandchallenge/MODULUS": {
       "phase": 3,
       "tracker": "grandchallenge/MODULUS#18",
       "disposition": "PENDING",
-      "current_state": "BASELINE_SCAN_PENDING"
+      "current_state": "PHASE3_READY_FOR_EXACT_PROTECTED_PREFLIGHT",
+      "protected_head_at_activation": "2a6fb6f190e52d23a9c65b710d82f9d4527bbe71",
+      "ruleset_id_at_activation": 20266757
     },
     "grandchallenge/GLOSS": {
       "phase": 3,
