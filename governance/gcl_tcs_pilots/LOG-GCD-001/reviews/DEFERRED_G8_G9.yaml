@@ -1,0 +1,15 @@
+artifact_id: LOG-GCD-001-TCS-PILOT-001
+subject_artifact_id: LOG-GCD-001
+source_revision: git-blob:d3c970b857bf084f93905d7245b1c98ffaa86d4d
+gates:
+- review_id: REV-LOG-GCD-TCS-G8-001
+  gate_id: G8
+  gate_name: referee_promotion_decision
+  decision: DEFERRED
+  reason: IC-2 promotion requires a genuine non-author Referee disposition against the exact candidate supplement revision. Same-system G0-G7 checks and the historical LOG-GCD Referee review cannot satisfy independence for this new supplement.
+  requested_authority_if_later_passed: Bounded GCL-TCS conformance/admission of this mathematical-communication supplement only. It does not alter LOG-GCD theorem bytes, recertify mathematics, promote audited claims, mutate the canonical Claim Ledger, create MATH-CORE state, cross C04-C07, change publication state, or authorize novelty, priority, patentability, commercial, or other external claims.
+- review_id: REV-LOG-GCD-TCS-G9-001
+  gate_id: G9
+  gate_name: release_and_atomic_admission
+  decision: DEFERRED
+  reason: Cannot occur before a valid exact-revision G8 PASS. Any later G9 must bind the approved supplement and its required records atomically while leaving the protected LOG-GCD source/certification/claim/publication identities unchanged unless separately authorized.

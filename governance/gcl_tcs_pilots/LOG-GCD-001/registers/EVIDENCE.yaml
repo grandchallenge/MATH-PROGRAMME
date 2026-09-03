@@ -1,0 +1,75 @@
+register_id: EVIDENCE-LOG-GCD-TCS-001
+artifact_id: LOG-GCD-001-TCS-PILOT-001
+evidence:
+- evidence_id: LG-TCS-E001
+  supports: [LG-TCS-C001]
+  location: fixtures/formal/LOG-GCD-001/LogGcd.lean
+  identity: git-blob:06c3678d63021cf6fbb90b7c7f6b1a36e7f176a0
+  authority_status: authoritative
+  note: Protected Lean theorem source for logGcd_posSemidef with exact finite-type, positivity, coefficient, and quadratic-form statement.
+- evidence_id: LG-TCS-E002
+  supports: [LG-TCS-C003]
+  location: fixtures/formal/LOG-GCD-001/LogGcdFeature.lean
+  identity: git-blob:41429debd75ceed1da718ea629cbde3769cebdba
+  authority_status: authoritative
+  note: Protected Lean feature definition and exact dot-product theorem with nonzero-input hypotheses.
+- evidence_id: LG-TCS-E003
+  supports: [LG-TCS-C001, LG-TCS-C002, LG-TCS-C003, LG-TCS-C004, LG-TCS-C005, LG-TCS-C006]
+  location: fixtures/formal/LOG-GCD-001/claim_ledger.json
+  identity: git-blob:525ac6eb321726627032968aa93b7f530e50c206
+  authority_status: authoritative
+  note: Protected claim classes, support types, statuses, dependencies, counterexample, and prior-art boundary.
+- evidence_id: LG-TCS-E004
+  supports: [LG-TCS-C001, LG-TCS-C003, LG-TCS-C006]
+  location: fixtures/formal/LOG-GCD-001/source_lock.json
+  identity: git-blob:42f500020ec7019d6390b717b6d1c6b3867fd844
+  authority_status: authoritative
+  note: Pins upstream repository/commit/blob/licence and exact Lean/mathlib environment provenance.
+- evidence_id: LG-TCS-E005
+  supports: [LG-TCS-C005]
+  location: fixtures/formal/LOG-GCD-001/prior_art_audit.json
+  identity: git-blob:5d435b6aed77e774174324f549a2ded54d9debb4
+  authority_status: authoritative
+  note: Machine-readable negative novelty and priority determination.
+- evidence_id: LG-TCS-E006
+  supports: [LG-TCS-C001, LG-TCS-C002, LG-TCS-C003, LG-TCS-C004, LG-TCS-C005, LG-TCS-C006]
+  location: fixtures/formal/LOG-GCD-001/README.md
+  identity: git-blob:d915fcb8b44f4ec64b4cd7d4246112706a943277
+  authority_status: authoritative
+  note: Protected result-status and theorem-spine record, including reproduction and trust boundaries.
+- evidence_id: LG-TCS-E007
+  supports: [LG-TCS-C001, LG-TCS-C003, LG-TCS-C006]
+  location: fixtures/formal/LOG-GCD-001/agent_review.yaml
+  identity: git-blob:3de21489f09653c6a2f941cb163933b022c827b9
+  authority_status: authoritative
+  note: Existing Council/review provenance and workflow evidence for the certified package; not a G8 review of this new supplement.
+- evidence_id: LG-TCS-E008
+  supports: [LG-TCS-C001, LG-TCS-C003]
+  location: fixtures/formal/LOG-GCD-001/lean-toolchain
+  identity: git-blob:fd85b262bf1c734663aa8292b0101f672168788f
+  authority_status: authoritative
+  note: Pins Lean to leanprover/lean4:v4.33.0-rc1.
+- evidence_id: LG-TCS-E009
+  supports: [LG-TCS-C001, LG-TCS-C003]
+  location: fixtures/formal/LOG-GCD-001/lake-manifest.json
+  identity: git-blob:99d43177d509c4ceb340c8b2e6330e9c75233169
+  authority_status: authoritative
+  note: Pinned dependency graph used by the existing replay route.
+- evidence_id: LG-TCS-E010
+  supports: [LG-TCS-C001, LG-TCS-C003]
+  location: MATH-PROGRAMME workflow runs 29984406250, 29993578051, 29994235171
+  identity: protected-certification-evidence:29984406250,29993578051,29994235171
+  authority_status: authoritative
+  note: Existing certification and checked-state evidence. This communication pilot does not issue replacements.
+- evidence_id: LG-TCS-E011
+  supports: [LG-TCS-C006]
+  location: handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/MATH_CORE_INTEGRITY.md
+  identity: git-blob:fff23e92ab93ab81bcb1497e02fd2f41cbbec474
+  authority_status: governing_guidance
+  note: Operation-specific firewall preventing communication review from becoming a parallel mathematical state or acceptance plane.
+- evidence_id: LG-TCS-E012
+  supports: [LG-TCS-C006]
+  location: docs/decisions/ADR-0021_MATH_CORE_CENTRED_GCL_MATHEMATICS_ARCHITECTURE.md
+  identity: git-blob:d162935be31556bbb20303856346a73e71d34199
+  authority_status: authoritative
+  note: Protected architecture distinguishing MATH-CORE coordination from proof/replay, assurance, certification, canonical recording, and policy authority.

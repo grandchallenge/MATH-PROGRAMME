@@ -1,0 +1,47 @@
+register_id: CLAIMS-LOG-GCD-TCS-001
+artifact_id: LOG-GCD-001-TCS-PILOT-001
+subject_artifact_id: LOG-GCD-001
+claims:
+- claim_id: LG-TCS-C001
+  type: inherited_certified_theorem
+  status: source_certified
+  statement: For every finite type ι, positive natural-valued x : ι → ℕ, and real c : ι → ℝ, the quadratic form ΣᵢΣⱼ cᵢcⱼ log(gcd(xᵢ,xⱼ)) is nonnegative.
+  source_claim: LOG-GCD-001-C001
+  formal_theorem: logGcd_posSemidef
+- claim_id: LG-TCS-C002
+  type: inherited_audited_interpretation
+  status: source_audited
+  statement: K(m,n)=log(gcd(m,n)) is a positive-semidefinite kernel on positive natural numbers in the finite-Gram convention.
+  source_claim: LOG-GCD-001-C002
+  depends_on: [LG-TCS-C001]
+- claim_id: LG-TCS-C003
+  type: inherited_certified_theorem
+  status: source_certified
+  statement: For nonzero naturals m,n, the finitely supported divisor feature vectors have exact dot product log(gcd(m,n)).
+  source_claim: LOG-GCD-001-C003
+  formal_definition: logGcdFeature
+  formal_theorem: logGcd_eq_feature_inner
+- claim_id: LG-TCS-C004
+  type: inherited_audited_counterexample_boundary
+  status: source_audited
+  statement: Strict positive definiteness on all positive natural numbers is false because K(1,1)=0.
+  source_claim: LOG-GCD-001-C004
+- claim_id: LG-TCS-C005
+  type: inherited_audited_prior_art_boundary
+  status: source_audited
+  statement: Mathematical novelty of the theorem and divisor feature factorization is not supported, and first-formalization priority is not established.
+  source_claim: LOG-GCD-001-C005
+- claim_id: LG-TCS-C006
+  type: communication_observation
+  status: observed_not_generalized
+  statement: The protected fixture exposes theorem statements, formal source, source lock, claim status, replay route, prior-art limits, boundary cases, and publication state in mutually linked records.
+not_claimed:
+- Any new theorem, proof repair, proof term, Lean declaration, or mathematical derivation introduced by this pilot.
+- Any new MATHCERT certificate, independent clean Lean replay, or change to existing certification status.
+- Any promotion of audited C002, C004, or C005 to certified theorem status.
+- Any theorem over zero inputs beyond the exact protected source statements.
+- Strict positive definiteness on all positive natural numbers.
+- A separately completed ℓ²(ℕ) construction or formally specified complete orthogonal prime basis.
+- Mathematical novelty, theorem priority, first proof, first feature representation, or first Lean formalization.
+- Canonical Claim Ledger mutation, MATH-CORE migration/promotion, cross-domain authority bridge, or C04-C07 capability transition.
+- New publication, patentability, commercial, or external-claim authority.

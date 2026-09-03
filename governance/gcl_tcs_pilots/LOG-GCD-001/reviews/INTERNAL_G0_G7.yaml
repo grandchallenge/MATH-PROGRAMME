@@ -1,0 +1,85 @@
+artifact_id: LOG-GCD-001-TCS-PILOT-001
+subject_artifact_id: LOG-GCD-001
+reviewed_revision: git-blob:d3c970b857bf084f93905d7245b1c98ffaa86d4d
+reviewer: openai-gpt-5.6-sol
+reviewer_kind: agent_machine_assisted
+independence_statement: Same assistant system authored this pilot supplement and these checks. They are internal G0-G7 evidence only and cannot establish independent CHECKED/ASSURED status, mathematical certification, canonical promotion, or G8.
+date: '2026-09-03'
+reviews:
+- review_id: REV-LOG-GCD-TCS-G0-001
+  gate_id: G0
+  gate_name: registration_and_identity
+  decision: PASS
+  established:
+  - Stable pilot artifact ID, protected subject identity, fixed source revision, owner, tracker, candidate status, and promotion state are explicit.
+  - The supplement is distinct from the certified LOG-GCD source artifact, preventing candidate communication status from altering source certification.
+  not_established:
+  - Independent review, recertification, or any new mathematical authority.
+- review_id: REV-LOG-GCD-TCS-G1-001
+  gate_id: G1
+  gate_name: scope_profile_and_authority_lock
+  decision: PASS
+  established:
+  - P03 is primary, P02 secondary, IC-2 is declared, and exact GCL-TCS versions are fixed.
+  - Scope is limited to communication integrity over the protected theorem package and its existing evidence.
+  - Lean modification, recertification, Claim Ledger mutation, MATH-CORE migration/C04-C07 transition, novelty/priority, publication change, and external authority are excluded.
+  not_established:
+  - Any authority beyond bounded communication review of the existing mathematical artifact.
+- review_id: REV-LOG-GCD-TCS-G2-001
+  gate_id: G2
+  gate_name: structural_and_metadata_completeness
+  decision: PASS
+  established:
+  - Candidate declaration, mathematical communication map, terminology, claims, evidence, observations, exceptions state, G0-G7 evidence, G8/G9 deferrals, supersession, and licence/access fields are explicit.
+  - Source identifiers resolve to protected theorem files, claim ledger, source lock, review record, toolchain/manifest, prior-art record, and architecture firewall.
+  not_established:
+  - G9 atomic admission of this supplement.
+- review_id: REV-LOG-GCD-TCS-G3-001
+  gate_id: G3
+  gate_name: language_terminology_and_notation
+  decision: PASS
+  established:
+  - Positive-semidefinite, finite-Gram, certified, audited, Finsupp, source-lock, replay-evidence, formal/informal-boundary, and priority-not-established terms are distinguished.
+  - The exact theorem statements retain their quantifier order, positivity/nonzero hypotheses, and formal notation.
+  not_established:
+  - A new formal notation system or empirical accessibility result.
+- review_id: REV-LOG-GCD-TCS-G4-001
+  gate_id: G4
+  gate_name: claim_and_evidence_integrity
+  decision: PASS
+  established:
+  - C001/C003 remain the only inherited certified formal claims; C002/C004/C005 retain audited status.
+  - Exact assumptions, dependencies, counterexample, prior-art limits, and unsupported extensions are visible.
+  - The supplement does not convert CI, publication, communication conformance, or MATH-CORE representation into mathematical proof or canonical status.
+  not_established:
+  - Any stronger theorem, certification state, novelty result, or canonical promotion than the protected Claim Ledger records.
+- review_id: REV-LOG-GCD-TCS-G5-001
+  gate_id: G5
+  gate_name: domain_verification
+  decision: PASS
+  established:
+  - Exact theorem text was checked directly against protected LogGcd.lean and LogGcdFeature.lean.
+  - Claim classes/statuses were checked against the protected claim ledger; upstream provenance/environment against source_lock.json and the pinned toolchain/manifest; review/certification history against the protected fixture records.
+  - ADR-0021 and MATH_CORE_INTEGRITY were re-read to confirm no parallel mathematical authority plane or C04-C07 transition is introduced.
+  not_established:
+  - New Lean replay, new MATHCERT adjudication, independent proof reconstruction, or new literature audit.
+- review_id: REV-LOG-GCD-TCS-G6-001
+  gate_id: G6
+  gate_name: adversarial_and_falsification_review
+  decision: PASS
+  established:
+  - The review tests strict-PD inflation, zero-domain widening, audited-to-certified promotion, novelty/priority inflation, completed-space inflation, basis-completeness inflation, and communication-as-proof conflation.
+  - K(1,1)=0 remains explicit counterevidence to strict positive definiteness.
+  - Search non-discovery remains insufficient for first-formalization priority.
+  not_established:
+  - Exhaustive mathematical falsification beyond the protected source/certification scope.
+- review_id: REV-LOG-GCD-TCS-G7-001
+  gate_id: G7
+  gate_name: reproducibility_and_provenance
+  decision: PASS
+  established:
+  - Upstream commit/blob/licence, GCL theorem blobs, Lean toolchain, Lake dependency manifest, Claim Ledger, and existing workflow evidence are fixed by immutable identities.
+  - The protected fixture gives the executable replay path `lake exe cache get` followed by `lake build`.
+  - Stage-A policy may reuse unchanged protected replay identity; that preserves evidence without issuing a new certificate.
+  not_established:
+  - A new independent clean Lean replay performed by this assistant or a new certification receipt for this supplement.
