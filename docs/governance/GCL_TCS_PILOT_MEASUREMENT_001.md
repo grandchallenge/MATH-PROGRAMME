@@ -40,7 +40,12 @@ Three concrete communication/governance defects were found during the four new S
 
 All three were corrected before protected merge. Where a correction changed the material candidate closure, earlier exact-head CI was discarded and the corrected head was revalidated.
 
-A fourth defect was caught during this measurement transaction itself: the new `GCL_TCS_PILOT_MEASUREMENT_001.md` page was initially missing from `mkdocs.yml`. The docs policy shard failed closed in `ci/validate_docs.py` before merge. The missing navigation entry was added and the failed head was discarded. This is direct evidence that document-to-navigation orphan detection is operating on at least one real surface.
+The Workstream-D measurement transaction then caught two additional documentation defects before merge:
+
+4. The new `GCL_TCS_PILOT_MEASUREMENT_001.md` page was initially absent from `mkdocs.yml`; `ci/validate_docs.py` failed closed.
+5. After that repair, the evidence index still used docs-relative Markdown targets for repository-root artifacts outside `docs_dir`; `mkdocs build --strict` rejected eight link warnings.
+
+Both failed heads were invalidated. The measurement page is now registered in navigation, and the evidence index uses docs-local links only for docs-tree artifacts while linking governed repository-root artifacts explicitly through GitHub.
 
 These examples show that the review and documentation controls can catch real defects. They do not measure review sensitivity.
 
@@ -72,7 +77,8 @@ The more important qualitative burdens were:
 - complete private-estate acquisition outside the sentinel classifier itself;
 - synchronization of public prose with certified/audited mathematical source identities;
 - synchronization of mathematical explanation with exact theorem hypotheses and replay provenance;
-- strict pre-state/post-state protection checks where tool-surface limits forced guarded administration.
+- strict pre-state/post-state protection checks where tool-surface limits forced guarded administration;
+- correct distinction between site-local documentation targets and governed repository-root discovery links.
 
 ## Unnecessary friction found
 
@@ -94,6 +100,7 @@ The following controls provided concrete value during the pilot:
 - proportional CI with protected unchanged-attestation reuse;
 - fail-closed treatment of unknown or ambiguous transitions;
 - document-to-navigation orphan detection;
+- strict documentation-link validation;
 - explicit domain-authority firewalls, especially for mathematics, certification, publication, and MATH-CORE.
 
 ## Readiness result
@@ -111,7 +118,7 @@ Criterion 9 is now satisfied in the narrow sense required by the candidate stand
 
 Criterion 8 remains partial because P04 is still missing. Criterion 2 remains unsatisfied because the complete profile owner/review-role map is not established. Criterion 4 remains unsatisfied because dedicated fail-closed exception tests are not established.
 
-Criterion 7 is now partial rather than unsatisfied. The docs shard demonstrated a real fail-closed Markdown-to-MkDocs orphan check on this transaction, but the broader web/source/candidate/asset/static/TeX/JSON/directory coverage required by the criterion remains unestablished.
+Criterion 7 remains partial. This transaction demonstrated both a fail-closed Markdown-to-MkDocs navigation orphan check and strict rejection of invalid docs-relative targets, but the broader web/source/candidate/asset/static/TeX/JSON/directory coverage required by the criterion remains unestablished.
 
 Criterion 10 remains outside the current tranche because no version-1.0 promotion is requested. No G8 decision should be manufactured merely to complete the pilot.
 
@@ -119,7 +126,7 @@ Criterion 10 remains outside the current tranche because no version-1.0 promotio
 
 Retain the candidate framework, but narrow and simplify its operating form.
 
-Keep the controls that protect exact identity, claim status, provenance, negative evidence, material closure, and domain authority. Automate shallow evidence discovery, measurement aggregation, and orphan detection where this can be done without creating a new authority plane. Extend the demonstrated Markdown navigation check across the remaining required surfaces rather than building a duplicate authority registry. Generate promotion-specific review packets only when a real promotion transition is requested.
+Keep the controls that protect exact identity, claim status, provenance, negative evidence, material closure, and domain authority. Automate shallow evidence discovery, measurement aggregation, and orphan/link detection where this can be done without creating a new authority plane. Extend the demonstrated documentation checks across the remaining required surfaces rather than building a duplicate authority registry. Generate promotion-specific review packets only when a real promotion transition is requested.
 
 Do not seek version 1.0 now. If future work naturally produces a completed P04 result and there is a reason to consider v1.0, first close the remaining structural gaps: profile owner/review-role mapping, exception fail-closed tests, broad cross-surface orphan detection, and a complete normative-text/policy/schema agreement audit.
 
