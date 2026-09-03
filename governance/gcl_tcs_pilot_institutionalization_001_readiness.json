@@ -57,7 +57,7 @@
       "criterion": 7,
       "status": "PARTIAL",
       "requirement": "Orphan detection covers documents, web pages, source records, candidate records, assets, static text, TeX, JSON, and directories where applicable.",
-      "evidence": "On Workstream-D PR #798, ci/validate_docs.py rejected the new GCL_TCS_PILOT_MEASUREMENT_001.md page because it was absent from mkdocs.yml navigation, demonstrating a live fail-closed document-to-navigation orphan check.",
+      "evidence": "On Workstream-D PR #798, ci/validate_docs.py rejected the new measurement page because it was absent from mkdocs.yml navigation, and a later strict MkDocs build rejected eight evidence-index links that incorrectly addressed repository-root artifacts as docs-local targets.",
       "gap": "The broader required cross-surface coverage for web pages, source/candidate records, assets, static text, TeX, JSON, and directories has not been demonstrated."
     },
     {
@@ -95,7 +95,7 @@
   "successor_recommendation": {
     "disposition": "CONTINUE_CANDIDATE__NARROW_AND_SIMPLIFY__NO_V1_PROMOTION",
     "rationale": [
-      "The pilot has produced useful evidence on claim/source separation, negative evidence, exact material closure, proportional CI, defect detection, and one live document-orphan control.",
+      "The pilot has produced useful evidence on claim/source separation, negative evidence, exact material closure, proportional CI, defect detection, and live fail-closed documentation orphan/link controls.",
       "The P04 class, owner/review-role map, exception fail-closed tests, and broad cross-surface orphan coverage remain material readiness gaps.",
       "The current evidence does not establish optimality or causal research improvement.",
       "Promotion-specific G8/G9 ceremony should not be generated for routine non-promotional pilot evidence; preserve those gates for actual promotion transitions."
@@ -106,13 +106,13 @@
       "negative evidence and falsifier preservation",
       "material-closure-sensitive validation",
       "proportional unchanged-attestation reuse",
-      "document-to-navigation orphan detection",
+      "documentation orphan/link validation",
       "domain-authority firewalls"
     ],
     "simplify_or_automate": [
       "shallow evidence discovery and pointer validation",
       "aggregate measurement from pilot observation records",
-      "extend orphan detection across the remaining required surfaces",
+      "extend orphan/link detection across the remaining required surfaces",
       "promotion packet generation only on explicit promotion request"
     ],
     "future_strengthening_if_naturally_warranted": [
