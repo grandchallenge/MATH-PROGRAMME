@@ -1,0 +1,37 @@
+review_id: REV-GHOSDOC-G0-001
+artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
+reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+gate_id: G0
+gate_name: registration_and_identity
+reviewer: openai-gpt-5.6-sol
+reviewer_kind: agent_machine_assisted
+review_role: Amanuensis / registry steward
+independence_statement: Machine-assisted internal check by the same assistant system; this is not independent review
+  and cannot satisfy G8.
+date: '2026-09-02'
+decision: PASS
+findings:
+- finding_id: G0-F01
+  severity: information
+  statement: Stable artifact ID, owner, tracker, source location, source revision, and candidate authority state
+    are explicit.
+- finding_id: G0-F02
+  severity: information
+  statement: Candidate discovery is durable through MATH-PROGRAMME issue #785, exact PR #786, and the package manifest
+    under the canonical governance/rebuild_evidence tree.
+- finding_id: G0-F03
+  severity: information
+  statement: Existing terminal GHOS evidence and closure contracts remain byte-preserved; candidate registration does
+    not widen their schemas or mutate the underlying estate terminal.
+evidence:
+- grandchallenge/MATH-PROGRAMME#785
+- grandchallenge/MATH-PROGRAMME#786
+- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/PACKAGE_MANIFEST.json
+- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/DOCUMENTARY_COVERAGE.md
+- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/GHOS-ESTATE-ROLLOUT-001.conformance.yaml
+established:
+- Stable artifact ID, owner, tracker, source location, source revision, and candidate authority state are explicit.
+- Candidate discovery is durable through the governed tracker, exact PR, and package manifest.
+- Existing terminal GHOS evidence and closure contracts are not extended with unregistered fields.
+not_established:
+- Does not independently establish technical truth or G8 independence.

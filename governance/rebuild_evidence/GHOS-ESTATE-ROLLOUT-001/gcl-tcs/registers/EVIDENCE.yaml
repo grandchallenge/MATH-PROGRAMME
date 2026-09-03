@@ -1,0 +1,150 @@
+register_id: GHOS-DOC-EVIDENCE-001
+artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
+version: 0.1.0
+date: '2026-09-02'
+evidence:
+- evidence_id: EVIDENCE-GHOSDOC-001
+  evidence_type: protected_state
+  location: governance/ghos_estate_conformance_ledger.json
+  version_or_hash: git-commit:3281f47f182f0e1d7376ccec0e9a624b89b6130c
+  method: 'Protected-main readback after terminal PR #784.'
+  result_summary: Records state GHOS_ESTATE_CONFORMANCE_GREEN, repository_count 14, terminal_green_count 14, and
+    zero shared-gate audit pending, applicable routing gaps, baseline scans pending, and blockers.
+  scope: Authoritative estate summary and repository-specific terminal evidence pointers.
+  limitations:
+  - Summary counts do not replace repository-local receipts.
+  - Future material state changes require new validation.
+  created_by: Grand Challenge Labs
+  created_at: '2026-09-03'
+- evidence_id: EVIDENCE-GHOSDOC-002
+  evidence_type: protected_campaign_manifest
+  location: governance/ghos_estate_rollout_campaign.json
+  version_or_hash: git-commit:3281f47f182f0e1d7376ccec0e9a624b89b6130c
+  method: Protected terminal campaign reconciliation.
+  result_summary: Records all phases complete, 14 frozen/live repositories reconciled, terminal statuses, shared-gate
+    identity, terminal estate gates, and closed claim boundaries.
+  scope: Campaign-wide scope, lifecycle, frozen repository IDs, terminal gates, and authority boundaries.
+  limitations:
+  - Does not independently prove repository-local workflow semantics beyond the referenced governed evidence.
+  created_by: Grand Challenge Labs
+  created_at: '2026-09-03'
+- evidence_id: EVIDENCE-GHOSDOC-003
+  evidence_type: independent_review_and_protected_admission
+  location: 'grandchallenge/MATH-PROGRAMME PR #784 and issue #724 terminal receipt comment 5519242825'
+  version_or_hash: head:5eba1dcae7674b8ce55fec62cc69d32f3c5c7853; review:PRR_kwDOSuWV7M8AAAABL86TRA; merge:3281f47f182f0e1d7376ccec0e9a624b89b6130c
+  method: Independent exact-head approval by jimsteeg, successful protected checks, expected-head merge, verified
+    GitHub merge signature, protected-main readback, and issue closure completed.
+  result_summary: The exact terminal candidate was independently approved and became protected canonical state.
+  scope: Terminal documentary integration and protected admission of the 14/14 estate state.
+  limitations:
+  - 'The review establishes the bounded terminal documentary/control result stated by PR #784; it does not create
+    excluded technical or public authorities.'
+  - This review predates this GCL-TCS supplement and is evidence for the underlying terminal artifact, not the supplement's
+    own G8 review.
+  created_by: jimsteeg / GitHub protected integration
+  created_at: '2026-09-03'
+- evidence_id: EVIDENCE-GHOSDOC-004
+  evidence_type: immutable_shared_gate_identity
+  location: grandchallenge/.github scripts/ghos_execution_routing_gate.py
+  version_or_hash: commit:ef1cce6029233a68cf46063cea2384772fcae613; blob:f9f85937713046eacdc79c532046c676cbb4550c;
+    sha256:fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17
+  method: Cross-repository gate consumers verified an immutable external gate identity before execution.
+  result_summary: The estate rollout used one exact external routing-gate identity rather than mutable branch-following
+    gate semantics.
+  scope: Shared routing-gate provenance.
+  limitations:
+  - Immutable identity proves byte identity, not correctness by itself.
+  created_by: Grand Challenge Labs
+  created_at: '2026-09-02'
+- evidence_id: EVIDENCE-GHOSDOC-005
+  evidence_type: consumer_pin_audit
+  location: 'grandchallenge/MATH-PROGRAMME#727 and #728 terminal/preflight records'
+  version_or_hash: lean-action terminal head 82d72e361976b4734e7b02a1437e21c8cb4317f8; upload-pages-artifact terminal
+    head 899944f687a6b935e866bdb9cc857868d209f5ea
+  method: Organization code searches and protected target readback distinguished immutable SHA consumers from floating
+    @main/@master/@latest/version references.
+  result_summary: Governed shared-tool consumers identified during Phase 4 remained pinned to immutable action identities.
+  scope: Shared-action/publication-tool consumer identity at the terminal audit.
+  limitations:
+  - A future consumer edit can introduce a different or floating identity and must be revalidated.
+  created_by: Grand Challenge Labs
+  created_at: '2026-09-03'
+- evidence_id: EVIDENCE-GHOSDOC-006
+  evidence_type: adversarial_control_evidence
+  location: governance/ghos_estate_conformance_ledger.json and repository terminal trackers
+  version_or_hash: git-commit:3281f47f182f0e1d7376ccec0e9a624b89b6130c
+  method: Safe hostile candidates intentionally violated routing-registry coverage while protected-base enforcement
+    remained authoritative; accepted proofs required routing-specific failure and blocked/unmerged state.
+  result_summary: Hostile evidence demonstrated fail-closed routing rejection appropriate to each governed repository
+    profile.
+  scope: Candidate-independent routing/control boundary.
+  limitations:
+  - Does not test all workflow business logic.
+  - Unrelated CI failures are not counted as hostile-routing proof.
+  created_by: Grand Challenge Labs
+  created_at: '2026-09-03'
+- evidence_id: EVIDENCE-GHOSDOC-007
+  evidence_type: negative_evidence
+  location: governance/ghos_estate_conformance_ledger.json — grandchallenge/AETHER protected_state_repair
+  version_or_hash: git-commit:3281f47f182f0e1d7376ccec0e9a624b89b6130c
+  method: Terminal ledger preserved the detected stale local-shell ruleset payload incident and the governed repair/readback
+    disposition.
+  result_summary: A material protection-state defect was detected before hostile proof, repaired to the governed
+    Provider profile, and revalidated before terminal closure.
+  scope: AETHER Stage-B/terminal protection integrity.
+  limitations:
+  - Does not imply other repositories experienced the same defect.
+  created_by: Grand Challenge Labs
+  created_at: '2026-09-02'
+- evidence_id: EVIDENCE-GHOSDOC-008
+  evidence_type: negative_evidence
+  location: grandchallenge/MATH-PROGRAMME#727 comments 5518093063 and 5518129006
+  version_or_hash: defect receipt:5518093063; repaired benign receipt:5518129006
+  method: The first benign probe exposed lexicographic registry-order mismatch; Stage B remained inactive; a one-file
+    repair was protected and the replacement benign probe passed.
+  result_summary: The routing gate detected a local Stage-A documentary registry defect before protection activation.
+  scope: lean-action Stage-A registry ordering and benign proof.
+  limitations:
+  - The initial failed benign probe is not itself terminal success evidence.
+  created_by: Grand Challenge Labs
+  created_at: '2026-09-02'
+- evidence_id: EVIDENCE-GHOSDOC-009
+  evidence_type: negative_evidence_and_operator_burden
+  location: grandchallenge/MATH-PROGRAMME#785 comment 5519368834
+  version_or_hash: issue-comment:5519368834
+  method: Post-terminal pilot ledger records operator-script assertion failure, candidate-branch hygiene repair,
+    and the connector ruleset-write capability boundary, with explicit statement of whether protected mutation occurred.
+  result_summary: Non-terminal tooling/candidate defects failed closed and were repaired before governed promotion/control
+    transitions.
+  scope: Operator burden, fail-closed administration, and candidate hygiene during Phase 4.
+  limitations:
+  - Not an exhaustive log of every transient tool error.
+  created_by: Grand Challenge Labs
+  created_at: '2026-09-03'
+- evidence_id: EVIDENCE-GHOSDOC-010
+  evidence_type: governing_candidate_pilot_authority
+  location: docs/council/submissions/GCL-TCS-00_GCL-POS-01_AUTHORITY_DECISION.json
+  version_or_hash: decision:2026-08-04; GCL-TCS-00 sha256:ea750b9b80b53c7d6ed755978fa4bdf59413fad93cec1db81eb3238372ce61c9;
+    GCL-POS-01 sha256:d8be180052a48655a02612b0d6ca883067abe93f0391c4b9c6561a3867ad4d2c
+  method: Protected authority decision for bounded candidate-pilot use.
+  result_summary: GCL-TCS-00@0.1.0 is admitted for bounded candidate pilot use and GCL-POS-01@0.1.0 is admitted
+    as the accompanying bounded institutional position.
+  scope: Authority for this documentary pilot application.
+  limitations:
+  - Does not promote GCL-TCS-00 or GCL-POS-01 to authoritative version 1.0 doctrine.
+  - Does not establish empirical efficacy or formal ASD-STE100 compliance.
+  created_by: Grand Challenge Labs
+  created_at: '2026-08-04'
+- evidence_id: EVIDENCE-GHOSDOC-011
+  evidence_type: internal_artifact_validation
+  location: governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/VALIDATION_REPORT.json
+  version_or_hash: candidate-package-internal-validation
+  method: Machine-assisted parse, identifier/reference, profile/impact, claim-evidence linkage, exception-state,
+    review-state, and source-lock checks performed before protected review.
+  result_summary: The candidate documentary package is internally coherent before independent review.
+  scope: Package structure and internal cross-reference consistency.
+  limitations:
+  - Machine-assisted validation is not independent review.
+  - Validation does not establish the truth of claims beyond the cited evidence.
+  created_by: OpenAI GPT-5.6 Sol
+  created_at: '2026-09-02'

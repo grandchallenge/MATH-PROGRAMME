@@ -1,0 +1,191 @@
+register_id: GHOS-DOC-CLAIMS-001
+artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
+version: 0.1.0
+date: '2026-09-02'
+claims:
+- claim_id: CLAIM-GHOSDOC-001
+  artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
+  statement: The reconciled 14-repository Grand Challenge Labs GitHub estate reached terminal GH-OS execution-routing
+    conformance at the recorded protected material state.
+  claim_type: governance_result
+  claim_status: reviewed_terminal
+  scope: The frozen 14-repository estate reconciled in GHOS-ESTATE-ROLLOUT-001 and the protected material objects
+    recorded by its terminal ledger.
+  assumptions:
+  - The stable repository IDs in the terminal estate ledger identify the intended active estate.
+  - Material-object-bound evidence remains current only while its bound workflow, controller, enforcement, protection,
+    consumer-pin, and merge-compatibility objects remain unchanged.
+  dependencies:
+  - GHOS-ESTATE-ROLLOUT-001 protected terminal ledger
+  - EVIDENCE-GHOSDOC-001
+  - EVIDENCE-GHOSDOC-002
+  supporting_evidence:
+  - EVIDENCE-GHOSDOC-001
+  - EVIDENCE-GHOSDOC-002
+  - EVIDENCE-GHOSDOC-003
+  counterevidence:
+  - A later material workflow, controller, enforcement, protection, or estate-membership change can invalidate the
+    corresponding terminal evidence.
+  - The rollout contained repaired defects; terminal green does not mean the execution path was defect-free.
+  falsifiers:
+  - A live material-state audit finds an active estate repository absent from the governed inventory.
+  - A material repository audit finds an applicable direct workflow without the required governed routing coverage
+    or a required routing control no longer protected.
+  limitations:
+  - This is a workflow/control-plane conformance result, not a mathematical, certification, scientific, publication,
+    production, constitutional, novelty, patentability, manufacturing, physical, commercial, or external-claim result.
+  - The result does not make future repository states automatically conformant.
+  owner: Grand Challenge Labs
+  last_reviewed: '2026-09-02'
+- claim_id: CLAIM-GHOSDOC-002
+  artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
+  statement: The terminal estate ledger records repository_count 14, terminal_green_count 14, and zero shared-gate-audit
+    pending, applicable routing gaps, baseline-scan pending, and blocked counts.
+  claim_type: documentary_result
+  claim_status: reviewed_terminal
+  scope: Protected `governance/ghos_estate_conformance_ledger.json` at MATH-PROGRAMME protected merge 3281f47f182f0e1d7376ccec0e9a624b89b6130c.
+  assumptions:
+  - The protected ledger is the authoritative estate-state artifact declared by the closure contract.
+  dependencies:
+  - EVIDENCE-GHOSDOC-001
+  supporting_evidence:
+  - EVIDENCE-GHOSDOC-001
+  - EVIDENCE-GHOSDOC-003
+  counterevidence:
+  - These counts are a governed reconciliation of the recorded estate and are not a guarantee against later material
+    drift.
+  falsifiers:
+  - Protected ledger readback differs from the recorded 14/14 and zero-gap terminal values.
+  limitations:
+  - Counts summarize repository-specific evidence; they do not replace repository-local receipts.
+  owner: Grand Challenge Labs
+  last_reviewed: '2026-09-02'
+- claim_id: CLAIM-GHOSDOC-003
+  artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
+  statement: The estate rollout uses a shared routing gate pinned by immutable commit, blob, and SHA-256 identity,
+    and governed shared-tool consumers were checked for immutable action identities rather than floating branch
+    references.
+  claim_type: provenance_result
+  claim_status: reviewed_terminal
+  scope: The shared gate and consumer relationships recorded by the terminal campaign manifest and Phase-4 terminal
+    receipts.
+  assumptions:
+  - The recorded immutable identities resolve to the governed gate/action bytes.
+  dependencies:
+  - EVIDENCE-GHOSDOC-004
+  - EVIDENCE-GHOSDOC-005
+  supporting_evidence:
+  - EVIDENCE-GHOSDOC-004
+  - EVIDENCE-GHOSDOC-005
+  counterevidence:
+  - A future consumer can introduce a floating reference or change to another immutable identity; that later state
+    requires revalidation.
+  falsifiers:
+  - A governed terminal consumer is shown to have relied on an unrecorded mutable branch/tag identity at the claimed
+    terminal state.
+  limitations:
+  - Immutable identity supports provenance; it does not establish correctness of the referenced implementation.
+  owner: Grand Challenge Labs
+  last_reviewed: '2026-09-02'
+- claim_id: CLAIM-GHOSDOC-004
+  artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
+  statement: Candidate-independent hostile probes demonstrated fail-closed routing rejection, including deterministic
+    workflow routing coverage mismatch for safe unregistered-workflow candidates.
+  claim_type: control_result
+  claim_status: reviewed_terminal
+  scope: Repository-specific hostile probes recorded in the estate ledger and terminal trackers.
+  assumptions:
+  - The hostile candidates were safe proof objects and were not merged.
+  - The protected-base routing gate executed the pinned enforcement implementation.
+  dependencies:
+  - EVIDENCE-GHOSDOC-002
+  - EVIDENCE-GHOSDOC-006
+  supporting_evidence:
+  - EVIDENCE-GHOSDOC-002
+  - EVIDENCE-GHOSDOC-006
+  counterevidence:
+  - An unrelated lint or CI failure alone would not establish routing rejection; accepted hostile proofs require
+    routing-specific failure evidence.
+  falsifiers:
+  - A hostile candidate that should violate registry coverage can merge while mandatory routing enforcement is active.
+  limitations:
+  - The probes test the routing/control boundary, not all workflow semantics or application correctness.
+  owner: Grand Challenge Labs
+  last_reviewed: '2026-09-02'
+- claim_id: CLAIM-GHOSDOC-005
+  artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
+  statement: The rollout encountered material and non-material defects that failed closed, were repaired before
+    the affected promotion/control transition, and were followed by protected revalidation.
+  claim_type: negative_evidence_record
+  claim_status: reviewed_terminal
+  scope: AETHER protected-state repair, lean-action registry-order defect, upload-pages-artifact operator-script
+    assertion defect and candidate-branch hygiene incident, and the connector administration capability boundary.
+  assumptions:
+  - The durable issue/ledger records accurately identify the defects and their dispositions.
+  dependencies:
+  - EVIDENCE-GHOSDOC-007
+  - EVIDENCE-GHOSDOC-008
+  - EVIDENCE-GHOSDOC-009
+  supporting_evidence:
+  - EVIDENCE-GHOSDOC-007
+  - EVIDENCE-GHOSDOC-008
+  - EVIDENCE-GHOSDOC-009
+  counterevidence:
+  - A defect that reached protected state without repair or invalidated a terminal proof would contradict this bounded
+    disposition.
+  falsifiers:
+  - Evidence shows any listed defect was promoted into protected terminal state without subsequent exact revalidation.
+  limitations:
+  - The negative-evidence register is not an exhaustive record of every transient tool error; it records defects
+    material to governance, operator burden, or candidate hygiene.
+  owner: Grand Challenge Labs
+  last_reviewed: '2026-09-02'
+- claim_id: CLAIM-GHOSDOC-006
+  artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
+  statement: GH-OS routing conformance establishes execution-routing/control-plane status only and creates no mathematical,
+    certification, publication, production, constitutional, scientific, novelty, patentability, manufacturing, physical,
+    commercial, or external-claim authority.
+  claim_type: authority_boundary
+  claim_status: reviewed_terminal
+  scope: All uses of the GHOS-ESTATE-ROLLOUT-001 terminal disposition and this documentary supplement.
+  assumptions:
+  - Current protected MATH-PROGRAMME authority and claim-boundary doctrine remains controlling.
+  dependencies:
+  - EVIDENCE-GHOSDOC-001
+  - EVIDENCE-GHOSDOC-003
+  supporting_evidence:
+  - EVIDENCE-GHOSDOC-001
+  - EVIDENCE-GHOSDOC-003
+  counterevidence:
+  - A later separately governed authority decision could authorize a distinct downstream use, but it would not be
+    created by this campaign retroactively.
+  falsifiers:
+  - A canonical GHOS record explicitly grants one of the excluded authorities without a separate governing authority
+    decision.
+  limitations:
+  - This boundary statement does not prevent separately governed future work from obtaining authority through its
+    own process.
+  owner: Grand Challenge Labs
+  last_reviewed: '2026-09-02'
+- claim_id: CLAIM-GHOSDOC-007
+  artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
+  statement: This documentary supplement applies GCL-TCS-00 version 0.1.0 only as an admitted bounded candidate
+    pilot informed by GCL-POS-01; it does not promote either artifact to authoritative version 1.0 doctrine.
+  claim_type: governance_boundary
+  claim_status: proposed_for_pilot_admission
+  scope: GHOS-ESTATE-ROLLOUT-001-DOC-001 and its GCL-TCS review/admission records.
+  assumptions:
+  - The 2026-08-04 GCL-TCS-00/GCL-POS-01 authority decision remains the controlling pilot admission.
+  dependencies:
+  - EVIDENCE-GHOSDOC-010
+  supporting_evidence:
+  - EVIDENCE-GHOSDOC-010
+  counterevidence:
+  - A separately governed successor decision can revise the pilot or promote a later standard version.
+  falsifiers:
+  - A protected successor authority decision supersedes the cited pilot status.
+  limitations:
+  - Conformance with a candidate pilot standard does not itself establish the empirical efficacy or optimality of
+    that standard.
+  owner: Grand Challenge Labs
+  last_reviewed: '2026-09-02'
