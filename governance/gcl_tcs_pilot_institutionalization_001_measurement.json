@@ -95,12 +95,24 @@
         "effect": "Synthetic dependency removed; protected ADR-0021 retained as the registered architecture dependency and MATH_CORE_INTEGRITY.md retained only as governing provenance/guidance."
       }
     ],
-    "interpretation": "These are concrete pre-merge defect detections, not an estimate of review sensitivity."
+    "interpretation": "These are concrete pre-merge Stage-A defect detections, not an estimate of review sensitivity."
+  },
+  "measurement_transaction_defects": {
+    "count": 1,
+    "items": [
+      {
+        "transaction": "Workstream D measurement/readiness PR #798",
+        "finding": "The new GCL_TCS_PILOT_MEASUREMENT_001.md page was initially absent from mkdocs.yml navigation.",
+        "detection": "The exact-head docs policy shard failed in ci/validate_docs.py before protected merge.",
+        "effect": "The candidate head was invalidated; the missing navigation entry was added and all earlier CI on that material closure was treated as stale.",
+        "control_evidence": "This is a real positive example of document-to-navigation orphan detection, but it does not establish the broader cross-surface orphan coverage required by v1.0 criterion 7."
+      }
+    ]
   },
   "post_merge_defect_observation": {
     "defects_observed_in_four_new_stage_a_packages_during_current_pass": 0,
     "false_negative_rate": "UNKNOWN_NOT_MEASURED",
-    "interpretation": "No later defect has yet been observed in the current pass. This does not establish that no defect exists and must not be interpreted as a measured zero false-negative rate."
+    "interpretation": "No later defect has yet been observed in the four protected Stage-A packages during the current pass. This does not establish that no defect exists and must not be interpreted as a measured zero false-negative rate."
   },
   "false_positive_evidence": {
     "empirical_rate": "UNKNOWN_NOT_MEASURED",
@@ -127,6 +139,11 @@
       "source": "governance/gcl_tcs_pilots/GHOS_ESTATE_MEMBERSHIP_SENTINEL/PILOT_OBSERVATIONS.yaml",
       "observation": "Manual live-estate reconciliation found grandchallenge/GCT-EXECUTIVE, repository ID 1355707445, outside the historical frozen 14-member campaign and routed it to successor issue #791.",
       "limit": "One live routing example is not a population-level sensitivity estimate."
+    },
+    {
+      "source": "Programme policy checks / docs shard on PR #798",
+      "observation": "ci/validate_docs.py rejected a new governed Markdown page that was not yet present in mkdocs.yml navigation.",
+      "limit": "This demonstrates one document-orphan control, not full orphan detection across all required surfaces."
     }
   ],
   "burden_and_friction": [
@@ -160,7 +177,8 @@
     "How to obtain representative empirical false-positive and false-negative evidence without manufacturing artificial projects or risky live transitions.",
     "How complete private-estate acquisition should be governed if the GHOS sentinel is later scheduled or automated.",
     "Whether a future v1.0 promotion should use a newly activated independent Referee mechanism; the current delegated Referee office record is not effective on the measurement baseline.",
-    "Whether the P04 experimental/computational deficit should be filled by an already-completed real result found in later evidence discovery or by a future naturally occurring experiment, rather than by manufacturing a pilot solely for coverage."
+    "Whether the P04 experimental/computational deficit should be filled by an already-completed real result found in later evidence discovery or by a future naturally occurring experiment, rather than by manufacturing a pilot solely for coverage.",
+    "How to extend the demonstrated Markdown-to-MkDocs orphan check into the full document/web/source/candidate/asset/static/TeX/JSON/directory coverage required by criterion 7 without building an over-broad duplicate registry."
   ],
   "preserved_controls": [
     "exact immutable source and candidate identities",
@@ -169,12 +187,13 @@
     "material-closure-sensitive invalidation",
     "proportional CI and unchanged-attestation reuse",
     "fail-closed handling of unknown or ambiguous transitions",
+    "document-to-navigation orphan detection",
     "no domain-authority promotion by communication conformance"
   ],
   "safe_automation_opportunities": [
     "aggregate pilot observation records into a non-authoritative measurement summary",
     "validate shallow evidence-index pointers and immutable identities",
-    "add cross-surface orphan detection for governed candidate records and static artifacts",
+    "extend existing document navigation orphan detection to the remaining required cross-surfaces",
     "reuse unchanged formal attestations when material identity is unchanged",
     "generate promotion-specific G8/G9 packet material only when a promotion transition is explicitly requested"
   ],
@@ -183,6 +202,7 @@
     "The pilot does not establish a causal improvement in research quality, safety, correctness, throughput, or review latency.",
     "Repository diff counts are not a complete burden metric.",
     "No representative empirical false-positive or false-negative rate has been measured.",
-    "Candidate Stage-A protected merges are evidence-preservation transactions, not GCL-TCS promotions."
+    "Candidate Stage-A protected merges are evidence-preservation transactions, not GCL-TCS promotions.",
+    "One successful Markdown orphan detection does not establish the full cross-surface orphan-detection criterion."
   ]
 }
