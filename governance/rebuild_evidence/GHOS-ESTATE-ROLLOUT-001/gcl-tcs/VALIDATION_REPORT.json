@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "GHOS-ESTATE-ROLLOUT-001-DOC-001",
+  "work_id": "GHOS-DOC-CONFORMANCE-001",
+  "tracker": "grandchallenge/MATH-PROGRAMME#785",
+  "validation_scope": "candidate GCL-TCS-00 v0.1.0 documentary-conformance package",
+  "source_revision": "git-blob:4aac4039726dca614959075244e058e542f47730",
+  "protected_source_base": "3281f47f182f0e1d7376ccec0e9a624b89b6130c",
+  "result": "PASS_INTERNAL_G0_G7__G8_G9_DEFERRED",
+  "independence_boundary": "This report is machine-assisted internal validation by the same assistant system. It does not satisfy independent Referee gate G8 and does not create G9 release authority.",
+  "checks": [
+    {
+      "check": "machine_readable_parse",
+      "status": "PASS",
+      "detail": "All candidate YAML/JSON files parse."
+    },
+    {
+      "check": "conformance_schema_shape",
+      "status": "PASS",
+      "detail": "The conformance declaration contains every field required by GCL-TCS-00 v0.1.0 schema and uses only declared profile/status/impact values."
+    },
+    {
+      "check": "candidate_authority_state",
+      "status": "PASS",
+      "detail": "Candidate does not pre-claim admission or promotion."
+    },
+    {
+      "check": "profile_and_impact",
+      "status": "PASS",
+      "detail": "Primary P07, secondary P01, impact IC-2."
+    },
+    {
+      "check": "no_assured_dimension",
+      "status": "PASS",
+      "detail": "All dimensions are CHECKED; none is marked ASSURED."
+    },
+    {
+      "check": "source_revision_lock",
+      "status": "PASS",
+      "detail": "Source revision matches DOCUMENTARY_COVERAGE.md Git blob 4aac4039726dca614959075244e058e542f47730."
+    },
+    {
+      "check": "unique_claim_ids",
+      "status": "PASS",
+      "detail": "7 unique claim IDs."
+    },
+    {
+      "check": "unique_evidence_ids",
+      "status": "PASS",
+      "detail": "11 unique evidence IDs."
+    },
+    {
+      "check": "unique_terms",
+      "status": "PASS",
+      "detail": "9 unique canonical terms."
+    },
+    {
+      "check": "claim_evidence_resolution",
+      "status": "PASS",
+      "detail": "All consequential claim evidence references resolve."
+    },
+    {
+      "check": "explicit_empty_exception_register",
+      "status": "PASS",
+      "detail": "No artifact-specific GCL-TCS exception is requested."
+    },
+    {
+      "check": "review_gate_coverage",
+      "status": "PASS",
+      "detail": "G0 through G9 each have an explicit review record."
+    },
+    {
+      "check": "internal_gate_state",
+      "status": "PASS",
+      "detail": "G0-G7 PASS as machine-assisted internal checks; G8/G9 remain DEFERRED."
+    },
+    {
+      "check": "independence_boundary",
+      "status": "PASS",
+      "detail": "Every G0-G7 internal review explicitly disclaims G8 independence."
+    },
+    {
+      "check": "negative_evidence_visible",
+      "status": "PASS",
+      "detail": "Documentary source names the material and non-material repaired defects."
+    },
+    {
+      "check": "authority_boundary_visible",
+      "status": "PASS",
+      "detail": "Excluded authority classes remain explicit."
+    },
+    {
+      "check": "material_revalidation_boundary",
+      "status": "PASS",
+      "detail": "Document states concrete material-change revalidation conditions."
+    },
+    {
+      "check": "candidate_discovery",
+      "status": "PASS",
+      "detail": "Candidate is durably discoverable through MATH-PROGRAMME issue #785, exact PR #786, and PACKAGE_MANIFEST.json under the canonical governance/rebuild_evidence tree."
+    },
+    {
+      "check": "terminal_source_preservation",
+      "status": "PASS",
+      "detail": "Candidate leaves the pre-existing GHOS evidence manifest and closure contract byte-identical to protected source commit 3281f47f182f0e1d7376ccec0e9a624b89b6130c."
+    }
+  ],
+  "unresolved_gates": [
+    "G8_independent_exact_head_referee_review",
+    "G9_atomic_protected_admission_and_readback"
+  ],
+  "claim_boundary": {
+    "changes_ghos_terminal_control_state": false,
+    "creates_new_authority": false,
+    "creates_mathematical_claim": false,
+    "creates_certification_claim": false,
+    "creates_publication_authority": false,
+    "creates_production_authority": false,
+    "creates_external_claim_authority": false
+  }
+}

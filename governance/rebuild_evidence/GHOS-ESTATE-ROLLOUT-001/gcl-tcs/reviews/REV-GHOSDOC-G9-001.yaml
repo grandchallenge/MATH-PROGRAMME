@@ -1,0 +1,25 @@
+review_id: REV-GHOSDOC-G9-001
+artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
+reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+gate_id: G9
+gate_name: release_and_atomic_admission
+reviewer: unassigned_pending_gate
+reviewer_kind: pending
+review_role: Delegated Release Steward / Amanuensis
+independence_statement: No independent or release disposition is asserted while this gate is deferred.
+date: '2026-09-02'
+decision: DEFERRED
+findings:
+- finding_id: G9-F01
+  severity: information
+  statement: Atomic protected admission is required after G8, successful protected checks, exact-head merge, and
+    protected-main readback.
+evidence:
+- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/DOCUMENTARY_COVERAGE.md
+- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/GHOS-ESTATE-ROLLOUT-001.conformance.yaml
+- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/registers/CLAIMS.yaml
+- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/registers/EVIDENCE.yaml
+- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/registries/TERMINOLOGY.yaml
+established: []
+not_established:
+- DEFERRED; candidate bytes do not self-promote.

@@ -1,0 +1,35 @@
+review_id: REV-GHOSDOC-G7-001
+artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
+reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+gate_id: G7
+gate_name: reproducibility_and_provenance
+reviewer: openai-gpt-5.6-sol
+reviewer_kind: agent_machine_assisted
+review_role: Verifier / Amanuensis
+independence_statement: Machine-assisted internal check by the same assistant system; this is not independent review
+  and cannot satisfy G8.
+date: '2026-09-02'
+decision: PASS
+findings:
+- finding_id: G7-F01
+  severity: information
+  statement: Source and evidence locations use protected commit, review, run, comment, gate digest, and repository
+    identities.
+- finding_id: G7-F02
+  severity: information
+  statement: The package records exact failure/recovery evidence and a supersession/revalidation boundary.
+- finding_id: G7-F03
+  severity: information
+  statement: Internal validation checks package references and status consistency.
+evidence:
+- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/DOCUMENTARY_COVERAGE.md
+- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/GHOS-ESTATE-ROLLOUT-001.conformance.yaml
+- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/registers/CLAIMS.yaml
+- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/registers/EVIDENCE.yaml
+- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/registries/TERMINOLOGY.yaml
+established:
+- Source and evidence locations use protected commit, review, run, comment, gate digest, and repository identities.
+- The package records exact failure/recovery evidence and a supersession/revalidation boundary.
+- Internal validation checks package references and status consistency.
+not_established:
+- A future material-state change requires new evidence rather than relying on this snapshot.

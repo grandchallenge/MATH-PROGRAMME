@@ -1,0 +1,135 @@
+schema_version: 0.1.0
+standard:
+  id: GCL-TCS-00
+  version: 0.1.0
+artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
+title: GHOS estate rollout documentary conformance supplement
+artifact_type: governance_documentary_record
+version: 0.1.0
+date: '2026-09-02'
+owner: Grand Challenge Labs
+authority_status: candidate
+promotion_status: in_review
+primary_profile:
+  id: GCL-TCS-P07
+  version: 0.1.0
+secondary_profiles:
+- id: GCL-TCS-P01
+  version: 0.1.0
+impact_class: IC-2
+audience:
+- GCL researchers and operators
+- technical reviewers and Referees
+- research programme stewards
+- future GHOS maintainers
+- public technical writers deriving explanations from the governed source
+scope: Provides a bounded GCL-TCS-00 pilot communication layer for the protected terminal GHOS-ESTATE-ROLLOUT-001
+  record, making claim identity, evidence scope, negative evidence, limitations, provenance, review state, and authorized
+  downstream uses inspectable without changing the underlying control-plane disposition.
+out_of_scope:
+- Reopening or strengthening GHOS_ESTATE_CONFORMANCE_GREEN.
+- Claiming that future repository states remain conformant without material-state revalidation.
+- Mathematical, theorem-certification, scientific, publication, production, constitutional, novelty, priority, patentability,
+  manufacturing, physical, commercial, or external-claim authority.
+- GCL-TCS-00 version 1.0 or authoritative-standard promotion.
+- Formal ASD-STE100 compliance.
+- Empirical proof that the GCL-TCS/GCL-POS governance model improves research outcomes.
+source_location: DOCUMENTARY_COVERAGE.md
+source_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+dependencies:
+- artifact_id: GHOS-ESTATE-ROLLOUT-001
+  version_or_revision: protected-main:3281f47f182f0e1d7376ccec0e9a624b89b6130c
+  authority_status: authoritative
+  relation: underlying_terminal_governed_record
+- artifact_id: GCL-TCS-00
+  version_or_revision: 0.1.0
+  authority_status: admitted
+  relation: governing_candidate_pilot_standard
+- artifact_id: GCL-POS-01
+  version_or_revision: 0.1.0
+  authority_status: admitted
+  relation: bounded_institutional_position_and_pilot_context
+- artifact_id: MP-STREAMLINED-EXECUTION-001
+  version_or_revision: current protected revision
+  authority_status: authoritative
+  relation: material_object_evidence_and_routine_integration_policy
+terminology_registry: registries/TERMINOLOGY.yaml
+notation_registry:
+  status: not_applicable
+  reason: The supplement uses stable identifiers and status tokens but no material mathematical notation requiring
+    a notation registry.
+claim_register: registers/CLAIMS.yaml
+evidence_register: registers/EVIDENCE.yaml
+review_register:
+- review_id: REV-GHOSDOC-G0-001
+  gate_id: G0
+  location: reviews/REV-GHOSDOC-G0-001.yaml
+  decision: PASS
+  reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+- review_id: REV-GHOSDOC-G1-001
+  gate_id: G1
+  location: reviews/REV-GHOSDOC-G1-001.yaml
+  decision: PASS
+  reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+- review_id: REV-GHOSDOC-G2-001
+  gate_id: G2
+  location: reviews/REV-GHOSDOC-G2-001.yaml
+  decision: PASS
+  reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+- review_id: REV-GHOSDOC-G3-001
+  gate_id: G3
+  location: reviews/REV-GHOSDOC-G3-001.yaml
+  decision: PASS
+  reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+- review_id: REV-GHOSDOC-G4-001
+  gate_id: G4
+  location: reviews/REV-GHOSDOC-G4-001.yaml
+  decision: PASS
+  reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+- review_id: REV-GHOSDOC-G5-001
+  gate_id: G5
+  location: reviews/REV-GHOSDOC-G5-001.yaml
+  decision: PASS
+  reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+- review_id: REV-GHOSDOC-G6-001
+  gate_id: G6
+  location: reviews/REV-GHOSDOC-G6-001.yaml
+  decision: PASS
+  reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+- review_id: REV-GHOSDOC-G7-001
+  gate_id: G7
+  location: reviews/REV-GHOSDOC-G7-001.yaml
+  decision: PASS
+  reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+- review_id: REV-GHOSDOC-G8-001
+  gate_id: G8
+  location: reviews/REV-GHOSDOC-G8-001.yaml
+  decision: DEFERRED
+  reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+- review_id: REV-GHOSDOC-G9-001
+  gate_id: G9
+  location: reviews/REV-GHOSDOC-G9-001.yaml
+  decision: DEFERRED
+  reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+exceptions: []
+conformance_dimensions:
+  L: CHECKED
+  T: CHECKED
+  S: CHECKED
+  C: CHECKED
+  E: CHECKED
+  R: CHECKED
+  P: CHECKED
+  V: CHECKED
+  G: CHECKED
+supersedes: []
+superseded_by: null
+licence_and_access:
+  licence: Repository licence and current protected MATH-PROGRAMME access policy control.
+  access: public_repository_candidate_pilot_record
+generated_content:
+  present: true
+  method: Drafted and internally checked by OpenAI GPT-5.6 Sol under the Founder-Operator request to harden GHOS
+    documentary coverage against GCL-POS-01/GCL-TCS-00.
+  review: G0 through G7 are machine-assisted internal checks and are not independent. G8 and G9 remain deferred
+    until a genuine exact-head Referee review and protected atomic admission occur.
