@@ -6,8 +6,8 @@
   "repository": "grandchallenge/GCT-EXECUTIVE",
   "repository_id": 1355707445,
   "default_branch": "main",
-  "state": "GHOS_BLOCKED_WITH_NAMED_DEFECT",
-  "named_defect": "ORGANIZATION_PROFILE_ADMISSION_PENDING",
+  "state": "GHOS_ROUTING_ENFORCED",
+  "named_defect": null,
   "historical_campaign_boundary": {
     "campaign": "GHOS-ESTATE-ROLLOUT-001",
     "frozen_repository_count": 14,
@@ -16,15 +16,26 @@
     "successor_operation_is_separate": true
   },
   "current_target_readback": {
-    "protected_main": "a7ca7ccc7e7fa7d9b10416ab9902395cd2905234",
+    "protected_main": "51c9b5bd36b6ea3c510f5b026ec6e61a903cffa9",
     "ruleset_id": 22185688,
     "ruleset_name": "GCT corporate executive - main",
     "ruleset_enforcement": "active",
     "strict_required_status_checks": true,
-    "required_status_checks": ["policy / policy", "security / action-policy"],
-    "routing_enforcement_required": false,
+    "required_status_checks": [
+      "policy / policy",
+      "routing-enforcement",
+      "security / action-policy"
+    ],
+    "routing_enforcement_required": true,
     "bypass_actor_count": 0,
-    "custom_properties": {}
+    "custom_properties": {
+      "authority_scope": "corporate-executive",
+      "claim_promotion_role": "none",
+      "public_programme": "false",
+      "risk_tier": "critical",
+      "workflow_profile": "governance"
+    },
+    "constitutional_profile_unset": true
   },
   "routing_stage_a": {
     "pull_request": 16,
@@ -44,12 +55,48 @@
     "routing_run": 33747691124,
     "routing_result": "success"
   },
+  "organization_profile_gate": {
+    "tracker": "grandchallenge/.github#87",
+    "disposition": "ADMITTED",
+    "proposal_pull_request": 88,
+    "proposal_exact_head": "9f35cb3bc4e657dd5b42ae20d82cf4bccb8e2dc5",
+    "independent_reviewer": "jimsteeg",
+    "independent_review_status": "APPROVED",
+    "protected_merge": "34715e3274537bd5c1f29e68d014cedcde291b23",
+    "authority_scope_source_type": "organization",
+    "admitted_authority_scope_value": "corporate-executive",
+    "bound_repository_values": {
+      "authority_scope": "corporate-executive",
+      "claim_promotion_role": "none",
+      "public_programme": "false",
+      "risk_tier": "critical",
+      "workflow_profile": "governance"
+    },
+    "constitutional_profile_unset": true
+  },
   "routing_proofs": {
-    "benign": {
+    "pre_required_context_benign": {
       "result": "PASS",
-      "latest_exact_candidate_head": "7b0164fc842a6cdeb81378bd45f482f9d9ca6e57",
+      "exact_candidate_head": "7b0164fc842a6cdeb81378bd45f482f9d9ca6e57",
       "run_id": 33747691124,
-      "note": "Candidate-independent routing enforcement passed against current reconciled control bytes. The context is not yet required by the hosted ruleset."
+      "note": "Candidate-independent routing enforcement passed before the context was added to the hosted ruleset."
+    },
+    "required_context_benign": {
+      "result": "PASS",
+      "pull_request": 22,
+      "merged": false,
+      "protected_base": "51c9b5bd36b6ea3c510f5b026ec6e61a903cffa9",
+      "exact_candidate_head": "73396b5a9e14f134eea9f4b79b8f9524ea2d8e06",
+      "policy_run_id": 33803314520,
+      "policy_job_id": 100807721932,
+      "policy_result": "success",
+      "security_run_id": 33803314520,
+      "security_job_id": 100807722194,
+      "security_result": "success",
+      "routing_run_id": 33803314862,
+      "routing_job_id": 100807723486,
+      "routing_result": "success",
+      "note": "The first gh pr checks query raced check-suite creation; direct Actions readback confirmed all three required contexts completed successfully. The probe was closed unmerged."
     },
     "hostile": {
       "result": "EXPECTED_FAIL_CLOSED",
@@ -63,37 +110,17 @@
       "merged": false
     }
   },
-  "organization_profile_gate": {
-    "tracker": "grandchallenge/.github#87",
-    "disposition": "NEW_GCT_CORPORATE_PROFILE_REQUIRED",
-    "proposal_pull_request": 88,
-    "proposal_exact_head": "9f35cb3bc4e657dd5b42ae20d82cf4bccb8e2dc5",
-    "proposal_policy_check": "success",
-    "proposal_security_check": "success",
-    "proposal_routing_run": 33747481263,
-    "proposal_routing_result": "success",
-    "independent_reviewer_requested": "grandchallenge/amanuensis",
-    "independent_review_status": "PENDING",
-    "proposed_authority_scope_value": "corporate-executive",
-    "compatible_repository_values_after_schema_admission": {
-      "authority_scope": "corporate-executive",
-      "claim_promotion_role": "none",
-      "public_programme": "false",
-      "risk_tier": "critical",
-      "workflow_profile": "governance"
-    },
-    "constitutional_profile_must_remain_unset": true
+  "terminal_evidence": {
+    "profile_schema_admitted": true,
+    "repository_profile_bound": true,
+    "routing_context_required": true,
+    "strict_required_status_policy_preserved": true,
+    "zero_bypass_actors_preserved": true,
+    "candidate_independent_benign_proof_passed": true,
+    "hostile_drift_proof_failed_closed": true,
+    "historical_campaign_unchanged": true
   },
-  "remaining_terminal_sequence": [
-    "independent non-author review and protected admission of grandchallenge/.github PR #88",
-    "authenticated organization-admin schema extension adding only authority_scope=corporate-executive",
-    "exact schema readback",
-    "separate GCT-EXECUTIVE repository custom-property binding and readback",
-    "add routing-enforcement to ruleset 22185688 while preserving strict=true and zero bypass actors",
-    "benign proof with routing-enforcement as a required protected context",
-    "final protected-main, property, ruleset, and check readback",
-    "record GHOS_ROUTING_ENFORCED only if all terminal evidence is complete"
-  ],
+  "remaining_terminal_sequence": [],
   "authority_boundaries": {
     "may_rewrite_historical_ghos_terminal_campaign": false,
     "may_infer_profile_admission_from_candidate_pr": false,
