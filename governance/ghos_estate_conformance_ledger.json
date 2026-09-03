@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0.0",
   "campaign_id": "GHOS-ESTATE-ROLLOUT-001",
-  "state": "ACTIVE_PHASE_4_AT_LEAN_ACTION",
+  "state": "ACTIVE_PHASE_4_AT_UPLOAD_PAGES_ARTIFACT",
   "repository_count": 14,
-  "terminal_green_count": 12,
+  "terminal_green_count": 13,
   "shared_gate_audit_pending_count": 0,
   "applicable_routing_gap_count": 0,
-  "baseline_scan_pending_count": 2,
+  "baseline_scan_pending_count": 1,
   "blocked_count": 0,
   "phase_0": {
     "state": "COMPLETE",
@@ -467,14 +467,71 @@
       "phase": 4,
       "tracker": "grandchallenge/MATH-PROGRAMME#727",
       "tracker_note": "target repository issues disabled",
-      "disposition": "PENDING",
-      "current_state": "PHASE4_READY_FOR_EXACT_PROTECTED_PREFLIGHT"
+      "terminal_comment_id": 5518225200,
+      "disposition": "GHOS_ROUTING_ENFORCED",
+      "tracker_state": "CLOSED_COMPLETED",
+      "current_state": "PHASE4_TERMINAL__ROUTING_REQUIRED_AND_HOSTILE_PROVEN",
+      "protected_head_at_activation": "138a564e38a62ce545e8d47d86a97628463aced4",
+      "terminal_head": "82d72e361976b4734e7b02a1437e21c8cb4317f8",
+      "observed_direct_workflow_count": 5,
+      "terminal_direct_workflow_count": 6,
+      "routing_registry_blob": "76f3d33c8fa728e7e6548b41b5d3e80dbbd62701",
+      "routing_enforcement_blob": "a0ce4332e41be37e87025da71533dec15160aa55",
+      "ruleset_id": 19965519,
+      "ruleset_strict": true,
+      "ruleset_bypass_actors": [],
+      "required_contexts": [
+        "policy / policy",
+        "security / action-policy",
+        "routing-enforcement"
+      ],
+      "tag_ruleset_id": 19965520,
+      "tag_ruleset_unchanged": true,
+      "routing_required": true,
+      "benign_proof": {
+        "pull_request": 7,
+        "head": "9936639ed6d451c6a1107fc3849fb8438f92f7fe",
+        "workflow_run": 33696845237,
+        "job": 100467449686,
+        "result": "SUCCESS",
+        "closed_unmerged": true
+      },
+      "protected_state_repair": {
+        "incident": "REGISTRY_WORKFLOW_PATH_ORDER_MISMATCH",
+        "detected_before_ruleset_activation": true,
+        "failed_benign_pull_request": 5,
+        "failed_benign_head": "1cb6c7710ba468caab815ff40d7310fc6ee1f0cf",
+        "repair_pull_request": 6,
+        "repair_head": "7e370412951f503289d3229a3e2a486c2a4320af",
+        "repaired_terminal_registry_blob": "76f3d33c8fa728e7e6548b41b5d3e80dbbd62701",
+        "terminal_exact_readback": true
+      },
+      "hostile_proof": {
+        "pull_request": 8,
+        "head": "ef32a5d9b241a58e74f652cbef38d717caa9dfd0",
+        "workflow_run": 33697487728,
+        "job": 100469420837,
+        "result": "EXPECTED_FAILURE",
+        "failure_class": "workflow routing coverage mismatch",
+        "mergeable_state": "blocked",
+        "closed_unmerged": true
+      },
+      "downstream_immutable_consumer_trust": {
+        "pinned_action_sha": "138a564e38a62ce545e8d47d86a97628463aced4",
+        "consumers_checked": [
+          "grandchallenge/MATH-PROGRAMME",
+          "grandchallenge/MATHCERT",
+          "grandchallenge/MATHSOLVE"
+        ],
+        "floating_refs_absent": true,
+        "terminal_revalidated": true
+      }
     },
     "grandchallenge/upload-pages-artifact": {
       "phase": 4,
       "tracker": "grandchallenge/MATH-PROGRAMME#728",
       "disposition": "PENDING",
-      "current_state": "BASELINE_SCAN_PENDING"
+      "current_state": "PHASE4_READY_FOR_EXACT_PROTECTED_PREFLIGHT"
     }
   },
   "estate_terminal": "PENDING",
