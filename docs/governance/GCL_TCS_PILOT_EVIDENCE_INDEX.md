@@ -15,19 +15,19 @@ This index is not a GCL-TCS normative source, GCL-POS authority record, GHOS ter
 
 - [`STREAMLINED_EXECUTION_AMENDMENT.md`](STREAMLINED_EXECUTION_AMENDMENT.md) — `MP-STREAMLINED-EXECUTION-001`; material-closure execution and standing delegated authority for routine bounded work.
 - [`EXECUTION_RECOVERY_OPERATING_GUIDE.md`](EXECUTION_RECOVERY_OPERATING_GUIDE.md) — authorized recovery and checkpoint-admission rules.
-- [`../../governance/bounded_operation_checkpoint_registry.json`](../../governance/bounded_operation_checkpoint_registry.json) — live checkpoint registry; routine work is excluded unless separately admitted.
-- [`../../handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/README.md`](../../handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/README.md) — non-authoritative takeover entry point for this operation.
+- [`governance/bounded_operation_checkpoint_registry.json`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/bounded_operation_checkpoint_registry.json) — live checkpoint registry; routine work is excluded unless separately admitted.
+- [`handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/README.md`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/README.md) — non-authoritative takeover entry point for this operation.
 
 ## GCL-TCS-00 and GCL-POS-01
 
 The candidate standard remains `GCL-TCS-00` version `0.1.0`. Version `1.0` readiness is a separate question from authority to perform this pilot.
 
-- [`../../council_submissions/GCL-TCS-00/`](../../council_submissions/GCL-TCS-00/) — candidate normative source package.
-- [`../../council_submissions/GCL-TCS-00/parts/06-adoption-acceptance-appendices.md`](../../council_submissions/GCL-TCS-00/parts/06-adoption-acceptance-appendices.md) — current version-1.0 acceptance criteria.
-- [`../council/submissions/GCL-TCS-00/GCL-TCS-00.policy.yaml`](../council/submissions/GCL-TCS-00/GCL-TCS-00.policy.yaml) — machine-readable policy manifest.
-- [`../council/submissions/GCL-TCS-00/schemas/gcl-tcs-conformance.schema.json`](../council/submissions/GCL-TCS-00/schemas/gcl-tcs-conformance.schema.json) — conformance schema.
-- [`../../council_submissions/GCL-POS-01/GCL-POS-01.md`](../../council_submissions/GCL-POS-01/GCL-POS-01.md) — institutional position and boundary doctrine.
-- [`../council/submissions/GCL-POS-01/conformance/GCL-POS-01.conformance.yaml`](../council/submissions/GCL-POS-01/conformance/GCL-POS-01.conformance.yaml) — public-position conformance declaration.
+- [`council_submissions/GCL-TCS-00/`](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/council_submissions/GCL-TCS-00) — candidate normative source package.
+- [`council_submissions/GCL-TCS-00/parts/06-adoption-acceptance-appendices.md`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/council_submissions/GCL-TCS-00/parts/06-adoption-acceptance-appendices.md) — current version-1.0 acceptance criteria.
+- [`GCL-TCS-00.policy.yaml`](../council/submissions/GCL-TCS-00/GCL-TCS-00.policy.yaml) — machine-readable policy manifest.
+- [`gcl-tcs-conformance.schema.json`](../council/submissions/GCL-TCS-00/schemas/gcl-tcs-conformance.schema.json) — conformance schema.
+- [`council_submissions/GCL-POS-01/GCL-POS-01.md`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/council_submissions/GCL-POS-01/GCL-POS-01.md) — institutional position and boundary doctrine.
+- [`GCL-POS-01.conformance.yaml`](../council/submissions/GCL-POS-01/conformance/GCL-POS-01.conformance.yaml) — public-position conformance declaration.
 
 Presentation can reveal authority; it cannot create authority. GCL-TCS/POS conformance must not be used to promote the underlying domain claim beyond its own evidence and acceptance route.
 
@@ -35,16 +35,16 @@ Presentation can reveal authority; it cannot create authority. GCL-TCS/POS confo
 
 The historical GHOS estate rollout is terminal. Later maintenance does not rewrite its terminal source objects.
 
-- [`../../governance/ghos_estate_conformance_ledger.json`](../../governance/ghos_estate_conformance_ledger.json) — canonical estate terminal ledger.
+- [`governance/ghos_estate_conformance_ledger.json`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/ghos_estate_conformance_ledger.json) — canonical estate terminal ledger.
 - [`GHOS_ESTATE_ROLLOUT_CAMPAIGN.md`](GHOS_ESTATE_ROLLOUT_CAMPAIGN.md) — human-readable campaign record.
-- [`../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/closure_contract.json`](../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/closure_contract.json) — documentary closure contract.
-- [`../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/README.md`](../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/README.md) — admitted GCL-TCS pilot package entry point.
-- [`../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/GHOS-ESTATE-ROLLOUT-001.conformance.yaml`](../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/GHOS-ESTATE-ROLLOUT-001.conformance.yaml) — conformance declaration.
-- [`../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/DOCUMENTARY_COVERAGE.md`](../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/DOCUMENTARY_COVERAGE.md) — governed documentary source.
-- [`../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/PILOT_OBSERVATIONS.yaml`](../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/PILOT_OBSERVATIONS.yaml) — defects, burden, negative evidence, and recurring failure modes.
-- [`../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/VALIDATION_REPORT.json`](../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/VALIDATION_REPORT.json) — structural/admission validation.
-- [`../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/AUTHORITY_DECISION.json`](../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/AUTHORITY_DECISION.json) — bounded pilot G8/G9 receipts.
-- [`../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/PACKAGE_MANIFEST.json`](../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/PACKAGE_MANIFEST.json) and [`SHA256SUMS`](../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/SHA256SUMS) — package discovery and byte identities.
+- [`governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/closure_contract.json`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/closure_contract.json) — documentary closure contract.
+- [`governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/README.md`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/README.md) — admitted GCL-TCS pilot package entry point.
+- [`GHOS-ESTATE-ROLLOUT-001.conformance.yaml`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/GHOS-ESTATE-ROLLOUT-001.conformance.yaml) — conformance declaration.
+- [`DOCUMENTARY_COVERAGE.md`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/DOCUMENTARY_COVERAGE.md) — governed documentary source.
+- [`PILOT_OBSERVATIONS.yaml`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/PILOT_OBSERVATIONS.yaml) — defects, burden, negative evidence, and recurring failure modes.
+- [`VALIDATION_REPORT.json`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/VALIDATION_REPORT.json) — structural/admission validation.
+- [`AUTHORITY_DECISION.json`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/AUTHORITY_DECISION.json) — bounded pilot G8/G9 receipts.
+- [`PACKAGE_MANIFEST.json`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/PACKAGE_MANIFEST.json) and [`SHA256SUMS`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/SHA256SUMS) — package discovery and byte identities.
 
 The GHOS package establishes workflow/control-plane and documentary-governance results only. It does not establish mathematical, certification, publication, scientific, production, constitutional, novelty, patentability, manufacturing, physical, commercial, or external-claim authority.
 
@@ -54,11 +54,11 @@ Mathematical pilots must preserve the protected architecture:
 
 `INTELLECT -> MATH-CORE -> MATHFORGE / MATHSOLVE / MATHCERT -> trusted acceptance boundary`
 
-- [`../decisions/ADR-0021_MATH_CORE_CENTRED_GCL_MATHEMATICS_ARCHITECTURE.md`](../decisions/ADR-0021_MATH_CORE_CENTRED_GCL_MATHEMATICS_ARCHITECTURE.md) — controlling architecture.
-- [`../../governance/math_core_01_architecture_authority_closure_001.json`](../../governance/math_core_01_architecture_authority_closure_001.json) — architecture authority closure.
-- [`../MATH_CORE_DOMAIN_SHADOW_001.md`](../MATH_CORE_DOMAIN_SHADOW_001.md) — provenance-preserving read-only Condensed-domain shadow.
-- [`../MATH_CORE_DOMAIN_DIAG_001.md`](../MATH_CORE_DOMAIN_DIAG_001.md) — deterministic observation-only diagnostic.
-- [`../../handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/MATH_CORE_INTEGRITY.md`](../../handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/MATH_CORE_INTEGRITY.md) — operation-specific architectural integrity rules.
+- [`ADR-0021`](../decisions/ADR-0021_MATH_CORE_CENTRED_GCL_MATHEMATICS_ARCHITECTURE.md) — controlling architecture.
+- [`governance/math_core_01_architecture_authority_closure_001.json`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/math_core_01_architecture_authority_closure_001.json) — architecture authority closure.
+- [`MATH_CORE_DOMAIN_SHADOW_001.md`](../MATH_CORE_DOMAIN_SHADOW_001.md) — provenance-preserving read-only Condensed-domain shadow.
+- [`MATH_CORE_DOMAIN_DIAG_001.md`](../MATH_CORE_DOMAIN_DIAG_001.md) — deterministic observation-only diagnostic.
+- [`handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/MATH_CORE_INTEGRITY.md`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/MATH_CORE_INTEGRITY.md) — operation-specific architectural integrity rules.
 
 MATH-CORE working state is not canonical claim state. Graph connectivity, transport identity, a diagnostic result, or a certificate does not silently supply proof/replay checking, independent assurance, certification status, canonical Claim Ledger recording, or policy disposition.
 
