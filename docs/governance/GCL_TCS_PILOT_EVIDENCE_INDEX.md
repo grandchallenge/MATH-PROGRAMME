@@ -16,8 +16,8 @@ Candidate Stage-A pilot packages are evidence for institutional learning. Their 
 ## Controlling doctrine
 
 - [`STREAMLINED_EXECUTION_AMENDMENT.md`](STREAMLINED_EXECUTION_AMENDMENT.md) — `MP-STREAMLINED-EXECUTION-001`; material-closure execution and delegated routine authority.
-- [`handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/HANDOFF.md`](../../handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/HANDOFF.md) — operation scope, workstreams, stop conditions, measurement doctrine, and domain-authority firewall.
-- [`handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/MATH_CORE_INTEGRITY.md`](../../handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/MATH_CORE_INTEGRITY.md) — mathematical architecture integrity rules.
+- [Institutionalization handoff](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/HANDOFF.md) — operation scope, workstreams, stop conditions, measurement doctrine, and domain-authority firewall.
+- [MATH-CORE integrity guidance](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/MATH_CORE_INTEGRITY.md) — mathematical architecture integrity rules.
 - [`ADR-0021`](../decisions/ADR-0021_MATH_CORE_CENTRED_GCL_MATHEMATICS_ARCHITECTURE.md) — protected MATH-CORE-centred mathematics architecture.
 
 Routine pilot-record work does not acquire a generic Human Steward or Referee gate. G8 matters when an actual promotion transition is requested under the controlling instrument.
@@ -26,18 +26,18 @@ Routine pilot-record work does not acquire a generic Human Steward or Referee ga
 
 The candidate standard remains `GCL-TCS-00` version `0.1.0`. Version-1.0 readiness is separate from authority to conduct this pilot.
 
-- [`council_submissions/GCL-TCS-00/`](../../council_submissions/GCL-TCS-00/) — candidate normative source package.
-- [`parts/06-adoption-acceptance-appendices.md`](../../council_submissions/GCL-TCS-00/parts/06-adoption-acceptance-appendices.md) — current version-1.0 acceptance criteria.
+- [GCL-TCS-00 candidate source package](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/council_submissions/GCL-TCS-00) — candidate normative source package.
+- [Version-1.0 acceptance criteria](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/council_submissions/GCL-TCS-00/parts/06-adoption-acceptance-appendices.md) — current acceptance criteria.
 - [`GCL-TCS-00.policy.yaml`](../council/submissions/GCL-TCS-00/GCL-TCS-00.policy.yaml) — machine-readable policy manifest.
 - [`gcl-tcs-conformance.schema.json`](../council/submissions/GCL-TCS-00/schemas/gcl-tcs-conformance.schema.json) — conformance schema.
-- [`GCL-POS-01`](../../council_submissions/GCL-POS-01/GCL-POS-01.md) — institutional position and authority-boundary doctrine.
+- [GCL-POS-01](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/council_submissions/GCL-POS-01/GCL-POS-01.md) — institutional position and authority-boundary doctrine.
 
 ## Real pilot evidence by required class
 
 ### Mathematical
 
-- [`governance/gcl_tcs_pilots/LOG-GCD-001/`](../../governance/gcl_tcs_pilots/LOG-GCD-001/) — `LOG-GCD-001-TCS-PILOT-001`, protected Stage-A mathematical/formal communication supplement.
-- [`fixtures/formal/LOG-GCD-001/`](../../fixtures/formal/LOG-GCD-001/) — authoritative certified/audited source package.
+- [LOG-GCD mathematical communication pilot](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/governance/gcl_tcs_pilots/LOG-GCD-001) — `LOG-GCD-001-TCS-PILOT-001`, protected Stage-A mathematical/formal communication supplement.
+- [LOG-GCD authoritative fixture](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/fixtures/formal/LOG-GCD-001) — authoritative certified/audited source package.
 
 Stage-A protected merge: `66aaa9175fe8d91907c3cf113efc2d08a113a780`. The supplement remains candidate/in-review and does not alter Lean, certification, Claim Ledger, prior-art, publication, or MATH-CORE authority.
 
@@ -47,35 +47,35 @@ Stage-A protected merge: `66aaa9175fe8d91907c3cf113efc2d08a113a780`. The supplem
 
 ### Software
 
-- [`governance/gcl_tcs_pilots/GHOS_ESTATE_MEMBERSHIP_SENTINEL/`](../../governance/gcl_tcs_pilots/GHOS_ESTATE_MEMBERSHIP_SENTINEL/) — candidate P05/P07 sentinel communication pilot.
+- [GHOS estate-membership sentinel pilot](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/governance/gcl_tcs_pilots/GHOS_ESTATE_MEMBERSHIP_SENTINEL) — candidate P05/P07 sentinel communication pilot.
 
 Stage-A protected merge: `4a13fefdf213979ed255bfaacc677d0f1d062bcd`. Its observations include one live successor-routing example, synthetic FP/FN probes, fail-closed ambiguity handling, acquisition-layer burden, and the explicit absence of representative empirical error rates.
 
 ### Operational
 
-- [`governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/`](../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/) — existing completed/admitted GHOS documentary pilot.
-- [`PILOT_OBSERVATIONS.yaml`](../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/PILOT_OBSERVATIONS.yaml) — defects, burden, negative evidence, and recurring failure modes.
-- [`AUTHORITY_DECISION.json`](../../governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/AUTHORITY_DECISION.json) — historical bounded pilot authority receipts.
+- [Existing completed GHOS documentary pilot](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs) — existing completed/admitted pilot.
+- [Operational pilot observations](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/PILOT_OBSERVATIONS.yaml) — defects, burden, negative evidence, and recurring failure modes.
+- [Historical authority decision](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/AUTHORITY_DECISION.json) — bounded pilot authority receipts.
 
 The historical GHOS result remains terminal within its original scope and is not rewritten by later estate changes.
 
 ### Governance
 
-- [`governance/gcl_tcs_pilots/MP-STREAMLINED-EXECUTION-001/`](../../governance/gcl_tcs_pilots/MP-STREAMLINED-EXECUTION-001/) — candidate P07/P01 communication supplement over the already-authoritative streamlined-execution directive.
+- [Streamlined-execution communication pilot](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/governance/gcl_tcs_pilots/MP-STREAMLINED-EXECUTION-001) — candidate P07/P01 communication supplement over the already-authoritative directive.
 
 Stage-A protected merge: `f48244ccac621fa59d64daff0b84f3dd5b0877e4`. The supplement does not amend the directive.
 
 ### Public
 
-- [`governance/gcl_tcs_pilots/PUB-LOG-GCD-001/`](../../governance/gcl_tcs_pilots/PUB-LOG-GCD-001/) — candidate P06/P03/P02 public-communication supplement.
+- [LOG-GCD public communication pilot](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/governance/gcl_tcs_pilots/PUB-LOG-GCD-001) — candidate P06/P03/P02 public-communication supplement.
 - [`LOG_GCD_PUBLICATION.md`](../LOG_GCD_PUBLICATION.md) — already-published canonical public note.
 
 Stage-A protected merge: `20c4796ccd6d1e9d4fd8578ffc7c3f7847b40eb6`. The supplement preserves the certified C001/C003 public claim set and audited C004/C005 boundaries without republication or mathematical promotion.
 
 ## Measurement and successor evaluation
 
-- [`governance/gcl_tcs_pilot_institutionalization_001_measurement.json`](../../governance/gcl_tcs_pilot_institutionalization_001_measurement.json) — machine-readable defects, FP/FN evidence and limits, burden proxy, ambiguities, preserved controls, and automation opportunities.
-- [`governance/gcl_tcs_pilot_institutionalization_001_readiness.json`](../../governance/gcl_tcs_pilot_institutionalization_001_readiness.json) — criterion-by-criterion v1.0 readiness assessment.
+- [Machine-readable pilot measurement](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilot_institutionalization_001_measurement.json) — defects, FP/FN evidence and limits, burden proxy, ambiguities, preserved controls, and automation opportunities.
+- [Machine-readable readiness assessment](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilot_institutionalization_001_readiness.json) — criterion-by-criterion v1.0 readiness assessment.
 - [`GCL_TCS_PILOT_MEASUREMENT_001.md`](GCL_TCS_PILOT_MEASUREMENT_001.md) — human-readable measurement and successor recommendation.
 
 The successor recommendation is:
@@ -96,7 +96,7 @@ It is an observational recommendation, not a standard promotion or Referee dispo
 | 4 | `UNSATISFIED` | The exception model is fail-closed normatively, but dedicated exception-workflow failure tests are not established. |
 | 5 | `PARTIAL` | Real gate records bind immutable identities; complete standard-wide enforcement across every admissible path remains unestablished. |
 | 6 | `PARTIAL` | Real candidate supplements are cleanly separated from authoritative subjects; complete schema-level source/candidate distinction remains to be established. |
-| 7 | `PARTIAL` | PR #798 demonstrated a fail-closed Markdown-to-MkDocs orphan check; the broader web/source/candidate/asset/static/TeX/JSON/directory coverage remains unestablished. |
+| 7 | `PARTIAL` | PR #798 demonstrated fail-closed documentation orphan/link checks; the broader web/source/candidate/asset/static/TeX/JSON/directory coverage remains unestablished. |
 | 8 | `PARTIAL` | Five of six required classes now have real protected pilot evidence; experimental/computational P04 remains an explicit deficit. |
 | 9 | `SATISFIED` | The measurement record explicitly records FP evidence, FN evidence, burden, and unresolved ambiguities. Empirical error rates remain unknown. |
 | 10 | `OUTSIDE_CURRENT_TRANCHE` | No version-1.0 promotion is requested; no G8 decision is manufactured for routine institutionalization evidence. |
@@ -107,7 +107,7 @@ Readiness is not promotion authority. A `SATISFIED` readiness row does not promo
 
 The four new Stage-A packages recorded three pre-merge defects: the software gate-semantic mapping defect, software compatibility/replay-documentation defect, and public synthetic-dependency-identifier defect. All were corrected before protected merge and affected candidate closures were revalidated.
 
-The Workstream-D measurement transaction then exposed a fourth current-pass defect: its new governed Markdown page was omitted from MkDocs navigation. `ci/validate_docs.py` rejected the orphaned page before merge. The page was registered and the failed head was invalidated. This is why criterion 7 is now `PARTIAL` rather than `UNSATISFIED`.
+The Workstream-D measurement transaction then exposed two documentation defects before merge. First, `ci/validate_docs.py` rejected the new measurement page because it was absent from MkDocs navigation. Second, after that repair, `mkdocs build --strict` rejected eight evidence-index links that incorrectly treated repository-root artifacts as docs-local relative targets. The index now uses docs-local links only for docs-tree artifacts and explicit GitHub repository links for governed artifacts outside `docs/`. Both failed heads were invalidated.
 
 The four new Stage-A packages total 36 changed files, 2,138 added lines, zero deletions, and seven pre-merge commits. These counts are a narrow repository-diff burden proxy, not a time or cost measurement.
 
@@ -119,7 +119,7 @@ The bounded pilot should continue as a candidate institutional learning loop, bu
 
 1. preserve immutable identities, claim/evidence boundaries, negative evidence, material-closure invalidation, proportional CI, and domain-authority firewalls;
 2. automate shallow evidence discovery, measurement aggregation, and cross-surface orphan detection where safe;
-3. extend the demonstrated Markdown navigation orphan check to the remaining required surfaces without building a duplicate authority registry;
+3. extend the demonstrated documentation checks to the remaining required surfaces without building a duplicate authority registry;
 4. avoid generating promotion-specific G8/G9 packet material until promotion is actually requested;
 5. keep the P04 deficit explicit until a real completed experimental/computational artifact is naturally available and verified;
 6. if a future v1.0 proposal becomes warranted, first close the owner/review-role, exception-test, broad orphan-detection, and normative/schema-agreement gaps, then use the governing promotion route on a fixed candidate revision.
