@@ -1,0 +1,134 @@
+schema_version: 0.1.0
+standard:
+  id: GCL-TCS-00
+  version: 0.1.0
+artifact_id: PUB-LOG-GCD-001-TCS-PILOT-001
+title: PUB-LOG-GCD-001 public communication pilot
+artifact_type: public_technical_exposition_conformance_supplement
+version: 0.1.0
+date: '2026-09-03'
+owner: Grand Challenge Labs
+authority_status: candidate
+promotion_status: in_review
+primary_profile:
+  id: GCL-TCS-P06
+  version: 0.1.0
+secondary_profiles:
+- id: GCL-TCS-P03
+  version: 0.1.0
+- id: GCL-TCS-P02
+  version: 0.1.0
+impact_class: IC-2
+audience:
+- public technical readers
+- GCL researchers and technical writers
+- mathematical reviewers and Referees
+- publication and governance maintainers
+scope: Evaluates whether the already-published PUB-LOG-GCD-001 exposition preserves the exact certified mathematical claim set, audited strictness/novelty/priority boundaries, source provenance, replay evidence, and publication authority without editing, republishing, recertifying, or canonically promoting the subject artifact.
+out_of_scope:
+- Editing or republishing docs/LOG_GCD_PUBLICATION.md merely to satisfy the pilot.
+- New mathematical proof, Lean replay, MATHCERT certification, canonical Claim Ledger promotion, or source-semantic adjudication.
+- MATH-CORE migration, blackboard event creation, cross-domain authority bridge, or C04-C07 capability transition.
+- Mathematical novelty, priority, strict positive definiteness, zero-input extension, completed-space l2 packaging, or complete-basis claims beyond the protected source set.
+- New publication, novelty, priority, patentability, commercial, constitutional, or external-claim authority.
+- GCL-TCS-00 version 1.0 promotion.
+source_location: PUBLIC_COMMUNICATION_MAP.md
+source_revision: git-blob:2c7afbed5d9f0966ab67cbbcf12dc5e9d7b9b5f9
+dependencies:
+- artifact_id: PUB-LOG-GCD-001
+  version_or_revision: git-blob:f52b6e0d08520de2c4d263a58acee06468d1770c
+  authority_status: authoritative
+  relation: already-published canonical public subject whose visibility and claim boundary this supplement reviews without republication
+- artifact_id: LOG-GCD-001
+  version_or_revision: fixture-entry-git-blob:d915fcb8b44f4ec64b4cd7d4246112706a943277
+  authority_status: authoritative
+  relation: certified/audited mathematical source package that fixes theorem identity, replay provenance, limitations, and publication state
+- artifact_id: GCL-TCS-00
+  version_or_revision: 0.1.0
+  authority_status: admitted
+  relation: governs this bounded communication pilot
+- artifact_id: GCL-POS-01
+  version_or_revision: 0.1.0
+  authority_status: admitted
+  relation: constrains institutional authority and public claim presentation
+- artifact_id: ADR-0021
+  version_or_revision: git-blob:d162935be31556bbb20303856346a73e71d34199
+  authority_status: authoritative
+  relation: protected MATH-CORE-centred mathematics architecture preserving coordination, trusted acceptance, and C03-C07 authority boundaries
+terminology_registry: registries/TERMINOLOGY.yaml
+notation_registry:
+  status: not_applicable
+  reason: The supplement quotes protected LOG-GCD notation only to preserve source meaning and introduces no new mathematical notation system.
+claim_register: registers/CLAIMS.yaml
+evidence_register: registers/EVIDENCE.yaml
+review_register:
+- review_id: REV-PUB-LOG-GCD-TCS-G0-001
+  gate_id: G0
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:2c7afbed5d9f0966ab67cbbcf12dc5e9d7b9b5f9
+- review_id: REV-PUB-LOG-GCD-TCS-G1-001
+  gate_id: G1
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:2c7afbed5d9f0966ab67cbbcf12dc5e9d7b9b5f9
+- review_id: REV-PUB-LOG-GCD-TCS-G2-001
+  gate_id: G2
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:2c7afbed5d9f0966ab67cbbcf12dc5e9d7b9b5f9
+- review_id: REV-PUB-LOG-GCD-TCS-G3-001
+  gate_id: G3
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:2c7afbed5d9f0966ab67cbbcf12dc5e9d7b9b5f9
+- review_id: REV-PUB-LOG-GCD-TCS-G4-001
+  gate_id: G4
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:2c7afbed5d9f0966ab67cbbcf12dc5e9d7b9b5f9
+- review_id: REV-PUB-LOG-GCD-TCS-G5-001
+  gate_id: G5
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:2c7afbed5d9f0966ab67cbbcf12dc5e9d7b9b5f9
+- review_id: REV-PUB-LOG-GCD-TCS-G6-001
+  gate_id: G6
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:2c7afbed5d9f0966ab67cbbcf12dc5e9d7b9b5f9
+- review_id: REV-PUB-LOG-GCD-TCS-G7-001
+  gate_id: G7
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:2c7afbed5d9f0966ab67cbbcf12dc5e9d7b9b5f9
+- review_id: REV-PUB-LOG-GCD-TCS-G8-001
+  gate_id: G8
+  location: reviews/DEFERRED_G8_G9.yaml
+  decision: DEFERRED
+  reviewed_revision: git-blob:2c7afbed5d9f0966ab67cbbcf12dc5e9d7b9b5f9
+- review_id: REV-PUB-LOG-GCD-TCS-G9-001
+  gate_id: G9
+  location: reviews/DEFERRED_G8_G9.yaml
+  decision: DEFERRED
+  reviewed_revision: git-blob:2c7afbed5d9f0966ab67cbbcf12dc5e9d7b9b5f9
+exceptions: []
+conformance_dimensions:
+  L: DECLARED
+  T: DECLARED
+  S: DECLARED
+  C: DECLARED
+  E: DECLARED
+  R: DECLARED
+  P: DECLARED
+  V: DECLARED
+  G: DECLARED
+supersedes: []
+superseded_by: null
+licence_and_access:
+  licence: Repository licence and protected MATH-PROGRAMME publication/policy controls.
+  access: public_repository_candidate_pilot_record
+generated_content:
+  present: true
+  method: Candidate public-communication supplement and G0-G7 internal checks drafted by OpenAI GPT-5.6 Sol from the protected PUB-LOG-GCD-001 publication, LOG-GCD certified/audited source package, GCL-TCS/POS candidate standards, and protected MATH-CORE architecture firewall.
+  review: G0-G7 are same-system machine-assisted internal checks and do not establish independent CHECKED or ASSURED status. G8 and G9 are explicitly deferred pending genuine non-author Referee review and atomic protected admission. No mathematical or publication authority is created by this package.

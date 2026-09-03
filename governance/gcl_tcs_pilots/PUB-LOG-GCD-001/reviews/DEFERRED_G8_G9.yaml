@@ -1,0 +1,15 @@
+artifact_id: PUB-LOG-GCD-001-TCS-PILOT-001
+subject_artifact_id: PUB-LOG-GCD-001
+source_revision: git-blob:2c7afbed5d9f0966ab67cbbcf12dc5e9d7b9b5f9
+gates:
+- review_id: REV-PUB-LOG-GCD-TCS-G8-001
+  gate_id: G8
+  gate_name: referee_promotion_review
+  decision: DEFERRED
+  reason: IC-2 promotion requires a genuine non-author Referee disposition against the exact candidate supplement closure. Same-system G0-G7 checks cannot satisfy independence.
+  requested_authority_if_later_passed: Bounded GCL-TCS conformance/admission of this public-communication supplement only. It does not republish PUB-LOG-GCD-001, recertify mathematics, mutate canonical Claim Ledger or MATH-CORE state, cross C04-C07, or authorize stronger mathematical, novelty, priority, commercial, patentability, or external claims.
+- review_id: REV-PUB-LOG-GCD-TCS-G9-001
+  gate_id: G9
+  gate_name: atomic_admission
+  decision: DEFERRED
+  reason: Cannot occur before a valid G8 PASS. Any later G9 must bind the approved supplement identity and protected readback while leaving the subject public page, publication manifest, mathematical claim ledger, certification evidence, prior-art boundary, and publication status unchanged unless separately authorized.

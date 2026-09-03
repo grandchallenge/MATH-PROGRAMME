@@ -1,0 +1,40 @@
+register_id: CLAIMS-PUB-LOG-GCD-TCS-001
+artifact_id: PUB-LOG-GCD-001-TCS-PILOT-001
+subject_artifact_id: PUB-LOG-GCD-001
+claims:
+- claim_id: PLG-TCS-C001
+  type: inherited_certified_public_claim
+  status: source_certified_and_published
+  statement: The public note may state the finite-Gram positive-semidefiniteness result represented by LOG-GCD-001-C001 for positive natural inputs.
+  source_claim: LOG-GCD-001-C001
+- claim_id: PLG-TCS-C002
+  type: inherited_certified_public_claim
+  status: source_certified_and_published
+  statement: The public note may state the exact finitely supported divisor-feature Gram identity represented by LOG-GCD-001-C003 for nonzero natural inputs.
+  source_claim: LOG-GCD-001-C003
+- claim_id: PLG-TCS-C003
+  type: inherited_audited_boundary
+  status: source_audited_and_published_boundary
+  statement: The public note must not describe the kernel as strictly positive definite on the full positive-natural domain; K(1,1)=0 is the exact counterexample boundary.
+  source_claim: LOG-GCD-001-C004
+- claim_id: PLG-TCS-C004
+  type: inherited_audited_boundary
+  status: source_audited_and_published_boundary
+  statement: The public note must not claim mathematical novelty, theorem priority, or first-formalization priority.
+  source_claim: LOG-GCD-001-C005
+- claim_id: PLG-TCS-C005
+  type: publication_semantics
+  status: source_authoritative
+  statement: PUB-LOG-GCD-001 changes public visibility only and does not itself change the certified mathematical claim state.
+- claim_id: PLG-TCS-C006
+  type: communication_observation
+  status: observed_not_generalized
+  statement: The current public page visibly co-locates claim status, limitations, prior-art boundary, certification evidence, and reproduction pointers, while the publication validator machine-enforces several permanent communication boundaries.
+not_claimed:
+- Any new proof, recertification, canonical Claim Ledger promotion, or MATH-CORE mathematical-state promotion.
+- Mathematical novelty or priority, first proof, first feature representation, or first Lean formalization.
+- Strict positive definiteness on all positive natural numbers.
+- A theorem over inputs containing zero.
+- A separately completed l2(N) construction or a formally specified complete orthogonal prime basis.
+- Reader-comprehension, accessibility-effectiveness, or organization-wide communication-quality improvement rates.
+- New publication, republication, commercial, patentability, or external-claim authority.
