@@ -1,0 +1,140 @@
+{
+  "schema_version": "1.0.0",
+  "operation_id": "GCL-TCS-PILOT-INSTITUTIONALIZATION-001",
+  "tracker": "grandchallenge/MATH-PROGRAMME#788",
+  "record_type": "NON_AUTHORITATIVE_PILOT_SELECTION",
+  "protected_selection_baseline": "5bb3a91cca92b99bd97e60101934390a91f96103",
+  "standard": {
+    "id": "GCL-TCS-00",
+    "version": "0.1.0",
+    "authority_status": "admitted_for_bounded_pilot_use_only"
+  },
+  "selection_rule": "Use real existing artifacts. Selection does not create conformance, promotion, certification, canonical status, publication authority, or downstream-use authority. A class remains deficient until a qualifying artifact completes the applicable G0-G9 pilot review.",
+  "classes": [
+    {
+      "class_id": "mathematical",
+      "selection_status": "SELECTED_NOT_YET_GCL_TCS_PILOT_COMPLETE",
+      "artifact_id": "LOG-GCD-001",
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "source_location": "fixtures/formal/LOG-GCD-001/",
+      "identity_anchor": {
+        "protected_commit": "5bb3a91cca92b99bd97e60101934390a91f96103",
+        "entry_blob": "d915fcb8b44f4ec64b4cd7d4246112706a943277"
+      },
+      "primary_profile": "GCL-TCS-P03",
+      "secondary_profiles": ["GCL-TCS-P02"],
+      "selection_basis": "Actual certified and published mathematical result package with explicit theorem identity, proof/replay route, prior-art boundary, negative claims, and publication status.",
+      "integrity_constraints": [
+        "Apply MATH_CORE_INTEGRITY.md before adding any mathematical communication mapping.",
+        "Do not treat the GCL-TCS pilot as mathematical recertification or canonical Claim Ledger promotion.",
+        "Do not invent MATH-CORE migration merely to complete the pilot."
+      ]
+    },
+    {
+      "class_id": "experimental_computational",
+      "selection_status": "EXPLICIT_DEFICIT__NO_COMPLETED_NON_SYNTHETIC_P04_RESULT_VERIFIED_IN_CURRENT_PASS",
+      "artifact_id": null,
+      "repository": null,
+      "source_location": null,
+      "identity_anchor": null,
+      "primary_profile": "GCL-TCS-P04",
+      "secondary_profiles": [],
+      "selection_basis": "A benchmark harness, plan, notebook, or generated possibility is insufficient. The row stays deficient until a completed real experiment, simulation, benchmark, computational proof, data analysis, or visual-result package is verified with immutable evidence.",
+      "integrity_constraints": [
+        "Do not manufacture an experiment or publication merely to satisfy criterion 8.",
+        "Record negative search evidence and burden in successor measurement work."
+      ]
+    },
+    {
+      "class_id": "software",
+      "selection_status": "SELECTED_NOT_YET_GCL_TCS_PILOT_COMPLETE",
+      "artifact_id": "GHOS_ESTATE_MEMBERSHIP_SENTINEL",
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "source_location": "ci/ghos_material_state_sentinel.py",
+      "identity_anchor": {
+        "protected_commit": "5bb3a91cca92b99bd97e60101934390a91f96103",
+        "git_blob": "ae860565d8b1769e0072bcebd9b0b92b2a3e8549"
+      },
+      "primary_profile": "GCL-TCS-P05",
+      "secondary_profiles": ["GCL-TCS-P07"],
+      "selection_basis": "Real protected software component with deterministic API, hostile/edge-case tests, fail-closed semantics, and an explicit no-mutation authority boundary.",
+      "integrity_constraints": [
+        "Pilot review may assess communication, software contract, provenance, limitations, and authorized uses only.",
+        "It may not grant repository-admission, workflow, routing, ruleset, protection, controller, mathematical, certification, or publication authority."
+      ]
+    },
+    {
+      "class_id": "operational",
+      "selection_status": "COMPLETED_EXISTING_PILOT__REUSE_DO_NOT_REWRITE",
+      "artifact_id": "GHOS-ESTATE-ROLLOUT-001-DOC-001",
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "source_location": "governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/",
+      "identity_anchor": {
+        "historical_source_blob": "4aac4039726dca614959075244e058e542f47730",
+        "g8_reviewed_commit": "0e8e6ab3a297eb333ee9e6c985519645b6ca43c3",
+        "g9_protected_merge": "4161a699e61dba390935ef0bb60c2bbb0936d065"
+      },
+      "primary_profile": "GCL-TCS-P01",
+      "secondary_profiles": ["GCL-TCS-P07"],
+      "selection_basis": "Existing admitted GHOS documentary pilot completed G0-G9 and directly covers operational procedure/runbook communication as a secondary P01 profile.",
+      "integrity_constraints": [
+        "Reuse the historical completed pilot as evidence; do not reopen terminal GHOS source objects.",
+        "Later estate changes require successor admission or revalidation rather than rewriting this record."
+      ]
+    },
+    {
+      "class_id": "governance",
+      "selection_status": "SELECTED_NOT_YET_GCL_TCS_PILOT_COMPLETE",
+      "artifact_id": "MP-STREAMLINED-EXECUTION-001",
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "source_location": "docs/governance/STREAMLINED_EXECUTION_AMENDMENT.md",
+      "identity_anchor": {
+        "protected_commit": "5bb3a91cca92b99bd97e60101934390a91f96103",
+        "git_blob": "9c0e0895aa84ddf8402774070bfd7d0438a19a9f"
+      },
+      "primary_profile": "GCL-TCS-P07",
+      "secondary_profiles": ["GCL-TCS-P01"],
+      "selection_basis": "Binding governance instrument with explicit authority, scope, evidence-closure, concurrency, CI proportionality, recovery, and reserved-boundary semantics.",
+      "integrity_constraints": [
+        "GCL-TCS review may expose governance meaning and limitations but cannot amend the governing directive.",
+        "Any source change remains a separate protected authority transaction."
+      ]
+    },
+    {
+      "class_id": "public",
+      "selection_status": "SELECTED_NOT_YET_GCL_TCS_PILOT_COMPLETE",
+      "artifact_id": "PUB-LOG-GCD-001",
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "source_location": "docs/LOG_GCD_PUBLICATION.md",
+      "identity_anchor": {
+        "protected_commit": "5bb3a91cca92b99bd97e60101934390a91f96103",
+        "git_blob": "f52b6e0d08520de2c4d263a58acee06468d1770c"
+      },
+      "primary_profile": "GCL-TCS-P06",
+      "secondary_profiles": ["GCL-TCS-P03", "GCL-TCS-P02"],
+      "selection_basis": "Already-published public technical artifact with explicit mathematical status, public claim, novelty/priority exclusions, certified declarations, and publication-gate evidence.",
+      "integrity_constraints": [
+        "Review the existing publication; do not republish or widen its public claims merely to satisfy the pilot.",
+        "Public presentation cannot promote mathematical status beyond the certified and audited source claim set."
+      ]
+    }
+  ],
+  "criterion_8_status": "PARTIAL",
+  "criterion_8_summary": {
+    "completed_classes": ["operational"],
+    "selected_pending_classes": ["mathematical", "software", "governance", "public"],
+    "explicit_deficit_classes": ["experimental_computational"]
+  },
+  "authority_boundary": {
+    "authority_created": false,
+    "promotion_requested": false,
+    "g8_decision_created": false,
+    "g9_admission_created": false,
+    "mathematical_status_changed": false,
+    "certification_status_changed": false,
+    "canonical_claim_state_changed": false,
+    "publication_authority_changed": false,
+    "workflow_routing_or_protection_changed": false,
+    "controller_authority_changed": false
+  }
+}
