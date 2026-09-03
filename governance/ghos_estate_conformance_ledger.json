@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0.0",
   "campaign_id": "GHOS-ESTATE-ROLLOUT-001",
-  "state": "ACTIVE_PHASE_4_AT_UPLOAD_PAGES_ARTIFACT",
+  "state": "GHOS_ESTATE_CONFORMANCE_GREEN",
   "repository_count": 14,
-  "terminal_green_count": 13,
+  "terminal_green_count": 14,
   "shared_gate_audit_pending_count": 0,
   "applicable_routing_gap_count": 0,
-  "baseline_scan_pending_count": 1,
+  "baseline_scan_pending_count": 0,
   "blocked_count": 0,
   "phase_0": {
     "state": "COMPLETE",
@@ -31,6 +31,11 @@
     "state": "COMPLETE",
     "terminal_repository_count": 4,
     "next_phase": "PHASE_4_SHARED_ACTION_AND_PUBLICATION_TOOLING"
+  },
+  "phase_4": {
+    "state": "COMPLETE",
+    "terminal_repository_count": 2,
+    "next_phase": "GHOS_ESTATE_CONFORMANCE_GREEN"
   },
   "repositories": {
     "grandchallenge/.github": {
@@ -530,10 +535,55 @@
     "grandchallenge/upload-pages-artifact": {
       "phase": 4,
       "tracker": "grandchallenge/MATH-PROGRAMME#728",
-      "disposition": "PENDING",
-      "current_state": "PHASE4_READY_FOR_EXACT_PROTECTED_PREFLIGHT"
+      "terminal_comment_id": 5518695873,
+      "disposition": "GHOS_ROUTING_ENFORCED",
+      "tracker_state": "CLOSED_COMPLETED",
+      "current_state": "PHASE4_TERMINAL__ROUTING_REQUIRED_AND_HOSTILE_PROVEN",
+      "protected_head_at_activation": "1976f492c26a307fdc9c381f8e86cd26932ed1ca",
+      "terminal_head": "899944f687a6b935e866bdb9cc857868d209f5ea",
+      "observed_direct_workflow_count": 5,
+      "terminal_direct_workflow_count": 6,
+      "routing_registry_blob": "f8ecf74c1a62a2ecb9cfaef4293a82a93655ce3f",
+      "routing_enforcement_blob": "a0ce4332e41be37e87025da71533dec15160aa55",
+      "ruleset_id": 19965833,
+      "ruleset_strict": true,
+      "ruleset_bypass_actors": [],
+      "required_contexts": [
+        "policy / policy",
+        "security / action-policy",
+        "routing-enforcement"
+      ],
+      "tag_ruleset_id": 19965835,
+      "tag_ruleset_unchanged": true,
+      "routing_required": true,
+      "benign_proof": {
+        "pull_request": 4,
+        "head": "18c7d88ab9cfcd5b9cb887539291cf5abbf6c737",
+        "workflow_run": 33699959488,
+        "job": 100476917545,
+        "result": "SUCCESS",
+        "closed_unmerged": true
+      },
+      "hostile_proof": {
+        "pull_request": 5,
+        "head": "cdb15c03b819306da0dc44f308faca45ab1014e9",
+        "workflow_run": 33701676510,
+        "job": 100482103692,
+        "result": "EXPECTED_FAILURE",
+        "failure_class": "workflow routing coverage mismatch",
+        "mergeable_state": "blocked",
+        "closed_unmerged": true
+      },
+      "downstream_immutable_consumer_trust": {
+        "pinned_action_sha": "1976f492c26a307fdc9c381f8e86cd26932ed1ca",
+        "consumers_checked": [
+          "grandchallenge/MATH-PROGRAMME"
+        ],
+        "floating_refs_absent": true,
+        "terminal_revalidated": true
+      }
     }
   },
-  "estate_terminal": "PENDING",
+  "estate_terminal": "GHOS_ESTATE_CONFORMANCE_GREEN",
   "terminal_required": "GHOS_ESTATE_CONFORMANCE_GREEN"
 }
