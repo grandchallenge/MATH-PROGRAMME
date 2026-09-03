@@ -55,10 +55,10 @@
     },
     {
       "criterion": 7,
-      "status": "UNSATISFIED",
+      "status": "PARTIAL",
       "requirement": "Orphan detection covers documents, web pages, source records, candidate records, assets, static text, TeX, JSON, and directories where applicable.",
-      "evidence": "Some package validators and evidence indexes provide local discovery checks.",
-      "gap": "Required cross-surface orphan detection has not been demonstrated across the full listed surface."
+      "evidence": "On Workstream-D PR #798, ci/validate_docs.py rejected the new GCL_TCS_PILOT_MEASUREMENT_001.md page because it was absent from mkdocs.yml navigation, demonstrating a live fail-closed document-to-navigation orphan check.",
+      "gap": "The broader required cross-surface coverage for web pages, source/candidate records, assets, static text, TeX, JSON, and directories has not been demonstrated."
     },
     {
       "criterion": 8,
@@ -84,8 +84,8 @@
   ],
   "summary": {
     "satisfied": 1,
-    "partial": 5,
-    "unsatisfied": 3,
+    "partial": 6,
+    "unsatisfied": 2,
     "outside_current_tranche": 1,
     "required_pilot_classes_with_real_evidence": 5,
     "required_pilot_classes_total": 6,
@@ -95,8 +95,8 @@
   "successor_recommendation": {
     "disposition": "CONTINUE_CANDIDATE__NARROW_AND_SIMPLIFY__NO_V1_PROMOTION",
     "rationale": [
-      "The pilot has produced useful evidence on claim/source separation, negative evidence, exact material closure, proportional CI, and defect detection.",
-      "The P04 class, owner/review-role map, exception fail-closed tests, and cross-surface orphan detection remain material readiness gaps.",
+      "The pilot has produced useful evidence on claim/source separation, negative evidence, exact material closure, proportional CI, defect detection, and one live document-orphan control.",
+      "The P04 class, owner/review-role map, exception fail-closed tests, and broad cross-surface orphan coverage remain material readiness gaps.",
       "The current evidence does not establish optimality or causal research improvement.",
       "Promotion-specific G8/G9 ceremony should not be generated for routine non-promotional pilot evidence; preserve those gates for actual promotion transitions."
     ],
@@ -106,19 +106,20 @@
       "negative evidence and falsifier preservation",
       "material-closure-sensitive validation",
       "proportional unchanged-attestation reuse",
+      "document-to-navigation orphan detection",
       "domain-authority firewalls"
     ],
     "simplify_or_automate": [
       "shallow evidence discovery and pointer validation",
       "aggregate measurement from pilot observation records",
-      "cross-surface orphan detection",
+      "extend orphan detection across the remaining required surfaces",
       "promotion packet generation only on explicit promotion request"
     ],
     "future_strengthening_if_naturally_warranted": [
       "verify a real completed experimental/computational P04 result package",
       "establish the profile owner/review-role map",
       "add dedicated fail-closed exception workflow tests",
-      "implement required cross-surface orphan detection",
+      "extend orphan detection across web/source/candidate/assets/static/TeX/JSON/directory surfaces",
       "perform a complete normative-text/policy/schema agreement audit before any v1 proposal"
     ]
   },
