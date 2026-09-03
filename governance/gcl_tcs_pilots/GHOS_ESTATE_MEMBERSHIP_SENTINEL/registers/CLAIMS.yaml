@@ -1,0 +1,32 @@
+register_id: CLAIMS-GHOS-SENTINEL-001
+artifact_id: GHOS_ESTATE_MEMBERSHIP_SENTINEL
+claims:
+- claim_id: SENTINEL-C001
+  type: software_behavior
+  status: established_for_protected_source
+  statement: Equal valid campaign and live-snapshot values produce deterministic classification output without network or repository mutation.
+  limitations:
+  - Does not establish completeness or freshness of the caller-supplied live snapshot.
+- claim_id: SENTINEL-C002
+  type: software_behavior
+  status: established_for_protected_source
+  statement: A new stable repository ID routes to NEW_ESTATE_MEMBER_SUCCESSOR_ADMISSION_REQUIRED without admitting the repository or permitting historical terminal rewrite.
+- claim_id: SENTINEL-C003
+  type: failure_semantics
+  status: established_for_protected_source
+  statement: Malformed populations, duplicate identities, identity replacement ambiguity, and simultaneous addition/removal drift fail closed as UNKNOWN_FAIL_CLOSED.
+- claim_id: SENTINEL-C004
+  type: authority_boundary
+  status: established_for_protected_source
+  statement: The returned authority boundary denies terminal-evidence mutation, repository admission, workflow/routing/protection mutation, controller expansion, and mathematical/certification/publication authority.
+- claim_id: SENTINEL-C005
+  type: integration_observation
+  status: observed_once_not_generalized
+  statement: During GCL-TCS institutionalization the live organization population exposed grandchallenge/GCT-EXECUTIVE as a repository absent from the frozen 14-member GHOS campaign and routed it to successor issue #791.
+not_claimed:
+- Complete discovery of private organization repositories from public GitHub data.
+- Autonomous or scheduled monitoring capability.
+- Repository admission authority.
+- Security correctness of any future acquisition credential or controller.
+- Continued conformance of the historical estate after material state changes.
+- Mathematical, certification, canonical Claim Ledger, publication, commercial, or external-claim authority.

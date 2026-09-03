@@ -1,0 +1,86 @@
+artifact_id: GHOS_ESTATE_MEMBERSHIP_SENTINEL
+reviewed_revision: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+reviewer: openai-gpt-5.6-sol
+reviewer_kind: agent_machine_assisted
+independence_statement: Same assistant system authored the implementation and this communication package; these are internal gate checks only and cannot satisfy independent CHECKED/ASSURED status or G8.
+date: '2026-09-03'
+reviews:
+- review_id: REV-GHOS-SENTINEL-G0-001
+  gate_id: G0
+  gate_name: registration_and_identity
+  decision: PASS
+  established:
+  - Artifact ID, protected source location, source blob, owner, tracker, candidate authority state, and promotion state are explicit.
+  - The candidate package is discoverable under governance/gcl_tcs_pilots/GHOS_ESTATE_MEMBERSHIP_SENTINEL.
+  not_established:
+  - Independent review or promotion authority.
+- review_id: REV-GHOS-SENTINEL-G1-001
+  gate_id: G1
+  gate_name: scope_profile_and_authority_lock
+  decision: PASS
+  established:
+  - GCL-TCS-P05 is primary, GCL-TCS-P07 is secondary, and IC-2 is declared for the reusable software guarantee.
+  - Scope, out-of-scope boundaries, admitted dependencies, and exact GCL-TCS/GCL-POS versions are explicit.
+  - Repository admission, acquisition credentials, controller expansion, mathematical/certification/canonical/publication authority, and historical-terminal rewrite are excluded.
+  not_established:
+  - Completeness or security of any future live-snapshot acquisition mechanism.
+- review_id: REV-GHOS-SENTINEL-G2-001
+  gate_id: G2
+  gate_name: structural_and_metadata_completeness
+  decision: PASS
+  established:
+  - The conformance declaration contains the schema-required metadata fields and links the terminology, claims, evidence, review, and exception records.
+  - The candidate package contains a software contract, observations, controlled terminology, claim/evidence registers, and explicit G8/G9 deferrals.
+  - Supersession and licence/access fields are explicit and no package record required by this candidate is intentionally orphaned.
+  not_established:
+  - G9 atomic admission or authoritative central-registry promotion.
+- review_id: REV-GHOS-SENTINEL-G3-001
+  gate_id: G3
+  gate_name: language_terminology_and_notation
+  decision: PASS
+  established:
+  - Material status tokens and governance terms are registered in registries/TERMINOLOGY.yaml and used consistently.
+  - Input, output, failure, compatibility, and authority-boundary language distinguishes classifier behavior from acquisition-layer behavior.
+  - Mathematical notation is not material to this software contract.
+  not_established:
+  - Formal ASD-STE100 conformance or terminology authority beyond this candidate package.
+- review_id: REV-GHOS-SENTINEL-G4-001
+  gate_id: G4
+  gate_name: claim_and_evidence_integrity
+  decision: PASS
+  established:
+  - Consequential software claims are typed, scoped, limited, and bound to protected source/test blobs, PR #792, frozen campaign identity, and successor issue #791.
+  - The one observed live case is separated from general software guarantees and is not generalized into a population-level error rate.
+  - Snapshot completeness, autonomous monitoring, repository admission, and external claim authority are explicitly not claimed.
+  not_established:
+  - Empirical false-positive or false-negative rates over representative live transitions.
+- review_id: REV-GHOS-SENTINEL-G5-001
+  gate_id: G5
+  gate_name: domain_verification
+  decision: PASS
+  established:
+  - Eight unit tests exercise unchanged, new-member, archive, removal, identity-replacement, duplicate-identity, mixed-drift, and frozen-campaign behavior.
+  - Source inspection confirms the protected component has no network, mutation, secret, schedule, subprocess, or autonomous wake mechanism.
+  - The software contract documents Python >= 3.9 compatibility, the serialized schema version, and a direct repository-root test command.
+  not_established:
+  - Correctness or security of an external organization-wide repository acquisition implementation.
+- review_id: REV-GHOS-SENTINEL-G6-001
+  gate_id: G6
+  gate_name: adversarial_and_falsification_review
+  decision: PASS
+  established:
+  - Identity replacement, duplicate names or repository IDs, malformed populations, and simultaneous addition/removal cases fail closed.
+  - New-member output explicitly denies auto-admission and historical-terminal rewrite.
+  - Acquisition omission is identified as a falsifier of any claim that this classifier alone provides complete estate monitoring.
+  not_established:
+  - Robustness to adversarial or incomplete data omitted before it reaches the classifier.
+- review_id: REV-GHOS-SENTINEL-G7-001
+  gate_id: G7
+  gate_name: reproducibility_and_provenance
+  decision: PASS
+  established:
+  - Source and test bytes are fixed by git blob identity and protected PR #792 / merge provenance.
+  - A qualified reviewer can replay the eight tests from the repository root with Python >= 3.9 using the documented command.
+  - The frozen campaign remains an authoritative external dependency rather than a copied mutable baseline, and successor routing remains separate from terminal history.
+  not_established:
+  - Reproducible acquisition of a complete private organization-wide live snapshot; no credentialed or scheduled acquisition path is admitted.

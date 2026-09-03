@@ -1,0 +1,14 @@
+artifact_id: GHOS_ESTATE_MEMBERSHIP_SENTINEL
+source_revision: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+gates:
+- review_id: REV-GHOS-SENTINEL-G8-001
+  gate_id: G8
+  gate_name: referee_promotion_review
+  decision: DEFERRED
+  reason: Requires a genuine non-author Referee disposition against the exact candidate material closure after G0-G7 evidence is protected and reviewable.
+  requested_authority_if_later_passed: Bounded GCL-TCS pilot conformance/admission of this software communication package only; no repository-admission, workflow/routing/protection, controller, mathematical, certification, canonical-claim, publication, or external-claim authority.
+- review_id: REV-GHOS-SENTINEL-G9-001
+  gate_id: G9
+  gate_name: atomic_admission
+  decision: DEFERRED
+  reason: Cannot occur before a valid G8 PASS. Any later G9 must atomically record the approved candidate identity and protected readback without changing the underlying software source as a side effect.

@@ -1,0 +1,33 @@
+observation_record_id: OBS-GHOS-SENTINEL-001
+artifact_id: GHOS_ESTATE_MEMBERSHIP_SENTINEL
+date: '2026-09-03'
+status: candidate_pilot_observations
+observations:
+- observation_id: OBS-001
+  category: positive_detection
+  statement: Manual live-estate reconciliation during issue #788 found grandchallenge/GCT-EXECUTIVE, repository ID 1355707445, outside the frozen 14-member campaign and routed it to successor issue #791.
+  interpretation_limit: This is one observed true-positive routing case, not a measured population-level recall rate.
+- observation_id: OBS-002
+  category: false_positive_probe
+  statement: The unchanged-membership unit test returns UNCHANGED for an identity-equivalent population.
+  interpretation_limit: Synthetic test coverage does not establish a real-world false-positive rate.
+- observation_id: OBS-003
+  category: false_negative_probe
+  statement: The new-member unit test injects GCT-EXECUTIVE as a new stable repository ID and requires successor-admission routing.
+  interpretation_limit: This tests classifier logic after acquisition; it cannot reveal a repository omitted by the acquisition layer.
+- observation_id: OBS-004
+  category: ambiguity_and_fail_closed
+  statement: Identity replacement, duplicate IDs, and mixed addition/removal drift route to UNKNOWN_FAIL_CLOSED rather than guessing a safe transition.
+- observation_id: OBS-005
+  category: operator_burden
+  statement: A trusted caller must assemble a complete live snapshot. The classifier itself adds no credential or network burden, but this shifts completeness responsibility to the acquisition layer.
+- observation_id: OBS-006
+  category: prevented_invalid_transition
+  statement: New-member detection does not mutate the historical terminal ledger or auto-admit the repository; it forces a successor transaction.
+- observation_id: OBS-007
+  category: unnecessary_friction
+  statement: Running the classifier is cheap once a snapshot exists; the unresolved friction is obtaining complete visibility across private organization repositories without enlarging credential/controller authority.
+known_deficits:
+- No autonomous or scheduled complete private-estate acquisition path is admitted.
+- No empirical false-positive or false-negative rate has been measured over a representative sequence of live estate transitions.
+- G8 independent Referee review and G9 atomic admission remain deferred.
