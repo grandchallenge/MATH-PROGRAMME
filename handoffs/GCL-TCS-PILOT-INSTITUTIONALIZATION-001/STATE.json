@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0.0",
+  "operation_id": "GCL-TCS-PILOT-INSTITUTIONALIZATION-001",
+  "tracker": "grandchallenge/MATH-PROGRAMME#788",
+  "document_role": "NON_AUTHORITATIVE_BOOTSTRAP_STATE",
+  "not_a_checkpoint": true,
+  "authority_created_by_this_file": false,
+  "bootstrap_status": "PREFLIGHT_UNVERIFIED",
+  "first_action": "REFETCH_AND_RECONCILE_PROTECTED_STATE",
+  "historical_reference_only": {
+    "math_programme_main_at_registration": "4b550004dd57e90fe394d80eb055847a23be3b76",
+    "ghos_state": "GHOS_ESTATE_CONFORMANCE_GREEN",
+    "ghos_repository_count": 14,
+    "ghos_terminal_is_historical_material_state": true
+  },
+  "must_refetch": [
+    "protected MATH-PROGRAMME main",
+    "issue #788 and any implementation PR",
+    "MP-STREAMLINED-EXECUTION-001",
+    "EXECUTION_RECOVERY_OPERATING_GUIDE",
+    "current GCL-TCS-00 normative source, profiles, schemas and v1.0 acceptance criteria",
+    "GCL-POS-01",
+    "ADR-0021 MATH-CORE architecture and authority closure",
+    "current MATH-CORE shadow/diagnostic capability state",
+    "current GHOS estate ledger and documentary package",
+    "live grandchallenge repository estate",
+    "current relevant rulesets and protection"
+  ],
+  "architectural_invariants": [
+    "GHOS = execution/control integrity",
+    "MATH-CORE = mathematical reasoning-state coordination, not canonical truth",
+    "GCL-TCS/POS = communication/provenance/authority-boundary integrity",
+    "MATHFORGE/MATHSOLVE/MATHCERT remain distinct mathematical institutions",
+    "trusted acceptance and canonical recording remain distinct from MATH-CORE working state"
+  ],
+  "execution_invariants": [
+    "material closure, not numerical head freshness, controls evidence validity",
+    "routine bounded work uses standing delegated authority",
+    "no generic Human Steward approval",
+    "no generic Referee approval",
+    "no full-estate or expensive replay for unaffected material closures",
+    "sentinel is detect-only by default",
+    "same protection for less ceremony is preferred"
+  ],
+  "workstreams": [
+    "A_GHOS_MATERIAL_DRIFT_SENTINEL",
+    "B_EVIDENCE_DISCOVERABILITY",
+    "C_HETEROGENEOUS_GCL_TCS_PILOTS",
+    "D_MEASUREMENT_AND_SUCCESSOR_REVIEW"
+  ],
+  "gcl_tcs_v1_readiness_classes": [
+    "mathematical",
+    "experimental_or_computational",
+    "software",
+    "operational",
+    "governance",
+    "public"
+  ],
+  "math_core_capability_boundary": [
+    "preserve C03 domain isolation and evidence-bearing bridges",
+    "do not cross C04 live coordination without the admitted identity/concurrency controls",
+    "do not cross C05 operational pruning without exact replayable evidence",
+    "preserve C06 provenance-bound migration and blocker taxonomy",
+    "do not cross C07 persistent unattended execution without admitted routing/controller authority",
+    "do not duplicate mathematical claim-state or canonical acceptance machinery"
+  ],
+  "prohibited_inferences": [
+    "GCL-TCS v1.0 is authorized",
+    "GCL-POS-01 is organization-wide authoritative doctrine",
+    "MATH-CORE working state is canonical mathematical truth",
+    "GHOS terminal evidence automatically covers future material states",
+    "pilot conformance proves mathematical or scientific claims",
+    "a generic template creates a Human Steward or Referee gate"
+  ],
+  "escalate_only_for": [
+    "reserved authority transition",
+    "material capability transition",
+    "substantive mathematical or certification authority",
+    "constitutional or policy authority expansion",
+    "security-sensitive weakening or controller transition",
+    "external publication or claim authority where reserved",
+    "genuine evidentiary, authentication or recovery exhaustion boundary"
+  ],
+  "checkpoint_policy": {
+    "automatic_checkpoint_creation": false,
+    "rule": "Create/register a bounded-operation checkpoint only if current protected doctrine explicitly admits this operation as a multi-session governed campaign."
+  },
+  "next_action": "READ_README_THEN_PERFORM_LIVE_PREFLIGHT"
+}
