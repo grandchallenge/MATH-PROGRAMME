@@ -1,25 +1,31 @@
 review_id: REV-GHOSDOC-G9-001
 artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
-reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+reviewed_revision: git-commit:4161a699e61dba390935ef0bb60c2bbb0936d065
 gate_id: G9
 gate_name: release_and_atomic_admission
-reviewer: unassigned_pending_gate
-reviewer_kind: pending
+reviewer: openai-gpt-5.6-sol
+reviewer_kind: agent_machine_assisted
 review_role: Delegated Release Steward / Amanuensis
-independence_statement: No independent or release disposition is asserted while this gate is deferred.
+independence_statement: G9 is the release/admission gate, not an independent review substitute; it relies on independent G8 review 5097435540.
 date: '2026-09-02'
-decision: DEFERRED
+decision: PASS
 findings:
 - finding_id: G9-F01
   severity: information
-  statement: Atomic protected admission is required after G8, successful protected checks, exact-head merge, and
-    protected-main readback.
+  statement: PR #786 merged with an expected-head guard from the independently approved exact head and was read back from protected main.
+- finding_id: G9-F02
+  severity: information
+  statement: Merge commit 4161a699e61dba390935ef0bb60c2bbb0936d065 has a valid GitHub signature and protected main readback equals that commit.
 evidence:
-- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/DOCUMENTARY_COVERAGE.md
-- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/GHOS-ESTATE-ROLLOUT-001.conformance.yaml
-- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/registers/CLAIMS.yaml
-- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/registers/EVIDENCE.yaml
-- governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/registries/TERMINOLOGY.yaml
-established: []
+- grandchallenge/MATH-PROGRAMME#786
+- grandchallenge/MATH-PROGRAMME#786 review 5097435540
+- git-commit:0e8e6ab3a297eb333ee9e6c985519645b6ca43c3
+- git-commit:4161a699e61dba390935ef0bb60c2bbb0936d065
+- protected-main:4161a699e61dba390935ef0bb60c2bbb0936d065
+established:
+- G8 exact-head approval preceded protected merge.
+- Protected merge and protected-main readback completed at 4161a699e61dba390935ef0bb60c2bbb0936d065.
+- The protected merge signature is verified with reason valid.
 not_established:
-- DEFERRED; candidate bytes do not self-promote.
+- G9 does not strengthen or reopen GHOS_ESTATE_CONFORMANCE_GREEN.
+- G9 does not enlarge any excluded mathematical, certification, publication, production, constitutional, scientific, novelty, patentability, manufacturing, physical, commercial, or external-claim authority.
