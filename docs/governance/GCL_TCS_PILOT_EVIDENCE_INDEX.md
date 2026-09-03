@@ -96,7 +96,7 @@ It is an observational recommendation, not a standard promotion or Referee dispo
 | 4 | `UNSATISFIED` | The exception model is fail-closed normatively, but dedicated exception-workflow failure tests are not established. |
 | 5 | `PARTIAL` | Real gate records bind immutable identities; complete standard-wide enforcement across every admissible path remains unestablished. |
 | 6 | `PARTIAL` | Real candidate supplements are cleanly separated from authoritative subjects; complete schema-level source/candidate distinction remains to be established. |
-| 7 | `UNSATISFIED` | Required cross-surface orphan detection has not been demonstrated. |
+| 7 | `PARTIAL` | PR #798 demonstrated a fail-closed Markdown-to-MkDocs orphan check; the broader web/source/candidate/asset/static/TeX/JSON/directory coverage remains unestablished. |
 | 8 | `PARTIAL` | Five of six required classes now have real protected pilot evidence; experimental/computational P04 remains an explicit deficit. |
 | 9 | `SATISFIED` | The measurement record explicitly records FP evidence, FN evidence, burden, and unresolved ambiguities. Empirical error rates remain unknown. |
 | 10 | `OUTSIDE_CURRENT_TRANCHE` | No version-1.0 promotion is requested; no G8 decision is manufactured for routine institutionalization evidence. |
@@ -105,11 +105,13 @@ Readiness is not promotion authority. A `SATISFIED` readiness row does not promo
 
 ## Defect and burden evidence
 
-The current pass recorded three pre-merge defects in the four new Stage-A packages: the software gate-semantic mapping defect, software compatibility/replay-documentation defect, and public synthetic-dependency-identifier defect. All were corrected before protected merge and affected candidate closures were revalidated.
+The four new Stage-A packages recorded three pre-merge defects: the software gate-semantic mapping defect, software compatibility/replay-documentation defect, and public synthetic-dependency-identifier defect. All were corrected before protected merge and affected candidate closures were revalidated.
+
+The Workstream-D measurement transaction then exposed a fourth current-pass defect: its new governed Markdown page was omitted from MkDocs navigation. `ci/validate_docs.py` rejected the orphaned page before merge. The page was registered and the failed head was invalidated. This is why criterion 7 is now `PARTIAL` rather than `UNSATISFIED`.
 
 The four new Stage-A packages total 36 changed files, 2,138 added lines, zero deletions, and seven pre-merge commits. These counts are a narrow repository-diff burden proxy, not a time or cost measurement.
 
-No later defect has yet been observed in those four packages during the current pass. That is not a measured zero false-negative rate.
+No later defect has yet been observed in those four protected Stage-A packages during the current pass. That is not a measured zero false-negative rate.
 
 ## Successor routing
 
@@ -117,9 +119,10 @@ The bounded pilot should continue as a candidate institutional learning loop, bu
 
 1. preserve immutable identities, claim/evidence boundaries, negative evidence, material-closure invalidation, proportional CI, and domain-authority firewalls;
 2. automate shallow evidence discovery, measurement aggregation, and cross-surface orphan detection where safe;
-3. avoid generating promotion-specific G8/G9 packet material until promotion is actually requested;
-4. keep the P04 deficit explicit until a real completed experimental/computational artifact is naturally available and verified;
-5. if a future v1.0 proposal becomes warranted, first close the owner/review-role, exception-test, orphan-detection, and normative/schema-agreement gaps, then use the governing promotion route on a fixed candidate revision.
+3. extend the demonstrated Markdown navigation orphan check to the remaining required surfaces without building a duplicate authority registry;
+4. avoid generating promotion-specific G8/G9 packet material until promotion is actually requested;
+5. keep the P04 deficit explicit until a real completed experimental/computational artifact is naturally available and verified;
+6. if a future v1.0 proposal becomes warranted, first close the owner/review-role, exception-test, broad orphan-detection, and normative/schema-agreement gaps, then use the governing promotion route on a fixed candidate revision.
 
 ## Revalidation rule
 
