@@ -98,7 +98,7 @@
     "interpretation": "These are concrete pre-merge Stage-A defect detections, not an estimate of review sensitivity."
   },
   "measurement_transaction_defects": {
-    "count": 1,
+    "count": 2,
     "items": [
       {
         "transaction": "Workstream D measurement/readiness PR #798",
@@ -106,6 +106,13 @@
         "detection": "The exact-head docs policy shard failed in ci/validate_docs.py before protected merge.",
         "effect": "The candidate head was invalidated; the missing navigation entry was added and all earlier CI on that material closure was treated as stale.",
         "control_evidence": "This is a real positive example of document-to-navigation orphan detection, but it does not establish the broader cross-surface orphan coverage required by v1.0 criterion 7."
+      },
+      {
+        "transaction": "Workstream D measurement/readiness PR #798",
+        "finding": "The refreshed evidence index used docs-relative Markdown links for governed repository-root artifacts outside docs_dir, producing eight strict MkDocs target warnings.",
+        "detection": "After the navigation repair, mkdocs build --strict failed on the corrected candidate head before protected merge.",
+        "effect": "That candidate head was invalidated. Docs-tree targets remain docs-local links; repository-root governed artifacts are now referenced through explicit GitHub repository links.",
+        "control_evidence": "This is a second real positive example of strict documentation-link validation. It strengthens evidence for the docs surface but still does not establish the full cross-surface orphan requirement."
       }
     ]
   },
@@ -144,6 +151,11 @@
       "source": "Programme policy checks / docs shard on PR #798",
       "observation": "ci/validate_docs.py rejected a new governed Markdown page that was not yet present in mkdocs.yml navigation.",
       "limit": "This demonstrates one document-orphan control, not full orphan detection across all required surfaces."
+    },
+    {
+      "source": "Programme policy checks / strict MkDocs build on PR #798",
+      "observation": "mkdocs build --strict rejected eight evidence-index links that incorrectly addressed repository-root artifacts as docs-local paths.",
+      "limit": "This demonstrates strict link-target hygiene on the documentation surface, not full cross-surface orphan coverage."
     }
   ],
   "burden_and_friction": [
@@ -170,6 +182,10 @@
     {
       "class": "pilot_process",
       "observation": "The four new Stage-A packages each used a nine-file communication/conformance envelope. For non-promotional pilot evidence, generating standing G8/G9 placeholder records may be unnecessary ceremony; future templates should defer creation of promotion-specific records until promotion is actually requested, provided discoverability and authority boundaries remain explicit."
+    },
+    {
+      "class": "documentation",
+      "observation": "Governed discovery pages must distinguish site-local docs links from repository-root artifact links. Strict docs validation catches both missing navigation and invalid docs-relative targets, but this adds maintenance when an index spans multiple repository surfaces."
     }
   ],
   "unresolved_ambiguities": [
@@ -178,7 +194,7 @@
     "How complete private-estate acquisition should be governed if the GHOS sentinel is later scheduled or automated.",
     "Whether a future v1.0 promotion should use a newly activated independent Referee mechanism; the current delegated Referee office record is not effective on the measurement baseline.",
     "Whether the P04 experimental/computational deficit should be filled by an already-completed real result found in later evidence discovery or by a future naturally occurring experiment, rather than by manufacturing a pilot solely for coverage.",
-    "How to extend the demonstrated Markdown-to-MkDocs orphan check into the full document/web/source/candidate/asset/static/TeX/JSON/directory coverage required by criterion 7 without building an over-broad duplicate registry."
+    "How to extend the demonstrated documentation orphan/link checks into the full document/web/source/candidate/asset/static/TeX/JSON/directory coverage required by criterion 7 without building an over-broad duplicate registry."
   ],
   "preserved_controls": [
     "exact immutable source and candidate identities",
@@ -188,12 +204,13 @@
     "proportional CI and unchanged-attestation reuse",
     "fail-closed handling of unknown or ambiguous transitions",
     "document-to-navigation orphan detection",
+    "strict documentation-link validation",
     "no domain-authority promotion by communication conformance"
   ],
   "safe_automation_opportunities": [
     "aggregate pilot observation records into a non-authoritative measurement summary",
     "validate shallow evidence-index pointers and immutable identities",
-    "extend existing document navigation orphan detection to the remaining required cross-surfaces",
+    "extend existing documentation orphan/link checks to the remaining required cross-surfaces",
     "reuse unchanged formal attestations when material identity is unchanged",
     "generate promotion-specific G8/G9 packet material only when a promotion transition is explicitly requested"
   ],
@@ -203,6 +220,6 @@
     "Repository diff counts are not a complete burden metric.",
     "No representative empirical false-positive or false-negative rate has been measured.",
     "Candidate Stage-A protected merges are evidence-preservation transactions, not GCL-TCS promotions.",
-    "One successful Markdown orphan detection does not establish the full cross-surface orphan-detection criterion."
+    "Successful docs orphan/link detection does not establish the full cross-surface orphan-detection criterion."
   ]
 }
