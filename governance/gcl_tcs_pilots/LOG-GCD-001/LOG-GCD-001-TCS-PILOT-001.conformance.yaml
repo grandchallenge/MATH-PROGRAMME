@@ -1,0 +1,133 @@
+schema_version: 0.1.0
+standard:
+  id: GCL-TCS-00
+  version: 0.1.0
+artifact_id: LOG-GCD-001-TCS-PILOT-001
+title: LOG-GCD-001 mathematical communication pilot
+artifact_type: mathematical_formal_communication_conformance_supplement
+version: 0.1.0
+date: '2026-09-03'
+owner: Grand Challenge Labs
+authority_status: candidate
+promotion_status: in_review
+primary_profile:
+  id: GCL-TCS-P03
+  version: 0.1.0
+secondary_profiles:
+- id: GCL-TCS-P02
+  version: 0.1.0
+impact_class: IC-2
+audience:
+- mathematicians and formal-methods reviewers
+- GCL researchers and mathematical communicators
+- proof-assistant and certification maintainers
+- Referees and programme governance maintainers
+scope: Evaluates whether the protected LOG-GCD-001 mathematical package communicates exact theorem identity, domains and quantifiers, formal/informal boundaries, dependency and implication structure, source provenance, proof/replay evidence, counterexamples, prior-art limits, certification status, unresolved debt, and authorized interpretations without altering the mathematics or its governed authority.
+out_of_scope:
+- Editing LogGcd.lean, LogGcdFeature.lean, the source lock, Claim Ledger, prior-art record, certificate record, or publication merely to satisfy this pilot.
+- New theorem proving, proof repair, proof-term generation, Lean replay, MATHCERT recertification, canonical Claim Ledger promotion, or source-semantic adjudication.
+- MATH-CORE migration, blackboard event creation, cross-domain authority bridge, or C04-C07 capability transition.
+- Promotion of audited interpretations/boundaries to certified theorem status.
+- Mathematical novelty, priority, strict positive definiteness, zero-input extension, completed-space l2 packaging, or complete-basis claims beyond the protected source set.
+- New publication, novelty, priority, patentability, commercial, constitutional, or external-claim authority.
+- GCL-TCS-00 version 1.0 promotion.
+source_location: MATHEMATICAL_COMMUNICATION_MAP.md
+source_revision: git-blob:d3c970b857bf084f93905d7245b1c98ffaa86d4d
+dependencies:
+- artifact_id: LOG-GCD-001
+  version_or_revision: fixture-entry-git-blob:d915fcb8b44f4ec64b4cd7d4246112706a943277
+  authority_status: authoritative
+  relation: protected mathematical result package whose exact theorem, evidence, limitations, and publication status this supplement communicates without source mutation
+- artifact_id: CERT-LOG-GCD-001
+  version_or_revision: agent-review-git-blob:3de21489f09653c6a2f941cb163933b022c827b9
+  authority_status: authoritative
+  relation: existing certification/review state inherited as evidence; this supplement does not issue or amend the certificate
+- artifact_id: GCL-TCS-00
+  version_or_revision: 0.1.0
+  authority_status: admitted
+  relation: governs this bounded communication pilot
+- artifact_id: GCL-POS-01
+  version_or_revision: 0.1.0
+  authority_status: admitted
+  relation: constrains authority, evidence status, and mathematical/public claim presentation
+- artifact_id: ADR-0021
+  version_or_revision: git-blob:d162935be31556bbb20303856346a73e71d34199
+  authority_status: authoritative
+  relation: protected MATH-CORE-centred mathematics architecture preserving the separation between coordination, proof/replay, assurance, certification, canonical recording, and policy authority
+terminology_registry: registries/TERMINOLOGY.yaml
+notation_registry:
+  status: source_inherited
+  reason: Exact mathematical notation and theorem signatures are inherited verbatim from protected LogGcd.lean and LogGcdFeature.lean; this supplement introduces no competing notation system.
+claim_register: registers/CLAIMS.yaml
+evidence_register: registers/EVIDENCE.yaml
+review_register:
+- review_id: REV-LOG-GCD-TCS-G0-001
+  gate_id: G0
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:d3c970b857bf084f93905d7245b1c98ffaa86d4d
+- review_id: REV-LOG-GCD-TCS-G1-001
+  gate_id: G1
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:d3c970b857bf084f93905d7245b1c98ffaa86d4d
+- review_id: REV-LOG-GCD-TCS-G2-001
+  gate_id: G2
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:d3c970b857bf084f93905d7245b1c98ffaa86d4d
+- review_id: REV-LOG-GCD-TCS-G3-001
+  gate_id: G3
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:d3c970b857bf084f93905d7245b1c98ffaa86d4d
+- review_id: REV-LOG-GCD-TCS-G4-001
+  gate_id: G4
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:d3c970b857bf084f93905d7245b1c98ffaa86d4d
+- review_id: REV-LOG-GCD-TCS-G5-001
+  gate_id: G5
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:d3c970b857bf084f93905d7245b1c98ffaa86d4d
+- review_id: REV-LOG-GCD-TCS-G6-001
+  gate_id: G6
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:d3c970b857bf084f93905d7245b1c98ffaa86d4d
+- review_id: REV-LOG-GCD-TCS-G7-001
+  gate_id: G7
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:d3c970b857bf084f93905d7245b1c98ffaa86d4d
+- review_id: REV-LOG-GCD-TCS-G8-001
+  gate_id: G8
+  location: reviews/DEFERRED_G8_G9.yaml
+  decision: DEFERRED
+  reviewed_revision: git-blob:d3c970b857bf084f93905d7245b1c98ffaa86d4d
+- review_id: REV-LOG-GCD-TCS-G9-001
+  gate_id: G9
+  location: reviews/DEFERRED_G8_G9.yaml
+  decision: DEFERRED
+  reviewed_revision: git-blob:d3c970b857bf084f93905d7245b1c98ffaa86d4d
+exceptions: []
+conformance_dimensions:
+  L: DECLARED
+  T: DECLARED
+  S: DECLARED
+  C: DECLARED
+  E: DECLARED
+  R: DECLARED
+  P: DECLARED
+  V: DECLARED
+  G: DECLARED
+supersedes: []
+superseded_by: null
+licence_and_access:
+  licence: Repository licence plus protected LOG-GCD source/provenance and MATH-PROGRAMME certification/publication controls.
+  access: public_repository_candidate_pilot_record
+generated_content:
+  present: true
+  method: Candidate mathematical-communication supplement and G0-G7 internal checks drafted by OpenAI GPT-5.6 Sol from the protected LOG-GCD theorem sources, Claim Ledger, source lock, prior-art/certification records, GCL-TCS/POS candidate standards, and protected MATH-CORE architecture firewall.
+  review: G0-G7 are same-system machine-assisted internal checks and do not establish independent CHECKED or ASSURED status. G8 and G9 are explicitly deferred pending genuine non-author Referee review and atomic protected admission. No mathematical, certification, canonical, MATH-CORE, or publication authority is created by this package.
