@@ -55,7 +55,7 @@ A new repository result routes to a successor admission transaction. It does not
 
 ## Compatibility
 
-- language: Python 3 with built-in `typing` support for the annotations used by the protected repository;
+- language/runtime: Python 3.9 or newer; the protected source uses built-in generic type syntax such as `list[...]` and `tuple[...]`;
 - external runtime dependencies: none;
 - network/runtime credentials: none;
 - serialized input schema version: `1.0.0`.
@@ -85,5 +85,11 @@ assert report["authority_boundary"]["may_admit_repository"] is False
 ```
 
 ## Tests linked to guarantees
+
+From the repository root, replay the protected test module with:
+
+```text
+python3 tests/test_ghos_material_state_sentinel.py
+```
 
 `tests/test_ghos_material_state_sentinel.py` checks unchanged membership, new-member routing without auto-admission, archive/removal routing, identity replacement, duplicate identity, mixed drift fail-closed behavior, and parsing of the protected 14-member GHOS campaign. These tests establish implemented behavior for the protected source identity; they do not establish completeness of an external live-snapshot acquisition mechanism.
