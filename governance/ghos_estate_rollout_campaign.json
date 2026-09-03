@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "campaign_id": "GHOS-ESTATE-ROLLOUT-001",
   "title": "GH-OS estate-wide execution routing and conformance campaign",
-  "state": "ACTIVE_PHASE_1_READY",
+  "state": "GHOS_ESTATE_CONFORMANCE_GREEN",
   "umbrella_issue": "grandchallenge/MATH-PROGRAMME#724",
   "protected_predecessor": "3c7aa5298debd6564e3f93a7a05b4f6821cd3bb2",
   "protected_admission": {
@@ -13,9 +13,28 @@
   },
   "phase_transition": {
     "phase_0": "COMPLETE__GHOS_ROUTING_ENFORCED",
-    "phase_1": "READY_FOR_REVALIDATION_AND_IMPLEMENTATION",
+    "phase_1": "COMPLETE__GHOS_ROUTING_ENFORCED",
+    "phase_2": "COMPLETE__GHOS_ROUTING_ENFORCED",
+    "phase_3": "COMPLETE__GHOS_ROUTING_ENFORCED",
+    "phase_4": "COMPLETE__GHOS_ROUTING_ENFORCED",
     "phase_0_umbrella_checkpoint_comment_id": 5493507033,
     "phase_1_handoff": "handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/HANDOFF.md"
+  },
+  "terminal_reconciliation": {
+    "estate_terminal": "GHOS_ESTATE_CONFORMANCE_GREEN",
+    "frozen_repository_count": 14,
+    "live_repository_count": 14,
+    "stable_repository_ids_match": true,
+    "all_repository_specific_tracks_terminal": true,
+    "unaccounted_archived_or_inactive_repository_count": 0,
+    "shared_gate_audit_pending_count": 0,
+    "applicable_routing_gap_count": 0,
+    "blocked_count": 0,
+    "documentary_closure_contract": "governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/closure_contract.json",
+    "closure_stage1_reviewed_head": "d05c09f7dd6de12a08b01f577c5d984d5fe53d48",
+    "closure_stage1_review_id": "PRR_kwDOSuWV7M8AAAABL8tVIQ",
+    "closure_stage1_protected_merge": "8d9549e60fde5fc81c11b84c1914e1c74a972993",
+    "closure_stage1_receipt_comment_id": 5518908313
   },
   "control_model": {
     "execution_topology": "MULTI_SESSION_RESUMABLE",
@@ -86,100 +105,118 @@
       "repository_id": 1304763338,
       "default_branch": "main",
       "opening_head": "08a3044e0363fa932012fa642ea15d9153ba876b",
+      "terminal_head": "565ed31f413b4698f400a260fc4a8ea65e7e1255",
       "phase": 1,
       "risk_tier": "CONSTITUTIONAL_AUTHORITY",
       "tracker": "grandchallenge/INTELLECT#73",
       "ruleset_id": 19964077,
-      "status": "PREFLIGHT_CONFIRMED__ROUTING_REGISTRY_ABSENT__IMPLEMENTATION_PENDING"
+      "status": "GHOS_ROUTING_ENFORCED"
     },
     {
       "repository": "grandchallenge/MATHFORGE",
       "repository_id": 1256536875,
       "default_branch": "main",
       "opening_head": "ed8a65410336489ea5646808265c44f5387bebb8",
+      "terminal_head": "44096e1d2d9390bffea799f8609f3752c6ac3946",
       "phase": 1,
       "risk_tier": "PROVENANCE_AUTHORITY",
       "tracker": "grandchallenge/MATHFORGE#117",
       "ruleset_id": 17137626,
-      "status": "PREFLIGHT_CONFIRMED__ROUTING_REGISTRY_ABSENT__IMPLEMENTATION_PENDING"
+      "status": "GHOS_ROUTING_ENFORCED"
     },
     {
       "repository": "grandchallenge/MATHSOLVE",
       "repository_id": 1256536872,
       "default_branch": "main",
       "opening_head": "07814c1e28855ff0314737d3666642217da095a1",
+      "terminal_head": "505afed8c51a10bc7857e7d0ec52c499d01f3f8c",
       "phase": 1,
       "risk_tier": "MATHEMATICAL_PRODUCTION",
       "tracker": "grandchallenge/MATHSOLVE#131",
       "ruleset_id": 17137627,
-      "status": "PREFLIGHT_CONFIRMED__ROUTING_REGISTRY_ABSENT__IMPLEMENTATION_PENDING"
+      "status": "GHOS_ROUTING_ENFORCED"
     },
     {
       "repository": "grandchallenge/MATHCERT",
       "repository_id": 1256536865,
       "default_branch": "main",
       "opening_head": "bb9b88a03f379fc0ea9776a672a098cb73096f0a",
+      "terminal_head": "8fb55780045cf02e953d474325519f152023bd2c",
       "phase": 1,
       "risk_tier": "CERTIFICATION_AUTHORITY",
       "tracker": "grandchallenge/MATHCERT#232",
       "ruleset_id": 17137628,
-      "status": "PREFLIGHT_CONFIRMED__LARGE_ROUTING_REGISTRY_ABSENT__IMPLEMENTATION_PENDING"
+      "status": "GHOS_ROUTING_ENFORCED"
     },
     {
       "repository": "grandchallenge/AETHER",
       "repository_id": 1184906615,
       "default_branch": "main",
+      "terminal_head": "c3cc79d5c2848d7732b8529220bda01452efd1dc",
       "phase": 2,
       "risk_tier": "PERSISTENT_AGENTIC_COORDINATION",
-      "status": "BASELINE_SCAN_PENDING"
+      "tracker": "grandchallenge/AETHER#61",
+      "status": "GHOS_ROUTING_ENFORCED"
     },
     {
       "repository": "grandchallenge/MODULUS",
       "repository_id": 1173145816,
       "default_branch": "main",
+      "terminal_head": "bdc236cb50b25d234451bf05a36ce7da49256870",
       "phase": 3,
       "risk_tier": "ACTIVE_TECHNICAL_PROGRAMME",
-      "status": "BASELINE_SCAN_PENDING"
+      "tracker": "grandchallenge/MODULUS#18",
+      "status": "GHOS_ROUTING_ENFORCED"
     },
     {
       "repository": "grandchallenge/GLOSS",
       "repository_id": 1303378014,
       "default_branch": "main",
+      "terminal_head": "0d4b5383744ff39315fde7f8fab107d60097d4c7",
       "phase": 3,
       "risk_tier": "ACTIVE_TECHNICAL_PROGRAMME",
-      "status": "BASELINE_SCAN_PENDING"
+      "tracker": "grandchallenge/GLOSS#6",
+      "status": "GHOS_ROUTING_ENFORCED"
     },
     {
       "repository": "grandchallenge/QUANTUM-TECHNOLOGIES",
       "repository_id": 1317238218,
       "default_branch": "main",
+      "terminal_head": "4f0e59cfc16322e5949b388b6c34fdb0176e2c07",
       "phase": 3,
       "risk_tier": "ACTIVE_TECHNICAL_PROGRAMME",
-      "status": "BASELINE_SCAN_PENDING"
+      "tracker": "grandchallenge/QUANTUM-TECHNOLOGIES#116",
+      "status": "GHOS_ROUTING_ENFORCED"
     },
     {
       "repository": "grandchallenge/TROVE-CURATA",
       "repository_id": 1333630693,
       "default_branch": "main",
+      "terminal_head": "6a6dd7bf16dadab16405b3be610abb090cf02af1",
       "phase": 3,
       "risk_tier": "ACTIVE_DATA_PROGRAMME",
-      "status": "BASELINE_SCAN_PENDING"
+      "tracker": "grandchallenge/TROVE-CURATA#2",
+      "status": "GHOS_ROUTING_ENFORCED"
     },
     {
       "repository": "grandchallenge/lean-action",
       "repository_id": 1316003821,
       "default_branch": "main",
+      "terminal_head": "82d72e361976b4734e7b02a1437e21c8cb4317f8",
       "phase": 4,
       "risk_tier": "SHARED_ACTION_TOOLING",
-      "status": "BASELINE_SCAN_PENDING"
+      "tracker": "grandchallenge/MATH-PROGRAMME#727",
+      "status": "GHOS_ROUTING_ENFORCED"
     },
     {
       "repository": "grandchallenge/upload-pages-artifact",
       "repository_id": 1316011378,
       "default_branch": "main",
+      "terminal_head": "899944f687a6b935e866bdb9cc857868d209f5ea",
       "phase": 4,
       "risk_tier": "SHARED_PUBLICATION_TOOLING",
-      "status": "BASELINE_SCAN_PENDING"
+      "tracker": "grandchallenge/MATH-PROGRAMME#728",
+      "status": "GHOS_ROUTING_ENFORCED"
     }
   ],
   "allowed_terminal_repository_dispositions": [
