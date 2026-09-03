@@ -1,0 +1,20 @@
+registry_id: TERM-GHOS-SENTINEL-001
+artifact_id: GHOS_ESTATE_MEMBERSHIP_SENTINEL
+terms:
+- term: estate membership
+  meaning: The set of repositories identified by stable repository IDs in the governed population being compared.
+- term: frozen campaign population
+  meaning: The stable repository identities recorded by the historical GHOS estate campaign; later membership changes do not rewrite that historical population.
+- term: live snapshot
+  meaning: A caller-supplied repository population presented to the classifier; completeness is an acquisition-layer responsibility.
+- term: detect-only
+  meaning: The component may classify and route a condition but has no authority or mechanism to perform the routed mutation.
+- term: successor admission
+  meaning: A new governed transaction for a newly observed repository; it is distinct from reopening or rewriting the historical terminal campaign.
+- term: fail closed
+  meaning: Ambiguous or malformed identity state routes to UNKNOWN_FAIL_CLOSED and blocks an automatic governed transition.
+status_tokens:
+- UNCHANGED
+- NEW_ESTATE_MEMBER_SUCCESSOR_ADMISSION_REQUIRED
+- ESTATE_MEMBER_REMOVED_OR_ARCHIVED
+- UNKNOWN_FAIL_CLOSED

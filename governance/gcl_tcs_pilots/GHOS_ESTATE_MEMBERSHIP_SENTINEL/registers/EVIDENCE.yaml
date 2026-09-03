@@ -1,0 +1,33 @@
+register_id: EVIDENCE-GHOS-SENTINEL-001
+artifact_id: GHOS_ESTATE_MEMBERSHIP_SENTINEL
+evidence:
+- evidence_id: SENTINEL-E001
+  supports: [SENTINEL-C001, SENTINEL-C002, SENTINEL-C003, SENTINEL-C004]
+  location: ci/ghos_material_state_sentinel.py
+  identity: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+  authority_status: admitted
+  note: Protected source implementation merged by MATH-PROGRAMME PR #792.
+- evidence_id: SENTINEL-E002
+  supports: [SENTINEL-C001, SENTINEL-C002, SENTINEL-C003, SENTINEL-C004]
+  location: tests/test_ghos_material_state_sentinel.py
+  identity: git-blob:d6a1ffb0ee2f61fc43a4399b79864a580c9900a0
+  authority_status: admitted
+  note: Eight unit tests cover unchanged, new, archived, missing, identity-replacement, duplicate, mixed-drift, and frozen-campaign cases.
+- evidence_id: SENTINEL-E003
+  supports: [SENTINEL-C005]
+  location: grandchallenge/MATH-PROGRAMME#791
+  identity: issue:791
+  authority_status: admitted
+  note: Successor admission tracker records GCT-EXECUTIVE repository ID 1355707445 and the no-terminal-rewrite boundary.
+- evidence_id: SENTINEL-E004
+  supports: [SENTINEL-C001, SENTINEL-C002, SENTINEL-C003, SENTINEL-C004]
+  location: grandchallenge/MATH-PROGRAMME#792
+  identity: candidate:36e470de5f7d2da1ab0b671d2355ffd72125a07f;protected-merge:5bb3a91cca92b99bd97e60101934390a91f96103
+  authority_status: admitted
+  note: Exact-head protected validation and merge record for the source and tests.
+- evidence_id: SENTINEL-E005
+  supports: [SENTINEL-C002, SENTINEL-C005]
+  location: governance/ghos_estate_rollout_campaign.json
+  identity: frozen-campaign:GHOS-ESTATE-ROLLOUT-001
+  authority_status: authoritative
+  note: Historical campaign population supplies the 14 stable baseline repository identities.

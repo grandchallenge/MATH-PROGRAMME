@@ -1,0 +1,128 @@
+schema_version: 0.1.0
+standard:
+  id: GCL-TCS-00
+  version: 0.1.0
+artifact_id: GHOS_ESTATE_MEMBERSHIP_SENTINEL
+title: GHOS estate membership sentinel software communication pilot
+artifact_type: software_component
+version: 1.0.0
+date: '2026-09-03'
+owner: Grand Challenge Labs
+authority_status: candidate
+promotion_status: in_review
+primary_profile:
+  id: GCL-TCS-P05
+  version: 0.1.0
+secondary_profiles:
+- id: GCL-TCS-P07
+  version: 0.1.0
+impact_class: IC-2
+audience:
+- GCL operators and maintainers
+- GHOS governance reviewers
+- software reviewers
+- future acquisition-layer implementers
+scope: Documents and evaluates the protected detect-only GHOS estate-membership classifier, including its input/output contract, deterministic behavior, failure semantics, tests, provenance, and authority boundary.
+out_of_scope:
+- Acquiring or proving completeness of a live organization repository snapshot.
+- Admitting, removing, archiving, or otherwise changing repository estate membership.
+- Rewriting historical terminal GHOS evidence.
+- Creating or changing workflows, routing registries, rulesets, branch protection, credentials, or persistent-controller authority.
+- Mathematical, certification, canonical Claim Ledger, publication, constitutional, commercial, production, or external-claim authority.
+- GCL-TCS-00 version 1.0 promotion.
+source_location: ci/ghos_material_state_sentinel.py
+source_revision: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+dependencies:
+- artifact_id: GHOS-ESTATE-ROLLOUT-001
+  version_or_revision: frozen-campaign-source:governance/ghos_estate_rollout_campaign.json
+  authority_status: authoritative
+  relation: supplies the frozen stable repository identity population consumed by the classifier
+- artifact_id: GCL-TCS-00
+  version_or_revision: 0.1.0
+  authority_status: admitted
+  relation: governs this bounded communication pilot
+- artifact_id: GCL-POS-01
+  version_or_revision: 0.1.0
+  authority_status: admitted
+  relation: constrains institutional claim and authority presentation
+- artifact_id: MP-STREAMLINED-EXECUTION-001
+  version_or_revision: protected-main:38668d297be7cdf425c33193f27d1628a9102101
+  authority_status: authoritative
+  relation: controls bounded execution and material-evidence closure
+terminology_registry: registries/TERMINOLOGY.yaml
+notation_registry:
+  status: not_applicable
+  reason: The component uses stable identifiers, Python types, and status tokens but no material mathematical notation requiring a notation registry.
+claim_register: registers/CLAIMS.yaml
+evidence_register: registers/EVIDENCE.yaml
+review_register:
+- review_id: REV-GHOS-SENTINEL-G0-001
+  gate_id: G0
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+- review_id: REV-GHOS-SENTINEL-G1-001
+  gate_id: G1
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+- review_id: REV-GHOS-SENTINEL-G2-001
+  gate_id: G2
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+- review_id: REV-GHOS-SENTINEL-G3-001
+  gate_id: G3
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+- review_id: REV-GHOS-SENTINEL-G4-001
+  gate_id: G4
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+- review_id: REV-GHOS-SENTINEL-G5-001
+  gate_id: G5
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+- review_id: REV-GHOS-SENTINEL-G6-001
+  gate_id: G6
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+- review_id: REV-GHOS-SENTINEL-G7-001
+  gate_id: G7
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+- review_id: REV-GHOS-SENTINEL-G8-001
+  gate_id: G8
+  location: reviews/DEFERRED_G8_G9.yaml
+  decision: DEFERRED
+  reviewed_revision: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+- review_id: REV-GHOS-SENTINEL-G9-001
+  gate_id: G9
+  location: reviews/DEFERRED_G8_G9.yaml
+  decision: DEFERRED
+  reviewed_revision: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+exceptions: []
+conformance_dimensions:
+  L: DECLARED
+  T: DECLARED
+  S: DECLARED
+  C: DECLARED
+  E: DECLARED
+  R: DECLARED
+  P: DECLARED
+  V: DECLARED
+  G: DECLARED
+supersedes: []
+superseded_by: null
+licence_and_access:
+  licence: Repository licence and protected MATH-PROGRAMME policy control.
+  access: public_repository_candidate_pilot_record
+generated_content:
+  present: true
+  method: Candidate communication package and G0-G7 internal checks drafted by OpenAI GPT-5.6 Sol from protected source, tests, GCL-TCS-00, GCL-POS-01, GHOS, and MP-STREAMLINED-EXECUTION-001 evidence.
+  review: G0-G7 are same-system machine-assisted internal checks and do not establish independent CHECKED or ASSURED status. G8 and G9 are explicitly deferred pending a genuine non-author Referee disposition and atomic protected admission.

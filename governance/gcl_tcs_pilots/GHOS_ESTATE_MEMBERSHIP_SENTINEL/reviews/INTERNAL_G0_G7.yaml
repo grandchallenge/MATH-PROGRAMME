@@ -1,0 +1,79 @@
+artifact_id: GHOS_ESTATE_MEMBERSHIP_SENTINEL
+reviewed_revision: git-blob:ae860565d8b1769e0072bcebd9b0b92b2a3e8549
+reviewer: openai-gpt-5.6-sol
+reviewer_kind: agent_machine_assisted
+independence_statement: Same assistant system authored the implementation and this communication package; these are internal gate checks only and cannot satisfy independent CHECKED/ASSURED status or G8.
+date: '2026-09-03'
+reviews:
+- review_id: REV-GHOS-SENTINEL-G0-001
+  gate_id: G0
+  gate_name: registration_and_identity
+  decision: PASS
+  established:
+  - Artifact ID, protected source location, source blob, owner, profiles, impact class, and tracker are explicit.
+  not_established:
+  - Independent review or promotion authority.
+- review_id: REV-GHOS-SENTINEL-G1-001
+  gate_id: G1
+  gate_name: source_and_provenance_lock
+  decision: PASS
+  established:
+  - Source and test bytes are fixed by git blob identity and protected merge provenance.
+  - Historical GHOS campaign is identified as an authoritative dependency rather than copied into the candidate package.
+  not_established:
+  - Completeness of any future live-snapshot acquisition mechanism.
+- review_id: REV-GHOS-SENTINEL-G2-001
+  gate_id: G2
+  gate_name: terminology_and_notation_control
+  decision: PASS
+  established:
+  - Material status tokens and governance terms are registered in registries/TERMINOLOGY.yaml.
+  - Mathematical notation is not material to the software contract.
+  not_established:
+  - No cross-project terminology authority beyond this candidate package.
+- review_id: REV-GHOS-SENTINEL-G3-001
+  gate_id: G3
+  gate_name: claim_registration
+  decision: PASS
+  established:
+  - Software behavior, failure semantics, authority boundary, and the single observed live case are separately scoped.
+  - Explicit not-claimed statements prevent snapshot-completeness and autonomous-monitoring overreach.
+  not_established:
+  - Generalized empirical false-positive or false-negative rates.
+- review_id: REV-GHOS-SENTINEL-G4-001
+  gate_id: G4
+  gate_name: evidence_binding
+  decision: PASS
+  established:
+  - Consequential software claims bind to protected source/test blobs, PR #792, frozen campaign identity, and successor issue #791.
+  - Evidence strength distinguishes unit-test guarantees from a one-time live observation.
+  not_established:
+  - Independent acquisition-layer completeness evidence.
+- review_id: REV-GHOS-SENTINEL-G5-001
+  gate_id: G5
+  gate_name: domain_verification
+  decision: PASS
+  established:
+  - Eight unit tests exercise normal, material-change, and invalid-identity behavior of the protected source.
+  - The source has no network, mutation, secret, schedule, or autonomous wake mechanism.
+  not_established:
+  - Correctness or security of an external organization-wide repository acquisition implementation.
+- review_id: REV-GHOS-SENTINEL-G6-001
+  gate_id: G6
+  gate_name: adversarial_and_boundary_review
+  decision: PASS
+  established:
+  - Identity replacement, duplicate repository ID, and simultaneous addition/removal cases fail closed.
+  - New-member output explicitly denies auto-admission and historical-terminal rewrite.
+  not_established:
+  - Robustness to adversarial data omitted before it reaches the classifier.
+- review_id: REV-GHOS-SENTINEL-G7-001
+  gate_id: G7
+  gate_name: integration_and_governance_review
+  decision: PASS
+  established:
+  - Component is library-only and does not become a persistent controller or registered direct execution surface.
+  - Successor routing is separated from the frozen terminal GHOS record.
+  - Introducing private-estate acquisition credentials remains outside this package and would require separate security/controller disposition.
+  not_established:
+  - Scheduled organization-wide monitoring or credentialed private-repository acquisition.
