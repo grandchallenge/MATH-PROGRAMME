@@ -1,0 +1,188 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "GCL-TCS-PILOT-INSTITUTIONALIZATION-001-MEASUREMENT-001",
+  "record_type": "NON_AUTHORITATIVE_PILOT_MEASUREMENT_OBSERVATION",
+  "operation_id": "GCL-TCS-PILOT-INSTITUTIONALIZATION-001",
+  "tracker": "grandchallenge/MATH-PROGRAMME#788",
+  "measurement_baseline": "66aaa9175fe8d91907c3cf113efc2d08a113a780",
+  "date": "2026-09-03",
+  "authority_boundary": {
+    "readiness_is_promotion_authority": false,
+    "changes_standard_version": false,
+    "promotes_candidate_pilots": false,
+    "changes_domain_claim_authority": false,
+    "changes_mathematical_or_certification_state": false,
+    "changes_publication_authority": false,
+    "changes_workflow_routing_protection_or_controller_authority": false
+  },
+  "pilot_class_coverage": {
+    "required_classes": 6,
+    "classes_with_real_protected_pilot_evidence": 5,
+    "classes": [
+      {
+        "class_id": "mathematical",
+        "artifact_id": "LOG-GCD-001-TCS-PILOT-001",
+        "evidence": "governance/gcl_tcs_pilots/LOG-GCD-001/",
+        "protected_merge": "66aaa9175fe8d91907c3cf113efc2d08a113a780",
+        "pilot_status": "candidate_in_review",
+        "promotion_claimed": false
+      },
+      {
+        "class_id": "experimental_computational",
+        "artifact_id": null,
+        "evidence": null,
+        "pilot_status": "explicit_deficit",
+        "deficit": "No completed non-synthetic P04 result package was verified in the current institutionalization pass."
+      },
+      {
+        "class_id": "software",
+        "artifact_id": "GHOS_ESTATE_MEMBERSHIP_SENTINEL",
+        "evidence": "governance/gcl_tcs_pilots/GHOS_ESTATE_MEMBERSHIP_SENTINEL/",
+        "protected_merge": "4a13fefdf213979ed255bfaacc677d0f1d062bcd",
+        "pilot_status": "candidate_in_review",
+        "promotion_claimed": false
+      },
+      {
+        "class_id": "operational",
+        "artifact_id": "GHOS-ESTATE-ROLLOUT-001-DOC-001",
+        "evidence": "governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/",
+        "pilot_status": "completed_existing_pilot",
+        "promotion_claimed": false
+      },
+      {
+        "class_id": "governance",
+        "artifact_id": "MP-STREAMLINED-EXECUTION-001-TCS-PILOT-001",
+        "evidence": "governance/gcl_tcs_pilots/MP-STREAMLINED-EXECUTION-001/",
+        "protected_merge": "f48244ccac621fa59d64daff0b84f3dd5b0877e4",
+        "pilot_status": "candidate_in_review",
+        "promotion_claimed": false
+      },
+      {
+        "class_id": "public",
+        "artifact_id": "PUB-LOG-GCD-001-TCS-PILOT-001",
+        "evidence": "governance/gcl_tcs_pilots/PUB-LOG-GCD-001/",
+        "protected_merge": "20c4796ccd6d1e9d4fd8578ffc7c3f7847b40eb6",
+        "pilot_status": "candidate_in_review",
+        "promotion_claimed": false
+      }
+    ]
+  },
+  "stage_a_burden_proxy": {
+    "scope": "Four new Stage-A candidate pilot packages created during the current pass: software, governance, public, mathematical.",
+    "packages": 4,
+    "changed_files": 36,
+    "added_lines": 2138,
+    "deleted_lines": 0,
+    "commits_before_protected_merge": 7,
+    "interpretation": "Repository-diff counts are a narrow paperwork/iteration proxy. They are not elapsed-time, cognitive-load, or cost measurements."
+  },
+  "defects_caught_before_protected_merge": {
+    "count": 3,
+    "items": [
+      {
+        "pilot": "GHOS_ESTATE_MEMBERSHIP_SENTINEL",
+        "finding": "Initial internal G1-G7 labels did not match protected GCL-TCS gate semantics.",
+        "effect": "Corrected before Stage-A protected merge; earlier exact-head CI was treated as stale."
+      },
+      {
+        "pilot": "GHOS_ESTATE_MEMBERSHIP_SENTINEL",
+        "finding": "Python compatibility and explicit repository-root replay documentation were insufficiently precise.",
+        "effect": "Corrected before Stage-A protected merge and revalidated at the corrected exact head."
+      },
+      {
+        "pilot": "PUB-LOG-GCD-001",
+        "finding": "The initial conformance metadata assigned a synthetic artifact identifier to MATH_CORE_INTEGRITY.md.",
+        "effect": "Synthetic dependency removed; protected ADR-0021 retained as the registered architecture dependency and MATH_CORE_INTEGRITY.md retained only as governing provenance/guidance."
+      }
+    ],
+    "interpretation": "These are concrete pre-merge defect detections, not an estimate of review sensitivity."
+  },
+  "post_merge_defect_observation": {
+    "defects_observed_in_four_new_stage_a_packages_during_current_pass": 0,
+    "false_negative_rate": "UNKNOWN_NOT_MEASURED",
+    "interpretation": "No later defect has yet been observed in the current pass. This does not establish that no defect exists and must not be interpreted as a measured zero false-negative rate."
+  },
+  "false_positive_evidence": {
+    "empirical_rate": "UNKNOWN_NOT_MEASURED",
+    "evidence": [
+      {
+        "source": "governance/gcl_tcs_pilots/GHOS_ESTATE_MEMBERSHIP_SENTINEL/PILOT_OBSERVATIONS.yaml",
+        "observation": "An identity-equivalent synthetic population is required to classify as UNCHANGED.",
+        "limit": "Synthetic classifier coverage does not establish a live-estate false-positive rate."
+      }
+    ]
+  },
+  "false_negative_evidence": {
+    "empirical_rate": "UNKNOWN_NOT_MEASURED",
+    "evidence": [
+      {
+        "source": "governance/gcl_tcs_pilots/GHOS_ESTATE_MEMBERSHIP_SENTINEL/PILOT_OBSERVATIONS.yaml",
+        "observation": "A synthetic new stable repository ID must route to successor admission.",
+        "limit": "The classifier cannot detect an estate member omitted by the acquisition layer, so end-to-end recall is not established."
+      }
+    ]
+  },
+  "true_positive_examples": [
+    {
+      "source": "governance/gcl_tcs_pilots/GHOS_ESTATE_MEMBERSHIP_SENTINEL/PILOT_OBSERVATIONS.yaml",
+      "observation": "Manual live-estate reconciliation found grandchallenge/GCT-EXECUTIVE, repository ID 1355707445, outside the historical frozen 14-member campaign and routed it to successor issue #791.",
+      "limit": "One live routing example is not a population-level sensitivity estimate."
+    }
+  ],
+  "burden_and_friction": [
+    {
+      "class": "operational",
+      "observation": "Strict pre-state/post-state protection comparisons and connected-GitHub write limitations increased operator steps but prevented silent protection drift."
+    },
+    {
+      "class": "software",
+      "observation": "The sentinel classifier is cheap after acquisition, but complete private-estate snapshot acquisition remains an external completeness burden."
+    },
+    {
+      "class": "governance",
+      "observation": "Streamlined execution removes repeated approval ceremony but shifts work toward accurate material-closure classification and immutable dependency tracking."
+    },
+    {
+      "class": "public",
+      "observation": "Public communication requires continued synchronization with certified/audited source identities and permanent exclusions."
+    },
+    {
+      "class": "mathematical",
+      "observation": "Mathematical communication requires exact theorem hypotheses, claim classes, source identities, counterexamples, and replay provenance to remain synchronized."
+    },
+    {
+      "class": "pilot_process",
+      "observation": "The four new Stage-A packages each used a nine-file communication/conformance envelope. For non-promotional pilot evidence, generating standing G8/G9 placeholder records may be unnecessary ceremony; future templates should defer creation of promotion-specific records until promotion is actually requested, provided discoverability and authority boundaries remain explicit."
+    }
+  ],
+  "unresolved_ambiguities": [
+    "Whether the present nine-file-per-pilot packet is the minimum useful durable record or can be reduced without weakening claim/evidence/provenance boundaries.",
+    "How to obtain representative empirical false-positive and false-negative evidence without manufacturing artificial projects or risky live transitions.",
+    "How complete private-estate acquisition should be governed if the GHOS sentinel is later scheduled or automated.",
+    "Whether a future v1.0 promotion should use a newly activated independent Referee mechanism; the current delegated Referee office record is not effective on the measurement baseline.",
+    "Whether the P04 experimental/computational deficit should be filled by an already-completed real result found in later evidence discovery or by a future naturally occurring experiment, rather than by manufacturing a pilot solely for coverage."
+  ],
+  "preserved_controls": [
+    "exact immutable source and candidate identities",
+    "candidate/source authority separation",
+    "negative evidence and boundary-case preservation",
+    "material-closure-sensitive invalidation",
+    "proportional CI and unchanged-attestation reuse",
+    "fail-closed handling of unknown or ambiguous transitions",
+    "no domain-authority promotion by communication conformance"
+  ],
+  "safe_automation_opportunities": [
+    "aggregate pilot observation records into a non-authoritative measurement summary",
+    "validate shallow evidence-index pointers and immutable identities",
+    "add cross-surface orphan detection for governed candidate records and static artifacts",
+    "reuse unchanged formal attestations when material identity is unchanged",
+    "generate promotion-specific G8/G9 packet material only when a promotion transition is explicitly requested"
+  ],
+  "interpretation_limits": [
+    "The pilot does not establish that GCL-TCS is optimal.",
+    "The pilot does not establish a causal improvement in research quality, safety, correctness, throughput, or review latency.",
+    "Repository diff counts are not a complete burden metric.",
+    "No representative empirical false-positive or false-negative rate has been measured.",
+    "Candidate Stage-A protected merges are evidence-preservation transactions, not GCL-TCS promotions."
+  ]
+}
