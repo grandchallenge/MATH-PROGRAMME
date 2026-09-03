@@ -3,7 +3,7 @@
   "contract_id": "GHOS-ESTATE-ROLLOUT-001-CLOSURE-CONTRACT-001",
   "governed_work_id": "GHOS-ESTATE-ROLLOUT-001",
   "binding": {
-    "status": "CANDIDATE_AWAITING_PROTECTED_ADMISSION",
+    "status": "CANONICAL_ON_PROTECTED_MAIN",
     "policy_refs": [
       "AGENTS.md",
       "docs/AGENT_COUNCIL_GOVERNANCE.md",
@@ -16,14 +16,17 @@
     "entry_id": "GHOS-ESTATE-ROLLOUT-001-EVIDENCE-001"
   },
   "review_provenance": {
-    "complete": false,
+    "complete": true,
     "evidence_refs": [
       "grandchallenge/MATH-PROGRAMME#724 terminal estate gate",
-      "grandchallenge/MATH-PROGRAMME#728 terminal receipt comment 5518695873"
+      "grandchallenge/MATH-PROGRAMME#728 terminal receipt comment 5518695873",
+      "MATH-PROGRAMME PR #783 exact reviewed head d05c09f7dd6de12a08b01f577c5d984d5fe53d48",
+      "MATH-PROGRAMME PR #783 independent APPROVED review PRR_kwDOSuWV7M8AAAABL8tVIQ by jimsteeg",
+      "MATH-PROGRAMME issue #724 comment 5518908313 protected admission/readback receipt"
     ]
   },
   "cross_document_consistency": {
-    "status": "pending",
+    "status": "reviewed",
     "checked_against": [
       "docs/governance/GHOS_ESTATE_ROLLOUT_CAMPAIGN.md",
       "governance/ghos_estate_rollout_campaign.json",
@@ -33,25 +36,40 @@
     "conflicts": []
   },
   "final_editorial_integration": {
-    "status": "pending",
+    "status": "reviewed",
     "authoritative_artifact_ref": "governance/ghos_estate_conformance_ledger.json",
     "integration_notes": [
-      "The estate ledger remains non-terminal until this contract receives independent exact-revision review, protected admission, and readback."
+      "The estate ledger is terminalized only after all 14 repository-specific tracks reached governed terminal dispositions and the documentary closure contract received independent exact-revision review, protected admission, and protected readback.",
+      "The campaign manifest and human-readable campaign record are reconciled in the same terminal candidate so no stale active-phase statement remains canonical."
     ]
   },
-  "unresolved_documentary_obligations": [
-    "independent_exact_revision_terminal_review",
-    "protected_pr_admission_and_readback"
-  ],
+  "unresolved_documentary_obligations": [],
   "authority_refs": [
     "grandchallenge/MATH-PROGRAMME#724",
     "governance/ghos_estate_rollout_campaign.json",
     "governance/governed_closure_registry.json"
   ],
-  "terminal_evidence_refs": [],
+  "terminal_evidence_refs": [
+    "MATH-PROGRAMME PR #783 exact reviewed head d05c09f7dd6de12a08b01f577c5d984d5fe53d48",
+    "MATH-PROGRAMME PR #783 independent APPROVED review PRR_kwDOSuWV7M8AAAABL8tVIQ by jimsteeg",
+    "MATH-PROGRAMME Programme policy run 33702629475 success on exact reviewed head",
+    "protected documentary merge 8d9549e60fde5fc81c11b84c1914e1c74a972993 verified=true reason=valid",
+    "protected main readback 8d9549e60fde5fc81c11b84c1914e1c74a972993",
+    "MATH-PROGRAMME issue #724 comment 5518908313 protected admission/readback receipt",
+    "MATH-PROGRAMME issue #728 terminal receipt comment 5518695873"
+  ],
   "admission": {
-    "phase": "candidate",
-    "required_next_step": "protected_pr_admission_and_readback"
+    "phase": "protected",
+    "exact_reviewed_head": "d05c09f7dd6de12a08b01f577c5d984d5fe53d48",
+    "independent_review_id": "PRR_kwDOSuWV7M8AAAABL8tVIQ",
+    "independent_reviewer": "jimsteeg",
+    "programme_policy_run": 33702629475,
+    "programme_policy_conclusion": "success",
+    "protected_merge": "8d9549e60fde5fc81c11b84c1914e1c74a972993",
+    "protected_merge_signature_verified": true,
+    "protected_merge_signature_reason": "valid",
+    "protected_main_readback": "8d9549e60fde5fc81c11b84c1914e1c74a972993",
+    "terminal_receipt_ref": "MATH-PROGRAMME issue #724 comment 5518908313 protected admission/readback receipt"
   },
   "claim_boundary": {
     "creates_new_authority": false,
