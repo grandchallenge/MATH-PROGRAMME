@@ -1,0 +1,63 @@
+register_id: EVIDENCE-PUB-LOG-GCD-TCS-001
+artifact_id: PUB-LOG-GCD-001-TCS-PILOT-001
+evidence:
+- evidence_id: PLG-TCS-E001
+  supports: [PLG-TCS-C001, PLG-TCS-C002, PLG-TCS-C003, PLG-TCS-C004, PLG-TCS-C005, PLG-TCS-C006]
+  location: docs/LOG_GCD_PUBLICATION.md
+  identity: git-blob:f52b6e0d08520de2c4d263a58acee06468d1770c
+  authority_status: authoritative
+  note: Canonical published public note; fixed subject of this pilot and not edited by it.
+- evidence_id: PLG-TCS-E002
+  supports: [PLG-TCS-C001, PLG-TCS-C002, PLG-TCS-C003, PLG-TCS-C004, PLG-TCS-C005]
+  location: fixtures/formal/LOG-GCD-001/publication_manifest.json
+  identity: git-blob:24f76b494b74a51f2949171b8380cc08f1458156
+  authority_status: authoritative
+  note: Fixes published certified claim set C001/C003, audited boundary set C004/C005, permitted description, prohibited descriptions, source commit, and publication/certification evidence.
+- evidence_id: PLG-TCS-E003
+  supports: [PLG-TCS-C001, PLG-TCS-C002, PLG-TCS-C003, PLG-TCS-C004]
+  location: fixtures/formal/LOG-GCD-001/claim_ledger.json
+  identity: git-blob:525ac6eb321726627032968aa93b7f530e50c206
+  authority_status: authoritative
+  note: Records C001/C003 as CERTIFIED and C004/C005 as AUDITED with exact theorem names, support types, dependencies, and exclusions.
+- evidence_id: PLG-TCS-E004
+  supports: [PLG-TCS-C004]
+  location: fixtures/formal/LOG-GCD-001/prior_art_audit.json
+  identity: git-blob:5d435b6aed77e774174324f549a2ded54d9debb4
+  authority_status: authoritative
+  note: Machine-readable negative novelty and priority boundary; mathematical and feature-factorization novelty NOT_SUPPORTED, Lean-artifact priority NOT_ESTABLISHED.
+- evidence_id: PLG-TCS-E005
+  supports: [PLG-TCS-C001, PLG-TCS-C002, PLG-TCS-C003, PLG-TCS-C004, PLG-TCS-C005]
+  location: fixtures/formal/LOG-GCD-001/README.md
+  identity: git-blob:d915fcb8b44f4ec64b4cd7d4246112706a943277
+  authority_status: authoritative
+  note: Protected result-status record containing theorem identity, replay route, provenance, trust quartet, publication state, and no-remaining-obligation statement.
+- evidence_id: PLG-TCS-E006
+  supports: [PLG-TCS-C006]
+  location: ci/validate_log_gcd_publication.py
+  identity: git-blob:0ad7a047f4bbec0a4acac5dc4233cf15111575ae
+  authority_status: admitted
+  note: Fail-closes drift in published claims, audited boundaries, permitted/prohibited descriptions, certification evidence, public page, showcase, navigation, ledgers, and fixture readback.
+- evidence_id: PLG-TCS-E007
+  supports: [PLG-TCS-C001, PLG-TCS-C002]
+  location: MATH-PROGRAMME workflow runs 29984406250 and 29993578051
+  identity: protected-certification-evidence:29984406250,29993578051
+  authority_status: authoritative
+  note: Existing certification evidence referenced by the protected publication manifest; this pilot does not issue a replacement certificate.
+- evidence_id: PLG-TCS-E008
+  supports: [PLG-TCS-C005, PLG-TCS-C006]
+  location: MATH-PROGRAMME workflow run 29997559180
+  identity: protected-publication-evidence:29997559180
+  authority_status: authoritative
+  note: Existing publication gate evidence; this pilot does not re-run publication or create a second publication status.
+- evidence_id: PLG-TCS-E009
+  supports: [PLG-TCS-C005]
+  location: handoffs/GCL-TCS-PILOT-INSTITUTIONALIZATION-001/MATH_CORE_INTEGRITY.md
+  identity: git-blob:fff23e92ab93ab81bcb1497e02fd2f41cbbec474
+  authority_status: authoritative
+  note: Operation-specific firewall separating GCL-TCS communication from MATH-CORE coordination and trusted mathematical acceptance.
+- evidence_id: PLG-TCS-E010
+  supports: [PLG-TCS-C005]
+  location: docs/decisions/ADR-0021_MATH_CORE_CENTRED_GCL_MATHEMATICS_ARCHITECTURE.md
+  identity: git-blob:d162935be31556bbb20303856346a73e71d34199
+  authority_status: authoritative
+  note: Protected architecture preserving MATH-CORE as coordination rather than proof/canonical authority and retaining C03-C07 stage boundaries.
