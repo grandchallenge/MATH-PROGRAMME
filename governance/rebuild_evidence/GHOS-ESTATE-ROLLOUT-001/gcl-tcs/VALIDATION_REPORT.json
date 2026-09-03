@@ -3,26 +3,26 @@
   "artifact_id": "GHOS-ESTATE-ROLLOUT-001-DOC-001",
   "work_id": "GHOS-DOC-CONFORMANCE-001",
   "tracker": "grandchallenge/MATH-PROGRAMME#785",
-  "validation_scope": "candidate GCL-TCS-00 v0.1.0 documentary-conformance package",
+  "validation_scope": "post-admission GCL-TCS-00 v0.1.0 documentary-conformance receipt canonicalization",
   "source_revision": "git-blob:4aac4039726dca614959075244e058e542f47730",
   "protected_source_base": "3281f47f182f0e1d7376ccec0e9a624b89b6130c",
-  "result": "PASS_INTERNAL_G0_G7__G8_G9_DEFERRED",
-  "independence_boundary": "This report is machine-assisted internal validation by the same assistant system. It does not satisfy independent Referee gate G8 and does not create G9 release authority.",
+  "result": "PASS_G0_G9__PROTECTED_ADMISSION_RECORDED",
+  "independence_boundary": "Machine-assisted validation does not substitute for independent review. G8 is satisfied by GitHub review 5097435540 from jimsteeg at exact head 0e8e6ab3a297eb333ee9e6c985519645b6ca43c3.",
   "checks": [
     {
       "check": "machine_readable_parse",
       "status": "PASS",
-      "detail": "All candidate YAML/JSON files parse."
+      "detail": "All package YAML/JSON receipt files parse."
     },
     {
       "check": "conformance_schema_shape",
       "status": "PASS",
-      "detail": "The conformance declaration contains every field required by GCL-TCS-00 v0.1.0 schema and uses only declared profile/status/impact values."
+      "detail": "The conformance declaration uses only fields and enum values admitted by the GCL-TCS-00 v0.1.0 schema."
     },
     {
-      "check": "candidate_authority_state",
+      "check": "admitted_authority_state",
       "status": "PASS",
-      "detail": "Candidate does not pre-claim admission or promotion."
+      "detail": "authority_status=admitted and promotion_status=promoted reflect the bounded package admission; no broader authority is claimed."
     },
     {
       "check": "profile_and_impact",
@@ -32,32 +32,37 @@
     {
       "check": "no_assured_dimension",
       "status": "PASS",
-      "detail": "All dimensions are CHECKED; none is marked ASSURED."
+      "detail": "All dimensions remain CHECKED; none is marked ASSURED."
     },
     {
       "check": "source_revision_lock",
       "status": "PASS",
-      "detail": "Source revision matches DOCUMENTARY_COVERAGE.md Git blob 4aac4039726dca614959075244e058e542f47730."
+      "detail": "Source revision remains DOCUMENTARY_COVERAGE.md Git blob 4aac4039726dca614959075244e058e542f47730."
     },
     {
-      "check": "unique_claim_ids",
+      "check": "review_gate_coverage",
       "status": "PASS",
-      "detail": "7 unique claim IDs."
+      "detail": "G0 through G9 each have an explicit PASS review record."
     },
     {
-      "check": "unique_evidence_ids",
+      "check": "g8_exact_head_independence",
       "status": "PASS",
-      "detail": "11 unique evidence IDs."
+      "detail": "Review 5097435540 by jimsteeg is APPROVED and GitHub-bound to exact head 0e8e6ab3a297eb333ee9e6c985519645b6ca43c3."
     },
     {
-      "check": "unique_terms",
+      "check": "g9_atomic_protected_admission",
       "status": "PASS",
-      "detail": "9 unique canonical terms."
+      "detail": "PR #786 merged exact head 0e8e6ab3a297eb333ee9e6c985519645b6ca43c3 as 4161a699e61dba390935ef0bb60c2bbb0936d065; protected-main readback equals the merge commit."
+    },
+    {
+      "check": "merge_signature",
+      "status": "PASS",
+      "detail": "GitHub reports the protected merge signature verified with reason valid."
     },
     {
       "check": "claim_evidence_resolution",
       "status": "PASS",
-      "detail": "All consequential claim evidence references resolve."
+      "detail": "Existing 7 consequential claim IDs and 11 evidence IDs remain unchanged and resolved."
     },
     {
       "check": "explicit_empty_exception_register",
@@ -65,24 +70,9 @@
       "detail": "No artifact-specific GCL-TCS exception is requested."
     },
     {
-      "check": "review_gate_coverage",
-      "status": "PASS",
-      "detail": "G0 through G9 each have an explicit review record."
-    },
-    {
-      "check": "internal_gate_state",
-      "status": "PASS",
-      "detail": "G0-G7 PASS as machine-assisted internal checks; G8/G9 remain DEFERRED."
-    },
-    {
-      "check": "independence_boundary",
-      "status": "PASS",
-      "detail": "Every G0-G7 internal review explicitly disclaims G8 independence."
-    },
-    {
       "check": "negative_evidence_visible",
       "status": "PASS",
-      "detail": "Documentary source names the material and non-material repaired defects."
+      "detail": "Documentary source continues to name material and non-material repaired defects."
     },
     {
       "check": "authority_boundary_visible",
@@ -92,23 +82,15 @@
     {
       "check": "material_revalidation_boundary",
       "status": "PASS",
-      "detail": "Document states concrete material-change revalidation conditions."
-    },
-    {
-      "check": "candidate_discovery",
-      "status": "PASS",
-      "detail": "Candidate is durably discoverable through MATH-PROGRAMME issue #785, exact PR #786, and PACKAGE_MANIFEST.json under the canonical governance/rebuild_evidence tree."
+      "detail": "Document continues to state concrete material-change revalidation conditions."
     },
     {
       "check": "terminal_source_preservation",
       "status": "PASS",
-      "detail": "Candidate leaves the pre-existing GHOS evidence manifest and closure contract byte-identical to protected source commit 3281f47f182f0e1d7376ccec0e9a624b89b6130c."
+      "detail": "The pre-existing GHOS evidence manifest and closure contract remain outside this package receipt update and were byte-preserved by Stage-1 admission."
     }
   ],
-  "unresolved_gates": [
-    "G8_independent_exact_head_referee_review",
-    "G9_atomic_protected_admission_and_readback"
-  ],
+  "unresolved_gates": [],
   "claim_boundary": {
     "changes_ghos_terminal_control_state": false,
     "creates_new_authority": false,

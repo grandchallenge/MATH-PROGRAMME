@@ -5,7 +5,7 @@
   "work_id": "GHOS-DOC-CONFORMANCE-001",
   "tracker": "grandchallenge/MATH-PROGRAMME#785",
   "version": "0.1.0",
-  "status": "CANDIDATE_IN_REVIEW",
+  "status": "PROTECTED_ADMITTED",
   "protected_source_base": "3281f47f182f0e1d7376ccec0e9a624b89b6130c",
   "source_location": "governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/DOCUMENTARY_COVERAGE.md",
   "source_revision": "git-blob:4aac4039726dca614959075244e058e542f47730",
@@ -29,7 +29,7 @@
   "artifacts": [
     {
       "path": "AUTHORITY_DECISION.json",
-      "sha256": "57566830ba7c9e091da46320799a256cf71711085f88f9dd46c0104fe7a2ff45",
+      "sha256": "0ff9a45c570fec65effaefb2116679f23a2a5974d53a833475200fec26db10d4",
       "role": "authority_decision"
     },
     {
@@ -39,7 +39,7 @@
     },
     {
       "path": "GHOS-ESTATE-ROLLOUT-001.conformance.yaml",
-      "sha256": "4068a1e4d4029fa9ef7e736736be5831786015765f3aeaa77bf057481da34977",
+      "sha256": "9968e8d631ab436b2c173eafc67610d8205a38cd986f7c7b153752118873e4ca",
       "role": "conformance_declaration"
     },
     {
@@ -49,12 +49,12 @@
     },
     {
       "path": "README.md",
-      "sha256": "1b2fa29201a771d7763068299f997d156e708b382b5199f799bf96a5dbcfb1ae",
+      "sha256": "a7e365b013af278bbc3aa0616609e1ce58f149833108d398573304927beacfa0",
       "role": "package_readme"
     },
     {
       "path": "VALIDATION_REPORT.json",
-      "sha256": "3db525a10dd5a6b2dacc0f343d2679e3820f99182306c31e8c548c9726b3348d",
+      "sha256": "e1c67ea8bf28ce2b30a47504cbcef9291dff28747f7056f5acbb0a1eea1af5ad",
       "role": "validation_report"
     },
     {
@@ -119,32 +119,44 @@
     },
     {
       "path": "reviews/REV-GHOSDOC-G8-001.yaml",
-      "sha256": "12e6e5d9443566668dcc0c84516ff5804d1be50d44c759908c4609b2ae2ec6af",
+      "sha256": "5e7231f9012052216c8a2460c686ae2d825ebf4027c980de7dd8925744a1c2cc",
       "role": "gate_review"
     },
     {
       "path": "reviews/REV-GHOSDOC-G9-001.yaml",
-      "sha256": "9ccd869ce36848eb925d9a25a5e464469facc9504c7f78fd6c5fda4ab4a1b606",
+      "sha256": "f05b6360eac434e28ef8f73a0459f9f23d5bb5b95f10d3c4d7c19ae7db6f1da7",
       "role": "gate_review"
     },
     {
       "path": "reviews/REVIEW_INDEX.yaml",
-      "sha256": "d7afafe7aa7920add7ad7c6567c8b1d291b16ba2adb687154b475c4a2c60964e",
+      "sha256": "a773dc6ea66a406c4b204dfc5aaab109c144013bfc7f89effc2ae1ae63ca3744",
       "role": "review_index"
     }
   ],
   "checksum_file": "SHA256SUMS",
-  "manifest_self_identity": "Immutable Git blob and protected integration commit recorded at G9; self-hash omitted to avoid circularity.",
-  "candidate_discovery": {
+  "manifest_self_identity": "Manifest content is self-hash-free; the candidate Git blob identifies this receipt revision, and protected merge/readback of the receipt PR supplies its terminal repository identity.",
+  "discovery": {
     "tracker": "grandchallenge/MATH-PROGRAMME#785",
-    "pull_request": "grandchallenge/MATH-PROGRAMME#786",
+    "admission_pull_request": "grandchallenge/MATH-PROGRAMME#786",
     "canonical_tree_location": "governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/",
     "terminal_source_records_modified": false
   },
   "admission": {
     "g0_g7_internal": "PASS",
-    "g8_independent_referee": "DEFERRED",
-    "g9_atomic_protected_admission": "DEFERRED"
+    "g8_independent_referee": {
+      "decision": "PASS",
+      "reviewer": "jimsteeg",
+      "review_id": 5097435540,
+      "exact_head": "0e8e6ab3a297eb333ee9e6c985519645b6ca43c3",
+      "submitted_at": "2026-09-03T03:23:33Z"
+    },
+    "g9_atomic_protected_admission": {
+      "decision": "PASS",
+      "protected_merge": "4161a699e61dba390935ef0bb60c2bbb0936d065",
+      "protected_main_readback": "4161a699e61dba390935ef0bb60c2bbb0936d065",
+      "protected_merge_signature_verified": true,
+      "protected_merge_signature_reason": "valid"
+    }
   },
   "underlying_ghos_state": {
     "state": "GHOS_ESTATE_CONFORMANCE_GREEN",

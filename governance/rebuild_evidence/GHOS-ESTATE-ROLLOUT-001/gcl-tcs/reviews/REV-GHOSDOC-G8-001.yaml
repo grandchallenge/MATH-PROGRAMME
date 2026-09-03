@@ -1,24 +1,29 @@
 review_id: REV-GHOSDOC-G8-001
 artifact_id: GHOS-ESTATE-ROLLOUT-001-DOC-001
-reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+reviewed_revision: git-commit:0e8e6ab3a297eb333ee9e6c985519645b6ca43c3
 gate_id: G8
 gate_name: referee_promotion_decision
-reviewer: unassigned_pending_gate
-reviewer_kind: pending
+reviewer: jimsteeg
+reviewer_kind: independent_human_member
 review_role: Independent Referee
-independence_statement: No independent or release disposition is asserted while this gate is deferred.
+independence_statement: Independent non-author GitHub review over the exact candidate head; this satisfies G8 for the reviewed package.
 date: '2026-09-02'
-decision: DEFERRED
+decision: PASS
 findings:
 - finding_id: G8-F01
   severity: information
-  statement: Independent exact-head review is required after the candidate package and protected CI are visible.
+  statement: Independent Referee approval exists at the exact candidate head admitted by PR #786.
 evidence:
+- grandchallenge/MATH-PROGRAMME#786 review 5097435540
+- git-commit:0e8e6ab3a297eb333ee9e6c985519645b6ca43c3
 - governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/DOCUMENTARY_COVERAGE.md
 - governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/GHOS-ESTATE-ROLLOUT-001.conformance.yaml
 - governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/registers/CLAIMS.yaml
 - governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/registers/EVIDENCE.yaml
 - governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/registries/TERMINOLOGY.yaml
-established: []
+established:
+- Review 5097435540 by jimsteeg is APPROVED and bound by GitHub to exact head 0e8e6ab3a297eb333ee9e6c985519645b6ca43c3.
+- G8 independence is satisfied for the package admitted from that exact head.
 not_established:
-- DEFERRED until a genuine non-author Referee disposition exists.
+- G8 does not create mathematical, certification, publication, production, constitutional, scientific, novelty, patentability, manufacturing, physical, commercial, or external-claim authority.
+- G8 does not promote GCL-TCS-00 or GCL-POS-01 to version 1.0 or authoritative-standard status.

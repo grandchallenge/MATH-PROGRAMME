@@ -8,8 +8,8 @@ artifact_type: governance_documentary_record
 version: 0.1.0
 date: '2026-09-02'
 owner: Grand Challenge Labs
-authority_status: candidate
-promotion_status: in_review
+authority_status: admitted
+promotion_status: promoted
 primary_profile:
   id: GCL-TCS-P07
   version: 0.1.0
@@ -104,13 +104,13 @@ review_register:
 - review_id: REV-GHOSDOC-G8-001
   gate_id: G8
   location: reviews/REV-GHOSDOC-G8-001.yaml
-  decision: DEFERRED
-  reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+  decision: PASS
+  reviewed_revision: git-commit:0e8e6ab3a297eb333ee9e6c985519645b6ca43c3
 - review_id: REV-GHOSDOC-G9-001
   gate_id: G9
   location: reviews/REV-GHOSDOC-G9-001.yaml
-  decision: DEFERRED
-  reviewed_revision: git-blob:4aac4039726dca614959075244e058e542f47730
+  decision: PASS
+  reviewed_revision: git-commit:4161a699e61dba390935ef0bb60c2bbb0936d065
 exceptions: []
 conformance_dimensions:
   L: CHECKED
@@ -126,10 +126,10 @@ supersedes: []
 superseded_by: null
 licence_and_access:
   licence: Repository licence and current protected MATH-PROGRAMME access policy control.
-  access: public_repository_candidate_pilot_record
+  access: public_repository_admitted_pilot_record
 generated_content:
   present: true
   method: Drafted and internally checked by OpenAI GPT-5.6 Sol under the Founder-Operator request to harden GHOS
     documentary coverage against GCL-POS-01/GCL-TCS-00.
-  review: G0 through G7 are machine-assisted internal checks and are not independent. G8 and G9 remain deferred
-    until a genuine exact-head Referee review and protected atomic admission occur.
+  review: G0 through G7 are machine-assisted internal checks and are not independent. G8 was independently approved
+    by jimsteeg at exact head 0e8e6ab3a297eb333ee9e6c985519645b6ca43c3; G9 protected merge and readback completed at 4161a699e61dba390935ef0bb60c2bbb0936d065.
