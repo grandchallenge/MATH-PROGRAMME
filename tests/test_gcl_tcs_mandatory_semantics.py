@@ -101,7 +101,7 @@ class GclTcsMandatorySemanticTests(unittest.TestCase):
             ),
             "declaration.review_reference": ({
                 "review_id": "REV-001", "gate_id": "G5", "location": "reviews/REV-001.yaml",
-                "decision": "PASS", "reviewed_revision": "abc123",
+                "decision": "PASS", "reviewed_revision": "a" * 40,
             }, defs["reviewReference"]),
             "declaration.exception_reference": ({
                 "exception_id": "EXC-001", "location": "exceptions/EXC-001.yaml", "status": "approved",

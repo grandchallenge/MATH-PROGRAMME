@@ -60,6 +60,21 @@ class GclTcsRevisionBindingTests(unittest.TestCase):
             broken["source_revision"] = value
             self.assertTrue(list(validator.iter_errors(broken)))
 
+    def test_declaration_review_reference_rejects_mutable_revision(self) -> None:
+        validator = Draft202012Validator(self.decl_schema, format_checker=FormatChecker())
+        good = copy.deepcopy(self.declaration)
+        good["review_register"] = [{
+            "review_id": "REV-IMMUTABLE-001",
+            "gate_id": "G4",
+            "location": "reviews/REV-IMMUTABLE-001.yaml",
+            "decision": "PASS",
+            "reviewed_revision": good["source_revision"],
+        }]
+        self.assertEqual(list(validator.iter_errors(good)), [])
+        broken = copy.deepcopy(good)
+        broken["review_register"][0]["reviewed_revision"] = "main"
+        self.assertTrue(list(validator.iter_errors(broken)))
+
     def test_gate_schema_rejects_mutable_revision(self) -> None:
         schema = self.record_schema["$defs"]["gateRecord"]
         validator = Draft202012Validator(schema)
