@@ -46,6 +46,24 @@ def main() -> int:
         for error in research_programme_registry_errors(duplicate)
     )
 
+    inconsistent_adoption = copy.deepcopy(research_programmes)
+    inconsistent_adoption["status"] = "adopted"
+    inconsistent_adoption["programmes"][0]["programme_state"] = "candidate"
+    inconsistent_adoption["programmes"][0]["unresolved_obligations"] = ["pending admission"]
+    assert any(
+        "non-adopted programme" in error
+        for error in research_programme_registry_errors(inconsistent_adoption)
+    )
+
+    adopted_with_debt = copy.deepcopy(research_programmes)
+    adopted_with_debt["status"] = "adopted"
+    adopted_with_debt["programmes"][0]["programme_state"] = "adopted"
+    adopted_with_debt["programmes"][0]["unresolved_obligations"] = ["stale obligation"]
+    assert any(
+        "retains unresolved obligations" in error
+        for error in research_programme_registry_errors(adopted_with_debt)
+    )
+
     duplicate_graph = copy.deepcopy(graph)
     duplicate_graph["nodes"].append(copy.deepcopy(duplicate_graph["nodes"][0]))
     assert any(

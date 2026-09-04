@@ -72,11 +72,11 @@ Union-Closed remains the programme's first demonstration of the complete route. 
 
 | Programme | Candidate scope | Routing |
 |---|---|---|
-| [BUTTERFLY CLOSURE](https://github.com/grandchallenge/BUTTERFLY) | Complementary low-rank observability, factorization, numerical certification, neural systems, and runtime research | Source and work-package authority remain in BUTTERFLY; any mathematical certification routes independently to MATHCERT |
+| [BUTTERFLY CLOSURE](https://github.com/grandchallenge/BUTTERFLY) | Adopted programme for complementary low-rank observability, factorization, numerical certification, neural systems, and runtime research | Source and work-package authority remain in BUTTERFLY; any mathematical certification routes independently to MATHCERT |
 
 The protected machine-readable index is
 `governance/research_programme_registry.json`. During onboarding it remains a
-candidate index: it does not admit BUTTERFLY, promote scientific claims,
+portfolio index: it records BUTTERFLY adoption but does not promote scientific claims,
 authorize publication, transfer source ownership, or certify mathematics.
 
 ## Cross-pillar obligations
