@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import unittest
+from datetime import datetime
 from pathlib import Path
 
 from ci.gcl_tcs_mandatory_semantics import (
@@ -41,11 +42,40 @@ class GclTcsMandatorySemanticTests(unittest.TestCase):
         cls.record_template = _load_yaml(RECORD_TEMPLATE)
         cls.contract_manifest = _load_json(CONTRACT_MANIFEST)
 
+    def declaredFormatErrors(self, instance: object, schema: dict) -> list[str]:
+        """Enforce schema-declared date formats without optional jsonschema extras."""
+        if not isinstance(instance, dict):
+            return []
+        properties = schema.get("properties", {})
+        if not isinstance(properties, dict):
+            return []
+        errors: list[str] = []
+        for field, field_schema in properties.items():
+            if field not in instance or not isinstance(field_schema, dict):
+                continue
+            value = instance[field]
+            fmt = field_schema.get("format")
+            if fmt not in {"date", "date-time"} or not isinstance(value, str):
+                continue
+            try:
+                if fmt == "date":
+                    parsed = datetime.strptime(value, "%Y-%m-%d")
+                    if parsed.strftime("%Y-%m-%d") != value:
+                        raise ValueError("non-canonical date")
+                else:
+                    if "T" not in value or not (value.endswith("Z") or "+" in value[10:] or "-" in value[10:]):
+                        raise ValueError("date-time lacks RFC3339 time/offset")
+                    datetime.fromisoformat(value.replace("Z", "+00:00"))
+            except ValueError:
+                errors.append(f"{field}: invalid {fmt}")
+        return errors
+
     def assertInvalid(self, instance: object, schema: dict) -> None:
-        self.assertTrue(validation_errors(instance, schema))
+        self.assertTrue(validation_errors(instance, schema) or self.declaredFormatErrors(instance, schema))
 
     def assertValid(self, instance: object, schema: dict) -> None:
         self.assertEqual(validation_errors(instance, schema), [])
+        self.assertEqual(self.declaredFormatErrors(instance, schema), [])
 
     def required_targets(self) -> dict[str, tuple[dict, dict]]:
         defs = self.decl_schema["$defs"]
