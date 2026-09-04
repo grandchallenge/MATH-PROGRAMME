@@ -226,7 +226,8 @@ def governed_root_orphan_errors(
     return [
         f"{target.relative_to(root)}: definite governed orphan"
         for target in sorted(governed_root.iterdir())
-        if not registered_by_text(target, registrars, root)
+        if not is_deliberate_scratch(target, root)
+        and not registered_by_text(target, registrars, root)
     ]
 
 
