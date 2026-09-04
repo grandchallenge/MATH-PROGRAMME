@@ -74,6 +74,7 @@ Stage-A protected merge: `20c4796ccd6d1e9d4fd8578ffc7c3f7847b40eb6`. The supplem
 
 ## Measurement and successor evaluation
 
+- [Machine-readable pilot selection](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilot_institutionalization_001_pilot_selection.json) — historical non-authoritative bounded selection record for the six required pilot classes; exposed here without changing its original authority or status.
 - [Machine-readable pilot measurement](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilot_institutionalization_001_measurement.json) — defects, FP/FN evidence and limits, burden proxy, ambiguities, preserved controls, and automation opportunities.
 - [Machine-readable readiness assessment](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilot_institutionalization_001_readiness.json) — historical criterion-by-criterion assessment produced by the completed institutionalization operation.
 - [`GCL_TCS_PILOT_MEASUREMENT_001.md`](GCL_TCS_PILOT_MEASUREMENT_001.md) — human-readable measurement and successor recommendation.
