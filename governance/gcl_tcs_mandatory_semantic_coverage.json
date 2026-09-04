@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0.0",
+  "operation": "GCL-TCS-CANDIDATE-HARDENING-005",
+  "tracker": "grandchallenge/MATH-PROGRAMME#816",
+  "protected_baseline": "e9d182bdd95a928c3205a99086e05d2986c0b174",
+  "standard": {
+    "id": "GCL-TCS-00",
+    "version": "0.1.0",
+    "status": "candidate"
+  },
+  "authority_boundary": "CANDIDATE_READINESS_ONLY__NO_V1_PROMOTION",
+  "agreement_matrix": {
+    "path": "governance/gcl_tcs_normative_agreement_matrix.json",
+    "assembled_normative_sha256": "ea750b9b80b53c7d6ed755978fa4bdf59413fad93cec1db81eb3238372ce61c9",
+    "required_row_ids": [
+      "N-4.7-02",
+      "N-6.4-01",
+      "N-6.5-01",
+      "N-7.2-01",
+      "N-7.2-02",
+      "N-7.3-01",
+      "N-7.4-01",
+      "N-9.1-01",
+      "N-10.1-01",
+      "N-10.1-03",
+      "N-10.2-01",
+      "N-10.3-01",
+      "N-10.4-01",
+      "N-10.5-01",
+      "N-10.6-01",
+      "N-12.3-01",
+      "N-12.4-01",
+      "N-12.5-01",
+      "N-12.5-02",
+      "N-13.1-01",
+      "N-13.1-02",
+      "N-13.1-03",
+      "N-17-01"
+    ]
+  },
+  "required_field_sets": {
+    "declaration": [
+      "artifact_id",
+      "artifact_type",
+      "audience",
+      "authority_status",
+      "claim_register",
+      "conformance_dimensions",
+      "date",
+      "dependencies",
+      "evidence_register",
+      "exceptions",
+      "generated_content",
+      "impact_class",
+      "licence_and_access",
+      "notation_registry",
+      "out_of_scope",
+      "owner",
+      "primary_profile",
+      "promotion_status",
+      "review_register",
+      "schema_version",
+      "scope",
+      "secondary_profiles",
+      "source_location",
+      "source_revision",
+      "standard",
+      "superseded_by",
+      "supersedes",
+      "terminology_registry",
+      "title",
+      "version"
+    ],
+    "declaration.standard": ["id", "version"],
+    "declaration.primary_profile": ["id", "version"],
+    "declaration.dependency": ["artifact_id", "authority_status", "relation", "version_or_revision"],
+    "declaration.location_or_not_applicable": ["reason", "status"],
+    "declaration.location_or_explicit_empty": ["reason", "status"],
+    "declaration.review_reference": ["decision", "gate_id", "location", "review_id", "reviewed_revision"],
+    "declaration.exception_reference": ["exception_id", "location", "status"],
+    "declaration.conformance_dimensions": ["C", "E", "G", "L", "P", "R", "S", "T", "V"],
+    "declaration.licence_and_access": ["access", "licence"],
+    "declaration.generated_content": ["method", "present", "review"],
+    "record.claimRecord": ["assumptions", "claim_id", "claim_status", "claim_type", "counterevidence", "dependencies", "falsifiers", "last_reviewed", "limitations", "owner", "scope", "supporting_evidence"],
+    "record.evidenceRecord": ["created_at", "created_by", "evidence_id", "evidence_type", "limitations", "location", "method", "result_summary", "scope", "version_or_hash"],
+    "record.reviewRecord": ["date", "decision", "evidence", "findings", "gate_id", "independence_statement", "required_actions", "resolved_actions", "review_id", "review_role", "reviewed_revision", "reviewer"],
+    "record.exceptionRecord": ["affected_content", "approved_by", "artifact_scope", "compensating_controls", "exception_id", "issued_date", "justification", "requested_by", "risk_assessment", "rule_id", "status"],
+    "record.gateRecord": ["artifact_id", "decision", "evidence", "gate_id", "review_record_ref", "reviewed_revision"],
+    "record.conformanceStatement": ["active_exceptions", "date", "dimensions", "impact_class", "primary_profile", "promotion_status", "secondary_profiles", "standard_versions", "target_state"],
+    "record.releaseRecord": ["change_log", "compatibility_statement", "migration_note", "new_standard_identifier", "previous_standard_identifier", "promotion_record", "review_record"]
+  },
+  "semantic_cases": [
+    {
+      "id": "all_required_fields_reject_omission",
+      "matrix_rows": ["N-4.7-02", "N-7.3-01", "N-7.4-01", "N-10.1-01", "N-10.1-03", "N-10.2-01", "N-10.3-01", "N-10.4-01", "N-10.5-01", "N-12.3-01", "N-17-01"],
+      "test": "tests/test_gcl_tcs_mandatory_semantics.py::test_every_required_field_rejects_omission"
+    },
+    {
+      "id": "identity_enumeration_format_and_shape_constraints",
+      "matrix_rows": ["N-6.4-01", "N-6.5-01", "N-7.2-01", "N-9.1-01", "N-10.6-01", "N-13.1-01"],
+      "test": "tests/test_gcl_tcs_mandatory_semantics.py::test_matrix_bound_field_semantics_reject_invalid_values"
+    },
+    {
+      "id": "assured_requires_exact_revision_review_link",
+      "matrix_rows": ["N-7.2-02"],
+      "test": "tests/test_gcl_tcs_mandatory_semantics.py::test_assured_requires_linked_exact_revision_review"
+    },
+    {
+      "id": "gate_review_pair_semantics",
+      "matrix_rows": ["N-13.1-02", "N-13.1-03"],
+      "test": "tests/test_gcl_tcs_mandatory_semantics.py::test_gate_review_semantics_fail_closed"
+    }
+  ],
+  "reused_dedicated_controls": [
+    {
+      "matrix_rows": ["N-12.4-01", "N-12.5-01", "N-12.5-02"],
+      "test": "tests/test_gcl_tcs_exception_control.py",
+      "reason": "Dedicated criterion-4 control already adversarially covers non-waivable exceptions, approved timing, and missing/expired/revoked required exceptions; duplication would weaken single-source control clarity."
+    }
+  ],
+  "review_only_exclusion": "Agreement-matrix rows classified review-only are not counted as machine field-test obligations and are not represented as automated authority.",
+  "completeness_claim": "MANDATORY_MACHINE_FIELD_AND_FIELD_SEMANTIC_COVERAGE_COMPLETE__CANDIDATE_READINESS_ONLY"
+}
