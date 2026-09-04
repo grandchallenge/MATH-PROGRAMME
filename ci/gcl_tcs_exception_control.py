@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from __future__ import annotations
 
 from datetime import date
@@ -215,16 +214,3 @@ def evaluate_required_exceptions_for_promotion(
         errors.extend(f"{exception_id}: {item}" for item in record_errors)
 
     return sorted(set(errors))
-
-
-def main() -> int:
-    policy = _load_policy(ROOT)
-    print(
-        f"{policy['standard']['id']} {policy['standard']['version']} "
-        "exception control: candidate validator loaded"
-    )
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
