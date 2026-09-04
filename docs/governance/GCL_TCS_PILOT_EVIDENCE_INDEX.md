@@ -92,14 +92,24 @@ It is an observational recommendation, not a standard promotion or Referee dispo
 
 The successor adds [`ci/gcl_tcs_exception_control.py`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ci/gcl_tcs_exception_control.py) and [`tests/test_gcl_tcs_exception_control.py`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/tests/test_gcl_tcs_exception_control.py), with the test registered in the existing Programme contract-test manifest. The control is bound to the candidate `GCL-TCS-00/0.1.0` machine policy and fails closed for unresolved or unauthorized approval authority, missing approval identity, absent review/expiry timing on approved exceptions, attempted waiver of machine-declared non-waivable requirements, empty or placeholder compensating controls, malformed records or dates, and missing/expired/revoked/non-approved required exceptions at promotion evaluation. It includes a positive narrow approved-exception case.
 
-The control does **not** invent the still-missing profile owner/review-role map. Authorized approvers are supplied by the governing caller; an absent authority set fails closed. This closes the dedicated-testing deficit only and leaves criterion 2 separate.
+The exception control does not invent profile authority. Authorized approvers remain resolved by the governing caller and review record.
+
+### Successor hardening: criterion 2
+
+`GCL-TCS-CANDIDATE-HARDENING-002` is tracked by [issue #808](https://github.com/grandchallenge/MATH-PROGRAMME/issues/808).
+
+The canonical derivative [P01–P07 profile owner/reviewer authority map](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_profile_authority_map.json) maps each profile to already-established institutional functions. `Steward` owns profile lifecycle for every profile because standards selection, impact class, and lifecycle governance already belong to that role. Every artifact still supplies its own mandatory `owner`; no person, agent identity, or repository team is preassigned by profile.
+
+The map projects the existing G0–G9 gate matrix onto active Council functions. `Amanuensis`, `Cartographer`, `Grammarian`, `Verifier`, `Adversary`, domain offices such as `Axiomatist`, `Formalist`, `Experimentalist`, `Mechanist`, and the existing `Referee` function appear only where the current profile/gate semantics call for them. G8 remains promotion-only. Material-specific specialist and independence requirements remain governed by the existing G5, impact-class, external-authority, and review-record rules.
+
+[`ci/gcl_tcs_profile_authority_control.py`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ci/gcl_tcs_profile_authority_control.py) is a test-bound derivative validator, executed only through the existing governed contract-test route. It fails closed on profile/version drift, gate-applicability drift, missing lifecycle ownership, artifact-owner substitution, unknown role creation, or any attempt for the map to become an authority registry, confer authority by role name, activate promotion, or claim constitutional expansion.
 
 ## Current version-1.0 readiness
 
 | Criterion | Status | Current evidence / gap |
 |---:|---|---|
 | 1 | `PARTIAL` | Normative text, policy manifest, schema, and validating packages exist; a complete standard-wide agreement audit is not yet established. |
-| 2 | `UNSATISFIED` | An approved owner/review-role map for every profile has not been established. |
+| 2 | `SATISFIED` | Successor operation #808 establishes a canonical P01–P07 lifecycle-owner and gate-review-role map as a derivative projection of existing institutional authority. `Steward` owns profile lifecycle; artifact ownership remains per-artifact mandatory metadata; the map creates no new authority. |
 | 3 | `PARTIAL` | Mandatory schema fields and validation exist; complete mandatory-semantic test coverage is not established. |
 | 4 | `SATISFIED` | Successor operation #806 adds dedicated adversarial fail-closed exception tests and registers them in governed Programme contract testing; this is candidate-readiness evidence only, not v1.0 promotion authority. |
 | 5 | `PARTIAL` | Real gate records bind immutable identities; complete standard-wide enforcement across every admissible path remains unestablished. |
@@ -111,7 +121,7 @@ The control does **not** invent the still-missing profile owner/review-role map.
 
 Readiness is not promotion authority. A `SATISFIED` readiness row does not promote a candidate artifact or the standard.
 
-The historical machine-readable readiness record from operation #788 remains unchanged. It correctly records criterion 4 as unsatisfied at that operation's terminal assessment point; this successor index records the later closure rather than rewriting historical evidence.
+The historical machine-readable readiness record from operation #788 remains unchanged. It correctly records criteria 2 and 4 as unsatisfied at that operation's terminal assessment point; the successor index records later closures rather than rewriting historical evidence.
 
 ## Defect and burden evidence
 
@@ -132,7 +142,7 @@ The bounded pilot should continue as a candidate institutional learning loop, bu
 3. extend the demonstrated documentation checks to the remaining required surfaces without building a duplicate authority registry;
 4. avoid generating promotion-specific G8/G9 packet material until promotion is actually requested;
 5. keep the P04 deficit explicit until a real completed experimental/computational artifact is naturally available and verified;
-6. if a future v1.0 proposal becomes warranted, first close the owner/review-role, broad orphan-detection, mandatory-semantic-coverage, and normative/schema-agreement gaps, then use the governing promotion route on a fixed candidate revision.
+6. if a future v1.0 proposal becomes warranted, first close the broad orphan-detection, mandatory-semantic-coverage, and normative/schema-agreement gaps, then use the governing promotion route on a fixed candidate revision.
 
 ## Revalidation rule
 
