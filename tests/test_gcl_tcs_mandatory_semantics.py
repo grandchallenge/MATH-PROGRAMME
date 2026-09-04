@@ -51,6 +51,8 @@ class GclTcsMandatorySemanticTests(unittest.TestCase):
         defs = self.decl_schema["$defs"]
         props = self.decl_schema["properties"]
         record_defs = self.record_schema["$defs"]
+        dimension_schema = copy.deepcopy(props["conformance_dimensions"])
+        dimension_schema["$defs"] = copy.deepcopy(defs)
         targets: dict[str, tuple[dict, dict]] = {
             "declaration": (copy.deepcopy(self.decl_template), self.decl_schema),
             "declaration.standard": (copy.deepcopy(self.decl_template["standard"]), defs["standardIdentifier"]),
@@ -92,7 +94,7 @@ class GclTcsMandatorySemanticTests(unittest.TestCase):
             ),
             "declaration.conformance_dimensions": (
                 copy.deepcopy(self.decl_template["conformance_dimensions"]),
-                props["conformance_dimensions"],
+                dimension_schema,
             ),
             "declaration.licence_and_access": (
                 copy.deepcopy(self.decl_template["licence_and_access"]),
