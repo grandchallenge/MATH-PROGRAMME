@@ -1,6 +1,6 @@
 """Cross-surface orphan discovery for GCL-TCS candidate-readiness.
 
-This module is deliberately library-only.  It discovers references and composes
+This module is deliberately library-only. It discovers references and composes
 incumbent authoritative registrations; it is not a registry and confers no authority.
 """
 from __future__ import annotations
@@ -107,7 +107,11 @@ def _github_repository_path(raw: str) -> str | None:
     parsed = urlparse(raw)
     if parsed.netloc == "github.com":
         parts = [unquote(part) for part in parsed.path.split("/") if part]
-        if len(parts) >= 5 and parts[:2] == ["grandchallenge", "MATH-PROGRAMME"] and parts[2] in {"blob", "tree"}:
+        if (
+            len(parts) >= 5
+            and parts[:2] == ["grandchallenge", "MATH-PROGRAMME"]
+            and parts[2] in {"blob", "tree"}
+        ):
             return "/".join(parts[4:])
     if parsed.netloc == "raw.githubusercontent.com":
         parts = [unquote(part) for part in parsed.path.split("/") if part]
@@ -122,12 +126,11 @@ def _looks_like_path(value: str) -> bool:
         return False
     if value.startswith(("http://", "https://")):
         return _github_repository_path(value) is not None
-    if "/" not in value and not Path(value).suffix:
-        return False
-    return True
+    return "/" in value or bool(Path(value).suffix)
 
 
 def raw_references(path: Path) -> list[str]:
+    """Discover repository-like references without assigning authority to them."""
     if not path.is_file() or path.suffix.lower() not in TEXT_SUFFIXES:
         return []
     text = path.read_text(encoding="utf-8")
@@ -140,12 +143,13 @@ def raw_references(path: Path) -> list[str]:
         refs.extend(TEX_REF_RE.findall(text))
     if suffix in {".json", ".yaml", ".yml"}:
         try:
-            refs.extend(value for value in _iter_strings(_structured_value(path)) if _looks_like_path(value))
+            refs.extend(
+                value for value in _iter_strings(_structured_value(path)) if _looks_like_path(value)
+            )
         except (json.JSONDecodeError, yaml.YAMLError):
             pass
     if suffix in {".md", ".html", ".htm", ".txt", ".tex"}:
         refs.extend(STATIC_PATH_RE.findall(text))
-    # Preserve order while deduplicating.
     return list(dict.fromkeys(ref.strip() for ref in refs if ref.strip()))
 
 
@@ -161,10 +165,7 @@ def resolve_reference(source: Path, raw: str, root: Path) -> tuple[Path | None, 
         clean = raw.split("#", 1)[0].split("?", 1)[0]
         if not clean or clean.startswith(("mailto:", "data:", "javascript:")):
             return None, None
-        if clean.startswith("/"):
-            candidate = root / clean.lstrip("/")
-        else:
-            candidate = source.parent / clean
+        candidate = root / clean.lstrip("/") if clean.startswith("/") else source.parent / clean
     try:
         resolved = candidate.resolve()
         resolved.relative_to(root.resolve())
@@ -174,7 +175,6 @@ def resolve_reference(source: Path, raw: str, root: Path) -> tuple[Path | None, 
     if resolved.exists():
         return resolved, None
 
-    # TeX commonly omits the extension for input/include and graphics.
     if source.suffix.lower() == ".tex" and not resolved.suffix:
         tex = resolved.with_suffix(".tex")
         if tex.exists():
@@ -199,10 +199,7 @@ def reference_errors(paths: Iterable[Path], root: Path) -> list[str]:
 
 
 def registered_by_text(target: Path, registrars: Iterable[Path], root: Path) -> bool:
-    """Check whether an incumbent discovery surface references a target.
-
-    This is intentionally referential: it does not assign status to the target.
-    """
+    """Return whether an incumbent discovery surface references the target."""
     relative = target.relative_to(root).as_posix()
     for registrar in registrars:
         if not registrar.is_file():
@@ -227,21 +224,20 @@ def governed_root_orphan_errors(
     if not governed_root.is_dir():
         return [f"{governed_root.relative_to(root)}: governed directory is missing"]
     for target in sorted(governed_root.iterdir()):
-        if is_deliberate_scratch(target, root):
-            if target.is_file() and has_strong_governance_identity(target):
-                errors.append(
-                    f"{target.relative_to(root)}: scratch path contains governed identity markers"
-                )
-            continue
         if not registered_by_text(target, registrars, root):
             errors.append(f"{target.relative_to(root)}: definite governed orphan")
     return errors
 
 
 def scratch_boundary_errors(root: Path) -> list[str]:
+    """Permit scratch paths unless their content asserts a strong governed identity."""
     errors: list[str] = []
     for path in root.rglob("*"):
-        if path.is_file() and is_deliberate_scratch(path, root) and has_strong_governance_identity(path):
+        if (
+            path.is_file()
+            and is_deliberate_scratch(path, root)
+            and has_strong_governance_identity(path)
+        ):
             errors.append(f"{path.relative_to(root)}: scratch path contains governed identity markers")
     return sorted(set(errors))
 
@@ -256,20 +252,18 @@ def gcl_tcs_json_orphan_errors(registrars: Iterable[Path], root: Path) -> list[s
 
 
 def cross_surface_orphan_errors(root: Path = ROOT) -> list[str]:
-    """Run the live compositional GCL-TCS criterion-7 orphan checks.
+    """Run the live GCL-TCS criterion-7 discovery layer.
 
-    Documentary Library remains authoritative for its own manifest membership.  We call
-    its validator rather than reproduce its source/candidate/web/asset/static inventory.
+    The Documentary Library's manifest-driven source/candidate/web/asset/static/TeX
+    discovery remains authoritative and is already executed by `ci/validate_programme.py`.
+    This layer adds the missing generic reference graph for the GCL-TCS governed pilot
+    surface and does not copy the Documentary Library inventory.
     """
-    errors: list[str] = []
     index = root / EVIDENCE_INDEX
     if not index.is_file():
         return [f"{EVIDENCE_INDEX}: current GCL-TCS evidence index is missing"]
 
-    # Import lazily so this module remains usable in isolated fixture tests.
-    from validate_documentary_library import documentary_contract_errors
-
-    errors.extend(documentary_contract_errors(root))
+    errors: list[str] = []
     errors.extend(reference_errors([index], root))
     errors.extend(governed_root_orphan_errors(root / PILOT_ROOT, [index], root))
     errors.extend(gcl_tcs_json_orphan_errors([index], root))
