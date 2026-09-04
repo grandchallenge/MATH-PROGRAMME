@@ -1,0 +1,167 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "GCL-TCS-PROFILE-AUTHORITY-MAP-001",
+  "record_type": "DERIVATIVE_PROFILE_OWNER_REVIEW_ROLE_MAP",
+  "operation_id": "GCL-TCS-CANDIDATE-HARDENING-002",
+  "tracker": "grandchallenge/MATH-PROGRAMME#808",
+  "standard": {
+    "id": "GCL-TCS-00",
+    "version": "0.1.0",
+    "status": "candidate"
+  },
+  "mapping_status": "APPROVED_MAPPING_OF_EXISTING_AUTHORITY",
+  "authority_semantics": {
+    "mapping_is_authority_registry": false,
+    "mapping_confers_authority_by_role_name": false,
+    "mapping_replaces_artifact_owner": false,
+    "mapping_activates_promotion_gate": false,
+    "profile_lifecycle_owner_role": "Steward",
+    "artifact_owner_binding": "mandatory_metadata.owner",
+    "artifact_owner_fixed_by_profile": false,
+    "material_specialist_rule": "G5 material-specific specialist requirements continue to resolve under existing gate, impact-class, external-authority, and review-record rules; this map creates no specialist office or approval power."
+  },
+  "authority_sources": [
+    "council_submissions/GCL-TCS-00/parts/02-conformance-profiles.md",
+    "council_submissions/GCL-TCS-00/parts/04-exceptions-promotion-gates.md",
+    "council_submissions/GCL-TCS-00/parts/05-review-roles-controls-change.md",
+    "docs/council/submissions/GCL-TCS-00/GCL-TCS-00.policy.yaml",
+    "docs/MATH_PROGRAMME_AGENT_COUNCIL.md"
+  ],
+  "profiles": {
+    "GCL-TCS-P01": {
+      "name": "operational_and_procedural",
+      "version": "0.1.0",
+      "profile_lifecycle_owner_role": "Steward",
+      "artifact_owner_binding": "mandatory_metadata.owner",
+      "gates": {
+        "G0": {"mode": "required", "review_roles": ["Amanuensis"]},
+        "G1": {"mode": "required", "review_roles": ["Steward"], "artifact_owner_required": true},
+        "G2": {"mode": "required", "review_roles": ["Amanuensis", "Cartographer"]},
+        "G3": {"mode": "required", "review_roles": ["Grammarian"]},
+        "G4": {"mode": "required", "review_roles": ["Verifier"]},
+        "G5": {"mode": "required", "review_roles": ["Verifier"], "conditional_domain_roles": ["Mechanist"]},
+        "G6": {"mode": "conditional", "review_roles": ["Adversary"]},
+        "G7": {"mode": "conditional", "review_roles": ["Verifier", "Amanuensis"]},
+        "G8": {"mode": "required", "review_roles": ["Referee"], "promotion_only": true},
+        "G9": {"mode": "required", "review_roles": ["Steward", "Amanuensis"]}
+      }
+    },
+    "GCL-TCS-P02": {
+      "name": "research_communication",
+      "version": "0.1.0",
+      "profile_lifecycle_owner_role": "Steward",
+      "artifact_owner_binding": "mandatory_metadata.owner",
+      "gates": {
+        "G0": {"mode": "required", "review_roles": ["Amanuensis"]},
+        "G1": {"mode": "required", "review_roles": ["Steward"], "artifact_owner_required": true, "conditional_domain_roles": ["Axiomatist"]},
+        "G2": {"mode": "required", "review_roles": ["Amanuensis", "Cartographer"]},
+        "G3": {"mode": "required", "review_roles": ["Grammarian"]},
+        "G4": {"mode": "required", "review_roles": ["Verifier"]},
+        "G5": {"mode": "required", "review_roles": ["Axiomatist", "Verifier"], "conditional_domain_roles": ["Experimentalist", "Archivist"]},
+        "G6": {"mode": "required", "review_roles": ["Adversary"]},
+        "G7": {"mode": "conditional", "review_roles": ["Verifier", "Amanuensis"]},
+        "G8": {"mode": "required", "review_roles": ["Referee"], "promotion_only": true},
+        "G9": {"mode": "required", "review_roles": ["Steward", "Amanuensis"]}
+      }
+    },
+    "GCL-TCS-P03": {
+      "name": "mathematical_and_formal",
+      "version": "0.1.0",
+      "profile_lifecycle_owner_role": "Steward",
+      "artifact_owner_binding": "mandatory_metadata.owner",
+      "gates": {
+        "G0": {"mode": "required", "review_roles": ["Amanuensis"]},
+        "G1": {"mode": "required", "review_roles": ["Steward", "Axiomatist"], "artifact_owner_required": true},
+        "G2": {"mode": "required", "review_roles": ["Amanuensis", "Cartographer"]},
+        "G3": {"mode": "required", "review_roles": ["Grammarian"]},
+        "G4": {"mode": "required", "review_roles": ["Verifier"]},
+        "G5": {"mode": "required", "review_roles": ["Axiomatist", "Formalist", "Verifier"]},
+        "G6": {"mode": "required", "review_roles": ["Adversary"]},
+        "G7": {"mode": "conditional", "review_roles": ["Formalist", "Verifier", "Amanuensis"]},
+        "G8": {"mode": "required", "review_roles": ["Referee"], "promotion_only": true},
+        "G9": {"mode": "required", "review_roles": ["Steward", "Amanuensis"]}
+      }
+    },
+    "GCL-TCS-P04": {
+      "name": "experimental_and_computational",
+      "version": "0.1.0",
+      "profile_lifecycle_owner_role": "Steward",
+      "artifact_owner_binding": "mandatory_metadata.owner",
+      "gates": {
+        "G0": {"mode": "required", "review_roles": ["Amanuensis"]},
+        "G1": {"mode": "required", "review_roles": ["Steward"], "artifact_owner_required": true},
+        "G2": {"mode": "required", "review_roles": ["Amanuensis", "Cartographer"]},
+        "G3": {"mode": "required", "review_roles": ["Grammarian"]},
+        "G4": {"mode": "required", "review_roles": ["Verifier"]},
+        "G5": {"mode": "required", "review_roles": ["Experimentalist", "Verifier"]},
+        "G6": {"mode": "required", "review_roles": ["Adversary"]},
+        "G7": {"mode": "required", "review_roles": ["Experimentalist", "Verifier", "Amanuensis"]},
+        "G8": {"mode": "required", "review_roles": ["Referee"], "promotion_only": true},
+        "G9": {"mode": "required", "review_roles": ["Steward", "Amanuensis"]}
+      }
+    },
+    "GCL-TCS-P05": {
+      "name": "software_api_and_notebook",
+      "version": "0.1.0",
+      "profile_lifecycle_owner_role": "Steward",
+      "artifact_owner_binding": "mandatory_metadata.owner",
+      "gates": {
+        "G0": {"mode": "required", "review_roles": ["Amanuensis"]},
+        "G1": {"mode": "required", "review_roles": ["Steward"], "artifact_owner_required": true},
+        "G2": {"mode": "required", "review_roles": ["Amanuensis", "Cartographer"]},
+        "G3": {"mode": "required", "review_roles": ["Grammarian"]},
+        "G4": {"mode": "required", "review_roles": ["Verifier"]},
+        "G5": {"mode": "required", "review_roles": ["Mechanist", "Verifier"]},
+        "G6": {"mode": "conditional", "review_roles": ["Adversary"]},
+        "G7": {"mode": "required", "review_roles": ["Mechanist", "Verifier", "Amanuensis"]},
+        "G8": {"mode": "required", "review_roles": ["Referee"], "promotion_only": true},
+        "G9": {"mode": "required", "review_roles": ["Steward", "Amanuensis"]}
+      }
+    },
+    "GCL-TCS-P06": {
+      "name": "public_technical_exposition",
+      "version": "0.1.0",
+      "profile_lifecycle_owner_role": "Steward",
+      "artifact_owner_binding": "mandatory_metadata.owner",
+      "gates": {
+        "G0": {"mode": "required", "review_roles": ["Amanuensis"]},
+        "G1": {"mode": "required", "review_roles": ["Steward"], "artifact_owner_required": true},
+        "G2": {"mode": "required", "review_roles": ["Amanuensis", "Cartographer"]},
+        "G3": {"mode": "required", "review_roles": ["Grammarian"]},
+        "G4": {"mode": "required", "review_roles": ["Verifier"]},
+        "G5": {"mode": "inherited", "review_roles": ["Verifier"], "inheritance_check_required": true},
+        "G6": {"mode": "required", "review_roles": ["Adversary"]},
+        "G7": {"mode": "inherited", "review_roles": ["Verifier", "Amanuensis"], "inheritance_check_required": true},
+        "G8": {"mode": "required", "review_roles": ["Referee"], "promotion_only": true},
+        "G9": {"mode": "required", "review_roles": ["Steward", "Amanuensis"]}
+      }
+    },
+    "GCL-TCS-P07": {
+      "name": "governance_and_documentary_records",
+      "version": "0.1.0",
+      "profile_lifecycle_owner_role": "Steward",
+      "artifact_owner_binding": "mandatory_metadata.owner",
+      "gates": {
+        "G0": {"mode": "required", "review_roles": ["Amanuensis"]},
+        "G1": {"mode": "required", "review_roles": ["Steward"], "artifact_owner_required": true},
+        "G2": {"mode": "required", "review_roles": ["Amanuensis", "Cartographer"]},
+        "G3": {"mode": "required", "review_roles": ["Grammarian"]},
+        "G4": {"mode": "required", "review_roles": ["Verifier"]},
+        "G5": {"mode": "required", "review_roles": ["Steward", "Verifier", "Amanuensis"]},
+        "G6": {"mode": "required", "review_roles": ["Adversary"]},
+        "G7": {"mode": "conditional", "review_roles": ["Verifier", "Amanuensis"]},
+        "G8": {"mode": "required", "review_roles": ["Referee"], "promotion_only": true},
+        "G9": {"mode": "required", "review_roles": ["Steward", "Amanuensis"]}
+      }
+    }
+  },
+  "boundary": {
+    "standard_version_changed": false,
+    "normative_source_changed": false,
+    "constitutional_authority_created": false,
+    "new_role_registry_created": false,
+    "artifact_ownership_preassigned": false,
+    "promotion_requested": false,
+    "referee_disposition_created": false
+  }
+}
