@@ -81,7 +81,8 @@ Stage-A protected merge: `20c4796ccd6d1e9d4fd8578ffc7c3f7847b40eb6`. The supplem
 - [Machine-readable pilot selection](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilot_institutionalization_001_pilot_selection.json) — historical non-authoritative bounded selection record for the six required pilot classes; exposed here without changing its original authority or status.
 - [Machine-readable pilot measurement](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilot_institutionalization_001_measurement.json) — defects, FP/FN evidence and limits, burden proxy, ambiguities, preserved controls, and automation opportunities.
 - [Machine-readable readiness assessment](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilot_institutionalization_001_readiness.json) — historical criterion-by-criterion assessment produced by the completed institutionalization operation.
-- [Fresh protected candidate remeasurement](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_candidate_remeasurement_001.json) — `GCL-TCS-CANDIDATE-REMEASUREMENT-001`, a new ten-criterion recomputation from protected baseline `ad2ae735860af73526243304238544aa294abebf`; it does not inherit the historical counts and creates no promotion authority.
+- [Fresh protected candidate remeasurement](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_candidate_remeasurement_001.json) — `GCL-TCS-CANDIDATE-REMEASUREMENT-001`, a ten-criterion recomputation from protected baseline `ad2ae735860af73526243304238544aa294abebf`; it remains immutable historical successor evidence.
+- [Current fixed-revision candidate remeasurement](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_candidate_remeasurement_002.json) — `GCL-TCS-CANDIDATE-REMEASUREMENT-002`, recomputed from signed protected baseline `db3adf0f57ce44f14fff2bd975dad6a8e93cdc2f`; criteria 1–9 are materially satisfied and criterion 10 is reserved to a distinct fixed-candidate Referee promotion operation.
 - [`GCL_TCS_PILOT_MEASUREMENT_001.md`](GCL_TCS_PILOT_MEASUREMENT_001.md) — human-readable measurement and successor recommendation.
 
 The historical successor recommendation remains:
@@ -90,7 +91,7 @@ The historical successor recommendation remains:
 CONTINUE_CANDIDATE__NARROW_AND_SIMPLIFY__NO_V1_PROMOTION
 ```
 
-The fresh remeasurement is a separate current assessment. It does not rewrite the historical #788 readiness record.
+Historical measurement and readiness records remain correct for their own protected baselines and are not rewritten by successor work.
 
 ### Successor hardening: criterion 4
 
@@ -148,30 +149,45 @@ The [P04 application](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main
 
 The subject's scientific bytes remain untouched. The GCL-TCS supplement is candidate/in-review with all dimensions `DECLARED` and G8/G9 deferred. Criterion 8 satisfaction is therefore candidate-readiness evidence for the six required real artifact classes, not promotion of the source experiment, the supplement, or GCL-TCS-00.
 
-## Current version-1.0 readiness — fresh protected remeasurement
+## Prior version-1.0 readiness — protected remeasurement 001
 
-`GCL-TCS-CANDIDATE-REMEASUREMENT-001`, tracked by [issue #821](https://github.com/grandchallenge/MATH-PROGRAMME/issues/821), recomputes all ten acceptance criteria from protected baseline `ad2ae735860af73526243304238544aa294abebf`. It does not carry forward the historical `1 / 6 / 2 / 1` counts by assumption.
+`GCL-TCS-CANDIDATE-REMEASUREMENT-001`, tracked by [issue #821](https://github.com/grandchallenge/MATH-PROGRAMME/issues/821), recomputed all ten acceptance criteria from protected baseline `ad2ae735860af73526243304238544aa294abebf`. It did not carry forward the historical `1 / 6 / 2 / 1` counts by assumption.
 
-| Criterion | Status | Fresh protected finding |
+| Criterion | Status | Protected finding |
 |---:|---|---|
 | 1 | `SATISFIED` | The protected 125-row agreement matrix binds all seven normative source parts to policy/schema/template/validator representations and closes the identified candidate machine-contract gaps without changing normative source meaning. |
 | 2 | `SATISFIED` | The protected P01–P07 map supplies a lifecycle owner and G0–G9 review-role map for every profile while preserving per-artifact ownership and existing institutional authority. |
 | 3 | `SATISFIED` | Mandatory declaration/record field sets and matrix-bound machine semantics have protected mutation/adversarial test coverage; review-only obligations remain review-only. |
 | 4 | `SATISFIED` | Dedicated protected exception tests fail closed on invalid/missing authority, timing, non-waivable-rule, compensating-control, malformed-record and lifecycle failures. |
-| 5 | `PARTIAL` | Gate/review records require and compare `reviewed_revision`, ASSURED review linkage is checked, and real pilots use immutable Git identities. However the schemas still accept any nonempty revision string; mutable values such as branch names or `latest` are not rejected, and gate/review equality does not universally prove immutable binding to the artifact declaration. |
-| 6 | `PARTIAL` | Candidate supplements are operationally separate from authoritative subjects, but `gcl-tcs-conformance.schema.json` uses one record shape whose `authority_status` enum includes both `candidate` and `authoritative`; there are no structurally distinct candidate-record and authoritative-source-record schema forms. |
+| 5 | `PARTIAL` | Gate/review records required and compared `reviewed_revision`, but the schemas still accepted arbitrary nonempty strings and did not establish standard-wide immutable binding. |
+| 6 | `PARTIAL` | Candidate supplements were operationally separate from authoritative subjects, but the conformance schema had no structurally distinct candidate and authoritative-source forms. |
 | 7 | `SATISFIED` | Protected cross-surface controls cover docs, web, source/candidate records, assets, static text, TeX, JSON/YAML and governed directories while preserving the deliberate scratch boundary. |
-| 8 | `SATISFIED` | All six required real artifact classes have completed protected pilot conformance reviews. The five candidate supplements have G0–G7 `PASS` reviews on exact revisions; the historical operational GHOS documentary pilot has G0–G9 `PASS`. Promotion of candidate supplements is not required by this criterion and remains deferred. |
-| 9 | `SATISFIED` | Protected measurements record false-positive evidence, false-negative evidence, burden, unresolved ambiguities, defects and explicit unknown empirical-rate limits; the P04 successor adds its own burden and ambiguity evidence. |
-| 10 | `INACTIVE__PREREQUISITES_NOT_MET` | Criteria 5 and 6 remain `PARTIAL`, so no fixed v1.0 candidate revision exists and no Referee promotion disposition may be requested or manufactured. |
+| 8 | `SATISFIED` | All six required real artifact classes have completed protected pilot conformance reviews. |
+| 9 | `SATISFIED` | Protected measurements record false-positive evidence, false-negative evidence, burden, unresolved ambiguities, defects and explicit unknown empirical-rate limits. |
+| 10 | `INACTIVE__PREREQUISITES_NOT_MET` | Criteria 5 and 6 were `PARTIAL`, so no fixed v1.0 candidate revision or Referee promotion disposition was proper at that baseline. |
 
-Fresh summary: **7 satisfied / 2 partial / 0 unsatisfied / 1 inactive**.
+Historical summary for remeasurement 001: **7 satisfied / 2 partial / 0 unsatisfied / 1 inactive**. Its precise blockers were criteria 5 and 6. That record remains immutable evidence for its own baseline.
 
-Criteria 1–9 are **not** all materially satisfied. Therefore the current candidate does **not** warrant creation of a v1.0 candidate revision. No promotion operation, Referee disposition request, G8 packet, or G9 packet is created by this remeasurement. The precise blockers are criterion 5 (standard-wide immutable-revision enforcement) and criterion 6 (schema-level structural candidate/source distinction).
+## Current version-1.0 readiness — fixed protected remeasurement 002
 
-Readiness is not promotion authority. A `SATISFIED` readiness row does not promote a candidate artifact or the standard.
+`GCL-TCS-CANDIDATE-REMEASUREMENT-002`, tracked by [issue #829](https://github.com/grandchallenge/MATH-PROGRAMME/issues/829), recomputes all ten acceptance criteria from signed protected baseline `db3adf0f57ce44f14fff2bd975dad6a8e93cdc2f` after protected closure of criteria 5 and 6.
 
-The historical machine-readable readiness record from operation #788 remains unchanged. Its earlier statuses and counts remain correct for its own protected baseline; this successor remeasurement records the current protected state separately.
+| Criterion | Status | Fixed-revision finding |
+|---:|---|---|
+| 1 | `SATISFIED` | Normative/policy/schema agreement remains protected and green under the derivative criterion-5/6 machine hardening. |
+| 2 | `SATISFIED` | P01–P07 retain the approved derivative lifecycle-owner/review-role map without creating authority. |
+| 3 | `SATISFIED` | Mandatory machine fields and semantic mutation tests remain complete; the old synthetic review-revision fixture was updated to an immutable dummy identity without weakening the test. |
+| 4 | `SATISFIED` | Dedicated exception controls remain fail-closed. |
+| 5 | `SATISFIED` | Declaration, gate and review revision fields now require immutable Git/SHA-256 identities, reject mutable symbolic refs, and enforce exact declaration/gate/review binding. |
+| 6 | `SATISFIED` | Candidate, active authoritative-source, and terminal-source records are structurally disjoint schema forms under the existing `authority_status` vocabulary. |
+| 7 | `SATISFIED` | Cross-surface orphan controls remain protected; this successor record is registered on this existing index. |
+| 8 | `SATISFIED` | All six required real artifact classes retain protected pilot review evidence. |
+| 9 | `SATISFIED` | FP/FN evidence and limits, burden, defects and unresolved ambiguities remain recorded, including P04 observations. |
+| 10 | `INACTIVE__DISTINCT_PROMOTION_OPERATION_REQUIRED` | Criteria 1–9 now pass, but Referee approval with explicit limitations must occur only in the distinct fixed-candidate promotion operation. |
+
+Current summary: **9 satisfied / 0 partial / 0 unsatisfied / 1 inactive**. Criteria 1–9 are materially satisfied. This authorizes beginning the separately governed v1.0 candidate-freeze and Referee-promotion path; it does not itself freeze, promote, or create a Referee disposition.
+
+Readiness remains distinct from promotion authority. No mathematical, certification, GHOS, MATH-CORE, controller, publication, or external claim authority is changed by this remeasurement.
 
 ## Defect and burden evidence
 
@@ -191,7 +207,7 @@ The bounded pilot should continue as a candidate institutional learning loop, bu
 2. keep reference discovery compositional: extend incumbent authoritative manifests and discovery surfaces rather than adding parallel inventories;
 3. avoid generating promotion-specific G8/G9 packet material until promotion is actually requested;
 4. retain the real TCM-C72 P04 pilot as the sixth-class evidence, preserve `P04-D001`, and do not extrapolate its finite C72 result or its scientific certification into broader experimental or artifact authority;
-5. close criterion 5 by enforcing genuinely immutable revision identities across admissible gate/review/declaration paths, close criterion 6 by making candidate and authoritative source records structurally distinct in schema, and only then perform another fixed-revision ten-criterion remeasurement before activating the promotion route.
+5. criteria 1–9 are now materially satisfied at fixed protected baseline `db3adf0f57ce44f14fff2bd975dad6a8e93cdc2f`; proceed only through the separately governed v1.0 candidate-freeze and Referee-promotion operation for criterion 10.
 
 ## Revalidation rule
 
