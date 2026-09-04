@@ -4,6 +4,7 @@
   "title": "GCL-TCS-00 Candidate Record Contracts",
   "description": "Derivative machine representation of existing GCL-TCS-00/0.1.0 normative record fields. Does not create authority.",
   "$defs": {
+    "immutableRevision": {"type": "string", "pattern": "^(?:git-(?:blob|commit|tree):[0-9a-f]{40}|sha256:[0-9a-f]{64}|[0-9a-f]{40})$"},
     "claimRecord": {
       "type": "object",
       "additionalProperties": false,
@@ -37,7 +38,7 @@
       "type": "object", "additionalProperties": false,
       "required": ["review_id", "gate_id", "reviewer", "review_role", "independence_statement", "date", "decision", "findings", "required_actions", "resolved_actions", "evidence", "reviewed_revision"],
       "properties": {
-        "review_id": {"type": "string", "minLength": 1}, "gate_id": {"type": "string", "pattern": "^G[0-9]$"}, "reviewer": {"type": "string", "minLength": 1}, "review_role": {"type": "string", "minLength": 1}, "independence_statement": {"type": "string", "minLength": 1}, "date": {"type": "string", "format": "date"}, "decision": {"enum": ["PASS", "FAIL", "DEFERRED", "NOT_APPLICABLE"]}, "findings": {"type": "array", "items": {"type": "string", "minLength": 1}}, "required_actions": {"type": "array", "items": {"type": "string", "minLength": 1}}, "resolved_actions": {"type": "array", "items": {"type": "string", "minLength": 1}}, "evidence": {"type": "array", "items": {"type": "string", "minLength": 1}}, "reviewed_revision": {"type": "string", "minLength": 1}
+        "review_id": {"type": "string", "minLength": 1}, "gate_id": {"type": "string", "pattern": "^G[0-9]$"}, "reviewer": {"type": "string", "minLength": 1}, "review_role": {"type": "string", "minLength": 1}, "independence_statement": {"type": "string", "minLength": 1}, "date": {"type": "string", "format": "date"}, "decision": {"enum": ["PASS", "FAIL", "DEFERRED", "NOT_APPLICABLE"]}, "findings": {"type": "array", "items": {"type": "string", "minLength": 1}}, "required_actions": {"type": "array", "items": {"type": "string", "minLength": 1}}, "resolved_actions": {"type": "array", "items": {"type": "string", "minLength": 1}}, "evidence": {"type": "array", "items": {"type": "string", "minLength": 1}}, "reviewed_revision": {"$ref": "#/$defs/immutableRevision"}
       }
     },
     "exceptionRecord": {
@@ -52,7 +53,7 @@
       "type": "object", "additionalProperties": false,
       "required": ["gate_id", "artifact_id", "reviewed_revision", "decision", "review_record_ref", "evidence"],
       "properties": {
-        "gate_id": {"type": "string", "pattern": "^G[0-9]$"}, "artifact_id": {"type": "string", "minLength": 1}, "reviewed_revision": {"type": "string", "minLength": 1}, "decision": {"enum": ["PASS", "FAIL", "DEFERRED", "NOT_APPLICABLE"]}, "review_record_ref": {"type": "string", "minLength": 1}, "evidence": {"type": "array", "items": {"type": "string", "minLength": 1}}, "not_applicable_reason": {"type": "string", "minLength": 1}, "material_change_invalidates": {"type": "boolean"}
+        "gate_id": {"type": "string", "pattern": "^G[0-9]$"}, "artifact_id": {"type": "string", "minLength": 1}, "reviewed_revision": {"$ref": "#/$defs/immutableRevision"}, "decision": {"enum": ["PASS", "FAIL", "DEFERRED", "NOT_APPLICABLE"]}, "review_record_ref": {"type": "string", "minLength": 1}, "evidence": {"type": "array", "items": {"type": "string", "minLength": 1}}, "not_applicable_reason": {"type": "string", "minLength": 1}, "material_change_invalidates": {"type": "boolean"}
       },
       "allOf": [{"if": {"properties": {"decision": {"const": "NOT_APPLICABLE"}}}, "then": {"required": ["not_applicable_reason"]}}]
     },
