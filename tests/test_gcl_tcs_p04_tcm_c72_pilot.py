@@ -12,6 +12,7 @@ PKG = ROOT / "governance/gcl_tcs_pilots/TCM-C72-INTERFACE-001"
 DECL = PKG / "TCM-C72-INTERFACE-001-TCS-PILOT-001.conformance.yaml"
 MEAS = PKG / "P04_MEASUREMENT.json"
 APPLICATION = PKG / "P04_APPLICATION.md"
+EVIDENCE = PKG / "registers/EVIDENCE.yaml"
 SCHEMA = ROOT / "docs/council/submissions/GCL-TCS-00/schemas/gcl-tcs-conformance.schema.json"
 
 EXPECTED_APPLICATION_BLOB = "82d7078ab2ada4c817b5dc03b8e4070dbf904cd4"
@@ -28,6 +29,7 @@ class TcmC72P04PilotContract(unittest.TestCase):
         cls.decl = yaml.safe_load(DECL.read_text(encoding="utf-8"))
         cls.meas = json.loads(MEAS.read_text(encoding="utf-8"))
         cls.application = APPLICATION.read_text(encoding="utf-8")
+        cls.evidence = yaml.safe_load(EVIDENCE.read_text(encoding="utf-8"))
         cls.schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
 
     def test_conformance_schema(self) -> None:
@@ -43,7 +45,12 @@ class TcmC72P04PilotContract(unittest.TestCase):
         self.assertEqual({"DECLARED"}, set(self.decl["conformance_dimensions"].values()))
 
     def test_immutable_subject_bindings(self) -> None:
-        serialized = json.dumps(self.decl, sort_keys=True) + self.application + json.dumps(self.meas, sort_keys=True)
+        serialized = (
+            json.dumps(self.decl, sort_keys=True)
+            + self.application
+            + json.dumps(self.evidence, sort_keys=True)
+            + json.dumps(self.meas, sort_keys=True)
+        )
         for token in [
             EXPECTED_APPLICATION_BLOB,
             EXPECTED_SUBJECT_MERGE,
@@ -90,12 +97,17 @@ class TcmC72P04PilotContract(unittest.TestCase):
             self.assertIn(heading, self.application)
 
     def test_real_environment_defect_is_not_erased(self) -> None:
-        defects = self.meas["defects"]
-        self.assertEqual(1, len(defects))
-        self.assertEqual("P04-D001", defects[0]["id"])
-        self.assertFalse(defects[0]["repair_in_this_pilot"])
-        self.assertIn("ubuntu-latest", defects[0]["finding"])
+        defects = {item["id"]: item for item in self.meas["defects"]}
+        self.assertIn("P04-D001", defects)
+        self.assertFalse(defects["P04-D001"]["repair_in_this_pilot"])
+        self.assertIn("ubuntu-latest", defects["P04-D001"]["finding"])
         self.assertIn("P04 defect `P04-D001`", self.application)
+
+    def test_failed_head_contract_defect_is_retained(self) -> None:
+        defects = {item["id"]: item for item in self.meas["defects"]}
+        self.assertIn("P04-PILOT-D002", defects)
+        self.assertEqual("f7d992a8497aeea67d098f4a1081304a0d143cf2", defects["P04-PILOT-D002"]["failed_head"])
+        self.assertEqual(33854741352, defects["P04-PILOT-D002"]["run_id"])
 
     def test_claim_boundary_fails_closed(self) -> None:
         boundary = self.meas["claim_boundary"]
