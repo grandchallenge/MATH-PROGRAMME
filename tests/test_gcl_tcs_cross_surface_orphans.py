@@ -91,6 +91,17 @@ class GclTcsCrossSurfaceOrphanTests(unittest.TestCase):
             self.assertIn("records/receipt.json", raw_references(note))
             self.assertEqual(reference_errors([note], root), [])
 
+    def test_slash_bearing_identifiers_are_not_paths(self):
+        with self.fixture() as directory:
+            root = Path(directory)
+            note = root / "STATUS.txt"
+            note.write_text(
+                "Candidate `GCL-TCS-00/0.1.0` remains in `grandchallenge/MATH-PROGRAMME`.\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(raw_references(note), [])
+            self.assertEqual(reference_errors([note], root), [])
+
     def test_governed_directory_registration(self):
         with self.fixture() as directory:
             root = Path(directory)
