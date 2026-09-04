@@ -45,7 +45,10 @@ class GclTcsNormativeAgreementTests(unittest.TestCase):
 
     def test_matrix_is_clause_level_and_has_no_open_gap(self) -> None:
         rows = self.matrix["rows"]
-        self.assertEqual(self.matrix["row_count"], 119)
+        self.assertEqual(self.matrix["row_count"], 125)
+        self.assertEqual(self.matrix["substantive_requirement_row_count"], 119)
+        self.assertEqual(self.matrix["normative_keyword_semantics_row_count"], 6)
+        self.assertEqual(len(rows), self.matrix["row_count"])
         self.assertGreaterEqual(len(rows), 100)
         self.assertEqual(len({row["id"] for row in rows}), len(rows))
         self.assertTrue(all(row["gap"] in {"CLOSED", "NOT_MACHINE_CHECKABLE"} for row in rows))
