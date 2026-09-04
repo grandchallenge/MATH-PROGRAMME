@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "GCL-TCS-P04-PILOT-001-MEASUREMENT-001",
+  "operation": "GCL-TCS-P04-PILOT-001",
+  "tracker": "grandchallenge/MATH-PROGRAMME#819",
+  "date": "2026-09-04",
+  "subject": {
+    "repository": "grandchallenge/QUANTUM-TECHNOLOGIES",
+    "experiment_id": "TCM-C72-INTERFACE-001",
+    "protected_merge": "aa53dc3c0e99c39f766f4ccb0c0d0629cd9093db",
+    "durable_report_blob": "929fdf77bb5ea2557e86658d22a0ab9627ce7313",
+    "preexisting_real_result": true,
+    "created_for_gcl_tcs": false
+  },
+  "p04_coverage": {
+    "mandatory_emphasis_count": 11,
+    "explicitly_addressed": 11,
+    "plot_provenance": "NOT_APPLICABLE__NO_SOURCE_PLOT",
+    "primary_profile": "GCL-TCS-P04/0.1.0"
+  },
+  "result_preservation": {
+    "frozen_inputs": 329,
+    "logical_classes_per_input": 4096,
+    "source_shards": 64,
+    "algebras": 3,
+    "oracle_success": {
+      "soft_tropical_base_2": 167,
+      "sum_product_bsc_p_0_1": 166,
+      "min_plus_hamming": 152
+    },
+    "oracle_failure": {
+      "soft_tropical_base_2": 162,
+      "sum_product_bsc_p_0_1": 163,
+      "min_plus_hamming": 177
+    },
+    "syndrome_inconsistent": 0,
+    "source_report_negative_claim_boundary_fields_preserved": 9,
+    "source_scientific_bytes_modified": false
+  },
+  "defects": [
+    {
+      "id": "P04-D001",
+      "category": "documentation_reproducibility",
+      "finding": "The source execution uses mutable ubuntu-latest rather than an immutable runner-image identity.",
+      "scientific_effect": "NONE_ESTABLISHED__DETERMINISTIC_HOST_NEUTRAL_SEMANTICS_PRESERVED",
+      "communication_effect": "EXACT_ENVIRONMENT_RECONSTRUCTION_PARTIAL",
+      "repair_in_this_pilot": false,
+      "reason_not_repaired": "Retrospective mutation of the completed experiment would manufacture provenance rather than preserve it."
+    },
+    {
+      "id": "P04-PILOT-D002",
+      "category": "candidate_contract_test_closure",
+      "finding": "The first immutable-subject-binding test omitted registers/EVIDENCE.yaml from the serialized closure and therefore falsely reported the already-recorded execution-workflow blob as absent.",
+      "failed_head": "f7d992a8497aeea67d098f4a1081304a0d143cf2",
+      "run_id": 33854741352,
+      "job_id": 100965366847,
+      "failure_artifact_id": 9929741420,
+      "scientific_effect": "NONE__SUBJECT_AND_PACKAGE_EVIDENCE_BYTES_ALREADY_CONTAINED_THE_BINDING",
+      "communication_effect": "GOVERNED_CONTRACT_TEST_FALSE_NEGATIVE",
+      "repair_in_this_pilot": true,
+      "repair": "Load registers/EVIDENCE.yaml in the contract and include it in immutable-binding closure before checking source identities.",
+      "revalidation_required": "FRESH_EXACT_HEAD_REPLAY"
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "P04-A001",
+      "finding": "The durable receipt combines artifact status candidate_executable_not_promoted with finite scientific adjudication C72_TCM_SHARED_DECODER_INTERFACE_CERTIFIED.",
+      "resolution": "Treat them as distinct status dimensions; do not infer artifact promotion from scientific certification."
+    }
+  ],
+  "burden": {
+    "candidate_package_files_added": 10,
+    "governed_contract_tests_added": 1,
+    "incumbent_surfaces_modified": 2,
+    "scientific_subject_files_modified": 0,
+    "operator_time": "UNKNOWN_NOT_MEASURED",
+    "reviewer_time": "UNKNOWN_NOT_MEASURED",
+    "incremental_scientific_compute": 0,
+    "incremental_scientific_compute_note": "No experiment rerun or new scientific computation is performed for the P04 communication pilot.",
+    "failed_candidate_heads": 1,
+    "failed_candidate_head": "f7d992a8497aeea67d098f4a1081304a0d143cf2"
+  },
+  "claim_boundary": {
+    "preserved": true,
+    "c90_execution_authorized": false,
+    "new_c90_bound_refinement_authorized": false,
+    "approximation_authorized": false,
+    "family_or_asymptotic_claim": false,
+    "threshold_or_circuit_claim": false,
+    "hardware_superiority_claim": false,
+    "learned_decoding_authorized": false,
+    "qec_circuit_003_authorized": false,
+    "qldpc_forge_authorized": false,
+    "autonomous_search_authorized": false,
+    "corpus_or_semiring_tuning_authorized": false
+  },
+  "criterion_8_effect_on_protected_admission": "SATISFIES_MISSING_REAL_EXPERIMENTAL_COMPUTATIONAL_P04_CLASS__CANDIDATE_READINESS_ONLY",
+  "authority_boundary": {
+    "gcl_tcs_version_changed": false,
+    "gcl_tcs_promoted": false,
+    "g8_or_g9_created": false,
+    "subject_scientific_authority_changed": false,
+    "mathematical_or_certification_state_changed": false,
+    "ghos_changed": false,
+    "math_core_capability_changed": false,
+    "publication_or_external_authority_changed": false
+  }
+}

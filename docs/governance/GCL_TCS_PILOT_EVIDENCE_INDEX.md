@@ -43,7 +43,11 @@ Stage-A protected merge: `66aaa9175fe8d91907c3cf113efc2d08a113a780`. The supplem
 
 ### Experimental / computational
 
-**Explicit deficit.** No completed non-synthetic P04 result package was verified in the current institutionalization pass. A plan, harness, notebook, or manufactured experiment is not counted merely to fill criterion 8.
+The original institutionalization pass correctly recorded an explicit deficit because no completed non-synthetic P04 result package had then been verified. A plan, harness, notebook, or manufactured experiment was not counted merely to fill criterion 8.
+
+Successor operation `GCL-TCS-P04-PILOT-001`, tracked by [issue #819](https://github.com/grandchallenge/MATH-PROGRAMME/issues/819), applies P04 retrospectively to the independently pre-existing [TCM-C72-INTERFACE-001 computational result](https://github.com/grandchallenge/QUANTUM-TECHNOLOGIES/pull/111). The subject was already protected-merged in `grandchallenge/QUANTUM-TECHNOLOGIES` as `aa53dc3c0e99c39f766f4ccb0c0d0629cd9093db` after a frozen 64-shard exact computation over 329 inputs and independent PR approval. The GCL-TCS [candidate P04 supplement](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/governance/gcl_tcs_pilots/TCM-C72-INTERFACE-001) does not rerun, tune, or alter the experiment.
+
+The P04 pass preserves all finite positive and negative outcomes, the exact execution and corpus identities, the distinction between the source artifact status `candidate_executable_not_promoted` and its finite scientific adjudication `C72_TCM_SHARED_DECODER_INTERFACE_CERTIFIED`, and the source prohibitions on C90 execution, broader family/asymptotic claims, hardware superiority, learned decoding, approximation, autonomous search, and adjacent programme authority. It also retains one real source limitation as `P04-D001`: the original workflow used mutable `ubuntu-latest`, so exact runner-image reconstruction is not established even though Python/action revisions were pinned and host size was non-scientific.
 
 ### Software
 
@@ -135,6 +139,14 @@ The governed [mandatory-semantic coverage record](https://github.com/grandchalle
 
 The completeness claim is limited to mandatory machine fields and field semantics represented by the agreement matrix. Rows classified review-only remain review-only and are not falsely converted into automated authority. Criterion 3 satisfaction here is candidate-readiness evidence only; it does not promote GCL-TCS-00 or activate G8/G9.
 
+### Successor pilot: criterion 8
+
+`GCL-TCS-P04-PILOT-001` is tracked by [issue #819](https://github.com/grandchallenge/MATH-PROGRAMME/issues/819). It uses the next suitable naturally completed GCL computational result rather than manufacturing an experiment for GCL-TCS.
+
+The [P04 application](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilots/TCM-C72-INTERFACE-001/P04_APPLICATION.md) maps the protected TCM-C72 subject to all eleven P04 emphasis areas. The [machine-readable measurement](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilots/TCM-C72-INTERFACE-001/P04_MEASUREMENT.json) records the real source defect `P04-D001`, structural burden, unresolved status-layer ambiguity, zero incremental scientific computation, exact positive/negative result preservation, and the unchanged claim firewall.
+
+The subject's scientific bytes remain untouched. The GCL-TCS supplement is candidate/in-review with all dimensions `DECLARED` and G8/G9 deferred. Criterion 8 satisfaction is therefore candidate-readiness evidence for the six required real artifact classes, not promotion of the source experiment, the supplement, or GCL-TCS-00.
+
 ## Current version-1.0 readiness
 
 | Criterion | Status | Current evidence / gap |
@@ -146,13 +158,13 @@ The completeness claim is limited to mandatory machine fields and field semantic
 | 5 | `PARTIAL` | Real gate records bind immutable identities; complete standard-wide enforcement across every admissible path remains unestablished. |
 | 6 | `PARTIAL` | Real candidate supplements are cleanly separated from authoritative subjects; complete schema-level source/candidate distinction remains to be established. |
 | 7 | `SATISFIED` | Successor operation #810 composes existing MkDocs and Documentary Library discovery with a generic governed-reference graph and adversarial tests across docs, web, source, candidate, assets, static text, TeX, JSON and governed-directory surfaces. Definite governed orphans fail closed; non-governed scratch remains explicitly outside registration. |
-| 8 | `PARTIAL` | Five of six required classes now have real protected pilot evidence; experimental/computational P04 remains an explicit deficit. |
+| 8 | `SATISFIED` | Successor operation #819 applies P04 to the pre-existing protected TCM-C72 exact computational result without rerunning it. All six required artifact classes now have real evidence; the P04 package preserves exact finite positive/negative outcomes, claim boundaries and the documented `P04-D001` environment-identity limitation. This is candidate-readiness evidence only. |
 | 9 | `SATISFIED` | The measurement record explicitly records FP evidence, FN evidence, burden, and unresolved ambiguities. Empirical error rates remain unknown. |
 | 10 | `OUTSIDE_CURRENT_TRANCHE` | No version-1.0 promotion is requested; no G8 decision is manufactured for routine institutionalization evidence. |
 
 Readiness is not promotion authority. A `SATISFIED` readiness row does not promote a candidate artifact or the standard.
 
-The historical machine-readable readiness record from operation #788 remains unchanged. It correctly records criteria 1, 2, 3, 4 and 7 at their earlier terminal assessment point; this successor index records later closures rather than rewriting historical evidence.
+The historical machine-readable readiness record from operation #788 remains unchanged. It correctly records criteria 1, 2, 3, 4, 7 and 8 at their earlier terminal assessment point; this successor index records later closures rather than rewriting historical evidence.
 
 ## Defect and burden evidence
 
@@ -160,9 +172,9 @@ The four new Stage-A packages recorded three pre-merge defects: the software gat
 
 The Workstream-D measurement transaction then exposed two documentation defects before merge. First, `ci/validate_docs.py` rejected the new measurement page because it was absent from MkDocs navigation. Second, after that repair, `mkdocs build --strict` rejected eight evidence-index links that incorrectly treated repository-root artifacts as docs-local relative targets. The index now uses docs-local links only for docs-tree artifacts and explicit GitHub repository links for governed artifacts outside `docs/`. Both failed heads were invalidated.
 
-The four new Stage-A packages total 36 changed files, 2,138 added lines, zero deletions, and seven pre-merge commits. These counts are a narrow repository-diff burden proxy, not a time or cost measurement.
+The four original Stage-A packages total 36 changed files, 2,138 added lines, zero deletions, and seven pre-merge commits. These counts are a narrow repository-diff burden proxy, not a time or cost measurement.
 
-No later defect has yet been observed in those four protected Stage-A packages during the current pass. That is not a measured zero false-negative rate.
+The successor P04 pilot records its own structural burden separately: ten candidate-package files, one governed contract test, two incumbent discovery/test-manifest surfaces, zero scientific-subject files changed, and zero incremental scientific computation. Operator and reviewer time remain `UNKNOWN_NOT_MEASURED`. It records `P04-D001` rather than claiming no defect.
 
 ## Successor routing
 
@@ -171,7 +183,7 @@ The bounded pilot should continue as a candidate institutional learning loop, bu
 1. preserve immutable identities, claim/evidence boundaries, negative evidence, material-closure invalidation, proportional CI, and domain-authority firewalls;
 2. keep reference discovery compositional: extend incumbent authoritative manifests and discovery surfaces rather than adding parallel inventories;
 3. avoid generating promotion-specific G8/G9 packet material until promotion is actually requested;
-4. keep the P04 deficit explicit until a real completed experimental/computational artifact is naturally available and verified;
+4. retain the real TCM-C72 P04 pilot as the sixth-class evidence, preserve `P04-D001`, and do not extrapolate its finite C72 result or its scientific certification into broader experimental or artifact authority;
 5. if a future v1.0 proposal becomes warranted, first close the remaining immutable-gate-enforcement and schema-level candidate/source-distinction gaps and remeasure every acceptance criterion on a fixed candidate revision before using the governing promotion route.
 
 ## Revalidation rule

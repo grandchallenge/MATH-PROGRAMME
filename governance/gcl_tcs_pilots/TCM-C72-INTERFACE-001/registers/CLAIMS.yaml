@@ -1,0 +1,36 @@
+register_id: CLAIMS-TCM-C72-TCS-001
+artifact_id: TCM-C72-INTERFACE-001-TCS-PILOT-001
+subject_artifact_id: TCM-C72-INTERFACE-001
+claims:
+- claim_id: TCM-C72-TCS-C001
+  type: inherited_finite_computational_result
+  status: source_scientifically_adjudicated_artifact_not_promoted
+  statement: On the frozen 329-input C72 corpus, all returned outputs for all three protected algebras were correction-valued and syndrome-consistent.
+  source_evidence: report-blob:929fdf77bb5ea2557e86658d22a0ab9627ce7313
+- claim_id: TCM-C72-TCS-C002
+  type: inherited_finite_quality_counts
+  status: source_scientifically_adjudicated_artifact_not_promoted
+  statement: The exact finite oracle-success counts were 167/329 for soft tropical base-2, 166/329 for sum-product BSC p=0.1, and 152/329 for min-plus Hamming; corresponding failures were 162, 163, and 177.
+  source_evidence: report-blob:929fdf77bb5ea2557e86658d22a0ab9627ce7313
+- claim_id: TCM-C72-TCS-C003
+  type: inherited_execution_completeness
+  status: source_protected
+  statement: The frozen execution covered all 329 inputs, evaluated all 4096 logical classes per input, required all 64 shards, and prohibited approximation, pruning, early stopping, order search, and post-outcome tuning.
+  source_evidence: manifest-blob:2e0d4747ba055aae840567f38d4f05f8d6778388
+- claim_id: TCM-C72-TCS-C004
+  type: p04_communication_finding
+  status: observed_limitation
+  statement: Exact runner-image reconstruction is not established because the source workflow used mutable ubuntu-latest even though Python and action revisions were pinned and host size was non-scientific.
+  source_evidence: workflow-blob:1fcd5fda34a19169db81922abb1f8a12dec1848f
+- claim_id: TCM-C72-TCS-C005
+  type: authority_boundary_observation
+  status: observed_not_generalized
+  statement: P04 can communicate the certified finite scientific adjudication while retaining the source artifact status candidate_executable_not_promoted; the two status dimensions are not collapsed.
+not_claimed:
+- Any C90 execution or new C90 bound refinement.
+- Approximation, tuning, learned decoding, autonomous search, or outcome-dependent restriction authority.
+- Family or asymptotic performance, thresholds, circuit claims, or hardware superiority.
+- Statistical generalization from the frozen 329-input corpus to a population or another corpus.
+- QEC-CIRCUIT-003 or QLDPC-FORGE authority.
+- Exact immutable runner-image reproduction for the original execution.
+- GCL-TCS v1.0 promotion, G8/G9 admission, or any change to scientific, mathematical, certification, canonical, publication, commercial, constitutional, GHOS, MATH-CORE, controller, or external authority.
