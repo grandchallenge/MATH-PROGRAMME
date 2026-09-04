@@ -111,6 +111,20 @@ def duplicate_values(values: Iterable[str]) -> set[str]:
     return duplicates
 
 
+def research_programme_registry_errors(instance: dict[str, Any]) -> list[str]:
+    errors = schema_errors(instance, "research_programme_registry.schema.json")
+    programmes = instance.get("programmes", [])
+    identifiers = [row.get("identifier") for row in programmes if isinstance(row, dict)]
+    repositories = [row.get("repository") for row in programmes if isinstance(row, dict)]
+    if duplicate_values(str(value) for value in identifiers):
+        errors.append("research programme identifiers must be unique")
+    if duplicate_values(str(value) for value in repositories):
+        errors.append("research programme repositories must be unique")
+    if instance.get("status") != "candidate_pending_cross_repository_admission":
+        errors.append("research programme registry cannot claim protected admission")
+    return errors
+
+
 def discovered_schema_bound_reviews(root: Path = ROOT) -> set[str]:
     discovered: set[str] = set()
     for relative in SCHEMA_BOUND_REVIEW_DISCOVERY_ROOTS:
@@ -477,6 +491,11 @@ def main() -> int:
     errors.extend(
         f"DOMAIN_REGISTRY.yaml: {error}"
         for error in schema_errors(domain_registry, "domain_registry.schema.json")
+    )
+    research_programmes = load_json(ROOT / "governance/research_programme_registry.json")
+    errors.extend(
+        f"governance/research_programme_registry.json: {error}"
+        for error in research_programme_registry_errors(research_programmes)
     )
 
     agent_review_template = yaml.safe_load(

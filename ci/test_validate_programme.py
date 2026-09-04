@@ -18,6 +18,7 @@ from validate_programme import (
     discovered_canonical_claim_ledgers,
     discovered_schema_bound_reviews,
     load_json,
+    research_programme_registry_errors,
     schema_bound_review_registry_errors,
     schema_errors,
     validate_documents,
@@ -32,6 +33,17 @@ def main() -> int:
     candidate = load_json(ROOT / "examples/candidate_problem_union_closed.json")
     agent_review = yaml.safe_load(
         (ROOT / "templates/agent_review.yaml").read_text(encoding="utf-8")
+    )
+    research_programmes = load_json(ROOT / "governance/research_programme_registry.json")
+    inflated = copy.deepcopy(research_programmes)
+    inflated["claim_boundaries"]["certifies_mathematics"] = True
+    assert research_programme_registry_errors(inflated)
+
+    duplicate = copy.deepcopy(research_programmes)
+    duplicate["programmes"].append(copy.deepcopy(duplicate["programmes"][0]))
+    assert any(
+        "unique" in error
+        for error in research_programme_registry_errors(duplicate)
     )
 
     duplicate_graph = copy.deepcopy(graph)
