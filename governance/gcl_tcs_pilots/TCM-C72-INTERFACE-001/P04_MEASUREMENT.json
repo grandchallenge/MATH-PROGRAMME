@@ -46,6 +46,20 @@
       "communication_effect": "EXACT_ENVIRONMENT_RECONSTRUCTION_PARTIAL",
       "repair_in_this_pilot": false,
       "reason_not_repaired": "Retrospective mutation of the completed experiment would manufacture provenance rather than preserve it."
+    },
+    {
+      "id": "P04-PILOT-D002",
+      "category": "candidate_contract_test_closure",
+      "finding": "The first immutable-subject-binding test omitted registers/EVIDENCE.yaml from the serialized closure and therefore falsely reported the already-recorded execution-workflow blob as absent.",
+      "failed_head": "f7d992a8497aeea67d098f4a1081304a0d143cf2",
+      "run_id": 33854741352,
+      "job_id": 100965366847,
+      "failure_artifact_id": 9929741420,
+      "scientific_effect": "NONE__SUBJECT_AND_PACKAGE_EVIDENCE_BYTES_ALREADY_CONTAINED_THE_BINDING",
+      "communication_effect": "GOVERNED_CONTRACT_TEST_FALSE_NEGATIVE",
+      "repair_in_this_pilot": true,
+      "repair": "Load registers/EVIDENCE.yaml in the contract and include it in immutable-binding closure before checking source identities.",
+      "revalidation_required": "FRESH_EXACT_HEAD_REPLAY"
     }
   ],
   "ambiguities": [
@@ -63,7 +77,9 @@
     "operator_time": "UNKNOWN_NOT_MEASURED",
     "reviewer_time": "UNKNOWN_NOT_MEASURED",
     "incremental_scientific_compute": 0,
-    "incremental_scientific_compute_note": "No experiment rerun or new scientific computation is performed for the P04 communication pilot."
+    "incremental_scientific_compute_note": "No experiment rerun or new scientific computation is performed for the P04 communication pilot.",
+    "failed_candidate_heads": 1,
+    "failed_candidate_head": "f7d992a8497aeea67d098f4a1081304a0d143cf2"
   },
   "claim_boundary": {
     "preserved": true,
