@@ -115,11 +115,21 @@ The control deliberately does not reproduce Documentary Library membership. Exis
 
 [`tests/test_gcl_tcs_cross_surface_orphans.py`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/tests/test_gcl_tcs_cross_surface_orphans.py) is registered in the existing governed contract-test manifest. The live test requires the current repository discovery graph to be clean; fixture tests separately exercise Markdown/HTML, source and candidate records, assets, static text, TeX, JSON, governed directories, missing targets, path escape, scratch exemption, and governed material concealed in scratch.
 
+### Successor hardening: criterion 1
+
+`GCL-TCS-CANDIDATE-HARDENING-004` is tracked by [issue #814](https://github.com/grandchallenge/MATH-PROGRAMME/issues/814) and implemented by [PR #815](https://github.com/grandchallenge/MATH-PROGRAMME/pull/815).
+
+[`GCL_TCS_NORMATIVE_AGREEMENT_MATRIX.md`](GCL_TCS_NORMATIVE_AGREEMENT_MATRIX.md) gives the human-readable clause-level reconciliation. The governed machine index at [`governance/gcl_tcs_normative_agreement_matrix.json`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_normative_agreement_matrix.json) binds seven source-specific shards to the exact candidate source package and assembled SHA-256 `ea750b9b80b53c7d6ed755978fa4bdf59413fad93cec1db81eb3238372ce61c9`. It contains 119 substantive requirement rows plus six normative-keyword semantic bindings. Each row records the normative requirement, machine representation, validator/test surface, machine-checkability class, and remaining gap.
+
+The candidate correction binds the policy manifest to the protected normative source identity, represents previously implicit claim/evidence/review/exception/gate/conformance/release record contracts, tightens the declaration schema to exact `GCL-TCS-00/0.1.0` and profile `0.1.0` version locks, adds the record-contract schema and normative candidate templates, and registers [`tests/test_gcl_tcs_normative_agreement.py`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/tests/test_gcl_tcs_normative_agreement.py) through the existing governed contract-test shard. [`MACHINE_CONTRACT_MIGRATION_0.1.0-R1.md`](../council/submissions/GCL-TCS-00/MACHINE_CONTRACT_MIGRATION_0.1.0-R1.md) records that these are candidate machine-contract corrections, not source changes or v1 promotion.
+
+The seven normative source parts are unchanged. The historical issued submission manifest retains the originally issued machine-policy and conformance-schema hashes, and the historical #788 readiness record remains unchanged. Criterion 1 satisfaction here is candidate-readiness evidence only and does not authorize G8/G9 or version-1.0 promotion.
+
 ## Current version-1.0 readiness
 
 | Criterion | Status | Current evidence / gap |
 |---:|---|---|
-| 1 | `PARTIAL` | Normative text, policy manifest, schema, and validating packages exist; a complete standard-wide agreement audit is not yet established. |
+| 1 | `SATISFIED` | Successor operation #814 provides a source-bound clause-level agreement matrix over all seven normative source parts, closes identified policy/schema/template representation gaps, and adds adversarial agreement tests through governed contract testing. This is candidate-readiness evidence only, not v1.0 promotion authority. |
 | 2 | `SATISFIED` | Successor operation #808 establishes a canonical P01–P07 lifecycle-owner and gate-review-role map as a derivative projection of existing institutional authority. `Steward` owns profile lifecycle; artifact ownership remains per-artifact mandatory metadata; the map creates no new authority. |
 | 3 | `PARTIAL` | Mandatory schema fields and validation exist; complete mandatory-semantic test coverage is not established. |
 | 4 | `SATISFIED` | Successor operation #806 adds dedicated adversarial fail-closed exception tests and registers them in governed Programme contract testing; this is candidate-readiness evidence only, not v1.0 promotion authority. |
@@ -132,7 +142,7 @@ The control deliberately does not reproduce Documentary Library membership. Exis
 
 Readiness is not promotion authority. A `SATISFIED` readiness row does not promote a candidate artifact or the standard.
 
-The historical machine-readable readiness record from operation #788 remains unchanged. It correctly records criteria 2, 4 and 7 at their earlier terminal assessment point; this successor index records later closures rather than rewriting historical evidence.
+The historical machine-readable readiness record from operation #788 remains unchanged. It correctly records criteria 1, 2, 4 and 7 at their earlier terminal assessment point; this successor index records later closures rather than rewriting historical evidence.
 
 ## Defect and burden evidence
 
@@ -152,7 +162,7 @@ The bounded pilot should continue as a candidate institutional learning loop, bu
 2. keep reference discovery compositional: extend incumbent authoritative manifests and discovery surfaces rather than adding parallel inventories;
 3. avoid generating promotion-specific G8/G9 packet material until promotion is actually requested;
 4. keep the P04 deficit explicit until a real completed experimental/computational artifact is naturally available and verified;
-5. if a future v1.0 proposal becomes warranted, first close the remaining mandatory-semantic-coverage and normative/schema-agreement gaps and remeasure every acceptance criterion on a fixed candidate revision before using the governing promotion route.
+5. if a future v1.0 proposal becomes warranted, first close the remaining mandatory-semantic-coverage, immutable-gate-enforcement, and schema-level candidate/source-distinction gaps and remeasure every acceptance criterion on a fixed candidate revision before using the governing promotion route.
 
 ## Revalidation rule
 
