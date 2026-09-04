@@ -1,0 +1,166 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "GCL-TCS-CANDIDATE-REMEASUREMENT-001",
+  "record_type": "NON_AUTHORITATIVE_V1_READINESS_REMEASUREMENT",
+  "operation_id": "GCL-TCS-CANDIDATE-REMEASUREMENT-001",
+  "tracker": "grandchallenge/MATH-PROGRAMME#821",
+  "assessment_baseline": "ad2ae735860af73526243304238544aa294abebf",
+  "date": "2026-09-04",
+  "standard": {
+    "id": "GCL-TCS-00",
+    "version": "0.1.0",
+    "status": "candidate"
+  },
+  "criteria_source": {
+    "path": "council_submissions/GCL-TCS-00/parts/06-adoption-acceptance-appendices.md",
+    "blob": "2d3db80408a35caa8e400f1d023bf1962e3f91f3"
+  },
+  "measurement_rule": "RECOMPUTE_FROM_PROTECTED_EVIDENCE__DO_NOT_INHERIT_PRIOR_COUNTS",
+  "criteria": [
+    {
+      "criterion": 1,
+      "status": "SATISFIED",
+      "requirement": "The policy manifest and conformance schema agree with the normative text.",
+      "evidence": [
+        "governance/gcl_tcs_normative_agreement_matrix.json@blob:b03fa345835619a30c5c6351afb5ae9efbc46251",
+        "docs/council/submissions/GCL-TCS-00/schemas/gcl-tcs-conformance.schema.json@blob:81d1373b87b65f9bb8c29b8c2bc184879b037cc3",
+        "docs/council/submissions/GCL-TCS-00/schemas/gcl-tcs-record-contracts.schema.json@blob:3e6c73dec97aaebf798ef47ac4da2eb9bd181fd4"
+      ],
+      "finding": "The protected reconciliation binds all seven normative source parts, 119 substantive requirement rows and six normative-keyword bindings to machine representations and validators, with candidate machine-contract corrections explicitly separated from v1 promotion.",
+      "gap": null
+    },
+    {
+      "criterion": 2,
+      "status": "SATISFIED",
+      "requirement": "Each profile has an approved owner and review role map.",
+      "evidence": [
+        "governance/gcl_tcs_profile_authority_map.json@blob:f771dbab9b6fb1763c4fa0f5cfb99bbed5506aea"
+      ],
+      "finding": "P01-P07 each have a protected lifecycle-owner and G0-G9 review-role map projected from existing institutional authority. Steward owns profile lifecycle; artifact ownership remains mandatory per-artifact metadata; G8 remains promotion-only.",
+      "gap": null
+    },
+    {
+      "criterion": 3,
+      "status": "SATISFIED",
+      "requirement": "Mandatory fields have machine-readable definitions and validation tests.",
+      "evidence": [
+        "governance/gcl_tcs_mandatory_semantic_coverage.json@blob:6fc66dfd35ac4ca1223dc1139232cda085e7125c",
+        "ci/gcl_tcs_mandatory_semantics.py@blob:9f356599a8e06bab30d6a11e2a472841a4d04a14"
+      ],
+      "finding": "The protected coverage record derives mandatory fields and machine semantics from exact agreement-matrix rows, re-derives required field sets from live schemas, mutation-tests omissions, and tests exact-version, enum, format, ASSURED-review, gate/review revision and NOT_APPLICABLE semantics while preserving review-only rows as review-only.",
+      "gap": null
+    },
+    {
+      "criterion": 4,
+      "status": "SATISFIED",
+      "requirement": "The exception workflow has fail-closed tests.",
+      "evidence": [
+        "tests/test_gcl_tcs_exception_control.py@blob:28bc3d7b00f7a251d3820155f467ff14fb5be762"
+      ],
+      "finding": "Protected adversarial tests fail closed on missing or unresolved approval authority, unauthorized approvers, missing review/expiry timing, attempted waiver of non-waivable requirements, insufficient compensating controls, malformed records/dates, and missing/expired/revoked/non-approved required exceptions.",
+      "gap": null
+    },
+    {
+      "criterion": 5,
+      "status": "PARTIAL",
+      "requirement": "Gate records bind to immutable artifact revisions.",
+      "evidence": [
+        "docs/council/submissions/GCL-TCS-00/schemas/gcl-tcs-record-contracts.schema.json@blob:3e6c73dec97aaebf798ef47ac4da2eb9bd181fd4",
+        "docs/council/submissions/GCL-TCS-00/schemas/gcl-tcs-conformance.schema.json@blob:81d1373b87b65f9bb8c29b8c2bc184879b037cc3",
+        "ci/gcl_tcs_mandatory_semantics.py@blob:9f356599a8e06bab30d6a11e2a472841a4d04a14"
+      ],
+      "finding": "Gate and review records require reviewed_revision, gate/review pairs fail closed on revision mismatch, and ASSURED declarations require a review linked to source_revision. Real pilot records use immutable git-blob/git-commit identities.",
+      "gap": "The machine contract still accepts any nonempty string for source_revision/reviewed_revision. It does not reject mutable symbolic references such as branch names or 'latest', and gate-review equality alone does not universally prove that the shared value is immutable or bound to the artifact declaration. Standard-wide immutability is therefore not established."
+    },
+    {
+      "criterion": 6,
+      "status": "PARTIAL",
+      "requirement": "Candidate and authoritative source records are distinct in the schema.",
+      "evidence": [
+        "docs/council/submissions/GCL-TCS-00/schemas/gcl-tcs-conformance.schema.json@blob:81d1373b87b65f9bb8c29b8c2bc184879b037cc3",
+        "governance/gcl_tcs_profile_authority_map.json@blob:f771dbab9b6fb1763c4fa0f5cfb99bbed5506aea"
+      ],
+      "finding": "Protected pilot practice cleanly separates candidate communication supplements from authoritative subjects and the schema requires machine-readable authority_status.",
+      "gap": "The conformance schema uses one record shape whose authority_status enum includes candidate, admitted and authoritative. It has no discriminated candidate-record versus authoritative-source-record schema forms, so the distinction is operationally represented but not structurally distinct in schema as the criterion requires."
+    },
+    {
+      "criterion": 7,
+      "status": "SATISFIED",
+      "requirement": "Orphan detection covers documents, web pages, source records, candidate records, assets, static text, TeX, JSON, and directories where applicable.",
+      "evidence": [
+        "tests/test_gcl_tcs_cross_surface_orphans.py@blob:2fdf39e096ce1c554ef88fed17dbd3f54746e71f",
+        "ci/gcl_tcs_cross_surface_orphans.py@blob:c8fd4b2b797d51bff0bf8faa07b3c6a0456cdfec"
+      ],
+      "finding": "The protected control composes MkDocs/Documentary Library discovery with generic Markdown, HTML, static-text, TeX, JSON/YAML and governed-directory reference discovery; definite governed orphans, missing targets, repository escapes and governed identity hidden in scratch fail closed, while deliberately non-governed scratch remains outside registration.",
+      "gap": null
+    },
+    {
+      "criterion": 8,
+      "status": "SATISFIED",
+      "requirement": "At least one mathematical, experimental, software, operational, governance, and public artifact has completed a pilot conformance review.",
+      "evidence": [
+        "governance/gcl_tcs_pilots/LOG-GCD-001/LOG-GCD-001-TCS-PILOT-001.conformance.yaml@blob:2a4976285c80934529ad416aa67116c02d02c2ce",
+        "governance/gcl_tcs_pilots/TCM-C72-INTERFACE-001/reviews/INTERNAL_G0_G7.yaml@blob:a74d3e1c2cdf36f0993cdff9f3702aa9d22580f4",
+        "governance/gcl_tcs_pilots/GHOS_ESTATE_MEMBERSHIP_SENTINEL/GHOS_ESTATE_MEMBERSHIP_SENTINEL.conformance.yaml@blob:343c1a5e0539d8f4c61d4055fc843613676b6fd3",
+        "governance/rebuild_evidence/GHOS-ESTATE-ROLLOUT-001/gcl-tcs/GHOS-ESTATE-ROLLOUT-001.conformance.yaml@blob:a5c78ffb5550bf211029fdcd28c8185739ad0d4b",
+        "governance/gcl_tcs_pilots/MP-STREAMLINED-EXECUTION-001/MP-STREAMLINED-EXECUTION-001-TCS-PILOT-001.conformance.yaml@blob:362734042bea8a79ac7dbd7248d58c22abe10da8",
+        "governance/gcl_tcs_pilots/PUB-LOG-GCD-001/PUB-LOG-GCD-001-TCS-PILOT-001.conformance.yaml@blob:c186fcde5190a964838ec273bbb855008574585f"
+      ],
+      "finding": "All six required real artifact classes have protected pilot review evidence. The five candidate supplements have completed internal G0-G7 pilot conformance reviews with PASS decisions on exact revisions; the historical operational GHOS documentary pilot has completed G0-G9 including independent G8 and protected G9. Promotion of the candidate supplements is not required by criterion 8 and remains deferred.",
+      "gap": null
+    },
+    {
+      "criterion": 9,
+      "status": "SATISFIED",
+      "requirement": "The pilots record false positives, false negatives, burden, and unresolved ambiguities.",
+      "evidence": [
+        "governance/gcl_tcs_pilot_institutionalization_001_measurement.json@blob:47c0964da1ea523cb2da734108399c96eb0433c1",
+        "governance/gcl_tcs_pilots/TCM-C72-INTERFACE-001/P04_MEASUREMENT.json@blob:5cdd5e87c75461ccb910d239649e7e773d1a5a01"
+      ],
+      "finding": "Protected measurements explicitly record false-positive evidence and limits, false-negative evidence and limits, burden proxies, unresolved ambiguities, defects, unknown empirical-rate caveats, P04 structural burden and zero incremental scientific compute.",
+      "gap": null
+    },
+    {
+      "criterion": 10,
+      "status": "INACTIVE__PREREQUISITES_NOT_MET",
+      "requirement": "The Referee approves promotion with an explicit statement of remaining limitations.",
+      "evidence": [
+        "council_submissions/GCL-TCS-00/parts/06-adoption-acceptance-appendices.md@blob:2d3db80408a35caa8e400f1d023bf1962e3f91f3"
+      ],
+      "finding": "Criterion 10 is not activated because criteria 1-9 are not all materially satisfied: criteria 5 and 6 remain PARTIAL.",
+      "gap": "No Referee promotion disposition may be requested or manufactured until a fixed candidate revision satisfies criteria 1-9."
+    }
+  ],
+  "summary": {
+    "satisfied": 7,
+    "partial": 2,
+    "unsatisfied": 0,
+    "inactive": 1,
+    "criteria_1_through_9_materially_satisfied": false,
+    "blocking_criteria": [5, 6],
+    "v1_candidate_should_exist_now": false,
+    "v1_candidate_revision_frozen": false,
+    "promotion_operation_opened": false,
+    "referee_disposition_requested": false,
+    "g8_packet_created": false,
+    "g9_packet_created": false,
+    "decision": "NOT_READY_FOR_V1_CANDIDATE__CLOSE_CRITERIA_5_AND_6_THEN_REMEASURE"
+  },
+  "historical_record_boundary": {
+    "historical_readiness_path": "governance/gcl_tcs_pilot_institutionalization_001_readiness.json",
+    "historical_readiness_blob": "7c3c3aa7b0c2714a98b1be4b0231380dc3d3324b",
+    "historical_record_rewritten": false
+  },
+  "authority_boundary": {
+    "standard_version_changed": false,
+    "candidate_promoted": false,
+    "v1_candidate_created": false,
+    "referee_disposition_created": false,
+    "g8_or_g9_promotion_packet_created": false,
+    "mathematical_or_certification_state_changed": false,
+    "publication_or_external_authority_changed": false,
+    "ghos_changed": false,
+    "math_core_capability_changed": false,
+    "controller_changed": false
+  }
+}
