@@ -1,0 +1,124 @@
+schema_version: 0.1.0
+standard:
+  id: GCL-TCS-00
+  version: 0.1.0
+artifact_id: TCM-C72-INTERFACE-001-TCS-PILOT-001
+title: TCM-C72-INTERFACE-001 experimental/computational communication pilot
+artifact_type: experimental_computational_conformance_supplement
+version: 0.1.0
+date: '2026-09-04'
+owner: Grand Challenge Labs
+authority_status: candidate
+promotion_status: in_review
+primary_profile:
+  id: GCL-TCS-P04
+  version: 0.1.0
+secondary_profiles: []
+impact_class: IC-2
+audience:
+- GCL experimental and computational researchers
+- scientific reviewers and Referees
+- technical communication and governance maintainers
+scope: Applies GCL-TCS-P04 to the already-completed TCM-C72-INTERFACE-001 finite computational result, preserving frozen experimental design, exact execution provenance, finite positive and negative outcomes, environment limitations, and the source claim firewall without rerunning or modifying the experiment.
+out_of_scope:
+- Rerunning, tuning, reconstructing, sampling, extending, or modifying TCM-C72-INTERFACE-001 for the purpose of satisfying GCL-TCS.
+- C90 execution, new C90 bound refinement, approximation, learned decoding, autonomous search, or post-outcome tuning.
+- Family or asymptotic claims, threshold or circuit claims, hardware-superiority claims, QEC-CIRCUIT-003, or QLDPC-FORGE authority.
+- Reclassification of the subject artifact from candidate_executable_not_promoted merely because its finite scientific adjudication is certified.
+- GCL-TCS-00 version 1.0 promotion, G8/G9 promotion, or any mathematical, certification, canonical, publication, commercial, constitutional, GHOS, MATH-CORE, controller, or external authority change.
+source_location: P04_APPLICATION.md
+source_revision: git-blob:82d7078ab2ada4c817b5dc03b8e4070dbf904cd4
+dependencies:
+- artifact_id: TCM-C72-INTERFACE-001
+  version_or_revision: protected-merge:aa53dc3c0e99c39f766f4ccb0c0d0629cd9093db;report-blob:929fdf77bb5ea2557e86658d22a0ab9627ce7313
+  authority_status: candidate
+  relation: protected-merged scientific subject whose durable receipt retains candidate artifact status while recording the finite C72 scientific adjudication
+- artifact_id: TCM-C72-INTERFACE-001-MANIFEST
+  version_or_revision: git-blob:2e0d4747ba055aae840567f38d4f05f8d6778388;payload-sha256:35e3715fa9b1d0d44cad63c8cafbee01a42c3426c7db21c37d3ff68073506ddf
+  authority_status: candidate
+  relation: frozen pre-measurement design, outcome space, controls, corpus identity, execution method, stop rules, and claim boundary
+- artifact_id: GCL-TCS-00
+  version_or_revision: 0.1.0
+  authority_status: admitted
+  relation: governs this bounded experimental/computational communication pilot
+- artifact_id: GCL-POS-01
+  version_or_revision: 0.1.0
+  authority_status: admitted
+  relation: constrains institutional authority and prevents communication review from creating scientific or external authority
+terminology_registry: registries/TERMINOLOGY.yaml
+notation_registry:
+  status: not_applicable
+  reason: This supplement inherits the subject experiment's notation and introduces no independent mathematical notation system.
+claim_register: registers/CLAIMS.yaml
+evidence_register: registers/EVIDENCE.yaml
+review_register:
+- review_id: REV-TCM-C72-TCS-G0-001
+  gate_id: G0
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:82d7078ab2ada4c817b5dc03b8e4070dbf904cd4
+- review_id: REV-TCM-C72-TCS-G1-001
+  gate_id: G1
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:82d7078ab2ada4c817b5dc03b8e4070dbf904cd4
+- review_id: REV-TCM-C72-TCS-G2-001
+  gate_id: G2
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:82d7078ab2ada4c817b5dc03b8e4070dbf904cd4
+- review_id: REV-TCM-C72-TCS-G3-001
+  gate_id: G3
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:82d7078ab2ada4c817b5dc03b8e4070dbf904cd4
+- review_id: REV-TCM-C72-TCS-G4-001
+  gate_id: G4
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:82d7078ab2ada4c817b5dc03b8e4070dbf904cd4
+- review_id: REV-TCM-C72-TCS-G5-001
+  gate_id: G5
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:82d7078ab2ada4c817b5dc03b8e4070dbf904cd4
+- review_id: REV-TCM-C72-TCS-G6-001
+  gate_id: G6
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:82d7078ab2ada4c817b5dc03b8e4070dbf904cd4
+- review_id: REV-TCM-C72-TCS-G7-001
+  gate_id: G7
+  location: reviews/INTERNAL_G0_G7.yaml
+  decision: PASS
+  reviewed_revision: git-blob:82d7078ab2ada4c817b5dc03b8e4070dbf904cd4
+- review_id: REV-TCM-C72-TCS-G8-001
+  gate_id: G8
+  location: reviews/DEFERRED_G8_G9.yaml
+  decision: DEFERRED
+  reviewed_revision: git-blob:82d7078ab2ada4c817b5dc03b8e4070dbf904cd4
+- review_id: REV-TCM-C72-TCS-G9-001
+  gate_id: G9
+  location: reviews/DEFERRED_G8_G9.yaml
+  decision: DEFERRED
+  reviewed_revision: git-blob:82d7078ab2ada4c817b5dc03b8e4070dbf904cd4
+exceptions: []
+conformance_dimensions:
+  L: DECLARED
+  T: DECLARED
+  S: DECLARED
+  C: DECLARED
+  E: DECLARED
+  R: DECLARED
+  P: DECLARED
+  V: DECLARED
+  G: DECLARED
+supersedes: []
+superseded_by: null
+licence_and_access:
+  licence: Repository licences and protected GCL/QUANTUM governance controls.
+  access: public_repository_candidate_pilot_record
+generated_content:
+  present: true
+  method: Candidate P04 communication/conformance supplement drafted by OpenAI GPT-5.6 Sol from the protected TCM-C72-INTERFACE-001 receipt, frozen manifest, compute configuration, execution workflow, PR review provenance, and GCL-TCS/POS sources.
+  review: G0-G7 are same-system machine-assisted internal checks only. They do not create independent CHECKED or ASSURED status, do not substitute for the original QUANTUM scientific review, and do not activate G8/G9. The source experiment is not rerun or altered.

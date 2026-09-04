@@ -1,0 +1,40 @@
+register_id: EVIDENCE-TCM-C72-TCS-001
+artifact_id: TCM-C72-INTERFACE-001-TCS-PILOT-001
+subject_artifact_id: TCM-C72-INTERFACE-001
+evidence:
+- evidence_id: TCM-C72-TCS-E001
+  supports: [TCM-C72-TCS-C001, TCM-C72-TCS-C002, TCM-C72-TCS-C005]
+  location: grandchallenge/QUANTUM-TECHNOLOGIES/evidence/TCM-C72-INTERFACE-001-report.json
+  identity: protected-merge:aa53dc3c0e99c39f766f4ccb0c0d0629cd9093db;git-blob:929fdf77bb5ea2557e86658d22a0ab9627ce7313
+  authority_status: candidate
+  note: Durable receipt fixes execution identities, finite C72 counts, scientific adjudication, candidate artifact status, and source claim boundary.
+- evidence_id: TCM-C72-TCS-E002
+  supports: [TCM-C72-TCS-C001, TCM-C72-TCS-C002, TCM-C72-TCS-C003, TCM-C72-TCS-C005]
+  location: grandchallenge/QUANTUM-TECHNOLOGIES/registry/tcm-c72-interface-001-manifest.json
+  identity: protected-merge:aa53dc3c0e99c39f766f4ccb0c0d0629cd9093db;git-blob:2e0d4747ba055aae840567f38d4f05f8d6778388;payload-sha256:35e3715fa9b1d0d44cad63c8cafbee01a42c3426c7db21c37d3ff68073506ddf
+  authority_status: candidate
+  note: Frozen pre-measurement question, alternatives, controls, corpus, oracle, decision rule, execution method, resource semantics, and claim boundary.
+- evidence_id: TCM-C72-TCS-E003
+  supports: [TCM-C72-TCS-C003, TCM-C72-TCS-C004]
+  location: grandchallenge/QUANTUM-TECHNOLOGIES/.github/workflows/qtr-tcm-c72-interface-001-execute.yml
+  identity: protected-merge:aa53dc3c0e99c39f766f4ccb0c0d0629cd9093db;git-blob:1fcd5fda34a19169db81922abb1f8a12dec1848f
+  authority_status: candidate
+  note: Exact activation binding, ubuntu-latest runner label, Python 3.12, 64 shards, workers=4, all-4096 assertion, and 90-day shard preservation.
+- evidence_id: TCM-C72-TCS-E004
+  supports: [TCM-C72-TCS-C003, TCM-C72-TCS-C004]
+  location: grandchallenge/QUANTUM-TECHNOLOGIES/configs/compute/tcm_c72_interface_001_job.json
+  identity: protected-merge:aa53dc3c0e99c39f766f4ccb0c0d0629cd9093db;git-blob:43a2ad070d9aa924a5afbb41de7b5945fe81e684
+  authority_status: candidate
+  note: Separates operational worker/host choices from scientific invariants and defines resource failure as operationally incomplete rather than scientific infeasibility.
+- evidence_id: TCM-C72-TCS-E005
+  supports: [TCM-C72-TCS-C001, TCM-C72-TCS-C002, TCM-C72-TCS-C003]
+  location: GitHub Actions source execution run 32709539233 and aggregate/scoring run 32797057625
+  identity: activation-head:299e74f762b745986d2c930a875606660065d5af;source-artifacts:64;aggregate-artifact:9545199159;aggregate-digest:sha256:715e4ab49498eca87bded7b2ded7708ba53c8d842aca4886fddebbc583f1ad29
+  authority_status: candidate
+  note: Existing real computation; this P04 pilot does not rerun it.
+- evidence_id: TCM-C72-TCS-E006
+  supports: [TCM-C72-TCS-C005]
+  location: grandchallenge/QUANTUM-TECHNOLOGIES PR #111
+  identity: exact-reviewed-head:ff136da83b5224908476329f7a694b4e2dfc23ee;approved-review:5015097986;protected-merge:aa53dc3c0e99c39f766f4ccb0c0d0629cd9093db
+  authority_status: candidate
+  note: Protected integration followed fresh independent GitHub approval; this provenance is evidence, not a transferable GCL-TCS G8 disposition.
