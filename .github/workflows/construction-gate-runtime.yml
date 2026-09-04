@@ -46,7 +46,7 @@ jobs:
         github.event_name == 'workflow_dispatch' ||
         (
           github.event_name == 'issue_comment' &&
-          github.event.issue.number == 737 &&
+          (github.event.issue.number == 737 || github.event.issue.number == 831) &&
           github.event.comment.user.login == 'fyremael' &&
           startsWith(github.event.comment.body, '/construction-gate ')
         )
@@ -61,6 +61,7 @@ jobs:
         id: request
         env:
           EVENT_NAME: ${{ github.event_name }}
+          ISSUE_NUMBER: ${{ github.event.issue.number || 0 }}
           COMMENT_BODY: ${{ github.event.comment.body || '' }}
           INPUT_TARGET: ${{ inputs.target || '' }}
           INPUT_OPERATION: ${{ inputs.operation || '' }}
@@ -78,31 +79,50 @@ jobs:
             read -r command target operation proposed_head expect extra <<<"$COMMENT_BODY"
             [[ "$command" == "/construction-gate" ]] || { echo "invalid issue command" >&2; exit 2; }
             [[ -z "${extra:-}" ]] || { echo "unexpected trailing issue-command input" >&2; exit 2; }
-            [[ "$target" == "MP-MCORE-DOMAIN-DIAG-001" ]] || { echo "issue-comment entry is scoped only to MP-MCORE-DOMAIN-DIAG-001" >&2; exit 2; }
             [[ "$expect" == allow ]] || { echo "issue-comment entry accepts only allow disposition" >&2; exit 2; }
-            case "$operation" in
-              CREATE_DEVELOPMENT)
-                [[ "$proposed_head" == "03ca91bf486d38007799bee0b0552afbfb61245c" ]] || {
-                  echo "CREATE_DEVELOPMENT issue command is pinned to protected predecessor" >&2; exit 2;
-                }
-                ;;
-              UPDATE_DEVELOPMENT|FREEZE_CANDIDATE)
-                [[ "$proposed_head" == "07582227a487a56c21c8604d9e85b99c7b0b6ac2" ]] || {
-                  echo "$operation issue command is pinned to exact validated diagnostic head" >&2; exit 2;
-                }
-                ;;
-              *) echo "unsupported issue-command operation" >&2; exit 2 ;;
-            esac
 
-            issue_state="$(curl --fail --silent --show-error -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10' \
-              https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/737 | jq -r .state)"
-            pr_json="$(curl --fail --silent --show-error -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10' \
-              https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/pulls/739)"
-            pr_state="$(jq -r .state <<<"$pr_json")"
-            pr_head="$(jq -r .head.sha <<<"$pr_json")"
-            [[ "$issue_state" == open ]] || { echo "issue #737 is not open" >&2; exit 2; }
-            [[ "$pr_state" == open ]] || { echo "PR #739 is not open" >&2; exit 2; }
-            [[ "$pr_head" == "07582227a487a56c21c8604d9e85b99c7b0b6ac2" ]] || { echo "PR #739 exact head changed" >&2; exit 2; }
+            case "$target" in
+              MP-MCORE-DOMAIN-DIAG-001)
+                [[ "$ISSUE_NUMBER" == 737 ]] || { echo "MCORE issue-command target requires issue #737" >&2; exit 2; }
+                case "$operation" in
+                  CREATE_DEVELOPMENT)
+                    [[ "$proposed_head" == "03ca91bf486d38007799bee0b0552afbfb61245c" ]] || {
+                      echo "CREATE_DEVELOPMENT issue command is pinned to protected predecessor" >&2; exit 2;
+                    }
+                    ;;
+                  UPDATE_DEVELOPMENT|FREEZE_CANDIDATE)
+                    [[ "$proposed_head" == "07582227a487a56c21c8604d9e85b99c7b0b6ac2" ]] || {
+                      echo "$operation issue command is pinned to exact validated diagnostic head" >&2; exit 2;
+                    }
+                    ;;
+                  *) echo "unsupported MCORE issue-command operation" >&2; exit 2 ;;
+                esac
+
+                issue_state="$(curl --fail --silent --show-error -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10' \
+                  https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/737 | jq -r .state)"
+                pr_json="$(curl --fail --silent --show-error -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10' \
+                  https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/pulls/739)"
+                pr_state="$(jq -r .state <<<"$pr_json")"
+                pr_head="$(jq -r .head.sha <<<"$pr_json")"
+                [[ "$issue_state" == open ]] || { echo "issue #737 is not open" >&2; exit 2; }
+                [[ "$pr_state" == open ]] || { echo "PR #739 is not open" >&2; exit 2; }
+                [[ "$pr_head" == "07582227a487a56c21c8604d9e85b99c7b0b6ac2" ]] || { echo "PR #739 exact head changed" >&2; exit 2; }
+                ;;
+              GCL-TCS-V1-PROMOTION-001)
+                [[ "$ISSUE_NUMBER" == 831 ]] || { echo "GCL-TCS issue-command target requires issue #831" >&2; exit 2; }
+                case "$operation" in
+                  CREATE_DEVELOPMENT|FREEZE_CANDIDATE) ;;
+                  *) echo "GCL-TCS issue-command path permits only CREATE_DEVELOPMENT or FREEZE_CANDIDATE" >&2; exit 2 ;;
+                esac
+                [[ "$proposed_head" == "8833253f620c6c05930740bda983d6f43bee6612" ]] || {
+                  echo "GCL-TCS issue command is pinned to the protected readiness revision" >&2; exit 2;
+                }
+                issue_state="$(curl --fail --silent --show-error -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10' \
+                  https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/831 | jq -r .state)"
+                [[ "$issue_state" == open ]] || { echo "issue #831 is not open" >&2; exit 2; }
+                ;;
+              *) echo "unsupported issue-command target" >&2; exit 2 ;;
+            esac
           else
             echo "unsupported event" >&2
             exit 2
