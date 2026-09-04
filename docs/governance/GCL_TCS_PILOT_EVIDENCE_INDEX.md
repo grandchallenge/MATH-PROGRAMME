@@ -125,13 +125,23 @@ The candidate correction binds the policy manifest to the protected normative so
 
 The seven normative source parts are unchanged. The historical issued submission manifest retains the originally issued machine-policy and conformance-schema hashes, and the historical #788 readiness record remains unchanged. Criterion 1 satisfaction here is candidate-readiness evidence only and does not authorize G8/G9 or version-1.0 promotion.
 
+### Successor hardening: criterion 3
+
+`GCL-TCS-CANDIDATE-HARDENING-005` is tracked by [issue #816](https://github.com/grandchallenge/MATH-PROGRAMME/issues/816) and implemented by [PR #817](https://github.com/grandchallenge/MATH-PROGRAMME/pull/817).
+
+The governed [mandatory-semantic coverage record](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_mandatory_semantic_coverage.json) derives the tested surface from exact rows of the protected normative agreement matrix rather than from an independent checklist. [`ci/gcl_tcs_mandatory_semantics.py`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ci/gcl_tcs_mandatory_semantics.py) dynamically re-derives the declaration and record required-field sets from the live candidate schemas and fails closed if the coverage record, candidate identity, policy required fields, agreement-matrix row set, source digest, governed test registration, or candidate-only authority boundary drifts.
+
+[`tests/test_gcl_tcs_mandatory_semantics.py`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/tests/test_gcl_tcs_mandatory_semantics.py) mutation-tests omission of every mandatory top-level and nested conformance-declaration field and every required claim, evidence, review, exception, gate, conformance-statement and release-record field. It also adversarially tests exact standard/profile locks, enumerations, patterns, formats, collection constraints, explicit-empty/not-applicable forms, claim statement-or-pointer exclusivity, `ASSURED` review linkage to the exact source revision, and gate/review revision plus `NOT_APPLICABLE` consistency. The existing dedicated exception-control suite remains the single control for non-waivable rules, approved review/expiry timing, and missing/expired/revoked required-exception semantics.
+
+The completeness claim is limited to mandatory machine fields and field semantics represented by the agreement matrix. Rows classified review-only remain review-only and are not falsely converted into automated authority. Criterion 3 satisfaction here is candidate-readiness evidence only; it does not promote GCL-TCS-00 or activate G8/G9.
+
 ## Current version-1.0 readiness
 
 | Criterion | Status | Current evidence / gap |
 |---:|---|---|
 | 1 | `SATISFIED` | Successor operation #814 provides a source-bound clause-level agreement matrix over all seven normative source parts, closes identified policy/schema/template representation gaps, and adds adversarial agreement tests through governed contract testing. This is candidate-readiness evidence only, not v1.0 promotion authority. |
 | 2 | `SATISFIED` | Successor operation #808 establishes a canonical P01–P07 lifecycle-owner and gate-review-role map as a derivative projection of existing institutional authority. `Steward` owns profile lifecycle; artifact ownership remains per-artifact mandatory metadata; the map creates no new authority. |
-| 3 | `PARTIAL` | Mandatory schema fields and validation exist; complete mandatory-semantic test coverage is not established. |
+| 3 | `SATISFIED` | Successor operation #816 derives mandatory-field and field-semantic coverage from exact agreement-matrix rows, re-derives required sets from the live schemas, mutation-tests every mandatory declaration/record omission, adversarially tests matrix-bound machine semantics, and reuses the dedicated exception-control suite. Review-only obligations remain excluded from automation. This is candidate-readiness evidence only, not v1.0 promotion authority. |
 | 4 | `SATISFIED` | Successor operation #806 adds dedicated adversarial fail-closed exception tests and registers them in governed Programme contract testing; this is candidate-readiness evidence only, not v1.0 promotion authority. |
 | 5 | `PARTIAL` | Real gate records bind immutable identities; complete standard-wide enforcement across every admissible path remains unestablished. |
 | 6 | `PARTIAL` | Real candidate supplements are cleanly separated from authoritative subjects; complete schema-level source/candidate distinction remains to be established. |
@@ -142,7 +152,7 @@ The seven normative source parts are unchanged. The historical issued submission
 
 Readiness is not promotion authority. A `SATISFIED` readiness row does not promote a candidate artifact or the standard.
 
-The historical machine-readable readiness record from operation #788 remains unchanged. It correctly records criteria 1, 2, 4 and 7 at their earlier terminal assessment point; this successor index records later closures rather than rewriting historical evidence.
+The historical machine-readable readiness record from operation #788 remains unchanged. It correctly records criteria 1, 2, 3, 4 and 7 at their earlier terminal assessment point; this successor index records later closures rather than rewriting historical evidence.
 
 ## Defect and burden evidence
 
@@ -162,7 +172,7 @@ The bounded pilot should continue as a candidate institutional learning loop, bu
 2. keep reference discovery compositional: extend incumbent authoritative manifests and discovery surfaces rather than adding parallel inventories;
 3. avoid generating promotion-specific G8/G9 packet material until promotion is actually requested;
 4. keep the P04 deficit explicit until a real completed experimental/computational artifact is naturally available and verified;
-5. if a future v1.0 proposal becomes warranted, first close the remaining mandatory-semantic-coverage, immutable-gate-enforcement, and schema-level candidate/source-distinction gaps and remeasure every acceptance criterion on a fixed candidate revision before using the governing promotion route.
+5. if a future v1.0 proposal becomes warranted, first close the remaining immutable-gate-enforcement and schema-level candidate/source-distinction gaps and remeasure every acceptance criterion on a fixed candidate revision before using the governing promotion route.
 
 ## Revalidation rule
 
