@@ -51,6 +51,29 @@ def _load_json(path: Path, root: Path = ROOT) -> dict[str, Any]:
     return raw
 
 
+def load_matrix(root: Path = ROOT) -> dict[str, Any]:
+    index = _load_json(MATRIX, root)
+    shards = index.get("shards")
+    if not isinstance(shards, list) or not shards:
+        raise AgreementError("matrix.shards: missing_or_empty")
+    rows: list[Any] = []
+    for entry in shards:
+        if not isinstance(entry, Mapping) or not isinstance(entry.get("path"), str) or not isinstance(entry.get("source"), str):
+            raise AgreementError("matrix.shards: malformed_entry")
+        shard = _load_json(Path(entry["path"]), root)
+        if shard.get("source") != entry["source"]:
+            raise AgreementError(f"matrix shard source drift: {entry['path']}")
+        shard_rows = shard.get("rows")
+        if not isinstance(shard_rows, list):
+            raise AgreementError(f"matrix shard rows missing: {entry['path']}")
+        rows.extend(shard_rows)
+    if index.get("row_count") != len(rows):
+        raise AgreementError(f"matrix row count drift: expected {index.get('row_count')}, got {len(rows)}")
+    merged = dict(index)
+    merged["rows"] = rows
+    return merged
+
+
 def _norm(text: str) -> str:
     text = text.replace("`", "").replace("**", "")
     return re.sub(r"\s+", " ", text).strip().lower()
@@ -71,7 +94,6 @@ def source_coverage_errors(matrix: Mapping[str, Any], root: Path = ROOT) -> list
     rows = matrix.get("rows")
     if not isinstance(rows, list) or not rows:
         return ["matrix.rows: missing_or_empty"]
-
     by_source: dict[str, list[Mapping[str, Any]]] = {}
     ids: set[str] = set()
     for item in rows:
@@ -94,12 +116,10 @@ def source_coverage_errors(matrix: Mapping[str, Any], root: Path = ROOT) -> list
             errors.append(f"{rid}: missing_source_match")
             continue
         by_source.setdefault(source, []).append(item)
-
     expected_sources = {str(p) for p in SOURCE_PARTS}
     missing_sources = expected_sources - set(by_source)
     if missing_sources:
         errors.extend(f"matrix: source_uncovered:{p}" for p in sorted(missing_sources))
-
     for path in SOURCE_PARTS:
         source_name = str(path)
         text = (root / path).read_text(encoding="utf-8")
@@ -109,7 +129,6 @@ def source_coverage_errors(matrix: Mapping[str, Any], root: Path = ROOT) -> list
             match = _norm(str(row.get("source_match", "")))
             if match and match not in norm_text:
                 errors.append(f"{row.get('id')}: source_match_not_found")
-
         for paragraph in _paragraphs(text):
             hard_count = len(HARD_RE.findall(paragraph))
             strong_count = len(STRONG_RE.findall(paragraph))
@@ -119,11 +138,7 @@ def source_coverage_errors(matrix: Mapping[str, Any], root: Path = ROOT) -> list
             matched = [row for row in source_rows if _norm(str(row.get("source_match", ""))) in norm_para]
             required_count = hard_count + strong_count
             if len(matched) < required_count:
-                errors.append(
-                    f"{source_name}: uncovered_normative_clause:"
-                    f"required={required_count}:matched={len(matched)}:"
-                    f"{norm_para[:120]}"
-                )
+                errors.append(f"{source_name}: uncovered_normative_clause:required={required_count}:matched={len(matched)}:{norm_para[:120]}")
     return sorted(set(errors))
 
 
@@ -139,23 +154,18 @@ def _require_policy_path(policy: Mapping[str, Any], path: str) -> bool:
 def policy_contract_errors(policy: Mapping[str, Any]) -> list[str]:
     errors: list[str] = []
     standard = policy.get("standard")
-    if not isinstance(standard, Mapping) or (
-        standard.get("id"), standard.get("version"), standard.get("status")
-    ) != ("GCL-TCS-00", "0.1.0", "candidate"):
+    if not isinstance(standard, Mapping) or (standard.get("id"), standard.get("version"), standard.get("status")) != ("GCL-TCS-00", "0.1.0", "candidate"):
         errors.append("policy: candidate_identity_drift")
-
     required_paths = (
         "normative_source_contract", "normative_obligations", "conformance_rules",
         "record_contracts.claim", "record_contracts.evidence", "record_contracts.review",
         "record_contracts.exception", "record_contracts.gate", "record_contracts.conformance_statement",
         "record_contracts.release", "language_structure_contract", "exception_contract",
-        "gate_contracts", "promotion_contract", "review_control", "change_control",
-        "strong_defaults", "machine_contracts",
+        "gate_contracts", "promotion_contract", "review_control", "change_control", "strong_defaults", "machine_contracts",
     )
     for path in required_paths:
         if not _require_policy_path(policy, path):
             errors.append(f"policy: missing:{path}")
-
     source = policy.get("normative_source_contract")
     if isinstance(source, Mapping):
         if source.get("assembled_sha256") != EXPECTED_SOURCE_SHA256:
@@ -164,7 +174,6 @@ def policy_contract_errors(policy: Mapping[str, Any]) -> list[str]:
             errors.append("policy: source_must_control_meaning")
         if source.get("machine_surfaces_are_derivative") is not True:
             errors.append("policy: machine_surface_authority_inflation")
-
     contracts = policy.get("record_contracts")
     expected_fields = {
         "claim": {"claim_id","statement_or_immutable_pointer","claim_type","claim_status","scope","assumptions","dependencies","supporting_evidence","counterevidence","falsifiers","limitations","owner","last_reviewed"},
@@ -181,13 +190,11 @@ def policy_contract_errors(policy: Mapping[str, Any]) -> list[str]:
             vals = block.get("required_fields") if isinstance(block, Mapping) else None
             if not isinstance(vals, list) or not fields.issubset(set(vals)):
                 errors.append(f"policy: record_contract_fields:{name}")
-
     exception_model = policy.get("exception_model")
     if not isinstance(exception_model, Mapping):
         errors.append("policy: exception_model_missing")
     else:
-        statuses = exception_model.get("statuses")
-        if set(statuses or []) != {"requested","approved","rejected","expired","revoked","superseded"}:
+        if set(exception_model.get("statuses") or []) != {"requested","approved","rejected","expired","revoked","superseded"}:
             errors.append("policy: exception_status_drift")
         non_waivable = set(exception_model.get("non_waivable") or [])
         for value in ("truthful_nonmisleading_communication", "exception_registration", "fail_closed_missing_record_behaviour", "no_fabricated_evidence_reviews_or_authority"):
@@ -206,7 +213,6 @@ def schema_contract_errors(declaration_schema: Mapping[str, Any], record_schema:
         Draft202012Validator.check_schema(dict(record_schema))
     except Exception as exc:
         errors.append(f"record_schema: invalid:{exc}")
-
     defs = declaration_schema.get("$defs")
     if not isinstance(defs, Mapping):
         return errors + ["declaration_schema: missing_defs"]
@@ -224,7 +230,6 @@ def schema_contract_errors(declaration_schema: Mapping[str, Any], record_schema:
         props = profile.get("properties")
         if not isinstance(props, Mapping) or props.get("version", {}).get("const") != "0.1.0":
             errors.append("declaration_schema: profile_version_not_locked")
-
     record_defs = record_schema.get("$defs")
     required = {"claimRecord","evidenceRecord","reviewRecord","exceptionRecord","gateRecord","conformanceStatement","releaseRecord"}
     if not isinstance(record_defs, Mapping) or not required.issubset(record_defs):
@@ -283,20 +288,18 @@ def repository_agreement_errors(root: Path = ROOT) -> list[str]:
     errors: list[str] = []
     if source_digest(root) != EXPECTED_SOURCE_SHA256:
         errors.append("normative_source: assembled_digest_mismatch")
-    matrix = _load_json(MATRIX, root)
+    matrix = load_matrix(root)
     policy = _load_yaml(POLICY, root)
     decl_schema = _load_json(DECL_SCHEMA, root)
     record_schema = _load_json(RECORD_SCHEMA, root)
     decl_template = _load_yaml(DECL_TEMPLATE, root)
     record_template = _load_yaml(RECORD_TEMPLATE, root)
     historical = _load_yaml(HISTORICAL_MANIFEST, root)
-
     errors.extend(source_coverage_errors(matrix, root))
     errors.extend(policy_contract_errors(policy))
     errors.extend(schema_contract_errors(decl_schema, record_schema))
     errors.extend(template_contract_errors(decl_schema, record_schema, decl_template, record_template))
     errors.extend(historical_manifest_errors(historical))
-
     rows = matrix.get("rows")
     if isinstance(rows, list):
         for row in rows:
