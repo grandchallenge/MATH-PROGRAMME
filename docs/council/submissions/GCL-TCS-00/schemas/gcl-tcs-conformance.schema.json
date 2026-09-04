@@ -24,7 +24,7 @@
     "scope": {"type": "string", "minLength": 1},
     "out_of_scope": {"type": "array", "items": {"type": "string", "minLength": 1}},
     "source_location": {"type": "string", "minLength": 1},
-    "source_revision": {"type": "string", "minLength": 1},
+    "source_revision": {"$ref": "#/$defs/immutableRevision"},
     "dependencies": {"type": "array", "items": {"$ref": "#/$defs/dependency"}},
     "terminology_registry": {"$ref": "#/$defs/locationOrNotApplicable"},
     "notation_registry": {"$ref": "#/$defs/locationOrNotApplicable"},
@@ -39,6 +39,7 @@
     "generated_content": {"type": "object", "additionalProperties": false, "required": ["present", "method", "review"], "properties": {"present": {"type": "boolean"}, "method": {"type": "string"}, "review": {"type": "string", "minLength": 1}}}
   },
   "$defs": {
+    "immutableRevision": {"type": "string", "pattern": "^(?:git-(?:blob|commit|tree):[0-9a-f]{40}|sha256:[0-9a-f]{64}|[0-9a-f]{40})$"},
     "versionedIdentifier": {"type": "object", "additionalProperties": false, "required": ["id", "version"], "properties": {"id": {"type": "string", "minLength": 1}, "version": {"type": "string", "minLength": 1}}},
     "standardIdentifier": {"type": "object", "additionalProperties": false, "required": ["id", "version"], "properties": {"id": {"const": "GCL-TCS-00"}, "version": {"const": "0.1.0"}}},
     "profile": {"type": "object", "additionalProperties": false, "required": ["id", "version"], "properties": {"id": {"enum": ["GCL-TCS-P01", "GCL-TCS-P02", "GCL-TCS-P03", "GCL-TCS-P04", "GCL-TCS-P05", "GCL-TCS-P06", "GCL-TCS-P07"]}, "version": {"const": "0.1.0"}}},
