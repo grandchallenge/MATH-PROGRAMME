@@ -1,7 +1,7 @@
 """Cross-surface orphan discovery for GCL-TCS candidate-readiness.
 
-This module is deliberately library-only. It discovers references and composes
-incumbent authoritative registrations; it is not a registry and confers no authority.
+Library-only by design. This module discovers references and composes incumbent
+registrations; it is not an authority, claim, promotion, or inventory registry.
 """
 from __future__ import annotations
 
@@ -18,42 +18,26 @@ EVIDENCE_INDEX = Path("docs/governance/GCL_TCS_PILOT_EVIDENCE_INDEX.md")
 PILOT_ROOT = Path("governance/gcl_tcs_pilots")
 
 TEXT_SUFFIXES = {".md", ".html", ".htm", ".txt", ".tex", ".json", ".yaml", ".yml"}
+PATH_SUFFIXES = TEXT_SUFFIXES | {
+    ".py", ".svg", ".png", ".jpg", ".jpeg", ".pdf", ".csv", ".toml", ".lock"
+}
 SCRATCH_PARTS = {"scratch", "_scratch", "scratchpad", "unregistered_scratch", "tmp", "temp"}
 REPOSITORY_ROOT_PREFIXES = (
-    ".github/",
-    "campaigns/",
-    "ci/",
-    "council_submissions/",
-    "docs/",
-    "fixtures/",
-    "governance/",
-    "handoffs/",
-    "reviews/",
-    "schemas/",
-    "tests/",
+    ".github/", "campaigns/", "ci/", "council_submissions/", "docs/", "fixtures/",
+    "governance/", "handoffs/", "reviews/", "schemas/", "tests/",
 )
 STRONG_GOVERNANCE_KEYS = {
-    "record_id",
-    "operation_id",
-    "authority_status",
-    "promotion_status",
-    "candidate_revision",
-    "review_record",
-    "claim_ledger",
+    "record_id", "operation_id", "authority_status", "promotion_status",
+    "candidate_revision", "review_record", "claim_ledger",
 }
 STRONG_TEXT_MARKERS = (
-    "**Artifact ID:**",
-    "authority_status:",
-    "promotion_status:",
-    '"record_id"',
-    '"operation_id"',
+    "**Artifact ID:**", "authority_status:", "promotion_status:",
+    '"record_id"', '"operation_id"',
 )
 
 MARKDOWN_REF_RE = re.compile(r"!?\[[^\]]*\]\(([^)\s]+)")
 HTML_REF_RE = re.compile(r"(?:href|src)=[\"']([^\"']+)[\"']", re.IGNORECASE)
-TEX_REF_RE = re.compile(
-    r"\\(?:input|include|includegraphics)(?:\[[^\]]*\])?\{([^}]+)\}"
-)
+TEX_REF_RE = re.compile(r"\\(?:input|include|includegraphics)(?:\[[^\]]*\])?\{([^}]+)\}")
 STATIC_PATH_RE = re.compile(
     r"(?:`|\b(?:path|file|source|candidate|asset|directory)\s*[:=]\s*[\"']?)"
     r"([A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)+(?:\.[A-Za-z0-9_.-]+)?)/?"
@@ -94,13 +78,11 @@ def _structured_governance_keys(value: Any) -> set[str]:
 
 
 def has_strong_governance_identity(path: Path) -> bool:
-    """Return true only for explicit machine/text governance identity markers."""
     if not path.is_file() or path.suffix.lower() not in TEXT_SUFFIXES:
         return False
     try:
         if path.suffix.lower() in {".json", ".yaml", ".yml"}:
-            value = _structured_value(path)
-            if _structured_governance_keys(value):
+            if _structured_governance_keys(_structured_value(path)):
                 return True
         text = path.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError, json.JSONDecodeError, yaml.YAMLError):
@@ -118,28 +100,33 @@ def is_deliberate_scratch(path: Path, root: Path) -> bool:
 
 def _github_repository_path(raw: str) -> str | None:
     parsed = urlparse(raw)
+    parts = [unquote(part) for part in parsed.path.split("/") if part]
     if parsed.netloc == "github.com":
-        parts = [unquote(part) for part in parsed.path.split("/") if part]
         if (
             len(parts) >= 5
             and parts[:2] == ["grandchallenge", "MATH-PROGRAMME"]
             and parts[2] in {"blob", "tree"}
         ):
             return "/".join(parts[4:])
-    if parsed.netloc == "raw.githubusercontent.com":
-        parts = [unquote(part) for part in parsed.path.split("/") if part]
+    elif parsed.netloc == "raw.githubusercontent.com":
         if len(parts) >= 4 and parts[:2] == ["grandchallenge", "MATH-PROGRAMME"]:
             return "/".join(parts[3:])
     return None
 
 
-def _looks_like_path(value: str) -> bool:
+def _looks_like_repository_path(value: str) -> bool:
+    """Conservatively distinguish file paths from identifiers containing slashes."""
     value = value.strip().strip("`\"'")
     if not value or value.startswith(("#", "mailto:", "data:", "javascript:")):
         return False
     if value.startswith(("http://", "https://")):
         return _github_repository_path(value) is not None
-    return "/" in value or bool(Path(value).suffix)
+    clean = value.split("#", 1)[0].split("?", 1)[0]
+    return (
+        clean.startswith(("/", "./", "../"))
+        or clean.startswith(REPOSITORY_ROOT_PREFIXES)
+        or Path(clean).suffix.lower() in PATH_SUFFIXES
+    )
 
 
 def raw_references(path: Path) -> list[str]:
@@ -157,17 +144,20 @@ def raw_references(path: Path) -> list[str]:
     if suffix in {".json", ".yaml", ".yml"}:
         try:
             refs.extend(
-                value for value in _iter_strings(_structured_value(path)) if _looks_like_path(value)
+                value for value in _iter_strings(_structured_value(path))
+                if _looks_like_repository_path(value)
             )
         except (json.JSONDecodeError, yaml.YAMLError):
             pass
     if suffix in {".md", ".html", ".htm", ".txt", ".tex"}:
-        refs.extend(STATIC_PATH_RE.findall(text))
+        refs.extend(
+            value for value in STATIC_PATH_RE.findall(text)
+            if _looks_like_repository_path(value)
+        )
     return list(dict.fromkeys(ref.strip() for ref in refs if ref.strip()))
 
 
 def resolve_reference(source: Path, raw: str, root: Path) -> tuple[Path | None, str | None]:
-    """Resolve a discovered repository reference, returning (target, error)."""
     raw = raw.strip().strip("`\"'")
     repository_path = _github_repository_path(raw)
     if raw.startswith(("http://", "https://")) and repository_path is None:
@@ -190,7 +180,6 @@ def resolve_reference(source: Path, raw: str, root: Path) -> tuple[Path | None, 
 
     if resolved.exists():
         return resolved, None
-
     if source.suffix.lower() == ".tex" and not resolved.suffix:
         tex = resolved.with_suffix(".tex")
         if tex.exists():
@@ -205,17 +194,16 @@ def resolve_reference(source: Path, raw: str, root: Path) -> tuple[Path | None, 
 def reference_errors(paths: Iterable[Path], root: Path) -> list[str]:
     errors: list[str] = []
     for source in paths:
-        if not source.is_file():
-            continue
-        for raw in raw_references(source):
-            _, error = resolve_reference(source, raw, root)
-            if error:
-                errors.append(error)
+        if source.is_file():
+            for raw in raw_references(source):
+                _, error = resolve_reference(source, raw, root)
+                if error:
+                    errors.append(error)
     return sorted(set(errors))
 
 
 def registered_by_text(target: Path, registrars: Iterable[Path], root: Path) -> bool:
-    """Return whether an incumbent discovery surface references the target."""
+    """Test incumbent discoverability only; this function grants no status."""
     relative = target.relative_to(root).as_posix()
     for registrar in registrars:
         if not registrar.is_file():
@@ -231,54 +219,42 @@ def registered_by_text(target: Path, registrars: Iterable[Path], root: Path) -> 
 
 
 def governed_root_orphan_errors(
-    governed_root: Path,
-    registrars: Iterable[Path],
-    root: Path,
+    governed_root: Path, registrars: Iterable[Path], root: Path
 ) -> list[str]:
-    """Require each immediate governed package/file to be discoverable from a registrar."""
-    errors: list[str] = []
     if not governed_root.is_dir():
         return [f"{governed_root.relative_to(root)}: governed directory is missing"]
-    for target in sorted(governed_root.iterdir()):
-        if not registered_by_text(target, registrars, root):
-            errors.append(f"{target.relative_to(root)}: definite governed orphan")
-    return errors
+    return [
+        f"{target.relative_to(root)}: definite governed orphan"
+        for target in sorted(governed_root.iterdir())
+        if not registered_by_text(target, registrars, root)
+    ]
 
 
 def scratch_boundary_errors(root: Path) -> list[str]:
-    """Permit scratch paths unless their content asserts a strong governed identity."""
-    errors: list[str] = []
-    for path in root.rglob("*"):
-        if (
-            path.is_file()
-            and is_deliberate_scratch(path, root)
-            and has_strong_governance_identity(path)
-        ):
-            errors.append(f"{path.relative_to(root)}: scratch path contains governed identity markers")
-    return sorted(set(errors))
+    """Scratch is exempt only while it does not assert strong governed identity."""
+    return sorted({
+        f"{path.relative_to(root)}: scratch path contains governed identity markers"
+        for path in root.rglob("*")
+        if path.is_file()
+        and is_deliberate_scratch(path, root)
+        and has_strong_governance_identity(path)
+    })
 
 
 def gcl_tcs_json_orphan_errors(registrars: Iterable[Path], root: Path) -> list[str]:
-    errors: list[str] = []
     governance = root / "governance"
-    for target in sorted(governance.glob("gcl_tcs_*.json")):
-        if not registered_by_text(target, registrars, root):
-            errors.append(f"{target.relative_to(root)}: definite governed JSON orphan")
-    return errors
+    return [
+        f"{target.relative_to(root)}: definite governed JSON orphan"
+        for target in sorted(governance.glob("gcl_tcs_*.json"))
+        if not registered_by_text(target, registrars, root)
+    ]
 
 
 def cross_surface_orphan_errors(root: Path = ROOT) -> list[str]:
-    """Run the live GCL-TCS criterion-7 discovery layer.
-
-    The Documentary Library's manifest-driven source/candidate/web/asset/static/TeX
-    discovery remains authoritative and is already executed by `ci/validate_programme.py`.
-    This layer adds the missing generic reference graph for the GCL-TCS governed pilot
-    surface and does not copy the Documentary Library inventory.
-    """
+    """Run the live generic layer; incumbent Documentary Library authority stays separate."""
     index = root / EVIDENCE_INDEX
     if not index.is_file():
         return [f"{EVIDENCE_INDEX}: current GCL-TCS evidence index is missing"]
-
     errors: list[str] = []
     errors.extend(reference_errors([index], root))
     errors.extend(governed_root_orphan_errors(root / PILOT_ROOT, [index], root))
