@@ -19,6 +19,19 @@ PILOT_ROOT = Path("governance/gcl_tcs_pilots")
 
 TEXT_SUFFIXES = {".md", ".html", ".htm", ".txt", ".tex", ".json", ".yaml", ".yml"}
 SCRATCH_PARTS = {"scratch", "_scratch", "scratchpad", "unregistered_scratch", "tmp", "temp"}
+REPOSITORY_ROOT_PREFIXES = (
+    ".github/",
+    "campaigns/",
+    "ci/",
+    "council_submissions/",
+    "docs/",
+    "fixtures/",
+    "governance/",
+    "handoffs/",
+    "reviews/",
+    "schemas/",
+    "tests/",
+)
 STRONG_GOVERNANCE_KEYS = {
     "record_id",
     "operation_id",
@@ -165,7 +178,10 @@ def resolve_reference(source: Path, raw: str, root: Path) -> tuple[Path | None, 
         clean = raw.split("#", 1)[0].split("?", 1)[0]
         if not clean or clean.startswith(("mailto:", "data:", "javascript:")):
             return None, None
-        candidate = root / clean.lstrip("/") if clean.startswith("/") else source.parent / clean
+        if clean.startswith("/") or clean.startswith(REPOSITORY_ROOT_PREFIXES):
+            candidate = root / clean.lstrip("/")
+        else:
+            candidate = source.parent / clean
     try:
         resolved = candidate.resolve()
         resolved.relative_to(root.resolve())
