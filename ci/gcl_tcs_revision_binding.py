@@ -72,9 +72,10 @@ def schema_binding_errors(
     gate = record_defs.get("gateRecord")
     review_props = review.get("properties") if isinstance(review, Mapping) else None
     gate_props = gate.get("properties") if isinstance(gate, Mapping) else None
-    if not isinstance(review_props, Mapping) or review_props.get("reviewed_revision") != {"$ref": "#/$defs/immutableRevision"}:
+    expected_inline = {"type": "string", "pattern": IMMUTABLE_REVISION_PATTERN}
+    if not isinstance(review_props, Mapping) or review_props.get("reviewed_revision") != expected_inline:
         errors.append("schema: review_revision_not_bound")
-    if not isinstance(gate_props, Mapping) or gate_props.get("reviewed_revision") != {"$ref": "#/$defs/immutableRevision"}:
+    if not isinstance(gate_props, Mapping) or gate_props.get("reviewed_revision") != expected_inline:
         errors.append("schema: gate_revision_not_bound")
     return sorted(set(errors))
 
