@@ -120,8 +120,26 @@ def research_programme_registry_errors(instance: dict[str, Any]) -> list[str]:
         errors.append("research programme identifiers must be unique")
     if duplicate_values(str(value) for value in repositories):
         errors.append("research programme repositories must be unique")
-    if instance.get("status") != "candidate_pending_cross_repository_admission":
-        errors.append("research programme registry cannot claim protected admission")
+    status = instance.get("status")
+    for programme in programmes:
+        if not isinstance(programme, dict):
+            continue
+        state = programme.get("programme_state")
+        obligations = programme.get("unresolved_obligations")
+        if state == "adopted" and obligations:
+            errors.append("adopted research programme retains unresolved obligations")
+        if state == "candidate" and not obligations:
+            errors.append("candidate research programme must retain an obligation")
+    if status == "adopted" and any(
+        isinstance(programme, dict) and programme.get("programme_state") != "adopted"
+        for programme in programmes
+    ):
+        errors.append("adopted registry contains a non-adopted programme")
+    if status == "candidate_pending_cross_repository_admission" and any(
+        isinstance(programme, dict) and programme.get("programme_state") == "adopted"
+        for programme in programmes
+    ):
+        errors.append("candidate registry cannot contain an adopted programme")
     return errors
 
 
