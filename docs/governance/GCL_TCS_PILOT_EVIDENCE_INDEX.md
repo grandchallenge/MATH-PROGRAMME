@@ -74,6 +74,7 @@ Stage-A protected merge: `20c4796ccd6d1e9d4fd8578ffc7c3f7847b40eb6`. The supplem
 
 ## Measurement and successor evaluation
 
+- [Machine-readable pilot selection](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilot_institutionalization_001_pilot_selection.json) — historical non-authoritative bounded selection record for the six required pilot classes; exposed here without changing its original authority or status.
 - [Machine-readable pilot measurement](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilot_institutionalization_001_measurement.json) — defects, FP/FN evidence and limits, burden proxy, ambiguities, preserved controls, and automation opportunities.
 - [Machine-readable readiness assessment](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilot_institutionalization_001_readiness.json) — historical criterion-by-criterion assessment produced by the completed institutionalization operation.
 - [`GCL_TCS_PILOT_MEASUREMENT_001.md`](GCL_TCS_PILOT_MEASUREMENT_001.md) — human-readable measurement and successor recommendation.
@@ -104,6 +105,16 @@ The map projects the existing G0–G9 gate matrix onto active Council functions.
 
 [`ci/gcl_tcs_profile_authority_control.py`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ci/gcl_tcs_profile_authority_control.py) is a test-bound derivative validator, executed only through the existing governed contract-test route. It fails closed on profile/version drift, gate-applicability drift, missing lifecycle ownership, artifact-owner substitution, unknown role creation, or any attempt for the map to become an authority registry, confer authority by role name, activate promotion, or claim constitutional expansion.
 
+### Successor hardening: criterion 7
+
+`GCL-TCS-CANDIDATE-HARDENING-003` is tracked by [issue #810](https://github.com/grandchallenge/MATH-PROGRAMME/issues/810).
+
+[`ci/gcl_tcs_cross_surface_orphans.py`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ci/gcl_tcs_cross_surface_orphans.py) adds a library-only reference graph for the bounded GCL-TCS pilot surface. It discovers repository references from Markdown, HTML, static text, TeX, JSON and YAML, validates local target resolution, rejects repository-root escapes, requires each definite governed pilot package and current `gcl_tcs_*.json` record to remain discoverable from this existing evidence index, and rejects strong governed identity markers hidden in conventional scratch paths. Deliberately unregistered scratch with no governed identity remains outside registration and is neither promoted nor treated as an orphan.
+
+The control deliberately does not reproduce Documentary Library membership. Existing `ci/validate_programme.py` continues to invoke the authoritative Documentary Library contract, whose manifest-driven discovery covers web pages, TeX source records, candidate source locks, documentary assets and asset directories, JSON edition records, and root static inventory. The new cross-surface suite verifies that composition and adds synthetic adversarial coverage for the generic parsers rather than constructing a second manifest.
+
+[`tests/test_gcl_tcs_cross_surface_orphans.py`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/tests/test_gcl_tcs_cross_surface_orphans.py) is registered in the existing governed contract-test manifest. The live test requires the current repository discovery graph to be clean; fixture tests separately exercise Markdown/HTML, source and candidate records, assets, static text, TeX, JSON, governed directories, missing targets, path escape, scratch exemption, and governed material concealed in scratch.
+
 ## Current version-1.0 readiness
 
 | Criterion | Status | Current evidence / gap |
@@ -114,14 +125,14 @@ The map projects the existing G0–G9 gate matrix onto active Council functions.
 | 4 | `SATISFIED` | Successor operation #806 adds dedicated adversarial fail-closed exception tests and registers them in governed Programme contract testing; this is candidate-readiness evidence only, not v1.0 promotion authority. |
 | 5 | `PARTIAL` | Real gate records bind immutable identities; complete standard-wide enforcement across every admissible path remains unestablished. |
 | 6 | `PARTIAL` | Real candidate supplements are cleanly separated from authoritative subjects; complete schema-level source/candidate distinction remains to be established. |
-| 7 | `PARTIAL` | PR #798 demonstrated fail-closed documentation orphan/link checks; the broader web/source/candidate/asset/static/TeX/JSON/directory coverage remains unestablished. |
+| 7 | `SATISFIED` | Successor operation #810 composes existing MkDocs and Documentary Library discovery with a generic governed-reference graph and adversarial tests across docs, web, source, candidate, assets, static text, TeX, JSON and governed-directory surfaces. Definite governed orphans fail closed; non-governed scratch remains explicitly outside registration. |
 | 8 | `PARTIAL` | Five of six required classes now have real protected pilot evidence; experimental/computational P04 remains an explicit deficit. |
 | 9 | `SATISFIED` | The measurement record explicitly records FP evidence, FN evidence, burden, and unresolved ambiguities. Empirical error rates remain unknown. |
 | 10 | `OUTSIDE_CURRENT_TRANCHE` | No version-1.0 promotion is requested; no G8 decision is manufactured for routine institutionalization evidence. |
 
 Readiness is not promotion authority. A `SATISFIED` readiness row does not promote a candidate artifact or the standard.
 
-The historical machine-readable readiness record from operation #788 remains unchanged. It correctly records criteria 2 and 4 as unsatisfied at that operation's terminal assessment point; the successor index records later closures rather than rewriting historical evidence.
+The historical machine-readable readiness record from operation #788 remains unchanged. It correctly records criteria 2, 4 and 7 at their earlier terminal assessment point; this successor index records later closures rather than rewriting historical evidence.
 
 ## Defect and burden evidence
 
@@ -138,11 +149,10 @@ No later defect has yet been observed in those four protected Stage-A packages d
 The bounded pilot should continue as a candidate institutional learning loop, but with a narrower operating envelope:
 
 1. preserve immutable identities, claim/evidence boundaries, negative evidence, material-closure invalidation, proportional CI, and domain-authority firewalls;
-2. automate shallow evidence discovery, measurement aggregation, and cross-surface orphan detection where safe;
-3. extend the demonstrated documentation checks to the remaining required surfaces without building a duplicate authority registry;
-4. avoid generating promotion-specific G8/G9 packet material until promotion is actually requested;
-5. keep the P04 deficit explicit until a real completed experimental/computational artifact is naturally available and verified;
-6. if a future v1.0 proposal becomes warranted, first close the broad orphan-detection, mandatory-semantic-coverage, and normative/schema-agreement gaps, then use the governing promotion route on a fixed candidate revision.
+2. keep reference discovery compositional: extend incumbent authoritative manifests and discovery surfaces rather than adding parallel inventories;
+3. avoid generating promotion-specific G8/G9 packet material until promotion is actually requested;
+4. keep the P04 deficit explicit until a real completed experimental/computational artifact is naturally available and verified;
+5. if a future v1.0 proposal becomes warranted, first close the remaining mandatory-semantic-coverage and normative/schema-agreement gaps and remeasure every acceptance criterion on a fixed candidate revision before using the governing promotion route.
 
 ## Revalidation rule
 
