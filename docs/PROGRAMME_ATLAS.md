@@ -68,6 +68,17 @@ Each transformation changes the status of the material. The programme exists to 
 
 Union-Closed remains the programme's first demonstration of the complete route. It no longer exhausts the public domain catalogue. A merged WP00 dossier is documentary progress, not evidence that its terminal problem has moved toward resolution.
 
+## Adjacent GCL research programmes
+
+| Programme | Candidate scope | Routing |
+|---|---|---|
+| [BUTTERFLY CLOSURE](https://github.com/grandchallenge/BUTTERFLY) | Complementary low-rank observability, factorization, numerical certification, neural systems, and runtime research | Source and work-package authority remain in BUTTERFLY; any mathematical certification routes independently to MATHCERT |
+
+The protected machine-readable index is
+`governance/research_programme_registry.json`. During onboarding it remains a
+candidate index: it does not admit BUTTERFLY, promote scientific claims,
+authorize publication, transfer source ownership, or certify mathematics.
+
 ## Cross-pillar obligations
 
 MATHFORGE must give MATHSOLVE enough context to avoid attacking a mirage.
