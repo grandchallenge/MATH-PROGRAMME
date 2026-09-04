@@ -2,9 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://grandchallenge.ai/schemas/gcl-tcs-conformance-0.1.0.schema.json",
   "title": "GCL Technical Communication Conformance Declaration",
-  "description": "Candidate GCL-TCS-00/0.1.0 declaration schema, tightened by machine-contract revision 0.1.0-r1 without changing normative source meaning.",
+  "description": "Candidate GCL-TCS-00/0.1.0 declaration schema, tightened by derivative machine-contract controls without changing normative source meaning.",
   "type": "object",
   "additionalProperties": false,
+  "oneOf": [
+    {"$ref": "#/$defs/candidateRecordShape"},
+    {"$ref": "#/$defs/authoritativeSourceRecordShape"},
+    {"$ref": "#/$defs/terminalSourceRecordShape"}
+  ],
   "required": ["schema_version", "standard", "artifact_id", "title", "artifact_type", "version", "date", "owner", "authority_status", "promotion_status", "primary_profile", "secondary_profiles", "impact_class", "audience", "scope", "out_of_scope", "source_location", "source_revision", "dependencies", "terminology_registry", "notation_registry", "claim_register", "evidence_register", "review_register", "exceptions", "conformance_dimensions", "supersedes", "superseded_by", "licence_and_access", "generated_content"],
   "properties": {
     "schema_version": {"const": "0.1.0"},
@@ -40,6 +45,9 @@
   },
   "$defs": {
     "immutableRevision": {"type": "string", "pattern": "^(?:git-(?:blob|commit|tree):[0-9a-f]{40}|sha256:[0-9a-f]{64}|[0-9a-f]{40})$"},
+    "candidateRecordShape": {"type": "object", "required": ["authority_status"], "properties": {"authority_status": {"const": "candidate"}}},
+    "authoritativeSourceRecordShape": {"type": "object", "required": ["authority_status"], "properties": {"authority_status": {"enum": ["admitted", "authoritative"]}}},
+    "terminalSourceRecordShape": {"type": "object", "required": ["authority_status"], "properties": {"authority_status": {"enum": ["superseded", "withdrawn"]}}},
     "versionedIdentifier": {"type": "object", "additionalProperties": false, "required": ["id", "version"], "properties": {"id": {"type": "string", "minLength": 1}, "version": {"type": "string", "minLength": 1}}},
     "standardIdentifier": {"type": "object", "additionalProperties": false, "required": ["id", "version"], "properties": {"id": {"const": "GCL-TCS-00"}, "version": {"const": "0.1.0"}}},
     "profile": {"type": "object", "additionalProperties": false, "required": ["id", "version"], "properties": {"id": {"enum": ["GCL-TCS-P01", "GCL-TCS-P02", "GCL-TCS-P03", "GCL-TCS-P04", "GCL-TCS-P05", "GCL-TCS-P06", "GCL-TCS-P07"]}, "version": {"const": "0.1.0"}}},
@@ -47,7 +55,7 @@
     "dependency": {"type": "object", "additionalProperties": false, "required": ["artifact_id", "version_or_revision", "authority_status", "relation"], "properties": {"artifact_id": {"type": "string", "minLength": 1}, "version_or_revision": {"type": "string", "minLength": 1}, "authority_status": {"enum": ["candidate", "admitted", "authoritative", "superseded", "withdrawn"]}, "relation": {"type": "string", "minLength": 1}}},
     "locationOrNotApplicable": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "object", "additionalProperties": false, "required": ["status", "reason"], "properties": {"status": {"const": "not_applicable"}, "reason": {"type": "string", "minLength": 1}}}]},
     "locationOrExplicitEmpty": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "object", "additionalProperties": false, "required": ["status", "reason"], "properties": {"status": {"const": "explicit_empty"}, "reason": {"type": "string", "minLength": 1}}}]},
-    "reviewReference": {"type": "object", "additionalProperties": false, "required": ["review_id", "gate_id", "location", "decision", "reviewed_revision"], "properties": {"review_id": {"type": "string", "minLength": 1}, "gate_id": {"pattern": "^G[0-9]$", "type": "string"}, "location": {"type": "string", "minLength": 1}, "decision": {"enum": ["PASS", "FAIL", "DEFERRED", "NOT_APPLICABLE"]}, "reviewed_revision": {"type": "string", "minLength": 1}}},
+    "reviewReference": {"type": "object", "additionalProperties": false, "required": ["review_id", "gate_id", "location", "decision", "reviewed_revision"], "properties": {"review_id": {"type": "string", "minLength": 1}, "gate_id": {"pattern": "^G[0-9]$", "type": "string"}, "location": {"type": "string", "minLength": 1}, "decision": {"enum": ["PASS", "FAIL", "DEFERRED", "NOT_APPLICABLE"]}, "reviewed_revision": {"$ref": "#/$defs/immutableRevision"}}},
     "exceptionReference": {"type": "object", "additionalProperties": false, "required": ["exception_id", "location", "status"], "properties": {"exception_id": {"type": "string", "minLength": 1}, "location": {"type": "string", "minLength": 1}, "status": {"enum": ["requested", "approved", "rejected", "expired", "revoked", "superseded"]}}}
   }
 }
