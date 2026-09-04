@@ -113,6 +113,18 @@ class GclTcsCrossSurfaceOrphanTests(unittest.TestCase):
             index.write_text("[Package](governed/PACKAGE-001)\n", encoding="utf-8")
             self.assertEqual(governed_root_orphan_errors(governed, [index], root), [])
 
+    def test_plain_scratch_inside_governed_root_is_not_an_orphan(self):
+        with self.fixture() as directory:
+            root = Path(directory)
+            governed = root / "governed"
+            scratch = governed / "scratch"
+            scratch.mkdir(parents=True)
+            (scratch / "notes.txt").write_text("unregistered working note\n", encoding="utf-8")
+            index = root / "INDEX.md"
+            index.write_text("# Governed discovery\n", encoding="utf-8")
+            self.assertEqual(governed_root_orphan_errors(governed, [index], root), [])
+            self.assertEqual(scratch_boundary_errors(root), [])
+
     def test_definite_governed_directory_orphan_fails_closed(self):
         with self.fixture() as directory:
             root = Path(directory)
