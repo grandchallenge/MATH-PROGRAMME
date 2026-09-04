@@ -68,6 +68,11 @@ def schema_binding_errors(
     if not isinstance(decl_props, Mapping) or decl_props.get("source_revision") != {"$ref": "#/$defs/immutableRevision"}:
         errors.append("schema: declaration_source_revision_not_bound")
 
+    declaration_review = decl_defs.get("reviewReference")
+    declaration_review_props = declaration_review.get("properties") if isinstance(declaration_review, Mapping) else None
+    if not isinstance(declaration_review_props, Mapping) or declaration_review_props.get("reviewed_revision") != {"$ref": "#/$defs/immutableRevision"}:
+        errors.append("schema: declaration_review_reference_revision_not_bound")
+
     review = record_defs.get("reviewRecord")
     gate = record_defs.get("gateRecord")
     review_props = review.get("properties") if isinstance(review, Mapping) else None
