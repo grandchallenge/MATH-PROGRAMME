@@ -10,13 +10,13 @@ from ci.gcl_tcs_normative_agreement import (
     DECL_SCHEMA,
     EXPECTED_SOURCE_SHA256,
     HISTORICAL_MANIFEST,
-    MATRIX,
     POLICY,
     RECORD_SCHEMA,
     RECORD_TEMPLATE,
     _load_json,
     _load_yaml,
     historical_manifest_errors,
+    load_matrix,
     policy_contract_errors,
     repository_agreement_errors,
     schema_contract_errors,
@@ -29,7 +29,7 @@ from ci.gcl_tcs_normative_agreement import (
 class GclTcsNormativeAgreementTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.matrix = _load_json(MATRIX)
+        cls.matrix = load_matrix()
         cls.policy = _load_yaml(POLICY)
         cls.decl_schema = _load_json(DECL_SCHEMA)
         cls.record_schema = _load_json(RECORD_SCHEMA)
@@ -45,6 +45,7 @@ class GclTcsNormativeAgreementTests(unittest.TestCase):
 
     def test_matrix_is_clause_level_and_has_no_open_gap(self) -> None:
         rows = self.matrix["rows"]
+        self.assertEqual(self.matrix["row_count"], 119)
         self.assertGreaterEqual(len(rows), 100)
         self.assertEqual(len({row["id"] for row in rows}), len(rows))
         self.assertTrue(all(row["gap"] in {"CLOSED", "NOT_MACHINE_CHECKABLE"} for row in rows))
