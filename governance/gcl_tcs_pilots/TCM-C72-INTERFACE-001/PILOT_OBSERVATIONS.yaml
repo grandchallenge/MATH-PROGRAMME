@@ -34,6 +34,15 @@ observations:
 - observation_id: OBS-009
   category: measured_burden_limit
   statement: Repository objects and review surfaces are measurable; operator minutes, reviewer minutes, compute cost attributable to this retrospective P04 communication pass, and counterfactual communication-error rates are UNKNOWN_NOT_MEASURED and are not invented.
+- observation_id: OBS-010
+  category: defect
+  defect_id: P04-PILOT-D002
+  severity: candidate_validation_false_negative
+  failed_head: f7d992a8497aeea67d098f4a1081304a0d143cf2
+  run_id: 33854741352
+  job_id: 100965366847
+  statement: The first immutable-subject-binding contract serialized the conformance declaration, application and measurement but omitted the governed evidence register, so it falsely reported the execution-workflow blob absent even though registers/EVIDENCE.yaml already contained it.
+  effect: The failed head is invalidated. The test is repaired to include the evidence register and requires fresh exact-head replay; no scientific or source-evidence byte changes.
 known_deficits:
 - Exact immutable runner-image identity for the original ubuntu-latest execution is not durably preserved.
 - The P04 pilot does not reproduce the 64-shard scientific computation; it validates communication against already-protected source evidence.
