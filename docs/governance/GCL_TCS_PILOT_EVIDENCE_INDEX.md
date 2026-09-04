@@ -75,16 +75,24 @@ Stage-A protected merge: `20c4796ccd6d1e9d4fd8578ffc7c3f7847b40eb6`. The supplem
 ## Measurement and successor evaluation
 
 - [Machine-readable pilot measurement](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilot_institutionalization_001_measurement.json) — defects, FP/FN evidence and limits, burden proxy, ambiguities, preserved controls, and automation opportunities.
-- [Machine-readable readiness assessment](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilot_institutionalization_001_readiness.json) — criterion-by-criterion v1.0 readiness assessment.
+- [Machine-readable readiness assessment](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/gcl_tcs_pilot_institutionalization_001_readiness.json) — historical criterion-by-criterion assessment produced by the completed institutionalization operation.
 - [`GCL_TCS_PILOT_MEASUREMENT_001.md`](GCL_TCS_PILOT_MEASUREMENT_001.md) — human-readable measurement and successor recommendation.
 
-The successor recommendation is:
+The successor recommendation remains:
 
 ```text
 CONTINUE_CANDIDATE__NARROW_AND_SIMPLIFY__NO_V1_PROMOTION
 ```
 
 It is an observational recommendation, not a standard promotion or Referee disposition.
+
+### Successor hardening: criterion 4
+
+`GCL-TCS-CANDIDATE-HARDENING-001` is tracked by [issue #806](https://github.com/grandchallenge/MATH-PROGRAMME/issues/806) and implemented by [PR #807](https://github.com/grandchallenge/MATH-PROGRAMME/pull/807).
+
+The successor adds [`ci/gcl_tcs_exception_control.py`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ci/gcl_tcs_exception_control.py) and [`tests/test_gcl_tcs_exception_control.py`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/tests/test_gcl_tcs_exception_control.py), with the test registered in the existing Programme contract-test manifest. The control is bound to the candidate `GCL-TCS-00/0.1.0` machine policy and fails closed for unresolved or unauthorized approval authority, missing approval identity, absent review/expiry timing on approved exceptions, attempted waiver of machine-declared non-waivable requirements, empty or placeholder compensating controls, malformed records or dates, and missing/expired/revoked/non-approved required exceptions at promotion evaluation. It includes a positive narrow approved-exception case.
+
+The control does **not** invent the still-missing profile owner/review-role map. Authorized approvers are supplied by the governing caller; an absent authority set fails closed. This closes the dedicated-testing deficit only and leaves criterion 2 separate.
 
 ## Current version-1.0 readiness
 
@@ -93,7 +101,7 @@ It is an observational recommendation, not a standard promotion or Referee dispo
 | 1 | `PARTIAL` | Normative text, policy manifest, schema, and validating packages exist; a complete standard-wide agreement audit is not yet established. |
 | 2 | `UNSATISFIED` | An approved owner/review-role map for every profile has not been established. |
 | 3 | `PARTIAL` | Mandatory schema fields and validation exist; complete mandatory-semantic test coverage is not established. |
-| 4 | `UNSATISFIED` | The exception model is fail-closed normatively, but dedicated exception-workflow failure tests are not established. |
+| 4 | `SATISFIED` | Successor operation #806 adds dedicated adversarial fail-closed exception tests and registers them in governed Programme contract testing; this is candidate-readiness evidence only, not v1.0 promotion authority. |
 | 5 | `PARTIAL` | Real gate records bind immutable identities; complete standard-wide enforcement across every admissible path remains unestablished. |
 | 6 | `PARTIAL` | Real candidate supplements are cleanly separated from authoritative subjects; complete schema-level source/candidate distinction remains to be established. |
 | 7 | `PARTIAL` | PR #798 demonstrated fail-closed documentation orphan/link checks; the broader web/source/candidate/asset/static/TeX/JSON/directory coverage remains unestablished. |
@@ -102,6 +110,8 @@ It is an observational recommendation, not a standard promotion or Referee dispo
 | 10 | `OUTSIDE_CURRENT_TRANCHE` | No version-1.0 promotion is requested; no G8 decision is manufactured for routine institutionalization evidence. |
 
 Readiness is not promotion authority. A `SATISFIED` readiness row does not promote a candidate artifact or the standard.
+
+The historical machine-readable readiness record from operation #788 remains unchanged. It correctly records criterion 4 as unsatisfied at that operation's terminal assessment point; this successor index records the later closure rather than rewriting historical evidence.
 
 ## Defect and burden evidence
 
@@ -122,7 +132,7 @@ The bounded pilot should continue as a candidate institutional learning loop, bu
 3. extend the demonstrated documentation checks to the remaining required surfaces without building a duplicate authority registry;
 4. avoid generating promotion-specific G8/G9 packet material until promotion is actually requested;
 5. keep the P04 deficit explicit until a real completed experimental/computational artifact is naturally available and verified;
-6. if a future v1.0 proposal becomes warranted, first close the owner/review-role, exception-test, broad orphan-detection, and normative/schema-agreement gaps, then use the governing promotion route on a fixed candidate revision.
+6. if a future v1.0 proposal becomes warranted, first close the owner/review-role, broad orphan-detection, mandatory-semantic-coverage, and normative/schema-agreement gaps, then use the governing promotion route on a fixed candidate revision.
 
 ## Revalidation rule
 
