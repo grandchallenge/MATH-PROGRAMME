@@ -1,3 +1,5 @@
+# Type Theory Series — Takeover Prompt
+
 Take over composition of the Grand Challenge monograph collection **TYPE THEORY — The Grand Unified Theory of Computation**.
 
 Treat this prompt only as a pointer. Start at `SERIES_HANDOFF.md` and follow its canonical read order. `SERIES_MANIFEST.json` controls volume identity and sequence. Volume I RC1.1 reconciled publication baseline is the reference implementation for pedagogy, formal scope, exercises, laboratories, plates, bibliography, audits and release production; do not copy its subject matter mechanically.
