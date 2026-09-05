@@ -4,6 +4,12 @@ MATH-PROGRAMME owns mathematics-specific policy and pins adopted cross-programme
 
 Current routine execution is governed by [`docs/governance/STREAMLINED_EXECUTION_AMENDMENT.md`](docs/governance/STREAMLINED_EXECUTION_AMENDMENT.md), [`docs/WORKFLOW_COVERAGE.md`](docs/WORKFLOW_COVERAGE.md), and [`docs/governance/AGENT_CADENCE_OPERATING_DESIGN.md`](docs/governance/AGENT_CADENCE_OPERATING_DESIGN.md).
 
+Canonical staffing follows `GCL-AGENT-STAFFING-001` version `1.0.0` at
+gcl-standards commit `94e94ddf2d4158494c084d0acaff04009971c16c`.
+One Codex system may staff multiple non-reserved roles through distinct,
+role-scoped logical audit passes. Identity, session, account, or generic human
+approval multiplication is not intrinsically required.
+
 ## Routine execution rule
 
 For bounded work within already-authorized scope:
