@@ -133,6 +133,28 @@
         "^governance/construction_integrity_contract\\.json$"
       ],
       "deny_update_when_exact_head_evidence_exists": true
+    },
+    {
+      "target_id": "GCL-TCS-V1-CORRECTION-001",
+      "authorized_predecessor": "bbe900f081d36e4a419c8841f8404ea4d7c1d8d9",
+      "lifecycle_state": "DEVELOPMENT",
+      "development_ref": "refs/heads/gcl/dev/GCL-TCS-V1-CORRECTION-001",
+      "candidate_ref": "refs/heads/gcl/candidate/GCL-TCS-V1-CORRECTION-001",
+      "allowed_paths": [],
+      "allowed_path_prefixes": [
+        "council_submissions/GCL-TCS-00/releases/1.0.0/",
+        "docs/council/submissions/GCL-TCS-00/releases/1.0.0/",
+        "ci/gcl_tcs_v1_",
+        "tests/test_gcl_tcs_v1_"
+      ],
+      "forbidden_path_patterns": [
+        "^\\.github/",
+        "^schemas/",
+        "^docs/decisions/",
+        "^docs/AGENT_COUNCIL_",
+        "^governance/construction_integrity_contract\\.json$"
+      ],
+      "deny_update_when_exact_head_evidence_exists": true
     }
   ],
   "estate_classification": {
