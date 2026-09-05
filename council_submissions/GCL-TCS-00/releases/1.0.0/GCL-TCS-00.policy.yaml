@@ -1,0 +1,577 @@
+standard:
+  id: GCL-TCS-00
+  title: Technical Communication Charter and Conformance Model
+  version: 1.0.0
+  status: candidate
+  date: 2026-07-27
+  authority: Grand Challenge Labs
+  language: en-CA
+  baseline_reference:
+    id: ASD-STE100
+    issue: "9"
+    date: 2025-01
+    role: baseline_language_reference
+
+normative_keywords:
+  MUST: mandatory requirement
+  MUST_NOT: prohibition
+  SHOULD: strong default; deviation requires a reason
+  SHOULD_NOT: practice that normally creates unacceptable risk
+  MAY: permitted choice
+
+principles:
+  - id: PR-01
+    name: correctness_before_style
+    non_waivable: true
+  - id: PR-02
+    name: claim_boundaries_before_persuasion
+    non_waivable: true
+  - id: PR-03
+    name: evidence_before_promotion
+    non_waivable: true
+  - id: PR-04
+    name: reproducibility_before_authority
+    non_waivable: false
+  - id: PR-05
+    name: stable_terminology_before_variation
+    non_waivable: false
+  - id: PR-06
+    name: explicit_uncertainty_before_apparent_completeness
+    non_waivable: true
+  - id: PR-07
+    name: fail_closed_governance
+    non_waivable: true
+
+hierarchy:
+  - level: H0
+    name: external_obligations
+    includes:
+      - law
+      - contract
+      - safety_rule
+      - security_rule
+      - licence
+      - source_locked_specification
+      - authoritative_external_standard
+  - level: H1
+    name: charter
+    includes: [GCL-TCS-00]
+  - level: H2
+    name: core_modules
+  - level: H3
+    name: conformance_profiles
+  - level: H4
+    name: project_annexes
+  - level: H5
+    name: artifact_declarations
+
+conflict_order:
+  - truthful_nonmisleading_and_safe_meaning
+  - applicable_external_obligations
+  - source_locked_meaning_and_formal_semantics
+  - GCL-TCS-00
+  - core_modules_and_profiles
+  - project_annex
+  - local_style
+
+conformance_dimensions:
+  L: language
+  T: terminology_and_notation
+  S: structure_and_accessibility
+  C: claims
+  E: evidence
+  R: reproducibility
+  P: provenance
+  V: verification_and_review
+  G: governance
+
+assessment_states:
+  - UNASSESSED
+  - DECLARED
+  - CHECKED
+  - ASSURED
+  - FAILED
+  - EXCEPTED
+
+authority_statuses:
+  - candidate
+  - admitted
+  - authoritative
+  - superseded
+  - withdrawn
+
+promotion_statuses:
+  - working_draft
+  - registered
+  - review_ready
+  - in_review
+  - verified
+  - promoted
+  - published
+  - superseded
+  - withdrawn
+
+impact_classes:
+  IC-0:
+    name: ephemeral
+    examples: [private_notes, temporary_working_material]
+  IC-1:
+    name: routine
+    examples: [internal_technical_note, ordinary_maintenance_documentation, low_consequence_example]
+  IC-2:
+    name: consequential
+    examples: [research_conclusion, public_technical_claim, reusable_software_guarantee, benchmark_result, governance_decision]
+  IC-3:
+    name: critical
+    examples: [safety_instruction, security_instruction, legal_instruction, major_commercial_claim, open_problem_resolution_claim]
+    required_rules:
+      - independent_G5_review
+      - independent_G6_review
+      - independent_referee
+      - exact_release_revision_verification
+
+profiles:
+  GCL-TCS-P01:
+    name: operational_and_procedural
+    version: 1.0.0
+    mandatory_dimensions: [L, T, S, C, E, P, V, G]
+    conditional_dimensions:
+      R: repeatable_or_testable_procedure
+    emphasis:
+      - direct_imperative_steps
+      - one_primary_action_per_step
+      - explicit_prerequisites
+      - warnings_before_hazardous_action
+      - named_responsibilities
+      - tested_step_order
+      - recovery_instructions
+  GCL-TCS-P02:
+    name: research_communication
+    version: 1.0.0
+    mandatory_dimensions: [L, T, S, C, E, R, P, V, G]
+    allowed_not_applicable:
+      R: fully_noncomputational_with_explicit_reason
+    emphasis:
+      - canonical_question_and_scope
+      - source_and_normalization_locks
+      - explicit_assumptions_and_exclusions
+      - claim_ledger
+      - evidence_and_counterevidence
+      - limitations_and_falsifiers
+  GCL-TCS-P03:
+    name: mathematical_and_formal
+    version: 1.0.0
+    mandatory_dimensions: [T, S, C, E, P, V, G]
+    conditional_dimensions:
+      L: explanatory_prose
+      R: computation_mechanized_proof_or_executable_checking
+    emphasis:
+      - ambient_objects_and_domains
+      - quantifier_order
+      - normalization_and_sign_conventions
+      - dependency_structure
+      - proof_obligations
+      - unresolved_proof_debt
+      - formalized_informal_boundary
+  GCL-TCS-P04:
+    name: experimental_and_computational
+    version: 1.0.0
+    mandatory_dimensions: [L, T, S, C, E, R, P, V, G]
+    emphasis:
+      - hypothesis_and_alternatives
+      - target_observable
+      - interventions_and_controls
+      - exact_versions_and_seeds
+      - stopping_and_exclusion_rules
+      - uncertainty_and_sensitivity
+      - negative_and_null_results
+      - exact_execution_path
+      - plot_provenance
+  GCL-TCS-P05:
+    name: software_api_and_notebook
+    version: 1.0.0
+    mandatory_dimensions: [L, T, S, C, E, R, P, V, G]
+    emphasis:
+      - input_output_contracts
+      - types_shapes_units_ranges
+      - preconditions_postconditions
+      - deterministic_and_nondeterministic_behaviour
+      - failure_and_error_semantics
+      - security_and_trust_boundaries
+      - executable_examples
+      - tests_linked_to_guarantees
+  GCL-TCS-P06:
+    name: public_technical_exposition
+    version: 1.0.0
+    mandatory_dimensions: [L, T, S, C, E, P, V, G]
+    inherited_dimensions:
+      R: promoted_authoritative_source
+    emphasis:
+      - audience_appropriate_explanation
+      - preserved_claim_status
+      - authoritative_source_links
+      - no_claim_inflation
+      - accessible_figures_and_equations
+  GCL-TCS-P07:
+    name: governance_and_documentary_records
+    version: 1.0.0
+    mandatory_dimensions: [L, T, S, C, E, P, V, G]
+    conditional_dimensions:
+      R: executable_validation
+    emphasis:
+      - machine_readable_status
+      - explicit_authority_and_ownership
+      - fail_closed_discovery
+      - stable_identifiers
+      - complete_supersession
+      - no_orphans
+      - atomic_admission
+
+mandatory_metadata:
+  core:
+    - schema_version
+    - standard
+    - artifact_id
+    - title
+    - artifact_type
+    - version
+    - date
+    - owner
+    - authority_status
+    - promotion_status
+    - primary_profile
+    - secondary_profiles
+    - impact_class
+    - audience
+    - scope
+    - out_of_scope
+    - source_location
+    - source_revision
+    - dependencies
+    - terminology_registry
+    - notation_registry
+    - claim_register
+    - evidence_register
+    - review_register
+    - exceptions
+    - conformance_dimensions
+    - supersedes
+    - superseded_by
+    - licence_and_access
+    - generated_content
+  omission_policy: explicit_empty_or_not_applicable_required
+
+claim_types:
+  - definition
+  - assumption
+  - observation
+  - hypothesis
+  - conjecture
+  - lemma
+  - proposition
+  - theorem
+  - empirical_result
+  - engineering_result
+  - interpretation
+  - recommendation
+  - speculation
+
+claim_statuses:
+  - proposed
+  - illustrative
+  - tested
+  - replicated
+  - independently_reproduced
+  - conditionally_established
+  - formally_verified
+  - falsified
+  - superseded
+  - withdrawn
+
+exception_model:
+  types:
+    - profile_allowance
+    - artifact_exception
+  acceptable_grounds:
+    - preserve_technical_meaning
+    - preserve_mathematical_or_formal_scope
+    - satisfy_external_authority
+    - preserve_safety_or_operational_correctness
+    - faithful_source_quotation
+    - machine_syntax_or_interoperability
+    - net_accessibility_improvement
+    - disproportionate_burden_without_material_risk_reduction
+  insufficient_grounds:
+    - convenience
+    - preference
+    - schedule_pressure
+    - rhetorical_effect
+  non_waivable:
+    - truthful_nonmisleading_communication
+    - claim_type_status_and_material_limitations
+    - provenance_for_consequential_evidence
+    - known_safety_hazard_disclosure
+    - external_obligations
+    - exception_registration
+    - machine_readable_promotion_and_authority_status
+    - independent_review_for_IC2_and_IC3
+    - fail_closed_missing_record_behaviour
+    - no_fabricated_evidence_reviews_or_authority
+  statuses:
+    - requested
+    - approved
+    - rejected
+    - expired
+    - revoked
+    - superseded
+
+gates:
+  G0:
+    name: registration_and_identity
+    required_evidence: [stable_artifact_id, owner, source_location, source_revision, authority_status, central_discovery]
+  G1:
+    name: scope_profile_and_authority_lock
+    required_evidence: [profile_declaration, impact_class_justification, scope_and_out_of_scope, dependency_and_source_lock, candidate_authority_distinction, exact_standard_versions]
+  G2:
+    name: structural_and_metadata_completeness
+    required_evidence: [mandatory_metadata, discoverable_ledgers_and_registries, navigation, identified_figures_tables_equations_code, supersession_and_licence, schema_validation]
+  G3:
+    name: language_terminology_and_notation
+    required_evidence: [stable_terms_and_symbols, profile_appropriate_prose, material_agent_clarity, complexity_justification, units_dimensions_identifiers, applicable_accessibility]
+  G4:
+    name: claim_and_evidence_integrity
+    required_evidence: [complete_claim_ledger, claim_types_and_statuses, assumptions_scope_limitations, supporting_and_counterevidence, evidence_claim_alignment, unresolved_debt]
+  G5:
+    name: domain_verification
+    required_evidence: [domain_appropriate_checks, reviewed_scope, unchecked_scope]
+  G6:
+    name: adversarial_and_falsification_review
+    required_evidence: [counterexamples_and_boundaries, alternative_explanations, omitted_assumption_search, framing_review, negative_evidence, falsifiers_or_failure_conditions]
+  G7:
+    name: reproducibility_and_provenance
+    required_evidence: [fixed_versions, executable_workflow, hashes_or_immutable_revisions, plot_traceability, clean_or_independent_run_or_accepted_limitation, no_orphans]
+  G8:
+    name: referee_promotion_decision
+    required_evidence: [all_prior_mandatory_gates_pass, no_blocking_findings, valid_exceptions, established_and_not_established_statement, authorized_downstream_use, fixed_promoted_revision]
+  G9:
+    name: release_and_atomic_admission
+    required_evidence: [artifact_manifest, related_record_admission, public_private_boundary, orphan_detection, final_release_hashes, authority_before_publication, rollback_and_supersession]
+
+gate_decisions: [PASS, FAIL, DEFERRED, NOT_APPLICABLE]
+
+gate_matrix:
+  G0: {GCL-TCS-P01: M, GCL-TCS-P02: M, GCL-TCS-P03: M, GCL-TCS-P04: M, GCL-TCS-P05: M, GCL-TCS-P06: M, GCL-TCS-P07: M}
+  G1: {GCL-TCS-P01: M, GCL-TCS-P02: M, GCL-TCS-P03: M, GCL-TCS-P04: M, GCL-TCS-P05: M, GCL-TCS-P06: M, GCL-TCS-P07: M}
+  G2: {GCL-TCS-P01: M, GCL-TCS-P02: M, GCL-TCS-P03: M, GCL-TCS-P04: M, GCL-TCS-P05: M, GCL-TCS-P06: M, GCL-TCS-P07: M}
+  G3: {GCL-TCS-P01: M, GCL-TCS-P02: M, GCL-TCS-P03: M, GCL-TCS-P04: M, GCL-TCS-P05: M, GCL-TCS-P06: M, GCL-TCS-P07: M}
+  G4: {GCL-TCS-P01: M, GCL-TCS-P02: M, GCL-TCS-P03: M, GCL-TCS-P04: M, GCL-TCS-P05: M, GCL-TCS-P06: M, GCL-TCS-P07: M}
+  G5: {GCL-TCS-P01: M, GCL-TCS-P02: M, GCL-TCS-P03: M, GCL-TCS-P04: M, GCL-TCS-P05: M, GCL-TCS-P06: I, GCL-TCS-P07: M}
+  G6: {GCL-TCS-P01: C, GCL-TCS-P02: M, GCL-TCS-P03: M, GCL-TCS-P04: M, GCL-TCS-P05: C, GCL-TCS-P06: M, GCL-TCS-P07: M}
+  G7: {GCL-TCS-P01: C, GCL-TCS-P02: C, GCL-TCS-P03: C, GCL-TCS-P04: M, GCL-TCS-P05: M, GCL-TCS-P06: I, GCL-TCS-P07: C}
+  G8: {GCL-TCS-P01: M, GCL-TCS-P02: M, GCL-TCS-P03: M, GCL-TCS-P04: M, GCL-TCS-P05: M, GCL-TCS-P06: M, GCL-TCS-P07: M}
+  G9: {GCL-TCS-P01: M, GCL-TCS-P02: M, GCL-TCS-P03: M, GCL-TCS-P04: M, GCL-TCS-P05: M, GCL-TCS-P06: M, GCL-TCS-P07: M}
+
+fail_closed_conditions:
+  - missing_claim_ledger
+  - missing_or_revision_mismatched_review
+  - missing_authority_status
+  - unadmitted_candidate_used_as_authority
+  - missing_expired_or_revoked_exception
+  - missing_mandatory_metadata
+  - public_claim_without_authoritative_source
+  - incomplete_artifact_manifest
+  - orphan_required_artifact
+  - machine_status_display_conflict
+  - hash_or_revision_mismatch
+
+planned_modules:
+  - {id: GCL-TCS-01, title: Controlled Technical Language}
+  - {id: GCL-TCS-02, title: Terminology Notation and Ontology}
+  - {id: GCL-TCS-03, title: Claims and Epistemic Status}
+  - {id: GCL-TCS-04, title: Mathematical Exposition and Proof Records}
+  - {id: GCL-TCS-05, title: Experimental and Computational Reporting}
+  - {id: GCL-TCS-06, title: Software API and Notebook Documentation}
+  - {id: GCL-TCS-07, title: Artifact Provenance and Manifest Integrity}
+  - {id: GCL-TCS-08, title: Review Promotion and Referee Practice}
+  - {id: GCL-TCS-09, title: Audience and Publication Profiles}
+
+# Candidate machine-contract reconciliation added by GCL-TCS-CANDIDATE-HARDENING-004.
+# The seven ordered normative source parts control meaning. These fields are derivative
+# machine representations of existing GCL-TCS-00/1.0.0 obligations and do not promote
+# the standard or create authority.
+normative_source_contract:
+  transport: ordered_markdown_parts
+  source_parts:
+    - council_submissions/GCL-TCS-00/parts/00-frontmatter-purpose-principles.md
+    - council_submissions/GCL-TCS-00/parts/01-hierarchy-conformance-impact.md
+    - council_submissions/GCL-TCS-00/parts/02-conformance-profiles.md
+    - council_submissions/GCL-TCS-00/parts/03-metadata-language-structure.md
+    - council_submissions/GCL-TCS-00/parts/04-exceptions-promotion-gates.md
+    - council_submissions/GCL-TCS-00/parts/05-review-roles-controls-change.md
+    - council_submissions/GCL-TCS-00/parts/06-adoption-acceptance-appendices.md
+  assembled_sha256: ea750b9b80b53c7d6ed755978fa4bdf59413fad93cec1db81eb3238372ce61c9
+  source_controls_meaning: true
+  machine_surfaces_are_derivative: true
+  scratch_boundary:
+    registered_governed_material_only_for_promotion: true
+    unregistered_scratch_cannot_be_sole_authority: true
+  agreement_matrix: governance/gcl_tcs_normative_agreement_matrix.json
+
+normative_obligations:
+  correctness_preservation: writing_rules_must_not_change_technical_meaning
+  structural_solution_before_exception: required_before_complexity_exception_when_clarity_and_precision_conflict
+  claim_boundary_distinction: established_results_distinct_from_hypothesis_interpretation_recommendation_speculation
+  no_presentation_promotion: presentation_quality_must_not_raise_claim_status
+  public_source_claim_preservation: [claim_status, scope, assumptions, important_limitations]
+  no_public_claim_inflation: true
+  evidence_sufficiency: evidence_sufficient_for_claim_type_and_impact_class
+  reproducibility_information: empirical_or_computational_result_repeat_information_required
+  reproducibility_limitation_substitute: reason_and_strongest_available_substitute_required_when_full_reproduction_impossible
+  canonical_term_identification: required_when_synonyms_used
+  explicit_uncertainty: [material_uncertainty, unresolved_proof_debt, missing_controls, unsupported_assumptions, known_failure_cases]
+  no_silence_as_resolution: true
+  fail_closed_promotion: true
+  fail_closed_is_blocking: warning_is_insufficient
+  machine_status_controls_display: true
+  machine_declaration_not_replaceable: human_front_matter_cannot_replace_machine_declaration
+
+conformance_rules:
+  lower_layer_must_not_weaken: true
+  conflict_resolution_required: true
+  unresolved_conflict_blocks_promotion: true
+  unresolved_conflict_record_required: true
+  normative_informative_identification: required_for_each_standard_and_annex
+  exact_version_locks_required: [charter, selected_profiles, project_annexes]
+  unspecified_latest_forbidden: true
+  promotion_dependency_authority_states: [admitted, authoritative]
+  assured_requires_linked_review: true
+  highest_applicable_impact_class: true
+  annex_cannot_lower_impact_class: true
+  open_problem_minimum_impact_class: IC-3
+  profile_union_and_stricter_rule: true
+  conformance_does_not_establish_truth: true
+  claim_status_and_verification_recorded_separately: true
+
+record_contracts:
+  claim:
+    consequential_requires_record: true
+    required_fields: [claim_id, statement_or_immutable_pointer, claim_type, claim_status, scope, assumptions, dependencies, supporting_evidence, counterevidence, falsifiers, limitations, owner, last_reviewed]
+    approved_types: [definition, assumption, observation, hypothesis, conjecture, lemma, proposition, theorem, empirical_result, engineering_result, interpretation, recommendation, speculation]
+    approved_statuses: [proposed, illustrative, tested, replicated, independently_reproduced, conditionally_established, formally_verified, falsified, superseded, withdrawn]
+    annex_status_relation_required: true
+  evidence:
+    required_fields: [evidence_id, evidence_type, location, version_or_hash, method, result_summary, scope, limitations, created_by, created_at]
+  review:
+    required_fields: [review_id, gate_id, reviewer, review_role, independence_statement, date, decision, findings, required_actions, resolved_actions, evidence, reviewed_revision]
+  exception:
+    required_fields: [exception_id, rule_id, artifact_scope, affected_content, justification, risk_assessment, compensating_controls, requested_by, approved_by, issued_date, status]
+    timing_fields: [review_date, expiry_date]
+    at_least_one_timing_field_required: true
+  gate:
+    required_fields: [gate_id, artifact_id, reviewed_revision, decision, review_record_ref, evidence]
+    not_applicable_reason_required: true
+  conformance_statement:
+    required_fields: [primary_profile, secondary_profiles, impact_class, target_state, dimensions, active_exceptions, promotion_status, date, standard_versions]
+  release:
+    required_fields: [change_log, migration_note, compatibility_statement, previous_standard_identifier, new_standard_identifier, review_record, promotion_record]
+
+language_structure_contract:
+  term_consistency: same_term_for_same_object_unless_explicit_alias
+  define_terms_before_use: true
+  no_cross_surface_term_drift: [prose, equations, code, figures, metadata]
+  passive_voice_must_preserve_correctness: true
+  responsible_actor_required: when_responsibility_is_not_readers
+  one_primary_action_per_step: true
+  sequence_context_before_need: [prerequisites, warnings, expected_results, recovery_steps]
+  visual_context_required: [what_it_shows, why_it_matters]
+  plot_context_fields: [quantity, population_or_sample, aggregation, uncertainty_representation, filtering, exploratory_or_confirmatory_status]
+  public_visual_accessibility: alt_text_or_equivalent_description_for_material_visual_content
+
+exception_contract:
+  unrecorded_deviation_is_not_implicit_exception: true
+  narrow_scope_required: true
+  approved_requires_review_or_expiry_unless_profile_permanent: true
+  permanent_exception_requires_major_version_review: true
+  promotion_fails_for_missing_expired_or_revoked_required_exception: true
+
+gate_contracts:
+  G0:
+    additional_required_evidence: [no_identifier_collision]
+  G1:
+    additional_required_evidence: []
+  G2:
+    additional_required_evidence: [cited_figures_tables_equations_code_identified]
+  G3:
+    additional_required_evidence: []
+  G4:
+    additional_required_evidence: [public_summary_no_claim_inflation]
+  G5:
+    additional_required_evidence: [checked_scope_and_unchecked_scope_explicit]
+  G6:
+    additional_required_evidence: []
+  G7:
+    additional_required_evidence: [derived_document_authoritative_source_trace]
+  G8:
+    additional_required_evidence: []
+  G9:
+    additional_required_evidence: [required_ledgers_sources_assets_schemas_reviews_included_or_linked]
+
+promotion_contract:
+  not_applicable:
+    reason_required: true
+    reviewer_approval_required: true
+    cannot_weaken_non_waivable: true
+  deferred_does_not_satisfy_gate: true
+  exact_revision_gate_binding: true
+  material_change_invalidates_affected_gate: true
+  conditional_gate_activation: relevant_material_makes_conditional_gate_mandatory
+  ic3_g6_g7_required: true
+
+review_control:
+  role_name_does_not_confer_authority: true
+  ic2_ic3_role_overlap_recorded: true
+  ic2_ic3_owner_not_sole_referee: true
+  ic3_separation_of_duties:
+    author_not_sole_G5_reviewer: true
+    authoring_team_not_only_G6_review: true
+    owner_not_sole_referee: true
+    release_steward_exact_revision_verification: true
+  automation_cannot_impersonate_authority: true
+  automated_and_judgment_checks_separate: true
+
+change_control:
+  semantic_versioning: true
+  patch_correction_can_fix_unambiguous_defect_without_normative_meaning_change: true
+  active_exception_review_after_major: true
+  superseded_not_default: true
+  modules_conform_and_cannot_remove_nonwaivable: true
+
+strong_defaults:
+  canonical_name: one_canonical_project_name_per_technical_object
+  cross_surface_registry_mapping: terminology_or_notation_registry_maps_prose_notation_code_and_schema_where_practical
+  examples_informative: true
+  machine_requirements_normative: [requirements, schemas, enumerations, gate_criteria]
+  atomic_formal_statement: keep_logically_atomic_definition_or_theorem_intact_when_split_obscures_scope
+  definition_scope: state_scope_and_distinguish_nearby_concepts
+  one_principal_assertion: sentence_default
+  split_independent_content: [independent_claims, hidden_conditions, multiple_procedural_actions]
+  sentence_length_diagnostic: 25
+  active_voice_when_agent_known: true
+  one_topic_per_paragraph: true
+  topic_sentence_when_needed: true
+  paragraph_length_diagnostic: 6
+  vertical_complex_list: true
+  module_adoption_order: [GCL-TCS-00, GCL-TCS-01, GCL-TCS-02, GCL-TCS-03, GCL-TCS-04, GCL-TCS-05, GCL-TCS-06, GCL-TCS-07, GCL-TCS-08, GCL-TCS-09]
+  exception_decision_test: Appendix_B
+  g8_decision_structure: Appendix_C
+
+machine_contracts:
+  revision: 1.0.0-r1
+  conformance_schema: docs/council/submissions/GCL-TCS-00/schemas/gcl-tcs-conformance.schema.json
+  record_contract_schema: docs/council/submissions/GCL-TCS-00/schemas/gcl-tcs-record-contracts.schema.json
+  templates:
+    - docs/council/submissions/GCL-TCS-00/templates/GCL-TCS-00.conformance.template.yaml
+    - docs/council/submissions/GCL-TCS-00/templates/GCL-TCS-00.records.template.yaml
+  migration_note: docs/council/submissions/GCL-TCS-00/MACHINE_CONTRACT_MIGRATION_1.0.0-R1.md
+  validator: ci/gcl_tcs_normative_agreement.py
+  tests: tests/test_gcl_tcs_normative_agreement.py
