@@ -1,0 +1,310 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "NOT_REQUIRED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": "success",
+      "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+      "name": "Replay LOG-GCD-001 in Lean",
+      "required": true,
+      "run_id": 101281895422,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+      "name": "Replay PC-WP04 bounded certificate",
+      "required": true,
+      "run_id": 101281895527,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+      "name": "Replay pinned Union-Closed MATHCERT evidence",
+      "required": true,
+      "run_id": 101281895437,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+      "name": "policy / policy",
+      "required": true,
+      "run_id": 101281878965,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+      "name": "routing-enforcement",
+      "required": true,
+      "run_id": 101281873064,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+      "name": "security / action-policy",
+      "required": true,
+      "run_id": 101281878957,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+      "name": "validate-json",
+      "required": true,
+      "run_id": 101281978236,
+      "status": "completed"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "UNKNOWN",
+    "reasons": [
+      "Human Steward requirement/state is inconsistent"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-09-05T01:26:47Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-09-05T09:03:57Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+    "exact_head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+    "pr_number": 840,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "[maintenance-candidate] deep_conformance_review due 2026-09-06T01:21:00Z"
+  },
+  "integration": {
+    "merge_commit_sha": "cc45f071647a5f09099cf19aadf8de7e764b63fc",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 1,
+      "collector_limitations": [],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 101281872407,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "Analyze (actions)",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281872474,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "Analyze (c-cpp)",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281872290,
+          "conclusion": null,
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 101281877382,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "Classify policy impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281946916,
+          "conclusion": "neutral",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "CodeQL",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281877175,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281879044,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281878815,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281895523,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "Policy shard / administrative",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281895447,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "Policy shard / contracts",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281895452,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "Policy shard / core",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281895422,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "Replay LOG-GCD-001 in Lean",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281895527,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "Replay PC-WP04 bounded certificate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281895437,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "Replay pinned Union-Closed MATHCERT evidence",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281873419,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281873012,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "advisory-report",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281878965,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281873846,
+          "conclusion": "skipped",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281873064,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "routing-enforcement",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281878957,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "security / action-policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101281978236,
+          "conclusion": "success",
+          "head_sha": "3b54d9b446d796b98470cce0efa6bdf095d25430",
+          "name": "validate-json",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [
+        "Replay LOG-GCD-001 in Lean",
+        "Replay PC-WP04 bounded certificate",
+        "Replay pinned Union-Closed MATHCERT evidence",
+        "policy / policy",
+        "routing-enforcement",
+        "security / action-policy",
+        "validate-json"
+      ],
+      "ruleset_source_available": true
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-09-05T09:04:44Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "f21efd2e617bd5b6a73755f5db6d233d260810501b961de11605f48859c12b66"
+  },
+  "report_id": "PRVSR-LIVE-PR840-3b54d9b446d7-20260905090444",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane",
+      "administrative_automation"
+    ]
+  }
+}
