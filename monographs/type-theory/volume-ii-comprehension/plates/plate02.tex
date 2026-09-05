@@ -1,0 +1,22 @@
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}[gclplate]
+\node[anchor=west,font=\sffamily\bfseries\Large,gcllabel] at (-6,4.1) {THE TELESCOPE};
+\draw[GCLWarm,line width=1pt] (-6,3.72)--(6,3.72);
+
+\node[gcllabel,draw=GCLBlue,rounded corners=3pt,minimum width=2.4cm] (g0) at (-4.5,2.5) {$n:\Nat$};
+\node[gcllabel,draw=GCLBlue,rounded corners=3pt,minimum width=2.8cm] (g1) at (-1.5,1.25) {$i:\Fin(n)$};
+\node[gcllabel,draw=GCLBlue,rounded corners=3pt,minimum width=3.2cm] (g2) at (1.8,0.0) {$j:\Fin(\mathrm{succ}(n))$};
+\node[gcllabel,draw=GCLBlue,rounded corners=3pt,minimum width=3.0cm] (g3) at (4.4,-1.25) {$b:\mathsf{Bool}$};
+
+\draw[gclwarmarrow] (g1.west) to[out=170,in=-30] (g0.south east);
+\draw[gclwarmarrow] (g2.west) to[out=170,in=-25] (g0.south east);
+\node[gcllabel,font=\scriptsize] at (-2.3,2.45) {may mention $n$};
+\node[gcllabel,font=\scriptsize] at (0.2,1.0) {may mention $n$};
+
+\draw[GCLGreen,line width=1pt] (-5.8,-2.55)--(5.8,-2.55);
+\node[gcllabel,align=center] at (0,-3.15) {Declarations may depend \emph{backward} on earlier declarations.\\Reversing the order can destroy well-formedness.};
+\end{tikzpicture}
+\caption{\textbf{Plate 2. The telescope.} A dependent context is an ordered sequence of declarations in which later types may mention earlier terms. The arrows record free-variable dependency; they are not runtime dataflow edges.}
+\label{plate:telescope}
+\end{figure}
