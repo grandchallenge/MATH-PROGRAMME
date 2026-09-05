@@ -31,7 +31,6 @@ concurrency:
 
 jobs:
   prepare:
-    if: github.event_name != 'push'
     runs-on: ubuntu-24.04
     timeout-minutes: 80
     environment: release-trust
@@ -43,6 +42,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Mint bounded Candidate and merge-executor token
+        if: github.event_name != 'push'
         id: write-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
         with:
@@ -55,6 +55,7 @@ jobs:
           permission-pull-requests: write
 
       - name: Mint bounded evidence and observability token
+        if: github.event_name != 'push'
         id: evidence-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
         with:
@@ -73,6 +74,7 @@ jobs:
           permission-pull-requests: read
 
       - name: Mint bounded ruleset-readback token
+        if: github.event_name != 'push'
         id: admin-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
         with:
@@ -83,21 +85,25 @@ jobs:
           permission-administration: write
 
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: github.event_name != 'push'
         with:
           ref: refs/heads/main
           fetch-depth: 0
           persist-credentials: false
 
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        if: github.event_name != 'push'
         with:
           python-version: '3.12'
 
       - name: Install governed policy dependencies
+        if: github.event_name != 'push'
         run: |
           set -euo pipefail
           python -m pip install --requirement requirements/policy.txt
 
       - name: Record trigger provenance
+        if: github.event_name != 'push'
         env:
           GCL_EVENT_SCHEDULE: ${{ github.event.schedule || '' }}
         run: |
@@ -126,6 +132,7 @@ jobs:
           PY
 
       - name: Require bounded and separated credentials
+        if: github.event_name != 'push'
         env:
           WRITE_TOKEN: ${{ steps.write-token.outputs.token }}
           EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
@@ -138,6 +145,7 @@ jobs:
           test "${ADMIN_TOKEN}" != "${WRITE_TOKEN}"
 
       - name: Qualify suspended generic protected-receipt integration read-only
+        if: github.event_name != 'push'
         env:
           CANDIDATE_TOKEN: ${{ steps.write-token.outputs.token }}
           EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
@@ -149,6 +157,7 @@ jobs:
             --report administrative-protected-receipt-qualification.json
 
       - name: Prepare idempotent non-authoritative candidates
+        if: github.event_name != 'push'
         env:
           GITHUB_TOKEN: ${{ steps.write-token.outputs.token }}
           EVIDENCE_GITHUB_TOKEN: ${{ steps.evidence-token.outputs.token }}
@@ -163,6 +172,7 @@ jobs:
           }
 
       - name: Validate active autonomy runtime contract
+        if: github.event_name != 'push'
         run: python ci/administrative_autonomy_runtime.py validate
 
       # Historical compatibility-test markers only; the superseded Aug13 preflight is not executed.
@@ -170,6 +180,7 @@ jobs:
       # if [[ "$recovered" == "true" ]]; then
       # administrative-autonomy-0813-closure-preflight.json
       - name: Execute eligible frozen candidate with administrative-review receipt lane suspended
+        if: github.event_name != 'push'
         env:
           CANDIDATE_TOKEN: ${{ steps.write-token.outputs.token }}
           EVIDENCE_TOKEN: ${{ steps.evidence-token.outputs.token }}
@@ -191,7 +202,7 @@ jobs:
           }
 
       - name: Preserve candidate and runtime evidence
-        if: always()
+        if: github.event_name != 'push' && always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: administrative-autonomy-runtime
@@ -204,13 +215,8 @@ jobs:
           if-no-files-found: warn
           retention-days: 90
 
-  finalize-butterfly-ghos:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'GHOS-BUTTERFLY-RULESET-001')
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    environment: release-trust
-    steps:
       - name: Mint bounded BUTTERFLY administration token
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'GHOS-BUTTERFLY-RULESET-001')
         id: butterfly-admin-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
         with:
@@ -222,10 +228,12 @@ jobs:
           permission-contents: read
 
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'GHOS-BUTTERFLY-RULESET-001')
         with:
           python-version: '3.12'
 
       - name: Add only routing-enforcement to exact BUTTERFLY ruleset
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'GHOS-BUTTERFLY-RULESET-001')
         env:
           GCL_BUTTERFLY_ADMIN_TOKEN: ${{ steps.butterfly-admin-token.outputs.token }}
         shell: bash
@@ -354,7 +362,7 @@ jobs:
           PY
 
       - name: Preserve BUTTERFLY GHOS ruleset evidence
-        if: always()
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'GHOS-BUTTERFLY-RULESET-001') && always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: butterfly-ghos-ruleset-evidence
