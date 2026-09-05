@@ -1,0 +1,97 @@
+schema_version: 1.0.0
+manifest_id: GCL-TCS-00-1.0.0-RC1
+artifact_id: GCL-TCS-00
+proposed_version: 1.0.0
+source_status: release_candidate
+authority_status: candidate
+requested_authority_status: authoritative
+authority_effective_only_after: G9_PASS_ON_EXACT_G8_APPROVED_REVISION
+historical_predecessor:
+  identifier: GCL-TCS-00/0.1.0
+  commit: 8833253f620c6c05930740bda983d6f43bee6612
+triggering_review:
+  review_id: REV-GCLTCS-G8-001
+  decision: DEFERRED
+  reviewed_revision: git-commit:8833253f620c6c05930740bda983d6f43bee6612
+normative_source:
+  transport: versioned_release_assembly
+  files:
+  - path: council_submissions/GCL-TCS-00/releases/1.0.0/README.md
+    git_blob: 54b2b22546a6900ec6ff74bc16f6ea9ab89c1de4
+  - path: council_submissions/GCL-TCS-00/releases/1.0.0/parts/00-frontmatter-purpose-principles.md
+    git_blob: 5ac8ddf128d6654ba5cc197b18d63e87fd39c228
+  - path: council_submissions/GCL-TCS-00/parts/01-hierarchy-conformance-impact.md
+    git_blob: 37f9181c495901ff15220260ed71285a488733c0
+    inheritance: unchanged_from_0.1.0
+  - path: council_submissions/GCL-TCS-00/parts/02-conformance-profiles.md
+    git_blob: e80dcdab18789ec3c176deb127418c396c5be210
+    inheritance: unchanged_from_0.1.0
+  - path: council_submissions/GCL-TCS-00/parts/03-metadata-language-structure.md
+    git_blob: 49133bc54eff35dd1fb24a5ff2c3af5bb1461348
+    inheritance: unchanged_from_0.1.0
+  - path: council_submissions/GCL-TCS-00/parts/04-exceptions-promotion-gates.md
+    git_blob: a189b63d99eee016be4b67fa00b44b749c15cb2f
+    inheritance: unchanged_from_0.1.0
+  - path: council_submissions/GCL-TCS-00/parts/05-review-roles-controls-change.md
+    git_blob: 33c7fe8ce2ddf60c477ce39be6b429399e52c93e
+    inheritance: unchanged_from_0.1.0
+  - path: council_submissions/GCL-TCS-00/releases/1.0.0/parts/06-adoption-acceptance-appendices.md
+    git_blob: ffefc458de3d05ad61206edef9955c9bc30ee063
+machine_contract:
+  policy:
+    path: docs/council/submissions/GCL-TCS-00/releases/1.0.0/GCL-TCS-00.policy.yaml
+    git_blob: 830c897b21b80ec34e103439ee19680a324f89cf
+  conformance_schema:
+    path: docs/council/submissions/GCL-TCS-00/releases/1.0.0/schemas/gcl-tcs-conformance.schema.json
+    git_blob: 9f915696d8204850cef8a4106e0788fa695922d5
+  record_contracts_schema:
+    path: docs/council/submissions/GCL-TCS-00/releases/1.0.0/schemas/gcl-tcs-record-contracts.schema.json
+    git_blob: 0f7b9e33a934dca035d928d9c5b8cbb09b9b6981
+  conformance_template:
+    path: docs/council/submissions/GCL-TCS-00/releases/1.0.0/templates/GCL-TCS-00.conformance.template.yaml
+    git_blob: 2b9fd3a10fc64c2796d3c096de9009ed93571080
+  records_template:
+    path: docs/council/submissions/GCL-TCS-00/releases/1.0.0/templates/GCL-TCS-00.records.template.yaml
+    git_blob: a043d1340dd47a371add6cabaffe81957c5c84b5
+release_controls:
+  change_log:
+    path: docs/council/submissions/GCL-TCS-00/releases/1.0.0/CHANGELOG.md
+    git_blob: 4abe91adf768482304d6836d4db427550bb404b1
+  migration_note:
+    path: docs/council/submissions/GCL-TCS-00/releases/1.0.0/MIGRATION.md
+    git_blob: 58980dc1b1361ba9488871ff51cff78cc484e7c8
+  compatibility_statement:
+    path: docs/council/submissions/GCL-TCS-00/releases/1.0.0/COMPATIBILITY.md
+    git_blob: 21a33b09950e7bbf21eb495b44a3920381655f15
+  promotion_candidate:
+    path: docs/council/submissions/GCL-TCS-00/releases/1.0.0/PROMOTION_CANDIDATE.yaml
+    git_blob: 8f6995b3a3f63b20a3da4526621db9e6167b88e0
+required_exact_revision_reviews:
+- G0
+- G1
+- G2
+- G3
+- G4
+- G5
+- G6
+- G7
+- G8
+admission_gate: G9
+rollback_and_supersession:
+  predecessor_remains_effective_until_G9: true
+  version_1_supersession_effective_before_G9: false
+  rollback_target_if_post_admission_superseded: GCL-TCS-00/0.1.0 bounded-candidate authority only unless a later authoritative record states otherwise
+claim_boundaries:
+  formal_asd_ste100_conformance: false
+  mathematical_certification: false
+  empirical_efficacy: false
+  novelty_or_priority: false
+  deployment_authority: false
+  manufacturing_authority: false
+  product_or_commercial_authority: false
+  legal_authority: false
+  credential_authority: false
+  safety_authority: false
+  corpus_admission: false
+  ghos_authority: false
+  math_core_authority: false
