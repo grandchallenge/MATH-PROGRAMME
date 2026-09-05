@@ -1,0 +1,99 @@
+standard:
+  id: GCL-TCS-00
+  title: Technical Communication Charter and Conformance Model
+  version: 1.0.0
+  source_status: release_candidate
+  authority_status: candidate
+  requested_authority_status: authoritative
+  authority_effective_only_after: G9_PASS_ON_EXACT_G8_APPROVED_REVISION
+  date: '2026-09-05'
+  authority: Grand Challenge Labs
+  language: en-CA
+  historical_predecessor:
+    id: GCL-TCS-00
+    version: 0.1.0
+    commit: 8833253f620c6c05930740bda983d6f43bee6612
+  baseline_reference:
+    id: ASD-STE100
+    issue: '9'
+    date: 2025-01
+    role: baseline_language_reference
+
+semantic_inheritance:
+  historical_policy:
+    path: docs/council/submissions/GCL-TCS-00/GCL-TCS-00.policy.yaml
+    blob: 80c6b69e3af38748fe280175f306e2460c251c0b
+  rule: All semantic policy fields are inherited unchanged except version-bound identity, profile-version identifiers, release lifecycle, and exact version-1 source bindings explicitly replaced by this release package.
+  inherited_domains:
+    - normative_keywords
+    - principles
+    - hierarchy
+    - conflict_order
+    - conformance_dimensions
+    - assessment_states
+    - authority_statuses
+    - promotion_statuses
+    - impact_classes
+    - mandatory_metadata
+    - claim_types
+    - claim_statuses
+    - exception_model
+    - gates
+    - gate_decisions
+    - gate_matrix
+    - fail_closed_conditions
+    - planned_modules
+
+profiles:
+  GCL-TCS-P01: {version: 1.0.0, semantic_predecessor: GCL-TCS-P01/0.1.0}
+  GCL-TCS-P02: {version: 1.0.0, semantic_predecessor: GCL-TCS-P02/0.1.0}
+  GCL-TCS-P03: {version: 1.0.0, semantic_predecessor: GCL-TCS-P03/0.1.0}
+  GCL-TCS-P04: {version: 1.0.0, semantic_predecessor: GCL-TCS-P04/0.1.0}
+  GCL-TCS-P05: {version: 1.0.0, semantic_predecessor: GCL-TCS-P05/0.1.0}
+  GCL-TCS-P06: {version: 1.0.0, semantic_predecessor: GCL-TCS-P06/0.1.0}
+  GCL-TCS-P07: {version: 1.0.0, semantic_predecessor: GCL-TCS-P07/0.1.0}
+
+normative_source_contract:
+  transport: versioned_release_assembly
+  release_index: council_submissions/GCL-TCS-00/releases/1.0.0/README.md
+  versioned_parts:
+    - council_submissions/GCL-TCS-00/releases/1.0.0/parts/00-frontmatter-purpose-principles.md
+    - council_submissions/GCL-TCS-00/releases/1.0.0/parts/06-adoption-acceptance-appendices.md
+  inherited_parts:
+    - {path: council_submissions/GCL-TCS-00/parts/01-hierarchy-conformance-impact.md, blob: 37f9181c495901ff15220260ed71285a488733c0}
+    - {path: council_submissions/GCL-TCS-00/parts/02-conformance-profiles.md, blob: e80dcdab18789ec3c176deb127418c396c5be210}
+    - {path: council_submissions/GCL-TCS-00/parts/03-metadata-language-structure.md, blob: 49133bc54eff35dd1fb24a5ff2c3af5bb1461348}
+    - {path: council_submissions/GCL-TCS-00/parts/04-exceptions-promotion-gates.md, blob: a189b63d99eee016be4b67fa00b44b749c15cb2f}
+    - {path: council_submissions/GCL-TCS-00/parts/05-review-roles-controls-change.md, blob: 33c7fe8ce2ddf60c477ce39be6b429399e52c93e}
+
+machine_contract:
+  conformance_schema: docs/council/submissions/GCL-TCS-00/releases/1.0.0/schemas/gcl-tcs-conformance.schema.json
+  record_contracts_schema: docs/council/submissions/GCL-TCS-00/releases/1.0.0/schemas/gcl-tcs-record-contracts.schema.json
+  conformance_template: docs/council/submissions/GCL-TCS-00/releases/1.0.0/templates/GCL-TCS-00.conformance.template.yaml
+  records_template: docs/council/submissions/GCL-TCS-00/releases/1.0.0/templates/GCL-TCS-00.records.template.yaml
+
+release_controls:
+  previous_standard_identifier: GCL-TCS-00/0.1.0
+  proposed_standard_identifier: GCL-TCS-00/1.0.0
+  change_log: docs/council/submissions/GCL-TCS-00/releases/1.0.0/CHANGELOG.md
+  migration_note: docs/council/submissions/GCL-TCS-00/releases/1.0.0/MIGRATION.md
+  compatibility_statement: docs/council/submissions/GCL-TCS-00/releases/1.0.0/COMPATIBILITY.md
+  promotion_candidate: docs/council/submissions/GCL-TCS-00/releases/1.0.0/PROMOTION_CANDIDATE.yaml
+  release_candidate_manifest: docs/council/submissions/GCL-TCS-00/releases/1.0.0/RELEASE_CANDIDATE_MANIFEST.yaml
+  required_pre_admission_gates: [G0, G1, G2, G3, G4, G5, G6, G7, G8]
+  admission_gate: G9
+
+claim_boundaries:
+  formal_asd_ste100_conformance: false
+  mathematical_certification: false
+  empirical_efficacy: false
+  novelty_or_priority: false
+  deployment_authority: false
+  manufacturing_authority: false
+  product_or_commercial_authority: false
+  legal_authority: false
+  credential_authority: false
+  safety_authority: false
+  corpus_admission: false
+  ghos_authority: false
+  math_core_authority: false
