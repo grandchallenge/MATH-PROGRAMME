@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -253,5 +255,28 @@ implementation.preparation_occurrences = preparation_occurrences
 implementation.apply_occurrence = apply_occurrence
 
 
+def main(argv: list[str] | None = None) -> int:
+    values = sys.argv[1:] if argv is None else argv
+    args = implementation.parse_args(values)
+    if args.apply and os.environ.get("GITHUB_EVENT_NAME") == "schedule":
+        # MP-STREAMLINED-EXECUTION-001 retired countdown-created transactions.
+        # Keep the workflow heartbeat and its independent active-work sweep;
+        # explicit operator dispatch and read-only historical replay remain.
+        report = {
+            "schema_version": "1.0.0",
+            "state": "CALENDAR_ONLY_CANDIDATE_CREATION_RETIRED",
+            "evaluated_at": automation.iso_z(datetime.now(UTC)),
+            "apply": True,
+            "occurrence_count": 0,
+            "results": [],
+            "authority_created": False,
+            "policy": "MP-STREAMLINED-EXECUTION-001",
+        }
+        args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps(report, indent=2))
+        return 0
+    return implementation.main(values)
+
+
 if __name__ == "__main__":
-    raise SystemExit(implementation.main())
+    raise SystemExit(main())
