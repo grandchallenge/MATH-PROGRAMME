@@ -16,6 +16,11 @@ on:
     - cron: '27 * * * *'
     - cron: '47 * * * *'
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/administrative-maintenance-candidate.yml'
 
 permissions:
   contents: read
@@ -26,6 +31,7 @@ concurrency:
 
 jobs:
   prepare:
+    if: github.event_name != 'push'
     runs-on: ubuntu-24.04
     timeout-minutes: 80
     environment: release-trust
@@ -197,3 +203,162 @@ jobs:
             administrative-autonomy-runtime-report.json
           if-no-files-found: warn
           retention-days: 90
+
+  finalize-butterfly-ghos:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'GHOS-BUTTERFLY-RULESET-001')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: release-trust
+    steps:
+      - name: Mint bounded BUTTERFLY administration token
+        id: butterfly-admin-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: BUTTERFLY
+          permission-administration: write
+          permission-contents: read
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+
+      - name: Add only routing-enforcement to exact BUTTERFLY ruleset
+        env:
+          GCL_BUTTERFLY_ADMIN_TOKEN: ${{ steps.butterfly-admin-token.outputs.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${GCL_BUTTERFLY_ADMIN_TOKEN}"
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import urllib.error
+          import urllib.request
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          API = "https://api.github.com"
+          REPO = "grandchallenge/BUTTERFLY"
+          RULESET_ID = 22254451
+          EXPECTED_MAIN = "a2859ef5cf49613bdb2d3dac00ddf6ffde4181e2"
+          TOKEN = os.environ["GCL_BUTTERFLY_ADMIN_TOKEN"]
+          BASE_CONTEXTS = ["quality (3.10)", "quality (3.12)", "governance", "smoke"]
+          FINAL_CONTEXTS = BASE_CONTEXTS + ["routing-enforcement"]
+
+          headers = {
+              "Accept": "application/vnd.github+json",
+              "Authorization": f"Bearer {TOKEN}",
+              "X-GitHub-Api-Version": "2022-11-28",
+              "User-Agent": "gcl-butterfly-ghos-finalizer",
+          }
+
+          def request(method, path, data=None):
+              body = None if data is None else json.dumps(data).encode("utf-8")
+              req = urllib.request.Request(API + path, data=body, headers=headers, method=method)
+              try:
+                  with urllib.request.urlopen(req, timeout=60) as response:
+                      raw = response.read()
+                      return json.loads(raw) if raw else None
+              except urllib.error.HTTPError as exc:
+                  detail = exc.read().decode("utf-8", errors="replace")
+                  raise RuntimeError(f"GitHub API {method} {path} failed with {exc.code}: {detail}") from exc
+
+          def payload(contexts):
+              return {
+                  "name": "branch_protect",
+                  "target": "branch",
+                  "enforcement": "active",
+                  "bypass_actors": [],
+                  "conditions": {"ref_name": {"exclude": [], "include": ["~DEFAULT_BRANCH"]}},
+                  "rules": [
+                      {"type": "deletion"},
+                      {"type": "non_fast_forward"},
+                      {
+                          "type": "pull_request",
+                          "parameters": {
+                              "required_approving_review_count": 0,
+                              "dismiss_stale_reviews_on_push": True,
+                              "required_reviewers": [],
+                              "require_code_owner_review": False,
+                              "dismissal_restriction": {"enabled": False, "allowed_actors": []},
+                              "require_last_push_approval": False,
+                              "required_review_thread_resolution": True,
+                              "require_extra_approval_for_unattributed_changes": True,
+                              "allowed_merge_methods": ["merge", "squash"],
+                          },
+                      },
+                      {
+                          "type": "required_status_checks",
+                          "parameters": {
+                              "strict_required_status_checks_policy": True,
+                              "do_not_enforce_on_create": False,
+                              "required_status_checks": [{"context": context} for context in contexts],
+                          },
+                      },
+                  ],
+              }
+
+          def material(value):
+              return {key: value.get(key) for key in ("name", "target", "enforcement", "bypass_actors", "conditions", "rules")}
+
+          branch = request("GET", f"/repos/{REPO}/branches/main")
+          actual_main = branch.get("commit", {}).get("sha")
+          if actual_main != EXPECTED_MAIN:
+              raise RuntimeError(f"BUTTERFLY protected-main drift: expected {EXPECTED_MAIN}, observed {actual_main}")
+
+          before = request("GET", f"/repos/{REPO}/rulesets/{RULESET_ID}")
+          if before.get("id") != RULESET_ID or before.get("source_type") != "Repository" or before.get("source") != REPO:
+              raise RuntimeError("BUTTERFLY ruleset identity drift")
+
+          expected_before = payload(BASE_CONTEXTS)
+          expected_after = payload(FINAL_CONTEXTS)
+          observed_before = material(before)
+
+          if observed_before == expected_after:
+              state = "ALREADY_CONFORMANT"
+          elif observed_before == expected_before:
+              request("PUT", f"/repos/{REPO}/rulesets/{RULESET_ID}", expected_after)
+              state = "ROUTING_ENFORCEMENT_ADDED"
+          else:
+              digest = hashlib.sha256(json.dumps(observed_before, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+              raise RuntimeError(f"BUTTERFLY ruleset pre-state drift; material_sha256={digest}")
+
+          after = request("GET", f"/repos/{REPO}/rulesets/{RULESET_ID}")
+          observed_after = material(after)
+          if observed_after != expected_after:
+              raise RuntimeError("BUTTERFLY ruleset post-state mismatch")
+          if after.get("bypass_actors") != []:
+              raise RuntimeError("BUTTERFLY bypass actors changed")
+
+          evidence = {
+              "schema_version": "gcl.butterfly-ghos-ruleset-evidence.v1",
+              "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+              "repository": REPO,
+              "protected_main": EXPECTED_MAIN,
+              "ruleset_id": RULESET_ID,
+              "state": state,
+              "before": observed_before,
+              "after": observed_after,
+              "verified": True,
+              "authority_created": False,
+          }
+          evidence["evidence_sha256"] = hashlib.sha256(
+              json.dumps(evidence, sort_keys=True, separators=(",", ":")).encode()
+          ).hexdigest()
+          Path("butterfly-ghos-ruleset-evidence.json").write_text(json.dumps(evidence, indent=2) + "\n", encoding="utf-8")
+          print(json.dumps({"state": state, "ruleset_id": RULESET_ID, "contexts": FINAL_CONTEXTS}, sort_keys=True))
+          PY
+
+      - name: Preserve BUTTERFLY GHOS ruleset evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: butterfly-ghos-ruleset-evidence
+          path: butterfly-ghos-ruleset-evidence.json
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 0
