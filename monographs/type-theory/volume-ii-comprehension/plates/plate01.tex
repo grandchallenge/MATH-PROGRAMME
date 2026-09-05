@@ -1,0 +1,33 @@
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}[gclplate]
+\node[anchor=west,font=\sffamily\bfseries\Large,gcllabel] at (-6,4.1) {FIXED WORLD / DEPENDENT WORLD};
+\draw[GCLWarm,line width=1pt] (-6,3.72)--(6,3.72);
+
+\node[gcllabel,font=\bfseries] at (-3.4,3.1) {Fixed codomain};
+\node[gcllabel] (a1) at (-5.0,1.8) {$a_0:A$};
+\node[gcllabel] (a2) at (-3.4,1.8) {$a_1:A$};
+\node[gcllabel] (a3) at (-1.8,1.8) {$a_2:A$};
+\node[gcllabel,draw=GCLBlue,rounded corners=3pt,minimum width=3.8cm,minimum height=1.0cm] (B) at (-3.4,0.1) {$B\;\mathsf{type}$};
+\draw[gclbluearrow] (a1.south) to[out=-90,in=160] (B.north west);
+\draw[gclbluearrow] (a2.south) -- (B.north);
+\draw[gclbluearrow] (a3.south) to[out=-90,in=20] (B.north east);
+\node[gcllabel,align=center] at (-3.4,-1.25) {the target type does not change\\when the input changes};
+
+\draw[GCLInk!30,line width=0.8pt] (0,-2.2)--(0,3.2);
+
+\node[gcllabel,font=\bfseries] at (3.3,3.1) {Dependent family};
+\node[gcllabel] (x1) at (1.6,1.8) {$a_0:A$};
+\node[gcllabel] (x2) at (3.3,1.8) {$a_1:A$};
+\node[gcllabel] (x3) at (5.0,1.8) {$a_2:A$};
+\node[gcllabel,draw=GCLGreen,rounded corners=3pt] (b1) at (1.6,0.15) {$B(a_0)\;\mathsf{type}$};
+\node[gcllabel,draw=GCLGreen,rounded corners=3pt] (b2) at (3.3,-0.15) {$B(a_1)\;\mathsf{type}$};
+\node[gcllabel,draw=GCLGreen,rounded corners=3pt] (b3) at (5.0,0.35) {$B(a_2)\;\mathsf{type}$};
+\draw[gclwarmarrow] (x1.south) -- (b1.north);
+\draw[gclwarmarrow] (x2.south) -- (b2.north);
+\draw[gclwarmarrow] (x3.south) -- (b3.north);
+\node[gcllabel,align=center] at (3.3,-1.45) {the available type may vary\\with an earlier term};
+\end{tikzpicture}
+\caption{\textbf{Plate 1. Fixed world / dependent world.} Ordinary typing may reuse one codomain $B$ for every input. Dependency permits a family $B(x)$ whose well-formed type can vary with an earlier term. The fiber-like layout is geometric intuition, not the syntax itself.}
+\label{plate:fixed-dependent}
+\end{figure}

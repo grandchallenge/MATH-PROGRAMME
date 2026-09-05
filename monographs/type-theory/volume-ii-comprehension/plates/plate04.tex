@@ -1,0 +1,24 @@
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}[gclplate]
+\node[anchor=west,font=\sffamily\bfseries\Large,gcllabel] at (-6,4.1) {DEPENDENCY IS NOT RUNTIME TAGGING};
+\draw[GCLWarm,line width=1pt] (-6,3.72)--(6,3.72);
+
+\node[gcllabel,font=\bfseries] at (-3.3,2.9) {Static family formation};
+\node[gcllabel,draw=GCLGreen,rounded corners=4pt,align=center,minimum width=5.0cm,minimum height=1.6cm] (stat) at (-3.3,1.3) {$\Gamma\vdash n:\Nat$\\[2pt]$\Gamma\vdash \Fin(n)\;\mathsf{type}$};
+\node[gcllabel,align=center] at (-3.3,-0.35) {The type expression is well formed\\because the index is typed.};
+
+\draw[GCLWarm,line width=2pt] (0,-2.2)--(0,3.15);
+\node[gcllabel,font=\bfseries,text=GCLWarm] at (0,0.65) {$\neq$};
+
+\node[gcllabel,font=\bfseries] at (3.3,2.9) {Dynamic case analysis};
+\node[gcllabel,draw=GCLBlue,rounded corners=4pt,align=center] (run) at (3.3,1.7) {evaluate $n$};
+\node[gcllabel,draw=GCLBlue,rounded corners=4pt] (z) at (2.0,0.1) {$0$ branch};
+\node[gcllabel,draw=GCLBlue,rounded corners=4pt] (s) at (4.6,0.1) {$\mathrm{succ}$ branch};
+\draw[gclbluearrow] (run.south west) to[out=-120,in=90] (z.north);
+\draw[gclbluearrow] (run.south east) to[out=-60,in=90] (s.north);
+\node[gcllabel,align=center] at (3.3,-1.25) {A runtime computation chooses\\which behavior occurs.};
+\end{tikzpicture}
+\caption{\textbf{Plate 4. Dependency is not runtime tagging.} A family-formation judgment constrains which type expressions make sense before execution; a runtime branch chooses behavior during execution. Implementations may connect the two, but they are different formal notions.}
+\label{plate:not-runtime-tagging}
+\end{figure}

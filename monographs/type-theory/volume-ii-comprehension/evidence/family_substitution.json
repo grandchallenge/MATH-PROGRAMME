@@ -1,0 +1,58 @@
+{
+  "calculus": "COMP-0",
+  "purpose": "finite regression evidence for dependent family/context substitution",
+  "claim_boundary": "passing cases are not a mechanized proof of generalized substitution",
+  "cases": [
+    {
+      "name": "dependent_context_well_formed",
+      "pass": true,
+      "actual": [
+        "n:Nat",
+        "i:Fin(n)",
+        "j:Fin(succ(n))"
+      ]
+    },
+    {
+      "name": "reversed_dependency_rejected",
+      "pass": true,
+      "actual": [
+        "i:Fin(n)",
+        "n:Nat"
+      ]
+    },
+    {
+      "name": "trailing_context_specializes",
+      "pass": true,
+      "actual": [
+        "i:Fin(succ(succ(succ(0))))",
+        "j:Fin(succ(succ(succ(succ(0)))))"
+      ]
+    },
+    {
+      "name": "specialized_context_well_formed",
+      "pass": true,
+      "actual": [
+        "i:Fin(succ(succ(succ(0))))",
+        "j:Fin(succ(succ(succ(succ(0)))))"
+      ]
+    },
+    {
+      "name": "family_formation_preserved",
+      "pass": true,
+      "actual": "Fin(succ(succ(succ(0))))"
+    },
+    {
+      "name": "substitution_composition_term",
+      "pass": true,
+      "lhs": "succ(succ(succ(0)))",
+      "rhs": "succ(succ(succ(0)))"
+    },
+    {
+      "name": "substitution_composition_type",
+      "pass": true,
+      "lhs": "Fin(succ(succ(succ(0))))",
+      "rhs": "Fin(succ(succ(succ(0))))"
+    }
+  ],
+  "all_pass": true
+}

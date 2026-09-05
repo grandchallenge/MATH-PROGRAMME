@@ -1,0 +1,448 @@
+\documentclass[11pt,openany]{book}
+\input{series_style.tex}
+\input{series_macros.tex}
+\input{volume_macros.tex}
+\hypersetup{colorlinks=true,linkcolor=GCLBlue,urlcolor=GCLBlue,citecolor=GCLGreen,
+  pdftitle={COMPREHENSION: How Computational Worlds Are Built},pdfauthor={Grand Challenge Labs}}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\small\sffamily COMPREHENSION}
+\fancyhead[RO]{\small\sffamily\nouppercase{\leftmark}}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{15pt}
+\begin{document}
+\frontmatter
+\begin{titlepage}
+\pagecolor{GCLPale!35}\color{GCLInk}\centering
+\vspace*{1.2cm}
+{\small\sffamily GRAND CHALLENGE MONOGRAPH COLLECTION\par}
+\vspace{1.1cm}{\Huge\bfseries TYPE THEORY\par}
+\vspace{0.25cm}{\Large The Grand Unified Theory of Computation\par}
+\vspace{1cm}{\color{GCLWarm}\rule{0.76\textwidth}{1.1pt}\par}
+\vspace{0.8cm}{\fontsize{31}{35}\selectfont\bfseries COMPREHENSION\par}
+\vspace{0.25cm}{\LARGE How Computational Worlds Are Built\par}
+\vspace{0.25cm}{\large Volume II\par}
+\vfill {\large Grand Challenge Labs\par}
+\end{titlepage}
+\nopagecolor\color{GCLInk}
+
+\chapter*{Scope and series thesis}
+\addcontentsline{toc}{chapter}{Scope and series thesis}
+The phrase \emph{grand unified theory} names a research thesis, not an established theorem. The collection asks whether type theory can serve as a sufficiently general grammar of computational possibility: a language for specifying what computational constructions may exist, what information they require, how they compose, what distinctions they preserve, and what interactions they permit.
+
+Volume I asked what must exist before a program can even make sense. Volume II asks the next question:
+
+\begin{principle}
+Which formation principles permit new kinds of computational objects and dependencies to exist?
+\end{principle}
+
+The central move is small in notation and large in consequence. We pass from a fixed type judgment
+\[
+  \Gamma\vdash B\type
+\]
+to a family judgment
+\[
+  \Gamma,x:A\vdash B(x)\type.
+\]
+Now the type available later may depend on information established earlier.
+
+The word \emph{comprehension} is used here in the type-theoretic and contextual sense: disciplined family formation and context extension. It does not mean unrestricted set comprehension.
+
+\chapter*{Preface: Why another volume is necessary}
+\addcontentsline{toc}{chapter}{Preface: Why another volume is necessary}
+A language with only fixed input and output types can already say much. It can rule out adding a Boolean to a function, distinguish a pair from a sum, and describe recursive data. But it cannot directly say that a matrix multiplication returns a matrix whose dimensions are determined by the inputs, that an array index is smaller than the array it indexes, or that the second field of a data structure has a type determined by the first.
+
+One could encode such facts as comments, runtime checks, proof obligations outside the language, or conventions maintained by programmers. Dependent type theory asks a sharper question: what if the language of types itself may mention terms already known in the context?
+
+This volume studies that move before turning it into a slogan. Dependency is not introduced as magic. It is introduced as a change to formation rules, context structure, substitution, computation, and checking. The first two chapters deliberately restrict the calculus so that the structural consequence is visible before dependent functions, dependent pairs, inductive families, or universes arrive.
+
+\tableofcontents
+
+\mainmatter
+\part{The First Dependency}
+
+\chapter{A Type Can Depend on a Value}
+\label{ch:families}
+
+A conventional type judgment answers a local question: given the assumptions in $\Gamma$, is $A$ a meaningful type? A conventional term judgment then asks whether a term belongs to that type. In Volume I, this was enough to make syntax disciplined.
+
+Dependency changes the question. A type may now mention a term that was introduced earlier. The language does not merely classify finished expressions; it can use earlier information to determine which classifications are available later.
+
+\section{The ordinary problem before the notation}
+
+Suppose a program stores an integer index into an array. The statement ``this index is in bounds'' relates two pieces of information: the index and the array length. If the type of the index is merely \term{Nat}, the relationship is not represented in the type. It must be checked elsewhere.
+
+A dependent family can make the permissible index type vary with the length. We will use the schematic family $\Fin(n)$: when $n:\Nat$, $\Fin(n)$ is a type intended eventually to contain exactly the indices below $n$. For now, $\Fin$ is deliberately opaque. We study what follows merely from allowing the expression $\Fin(n)$ to be a type when $n$ is known to be a natural number.
+
+\begin{intuition}
+A fixed type is one room. A dependent family is a floor plan whose available room depends on where you stand. The metaphor is useful only if we remember that the formal object is still a judgment generated by rules.
+\end{intuition}
+
+\input{plates/plate01.tex}
+
+\section{Contexts become telescopes}
+
+The context
+\[
+  n:\Nat,\; i:\Fin(n)
+\]
+is not merely a set of two declarations. The type of $i$ mentions $n$. Therefore $n$ must already be available when $i$ is declared.
+
+This motivates a stronger reading of context. A dependent context is a \keyword{telescope}: an ordered sequence in which each type may depend on the declarations to its left.
+
+\begin{definition}[COMP-0 contexts]
+The initial family-formation kernel uses contexts generated by
+\[
+  \Gamma ::= \cdot \mid \Gamma,x:A.
+\]
+The extension $\Gamma,x:A$ is well formed only when $\Gamma\ctx$, $\Gamma\vdash A\type$, and $x$ is fresh for $\Gamma$.
+\end{definition}
+
+\input{plates/plate02.tex}
+
+The order is no longer bureaucratic. Compare
+\[
+  n:\Nat,\; i:\Fin(n)
+\]
+with
+\[
+  i:\Fin(n),\; n:\Nat.
+\]
+The first can be well formed. The second cannot even form the type of $i$, because $n$ is not yet in scope.
+
+\begin{warningbox}
+A telescope is not an ordinary unordered environment. Implementations may store declarations in maps or hash tables, but the mathematical invariant remains ordered dependency: later types may mention earlier declarations only.
+\end{warningbox}
+
+\section{The COMP-0 kernel}
+
+The smallest safe fragment is intentionally austere. It contains enough syntax to make dependency observable and almost nothing else.
+
+\begin{formal}
+\textbf{Types}
+\[
+  A,B ::= \Nat \mid \mathsf{Bool} \mid \Fin(t).
+\]
+
+\textbf{Terms}
+\[
+  t,u ::= x \mid 0 \mid \mathrm{succ}(t) \mid \mathsf{true} \mid \mathsf{false}.
+\]
+
+\textbf{Judgments}
+\[
+  \Gamma\ctx,
+  \qquad \Gamma\vdash A\type,
+  \qquad \Gamma\vdash t:A.
+\]
+
+The essential rules are:
+\[
+\frac{}{\cdot\ctx}
+\qquad
+\frac{\Gamma\ctx\qquad \Gamma\vdash A\type\qquad x\notin\mathrm{dom}(\Gamma)}
+     {\Gamma,x:A\ctx}
+\]
+\[
+\frac{\Gamma\ctx}{\Gamma\vdash \Nat\type}
+\qquad
+\frac{\Gamma\ctx}{\Gamma\vdash \mathsf{Bool}\type}
+\qquad
+\frac{\Gamma\vdash n:\Nat}{\Gamma\vdash \Fin(n)\type}
+\]
+\[
+\frac{x:A\in\Gamma}{\Gamma\vdash x:A}
+\qquad
+\frac{\Gamma\ctx}{\Gamma\vdash 0:\Nat}
+\qquad
+\frac{\Gamma\vdash n:\Nat}{\Gamma\vdash \mathrm{succ}(n):\Nat}
+\]
+\[
+\frac{\Gamma\ctx}{\Gamma\vdash \mathsf{true}:\mathsf{Bool}}
+\qquad
+\frac{\Gamma\ctx}{\Gamma\vdash \mathsf{false}:\mathsf{Bool}}.
+\]
+\end{formal}
+
+There are no constructors for $\Fin$ yet. This is deliberate. The first question is not ``what values inhabit $\Fin(n)$?'' but ``what changes structurally once the type language may mention a term?''
+
+\begin{workedexample}
+Let
+\[
+  \Gamma = n:\Nat,\; i:\Fin(n),\; j:\Fin(\mathrm{succ}(n)).
+\]
+The context is well formed because $n:\Nat$ is available before either dependent declaration is checked. Notice that well-formedness of a context does not assert that every hypothetical declaration can be instantiated simultaneously in the empty context. It says that each declaration makes sense under the assumptions to its left.
+\end{workedexample}
+
+\section{Dependency is static structure}
+
+It is tempting to imagine that $\Fin(n)$ means the program evaluates $n$ and then chooses one of many runtime type tags. That is not the formal story. Family formation is a typing judgment. Runtime case analysis is an operational event. They may interact in an implementation, but they answer different questions.
+
+\input{plates/plate04.tex}
+
+\section{Weakening, now with an order condition}
+
+A structural rule that was nearly invisible in a simply typed setting becomes worth stating carefully.
+
+\begin{theorem}[Weakening for COMP-0]
+Suppose $\Gamma,\Delta\vdash J$ is derivable in COMP-0, $\Gamma\vdash A\type$, and $x$ is fresh for $\Gamma,\Delta,J$. If no declaration in $\Delta$ depends on $x$---which is automatic because $x$ is new---then
+\[
+  \Gamma,x:A,\Delta\vdash J
+\]
+is derivable, with the same judgment shape $J$.
+\end{theorem}
+
+\begin{proof}
+Proceed by induction on the derivation of $\Gamma,\Delta\vdash J$, simultaneously with well-formedness of $\Delta$. The base-type and canonical-term cases are immediate because their premises require only a well-formed context. In the variable case, an old declaration remains present after insertion of the fresh declaration. In the family case, a derivation of $\Fin(t)\type$ is obtained from a derivation of $t:\Nat$; apply the induction hypothesis to that premise. Context extension follows because each trailing type remains well formed after the fresh declaration is inserted. No exchange principle is used: the new declaration is inserted at a position that does not violate any existing dependency.
+\end{proof}
+
+\begin{warningbox}
+Weakening does not imply arbitrary exchange. If $i:\Fin(n)$, then swapping $i$ to the left of $n:\Nat$ destroys the premise needed to form $\Fin(n)$.
+\end{warningbox}
+
+\section{Computational Laboratory 1: make dependency explicit}
+
+\begin{labbox}
+The file \term{labs/family\_substitution.py} implements the syntax of COMP-0, context well-formedness, term typing, type formation, and structural substitution. The first laboratory does not attempt to implement all of dependent type theory. Its purpose is narrower: make the transformation of a dependent context inspectable.
+
+The committed evidence file \term{evidence/family\_substitution.json} records deterministic regression cases. The program can regenerate that evidence.
+\end{labbox}
+
+The laboratory treats $\Fin$ as opaque in exactly the same sense as the chapter: it checks that its index is a natural number but does not yet provide inhabitants.
+
+\section{Exercises}
+
+\begin{enumerate}[label=\textbf{1.\arabic*.}]
+\item \textbf{Checkpoint.} Which of the contexts $n:\Nat,i:\Fin(n)$ and $i:\Fin(n),n:\Nat$ is well formed in COMP-0? Give the premise that decides the case.
+\item \textbf{Checkpoint.} Derive $n:\Nat\vdash \Fin(\mathrm{succ}(n))\type$.
+\item \textbf{Checkpoint.} Explain in one sentence why $\Fin(n)$ is not a runtime branch in the formal system.
+\item \textbf{Core.} Give a well-formed four-declaration telescope containing two declarations whose types depend on the same natural-number variable.
+\item \textbf{Core.} Show that $n:\Nat,b:\mathsf{Bool}\vdash \Fin(n)\type$ by weakening.
+\item \textbf{Core.} Find an attempted exchange of two declarations that breaks well-formedness, and identify the missing premise.
+\item \textbf{Synthesis.} Compare a telescope with a conventional compiler symbol table. Which implementation details may differ while the typing invariant remains the same?
+\item \textbf{Synthesis.} A programmer says: ``Dependent types are just values stored in types.'' Refine this into a statement that is formally defensible for COMP-0.
+\item \textbf{Proof Workshop.} Prove the variable case of the weakening theorem, distinguishing whether the referenced variable lies in $\Gamma$ or $\Delta$.
+\item \textbf{Proof Workshop.} Prove that if $\Gamma\vdash t:\Nat$ then extending $\Gamma$ by a fresh independent Boolean declaration preserves formation of $\Fin(t)$.
+\item \textbf{Design Clinic.} Add a primitive family $\mathsf{Matrix}(m,n)$ indexed by two naturals. State only the formation rule; do not invent constructors. What new contexts become expressible?
+\item \textbf{Challenge.} Context exchange is not freely admissible. State a sufficient condition under which two adjacent declarations may be exchanged, and justify it informally in terms of free-variable dependency.
+\end{enumerate}
+
+\chapter{Substitution Changes the World}
+\label{ch:substitution}
+
+In a simply typed calculus, substitution replaces a variable inside a term. In a dependent calculus, that description is incomplete. A later type may mention the variable too. Replacing the variable therefore changes the world in which later terms are judged.
+
+The example
+\[
+  n:\Nat,\; i:\Fin(n)
+\]
+contains the entire issue. If we substitute $3$ for $n$, the declaration for $n$ disappears and the type of $i$ becomes $\Fin(3)$.
+
+\input{plates/plate03.tex}
+
+\section{Substitution acts on terms, types, and contexts}
+
+For COMP-0 there are no binders inside terms or types, so capture avoidance is structurally simple. The binder problem returns when $\Pi$, $\Sigma$, and lambda abstraction are introduced; the general convention remains alpha-renaming before substitution when needed.
+
+Write $E[a/x]$ for substituting $a$ for free occurrences of $x$ in an expression $E$.
+
+For terms:
+\[
+\begin{aligned}
+  x[a/x] &= a,\\
+  y[a/x] &= y \quad(y\neq x),\\
+  0[a/x] &= 0,\\
+  \mathrm{succ}(t)[a/x] &= \mathrm{succ}(t[a/x]),\\
+  \mathsf{true}[a/x] &= \mathsf{true},\\
+  \mathsf{false}[a/x] &= \mathsf{false}.
+\end{aligned}
+\]
+
+For types:
+\[
+  \Nat[a/x]=\Nat,
+  \qquad \mathsf{Bool}[a/x]=\mathsf{Bool},
+  \qquad \Fin(t)[a/x]=\Fin(t[a/x]).
+\]
+
+For a trailing context
+\[
+  \Delta = y_1:B_1,\ldots,y_k:B_k,
+\]
+we substitute recursively through every declaration:
+\[
+  \Delta[a/x]
+  = y_1:B_1[a/x],\ldots,y_k:B_k[a/x].
+\]
+
+\begin{principle}
+In dependent type theory, substitution is not merely term replacement. It is a structure-preserving change of context.
+\end{principle}
+
+\section{Why the theorem needs a trailing context}
+
+A substitution theorem stated only for a judgment directly under $\Gamma,x:A$ is too weak for dependent reasoning beneath later declarations. The correct shape must account for a suffix $\Delta$ whose types can mention $x$.
+
+\begin{theorem}[Generalized dependent substitution for COMP-0]
+Assume
+\[
+  \Gamma\vdash a:A
+\]
+and $\Gamma,x:A,\Delta$ is a well-formed COMP-0 context. Then:
+
+\begin{enumerate}[label=(\roman*)]
+\item $\Gamma,\Delta[a/x]\ctx$;
+\item if $\Gamma,x:A,\Delta\vdash B\type$, then
+\[
+  \Gamma,\Delta[a/x]\vdash B[a/x]\type;
+\]
+\item if $\Gamma,x:A,\Delta\vdash t:B$, then
+\[
+  \Gamma,\Delta[a/x]\vdash t[a/x]:B[a/x].
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The three statements are proved simultaneously by induction on the relevant derivations, with an inner induction over the construction of the trailing context where necessary.
+
+For context extension, suppose the final declaration of $\Delta$ is $y:C$. By the induction hypothesis, the transformed prefix is well formed and $C[a/x]$ is a type in that transformed prefix. Therefore it may be extended by $y:C[a/x]$.
+
+For type formation, the only dependency-specific case in COMP-0 is
+\[
+  \frac{\Gamma,x:A,\Delta\vdash n:\Nat}
+       {\Gamma,x:A,\Delta\vdash \Fin(n)\type}.
+\]
+The term induction hypothesis gives
+\[
+  \Gamma,\Delta[a/x]\vdash n[a/x]:\Nat,
+\]
+so the $\Fin$ formation rule yields
+\[
+  \Gamma,\Delta[a/x]\vdash \Fin(n[a/x])\type,
+\]
+which is exactly $\Fin(n)[a/x]\type$.
+
+For term typing, the canonical constants are immediate. The successor case follows from the induction hypothesis on its natural-number premise. The variable case has three subcases. If the variable is $x$, substitution produces $a$; weakening lifts the premise $\Gamma\vdash a:A$ through the transformed trailing context. If the variable was declared in $\Gamma$, the declaration survives unchanged and weakening again supplies the needed judgment. If it was declared in $\Delta$, the transformed declaration appears in $\Delta[a/x]$ with exactly its substituted type, so the variable rule applies.
+
+These cases exhaust COMP-0.
+\end{proof}
+
+The theorem is deliberately scoped. It proves substitution for COMP-0. Later chapters must extend the induction to binders, $\Pi$/$\Sigma$ formation, beta computation, and the chosen equality rules. Nothing about the phrase ``dependent type theory'' makes those later cases automatic.
+
+\begin{workedexample}
+Let
+\[
+  \Gamma = \cdot,
+  \qquad A=\Nat,
+  \qquad a=\mathrm{succ}(\mathrm{succ}(0)),
+\]
+and
+\[
+  \Delta = i:\Fin(n),\; j:\Fin(\mathrm{succ}(n)).
+\]
+Then
+\[
+  \Delta[a/n]
+  = i:\Fin(\mathrm{succ}(\mathrm{succ}(0))),\;
+    j:\Fin(\mathrm{succ}(\mathrm{succ}(\mathrm{succ}(0)))).
+\]
+The substitution does not evaluate $\Fin$. It specializes the index expression inside the type.
+\end{workedexample}
+
+\section{Substitution is not evaluation}
+
+The expression $t[a/x]$ is a syntactic operation defined by recursion on structure. A reduction step $t\to t'$ belongs to operational semantics. The two interact---beta reduction will eventually use substitution---but they are not interchangeable.
+
+\begin{warningbox}
+Do not read $[a/x]$ as ``run the program with input $a$.'' In Chapter 2 it means: replace free occurrences of $x$ structurally, including occurrences inside types and trailing context declarations.
+\end{warningbox}
+
+\section{Composition of substitutions}
+
+Even in COMP-0, repeated substitutions must agree with one another in a controlled way.
+
+\begin{lemma}[Substitution composition in COMP-0]
+Let $x\neq y$ and assume $x\notin FV(b)$. For every COMP-0 term or type expression $E$,
+\[
+  E[a/x][b/y]
+  =
+  E[b/y][a[b/y]/x].
+\]
+Equality here is literal structural equality of the resulting COMP-0 syntax.
+\end{lemma}
+
+\begin{proof}
+By structural induction on $E$. Constants are immediate. For a variable, distinguish $E=x$, $E=y$, and $E=z$ with $z$ different from both. The side condition $x\notin FV(b)$ handles the $E=x$ case. The successor case follows from the induction hypothesis. The only type-specific case is $E=\Fin(t)$, where both sides reduce to $\Fin$ applied to the corresponding term-level composition equation for $t$.
+\end{proof}
+
+Once binders are added, this lemma requires alpha-renaming and the usual capture-avoidance conditions. The clean COMP-0 proof is useful because it exposes the algebra before binder hygiene makes the notation noisier.
+
+\section{Computational Laboratory 2: inspect the transformed context}
+
+The same laboratory used in Chapter 1 now exercises the theorem-shaped behavior directly. Its regression cases include:
+
+\begin{itemize}
+\item substituting a closed numeral for an index variable;
+\item propagating the substitution through multiple trailing $\Fin$ declarations;
+\item checking that the transformed trailing context remains well formed;
+\item confirming the substitution-composition equation on representative terms and types.
+\end{itemize}
+
+The evidence is finite regression evidence. It is not a mechanized proof of the theorem.
+
+\input{plates/plate05.tex}
+
+\section{What the first two chapters have bought us}
+
+We can now say exactly what dependency changes before introducing any sophisticated dependent type former:
+
+\begin{enumerate}
+\item context order can carry mathematical content;
+\item type formation can depend on earlier term typing;
+\item structural rules acquire dependency side conditions;
+\item substitution must act through types and trailing contexts;
+\item the language can specialize later computational possibilities when earlier information is fixed.
+\end{enumerate}
+
+The next step is no longer optional. If a result type may depend on an input, we need a function former whose codomain is a family. That is the role of $\Pi$.
+
+\section{Exercises}
+
+\begin{enumerate}[label=\textbf{2.\arabic*.}]
+\item \textbf{Checkpoint.} Compute $\Fin(\mathrm{succ}(n))[0/n]$.
+\item \textbf{Checkpoint.} Substitute $\mathrm{succ}(0)$ for $n$ in the trailing context $i:\Fin(n),j:\Fin(\mathrm{succ}(n))$.
+\item \textbf{Checkpoint.} State the difference between substitution and reduction in COMP-0.
+\item \textbf{Core.} Given $\Gamma=n:\Nat$ and $\Delta=i:\Fin(n),b:\mathsf{Bool}$, compute $\Delta[\mathrm{succ}(0)/n]$.
+\item \textbf{Core.} Show that substitution preserves formation of $\Fin(\mathrm{succ}(n))$ when a natural term is substituted for $n$.
+\item \textbf{Core.} Give an example where substituting for a variable changes a later type even though the later variable term itself is unchanged.
+\item \textbf{Synthesis.} Explain why a substitution theorem without trailing $\Delta$ is insufficient for the context $n:\Nat,i:\Fin(n)$.
+\item \textbf{Synthesis.} Compare dependent substitution with parameter specialization in a conventional generic programming language. Give one similarity and one formal difference.
+\item \textbf{Proof Workshop.} Fill in the $E=x$ and $E=y$ cases of the substitution-composition lemma.
+\item \textbf{Proof Workshop.} Prove the $\Fin(t)$ case of generalized substitution using only the COMP-0 rules and the term-typing induction hypothesis.
+\item \textbf{Design Clinic.} Extend COMP-0 with a two-index family $\mathsf{Cell}(r,c)$. Specify how substitution acts on it and identify the new case needed in the substitution proof.
+\item \textbf{Challenge.} Remove the side condition $x\notin FV(b)$ from the substitution-composition lemma and find a concrete counterexample. Then state a corrected general composition law or side condition.
+\end{enumerate}
+
+\backmatter
+\chapter*{Stage-B transition record}
+\addcontentsline{toc}{chapter}{Stage-B transition record}
+The minimal executable tranche ends here. It has established dependency at the level of context formation and generalized substitution, produced executable regression evidence for COMP-0, and fixed the first five visual arguments.
+
+The next chapter must introduce $\Pi(x:A).B(x)$ because ordinary arrows cannot express a function whose result type varies with its input. No claim about strong normalization, canonicity, identity types, or universes has been smuggled into the first tranche.
+
+\chapter*{Notation in the current tranche}
+\addcontentsline{toc}{chapter}{Notation in the current tranche}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+$\Gamma,\Delta$ & contexts / telescopes \\
+$\Gamma\vdash A\type$ & $A$ is a well-formed type under $\Gamma$ \\
+$\Gamma\vdash t:A$ & $t$ has type $A$ under $\Gamma$ \\
+$\Fin(n)$ & primitive indexed family formed when $n:\Nat$ \\
+$E[a/x]$ & capture-avoiding substitution of $a$ for free $x$ in $E$ \\
+$FV(E)$ & free variables of expression $E$ \\
+\bottomrule
+\end{tabularx}
+
+\printindex
+\end{document}
