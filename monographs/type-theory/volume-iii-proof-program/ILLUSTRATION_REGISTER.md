@@ -49,4 +49,6 @@ Target: 42 canonical plates. All 42 source files are instantiated. Each caption 
 
 ## Gate-4 status
 
-**SOURCE COMPLETE; RENDERED INSPECTION PENDING.** Gate 4 is not claimed yet because the governing gate additionally requires manuscript-scale and folio-scale rendered inspection, grayscale legibility confirmation, and arrow/text collision inspection of the built pages.
+**PASS — rendered visual closure.** The complete 77-page manuscript, 32-page solutions companion, and 15-page plate folio were rendered and inspected at publication scale. The folio contains all 42 canonical plates. No clipping, overlap, broken glyph, or arrow/text collision was found. A separate grayscale rendering of the full plate folio remained legible throughout, so no plate depends on color as its sole semantic carrier.
+
+This visual pass is internal publication evidence only. It is not independent mathematical review or publication authority.

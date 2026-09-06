@@ -56,7 +56,7 @@ Operational one-step reduction `→` remains distinct from calculus-scoped defin
 
 Fourteen laboratories cover representative executable claims. Labs 1–2 implement the implication checker and capture-avoiding normalizer. Labs 3–14 cover product/sum computation, finite progress/canonical-shape checks, finite dependent witnesses, bounded cut reduction, Kripke countermodel evaluation, CPS fixtures, hostile erasure, witness extraction/replay, finite relational checks, hostile kernel certificates, and protocol traces. Negative/hostile fixtures are present where permissive acceptance would be a false positive.
 
-The composing process has semantically replayed the retained algorithms during development. Gate 7 still requires an exact fresh-source build/replay package before an RC claim.
+The retained 14-laboratory suite has passed the camera-ready exact-source replay used for Gate 7. This is regression evidence for the scoped executable claims only; it is not an independent mathematical review of the monograph.
 
 ## Gate-2 disposition
 

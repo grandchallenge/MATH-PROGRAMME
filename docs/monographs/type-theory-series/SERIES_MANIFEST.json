@@ -11,10 +11,23 @@
     "technical_writing_reference": "docs/TECHNICAL_WRITING_REFERENCE.md",
     "trim": "7 x 10 in",
     "default_chapters": 14,
-    "chapter_range": [12, 15],
+    "chapter_range": [
+      12,
+      15
+    ],
     "default_plate_target": 42,
-    "plate_range": [36, 48],
-    "exercise_modes": ["Checkpoint", "Core", "Synthesis", "Proof Workshop", "Design Clinic", "Challenge"],
+    "plate_range": [
+      36,
+      48
+    ],
+    "exercise_modes": [
+      "Checkpoint",
+      "Core",
+      "Synthesis",
+      "Proof Workshop",
+      "Design Clinic",
+      "Challenge"
+    ],
     "default_exercises_per_chapter": 12,
     "default_labs_per_teaching_chapter": 1
   },
@@ -61,24 +74,89 @@
       "slug": "proof-program",
       "title": "PROOF / PROGRAM",
       "subtitle": "Logic Becomes Executable",
-      "status": "full-development candidate; internal Gates 2, 3, 5, and 6 pass; Gate 4 rendered inspection and Gate 7 camera-ready RC remain open",
-      "composition_status": "DEVELOPMENT",
-      "durable_admission_status": "NOT_AN_RC",
-      "independent_review_status": "NOT_STARTED",
+      "status": "RC1 composition complete; durable admission pending protected merge and readback; external mathematical review pending",
+      "composition_status": "RC_COMPOSITION_COMPLETE",
+      "durable_admission_status": "PENDING_FOR_RC1",
+      "independent_review_status": "PENDING_EXTERNAL_MATHEMATICAL_REVIEW",
       "publication_authority_status": "NOT_GRANTED",
       "tracking_issue": 865,
       "protected_gate1_admission_commit": "dc317f3b00babe3dce1c75dd1d218107cb22fd15",
       "source_path": "monographs/type-theory/volume-iii-proof-program",
       "governing_question": "Why do logical construction and computational construction repeatedly share the same laws?",
       "formal_core": "Curry–Howard beyond slogans: natural deduction, normalization, propositions-as-types, constructive logics, proof terms, extraction, parametricity preview.",
-      "next_threshold": "Open interaction and protocols."
+      "next_threshold": "Open interaction and protocols.",
+      "rc1_source_archive_sha256": "70c9ffedefa795cf40e2536c45db8a7f3fb0223719d4c6cf24f921e7637d7a62",
+      "release_path": "monographs/type-theory/volume-iii-proof-program/releases/RC1"
     },
-    {"number":"IV","slug":"protocol","title":"PROTOCOL","subtitle":"Computation as Communication","status":"queued","governing_question":"What changes when the primary computational object is interaction rather than closed function evaluation?","formal_core":"Session types, duality, linear resources, channels, process calculi, protocol fidelity, progress/deadlock distinctions.","next_threshold":"Effects and environmental interaction."},
-    {"number":"V","slug":"effects","title":"EFFECTS","subtitle":"Computation Meets the World","status":"queued","governing_question":"How can types describe not merely returned values but the events computations may perform?","formal_core":"State, exceptions, I/O, algebraic effects/handlers, monads, graded and capability types, probabilistic effects, recursion/partiality boundaries.","next_threshold":"Types and languages as objects."},
-    {"number":"VI","slug":"universes","title":"UNIVERSES","subtitle":"Languages That Speak About Languages","status":"queued","governing_question":"What happens when descriptions of computational spaces themselves become computational objects?","formal_core":"Universes, codes/decoding, polymorphism, generic programming, reflection, metaprogramming, stratification and paradox avoidance.","next_threshold":"Identity as internal computational structure."},
-    {"number":"VII","slug":"identity","title":"IDENTITY","subtitle":"Equality Becomes Structure","status":"queued","governing_question":"What is equality when evidence of sameness itself carries computational information?","formal_core":"Identity types, intensional/extensional equality, J, transport, higher identities, HITs, HoTT and univalence with computational caveats.","next_threshold":"Multiple semantics for the same syntax."},
-    {"number":"VIII","slug":"semantics","title":"SEMANTICS","subtitle":"What Makes a Type Theory Mean Something?","status":"queued","governing_question":"Which semantic structures validate type-theoretic rules, and which parts survive changes of model?","formal_core":"Operational, denotational, categorical, realizability, game, domain, geometric and homotopical semantics; adequacy/full abstraction distinctions.","next_threshold":"Expressive and epistemic limits."},
-    {"number":"IX","slug":"limits","title":"THE LIMITS OF CONSTRUCTION","subtitle":"Computation, Incompleteness, Partiality, and Boundaries","status":"queued","governing_question":"What do undecidability, incompleteness, nontermination, paradox, openness and physical interaction reveal about the limits of typed construction?","formal_core":"Gödel/Turing/Church boundaries, strong normalization vs Turing completeness, recursive types, partiality, guarded recursion, oracles/open systems, probabilistic/continuous computation boundaries.","next_threshold":"Series-wide synthesis under adversarial pressure."},
-    {"number":"X","slug":"synthesis","title":"THE TYPE-THEORETIC SYNTHESIS","subtitle":"A Grammar of Computational Possibility","status":"queued","governing_question":"What strongest unifying thesis survives the previous nine volumes?","formal_core":"Cross-volume synthesis of judgment, context, comprehension, substitution, construction, interaction, effects, reflection, identity and semantics; explicit residual counterexamples and open problems.","next_threshold":"Research programme beyond the monograph collection."}
+    {
+      "number": "IV",
+      "slug": "protocol",
+      "title": "PROTOCOL",
+      "subtitle": "Computation as Communication",
+      "status": "queued",
+      "governing_question": "What changes when the primary computational object is interaction rather than closed function evaluation?",
+      "formal_core": "Session types, duality, linear resources, channels, process calculi, protocol fidelity, progress/deadlock distinctions.",
+      "next_threshold": "Effects and environmental interaction."
+    },
+    {
+      "number": "V",
+      "slug": "effects",
+      "title": "EFFECTS",
+      "subtitle": "Computation Meets the World",
+      "status": "queued",
+      "governing_question": "How can types describe not merely returned values but the events computations may perform?",
+      "formal_core": "State, exceptions, I/O, algebraic effects/handlers, monads, graded and capability types, probabilistic effects, recursion/partiality boundaries.",
+      "next_threshold": "Types and languages as objects."
+    },
+    {
+      "number": "VI",
+      "slug": "universes",
+      "title": "UNIVERSES",
+      "subtitle": "Languages That Speak About Languages",
+      "status": "queued",
+      "governing_question": "What happens when descriptions of computational spaces themselves become computational objects?",
+      "formal_core": "Universes, codes/decoding, polymorphism, generic programming, reflection, metaprogramming, stratification and paradox avoidance.",
+      "next_threshold": "Identity as internal computational structure."
+    },
+    {
+      "number": "VII",
+      "slug": "identity",
+      "title": "IDENTITY",
+      "subtitle": "Equality Becomes Structure",
+      "status": "queued",
+      "governing_question": "What is equality when evidence of sameness itself carries computational information?",
+      "formal_core": "Identity types, intensional/extensional equality, J, transport, higher identities, HITs, HoTT and univalence with computational caveats.",
+      "next_threshold": "Multiple semantics for the same syntax."
+    },
+    {
+      "number": "VIII",
+      "slug": "semantics",
+      "title": "SEMANTICS",
+      "subtitle": "What Makes a Type Theory Mean Something?",
+      "status": "queued",
+      "governing_question": "Which semantic structures validate type-theoretic rules, and which parts survive changes of model?",
+      "formal_core": "Operational, denotational, categorical, realizability, game, domain, geometric and homotopical semantics; adequacy/full abstraction distinctions.",
+      "next_threshold": "Expressive and epistemic limits."
+    },
+    {
+      "number": "IX",
+      "slug": "limits",
+      "title": "THE LIMITS OF CONSTRUCTION",
+      "subtitle": "Computation, Incompleteness, Partiality, and Boundaries",
+      "status": "queued",
+      "governing_question": "What do undecidability, incompleteness, nontermination, paradox, openness and physical interaction reveal about the limits of typed construction?",
+      "formal_core": "Gödel/Turing/Church boundaries, strong normalization vs Turing completeness, recursive types, partiality, guarded recursion, oracles/open systems, probabilistic/continuous computation boundaries.",
+      "next_threshold": "Series-wide synthesis under adversarial pressure."
+    },
+    {
+      "number": "X",
+      "slug": "synthesis",
+      "title": "THE TYPE-THEORETIC SYNTHESIS",
+      "subtitle": "A Grammar of Computational Possibility",
+      "status": "queued",
+      "governing_question": "What strongest unifying thesis survives the previous nine volumes?",
+      "formal_core": "Cross-volume synthesis of judgment, context, comprehension, substitution, construction, interaction, effects, reflection, identity and semantics; explicit residual counterexamples and open problems.",
+      "next_threshold": "Research programme beyond the monograph collection."
+    }
   ]
 }
