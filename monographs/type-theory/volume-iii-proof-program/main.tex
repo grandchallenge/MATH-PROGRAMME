@@ -1,0 +1,38 @@
+\documentclass[11pt,openany]{book}
+\input{series_style.tex}
+\input{series_macros.tex}
+\hypersetup{colorlinks=true,linkcolor=GCLBlue,urlcolor=GCLBlue,citecolor=GCLGreen,pdftitle={PROOF / PROGRAM: Logic Becomes Executable},pdfauthor={Grand Challenge Labs}}
+\begin{document}
+\frontmatter
+\begin{titlepage}
+\pagecolor{GCLPale!35}\color{GCLInk}\centering
+\vspace*{1.2cm}
+{\small\sffamily GRAND CHALLENGE MONOGRAPH COLLECTION\par}
+\vspace{1.1cm}{\Huge\bfseries TYPE THEORY\par}
+\vspace{0.25cm}{\Large The Grand Unified Theory of Computation\par}
+\vspace{1cm}{\color{GCLWarm}\rule{0.76\textwidth}{1.1pt}\par}
+\vspace{0.8cm}{\fontsize{31}{35}\selectfont\bfseries PROOF / PROGRAM\par}
+\vspace{0.25cm}{\LARGE Logic Becomes Executable\par}
+\vspace{0.25cm}{\large Volume III\par}
+\vfill {\large Grand Challenge Labs\par}
+\end{titlepage}
+\nopagecolor\color{GCLInk}
+
+\chapter*{Scope and series thesis}
+The phrase ``grand unified theory'' names a research thesis, not an established theorem. This volume asks why logical construction and computational construction repeatedly share the same laws.
+
+The Stage-B teaching kernel fixes a constructive Curry--Howard core, $\mathrm{CH}\text{-}0$, before introducing dependent quantifiers, classical control, extraction, parametricity or proof-assistant architecture. Every theorem is scoped to the exact calculus named with it. Volumes I and II are inherited as composition-complete and durably admitted works whose independent mathematical reviews remain pending; this volume does not upgrade their institutional state.
+
+\chapter*{Series orientation}
+Volume I asked what must exist before a program can be meaningful. Volume II asked how dependent formation principles build new computational worlds. Volume III now asks why the rules for constructing evidence so often have the same shape as the rules for constructing programs. The answer will be strongest where an exact term assignment and normalization correspondence can be proved, weaker where a translation is required, and deliberately adversarial where proof relevance, classical control, effects, or open interaction break the naive slogan.
+
+\tableofcontents
+\mainmatter
+\input{chapters/ch01.tex}
+\input{chapters/ch02.tex}
+
+\backmatter
+\chapter*{Current threshold}
+The first tranche establishes implication-level proof/term assignment and the principal detour/beta correspondence. The next internal composition stage expands the same discipline through products, sums, empty/unit, dependent quantifiers, sequent calculus, constructive/classical boundaries, extraction, parametricity and proof-assistant trust boundaries before the final transition to open protocols.
+\printindex
+\end{document}

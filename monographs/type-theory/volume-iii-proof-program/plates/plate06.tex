@@ -1,0 +1,21 @@
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}[gclplate,scale=.88]
+\node[anchor=west,font=\sffamily\bfseries\Large,gcllabel] at (-6,3.9) {DISJUNCTION CARRIES A CHOICE};
+\draw[GCLWarm,line width=1pt] (-6,3.55)--(6,3.55);
+\node[gcllabel] (sum) at (0,2.25) {$s:A+B$};
+\node[gcllabel] (left) at (-3.5,1.05) {$\operatorname{inl}(a)$};
+\node[gcllabel] (right) at (3.5,1.05) {$\operatorname{inr}(b)$};
+\draw[gclwarmarrow] (sum.south west) -- (left.north east);
+\draw[gclwarmarrow] (sum.south east) -- (right.north west);
+\node[gcllabel] (lcase) at (-3.5,-.15) {$a{:}A\mapsto c_A{:}C$};
+\node[gcllabel] (rcase) at (3.5,-.15) {$b{:}B\mapsto c_B{:}C$};
+\draw[gclbluearrow] (left)--(lcase);
+\draw[gclbluearrow] (right)--(rcase);
+\node[gcllabel] (out) at (0,-1.05) {$C$};
+\draw[gclbluearrow] (lcase.south east) -- (out.north west);
+\draw[gclbluearrow] (rcase.south west) -- (out.north east);
+\end{tikzpicture}
+\caption{\textbf{Plate 6. Disjunction carries a choice.} Constructive disjunction records which injection was built and carries the evidence needed by the selected branch. This is richer than a proof-irrelevant Boolean truth value.}
+\label{plate:sum-preview}
+\end{figure}

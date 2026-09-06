@@ -1,0 +1,23 @@
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}[gclplate,scale=.88]
+\node[anchor=west,font=\sffamily\bfseries\Large,gcllabel] at (-6,3.9) {INTRODUCTION THEN ELIMINATION IS A DETOUR};
+\draw[GCLWarm,line width=1pt] (-6,3.55)--(6,3.55);
+\node[gcllabel,font=\bfseries] at (-3.2,2.8) {Proof detour};
+\node[gcllabel] at (-4.6,1.85) {$[x{:}A]$};
+\node[gcllabel] at (-2.55,1.85) {$D:B$};
+\node[gcllabel] (arr) at (-3.55,1.1) {$A\to B$};
+\node[gcllabel] (evid) at (-1.55,1.1) {$E:A$};
+\node[gcllabel] (bout) at (-2.55,.25) {$B$};
+\draw[gclwarmarrow] (-3.55,.82)--(-2.9,.47);
+\draw[gclwarmarrow] (-1.55,.82)--(-2.2,.47);
+\node[gcllabel,font=\bfseries] at (3.25,2.8) {Proof term};
+\node[gcllabel] (redex) at (3.25,1.4) {$(\lambda x{:}A.\assign{D})\,\assign{E}$};
+\node[gcllabel] (reduct) at (3.25,.25) {$\assign{D}[\assign{E}/x]$};
+\draw[gclbluearrow] (redex)--(reduct);
+\node[gcllabel] at (4.55,.85) {$\beta$};
+\draw[dashed,GCLInk!55] (0,-.2)--(0,3.1);
+\end{tikzpicture}
+\caption{\textbf{Plate 2. Introduction then elimination is a detour.} The principal implication detour is assigned a beta redex, and proof substitution becomes capture-avoiding term substitution. This plate shows the principal implication case only; it does not prove global normalization.}
+\label{plate:detour-beta}
+\end{figure}
