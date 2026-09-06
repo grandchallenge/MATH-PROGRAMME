@@ -1,6 +1,10 @@
 # Illustration Register — Volume II: COMPREHENSION
 
-Status key: `FINISHED-B1`, `PLANNED`.
+> **Supersession notice.** This is the historical Stage-B1 plate-burden register. The `FINISHED-B1` / `PLANNED` labels below describe the first executable tranche, not the comprehensive RC1 visual state. The protected RC1 release record and `WORKSET_STATE.json` record a 43-page folio with 42 canonical plates and completion of the 42-plate visual programme. The exact RC1 plate sources are part of the checksummed release archive under `releases/RC1/` and are the review/rebuild target.
+>
+> This historical register is retained because its pedagogical burdens and analogy limits remain useful provenance. It is not a current production-status list.
+
+Historical status key: `FINISHED-B1`, `PLANNED`.
 
 ## Plate 1 — FINISHED-B1 — Fixed World / Dependent World
 **Pedagogical burden:** isolate the single conceptual step from a fixed type `B` to a family `B(x)` whose well-formedness may mention an earlier term.  
