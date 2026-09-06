@@ -1,16 +1,18 @@
 # Volume I — JUDGMENT RC1.1 durable release record
 
-This directory binds the exact reconciled **Volume I — JUDGMENT: The Grammar of Computation** RC1.1 source to protected MATH-PROGRAMME state.
+This directory binds the exact reconciled **Volume I — JUDGMENT: The Grammar of Computation** RC1.1 rebuild inputs to protected MATH-PROGRAMME state.
 
-The rebuild source archive is transported as four Base64 text parts because repository connector writes are text-oriented. Concatenate the parts in lexical order and Base64-decode them to obtain:
+The rebuild core is transported as nine Base64 text parts because repository connector writes are text-oriented. Concatenate the parts in lexical order and Base64-decode them to obtain:
 
-`GCL_Type_Theory_Volume_I_JUDGMENT_RC1_1_Rebuild_Source.zip`
+`GCL_Type_Theory_Volume_I_JUDGMENT_RC1_1_Rebuild_Core.zip`
 
 Expected decoded identity:
 
-- bytes: `156774`
-- SHA-256: `bb4a1afc6e5e3e7212d5e134ba271e28af18e2718bc2c99c8735a44e2572ebf2`
+- bytes: `134967`
+- SHA-256: `013fd6b5f78a8bb45711bb9e167321f7ca58324b7a0ae3f0c7e594ba63a96e3b`
 
-The archive intentionally excludes generated PDFs. It contains the complete rebuild inputs, audits, laboratories/evidence, 42 plate sources, manuscript source, solutions source, and plate-folio source. Its key source-file hashes are checked against `docs/monographs/type-theory-series/REFERENCE_BASELINE.json`.
+The archive contains the exact rebuild inputs: `main.tex`, `solutions_companion.tex`, `plates_folio.tex`, all 42 plate sources, and an internal source manifest. Generated PDFs are not duplicated in the archive; their identities remain pinned by `docs/monographs/type-theory-series/REFERENCE_BASELINE.json`. The manuscript, solutions, and folio source hashes in this transport match that baseline exactly.
 
-This admission establishes persistence and provenance only. It does not establish independent mathematical review or publication authority.
+The publication and exercise audits remain separately identified by the reference baseline and may be reviewed from the historical publication package. This release record is about exact rebuildability and institutional persistence.
+
+Durable admission establishes persistence and provenance only. It does not establish independent mathematical review, mathematical certification, or publication authority.
