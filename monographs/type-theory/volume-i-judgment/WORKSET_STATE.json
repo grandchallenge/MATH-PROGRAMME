@@ -6,7 +6,7 @@
   "series_contract_path": "docs/monographs/type-theory-series/SERIES_HANDOFF.md",
   "technical_writing_reference_path": "docs/TECHNICAL_WRITING_REFERENCE.md",
   "publication_state_model_path": "docs/monographs/type-theory-series/PUBLICATION_STATE_MODEL.md",
-  "stage": "RC1_1_RECONCILED__DURABLY_ADMITTED__INDEPENDENT_REVIEW_PENDING",
+  "stage": "RC1_1_RECONCILED__DURABLY_ADMITTED__GATE8_REVIEW_DOCKET_ADMITTED__INDEPENDENT_REVIEW_PENDING",
   "composition_status": "RC_COMPOSITION_COMPLETE",
   "durable_admission_status": "RC_DURABLY_ADMITTED",
   "independent_review_status": "PENDING_EXTERNAL_MATHEMATICAL_REVIEW",
@@ -33,7 +33,32 @@
     "verified_transport_parts": 23,
     "admission_pr": 857
   },
-  "current_claim_boundary": "Volume I RC1.1 is composition-complete and its exact rebuild core is durably admitted and read back from protected main. Independent mathematical review and publication authority remain separate later gates.",
-  "next_action": "Prepare and admit a Gate 8 independent mathematical review docket bound to protected commit 0b18341a7536d021b6ab007c033a72b32e3ff7e1 and source archive SHA-256 013fd6b5f78a8bb45711bb9e167321f7ca58324b7a0ae3f0c7e594ba63a96e3b.",
+  "gate8_review": {
+    "tracking_issue": 859,
+    "tracking_issue_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/859",
+    "review_packet_path": "monographs/type-theory/volume-i-judgment/reviews/RC1.1/GATE8_REVIEW_PACKET.md",
+    "review_template_path": "monographs/type-theory/volume-i-judgment/reviews/RC1.1/REVIEW_RECORD_TEMPLATE.yaml",
+    "theorem_review_matrix_path": "monographs/type-theory/volume-i-judgment/reviews/RC1.1/THEOREM_REVIEW_MATRIX.json",
+    "review_packet_protected_commit": "0ddda0b2525a9733db447f6558bdaad3ef2e62f7",
+    "review_packet_protected_tree_sha": "c184118661e309e67d2e8fa3f05839ec0d56f1e9",
+    "review_packet_protected_readback": "PASS",
+    "reviewer_assignment_status": "UNASSIGNED__INDEPENDENT_REVIEWER_REQUIRED",
+    "required_target_binding": {
+      "rebuild_core_sha256": "013fd6b5f78a8bb45711bb9e167321f7ca58324b7a0ae3f0c7e594ba63a96e3b",
+      "main_tex_sha256": "ceb02e6c84011615c7557c9bf4bba391290f43d6d54d9c5033dab9215af14d01",
+      "protected_source_admission_commit": "0b18341a7536d021b6ab007c033a72b32e3ff7e1",
+      "protected_release_tree_sha": "3a7dbb5d0990b75ce15c70daa91b232138b3a9a0"
+    },
+    "mandatory_named_results": 19,
+    "allowed_dispositions": [
+      "PASS",
+      "PASS_WITH_NONMATERIAL_NOTES",
+      "REVISE_AND_REREVIEW",
+      "FAIL"
+    ]
+  },
+  "current_claim_boundary": "Volume I RC1.1 is composition-complete and its exact rebuild core is durably admitted and read back from protected main. The Gate 8 independent-review docket, exact 19-result matrix, and review template are also durably admitted and read back from protected main. No genuinely independent reviewer has yet submitted an admissible review record. Preparation or admission of the review packet is not independent mathematical review, mathematical certification, or publication authority.",
+  "next_action": "A genuinely independent mathematical reader must review the exact admitted RC1.1 target defined in issue #859 and the protected Gate 8 review packet, then submit a durable review record stating exact target identity, independence/conflicts, materials examined, all T01-T19 result findings, claim-boundary checks, limitations, defects, and one allowed disposition. Do not transition to RC_REVIEW_QUALIFIED before that record is independently produced, admitted, and checked.",
+  "subsequent_gate": "After a qualifying independent review record is admitted for the exact revision, record RC_REVIEW_QUALIFIED in a separate protected state transition. Publication authority remains a distinct later disposition.",
   "requires_chat_history": false
 }
