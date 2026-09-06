@@ -42,7 +42,7 @@ jobs:
             echo "head_sha=${GITHUB_SHA}"
             echo "pr_head_sha=${{ github.event.pull_request.head.sha }}"
             lualatex --version | head -n 2
-            makeindex --version | head -n 2
+            (makeindex 2>&1 | head -n 2) || true
             python3 --version
           } > evidence/gate7/environment.txt
           git ls-files . | LC_ALL=C sort > evidence/gate7/source-files.txt
@@ -54,15 +54,30 @@ jobs:
         run: |
           set -euo pipefail
           rm -f *.aux *.bbl *.blg *.idx *.ilg *.ind *.log *.out *.toc *.lof *.lot *.pdf
+          latex_pass() {
+            local target="$1"
+            local stem="$2"
+            local pass="$3"
+            local report="evidence/gate7/${stem}-pass${pass}.txt"
+            if ! lualatex -interaction=nonstopmode -halt-on-error "$target" > "$report" 2>&1; then
+              echo "=== ${target} pass ${pass} failed ===" >&2
+              tail -n 160 "$report" >&2 || true
+              return 1
+            fi
+          }
           build_target() {
             local target="$1"
             local stem="${target%.tex}"
-            lualatex -interaction=nonstopmode -halt-on-error "$target" > "evidence/gate7/${stem}-pass1.txt" 2>&1
+            latex_pass "$target" "$stem" 1
             if [[ -s "${stem}.idx" ]]; then
-              makeindex "${stem}.idx" > "evidence/gate7/${stem}-makeindex.txt" 2>&1
+              if ! makeindex "${stem}.idx" > "evidence/gate7/${stem}-makeindex.txt" 2>&1; then
+                echo "=== makeindex ${stem}.idx failed ===" >&2
+                tail -n 160 "evidence/gate7/${stem}-makeindex.txt" >&2 || true
+                return 1
+              fi
             fi
-            lualatex -interaction=nonstopmode -halt-on-error "$target" > "evidence/gate7/${stem}-pass2.txt" 2>&1
-            lualatex -interaction=nonstopmode -halt-on-error "$target" > "evidence/gate7/${stem}-pass3.txt" 2>&1
+            latex_pass "$target" "$stem" 2
+            latex_pass "$target" "$stem" 3
           }
           build_target main.tex
           build_target solutions_companion.tex
@@ -104,6 +119,7 @@ jobs:
           pdftotext plates_folio.pdf evidence/gate7/plates.txt
 
       - name: Upload Gate 7 evidence bundle
+        if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: type-theory-volume-iii-gate7-evidence
