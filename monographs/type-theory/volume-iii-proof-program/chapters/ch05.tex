@@ -1,0 +1,76 @@
+\chapter{Truth, Falsity, and Impossible Branches}
+\label{ch:truth-falsity}
+
+The unit and empty types sharpen the distinction between construction and assertion. The unit type has a canonical constructor $\star$. The empty type has none. Empty elimination is powerful precisely because its premise cannot be constructed in a consistent closed $\mathrm{CH}\text{-}0$ computation.
+
+\begin{formal}[title={Unit and empty rules}]
+\[
+\frac{}{\Gamma\vdash\star:\Unit}\;1I
+\qquad
+\frac{\Gamma\vdash e:\Empty}{\Gamma\vdash\operatorname{abort}_A(e):A}\;0E.
+\]
+There is no introduction rule for $\Empty$.
+\end{formal}
+
+\input{plates/plate13.tex}
+
+\begin{lemma}[Canonical forms for $\mathrm{CH}\text{-}0$]
+Let $v$ be a closed value.
+\begin{enumerate}
+\item If $\vdash v:A\to B$, then $v$ is a lambda abstraction.
+\item If $\vdash v:A\times B$, then $v$ is a pair.
+\item If $\vdash v:A+B$, then $v$ is a left or right injection.
+\item If $\vdash v:\Unit$, then $v=\star$.
+\item There is no closed value $v$ with $\vdash v:\Empty$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Each clause follows by inspecting the value constructors and inverting the typing rule that could assign the stated outer type. The final clause follows because the value grammar contains no empty constructor and no other constructor can be typed $\Empty$ by inversion.
+\end{proof}
+
+\input{plates/plate14.tex}
+
+\begin{theorem}[Progress for closed $\mathrm{CH}\text{-}0$]
+If $\vdash t:A$, then either $t$ is a value or there exists $t'$ with $t\step t'$ under the deterministic teaching evaluator.
+\end{theorem}
+\begin{proof}
+Induct on the typing derivation. Variables cannot occur in a closed derivation. Introduction forms are values once their recursively designated value premises are values. For elimination forms, apply the induction hypothesis to the principal subterm. If it steps, the whole term steps by the evaluator context. If it is a value, canonical forms expose the matching constructor: lambdas for application, pairs for projection, injections for case analysis. For $\operatorname{abort}_A(e)$, the induction hypothesis says $e$ either steps or is a value; the latter is impossible by the empty canonical-form clause. Hence every nonvalue closed well-typed term has a next evaluator step.
+\end{proof}
+
+\begin{theorem}[Preservation for $\mathrm{CH}\text{-}0$]
+If $\Gamma\vdash t:A$ and $t\step t'$, then $\Gamma\vdash t':A$.
+\end{theorem}
+\begin{proof}
+Induct on the derivation of the evaluator step. Principal beta uses substitution. Product projections use inversion. Sum cases use substitution in the selected branch. Congruence/evaluation-context cases reapply the surrounding typing rule to the induction hypothesis. Unit has no reduction, and empty elimination can only step through its premise.
+\end{proof}
+
+\input{plates/plate15.tex}
+
+\section{What strong normalization adds}
+Progress and preservation say that well-typed closed computation does not become stuck. They do not forbid an infinite sequence of well-typed steps. For pure simply typed lambda calculus with products, sums, unit, and empty, strong normalization is standard. We use that theorem as an imported result and give its proof architecture rather than pretending the fixture suite proves it.
+
+Define a reducibility predicate $\mathcal{R}_A(t)$ by induction on $A$: at atomic types it requires strong normalization; at arrows it additionally requires that $t\,u$ be reducible at $B$ for every reducible $u$ at $A$; products require reducible projections; sums require strong normalization together with reducible payloads when a normal form exposes an injection; unit is strongly normalizing; empty is strongly normalizing with no closed canonical inhabitant. The fundamental lemma proves that a well-typed term under a reducible substitution is reducible. The identity substitution then yields strong normalization for well-typed terms. This is a structured proof sketch, not an independent re-proof of every reducibility lemma.
+
+\begin{warningbox}
+Strong normalization here is scoped to pure $\mathrm{CH}\text{-}0$. It is not transferred to the later continuation layer, unrestricted dependent type theory, effects, recursion, or open protocols.
+\end{warningbox}
+
+\begin{labbox}
+Run \texttt{python labs/lab05_empty_unit.py}. The laboratory enumerates the retained canonical values, tests progress on a finite fixture suite, and verifies that the parser/checker exposes no empty constructor.
+\end{labbox}
+
+\section*{Exercises}\addcontentsline{toc}{section}{Exercises}
+\begin{enumerate}[label=\textbf{5.\arabic*.}]
+\item \textbf{Checkpoint.} Give the canonical inhabitant of $\Unit$.
+\item \textbf{Checkpoint.} Why is there no introduction rule for $\Empty$?
+\item \textbf{Checkpoint.} State progress without confusing it with normalization.
+\item \textbf{Core.} Type $\lambda e{:}\Empty.\operatorname{abort}_P(e)$.
+\item \textbf{Core.} Classify the possible closed values at each $\mathrm{CH}\text{-}0$ type former.
+\item \textbf{Core.} Trace progress for an application whose function subterm is not yet a value.
+\item \textbf{Synthesis.} Explain why ex falso does not manufacture a closed inhabitant of $\Empty$.
+\item \textbf{Synthesis.} Distinguish type safety, evaluator termination, and strong normalization.
+\item \textbf{Proof Workshop.} Fill in the case-analysis branch of progress.
+\item \textbf{Proof Workshop.} Fill in the congruence cases of preservation.
+\item \textbf{Design Clinic.} Design a fixture generator that cannot accidentally assume the theorem it tests.
+\item \textbf{Challenge.} State the fundamental lemma needed by the reducibility argument, including the reducible-substitution hypothesis.
+\end{enumerate}
