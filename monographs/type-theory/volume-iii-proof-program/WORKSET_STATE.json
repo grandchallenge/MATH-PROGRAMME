@@ -6,7 +6,7 @@
   "subtitle": "Logic Becomes Executable",
   "series_contract_path": "docs/monographs/type-theory-series/SERIES_HANDOFF.md",
   "publication_state_model_path": "docs/monographs/type-theory-series/PUBLICATION_STATE_MODEL.md",
-  "stage": "RC1_COMPOSITION_COMPLETE__DURABLE_ADMISSION_PENDING",
+  "stage": "RC1_DURABLY_ADMITTED__EXTERNAL_REVIEW_PENDING",
   "gate0_preflight": "PASS",
   "gate1_minimal_executable_tranche": "PROTECTED_ADMITTED_AT_dc317f3b00babe3dce1c75dd1d218107cb22fd15",
   "gate2_formal_closure": "PASS_INTERNAL",
@@ -15,14 +15,17 @@
   "gate5_scholarship_closure": "PASS_INTERNAL",
   "gate6_notation_index_closure": "PASS_INTERNAL",
   "gate7_camera_ready_rc": "PASS_INTERNAL",
-  "gate7a_durable_rc_admission": "PENDING_PROTECTED_ADMISSION_AND_READBACK",
+  "gate7a_durable_rc_admission": "PASS_PROTECTED_ADMISSION_AND_READBACK",
   "composition_status": "RC_COMPOSITION_COMPLETE",
-  "durable_admission_status": "PENDING_FOR_RC1",
+  "durable_admission_status": "RC_DURABLY_ADMITTED",
   "independent_review_status": "PENDING_EXTERNAL_MATHEMATICAL_REVIEW",
   "publication_authority_status": "NOT_GRANTED",
   "protected_starting_head": "98ece0ccb07943ca3690b69a8e831eef5e8bfa80",
   "protected_gate1_admission_commit": "dc317f3b00babe3dce1c75dd1d218107cb22fd15",
   "protected_full_development_commit": "540fce53b3696c84e4adfe197fc399d24d8ebe9e",
+  "protected_rc1_admission_commit": "69fe9e649ea59c5bc1c27f816bb65f52c2627d79",
+  "protected_rc1_admission_release_tree_sha": "fd8ad170e47ef68ae4745d12b27a4200cc1e6be8",
+  "rc1_source_archive_sha256": "70c9ffedefa795cf40e2536c45db8a7f3fb0223719d4c6cf24f921e7637d7a62",
   "tracking_issue": 865,
   "chapter_count": 14,
   "plate_count": 42,
@@ -35,9 +38,9 @@
     "plate_folio_pages": 15,
     "canonical_plates": 42,
     "laboratories_passing": 14,
-    "main_pdf_sha256": "3600bf0c0405dcd63d53c0323a65c0665756dec7fb3e5efd3c56e6c0a068164c",
-    "solutions_pdf_sha256": "5f94b2ddf5eeffd92a8e26d5755d9cb0efea581e9b158661273dc68c6c17ffd1",
-    "plates_pdf_sha256": "b94c73bf9b2bea9ad217c594e96ce326a201c927f57236c72cf15f2558bd4aad"
+    "main_pdf_sha256": "caf12162ff052db869356c8c0d0fa96dce77b8c40de3bf576e61a2fce30574f3",
+    "solutions_pdf_sha256": "2e1eae3596f7cb386dc2c93064bcc3d1c85f9511f46f49431ed9ede62836677e",
+    "plates_pdf_sha256": "ae718ef486fbee4a89fe5d498a48228d5499100d9e84d04bf67517fb520a0de0"
   },
   "completed": [
     "Stage A preflight contract",
@@ -53,10 +56,11 @@
     "14-of-14 exact-source laboratory replay",
     "full rendered manuscript/solutions/folio inspection",
     "grayscale plate-folio inspection",
-    "internal RC1 composition complete"
+    "internal RC1 composition complete",
+    "protected RC1 admission and exact admission release-tree readback"
   ],
-  "current_claim_boundary": "Volume III RC1 is internally composition-complete. Its exact source/rebuild identity is not yet durably admitted on protected main. External mathematical review remains pending and publication authority is not granted. Machine-assisted audits, CI, executable regressions, rendered inspection, and durable admission are not independent mathematical review or mathematical certification.",
-  "next_action": "Freeze the deterministic RC1 source archive and release checksums for this composition-complete candidate, admit that exact identity through protected repository controls, perform protected readback, and only then set durable_admission_status to RC_DURABLY_ADMITTED.",
-  "subsequent_gate": "After durable RC1 admission, obtain genuinely independent mathematical review of the exact admitted revision before RC_REVIEW_QUALIFIED; require a separate explicit authority disposition before PUBLISHED_AUTHORITATIVE_EDITION.",
+  "current_claim_boundary": "Volume III RC1 is internally composition-complete and its exact source archive is durably admitted on protected main at commit 69fe9e649ea59c5bc1c27f816bb65f52c2627d79 with admission release tree fd8ad170e47ef68ae4745d12b27a4200cc1e6be8. External mathematical review remains pending and publication authority is not granted. Machine-assisted audits, CI, executable regressions, rendered inspection, and durable admission are not independent mathematical review or mathematical certification.",
+  "next_action": "Prepare and admit the exact Gate 8 external mathematical review docket bound to the admitted RC1 source archive and protected admission identity. Do not mark Gate 8 satisfied until genuinely independent mathematical review is received for that exact target.",
+  "subsequent_gate": "After genuinely independent mathematical review of the exact admitted revision, record its disposition before RC_REVIEW_QUALIFIED; require a separate explicit authority disposition before PUBLISHED_AUTHORITATIVE_EDITION.",
   "requires_chat_history": false
 }
