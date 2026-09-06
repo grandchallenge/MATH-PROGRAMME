@@ -1,0 +1,120 @@
+name: Type Theory Volume III RC build
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'monographs/type-theory/volume-iii-proof-program/**'
+      - '.github/workflows/type-theory-volume-iii-rc-build.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: type-theory-volume-iii-rc-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate7-build:
+    name: Gate 7 exact-source build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact pull-request head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Install publication toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-luatex texlive-latex-extra texlive-fonts-extra texlive-pictures \
+            poppler-utils
+
+      - name: Record exact environment and source identity
+        working-directory: monographs/type-theory/volume-iii-proof-program
+        run: |
+          mkdir -p evidence/gate7
+          {
+            echo "repository=${GITHUB_REPOSITORY}"
+            echo "head_sha=${GITHUB_SHA}"
+            echo "pr_head_sha=${{ github.event.pull_request.head.sha }}"
+            lualatex --version | head -n 2
+            makeindex --version | head -n 2
+            python3 --version
+          } > evidence/gate7/environment.txt
+          git ls-files . | LC_ALL=C sort > evidence/gate7/source-files.txt
+          while IFS= read -r path; do sha256sum "$path"; done < evidence/gate7/source-files.txt > evidence/gate7/source-sha256.txt
+
+      - name: Clean and build publication targets
+        working-directory: monographs/type-theory/volume-iii-proof-program
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f *.aux *.bbl *.blg *.idx *.ilg *.ind *.log *.out *.toc *.lof *.lot *.pdf
+          build_target() {
+            local target="$1"
+            local stem="${target%.tex}"
+            lualatex -interaction=nonstopmode -halt-on-error "$target" > "evidence/gate7/${stem}-pass1.txt" 2>&1
+            if [[ -s "${stem}.idx" ]]; then
+              makeindex "${stem}.idx" > "evidence/gate7/${stem}-makeindex.txt" 2>&1
+            fi
+            lualatex -interaction=nonstopmode -halt-on-error "$target" > "evidence/gate7/${stem}-pass2.txt" 2>&1
+            lualatex -interaction=nonstopmode -halt-on-error "$target" > "evidence/gate7/${stem}-pass3.txt" 2>&1
+          }
+          build_target main.tex
+          build_target solutions_companion.tex
+          build_target plates_folio.tex
+
+      - name: Replay all retained laboratories
+        working-directory: monographs/type-theory/volume-iii-proof-program
+        shell: bash
+        run: |
+          set -euo pipefail
+          : > evidence/gate7/lab-replay.txt
+          count=0
+          for lab in labs/lab*.py; do
+            count=$((count + 1))
+            echo "===== ${lab} =====" | tee -a evidence/gate7/lab-replay.txt
+            python3 "$lab" 2>&1 | tee -a evidence/gate7/lab-replay.txt
+          done
+          echo "lab_count=${count}" | tee -a evidence/gate7/lab-replay.txt
+          test "$count" -eq 14
+
+      - name: Audit logs, references, glyphs and output geometry
+        working-directory: monographs/type-theory/volume-iii-proof-program
+        shell: bash
+        run: |
+          set -euo pipefail
+          pdfinfo main.pdf > evidence/gate7/main-pdfinfo.txt
+          pdfinfo solutions_companion.pdf > evidence/gate7/solutions-pdfinfo.txt
+          pdfinfo plates_folio.pdf > evidence/gate7/plates-pdfinfo.txt
+          sha256sum main.pdf solutions_companion.pdf plates_folio.pdf > evidence/gate7/output-sha256.txt
+          grep -HnE 'Overfull|Underfull|undefined references|There were undefined references|Missing character|LaTeX Error|Fatal error' \
+            main.log solutions_companion.log plates_folio.log > evidence/gate7/log-findings.txt || true
+          if grep -HnE 'undefined references|There were undefined references|Missing character|LaTeX Error|Fatal error' \
+            main.log solutions_companion.log plates_folio.log; then
+            echo 'fatal publication-log finding' >&2
+            exit 1
+          fi
+          pdftotext main.pdf evidence/gate7/main.txt
+          pdftotext solutions_companion.pdf evidence/gate7/solutions.txt
+          pdftotext plates_folio.pdf evidence/gate7/plates.txt
+
+      - name: Upload Gate 7 evidence bundle
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: type-theory-volume-iii-gate7-evidence
+          path: |
+            monographs/type-theory/volume-iii-proof-program/main.pdf
+            monographs/type-theory/volume-iii-proof-program/main.log
+            monographs/type-theory/volume-iii-proof-program/solutions_companion.pdf
+            monographs/type-theory/volume-iii-proof-program/solutions_companion.log
+            monographs/type-theory/volume-iii-proof-program/plates_folio.pdf
+            monographs/type-theory/volume-iii-proof-program/plates_folio.log
+            monographs/type-theory/volume-iii-proof-program/evidence/gate7/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
