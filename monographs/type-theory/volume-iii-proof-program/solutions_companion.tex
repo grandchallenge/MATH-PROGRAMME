@@ -1,0 +1,130 @@
+\documentclass[11pt,openany]{book}
+\input{series_style.tex}
+\input{series_macros.tex}
+\hypersetup{colorlinks=true,linkcolor=GCLBlue,urlcolor=GCLBlue,citecolor=GCLGreen,pdftitle={PROOF / PROGRAM — Solutions Companion},pdfauthor={Grand Challenge Labs}}
+\begin{document}
+\frontmatter
+\chapter*{Instructor and Self-Study Solutions Companion}
+This companion belongs to the Stage-B teaching kernel of Volume III. Every exercise in Chapters 1--2 has a worked solution or an explicit rubric. These solutions do not constitute independent mathematical review of the volume.
+\tableofcontents
+\mainmatter
+\chapter{Solutions to Chapter 1}
+
+\section*{1.1 Checkpoint}
+$\lambda x{:}P.x$ has type $P\to P$ by one application of implication introduction to the variable judgment $x{:}P\vdash x:P$.
+
+\section*{1.2 Checkpoint}
+Implication elimination is application. From $\Gamma\vdash f:A\to B$ and $\Gamma\vdash a:A$, infer $\Gamma\vdash f\,a:B$.
+
+\section*{1.3 Checkpoint}
+$\Gamma\vdash A$ records derivability while suppressing the selected proof term. $\Gamma\vdash t:A$ identifies one witness $t$. Suppressing $t$ does not assert that every witness is equal or observationally irrelevant.
+
+\section*{1.4 Core}
+Assume $x:P$, then assume $y:Q$. The variable rule yields $x:P$. Discharge $y$ to obtain $Q\to P$, then discharge $x$:
+\[
+\vdash \lambda x{:}P.\lambda y{:}Q.x:P\to(Q\to P).
+\]
+
+\section*{1.5 Core}
+A proof term is
+\[
+\lambda f{:}(P\to Q).\lambda g{:}(Q\to R).\lambda x{:}P.g\,(f\,x).
+\]
+It is ordinary typed function composition with arguments ordered according to the stated formula.
+
+\section*{1.6 Core}
+In context $f:P\to Q,g:Q\to R,x:P$:
+\[
+ f:P\to Q,\quad x:P,\quad f\,x:Q,
+\]
+\[
+ g:Q\to R,\quad g\,(f\,x):R.
+\]
+Every proper application subterm is therefore typed before the outer application is checked.
+
+\section*{1.7 Synthesis}
+Exact sense: the premises and conclusion of $\to I$ map recursively to the binder and function type of a lambda abstraction, and $\to E$ maps to application. Remaining difference: a natural-deduction derivation is a tree with rule bureaucracy and assumption-discharge annotations, while the proof term is a compact syntax with lexical binding. A translation relates them.
+
+\section*{1.8 Synthesis}
+The chapter establishes that selected logical connectives can be read as type constructors and that proofs carry terms. It does not quotient every data type to a truth value or assert that all inhabitants of a type are logically indistinguishable. Data-bearing types can preserve computational information that a proposition-only semantics may ignore.
+
+\section*{1.9 Proof Workshop}
+Induct on the typing derivation. \textsc{Var}: the original declaration remains in the extended context. $\to E$: weaken both premises and reapply application. $\to I$: alpha-rename the bound variable if it equals the fresh weakening variable, weaken the premise under the renamed binder, then reapply introduction. The freshness side condition prevents accidental shadowing.
+
+\section*{1.10 Proof Workshop}
+Induct on the final natural-deduction rule. Assumption maps to \textsc{Var}; implication introduction maps the induction hypothesis under the discharged assumption to a lambda abstraction; implication elimination maps two induction hypotheses to an application. Those are all rules in the implication fragment, so the induction is exhaustive.
+
+\section*{1.11 Design Clinic}
+One acceptable design tokenizes identifiers, parentheses and a right-associative arrow token, parses a surface type such as \texttt{P -> Q -> R}, and lowers it to the same internal \texttt{Arrow(P, Arrow(Q,R))} AST used by the checker. Required rejection examples include a dangling arrow \texttt{P ->} and unmatched parentheses \texttt{(P -> Q}. A complete implementation should also reject reserved keywords where an atomic type is expected.
+
+\section*{1.12 Challenge}
+A reasonable derivation-size measure counts rule nodes. A corresponding term measure can count AST constructors. With assumptions/variables each counted as one, $\to I$/lambda and $\to E$/application each contribute one constructor, so the recursive assignment is size-preserving for this presentation. If derivations count explicit discharge annotations or contexts as additional syntax while terms do not, the sizes differ by administrative overhead. Credit requires a metric fixed before the comparison and a proof or counterexample for the claimed relation.
+
+\chapter{Solutions to Chapter 2}
+
+\section*{2.1 Checkpoint}
+\[
+(\lambda x{:}P.x)\,u\step u.
+\]
+This is the beta rule with body $x$ and replacement $u$.
+
+\section*{2.2 Checkpoint}
+The substitution lemma assumes $\Gamma,x{:}A\vdash t:B$ and $\Gamma\vdash u:A$. It concludes $\Gamma\vdash t[u/x]:B$.
+
+\section*{2.3 Checkpoint}
+If a binder $y$ occurs free in the replacement $u$, descending under $\lambda y$ without renaming would turn those free occurrences into bound ones. Alpha-renaming the binder first preserves the meaning and the typing context of $u$.
+
+\section*{2.4 Core}
+\[
+(\lambda f{:}(P\to P).\lambda x{:}P.f\,x)(\lambda z{:}P.z)
+\]
+has type $P\to P$. One beta step gives
+\[
+\lambda x{:}P.(\lambda z{:}P.z)\,x:P\to P,
+\]
+and the inner beta step gives
+\[
+\lambda x{:}P.x:P\to P.
+\]
+The type is invariant at each state.
+
+\section*{2.5 Core}
+With free $y:P$,
+\[
+(\lambda x{:}P.\lambda y{:}Q.x)\,y
+\]
+would be corrupted by naive substitution into $\lambda y{:}Q.y$. Rename the inner binder to $y_1$ before substituting:
+\[
+(\lambda x{:}P.\lambda y{:}Q.x)\,y\step \lambda y_1{:}Q.y.
+\]
+The free $y:P$ remains free and the result has type $Q\to P$.
+
+\section*{2.6 Core}
+From typing the application infer an arrow type for its function and the matching argument type:
+\[
+\Gamma\vdash \lambda x{:}A.t:A\to B,\qquad \Gamma\vdash u:A.
+\]
+Invert abstraction typing to get $\Gamma,x{:}A\vdash t:B$. Apply substitution to obtain $\Gamma\vdash t[u/x]:B$.
+
+\section*{2.7 Synthesis}
+A principal natural-deduction detour is an introduction immediately consumed by its matching elimination. Under the selected term assignment, that proof fragment receives a beta-redex term. Eliminating the proof detour replaces uses of the discharged assumption by the supplied derivation; beta reduction performs the corresponding capture-avoiding term substitution. The relationship is exact under the translation but the derivation transformation and term reduction remain differently presented operations.
+
+\section*{2.8 Synthesis}
+The mathematical beta relation can reduce a redex at any compatible position and is not itself an evaluation policy. A deterministic normal-order evaluator chooses a particular next redex and therefore selects one path through the reduction graph. The evaluator is an algorithm over the relation, not the relation itself.
+
+\section*{2.9 Proof Workshop}
+Suppose the final derivation types $\lambda y{:}C.s:C\to D$. Alpha-rename $y$ so that $y\neq x$ and $y\notin FV(u)$. The premise is $\Gamma,x{:}A,y{:}C\vdash s:D$. By weakening, $\Gamma,y{:}C\vdash u:A$. Apply the induction hypothesis to get $\Gamma,y{:}C\vdash s[u/x]:D$, then reapply $\to I$ to conclude $\Gamma\vdash \lambda y{:}C.s[u/x]:C\to D$.
+
+\section*{2.10 Proof Workshop}
+Suppose $t_1\step t_1'$ and the whole term is $t_1\,t_2$. Typing gives $\Gamma\vdash t_1:A\to B$ and $\Gamma\vdash t_2:A$. By the induction hypothesis, $\Gamma\vdash t_1':A\to B$. Reapply application typing to obtain $\Gamma\vdash t_1'\,t_2:B$.
+
+\section*{2.11 Design Clinic}
+Represent a redex path as a list over a stable alphabet, for example \texttt{fn}, \texttt{arg}, and \texttt{body}. The root redex has path \texttt{[]}; a redex inside the function of an application may have \texttt{["fn", ...]}. The trace checker should verify that following the recorded path in the pre-state finds a contractible redex and that replacing exactly that subtree yields the recorded post-state. It should also recheck the invariant type after the step.
+
+\section*{2.12 Challenge}
+Strong normalization for $\mathrm{CH}\text{-}0$ states: for every well-typed term $\Gamma\vdash t:A$, there is no infinite sequence $t=t_0\step t_1\step t_2\step\cdots$ of allowed reductions. Termination of one deterministic evaluator states only that its selected sequence terminates. Even if that evaluator terminates for every input, another reduction strategy could in principle expose an infinite sequence unless the calculus theorem rules that out. Fixture termination is weaker still because it quantifies over only the retained examples.
+
+\backmatter
+\chapter*{Scope note}
+These solutions support the internal teaching kernel. They neither replace the theorem audit nor satisfy the independent mathematical review gate.
+\end{document}

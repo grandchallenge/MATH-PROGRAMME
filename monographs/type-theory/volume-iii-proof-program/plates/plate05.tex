@@ -1,0 +1,19 @@
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}[gclplate,scale=.88]
+\node[anchor=west,font=\sffamily\bfseries\Large,gcllabel] at (-6,3.9) {CONJUNCTION / PRODUCT PREVIEW};
+\draw[GCLWarm,line width=1pt] (-6,3.55)--(6,3.55);
+\node[gcllabel] (a) at (-3.5,2.0) {$a{:}A$};
+\node[gcllabel] (b) at (3.5,2.0) {$b{:}B$};
+\node[gcllabel] (pair) at (0,1.0) {$\langle a,b\rangle:A\times B$};
+\draw[gclwarmarrow] (a.south east) -- (pair.north west);
+\draw[gclwarmarrow] (b.south west) -- (pair.north east);
+\node[gcllabel] (p1) at (-3.0,-.15) {$\pi_1\langle a,b\rangle:A$};
+\node[gcllabel] (p2) at (3.0,-.15) {$\pi_2\langle a,b\rangle:B$};
+\draw[gclbluearrow] (pair.south west) -- (p1.north east);
+\draw[gclbluearrow] (pair.south east) -- (p2.north west);
+\node[gcllabel,align=center] at (0,-1.05) {conjunction introduction carries both pieces of evidence};
+\end{tikzpicture}
+\caption{\textbf{Plate 5. Conjunction / product preview.} A constructive proof of conjunction carries evidence for both components, matching pair construction and projection in $\mathrm{CH}\text{-}0$. The alignment is structural in this calculus, not a universal semantic identity between products and truth-valued conjunction.}
+\label{plate:product-preview}
+\end{figure}

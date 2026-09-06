@@ -1,0 +1,222 @@
+\chapter{Detours That Compute}
+\label{ch:detours-compute}
+
+A correspondence between static rules is suggestive but incomplete. Computation is about change. Proof normalization is also about change. The central test is therefore dynamic: does a local proof simplification induce the expected local program reduction?
+
+Take a derivation that first proves $A\to B$ by assuming $A$, deriving $B$, and discharging the assumption; then immediately eliminates that implication using a proof of $A$. In natural deduction, the introduction followed immediately by elimination is a \emph{detour}. The proof has constructed an implication only to consume it at once.
+
+Under the term assignment, the same pattern is
+\[
+ (\lambda x{:}A.t)\,u.
+\]
+Its beta contraction is
+\[
+ (\lambda x{:}A.t)\,u\step t[u/x].
+\]
+The dynamic core of Curry--Howard is now visible: principal proof normalization and beta computation move in lockstep under the chosen assignment.
+
+\input{plates/plate02.tex}
+
+\section{Substitution is the hinge}
+
+The reduct $t[u/x]$ replaces the discharged assumption by the proof that supplied it. On the program side, it replaces a bound variable by an argument. Both readings require capture-avoiding substitution.
+
+\begin{formal}[title={Formal Interlude: capture-avoiding substitution}]
+For variables,
+\[
+ x[u/x]=u,\qquad y[u/x]=y\quad(y\neq x).
+\]
+For application,
+\[
+ (t_1\,t_2)[u/x]=t_1[u/x]\,t_2[u/x].
+\]
+For abstraction,
+\[
+ (\lambda y{:}B.t)[u/x]
+\]
+leaves the body untouched if $y=x$; otherwise it substitutes recursively, alpha-renaming $y$ first when $y$ occurs free in $u$.
+\end{formal}
+
+The alpha-renaming clause is not clerical trivia. Without it, substitution can change which assumption a variable denotes. The laboratory includes a retained capture-avoidance fixture for exactly this reason.
+
+\begin{lemma}[Substitution for the implication fragment]
+\label{lem:substitution-imp}
+If
+\[
+ \Gamma,x{:}A\vdash t:B
+ \qquad\text{and}\qquad
+ \Gamma\vdash u:A,
+\]
+then
+\[
+ \Gamma\vdash t[u/x]:B.
+\]
+\end{lemma}
+
+\begin{proof}
+Induct on the derivation of $\Gamma,x{:}A\vdash t:B$.
+
+If the final term is a variable, either it is $x$, in which case the conclusion is exactly the second premise, or it is another variable whose declaration remains in $\Gamma$.
+
+If the final rule is application, apply the induction hypothesis to the function and argument premises and reapply $\to E$.
+
+If the final rule is abstraction $\lambda y{:}C.s$, first alpha-rename $y$ so that $y\neq x$ and $y$ is fresh for the free variables of $u$. The premise has the form
+\[
+ \Gamma,x{:}A,y{:}C\vdash s:D.
+\]
+By weakening, $\Gamma\vdash u:A$ remains valid under $y{:}C$. Apply the induction hypothesis to obtain
+\[
+ \Gamma,y{:}C\vdash s[u/x]:D,
+\]
+then reapply $\to I$.
+\end{proof}
+
+\section{Preservation is the type-level conservation law}
+
+A reduction step should simplify the term without changing the proposition/type it inhabits.
+
+\begin{theorem}[Preservation for principal implication beta reduction]
+\label{thm:preservation-imp}
+If
+\[
+ \Gamma\vdash (\lambda x{:}A.t)\,u:B
+\]
+and
+\[
+ (\lambda x{:}A.t)\,u\step t[u/x],
+\]
+then
+\[
+ \Gamma\vdash t[u/x]:B.
+\]
+\end{theorem}
+
+\begin{proof}
+Invert the typing of the application. We obtain
+\[
+ \Gamma\vdash \lambda x{:}A.t:A\to B
+ \qquad\text{and}\qquad
+ \Gamma\vdash u:A.
+\]
+Invert the typing of the abstraction to obtain
+\[
+ \Gamma,x{:}A\vdash t:B.
+\]
+Lemma~\ref{lem:substitution-imp} then gives
+\[
+ \Gamma\vdash t[u/x]:B.
+\]
+\end{proof}
+
+This proof is small because the substitution lemma absorbed the difficult bookkeeping. That pattern recurs across type systems: prove the structural substitution theorem once, then use it as the engine of subject reduction.
+
+\input{plates/plate04.tex}
+
+\section{A principal normalization correspondence}
+
+We can now state the exact dynamic correspondence for the implication fragment.
+
+\begin{proposition}[Principal detour/beta correspondence]
+\label{prop:detour-beta}
+Let a natural-deduction derivation end by applying implication elimination to an implication that was produced immediately by implication introduction from subderivation $D$ with discharged assumption $x{:}A$, and let $E$ derive $A$. Under the term assignment, the detour is assigned
+\[
+ (\lambda x{:}A.\assign{D})\,\assign{E}.
+\]
+Contracting the principal logical detour corresponds to the beta step
+\[
+ (\lambda x{:}A.\assign{D})\,\assign{E}
+ \step
+ \assign{D}[\assign{E}/x].
+\]
+The reduct has the same conclusion type as the original derivation.
+\end{proposition}
+
+\begin{proof}
+The first statement follows directly from the recursive term assignment for $\to I$ and $\to E$. The proof-normalization step replaces every open occurrence of the discharged assumption in $D$ by the supplied derivation $E$. The assigned term therefore performs capture-avoiding substitution of $\assign{E}$ for $x$ in $\assign{D}$. Type preservation follows from Theorem~\ref{thm:preservation-imp}.
+\end{proof}
+
+This is a genuine structural theorem. It is also deliberately local. Full natural-deduction normalization must handle all connectives and permutations/commuting conversions appropriate to the calculus. Full strong normalization must show that no well-typed reduction sequence can continue forever. Those are stronger claims.
+
+\begin{warningbox}
+\textbf{Do not confuse a normalization trace with a normalization theorem.} A program that reduces every example in a test suite may still diverge on an untested input. Strong normalization is a universal mathematical claim over all well-typed terms in the stated calculus.
+\end{warningbox}
+
+\section{Normal forms and the strong theorem}
+
+A term is in beta-normal form when it contains no beta redex. For the simply typed lambda calculus, the standard theorem is much stronger than termination of our teaching evaluator: every well-typed term is strongly normalizing. We will cite that standard result for the full $\mathrm{CH}\text{-}0$ core and later give a structured reducibility-candidates proof sketch that names the induction measure and function-type case.
+
+The proof idea is not “types are finite, therefore execution ends.” The arrow type itself admits arbitrarily large terms. Reducibility arguments instead define a semantic predicate on typed terms strong enough to imply normalization and closed under application/substitution. For $A\to B$, a term is reducible when applying it to every reducible $A$-term yields a reducible $B$-term. Typing induction then places every well-typed term in the corresponding reducibility set.
+
+That theorem belongs to the mathematical metatheory. The laboratory below has a different job: make individual reductions inspectable and automatically recheck the type invariant.
+
+\section{The normalizer as executable evidence}
+
+The second laboratory imports the exact AST and type checker from the first. It implements:
+
+\begin{itemize}
+\item free-variable computation;
+\item fresh-name generation;
+\item alpha-renaming for capture avoidance;
+\item capture-avoiding substitution;
+\item deterministic normal-order one-step reduction;
+\item trace generation;
+\item type rechecking after every step.
+\end{itemize}
+
+\begin{labbox}
+Run \texttt{labs/lab02\_normalizer.py}. Three retained fixtures cover a one-step identity beta reduction, a nested reduction, and a capture-avoidance case in which the binder must be alpha-renamed. The report explicitly states that these traces test the implementation and invariant on fixtures; they do not prove strong normalization.
+\end{labbox}
+
+\begin{workedexample}[title={Worked Example: capture avoidance}]
+Suppose $y:P$ is free in the surrounding context and consider
+\[
+ (\lambda x{:}P.\lambda y{:}Q.x)\,y.
+\]
+A naive textual substitution would produce $\lambda y{:}Q.y$, incorrectly capturing the free $y:P$ and even changing its intended type. Capture-avoiding substitution first renames the inner binder:
+\[
+ (\lambda x{:}P.\lambda y{:}Q.x)\,y
+ \step
+ \lambda y_1{:}Q.y.
+\]
+The free $y:P$ remains free, and the reduct has type $Q\to P$.
+\end{workedexample}
+
+\section{Reduction is not definitional equality}
+
+The directed relation $t\step u$ records a computation step. Definitional equality $t\defeq u$, when used, is an equational relation generated by selected computation laws and congruence; it can be symmetric even when evaluation is not. This distinction will matter more in dependent type theory and proof assistants, where conversion checking may use normalization or other decision procedures without identifying every equality proof with an evaluation step.
+
+Similarly, proof normalization is a transformation on derivations. The term assignment lets us compare it with beta reduction, but the administrative syntax of derivations and terms can differ. Later, the sequent calculus will add a third representation: cut elimination. The volume will connect these three notions without merging their names.
+
+\section{What has actually been established}
+
+For the implication tranche we now have:
+
+\begin{itemize}
+\item a precise natural-deduction/term assignment;
+\item weakening;
+\item capture-avoiding substitution;
+\item preservation for principal beta reduction;
+\item a theorem identifying the principal implication detour with beta substitution under the assignment;
+\item executable traces that recheck the type invariant;
+\item a clearly separated cited obligation for strong normalization.
+\end{itemize}
+
+The next conceptual expansion is not to claim victory for “proofs are programs.” It is to test the correspondence against richer logical constructors. Conjunction must carry both pieces of evidence; disjunction must carry a choice. Those facts make proof relevance impossible to ignore.
+
+\section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
+
+\begin{enumerate}[label=\textbf{2.\arabic*.}]
+\item \textbf{Checkpoint.} Contract $(\lambda x{:}P.x)\,u$ by one beta step.
+\item \textbf{Checkpoint.} State the two premises of the substitution lemma.
+\item \textbf{Checkpoint.} Why must substitution alpha-rename a binder that occurs free in the replacement term?
+\item \textbf{Core.} Normalize $(\lambda f{:}(P\to P).\lambda x{:}P.f\,x)(\lambda z{:}P.z)$ and annotate the type after every step.
+\item \textbf{Core.} Give an example in which naive textual substitution captures a variable. Then perform the capture-avoiding substitution correctly.
+\item \textbf{Core.} Reconstruct the inversion steps used in the proof of Theorem~\ref{thm:preservation-imp}.
+\item \textbf{Synthesis.} Explain the relation among proof detour elimination, beta reduction, and substitution without using the words “they are identical.”
+\item \textbf{Synthesis.} Give a concrete reason that deterministic normal-order evaluation and the mathematical one-step beta relation are different objects.
+\item \textbf{Proof Workshop.} Complete the abstraction case of Lemma~\ref{lem:substitution-imp}, including the weakening step for the substituted argument.
+\item \textbf{Proof Workshop.} Prove preservation for a beta step occurring strictly inside the function position of an application, assuming compatible closure of reduction and the induction hypothesis for the subterm.
+\item \textbf{Design Clinic.} Modify the normalizer design so that every trace step includes the redex path contracted. Specify a stable path representation and one invariant the trace checker should enforce.
+\item \textbf{Challenge.} Write a precise statement of strong normalization for $\mathrm{CH}\text{-}0$. Then explain why termination of the provided normal-order evaluator is logically weaker than that statement, even if the evaluator terminates on every fixture in this volume.
+\end{enumerate}
