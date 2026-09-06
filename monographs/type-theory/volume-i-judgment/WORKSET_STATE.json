@@ -6,9 +6,9 @@
   "series_contract_path": "docs/monographs/type-theory-series/SERIES_HANDOFF.md",
   "technical_writing_reference_path": "docs/TECHNICAL_WRITING_REFERENCE.md",
   "publication_state_model_path": "docs/monographs/type-theory-series/PUBLICATION_STATE_MODEL.md",
-  "stage": "RC1_1_RECONCILED__DURABLE_ADMISSION_PENDING",
+  "stage": "RC1_1_RECONCILED__DURABLY_ADMITTED__INDEPENDENT_REVIEW_PENDING",
   "composition_status": "RC_COMPOSITION_COMPLETE",
-  "durable_admission_status": "PENDING_PROTECTED_ADMISSION",
+  "durable_admission_status": "RC_DURABLY_ADMITTED",
   "independent_review_status": "PENDING_EXTERNAL_MATHEMATICAL_REVIEW",
   "publication_authority_status": "NOT_GRANTED",
   "reference_baseline": {
@@ -25,7 +25,15 @@
     "transport_base64_chars": 179956,
     "scope": "exact manuscript, solutions, plate-folio, and 42 plate rebuild inputs plus source manifest"
   },
-  "current_claim_boundary": "Volume I RC1.1 is composition-complete and checksummed as the series reference implementation. Durable admission requires exact source transport admission plus protected readback. External mathematical review and publication authority remain separate later gates.",
-  "next_action": "Admit the exact RC1.1 rebuild source to protected main, perform protected readback and reconstruction verification, then record RC_DURABLY_ADMITTED before opening the independent mathematical review docket.",
+  "durable_admission": {
+    "protected_main_commit": "0b18341a7536d021b6ab007c033a72b32e3ff7e1",
+    "protected_release_tree_sha": "3a7dbb5d0990b75ce15c70daa91b232138b3a9a0",
+    "protected_readback": "PASS",
+    "readback_receipt_path": "monographs/type-theory/volume-i-judgment/releases/RC1.1/PROTECTED_READBACK_RECEIPT.json",
+    "verified_transport_parts": 23,
+    "admission_pr": 857
+  },
+  "current_claim_boundary": "Volume I RC1.1 is composition-complete and its exact rebuild core is durably admitted and read back from protected main. Independent mathematical review and publication authority remain separate later gates.",
+  "next_action": "Prepare and admit a Gate 8 independent mathematical review docket bound to protected commit 0b18341a7536d021b6ab007c033a72b32e3ff7e1 and source archive SHA-256 013fd6b5f78a8bb45711bb9e167321f7ca58324b7a0ae3f0c7e594ba63a96e3b.",
   "requires_chat_history": false
 }
