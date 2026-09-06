@@ -1,5 +1,11 @@
 # Claims Ledger — Volume II: COMPREHENSION
 
+> **Supersession notice.** The ledger below is the historical Stage-B1 claim seed. Entries marked `planned` describe the state of the first executable tranche and are not current comprehensive RC1 disposition records.
+>
+> For the exact comprehensive RC1 claim/review surface, use `releases/RC1/`, `WORKSET_STATE.json`, `reviews/RC1/GATE8_REVIEW_PACKET.md`, and `reviews/RC1/THEOREM_REVIEW_MATRIX.json`. The RC1 candidate remains `RC_COMPOSITION_COMPLETE` and `RC_DURABLY_ADMITTED`; independent mathematical review is pending and publication authority is not granted.
+
+## Historical Stage-B1 claim seed
+
 | ID | Claim | Status | Exact scope | Evidence/source |
 |---|---|---|---|---|
 | V2-C001 | A type family permits a well-formed type expression to depend on a term already available in the context. | theorem/definition | COMP-0 | Ch. 1 formation rules |
