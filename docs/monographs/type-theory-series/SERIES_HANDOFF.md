@@ -17,9 +17,10 @@ Before writing a new volume, read in this order:
 3. `SERIES_STYLE_CONTRACT.md` — typography, pedagogy, visual grammar, notation and prose invariants.
 4. `VOLUME_BLUEPRINTS.md` — volume-specific intellectual arcs.
 5. `QUALITY_GATES.md` — audit and release requirements.
-6. `NOTATION_REGISTRY.json` — symbols already claimed or reserved by the series.
-7. `REFERENCE_BASELINE.json` — the exact Volume I reference state and checksums.
-8. For implementation, run `bootstrap_volume.py` and then `validate_volume.py`.
+6. `PUBLICATION_STATE_MODEL.md` — the non-collapsible states composition complete, durably admitted, independently reviewed, and published authoritative edition.
+7. `NOTATION_REGISTRY.json` — symbols already claimed or reserved by the series.
+8. `REFERENCE_BASELINE.json` — the exact Volume I reference state and checksums.
+9. For implementation, run `bootstrap_volume.py` and then `validate_volume.py`.
 
 Do not begin drafting chapters before the preflight contract below is written into the new volume's `VOLUME_PLAN.md`.
 
@@ -117,6 +118,16 @@ Each volume must:
 - end with a threshold that makes the next volume necessary rather than merely advertised;
 - include a final series-atlas plate locating the current volume within the ten-volume argument.
 
+### 8. Publication-state honesty
+
+The series uses the state model in `PUBLICATION_STATE_MODEL.md`. The following transitions are independent and must not be collapsed:
+
+`RC_COMPOSITION_COMPLETE → RC_DURABLY_ADMITTED → RC_REVIEW_QUALIFIED → PUBLISHED_AUTHORITATIVE_EDITION`.
+
+A clean PDF, complete manuscript, release checksum, successful self-audit, or executable regression suite may establish internal composition evidence. None by itself establishes durable admission, independent review, or publication authority.
+
+Every late-stage `WORKSET_STATE.json` should carry separate `composition_status`, `durable_admission_status`, `independent_review_status`, and `publication_authority_status` fields. A later volume must inherit a prior volume at the institutional state actually achieved, not silently upgrade it.
+
 ## Composition stages
 
 ### Stage A — Intellectual contract
@@ -139,13 +150,21 @@ Finish the canonical plate set. Default target is 42; acceptable range is 36–4
 
 Deepen theorem/proof layer; add worked examples; complete exercises; build solutions companion; reconcile laboratories and prose APIs.
 
-### Stage F — Publication pass
+### Stage F — Publication pass / internal RC composition
 
-Run the theorem/proof audit, exercise/solution completeness audit, bibliography/history audit, notation/index audit, copyedit, camera-ready typography, PDF preflight and rendered-page inspection. Produce `PUBLICATION_AUDIT_RC1.md`.
+Run the theorem/proof audit, exercise/solution completeness audit, bibliography/history audit, notation/index audit, copyedit, camera-ready typography, PDF preflight and rendered-page inspection. Produce `PUBLICATION_AUDIT_RC1.md` and release checksums. Passing this stage permits `RC_COMPOSITION_COMPLETE`; it does not by itself mean the exact RC has been durably admitted.
+
+### Stage F.5 — Durable RC admission
+
+Admit the exact checksummed RC source/rebuild identity and required continuity records to protected repository state through the applicable controls. Read the exact state back from protected state. Only then may the exact RC be called `RC_DURABLY_ADMITTED` or canonical on protected GitHub.
 
 ### Stage G — External review gate
 
-Do not call the work an externally refereed final edition until a genuinely independent mathematical reader has checked the formal claims. RC publication for review is allowed; “externally refereed final” is reserved.
+Do not call the work an externally refereed final edition until a genuinely independent mathematical reader has checked the exact admitted formal claims. A self-audit, regression suite, or second pass by the same composing process is not independent review. Successful review permits `RC_REVIEW_QUALIFIED`, subject to the review record's stated scope.
+
+### Stage H — Publication authority
+
+A review-qualified RC becomes a `PUBLISHED_AUTHORITATIVE_EDITION` only through an explicit authority disposition over the exact revision. Public availability, a PDF release, a Git tag, or polished presentation does not create authority.
 
 ## Stop conditions
 
@@ -156,7 +175,8 @@ Routine bounded editorial work proceeds autonomously. Stop and explicitly surfac
 - a claimed equivalence turns out to be only an analogy or requires materially stronger hypotheses;
 - the notation registry would need an incompatible redefinition of a series-wide symbol;
 - a computational experiment contradicts the prose claim;
-- a publication claim depends on external mathematical sign-off that has not occurred.
+- a publication claim depends on external mathematical sign-off that has not occurred;
+- an institutional-state claim would represent composition, persistence, review, or publication authority more strongly than the exact durable records permit.
 
 ## Required release artifacts per volume
 
@@ -175,7 +195,8 @@ At minimum:
 - `EXERCISE_AUDIT.json`;
 - `PUBLICATION_AUDIT_RC1.md`;
 - `RELEASE_MANIFEST_SHA256.txt`;
-- a source archive containing everything needed to rebuild.
+- a source archive containing everything needed to rebuild;
+- a `WORKSET_STATE.json` whose institutional-state fields do not conflate composition, durable admission, independent review, and publication authority.
 
 ## Definition of consistency
 
@@ -186,4 +207,5 @@ Series consistency does **not** mean making every volume visually or mathematica
 - proofs are scoped to the calculus actually taught;
 - executable companions test the claims they are said to test;
 - later abstractions arise because earlier machinery reaches a visible boundary;
-- the grand-unification thesis is continuously earned rather than repeated.
+- the grand-unification thesis is continuously earned rather than repeated;
+- institutional state is explicit: internally complete, durably admitted, independently reviewed, and published authoritative are separate claims.
