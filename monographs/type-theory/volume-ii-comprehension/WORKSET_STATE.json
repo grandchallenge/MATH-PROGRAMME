@@ -7,9 +7,9 @@
   "publication_state_model_path": "docs/monographs/type-theory-series/PUBLICATION_STATE_MODEL.md",
   "protected_baseline_commit": "4aba2ec1a085c30c770e2656babc2ecc0575e8fc",
   "protected_baseline_state": "Stage B1 minimal teaching kernel admitted on protected main",
-  "stage": "RC1_COMPOSITION_COMPLETE__DURABLE_ADMISSION_PENDING",
+  "stage": "RC1_DURABLY_ADMITTED__EXTERNAL_REVIEW_PENDING",
   "composition_status": "RC_COMPOSITION_COMPLETE",
-  "durable_admission_status": "PENDING_FOR_COMPREHENSIVE_RC1",
+  "durable_admission_status": "RC_DURABLY_ADMITTED",
   "independent_review_status": "PENDING_EXTERNAL_MATHEMATICAL_REVIEW",
   "publication_authority_status": "NOT_GRANTED",
   "comprehensive_rc1_identity": {
@@ -17,6 +17,16 @@
     "main_pdf_sha256": "f7e2bf70986f7728506d4367333ae3c4680ef01820ce8c35accd5f34c90a0235",
     "solutions_pdf_sha256": "90c4e4547d36708748afad452d6f0c2218ae18ebbe45c77b55bfacd8db53b255",
     "plates_pdf_sha256": "b406438d6245ba4cc872e4f8181205e43027f59cc68c11a98bcb045870b049b8"
+  },
+  "durable_admission": {
+    "release_path": "monographs/type-theory/volume-ii-comprehension/releases/RC1",
+    "protected_merge_commit": "3615be3114ea3aceec14e02231e3a1647faa44b4",
+    "protected_release_tree_sha": "8fae441820506bb6902e36c048cc475dc56242d5",
+    "protected_readback": "PASS",
+    "transport_parts_verified": 25,
+    "transport_base64_chars": 189472,
+    "decoded_source_bytes": 142104,
+    "decoded_source_sha256": "1e1f4ae917e50514dc0a74fa706d30ad0d1c3dbf9ac2f45d7c8ad2445f3fd95a"
   },
   "completed": [
     "Stage A preflight contract",
@@ -29,11 +39,13 @@
     "notation and index audit",
     "camera-ready internal RC1 build and PDF preflight",
     "release checksum manifest",
-    "internal RC1 composition complete"
+    "internal RC1 composition complete",
+    "exact comprehensive RC1 source admission merged to protected main",
+    "protected source-transport tree readback verified"
   ],
-  "current_claim_boundary": "The comprehensive RC1 is internally composition-complete but is not yet the canonical comprehensive RC on protected GitHub. Protected main contains the earlier Stage B1 baseline. Machine-assisted audits and executable regressions are evidence, not independent mathematical review or publication authority.",
-  "next_action": "Admit the exact comprehensive RC1 source/rebuild identity and release record to protected repository state, run applicable checks, merge through protected controls, and perform exact protected readback. Then update durable_admission_status to RC_DURABLY_ADMITTED without changing independent_review_status or publication_authority_status.",
-  "subsequent_gate": "After durable RC1 admission, obtain genuinely independent mathematical review of the exact admitted revision before RC_REVIEW_QUALIFIED; require a separate explicit authority disposition before PUBLISHED_AUTHORITATIVE_EDITION.",
+  "current_claim_boundary": "The comprehensive RC1 is composition-complete and durably admitted as an exact checksummed rebuildable source representation on protected GitHub. Machine-assisted audits, executable regressions, CI, and durable admission are not independent mathematical review, mathematical certification, or publication authority.",
+  "next_action": "Obtain genuinely independent mathematical review of the exact durably admitted RC1 revision bound to source archive sha256:1e1f4ae917e50514dc0a74fa706d30ad0d1c3dbf9ac2f45d7c8ad2445f3fd95a and protected admission commit 3615be3114ea3aceec14e02231e3a1647faa44b4. Record the review scope, findings, limitations, and exact revision identity before any RC_REVIEW_QUALIFIED transition.",
+  "subsequent_gate": "Require a separate explicit publication-authority disposition over the exact review-qualified revision before PUBLISHED_AUTHORITATIVE_EDITION.",
   "institutional_alignment": {
     "position_piece": "GCL-POS-01 version 0.1.0",
     "authority_decision": "docs/council/submissions/GCL-TCS-00_GCL-POS-01_AUTHORITY_DECISION.json",
