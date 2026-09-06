@@ -1,0 +1,49 @@
+\chapter{Proof Assistants Have a Trust Boundary}
+\label{ch:trust-boundary}
+
+“The proof is the program” can obscure the machinery between a human command and a kernel judgment. A modern proof assistant may include a parser, elaborator, unifier, tactic engine, simplifier, compiler, external solver, and a small trusted checker. The proof object matters because it lets a smaller component recheck what larger untrusted components propose.
+
+\input{plates/plate37.tex}
+
+The toy architecture in this chapter has two components. An untrusted elaborator turns abbreviated surface declarations into fully explicit $\mathrm{CH}\text{-}0$ terms. A separate kernel receives only the explicit term, context, and claimed type. It parses independently and runs the small typing relation from first principles.
+
+\begin{proposition}[Kernel rechecking boundary]
+In the toy architecture, acceptance by the independent kernel depends only on the explicit object supplied to the kernel and the kernel's implemented rules; it does not depend on the elaborator's claim that the object is valid.
+\end{proposition}
+\begin{proof}
+The kernel does not consume an “accepted” flag from the elaborator. It reparses the explicit certificate and recomputes the typing judgment. Hostile fixtures alter either a binder type, an application argument, or a claimed result type while preserving the elaborator-shaped wrapper. These fixtures are rejected. Thus elaborator authority is not part of the kernel acceptance rule.
+\end{proof}
+
+\input{plates/plate38.tex}
+
+This proposition is architectural, not metaphysical. Trust has not disappeared. It has been concentrated into the kernel implementation, parser, runtime, foundational calculus, and the correctness of the statement submitted for checking. A tiny kernel can faithfully certify the wrong formalization of an informal theorem.
+
+\begin{workedexample}[title={A plausible but invalid certificate}]
+Suppose an elaborator claims that $(\lambda x{:}P.x)$ has type $Q\to Q$. The syntax is well formed and the term is typable, but the claimed type is wrong unless $P$ and $Q$ are definitionally the same atomic type. Independent rechecking derives $P\to P$ and rejects the mismatched certificate.
+\end{workedexample}
+
+\input{plates/plate39.tex}
+
+\begin{warningbox}
+Kernel acceptance establishes validity according to the encoded rules and statement. It does not establish that the informal theorem was translated correctly, that the kernel has no implementation bug, or that the foundational assumptions are philosophically mandatory.
+\end{warningbox}
+
+\begin{labbox}
+Run \texttt{python labs/lab13_kernel_boundary.py}. Positive certificates must pass; hostile mutated certificates must be rejected by the independent checker. The lab measures this toy trust boundary only.
+\end{labbox}
+
+\section*{Exercises}\addcontentsline{toc}{section}{Exercises}
+\begin{enumerate}[label=\textbf{13.\arabic*.}]
+\item \textbf{Checkpoint.} Distinguish elaboration from kernel checking.
+\item \textbf{Checkpoint.} What input does the toy kernel trust from the elaborator?
+\item \textbf{Checkpoint.} What remains in the trusted computing base?
+\item \textbf{Core.} Mutate a valid certificate so only the claimed result type is wrong.
+\item \textbf{Core.} Explain why reparsing independently matters.
+\item \textbf{Core.} Give an example of a correct formal proof of the wrong informal statement.
+\item \textbf{Synthesis.} Compare proof objects with proof-carrying certificates in other systems.
+\item \textbf{Synthesis.} Explain why a smaller kernel can improve auditability without creating absolute certainty.
+\item \textbf{Proof Workshop.} Prove the stated kernel-boundary proposition from the interface definition.
+\item \textbf{Proof Workshop.} Classify parser correctness as a separate trust obligation.
+\item \textbf{Design Clinic.} Minimize a checker interface while retaining explicit diagnostics.
+\item \textbf{Challenge.} Draw the full trust cone from informal theorem to hardware and identify which layers formal proof does and does not eliminate.
+\end{enumerate}

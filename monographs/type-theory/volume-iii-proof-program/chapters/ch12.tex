@@ -1,0 +1,53 @@
+\chapter{Uniformity Has Teeth}
+\label{ch:parametricity}
+
+A polymorphic type can constrain behavior even before we know the implementation. Relational parametricity makes that fact precise: a polymorphic term must act uniformly with respect to relations between its type instantiations, subject to the hypotheses of the parametric model.
+
+Volume III treats this as a preview in the restricted layer $\mathrm{CHF}\text{-}1$. We do not build a complete System F kernel. We use a small polymorphic syntax for selected examples, cite the relational abstraction theorem, and compute finite relational instances.
+
+\input{plates/plate34.tex}
+
+\begin{formal}[title={Imported theorem: relational parametricity}]
+Reynolds's abstraction theorem interprets types relationally and shows, for the corresponding polymorphic calculus and semantics, that well-typed terms preserve the relations assigned to their type variables. The exact theorem is imported; finite checks below illustrate consequences but do not establish the theorem.
+\end{formal}
+
+Consider a closed pure term of polymorphic type
+\[
+\forall\alpha.\;\alpha\to\alpha.
+\]
+Under the standard parametricity hypotheses, its behavior is severely constrained: it cannot manufacture an arbitrary element of an unknown type, inspect a type-specific representation, or choose a distinguished value unavailable from its argument. The familiar consequence is identity-like behavior, modulo the exact calculus and observational equality.
+
+\input{plates/plate35.tex}
+
+\begin{proposition}[Finite relational fixture property]
+For every finite relation enumerated by \texttt{lab12\_parametricity.py}, each registered exemplar marked parametric maps related inputs to related outputs.
+\end{proposition}
+\begin{proof}
+The laboratory exhaustively enumerates the finite carrier pairs and relation pairs in its declared fixture universe. It evaluates each registered exemplar on both components of every related input pair and tests membership of the resulting pair in the target relation. The proposition therefore follows from exhaustive finite enumeration over that fixture universe only.
+\end{proof}
+
+\input{plates/plate36.tex}
+
+\begin{warningbox}
+A finite relation checker is not a proof of relational parametricity for System F. Effects, runtime type analysis, nontermination, unsafe casts, or a richer observational theory can invalidate naive free-theorem reasoning unless the theorem's hypotheses are restored.
+\end{warningbox}
+
+\begin{labbox}
+Run \texttt{python labs/lab12_parametricity.py}. The program exhaustively checks the retained finite relations and includes a deliberately nonuniform hostile function that must fail at least one relation.
+\end{labbox}
+
+\section*{Exercises}\addcontentsline{toc}{section}{Exercises}
+\begin{enumerate}[label=\textbf{12.\arabic*.}]
+\item \textbf{Checkpoint.} What does parametricity add beyond ordinary typing?
+\item \textbf{Checkpoint.} Why can $\forall\alpha.\alpha\to\alpha$ not normally manufacture a new $\alpha$?
+\item \textbf{Checkpoint.} What is the evidentiary status of the finite checker?
+\item \textbf{Core.} Test identity against a relation of your choice.
+\item \textbf{Core.} Construct a nonuniform finite function that violates a relation.
+\item \textbf{Core.} Explain why runtime type inspection changes the argument.
+\item \textbf{Synthesis.} Relate parametric uniformity to abstraction barriers.
+\item \textbf{Synthesis.} State two hypotheses needed before using a free theorem.
+\item \textbf{Proof Workshop.} Prove the finite fixture property from exhaustive enumeration.
+\item \textbf{Proof Workshop.} State the relational interpretation of an arrow type informally but precisely.
+\item \textbf{Design Clinic.} Design a relation-generator that avoids vacuous all-empty test suites.
+\item \textbf{Challenge.} Explain why parametricity is a deeper constraint than checking a handful of type instantiations independently.
+\end{enumerate}
