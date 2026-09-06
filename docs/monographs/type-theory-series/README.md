@@ -9,10 +9,11 @@ This package is designed so a future composing agent can reconstruct the series 
 Key files:
 - `SERIES_HANDOFF.md` — operating instructions and read order.
 - `HANDOFF_PROMPT.md` — compact paste-ready takeover pointer.
-- `SERIES_MANIFEST.json` — canonical volume identities/questions.
+- `SERIES_MANIFEST.json` — canonical volume identities/questions and current state axes.
 - `VOLUME_BLUEPRINTS.md` — intellectual spines for Volumes II–X.
 - `SERIES_STYLE_CONTRACT.md` — typography/pedagogy/visual conventions.
-- `QUALITY_GATES.md` — development and publication gates.
+- `QUALITY_GATES.md` — development, durable-admission, review, and publication gates.
+- `PUBLICATION_STATE_MODEL.md` — separates composition complete, durably admitted, independently reviewed, and published authoritative states.
 - `NOTATION_REGISTRY.json` — cross-volume notation contract.
 - `REFERENCE_BASELINE.json` — checksummed Volume I reference baseline.
 - `bootstrap_volume.py` — instantiate a volume workspace.
@@ -32,6 +33,8 @@ Before a release candidate:
 ```bash
 python validate_volume.py ./volume_II_comprehension --rc --compile
 ```
+
+A passing internal RC build is not, by itself, a durable-admission, independent-review, or publication-authority claim. Follow `PUBLICATION_STATE_MODEL.md` and the corresponding gates in `QUALITY_GATES.md`.
 
 The reconciled Volume I RC1.1 reference is a 146-page publication-pass manuscript with the cosmetic plate cleanup applied. It supersedes the earlier 139-page cosmetic-only RC1.1 build as a series baseline.
 
