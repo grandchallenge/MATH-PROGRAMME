@@ -21,6 +21,16 @@ The governing pedagogical maxim is:
 
 > Formal notation should arrive after the problem it solves is visible.
 
+## Technical writing inheritance
+
+The collection inherits the programme-wide writing contract at `docs/TECHNICAL_WRITING_REFERENCE.md`.
+
+In particular, every volume must preserve the GCL-TCS-00 / GCL-POS-01 discipline that communication is part of the research instrument: technical object identity, claim identity, bounded evidence, limitations, provenance, review specificity, and authority state must survive composition and public exposition. Presentation may reveal authority; it cannot create it.
+
+The monograph voice may be richer and more literary than procedure-oriented controlled language, but the underlying claim boundaries may not be softened. ASD-STE100 is a prose-clarity baseline where appropriate, not a requirement to deform mathematical notation, theorem statements, code, schemas, or quotations. Formal ASD-STE100 compliance must never be implied without a separate conformance record.
+
+For mathematical exposition, this series contract also specializes `docs/PEDAGOGICAL_STYLE_GUIDE.md` and `docs/GRAND_CHALLENGE_PEDAGOGY_STANDARD.md`. Where these documents differ in level of detail, the stricter claim/provenance/review boundary controls.
+
 ## Chapter rhythm
 
 Default chapter architecture:
