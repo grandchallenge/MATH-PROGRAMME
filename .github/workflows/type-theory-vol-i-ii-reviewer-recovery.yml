@@ -1,0 +1,48 @@
+name: Type Theory Volumes I-II reviewer recovery
+
+on:
+  push:
+    branches:
+      - reviews/type-theory-vol-i-ii-reviewer-delivery-003
+
+permissions:
+  contents: read
+
+env:
+  VOL1_EXPECTED_SHA256: 013fd6b5f78a8bb45711bb9e167321f7ca58324b7a0ae3f0c7e594ba63a96e3b
+  VOL2_EXPECTED_SHA256: 1e1f4ae917e50514dc0a74fa706d30ad0d1c3dbf9ac2f45d7c8ad2445f3fd95a
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Reconstruct exact admitted source archives
+        shell: bash
+        run: |
+          set -euo pipefail
+          python monographs/type-theory/volume-i-judgment/releases/RC1.1/RECONSTRUCT_SOURCE.py
+          python monographs/type-theory/volume-ii-comprehension/releases/RC1/RECONSTRUCT_SOURCE.py
+          V1=monographs/type-theory/volume-i-judgment/releases/RC1.1/GCL_Type_Theory_Volume_I_JUDGMENT_RC1_1_Rebuild_Core.zip
+          V2=monographs/type-theory/volume-ii-comprehension/releases/RC1/GCL_Type_Theory_Volume_II_COMPREHENSION_RC1_Source.zip
+          test "$(sha256sum "$V1" | awk '{print $1}')" = "$VOL1_EXPECTED_SHA256"
+          test "$(sha256sum "$V2" | awk '{print $1}')" = "$VOL2_EXPECTED_SHA256"
+          mkdir -p recovered/volume-i recovered/volume-ii
+          cp "$V1" recovered/volume-i/source.zip
+          cp "$V2" recovered/volume-ii/source.zip
+          unzip -q "$V1" -d recovered/volume-i/extracted
+          unzip -q "$V2" -d recovered/volume-ii/extracted
+          (cd recovered/volume-i/extracted && find . -maxdepth 3 -type f | sort) > recovered/volume-i/file-list.txt
+          (cd recovered/volume-ii/extracted && find . -maxdepth 3 -type f | sort) > recovered/volume-ii/file-list.txt
+          find recovered -type f -name '*.pdf' -print | sort > recovered/pdf-files.txt
+          sha256sum recovered/volume-i/source.zip recovered/volume-ii/source.zip > recovered/SOURCE_SHA256SUMS.txt
+
+      - name: Upload exact recovered sources
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: type-theory-vol-i-ii-exact-source-recovery
+          path: recovered/
+          if-no-files-found: error
+          retention-days: 7
