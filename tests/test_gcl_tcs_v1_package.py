@@ -43,6 +43,23 @@ class CandidatePackagingTests(unittest.TestCase):
         path.write_text(json.dumps(manifest))
         self.assertTrue(any("unsafe path" in e for e in errors(self.package)))
 
+    def test_stale_policy_references_rejected_after_rehash(self):
+        import hashlib
+        path = self.package / "GCL-TCS-00.policy.yaml"
+        policy = yaml.safe_load(path.read_text())
+        policy["machine_contracts"]["conformance_schema"] = "historical/schema.json"
+        policy["standard"]["date"] = "2026-07-27"
+        path.write_text(yaml.safe_dump(policy))
+        manifest_path = self.package / "manifest.json"
+        manifest = json.loads(manifest_path.read_text())
+        for row in manifest["files"]:
+            if row["path"] == path.name:
+                row["sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+        manifest_path.write_text(json.dumps(manifest))
+        problems = errors(self.package)
+        self.assertIn("policy/charter date mismatch", problems)
+        self.assertIn("versioned package reference mismatch: conformance_schema", problems)
+
     def test_old_declaration_identity_is_not_silently_admitted(self):
         schema = json.loads((self.package / "schemas/gcl-tcs-conformance.schema.json").read_text())
         record = yaml.safe_load((self.package / "templates/GCL-TCS-00.conformance.template.yaml").read_text())

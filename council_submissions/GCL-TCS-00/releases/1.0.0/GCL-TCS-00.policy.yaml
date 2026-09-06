@@ -3,7 +3,7 @@ standard:
   title: Technical Communication Charter and Conformance Model
   version: 1.0.0
   status: candidate
-  date: 2026-07-27
+  date: 2026-09-05
   authority: Grand Challenge Labs
   language: en-CA
   baseline_reference:
@@ -567,11 +567,11 @@ strong_defaults:
 
 machine_contracts:
   revision: 1.0.0-r1
-  conformance_schema: docs/council/submissions/GCL-TCS-00/schemas/gcl-tcs-conformance.schema.json
-  record_contract_schema: docs/council/submissions/GCL-TCS-00/schemas/gcl-tcs-record-contracts.schema.json
+  conformance_schema: council_submissions/GCL-TCS-00/releases/1.0.0/schemas/gcl-tcs-conformance.schema.json
+  record_contract_schema: council_submissions/GCL-TCS-00/releases/1.0.0/schemas/gcl-tcs-record-contracts.schema.json
   templates:
-    - docs/council/submissions/GCL-TCS-00/templates/GCL-TCS-00.conformance.template.yaml
-    - docs/council/submissions/GCL-TCS-00/templates/GCL-TCS-00.records.template.yaml
-  migration_note: docs/council/submissions/GCL-TCS-00/MACHINE_CONTRACT_MIGRATION_1.0.0-R1.md
+    - council_submissions/GCL-TCS-00/releases/1.0.0/templates/GCL-TCS-00.conformance.template.yaml
+    - council_submissions/GCL-TCS-00/releases/1.0.0/templates/GCL-TCS-00.records.template.yaml
+  migration_note: council_submissions/GCL-TCS-00/releases/1.0.0/MIGRATION.md
   validator: ci/gcl_tcs_normative_agreement.py
   tests: tests/test_gcl_tcs_normative_agreement.py

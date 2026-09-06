@@ -45,6 +45,21 @@ def errors(package: Path = PACKAGE) -> list[str]:
     policy = yaml.safe_load((package / "GCL-TCS-00.policy.yaml").read_text())
     if policy["standard"]["version"] != "1.0.0" or policy["standard"]["status"] != "candidate":
         problems.append("policy identity mismatch")
+    charter = (package / "GCL-TCS-00.md").read_text()
+    if f"| Date | {policy['standard']['date']} |" not in charter:
+        problems.append("policy/charter date mismatch")
+    prefix = "council_submissions/GCL-TCS-00/releases/1.0.0/"
+    contracts = policy["machine_contracts"]
+    expected_refs = {
+        "conformance_schema": prefix + "schemas/gcl-tcs-conformance.schema.json",
+        "record_contract_schema": prefix + "schemas/gcl-tcs-record-contracts.schema.json",
+        "migration_note": prefix + "MIGRATION.md",
+        "templates": [prefix + "templates/GCL-TCS-00.conformance.template.yaml",
+                      prefix + "templates/GCL-TCS-00.records.template.yaml"],
+    }
+    for key, expected in expected_refs.items():
+        if contracts.get(key) != expected:
+            problems.append(f"versioned package reference mismatch: {key}")
     if "| Version | 1.0.0 |" not in (package / "GCL-TCS-00.md").read_text():
         problems.append("normative identity mismatch")
     return problems
