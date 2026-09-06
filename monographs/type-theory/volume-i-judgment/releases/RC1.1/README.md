@@ -2,7 +2,7 @@
 
 This directory binds the exact reconciled **Volume I — JUDGMENT: The Grammar of Computation** RC1.1 rebuild inputs to protected MATH-PROGRAMME state.
 
-The rebuild core is transported as 23 bounded Base64 text parts because repository connector writes are text-oriented. Concatenate the parts in lexical order and Base64-decode them to obtain:
+The rebuild core is transported as 12 bounded Base64 text parts because repository connector writes are text-oriented. Concatenate the parts in lexical order and Base64-decode them to obtain:
 
 `GCL_Type_Theory_Volume_I_JUDGMENT_RC1_1_Rebuild_Core.zip`
 
