@@ -1,0 +1,161 @@
+name: Type Theory Volume III RC1 package
+
+on:
+  push:
+    branches: [docs/type-theory-vol-iii-rc1-003]
+    paths:
+      - '.github/workflows/type-theory-volume-iii-rc-package.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    name: Package exact RC1 admission branch
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout packaging source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Recompute and require exact RC1 source identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import os, zipfile, hashlib
+          root = Path('monographs/type-theory/volume-iii-proof-program')
+          files = sorted(p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file() and '.git' not in p.parts)
+          # Only tracked source files belong to the archive.
+          import subprocess
+          tracked = subprocess.check_output(['git','ls-files','.'], cwd=root, text=True).splitlines()
+          out = Path('/tmp/volume-iii-rc1-source.zip')
+          with zipfile.ZipFile(out, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:
+              for rel in sorted(tracked):
+                  p = root / rel
+                  info = zipfile.ZipInfo(rel, date_time=(1980,1,1,0,0,0))
+                  info.compress_type = zipfile.ZIP_DEFLATED
+                  info.create_system = 3
+                  mode = 0o755 if os.access(p, os.X_OK) else 0o644
+                  info.external_attr = mode << 16
+                  z.writestr(info, p.read_bytes(), compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
+          raw = out.read_bytes()
+          sha = hashlib.sha256(raw).hexdigest()
+          expected = '70c9ffedefa795cf40e2536c45db8a7f3fb0223719d4c6cf24f921e7637d7a62'
+          print(f'source_bytes={len(raw)} source_sha256={sha}')
+          if len(raw) != 106349 or sha != expected:
+              raise SystemExit('RC1 source identity mismatch; refusing package mutation')
+          PY
+
+      - name: Form clean protected-main-derived admission commit
+        shell: bash
+        env:
+          SOURCE_SHA256: 70c9ffedefa795cf40e2536c45db8a7f3fb0223719d4c6cf24f921e7637d7a62
+          MAIN_PDF_SHA256: caf12162ff052db869356c8c0d0fa96dce77b8c40de3bf576e61a2fce30574f3
+          SOLUTIONS_PDF_SHA256: 2e1eae3596f7cb386dc2c93064bcc3d1c85f9511f46f49431ed9ede62836677e
+          PLATES_PDF_SHA256: ae718ef486fbee4a89fe5d498a48228d5499100d9e84d04bf67517fb520a0de0
+        run: |
+          set -euo pipefail
+          git fetch origin main release/type-theory-vol-iii-rc1-admission
+          git worktree add -B release/type-theory-vol-iii-rc1-admission /tmp/admission origin/main
+          src="$GITHUB_WORKSPACE/monographs/type-theory/volume-iii-proof-program"
+          dst="/tmp/admission/monographs/type-theory/volume-iii-proof-program"
+          for f in ILLUSTRATION_REGISTER.md PUBLICATION_AUDIT_RC1.md THEOREM_AUDIT.md WORKSET_STATE.json series_style.tex; do
+            cp "$src/$f" "$dst/$f"
+          done
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, hashlib, json, subprocess
+          root = Path('/tmp/admission')
+          manifest_path = root/'docs/monographs/type-theory-series/SERIES_MANIFEST.json'
+          manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+          v3 = next(v for v in manifest['volumes'] if v['number'] == 'III')
+          v3.update({
+              'status': 'RC1 composition complete; durable admission pending protected merge and readback; external mathematical review pending',
+              'composition_status': 'RC_COMPOSITION_COMPLETE',
+              'durable_admission_status': 'PENDING_FOR_RC1',
+              'independent_review_status': 'PENDING_EXTERNAL_MATHEMATICAL_REVIEW',
+              'publication_authority_status': 'NOT_GRANTED',
+              'rc1_source_archive_sha256': '70c9ffedefa795cf40e2536c45db8a7f3fb0223719d4c6cf24f921e7637d7a62',
+              'release_path': 'monographs/type-theory/volume-iii-proof-program/releases/RC1'
+          })
+          manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+
+          rel = root/'monographs/type-theory/volume-iii-proof-program/releases/RC1'
+          rel.mkdir(parents=True, exist_ok=True)
+          raw = Path('/tmp/volume-iii-rc1-source.zip').read_bytes()
+          enc = base64.b64encode(raw).decode('ascii')
+          parts = [enc[i:i+8000] for i in range(0, len(enc), 8000)]
+          ordered = []
+          for i, part in enumerate(parts, 1):
+              name = f'source.zip.b64.part{i:02d}'
+              p = rel/name
+              p.write_text(part, encoding='ascii')
+              sha = subprocess.check_output(['git','hash-object',str(p)], text=True).strip()
+              ordered.append({'file':name,'chars':len(part),'git_blob_sha':sha})
+
+          transport = {
+              'schema_version':'1.0.0',
+              'encoding':'base64',
+              'ordered_parts':ordered,
+              'base64_length':len(enc),
+              'decoded_filename':'GCL_Type_Theory_Volume_III_PROOF_PROGRAM_RC1_Source.zip',
+              'decoded_size':len(raw),
+              'decoded_sha256':'70c9ffedefa795cf40e2536c45db8a7f3fb0223719d4c6cf24f921e7637d7a62',
+              'reconstruction':'Concatenate ordered parts byte-for-byte with no separators or newline insertion, Base64-decode with validation, then verify size and SHA-256.'
+          }
+          (rel/'SOURCE_TRANSPORT_MANIFEST.json').write_text(json.dumps(transport,indent=2)+'\n',encoding='utf-8')
+
+          release = {
+              'schema_version':'1.0.0',
+              'series':'TYPE THEORY — The Grand Unified Theory of Computation',
+              'volume':'III',
+              'title':'PROOF / PROGRAM',
+              'subtitle':'Logic Becomes Executable',
+              'release':'RC1',
+              'composition_status':'RC_COMPOSITION_COMPLETE',
+              'durable_admission_status':'PENDING_UNTIL_PROTECTED_MERGE_AND_READBACK',
+              'independent_review_status':'PENDING_EXTERNAL_MATHEMATICAL_REVIEW',
+              'publication_authority_status':'NOT_GRANTED',
+              'source_archive':{
+                  'filename':'GCL_Type_Theory_Volume_III_PROOF_PROGRAM_RC1_Source.zip',
+                  'size_bytes':106349,
+                  'sha256':'70c9ffedefa795cf40e2536c45db8a7f3fb0223719d4c6cf24f921e7637d7a62',
+                  'transport_manifest':'SOURCE_TRANSPORT_MANIFEST.json'
+              },
+              'distribution_artifacts':{
+                  'main_pdf_sha256':'caf12162ff052db869356c8c0d0fa96dce77b8c40de3bf576e61a2fce30574f3',
+                  'solutions_pdf_sha256':'2e1eae3596f7cb386dc2c93064bcc3d1c85f9511f46f49431ed9ede62836677e',
+                  'plates_pdf_sha256':'ae718ef486fbee4a89fe5d498a48228d5499100d9e84d04bf67517fb520a0de0'
+              },
+              'composition_evidence':{
+                  'main_pages':77,'solutions_pages':32,'plate_folio_pages':15,
+                  'canonical_plates':42,'exercises':168,'keyed_solutions_or_rubrics':168,
+                  'laboratories':14,'laboratories_passing':14
+              },
+              'claim_boundary':'This record stages exact RC1 source bytes for durable admission. It creates no independent mathematical review result, mathematical certification, or publication authority. Durable admission becomes true only after protected merge and protected readback of this exact source identity.'
+          }
+          (rel/'RELEASE_RECORD.json').write_text(json.dumps(release,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+
+          (rel/'README.md').write_text('''# Volume III — PROOF / PROGRAM RC1 source admission packet\n\nThis directory preserves an exact, content-addressed rebuildable representation of the composition-complete RC1 source archive for **Volume III — PROOF / PROGRAM: Logic Becomes Executable**.\n\nThe source archive is transported as ordered Base64 text chunks. `SOURCE_TRANSPORT_MANIFEST.json` fixes the order, character lengths, Git blob identities, decoded size, and expected SHA-256. Run `python RECONSTRUCT_SOURCE.py` from this directory to reconstruct and verify the archive.\n\nCanonical decoded source identity:\n\n`sha256:70c9ffedefa795cf40e2536c45db8a7f3fb0223719d4c6cf24f921e7637d7a62`\n\nThis packet is an admission artifact, not a mathematical review or publication-authority record. Until protected merge and protected readback occur, RC1 remains composition-complete but not durably admitted. Independent mathematical review remains pending and publication authority is not granted.\n''',encoding='utf-8')
+
+          (rel/'RECONSTRUCT_SOURCE.py').write_text('''#!/usr/bin/env python3\n"""Reconstruct and verify the exact Volume III PROOF / PROGRAM RC1 source archive."""\nfrom __future__ import annotations\nimport base64, hashlib, json\nfrom pathlib import Path\n\nROOT = Path(__file__).resolve().parent\nmanifest = json.loads((ROOT / "SOURCE_TRANSPORT_MANIFEST.json").read_text(encoding="utf-8"))\nchunks = []\nfor part in manifest["ordered_parts"]:\n    p = ROOT / part["file"]\n    data = p.read_text(encoding="ascii")\n    if len(data) != part["chars"]:\n        raise SystemExit(f"length mismatch: {p.name}: {len(data)} != {part['chars']}")\n    chunks.append(data)\nencoded = "".join(chunks)\nif len(encoded) != manifest["base64_length"]:\n    raise SystemExit(f"base64 length mismatch: {len(encoded)}")\nraw = base64.b64decode(encoded, validate=True)\nif len(raw) != manifest["decoded_size"]:\n    raise SystemExit(f"decoded size mismatch: {len(raw)}")\nsha = hashlib.sha256(raw).hexdigest()\nif sha != manifest["decoded_sha256"]:\n    raise SystemExit(f"sha256 mismatch: {sha}")\nout = ROOT / manifest["decoded_filename"]\nout.write_bytes(raw)\nprint(f"verified {out.name} bytes={len(raw)} sha256={sha}")\n''',encoding='utf-8')
+
+          (rel/'CHECKSUMS.sha256').write_text('''# Volume III PROOF / PROGRAM RC1 — release identities\n\n70c9ffedefa795cf40e2536c45db8a7f3fb0223719d4c6cf24f921e7637d7a62  GCL_Type_Theory_Volume_III_PROOF_PROGRAM_RC1_Source.zip\ncaf12162ff052db869356c8c0d0fa96dce77b8c40de3bf576e61a2fce30574f3  GCL_Type_Theory_Volume_III_PROOF_PROGRAM_RC1.pdf\n2e1eae3596f7cb386dc2c93064bcc3d1c85f9511f46f49431ed9ede62836677e  GCL_Type_Theory_Volume_III_Solutions_RC1.pdf\nae718ef486fbee4a89fe5d498a48228d5499100d9e84d04bf67517fb520a0de0  GCL_Type_Theory_Volume_III_Plates_01_42_RC1.pdf\n\nState at staging: RC_COMPOSITION_COMPLETE. Durable admission is pending protected merge and readback. Independent mathematical review is pending. Publication authority is not granted.\n''',encoding='utf-8')
+          PY
+
+          cd /tmp/admission
+          python3 monographs/type-theory/volume-iii-proof-program/releases/RC1/RECONSTRUCT_SOURCE.py
+          cmp /tmp/volume-iii-rc1-source.zip monographs/type-theory/volume-iii-proof-program/releases/RC1/GCL_Type_Theory_Volume_III_PROOF_PROGRAM_RC1_Source.zip
+          rm monographs/type-theory/volume-iii-proof-program/releases/RC1/GCL_Type_Theory_Volume_III_PROOF_PROGRAM_RC1_Source.zip
+          git diff -- . ':!.github/workflows'
+          git add docs/monographs/type-theory-series/SERIES_MANIFEST.json monographs/type-theory/volume-iii-proof-program
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'release: stage Type Theory Volume III PROOF PROGRAM RC1 admission'
+          git push origin HEAD:refs/heads/release/type-theory-vol-iii-rc1-admission
