@@ -113,11 +113,13 @@ A later volume may cite or inherit a prior volume's **formal content** at the st
 
 ## Volume II reconciliation
 
-For Volume II — **COMPREHENSION**, the comprehensive RC1 produced during composition is presently classified as:
+For Volume II — **COMPREHENSION**, the exact comprehensive RC1 is presently classified as:
 
-- composition: complete at internal RC1;
-- durable admission: pending for the comprehensive RC1 exact source package;
-- independent mathematical review: pending;
-- publication authority: not granted.
+- composition: `RC_COMPOSITION_COMPLETE`;
+- durable admission: `RC_DURABLY_ADMITTED`;
+- independent mathematical review: `PENDING_EXTERNAL_MATHEMATICAL_REVIEW`;
+- publication authority: `NOT_GRANTED`.
 
-Protected `main` presently contains the earlier admitted Stage-B1 baseline. The deterministic next institutional action is to admit the exact comprehensive RC1 source/release identity, run the applicable checks, merge through protected controls, and read back that exact state before calling the comprehensive RC1 canonical on protected GitHub.
+The exact admitted review target is bound to source archive SHA-256 `1e1f4ae917e50514dc0a74fa706d30ad0d1c3dbf9ac2f45d7c8ad2445f3fd95a`, protected admission commit `3615be3114ea3aceec14e02231e3a1647faa44b4`, and protected release tree `8fae441820506bb6902e36c048cc475dc56242d5`.
+
+Gate 8 is tracked by issue `#853`. Its durable review packet is under `monographs/type-theory/volume-ii-comprehension/reviews/RC1/`. The next legitimate transition is genuinely independent mathematical review of that exact admitted revision. No self-audit, regression suite, CI run, or second pass by the composing process may substitute for the required independent reviewer record. Passing Gate 8 would permit `RC_REVIEW_QUALIFIED` only; publication authority remains a separate Gate 9 disposition.
