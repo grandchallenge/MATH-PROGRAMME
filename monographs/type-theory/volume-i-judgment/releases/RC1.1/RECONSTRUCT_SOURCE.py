@@ -17,6 +17,6 @@ data = base64.b64decode(b64, validate=True)
 assert len(data) == manifest["decoded_bytes"]
 digest = hashlib.sha256(data).hexdigest()
 assert digest == manifest["decoded_sha256"], digest
-out = ROOT / "GCL_Type_Theory_Volume_I_JUDGMENT_RC1_1_Rebuild_Source.zip"
+out = ROOT / "GCL_Type_Theory_Volume_I_JUDGMENT_RC1_1_Rebuild_Core.zip"
 out.write_bytes(data)
 print(f"PASS bytes={len(data)} sha256={digest} output={out.name}")
