@@ -1,0 +1,55 @@
+\chapter{Cut Is Substitution Wearing Different Clothes}
+\label{ch:cut}
+
+Natural deduction makes assumption discharge visible. Sequent calculus makes composition visible. The rule called \emph{cut} inserts an intermediate formula and composes a proof of that formula with a proof that uses it. This is closely related to substitution, but the theorem statements live in different proof presentations.
+
+We use a bounded single-succedent intuitionistic sequent calculus $\mathrm{LJ}\text{-}0$. Sequents have the form $\Gamma\Rightarrow A$. Identity and cut are
+\[
+\frac{}{\Gamma,A\Rightarrow A}\;\mathrm{id}
+\qquad
+\frac{\Gamma\Rightarrow A\qquad \Delta,A\Rightarrow C}{\Gamma,\Delta\Rightarrow C}\;\mathrm{cut}.
+\]
+Logical left/right rules are given for $\to,\times,+,\Unit,\Empty$ in the standard intuitionistic style.
+
+\input{plates/plate19.tex}
+
+A cut can be read as explicit composition. Under a translation back to natural deduction, the right premise is a derivation with an open assumption $A$, and the left premise supplies what is substituted for that assumption. Under term assignment, the same movement becomes capture-avoiding substitution. These facts explain the family resemblance among cut elimination, proof normalization, and beta reduction without collapsing them into one syntactic operation.
+
+\begin{proposition}[Principal implication cut reduction]
+In $\mathrm{LJ}\text{-}0$, a cut whose cut formula $A\to B$ is introduced last on the right in the left premise and consumed last by the matching implication-left rule in the right premise can be transformed into cuts on structurally smaller formulas/premises.
+\end{proposition}
+\begin{proof}
+Expose the two final inference rules. Replace the cut on $A\to B$ by composition of the proof of the implication body with the proof of the argument assumption and then with the continuation deriving the final succedent. The resulting cuts have lower logical complexity or lower proof height under the standard lexicographic cut measure. This is the principal local reduction; commuting conversions handle nonprincipal occurrences.
+\end{proof}
+
+\input{plates/plate20.tex}
+
+\begin{formal}[title={Imported theorem: cut admissibility}]
+Gentzen's Hauptsatz provides the historical prototype for cut elimination in sequent calculi. For the standard intuitionistic propositional sequent calculus matching $\mathrm{LJ}\text{-}0$, we use cut admissibility as a cited theorem: if a sequent is derivable with cut, it has a cut-free derivation. This volume demonstrates principal and bounded commuting reductions but does not claim a fresh independent proof of the full theorem.
+\end{formal}
+
+\input{plates/plate21.tex}
+
+\begin{warningbox}
+Normalization, beta reduction, and cut elimination are related through translations. They are not interchangeable labels. Their objects, reduction steps, and induction measures differ.
+\end{warningbox}
+
+\begin{labbox}
+Run \texttt{python labs/lab07_cut_reducer.py}. The bounded reducer constructs finite proof trees, contracts selected principal cuts, and checks that the end sequent is preserved while a declared cut measure decreases. It is not evidence for arbitrary cut elimination.
+\end{labbox}
+
+\section*{Exercises}\addcontentsline{toc}{section}{Exercises}
+\begin{enumerate}[label=\textbf{7.\arabic*.}]
+\item \textbf{Checkpoint.} State the cut rule.
+\item \textbf{Checkpoint.} What is the cut formula?
+\item \textbf{Checkpoint.} Why can cut be read as explicit composition?
+\item \textbf{Core.} Translate a simple implication application into a cut-containing sequent derivation.
+\item \textbf{Core.} Identify the substitution corresponding to that cut.
+\item \textbf{Core.} Give a lexicographic cut measure using formula complexity and proof height.
+\item \textbf{Synthesis.} Compare natural-deduction detours with sequent cuts.
+\item \textbf{Synthesis.} Explain why a bounded cut reducer cannot establish the Hauptsatz.
+\item \textbf{Proof Workshop.} Work the principal implication cut reduction in detail.
+\item \textbf{Proof Workshop.} Give one commuting conversion for a nonprincipal cut.
+\item \textbf{Design Clinic.} Specify a proof-tree representation that records end sequents and cut formulas.
+\item \textbf{Challenge.} State precisely what must be proved for cut admissibility rather than merely local cut reduction.
+\end{enumerate}

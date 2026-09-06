@@ -2,129 +2,211 @@
 \input{series_style.tex}
 \input{series_macros.tex}
 \hypersetup{colorlinks=true,linkcolor=GCLBlue,urlcolor=GCLBlue,citecolor=GCLGreen,pdftitle={PROOF / PROGRAM — Solutions Companion},pdfauthor={Grand Challenge Labs}}
+\newcommand{\sol}[2]{\section*{#1}\textbf{Solution / rubric.} #2}
 \begin{document}
 \frontmatter
 \chapter*{Instructor and Self-Study Solutions Companion}
-This companion belongs to the Stage-B teaching kernel of Volume III. Every exercise in Chapters 1--2 has a worked solution or an explicit rubric. These solutions do not constitute independent mathematical review of the volume.
+This companion keys every exercise in Volume III. A concise rubric is used where an exercise deliberately admits several correct constructions. The companion is an internal pedagogical artifact and does not constitute independent mathematical review.
 \tableofcontents
 \mainmatter
+
 \chapter{Solutions to Chapter 1}
-
-\section*{1.1 Checkpoint}
-$\lambda x{:}P.x$ has type $P\to P$ by one application of implication introduction to the variable judgment $x{:}P\vdash x:P$.
-
-\section*{1.2 Checkpoint}
-Implication elimination is application. From $\Gamma\vdash f:A\to B$ and $\Gamma\vdash a:A$, infer $\Gamma\vdash f\,a:B$.
-
-\section*{1.3 Checkpoint}
-$\Gamma\vdash A$ records derivability while suppressing the selected proof term. $\Gamma\vdash t:A$ identifies one witness $t$. Suppressing $t$ does not assert that every witness is equal or observationally irrelevant.
-
-\section*{1.4 Core}
-Assume $x:P$, then assume $y:Q$. The variable rule yields $x:P$. Discharge $y$ to obtain $Q\to P$, then discharge $x$:
-\[
-\vdash \lambda x{:}P.\lambda y{:}Q.x:P\to(Q\to P).
-\]
-
-\section*{1.5 Core}
-A proof term is
-\[
-\lambda f{:}(P\to Q).\lambda g{:}(Q\to R).\lambda x{:}P.g\,(f\,x).
-\]
-It is ordinary typed function composition with arguments ordered according to the stated formula.
-
-\section*{1.6 Core}
-In context $f:P\to Q,g:Q\to R,x:P$:
-\[
- f:P\to Q,\quad x:P,\quad f\,x:Q,
-\]
-\[
- g:Q\to R,\quad g\,(f\,x):R.
-\]
-Every proper application subterm is therefore typed before the outer application is checked.
-
-\section*{1.7 Synthesis}
-Exact sense: the premises and conclusion of $\to I$ map recursively to the binder and function type of a lambda abstraction, and $\to E$ maps to application. Remaining difference: a natural-deduction derivation is a tree with rule bureaucracy and assumption-discharge annotations, while the proof term is a compact syntax with lexical binding. A translation relates them.
-
-\section*{1.8 Synthesis}
-The chapter establishes that selected logical connectives can be read as type constructors and that proofs carry terms. It does not quotient every data type to a truth value or assert that all inhabitants of a type are logically indistinguishable. Data-bearing types can preserve computational information that a proposition-only semantics may ignore.
-
-\section*{1.9 Proof Workshop}
-Induct on the typing derivation. \textsc{Var}: the original declaration remains in the extended context. $\to E$: weaken both premises and reapply application. $\to I$: alpha-rename the bound variable if it equals the fresh weakening variable, weaken the premise under the renamed binder, then reapply introduction. The freshness side condition prevents accidental shadowing.
-
-\section*{1.10 Proof Workshop}
-Induct on the final natural-deduction rule. Assumption maps to \textsc{Var}; implication introduction maps the induction hypothesis under the discharged assumption to a lambda abstraction; implication elimination maps two induction hypotheses to an application. Those are all rules in the implication fragment, so the induction is exhaustive.
-
-\section*{1.11 Design Clinic}
-One acceptable design tokenizes identifiers, parentheses and a right-associative arrow token, parses a surface type such as \texttt{P -> Q -> R}, and lowers it to the same internal \texttt{Arrow(P, Arrow(Q,R))} AST used by the checker. Required rejection examples include a dangling arrow \texttt{P ->} and unmatched parentheses \texttt{(P -> Q}. A complete implementation should also reject reserved keywords where an atomic type is expected.
-
-\section*{1.12 Challenge}
-A reasonable derivation-size measure counts rule nodes. A corresponding term measure can count AST constructors. With assumptions/variables each counted as one, $\to I$/lambda and $\to E$/application each contribute one constructor, so the recursive assignment is size-preserving for this presentation. If derivations count explicit discharge annotations or contexts as additional syntax while terms do not, the sizes differ by administrative overhead. Credit requires a metric fixed before the comparison and a proof or counterexample for the claimed relation.
+\sol{1.1}{$\lambda x{:}P.x:P\to P$ by variable then implication introduction.}
+\sol{1.2}{$\to E$: from $\Gamma\vdash f:A\to B$ and $\Gamma\vdash a:A$, infer $\Gamma\vdash f\,a:B$.}
+\sol{1.3}{$\Gamma\vdash A$ hides the selected witness; $\Gamma\vdash t:A$ records it. Hiding a witness does not equate all witnesses.}
+\sol{1.4}{Use $\lambda x{:}P.\lambda y{:}Q.x:P\to(Q\to P)$.}
+\sol{1.5}{One term is $\lambda f.\lambda g.\lambda x.g(fx)$ with the declared types; it is function composition in the stated argument order.}
+\sol{1.6}{Type $x:P$, then $f x:Q$, then $g(fx):R$; both application heads must have matching arrow domains.}
+\sol{1.7}{Exact: the premises/conclusion of $\to I/\to E$ determine lambda/application. Difference: a derivation tree and a compact bound term have different bureaucracy.}
+\sol{1.8}{The chapter relates logical and type constructors; it does not quotient data-bearing types to truth values.}
+\sol{1.9}{Induct on typing; variable and application are immediate, while abstraction may require alpha-renaming before weakening.}
+\sol{1.10}{Induct on the final natural-deduction rule; assumption, $\to I$, and $\to E$ are exhaustive in the implication fragment.}
+\sol{1.11}{A correct design parses right-associative arrows into the checker AST and rejects dangling arrows, unbalanced parentheses, and reserved tokens as atoms.}
+\sol{1.12}{With rule-node/AST-constructor size, the selected assignment can be size-preserving; counting discharge/context annotations introduces administrative overhead. Credit requires the metric first.}
 
 \chapter{Solutions to Chapter 2}
+\sol{2.1}{$(\lambda x{:}P.x)u\step u$.}
+\sol{2.2}{Premises: $\Gamma,x{:}A\vdash t:B$ and $\Gamma\vdash u:A$; conclusion $\Gamma\vdash t[u/x]:B$.}
+\sol{2.3}{Rename when a binder would capture a free variable of the replacement.}
+\sol{2.4}{The term reduces first to $\lambda x{:}P.(\lambda z{:}P.z)x$ and then to $\lambda x{:}P.x$, preserving type $P\to P$.}
+\sol{2.5}{For $(\lambda x{:}P.\lambda y{:}Q.x)y$, rename the inner binder before substitution, yielding $\lambda y_1{:}Q.y$.}
+\sol{2.6}{Invert application and abstraction typing, then apply substitution to the body.}
+\sol{2.7}{Proof detour elimination substitutes the supplied derivation for a discharged assumption; beta reduction performs the corresponding capture-avoiding term substitution under the assignment.}
+\sol{2.8}{The reduction relation permits compatible redexes; a deterministic evaluator chooses one next redex and therefore one path.}
+\sol{2.9}{Alpha-rename the binder fresh for $u$, weaken $u$ into the extended context, apply the induction hypothesis, and reintroduce the lambda.}
+\sol{2.10}{Use the induction hypothesis on the function subterm and reapply application typing.}
+\sol{2.11}{A stable path alphabet such as \texttt{fn,arg,body} is sufficient; recheck that the recorded path identifies a redex and preserves the invariant type.}
+\sol{2.12}{Strong normalization forbids every infinite reduction sequence; termination of one strategy, and especially termination on fixtures, is strictly weaker.}
 
-\section*{2.1 Checkpoint}
-\[
-(\lambda x{:}P.x)\,u\step u.
-\]
-This is the beta rule with body $x$ and replacement $u$.
+\chapter{Solutions to Chapter 3}
+\sol{3.1}{$\times I$ builds a pair; $\times E_1$ and $\times E_2$ project its components.}
+\sol{3.2}{$\pi_2\langle a,b\rangle\step b$.}
+\sol{3.3}{The pair retains both witnesses and therefore supports two computationally distinct projections.}
+\sol{3.4}{$\lambda x{:}P.\langle x,x\rangle:P\to(P\times P)$.}
+\sol{3.5}{$\lambda p{:}P\times Q.\langle\pi_2p,\pi_1p\rangle:(P\times Q)\to(Q\times P)$.}
+\sol{3.6}{Reduce inside the first component if required, then the outer projection; final result is the normalized first component.}
+\sol{3.7}{Both eliminate a compound object by selecting a field; the logical reading is scoped to conjunction evidence.}
+\sol{3.8}{Canonical forms follows from the declared value grammar plus typing inversion; it says nothing about untyped host data.}
+\sol{3.9}{Substitution distributes recursively through pair construction and projection; invoke the induction hypothesis on the component subderivations.}
+\sol{3.10}{Invert the pair typing and select the corresponding component type for each projection reduction.}
+\sol{3.11}{Reject projection of non-products, ill-typed pair components, and mismatched claimed projection types.}
+\sol{3.12}{Product eta $p\defeq\langle\pi_1p,\pi_2p\rangle$ is an equational law here, not a designated one-step evaluator rule.}
 
-\section*{2.2 Checkpoint}
-The substitution lemma assumes $\Gamma,x{:}A\vdash t:B$ and $\Gamma\vdash u:A$. It concludes $\Gamma\vdash t[u/x]:B$.
+\chapter{Solutions to Chapter 4}
+\sol{4.1}{$+I_1$ maps $a:A$ to $\operatorname{inl}(a):A+B$; $+I_2$ is symmetric.}
+\sol{4.2}{The eliminator must have one well-defined result type regardless of which injection is observed.}
+\sol{4.3}{A case over $\operatorname{inr}(b)$ contracts to the right branch with $b$ substituted for its binder.}
+\sol{4.4}{$\lambda x{:}P.\operatorname{inl}(x):P\to(P+Q)$.}
+\sol{4.5}{Case on the input; map left $p$ to $\operatorname{inr}(p)$ and right $q$ to $\operatorname{inl}(q)$.}
+\sol{4.6}{Given $f:P\to R$ and $g:Q\to R$, case on $s:P+Q$ and return $f p$ or $g q$; both have type $R$.}
+\sol{4.7}{A Boolean flag contains a tag only; a sum contains a tag plus evidence/payload for the chosen branch.}
+\sol{4.8}{The case consumer can observe which proof constructor was used and may compute differently.}
+\sol{4.9}{Substitute recursively in the scrutinee and both branches, alpha-renaming branch binders when necessary.}
+\sol{4.10}{Invert the right injection and branch typing, then use substitution to type the selected reduct.}
+\sol{4.11}{AST fields: scrutinee, left binder/body, right binder/body; type both bodies under extended contexts and require equal codomains.}
+\sol{4.12}{A sum eta principle belongs to the equational layer unless explicitly oriented as a reduction; it is not one of the chapter's principal operational steps.}
 
-\section*{2.3 Checkpoint}
-If a binder $y$ occurs free in the replacement $u$, descending under $\lambda y$ without renaming would turn those free occurrences into bound ones. Alpha-renaming the binder first preserves the meaning and the typing context of $u$.
+\chapter{Solutions to Chapter 5}
+\sol{5.1}{$\star:\Unit$.}
+\sol{5.2}{$\Empty$ represents an unconstructible proposition/type in the core, so it has no constructor.}
+\sol{5.3}{For closed well-typed $t$, either $t$ is a value or the chosen evaluator can take a step.}
+\sol{5.4}{$\lambda e{:}\Empty.\operatorname{abort}_P(e):\Empty\to P$.}
+\sol{5.5}{Arrow/lambda; product/pair; sum/injection; unit/$\star$; empty/no closed value.}
+\sol{5.6}{Use progress on the function; if it steps, lift the step through application; if it is a value, canonical forms expose a lambda.}
+\sol{5.7}{Ex falso is an eliminator conditioned on evidence of $\Empty$; it introduces no such evidence.}
+\sol{5.8}{Type safety excludes stuck well-typed states; evaluator termination concerns one strategy; strong normalization excludes all infinite reduction sequences.}
+\sol{5.9}{Progress the scrutinee; if it is a value, sum canonical forms selects an injection and hence a case redex.}
+\sol{5.10}{Apply the induction hypothesis to the stepped subterm and reapply the surrounding typing rule.}
+\sol{5.11}{Generate syntax independently of the expected progress result, then filter/type-check; include malformed terms as negative controls rather than preconstructing only redexes.}
+\sol{5.12}{Fundamental lemma: a well-typed term instantiated by a substitution mapping each context variable to a reducible term yields a reducible term at the judgment type.}
 
-\section*{2.4 Core}
-\[
-(\lambda f{:}(P\to P).\lambda x{:}P.f\,x)(\lambda z{:}P.z)
-\]
-has type $P\to P$. One beta step gives
-\[
-\lambda x{:}P.(\lambda z{:}P.z)\,x:P\to P,
-\]
-and the inner beta step gives
-\[
-\lambda x{:}P.x:P\to P.
-\]
-The type is invariant at each state.
+\chapter{Solutions to Chapter 6}
+\sol{6.1}{$\Pi(x:A).B(x)$ is a construction producing evidence of $B(a)$ for every supplied $a:A$.}
+\sol{6.2}{$\Sigma(x:A).B(x)$ packages one witness $a$ and evidence of $B(a)$.}
+\sol{6.3}{Application substitutes the supplied $a$ for $x$ in the codomain, yielding $B(a)$.}
+\sol{6.4}{For a two-element domain, a term $f:\Pi(b:\mathrm{Bit}).B(b)$ supplies both indexed cases through one dependent function.}
+\sol{6.5}{A package $\langle a,b\rangle$ has witness $a:A$ and evidence $b:B(a)$.}
+\sol{6.6}{If $B$ is constant in $x$, $\Pi(x:A).B$ reduces to the ordinary nondependent function shape $A\to B$.}
+\sol{6.7}{Like an indexed record, the type of the second field is determined by the first field's value.}
+\sol{6.8}{Erasing the witness can destroy the value that downstream computation needs, so erasure requires a relevance theorem/policy.}
+\sol{6.9}{Read each dependent introduction/elimination premise propositionally and map it to the matching constructor/eliminator; no additional cases are needed for the displayed fragment.}
+\sol{6.10}{The motive/branch must remain well formed after capture-avoiding substitution of the witness and dependent evidence.}
+\sol{6.11}{Enumerate the finite witness domain, recompute the registered predicate for each package, and reject witnesses outside the domain or evidence with the wrong indexed claim.}
+\sol{6.12}{Substitution, preservation, progress/canonical forms, and normalization all require fresh dependent proofs before transfer to a richer calculus.}
 
-\section*{2.5 Core}
-With free $y:P$,
-\[
-(\lambda x{:}P.\lambda y{:}Q.x)\,y
-\]
-would be corrupted by naive substitution into $\lambda y{:}Q.y$. Rename the inner binder to $y_1$ before substituting:
-\[
-(\lambda x{:}P.\lambda y{:}Q.x)\,y\step \lambda y_1{:}Q.y.
-\]
-The free $y:P$ remains free and the result has type $Q\to P$.
+\chapter{Solutions to Chapter 7}
+\sol{7.1}{Cut composes $\Gamma\Rightarrow A$ and $\Delta,A\Rightarrow C$ into $\Gamma,\Delta\Rightarrow C$.}
+\sol{7.2}{$A$ is the cut formula: the explicit intermediate proposition introduced by one premise and consumed by the other.}
+\sol{7.3}{The first derivation supplies an intermediate object that the second derivation uses; eliminating the intermediate composes the proofs directly.}
+\sol{7.4}{Any correct sequent derivation that derives an implication then cuts it into a consumer earns credit if the end sequent is preserved.}
+\sol{7.5}{Under the ND/term translation, substitute the proof/term for the open assumption corresponding to the cut formula.}
+\sol{7.6}{One standard measure is lexicographic: cut-formula complexity first, then proof height or sum of premise heights.}
+\sol{7.7}{Both remove an intermediate proof detour, but their syntax and local transformations are different and related by translation.}
+\sol{7.8}{Finite traces cover only enumerated proof trees; Hauptsatz quantifies over every derivation in the calculus.}
+\sol{7.9}{Expose the final implication-right and implication-left rules and replace the cut on $A\to B$ by cuts on structurally smaller components/premises.}
+\sol{7.10}{Commute a cut upward past an inference in which the cut formula is not principal, preserving the end sequent while reducing height.}
+\sol{7.11}{Store rule tag, premise trees, end sequent, and optional cut formula; validate the conclusion from the rule and premises.}
+\sol{7.12}{Cut admissibility requires an induction proving every derivation with cut can be transformed into a cut-free derivation of the same end sequent.}
 
-\section*{2.6 Core}
-From typing the application infer an arrow type for its function and the matching argument type:
-\[
-\Gamma\vdash \lambda x{:}A.t:A\to B,\qquad \Gamma\vdash u:A.
-\]
-Invert abstraction typing to get $\Gamma,x{:}A\vdash t:B$. Apply substitution to obtain $\Gamma\vdash t[u/x]:B$.
+\chapter{Solutions to Chapter 8}
+\sol{8.1}{$\neg A$ abbreviates $A\to\Empty$.}
+\sol{8.2}{One must supply either a left injection with $A$ evidence or a right injection with $\neg A$ evidence.}
+\sol{8.3}{Because extension $w_1$ forces $P$ but not $\Empty$, the implication $P\to\Empty$ fails at $w_0$.}
+\sol{8.4}{$w_1$ forces $P$, so it forces $P\lor\neg P$ by the left disjunct.}
+\sol{8.5}{If an atomic proposition is forced at $w$, it remains forced at every extension $v\ge w$.}
+\sol{8.6}{Any finite monotone frame that falsifies the selected schema is acceptable if all forcing clauses are checked.}
+\sol{8.7}{The semantic countermodel yields syntactic nonderivability only after applying soundness: derivable formulas are valid in every model.}
+\sol{8.8}{Failure of constructive derivability means the rules do not construct the formula; it is not the same assertion as classical falsity under a valuation.}
+\sol{8.9}{Induct on formula structure; for implication use transitivity of the accessibility relation to propagate the universal extension condition.}
+\sol{8.10}{Check root nonforcing of $P$, root nonforcing of $\neg P$, and the disjunction clause; verify monotonic atomic forcing.}
+\sol{8.11}{Require a finite preorder, monotone atomic forcing, valid formula syntax, and referenced worlds/propositions to exist.}
+\sol{8.12}{Excluded middle adds a proof principle not generated by witness-producing introduction rules, altering normalization/extraction interpretations even when classical truth tables are familiar.}
 
-\section*{2.7 Synthesis}
-A principal natural-deduction detour is an introduction immediately consumed by its matching elimination. Under the selected term assignment, that proof fragment receives a beta-redex term. Eliminating the proof detour replaces uses of the discharged assumption by the supplied derivation; beta reduction performs the corresponding capture-avoiding term substitution. The relationship is exact under the translation but the derivation transformation and term reduction remain differently presented operations.
+\chapter{Solutions to Chapter 9}
+\sol{9.1}{A continuation is a function describing how the rest of the computation consumes a produced value.}
+\sol{9.2}{Fixing $R$ gives every continuation a common target and makes the translation typing equations determinate.}
+\sol{9.3}{With $R=\Empty$, a CPS result has a double-negation-like outer shape.}
+\sol{9.4}{Under the stated rules, translate identity so it receives a continuation and passes its argument to that continuation.}
+\sol{9.5}{Each fresh continuation accepts exactly the translated intermediate value and returns the common answer type $R$.}
+\sol{9.6}{Evaluate both forms on the same closed fixture; the chapter requires equal observed result for the retained examples, not general contextual equivalence.}
+\sol{9.7}{A translation provides a defined structure-preserving map; that is more precise than analogy but still relates distinct source and target syntaxes.}
+\sol{9.8}{Control can make continuation/context behavior computationally relevant, so constructive erasure/extraction theorems need new hypotheses.}
+\sol{9.9}{Assume the translated body is well typed under the translated argument; build the target function and pass it to the current continuation.}
+\sol{9.10}{Translate function and argument through fresh continuations, type each bound intermediate, then apply the translated function and outer continuation.}
+\sol{9.11}{Generate fresh names outside the union of source free variables and names introduced earlier by the translation; alpha-rename source binders if needed.}
+\sol{9.12}{One must prove a normalization theorem for the actual extended control calculus, including its new reduction rules; $\mathrm{CH}\text{-}0$ normalization cannot simply be cited.}
 
-\section*{2.8 Synthesis}
-The mathematical beta relation can reduce a redex at any compatible position and is not itself an evaluation policy. A deterministic normal-order evaluator chooses a particular next redex and therefore selects one path through the reduction graph. The evaluator is an algorithm over the relation, not the relation itself.
+\chapter{Solutions to Chapter 10}
+\sol{10.1}{Proof evidence is relevant when a context can observe which inhabitant was supplied and change retained behavior.}
+\sol{10.2}{Left and right injections of a sum can select different case branches.}
+\sol{10.3}{No. $\mathrm{CH}\text{-}0$ treats proof terms as ordinary computationally meaningful inhabitants unless a separate quotient/erasure rule is stated.}
+\sol{10.4}{$\operatorname{inl}(a)$ and $\operatorname{inr}(b)$ inhabit the same sum type but a case context can return different results.}
+\sol{10.5}{Any argument used only in checked ghost/erasable positions is acceptable under the toy policy.}
+\sol{10.6}{A value that controls a retained branch must remain; erasing it can change observable output.}
+\sol{10.7}{Proof irrelevance is a semantic/type-theoretic equality principle; dead-code elimination is a compiler transformation justified by a program analysis.}
+\sol{10.8}{Extraction may keep only a computational projection of the proof term, so the source proof and deployed program need not be byte- or syntax-identical.}
+\sol{10.9}{Apply the induction hypotheses to function and argument; since ordinary application is retained, reconstructed application preserves the retained behavior.}
+\sol{10.10}{The checker must prove the ghost-bound value has no dependency path to retained constructors, guards, outputs, or effects.}
+\sol{10.11}{Mark a branch-controlling Boolean/tag as ghost; a sound checker must reject the erasure because outputs differ.}
+\sol{10.12}{Proof irrelevance can simplify proposition fields used solely for certification; the intentional cost is losing distinctions among their inhabitants.}
 
-\section*{2.9 Proof Workshop}
-Suppose the final derivation types $\lambda y{:}C.s:C\to D$. Alpha-rename $y$ so that $y\neq x$ and $y\notin FV(u)$. The premise is $\Gamma,x{:}A,y{:}C\vdash s:D$. By weakening, $\Gamma,y{:}C\vdash u:A$. Apply the induction hypothesis to get $\Gamma,y{:}C\vdash s[u/x]:D$, then reapply $\to I$ to conclude $\Gamma\vdash \lambda y{:}C.s[u/x]:C\to D$.
+\chapter{Solutions to Chapter 11}
+\sol{11.1}{Evaluation runs an already executable term; extraction transforms a proof-bearing artifact into the program intended for execution.}
+\sol{11.2}{The selected existential extractor retains the witness and drops the already-checked certificate.}
+\sol{11.3}{Replay verifies that the exact retained witness still satisfies the registered decidable specification.}
+\sol{11.4}{Example: witness $2$ for $n^2=4$ over the finite domain, paired with a checked certificate.}
+\sol{11.5}{The runtime needs the witness; the proof certificate may be dropped only after the pipeline has checked it under the stated policy.}
+\sol{11.6}{Pair witness $3$ with a forged certificate claiming $3^2=4$; the checker must reject it before extraction.}
+\sol{11.7}{Proof irrelevance concerns equality/observability of proofs; extraction is a transformation deciding what evidence is retained at runtime.}
+\sol{11.8}{Classical axioms, opaque constants, effects, unsafe casts, or external oracles are acceptable examples.}
+\sol{11.9}{Acceptance establishes predicate($a$); extraction returns that same $a$; replay recomputes the same predicate, hence succeeds.}
+\sol{11.10}{A stronger theorem would quantify over all well-typed sources and prove compilation/erasure semantic preservation, including every source construct and runtime rule.}
+\sol{11.11}{Checker validates proof-bearing input; extractor transforms only validated artifacts; replay independently checks the retained result/specification pair.}
+\sol{11.12}{Execution validates one pipeline/output relation; it cannot detect that the formal source statement was an incorrect encoding of the intended informal theorem.}
 
-\section*{2.10 Proof Workshop}
-Suppose $t_1\step t_1'$ and the whole term is $t_1\,t_2$. Typing gives $\Gamma\vdash t_1:A\to B$ and $\Gamma\vdash t_2:A$. By the induction hypothesis, $\Gamma\vdash t_1':A\to B$. Reapply application typing to obtain $\Gamma\vdash t_1'\,t_2:B$.
+\chapter{Solutions to Chapter 12}
+\sol{12.1}{Typing says which instances are legal; parametricity adds uniform relational behavior across those instances.}
+\sol{12.2}{With no type-specific operations or constants of unknown $\alpha$, the only generally available $\alpha$ is the supplied argument, under the usual purity/parametricity assumptions.}
+\sol{12.3}{It is exhaustive evidence over the declared finite fixture universe, not a proof of the abstraction theorem.}
+\sol{12.4}{For identity, every related pair $(a,b)\in R$ maps to the same pair $(a,b)$, which remains in $R$.}
+\sol{12.5}{A type-specific branch that flips one finite carrier while leaving the other unchanged will violate a suitably chosen relation.}
+\sol{12.6}{Runtime type inspection supplies representation-specific information that ordinary parametric reasoning assumes unavailable.}
+\sol{12.7}{Both prevent clients/implementations from exploiting hidden representation details beyond the declared interface.}
+\sol{12.8}{Purity and relational parametricity are two central hypotheses; termination/effect assumptions may also matter for the exact theorem.}
+\sol{12.9}{The finite proposition follows by enumerating every declared related input pair and checking target-relation membership of the outputs.}
+\sol{12.10}{Arrow relations relate $f$ and $g$ when they map every pair of related inputs to a pair of outputs related at the codomain relation.}
+\sol{12.11}{Generate nonempty, empty, total, singleton, and structured relations deliberately so the suite cannot pass solely because every relation is vacuous.}
+\sol{12.12}{Independent type instantiations test samples; parametricity quantifies over relations connecting instantiations and thereby constrains cross-instance behavior.}
 
-\section*{2.11 Design Clinic}
-Represent a redex path as a list over a stable alphabet, for example \texttt{fn}, \texttt{arg}, and \texttt{body}. The root redex has path \texttt{[]}; a redex inside the function of an application may have \texttt{["fn", ...]}. The trace checker should verify that following the recorded path in the pre-state finds a contractible redex and that replacing exactly that subtree yields the recorded post-state. It should also recheck the invariant type after the step.
+\chapter{Solutions to Chapter 13}
+\sol{13.1}{Elaboration fills in/constructs explicit proof terms; kernel checking independently validates the explicit object against the small trusted rules.}
+\sol{13.2}{The kernel need not trust an elaborator success flag; it receives only explicit syntax/context/type data that it reparses and checks.}
+\sol{13.3}{At minimum the kernel implementation, parser, runtime/hardware, foundational rules, and correctness of the formalized statement remain trusted obligations.}
+\sol{13.4}{Change the claim for $\lambda x{:}P.x$ from $P\to P$ to $Q\to Q$; independent inference rejects it.}
+\sol{13.5}{If elaborator and kernel share a buggy parse result, the apparent independent check may inherit the same interpretation error.}
+\sol{13.6}{Formalize the unintended theorem $P\to P$ when the prose intended a stronger claim; the proof can be fully correct for the wrong statement.}
+\sol{13.7}{Both carry an explicit object that a smaller verifier can check without trusting the producer's entire reasoning process.}
+\sol{13.8}{A smaller checker reduces the trusted surface and improves auditability; bugs, foundational assumptions, and specification errors remain possible.}
+\sol{13.9}{By interface definition the kernel discards producer authority and recomputes derivability from explicit inputs, so acceptance is a function of kernel rules and object only.}
+\sol{13.10}{Parser correctness is a separate obligation: the checked AST must represent the supplied serialized certificate without ambiguity or producer-controlled reinterpretation.}
+\sol{13.11}{Use explicit context, term, claimed type, and structured diagnostics; avoid accepting opaque producer-side validation tokens.}
+\sol{13.12}{Credit requires identifying informal specification, formal statement, elaboration, kernel, compiler/runtime, OS/hardware; formal proof primarily addresses derivability inside the formal statement/calculus.}
 
-\section*{2.12 Challenge}
-Strong normalization for $\mathrm{CH}\text{-}0$ states: for every well-typed term $\Gamma\vdash t:A$, there is no infinite sequence $t=t_0\step t_1\step t_2\step\cdots$ of allowed reductions. Termination of one deterministic evaluator states only that its selected sequence terminates. Even if that evaluator terminates for every input, another reduction strategy could in principle expose an infinite sequence unless the calculus theorem rules that out. Fixture termination is weaker still because it quantifies over only the retained examples.
+\chapter{Solutions to Chapter 14}
+\sol{14.1}{A service can be correct precisely by remaining available for further legal messages; termination may mean service failure.}
+\sol{14.2}{Examples: who sends first, allowed message order, peer duality, resource linearity, or liveness.}
+\sol{14.3}{A handler may terminate on each message while the sequence of messages violates the protocol transition relation.}
+\sol{14.4}{Example: states \texttt{start} and \texttt{await\_ack}; \texttt{hello} moves to await-ack and \texttt{ack} returns to start.}
+\sol{14.5}{An \texttt{ack} in the initial state violates the request-before-response ordering.}
+\sol{14.6}{Safety: every observed transition is protocol-legal. Liveness: under stated scheduling/peer assumptions an enabled conversation eventually makes required progress.}
+\sol{14.7}{Session fidelity concerns conformance to typed communication structure; distributed correctness additionally depends on failures, scheduling, networks, fairness, persistence, and other system assumptions.}
+\sol{14.8}{Strongest surviving form: exact rule/term and principal normalization correspondences in scoped constructive calculi, with translations or added hypotheses required beyond them.}
+\sol{14.9}{Use two terminating local handlers plus an illegal initial \texttt{ack}; local termination holds while the trace checker rejects the first transition.}
+\sol{14.10}{Global progress needs complementary endpoint typing plus assumptions about channel semantics, scheduling/fairness, recursion, and absence/handling of failures appropriate to the theorem.}
+\sol{14.11}{Expose endpoint role, protocol state, permitted send/receive labels and payloads, transition targets, resource usage, and recursion/termination points.}
+\sol{14.12}{Minimum vocabulary: channels/endpoints, duality, send/receive, branch/select, protocol state, linear/resource discipline, recursion, operational semantics, fidelity, progress, and deadlock hypotheses.}
 
 \backmatter
 \chapter*{Scope note}
-These solutions support the internal teaching kernel. They neither replace the theorem audit nor satisfy the independent mathematical review gate.
+The solutions support internal pedagogical closure. They neither replace the theorem audit nor satisfy Gate 8 independent mathematical review.
 \end{document}

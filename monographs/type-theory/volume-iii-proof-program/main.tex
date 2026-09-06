@@ -19,20 +19,85 @@
 \nopagecolor\color{GCLInk}
 
 \chapter*{Scope and series thesis}
+\addcontentsline{toc}{chapter}{Scope and series thesis}
 The phrase ``grand unified theory'' names a research thesis, not an established theorem. This volume asks why logical construction and computational construction repeatedly share the same laws.
 
-The Stage-B teaching kernel fixes a constructive Curry--Howard core, $\mathrm{CH}\text{-}0$, before introducing dependent quantifiers, classical control, extraction, parametricity or proof-assistant architecture. Every theorem is scoped to the exact calculus named with it. Volumes I and II are inherited as composition-complete and durably admitted works whose independent mathematical reviews remain pending; this volume does not upgrade their institutional state.
+The answer is deliberately stratified. In the constructive core $\mathrm{CH}\text{-}0$, natural-deduction rules and typed term constructors admit an exact rule-level correspondence, and principal proof detours align with computational redexes. Dependent quantifiers are treated separately in $\mathrm{CHD}\text{-}1$; sequent cut in $\mathrm{LJ}\text{-}0$; classical/control interpretations in $\mathrm{CHC}\text{-}1$; and parametricity only as the restricted preview $\mathrm{CHF}\text{-}1$. Results are not transferred silently between these layers.
+
+Volumes I and II are inherited at their actual institutional state: composition complete and durably admitted, with independent mathematical review pending. This volume does not upgrade that status.
+
+\chapter*{Preface: why proof/program needs its own volume}
+\addcontentsline{toc}{chapter}{Preface}
+A slogan can hide the work that makes it true. ``Propositions are types'' and ``proofs are programs'' become mathematically informative only after a logic, a term calculus, translations, reduction relations, and metatheorems have been fixed. The volume therefore starts small, proves exact correspondences where possible, and then subjects them to pressure: products, sums, dependent witnesses, cut, classical principles, erasure, extraction, polymorphism, proof-assistant trust, and finally open interaction.
+
+The governing rule is simple: an analogy may motivate a construction, but it may not impersonate a theorem. Where the proof/program relation is exact, the text says why. Where a translation is required, it names the translation. Where evidence is only executable or finite, it remains bounded to that evidence.
 
 \chapter*{Series orientation}
-Volume I asked what must exist before a program can be meaningful. Volume II asked how dependent formation principles build new computational worlds. Volume III now asks why the rules for constructing evidence so often have the same shape as the rules for constructing programs. The answer will be strongest where an exact term assignment and normalization correspondence can be proved, weaker where a translation is required, and deliberately adversarial where proof relevance, classical control, effects, or open interaction break the naive slogan.
+\addcontentsline{toc}{chapter}{Series orientation}
+Volume I asked what must exist before a program can be meaningful. Volume II asked how dependent formation principles build new computational worlds. Volume III asks why the laws of logical construction so often have computational form. Its endpoint is equally important: closed proof-term evaluation stops being an adequate primary model when computation becomes an open conversation. That threshold forces Volume IV, \emph{PROTOCOL: Computation as Communication}.
 
 \tableofcontents
 \mainmatter
-\input{chapters/ch01.tex}
-\input{chapters/ch02.tex}
+\index{Curry--Howard correspondence}\index{natural deduction}\index{proof term}\input{chapters/ch01.tex}
+\index{normalization}\index{beta reduction}\index{substitution}\input{chapters/ch02.tex}
+\index{conjunction}\index{product type}\input{chapters/ch03.tex}
+\index{disjunction}\index{sum type}\index{case analysis}\input{chapters/ch04.tex}
+\index{canonical forms}\index{progress}\index{preservation}\index{strong normalization}\input{chapters/ch05.tex}
+\index{dependent product}\index{dependent sum}\index{universal quantification}\index{existential quantification}\input{chapters/ch06.tex}
+\index{sequent calculus}\index{cut elimination}\index{cut rule}\input{chapters/ch07.tex}
+\index{intuitionistic logic}\index{classical logic}\index{Kripke semantics}\index{excluded middle}\input{chapters/ch08.tex}
+\index{continuation-passing style}\index{control operator}\index{double negation}\input{chapters/ch09.tex}
+\index{proof relevance}\index{proof irrelevance}\index{erasure}\input{chapters/ch10.tex}
+\index{program extraction}\index{witness}\index{certificate replay}\input{chapters/ch11.tex}
+\index{parametricity}\index{relational interpretation}\index{polymorphism}\input{chapters/ch12.tex}
+\index{proof assistant}\index{kernel}\index{elaborator}\index{trusted computing base}\input{chapters/ch13.tex}
+\index{protocol}\index{interaction}\index{duality}\index{deadlock}\index{liveness}\input{chapters/ch14.tex}
 
 \backmatter
-\chapter*{Current threshold}
-The first tranche establishes implication-level proof/term assignment and the principal detour/beta correspondence. The next internal composition stage expands the same discipline through products, sums, empty/unit, dependent quantifiers, sequent calculus, constructive/classical boundaries, extraction, parametricity and proof-assistant trust boundaries before the final transition to open protocols.
+\chapter*{Formal reference and notation guide}
+\addcontentsline{toc}{chapter}{Formal reference and notation guide}
+\begin{longtable}{p{0.24\textwidth}p{0.66\textwidth}}
+$\Gamma,\Delta$ & typing/proof contexts.\\
+$\Gamma\vdash t:A$ & term $t$ has type $A$ under context $\Gamma$.\\
+$\Gamma\vdash A$ & derivability with the selected proof term suppressed.\\
+$\assign{D}$ & proof term assigned to derivation $D$.\\
+$t\step t'$ & one operational reduction step in the stated calculus/strategy.\\
+$t\steps t'$ & zero or more operational steps.\\
+$t\defeq u$ & calculus-scoped definitional/equational equality; not one-step reduction.\\
+$A\times B$, $A+B$ & product/conjunction and sum/disjunction type formers in $\mathrm{CH}\text{-}0$.\\
+$\Unit$, $\Empty$ & unit/truth and empty/falsity types.\\
+$\Pi(x:A).B(x)$, $\Sigma(x:A).B(x)$ & dependent product/universal and dependent sum/existential constructions in $\mathrm{CHD}\text{-}1$.\\
+$\Gamma\Rightarrow A$ & single-succedent sequent in $\mathrm{LJ}\text{-}0$.\\
+$w\Vdash A$ & Kripke-world forcing relation used in Chapter 8.\\
+$R$ & local answer type in Chapter 9 or local relation in Chapter 12; the chapter fixes the intended meaning.\\
+\end{longtable}
+
+\chapter*{Course and self-study roadmap}
+\addcontentsline{toc}{chapter}{Course and self-study roadmap}
+Chapters 1--5 form a constructive core suitable for a first proof/program module. Chapters 6--9 form the logic-boundary module: dependent quantification, sequent cut, intuitionistic/classical separation, and control. Chapters 10--13 form the implementation-and-evidence module: relevance, extraction, parametricity, and kernel trust. Chapter 14 is the transition seminar into typed interaction. Each teaching chapter has twelve exercises and one executable laboratory; the solutions companion contains a keyed solution or rubric for every exercise.
+
+\chapter*{Illustration and production note}
+\addcontentsline{toc}{chapter}{Illustration and production note}
+The volume contains 42 canonical TikZ plates. Each plate carries a single pedagogical burden and an explicit scope or analogy limit. Computed claims represented in plates remain bound to the corresponding laboratory/evidence records. Visual closure requires inspection at manuscript and folio scale; source conformance alone does not satisfy that gate.
+
+\chapter*{Selected bibliography}
+\addcontentsline{toc}{chapter}{Selected bibliography}
+\begin{thebibliography}{99}
+\bibitem{church1940} Alonzo Church. ``A Formulation of the Simple Theory of Types.'' \emph{Journal of Symbolic Logic} 5(2), 1940, 56--68.
+\bibitem{gentzen1935} Gerhard Gentzen. ``Untersuchungen über das logische Schließen I.'' \emph{Mathematische Zeitschrift} 39, 1935, 176--210.
+\bibitem{prawitz1965} Dag Prawitz. \emph{Natural Deduction: A Proof-Theoretical Study}. Almqvist \& Wiksell, 1965.
+\bibitem{howard1980} William A. Howard. ``The Formulae-as-Types Notion of Construction.'' In J. P. Seldin and J. R. Hindley, eds., \emph{To H. B. Curry: Essays on Combinatory Logic, Lambda Calculus and Formalism}, Academic Press, 1980, 479--490.
+\bibitem{girard1972} Jean-Yves Girard. \emph{Interprétation fonctionnelle et élimination des coupures de l'arithmétique d'ordre supérieur}. Doctoral thesis, Université Paris VII, 1972.
+\bibitem{reynolds1983} John C. Reynolds. ``Types, Abstraction and Parametric Polymorphism.'' In \emph{Information Processing 83}, 513--523.
+\bibitem{griffin1990} Timothy G. Griffin. ``A Formulae-as-Types Notion of Control.'' \emph{Proceedings of POPL}, 1990, 47--58.
+\bibitem{pierce2002} Benjamin C. Pierce. \emph{Types and Programming Languages}. MIT Press, 2002.
+\bibitem{sorensen2006} Morten Heine Sørensen and Paweł Urzyczyn. \emph{Lectures on the Curry--Howard Isomorphism}. Elsevier, 2006.
+\bibitem{harper2016} Robert Harper. \emph{Practical Foundations for Programming Languages}, 2nd ed. Cambridge University Press, 2016.
+\end{thebibliography}
+
+\chapter*{Transition: from construction to interaction}
+\addcontentsline{toc}{chapter}{Transition to Volume IV}
+The volume began with an exact question about constructions: when a proof is assembled from introduction and elimination rules, when does its structure also define a program? The answer survives substantial pressure, but not unchanged. The final boundary is structural. An indefinitely open conversation is not merely a closed term that has failed to normalize. It has peer-relative obligations, protocol state, branching, resource use, and liveness questions. Volume IV therefore replaces the closed input--output object with typed interaction.
+
 \printindex
 \end{document}

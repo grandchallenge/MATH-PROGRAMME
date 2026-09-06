@@ -1,0 +1,70 @@
+\chapter{Disjunction Makes a Choice}
+\label{ch:disjunction}
+
+A constructive proof of $A\lor B$ does more than certify that one side holds. It exposes which side was constructed and carries the evidence needed by that branch. In $\mathrm{CH}\text{-}0$, this is a sum type.
+
+\begin{formal}[title={Sum rules}]
+\[
+\frac{\Gamma\vdash a:A}{\Gamma\vdash\operatorname{inl}(a):A+B}\;+I_1
+\qquad
+\frac{\Gamma\vdash b:B}{\Gamma\vdash\operatorname{inr}(b):A+B}\;+I_2
+\]
+\[
+\frac{\Gamma\vdash s:A+B\quad\Gamma,x{:}A\vdash t:C\quad\Gamma,y{:}B\vdash u:C}
+{\Gamma\vdash\operatorname{case}\;s\;\operatorname{of}\;\operatorname{inl}(x)\Rightarrow t\mid\operatorname{inr}(y)\Rightarrow u:C}\;+E.
+\]
+\end{formal}
+
+Case analysis is typed branching: the scrutinee chooses a branch, but both branches must converge on the same result type $C$.
+
+\input{plates/plate10.tex}
+
+\begin{lemma}[Sum canonical form]
+If $v$ is closed, $\vdash v:A+B$, and $v$ is a value, then either $v=\operatorname{inl}(v_A)$ with $\vdash v_A:A$, or $v=\operatorname{inr}(v_B)$ with $\vdash v_B:B$.
+\end{lemma}
+\begin{proof}
+By inspection of the value grammar and inversion of typing. No other value constructor concludes with a sum type.
+\end{proof}
+
+\begin{theorem}[Principal case preservation]
+A well-typed case expression whose scrutinee is a matching injection contracts to a well-typed selected branch of the same result type.
+\end{theorem}
+\begin{proof}
+For the left case, inversion gives $\Gamma\vdash a:A$ and $\Gamma,x{:}A\vdash t:C$. The reduct is $t[a/x]$, typed $C$ by substitution. The right case is symmetric.
+\end{proof}
+
+\input{plates/plate11.tex}
+
+\begin{workedexample}[title={Choice is evidence}]
+The term
+\[
+\lambda x{:}P.\operatorname{inl}(x):P\to(P+Q)
+\]
+not only proves the disjunction; it records that the left alternative was chosen. A consumer can inspect that constructor and run the corresponding branch. This computational choice is precisely what a constructive disjunction proof contributes.
+\end{workedexample}
+
+\input{plates/plate12.tex}
+
+\begin{warningbox}
+A sum inhabitant is not merely a Boolean bit. It carries a tag and a payload. Conversely, this chapter does not assert that every logical disjunction in every semantics should be implemented as a tagged union.
+\end{warningbox}
+
+\begin{labbox}
+Run \texttt{python labs/lab04_sums.py}. It evaluates retained left/right case fixtures, verifies branch-result type agreement, and rejects mismatched branch codomains.
+\end{labbox}
+
+\section*{Exercises}\addcontentsline{toc}{section}{Exercises}
+\begin{enumerate}[label=\textbf{4.\arabic*.}]
+\item \textbf{Checkpoint.} State both sum introduction rules.
+\item \textbf{Checkpoint.} Why must both case branches have type $C$?
+\item \textbf{Checkpoint.} Contract a case over $\operatorname{inr}(b)$.
+\item \textbf{Core.} Derive $P\to(P+Q)$.
+\item \textbf{Core.} Derive $(P+Q)\to(Q+P)$.
+\item \textbf{Core.} Type a case expression that maps $P+Q$ into a common type $R$ given $P\to R$ and $Q\to R$.
+\item \textbf{Synthesis.} Contrast sum evidence with a Boolean truth flag.
+\item \textbf{Synthesis.} Explain how case analysis exposes proof relevance.
+\item \textbf{Proof Workshop.} Prove substitution for the case constructor, including both binders.
+\item \textbf{Proof Workshop.} Prove principal case preservation for the right injection.
+\item \textbf{Design Clinic.} Specify an AST and type-checking rule for case expressions.
+\item \textbf{Challenge.} State a sum eta principle and classify it as operational, equational, or semantic under the conventions of this volume.
+\end{enumerate}

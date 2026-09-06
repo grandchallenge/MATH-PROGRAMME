@@ -1,0 +1,69 @@
+\chapter{Quantifiers Are Dependent Construction}
+\label{ch:quantifiers}
+
+The propositions-as-types reading becomes substantially more expressive when the type of the evidence may depend on a value. Volume II developed the dependent formation rules. Here we reuse them without changing their meaning and ask what logical construction they encode.
+
+For a family $x:A\vdash B(x)\type$, a term of $\Pi(x:A).B(x)$ is a construction that, given each $a:A$, produces evidence of $B(a)$. A term of $\Sigma(x:A).B(x)$ is a witness $a:A$ paired with evidence of $B(a)$.
+
+\input{plates/plate16.tex}
+
+\begin{formal}[title={Dependent universal/existential reading}]
+The core rules used here are
+\[
+\frac{\Gamma,x{:}A\vdash b:B(x)}{\Gamma\vdash\lambda x.b:\Pi(x{:}A).B(x)}
+\qquad
+\frac{\Gamma\vdash f:\Pi(x{:}A).B(x)\quad\Gamma\vdash a:A}{\Gamma\vdash f\,a:B(a)}
+\]
+and
+\[
+\frac{\Gamma\vdash a:A\quad\Gamma\vdash b:B(a)}{\Gamma\vdash\langle a,b\rangle:\Sigma(x{:}A).B(x)}.
+\]
+Elimination for $\Sigma$ exposes a witness together with its dependent evidence under the usual substitution discipline.
+\end{formal}
+
+\begin{proposition}[Rule-level quantifier correspondence]
+Under the $\mathrm{CHD}\text{-}1$ reading, dependent product introduction/elimination has the constructor/eliminator shape of constructive universal introduction/instantiation, and dependent sum introduction/elimination has the witness/evidence shape of constructive existential introduction/elimination.
+\end{proposition}
+\begin{proof}
+Read the displayed premises and conclusions propositionally. $\Pi$ introduction abstracts over an arbitrary $x:A$ and returns evidence whose type is $B(x)$; elimination instantiates at a supplied $a$. $\Sigma$ introduction supplies both the witness and evidence at that witness. Its eliminator binds both pieces before producing the motive result. The correspondence is rule-by-rule; no normalization result beyond the separately cited dependent metatheory is used.
+\end{proof}
+
+\input{plates/plate17.tex}
+
+\begin{workedexample}[title={Finite universal construction}]
+Let $\mathrm{Bit}$ have constructors $0,1$, and let $B(b)$ be a family whose evidence records that flipping twice returns $b$. A dependent function
+\[
+f:\Pi(b:\mathrm{Bit}).B(b)
+\]
+contains a method that works for either input. By contrast, a dependent pair
+\[
+p:\Sigma(b:\mathrm{Bit}).B(b)
+\]
+contains one selected bit and evidence about that bit. Universal construction supplies a procedure; existential construction supplies a witness.
+\end{workedexample}
+
+\input{plates/plate18.tex}
+
+\begin{warningbox}
+This chapter does not promote the full dependent metatheory. Volume II is inherited at its actual durable-but-unreviewed state, and $\mathrm{CH}\text{-}0$ strong normalization is not silently generalized to all of $\mathrm{CHD}\text{-}1$.
+\end{warningbox}
+
+\begin{labbox}
+Run \texttt{python labs/lab06_quantifiers.py}. The finite-domain laboratory checks explicit universal tables and existential witness/evidence packages. It is a bounded model of the rule shapes, not a dependent-type-theory kernel.
+\end{labbox}
+
+\section*{Exercises}\addcontentsline{toc}{section}{Exercises}
+\begin{enumerate}[label=\textbf{6.\arabic*.}]
+\item \textbf{Checkpoint.} Read $\Pi(x:A).B(x)$ constructively.
+\item \textbf{Checkpoint.} Read $\Sigma(x:A).B(x)$ constructively.
+\item \textbf{Checkpoint.} What substitution occurs when a dependent function is applied to $a:A$?
+\item \textbf{Core.} Write the type of a function returning a proof family over a two-element domain.
+\item \textbf{Core.} Construct a dependent pair and identify its witness and evidence components.
+\item \textbf{Core.} Explain why ordinary $A\to B$ is a special case of $\Pi$ when $B$ does not depend on $x$.
+\item \textbf{Synthesis.} Compare existential evidence with a database record whose second field is indexed by the first.
+\item \textbf{Synthesis.} Explain why witness erasure can change the computational interpretation of an existential proof.
+\item \textbf{Proof Workshop.} Prove the rule-level $\Pi$ correspondence by induction on the selected derivation forms.
+\item \textbf{Proof Workshop.} State the substitution side condition needed by $\Sigma$ elimination.
+\item \textbf{Design Clinic.} Specify a finite-domain checker for dependent witness packages and one malformed package it must reject.
+\item \textbf{Challenge.} Identify exactly which $\mathrm{CH}\text{-}0$ metatheorems would require new proof obligations before being claimed for a richer dependent calculus.
+\end{enumerate}
