@@ -1,9 +1,14 @@
-# Evidence retrigger for composition-complete candidate ddb9fae354df7aadeae5852962e204581bbb78b9
+# Push-trigger recovery for composition-complete monograph candidate ddb9fae354df7aadeae5852962e204581bbb78b9
 name: Type Theory Volume III RC build
 
 on:
   pull_request:
     branches: [main]
+    paths:
+      - 'monographs/type-theory/volume-iii-proof-program/**'
+      - '.github/workflows/type-theory-volume-iii-rc-build.yml'
+  push:
+    branches: [docs/type-theory-vol-iii-rc1-003]
     paths:
       - 'monographs/type-theory/volume-iii-proof-program/**'
       - '.github/workflows/type-theory-volume-iii-rc-build.yml'
@@ -21,11 +26,11 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
-      - name: Checkout exact pull-request head
+      - name: Checkout exact event head
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Install publication toolchain
         run: |
@@ -41,7 +46,8 @@ jobs:
           {
             echo "repository=${GITHUB_REPOSITORY}"
             echo "head_sha=${GITHUB_SHA}"
-            echo "pr_head_sha=${{ github.event.pull_request.head.sha }}"
+            echo "evidence_head_sha=${{ github.event.pull_request.head.sha || github.sha }}"
+            echo "composition_candidate_sha=ddb9fae354df7aadeae5852962e204581bbb78b9e"
             lualatex --version | head -n 2
             (makeindex 2>&1 | head -n 2) || true
             python3 --version
