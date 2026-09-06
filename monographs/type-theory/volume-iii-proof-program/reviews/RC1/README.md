@@ -32,7 +32,7 @@ The complete bundle contains the exact PDFs, the exact source archive, review pa
 - manuscript PDF SHA-256: `caf12162ff052db869356c8c0d0fa96dce77b8c40de3bf576e61a2fce30574f3`
 - solutions PDF SHA-256: `2e1eae3596f7cb386dc2c93064bcc3d1c85f9511f46f49431ed9ede62836677e`
 - plate folio PDF SHA-256: `ae718ef486fbee4a89fe5d498a48228d5499100d9e84d04bf67517fb520a0de0`
-- reviewer bundle SHA-256: `__BUNDLE_SHA256__`
+- reviewer bundle SHA-256: `17318481fdcf7ffbb10edf0d74ffe71397e609f15ab92f565bfed6c9baa679f3`
 - review tracking issue: `#871`
 
 `REVIEWER_ASSET_MANIFEST.json` records all reviewer-facing convenience-asset identities.

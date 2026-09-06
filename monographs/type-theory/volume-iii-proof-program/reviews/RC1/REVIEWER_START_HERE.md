@@ -29,7 +29,7 @@ Camera-ready PDF SHA-256 values:
 - manuscript: `caf12162ff052db869356c8c0d0fa96dce77b8c40de3bf576e61a2fce30574f3`
 - solutions: `2e1eae3596f7cb386dc2c93064bcc3d1c85f9511f46f49431ed9ede62836677e`
 - plate folio: `ae718ef486fbee4a89fe5d498a48228d5499100d9e84d04bf67517fb520a0de0`
-- reviewer bundle: `__BUNDLE_SHA256__`
+- reviewer bundle: `17318481fdcf7ffbb10edf0d74ffe71397e609f15ab92f565bfed6c9baa679f3`
 
 ## Independence boundary
 
