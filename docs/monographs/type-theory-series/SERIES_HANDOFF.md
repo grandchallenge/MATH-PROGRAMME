@@ -15,12 +15,13 @@ Before writing a new volume, read in this order:
 1. `SERIES_HANDOFF.md` — this operating contract.
 2. `SERIES_MANIFEST.json` — canonical volume identities, questions, and thresholds.
 3. `SERIES_STYLE_CONTRACT.md` — typography, pedagogy, visual grammar, notation and prose invariants.
-4. `VOLUME_BLUEPRINTS.md` — volume-specific intellectual arcs.
-5. `QUALITY_GATES.md` — audit and release requirements.
-6. `PUBLICATION_STATE_MODEL.md` — the non-collapsible states composition complete, durably admitted, independently reviewed, and published authoritative edition.
-7. `NOTATION_REGISTRY.json` — symbols already claimed or reserved by the series.
-8. `REFERENCE_BASELINE.json` — the exact Volume I reference state and checksums.
-9. For implementation, run `bootstrap_volume.py` and then `validate_volume.py`.
+4. `docs/TECHNICAL_WRITING_REFERENCE.md` — programme-wide technical-writing hierarchy integrating GCL-TCS-00, GCL-POS-01, ASD-STE100, and the mathematical exposition companions.
+5. `VOLUME_BLUEPRINTS.md` — volume-specific intellectual arcs.
+6. `QUALITY_GATES.md` — audit and release requirements.
+7. `PUBLICATION_STATE_MODEL.md` — the non-collapsible states composition complete, durably admitted, independently reviewed, and published authoritative edition.
+8. `NOTATION_REGISTRY.json` — symbols already claimed or reserved by the series.
+9. `REFERENCE_BASELINE.json` — the exact Volume I reference state and checksums.
+10. For implementation, run `bootstrap_volume.py` and then `validate_volume.py`.
 
 Do not begin drafting chapters before the preflight contract below is written into the new volume's `VOLUME_PLAN.md`.
 
@@ -118,7 +119,13 @@ Each volume must:
 - end with a threshold that makes the next volume necessary rather than merely advertised;
 - include a final series-atlas plate locating the current volume within the ten-volume argument.
 
-### 8. Publication-state honesty
+### 8. Technical communication inheritance
+
+Every volume inherits `docs/TECHNICAL_WRITING_REFERENCE.md`. The series-specific style may refine exposition, typography, pedagogy, and visual grammar, but it may not weaken the programme-wide requirements for technical-object identity, claim identity, bounded evidence, limitations, provenance, review specificity, public-boundary inheritance, or authority separation.
+
+A monograph may be elegant, literary, diagram-rich, or pedagogically expansive. None of those qualities may silently strengthen a claim. Presentation may reveal authority; it cannot create it.
+
+### 9. Publication-state honesty
 
 The series uses the state model in `PUBLICATION_STATE_MODEL.md`. The following transitions are independent and must not be collapsed:
 
