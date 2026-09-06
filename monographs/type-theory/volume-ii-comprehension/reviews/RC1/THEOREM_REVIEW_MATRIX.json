@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": {
+    "volume": "II",
+    "release": "RC1",
+    "source_archive_sha256": "1e1f4ae917e50514dc0a74fa706d30ad0d1c3dbf9ac2f45d7c8ad2445f3fd95a",
+    "protected_admission_commit": "3615be3114ea3aceec14e02231e3a1647faa44b4",
+    "protected_release_tree_sha": "8fae441820506bb6902e36c048cc475dc56242d5"
+  },
+  "warning": "This matrix is a navigation scaffold derived from the candidate's internal theorem audit. It does not establish any result and must not substitute for independent review.",
+  "results": [
+    {
+      "id": "T01",
+      "result": "Weakening under dependency",
+      "scope": "COMP-0",
+      "dependencies": "Induction on derivation plus trailing-context formation",
+      "critical_cases": ["variable", "Fin(t) formation", "context extension"],
+      "candidate_status": "proof included",
+      "primary_source_hint": "Chapter 1"
+    },
+    {
+      "id": "T02",
+      "result": "Generalized dependent substitution",
+      "scope": "COMP-0 with Γ,x:A,Δ ⊢ J",
+      "dependencies": "Simultaneous induction on derivation and well-formed suffix",
+      "critical_cases": ["variable x", "dependent Fin(t)", "trailing declarations"],
+      "candidate_status": "proof included",
+      "primary_source_hint": "Chapter 2"
+    },
+    {
+      "id": "T03",
+      "result": "Binder-free substitution composition",
+      "scope": "binder-free COMP-0",
+      "dependencies": "Structural induction on terms/types/context suffix",
+      "critical_cases": ["variable coincidences", "Fin(t)"],
+      "candidate_status": "proof sketch plus Lab 2 regression",
+      "primary_source_hint": "Chapter 2; Lab 2"
+    },
+    {
+      "id": "T04",
+      "result": "Pi formation/introduction/elimination and dependent application",
+      "scope": "COMP-PiSigma",
+      "dependencies": "Formation premises and substitution into codomain",
+      "critical_cases": ["codomain well-formed under binder", "application result specialization"],
+      "candidate_status": "rules included",
+      "primary_source_hint": "Chapter 3"
+    },
+    {
+      "id": "T05",
+      "result": "Principal Pi-beta subject reduction",
+      "scope": "COMP-PiSigma principal beta redex",
+      "dependencies": "Generalized dependent substitution",
+      "critical_cases": ["(lambda x.t) a -> t[a/x] with result B[a/x]"],
+      "candidate_status": "proof included",
+      "primary_source_hint": "Chapter 3"
+    },
+    {
+      "id": "T06",
+      "result": "Sigma formation/introduction/projections",
+      "scope": "COMP-PiSigma",
+      "dependencies": "Formation, substitution, and conversion",
+      "critical_cases": ["dependent second projection B(fst p)"],
+      "candidate_status": "rules included",
+      "primary_source_hint": "Chapter 4"
+    },
+    {
+      "id": "T07",
+      "result": "Principal Sigma projection preservation",
+      "scope": "COMP-PiSigma principal pair redexes",
+      "dependencies": "Pair typing and definitional equality",
+      "critical_cases": ["fst <a,b>", "snd <a,b>"],
+      "candidate_status": "proof included",
+      "primary_source_hint": "Chapter 4"
+    },
+    {
+      "id": "T08",
+      "result": "Conditional adjacent exchange",
+      "scope": "COMP telescopes",
+      "dependencies": "Mutual non-dependence and suffix re-formation",
+      "critical_cases": ["neither exchanged declaration may depend on the other"],
+      "candidate_status": "scoped proposition/proof sketch",
+      "primary_source_hint": "Chapter 5"
+    },
+    {
+      "id": "T09",
+      "result": "Canonical Fin values",
+      "scope": "selected COMP-I Fin family",
+      "dependencies": "Inversion on value typing derivation",
+      "critical_cases": ["no inhabitant constructor form at zero index", "successor constructor"],
+      "candidate_status": "proof sketch plus Lab 6",
+      "primary_source_hint": "Chapter 6; Lab 6"
+    },
+    {
+      "id": "T10",
+      "result": "Canonical vector values",
+      "scope": "selected COMP-I Vec family",
+      "dependencies": "Inversion on value typing derivation",
+      "critical_cases": ["zero index", "successor index"],
+      "candidate_status": "proof sketch plus Lab 7",
+      "primary_source_hint": "Chapter 7; Lab 7"
+    },
+    {
+      "id": "T11",
+      "result": "Nonempty vector head has no nil case",
+      "scope": "selected COMP-I",
+      "dependencies": "Vector canonical forms",
+      "critical_cases": ["succ(n) excludes vnil"],
+      "candidate_status": "formal example plus Lab 8",
+      "primary_source_hint": "Chapter 8; Lab 8"
+    },
+    {
+      "id": "T12",
+      "result": "Restricted bidirectional algorithmic soundness",
+      "scope": "explicit COMP-CHECK subset",
+      "dependencies": "Induction on synth/check derivation",
+      "critical_cases": ["application substitution", "lambda checked against Pi", "pair checked against Sigma", "conversion"],
+      "candidate_status": "proof sketch plus Lab 10 regression",
+      "primary_source_hint": "Chapter 10; Lab 10"
+    },
+    {
+      "id": "T13",
+      "result": "Concrete teaching-checker termination",
+      "scope": "teaching implementation only",
+      "dependencies": "Structural recursion plus terminating finite normalizer on admitted syntax",
+      "critical_cases": ["no general recursion", "finite constraint search"],
+      "candidate_status": "implementation argument",
+      "primary_source_hint": "Chapter 10"
+    },
+    {
+      "id": "T14",
+      "result": "Elaborator/kernel trust-boundary proposition",
+      "scope": "explicit elaborator/core/checker architecture",
+      "dependencies": "Checker soundness and exact emitted core",
+      "critical_cases": ["elaborator may fail or search incorrectly but cannot make rejected core valid"],
+      "candidate_status": "scoped proposition",
+      "primary_source_hint": "Chapter 11; Lab 11"
+    },
+    {
+      "id": "T15",
+      "result": "Toy finite code-decoder totality",
+      "scope": "finite external code grammar in Lab 12",
+      "dependencies": "Finite case split on code syntax",
+      "critical_cases": ["unsupported code rejected"],
+      "candidate_status": "executable result only",
+      "primary_source_hint": "Chapter 12; Lab 12"
+    }
+  ],
+  "explicit_nonresults": [
+    "Strong normalization for the full pedagogical union of fragments",
+    "Global canonicity without a cited or proved normalization route",
+    "Decidability or completeness of arbitrary dependent definitional equality",
+    "General strict-positivity or termination checking for user-defined inductive families",
+    "Consistency of a full internal universe hierarchy",
+    "Identity types, propositional equality, J, or general transport",
+    "Completeness of elaboration or higher-order unification"
+  ]
+}

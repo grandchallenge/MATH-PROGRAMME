@@ -7,7 +7,7 @@
   "publication_state_model_path": "docs/monographs/type-theory-series/PUBLICATION_STATE_MODEL.md",
   "protected_baseline_commit": "4aba2ec1a085c30c770e2656babc2ecc0575e8fc",
   "protected_baseline_state": "Stage B1 minimal teaching kernel admitted on protected main",
-  "stage": "RC1_DURABLY_ADMITTED__EXTERNAL_REVIEW_PENDING",
+  "stage": "RC1_DURABLY_ADMITTED__GATE8_REVIEW_DOCKET_OPEN",
   "composition_status": "RC_COMPOSITION_COMPLETE",
   "durable_admission_status": "RC_DURABLY_ADMITTED",
   "independent_review_status": "PENDING_EXTERNAL_MATHEMATICAL_REVIEW",
@@ -28,6 +28,25 @@
     "decoded_source_bytes": 142104,
     "decoded_source_sha256": "1e1f4ae917e50514dc0a74fa706d30ad0d1c3dbf9ac2f45d7c8ad2445f3fd95a"
   },
+  "gate8_review": {
+    "tracking_issue": 853,
+    "tracking_issue_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/853",
+    "review_packet_path": "monographs/type-theory/volume-ii-comprehension/reviews/RC1/GATE8_REVIEW_PACKET.md",
+    "review_template_path": "monographs/type-theory/volume-ii-comprehension/reviews/RC1/REVIEW_RECORD_TEMPLATE.yaml",
+    "theorem_review_matrix_path": "monographs/type-theory/volume-ii-comprehension/reviews/RC1/THEOREM_REVIEW_MATRIX.json",
+    "reviewer_assignment_status": "UNASSIGNED__INDEPENDENT_REVIEWER_REQUIRED",
+    "required_target_binding": {
+      "source_archive_sha256": "1e1f4ae917e50514dc0a74fa706d30ad0d1c3dbf9ac2f45d7c8ad2445f3fd95a",
+      "protected_admission_commit": "3615be3114ea3aceec14e02231e3a1647faa44b4",
+      "protected_release_tree_sha": "8fae441820506bb6902e36c048cc475dc56242d5"
+    },
+    "allowed_dispositions": [
+      "PASS",
+      "PASS_WITH_NONMATERIAL_NOTES",
+      "REVISE_AND_REREVIEW",
+      "FAIL"
+    ]
+  },
   "completed": [
     "Stage A preflight contract",
     "14-chapter manuscript composition",
@@ -41,11 +60,13 @@
     "release checksum manifest",
     "internal RC1 composition complete",
     "exact comprehensive RC1 source admission merged to protected main",
-    "protected source-transport tree readback verified"
+    "protected source-transport tree readback verified",
+    "Gate 8 independent-review docket opened as issue #853",
+    "Gate 8 review packet/template/matrix prepared for protected admission"
   ],
-  "current_claim_boundary": "The comprehensive RC1 is composition-complete and durably admitted as an exact checksummed rebuildable source representation on protected GitHub. Machine-assisted audits, executable regressions, CI, and durable admission are not independent mathematical review, mathematical certification, or publication authority.",
-  "next_action": "Obtain genuinely independent mathematical review of the exact durably admitted RC1 revision bound to source archive sha256:1e1f4ae917e50514dc0a74fa706d30ad0d1c3dbf9ac2f45d7c8ad2445f3fd95a and protected admission commit 3615be3114ea3aceec14e02231e3a1647faa44b4. Record the review scope, findings, limitations, and exact revision identity before any RC_REVIEW_QUALIFIED transition.",
-  "subsequent_gate": "Require a separate explicit publication-authority disposition over the exact review-qualified revision before PUBLISHED_AUTHORITATIVE_EDITION.",
+  "current_claim_boundary": "The comprehensive RC1 is composition-complete and durably admitted as an exact checksummed rebuildable source representation on protected GitHub. Gate 8 is now formally docketed, but no independent reviewer has yet submitted an admissible review record. Machine-assisted audits, executable regressions, CI, durable admission, and preparation of the review packet are not independent mathematical review, mathematical certification, or publication authority.",
+  "next_action": "A genuinely independent mathematical reader must review the exact admitted RC1 target defined in issue #853 and the protected Gate 8 review packet, then submit a durable review record stating scope, findings, limitations, exact revision identity, independence declaration, and disposition. Do not transition to RC_REVIEW_QUALIFIED before that record is independently produced, admitted, and checked.",
+  "subsequent_gate": "After a qualifying independent review record is admitted for the exact revision, record RC_REVIEW_QUALIFIED in a separate protected state transition. Then require a distinct explicit publication-authority disposition before PUBLISHED_AUTHORITATIVE_EDITION.",
   "institutional_alignment": {
     "position_piece": "GCL-POS-01 version 0.1.0",
     "authority_decision": "docs/council/submissions/GCL-TCS-00_GCL-POS-01_AUTHORITY_DECISION.json",
