@@ -1,5 +1,7 @@
 # QUALITY GATES
 
+These gates assess different kinds of closure. Passing a later internal composition gate does not retroactively create durable admission, independent review, or publication authority. `PUBLICATION_STATE_MODEL.md` controls the status vocabulary.
+
 ## Gate 0 — Preflight
 
 Pass when `VOLUME_PLAN.md` names the calculus, semantics, intended metatheorems, chapter/lab plan, initial plate burdens, exercise ecology, bibliography plan, next-volume threshold, and thesis pressure points.
@@ -52,7 +54,7 @@ Pass when:
 - no cross-volume symbol changes meaning silently;
 - index coverage includes the main concepts, formal rules, metatheorems, and computational techniques.
 
-## Gate 7 — Camera-ready RC
+## Gate 7 — Camera-ready composition RC
 
 Pass when:
 - clean LuaLaTeX rebuild succeeds from a fresh auxiliary state;
@@ -65,6 +67,27 @@ Pass when:
 - affected pages receive full-resolution spot checks;
 - release manifest/checksums are written.
 
+Passing Gate 7 permits the status `RC_COMPOSITION_COMPLETE`. It does **not** mean that the comprehensive RC is canonical on protected GitHub.
+
+## Gate 7A — Durable RC admission
+
+Pass when:
+- the exact RC source/rebuild identity and release checksum identity are durably present in protected repository state;
+- the required claim boundaries, audit state, and unresolved review obligations are present in the same durable continuity record or are referenced exactly;
+- applicable repository checks pass;
+- protected merge/admission succeeds under current doctrine;
+- protected readback confirms the exact admitted identity.
+
+Passing Gate 7A permits `RC_DURABLY_ADMITTED`. It is a persistence/institutional-state gate, not a mathematical truth or certification gate.
+
 ## Gate 8 — External mathematical review
 
-Required before claiming “externally refereed final edition.” A self-audit, regression suite, or second pass by the same composing process is not an independent referee.
+Required before claiming `RC_REVIEW_QUALIFIED` or “externally refereed.” The review must bind to the exact admitted revision and state what was checked, what was established, and what remains outside scope. A self-audit, regression suite, or second pass by the same composing process is not an independent referee.
+
+Passing Gate 8 does not itself create publication authority.
+
+## Gate 9 — Publication authority
+
+Required before claiming `PUBLISHED_AUTHORITATIVE_EDITION`. Pass only when an explicit governing authority disposition applies to the exact review-qualified revision and states the permitted representation/use.
+
+A PDF release, public URL, Git tag, repository presence, or polished presentation does not satisfy Gate 9 by itself.
