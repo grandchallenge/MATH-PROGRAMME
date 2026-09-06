@@ -1,0 +1,53 @@
+\chapter{What Constructive Logic Refuses to Guess}
+\label{ch:constructive-boundary}
+
+The constructive core has a simple discipline: to prove a disjunction, construct a branch; to prove an existential, supply a witness. Classical logic validates principles that need not expose such information. The difference is not a defect in either system; it is a difference in admissible proof principles.
+
+Let $\neg A$ abbreviate $A\to\Empty$. The schema $A+\neg A$ is excluded middle in the propositional reading. It is not derivable from the pure $\mathrm{CH}\text{-}0$ rules alone.
+
+\input{plates/plate22.tex}
+
+To make that nonderivability visible, consider the two-world Kripke frame $w_0\le w_1$. Let atomic $P$ be false at $w_0$ and forced at $w_1$. Persistence holds because once $P$ becomes true it remains true upward.
+
+At $w_0$, $P$ is not forced. Neither is $\neg P$: forcing $P\to\Empty$ at $w_0$ would require every extension forcing $P$ also to force $\Empty$, but $w_1$ forces $P$ and not $\Empty$. Therefore $w_0$ forces neither disjunct, so it does not force $P+\neg P$.
+
+\begin{proposition}[Finite countermodel to excluded middle]
+The Kripke model above does not force $P\lor\neg P$ at its root.
+\end{proposition}
+\begin{proof}
+By the forcing clauses for disjunction and implication just evaluated: neither $P$ nor $P\to\Empty$ is forced at $w_0$.
+\end{proof}
+
+By the standard soundness theorem for intuitionistic propositional logic with respect to Kripke semantics, the existence of this countermodel implies that excluded middle is not derivable in the corresponding intuitionistic calculus.
+
+\input{plates/plate23.tex}
+
+\begin{workedexample}[title={Information not supplied}]
+A classical proof may establish that one of $P$ or $\neg P$ must hold without constructing which branch in the same direct manner as $+I_1$ or $+I_2$. If we want executable content from such reasoning, we need a translation, additional semantic structure, or control behavior. Chapter~\ref{ch:classical-control} explores one such route.
+\end{workedexample}
+
+\input{plates/plate24.tex}
+
+\begin{warningbox}
+“Nonconstructive” is calculus-relative. It does not mean invalid, useless, or irrational. It says that the proof uses principles not justified by the witness-producing rules fixed for $\mathrm{CH}\text{-}0$.
+\end{warningbox}
+
+\begin{labbox}
+Run \texttt{python labs/lab08_kripke.py}. The finite model checker verifies persistence and evaluates the selected excluded-middle formula at both worlds. Its result is a countermodel for that formula under the implemented forcing semantics, not a survey of all constructive logics.
+\end{labbox}
+
+\section*{Exercises}\addcontentsline{toc}{section}{Exercises}
+\begin{enumerate}[label=\textbf{8.\arabic*.}]
+\item \textbf{Checkpoint.} Define $\neg A$ in $\mathrm{CH}\text{-}0$.
+\item \textbf{Checkpoint.} What evidence does constructive disjunction require?
+\item \textbf{Checkpoint.} Why does $w_0$ fail to force $\neg P$ in the example?
+\item \textbf{Core.} Evaluate $P\lor\neg P$ at $w_1$.
+\item \textbf{Core.} State the persistence condition for atomic forcing.
+\item \textbf{Core.} Build a finite model separating another selected classical schema from intuitionistic validity.
+\item \textbf{Synthesis.} Explain how a semantic countermodel becomes a syntactic nonderivability result only with a soundness theorem.
+\item \textbf{Synthesis.} Contrast lack of a constructive proof with falsity in a classical two-valued model.
+\item \textbf{Proof Workshop.} Prove persistence for the implication forcing clause by induction on formulas.
+\item \textbf{Proof Workshop.} Verify every forcing clause used in the root countermodel.
+\item \textbf{Design Clinic.} Specify checks that a finite Kripke-model parser should impose before evaluation.
+\item \textbf{Challenge.} Explain why adding excluded middle changes proof theory even when ordinary classical truth tables remain familiar.
+\end{enumerate}
