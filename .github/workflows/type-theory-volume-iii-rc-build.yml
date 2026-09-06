@@ -48,6 +48,18 @@ jobs:
           git ls-files . | LC_ALL=C sort > evidence/gate7/source-files.txt
           while IFS= read -r path; do sha256sum "$path"; done < evidence/gate7/source-files.txt > evidence/gate7/source-sha256.txt
 
+      - name: Run canonical series validator
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/monographs/type-theory-series/validate_volume.py \
+            monographs/type-theory/volume-iii-proof-program --rc --compile \
+            > monographs/type-theory/volume-iii-proof-program/evidence/gate7/series-validator.txt 2>&1 || {
+              cat monographs/type-theory/volume-iii-proof-program/evidence/gate7/series-validator.txt >&2
+              exit 1
+            }
+          cat monographs/type-theory/volume-iii-proof-program/evidence/gate7/series-validator.txt
+
       - name: Clean and build publication targets
         working-directory: monographs/type-theory/volume-iii-proof-program
         shell: bash
@@ -98,6 +110,30 @@ jobs:
           echo "lab_count=${count}" | tee -a evidence/gate7/lab-replay.txt
           test "$count" -eq 14
 
+      - name: Build deterministic exact-source archive
+        working-directory: monographs/type-theory/volume-iii-proof-program
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import os, zipfile
+          root = Path('.')
+          files = [line.strip() for line in (root/'evidence/gate7/source-files.txt').read_text().splitlines() if line.strip()]
+          out = root/'evidence/gate7/source.zip'
+          with zipfile.ZipFile(out, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:
+              for rel in files:
+                  p = root/rel
+                  info = zipfile.ZipInfo(rel, date_time=(1980,1,1,0,0,0))
+                  info.compress_type = zipfile.ZIP_DEFLATED
+                  info.create_system = 3
+                  mode = 0o755 if os.access(p, os.X_OK) else 0o644
+                  info.external_attr = mode << 16
+                  z.writestr(info, p.read_bytes(), compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
+          PY
+          sha256sum evidence/gate7/source.zip > evidence/gate7/source-archive-sha256.txt
+          wc -c evidence/gate7/source.zip > evidence/gate7/source-archive-size.txt
+
       - name: Audit logs, references, glyphs and output geometry
         working-directory: monographs/type-theory/volume-iii-proof-program
         shell: bash
@@ -117,6 +153,7 @@ jobs:
           pdftotext main.pdf evidence/gate7/main.txt
           pdftotext solutions_companion.pdf evidence/gate7/solutions.txt
           pdftotext plates_folio.pdf evidence/gate7/plates.txt
+          test "$(grep -o 'Plate [0-9]\+' evidence/gate7/plates.txt | sort -u -V | wc -l)" -eq 42
 
       - name: Upload Gate 7 evidence bundle
         if: always()
