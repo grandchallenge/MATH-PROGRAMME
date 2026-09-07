@@ -84,12 +84,32 @@ For an already authorized bounded MATH operation, follow [`docs/governance/EXECU
 
 ## Durable bounded-operation continuity
 
-This control applies only to a multi-session governed campaign explicitly
-admitted in `governance/bounded_operation_checkpoint_registry.json`. Routine
-pull requests, ordinary CI waits, bounded repairs, and ordinary drafting are
-excluded. Their absence from the registry never blocks streamlined execution.
-For an admitted campaign, repository state—not conversational memory—owns the
-operational resume point.
+This control applies to a multi-session governed campaign explicitly admitted in
+`governance/bounded_operation_checkpoint_registry.json`. It also applies to a
+long-horizon workset when its authoritative issue, plan, or protected workset
+record delegates autonomous progression across multiple named stages or gates,
+through protected admission/readback, or across a session boundary where a
+deterministic resume action must survive the conversational executor.
+
+"Ordinary drafting" means a deliberately session-bounded editing transaction. It
+does not include a full-volume, campaign-scale, or other autonomous multi-stage
+workset merely because the artifact being produced is prose, documentation, or
+a monograph. Artifact type does not exempt a long-horizon workset from durable
+continuity.
+
+Routine pull requests, ordinary CI waits, bounded repairs, and genuinely
+session-bounded drafting remain excluded. Their absence from the registry never
+blocks streamlined execution. A workset that meets the long-horizon criterion
+must be admitted before the next material transition. Repository state—not
+conversational memory—owns the operational resume point.
+
+The continuity validator accepts an explicit `continuity_required: true` marker
+in a durable `WORKSET_STATE.json` as a repository-wide admission signal. For the
+Type Theory series, a nonterminal development or Gate-7-pending
+`WORKSET_STATE.json` is also continuity-required so that a full-volume workset
+cannot silently fall back to "ordinary drafting".
+
+For an admitted campaign or long-horizon workset:
 
 - Read `governance/bounded_operation_checkpoint_registry.json` before resuming a
   registered operation. Re-read the named authoritative issue/PR and exact
@@ -99,15 +119,17 @@ operational resume point.
   `next_action`, and set `resume.fresh_session_safe=true` and
   `resume.requires_chat_history=false`.
 - Before any permitted transition, run the checkpoint's
-  `freshness.verification_command`. Any exact-head, base, PR-state, or settled
-  failure mismatch requires durable rebinding before mutation.
+  `freshness.verification_command`. Any exact candidate-head, PR-state, or
+  settled-result mismatch requires durable rebinding before mutation. A
+  branch-bound pre-PR workset may verify freshness directly against its exact
+  branch head and governing issue.
 - Update the registered checkpoint after every material transition that changes
   phase, candidate head, external-evidence state, permitted next action, or
   genuine blocking boundary. Git history is the durable transition history.
 - Mandatory execution routing chooses whether a persistent controller is
-  required; this checkpoint records resumable transaction state for the much
-  smaller set of explicitly admitted campaigns. Neither control substitutes
-  for the other.
+  required; this checkpoint records resumable transaction state for the smaller
+  set of explicitly admitted campaigns and long-horizon worksets. Neither
+  control substitutes for the other.
 - Never use a vague `wait` as the resume instruction. If an external object is
   pending, record its exact run/job/review/artifact identity and the exact
   evidence-acquisition action to perform next.

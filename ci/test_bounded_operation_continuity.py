@@ -5,13 +5,16 @@ from __future__ import annotations
 
 import copy
 import unittest
+from unittest.mock import patch
 
 from validate_bounded_operation_continuity import (
     CHECKPOINT_SCHEMA_REL,
     REGISTRY_REL,
     ROOT,
     checkpoint_semantic_errors,
+    continuity_required_worksets,
     instruction_binding_errors,
+    live_freshness_errors,
     load_json,
     registry_errors,
     schema_errors,
@@ -34,6 +37,16 @@ class BoundedOperationContinuityTests(unittest.TestCase):
         self.assertEqual([], instruction_binding_errors())
         self.assertEqual([], registry_errors())
         self.assertEqual([], schema_errors(self.base, ROOT / CHECKPOINT_SCHEMA_REL))
+
+    def test_continuity_required_worksets_are_registered(self) -> None:
+        required = continuity_required_worksets()
+        registry = load_json(ROOT / REGISTRY_REL)
+        registered = {
+            load_json(ROOT / path)["governed_work_id"]
+            for path in registry["checkpoints"]
+        }
+        self.assertIn("TYPE-THEORY-VOL-IV-001", required)
+        self.assertTrue(set(required).issubset(registered))
 
     def test_next_action_must_be_permitted(self) -> None:
         errors = self.errors(lambda value: value["next_action"].update({"id": "invented_action"}))
@@ -94,7 +107,56 @@ class BoundedOperationContinuityTests(unittest.TestCase):
     def test_pr_bound_checkpoint_requires_exact_candidate_head(self) -> None:
         errors = self.errors(lambda value: value["identities"].update({"candidate_head_sha": None}))
         self.assertTrue(any("PR-bound checkpoint requires candidate_head_sha" in error for error in errors))
+        self.assertTrue(any("branch-bound checkpoint requires candidate_head_sha" in error for error in errors))
         self.assertTrue(any("workflow-bound checkpoint requires candidate_head_sha" in error for error in errors))
+
+    def test_live_checkpoint_requires_pr_or_branch_locator(self) -> None:
+        def mutate(value):
+            value["state"] = "IN_PROGRESS"
+            value["blocking_boundary"] = None
+            value["identities"]["pr_number"] = None
+            value["identities"]["branch"] = None
+            value["identities"]["workflow_runs"] = []
+
+        errors = self.errors(mutate)
+        self.assertTrue(any("requires either a PR or branch identity" in error for error in errors))
+
+    def test_branch_bound_checkpoint_is_valid_without_pr(self) -> None:
+        checkpoint = copy.deepcopy(self.base)
+        checkpoint["state"] = "IN_PROGRESS"
+        checkpoint["blocking_boundary"] = None
+        checkpoint["identities"]["pr_number"] = None
+        checkpoint["identities"]["workflow_runs"] = []
+        errors = checkpoint_semantic_errors(checkpoint, "fixture")
+        self.assertFalse(any("requires either a PR or branch identity" in error for error in errors))
+        self.assertFalse(any("branch-bound checkpoint requires candidate_head_sha" in error for error in errors))
+
+    @patch("validate_bounded_operation_continuity._run_json")
+    def test_branch_live_freshness_matches_exact_head(self, run_json) -> None:
+        checkpoint = copy.deepcopy(self.base)
+        checkpoint["state"] = "IN_PROGRESS"
+        checkpoint["blocking_boundary"] = None
+        checkpoint["identities"]["pr_number"] = None
+        checkpoint["identities"]["workflow_runs"] = []
+        run_json.side_effect = [
+            {"object": {"sha": checkpoint["identities"]["candidate_head_sha"]}},
+            {"state": "OPEN"},
+        ]
+        self.assertEqual([], live_freshness_errors(checkpoint, "fixture"))
+
+    @patch("validate_bounded_operation_continuity._run_json")
+    def test_branch_live_freshness_rejects_moved_head(self, run_json) -> None:
+        checkpoint = copy.deepcopy(self.base)
+        checkpoint["state"] = "IN_PROGRESS"
+        checkpoint["blocking_boundary"] = None
+        checkpoint["identities"]["pr_number"] = None
+        checkpoint["identities"]["workflow_runs"] = []
+        run_json.side_effect = [
+            {"object": {"sha": "0" * 40}},
+            {"state": "OPEN"},
+        ]
+        errors = live_freshness_errors(checkpoint, "fixture")
+        self.assertTrue(any("stale branch head" in error for error in errors))
 
     def test_routine_work_cannot_be_admitted_through_checkpoint(self) -> None:
         errors = self.errors(lambda value: value["admission"].update({"routine_work_excluded": False}))

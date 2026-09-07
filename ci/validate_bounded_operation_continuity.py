@@ -40,6 +40,7 @@ REQUIRED_INSTRUCTION_BINDINGS = {
         "Durable bounded-operation continuity",
         REGISTRY_REL,
         "ci/validate_bounded_operation_continuity.py",
+        "long-horizon workset",
     ),
     "docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md": (
         "Durable checkpoint and session restart",
@@ -82,6 +83,43 @@ def discovered_checkpoints(root: Path = ROOT) -> set[str]:
         for path in checkpoint_root.glob("*.json")
         if path.is_file()
     }
+
+
+def continuity_required_worksets(root: Path = ROOT) -> dict[str, str]:
+    """Return durable worksets that must have resumable checkpoints.
+
+    Explicit opt-in works repository-wide. Type Theory DEVELOPMENT/Gate-7-pending
+    worksets are also covered implicitly because the series already persists a
+    WORKSET_STATE.json and delegates multi-stage autonomous progression.
+    """
+    required: dict[str, str] = {}
+    for path in root.rglob("WORKSET_STATE.json"):
+        if ".git" in path.parts:
+            continue
+        try:
+            state = load_json(path)
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(state, dict):
+            continue
+        work_id = state.get("workset")
+        if not isinstance(work_id, str) or not work_id:
+            continue
+
+        explicit = state.get("continuity_required") is True
+        relative = path.relative_to(root).as_posix()
+        type_theory = relative.startswith("monographs/type-theory/")
+        type_theory_live = (
+            type_theory
+            and state.get("requires_chat_history") is not True
+            and (
+                state.get("composition_status") == "DEVELOPMENT"
+                or "GATE7_PENDING" in str(state.get("composition", ""))
+            )
+        )
+        if explicit or type_theory_live:
+            required[work_id] = relative
+    return required
 
 
 def checkpoint_semantic_errors(checkpoint: dict[str, Any], label: str) -> list[str]:
@@ -148,6 +186,10 @@ def checkpoint_semantic_errors(checkpoint: dict[str, Any], label: str) -> list[s
     identities = checkpoint["identities"]
     if identities["pr_number"] is not None and identities["candidate_head_sha"] is None:
         errors.append(f"{label}: PR-bound checkpoint requires candidate_head_sha")
+    if identities["branch"] is not None and identities["candidate_head_sha"] is None:
+        errors.append(f"{label}: branch-bound checkpoint requires candidate_head_sha")
+    if state in LIVE_STATES and identities["pr_number"] is None and identities["branch"] is None:
+        errors.append(f"{label}: live checkpoint requires either a PR or branch identity")
     if identities["workflow_runs"] and identities["candidate_head_sha"] is None:
         errors.append(f"{label}: workflow-bound checkpoint requires candidate_head_sha")
 
@@ -165,19 +207,79 @@ def checkpoint_semantic_errors(checkpoint: dict[str, Any], label: str) -> list[s
     return errors
 
 
+def _run_json(command: list[str]) -> Any:
+    return json.loads(subprocess.run(command, check=True, capture_output=True, text=True).stdout)
+
+
 def live_freshness_errors(checkpoint: dict[str, Any], label: str) -> list[str]:
-    """Compare the recorded PR identity and settled failures with live GitHub state."""
+    """Compare the recorded live identity with GitHub.
+
+    PR-bound campaigns retain the existing PR/check-set verification. A
+    pre-PR long-horizon workset may instead bind directly to an exact branch
+    head plus an open governing issue.
+    """
     identities = checkpoint["identities"]
-    if identities["pr_number"] is None:
-        return [f"{label}: live verification currently requires a PR-bound checkpoint"]
+    repository = checkpoint["repository"]
+    pr_number = identities["pr_number"]
+
+    if pr_number is None:
+        branch = identities["branch"]
+        recorded_head = identities["candidate_head_sha"]
+        if branch is None or recorded_head is None:
+            return [f"{label}: branch-bound live verification requires branch and candidate_head_sha"]
+        try:
+            live_ref = _run_json([
+                "gh", "api", f"repos/{repository}/git/ref/heads/{branch}",
+            ])
+            if identities["issue_number"] is not None:
+                live_issue = _run_json([
+                    "gh", "issue", "view", str(identities["issue_number"]),
+                    "--repo", repository, "--json", "state",
+                ])
+            else:
+                live_issue = None
+            live_runs = []
+            for recorded in identities["workflow_runs"]:
+                live_runs.append(_run_json([
+                    "gh", "run", "view", str(recorded["run_id"]), "--repo", repository,
+                    "--json", "headSha,status,conclusion",
+                ]))
+        except (OSError, subprocess.CalledProcessError, json.JSONDecodeError) as exc:
+            return [f"{label}: live branch freshness query failed closed: {exc}"]
+
+        errors: list[str] = []
+        live_head = live_ref.get("object", {}).get("sha")
+        if live_head != recorded_head:
+            errors.append(f"{label}: stale branch head: recorded {recorded_head}, live {live_head}")
+        if live_issue is not None and live_issue.get("state") != "OPEN":
+            errors.append(f"{label}: governing issue is no longer open: {live_issue.get('state')}")
+
+        for recorded, live in zip(identities["workflow_runs"], live_runs):
+            if live.get("headSha") != recorded_head:
+                errors.append(
+                    f"{label}: workflow run {recorded['run_id']} is bound to {live.get('headSha')}, "
+                    f"not candidate {recorded_head}"
+                )
+            if live.get("status") != recorded["status"]:
+                errors.append(
+                    f"{label}: workflow run {recorded['run_id']} status is stale: "
+                    f"recorded {recorded['status']}, live {live.get('status')}"
+                )
+            if live.get("conclusion") != recorded["conclusion"]:
+                errors.append(
+                    f"{label}: workflow run {recorded['run_id']} conclusion is stale: "
+                    f"recorded {recorded['conclusion']}, live {live.get('conclusion')}"
+                )
+        return errors
+
     command = [
-        "gh", "pr", "view", str(identities["pr_number"]), "--repo", checkpoint["repository"],
+        "gh", "pr", "view", str(pr_number), "--repo", repository,
         "--json", "headRefOid,baseRefOid,state",
     ]
     try:
-        live_pr = json.loads(subprocess.run(command, check=True, capture_output=True, text=True).stdout)
+        live_pr = _run_json(command)
         checks = json.loads(subprocess.run(
-            ["gh", "pr", "checks", str(identities["pr_number"]), "--repo", checkpoint["repository"],
+            ["gh", "pr", "checks", str(pr_number), "--repo", repository,
              "--json", "name,state,bucket"],
             check=False, capture_output=True, text=True,
         ).stdout or "[]")
@@ -249,6 +351,15 @@ def registry_errors(root: Path = ROOT) -> list[str]:
         errors.append(f"bounded-operation continuity: duplicate checkpoint_id {value}")
     for value in sorted({x for x in work_ids if work_ids.count(x) > 1}):
         errors.append(f"bounded-operation continuity: duplicate governed_work_id {value}")
+
+    required = continuity_required_worksets(root)
+    registered_work_ids = set(work_ids)
+    for work_id, source in sorted(required.items()):
+        if work_id not in registered_work_ids:
+            errors.append(
+                f"bounded-operation continuity: continuity-required workset {work_id} "
+                f"has no registered checkpoint ({source})"
+            )
     return errors
 
 
