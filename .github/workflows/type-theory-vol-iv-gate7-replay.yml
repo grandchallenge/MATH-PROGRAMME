@@ -17,7 +17,7 @@ jobs:
       - name: Checkout exact candidate
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: ea7b4f4d61cca274b091f9673eb6f851df4be3d6
+          ref: 7224490f07ef4b5e1d790b3a8194de23f358a65a
           fetch-depth: 1
           persist-credentials: false
 
@@ -26,7 +26,7 @@ jobs:
         run: |
           set -euo pipefail
           observed="$(git rev-parse HEAD)"
-          test "$observed" = "ea7b4f4d61cca274b091f9673eb6f851df4be3d6"
+          test "$observed" = "7224490f07ef4b5e1d790b3a8194de23f358a65a"
           git diff --exit-code
           printf 'EXACT_HEAD=%s\n' "$observed" | tee /tmp/exact-head.txt
 
@@ -100,7 +100,7 @@ jobs:
       - name: Upload Gate 7 replay evidence
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: type-theory-vol-iv-gate7-ea7b4f4d
+          name: type-theory-vol-iv-gate7-7224490f
           if-no-files-found: error
           retention-days: 14
           path: |
