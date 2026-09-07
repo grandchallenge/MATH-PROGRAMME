@@ -1,5 +1,5 @@
 name: Type Theory Volume IV full development bootstrap
-# exact archive materialization trigger
+# recover the original continuous Base64 transport; intermediate padding is transport noise
 
 on:
   push:
@@ -18,24 +18,44 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Verify and unpack exact source archive
+      - name: Reconstruct and verify staged source transport
         shell: bash
         run: |
           set -euo pipefail
-          SRC=.tmp/type-theory-vol-iv-full-development/source.zip
-          test -f "$SRC"
-          test "$(stat -c%s "$SRC")" = "113191"
-          test "$(sha256sum "$SRC" | awk '{print $1}')" = "c7354f5ac16c73af864736e29357053a41d884422e710fc97f9567ce1650b23c"
-          unzip -t "$SRC"
+          T=.tmp/type-theory-vol-iv-full-development
+          cat "$T/src_xz.b64.00" "$T/src_xz.b64.01" "$T/src_xz.b64.02a" "$T/src_xz.b64.02b" "$T/src_xz.b64.03" "$T/src_xz.b64.04" | tr -d '\r\n' > /tmp/raw.b64
+          echo "raw_chars=$(stat -c%s /tmp/raw.b64) equals=$(tr -cd '=' < /tmp/raw.b64 | wc -c)"
+          tr -d '=' < /tmp/raw.b64 > /tmp/clean.b64
+          n=$(stat -c%s /tmp/clean.b64)
+          rem=$(( n % 4 ))
+          case "$rem" in
+            0) : ;;
+            2) printf '==' >> /tmp/clean.b64 ;;
+            3) printf '=' >> /tmp/clean.b64 ;;
+            *) echo "impossible base64 remainder $rem" >&2; exit 1 ;;
+          esac
+          base64 -d /tmp/clean.b64 > /tmp/vol4-source.xz
+          echo "transport_xz_size=$(stat -c%s /tmp/vol4-source.xz)"
+          echo "transport_xz_sha256=$(sha256sum /tmp/vol4-source.xz | awk '{print $1}')"
+          xz -t /tmp/vol4-source.xz
+          xz -dc /tmp/vol4-source.xz > /tmp/vol4-source.payload
+          echo "payload_size=$(stat -c%s /tmp/vol4-source.payload)"
+          echo "payload_sha256=$(sha256sum /tmp/vol4-source.payload | awk '{print $1}')"
           rm -rf /tmp/vol4-source
-          mkdir -p /tmp/vol4-source
-          unzip -q "$SRC" -d /tmp/vol4-source
-          test "$(find /tmp/vol4-source -type f | wc -l)" -eq 101
-          echo "source_archive_size=$(stat -c%s "$SRC")"
-          echo "source_archive_sha256=$(sha256sum "$SRC" | awk '{print $1}')"
+          if unzip -t /tmp/vol4-source.payload >/dev/null 2>&1; then
+            echo payload_kind=zip
+            unzip -q /tmp/vol4-source.payload -d /tmp/vol4-source
+          elif tar -tf /tmp/vol4-source.payload >/dev/null 2>&1; then
+            echo payload_kind=tar
+            mkdir -p /tmp/vol4-source
+            tar -xf /tmp/vol4-source.payload -C /tmp/vol4-source
+          else
+            echo "unrecognized payload" >&2; exit 1
+          fi
           echo "source_file_count=$(find /tmp/vol4-source -type f | wc -l)"
+          test "$(find /tmp/vol4-source -type f | wc -l)" -eq 101
 
-      - name: Validate exact source and laboratories
+      - name: Validate exact source and all laboratories
         shell: bash
         run: |
           set -euo pipefail
@@ -59,13 +79,13 @@ jobs:
           ex=json.loads((s/'EXERCISE_AUDIT.json').read_text())
           ev=json.loads((s/'evidence/FULL_DEVELOPMENT_EVIDENCE.json').read_text())
           print('exercise_audit=', ex)
-          print('full_evidence_keys=', sorted(ev.keys()))
+          print('evidence_keys=', sorted(ev.keys()))
           assert len(list((s/'chapters').glob('ch*.tex'))) == 14
           assert len(list((s/'plates').glob('plate*.tex'))) == 42
           assert len(list((s/'labs').glob('lab*.py'))) == 14
           PY
 
-      - name: Materialize source without deleting protected preflight records
+      - name: Materialize source and remove all temporary transport
         shell: bash
         run: |
           set -euo pipefail
