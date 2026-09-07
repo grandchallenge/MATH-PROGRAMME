@@ -1,0 +1,65 @@
+name: Type Theory Volume IV plate label repair
+
+on:
+  push:
+    branches:
+      - ci/type-theory-vol-iv-plate-label-repair-001
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact source branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: docs/type-theory-vol-iv-full-composition-001
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Bind source and add canonical plate labels
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected="618735466810deabd41c0d2a312effd863b49f7a"
+          observed="$(git rev-parse HEAD)"
+          test "$observed" = "$expected"
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('monographs/type-theory/volume-iv-protocol/plates')
+          files = sorted(root.glob('plate*.tex'))
+          assert len(files) == 42, len(files)
+          changed = 0
+          for p in files:
+              text = p.read_text()
+              if r'\label{plate:' in text:
+                  continue
+              m = re.fullmatch(r'plate(\d{2})\.tex', p.name)
+              assert m, p.name
+              label = rf'\label{{plate:protocol-{m.group(1)}}}'
+              marker = '\n\\end{figure}'
+              assert marker in text, p
+              text = text.replace(marker, '\n' + label + marker, 1)
+              p.write_text(text)
+              changed += 1
+          assert changed == 42, changed
+          PY
+
+          grep -L '\\label{plate:' monographs/type-theory/volume-iv-protocol/plates/plate*.tex && exit 1 || true
+          test "$(grep -l '\\label{plate:' monographs/type-theory/volume-iv-protocol/plates/plate*.tex | wc -l)" -eq 42
+
+      - name: Commit bounded source repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "GCL CI Repair"
+          git config user.email "actions@users.noreply.github.com"
+          git add monographs/type-theory/volume-iv-protocol/plates/plate*.tex
+          test "$(git diff --cached --name-only | wc -l)" -eq 42
+          git commit -m "docs: add canonical Volume IV plate labels"
+          git push origin HEAD:docs/type-theory-vol-iv-full-composition-001
