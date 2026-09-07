@@ -1,0 +1,117 @@
+name: Type Theory Volume IV Gate 7 replay
+
+on:
+  push:
+    branches:
+      - ci/type-theory-vol-iv-gate7-replay-ea7b4f4d
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-head-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ea7b4f4d61cca274b091f9673eb6f851df4be3d6
+          fetch-depth: 1
+
+      - name: Bind exact identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          observed="$(git rev-parse HEAD)"
+          test "$observed" = "ea7b4f4d61cca274b091f9673eb6f851df4be3d6"
+          git diff --exit-code
+          printf 'EXACT_HEAD=%s\n' "$observed" | tee /tmp/exact-head.txt
+
+      - name: Install build dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-luatex texlive-latex-extra texlive-pictures \
+            texlive-fonts-recommended poppler-utils
+
+      - name: Run all 14 laboratories
+        working-directory: monographs/type-theory/volume-iv-protocol
+        shell: bash
+        run: |
+          set -euo pipefail
+          : > gate7-labs.log
+          count=0
+          for f in labs/lab*.py; do
+            echo "===== $f =====" | tee -a gate7-labs.log
+            python3 "$f" 2>&1 | tee -a gate7-labs.log
+            count=$((count+1))
+          done
+          test "$count" -eq 14
+          printf 'LAB_COUNT=%s\nLAB_REPLAY=PASS\n' "$count" | tee -a gate7-labs.log
+
+      - name: Clean LuaLaTeX builds and checksums
+        working-directory: monographs/type-theory/volume-iv-protocol
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f main.{aux,idx,ilg,ind,log,out,toc,pdf} \
+                solutions_companion.{aux,log,out,pdf} \
+                plates_folio.{aux,log,out,pdf}
+
+          lualatex -interaction=nonstopmode -halt-on-error main.tex > main.pass1.log
+          makeindex main.idx > main.index.log 2>&1
+          lualatex -interaction=nonstopmode -halt-on-error main.tex > main.pass2.log
+          lualatex -interaction=nonstopmode -halt-on-error main.tex > main.pass3.log
+
+          lualatex -interaction=nonstopmode -halt-on-error solutions_companion.tex > solutions.pass1.log
+          lualatex -interaction=nonstopmode -halt-on-error solutions_companion.tex > solutions.pass2.log
+
+          lualatex -interaction=nonstopmode -halt-on-error plates_folio.tex > plates.pass1.log
+          lualatex -interaction=nonstopmode -halt-on-error plates_folio.tex > plates.pass2.log
+
+          pdfinfo main.pdf > main.pdfinfo.txt
+          pdfinfo solutions_companion.pdf > solutions.pdfinfo.txt
+          pdfinfo plates_folio.pdf > plates.pdfinfo.txt
+          sha256sum main.pdf solutions_companion.pdf plates_folio.pdf > SHA256SUMS.txt
+
+          grep '^Pages:' main.pdfinfo.txt solutions.pdfinfo.txt plates.pdfinfo.txt | tee page-counts.txt
+          cat SHA256SUMS.txt
+
+      - name: PDF preflight diagnostics
+        working-directory: monographs/type-theory/volume-iv-protocol
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -R -n -E 'Undefined control sequence|LaTeX Error|Emergency stop|Fatal error' \
+              main.pass*.log solutions.pass*.log plates.pass*.log; then
+            echo 'PREFLIGHT_FATAL_DIAGNOSTIC=FAIL'
+            exit 1
+          fi
+          grep -R -n -E 'Overfull|Underfull|LaTeX Warning|Package .* Warning' \
+            main.pass3.log solutions.pass2.log plates.pass2.log > gate7-layout-warnings.txt || true
+          printf 'PREFLIGHT_FATAL_DIAGNOSTIC=PASS\n' | tee gate7-preflight.txt
+          wc -l gate7-layout-warnings.txt | tee -a gate7-preflight.txt
+
+      - name: Upload Gate 7 replay evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-theory-vol-iv-gate7-ea7b4f4d
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            /tmp/exact-head.txt
+            monographs/type-theory/volume-iv-protocol/main.pdf
+            monographs/type-theory/volume-iv-protocol/solutions_companion.pdf
+            monographs/type-theory/volume-iv-protocol/plates_folio.pdf
+            monographs/type-theory/volume-iv-protocol/SHA256SUMS.txt
+            monographs/type-theory/volume-iv-protocol/page-counts.txt
+            monographs/type-theory/volume-iv-protocol/gate7-labs.log
+            monographs/type-theory/volume-iv-protocol/gate7-preflight.txt
+            monographs/type-theory/volume-iv-protocol/gate7-layout-warnings.txt
+            monographs/type-theory/volume-iv-protocol/main.pass3.log
+            monographs/type-theory/volume-iv-protocol/solutions.pass2.log
+            monographs/type-theory/volume-iv-protocol/plates.pass2.log
