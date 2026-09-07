@@ -17,50 +17,24 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Reconstruct staged source transport
+      - name: Verify and unpack exact source archive
         shell: bash
         run: |
           set -euo pipefail
-          T=.tmp/type-theory-vol-iv-full-development
-          cat "$T/src_xz.b64.00" "$T/src_xz.b64.01" "$T/src_xz.b64.02a" "$T/src_xz.b64.02b" "$T/src_xz.b64.03" "$T/src_xz.b64.04" | tr -d '\r\n' > /tmp/vol4-source.b64
-          if grep -P '[^A-Za-z0-9+/=]' /tmp/vol4-source.b64 >/dev/null; then
-            echo "invalid base64 character in concatenated transport" >&2
-            exit 1
-          fi
-          n=$(stat -c%s /tmp/vol4-source.b64)
-          rem=$(( n % 4 ))
-          echo "transport_b64_chars=$n mod4=$rem"
-          case "$rem" in
-            0) : ;;
-            2) printf '==' >> /tmp/vol4-source.b64 ;;
-            3) printf '=' >> /tmp/vol4-source.b64 ;;
-            *) echo "impossible base64 remainder: $rem" >&2; exit 1 ;;
-          esac
-          base64 -d /tmp/vol4-source.b64 > /tmp/vol4-source.xz
-          echo "transport_xz_size=$(stat -c%s /tmp/vol4-source.xz)"
-          echo "transport_xz_sha256=$(sha256sum /tmp/vol4-source.xz | awk '{print $1}')"
-          xz -t /tmp/vol4-source.xz
-          xz -dc /tmp/vol4-source.xz > /tmp/vol4-source.payload
-          echo "payload_size=$(stat -c%s /tmp/vol4-source.payload)"
-          echo "payload_sha256=$(sha256sum /tmp/vol4-source.payload | awk '{print $1}')"
-          file /tmp/vol4-source.payload
+          SRC=.tmp/type-theory-vol-iv-full-development/source.zip
+          test -f "$SRC"
+          test "$(stat -c%s "$SRC")" = "113191"
+          test "$(sha256sum "$SRC" | awk '{print $1}')" = "c7354f5ac16c73af864736e29357053a41d884422e710fc97f9567ce1650b23c"
+          unzip -t "$SRC"
           rm -rf /tmp/vol4-source
-          if unzip -t /tmp/vol4-source.payload >/dev/null 2>&1; then
-            echo payload_kind=zip
-            unzip -q /tmp/vol4-source.payload -d /tmp/vol4-source
-          elif tar -tf /tmp/vol4-source.payload >/dev/null 2>&1; then
-            echo payload_kind=tar
-            mkdir -p /tmp/vol4-source
-            tar -xf /tmp/vol4-source.payload -C /tmp/vol4-source
-          else
-            echo "unrecognized decompressed payload" >&2
-            exit 1
-          fi
-          echo "source_file_count=$(find /tmp/vol4-source -type f | wc -l)"
-          find /tmp/vol4-source -type f -printf '%P\n' | sort | head -20
+          mkdir -p /tmp/vol4-source
+          unzip -q "$SRC" -d /tmp/vol4-source
           test "$(find /tmp/vol4-source -type f | wc -l)" -eq 101
+          echo "source_archive_size=$(stat -c%s "$SRC")"
+          echo "source_archive_sha256=$(sha256sum "$SRC" | awk '{print $1}')"
+          echo "source_file_count=$(find /tmp/vol4-source -type f | wc -l)"
 
-      - name: Validate source structure and executable laboratories
+      - name: Validate exact source and laboratories
         shell: bash
         run: |
           set -euo pipefail
@@ -83,25 +57,24 @@ jobs:
           s=Path('/tmp/vol4-source')
           ex=json.loads((s/'EXERCISE_AUDIT.json').read_text())
           ev=json.loads((s/'evidence/FULL_DEVELOPMENT_EVIDENCE.json').read_text())
-          print('exercise audit keys', sorted(ex.keys()))
-          print('evidence keys', sorted(ev.keys()))
+          print('exercise_audit=', ex)
+          print('full_evidence_keys=', sorted(ev.keys()))
           assert len(list((s/'chapters').glob('ch*.tex'))) == 14
           assert len(list((s/'plates').glob('plate*.tex'))) == 42
           assert len(list((s/'labs').glob('lab*.py'))) == 14
-          print('structural checks passed')
           PY
 
-      - name: Materialize exact source into repository workspace
+      - name: Materialize source without deleting protected preflight records
         shell: bash
         run: |
           set -euo pipefail
           DEST=monographs/type-theory/volume-iv-protocol
-          rsync -a --delete --exclude 'reviews/' --exclude 'releases/' /tmp/vol4-source/ "$DEST/"
+          rsync -a /tmp/vol4-source/ "$DEST/"
           rm -rf .tmp/type-theory-vol-iv-full-development
           rm -f .github/workflows/type-theory-vol-iv-full-development-bootstrap.yml
-          git status --short
           git config user.name "GCL Type Theory Composer"
           git config user.email "type-theory@grandchallenge.invalid"
           git add -A
+          git status --short
           git commit -m "docs: complete Type Theory Volume IV full development"
           git push origin HEAD:docs/type-theory-vol-iv-full-development-003
