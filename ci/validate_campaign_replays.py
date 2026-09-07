@@ -252,7 +252,7 @@ def transition_refs_from_event(
 ) -> tuple[str, str] | None:
     event_name = event_name or os.environ.get("GITHUB_EVENT_NAME", "")
     event_path = event_path or os.environ.get("GITHUB_EVENT_PATH")
-    if event_name not in {"pull_request", "push"}:
+    if event_name not in {"pull_request", "push", "merge_group"}:
         return None
     if not event_path:
         raise ReplayRoutingError(f"{event_name} replay routing requires GITHUB_EVENT_PATH")
@@ -264,6 +264,10 @@ def transition_refs_from_event(
         pull_request = event.get("pull_request") or {}
         base = str((pull_request.get("base") or {}).get("sha") or "")
         head = str((pull_request.get("head") or {}).get("sha") or "")
+    elif event_name == "merge_group":
+        merge_group = event.get("merge_group") or {}
+        base = str(merge_group.get("base_sha") or "")
+        head = str(merge_group.get("head_sha") or "")
     else:
         base = str(event.get("before") or "")
         head = str(event.get("after") or os.environ.get("GITHUB_SHA") or "")
