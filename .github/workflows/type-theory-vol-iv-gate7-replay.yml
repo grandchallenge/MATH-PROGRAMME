@@ -17,7 +17,7 @@ jobs:
       - name: Checkout exact candidate
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 0cfdb07cd3a63809f77653f4fd6095e032bd006f
+          ref: 618735466810deabd41c0d2a312effd863b49f7a
           fetch-depth: 1
           persist-credentials: false
 
@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          expected="0cfdb07cd3a63809f77653f4fd6095e032bd006f"
+          expected="618735466810deabd41c0d2a312effd863b49f7a"
           observed="$(git rev-parse HEAD)"
           test "$observed" = "$expected"
           git diff --exit-code
@@ -151,21 +151,21 @@ jobs:
           mkdir -p /tmp/type-theory-vol-iv-source
           git archive --format=zip \
             --prefix=volume-iv-protocol/ \
-            -o /tmp/type-theory-vol-iv-source/volume-iv-protocol-0cfdb07c.zip \
+            -o /tmp/type-theory-vol-iv-source/volume-iv-protocol-61873546.zip \
             HEAD:monographs/type-theory/volume-iv-protocol
-          sha256sum /tmp/type-theory-vol-iv-source/volume-iv-protocol-0cfdb07c.zip \
+          sha256sum /tmp/type-theory-vol-iv-source/volume-iv-protocol-61873546.zip \
             | tee /tmp/type-theory-vol-iv-source/SOURCE_SHA256.txt
 
       - name: Upload Gate 7 replay evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: type-theory-vol-iv-gate7-0cfdb07c
+          name: type-theory-vol-iv-gate7-61873546
           if-no-files-found: warn
           retention-days: 14
           path: |
             /tmp/exact-head.txt
-            /tmp/type-theory-vol-iv-source/volume-iv-protocol-0cfdb07c.zip
+            /tmp/type-theory-vol-iv-source/volume-iv-protocol-61873546.zip
             /tmp/type-theory-vol-iv-source/SOURCE_SHA256.txt
             monographs/type-theory/volume-iv-protocol/main.pdf
             monographs/type-theory/volume-iv-protocol/solutions_companion.pdf
