@@ -13,7 +13,11 @@ MAINTENANCE_AUTOMATION_WORKFLOWS = {
     "administrative-maintenance-synchronization.yml",
 }
 ACTIVATION_WORKFLOW = "administrative-autonomy-activation.yml"
-EXTRA_WORKFLOWS = MAINTENANCE_AUTOMATION_WORKFLOWS | {ACTIVATION_WORKFLOW}
+GHOS_ROUTING_WORKFLOW = "ghos-routing-enforcement.yml"
+EXTRA_WORKFLOWS = MAINTENANCE_AUTOMATION_WORKFLOWS | {
+    ACTIVATION_WORKFLOW,
+    GHOS_ROUTING_WORKFLOW,
+}
 legacy.EXPECTED_WORKFLOWS = set(legacy.EXPECTED_WORKFLOWS) | EXTRA_WORKFLOWS
 
 APP_ACTION = "actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1"
@@ -247,18 +251,130 @@ def activation_workflow_errors(texts: dict[str, str]) -> list[str]:
     return errors
 
 
+def ghos_routing_enforcement_errors(texts: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    text = texts.get(GHOS_ROUTING_WORKFLOW)
+    if text is None:
+        return errors
+    workflow = legacy.load_yaml_text(text)
+    trigger = _trigger(workflow)
+    if set(trigger) != {"pull_request_target", "push", "workflow_dispatch"}:
+        errors.append(
+            f"{GHOS_ROUTING_WORKFLOW}: triggers must be exactly pull_request_target, push, and workflow_dispatch"
+        )
+    pull_request_target = trigger.get("pull_request_target", {})
+    pr_types = pull_request_target.get("types", []) if isinstance(pull_request_target, dict) else []
+    if pr_types != ["opened", "synchronize", "reopened", "ready_for_review"]:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: pull_request_target trigger set drift")
+    if isinstance(pull_request_target, dict) and _as_list(pull_request_target.get("branches")) != ["main"]:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: pull_request_target must bind main")
+    push = trigger.get("push", {})
+    if not isinstance(push, dict) or _as_list(push.get("branches")) != ["main"]:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: push trigger must bind main")
+    workflow_dispatch = trigger.get("workflow_dispatch", {})
+    inputs = workflow_dispatch.get("inputs", {}) if isinstance(workflow_dispatch, dict) else {}
+    pr_number = inputs.get("pr_number", {}) if isinstance(inputs, dict) else {}
+    if (
+        not isinstance(pr_number, dict)
+        or str(pr_number.get("required", "")).lower() != "true"
+        or pr_number.get("type") != "string"
+    ):
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: workflow_dispatch must require string pr_number")
+
+    if workflow.get("permissions") != {"contents": "read"}:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: top-level permissions must remain contents-read only")
+    jobs = workflow.get("jobs", {})
+    if not isinstance(jobs, dict) or set(jobs) != {"routing-controller", "base-refresh"}:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: job set must remain routing-controller plus base-refresh")
+    routing_controller = _job(workflow, "routing-controller")
+    base_refresh = _job(workflow, "base-refresh")
+    expected_controller_permissions = {
+        "contents": "read",
+        "pull-requests": "read",
+        "statuses": "write",
+    }
+    expected_refresh_permissions = {
+        "actions": "write",
+        "contents": "read",
+        "pull-requests": "read",
+    }
+    if routing_controller.get("permissions") != expected_controller_permissions:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: routing-controller permission profile drift")
+    if base_refresh.get("permissions") != expected_refresh_permissions:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: base-refresh permission profile drift")
+
+    required_markers = (
+        "refs/pull/${PR_NUMBER}/merge",
+        'test "$PARENT_BASE" = "$CURRENT_BASE"',
+        'test "$PARENT_HEAD" = "$HEAD_SHA"',
+        "Reject enforcement self-modification",
+        "protected-base/.github/workflows/ghos-routing-enforcement.yml",
+        "effective-candidate/.github/workflows/ghos-routing-enforcement.yml",
+        "ef1cce6029233a68cf46063cea2384772fcae613",
+        "fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17",
+        "--root effective-candidate",
+        "Verify protected base remained current through evaluation",
+        '"context": "routing-enforcement"',
+        '/statuses/{os.environ["MERGE_SHA"]}',
+        "/actions/workflows/ghos-routing-enforcement.yml/dispatches",
+        "persist-credentials: false",
+    )
+    for marker in required_markers:
+        if marker not in text:
+            errors.append(f"{GHOS_ROUTING_WORKFLOW}: missing effective-candidate control marker {marker}")
+
+    if text.count("statuses: write") != 1:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: exactly one status-write grant is required")
+    if text.count("actions: write") != 1:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: exactly one actions-write grant is required")
+    for forbidden in (
+        "contents: write",
+        "pull-requests: write",
+        "checks: write",
+        "issues: write",
+        "administration: write",
+        "permission-contents: write",
+        "permission-pull-requests: write",
+        "permission-checks: write",
+        "permission-issues: write",
+        "permission-administration: write",
+        "gh pr merge",
+        "git push origin main",
+        "/git/refs/heads/main",
+    ):
+        if forbidden in text:
+            errors.append(f"{GHOS_ROUTING_WORKFLOW}: forbidden routing-controller capability {forbidden}")
+
+    sequence = (
+        "Resolve current effective merge identity",
+        "Mark effective candidate pending",
+        "Materialize effective candidate as inert data",
+        "Reject enforcement self-modification",
+        "Verify and execute external gate against effective candidate",
+        "Verify protected base remained current through evaluation",
+        "Publish required effective-candidate status",
+    )
+    positions = [text.find(marker) for marker in sequence]
+    if any(position < 0 for position in positions) or positions != sorted(positions):
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: effective-candidate validation sequence drift")
+    return errors
+
+
 def workflow_coverage_errors(root=legacy.ROOT, texts=None, evidence=None):
     texts = legacy.workflow_texts(root) if texts is None else texts
     errors = legacy.workflow_coverage_errors(root=root, texts=texts, evidence=evidence)
     delegated = {
         f"{ACTIVATION_WORKFLOW}:activate: non-Pages job permissions may not exceed contents: read",
         "administrative-maintenance-candidate.yml:prepare: non-Pages job permissions may not exceed contents: read",
+        f"{GHOS_ROUTING_WORKFLOW}:routing-controller: non-Pages job permissions may not exceed contents: read",
+        f"{GHOS_ROUTING_WORKFLOW}:base-refresh: non-Pages job permissions may not exceed contents: read",
     }
     errors = [error for error in errors if error not in delegated]
     errors.extend(candidate_workflow_errors(texts))
     errors.extend(synchronization_workflow_errors(texts))
     errors.extend(validation_workflow_errors(texts))
     errors.extend(activation_workflow_errors(texts))
+    errors.extend(ghos_routing_enforcement_errors(texts))
     return errors
 
 
@@ -269,7 +385,11 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"workflow coverage v3 validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print("workflow coverage v3: active bounded administrative runtime, separated Candidate and Referee identities, protected exact-head merge, mirror-only synchronization, manual control-plane gates, and claim boundaries are valid")
+    print(
+        "workflow coverage v3: active bounded administrative runtime, separated Candidate and Referee identities, "
+        "protected exact-head merge, effective-candidate GH-OS routing with exact bounded status/action privileges, "
+        "mirror-only synchronization, manual control-plane gates, and claim boundaries are valid"
+    )
     return 0
 
 
