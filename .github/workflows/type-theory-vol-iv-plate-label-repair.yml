@@ -37,21 +37,21 @@ jobs:
           changed = 0
           for p in files:
               text = p.read_text()
-              if r'\label{plate:' in text:
-                  continue
+              assert r'\label{plate:' not in text, p
               m = re.fullmatch(r'plate(\d{2})\.tex', p.name)
               assert m, p.name
               label = rf'\label{{plate:protocol-{m.group(1)}}}'
               marker = '\n\\end{figure}'
               assert marker in text, p
-              text = text.replace(marker, '\n' + label + marker, 1)
-              p.write_text(text)
+              p.write_text(text.replace(marker, '\n' + label + marker, 1))
               changed += 1
-          assert changed == 42, changed
-          PY
 
-          grep -L '\\label{plate:' monographs/type-theory/volume-iv-protocol/plates/plate*.tex && exit 1 || true
-          test "$(grep -l '\\label{plate:' monographs/type-theory/volume-iv-protocol/plates/plate*.tex | wc -l)" -eq 42
+          assert changed == 42, changed
+          for p in files:
+              text = p.read_text()
+              assert text.count(r'\label{plate:') == 1, p
+          print('PLATE_LABEL_REPAIR=PASS count=42')
+          PY
 
       - name: Commit bounded source repair
         shell: bash
@@ -61,5 +61,6 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add monographs/type-theory/volume-iv-protocol/plates/plate*.tex
           test "$(git diff --cached --name-only | wc -l)" -eq 42
+          git diff --cached --check
           git commit -m "docs: add canonical Volume IV plate labels"
           git push origin HEAD:docs/type-theory-vol-iv-full-composition-001
