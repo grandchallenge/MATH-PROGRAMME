@@ -22,19 +22,21 @@ jobs:
         run: |
           set -euo pipefail
           T=.tmp/type-theory-vol-iv-full-development
-          rm -f /tmp/vol4-source.xz
-          for f in "$T/src_xz.b64.00" "$T/src_xz.b64.01" "$T/src_xz.b64.02a" "$T/src_xz.b64.02b" "$T/src_xz.b64.03" "$T/src_xz.b64.04"; do
-            clean=/tmp/$(basename "$f").clean
-            decoded=/tmp/$(basename "$f").bin
-            tr -d '\r\n' < "$f" > "$clean"
-            echo "$(basename "$f") text=$(stat -c%s "$f") clean=$(stat -c%s "$clean") mod4=$(( $(stat -c%s "$clean") % 4 ))"
-            if grep -P '[^A-Za-z0-9+/=]' "$clean" >/dev/null; then
-              echo "invalid base64 character in $f" >&2
-              exit 1
-            fi
-            base64 -d "$clean" > "$decoded"
-            cat "$decoded" >> /tmp/vol4-source.xz
-          done
+          cat "$T/src_xz.b64.00" "$T/src_xz.b64.01" "$T/src_xz.b64.02a" "$T/src_xz.b64.02b" "$T/src_xz.b64.03" "$T/src_xz.b64.04" | tr -d '\r\n' > /tmp/vol4-source.b64
+          if grep -P '[^A-Za-z0-9+/=]' /tmp/vol4-source.b64 >/dev/null; then
+            echo "invalid base64 character in concatenated transport" >&2
+            exit 1
+          fi
+          n=$(stat -c%s /tmp/vol4-source.b64)
+          rem=$(( n % 4 ))
+          echo "transport_b64_chars=$n mod4=$rem"
+          case "$rem" in
+            0) : ;;
+            2) printf '==' >> /tmp/vol4-source.b64 ;;
+            3) printf '=' >> /tmp/vol4-source.b64 ;;
+            *) echo "impossible base64 remainder: $rem" >&2; exit 1 ;;
+          esac
+          base64 -d /tmp/vol4-source.b64 > /tmp/vol4-source.xz
           echo "transport_xz_size=$(stat -c%s /tmp/vol4-source.xz)"
           echo "transport_xz_sha256=$(sha256sum /tmp/vol4-source.xz | awk '{print $1}')"
           xz -t /tmp/vol4-source.xz
@@ -42,6 +44,7 @@ jobs:
           echo "payload_size=$(stat -c%s /tmp/vol4-source.payload)"
           echo "payload_sha256=$(sha256sum /tmp/vol4-source.payload | awk '{print $1}')"
           file /tmp/vol4-source.payload
+          rm -rf /tmp/vol4-source
           if unzip -t /tmp/vol4-source.payload >/dev/null 2>&1; then
             echo payload_kind=zip
             unzip -q /tmp/vol4-source.payload -d /tmp/vol4-source
