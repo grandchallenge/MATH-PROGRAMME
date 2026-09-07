@@ -22,7 +22,19 @@ jobs:
         run: |
           set -euo pipefail
           T=.tmp/type-theory-vol-iv-full-development
-          cat "$T/src_xz.b64.00" "$T/src_xz.b64.01" "$T/src_xz.b64.02a" "$T/src_xz.b64.02b" "$T/src_xz.b64.03" "$T/src_xz.b64.04" | tr -d '\r\n' | base64 -d > /tmp/vol4-source.xz
+          rm -f /tmp/vol4-source.xz
+          for f in "$T/src_xz.b64.00" "$T/src_xz.b64.01" "$T/src_xz.b64.02a" "$T/src_xz.b64.02b" "$T/src_xz.b64.03" "$T/src_xz.b64.04"; do
+            clean=/tmp/$(basename "$f").clean
+            decoded=/tmp/$(basename "$f").bin
+            tr -d '\r\n' < "$f" > "$clean"
+            echo "$(basename "$f") text=$(stat -c%s "$f") clean=$(stat -c%s "$clean") mod4=$(( $(stat -c%s "$clean") % 4 ))"
+            if grep -P '[^A-Za-z0-9+/=]' "$clean" >/dev/null; then
+              echo "invalid base64 character in $f" >&2
+              exit 1
+            fi
+            base64 -d "$clean" > "$decoded"
+            cat "$decoded" >> /tmp/vol4-source.xz
+          done
           echo "transport_xz_size=$(stat -c%s /tmp/vol4-source.xz)"
           echo "transport_xz_sha256=$(sha256sum /tmp/vol4-source.xz | awk '{print $1}')"
           xz -t /tmp/vol4-source.xz
@@ -70,11 +82,9 @@ jobs:
           ev=json.loads((s/'evidence/FULL_DEVELOPMENT_EVIDENCE.json').read_text())
           print('exercise audit keys', sorted(ex.keys()))
           print('evidence keys', sorted(ev.keys()))
-          text=(s/'solutions_companion.tex').read_text()
-          for n in range(1,169):
-              token=f'Exercise {n}'
           assert len(list((s/'chapters').glob('ch*.tex'))) == 14
           assert len(list((s/'plates').glob('plate*.tex'))) == 42
+          assert len(list((s/'labs').glob('lab*.py'))) == 14
           print('structural checks passed')
           PY
 
