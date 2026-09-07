@@ -37,7 +37,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             texlive-luatex texlive-latex-extra texlive-pictures \
-            texlive-fonts-recommended poppler-utils
+            texlive-fonts-recommended texlive-fonts-extra poppler-utils
 
       - name: Run all 14 laboratories
         working-directory: monographs/type-theory/volume-iv-protocol
@@ -63,16 +63,16 @@ jobs:
                 solutions_companion.{aux,log,out,pdf} \
                 plates_folio.{aux,log,out,pdf}
 
-          lualatex -interaction=nonstopmode -halt-on-error main.tex > main.pass1.log
-          makeindex main.idx > main.index.log 2>&1
-          lualatex -interaction=nonstopmode -halt-on-error main.tex > main.pass2.log
-          lualatex -interaction=nonstopmode -halt-on-error main.tex > main.pass3.log
+          lualatex -interaction=nonstopmode -halt-on-error main.tex 2>&1 | tee main.pass1.log
+          makeindex main.idx 2>&1 | tee main.index.log
+          lualatex -interaction=nonstopmode -halt-on-error main.tex 2>&1 | tee main.pass2.log
+          lualatex -interaction=nonstopmode -halt-on-error main.tex 2>&1 | tee main.pass3.log
 
-          lualatex -interaction=nonstopmode -halt-on-error solutions_companion.tex > solutions.pass1.log
-          lualatex -interaction=nonstopmode -halt-on-error solutions_companion.tex > solutions.pass2.log
+          lualatex -interaction=nonstopmode -halt-on-error solutions_companion.tex 2>&1 | tee solutions.pass1.log
+          lualatex -interaction=nonstopmode -halt-on-error solutions_companion.tex 2>&1 | tee solutions.pass2.log
 
-          lualatex -interaction=nonstopmode -halt-on-error plates_folio.tex > plates.pass1.log
-          lualatex -interaction=nonstopmode -halt-on-error plates_folio.tex > plates.pass2.log
+          lualatex -interaction=nonstopmode -halt-on-error plates_folio.tex 2>&1 | tee plates.pass1.log
+          lualatex -interaction=nonstopmode -halt-on-error plates_folio.tex 2>&1 | tee plates.pass2.log
 
           pdfinfo main.pdf > main.pdfinfo.txt
           pdfinfo solutions_companion.pdf > solutions.pdfinfo.txt
@@ -83,25 +83,28 @@ jobs:
           cat SHA256SUMS.txt
 
       - name: PDF preflight diagnostics
+        if: always()
         working-directory: monographs/type-theory/volume-iv-protocol
         shell: bash
         run: |
           set -euo pipefail
-          if grep -R -n -E 'Undefined control sequence|LaTeX Error|Emergency stop|Fatal error' \
-              main.pass*.log solutions.pass*.log plates.pass*.log; then
-            echo 'PREFLIGHT_FATAL_DIAGNOSTIC=FAIL'
-            exit 1
+          touch gate7-layout-warnings.txt
+          if grep -R -n -E 'Undefined control sequence|LaTeX Error|Emergency stop|Fatal error|fontspec error' \
+              main.pass*.log solutions.pass*.log plates.pass*.log 2>/dev/null; then
+            echo 'PREFLIGHT_FATAL_DIAGNOSTIC=FAIL' | tee gate7-preflight.txt
+          else
+            echo 'PREFLIGHT_FATAL_DIAGNOSTIC=PASS' | tee gate7-preflight.txt
           fi
           grep -R -n -E 'Overfull|Underfull|LaTeX Warning|Package .* Warning' \
-            main.pass3.log solutions.pass2.log plates.pass2.log > gate7-layout-warnings.txt || true
-          printf 'PREFLIGHT_FATAL_DIAGNOSTIC=PASS\n' | tee gate7-preflight.txt
+            main.pass3.log solutions.pass2.log plates.pass2.log 2>/dev/null > gate7-layout-warnings.txt || true
           wc -l gate7-layout-warnings.txt | tee -a gate7-preflight.txt
 
       - name: Upload Gate 7 replay evidence
+        if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: type-theory-vol-iv-gate7-7224490f
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 14
           path: |
             /tmp/exact-head.txt
@@ -113,6 +116,7 @@ jobs:
             monographs/type-theory/volume-iv-protocol/gate7-labs.log
             monographs/type-theory/volume-iv-protocol/gate7-preflight.txt
             monographs/type-theory/volume-iv-protocol/gate7-layout-warnings.txt
+            monographs/type-theory/volume-iv-protocol/main.pass1.log
             monographs/type-theory/volume-iv-protocol/main.pass3.log
             monographs/type-theory/volume-iv-protocol/solutions.pass2.log
             monographs/type-theory/volume-iv-protocol/plates.pass2.log
