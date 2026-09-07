@@ -98,6 +98,10 @@ def _changed_paths() -> tuple[str, list[str] | None]:
         pr = event.get("pull_request", {})
         base = str(pr.get("base", {}).get("sha") or "")
         head = str(pr.get("head", {}).get("sha") or "")
+    elif event_name == "merge_group":
+        merge_group = event.get("merge_group", {})
+        base = str(merge_group.get("base_sha") or "")
+        head = str(merge_group.get("head_sha") or "")
     elif event_name == "push":
         base = str(event.get("before") or "")
         head = str(event.get("after") or os.environ.get("GITHUB_SHA") or "")

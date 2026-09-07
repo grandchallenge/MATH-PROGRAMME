@@ -25,8 +25,9 @@ class PolicyShardRuntimeTests(unittest.TestCase):
     def test_execution_policy_has_exact_long_running_overrides(self) -> None:
         default, overrides = run_policy_shard._execution_policy(self.registry())
         self.assertEqual(default, 900.0)
-        self.assertEqual(set(overrides), {("oz", 1), ("campaigns", 5)})
-        for key in (("oz", 1), ("campaigns", 5)):
+        expected = {("oz", 1), ("campaigns", 2), ("campaigns", 5)}
+        self.assertEqual(set(overrides), expected)
+        for key in expected:
             timeout, reason = overrides[key]
             self.assertEqual(timeout, 1680.0)
             self.assertGreaterEqual(len(reason), 20)
