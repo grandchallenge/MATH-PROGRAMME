@@ -1,1 +1,383 @@
-{"record_type":"GHOS_EXECUTION_ROUTING_REGISTRY","schema_version":"1.0.0","repository":"grandchallenge/MATH-PROGRAMME","controllers":[{"controller_id":"GITHUB_ACTIONS","executor_class":"PERSISTENT_CONTROLLER","provider":"github","durable_wake_mechanism":"repository-bound GitHub Actions event queue","state_store":"GitHub Actions workflow run and job records bound to repository and commit SHA","supported_features":["AUTONOMOUS_WAKE","EXTERNAL_REUSABLE_JOB","EXTERNAL_WAIT","NON_RECONCILABLE_MUTATION","OPAQUE_EXECUTION","SCHEDULED","SECRET_CREDENTIAL","UNATTENDED_DISPATCH","WRITE_CAPABLE"]}],"workflows":[{"path":".github/workflows/administrative-autonomy-activation.yml","observed_features":["OPAQUE_EXECUTION","SECRET_CREDENTIAL","WRITE_CAPABLE"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/administrative-maintenance-0813-recovery-failover.yml","observed_features":["OPAQUE_EXECUTION","SECRET_CREDENTIAL","WRITE_CAPABLE"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/administrative-maintenance-automation-validation.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/administrative-maintenance-candidate.yml","observed_features":["AUTONOMOUS_WAKE","OPAQUE_EXECUTION","SCHEDULED","SECRET_CREDENTIAL","WRITE_CAPABLE"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/administrative-maintenance-dispatch.yml","observed_features":["AUTONOMOUS_WAKE","OPAQUE_EXECUTION","SCHEDULED","UNATTENDED_DISPATCH"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/administrative-maintenance-synchronization.yml","observed_features":["AUTONOMOUS_WAKE","OPAQUE_EXECUTION","SECRET_CREDENTIAL","UNATTENDED_DISPATCH"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/administrative-protected-receipt-live-qualification.yml","observed_features":["OPAQUE_EXECUTION","SECRET_CREDENTIAL","WRITE_CAPABLE"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/aether-controls-admin.yml","observed_features":["OPAQUE_EXECUTION","SECRET_CREDENTIAL"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/bsd-wp03-substrate.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/bsd-wp04-target.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/ci.yml","observed_features":["AUTONOMOUS_WAKE","OPAQUE_EXECUTION","SCHEDULED"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/cmdg-condensed-cm1.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/cmdg-condensed-cm2.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/cmdg-condensed-cm3.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/cmdg-condensed-cm4-p2-d.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/cmdg-condensed-cm4-p2-e.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/cmdg-condensed-cm4-p2.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/cmdg-condensed-cm4-p3.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/cmdg-condensed-cm4.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/cmdg-euclid-bridge.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/cmdg-nat-concordance.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/cmdg-postmerge.yml","observed_features":["AUTONOMOUS_WAKE","EXTERNAL_REUSABLE_JOB","OPAQUE_EXECUTION","SCHEDULED"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/cmdg-solid-c05.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/cmdg-vertical-spine-v0.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/construction-gate-runtime.yml","observed_features":["OPAQUE_EXECUTION","SECRET_CREDENTIAL","WRITE_CAPABLE"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/gcl-conformance.yml","observed_features":["AUTONOMOUS_WAKE","EXTERNAL_REUSABLE_JOB","OPAQUE_EXECUTION","SCHEDULED"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/ghos-routing-enforcement.yml","observed_features":["EXTERNAL_WAIT","OPAQUE_EXECUTION","SECRET_CREDENTIAL","WRITE_CAPABLE"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/oz-next-004-independent-review.yml","observed_features":["EXTERNAL_WAIT","OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/oz-rt-apery-brow.yml","observed_features":["EXTERNAL_WAIT","OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/oz-rt-bz-t3.yml","observed_features":["EXTERNAL_WAIT","OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/oz-rt-lb-instance.yml","observed_features":["EXTERNAL_WAIT","OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/pages.yml","observed_features":["AUTONOMOUS_WAKE","OPAQUE_EXECUTION","SECRET_CREDENTIAL","UNATTENDED_DISPATCH","WRITE_CAPABLE"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/pc-wp04.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/pc-wp05.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/pr-visual-status-advisory.yml","observed_features":["AUTONOMOUS_WAKE","OPAQUE_EXECUTION","SECRET_CREDENTIAL","UNATTENDED_DISPATCH"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/release-trust-admin.yml","observed_features":["OPAQUE_EXECUTION","SECRET_CREDENTIAL"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/vgse-final-activation.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"},{"path":".github/workflows/visual-pedagogy-representation-repair.yml","observed_features":["OPAQUE_EXECUTION"],"topology":"PERSISTENT_CONTROLLER_REQUIRED","controller_id":"GITHUB_ACTIONS"}],"claim_boundaries":{"constitutional":false,"merge":false,"certification":false,"production":false,"publication":false,"mathematical_claim":false,"claim_promotion":false,"commercial":false}}
+{
+  "record_type": "GHOS_EXECUTION_ROUTING_REGISTRY",
+  "schema_version": "1.0.0",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "controllers": [
+    {
+      "controller_id": "GITHUB_ACTIONS",
+      "executor_class": "PERSISTENT_CONTROLLER",
+      "provider": "github",
+      "durable_wake_mechanism": "repository-bound GitHub Actions event queue",
+      "state_store": "GitHub Actions workflow run and job records bound to repository and commit SHA",
+      "supported_features": [
+        "AUTONOMOUS_WAKE",
+        "EXTERNAL_REUSABLE_JOB",
+        "EXTERNAL_WAIT",
+        "NON_RECONCILABLE_MUTATION",
+        "OPAQUE_EXECUTION",
+        "SCHEDULED",
+        "SECRET_CREDENTIAL",
+        "UNATTENDED_DISPATCH",
+        "WRITE_CAPABLE"
+      ]
+    }
+  ],
+  "workflows": [
+    {
+      "path": ".github/workflows/administrative-autonomy-activation.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION",
+        "SECRET_CREDENTIAL",
+        "WRITE_CAPABLE"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/administrative-maintenance-0813-recovery-failover.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION",
+        "SECRET_CREDENTIAL",
+        "WRITE_CAPABLE"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/administrative-maintenance-automation-validation.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/administrative-maintenance-candidate.yml",
+      "observed_features": [
+        "AUTONOMOUS_WAKE",
+        "OPAQUE_EXECUTION",
+        "SCHEDULED",
+        "SECRET_CREDENTIAL",
+        "WRITE_CAPABLE"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/administrative-maintenance-dispatch.yml",
+      "observed_features": [
+        "AUTONOMOUS_WAKE",
+        "OPAQUE_EXECUTION",
+        "SCHEDULED",
+        "UNATTENDED_DISPATCH"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/administrative-maintenance-synchronization.yml",
+      "observed_features": [
+        "AUTONOMOUS_WAKE",
+        "OPAQUE_EXECUTION",
+        "SECRET_CREDENTIAL",
+        "UNATTENDED_DISPATCH"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/administrative-protected-receipt-live-qualification.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION",
+        "SECRET_CREDENTIAL",
+        "WRITE_CAPABLE"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/aether-controls-admin.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION",
+        "SECRET_CREDENTIAL"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/bsd-wp03-substrate.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/bsd-wp04-target.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "observed_features": [
+        "AUTONOMOUS_WAKE",
+        "OPAQUE_EXECUTION",
+        "SCHEDULED"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/cmdg-condensed-cm1.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/cmdg-condensed-cm2.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/cmdg-condensed-cm3.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/cmdg-condensed-cm4-p2-d.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/cmdg-condensed-cm4-p2-e.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/cmdg-condensed-cm4-p2.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/cmdg-condensed-cm4-p3.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/cmdg-condensed-cm4.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/cmdg-euclid-bridge.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/cmdg-nat-concordance.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/cmdg-postmerge.yml",
+      "observed_features": [
+        "AUTONOMOUS_WAKE",
+        "EXTERNAL_REUSABLE_JOB",
+        "OPAQUE_EXECUTION",
+        "SCHEDULED"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/cmdg-solid-c05.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/cmdg-vertical-spine-v0.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/construction-gate-runtime.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION",
+        "SECRET_CREDENTIAL",
+        "WRITE_CAPABLE"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/gcl-conformance.yml",
+      "observed_features": [
+        "AUTONOMOUS_WAKE",
+        "EXTERNAL_REUSABLE_JOB",
+        "OPAQUE_EXECUTION",
+        "SCHEDULED"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/ghos-routing-enforcement.yml",
+      "observed_features": [
+        "EXTERNAL_WAIT",
+        "OPAQUE_EXECUTION",
+        "SECRET_CREDENTIAL",
+        "WRITE_CAPABLE"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/oz-next-004-independent-review.yml",
+      "observed_features": [
+        "EXTERNAL_WAIT",
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/oz-rt-apery-brow.yml",
+      "observed_features": [
+        "EXTERNAL_WAIT",
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/oz-rt-bz-t3.yml",
+      "observed_features": [
+        "EXTERNAL_WAIT",
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/oz-rt-lb-instance.yml",
+      "observed_features": [
+        "EXTERNAL_WAIT",
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/pages.yml",
+      "observed_features": [
+        "AUTONOMOUS_WAKE",
+        "OPAQUE_EXECUTION",
+        "SECRET_CREDENTIAL",
+        "UNATTENDED_DISPATCH",
+        "WRITE_CAPABLE"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/pc-wp04.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/pc-wp05.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/pr-visual-status-advisory.yml",
+      "observed_features": [
+        "AUTONOMOUS_WAKE",
+        "OPAQUE_EXECUTION",
+        "SECRET_CREDENTIAL",
+        "UNATTENDED_DISPATCH"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/release-trust-admin.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION",
+        "SECRET_CREDENTIAL"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/vgse-final-activation.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/visual-pedagogy-representation-repair.yml",
+      "observed_features": [
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    }
+  ],
+  "claim_boundaries": {
+    "constitutional": false,
+    "merge": false,
+    "certification": false,
+    "production": false,
+    "publication": false,
+    "mathematical_claim": false,
+    "claim_promotion": false,
+    "commercial": false
+  }
+}
