@@ -274,7 +274,11 @@ def ghos_routing_enforcement_errors(texts: dict[str, str]) -> list[str]:
     workflow_dispatch = trigger.get("workflow_dispatch", {})
     inputs = workflow_dispatch.get("inputs", {}) if isinstance(workflow_dispatch, dict) else {}
     pr_number = inputs.get("pr_number", {}) if isinstance(inputs, dict) else {}
-    if not isinstance(pr_number, dict) or pr_number.get("required") is not True or pr_number.get("type") != "string":
+    if (
+        not isinstance(pr_number, dict)
+        or str(pr_number.get("required", "")).lower() != "true"
+        or pr_number.get("type") != "string"
+    ):
         errors.append(f"{GHOS_ROUTING_WORKFLOW}: workflow_dispatch must require string pr_number")
 
     if workflow.get("permissions") != {"contents": "read"}:
