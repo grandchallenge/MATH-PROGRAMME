@@ -4,6 +4,8 @@ on:
   pull_request_target:
     types: [opened, synchronize, reopened, ready_for_review]
     branches: [main]
+  merge_group:
+    types: [checks_requested]
   push:
     branches: [main]
   workflow_dispatch:
@@ -17,12 +19,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: ghos-routing-${{ github.event.pull_request.number || inputs.pr_number || github.run_id }}
+  group: ghos-routing-${{ github.event.pull_request.number || github.event.merge_group.head_sha || inputs.pr_number || github.run_id }}
   cancel-in-progress: true
 
 jobs:
   routing-controller:
-    name: GH-OS effective candidate controller
+    name: GH-OS pre-queue effective candidate controller
     if: github.event_name == 'pull_request_target' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -51,7 +53,9 @@ jobs:
           test -n "$PR_NUMBER"
           CURRENT_BASE="$(git -C protected-base rev-parse HEAD)"
           FOUND=0
+          STARTED_AT="$(date +%s)"
           for attempt in 1 2 3 4 5; do
+            echo "GHOS_PREQUEUE_RESOLUTION_ATTEMPT=${attempt}"
             python - <<'PY' > pr.json
           import json
           import os
@@ -94,25 +98,39 @@ jobs:
                  test "$PARENT_HEAD" = "$HEAD_SHA" && \
                  test "$API_MERGE_SHA" = "$MERGE_SHA"; then
                 FOUND=1
+                RESOLUTION_ATTEMPTS="$attempt"
                 break
               fi
             fi
             sleep 2
           done
+          ELAPSED="$(( $(date +%s) - STARTED_AT ))"
           if test "$FOUND" != "1"; then
-            echo "GitHub did not provide an effective merge candidate bound to current protected main"
+            echo "GHOS_PREQUEUE_RESOLUTION_FAILED attempts=5 elapsed_seconds=${ELAPSED} base=${CURRENT_BASE} head=${HEAD_SHA:-unknown} api_merge=${API_MERGE_SHA:-unknown}"
             exit 1
           fi
+          echo "GHOS_PREQUEUE_RESOLVED attempts=${RESOLUTION_ATTEMPTS} elapsed_seconds=${ELAPSED} base=${CURRENT_BASE} head=${HEAD_SHA} effective_merge=${MERGE_SHA}"
+          {
+            echo "### GH-OS pre-queue identity"
+            echo "- PR: #${PR_NUMBER}"
+            echo "- protected base: \`${CURRENT_BASE}\`"
+            echo "- PR head: \`${HEAD_SHA}\`"
+            echo "- effective merge: \`${MERGE_SHA}\`"
+            echo "- resolution attempts: ${RESOLUTION_ATTEMPTS}"
+            echo "- resolution elapsed seconds: ${ELAPSED}"
+          } >> "$GITHUB_STEP_SUMMARY"
           echo "base_sha=$CURRENT_BASE" >> "$GITHUB_OUTPUT"
           echo "head_sha=$HEAD_SHA" >> "$GITHUB_OUTPUT"
           echo "merge_sha=$MERGE_SHA" >> "$GITHUB_OUTPUT"
           echo "pr_number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
-      - name: Mark effective candidate pending
+          echo "resolution_attempts=$RESOLUTION_ATTEMPTS" >> "$GITHUB_OUTPUT"
+          echo "resolution_elapsed_seconds=$ELAPSED" >> "$GITHUB_OUTPUT"
+      - name: Mark pre-queue routing pending on PR head
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
           API_URL: ${{ github.api_url }}
-          MERGE_SHA: ${{ steps.identity.outputs.merge_sha }}
+          STATUS_SHA: ${{ steps.identity.outputs.head_sha }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           python - <<'PY'
@@ -123,11 +141,11 @@ jobs:
           payload = json.dumps({
               "state": "pending",
               "context": "routing-enforcement",
-              "description": "Validating GH-OS routing on the current effective merge candidate",
+              "description": "GH-OS pre-queue validation of current effective candidate",
               "target_url": os.environ["RUN_URL"],
           }).encode()
           request = urllib.request.Request(
-              f'{os.environ["API_URL"]}/repos/{os.environ["REPOSITORY"]}/statuses/{os.environ["MERGE_SHA"]}',
+              f'{os.environ["API_URL"]}/repos/{os.environ["REPOSITORY"]}/statuses/{os.environ["STATUS_SHA"]}',
               data=payload,
               method="POST",
               headers={
@@ -182,13 +200,13 @@ jobs:
           git -C protected-base fetch --no-tags origin refs/heads/main
           test "$(git -C protected-base rev-parse FETCH_HEAD)" = \
             "${{ steps.identity.outputs.base_sha }}"
-      - name: Publish required effective-candidate status
-        if: ${{ always() && steps.identity.outputs.merge_sha != '' }}
+      - name: Publish required pre-queue status on PR head
+        if: ${{ always() && steps.identity.outputs.head_sha != '' }}
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
           API_URL: ${{ github.api_url }}
-          MERGE_SHA: ${{ steps.identity.outputs.merge_sha }}
+          STATUS_SHA: ${{ steps.identity.outputs.head_sha }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           JOB_STATUS: ${{ job.status }}
         run: |
@@ -202,14 +220,173 @@ jobs:
               "state": "success" if success else "failure",
               "context": "routing-enforcement",
               "description": (
-                  "GH-OS routing valid on current effective merge candidate"
+                  "GH-OS pre-queue routing valid; final merge-group check still required"
                   if success
-                  else "GH-OS routing rejected current effective merge candidate"
+                  else "GH-OS pre-queue routing rejected current candidate"
               ),
               "target_url": os.environ["RUN_URL"],
           }).encode()
           request = urllib.request.Request(
-              f'{os.environ["API_URL"]}/repos/{os.environ["REPOSITORY"]}/statuses/{os.environ["MERGE_SHA"]}',
+              f'{os.environ["API_URL"]}/repos/{os.environ["REPOSITORY"]}/statuses/{os.environ["STATUS_SHA"]}',
+              data=payload,
+              method="POST",
+              headers={
+                  "Accept": "application/vnd.github+json",
+                  "Authorization": f'Bearer {os.environ["GH_TOKEN"]}',
+                  "Content-Type": "application/json",
+                  "X-GitHub-Api-Version": "2022-11-28",
+              },
+          )
+          with urllib.request.urlopen(request, timeout=30):
+              pass
+          PY
+
+  merge-group-controller:
+    name: GH-OS merge-group admission controller
+    if: github.event_name == 'merge_group'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      statuses: write
+    steps:
+      - name: Check out current protected base
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          path: protected-base
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Bind native merge-group identity
+        id: identity
+        shell: bash
+        env:
+          MERGE_GROUP_SHA: ${{ github.sha }}
+          MERGE_GROUP_REF: ${{ github.ref }}
+        run: |
+          set -euo pipefail
+          CURRENT_BASE="$(git -C protected-base rev-parse HEAD)"
+          case "$MERGE_GROUP_REF" in
+            refs/heads/gh-readonly-queue/main/*) ;;
+            *) echo "unexpected merge-group ref: $MERGE_GROUP_REF"; exit 1 ;;
+          esac
+          git -C protected-base fetch --force --no-tags origin "+${MERGE_GROUP_REF}:refs/remotes/origin/ghos-merge-group"
+          FETCHED_SHA="$(git -C protected-base rev-parse refs/remotes/origin/ghos-merge-group)"
+          test "$FETCHED_SHA" = "$MERGE_GROUP_SHA"
+          git -C protected-base merge-base --is-ancestor "$CURRENT_BASE" "$MERGE_GROUP_SHA"
+          echo "GHOS_MERGE_GROUP_BOUND base=${CURRENT_BASE} merge_group=${MERGE_GROUP_SHA} ref=${MERGE_GROUP_REF}"
+          {
+            echo "### GH-OS merge-group identity"
+            echo "- protected base: \`${CURRENT_BASE}\`"
+            echo "- merge-group SHA: \`${MERGE_GROUP_SHA}\`"
+            echo "- merge-group ref: \`${MERGE_GROUP_REF}\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "base_sha=$CURRENT_BASE" >> "$GITHUB_OUTPUT"
+          echo "merge_sha=$MERGE_GROUP_SHA" >> "$GITHUB_OUTPUT"
+          echo "merge_ref=$MERGE_GROUP_REF" >> "$GITHUB_OUTPUT"
+      - name: Mark merge-group routing pending
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          API_URL: ${{ github.api_url }}
+          STATUS_SHA: ${{ steps.identity.outputs.merge_sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          payload = json.dumps({
+              "state": "pending",
+              "context": "routing-enforcement",
+              "description": "Validating GH-OS routing on native merge-group candidate",
+              "target_url": os.environ["RUN_URL"],
+          }).encode()
+          request = urllib.request.Request(
+              f'{os.environ["API_URL"]}/repos/{os.environ["REPOSITORY"]}/statuses/{os.environ["STATUS_SHA"]}',
+              data=payload,
+              method="POST",
+              headers={
+                  "Accept": "application/vnd.github+json",
+                  "Authorization": f'Bearer {os.environ["GH_TOKEN"]}',
+                  "Content-Type": "application/json",
+                  "X-GitHub-Api-Version": "2022-11-28",
+              },
+          )
+          with urllib.request.urlopen(request, timeout=30):
+              pass
+          PY
+      - name: Materialize merge-group candidate as inert data
+        run: |
+          git -C protected-base worktree add --detach ../effective-candidate \
+            "${{ steps.identity.outputs.merge_sha }}"
+      - name: Verify merge-group uses protected enforcement workflow
+        shell: bash
+        run: |
+          test ! -L effective-candidate/.github/workflows/ghos-routing-enforcement.yml
+          cmp --silent \
+            protected-base/.github/workflows/ghos-routing-enforcement.yml \
+            effective-candidate/.github/workflows/ghos-routing-enforcement.yml || {
+              echo "merge-group candidate does not use the current protected GH-OS enforcement workflow"
+              exit 1
+            }
+      - name: Check out externally governed routing gate
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: grandchallenge/.github
+          ref: ef1cce6029233a68cf46063cea2384772fcae613
+          path: policy-runtime
+          persist-credentials: false
+      - name: Install pinned routing gate dependency
+        run: python -m pip install --requirement protected-base/requirements/policy.txt
+      - name: Verify protected base before merge-group gate
+        shell: bash
+        run: |
+          git -C protected-base fetch --no-tags origin refs/heads/main
+          test "$(git -C protected-base rev-parse FETCH_HEAD)" = \
+            "${{ steps.identity.outputs.base_sha }}"
+      - name: Verify and execute external gate against merge-group candidate
+        shell: bash
+        run: |
+          echo "fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17  policy-runtime/scripts/ghos_execution_routing_gate.py" | sha256sum --check --strict
+          python -c 'import runpy,sys; runpy.run_path(sys.argv.pop(1), run_name="__main__")' policy-runtime/scripts/ghos_execution_routing_gate.py \
+            --root effective-candidate \
+            --repository "$GITHUB_REPOSITORY"
+      - name: Verify protected base remained current through merge-group evaluation
+        shell: bash
+        run: |
+          git -C protected-base fetch --no-tags origin refs/heads/main
+          test "$(git -C protected-base rev-parse FETCH_HEAD)" = \
+            "${{ steps.identity.outputs.base_sha }}"
+      - name: Publish required merge-group status
+        if: ${{ always() && steps.identity.outputs.merge_sha != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          API_URL: ${{ github.api_url }}
+          STATUS_SHA: ${{ steps.identity.outputs.merge_sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          success = os.environ["JOB_STATUS"] == "success"
+          payload = json.dumps({
+              "state": "success" if success else "failure",
+              "context": "routing-enforcement",
+              "description": (
+                  "GH-OS routing valid on native merge-group candidate"
+                  if success
+                  else "GH-OS routing rejected native merge-group candidate"
+              ),
+              "target_url": os.environ["RUN_URL"],
+          }).encode()
+          request = urllib.request.Request(
+              f'{os.environ["API_URL"]}/repos/{os.environ["REPOSITORY"]}/statuses/{os.environ["STATUS_SHA"]}',
               data=payload,
               method="POST",
               headers={
@@ -242,9 +419,11 @@ jobs:
           python - <<'PY'
           import json
           import os
+          import time
           import urllib.parse
           import urllib.request
 
+          started = time.monotonic()
           api = os.environ["API_URL"]
           repository = os.environ["REPOSITORY"]
           token = os.environ["GH_TOKEN"]
@@ -256,6 +435,7 @@ jobs:
 
           page = 1
           pull_numbers = []
+          api_calls = 0
           while True:
               query = urllib.parse.urlencode({
                   "state": "open",
@@ -269,11 +449,13 @@ jobs:
               )
               with urllib.request.urlopen(request, timeout=30) as response:
                   batch = json.load(response)
+              api_calls += 1
               pull_numbers.extend(item["number"] for item in batch)
               if len(batch) < 100:
                   break
               page += 1
 
+          print(f"GHOS_BASE_REFRESH_OPEN_PR_COUNT={len(pull_numbers)}")
           for number in pull_numbers:
               payload = json.dumps({
                   "ref": "main",
@@ -287,5 +469,18 @@ jobs:
               )
               with urllib.request.urlopen(request, timeout=30):
                   pass
+              api_calls += 1
               print(f"dispatched routing revalidation for PR #{number}")
+          elapsed = time.monotonic() - started
+          print(f"GHOS_BASE_REFRESH_DISPATCH_COUNT={len(pull_numbers)}")
+          print(f"GHOS_BASE_REFRESH_API_CALLS={api_calls}")
+          print(f"GHOS_BASE_REFRESH_ELAPSED_SECONDS={elapsed:.3f}")
+          summary = os.environ.get("GITHUB_STEP_SUMMARY")
+          if summary:
+              with open(summary, "a", encoding="utf-8") as handle:
+                  handle.write("### GH-OS base refresh telemetry\n")
+                  handle.write(f"- open PRs: {len(pull_numbers)}\n")
+                  handle.write(f"- dispatched revalidations: {len(pull_numbers)}\n")
+                  handle.write(f"- GitHub API calls: {api_calls}\n")
+                  handle.write(f"- elapsed seconds: {elapsed:.3f}\n")
           PY
