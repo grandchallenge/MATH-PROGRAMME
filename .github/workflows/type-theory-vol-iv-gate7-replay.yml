@@ -11,14 +11,15 @@ permissions:
 
 jobs:
   exact-head-replay:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
       - name: Checkout exact candidate
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: ea7b4f4d61cca274b091f9673eb6f851df4be3d6
           fetch-depth: 1
+          persist-credentials: false
 
       - name: Bind exact identity
         shell: bash
@@ -97,7 +98,7 @@ jobs:
           wc -l gate7-layout-warnings.txt | tee -a gate7-preflight.txt
 
       - name: Upload Gate 7 replay evidence
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: type-theory-vol-iv-gate7-ea7b4f4d
           if-no-files-found: error
