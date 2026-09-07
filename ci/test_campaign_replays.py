@@ -101,7 +101,7 @@ def main() -> int:
     else:
         raise AssertionError("unregistered campaign root must fail closed")
 
-    # GitHub event parsing must preserve exact PR and push transition identities.
+    # GitHub event parsing must preserve exact PR, push, and merge-group transition identities.
     with tempfile.TemporaryDirectory() as temporary:
         event_path = Path(temporary) / "event.json"
         event_path.write_text(
@@ -127,6 +127,31 @@ def main() -> int:
             "c" * 40,
             "d" * 40,
         )
+        event_path.write_text(
+            json.dumps(
+                {
+                    "merge_group": {
+                        "base_sha": "e" * 40,
+                        "head_sha": "f" * 40,
+                    }
+                }
+            ),
+            encoding="utf-8",
+        )
+        assert transition_refs_from_event("merge_group", str(event_path)) == (
+            "e" * 40,
+            "f" * 40,
+        )
+        event_path.write_text(
+            json.dumps({"merge_group": {"base_sha": "e" * 40}}),
+            encoding="utf-8",
+        )
+        try:
+            transition_refs_from_event("merge_group", str(event_path))
+        except ReplayRoutingError as exc:
+            assert "merge_group transition base/head is unavailable" in str(exc)
+        else:
+            raise AssertionError("incomplete merge-group identity must fail closed")
         assert transition_refs_from_event("schedule", str(event_path)) is None
 
     with tempfile.TemporaryDirectory() as temporary:
