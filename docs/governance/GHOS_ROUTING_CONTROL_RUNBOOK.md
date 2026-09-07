@@ -15,13 +15,13 @@ This runbook grants no certification, mathematical-claim, publication, external-
 | `.ghos-routing/workflows.json` | Complete workflow inventory, derived features, topology, controller, and fixed authority boundaries |
 | `ci/ghos_execution_routing.py` | Repository-local deterministic validator |
 | `schemas/ghos_execution_routing.schema.json` | Closed routing-record schema |
-| `tests/test_ghos_execution_routing.py` | Hostile semantic tests |
-| `.github/workflows/ghos-routing-enforcement.yml` | Protected-base candidate-independent enforcement |
+| `tests/test_ghos_execution_routing.py` | Core hostile semantic tests plus effective-candidate, base-advance, and enforcement-contract regressions |
+| `.github/workflows/ghos-routing-enforcement.yml` | Protected-base candidate-independent enforcement and protected-base revalidation dispatcher |
 | `grandchallenge/.github/scripts/ghos_execution_routing_gate.py` | External governed gate whose bytes are SHA-256 pinned by the enforcement workflow |
 | Ruleset `21969152` | Dedicated protected-main requirement for `routing-enforcement` |
 | Ruleset `17137629` | Separate Programme profile; not the GH-OS routing ruleset |
 
-The dedicated routing ruleset currently requires `routing-enforcement` with `strict_required_status_checks_policy: false` and no bypass actors. Non-strict status policy is deliberate: it permits concurrent mergeable development without update-branch synchronization solely for freshness.
+The dedicated routing ruleset currently requires `routing-enforcement` with `strict_required_status_checks_policy: false` and no bypass actors. Non-strict status policy is deliberate: it permits concurrent mergeable development without update-branch synchronization solely for freshness. The protected controller supplies freshness by binding the required context to the effective merge candidate and revalidating open pull requests after protected-main movement.
 
 ## Routine workflow maintenance
 
@@ -39,16 +39,28 @@ The expected maintenance burden is one routing-entry update per workflow change 
 
 ## Candidate-independent enforcement and concurrency
 
-The enforcement workflow runs from the protected base under `pull_request_target`, treats candidate content as inert data, and must not execute untrusted candidate code. It evaluates the effective candidate represented by GitHub's virtual merge ref `refs/pull/<number>/merge`, so protected-base advances are included without requiring a rebase or synchronization commit.
+The enforcement workflow executes protected controller logic from protected `main` under `pull_request_target` or a protected `workflow_dispatch`. Candidate content is inert data and must never be executed under the privileged controller.
 
-A candidate may therefore remain valid across unrelated protected-main movement when:
+For each pull request targeting `main`, the controller:
 
-- GitHub can construct the virtual merge candidate;
-- routing-control bytes relevant to the candidate are unchanged or intentionally updated within scope;
-- required affected checks pass;
-- no relevant authority or controller boundary widened.
+1. checks out current protected `main` with credentials disabled;
+2. reads the current pull-request identity through the GitHub API;
+3. fetches `refs/pull/<number>/head` and `refs/pull/<number>/merge` as data;
+4. accepts the merge ref only when its two parents are exactly the current protected-main commit followed by the current pull-request head commit, and the API-reported test-merge identity equals the fetched merge identity;
+5. fails closed after a bounded retry when GitHub cannot supply that exact effective candidate;
+6. materializes the verified merge tree without executing any candidate-controlled program, action, hook, script, dependency declaration, or workflow;
+7. compares the effective candidate's enforcement-workflow bytes with the protected-base enforcement workflow and rejects ordinary self-modification;
+8. verifies the content-addressed external gate and runs that gate only against the inert effective-candidate tree;
+9. re-fetches protected `main` before admitting the gate result and fails if the protected base moved during evaluation; and
+10. publishes the required `routing-enforcement` status to the verified effective merge commit, not to a stale head-only snapshot.
 
-Do not use raw stale branch snapshots where the control is intended to evaluate the effective merge candidate.
+The controller job is deliberately not named `routing-enforcement`. The dedicated required context is the commit status emitted only for the verified effective merge commit. Therefore a successful routing result attached only to a pull-request head cannot stand in for evaluation of a materially different current effective merge candidate.
+
+Protected-main movement does not require update-branch synchronization. On each push to `main`, the protected workflow dispatches a fresh effective-candidate evaluation for every open pull request targeting `main`. GitHub may regenerate the virtual merge candidate; the controller accepts it only after the exact-parent checks above. A disjoint protected-base change should therefore produce a fresh passing effective-candidate result without mutating the pull-request branch. A relevant protected-base routing change is necessarily present in the effective tree and can invalidate the gate result.
+
+If protected-main movement occurs while a controller evaluation is in flight, the protected-base recheck fails that attempt rather than publishing success for a stale base. The subsequent protected-main dispatch supplies the fresh evaluation. If GitHub cannot generate the current merge candidate or cannot dispatch the revalidation, the current effective candidate lacks a passing required context and remains blocked; absence of evidence is not success.
+
+Do not evaluate the routing contract against raw stale branch snapshots where the protected control requires the effective merge candidate.
 
 ## External gate and digest rotation
 
@@ -94,21 +106,23 @@ After routing administration or a material control upgrade:
 2. Confirm it is active on `refs/heads/main`.
 3. Confirm `routing-enforcement` is required with `strict_required_status_checks_policy: false`.
 4. Confirm bypass actors remain empty.
-5. Read Programme profile `17137629` separately so a routing transaction cannot silently weaken unrelated Programme protections.
-6. Open a bounded repair immediately on material drift. Pause only the affected unattended transition if enforcement is no longer mandatory.
+5. Confirm the passing required context is bound to the current effective merge commit when a pull request is being admitted; a head-only status is not equivalent.
+6. Read Programme profile `17137629` separately so a routing transaction cannot silently weaken unrelated Programme protections.
+7. Open a bounded repair immediately on material drift. Pause only the affected unattended transition if enforcement is no longer mandatory.
 
-Do not interpret a passing optional routing check as equivalent to a required protected context.
+Do not interpret a passing optional routing check or a stale head-only result as equivalent to the required protected effective-candidate context.
 
 ## Emergency diagnosis
 
 Use this order when `routing-enforcement` fails:
 
-1. Bind the failure to repository, PR, candidate bytes/effective merge ref, workflow run, job, and external gate digest.
-2. Classify the first exact error: missing registry, coverage mismatch, feature drift, topology drift, controller mismatch, repository mismatch, self-modification, external digest failure, dependency failure, or platform outage.
+1. Bind the failure to repository, pull request, current protected-base SHA, pull-request head SHA, verified effective-merge SHA and parent identities, workflow run, external gate digest, and emitted status context where available.
+2. Classify the first exact error: missing registry, coverage mismatch, feature drift, topology drift, controller mismatch, repository mismatch, unavailable/stale merge ref, merge-parent mismatch, protected-base movement during evaluation, self-modification, external digest failure, status-publication failure, revalidation-dispatch failure, dependency failure, or platform outage.
 3. For candidate drift, correct the changed candidate registry/workflow and rerun the affected routing check. Do not refresh unrelated review or CI evidence.
-4. For an external digest mismatch, verify the protected shared script and change history; use the control-upgrade route rather than changing the pin ad hoc.
-5. For a platform outage, leave the gate required and recover evidence through the execution-recovery guide. Do not infer success from absence of a result.
-6. For unexpected ruleset drift or missing enforcement, pause the affected unattended transition until protected enforcement is restored and proven.
+4. For a stale or unavailable merge ref, retain the required context and retry through the protected controller; do not fall back to head-only validation.
+5. For an external digest mismatch, verify the protected shared script and change history; use the control-upgrade route rather than changing the pin ad hoc.
+6. For a platform outage, leave the gate required and recover evidence through the execution-recovery guide. Do not infer success from absence of a result.
+7. For unexpected ruleset drift or missing enforcement, pause the affected unattended transition until protected enforcement is restored and proven.
 
 Never solve an emergency by executing untrusted candidate code under `pull_request_target`, granting write credentials to candidate content, removing authority boundaries, or carrying an approval to materially changed security-control bytes.
 
@@ -120,8 +134,9 @@ After every material control upgrade, and through the programme's existing sched
 - successful workflow inventory/coverage validation;
 - external gate commit/path/digest;
 - dedicated routing ruleset identity, required context, strictness, and bypass actors;
+- proof that the required context is attached to the current effective merge candidate rather than only to the pull-request head;
 - separate Programme-profile readback where routing administration occurred;
-- focused hostile-test results;
+- focused hostile-test results, including relevant and disjoint protected-base movement;
 - live or fixture-based fail-closed proof outside candidate control.
 
 Routine periods with no workflow, controller, gate, or ruleset change require verification or protected evidence reuse, not ceremonial regeneration of unchanged records.
