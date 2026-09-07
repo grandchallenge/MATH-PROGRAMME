@@ -15,8 +15,7 @@ This runbook grants no certification, mathematical-claim, publication, external-
 | `.ghos-routing/workflows.json` | Complete workflow inventory, derived features, topology, controller, and fixed authority boundaries |
 | `ci/ghos_execution_routing.py` | Repository-local deterministic validator |
 | `schemas/ghos_execution_routing.schema.json` | Closed routing-record schema |
-| `tests/test_ghos_execution_routing.py` | Core hostile semantic tests |
-| `tests/test_ghos_effective_candidate_enforcement.py` | Effective-candidate, base-advance, and enforcement-contract regression tests |
+| `tests/test_ghos_execution_routing.py` | Core hostile semantic tests plus effective-candidate, base-advance, and enforcement-contract regressions |
 | `.github/workflows/ghos-routing-enforcement.yml` | Protected-base candidate-independent enforcement and protected-base revalidation dispatcher |
 | `grandchallenge/.github/scripts/ghos_execution_routing_gate.py` | External governed gate whose bytes are SHA-256 pinned by the enforcement workflow |
 | Ruleset `21969152` | Dedicated protected-main requirement for `routing-enforcement` |
