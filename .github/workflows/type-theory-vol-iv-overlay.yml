@@ -1,0 +1,59 @@
+name: Type Theory Volume IV bounded source overlay
+
+on:
+  push:
+    branches:
+      - docs/type-theory-vol-iv-transfer-001
+
+permissions:
+  contents: write
+
+jobs:
+  overlay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify bootstrap ancestry
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD^)" = "04c63a69e2178b7b0e9a176b437337c466a368c9"
+      - name: Reassemble and verify bounded payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .gcl-transfer/vol4/chunk_* > /tmp/vol4_overlay.b64
+          echo "e3c9cf91e35748ab8f8027e723a530fbb2ea8969bf668e8161dc250c1ab31f82  /tmp/vol4_overlay.b64" | sha256sum -c -
+          base64 -d /tmp/vol4_overlay.b64 > /tmp/vol4_overlay.tar.gz
+          echo "9b096407c4149c4fcfdca04b77ae1f82f3f687510771cf22e989dfa9424f1841  /tmp/vol4_overlay.tar.gz" | sha256sum -c -
+          tar -tzf /tmp/vol4_overlay.tar.gz > /tmp/members.txt
+          test "$(wc -l < /tmp/members.txt)" -eq 73
+          if grep -E '(^/|(^|/)\.\.(/|$))' /tmp/members.txt; then
+            echo "unsafe archive member" >&2
+            exit 1
+          fi
+      - name: Overlay exact source and self-clean
+        shell: bash
+        run: |
+          set -euo pipefail
+          tar -xzf /tmp/vol4_overlay.tar.gz -C monographs/type-theory/volume-iv-protocol
+          rm -rf .gcl-transfer/vol4
+          rm -f .github/workflows/type-theory-vol-iv-overlay.yml
+          test ! -e .gcl-transfer/vol4
+          test ! -e .github/workflows/type-theory-vol-iv-overlay.yml
+          git status --short
+      - name: Commit integrated source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "GCL bounded composition agent"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "overlay produced no changes" >&2
+            exit 1
+          fi
+          git commit -m "docs: integrate Type Theory Volume IV full composition source"
+          git push origin HEAD:docs/type-theory-vol-iv-transfer-001
