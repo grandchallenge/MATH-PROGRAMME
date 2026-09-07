@@ -1,0 +1,12 @@
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,node distance=1.0cm]
+  \node[gcllabel,draw=GCLWarm!80!black,minimum width=1.55cm,minimum height=.8cm] (a) {$!\Nat$};
+  \node[gcllabel,draw=GCLBlue!80!black,minimum width=1.55cm,minimum height=.8cm,right=of a] (b) {$?\Bool$};
+  \node[gcllabel,draw=GCLGreen!80!black,minimum width=1.55cm,minimum height=.8cm,right=of b] (c) {$\mathsf{end!}$};
+  \draw[gclwarmarrow] (a) -- node[gcllabel,above]{send} (b);
+  \draw[gclbluearrow] (b) -- node[gcllabel,above]{receive} (c);
+  \node[font=\sffamily\footnotesize,align=center,below=.75cm of b] {current constructor = permitted action\\continuation = next protocol state};
+\end{tikzpicture}
+\caption{Plate 2. A protocol is a typed state machine. The finite session $!\Nat.?\Bool.\mathsf{end!}$ records ordered communication obligations, not merely a set of payload types. The picture covers the synchronous finite teaching fragment only.}
+\end{figure}

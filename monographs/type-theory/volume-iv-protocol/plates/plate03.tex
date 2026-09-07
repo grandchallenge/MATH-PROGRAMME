@@ -1,0 +1,15 @@
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate]
+  \node[gcllabel,draw=GCLWarm!75!black,minimum width=4.8cm] (top) at (0,1.15) {$!\Nat\;.\;?\Bool\;.\;\mathsf{end!}$};
+  \node[gcllabel,draw=GCLBlue!75!black,minimum width=4.8cm] (bot) at (0,-1.05) {$?\Nat\;.\;!\Bool\;.\;\mathsf{end?}$};
+  \draw[gclbluearrow] (-1.65,.78) -- (-1.65,-.68);
+  \draw[gclbluearrow] (0,.78) -- (0,-.68);
+  \draw[gclbluearrow] (1.65,.78) -- (1.65,-.68);
+  \node[gcllabel,font=\sffamily\footnotesize] at (-1.65,.05) {send $\leftrightarrow$ receive};
+  \node[gcllabel,font=\sffamily\footnotesize] at (0,-1.65) {payloads preserved};
+  \node[gcllabel,font=\sffamily\footnotesize] at (1.65,.05) {close $\leftrightarrow$ wait};
+  \node[font=\sffamily\footnotesize,align=center] at (0,-2.15) {complementary obligations on paired endpoints};
+\end{tikzpicture}
+\caption{Plate 3. Two ends, complementary actions. Session duality swaps sending with receiving, selecting with offering, and active close with passive wait. This operation is complementary protocol behavior; it is not logical negation in general.}
+\end{figure}

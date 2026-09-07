@@ -1,9 +1,13 @@
 # Volume IV — PROTOCOL: Computation as Communication
 
-Work set: `TYPE-THEORY-VOL-IV-001`, tracked by issue #877.
+Work set: `TYPE-THEORY-VOL-IV-001` (issue #877).
 
-Current stage: **Stage A / Gate 0 preflight candidate**.
+Gate 0 was admitted to protected `main` at `34cf03876486eed086f2b05c9b01d9d8887915e7`.
 
-Start with `VOLUME_PLAN.md`. The formal core begins with a finite synchronous binary session calculus (`PROTO-0`) and expands only after the first two-chapter executable tranche is admitted. The volume explicitly separates session fidelity from global progress, deadlock freedom, lock freedom, fairness, fault tolerance, security, and application-level correctness.
+The active Gate-1 tranche contains Chapters 1–2, the finite synchronous `PROTO-0` teaching kernel, two dependency-free executable laboratories, six canonical plates, 24 exercises with 24 keyed solutions/rubrics, and the first scoped theorem audit. It remains a development candidate until protected admission completes.
+
+Build with LuaLaTeX/`latexmk`. Execute both retained laboratories under `labs/`. Machine-readable Gate-1 evidence is under `evidence/GATE1_EVIDENCE.json`.
+
+The formal boundary is explicit: finite binary session duality and linear-environment splitting are developed here; full subject reduction, communication safety, single-session progress, unrestricted deadlock freedom, fault tolerance, security, and distributed-system correctness are not silently inferred.
 
 The series title **TYPE THEORY — The Grand Unified Theory of Computation** remains a research thesis, not an established theorem.

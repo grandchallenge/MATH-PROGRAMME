@@ -1,0 +1,22 @@
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLInk,minimum width=1.45cm,minimum height=.7cm] (input) at (-2.8,1.25) {input};
+  \node[gcllabel,draw=GCLBlue,minimum width=1.45cm,minimum height=.7cm] (term) at (-2.8,0) {closed term};
+  \node[gcllabel,draw=GCLGreen,minimum width=1.45cm,minimum height=.7cm] (value) at (-2.8,-1.25) {value};
+  \draw[gclbluearrow] (input) -- (term);
+  \draw[gclbluearrow] (term) -- (value);
+  \node[font=\sffamily\footnotesize] at (-2.8,-2.0) {one reduction story};
+
+  \draw[GCLInk!30,line width=.6pt] (0,-2.0) -- (0,2.0);
+
+  \node[gcllabel,draw=GCLInk,minimum width=1.25cm] (c) at (1.4,1.55) {client};
+  \node[gcllabel,draw=GCLInk,minimum width=1.25cm] (s) at (3.8,1.55) {server};
+  \draw[GCLInk!55] (1.4,1.15) -- (1.4,-1.65);
+  \draw[GCLInk!55] (3.8,1.15) -- (3.8,-1.65);
+  \draw[gclwarmarrow] (1.45,.55) -- node[gcllabel,above] {$42$} (3.75,.55);
+  \draw[gclbluearrow] (3.75,-.45) -- node[gcllabel,above] {$\mathsf{true}$} (1.45,-.45);
+  \node[gcllabel,draw=GCLWarm!70!black] at (2.6,-1.35) {next action changed};
+\end{tikzpicture}
+\caption{Plate 1. Closed function, open conversation. A closed term is organized around producing a value; an interaction trace advances as another participant acts. The contrast is pedagogical: it does not assert that every computation is purely closed or purely interactive.}
+\end{figure}

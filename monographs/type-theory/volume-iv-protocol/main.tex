@@ -1,0 +1,90 @@
+\documentclass[11pt,openany]{book}
+\input{series_style.tex}
+\input{series_macros.tex}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=GCLBlue,
+  urlcolor=GCLBlue,
+  citecolor=GCLGreen,
+  pdftitle={PROTOCOL: Computation as Communication},
+  pdfauthor={Grand Challenge Labs}
+}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\small\sffamily PROTOCOL}
+\fancyhead[RE,LO]{\small\sffamily Type Theory — Volume IV}
+\fancyfoot[C]{\thepage}
+\begin{document}
+\frontmatter
+\begin{titlepage}
+\pagecolor{GCLPale!35}\color{GCLInk}\centering
+\vspace*{1.2cm}
+{\small\sffamily GRAND CHALLENGE MONOGRAPH COLLECTION\par}
+\vspace{1.1cm}
+{\Huge\bfseries TYPE THEORY\par}
+\vspace{0.25cm}
+{\Large The Grand Unified Theory of Computation\par}
+\vspace{1cm}
+{\color{GCLWarm}\rule{0.76\textwidth}{1.1pt}\par}
+\vspace{0.8cm}
+{\fontsize{31}{35}\selectfont\bfseries PROTOCOL\par}
+\vspace{0.25cm}
+{\LARGE Computation as Communication\par}
+\vspace{0.25cm}
+{\large Volume IV\par}
+\vfill
+{\large Grand Challenge Labs\par}
+\end{titlepage}
+\nopagecolor\color{GCLInk}
+
+\chapter*{Scope and series thesis}
+The phrase ``grand unified theory'' names a research thesis, not an established theorem.
+This volume asks what changes when the primary computational object is interaction rather than
+closed function evaluation.
+
+The present Gate-1 teaching kernel develops only a finite synchronous binary session calculus.
+It establishes the vocabulary and executable evidence needed for later chapters. It does not
+establish arbitrary deadlock freedom, fairness, fault tolerance, security, asynchronous
+correctness, or distributed-system correctness.
+
+\chapter*{How to read the formalism}
+A session type is an ordered communication obligation. A typing judgment
+\[
+  \ptypes{\Gamma}{\Delta}{P}
+\]
+separates reusable value assumptions in \(\Gamma\) from linear channel obligations in
+\(\Delta\). The distinction is essential: the calculus is designed so that two parallel
+subprocesses cannot independently consume the same linear endpoint obligation.
+
+\tableofcontents
+
+\mainmatter
+\input{chapters/ch01}
+\input{chapters/ch02}
+
+\backmatter
+\chapter*{Gate-1 transition}
+The first two chapters establish the smallest executable protocol kernel. The next chapter must
+prove that a well-typed communication step advances process state and session state together.
+Later chapters will then deliberately construct a locally well-typed multi-session deadlock to
+separate session fidelity from global liveness.
+
+\chapter*{Gate-1 notation guide}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+Notation & Meaning in this volume \\
+\midrule
+\(\send{A}{S}\) & send a value of payload type \(A\), then continue as \(S\) \\
+\(\recv{A}{S}\) & receive a value of payload type \(A\), then continue as \(S\) \\
+\(\sel{l_i:S_i}\) & internally select one labeled continuation \\
+\(\bra{l_i:S_i}\) & externally offer labeled continuations \\
+\(\dual{S}\) & protocol dual of session type \(S\) \\
+\(\ptypes{\Gamma}{\Delta}{P}\) & process \(P\) is typed under value context \(\Gamma\) and linear channel environment \(\Delta\) \\
+\(P\to P'\) & one process reduction step \\
+\(P\pcong Q\) & selected process structural congruence relation \\
+\(\Delta\envstep\Delta'\) & protocol-obligation environment evolves with communication \\
+\bottomrule
+\end{tabularx}
+
+\printindex
+\end{document}

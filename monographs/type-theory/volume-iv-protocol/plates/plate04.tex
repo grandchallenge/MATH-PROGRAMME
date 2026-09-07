@@ -1,0 +1,14 @@
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLWarm!75!black] (p) at (-2.5,1.0) {$x!\langle 42\rangle.P$};
+  \node[gcllabel,draw=GCLBlue!75!black] (q) at (2.5,1.0) {$y?(z).Q$};
+  \draw[gclwarmarrow] (p) -- node[gcllabel,above] {$42$} (q);
+  \node[gcllabel,draw=GCLInk] (db) at (0,.15) {$\Delta=\{x:!\Nat.S,\ y:?\Nat.\dual S\}$};
+  \draw[gclbluearrow,line width=1pt] (0,-.25) -- node[gcllabel,right] {communication} (0,-1.0);
+  \node[gcllabel,draw=GCLGreen!75!black] (pa) at (-2.5,-1.55) {$P$};
+  \node[gcllabel,draw=GCLGreen!75!black] (qa) at (2.5,-1.55) {$Q[42/z]$};
+  \node[gcllabel,draw=GCLInk] at (0,-2.25) {$\Delta' = \{x:S,\ y:\dual S\}$};
+\end{tikzpicture}
+\caption{Plate 4. A handshake consumes obligations. A principal synchronous communication advances both process continuations and the session environment from $\Delta$ to $\Delta'$. One commuting step is not a proof of global liveness.}
+\end{figure}
