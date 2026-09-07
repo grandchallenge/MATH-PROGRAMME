@@ -17,7 +17,7 @@ jobs:
       - name: Checkout exact candidate
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 1599b70a15c368622f6900ce53a1b5c2491b930b
+          ref: 385866965456c5e5ae9de1558074f240e6d65ab8
           fetch-depth: 1
           persist-credentials: false
 
@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          expected="1599b70a15c368622f6900ce53a1b5c2491b930b"
+          expected="385866965456c5e5ae9de1558074f240e6d65ab8"
           observed="$(git rev-parse HEAD)"
           test "$observed" = "$expected"
           git diff --exit-code
@@ -106,6 +106,12 @@ jobs:
           fi
           echo 'UNRESOLVED_REFERENCE_OR_CITATION=PASS' | tee -a gate7-preflight.txt
 
+          if grep -n -E 'multiply defined|multiply-defined labels' "${logs[@]}"; then
+            echo 'DUPLICATE_LABEL=FAIL' | tee -a gate7-preflight.txt
+            exit 1
+          fi
+          echo 'DUPLICATE_LABEL=PASS' | tee -a gate7-preflight.txt
+
           if grep -n -E 'Missing character:' "${logs[@]}"; then
             echo 'MISSING_GLYPH=FAIL' | tee -a gate7-preflight.txt
             exit 1
@@ -151,21 +157,21 @@ jobs:
           mkdir -p /tmp/type-theory-vol-iv-source
           git archive --format=zip \
             --prefix=volume-iv-protocol/ \
-            -o /tmp/type-theory-vol-iv-source/volume-iv-protocol-1599b70a.zip \
+            -o /tmp/type-theory-vol-iv-source/volume-iv-protocol-38586696.zip \
             HEAD:monographs/type-theory/volume-iv-protocol
-          sha256sum /tmp/type-theory-vol-iv-source/volume-iv-protocol-1599b70a.zip \
+          sha256sum /tmp/type-theory-vol-iv-source/volume-iv-protocol-38586696.zip \
             | tee /tmp/type-theory-vol-iv-source/SOURCE_SHA256.txt
 
       - name: Upload Gate 7 replay evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: type-theory-vol-iv-gate7-1599b70a
+          name: type-theory-vol-iv-gate7-38586696
           if-no-files-found: warn
           retention-days: 14
           path: |
             /tmp/exact-head.txt
-            /tmp/type-theory-vol-iv-source/volume-iv-protocol-1599b70a.zip
+            /tmp/type-theory-vol-iv-source/volume-iv-protocol-38586696.zip
             /tmp/type-theory-vol-iv-source/SOURCE_SHA256.txt
             monographs/type-theory/volume-iv-protocol/main.pdf
             monographs/type-theory/volume-iv-protocol/solutions_companion.pdf
