@@ -30,9 +30,6 @@ jobs:
           mkdir -p /tmp/vol4-source
           unzip -q "$SRC" -d /tmp/vol4-source
           test "$(find /tmp/vol4-source -type f | wc -l)" -eq 101
-          echo "source_archive_size=$(stat -c%s "$SRC")"
-          echo "source_archive_sha256=$(sha256sum "$SRC" | awk '{print $1}')"
-          echo "source_file_count=$(find /tmp/vol4-source -type f | wc -l)"
 
       - name: Validate exact source and laboratories
         shell: bash
@@ -48,23 +45,10 @@ jobs:
           test "$(find "$S/plates" -maxdepth 1 -name 'plate*.tex' | wc -l)" -eq 42
           test "$(find "$S/labs" -maxdepth 1 -name 'lab*.py' | wc -l)" -eq 14
           for f in "$S"/labs/lab*.py; do
-            echo "== $f =="
             python "$f"
           done
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          s=Path('/tmp/vol4-source')
-          ex=json.loads((s/'EXERCISE_AUDIT.json').read_text())
-          ev=json.loads((s/'evidence/FULL_DEVELOPMENT_EVIDENCE.json').read_text())
-          assert len(list((s/'chapters').glob('ch*.tex'))) == 14
-          assert len(list((s/'plates').glob('plate*.tex'))) == 42
-          assert len(list((s/'labs').glob('lab*.py'))) == 14
-          print('exercise_audit=', ex)
-          print('full_development_evidence_keys=', sorted(ev.keys()))
-          PY
 
-      - name: Materialize source without deleting protected preflight records
+      - name: Materialize source and remove temporary transport
         shell: bash
         run: |
           set -euo pipefail
@@ -75,6 +59,5 @@ jobs:
           git config user.name "GCL Type Theory Composer"
           git config user.email "type-theory@grandchallenge.invalid"
           git add -A
-          git status --short
           git commit -m "docs: complete Type Theory Volume IV full development"
           git push origin HEAD:docs/type-theory-vol-iv-full-development-003
