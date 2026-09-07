@@ -163,7 +163,7 @@ jobs:
           persist-credentials: false
       - name: Install pinned routing gate dependency
         run: python -m pip install --disable-pip-version-check PyYAML==6.0.3
-      - name: Verify protected base is still current
+      - name: Verify protected base before gate
         shell: bash
         run: |
           git -C protected-base fetch --no-tags origin refs/heads/main
@@ -176,6 +176,12 @@ jobs:
           python -c 'import runpy,sys; runpy.run_path(sys.argv.pop(1), run_name="__main__")' policy-runtime/scripts/ghos_execution_routing_gate.py \
             --root effective-candidate \
             --repository "$GITHUB_REPOSITORY"
+      - name: Verify protected base remained current through evaluation
+        shell: bash
+        run: |
+          git -C protected-base fetch --no-tags origin refs/heads/main
+          test "$(git -C protected-base rev-parse FETCH_HEAD)" = \
+            "${{ steps.identity.outputs.base_sha }}"
       - name: Publish required effective-candidate status
         if: ${{ always() && steps.identity.outputs.merge_sha != '' }}
         env:
