@@ -1,0 +1,86 @@
+\chapter{One Protocol Standing In for Another}
+
+A type system becomes more useful when an implementation may safely provide behavior more specific than the interface demands. For finite synchronous sessions, subtyping turns that intuition into a replacement relation. The label rules are easy to reverse by accident, so this chapter derives them from who controls the choice.
+
+\section{The bounded relation}
+Write $S\subsess T$ when behavior $S$ may replace behavior expected at $T$ in the selected \texttt{PROTO-S1} endpoint model. Payload types are invariant in this teaching fragment. Send, receive, and terminal constructors therefore compare only equal payload classes and recursively related continuations.
+
+\input{plates/plate23}
+
+\section{Offer more, select less}
+For internal choice,
+\[
+\sel{l_i:S_i}_{i\in I}\subsess
+\sel{l_j:T_j}_{j\in J}
+\quad\text{when }I\subseteq J
+\]
+and corresponding continuations are related. The implementation selects among fewer possibilities than the context is prepared for.
+
+For external choice,
+\[
+\bra{l_i:S_i}_{i\in I}\subsess
+\bra{l_j:T_j}_{j\in J}
+\quad\text{when }J\subseteq I.
+\]
+The implementation offers at least every label the peer may select.
+
+\section{Finite substitutability}
+\begin{theorem}[T4.18, bounded synchronous session subtyping safety]
+For finite \texttt{PROTO-S1}, if $S\subsess T$ and an endpoint implementing $S$ is connected to a peer implementing $\dual T$, then every first communication action admitted by the substituting endpoint is compatible with the peer; after the action, the continuation pair satisfies the corresponding relation. Repeating the argument gives safety for every finite run.
+\end{theorem}
+\begin{proof}
+By induction on the derivation of $S\subsess T$. Send/receive cases use payload invariance and the induction hypothesis. For internal choice, the substituting label set is a subset of the expected set, so every selected label is offered by $\dual T$. For external choice, the substituting endpoint offers a superset of the labels the peer may select. Terminal cases are immediate.
+\end{proof}
+
+\input{plates/plate24}
+
+\section{Why asynchronous subtyping is excluded}
+With queues, output anticipation and reordering can make subtyping substantially more subtle and can affect decidability. T4.19 therefore remains an explicit non-result: this volume does not claim a complete or decidable general asynchronous session-subtyping relation.
+
+\section{Do not confuse: traces and syntax}
+\begin{warningbox}
+The finite syntactic relation is one safe replacement criterion. It is not claimed to coincide with every semantic trace-refinement relation. Behavioral refinement depends on the observation model and semantics.
+\end{warningbox}
+
+\input{plates/plate25}
+
+\section{Computational laboratory}
+\begin{labbox}
+Run
+\[
+  \texttt{python labs/lab10_subtyping.py}.
+\]
+The laboratory implements the finite synchronous relation with invariant payloads and checks the internal-choice subset/external-choice superset rules. It is executable evidence for the stated finite fixtures and does not enlarge the theorem scope.
+\end{labbox}
+
+\section{Exercises}
+\subsection*{Checkpoint}
+\begin{enumerate}[label=\textbf{10.\arabic*},start=1]
+\item In the bounded relation, are payload types covariant, contravariant, or invariant?
+\item Which side may select fewer labels?
+\item Which side may offer more labels?
+\end{enumerate}
+\subsection*{Core}
+\begin{enumerate}[label=\textbf{10.\arabic*},start=4]
+\item Check whether $\oplus\{a:S\}\subsess\oplus\{a:T,b:U\}$ can hold and state the continuation obligation.
+\item Check whether $\&\{a:S,b:T\}\subsess\&\{a:U\}$ can hold.
+\item Give an unsafe reversal of one width rule and a peer that exposes the error.
+\end{enumerate}
+\subsection*{Synthesis}
+\begin{enumerate}[label=\textbf{10.\arabic*},start=7]
+\item Explain the substitutability intuition behind internal-choice width.
+\item Explain why a semantic trace inclusion relation might differ from this syntactic subtyping relation.
+\end{enumerate}
+\subsection*{Proof Workshop}
+\begin{enumerate}[label=\textbf{10.\arabic*},start=9]
+\item Prove the internal-choice induction case of T4.18.
+\item Prove the external-choice induction case of T4.18.
+\end{enumerate}
+\subsection*{Design Clinic}
+\begin{enumerate}[label=\textbf{10.\arabic*},start=11]
+\item Design an error explanation that reports the first missing/extra label according to the direction of subtyping.
+\end{enumerate}
+\subsection*{Challenge}
+\begin{enumerate}[label=\textbf{10.\arabic*},start=12]
+\item Investigate one asynchronous session-subtyping result and list the additional semantic machinery it uses; do not transfer its conclusion to $\texttt{PROTO-S1}$.
+\end{enumerate}

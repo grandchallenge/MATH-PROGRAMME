@@ -1,0 +1,94 @@
+\chapter{Use the Channel Exactly as Promised}
+
+The protocol frontier is also a resource frontier. If an endpoint obligation can be duplicated, two subprocesses may each act as though they own the same next communication. If it can be silently discarded, a peer may wait forever for an action the program has forgotten. The linear environment prevents both errors inside the formal derivation.
+
+\section{Splitting is the parallel rule}
+For parallel composition the channel environment is partitioned:
+\[
+\frac{\ptypes{\Gamma}{\Delta_1}{P}\qquad
+      \ptypes{\Gamma}{\Delta_2}{Q}\qquad
+      \Delta=\Delta_1\uplus\Delta_2}
+     {\ptypes{\Gamma}{\Delta}{P\mid Q}}.
+\]
+The value context $\Gamma$ is shared because its assumptions are reusable. The channel bindings in $\Delta$ are assigned to exactly one premise in the finite core.
+
+\input{plates/plate10}
+
+\section{Dropping and duplication}
+A process that never mentions an endpoint cannot normally discharge its nonterminal session obligation. A process that mentions the same linear endpoint in two parallel branches cannot be typed because the required environment split would have overlapping domains. These are syntactic facts about the typing derivation, not observations about operating-system handles.
+
+\section{Structural congruence}
+\begin{theorem}[T4.22, selected structural congruence preserves typing]
+For the selected \texttt{PROTO-0} laws
+\[
+P\mid 0\pcong P,\quad
+P\mid Q\pcong Q\mid P,\quad
+(P\mid Q)\mid R\pcong P\mid(Q\mid R),
+\]
+and freshness-guarded scope extrusion, if $\ptypes{\Gamma}{\Delta}{P}$ and $P\pcong Q$, then $\ptypes{\Gamma}{\Delta}{Q}$.
+\end{theorem}
+\begin{proof}
+By cases on the generating congruence law. The parallel laws use commutativity and associativity of finite disjoint environment splitting. The identity law uses the empty channel environment for $0$. Scope extrusion uses the stated freshness side condition so that moving a restriction does not capture a free endpoint or change which subderivation owns its bindings.
+\end{proof}
+
+\section{Full finite fidelity}
+\begin{theorem}[T4.5, \texttt{PROTO-0} subject reduction]
+If $\ptypes{\Gamma}{\Delta}{P}$, $P\to P'$, and the operational step induces $\Delta\envstep\Delta'$, then $\ptypes{\Gamma}{\Delta'}{P'}$ for the finite synchronous \texttt{PROTO-0} calculus defined in this volume.
+\end{theorem}
+\begin{proof}
+Induct on the derivation of $P\to P'$. Principal redexes use T4.3 and T4.4. A reduction beneath parallel composition applies the induction hypothesis to the affected subderivation and reconstructs the disjoint environment split. A reduction beneath restriction advances the paired endpoint bindings together. Congruence-closed steps use T4.22 before and after the principal/context step. These cases exhaust the selected reduction rules.
+\end{proof}
+\begin{corollary}[T4.6, communication safety]
+A closed well-typed \texttt{PROTO-0} configuration cannot take a principal reduction whose paired endpoints disagree on action class, label, or payload type.
+\end{corollary}
+\begin{proof}
+By inversion of the typing derivation at a principal redex. Paired endpoints are assigned dual session types, and T4.4 enumerates the only compatible principal actions.
+\end{proof}
+
+\section{Do not confuse: linear variable use with physical ownership}
+\begin{warningbox}
+The theorem is about names and obligations in this calculus. A compiler can introduce aliases; a foreign-function interface can duplicate handles; a broker can multiplex a physical connection. Connecting formal linearity to deployment ownership requires a separate compilation/runtime correctness argument.
+\end{warningbox}
+
+\input{plates/plate11}
+
+\section{Computational laboratory}
+\begin{labbox}
+Run
+\[
+  \texttt{python labs/lab05_linearity.py}.
+\]
+The laboratory checks finite channel-environment splits and rejects duplicated, missing, and invented endpoint bindings. It is executable evidence for the stated finite fixtures and does not enlarge the theorem scope.
+\end{labbox}
+
+\section{Exercises}
+\subsection*{Checkpoint}
+\begin{enumerate}[label=\textbf{5.\arabic*},start=1]
+\item Why is $\Gamma$ shared while $\Delta$ is split in the parallel rule?
+\item State the three conditions checked by a valid finite environment split.
+\item What environment types the inactive process $0$ in the core calculus?
+\end{enumerate}
+\subsection*{Core}
+\begin{enumerate}[label=\textbf{5.\arabic*},start=4]
+\item Give an example of an invalid split that duplicates one endpoint.
+\item Give an example of an invalid split that drops one endpoint.
+\item Show how a valid split changes when a third independent endpoint is assigned to the right subprocess.
+\end{enumerate}
+\subsection*{Synthesis}
+\begin{enumerate}[label=\textbf{5.\arabic*},start=7]
+\item Explain why linear typing can improve local protocol accounting without guaranteeing network liveness.
+\item Explain why endpoint aliasing in a foreign-function call is outside T4.5.
+\end{enumerate}
+\subsection*{Proof Workshop}
+\begin{enumerate}[label=\textbf{5.\arabic*},start=9]
+\item Prove the commutativity case of T4.22 using disjoint splitting.
+\item Outline the induction cases of T4.5 and identify where T4.3 and T4.4 enter.
+\end{enumerate}
+\subsection*{Design Clinic}
+\begin{enumerate}[label=\textbf{5.\arabic*},start=11]
+\item Design a compiler-side assertion that would help preserve the source-level endpoint ownership discipline.
+\end{enumerate}
+\subsection*{Challenge}
+\begin{enumerate}[label=\textbf{5.\arabic*},start=12]
+\item Consider a shared-channel language. State which Gate-5 premise would need to change rather than pretending the same linear rule still applies.
+\end{enumerate}

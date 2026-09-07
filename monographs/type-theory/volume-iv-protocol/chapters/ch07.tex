@@ -1,0 +1,87 @@
+\chapter{Conversations That Do Not End}
+
+A service may be correct because it does not terminate. Finite session syntax cannot describe a server that repeatedly receives a request and sends a reply. Guarded recursion adds an unbounded protocol without turning nontermination into an error or turning guardedness into a liveness theorem.
+
+\section{Recursive session equations}
+Extend session types with variables and a binder:
+\[
+S ::= \cdots \mid \mu t.S \mid t.
+\]
+A recursive occurrence is \keyword{guarded} when every path from its binder to that occurrence passes through a communication constructor. Thus
+\[
+\mu t.\recv{\Nat}{\send{\Bool}{t}}
+\]
+is guarded, while $\mu t.t$ is not admitted in \texttt{PROTO-R1}.
+
+\input{plates/plate13}
+
+\section{Unfolding}
+Define one unfolding by
+\[
+\mathsf{unfold}(\mu t.S)=S[\mu t.S/t].
+\]
+This is a syntactic equation for exposing one protocol layer. It does not execute the process, choose a scheduler, or prove that the next communication will occur.
+
+\section{Guarded well-formedness}
+\begin{theorem}[T4.10, guarded unfolding preserves session well-formedness]
+If $\mu t.S$ is well formed in the guarded \texttt{PROTO-R1} fragment, then $S[\mu t.S/t]$ is well formed.
+\end{theorem}
+\begin{proof}
+The guardedness check ensures every recursive occurrence is under a session constructor and that substitution re-inserts the same well-formed recursive binder only at session-type positions. Structural induction on $S$ preserves payload well-formedness and labeled-branch distinctness.
+\end{proof}
+
+\section{One recursive communication}
+\begin{theorem}[T4.11, one-step recursive preservation]
+In the bounded teaching fragment, unfold the endpoint types only enough to expose one principal communication. If the resulting paired endpoints are dual and the process takes that principal step, the continuations are typable by the corresponding recursive continuation types.
+\end{theorem}
+\begin{proof}
+Apply T4.10 to justify the unfoldings, then the finite principal compatibility argument T4.4. The recursive binder is reintroduced in the continuation exactly where the unfolded type substituted it. This theorem is one-step preservation; it is not a productivity theorem for an infinite run.
+\end{proof}
+
+\section{Do not confuse: guardedness with productivity}
+\begin{warningbox}
+Guarded syntax prevents an immediate self-reference with no communication constructor. It does not guarantee fairness, response time, lock freedom, or even that an enabled process is ever scheduled. T4.12, general productivity/lock freedom for recursive sessions, remains explicitly unclaimed.
+\end{warningbox}
+
+\input{plates/plate14}
+
+\section{Computational laboratory}
+\begin{labbox}
+Run
+\[
+  \texttt{python labs/lab07_recursion.py}.
+\]
+The laboratory checks guardedness of a small recursive-session AST and produces bounded unfoldings without interpreting them as termination evidence. It is executable evidence for the stated finite fixtures and does not enlarge the theorem scope.
+\end{labbox}
+
+\section{Exercises}
+\subsection*{Checkpoint}
+\begin{enumerate}[label=\textbf{7.\arabic*},start=1]
+\item Is $\mu t.!\Nat.t$ guarded? Is $\mu t.t$?
+\item Compute one unfolding of $\mu t.?\Nat.!\Bool.t$.
+\item Why is unfolding a type operation rather than a scheduler step?
+\end{enumerate}
+\subsection*{Core}
+\begin{enumerate}[label=\textbf{7.\arabic*},start=4]
+\item Give a guarded recursive protocol for a request/reply server.
+\item Construct an unguarded recursive type and explain why the checker rejects it.
+\item Show two successive unfoldings of a ping/pong protocol.
+\end{enumerate}
+\subsection*{Synthesis}
+\begin{enumerate}[label=\textbf{7.\arabic*},start=7]
+\item Explain why a nonterminating service can satisfy its protocol indefinitely.
+\item Explain why T4.10 alone cannot prove that every request receives a response.
+\end{enumerate}
+\subsection*{Proof Workshop}
+\begin{enumerate}[label=\textbf{7.\arabic*},start=9]
+\item Prove the send-constructor case needed in T4.10.
+\item Explain the dependency of T4.11 on T4.10 and T4.4.
+\end{enumerate}
+\subsection*{Design Clinic}
+\begin{enumerate}[label=\textbf{7.\arabic*},start=11]
+\item Design a productivity contract that adds an explicit fairness assumption rather than smuggling it into guardedness.
+\end{enumerate}
+\subsection*{Challenge}
+\begin{enumerate}[label=\textbf{7.\arabic*},start=12]
+\item Compare guarded recursion with termination by proposing one infinite but protocol-correct trace and one finite stuck trace.
+\end{enumerate}

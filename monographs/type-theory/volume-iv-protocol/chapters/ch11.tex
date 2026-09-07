@@ -1,0 +1,77 @@
+\chapter{When the Network Is Not the Calculus}
+
+A proof can be correct about the wrong world. The synchronous and FIFO calculi make explicit assumptions: messages are delivered according to their semantics, peers do not crash unless the model says so, and clocks do not silently expire. Distributed systems fail precisely by violating such assumptions. The type theorem remains true inside its model while the deployment can still fail.
+
+\section{Failure changes the transition system}
+Message loss removes a transition that the reliable calculus assumes. Duplication creates extra messages. Reordering violates FIFO. A crash removes future actions of one process. A partition changes reachability. A timeout adds clock state and a new event. Each change modifies the semantic object that a soundness theorem must quantify over.
+
+\input{plates/plate26}
+
+\section{A perfect protocol over a lossy transport}
+\begin{workedexample}
+Suppose the client follows $!\Nat.?\Bool.\mathsf{end!}$ and the server follows the exact dual. If the natural-number message is dropped by a transport not modeled in \texttt{PROTO-0}, both endpoint programs may be locally type-correct and still fail to complete the exchange. The deployment failure is not a counterexample to T4.5; it is evidence that the deployment is not an execution of the theorem's transition system.
+\end{workedexample}
+
+\input{plates/plate27}
+
+\section{Timing and security are separate planes}
+Deadlines require timed semantics or explicit timeout effects. Authentication requires identities and cryptographic or trusted-channel assumptions. Confidentiality and integrity require security judgments. None is created by the fact that a message occurs in the right order with the right payload type.
+
+\section{Two explicit non-results}
+\begin{proposition}[T4.23, non-result]
+Session fidelity in the calculi of this volume does not imply fault tolerance for crashes, partitions, message loss, duplication, or Byzantine behavior.
+\end{proposition}
+\begin{proposition}[T4.24, non-result]
+Typed protocol conformance does not imply arbitrary application-level functional correctness of the payloads or state transitions represented by the messages.
+\end{proposition}
+These are claim boundaries rather than positive theorems. Counterexamples are sufficient: a reliable-type derivation executed over a lossy transport for T4.23, and a correctly typed but semantically wrong payment amount for T4.24.
+
+\input{plates/plate28}
+
+\section{Do not confuse: outside the model with impossible to type}
+\begin{warningbox}
+Saying that faults are outside \texttt{PROTO-0} does not say that type theory cannot model faults. Failure-aware session calculi, timed types, security types, and effect systems can add such structure. The point is narrower: no theorem survives a material change of semantics merely because its notation still looks familiar.
+\end{warningbox}
+
+\input{plates/plate29}
+
+\section{Computational laboratory}
+\begin{labbox}
+Run
+\[
+  \texttt{python labs/lab11_failures.py}.
+\]
+The laboratory injects loss, duplication, reordering, crash, and timeout events into an otherwise valid trace and classifies which core model assumption was changed. It is executable evidence for the stated finite fixtures and does not enlarge the theorem scope.
+\end{labbox}
+
+\section{Exercises}
+\subsection*{Checkpoint}
+\begin{enumerate}[label=\textbf{11.\arabic*},start=1]
+\item Why is message loss a semantic change rather than a payload-type mismatch?
+\item Name one property session fidelity does not imply.
+\item Why is a timeout not present in untimed $\texttt{PROTO-0}$?
+\end{enumerate}
+\subsection*{Core}
+\begin{enumerate}[label=\textbf{11.\arabic*},start=4]
+\item Give a correct local session pair that fails under message loss.
+\item Give a protocol-correct trace that violates an application invariant.
+\item Classify duplication versus reordering as changes to the queue model.
+\end{enumerate}
+\subsection*{Synthesis}
+\begin{enumerate}[label=\textbf{11.\arabic*},start=7]
+\item Explain why a deployment failure can coexist with a correct formal preservation theorem.
+\item Explain why saying 'outside the model' is not the same as saying 'unmodellable'.
+\end{enumerate}
+\subsection*{Proof Workshop}
+\begin{enumerate}[label=\textbf{11.\arabic*},start=9]
+\item Construct a counterexample witnessing T4.23.
+\item Construct a counterexample witnessing T4.24.
+\end{enumerate}
+\subsection*{Design Clinic}
+\begin{enumerate}[label=\textbf{11.\arabic*},start=11]
+\item Design a failure-assumption header for a protocol specification intended for deployment.
+\end{enumerate}
+\subsection*{Challenge}
+\begin{enumerate}[label=\textbf{11.\arabic*},start=12]
+\item Choose one failure-aware typed communication system from the literature and compare its semantic state with $\texttt{PROTO-0}$.
+\end{enumerate}

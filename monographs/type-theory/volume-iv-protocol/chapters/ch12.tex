@@ -1,0 +1,72 @@
+\chapter{Watching the Conversation}
+
+Static typing judges source structure before execution. A runtime monitor observes events after execution has begun. The two techniques can share a session description, but they have different information and different failure modes.
+
+\section{Compile a finite session to an automaton}
+For each finite local session type, construct a monitor state for each residual type. A send constructor expects an observed send event with the declared payload class; a receive constructor expects the complementary local event; selection and branching inspect labels; terminal states inspect close/wait. A transition advances to the continuation state.
+
+\input{plates/plate30}
+
+\section{Observed-trace soundness}
+\begin{theorem}[T4.20, monitor soundness for observed finite traces]
+If the \texttt{PROTO-MON1} monitor generated from finite session type $S$ accepts a complete, fully observed local trace $\tau$, then $\tau$ is a valid complete local trace of $S$ under the monitor's event abstraction.
+\end{theorem}
+\begin{proof}
+By induction on $S$. Every generated monitor state has transitions only for the event class licensed by the outer session constructor. Acceptance advances to the monitor generated from the continuation. Branch constructors dispatch only to registered labels. Terminal constructors accept only their corresponding terminal event. Thus an accepted complete trace follows the session structure constructor by constructor.
+\end{proof}
+
+\section{What the monitor cannot see}
+An application may send a natural number with the wrong business meaning. A transport may duplicate a frame below the instrumentation boundary and later de-duplicate it. A peer may crash before an event is emitted. The monitor can reason only about its observed event stream and any trusted metadata attached to those events.
+
+\input{plates/plate31}
+
+\section{Static and dynamic evidence}
+Static typing can rule out some bad programs before they run, but only relative to the source/compilation model. Monitoring can detect violations caused by untyped components or deployment drift, but only after observable events occur. Neither technique universally subsumes the other.
+
+\section{Do not confuse: monitor rejection with diagnosis}
+\begin{warningbox}
+A monitor can report that the observed trace violated its automaton. It does not automatically explain the root cause, repair the protocol, or establish completeness for unobserved distributed failures. T4.21 remains an explicit non-result.
+\end{warningbox}
+
+\input{plates/plate32}
+
+\section{Computational laboratory}
+\begin{labbox}
+Run
+\[
+  \texttt{python labs/lab12_monitor.py}.
+\]
+The laboratory generates a finite-state monitor from a session AST and classifies accepted, rejected, incomplete, and unobservable-failure examples. It is executable evidence for the stated finite fixtures and does not enlarge the theorem scope.
+\end{labbox}
+
+\section{Exercises}
+\subsection*{Checkpoint}
+\begin{enumerate}[label=\textbf{12.\arabic*},start=1]
+\item What is a monitor state in the finite construction?
+\item State T4.20's observation assumption.
+\item Why does monitor soundness not imply fault recovery?
+\end{enumerate}
+\subsection*{Core}
+\begin{enumerate}[label=\textbf{12.\arabic*},start=4]
+\item Generate the monitor transitions for $!\Nat.?\Bool.\mathsf{end!}$.
+\item Give one wrong-label trace and show where the monitor rejects it.
+\item Give an incomplete trace that is locally valid so far but not complete.
+\end{enumerate}
+\subsection*{Synthesis}
+\begin{enumerate}[label=\textbf{12.\arabic*},start=7]
+\item Compare the evidence produced by static typing and runtime monitoring.
+\item Explain one failure that can occur outside the monitor's observation boundary.
+\end{enumerate}
+\subsection*{Proof Workshop}
+\begin{enumerate}[label=\textbf{12.\arabic*},start=9]
+\item Prove T4.20 for the send constructor.
+\item Extend the proof to an internal-choice constructor.
+\end{enumerate}
+\subsection*{Design Clinic}
+\begin{enumerate}[label=\textbf{12.\arabic*},start=11]
+\item Design a monitor log schema that keeps observed event, expected event class, session state, and timestamp separate.
+\end{enumerate}
+\subsection*{Challenge}
+\begin{enumerate}[label=\textbf{12.\arabic*},start=12]
+\item Propose a distributed-monitoring extension and identify one new assumption needed to correlate events across peers.
+\end{enumerate}
