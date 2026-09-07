@@ -1,0 +1,56 @@
+name: Type Theory Volume IV full development bootstrap
+
+on:
+  push:
+    branches:
+      - docs/type-theory-vol-iv-full-development-003
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+      - name: Verify and unpack exact source archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=.tmp/type-theory-vol-iv-full-development/source.zip
+          test -f "$SRC"
+          test "$(stat -c%s "$SRC")" = "113191"
+          test "$(sha256sum "$SRC" | awk '{print $1}')" = "c7354f5ac16c73af864736e29357053a41d884422e710fc97f9567ce1650b23c"
+          rm -rf /tmp/vol4-source && mkdir -p /tmp/vol4-source
+          unzip -q "$SRC" -d /tmp/vol4-source
+          test "$(find /tmp/vol4-source -type f | wc -l)" -eq 101
+      - name: Validate exact source and laboratories
+        shell: bash
+        run: |
+          set -euo pipefail
+          S=/tmp/vol4-source
+          test -f "$S/main.tex"
+          test -f "$S/solutions_companion.tex"
+          test -f "$S/plates_folio.tex"
+          test -f "$S/WORKSET_STATE.json"
+          test -f "$S/evidence/FULL_DEVELOPMENT_EVIDENCE.json"
+          test "$(find "$S/chapters" -maxdepth 1 -name 'ch*.tex' | wc -l)" -eq 14
+          test "$(find "$S/plates" -maxdepth 1 -name 'plate*.tex' | wc -l)" -eq 42
+          test "$(find "$S/labs" -maxdepth 1 -name 'lab*.py' | wc -l)" -eq 14
+          for f in "$S"/labs/lab*.py; do python "$f"; done
+      - name: Materialize source and remove temporary transport
+        shell: bash
+        run: |
+          set -euo pipefail
+          DEST=monographs/type-theory/volume-iv-protocol
+          rsync -a /tmp/vol4-source/ "$DEST/"
+          rm -rf .tmp/type-theory-vol-iv-full-development
+          rm -f .github/workflows/type-theory-vol-iv-full-development-bootstrap.yml
+          git config user.name "GCL Type Theory Composer"
+          git config user.email "type-theory@grandchallenge.invalid"
+          git add -A
+          git commit -m "docs: complete Type Theory Volume IV full development"
+          git push origin HEAD:docs/type-theory-vol-iv-full-development-003
