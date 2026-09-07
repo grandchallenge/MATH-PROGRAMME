@@ -1,7 +1,11 @@
-\PlateHeader{Plate 29 --- Guarded Fixed-Point Loop}{Ch. 12}
-\begin{tikzpicture}[>=stealth]
-  \node[draw,rounded corners,minimum width=3.2cm,minimum height=1.0cm] (f) at (0,2.5) {$f:\triangleright A\to A$};
-  \node[draw,rounded corners,minimum width=3.2cm,minimum height=1.0cm] (x) at (0,0) {$\operatorname{fix}(f):A$};
-  \draw[->,thick] (f)--(x) node[midway,right] {unfold};
-  \draw[->,thick] (x.west) .. controls (-3,0) and (-3,2.5) .. (f.west) node[midway,left] {$\operatorname{next}$};
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {session order};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {auth / secrecy};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {secure protocol};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
 \end{tikzpicture}
+\caption{Plate 29. Security is another obligation plane. Authentication and confidentiality require obligations not supplied by communication order alone. No security theorem is inferred from the layout.}
+\end{figure}

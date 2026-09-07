@@ -1,10 +1,11 @@
-\PlateHeader{Plate 30 --- Productivity Frontier}{Ch. 12}
-\begin{tikzpicture}[x=0.8cm,y=0.8cm,>=stealth]
-  \draw[->] (0,0)--(8.8,0) node[right] {observation depth};
-  \foreach \x in {1,...,8} {
-    \draw[thick] (\x,0.25)--(\x,{0.7+0.25*\x});
-    \fill (\x,{0.7+0.25*\x}) circle (1.6pt);
-  }
-  \draw[dashed] (0.6,1.1)--(8.2,3.0) node[right] {productive frontier};
-  \node[align=center] at (4.2,4.2) {each finite observation\\uses finitely many guarded unfoldings};
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {session type $S$};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {compile};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {finite observer};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
 \end{tikzpicture}
+\caption{Plate 30. Monitor as automaton. A finite local session can generate an observer automaton for instrumented events. The monitor sees only its observation interface.}
+\end{figure}

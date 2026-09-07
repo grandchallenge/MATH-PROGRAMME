@@ -1,11 +1,11 @@
-\PlateHeader{Plate 31 --- Session Fidelity State Machine}{Ch. 13}
-\begin{tikzpicture}[node distance=2.0cm,>=stealth]
-  \node[state] (s0) {$S_0$};
-  \node[state,right=of s0] (s1) {$S_1$};
-  \node[state,right=of s1] (s2) {$S_2$};
-  \node[state,below=of s1] (bad) {stuck};
-  \path[->,thick]
-    (s0) edge node[above] {send} (s1)
-    (s1) edge node[above] {recv} (s2)
-    (s1) edge[dashed] node[right] {wrong branch} (bad);
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {source typing\\before run};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {same protocol};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {monitoring\\during run};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
 \end{tikzpicture}
+\caption{Plate 31. Static proof and runtime observation. Static typing and runtime monitoring use related protocol structure at different evidence surfaces. Neither subsumes the other in general.}
+\end{figure}

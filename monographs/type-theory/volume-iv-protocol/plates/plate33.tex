@@ -1,10 +1,11 @@
-\PlateHeader{Plate 33 --- Merge Compatibility Gate}{Ch. 13}
-\begin{tikzpicture}[>=stealth]
-  \node[draw,rounded corners] (a) at (-3,2) {branch $p$};
-  \node[draw,rounded corners] (b) at (3,2) {branch $q$};
-  \node[draw,rounded corners,align=center] (g) at (0,0) {merge\\compatibility};
-  \node[draw,rounded corners] (m) at (0,-2) {merged type};
-  \draw[->,thick] (a)--(g);
-  \draw[->,thick] (b)--(g);
-  \draw[->,thick] (g)--(m);
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {process step\\$P\to P'$};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {typing derivation};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {environment step\\$\Delta\Rightarrow\Delta'$};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
 \end{tikzpicture}
+\caption{Plate 33. Session fidelity triangle. Subject reduction synchronizes process evolution, protocol-state evolution, and typing. The commuting diagram states T4.5 only.}
+\end{figure}

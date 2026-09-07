@@ -1,10 +1,11 @@
-\PlateHeader{Plate 28 --- Later Modality Step}{Ch. 12}
-\begin{tikzpicture}[x=1.2cm,y=0.9cm,>=stealth]
-  \foreach \x in {0,...,6} {
-    \fill (\x,0) circle (1.8pt);
-    \node[below] at (\x,0) {\small $\x$};
-  }
-  \foreach \x in {0,...,5} {\draw[->,thick] (\x+0.1,0.35)--(\x+0.9,0.35);}
-  \node[draw,rounded corners] at (3,1.65) {$\triangleright A$};
-  \draw[->,thick] (3,1.25)--(3,0.45) node[midway,right] {\small one-step delay};
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {protocol order};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {deadline / clock};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {timed behavior};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
 \end{tikzpicture}
+\caption{Plate 28. Timing adds another dimension. Message order and temporal deadlines constrain different dimensions of behavior. A full timed-session calculus is not developed here.}
+\end{figure}

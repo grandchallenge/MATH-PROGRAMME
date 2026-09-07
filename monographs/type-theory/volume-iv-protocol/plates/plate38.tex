@@ -1,8 +1,11 @@
-\PlateHeader{Plate 38 --- Exercise Escalation Ladder}{Synthesis}
-\begin{tikzpicture}[x=1.0cm,y=0.8cm,>=stealth]
-  \foreach \i/\lab in {0/Check,1/Prove,2/Construct,3/Diagnose,4/Extend} {
-    \draw[thick] (\i*1.6,0) rectangle ++(1.35,{0.7+0.45*\i});
-    \node[rotate=90] at ({\i*1.6+0.675},{0.35+0.225*\i}) {\lab};
-  }
-  \draw[->,very thick] (0,-0.65)--(7.9,-0.65) node[right] {independence};
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {proof cut};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {translation};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {private channel\\composition};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
 \end{tikzpicture}
+\caption{Plate 38. Cut as channel composition, with conditions. Cut and restricted channel composition can correspond under an explicit translation. No unrestricted identification of normalization with concurrent execution is made.}
+\end{figure}

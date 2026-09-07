@@ -1,12 +1,11 @@
-\PlateHeader{Plate 40 --- Compilation Boundary Map}{Synthesis}
-\begin{tikzpicture}[x=0.9cm,y=0.9cm,>=stealth]
-  \node[draw,rounded corners] (src) at (0,2) {source};
-  \node[draw,rounded corners] (elab) at (3,2) {elaboration};
-  \node[draw,rounded corners] (core) at (6,2) {core};
-  \node[draw,rounded corners] (run) at (9,2) {runtime};
-  \draw[->,thick] (src)--(elab);
-  \draw[->,thick] (elab)--(core);
-  \draw[->,thick] (core)--(run);
-  \draw[dashed] (4.5,0.8)--(4.5,3.2);
-  \node[below] at (4.5,0.8) {trusted boundary};
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {send $42$};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {type/order OK};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {wrong business\\meaning};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
 \end{tikzpicture}
+\caption{Plate 40. A protocol-conforming semantic bug. A message can have the right type at the right time and still encode the wrong application meaning. Application invariants require additional specification.}
+\end{figure}

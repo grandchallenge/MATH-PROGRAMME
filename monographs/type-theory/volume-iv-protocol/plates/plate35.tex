@@ -1,10 +1,11 @@
-\PlateHeader{Plate 35 --- Elaborator Constraint Pipeline}{Ch. 14}
-\begin{tikzpicture}[node distance=1.4cm,>=stealth]
-  \node[draw,rounded corners] (s) {surface term};
-  \node[draw,rounded corners,right=of s] (m) {metavariables};
-  \node[draw,rounded corners,right=of m] (c) {constraints};
-  \node[draw,rounded corners,right=of c] (k) {kernel term};
-  \draw[->,thick] (s)--(m);
-  \draw[->,thick] (m)--(c);
-  \draw[->,thick] (c)--(k);
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {deadlock\\no action};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {starvation\\one waits forever};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {fairness\\scheduler rule};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
 \end{tikzpicture}
+\caption{Plate 35. Deadlock, lock freedom, starvation, fairness. Several temporal notions answer different questions and must not be collapsed. Examples illustrate distinctions rather than prove equivalences.}
+\end{figure}

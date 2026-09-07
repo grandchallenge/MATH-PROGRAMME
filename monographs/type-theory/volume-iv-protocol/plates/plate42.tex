@@ -1,10 +1,11 @@
-\PlateHeader{Plate 42 --- Protocol Closure Matrix}{Synthesis}
-\begin{tikzpicture}[x=0.9cm,y=0.9cm]
-  \draw[thick] (0,0) grid (7,5);
-  \foreach \x/\lab in {0.5/Syntax,1.5/Types,2.5/Red.,3.5/Norm.,4.5/Sem.,5.5/Impl.,6.5/Prot.}
-    {\node[rotate=50,anchor=west] at (\x,5.15) {\small \lab};}
-  \foreach \y/\lab in {4.5/Defined,3.5/Proved,2.5/Tested,1.5/Ref'd,0.5/Audited}
-    {\node[anchor=east] at (-0.15,\y) {\small \lab};}
-  \foreach \x/\y in {0.5/4.5,1.5/4.5,2.5/3.5,3.5/3.5,4.5/2.5,5.5/2.5,6.5/1.5,6.5/0.5}
-    {\fill (\x,\y) circle (3pt);}
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {III\\PROOF / PROGRAM};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {IV\\PROTOCOL};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {V\\EFFECTS};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
 \end{tikzpicture}
+\caption{Plate 42. Series atlas IV. PROTOCOL extends the series from closed proof/program structure to typed interaction and exposes the threshold into effects. The atlas is organizational, not evidence for the grand-unification thesis.}
+\end{figure}

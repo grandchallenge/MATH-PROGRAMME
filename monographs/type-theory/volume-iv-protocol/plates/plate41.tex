@@ -1,10 +1,11 @@
-\PlateHeader{Plate 41 --- Evidence Triangulation}{Synthesis}
-\begin{tikzpicture}[>=stealth]
-  \node[draw,rounded corners] (p) at (0,3) {proof};
-  \node[draw,rounded corners] (c) at (-3,0) {computation};
-  \node[draw,rounded corners] (r) at (3,0) {reference};
-  \draw[<->,thick] (p)--(c);
-  \draw[<->,thick] (p)--(r);
-  \draw[<->,thick] (c)--(r);
-  \node[align=center] at (0,1.1) {bounded\\claim};
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {protocol action};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {external event};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {world changes};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
 \end{tikzpicture}
+\caption{Plate 41. From conversation to effect. An external event can change state not owned by either endpoint's session frontier. The event model belongs to Volume V.}
+\end{figure}

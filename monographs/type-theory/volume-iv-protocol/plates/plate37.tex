@@ -1,14 +1,11 @@
-\PlateHeader{Plate 37 --- Theorem Dependency Spine}{Synthesis}
-\begin{tikzpicture}[node distance=1.15cm,>=stealth]
-  \node[draw,rounded corners] (a) {syntax};
-  \node[draw,rounded corners,right=of a] (b) {substitution};
-  \node[draw,rounded corners,right=of b] (c) {reduction};
-  \node[draw,rounded corners,right=of c] (d) {metatheory};
-  \node[draw,rounded corners,right=of d] (e) {semantics};
-  \node[draw,rounded corners,right=of e] (f) {protocols};
-  \draw[->,thick] (a)--(b);
-  \draw[->,thick] (b)--(c);
-  \draw[->,thick] (c)--(d);
-  \draw[->,thick] (d)--(e);
-  \draw[->,thick] (e)--(f);
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {linear proof\\rule};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {exact translation\\when defined};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {process\\construct};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
 \end{tikzpicture}
+\caption{Plate 37. Processes and proofs: a disciplined correspondence. Specific calculi admit exact proof/process correspondences. The correspondence is calculus-specific.}
+\end{figure}

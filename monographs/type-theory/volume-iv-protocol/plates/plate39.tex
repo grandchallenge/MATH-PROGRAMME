@@ -1,9 +1,11 @@
-\PlateHeader{Plate 39 --- Mechanization Interface}{Synthesis}
-\begin{tikzpicture}[node distance=1.5cm,>=stealth]
-  \node[draw,rounded corners] (math) {mathematical statement};
-  \node[draw,rounded corners,right=of math] (enc) {formal encoding};
-  \node[draw,rounded corners,right=of enc] (check) {kernel check};
-  \draw[->,thick] (math)--(enc);
-  \draw[->,thick] (enc)--(check);
-  \draw[->,dashed,bend left=35] (check) to node[above] {counterexample / repair} (math);
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {$\Delta$\\channel obligations};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {different layer};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {database / file /\\device state};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
 \end{tikzpicture}
+\caption{Plate 39. Protocol state is not world state. A session frontier records communication obligations, not arbitrary external state. This boundary prepares Volume V rather than proving an effect theorem.}
+\end{figure}

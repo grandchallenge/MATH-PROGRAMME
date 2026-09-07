@@ -1,14 +1,11 @@
-\PlateHeader{Plate 34 --- Typeclass Search Tree}{Ch. 14}
-\begin{tikzpicture}[x=1.2cm,y=1.0cm,>=stealth]
-  \node[draw,rounded corners] (g) at (0,3) {goal};
-  \node[draw,rounded corners] (a) at (-2,1.4) {instance A};
-  \node[draw,rounded corners] (b) at (2,1.4) {instance B};
-  \node[draw,rounded corners] (c) at (-3,0) {subgoal};
-  \node[draw,rounded corners] (d) at (-1,0) {solved};
-  \node[draw,rounded corners] (e) at (2,0) {loop};
-  \draw[->] (g)--(a);
-  \draw[->] (g)--(b);
-  \draw[->] (a)--(c);
-  \draw[->] (a)--(d);
-  \draw[->,dashed] (b)--(e);
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {local fidelity};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {one-session\\progress};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {stronger liveness\\extra hypotheses};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
 \end{tikzpicture}
+\caption{Plate 34. Progress hypothesis map. Moving from safety to stronger liveness requires additional topology, scheduler, or global-structure assumptions. Implication arrows are used only for proved or explicitly cited relations.}
+\end{figure}

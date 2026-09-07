@@ -1,12 +1,11 @@
-\PlateHeader{Plate 32 --- Subtyping Branch Lattice}{Ch. 13}
-\begin{tikzpicture}[>=stealth]
-  \node[draw,rounded corners] (top) at (0,3) {broad offer};
-  \node[draw,rounded corners] (l) at (-2,1.3) {branch set $B_1$};
-  \node[draw,rounded corners] (r) at (2,1.3) {branch set $B_2$};
-  \node[draw,rounded corners] (bot) at (0,-0.4) {restricted protocol};
-  \draw[->,thick] (top)--(l);
-  \draw[->,thick] (top)--(r);
-  \draw[->,thick] (l)--(bot);
-  \draw[->,thick] (r)--(bot);
-  \node at (4.2,1.3) {$\leq_{\mathrm{sess}}$};
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {accepted trace};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {hidden semantic bug};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {monitor says OK};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
 \end{tikzpicture}
+\caption{Plate 32. An unobservable violation. An observed protocol trace can be accepted while application meaning is wrong. This finite witness marks the observation boundary.}
+\end{figure}
