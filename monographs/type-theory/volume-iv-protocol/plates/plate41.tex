@@ -1,0 +1,10 @@
+\PlateHeader{Plate 41 --- Evidence Triangulation}{Synthesis}
+\begin{tikzpicture}[>=stealth]
+  \node[draw,rounded corners] (p) at (0,3) {proof};
+  \node[draw,rounded corners] (c) at (-3,0) {computation};
+  \node[draw,rounded corners] (r) at (3,0) {reference};
+  \draw[<->,thick] (p)--(c);
+  \draw[<->,thick] (p)--(r);
+  \draw[<->,thick] (c)--(r);
+  \node[align=center] at (0,1.1) {bounded\\claim};
+\end{tikzpicture}

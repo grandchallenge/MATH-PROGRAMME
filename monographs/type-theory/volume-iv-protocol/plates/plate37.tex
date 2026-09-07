@@ -1,0 +1,14 @@
+\PlateHeader{Plate 37 --- Theorem Dependency Spine}{Synthesis}
+\begin{tikzpicture}[node distance=1.15cm,>=stealth]
+  \node[draw,rounded corners] (a) {syntax};
+  \node[draw,rounded corners,right=of a] (b) {substitution};
+  \node[draw,rounded corners,right=of b] (c) {reduction};
+  \node[draw,rounded corners,right=of c] (d) {metatheory};
+  \node[draw,rounded corners,right=of d] (e) {semantics};
+  \node[draw,rounded corners,right=of e] (f) {protocols};
+  \draw[->,thick] (a)--(b);
+  \draw[->,thick] (b)--(c);
+  \draw[->,thick] (c)--(d);
+  \draw[->,thick] (d)--(e);
+  \draw[->,thick] (e)--(f);
+\end{tikzpicture}

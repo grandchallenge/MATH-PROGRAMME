@@ -1,0 +1,11 @@
+\PlateHeader{Plate 31 --- Session Fidelity State Machine}{Ch. 13}
+\begin{tikzpicture}[node distance=2.0cm,>=stealth]
+  \node[state] (s0) {$S_0$};
+  \node[state,right=of s0] (s1) {$S_1$};
+  \node[state,right=of s1] (s2) {$S_2$};
+  \node[state,below=of s1] (bad) {stuck};
+  \path[->,thick]
+    (s0) edge node[above] {send} (s1)
+    (s1) edge node[above] {recv} (s2)
+    (s1) edge[dashed] node[right] {wrong branch} (bad);
+\end{tikzpicture}

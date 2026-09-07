@@ -1,0 +1,9 @@
+\PlateHeader{Plate 39 --- Mechanization Interface}{Synthesis}
+\begin{tikzpicture}[node distance=1.5cm,>=stealth]
+  \node[draw,rounded corners] (math) {mathematical statement};
+  \node[draw,rounded corners,right=of math] (enc) {formal encoding};
+  \node[draw,rounded corners,right=of enc] (check) {kernel check};
+  \draw[->,thick] (math)--(enc);
+  \draw[->,thick] (enc)--(check);
+  \draw[->,dashed,bend left=35] (check) to node[above] {counterexample / repair} (math);
+\end{tikzpicture}

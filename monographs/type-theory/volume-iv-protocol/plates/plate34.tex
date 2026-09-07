@@ -1,0 +1,14 @@
+\PlateHeader{Plate 34 --- Typeclass Search Tree}{Ch. 14}
+\begin{tikzpicture}[x=1.2cm,y=1.0cm,>=stealth]
+  \node[draw,rounded corners] (g) at (0,3) {goal};
+  \node[draw,rounded corners] (a) at (-2,1.4) {instance A};
+  \node[draw,rounded corners] (b) at (2,1.4) {instance B};
+  \node[draw,rounded corners] (c) at (-3,0) {subgoal};
+  \node[draw,rounded corners] (d) at (-1,0) {solved};
+  \node[draw,rounded corners] (e) at (2,0) {loop};
+  \draw[->] (g)--(a);
+  \draw[->] (g)--(b);
+  \draw[->] (a)--(c);
+  \draw[->] (a)--(d);
+  \draw[->,dashed] (b)--(e);
+\end{tikzpicture}

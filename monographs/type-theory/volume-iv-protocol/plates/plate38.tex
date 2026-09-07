@@ -1,0 +1,8 @@
+\PlateHeader{Plate 38 --- Exercise Escalation Ladder}{Synthesis}
+\begin{tikzpicture}[x=1.0cm,y=0.8cm,>=stealth]
+  \foreach \i/\lab in {0/Check,1/Prove,2/Construct,3/Diagnose,4/Extend} {
+    \draw[thick] (\i*1.6,0) rectangle ++(1.35,{0.7+0.45*\i});
+    \node[rotate=90] at ({\i*1.6+0.675},{0.35+0.225*\i}) {\lab};
+  }
+  \draw[->,very thick] (0,-0.65)--(7.9,-0.65) node[right] {independence};
+\end{tikzpicture}

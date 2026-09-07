@@ -1,0 +1,10 @@
+\PlateHeader{Plate 36 --- Safe Automation Trust Boundary}{Ch. 14}
+\begin{tikzpicture}[x=0.9cm,y=0.9cm,>=stealth]
+  \draw[rounded corners,thick] (-4,-1.5) rectangle (-0.4,2.2);
+  \draw[rounded corners,thick] (0.4,-1.5) rectangle (4,2.2);
+  \node[align=center] at (-2.2,1.45) {untrusted / heuristic};
+  \node[align=center] at (2.2,1.45) {trusted kernel};
+  \node[draw,rounded corners] (t) at (-2.2,0) {tactic search};
+  \node[draw,rounded corners] (p) at (2.2,0) {proof term check};
+  \draw[->,thick] (t)--(p) node[midway,above] {certificate};
+\end{tikzpicture}

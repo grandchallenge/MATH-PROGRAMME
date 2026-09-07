@@ -1,0 +1,10 @@
+\PlateHeader{Plate 33 --- Merge Compatibility Gate}{Ch. 13}
+\begin{tikzpicture}[>=stealth]
+  \node[draw,rounded corners] (a) at (-3,2) {branch $p$};
+  \node[draw,rounded corners] (b) at (3,2) {branch $q$};
+  \node[draw,rounded corners,align=center] (g) at (0,0) {merge\\compatibility};
+  \node[draw,rounded corners] (m) at (0,-2) {merged type};
+  \draw[->,thick] (a)--(g);
+  \draw[->,thick] (b)--(g);
+  \draw[->,thick] (g)--(m);
+\end{tikzpicture}

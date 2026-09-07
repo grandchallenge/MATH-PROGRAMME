@@ -1,0 +1,37 @@
+\chapter{Choice Has Two Sides}
+
+\section*{4.1}
+$\dual{\sel{\mathsf{yes}:S,\mathsf{no}:T}}=\bra{\mathsf{yes}:\dual S,\mathsf{no}:\dual T}$.
+
+\section*{4.2}
+Selection chooses a label locally; branching waits for and accepts a label chosen by the peer.
+
+\section*{4.3}
+Exact duals have the same label set, with pairwise dual continuations.
+
+\section*{4.4}
+$(\nu x\,y)(x\oplus \mathsf{ok}.P\mid y\&\{\mathsf{ok}:Q_1,\mathsf{cancel}:Q_2\})\to(\nu x\,y)(P\mid Q_1)$.
+
+\section*{4.5}
+A selector permits `ok` but the offerer exposes only `cancel`. The continuations can otherwise be well formed.
+
+\section*{4.6}
+Client: $\sel{\mathsf{retry}:S,\mathsf{abort}:\mathsf{end!}}$; peer: $\bra{\mathsf{retry}:\dual S,\mathsf{abort}:\mathsf{end?}}$.
+
+\section*{4.7}
+The branch process exposes a family of continuations and does not choose among them until a peer label arrives.
+
+\section*{4.8}
+In a multiparty protocol, a third role can need to know a choice it did not directly receive. That is a projectability/choice-propagation question, not solved by binary label matching alone.
+
+\section*{4.9}
+Duality gives the peer an offer containing the selected label with dual continuation. The reduction chooses exactly that branch, leaving the two continuation types dual.
+
+\section*{4.10}
+Induct on the choice type. Applying dual twice changes $\oplus$ to $\&$ and back and invokes the induction hypothesis independently on each continuation.
+
+\section*{4.11}
+Report duplicate labels during parsing; report missing selected label at synchronization; report continuation incompatibility after a shared label is matched.
+
+\section*{4.12}
+A safe candidate is that internal-choice implementations may select a subset of expected labels, while external-choice implementations may offer a superset. Chapter 10 proves this for the bounded relation.

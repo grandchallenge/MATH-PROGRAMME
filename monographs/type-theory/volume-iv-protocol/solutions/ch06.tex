@@ -1,0 +1,37 @@
+\chapter{Safe Can Still Be Stuck}
+
+\section*{6.1}
+T4.7 applies to a closed canonical network with exactly one restricted session, sequential endpoint owners, no free endpoints, and no other session on which either side can block first.
+
+\section*{6.2}
+Global progress/deadlock freedom fails. Local duality and communication safety can remain intact.
+
+\section*{6.3}
+$x:!\Nat.\mathsf{end!}$ is dual to $y:?\Nat.\mathsf{end?}$; $u:?\Bool.\mathsf{end?}$ is dual to $v:!\Bool.\mathsf{end!}$.
+
+\section*{6.4}
+The graph has $P\to Q$ because $P$ waits on session $b$ for $Q$, and $Q\to P$ because $Q$ waits on session $a$ for $P$.
+
+\section*{6.5}
+Let $Q$ send on $v$ before receiving on $y$. Then $P$'s initial receive on $u$ can synchronize with $Q$'s send.
+
+\section*{6.6}
+Arrange $P_1$ to receive on $c$ before send on $a$, $P_2$ to receive on $a$ before send on $b$, and $P_3$ to receive on $b$ before send on $c$, with pairwise dual endpoint types.
+
+\section*{6.7}
+T4.7's one-session topology prevents a process from blocking on an unrelated session. T4.9 adds exactly the additional inter-session dependency that invalidates the progress inference.
+
+\section*{6.8}
+A deadlock-free run can still starve one participant if another keeps making progress. A fairness assumption can rule out some scheduler-induced starvation but is not identical to deadlock freedom.
+
+\section*{6.9}
+If $x$ begins with send, duality makes $y$ begin with receive. Canonical sequential forms put those prefixes at the front, creating a principal redex.
+
+\section*{6.10}
+Type each endpoint by the two dual pairs, derive both sequential processes, and combine by disjoint splits under two restrictions. Both exposed prefixes are receives whose matching sends are behind the other receive, so no reduction rule applies.
+
+\section*{6.11}
+Impose a global acyclic order on session acquisition and require processes to acquire/use sessions consistently with it. This needs inter-session dependency information absent from local binary types.
+
+\section*{6.12}
+Full credit requires a named cited calculus and one exact stronger hypothesis, such as proof-derived topology, priority order, or global-type discipline, with source scope stated.

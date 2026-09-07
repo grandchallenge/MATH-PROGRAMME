@@ -1,0 +1,10 @@
+\PlateHeader{Plate 35 --- Elaborator Constraint Pipeline}{Ch. 14}
+\begin{tikzpicture}[node distance=1.4cm,>=stealth]
+  \node[draw,rounded corners] (s) {surface term};
+  \node[draw,rounded corners,right=of s] (m) {metavariables};
+  \node[draw,rounded corners,right=of m] (c) {constraints};
+  \node[draw,rounded corners,right=of c] (k) {kernel term};
+  \draw[->,thick] (s)--(m);
+  \draw[->,thick] (m)--(c);
+  \draw[->,thick] (c)--(k);
+\end{tikzpicture}
