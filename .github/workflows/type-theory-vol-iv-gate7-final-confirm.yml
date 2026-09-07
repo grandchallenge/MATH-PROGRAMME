@@ -1,0 +1,131 @@
+name: Type Theory Volume IV Gate 7 final confirmation
+
+on:
+  push:
+    branches:
+      - ci/type-theory-vol-iv-gate7-replay-ea7b4f4d
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-final-confirmation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact evidence head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: dd95b0d5b1ae031db46c1be6d38cfadd5724e404
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Bind exact identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected="dd95b0d5b1ae031db46c1be6d38cfadd5724e404"
+          observed="$(git rev-parse HEAD)"
+          test "$observed" = "$expected"
+          git diff --exit-code
+          printf 'EXACT_EVIDENCE_HEAD=%s\n' "$observed" | tee /tmp/exact-head.txt
+
+      - name: Install build dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-luatex texlive-latex-extra texlive-pictures \
+            texlive-fonts-recommended texlive-fonts-extra poppler-utils
+
+      - name: Canonical RC validator and laboratories
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/monographs/type-theory-series/validate_volume.py \
+            monographs/type-theory/volume-iv-protocol --rc \
+            2>&1 | tee /tmp/gate7-validator.log
+          cd monographs/type-theory/volume-iv-protocol
+          count=0
+          : > /tmp/gate7-labs.log
+          for f in labs/lab*.py; do
+            python3 "$f" 2>&1 | tee -a /tmp/gate7-labs.log
+            count=$((count+1))
+          done
+          test "$count" -eq 14
+
+      - name: Clean indexed publication builds
+        working-directory: monographs/type-theory/volume-iv-protocol
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f main.{aux,idx,ilg,ind,log,out,toc,pdf} \
+                solutions_companion.{aux,log,out,pdf} \
+                plates_folio.{aux,log,out,pdf}
+          lualatex -interaction=nonstopmode -halt-on-error main.tex > /tmp/main.pass1.log 2>&1
+          test -s main.idx
+          makeindex main.idx > /tmp/main.index.log 2>&1
+          test -s main.ind
+          lualatex -interaction=nonstopmode -halt-on-error main.tex > /tmp/main.pass2.log 2>&1
+          lualatex -interaction=nonstopmode -halt-on-error main.tex > /tmp/main.pass3.log 2>&1
+          lualatex -interaction=nonstopmode -halt-on-error solutions_companion.tex > /tmp/solutions.pass1.log 2>&1
+          lualatex -interaction=nonstopmode -halt-on-error solutions_companion.tex > /tmp/solutions.pass2.log 2>&1
+          lualatex -interaction=nonstopmode -halt-on-error plates_folio.tex > /tmp/plates.pass1.log 2>&1
+          lualatex -interaction=nonstopmode -halt-on-error plates_folio.tex > /tmp/plates.pass2.log 2>&1
+
+      - name: Enforce final diagnostics and output identity
+        working-directory: monographs/type-theory/volume-iv-protocol
+        shell: bash
+        run: |
+          set -euo pipefail
+          logs=(/tmp/main.pass3.log /tmp/solutions.pass2.log /tmp/plates.pass2.log)
+          ! grep -n -E 'Undefined control sequence|LaTeX Error|Emergency stop|Fatal error|fontspec error' "${logs[@]}"
+          ! grep -n -E 'There were undefined references|Reference .* undefined|There were undefined citations|Citation .* undefined' "${logs[@]}"
+          ! grep -n -E 'multiply defined|multiply-defined labels' "${logs[@]}"
+          ! grep -n -E 'Missing character:' "${logs[@]}"
+          ! grep -n -E 'Overfull \\hbox|Overfull \\vbox' "${logs[@]}"
+          test "$(grep -c '^  \\item' main.ind || true)" -eq 58
+
+          printf '%s  %s\n' \
+            'bb1c4ef217f7487a8e4a9f93fb2f1e7e7ecce3fef3f426485e7e8f2d5c1a12b7' main.pdf \
+            'd5a1bfa752c57f90a3461ea24d663523dc35c7bb9a127116d32e4d05ae57cdd4' solutions_companion.pdf \
+            '6e5fb07bc67f88230895fca2a4e60354ec452d7e4dec9871dd47c806b3c84fe0' plates_folio.pdf \
+            > /tmp/EXPECTED_PDF_SHA256SUMS.txt
+          sha256sum -c /tmp/EXPECTED_PDF_SHA256SUMS.txt
+
+          pdfinfo main.pdf > /tmp/main.pdfinfo.txt
+          pdfinfo solutions_companion.pdf > /tmp/solutions.pdfinfo.txt
+          pdfinfo plates_folio.pdf > /tmp/plates.pdfinfo.txt
+          grep -Eq '^Pages:[[:space:]]+77$' /tmp/main.pdfinfo.txt
+          grep -Eq '^Pages:[[:space:]]+34$' /tmp/solutions.pdfinfo.txt
+          grep -Eq '^Pages:[[:space:]]+10$' /tmp/plates.pdfinfo.txt
+          grep -Eq '^Encrypted:[[:space:]]+no$' /tmp/main.pdfinfo.txt
+          grep -Eq '^Encrypted:[[:space:]]+no$' /tmp/solutions.pdfinfo.txt
+          grep -Eq '^Encrypted:[[:space:]]+no$' /tmp/plates.pdfinfo.txt
+
+          python3 releases/RC1/RECONSTRUCT_SOURCE.py
+          test "$(sha256sum GCL_Type_Theory_Volume_IV_PROTOCOL_RC1_Source.zip | awk '{print $1}')" = \
+            '48e2d1f32b1cbf8349ddd3a0f5a807781c6e75b50a411fba8a8f8f038302508e'
+          echo 'GATE7_FINAL_CONFIRMATION=PASS' | tee /tmp/gate7-final-confirmation.txt
+
+      - name: Upload final confirmation evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: type-theory-vol-iv-gate7-final-dd95b0d5
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            /tmp/exact-head.txt
+            /tmp/gate7-validator.log
+            /tmp/gate7-labs.log
+            /tmp/gate7-final-confirmation.txt
+            /tmp/EXPECTED_PDF_SHA256SUMS.txt
+            /tmp/main.pdfinfo.txt
+            /tmp/solutions.pdfinfo.txt
+            /tmp/plates.pdfinfo.txt
+            monographs/type-theory/volume-iv-protocol/main.pdf
+            monographs/type-theory/volume-iv-protocol/solutions_companion.pdf
+            monographs/type-theory/volume-iv-protocol/plates_folio.pdf
