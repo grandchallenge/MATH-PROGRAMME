@@ -1,0 +1,267 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "NOT_REQUIRED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": null,
+      "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+      "name": "Replay LOG-GCD-001 in Lean",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+      "name": "Replay PC-WP04 bounded certificate",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+      "name": "Replay pinned Union-Closed MATHCERT evidence",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+      "name": "policy / policy",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+      "name": "routing-enforcement",
+      "required": true,
+      "run_id": 101587933110,
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+      "name": "security / action-policy",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+      "name": "validate-json",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "CHECKS_PENDING",
+    "reasons": [
+      "7 required check(s) are not complete"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-09-07T00:40:52Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-09-07T00:47:03Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+    "exact_head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+    "pr_number": 878,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "GHOS: bind routing enforcement to the effective merge candidate"
+  },
+  "integration": {
+    "merge_commit_sha": "5a8c423be42aa3adccb474899dcd977de3469af3",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 4,
+      "collector_limitations": [],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 101587923544,
+          "conclusion": null,
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "Analyze (actions)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 101587923410,
+          "conclusion": null,
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "Analyze (c-cpp)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 101587923524,
+          "conclusion": null,
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 101587929246,
+          "conclusion": null,
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "Replay CM3 abelian and AB exactness",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 101587941290,
+          "conclusion": null,
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "Replay P2-E comparison audit",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 101587937999,
+          "conclusion": null,
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "Replay P3 pinned-interface audit",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 101587942964,
+          "conclusion": null,
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "Replay and extract original Euclid MATHCERT authority",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 101587943166,
+          "conclusion": null,
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "Replay concordant Euclid bridge in Lean",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 101587943107,
+          "conclusion": null,
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "Validate CMDG Euclid bridge",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 101587929441,
+          "conclusion": null,
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "Validate CMDG condensed CM3",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 101587941193,
+          "conclusion": null,
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "Validate P2-E governed comparison state",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 101587938174,
+          "conclusion": null,
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "Validate P3 exact-tree blocker certificate",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 101587924693,
+          "conclusion": "success",
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101587925118,
+          "conclusion": "skipped",
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 101587933110,
+          "conclusion": null,
+          "head_sha": "1273dbe5e77297044c491b4227c11c3db0fd5aa5",
+          "name": "routing-enforcement",
+          "status": "in_progress"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [
+        "Replay LOG-GCD-001 in Lean",
+        "Replay PC-WP04 bounded certificate",
+        "Replay pinned Union-Closed MATHCERT evidence",
+        "policy / policy",
+        "routing-enforcement",
+        "security / action-policy",
+        "validate-json"
+      ],
+      "ruleset_source_available": true
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-09-07T00:47:10Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "a1c97c518b0ae70f07f8046f348aab9f29ee250657d05e96c5d4cdd1d78449c4"
+  },
+  "report_id": "PRVSR-LIVE-PR878-1273dbe5e772-20260907004710",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "repository_policy_or_workflow"
+    ]
+  }
+}
