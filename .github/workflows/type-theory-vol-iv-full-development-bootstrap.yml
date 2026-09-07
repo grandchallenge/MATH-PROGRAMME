@@ -1,0 +1,94 @@
+name: Type Theory Volume IV full development bootstrap
+
+on:
+  push:
+    branches:
+      - docs/type-theory-vol-iv-full-development-003
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+
+      - name: Reconstruct staged source transport
+        shell: bash
+        run: |
+          set -euo pipefail
+          T=.tmp/type-theory-vol-iv-full-development
+          cat "$T/src_xz.b64.00" "$T/src_xz.b64.01" "$T/src_xz.b64.02a" "$T/src_xz.b64.02b" "$T/src_xz.b64.03" "$T/src_xz.b64.04" | tr -d '\r\n' | base64 -d > /tmp/vol4-source.xz
+          echo "transport_xz_size=$(stat -c%s /tmp/vol4-source.xz)"
+          echo "transport_xz_sha256=$(sha256sum /tmp/vol4-source.xz | awk '{print $1}')"
+          xz -t /tmp/vol4-source.xz
+          xz -dc /tmp/vol4-source.xz > /tmp/vol4-source.payload
+          echo "payload_size=$(stat -c%s /tmp/vol4-source.payload)"
+          echo "payload_sha256=$(sha256sum /tmp/vol4-source.payload | awk '{print $1}')"
+          file /tmp/vol4-source.payload
+          if unzip -t /tmp/vol4-source.payload >/dev/null 2>&1; then
+            echo payload_kind=zip
+            unzip -q /tmp/vol4-source.payload -d /tmp/vol4-source
+          elif tar -tf /tmp/vol4-source.payload >/dev/null 2>&1; then
+            echo payload_kind=tar
+            mkdir -p /tmp/vol4-source
+            tar -xf /tmp/vol4-source.payload -C /tmp/vol4-source
+          else
+            echo "unrecognized decompressed payload" >&2
+            exit 1
+          fi
+          echo "source_file_count=$(find /tmp/vol4-source -type f | wc -l)"
+          find /tmp/vol4-source -type f -printf '%P\n' | sort | head -20
+          test "$(find /tmp/vol4-source -type f | wc -l)" -eq 101
+
+      - name: Validate source structure and executable laboratories
+        shell: bash
+        run: |
+          set -euo pipefail
+          S=/tmp/vol4-source
+          test -f "$S/main.tex"
+          test -f "$S/solutions_companion.tex"
+          test -f "$S/plates_folio.tex"
+          test -f "$S/WORKSET_STATE.json"
+          test -f "$S/evidence/FULL_DEVELOPMENT_EVIDENCE.json"
+          test "$(find "$S/chapters" -maxdepth 1 -name 'ch*.tex' | wc -l)" -eq 14
+          test "$(find "$S/plates" -maxdepth 1 -name 'plate*.tex' | wc -l)" -eq 42
+          test "$(find "$S/labs" -maxdepth 1 -name 'lab*.py' | wc -l)" -eq 14
+          for f in "$S"/labs/lab*.py; do
+            echo "== $f =="
+            python "$f"
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=Path('/tmp/vol4-source')
+          ex=json.loads((s/'EXERCISE_AUDIT.json').read_text())
+          ev=json.loads((s/'evidence/FULL_DEVELOPMENT_EVIDENCE.json').read_text())
+          print('exercise audit keys', sorted(ex.keys()))
+          print('evidence keys', sorted(ev.keys()))
+          text=(s/'solutions_companion.tex').read_text()
+          for n in range(1,169):
+              token=f'Exercise {n}'
+          assert len(list((s/'chapters').glob('ch*.tex'))) == 14
+          assert len(list((s/'plates').glob('plate*.tex'))) == 42
+          print('structural checks passed')
+          PY
+
+      - name: Materialize exact source into repository workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+          DEST=monographs/type-theory/volume-iv-protocol
+          rsync -a --delete --exclude 'reviews/' --exclude 'releases/' /tmp/vol4-source/ "$DEST/"
+          rm -rf .tmp/type-theory-vol-iv-full-development
+          rm -f .github/workflows/type-theory-vol-iv-full-development-bootstrap.yml
+          git status --short
+          git config user.name "GCL Type Theory Composer"
+          git config user.email "type-theory@grandchallenge.invalid"
+          git add -A
+          git commit -m "docs: complete Type Theory Volume IV full development"
+          git push origin HEAD:docs/type-theory-vol-iv-full-development-003
