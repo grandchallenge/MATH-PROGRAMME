@@ -12,12 +12,12 @@ permissions:
 jobs:
   exact-head-replay:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - name: Checkout exact candidate
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 7224490f07ef4b5e1d790b3a8194de23f358a65a
+          ref: 0cfdb07cd3a63809f77653f4fd6095e032bd006f
           fetch-depth: 1
           persist-credentials: false
 
@@ -25,10 +25,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          expected="0cfdb07cd3a63809f77653f4fd6095e032bd006f"
           observed="$(git rev-parse HEAD)"
-          test "$observed" = "7224490f07ef4b5e1d790b3a8194de23f358a65a"
+          test "$observed" = "$expected"
           git diff --exit-code
-          printf 'EXACT_HEAD=%s\n' "$observed" | tee /tmp/exact-head.txt
+          printf 'EXACT_SOURCE_HEAD=%s\n' "$observed" | tee /tmp/exact-head.txt
 
       - name: Install build dependencies
         shell: bash
@@ -37,7 +38,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             texlive-luatex texlive-latex-extra texlive-pictures \
-            texlive-fonts-recommended texlive-fonts-extra poppler-utils
+            texlive-fonts-recommended texlive-fonts-extra poppler-utils zip
+
+      - name: Run canonical RC validator
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/monographs/type-theory-series/validate_volume.py \
+            monographs/type-theory/volume-iv-protocol --rc \
+            2>&1 | tee monographs/type-theory/volume-iv-protocol/gate7-validator.log
 
       - name: Run all 14 laboratories
         working-directory: monographs/type-theory/volume-iv-protocol
@@ -54,7 +63,7 @@ jobs:
           test "$count" -eq 14
           printf 'LAB_COUNT=%s\nLAB_REPLAY=PASS\n' "$count" | tee -a gate7-labs.log
 
-      - name: Clean LuaLaTeX builds and checksums
+      - name: Clean LuaLaTeX builds
         working-directory: monographs/type-theory/volume-iv-protocol
         shell: bash
         run: |
@@ -64,7 +73,9 @@ jobs:
                 plates_folio.{aux,log,out,pdf}
 
           lualatex -interaction=nonstopmode -halt-on-error main.tex 2>&1 | tee main.pass1.log
+          test -s main.idx
           makeindex main.idx 2>&1 | tee main.index.log
+          test -s main.ind
           lualatex -interaction=nonstopmode -halt-on-error main.tex 2>&1 | tee main.pass2.log
           lualatex -interaction=nonstopmode -halt-on-error main.tex 2>&1 | tee main.pass3.log
 
@@ -74,49 +85,105 @@ jobs:
           lualatex -interaction=nonstopmode -halt-on-error plates_folio.tex 2>&1 | tee plates.pass1.log
           lualatex -interaction=nonstopmode -halt-on-error plates_folio.tex 2>&1 | tee plates.pass2.log
 
-          pdfinfo main.pdf > main.pdfinfo.txt
-          pdfinfo solutions_companion.pdf > solutions.pdfinfo.txt
-          pdfinfo plates_folio.pdf > plates.pdfinfo.txt
-          sha256sum main.pdf solutions_companion.pdf plates_folio.pdf > SHA256SUMS.txt
-
-          grep '^Pages:' main.pdfinfo.txt solutions.pdfinfo.txt plates.pdfinfo.txt | tee page-counts.txt
-          cat SHA256SUMS.txt
-
-      - name: PDF preflight diagnostics
-        if: always()
+      - name: Enforce Gate 7 textual diagnostics
         working-directory: monographs/type-theory/volume-iv-protocol
         shell: bash
         run: |
           set -euo pipefail
-          touch gate7-layout-warnings.txt
-          if grep -R -n -E 'Undefined control sequence|LaTeX Error|Emergency stop|Fatal error|fontspec error' \
-              main.pass*.log solutions.pass*.log plates.pass*.log 2>/dev/null; then
-            echo 'PREFLIGHT_FATAL_DIAGNOSTIC=FAIL' | tee gate7-preflight.txt
-          else
-            echo 'PREFLIGHT_FATAL_DIAGNOSTIC=PASS' | tee gate7-preflight.txt
+          logs=(main.pass3.log solutions.pass2.log plates.pass2.log)
+          : > gate7-preflight.txt
+          : > gate7-layout-warnings.txt
+
+          if grep -n -E 'Undefined control sequence|LaTeX Error|Emergency stop|Fatal error|fontspec error' "${logs[@]}"; then
+            echo 'FATAL_DIAGNOSTIC=FAIL' | tee -a gate7-preflight.txt
+            exit 1
           fi
-          grep -R -n -E 'Overfull|Underfull|LaTeX Warning|Package .* Warning' \
-            main.pass3.log solutions.pass2.log plates.pass2.log 2>/dev/null > gate7-layout-warnings.txt || true
-          wc -l gate7-layout-warnings.txt | tee -a gate7-preflight.txt
+          echo 'FATAL_DIAGNOSTIC=PASS' | tee -a gate7-preflight.txt
+
+          if grep -n -E 'There were undefined references|Reference .* undefined|There were undefined citations|Citation .* undefined' "${logs[@]}"; then
+            echo 'UNRESOLVED_REFERENCE_OR_CITATION=FAIL' | tee -a gate7-preflight.txt
+            exit 1
+          fi
+          echo 'UNRESOLVED_REFERENCE_OR_CITATION=PASS' | tee -a gate7-preflight.txt
+
+          if grep -n -E 'Missing character:' "${logs[@]}"; then
+            echo 'MISSING_GLYPH=FAIL' | tee -a gate7-preflight.txt
+            exit 1
+          fi
+          echo 'MISSING_GLYPH=PASS' | tee -a gate7-preflight.txt
+
+          if grep -n -E 'Overfull \\hbox|Overfull \\vbox' "${logs[@]}"; then
+            echo 'OVERFULL_BOX=FAIL' | tee -a gate7-preflight.txt
+            exit 1
+          fi
+          echo 'OVERFULL_BOX=PASS' | tee -a gate7-preflight.txt
+
+          grep -n -E 'Underfull|LaTeX Warning|Package .* Warning' "${logs[@]}" > gate7-layout-warnings.txt || true
+          printf 'LAYOUT_WARNING_LINES=%s\n' "$(wc -l < gate7-layout-warnings.txt)" | tee -a gate7-preflight.txt
+
+          index_entries="$(grep -c '^  \\item' main.ind || true)"
+          printf 'INDEX_ENTRIES=%s\n' "$index_entries" | tee -a gate7-preflight.txt
+          test "$index_entries" -ge 10
+          echo 'INDEX_MATERIALLY_NONTRIVIAL=PASS' | tee -a gate7-preflight.txt
+
+      - name: PDF metadata and checksums
+        working-directory: monographs/type-theory/volume-iv-protocol
+        shell: bash
+        run: |
+          set -euo pipefail
+          pdfinfo main.pdf > main.pdfinfo.txt
+          pdfinfo solutions_companion.pdf > solutions.pdfinfo.txt
+          pdfinfo plates_folio.pdf > plates.pdfinfo.txt
+
+          for f in main.pdfinfo.txt solutions.pdfinfo.txt plates.pdfinfo.txt; do
+            grep -Eq '^Pages:[[:space:]]+[1-9][0-9]*' "$f"
+            grep -Eq '^Encrypted:[[:space:]]+no' "$f"
+          done
+
+          sha256sum main.pdf solutions_companion.pdf plates_folio.pdf > SHA256SUMS.txt
+          grep '^Pages:' main.pdfinfo.txt solutions.pdfinfo.txt plates.pdfinfo.txt | tee page-counts.txt
+          cat SHA256SUMS.txt
+
+      - name: Package deterministic source transport
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/type-theory-vol-iv-source
+          git archive --format=zip \
+            --prefix=volume-iv-protocol/ \
+            -o /tmp/type-theory-vol-iv-source/volume-iv-protocol-0cfdb07c.zip \
+            HEAD:monographs/type-theory/volume-iv-protocol
+          sha256sum /tmp/type-theory-vol-iv-source/volume-iv-protocol-0cfdb07c.zip \
+            | tee /tmp/type-theory-vol-iv-source/SOURCE_SHA256.txt
 
       - name: Upload Gate 7 replay evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: type-theory-vol-iv-gate7-7224490f
+          name: type-theory-vol-iv-gate7-0cfdb07c
           if-no-files-found: warn
           retention-days: 14
           path: |
             /tmp/exact-head.txt
+            /tmp/type-theory-vol-iv-source/volume-iv-protocol-0cfdb07c.zip
+            /tmp/type-theory-vol-iv-source/SOURCE_SHA256.txt
             monographs/type-theory/volume-iv-protocol/main.pdf
             monographs/type-theory/volume-iv-protocol/solutions_companion.pdf
             monographs/type-theory/volume-iv-protocol/plates_folio.pdf
             monographs/type-theory/volume-iv-protocol/SHA256SUMS.txt
             monographs/type-theory/volume-iv-protocol/page-counts.txt
+            monographs/type-theory/volume-iv-protocol/gate7-validator.log
             monographs/type-theory/volume-iv-protocol/gate7-labs.log
             monographs/type-theory/volume-iv-protocol/gate7-preflight.txt
             monographs/type-theory/volume-iv-protocol/gate7-layout-warnings.txt
             monographs/type-theory/volume-iv-protocol/main.pass1.log
+            monographs/type-theory/volume-iv-protocol/main.index.log
+            monographs/type-theory/volume-iv-protocol/main.pass2.log
             monographs/type-theory/volume-iv-protocol/main.pass3.log
+            monographs/type-theory/volume-iv-protocol/solutions.pass1.log
             monographs/type-theory/volume-iv-protocol/solutions.pass2.log
+            monographs/type-theory/volume-iv-protocol/plates.pass1.log
             monographs/type-theory/volume-iv-protocol/plates.pass2.log
+            monographs/type-theory/volume-iv-protocol/main.pdfinfo.txt
+            monographs/type-theory/volume-iv-protocol/solutions.pdfinfo.txt
+            monographs/type-theory/volume-iv-protocol/plates.pdfinfo.txt
