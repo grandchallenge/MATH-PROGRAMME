@@ -6,6 +6,7 @@ on:
       - ci/type-theory-vol-iv-release-packet-001
 
 permissions:
+  actions: read
   contents: write
 
 jobs:
@@ -28,12 +29,28 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
+      - name: Download exact Gate 7 evidence
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/gate7-artifact
+          gh run download 34170916991 \
+            --repo grandchallenge/MATH-PROGRAMME \
+            --name type-theory-vol-iv-gate7-9e7d817d \
+            --dir /tmp/gate7-artifact
+          archive="$(find /tmp/gate7-artifact -type f -name 'volume-iv-protocol-9e7d817d.zip' -print -quit)"
+          test -n "$archive"
+          printf '%s\n' "$archive" > /tmp/gate7-source-archive-path.txt
+
       - name: Generate and verify bounded packet
         working-directory: source
         shell: bash
         run: |
           set -euo pipefail
-          python3 ../helper/.github/scripts/type_theory_vol_iv_release_packet.py
+          archive="$(cat /tmp/gate7-source-archive-path.txt)"
+          GATE7_SOURCE_ARCHIVE="$archive" python3 ../helper/.github/scripts/type_theory_vol_iv_release_packet.py
           git add monographs/type-theory/volume-iv-protocol
           git diff --cached --name-only | sort > /tmp/actual-release-paths.txt
           diff -u /tmp/expected-release-paths.txt /tmp/actual-release-paths.txt
