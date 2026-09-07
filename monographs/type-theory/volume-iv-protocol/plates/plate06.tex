@@ -1,0 +1,17 @@
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,minimum width=1.85cm] (p) at (-2.25,.2) {$P$ waits on $b$};
+  \node[gcllabel,draw=GCLWarm!75!black,minimum width=1.85cm] (q) at (2.25,.2) {$Q$ waits on $a$};
+  \node[gcllabel,draw=GCLInk] (a) at (0,1.65) {session $a$};
+  \node[gcllabel,draw=GCLInk] (b) at (0,-1.35) {session $b$};
+  \draw[gclbluearrow] (p) to[out=55,in=185] (a);
+  \draw[gclwarmarrow] (a) to[out=-5,in=125] (q);
+  \draw[gclwarmarrow] (q) to[out=-125,in=5] (b);
+  \draw[gclbluearrow] (b) to[out=175,in=-55] (p);
+  \node[gcllabel,font=\sffamily\footnotesize] at (-2.35,1.2) {needs $Q$};
+  \node[gcllabel,font=\sffamily\footnotesize] at (2.35,-.85) {needs $P$};
+  \node[gcllabel,draw=red!55!black,minimum width=4.1cm] at (0,-2.25) {locally compatible; globally no enabled handshake};
+\end{tikzpicture}
+\caption{Plate 6. Safe but stuck. Two locally well-typed sessions can participate in a cyclic wait when processes acquire them in incompatible orders. The witness refutes unrestricted progress from local session typing; it does not refute session fidelity.}
+\end{figure}

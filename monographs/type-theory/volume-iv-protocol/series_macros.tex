@@ -1,0 +1,20 @@
+% Shared series macros plus Volume IV protocol notation
+\newcommand{\judg}[3][]{#2 \vdash #3#1}
+\newcommand{\type}{\;\mathsf{type}}
+\newcommand{\ctx}{\;\mathsf{ctx}}
+\newcommand{\Nat}{\mathbb{N}}
+\newcommand{\Bool}{\mathsf{Bool}}
+\newcommand{\Unit}{\mathbf{1}}
+\newcommand{\Empty}{\mathbf{0}}
+\newcommand{\chanval}[1]{\langle #1\rangle}
+\newcommand{\term}[1]{\texttt{#1}}
+\newcommand{\keyword}[1]{\textbf{#1}\index{#1}}
+\newcommand{\dual}[1]{\overline{#1}}
+\newcommand{\send}[2]{!#1.#2}
+\newcommand{\recv}[2]{?#1.#2}
+\newcommand{\sel}[1]{\oplus\{#1\}}
+\newcommand{\bra}[1]{\mathbin{\&}\{#1\}}
+\newcommand{\pctx}[2]{#1\,;\,#2}
+\newcommand{\ptypes}[3]{#1\,;\,#2 \vdash #3}
+\newcommand{\pcong}{\equiv_{\!p}}
+\newcommand{\envstep}{\Rightarrow}

@@ -1,0 +1,216 @@
+{
+  "schema_version": "1.0.0",
+  "workset": "TYPE-THEORY-VOL-IV-001",
+  "stage": "GATE1_MINIMAL_TEACHING_KERNEL_LOCAL_EVIDENCE",
+  "protected_gate0_admission_commit": "34cf03876486eed086f2b05c9b01d9d8887915e7",
+  "formal_scope": "finite synchronous PROTO-0 Chapters 1-2 only",
+  "laboratories": [
+    {
+      "path": "labs/lab01_protocol_trace.py",
+      "result": "PASS",
+      "fixtures": 8,
+      "evidence": "evidence/lab01.txt"
+    },
+    {
+      "path": "labs/lab02_duality_checker.py",
+      "result": "PASS",
+      "involution_fixtures": 6,
+      "hostile_peer_fixtures": 5,
+      "evidence": "evidence/lab02.txt"
+    }
+  ],
+  "pdfs": [
+    {
+      "path": "main.pdf",
+      "bytes": 107420,
+      "sha256": "3b7f7061aca60f9d896ed711e57435164b3ad574c987c3efdc4df7cfba1530ed",
+      "pages": 20
+    },
+    {
+      "path": "solutions_companion.pdf",
+      "bytes": 49698,
+      "sha256": "d1de968e3f67af030b9509cffe848a15a06ae2f1b465d2275b2f6079b247fff6",
+      "pages": 11
+    },
+    {
+      "path": "plates_folio.pdf",
+      "bytes": 37234,
+      "sha256": "d4b1dc89851707e4f812684ab4553bf59460955e43e41354e2f59cf224f58e9f",
+      "pages": 3
+    }
+  ],
+  "log_diagnostics": {
+    "main.log": {
+      "overfull": 0,
+      "missing_character": 0,
+      "undefined_reference": 0,
+      "latex_error": 0,
+      "underfull": 2
+    },
+    "solutions_companion.log": {
+      "overfull": 0,
+      "missing_character": 0,
+      "undefined_reference": 0,
+      "latex_error": 0,
+      "underfull": 0
+    },
+    "plates_folio.log": {
+      "overfull": 0,
+      "missing_character": 0,
+      "undefined_reference": 0,
+      "latex_error": 0,
+      "underfull": 0
+    }
+  },
+  "rendered_inspection": {
+    "plate_folio_pages_inspected": 3,
+    "main_pages_contact_sheet_inspected": 20,
+    "solutions_pages_contact_sheet_inspected": 11,
+    "arrow_text_interference_repairs": [
+      "plate03",
+      "plate06"
+    ],
+    "result": "PASS_NO_CLIPPING_OR_ARROW_TEXT_COLLISION_OBSERVED_AFTER_REPAIR"
+  },
+  "exercise_audit": {
+    "exercises": 24,
+    "solutions_or_rubrics": 24,
+    "complete_for_gate1": true
+  },
+  "notation_registry": {
+    "policy_observed": "Volume IV Δ and process-arrow usages recorded as explicit local overloads; no silent redefinition",
+    "local_candidate_path": "NOTATION_REGISTRY.json",
+    "repository_target": "docs/monographs/type-theory-series/NOTATION_REGISTRY.json"
+  },
+  "theorem_boundary": {
+    "complete_named_results": [
+      "T4.1",
+      "T4.2"
+    ],
+    "principal_redex_proposition": "local core of T4.4 only",
+    "not_promoted": [
+      "T4.5 full subject reduction",
+      "T4.6 communication safety",
+      "T4.7 single-session progress",
+      "T4.9 full typed deadlock witness"
+    ]
+  },
+  "source_files": [
+    {
+      "path": "README.md",
+      "bytes": 1113,
+      "sha256": "ea5c11817f07787fce6afdbf4b08a00609a2f962daa5713fb25de2d24fd2ce0e"
+    },
+    {
+      "path": "WORKSET_STATE.json",
+      "bytes": 3292,
+      "sha256": "4b08a2754a995fc34208fcbb33c19fda52e1180c5ae5656ec46982764fdac0b5"
+    },
+    {
+      "path": "NOTATION_REGISTRY.json",
+      "bytes": 5339,
+      "sha256": "995c56113676bf8982fdd2634aa0896543b97d034c79dc6722fdcad51730fdab"
+    },
+    {
+      "path": "main.tex",
+      "bytes": 3311,
+      "sha256": "5098085e4de80cc97e759a0ecbe48ecc468b650e638389db5560d515a676f4f8"
+    },
+    {
+      "path": "solutions_companion.tex",
+      "bytes": 9549,
+      "sha256": "d602e3652e24d7c190f16a6cedb8fac07d2c0ad51aab336a0749f60b92b5288c"
+    },
+    {
+      "path": "plates_folio.tex",
+      "bytes": 296,
+      "sha256": "514351627f02c8891eee22f0c04e994dca3dff6ea5cf4bd9971f5a7e162f0046"
+    },
+    {
+      "path": "series_style.tex",
+      "bytes": 2888,
+      "sha256": "e8eabf23eca7d8bc280a091fe2b18679041935b40a9fd9591f25d197211f0ac3"
+    },
+    {
+      "path": "series_macros.tex",
+      "bytes": 740,
+      "sha256": "9f3af20e73d090198c2e2838418f1056b0b4515db0552d64aeab578173635f08"
+    },
+    {
+      "path": "chapters/ch01.tex",
+      "bytes": 8534,
+      "sha256": "a314d36af04f2c3f02344695c768b701909ea4a4b981f8de5091fad93c756be5"
+    },
+    {
+      "path": "chapters/ch02.tex",
+      "bytes": 9706,
+      "sha256": "06a5d7c357620e7c46efe61e593ef18dbc5f07c48040b6fc2970347e5428dd9e"
+    },
+    {
+      "path": "plates/plate01.tex",
+      "bytes": 1405,
+      "sha256": "00e0ac589c76ac748b9c1d7e97991551e08300c21c9c98be6c2f05584ffbb05e"
+    },
+    {
+      "path": "plates/plate02.tex",
+      "bytes": 950,
+      "sha256": "eedffccc432f367bdd157187eea4180092eb42cdcfa498d3195584f4e51e0f70"
+    },
+    {
+      "path": "plates/plate03.tex",
+      "bytes": 1101,
+      "sha256": "4f38ea8960f4ce4a579afdfaf7c80d9bfb0658210c8a6c67cf9a6abde6196901"
+    },
+    {
+      "path": "plates/plate04.tex",
+      "bytes": 965,
+      "sha256": "43dee94703f64ab71e592ae0e4b4d019481345f0ba2a939a8d451597e5058e2d"
+    },
+    {
+      "path": "plates/plate05.tex",
+      "bytes": 1234,
+      "sha256": "0bd29756dcd5e1833f444f8d84942407e04688db610f4fdc71430afaab439cb7"
+    },
+    {
+      "path": "plates/plate06.tex",
+      "bytes": 1149,
+      "sha256": "f38bd1340f277a4833d2e4157d0b1f0c3c83539fd45b9761c850d08fee92e786"
+    },
+    {
+      "path": "labs/protocol_core.py",
+      "bytes": 6947,
+      "sha256": "c093fa9789a850cecb25423a72f2751e85a8c8d4ffcd89d23201ff1a963acdbb"
+    },
+    {
+      "path": "labs/lab01_protocol_trace.py",
+      "bytes": 1262,
+      "sha256": "f93409903942fc4391bb6d15d5d82c9b57e7483de19c406fb52bd1a91585dcd0"
+    },
+    {
+      "path": "labs/lab02_duality_checker.py",
+      "bytes": 1552,
+      "sha256": "3057f796c0d0b2606e310d8744bc30554948be5e28ff743f1bd116094ae2a83e"
+    },
+    {
+      "path": "THEOREM_AUDIT.md",
+      "bytes": 3205,
+      "sha256": "54badae614459f4780c366e8fe102bcf7a7c9266035dff8ef2d0a421c04cdae7"
+    },
+    {
+      "path": "EXERCISE_AUDIT.json",
+      "bytes": 958,
+      "sha256": "d5dfb2a5434af6c7bb49cad70177e495ea280cce8473feab48f971d502537c0a"
+    },
+    {
+      "path": "evidence/lab01.txt",
+      "bytes": 743,
+      "sha256": "2249a2363187d8c1e28f3ff7702e48f2b7504f3820c36de52317a0edfd1bf301"
+    },
+    {
+      "path": "evidence/lab02.txt",
+      "bytes": 640,
+      "sha256": "a1d3b977bd75ba4ea0332509c8c5b612b7cb6da7fff2db4378799c9f77ba7538"
+    }
+  ],
+  "claim_boundary": "Internal Gate-1 composition evidence only. It is not independent mathematical review, mathematical certification, RC admission, or publication authority."
+}

@@ -1,0 +1,9 @@
+nominal: PASS | observed=True expected=True | accepted
+wrong_order: PASS | observed=False expected=False | expected send:Nat, got recv:Bool
+wrong_payload: PASS | observed=False expected=False | expected send:Nat, got send:Bool
+premature_end: PASS | observed=False expected=False | trace ended before protocol termination; residual=recv(Bool).close
+trailing_event: PASS | observed=False expected=False | event 4: trailing event after protocol termination: send:Nat
+branch_nominal: PASS | observed=True expected=True | accepted
+branch_unknown_label: PASS | observed=False expected=False | unknown selection label 'retry'
+branch_wrong_continuation: PASS | observed=False expected=False | expected close, got send:Nat
+LAB01_RESULT=PASS fixtures=8

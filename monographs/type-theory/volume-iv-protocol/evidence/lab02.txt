@@ -1,0 +1,7 @@
+involution send(Nat).recv(Bool).close -> recv(Nat).send(Bool).wait -> send(Nat).recv(Bool).close
+involution recv(Nat).send(Bool).wait -> send(Nat).recv(Bool).close -> recv(Nat).send(Bool).wait
+involution select{ok:send(Nat).close,err:close} -> branch{err:wait,ok:recv(Nat).wait} -> select{err:close,ok:send(Nat).close}
+involution branch{ok:recv(Nat).wait,err:wait} -> select{err:close,ok:send(Nat).close} -> branch{err:wait,ok:recv(Nat).wait}
+involution send(Unit).close -> recv(Unit).wait -> send(Unit).close
+involution recv(Unit).wait -> send(Unit).close -> recv(Unit).wait
+LAB02_RESULT=PASS involution_fixtures=6 hostile_peer_fixtures=5

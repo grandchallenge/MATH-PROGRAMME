@@ -1,0 +1,16 @@
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,node distance=.75cm]
+  \node[gcllabel,draw=GCLInk,minimum width=4.2cm] (d) {$\Delta=\Delta_1\uplus\Delta_2$};
+  \node[gcllabel,draw=GCLBlue!70!black,below left=1.0cm and .55cm of d,minimum width=2.15cm] (d1) {$\Delta_1=\{x:S\}$};
+  \node[gcllabel,draw=GCLWarm!70!black,below right=1.0cm and .55cm of d,minimum width=2.15cm] (d2) {$\Delta_2=\{y:T\}$};
+  \draw[gclbluearrow] (d) -- (d1);
+  \draw[gclwarmarrow] (d) -- (d2);
+  \node[gcllabel,draw=GCLBlue!70!black,below=.85cm of d1] (p) {$\Gamma;\Delta_1\vdash P$};
+  \node[gcllabel,draw=GCLWarm!70!black,below=.85cm of d2] (q) {$\Gamma;\Delta_2\vdash Q$};
+  \draw[gclbluearrow] (d1) -- (p);
+  \draw[gclwarmarrow] (d2) -- (q);
+  \node[font=\sffamily\footnotesize,align=center,below=.75cm of p,xshift=1.5cm] {disjoint domains: one endpoint obligation\\cannot be spent by both subprocesses};
+\end{tikzpicture}
+\caption{Plate 5. Linear splitting of channel authority. The parallel rule partitions channel obligations between subprocesses, preventing one formal endpoint obligation from being independently consumed twice. Formal linearity does not establish unique physical ownership after compilation or deployment.}
+\end{figure}
