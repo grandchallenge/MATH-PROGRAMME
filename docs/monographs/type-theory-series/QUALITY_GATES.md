@@ -84,6 +84,8 @@ Passing Gate 7A permits `RC_DURABLY_ADMITTED`. It is a persistence/institutional
 
 Required before claiming `RC_REVIEW_QUALIFIED` or “externally refereed.” The review must bind to the exact admitted revision and state what was checked, what was established, and what remains outside scope. A self-audit, regression suite, or second pass by the same composing process is not an independent referee.
 
+Before soliciting the reviewer, satisfy the reviewer-delivery readiness requirements in `REVIEWER_DELIVERY_STANDARD.md`: provide one protected PDF-first landing page, direct manuscript/solutions/folio PDFs, the exact admitted source archive, the review packet/matrix/template, optional build instructions, a checksum-bound deterministic reviewer bundle, and a one-click Gate-8 issue entry point. Source reconstruction or TeX compilation must not be a prerequisite for beginning mathematical review. Reviewer-delivery readiness is logistics only and creates no publication-state transition.
+
 Passing Gate 8 does not itself create publication authority.
 
 ## Gate 9 — Publication authority

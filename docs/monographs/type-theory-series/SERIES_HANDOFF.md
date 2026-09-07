@@ -18,10 +18,11 @@ Before writing a new volume, read in this order:
 4. `docs/TECHNICAL_WRITING_REFERENCE.md` — programme-wide technical-writing hierarchy integrating GCL-TCS-00, GCL-POS-01, ASD-STE100, and the mathematical exposition companions.
 5. `VOLUME_BLUEPRINTS.md` — volume-specific intellectual arcs.
 6. `QUALITY_GATES.md` — audit and release requirements.
-7. `PUBLICATION_STATE_MODEL.md` — the non-collapsible states composition complete, durably admitted, independently reviewed, and published authoritative edition.
-8. `NOTATION_REGISTRY.json` — symbols already claimed or reserved by the series.
-9. `REFERENCE_BASELINE.json` — the exact Volume I reference state and checksums.
-10. For implementation, run `bootstrap_volume.py` and then `validate_volume.py`.
+7. `REVIEWER_DELIVERY_STANDARD.md` — mandatory PDF-first Gate-8 delivery surface for every review candidate.
+8. `PUBLICATION_STATE_MODEL.md` — the non-collapsible states composition complete, durably admitted, independently reviewed, and published authoritative edition.
+9. `NOTATION_REGISTRY.json` — symbols already claimed or reserved by the series.
+10. `REFERENCE_BASELINE.json` — the exact Volume I reference state and checksums.
+11. For implementation, run `bootstrap_volume.py` and then `validate_volume.py`.
 
 Do not begin drafting chapters before the preflight contract below is written into the new volume's `VOLUME_PLAN.md`.
 
