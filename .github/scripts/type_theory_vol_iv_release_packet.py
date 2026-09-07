@@ -4,6 +4,7 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
+import os
 import subprocess
 from pathlib import Path
 
@@ -33,20 +34,12 @@ def main() -> None:
     if subprocess.check_output(["git", "status", "--porcelain"], text=True).strip():
         raise SystemExit("source working tree is not clean")
 
-    RELEASE.mkdir(parents=True, exist_ok=True)
-    archive = Path("/tmp/GCL_Type_Theory_Volume_IV_PROTOCOL_RC1_Source.zip")
-    subprocess.run(
-        [
-            "git",
-            "archive",
-            "--format=zip",
-            "--prefix=volume-iv-protocol/",
-            "-o",
-            str(archive),
-            f"HEAD:{ROOT.as_posix()}",
-        ],
-        check=True,
-    )
+    archive_env = os.environ.get("GATE7_SOURCE_ARCHIVE")
+    if not archive_env:
+        raise SystemExit("GATE7_SOURCE_ARCHIVE is required")
+    archive = Path(archive_env)
+    if not archive.is_file():
+        raise SystemExit(f"Gate-7 source archive not found: {archive}")
     raw = archive.read_bytes()
     observed_archive_sha = hashlib.sha256(raw).hexdigest()
     if len(raw) != SOURCE_ARCHIVE_SIZE or observed_archive_sha != SOURCE_ARCHIVE_SHA:
@@ -54,6 +47,7 @@ def main() -> None:
             f"source archive identity mismatch: bytes={len(raw)} sha256={observed_archive_sha}"
         )
 
+    RELEASE.mkdir(parents=True, exist_ok=True)
     encoded = base64.b64encode(raw).decode("ascii")
     parts = [encoded[i : i + 8000] for i in range(0, len(encoded), 8000)]
     ordered_parts = []
