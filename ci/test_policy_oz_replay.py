@@ -13,9 +13,13 @@ import policy_oz_replay as oz
 
 class OzReplayRoutingTests(unittest.TestCase):
     def test_measured_heavy_profile_is_exact(self) -> None:
-        self.assertEqual(len(oz.HEAVY_MODULES), 12)
-        self.assertEqual(len(set(oz.HEAVY_MODULES)), 12)
-        self.assertEqual(oz.HEAVY_MODULES[-1], "tests/test_oz_rt_bz_t3_011_f.py")
+        self.assertEqual(len(oz.HEAVY_MODULES), 13)
+        self.assertEqual(len(set(oz.HEAVY_MODULES)), 13)
+        self.assertEqual(oz.HEAVY_MODULES[-1], "tests/test_oz_rt_bz_t3_011_g.py")
+        self.assertEqual(
+            oz.HEAVY_MODULE_TIMEOUT_OVERRIDES,
+            {"tests/test_oz_rt_bz_t3_011_g.py": 600.0},
+        )
 
     def test_unrelated_change_selects_no_heavy_replay(self) -> None:
         self.assertEqual(oz.select_heavy(["docs/governance/example.md"]), [])
@@ -101,7 +105,10 @@ class OzReplayRoutingTests(unittest.TestCase):
         ):
             selected = oz.select_heavy([path])
             self.assertIn("tests/test_oz_rt_bz_t3_009_search.py", selected)
-            for stage in ("010_a", "010_b", "010_c", "011_a", "011_b", "011_c", "011_d", "011_e", "011_f"):
+            for stage in (
+                "010_a", "010_b", "010_c",
+                "011_a", "011_b", "011_c", "011_d", "011_e", "011_f", "011_g",
+            ):
                 self.assertIn(f"tests/test_oz_rt_bz_t3_{stage}.py", selected)
             self.assertNotIn("tests/test_oz_rt_bz_t3_003.py", selected)
             self.assertNotIn("tests/test_oz_rt_bz_t3_004.py", selected)
@@ -111,17 +118,29 @@ class OzReplayRoutingTests(unittest.TestCase):
         self.assertNotIn("tests/test_oz_rt_bz_t3_010_a.py", selected_c)
         self.assertNotIn("tests/test_oz_rt_bz_t3_010_b.py", selected_c)
         self.assertIn("tests/test_oz_rt_bz_t3_010_c.py", selected_c)
-        for stage in ("011_a", "011_b", "011_c", "011_d", "011_e", "011_f"):
+        for stage in (
+            "011_a", "011_b", "011_c", "011_d", "011_e", "011_f", "011_g",
+        ):
             self.assertIn(f"tests/test_oz_rt_bz_t3_{stage}.py", selected_c)
 
         selected_e = oz.select_heavy(["campaigns/odd_zeta/OZ_RT_BZ_T3_010/t3_011_e.py"])
         self.assertEqual(
             selected_e,
-            ["tests/test_oz_rt_bz_t3_011_e.py", "tests/test_oz_rt_bz_t3_011_f.py"],
+            [
+                "tests/test_oz_rt_bz_t3_011_e.py",
+                "tests/test_oz_rt_bz_t3_011_f.py",
+                "tests/test_oz_rt_bz_t3_011_g.py",
+            ],
         )
 
         selected_f = oz.select_heavy(["campaigns/odd_zeta/OZ_RT_BZ_T3_010/t3_011_f.py"])
-        self.assertEqual(selected_f, ["tests/test_oz_rt_bz_t3_011_f.py"])
+        self.assertEqual(
+            selected_f,
+            ["tests/test_oz_rt_bz_t3_011_f.py", "tests/test_oz_rt_bz_t3_011_g.py"],
+        )
+
+        selected_g = oz.select_heavy(["campaigns/odd_zeta/OZ_RT_BZ_T3_010/t3_011_g.py"])
+        self.assertEqual(selected_g, ["tests/test_oz_rt_bz_t3_011_g.py"])
 
     def test_shared_computational_helper_fails_closed_to_all_downstream_replays(self) -> None:
         selected = oz.select_heavy(["campaigns/odd_zeta/OZ_RT_BZ_T3_010/shared_exact_helper.py"])
@@ -130,12 +149,12 @@ class OzReplayRoutingTests(unittest.TestCase):
 
     def test_documentary_change_does_not_trigger_computational_replay(self) -> None:
         self.assertEqual(
-            oz.select_heavy(["campaigns/odd_zeta/OZ_RT_BZ_T3_010/README_011_F.md"]),
+            oz.select_heavy(["campaigns/odd_zeta/OZ_RT_BZ_T3_010/README_011_G.md"]),
             [],
         )
 
     def test_direct_heavy_test_change_selects_that_test(self) -> None:
-        target = "tests/test_oz_rt_bz_t3_011_f.py"
+        target = "tests/test_oz_rt_bz_t3_011_g.py"
         self.assertEqual(oz.select_heavy([target]), [target])
 
     def test_unsafe_changed_paths_fail_closed(self) -> None:

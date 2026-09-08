@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RUNNER = ROOT / "ci" / "run_unittest_modules.py"
 COMPUTATIONAL_SUFFIXES = {".py", ".json", ".c", ".h"}
 
-# Protected-run profile 2026-09-02: these 12 modules consumed ~98% of OZ time.
+# Protected-run profile 2026-09-02 plus the admitted T3-011-G successor.
 HEAVY_MODULES = (
     "tests/test_oz_rt_bz_t3_003.py",
     "tests/test_oz_rt_bz_t3_004.py",
@@ -33,7 +33,16 @@ HEAVY_MODULES = (
     "tests/test_oz_rt_bz_t3_011_d.py",
     "tests/test_oz_rt_bz_t3_011_e.py",
     "tests/test_oz_rt_bz_t3_011_f.py",
+    "tests/test_oz_rt_bz_t3_011_g.py",
 )
+
+# G performs a producer plus an independently reconstructed verifier replay over
+# all 1,282 frozen F records. Exact-head measurements reached the generic 420 s
+# boundary without a mathematical/test failure. Keep the recovery local to this
+# module and inside the existing 1,680 s OZ shard envelope.
+HEAVY_MODULE_TIMEOUT_OVERRIDES = {
+    "tests/test_oz_rt_bz_t3_011_g.py": 600.0,
+}
 
 T3 = "campaigns/odd_zeta/OZ_RT_BZ_T3_"
 T3_010_DIR = f"{T3}010/"
@@ -50,6 +59,7 @@ STAGE_TOKENS = {
     "011_d": ("t3_010_a", "T3_010_A", "t3_010_b", "T3_010_B", "t3_010_c", "T3_010_C", "t3_011_a", "T3_011_A", "t3_011_b", "T3_011_B", "t3_011_c", "T3_011_C", "t3_011_d", "T3_011_D"),
     "011_e": ("t3_010_a", "T3_010_A", "t3_010_b", "T3_010_B", "t3_010_c", "T3_010_C", "t3_011_a", "T3_011_A", "t3_011_b", "T3_011_B", "t3_011_c", "T3_011_C", "t3_011_d", "T3_011_D", "t3_011_e", "T3_011_E"),
     "011_f": ("t3_010_a", "T3_010_A", "t3_010_b", "T3_010_B", "t3_010_c", "T3_010_C", "t3_011_a", "T3_011_A", "t3_011_b", "T3_011_B", "t3_011_c", "T3_011_C", "t3_011_d", "T3_011_D", "t3_011_e", "T3_011_E", "t3_011_f", "T3_011_F"),
+    "011_g": ("t3_010_a", "T3_010_A", "t3_010_b", "T3_010_B", "t3_010_c", "T3_010_C", "t3_011_a", "T3_011_A", "t3_011_b", "T3_011_B", "t3_011_c", "T3_011_C", "t3_011_d", "T3_011_D", "t3_011_e", "T3_011_E", "t3_011_f", "T3_011_F", "t3_011_g", "T3_011_G"),
 }
 ALL_STAGE_TOKENS = tuple(sorted({token for tokens in STAGE_TOKENS.values() for token in tokens}))
 MODULE_STAGE = {
@@ -212,12 +222,16 @@ def _run_selected(selected: list[str]) -> list[dict[str, object]]:
 
     for index, module in enumerate(selected, 1):
         report = ROOT / f".oz-heavy-{index}.json"
+        cmd = [
+            sys.executable, str(RUNNER), "--discover-root", "tests",
+            "--pattern", Path(module).name,
+            "--report-json", report.relative_to(ROOT).as_posix(),
+        ]
+        override = HEAVY_MODULE_TIMEOUT_OVERRIDES.get(module)
+        if override is not None:
+            cmd.extend(["--module-timeout-seconds", str(override)])
         try:
-            _run([
-                sys.executable, str(RUNNER), "--discover-root", "tests",
-                "--pattern", Path(module).name,
-                "--report-json", report.relative_to(ROOT).as_posix(),
-            ])
+            _run(cmd)
             records.extend(_load_report(report))
         finally:
             report.unlink(missing_ok=True)

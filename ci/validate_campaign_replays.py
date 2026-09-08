@@ -20,6 +20,11 @@ SCHEMA_PATH = ROOT / "schemas" / "campaign_replay_registry.schema.json"
 MAIN_GUARD = re.compile(r"if\s+__name__\s*==\s*['\"]__main__['\"]\s*:")
 ZERO_SHA = "0" * 40
 
+# Odd Zeta has a dedicated dependency-aware replay router in the same protected
+# policy shard. Keep registry discovery/coverage here, and always replay changed
+# registry entries, but do not duplicate the historical whole-family fanout.
+MATERIAL_ROUTER_OWNED_ROOTS = frozenset({"odd_zeta"})
+
 
 class ReplayRoutingError(RuntimeError):
     """Raised when transition-aware replay selection cannot be established safely."""
@@ -164,17 +169,18 @@ def affected_replay_ids(
     *,
     base_registry: dict[str, Any] | None = None,
 ) -> set[str]:
-    """Return the exact registered replay IDs affected by one repository transition."""
+    """Return registered replay IDs not delegated to a material-closure router."""
     entries = entry_map(registry)
     roots = {
         root
         for path in changed_paths
         if (root := campaign_root(path)) is not None
     }
+    direct_roots = roots - MATERIAL_ROUTER_OWNED_ROOTS
     selected = {
         label
         for label, entry in entries.items()
-        if entry_campaign_root(entry) in roots
+        if entry_campaign_root(entry) in direct_roots
     }
 
     if REGISTRY_RELATIVE in changed_paths:
@@ -182,6 +188,8 @@ def affected_replay_ids(
             raise ReplayRoutingError(
                 "campaign replay registry changed but predecessor registry is unavailable"
             )
+        # Registry deltas are executable contract changes and therefore replay
+        # directly even when their campaign family has a dedicated router.
         selected.update(changed_registry_entry_ids(base_registry, registry))
 
     uncovered_roots = {
