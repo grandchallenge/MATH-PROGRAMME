@@ -59,29 +59,47 @@ def main() -> int:
         ["governance/policy_shard_registry.json"],
     ) == set()
 
-    # A campaign-family transition selects that family and no others.
-    oz_ids = affected_replay_ids(
+    # A campaign family without a dedicated material router selects that family
+    # and no others.
+    rh_ids = affected_replay_ids(
         registry,
-        ["campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/README.md"],
+        ["campaigns/riemann_hypothesis/WP01_FALSE_PROOF_ATLAS/README.md"],
     )
-    assert oz_ids
+    assert rh_ids
     assert all(
         str(next(entry for entry in registry["entries"] if entry["id"] == label)["command"][1]).startswith(
-            "campaigns/odd_zeta/"
+            "campaigns/riemann_hypothesis/"
         )
-        for label in oz_ids
+        for label in rh_ids
     )
-    assert not any(label.startswith("BSD-") for label in oz_ids)
+    assert not any(label.startswith("BSD-") for label in rh_ids)
 
-    # A changed registry entry is replayed even when its campaign files are unchanged.
+    # Odd Zeta dependency closure is owned by ci/policy_oz_replay.py in the
+    # protected policy shard. The campaign registry still validates discovery,
+    # but a plain OZ campaign change must not fan out over the historical root.
+    assert affected_replay_ids(
+        registry,
+        ["campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/README.md"],
+    ) == set()
+
+    # A changed registry entry is replayed even when its campaign family has a
+    # dedicated material router.
     base_registry = copy.deepcopy(registry)
     changed_registry = copy.deepcopy(registry)
-    changed_label = str(changed_registry["entries"][0]["id"])
-    changed_registry["entries"][0]["timeout_seconds"] += 1
+    oz_index = next(
+        index
+        for index, entry in enumerate(changed_registry["entries"])
+        if str(entry["command"][1]).startswith("campaigns/odd_zeta/")
+    )
+    changed_label = str(changed_registry["entries"][oz_index]["id"])
+    changed_registry["entries"][oz_index]["timeout_seconds"] += 1
     assert changed_registry_entry_ids(base_registry, changed_registry) == {changed_label}
     assert affected_replay_ids(
         changed_registry,
-        [REGISTRY_RELATIVE],
+        [
+            "campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/README.md",
+            REGISTRY_RELATIVE,
+        ],
         base_registry=base_registry,
     ) == {changed_label}
 
