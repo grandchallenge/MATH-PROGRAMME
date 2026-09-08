@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import sys
 from fractions import Fraction as Q
 from functools import lru_cache
@@ -458,3 +459,18 @@ def verify(result: dict) -> dict:
         },
         "terminal": terminal,
     }
+
+
+def main() -> int:
+    print(
+        json.dumps(
+            verify(producer.build()),
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
