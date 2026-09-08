@@ -1,11 +1,14 @@
 # Canonical GCL Handoff Takeover Prompt
 
-Canonical control repository: `grandchallenge/MATH-PROGRAMME`.
+Constitutional authority repository: `grandchallenge/INTELLECT`.
 
-Use this prompt to start any substantial GCL work-set takeover. Replace only the target-work placeholders in the opening lines unless a domain-specific handoff explicitly requires additional material context. Do not assume that the work repository is `MATH-PROGRAMME`; GCL work spans multiple repositories.
+Handoff contract repository: `grandchallenge/MATH-PROGRAMME`.
+
+Use this prompt to start any substantial GCL work-set takeover. Replace only the target-work placeholders in the opening lines unless a domain-specific handoff explicitly requires additional material context. Do not infer authority from repository location: GCL work spans multiple repositories, and the handoff contract does not enlarge `MATH-PROGRAMME` jurisdiction.
 
 ```text
-CANONICAL CONTROL REPOSITORY: grandchallenge/MATH-PROGRAMME
+CONSTITUTIONAL AUTHORITY REPOSITORY: grandchallenge/INTELLECT
+HANDOFF CONTRACT REPOSITORY: grandchallenge/MATH-PROGRAMME
 TARGET WORK REPOSITORY: <OWNER/REPOSITORY>
 WORKSET: <WORKSET-ID>
 TRACKING POINTER: <ISSUE/PR/WORKSET POINTER IF APPLICABLE>
@@ -14,27 +17,53 @@ Take over `<WORKSET-ID>` in `<OWNER/REPOSITORY>`, tracked by `<ISSUE/PR/WORKSET 
 
 Treat this prompt only as a pointer. Do not rely on conversational history or stale handoff state.
 
-Re-fetch protected live state of the `TARGET WORK REPOSITORY` first.
+Before mutation:
 
-Then read the durable work-set handoff in the canonical control repository:
+1. Re-fetch protected live state of `grandchallenge/INTELLECT` and the `TARGET WORK REPOSITORY`.
+2. From protected INTELLECT, read `CONSTITUTION.md`, `governance/constitutional_authority_schedule.json`, and only the effective amendments/directives selected by that schedule that materially govern the work.
+3. From the target repository, read its live `AGENTS.md` and exact domain/repository governing instruments when present.
+4. Read the durable handoff contract at `grandchallenge/MATH-PROGRAMME:handoffs/README.md` and the work-set handoff at `grandchallenge/MATH-PROGRAMME:handoffs/<WORKSET-ID>/README.md`.
+5. Resolve the target repository's delegated domain authority and any exact admitted operating-standard adoption that materially applies.
 
-`grandchallenge/MATH-PROGRAMME:handoffs/<WORKSET-ID>/README.md`
+Authority rules:
 
-Before mutation, read and inherit the canonical operating contract from:
+- `grandchallenge/INTELLECT:CONSTITUTION.md`, effective constitutional amendments, and the live INTELLECT authority schedule control constitutional powers, obligations, work-package transitions, office obligations, and reserved authority.
+- INTELLECT owns constitutional policy, work-package commands, artifact contracts, application projections, and gate reports.
+- The target repository owns only the domain authority delegated to it by the governing authority chain.
+- `grandchallenge/MATHCERT` alone renders bounded mathematical certification dispositions through accepted routes.
+- `grandchallenge/AETHER` owns the production semantic authority assigned by INTELLECT Article IX.
+- `grandchallenge/gcl-standards` is the subordinate registry and publication repository for admitted cross-programme operating standards.
+- GitHub issues, pull requests, checks, releases, and repository settings are operational or evidentiary surfaces. They do not create constitutional, certification, semantic, or domain authority by themselves.
+- `grandchallenge/MATH-PROGRAMME` hosts this handoff contract and retains its mathematics-domain powers. Handoff custody does not make it the constitutional control repository for GCL.
 
-`grandchallenge/MATH-PROGRAMME:handoffs/README.md`
+INTELLECT lifecycle reconciliation:
 
-The following controls govern this work unless an exact domain-specific instrument materially overrides them:
+- Determine whether this work set is an INTELLECT-governed work package. If so, state its current lawful phase: `Charter`, `Generation`, `Specification`, `Realization`, `Confrontation`, `Judgment`, `Integration`, `Disposal`, or `Complete`.
+- A handoff and its preflight are continuity projections; they do not create a second lifecycle or perform a phase transition.
+- Do not redefine inherited purpose, scope, claims, evaluation contract, or acceptance criteria during realization merely to fit the current implementation.
+- Any phase transition must satisfy the substantive conditions and office obligations required by the live INTELLECT Constitution and authority schedule.
+- Follow the live staffing schedule. A single system may staff multiple non-reserved roles through distinct exact-subject logical passes when permitted. If an authoring system acts as Adversary or Referee, that pass must be declared `non_authoring_read_only`; mutation invalidates the pass.
+- Do not manufacture Human Steward authority. Reserved authority exists only where the governing chain expressly reserves the material transition.
+
+Execution controls:
+
+Apply the following MATH-PROGRAMME execution disciplines only to the extent they are compatible with the higher constitutional chain, the target repository's delegated authority, and any exact domain-specific instrument:
 
 - `MP-STREAMLINED-EXECUTION-001`
 - `MP-SUBSTANCE-FIRST-EXECUTION-001`
+
+They constrain execution behavior; they do not alter constitutional phases, office powers, mathematical certification, production semantic authority, or target-repository jurisdiction.
 
 Do not reproduce those controls into the domain handoff. The domain handoff is intentionally thin and contains only work-set-specific state, acceptance criteria, authoritative pointers, dependencies, and exact stop conditions.
 
 First produce the mandatory canonical preflight:
 
-LIVE PROTECTED HEAD
+CONSTITUTIONAL AUTHORITY HEAD
+TARGET WORK REPOSITORY
+TARGET PROTECTED HEAD
+INTELLECT WORK-PACKAGE PHASE: <phase / not applicable>
 CONTROLLING DOCTRINE REVISIONS
+TARGET DOMAIN AUTHORITY
 PRIMARY DELIVERABLE
 MATERIAL ACCEPTANCE CRITERIA
 CURRENT SUBSTANTIVE STATE
@@ -47,7 +76,7 @@ PROCESS NECESSITY TEST: pass / fail
 DRIFT TRIPWIRES ACTIVE: none / list
 AUTHORITY REQUIRED: delegated / reserved
 
-Then immediately effectuate the `SMALLEST SAFE EXECUTABLE TRANCHE`.
+Then immediately effectuate the `SMALLEST SAFE EXECUTABLE TRANCHE` unless an exact governing instrument reserves that transition.
 
 Execution rules:
 
@@ -60,17 +89,17 @@ Execution rules:
 - If supporting machinery fails, determine whether it actually blocks a material acceptance criterion or reserved authority boundary before repairing or expanding it.
 - Do not reproduce historical ceremony that is no longer a live material dependency.
 - Prefer terminal completion of a meaningful substantive unit over accumulation of branches, manifests, evidence packets, gates, or intermediate state.
-- Proceed autonomously through routine bounded work under standing delegated authority.
-- Do not request Human Steward, Referee, Council, or other approval unless an exact governing instrument materially reserves the transition. If authority is `reserved`, cite the exact instrument and transition.
+- Proceed autonomously through routine bounded, non-reserved work under the live delegated authority schedule.
+- Do not request Human Steward, Referee, Council, or other approval merely as ceremony. Where an exact governing instrument requires an office finding or reserves a transition, satisfy that exact requirement and record the exact subject.
 - Stop only for a genuine material blocker, material scope/control-plan change, exact reserved authority boundary, substantive contradiction/failure requiring escalation, or completed material closure.
 
-If the existing `grandchallenge/MATH-PROGRAMME:handoffs/<WORKSET-ID>/README.md` materially conflicts with the canonical handoff contract by duplicating obsolete ceremony or process, preserve historical evidence but follow the live canonical controls and identify the shortest safe path back to substantive execution.
+If the existing `grandchallenge/MATH-PROGRAMME:handoffs/<WORKSET-ID>/README.md` duplicates obsolete ceremony or conflicts with the live authority chain, preserve historical evidence but follow the higher live authority and identify the shortest safe path back to substantive execution.
 
 For any new handoff material created during this work, use:
 
 `grandchallenge/MATH-PROGRAMME:handoffs/_TEMPLATE/README.md`
 
-Do not invent a new handoff structure or operating doctrine.
+Do not invent a new lifecycle, handoff structure, or operating doctrine.
 ```
 
 ## Usage
@@ -81,6 +110,6 @@ Normally replace only:
 - `<WORKSET-ID>`;
 - `<ISSUE/PR/WORKSET POINTER IF APPLICABLE>`.
 
-`grandchallenge/MATH-PROGRAMME` remains the canonical control repository unless an exact governing instrument changes that designation. The target work repository may be any applicable GCL repository.
+`grandchallenge/INTELLECT` remains the constitutional authority repository under its live protected schedule. `grandchallenge/MATH-PROGRAMME` is the durable host for this handoff contract and retains only its delegated domain authority. The target work repository may be any applicable GCL repository.
 
 Everything after the opening pointer should remain stable. Domain-specific execution detail belongs in `grandchallenge/MATH-PROGRAMME:handoffs/<WORKSET-ID>/README.md`, not in a rewritten takeover prompt.
