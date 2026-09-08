@@ -11,9 +11,11 @@ The handoff exists to preserve continuity of substantive work. It is not an auth
 
 ## Quick access
 
-To start a substantial GCL takeover, copy `handoffs/CANONICAL_TAKEOVER_PROMPT.md` and replace only its opening work-set, repository, and issue/PR pointer placeholders.
+Canonical control repository: `grandchallenge/MATH-PROGRAMME`.
 
-To create a new handoff package, start from `handoffs/_TEMPLATE/README.md` and keep the domain handoff thin.
+To start a substantial GCL takeover, copy `grandchallenge/MATH-PROGRAMME:handoffs/CANONICAL_TAKEOVER_PROMPT.md`. Set its `TARGET WORK REPOSITORY` explicitly; do not assume the substantive work lives in `MATH-PROGRAMME`.
+
+To create a new handoff package, start from `grandchallenge/MATH-PROGRAMME:handoffs/_TEMPLATE/README.md` and keep the domain handoff thin.
 
 Do not rewrite the operating doctrine into either artifact.
 
