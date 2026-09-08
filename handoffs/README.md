@@ -61,4 +61,47 @@ Do not:
 - report procedural motion as substantive completion;
 - continue a repeatedly fragmenting execution path without re-planning.
 
-Prefer the shortest path that leaves the primary artifact correct, verified to its actual acceptance criteria, and durably preserved under the required authority boundaries.
+Prefer the shortest path that leaves the primary artifact correct, verified to its actual acceptance criteria, and durably preserved under the required authority boundaries.## Standard structure for new `handoffs/<WORKSET>/README.md`
+
+All new substantial handoffs must use a **thin domain-handoff structure** under this canonical contract.
+
+The domain handoff exists to supply only work-set-specific information. It must not restate or replace the governing doctrine already inherited from:
+
+1. `docs/governance/STREAMLINED_EXECUTION_AMENDMENT.md` (`MP-STREAMLINED-EXECUTION-001`)
+2. `docs/governance/SUBSTANCE_FIRST_EXECUTION_DISCIPLINE.md` (`MP-SUBSTANCE-FIRST-EXECUTION-001`)
+3. this canonical handoff contract (`handoffs/README.md`)
+
+### Required outline
+
+Each new `handoffs/<WORKSET>/README.md` must contain only the following sections, in this order:
+
+1. `# <WORKSET-ID> — Handoff`
+2. `## Purpose`
+3. `## Primary deliverable`
+4. `## Material acceptance criteria`
+5. `## Current substantive state`
+6. `## Authoritative pointers`
+7. `## Smallest safe next tranche`
+8. `## Material dependencies and boundaries`
+9. `## Reserved authority / stop conditions`
+10. `## Notes intentionally omitted`
+
+### Structural rules
+
+- Keep the file thin and domain-specific.
+- Do not duplicate general operating doctrine.
+- Do not reproduce historical ceremony unless it remains a live material dependency.
+- Do not embed large status logs, replay transcripts, release packets, or procedural archives.
+- Put domain intelligence in the handoff; put operating behavior in the canonical contract.
+- If a work set requires additional detail, link to authoritative domain artifacts instead of restating them redundantly.
+
+### `Notes intentionally omitted`
+
+Each handoff should close with a short section stating what is *not* included, for example:
+
+- full operating doctrine, inherited from `handoffs/README.md`;
+- historical workflow detail no longer required for execution;
+- supporting evidence already preserved elsewhere;
+- generic GitHub or governance instructions already controlled by live doctrine.
+
+Use `handoffs/_TEMPLATE/README.md` as the starter form for all new substantial handoffs.
