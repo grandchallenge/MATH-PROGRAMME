@@ -188,8 +188,7 @@ def provider_gate_errors(campaign_id: str, stage: str, registry: dict[str, Any] 
 def main() -> int:
     errors = mathforge_provider_import_errors()
     if errors:
-        print("\
-".join(errors), file=sys.stderr)
+        print("\n".join(errors), file=sys.stderr)
         return 1
     print("MATHFORGE provider imports are pinned: 8 campaigns, exact merged commit, unchanged coverage modes, FC-GDM-001 RH/NS supplements, FC-GDM-002 expanded artifact identities, and promotion coverage")
     return 0
