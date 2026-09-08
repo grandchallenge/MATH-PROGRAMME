@@ -1,0 +1,12 @@
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {syntax relation\\$S\preccurlyeq T$};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {observation model};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {trace behavior};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
+\end{tikzpicture}
+\caption{Plate 25. Behavioral refinement is not syntactic inclusion. Syntactic subtyping is one safe replacement criterion, not literal set inclusion of source text. Semantic and syntactic refinement need not coincide generally.}
+\label{plate:protocol-25}
+\end{figure}

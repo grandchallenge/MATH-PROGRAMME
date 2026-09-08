@@ -1,0 +1,12 @@
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {same session syntax};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {sync / async /\\monitored};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {different state spaces};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
+\end{tikzpicture}
+\caption{Plate 36. One syntax, several semantics. The same surface protocol can be interpreted by distinct operational models. Alternative semantics are not automatically equivalent.}
+\label{plate:protocol-36}
+\end{figure}

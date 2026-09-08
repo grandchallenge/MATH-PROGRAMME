@@ -1,0 +1,37 @@
+\chapter{One Protocol Standing In for Another}
+
+\section*{10.1}
+Invariant.
+
+\section*{10.2}
+An internal-choice subtype may select fewer labels than the expected type.
+
+\section*{10.3}
+An external-choice subtype may offer more labels than the expected type.
+
+\section*{10.4}
+It can hold if $S\subsess T$; the implementation's label set $\{a\}$ is a subset of the expected $\{a,b\}$.
+
+\section*{10.5}
+It can hold if $S\subsess U$; the implementation offers the superset $\{a,b\}$ while the expected peer may select only $a$.
+
+\section*{10.6}
+If an internal-choice implementation were allowed extra label $b$, it could select $b$ against a peer prepared only for $a$, producing a mismatch.
+
+\section*{10.7}
+The context is ready for every expected selection. Choosing from a smaller subset cannot surprise it with a new label.
+
+\section*{10.8}
+A semantic relation depends on what traces/events are observable and can identify behaviors that a syntax-directed relation distinguishes, or vice versa.
+
+\section*{10.9}
+Given $I\subseteq J$, any label selected by the subtype lies in the expected set. Duality makes the peer offer all labels in $J$; the continuation induction hypothesis applies at the selected label.
+
+\section*{10.10}
+For external choice, $J\subseteq I$ means the subtype offers every label the peer of the expected type can select. Continue by the induction hypothesis for that label.
+
+\section*{10.11}
+For internal choice, report an implementation-only label; for external choice, report an expected label the implementation fails to offer. Include the continuation path.
+
+\section*{10.12}
+Full credit requires a cited asynchronous result and its queue/output-anticipation semantics or other additional machinery. Its conclusion must not be attributed to PROTO-S1.

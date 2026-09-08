@@ -2,12 +2,23 @@
 
 Work set: `TYPE-THEORY-VOL-IV-001` (issue #877).
 
-Gate 0 was admitted to protected `main` at `34cf03876486eed086f2b05c9b01d9d8887915e7`.
+Protected Gate 0 admission: `34cf03876486eed086f2b05c9b01d9d8887915e7`.
 
-The active Gate-1 tranche contains Chapters 1–2, the finite synchronous `PROTO-0` teaching kernel, two dependency-free executable laboratories, six canonical plates, 24 exercises with 24 keyed solutions/rubrics, and the first scoped theorem audit. It remains a development candidate until protected admission completes.
+Protected Gate 1 source head: `12d25fdc4a5fe7c682d224efd105d91854b5b93a`.
 
-Build with LuaLaTeX/`latexmk`. Execute both retained laboratories under `labs/`. Machine-readable Gate-1 evidence is under `evidence/GATE1_EVIDENCE.json`.
+Protected Gate 1 merge: `f442b24b634691096a77c0d3228f8e932ef768dd`.
 
-The formal boundary is explicit: finite binary session duality and linear-environment splitting are developed here; full subject reduction, communication safety, single-session progress, unrestricted deadlock freedom, fault tolerance, security, and distributed-system correctness are not silently inferred.
+The active composition candidate extends the admitted two-chapter teaching kernel through all fourteen
+planned chapters. Its target surface is 42 canonical plates, 14 dependency-free laboratories,
+168 exercises, and 168 keyed solutions/rubrics, with theorem, claim, bibliography, illustration,
+exercise, notation, index, and publication audits.
 
-The series title **TYPE THEORY — The Grand Unified Theory of Computation** remains a research thesis, not an established theorem.
+The candidate preserves the central negative boundary: local session fidelity is not global
+deadlock freedom, fault tolerance, fairness, security, scheduler independence, or application
+correctness.
+
+Build with LuaLaTeX/latexmk. Run every `labs/lab*.py` fixture and the series validator before
+establishing Gate 7 composition-complete status.
+
+Independent mathematical review is Gate 8 and must be performed by a separate reviewer after
+durable RC admission. Publication authority remains a distinct Gate 9 transition.

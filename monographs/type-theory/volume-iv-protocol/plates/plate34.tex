@@ -1,0 +1,12 @@
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {local fidelity};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {one-session\\progress};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {stronger liveness\\extra hypotheses};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
+\end{tikzpicture}
+\caption{Plate 34. Progress hypothesis map. Moving from safety to stronger liveness requires additional topology, scheduler, or global-structure assumptions. Implication arrows are used only for proved or explicitly cited relations.}
+\label{plate:protocol-34}
+\end{figure}

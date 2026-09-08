@@ -1,0 +1,12 @@
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {typed core\\reliable steps};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {model boundary};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {loss / crash /\\partition};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
+\end{tikzpicture}
+\caption{Plate 26. Network faults live outside PROTO-0. The synchronous core omits faults unless they are added to its transition system. Being outside the box is a scope statement, not an impossibility claim.}
+\label{plate:protocol-26}
+\end{figure}

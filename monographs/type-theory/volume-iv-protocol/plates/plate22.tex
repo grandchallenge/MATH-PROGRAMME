@@ -1,0 +1,12 @@
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[gclplate,x=1cm,y=1cm]
+  \node[gcllabel,draw=GCLBlue!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (a) at (-4.15,0) {role $A$\\chooses $l$};
+  \node[gcllabel,draw=GCLWarm!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (b) at (0,0) {choice message};
+  \node[gcllabel,draw=GCLGreen!75!black,align=center,text width=2.8cm,minimum height=1.0cm] (c) at (4.15,0) {role $C$\\behavior depends on $l$};
+  \draw[gclbluearrow] (a.east) -- (b.west);
+  \draw[gclwarmarrow] (b.east) -- (c.west);
+\end{tikzpicture}
+\caption{Plate 22. Branch knowledge must reach the right roles. A role whose continuation depends on a remote choice must learn enough about that choice. No universal MPST theorem is claimed by the diagram.}
+\label{plate:protocol-22}
+\end{figure}

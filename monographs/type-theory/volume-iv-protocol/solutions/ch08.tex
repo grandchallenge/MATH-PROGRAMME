@@ -1,0 +1,37 @@
+\chapter{Messages in Flight}
+
+\section*{8.1}
+Explicit FIFO queues become part of the configuration.
+
+\section*{8.2}
+Messages are dequeued in the order enqueued on each directed channel.
+
+\section*{8.3}
+It records messages already emitted by the sender frontier but not yet consumed by the receiver frontier, with their payload/label classes and FIFO order.
+
+\section*{8.4}
+Enqueue advances only the sender frontier and appends a message; the later dequeue removes the head and advances the receiver frontier.
+
+\section*{8.5}
+A queue headed by a Bool when the receiver's next input is Nat violates queue consistency.
+
+\section*{8.6}
+Permit a peer to terminate while a nonempty outbound/inbound queue remains. The residual queue is then an orphan diagnostic.
+
+\section*{8.7}
+Asynchronous semantics contains intermediate queue states and separate enqueue/dequeue steps absent from rendezvous semantics.
+
+\section*{8.8}
+One erasure map on one finite fixture proves only equality for that fixture. Different protocols can expose ordering or buffering differences.
+
+\section*{8.9}
+Enqueue requires the sender's next output type to match the message; appending it extends the typed pending prefix by exactly one and preserves FIFO order.
+
+\section*{8.10}
+Queue consistency guarantees the head matches the receiver input; dequeue removes that head, advances the receiver continuation, and leaves the remaining prefix consistent.
+
+\section*{8.11}
+With a capacity $k$, sending at $|q|=k$ introduces a block, error, or drop transition. The chosen behavior must be added explicitly to the semantics.
+
+\section*{8.12}
+Gay--Vasconcelos 2010 proves buffer-related results for its multithreaded functional language with buffered channels. Any comparison must keep that calculus and its assumptions distinct from PROTO-A1.

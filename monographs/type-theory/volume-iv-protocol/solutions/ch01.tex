@@ -1,0 +1,37 @@
+\chapter{A Program With Someone on the Other End}
+
+\section*{1.1}
+$\send{\Nat}{\recv{\Bool}{\mathsf{end!}}}$.
+
+\section*{1.2}
+The first type begins with send and the second with receive. Since the outer constructor determines the next legal action, the protocol order differs.
+
+\section*{1.3}
+$\Gamma$ stores reusable value assumptions; $\Delta$ stores linear endpoint obligations that must be split and consumed.
+
+\section*{1.4}
+One skeleton is $x!\chanval{b}.x!\chanval{n}.\mathsf{close}\;x.0$ with $b:\Bool$ and $n:\Nat$.
+
+\section*{1.5}
+$\mathsf{recv{:}Nat},\mathsf{recv{:}Bool},\mathsf{wait}$.
+
+\section*{1.6}
+Wrong order: receive Bool before send Nat. Wrong payload: send Bool where send Nat is required.
+
+\section*{1.7}
+$\Nat\to\Bool$ states an input/output value relation under function semantics; the session type states an ordered two-party action discipline. The session type need not define a function from the sent natural to the received Boolean.
+
+\section*{1.8}
+The checker decides whether one finite trace matches one finite protocol. The mathematical relation may still have several independently enabled redexes.
+
+\section*{1.9}
+Inspect the outer constructor: send, receive, active close, or passive wait. These four cases exhaust the Gate-1 grammar, so a first local action class exists and is unique.
+
+\section*{1.10}
+Induct on session syntax. Each send/receive constructor consumes one trace event and reduces the claim to the continuation; either terminal constructor consumes one final event. Thus complete trace length equals constructor count.
+
+\section*{1.11}
+Add a refinement layer such as a predicate $n>0$ on the Nat payload. The new layer checks both ordinary payload type/order and the predicate; this is not ordinary session fidelity.
+
+\section*{1.12}
+Use guarded recursion, for example $\mu t.?Req.!Resp.t$, plus process recursion and unfolding semantics. Correct nontermination still needs separate productivity/fairness hypotheses.

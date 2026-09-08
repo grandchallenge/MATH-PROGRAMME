@@ -27,13 +27,17 @@
     {"symbol": "Γ ; Δ ⊢ P", "meaning": "Volume IV process typing judgment with reusable value context Γ and linear channel environment Δ", "introduced": "IV", "status": "active in PROTO-0"},
     {"symbol": "!A.S", "meaning": "local session obligation: send a payload of type A, then continue as S", "introduced": "IV", "status": "active in PROTO-0"},
     {"symbol": "?A.S", "meaning": "local session obligation: receive a payload of type A, then continue as S", "introduced": "IV", "status": "active in PROTO-0"},
-    {"symbol": "⊕{l_i:S_i}", "meaning": "internal session selection among labeled continuations", "introduced": "IV", "status": "reserved by Gate-0 plan; developed after Gate 1"},
-    {"symbol": "&{l_i:S_i}", "meaning": "external session branching/offer among labeled continuations", "introduced": "IV", "status": "reserved by Gate-0 plan; developed after Gate 1"},
+    {"symbol": "⊕{l_i:S_i}", "meaning": "internal session selection among labeled continuations", "introduced": "IV", "status": "active in finite PROTO-0 choice layer"},
+    {"symbol": "&{l_i:S_i}", "meaning": "external session branching/offer among labeled continuations", "introduced": "IV", "status": "active in finite PROTO-0 choice layer"},
     {"symbol": "dual(S) / overline(S)", "meaning": "session duality: syntax-directed complementary endpoint behavior; not logical negation in general", "introduced": "IV", "status": "active in PROTO-0"},
     {"symbol": "(ν x y)P", "meaning": "paired-endpoint restriction creating private endpoints x and y governed by dual sessions", "introduced": "IV", "status": "active in PROTO-0"},
     {"symbol": "P → P'", "meaning": "one-step process reduction in Volume IV; distinct in object language from earlier term reduction even though the arrow glyph is locally overloaded", "introduced": "IV", "status": "active with explicit local-overload note"},
     {"symbol": "P ≡_p Q", "meaning": "selected process structural congruence; distinct from definitional/equational equality ≡ for terms/types", "introduced": "IV", "status": "active in PROTO-0"},
     {"symbol": "Δ ⇒ Δ'", "meaning": "session-environment evolution synchronized with process communication", "introduced": "IV", "status": "active in PROTO-0"},
+    {"symbol": "μ t.S", "meaning": "guarded recursive session type binder in the Volume IV recursive layer", "introduced": "IV", "status": "active in PROTO-R1"},
+    {"symbol": "q_xy / <...>_q", "meaning": "explicit directed FIFO queue state between endpoints/roles in the asynchronous teaching layer", "introduced": "IV", "status": "active in PROTO-A1"},
+    {"symbol": "G ↾ p", "meaning": "finite global-description projection of choreography G to role p", "introduced": "IV", "status": "active in registered finite PROTO-M1 exemplars"},
+    {"symbol": "S ≼ T", "meaning": "bounded synchronous session replacement/subtyping relation with invariant payloads", "introduced": "IV", "status": "active in PROTO-S1"},
     {"symbol": "Id_A(a,b)", "meaning": "identity type", "introduced": "VII", "status": "reserved"}
   ]
 }

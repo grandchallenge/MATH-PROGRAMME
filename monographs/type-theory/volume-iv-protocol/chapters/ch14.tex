@@ -1,0 +1,80 @@
+\chapter{The World Pushes Back}
+
+A protocol can be perfectly typed while the world it talks about changes behind it. A request can mutate a database, consume a capability, raise an exception, sample randomness, or fail because an external device refuses the operation. Those events are not merely more messages. They change the semantic state against which the computation must be judged.
+
+\section{Protocol state is not world state}
+The channel environment $\Delta$ records what communication action an endpoint owes next. It does not record the contents of a file, the balance in an account, the state of a device, the authority represented by a capability, or the probability distribution used by a sampler. Two executions can project to the same protocol trace while changing the world differently.
+
+\input{plates/plate39}
+
+\section{A protocol-conforming semantic bug}
+\begin{workedexample}
+A payment client sends a natural-number amount and receives a Boolean acknowledgement. Both peers follow the session type exactly. One implementation debits the requested amount; another debits twice the amount because of an application bug. The protocol projection is identical. The world-state transition is not.
+\end{workedexample}
+
+\section{Effects become first-class obligations}
+The next volume asks how types can describe not only returned values and communication order but also events: state mutation, exceptions, I/O, nondeterminism, probability, capability use, and partiality. Session types remain useful, but protocol state alone is no longer the complete local description of computation.
+
+\input{plates/plate40}
+
+\section{The thesis after interaction}
+\begin{principle}
+Volume IV strengthens the series thesis in one precise sense: typed judgments can describe compositional obligations over open interaction, not only closed construction. It also exposes a limit: local type structure does not automatically supply global liveness, failure semantics, security, scheduler assumptions, or world-state meaning.
+\end{principle}
+
+\input{plates/plate41}
+
+\section{The forced question}
+The transition to Volume V is therefore not decorative:
+\[
+\boxed{\text{How can a type describe what a computation may \emph{do} to the world?}}
+\]
+Once the environment can answer, refuse, mutate, fail, or sample, the protocol is only one layer of the computational contract.
+
+\section{Do not confuse: adding messages with modeling effects}
+\begin{warningbox}
+An implementation can encode an effect request as a message, but the semantic claim still needs a model of what that request means and how the world changes. Protocol conformance alone cannot manufacture that semantics.
+\end{warningbox}
+
+\input{plates/plate42}
+
+\section{Computational laboratory}
+\begin{labbox}
+Run
+\[
+  \texttt{python labs/lab14_effect_threshold.py}.
+\]
+The laboratory compares executions with identical protocol projections but different external state/effect traces, demonstrating the exact threshold into Volume V. It is executable evidence for the stated finite fixtures and does not enlarge the theorem scope.
+\end{labbox}
+
+\section{Exercises}
+\subsection*{Checkpoint}
+\begin{enumerate}[label=\textbf{14.\arabic*},start=1]
+\item What does $\Delta$ record, and what does it omit?
+\item Give one external effect not represented by a plain session frontier.
+\item State the Volume V threshold question.
+\end{enumerate}
+\subsection*{Core}
+\begin{enumerate}[label=\textbf{14.\arabic*},start=4]
+\item Construct two executions with the same protocol trace but different database outcomes.
+\item Give a capability-use example whose message order alone is insufficient to state authority.
+\item Explain why encoding an effect request as a message does not eliminate the need for effect semantics.
+\end{enumerate}
+\subsection*{Synthesis}
+\begin{enumerate}[label=\textbf{14.\arabic*},start=7]
+\item State one way Volume IV strengthens the series thesis.
+\item State one way Volume IV forces the thesis to weaken or acquire additional semantic structure.
+\end{enumerate}
+\subsection*{Proof Workshop}
+\begin{enumerate}[label=\textbf{14.\arabic*},start=9]
+\item Using T4.24, prove that protocol conformance cannot imply arbitrary application correctness by counterexample.
+\item Formalize a projection that erases external effect events and show two distinct effect traces map to one protocol trace.
+\end{enumerate}
+\subsection*{Design Clinic}
+\begin{enumerate}[label=\textbf{14.\arabic*},start=11]
+\item Design the smallest effect annotation you would add to the payment protocol to distinguish read-only from state-mutating operations.
+\end{enumerate}
+\subsection*{Challenge}
+\begin{enumerate}[label=\textbf{14.\arabic*},start=12]
+\item Write a one-paragraph adversarial assessment of the claim 'type theory is the grammar of all computation' after the evidence of Volume IV.
+\end{enumerate}

@@ -1,0 +1,37 @@
+\chapter{The World Pushes Back}
+
+\section*{14.1}
+$\Delta$ records current channel/session obligations. It omits arbitrary database, file, device, capability, clock, random, and other environmental state.
+
+\section*{14.2}
+Examples: mutate a database row, read a file, throw an exception, sample randomness, or exercise a capability.
+
+\section*{14.3}
+How do we type the events by which computation changes or observes a world not reducible to the protocol itself?
+
+\section*{14.4}
+Both traces send amount 42 and receive `true`; one database transition debits 42 and the other debits 84.
+
+\section*{14.5}
+A message `delete(resource)` can be well typed while the sender lacks authority to delete the resource. Capability possession/consumption must be specified separately.
+
+\section*{14.6}
+The message describes a request; an effect semantics must state the world transition, failure modes, and authority under which the request has meaning.
+
+\section*{14.7}
+It shows that compositional typing judgments can govern ordered obligations in open interaction, not only closed term construction.
+
+\section*{14.8}
+Local protocol typing does not determine global liveness, failure behavior, scheduler fairness, security, or the semantics of external state changes; the thesis needs additional semantic layers.
+
+\section*{14.9}
+Exhibit two applications with the same accepted protocol trace but different correctness predicate values. Therefore no implication from protocol conformance alone to arbitrary application correctness can hold.
+
+\section*{14.10}
+Define $\pi$ to remove `effect` events. Then the good and buggy traces in Lab 14 are distinct but $\pi(\tau_{\rm good})=\pi(\tau_{\rm bug})$, so protocol projection is non-injective over world behaviors.
+
+\section*{14.11}
+Annotate the request with an effect class such as `read Account` versus `write Account`, plus the target capability. This is only a seed; Volume V must supply semantics.
+
+\section*{14.12}
+A strong answer should retain the exact positive result (typed interaction is compositional) and the exact negative boundary (type syntax alone does not erase semantic assumptions). It should not resolve the thesis by slogan.

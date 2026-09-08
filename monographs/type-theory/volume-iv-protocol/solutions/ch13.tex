@@ -1,0 +1,37 @@
+\chapter{Processes as Proofs, Carefully}
+
+\section*{13.1}
+Both linear logic and session typing make resource/obligation use explicit rather than freely duplicable by default.
+
+\section*{13.2}
+Caires--Pfenning's session calculus or Wadler's CP are acceptable.
+
+\section*{13.3}
+The table only records structural roles; it defines neither a translation function nor preservation/adequacy theorems.
+
+\section*{13.4}
+Both connect two components through a private intermediate interface/resource that is eliminated or internalized by composition.
+
+\section*{13.5}
+Concurrent systems can have nondeterministic interleavings, observable communication, and liveness behavior not represented by an arbitrary proof-normalization relation.
+
+\section*{13.6}
+Not established in general; at most a calculus-specific correspondence under an explicit translation.
+
+\section*{13.7}
+Define a translation and prove at least typing preservation plus an operational correspondence/adequacy property.
+
+\section*{13.8}
+A cited theorem can carry external mathematical authority for its stated calculus. The lab only verifies the classification of our local claims.
+
+\section*{13.9}
+Show: if $\ptypes{\Gamma}{\Delta}{P}$ then the translated object is derivable at the translated interface, with a precise mapping of linear endpoints.
+
+\section*{13.10}
+Show that each relevant source reduction maps to one or more target cut-elimination steps (and usually a converse/adequacy direction if equivalence is claimed).
+
+\section*{13.11}
+Use an enum-valued claim field such as `EXACT_EQUIVALENCE`, `PROVED_CORRESPONDENCE`, `STRUCTURAL_ANALOGY`, `MOTIVATING_RESEMBLANCE`, each with source and scope.
+
+\section*{13.12}
+Full credit identifies one exact theorem from the cited source and explicitly says why its syntax/semantics differ from PROTO-0.
