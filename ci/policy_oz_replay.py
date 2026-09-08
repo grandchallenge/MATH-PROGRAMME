@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RUNNER = ROOT / "ci" / "run_unittest_modules.py"
 COMPUTATIONAL_SUFFIXES = {".py", ".json", ".c", ".h"}
 
-# Protected-run profile 2026-09-02: these 12 modules consumed ~98% of OZ time.
+# Protected-run profile 2026-09-02 plus the admitted T3-011-G successor.
 HEAVY_MODULES = (
     "tests/test_oz_rt_bz_t3_003.py",
     "tests/test_oz_rt_bz_t3_004.py",
@@ -33,6 +33,7 @@ HEAVY_MODULES = (
     "tests/test_oz_rt_bz_t3_011_d.py",
     "tests/test_oz_rt_bz_t3_011_e.py",
     "tests/test_oz_rt_bz_t3_011_f.py",
+    "tests/test_oz_rt_bz_t3_011_g.py",
 )
 
 T3 = "campaigns/odd_zeta/OZ_RT_BZ_T3_"
@@ -50,6 +51,7 @@ STAGE_TOKENS = {
     "011_d": ("t3_010_a", "T3_010_A", "t3_010_b", "T3_010_B", "t3_010_c", "T3_010_C", "t3_011_a", "T3_011_A", "t3_011_b", "T3_011_B", "t3_011_c", "T3_011_C", "t3_011_d", "T3_011_D"),
     "011_e": ("t3_010_a", "T3_010_A", "t3_010_b", "T3_010_B", "t3_010_c", "T3_010_C", "t3_011_a", "T3_011_A", "t3_011_b", "T3_011_B", "t3_011_c", "T3_011_C", "t3_011_d", "T3_011_D", "t3_011_e", "T3_011_E"),
     "011_f": ("t3_010_a", "T3_010_A", "t3_010_b", "T3_010_B", "t3_010_c", "T3_010_C", "t3_011_a", "T3_011_A", "t3_011_b", "T3_011_B", "t3_011_c", "T3_011_C", "t3_011_d", "T3_011_D", "t3_011_e", "T3_011_E", "t3_011_f", "T3_011_F"),
+    "011_g": ("t3_010_a", "T3_010_A", "t3_010_b", "T3_010_B", "t3_010_c", "T3_010_C", "t3_011_a", "T3_011_A", "t3_011_b", "T3_011_B", "t3_011_c", "T3_011_C", "t3_011_d", "T3_011_D", "t3_011_e", "T3_011_E", "t3_011_f", "T3_011_F", "t3_011_g", "T3_011_G"),
 }
 ALL_STAGE_TOKENS = tuple(sorted({token for tokens in STAGE_TOKENS.values() for token in tokens}))
 MODULE_STAGE = {
