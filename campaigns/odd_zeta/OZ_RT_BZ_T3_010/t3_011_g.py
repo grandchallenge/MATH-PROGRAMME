@@ -4,6 +4,7 @@ import hashlib
 import json
 import sys
 from fractions import Fraction as Q
+from functools import lru_cache
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -117,7 +118,8 @@ def _combine_sig(base_sig, left_sig, right_sig, r: int, s: int):
     return tuple(sorted(powers.items()))
 
 
-def _solve_multidegrees(base_sig, left_sig, right_sig, target_sig) -> list[tuple[int, int]]:
+@lru_cache(maxsize=None)
+def _solve_multidegrees(base_sig, left_sig, right_sig, target_sig) -> tuple[tuple[int, int], ...]:
     base = _sig_dict(base_sig)
     left = _sig_dict(left_sig)
     right = _sig_dict(right_sig)
@@ -132,7 +134,7 @@ def _solve_multidegrees(base_sig, left_sig, right_sig, target_sig) -> list[tuple
         for factor in set(base) | set(left) | set(right) | set(target)
     }
     if any(diff < 0 for diff in diffs.values()):
-        return []
+        return ()
 
     def upper(step: dict) -> int:
         bounds = [diffs[factor] // exp for factor, exp in step.items() if exp > 0]
@@ -147,7 +149,7 @@ def _solve_multidegrees(base_sig, left_sig, right_sig, target_sig) -> list[tuple
         for s in range(smax + 1):
             if _combine_sig(base_sig, left_sig, right_sig, r, s) == target_sig:
                 out.append((r, s))
-    return out
+    return tuple(out)
 
 
 def _base_index(vec: dict):
@@ -171,26 +173,24 @@ def _stratum_id(cell_id: str) -> str:
 
 
 def bivariate_moment_ledger(
-    witness: dict,
-    base_vec: dict,
+    witness_index: dict,
+    base_index: dict,
     left_factors: dict,
     left_kind: str,
     right_factors: dict,
     right_kind: str,
 ) -> dict:
-    widx = _witness_index(witness)
-    bidx = _base_index(base_vec)
     aggregate: dict[tuple[int, int], Q] = {}
     possible: set[tuple[int, int]] = set()
     matches = []
     first_evidence = {}
-    for base_key in sorted(set(widx) & set(bidx), key=repr):
+    for base_key in sorted(set(witness_index) & set(base_index), key=repr):
         cell_id, scalar, mon = base_key
         sid = _stratum_id(cell_id)
         left_sig, left_coeff = left_factors[sid][left_kind]
         right_sig, right_coeff = right_factors[sid][right_kind]
-        for target_sig, weight in widx[base_key]:
-            for base_sig, coeff in bidx[base_key]:
+        for target_sig, weight in witness_index[base_key]:
+            for base_sig, coeff in base_index[base_key]:
                 for r, s in _solve_multidegrees(base_sig, left_sig, right_sig, target_sig):
                     possible.add((r, s))
                     contribution = weight * coeff * (left_coeff ** r) * (right_coeff ** s)
@@ -227,36 +227,80 @@ def _strip_internal(ledger: dict) -> dict:
     return {key: value for key, value in ledger.items() if not key.startswith("_")}
 
 
-def _candidate_record(pair, endpoint, uid, strata, bank, f_record):
-    left, right = pair
+def _cached_vector_index(
+    endpoint,
+    uid,
+    shifts,
+    strata,
+    bank,
+    poly_cache,
+    vector_cache,
+):
     scalar, mon = uid
-    g = semantic.direct_original_monomial(mon)
-    gc = f.shift_poly(g, left)
-    gd = f.shift_poly(g, right)
-    gcd = f.shift_poly(gc, right)
+    poly_key = (mon, tuple(shifts))
+    poly = poly_cache.get(poly_key)
+    if poly is None:
+        poly = semantic.direct_original_monomial(mon)
+        for channel in shifts:
+            poly = f.shift_poly(poly, channel)
+        poly_cache[poly_key] = poly
+    vector_key = (endpoint, uid, tuple(shifts))
+    cached = vector_cache.get(vector_key)
+    if cached is None:
+        vec = semantic.direct_global_column_from_poly(
+            poly, scalar, endpoint, strata, bank["active"]
+        )
+        cached = (vec, _base_index(vec))
+        vector_cache[vector_key] = cached
+    return cached
 
-    active = bank["active"]
-    vec_g = semantic.direct_global_column_from_poly(g, scalar, endpoint, strata, active)
-    vec_gc = semantic.direct_global_column_from_poly(gc, scalar, endpoint, strata, active)
-    vec_gd = semantic.direct_global_column_from_poly(gd, scalar, endpoint, strata, active)
-    vec_gcd = semantic.direct_global_column_from_poly(gcd, scalar, endpoint, strata, active)
 
-    left_factors = e._coordinate_factors(left, strata)
-    right_factors = e._coordinate_factors(right, strata)
+def _candidate_record(
+    pair,
+    endpoint,
+    uid,
+    strata,
+    bank,
+    f_record,
+    witness_index,
+    left_factors,
+    right_factors,
+    poly_cache,
+    vector_cache,
+):
+    left, right = pair
+    _vec_g, idx_g = _cached_vector_index(
+        endpoint, uid, (), strata, bank, poly_cache, vector_cache
+    )
+    _vec_gc, idx_gc = _cached_vector_index(
+        endpoint, uid, (left,), strata, bank, poly_cache, vector_cache
+    )
+    _vec_gd, idx_gd = _cached_vector_index(
+        endpoint, uid, (right,), strata, bank, poly_cache, vector_cache
+    )
+    _vec_gcd, idx_gcd = _cached_vector_index(
+        endpoint, uid, (left, right), strata, bank, poly_cache, vector_cache
+    )
+
     A = bivariate_moment_ledger(
-        bank["witness"], vec_gcd, left_factors, "x1", right_factors, "x1"
+        witness_index, idx_gcd, left_factors, "x1", right_factors, "x1"
     )
     B = bivariate_moment_ledger(
-        bank["witness"], vec_gc, left_factors, "x1", right_factors, "x0"
+        witness_index, idx_gc, left_factors, "x1", right_factors, "x0"
     )
     C = bivariate_moment_ledger(
-        bank["witness"], vec_gd, left_factors, "x0", right_factors, "x1"
+        witness_index, idx_gd, left_factors, "x0", right_factors, "x1"
     )
     D = bivariate_moment_ledger(
-        bank["witness"], vec_g, left_factors, "x0", right_factors, "x0"
+        witness_index, idx_g, left_factors, "x0", right_factors, "x0"
     )
 
-    domain = set(A["_aggregate"]) | set(B["_aggregate"]) | set(C["_aggregate"]) | set(D["_aggregate"])
+    domain = (
+        set(map(tuple, A["possible_multidegrees"]))
+        | set(map(tuple, B["possible_multidegrees"]))
+        | set(map(tuple, C["possible_multidegrees"]))
+        | set(map(tuple, D["possible_multidegrees"]))
+    )
     domain = {degree for degree in domain if degree[0] >= 1 and degree[1] >= 1}
     pairing_rows = []
     nonzero = []
@@ -306,6 +350,7 @@ def _candidate_record(pair, endpoint, uid, strata, bank, f_record):
 
 def build() -> dict:
     validate_scope()
+    _solve_multidegrees.cache_clear()
     f_locks = assert_f_locks()
     predecessor = f.build()
     if predecessor.get("terminal") != F_REQUIRED_TERMINAL:
@@ -320,6 +365,16 @@ def build() -> dict:
     primitive_full, strata, specialized, supports = f.d.build_context()
     banks = f._channel_banks(primitive_full, strata, specialized, supports)
     f_records = predecessor["tested_records"]
+    coordinate_factors = {
+        channel: e._coordinate_factors(channel, strata)
+        for channel in CHANNEL_COORDINATE
+    }
+    witness_indexes = {
+        channel: _witness_index(bank["witness"])
+        for channel, bank in banks.items()
+    }
+    poly_cache = {}
+    vector_cache = {}
 
     records = []
     global_residue: set[tuple[int, int]] = set()
@@ -327,8 +382,12 @@ def build() -> dict:
     first_ambiguity = None
     cursor = 0
     for pair_index, pair in enumerate(ADMITTED_PAIRS):
+        left, right = pair
+        left_factors = coordinate_factors[left]
+        right_factors = coordinate_factors[right]
         for endpoint_index, endpoint in enumerate(pair):
             bank = banks[endpoint]
+            witness_index = witness_indexes[endpoint]
             for candidate_index, uid in enumerate(bank["candidates"]):
                 f_record = f_records[cursor]
                 expected_identity = (list(pair), endpoint, unknown_json(uid))
@@ -339,7 +398,19 @@ def build() -> dict:
                 )
                 if actual_identity != expected_identity:
                     raise AssertionError(f"T3-011-G F deterministic record drift at {cursor}")
-                rec = _candidate_record(pair, endpoint, uid, strata, bank, f_record)
+                rec = _candidate_record(
+                    pair,
+                    endpoint,
+                    uid,
+                    strata,
+                    bank,
+                    f_record,
+                    witness_index,
+                    left_factors,
+                    right_factors,
+                    poly_cache,
+                    vector_cache,
+                )
                 rec.update(
                     {
                         "ordinal": cursor,
@@ -372,6 +443,7 @@ def build() -> dict:
     else:
         terminal = CLOSURE_TERMINAL
 
+    cache_info = _solve_multidegrees.cache_info()
     return {
         "schema_version": "1.0.0",
         "issue": ISSUE,
@@ -404,6 +476,14 @@ def build() -> dict:
             "recurrence_search_admitted": False,
             "correction_layer_work_admitted": False,
             "candidate_linear_combinations_admitted": False,
+        },
+        "execution_ledger": {
+            "coordinate_factor_maps": len(coordinate_factors),
+            "witness_indexes": len(witness_indexes),
+            "cached_shifted_polynomials": len(poly_cache),
+            "cached_semantic_vectors": len(vector_cache),
+            "multidegree_solver_cache_hits": cache_info.hits,
+            "multidegree_solver_cache_misses": cache_info.misses,
         },
         "candidate_record_count": len(records),
         "candidate_records": records,
