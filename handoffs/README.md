@@ -9,6 +9,14 @@ All new substantial handoffs inherit the following live operating controls unles
 
 The handoff exists to preserve continuity of substantive work. It is not an authority source by itself and must not grow into a second control plane.
 
+## Quick access
+
+To start a substantial GCL takeover, copy `handoffs/CANONICAL_TAKEOVER_PROMPT.md` and replace only its opening work-set, repository, and issue/PR pointer placeholders.
+
+To create a new handoff package, start from `handoffs/_TEMPLATE/README.md` and keep the domain handoff thin.
+
+Do not rewrite the operating doctrine into either artifact.
+
 ## Mandatory first executable preflight
 
 Before mutation, a future execution lead must state:
