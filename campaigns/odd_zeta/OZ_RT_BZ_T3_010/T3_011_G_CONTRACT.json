@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 906,
+  "operation": "OZ-RT-BZ-T3-011-G",
+  "stage": "T3_011_G_MIXED_POLYNOMIAL_COKERNEL_CLOSURE_AUDIT",
+  "predecessor": {
+    "reviewed_head": "bc67c0e6b3b2e521569339798d879f4a3a4448bf",
+    "merge_commit": "81296b7cce3c741597ae86e991cb59e2d1835fcb",
+    "required_terminal": "MIXED_CHANNEL_QUADRATIC_RESPONSE_CLASS_COKERNEL_INVISIBLE",
+    "expected_tested_records": 1282,
+    "expected_semantic_functional_ambiguity": null,
+    "expected_cokernel_breaking_direction": null
+  },
+  "clean_question": "does the finite-support cokernel obstruction close the entire genuinely mixed polynomial-multiplier algebra x_c^r x_d^s, r,s>=1, on the frozen F endpoint banks?",
+  "mixed_polynomial_class": {
+    "monomial_domain": "x_c^r*x_d^s with integers r>=1,s>=1",
+    "unordered_pair_order": [
+      ["n1", "k1"],
+      ["n1", "l1"],
+      ["n2", "k1"],
+      ["n2", "l1"],
+      ["n3", "k1"],
+      ["n3", "l1"],
+      ["k1", "l1"]
+    ],
+    "pure_axes_excluded_as_E_closed": true,
+    "same_coordinate_pairs_excluded_as_E_reducible": true,
+    "endpoint_anchored_candidate_banks": true,
+    "finite_support_overlap_must_be_derived_without_degree_cutoff": true,
+    "direct_response": "Delta_c Delta_d(x_c^r x_d^s G)",
+    "four_moment_components": [
+      "<(w),(x_c+h_c)^r(x_d+h_d)^s S_cS_d(G)>",
+      "<(w),(x_c+h_c)^r x_d^s S_c(G)>",
+      "<(w),x_c^r(x_d+h_d)^s S_d(G)>",
+      "<(w),x_c^r x_d^s G>"
+    ],
+    "degree_1_1_semantics_must_exactly_match_F": true,
+    "arbitrary_finite_bivariate_polynomial_closure_follows_only_by_linearity_after_monomial_closure": true
+  },
+  "terminals": {
+    "closure": "MIXED_POLYNOMIAL_MULTIPLIER_COKERNEL_CLOSURE_CERTIFIED",
+    "finite_residue": "MIXED_POLYNOMIAL_CLOSURE_REDUCES_TO_FINITE_MULTIDEGREE_SET",
+    "semantic_ambiguity": "MIXED_POLYNOMIAL_CLOSURE_NOT_CERTIFIED__SEMANTIC_FUNCTIONAL_AMBIGUITY",
+    "blocker": "MIXED_POLYNOMIAL_CLOSURE_NOT_CERTIFIED__CHARACTERIZED_BLOCKER"
+  },
+  "claim_firewall": {
+    "arbitrary_degree_cutoff_authorized": false,
+    "pure_axis_terms_authorized": false,
+    "same_coordinate_pairs_authorized": false,
+    "support_or_harmonic_enlargement_authorized": false,
+    "candidate_bank_or_scalar_namespace_widening_authorized": false,
+    "rational_prefactors_authorized": false,
+    "recurrence_search_authorized": false,
+    "correction_layer_recombination_authorized": false,
+    "candidate_linear_combinations_authorized": false,
+    "theorem_promotion_authorized": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}
