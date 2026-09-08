@@ -419,12 +419,3 @@ def build() -> dict:
         "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
         "terminal": terminal,
     }
-
-
-def main() -> int:
-    print(json.dumps(build(), sort_keys=True, separators=(",", ":")))
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
