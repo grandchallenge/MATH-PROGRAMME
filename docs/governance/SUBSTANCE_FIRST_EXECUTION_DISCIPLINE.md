@@ -2,8 +2,25 @@
 
 **Control:** `MP-SUBSTANCE-FIRST-EXECUTION-001`  
 **Authority:** Human Steward directive, 2026-09-07  
-**Status:** binding operating doctrine for substantive GCL work and handoffs  
+**Status:** binding execution discipline within its admitted and delegated scope; cross-repository use does not transfer MATH-PROGRAMME authority  
+**Constitutional relationship:** subordinate to `grandchallenge/INTELLECT:CONSTITUTION.md`, effective amendments, the live constitutional authority schedule, and exact domain authorities  
 **Relationship:** complements `MP-STREAMLINED-EXECUTION-001`; does not create a new approval plane
+
+## Authority compatibility
+
+This discipline governs execution behavior, not constitutional or domain authority.
+
+The live GCL authority chain remains controlling:
+
+1. the Human Steward retains powers expressly reserved by the INTELLECT Constitution and live authority schedule;
+2. `grandchallenge/INTELLECT:CONSTITUTION.md`, effective amendments, and the live constitutional authority schedule govern constitutional powers, obligations, work-package phases, office obligations, and reserved transitions;
+3. admitted cross-programme standards are registered and published through `grandchallenge/gcl-standards` as a subordinate layer;
+4. each target repository acts only within its delegated domain authority and exact adopted controls;
+5. GitHub surfaces provide operational and evidentiary functions and cannot create constitutional, certification, production-semantic, or domain authority by themselves.
+
+Specific boundaries are unchanged: `grandchallenge/MATHCERT` alone renders bounded mathematical certification dispositions through accepted routes; `grandchallenge/AETHER` retains the production semantic authority assigned by INTELLECT Article IX; `grandchallenge/MATH-PROGRAMME` retains only its delegated mathematics-domain powers. Custody of this discipline or of a handoff in MATH-PROGRAMME does not enlarge that jurisdiction.
+
+Where this discipline is reused outside MATH-PROGRAMME, it applies only to the extent compatible with the higher constitutional chain, the target repository's delegated authority, and any exact domain-specific instrument. It cannot waive an INTELLECT phase gate or office obligation, manufacture specialist independence, alter a work-package contract, or create a second lifecycle.
 
 ## Purpose
 
@@ -27,6 +44,8 @@ Every material activity must satisfy at least one of these tests:
 If an activity satisfies none of these tests, defer or abandon it.
 
 The execution lead must not substitute a process objective for the primary deliverable. A successful workflow, green CI suite, release archive, merge, ledger update, or evidence packet is not substantive completion unless the work set itself makes that object the primary deliverable.
+
+For an INTELLECT-governed work package, the primary deliverable and acceptance criteria are inherited from the lawful work-package state. The Executor must not silently redefine them during realization.
 
 ## 2. Artifact hierarchy
 
@@ -57,6 +76,8 @@ A new process artifact or control step requires a concrete answer to:
 
 If those questions cannot be answered, do not add the mechanism.
 
+Process proportionality does not waive a substantive condition or office obligation required by the live INTELLECT work-package gate or an exact domain authority.
+
 ## 4. Material-progress rule
 
 A continuation or execution tranche counts as **material progress** only when it does one or more of the following:
@@ -69,6 +90,8 @@ A continuation or execution tranche counts as **material progress** only when it
 Creating additional intermediate state, evidence packaging, transport identities, procedural records, or repair scaffolding is not sufficient by itself.
 
 Status reports must distinguish substantive progress from process state.
+
+A local terminal state is not automatically an INTELLECT phase transition. Where the work is constitutionally governed, phase advancement remains subject to the live phase-gate substance and office obligations.
 
 ## 5. Continuation discipline
 
@@ -113,6 +136,8 @@ Machine evidence must not be used as a proxy for intellectual, scientific, mathe
 
 A green build proves only what the build and checks actually test.
 
+These labels are execution-state distinctions, not a replacement for INTELLECT work-package phases or domain-specific claim-status vocabularies.
+
 ## 8. Drift tripwires
 
 The following conditions require immediate re-planning, not another procedural continuation.
@@ -153,13 +178,31 @@ New supporting artifacts are accumulating faster than required substantive outpu
 
 Response: freeze creation of supporting artifacts until each proposed artifact passes the process-proportionality test.
 
+### `AUTHORITY_INVERSION`
+
+A handoff, programme rule, repository setting, workflow, or execution convention is being treated as authority over a higher constitutional or domain layer.
+
+Response: stop the transition; resolve the live INTELLECT authority chain and exact domain jurisdiction; continue only within delegated scope.
+
+### `LIFECYCLE_DUPLICATION`
+
+A handoff, status vocabulary, or local completion state is being treated as a lifecycle parallel to the INTELLECT work-package phases.
+
+Response: map the state back to the current lawful INTELLECT phase or mark the work package relationship `not applicable`; do not mint a new phase.
+
 ## 9. Handoff inheritance
 
-Every future GCL handoff for a substantial work set must explicitly inherit this control.
+Every future GCL handoff using this contract for a substantial work set must explicitly inherit this control only within the compatible authority scope established above.
 
 Its first executable preflight must include:
 
 ```text
+CONSTITUTIONAL AUTHORITY HEAD
+TARGET WORK REPOSITORY
+TARGET PROTECTED HEAD
+INTELLECT WORK-PACKAGE PHASE: <phase / not applicable>
+CONTROLLING DOCTRINE REVISIONS
+TARGET DOMAIN AUTHORITY
 PRIMARY DELIVERABLE
 MATERIAL ACCEPTANCE CRITERIA
 CURRENT SUBSTANTIVE STATE
@@ -174,7 +217,9 @@ AUTHORITY REQUIRED: delegated / reserved
 
 A handoff must not require a future agent to reproduce historical process that is no longer materially necessary. Preserve historical records as evidence; inherit only live controls and material dependencies.
 
-If a domain-specific handoff conflicts with this discipline by requiring unnecessary ceremony, `MP-STREAMLINED-EXECUTION-001` and this control govern routine bounded execution unless the domain instrument protects a specific material boundary and explicitly reserves the stricter procedure.
+If a domain-specific handoff appears to conflict with this discipline, resolve the conflict through the live INTELLECT authority chain and exact target-domain authority. This discipline and `MP-STREAMLINED-EXECUTION-001` may remove unnecessary routine ceremony only where the higher or domain instrument does not require the stricter substantive condition, office finding, independence property, or reserved transition.
+
+A handoff is an inheritance aid. It does not itself perform an INTELLECT Integration transition, declare a work package Complete, or authorize a target-domain promotion.
 
 ## 10. Execution-lead self-check
 
@@ -184,6 +229,8 @@ At each meaningful checkpoint, the execution lead must be able to answer:
 
 If the answer is no, classify the work performed as process state rather than substantive progress and evaluate the drift tripwires before proceeding.
 
+For INTELLECT-governed work, also ask whether the activity remains lawful within the current work-package phase and delegated office/domain authority.
+
 ## 11. Terminal-state bias
 
 Prefer completing one meaningful unit to a defensible terminal state over opening many partially complete surfaces.
@@ -192,9 +239,11 @@ Do not optimize for the count of commits, branches, artifacts, checks, handoff r
 
 Once the primary artifact and all required acceptance criteria are complete, close the minimum required governance path promptly. Do not continue producing evidence after the governing boundary is already satisfied.
 
+Where INTELLECT governs the work package, local material closure does not bypass the required lawful transition to the next phase or to `Complete`.
+
 ## 12. Non-expansion boundary
 
-This doctrine does not waive mathematical review, certification, security, provenance, publication authority, or any other materially reserved boundary.
+This doctrine does not waive constitutional law, INTELLECT work-package gates or office obligations, mathematical review or certification, security, provenance, publication authority, AETHER production-semantic authority, target-repository jurisdiction, or any other materially reserved boundary.
 
 It changes the default execution question from:
 
@@ -204,4 +253,4 @@ To:
 
 > What is the least process necessary to protect the substantive result?
 
-Where an exact protected instrument requires a control, perform it. Where it does not, substance remains primary.
+Where an exact protected instrument requires a control, perform it. Where it does not, substance remains primary. Nothing in this discipline makes MATH-PROGRAMME a GCL-wide constitutional authority or creates a lifecycle parallel to INTELLECT.
