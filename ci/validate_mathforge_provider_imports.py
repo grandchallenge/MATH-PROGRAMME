@@ -15,9 +15,9 @@ REGISTRY_PATH = ROOT / "governance" / "mathforge_provider_imports.json"
 SCHEMA_PATH = ROOT / "schemas" / "mathforge_provider_import.schema.json"
 DOMAIN_REGISTRY_PATH = ROOT / "DOMAIN_REGISTRY.yaml"
 
-EXPECTED_PROVIDER_COMMIT = "d287f457537540a69eb9446bd71567db5e334fbd"
+EXPECTED_PROVIDER_COMMIT = "c44fef1d5d235b2e496bcee9ba0f7fc54212fa0d"
 EXPECTED_IMPORTS = {
-    "BSD-001": ("retrospective", "provider_manifests/BSD-001.json", "ee6a5ada9e06694ca66c293bad3bb4f3f1f9162a"),
+    "BSD-001": ("retrospective", "provider_manifests/BSD-001.json", "0926dd22a3c5fe474cc21347994de99d1812ae8b"),
     "HC-001": ("native", "provider_manifests/HC-001.json", "1bce7ab1e2cc7daa8f125747c69bad262adc080f"),
     "NS-CI-001": ("native", "provider_manifests/NS-CI-001.json", "ed5220c31e38ba3458dc8a94a462c89c285fc22e"),
     "OZ-001": ("retrospective", "provider_manifests/OZ-001.json", "361da6642ff3ac7953b530ee0eb21659dc94fb65"),
