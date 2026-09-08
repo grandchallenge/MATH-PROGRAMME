@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import sys
 from fractions import Fraction as Q
+from functools import lru_cache
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -74,6 +75,7 @@ def _compose(base_sig, left_sig, right_sig, r: int, s: int):
     return tuple(sorted(out.items()))
 
 
+@lru_cache(maxsize=None)
 def _independent_solutions(base_sig, left_sig, right_sig, target_sig):
     base = _as_dict(base_sig)
     left = _as_dict(left_sig)
@@ -89,7 +91,7 @@ def _independent_solutions(base_sig, left_sig, right_sig, target_sig):
         for factor in factors
     }
     if any(value < 0 for value in diff.values()):
-        return []
+        return ()
     rbounds = [diff[factor] // exp for factor, exp in left.items() if exp]
     sbounds = [diff[factor] // exp for factor, exp in right.items() if exp]
     if not rbounds or not sbounds:
@@ -99,7 +101,7 @@ def _independent_solutions(base_sig, left_sig, right_sig, target_sig):
         for r in range(min(rbounds), -1, -1):
             if _compose(base_sig, left_sig, right_sig, r, s) == target_sig:
                 out.append((r, s))
-    return sorted(out)
+    return tuple(sorted(out))
 
 
 def _base_index(vec: dict):
@@ -123,26 +125,24 @@ def _stratum_id(cell_id: str) -> str:
 
 
 def _ledger(
-    witness,
-    base_vec,
+    witness_index,
+    base_index,
     left_factors,
     left_kind,
     right_factors,
     right_kind,
 ):
-    widx = _witness_index(witness)
-    bidx = _base_index(base_vec)
     aggregate = {}
     possible = set()
     matches = []
     first = {}
-    for key in sorted(set(widx) & set(bidx), key=repr, reverse=True):
+    for key in sorted(set(witness_index) & set(base_index), key=repr, reverse=True):
         cell_id, scalar, mon = key
         sid = _stratum_id(cell_id)
         left_sig, left_coeff = left_factors[sid][left_kind]
         right_sig, right_coeff = right_factors[sid][right_kind]
-        for target_sig, weight in reversed(widx[key]):
-            for base_sig, coeff in reversed(bidx[key]):
+        for target_sig, weight in reversed(witness_index[key]):
+            for base_sig, coeff in reversed(base_index[key]):
                 for r, s in _independent_solutions(
                     base_sig,
                     left_sig,
@@ -183,39 +183,70 @@ def _ledger(
     }
 
 
-def _independent_record(pair, endpoint, uid, strata, bank, f_record):
-    left, right = pair
+def _cached_vector_index(
+    endpoint,
+    uid,
+    shifts,
+    strata,
+    bank,
+    poly_cache,
+    vector_cache,
+):
     scalar, mon = uid
-    g = semantic.direct_original_monomial(mon)
-    gc = vf._shift_poly_independent(g, left)
-    gd = vf._shift_poly_independent(g, right)
-    gcd = vf._shift_poly_independent(gc, right)
+    poly_key = (mon, tuple(shifts))
+    poly = poly_cache.get(poly_key)
+    if poly is None:
+        poly = semantic.direct_original_monomial(mon)
+        for channel in shifts:
+            poly = vf._shift_poly_independent(poly, channel)
+        poly_cache[poly_key] = poly
+    vector_key = (endpoint, uid, tuple(shifts))
+    cached = vector_cache.get(vector_key)
+    if cached is None:
+        vec = semantic.direct_global_column_from_poly(
+            poly, scalar, endpoint, strata, bank["active"]
+        )
+        cached = (vec, _base_index(vec))
+        vector_cache[vector_key] = cached
+    return cached
 
-    active = bank["active"]
-    vec_g = semantic.direct_global_column_from_poly(
-        g, scalar, endpoint, strata, active
+
+def _independent_record(
+    pair,
+    endpoint,
+    uid,
+    strata,
+    bank,
+    f_record,
+    witness_index,
+    left_factors,
+    right_factors,
+    poly_cache,
+    vector_cache,
+):
+    left, right = pair
+    _vec_g, idx_g = _cached_vector_index(
+        endpoint, uid, (), strata, bank, poly_cache, vector_cache
     )
-    vec_gc = semantic.direct_global_column_from_poly(
-        gc, scalar, endpoint, strata, active
+    _vec_gc, idx_gc = _cached_vector_index(
+        endpoint, uid, (left,), strata, bank, poly_cache, vector_cache
     )
-    vec_gd = semantic.direct_global_column_from_poly(
-        gd, scalar, endpoint, strata, active
+    _vec_gd, idx_gd = _cached_vector_index(
+        endpoint, uid, (right,), strata, bank, poly_cache, vector_cache
     )
-    vec_gcd = semantic.direct_global_column_from_poly(
-        gcd, scalar, endpoint, strata, active
+    _vec_gcd, idx_gcd = _cached_vector_index(
+        endpoint, uid, (left, right), strata, bank, poly_cache, vector_cache
     )
 
-    lf = _factor_map(left, strata)
-    rf = _factor_map(right, strata)
     ledgers = {
-        "ScSd": _ledger(bank["witness"], vec_gcd, lf, "x1", rf, "x1"),
-        "Sc": _ledger(bank["witness"], vec_gc, lf, "x1", rf, "x0"),
-        "Sd": _ledger(bank["witness"], vec_gd, lf, "x0", rf, "x1"),
-        "I": _ledger(bank["witness"], vec_g, lf, "x0", rf, "x0"),
+        "ScSd": _ledger(witness_index, idx_gcd, left_factors, "x1", right_factors, "x1"),
+        "Sc": _ledger(witness_index, idx_gc, left_factors, "x1", right_factors, "x0"),
+        "Sd": _ledger(witness_index, idx_gd, left_factors, "x0", right_factors, "x1"),
+        "I": _ledger(witness_index, idx_g, left_factors, "x0", right_factors, "x0"),
     }
     domain = set()
     for ledger in ledgers.values():
-        domain.update(ledger["_aggregate"])
+        domain.update(map(tuple, ledger["possible_multidegrees"]))
     domain = {
         degree for degree in domain if degree[0] >= 1 and degree[1] >= 1
     }
@@ -273,6 +304,7 @@ def verify(result: dict) -> dict:
         raise AssertionError("T3-011-G identity drift")
     producer.validate_scope()
     _assert_f_locks_independent()
+    _independent_solutions.cache_clear()
 
     f_result = producer.f.build()
     f_replay = vf.verify(f_result)
@@ -307,13 +339,28 @@ def verify(result: dict) -> dict:
     if len(emitted) != producer.F_EXPECTED_RECORDS:
         raise AssertionError("T3-011-G emitted candidate cardinality drift")
 
+    coordinate_factors = {
+        channel: _factor_map(channel, strata)
+        for channel in producer.CHANNEL_COORDINATE
+    }
+    witness_indexes = {
+        channel: _witness_index(bank["witness"])
+        for channel, bank in banks.items()
+    }
+    poly_cache = {}
+    vector_cache = {}
+
     global_residue = set()
     first_residue = None
     first_ambiguity = None
     cursor = 0
     for pair_index, pair in enumerate(producer.ADMITTED_PAIRS):
+        left, right = pair
+        left_factors = coordinate_factors[left]
+        right_factors = coordinate_factors[right]
         for endpoint_index, endpoint in enumerate(pair):
             bank = banks[endpoint]
+            witness_index = witness_indexes[endpoint]
             for candidate_index, uid in enumerate(bank["candidates"]):
                 rec = emitted[cursor]
                 expected_identity = {
@@ -337,6 +384,11 @@ def verify(result: dict) -> dict:
                     strata,
                     bank,
                     f_records[cursor],
+                    witness_index,
+                    left_factors,
+                    right_factors,
+                    poly_cache,
+                    vector_cache,
                 )
                 for key, value in alt.items():
                     if rec.get(key) != value:
@@ -386,6 +438,7 @@ def verify(result: dict) -> dict:
     if result.get("t3_status") != "OPEN_WITH_CHARACTERIZED_BLOCKER":
         raise AssertionError("T3-011-G T3 status drift")
 
+    cache_info = _independent_solutions.cache_info()
     return {
         "operation": producer.OPERATION,
         "status": "INDEPENDENT_T3_011_G_REPLAY_COMPLETE",
@@ -395,5 +448,13 @@ def verify(result: dict) -> dict:
         "all_mixed_polynomial_multipliers_cokernel_invisible": (
             terminal == producer.CLOSURE_TERMINAL
         ),
+        "execution_ledger": {
+            "coordinate_factor_maps": len(coordinate_factors),
+            "witness_indexes": len(witness_indexes),
+            "cached_shifted_polynomials": len(poly_cache),
+            "cached_semantic_vectors": len(vector_cache),
+            "multidegree_solver_cache_hits": cache_info.hits,
+            "multidegree_solver_cache_misses": cache_info.misses,
+        },
         "terminal": terminal,
     }
