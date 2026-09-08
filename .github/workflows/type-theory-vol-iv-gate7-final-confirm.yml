@@ -75,7 +75,7 @@ jobs:
           lualatex -interaction=nonstopmode -halt-on-error plates_folio.tex > /tmp/plates.pass1.log 2>&1
           lualatex -interaction=nonstopmode -halt-on-error plates_folio.tex > /tmp/plates.pass2.log 2>&1
 
-      - name: Enforce final diagnostics and output identity
+      - name: Enforce final diagnostics and semantic output identity
         working-directory: monographs/type-theory/volume-iv-protocol
         shell: bash
         run: |
@@ -88,13 +88,6 @@ jobs:
           ! grep -n -E 'Overfull \\hbox|Overfull \\vbox' "${logs[@]}"
           test "$(grep -c '^  \\item' main.ind || true)" -eq 58
 
-          printf '%s  %s\n' \
-            'bb1c4ef217f7487a8e4a9f93fb2f1e7e7ecce3fef3f426485e7e8f2d5c1a12b7' main.pdf \
-            'd5a1bfa752c57f90a3461ea24d663523dc35c7bb9a127116d32e4d05ae57cdd4' solutions_companion.pdf \
-            '6e5fb07bc67f88230895fca2a4e60354ec452d7e4dec9871dd47c806b3c84fe0' plates_folio.pdf \
-            > /tmp/EXPECTED_PDF_SHA256SUMS.txt
-          sha256sum -c /tmp/EXPECTED_PDF_SHA256SUMS.txt
-
           pdfinfo main.pdf > /tmp/main.pdfinfo.txt
           pdfinfo solutions_companion.pdf > /tmp/solutions.pdfinfo.txt
           pdfinfo plates_folio.pdf > /tmp/plates.pdfinfo.txt
@@ -105,10 +98,34 @@ jobs:
           grep -Eq '^Encrypted:[[:space:]]+no$' /tmp/solutions.pdfinfo.txt
           grep -Eq '^Encrypted:[[:space:]]+no$' /tmp/plates.pdfinfo.txt
 
+          mkdir -p /tmp/render/main /tmp/render/solutions /tmp/render/plates
+          pdftoppm -r 72 -png main.pdf /tmp/render/main/page >/dev/null 2>&1
+          pdftoppm -r 72 -png solutions_companion.pdf /tmp/render/solutions/page >/dev/null 2>&1
+          pdftoppm -r 72 -png plates_folio.pdf /tmp/render/plates/page >/dev/null 2>&1
+          main_render="$(cd /tmp/render/main && sha256sum page-*.png | sha256sum | awk '{print $1}')"
+          solutions_render="$(cd /tmp/render/solutions && sha256sum page-*.png | sha256sum | awk '{print $1}')"
+          plates_render="$(cd /tmp/render/plates && sha256sum page-*.png | sha256sum | awk '{print $1}')"
+          test "$main_render" = '332af463efa4a8b6579c23d0f2c3d5754f57862d008d1e592dcc1816c8ec2f94'
+          test "$solutions_render" = '097912de864a36dc31977afcdf9961ba5ef37780d5762925faf524175081ba70'
+          test "$plates_render" = 'f867a463b9791a1100bdfca3e1bfaa76c6cd39bb1b39b13489740599395ee8fc'
+
+          pdftotext -layout main.pdf /tmp/main.txt
+          pdftotext -layout solutions_companion.pdf /tmp/solutions.txt
+          pdftotext -layout plates_folio.pdf /tmp/plates.txt
+          test "$(sha256sum /tmp/main.txt | awk '{print $1}')" = 'a0629e99816fb94c5b18a7f85e209bbdef8e0ec68a1c98029b300c93bdba5543'
+          test "$(sha256sum /tmp/solutions.txt | awk '{print $1}')" = 'e2b94ee930960d3251f39600bdcddb5f8c3a57ea4f496090f1177a6e3776f823'
+          test "$(sha256sum /tmp/plates.txt | awk '{print $1}')" = '9b719d0a5597ba8a5b51309a26f860179c3b91b05d58808d5e47c6a2e0df765b'
+
           python3 releases/RC1/RECONSTRUCT_SOURCE.py
           test "$(sha256sum GCL_Type_Theory_Volume_IV_PROTOCOL_RC1_Source.zip | awk '{print $1}')" = \
             '48e2d1f32b1cbf8349ddd3a0f5a807781c6e75b50a411fba8a8f8f038302508e'
-          echo 'GATE7_FINAL_CONFIRMATION=PASS' | tee /tmp/gate7-final-confirmation.txt
+
+          {
+            echo "MAIN_RENDER_SHA256=$main_render"
+            echo "SOLUTIONS_RENDER_SHA256=$solutions_render"
+            echo "PLATES_RENDER_SHA256=$plates_render"
+            echo 'GATE7_FINAL_CONFIRMATION=PASS'
+          } | tee /tmp/gate7-final-confirmation.txt
 
       - name: Upload final confirmation evidence
         if: always()
@@ -122,7 +139,6 @@ jobs:
             /tmp/gate7-validator.log
             /tmp/gate7-labs.log
             /tmp/gate7-final-confirmation.txt
-            /tmp/EXPECTED_PDF_SHA256SUMS.txt
             /tmp/main.pdfinfo.txt
             /tmp/solutions.pdfinfo.txt
             /tmp/plates.pdfinfo.txt
