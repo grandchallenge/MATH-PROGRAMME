@@ -117,7 +117,7 @@ jobs:
           test "$(sha256sum /tmp/plates.txt | awk '{print $1}')" = '9b719d0a5597ba8a5b51309a26f860179c3b91b05d58808d5e47c6a2e0df765b'
 
           python3 releases/RC1/RECONSTRUCT_SOURCE.py
-          test "$(sha256sum GCL_Type_Theory_Volume_IV_PROTOCOL_RC1_Source.zip | awk '{print $1}')" = \
+          test "$(sha256sum releases/RC1/GCL_Type_Theory_Volume_IV_PROTOCOL_RC1_Source.zip | awk '{print $1}')" = \
             '48e2d1f32b1cbf8349ddd3a0f5a807781c6e75b50a411fba8a8f8f038302508e'
 
           {
