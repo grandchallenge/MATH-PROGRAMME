@@ -109,12 +109,25 @@ def continuity_required_worksets(root: Path = ROOT) -> dict[str, str]:
         explicit = state.get("continuity_required") is True
         relative = path.relative_to(root).as_posix()
         type_theory = relative.startswith("monographs/type-theory/")
+        durable_state = state.get("durable_admission_status", state.get("durable_admission"))
+        composition_complete = (
+            state.get("composition_status") == "RC_COMPOSITION_COMPLETE"
+            or state.get("composition") == "RC_COMPOSITION_COMPLETE"
+        )
+        awaiting_durable_admission = (
+            composition_complete
+            and durable_state not in {
+                "RC_DURABLY_ADMITTED",
+                "PASS_PROTECTED_ADMISSION_AND_READBACK",
+            }
+        )
         type_theory_live = (
             type_theory
             and state.get("requires_chat_history") is not True
             and (
                 state.get("composition_status") == "DEVELOPMENT"
                 or "GATE7_PENDING" in str(state.get("composition", ""))
+                or awaiting_durable_admission
             )
         )
         if explicit or type_theory_live:
