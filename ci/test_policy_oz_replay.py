@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import json
+import os
+import tempfile
 import unittest
+from types import SimpleNamespace
+from unittest import mock
 
 import policy_oz_replay as oz
 
@@ -18,6 +23,60 @@ class OzReplayRoutingTests(unittest.TestCase):
 
     def test_full_sentinel_selects_all_measured_heavy_replays(self) -> None:
         self.assertEqual(oz.select_heavy(None), list(oz.HEAVY_MODULES))
+
+    def test_merge_group_routes_exact_payload_transition(self) -> None:
+        base = "a" * 40
+        head = "b" * 40
+        with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False) as handle:
+            json.dump({"merge_group": {"base_sha": base, "head_sha": head}}, handle)
+            event_path = handle.name
+        try:
+            diff_result = SimpleNamespace(
+                returncode=0,
+                stdout="docs/governance/example.md\n",
+                stderr="",
+            )
+            with (
+                mock.patch.dict(
+                    os.environ,
+                    {
+                        "GITHUB_EVENT_NAME": "merge_group",
+                        "GITHUB_EVENT_PATH": event_path,
+                    },
+                    clear=False,
+                ),
+                mock.patch.object(oz, "_fetch_commit") as fetch_commit,
+                mock.patch.object(oz.subprocess, "run", return_value=diff_result) as run,
+            ):
+                event, changed = oz._changed_paths()
+
+            self.assertEqual(event, "merge_group")
+            self.assertEqual(changed, ["docs/governance/example.md"])
+            fetch_commit.assert_has_calls([mock.call(base), mock.call(head)])
+            self.assertEqual(
+                run.call_args.args[0],
+                ["git", "diff", "--name-only", base, head, "--"],
+            )
+        finally:
+            os.unlink(event_path)
+
+    def test_merge_group_missing_identity_fails_closed(self) -> None:
+        with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False) as handle:
+            json.dump({"merge_group": {"base_sha": "a" * 40}}, handle)
+            event_path = handle.name
+        try:
+            with mock.patch.dict(
+                os.environ,
+                {
+                    "GITHUB_EVENT_NAME": "merge_group",
+                    "GITHUB_EVENT_PATH": event_path,
+                },
+                clear=False,
+            ):
+                with self.assertRaisesRegex(RuntimeError, "transition base/head unavailable"):
+                    oz._changed_paths()
+        finally:
+            os.unlink(event_path)
 
     def test_stage_003_and_004_are_local(self) -> None:
         self.assertEqual(

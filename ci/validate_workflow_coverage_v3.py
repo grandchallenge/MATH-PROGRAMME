@@ -258,9 +258,10 @@ def ghos_routing_enforcement_errors(texts: dict[str, str]) -> list[str]:
         return errors
     workflow = legacy.load_yaml_text(text)
     trigger = _trigger(workflow)
-    if set(trigger) != {"pull_request_target", "push", "workflow_dispatch"}:
+    expected_triggers = {"pull_request_target", "merge_group", "push", "workflow_dispatch"}
+    if set(trigger) != expected_triggers:
         errors.append(
-            f"{GHOS_ROUTING_WORKFLOW}: triggers must be exactly pull_request_target, push, and workflow_dispatch"
+            f"{GHOS_ROUTING_WORKFLOW}: triggers must be exactly pull_request_target, merge_group, push, and workflow_dispatch"
         )
     pull_request_target = trigger.get("pull_request_target", {})
     pr_types = pull_request_target.get("types", []) if isinstance(pull_request_target, dict) else []
@@ -268,6 +269,10 @@ def ghos_routing_enforcement_errors(texts: dict[str, str]) -> list[str]:
         errors.append(f"{GHOS_ROUTING_WORKFLOW}: pull_request_target trigger set drift")
     if isinstance(pull_request_target, dict) and _as_list(pull_request_target.get("branches")) != ["main"]:
         errors.append(f"{GHOS_ROUTING_WORKFLOW}: pull_request_target must bind main")
+    merge_group = trigger.get("merge_group", {})
+    merge_group_types = merge_group.get("types", []) if isinstance(merge_group, dict) else []
+    if merge_group_types != ["checks_requested"]:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: merge_group must be checks_requested only")
     push = trigger.get("push", {})
     if not isinstance(push, dict) or _as_list(push.get("branches")) != ["main"]:
         errors.append(f"{GHOS_ROUTING_WORKFLOW}: push trigger must bind main")
@@ -284,13 +289,19 @@ def ghos_routing_enforcement_errors(texts: dict[str, str]) -> list[str]:
     if workflow.get("permissions") != {"contents": "read"}:
         errors.append(f"{GHOS_ROUTING_WORKFLOW}: top-level permissions must remain contents-read only")
     jobs = workflow.get("jobs", {})
-    if not isinstance(jobs, dict) or set(jobs) != {"routing-controller", "base-refresh"}:
-        errors.append(f"{GHOS_ROUTING_WORKFLOW}: job set must remain routing-controller plus base-refresh")
+    expected_jobs = {"routing-controller", "merge-group-controller", "base-refresh"}
+    if not isinstance(jobs, dict) or set(jobs) != expected_jobs:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: job set must remain pre-queue controller, merge-group controller, plus base-refresh")
     routing_controller = _job(workflow, "routing-controller")
+    merge_group_controller = _job(workflow, "merge-group-controller")
     base_refresh = _job(workflow, "base-refresh")
     expected_controller_permissions = {
         "contents": "read",
         "pull-requests": "read",
+        "statuses": "write",
+    }
+    expected_merge_group_permissions = {
+        "contents": "read",
         "statuses": "write",
     }
     expected_refresh_permissions = {
@@ -300,6 +311,8 @@ def ghos_routing_enforcement_errors(texts: dict[str, str]) -> list[str]:
     }
     if routing_controller.get("permissions") != expected_controller_permissions:
         errors.append(f"{GHOS_ROUTING_WORKFLOW}: routing-controller permission profile drift")
+    if merge_group_controller.get("permissions") != expected_merge_group_permissions:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: merge-group-controller permission profile drift")
     if base_refresh.get("permissions") != expected_refresh_permissions:
         errors.append(f"{GHOS_ROUTING_WORKFLOW}: base-refresh permission profile drift")
 
@@ -307,24 +320,38 @@ def ghos_routing_enforcement_errors(texts: dict[str, str]) -> list[str]:
         "refs/pull/${PR_NUMBER}/merge",
         'test "$PARENT_BASE" = "$CURRENT_BASE"',
         'test "$PARENT_HEAD" = "$HEAD_SHA"',
+        "GHOS_PREQUEUE_RESOLUTION_ATTEMPT",
+        "GHOS_PREQUEUE_RESOLUTION_FAILED",
+        "GHOS_PREQUEUE_RESOLVED",
         "Reject enforcement self-modification",
         "protected-base/.github/workflows/ghos-routing-enforcement.yml",
         "effective-candidate/.github/workflows/ghos-routing-enforcement.yml",
+        "refs/heads/gh-readonly-queue/main/*",
+        'test "$FETCHED_SHA" = "$MERGE_GROUP_SHA"',
+        'merge-base --is-ancestor "$CURRENT_BASE" "$MERGE_GROUP_SHA"',
+        "Verify merge-group uses protected enforcement workflow",
         "ef1cce6029233a68cf46063cea2384772fcae613",
         "fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17",
         "--root effective-candidate",
         "Verify protected base remained current through evaluation",
+        "Verify protected base remained current through merge-group evaluation",
         '"context": "routing-enforcement"',
-        '/statuses/{os.environ["MERGE_SHA"]}',
+        '/statuses/{os.environ["STATUS_SHA"]}',
+        "GH-OS pre-queue routing valid; final merge-group check still required",
+        "GH-OS routing valid on native merge-group candidate",
         "/actions/workflows/ghos-routing-enforcement.yml/dispatches",
+        "GHOS_BASE_REFRESH_OPEN_PR_COUNT",
+        "GHOS_BASE_REFRESH_DISPATCH_COUNT",
+        "GHOS_BASE_REFRESH_API_CALLS",
+        "GHOS_BASE_REFRESH_ELAPSED_SECONDS",
         "persist-credentials: false",
     )
     for marker in required_markers:
         if marker not in text:
-            errors.append(f"{GHOS_ROUTING_WORKFLOW}: missing effective-candidate control marker {marker}")
+            errors.append(f"{GHOS_ROUTING_WORKFLOW}: missing native-admission control marker {marker}")
 
-    if text.count("statuses: write") != 1:
-        errors.append(f"{GHOS_ROUTING_WORKFLOW}: exactly one status-write grant is required")
+    if text.count("statuses: write") != 2:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: exactly two narrowly scoped status-write grants are required")
     if text.count("actions: write") != 1:
         errors.append(f"{GHOS_ROUTING_WORKFLOW}: exactly one actions-write grant is required")
     for forbidden in (
@@ -345,18 +372,31 @@ def ghos_routing_enforcement_errors(texts: dict[str, str]) -> list[str]:
         if forbidden in text:
             errors.append(f"{GHOS_ROUTING_WORKFLOW}: forbidden routing-controller capability {forbidden}")
 
-    sequence = (
+    prequeue_sequence = (
         "Resolve current effective merge identity",
-        "Mark effective candidate pending",
+        "Mark pre-queue routing pending on PR head",
         "Materialize effective candidate as inert data",
         "Reject enforcement self-modification",
         "Verify and execute external gate against effective candidate",
         "Verify protected base remained current through evaluation",
-        "Publish required effective-candidate status",
+        "Publish required pre-queue status on PR head",
     )
-    positions = [text.find(marker) for marker in sequence]
+    positions = [text.find(marker) for marker in prequeue_sequence]
     if any(position < 0 for position in positions) or positions != sorted(positions):
-        errors.append(f"{GHOS_ROUTING_WORKFLOW}: effective-candidate validation sequence drift")
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: pre-queue validation sequence drift")
+
+    merge_group_sequence = (
+        "Bind native merge-group identity",
+        "Mark merge-group routing pending",
+        "Materialize merge-group candidate as inert data",
+        "Verify merge-group uses protected enforcement workflow",
+        "Verify and execute external gate against merge-group candidate",
+        "Verify protected base remained current through merge-group evaluation",
+        "Publish required merge-group status",
+    )
+    positions = [text.find(marker) for marker in merge_group_sequence]
+    if any(position < 0 for position in positions) or positions != sorted(positions):
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: merge-group validation sequence drift")
     return errors
 
 
@@ -367,6 +407,7 @@ def workflow_coverage_errors(root=legacy.ROOT, texts=None, evidence=None):
         f"{ACTIVATION_WORKFLOW}:activate: non-Pages job permissions may not exceed contents: read",
         "administrative-maintenance-candidate.yml:prepare: non-Pages job permissions may not exceed contents: read",
         f"{GHOS_ROUTING_WORKFLOW}:routing-controller: non-Pages job permissions may not exceed contents: read",
+        f"{GHOS_ROUTING_WORKFLOW}:merge-group-controller: non-Pages job permissions may not exceed contents: read",
         f"{GHOS_ROUTING_WORKFLOW}:base-refresh: non-Pages job permissions may not exceed contents: read",
     }
     errors = [error for error in errors if error not in delegated]
@@ -387,7 +428,7 @@ def main() -> int:
         return 1
     print(
         "workflow coverage v3: active bounded administrative runtime, separated Candidate and Referee identities, "
-        "protected exact-head merge, effective-candidate GH-OS routing with exact bounded status/action privileges, "
+        "protected exact-head merge, two-stage pre-queue/native-merge-group GH-OS routing with bounded status/action privileges, "
         "mirror-only synchronization, manual control-plane gates, and claim boundaries are valid"
     )
     return 0

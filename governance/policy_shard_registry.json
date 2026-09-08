@@ -13,6 +13,13 @@
       },
       {
         "shard": "campaigns",
+        "command_index": 2,
+        "command": ["python3", "ci/validate_campaign_replays.py"],
+        "timeout_seconds": 1680,
+        "reason": "The complete campaign replay traverses the retained computational Odd Zeta stages; native merge-group evidence exceeded the 15-minute default while continuing to produce valid replay output."
+      },
+      {
+        "shard": "campaigns",
         "command_index": 5,
         "command": ["python3", "ci/policy_oz_replay.py", "--mode", "campaign", "--report-json", "oz-campaign-test-timing.json"],
         "timeout_seconds": 1680,
