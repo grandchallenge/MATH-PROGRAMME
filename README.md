@@ -11,9 +11,11 @@ The programme exists to turn mathematical curiosity into checked understanding w
 
 ## Programme progress — protected concurrent execution
 
-The programme now operates under the protected streamlined execution model established by `MP-STREAMLINED-EXECUTION-001`.
+The programme now operates under the protected streamlined execution model established by `MP-STREAMLINED-EXECUTION-001`, together with the substance-first execution discipline established by `MP-SUBSTANCE-FIRST-EXECUTION-001`.
 
 Routine bounded administrative, documentation, engineering, workflow, maintenance, routing, synchronization, and campaign-execution work proceeds under standing delegated authority. It does not acquire a fresh Human Steward or independent-review gate merely because a branch head or protected `main` moved. Specialist non-author review remains reserved for substantive mathematical certification, source-semantic adjudication, constitutional authority expansion, security-sensitive protection weakening, and external claim promotion.
+
+For substantive work, the primary mathematical, scientific, technical, editorial, or product artifact remains the object of optimization. Governance, CI, evidence, provenance, release engineering, and repository mechanics must remain the minimum control path required to protect that artifact. Repeated continuation without material primary-artifact progress, process dominance, evidence substitution, remediation recursion, objective drift, and artifact inflation trigger re-planning rather than more ceremony.
 
 Evidence binds to its material evidence closure rather than indiscriminately to the whole repository SHA. Protected branches may therefore develop concurrently when the candidate remains mergeable, relevant dependencies are unchanged, affected checks pass, and scope or authority has not widened.
 
@@ -46,8 +48,9 @@ Use these as the current source of truth before opening new doctrine or domain w
 9. `CLAIM_LEDGER_STANDARD.md` — claim ledger format, support route, and promotion conditions.
 10. `CERTIFICATION_LADDER.md` — promotion gate from mathematical development to certified result.
 11. `docs/governance/STREAMLINED_EXECUTION_AMENDMENT.md` — current delegation, material-closure, concurrency, CI-proportionality, merge, and readback rules.
-12. `docs/WORKFLOW_COVERAGE.md` — current executable CI coverage, bounded replay, routing, and operational evidence.
-13. `docs/governance/AGENT_CADENCE_OPERATING_DESIGN.md` — current event-driven and campaign-local cadence interpretation; no global countdown.
+12. `docs/governance/SUBSTANCE_FIRST_EXECUTION_DISCIPLINE.md` — primary-deliverable lock, process proportionality, material-progress rules, drift tripwires, remediation-recursion limits, and mandatory handoff inheritance.
+13. `docs/WORKFLOW_COVERAGE.md` — current executable CI coverage, bounded replay, routing, and operational evidence.
+14. `docs/governance/AGENT_CADENCE_OPERATING_DESIGN.md` — current event-driven and campaign-local cadence interpretation; no global countdown.
 
 ## Presentation and pedagogy companions
 
@@ -75,7 +78,7 @@ Additional supporting files include schemas, templates, exact finite enumerators
 8. Read `docs/CROSS_PILLAR_LANES.md` when a recurring tactic, witness, or certificate path spans all three pillars.
 9. Treat `CLASSIFICATION_DISCOVERY_STANDARD.md` as binding for subject mappings, knowledge graph assertions, and discovery evidence.
 10. Treat `schemas/foundational_profile.schema.json` as the machine-readable form of the foundation-aware profile.
-11. For routine execution, classify the material closure, run affected checks, exercise delegated disposition, merge through protection, and read back protected state. Do not create synchronization commits, repeat unrelated review, or launch full-estate CI solely because `main` advanced.
+11. For routine execution, identify the primary deliverable and material acceptance criteria, classify the material closure, run affected checks, exercise delegated disposition, merge through protection, and read back protected state. Do not create synchronization commits, repeat unrelated review, launch full-estate CI solely because `main` advanced, or expand supporting process beyond what protects a material boundary.
 12. Begin the first domain with `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`, `WP01_UNION_CLOSED_STATUS_SPINE.md`, and `WP02_UNION_CLOSED_LEAN_HANDOFF.md`.
 
 ## Claim boundary
