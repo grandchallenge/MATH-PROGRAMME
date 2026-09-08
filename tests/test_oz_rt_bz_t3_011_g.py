@@ -26,6 +26,8 @@ class T3011GMixedPolynomialClosureTests(unittest.TestCase):
             "finite_nonzero_multidegree_residue": cls.result["finite_nonzero_multidegree_residue"],
             "semantic_functional_ambiguity": cls.result["semantic_functional_ambiguity"],
             "all_mixed_polynomial_multipliers_cokernel_invisible": cls.result["all_mixed_polynomial_multipliers_cokernel_invisible"],
+            "producer_execution_ledger": cls.result["execution_ledger"],
+            "verifier_execution_ledger": cls.replay["execution_ledger"],
         }, sort_keys=True, separators=(",", ":")))
 
     def test_terminal_and_independent_replay_agree(self):
@@ -79,7 +81,7 @@ class T3011GMixedPolynomialClosureTests(unittest.TestCase):
         target = ((factor, 4),)
         self.assertEqual(
             producer._solve_multidegrees(base, left, right, target),
-            [(0, 4), (1, 3), (2, 2), (3, 1), (4, 0)],
+            ((0, 4), (1, 3), (2, 2), (3, 1), (4, 0)),
         )
 
     def test_f_source_lock_mutation_fails_closed(self):
@@ -107,6 +109,13 @@ class T3011GMixedPolynomialClosureTests(unittest.TestCase):
                 self.assertGreaterEqual(s, 1)
             if rec["all_genuinely_mixed_monomial_degrees_annihilated"]:
                 self.assertEqual(rec["nonzero_pairings"], [])
+
+    def test_exact_memoization_is_exercised(self):
+        for ledger in (self.result["execution_ledger"], self.replay["execution_ledger"]):
+            self.assertGreater(ledger["multidegree_solver_cache_hits"], 0)
+            self.assertGreater(ledger["cached_semantic_vectors"], 0)
+            self.assertEqual(ledger["coordinate_factor_maps"], 5)
+            self.assertEqual(ledger["witness_indexes"], 5)
 
     def test_claim_firewall_unchanged(self):
         self.assertFalse(self.result["residual_sum_zero_proved"])
