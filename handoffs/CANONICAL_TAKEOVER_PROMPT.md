@@ -1,19 +1,28 @@
 # Canonical GCL Handoff Takeover Prompt
 
-Use this prompt to start any substantial GCL work-set takeover. Replace only the placeholders in the opening lines unless a domain-specific handoff explicitly requires additional material context.
+Canonical control repository: `grandchallenge/MATH-PROGRAMME`.
+
+Use this prompt to start any substantial GCL work-set takeover. Replace only the target-work placeholders in the opening lines unless a domain-specific handoff explicitly requires additional material context. Do not assume that the work repository is `MATH-PROGRAMME`; GCL work spans multiple repositories.
 
 ```text
+CANONICAL CONTROL REPOSITORY: grandchallenge/MATH-PROGRAMME
+TARGET WORK REPOSITORY: <OWNER/REPOSITORY>
+WORKSET: <WORKSET-ID>
+TRACKING POINTER: <ISSUE/PR/WORKSET POINTER IF APPLICABLE>
+
 Take over `<WORKSET-ID>` in `<OWNER/REPOSITORY>`, tracked by `<ISSUE/PR/WORKSET POINTER IF APPLICABLE>`.
 
 Treat this prompt only as a pointer. Do not rely on conversational history or stale handoff state.
 
-Re-fetch protected live repository state first, then start at:
+Re-fetch protected live state of the `TARGET WORK REPOSITORY` first.
 
-`handoffs/<WORKSET-ID>/README.md`
+Then read the durable work-set handoff in the canonical control repository:
 
-Before mutation, read and inherit the canonical operating contract at:
+`grandchallenge/MATH-PROGRAMME:handoffs/<WORKSET-ID>/README.md`
 
-`handoffs/README.md`
+Before mutation, read and inherit the canonical operating contract from:
+
+`grandchallenge/MATH-PROGRAMME:handoffs/README.md`
 
 The following controls govern this work unless an exact domain-specific instrument materially overrides them:
 
@@ -55,11 +64,11 @@ Execution rules:
 - Do not request Human Steward, Referee, Council, or other approval unless an exact governing instrument materially reserves the transition. If authority is `reserved`, cite the exact instrument and transition.
 - Stop only for a genuine material blocker, material scope/control-plan change, exact reserved authority boundary, substantive contradiction/failure requiring escalation, or completed material closure.
 
-If the existing `handoffs/<WORKSET-ID>/README.md` materially conflicts with the canonical handoff contract by duplicating obsolete ceremony or process, preserve historical evidence but follow the live canonical controls and identify the shortest safe path back to substantive execution.
+If the existing `grandchallenge/MATH-PROGRAMME:handoffs/<WORKSET-ID>/README.md` materially conflicts with the canonical handoff contract by duplicating obsolete ceremony or process, preserve historical evidence but follow the live canonical controls and identify the shortest safe path back to substantive execution.
 
 For any new handoff material created during this work, use:
 
-`handoffs/_TEMPLATE/README.md`
+`grandchallenge/MATH-PROGRAMME:handoffs/_TEMPLATE/README.md`
 
 Do not invent a new handoff structure or operating doctrine.
 ```
@@ -68,8 +77,10 @@ Do not invent a new handoff structure or operating doctrine.
 
 Normally replace only:
 
-- `<WORKSET-ID>`
-- `<OWNER/REPOSITORY>`
-- `<ISSUE/PR/WORKSET POINTER IF APPLICABLE>`
+- `<OWNER/REPOSITORY>` — the repository containing the substantive work;
+- `<WORKSET-ID>`;
+- `<ISSUE/PR/WORKSET POINTER IF APPLICABLE>`.
 
-Everything after the opening pointer should remain stable. Domain-specific execution detail belongs in `handoffs/<WORKSET-ID>/README.md`, not in a rewritten takeover prompt.
+`grandchallenge/MATH-PROGRAMME` remains the canonical control repository unless an exact governing instrument changes that designation. The target work repository may be any applicable GCL repository.
+
+Everything after the opening pointer should remain stable. Domain-specific execution detail belongs in `grandchallenge/MATH-PROGRAMME:handoffs/<WORKSET-ID>/README.md`, not in a rewritten takeover prompt.
