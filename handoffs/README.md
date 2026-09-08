@@ -61,7 +61,9 @@ Do not:
 - report procedural motion as substantive completion;
 - continue a repeatedly fragmenting execution path without re-planning.
 
-Prefer the shortest path that leaves the primary artifact correct, verified to its actual acceptance criteria, and durably preserved under the required authority boundaries.## Standard structure for new `handoffs/<WORKSET>/README.md`
+Prefer the shortest path that leaves the primary artifact correct, verified to its actual acceptance criteria, and durably preserved under the required authority boundaries.
+
+## Standard structure for new `handoffs/<WORKSET>/README.md`
 
 All new substantial handoffs must use a **thin domain-handoff structure** under this canonical contract.
 
