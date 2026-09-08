@@ -31,7 +31,7 @@ jobs:
               raise SystemExit('continuity detector preimage not found')
           p.write_text(s.replace(old, new, 1))
           PY
-          python3 -m unittest ci/test_bounded_operation_continuity.py
+          python3 ci/test_bounded_operation_continuity.py
           git rm .github/workflows/type-theory-continuity-gate7a-repair.yml
           git add ci/validate_bounded_operation_continuity.py
           git diff --cached --check
