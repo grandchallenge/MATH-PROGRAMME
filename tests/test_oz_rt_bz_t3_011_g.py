@@ -110,10 +110,12 @@ class T3011GMixedPolynomialClosureTests(unittest.TestCase):
             if rec["all_genuinely_mixed_monomial_degrees_annihilated"]:
                 self.assertEqual(rec["nonzero_pairings"], [])
 
-    def test_exact_memoization_is_exercised(self):
+    def test_optimized_exact_replay_path_is_exercised(self):
         for ledger in (self.result["execution_ledger"], self.replay["execution_ledger"]):
-            self.assertGreater(ledger["multidegree_solver_cache_hits"], 0)
+            self.assertEqual(ledger["multidegree_solver_cache_hits"], 0)
+            self.assertEqual(ledger["multidegree_solver_cache_misses"], 0)
             self.assertGreater(ledger["cached_semantic_vectors"], 0)
+            self.assertGreater(ledger["cached_shifted_polynomials"], 0)
             self.assertEqual(ledger["coordinate_factor_maps"], 5)
             self.assertEqual(ledger["witness_indexes"], 5)
 
