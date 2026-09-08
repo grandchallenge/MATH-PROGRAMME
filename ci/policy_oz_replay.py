@@ -36,6 +36,14 @@ HEAVY_MODULES = (
     "tests/test_oz_rt_bz_t3_011_g.py",
 )
 
+# G performs a producer plus an independently reconstructed verifier replay over
+# all 1,282 frozen F records. Exact-head measurements reached the generic 420 s
+# boundary without a mathematical/test failure. Keep the recovery local to this
+# module and inside the existing 1,680 s OZ shard envelope.
+HEAVY_MODULE_TIMEOUT_OVERRIDES = {
+    "tests/test_oz_rt_bz_t3_011_g.py": 600.0,
+}
+
 T3 = "campaigns/odd_zeta/OZ_RT_BZ_T3_"
 T3_010_DIR = f"{T3}010/"
 UPSTREAM_DOWNSTREAM_STAGES = ("002", "005", "006", "009")
@@ -214,12 +222,16 @@ def _run_selected(selected: list[str]) -> list[dict[str, object]]:
 
     for index, module in enumerate(selected, 1):
         report = ROOT / f".oz-heavy-{index}.json"
+        cmd = [
+            sys.executable, str(RUNNER), "--discover-root", "tests",
+            "--pattern", Path(module).name,
+            "--report-json", report.relative_to(ROOT).as_posix(),
+        ]
+        override = HEAVY_MODULE_TIMEOUT_OVERRIDES.get(module)
+        if override is not None:
+            cmd.extend(["--module-timeout-seconds", str(override)])
         try:
-            _run([
-                sys.executable, str(RUNNER), "--discover-root", "tests",
-                "--pattern", Path(module).name,
-                "--report-json", report.relative_to(ROOT).as_posix(),
-            ])
+            _run(cmd)
             records.extend(_load_report(report))
         finally:
             report.unlink(missing_ok=True)
