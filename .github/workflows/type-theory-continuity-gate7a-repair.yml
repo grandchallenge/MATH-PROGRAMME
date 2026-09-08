@@ -1,0 +1,41 @@
+name: Type Theory Gate 7A continuity detector repair
+
+on:
+  push:
+    branches:
+      - ci/type-theory-continuity-gate7a-001
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ci/type-theory-continuity-gate7a-001
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Extend continuity through durable admission
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('ci/validate_bounded_operation_continuity.py')
+          s = p.read_text()
+          old = '''        type_theory_live = (\n            type_theory\n            and state.get("requires_chat_history") is not True\n            and (\n                state.get("composition_status") == "DEVELOPMENT"\n                or "GATE7_PENDING" in str(state.get("composition", ""))\n            )\n        )'''
+          new = '''        durable_state = state.get("durable_admission_status", state.get("durable_admission"))\n        composition_complete = (\n            state.get("composition_status") == "RC_COMPOSITION_COMPLETE"\n            or state.get("composition") == "RC_COMPOSITION_COMPLETE"\n        )\n        awaiting_durable_admission = (\n            composition_complete\n            and durable_state not in {\n                "RC_DURABLY_ADMITTED",\n                "PASS_PROTECTED_ADMISSION_AND_READBACK",\n            }\n        )\n        type_theory_live = (\n            type_theory\n            and state.get("requires_chat_history") is not True\n            and (\n                state.get("composition_status") == "DEVELOPMENT"\n                or "GATE7_PENDING" in str(state.get("composition", ""))\n                or awaiting_durable_admission\n            )\n        )'''
+          if old not in s:
+              raise SystemExit('continuity detector preimage not found')
+          p.write_text(s.replace(old, new, 1))
+          PY
+          python3 -m unittest ci/test_bounded_operation_continuity.py
+          git rm .github/workflows/type-theory-continuity-gate7a-repair.yml
+          git add ci/validate_bounded_operation_continuity.py
+          git diff --cached --check
+          git config user.name 'GCL CI Repair'
+          git config user.email 'actions@users.noreply.github.com'
+          git commit -m 'ci: retain Type Theory continuity through Gate 7A'
+          git push origin HEAD:ci/type-theory-continuity-gate7a-001
