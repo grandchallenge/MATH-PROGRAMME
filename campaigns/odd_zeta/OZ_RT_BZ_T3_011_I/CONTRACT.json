@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 910,
+  "operation": "OZ-RT-BZ-T3-011-I",
+  "stage": "T3_011_I_MIXED_RECIPROCAL_LAURENT_COKERNEL_AUDIT",
+  "predecessor": {
+    "reviewed_head": "154fda97329fa125965c5c78daa60c8939a6bbdb",
+    "merge_commit": "f8e1a3dfe005fd46c0999bb4d553be23bdc24231",
+    "required_terminal": "RECIPROCAL_AXIS_RESPONSE_CLASS_COKERNEL_INVISIBLE",
+    "expected_possible_record_count": 2564,
+    "expected_tested_record_count": 2564,
+    "expected_semantic_functional_ambiguity": null,
+    "expected_first_cokernel_breaking_direction": null
+  },
+  "clean_question": "does the protected endpoint cokernel witness annihilate every mixed reciprocal response Delta_c Delta_d(x_c^{-r} x_d^{-s} G), r,s>=1, on the frozen pairwise endpoint banks?",
+  "mixed_reciprocal_class": {
+    "monomial_domain": "x_c^{-r}*x_d^{-s} with integers r>=1,s>=1",
+    "unordered_pair_order": [
+      ["n1", "k1"],
+      ["n1", "l1"],
+      ["n2", "k1"],
+      ["n2", "l1"],
+      ["n3", "k1"],
+      ["n3", "l1"],
+      ["k1", "l1"]
+    ],
+    "only_poles": ["x_c=0", "x_d=0"],
+    "nonzero_laurent_specialization_required": true,
+    "finite_support_overlap_must_be_derived_without_degree_cutoff": true,
+    "pure_reciprocal_axes_are_H_boundary_anchors": true,
+    "degree_zero_is_direct_response_anchor": true,
+    "shifted_poles_authorized": false,
+    "positive_numerator_polynomials_authorized": false,
+    "mixed_sign_laurent_monomials_authorized": false,
+    "arbitrary_rational_functions_authorized": false
+  },
+  "terminals": {
+    "escape": "MIXED_RECIPROCAL_RESPONSE_ESCAPE_FOUND",
+    "closure": "MIXED_RECIPROCAL_RESPONSE_CLASS_COKERNEL_INVISIBLE",
+    "semantic_ambiguity": "MIXED_RECIPROCAL_RESPONSE_NOT_CERTIFIED__SEMANTIC_FUNCTIONAL_AMBIGUITY",
+    "blocker": "MIXED_RECIPROCAL_RESPONSE_NOT_CERTIFIED__CHARACTERIZED_BLOCKER"
+  },
+  "claim_firewall": {
+    "support_or_harmonic_enlargement_authorized": false,
+    "candidate_bank_or_scalar_namespace_widening_authorized": false,
+    "recurrence_search_authorized": false,
+    "correction_layer_recombination_authorized": false,
+    "candidate_linear_combinations_authorized": false,
+    "theorem_promotion_authorized": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}
