@@ -16,6 +16,10 @@ class OzReplayRoutingTests(unittest.TestCase):
         self.assertEqual(len(oz.HEAVY_MODULES), 13)
         self.assertEqual(len(set(oz.HEAVY_MODULES)), 13)
         self.assertEqual(oz.HEAVY_MODULES[-1], "tests/test_oz_rt_bz_t3_011_g.py")
+        self.assertEqual(
+            oz.HEAVY_MODULE_TIMEOUT_OVERRIDES,
+            {"tests/test_oz_rt_bz_t3_011_g.py": 600.0},
+        )
 
     def test_unrelated_change_selects_no_heavy_replay(self) -> None:
         self.assertEqual(oz.select_heavy(["docs/governance/example.md"]), [])
