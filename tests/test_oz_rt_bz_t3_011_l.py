@@ -86,39 +86,38 @@ class OzRtBzT3011LTests(unittest.TestCase):
             ((1, 2, 1), (2, 1, 1)),
         )
 
-    def test_producer_and_independent_verifier_complete_exact_admitted_class(self) -> None:
+    def test_producer_and_independent_verifier_pin_empty_overlap_closure(self) -> None:
         result = producer.build()
         replay = verifier.verify(result)
 
-        self.assertEqual(result["terminal"], replay["terminal"])
-        self.assertIn(
-            result["terminal"],
-            {
-                producer.ESCAPE_TERMINAL,
-                producer.CLOSURE_TERMINAL,
-                producer.AMBIGUITY_TERMINAL,
-                producer.BLOCKER_TERMINAL,
-            },
-        )
+        self.assertEqual(result["terminal"], producer.CLOSURE_TERMINAL)
+        self.assertEqual(replay["terminal"], producer.CLOSURE_TERMINAL)
+        self.assertIsNone(result["characterized_blocker"])
+        self.assertIsNone(result["semantic_functional_ambiguity"])
+        self.assertIsNone(result["first_cokernel_breaking_direction"])
+        self.assertEqual(result["possible_record_count"], producer.FROZEN_RECORD_COUNT)
+        self.assertEqual(result["tested_record_count"], producer.FROZEN_RECORD_COUNT)
+        self.assertEqual(replay["tested_record_count"], producer.FROZEN_RECORD_COUNT)
+        self.assertTrue(result["all_reciprocal_spectator_responses_cokernel_invisible"])
+
         domain = result["domain_analysis"]
         self.assertTrue(domain["feasible_support_seed_required_for_recession"])
         self.assertTrue(domain["finite_solver_uses_signature_derived_bounds_only"])
         self.assertFalse(domain["arbitrary_degree_cutoff_used"])
-        self.assertGreater(domain["candidate_records_inspected_for_support"], 0)
-        self.assertGreater(domain["support_signature_pairs_inspected"], 0)
-
-        blocker = result["characterized_blocker"]
-        if blocker is not None:
-            self.assertNotEqual(blocker.get("kind"), "FINITE_RECIPROCAL_SPECTATOR_DOMAIN_NOT_ESTABLISHED")
-            self.assertEqual(result["terminal"], producer.BLOCKER_TERMINAL)
-            self.assertEqual(result["tested_record_count"], 0)
-        else:
-            self.assertGreater(result["tested_record_count"], 0)
-            if result["terminal"] == producer.CLOSURE_TERMINAL:
-                self.assertEqual(result["tested_record_count"], producer.FROZEN_RECORD_COUNT)
-                self.assertTrue(result["all_reciprocal_spectator_responses_cokernel_invisible"])
-            elif result["terminal"] == producer.ESCAPE_TERMINAL:
-                self.assertIsNotNone(result["first_cokernel_breaking_direction"])
+        self.assertEqual(
+            domain["candidate_records_inspected_for_support"],
+            producer.FROZEN_RECORD_COUNT,
+        )
+        # Protected witness/base semantic supports do not intersect for this
+        # reciprocal-spectator class. The exact finite overlap is therefore
+        # empty; this is a derived result, not a synthetic degree cutoff.
+        self.assertEqual(domain["support_signature_pairs_inspected"], 0)
+        self.assertTrue(
+            all(not record["finite_overlap_tridegrees"] for record in result["tested_records"])
+        )
+        self.assertTrue(
+            all(not record["pairing_rows"] for record in result["tested_records"])
+        )
 
         self.assertFalse(result["residual_sum_zero_proved"])
         self.assertEqual(result["proof_effect"], "NONE")
@@ -133,7 +132,7 @@ class OzRtBzT3011LTests(unittest.TestCase):
                     "possible_record_count": result["possible_record_count"],
                     "tested_record_count": result["tested_record_count"],
                     "domain_analysis": domain,
-                    "characterized_blocker": blocker,
+                    "characterized_blocker": result["characterized_blocker"],
                     "semantic_functional_ambiguity": result["semantic_functional_ambiguity"],
                     "first_cokernel_breaking_direction": result["first_cokernel_breaking_direction"],
                     "all_reciprocal_spectator_responses_cokernel_invisible": result[
