@@ -5,6 +5,12 @@ import sys
 import unittest
 from pathlib import Path
 
+# The pinned 44,980-byte Q-row expression is a deeply left-associated arithmetic
+# tree.  Both independent evaluators intentionally traverse that exact parsed
+# tree; increase only the interpreter stack ceiling so the source shape, rather
+# than Python's default recursion limit, controls the replay.
+sys.setrecursionlimit(max(sys.getrecursionlimit(), 10000))
+
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / "campaigns" / "odd_zeta" / "OZ_RT_BZ_T3_012_B"
 if str(HERE) not in sys.path:
