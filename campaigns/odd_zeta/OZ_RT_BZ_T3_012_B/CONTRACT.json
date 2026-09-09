@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.2.0",
+  "issue": 927,
+  "stage": "T3_012_B_COUPLED_CORRECTION_RECOMBINATION_GATE",
+  "protected_base": "68826ff58629b59a09a97bbfcff9f560ac518d18",
+  "predecessor": {
+    "operation": "OZ-RT-BZ-T3-012-A",
+    "protected_merge": "68826ff58629b59a09a97bbfcff9f560ac518d18",
+    "terminal": "NORMALIZED_RECURRENCE_OPERATOR_TANGENT_POLY_DEG_LE_9_EXHAUSTED"
+  },
+  "mathematical_input": {
+    "t3_010_c_producer_blob": "c6359f01c12011a22194bfe7ff960aa3e30452d3",
+    "t3_010_c_contract_blob": "4f547f29d8bcb734f5e76816c5838d2b095a51b9",
+    "qrow_source_git_blob_sha1": "61f12f412726887f506e1d423b7ee183a22116e5",
+    "qrow_source_byte_count": 44980,
+    "correction_class": "SUPPORT_LOCKED_ORIENTED_ONE_BODY_DEGREE0_WEIGHT_CORRECTION_001",
+    "independent_channels": ["n1", "n2", "n3", "k1"],
+    "shared_unknown_count": 506
+  },
+  "diagnostic_projection_replay": {
+    "discovery_only": true,
+    "modes": {
+      "erase_partition_only": {"coefficient_rank": 311, "augmented_rank": 312},
+      "erase_scalar_labels": {"coefficient_rank": 303, "augmented_rank": 304},
+      "retain_shell_erase_rational_labels": {"coefficient_rank": 155, "augmented_rank": 156},
+      "erase_rational_coefficient_labels": {"coefficient_rank": 57, "augmented_rank": 58}
+    }
+  },
+  "source_functional_negative_witness": {
+    "basis": "EXACT_SOURCE_LOCKED_STRICT_INTERIOR_NECESSARY_SUBSYSTEM_INCONSISTENCY",
+    "samples": [[8, 1, 2], [9, 2, 1]],
+    "strict_interior_only": true,
+    "shell_regularization_enters_witness": false,
+    "protected_qrow_point_replay": true,
+    "one_orientation_spatial_multiplier": 2,
+    "unknown_count": 506,
+    "target_coordinate_count": 298,
+    "coefficient_rank": 84,
+    "augmented_rank": 85,
+    "consistent": false,
+    "nullity": 422,
+    "independent_replay_required": true,
+    "global_solution_implies_subsystem_solution": true,
+    "finite_specialization_used_as_nonexistence_witness": true,
+    "finite_sampling_used_as_identity_proof": false,
+    "source_locked_recombination_restriction_reconstructed": true,
+    "actual_source_locked_global_recombination_map_fully_reconstructed": false
+  },
+  "terminal": "SUPPORT_LOCKED_DEGREE0_COUPLED_CORRECTION_RECOMBINATION_INCOMPATIBLE",
+  "terminal_scope": "Excludes only the unchanged support-locked degree-zero coupled correction class. It does not exclude broader rational coefficient families, support or harmonic widenings, higher-order operator deformations, or different certificate architectures.",
+  "scope_exclusions": {
+    "support_widening": true,
+    "harmonic_widening": true,
+    "scalar_namespace_widening": true,
+    "coefficient_degree_widening": true,
+    "new_recurrence_order": true,
+    "recurrence_coefficient_deformation": true,
+    "recurrence_fitting": true,
+    "finite_grid_to_positive_identity_proof": true,
+    "theorem_promotion": true
+  },
+  "residual_sum_zero_proved": false,
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE",
+  "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+}
