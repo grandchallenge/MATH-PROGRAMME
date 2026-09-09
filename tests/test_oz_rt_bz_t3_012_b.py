@@ -15,8 +15,12 @@ import verifier
 
 
 class OzRtBzT3012BTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.result = producer.build()
+
     def test_projection_probe_is_explicitly_discovery_only(self) -> None:
-        result = producer.build()
+        result = self.result
         self.assertEqual(
             result["terminal"],
             "COUPLED_RECOMBINATION_PROJECTION_VIABILITY_PROBE_COMPLETE__EXACT_FUNCTIONAL_MAP_PENDING",
@@ -32,7 +36,7 @@ class OzRtBzT3012BTests(unittest.TestCase):
         self.assertEqual(result["t3_status"], "OPEN_WITH_CHARACTERIZED_BLOCKER")
 
     def test_protected_c_negative_frontier_is_reconstructed(self) -> None:
-        result = producer.build()
+        result = self.result
         expected = {
             "n1": (116, 67, 68),
             "n2": (116, 67, 68),
@@ -46,8 +50,18 @@ class OzRtBzT3012BTests(unittest.TestCase):
                 triple,
             )
 
+    def test_source_functional_interior_probe_is_source_locked(self) -> None:
+        row = self.result["producer_source_functional_interior_probe"]
+        self.assertEqual(row["source"]["git_blob_sha1"], "61f12f412726887f506e1d423b7ee183a22116e5")
+        self.assertEqual(row["source"]["byte_count"], 44980)
+        self.assertTrue(row["strict_interior_only"])
+        self.assertFalse(row["shell_regularization_enters_witness"])
+        self.assertTrue(row["qrow_point_replay"])
+        self.assertEqual(row["one_orientation_spatial_multiplier"], 2)
+        self.assertEqual(row["unknown_count"], 506)
+
     def test_independent_projection_replay(self) -> None:
-        result = producer.build()
+        result = self.result
         replay = verifier.verify(result)
         self.assertTrue(replay["independent_projection_replay_complete"])
         self.assertFalse(replay["producer_projected_matrices_imported_as_authority"])
@@ -69,6 +83,13 @@ class OzRtBzT3012BTests(unittest.TestCase):
                         }
                         for row in result["probes"]
                     ],
+                    "source_functional_interior": {
+                        key: result["producer_source_functional_interior_probe"][key]
+                        for key in (
+                            "samples", "unknown_count", "target_coordinate_count",
+                            "coefficient_rank", "augmented_rank", "consistent", "nullity",
+                        )
+                    },
                     "proof_effect": result["proof_effect"],
                     "promotion_effect": result["promotion_effect"],
                 },
