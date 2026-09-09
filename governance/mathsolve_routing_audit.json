@@ -5,11 +5,11 @@
   "provider_commit": "c9b9d0122017df7a117847d9ff1c2b9f6d6b75a1",
   "provider_pull_request": "https://github.com/grandchallenge/MATHSOLVE/pull/95",
   "certification_provider_repository": "grandchallenge/MATHCERT",
-  "certification_provider_commit": "64e042ddb1147338ad7868a2847715fe7c1c079d",
-  "certification_provider_pull_request": "https://github.com/grandchallenge/MATHCERT/pull/79",
+  "certification_provider_commit": "e0c3905b8e5ca39612f46d90a522fd289c73f4ba",
+  "certification_provider_pull_request": "https://github.com/grandchallenge/MATHCERT/pull/257",
   "certification_route_registry_path": "governance/certification_routes.json",
-  "certification_route_registry_git_blob_sha1": "cf876f43ae824f965a3aedf411671c110c380028",
-  "verified_at": "2026-08-02",
+  "certification_route_registry_git_blob_sha1": "42ac6b2b544976986569e783a835271417485480",
+  "verified_at": "2026-09-09",
   "predecessor": {
     "path": "governance/mathcert_cross_repository_conformance.json",
     "audit_id": "MP-MC-CONFORMANCE-001",
@@ -129,7 +129,7 @@
       "cert": {
         "repository": "grandchallenge/MATHCERT",
         "route_issue": "https://github.com/grandchallenge/MATHCERT/issues/23",
-        "route_state": "ready",
+        "route_state": "qualified",
         "handoff": {
           "repository": "grandchallenge/MATHSOLVE",
           "handoff_id": "MC-HANDOFF-HC-001",
@@ -137,15 +137,22 @@
           "path": "cert_handoffs/HC-001.json",
           "git_blob_sha1": "0c154af2e577e4367f9f5d0aeac5e15f9420172c"
         },
-        "cert_output": null,
-        "qualification_scope": null
+        "cert_output": {
+          "repository": "grandchallenge/MATHCERT",
+          "commit_sha": "fdc33903593b6bc4a021ad7158f3533f50da8705",
+          "path": "certificates/hodge/MC-HC-WP00-QUAL-001.json",
+          "digest_algorithm": "git_blob_sha1",
+          "digest": "38830b24464f148a53f0a0a3e47e97d307fadf23"
+        },
+        "qualification_scope": "qualified_semantic_and_conditional_interface_only"
       },
       "promotion": {
         "state": "blocked",
         "blockers": [
-          "The full conjecture remains open.",
-          "No restricted target has been selected.",
-          "The ready packet has no MATHCERT adjudication."
+          "The full rational Hodge conjecture remains mathematically unproved.",
+          "The qualification covers statement identity, definition-level equivalence, and a conditional dimension-at-most-three reduction only.",
+          "No governed restricted target or faithful Lean/kernel proof is present.",
+          "Independent human specialist review of imported classical-theorem application remains outstanding."
         ]
       }
     },

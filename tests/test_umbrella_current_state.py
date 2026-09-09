@@ -60,12 +60,23 @@ class UmbrellaCurrentStateTests(unittest.TestCase):
             any("UC-001 qualification may not enable promotion" in error for error in module.validation_errors(routing=routing))
         )
 
-    def test_ready_route_cannot_be_silently_qualified(self):
+    def test_hc_qualified_route_cannot_regress_to_ready(self):
         routing = self.load("mathsolve_routing_audit.json")
         hc = next(item for item in routing["campaigns"] if item["campaign_id"] == "HC-001")
-        hc["cert"]["route_state"] = "qualified"
+        hc["cert"]["route_state"] = "ready"
         self.assertTrue(
             any("qualified portfolio drift" in error for error in module.validation_errors(routing=routing))
+        )
+
+    def test_hc_qualification_cannot_expand_beyond_bounded_scope(self):
+        routing = self.load("mathsolve_routing_audit.json")
+        hc = next(item for item in routing["campaigns"] if item["campaign_id"] == "HC-001")
+        hc["cert"]["qualification_scope"] = "qualified_interface_only"
+        self.assertTrue(
+            any(
+                "HC-001 qualification is not bounded semantic-and-conditional interface only" in error
+                for error in module.validation_errors(routing=routing)
+            )
         )
 
     def test_recorded_restricted_portfolio_cannot_drop_uc(self):
