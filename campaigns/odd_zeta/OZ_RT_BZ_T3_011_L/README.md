@@ -8,19 +8,25 @@ The admitted multiplier is
 
 where `e` is the unique remaining coordinate axis and is not shifted by either finite difference.
 
-The first question is not numerical. It is whether the Laurent-factor geometry still gives a finite exhaustive tridegree domain. L therefore checks the homogeneous factor relation
+The first question is whether the exact Laurent support still gives a finite exhaustive tridegree domain. A geometric cancellation relation alone is not sufficient. L requires both:
 
-`dr L + ds R - dt E = 0`
+1. a primitive nonnegative recession ray
 
-for a nonzero primitive integer ray `(dr, ds, dt) >= 0`. Such a ray means that increasing `(r,s,t)` along that direction leaves an endpoint Laurent signature unchanged. The response class then has an unbounded cancellation direction, so finite-support overlap cannot justify a finite scan. The operation must stop with a characterized blocker; adding any degree cutoff would manufacture a false finite closure.
+   `dr L + ds R - dt E = 0`, with `dt > 0` and `dr + ds > 0`; and
 
-This matters on shell strata because protected specialization can identify distinct ambient coordinate factors. In particular, edge strata can set `k=n` or `l=n`, so an active coordinate factor can coincide exactly with the reciprocal spectator factor.
+2. an actual protected witness/base support match with a positive integer seed
 
-The producer binds the protected K and G source objects, reconstructs the protected shell strata and coordinate-factor maps, and scans pair/component/stratum order deterministically for the first exact nonnegative cancellation ray.
+   `target - base = r L + s R - t E`, with `r,s,t >= 1`.
 
-The independent verifier uses the reverse G verification path to reconstruct the strata and factor maps, solves the cone relation independently, and checks the emitted primitive ray factor-by-factor.
+Only when both conditions hold does the ray pass through the admitted response domain. Then every seed plus a nonnegative multiple of the primitive ray is another admissible tridegree with the same endpoint Laurent signature. The domain is genuinely unbounded, and issue #920 requires termination with a characterized blocker instead of an arbitrary degree cutoff.
 
-If an unbounded ray is found, no endpoint candidate record is tested. That is deliberate: issue #920 requires stopping at the unbounded-domain blocker rather than truncating the family.
+This distinction is material. Protected shell specialization can identify distinct ambient coordinate factors, for example by setting `k=n` or `l=n`, but such a local factor coincidence does not by itself prove that any admitted witness/base support pair lies on the resulting ray.
+
+The producer binds the protected K and G source objects, reconstructs the protected shell strata, endpoint banks, coordinate-factor maps, witness indexes, and shifted semantic base indexes, then scans the canonical pair/endpoint/candidate/component/support order. It reports an unbounded blocker only at the first support-feasible recession ray.
+
+The independent verifier reconstructs the endpoint banks and factor maps through the reverse G verification path. It independently checks integer feasibility of the same support equation, reproduces the first canonical ray-bearing support match, and verifies the producer's emitted positive seed and primitive ray factor-by-factor.
+
+If a support-feasible unbounded ray is found, no cokernel-pairing candidate record is tested. That is deliberate: finite truncation of an unbounded class would create a false closure claim. The result records how many candidate support records and ray-bearing signature pairs were inspected before the blocker.
 
 No reciprocal power is admitted on the two active axes. No shifted spectator, shifted pole, second reciprocal axis, arbitrary rational function, support/harmonic/candidate-bank widening, recurrence widening, correction recombination, candidate linear combination, third finite difference, theorem promotion, or certification is admitted.
 
