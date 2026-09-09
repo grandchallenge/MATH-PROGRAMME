@@ -51,7 +51,27 @@ class OzRtBzT3011LTests(unittest.TestCase):
             producer.cancellation_ray((("a", 1),), (("b", 1),), (("c", 1),))
         )
 
-    def test_producer_and_independent_verifier_stop_at_unbounded_ray(self) -> None:
+    def test_geometric_ray_requires_actual_positive_support_seed(self) -> None:
+        left = (("a", 1),)
+        right = (("b", 1),)
+        spectator = (("b", 1),)
+        self.assertEqual(producer.cancellation_ray(left, right, spectator), [0, 1, 1])
+
+        # target-base = a admits (r,s,t)=(1,1,1), so the ray passes
+        # through an actual positive integer support solution.
+        seed = producer.feasible_seed((), (("a", 1),), left, right, spectator)
+        self.assertIsNotNone(seed)
+        r, s, t = seed
+        self.assertGreaterEqual(min(r, s, t), 1)
+
+        # target-base = b has the same homogeneous geometric ray but forces
+        # r=0.  It is therefore outside the admitted r>=1 response class and
+        # must not be reported as an unbounded admitted support family.
+        self.assertIsNone(
+            producer.feasible_seed((), (("b", 1),), left, right, spectator)
+        )
+
+    def test_producer_and_independent_verifier_stop_at_support_feasible_ray(self) -> None:
         result = producer.build()
         replay = verifier.verify(result)
 
@@ -63,8 +83,19 @@ class OzRtBzT3011LTests(unittest.TestCase):
             "UNBOUNDED_RECIPROCAL_SPECTATOR_CANCELLATION_RAY",
         )
         ray = blocker["primitive_integer_ray"]
+        seed = blocker["feasible_seed_tridegree"]
         self.assertGreater(ray[2], 0)
         self.assertGreater(ray[0] + ray[1], 0)
+        self.assertGreaterEqual(min(seed), 1)
+        self.assertIn("support_key", blocker)
+        self.assertIn("base_signature", blocker)
+        self.assertIn("target_signature", blocker)
+
+        domain = result["domain_analysis"]
+        self.assertTrue(domain["feasible_support_seed_required"])
+        self.assertFalse(domain["arbitrary_degree_cutoff_used"])
+        self.assertGreater(domain["candidate_records_inspected_for_support"], 0)
+        self.assertGreater(domain["ray_bearing_support_signature_pairs_inspected"], 0)
 
         self.assertEqual(result["tested_record_count"], 0)
         self.assertEqual(result["tested_records"], [])
@@ -83,6 +114,7 @@ class OzRtBzT3011LTests(unittest.TestCase):
                     "terminal": result["terminal"],
                     "possible_record_count": result["possible_record_count"],
                     "tested_record_count": result["tested_record_count"],
+                    "domain_analysis": domain,
                     "characterized_blocker": blocker,
                     "semantic_functional_ambiguity": result[
                         "semantic_functional_ambiguity"
