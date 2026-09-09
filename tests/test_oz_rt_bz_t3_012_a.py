@@ -40,6 +40,13 @@ class OzRtBzT3012ATests(unittest.TestCase):
         )
         self.assertNotEqual(producer.fixed_tangent_residual(0), 0)
 
+    def test_reconstructed_base_sequence_satisfies_operator_on_all_gate_rows(self) -> None:
+        for n in range(producer.row_count(9)):
+            c = producer.recurrence_coefficients(n)
+            self.assertEqual(sum(c[j] * producer.y0(n+j) for j in range(4)), 0)
+            vc = verifier._coeffs(n)
+            self.assertEqual(sum(vc[j] * verifier._sequences(n+j)[0] for j in range(4)), 0)
+
     def test_gauge_normalized_column_counts(self) -> None:
         for degree in range(9):
             self.assertEqual(len(producer.stage_columns(degree)), 4*(degree+1))
