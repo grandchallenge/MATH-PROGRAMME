@@ -60,13 +60,23 @@ class OzRtBzT3012BTests(unittest.TestCase):
         self.assertEqual(row["one_orientation_spatial_multiplier"], 2)
         self.assertEqual(row["unknown_count"], 506)
 
-    def test_independent_projection_replay(self) -> None:
+    def test_independent_projection_and_source_functional_replay(self) -> None:
         result = self.result
         replay = verifier.verify(result)
         self.assertTrue(replay["independent_projection_replay_complete"])
+        self.assertTrue(replay["independent_source_functional_replay_complete"])
         self.assertFalse(replay["producer_projected_matrices_imported_as_authority"])
+        self.assertFalse(replay["producer_source_jets_imported_as_authority"])
         self.assertEqual(replay["proof_effect"], "NONE")
         self.assertEqual(replay["promotion_effect"], "NONE")
+        self.assertEqual(
+            replay["source_functional_interior"]["coefficient_rank"],
+            result["producer_source_functional_interior_probe"]["coefficient_rank"],
+        )
+        self.assertEqual(
+            replay["source_functional_interior"]["augmented_rank"],
+            result["producer_source_functional_interior_probe"]["augmented_rank"],
+        )
         print(
             "T3_012_B_PROBE "
             + json.dumps(
@@ -90,6 +100,7 @@ class OzRtBzT3012BTests(unittest.TestCase):
                             "coefficient_rank", "augmented_rank", "consistent", "nullity",
                         )
                     },
+                    "independent_source_functional_replay_complete": replay["independent_source_functional_replay_complete"],
                     "proof_effect": result["proof_effect"],
                     "promotion_effect": result["promotion_effect"],
                 },
