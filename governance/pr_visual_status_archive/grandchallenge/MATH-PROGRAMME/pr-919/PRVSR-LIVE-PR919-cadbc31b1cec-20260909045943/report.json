@@ -1,0 +1,507 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "NOT_REQUIRED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": "success",
+      "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+      "name": "Replay LOG-GCD-001 in Lean",
+      "required": true,
+      "run_id": 102343197964,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+      "name": "Replay PC-WP04 bounded certificate",
+      "required": true,
+      "run_id": 102343197896,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+      "name": "Replay pinned Union-Closed MATHCERT evidence",
+      "required": true,
+      "run_id": 102343197858,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+      "name": "policy / policy",
+      "required": true,
+      "run_id": 102343165393,
+      "status": "completed"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+      "name": "routing-enforcement",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+      "name": "security / action-policy",
+      "required": true,
+      "run_id": 102343165629,
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+      "name": "validate-json",
+      "required": true,
+      "run_id": 102343605016,
+      "status": "completed"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "CHECKS_PENDING",
+    "reasons": [
+      "1 required check(s) are not complete"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-09-08T23:32:14Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-09-09T04:57:52Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+    "exact_head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+    "pr_number": 919,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "CMDG CM4 P3-M: continue #664 at finite point comparison"
+  },
+  "integration": {
+    "merge_commit_sha": "855814221ee29780f5b8f15557697c368cdbfb04",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 1,
+      "collector_limitations": [],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 102343159764,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Analyze (actions)",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343159634,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Analyze (c-cpp)",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343159826,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Analyze (python)",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163403,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Classify policy impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343263211,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "CodeQL",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163138,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343165450,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343165292,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343161210,
+          "conclusion": "skipped",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "GH-OS merge-group admission controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343159996,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "GH-OS pre-queue effective candidate controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343160963,
+          "conclusion": "skipped",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "GH-OS protected-base revalidation dispatcher",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343197868,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Policy shard / cmdg",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343197945,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Policy shard / core",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343197894,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Policy shard / fixtures",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163658,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay C05 solid definition reconstruction",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163354,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay CM1 discrete-underlying adjunction",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163572,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay CM2 Cartesian closedness",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163401,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay CM3 abelian and AB exactness",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163373,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay CM4 target and protected dependency evidence",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163592,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay CM4-P2 reconciled evidence boundary",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163135,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay CMDG NAT concordance in Lean",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343197964,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay LOG-GCD-001 in Lean",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163673,
+          "conclusion": null,
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay P2-E comparison audit",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 102343163393,
+          "conclusion": null,
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay P3 pinned-interface audit",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 102343197896,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay PC-WP04 bounded certificate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163360,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay V0 formal interface on pinned mathlib",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163656,
+          "conclusion": null,
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay and extract original Euclid MATHCERT authority",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 102343163212,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay canonical measure-dual model",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163670,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay concordant Euclid bridge in Lean",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343197858,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Replay pinned Union-Closed MATHCERT evidence",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163631,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Validate CM4 dependency reconciliation",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163443,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Validate CM4-P2 reconciled closure candidate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163476,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Validate CMDG Euclid bridge",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163311,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Validate CMDG NAT concordance",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163160,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Validate CMDG condensed CM1",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163368,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Validate CMDG condensed CM2",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163174,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Validate CMDG condensed CM3",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163475,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Validate CMDG solid C05",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163540,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Validate CMDG vertical spine V0",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163385,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Validate P2-E governed comparison state",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163240,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Validate P3 exact-tree blocker certificate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343163298,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "Validate canonical measure-dual candidate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343160256,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343160284,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "advisory-report",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343165393,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343161281,
+          "conclusion": "skipped",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343165629,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "security / action-policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 102343605016,
+          "conclusion": "success",
+          "head_sha": "cadbc31b1cecbf8326623c0667d5c45cdb00ae99",
+          "name": "validate-json",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [
+        {
+          "actor": "jimsteeg",
+          "commit_sha": "b6d0a5688740a037c82fd17f31ebf9b8ae342154",
+          "review_id": 5148566961,
+          "state": "DISMISSED",
+          "submitted_at": "2026-09-09T00:56:48Z"
+        }
+      ],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [
+        "Replay LOG-GCD-001 in Lean",
+        "Replay PC-WP04 bounded certificate",
+        "Replay pinned Union-Closed MATHCERT evidence",
+        "policy / policy",
+        "routing-enforcement",
+        "security / action-policy",
+        "validate-json"
+      ],
+      "ruleset_source_available": true
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-09-09T04:59:43Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "3486a24d42c93e3392655a638f0e4e8cdfebd5ce51d2f1c3c07662e7902463e2"
+  },
+  "report_id": "PRVSR-LIVE-PR919-cadbc31b1cec-20260909045943",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification",
+      "theorem_certification_or_formal_replay"
+    ]
+  }
+}
