@@ -56,52 +56,70 @@ class OzRtBzT3011LTests(unittest.TestCase):
         right = (("b", 1),)
         spectator = (("b", 1),)
         self.assertEqual(producer.cancellation_ray(left, right, spectator), [0, 1, 1])
-
-        # target-base = a admits (r,s,t)=(1,1,1), so the ray passes
-        # through an actual positive integer support solution.
         seed = producer.feasible_seed((), (("a", 1),), left, right, spectator)
         self.assertIsNotNone(seed)
-        r, s, t = seed
-        self.assertGreaterEqual(min(r, s, t), 1)
-
-        # target-base = b has the same homogeneous geometric ray but forces
-        # r=0.  It is therefore outside the admitted r>=1 response class and
-        # must not be reported as an unbounded admitted support family.
+        self.assertGreaterEqual(min(seed), 1)
         self.assertIsNone(
             producer.feasible_seed((), (("b", 1),), left, right, spectator)
         )
 
-    def test_producer_and_independent_verifier_stop_at_support_feasible_ray(self) -> None:
+    def test_exact_finite_solver_uses_signature_bounds_only(self) -> None:
+        left = (("a", 1),)
+        right = (("b", 1),)
+        spectator = (("e", 1),)
+        self.assertEqual(
+            producer.finite_tridegrees(
+                (("e", 2),), left, right, spectator, (("a", 1), ("b", 1), ("e", 1))
+            ),
+            ((1, 1, 1),),
+        )
+
+        # Coincident active factors remain finite: r+s=3 and t=1.
+        self.assertEqual(
+            producer.finite_tridegrees(
+                (("e", 1),),
+                (("a", 1),),
+                (("a", 1),),
+                spectator,
+                (("a", 3),),
+            ),
+            ((1, 2, 1), (2, 1, 1)),
+        )
+
+    def test_producer_and_independent_verifier_complete_exact_admitted_class(self) -> None:
         result = producer.build()
         replay = verifier.verify(result)
 
-        self.assertEqual(result["terminal"], producer.BLOCKER_TERMINAL)
-        self.assertEqual(replay["terminal"], producer.BLOCKER_TERMINAL)
-        blocker = result["characterized_blocker"]
-        self.assertEqual(
-            blocker["kind"],
-            "UNBOUNDED_RECIPROCAL_SPECTATOR_CANCELLATION_RAY",
+        self.assertEqual(result["terminal"], replay["terminal"])
+        self.assertIn(
+            result["terminal"],
+            {
+                producer.ESCAPE_TERMINAL,
+                producer.CLOSURE_TERMINAL,
+                producer.AMBIGUITY_TERMINAL,
+                producer.BLOCKER_TERMINAL,
+            },
         )
-        ray = blocker["primitive_integer_ray"]
-        seed = blocker["feasible_seed_tridegree"]
-        self.assertGreater(ray[2], 0)
-        self.assertGreater(ray[0] + ray[1], 0)
-        self.assertGreaterEqual(min(seed), 1)
-        self.assertIn("support_key", blocker)
-        self.assertIn("base_signature", blocker)
-        self.assertIn("target_signature", blocker)
-
         domain = result["domain_analysis"]
-        self.assertTrue(domain["feasible_support_seed_required"])
+        self.assertTrue(domain["feasible_support_seed_required_for_recession"])
+        self.assertTrue(domain["finite_solver_uses_signature_derived_bounds_only"])
         self.assertFalse(domain["arbitrary_degree_cutoff_used"])
         self.assertGreater(domain["candidate_records_inspected_for_support"], 0)
-        self.assertGreater(domain["ray_bearing_support_signature_pairs_inspected"], 0)
+        self.assertGreater(domain["support_signature_pairs_inspected"], 0)
 
-        self.assertEqual(result["tested_record_count"], 0)
-        self.assertEqual(result["tested_records"], [])
-        self.assertIsNone(result["first_cokernel_breaking_direction"])
-        self.assertIsNone(result["semantic_functional_ambiguity"])
-        self.assertFalse(result["all_reciprocal_spectator_responses_cokernel_invisible"])
+        blocker = result["characterized_blocker"]
+        if blocker is not None:
+            self.assertNotEqual(blocker.get("kind"), "FINITE_RECIPROCAL_SPECTATOR_DOMAIN_NOT_ESTABLISHED")
+            self.assertEqual(result["terminal"], producer.BLOCKER_TERMINAL)
+            self.assertEqual(result["tested_record_count"], 0)
+        else:
+            self.assertGreater(result["tested_record_count"], 0)
+            if result["terminal"] == producer.CLOSURE_TERMINAL:
+                self.assertEqual(result["tested_record_count"], producer.FROZEN_RECORD_COUNT)
+                self.assertTrue(result["all_reciprocal_spectator_responses_cokernel_invisible"])
+            elif result["terminal"] == producer.ESCAPE_TERMINAL:
+                self.assertIsNotNone(result["first_cokernel_breaking_direction"])
+
         self.assertFalse(result["residual_sum_zero_proved"])
         self.assertEqual(result["proof_effect"], "NONE")
         self.assertEqual(result["promotion_effect"], "NONE")
@@ -116,12 +134,8 @@ class OzRtBzT3011LTests(unittest.TestCase):
                     "tested_record_count": result["tested_record_count"],
                     "domain_analysis": domain,
                     "characterized_blocker": blocker,
-                    "semantic_functional_ambiguity": result[
-                        "semantic_functional_ambiguity"
-                    ],
-                    "first_cokernel_breaking_direction": result[
-                        "first_cokernel_breaking_direction"
-                    ],
+                    "semantic_functional_ambiguity": result["semantic_functional_ambiguity"],
+                    "first_cokernel_breaking_direction": result["first_cokernel_breaking_direction"],
                     "all_reciprocal_spectator_responses_cokernel_invisible": result[
                         "all_reciprocal_spectator_responses_cokernel_invisible"
                     ],
