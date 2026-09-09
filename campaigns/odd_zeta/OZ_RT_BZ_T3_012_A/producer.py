@@ -280,6 +280,3 @@ def build() -> dict:
         "promotion_effect": "NONE",
         "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
     }
-
-if __name__ == "__main__":
-    print(json.dumps(build(), indent=2, sort_keys=True))
