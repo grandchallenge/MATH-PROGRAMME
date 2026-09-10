@@ -86,41 +86,32 @@ class OzRtBzT3011PTests(unittest.TestCase):
         self.assertTrue(producer._solution_matches(*case[:-1], case[-1], seed))
         self.assertTrue(producer._ray_matches(case[1], case[2], case[3], ray))
 
-    def test_producer_and_independent_verifier_replay_exact_class(self) -> None:
+    def test_producer_and_independent_verifier_replay_pinned_closure(self) -> None:
         result = producer.build()
         replay = verifier.verify(result)
 
-        admissible = {
-            producer.ESCAPE_TERMINAL,
-            producer.CLOSURE_TERMINAL,
-            producer.AMBIGUITY_TERMINAL,
-            producer.BLOCKER_TERMINAL,
-        }
-        self.assertIn(result["terminal"], admissible)
-        self.assertEqual(replay["terminal"], result["terminal"])
+        self.assertEqual(result["terminal"], producer.CLOSURE_TERMINAL)
+        self.assertEqual(replay["terminal"], producer.CLOSURE_TERMINAL)
         self.assertEqual(result["possible_record_count"], 1282)
+        self.assertEqual(result["tested_record_count"], 1282)
         self.assertEqual(replay["possible_record_count"], 1282)
-        self.assertEqual(replay["tested_record_count"], result["tested_record_count"])
-        self.assertEqual(
-            replay["support_signature_pairs_inspected"],
-            result["domain_analysis"]["support_signature_pairs_inspected"],
-        )
+        self.assertEqual(replay["tested_record_count"], 1282)
+        self.assertEqual(result["domain_analysis"]["support_signature_pairs_inspected"], 0)
+        self.assertEqual(replay["support_signature_pairs_inspected"], 0)
         self.assertTrue(replay["finite_solver_uses_signature_derived_bounds_only"])
         self.assertFalse(replay["arbitrary_degree_cutoff_used"])
 
-        if result["terminal"] == producer.CLOSURE_TERMINAL:
-            self.assertEqual(result["tested_record_count"], 1282)
-            self.assertIsNone(result["characterized_blocker"])
-            self.assertIsNone(result["semantic_functional_ambiguity"])
-            self.assertIsNone(result["first_cokernel_breaking_direction"])
-            self.assertTrue(result["all_all_reciprocal_trivariate_responses_cokernel_invisible"])
-            self.assertTrue(replay["all_all_reciprocal_trivariate_responses_cokernel_invisible"])
-            for record in result["tested_records"]:
-                self.assertTrue(record["spectator_reciprocal_degree_zero_semantics_exactly_match_I"])
-                self.assertEqual(
-                    record["active_reciprocal_degree_zero_anchor_kind"],
-                    "DIRECT_RESPONSE_ONLY_NO_PREDECESSOR_CLASS_PROMOTION",
-                )
+        self.assertIsNone(result["characterized_blocker"])
+        self.assertIsNone(result["semantic_functional_ambiguity"])
+        self.assertIsNone(result["first_cokernel_breaking_direction"])
+        self.assertTrue(result["all_all_reciprocal_trivariate_responses_cokernel_invisible"])
+        self.assertTrue(replay["all_all_reciprocal_trivariate_responses_cokernel_invisible"])
+        for record in result["tested_records"]:
+            self.assertTrue(record["spectator_reciprocal_degree_zero_semantics_exactly_match_I"])
+            self.assertEqual(
+                record["active_reciprocal_degree_zero_anchor_kind"],
+                "DIRECT_RESPONSE_ONLY_NO_PREDECESSOR_CLASS_PROMOTION",
+            )
 
         self.assertFalse(result["residual_sum_zero_proved"])
         self.assertEqual(result["proof_effect"], "NONE")
