@@ -30,6 +30,19 @@ The complete integer tridegree domain is derived from exact Laurent-factor signa
 
 The `t=0` face is checked against protected T3-011-I negative-negative pairwise semantics. The two active-degree-zero faces are retained as exact direct-response anchors only; they are not relabelled as previously certified trivariate classes.
 
+## Observed exact replay
+
+The first governed PR replay on implementation head `5a5912092562b3602e163ffd03ea3361e40ab465` completed in Programme run `34421197879`, OZ job `102696816066`, and produced:
+
+- terminal: `ALL_RECIPROCAL_TRIVARIATE_RESPONSE_CLASS_COKERNEL_INVISIBLE`;
+- exact records: `1282/1282`;
+- protected support-signature intersections: `0`;
+- characterized blocker: none;
+- semantic functional ambiguity: none;
+- first cokernel-breaking direction: none.
+
+The governed test now pins this observed result. Any later exact-head replay must reproduce it before queue admission.
+
 ## Terminals
 
 - `ALL_RECIPROCAL_TRIVARIATE_RESPONSE_ESCAPE_FOUND`
