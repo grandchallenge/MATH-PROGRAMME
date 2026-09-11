@@ -1,3 +1,4 @@
+import CMDGCondensedCM4P3MFiniteQuotientBridge
 import CMDGCondensedCM4P3G
 import CMDGCondensedCM4P3GFiniteBooleanMeasureHom
 
@@ -91,3 +92,90 @@ noncomputable def measurePointIntegralFunctional
 #print axioms measurePointIntegralFunctional
 
 end CMDG.CondensedCM4P3G.PointFunctional
+
+/-!
+## Branch-local P3-M diagnostic
+
+The declarations below test only the next finite point/measure comparison required by #664.
+They preserve the protected point-functional module above unchanged in substance.
+-/
+
+namespace CMDG.CondensedCM4P3M.KernelPointBridge
+
+universe u
+
+open CategoryTheory Limits Opposite
+open CMDG.CondensedCM4P3G
+open CMDG.CondensedCM4P3G.FreeSections
+open CMDG.CondensedCM4P3J.WeightedBooleanMeasure
+open CMDG.CondensedCM4P3L.KernelFunctional
+open CMDG.CondensedCM4P2E.RightKanReconstruction
+
+/-- The one-point profinite probe selecting `x`. -/
+noncomputable def profinitePointProbe
+    (X : Profinite.{u}) (x : X) : Profinite.of PUnit.{u + 1} ⟶ X :=
+  ConcreteCategory.ofHom
+    { toFun := fun _ => x
+      continuous_toFun := continuous_const }
+
+/-- Finite-stage measure/Dirac identity.  The large finite comparison is kept inside the proof so
+that its four canonical factors can be cancelled explicitly rather than normalized definitionally
+in the theorem statement. -/
+set_option maxHeartbeats 800000 in
+theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
+    (X : Profinite.{u}) (x : X) (j : DiscreteQuotient X) :
+    (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
+        (basisBooleanPointProbe X (fun _ => true)) ≫
+      weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j =
+    (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
+        (profinitePointProbe (X.diagram.obj j) (j.proj x)) ≫
+      measureSolidification.app (X.diagram.obj j) := by
+  let P := Profinite.of PUnit.{u + 1}
+  let T := basisBooleanCube X
+  let Q := FiniteQuotientObject X j
+  let A := CMDG.CondensedCM4P2D.measureFunctor.obj (X.diagram.obj j)
+  let D :=
+    (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+      ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
+      Condensed.discrete (ModuleCat.{u + 1} CMDG.CondensedCM4P3G.R.{u})).obj Q
+  let S := op ((profiniteToCompHaus).obj T)
+  let eComp :=
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.hom.app Q
+  let eFree := CMDG.CondensedCM4P2E.finiteFreeDiscreteIso.hom.app Q
+  apply (cancel_mono eComp).1
+  simp only [Category.assoc]
+  rw [measureSolidification_fac]
+  simp only [Category.comp_id]
+  apply (cancel_mono eFree).1
+  simp only [Category.assoc]
+  let e := eComp ≫ eFree
+  have hpost :
+      freeHomSectionsEquiv T D
+          (weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j ≫ e) =
+        (ConcreteCategory.hom (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map e).hom.app S))
+          (freeHomSectionsEquiv T A
+            (weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j)) := by
+    change
+      (coherentTopology CompHaus.{u}).uliftYonedaEquiv
+        ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
+          ((profiniteToCondensed).obj T) D
+          (weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j ≫ e)) = _
+    rw [(Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv_naturality_right]
+    rfl
+  have hsection :
+      freeHomSectionsEquiv T A
+          (weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j) =
+        weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j := by
+    exact Equiv.apply_symm_apply _ _
+  apply (freeHomSectionsEquiv P D).injective
+  rw [Category.assoc]
+  rw [freeHomSectionsEquiv_precomp]
+  rw [hpost, hsection]
+  trace_state
+  exact weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j
+
+#check profinitePointProbe
+#check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
+#print axioms weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
+
+end CMDG.CondensedCM4P3M.KernelPointBridge
