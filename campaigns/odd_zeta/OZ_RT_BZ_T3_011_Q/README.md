@@ -1,12 +1,19 @@
 # OZ-RT-BZ-T3-011-Q
 
-Q audits the lower-dimensional faces that the protected T3-011 trivariate Laurent ladder already constructs when exactly one of the two active-coordinate exponents is zero.
+Q audits the lower-dimensional faces already present in the protected T3-011 trivariate Laurent ladder when exactly one active-coordinate exponent is zero.
 
-It does not widen the multiplier syntax. It source-locks the protected M, N, O, and P implementations and replays their exact boundary/direct-response rows. The four surviving active-axis/spectator sign families are `++`, `-+`, `+-`, and `--`.
+It does not widen the multiplier syntax. It source-locks protected M, N, O, and P, then reconstructs only the required face rows rather than rerunning the full parent search classes.
 
-M and N already require the `++` and `-+` boundary rows to vanish as part of their protected closure semantics. O supplies the unresolved `+-` rows and one direct `--` anchor. P supplies both direct `--` anchors. Q asks only whether any of these exact face rows has a nonzero protected cokernel pairing.
+The four surviving active-axis/spectator sign families are `++`, `-+`, `+-`, and `--`:
 
-The verifier reruns the protected independent verifiers for M, N, O, and P before independently rescanning the exact face rows and deriving the Q terminal.
+- `++`: reconstructed from the protected K-boundary semantics used by M;
+- `-+`: reconstructed from the double-reciprocal N boundary with one active exponent zero;
+- `+-`: reconstructed from the O class with the reciprocal active exponent zero;
+- `--`: reconstructed from the P class with one reciprocal active exponent zero.
+
+The producer computes the exact rows in deterministic family, pair, endpoint, candidate, and side order. It stops at the first exact nonzero protected cokernel pairing or closes all four one-zero sign families. No arbitrary degree cutoff is used.
+
+The verifier uses the protected independent M/N/O/P ledger implementations and their independent signed-degree solvers to reconstruct the same face partition and exact rational pairings. It does not consume producer face matrices or pairings. Exact parent source/blob locks remain mandatory.
 
 A Q closure does **not** close the full coordinate-zero Laurent monomial algebra. The strictly lower-dimensional family with both active exponents zero and a nonzero spectator exponent remains outside Q and must be handled separately before any full-algebra corollary is admitted.
 
