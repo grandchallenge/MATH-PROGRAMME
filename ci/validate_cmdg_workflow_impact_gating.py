@@ -139,14 +139,18 @@ def validation_errors(
         "ci/formal_validation.py classify",
         "ci/formal_validation.py run",
         "formal-validation:\n    name: formal-validation",
-    "Require exactly the selected substantive lane set",
-    "Bridge legacy required context",
-    "Replay LOG-GCD-001 in Lean",
-    "Replay PC-WP04 bounded certificate",
-    "Replay pinned Union-Closed MATHCERT evidence",
+        "Require exactly the selected substantive lane set",
     ):
         if marker not in generic:
-            errors.append(f"generic formal router missing migration marker: {marker}")
+            errors.append(f"generic formal router missing required marker: {marker}")
+    for retired_marker in (
+        "Bridge legacy required context",
+        "Replay LOG-GCD-001 in Lean",
+        "Replay PC-WP04 bounded certificate",
+        "Replay pinned Union-Closed MATHCERT evidence",
+    ):
+        if retired_marker in generic:
+            errors.append(f"generic formal router retains retired migration marker: {retired_marker}")
 
     p3 = control["acceptance_examples"]["p3_only"]
     try:

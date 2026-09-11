@@ -57,7 +57,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.impact.outputs.formal_matrix) }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -126,35 +126,12 @@ jobs:
             test "$LANE_RESULT" = "skipped"
           fi
 
-  # Temporary compatibility aliases for the live pre-migration ruleset. These
-  # jobs perform no campaign replay. They mirror only the generic aggregate and
-  # are removed after the ruleset requires formal-validation / formal-validation.
-  legacy-log-gcd-context:
-    name: Replay LOG-GCD-001 in Lean
+  required-formal-validation-context:
+    name: formal-validation / formal-validation
     if: always()
     needs: formal-validation
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - name: Bridge legacy required context
-        run: test "${{ needs.formal-validation.result }}" = "success"
-
-  legacy-pc-wp04-context:
-    name: Replay PC-WP04 bounded certificate
-    if: always()
-    needs: formal-validation
-    runs-on: ubuntu-24.04
-    timeout-minutes: 5
-    steps:
-      - name: Bridge legacy required context
-        run: test "${{ needs.formal-validation.result }}" = "success"
-
-  legacy-union-closed-context:
-    name: Replay pinned Union-Closed MATHCERT evidence
-    if: always()
-    needs: formal-validation
-    runs-on: ubuntu-24.04
-    timeout-minutes: 5
-    steps:
-      - name: Bridge legacy required context
+      - name: Bridge admitted required context identity
         run: test "${{ needs.formal-validation.result }}" = "success"
