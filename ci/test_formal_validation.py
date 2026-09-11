@@ -130,6 +130,7 @@ def main() -> int:
     assert "matrix: ${{ fromJSON(needs.impact.outputs.formal_matrix) }}" in generic
     assert "name: formal-validation" in generic
     assert "ci/formal_validation.py run" in generic
+    assert "timeout-minutes: 75" in generic
 
     # Candidate execution is deliberately unprivileged. Exact candidate SHA
     # checkout is allowed because no secret/write authority or persistent GitHub

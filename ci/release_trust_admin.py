@@ -45,6 +45,14 @@ EXPECTED_STRICT_STATUS_CHECKS = {
     "grandchallenge/MATH-PROGRAMME": False,
     "grandchallenge/INTELLECT": False,
 }
+EXPECTED_BYPASS_ACTORS = {
+    "grandchallenge/MATHCERT": [],
+    "grandchallenge/MATHSOLVE": [],
+    "grandchallenge/MATH-PROGRAMME": [
+        {"actor_id": 4423678, "actor_type": "Integration", "bypass_mode": "pull_request"}
+    ],
+    "grandchallenge/INTELLECT": [],
+}
 
 
 class ReleaseTrustError(RuntimeError):
@@ -58,6 +66,23 @@ def load_json(path: Path) -> Any:
 def canonical_sha256(value: Any) -> str:
     payload = json.dumps(value, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(payload).hexdigest()
+
+
+def _normalized_bypass_actors(value: Any) -> list[dict[str, Any]]:
+    if not isinstance(value, list):
+        return []
+    records = []
+    for actor in value:
+        if not isinstance(actor, dict):
+            continue
+        records.append(
+            {
+                "actor_id": int(actor.get("actor_id") or 0),
+                "actor_type": str(actor.get("actor_type") or ""),
+                "bypass_mode": str(actor.get("bypass_mode") or ""),
+            }
+        )
+    return sorted(records, key=lambda row: (row["actor_type"], row["actor_id"], row["bypass_mode"]))
 
 
 def validate_contract(contract: dict[str, Any], schema: dict[str, Any]) -> None:
@@ -89,9 +114,7 @@ def validate_contract(contract: dict[str, Any], schema: dict[str, Any]) -> None:
         ],
         "grandchallenge/MATH-PROGRAMME": [
             "validate-json",
-            "Replay LOG-GCD-001 in Lean",
-            "Replay PC-WP04 bounded certificate",
-            "Replay pinned Union-Closed MATHCERT evidence",
+            "formal-validation / formal-validation",
             "policy / policy",
             "security / action-policy",
         ],
@@ -110,6 +133,16 @@ def validate_contract(contract: dict[str, Any], schema: dict[str, Any]) -> None:
     }
     if strictness != EXPECTED_STRICT_STATUS_CHECKS:
         raise ReleaseTrustError("required status-check strictness map drift")
+    bypass = {
+        entry["repository"]: _normalized_bypass_actors(entry.get("bypass_actors"))
+        for entry in repositories
+    }
+    expected_bypass = {
+        repository: _normalized_bypass_actors(actors)
+        for repository, actors in EXPECTED_BYPASS_ACTORS.items()
+    }
+    if bypass != expected_bypass:
+        raise ReleaseTrustError("required ruleset bypass-actor map drift")
 
 
 def repository_policy(
@@ -117,6 +150,8 @@ def repository_policy(
 ) -> dict[str, Any]:
     effective = dict(policy)
     effective["strict_status_checks"] = entry["strict_status_checks"]
+    effective["bypass_actors"] = _normalized_bypass_actors(entry.get("bypass_actors"))
+    effective["enforce_admins"] = not bool(effective["bypass_actors"])
     return effective
 
 
@@ -158,7 +193,7 @@ def ruleset_payload(
         "name": name,
         "target": "branch",
         "enforcement": "active",
-        "bypass_actors": [],
+        "bypass_actors": _normalized_bypass_actors(policy.get("bypass_actors")),
         "conditions": {
             "ref_name": {"include": ["~DEFAULT_BRANCH"], "exclude": []}
         },
@@ -174,7 +209,7 @@ def normalize_ruleset(ruleset: dict[str, Any]) -> dict[str, Any]:
     }
     status = rules.get("required_status_checks", {}).get("parameters", {})
     reviews = rules.get("pull_request", {}).get("parameters", {})
-    bypass = ruleset.get("bypass_actors") or []
+    bypass = _normalized_bypass_actors(ruleset.get("bypass_actors") or [])
     conditions = ruleset.get("conditions") or {}
     ref_name = conditions.get("ref_name") or {}
     return {
@@ -209,15 +244,7 @@ def normalize_ruleset(ruleset: dict[str, Any]) -> dict[str, Any]:
         "allow_force_pushes": "non_fast_forward" not in rules,
         "allow_deletions": "deletion" not in rules,
         "required_linear_history": "required_linear_history" in rules,
-        "bypass_actors": {
-            "users": [],
-            "teams": [],
-            "apps": [
-                str(actor.get("actor_id"))
-                for actor in bypass
-                if isinstance(actor, dict)
-            ],
-        },
+        "bypass_actors": bypass,
     }
 
 
@@ -250,13 +277,11 @@ def ruleset_errors(
         "allow_force_pushes": policy["allow_force_pushes"],
         "allow_deletions": policy["allow_deletions"],
         "required_linear_history": policy["required_linear_history"],
+        "bypass_actors": _normalized_bypass_actors(policy.get("bypass_actors")),
     }
     for key, value in expected.items():
         if normalized.get(key) != value:
             errors.append(f"{key} drift: {normalized.get(key)!r} != {value!r}")
-    bypass = normalized.get("bypass_actors", {})
-    if any(bypass.get(kind) for kind in ("users", "teams", "apps")):
-        errors.append(f"repository ruleset has bypass actors: {bypass}")
     if not normalized.get("url"):
         errors.append("repository ruleset has no stable API identity")
     return errors
@@ -317,20 +342,27 @@ def fetch_public_bytes(url: str, expected_sha: str) -> bytes:
 
 def branch_ruleset(client: GitHubClient, repository: str) -> dict[str, Any]:
     listing = client.request("GET", f"/repos/{repository}/rulesets")
+    if not isinstance(listing, list):
+        raise ReleaseTrustError(f"{repository}: ruleset listing is not a list")
+    expected_name = RULESET_NAMES[repository]
     candidates = [
         item
         for item in listing
-        if item.get("target") == "branch" and item.get("enforcement") == "active"
+        if item.get("target") == "branch"
+        and item.get("enforcement") == "active"
+        and item.get("name") == expected_name
     ]
     if len(candidates) != 1:
         raise ReleaseTrustError(
-            f"{repository}: expected exactly one active branch ruleset, found "
-            f"{len(candidates)}"
+            f"{repository}: expected exactly one active branch ruleset named {expected_name!r}, found {len(candidates)}"
         )
     ruleset_id = candidates[0].get("id")
     if not ruleset_id:
-        raise ReleaseTrustError(f"{repository}: active branch ruleset has no id")
-    return client.request("GET", f"/repos/{repository}/rulesets/{ruleset_id}")
+        raise ReleaseTrustError(f"{repository}: selected branch ruleset has no id")
+    detail = client.request("GET", f"/repos/{repository}/rulesets/{ruleset_id}")
+    if detail.get("name") != expected_name:
+        raise ReleaseTrustError(f"{repository}: selected ruleset identity changed during readback")
+    return detail
 
 
 def apply_contract(client: GitHubClient, contract: dict[str, Any]) -> None:
@@ -582,8 +614,8 @@ def close_child_issues(client: GitHubClient, contract: dict[str, Any], evidence:
         repository,
         contract["issues"]["protected_branches"],
         "Release-trust administration passed for MATHCERT, MATHSOLVE, MATH-PROGRAMME, and INTELLECT. "
-        "Required checks, repository-specific strictness, pull-request review, admin enforcement, "
-        "conversation resolution, and zero bypass actors were verified. "
+        "Required checks, repository-specific strictness, pull-request review, conversation resolution, "
+        "and the exact governed bypass-actor map were verified. "
         f"Evidence SHA-256: `{evidence_sha}`.",
     )
     client.request(

@@ -18,7 +18,7 @@
   ],
   "properties": {
     "$schema": {"type": "string", "minLength": 1},
-    "schema_version": {"const": "1.1.0"},
+    "schema_version": {"const": "1.2.0"},
     "contract_id": {"const": "ORG-REL-TRUST-01"},
     "api_version": {"const": "2022-11-28"},
     "administration_secret": {"const": "GCL_REPOSITORY_ADMIN_TOKEN"},
@@ -57,7 +57,7 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["repository", "branch", "strict_status_checks", "required_checks"],
+        "required": ["repository", "branch", "strict_status_checks", "required_checks", "bypass_actors"],
         "properties": {
           "repository": {
             "enum": [
@@ -74,6 +74,19 @@
             "minItems": 1,
             "items": {"type": "string", "minLength": 1},
             "uniqueItems": true
+          },
+          "bypass_actors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["actor_id", "actor_type", "bypass_mode"],
+              "properties": {
+                "actor_id": {"type": "integer", "minimum": 1},
+                "actor_type": {"enum": ["Integration", "RepositoryRole", "Team", "User"]},
+                "bypass_mode": {"enum": ["always", "pull_request"]}
+              }
+            }
           }
         }
       }
