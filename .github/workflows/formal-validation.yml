@@ -125,3 +125,13 @@ jobs:
           else
             test "$LANE_RESULT" = "skipped"
           fi
+
+  required-formal-validation-context:
+    name: formal-validation / formal-validation
+    if: always()
+    needs: formal-validation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Bridge admitted required context identity
+        run: test "${{ needs.formal-validation.result }}" = "success"
