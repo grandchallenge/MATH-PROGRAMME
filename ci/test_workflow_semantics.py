@@ -134,18 +134,17 @@ def main() -> int:
     renamed_formal_aggregate["formal-validation.yml"]["jobs"]["formal-validation"]["name"] = "all-formal-campaigns"
     assert any("required aggregate job name drift" in error for error in errors(renamed_formal_aggregate))
 
-    substantive_alias = copy.deepcopy(workflows)
-    substantive_alias["formal-validation.yml"]["jobs"]["legacy-log-gcd-context"]["steps"].append(
-        {"run": "lake build"}
+    reintroduced_alias = copy.deepcopy(workflows)
+    reintroduced_alias["formal-validation.yml"]["jobs"]["legacy-log-gcd-context"] = {
+        "name": "Replay LOG-GCD-001 in Lean",
+        "needs": "formal-validation",
+        "runs-on": "ubuntu-24.04",
+        "steps": [{"run": "echo retired compatibility alias"}],
+    }
+    assert any(
+        "retired compatibility alias must remain absent" in error
+        for error in errors(reintroduced_alias)
     )
-    assert any("compatibility alias may not perform substantive replay" in error for error in errors(substantive_alias))
-
-    alias_dependency_drift = copy.deepcopy(workflows)
-    alias_dependency_drift["formal-validation.yml"]["jobs"]["legacy-pc-wp04-context"]["needs"] = [
-        "formal-validation",
-        "formal-lane",
-    ]
-    assert any("must depend only on generic aggregate" in error for error in errors(alias_dependency_drift))
 
     pc_pr_trigger = copy.deepcopy(workflows)
     pc_pr_trigger["pc-wp04.yml"]["on"]["pull_request"] = {}
