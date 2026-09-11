@@ -97,3 +97,5 @@ A good artifact should leave the reader with four things:
 - the obstruction in focus;
 - the claim boundary visible;
 - the next move unmistakable.
+
+<!-- MP-CI-SCOPE-ISOLATION-001 routing probe: unrelated documentation change; dispose unmerged. -->
