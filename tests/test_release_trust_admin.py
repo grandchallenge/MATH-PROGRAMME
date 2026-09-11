@@ -13,9 +13,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "ci"))
 
 from release_trust_admin import (  # noqa: E402
+    EXPECTED_BYPASS_ACTORS,
     EXPECTED_STRICT_STATUS_CHECKS,
     RULESET_NAMES,
     ReleaseTrustError,
+    branch_ruleset,
     normalize_ruleset,
     repository_policy,
     ruleset_errors,
@@ -80,6 +82,28 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         ):
             validate_contract(contract, self.schema)
 
+    def test_required_bypass_map_is_exact(self) -> None:
+        actual = {
+            entry["repository"]: entry["bypass_actors"]
+            for entry in self.contract["repositories"]
+        }
+        self.assertEqual(actual, EXPECTED_BYPASS_ACTORS)
+        self.assertEqual(
+            actual["grandchallenge/MATH-PROGRAMME"],
+            [{"actor_id": 4423678, "actor_type": "Integration", "bypass_mode": "pull_request"}],
+        )
+
+    def test_required_bypass_drift_is_rejected(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        programme = next(
+            entry
+            for entry in contract["repositories"]
+            if entry["repository"] == "grandchallenge/MATH-PROGRAMME"
+        )
+        programme["bypass_actors"] = []
+        with self.assertRaisesRegex(ReleaseTrustError, "bypass-actor map drift"):
+            validate_contract(contract, self.schema)
+
     def test_ruleset_payload_is_fail_closed_without_approval_deadlock(self) -> None:
         policy = self.contract["branch_policy"]
         payload = ruleset_payload("Solve profile - main", policy, ["ledgers"])
@@ -124,7 +148,7 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         self.assertTrue(reviews["required_review_thread_resolution"])
         self.assertEqual(payload["bypass_actors"], [])
 
-    def test_programme_ruleset_is_non_strict_without_removing_checks(self) -> None:
+    def test_programme_ruleset_is_non_strict_with_generic_formal_context(self) -> None:
         entry = next(
             entry
             for entry in self.contract["repositories"]
@@ -139,10 +163,16 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         self.assertFalse(status["strict_required_status_checks_policy"])
         self.assertEqual(
             [item["context"] for item in status["required_status_checks"]],
-            entry["required_checks"],
+            [
+                "validate-json",
+                "formal-validation / formal-validation",
+                "policy / policy",
+                "security / action-policy",
+            ],
         )
-        self.assertEqual(len(status["required_status_checks"]), 6)
-        self.assertEqual(payload["bypass_actors"], [])
+        self.assertEqual(len(status["required_status_checks"]), 4)
+        self.assertEqual(payload["bypass_actors"], EXPECTED_BYPASS_ACTORS[entry["repository"]])
+        self.assertFalse(policy["enforce_admins"])
 
     def test_all_managed_repositories_are_non_strict(self) -> None:
         for repository in (
@@ -174,6 +204,7 @@ class ReleaseTrustAdminTests(unittest.TestCase):
             )
             effective = repository_policy(shared, entry)
             self.assertTrue(shared["strict_status_checks"])
+            self.assertEqual(shared["bypass_actors"], [])
             self.assertFalse(effective["strict_status_checks"])
 
     def test_mathcert_normalized_matching_ruleset_passes(self) -> None:
@@ -218,7 +249,7 @@ class ReleaseTrustAdminTests(unittest.TestCase):
             [],
         )
 
-    def test_bypass_actor_is_rejected(self) -> None:
+    def test_bypass_actor_drift_is_rejected(self) -> None:
         entry = next(
             entry
             for entry in self.contract["repositories"]
@@ -229,14 +260,45 @@ class ReleaseTrustAdminTests(unittest.TestCase):
             RULESET_NAMES[entry["repository"]], policy, entry["required_checks"]
         )
         raw["source"] = entry["repository"]
-        raw["bypass_actors"] = [{"actor_id": 1, "actor_type": "Team"}]
+        raw["bypass_actors"] = [
+            {"actor_id": 1, "actor_type": "Team", "bypass_mode": "always"}
+        ]
         errors = ruleset_errors(
             normalize_ruleset(raw),
             policy,
             entry["required_checks"],
             RULESET_NAMES[entry["repository"]],
         )
-        self.assertTrue(any("bypass actors" in error for error in errors))
+        self.assertTrue(any("bypass_actors drift" in error for error in errors), errors)
+
+    def test_branch_ruleset_selects_exact_programme_profile_among_multiple_active_rulesets(self) -> None:
+        programme_detail = {
+            "id": 17137629,
+            "name": "Programme profile - main",
+            "target": "branch",
+            "enforcement": "active",
+        }
+
+        class FakeClient:
+            def request(self, method, path, data=None):
+                self.assert_get(method)
+                if path.endswith("/rulesets"):
+                    return [
+                        {"id": 17137629, "name": "Programme profile - main", "target": "branch", "enforcement": "active"},
+                        {"id": 21969152, "name": "GH-OS universal execution routing", "target": "branch", "enforcement": "active"},
+                    ]
+                if path.endswith("/rulesets/17137629"):
+                    return programme_detail
+                raise AssertionError(path)
+
+            @staticmethod
+            def assert_get(method):
+                if method != "GET":
+                    raise AssertionError(method)
+
+        selected = branch_ruleset(FakeClient(), "grandchallenge/MATH-PROGRAMME")
+        self.assertEqual(selected["id"], 17137629)
+        self.assertEqual(selected["name"], "Programme profile - main")
 
     def test_mathcert_strict_status_checks_are_rejected(self) -> None:
         entry = next(

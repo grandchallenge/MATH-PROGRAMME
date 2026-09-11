@@ -1,24 +1,69 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "2.0.0",
   "control_id": "MP-POLICY-IMPACT-GATING-001",
   "status": "ACTIVE_ON_PROTECTED_MERGE",
-  "issue": 390,
+  "issue": 936,
   "protected_required_contexts": [
     "validate-json",
-    "Replay LOG-GCD-001 in Lean",
-    "Replay PC-WP04 bounded certificate",
-    "Replay pinned Union-Closed MATHCERT evidence",
+    "formal-validation / formal-validation",
     "policy / policy",
     "security / action-policy"
   ],
-  "classifier": {"implementation": "ci/policy_impact.py", "shard_registry": "governance/policy_shard_registry.json", "unknown_path_behavior": "FULL_FANOUT", "classifier_change_behavior": "FULL_FANOUT"},
-  "formal_replay": {
-    "policy": "governance/formal_replay_policy.json",
-    "clean_transition": {"full_replay_allowed": false, "protected_attestation_required": true, "max_attestation_age_hours": 24, "stale_behavior": "FAIL_FAST_FORMAL_REPLAY_SENTINEL_STALE"},
-    "dirty_transition": {"content_addressed_reuse": true, "full_replay_if_unattested": true},
-    "sentinel": {"cron": "17 */6 * * *", "time_based_replay_repair_allowed": true}
+  "classifier": {
+    "implementation": "ci/policy_impact.py",
+    "shard_registry": "governance/policy_shard_registry.json",
+    "unknown_path_behavior": "FULL_FANOUT",
+    "classifier_change_behavior": "FULL_FANOUT"
   },
-  "policy_dag": {"shards": ["core", "fixtures", "cmdg", "oz", "administrative", "campaigns", "contracts", "docs", "repository-regression"], "final_aggregator": "validate-json", "full_policy_sentinel_cron": "43 8 * * *", "irrelevant_shard_behavior": "VERIFIED_NO_OP", "protected_main_docs_build_required": true},
-  "authority_boundary": {"human_steward_exact_head_authorization_required": true, "required_checks_removed_or_renamed": false, "formal_proof_closure_weakened": false, "formal_semantic_tcb_weakened": false, "bypass_created": false, "emergency_authority_created": false, "direct_protected_push_authorized": false, "human_steward_impersonation_authorized": false},
-  "claim_boundaries": {"mathematical_authority_created": false, "source_authority_created": false, "certification_authority_created": false, "novelty_or_priority_claim_created": false, "publication_authority_created": false, "deployment_authority_created": false, "product_or_release_authority_created": false, "commercial_authority_created": false}
+  "formal_validation": {
+    "registry": "governance/formal_validation_registry.json",
+    "workflow": ".github/workflows/formal-validation.yml",
+    "required_context": "formal-validation / formal-validation",
+    "unaffected_lane_behavior": "ABSENT",
+    "unknown_formal_path_behavior": "ERROR",
+    "control_plane_change_behavior": "FULL_FORMAL_FANOUT",
+    "protected_sentinel": {
+      "cron": "17 */6 * * *",
+      "replay_behavior": "ACTUAL_REPLAY_OF_DECLARED_SENTINEL_LANES",
+      "attestation_substitution": false
+    },
+    "compatibility_aliases": {
+      "status": "TEMPORARY_UNTIL_PROGRAMME_RULESET_MIGRATION",
+      "contexts": [
+        "Replay LOG-GCD-001 in Lean",
+        "Replay PC-WP04 bounded certificate",
+        "Replay pinned Union-Closed MATHCERT evidence"
+      ],
+      "substantive_execution": false,
+      "depends_only_on_generic_aggregate": true,
+      "removal_condition": "Programme profile - main requires formal-validation / formal-validation and no longer requires any compatibility alias"
+    }
+  },
+  "policy_dag": {
+    "shards": ["core", "fixtures", "cmdg", "oz", "administrative", "campaigns", "contracts", "docs", "repository-regression"],
+    "final_aggregator": "validate-json",
+    "full_policy_sentinel_cron": "43 8 * * *",
+    "irrelevant_shard_behavior": "VERIFIED_NO_OP",
+    "protected_main_docs_build_required": true
+  },
+  "authority_boundary": {
+    "human_steward_exact_head_authorization_required": true,
+    "required_checks_removed_without_equivalent_successor": false,
+    "formal_proof_closure_weakened": false,
+    "formal_semantic_tcb_weakened": false,
+    "bypass_created": false,
+    "emergency_authority_created": false,
+    "direct_protected_push_authorized": false,
+    "human_steward_impersonation_authorized": false
+  },
+  "claim_boundaries": {
+    "mathematical_authority_created": false,
+    "source_authority_created": false,
+    "certification_authority_created": false,
+    "novelty_or_priority_claim_created": false,
+    "publication_authority_created": false,
+    "deployment_authority_created": false,
+    "product_or_release_authority_created": false,
+    "commercial_authority_created": false
+  }
 }

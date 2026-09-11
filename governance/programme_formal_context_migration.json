@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "operation_id": "MP-PROGRAMME-FORMAL-CONTEXT-MIGRATION-001",
+  "issue": 936,
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "ruleset_id": 17137629,
+  "ruleset_name": "Programme profile - main",
+  "from_required_checks": [
+    "validate-json",
+    "Replay LOG-GCD-001 in Lean",
+    "Replay PC-WP04 bounded certificate",
+    "Replay pinned Union-Closed MATHCERT evidence",
+    "policy / policy",
+    "security / action-policy"
+  ],
+  "to_required_checks": [
+    "validate-json",
+    "formal-validation / formal-validation",
+    "policy / policy",
+    "security / action-policy"
+  ],
+  "preservation_rule": "MUTATE_ONLY_REQUIRED_STATUS_CHECK_CONTEXT_LIST",
+  "idempotent_target_allowed": true,
+  "authority_boundary": {
+    "ghos_ruleset_mutation_authorized": false,
+    "bypass_actor_mutation_authorized": false,
+    "review_rule_mutation_authorized": false,
+    "strictness_mutation_authorized": false,
+    "merge_queue_mutation_authorized": false,
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "publication_claim_authorized": false
+  }
+}

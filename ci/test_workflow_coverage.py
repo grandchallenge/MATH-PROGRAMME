@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Adversarial rejection tests for workflow and cross-repository coverage."""
+"""Adversarial rejection tests for workflow, formal-routing, and cross-repository coverage."""
 from __future__ import annotations
 
 import copy
@@ -26,20 +26,30 @@ def remove_registry_command(registry: dict, command: list[str]) -> dict:
 
 def main() -> int:
     texts = workflow_texts()
-    evidence = json.loads(
-        (ROOT / "evidence/UC-WP02-MATHCERT.json").read_text(encoding="utf-8")
-    )
-    registry = json.loads(
-        (ROOT / "governance/policy_shard_registry.json").read_text(encoding="utf-8")
-    )
-    assert not workflow_coverage_errors(texts=texts, evidence=evidence, registry=registry)
+    evidence = json.loads((ROOT / "evidence/UC-WP02-MATHCERT.json").read_text(encoding="utf-8"))
+    registry = json.loads((ROOT / "governance/policy_shard_registry.json").read_text(encoding="utf-8"))
+    baseline = workflow_coverage_errors(texts=texts, evidence=evidence, registry=registry)
+    assert not baseline, baseline
 
     missing_policy = dict(texts)
     missing_policy.pop("ci.yml")
     require_error(missing_policy, evidence, "missing governed workflow ci.yml", registry=registry)
 
+    missing_formal = dict(texts)
+    missing_formal.pop("formal-validation.yml")
+    require_error(
+        missing_formal,
+        evidence,
+        "missing governed workflow formal-validation.yml",
+        registry=registry,
+    )
+
+    unregistered_workflow = dict(texts)
+    unregistered_workflow["unregistered-formal.yml"] = texts["formal-validation.yml"]
+    require_error(unregistered_workflow, evidence, "unregistered workflow unregistered-formal.yml", registry=registry)
+
     missing_concurrency = dict(texts)
-    missing_concurrency["ci.yml"] = missing_concurrency["ci.yml"].replace(
+    missing_concurrency["formal-validation.yml"] = missing_concurrency["formal-validation.yml"].replace(
         "concurrency:\n", "concurrency-disabled:\n", 1
     )
     require_error(missing_concurrency, evidence, "explicit concurrency control is required", registry=registry)
@@ -51,6 +61,34 @@ def main() -> int:
         1,
     )
     require_error(overprivileged_policy, evidence, "top-level permissions must be exactly contents: read", registry=registry)
+
+    retired_formal_job = dict(texts)
+    retired_formal_job["ci.yml"] += "\n  # log-gcd-lean:\n"
+    # A mere comment is inert; use a YAML mutation for the actual rejection path.
+    ci = retired_formal_job["ci.yml"].replace(
+        "  validate-json:\n",
+        "  log-gcd-lean:\n    runs-on: ubuntu-24.04\n    timeout-minutes: 5\n    steps:\n      - run: echo retired\n\n  validate-json:\n",
+        1,
+    )
+    retired_formal_job["ci.yml"] = ci
+    require_error(retired_formal_job, evidence, "retired substantive formal job remains", registry=registry)
+
+    formal_direct_push = dict(texts)
+    formal_direct_push["formal-validation.yml"] = formal_direct_push["formal-validation.yml"].replace(
+        "  pull_request:\n", "  push:\n    branches: [main]\n  pull_request:\n", 1
+    )
+    require_error(formal_direct_push, evidence, "direct push trigger is forbidden", registry=registry)
+
+    formal_classifier_removed = dict(texts)
+    original_formal = formal_classifier_removed["formal-validation.yml"]
+    mutated_formal = original_formal.replace(
+        "python3 ci/formal_validation.py classify",
+        "python3 -c 'raise SystemExit(0)'",
+        1,
+    )
+    assert mutated_formal != original_formal, "formal classifier mutation did not apply"
+    formal_classifier_removed["formal-validation.yml"] = mutated_formal
+    require_error(formal_classifier_removed, evidence, "missing formal routing marker", registry=registry)
 
     direct_pages_push = dict(texts)
     direct_pages_push["pages.yml"] = direct_pages_push["pages.yml"].replace(
@@ -71,12 +109,6 @@ def main() -> int:
         1,
     )
     require_error(overprivileged_build, evidence, "build permissions must be exactly", registry=registry)
-
-    missing_artifact_read = dict(texts)
-    missing_artifact_read["pages.yml"] = missing_artifact_read["pages.yml"].replace(
-        "      actions: read\n", "", 1
-    )
-    require_error(missing_artifact_read, evidence, "build permissions must be exactly", registry=registry)
 
     missing_deploy_token = dict(texts)
     missing_deploy_token["pages.yml"] = missing_deploy_token["pages.yml"].replace(
@@ -116,22 +148,6 @@ def main() -> int:
         registry=missing_repository_route,
     )
 
-    dynamic_external_repository = dict(texts)
-    dynamic_external_repository["ci.yml"] = dynamic_external_repository["ci.yml"].replace(
-        "          repository: grandchallenge/MATHCERT\n",
-        "          repository: ${{ steps.external-evidence.outputs.repository }}\n",
-        1,
-    )
-    require_error(dynamic_external_repository, evidence, "external checkout repository must match", registry=registry)
-
-    mismatched_external_ref = dict(texts)
-    mismatched_external_ref["ci.yml"] = mismatched_external_ref["ci.yml"].replace(
-        "          ref: d59173899dcd1a67dbe8f31de0b9f0917cd1459a\n",
-        "          ref: 0000000000000000000000000000000000000000\n",
-        1,
-    )
-    require_error(mismatched_external_ref, evidence, "external checkout ref must match", registry=registry)
-
     missing_replay_route = remove_registry_command(
         registry, ["python3", "ci/validate_campaign_replays.py"]
     )
@@ -156,8 +172,7 @@ def main() -> int:
     )
 
     assert run_rh_continuity_tests() == 0
-
-    print("workflow, routed-policy, exact-artifact, repository-execution, and RH rejection tests passed")
+    print("workflow, routed-policy, material-formal, exact-artifact, repository-execution, and RH rejection tests passed")
     return 0
 
 

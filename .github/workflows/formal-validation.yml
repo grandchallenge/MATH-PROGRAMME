@@ -1,0 +1,160 @@
+name: formal-validation
+
+on:
+  pull_request:
+    branches: [main]
+  merge_group:
+    types: [checks_requested]
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: formal-validation-${{ github.event.pull_request.number || github.event.merge_group.head_sha || github.sha || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  impact:
+    name: Classify material formal closure
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      mode: ${{ steps.classify.outputs.mode }}
+      formal_lanes: ${{ steps.classify.outputs.formal_lanes }}
+      formal_matrix: ${{ steps.classify.outputs.formal_matrix }}
+      changed_paths_json: ${{ steps.classify.outputs.changed_paths_json }}
+      has_lanes: ${{ steps.classify.outputs.has_lanes }}
+      reason: ${{ steps.classify.outputs.reason }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event_name == 'merge_group' && github.event.merge_group.head_sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install governed policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Validate governed formal lane registry
+        run: python3 ci/formal_validation.py validate
+      - name: Classify exact material transition
+        id: classify
+        run: >-
+          python3 ci/formal_validation.py classify
+          --event-name "$GITHUB_EVENT_NAME"
+          --event-path "$GITHUB_EVENT_PATH"
+          --github-output "$GITHUB_OUTPUT"
+
+  formal-lane:
+    name: ${{ matrix.lane }}
+    needs: impact
+    if: needs.impact.result == 'success' && needs.impact.outputs.has_lanes == 'true'
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.impact.outputs.formal_matrix) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event_name == 'merge_group' && github.event.merge_group.head_sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install governed policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Checkout exact external formal authority
+        if: matrix.lane == 'union-closed-mathcert'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: grandchallenge/MATHCERT
+          ref: d59173899dcd1a67dbe8f31de0b9f0917cd1459a
+          path: external/MATHCERT
+          persist-credentials: false
+      - name: Set up pinned Lean environment with no GitHub Actions cache persistence
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: ${{ matrix.package_dir }}
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Execute only the materially selected formal lane
+        env:
+          FORMAL_CHANGED_PATHS: ${{ needs.impact.outputs.changed_paths_json }}
+        run: >-
+          python3 ci/formal_validation.py run
+          --lane "${{ matrix.lane }}"
+          --mode "${{ needs.impact.outputs.mode }}"
+          --changed-paths-json "$FORMAL_CHANGED_PATHS"
+      - name: Preserve exact lane result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: formal-validation-${{ matrix.lane }}-${{ github.run_id }}
+          path: .formal-validation/${{ matrix.lane }}/result.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  formal-validation:
+    name: formal-validation
+    if: always()
+    needs: [impact, formal-lane]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require fail-closed impact classification
+        env:
+          IMPACT_RESULT: ${{ needs.impact.result }}
+        run: test "$IMPACT_RESULT" = "success"
+      - name: Require exactly the selected substantive lane set
+        env:
+          HAS_LANES: ${{ needs.impact.outputs.has_lanes }}
+          LANE_RESULT: ${{ needs.formal-lane.result }}
+        run: |
+          set -euo pipefail
+          if [[ "$HAS_LANES" == "true" ]]; then
+            test "$LANE_RESULT" = "success"
+          else
+            test "$LANE_RESULT" = "skipped"
+          fi
+
+  # Temporary compatibility aliases for the live pre-migration ruleset. These
+  # jobs perform no campaign replay. They mirror only the generic aggregate and
+  # are removed after the ruleset requires formal-validation / formal-validation.
+  legacy-log-gcd-context:
+    name: Replay LOG-GCD-001 in Lean
+    if: always()
+    needs: formal-validation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Bridge legacy required context
+        run: test "${{ needs.formal-validation.result }}" = "success"
+
+  legacy-pc-wp04-context:
+    name: Replay PC-WP04 bounded certificate
+    if: always()
+    needs: formal-validation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Bridge legacy required context
+        run: test "${{ needs.formal-validation.result }}" = "success"
+
+  legacy-union-closed-context:
+    name: Replay pinned Union-Closed MATHCERT evidence
+    if: always()
+    needs: formal-validation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Bridge legacy required context
+        run: test "${{ needs.formal-validation.result }}" = "success"

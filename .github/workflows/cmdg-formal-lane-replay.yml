@@ -1,19 +1,23 @@
-name: PC-WP04 promotion replay
+name: CMDG formal lane replay
 
 on:
   workflow_call:
-  workflow_dispatch:
+    inputs:
+      lane:
+        description: Governed CMDG lane id
+        required: true
+        type: string
 
 permissions:
   contents: read
 
 concurrency:
-  group: pc-wp04-promotion-${{ github.ref }}
+  group: cmdg-formal-lane-${{ inputs.lane }}-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   replay:
-    name: Replay PC-WP04 promotion contract
+    name: Replay ${{ inputs.lane }} promotion contract
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
@@ -28,14 +32,14 @@ jobs:
           python-version: "3.12"
       - name: Install governed policy dependencies
         run: python -m pip install --requirement requirements/policy.txt
-      - name: Set up exact PC-WP04 Lean environment
+      - name: Set up exact CMDG Lean environment
         uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
         with:
-          lake-package-directory: fixtures/formal/PC-WP04
+          lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
           auto-config: false
           build: false
           test: false
           use-github-cache: false
           use-mathlib-cache: true
       - name: Replay governed promotion closure
-        run: python3 ci/formal_validation.py run --lane pc-wp04 --mode promotion --changed-paths-json '[]'
+        run: python3 ci/formal_validation.py run --lane "${{ inputs.lane }}" --mode promotion --changed-paths-json '[]'

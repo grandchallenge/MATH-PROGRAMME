@@ -1,102 +1,66 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "2.0.0",
   "control_id": "MP-CMDG-WORKFLOW-IMPACT-GATING-001",
   "status": "ACTIVE_ON_PROTECTED_MERGE",
-  "origin_baseline": "fad9cff9f8f73b78bfed94fb1aab9763f63d00ab",
-  "phase": "CLASSIFIER_ORCHESTRATED_PROTECTED_MERGE",
-  "dispatcher_workflow": "cmdg-postmerge.yml",
-  "receipt_schema": "schemas/cmdg_postmerge_readback.schema.json",
-  "workflow_roster": [
-    "cmdg-condensed-cm1.yml",
-    "cmdg-condensed-cm2.yml",
-    "cmdg-condensed-cm3.yml",
-    "cmdg-condensed-cm4-p2-d.yml",
-    "cmdg-condensed-cm4-p2-e.yml",
-    "cmdg-condensed-cm4-p2.yml",
-    "cmdg-condensed-cm4-p3.yml",
-    "cmdg-condensed-cm4.yml",
-    "cmdg-euclid-bridge.yml",
-    "cmdg-nat-concordance.yml",
-    "cmdg-solid-c05.yml",
-    "cmdg-vertical-spine-v0.yml"
-  ],
-  "pull_request_paths": [
-    ".github/workflows/**",
-    "ci/*cmdg*.py",
-    "ci/validate_workflow_coverage*.py",
-    "ci/validate_rh_continuity.py",
-    "governance/cmdg_*.json",
-    "governance/policy_shard_registry.json",
-    "schemas/cmdg_*.json",
-    "schemas/cross_repository_evidence.schema.json",
-    "fixtures/cmdg/**",
-    "fixtures/formal/CMDG-NAT-CONCORDANCE-001/**",
-    "tests/test_cmdg*.py",
-    "tests/**/test_cmdg*.py",
-    "requirements/policy.txt",
-    "evidence/UC-WP02-MATHCERT.json",
-    "campaigns/riemann_hypothesis/RH_WP01_WP02_POST_MERGE_DISPOSITION.md",
-    "docs/domains/riemann_hypothesis.md",
-    "docs/domains/index.md",
-    "docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md",
-    "docs/CAMPAIGN_PROMOTION_REGISTER.md",
-    "reviews/riemann_hypothesis/RH-WP01.agent_review.yaml",
-    "reviews/riemann_hypothesis/RH-WP02.agent_review.yaml"
-  ],
-  "negative_examples": [
-    "docs/WORKFLOW_COVERAGE.md",
-    "docs/index.md",
-    "README.md"
-  ],
-  "positive_examples": [
-    ".github/workflows/ci.yml",
-    ".github/workflows/cmdg-condensed-cm1.yml",
-    "ci/validate_cmdg_condensed_cm1.py",
-    "ci/extract_cmdg_lean_dependencies.py",
-    "ci/validate_workflow_coverage_v2.py",
-    "ci/validate_rh_continuity.py",
-    "governance/cmdg_condensed_cm1_001.json",
-    "governance/policy_shard_registry.json",
-    "schemas/cmdg_condensed_cm1.schema.json",
-    "schemas/cross_repository_evidence.schema.json",
-    "fixtures/cmdg/condensed_cm1_001/nodes.json",
-    "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean",
-    "tests/test_cmdg_condensed_cm1.py",
-    "requirements/policy.txt",
-    "evidence/UC-WP02-MATHCERT.json",
-    "campaigns/riemann_hypothesis/RH_WP01_WP02_POST_MERGE_DISPOSITION.md",
-    "docs/domains/riemann_hypothesis.md",
-    "docs/domains/index.md",
-    "docs/AGENT_COUNCIL_ARTIFACT_LEDGER.md",
-    "docs/CAMPAIGN_PROMOTION_REGISTER.md",
-    "reviews/riemann_hypothesis/RH-WP01.agent_review.yaml",
-    "reviews/riemann_hypothesis/RH-WP02.agent_review.yaml"
-  ],
-  "native_path_filter_guard": {
-    "event": "pull_request",
-    "max_changed_files": 300,
-    "relevant_large_pr_behavior": "FAIL_PROTECTED_PROGRAMME_POLICY__SPLIT_PR_REQUIRED",
-    "unrelated_large_pr_behavior": "ALLOW"
+  "issue": 936,
+  "supersedes_phase": "CLASSIFIER_ORCHESTRATED_PROTECTED_MERGE",
+  "phase": "MATERIAL_CLOSURE_FORMAL_VALIDATION",
+  "formal_router": {
+    "workflow": ".github/workflows/formal-validation.yml",
+    "registry": "governance/formal_validation_registry.json",
+    "required_context": "formal-validation / formal-validation",
+    "pull_request_behavior": "INSTANTIATE_ONLY_MATERIALLY_SELECTED_LANES",
+    "merge_group_behavior": "PROMOTION_REPLAY_ONLY_MATERIALLY_SELECTED_LANES",
+    "unknown_formal_path_behavior": "ERROR",
+    "control_plane_behavior": "CONSERVATIVE_FULL_FANOUT"
   },
-  "event_semantics": {
-    "pull_request": "NATIVE_PATH_GATED_SHARED_CMDG_CLOSURE",
-    "push_main": "ALWAYS_CLASSIFY_THEN_CALL_FULL_FAMILY_IF_CMDG_OR_UNKNOWN",
-    "schedule": "DAILY_CURRENT_HEAD_SENTINEL_FULL_FAMILY",
-    "workflow_dispatch": "PRESERVED_FULL_FAMILY"
+  "promotion": {
+    "shared_executor": ".github/workflows/cmdg-formal-lane-replay.yml",
+    "standalone_workflows": {
+      "cmdg-nat-concordance.yml": "cmdg-nat",
+      "cmdg-euclid-bridge.yml": "cmdg-euclid-bridge",
+      "cmdg-vertical-spine-v0.yml": "cmdg-vertical-spine-v0",
+      "cmdg-condensed-cm1.yml": "cmdg-cm1",
+      "cmdg-condensed-cm2.yml": "cmdg-cm2",
+      "cmdg-condensed-cm3.yml": "cmdg-cm3",
+      "cmdg-solid-c05.yml": "cmdg-solid-c05",
+      "cmdg-condensed-cm4.yml": "cmdg-cm4",
+      "cmdg-condensed-cm4-p2.yml": "cmdg-cm4-p2",
+      "cmdg-condensed-cm4-p2-d.yml": "cmdg-cm4-p2-d",
+      "cmdg-condensed-cm4-p2-e.yml": "cmdg-cm4-p2-e",
+      "cmdg-condensed-cm4-p3.yml": "cmdg-cm4-p3"
+    },
+    "allowed_wrapper_triggers": ["workflow_call", "workflow_dispatch"],
+    "chronological_predecessor_revalidation": false
   },
-  "scheduled_current_head_sentinel": {
+  "sentinel": {
+    "workflow": ".github/workflows/cmdg-postmerge.yml",
     "cron": "47 11 * * *",
-    "terminal_identity": "REPOSITORY_REF_SHA_CLASSIFIER_DIGEST",
-    "duplicate_delivery_creates_new_decision": false,
-    "missed_intermediate_merge_replay": false
+    "source_of_truth": "governance/formal_validation_registry.json",
+    "replays_complete_cmdg_lane_set": true,
+    "uses_attestation_substitution": false
+  },
+  "acceptance_examples": {
+    "p3_only": {
+      "paths": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean"],
+      "expected_lanes": ["cmdg-cm4-p3"]
+    },
+    "unrelated": {
+      "paths": ["README.md"],
+      "expected_lanes": []
+    },
+    "shared_cmdg_environment": {
+      "paths": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/lakefile.toml"],
+      "expected_family": "CMDG_ALL_ONLY"
+    }
   },
   "routing_boundary": {
-    "unrelated_pr_standalone_cmdg_instantiation": false,
-    "unrelated_main_push_standalone_cmdg_instantiation": false,
-    "cmdg_relevant_pr_full_standalone_family": true,
-    "cmdg_relevant_main_push_full_standalone_family": true,
-    "within_cmdg_lane_reduction": false,
-    "protected_required_check_identity_changed": false
+    "unrelated_pr_substantive_cmdg_instantiation": false,
+    "cmdg_relevant_pr_full_standalone_family": false,
+    "within_cmdg_lane_reduction": true,
+    "standalone_cmdg_pr_triggers": false,
+    "promotion_full_declared_lane_replay_preserved": true,
+    "daily_full_cmdg_sentinel_preserved": true
   },
   "authority_boundary": {
     "mathematical_authority_conferred": false,
@@ -109,5 +73,5 @@
     "direct_protected_push_authorized": false,
     "human_steward_impersonation_authorized": false
   },
-  "terminal_target": "CMDG_WORKFLOW_IMPACT_GATING_PROTECTED__UNRELATED_PR_AND_MAIN_EXPENSIVE_FANOUT_SUPPRESSED__EXACT_SHA_READBACK__CMDG_CLOSURE_PRESERVED"
+  "terminal_target": "CMDG_MATERIAL_CLOSURE_ROUTING_PROTECTED__P3_ONLY_EDIT_INSTANTIATES_ONLY_P3_SUBSTANTIVE_LANE__PROMOTION_AND_SENTINEL_CLOSURE_PRESERVED"
 }
