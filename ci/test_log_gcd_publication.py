@@ -16,7 +16,7 @@ SOURCE = Path(__file__).resolve().parents[1] / "fixtures" / "formal" / "LOG-GCD-
 def materialize() -> tuple[tempfile.TemporaryDirectory[str], Path]:
     temporary = tempfile.TemporaryDirectory()
     target = Path(temporary.name) / "LOG-GCD-001"
-    shutil.copytree(SOURCE, target)
+    shutil.copytree(SOURCE, target, ignore=shutil.ignore_patterns(".lake"))
     return temporary, target
 
 

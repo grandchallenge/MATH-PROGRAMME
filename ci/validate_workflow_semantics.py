@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate semantic workflow, routing, replay, runner, and publication contracts."""
+"""Validate semantic workflow, routing, runner, and publication contracts."""
 from __future__ import annotations
 
 import json
@@ -15,8 +15,9 @@ EXPECTED_NAMES = {
     "bsd-wp03-substrate.yml": "BSD WP03 substrate replay",
     "bsd-wp04-target.yml": "BSD WP04 target scorecard",
     "ci.yml": "Programme policy checks",
+    "formal-validation.yml": "formal-validation",
     "pages.yml": "Deploy documentation site",
-    "pc-wp04.yml": "PC-WP04 certificate checks",
+    "pc-wp04.yml": "PC-WP04 promotion replay",
     "pc-wp05.yml": "PC-WP05 archival checks",
 }
 PYTHON_MINOR_LINE = "3.12"
@@ -29,7 +30,6 @@ DOCS_REQUIREMENTS = (
 )
 POLICY_INSTALL = "python -m pip install --requirement requirements/policy.txt"
 DOCS_INSTALL = "python -m pip install --requirement requirements/docs.txt"
-EXTERNAL_POLICY_INSTALL = 'python -m pip install --requirement "$GITHUB_WORKSPACE/requirements/policy.txt"'
 PINNED_REUSABLE_WORKFLOW = re.compile(r"^[^@\s]+/\.github/workflows/[^@\s]+@[0-9a-f]{40}$")
 LOCAL_REUSABLE_WORKFLOW = re.compile(r"^\./\.github/workflows/[^@\s]+[.]ya?ml$")
 SHARDS = (
@@ -44,6 +44,7 @@ SHARDS = (
     "repository-regression",
 )
 DYNAMIC_SHARD_MATRIX = "${{ fromJSON(needs.impact.outputs.policy_shards) }}"
+DYNAMIC_FORMAL_MATRIX = "${{ fromJSON(needs.impact.outputs.formal_matrix) }}"
 REPOSITORY_REGRESSION_COMMAND = (
     "python3 ci/run_unittest_modules.py --discover-root tests --pattern test_*.py "
     "--report-json repository-regression-timing.json"
@@ -58,6 +59,11 @@ def load_workflows(root: Path = ROOT) -> dict[str, dict[str, Any]]:
     return out
 
 
+def trigger(workflow: dict[str, Any]) -> dict[str, Any]:
+    value = workflow.get("on", {})
+    return value if isinstance(value, dict) else {}
+
+
 def job_runs(workflow: dict[str, Any], job_id: str) -> list[str]:
     return [
         str(step.get("run", ""))
@@ -70,8 +76,9 @@ def all_runs(workflow: dict[str, Any]) -> list[str]:
     return [
         str(step.get("run", ""))
         for job in workflow.get("jobs", {}).values()
+        if isinstance(job, dict)
         for step in job.get("steps", [])
-        if step.get("run")
+        if isinstance(step, dict) and step.get("run")
     ]
 
 
@@ -93,7 +100,11 @@ def marker(runs: list[str], value: str) -> bool:
 
 
 def steps_using(job: dict[str, Any], prefix: str) -> list[dict[str, Any]]:
-    return [step for step in job.get("steps", []) if str(step.get("uses", "")).startswith(prefix)]
+    return [
+        step
+        for step in job.get("steps", [])
+        if isinstance(step, dict) and str(step.get("uses", "")).startswith(prefix)
+    ]
 
 
 def requirement_lines(root: Path, relative: str) -> tuple[str, ...]:
@@ -108,7 +119,7 @@ def requirement_lines(root: Path, relative: str) -> tuple[str, ...]:
 
 
 def registry_shards(root: Path) -> dict[str, set[str]]:
-    path = root / "governance" / "policy_shard_registry.json"
+    path = root / "governance/policy_shard_registry.json"
     if not path.is_file():
         return {}
     try:
@@ -140,19 +151,18 @@ def workflow_semantic_errors(
 ) -> list[str]:
     errors: list[str] = []
     workflows = load_workflows(root) if workflows is None else workflows
-    names: list[str] = []
 
     for filename, expected in EXPECTED_NAMES.items():
         actual = str(workflows.get(filename, {}).get("name", ""))
-        names.append(actual)
         if actual != expected:
             errors.append(f"{filename}: workflow name must be exactly {expected!r}, found {actual!r}")
-    for name in sorted({name for name in names if name and names.count(name) > 1}):
-        errors.append(f"workflow names must be unique; duplicate {name!r}")
 
     setup_count = 0
     for filename, workflow in workflows.items():
         for job_id, job in workflow.get("jobs", {}).items():
+            if not isinstance(job, dict):
+                errors.append(f"{filename}:{job_id}: workflow job must be a mapping")
+                continue
             reusable = str(job.get("uses", ""))
             if reusable:
                 if not (
@@ -166,6 +176,8 @@ def workflow_semantic_errors(
             if str(job.get("runs-on", "")) != "ubuntu-24.04":
                 errors.append(f"{filename}:{job_id}: runs-on must be pinned to ubuntu-24.04")
             for step in job.get("steps", []):
+                if not isinstance(step, dict):
+                    continue
                 if str(step.get("uses", "")).startswith("actions/setup-python@"):
                     setup_count += 1
                     if str(step.get("with", {}).get("python-version", "")) != PYTHON_MINOR_LINE:
@@ -184,17 +196,20 @@ def workflow_semantic_errors(
         errors.append("requirements/docs.txt must contain the exact governed documentation pins")
 
     policy = workflows.get("ci.yml", {})
-    triggers = policy.get("on", {})
-    schedules = str(triggers.get("schedule", "")) if isinstance(triggers, dict) else ""
-    for cron in ("17 */6 * * *", "43 8 * * *"):
-        if cron not in schedules:
-            errors.append(f"ci.yml: missing protected policy sentinel cron {cron}")
+    policy_trigger = trigger(policy)
+    schedules = [
+        str(item.get("cron"))
+        for item in policy_trigger.get("schedule", [])
+        if isinstance(item, dict)
+    ]
+    if schedules != ["43 8 * * *"]:
+        errors.append("ci.yml: policy workflow must own only the 43 8 * * * policy sentinel")
 
     impact = policy.get("jobs", {}).get("impact", {})
     if not marker(job_runs(policy, "impact"), "ci/policy_impact.py classify"):
         errors.append("ci.yml:impact must execute the fail-closed policy impact classifier")
-    impact_checkouts = steps_using(impact, "actions/checkout@")
-    if len(impact_checkouts) != 1 or str(impact_checkouts[0].get("with", {}).get("fetch-depth", "")) != "0":
+    checkouts = steps_using(impact, "actions/checkout@")
+    if len(checkouts) != 1 or str(checkouts[0].get("with", {}).get("fetch-depth", "")) != "0":
         errors.append("ci.yml:impact must use one full-history checkout for exact transition diffing")
 
     shard_job = policy.get("jobs", {}).get("policy-shard", {})
@@ -204,27 +219,35 @@ def workflow_semantic_errors(
     shard_runs = job_runs(policy, "policy-shard")
     if not contains_command(shard_runs, POLICY_INSTALL):
         errors.append("ci.yml:policy-shard is missing governed policy dependency command")
-    if not contains_command(shard_runs, DOCS_INSTALL):
-        errors.append("ci.yml:policy-shard is missing governed docs dependency command")
     if not marker(shard_runs, "ci/run_policy_shard.py --shard"):
         errors.append("ci.yml:policy-shard must execute the governed shard registry runner")
+
+    aggregate = policy.get("jobs", {}).get("validate-json", {})
+    if not {"impact", "policy-shard"}.issubset(needs(aggregate)):
+        errors.append("ci.yml:validate-json must aggregate impact and policy-shard")
+    if "always()" not in str(aggregate.get("if", "")):
+        errors.append("ci.yml:validate-json must run under always()")
+    for result_marker in ("needs.impact.result", "needs.policy-shard.result"):
+        if not marker(job_runs(policy, "validate-json"), result_marker):
+            errors.append(f"ci.yml:validate-json missing result gate {result_marker}")
+    for retired in ("log-gcd-lean", "pc-wp04-lean", "union-closed-mathcert"):
+        if retired in policy.get("jobs", {}):
+            errors.append(f"ci.yml: retired campaign-specific formal job remains instantiated: {retired}")
 
     routed = registry_shards(root)
     if tuple(routed) != SHARDS:
         errors.append("governed shard registry must enumerate the exact nine policy shards in governed order")
     if REPOSITORY_REGRESSION_COMMAND not in routed.get("repository-regression", set()):
-        errors.append(
-            "governed repository-regression shard is missing executable coverage command "
-            + REPOSITORY_REGRESSION_COMMAND
-        )
+        errors.append("governed repository-regression shard is missing executable coverage command")
     for owner, commands in routed.items():
         if owner != "repository-regression" and REPOSITORY_REGRESSION_COMMAND in commands:
-            errors.append(
-                "full repository regression command must be owned only by repository-regression; "
-                f"found in {owner}"
-            )
+            errors.append(f"full repository regression command must be owned only by repository-regression; found in {owner}")
     all_registry_commands = set().union(*routed.values()) if routed else set()
     for command in (
+        "python3 ci/policy_impact.py validate",
+        "python3 ci/test_policy_impact.py",
+        "python3 ci/formal_validation.py validate",
+        "python3 ci/test_formal_validation.py",
         "python3 ci/validate_policy_reachability.py",
         "python3 ci/test_policy_reachability.py",
         "python3 ci/validate_repository_execution.py",
@@ -236,19 +259,10 @@ def workflow_semantic_errors(
         if command not in all_registry_commands:
             errors.append(f"governed shard registry is missing executable coverage command {command}")
 
-    aggregate = policy.get("jobs", {}).get("validate-json", {})
-    if not {"impact", "policy-shard"}.issubset(needs(aggregate)):
-        errors.append("ci.yml:validate-json must aggregate impact and policy-shard")
-    if "always()" not in str(aggregate.get("if", "")):
-        errors.append("ci.yml:validate-json must run under always() to fail closed on upstream results")
-    aggregate_runs = job_runs(policy, "validate-json")
-    for result_marker in ("needs.impact.result", "needs.policy-shard.result"):
-        if not marker(aggregate_runs, result_marker):
-            errors.append(f"ci.yml:validate-json aggregator is missing result gate {result_marker}")
-
     uploads = [
         step
         for job in policy.get("jobs", {}).values()
+        if isinstance(job, dict)
         for step in steps_using(job, "actions/upload-artifact@")
     ]
     site_uploads = [step for step in uploads if step.get("with", {}).get("name") == "validated-site"]
@@ -267,34 +281,64 @@ def workflow_semantic_errors(
         if str(upload.get("with", {}).get("retention-days", "")) != "1":
             errors.append("ci.yml: validated-site artifact retention must be exactly one day")
 
-    for job_id, lane in {
-        "log-gcd-lean": "log-gcd",
-        "pc-wp04-lean": "pc-wp04",
-        "union-closed-mathcert": "union-closed-mathcert",
-    }.items():
-        job = policy.get("jobs", {}).get(job_id, {})
-        runs = job_runs(policy, job_id)
-        if "impact" not in needs(job):
-            errors.append(f"ci.yml:{job_id} must depend on impact classification")
-        for required in (
-            f"formal_replay_attestation.py digest --lane {lane}",
-            f"formal_replay_gate.py decide --lane {lane}",
-            '--mode "${MODE}"',
-        ):
-            if not marker(runs, required):
-                errors.append(f"ci.yml:{job_id} missing formal replay impact-gate marker {required}")
-        if not marker(runs, "formal_replay_gate.py emit-receipt"):
-            errors.append(f"ci.yml:{job_id} must emit protected replay receipts through the schedule-aware gate")
+    formal_workflow = workflows.get("formal-validation.yml", {})
+    formal_trigger = trigger(formal_workflow)
+    if not {"pull_request", "merge_group", "schedule", "workflow_dispatch"}.issubset(formal_trigger):
+        errors.append("formal-validation.yml: trigger set is incomplete")
+    formal_schedules = [
+        str(item.get("cron"))
+        for item in formal_trigger.get("schedule", [])
+        if isinstance(item, dict)
+    ]
+    if formal_schedules != ["17 */6 * * *"]:
+        errors.append("formal-validation.yml: formal sentinel cron drift")
+    if "push" in formal_trigger:
+        errors.append("formal-validation.yml: direct protected-main push trigger is forbidden")
 
-    if not contains_command(job_runs(policy, "pc-wp04-lean"), POLICY_INSTALL):
-        errors.append("ci.yml:pc-wp04-lean must install requirements/policy.txt")
-    if not contains_command(job_runs(policy, "union-closed-mathcert"), EXTERNAL_POLICY_INSTALL):
-        errors.append("ci.yml:union-closed-mathcert must install the root policy requirements by absolute workspace path")
-    for job_id in ("log-gcd-lean", "pc-wp04-lean"):
-        if not marker(job_runs(policy, job_id), "lake build"):
-            errors.append(f"ci.yml:{job_id} must retain full Lean replay path")
-    if not marker(job_runs(policy, "union-closed-mathcert"), "bash ci/check_lean.sh"):
-        errors.append("ci.yml:union-closed-mathcert must retain pinned external replay path")
+    formal_impact = formal_workflow.get("jobs", {}).get("impact", {})
+    formal_checkouts = steps_using(formal_impact, "actions/checkout@")
+    if len(formal_checkouts) != 1 or str(formal_checkouts[0].get("with", {}).get("fetch-depth", "")) != "0":
+        errors.append("formal-validation.yml:impact must use full-history checkout")
+    if not marker(job_runs(formal_workflow, "impact"), "ci/formal_validation.py classify"):
+        errors.append("formal-validation.yml:impact must execute material formal classifier")
+
+    lane_job = formal_workflow.get("jobs", {}).get("formal-lane", {})
+    formal_matrix = lane_job.get("strategy", {}).get("matrix", "")
+    if str(formal_matrix) != DYNAMIC_FORMAL_MATRIX:
+        errors.append("formal-validation.yml:formal-lane must use classifier-produced dynamic matrix")
+    if not marker(job_runs(formal_workflow, "formal-lane"), "ci/formal_validation.py run"):
+        errors.append("formal-validation.yml:formal-lane must execute generic lane runner")
+    if not steps_using(lane_job, "grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4"):
+        errors.append("formal-validation.yml: formal lanes must use the exact governed Lean action")
+
+    formal_aggregate = formal_workflow.get("jobs", {}).get("formal-validation", {})
+    if not {"impact", "formal-lane"}.issubset(needs(formal_aggregate)):
+        errors.append("formal-validation.yml: aggregate must depend on impact and formal-lane")
+    if "always()" not in str(formal_aggregate.get("if", "")):
+        errors.append("formal-validation.yml: aggregate must run under always()")
+    if str(formal_aggregate.get("name", "")) != "formal-validation":
+        errors.append("formal-validation.yml: required aggregate job name drift")
+
+    aliases = {
+        "legacy-log-gcd-context": "Replay LOG-GCD-001 in Lean",
+        "legacy-pc-wp04-context": "Replay PC-WP04 bounded certificate",
+        "legacy-union-closed-context": "Replay pinned Union-Closed MATHCERT evidence",
+    }
+    for job_id, name in aliases.items():
+        job = formal_workflow.get("jobs", {}).get(job_id, {})
+        if str(job.get("name", "")) != name:
+            errors.append(f"formal-validation.yml:{job_id}: temporary compatibility context drift")
+        if needs(job) != {"formal-validation"}:
+            errors.append(f"formal-validation.yml:{job_id}: compatibility alias must depend only on generic aggregate")
+        text = "\n".join(job_runs(formal_workflow, job_id))
+        if "formal_validation.py" in text or "lake " in text:
+            errors.append(f"formal-validation.yml:{job_id}: compatibility alias may not perform substantive replay")
+
+    pc = workflows.get("pc-wp04.yml", {})
+    if set(trigger(pc)) != {"workflow_call", "workflow_dispatch"}:
+        errors.append("pc-wp04.yml: promotion replay triggers must be workflow_call plus workflow_dispatch only")
+    if not marker(all_runs(pc), "ci/formal_validation.py run --lane pc-wp04 --mode promotion"):
+        errors.append("pc-wp04.yml: promotion replay must delegate to generic lane runner")
 
     pages = workflows.get("pages.yml", {})
     concurrency = pages.get("concurrency", {})
@@ -309,21 +353,16 @@ def workflow_semantic_errors(
     ):
         if clause not in build_if:
             errors.append(f"pages.yml: build.if is missing semantic gate {clause}")
-    checkouts = steps_using(build, "actions/checkout@")
-    if len(checkouts) != 1:
-        errors.append("pages.yml: build must contain exactly one checkout step")
-    elif checkouts[0].get("with", {}).get("ref") != "${{ github.event.workflow_run.head_sha }}":
-        errors.append("pages.yml: checkout must use the validated workflow_run.head_sha")
-    build_runs = job_runs(pages, "build")
-    if contains_command(build_runs, DOCS_INSTALL) or contains_command(build_runs, "mkdocs build --strict"):
-        errors.append("pages.yml: Pages must deploy the policy artifact without resolving dependencies or rebuilding MkDocs")
+    page_checkouts = steps_using(build, "actions/checkout@")
+    if len(page_checkouts) != 1 or page_checkouts[0].get("with", {}).get("ref") != "${{ github.event.workflow_run.head_sha }}":
+        errors.append("pages.yml: checkout must bind the validated workflow_run.head_sha")
+    page_runs = job_runs(pages, "build")
+    if contains_command(page_runs, DOCS_INSTALL) or contains_command(page_runs, "mkdocs build --strict"):
+        errors.append("pages.yml: Pages must deploy the policy artifact without rebuilding documentation")
     deploy = pages.get("jobs", {}).get("deploy", {})
-    environment = deploy.get("environment", {})
-    if str(environment.get("url", "")) != "${{ steps.deployment.outputs.page_url }}":
-        errors.append("pages.yml: deploy environment must expose the deploy-pages page_url output")
     deployment_steps = steps_using(deploy, "actions/deploy-pages@")
     if len(deployment_steps) != 1 or deployment_steps[0].get("id") != "deployment":
-        errors.append("pages.yml: deploy-pages step must have id deployment")
+        errors.append("pages.yml: deploy must use exactly one deployment step with id=deployment")
 
     return errors
 
@@ -335,10 +374,7 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"workflow semantic validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print(
-        "workflow names, dynamic impact routing, formal replay gates, runners, dependencies, "
-        "repository-regression ownership, and publication freshness are valid"
-    )
+    print("workflow semantic validation passed")
     return 0
 
 

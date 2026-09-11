@@ -19,15 +19,15 @@ Its determination is:
 
 The admitted administrative evidence is App-backed release-trust run `30450610588`, artifact `8723362498`, and canonical evidence SHA-256 `acd7e9c3ea10e9c03ea5dc81a0b84918d7241fea886426d2304e168b10c936f8`.
 
-The historical audit remains a historical record. Current execution semantics are additionally governed by `MP-STREAMLINED-EXECUTION-001` and the checked-in impact classifier and policy-shard registry.
+The historical audit remains a historical record. Current execution semantics are additionally governed by `MP-STREAMLINED-EXECUTION-001`, the policy-shard classifier and registry, and the formal-validation material-closure registry.
 
 ## Global policy gate
 
-`.github/workflows/ci.yml` is the global `Programme policy checks` workflow. It runs on pull requests, pushes to `main`, explicit manual audits, and scheduled assurance according to the workflow definition.
+`.github/workflows/ci.yml` is the global `Programme policy checks` workflow. It runs on pull requests, pushes to `main`, merge groups, explicit manual audits, and scheduled policy assurance according to the workflow definition.
 
 The workflow uses read-only repository permissions, bounded timeouts, non-persistent checkout credentials, immutable action references, fixed runner families, checked-in dependency pins, and concurrency cancellation.
 
-The workflow is impact-routed. `ci/policy_impact.py` classifies the material closure and selects policy shards from `governance/policy_shard_registry.json`. The current shard set is:
+The policy workflow is impact-routed. `ci/policy_impact.py` classifies only Programme policy obligations and selects policy shards from `governance/policy_shard_registry.json`. Formal proof replay is not a policy-shard side effect. The current policy shard set is:
 
 - `core`;
 - `fixtures`;
@@ -43,14 +43,31 @@ The required `validate-json` context is the aggregation gate for the routed poli
 
 | Job / context | Controlled obligation |
 |---|---|
-| `Classify policy impact` | Determine affected policy shards and formal replay lanes from the material transition; unknown or central dependency-map changes fail closed |
+| `Classify policy impact` | Determine affected policy shards from the material transition; unknown or central dependency-map changes fail closed |
 | `Policy shard / <name>` | Execute only the selected governed shard commands under the registered execution envelope |
-| `validate-json` | Aggregate the selected policy shards into the stable required status context |
-| `Replay LOG-GCD-001 in Lean` | Pinned Lean replay or protected evidence reuse according to formal material identity |
-| `Replay PC-WP04 bounded certificate` | Pinned Lean replay and policy validation of the bounded Poincaré certificate, or protected evidence reuse when materially unchanged |
-| `Replay pinned Union-Closed MATHCERT evidence` | Exact external certification replay or protected evidence reuse according to formal material identity |
+| `validate-json` | Aggregate the selected policy shards into the stable policy status context |
 
-A successful workflow records integration, execution, policy, artifact, or bounded-certification facts. It does not promote an open mathematical claim.
+## Formal validation gate
+
+`.github/workflows/formal-validation.yml` is the separate formal-validation workflow. `governance/formal_validation_registry.json` is the source of truth for formal lane identities, material dependency closures, promotion targets, and sentinel scope. `ci/formal_validation.py` validates that registry, classifies the exact transition, and constructs the dynamic lane matrix.
+
+The governing rule is material closure: an ordinary candidate instantiates a substantive formal lane only when the exact candidate transition intersects that lane's declared material closure. A formal control-plane change conservatively selects the full formal lane set. An unknown managed formal or formal-executable path fails closed.
+
+| Job / context | Controlled obligation |
+|---|---|
+| `Classify material formal closure` | Resolve the exact changed paths and select only materially affected formal lanes |
+| `<formal lane id>` | Execute one selected formal lane under its registered package, validator, and proof-environment contract |
+| `formal-validation / formal-validation` | Aggregate the exact selected lane matrix into the generic formal status context |
+
+CMDG development validation compiles the changed Lean leaf plus its actual local import closure. It does not replay historical CMDG stages merely because they precede the changed theorem in the research programme. Shared CMDG environment changes still select all CMDG lanes because they can affect every lane.
+
+Standalone CMDG workflows and `pc-wp04.yml` are promotion/manual replay surfaces, not ordinary PR triggers. CMDG promotion uses the complete registered lane source closure. Protected-main sentinels preserve periodic whole-family assurance independently of candidate-local development validation.
+
+Candidate formal execution is deliberately unprivileged. The generic workflow has read-only contents permission, no repository secrets or write token, non-persistent checkout credentials, exact candidate-SHA checkout, pinned actions, and no GitHub Actions cache persistence. The pinned Lean action may run Mathlib's retrieval-only `lake exe cache get` path so the exact committed Lake dependency graph and precompiled Mathlib artifacts are materialized locally without a repository-wide source build; the resulting `.lake` state is not saved into a GitHub Actions cache. The Union-Closed external authority is a fixed audited `grandchallenge/MATHCERT` commit rather than candidate-controlled repository/ref data. Promotion workflows reject non-`main` execution before Python or Lean/cache setup.
+
+During the required-context migration only, three compatibility jobs retain the legacy required context names. They perform no campaign replay; each depends only on the generic formal aggregate. After Programme ruleset `17137629` requires `formal-validation / formal-validation`, those compatibility aliases are removed. This bridge prevents an enforcement gap while avoiding duplicate substantive validation.
+
+A successful policy or formal workflow records integration, execution, policy, artifact, or bounded-certification facts. It does not promote an open mathematical claim.
 
 ## Execution bounds and de-duplication
 
@@ -91,7 +108,7 @@ The global contract covers:
 
 - recursive campaign executable discovery;
 - executable CI-control reachability;
-- impact classification and material-dependency routing;
+- policy-shard impact classification and formal material-closure routing as separate control planes;
 - repository tests and experiment reachability;
 - bounded command and unittest execution;
 - symbolic resource budgets and failure ledgers;
@@ -101,7 +118,7 @@ The global contract covers:
 - programme-wide MATHCERT conformance;
 - bounded MATHFORGE algebraic witness generation;
 - bounded MATHSOLVE algebraic tactic routing;
-- formal Lean replays and protected replay evidence;
+- material-closure formal Lean development validation and protected promotion/sentinel replay;
 - pinned external certification evidence;
 - material-input-routed computational mathematics such as Odd Zeta replay;
 - strict documentation construction;
