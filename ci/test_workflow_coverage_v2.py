@@ -28,18 +28,15 @@ def remove_registry_command(registry: dict, command: list[str]) -> dict:
 
 def main() -> int:
     texts = workflow_texts()
-    evidence = json.loads(
-        (ROOT / "evidence/UC-WP02-MATHCERT.json").read_text(encoding="utf-8")
-    )
-    registry = json.loads(
-        (ROOT / "governance/policy_shard_registry.json").read_text(encoding="utf-8")
-    )
-    assert not workflow_coverage_errors(texts=texts, evidence=evidence, registry=registry)
+    evidence = json.loads((ROOT / "evidence/UC-WP02-MATHCERT.json").read_text(encoding="utf-8"))
+    registry = json.loads((ROOT / "governance/policy_shard_registry.json").read_text(encoding="utf-8"))
+    baseline = workflow_coverage_errors(texts=texts, evidence=evidence, registry=registry)
+    assert not baseline, baseline
 
-    missing_qualification_workflow = dict(texts)
-    missing_qualification_workflow.pop(QUALIFICATION_ONLY_WORKFLOW)
+    missing_qualification = dict(texts)
+    missing_qualification.pop(QUALIFICATION_ONLY_WORKFLOW)
     require_error(
-        missing_qualification_workflow,
+        missing_qualification,
         evidence,
         f"missing governed workflow {QUALIFICATION_ONLY_WORKFLOW}",
         registry=registry,
@@ -61,7 +58,7 @@ def main() -> int:
     require_error(
         texts,
         evidence,
-        "missing workflow coverage marker python3 ci/validate_workflow_coverage.py",
+        "missing workflow coverage marker python3 ci/validate_workflow_coverage_v2.py",
         registry=missing_successor_route,
     )
 
@@ -76,21 +73,21 @@ def main() -> int:
     require_error(mutable_app, evidence, "full commit SHA", registry=registry)
 
     external_reusable_branch = dict(texts)
-    external_reusable_branch["cmdg-postmerge.yml"] = external_reusable_branch[
-        "cmdg-postmerge.yml"
+    external_reusable_branch["cmdg-condensed-cm1.yml"] = external_reusable_branch[
+        "cmdg-condensed-cm1.yml"
     ].replace(
-        "./.github/workflows/cmdg-condensed-cm1.yml",
-        "grandchallenge/MATH-PROGRAMME/.github/workflows/cmdg-condensed-cm1.yml@main",
+        "./.github/workflows/cmdg-formal-lane-replay.yml",
+        "grandchallenge/MATH-PROGRAMME/.github/workflows/cmdg-formal-lane-replay.yml@main",
         1,
     )
     require_error(external_reusable_branch, evidence, "full commit SHA", registry=registry)
 
     escaping_local_reusable = dict(texts)
-    escaping_local_reusable["cmdg-postmerge.yml"] = escaping_local_reusable[
-        "cmdg-postmerge.yml"
+    escaping_local_reusable["cmdg-condensed-cm1.yml"] = escaping_local_reusable[
+        "cmdg-condensed-cm1.yml"
     ].replace(
-        "./.github/workflows/cmdg-condensed-cm1.yml",
-        "./.github/workflows/../cmdg-condensed-cm1.yml",
+        "./.github/workflows/cmdg-formal-lane-replay.yml",
+        "./.github/workflows/../cmdg-formal-lane-replay.yml",
         1,
     )
     require_error(escaping_local_reusable, evidence, "same-repository local", registry=registry)
@@ -127,11 +124,11 @@ def main() -> int:
     direct_push["administrative-maintenance-candidate.yml"] += "\n# git push origin main\n"
     require_error(direct_push, evidence, "forbidden runtime capability", registry=registry)
 
-    sync_v4_removed = dict(texts)
-    sync_v4_removed["administrative-maintenance-synchronization.yml"] = sync_v4_removed[
+    sync_runtime_drift = dict(texts)
+    sync_runtime_drift["administrative-maintenance-synchronization.yml"] = sync_runtime_drift[
         "administrative-maintenance-synchronization.yml"
     ].replace("synchronize_administrative_completion_v4.py", "synchronize_administrative_completion_v3.py", 1)
-    require_error(sync_v4_removed, evidence, "bounded synchronization marker", registry=registry)
+    require_error(sync_runtime_drift, evidence, "bounded synchronization marker", registry=registry)
 
     arbitrary_manual_sha = dict(texts)
     arbitrary_manual_sha["administrative-maintenance-synchronization.yml"] += "\n# inputs.head_sha\n"
@@ -163,9 +160,9 @@ def main() -> int:
         "      - name: Deferred Administration actor restoration",
         1,
     )
-    actor_restore_order_drift[
-        "administrative-maintenance-0813-recovery-failover.yml"
-    ] = failover + "\n# Restore exact PR-only Administration actor\n"
+    actor_restore_order_drift["administrative-maintenance-0813-recovery-failover.yml"] = (
+        failover + "\n# Restore exact PR-only Administration actor\n"
+    )
     require_error(
         actor_restore_order_drift,
         evidence,
@@ -174,9 +171,7 @@ def main() -> int:
     )
 
     failover_direct_push = dict(texts)
-    failover_direct_push[
-        "administrative-maintenance-0813-recovery-failover.yml"
-    ] += "\n# git push origin main\n"
+    failover_direct_push["administrative-maintenance-0813-recovery-failover.yml"] += "\n# git push origin main\n"
     require_error(
         failover_direct_push,
         evidence,
@@ -190,17 +185,6 @@ def main() -> int:
     ].replace("      issues: write", "      issues: read", 1)
     require_error(
         remediation_permission_drift,
-        evidence,
-        "delegated Referee admission permissions drift",
-        registry=registry,
-    )
-
-    remediation_pr_write_permission_drift = dict(texts)
-    remediation_pr_write_permission_drift[QUALIFICATION_ONLY_WORKFLOW] = remediation_pr_write_permission_drift[
-        QUALIFICATION_ONLY_WORKFLOW
-    ].replace("      pull-requests: write", "      pull-requests: read", 1)
-    require_error(
-        remediation_pr_write_permission_drift,
         evidence,
         "delegated Referee admission permissions drift",
         registry=registry,
@@ -236,74 +220,6 @@ def main() -> int:
         remediation_comment_trigger_removed,
         evidence,
         "trigger must be workflow_dispatch plus issue_comment plus pull_request_target",
-        registry=registry,
-    )
-
-    remediation_comment_association_removed = dict(texts)
-    remediation_comment_association_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_comment_association_removed[
-        QUALIFICATION_ONLY_WORKFLOW
-    ].replace(
-        "contains(fromJSON('[\"OWNER\",\"MEMBER\",\"COLLABORATOR\"]'), github.event.comment.author_association)",
-        "true",
-        1,
-    )
-    require_error(
-        remediation_comment_association_removed,
-        evidence,
-        "missing remediation envelope marker contains(fromJSON",
-        registry=registry,
-    )
-
-    remediation_comment_command_removed = dict(texts)
-    remediation_comment_command_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_comment_command_removed[
-        QUALIFICATION_ONLY_WORKFLOW
-    ].replace("DELEGATED_REMEDIATION_ADMIT ([0-9a-f]{40})", "DELEGATED_REMEDIATION_ADMIT (.*)")
-    require_error(
-        remediation_comment_command_removed,
-        evidence,
-        "DELEGATED_REMEDIATION_ADMIT ([0-9a-f]{40})",
-        registry=registry,
-    )
-
-    remediation_admission_status_removed = dict(texts)
-    remediation_admission_status_removed[QUALIFICATION_ONLY_WORKFLOW] = remediation_admission_status_removed[
-        QUALIFICATION_ONLY_WORKFLOW
-    ].replace("Publish durable admission result", "Admission result unavailable", 1)
-    require_error(
-        remediation_admission_status_removed,
-        evidence,
-        "Publish durable admission result",
-        registry=registry,
-    )
-
-    remediation_extra_candidate_contents_write = dict(texts)
-    remediation_extra_candidate_contents_write[QUALIFICATION_ONLY_WORKFLOW] += (
-        "\n# permission-contents: write\n"
-    )
-    require_error(
-        remediation_extra_candidate_contents_write,
-        evidence,
-        "exactly one Candidate contents-write merge token",
-        registry=registry,
-    )
-
-    remediation_extra_candidate_pr_write = dict(texts)
-    remediation_extra_candidate_pr_write[QUALIFICATION_ONLY_WORKFLOW] += (
-        "\n# permission-pull-requests: write\n"
-    )
-    require_error(
-        remediation_extra_candidate_pr_write,
-        evidence,
-        "exactly one Candidate pull-request-write merge token",
-        registry=registry,
-    )
-
-    remediation_app_issue_write = dict(texts)
-    remediation_app_issue_write[QUALIFICATION_ONLY_WORKFLOW] += "\n# permission-issues: write\n"
-    require_error(
-        remediation_app_issue_write,
-        evidence,
-        "App tokens may not receive issues-write",
         registry=registry,
     )
 

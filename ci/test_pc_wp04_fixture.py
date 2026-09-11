@@ -81,7 +81,11 @@ def main() -> None:
     ]:
         with tempfile.TemporaryDirectory(prefix=f"pc-wp04-{name}-") as tmp:
             fixture = Path(tmp) / "PC-WP04"
-            shutil.copytree(SOURCE_FIXTURE, fixture)
+            shutil.copytree(
+                SOURCE_FIXTURE,
+                fixture,
+                ignore=shutil.ignore_patterns(".lake"),
+            )
             mutation(fixture)
             if run(fixture) == 0:
                 raise SystemExit(f"adversarial mutation unexpectedly passed: {name}")

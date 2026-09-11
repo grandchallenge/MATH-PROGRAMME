@@ -1,0 +1,251 @@
+{
+  "schema_version": "1.0.0",
+  "registry_id": "MP-FORMAL-VALIDATION-LANES-001",
+  "issue": 936,
+  "status": "ACTIVE",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "required_context": "formal-validation / formal-validation",
+  "unknown_formal_path_behavior": "ERROR",
+  "managed_formal_roots": [
+    "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+    "fixtures/formal/LOG-GCD-001",
+    "fixtures/formal/PC-WP04"
+  ],
+  "control_plane": {
+    "full_fanout_patterns": [
+      ".github/workflows/ci.yml",
+      ".github/workflows/formal-validation.yml",
+      ".github/workflows/cmdg-*.yml",
+      ".github/workflows/pc-wp04.yml",
+      "ci/formal_validation.py",
+      "ci/test_formal_validation.py",
+      "ci/formal_replay_attestation.py",
+      "ci/formal_replay_gate.py",
+      "ci/test_formal_replay_gate.py",
+      "ci/extract_cmdg_lean_dependencies.py",
+      "ci/validate_workflow_coverage*.py",
+      "ci/test_workflow_coverage*.py",
+      "ci/validate_workflow_semantics.py",
+      "ci/test_workflow_semantics.py",
+      "governance/formal_validation_registry.json",
+      "schemas/formal_validation_registry.schema.json",
+      "governance/formal_replay_policy.json",
+      "governance/policy_impact_gating.json",
+      "governance/cmdg_workflow_impact_gating.json",
+      "requirements/policy.txt"
+    ],
+    "shared_cmdg_patterns": [
+      "fixtures/formal/CMDG-NAT-CONCORDANCE-001/lakefile.toml",
+      "fixtures/formal/CMDG-NAT-CONCORDANCE-001/lake-manifest.json",
+      "fixtures/formal/CMDG-NAT-CONCORDANCE-001/lean-toolchain",
+      "fixtures/cmdg/**",
+      "ci/*cmdg*.py",
+      "tests/test_cmdg*.py",
+      "schemas/cmdg_*.json",
+      "governance/cmdg_*.json"
+    ]
+  },
+  "cmdg_environment": {
+    "package_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+    "mathlib_commit": "79d0395a1825a6264ad5d269e35e60537518955e",
+    "mathlib_tree": "d76f5e09b832a08949f6d8ad4fb80ce30527da64",
+    "lean_action_sha": "138a564e38a62ce545e8d47d86a97628463aced4"
+  },
+  "sentinels": {
+    "legacy_formal_cron": "17 */6 * * *",
+    "legacy_formal_lanes": ["log-gcd", "pc-wp04", "union-closed-mathcert"],
+    "cmdg_full_replay_workflow": ".github/workflows/cmdg-postmerge.yml",
+    "cmdg_full_replay_cron": "47 11 * * *"
+  },
+  "lanes": [
+    {
+      "id": "log-gcd",
+      "family": "LOG-GCD",
+      "execution_kind": "lake-build",
+      "package_dir": "fixtures/formal/LOG-GCD-001",
+      "material_patterns": [
+        "fixtures/formal/LOG-GCD-001/**",
+        "fixtures/cmdg/extractor_001/log_gcd.json",
+        "ci/validate_log_gcd_fixture.py",
+        "ci/test_log_gcd_fixture.py",
+        "ci/validate_log_gcd_publication.py",
+        "ci/test_log_gcd_publication.py"
+      ],
+      "validator_commands": [
+        ["python3", "ci/validate_log_gcd_fixture.py", "fixtures/formal/LOG-GCD-001"],
+        ["python3", "ci/test_log_gcd_fixture.py"],
+        ["python3", "ci/validate_log_gcd_publication.py", "fixtures/formal/LOG-GCD-001"],
+        ["python3", "ci/test_log_gcd_publication.py"]
+      ],
+      "development_targets": [],
+      "formal_sources": []
+    },
+    {
+      "id": "pc-wp04",
+      "family": "PC-WP04",
+      "execution_kind": "lake-build",
+      "package_dir": "fixtures/formal/PC-WP04",
+      "material_patterns": [
+        "fixtures/formal/PC-WP04/**",
+        "campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/**",
+        "campaigns/poincare_reconstruction/WP04_BOUNDED_CERTIFICATION/**",
+        "ci/validate_pc_wp04_fixture.py",
+        "ci/test_pc_wp04_fixture.py"
+      ],
+      "validator_commands": [
+        ["python3", "ci/validate_pc_wp04_fixture.py", "fixtures/formal/PC-WP04"],
+        ["python3", "ci/test_pc_wp04_fixture.py"]
+      ],
+      "development_targets": [],
+      "formal_sources": []
+    },
+    {
+      "id": "union-closed-mathcert",
+      "family": "UNION-CLOSED",
+      "execution_kind": "external-check",
+      "package_dir": "external/MATHCERT",
+      "external_repository": "grandchallenge/MATHCERT",
+      "external_ref": "d59173899dcd1a67dbe8f31de0b9f0917cd1459a",
+      "material_patterns": ["evidence/UC-WP02-MATHCERT.json"],
+      "validator_commands": [],
+      "development_targets": [],
+      "formal_sources": []
+    },
+    {
+      "id": "cmdg-nat",
+      "family": "CMDG",
+      "execution_kind": "cmdg-lean-closure",
+      "package_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+      "promotion_workflow": ".github/workflows/cmdg-nat-concordance.yml",
+      "material_patterns": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGNatConcordance.lean", "ci/validate_cmdg_nat_concordance.py", "tests/test_cmdg_nat_concordance.py"],
+      "validator_commands": [["python3", "ci/validate_cmdg_nat_concordance.py"], ["python", "-m", "unittest", "tests.test_cmdg_nat_concordance"]],
+      "development_targets": ["CMDGNatConcordance.lean"],
+      "formal_sources": ["CMDGNatConcordance.lean"]
+    },
+    {
+      "id": "cmdg-euclid-bridge",
+      "family": "CMDG",
+      "execution_kind": "cmdg-lean-closure",
+      "package_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+      "promotion_workflow": ".github/workflows/cmdg-euclid-bridge.yml",
+      "material_patterns": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGEuclidBridge.lean", "ci/validate_cmdg_euclid_bridge.py", "tests/test_cmdg_euclid_bridge.py"],
+      "validator_commands": [["python3", "ci/validate_cmdg_euclid_bridge.py"], ["python", "-m", "unittest", "tests.test_cmdg_euclid_bridge"]],
+      "development_targets": ["CMDGEuclidBridge.lean"],
+      "formal_sources": ["CMDGEuclidBridge.lean"]
+    },
+    {
+      "id": "cmdg-vertical-spine-v0",
+      "family": "CMDG",
+      "execution_kind": "cmdg-lean-closure",
+      "package_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+      "promotion_workflow": ".github/workflows/cmdg-vertical-spine-v0.yml",
+      "material_patterns": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGVerticalSpineV0.lean", "ci/validate_cmdg_vertical_spine_v0.py", "tests/test_cmdg_vertical_spine_v0.py"],
+      "validator_commands": [["python3", "ci/validate_cmdg_vertical_spine_v0.py"], ["python", "-m", "unittest", "tests.test_cmdg_vertical_spine_v0"]],
+      "development_targets": ["CMDGVerticalSpineV0.lean"],
+      "formal_sources": ["CMDGVerticalSpineV0.lean"]
+    },
+    {
+      "id": "cmdg-cm1",
+      "family": "CMDG",
+      "execution_kind": "cmdg-lean-closure",
+      "package_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+      "promotion_workflow": ".github/workflows/cmdg-condensed-cm1.yml",
+      "material_patterns": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM1.lean", "fixtures/cmdg/condensed_cm1_001/**", "governance/cmdg_condensed_cm1_001.json", "schemas/cmdg_condensed_cm1.schema.json", "ci/validate_cmdg_condensed_cm1.py", "tests/test_cmdg_condensed_cm1.py"],
+      "validator_commands": [["python3", "ci/validate_cmdg_condensed_cm1.py"], ["python", "-m", "unittest", "tests.test_cmdg_condensed_cm1"]],
+      "development_targets": ["CMDGCondensedCM1.lean"],
+      "formal_sources": ["CMDGCondensedCM1.lean"]
+    },
+    {
+      "id": "cmdg-cm2",
+      "family": "CMDG",
+      "execution_kind": "cmdg-lean-closure",
+      "package_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+      "promotion_workflow": ".github/workflows/cmdg-condensed-cm2.yml",
+      "material_patterns": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM2.lean", "fixtures/cmdg/condensed_cm2_001/**", "governance/cmdg_condensed_cm2_001.json", "schemas/cmdg_condensed_cm2.schema.json", "ci/validate_cmdg_condensed_cm2.py", "tests/test_cmdg_condensed_cm2.py"],
+      "validator_commands": [["python3", "ci/validate_cmdg_condensed_cm2.py"], ["python", "-m", "unittest", "tests.test_cmdg_condensed_cm2"]],
+      "development_targets": ["CMDGCondensedCM2.lean"],
+      "formal_sources": ["CMDGCondensedCM2.lean"]
+    },
+    {
+      "id": "cmdg-cm3",
+      "family": "CMDG",
+      "execution_kind": "cmdg-lean-closure",
+      "package_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+      "promotion_workflow": ".github/workflows/cmdg-condensed-cm3.yml",
+      "material_patterns": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM3.lean", "fixtures/cmdg/condensed_cm3_001/**", "governance/cmdg_condensed_cm3_001.json", "schemas/cmdg_condensed_cm3.schema.json", "ci/validate_cmdg_condensed_cm3.py", "tests/test_cmdg_condensed_cm3.py"],
+      "validator_commands": [["python3", "ci/validate_cmdg_condensed_cm3.py"], ["python", "-m", "unittest", "tests.test_cmdg_condensed_cm3"]],
+      "development_targets": ["CMDGCondensedCM3.lean"],
+      "formal_sources": ["CMDGCondensedCM3.lean"]
+    },
+    {
+      "id": "cmdg-solid-c05",
+      "family": "CMDG",
+      "execution_kind": "cmdg-lean-closure",
+      "package_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+      "promotion_workflow": ".github/workflows/cmdg-solid-c05.yml",
+      "material_patterns": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGSolidC05.lean", "governance/cmdg_solid_c05_001.json", "schemas/cmdg_solid_c05.schema.json", "ci/validate_cmdg_solid_c05.py", "tests/test_cmdg_solid_c05.py"],
+      "validator_commands": [["python3", "ci/validate_cmdg_solid_c05.py"], ["python", "-m", "unittest", "tests.test_cmdg_solid_c05"]],
+      "development_targets": ["CMDGSolidC05.lean"],
+      "formal_sources": ["CMDGSolidC05.lean"]
+    },
+    {
+      "id": "cmdg-cm4",
+      "family": "CMDG",
+      "execution_kind": "cmdg-lean-closure",
+      "package_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+      "promotion_workflow": ".github/workflows/cmdg-condensed-cm4.yml",
+      "material_patterns": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean", "governance/cmdg_condensed_cm4_001.json", "schemas/cmdg_condensed_cm4.schema.json", "ci/validate_cmdg_condensed_cm4.py", "tests/test_cmdg_condensed_cm4.py"],
+      "validator_commands": [["python3", "ci/validate_cmdg_condensed_cm4.py"], ["python", "-m", "unittest", "tests.test_cmdg_condensed_cm4"]],
+      "development_targets": ["CMDGCondensedCM4Blocker.lean"],
+      "formal_sources": ["CMDGCondensedCM4Blocker.lean"]
+    },
+    {
+      "id": "cmdg-cm4-p2",
+      "family": "CMDG",
+      "execution_kind": "cmdg-lean-closure",
+      "package_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+      "promotion_workflow": ".github/workflows/cmdg-condensed-cm4-p2.yml",
+      "material_patterns": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2Blocker.lean", "governance/cmdg_condensed_cm4_p2_001.json", "schemas/cmdg_condensed_cm4_p2.schema.json", "ci/validate_cmdg_condensed_cm4_p2.py", "tests/test_cmdg_condensed_cm4_p2.py"],
+      "validator_commands": [["python3", "ci/validate_cmdg_condensed_cm4_p2.py"], ["python", "-m", "unittest", "tests.test_cmdg_condensed_cm4_p2"]],
+      "development_targets": ["CMDGCondensedCM4P2Blocker.lean"],
+      "formal_sources": ["CMDGCondensedCM4P2Blocker.lean"]
+    },
+    {
+      "id": "cmdg-cm4-p2-d",
+      "family": "CMDG",
+      "execution_kind": "cmdg-lean-closure",
+      "package_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+      "promotion_workflow": ".github/workflows/cmdg-condensed-cm4-p2-d.yml",
+      "material_patterns": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2D.lean", "governance/cmdg_condensed_cm4_p2_d_001.json", "schemas/cmdg_condensed_cm4_p2_d.schema.json", "ci/validate_cmdg_condensed_cm4_p2_d.py", "tests/test_cmdg_condensed_cm4_p2_d.py"],
+      "validator_commands": [["python3", "ci/validate_cmdg_condensed_cm4_p2_d.py"], ["python", "-m", "unittest", "tests.test_cmdg_condensed_cm4_p2_d"]],
+      "development_targets": ["CMDGCondensedCM4P2D.lean"],
+      "formal_sources": ["CMDGCondensedCM4P2D.lean"]
+    },
+    {
+      "id": "cmdg-cm4-p2-e",
+      "family": "CMDG",
+      "execution_kind": "cmdg-lean-closure",
+      "package_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+      "promotion_workflow": ".github/workflows/cmdg-condensed-cm4-p2-e.yml",
+      "material_patterns": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P2E*.lean", "governance/cmdg_condensed_cm4_p2_e_001.json", "schemas/cmdg_condensed_cm4_p2_e.schema.json", "ci/validate_cmdg_condensed_cm4_p2_e.py", "tests/test_cmdg_condensed_cm4_p2_e.py"],
+      "validator_commands": [["python3", "ci/validate_cmdg_condensed_cm4_p2_e.py"], ["python", "-m", "unittest", "tests.test_cmdg_condensed_cm4_p2_e"]],
+      "development_targets": ["CMDGCondensedCM4P2E.lean", "CMDGCondensedCM4P2EAlgebraic.lean", "CMDGCondensedCM4P2EInternalHom.lean"],
+      "formal_sources": ["CMDGCondensedCM4P2E*.lean"]
+    },
+    {
+      "id": "cmdg-cm4-p3",
+      "family": "CMDG",
+      "execution_kind": "cmdg-lean-closure",
+      "package_dir": "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
+      "promotion_workflow": ".github/workflows/cmdg-condensed-cm4-p3.yml",
+      "material_patterns": ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3*.lean", "governance/cmdg_condensed_cm4_p3_001.json", "governance/CMDG-CONDENSED-CM4-P3-001.md", "schemas/cmdg_condensed_cm4_p3.schema.json", "ci/validate_cmdg_condensed_cm4_p3.py", "tests/test_cmdg_condensed_cm4_p3.py"],
+      "validator_commands": [["python3", "ci/validate_cmdg_condensed_cm4_p3.py"], ["python", "-m", "unittest", "tests.test_cmdg_condensed_cm4_p3"]],
+      "development_targets": ["CMDGCondensedCM4P3GPointFunctional.lean"],
+      "formal_sources": ["CMDGCondensedCM4P3*.lean"],
+      "protected_inputs": {
+        "CMDGCondensedCM4P2D.lean": "7515583c1b56308bbd48c2c690addd3b432eba09",
+        "CMDGCondensedCM4P2EE3.lean": "24913aa4c1b2616fea244e2d73d912f99aae5921"
+      }
+    }
+  ]
+}
