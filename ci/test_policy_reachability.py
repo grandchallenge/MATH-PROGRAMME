@@ -38,11 +38,21 @@ def main() -> int:
         rogue.write_text("def main():\n    print('reachable')\n\nif __name__ == '__main__':\n    main()\n", encoding="utf-8")
         assert not policy_reachability_errors(root)
 
+        # Dynamic formal validators are execution roots even though the workflow
+        # invokes them indirectly through ci/formal_validation.py and registry data.
+        (root / "governance").mkdir()
+        formal_check = root / "ci" / "formal_lane_check.py"
+        formal_check.write_text("#!/usr/bin/env python3\nif __name__ == '__main__':\n    print('formal')\n", encoding="utf-8")
+        (root / "governance" / "formal_validation_registry.json").write_text(
+            '{"lanes":[{"validator_commands":[["python3","ci/formal_lane_check.py"]]}]}\n',
+            encoding="utf-8",
+        )
+        assert not policy_reachability_errors(root)
+
         (root / ".github" / "workflows" / "ci.yml").write_text(WORKFLOW.replace("ci/root_check.py", "ci/missing.py"), encoding="utf-8")
         assert any("missing Python script ci/missing.py" in error for error in policy_reachability_errors(root))
 
         (root / ".github" / "workflows" / "ci.yml").write_text(WORKFLOW, encoding="utf-8")
-        (root / "governance").mkdir()
         (root / "governance" / "gcl_tooling_command_contract.json").write_text("{}\n", encoding="utf-8")
         assert any("incomplete tooling control surface" in error and "ci/gcl.py" in error and "schemas/gcl_tooling_command_contract.schema.json" in error for error in policy_reachability_errors(root))
 
