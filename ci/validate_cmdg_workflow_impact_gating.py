@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""Fail-closed validator for MP-CMDG-WORKFLOW-IMPACT-GATING-001."""
+"""Fail-closed validator for CMDG material-closure workflow routing."""
 from __future__ import annotations
 
-import fnmatch
 import json
 import sys
 from pathlib import Path
@@ -10,6 +9,8 @@ from typing import Any
 
 import jsonschema
 import yaml
+
+import formal_validation as formal
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTROL = ROOT / "governance/cmdg_workflow_impact_gating.json"
@@ -24,11 +25,21 @@ def load_json(path: Path) -> dict[str, Any]:
     return value
 
 
-def load_workflow_texts() -> dict[str, str]:
+def load_control() -> dict[str, Any]:
+    return load_json(CONTROL)
+
+
+def wrapper_mapping(control: dict[str, Any] | None = None) -> dict[str, str]:
+    control = load_control() if control is None else control
+    value = control.get("promotion", {}).get("standalone_workflows", {})
+    return {str(name): str(lane) for name, lane in value.items()} if isinstance(value, dict) else {}
+
+
+def load_workflow_texts(control: dict[str, Any] | None = None) -> dict[str, str]:
     return {
-        path.name: path.read_text(encoding="utf-8")
-        for path in sorted(WORKFLOW_DIR.glob("cmdg-*.yml"))
-        if path.name != "cmdg-postmerge.yml"
+        name: (WORKFLOW_DIR / name).read_text(encoding="utf-8")
+        for name in sorted(wrapper_mapping(control))
+        if (WORKFLOW_DIR / name).is_file()
     }
 
 
@@ -36,16 +47,9 @@ def load_dispatcher_text() -> str:
     return (WORKFLOW_DIR / "cmdg-postmerge.yml").read_text(encoding="utf-8")
 
 
-def path_matches(path: str, patterns: list[str]) -> bool:
-    return any(fnmatch.fnmatchcase(path, pattern) for pattern in patterns)
-
-
-def _as_list(value: Any) -> list[str]:
-    if isinstance(value, list):
-        return [str(item) for item in value]
-    if value is None:
-        return []
-    return [str(value)]
+def _trigger(workflow: dict[str, Any]) -> dict[str, Any]:
+    value = workflow.get("on", {}) if isinstance(workflow, dict) else {}
+    return value if isinstance(value, dict) else {}
 
 
 def validation_errors(
@@ -55,28 +59,38 @@ def validation_errors(
 ) -> list[str]:
     errors: list[str] = []
     try:
-        control = load_json(CONTROL) if control is None else control
+        control = load_control() if control is None else control
         jsonschema.validate(control, load_json(SCHEMA))
-    except (OSError, ValueError, json.JSONDecodeError, jsonschema.ValidationError) as exc:
-        return [f"control/schema invalid: {exc}"]
+        registry = formal.load_registry(ROOT)
+    except (OSError, ValueError, json.JSONDecodeError, jsonschema.ValidationError, formal.FormalValidationError) as exc:
+        return [f"control/schema/registry invalid: {exc}"]
 
-    if control.get("control_id") != "MP-CMDG-WORKFLOW-IMPACT-GATING-001":
-        errors.append("control identity drift")
-    if control.get("status") != "ACTIVE_ON_PROTECTED_MERGE":
-        errors.append("control status drift")
+    if control["formal_router"]["required_context"] != registry["required_context"]:
+        errors.append("formal required context disagrees with lane registry")
 
-    paths = control.get("pull_request_paths")
-    if not isinstance(paths, list) or not paths or not all(isinstance(x, str) and x for x in paths):
-        errors.append("pull_request_paths must be a nonempty string list")
-        paths = []
+    expected = wrapper_mapping(control)
+    texts = load_workflow_texts(control) if workflow_texts is None else workflow_texts
+    actual_wrapper_files = {
+        path.name
+        for path in WORKFLOW_DIR.glob("cmdg-*.yml")
+        if path.name not in {"cmdg-postmerge.yml", "cmdg-formal-lane-replay.yml"}
+    }
+    if set(expected) != actual_wrapper_files:
+        errors.append(
+            f"standalone CMDG workflow roster drift: expected={sorted(expected)} actual={sorted(actual_wrapper_files)}"
+        )
+    if set(texts) != set(expected):
+        errors.append("provided CMDG workflow text roster drift")
 
-    texts = load_workflow_texts() if workflow_texts is None else workflow_texts
-    expected = sorted(str(x) for x in control.get("workflow_roster", []))
-    actual = sorted(texts)
-    if actual != expected:
-        errors.append(f"standalone CMDG workflow roster drift: expected={expected} actual={actual}")
+    registry_cmdg = {
+        lane["promotion_workflow"].removeprefix(".github/workflows/"): lane["id"]
+        for lane in registry["lanes"]
+        if lane["family"] == "CMDG"
+    }
+    if expected != registry_cmdg:
+        errors.append("CMDG wrapper-to-lane map disagrees with formal lane registry")
 
-    for name in expected:
+    for name, lane in expected.items():
         text = texts.get(name)
         if text is None:
             continue
@@ -85,77 +99,101 @@ def validation_errors(
         except yaml.YAMLError as exc:
             errors.append(f"{name}: invalid YAML: {exc}")
             continue
-        if not isinstance(workflow, dict):
-            errors.append(f"{name}: workflow root must be a mapping")
-            continue
-        trigger = workflow.get("on")
-        if not isinstance(trigger, dict):
-            errors.append(f"{name}: on trigger must be a mapping")
-            continue
-        pr = trigger.get("pull_request")
-        if not isinstance(pr, dict) or _as_list(pr.get("paths")) != paths:
-            errors.append(f"{name}: pull_request paths must equal the governed shared closure")
-        if "push" in trigger:
-            errors.append(f"{name}: direct push trigger must be absent; protected pushes route through dispatcher")
-        if "workflow_call" not in trigger:
-            errors.append(f"{name}: workflow_call trigger missing")
-        if "workflow_dispatch" not in trigger:
-            errors.append(f"{name}: workflow_dispatch trigger missing")
+        trigger = _trigger(workflow)
+        if set(trigger) != {"workflow_call", "workflow_dispatch"}:
+            errors.append(f"{name}: wrapper triggers must be exactly workflow_call plus workflow_dispatch")
+        jobs = workflow.get("jobs", {}) if isinstance(workflow, dict) else {}
+        replay = jobs.get("replay", {}) if isinstance(jobs, dict) else {}
+        if replay.get("uses") != "./.github/workflows/cmdg-formal-lane-replay.yml":
+            errors.append(f"{name}: wrapper must delegate to the shared promotion executor")
+        if replay.get("with", {}).get("lane") != lane:
+            errors.append(f"{name}: governed lane binding drift")
+        for forbidden in ("pull_request:", "push:", "schedule:", "Revalidate protected"):
+            if forbidden in text:
+                errors.append(f"{name}: forbidden feature-PR/chronological replay marker {forbidden}")
+
+    shared = (WORKFLOW_DIR / "cmdg-formal-lane-replay.yml").read_text(encoding="utf-8")
+    if "workflow_call:" not in shared:
+        errors.append("shared CMDG executor must be reusable")
+    for forbidden in ("pull_request:", "push:", "schedule:"):
+        if forbidden in shared:
+            errors.append(f"shared CMDG executor has forbidden direct trigger {forbidden}")
+    for marker in (
+        "ci/formal_validation.py run",
+        "--mode promotion",
+        "grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4",
+    ):
+        if marker not in shared:
+            errors.append(f"shared CMDG executor missing marker: {marker}")
+
+    generic = (WORKFLOW_DIR / "formal-validation.yml").read_text(encoding="utf-8")
+    try:
+        generic_yaml = yaml.load(generic, Loader=yaml.BaseLoader)
+        trigger = _trigger(generic_yaml)
+        if not {"pull_request", "merge_group", "schedule", "workflow_dispatch"}.issubset(trigger):
+            errors.append("generic formal router trigger set incomplete")
+    except yaml.YAMLError as exc:
+        errors.append(f"generic formal router invalid YAML: {exc}")
+    for marker in (
+        "fromJSON(needs.impact.outputs.formal_matrix)",
+        "ci/formal_validation.py classify",
+        "ci/formal_validation.py run",
+        "formal-validation:\n    name: formal-validation",
+    "Require exactly the selected substantive lane set",
+    "Bridge legacy required context",
+    "Replay LOG-GCD-001 in Lean",
+    "Replay PC-WP04 bounded certificate",
+    "Replay pinned Union-Closed MATHCERT evidence",
+    ):
+        if marker not in generic:
+            errors.append(f"generic formal router missing migration marker: {marker}")
+
+    p3 = control["acceptance_examples"]["p3_only"]
+    try:
+        planned = formal.classify_paths(p3["paths"], registry)
+        if planned["lanes"] != p3["expected_lanes"]:
+            errors.append(f"P3-only acceptance route drift: {planned['lanes']}")
+        unrelated = control["acceptance_examples"]["unrelated"]
+        planned = formal.classify_paths(unrelated["paths"], registry)
+        if planned["lanes"] != unrelated["expected_lanes"]:
+            errors.append(f"unrelated acceptance route drift: {planned['lanes']}")
+    except formal.FormalValidationError as exc:
+        errors.append(f"acceptance routing failed: {exc}")
 
     try:
         dispatcher_text = load_dispatcher_text() if dispatcher_text is None else dispatcher_text
         dispatcher = yaml.load(dispatcher_text, Loader=yaml.BaseLoader)
-        trigger = dispatcher.get("on", {}) if isinstance(dispatcher, dict) else {}
-        push = trigger.get("push", {}) if isinstance(trigger, dict) else {}
-        if "main" not in _as_list(push.get("branches")) or push.get("paths") is not None:
-            errors.append("dispatcher: every protected-main push must reach classifier without native paths")
-        schedules = trigger.get("schedule", []) if isinstance(trigger, dict) else []
-        crons = [item.get("cron") for item in schedules if isinstance(item, dict)]
-        if crons != [control.get("scheduled_current_head_sentinel", {}).get("cron")]:
-            errors.append("dispatcher: daily current-head sentinel cron drift")
-        if "workflow_dispatch" not in trigger:
-            errors.append("dispatcher: workflow_dispatch trigger missing")
-        jobs = dispatcher.get("jobs", {}) if isinstance(dispatcher, dict) else {}
-        calls = {
-            str(job.get("uses", "")).removeprefix("./.github/workflows/")
-            for job in jobs.values() if isinstance(job, dict) and "uses" in job
-        }
-        if calls != set(expected):
-            errors.append(f"dispatcher: reusable-workflow roster drift: expected={expected} actual={sorted(calls)}")
-        for job_id, job in jobs.items():
-            if isinstance(job, dict) and "uses" in job:
-                condition = str(job.get("if", ""))
-                if "policy_shards" not in condition or "cmdg" not in condition:
-                    errors.append(f"dispatcher: {job_id} is not gated by fail-closed CMDG classification")
-        for marker in ("ci/policy_impact.py classify", "ci/cmdg_postmerge_readback.py", "Enforce downstream hold"):
+        trigger = _trigger(dispatcher)
+        if set(trigger) != {"schedule", "workflow_dispatch"}:
+            errors.append("CMDG sentinel triggers must be exactly schedule plus workflow_dispatch")
+        crons = [item.get("cron") for item in trigger.get("schedule", []) if isinstance(item, dict)]
+        if crons != [control["sentinel"]["cron"]]:
+            errors.append("CMDG current-head sentinel cron drift")
+        for marker in (
+            "family'] == 'CMDG'",
+            "ci/formal_validation.py run",
+            "--mode sentinel",
+            "CMDG_PROTECTED_MAIN_SENTINEL_SUCCEEDED",
+        ):
             if marker not in dispatcher_text:
-                errors.append(f"dispatcher: required marker missing: {marker}")
+                errors.append(f"CMDG sentinel missing marker: {marker}")
+        for forbidden in ("ci/policy_impact.py", "formal_replay_gate.py", "formal_replay_attestation.py"):
+            if forbidden in dispatcher_text:
+                errors.append(f"CMDG sentinel retains superseded router/attestation marker: {forbidden}")
     except (OSError, yaml.YAMLError, AttributeError) as exc:
-        errors.append(f"dispatcher invalid: {exc}")
+        errors.append(f"CMDG sentinel invalid: {exc}")
 
-    for path in control.get("negative_examples", []):
-        if path_matches(str(path), paths):
-            errors.append(f"negative example unexpectedly matches CMDG gate: {path}")
-    for path in control.get("positive_examples", []):
-        if not path_matches(str(path), paths):
-            errors.append(f"positive example does not match CMDG gate: {path}")
-
-    routing = control.get("routing_boundary", {})
-    if routing.get("unrelated_pr_standalone_cmdg_instantiation") is not False:
-        errors.append("unrelated PR standalone CMDG instantiation must remain false")
-    if routing.get("unrelated_main_push_standalone_cmdg_instantiation") is not False:
-        errors.append("unrelated main-push standalone CMDG instantiation must remain false")
-    if routing.get("cmdg_relevant_pr_full_standalone_family") is not True:
-        errors.append("CMDG-relevant PR full-family fanout must remain true")
-    if routing.get("cmdg_relevant_main_push_full_standalone_family") is not True:
-        errors.append("CMDG-relevant main-push full-family fanout must remain true")
-    if routing.get("within_cmdg_lane_reduction") is not False:
-        errors.append("Phase 1 may not reduce within-CMDG lane fanout")
-    if routing.get("protected_required_check_identity_changed") is not False:
-        errors.append("protected required check identity may not change")
-
-    authority = control.get("authority_boundary", {})
-    if any(value is not False for value in authority.values()):
+    routing = control["routing_boundary"]
+    if routing != {
+        "unrelated_pr_substantive_cmdg_instantiation": False,
+        "cmdg_relevant_pr_full_standalone_family": False,
+        "within_cmdg_lane_reduction": True,
+        "standalone_cmdg_pr_triggers": False,
+        "promotion_full_declared_lane_replay_preserved": True,
+        "daily_full_cmdg_sentinel_preserved": True,
+    }:
+        errors.append("CMDG material routing boundary drift")
+    if any(value is not False for value in control["authority_boundary"].values()):
         errors.append("authority boundary weakened")
     return errors
 
@@ -165,11 +203,10 @@ def main() -> int:
     if errors:
         for error in errors:
             print(error, file=sys.stderr)
-        print(f"CMDG workflow impact gating failed with {len(errors)} error(s)", file=sys.stderr)
+        print(f"CMDG material routing validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
     print(
-        "CMDG workflow impact gating: exact reusable roster, conservative PR closure, "
-        "always-classified protected pushes, exact-SHA readback, daily current-head sentinel, manual dispatch, and authority boundaries are valid"
+        "CMDG material routing: feature PRs instantiate only material lanes; standalone workflows are promotion-only; complete protected-main sentinel replay and authority boundaries are preserved"
     )
     return 0
 

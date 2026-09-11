@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/formal_validation_registry.schema.json",
+  "title": "MATH-PROGRAMME formal validation lane registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "issue", "status", "repository", "required_context", "unknown_formal_path_behavior", "managed_formal_roots", "control_plane", "cmdg_environment", "sentinels", "lanes"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "registry_id": {"const": "MP-FORMAL-VALIDATION-LANES-001"},
+    "issue": {"const": 936},
+    "status": {"const": "ACTIVE"},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "required_context": {"const": "formal-validation / formal-validation"},
+    "unknown_formal_path_behavior": {"const": "ERROR"},
+    "managed_formal_roots": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "control_plane": {
+      "type": "object", "additionalProperties": false,
+      "required": ["full_fanout_patterns", "shared_cmdg_patterns"],
+      "properties": {
+        "full_fanout_patterns": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "shared_cmdg_patterns": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "cmdg_environment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["package_dir", "mathlib_commit", "mathlib_tree", "lean_action_sha"],
+      "properties": {
+        "package_dir": {"type": "string"},
+        "mathlib_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "mathlib_tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "lean_action_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "sentinels": {
+      "type": "object", "additionalProperties": false,
+      "required": ["legacy_formal_cron", "legacy_formal_lanes", "cmdg_full_replay_workflow", "cmdg_full_replay_cron"],
+      "properties": {
+        "legacy_formal_cron": {"type": "string"},
+        "legacy_formal_lanes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+        "cmdg_full_replay_workflow": {"const": ".github/workflows/cmdg-postmerge.yml"},
+        "cmdg_full_replay_cron": {"type": "string"}
+      }
+    },
+    "lanes": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "family", "execution_kind", "package_dir", "material_patterns", "validator_commands", "development_targets", "formal_sources"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "family": {"type": "string", "minLength": 1},
+          "execution_kind": {"enum": ["cmdg-lean-closure", "lake-build", "external-check"]},
+          "package_dir": {"type": "string", "minLength": 1},
+          "promotion_workflow": {"type": "string", "pattern": "^\\.github/workflows/cmdg-.*\\.yml$"},
+          "external_repository": {"type": "string"},
+          "external_ref": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "material_patterns": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+          "validator_commands": {"type": "array", "items": {"type": "array", "minItems": 1, "items": {"type": "string"}}},
+          "development_targets": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "formal_sources": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "protected_inputs": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{40}$"}}
+        }
+      }
+    }
+  }
+}
