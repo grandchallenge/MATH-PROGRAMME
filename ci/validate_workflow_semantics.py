@@ -319,20 +319,16 @@ def workflow_semantic_errors(
     if str(formal_aggregate.get("name", "")) != "formal-validation":
         errors.append("formal-validation.yml: required aggregate job name drift")
 
-    aliases = {
-        "legacy-log-gcd-context": "Replay LOG-GCD-001 in Lean",
-        "legacy-pc-wp04-context": "Replay PC-WP04 bounded certificate",
-        "legacy-union-closed-context": "Replay pinned Union-Closed MATHCERT evidence",
+    retired_aliases = {
+        "legacy-log-gcd-context",
+        "legacy-pc-wp04-context",
+        "legacy-union-closed-context",
     }
-    for job_id, name in aliases.items():
-        job = formal_workflow.get("jobs", {}).get(job_id, {})
-        if str(job.get("name", "")) != name:
-            errors.append(f"formal-validation.yml:{job_id}: temporary compatibility context drift")
-        if needs(job) != {"formal-validation"}:
-            errors.append(f"formal-validation.yml:{job_id}: compatibility alias must depend only on generic aggregate")
-        text = "\n".join(job_runs(formal_workflow, job_id))
-        if "formal_validation.py" in text or "lake " in text:
-            errors.append(f"formal-validation.yml:{job_id}: compatibility alias may not perform substantive replay")
+    for job_id in retired_aliases:
+        if job_id in formal_workflow.get("jobs", {}):
+            errors.append(
+                f"formal-validation.yml:{job_id}: retired compatibility alias must remain absent"
+            )
 
     pc = workflows.get("pc-wp04.yml", {})
     if set(trigger(pc)) != {"workflow_call", "workflow_dispatch"}:
