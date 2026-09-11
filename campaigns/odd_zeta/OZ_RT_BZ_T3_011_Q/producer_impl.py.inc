@@ -1,12 +1,12 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[2]
 P_DIR = HERE.parent / "OZ_RT_BZ_T3_011_P"
 O_DIR = HERE.parent / "OZ_RT_BZ_T3_011_O"
 N_DIR = HERE.parent / "OZ_RT_BZ_T3_011_N"
@@ -82,6 +82,15 @@ CLOSURE_TERMINAL = "ACTIVE_ZERO_LAURENT_FACES_COKERNEL_INVISIBLE"
 BLOCKER_TERMINAL = "ACTIVE_ZERO_LAURENT_FACES_NOT_CERTIFIED__CHARACTERIZED_BLOCKER"
 FULL_ALGEBRA_COROLLARY = "FROZEN_COORDINATE_ZERO_LAURENT_MONOMIAL_RESPONSE_ALGEBRA_COKERNEL_INVISIBLE"
 REMAINING_SEAM = "BOTH_ACTIVE_EXPONENTS_ZERO_WITH_NONZERO_SPECTATOR_EXPONENT"
+FAMILY_ORDER = ("++", "-+", "+-", "--")
+SIDE_ORDER = ("left", "right")
+EXPECTED_FACE_RECORDS_PER_FAMILY = 2 * p.POSSIBLE_RECORD_COUNT
+
+
+def sha(obj: object) -> str:
+    return hashlib.sha256(
+        json.dumps(obj, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
 
 
 def validate_scope(
@@ -127,113 +136,205 @@ def assert_locks() -> dict:
     return out
 
 
-def _require_parent(result: dict, stage: str, terminal: str) -> None:
-    if result.get("terminal") != terminal:
-        raise AssertionError(f"protected {stage} did not replay its closure terminal")
-    if result.get("tested_record_count") != result.get("possible_record_count"):
-        raise AssertionError(f"protected {stage} replay is incomplete")
-    if result.get("semantic_functional_ambiguity") is not None:
-        raise AssertionError(f"protected {stage} replay has semantic ambiguity")
-    if result.get("characterized_blocker") is not None:
-        raise AssertionError(f"protected {stage} replay has characterized blocker")
-    if result.get("first_cokernel_breaking_direction") is not None:
-        raise AssertionError(f"protected {stage} replay has a non-boundary escape")
+def _domain_rows(module, ledgers, selector):
+    domain = {
+        degree
+        for ledger in ledgers.values()
+        for degree in map(tuple, ledger["possible_tridegrees"])
+        if selector(*degree)
+    }
+    return module._pairing_rows(ledgers, domain)
 
 
-def _scan_rows(records: list[dict], field: str, family: str, source: str, side: str | None = None):
-    row_count = 0
-    first = None
-    for index, record in enumerate(records):
-        rows = record.get(field, [])
-        row_count += len(rows)
-        for row_index, row in enumerate(rows):
-            if row[-2] != 0:
-                witness = {
-                    "family": family,
-                    "source_stage": source,
-                    "record_index": index,
-                    "row_index": row_index,
-                    "pair": record.get("pair"),
-                    "endpoint": record.get("endpoint"),
-                    "candidate": record.get("candidate"),
-                    "orientation": record.get("orientation"),
-                    "side": side,
-                    "row": row,
-                }
-                if first is None or json.dumps(witness, sort_keys=True) < json.dumps(first, sort_keys=True):
-                    first = witness
-    return {"record_count": len(records), "row_count": row_count, "first_nonzero": first}
+def _producer_face_rows(
+    family, side, pair, endpoint, uid, strata, bank, witness_index,
+    forward, inverse, pcache, vcache,
+):
+    if family == "++":
+        orientation = (
+            "negative_left_positive_right"
+            if side == "left"
+            else "positive_left_negative_right"
+        )
+        return m._k_zero_boundary_rows(
+            pair, endpoint, uid, orientation, strata, bank, witness_index,
+            forward, pcache, vcache,
+        )
+
+    if family == "-+":
+        return n._n_zero_boundary_rows(
+            pair, endpoint, uid, side, strata, bank, witness_index,
+            forward, inverse, pcache, vcache,
+        )
+
+    if family == "+-":
+        orientation = (
+            "negative_left_positive_right"
+            if side == "left"
+            else "positive_left_negative_right"
+        )
+        lower = (0, 1, 1) if side == "left" else (1, 0, 1)
+        selector = (
+            (lambda r, s, t: r == 0 and s >= 1 and t >= 1)
+            if side == "left"
+            else (lambda r, s, t: s == 0 and r >= 1 and t >= 1)
+        )
+        ledgers, *_ = o._make_ledgers(
+            pair, endpoint, uid, orientation, strata, bank, witness_index,
+            forward, inverse, pcache, vcache, lower,
+            f"Q_{family}_{side}_active_zero_face", "O",
+        )
+        return o._selected_rows(ledgers, selector)
+
+    if family == "--":
+        lower = (0, 1, 1) if side == "left" else (1, 0, 1)
+        selector = (
+            (lambda r, s, t: r == 0 and s >= 1 and t >= 1)
+            if side == "left"
+            else (lambda r, s, t: s == 0 and r >= 1 and t >= 1)
+        )
+        ledgers, *_ = p._make_ledgers(
+            pair, endpoint, uid, strata, bank, witness_index,
+            inverse, pcache, vcache, lower,
+            f"Q_{family}_{side}_active_zero_face",
+        )
+        return p._selected_rows(ledgers, selector)
+
+    raise AssertionError(f"unknown Q face family: {family}")
 
 
-def _combine_first(*items):
-    present = [x for x in items if x is not None]
-    return min(present, key=lambda x: json.dumps(x, sort_keys=True)) if present else None
-
-
-def _summarize(mr: dict, nr: dict, orr: dict, pr: dict) -> dict:
-    m_records = mr["tested_records"]
-    n_records = nr["tested_records"]
-    o_records = orr["tested_records"]
-    p_records = pr["tested_records"]
-
-    if not all(r.get("reciprocal_degree_zero_semantics_exactly_match_K") for r in m_records):
-        raise AssertionError("M/K active-zero boundary semantics drift")
-    if not all(r.get("reciprocal_degree_zero_semantics_exactly_match_M") for r in n_records):
-        raise AssertionError("N/M active-zero boundary semantics drift")
-    if not all(r.get("reciprocal_active_degree_zero_semantics_exactly_match_L") for r in o_records):
-        raise AssertionError("O/L active-zero boundary semantics drift")
-    if not all(r.get("positive_active_degree_zero_anchor_kind") == "DIRECT_RESPONSE_ONLY_NOT_T3_011_I" for r in o_records):
-        raise AssertionError("O direct-response anchor kind drift")
-    if not all(r.get("active_reciprocal_degree_zero_anchor_kind") == "DIRECT_RESPONSE_ONLY_NO_PREDECESSOR_CLASS_PROMOTION" for r in p_records):
-        raise AssertionError("P direct-response anchor kind drift")
-
-    plus_plus = _scan_rows(m_records, "protected_K_boundary_rows", "++", "M")
-    minus_plus_left = _scan_rows(n_records, "protected_M_left_boundary_rows", "-+", "N", "left")
-    minus_plus_right = _scan_rows(n_records, "protected_M_right_boundary_rows", "-+", "N", "right")
-    plus_minus = _scan_rows(o_records, "reciprocal_active_degree_zero_boundary_rows", "+-", "O")
-    minus_minus_o = _scan_rows(o_records, "positive_active_degree_zero_direct_response_rows", "--", "O")
-    minus_minus_p_left = _scan_rows(p_records, "left_reciprocal_degree_zero_direct_response_rows", "--", "P", "left")
-    minus_minus_p_right = _scan_rows(p_records, "right_reciprocal_degree_zero_direct_response_rows", "--", "P", "right")
-
-    first = _combine_first(
-        plus_plus["first_nonzero"],
-        minus_plus_left["first_nonzero"], minus_plus_right["first_nonzero"],
-        plus_minus["first_nonzero"],
-        minus_minus_o["first_nonzero"],
-        minus_minus_p_left["first_nonzero"], minus_minus_p_right["first_nonzero"],
-    )
+def _new_family():
     return {
-        "families": {
-            "++": plus_plus,
-            "-+": {
-                "left": minus_plus_left,
-                "right": minus_plus_right,
-                "first_nonzero": _combine_first(minus_plus_left["first_nonzero"], minus_plus_right["first_nonzero"]),
-            },
-            "+-": plus_minus,
-            "--": {
-                "O_positive_zero": minus_minus_o,
-                "P_left_zero": minus_minus_p_left,
-                "P_right_zero": minus_minus_p_right,
-                "first_nonzero": _combine_first(minus_minus_o["first_nonzero"], minus_minus_p_left["first_nonzero"], minus_minus_p_right["first_nonzero"]),
-            },
-        },
-        "first_nonzero": first,
-        "all_one_active_zero_sign_families_annihilated": first is None,
+        "record_count": 0,
+        "row_count": 0,
+        "record_sha256": None,
+        "first_nonzero": None,
+    }
+
+
+def _collect_face_partition(strata, banks, forward, inverse, witness_indexes):
+    families = {family: _new_family() for family in FAMILY_ORDER}
+    first_nonzero = None
+    blocker = None
+
+    for family in FAMILY_ORDER:
+        digest_records = []
+        pcache, vcache = {}, {}
+        try:
+            for pair_index, pair in enumerate(p.ADMITTED_PAIRS):
+                for endpoint_index, endpoint in enumerate(pair):
+                    bank = banks[endpoint]
+                    witness_index = witness_indexes[endpoint]
+                    for candidate_index, uid in enumerate(bank["candidates"]):
+                        for side in SIDE_ORDER:
+                            rows = _producer_face_rows(
+                                family, side, pair, endpoint, uid, strata, bank,
+                                witness_index, forward, inverse, pcache, vcache,
+                            )
+                            record = {
+                                "pair_index": pair_index,
+                                "endpoint_index": endpoint_index,
+                                "candidate_index": candidate_index,
+                                "pair": list(pair),
+                                "endpoint": endpoint,
+                                "candidate": p.unknown_json(uid),
+                                "side": side,
+                                "rows": rows,
+                            }
+                            digest_records.append(record)
+                            families[family]["record_count"] += 1
+                            families[family]["row_count"] += len(rows)
+                            for row_index, row in enumerate(rows):
+                                if row[-2] != 0:
+                                    witness = {
+                                        "family": family,
+                                        "pair_index": pair_index,
+                                        "endpoint_index": endpoint_index,
+                                        "candidate_index": candidate_index,
+                                        "pair": list(pair),
+                                        "endpoint": endpoint,
+                                        "candidate": p.unknown_json(uid),
+                                        "side": side,
+                                        "row_index": row_index,
+                                        "row": row,
+                                    }
+                                    families[family]["first_nonzero"] = witness
+                                    first_nonzero = witness
+                                    break
+                            if first_nonzero is not None:
+                                break
+                        if first_nonzero is not None:
+                            break
+                    if first_nonzero is not None:
+                        break
+                if first_nonzero is not None:
+                    break
+        except (
+            m.UnboundedSupportOverlap,
+            n.UnboundedSupportOverlap,
+            o.UnboundedSupportOverlap,
+            p.UnboundedSupportOverlap,
+        ) as exc:
+            blocker = {
+                "kind": "UNBOUNDED_ACTIVE_ZERO_FACE_DOMAIN",
+                "family": family,
+                **getattr(exc, "evidence", {}),
+            }
+        families[family]["record_sha256"] = sha(digest_records)
+        if first_nonzero is not None or blocker is not None:
+            break
+
+    complete = first_nonzero is None and blocker is None
+    if complete:
+        for family in FAMILY_ORDER:
+            if families[family]["record_count"] != EXPECTED_FACE_RECORDS_PER_FAMILY:
+                raise AssertionError(
+                    f"Q {family} face coverage drift: "
+                    f"{families[family]['record_count']} != {EXPECTED_FACE_RECORDS_PER_FAMILY}"
+                )
+
+    return {
+        "families": families,
+        "expected_face_records_per_family": EXPECTED_FACE_RECORDS_PER_FAMILY,
+        "first_nonzero": first_nonzero,
+        "characterized_blocker": blocker,
+        "all_one_active_zero_sign_families_annihilated": complete,
+        "coverage_complete": complete,
     }
 
 
 def build() -> dict:
     validate_scope()
     locks = assert_locks()
-    mr, nr, orr, pr = m.build(), n.build(), o.build(), p.build()
-    _require_parent(mr, "M", m.CLOSURE_TERMINAL)
-    _require_parent(nr, "N", n.CLOSURE_TERMINAL)
-    _require_parent(orr, "O", o.CLOSURE_TERMINAL)
-    _require_parent(pr, "P", p.CLOSURE_TERMINAL)
 
-    summary = _summarize(mr, nr, orr, pr)
-    terminal = ESCAPE_TERMINAL if summary["first_nonzero"] is not None else CLOSURE_TERMINAL
+    m.solve_signed_tridegrees.cache_clear()
+    n.solve_signed_tridegrees.cache_clear()
+
+    primitive_full, strata, specialized, supports = o.f.d.build_context()
+    banks = o.f._channel_banks(primitive_full, strata, specialized, supports)
+    forward = {
+        channel: o.g.e._coordinate_factors(channel, strata)
+        for channel in o.CHANNEL_COORDINATE
+    }
+    inverse = {
+        channel: o.h.inverse_coordinate_factors(channel, strata)
+        for channel in o.CHANNEL_COORDINATE
+    }
+    witness_indexes = {
+        channel: o.g._witness_index(bank["witness"])
+        for channel, bank in banks.items()
+    }
+
+    partition = _collect_face_partition(
+        strata, banks, forward, inverse, witness_indexes
+    )
+    if partition["characterized_blocker"] is not None:
+        terminal = BLOCKER_TERMINAL
+    elif partition["first_nonzero"] is not None:
+        terminal = ESCAPE_TERMINAL
+    else:
+        terminal = CLOSURE_TERMINAL
+
     return {
         "schema_version": "1.0.0",
         "issue": ISSUE,
@@ -242,13 +343,15 @@ def build() -> dict:
         "protected_base": PROTECTED_BASE,
         "source_locks": locks,
         "predecessor_terminals": {
-            "M": mr["terminal"], "N": nr["terminal"], "O": orr["terminal"], "P": pr["terminal"],
+            stage: spec["terminal"] for stage, spec in LOCKS.items()
         },
-        "active_zero_face_partition": summary,
+        "active_zero_face_partition": partition,
         "terminal": terminal,
         "full_coordinate_zero_laurent_algebra_corollary": None,
         "full_coordinate_zero_laurent_algebra_closed": False,
-        "remaining_lower_dimensional_seam": REMAINING_SEAM if terminal == CLOSURE_TERMINAL else None,
+        "remaining_lower_dimensional_seam": (
+            REMAINING_SEAM if terminal == CLOSURE_TERMINAL else None
+        ),
         "residual_sum_zero_proved": False,
         "proof_effect": "NONE",
         "promotion_effect": "NONE",
