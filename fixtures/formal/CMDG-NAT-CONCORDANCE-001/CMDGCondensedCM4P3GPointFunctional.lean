@@ -182,8 +182,8 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
   rw [hpost, hsection]
   rw [freeHomSectionsEquiv_precomp]
   simp only [Category.id_comp]
-  trace_state
-  exact weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j
+  simpa using
+    (weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j)
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
