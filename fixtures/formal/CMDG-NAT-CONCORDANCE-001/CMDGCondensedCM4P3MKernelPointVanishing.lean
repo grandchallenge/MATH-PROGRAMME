@@ -84,13 +84,75 @@ theorem finiteComparisonTail_coordinateSection
           (profinitePointProbe (FintypeCat.toProfinite.obj Q) q)) := by
   rfl
 
+/-- After the complete protected finite comparison, the all-true pullback of the evaluation-weight
+finite measure morphism is the free generator represented by the quotient point `j.proj x`. -/
+theorem weightedFiniteBooleanMeasureHom_finiteComparison_evaluationWeight_allTrue
+    (X : Profinite.{u}) (x : X) (j : DiscreteQuotient X) :
+    (Condensed.profiniteFree R).map
+          (basisBooleanPointProbe X (fun _ => true)) ≫
+        weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j ≫
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.hom.app
+          (FiniteQuotientObject X j) =
+      (Condensed.profiniteFree R).map
+        (profinitePointProbe (X.diagram.obj j) (j.proj x)) := by
+  let P := Profinite.of PUnit.{u + 1}
+  let T := basisBooleanCube X
+  let Q := FiniteQuotientObject X j
+  let U := op ((profiniteToCompHaus).obj P)
+  let S := op ((profiniteToCompHaus).obj T)
+  let qtrue := basisBooleanPointProbe X (fun _ => true)
+  let w := weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j
+  let A := CMDG.CondensedCM4P2D.measureFunctor.obj (X.diagram.obj j)
+  let A0 := CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedFunctor.obj Q
+  let B := (Condensed.finFree R).obj Q
+  let i0 :=
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso.app Q
+  let it := finiteComparisonTailNatIso.app Q
+  have hw : freeHomSectionsEquiv T A w =
+      weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j := by
+    exact Equiv.apply_symm_apply _ _
+  have hnat := ConcreteCategory.congr_hom
+    ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreePresheafNatIso
+      (FiniteQuotientObject X j)).hom.naturality
+      ((profiniteToCompHaus).map qtrue).op)
+    (weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j)
+  simp only [ConcreteCategory.comp_apply] at hnat
+  have hdelta :=
+    weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j
+  have htailNat := congrArg
+    (fun t =>
+      (ConcreteCategory.hom
+        (((Condensed.forget R).map it.hom).hom.app U)) t)
+    hnat
+  have htailDelta := congrArg
+    (fun t =>
+      (ConcreteCategory.hom
+        (((Condensed.forget R).map it.hom).hom.app U)) t)
+    hdelta
+  have hcoord := finiteComparisonTail_coordinateSection Q (j.proj x)
+  apply (freeHomSectionsEquiv P B).injective
+  change
+    freeHomSectionsEquiv P B
+      ((((Condensed.profiniteFree R).map qtrue ≫ w) ≫ i0.hom) ≫ it.hom) =
+      freeHomSectionsEquiv P B
+        ((Condensed.profiniteFree R).map
+          (profinitePointProbe (FintypeCat.toProfinite.obj Q) (j.proj x)))
+  rw [freeHomSectionsEquiv_postcomp P
+      (((Condensed.profiniteFree R).map qtrue ≫ w) ≫ i0.hom) it.hom]
+  rw [freeHomSectionsEquiv_postcomp P
+      ((Condensed.profiniteFree R).map qtrue ≫ w) i0.hom]
+  rw [freeHomSectionsEquiv_precomp qtrue A w, hw]
+  exact htailNat.trans (htailDelta.trans hcoord)
+
 #check profinitePointProbe
 #check profinitePointProbe_comp_finiteQuotientMap
 #check freeHomSectionsEquiv_postcomp
 #check finiteComparisonTailNatIso
 #check finiteComparisonTail_coordinateSection
+#check weightedFiniteBooleanMeasureHom_finiteComparison_evaluationWeight_allTrue
 #print axioms profinitePointProbe_comp_finiteQuotientMap
 #print axioms freeHomSectionsEquiv_postcomp
 #print axioms finiteComparisonTail_coordinateSection
+#print axioms weightedFiniteBooleanMeasureHom_finiteComparison_evaluationWeight_allTrue
 
 end CMDG.CondensedCM4P3M.KernelPointVanishing
