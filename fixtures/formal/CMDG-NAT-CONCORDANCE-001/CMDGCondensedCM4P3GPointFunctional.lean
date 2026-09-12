@@ -121,7 +121,6 @@ noncomputable def profinitePointProbe
 /-- Finite-stage measure/Dirac identity.  The large finite comparison is kept inside the proof so
 that its four canonical factors can be cancelled explicitly rather than normalized definitionally
 in the theorem statement. -/
-set_option maxHeartbeats 800000 in
 theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
     (X : Profinite.{u}) (x : X) (j : DiscreteQuotient X) :
     (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
@@ -131,7 +130,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         (profinitePointProbe (X.diagram.obj j) (j.proj x)) ≫
       measureSolidification.app (X.diagram.obj j) := by
   let P := Profinite.of PUnit.{u + 1}
-  let T := basisBooleanCube X
+  let T := CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X
   let Q := FiniteQuotientObject X j
   let A := CMDG.CondensedCM4P2D.measureFunctor.obj (X.diagram.obj j)
   let D :=
