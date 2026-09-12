@@ -127,7 +127,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         (basisBooleanPointProbe X (fun _ => true)) ≫
       weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j =
     (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
-        (profinitePointProbe (X.diagram.obj j) (j.proj x)) ≫
+        (profinitePointProbe (X.diagram.obj j) ((finiteQuotientMap X j).hom.hom x)) ≫
       measureSolidification.app (X.diagram.obj j) := by
   let P := Profinite.of PUnit.{u + 1}
   let T := CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X
