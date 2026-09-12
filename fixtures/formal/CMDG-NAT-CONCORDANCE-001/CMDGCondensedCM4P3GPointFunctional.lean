@@ -150,7 +150,6 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     simpa only [Functor.comp_obj] using
       (measureSolidification_fac (X.fintypeDiagram.obj j))
   rw [hfac]
-  simp only [Category.comp_id]
   apply (cancel_mono eFree).1
   simp only [Category.assoc]
   let e := eComp ≫ eFree
