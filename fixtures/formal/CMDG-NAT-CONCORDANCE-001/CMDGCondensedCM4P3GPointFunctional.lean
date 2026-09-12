@@ -131,7 +131,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       measureSolidification.app (X.diagram.obj j) := by
   let P := Profinite.of PUnit.{u + 1}
   let T := CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X
-  let Q := FiniteQuotientObject X j
+  let Q := CMDG.CondensedCM4P3G.FiniteBooleanMeasure.FiniteQuotientObject X j
   let A := CMDG.CondensedCM4P2D.measureFunctor.obj (X.diagram.obj j)
   let D :=
     (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
