@@ -7,6 +7,7 @@ import json
 import sys
 import urllib.request
 from fractions import Fraction as Q
+from functools import lru_cache
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -115,6 +116,7 @@ def _shift_point(n: int, k: int, l: int, shift: tuple[int, int, int]) -> tuple[i
     return n + dn, k + dk, l + dl
 
 
+@lru_cache(maxsize=None)
 def _shifted_monomial_poly(mon: tuple[str, ...], shift: tuple[int, int, int]):
     shifted = pred.c.b.a.rc.p_const(1)
     for name in mon:
@@ -124,6 +126,7 @@ def _shifted_monomial_poly(mon: tuple[str, ...], shift: tuple[int, int, int]):
 
 def weighted_delta_coefficients(
     nodes: list[ast.AST],
+    basis_cache: dict[tuple[int, int, int], dict[str, Q]],
     mon: tuple[str, ...],
     shift: tuple[int, int, int],
     basis: str,
@@ -132,9 +135,14 @@ def weighted_delta_coefficients(
     l: int,
 ) -> dict[tuple[str, ...], Q]:
     """Evaluate Delta(q*M)=q_shift*M_shift-q*M in the protected atom basis."""
-    q0 = source_basis_values(nodes, n, k, l)[basis]
-    ns, ks, ls = _shift_point(n, k, l, shift)
-    q1 = source_basis_values(nodes, ns, ks, ls)[basis]
+    point = (n, k, l)
+    shifted_point = _shift_point(n, k, l, shift)
+    if point not in basis_cache:
+        basis_cache[point] = source_basis_values(nodes, *point)
+    if shifted_point not in basis_cache:
+        basis_cache[shifted_point] = source_basis_values(nodes, *shifted_point)
+    q0 = basis_cache[point][basis]
+    q1 = basis_cache[shifted_point][basis]
     out: dict[tuple[str, ...], Q] = {}
     for shifted_mon, rat in _shifted_monomial_poly(mon, shift).items():
         value = q1 * pred._eval_rat(rat, n, k, l)
@@ -171,6 +179,7 @@ def weighted_source_functional_gate(primitive_full, supports: dict) -> dict:
     weighted_ids = [(*row, basis) for row in base_ids for basis in COEFFICIENT_BASIS]
     columns: list[dict] = [{} for _ in weighted_ids]
     target: dict = {}
+    basis_cache: dict[tuple[int, int, int], dict[str, Q]] = {}
     scalars = ("TN1", "TN2", "TN3", "SK", "AK", "LKK", "LLK")
 
     for sample_index, (n, k, l) in enumerate(SAMPLES):
@@ -191,7 +200,7 @@ def weighted_source_functional_gate(primitive_full, supports: dict) -> dict:
             for basis_index, basis in enumerate(COEFFICIENT_BASIS):
                 out = columns[base_index * len(COEFFICIENT_BASIS) + basis_index]
                 response = weighted_delta_coefficients(
-                    nodes, support_mon, shift, basis, n, k, l
+                    nodes, basis_cache, support_mon, shift, basis, n, k, l
                 )
                 for mon, coeff in response.items():
                     value = mult * coeff
@@ -222,6 +231,7 @@ def weighted_source_functional_gate(primitive_full, supports: dict) -> dict:
         "source": source,
         "coefficient_basis": list(COEFFICIENT_BASIS),
         "coefficient_shift_semantics": "Delta(q*M)=q_shift*M_shift-q*M",
+        "source_point_cache_count": len(basis_cache),
         "samples": [list(x) for x in SAMPLES],
         "sample_set_inherited_exactly_from_t3_012_b": True,
         "strict_interior_only": True,
