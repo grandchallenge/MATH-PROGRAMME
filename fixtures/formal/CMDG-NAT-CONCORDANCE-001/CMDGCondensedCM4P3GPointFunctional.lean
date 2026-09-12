@@ -182,8 +182,17 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
   rw [hpost, hsection]
   rw [freeHomSectionsEquiv_precomp]
   simp only [Category.id_comp]
-  simpa using
-    (weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j)
+  have he :
+      eComp ≫ eFree =
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso.hom.app Q ≫
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso.hom.app Q ≫
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso.hom.app Q := by
+    dsimp [eComp, eFree]
+    simp [CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso,
+      Category.assoc]
+  rw [he]
+  trace_state
+  exact weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
