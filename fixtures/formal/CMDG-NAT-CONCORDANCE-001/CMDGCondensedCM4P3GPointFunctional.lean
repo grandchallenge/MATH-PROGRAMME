@@ -180,6 +180,8 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
   apply (freeHomSectionsEquiv P D).injective
   rw [freeHomSectionsEquiv_precomp]
   rw [hpost, hsection]
+  rw [freeHomSectionsEquiv_precomp]
+  simp only [Category.id_comp]
   trace_state
   exact weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j
 
