@@ -58,14 +58,46 @@ def _load_source() -> tuple[list[ast.AST], dict]:
 
 
 def _basis_values(nodes: list[ast.AST], n: int, k: int, l: int) -> dict[str, Q]:
-    env = {
-        "n": v.t_const(n),
-        "k": v.t_var(k, 0),
-        "l": v.t_var(l, 1),
-    }
+    env = {"n": v.t_const(n), "k": v.t_const(k), "l": v.t_const(l)}
     rho = v._src_eval(nodes[0], env).get((0, 0), Q(0))
     sigma = v._src_eval(nodes[1], env).get((0, 0), Q(0))
     return {"one": Q(1), "rho": rho, "sigma": sigma}
+
+
+def _shift_point(n: int, k: int, l: int, shift: tuple[int, int, int]) -> tuple[int, int, int]:
+    dn, dk, dl = shift
+    return n + dn, k + dk, l + dl
+
+
+def _shifted_poly(mon: tuple[str, ...], shift: tuple[int, int, int]):
+    shifted = v.c.b.a.rc.p_const(1)
+    for name in mon:
+        shifted = v.c.b.a.rc.p_mul(shifted, v.c.b.primitive_shift_atom(name, shift))
+    return shifted
+
+
+def _weighted_delta(
+    nodes: list[ast.AST],
+    mon: tuple[str, ...],
+    shift: tuple[int, int, int],
+    basis: str,
+    n: int,
+    k: int,
+    l: int,
+) -> dict[tuple[str, ...], Q]:
+    """Independent point replay of Delta(q*M)=q_shift*M_shift-q*M."""
+    q0 = _basis_values(nodes, n, k, l)[basis]
+    ns, ks, ls = _shift_point(n, k, l, shift)
+    q1 = _basis_values(nodes, ns, ks, ls)[basis]
+    out: dict[tuple[str, ...], Q] = {}
+    for shifted_mon, rat in _shifted_poly(mon, shift).items():
+        value = q1 * v.c.b.a.pcl.rat_eval_polefree(rat, n, k, l)
+        if value:
+            out[shifted_mon] = out.get(shifted_mon, Q(0)) + value
+    out[mon] = out.get(mon, Q(0)) - q0
+    if not out[mon]:
+        del out[mon]
+    return out
 
 
 def reconstruct() -> dict:
@@ -90,11 +122,9 @@ def reconstruct() -> dict:
             raise AssertionError("independent current-source Q-row replay failed")
 
     base_ids: list[tuple[str, str, tuple[str, ...]]] = []
-    polynomials = []
     for channel in v.c.b.a.INDEPENDENT_CHANNELS:
         for scalar, mon in v.c.union_support_ids(supports, channel):
             base_ids.append((channel, scalar, mon))
-            polynomials.append(v.c.b.primitive_delta_monomial(mon, v.c.b.a.pcl.SHIFTS[channel]))
     if len(base_ids) != 506:
         raise AssertionError("independent protected support cardinality drift")
 
@@ -103,7 +133,6 @@ def reconstruct() -> dict:
     scalars = ("TN1", "TN2", "TN3", "SK", "AK", "LKK", "LLK")
     for sample_index, (n, k, l) in enumerate(SAMPLES):
         multipliers = {s: v._mult(nodes, s, n, k, l) for s in scalars}
-        weights = _basis_values(nodes, n, k, l)
         for mon, by_scalar in primitive.items():
             value = Q(0)
             for scalar, rat in by_scalar.items():
@@ -111,19 +140,20 @@ def reconstruct() -> dict:
                     value += multipliers[scalar] * v.c.b.a.pcl.rat_eval_polefree(rat, n, k, l)
             if value:
                 target[(sample_index, mon)] = value
+
         for base_index in reversed(range(len(base_ids))):
-            _channel, scalar, _support_mon = base_ids[base_index]
+            channel, scalar, support_mon = base_ids[base_index]
             mult = multipliers[scalar]
             if not mult:
                 continue
-            for basis_index, basis in enumerate(reversed(BASIS)):
-                actual_basis_index = BASIS.index(basis)
-                weight = weights[basis]
-                if not weight:
-                    continue
-                out = columns[base_index * len(BASIS) + actual_basis_index]
-                for mon, rat in polynomials[base_index].items():
-                    value = weight * mult * v.c.b.a.pcl.rat_eval_polefree(rat, n, k, l)
+            shift = v.c.b.a.pcl.SHIFTS[channel]
+            for basis in reversed(BASIS):
+                basis_index = BASIS.index(basis)
+                out = columns[base_index * len(BASIS) + basis_index]
+                for mon, coeff in _weighted_delta(
+                    nodes, support_mon, shift, basis, n, k, l
+                ).items():
+                    value = mult * coeff
                     if value:
                         out[(sample_index, mon)] = value
 
@@ -138,6 +168,7 @@ def reconstruct() -> dict:
     return {
         "source": source,
         "coefficient_basis": list(BASIS),
+        "coefficient_shift_semantics": "Delta(q*M)=q_shift*M_shift-q*M",
         "samples": [list(x) for x in SAMPLES],
         "strict_interior_only": True,
         "qrow_point_replay": True,
@@ -157,20 +188,18 @@ def reconstruct() -> dict:
 def verify(result: dict) -> dict:
     if result.get("issue") != ISSUE or result.get("operation") != OPERATION or result.get("stage") != STAGE:
         raise AssertionError("T3-013-A result identity drift")
-    if result.get("global_certificate_constructed"):
-        raise AssertionError("T3-013-A gate inflated to global certificate")
-    if result.get("residual_sum_zero_proved"):
-        raise AssertionError("T3-013-A gate inflated to residual proof")
+    if result.get("global_certificate_constructed") or result.get("residual_sum_zero_proved"):
+        raise AssertionError("T3-013-A gate inflated to proof")
     if result.get("proof_effect") != "NONE" or result.get("promotion_effect") != "NONE":
         raise AssertionError("T3-013-A gate promoted claims")
     expected = result["gate"]
     got = reconstruct()
     for field in (
-        "coefficient_basis", "samples", "strict_interior_only", "qrow_point_replay",
-        "protected_base_unknown_count", "weighted_unknown_count", "nonzero_weighted_column_count",
-        "target_coordinate_count", "embedded_predecessor_coefficient_rank",
-        "embedded_predecessor_augmented_rank", "coefficient_rank", "augmented_rank",
-        "consistent", "nullity",
+        "coefficient_basis", "coefficient_shift_semantics", "samples", "strict_interior_only",
+        "qrow_point_replay", "protected_base_unknown_count", "weighted_unknown_count",
+        "nonzero_weighted_column_count", "target_coordinate_count",
+        "embedded_predecessor_coefficient_rank", "embedded_predecessor_augmented_rank",
+        "coefficient_rank", "augmented_rank", "consistent", "nullity",
     ):
         if got[field] != expected[field]:
             raise AssertionError(f"T3-013-A independent replay drift: {field}")
