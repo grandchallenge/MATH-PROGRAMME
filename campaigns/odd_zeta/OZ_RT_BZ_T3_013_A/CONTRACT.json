@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 949,
+  "operation": "OZ-RT-BZ-T3-013-A",
+  "stage": "T3_013_A_SOURCE_QROW_CERTIFICATE_WEIGHTED_REDUCED_RESIDUAL_RESPONSE_GATE",
+  "protected_base": "6d760881430b3b587825a3db225f1e6599d1948e",
+  "hypothesis_class": {
+    "id": "SOURCE_QROW_CERTIFICATE_WEIGHTED_REDUCED_RESIDUAL_RESPONSE_001",
+    "target": "protected reduced recurrence-residual correction system inherited unchanged from OZ-RT-BZ-T3-012-B",
+    "support_widening": false,
+    "harmonic_widening": false,
+    "scalar_namespace_widening": false,
+    "recurrence_order_change": false,
+    "recurrence_refit": false,
+    "coefficient_basis": ["1", "rho", "sigma"],
+    "coefficient_field": "Q",
+    "rho_sigma_source_locked": true,
+    "polynomial_degree_ladder": false,
+    "free_denominator_family": false
+  },
+  "source": {
+    "repository": "rain-1/-odd-zeta-values-moremath",
+    "commit": "6cc0bf07137815ceeef0d9f340559f85352391e5",
+    "tree": "be780558454b704bdd016a3070d698c2e106e2b8",
+    "path": "work/lb5/Qrow_rhosigma.m",
+    "git_blob_sha1": "61f12f412726887f506e1d423b7ee183a22116e5",
+    "byte_count": 44980
+  },
+  "predecessor": {
+    "operation": "OZ-RT-BZ-T3-012-B",
+    "terminal": "SUPPORT_LOCKED_DEGREE0_COUPLED_CORRECTION_RECOMBINATION_INCOMPATIBLE",
+    "producer_blob": "5682d61997499eccefddc15c6967dc907c091af4",
+    "verifier_blob": "89d22466513957050e0d3440c801052a6531323d",
+    "contract_blob": "9d4dbdd03bd8c21ab2333757dbf85cd0dd5368a5"
+  },
+  "gate": {
+    "kind": "EXACT_INHERITED_STRICT_INTERIOR_NECESSARY_SUBSYSTEM_OBSTRUCTION_ESCAPE_TEST",
+    "samples": [[8, 1, 2], [9, 2, 1]],
+    "sample_set_inherited_exactly_from_t3_012_b": true,
+    "finite_sample_set_defines_hypothesis_class": false,
+    "finite_sampling_may_prove_positive_identity": false,
+    "inconsistency_refutes_declared_global_class": true,
+    "consistency_is_viability_only": true,
+    "embedded_predecessor_rank_required": [84, 85],
+    "forward_and_reverse_exact_rank_replay_required": true,
+    "independent_verifier_required": true
+  },
+  "non_reducibility": {
+    "t3_011_r": "rho and sigma are exact nonmonomial rational source-certificate functions; T3-011-R admits only the frozen coordinate-zero Laurent monomial response algebra and explicitly forbids shifted poles/arbitrary rational functions",
+    "t3_008": "the target is the protected reduced recurrence residual/correction system, not the original 198-raw-jet two-flux target; the coefficient law is the fixed source certificate basis rather than a free polynomial envelope",
+    "t3_012_b": "the support/harmonics/scalars remain fixed, but the coefficient law widens from constants to span_Q{1,rho,sigma}; T3-012-B explicitly excludes only the unchanged degree-zero class"
+  },
+  "authorized_terminals": {
+    "escape": "QROW_CERTIFICATE_WEIGHTED_PREDECESSOR_OBSTRUCTION_ESCAPED__GLOBAL_CERTIFICATE_REQUIRED",
+    "negative": "QROW_CERTIFICATE_WEIGHTED_STRICT_INTERIOR_SUBSYSTEM_INCONSISTENT"
+  },
+  "claim_firewall": {
+    "global_certificate_constructed": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}
