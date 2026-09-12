@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 944,
+  "operation": "OZ-RT-BZ-T3-011-R",
+  "stage": "T3_011_R_SPECTATOR_ONLY_LAURENT_AXIS_COKERNEL_AUDIT",
+  "predecessor": {
+    "operation": "OZ-RT-BZ-T3-011-Q",
+    "protected_merge": "1737fcc6ef103a1733c92c39e68cf6e7d34429d9",
+    "required_terminal": "ACTIVE_ZERO_LAURENT_FACES_COKERNEL_INVISIBLE",
+    "required_remaining_seam": "BOTH_ACTIVE_EXPONENTS_ZERO_WITH_NONZERO_SPECTATOR_EXPONENT"
+  },
+  "clean_question": "does the protected endpoint cokernel witness annihilate every spectator-only coordinate-zero Laurent response Delta_c Delta_d(x_e^t G) and Delta_c Delta_d(x_e^-t G), t>=1, with exact codimension-two parent-path agreement?",
+  "spectator_only_axis": {
+    "positive_domain": "r=0,s=0,t>=1 with positive unshifted spectator",
+    "reciprocal_domain": "r=0,s=0,t>=1 interpreted as reciprocal unshifted spectator",
+    "positive_parent_paths": [
+      "K",
+      "M_left",
+      "M_right",
+      "N"
+    ],
+    "reciprocal_parent_paths": [
+      "L",
+      "O_left",
+      "O_right",
+      "P"
+    ],
+    "parent_path_agreement_required": true,
+    "coordinate_zero_poles_only": true,
+    "unshifted_spectator_only": true,
+    "arbitrary_degree_cutoff_authorized": false,
+    "shifted_poles_authorized": false,
+    "arbitrary_rational_functions_authorized": false,
+    "support_or_harmonic_enlargement_authorized": false,
+    "candidate_bank_or_scalar_namespace_widening_authorized": false,
+    "recurrence_search_authorized": false,
+    "correction_layer_recombination_authorized": false,
+    "candidate_linear_combinations_authorized": false,
+    "third_finite_difference_operator_authorized": false,
+    "source_or_representative_substitution_authorized": false
+  },
+  "all_zero_multiplier_guard": {
+    "domain": "r=0,s=0,t=0, equivalently the direct mixed response Delta_c Delta_d(G)",
+    "required_for_full_structural_corollary": true,
+    "producer_and_independent_verifier_required": true,
+    "all_frozen_records_required": true,
+    "spectator_axis_terminal_unchanged_by_guard": true
+  },
+  "terminals": {
+    "escape": "SPECTATOR_ONLY_LAURENT_ESCAPE_FOUND",
+    "closure": "SPECTATOR_ONLY_LAURENT_AXIS_COKERNEL_INVISIBLE",
+    "semantic_path_ambiguity": "SPECTATOR_ONLY_LAURENT_NOT_CERTIFIED__SEMANTIC_PATH_AMBIGUITY",
+    "blocker": "SPECTATOR_ONLY_LAURENT_NOT_CERTIFIED__CHARACTERIZED_BLOCKER"
+  },
+  "conditional_structural_corollary": "FROZEN_COORDINATE_ZERO_LAURENT_MONOMIAL_RESPONSE_ALGEBRA_COKERNEL_INVISIBLE",
+  "conditional_structural_corollary_requires": [
+    "SPECTATOR_ONLY_LAURENT_AXIS_COKERNEL_INVISIBLE",
+    "complete all-zero multiplier audit with every direct mixed pairing equal to zero",
+    "protected Q active-zero-face closure",
+    "protected nonzero trivariate octants and zero-spectator pairwise/single-axis boundaries"
+  ],
+  "claim_firewall": {
+    "theorem_promotion_authorized": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  },
+  "protected_base": "1737fcc6ef103a1733c92c39e68cf6e7d34429d9"
+}
