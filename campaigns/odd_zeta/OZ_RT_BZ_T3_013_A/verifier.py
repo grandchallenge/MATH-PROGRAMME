@@ -6,6 +6,7 @@ import importlib.util
 import sys
 import urllib.request
 from fractions import Fraction as Q
+from functools import lru_cache
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -69,6 +70,7 @@ def _shift_point(n: int, k: int, l: int, shift: tuple[int, int, int]) -> tuple[i
     return n + dn, k + dk, l + dl
 
 
+@lru_cache(maxsize=None)
 def _shifted_poly(mon: tuple[str, ...], shift: tuple[int, int, int]):
     shifted = v.c.b.a.rc.p_const(1)
     for name in mon:
@@ -78,6 +80,7 @@ def _shifted_poly(mon: tuple[str, ...], shift: tuple[int, int, int]):
 
 def _weighted_delta(
     nodes: list[ast.AST],
+    basis_cache: dict[tuple[int, int, int], dict[str, Q]],
     mon: tuple[str, ...],
     shift: tuple[int, int, int],
     basis: str,
@@ -86,9 +89,14 @@ def _weighted_delta(
     l: int,
 ) -> dict[tuple[str, ...], Q]:
     """Independent point replay of Delta(q*M)=q_shift*M_shift-q*M."""
-    q0 = _basis_values(nodes, n, k, l)[basis]
-    ns, ks, ls = _shift_point(n, k, l, shift)
-    q1 = _basis_values(nodes, ns, ks, ls)[basis]
+    point = (n, k, l)
+    shifted_point = _shift_point(n, k, l, shift)
+    if point not in basis_cache:
+        basis_cache[point] = _basis_values(nodes, *point)
+    if shifted_point not in basis_cache:
+        basis_cache[shifted_point] = _basis_values(nodes, *shifted_point)
+    q0 = basis_cache[point][basis]
+    q1 = basis_cache[shifted_point][basis]
     out: dict[tuple[str, ...], Q] = {}
     for shifted_mon, rat in _shifted_poly(mon, shift).items():
         value = q1 * v.c.b.a.pcl.rat_eval_polefree(rat, n, k, l)
@@ -130,6 +138,7 @@ def reconstruct() -> dict:
 
     columns: list[dict] = [{} for _ in range(len(base_ids) * len(BASIS))]
     target: dict = {}
+    basis_cache: dict[tuple[int, int, int], dict[str, Q]] = {}
     scalars = ("TN1", "TN2", "TN3", "SK", "AK", "LKK", "LLK")
     for sample_index, (n, k, l) in enumerate(SAMPLES):
         multipliers = {s: v._mult(nodes, s, n, k, l) for s in scalars}
@@ -151,7 +160,7 @@ def reconstruct() -> dict:
                 basis_index = BASIS.index(basis)
                 out = columns[base_index * len(BASIS) + basis_index]
                 for mon, coeff in _weighted_delta(
-                    nodes, support_mon, shift, basis, n, k, l
+                    nodes, basis_cache, support_mon, shift, basis, n, k, l
                 ).items():
                     value = mult * coeff
                     if value:
@@ -169,6 +178,7 @@ def reconstruct() -> dict:
         "source": source,
         "coefficient_basis": list(BASIS),
         "coefficient_shift_semantics": "Delta(q*M)=q_shift*M_shift-q*M",
+        "source_point_cache_count": len(basis_cache),
         "samples": [list(x) for x in SAMPLES],
         "strict_interior_only": True,
         "qrow_point_replay": True,
@@ -195,9 +205,9 @@ def verify(result: dict) -> dict:
     expected = result["gate"]
     got = reconstruct()
     for field in (
-        "coefficient_basis", "coefficient_shift_semantics", "samples", "strict_interior_only",
-        "qrow_point_replay", "protected_base_unknown_count", "weighted_unknown_count",
-        "nonzero_weighted_column_count", "target_coordinate_count",
+        "coefficient_basis", "coefficient_shift_semantics", "source_point_cache_count",
+        "samples", "strict_interior_only", "qrow_point_replay", "protected_base_unknown_count",
+        "weighted_unknown_count", "nonzero_weighted_column_count", "target_coordinate_count",
         "embedded_predecessor_coefficient_rank", "embedded_predecessor_augmented_rank",
         "coefficient_rank", "augmented_rank", "consistent", "nullity",
     ):
