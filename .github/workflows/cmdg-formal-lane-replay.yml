@@ -33,7 +33,7 @@ jobs:
       - name: Install governed policy dependencies
         run: python -m pip install --requirement requirements/policy.txt
       - name: Set up exact CMDG Lean environment
-        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        uses: grandchallenge/lean-action@37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01
         with:
           lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
           auto-config: false
