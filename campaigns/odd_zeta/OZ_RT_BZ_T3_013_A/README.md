@@ -23,6 +23,14 @@ Git blob 61f12f412726887f506e1d423b7ee183a22116e5
 
 No polynomial degree ladder, free denominator family, support widening, harmonic widening, scalar widening, recurrence refit, or recurrence-order change is admitted.
 
+The source coefficients live inside the discrete correction operator. Their exact response is therefore evaluated with the discrete product rule
+
+```text
+Delta(q M) = q_shift M_shift - q M
+```
+
+for `q` in `{1,rho,sigma}`. Post-multiplying an already differenced constant-coefficient response by `q` is explicitly forbidden because it would omit the shifted-coefficient term.
+
 ## Why this is not a recycled class
 
 T3-011-R closed only the frozen coordinate-zero Laurent monomial response algebra. It explicitly excluded shifted poles and arbitrary rational functions. The pinned Q-row source functions are nonmonomial rational functions with non-coordinate denominator geometry, and the producer checks this source shape mechanically.
@@ -44,12 +52,12 @@ The sample set is not a cutoff defining the mathematical class. It is the exact 
 
 The producer first reconstructs the constant subspace and requires the protected predecessor rank pair `84/85`. If that control fails, the operation stops for semantic drift.
 
-It then adds the exact `rho` and `sigma` weighted copies of every protected correction column and computes exact rational coefficient and augmented ranks in both pivot orders.
+It then evaluates the exact product-rule responses for the `rho` and `sigma` weighted copies of every protected correction column and computes exact rational coefficient and augmented ranks in both pivot orders.
 
 - If the enlarged system remains inconsistent, the exact declared source-weighted class is refuted because every global solution would have to satisfy this necessary subsystem.
 - If the ranks become equal, only the known T3-012-B obstruction has been escaped. That is viability evidence; it is not a global certificate and does not prove the T3 identity.
 
-The independent verifier reconstructs the protected target/support system, reparses the current admitted Q-row source through the predecessor's independent Taylor evaluator, rebuilds the weighted columns without importing the producer matrix, and replays the exact rank calculation.
+The independent verifier reconstructs the protected target/support system, reparses the current admitted Q-row source through the predecessor's independent Taylor evaluator, rebuilds `Delta(q M)` from shifted source values without importing the producer matrix, and replays the exact rank calculation in a different traversal/elimination order.
 
 ## Claim boundary
 
