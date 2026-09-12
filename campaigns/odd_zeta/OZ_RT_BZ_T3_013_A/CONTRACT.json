@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "issue": 949,
   "operation": "OZ-RT-BZ-T3-013-A",
   "stage": "T3_013_A_SOURCE_QROW_CERTIFICATE_WEIGHTED_REDUCED_RESIDUAL_RESPONSE_GATE",
@@ -15,6 +15,8 @@
     "coefficient_basis": ["1", "rho", "sigma"],
     "coefficient_field": "Q",
     "rho_sigma_source_locked": true,
+    "coefficient_shift_semantics": "Delta(q*M)=q_shift*M_shift-q*M",
+    "naive_post_difference_scaling_forbidden": true,
     "polynomial_degree_ladder": false,
     "free_denominator_family": false
   },
