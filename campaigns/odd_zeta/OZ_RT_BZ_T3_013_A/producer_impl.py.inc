@@ -63,10 +63,8 @@ def assert_predecessor_locks() -> dict[str, str]:
             raise AssertionError(f"T3-012-B lock drift: {name}: {value} != {want}")
         got[name] = value
     contract = json.loads((PRED_DIR / "CONTRACT.json").read_text())
-    if contract.get("issue") != 927:
-        raise AssertionError("T3-012-B issue identity drift")
-    if contract.get("terminal") != PREDECESSOR_TERMINAL:
-        raise AssertionError("T3-012-B terminal drift")
+    if contract.get("issue") != 927 or contract.get("terminal") != PREDECESSOR_TERMINAL:
+        raise AssertionError("T3-012-B predecessor identity drift")
     pred.assert_source_locks()
     return got
 
@@ -90,54 +88,78 @@ def load_current_qrow_ast() -> tuple[list[ast.AST], dict]:
     }
 
 
-def _contains_add_sub(node: ast.AST) -> bool:
-    return any(
-        isinstance(x, ast.BinOp) and isinstance(x.op, (ast.Add, ast.Sub))
-        for x in ast.walk(node)
-    )
-
-
 def _contains_source_nonmonomial_denominator(nodes: list[ast.AST]) -> bool:
     for root in nodes:
         for node in ast.walk(root):
             if not (isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div)):
                 continue
             names = {x.id for x in ast.walk(node.right) if isinstance(x, ast.Name)}
-            if names.intersection({"k", "l"}) and _contains_add_sub(node.right):
+            has_add_sub = any(
+                isinstance(x, ast.BinOp) and isinstance(x.op, (ast.Add, ast.Sub))
+                for x in ast.walk(node.right)
+            )
+            if names.intersection({"k", "l"}) and has_add_sub:
                 return True
     return False
 
 
 def source_basis_values(nodes: list[ast.AST], n: int, k: int, l: int) -> dict[str, Q]:
-    env = {
-        "n": pred.Jet.const(n),
-        "k": pred.Jet.kvar(k),
-        "l": pred.Jet.lvar(l),
-    }
+    env = {"n": pred.Jet.const(n), "k": pred.Jet.const(k), "l": pred.Jet.const(l)}
     rho = pred._eval_source_ast(nodes[0], env).value
     sigma = pred._eval_source_ast(nodes[1], env).value
     return {"one": Q(1), "rho": Q(rho), "sigma": Q(sigma)}
 
 
-def _base_columns(primitive_full, supports: dict):
+def _shift_point(n: int, k: int, l: int, shift: tuple[int, int, int]) -> tuple[int, int, int]:
+    dn, dk, dl = shift
+    return n + dn, k + dk, l + dl
+
+
+def _shifted_monomial_poly(mon: tuple[str, ...], shift: tuple[int, int, int]):
+    shifted = pred.c.b.a.rc.p_const(1)
+    for name in mon:
+        shifted = pred.c.b.a.rc.p_mul(shifted, pred.c.b.primitive_shift_atom(name, shift))
+    return shifted
+
+
+def weighted_delta_coefficients(
+    nodes: list[ast.AST],
+    mon: tuple[str, ...],
+    shift: tuple[int, int, int],
+    basis: str,
+    n: int,
+    k: int,
+    l: int,
+) -> dict[tuple[str, ...], Q]:
+    """Evaluate Delta(q*M)=q_shift*M_shift-q*M in the protected atom basis."""
+    q0 = source_basis_values(nodes, n, k, l)[basis]
+    ns, ks, ls = _shift_point(n, k, l, shift)
+    q1 = source_basis_values(nodes, ns, ks, ls)[basis]
+    out: dict[tuple[str, ...], Q] = {}
+    for shifted_mon, rat in _shifted_monomial_poly(mon, shift).items():
+        value = q1 * pred._eval_rat(rat, n, k, l)
+        if value:
+            out[shifted_mon] = out.get(shifted_mon, Q(0)) + value
+    out[mon] = out.get(mon, Q(0)) - q0
+    if not out[mon]:
+        del out[mon]
+    return out
+
+
+def _base_ids(primitive_full, supports: dict):
     ids: list[tuple[str, str, tuple[str, ...]]] = []
-    response_polys: list[object] = []
     for channel in pred.c.b.a.INDEPENDENT_CHANNELS:
         for scalar, mon in pred.c.union_support_ids(supports, channel):
             ids.append((channel, scalar, mon))
-            response_polys.append(
-                pred.c.b.primitive_delta_monomial(mon, pred.c.b.a.pcl.SHIFTS[channel])
-            )
     if len(ids) != 506:
         raise AssertionError(f"protected support cardinality drift: {len(ids)} != 506")
-    return ids, response_polys
+    return ids
 
 
 def weighted_source_functional_gate(primitive_full, supports: dict) -> dict:
     nodes, source = load_current_qrow_ast()
     if not _contains_source_nonmonomial_denominator(nodes):
         raise AssertionError("pinned source no longer exhibits nonmonomial rational denominator geometry")
-
     for point in SAMPLES:
         n, k, l = point
         if not (0 <= k < n and 0 <= l <= n and k + 1 <= n):
@@ -145,23 +167,14 @@ def weighted_source_functional_gate(primitive_full, supports: dict) -> dict:
         if not pred.qrow_point_check(nodes, n, k, l):
             raise AssertionError(f"current-source Q-row point replay failed: {point}")
 
-    base_ids, response_polys = _base_columns(primitive_full, supports)
-    weighted_ids = [
-        (channel, scalar, mon, basis)
-        for channel, scalar, mon in base_ids
-        for basis in COEFFICIENT_BASIS
-    ]
+    base_ids = _base_ids(primitive_full, supports)
+    weighted_ids = [(*row, basis) for row in base_ids for basis in COEFFICIENT_BASIS]
     columns: list[dict] = [{} for _ in weighted_ids]
     target: dict = {}
     scalars = ("TN1", "TN2", "TN3", "SK", "AK", "LKK", "LLK")
 
     for sample_index, (n, k, l) in enumerate(SAMPLES):
-        multipliers = {
-            scalar: pred.scalar_multiplier(nodes, scalar, n, k, l)
-            for scalar in scalars
-        }
-        basis_values = source_basis_values(nodes, n, k, l)
-
+        multipliers = {s: pred.scalar_multiplier(nodes, s, n, k, l) for s in scalars}
         for mon, by_scalar in primitive_full.items():
             total = Q(0)
             for scalar, rat in by_scalar.items():
@@ -170,20 +183,18 @@ def weighted_source_functional_gate(primitive_full, supports: dict) -> dict:
             if total:
                 target[(sample_index, mon)] = total
 
-        for base_index, ((channel, scalar, _support_mon), poly) in enumerate(
-            zip(base_ids, response_polys)
-        ):
-            del channel
+        for base_index, (channel, scalar, support_mon) in enumerate(base_ids):
             mult = multipliers[scalar]
             if not mult:
                 continue
+            shift = pred.c.b.a.pcl.SHIFTS[channel]
             for basis_index, basis in enumerate(COEFFICIENT_BASIS):
-                weight = basis_values[basis]
-                if not weight:
-                    continue
                 out = columns[base_index * len(COEFFICIENT_BASIS) + basis_index]
-                for mon, rat in poly.items():
-                    value = weight * mult * pred._eval_rat(rat, n, k, l)
+                response = weighted_delta_coefficients(
+                    nodes, support_mon, shift, basis, n, k, l
+                )
+                for mon, coeff in response.items():
+                    value = mult * coeff
                     if value:
                         out[(sample_index, mon)] = value
 
@@ -192,15 +203,11 @@ def weighted_source_functional_gate(primitive_full, supports: dict) -> dict:
     predecessor_rank_reverse = pred.exact_rank(constant_columns, reverse=True)
     predecessor_augmented = pred.exact_rank(constant_columns + [target])
     predecessor_augmented_reverse = pred.exact_rank(constant_columns + [target], reverse=True)
-    if (
-        predecessor_rank != predecessor_rank_reverse
-        or predecessor_augmented != predecessor_augmented_reverse
-    ):
+    if predecessor_rank != predecessor_rank_reverse or predecessor_augmented != predecessor_augmented_reverse:
         raise AssertionError("embedded T3-012-B rank ordering drift")
     if (predecessor_rank, predecessor_augmented) != (84, 85):
         raise AssertionError(
-            "embedded T3-012-B obstruction drift: "
-            f"{predecessor_rank}/{predecessor_augmented} != 84/85"
+            f"embedded T3-012-B obstruction drift: {predecessor_rank}/{predecessor_augmented} != 84/85"
         )
 
     rank = pred.exact_rank(columns)
@@ -211,10 +218,10 @@ def weighted_source_functional_gate(primitive_full, supports: dict) -> dict:
         raise AssertionError("source-weighted exact rank ordering drift")
 
     consistent = rank == augmented
-    terminal = ESCAPE_TERMINAL if consistent else NEGATIVE_TERMINAL
     return {
         "source": source,
         "coefficient_basis": list(COEFFICIENT_BASIS),
+        "coefficient_shift_semantics": "Delta(q*M)=q_shift*M_shift-q*M",
         "samples": [list(x) for x in SAMPLES],
         "sample_set_inherited_exactly_from_t3_012_b": True,
         "strict_interior_only": True,
@@ -237,12 +244,11 @@ def weighted_source_functional_gate(primitive_full, supports: dict) -> dict:
         "target_sha256": sha(
             sorted((repr(key), value.numerator, value.denominator) for key, value in target.items())
         ),
-        "terminal": terminal,
+        "terminal": ESCAPE_TERMINAL if consistent else NEGATIVE_TERMINAL,
         "interpretation": (
-            "Exact strict-interior obstruction-escape gate. Consistency means only that the "
-            "protected T3-012-B necessary-subsystem obstruction is escaped; it is not a global "
-            "certificate and not an identity proof. Inconsistency would refute this exact fixed "
-            "source-weighted class because every global solution must satisfy the inherited subsystem."
+            "Exact strict-interior obstruction-escape gate using the true discrete product rule for "
+            "source-dependent coefficients. Consistency means only that the protected T3-012-B "
+            "necessary-subsystem obstruction is escaped; it is not a global certificate or identity proof."
         ),
     }
 
@@ -252,7 +258,7 @@ def build() -> dict:
     _systems, primitive_full, supports = pred.reconstruct_c_systems()
     gate = weighted_source_functional_gate(primitive_full, supports)
     return {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "issue": ISSUE,
         "operation": OPERATION,
         "stage": STAGE,
@@ -283,7 +289,3 @@ def build() -> dict:
         "promotion_effect": "NONE",
         "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
     }
-
-
-if __name__ == "__main__":
-    print(json.dumps(build(), sort_keys=True, separators=(",", ":")))
