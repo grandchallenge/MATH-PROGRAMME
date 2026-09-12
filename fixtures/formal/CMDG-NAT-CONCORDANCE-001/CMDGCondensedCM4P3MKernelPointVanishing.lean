@@ -87,6 +87,8 @@ theorem finiteComparisonTail_coordinateSection
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
     CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
     CMDG.CondensedCM4P2E.discreteFreeIso,
+    Adjunction.leftAdjointUniq_inv_app,
+    Adjunction.unit_leftAdjointUniq_hom_app,
     profinitePointProbe]
 
 /-- After the complete protected finite comparison, the all-true pullback of the evaluation-weight
