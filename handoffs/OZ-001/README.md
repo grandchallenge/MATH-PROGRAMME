@@ -5,8 +5,8 @@
 - Workset: `OZ-001`
 - Target repository: `grandchallenge/MATH-PROGRAMME`
 - Constitutional authority repository: `grandchallenge/INTELLECT`
-- Constitutional authority head at takeover: `f4610c37b7a010e0032666fe73f35eebb4b7a218`
-- Target protected head at takeover: `5f4d3c444a60d413f785cc54266e826d6e426697`
+- Constitutional authority head last re-read for this continuation: `f4610c37b7a010e0032666fe73f35eebb4b7a218`
+- Current protected MATH-PROGRAMME head at reconciliation: `a4003ef7793e5b309b64a6cff2ccb276b1aa7b61`
 - Generic handoff contract: `grandchallenge/INTELLECT:governance/handoffs/README.md`
 - Umbrella tracker: `grandchallenge/MATH-PROGRAMME#113` is navigation only.
 
@@ -14,25 +14,7 @@
 
 Preserve only the campaign-specific continuity needed to advance the strongest mathematically justified odd-zeta result without weakening source locks, theorem/representative distinctions, independent verification, or the claim firewall.
 
-## Primary deliverable
-
-Advance the strongest mathematically justified OZ result from protected state while preserving exact source identity and independent claim lanes.
-
-## Material acceptance criteria
-
-A successor may advance only when it:
-
-- binds the exact protected predecessor and admitted source identities;
-- preserves the exact T3 representative and coefficient-system semantics unless a separately governed bridge changes them;
-- does not reopen an exhausted bounded class;
-- uses producer/verifier separation for substantive exact computation;
-- keeps finite evidence distinct from an unbounded proof;
-- preserves the T3 claim firewall unless a separately admitted theorem changes it;
-- does not infer T1-top, DEPTH, Sharp-12, primes `2,3`, formal replay, companion/cuspidal, irrationality, infinitude, novelty, publication, or MATHCERT consequences without an exact admitted bridge.
-
-## Current substantive state
-
-### Source lock
+## Current source lock
 
 Current admitted upstream source revision:
 
@@ -42,35 +24,42 @@ Current admitted upstream source revision:
 - Programme disposition: `SOURCE_REVISION_PARTIALLY_ADMITTED_WITH_BLOCKERS`;
 - `promotion_effect: NONE`.
 
-### Active T3 mathematical frontier
+## Current protected T3 state
 
-The issuance-time pointer `#509` / `OZ-RT-BZ-T3-011-F` is no longer an open mathematical operation. PR #684 completed the authorized F class at exact implementation head
+The frozen coordinate-zero Laurent monomial multiplier-response programme has reached structural closure.
 
-`bc67c0e6b3b2e521569339798d879f4a3a4448bf`
+Protected `OZ-RT-BZ-T3-011-R` merged through PR #946 at
 
-and protected merge
+`a4003ef7793e5b309b64a6cff2ccb276b1aa7b61`.
 
-`81296b7cce3c741597ae86e991cb59e2d1835fcb`.
+Its exact terminal is
 
-The exact OZ replay exhausted all `1282` admitted endpoint-anchored genuinely mixed total-degree-2 records with:
+`SPECTATOR_ONLY_LAURENT_AXIS_COKERNEL_INVISIBLE`.
 
-- no semantic functional ambiguity;
-- no cokernel-breaking direction;
-- exact predecessor-ledger concordance;
-- terminal `MIXED_CHANNEL_QUADRATIC_RESPONSE_CLASS_COKERNEL_INVISIBLE`.
+R closed the final spectator-only Laurent axis and separately audited the literal all-zero multiplier case. Exact protected replay established:
 
-The immediate predecessor `OZ-RT-BZ-T3-011-E` already established
+- positive spectator family: `1282/1282`, every protected parent path agrees, no nonzero cokernel pairing;
+- reciprocal spectator family: `1282/1282`, every protected parent path agrees, no nonzero cokernel pairing;
+- all-zero direct mixed response: `1282/1282`, complete, `first_nonzero = null`;
+- no semantic path ambiguity;
+- no characterized blocker inside this frozen multiplier-response class.
 
-`POLYNOMIAL_MULTIPLIER_COKERNEL_CLOSURE_CERTIFIED`
+Together with the already protected T3-011 ladder:
 
-for the entire frozen single-channel polynomial-multiplier class, with no unresolved higher-degree residue.
+- E: frozen single-channel polynomial multipliers;
+- G: mixed positive polynomial multipliers;
+- H/I/J: reciprocal and mixed-sign pairwise Laurent classes;
+- K/L/M/N/O/P: all eight nonzero trivariate Laurent sign octants;
+- Q: exactly-one-active-exponent-zero Laurent faces;
+- R: both-active-exponents-zero spectator-only Laurent axis and the all-zero direct anchor;
 
-Therefore the strongest protected T3 structural result is now:
+this admits the bounded structural corollary
 
-1. every frozen single-channel polynomial multiplier is invisible to the governing cokernel witness; and
-2. the smallest genuinely mixed total-degree-2 endpoint-anchored multiplier class is also invisible.
+`FROZEN_COORDINATE_ZERO_LAURENT_MONOMIAL_RESPONSE_ALGEBRA_COKERNEL_INVISIBLE`.
 
-The following remain unchanged:
+This corollary concerns only the frozen multiplier-response architecture. It is not the T3 residual identity and does not prove T3.
+
+The claim firewall remains exactly:
 
 `residual_sum_zero_proved = false`
 
@@ -82,16 +71,48 @@ The following remain unchanged:
 
 T3 is neither proved nor refuted.
 
-### Independent OZ lanes
+## Other already exhausted T3 probes
+
+Two separately protected bounded probes also remain negative and must not be silently recycled as successors:
+
+- `OZ-RT-BZ-T3-012-A`: `NORMALIZED_RECURRENCE_OPERATOR_TANGENT_POLY_DEG_LE_9_EXHAUSTED`;
+- `OZ-RT-BZ-T3-012-B`: `SUPPORT_LOCKED_DEGREE0_COUPLED_CORRECTION_RECOMBINATION_INCOMPATIBLE`.
+
+The 012-B result is an exact source-locked necessary-subsystem inconsistency for the unchanged support-locked degree-zero coupled correction class. It does not exclude broader rational coefficient families, support/harmonic widenings, higher-order operator deformations, or different certificate architectures.
+
+## Independent OZ lanes
 
 - **T1-top:** `OPEN_WITH_CHARACTERIZED_BLOCKER`. No independently replayable unbounded proof object exists for the exact `w5_I` representative. T3 cannot substitute for T1-top without a separately admitted representative bridge.
 - **DEPTH:** `OPEN_WITH_CHARACTERIZED_BLOCKER`. The canonical 448-variable producer/order/matrix package and independently replayable rational certificate are not recoverable from the admitted exact source tree. The governed reopening conditions remain unsatisfied.
 - **Sharp-12:** gated by separate accepted T1-top and DEPTH results. T3 does not discharge either gate.
 - **Primes `2,3`:** remain outside the current conditional `p >= 5` Sharp-12 chain and are a separate completion lane.
-- **Eisenstein companions:** MATHFORGE #69 closed as `SOURCE_IDENTIFICATION_PARTIALLY_ADMITTED_WITH_BLOCKERS`; bounded coefficient-law replay only, with no theorem/promotion effect.
+- **Eisenstein companions:** MATHFORGE #69 closed as `SOURCE_IDENTIFICATION_PARTIALLY_ADMITTED_WITH_BLOCKERS`; bounded coefficient/source replay only, with no theorem or promotion effect.
 - **Cuspidal/Fricke lane:** MATHFORGE #70 closed as `CUSPIDAL_SOURCE_PACKET_PARTIALLY_ADMITTED_WITH_BLOCKERS`; exact finite/source replay only, with transformation, period, and all-`n` denominator blockers retained.
 - **Formal replay:** DELTA-003 introduced no Lean delta; quarantined declarations remain non-promotable and no T3 result repairs them.
-- **MATHCERT:** protected route `MC-ROUTE-OZ-001` remains `pending`, with no accepted intake packet and no certificate output.
+- **MATHCERT:** route `MC-ROUTE-OZ-001` remains `pending`; no accepted OZ certificate output exists.
+
+## Material acceptance criteria for any successor
+
+A successor may advance only when it:
+
+- binds the exact protected predecessor and admitted source identities;
+- states the genuinely new mathematical hypothesis class before implementation;
+- explains why that class is not contained in an already exhausted protected class;
+- preserves the exact T3 representative and coefficient-system semantics unless a separately governed bridge changes them;
+- uses producer/verifier separation for substantive exact computation;
+- keeps finite evidence distinct from an unbounded proof;
+- preserves the claim firewall unless a separately admitted theorem changes it;
+- does not infer T1-top, DEPTH, Sharp-12, primes `2,3`, formal replay, companion/cuspidal, irrationality, infinitude, novelty, publication, or MATHCERT consequences without an exact admitted bridge.
+
+## Current T3 frontier
+
+There is no authorized same-hypothesis-class T3-011 successor after R.
+
+Do not open another sign, face, boundary, monomial-degree, or linear-combination variant inside the frozen coordinate-zero Laurent monomial response algebra. That architecture is now structurally exhausted under its protected semantics.
+
+Do not repeat T3-012-A or T3-012-B without a separately governed widening that changes the mathematical hypothesis class rather than only its label or finite scan range.
+
+The next substantive T3 operation therefore requires a separately governed new hypothesis class. Candidate directions may be researched, but nomination is not admission and no one candidate is authorized by this handoff.
 
 ## Authoritative pointers
 
@@ -102,44 +123,24 @@ Read these from protected state before any successor mutation:
 - `campaigns/odd_zeta/OZ_SOURCE_REVISION_DELTA_003/OZ_SOURCE_REVISION_DELTA_003.json`;
 - `campaigns/odd_zeta/OZ_RT_SHARP12_T1TOP_001/OZ_RT_SHARP12_T1TOP_001.json`;
 - `campaigns/odd_zeta/OZ_RT_SHARP12_DEPTH_001/OZ_RT_SHARP12_DEPTH_001.json`;
-- `campaigns/odd_zeta/OZ_RT_BZ_T3_010/T3_011_E_CONTRACT.json`;
-- `campaigns/odd_zeta/OZ_RT_BZ_T3_010/T3_011_F_CONTRACT.json`;
-- `campaigns/odd_zeta/OZ_RT_BZ_T3_010/README_011_F.md`;
-- `campaigns/odd_zeta/OZ_RT_BZ_T3_010/t3_011_f.py`;
-- `campaigns/odd_zeta/OZ_RT_BZ_T3_010/t3_011_f_verify.py`;
-- `tests/test_oz_rt_bz_t3_011_f.py`;
-- closed issue `#509` and merged PR `#684` for terminal execution evidence;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_011_Q/CONTRACT.json`;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_011_R/CONTRACT.json`;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_011_R/README.md`;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_011_R/producer.py` and `producer_impl.py.inc`;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_011_R/verifier.py` and `verifier_impl.py.inc`;
+- `tests/test_oz_rt_bz_t3_011_r.py`;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_012_A/CONTRACT.json`;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_012_B/CONTRACT.json`;
+- closed issue #944 and merged PR #946 for the R terminal execution evidence;
 - `grandchallenge/MATHCERT:governance/certification_routes.json`, route `MC-ROUTE-OZ-001`, for certification state.
 
-## Smallest safe next tranche
+## Reserved authority and stop condition
 
-The F operation itself is materially complete and must not be reopened.
+Stop before further substantive T3 search at
 
-Any further T3 search requires a new hypothesis class. The mathematically preferred nomination is a separately governed **mixed-polynomial cokernel-closure audit**, structurally analogous to T3-011-E:
+`NEW_HYPOTHESIS_CLASS_REQUIRED`.
 
-- keep the frozen source objects, endpoint candidate banks, scalar namespaces, active cells, support, harmonic blocks, shell semantics, shifts, coefficient system, and normalized endpoint witnesses unchanged;
-- derive exactly the finite multidegree support-overlap domain for genuinely mixed `P(x_c,x_d)G` responses;
-- prove all mixed polynomial multipliers cokernel-invisible if the overlap closes; otherwise bind the exact finite unresolved multidegree residue set and first untested class;
-- do not substitute a brute degree-3 scan while this stronger structural closure route remains available.
-
-This nomination is not authorization to execute that class.
-
-Linear combinations of the already exhausted F response columns are not a warranted successor: each admitted F direction has zero pairing with its governing endpoint witness, so any linear combination within the same frozen response span remains zero by linearity.
-
-## Material dependencies and boundaries
-
-- Preserve exact source and predecessor locks before every substantive replay.
-- Treat T3, T1-top, DEPTH, Sharp-12, companion/cuspidal, primes `2,3`, formal replay, and MATHCERT as independent lanes unless an exact admitted bridge connects them.
-- Do not widen support, harmonic basis, polynomial/multivariate degree, mixed-channel architecture, rational prefactors, recurrence classes, correction architecture, or representative identity merely because an exhausted class is convenient to rerun.
-- A new structural search class must state the exact new hypothesis and why the protected negative result mathematically motivates it.
-
-## Reserved authority and stop conditions
-
-Stop before further substantive T3 search at:
-
-`NEW_HYPOTHESIS_CLASS_REQUIRED`
-
-until a separately governed successor defines the next admitted class.
+This is now a substantive evidentiary and scope boundary, not an infrastructure blocker. A successor must define and admit a genuinely new hypothesis class before implementation. Existing delegated routine execution authority does not authorize inventing that mathematical widening implicitly.
 
 Also stop on material target/representative/source drift, failure of a central exact verification path, an exact reserved constitutional authority boundary, or a separately established material closure.
 
