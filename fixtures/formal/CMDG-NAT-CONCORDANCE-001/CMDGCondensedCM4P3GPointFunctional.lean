@@ -143,7 +143,15 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
   let eFree := CMDG.CondensedCM4P2E.finiteFreeDiscreteIso.hom.app Q
   apply (cancel_mono eComp).1
   simp only [Category.assoc]
-  rw [measureSolidification_fac]
+  dsimp [eComp, Q]
+  have hfac :
+      measureSolidification.app (X.diagram.obj j) ≫
+          CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.hom.app
+            (X.fintypeDiagram.obj j) =
+        𝟙 ((Condensed.finFree CMDG.CondensedCM4P3G.R.{u}).obj (X.fintypeDiagram.obj j)) := by
+    simpa only [Functor.comp_obj] using
+      (measureSolidification_fac (X.fintypeDiagram.obj j))
+  rw [hfac]
   simp only [Category.comp_id]
   apply (cancel_mono eFree).1
   simp only [Category.assoc]
