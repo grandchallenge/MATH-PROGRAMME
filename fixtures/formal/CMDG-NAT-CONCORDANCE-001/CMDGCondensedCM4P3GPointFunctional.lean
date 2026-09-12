@@ -154,17 +154,19 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
   simp only [Category.assoc]
   let e := eComp ≫ eFree
   have hpost :
-      freeHomSectionsEquiv T D
-          (weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j ≫ e) =
-        (ConcreteCategory.hom (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map e).hom.app S))
-          (freeHomSectionsEquiv T A
-            (weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j)) := by
+      ∀ {B C : CondensedMod.{u} CMDG.CondensedCM4P3G.R.{u}}
+        (g : (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).obj T ⟶ B)
+        (h : B ⟶ C),
+        freeHomSectionsEquiv T C (g ≫ h) =
+          (ConcreteCategory.hom
+            (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map h).hom.app S))
+            (freeHomSectionsEquiv T B g) := by
+    intro B C g h
     change
       (coherentTopology CompHaus.{u}).uliftYonedaEquiv
         ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
-          ((profiniteToCondensed).obj T) D
-          (weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j ≫ e)) = _
-    rw [(Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv_naturality_right]
+          ((profiniteToCondensed).obj T) C (g ≫ h)) = _
+    rw [Adjunction.homEquiv_naturality_right]
     rfl
   have hsection :
       freeHomSectionsEquiv T A
@@ -172,7 +174,6 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j := by
     exact Equiv.apply_symm_apply _ _
   apply (freeHomSectionsEquiv P D).injective
-  rw [Category.assoc]
   rw [freeHomSectionsEquiv_precomp]
   rw [hpost, hsection]
   trace_state
