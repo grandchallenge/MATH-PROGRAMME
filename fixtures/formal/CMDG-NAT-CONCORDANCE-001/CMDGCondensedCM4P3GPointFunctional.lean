@@ -169,9 +169,13 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     rw [Adjunction.homEquiv_naturality_right]
     rfl
   have hsection :
-      freeHomSectionsEquiv T A
+      freeHomSectionsEquiv T (CMDG.CondensedCM4P2E.finiteMeasure.obj Q)
           (weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j) =
         weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j := by
+    change
+      freeHomSectionsEquiv T A
+          (weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j) =
+        weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j
     exact Equiv.apply_symm_apply _ _
   apply (freeHomSectionsEquiv P D).injective
   rw [freeHomSectionsEquiv_precomp]
