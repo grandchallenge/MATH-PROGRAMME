@@ -36,6 +36,16 @@ class OzRtBzT3011RTests(unittest.TestCase):
             contract["spectator_only_axis"]["reciprocal_parent_paths"],
             list(producer.RECIPROCAL_PATHS),
         )
+        self.assertTrue(
+            contract["all_zero_multiplier_guard"][
+                "required_for_full_structural_corollary"
+            ]
+        )
+        self.assertTrue(
+            contract["all_zero_multiplier_guard"][
+                "producer_and_independent_verifier_required"
+            ]
+        )
 
     def test_scope_rejects_every_widening(self) -> None:
         mutations = (
@@ -75,6 +85,20 @@ class OzRtBzT3011RTests(unittest.TestCase):
             result["spectator_only_axis_audit"]["coverage_complete"],
             replay["coverage_complete"],
         )
+        self.assertEqual(
+            result["all_zero_multiplier_audit"],
+            replay["all_zero_multiplier_audit"],
+        )
+        self.assertEqual(
+            result["all_zero_multiplier_audit"]["expected_record_count"],
+            producer.p.POSSIBLE_RECORD_COUNT,
+        )
+        self.assertEqual(
+            result["all_zero_multiplier_audit"]["record_count"],
+            producer.p.POSSIBLE_RECORD_COUNT,
+        )
+        self.assertTrue(result["all_zero_multiplier_audit"]["coverage_complete"])
+
         self.assertIn(
             result["terminal"],
             (
@@ -94,11 +118,6 @@ class OzRtBzT3011RTests(unittest.TestCase):
                     "all_spectator_only_responses_annihilated"
                 ]
             )
-            self.assertTrue(result["full_coordinate_zero_laurent_algebra_closed"])
-            self.assertEqual(
-                result["full_coordinate_zero_laurent_algebra_corollary"],
-                producer.FULL_ALGEBRA_COROLLARY,
-            )
             for sign in producer.SIGNS:
                 self.assertEqual(
                     result["spectator_only_axis_audit"]["signs"][sign][
@@ -106,11 +125,25 @@ class OzRtBzT3011RTests(unittest.TestCase):
                     ],
                     producer.EXPECTED_RECORDS_PER_SIGN,
                 )
-        else:
-            self.assertFalse(result["full_coordinate_zero_laurent_algebra_closed"])
-            self.assertIsNone(
-                result["full_coordinate_zero_laurent_algebra_corollary"]
-            )
+
+        zero_closed = result["all_zero_multiplier_audit"][
+            "all_zero_responses_annihilated"
+        ]
+        expected_full_closed = (
+            result["terminal"] == producer.CLOSURE_TERMINAL and zero_closed
+        )
+        self.assertIs(
+            result["full_coordinate_zero_laurent_algebra_closed"],
+            expected_full_closed,
+        )
+        self.assertEqual(
+            result["full_coordinate_zero_laurent_algebra_corollary"],
+            producer.FULL_ALGEBRA_COROLLARY if expected_full_closed else None,
+        )
+        self.assertEqual(
+            result["partition_basis"]["all_exponents_zero"],
+            "explicit R all-zero direct mixed-response audit",
+        )
 
         self.assertFalse(result["residual_sum_zero_proved"])
         self.assertEqual(result["proof_effect"], "NONE")
@@ -146,6 +179,32 @@ class OzRtBzT3011RTests(unittest.TestCase):
                         result["spectator_only_axis_audit"][
                             "characterized_blocker"
                         ],
+                    "all_zero_multiplier": {
+                        "expected_record_count":
+                            result["all_zero_multiplier_audit"][
+                                "expected_record_count"
+                            ],
+                        "record_count":
+                            result["all_zero_multiplier_audit"]["record_count"],
+                        "record_sha256":
+                            result["all_zero_multiplier_audit"][
+                                "record_sha256"
+                            ],
+                        "first_nonzero":
+                            result["all_zero_multiplier_audit"][
+                                "first_nonzero"
+                            ],
+                        "coverage_complete":
+                            result["all_zero_multiplier_audit"][
+                                "coverage_complete"
+                            ],
+                        "all_zero_responses_annihilated":
+                            result["all_zero_multiplier_audit"][
+                                "all_zero_responses_annihilated"
+                            ],
+                    },
+                    "full_coordinate_zero_laurent_algebra_closed":
+                        result["full_coordinate_zero_laurent_algebra_closed"],
                     "full_coordinate_zero_laurent_algebra_corollary":
                         result["full_coordinate_zero_laurent_algebra_corollary"],
                 },

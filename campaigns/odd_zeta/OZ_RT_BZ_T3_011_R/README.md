@@ -25,13 +25,21 @@ Any exact disagreement is terminal semantic-path ambiguity. It is not an escape 
 
 The finite or unbounded spectator-degree domain comes only from the protected exact support/signature machinery. No arbitrary degree cutoff is permitted. The original `Delta_c Delta_d` operator, endpoint banks, witnesses, candidates, support, harmonics, scalar namespace, source, and coordinate representatives remain frozen.
 
+## All-zero corollary guard
+
+The spectator-axis terminal concerns only nonzero spectator exponent. A full coordinate-zero Laurent-monomial structural corollary additionally requires the literal all-zero multiplier `(r,s,t)=(0,0,0)` to be checked explicitly.
+
+R therefore reconstructs the direct mixed response `Delta_c Delta_d(G)` for every frozen record in both the producer and the independent verifier. The full-algebra corollary is withheld unless this all-zero audit is complete and every direct pairing vanishes.
+
+This guard does not alter the authorized spectator-axis terminal. It only closes the evidentiary gap before the stronger structural corollary may be recorded.
+
 ## Structural corollary
 
-If both spectator signs close, all parent paths agree, and every exact pairing vanishes, R may record
+If both spectator signs close, all parent paths agree, every exact nonzero-spectator pairing vanishes, and the complete all-zero audit also vanishes, R may record
 
 `FROZEN_COORDINATE_ZERO_LAURENT_MONOMIAL_RESPONSE_ALGEBRA_COKERNEL_INVISIBLE`
 
-by combining this final codimension-two closure with protected Q, the protected nonzero trivariate sign octants, and the protected zero-spectator pairwise/single-axis boundary semantics.
+by combining R with protected Q, the protected nonzero trivariate sign octants, and the protected zero-spectator pairwise/single-axis boundary semantics.
 
 This is only a structural closure of the frozen multiplier-response architecture. It does not establish the T3 residual identity.
 

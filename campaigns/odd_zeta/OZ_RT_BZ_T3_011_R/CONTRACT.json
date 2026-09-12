@@ -39,6 +39,13 @@
     "third_finite_difference_operator_authorized": false,
     "source_or_representative_substitution_authorized": false
   },
+  "all_zero_multiplier_guard": {
+    "domain": "r=0,s=0,t=0, equivalently the direct mixed response Delta_c Delta_d(G)",
+    "required_for_full_structural_corollary": true,
+    "producer_and_independent_verifier_required": true,
+    "all_frozen_records_required": true,
+    "spectator_axis_terminal_unchanged_by_guard": true
+  },
   "terminals": {
     "escape": "SPECTATOR_ONLY_LAURENT_ESCAPE_FOUND",
     "closure": "SPECTATOR_ONLY_LAURENT_AXIS_COKERNEL_INVISIBLE",
@@ -46,6 +53,12 @@
     "blocker": "SPECTATOR_ONLY_LAURENT_NOT_CERTIFIED__CHARACTERIZED_BLOCKER"
   },
   "conditional_structural_corollary": "FROZEN_COORDINATE_ZERO_LAURENT_MONOMIAL_RESPONSE_ALGEBRA_COKERNEL_INVISIBLE",
+  "conditional_structural_corollary_requires": [
+    "SPECTATOR_ONLY_LAURENT_AXIS_COKERNEL_INVISIBLE",
+    "complete all-zero multiplier audit with every direct mixed pairing equal to zero",
+    "protected Q active-zero-face closure",
+    "protected nonzero trivariate octants and zero-spectator pairwise/single-axis boundaries"
+  ],
   "claim_firewall": {
     "theorem_promotion_authorized": false,
     "residual_sum_zero_proved": false,
