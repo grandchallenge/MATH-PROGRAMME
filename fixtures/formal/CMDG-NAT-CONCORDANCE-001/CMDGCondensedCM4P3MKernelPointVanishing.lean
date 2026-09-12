@@ -82,7 +82,12 @@ theorem finiteComparisonTail_coordinateSection
       freeHomSectionsEquiv P ((Condensed.finFree R).obj Q)
         ((Condensed.profiniteFree R).map
           (profinitePointProbe (FintypeCat.toProfinite.obj Q) q)) := by
-  rfl
+  simp [finiteComparisonTailNatIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
+    CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
+    CMDG.CondensedCM4P2E.discreteFreeIso,
+    profinitePointProbe]
 
 /-- After the complete protected finite comparison, the all-true pullback of the evaluation-weight
 finite measure morphism is the free generator represented by the quotient point `j.proj x`. -/
