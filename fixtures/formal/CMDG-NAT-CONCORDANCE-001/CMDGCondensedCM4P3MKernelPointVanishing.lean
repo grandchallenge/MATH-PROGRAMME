@@ -91,15 +91,31 @@ theorem finiteSmallFreeCoordinateValue_ulift
   exact
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single Q q 1
 
+/-- The inverse unique-left-adjoint comparison carries the free-module unit back to the
+free-condensed-set unit.  This is the universal generator law needed for the last finite
+comparison-tail stage. -/
+theorem discreteFreeIso_inv_unit (A : Type (u + 1)) :
+    CMDG.CondensedCM4P2E.freeDiscreteModuleAdj.unit.app A ≫
+        (Condensed.forget R ⋙ Condensed.underlying (Type (u + 1))).map
+          (CMDG.CondensedCM4P2E.discreteFreeIso.inv.app A) =
+      CMDG.CondensedCM4P2E.discreteSetFreeAdj.unit.app A := by
+  simpa [CMDG.CondensedCM4P2E.discreteFreeIso,
+    Adjunction.leftAdjointUniq_inv_app] using
+    (Adjunction.unit_leftAdjointUniq_hom_app
+      CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
+      CMDG.CondensedCM4P2E.discreteSetFreeAdj A)
+
 #check profinitePointProbe
 #check profinitePointProbe_comp_finiteQuotientMap
 #check freeHomSectionsEquiv_postcomp
 #check finiteComparisonTailNatIso
 #check finiteSmallFreeCoordinate_condensedDiscrete
 #check finiteSmallFreeCoordinateValue_ulift
+#check discreteFreeIso_inv_unit
 #print axioms profinitePointProbe_comp_finiteQuotientMap
 #print axioms freeHomSectionsEquiv_postcomp
 #print axioms finiteSmallFreeCoordinate_condensedDiscrete
 #print axioms finiteSmallFreeCoordinateValue_ulift
+#print axioms discreteFreeIso_inv_unit
 
 end CMDG.CondensedCM4P3M.KernelPointVanishing
