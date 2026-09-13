@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 956,
+  "operation": "OZ-RT-BZ-T3-015-A",
+  "stage": "T3_015_A_CANONICAL_GLOBAL_RATIONAL_DELTA_DIFFERENCE_MODULE_EXTRACTION",
+  "protected_base": "9c570e92b9bb0f80183b495715751340e35f0150",
+  "hypothesis_class": {
+    "id": "SOURCE_DECLARED_RATIONAL_DELTA_COEFFICIENT_CLASS_001",
+    "continued_from": "OZ-RT-BZ-T3-014",
+    "new_hypothesis_class": false,
+    "coefficient_field": "Q(n,k,l)",
+    "coefficient_law": "one independent q_i(n,k,l) in Q(n,k,l) per protected correction generator",
+    "operator_semantics": "mu_s(n,k,l)*(q_i(shift)*M_shift-q_i(n,k,l)*M)",
+    "protected_generator_count": 506,
+    "support_widening": false,
+    "harmonic_widening": false,
+    "scalar_namespace_widening": false,
+    "recurrence_order_change": false,
+    "recurrence_refit": false,
+    "degree_or_denominator_scan": false
+  },
+  "predecessor": {
+    "operation": "OZ-RT-BZ-T3-014",
+    "issue": 953,
+    "protected_merge": "9c570e92b9bb0f80183b495715751340e35f0150",
+    "required_terminal": "RATIONAL_DELTA_LOCAL_JET_PREDECESSOR_OBSTRUCTION_ESCAPED__GLOBAL_RATIONAL_CERTIFICATE_REQUIRED",
+    "contract_blob": "ebb244851395b7d72f9932cc9d1d8190faf305f1",
+    "producer_blob": "8c1ae1285ca6c111366cca94dad8f7e0bd888bbb",
+    "producer_impl_blob": "b7746d8f6bb03333a384b695e51f3a98ab328d0c",
+    "verifier_blob": "ef88efd1277d69175deb6b20ed73e8fa069746ba"
+  },
+  "source": {
+    "repository": "rain-1/-odd-zeta-values-moremath",
+    "commit": "6cc0bf07137815ceeef0d9f340559f85352391e5",
+    "tree": "be780558454b704bdd016a3070d698c2e106e2b8",
+    "declarations": {
+      "work/Z5T3_BRIDGE.md": "002c96d28123e5949c38656f26677ae5a723ee93",
+      "work/Z5CF_LINALG.md": "637ecaa7f3ee941a87932de390eb7336d7fde677"
+    },
+    "qrow": {
+      "path": "work/lb5/Qrow_rhosigma.m",
+      "git_blob_sha1": "61f12f412726887f506e1d423b7ee183a22116e5",
+      "byte_count": 44980
+    }
+  },
+  "tranche": {
+    "kind": "CANONICAL_GLOBAL_RATIONAL_DIFFERENCE_MODULE_EXTRACTION",
+    "finite_sample_grid_used": false,
+    "positive_identity_inference_from_sampling": false,
+    "rational_degree_cutoff": null,
+    "denominator_cutoff": null,
+    "required_generator_count": 506,
+    "required_channel_counts": {
+      "n1": 116,
+      "n2": 116,
+      "n3": 116,
+      "k1": 158
+    },
+    "required_scalar_namespace": [
+      "TN1",
+      "TN2",
+      "TN3",
+      "SK",
+      "AK",
+      "LKK",
+      "LLK"
+    ],
+    "canonical_rational_serialization": "campaigns/odd_zeta/OZ_RT_BZ_T3_009/residual_canonical.py::rat_json",
+    "independent_reconstruction_required": true,
+    "module_digest_required": true,
+    "solver_effect": "NONE"
+  },
+  "authorized_terminal": "GLOBAL_RATIONAL_DELTA_DIFFERENCE_MODULE_EXTRACTED__COMPLETE_RATIONAL_SOLVER_REQUIRED",
+  "successor_obligation": {
+    "same_class": true,
+    "consume_exact_module": true,
+    "allowed_positive_exit": "globally compatible rational coefficient certificate with exact symbolic replay",
+    "allowed_negative_exit": "completeness-backed rational obstruction",
+    "finite_fit_sufficient": false,
+    "arbitrary_degree_or_denominator_cutoff_sufficient": false
+  },
+  "claim_firewall": {
+    "global_certificate_constructed": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}
