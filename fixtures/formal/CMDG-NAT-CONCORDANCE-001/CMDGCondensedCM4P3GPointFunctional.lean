@@ -191,7 +191,16 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     simp [CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso,
       Category.assoc]
   rw [he]
-  simpa using
+  simpa [eFree, freeHomSectionsEquiv,
+    CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
+    CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
+    CMDG.CondensedCM4P2E.discreteFreeIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
+    CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app] using
     (weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j)
 
 #check profinitePointProbe
