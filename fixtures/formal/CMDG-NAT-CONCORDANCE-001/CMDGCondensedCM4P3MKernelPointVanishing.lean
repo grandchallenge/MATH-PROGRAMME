@@ -99,11 +99,17 @@ theorem discreteFreeIso_inv_unit (A : Type (u + 1)) :
         (Condensed.forget R ⋙ Condensed.underlying (Type (u + 1))).map
           (CMDG.CondensedCM4P2E.discreteFreeIso.inv.app A) =
       CMDG.CondensedCM4P2E.discreteSetFreeAdj.unit.app A := by
-  simpa [CMDG.CondensedCM4P2E.discreteFreeIso,
-    Adjunction.leftAdjointUniq_inv_app] using
-    (Adjunction.unit_leftAdjointUniq_hom_app
+  change
+    CMDG.CondensedCM4P2E.freeDiscreteModuleAdj.unit.app A ≫
+        (Condensed.forget R ⋙ Condensed.underlying (Type (u + 1))).map
+          ((Adjunction.leftAdjointUniq
+            CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
+            CMDG.CondensedCM4P2E.discreteSetFreeAdj).hom.app A) =
+      CMDG.CondensedCM4P2E.discreteSetFreeAdj.unit.app A
+  exact
+    Adjunction.unit_leftAdjointUniq_hom_app
       CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
-      CMDG.CondensedCM4P2E.discreteSetFreeAdj A)
+      CMDG.CondensedCM4P2E.discreteSetFreeAdj A
 
 #check profinitePointProbe
 #check profinitePointProbe_comp_finiteQuotientMap
