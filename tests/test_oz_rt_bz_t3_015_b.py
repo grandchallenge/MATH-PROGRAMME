@@ -74,22 +74,31 @@ class OzRtBzT3015BTests(unittest.TestCase):
             self.replay["scalar_reports"], self.evidence["structure"]["scalar_reports"]
         )
 
-    def test_scalar_separated_probe_is_positive_candidate_or_nonconclusive(self) -> None:
+    def test_strict_interior_probe_is_candidate_or_nonconclusive(self) -> None:
         self.assertIn(
             self.probe_result["status"],
             {
-                "SCALAR_SEPARATED_GLOBAL_RATIONAL_CERTIFICATE_CANDIDATE",
-                "SCALAR_SEPARATED_ROUTE_BLOCKED",
+                "STRICT_INTERIOR_SCALAR_SEPARATED_RATIONAL_CERTIFICATE_CANDIDATE",
+                "STRICT_INTERIOR_SCALAR_SEPARATED_ROUTE_BLOCKED",
             },
         )
+        self.assertGreater(
+            self.probe_result["tagged_positive_reciprocal_factor_count"], 0
+        )
+        self.assertTrue(self.probe_result["shell_replay_required"])
+        self.assertFalse(self.probe_result["global_certificate_constructed"])
         self.assertFalse(self.probe_result["class_nonexistence_proved"])
-        if self.probe_result["status"] == "SCALAR_SEPARATED_GLOBAL_RATIONAL_CERTIFICATE_CANDIDATE":
-            self.assertTrue(self.probe_result["candidate_exact_scalarwise_replay"])
+        if (
+            self.probe_result["status"]
+            == "STRICT_INTERIOR_SCALAR_SEPARATED_RATIONAL_CERTIFICATE_CANDIDATE"
+        ):
+            self.assertTrue(self.probe_result["interior_exact_scalarwise_replay"])
             self.assertEqual(
                 self.probe_result["module_sha256"], self.evidence["predecessor_module_sha256"]
             )
             self.assertGreater(self.probe_result["certificate_generator_count"], 0)
         else:
+            self.assertFalse(self.probe_result["interior_exact_scalarwise_replay"])
             self.assertIn(
                 self.probe_result["reason"],
                 {
