@@ -111,19 +111,14 @@ theorem discreteFreeIso_inv_unit (A : Type (u + 1)) :
       CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
       CMDG.CondensedCM4P2E.discreteSetFreeAdj A
 
-/-- Elementwise form of the inverse unique-left-adjoint generator law.  It isolates the
-`discreteFreeIso.inv` half of the terminal finite comparison before the representable/discrete
-point identification is introduced. -/
+/-- Elementwise form of the inverse unique-left-adjoint generator law.  It stays in the Type-valued
+right adjoint, so no additional concrete-category coercion is introduced. -/
 theorem discreteFreeIso_inv_unit_apply (A : Type (u + 1)) (a : A) :
-    (ConcreteCategory.hom
-      ((Condensed.forget R ⋙ Condensed.underlying (Type (u + 1))).map
-        (CMDG.CondensedCM4P2E.discreteFreeIso.inv.app A)))
-      ((ConcreteCategory.hom
-        (CMDG.CondensedCM4P2E.freeDiscreteModuleAdj.unit.app A)) a) =
-      (ConcreteCategory.hom
-        (CMDG.CondensedCM4P2E.discreteSetFreeAdj.unit.app A)) a := by
-  simpa only [ConcreteCategory.comp_apply] using
-    ConcreteCategory.congr_hom (discreteFreeIso_inv_unit A) a
+    (CMDG.CondensedCM4P2E.freeDiscreteModuleAdj.unit.app A ≫
+      (Condensed.forget R ⋙ Condensed.underlying (Type (u + 1))).map
+        (CMDG.CondensedCM4P2E.discreteFreeIso.inv.app A)) a =
+      CMDG.CondensedCM4P2E.discreteSetFreeAdj.unit.app A a := by
+  exact congrFun (discreteFreeIso_inv_unit A) a
 
 #check profinitePointProbe
 #check profinitePointProbe_comp_finiteQuotientMap
