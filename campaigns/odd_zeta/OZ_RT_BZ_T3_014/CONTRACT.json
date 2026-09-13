@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.1.0",
+  "issue": 953,
+  "operation": "OZ-RT-BZ-T3-014",
+  "stage": "T3_014_SOURCE_DECLARED_RATIONAL_DELTA_LOCAL_JET_VIABILITY_GATE",
+  "protected_base": "ced68d9f56d8757554ef1b06360808d1a13b9982",
+  "hypothesis_class": {
+    "id": "SOURCE_DECLARED_RATIONAL_DELTA_COEFFICIENT_CLASS_001",
+    "target": "protected reduced recurrence-residual correction system inherited unchanged through OZ-RT-BZ-T3-013-A",
+    "support_widening": false,
+    "harmonic_widening": false,
+    "scalar_namespace_widening": false,
+    "recurrence_order_change": false,
+    "recurrence_refit": false,
+    "coefficient_law": "one independent q_i(n,k,l) in Q(n,k,l) per protected correction column",
+    "coefficient_field": "Q(n,k,l)",
+    "coefficient_shift_semantics": "Delta(q_i*M)=q_i(shifted_point)*M_shift-q_i(base_point)*M",
+    "regularity_requirement": "q_i is regular on the finite gate orbit",
+    "polynomial_degree_ladder": false,
+    "denominator_degree_ladder": false,
+    "free_denominator_family_scan": false,
+    "finite_gate_values_shared_at_repeated_points": true
+  },
+  "source": {
+    "repository": "rain-1/-odd-zeta-values-moremath",
+    "commit": "6cc0bf07137815ceeef0d9f340559f85352391e5",
+    "tree": "be780558454b704bdd016a3070d698c2e106e2b8",
+    "declaration": {
+      "path": "work/Z5T3_BRIDGE.md",
+      "git_blob_sha1": "002c96d28123e5949c38656f26677ae5a723ee93",
+      "role": "explicitly maps the next T3 campaign to a Delta-certificate / creative-telescoping class with coefficients rational in (n,k,l)"
+    },
+    "finite_module_doctrine": {
+      "path": "work/Z5CF_LINALG.md",
+      "git_blob_sha1": "637ecaa7f3ee941a87932de390eb7336d7fde677",
+      "role": "finite Q(n,k,l)-linear shift-module formulation and exact linear-algebra doctrine"
+    },
+    "qrow": {
+      "path": "work/lb5/Qrow_rhosigma.m",
+      "git_blob_sha1": "61f12f412726887f506e1d423b7ee183a22116e5",
+      "byte_count": 44980
+    }
+  },
+  "predecessor": {
+    "operation": "OZ-RT-BZ-T3-013-A",
+    "issue": 949,
+    "contract_blob": "846d3c399fd4d1e27cb28cbc71882d2f21f6e8e8",
+    "producer_blob": "8c1ae1285ca6c111366cca94dad8f7e0bd888bbb",
+    "producer_impl_blob": "9ed7357c841ae88f0a22936a320f6f85f9202d6b",
+    "verifier_blob": "3d5a67013b6c43925403e476e501db91d4ca8e37",
+    "required_negative_terminal": "QROW_CERTIFICATE_WEIGHTED_STRICT_INTERIOR_SUBSYSTEM_INCONSISTENT",
+    "embedded_constant_rank_required": [84, 85]
+  },
+  "gate": {
+    "kind": "EXACT_FINITE_RATIONAL_VALUE_JET_RESTRICTION_ON_INHERITED_NECESSARY_SUBSYSTEM",
+    "samples": [[8, 1, 2], [9, 2, 1]],
+    "sample_set_inherited_exactly_from_t3_012_b": true,
+    "finite_sample_set_defines_hypothesis_class": false,
+    "finite_sampling_may_prove_positive_identity": false,
+    "inconsistency_refutes_declared_global_class": true,
+    "consistency_is_obstruction_escape_only": true,
+    "finite_value_assignment_realizable_by_polynomial_interpolation": true,
+    "rational_degree_cutoff": null,
+    "denominator_cutoff": null,
+    "forward_and_reverse_exact_rank_replay_required": true,
+    "independent_verifier_required": true
+  },
+  "non_reducibility": {
+    "t3_011_r": "allows independent rational coefficient functions with shifted non-coordinate geometry; T3-011-R closes only the frozen coordinate-zero Laurent monomial response algebra",
+    "t3_012_b": "changes the coefficient law from constants to Q(n,k,l) while preserving the protected target/support/harmonics/scalars",
+    "t3_013_a": "strictly widens the fixed three-dimensional source span_Q{1,rho,sigma} to the source-declared rational function field Q(n,k,l), without changing support or recurrence data",
+    "source_motivation": "work/Z5T3_BRIDGE.md explicitly names rational Delta/creative-telescoping coefficients as the mapped next campaign"
+  },
+  "authorized_terminals": {
+    "escape": "RATIONAL_DELTA_LOCAL_JET_PREDECESSOR_OBSTRUCTION_ESCAPED__GLOBAL_RATIONAL_CERTIFICATE_REQUIRED",
+    "negative": "RATIONAL_DELTA_CLASS_REFUTED_AT_INHERITED_NECESSARY_SUBSYSTEM"
+  },
+  "claim_firewall": {
+    "global_certificate_constructed": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}
