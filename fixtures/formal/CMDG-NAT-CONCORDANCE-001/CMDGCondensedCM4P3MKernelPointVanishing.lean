@@ -67,45 +67,26 @@ noncomputable def finiteComparisonTailNatIso :
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso ≪≫
     CMDG.CondensedCM4P2E.finiteFreeDiscreteIso.symm
 
-/-- The protected finite-comparison tail sends the canonical small-free coordinate section at a
-finite point to the section represented by the corresponding profinite point map. -/
-theorem finiteComparisonTail_coordinateSection
+/-- The first comparison-tail square is just naturality of the protected locally-constant/discrete
+comparison.  This keeps the coordinate map outside the nontrivial section-level presentation. -/
+theorem finiteSmallFreeCoordinate_condensedDiscrete
     (Q : FintypeCat.{u}) (q : Q.obj) :
-    let P := Profinite.of PUnit.{u + 1}
-    let U := op ((profiniteToCompHaus).obj P)
-    (ConcreteCategory.hom
-      (((Condensed.forget R).map
-        ((finiteComparisonTailNatIso.app Q).hom)).hom.app U))
-      ((ConcreteCategory.hom
-        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion Q q).app U))
-        (1 : LocallyConstant P R)) =
-      freeHomSectionsEquiv P ((Condensed.finFree R).obj Q)
-        ((Condensed.profiniteFree R).map
-          (profinitePointProbe (FintypeCat.toProfinite.obj Q) q)) := by
-  simp [finiteComparisonTailNatIso,
-    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
-    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
-    CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
-    CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
-    CMDG.CondensedCM4P2E.finiteDiscreteCondensedIso,
-    CMDG.CondensedCM4P2E.finiteDiscreteULiftIso,
-    CMDG.CondensedCM4P2E.discreteTopCondensedIso,
-    CMDG.CondensedCM4P2E.compHausTopULiftNatIso,
-    CMDG.CondensedCM4P2E.compHausTopULiftIso,
-    CMDG.CondensedCM4P2E.compHausTopULiftPresheafIso,
-    CMDG.CondensedCM4P2E.continuousULiftSectionEquiv,
-    CMDG.CondensedCM4P2E.discreteFreeIso,
-    Adjunction.leftAdjointUniq_inv_app,
-    Adjunction.unit_leftAdjointUniq_hom_app,
-    profinitePointProbe]
+    (CondensedMod.LocallyConstant.functor R).map
+          (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap Q q) ≫
+        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso.app Q).hom =
+      (CondensedMod.LocallyConstant.functorIsoDiscrete R).hom.app (ModuleCat.of R R) ≫
+        (Condensed.discrete (ModuleCat.{u + 1} R)).map
+          (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap Q q) := by
+  exact (CondensedMod.LocallyConstant.functorIsoDiscrete R).hom.naturality
+    (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap Q q)
 
 #check profinitePointProbe
 #check profinitePointProbe_comp_finiteQuotientMap
 #check freeHomSectionsEquiv_postcomp
 #check finiteComparisonTailNatIso
-#check finiteComparisonTail_coordinateSection
+#check finiteSmallFreeCoordinate_condensedDiscrete
 #print axioms profinitePointProbe_comp_finiteQuotientMap
 #print axioms freeHomSectionsEquiv_postcomp
-#print axioms finiteComparisonTail_coordinateSection
+#print axioms finiteSmallFreeCoordinate_condensedDiscrete
 
 end CMDG.CondensedCM4P3M.KernelPointVanishing
