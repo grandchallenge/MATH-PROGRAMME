@@ -1,4 +1,4 @@
-name: OZ T3-015-C maximal singleton diagnostic
+name: OZ T3-015-C witness incidence diagnostic
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  singleton-summability:
+  witness-incidence:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -21,19 +21,18 @@ jobs:
           python-version: "3.12"
       - name: Install exact OZ symbolic dependencies
         run: python -m pip install --requirement requirements/oz_source_revision_delta.txt
-      - name: Decide exact rational summability of maximal singleton blocks
+      - name: Verify full incoming incidence of candidate witness
         run: |
           python -u - <<'PY'
           import importlib.util
           import json
           import sys
-          from collections import defaultdict
           from pathlib import Path
-          from sympy import Rational, cancel, expand, symbols
-          from sympy.concrete.gosper import gosper_sum
+          from sympy import Rational, cancel, symbols
 
-          n,k,l,z = symbols('n k l _z')
+          n,k,l=symbols('n k l')
           PINV_TAG=991337
+          WITNESS=('H_k_2','H_nk_1','H_nkl_1')
 
           def factor_expr(f):
               v=tuple(map(int,f))
@@ -56,40 +55,27 @@ jobs:
 
           root=Path('.').resolve()
           p=root/'campaigns'/'odd_zeta'/'OZ_RT_BZ_T3_015_A'/'producer.py'
-          spec=importlib.util.spec_from_file_location('t315a_singleton',p)
-          mod=importlib.util.module_from_spec(spec);sys.modules['t315a_singleton']=mod;spec.loader.exec_module(mod)
+          spec=importlib.util.spec_from_file_location('t315a_incidence',p)
+          mod=importlib.util.module_from_spec(spec);sys.modules['t315a_incidence']=mod;spec.loader.exec_module(mod)
           ev=mod.build(); M=ev['module']
           assert ev['module_sha256']=='cdabf6d7873f3aa8e9d53b39fd7b15341dbee58ce9684911d015aee9aaae04da'
 
-          gs=defaultdict(list); ts=defaultdict(list)
-          for g in M['generators']: gs[tuple(g['support_monomial'])].append(g)
-          for r in M['target_records']: ts[tuple(r['monomial'])].append(r)
-          maxdeg=max(map(len,gs))
-          singletons=[]
-          for mon, gens in gs.items():
-              rows=ts.get(mon,[])
-              if len(mon)==maxdeg and len(gens)==1:
-                  g=gens[0]
-                  assert g['channel']=='k1' and g['scalar']=='SK'
-                  assert len(rows)==1 and rows[0]['scalar']=='SK'
-                  same=[t for t in g['shifted_terms'] if tuple(t['monomial'])==mon]
-                  assert len(same)==1 and cancel(rat_expr(same[0]['coefficient'])-1)==0
-                  f=rat_expr(rows[0]['coefficient'])
-                  q=gosper_sum(f,k)
-                  replay=None if q is None else cancel(q.subs(k,k+1)-q-f)
-                  rec={
-                    'generator_index':g['index'],'monomial':list(mon),
-                    'target_numerator':str(expand(f.as_numer_denom()[0])),
-                    'target_denominator':str(expand(f.as_numer_denom()[1])),
-                    'gosper_result':'NONE' if q is None else 'RATIONAL',
-                    'exact_replay_zero': None if q is None else replay==0,
-                  }
-                  singletons.append(rec)
-                  print('T3_015_C_MAXIMAL_SINGLETON '+json.dumps(rec,sort_keys=True,separators=(',',':')),flush=True)
-          print('T3_015_C_MAXIMAL_SINGLETON_SUMMARY '+json.dumps({
-              'module_sha256':ev['module_sha256'],'max_degree':maxdeg,
-              'singleton_count':len(singletons),
-              'nonsummable_count':sum(r['gosper_result']=='NONE' for r in singletons),
-              'summable_count':sum(r['gosper_result']=='RATIONAL' for r in singletons),
-          },sort_keys=True,separators=(',',':')),flush=True)
+          incoming=[]
+          for g in M['generators']:
+              if tuple(g['base_term']['monomial'])==WITNESS:
+                  incoming.append({'generator_index':g['index'],'channel':g['channel'],'scalar':g['scalar'],'side':'base','coefficient':str(rat_expr(g['base_term']['coefficient']))})
+              for t in g['shifted_terms']:
+                  if tuple(t['monomial'])==WITNESS:
+                      incoming.append({'generator_index':g['index'],'channel':g['channel'],'scalar':g['scalar'],'side':'shifted','coefficient':str(rat_expr(t['coefficient']))})
+          targets=[]
+          for r in M['target_records']:
+              if tuple(r['monomial'])==WITNESS:
+                  targets.append({'scalar':r['scalar'],'coefficient':str(rat_expr(r['coefficient']))})
+          rec={'module_sha256':ev['module_sha256'],'witness':list(WITNESS),'incoming':incoming,'targets':targets}
+          print('T3_015_C_WITNESS_INCIDENCE '+json.dumps(rec,sort_keys=True,separators=(',',':')),flush=True)
+          assert incoming==[
+              {'generator_index':59,'channel':'k1','scalar':'SK','side':'base','coefficient':'-1'},
+              {'generator_index':59,'channel':'k1','scalar':'SK','side':'shifted','coefficient':'1'},
+          ]
+          assert targets==[{'scalar':'SK','coefficient':'1/(k + l + 1)'}]
           PY
