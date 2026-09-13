@@ -81,7 +81,7 @@ theorem finiteSmallFreeCoordinate_condensedDiscrete
     (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap Q q)
 
 /-- The protected universe transport sends the concrete finite free coordinate value to its
-ULifted coordinate value.  This is the element-level form actually consumed by the finite-stage
+ULifted coordinate value. This is the element-level form actually consumed by the finite-stage
 Dirac section, avoiding an unnecessary equality of bundled coordinate maps. -/
 theorem finiteSmallFreeCoordinateValue_ulift
     (Q : FintypeCat.{u}) (q : Q.obj) :
@@ -92,7 +92,7 @@ theorem finiteSmallFreeCoordinateValue_ulift
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single Q q 1
 
 /-- The inverse unique-left-adjoint comparison carries the free-module unit back to the
-free-condensed-set unit.  This is the universal generator law needed for the last finite
+free-condensed-set unit. This is the universal generator law needed for the last finite
 comparison-tail stage. -/
 theorem discreteFreeIso_inv_unit (A : Type (u + 1)) :
     CMDG.CondensedCM4P2E.freeDiscreteModuleAdj.unit.app A ≫
@@ -111,15 +111,6 @@ theorem discreteFreeIso_inv_unit (A : Type (u + 1)) :
       CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
       CMDG.CondensedCM4P2E.discreteSetFreeAdj A
 
-/-- Elementwise form of the inverse unique-left-adjoint generator law.  It stays in the Type-valued
-right adjoint, so no additional concrete-category coercion is introduced. -/
-theorem discreteFreeIso_inv_unit_apply (A : Type (u + 1)) (a : A) :
-    (CMDG.CondensedCM4P2E.freeDiscreteModuleAdj.unit.app A ≫
-      (Condensed.forget R ⋙ Condensed.underlying (Type (u + 1))).map
-        (CMDG.CondensedCM4P2E.discreteFreeIso.inv.app A)) a =
-      CMDG.CondensedCM4P2E.discreteSetFreeAdj.unit.app A a := by
-  exact congrFun (discreteFreeIso_inv_unit A) a
-
 #check profinitePointProbe
 #check profinitePointProbe_comp_finiteQuotientMap
 #check freeHomSectionsEquiv_postcomp
@@ -127,12 +118,10 @@ theorem discreteFreeIso_inv_unit_apply (A : Type (u + 1)) (a : A) :
 #check finiteSmallFreeCoordinate_condensedDiscrete
 #check finiteSmallFreeCoordinateValue_ulift
 #check discreteFreeIso_inv_unit
-#check discreteFreeIso_inv_unit_apply
 #print axioms profinitePointProbe_comp_finiteQuotientMap
 #print axioms freeHomSectionsEquiv_postcomp
 #print axioms finiteSmallFreeCoordinate_condensedDiscrete
 #print axioms finiteSmallFreeCoordinateValue_ulift
 #print axioms discreteFreeIso_inv_unit
-#print axioms discreteFreeIso_inv_unit_apply
 
 end CMDG.CondensedCM4P3M.KernelPointVanishing
