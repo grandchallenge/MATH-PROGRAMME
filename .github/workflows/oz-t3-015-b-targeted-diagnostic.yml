@@ -54,6 +54,8 @@ jobs:
           local['generators'] = [g for g in local['generators'] if g['scalar'] == scalar]
           local['target_records'] = [r for r in local['target_records'] if r['scalar'] == scalar]
           probe.SCALARS = (scalar,)
+          full_census = probe.tagged_factor_census(module)
+          probe.tagged_factor_census = lambda _local: full_census
 
           original = probe.antidifference
           count = 0
