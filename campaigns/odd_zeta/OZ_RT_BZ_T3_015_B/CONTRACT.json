@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 958,
+  "operation": "OZ-RT-BZ-T3-015-B",
+  "stage": "T3_015_B_COMPLETE_RATIONAL_SOLVER_STRUCTURAL_REDUCTION",
+  "protected_base": "a4eec4259ae6f7e12028cae1384a17ba865926e4",
+  "hypothesis_class": {
+    "id": "SOURCE_DECLARED_RATIONAL_DELTA_COEFFICIENT_CLASS_001",
+    "new_hypothesis_class": false,
+    "coefficient_field": "Q(n,k,l)",
+    "operator_semantics": "mu_s(n,k,l)*(q_i(shift)*M_shift-q_i(n,k,l)*M)",
+    "support_widening": false,
+    "harmonic_widening": false,
+    "scalar_namespace_widening": false,
+    "recurrence_order_change": false,
+    "recurrence_refit": false,
+    "degree_or_denominator_scan": false
+  },
+  "predecessor": {
+    "operation": "OZ-RT-BZ-T3-015-A",
+    "issue": 956,
+    "protected_merge": "a4eec4259ae6f7e12028cae1384a17ba865926e4",
+    "required_terminal": "GLOBAL_RATIONAL_DELTA_DIFFERENCE_MODULE_EXTRACTED__COMPLETE_RATIONAL_SOLVER_REQUIRED",
+    "module_sha256": "cdabf6d7873f3aa8e9d53b39fd7b15341dbee58ce9684911d015aee9aaae04da",
+    "generator_count": 506,
+    "coordinate_monomial_count": 167,
+    "target_record_count": 513
+  },
+  "tranche": {
+    "kind": "EXACT_STRUCTURAL_SOLVER_REDUCTION",
+    "finite_sample_grid_used": false,
+    "rational_degree_cutoff": null,
+    "denominator_cutoff": null,
+    "required_checks": [
+      "independent predecessor module reconstruction",
+      "exact scalar-family partition",
+      "non-self shift dependency graph",
+      "acyclicity / topological level extraction",
+      "target-to-generator support coverage",
+      "channel and shift-direction census"
+    ],
+    "solver_effect": "STRUCTURE_ONLY"
+  },
+  "authorized_terminal": "GLOBAL_RATIONAL_DELTA_SOLVER_STRUCTURE_EXTRACTED__COMPLETE_RATIONAL_SOLVER_REQUIRED",
+  "claim_firewall": {
+    "global_certificate_constructed": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}
