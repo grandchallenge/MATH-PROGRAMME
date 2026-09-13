@@ -6,7 +6,7 @@
 - Target repository: `grandchallenge/MATH-PROGRAMME`
 - Constitutional authority repository: `grandchallenge/INTELLECT`
 - Constitutional authority head last re-read for this continuation: `f4610c37b7a010e0032666fe73f35eebb4b7a218`
-- Current protected MATH-PROGRAMME head at reconciliation: `a4003ef7793e5b309b64a6cff2ccb276b1aa7b61`
+- Current protected MATH-PROGRAMME head at reconciliation: `69f72aa0955ede645d202d0d614e2a61abda012a`
 - Generic handoff contract: `grandchallenge/INTELLECT:governance/handoffs/README.md`
 - Umbrella tracker: `grandchallenge/MATH-PROGRAMME#113` is navigation only.
 
@@ -71,14 +71,51 @@ The claim firewall remains exactly:
 
 T3 is neither proved nor refuted.
 
-## Other already exhausted T3 probes
+## Other exhausted T3 probes
 
-Two separately protected bounded probes also remain negative and must not be silently recycled as successors:
+Three separately protected probes also remain negative and must not be silently recycled as successors:
 
 - `OZ-RT-BZ-T3-012-A`: `NORMALIZED_RECURRENCE_OPERATOR_TANGENT_POLY_DEG_LE_9_EXHAUSTED`;
-- `OZ-RT-BZ-T3-012-B`: `SUPPORT_LOCKED_DEGREE0_COUPLED_CORRECTION_RECOMBINATION_INCOMPATIBLE`.
+- `OZ-RT-BZ-T3-012-B`: `SUPPORT_LOCKED_DEGREE0_COUPLED_CORRECTION_RECOMBINATION_INCOMPATIBLE`;
+- `OZ-RT-BZ-T3-013-A`: `QROW_CERTIFICATE_WEIGHTED_STRICT_INTERIOR_SUBSYSTEM_INCONSISTENT`.
 
 The 012-B result is an exact source-locked necessary-subsystem inconsistency for the unchanged support-locked degree-zero coupled correction class. It does not exclude broader rational coefficient families, support/harmonic widenings, higher-order operator deformations, or different certificate architectures.
+
+T3-013-A admitted the genuinely new fixed source-defined class
+
+`SOURCE_QROW_CERTIFICATE_WEIGHTED_REDUCED_RESIDUAL_RESPONSE_001`
+
+with the protected T3-012-B target, support, harmonics, scalar namespace, and primitive correction columns unchanged, but with each correction coefficient drawn from the exact pinned source basis
+
+`span_Q { 1, rho(n,k,l), sigma(n,k,l) }`.
+
+The source coefficients are inside the discrete correction operator. The admitted implementation therefore uses the exact product-rule semantics
+
+`Delta(q M) = q_shift M_shift - q M`.
+
+A superseded implementation that post-multiplied an already differenced response by nonconstant `rho` or `sigma` omitted this shifted-coefficient term. That superseded head is explicitly non-evidence and is not part of the admitted result.
+
+The corrected exact-head execution at proposal commit
+
+`7d89f554047878bc5303d9675b219d53de3ed6ff`
+
+reproduced the embedded T3-012-B control rank `84/85`, then obtained for the full source-weighted necessary subsystem:
+
+- weighted unknowns: `1518`;
+- target coordinates: `298`;
+- coefficient rank: `327`;
+- augmented rank: `328`;
+- nullity: `1191`;
+- consistency: `false`;
+- independent source-weighted replay complete: `true`.
+
+The exact fixed `{1,rho,sigma}` source-weighted class is therefore refuted because every global solution in that declared class would have to satisfy the inherited strict-interior necessary subsystem. This result does not close broader rational coefficient families, higher-order operator deformations, different support/harmonic systems, or different correction architectures.
+
+PR #950 merged through the native merge queue as protected commit
+
+`69f72aa0955ede645d202d0d614e2a61abda012a`
+
+after exact-head independent maintainer approval and successful queue-owned OZ, policy, formal, routing, conformance, and repository replay. Issue #949 is closed as completed.
 
 ## Independent OZ lanes
 
@@ -112,7 +149,9 @@ Do not open another sign, face, boundary, monomial-degree, or linear-combination
 
 Do not repeat T3-012-A or T3-012-B without a separately governed widening that changes the mathematical hypothesis class rather than only its label or finite scan range.
 
-The next substantive T3 operation therefore requires a separately governed new hypothesis class. Candidate directions may be researched, but nomination is not admission and no one candidate is authorized by this handoff.
+Do not repeat T3-013-A by adding another finite scan, relabeling the fixed `{1,rho,sigma}` basis, or repackaging the same inherited necessary subsystem. The exact source-defined coefficient class tested there is exhausted under its protected semantics.
+
+The next substantive T3 operation therefore again requires a separately governed genuinely new hypothesis class. Broader rational coefficient families, higher recurrence order, nonlinear deformations, support/harmonic widenings, and different correction architectures remain outside the exhausted 013-A class, but this handoff does not nominate or admit any of them.
 
 ## Authoritative pointers
 
@@ -131,7 +170,13 @@ Read these from protected state before any successor mutation:
 - `tests/test_oz_rt_bz_t3_011_r.py`;
 - `campaigns/odd_zeta/OZ_RT_BZ_T3_012_A/CONTRACT.json`;
 - `campaigns/odd_zeta/OZ_RT_BZ_T3_012_B/CONTRACT.json`;
-- closed issue #944 and merged PR #946 for the R terminal execution evidence;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_013_A/CONTRACT.json`;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_013_A/README.md`;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_013_A/producer.py` and `producer_impl.py.inc`;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_013_A/verifier.py`;
+- `tests/test_oz_rt_bz_t3_013_a.py`;
+- closed issue #949 and merged PR #950 for the T3-013-A terminal execution evidence;
+- closed issue #944 and merged PR #946 for the T3-011-R terminal execution evidence;
 - `grandchallenge/MATHCERT:governance/certification_routes.json`, route `MC-ROUTE-OZ-001`, for certification state.
 
 ## Reserved authority and stop condition
@@ -140,7 +185,7 @@ Stop before further substantive T3 search at
 
 `NEW_HYPOTHESIS_CLASS_REQUIRED`.
 
-This is now a substantive evidentiary and scope boundary, not an infrastructure blocker. A successor must define and admit a genuinely new hypothesis class before implementation. Existing delegated routine execution authority does not authorize inventing that mathematical widening implicitly.
+This is a substantive evidentiary and scope boundary, not an infrastructure blocker. A successor must define and admit a genuinely new hypothesis class before implementation. Existing delegated routine execution authority does not authorize inventing that mathematical widening implicitly.
 
 Also stop on material target/representative/source drift, failure of a central exact verification path, an exact reserved constitutional authority boundary, or a separately established material closure.
 
