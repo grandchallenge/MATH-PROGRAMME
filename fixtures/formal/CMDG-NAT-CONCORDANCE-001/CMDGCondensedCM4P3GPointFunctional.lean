@@ -202,7 +202,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.app
           (op ((profiniteToCompHaus).obj P)))) t)
     hbridge
-  simpa [eTail, eFree, freeHomSectionsEquiv,
+  simp [eTail, eFree, freeHomSectionsEquiv,
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso,
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedIso,
     CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
@@ -214,7 +214,8 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
     Adjunction.homEquiv_naturality_left,
-    CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app] using hbridgeTail
+    CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app] at hbridgeTail
+  convert hbridgeTail using 1
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
