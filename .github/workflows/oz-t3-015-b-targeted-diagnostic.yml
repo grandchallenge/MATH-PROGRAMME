@@ -9,7 +9,12 @@ permissions:
   contents: read
 
 jobs:
-  t3-015-b-targeted:
+  scalar-route:
+    name: scalar-route / ${{ matrix.scalar }}
+    strategy:
+      fail-fast: false
+      matrix:
+        scalar: [TN1, TN2, TN3, SK, AK, LKK, LLK]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -21,15 +26,20 @@ jobs:
           python-version: "3.12"
       - name: Install exact OZ symbolic dependencies
         run: python -m pip install --requirement requirements/oz_source_revision_delta.txt
-      - name: Profile exact strict-interior route
+      - name: Profile one exact strict-interior scalar route
+        env:
+          OZ_SCALAR: ${{ matrix.scalar }}
         run: |
           python -u - <<'PY'
+          import copy
           import json
+          import os
           import signal
           import sys
           import time
           from pathlib import Path
 
+          scalar = os.environ['OZ_SCALAR']
           here = Path('campaigns/odd_zeta/OZ_RT_BZ_T3_015_B').resolve()
           sys.path.insert(0, str(here))
           import producer
@@ -37,8 +47,13 @@ jobs:
 
           t0 = time.perf_counter()
           evidence, module = producer.build_with_module()
-          print('PROFILE_MODULE seconds=%.3f sha=%s' % (
-              time.perf_counter() - t0, evidence['predecessor_module_sha256']), flush=True)
+          print('PROFILE_MODULE scalar=%s seconds=%.3f sha=%s' % (
+              scalar, time.perf_counter() - t0, evidence['predecessor_module_sha256']), flush=True)
+
+          local = copy.deepcopy(module)
+          local['generators'] = [g for g in local['generators'] if g['scalar'] == scalar]
+          local['target_records'] = [r for r in local['target_records'] if r['scalar'] == scalar]
+          probe.SCALARS = (scalar,)
 
           original = probe.antidifference
           count = 0
@@ -50,17 +65,25 @@ jobs:
               global count
               count += 1
               started = time.perf_counter()
-              print('PROFILE_ANTIDIFF_START index=%d active=%s step=%s' % (count, active, step), flush=True)
+              print('PROFILE_ANTIDIFF_START scalar=%s index=%d active=%s step=%s' % (
+                  scalar, count, active, step), flush=True)
               signal.alarm(45)
               try:
                   out = original(f, active, step)
               finally:
                   signal.alarm(0)
-              print('PROFILE_ANTIDIFF_DONE index=%d seconds=%.3f result=%s' % (
-                  count, time.perf_counter() - started, 'NONE' if out is None else 'RATIONAL'), flush=True)
+              print('PROFILE_ANTIDIFF_DONE scalar=%s index=%d seconds=%.3f result=%s' % (
+                  scalar, count, time.perf_counter() - started,
+                  'NONE' if out is None else 'RATIONAL'), flush=True)
               return out
           probe.antidifference = traced
 
-          result = probe.probe(module)
-          print('T3_015_B_SEPARABLE_PROBE ' + json.dumps(probe.compact(result), sort_keys=True, separators=(',', ':')), flush=True)
+          try:
+              result = probe.probe(local)
+              print('T3_015_B_SCALAR_PROBE scalar=%s %s' % (
+                  scalar, json.dumps(probe.compact(result), sort_keys=True, separators=(',', ':'))), flush=True)
+          except TimeoutError as exc:
+              print('T3_015_B_SCALAR_WATCHDOG scalar=%s index=%d error=%s' % (
+                  scalar, count, exc), flush=True)
+              raise
           PY
