@@ -111,6 +111,22 @@ theorem discreteFreeIso_inv_unit (A : Type (u + 1)) :
       CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
       CMDG.CondensedCM4P2E.discreteSetFreeAdj A
 
+/-- The set-level locally-constant/discrete comparison preserves the canonical adjunction unit.
+This is the point-generator law hidden inside `discreteTopCondensedIso`. -/
+theorem condensedSetLocallyConstantIso_unit (A : Type (u + 1)) :
+    (CompHausLike.LocallyConstant.adjunction
+      (fun _ : TopCat.{u} => True)
+      (fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 0 2).mp)).unit.app A ≫
+        (Condensed.underlying (Type (u + 1))).map
+          (CondensedSet.LocallyConstant.iso.hom.app A) =
+      (Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app A := by
+  simpa [CondensedSet.LocallyConstant.iso] using
+    (Adjunction.unit_leftAdjointUniq_hom_app
+      (CompHausLike.LocallyConstant.adjunction
+        (fun _ : TopCat.{u} => True)
+        (fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 0 2).mp))
+      (Condensed.discreteUnderlyingAdj (Type (u + 1))) A)
+
 #check profinitePointProbe
 #check profinitePointProbe_comp_finiteQuotientMap
 #check freeHomSectionsEquiv_postcomp
@@ -118,10 +134,12 @@ theorem discreteFreeIso_inv_unit (A : Type (u + 1)) :
 #check finiteSmallFreeCoordinate_condensedDiscrete
 #check finiteSmallFreeCoordinateValue_ulift
 #check discreteFreeIso_inv_unit
+#check condensedSetLocallyConstantIso_unit
 #print axioms profinitePointProbe_comp_finiteQuotientMap
 #print axioms freeHomSectionsEquiv_postcomp
 #print axioms finiteSmallFreeCoordinate_condensedDiscrete
 #print axioms finiteSmallFreeCoordinateValue_ulift
 #print axioms discreteFreeIso_inv_unit
+#print axioms condensedSetLocallyConstantIso_unit
 
 end CMDG.CondensedCM4P3M.KernelPointVanishing
