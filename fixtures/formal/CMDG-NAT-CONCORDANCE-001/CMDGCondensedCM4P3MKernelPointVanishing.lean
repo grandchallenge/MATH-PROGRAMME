@@ -120,12 +120,23 @@ theorem condensedSetLocallyConstantIso_unit (A : Type (u + 1)) :
         (Condensed.underlying (Type (u + 1))).map
           (CondensedSet.LocallyConstant.iso.hom.app A) =
       (Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app A := by
-  simpa [CondensedSet.LocallyConstant.iso] using
-    (Adjunction.unit_leftAdjointUniq_hom_app
+  change
+    (CompHausLike.LocallyConstant.adjunction
+      (fun _ : TopCat.{u} => True)
+      (fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 0 2).mp)).unit.app A ≫
+        (Condensed.underlying (Type (u + 1))).map
+          ((Adjunction.leftAdjointUniq
+            (CompHausLike.LocallyConstant.adjunction
+              (fun _ : TopCat.{u} => True)
+              (fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 0 2).mp))
+            (Condensed.discreteUnderlyingAdj (Type (u + 1)))).hom.app A) =
+      (Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app A
+  exact
+    Adjunction.unit_leftAdjointUniq_hom_app
       (CompHausLike.LocallyConstant.adjunction
         (fun _ : TopCat.{u} => True)
         (fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 0 2).mp))
-      (Condensed.discreteUnderlyingAdj (Type (u + 1))) A)
+      (Condensed.discreteUnderlyingAdj (Type (u + 1))) A
 
 #check profinitePointProbe
 #check profinitePointProbe_comp_finiteQuotientMap
