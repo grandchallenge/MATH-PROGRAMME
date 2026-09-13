@@ -11,7 +11,7 @@ permissions:
 jobs:
   t3-015-b-targeted:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -25,6 +25,7 @@ jobs:
         run: |
           python -u - <<'PY'
           import json
+          import signal
           import sys
           import time
           from pathlib import Path
@@ -41,12 +42,20 @@ jobs:
 
           original = probe.antidifference
           count = 0
+          def timeout_handler(_signum, _frame):
+              raise TimeoutError('ANTIDIFFERENCE_WATCHDOG')
+          signal.signal(signal.SIGALRM, timeout_handler)
+
           def traced(f, active, step):
               global count
               count += 1
               started = time.perf_counter()
               print('PROFILE_ANTIDIFF_START index=%d active=%s step=%s' % (count, active, step), flush=True)
-              out = original(f, active, step)
+              signal.alarm(45)
+              try:
+                  out = original(f, active, step)
+              finally:
+                  signal.alarm(0)
               print('PROFILE_ANTIDIFF_DONE index=%d seconds=%.3f result=%s' % (
                   count, time.perf_counter() - started, 'NONE' if out is None else 'RATIONAL'), flush=True)
               return out
