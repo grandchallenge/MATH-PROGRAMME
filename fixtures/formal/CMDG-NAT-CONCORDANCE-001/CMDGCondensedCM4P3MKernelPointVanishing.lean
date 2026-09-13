@@ -127,6 +127,7 @@ theorem finiteComparisonTail_coordinateSection
         ((Condensed.profiniteFree R).map
           (profinitePointProbe (FintypeCat.toProfinite.obj Q) q)) := by
   simp [finiteComparisonTailNatIso,
+    finiteSmallFreeCoordinate_condensedDiscrete,
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
     CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
