@@ -191,8 +191,8 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     simp [CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso,
       Category.assoc]
   rw [he]
-  trace_state
-  exact weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j
+  simpa using
+    (weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j)
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
