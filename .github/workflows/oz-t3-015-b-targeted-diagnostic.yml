@@ -1,11 +1,9 @@
 name: OZ T3-015-B targeted diagnostic
 
 on:
-  pull_request:
-    paths:
-      - "campaigns/odd_zeta/OZ_RT_BZ_T3_015_B/**"
-      - "tests/test_oz_rt_bz_t3_015_b.py"
-      - ".github/workflows/oz-t3-015-b-targeted-diagnostic.yml"
+  push:
+    branches:
+      - "codex/oz-t3-015-b-targeted-diagnostic"
 
 permissions:
   contents: read
