@@ -1,0 +1,80 @@
+name: OZ T3-015-C coupled geometry diagnostic
+
+on:
+  push:
+    branches:
+      - "codex/oz-t3-015-c-geometry-diagnostic"
+
+permissions:
+  contents: read
+
+jobs:
+  geometry:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install exact OZ symbolic dependencies
+        run: python -m pip install --requirement requirements/oz_source_revision_delta.txt
+      - name: Inspect canonical coupled support geometry
+        run: |
+          python -u - <<'PY'
+          import importlib.util
+          import json
+          import sys
+          from collections import Counter, defaultdict
+          from pathlib import Path
+
+          root = Path('.').resolve()
+          path = root/'campaigns'/'odd_zeta'/'OZ_RT_BZ_T3_015_A'/'producer.py'
+          spec = importlib.util.spec_from_file_location('t315a_diag', path)
+          mod = importlib.util.module_from_spec(spec)
+          sys.modules['t315a_diag'] = mod
+          spec.loader.exec_module(mod)
+          ev = mod.build()
+          module = ev['module']
+          assert ev['module_sha256'] == 'cdabf6d7873f3aa8e9d53b39fd7b15341dbee58ce9684911d015aee9aaae04da'
+
+          gs = defaultdict(list)
+          ts = defaultdict(list)
+          for g in module['generators']:
+              gs[tuple(g['support_monomial'])].append((g['index'], g['channel'], g['scalar']))
+          for row in module['target_records']:
+              ts[tuple(row['monomial'])].append(row['scalar'])
+
+          allmons = sorted(set(gs)|set(ts), key=lambda m:(-len(m), repr(m)))
+          records=[]
+          for mon in allmons:
+              gens=gs.get(mon,[])
+              targ=ts.get(mon,[])
+              records.append({
+                  'monomial':list(mon), 'degree':len(mon),
+                  'generator_count':len(gens),
+                  'generator_scalars':sorted({s for _,_,s in gens}),
+                  'generator_channels':sorted({c for _,c,_ in gens}),
+                  'generators':[list(x) for x in gens],
+                  'target_scalars':sorted(set(targ)),
+              })
+
+          summary={
+              'module_sha256':ev['module_sha256'],
+              'support_count':len(gs),
+              'target_support_count':len(ts),
+              'max_degree':max(r['degree'] for r in records),
+              'multi_generator_supports':sum(r['generator_count']>1 for r in records),
+              'multi_scalar_generator_supports':sum(len(r['generator_scalars'])>1 for r in records),
+              'multi_channel_generator_supports':sum(len(r['generator_channels'])>1 for r in records),
+              'max_generator_multiplicity':max(r['generator_count'] for r in records),
+              'generator_multiplicity_hist':dict(sorted(Counter(r['generator_count'] for r in records if r['generator_count']).items())),
+              'degree_support_hist':dict(sorted(Counter(r['degree'] for r in records).items(), reverse=True)),
+          }
+          print('T3_015_C_GEOMETRY_SUMMARY '+json.dumps(summary,sort_keys=True,separators=(',',':')),flush=True)
+          for r in records:
+              if r['degree']==summary['max_degree'] or r['generator_count']>1 or len(r['target_scalars'])>1:
+                  print('T3_015_C_BLOCK '+json.dumps(r,sort_keys=True,separators=(',',':')),flush=True)
+          PY
