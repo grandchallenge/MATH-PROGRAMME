@@ -155,14 +155,15 @@ def _analyse(module: dict) -> dict:
     }
 
 
-def build() -> dict:
+def build_with_module() -> tuple[dict, dict]:
     predecessor = pred15.build()
     if predecessor["module_sha256"] != PREDECESSOR_MODULE_SHA256:
         raise AssertionError("T3-015-A module digest drift")
     if predecessor["terminal"] != PREDECESSOR_TERMINAL:
         raise AssertionError("T3-015-A terminal drift")
 
-    structure = _analyse(predecessor["module"])
+    module = predecessor["module"]
+    structure = _analyse(module)
     if not structure["scalar_partition_exact"]:
         raise AssertionError("protected scalar-family partition is incomplete")
     if not structure["strict_degree_lowering"]:
@@ -170,7 +171,7 @@ def build() -> dict:
     if structure["l_shift_present"]:
         raise AssertionError("unexpected l-shift channel in protected module")
 
-    return {
+    evidence = {
         "schema_version": "1.0.0",
         "issue": ISSUE,
         "operation": OPERATION,
@@ -186,6 +187,12 @@ def build() -> dict:
         "promotion_effect": "NONE",
         "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
     }
+    return evidence, module
+
+
+def build() -> dict:
+    evidence, _module = build_with_module()
+    return evidence
 
 
 def compact_result(evidence: dict) -> dict:
