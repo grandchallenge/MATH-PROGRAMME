@@ -88,18 +88,14 @@ theorem finiteSmallFreeCoordinate_ulift
         (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso Q).hom =
       ModuleCat.ofHom (Finsupp.lsingle (ULift.up q)) := by
   apply ModuleCat.hom_ext
+  change
+    (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv Q).toLinearMap.comp
+        (Finsupp.lsingle q) =
+      Finsupp.lsingle (ULift.up q)
   apply LinearMap.ext
   intro r
-  have hsingle :
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv Q
-          (Finsupp.single q r) =
-        Finsupp.single (ULift.up q) r :=
+  exact
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single Q q r
-  change
-    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv Q
-        (Finsupp.single q r) =
-      Finsupp.single (ULift.up q) r
-  exact hsingle
 
 #check profinitePointProbe
 #check profinitePointProbe_comp_finiteQuotientMap
