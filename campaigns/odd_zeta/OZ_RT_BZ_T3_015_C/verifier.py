@@ -8,6 +8,10 @@ from pathlib import Path
 
 from sympy import Rational, cancel, symbols
 
+# The independent verifier traverses the same deeply nested pinned Q-row AST.
+# Raising only the Python recursion ceiling changes no algebraic semantics.
+sys.setrecursionlimit(max(sys.getrecursionlimit(), 20000))
+
 HERE = Path(__file__).resolve().parent
 PRED_A_DIR = HERE.parent / "OZ_RT_BZ_T3_015_A"
 PRED_B_DIR = HERE.parent / "OZ_RT_BZ_T3_015_B"
