@@ -191,7 +191,20 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     simp [CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso,
       Category.assoc]
   rw [he]
-  simpa [eFree, freeHomSectionsEquiv,
+  let eTail :=
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso.hom.app Q ≫
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso.hom.app Q
+  have hbridge :=
+    weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j
+  have hbridgeTail := congrArg
+    (fun t =>
+      (ConcreteCategory.hom
+        (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.app
+          (op ((profiniteToCompHaus).obj P)))) t)
+    hbridge
+  simpa [eTail, eFree, freeHomSectionsEquiv,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedIso,
     CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
     CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
     CMDG.CondensedCM4P2E.discreteFreeIso,
@@ -201,8 +214,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
     Adjunction.homEquiv_naturality_left,
-    CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app] using
-    (weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j)
+    CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app] using hbridgeTail
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
