@@ -111,33 +111,19 @@ theorem discreteFreeIso_inv_unit (A : Type (u + 1)) :
       CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
       CMDG.CondensedCM4P2E.discreteSetFreeAdj A
 
-/-- The protected finite-comparison tail sends the canonical small-free coordinate section at a
-finite point to the section represented by the corresponding profinite point map. -/
-theorem finiteComparisonTail_coordinateSection
-    (Q : FintypeCat.{u}) (q : Q.obj) :
-    let P := Profinite.of PUnit.{u + 1}
-    let U := op ((profiniteToCompHaus).obj P)
+/-- Elementwise form of the inverse unique-left-adjoint generator law.  It isolates the
+`discreteFreeIso.inv` half of the terminal finite comparison before the representable/discrete
+point identification is introduced. -/
+theorem discreteFreeIso_inv_unit_apply (A : Type (u + 1)) (a : A) :
     (ConcreteCategory.hom
-      (((Condensed.forget R).map
-        ((finiteComparisonTailNatIso.app Q).hom)).hom.app U))
+      ((Condensed.forget R ⋙ Condensed.underlying (Type (u + 1))).map
+        (CMDG.CondensedCM4P2E.discreteFreeIso.inv.app A)))
       ((ConcreteCategory.hom
-        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion Q q).app U))
-        (1 : LocallyConstant P R)) =
-      freeHomSectionsEquiv P ((Condensed.finFree R).obj Q)
-        ((Condensed.profiniteFree R).map
-          (profinitePointProbe (FintypeCat.toProfinite.obj Q) q)) := by
-  simp [finiteComparisonTailNatIso,
-    finiteSmallFreeCoordinate_condensedDiscrete,
-    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
-    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
-    CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
-    CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
-    CMDG.CondensedCM4P2E.discreteFreeIso,
-    Adjunction.leftAdjointUniq_inv_app,
-    Adjunction.unit_leftAdjointUniq_hom_app,
-    finiteSmallFreeCoordinateValue_ulift,
-    discreteFreeIso_inv_unit,
-    profinitePointProbe]
+        (CMDG.CondensedCM4P2E.freeDiscreteModuleAdj.unit.app A)) a) =
+      (ConcreteCategory.hom
+        (CMDG.CondensedCM4P2E.discreteSetFreeAdj.unit.app A)) a := by
+  simpa only [ConcreteCategory.comp_apply] using
+    ConcreteCategory.congr_hom (discreteFreeIso_inv_unit A) a
 
 #check profinitePointProbe
 #check profinitePointProbe_comp_finiteQuotientMap
@@ -146,12 +132,12 @@ theorem finiteComparisonTail_coordinateSection
 #check finiteSmallFreeCoordinate_condensedDiscrete
 #check finiteSmallFreeCoordinateValue_ulift
 #check discreteFreeIso_inv_unit
-#check finiteComparisonTail_coordinateSection
+#check discreteFreeIso_inv_unit_apply
 #print axioms profinitePointProbe_comp_finiteQuotientMap
 #print axioms freeHomSectionsEquiv_postcomp
 #print axioms finiteSmallFreeCoordinate_condensedDiscrete
 #print axioms finiteSmallFreeCoordinateValue_ulift
 #print axioms discreteFreeIso_inv_unit
-#print axioms finiteComparisonTail_coordinateSection
+#print axioms discreteFreeIso_inv_unit_apply
 
 end CMDG.CondensedCM4P3M.KernelPointVanishing
