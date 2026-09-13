@@ -80,32 +80,26 @@ theorem finiteSmallFreeCoordinate_condensedDiscrete
   exact (CondensedMod.LocallyConstant.functorIsoDiscrete R).hom.naturality
     (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap Q q)
 
-/-- The protected universe transport sends a finite free coordinate generator to the corresponding
-ULifted coordinate generator. -/
-theorem finiteSmallFreeCoordinate_ulift
+/-- The protected universe transport sends the concrete finite free coordinate value to its
+ULifted coordinate value.  This is the element-level form actually consumed by the finite-stage
+Dirac section, avoiding an unnecessary equality of bundled coordinate maps. -/
+theorem finiteSmallFreeCoordinateValue_ulift
     (Q : FintypeCat.{u}) (q : Q.obj) :
-    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap Q q ≫
-        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso Q).hom =
-      ModuleCat.ofHom (Finsupp.lsingle (ULift.up q)) := by
-  change ModuleCat.ofHom
-      ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv Q).toLinearMap.comp
-        (Finsupp.lsingle q)) =
-    ModuleCat.ofHom (Finsupp.lsingle (ULift.up q))
-  apply ModuleCat.hom_ext
-  apply LinearMap.ext
-  intro r
-  simpa only [Finsupp.lsingle_apply] using
-    (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single Q q r)
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv Q
+        (Finsupp.single q (1 : R)) =
+      Finsupp.single (ULift.up q) (1 : R) := by
+  exact
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single Q q 1
 
 #check profinitePointProbe
 #check profinitePointProbe_comp_finiteQuotientMap
 #check freeHomSectionsEquiv_postcomp
 #check finiteComparisonTailNatIso
 #check finiteSmallFreeCoordinate_condensedDiscrete
-#check finiteSmallFreeCoordinate_ulift
+#check finiteSmallFreeCoordinateValue_ulift
 #print axioms profinitePointProbe_comp_finiteQuotientMap
 #print axioms freeHomSectionsEquiv_postcomp
 #print axioms finiteSmallFreeCoordinate_condensedDiscrete
-#print axioms finiteSmallFreeCoordinate_ulift
+#print axioms finiteSmallFreeCoordinateValue_ulift
 
 end CMDG.CondensedCM4P3M.KernelPointVanishing
