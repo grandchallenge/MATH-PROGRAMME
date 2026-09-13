@@ -90,12 +90,10 @@ theorem finiteSmallFreeCoordinate_ulift
   apply ModuleCat.hom_ext
   apply LinearMap.ext
   intro r
-  change
-    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv Q
-        (Finsupp.single q r) =
-      Finsupp.single (ULift.up q) r
-  exact
-    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single Q q r
+  simpa [
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso] using
+    (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single Q q r)
 
 #check profinitePointProbe
 #check profinitePointProbe_comp_finiteQuotientMap
