@@ -200,6 +200,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
+    Adjunction.homEquiv_naturality_left,
     CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app] using
     (weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j)
 
