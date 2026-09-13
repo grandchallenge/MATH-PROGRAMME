@@ -21,5 +21,37 @@ jobs:
           python-version: "3.12"
       - name: Install exact OZ symbolic dependencies
         run: python -m pip install --requirement requirements/oz_source_revision_delta.txt
-      - name: Run T3-015-B only
-        run: python -m unittest tests.test_oz_rt_bz_t3_015_b -v
+      - name: Profile exact strict-interior route
+        run: |
+          python -u - <<'PY'
+          import json
+          import sys
+          import time
+          from pathlib import Path
+
+          here = Path('campaigns/odd_zeta/OZ_RT_BZ_T3_015_B').resolve()
+          sys.path.insert(0, str(here))
+          import producer
+          import separable_probe as probe
+
+          t0 = time.perf_counter()
+          evidence, module = producer.build_with_module()
+          print('PROFILE_MODULE seconds=%.3f sha=%s' % (
+              time.perf_counter() - t0, evidence['predecessor_module_sha256']), flush=True)
+
+          original = probe.antidifference
+          count = 0
+          def traced(f, active, step):
+              global count
+              count += 1
+              started = time.perf_counter()
+              print('PROFILE_ANTIDIFF_START index=%d active=%s step=%s' % (count, active, step), flush=True)
+              out = original(f, active, step)
+              print('PROFILE_ANTIDIFF_DONE index=%d seconds=%.3f result=%s' % (
+                  count, time.perf_counter() - started, 'NONE' if out is None else 'RATIONAL'), flush=True)
+              return out
+          probe.antidifference = traced
+
+          result = probe.probe(module)
+          print('T3_015_B_SEPARABLE_PROBE ' + json.dumps(probe.compact(result), sort_keys=True, separators=(',', ':')), flush=True)
+          PY
