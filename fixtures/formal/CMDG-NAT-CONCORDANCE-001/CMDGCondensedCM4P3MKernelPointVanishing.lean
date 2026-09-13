@@ -111,6 +111,33 @@ theorem discreteFreeIso_inv_unit (A : Type (u + 1)) :
       CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
       CMDG.CondensedCM4P2E.discreteSetFreeAdj A
 
+/-- The protected finite-comparison tail sends the canonical small-free coordinate section at a
+finite point to the section represented by the corresponding profinite point map. -/
+theorem finiteComparisonTail_coordinateSection
+    (Q : FintypeCat.{u}) (q : Q.obj) :
+    let P := Profinite.of PUnit.{u + 1}
+    let U := op ((profiniteToCompHaus).obj P)
+    (ConcreteCategory.hom
+      (((Condensed.forget R).map
+        ((finiteComparisonTailNatIso.app Q).hom)).hom.app U))
+      ((ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion Q q).app U))
+        (1 : LocallyConstant P R)) =
+      freeHomSectionsEquiv P ((Condensed.finFree R).obj Q)
+        ((Condensed.profiniteFree R).map
+          (profinitePointProbe (FintypeCat.toProfinite.obj Q) q)) := by
+  simp [finiteComparisonTailNatIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
+    CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
+    CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
+    CMDG.CondensedCM4P2E.discreteFreeIso,
+    Adjunction.leftAdjointUniq_inv_app,
+    Adjunction.unit_leftAdjointUniq_hom_app,
+    finiteSmallFreeCoordinateValue_ulift,
+    discreteFreeIso_inv_unit,
+    profinitePointProbe]
+
 #check profinitePointProbe
 #check profinitePointProbe_comp_finiteQuotientMap
 #check freeHomSectionsEquiv_postcomp
@@ -118,10 +145,12 @@ theorem discreteFreeIso_inv_unit (A : Type (u + 1)) :
 #check finiteSmallFreeCoordinate_condensedDiscrete
 #check finiteSmallFreeCoordinateValue_ulift
 #check discreteFreeIso_inv_unit
+#check finiteComparisonTail_coordinateSection
 #print axioms profinitePointProbe_comp_finiteQuotientMap
 #print axioms freeHomSectionsEquiv_postcomp
 #print axioms finiteSmallFreeCoordinate_condensedDiscrete
 #print axioms finiteSmallFreeCoordinateValue_ulift
 #print axioms discreteFreeIso_inv_unit
+#print axioms finiteComparisonTail_coordinateSection
 
 end CMDG.CondensedCM4P3M.KernelPointVanishing
