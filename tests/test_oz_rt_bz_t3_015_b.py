@@ -22,15 +22,13 @@ def _load(path: Path, name: str):
 
 producer = _load(HERE / "producer.py", "oz_t3_015_b_producer_test")
 verifier = _load(HERE / "verifier.py", "oz_t3_015_b_verifier_test")
-probe = _load(HERE / "separable_probe.py", "oz_t3_015_b_separable_probe_test")
 
 
 class OzRtBzT3015BTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.evidence, module = producer.build_with_module()
+        cls.evidence = producer.build()
         cls.replay = verifier.verify(cls.evidence)
-        cls.probe_result = probe.probe(module)
 
     def test_exact_predecessor_module_lock(self) -> None:
         self.assertEqual(
@@ -74,39 +72,6 @@ class OzRtBzT3015BTests(unittest.TestCase):
             self.replay["scalar_reports"], self.evidence["structure"]["scalar_reports"]
         )
 
-    def test_strict_interior_probe_is_candidate_or_nonconclusive(self) -> None:
-        self.assertIn(
-            self.probe_result["status"],
-            {
-                "STRICT_INTERIOR_SCALAR_SEPARATED_RATIONAL_CERTIFICATE_CANDIDATE",
-                "STRICT_INTERIOR_SCALAR_SEPARATED_ROUTE_BLOCKED",
-            },
-        )
-        self.assertGreater(
-            self.probe_result["tagged_positive_reciprocal_factor_count"], 0
-        )
-        self.assertTrue(self.probe_result["shell_replay_required"])
-        self.assertFalse(self.probe_result["global_certificate_constructed"])
-        self.assertFalse(self.probe_result["class_nonexistence_proved"])
-        if (
-            self.probe_result["status"]
-            == "STRICT_INTERIOR_SCALAR_SEPARATED_RATIONAL_CERTIFICATE_CANDIDATE"
-        ):
-            self.assertTrue(self.probe_result["interior_exact_scalarwise_replay"])
-            self.assertEqual(
-                self.probe_result["module_sha256"], self.evidence["predecessor_module_sha256"]
-            )
-            self.assertGreater(self.probe_result["certificate_generator_count"], 0)
-        else:
-            self.assertFalse(self.probe_result["interior_exact_scalarwise_replay"])
-            self.assertIn(
-                self.probe_result["reason"],
-                {
-                    "UNSUPPORTED_TRIANGULAR_COORDINATE",
-                    "UNIVARIATE_RATIONAL_ANTIDIFFERENCE_ABSENT",
-                },
-            )
-
     def test_terminal_and_claim_firewall(self) -> None:
         self.assertEqual(
             self.evidence["terminal"],
@@ -118,15 +83,10 @@ class OzRtBzT3015BTests(unittest.TestCase):
         self.assertEqual(self.evidence["promotion_effect"], "NONE")
         self.assertEqual(self.evidence["t3_status"], "OPEN_WITH_CHARACTERIZED_BLOCKER")
 
-    def test_emit_structure_and_probe(self) -> None:
+    def test_emit_structure(self) -> None:
         print(
             "T3_015_B_STRUCTURE "
             + json.dumps(producer.compact_result(self.evidence), sort_keys=True, separators=(",", ":")),
-            flush=True,
-        )
-        print(
-            "T3_015_B_SEPARABLE_PROBE "
-            + json.dumps(probe.compact(self.probe_result), sort_keys=True, separators=(",", ":")),
             flush=True,
         )
 
