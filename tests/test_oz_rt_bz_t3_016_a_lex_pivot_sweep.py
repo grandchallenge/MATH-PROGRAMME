@@ -15,6 +15,9 @@ import affine_sweep
 import lex_pivot_sweep
 
 
+EXPECTED_PIVOT_SHA256 = "3c1ce5a9603bf7c59ff312d4a22da9ab1d8a68a8ac34205cb192540a871fbdfe"
+
+
 class OzRtBzT3016ALexPivotSweepTests(unittest.TestCase):
     def request(self) -> dict:
         return {
@@ -94,10 +97,10 @@ class OzRtBzT3016ALexPivotSweepTests(unittest.TestCase):
         )
         self.assertEqual(len(lex_pivot_sweep._pivot_sha(p1)), 64)
 
-    def test_staged_repository_request_is_disabled_until_digest_bound(self) -> None:
+    def test_repository_request_binds_discovered_signature(self) -> None:
         request = lex_pivot_sweep.load_request()
-        self.assertFalse(request["enabled"])
-        self.assertIsNone(request["expected_pivot_sha256"])
+        self.assertTrue(request["enabled"])
+        self.assertEqual(request["expected_pivot_sha256"], EXPECTED_PIVOT_SHA256)
         self.assertEqual(request["rational_degree_test_bound"], 177)
 
     def test_disabled_request_cannot_execute(self) -> None:
