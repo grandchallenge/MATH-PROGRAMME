@@ -67,8 +67,13 @@ def _fetch(path: str) -> bytes:
 
 
 def _poly_from_asc(values, var):
-    """Build an integer polynomial from the source's constant-first coefficient lists."""
+    """Build an integer polynomial from a constant-first coefficient list."""
     return sp.Poly.from_list([int(x) for x in reversed(values)], gens=var, domain=sp.ZZ)
+
+
+def _poly_from_desc(values, var):
+    """Build an integer polynomial from a highest-degree-first coefficient list."""
+    return sp.Poly.from_list([int(x) for x in values], gens=var, domain=sp.ZZ)
 
 
 def _inv_mod(value: int, p: int) -> int:
@@ -348,8 +353,12 @@ def build_preflight() -> dict:
         raise AssertionError("A must contain five exact degree-58 integer polynomials")
 
     a0 = 41218 * n**3 + 198849 * n**2 + 320790 * n + 173057
-    f4 = _poly_from_asc(lift["F4"], n)
-    f4_shift2 = _poly_from_asc(lift["F4_shift2"], n)
+    # The source deposit deliberately uses two serializations in a_lift.json:
+    # `a` rows are constant-first; `F4` and `F4_shift2` are SymPy-style
+    # highest-degree-first lists. Treat the fields according to their recorded
+    # convention instead of imposing one convention on the whole JSON object.
+    f4 = _poly_from_desc(lift["F4"], n)
+    f4_shift2 = _poly_from_desc(lift["F4_shift2"], n)
     shifted = sp.Poly(sp.expand(f4.as_expr().subs(n, n + 2)), n, domain=sp.ZZ)
     if shifted != f4_shift2:
         raise AssertionError("F4_shift2 is not the exact polynomial shift F4(n+2)")
@@ -400,6 +409,11 @@ def build_preflight() -> dict:
             "repository": SOURCE_REPOSITORY,
             "commit": SOURCE_COMMIT,
             "git_blob_sha1": {path: SOURCE_BLOBS[path] for path in sorted(SOURCE_BLOBS)},
+            "coefficient_serialization": {
+                "a": "constant-first",
+                "F4": "highest-degree-first",
+                "F4_shift2": "highest-degree-first",
+            },
         },
         "operator": {
             "order": 7,
