@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "issue": 964,
   "operation": "OZ-RT-BZ-T3-016-A",
   "stage": "T3_016_A_ORDER7_POPOV_ORDER_BASIS_COMPRESSION",
@@ -22,7 +22,10 @@
       "work/z5la/z5cf_order7_partial.json": "d6024c7244a4a45ac759b455f65fca6d377b735d",
       "work/z5la/a_lift.json": "564fc9637f31b870d85dab293d6cbb5cfe52bae0",
       "work/z5la/o_scan.py": "bc6e9a59a48b15eddbab8e80ad4e5063972582d2",
+      "work/z5la/o_scan_E1.log": "9085d23798074e9e86bc1c41faaf17a7e4b1386f",
       "work/z5la/o_csweep.py": "b506b9d6fbd405e6ac36fc790aa354196df20938",
+      "work/z5la/o_final.py": "e51582d64e664714524ccf566178c94fc30b202a",
+      "work/z5la/o_final.log": "fdb111957380d1be0876982f706980eb074fc9ab",
       "work/z5la/solve.py": "478b15ce7584b5e8af6caaf5326d99c85a7b55bf"
     }
   },
@@ -34,7 +37,7 @@
     "order7_module_monomial_count": 15,
     "theorem_r_top_blocks": 7,
     "residual_blocks": 8,
-    "standalone_scalar_operator_columns": 1624,
+    "boundary_forced_scalar_operator_columns": 1624,
     "discrete_curl_flatness_identity_required": true
   },
   "residual_geometry": {
@@ -63,11 +66,41 @@
       "verifier_curl_coefficient_matrix_sha256": "0e8c1d38bc4c6c9276d648dd3ef5a15dc18231013c67661498c5dd93eccff4c2"
     }
   },
-  "source_reported_geometry": {
-    "reported_rank": 1106,
-    "reported_kernel_dimension": 518,
-    "status": "DOWNGRADED_INCOMPATIBLE_WITH_RECONSTRUCTED_E1_OPERATOR",
-    "promoted": false
+  "source_geometry_reconciliation": {
+    "source_summary_claim": {
+      "columns": 1624,
+      "rank": 1106,
+      "kernel_dimension": 518
+    },
+    "pinned_scan_code": {
+      "boundary_forcing": [0, 0],
+      "columns": 1682,
+      "rank": 1106,
+      "kernel_dimension": 576,
+      "evidence": [
+        "work/z5la/o_scan.py",
+        "work/z5la/o_scan_E1.log"
+      ]
+    },
+    "pinned_final_certificate_code": {
+      "boundary_forcing": [1, 1],
+      "columns": 1624,
+      "reconstructed_rank": 1048,
+      "kernel_dimension": 576,
+      "evidence": [
+        "work/z5la/o_final.py",
+        "work/z5la/o_final.log"
+      ]
+    },
+    "disposition": "RECONCILED_AS_MIXED_ANSATZ_DIMENSION_ACCOUNTING",
+    "explanation": "rank 1106 belongs to the unforced 1682-column scan; subtracting it from the boundary-forced 1624-column count produced the spurious 518 figure. Both coherent ansatz regimes have a 576-dimensional homogeneous curl kernel.",
+    "source_summary_518_promoted": false
+  },
+  "source_modular_route_evidence": {
+    "seven_standalone_blocks": "solved at sampled fibers",
+    "constant_block": "Z3 slack 16 solved at sampled fibers",
+    "fresh_replay": "four reported (n,p) fibers satisfy all 15 block identities and bottom-boundary checks",
+    "authority": "SOURCE_MODULAR_CANDIDATE_ONLY"
   },
   "mathematical_route": {
     "new_architecture": true,
