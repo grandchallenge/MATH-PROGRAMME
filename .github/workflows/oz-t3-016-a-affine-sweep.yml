@@ -27,11 +27,15 @@ env:
   SOURCE_COMMIT: 6cc0bf07137815ceeef0d9f340559f85352391e5
   REQUEST_PATH: campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/AFFINE_SWEEP_REQUEST.json
   MODULE_DIR: campaigns/odd_zeta/OZ_RT_BZ_T3_016_A
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
 
 jobs:
   validate-request:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     outputs:
       enabled: ${{ steps.request.outputs.enabled }}
       request_id: ${{ steps.request.outputs.request_id }}
@@ -82,6 +86,67 @@ jobs:
           PY
       - name: Replay affine sweep contract tests
         run: python -m unittest tests/test_oz_rt_bz_t3_016_a_affine_sweep.py -v
+      - name: Acquire exact locked upstream source for smoke replay
+        run: |
+          set -euo pipefail
+          git clone --filter=blob:none "$SOURCE_REPO" source-smoke
+          git -C source-smoke checkout --detach "$SOURCE_COMMIT"
+          test "$(git -C source-smoke rev-parse HEAD)" = "$SOURCE_COMMIT"
+          test "$(git -C source-smoke rev-parse HEAD^{tree})" = 'be780558454b704bdd016a3070d698c2e106e2b8'
+      - name: Replay one real canonical affine fiber
+        run: |
+          cat > affine-sweep-smoke.py <<'PY'
+          import json
+          import os
+          import sys
+          import tempfile
+          from pathlib import Path
+
+          module_dir = Path(os.environ['MODULE_DIR'])
+          sys.path.insert(0, str(module_dir))
+          import affine_sweep
+
+          def main() -> None:
+              request = json.loads(Path(os.environ['REQUEST_PATH']).read_text(encoding='utf-8'))
+              request.update({
+                  'request_id': 'OZ-RT-BZ-T3-016-A-AFFINE-SWEEP-SMOKE',
+                  'enabled': True,
+                  'n_start': 5,
+                  'n_stop': 8,
+                  'reconstruction_fit_count': 3,
+                  'holdout_count': 1,
+              })
+              with tempfile.TemporaryDirectory(prefix='oz-affine-sweep-smoke-') as tmp:
+                  root = Path(tmp)
+                  request_path = root / 'request.json'
+                  output = root / 'chunk-0'
+                  request_path.write_text(json.dumps(request), encoding='utf-8')
+                  metadata = affine_sweep.run_chunk(
+                      request_path,
+                      Path('source-smoke'),
+                      0,
+                      output,
+                  )
+                  replay = affine_sweep.verify_chunk(request_path, 0, output)
+                  assert metadata['n_start'] == metadata['n_stop'] == 5
+                  assert metadata['sample_count'] == 1
+                  assert replay['samples_verified'] == 1
+                  assert metadata['records'][0]['free_rank'] == 1048
+                  assert metadata['records'][0]['fresh_violations'] == 0
+                  print(json.dumps({
+                      'n': 5,
+                      'free_rank': metadata['records'][0]['free_rank'],
+                      'fresh_violations': metadata['records'][0]['fresh_violations'],
+                      'primitive_section_sha256': metadata['records'][0]['primitive_section_sha256'],
+                      'coordinate_map_sha256': metadata['coordinate_map_sha256'],
+                      'proof_effect': metadata['proof_effect'],
+                      'promotion_effect': metadata['promotion_effect'],
+                  }, sort_keys=True))
+
+          if __name__ == '__main__':
+              main()
+          PY
+          python affine-sweep-smoke.py
 
   sample:
     needs: validate-request
@@ -95,10 +160,6 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     env:
-      OPENBLAS_NUM_THREADS: '1'
-      OMP_NUM_THREADS: '1'
-      MKL_NUM_THREADS: '1'
-      NUMEXPR_NUM_THREADS: '1'
       CHUNK_INDEX: ${{ matrix.chunk }}
       OUTPUT_DIR: affine-sweep-chunk-${{ matrix.chunk }}
     steps:
@@ -124,7 +185,7 @@ jobs:
           test "$(git -C source rev-parse HEAD^{tree})" = 'be780558454b704bdd016a3070d698c2e106e2b8'
       - name: Generate canonical affine sample chunk
         run: |
-          python - <<'PY'
+          cat > affine-sweep-driver.py <<'PY'
           import json
           import os
           import sys
@@ -134,23 +195,28 @@ jobs:
           sys.path.insert(0, str(module_dir))
           import affine_sweep
 
-          metadata = affine_sweep.run_chunk(
-              os.environ['REQUEST_PATH'],
-              Path('source'),
-              int(os.environ['CHUNK_INDEX']),
-              Path(os.environ['OUTPUT_DIR']),
-          )
-          print(json.dumps({
-              'request_id': metadata['request_id'],
-              'chunk_index': metadata['chunk_index'],
-              'n_start': metadata['n_start'],
-              'n_stop': metadata['n_stop'],
-              'sample_count': metadata['sample_count'],
-              'coordinate_map_sha256': metadata['coordinate_map_sha256'],
-              'proof_effect': metadata['proof_effect'],
-              'promotion_effect': metadata['promotion_effect'],
-          }, sort_keys=True))
+          def main() -> None:
+              metadata = affine_sweep.run_chunk(
+                  os.environ['REQUEST_PATH'],
+                  Path('source'),
+                  int(os.environ['CHUNK_INDEX']),
+                  Path(os.environ['OUTPUT_DIR']),
+              )
+              print(json.dumps({
+                  'request_id': metadata['request_id'],
+                  'chunk_index': metadata['chunk_index'],
+                  'n_start': metadata['n_start'],
+                  'n_stop': metadata['n_stop'],
+                  'sample_count': metadata['sample_count'],
+                  'coordinate_map_sha256': metadata['coordinate_map_sha256'],
+                  'proof_effect': metadata['proof_effect'],
+                  'promotion_effect': metadata['promotion_effect'],
+              }, sort_keys=True))
+
+          if __name__ == '__main__':
+              main()
           PY
+          python affine-sweep-driver.py
       - name: Independently verify serialized chunk contract
         run: |
           python - <<'PY'
