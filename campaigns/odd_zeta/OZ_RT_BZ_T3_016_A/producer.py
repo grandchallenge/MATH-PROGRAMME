@@ -48,8 +48,9 @@ def _fetch(path: str) -> bytes:
     return data
 
 
-def _poly_from_desc(values, var):
-    return sp.Poly.from_list([int(x) for x in values], gens=var, domain=sp.ZZ)
+def _poly_from_asc(values, var):
+    """Build an integer polynomial from the source's constant-first coefficient lists."""
+    return sp.Poly.from_list([int(x) for x in reversed(values)], gens=var, domain=sp.ZZ)
 
 
 def build_preflight() -> dict:
@@ -69,13 +70,13 @@ def build_preflight() -> dict:
         raise AssertionError("Theorem-R transport count drift")
 
     n, k, l = sp.symbols("n k l")
-    a_polys = [_poly_from_desc(row, n) for row in lift["a"]]
+    a_polys = [_poly_from_asc(row, n) for row in lift["a"]]
     if len(a_polys) != 5 or any(poly.degree() != 58 for poly in a_polys):
         raise AssertionError("A must contain five exact degree-58 integer polynomials")
 
     a0 = 41218 * n**3 + 198849 * n**2 + 320790 * n + 173057
-    f4 = _poly_from_desc(lift["F4"], n)
-    f4_shift2 = _poly_from_desc(lift["F4_shift2"], n)
+    f4 = _poly_from_asc(lift["F4"], n)
+    f4_shift2 = _poly_from_asc(lift["F4_shift2"], n)
     shifted = sp.Poly(sp.expand(f4.as_expr().subs(n, n + 2)), n, domain=sp.ZZ)
     if shifted != f4_shift2:
         raise AssertionError("F4_shift2 is not the exact polynomial shift F4(n+2)")
