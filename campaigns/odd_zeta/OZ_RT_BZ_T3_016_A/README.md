@@ -14,7 +14,7 @@ The governed preflight checks the source locks, exact lifted `A`, factorization 
 
 Pinned upstream revision: `rain-1/-odd-zeta-values-moremath@6cc0bf07137815ceeef0d9f340559f85352391e5`.
 
-Exact object identities are recorded in `CONTRACT.json`. In addition to the original order-7 source objects, the reconciliation locks `o_scan_E1.log`, `o_final.py`, and `o_final.log`, because those objects distinguish two E1 ansatz conventions that were conflated in the prose summary.
+Exact object identities are recorded in `CONTRACT.json`. The reconciliation also locks `o_scan_E1.log`, `o_final.py`, and `o_final.log`, because those objects distinguish two E1 ansatz conventions that were conflated in the source prose summary.
 
 ## Exact lifted multiplier preflight
 
@@ -72,7 +72,7 @@ The source prose pairs rank `1106` with `1624` columns and states a 518-dimensio
 
 `o_final.build()` constructs the actual certificate ansatz with `force=(1,1)`. Removing the 29 pure-`l` coefficients of `N_r` and 29 pure-`k` coefficients of `N_s` leaves **1624 columns**. Programme reconstruction gives rank **1048**, hence nullity **576**.
 
-The source rank `1106` is therefore not contradicted. The spurious `518` arose by subtracting the unforced rank from the boundary-forced column count. Both coherent ansatz regimes have the same 576-dimensional curl kernel. This supersedes the earlier draft wording that called the source rank itself incompatible.
+The source rank `1106` is therefore valid for its exploratory unforced scan. The spurious `518` arose only from pairing that rank with the boundary-forced column count. Both coherent ansatz regimes have the same 576-dimensional curl kernel. The Programme does not promote the cross-regime `518` figure.
 
 ## Canonical potential gauge
 
@@ -95,7 +95,7 @@ The pinned source already contains modular constructive evidence beyond the homo
 
 At every listed fiber, all seven standalone E1 blocks solve; the constant block solves in the measured `Z3` ansatz; 350 fresh points across all 15 blocks give zero violations; and bottom-boundary obligations hold.
 
-The source's earlier `o_zero3.log` also records that `Z3` first closes at slack 16 in the tested progression, with zero violations on 300 fresh points. These are modular candidate facts only. They show that the sampled order-7 route is constructive; they do not replace characteristic-zero reconstruction.
+The source's `o_zero3.log` also records that `Z3` first closes at slack 16 in the tested progression, with zero violations on 300 fresh points. These are modular candidate facts only. They show that the sampled order-7 route is constructive; they do not replace characteristic-zero reconstruction.
 
 ## Consequence for compression
 
