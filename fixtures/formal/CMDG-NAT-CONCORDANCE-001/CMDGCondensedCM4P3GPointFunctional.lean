@@ -226,9 +226,18 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         ((ConcreteCategory.hom
           ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreePresheafNatIso.app Q).hom.app S))
           (weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j))
-    simpa only [ConcreteCategory.comp_apply] using hnat.symm
+    simpa [P, T, Q, D, S, eTail,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
+      ConcreteCategory.comp_apply] using hnat.symm
   ·
-    simp [P, T, Q, D, S, eTail, eFree, freeHomSectionsEquiv,
+    ext p y
+    simp [P, T, Q, D, S, eTail, eFree, freeHomSectionsEquiv, profinitePointProbe,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedIso,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
@@ -239,6 +248,8 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply,
       Adjunction.homEquiv_naturality_left,
       CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app]
