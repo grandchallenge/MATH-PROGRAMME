@@ -63,6 +63,9 @@ assert ans.nc == 1624
 gauge = [i for i, mon in enumerate(ans.mons_r)
          if 2 <= mon[0] <= 25 and 0 <= mon[1] <= 23]
 assert len(gauge) == 576
+gauge_set = set(gauge)
+free = [i for i in range(ans.nc) if i not in gauge_set]
+assert len(free) == RANK_ROWS
 
 lift = json.loads((ROOT / "a_lift.json").read_text())
 def peval(coeffs, x, p):
@@ -87,15 +90,20 @@ for column, block in enumerate(stand):
     slab = Acol[block * pd.npts:(block + 1) * pd.npts].astype(object)
     rhs[:, column] = [int(x) for x in (-(slab @ avec.astype(object))) % P]
 
-constraints = np.zeros((len(gauge), ans.nc), dtype=np.int64)
-for row, column in enumerate(gauge):
-    constraints[row, column] = 1
-G = np.concatenate([op[:RANK_ROWS].astype(np.int64), constraints], axis=0)
-B = np.concatenate([rhs[:RANK_ROWS], np.zeros((len(gauge), len(stand)), dtype=np.int64)], axis=0)
-X, rank, piv, nbad = fastlin.solve(G, B, P, nb=64)
-
-if rank != ans.nc or nbad != 0:
-    raise RuntimeError(f"potential gauge solve failed: rank={rank} nbad={nbad}")
+# Gauge coordinates are fixed to zero. Eliminating those variables before
+# solving is exactly equivalent to adjoining 576 coordinate equations, but
+# factors only the 1048x1048 complementary minor instead of a 1624x1624
+# augmented matrix. This keeps the governed replay inside the existing OZ
+# execution envelope without weakening a single equation.
+free_matrix = op[:RANK_ROWS, np.asarray(free)].astype(np.int64)
+Xfree, free_rank, piv, nbad = fastlin.solve(free_matrix, rhs[:RANK_ROWS], P, nb=64)
+if free_rank != len(free) or nbad != 0:
+    raise RuntimeError(f"potential gauge solve failed: rank={free_rank} nbad={nbad}")
+X = np.zeros((ans.nc, len(stand)), dtype=np.int64)
+X[np.asarray(free), :] = Xfree % P
+augmented_rank = free_rank + len(gauge)
+if augmented_rank != ans.nc:
+    raise RuntimeError(f"canonical augmented rank drift: {augmented_rank}")
 if np.count_nonzero(X[np.asarray(gauge), :] % P):
     raise RuntimeError("potential gauge constraints not satisfied")
 
@@ -124,7 +132,9 @@ print(json.dumps({
     "e1_columns": ans.nc,
     "rank_rows": RANK_ROWS,
     "gauge_coordinates": len(gauge),
-    "augmented_rank": int(rank),
+    "free_coordinates": len(free),
+    "free_rank": int(free_rank),
+    "augmented_rank": int(augmented_rank),
     "solver_nbad": int(nbad),
     "fresh_points": NFRESH,
     "fresh_violations": fresh_violations,
@@ -167,7 +177,7 @@ def probe(n: int, prime: int = 4194301, fresh_points: int = 48) -> dict:
             capture_output=True,
             text=True,
             env=env,
-            timeout=900,
+            timeout=420,
         )
         lines = [line for line in completed.stdout.splitlines() if line.strip()]
         if not lines:
