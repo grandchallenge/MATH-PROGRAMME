@@ -95,6 +95,26 @@ hide:
   <p class="gc-measure">These are compact claim summaries. Artifact lifecycle and campaign disposition are separate vocabularies. <a href="STATUS_TAXONOMY/">Read the status taxonomy.</a></p>
 </section>
 
+<section class="gc-section gc-section--argument">
+  <div class="gc-section__heading">
+    <p class="gc-kicker">New protected result · September 2026</p>
+    <h2>Ten supplied Lean proofs. One exact corpus. Independently checked.</h2>
+  </div>
+  <div class="argument-ledger">
+    <div class="argument-ledger__thesis">
+      <p>MATHCERT rebuilt all ten modules in OpenAI’s <em>Ten Proofs</em> corpus and checked twelve advertised headline declarations through the Lean kernel.</p>
+      <p>The public record pins the exact source tree, toolchain, module blobs, permitted axioms, independent review, protected merge, and post-merge replay.</p>
+      <p><a class="text-link" href="OPENAI_TEN_PROOFS_VERIFICATION/">Read the verification record <span>→</span></a></p>
+    </div>
+    <dl class="argument-ledger__tests">
+      <div><dt>10 / 10</dt><dd>Exact upstream Lean modules rebuilt.</dd></div>
+      <div><dt>12 / 12</dt><dd>Headline declarations accepted by the kernel.</dd></div>
+      <div><dt>0</dt><dd>Unexpected axioms in the checked surface.</dd></div>
+      <div><dt>Protected</dt><dd>Independent approval, merge, readback, and replay complete.</dd></div>
+    </dl>
+  </div>
+</section>
+
 <section class="gc-section gc-section--current">
   <div class="gc-section__heading">
     <p class="gc-kicker">The current portfolio</p>

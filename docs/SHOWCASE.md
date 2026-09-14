@@ -171,6 +171,44 @@ The checker distinguishes ideal membership from radical membership and preserves
 
 Publication changed visibility, not mathematical history. The theorem remains classical; the formal and editorial contribution is stated without a priority claim.
 
+## Verified corpus 001 · OpenAI Ten Proofs
+
+<div class="fixture-showcase" aria-label="OpenAI Ten Proofs protected corpus verification">
+  <header class="fixture-showcase__header">
+    <div>
+      <span class="fixture-showcase__index">Corpus 001 · 10 modules · 12 headline declarations · protected</span>
+      <h3>From supplied formalizations to independently checked proof surfaces</h3>
+    </div>
+    <a href="OPENAI_TEN_PROOFS_VERIFICATION.md">Read the verification note <span>→</span></a>
+  </header>
+
+  <div class="fixture-statement">
+    <span>Verified subject</span>
+    <strong>openai/ten-proofs @ 94bc0feb</strong>
+    <small>exact commit, tree, module blobs, Lean toolchain, and mathlib revision pinned</small>
+  </div>
+
+  <div class="fixture-route" aria-label="Ten Proofs verification route">
+    <div class="fixture-route__stage fixture-route__stage--audited"><span>01 · Source identity</span><strong>Pinned</strong><p>Ten exact upstream modules and their dependency environment.</p></div>
+    <b aria-hidden="true">→</b>
+    <div class="fixture-route__stage fixture-route__stage--checked"><span>02 · Kernel boundary</span><strong>Verified</strong><p>Every module built; twelve headline declarations and axiom closures checked.</p></div>
+    <b aria-hidden="true">→</b>
+    <div class="fixture-route__stage fixture-route__stage--checked"><span>03 · Public record</span><strong>Protected</strong><p>Independent approval, expected-head merge, and post-merge replay complete.</p></div>
+  </div>
+
+  <div class="fixture-rejections">
+    <span>Boundary retained</span>
+    <ul>
+      <li>not a line-by-line equivalence claim about the PDF exposition</li>
+      <li>not a novelty or priority claim</li>
+      <li>not authority for unlisted statements or broader paraphrases</li>
+    </ul>
+  </div>
+</div>
+
+The result is deliberately exact: the supplied Lean proofs crossed the kernel
+boundary, while every family-level statement qualification remains attached.
+
 ## Review posture
 
 > I know which domain I am reading, what is proved, what is computed, what is conjectural, what failed, what was ruled out, which artifact is authoritative, and what must happen next.
