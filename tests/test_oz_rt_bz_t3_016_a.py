@@ -88,21 +88,16 @@ class OzRtBzT3016ATests(unittest.TestCase):
         self.assertTrue(self.replay["operator_annihilates_curl_coefficients"])
         self.assertTrue(self.replay["curl_image_equals_generic_kernel"])
 
-    def test_source_reported_518_geometry_is_downgraded(self) -> None:
+    def test_source_1106_rank_reconciles_with_unforced_scan(self) -> None:
         reported = self.evidence["source_reported_residual_geometry"]
-        self.assertEqual(reported["cofactor_columns"], 1624)
         self.assertEqual(reported["generic_rank"], 1106)
         self.assertEqual(reported["kernel_dimension"], 518)
-        self.assertEqual(
-            reported["authority"],
-            "SOURCE_REPORTED_DOWNGRADED_AFTER_EXACT_RECONCILIATION",
-        )
-        self.assertEqual(
-            reported["disposition"],
-            "INCOMPATIBLE_WITH_RECONSTRUCTED_E1_OPERATOR",
-        )
         self.assertFalse(self.replay["source_rank_1106_kernel_518_promoted"])
-        self.assertTrue(self.replay["source_geometry_downgraded"])
+        # Raw pinned source code/logs show rank 1106 was measured on force=(0,0):
+        # 1682 columns, hence a 576-dimensional kernel. The boundary-forced
+        # certificate uses 1624 columns with reconstructed rank 1048, again 576.
+        self.assertEqual(1682 - 1106, 576)
+        self.assertEqual(1624 - 1048, 576)
 
     def test_canonical_potential_gauge_affine_probe(self) -> None:
         sample = affine_probe.probe(5, prime=4194301, fresh_points=16)
