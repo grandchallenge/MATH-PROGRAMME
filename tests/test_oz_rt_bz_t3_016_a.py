@@ -35,7 +35,7 @@ class OzRtBzT3016ATests(unittest.TestCase):
         cls.replay = verifier.verify()
         cls.source_reconciliation = source_reconciliation.verify()
 
-    def test_exact_source_lock(self) -> None:
+    def test_exact_source_lock_and_field_serialization(self) -> None:
         cls_source = self.evidence["source"]["commit"]
         self.assertEqual(cls_source, producer.SOURCE_COMMIT)
         self.assertEqual(cls_source, verifier.SOURCE_COMMIT)
@@ -44,7 +44,16 @@ class OzRtBzT3016ATests(unittest.TestCase):
             self.evidence["source"]["git_blob_sha1"],
             {path: producer.SOURCE_BLOBS[path] for path in sorted(producer.SOURCE_BLOBS)},
         )
+        self.assertEqual(
+            self.evidence["source"]["coefficient_serialization"],
+            {
+                "a": "constant-first",
+                "F4": "highest-degree-first",
+                "F4_shift2": "highest-degree-first",
+            },
+        )
         self.assertTrue(self.replay["source_locks_verified"])
+        self.assertTrue(self.replay["mixed_coefficient_serialization_replayed"])
         self.assertTrue(self.source_reconciliation["source_locks_verified"])
 
     def test_lift_and_a4_nonvanishing(self) -> None:
