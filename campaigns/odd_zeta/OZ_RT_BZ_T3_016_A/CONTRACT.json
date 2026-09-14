@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2.0",
+  "schema_version": "1.3.0",
   "issue": 964,
   "operation": "OZ-RT-BZ-T3-016-A",
   "stage": "T3_016_A_ORDER7_POPOV_ORDER_BASIS_COMPRESSION",
@@ -23,9 +23,12 @@
       "work/z5la/a_lift.json": "564fc9637f31b870d85dab293d6cbb5cfe52bae0",
       "work/z5la/o_scan.py": "bc6e9a59a48b15eddbab8e80ad4e5063972582d2",
       "work/z5la/o_scan_E1.log": "9085d23798074e9e86bc1c41faaf17a7e4b1386f",
+      "work/z5la/o_zero.py": "2bfa58cb573b0d40646e85bdbed682d8344b594a",
+      "work/z5la/o_zero1.log": "14dfe8cff588867ecbd478993dc318e78be8b232",
       "work/z5la/o_csweep.py": "b506b9d6fbd405e6ac36fc790aa354196df20938",
       "work/z5la/o_final.py": "e51582d64e664714524ccf566178c94fc30b202a",
       "work/z5la/o_final.log": "fdb111957380d1be0876982f706980eb074fc9ab",
+      "work/z5la/o_zero3.log": "d7ee036184121def642470768a9c3a1a46c43fa4",
       "work/z5la/solve.py": "478b15ce7584b5e8af6caaf5326d99c85a7b55bf"
     }
   },
@@ -77,24 +80,40 @@
       "columns": 1682,
       "rank": 1106,
       "kernel_dimension": 576,
-      "evidence": ["work/z5la/o_scan.py", "work/z5la/o_scan_E1.log"]
+      "evidence": [
+        "work/z5la/o_scan.py",
+        "work/z5la/o_scan_E1.log",
+        "work/z5la/o_zero.py",
+        "work/z5la/o_zero1.log"
+      ]
     },
     "pinned_final_certificate_code": {
       "boundary_forcing": [1, 1],
       "columns": 1624,
       "reconstructed_rank": 1048,
       "kernel_dimension": 576,
-      "evidence": ["work/z5la/o_final.py", "work/z5la/o_final.log"]
+      "source_forced_rank_recorded": false,
+      "evidence": ["work/z5la/o_csweep.py", "work/z5la/o_final.py", "work/z5la/o_final.log"]
     },
     "disposition": "RECONCILED_AS_MIXED_ANSATZ_DIMENSION_ACCOUNTING",
-    "explanation": "rank 1106 belongs to the unforced 1682-column scan; subtracting it from the boundary-forced 1624-column count produced the spurious 518 figure. Both coherent ansatz regimes have a 576-dimensional homogeneous curl kernel.",
+    "explanation": "rank 1106 belongs to the unforced 1682-column rank-producing route; the forced sweep uses 1624 columns but does not record rank. Subtracting the unforced rank from the forced column count produced the spurious 518 figure. Both coherent ansatz regimes have a 576-dimensional homogeneous curl kernel.",
     "source_summary_518_promoted": false
   },
   "source_modular_route_evidence": {
     "seven_standalone_blocks": "solved at sampled fibers",
     "constant_block": "Z3 slack 16 solved at sampled fibers",
+    "constant_block_evidence": "work/z5la/o_zero3.log",
     "fresh_replay": "four reported (n,p) fibers satisfy all 15 block identities and bottom-boundary checks",
+    "fresh_replay_evidence": "work/z5la/o_final.log",
     "authority": "SOURCE_MODULAR_CANDIDATE_ONLY"
+  },
+  "canonical_affine_probe": {
+    "gauge_coordinates": 576,
+    "free_coordinates": 1048,
+    "solve_form": "fix the 576 gauge coordinates to zero and solve the complementary 1048x1048 operator minor",
+    "equivalent_augmented_rank_target": 1624,
+    "fresh_point_replay_required": true,
+    "authority": "MODULAR_DIAGNOSTIC_ONLY"
   },
   "mathematical_route": {
     "new_architecture": true,
