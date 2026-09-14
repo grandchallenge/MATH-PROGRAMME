@@ -92,12 +92,21 @@ class OzRtBzT3016ATests(unittest.TestCase):
         reported = self.evidence["source_reported_residual_geometry"]
         self.assertEqual(reported["generic_rank"], 1106)
         self.assertEqual(reported["kernel_dimension"], 518)
+        self.assertEqual(reported["unforced_scan_columns"], 1682)
+        self.assertEqual(reported["unforced_scan_rank"], 1106)
+        self.assertEqual(reported["unforced_scan_kernel_dimension"], 576)
+        self.assertEqual(reported["boundary_forced_columns"], 1624)
+        self.assertEqual(reported["boundary_forced_reconstructed_rank"], 1048)
+        self.assertEqual(reported["boundary_forced_kernel_dimension"], 576)
+        self.assertEqual(
+            reported["disposition"],
+            "RECONCILED_AS_MIXED_ANSATZ_DIMENSION_ACCOUNTING",
+        )
         self.assertFalse(self.replay["source_rank_1106_kernel_518_promoted"])
-        # Raw pinned source code/logs show rank 1106 was measured on force=(0,0):
-        # 1682 columns, hence a 576-dimensional kernel. The boundary-forced
-        # certificate uses 1624 columns with reconstructed rank 1048, again 576.
-        self.assertEqual(1682 - 1106, 576)
-        self.assertEqual(1624 - 1048, 576)
+        self.assertTrue(self.replay["source_geometry_reconciled"])
+        self.assertEqual(self.replay["source_unforced_scan_columns"], 1682)
+        self.assertEqual(self.replay["source_unforced_scan_rank"], 1106)
+        self.assertEqual(self.replay["source_unforced_scan_kernel_dimension"], 576)
 
     def test_canonical_potential_gauge_affine_probe(self) -> None:
         sample = affine_probe.probe(5, prime=4194301, fresh_points=16)
