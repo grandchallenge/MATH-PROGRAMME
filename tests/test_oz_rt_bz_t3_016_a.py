@@ -23,6 +23,9 @@ def _load(path: Path, name: str):
 producer = _load(HERE / "producer.py", "oz_t3_016_a_producer_test")
 verifier = _load(HERE / "verifier.py", "oz_t3_016_a_verifier_test")
 affine_probe = _load(HERE / "affine_probe.py", "oz_t3_016_a_affine_probe_test")
+source_reconciliation = _load(
+    HERE / "source_reconciliation.py", "oz_t3_016_a_source_reconciliation_test"
+)
 
 
 class OzRtBzT3016ATests(unittest.TestCase):
@@ -30,16 +33,19 @@ class OzRtBzT3016ATests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.evidence = producer.build_preflight()
         cls.replay = verifier.verify()
+        cls.source_reconciliation = source_reconciliation.verify()
 
     def test_exact_source_lock(self) -> None:
         cls_source = self.evidence["source"]["commit"]
         self.assertEqual(cls_source, producer.SOURCE_COMMIT)
         self.assertEqual(cls_source, verifier.SOURCE_COMMIT)
+        self.assertEqual(cls_source, self.source_reconciliation["source_commit"])
         self.assertEqual(
             self.evidence["source"]["git_blob_sha1"],
             {path: producer.SOURCE_BLOBS[path] for path in sorted(producer.SOURCE_BLOBS)},
         )
         self.assertTrue(self.replay["source_locks_verified"])
+        self.assertTrue(self.source_reconciliation["source_locks_verified"])
 
     def test_lift_and_a4_nonvanishing(self) -> None:
         op = self.evidence["operator"]
@@ -108,6 +114,27 @@ class OzRtBzT3016ATests(unittest.TestCase):
         self.assertEqual(self.replay["source_unforced_scan_rank"], 1106)
         self.assertEqual(self.replay["source_unforced_scan_kernel_dimension"], 576)
 
+        locked = self.source_reconciliation
+        self.assertEqual(locked["unforced_scan"]["force"], [0, 0])
+        self.assertEqual(locked["unforced_scan"]["columns"], 1682)
+        self.assertEqual(locked["unforced_scan"]["rank"], 1106)
+        self.assertEqual(locked["unforced_scan"]["kernel_dimension"], 576)
+        self.assertEqual(locked["boundary_forced_certificate"]["force"], [1, 1])
+        self.assertEqual(locked["boundary_forced_certificate"]["columns"], 1624)
+        self.assertEqual(locked["boundary_forced_certificate"]["reconstructed_rank"], 1048)
+        self.assertEqual(locked["boundary_forced_certificate"]["kernel_dimension"], 576)
+        self.assertFalse(locked["boundary_forced_certificate"]["source_forced_rank_recorded"])
+        self.assertTrue(locked["cross_regime_518_rejected"])
+
+    def test_source_modular_constant_block_candidate_is_pinned(self) -> None:
+        constant = self.source_reconciliation["constant_block_modular_candidate"]
+        self.assertEqual(constant["ansatz"], "Z3")
+        self.assertEqual(constant["slack"], 16)
+        self.assertTrue(constant["solved"])
+        self.assertEqual(constant["fresh_points"], 300)
+        self.assertEqual(constant["fresh_violations"], 0)
+        self.assertEqual(constant["authority"], "SOURCE_MODULAR_CANDIDATE_ONLY")
+
     def test_canonical_potential_gauge_affine_probe(self) -> None:
         sample = affine_probe.probe(5, prime=4194301, fresh_points=16)
         print("OZ_T3_016_A_AFFINE_SAMPLE=" + json.dumps(sample, sort_keys=True), flush=True)
@@ -115,6 +142,8 @@ class OzRtBzT3016ATests(unittest.TestCase):
         self.assertEqual(sample["prime"], 4194301)
         self.assertEqual(sample["e1_columns"], 1624)
         self.assertEqual(sample["gauge_coordinates"], 576)
+        self.assertEqual(sample["free_coordinates"], 1048)
+        self.assertEqual(sample["free_rank"], 1048)
         self.assertEqual(sample["augmented_rank"], 1624)
         self.assertEqual(sample["solver_nbad"], 0)
         self.assertEqual(sample["fresh_points"], 16)
