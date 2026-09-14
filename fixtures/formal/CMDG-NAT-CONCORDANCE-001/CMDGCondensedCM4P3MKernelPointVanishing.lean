@@ -114,26 +114,26 @@ theorem discreteFreeIso_inv_unit (A : Type (u + 1)) :
 /-- The set-level locally-constant/discrete comparison preserves the canonical adjunction unit.
 This is the point-generator law hidden inside `discreteTopCondensedIso`. -/
 theorem condensedSetLocallyConstantIso_unit (A : Type (u + 1)) :
-    (CompHausLike.LocallyConstant.adjunction
+    (CompHausLike.LocallyConstant.adjunction.{u, u + 1}
       (fun _ : TopCat.{u} => True)
       (fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 0 2).mp)).unit.app A ≫
         (Condensed.underlying (Type (u + 1))).map
           (CondensedSet.LocallyConstant.iso.hom.app A) =
       (Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app A := by
   change
-    (CompHausLike.LocallyConstant.adjunction
+    (CompHausLike.LocallyConstant.adjunction.{u, u + 1}
       (fun _ : TopCat.{u} => True)
       (fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 0 2).mp)).unit.app A ≫
         (Condensed.underlying (Type (u + 1))).map
           ((Adjunction.leftAdjointUniq
-            (CompHausLike.LocallyConstant.adjunction
+            (CompHausLike.LocallyConstant.adjunction.{u, u + 1}
               (fun _ : TopCat.{u} => True)
               (fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 0 2).mp))
             (Condensed.discreteUnderlyingAdj (Type (u + 1)))).hom.app A) =
       (Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app A
   exact
     Adjunction.unit_leftAdjointUniq_hom_app
-      (CompHausLike.LocallyConstant.adjunction
+      (CompHausLike.LocallyConstant.adjunction.{u, u + 1}
         (fun _ : TopCat.{u} => True)
         (fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 0 2).mp))
       (Condensed.discreteUnderlyingAdj (Type (u + 1))) A
