@@ -160,12 +160,3 @@ def build_preflight() -> dict:
         "promotion_effect": "NONE",
         "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER",
     }
-
-
-def main() -> int:
-    print(json.dumps(build_preflight(), sort_keys=True, separators=(",", ":")))
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
