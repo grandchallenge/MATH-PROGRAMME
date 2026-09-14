@@ -7,12 +7,17 @@ on:
       - '.ghos-routing/workflows.json'
       - 'campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/affine_sweep.py'
       - 'campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/AFFINE_SWEEP_REQUEST.json'
+      - 'campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/lex_pivot_sweep.py'
+      - 'campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/LEX_PIVOT_SWEEP_REQUEST.json'
       - 'tests/test_oz_rt_bz_t3_016_a_affine_sweep.py'
+      - 'tests/test_oz_rt_bz_t3_016_a_lex_pivot_sweep.py'
   push:
     branches: [main]
     paths:
       - '.github/workflows/oz-t3-016-a-affine-sweep.yml'
       - 'campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/AFFINE_SWEEP_REQUEST.json'
+      - 'campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/lex_pivot_sweep.py'
+      - 'campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/LEX_PIVOT_SWEEP_REQUEST.json'
   workflow_dispatch:
 
 permissions:
@@ -25,7 +30,8 @@ concurrency:
 env:
   SOURCE_REPO: https://github.com/rain-1/-odd-zeta-values-moremath.git
   SOURCE_COMMIT: 6cc0bf07137815ceeef0d9f340559f85352391e5
-  REQUEST_PATH: campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/AFFINE_SWEEP_REQUEST.json
+  CANONICAL_REQUEST_PATH: campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/AFFINE_SWEEP_REQUEST.json
+  LEX_REQUEST_PATH: campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/LEX_PIVOT_SWEEP_REQUEST.json
   MODULE_DIR: campaigns/odd_zeta/OZ_RT_BZ_T3_016_A
   OPENBLAS_NUM_THREADS: '1'
   OMP_NUM_THREADS: '1'
@@ -35,7 +41,7 @@ env:
 jobs:
   validate-request:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 25
     outputs:
       enabled: ${{ steps.request.outputs.enabled }}
       request_id: ${{ steps.request.outputs.request_id }}
@@ -54,7 +60,7 @@ jobs:
       - name: Install exact Odd Zeta dependencies
         run: python -m pip install --requirement requirements/oz_source_revision_delta.txt
       - id: request
-        name: Validate affine sweep request
+        name: Validate affine sweep requests
         run: |
           python - <<'PY'
           import json
@@ -65,27 +71,37 @@ jobs:
           module_dir = Path(os.environ['MODULE_DIR'])
           sys.path.insert(0, str(module_dir))
           import affine_sweep
+          import lex_pivot_sweep
 
-          request = affine_sweep.load_request(os.environ['REQUEST_PATH'])
-          ranges = affine_sweep.chunk_ranges(request)
+          canonical = affine_sweep.load_request(os.environ['CANONICAL_REQUEST_PATH'])
+          lex = lex_pivot_sweep.load_request(os.environ['LEX_REQUEST_PATH'])
+          if canonical['enabled']:
+              raise AssertionError('completed canonical affine sweep must remain deactivated')
           summary = {
-              'request_id': request['request_id'],
-              'enabled': request['enabled'],
-              'n_range': [request['n_start'], request['n_stop']],
-              'chunks': ranges,
-              'reconstruction_fit_count': request['reconstruction_fit_count'],
-              'holdout_count': request['holdout_count'],
-              'rational_degree_test_bound': request['rational_degree_test_bound'],
-              'proof_effect': request['proof_effect'],
-              'promotion_effect': request['promotion_effect'],
+              'canonical_request_id': canonical['request_id'],
+              'canonical_enabled': canonical['enabled'],
+              'lex_request_id': lex['request_id'],
+              'lex_enabled': lex['enabled'],
+              'lex_section_mode': lex['section_mode'],
+              'expected_pivot_sha256': lex['expected_pivot_sha256'],
+              'n_range': [lex['n_start'], lex['n_stop']],
+              'chunks': lex_pivot_sweep.chunk_ranges(lex),
+              'reconstruction_fit_count': lex['reconstruction_fit_count'],
+              'holdout_count': lex['holdout_count'],
+              'rational_degree_test_bound': lex['rational_degree_test_bound'],
+              'proof_effect': lex['proof_effect'],
+              'promotion_effect': lex['promotion_effect'],
           }
           print(json.dumps(summary, sort_keys=True))
           with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as handle:
-              handle.write(f"enabled={'true' if request['enabled'] else 'false'}\n")
-              handle.write(f"request_id={request['request_id']}\n")
+              handle.write(f"enabled={'true' if lex['enabled'] else 'false'}\n")
+              handle.write(f"request_id={lex['request_id']}\n")
           PY
       - name: Replay affine sweep contract tests
-        run: python -m unittest tests/test_oz_rt_bz_t3_016_a_affine_sweep.py -v
+        run: |
+          python -m unittest \
+            tests/test_oz_rt_bz_t3_016_a_affine_sweep.py \
+            tests/test_oz_rt_bz_t3_016_a_lex_pivot_sweep.py -v
       - name: Acquire exact locked upstream source for smoke replay
         run: |
           set -euo pipefail
@@ -93,7 +109,7 @@ jobs:
           git -C source-smoke checkout --detach "$SOURCE_COMMIT"
           test "$(git -C source-smoke rev-parse HEAD)" = "$SOURCE_COMMIT"
           test "$(git -C source-smoke rev-parse HEAD^{tree})" = 'be780558454b704bdd016a3070d698c2e106e2b8'
-      - name: Verify excluded low-n modular specializations
+      - name: Verify excluded low-n canonical specializations
         if: github.event_name == 'pull_request'
         run: |
           python - <<'PY'
@@ -106,7 +122,7 @@ jobs:
           sys.path.insert(0, str(module_dir))
           import affine_sweep
 
-          request = affine_sweep.load_request(os.environ['REQUEST_PATH'])
+          request = affine_sweep.load_request(os.environ['CANONICAL_REQUEST_PATH'])
           p = int(request['prime'])
           fit_rows = affine_sweep.FREE_COORDINATES + int(request['fit_extra_rows'])
           fresh_rows = int(request['fresh_rows'])
@@ -138,9 +154,9 @@ jobs:
                       raise AssertionError(f'usable low-n residual drift at n={n}: {record}')
                   print(f'OZ_AFFINE_LOW_N n={n} status=USABLE rank={record["free_rank"]}')
           PY
-      - name: Replay one real canonical affine fiber
+      - name: Discover and replay lex-pivot signature
         run: |
-          cat > "$RUNNER_TEMP/affine-sweep-smoke-driver" <<'PY'
+          cat > "$RUNNER_TEMP/lex-pivot-smoke-driver.py" <<'PY'
           import json
           import os
           import sys
@@ -149,49 +165,72 @@ jobs:
 
           module_dir = Path(os.environ['MODULE_DIR'])
           sys.path.insert(0, str(module_dir))
-          import affine_sweep
+          import lex_pivot_sweep
 
           def main() -> None:
-              request = json.loads(Path(os.environ['REQUEST_PATH']).read_text(encoding='utf-8'))
-              request.update({
-                  'request_id': 'OZ-RT-BZ-T3-016-A-AFFINE-SWEEP-SMOKE',
-                  'enabled': True,
-                  'n_start': 5,
-                  'n_stop': 8,
-                  'reconstruction_fit_count': 3,
-                  'holdout_count': 1,
-              })
-              with tempfile.TemporaryDirectory(prefix='oz-affine-sweep-smoke-') as tmp:
+              request = lex_pivot_sweep.load_request(os.environ['LEX_REQUEST_PATH'])
+              p = int(request['prime'])
+              fit_rows = lex_pivot_sweep.EXPECTED_RANK + int(request['fit_extra_rows'])
+              fresh_rows = int(request['fresh_rows'])
+              nb = int(request['solver_block_size'])
+              expected = request['expected_pivot_sha256']
+
+              with tempfile.TemporaryDirectory(prefix='oz-lex-pivot-smoke-') as tmp:
                   root = Path(tmp)
+                  cache = root / 'qrow_cache.pkl'
+                  lex_pivot_sweep._install_source_modules(
+                      Path('source-smoke'), cache, prewarm=True
+                  )
+                  digests = set()
+                  for n in (3, 4, 5):
+                      _section, data = lex_pivot_sweep._lex_shape(
+                          n, p, fit_rows, fresh_rows, nb, expected
+                      )
+                      record = data['record']
+                      digests.add(record['pivot_sha256'])
+                      if record['rank'] != lex_pivot_sweep.EXPECTED_RANK:
+                          raise AssertionError(f'lex-pivot rank drift at n={n}')
+                      if record['solver_nbad'] != 0 or record['fresh_violations'] != 0:
+                          raise AssertionError(f'lex-pivot residual drift at n={n}')
+                      print(json.dumps({
+                          'n': n,
+                          'rank': record['rank'],
+                          'fresh_violations': record['fresh_violations'],
+                          'pivot_sha256': record['pivot_sha256'],
+                      }, sort_keys=True))
+                  if len(digests) != 1:
+                      raise AssertionError(f'low-n lex-pivot set drift: {sorted(digests)}')
+                  discovered = next(iter(digests))
+                  print(f'OZ_LEX_PIVOT_SIGNATURE={discovered}')
+
+                  smoke_request = dict(request)
+                  smoke_request.update({
+                      'request_id': 'OZ-RT-BZ-T3-016-A-LEX-PIVOT-SWEEP-SMOKE',
+                      'enabled': True,
+                      'expected_pivot_sha256': discovered,
+                      'n_start': 5,
+                      'n_stop': 8,
+                      'reconstruction_fit_count': 3,
+                      'holdout_count': 1,
+                  })
                   request_path = root / 'request.json'
                   output = root / 'chunk-0'
-                  request_path.write_text(json.dumps(request), encoding='utf-8')
-                  metadata = affine_sweep.run_chunk(
-                      request_path,
-                      Path('source-smoke'),
-                      0,
-                      output,
+                  request_path.write_text(json.dumps(smoke_request), encoding='utf-8')
+                  metadata = lex_pivot_sweep.run_chunk(
+                      request_path, Path('source-smoke'), 0, output
                   )
-                  replay = affine_sweep.verify_chunk(request_path, 0, output)
-                  assert metadata['n_start'] == metadata['n_stop'] == 5
-                  assert metadata['sample_count'] == 1
-                  assert replay['samples_verified'] == 1
-                  assert metadata['records'][0]['free_rank'] == 1048
-                  assert metadata['records'][0]['fresh_violations'] == 0
-                  print(json.dumps({
-                      'n': 5,
-                      'free_rank': metadata['records'][0]['free_rank'],
-                      'fresh_violations': metadata['records'][0]['fresh_violations'],
-                      'primitive_section_sha256': metadata['records'][0]['primitive_section_sha256'],
-                      'coordinate_map_sha256': metadata['coordinate_map_sha256'],
-                      'proof_effect': metadata['proof_effect'],
-                      'promotion_effect': metadata['promotion_effect'],
-                  }, sort_keys=True))
+                  replay = lex_pivot_sweep.verify_chunk(request_path, 0, output)
+                  if metadata['n_start'] != 5 or metadata['n_stop'] != 5:
+                      raise AssertionError('lex-pivot smoke chunk range drift')
+                  if replay['samples_verified'] != 1:
+                      raise AssertionError('lex-pivot smoke replay count drift')
+                  if replay['pivot_sha256'] != discovered:
+                      raise AssertionError('lex-pivot smoke pivot digest drift')
 
           if __name__ == '__main__':
               main()
           PY
-          python "$RUNNER_TEMP/affine-sweep-smoke-driver"
+          python "$RUNNER_TEMP/lex-pivot-smoke-driver.py"
 
   sample:
     needs: validate-request
@@ -206,7 +245,7 @@ jobs:
     timeout-minutes: 60
     env:
       CHUNK_INDEX: ${{ matrix.chunk }}
-      OUTPUT_DIR: affine-sweep-chunk-${{ matrix.chunk }}
+      OUTPUT_DIR: lex-pivot-sweep-chunk-${{ matrix.chunk }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -228,9 +267,9 @@ jobs:
           git -C source checkout --detach "$SOURCE_COMMIT"
           test "$(git -C source rev-parse HEAD)" = "$SOURCE_COMMIT"
           test "$(git -C source rev-parse HEAD^{tree})" = 'be780558454b704bdd016a3070d698c2e106e2b8'
-      - name: Generate canonical affine sample chunk
+      - name: Generate lex-pivot affine sample chunk
         run: |
-          cat > "$RUNNER_TEMP/affine-sweep-driver" <<'PY'
+          cat > "$RUNNER_TEMP/lex-pivot-sweep-driver.py" <<'PY'
           import json
           import os
           import sys
@@ -238,11 +277,11 @@ jobs:
 
           module_dir = Path(os.environ['MODULE_DIR'])
           sys.path.insert(0, str(module_dir))
-          import affine_sweep
+          import lex_pivot_sweep
 
           def main() -> None:
-              metadata = affine_sweep.run_chunk(
-                  os.environ['REQUEST_PATH'],
+              metadata = lex_pivot_sweep.run_chunk(
+                  os.environ['LEX_REQUEST_PATH'],
                   Path('source'),
                   int(os.environ['CHUNK_INDEX']),
                   Path(os.environ['OUTPUT_DIR']),
@@ -253,6 +292,7 @@ jobs:
                   'n_start': metadata['n_start'],
                   'n_stop': metadata['n_stop'],
                   'sample_count': metadata['sample_count'],
+                  'pivot_sha256': metadata['pivot_sha256'],
                   'coordinate_map_sha256': metadata['coordinate_map_sha256'],
                   'proof_effect': metadata['proof_effect'],
                   'promotion_effect': metadata['promotion_effect'],
@@ -261,7 +301,7 @@ jobs:
           if __name__ == '__main__':
               main()
           PY
-          python "$RUNNER_TEMP/affine-sweep-driver"
+          python "$RUNNER_TEMP/lex-pivot-sweep-driver.py"
       - name: Independently verify serialized chunk contract
         run: |
           python - <<'PY'
@@ -272,10 +312,10 @@ jobs:
 
           module_dir = Path(os.environ['MODULE_DIR'])
           sys.path.insert(0, str(module_dir))
-          import affine_sweep
+          import lex_pivot_sweep
 
-          replay = affine_sweep.verify_chunk(
-              os.environ['REQUEST_PATH'],
+          replay = lex_pivot_sweep.verify_chunk(
+              os.environ['LEX_REQUEST_PATH'],
               int(os.environ['CHUNK_INDEX']),
               Path(os.environ['OUTPUT_DIR']),
           )
@@ -290,10 +330,10 @@ jobs:
             git -C source rev-parse HEAD
             git -C source rev-parse HEAD^{tree}
           } > "$OUTPUT_DIR/environment.txt"
-      - name: Preserve content-addressed affine sweep evidence
+      - name: Preserve content-addressed lex-pivot evidence
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: oz-t3-016-a-affine-${{ needs.validate-request.outputs.request_id }}-chunk-${{ matrix.chunk }}
+          name: oz-t3-016-a-lex-pivot-${{ needs.validate-request.outputs.request_id }}-chunk-${{ matrix.chunk }}
           path: ${{ env.OUTPUT_DIR }}/
           if-no-files-found: error
           retention-days: 30
