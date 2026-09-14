@@ -35,7 +35,7 @@ env:
 jobs:
   validate-request:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
     outputs:
       enabled: ${{ steps.request.outputs.enabled }}
       request_id: ${{ steps.request.outputs.request_id }}
@@ -93,6 +93,51 @@ jobs:
           git -C source-smoke checkout --detach "$SOURCE_COMMIT"
           test "$(git -C source-smoke rev-parse HEAD)" = "$SOURCE_COMMIT"
           test "$(git -C source-smoke rev-parse HEAD^{tree})" = 'be780558454b704bdd016a3070d698c2e106e2b8'
+      - name: Verify excluded low-n modular specializations
+        if: github.event_name == 'pull_request'
+        run: |
+          python - <<'PY'
+          import os
+          import sys
+          import tempfile
+          from pathlib import Path
+
+          module_dir = Path(os.environ['MODULE_DIR'])
+          sys.path.insert(0, str(module_dir))
+          import affine_sweep
+
+          request = affine_sweep.load_request(os.environ['REQUEST_PATH'])
+          p = int(request['prime'])
+          fit_rows = affine_sweep.FREE_COORDINATES + int(request['fit_extra_rows'])
+          fresh_rows = int(request['fresh_rows'])
+          nb = int(request['solver_block_size'])
+          expected_singular = {1: 991, 2: 999}
+
+          with tempfile.TemporaryDirectory(prefix='oz-affine-low-n-') as tmp:
+              cache = Path(tmp) / 'qrow_cache.pkl'
+              affine_sweep._install_source_modules(Path('source-smoke'), cache, prewarm=True)
+              for n, expected_rank in expected_singular.items():
+                  try:
+                      affine_sweep._shape(n, p, fit_rows, fresh_rows, nb)
+                  except RuntimeError as exc:
+                      expected = f'canonical affine solve failed: rank={expected_rank} piv={expected_rank} nbad=0'
+                      if str(exc) != expected:
+                          raise AssertionError(
+                              f'unexpected excluded-fiber diagnostic at n={n}: {exc}'
+                          ) from exc
+                      print(f'OZ_AFFINE_LOW_N n={n} status=EXCLUDED rank={expected_rank}')
+                  else:
+                      raise AssertionError(f'excluded modular specialization unexpectedly usable at n={n}')
+
+              for n in (3, 4):
+                  _section, data = affine_sweep._shape(n, p, fit_rows, fresh_rows, nb)
+                  record = data['record']
+                  if record['free_rank'] != affine_sweep.FREE_COORDINATES:
+                      raise AssertionError(f'usable low-n rank drift at n={n}: {record["free_rank"]}')
+                  if record['solver_nbad'] != 0 or record['fresh_violations'] != 0:
+                      raise AssertionError(f'usable low-n residual drift at n={n}: {record}')
+                  print(f'OZ_AFFINE_LOW_N n={n} status=USABLE rank={record["free_rank"]}')
+          PY
       - name: Replay one real canonical affine fiber
         run: |
           cat > "$RUNNER_TEMP/affine-sweep-smoke-driver" <<'PY'
