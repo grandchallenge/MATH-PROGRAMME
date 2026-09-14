@@ -40,8 +40,9 @@ def _fetch(path: str) -> bytes:
     return data
 
 
-def _asc(desc):
-    return [int(x) for x in reversed(desc)]
+def _asc(values):
+    """Normalize the source's constant-first coefficient lists to integers."""
+    return [int(x) for x in values]
 
 
 def _trim(p):
