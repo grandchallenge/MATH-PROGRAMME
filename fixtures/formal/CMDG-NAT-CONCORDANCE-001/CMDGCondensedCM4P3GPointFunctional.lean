@@ -216,6 +216,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     Adjunction.homEquiv_naturality_left,
     CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app] at hbridgeTail
   convert hbridgeTail using 1
+  · rfl
   ·
     have hnat :=
       ConcreteCategory.congr_hom
@@ -238,6 +239,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply,
       Adjunction.homEquiv_naturality_left,
       CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app]
 
