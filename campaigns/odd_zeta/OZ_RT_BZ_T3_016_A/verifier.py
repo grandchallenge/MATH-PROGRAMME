@@ -20,7 +20,10 @@ SOURCE_BLOBS = {
     "work/z5la/z5cf_order7_partial.json": "d6024c7244a4a45ac759b455f65fca6d377b735d",
     "work/z5la/a_lift.json": "564fc9637f31b870d85dab293d6cbb5cfe52bae0",
     "work/z5la/o_scan.py": "bc6e9a59a48b15eddbab8e80ad4e5063972582d2",
+    "work/z5la/o_scan_E1.log": "9085d23798074e9e86bc1c41faaf17a7e4b1386f",
     "work/z5la/o_csweep.py": "b506b9d6fbd405e6ac36fc790aa354196df20938",
+    "work/z5la/o_final.py": "e51582d64e664714524ccf566178c94fc30b202a",
+    "work/z5la/o_final.log": "fdb111957380d1be0876982f706980eb074fc9ab",
     "work/z5la/solve.py": "478b15ce7584b5e8af6caaf5326d99c85a7b55bf",
 }
 EXPECTED_MONOMIALS = [
@@ -183,7 +186,7 @@ def _rank_mod(matrix: np.ndarray, p: int) -> int:
 
 
 def _operator_matrix(points: list[tuple[int, int]]) -> np.ndarray:
-    """Rebuild the E1 scalar divergence evaluation map without source solver code."""
+    """Rebuild the boundary-forced E1 scalar divergence map without source solver code."""
     deg = E1_NUMERATOR_DEGREE
     r_mons = [(a, b) for a in range(1, deg + 1) for b in range(0, deg + 1)]
     s_mons = [(a, b) for a in range(0, deg + 1) for b in range(1, deg + 1)]
@@ -341,8 +344,6 @@ def _verify_geometry() -> dict:
     if curl_rank != CURL_DIMENSION:
         raise AssertionError(f"independent curl coefficient rank failed: {curl_rank}")
 
-    # The coefficient-level curl columns must be annihilated by the independently
-    # reconstructed operator evaluations. 1624*(p-1)^2 remains below int64 range.
     if np.count_nonzero((operator @ curl) % GEOM_P):
         raise AssertionError("independent operator/curl composition is nonzero")
 
@@ -357,7 +358,10 @@ def _verify_geometry() -> dict:
         "curl_image_dimension": CURL_DIMENSION,
         "curl_image_equals_generic_kernel": True,
         "source_rank_1106_kernel_518_promoted": False,
-        "source_geometry_downgraded": True,
+        "source_geometry_reconciled": True,
+        "source_unforced_scan_columns": 1682,
+        "source_unforced_scan_rank": 1106,
+        "source_unforced_scan_kernel_dimension": 576,
     }
 
 
