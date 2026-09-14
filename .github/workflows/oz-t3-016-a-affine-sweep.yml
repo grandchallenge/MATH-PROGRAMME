@@ -1,0 +1,189 @@
+name: OZ T3-016-A affine sweep
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/oz-t3-016-a-affine-sweep.yml'
+      - '.ghos-routing/workflows.json'
+      - 'campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/affine_sweep.py'
+      - 'campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/AFFINE_SWEEP_REQUEST.json'
+      - 'tests/test_oz_rt_bz_t3_016_a_affine_sweep.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/oz-t3-016-a-affine-sweep.yml'
+      - 'campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/AFFINE_SWEEP_REQUEST.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oz-t3-016-a-affine-sweep-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+env:
+  SOURCE_REPO: https://github.com/rain-1/-odd-zeta-values-moremath.git
+  SOURCE_COMMIT: 6cc0bf07137815ceeef0d9f340559f85352391e5
+  REQUEST_PATH: campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/AFFINE_SWEEP_REQUEST.json
+  MODULE_DIR: campaigns/odd_zeta/OZ_RT_BZ_T3_016_A
+
+jobs:
+  validate-request:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      enabled: ${{ steps.request.outputs.enabled }}
+      request_id: ${{ steps.request.outputs.request_id }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact subject checkout
+        env:
+          SUBJECT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$SUBJECT_SHA"
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Install exact Odd Zeta dependencies
+        run: python -m pip install --requirement requirements/oz_source_revision_delta.txt
+      - id: request
+        name: Validate affine sweep request
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          module_dir = Path(os.environ['MODULE_DIR'])
+          sys.path.insert(0, str(module_dir))
+          import affine_sweep
+
+          request = affine_sweep.load_request(os.environ['REQUEST_PATH'])
+          ranges = affine_sweep.chunk_ranges(request)
+          summary = {
+              'request_id': request['request_id'],
+              'enabled': request['enabled'],
+              'n_range': [request['n_start'], request['n_stop']],
+              'chunks': ranges,
+              'reconstruction_fit_count': request['reconstruction_fit_count'],
+              'holdout_count': request['holdout_count'],
+              'rational_degree_test_bound': request['rational_degree_test_bound'],
+              'proof_effect': request['proof_effect'],
+              'promotion_effect': request['promotion_effect'],
+          }
+          print(json.dumps(summary, sort_keys=True))
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as handle:
+              handle.write(f"enabled={'true' if request['enabled'] else 'false'}\n")
+              handle.write(f"request_id={request['request_id']}\n")
+          PY
+      - name: Replay affine sweep contract tests
+        run: python -m unittest tests/test_oz_rt_bz_t3_016_a_affine_sweep.py -v
+
+  sample:
+    needs: validate-request
+    if: >-
+      needs.validate-request.outputs.enabled == 'true' &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    strategy:
+      fail-fast: false
+      matrix:
+        chunk: [0, 1, 2, 3]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+      CHUNK_INDEX: ${{ matrix.chunk }}
+      OUTPUT_DIR: affine-sweep-chunk-${{ matrix.chunk }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Assert exact protected or dispatched subject
+        env:
+          SUBJECT_SHA: ${{ github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$SUBJECT_SHA"
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Install exact Odd Zeta dependencies
+        run: python -m pip install --requirement requirements/oz_source_revision_delta.txt
+      - name: Acquire exact locked upstream source
+        run: |
+          set -euo pipefail
+          git clone --filter=blob:none "$SOURCE_REPO" source
+          git -C source checkout --detach "$SOURCE_COMMIT"
+          test "$(git -C source rev-parse HEAD)" = "$SOURCE_COMMIT"
+          test "$(git -C source rev-parse HEAD^{tree})" = 'be780558454b704bdd016a3070d698c2e106e2b8'
+      - name: Generate canonical affine sample chunk
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          module_dir = Path(os.environ['MODULE_DIR'])
+          sys.path.insert(0, str(module_dir))
+          import affine_sweep
+
+          metadata = affine_sweep.run_chunk(
+              os.environ['REQUEST_PATH'],
+              Path('source'),
+              int(os.environ['CHUNK_INDEX']),
+              Path(os.environ['OUTPUT_DIR']),
+          )
+          print(json.dumps({
+              'request_id': metadata['request_id'],
+              'chunk_index': metadata['chunk_index'],
+              'n_start': metadata['n_start'],
+              'n_stop': metadata['n_stop'],
+              'sample_count': metadata['sample_count'],
+              'coordinate_map_sha256': metadata['coordinate_map_sha256'],
+              'proof_effect': metadata['proof_effect'],
+              'promotion_effect': metadata['promotion_effect'],
+          }, sort_keys=True))
+          PY
+      - name: Independently verify serialized chunk contract
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          module_dir = Path(os.environ['MODULE_DIR'])
+          sys.path.insert(0, str(module_dir))
+          import affine_sweep
+
+          replay = affine_sweep.verify_chunk(
+              os.environ['REQUEST_PATH'],
+              int(os.environ['CHUNK_INDEX']),
+              Path(os.environ['OUTPUT_DIR']),
+          )
+          print(json.dumps(replay, sort_keys=True))
+          PY
+      - name: Capture execution environment
+        run: |
+          {
+            python --version
+            uname -a
+            python -m pip freeze
+            git -C source rev-parse HEAD
+            git -C source rev-parse HEAD^{tree}
+          } > "$OUTPUT_DIR/environment.txt"
+      - name: Preserve content-addressed affine sweep evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: oz-t3-016-a-affine-${{ needs.validate-request.outputs.request_id }}-chunk-${{ matrix.chunk }}
+          path: ${{ env.OUTPUT_DIR }}/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
