@@ -59,10 +59,6 @@ def _mul(a, b):
     return _trim(out)
 
 
-def _scale(a, c):
-    return [c * x for x in a]
-
-
 def _shift(a, s):
     out = [0] * len(a)
     for i, c in enumerate(a):
@@ -109,17 +105,8 @@ def verify() -> dict:
         raise AssertionError("F4(n+2) positivity certificate failed")
 
     a0 = [173057, 320790, 198849, 41218]
-    expected = [4]
-    for factor in (
-        _pow_linear(5, 1),
-        _pow_linear(6, 3),
-        _pow_linear(7, 2),
-        _scale(_pow_linear(13 / 2, 2), 4),
-    ):
-        # The fourth factor above would introduce rationals; replace it below.
-        pass
-
-    # Rebuild 4*(n+5)*(n+6)^3*(n+7)^2*(2n+13)^2 exactly over Z.
+    # Rebuild 4*(n+5)*(n+6)^3*(n+7)^2*(2n+13)^2*a0(n+1)*a0(n+2)*a0(n+3)*F4(n)
+    # exactly over Z, independently of SymPy.
     expected = [4]
     for factor in (
         [5, 1],
@@ -138,7 +125,6 @@ def verify() -> dict:
         raise AssertionError("initial a4 nonvanishing failed")
 
     # Independent factor-multiset proof of gk*gl(k+1)=gl*gk(l+1).
-    # A factor is represented by its canonical textual linear/power identity.
     lhs_num = Counter({
         "(n+7-k)^2": 1, "(n+k+1)": 1, "(n+k+l+1)": 1,
         "(n+7-l)^2": 1, "(n+l+1)": 1, "(n+k+l+2)": 1,
