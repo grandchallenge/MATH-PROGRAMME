@@ -25,15 +25,8 @@ jobs:
         run: |
           set -euo pipefail
 
-          check_id="$(gh api "repos/${REPO}/actions/jobs/${JOB_ID}" --jq '.check_run_url | split("/")[-1]')"
-          annotations="$(gh api --allow-escape-sequences "repos/${REPO}/check-runs/${check_id}/annotations?per_page=100" --paginate --jq '.[] | [(.path // ""), (.start_line // 0), (.end_line // 0), (.annotation_level // ""), (.title // ""), (.message // "")] | @tsv')"
-
           gh api --allow-escape-sequences "repos/${REPO}/actions/jobs/${JOB_ID}/logs" > /tmp/cmdg-job.log
-          excerpt="$(grep -n -C 16 -E 'error:|unsolved goals|type mismatch|application type mismatch|failed|CMDGCondensedCM4P3GPointFunctional' /tmp/cmdg-job.log | sed -n '1,240p' || true)"
 
-          echo '::group::SEALED_ANNOTATIONS'
-          printf '%s\n' "${annotations}"
-          echo '::endgroup::'
-          echo '::group::SEALED_LOG_EXCERPT'
-          printf '%s\n' "${excerpt}"
+          echo '::group::LEAN_FAILURE_BLOCK'
+          sed -n '3190,3400p' /tmp/cmdg-job.log
           echo '::endgroup::'
