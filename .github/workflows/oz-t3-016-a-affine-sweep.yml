@@ -35,7 +35,7 @@ env:
 jobs:
   validate-request:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
     outputs:
       enabled: ${{ steps.request.outputs.enabled }}
       request_id: ${{ steps.request.outputs.request_id }}
@@ -93,6 +93,35 @@ jobs:
           git -C source-smoke checkout --detach "$SOURCE_COMMIT"
           test "$(git -C source-smoke rev-parse HEAD)" = "$SOURCE_COMMIT"
           test "$(git -C source-smoke rev-parse HEAD^{tree})" = 'be780558454b704bdd016a3070d698c2e106e2b8'
+      - name: Diagnose low-n modular specializations
+        if: github.event_name == 'pull_request'
+        run: |
+          python - <<'PY'
+          import os
+          import sys
+          import tempfile
+          from pathlib import Path
+
+          module_dir = Path(os.environ['MODULE_DIR'])
+          sys.path.insert(0, str(module_dir))
+          import affine_sweep
+
+          with tempfile.TemporaryDirectory(prefix='oz-affine-low-n-') as tmp:
+              cache = Path(tmp) / 'qrow_cache.pkl'
+              affine_sweep._install_source_modules(Path('source-smoke'), cache, prewarm=True)
+              for n in range(1, 5):
+                  try:
+                      _section, data = affine_sweep._shape(n, 4194301, 1112, 16, 64)
+                  except Exception as exc:
+                      print(f'OZ_AFFINE_LOW_N n={n} status=UNUSABLE error={type(exc).__name__}:{exc}')
+                  else:
+                      record = data['record']
+                      print(
+                          f"OZ_AFFINE_LOW_N n={n} status=USABLE "
+                          f"rank={record['free_rank']} nbad={record['solver_nbad']} "
+                          f"fresh={record['fresh_violations']}"
+                      )
+          PY
       - name: Replay one real canonical affine fiber
         run: |
           cat > "$RUNNER_TEMP/affine-sweep-smoke-driver" <<'PY'
