@@ -59,8 +59,13 @@ def _fetch(path: str) -> bytes:
 
 
 def _asc(values):
-    """Normalize the source's constant-first coefficient lists to integers."""
+    """Normalize a constant-first coefficient list to integers."""
     return [int(x) for x in values]
+
+
+def _desc_to_asc(values):
+    """Normalize a highest-degree-first coefficient list to constant-first integers."""
+    return [int(x) for x in reversed(values)]
 
 
 def _trim(p):
@@ -381,8 +386,11 @@ def verify() -> dict:
     if len(aa) != 5 or any(len(_trim(p)) != 59 for p in aa):
         raise AssertionError("five degree-58 A polynomials required")
 
-    f4 = _asc(lift["F4"])
-    f4s = _asc(lift["F4_shift2"])
+    # The A arrays are constant-first, while the two F4 arrays are serialized
+    # highest-degree-first. Convert only F4/F4_shift2 before applying the
+    # verifier's integer-list arithmetic, which is constant-first throughout.
+    f4 = _desc_to_asc(lift["F4"])
+    f4s = _desc_to_asc(lift["F4_shift2"])
     if _shift(f4, 2) != f4s:
         raise AssertionError("integer-arithmetic F4 shift replay failed")
     if any(c <= 0 for c in f4s):
@@ -425,6 +433,7 @@ def verify() -> dict:
         "issue": ISSUE,
         "operation": OPERATION,
         "source_locks_verified": True,
+        "mixed_coefficient_serialization_replayed": True,
         "a4_factorization_integer_replay": True,
         "a4_nonvanishing_certificate_replayed": True,
         "order7_module_monomials_verified": True,
