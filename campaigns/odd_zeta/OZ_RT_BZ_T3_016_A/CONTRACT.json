@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 964,
+  "operation": "OZ-RT-BZ-T3-016-A",
+  "stage": "T3_016_A_ORDER7_POPOV_ORDER_BASIS_COMPRESSION",
+  "protected_base": "a05c16d2988a9a0c73f9c62b482c96777a49c5ea",
+  "predecessor": {
+    "operation": "OZ-RT-BZ-T3-015-C",
+    "proposal_head": "c3f3c2fd2dc71b96133934a05eb578fd6c191173",
+    "protected_merge": "a05c16d2988a9a0c73f9c62b482c96777a49c5ea",
+    "terminal": "GLOBAL_RATIONAL_DELTA_CLASS_OBSTRUCTED__COMPLETENESS_BACKED",
+    "reopens_refuted_class": false
+  },
+  "source": {
+    "repository": "rain-1/-odd-zeta-values-moremath",
+    "commit": "6cc0bf07137815ceeef0d9f340559f85352391e5",
+    "tree": "be780558454b704bdd016a3070d698c2e106e2b8",
+    "objects": {
+      "work/Z5CF_TELESCOPER.md": "a634b070d5d95d09749137c26bc51012f318683b",
+      "work/Z5CF_LIFT.md": "f1c48b2ce0951ef4a4aefa1d449e53fe33ce5cc5",
+      "work/Z5CF_LINALG.md": "637ecaa7f3ee941a87932de390eb7336d7fde677",
+      "work/z5la/z5cf_order7_partial.json": "d6024c7244a4a45ac759b455f65fca6d377b735d",
+      "work/z5la/a_lift.json": "564fc9637f31b870d85dab293d6cbb5cfe52bae0",
+      "work/z5la/o_scan.py": "bc6e9a59a48b15eddbab8e80ad4e5063972582d2",
+      "work/z5la/o_csweep.py": "b506b9d6fbd405e6ac36fc790aa354196df20938",
+      "work/z5la/solve.py": "478b15ce7584b5e8af6caaf5326d99c85a7b55bf"
+    }
+  },
+  "preflight": {
+    "a_polynomial_count": 5,
+    "a_polynomial_degree": 58,
+    "a4_factorization_exact": true,
+    "a4_nonvanishing_domain": "integer n >= 0",
+    "order7_module_monomial_count": 15,
+    "theorem_r_top_blocks": 7,
+    "residual_blocks": 8,
+    "standalone_scalar_operator_columns": 1624,
+    "reported_generic_rank": 1106,
+    "reported_kernel_dimension": 518,
+    "kernel_dimension_status": "SOURCE_REPORTED_PENDING_GENERIC_CHAR0_REPLAY",
+    "discrete_curl_flatness_identity_required": true
+  },
+  "mathematical_route": {
+    "new_architecture": true,
+    "coefficient_domain": "Q(n,k,l) with denominator-cleared polynomial-module realization over Q[n]",
+    "target": "order-7 left multiple L_min = A * L_BZ",
+    "compression": "shifted Popov / minimal approximant / order basis after structured gauge analysis",
+    "modular_acceleration_allowed": true,
+    "characteristic_zero_reconstruction_required": true,
+    "independent_exact_replay_required": true
+  },
+  "intermediate_terminal": "ORDER7_SOURCE_PREFLIGHT_REPLAYED__POPOV_REDUCTION_REQUIRED",
+  "authorized_terminals": {
+    "constructive": "ORDER7_POPOV_SECTION_CONSTRUCTED__CHAR0_REPLAY_REQUIRED",
+    "exact_route": "ORDER7_CT_CERTIFICATE_EXACT__T3_BRIDGE_REQUIRED",
+    "route_negative": "ORDER7_POPOV_COMPRESSION_ROUTE_EXHAUSTED__T3_REMAINS_OPEN"
+  },
+  "claim_firewall": {
+    "t3_proved": false,
+    "t3_refuted": false,
+    "global_certificate_constructed": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t1_top_promoted": false,
+    "depth_promoted": false,
+    "sharp12_promoted": false,
+    "mathcert_promoted": false
+  }
+}
