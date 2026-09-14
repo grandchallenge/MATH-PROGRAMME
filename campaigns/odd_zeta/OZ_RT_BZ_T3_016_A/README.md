@@ -14,7 +14,7 @@ The governed preflight checks the source locks, exact lifted `A`, factorization 
 
 Pinned upstream revision: `rain-1/-odd-zeta-values-moremath@6cc0bf07137815ceeef0d9f340559f85352391e5`.
 
-Exact object identities are recorded in `CONTRACT.json`. The reconciliation also locks `o_scan_E1.log`, `o_final.py`, and `o_final.log`, because those objects distinguish two E1 ansatz conventions that were conflated in the source prose summary.
+Exact object identities are recorded in `CONTRACT.json`. The reconciliation also locks `o_scan_E1.log`, `o_zero.py`, `o_zero1.log`, `o_csweep.py`, `o_final.py`, `o_final.log`, and `o_zero3.log`, because those objects distinguish two E1 ansatz conventions that were conflated in the source prose summary and preserve the sampled constant-block evidence.
 
 ## Exact lifted multiplier preflight
 
@@ -26,7 +26,9 @@ with `a0(n)=41218 n^3+198849 n^2+320790 n+173057`.
 
 The direct `n=0,1` values are nonzero. For `n>=2`, put `m=n-2`; coefficient positivity of `F4(m+2)` and positivity of every displayed factor give `a_4(n)>0`.
 
-The source coefficient arrays are constant-first. The replay also checks the locked 15-monomial module, five Theorem-R transports, and
+The pinned `a_lift.json` uses mixed coefficient serialization. The five `a_t` arrays are constant-first, matching the source's `poly(c,x)` helper, while `F4` and `F4_shift2` are highest-degree-first lists. Producer and verifier replay these field-specific conventions independently. Treating all arrays as constant-first is incorrect and is covered by regression tests.
+
+The replay also checks the locked 15-monomial module, five Theorem-R transports, and
 
 `gk(n,k,l) gl(n,k+1,l) = gl(n,k,l) gk(n,k,l+1)`.
 
@@ -68,9 +70,9 @@ At `n=5`, `p=4194301`, the 576-parameter curl witness has rank 576. Exact flatne
 
 The source prose pairs rank `1106` with `1624` columns and states a 518-dimensional kernel. The pinned raw code and logs show that those values come from two different ansatz conventions.
 
-`o_scan.run()` constructs the exploratory E1 ansatz with `force_k=0, force_l=0`. At order 7/slack 18, it has **1682 columns**; `o_scan_E1.log` records rank **1106**, hence nullity **576**.
+`o_scan.run()` and the rank-producing `o_zero.py` route construct the exploratory E1 ansatz with `force_k=0, force_l=0`. At order 7/slack 18, it has **1682 columns**; `o_scan_E1.log` records rank **1106**, hence nullity **576**. `o_zero1.log` independently records `rank=1106, nbad=0` for that unforced route.
 
-`o_final.build()` constructs the actual certificate ansatz with `force=(1,1)`. Removing the 29 pure-`l` coefficients of `N_r` and 29 pure-`k` coefficients of `N_s` leaves **1624 columns**. Programme reconstruction gives rank **1048**, hence nullity **576**.
+`o_csweep.py` and `o_final.build()` construct the actual certificate ansatz with `force=(1,1)`. Removing the 29 pure-`l` coefficients of `N_r` and 29 pure-`k` coefficients of `N_s` leaves **1624 columns**. The source forced sweep does not record its returned scalar rank. Programme reconstruction gives rank **1048**, hence nullity **576**.
 
 The source rank `1106` is therefore valid for its exploratory unforced scan. The spurious `518` arose only from pairing that rank with the boundary-forced column count. Both coherent ansatz regimes have the same 576-dimensional curl kernel. The Programme does not promote the cross-regime `518` figure.
 
@@ -83,6 +85,8 @@ Ordering potential monomials by `k` exponent makes this curl minor block lower t
 `T_n H = (n+7)[(n+l+1)^3(n+7-l)^2 H(l+1) - l^2(l+1)(l+2)(n+l+7)H(l)] mod l^24`.
 
 At `n=5`, `p=4194301`, the diagonal block has rank 24 and determinant `2300711 mod 4194301`; the full 576-coordinate gauge minor is therefore invertible at the governed witness.
+
+Fixing these 576 coordinates to zero leaves 1048 free cofactor coordinates. The modular affine probe solves the complementary `1048 x 1048` operator minor directly; this is algebraically equivalent to adjoining 576 coordinate equations to form a `1624 x 1624` augmented system, but avoids redundant factorization work. The full 1624-coordinate section is reconstructed afterward and replayed on fresh points.
 
 ## Source modular route evidence
 
