@@ -151,12 +151,3 @@ def verify() -> dict:
         "proof_effect": "NONE",
         "promotion_effect": "NONE",
     }
-
-
-def main() -> int:
-    print(json.dumps(verify(), sort_keys=True, separators=(",", ":")))
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
