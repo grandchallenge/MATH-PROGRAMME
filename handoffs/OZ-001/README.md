@@ -72,29 +72,26 @@ At `n=5`, `p=4194301`, independent nonzero-minor witnesses give curl rank 576 an
 
 ### Reconciliation of the source `1106/518` prose
 
-Do not treat `1106/518` as a contradictory second geometry. The pinned raw source resolves it:
+The pinned raw source resolves the apparent discrepancy:
 
 - `o_scan.run()` uses `force_k=0, force_l=0`; at order 7/slack 18 it has **1682 columns**, and `o_scan_E1.log` reports rank **1106**, so nullity is **576**.
 - `o_final.build()` uses `force=(1,1)`; the boundary-forced certificate has **1624 columns**. Programme replay gives rank **1048**, so nullity is again **576**.
 
-The prose summary mixed the unforced rank 1106 with the forced column count 1624, producing the spurious arithmetic figure 518. Both coherent regimes agree on the 576-dimensional curl freedom.
+The source rank 1106 is valid for the exploratory unforced scan. The prose summary paired it with the boundary-forced 1624-column count, producing the spurious 518 figure. Both coherent regimes agree on the 576-dimensional curl freedom.
 
 ### Modular route evidence
 
-Pinned `o_final.log` reports four sampled `(n,p)` fibers where:
+Pinned `o_final.log` reports four sampled `(n,p)` fibers where all seven standalone E1 blocks and the constant block solve, 350 fresh points × 15 blocks give zero violations, and bottom-boundary obligations hold. The constant block uses the measured `Z3` ansatz; `o_zero3.log` records closure at slack 16 in its tested progression.
 
-- all seven standalone E1 blocks solve;
-- the constant block solves in the measured `Z3` ansatz;
-- 350 fresh points × 15 blocks all satisfy the identities;
-- bottom-boundary obligations hold.
-
-This is useful construction evidence only. The remaining obligation is characteristic-zero lifting and compression.
+This is construction evidence only. The remaining obligation is characteristic-zero lifting and compression.
 
 ### Current affine construction
 
-The branch contains a source-locked canonical potential-gauge probe. It fixes the 576 `r`-numerator coordinates `k^a l^b`, `2<=a<=25`, `0<=b<=23`, solves the seven standalone residual blocks, and checks fresh unused points. The chosen coordinate minor is structurally block-lower-triangular; at `n=5`, `p=4194301`, its 24-by-24 diagonal block has determinant `2300711 mod 4194301`, so the 576-coordinate gauge is invertible at the governed witness.
+The branch contains a source-locked canonical potential-gauge probe. It fixes the 576 `r`-numerator coordinates `k^a l^b`, `2<=a<=25`, `0<=b<=23`, solves the seven standalone residual blocks, and checks fresh unused points.
 
-The affine sample remains diagnostic until the exact-head governed replay succeeds and its output is recorded.
+The chosen coordinate minor is block lower triangular by `k` degree. At `n=5`, `p=4194301`, each 24-by-24 diagonal block has determinant `2300711 mod 4194301`, so the 576-coordinate gauge is invertible at the governed witness.
+
+The affine sample remains diagnostic until exact-head governed replay succeeds and its output is recorded.
 
 Current intermediate terminal:
 
