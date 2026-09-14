@@ -28,9 +28,9 @@ jobs:
           set -euo pipefail
 
           check_id="$(gh api "repos/${REPO}/actions/jobs/${JOB_ID}" --jq '.check_run_url | split("/")[-1]')"
-          annotations="$(gh api "repos/${REPO}/check-runs/${check_id}/annotations?per_page=100" --paginate --jq '.[] | [(.path // ""), (.start_line // 0), (.end_line // 0), (.annotation_level // ""), (.title // ""), (.message // "")] | @tsv')"
+          annotations="$(gh api --allow-escape-sequences "repos/${REPO}/check-runs/${check_id}/annotations?per_page=100" --paginate --jq '.[] | [(.path // ""), (.start_line // 0), (.end_line // 0), (.annotation_level // ""), (.title // ""), (.message // "")] | @tsv')"
 
-          gh api "repos/${REPO}/actions/jobs/${JOB_ID}/logs" > /tmp/cmdg-job.log
+          gh api --allow-escape-sequences "repos/${REPO}/actions/jobs/${JOB_ID}/logs" > /tmp/cmdg-job.log
           excerpt="$(grep -n -C 16 -E 'error:|unsolved goals|type mismatch|application type mismatch|failed|CMDGCondensedCM4P3GPointFunctional' /tmp/cmdg-job.log | head -c 40000 || true)"
 
           body="$(printf '%s\n\n%s\n%s\n%s\n\n%s\n%s\n%s\n' \
