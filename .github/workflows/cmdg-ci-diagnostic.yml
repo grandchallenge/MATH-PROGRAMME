@@ -1,0 +1,30 @@
+name: CMDG CI diagnostic bridge
+
+on:
+  push:
+    branches:
+      - agent/cmdg-cm4-p3-m-kernel-point-004
+    paths:
+      - .github/workflows/cmdg-ci-diagnostic.yml
+
+permissions:
+  actions: read
+  checks: read
+  contents: read
+
+jobs:
+  sealed-diagnostic:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Emit sealed formal diagnostics
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          JOB_ID: "103946617019"
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api --allow-escape-sequences "repos/${REPO}/actions/jobs/${JOB_ID}/logs" > /tmp/cmdg-job.log
+          echo '::group::LEAN_ERRORS'
+          grep -n -C 24 -E 'error:|unsolved goals|type mismatch|application type mismatch|CMDGCondensedCM4P3GPointFunctional' /tmp/cmdg-job.log | sed -n '1,320p' || true
+          echo '::endgroup::'
