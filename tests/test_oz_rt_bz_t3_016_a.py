@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -21,6 +22,7 @@ def _load(path: Path, name: str):
 
 producer = _load(HERE / "producer.py", "oz_t3_016_a_producer_test")
 verifier = _load(HERE / "verifier.py", "oz_t3_016_a_verifier_test")
+affine_probe = _load(HERE / "affine_probe.py", "oz_t3_016_a_affine_probe_test")
 
 
 class OzRtBzT3016ATests(unittest.TestCase):
@@ -101,6 +103,22 @@ class OzRtBzT3016ATests(unittest.TestCase):
         )
         self.assertFalse(self.replay["source_rank_1106_kernel_518_promoted"])
         self.assertTrue(self.replay["source_geometry_downgraded"])
+
+    def test_canonical_potential_gauge_affine_probe(self) -> None:
+        sample = affine_probe.probe(5, prime=4194301, fresh_points=16)
+        print("OZ_T3_016_A_AFFINE_SAMPLE=" + json.dumps(sample, sort_keys=True), flush=True)
+        self.assertEqual(sample["n"], 5)
+        self.assertEqual(sample["prime"], 4194301)
+        self.assertEqual(sample["e1_columns"], 1624)
+        self.assertEqual(sample["gauge_coordinates"], 576)
+        self.assertEqual(sample["augmented_rank"], 1624)
+        self.assertEqual(sample["solver_nbad"], 0)
+        self.assertEqual(sample["fresh_points"], 16)
+        self.assertEqual(sample["fresh_violations"], 0)
+        self.assertEqual(sample["gauge_violations"], 0)
+        self.assertEqual(len(sample["standalone_blocks"]), 7)
+        self.assertEqual(len(sample["section_nonzero_coefficients_by_block"]), 7)
+        self.assertEqual(len(sample["section_sha256"]), 64)
 
     def test_terminal_and_firewall(self) -> None:
         self.assertEqual(
