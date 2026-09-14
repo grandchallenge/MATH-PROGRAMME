@@ -22,7 +22,7 @@ Current admitted upstream source revision:
 - Programme source disposition remains partial admission with blockers;
 - `promotion_effect: NONE`.
 
-Order-7 loci used by the current successor are unchanged from governed source head `790685b7ee4f642a8a88a1bd120636d1b8b39ea8` to the current admitted revision:
+Order-7 loci used by the current successor:
 
 - `work/Z5CF_TELESCOPER.md`: blob `a634b070d5d95d09749137c26bc51012f318683b`;
 - `work/Z5CF_LIFT.md`: blob `f1c48b2ce0951ef4a4aefa1d449e53fe33ce5cc5`;
@@ -30,7 +30,7 @@ Order-7 loci used by the current successor are unchanged from governed source he
 - `work/z5la/z5cf_order7_partial.json`: blob `d6024c7244a4a45ac759b455f65fca6d377b735d`;
 - `work/z5la/a_lift.json`: blob `564fc9637f31b870d85dab293d6cbb5cfe52bae0`.
 
-Source-reported mathematics remains candidate evidence until independently replayed in the Programme. Modular or sampled evidence does not become theorem authority merely because it is source-pinned.
+Source-reported mathematics remains candidate evidence until independently replayed in the Programme. Modular evidence is used only where it supplies an exact nonzero-minor witness or other completeness-backed implication.
 
 ## Exhausted protected T3 classes
 
@@ -48,15 +48,15 @@ T3-015-A extracted the canonical 506-generator rational-difference module with S
 
 `cdabf6d7873f3aa8e9d53b39fd7b15341dbee58ce9684911d015aee9aaae04da`.
 
-T3-015-B established its exact structural reduction. T3-015-C then independently reconstructed the module and isolated the unique maximal-degree witness coordinate
+T3-015-B established its exact structural reduction. T3-015-C isolated the unique maximal-degree witness coordinate
 
 `M = H_k_2 * H_nk_1 * H_nkl_1`.
 
-Only generator 59 contributes to that coordinate. After cancellation of the protected nonzero `SK` multiplier, every global certificate in the admitted class would have to satisfy
+Only generator 59 contributes. Every global certificate in the admitted class would have to satisfy
 
 `q_59(n,k+1,l) - q_59(n,k,l) = 1/(k+l+1)`.
 
-Over `Q(n,l)(k)`, every rational forward difference has zero discrete residue on each integer-shift pole orbit. The right-hand side has simple-orbit residue 1. Hence no rational `q_59` exists, and one impossible necessary coordinate refutes the full admitted 506-function system.
+Over `Q(n,l)(k)`, every rational forward difference has zero discrete residue on each integer-shift pole orbit. The right-hand side has simple-orbit residue 1. Hence no rational `q_59` exists.
 
 Protected identities:
 
@@ -64,17 +64,15 @@ Protected identities:
 - protected merge/readback: `a05c16d2988a9a0c73f9c62b482c96777a49c5ea`;
 - terminal: `GLOBAL_RATIONAL_DELTA_CLASS_OBSTRUCTED__COMPLETENESS_BACKED`.
 
-This is a completeness-backed class obstruction, not a bounded degree/denominator scan. It refutes only the protected reduced-residual architecture. T3 itself remains open.
+This refutes only the protected reduced-residual architecture. T3 itself remains open.
 
 ## Current T3 frontier
 
-The obsolete frontier `COUPLED_RATIONAL_DELTA_SOLVER_REQUIRED` is closed by T3-015-C.
-
 The current successor is issue #964:
 
-`OZ-RT-BZ-T3-016-A — order-7 Popov/order-basis certificate compression`.
+`OZ-RT-BZ-T3-016-A — order-7 discrete-curl / Popov certificate compression`.
 
-This is a separately governed architecture route. It does **not** reopen the refuted T3-015 class.
+This is a separately governed architecture route and does **not** reopen T3-015-C.
 
 The pinned source reports a minimal order-7 left multiple
 
@@ -82,29 +80,56 @@ The pinned source reports a minimal order-7 left multiple
 
 with
 
-`A = sum_{t=0}^4 a_t(n) S_n^t`, `a_t in Z[n]`,
+`A = sum_{t=0}^4 a_t(n) S_n^t`, `a_t in Z[n]`.
 
-and supplies an exact factorization intended to prove that the leading coefficient `a_4(n)` never vanishes for integer `n >= 0`. It also reports seven of fifteen order-7 certificate blocks in compact characteristic-zero form. The remaining eight blocks are modularly verified but not lifted into a usable characteristic-zero certificate.
+The current PR #965 independently replays the constant-first lifted coefficient objects, exact `a_4(n) != 0` argument, module shape, and normalized-shift flatness.
 
-For the seven standalone residual blocks, the source E1 cofactor ansatz has 1624 columns and reports generic rank 1106, leaving a 518-dimensional homogeneous gauge. Two pivot choices produce severe `n`-degree growth and a naive cleared certificate estimate near 500 MB. Those rank/nullity and size statements remain source evidence pending Programme replay.
+### Reconciled E1 geometry
 
-The source also records an exact trivial-pair freedom
+The source report `rank=1106` in 1624 columns / kernel dimension `518` is **not** promoted. Independent reconstruction of the stated E1 ansatz yields the corrected generic geometry
 
-`(delta, epsilon) = (gl*h(l+1)-h, -(gk*h(k+1)-h))`.
+- `rank(E1) = 1048`;
+- `dim ker(E1) = 576`;
+- `ker(E1) = image(discrete curl)` over `Q(n)`.
 
-For the order-7 normalized shifts,
+For
 
-`gk(n,k,l) gl(n,k+1,l) = gl(n,k,l) gk(n,k,l+1)`
+`D = (k+1)(l+1)(k+l+1)(k+l+2) prod_{j=1..7}(n+k+j)(n+l+j)`,
 
-identically. Therefore the current Programme plan is not to choose yet another arbitrary pivot gauge. It is to reconstruct the characteristic-zero scalar cofactor matrix, identify and quotient the structured discrete-curl syzygy module, then compute a shifted Popov/minimal-approximant/order basis for a degree-minimising affine section.
+with E1 numerator bidegree at most `(28,28)` and boundary forcing, the complete homogeneous freedom is parameterized by
 
-Current bounded preflight terminal:
+`h = k^2 l^2 H(k,l) / ((k+l+1) prod_{j=1..6}(n+k+j)(n+l+j))`,
 
-`ORDER7_SOURCE_PREFLIGHT_REPLAYED__POPOV_REDUCTION_REQUIRED`.
+`bideg(H) <= (23,23)`, giving exactly `24^2 = 576` parameters, and
 
-The successor may use modular computation, CRT, interpolation, rational reconstruction, or a pinned external polynomial-matrix implementation as acceleration. Any positive certificate must reconstruct and replay exactly in characteristic zero through an independent GCL verifier.
+`(r,s) = (gl*h(k,l+1)-h, -(gk*h(k+1,l)-h))`.
 
-A positive compression result is not itself T3. Full independent replay of all fifteen order-7 blocks, pole/boundary obligations, finite initial conditions, and the `a_4 != 0` induction is required before a separately governed T3 bridge may be considered.
+Exact denominator clearing puts every such pair inside E1. Exact flatness makes its divergence zero. A rank-576 modular nonzero-minor witness proves generic curl dimension 576; a rank-1048 witness for an independently reconstructed 1048-by-1624 E1 evaluation matrix proves generic operator rank at least 1048. Since the 576-dimensional curl image already lies in the kernel, rank is at most 1048. Equality follows in characteristic zero.
+
+Deterministic witness data are recorded in `campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/CONTRACT.json` and replayed independently by producer and verifier.
+
+Current intermediate terminal, subject to protected admission of PR #965:
+
+`ORDER7_E1_KERNEL_IDENTIFIED_AS_DISCRETE_CURL__POTENTIAL_SECTION_REDUCTION_REQUIRED`.
+
+### Remaining affine compression problem
+
+The remaining task is not to discover an opaque 518-dimensional quotient. It is to choose the 576 coefficient functions of the exact potential `H` so that a particular residual cofactor section has minimal `n`-degree and height.
+
+The next exact sequence is:
+
+1. reconstruct a particular E1 residual section over sufficient exact/modular `n` samples;
+2. attach the exact 576-potential homogeneous parameterization;
+3. formulate the affine section problem over `Q[n]`;
+4. compute a shifted Popov/minimal-approximant/order basis, or equivalent completeness-backed degree reduction, in the potential coordinates;
+5. reconstruct the seven standalone residual blocks in characteristic zero;
+6. propagate the compatible gauge into the constant block;
+7. independently replay all fifteen order-7 identities and pole/boundary obligations;
+8. verify finite initial conditions and the `a_4 != 0` induction before any separately governed T3 bridge.
+
+The source's two high-degree pivot gauges remain negative diagnostics about those representatives. They are not a completeness-backed obstruction to a lower-degree potential section.
+
+A positive compression result is not itself T3.
 
 ## Claim firewall
 
@@ -136,10 +161,10 @@ Read from protected state before mutation:
 - `governance/governed_campaign_registry.json`;
 - `governance/mathsolve_routing_audit.json`;
 - `campaigns/odd_zeta/OZ_SOURCE_REVISION_DELTA_003/OZ_SOURCE_REVISION_DELTA_003.json`;
-- `campaigns/odd_zeta/OZ_RT_BZ_T3_015_A/` for the canonical 506-generator module;
-- `campaigns/odd_zeta/OZ_RT_BZ_T3_015_B/` for structural reduction;
-- `campaigns/odd_zeta/OZ_RT_BZ_T3_015_C/` for the completeness-backed obstruction;
-- `campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/` for the current order-7 route;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_015_A/`;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_015_B/`;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_015_C/`;
+- `campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/`;
 - issue #964 for the current work contract;
 - `grandchallenge/MATHCERT:governance/certification_routes.json`, route `MC-ROUTE-OZ-001`.
 
