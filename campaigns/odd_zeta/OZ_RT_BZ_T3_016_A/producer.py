@@ -25,7 +25,10 @@ SOURCE_BLOBS = {
     "work/z5la/z5cf_order7_partial.json": "d6024c7244a4a45ac759b455f65fca6d377b735d",
     "work/z5la/a_lift.json": "564fc9637f31b870d85dab293d6cbb5cfe52bae0",
     "work/z5la/o_scan.py": "bc6e9a59a48b15eddbab8e80ad4e5063972582d2",
+    "work/z5la/o_scan_E1.log": "9085d23798074e9e86bc1c41faaf17a7e4b1386f",
     "work/z5la/o_csweep.py": "b506b9d6fbd405e6ac36fc790aa354196df20938",
+    "work/z5la/o_final.py": "e51582d64e664714524ccf566178c94fc30b202a",
+    "work/z5la/o_final.log": "fdb111957380d1be0876982f706980eb074fc9ab",
     "work/z5la/solve.py": "478b15ce7584b5e8af6caaf5326d99c85a7b55bf",
 }
 EXPECTED_MONOMIALS = [
@@ -318,8 +321,8 @@ def _geometry_evidence(n, k, l) -> dict:
             "generic curl subspace of the kernel; nonzero modular minors witness curl "
             "rank 576 and operator rank 1048, forcing equality over Q(n)"
         ),
-        "source_reported_rank_1106_kernel_518_reconciled": False,
-        "source_reported_geometry_disposition": "DOWNGRADED_INCOMPATIBLE_WITH_RECONSTRUCTED_E1_OPERATOR",
+        "source_reported_rank_1106_kernel_518_reconciled": True,
+        "source_reported_geometry_disposition": "RECONCILED_AS_MIXED_ANSATZ_DIMENSION_ACCOUNTING",
     }
 
 
@@ -427,8 +430,14 @@ def build_preflight() -> dict:
             "cofactor_columns": 1624,
             "generic_rank": 1106,
             "kernel_dimension": 518,
-            "authority": "SOURCE_REPORTED_DOWNGRADED_AFTER_EXACT_RECONCILIATION",
-            "disposition": "INCOMPATIBLE_WITH_RECONSTRUCTED_E1_OPERATOR",
+            "authority": "SOURCE_SUMMARY_CROSS_REGIME_ARITHMETIC_NOT_PROMOTED",
+            "disposition": "RECONCILED_AS_MIXED_ANSATZ_DIMENSION_ACCOUNTING",
+            "unforced_scan_columns": 1682,
+            "unforced_scan_rank": 1106,
+            "unforced_scan_kernel_dimension": 576,
+            "boundary_forced_columns": 1624,
+            "boundary_forced_reconstructed_rank": 1048,
+            "boundary_forced_kernel_dimension": 576,
         },
         "terminal": TERMINAL,
         "proof_effect": "NONE",
