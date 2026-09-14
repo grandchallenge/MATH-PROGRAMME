@@ -187,12 +187,22 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso.hom.app Q
   have hbridge :=
     weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j
+  have hnatTail :=
+    ConcreteCategory.congr_hom
+      (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.naturality
+        ((profiniteToCompHaus).map
+          (basisBooleanPointProbe X (fun _ => true))).op)
+      ((ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreePresheafNatIso.hom.app Q).app S))
+        (weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j))
+  simp only [ConcreteCategory.comp_apply] at hnatTail
   have hbridgeTail := congrArg
     (fun t =>
       (ConcreteCategory.hom
         (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.app
           (op ((profiniteToCompHaus).obj P)))) t)
     hbridge
+  have hbridgeTail' := hnatTail.symm.trans hbridgeTail
   simp [eTail, eFree, freeHomSectionsEquiv,
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso,
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedIso,
@@ -205,20 +215,12 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
     Adjunction.homEquiv_naturality_left,
-    CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app] at hbridgeTail
-  convert hbridgeTail using 1
+    CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app] at hbridgeTail'
+  convert hbridgeTail' using 1
   · rfl
   ·
-    have hnat :=
-      ConcreteCategory.congr_hom
-        (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.naturality
-          ((profiniteToCompHaus).map
-            (basisBooleanPointProbe X (fun _ => true))).op)
-        ((ConcreteCategory.hom
-          ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreePresheafNatIso.app Q).hom.app S))
-          (weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j))
-    simpa only [ConcreteCategory.comp_apply] using hnat.symm
-  ·
+    apply LocallyConstant.ext
+    intro p
     simp [P, T, Q, D, S, eTail, eFree, freeHomSectionsEquiv,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedIso,
