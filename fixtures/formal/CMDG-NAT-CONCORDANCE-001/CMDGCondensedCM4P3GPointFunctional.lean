@@ -215,7 +215,20 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
     Adjunction.homEquiv_naturality_left,
     CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app] at hbridgeTail
-  convert hbridgeTail using 1
+  convert hbridgeTail using 1 <;>
+    simp [P, T, Q, D, S, eTail, eFree, freeHomSectionsEquiv,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedIso,
+      CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
+      CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
+      CMDG.CondensedCM4P2E.discreteFreeIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
+      Adjunction.homEquiv_naturality_left,
+      CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app]
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
