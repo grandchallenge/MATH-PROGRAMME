@@ -1,3 +1,4 @@
+import CMDGCondensedCM4P3MFiniteQuotientBridge
 import CMDGCondensedCM4P3G
 import CMDGCondensedCM4P3GFiniteBooleanMeasureHom
 
@@ -91,3 +92,124 @@ noncomputable def measurePointIntegralFunctional
 #print axioms measurePointIntegralFunctional
 
 end CMDG.CondensedCM4P3G.PointFunctional
+
+namespace CMDG.CondensedCM4P3M.KernelPointBridge
+
+universe u
+
+open CategoryTheory Limits Opposite
+open CMDG.CondensedCM4P3G
+open CMDG.CondensedCM4P3G.FreeSections
+open CMDG.CondensedCM4P3J.WeightedBooleanMeasure
+open CMDG.CondensedCM4P3L.KernelFunctional
+open CMDG.CondensedCM4P2E.RightKanReconstruction
+
+/-- The one-point profinite probe selecting `x`. -/
+noncomputable def profinitePointProbe
+    (X : Profinite.{u}) (x : X) : Profinite.of PUnit.{u + 1} ⟶ X :=
+  ConcreteCategory.ofHom
+    { toFun := fun _ => x
+      continuous_toFun := continuous_const }
+
+/-- Finite-stage evaluation-weight measure is the Dirac point generator after the protected
+measure-to-free comparison. -/
+theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
+    (X : Profinite.{u}) (x : X) (j : DiscreteQuotient X) :
+    (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
+        (basisBooleanPointProbe X (fun _ => true)) ≫
+      weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j =
+    (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
+        (profinitePointProbe (X.diagram.obj j) ((finiteQuotientMap X j).hom.hom x)) ≫
+      measureSolidification.app (X.diagram.obj j) := by
+  let P := Profinite.of PUnit.{u + 1}
+  let T := CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X
+  let Q := CMDG.CondensedCM4P3G.FiniteBooleanMeasure.FiniteQuotientObject X j
+  let A := CMDG.CondensedCM4P2D.measureFunctor.obj (X.diagram.obj j)
+  let D :=
+    (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+      ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
+      Condensed.discrete (ModuleCat.{u + 1} CMDG.CondensedCM4P3G.R.{u})).obj Q
+  let S := op ((profiniteToCompHaus).obj T)
+  let eComp :=
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso.hom.app Q
+  let eFree := CMDG.CondensedCM4P2E.finiteFreeDiscreteIso.hom.app Q
+  apply (cancel_mono eComp).1
+  simp only [Category.assoc]
+  have hfac :
+      measureSolidification.app (X.diagram.obj j) ≫ eComp =
+        𝟙 ((Condensed.finFree CMDG.CondensedCM4P3G.R.{u}).obj Q) := by
+    dsimp [eComp, Q]
+    simpa only [Functor.comp_obj] using
+      (measureSolidification_fac (X.fintypeDiagram.obj j))
+  rw [hfac]
+  apply (cancel_mono eFree).1
+  simp only [Category.assoc]
+  have hpost :
+      ∀ {B C : CondensedMod.{u} CMDG.CondensedCM4P3G.R.{u}}
+        (g : (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).obj T ⟶ B)
+        (h : B ⟶ C),
+        freeHomSectionsEquiv T C (g ≫ h) =
+          (ConcreteCategory.hom
+            (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map h).hom.app S))
+            (freeHomSectionsEquiv T B g) := by
+    intro B C g h
+    change
+      (coherentTopology CompHaus.{u}).uliftYonedaEquiv
+        ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
+          ((profiniteToCondensed).obj T) C (g ≫ h)) = _
+    rw [Adjunction.homEquiv_naturality_right]
+    rfl
+  have hsection :
+      freeHomSectionsEquiv T (CMDG.CondensedCM4P2E.finiteMeasure.obj Q)
+          (weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j) =
+        weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j := by
+    change
+      freeHomSectionsEquiv T A
+          (weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j) =
+        weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j
+    exact Equiv.apply_symm_apply _ _
+  apply (freeHomSectionsEquiv P D).injective
+  rw [freeHomSectionsEquiv_precomp]
+  rw [hpost, hsection]
+  rw [freeHomSectionsEquiv_precomp]
+  simp only [Category.id_comp]
+  have he :
+      eComp ≫ eFree =
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso.hom.app Q ≫
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso.hom.app Q ≫
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso.hom.app Q := by
+    dsimp [eComp, eFree]
+    simp [CMDG.CondensedCM4P2E.FiniteDualTransport.finiteComparisonNatIso,
+      Category.assoc]
+  rw [he]
+  let eTail :=
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso.hom.app Q ≫
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso.hom.app Q
+  have hbridge :=
+    weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j
+  have hbridgeTail := congrArg
+    (fun t =>
+      (ConcreteCategory.hom
+        (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.app
+          (op ((profiniteToCompHaus).obj P)))) t)
+    hbridge
+  simp [eTail, eFree, freeHomSectionsEquiv,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedIso,
+    CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
+    CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
+    CMDG.CondensedCM4P2E.discreteFreeIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
+    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
+    Adjunction.homEquiv_naturality_left,
+    CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app] at hbridgeTail
+  convert hbridgeTail using 1 <;> rfl
+
+#check profinitePointProbe
+#check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
+#print axioms weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
+
+end CMDG.CondensedCM4P3M.KernelPointBridge
