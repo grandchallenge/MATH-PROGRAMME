@@ -10,7 +10,7 @@
 - Umbrella tracker: `grandchallenge/MATH-PROGRAMME#113` is navigation only.
 - Current Programme successor issue: `grandchallenge/MATH-PROGRAMME#964` (`OZ-RT-BZ-T3-016-A`).
 
-Always re-read live protected heads before mutation. Hashes here record the exact state of this handoff and are not substitutes for current protected-state readback.
+Always re-read live protected heads before mutation. Hashes here record this handoff state and do not replace protected-state readback.
 
 ## Source lock
 
@@ -22,41 +22,25 @@ Current admitted upstream source revision:
 - Programme source disposition remains partial admission with blockers;
 - `promotion_effect: NONE`.
 
-Order-7 loci used by the current successor:
-
-- `work/Z5CF_TELESCOPER.md`: blob `a634b070d5d95d09749137c26bc51012f318683b`;
-- `work/Z5CF_LIFT.md`: blob `f1c48b2ce0951ef4a4aefa1d449e53fe33ce5cc5`;
-- `work/Z5CF_LINALG.md`: blob `637ecaa7f3ee941a87932de390eb7336d7fde677`;
-- `work/z5la/z5cf_order7_partial.json`: blob `d6024c7244a4a45ac759b455f65fca6d377b735d`;
-- `work/z5la/a_lift.json`: blob `564fc9637f31b870d85dab293d6cbb5cfe52bae0`.
-
-Source-reported mathematics remains candidate evidence until independently replayed in the Programme. Modular evidence is used only where it supplies an exact nonzero-minor witness or other completeness-backed implication.
+Source-reported mathematics remains candidate evidence until independently replayed in the Programme. Modular or sampled evidence does not become theorem authority merely because it is source-pinned.
 
 ## Exhausted protected T3 classes
 
 Do not silently recycle these as successors:
 
-- T3-011 through R: frozen coordinate-zero Laurent-monomial multiplier-response algebra structurally exhausted; terminal corollary `FROZEN_COORDINATE_ZERO_LAURENT_MONOMIAL_RESPONSE_ALGEBRA_COKERNEL_INVISIBLE`.
+- T3-011 through R: frozen coordinate-zero Laurent-monomial multiplier-response algebra structurally exhausted.
 - T3-012-A: `NORMALIZED_RECURRENCE_OPERATOR_TANGENT_POLY_DEG_LE_9_EXHAUSTED`.
 - T3-012-B: `SUPPORT_LOCKED_DEGREE0_COUPLED_CORRECTION_RECOMBINATION_INCOMPATIBLE`.
-- T3-013-A: fixed source coefficient class `span_Q {1,rho,sigma}` exhausted; terminal `QROW_CERTIFICATE_WEIGHTED_STRICT_INTERIOR_SUBSYSTEM_INCONSISTENT`.
+- T3-013-A: fixed source coefficient class `span_Q {1,rho,sigma}` exhausted.
 - T3-015-C: the full protected 506-function reduced-residual class `SOURCE_DECLARED_RATIONAL_DELTA_COEFFICIENT_CLASS_001` is completeness-obstructed under its admitted architecture.
 
 ## T3-015-C protected completion
 
-T3-015-A extracted the canonical 506-generator rational-difference module with SHA-256
-
-`cdabf6d7873f3aa8e9d53b39fd7b15341dbee58ce9684911d015aee9aaae04da`.
-
-T3-015-B established its exact structural reduction. T3-015-C isolated the unique maximal-degree witness coordinate
-
-`M = H_k_2 * H_nk_1 * H_nkl_1`.
-
-Only generator 59 contributes. Every global certificate in the admitted class would have to satisfy
+T3-015-C independently reconstructed the canonical 506-generator module and isolated the unique maximal-degree witness coordinate `M = H_k_2 * H_nk_1 * H_nkl_1`. Only generator 59 contributes. Any certificate in the admitted class would require
 
 `q_59(n,k+1,l) - q_59(n,k,l) = 1/(k+l+1)`.
 
-Over `Q(n,l)(k)`, every rational forward difference has zero discrete residue on each integer-shift pole orbit. The right-hand side has simple-orbit residue 1. Hence no rational `q_59` exists.
+Over `Q(n,l)(k)`, rational forward differences have zero discrete residue on each integer-shift pole orbit, while the right side has simple-orbit residue 1. Hence no rational `q_59` exists.
 
 Protected identities:
 
@@ -64,72 +48,59 @@ Protected identities:
 - protected merge/readback: `a05c16d2988a9a0c73f9c62b482c96777a49c5ea`;
 - terminal: `GLOBAL_RATIONAL_DELTA_CLASS_OBSTRUCTED__COMPLETENESS_BACKED`.
 
-This refutes only the protected reduced-residual architecture. T3 itself remains open.
+This refutes only the protected reduced-residual architecture. T3 remains open.
 
 ## Current T3 frontier
 
-The current successor is issue #964:
+The current successor is #964, `OZ-RT-BZ-T3-016-A — order-7 discrete-curl / Popov certificate compression`.
 
-`OZ-RT-BZ-T3-016-A — order-7 discrete-curl / Popov certificate compression`.
+The pinned source supplies the order-7 left multiple `L_min = A * L_BZ`, five exact degree-58 multiplier polynomials, seven compact Theorem-R blocks, and modular candidate cofactors for the eight residual blocks. The Programme independently replayed the lifted multiplier data, including exact nonvanishing of `a_4(n)` for every integer `n >= 0`.
 
-This is a separately governed architecture route and does **not** reopen T3-015-C.
+### Exact boundary-forced E1 homogeneous geometry
 
-The pinned source reports a minimal order-7 left multiple
+For the actual certificate ansatz with `k | N_r`, `l | N_s`, numerator bidegree `(28,28)`, there are 1624 columns. The exact potential
 
-`L_min = A * L_BZ`,
+`h = k^2 l^2 H(k,l) / ((k+l+1) prod_{j=1..6}(n+k+j)(n+l+j))`, `bideg(H)<= (23,23)`,
 
-with
+has 576 parameters. Its discrete curl lies exactly inside E1, and normalized-shift flatness annihilates it.
 
-`A = sum_{t=0}^4 a_t(n) S_n^t`, `a_t in Z[n]`.
+At `n=5`, `p=4194301`, independent nonzero-minor witnesses give curl rank 576 and boundary-forced E1 rank 1048. Therefore over `Q(n)`:
 
-The current PR #965 independently replays the constant-first lifted coefficient objects, exact `a_4(n) != 0` argument, module shape, and normalized-shift flatness.
+- `rank(E1)=1048`;
+- `dim ker(E1)=576`;
+- `ker(E1)=image(discrete curl)`.
 
-### Reconciled E1 geometry
+### Reconciliation of the source `1106/518` prose
 
-The source report `rank=1106` in 1624 columns / kernel dimension `518` is **not** promoted. Independent reconstruction of the stated E1 ansatz yields the corrected generic geometry
+Do not treat `1106/518` as a contradictory second geometry. The pinned raw source resolves it:
 
-- `rank(E1) = 1048`;
-- `dim ker(E1) = 576`;
-- `ker(E1) = image(discrete curl)` over `Q(n)`.
+- `o_scan.run()` uses `force_k=0, force_l=0`; at order 7/slack 18 it has **1682 columns**, and `o_scan_E1.log` reports rank **1106**, so nullity is **576**.
+- `o_final.build()` uses `force=(1,1)`; the boundary-forced certificate has **1624 columns**. Programme replay gives rank **1048**, so nullity is again **576**.
 
-For
+The prose summary mixed the unforced rank 1106 with the forced column count 1624, producing the spurious arithmetic figure 518. Both coherent regimes agree on the 576-dimensional curl freedom.
 
-`D = (k+1)(l+1)(k+l+1)(k+l+2) prod_{j=1..7}(n+k+j)(n+l+j)`,
+### Modular route evidence
 
-with E1 numerator bidegree at most `(28,28)` and boundary forcing, the complete homogeneous freedom is parameterized by
+Pinned `o_final.log` reports four sampled `(n,p)` fibers where:
 
-`h = k^2 l^2 H(k,l) / ((k+l+1) prod_{j=1..6}(n+k+j)(n+l+j))`,
+- all seven standalone E1 blocks solve;
+- the constant block solves in the measured `Z3` ansatz;
+- 350 fresh points × 15 blocks all satisfy the identities;
+- bottom-boundary obligations hold.
 
-`bideg(H) <= (23,23)`, giving exactly `24^2 = 576` parameters, and
+This is useful construction evidence only. The remaining obligation is characteristic-zero lifting and compression.
 
-`(r,s) = (gl*h(k,l+1)-h, -(gk*h(k+1,l)-h))`.
+### Current affine construction
 
-Exact denominator clearing puts every such pair inside E1. Exact flatness makes its divergence zero. A rank-576 modular nonzero-minor witness proves generic curl dimension 576; a rank-1048 witness for an independently reconstructed 1048-by-1624 E1 evaluation matrix proves generic operator rank at least 1048. Since the 576-dimensional curl image already lies in the kernel, rank is at most 1048. Equality follows in characteristic zero.
+The branch contains a source-locked canonical potential-gauge probe. It fixes the 576 `r`-numerator coordinates `k^a l^b`, `2<=a<=25`, `0<=b<=23`, solves the seven standalone residual blocks, and checks fresh unused points. The chosen coordinate minor is structurally block-lower-triangular; at `n=5`, `p=4194301`, its 24-by-24 diagonal block has determinant `2300711 mod 4194301`, so the 576-coordinate gauge is invertible at the governed witness.
 
-Deterministic witness data are recorded in `campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/CONTRACT.json` and replayed independently by producer and verifier.
+The affine sample remains diagnostic until the exact-head governed replay succeeds and its output is recorded.
 
-Current intermediate terminal, subject to protected admission of PR #965:
+Current intermediate terminal:
 
 `ORDER7_E1_KERNEL_IDENTIFIED_AS_DISCRETE_CURL__POTENTIAL_SECTION_REDUCTION_REQUIRED`.
 
-### Remaining affine compression problem
-
-The remaining task is not to discover an opaque 518-dimensional quotient. It is to choose the 576 coefficient functions of the exact potential `H` so that a particular residual cofactor section has minimal `n`-degree and height.
-
-The next exact sequence is:
-
-1. reconstruct a particular E1 residual section over sufficient exact/modular `n` samples;
-2. attach the exact 576-potential homogeneous parameterization;
-3. formulate the affine section problem over `Q[n]`;
-4. compute a shifted Popov/minimal-approximant/order basis, or equivalent completeness-backed degree reduction, in the potential coordinates;
-5. reconstruct the seven standalone residual blocks in characteristic zero;
-6. propagate the compatible gauge into the constant block;
-7. independently replay all fifteen order-7 identities and pole/boundary obligations;
-8. verify finite initial conditions and the `a_4 != 0` induction before any separately governed T3 bridge.
-
-The source's two high-degree pivot gauges remain negative diagnostics about those representatives. They are not a completeness-backed obstruction to a lower-degree potential section.
-
-A positive compression result is not itself T3.
+Next: obtain canonical fixed-`n` samples; reconstruct their rational dependence on `n`; compute a degree-minimizing potential section; propagate the compatible gauge into the constant block; independently replay all fifteen blocks in characteristic zero.
 
 ## Claim firewall
 
@@ -142,17 +113,7 @@ Until a separately governed successor changes protected state:
 - `proof_effect = NONE`;
 - `promotion_effect = NONE`.
 
-T3 does not automatically discharge T1-top, DEPTH, Sharp-12, primes `2,3`, formal replay, MATHCERT, irrationality, infinitude, novelty, publication, patentability, deployment, product, or commercial gates.
-
-## Independent OZ lanes
-
-- T1-top remains `OPEN_WITH_CHARACTERIZED_BLOCKER`.
-- DEPTH remains `OPEN_WITH_CHARACTERIZED_BLOCKER`.
-- Sharp-12 remains gated by separately accepted T1-top and DEPTH results.
-- Primes `2,3` remain outside the current conditional `p >= 5` chain.
-- Eisenstein-companion and cuspidal/Fricke packets retain their existing source-admission blockers.
-- Formal replay remains independently governed.
-- MATHCERT route `MC-ROUTE-OZ-001` remains pending absent an accepted certifiable OZ proof object.
+T1-top, DEPTH, Sharp-12, primes `2,3`, formal replay, MATHCERT, irrationality, infinitude, novelty, publication, patentability, deployment, product, and commercial gates remain unchanged.
 
 ## Authoritative pointers for continuation
 
@@ -161,15 +122,11 @@ Read from protected state before mutation:
 - `governance/governed_campaign_registry.json`;
 - `governance/mathsolve_routing_audit.json`;
 - `campaigns/odd_zeta/OZ_SOURCE_REVISION_DELTA_003/OZ_SOURCE_REVISION_DELTA_003.json`;
-- `campaigns/odd_zeta/OZ_RT_BZ_T3_015_A/`;
-- `campaigns/odd_zeta/OZ_RT_BZ_T3_015_B/`;
 - `campaigns/odd_zeta/OZ_RT_BZ_T3_015_C/`;
 - `campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/`;
-- issue #964 for the current work contract;
+- issue #964;
 - `grandchallenge/MATHCERT:governance/certification_routes.json`, route `MC-ROUTE-OZ-001`.
 
 ## Stop conditions
 
-Stop only on a genuine authority, governance, authentication, safety, material source/target drift, exact verification failure that cannot be repaired within scope, a completeness-backed mathematical obstruction, or separately established material closure.
-
-Routine solver engineering, modular acceleration, polynomial-matrix/order-basis implementation, CI recovery, exact reconstruction, and documentary repair are not Human-Steward stop conditions under the currently authorized continuation.
+Stop only on a genuine authority, governance, authentication, safety, material source/target drift, exact verification failure that cannot be repaired within scope, a completeness-backed mathematical obstruction, or separately established material closure. Routine solver engineering, modular acceleration, polynomial-matrix/order-basis implementation, CI recovery, exact reconstruction, and documentary repair are not Human-Steward stop conditions.
