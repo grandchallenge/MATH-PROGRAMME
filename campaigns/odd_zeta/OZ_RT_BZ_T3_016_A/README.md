@@ -26,9 +26,7 @@ with `a0(n)=41218 n^3+198849 n^2+320790 n+173057`.
 
 The direct `n=0,1` values are nonzero. For `n>=2`, put `m=n-2`; coefficient positivity of `F4(m+2)` and positivity of every displayed factor give `a_4(n)>0`.
 
-The source coefficient arrays are constant-first. This convention is replayed explicitly rather than relying on SymPy's default coefficient ordering.
-
-The replay also checks the locked 15-monomial module, five Theorem-R transports, and the exact flatness identity
+The source coefficient arrays are constant-first. The replay also checks the locked 15-monomial module, five Theorem-R transports, and
 
 `gk(n,k,l) gl(n,k+1,l) = gl(n,k,l) gk(n,k,l+1)`.
 
@@ -60,65 +58,57 @@ N_s = l^2 (l+1)(n+l+7) [
 
 Thus every such potential lands inside the boundary-forced E1 ansatz. Flatness makes its weighted divergence identically zero.
 
-The generic dimensions are fixed by exact nonzero-minor reasoning:
+At `n=5`, `p=4194301`, the 576-parameter curl witness has rank 576. Exact flatness gives `rank(M) <= 1048`; an independently reconstructed `1048 x 1624` E1 evaluation matrix has rank 1048. Therefore over `Q(n)`:
 
-- at `n=5`, `p=4194301`, the 576-parameter curl witness has rank `576`;
-- exact flatness gives `image(curl) subset ker(M)`, so generic `rank(M) <= 1624-576 = 1048`;
-- an independently reconstructed `1048 x 1624` E1 evaluation matrix at the same admissible specialization has rank `1048`;
-- hence generic `rank(M)=1048`, `dim ker(M)=576`, and `ker(M)=image(curl)` over `Q(n)`.
-
-The producer and verifier use different curl reconstructions. The producer evaluates rational potentials; the verifier builds the denominator-cleared curl coefficient matrix directly and checks that the independently reconstructed E1 operator annihilates it.
+- `rank(M)=1048`;
+- `dim ker(M)=576`;
+- `ker(M)=image(curl)`.
 
 ## Reconciliation of the source `1106/518` summary
 
-The pinned source prose reports rank `1106` together with `1624` columns and therefore states a 518-dimensional kernel. The raw pinned code and logs show that these numbers came from two different E1 conventions.
+The source prose pairs rank `1106` with `1624` columns and states a 518-dimensional kernel. The pinned raw code and logs show that those values come from two different ansatz conventions.
 
-`o_scan.run()` constructs its exploratory E1 ansatz with `force_k=0, force_l=0`. At order 7, slack 18, this is a `(28,28)` numerator box with **1682 columns**. `o_scan_E1.log` records rank **1106**. Its homogeneous dimension is therefore
+`o_scan.run()` constructs the exploratory E1 ansatz with `force_k=0, force_l=0`. At order 7/slack 18, it has **1682 columns**; `o_scan_E1.log` records rank **1106**, hence nullity **576**.
 
-`1682 - 1106 = 576`.
+`o_final.build()` constructs the actual certificate ansatz with `force=(1,1)`. Removing the 29 pure-`l` coefficients of `N_r` and 29 pure-`k` coefficients of `N_s` leaves **1624 columns**. Programme reconstruction gives rank **1048**, hence nullity **576**.
 
-`o_final.build()` constructs the actual certificate ansatz with `force=(1,1)`, enforcing the bottom boundaries. That removes the 29 pure-`l` coefficients of `N_r` and 29 pure-`k` coefficients of `N_s`, leaving **1624 columns**. The Programme reconstruction gives rank **1048**, hence again
-
-`1624 - 1048 = 576`.
-
-Therefore the source rank `1106` is not contradicted; it belongs to the unforced 1682-column scan. The spurious `518` resulted from subtracting that unforced rank from the boundary-forced column count. Both coherent ansatz regimes have the same 576-dimensional curl kernel.
-
-This reconciliation supersedes the earlier draft wording that called the source rank itself incompatible.
+The source rank `1106` is therefore not contradicted. The spurious `518` arose by subtracting the unforced rank from the boundary-forced column count. Both coherent ansatz regimes have the same 576-dimensional curl kernel. This supersedes the earlier draft wording that called the source rank itself incompatible.
 
 ## Canonical potential gauge
 
-The affine probe fixes 576 boundary-forced `r`-numerator coefficients: the rectangle `k^a l^b` with `2 <= a <= 25`, `0 <= b <= 23`.
+The affine probe fixes 576 boundary-forced `r`-numerator coefficients: `k^a l^b` with `2 <= a <= 25`, `0 <= b <= 23`.
 
-This is an actual curl minor, not an arbitrary coordinate choice. Ordering the potential monomials by the `k` exponent makes the 576-by-576 map block lower triangular. The 24 diagonal blocks are identical 24-by-24 operators on `H(l)`:
+Ordering potential monomials by `k` exponent makes this curl minor block lower triangular. Its 24 diagonal blocks are the same operator on polynomials `H(l)` of degree at most 23:
 
 `T_n H = (n+7)[(n+l+1)^3(n+7-l)^2 H(l+1) - l^2(l+1)(l+2)(n+l+7)H(l)] mod l^24`.
 
-At the governed witness `n=5`, `p=4194301`, this diagonal block has rank 24 and determinant `2300711 mod 4194301`; therefore the full 576-coordinate gauge minor is invertible at that fiber. The exact-head affine replay still must validate the full residual solve and fresh points before any affine-section claim is admitted.
+At `n=5`, `p=4194301`, the diagonal block has rank 24 and determinant `2300711 mod 4194301`; the full 576-coordinate gauge minor is therefore invertible at the governed witness.
 
 ## Source modular route evidence
 
-The pinned source already contains modular constructive evidence beyond the homogeneous analysis:
+The pinned source already contains modular constructive evidence beyond the homogeneous analysis. `o_final.log` records four fibers:
 
-- seven standalone E1 blocks solve at sampled fibers;
-- the constant block solves in the measured `Z3` ansatz at slack 16;
-- `o_final.log` records four `(n,p)` fibers for which all fifteen block identities pass 350 fresh points each and all bottom-boundary checks hold.
+- `n=5, p=4194301`;
+- `n=9, p=4194301`;
+- `n=5, p=4194287`;
+- `n=11, p=4194287`.
 
-This materially changes the engineering expectation: the sampled order-7 route is constructive. It does **not** replace characteristic-zero reconstruction. The current task is to lift and compress a compatible affine section, not to promote the modular samples as a proof.
+At every listed fiber, all seven standalone E1 blocks solve; the constant block solves in the measured `Z3` ansatz; 350 fresh points across all 15 blocks give zero violations; and bottom-boundary obligations hold.
+
+The source's earlier `o_zero3.log` also records that `Z3` first closes at slack 16 in the tested progression, with zero violations on 300 fresh points. These are modular candidate facts only. They show that the sampled order-7 route is constructive; they do not replace characteristic-zero reconstruction.
 
 ## Consequence for compression
 
-There is no unexplained 518-dimensional quotient. The full homogeneous freedom in the boundary-forced E1 ansatz is the exact 576-dimensional discrete-curl potential family.
+There is no unexplained 518-dimensional quotient. The homogeneous freedom in the boundary-forced E1 ansatz is the exact 576-dimensional discrete-curl potential family.
 
-The affine degree-minimization problem therefore becomes: choose the 576 coefficient functions of `H` over `Q(n)` so that a particular residual cofactor section has minimal `n`-degree/height. A shifted Popov, minimal-approximant, or order-basis computation may still be appropriate, but it should act on this exact potential parameterization.
-
-The source's two high-degree pivot gauges remain useful diagnostics about those representatives. They do not establish a compression obstruction.
+The affine degree-minimization problem is therefore to choose the 576 coefficient functions of `H` over `Q(n)` so that a particular residual cofactor section has minimal `n`-degree/height. Shifted Popov, minimal approximant, or order-basis machinery may act on this exact potential parameterization.
 
 ## Next exact obligations
 
 1. Replay the canonical potential-gauge affine section at fixed fibers and verify fresh points.
-2. Reconstruct enough `n`-samples to determine the rational-function degree/denominator structure in the canonical gauge.
+2. Reconstruct enough `n`-samples to determine rational-function degree/denominator structure in the canonical gauge.
 3. Form the affine `Q[n]` section problem directly in the potential coordinates.
-4. Compute a degree-minimizing or provably degree-reduced potential section, recording the shift and normalization exactly.
+4. Compute a degree-minimizing or provably degree-reduced potential section, recording shift and normalization exactly.
 5. Reconstruct the seven standalone residual cofactors in characteristic zero and propagate the compatible gauge into the constant block.
 6. Independently replay all fifteen order-7 block identities and pole/boundary obligations.
 7. Verify finite initial conditions and the `a_4 != 0` induction input.
