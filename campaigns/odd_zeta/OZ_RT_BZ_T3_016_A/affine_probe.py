@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import argparse
 import hashlib
 import json
 import os
@@ -58,7 +57,7 @@ ans = solve.Ansatz(D, D, dk0 + 18, dl0 + 18, dk0 + 18, dl0 + 18,
                    force_k=1, force_l=1)
 assert ans.nc == 1624
 
-# Natural curl coordinates: the 24x24 low-r rectangle.  The exact campaign
+# Natural curl coordinates: the 24x24 low-r rectangle. The exact campaign
 # proof identifies the full homogeneous kernel with the discrete-curl image;
 # at generic n these 576 coordinates form an invertible curl minor.
 gauge = [i for i, mon in enumerate(ans.mons_r)
@@ -106,7 +105,7 @@ fresh_violations = int(np.count_nonzero(fresh))
 if fresh_violations:
     raise RuntimeError(f"fresh residual violations: {fresh_violations}")
 
-# Digest the canonical fixed-(n,p) seven-block section.  This is diagnostic
+# Digest the canonical fixed-(n,p) seven-block section. This is diagnostic
 # identity, not theorem authority.
 xd = np.asarray(X, dtype="<i8", order="C")
 digest = hashlib.sha256(xd.tobytes(order="C")).hexdigest()
@@ -174,16 +173,3 @@ def probe(n: int, prime: int = 4194301, fresh_points: int = 48) -> dict:
         if not lines:
             raise RuntimeError("affine probe produced no output")
         return json.loads(lines[-1])
-
-
-def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--n", type=int, default=5)
-    parser.add_argument("--prime", type=int, default=4194301)
-    parser.add_argument("--fresh-points", type=int, default=48)
-    args = parser.parse_args()
-    print(json.dumps(probe(args.n, args.prime, args.fresh_points), indent=2, sort_keys=True))
-
-
-if __name__ == "__main__":
-    main()
