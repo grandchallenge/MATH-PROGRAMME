@@ -203,6 +203,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
           (op ((profiniteToCompHaus).obj P)))) t)
     hbridge
   have hbridgeTail' := hnatTail.symm.trans hbridgeTail
+  dsimp only [Q] at hbridgeTail'
   simp [eTail, eFree, freeHomSectionsEquiv,
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso,
     CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedIso,
