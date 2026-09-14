@@ -30,7 +30,8 @@ class OzRtBzT3016ATests(unittest.TestCase):
         cls.replay = verifier.verify()
 
     def test_exact_source_lock(self) -> None:
-        self.assertEqual(cls_source := self.evidence["source"]["commit"], producer.SOURCE_COMMIT)
+        cls_source = self.evidence["source"]["commit"]
+        self.assertEqual(cls_source, producer.SOURCE_COMMIT)
         self.assertEqual(cls_source, verifier.SOURCE_COMMIT)
         self.assertEqual(
             self.evidence["source"]["git_blob_sha1"],
@@ -65,18 +66,46 @@ class OzRtBzT3016ATests(unittest.TestCase):
         self.assertIn("discrete-curl", gauge["interpretation"])
         self.assertTrue(self.replay["discrete_curl_flatness_verified"])
 
-    def test_source_reported_kernel_not_promoted(self) -> None:
-        geom = self.evidence["reported_residual_geometry"]
-        self.assertEqual(geom["cofactor_columns"], 1624)
-        self.assertEqual(geom["generic_rank"], 1106)
-        self.assertEqual(geom["kernel_dimension"], 518)
-        self.assertEqual(geom["authority"], "SOURCE_REPORTED_PENDING_GENERIC_CHAR0_REPLAY")
-        self.assertFalse(self.replay["kernel_dimension_518_promoted"])
+    def test_exact_e1_kernel_geometry(self) -> None:
+        geom = self.evidence["residual_geometry"]
+        self.assertEqual(geom["potential_bidegree"], [23, 23])
+        self.assertEqual(geom["potential_dimension"], 576)
+        self.assertEqual(geom["e1_numerator_bidegree_bound"], [28, 28])
+        self.assertTrue(geom["numerator_formula_exact"])
+        self.assertEqual(geom["generic_rank"], 1048)
+        self.assertEqual(geom["generic_kernel_dimension"], 576)
+        self.assertEqual(geom["curl_image_dimension"], 576)
+        self.assertTrue(geom["curl_image_equals_generic_kernel"])
+        self.assertEqual(geom["witness"]["operator_modular_rank"], 1048)
+        self.assertEqual(geom["witness"]["curl_eval_modular_rank"], 576)
+
+        self.assertTrue(self.replay["e1_operator_reconstructed_independently"])
+        self.assertEqual(self.replay["operator_modular_rank_witness"], 1048)
+        self.assertTrue(self.replay["curl_coefficients_reconstructed_independently"])
+        self.assertEqual(self.replay["curl_modular_rank_witness"], 576)
+        self.assertTrue(self.replay["operator_annihilates_curl_coefficients"])
+        self.assertTrue(self.replay["curl_image_equals_generic_kernel"])
+
+    def test_source_reported_518_geometry_is_downgraded(self) -> None:
+        reported = self.evidence["source_reported_residual_geometry"]
+        self.assertEqual(reported["cofactor_columns"], 1624)
+        self.assertEqual(reported["generic_rank"], 1106)
+        self.assertEqual(reported["kernel_dimension"], 518)
+        self.assertEqual(
+            reported["authority"],
+            "SOURCE_REPORTED_DOWNGRADED_AFTER_EXACT_RECONCILIATION",
+        )
+        self.assertEqual(
+            reported["disposition"],
+            "INCOMPATIBLE_WITH_RECONSTRUCTED_E1_OPERATOR",
+        )
+        self.assertFalse(self.replay["source_rank_1106_kernel_518_promoted"])
+        self.assertTrue(self.replay["source_geometry_downgraded"])
 
     def test_terminal_and_firewall(self) -> None:
         self.assertEqual(
             self.evidence["terminal"],
-            "ORDER7_SOURCE_PREFLIGHT_REPLAYED__POPOV_REDUCTION_REQUIRED",
+            "ORDER7_E1_KERNEL_IDENTIFIED_AS_DISCRETE_CURL__POTENTIAL_SECTION_REDUCTION_REQUIRED",
         )
         self.assertEqual(self.replay["terminal"], self.evidence["terminal"])
         self.assertEqual(self.evidence["proof_effect"], "NONE")
