@@ -95,7 +95,7 @@ jobs:
           test "$(git -C source-smoke rev-parse HEAD^{tree})" = 'be780558454b704bdd016a3070d698c2e106e2b8'
       - name: Replay one real canonical affine fiber
         run: |
-          cat > affine-sweep-smoke.py <<'PY'
+          cat > "$RUNNER_TEMP/affine-sweep-smoke-driver" <<'PY'
           import json
           import os
           import sys
@@ -146,7 +146,7 @@ jobs:
           if __name__ == '__main__':
               main()
           PY
-          python affine-sweep-smoke.py
+          python "$RUNNER_TEMP/affine-sweep-smoke-driver"
 
   sample:
     needs: validate-request
@@ -185,7 +185,7 @@ jobs:
           test "$(git -C source rev-parse HEAD^{tree})" = 'be780558454b704bdd016a3070d698c2e106e2b8'
       - name: Generate canonical affine sample chunk
         run: |
-          cat > affine-sweep-driver.py <<'PY'
+          cat > "$RUNNER_TEMP/affine-sweep-driver" <<'PY'
           import json
           import os
           import sys
@@ -216,7 +216,7 @@ jobs:
           if __name__ == '__main__':
               main()
           PY
-          python affine-sweep-driver.py
+          python "$RUNNER_TEMP/affine-sweep-driver"
       - name: Independently verify serialized chunk contract
         run: |
           python - <<'PY'
