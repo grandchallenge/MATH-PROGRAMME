@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "issue": 964,
   "operation": "OZ-RT-BZ-T3-016-A",
   "stage": "T3_016_A_ORDER7_POPOV_ORDER_BASIS_COMPRESSION",
@@ -35,21 +35,51 @@
     "theorem_r_top_blocks": 7,
     "residual_blocks": 8,
     "standalone_scalar_operator_columns": 1624,
-    "reported_generic_rank": 1106,
-    "reported_kernel_dimension": 518,
-    "kernel_dimension_status": "SOURCE_REPORTED_PENDING_GENERIC_CHAR0_REPLAY",
     "discrete_curl_flatness_identity_required": true
+  },
+  "residual_geometry": {
+    "e1_denominator": "(k+1)(l+1)(k+l+1)(k+l+2) prod_{j=1..7}(n+k+j)(n+l+j)",
+    "e1_numerator_bidegree": [28, 28],
+    "boundary_forcing": [1, 1],
+    "cofactor_columns": 1624,
+    "potential": {
+      "form": "h=k^2 l^2 H / ((k+l+1) prod_{j=1..6}(n+k+j)(n+l+j))",
+      "H_bidegree": [23, 23],
+      "parameter_dimension": 576
+    },
+    "generic_rank": 1048,
+    "generic_kernel_dimension": 576,
+    "kernel_equals_discrete_curl_image": true,
+    "authority": "CHAR0_EXACT_VIA_FLATNESS_DENOMINATOR_CLEARING_AND_NONZERO_MODULAR_MINORS",
+    "witness": {
+      "n": 5,
+      "prime": 4194301,
+      "operator_rows": 1048,
+      "operator_rank": 1048,
+      "curl_rank": 576,
+      "source_point_stream_sha256": "9bed1c3ec0364df8409a91ff6026bc1cc946b9380eff44937d9974e73ced3c66",
+      "operator_matrix_sha256": "8aa3f1029c385c2414222d9b902514383a7d587f34295acf9f9117b7874bbab6",
+      "producer_curl_eval_matrix_sha256": "4a69d83ff9ffc71b2bc636e5edc5bfe0fd09cd082678272faaa66bb2d997e0d6",
+      "verifier_curl_coefficient_matrix_sha256": "0e8c1d38bc4c6c9276d648dd3ef5a15dc18231013c67661498c5dd93eccff4c2"
+    }
+  },
+  "source_reported_geometry": {
+    "reported_rank": 1106,
+    "reported_kernel_dimension": 518,
+    "status": "DOWNGRADED_INCOMPATIBLE_WITH_RECONSTRUCTED_E1_OPERATOR",
+    "promoted": false
   },
   "mathematical_route": {
     "new_architecture": true,
     "coefficient_domain": "Q(n,k,l) with denominator-cleared polynomial-module realization over Q[n]",
     "target": "order-7 left multiple L_min = A * L_BZ",
-    "compression": "shifted Popov / minimal approximant / order basis after structured gauge analysis",
+    "homogeneous_parameterization": "exact 576-parameter discrete-curl potential H",
+    "compression": "degree-minimizing affine section over Q[n] using the potential parameters; shifted Popov / minimal approximant / order basis may be used",
     "modular_acceleration_allowed": true,
     "characteristic_zero_reconstruction_required": true,
     "independent_exact_replay_required": true
   },
-  "intermediate_terminal": "ORDER7_SOURCE_PREFLIGHT_REPLAYED__POPOV_REDUCTION_REQUIRED",
+  "intermediate_terminal": "ORDER7_E1_KERNEL_IDENTIFIED_AS_DISCRETE_CURL__POTENTIAL_SECTION_REDUCTION_REQUIRED",
   "authorized_terminals": {
     "constructive": "ORDER7_POPOV_SECTION_CONSTRUCTED__CHAR0_REPLAY_REQUIRED",
     "exact_route": "ORDER7_CT_CERTIFICATE_EXACT__T3_BRIDGE_REQUIRED",
