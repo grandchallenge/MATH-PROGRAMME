@@ -244,13 +244,17 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
       CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
       CMDG.CondensedCM4P2E.discreteFreeIso,
+      CMDG.CondensedCM4P2E.discreteSetFreeAdj,
+      CMDG.CondensedCM4P2E.freeDiscreteModuleAdj,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap]
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap,
+      Adjunction.homEquiv_naturality_left,
+      CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app]
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
