@@ -24,68 +24,15 @@ jobs:
           python-version: "3.12"
       - name: Install governed policy dependencies
         run: python -m pip install --requirement requirements/policy.txt
-      - name: Apply bounded alias-normalization proof experiment
+      - name: Normalize local aliases before tail composition
         shell: bash
         run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          path = Path('fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean')
-          text = path.read_text()
-
-          replacements = [
-              (
-                  '''  let eTail :=
-    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso.hom.app Q ≫
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso.hom.app Q
-''',
-                  '''  let eTail :=
-    CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso.hom.app
-        (CMDG.CondensedCM4P3G.FiniteBooleanMeasure.FiniteQuotientObject X j) ≫
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso.hom.app
-        (CMDG.CondensedCM4P3G.FiniteBooleanMeasure.FiniteQuotientObject X j)
-'''
-              ),
-              (
-                  '''      ((ConcreteCategory.hom
-        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreePresheafNatIso.hom.app Q).app S))
-        (weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j))
-''',
-                  '''      ((ConcreteCategory.hom
-        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreePresheafNatIso.hom.app
-          (CMDG.CondensedCM4P3G.FiniteBooleanMeasure.FiniteQuotientObject X j)).app
-          (op ((profiniteToCompHaus).obj
-            (CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X)))))
-        (weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j))
-'''
-              ),
-              (
-                  '''          (op ((profiniteToCompHaus).obj P)))) t)
-    hbridge
-''',
-                  '''          (op ((profiniteToCompHaus).obj (Profinite.of PUnit.{u + 1}))))) t)
-    hbridge
-'''
-              ),
-              (
-                  '''  dsimp only [Q] at hbridgeTail'
-''',
-                  ''''''
-              ),
-          ]
-
-          for old, new in replacements:
-              count = text.count(old)
-              if count != 1:
-                  raise SystemExit(f'expected exactly one match, found {count}: {old[:80]!r}')
-              text = text.replace(old, new, 1)
-
-          path.write_text(text)
-          PY
-
-          printf '%s\n' '=== bounded runtime diff ==='
+          f=fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean
+          sed -i '/simp only \[ConcreteCategory.comp_apply\] at hnatTail/a\  dsimp [Q, T, S] at hnatTail' "$f"
+          sed -i '/have hbridgeTail\x27 := hnatTail.symm.trans hbridgeTail/a\  dsimp [Q, P, T, S] at hbridgeTail\x27' "$f"
+          sed -i '/dsimp only \[Q\] at hbridgeTail\x27/d' "$f"
           git --no-pager diff --check
-          git --no-pager diff -- fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean
+          git --no-pager diff -- "$f"
       - name: Set up pinned Lean environment
         uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
         with:
