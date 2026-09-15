@@ -9,7 +9,21 @@ discover       organize       certify
 
 The programme exists to turn mathematical curiosity into checked understanding without confusing evidence, computation, exposition, or certification.
 
-## Programme progress — protected concurrent execution
+## Current programme fronts
+
+This table tracks material mathematical work currently in motion. Row order reflects active programme attention; it is not a ranking of theorem importance, evidentiary strength, or claim status.
+
+| Frontier | Current work |
+|---|---|
+| **BSD-001 — can the selected rank-one leading-term target retain every power of `2`?** | [MATHSOLVE #243](https://github.com/grandchallenge/MATHSOLVE/issues/243) — replay the Burns–Sakamoto–Sano theorem chain at literal `p=2` after the protected replacement stack; isolate the first unrepaired theorem-level dependency if the replay does not close. |
+| **VGSE-001 — which reconstructed t-embedding claims survive independent exact adjudication?** | [MATHCERT #299](https://github.com/grandchallenge/MATHCERT/issues/299) — execute the bounded four-claim adjudication for `VGSE-C00`, `C01`, `C04`, and `C05`; keep `C06` excluded and fail-closed. |
+| **OZ-001 — can the order-7 Brown–Zudilin route be compressed into an exact characteristic-zero certificate?** | [MATH-PROGRAMME #964](https://github.com/grandchallenge/MATH-PROGRAMME/issues/964) — reduce the 576-dimensional discrete-curl kernel through a degree-minimising Popov / approximant-basis section, then independently replay the resulting order-7 certificate. |
+
+Rows appear here only while they represent material active work. The issue trackers are navigation surfaces; protected repository records remain authoritative. None of these rows promotes a mathematical claim.
+
+[Programme Atlas →](docs/PROGRAMME_ATLAS.md) · [MATHFORGE](https://github.com/grandchallenge/MATHFORGE) · [MATHSOLVE](https://github.com/grandchallenge/MATHSOLVE) · [MATHCERT](https://github.com/grandchallenge/MATHCERT)
+
+## Execution model — protected concurrent execution
 
 The programme now operates under the protected streamlined execution model established by `MP-STREAMLINED-EXECUTION-001`, together with the substance-first execution discipline established by `MP-SUBSTANCE-FIRST-EXECUTION-001`.
 
@@ -64,26 +78,27 @@ Use these as the current source of truth before opening new doctrine or domain w
 - `docs/CROSS_PILLAR_LANES.md`
 - `docs/GLOSSARY.md`
 
-Additional supporting files include schemas, templates, exact finite enumerators, small audit outputs, resource notes, and Lean scaffolding for the Union-Closed domain.
+Additional supporting files include schemas, templates, exact finite enumerators, small audit outputs, resource notes, and Lean scaffolding retained from earlier domains.
 
-## How to use this pack
+## How to use this repository
 
-1. Read `docs/GRAND_CHALLENGE_READER_GUIDE.md` for orientation.
-2. Read `ARCHITECTURE_OVERVIEW.md` to understand the three-pillar split.
-3. Read the current operating standards above before starting new work.
-4. Use `GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md` and `templates/work_package_template.md` for every MATHSOLVE Work Package.
-5. Use `docs/ACCESSIBLE_RESEARCH_GUIDE_STANDARD.md` and `templates/accessible_research_guide_template.md` whenever a project needs a human or agentic on-ramp.
-6. Treat `CLAIM_LEDGER_STANDARD.md` as binding. No claim should appear without a type, support route, and promotion condition.
-7. Treat `CERTIFICATION_LADDER.md` as the promotion gate from mathematical development to certified result.
-8. Read `docs/CROSS_PILLAR_LANES.md` when a recurring tactic, witness, or certificate path spans all three pillars.
-9. Treat `CLASSIFICATION_DISCOVERY_STANDARD.md` as binding for subject mappings, knowledge graph assertions, and discovery evidence.
-10. Treat `schemas/foundational_profile.schema.json` as the machine-readable form of the foundation-aware profile.
-11. For routine execution, identify the primary deliverable and material acceptance criteria, classify the material closure, run affected checks, exercise delegated disposition, merge through protection, and read back protected state. Do not create synchronization commits, repeat unrelated review, launch full-estate CI solely because `main` advanced, or expand supporting process beyond what protects a material boundary.
-12. Begin the first domain with `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`, `WP01_UNION_CLOSED_STATUS_SPINE.md`, and `WP02_UNION_CLOSED_LEAN_HANDOFF.md`.
+1. Start with **Current programme fronts** above for the mathematics that is materially active now.
+2. Read `docs/GRAND_CHALLENGE_READER_GUIDE.md` for orientation.
+3. Read `ARCHITECTURE_OVERVIEW.md` to understand the three-pillar split.
+4. Read the current operating standards above before starting new work.
+5. Use `GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md` and `templates/work_package_template.md` for every MATHSOLVE Work Package.
+6. Use `docs/ACCESSIBLE_RESEARCH_GUIDE_STANDARD.md` and `templates/accessible_research_guide_template.md` whenever a project needs a human or agentic on-ramp.
+7. Treat `CLAIM_LEDGER_STANDARD.md` as binding. No claim should appear without a type, support route, and promotion condition.
+8. Treat `CERTIFICATION_LADDER.md` as the promotion gate from mathematical development to certified result.
+9. Read `docs/CROSS_PILLAR_LANES.md` when a recurring tactic, witness, or certificate path spans all three pillars.
+10. Treat `CLASSIFICATION_DISCOVERY_STANDARD.md` as binding for subject mappings, knowledge graph assertions, and discovery evidence.
+11. Treat `schemas/foundational_profile.schema.json` as the machine-readable form of the foundation-aware profile.
+12. For routine execution, identify the primary deliverable and material acceptance criteria, classify the material closure, run affected checks, exercise delegated disposition, merge through protection, and read back protected state. Do not create synchronization commits, repeat unrelated review, launch full-estate CI solely because `main` advanced, or expand supporting process beyond what protects a material boundary.
+13. Use `docs/PROGRAMME_ATLAS.md` and the governed campaign trackers to locate additional active, queued, blocked, and historical work. Historical domain scaffolding is retained as evidence and infrastructure; it is not an implied current priority.
 
 ## Claim boundary
 
-This package does not claim new mathematical results. The included Union-Closed enumerator is a small exact sanity audit for universes up to size 4. It is useful infrastructure, not progress on Frankl's conjecture.
+This README is a programme map, not a mathematical disposition. Active-front placement records current work, not proof, refutation, certification, novelty, or priority of discovery.
 
 A source can motivate a claim. A computation can suggest a claim. A Work Package can organize a claim. But MATHCERT determines whether a claim is checkable.
 
