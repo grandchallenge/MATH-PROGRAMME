@@ -239,6 +239,8 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreePresheafFunctor.obj Q).map ftrue)) z)
     exact hnat.symm
   ·
+    apply LocallyConstant.ext
+    intro p
     simp [P, T, Q, D, S, eTail, eFree, freeHomSectionsEquiv, profinitePointProbe,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedIso,
@@ -250,8 +252,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply,
       Adjunction.homEquiv_naturality_left,
       CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app]
