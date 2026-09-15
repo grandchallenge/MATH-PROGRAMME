@@ -1,0 +1,55 @@
+name: CMDG P3-M small-free alias experiment
+
+on:
+  push:
+    branches:
+      - agent/cmdg-cm4-p3-m-kernel-point-004
+    paths:
+      - .github/workflows/cmdg-ci-diagnostic.yml
+
+permissions:
+  contents: read
+
+jobs:
+  proof-sandbox:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install governed policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Type the transported section at the local aliases
+        env:
+          OLD_B64: ICBoYXZlIGhicmlkZ2UgOj0KICAgIHdlaWdodGVkRmluaXRlQm9vbGVhbk1lYXN1cmVTZWN0aW9uX3NtYWxsRnJlZV9ldmFsdWF0aW9uV2VpZ2h0X2FsbFRydWUgWCB4IGoKICBoYXZlIGhuYXRUYWlsIDo9CiAgICBDb25jcmV0ZUNhdGVnb3J5LmNvbmdyX2hvbQogICAgICAoKChDb25kZW5zZWQuZm9yZ2V0IENNREcuQ29uZGVuc2VkQ000UDNHLlIue3V9KS5tYXAgZVRhaWwpLmhvbS5uYXR1cmFsaXR5CiAgICAgICAgKChwcm9maW5pdGVUb0NvbXBIYXVzKS5tYXAKICAgICAgICAgIChiYXNpc0Jvb2xlYW5Qb2ludFByb2JlIFggKGZ1biBfID0+IHRydWUpKSkub3ApCiAgICAgICgoQ29uY3JldGVDYXRlZ29yeS5ob20KICAgICAgICAoKENNREcuQ29uZGVuc2VkQ000UDJFLkZpbml0ZUR1YWxUcmFuc3BvcnQuZmluaXRlTWVhc3VyZVNtYWxsRnJlZVByZXNoZWFmTmF0SXNvLmhvbS5hcHAgUSkuYXBwIFMpKQogICAgICAgICh3ZWlnaHRlZEZpbml0ZUJvb2xlYW5NZWFzdXJlU2VjdGlvbiBYIChpbnRlZ3JhbEJhc2lzRXZhbHVhdGlvbldlaWdodCBYIHgpIGopKQogIHNpbXAgb25seSBbQ29uY3JldGVDYXRlZ29yeS5jb21wX2FwcGx5XSBhdCBobmF0VGFpbAogIGhhdmUgaGJyaWRnZVRhaWwgOj0gY29uZ3JBcmcKICAgIChmdW4gdCA9PgogICAgICAoQ29uY3JldGVDYXRlZ29yeS5ob20KICAgICAgICAoKChDb25kZW5zZWQuZm9yZ2V0IENNREcuQ29uZGVuc2VkQ000UDNHLlIue3V9KS5tYXAgZVRhaWwpLmhvbS5hcHAKICAgICAgICAgIChvcCAoKHByb2Zpbml0ZVRvQ29tcEhhdXMpLm9iaiBQKSkpKSB0KQogICAgaGJyaWRnZQo=
+          NEW_B64: ICBsZXQgbVEgOgogICAgICAoQ01ERy5Db25kZW5zZWRDTTRQMkUuRmluaXRlRHVhbFRyYW5zcG9ydC5maW5pdGVTbWFsbEZyZWVQcmVzaGVhZkZ1bmN0b3Iub2JqIFEpLm9iaiBTIDo9IGJ5CiAgICBkc2ltcCBbUSwgUywgVF0KICAgIGV4YWN0CiAgICAgIChDb25jcmV0ZUNhdGVnb3J5LmhvbQogICAgICAgICgoQ01ERy5Db25kZW5zZWRDTTRQMkUuRmluaXRlRHVhbFRyYW5zcG9ydC5maW5pdGVNZWFzdXJlU21hbGxGcmVlUHJlc2hlYWZOYXRJc28uYXBwCiAgICAgICAgICAoQ01ERy5Db25kZW5zZWRDTTRQM0cuRmluaXRlQm9vbGVhbk1lYXN1cmUuRmluaXRlUXVvdGllbnRPYmplY3QgWCBqKSkuaG9tLmFwcAogICAgICAgICAgKG9wICgocHJvZmluaXRlVG9Db21wSGF1cykub2JqCiAgICAgICAgICAgIChDTURHLkNvbmRlbnNlZENNNFAzRy5Cb29sZWFuQ3ViZS5iYXNpc0Jvb2xlYW5DdWJlIFgpKSkpKQogICAgICAgICh3ZWlnaHRlZEZpbml0ZUJvb2xlYW5NZWFzdXJlU2VjdGlvbiBYIChpbnRlZ3JhbEJhc2lzRXZhbHVhdGlvbldlaWdodCBYIHgpIGopCiAgaGF2ZSBoYnJpZGdlUSA6CiAgICAgIChDb25jcmV0ZUNhdGVnb3J5LmhvbQogICAgICAgICgoQ01ERy5Db25kZW5zZWRDTTRQMkUuRmluaXRlRHVhbFRyYW5zcG9ydC5maW5pdGVTbWFsbEZyZWVQcmVzaGVhZkZ1bmN0b3Iub2JqIFEpLm1hcAogICAgICAgICAgKChwcm9maW5pdGVUb0NvbXBIYXVzKS5tYXAKICAgICAgICAgICAgKGJhc2lzQm9vbGVhblBvaW50UHJvYmUgWCAoZnVuIF8gPT4gdHJ1ZSkpKS5vcCkpIG1RID0KICAgICAgICAoQ29uY3JldGVDYXRlZ29yeS5ob20KICAgICAgICAgICgoQ01ERy5Db25kZW5zZWRDTTRQMkUuRmluaXRlRHVhbFRyYW5zcG9ydC5maW5pdGVTbWFsbEZyZWVDb29yZGluYXRlSW5jbHVzaW9uCiAgICAgICAgICAgIFEgKGoucHJvaiB4KSkuYXBwCiAgICAgICAgICAgIChvcCAoKHByb2Zpbml0ZVRvQ29tcEhhdXMpLm9iaiBQKSkpKQogICAgICAgICAgKDEgOiBMb2NhbGx5Q29uc3RhbnQgUCBDTURHLkNvbmRlbnNlZENNNFAzRy5SLnt1fSkgOj0gYnkKICAgIGRzaW1wIFttUSwgUSwgUCwgUywgVF0KICAgIGV4YWN0IHdlaWdodGVkRmluaXRlQm9vbGVhbk1lYXN1cmVTZWN0aW9uX3NtYWxsRnJlZV9ldmFsdWF0aW9uV2VpZ2h0X2FsbFRydWUgWCB4IGoKICBoYXZlIGhuYXRUYWlsIDo9CiAgICBDb25jcmV0ZUNhdGVnb3J5LmNvbmdyX2hvbQogICAgICAoKChDb25kZW5zZWQuZm9yZ2V0IENNREcuQ29uZGVuc2VkQ000UDNHLlIue3V9KS5tYXAgZVRhaWwpLmhvbS5uYXR1cmFsaXR5CiAgICAgICAgKChwcm9maW5pdGVUb0NvbXBIYXVzKS5tYXAKICAgICAgICAgIChiYXNpc0Jvb2xlYW5Qb2ludFByb2JlIFggKGZ1biBfID0+IHRydWUpKSkub3ApCiAgICAgIG1RCiAgc2ltcCBvbmx5IFtDb25jcmV0ZUNhdGVnb3J5LmNvbXBfYXBwbHldIGF0IGhuYXRUYWlsCiAgaGF2ZSBoYnJpZGdlVGFpbCA6PSBjb25nckFyZwogICAgKGZ1biB0ID0+CiAgICAgIChDb25jcmV0ZUNhdGVnb3J5LmhvbQogICAgICAgICgoKENvbmRlbnNlZC5mb3JnZXQgQ01ERy5Db25kZW5zZWRDTTRQM0cuUi57dX0pLm1hcCBlVGFpbCkuaG9tLmFwcAogICAgICAgICAgKG9wICgocHJvZmluaXRlVG9Db21wSGF1cykub2JqIFApKSkpIHQpCiAgICBoYnJpZGdlUQo=
+        run: |
+          python3 -c 'import os,base64; from pathlib import Path; p=Path("fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean"); s=p.read_text(); old=base64.b64decode(os.environ["OLD_B64"]).decode(); new=base64.b64decode(os.environ["NEW_B64"]).decode(); assert old in s, "expected proof block not found"; p.write_text(s.replace(old,new,1))'
+          git --no-pager diff --check
+          git --no-pager diff -- fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean
+      - name: Set up pinned Lean environment
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Execute governed P3 formal lane
+        env:
+          FORMAL_CHANGED_PATHS: '["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean"]'
+        shell: bash
+        run: |
+          set +e
+          python3 ci/formal_validation.py run --lane "cmdg-cm4-p3" --mode "development" --changed-paths-json "$FORMAL_CHANGED_PATHS" 2>&1 | tee /tmp/formal.log
+          status=${PIPESTATUS[0]}
+          echo '::group::LEAN_RESULT'
+          grep -n -C 24 -E 'error:|unsolved goals|type mismatch|application type mismatch|declaration uses|sorryAx|CMDGCondensedCM4P3GPointFunctional' /tmp/formal.log | tail -n 420 || true
+          echo '::endgroup::'
+          exit "$status"
