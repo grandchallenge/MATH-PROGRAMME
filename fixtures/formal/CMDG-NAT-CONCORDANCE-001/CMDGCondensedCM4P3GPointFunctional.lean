@@ -239,23 +239,12 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreePresheafFunctor.obj Q).map ftrue)) z)
     exact hnat.symm
   ·
+    dsimp [P, D, eTail, eFree, freeHomSectionsEquiv, profinitePointProbe]
     apply LocallyConstant.ext
     intro p
-    simp [P, T, Q, D, S, eTail, eFree, freeHomSectionsEquiv, profinitePointProbe,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedIso,
-      CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
-      CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
-      CMDG.CondensedCM4P2E.discreteFreeIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single,
+    simp only [
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply,
-      Adjunction.homEquiv_naturality_left,
-      CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app]
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single]
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
