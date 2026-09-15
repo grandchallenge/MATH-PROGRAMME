@@ -52,7 +52,7 @@ jobs:
           clean="$(mktemp)"
           trap 'rm -f "$raw" "$clean"' EXIT
 
-          gh api "repos/$REPO/actions/jobs/$TARGET_JOB/logs" >"$raw"
+          gh api --allow-escape-sequences "repos/$REPO/actions/jobs/$TARGET_JOB/logs" >"$raw"
           sed $'s/\033\\[[0-9;]*[[:alpha:]]//g' "$raw" >"$clean"
 
           printf '\n=== compiler diagnostics ===\n'
