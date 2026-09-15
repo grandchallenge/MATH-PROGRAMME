@@ -1,44 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120" role="img" aria-labelledby="title desc">
 <title id="title">BSD literal-p equals 2 theorem replay map</title>
-<desc id="desc">A dependency map for replaying Burns-Sakamoto-Sano Theorems 5.20 and 5.2 at literal p equals 2. It shows the original dependency classes on the left, the protected replacement stack in the middle, and the two admissible outcomes on the right.</desc>
+<desc id="desc">A dependency map for replaying Burns-Sakamoto-Sano Theorems 5.20 and 5.2 at literal p equals 2. It shows the original dependency classes, the protected replacement stack, and the two admissible outcomes.</desc>
 <style>
-.bg{fill:#fbfbf8}.ink{fill:#14213d}.muted{fill:#56616f}.line{stroke:#6b7785;stroke-width:3;fill:none}.box{fill:#fff;stroke:#c8ced6;stroke-width:2}.repl{fill:#f6f9fc;stroke:#9aa9bb;stroke-width:2}.out{fill:#f4faf6;stroke:#86a88c;stroke-width:2}.fail{fill:#fff8f8;stroke:#c78189;stroke-width:2}.h1{font:700 42px Georgia,serif}.h2{font:700 28px Arial,sans-serif}.body{font:22px Arial,sans-serif}.small{font:20px Arial,sans-serif}.tag{font:700 18px Arial,sans-serif;letter-spacing:.7px}
+.bg{fill:#fbfbf8}.ink{fill:#14213d}.muted{fill:#56616f}.line{stroke:#6b7785;stroke-width:3;fill:none}.box{fill:#fff;stroke:#c8ced6;stroke-width:2}.repl{fill:#f6f9fc;stroke:#9aa9bb;stroke-width:2}.out{fill:#f4faf6;stroke:#86a88c;stroke-width:2}.fail{fill:#fff8f8;stroke:#c78189;stroke-width:2}.h1{font:700 40px Georgia,serif}.h2{font:700 26px Arial,sans-serif}.body{font:20px Arial,sans-serif}.small{font:19px Arial,sans-serif}.tag{font:700 17px Arial,sans-serif;letter-spacing:.6px}
 </style>
-<rect class="bg" width="1600" height="980"/>
+<rect class="bg" width="1800" height="1120"/>
 <text x="70" y="70" class="h1 ink">BSD literal-p=2 replay: what must be repaired</text>
-<text x="70" y="110" class="small muted">WP60R replays BSS Theorems 5.20 and 5.2 without silently restoring hypotheses that fail at p=2.</text>
+<text x="70" y="108" class="small muted">WP60R replays BSS Theorems 5.20 and 5.2 without silently restoring hypotheses that fail at p=2.</text>
 <text x="90" y="165" class="h2 ink">Original dependency classes</text>
-<text x="610" y="165" class="h2 ink">Protected p=2 replacement stack</text>
-<text x="1180" y="165" class="h2 ink">Replay target</text>
-<rect x="80" y="200" rx="14" width="430" height="85" class="box"/><text x="110" y="235" class="tag ink">LOCALIZATION</text><text x="110" y="266" class="body muted">p&gt;3 / Lemma 3.9</text>
-<rect x="80" y="305" rx="14" width="430" height="85" class="box"/><text x="110" y="340" class="tag ink">COEFFICIENT CONTROL</text><text x="110" y="371" class="body muted">Hyp. 3.2(iii), Lemma 3.10</text>
-<rect x="80" y="410" rx="14" width="430" height="85" class="box"/><text x="110" y="445" class="tag ink">RESIDUAL HYPOTHESES</text><text x="110" y="476" class="body muted">Hyp. 4.2 and selected residual inputs</text>
-<rect x="80" y="515" rx="14" width="430" height="85" class="box"/><text x="110" y="550" class="tag ink">CORE CONNECTIVITY</text><text x="110" y="581" class="body muted">Theorem 5.18 / core graph</text>
-<rect x="80" y="620" rx="14" width="430" height="125" class="box"/><text x="110" y="655" class="tag ink">DOWNSTREAM CHAIN</text><text x="110" y="686" class="body muted">Lemma 5.19, Cor. 5.5, Prop. 5.7,</text><text x="110" y="718" class="body muted">Lemma 5.22 where used</text>
-<rect x="590" y="200" rx="14" width="470" height="85" class="repl"/><text x="620" y="235" class="tag ink">WP60G</text><text x="620" y="266" class="body muted">self-dual one-primal / one-dual localization</text>
-<rect x="590" y="305" rx="14" width="470" height="110" class="repl"/><text x="620" y="340" class="tag ink">WP60M</text><text x="620" y="371" class="body muted">all-level Selmer-restricted injectivity</text><text x="620" y="401" class="body muted">and coefficient reduction; full H3.2(iii) still fails</text>
-<rect x="590" y="435" rx="14" width="470" height="85" class="repl"/><text x="620" y="470" class="tag ink">WP60J</text><text x="620" y="501" class="body muted">selected residual hypotheses and full GL_2(Z_2) image</text>
-<rect x="590" y="540" rx="14" width="470" height="85" class="repl"/><text x="620" y="575" class="tag ink">WP60N / WP60Q</text><text x="620" y="606" class="body muted">characteristic-two core connectivity / applicability</text>
-<rect x="590" y="645" rx="14" width="470" height="100" class="repl"/><text x="620" y="680" class="tag ink">MATHFORGE WP60O / WP60P</text><text x="620" y="711" class="body muted">coisotropy, cartesianness, and core rank one</text>
-<path d="M1060 360 C1130 360,1130 315,1170 315" class="line"/>
-<path d="M1060 580 C1130 580,1130 360,1170 360" class="line"/>
-<path d="M1060 695 C1130 695,1130 405,1170 405" class="line"/>
-<rect x="1170" y="250" rx="18" width="360" height="220" class="box"/>
-<text x="1210" y="300" class="h2 ink">Replay BSS Thm. 5.20</text>
-<text x="1210" y="340" class="body muted">then replay Thm. 5.2</text>
-<text x="1210" y="385" class="small muted">Every altered dependency must be stated.</text>
-<text x="1210" y="420" class="small muted">No silent restoration of full H3.2(iii).</text>
-<path d="M1350 470 L1350 560" class="line"/>
-<rect x="1110" y="565" rx="18" width="420" height="120" class="out"/>
-<text x="1140" y="610" class="h2 ink">Outcome A</text>
-<text x="1140" y="646" class="small muted">Exact selected literal-p=2 replacement</text>
-<text x="1140" y="674" class="small muted">for Thm. 5.20, then replay Thm. 5.2.</text>
-<rect x="1110" y="715" rx="18" width="420" height="135" class="fail"/>
-<text x="1140" y="760" class="h2" fill="#6f2531">Outcome B</text>
-<text x="1140" y="796" class="small muted">Name the first unrepaired theorem-level</text>
-<text x="1140" y="824" class="small muted">dependency and attach an exact witness.</text>
-<rect x="80" y="790" rx="14" width="980" height="125" class="fail"/>
-<text x="110" y="835" class="h2" fill="#6f2531">Claim firewall</text>
-<text x="110" y="870" class="small muted">Success here does not promote BSS Thm. 5.25, Cor. 6.15, R5-LIFT, R5-PRIM,</text>
-<text x="110" y="900" class="small muted">D2d, BSD-R2-A1, or MATHCERT certification.</text>
+<text x="650" y="165" class="h2 ink">Protected p=2 replacement stack</text>
+<text x="1320" y="165" class="h2 ink">Replay target</text>
+<rect x="80" y="200" rx="14" width="470" height="90" class="box"/>
+<text x="110" y="236" class="tag ink">LOCALIZATION</text>
+<text x="110" y="270" class="body muted">p&gt;3 / Lemma 3.9</text>
+<rect x="80" y="310" rx="14" width="470" height="90" class="box"/>
+<text x="110" y="346" class="tag ink">COEFFICIENT CONTROL</text>
+<text x="110" y="380" class="body muted">Hypothesis 3.2(iii), Lemma 3.10</text>
+<rect x="80" y="420" rx="14" width="470" height="90" class="box"/>
+<text x="110" y="456" class="tag ink">RESIDUAL HYPOTHESES</text>
+<text x="110" y="490" class="body muted">Hypothesis 4.2 and selected residual inputs</text>
+<rect x="80" y="530" rx="14" width="470" height="90" class="box"/>
+<text x="110" y="566" class="tag ink">CORE CONNECTIVITY</text>
+<text x="110" y="600" class="body muted">Theorem 5.18 / core graph</text>
+<rect x="80" y="640" rx="14" width="470" height="130" class="box"/>
+<text x="110" y="676" class="tag ink">DOWNSTREAM CHAIN</text>
+<text x="110" y="710" class="body muted">Lemma 5.19, Corollary 5.5, Proposition 5.7,</text>
+<text x="110" y="740" class="body muted">and Lemma 5.22 where they enter the proof chain</text>
+<rect x="630" y="200" rx="14" width="560" height="100" class="repl"/>
+<text x="660" y="236" class="tag ink">WP60G</text>
+<text x="660" y="270" class="body muted">Self-dual one-primal / one-dual localization</text>
+<rect x="630" y="320" rx="14" width="560" height="130" class="repl"/>
+<text x="660" y="356" class="tag ink">WP60M</text>
+<text x="660" y="390" class="body muted">All-level Selmer-restricted restriction injectivity</text>
+<text x="660" y="420" class="body muted">and coefficient reduction</text>
+<text x="660" y="448" class="small muted">Full finite Hypothesis 3.2(iii) remains false.</text>
+<rect x="630" y="470" rx="14" width="560" height="100" class="repl"/>
+<text x="660" y="506" class="tag ink">WP60J</text>
+<text x="660" y="540" class="body muted">Selected residual hypotheses and full GL₂(Z₂) image</text>
+<rect x="630" y="590" rx="14" width="560" height="100" class="repl"/>
+<text x="660" y="626" class="tag ink">WP60N / WP60Q</text>
+<text x="660" y="660" class="body muted">Characteristic-two core connectivity and applicability</text>
+<rect x="630" y="710" rx="14" width="560" height="110" class="repl"/>
+<text x="660" y="746" class="tag ink">MATHFORGE WP60O / WP60P</text>
+<text x="660" y="780" class="body muted">Coisotropy, cartesianness, and core rank one</text>
+<path d="M1190 380 C1270 380,1270 320,1300 320" class="line"/>
+<path d="M1190 640 C1270 640,1270 370,1300 370" class="line"/>
+<path d="M1190 760 C1270 760,1270 420,1300 420" class="line"/>
+<rect x="1300" y="235" rx="18" width="430" height="255" class="box"/>
+<text x="1340" y="285" class="h2 ink">Replay BSS Theorem 5.20</text>
+<text x="1340" y="325" class="body muted">Then replay Theorem 5.2.</text>
+<text x="1340" y="370" class="small muted">Every altered dependency must be stated.</text>
+<text x="1340" y="402" class="small muted">No silent restoration of full Hypothesis 3.2(iii).</text>
+<text x="1340" y="434" class="small muted">Additional bounded lemmas may be proved if needed.</text>
+<path d="M1515 490 L1515 560" class="line"/>
+<rect x="1260" y="565" rx="18" width="500" height="135" class="out"/>
+<text x="1300" y="610" class="h2 ink">Outcome A</text>
+<text x="1300" y="648" class="small muted">Prove an exact selected literal-p=2 replacement</text>
+<text x="1300" y="678" class="small muted">for Theorem 5.20, then replay Theorem 5.2.</text>
+<rect x="1260" y="730" rx="18" width="500" height="145" class="fail"/>
+<text x="1300" y="775" class="h2" fill="#6f2531">Outcome B</text>
+<text x="1300" y="813" class="small muted">Name the first unrepaired theorem-level dependency</text>
+<text x="1300" y="843" class="small muted">and attach an exact proof witness.</text>
+<rect x="80" y="860" rx="14" width="1110" height="180" class="fail"/>
+<text x="110" y="905" class="h2" fill="#6f2531">Claim firewall</text>
+<text x="110" y="942" class="small muted">Success in WP60R does not by itself promote:</text>
+<text x="110" y="975" class="small muted">BSS Theorem 5.25, Corollary 6.15, R5-LIFT, R5-PRIM, D2d, BSD-R2-A1,</text>
+<text x="110" y="1006" class="small muted">or any MATHCERT certification state.</text>
 </svg>
