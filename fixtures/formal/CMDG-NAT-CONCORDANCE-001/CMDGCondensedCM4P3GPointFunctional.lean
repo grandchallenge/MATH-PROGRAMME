@@ -240,9 +240,17 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     exact hnat.symm
   ·
     dsimp [P, D, eTail, eFree, freeHomSectionsEquiv, profinitePointProbe]
-    simp only [
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single]
+    simp [
+      CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
+      CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
+      CMDG.CondensedCM4P2E.discreteFreeIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap]
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
