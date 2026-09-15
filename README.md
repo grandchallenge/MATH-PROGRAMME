@@ -22,20 +22,28 @@ The three pillars do not assign the same status to every artifact. A source can 
 ## How a claim moves through the programme
 
 ```mermaid
-flowchart LR
-    A[Question or source signal] --> B[MATHFORGE<br/>identify object, source, pattern, or obstruction]
-    B --> C[MATHSOLVE<br/>define obligations, proof routes, and handoffs]
-    C --> D[MATHCERT<br/>replay, check, and delimit the claim]
-    D --> E[Checked claim<br/>with explicit status and boundary]
+flowchart TB
+    A["Question or source signal"] --> B["MATHFORGE"]
+    B --> C["MATHSOLVE"]
+    C --> D["MATHCERT"]
+    D --> E["Checked claim"]
 
-    B -. route blocked .-> X1[Record the obstruction]
-    C -. proof route blocked .-> X2[Record unresolved proof debt]
-    D -. certification fails .-> X3[Do not promote the claim]
+    B -. blocked .-> X1["Record obstruction"]
+    C -. blocked .-> X2["Record proof debt"]
+    D -. not certified .-> X3["Do not promote"]
 ```
 
-The diagram shows a governed state transition. Each stage produces a different artifact and a different claim status.
+The diagram shows the programme states. The table gives the meaning of each state.
 
-A failed route remains part of the record. A failed certification does not become a weaker positive result unless a separate claim supports that result.
+| State | Meaning |
+|---|---|
+| **Question or source signal** | A candidate mathematical question, source, or observed pattern enters the programme. |
+| **MATHFORGE** | Identify the object, source, pattern, obstruction, or candidate route. |
+| **MATHSOLVE** | Define obligations, proof routes, work packages, and handoffs. |
+| **MATHCERT** | Replay the exact claim, check the applicable evidence or certificate, and record the disposition. |
+| **Checked claim** | Record the surviving claim status, scope, limitations, and boundary. |
+
+The dashed paths are fail-closed outcomes. A blocked discovery route records its obstruction. A blocked solving route records unresolved proof debt. A failed certification does not promote the claim.
 
 ## Why the pillars are separate
 
