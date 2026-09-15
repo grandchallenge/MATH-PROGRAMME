@@ -218,25 +218,28 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
   convert hbridgeTail using 1
   · rfl
   ·
+    let U := op ((profiniteToCompHaus).obj P)
+    let ftrue := ((profiniteToCompHaus).map
+      (basisBooleanPointProbe X (fun _ => true))).op
+    let z :=
+      (ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreePresheafNatIso.app Q).hom.app S))
+        (weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j)
     have hnat :=
       ConcreteCategory.congr_hom
-        (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.naturality
-          ((profiniteToCompHaus).map
-            (basisBooleanPointProbe X (fun _ => true))).op)
-        ((ConcreteCategory.hom
-          ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreePresheafNatIso.app Q).hom.app S))
-          (weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j))
-    simpa [P, T, Q, D, S, eTail,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
-      ConcreteCategory.comp_apply] using hnat.symm
+        (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.naturality ftrue) z
+    simp only [ConcreteCategory.comp_apply] at hnat
+    change
+      (ConcreteCategory.hom
+        (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).obj D).obj.map ftrue))
+          ((ConcreteCategory.hom
+            (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.app S)) z) =
+        (ConcreteCategory.hom
+          (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.app U))
+          ((ConcreteCategory.hom
+            ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreePresheafFunctor.obj Q).map ftrue)) z)
+    exact hnat.symm
   ·
-    ext p y
     simp [P, T, Q, D, S, eTail, eFree, freeHomSectionsEquiv, profinitePointProbe,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedNatIso,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreeCondensedIso,
