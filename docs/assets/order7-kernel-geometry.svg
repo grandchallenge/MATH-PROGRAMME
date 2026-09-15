@@ -1,35 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1080" viewBox="0 0 1800 1080" role="img" aria-labelledby="title desc">
 <title id="title">Order-7 residual kernel geometry</title>
-<desc id="desc">Comparison of the exploratory and boundary-forced order-7 E1 ansatz regimes. Both have a 576-dimensional homogeneous kernel, identified exactly with a discrete-curl image parameterized by a bidegree at most 23 by 23 polynomial H. The invalid cross-regime subtraction 1624 minus 1106 equals 518 is explicitly rejected.</desc>
+<desc id="desc">Comparison of the exploratory and boundary-forced order-7 E1 ansatz regimes. Both have a 576-dimensional homogeneous kernel, identified with a discrete-curl image parameterized by a bidegree at most 23 by 23 polynomial H. The invalid cross-regime subtraction 1624 minus 1106 equals 518 is rejected.</desc>
 <style>
-.bg{fill:#fbfbf8}.ink{fill:#14213d}.muted{fill:#56616f}.accent{fill:#8b5e1a}.bad{fill:#8a3b46}.line{stroke:#6b7785;stroke-width:3;fill:none}.box{fill:#fff;stroke:#c8ced6;stroke-width:2}.good{fill:#f4faf6;stroke:#86a88c;stroke-width:2}.warn{fill:#fff8f8;stroke:#c78189;stroke-width:2}.h1{font:700 42px Georgia,serif}.h2{font:700 30px Arial,sans-serif}.body{font:24px Arial,sans-serif}.small{font:21px Arial,sans-serif}.mono{font:23px 'Courier New',monospace}.big{font:700 50px Arial,sans-serif}.num{font:700 36px Arial,sans-serif}
+.bg{fill:#fbfbf8}.ink{fill:#14213d}.muted{fill:#56616f}.accent{fill:#8b5e1a}.bad{fill:#8a3b46}.line{stroke:#6b7785;stroke-width:3;fill:none}.box{fill:#fff;stroke:#c8ced6;stroke-width:2}.good{fill:#f4faf6;stroke:#86a88c;stroke-width:2}.warn{fill:#fff8f8;stroke:#c78189;stroke-width:2}.h1{font:700 40px Georgia,serif}.h2{font:700 27px Arial,sans-serif}.small{font:20px Arial,sans-serif}.mono{font:20px 'Courier New',monospace}.big{font:700 46px Arial,sans-serif}.num{font:700 32px Arial,sans-serif}
 </style>
-<rect class="bg" width="1600" height="980"/>
+<rect class="bg" width="1800" height="1080"/>
 <text x="80" y="72" class="h1 ink">Order-7 residual kernel geometry</text>
-<text x="80" y="112" class="small muted">Two ansatz regimes have different dimensions and ranks, but the same 576-dimensional homogeneous kernel.</text>
-<rect x="90" y="165" rx="18" width="660" height="280" class="box"/>
-<text x="130" y="215" class="h2 ink">Exploratory scan</text>
-<text x="130" y="258" class="small muted">o_scan.run() with force_k = 0, force_l = 0</text>
-<text x="130" y="330" class="num ink">1682 columns</text>
-<text x="430" y="330" class="num ink">rank 1106</text>
-<line x1="150" y1="360" x2="690" y2="360" class="line"/>
-<text x="130" y="414" class="big accent">nullity 576</text>
-<rect x="850" y="165" rx="18" width="660" height="280" class="box"/>
-<text x="890" y="215" class="h2 ink">Boundary-forced certificate ansatz</text>
-<text x="890" y="258" class="small muted">o_final.build() with force = (1,1)</text>
-<text x="890" y="330" class="num ink">1624 columns</text>
-<text x="1190" y="330" class="num ink">rank 1048</text>
-<line x1="910" y1="360" x2="1450" y2="360" class="line"/>
-<text x="890" y="414" class="big accent">nullity 576</text>
-<path d="M420 445 C420 500, 650 500, 650 535" class="line"/>
-<path d="M1180 445 C1180 500, 950 500, 950 535" class="line"/>
-<rect x="250" y="535" rx="20" width="1100" height="255" class="good"/>
-<text x="300" y="585" class="h2 ink">Common homogeneous kernel = discrete-curl image</text>
-<text x="300" y="635" class="mono ink">h = k^2 l^2 H(k,l) / ((k+l+1) product_{j=1..6} (n+k+j)(n+l+j))</text>
-<text x="300" y="680" class="mono ink">bideg(H) &lt;= (23,23)  -&gt;  24 x 24 = 576 parameters</text>
-<text x="300" y="730" class="mono ink">(r,s) = (g_l h(k,l+1) - h, -(g_k h(k+1,l) - h))</text>
-<text x="300" y="770" class="small muted">Exact denominator clearing places this family inside the boundary-forced E1 numerator degree and boundary constraints.</text>
-<rect x="250" y="835" rx="18" width="1100" height="105" class="warn"/>
-<text x="300" y="880" class="h2 bad">Do not mix regimes: 1624 - 1106 = 518 is not a kernel dimension.</text>
-<text x="300" y="915" class="small muted">It subtracts the exploratory rank from the boundary-forced column count. The coherent nullity is 576 in both regimes.</text>
+<text x="80" y="110" class="small muted">The two ansatz regimes have different sizes and ranks, but the same 576-dimensional homogeneous kernel.</text>
+<rect x="90" y="160" rx="18" width="750" height="300" class="box"/>
+<text x="135" y="212" class="h2 ink">Exploratory scan</text>
+<text x="135" y="252" class="small muted">o_scan.run()</text>
+<text x="135" y="282" class="small muted">force_k = 0, force_l = 0</text>
+<text x="135" y="350" class="num ink">1682 columns</text>
+<text x="465" y="350" class="num ink">rank 1106</text>
+<line x1="150" y1="382" x2="780" y2="382" class="line"/>
+<text x="135" y="438" class="big accent">nullity 576</text>
+<rect x="960" y="160" rx="18" width="750" height="300" class="box"/>
+<text x="1005" y="212" class="h2 ink">Boundary-forced certificate ansatz</text>
+<text x="1005" y="252" class="small muted">o_final.build()</text>
+<text x="1005" y="282" class="small muted">force = (1,1)</text>
+<text x="1005" y="350" class="num ink">1624 columns</text>
+<text x="1335" y="350" class="num ink">rank 1048</text>
+<line x1="1020" y1="382" x2="1650" y2="382" class="line"/>
+<text x="1005" y="438" class="big accent">nullity 576</text>
+<path d="M465 460 C465 515,720 515,720 550" class="line"/>
+<path d="M1335 460 C1335 515,1080 515,1080 550" class="line"/>
+<rect x="190" y="550" rx="20" width="1420" height="315" class="good"/>
+<text x="240" y="602" class="h2 ink">Common homogeneous kernel = discrete-curl image</text>
+<text x="240" y="652" class="mono ink">h = k² l² H(k,l)</text>
+<text x="240" y="682" class="mono ink">    / ((k+l+1) · ∏_{j=1..6}(n+k+j)(n+l+j))</text>
+<text x="240" y="730" class="mono ink">bideg(H) ≤ (23,23)  ⇒  24 × 24 = 576 parameters</text>
+<text x="240" y="780" class="mono ink">r = g_l · h(k,l+1) − h</text>
+<text x="240" y="812" class="mono ink">s = −(g_k · h(k+1,l) − h)</text>
+<text x="240" y="846" class="small muted">Exact denominator clearing keeps this family inside the boundary-forced E1 degree and boundary constraints.</text>
+<rect x="190" y="910" rx="18" width="1420" height="125" class="warn"/>
+<text x="240" y="956" class="h2 bad">Do not mix regimes: 1624 − 1106 = 518 is not a kernel dimension.</text>
+<text x="240" y="992" class="small muted">That subtraction combines the boundary-forced column count with the exploratory rank.</text>
+<text x="240" y="1022" class="small muted">Within either coherent regime, the nullity is 576.</text>
 </svg>
