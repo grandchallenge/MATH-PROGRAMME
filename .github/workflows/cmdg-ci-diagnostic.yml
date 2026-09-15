@@ -16,7 +16,7 @@ jobs:
   sealed-diagnostic:
     runs-on: ubuntu-24.04
     steps:
-      - name: Emit sandbox Lean diagnostics
+      - name: Emit exact surviving Lean goals
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: grandchallenge/MATH-PROGRAMME
@@ -25,9 +25,9 @@ jobs:
         run: |
           set -euo pipefail
           gh api --allow-escape-sequences "repos/${REPO}/actions/jobs/${JOB_ID}/logs" > /tmp/cmdg-job.log
-          echo '::group::LEAN_ERRORS'
-          grep -n -C 50 -E 'error:|unsolved goals|type mismatch|application type mismatch|failed to synthesize|declaration has metavariables|CMDGCondensedCM4P3GPointFunctional' /tmp/cmdg-job.log | sed -n '1,520p' || true
+          echo '::group::NATURALITY_RESIDUAL'
+          grep -n -A95 -B8 'CMDGCondensedCM4P3GPointFunctional.lean:221:4: error' /tmp/cmdg-job.log || true
           echo '::endgroup::'
-          echo '::group::LEAN_TAIL'
-          tail -n 240 /tmp/cmdg-job.log || true
+          echo '::group::GENERATOR_RESIDUAL'
+          grep -n -A180 -B4 "case e'_3" /tmp/cmdg-job.log || true
           echo '::endgroup::'
