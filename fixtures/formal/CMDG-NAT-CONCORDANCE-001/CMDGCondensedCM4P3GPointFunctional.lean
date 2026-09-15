@@ -240,8 +240,6 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     exact hnat.symm
   ·
     dsimp [P, D, eTail, eFree, freeHomSectionsEquiv, profinitePointProbe]
-    apply LocallyConstant.ext
-    intro p
     simp only [
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single]
