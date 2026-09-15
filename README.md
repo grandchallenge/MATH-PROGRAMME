@@ -21,29 +21,11 @@ The three pillars do not assign the same status to every artifact. A source can 
 
 ## How a claim moves through the programme
 
-```mermaid
-flowchart TB
-    A["Question or source signal"] --> B["MATHFORGE"]
-    B --> C["MATHSOLVE"]
-    C --> D["MATHCERT"]
-    D --> E["Checked claim"]
+The following state map shows the normal path and the three fail-closed exits. Each exit records the unresolved state instead of converting it into a positive claim.
 
-    B -. blocked .-> X1["Record obstruction"]
-    C -. blocked .-> X2["Record proof debt"]
-    D -. not certified .-> X3["Do not promote"]
-```
+![State transition from question or source signal through MATHFORGE, MATHSOLVE, and MATHCERT to a checked claim. Fail-closed exits record an obstruction, proof debt, or non-promotion.](docs/assets/claim-state-transition.svg)
 
-The diagram shows the programme states. The table gives the meaning of each state.
-
-| State | Meaning |
-|---|---|
-| **Question or source signal** | A candidate mathematical question, source, or observed pattern enters the programme. |
-| **MATHFORGE** | Identify the object, source, pattern, obstruction, or candidate route. |
-| **MATHSOLVE** | Define obligations, proof routes, work packages, and handoffs. |
-| **MATHCERT** | Replay the exact claim, check the applicable evidence or certificate, and record the disposition. |
-| **Checked claim** | Record the surviving claim status, scope, limitations, and boundary. |
-
-The dashed paths are fail-closed outcomes. A blocked discovery route records its obstruction. A blocked solving route records unresolved proof debt. A failed certification does not promote the claim.
+The visual distinction is operational. MATHFORGE can stop with a recorded obstruction. MATHSOLVE can stop with unresolved proof debt. MATHCERT can refuse promotion. None of these states is silently upgraded by presentation.
 
 ## Why the pillars are separate
 
@@ -63,17 +45,33 @@ The distinction is operational:
 
 ## Current programme fronts
 
-This table shows material mathematical work that is active now. Row order reflects current programme attention. It does not rank theorem importance or claim strength.
+This table shows material programme work that is active now. Row order reflects current programme attention. It does not rank theorem importance or claim strength.
 
 | Frontier | Current obligation | Programme significance |
 |---|---|---|
 | **BSD-001 — rank-one leading term at literal `p=2`** | [MATHSOLVE #243](https://github.com/grandchallenge/MATHSOLVE/issues/243) replays the Burns–Sakamoto–Sano theorem chain at literal `p=2`. If the replay fails, the campaign must identify the first unrepaired theorem-level dependency. | The work targets one named theorem-level obstruction. It does not generalize the result beyond the retained claim boundary. |
-| **VGSE-001 — exact adjudication of reconstructed t-embedding claims** | [MATHCERT #299](https://github.com/grandchallenge/MATHCERT/issues/299) adjudicates `VGSE-C00`, `C01`, `C04`, and `C05`. `C06` remains excluded from this route. | The campaign tests whether each reconstructed claim has enough exact support for its stated scope. Unsupported claims remain unpromoted. |
+| **VGSE-001 — restricted-output route semantics after four-claim adjudication** | [MATHCERT #301](https://github.com/grandchallenge/MATHCERT/issues/301) resolves the route boundary after exact adjudication cleared `VGSE-C00`, `C01`, `C04`, and `C05` while `C06` remained blocked. | The current problem is not another geometric calculation. It is whether a four-claim output can exist without silently qualifying the five-claim route or weakening the blocked `C06` state. |
 | **OZ-001 — order-7 Brown–Zudilin certificate route** | [MATH-PROGRAMME #964](https://github.com/grandchallenge/MATH-PROGRAMME/issues/964) reduces the 576-dimensional discrete-curl kernel through a degree-minimising Popov or approximant-basis section. The resulting order-7 certificate then requires independent replay. | The work attempts to construct an exact characteristic-zero certificate inside a defined admissible class. Construction and certification remain separate steps. |
 
 Rows appear here only while the work remains materially active. Issue trackers provide navigation. Protected repository records remain authoritative.
 
 [Programme Atlas →](docs/PROGRAMME_ATLAS.md) · [MATHFORGE](https://github.com/grandchallenge/MATHFORGE) · [MATHSOLVE](https://github.com/grandchallenge/MATHSOLVE) · [MATHCERT](https://github.com/grandchallenge/MATHCERT)
+
+### BSD-001: the current replay problem
+
+WP60R is not a general attempt to “prove BSD at `p=2`.” It is a replay of two specific BSS theorem steps after a protected replacement stack. The diagram below shows which dependency classes are being replaced and the two admissible outcomes.
+
+![Dependency map for the BSD literal-p=2 replay. Original BSS dependency classes are mapped to the protected replacement stack; the replay either closes Theorems 5.20 and 5.2 on the selected lane or records the first unrepaired theorem-level dependency.](docs/assets/bsd-p2-replay-map.svg)
+
+The important point is the retained failure of full finite Hypothesis 3.2(iii). The replay must use the admitted restricted replacements where they apply. It must not restore the stronger hypothesis by implication or presentation.
+
+### OZ-001: the 576-dimensional kernel
+
+The current order-7 route has two coherent ansatz regimes. Their column counts and ranks differ, but both have nullity `576`. The programme reconstruction identifies that common homogeneous kernel with the discrete-curl image.
+
+![Order-7 residual-kernel geometry. The exploratory scan has 1682 columns and rank 1106; the boundary-forced ansatz has 1624 columns and rank 1048. Both have nullity 576, matching the discrete-curl parameterization.](docs/assets/order7-kernel-geometry.svg)
+
+This diagram also explains why the earlier value `518` is rejected. It came from subtracting the exploratory rank `1106` from the boundary-forced column count `1624`. Those quantities belong to different ansatz regimes.
 
 ## What the programme preserves
 
@@ -122,11 +120,7 @@ Expensive formal, external, and computational replays use material-identity rout
 
 `docs/WORKFLOW_COVERAGE.md` records the current executable coverage and measured evidence.
 
-The earlier administrative workflow rebuild remains historical evidence at `governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/`. Its exact-head review sequence records how that transition was admitted at the time.
-
-[![MP-ADMIN-WORKFLOW-REBUILD-001 — working rebuild proof](https://raw.githubusercontent.com/grandchallenge/MATH-PROGRAMME/main/docs/assets/mp-admin-workflow-rebuild-proof.png)](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/README.md?plain=1#readme)
-
-The illustration is a historical progress view. It does not grant authority.
+The earlier administrative workflow rebuild remains historical evidence at [`MP-ADMIN-WORKFLOW-REBUILD-001`](governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/README.md). Its exact-head review sequence records how that transition was admitted at the time.
 
 ## Core repositories
 
