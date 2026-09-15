@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="920" viewBox="0 0 1600 920" role="img" aria-labelledby="title desc">
+<title id="title">How a claim moves through the Mathematics Programme</title>
+<desc id="desc">A five-stage state transition from question or source signal through MATHFORGE, MATHSOLVE, and MATHCERT to a checked claim, with fail-closed exits that record obstruction, proof debt, or non-promotion.</desc>
+<style>
+  .bg{fill:#fbfbf8}.ink{fill:#14213d}.muted{fill:#56616f}.line{stroke:#6b7785;stroke-width:3;fill:none}.dash{stroke:#8a3b46;stroke-width:3;stroke-dasharray:10 8;fill:none}.box{fill:#fff;stroke:#c8ced6;stroke-width:2}.fail{fill:#fff8f8;stroke:#c78189;stroke-width:2}.h1{font:700 42px Georgia,serif}.h2{font:700 30px Arial,sans-serif}.body{font:24px Arial,sans-serif}.small{font:21px Arial,sans-serif}.tag{font:700 20px Arial,sans-serif;letter-spacing:1px}.num{font:700 22px Arial,sans-serif}.pill{fill:#eef2f6;stroke:#c8ced6}.arrow{fill:#6b7785}.arrowFail{fill:#8a3b46}
+</style>
+<rect class="bg" width="1600" height="920"/>
+<text x="80" y="72" class="h1 ink">How a claim moves through the programme</text>
+<text x="80" y="112" class="small muted">Each stage changes the status of the work. Failure states remain explicit.</text>
+<line x1="520" y1="215" x2="520" y2="745" class="line"/>
+<rect x="210" y="150" rx="18" ry="18" width="620" height="120" class="box"/>
+<circle cx="265" cy="210" r="32" fill="#eef2f6"/><text x="252" y="219" class="h2 ink">?</text>
+<text x="320" y="195" class="h2 ink">Question or source signal</text>
+<text x="320" y="231" class="small muted">Candidate question, source, observation, or pattern.</text>
+<rect x="210" y="310" rx="18" ry="18" width="620" height="120" class="box"/>
+<rect x="245" y="342" width="80" height="44" rx="8" class="pill"/><text x="260" y="371" class="tag ink">01</text>
+<text x="350" y="350" class="h2 ink">MATHFORGE</text>
+<text x="350" y="386" class="small muted">Identify the object, source, pattern, obstruction, or route.</text>
+<rect x="210" y="470" rx="18" ry="18" width="620" height="120" class="box"/>
+<rect x="245" y="502" width="80" height="44" rx="8" class="pill"/><text x="260" y="531" class="tag ink">02</text>
+<text x="350" y="510" class="h2 ink">MATHSOLVE</text>
+<text x="350" y="546" class="small muted">Define proof obligations, work packages, routes, and handoffs.</text>
+<rect x="210" y="630" rx="18" ry="18" width="620" height="120" class="box"/>
+<rect x="245" y="662" width="80" height="44" rx="8" class="pill"/><text x="260" y="691" class="tag ink">03</text>
+<text x="350" y="670" class="h2 ink">MATHCERT</text>
+<text x="350" y="706" class="small muted">Replay the exact claim and record the disposition.</text>
+<rect x="210" y="790" rx="18" ry="18" width="620" height="100" class="box"/>
+<text x="260" y="835" class="h2 ink">Checked claim</text>
+<text x="260" y="870" class="small muted">Status, scope, assumptions, limitations, and boundary are explicit.</text>
+<line x1="830" y1="370" x2="1000" y2="370" class="dash"/><polygon points="1000,370 982,360 982,380" class="arrowFail"/>
+<rect x="1020" y="315" rx="16" ry="16" width="470" height="110" class="fail"/>
+<text x="1060" y="356" class="h2" fill="#6f2531">Record obstruction</text>
+<text x="1060" y="393" class="small muted">The discovery route stops here.</text>
+<line x1="830" y1="530" x2="1000" y2="530" class="dash"/><polygon points="1000,530 982,520 982,540" class="arrowFail"/>
+<rect x="1020" y="475" rx="16" ry="16" width="470" height="110" class="fail"/>
+<text x="1060" y="516" class="h2" fill="#6f2531">Record proof debt</text>
+<text x="1060" y="553" class="small muted">The unresolved obligation remains recorded.</text>
+<line x1="830" y1="690" x2="1000" y2="690" class="dash"/><polygon points="1000,690 982,680 982,700" class="arrowFail"/>
+<rect x="1020" y="635" rx="16" ry="16" width="470" height="110" class="fail"/>
+<text x="1060" y="676" class="h2" fill="#6f2531">Do not promote</text>
+<text x="1060" y="713" class="small muted">Failed certification does not promote the claim.</text>
+</svg>
