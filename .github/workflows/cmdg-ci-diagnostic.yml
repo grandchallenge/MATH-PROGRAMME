@@ -1,4 +1,4 @@
-name: CMDG P3-M sealed job diagnostic
+name: CMDG P3-M committed-source replay
 
 on:
   push:
@@ -9,58 +9,42 @@ on:
 
 permissions:
   contents: read
-  actions: read
-  checks: read
 
 jobs:
-  sealed-job-reader:
+  proof-sandbox:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    env:
-      GH_TOKEN: ${{ github.token }}
-      REPO: grandchallenge/MATH-PROGRAMME
-      TARGET_JOB: "104203344969"
-      EXPECTED_TARGET_SHA: 5ef8ed18ec9a6db95ba1b9bcc832136fe7f4cc4f
+    timeout-minutes: 75
     steps:
-      - name: Verify target and expose exact diagnostics
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install governed policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Verify committed proof source is unmodified
         shell: bash
         run: |
-          set -euo pipefail
-
-          job_json="$(gh api "repos/$REPO/actions/jobs/$TARGET_JOB")"
-          run_id="$(jq -r '.run_url | split("/")[-1]' <<<"$job_json")"
-          target_sha="$(gh api "repos/$REPO/actions/runs/$run_id" --jq '.head_sha')"
-          printf 'target job: %s\nrun id: %s\nrun head: %s\n' "$TARGET_JOB" "$run_id" "$target_sha"
-
-          if [[ "$target_sha" != "$EXPECTED_TARGET_SHA" ]]; then
-            printf 'SEALED-DIAGNOSTIC-ABORT: expected target SHA %s, got %s\n' \
-              "$EXPECTED_TARGET_SHA" "$target_sha" >&2
-            exit 2
-          fi
-
-          check_run_url="$(jq -r '.check_run_url // empty' <<<"$job_json")"
-          if [[ -n "$check_run_url" ]]; then
-            check_id="${check_run_url##*/}"
-            printf '\n=== check annotations ===\n'
-            gh api \
-              -H 'Accept: application/vnd.github+json' \
-              "repos/$REPO/check-runs/$check_id/annotations?per_page=100" \
-              --jq '.[] | {path,start_line,end_line,annotation_level,title,message,raw_details}' || true
-          fi
-
-          raw="$(mktemp)"
-          clean="$(mktemp)"
-          trap 'rm -f "$raw" "$clean"' EXIT
-
-          gh api --allow-escape-sequences "repos/$REPO/actions/jobs/$TARGET_JOB/logs" >"$raw"
-          sed $'s/\033\\[[0-9;]*[[:alpha:]]//g' "$raw" >"$clean"
-
-          printf '\n=== compiler diagnostics ===\n'
-          grep -n -A90 -B20 \
-            -E 'error:|unsolved goals|case e\.|application type mismatch|type mismatch|failed to synthesize|declaration has metavariables|tactic.*failed|invalid field|unknown identifier' \
-            "$clean" || true
-
-          printf '\n=== final log tail ===\n'
-          tail -n 240 "$clean" || true
-
-          printf '\nSEALED-DIAGNOSTIC-COMPLETE\n'
+          test -z "$(git status --porcelain -- fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean)"
+          git rev-parse HEAD
+          git hash-object fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean
+          nl -ba fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean | sed -n '185,260p'
+      - name: Set up pinned Lean environment
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Execute governed P3 formal lane
+        env:
+          FORMAL_CHANGED_PATHS: '["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean"]'
+        run: >-
+          python3 ci/formal_validation.py run
+          --lane "cmdg-cm4-p3"
+          --mode "development"
+          --changed-paths-json "$FORMAL_CHANGED_PATHS"
