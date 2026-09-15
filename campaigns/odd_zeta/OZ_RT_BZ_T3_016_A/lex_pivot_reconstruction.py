@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import argparse
 import hashlib
 import json
 import sys
@@ -15,10 +14,6 @@ if str(HERE) not in sys.path:
 import lex_pivot_sweep
 
 DEFAULT_REPORT = HERE / "LEX_PIVOT_RATIONAL_PROFILE.json"
-
-
-def _canonical_json_bytes(value: object) -> bytes:
-    return (json.dumps(value, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8")
 
 
 def _polyval(coefficients: list[int] | np.ndarray, x: int, p: int) -> int:
@@ -132,6 +127,7 @@ def verify_profile(
     report_path: Path | str,
     chunk_outputs: list[Path | str],
 ) -> dict[str, Any]:
+    """Replay one downloaded protected sweep against the bound modular profile."""
     report = load_report(report_path)
     if len(chunk_outputs) != 4:
         raise AssertionError("lex reconstruction profile requires exactly four protected chunks")
@@ -233,16 +229,3 @@ def verify_profile(
         "proof_effect": report["proof_effect"],
         "promotion_effect": report["promotion_effect"],
     }
-
-
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Verify the protected OZ T3-016-A lex-pivot rational profile")
-    parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
-    parser.add_argument("--chunk", action="append", type=Path, required=True, dest="chunks")
-    args = parser.parse_args()
-    summary = verify_profile(args.report, args.chunks)
-    print(json.dumps(summary, sort_keys=True))
-
-
-if __name__ == "__main__":
-    main()
