@@ -1,9 +1,9 @@
-name: CMDG P3-M alias-normalization experiment
+name: CMDG P3-M alias-normalization evidence capture
 
 on:
   push:
     branches:
-      - agent/cmdg-cm4-p3-m-kernel-point-004-diag-active
+      - agent/cmdg-cm4-p3-m-kernel-point-004-diag-evidence-104209987608
     paths:
       - .github/workflows/cmdg-ci-diagnostic.yml
 
@@ -42,11 +42,33 @@ jobs:
           test: false
           use-github-cache: false
           use-mathlib-cache: true
-      - name: Execute governed P3 formal lane
+      - name: Capture governed P3 formal lane
         env:
           FORMAL_CHANGED_PATHS: '["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean"]'
-        run: >-
-          python3 ci/formal_validation.py run
-          --lane "cmdg-cm4-p3"
-          --mode "development"
-          --changed-paths-json "$FORMAL_CHANGED_PATHS"
+        shell: bash
+        run: |
+          set +e
+          python3 ci/formal_validation.py run \
+            --lane "cmdg-cm4-p3" \
+            --mode "development" \
+            --changed-paths-json "$FORMAL_CHANGED_PATHS" \
+            > cmdg-p3-residual.log 2>&1
+          rc=$?
+          printf '%s\n' "$rc" > cmdg-p3-exit-code.txt
+          cat cmdg-p3-residual.log
+          exit 0
+      - name: Upload governed-lane residual
+        if: always()
+        uses: actions/upload-artifact@043fb46c3abb44a0b8e8c3c5511492ef876e6ef2
+        with:
+          name: cmdg-p3-residual-104209987608
+          path: |
+            cmdg-p3-residual.log
+            cmdg-p3-exit-code.txt
+          if-no-files-found: error
+      - name: Reassert governed lane outcome
+        if: always()
+        shell: bash
+        run: |
+          rc=$(cat cmdg-p3-exit-code.txt)
+          exit "$rc"
