@@ -113,23 +113,37 @@ If the job log cannot provide the diagnostic, inspect check-run annotations, job
 
 If individual surfaces fail, retrieve the complete log archive for the relevant workflow run. Isolate the exact job/step and retain enough surrounding context to distinguish the first substantive error from secondary failures.
 
-### 4. Pinned local replay
+### 4. Authenticated operator extraction
 
-If hosted logs remain unavailable or insufficient, replay the relevant candidate bytes using the workflow-declared toolchain, dependency pins, commands, and build order. Narrow the replay to the failing module or step when the workflow contract permits that narrowing; do not silently substitute a different environment or dependency set.
+When connected diagnostic surfaces remain unavailable or insufficient and a known authenticated operator environment can access GitHub, that operator shell is an active evidence-transport surface. It is not a Human Steward approval, escalation, or transfer of responsibility for deciding the operation.
 
-### 5. Authenticated local extraction
-
-When connected diagnostic surfaces remain unavailable but an authenticated operator environment can access GitHub, provide a self-contained `gh`/GitHub API extraction route bound to the relevant repository, PR, candidate, run, and job.
+The executing agent SHALL, in the same response in which connected recovery is found insufficient, provide a self-contained `gh` or GitHub API extraction route bound to the current exact repository, PR or branch, candidate commit, run, job, artifact, and failing material object, as applicable. The agent must not merely state that the operator could use `gh`.
 
 The extraction should attempt, as applicable:
 
 1. individual job logs;
-2. check-run annotations;
+2. check-run annotations and job/check output;
 3. the complete run-log archive;
 4. focused searches for the failing file, theorem/check identifier, and `error:`/equivalent diagnostics;
 5. sufficient surrounding lines to support a narrow repair.
 
-The script must verify that the run and job correspond to the candidate bytes whose failure is being repaired. If the candidate changed materially, recover evidence for the new candidate before patching. Do not require a branch update merely because the base repository advanced independently.
+The script must:
+
+- verify that the run, job, artifact, and candidate identities correspond to the bytes whose failure is being repaired;
+- reject stale evidence when a material identity changed;
+- avoid mutation unless mutation is separately authorized;
+- emit clearly delimited output that can be returned without interpretive reconstruction;
+- preserve the parent operator shell on recoverable extraction failures.
+
+If the candidate changed materially, recover evidence for the new candidate before patching. Do not require a branch update merely because the base repository advanced independently.
+
+Human execution of this script is an evidence-transport step only. When the returned evidence remains within the already authorized scope, the executing agent continues from it without requesting a fresh Human Steward approval.
+
+### 5. Pinned local replay
+
+If hosted and authenticated GitHub evidence remains unavailable or insufficient, replay the relevant candidate bytes using the workflow-declared toolchain, dependency pins, commands, and build order. Narrow the replay to the failing module or step when the workflow contract permits that narrowing; do not silently substitute a different environment or dependency set.
+
+A pinned local replay is evidence only for the route it actually exercises. It does not replace a hosted/protected check when that check remains a required admission gate.
 
 ## Shell safety for operator-provided recovery scripts
 
@@ -138,8 +152,8 @@ A recovery snippet intended to be pasted into an operator's existing shell must 
 Therefore:
 
 - do not use top-level `exit`;
-- do not use top-level `set -euo pipefail`;
-- isolate strict/error-exit behavior inside a subshell;
+- do not use top-level `set -e`, `set -u`, or `set -o pipefail`;
+- isolate strict/error-exit behavior inside a subshell when needed;
 - use guarded branches, warnings, and continue/skip behavior for recoverable extraction failures;
 - a hard material-identity mismatch must print a clear stop condition and avoid mutation or stale evidence use without terminating the parent shell.
 
@@ -178,9 +192,21 @@ Recognized categories are:
 
 A broken log endpoint, empty connector response, ordinary compiler error, single failed replay, transient CI failure, behind branch, or unrelated `main` movement is not by itself one of these boundaries.
 
+An authentication boundary, substantive evidentiary boundary, or recovery-exhaustion boundary is invalid while a known authenticated operator environment can still retrieve the required evidence through an authorized bounded `gh`/GitHub API route that has not yet been attempted or shown unavailable. If authenticated extraction cannot recover sufficient evidence, continue to the applicable pinned replay or other authorized recovery route before declaring recovery exhaustion.
+
+For recoverable evidence-transport failure, the required sequence is:
+
+`connected recovery -> exact-bound operator gh recovery script -> returned evidence -> bounded repair/replay`
+
+and not:
+
+`connected recovery failure -> stopping claim -> optional script after Human Steward objection`.
+
 ## Human Steward escalation
 
 Human Steward intervention is requested only where the governing process actually reserves the next decision or authority to the Human Steward. Standing delegation covers routine bounded execution; an operator must not convert implementation inconvenience, numerical head drift, or an ordinary documentation/engineering transition into a synthetic approval gate.
+
+Use of the Human Steward's authenticated shell for a bounded recovery script is evidence transport, not escalation. The script must not ask the Human Steward to decide a question that remains delegated to the executing agent.
 
 When escalation is genuinely required, provide the material identities, evidence already recovered, routes attempted, unresolved condition, and the specific reserved decision or authority required.
 

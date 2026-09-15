@@ -74,9 +74,9 @@ For an already authorized bounded MATH operation, follow [`docs/governance/EXECU
 - Bind diagnostics to the exact run/job/artifact and candidate bytes they actually describe. Do not patch from stale diagnostics.
 - A repository-head change matters only when it changes material evidence closure, a relevant protected dependency, mergeability, scope, or authority. Unrelated `main` movement does not invalidate evidence.
 - Repair only the demonstrated failing theorem/module/validator/scope, then rerun the affected replay or checks. Do not rerun unrelated expensive lanes merely for a numerically fresh head.
-- If connected diagnostic surfaces remain unavailable, use the guide's
-  authenticated local extraction route rather than declaring missing logs a
-  terminal blocker.
+- If connected GitHub, CI, compiler, or logging surfaces cannot expose exact evidence and a known authenticated operator shell is available, emit an exact-identity-bound, self-contained `gh`/GitHub API recovery script in the same response. The script must be safe to paste into the existing shell, must not use top-level shell-kill behavior, must reject stale material identities, and must avoid mutation unless separately authorized.
+- Human execution of that script is an evidence-transport step, not Human Steward approval or escalation. Continue from returned evidence without requesting a fresh approval when the operation remains within existing authority.
+- Do not claim an authentication, substantive evidentiary, or recovery-exhaustion boundary while that authenticated operator route remains available and unattempted. If it cannot recover sufficient evidence, continue to the applicable pinned replay or other authorized recovery route before declaring exhaustion.
 - Stop or escalate only at a named governance, authority, authentication,
   safety, protected-state, materially changed-state, substantive evidentiary,
   or actual recovery-exhaustion boundary.
