@@ -1,0 +1,35 @@
+name: CMDG CI diagnostic bridge
+
+on:
+  push:
+    branches:
+      - agent/cmdg-cm4-p3-m-kernel-point-004
+    paths:
+      - .github/workflows/cmdg-ci-diagnostic.yml
+
+permissions:
+  actions: read
+  checks: read
+  contents: read
+
+jobs:
+  sealed-diagnostic:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Emit sealed formal diagnostics
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          JOB_ID: "104209987608"
+        shell: bash
+        run: |
+          set -euo pipefail
+          job_json="$(gh api "repos/${REPO}/actions/jobs/${JOB_ID}")"
+          run_id="$(jq -r '.run_id' <<<"${job_json}")"
+          echo "TARGET_JOB_ID=${JOB_ID}"
+          echo "TARGET_RUN_ID=${run_id}"
+          gh api "repos/${REPO}/actions/runs/${run_id}" --jq '"TARGET_HEAD_SHA=" + .head_sha + "\nTARGET_STATUS=" + .status + "\nTARGET_CONCLUSION=" + (.conclusion // "")'
+          gh api --allow-escape-sequences "repos/${REPO}/actions/jobs/${JOB_ID}/logs" > /tmp/cmdg-job.log
+          echo '::group::LEAN_ERRORS'
+          grep -n -C 30 -E 'error:|unsolved goals|type mismatch|application type mismatch|CMDGCondensedCM4P3GPointFunctional|declaration uses|unknown identifier' /tmp/cmdg-job.log | sed -n '1,420p' || true
+          echo '::endgroup::'
