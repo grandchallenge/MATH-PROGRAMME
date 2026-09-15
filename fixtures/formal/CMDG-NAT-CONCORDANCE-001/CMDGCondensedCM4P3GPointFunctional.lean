@@ -228,7 +228,6 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     have hnat :=
       ConcreteCategory.congr_hom
         (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.naturality ftrue) z
-    simp only [ConcreteCategory.comp_apply] at hnat
     change
       (ConcreteCategory.hom
         (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).obj D).obj.map ftrue))
