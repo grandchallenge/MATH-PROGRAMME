@@ -1,4 +1,4 @@
-name: CMDG CI diagnostic bridge
+name: CMDG P3-M small-free alias experiment
 
 on:
   push:
@@ -8,28 +8,107 @@ on:
       - .github/workflows/cmdg-ci-diagnostic.yml
 
 permissions:
-  actions: read
-  checks: read
   contents: read
 
 jobs:
-  sealed-diagnostic:
+  proof-sandbox:
     runs-on: ubuntu-24.04
+    timeout-minutes: 75
     steps:
-      - name: Emit sealed formal diagnostics
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REPO: ${{ github.repository }}
-          JOB_ID: "104209987608"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install governed policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Type the transported section at the local aliases
         shell: bash
         run: |
-          set -euo pipefail
-          job_json="$(gh api "repos/${REPO}/actions/jobs/${JOB_ID}")"
-          run_id="$(jq -r '.run_id' <<<"${job_json}")"
-          echo "TARGET_JOB_ID=${JOB_ID}"
-          echo "TARGET_RUN_ID=${run_id}"
-          gh api "repos/${REPO}/actions/runs/${run_id}" --jq '"TARGET_HEAD_SHA=" + .head_sha + "\nTARGET_STATUS=" + .status + "\nTARGET_CONCLUSION=" + (.conclusion // "")'
-          gh api --allow-escape-sequences "repos/${REPO}/actions/jobs/${JOB_ID}/logs" > /tmp/cmdg-job.log
-          echo '::group::LEAN_ERRORS'
-          grep -n -C 30 -E 'error:|unsolved goals|type mismatch|application type mismatch|CMDGCondensedCM4P3GPointFunctional|declaration uses|unknown identifier' /tmp/cmdg-job.log | sed -n '1,420p' || true
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean')
+          s = p.read_text()
+          old = '''  have hbridge :=
+    weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j
+  have hnatTail :=
+    ConcreteCategory.congr_hom
+      (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.naturality
+        ((profiniteToCompHaus).map
+          (basisBooleanPointProbe X (fun _ => true))).op)
+      ((ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreePresheafNatIso.hom.app Q).app S))
+        (weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j))
+  simp only [ConcreteCategory.comp_apply] at hnatTail
+  have hbridgeTail := congrArg
+    (fun t =>
+      (ConcreteCategory.hom
+        (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.app
+          (op ((profiniteToCompHaus).obj P)))) t)
+    hbridge
+'''
+          new = '''  let mQ :
+      (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreePresheafFunctor.obj Q).obj S := by
+    dsimp [Q, S, T]
+    exact
+      (ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasureSmallFreePresheafNatIso.app
+          (CMDG.CondensedCM4P3G.FiniteBooleanMeasure.FiniteQuotientObject X j)).hom.app
+          (op ((profiniteToCompHaus).obj
+            (CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X)))))
+        (weightedFiniteBooleanMeasureSection X (integralBasisEvaluationWeight X x) j)
+  have hbridgeQ :
+      (ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreePresheafFunctor.obj Q).map
+          ((profiniteToCompHaus).map
+            (basisBooleanPointProbe X (fun _ => true))).op)) mQ =
+        (ConcreteCategory.hom
+          ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion
+            Q (j.proj x)).app
+            (op ((profiniteToCompHaus).obj P))))
+          (1 : LocallyConstant P CMDG.CondensedCM4P3G.R.{u}) := by
+    dsimp [mQ, Q, P, S, T]
+    exact weightedFiniteBooleanMeasureSection_smallFree_evaluationWeight_allTrue X x j
+  have hnatTail :=
+    ConcreteCategory.congr_hom
+      (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.naturality
+        ((profiniteToCompHaus).map
+          (basisBooleanPointProbe X (fun _ => true))).op)
+      mQ
+  simp only [ConcreteCategory.comp_apply] at hnatTail
+  have hbridgeTail := congrArg
+    (fun t =>
+      (ConcreteCategory.hom
+        (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.app
+          (op ((profiniteToCompHaus).obj P)))) t)
+    hbridgeQ
+'''
+          if old not in s:
+              raise SystemExit('expected proof block not found')
+          p.write_text(s.replace(old, new, 1))
+          PY
+          git --no-pager diff --check
+          git --no-pager diff -- fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean
+      - name: Set up pinned Lean environment
+        uses: grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4
+        with:
+          lake-package-directory: fixtures/formal/CMDG-NAT-CONCORDANCE-001
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Execute governed P3 formal lane
+        env:
+          FORMAL_CHANGED_PATHS: '["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean"]'
+        shell: bash
+        run: |
+          set +e
+          python3 ci/formal_validation.py run --lane "cmdg-cm4-p3" --mode "development" --changed-paths-json "$FORMAL_CHANGED_PATHS" 2>&1 | tee /tmp/formal.log
+          status=${PIPESTATUS[0]}
+          echo '::group::LEAN_RESULT'
+          grep -n -C 24 -E 'error:|unsolved goals|type mismatch|application type mismatch|declaration uses|sorryAx|CMDGCondensedCM4P3GPointFunctional' /tmp/formal.log | tail -n 420 || true
           echo '::endgroup::'
+          exit "$status"
