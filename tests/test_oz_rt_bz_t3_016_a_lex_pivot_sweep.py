@@ -97,9 +97,9 @@ class OzRtBzT3016ALexPivotSweepTests(unittest.TestCase):
         )
         self.assertEqual(len(lex_pivot_sweep._pivot_sha(p1)), 64)
 
-    def test_repository_request_binds_discovered_signature(self) -> None:
+    def test_repository_request_preserves_completed_signature_and_is_deactivated(self) -> None:
         request = lex_pivot_sweep.load_request()
-        self.assertTrue(request["enabled"])
+        self.assertFalse(request["enabled"])
         self.assertEqual(request["expected_pivot_sha256"], EXPECTED_PIVOT_SHA256)
         self.assertEqual(request["rational_degree_test_bound"], 177)
 
