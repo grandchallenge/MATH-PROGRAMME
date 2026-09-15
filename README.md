@@ -1,120 +1,130 @@
 # Grand Challenge Mathematics Programme
 
-Grand Challenge mathematics work is organized as a three-pillar system:
+Grand Challenge mathematics work uses a three-pillar system:
 
 ```text
 MATHFORGE  ->  MATHSOLVE  ->  MATHCERT
 discover       organize       certify
 ```
 
-The programme exists to turn mathematical curiosity into checked understanding without confusing evidence, computation, exposition, or certification.
+The programme separates discovery, mathematical development, and certification. This separation keeps claim status visible as work progresses.
 
-## What this programme is really for
+## What the programme does
 
-Most mathematical work fails in one of two ways. Either it never becomes executable, so it stays at the level of inspiration, notes, and slogans. Or it does become executable, but the boundary between *suggesting* a claim and *establishing* a claim becomes blurred.
+The programme turns a mathematical question into a sequence of explicit research states.
 
-The Mathematics Programme exists to prevent both failures.
+- **MATHFORGE** identifies the object, source, pattern, obstruction, or candidate route.
+- **MATHSOLVE** turns that material into named obligations, work packages, proof routes, and handoffs.
+- **MATHCERT** checks exact statements, evidence, and certificates. It records the claim boundary that survives review.
 
-It is a system for turning difficult mathematical questions into governed campaigns that can:
+The three pillars do not assign the same status to every artifact. A source can motivate a claim. A computation can support a claim. A work package can organize a claim. Certification is a separate act.
 
-- gather signals without pretending they are proofs;
-- organize proof work without pretending organization is certification;
-- certify only what survives exact replay and independent scrutiny.
-
-In plain language: **the programme is designed to help us think boldly without letting us speak carelessly.**
-
-## How truth moves through the programme
+## How a claim moves through the programme
 
 ```mermaid
 flowchart LR
-    A[Question or source signal] --> B[MATHFORGE<br/>find the object, source, pattern, or obstruction]
-    B --> C[MATHSOLVE<br/>turn it into explicit obligations, work packages, and proof routes]
-    C --> D[MATHCERT<br/>replay, check, and delimit what actually holds]
-    D --> E[Certified mathematical surface<br/>with explicit claim boundary]
+    A[Question or source signal] --> B[MATHFORGE<br/>identify object, source, pattern, or obstruction]
+    B --> C[MATHSOLVE<br/>define obligations, proof routes, and handoffs]
+    C --> D[MATHCERT<br/>replay, check, and delimit the claim]
+    D --> E[Checked claim<br/>with explicit status and boundary]
 
-    B -. may fail .-> X1[Source route blocked]
-    C -. may fail .-> X2[Proof route blocked]
-    D -. may fail closed .-> X3[Not certified / not promoted]
+    B -. route blocked .-> X1[Record the obstruction]
+    C -. proof route blocked .-> X2[Record unresolved proof debt]
+    D -. certification fails .-> X3[Do not promote the claim]
 ```
 
-This separation is the heart of the programme.
+The diagram shows a governed state transition. Each stage produces a different artifact and a different claim status.
 
-A source can be exciting. A computation can be persuasive. A work package can be beautifully organized. None of those is yet certification.
+A failed route remains part of the record. A failed certification does not become a weaker positive result unless a separate claim supports that result.
 
-The point of the three-pillar design is to keep the transitions explicit:
+## Why the pillars are separate
 
-- **MATHFORGE** is where a mathematical possibility becomes a disciplined object of inquiry.
-- **MATHSOLVE** is where that object becomes a campaign with named obligations and exact successor moves.
-- **MATHCERT** is where the surviving claim is replayed, bounded, and either admitted or refused.
+Each pillar controls a different transition.
 
-## Why the three pillars are separate
-
-Each pillar protects against a different kind of self-deception.
-
-| Pillar | What it does | What it prevents |
+| Pillar | Primary function | Boundary it preserves |
 |---|---|---|
-| **MATHFORGE** | Reconstructs sources, signals, heuristics, examples, and candidate routes. | Mistaking a promising lead for a governed mathematical object. |
-| **MATHSOLVE** | Builds theorem spines, work packages, proof obligations, and handoffs. | Mistaking a research programme for a completed result. |
-| **MATHCERT** | Replays exact statements, checks certificates, and fixes the claim boundary. | Mistaking evidence or exposition for certified truth. |
+| **MATHFORGE** | Reconstruct sources, record signals, run finite screens, and identify candidate routes. | Discovery evidence does not become a mathematical result by presentation alone. |
+| **MATHSOLVE** | Build theorem spines, proof obligations, work packages, and exact successor moves. | An active solving campaign does not become a completed result. |
+| **MATHCERT** | Replay exact statements, check certificates, and record claim disposition. | Evidence and exposition do not become certified truth without the required checks. |
 
-A useful intuition is this:
+The distinction is operational:
 
-- **MATHFORGE asks:** “What is here?”
-- **MATHSOLVE asks:** “What would it take to know?”
-- **MATHCERT asks:** “What, exactly, survived checking?”
+- **MATHFORGE asks:** What mathematical object or route is available?
+- **MATHSOLVE asks:** Which obligations must close before the claim can advance?
+- **MATHCERT asks:** Which exact claim survived the applicable checks?
 
 ## Current programme fronts
 
-This table tracks material mathematical work currently in motion. Row order reflects active programme attention; it is not a ranking of theorem importance, evidentiary strength, or claim status.
+This table shows material mathematical work that is active now. Row order reflects current programme attention. It does not rank theorem importance or claim strength.
 
-| Frontier | Current work | Why it matters |
+| Frontier | Current obligation | Programme significance |
 |---|---|---|
-| **BSD-001 — can the selected rank-one leading-term target retain every power of `2`?** | [MATHSOLVE #243](https://github.com/grandchallenge/MATHSOLVE/issues/243) — replay the Burns–Sakamoto–Sano theorem chain at literal `p=2` after the protected replacement stack; isolate the first unrepaired theorem-level dependency if the replay does not close. | This is a direct attempt to close a real theorem-level obstruction rather than circling it. The work is not “more evidence for BSD”; it is an exact attack on a sharply named boundary. |
-| **VGSE-001 — which reconstructed t-embedding claims survive independent exact adjudication?** | [MATHCERT #299](https://github.com/grandchallenge/MATHCERT/issues/299) — execute the bounded four-claim adjudication for `VGSE-C00`, `C01`, `C04`, and `C05`; keep `C06` excluded and fail-closed. | This is a strong example of the programme’s truth discipline: preserve what has support, exclude what does not, and refuse to blur the gap after the fact. |
-| **OZ-001 — can the order-7 Brown–Zudilin route be compressed into an exact characteristic-zero certificate?** | [MATH-PROGRAMME #964](https://github.com/grandchallenge/MATH-PROGRAMME/issues/964) — reduce the 576-dimensional discrete-curl kernel through a degree-minimising Popov / approximant-basis section, then independently replay the resulting order-7 certificate. | This is frontier constructive work: not just checking an inherited proof route, but trying to build a new exact certificate inside a tightly characterized admissible class. |
+| **BSD-001 — rank-one leading term at literal `p=2`** | [MATHSOLVE #243](https://github.com/grandchallenge/MATHSOLVE/issues/243) replays the Burns–Sakamoto–Sano theorem chain at literal `p=2`. If the replay fails, the campaign must identify the first unrepaired theorem-level dependency. | The work targets one named theorem-level obstruction. It does not generalize the result beyond the retained claim boundary. |
+| **VGSE-001 — exact adjudication of reconstructed t-embedding claims** | [MATHCERT #299](https://github.com/grandchallenge/MATHCERT/issues/299) adjudicates `VGSE-C00`, `C01`, `C04`, and `C05`. `C06` remains excluded from this route. | The campaign tests whether each reconstructed claim has enough exact support for its stated scope. Unsupported claims remain unpromoted. |
+| **OZ-001 — order-7 Brown–Zudilin certificate route** | [MATH-PROGRAMME #964](https://github.com/grandchallenge/MATH-PROGRAMME/issues/964) reduces the 576-dimensional discrete-curl kernel through a degree-minimising Popov or approximant-basis section. The resulting order-7 certificate then requires independent replay. | The work attempts to construct an exact characteristic-zero certificate inside a defined admissible class. Construction and certification remain separate steps. |
 
-Rows appear here only while they represent material active work. The issue trackers are navigation surfaces; protected repository records remain authoritative. None of these rows promotes a mathematical claim.
+Rows appear here only while the work remains materially active. Issue trackers provide navigation. Protected repository records remain authoritative.
 
 [Programme Atlas →](docs/PROGRAMME_ATLAS.md) · [MATHFORGE](https://github.com/grandchallenge/MATHFORGE) · [MATHSOLVE](https://github.com/grandchallenge/MATHSOLVE) · [MATHCERT](https://github.com/grandchallenge/MATHCERT)
 
-## What makes this programme different
+## What the programme preserves
 
-Many research groups can produce notes, experiments, or partial formalizations. The harder thing is to build a system in which mathematical work remains legible under pressure.
+The programme is designed so that later work can recover the state of inquiry without relying on informal context.
 
-This programme is trying to do exactly that.
+A continuable campaign should let another researcher or agent answer four questions:
 
-It treats mathematical research as something that should remain:
+1. What exact object or claim is under study?
+2. What evidence supports the current status?
+3. Which obligations, limitations, or failure cases remain open?
+4. What is the next authorized move?
 
-- **traceable** — one can recover where a claim came from;
-- **executable** — one can rerun the relevant computation, reconstruction, or verification path;
-- **bounded** — one knows exactly what is and is not being claimed;
-- **continuable** — another person or agent can take over without mythology or guesswork.
+The programme therefore preserves four properties:
 
-That is the compelling truth behind the architecture: **the objective is not merely to produce results, but to produce results that can survive transfer, scrutiny, and continuation.**
+| Property | Required result |
+|---|---|
+| **Traceability** | A reader can recover the source, evidence, and decision path for a consequential claim. |
+| **Executability** | A reader can repeat the relevant computation, reconstruction, proof replay, or validation when reproduction applies. |
+| **Bounded claims** | A reader can identify the claim type, status, scope, assumptions, and material limitations. |
+| **Continuation** | A new researcher or agent can resume from the recorded state without reconstructing hidden project context. |
+
+This is the practical reason for the programme architecture. The output is not only a mathematical result. The output is a result with enough structure for scrutiny, transfer, and continued work.
 
 ## Execution model — protected concurrent execution
 
-The programme now operates under the protected streamlined execution model established by `MP-STREAMLINED-EXECUTION-001`, together with the substance-first execution discipline established by `MP-SUBSTANCE-FIRST-EXECUTION-001`.
+The programme operates under `MP-STREAMLINED-EXECUTION-001` and `MP-SUBSTANCE-FIRST-EXECUTION-001`.
 
-Routine bounded administrative, documentation, engineering, workflow, maintenance, routing, synchronization, and campaign-execution work proceeds under standing delegated authority. It does not acquire a fresh Human Steward or independent-review gate merely because a branch head or protected `main` moved. Specialist non-author review remains reserved for substantive mathematical certification, source-semantic adjudication, constitutional authority expansion, security-sensitive protection weakening, and external claim promotion.
+Routine bounded administration, documentation, engineering, maintenance, routing, synchronization, and campaign execution use standing delegated authority. A moved branch head does not create a new review requirement by itself.
 
-For substantive work, the primary mathematical, scientific, technical, editorial, or product artifact remains the object of optimization. Governance, CI, evidence, provenance, release engineering, and repository mechanics must remain the minimum control path required to protect that artifact. Repeated continuation without material primary-artifact progress, process dominance, evidence substitution, remediation recursion, objective drift, and artifact inflation trigger re-planning rather than more ceremony.
+Specialist non-author review remains required for substantive mathematical certification and source-semantic adjudication. It also remains required for constitutional authority expansion, security-sensitive protection weakening, and external claim promotion.
 
-Evidence binds to its material evidence closure rather than indiscriminately to the whole repository SHA. Protected branches may therefore develop concurrently when the candidate remains mergeable, relevant dependencies are unchanged, affected checks pass, and scope or authority has not widened.
+The primary mathematical or technical artifact remains the object of optimization. Governance, CI, provenance, and release controls must remain proportional to the material risk.
 
-Programme policy CI is impact-routed. `validate-json` is the stable aggregate required context over selected policy shards; it is not a monolithic instruction to run every suite on every candidate. Expensive formal, external, and computational replays use material-identity routing, protected evidence reuse where valid, and scheduled or explicit full sentinels. `docs/WORKFLOW_COVERAGE.md` records the executable coverage and measured evidence.
+Evidence binds to its material evidence closure. It does not bind indiscriminately to every unrelated repository change.
 
-The earlier administrative workflow rebuild remains permanent historical evidence under `governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/`; its exact-head/review sequence records how that transition was admitted at the time and is not the current routine execution protocol.
+Protected branches can therefore develop concurrently when four conditions hold:
+
+1. the candidate remains mergeable;
+2. relevant dependencies are unchanged;
+3. affected checks pass;
+4. scope and authority have not widened.
+
+Programme policy CI is impact-routed. `validate-json` is the stable aggregate required context over selected policy shards.
+
+Expensive formal, external, and computational replays use material-identity routing where the policy permits reuse. Scheduled or explicit full sentinels provide broader coverage.
+
+`docs/WORKFLOW_COVERAGE.md` records the current executable coverage and measured evidence.
+
+The earlier administrative workflow rebuild remains historical evidence at `governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/`. Its exact-head review sequence records how that transition was admitted at the time.
 
 [![MP-ADMIN-WORKFLOW-REBUILD-001 — working rebuild proof](https://raw.githubusercontent.com/grandchallenge/MATH-PROGRAMME/main/docs/assets/mp-admin-workflow-rebuild-proof.png)](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rebuild_evidence/MP-ADMIN-WORKFLOW-REBUILD-001/README.md?plain=1#readme)
 
-The illustration is a historical progress view, not an authority grant. Protected records, retained evidence identities, validators, and current operating policy remain authoritative.
+The illustration is a historical progress view. It does not grant authority.
 
-## Core repositories and pillars
+## Core repositories
 
-- **MATHFORGE** discovers candidate ore: source signals, problem cards, reconnaissance artifacts, finite screens, and route suggestions.
-- **MATHSOLVE** organizes the campaign: theorem spines, work packages, proof-debt registers, exact obligations, and certification handoffs.
-- **MATHCERT** checks the boundary: formal statements, exact replays, certificate validators, and claim ledgers.
+- **MATHFORGE** discovers candidate material: source signals, problem cards, reconnaissance artifacts, finite screens, and route suggestions.
+- **MATHSOLVE** organizes solving campaigns: theorem spines, work packages, proof-debt registers, exact obligations, and certification handoffs.
+- **MATHCERT** checks the claim boundary: formal statements, exact replays, certificate validators, and claim ledgers.
 
 ## Current operating standards
 
@@ -122,18 +132,18 @@ Use these as the current source of truth before opening new doctrine or domain w
 
 1. `docs/GRAND_CHALLENGE_PEDAGOGY_STANDARD.md` — rails-before-research exposition standard.
 2. `docs/PEDAGOGICAL_STYLE_GUIDE.md` — sentence- and artifact-level style companion.
-3. `docs/ACCESSIBLE_RESEARCH_GUIDE_STANDARD.md` — prerequisites, examples, fixtures, challenge ladders, certification paths, and continuation graphs for accessible research handoff.
+3. `docs/ACCESSIBLE_RESEARCH_GUIDE_STANDARD.md` — prerequisites, examples, fixtures, challenge ladders, certification paths, and continuation graphs.
 4. `docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md` — theorem-spine campaign protocol.
 5. `docs/FOUNDATION_AWARE_MATH_PROGRAMME.md` — structured-object and axiom-profile doctrine.
 6. `docs/CLAIM_BOUNDARY_DOCTRINE.md` — claim-status and proof-boundary discipline.
-7. `CLASSIFICATION_DISCOVERY_STANDARD.md` — external classification, discovery evidence, and knowledge graph rules.
-8. `GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md` — Work Package structure and review discipline.
-9. `CLAIM_LEDGER_STANDARD.md` — claim ledger format, support route, and promotion conditions.
+7. `CLASSIFICATION_DISCOVERY_STANDARD.md` — classification, discovery evidence, and knowledge-graph rules.
+8. `GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md` — work-package structure and review discipline.
+9. `CLAIM_LEDGER_STANDARD.md` — claim-ledger format, support route, and promotion conditions.
 10. `CERTIFICATION_LADDER.md` — promotion gate from mathematical development to certified result.
-11. `docs/governance/STREAMLINED_EXECUTION_AMENDMENT.md` — current delegation, material-closure, concurrency, CI-proportionality, merge, and readback rules.
-12. `docs/governance/SUBSTANCE_FIRST_EXECUTION_DISCIPLINE.md` — primary-deliverable lock, process proportionality, material-progress rules, drift tripwires, remediation-recursion limits, and mandatory handoff inheritance.
-13. `docs/WORKFLOW_COVERAGE.md` — current executable CI coverage, bounded replay, routing, and operational evidence.
-14. `docs/governance/AGENT_CADENCE_OPERATING_DESIGN.md` — current event-driven and campaign-local cadence interpretation; no global countdown.
+11. `docs/governance/STREAMLINED_EXECUTION_AMENDMENT.md` — delegation, material closure, concurrency, CI proportionality, merge, and readback rules.
+12. `docs/governance/SUBSTANCE_FIRST_EXECUTION_DISCIPLINE.md` — primary-deliverable lock, process proportionality, drift controls, and handoff inheritance.
+13. `docs/WORKFLOW_COVERAGE.md` — executable CI coverage, bounded replay, routing, and operational evidence.
+14. `docs/governance/AGENT_CADENCE_OPERATING_DESIGN.md` — event-driven and campaign-local cadence interpretation.
 
 ## Presentation and pedagogy companions
 
@@ -147,37 +157,42 @@ Use these as the current source of truth before opening new doctrine or domain w
 - `docs/CROSS_PILLAR_LANES.md`
 - `docs/GLOSSARY.md`
 
-Additional supporting files include schemas, templates, exact finite enumerators, small audit outputs, resource notes, and Lean scaffolding retained from earlier domains.
+Supporting files include schemas, templates, finite enumerators, audit outputs, resource notes, and Lean scaffolding retained from earlier domains.
 
 ## How to use this repository
 
-1. Start with **Current programme fronts** above for the mathematics that is materially active now.
+1. Start with **Current programme fronts** for work that is materially active now.
 2. Read `docs/GRAND_CHALLENGE_READER_GUIDE.md` for orientation.
-3. Read `ARCHITECTURE_OVERVIEW.md` to understand the three-pillar split.
-4. Read the current operating standards above before starting new work.
-5. Use `GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md` and `templates/work_package_template.md` for every MATHSOLVE Work Package.
-6. Use `docs/ACCESSIBLE_RESEARCH_GUIDE_STANDARD.md` and `templates/accessible_research_guide_template.md` whenever a project needs a human or agentic on-ramp.
-7. Treat `CLAIM_LEDGER_STANDARD.md` as binding. No claim should appear without a type, support route, and promotion condition.
-8. Treat `CERTIFICATION_LADDER.md` as the promotion gate from mathematical development to certified result.
-9. Read `docs/CROSS_PILLAR_LANES.md` when a recurring tactic, witness, or certificate path spans all three pillars.
-10. Treat `CLASSIFICATION_DISCOVERY_STANDARD.md` as binding for subject mappings, knowledge graph assertions, and discovery evidence.
-11. Treat `schemas/foundational_profile.schema.json` as the machine-readable form of the foundation-aware profile.
-12. For routine execution, identify the primary deliverable and material acceptance criteria, classify the material closure, run affected checks, exercise delegated disposition, merge through protection, and read back protected state. Do not create synchronization commits, repeat unrelated review, launch full-estate CI solely because `main` advanced, or expand supporting process beyond what protects a material boundary.
-13. Use `docs/PROGRAMME_ATLAS.md` and the governed campaign trackers to locate additional active, queued, blocked, and historical work. Historical domain scaffolding is retained as evidence and infrastructure; it is not an implied current priority.
+3. Read `ARCHITECTURE_OVERVIEW.md` for the three-pillar architecture.
+4. Read the current operating standards before starting governed work.
+5. Use `GRAND_CHALLENGE_WORK_PACKAGE_STANDARD.md` and `templates/work_package_template.md` for MATHSOLVE work packages.
+6. Use `docs/ACCESSIBLE_RESEARCH_GUIDE_STANDARD.md` when a project needs a human or agentic on-ramp.
+7. Treat `CLAIM_LEDGER_STANDARD.md` as binding for consequential claims.
+8. Treat `CERTIFICATION_LADDER.md` as the promotion gate for certified results.
+9. Use `docs/CROSS_PILLAR_LANES.md` for recurring tactics or certificate paths that span all three pillars.
+10. Use `CLASSIFICATION_DISCOVERY_STANDARD.md` for subject mappings and discovery evidence.
+11. Use `schemas/foundational_profile.schema.json` for the machine-readable foundation-aware profile.
+12. For routine execution, identify the primary deliverable and its material acceptance criteria.
+13. Classify the material closure, run affected checks, exercise delegated disposition, merge through protection, and read back protected state.
+14. Use `docs/PROGRAMME_ATLAS.md` and governed campaign trackers to locate active, queued, blocked, and historical work.
+
+Historical domain scaffolding remains part of the record. Its presence does not imply current priority.
 
 ## Claim boundary
 
-This README is a programme map, not a mathematical disposition. Active-front placement records current work, not proof, refutation, certification, novelty, or priority of discovery.
+This README is a programme map. It is not a mathematical disposition.
 
-A source can motivate a claim. A computation can suggest a claim. A Work Package can organize a claim. But MATHCERT determines whether a claim is checkable.
+Placement in **Current programme fronts** records current work only. It does not establish proof, refutation, certification, novelty, or priority of discovery.
 
-## The Grand Challenge posture
+A source can motivate a claim. A computation can support a claim. A work package can organize a claim. MATHCERT determines the certification status of the exact claim presented to it.
 
-The desired voice is ambitious, lucid, and exact. It should not sound like marketing. It should not obscure uncertainty. It should not confuse ornament with insight. Decoration is allowed only when it helps the reader see the structure.
+## Communication posture
 
-A good artifact should leave the reader with four things:
+The README follows the same claim-boundary rule as the rest of the programme. Presentation can expose authority. Presentation cannot create authority.
 
-- the object in view;
-- the obstruction in focus;
-- the claim boundary visible;
-- the next move unmistakable.
+A useful programme artifact keeps four items visible:
+
+- the object under study;
+- the current obstruction or obligation;
+- the exact claim boundary;
+- the next authorized move.
