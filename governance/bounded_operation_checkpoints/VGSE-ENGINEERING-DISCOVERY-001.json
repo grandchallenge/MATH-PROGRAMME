@@ -15,28 +15,29 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#984"
   },
-  "phase": "VGSE-ENG-WP01 is substantively instantiated on an exact work-branch head with a layered model, forward-response map, gauge/invariant analysis, inverse-design result, robustness screen, claim ledger, and evidence-driven successor; exact-head review and protected integration remain pending.",
+  "phase": "VGSE-ENG-WP01 is substantively instantiated at exact head e302494b683832626be95c8f4af104078cb87cf7 and opened as PR #990; exact-head validation plus distinct read-only Adversary and Referee examination are the current gate before protected integration.",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "b6816dbebe772248993cc7724d3e661b70f4df6b",
     "candidate_head_sha": "e302494b683832626be95c8f4af104078cb87cf7",
     "issue_number": 984,
-    "pr_number": null,
+    "pr_number": 990,
     "branch": "research/vgse-eng-wp01",
     "workflow_runs": []
   },
   "terminal_condition": "The first VGSE engineering-discovery phase satisfies the material acceptance criteria in docs/VGSE_ENGINEERING_DISCOVERY_MANDATE.md: a canonical layered model exists; at least one candidate invariant is verified or falsified; parameter-to-response sensitivity is characterized; recoverable versus non-recoverable geometric information is explicit; one bounded inverse-design result is obtained; at least one robustness result is recorded; an engineering claim ledger preserves status and provenance; and the next substantive experiment or derivation is durably specified without broadening the protected mathematical claim boundary.",
   "permitted_next_actions": [
     {
-      "id": "open_review_vgse_eng_wp01",
-      "description": "Open the exact VGSE-ENG-WP01 candidate head for protected review, bind CI and read-only Adversary/Referee examination to that exact head, and preserve all C06 and physical-realization boundaries."
+      "id": "validate_review_vgse_eng_wp01",
+      "description": "Validate exact PR #990 head e302494b683832626be95c8f4af104078cb87cf7, perform distinct read-only Adversary and Referee passes against the complete candidate and protected VGSE boundary, repair only if evidence requires it, and integrate only after the applicable protected gates are satisfied."
     }
   ],
   "next_action": {
-    "id": "open_review_vgse_eng_wp01",
-    "description": "Open a pull request from exact head e302494b683832626be95c8f4af104078cb87cf7, then run applicable exact-head checks and distinct read-only Adversary/Referee passes before any protected integration.",
+    "id": "validate_review_vgse_eng_wp01",
+    "description": "Validate and independently examine PR #990 at exact head e302494b683832626be95c8f4af104078cb87cf7. The Adversary must actively try to falsify the gauge, invariant, inverse-design, robustness, and claim-boundary statements; the Referee must decide whether the bounded WP01 acceptance criteria are supported without promoting C06 or any physical claim.",
     "evidence_targets": [
       "grandchallenge/MATH-PROGRAMME#984",
+      "grandchallenge/MATH-PROGRAMME#990",
       "research/vgse-eng-wp01@e302494b683832626be95c8f4af104078cb87cf7",
       "research/vgse-eng-wp01/README.md",
       "research/vgse-eng-wp01/model.json",
@@ -55,9 +56,10 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "instantiate VGSE-ENG-WP01 on the dedicated work branch",
-    "result": "Exact head e302494b683832626be95c8f4af104078cb87cf7 now records the first substantive engineering-discovery tranche. It defines the layered object and a projective boundary-response map, identifies an exact eight-dimensional internal-vertex gauge redundancy in the sixteen raw positive weights, fixes eight canonical quotient coordinates, records a full-rank local quotient Jacobian, falsifies support invariance when strict positivity is relaxed, preserves a negative raw inverse-design result, records a deterministic perturbation screen, reconciles the retained numerical and exact positive-weight representatives up to gauge, and specifies quotient-response continuation as the evidence-driven successor. C06 remains excluded and no physical, manufacturing, novelty, patentability, product, performance, or commercial claim is created.",
+    "action": "instantiate and open VGSE-ENG-WP01 for exact-head review",
+    "result": "Exact head e302494b683832626be95c8f4af104078cb87cf7 is PR #990 and records the first substantive engineering-discovery tranche. It defines the layered object and projective boundary-response map; identifies an exact eight-dimensional internal-vertex gauge redundancy in the sixteen raw positive weights; fixes eight canonical quotient coordinates; records a full-rank local quotient Jacobian; falsifies support invariance when strict positivity is relaxed; preserves a negative raw inverse-design result; records a deterministic perturbation screen; reconciles the retained numerical and exact positive-weight representatives up to gauge; and specifies quotient-response continuation as the evidence-driven successor. C06 remains excluded and no physical, manufacturing, novelty, patentability, product, performance, or commercial claim is created.",
     "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#990",
       "research/vgse-eng-wp01@e302494b683832626be95c8f4af104078cb87cf7",
       "research/vgse-eng-wp01/RESULTS.json",
       "research/vgse-eng-wp01/CLAIM_LEDGER.json",
@@ -69,13 +71,14 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-ENGINEERING-DISCOVERY-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-16T09:31:00Z"
+    "observed_at": "2026-09-16T09:30:10Z"
   },
   "resume": {
     "fresh_session_safe": true,
     "requires_chat_history": false,
     "authoritative_sources": [
       "grandchallenge/MATH-PROGRAMME#984",
+      "grandchallenge/MATH-PROGRAMME#990",
       "research/vgse-eng-wp01@e302494b683832626be95c8f4af104078cb87cf7",
       "research/vgse-eng-wp01/README.md",
       "research/vgse-eng-wp01/model.json",
@@ -88,7 +91,7 @@
       "docs/governance/SUBSTANCE_FIRST_EXECUTION_DISCIPLINE.md",
       "AGENTS.md"
     ],
-    "instructions": "Run the recorded live verification command before every material transition. Require research/vgse-eng-wp01 to remain at exact head e302494b683832626be95c8f4af104078cb87cf7 unless a reviewed repair deliberately changes the candidate, in which case invalidate prior exact-head evidence and rebind. Review the WP01 structural-response claims as model-bounded results only. Preserve the C06 source-correspondence exclusion and do not infer stiffness, rigid foldability, collision freedom, finite thickness, manufacturability, durability, novelty, patentability, product performance, or commercial value. If WP01 is admitted, continue with the quotient-response continuation and singular-locus search in NEXT_ACTION.md rather than fabrication or Figure-16 reproduction."
+    "instructions": "Run the recorded live verification command before every material transition. Require PR #990 and research/vgse-eng-wp01 to remain at exact head e302494b683832626be95c8f4af104078cb87cf7 unless a reviewed repair deliberately changes the candidate, in which case invalidate prior exact-head evidence and rebind. Review the WP01 structural-response claims as model-bounded results only. Preserve the C06 source-correspondence exclusion and do not infer stiffness, rigid foldability, collision freedom, finite thickness, manufacturability, durability, novelty, patentability, product performance, or commercial value. If WP01 is admitted, continue with the quotient-response continuation and singular-locus search in NEXT_ACTION.md rather than fabrication or Figure-16 reproduction."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
