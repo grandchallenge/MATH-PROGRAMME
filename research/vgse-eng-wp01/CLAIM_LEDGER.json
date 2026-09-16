@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0.0",
+  "campaign_id": "VGSE-001",
+  "work_package_id": "VGSE-ENG-WP01",
+  "status": "work_branch_candidate",
+  "claims": [
+    {
+      "id": "VGSE-ENG-WP01-C01",
+      "label": "QUALIFIED MATHEMATICAL RESULT",
+      "statement": "The protected C04 result supplies a positive weighted representative of the reconstructed graph whose boundary measurement reproduces the recorded Plucker data up to one common scale.",
+      "authority": "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607",
+      "scope": "C04 only; no physical interpretation of the weights"
+    },
+    {
+      "id": "VGSE-ENG-WP01-C02",
+      "label": "QUALIFIED MATHEMATICAL RESULT",
+      "statement": "The protected C05 result supplies five distinct planar t-embeddings satisfying the recorded boundary and geometric constraints.",
+      "authority": "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607",
+      "scope": "C05 only; C06 source correspondence remains excluded"
+    },
+    {
+      "id": "VGSE-ENG-WP01-C03",
+      "label": "VERIFIED ENGINEERING RESULT",
+      "statement": "Within the fixed positive-weight boundary-response model, eight independent internal-vertex gauge rescalings leave every projective boundary response exactly invariant. The 16 raw weights therefore contain at least eight exact redundant directions.",
+      "evidence": ["analyze_wp01.py", "RESULTS.json", "test_wp01.py"],
+      "scope": "structural boundary-response model; not a physical stiffness law"
+    },
+    {
+      "id": "VGSE-ENG-WP01-C04",
+      "label": "VERIFIED ENGINEERING RESULT",
+      "statement": "At the protected C04 representative the raw 18x16 projective-response Jacobian has rank 8 and nullity 8; the gauge generator matrix also has rank 8 and is annihilated by the response Jacobian. Thus the observed local kernel is exactly the internal-vertex gauge kernel at the baseline.",
+      "evidence": ["RESULTS.json", "test_wp01.py"],
+      "scope": "local statement at the protected representative"
+    },
+    {
+      "id": "VGSE-ENG-WP01-C05",
+      "label": "GCL DESIGN",
+      "statement": "WP01 fixes a canonical gauge with B1 through B6, F01|F04, and F03|F06 set to one, leaving eight canonical positive coordinates for quotient-space analysis.",
+      "evidence": ["model.json", "README.md"],
+      "scope": "analysis coordinate system synthesized by GCL; not recovered source geometry"
+    },
+    {
+      "id": "VGSE-ENG-WP01-C06",
+      "label": "VERIFIED ENGINEERING RESULT",
+      "statement": "The canonical 18x8 Jacobian has full column rank 8 at the protected baseline, with singular values [5.9301, 2.1239, 1.9627, 1.5477, 1.3473, 1.2265, 0.9971, 0.8111] and condition number about 7.31.",
+      "evidence": ["RESULTS.json", "test_wp01.py"],
+      "scope": "local structural response sensitivity in logarithmic canonical weight coordinates"
+    },
+    {
+      "id": "VGSE-ENG-WP01-C07",
+      "label": "GCL OBSERVATION",
+      "statement": "The older MATHSOLVE numerical positive-weight representative canonicalizes to the protected MATHCERT exact representative with maximum absolute weight discrepancy below 9e-16, showing that the two retained raw weight lists are gauge-equivalent to replay precision.",
+      "evidence": ["RESULTS.json", "model.json"],
+      "scope": "numerical cross-representation reconciliation"
+    },
+    {
+      "id": "VGSE-ENG-WP01-C08",
+      "label": "VERIFIED ENGINEERING RESULT",
+      "statement": "For the fixed topology, the nineteen-minor boundary-measurement support is invariant under all strictly positive edge-weight changes because each supported minor is a positive sum of existing matching monomials.",
+      "evidence": ["analyze_wp01.py", "RESULTS.json"],
+      "scope": "strictly positive weights on this fixed graph"
+    },
+    {
+      "id": "VGSE-ENG-WP01-C09",
+      "label": "GCL OBSERVATION",
+      "statement": "The support invariant is falsified outside its admissible class: setting F07|F04 to zero makes minor 345 vanish.",
+      "evidence": ["RESULTS.json", "test_wp01.py"],
+      "scope": "counterexample after relaxing strict positivity"
+    },
+    {
+      "id": "VGSE-ENG-WP01-C10",
+      "label": "VERIFIED ENGINEERING RESULT",
+      "statement": "The bounded inverse problem of recovering all sixteen raw positive weights from the protected projective response is non-identifiable: an explicit nontrivial gauge-transformed second solution has the same response to floating replay precision.",
+      "evidence": ["RESULTS.json", "test_wp01.py"],
+      "scope": "negative inverse-design result for raw parameterization"
+    },
+    {
+      "id": "VGSE-ENG-WP01-C11",
+      "label": "GCL OBSERVATION",
+      "statement": "Across 256 deterministic perturbations of at most 5 percent in the eight canonical log-weight coordinates, the support count remained 19 and the canonical Jacobian rank remained 8; condition numbers ranged from about 7.24 to 7.40.",
+      "evidence": ["RESULTS.json", "test_wp01.py"],
+      "scope": "declared local perturbation screen; not material or fabrication tolerance"
+    },
+    {
+      "id": "VGSE-ENG-WP01-C12",
+      "label": "SOURCE FACT",
+      "statement": "The retained source-vector route provides visible rounded geometry, but current protected evidence does not establish the Figure-16-to-pinned-C weight correspondence required for C06.",
+      "authority": "existing VGSE source/provider and protected C06 producer-binding record",
+      "scope": "source-attribution boundary only"
+    },
+    {
+      "id": "VGSE-ENG-WP01-C13",
+      "label": "WORKING HYPOTHESIS",
+      "statement": "The eight canonical quotient coordinates may be useful controls for later mechanism design if a separately justified geometry-to-physical-response model couples them to measurable mechanics.",
+      "scope": "unverified physical interpretation"
+    },
+    {
+      "id": "VGSE-ENG-WP01-C14",
+      "label": "OPEN QUESTION",
+      "statement": "Where in the eight-dimensional quotient design space does the canonical response Jacobian lose rank or become badly conditioned, and do such loci correspond to useful amplification or merely degeneracy?",
+      "next_action": "bounded quotient-response continuation and singular-locus search"
+    },
+    {
+      "id": "VGSE-ENG-WP01-C15",
+      "label": "OPEN QUESTION",
+      "statement": "Which, if any, quotient coordinates admit a defensible coupling to geometric or physical mechanism observables once finite-thickness, material, hinge, contact, and tolerance models are separately introduced?",
+      "scope": "not addressed by WP01"
+    }
+  ],
+  "claim_boundary": {
+    "source_correspondence_c06": "not established",
+    "rigid_foldability": "not established",
+    "collision_freedom": "not established",
+    "finite_thickness": "not established",
+    "manufacturability": "not established",
+    "durability_fatigue": "not established",
+    "physical_stiffness_interpretation": "not established",
+    "product_performance": "not established",
+    "novelty_priority_patentability_commercial_value": "not established"
+  }
+}
