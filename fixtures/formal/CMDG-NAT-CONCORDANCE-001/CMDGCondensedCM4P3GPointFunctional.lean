@@ -245,7 +245,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
         (ULift.{u + 1, u} Q.obj)
     have huniqPoint :=
-      ConcreteCategory.congr_hom huniq (ULift.up (j.proj x))
+      CategoryTheory.types_congr_hom huniq (ULift.up (j.proj x))
     dsimp [P, D, eTail, eFree, freeHomSectionsEquiv, profinitePointProbe]
     simpa [
       Q,
