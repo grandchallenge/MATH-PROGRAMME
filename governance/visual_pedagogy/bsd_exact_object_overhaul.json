@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0.0",
+  "operation_id": "BSD-DOC-EXACT-OBJECT-OVERHAUL-001",
+  "documentary_id": "BSD-001",
+  "decision_ref": "docs/decisions/ADR-0022_EXACT_OBJECT_FIRST_DOCUMENTARY_VISUALIZATION.md",
+  "pull_request": 1002,
+  "semantic_master": "tools/bsd_wolfram_semantic_master.wl",
+  "delivery_compositor": "tools/compose_bsd_wolfram_plates.py",
+  "activation_runtime": "docs/assets/visual_pedagogy/bsd_exact/bsd_activation.js",
+  "activation_mode": "bsd_specific_stable_source_exact_path_rewrite",
+  "live_asset_root": "docs/assets/visual_pedagogy/bsd_exact",
+  "state": "CANDIDATE__INDEPENDENT_VISUAL_SEMANTIC_REVIEW_REQUIRED_BEFORE_PROTECTED_MERGE",
+  "visual_is_evidence": false,
+  "renderer_policy": "Wolfram Language is the canonical semantic-master language for exact mathematical fixtures. The deterministic compositor creates static web derivatives. The renderer and the plates create no mathematical authority.",
+  "runtime_validation": {
+    "wolfram_runtime_available_in_authoring_environment": false,
+    "wolfram_master_executed_in_authoring_environment": false,
+    "deterministic_delivery_replay_completed": true,
+    "independent_exact_arithmetic_replay_completed": true
+  },
+  "claim_boundary": "The overhaul changes exposition and visualization only. It does not prove BSD, promote any BSD claim, alter the current mathematical campaign status, or change the authority of the checksum-locked documentary source/PDF artifacts.",
+  "predecessor_policy": {
+    "preserve_bytes": true,
+    "preserve_paths": true,
+    "preserve_audited_asset_root": true,
+    "rollback_by_exact_predecessor": true,
+    "delete_or_overwrite_predecessor": false
+  },
+  "review_gate": {
+    "required": true,
+    "class": "independent_visual_semantic_review",
+    "requested_team": "math-programme-maintainers",
+    "reviewed_head": null,
+    "evidence": null
+  },
+  "plates": [
+    {
+      "plate_id": "BSD-CURVE-PLATE-I",
+      "source_reference": "../../assets/documentaries/bsd/plate_curve.svg",
+      "predecessor_path": "docs/assets/documentaries/bsd/plate_curve.svg",
+      "predecessor_blob": "88b010f956744a4303dfbfd04b9f95062dbdfe04",
+      "live_path": "docs/assets/visual_pedagogy/bsd_exact/plate_01_rational_point_triangle.svg",
+      "live_reference": "../../assets/visual_pedagogy/bsd_exact/plate_01_rational_point_triangle.svg",
+      "sha256": "123d48b59a206e8f392087cd71f96aa7efbe0baf988ae312942494981afc7646",
+      "bytes": 7386,
+      "representation_class": "exact-object",
+      "mathematical_source": "docs/documentaries/bsd.md#rational-points"
+    },
+    {
+      "plate_id": "BSD-HARMONY-PLATE-II",
+      "source_reference": "../../assets/documentaries/bsd/plate_harmony.svg",
+      "predecessor_path": "docs/assets/documentaries/bsd/plate_harmony.svg",
+      "predecessor_blob": "845fa10b8b13ec99a8d61dd6fb51543c113f43b3",
+      "live_path": "docs/assets/visual_pedagogy/bsd_exact/plate_02_group_law.svg",
+      "live_reference": "../../assets/visual_pedagogy/bsd_exact/plate_02_group_law.svg",
+      "sha256": "b9e9d6a699b59423164c3cfae13f063c65d5117492b5782dc61ec305613e97c4",
+      "bytes": 5964,
+      "representation_class": "exact-object",
+      "mathematical_source": "docs/documentaries/bsd.md#group-law"
+    },
+    {
+      "plate_id": "BSD-BRIDGE-PLATE-III",
+      "source_reference": "../../assets/documentaries/bsd/plate_bridge.svg",
+      "predecessor_path": "docs/assets/documentaries/bsd/plate_bridge.svg",
+      "predecessor_blob": "cf46ce8633c3d964ed21ced776494375c1c0cbff",
+      "live_path": "docs/assets/visual_pedagogy/bsd_exact/plate_03_good_prime.svg",
+      "live_reference": "../../assets/visual_pedagogy/bsd_exact/plate_03_good_prime.svg",
+      "sha256": "fe82ffd9c2c4b8c495365d14ac659167f07a1b48dfeae6fc63680b3874252d1d",
+      "bytes": 7898,
+      "representation_class": "exact-finite-computation",
+      "mathematical_source": "docs/documentaries/bsd.md#local-counts"
+    },
+    {
+      "plate_id": "BSD-OVERTURE-PLATE-IV",
+      "source_reference": "../../assets/documentaries/bsd/plate_overture.svg",
+      "predecessor_path": "docs/assets/documentaries/bsd/plate_overture.svg",
+      "predecessor_blob": "c151081594dcf3ae04f15863f85b8c3a32aa7440",
+      "live_path": "docs/assets/visual_pedagogy/bsd_exact/plate_04_strong_bsd_ledger.svg",
+      "live_reference": "../../assets/visual_pedagogy/bsd_exact/plate_04_strong_bsd_ledger.svg",
+      "sha256": "191ee3faf0422664b61943066061e5d3e87aac9f154707ff2bab0d5a4ae2454a",
+      "bytes": 3521,
+      "representation_class": "quantified-dependency",
+      "mathematical_source": "docs/documentaries/bsd.md#central-bridge"
+    },
+    {
+      "plate_id": "BSD-FRONTIER-PLATE-V",
+      "source_reference": "../../assets/documentaries/bsd/plate_frontier.svg",
+      "predecessor_path": "docs/assets/documentaries/bsd/plate_frontier.svg",
+      "predecessor_blob": "457c5de53b36d2de3cac0ab534e2545949084f57",
+      "live_path": "docs/assets/visual_pedagogy/bsd_exact/plate_05_theorem_frontier.svg",
+      "live_reference": "../../assets/visual_pedagogy/bsd_exact/plate_05_theorem_frontier.svg",
+      "sha256": "a635a766e90f24d3c022172cfd0e47925f5adf08b9e73842f21a28587aa46d4a",
+      "bytes": 4656,
+      "representation_class": "quantified-status",
+      "mathematical_source": "docs/documentaries/bsd.md#theorem-frontier"
+    }
+  ],
+  "nonclaims": [
+    "No predecessor documentary asset is deleted, renamed, or overwritten.",
+    "The checksum-locked documentary source and rendered PDF retain their existing authority.",
+    "The activation resolver changes presentation only.",
+    "No visual is mathematical evidence.",
+    "No theorem, proof, certification, novelty, priority, or product claim is promoted."
+  ]
+}
