@@ -239,8 +239,16 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreePresheafFunctor.obj Q).map ftrue)) z)
     exact hnat.symm
   ·
+    have huniq :=
+      CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
+        CMDG.CondensedCM4P2E.discreteSetFreeAdj
+        CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
+        (ULift.{u + 1, u} Q.obj)
+    have huniqPoint :=
+      ConcreteCategory.congr_hom huniq (ULift.up (j.proj x))
     dsimp [P, D, eTail, eFree, freeHomSectionsEquiv, profinitePointProbe]
-    simp [
+    simpa [
+      Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
       CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
       CMDG.CondensedCM4P2E.discreteFreeIso,
@@ -253,8 +261,9 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap,
+      Adjunction.comp_unit_app,
       Adjunction.homEquiv_naturality_left,
-      CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app]
+      ModuleCat.adj_homEquiv] using huniqPoint
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
