@@ -45,13 +45,15 @@ The distinction is operational:
 
 ## Current programme fronts
 
-This table shows material programme work that is active now. Row order reflects current programme attention. It does not rank theorem importance or claim strength.
+This table shows selected material programme work that is active now. It is deliberately not exhaustive. Row order reflects current programme attention within this public view; it does not rank theorem importance or claim strength.
 
 | Frontier | Current obligation | Programme significance |
 |---|---|---|
 | **BSD-001 — rank-one leading term at literal `p=2`** | [MATHSOLVE #243](https://github.com/grandchallenge/MATHSOLVE/issues/243) replays the Burns–Sakamoto–Sano theorem chain at literal `p=2`. If the replay fails, the campaign must identify the first unrepaired theorem-level dependency. | The work targets one named theorem-level obstruction. It does not generalize the result beyond the retained claim boundary. |
 | **VGSE-001 — engineering laws latent in origami structure** | [MATH-PROGRAMME #984](https://github.com/grandchallenge/MATH-PROGRAMME/issues/984) begins from the protected four-claim result and asks which behaviours belong to topology, which are selected by geometry, which are tunable through metric parameters, and which survive physical perturbation. | The objective is not to reproduce one historical drawing. It is to extract reusable mechanical laws and test whether desired behaviour can be designed backward through constraint structure. |
 | **OZ-001 — order-7 Brown–Zudilin certificate route** | [MATH-PROGRAMME #964](https://github.com/grandchallenge/MATH-PROGRAMME/issues/964) reduces the 576-dimensional discrete-curl kernel through a degree-minimising Popov or approximant-basis section. The resulting order-7 certificate then requires independent replay. | The work attempts to construct an exact characteristic-zero certificate inside a defined admissible class. Construction and certification remain separate steps. |
+
+Other active development includes [CMDG CM4 P3-M finite-stage recovery](https://github.com/grandchallenge/MATH-PROGRAMME/issues/662) and the [NS-CI-001 critical-integrability lane](https://github.com/grandchallenge/MATH-PROGRAMME/issues/55). The public table is a compact orientation surface, not the programme's full active-work registry.
 
 Rows appear here only while the work remains materially active. Issue trackers provide navigation. Protected repository records remain authoritative.
 

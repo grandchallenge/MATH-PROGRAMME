@@ -4,7 +4,7 @@
 
 ## Reading rule
 
-Each active front is described through the same six fields:
+Each highlighted front is described through the same six fields:
 
 1. **Status** — the present support and lifecycle boundary.
 2. **Object** — the mathematical or engineering object under study.
@@ -14,6 +14,8 @@ Each active front is described through the same six fields:
 6. **Next bounded move** — the next finite action with a completion test.
 
 This structure follows the programme pedagogy standard: status before suspense, object before method, obstruction before optimism, and one executable next move.
+
+The detailed profiles below are a curated public orientation surface, not a complete inventory of active development. Additional active fronts are listed compactly after the highlighted profiles.
 
 <a id="bsd-001--literal-p2-inverse-limit-replay"></a>
 
@@ -144,6 +146,17 @@ The first phase must produce:
 - one bounded inverse-design result, including an impossibility or ill-conditioning result if that is what the evidence supports;
 - an engineering claim ledger;
 - one executable next experiment or derivation.
+
+## Additional active development
+
+The programme's active development surface is broader than the three detailed profiles above. Two additional governed fronts currently in motion are:
+
+| Front | Current state | Next bounded boundary |
+| --- | --- | --- |
+| **CMDG CM4 P3-M** | Authorized research execution on finite-stage recovery from protected finite-coordinate dependence. | Prove or precisely block the finite-basis-set to common discrete-quotient bridge before attempting broader coefficient-morphism recovery. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/662) |
+| **NS-CI-001** | Active L5 direct critical-integral lane for the critical `L^4_t L^6_x` Navier–Stokes target; interface qualification only. | Produce a genuinely equation-specific estimate that survives the existing false-proof controls. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/55) |
+
+This compact list is also not a substitute for protected campaign registries and live trackers. It exists to prevent the public orientation surface from implying that active development has cardinality three.
 
 ## When a front leaves this page
 
