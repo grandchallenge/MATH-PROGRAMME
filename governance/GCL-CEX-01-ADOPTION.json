@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "GCL_STANDARD_PROGRAMME_ADOPTION",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "standard": "GCL-CEX-01",
+  "standard_version": "0.1.0",
+  "standard_repository": "grandchallenge/gcl-standards",
+  "standard_commit": "efe06a27aa594c63bd0489929ffd9fff1e2daeb9",
+  "standard_source_path": "standards/GCL-CEX-01.md",
+  "standard_git_blob_sha1": "36a0d7d17914a825d949396c42b74baf92377fc6",
+  "admission_record": "admissions/GCL-CEX-01-0.1.0.json",
+  "authority": {
+    "repository": "grandchallenge/INTELLECT",
+    "directive": "GI-STEWARD-0003",
+    "effective_commit": "f3e801a973eb918e7a71601d52c95755a743efc6",
+    "work_class": "substantive",
+    "effects": ["public_contract"],
+    "reserved_action_required": false,
+    "human_steward_gate": "not_applicable_under_GI_STEWARD_0003"
+  },
+  "programme_base": "8f43a8211c0236595eecee1cc5c195905bf5d27b",
+  "status": "effective",
+  "effective_condition": "protected_merge_of_this_exact_adoption_record",
+  "enforcement_profile": {
+    "campaign_state": ".gcl/campaigns/<campaign>/CAMPAIGN_STATE.json",
+    "operation_contract": ".gcl/operations/<operation>/OPERATION.json",
+    "content_freeze": ".gcl/admission/<operation>/FREEZE.json",
+    "completion_receipt": ".gcl/completions/<operation>/COMPLETION_RECEIPT.json",
+    "preflight": "repository-owned deterministic campaign preflight",
+    "review_model": "GI-STEWARD-0003 role-scoped logical passes",
+    "required_transition_evidence": [
+      "exact protected inputs",
+      "content freeze",
+      "distinct Adversary and Referee logical passes",
+      "affected CI at exact subject head",
+      "protected mutation when authorized",
+      "protected readback",
+      "machine-validated completion receipt"
+    ],
+    "progress_taxonomy": ["CLOSED", "BLOCKED", "FALSIFIED", "RECONNAISSANCE", "MAINTENANCE"],
+    "successor_rule": "RECONNAISSANCE and MAINTENANCE do not by themselves authorize a successor research package"
+  },
+  "pilot_evidence": {
+    "campaign": "BSD-001",
+    "repository": "grandchallenge/MATHSOLVE",
+    "operation": "BSD-WP60S",
+    "protected_receipt_head": "b0854bb7770296b610b655753bc62b27365b27bb",
+    "receipt_path": ".gcl/completions/BSD-WP60S/COMPLETION_RECEIPT.json",
+    "protected_replay_run": 35050310584,
+    "result": "success"
+  },
+  "exceptions": [
+    "MATHCERT remains the sole mathematical certification authority",
+    "standards conformance, CI success, programme adoption, or repository merge do not establish mathematical truth",
+    "superior INTELLECT authority and stricter domain-specific governance continue to prevail"
+  ],
+  "unresolved_obligations": [],
+  "claim_boundaries": {
+    "constitutional_authority_created": false,
+    "mathematical_certification": false,
+    "production_activation": false,
+    "safety_authority": false,
+    "credential_authority": false,
+    "destructive_authority": false,
+    "agent_permission_escalation": false
+  }
+}
