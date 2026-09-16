@@ -136,7 +136,7 @@
 
       The factors have different jobs. $\Omega_E$ is an archimedean period; the regulator measures the Mordell–Weil lattice; $c_p$ records bad-prime component data; torsion contributes a finite denominator; and $\operatorname{Sha}$ measures locally soluble torsors that may fail globally.
 
-      <div class="warning-box"><strong>Three obligations</strong><p>Rank equality, finiteness of $\operatorname{Sha}$, and the normalized leading-term identity are logically distinct. Establishing one does not silently establish the others.</p></div>
+      <div class="warning-box"><strong>Three obligations, not one slogan</strong><p>Rank equality, finiteness of $\operatorname{Sha}$, and the normalized leading-term identity are logically distinct. Establishing one does not silently establish the others.</p></div>
       </section>
 
       <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate IV"><img src="../../assets/documentaries/bsd/plate_overture.svg" width="1024" height="1536" loading="lazy" alt="A decorative ledger surrounds the leading-term formula with period, regulator, Tamagawa, torsion, and Tate–Shafarevich contributions."></button><figcaption><span class="plate-label">Plate IV</span><strong>The strong BSD ledger</strong><small>Fallback predecessor plate. With JavaScript enabled, the reviewed quantified dependency successor is activated at this stable source reference.</small></figcaption></figure>
@@ -145,9 +145,9 @@
       <p class="monograph-section__eyebrow">Chapter V</p>
       ## The exact theorem frontier
 
-      The frontier is governed by quantifiers and scope. Mordell–Weil finite generation and modularity hold for every elliptic curve over $\mathbb{Q}$. Through modularity, Gross–Zagier, and Kolyvagin, the analytic-rank-zero-or-one terrain gives matching algebraic rank and finite $\operatorname{Sha}$.
+      The frontier is governed by quantifiers and scope. Mordell–Weil finite generation and modularity hold for every elliptic curve over $\mathbb{Q}$. Through modularity, Gross–Zagier, and Kolyvagin, the established analytic rank zero or one terrain gives matching algebraic rank and finite $\operatorname{Sha}$.
 
-      The universal statements remain open: rank equality for every elliptic curve over $\mathbb{Q}$, general finiteness of $\operatorname{Sha}$, and the complete normalized complex leading-term formula.
+      The higher-rank and universal leading-term frontier remains open: rank equality for every elliptic curve over $\mathbb{Q}$, general finiteness of $\operatorname{Sha}$, and the complete normalized complex leading-term formula.
 
       <div class="theorem-box"><strong>Established low-rank terrain</strong><p>Analytic rank $0$ or $1$ yields the matching Mordell–Weil rank and finite $\operatorname{Sha}$ for elliptic curves over $\mathbb{Q}$.</p></div>
       <div class="conjecture-box"><strong>Still open universally</strong><p>For every elliptic curve over $\mathbb{Q}$: equality of algebraic and analytic rank, finiteness of $\operatorname{Sha}$, and the complete complex leading-term formula.</p></div>
