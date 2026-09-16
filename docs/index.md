@@ -4,140 +4,73 @@ hide:
   - toc
 ---
 
-<div class="frontispiece">
-  <div class="frontispiece__inner">
-    <div class="frontispiece__edition">
-      <span>Grand Challenge Labs</span>
-      <span>Mathematics Programme · Edition 2026.07</span>
+<div class="home-hero">
+  <div class="home-hero__inner">
+    <p class="home-hero__eyebrow">Grand Challenge Labs · Mathematics Programme · Edition 2026.09</p>
+    <h1>Mathematics Programme</h1>
+    <p class="home-hero__thesis">A governed research programme for moving difficult mathematical claims from source reconstruction through proof work to independent certification.</p>
+    <p class="home-hero__summary">The public record separates what is active, what is supported, what remains open, and what has crossed a declared checking boundary.</p>
+    <div class="home-hero__actions">
+      <a class="home-action home-action--primary" href="CURRENT_WORK/">Current work</a>
+      <a class="home-action" href="SHOWCASE/">Results</a>
     </div>
-    <h1>Mathematics<br>Programme</h1>
-    <p class="frontispiece__thesis">Discovery, solving, and certification are separate research states.</p>
-    <p class="frontispiece__summary">This site shows what is active now, what has crossed a checked boundary, how the programme moves claims, and where the standing mathematical estate lives.</p>
-    <div class="frontispiece__actions">
-      <a class="gc-button gc-button--primary" href="CURRENT_WORK/">Current work</a>
-      <a class="gc-button" href="SHOWCASE/">Results</a>
-    </div>
-
-    <div class="programme-spine" aria-label="The three mathematical execution pillars">
-      <a class="programme-spine__stage" href="https://github.com/grandchallenge/MATHFORGE">
-        <span class="programme-spine__number">I</span>
-        <span class="programme-spine__name">MATHFORGE</span>
-        <span class="programme-spine__verb">Reconstruct the object and source</span>
+    <div class="home-pipeline" aria-label="Mathematical execution path">
+      <a class="home-pipeline__stage" href="https://github.com/grandchallenge/MATHFORGE">
+        <span class="home-pipeline__number">I</span>
+        <span class="home-pipeline__name">MATHFORGE</span>
+        <span class="home-pipeline__verb">Reconstruct the object, source, and candidate route</span>
       </a>
-      <span class="programme-spine__arrow" aria-hidden="true">→</span>
-      <a class="programme-spine__stage" href="https://github.com/grandchallenge/MATHSOLVE">
-        <span class="programme-spine__number">II</span>
-        <span class="programme-spine__name">MATHSOLVE</span>
-        <span class="programme-spine__verb">Close named proof obligations</span>
+      <span class="home-pipeline__arrow" aria-hidden="true">→</span>
+      <a class="home-pipeline__stage" href="https://github.com/grandchallenge/MATHSOLVE">
+        <span class="home-pipeline__number">II</span>
+        <span class="home-pipeline__name">MATHSOLVE</span>
+        <span class="home-pipeline__verb">Close named mathematical obligations</span>
       </a>
-      <span class="programme-spine__arrow" aria-hidden="true">→</span>
-      <a class="programme-spine__stage" href="https://github.com/grandchallenge/MATHCERT">
-        <span class="programme-spine__number">III</span>
-        <span class="programme-spine__name">MATHCERT</span>
-        <span class="programme-spine__verb">Check the exact claim boundary</span>
+      <span class="home-pipeline__arrow" aria-hidden="true">→</span>
+      <a class="home-pipeline__stage" href="https://github.com/grandchallenge/MATHCERT">
+        <span class="home-pipeline__number">III</span>
+        <span class="home-pipeline__name">MATHCERT</span>
+        <span class="home-pipeline__verb">Check the exact claim presented for certification</span>
       </a>
     </div>
-    <p class="gc-measure"><strong>MATH-PROGRAMME</strong> preserves the integrated programme record. It does not certify mathematics by itself.</p>
   </div>
 </div>
 
-<section class="gc-section">
-  <div class="gc-section__heading">
-    <p class="gc-kicker">Read by question</p>
-    <h2>Four questions organize the public site.</h2>
-  </div>
+## What the programme is
 
-| Reader question | Start here |
-| --- | --- |
-| What is being worked on now? | [Current Work](CURRENT_WORK.md) |
-| What has crossed a checked or published boundary? | [Results and Exemplars](SHOWCASE.md) |
-| How does a claim move through the programme? | [Programme Atlas](PROGRAMME_ATLAS.md) |
-| What standing mathematical domains and records exist? | [Mathematical Estate](domains/index.md) |
+Mathematical discovery, solving, and certification are different research states. The programme keeps those states separate so that evidence cannot acquire a stronger claim merely because it is well presented.
 
-The four surfaces have different purposes. Current work is time-sensitive navigation. Results are bounded records. The Atlas explains the machinery. The estate preserves standing domains and archives.
-</section>
+**MATHFORGE** reconstructs the object, source, and candidate route. **MATHSOLVE** organizes and attacks the exact obligations that block progress. **MATHCERT** checks the precise claim and support surface presented to it. **MATH-PROGRAMME** preserves the integrated record, routing, governance, and continuation state; it does not certify mathematics by itself.
 
-<section class="gc-section">
-  <div class="gc-section__heading">
-    <p class="gc-kicker">Current mathematical work</p>
-    <h2>The active fronts are narrower than the standing domain catalogue.</h2>
-  </div>
-
-### BSD-001 · literal-`p=2` inverse-limit replay
-
-**Status:** active solving campaign; not certified.
-
-The current object is the inverse-limit step in Burns–Sakamoto–Sano Theorem 5.25 after the protected finite-level literal-`2` replay. The obstruction is precise: the published route uses full Hypothesis 4.7, while the protected campaign retains failure of the relevant infinite auxiliary-field vanishing condition.
-
-The next bounded move is to replay the transition maps, regulator compatibility, inverse-limit Kolyvagin system, Fitting ideals, and rank-one freeness without silently restoring the failed hypothesis.
-
-[Read the current-work entry →](CURRENT_WORK.md#bsd-001--literal-p2-inverse-limit-replay)
-
-### OZ-001 · order-7 certificate compression
-
-**Status:** active certificate-construction route; T3 remains open.
-
-The current object is a `576`-dimensional homogeneous residual kernel identified with a discrete-curl image. The obstruction is no longer the kernel dimension. It is the construction of a degree-reduced affine section over `Q[n]`, followed by independent characteristic-zero replay.
-
-The next bounded move is a shifted Popov, minimal-approximant, order-basis, or equivalent completeness-backed reduction for the seven residual blocks.
-
-[Read the current-work entry →](CURRENT_WORK.md#oz-001--order-7-certificate-compression)
-</section>
-
-<section class="gc-section">
-  <div class="gc-section__heading">
-    <p class="gc-kicker">Recent bounded transition</p>
-    <h2>VGSE now separates a qualified four-claim result from a new engineering question.</h2>
-  </div>
-
-The restricted successor `MC-ROUTE-VGSE-001-R4` qualified exactly `VGSE-C00`, `VGSE-C01`, `VGSE-C04`, and `VGSE-C05`. The original five-claim route remains fail-closed on `VGSE-C06`.
-
-The programme has therefore moved to a separate engineering-discovery question: which mechanical properties are invariant, tunable, robust, or synthesizable across admissible origami realizations? That work does not broaden the certified mathematics or resolve `VGSE-C06`.
-
-[Inspect the bounded result →](SHOWCASE.md#vgse-001--restricted-four-claim-publication) · [Inspect the engineering handoff →](CURRENT_WORK.md#vgse-001--engineering-discovery-handoff)
-</section>
-
-<section class="gc-section">
-  <div class="gc-section__heading">
-    <p class="gc-kicker">Claim movement</p>
-    <h2>Unresolved work exits visibly instead of becoming a stronger claim.</h2>
-  </div>
+## How a claim moves
 
 ![State transition from a question or source signal through MATHFORGE, MATHSOLVE, and MATHCERT. Fail-closed exits record an obstruction, proof debt, or non-promotion.](assets/claim-state-transition.svg)
 
-The diagram is schematic. It represents programme state transitions, not a proof. MATHFORGE can stop with a recorded obstruction. MATHSOLVE can stop with proof debt. MATHCERT can refuse promotion.
+The diagram is schematic. It teaches programme state transitions, not logical implication between mathematical statements. A route can stop in MATHFORGE with a recorded obstruction, in MATHSOLVE with proof debt, or in MATHCERT with non-promotion. Those exits remain part of the research record.
 
-[Read the Programme Atlas →](PROGRAMME_ATLAS.md)
-</section>
+[Read the Programme Atlas](PROGRAMME_ATLAS.md) for the full state model, support classes, and semantic-bridge requirements.
 
-<section class="gc-section">
-  <div class="gc-section__heading">
-    <p class="gc-kicker">Standing estate</p>
-    <h2>The domain catalogue records scope, not priority.</h2>
-  </div>
+## Current frontier
 
-The programme retains standing domains for Union-Closed Sets, Navier–Stokes, Hodge, Birch–Swinnerton-Dyer, Poincaré reconstruction, Yang–Mills, P versus NP, and the Riemann Hypothesis. A domain may be active, quiet, archival, or waiting on a later route.
+The active work surface is narrower than the standing mathematical estate. Each row names the object now under work and the boundary that still prevents promotion.
 
-Presence in the catalogue does not imply current priority, progress toward a terminal theorem, or certification.
+| Campaign | Current object | Open boundary |
+| --- | --- | --- |
+| **BSD-001** | Literal-`p=2` replay of the inverse-limit passage in Burns–Sakamoto–Sano Theorem 5.25 | Replay the transition maps, regulator compatibility, inverse-limit Kolyvagin system, Fitting ideals, and rank-one freeness without silently restoring the failed infinite auxiliary-field hypothesis. |
+| **OZ-001** | Order-7 boundary-forced residual system with a `576`-dimensional homogeneous kernel identified as a discrete-curl image | Construct a completeness-backed degree-reduced affine section over `Q[n]`, then replay the positive certificate independently in characteristic zero. |
+| **VGSE-001** | Engineering discovery over admissible origami realizations after qualification of the restricted four-claim successor | Determine which mechanical properties are invariant, tunable, robust, or synthesizable without broadening the qualified mathematics or treating the unresolved `VGSE-C06` bridge as closed. |
 
-[Inspect the Mathematical Estate →](domains/index.md)
-</section>
+[Inspect Current Work](CURRENT_WORK.md) for the status, object, obstruction, supported state, claim boundary, and next bounded move for each front.
 
-<section class="gc-section gc-section--boundary">
-  <div class="gc-section__heading">
-    <p class="gc-kicker">Claim boundary</p>
-    <h2>Status words must name the kind of support they describe.</h2>
-  </div>
+## Where to go next
 
-<div class="status-register" aria-label="Reader-facing claim status summary">
-  <span class="claim-status claim-status--conjectural">Conjectural</span>
-  <span class="claim-status claim-status--computed">Computed</span>
-  <span class="claim-status claim-status--provisional">Provisional</span>
-  <span class="claim-status claim-status--certified">Certified</span>
-  <span class="claim-status claim-status--rejected">Rejected</span>
-</div>
+- **[Current Work](CURRENT_WORK.md)** records live obligations. Use it when the question is what the programme is doing now and what must happen next.
+- **[Results and Exemplars](SHOWCASE.md)** records bounded outputs that have crossed a declared checking, publication, or archival boundary. It is not a ranking of importance.
+- **[Programme Atlas](PROGRAMME_ATLAS.md)** explains how objects and claims change state across MATHFORGE, MATHSOLVE, MATHCERT, and programme integration.
+- **[Mathematical Estate](domains/index.md)** preserves the standing domain catalogue, routes, and archives. Presence there does not imply current priority.
 
-These labels summarize mathematical support. Artifact lifecycle and campaign disposition use separate vocabularies. Public presentation does not raise claim status.
+## Claim boundary
 
-[Read the status taxonomy →](STATUS_TAXONOMY.md) · [Read the claim-boundary doctrine →](CLAIM_BOUNDARY_DOCTRINE.md)
-</section>
+This page is a public orientation surface. It does not create or raise mathematical authority. The linked protected records control claim scope, support class, exclusions, and certification state.
+
+[Read the status taxonomy](STATUS_TAXONOMY.md) and [claim-boundary doctrine](CLAIM_BOUNDARY_DOCTRINE.md) when the distinction between evidence, lifecycle state, campaign disposition, and certification matters.
