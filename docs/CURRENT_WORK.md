@@ -15,6 +15,8 @@ Each active front is described through the same six fields:
 
 This structure follows the programme pedagogy standard: status before suspense, object before method, obstruction before optimism, and one executable next move.
 
+<a id="bsd-001--literal-p2-inverse-limit-replay"></a>
+
 ## BSD-001 · literal-`p=2` inverse-limit replay
 
 **Live tracker:** [MATHSOLVE #245](https://github.com/grandchallenge/MATHSOLVE/issues/245)  
@@ -95,6 +97,8 @@ No global order-7 certificate has yet crossed the declared replay boundary. `t3_
 Construct a shifted Popov, minimal-approximant, order-basis, or equivalent completeness-backed affine reduction for the seven standalone residual blocks.
 
 A constructive completion must produce an explicit degree-reduced section. A positive route then requires independent exact replay over `Q(n,k,l)` before the certificate state can advance.
+
+<a id="vgse-001--engineering-discovery-handoff"></a>
 
 ## VGSE-001 · engineering-discovery handoff
 
