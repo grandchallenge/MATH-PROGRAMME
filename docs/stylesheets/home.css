@@ -1,0 +1,232 @@
+/*
+ * MATH-PROGRAMME public front door.
+ *
+ * These classes are intentionally unique to docs/index.md. The homepage does
+ * not reuse the legacy frontispiece/programme-spine component stack, so its
+ * layout has one stylesheet owner instead of depending on cross-file cascade.
+ */
+
+.home-hero {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  margin: -1.6rem 0 4rem -50vw;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 88% 14%, color-mix(in srgb, var(--gcl-gold-300) 12%, transparent), transparent 24rem),
+    var(--gc-paper-deep);
+  border-top: 3px solid var(--gcl-gold-400);
+  border-bottom: 1px solid var(--gc-rule);
+}
+
+.home-hero::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: max(1rem, calc((100vw - 72rem) / 2));
+  width: 1px;
+  background: linear-gradient(var(--gcl-gold-400), transparent 42%);
+  content: "";
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.home-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 72rem;
+  min-height: 34rem;
+  margin: 0 auto;
+  padding: clamp(4.5rem, 8vh, 6.5rem) clamp(1.4rem, 5vw, 4rem) 3rem;
+}
+
+.home-hero__eyebrow {
+  max-width: 50rem;
+  margin: 0 0 1.4rem !important;
+  color: var(--gc-signal-dark);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.home-hero h1 {
+  max-width: 13ch;
+  margin: 0;
+  color: var(--gc-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.4rem, 7vw, 6.4rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.93;
+  text-wrap: balance;
+}
+
+.home-hero__thesis {
+  max-width: 43rem;
+  margin: 1.8rem 0 0 !important;
+  color: var(--gc-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  line-height: 1.4 !important;
+}
+
+.home-hero__summary {
+  max-width: 42rem;
+  margin: 1rem 0 0 !important;
+  color: var(--gc-muted);
+  font-size: 0.96rem;
+  line-height: 1.65 !important;
+}
+
+.home-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 2rem;
+}
+
+.home-action {
+  display: inline-flex;
+  min-height: 2.9rem;
+  padding: 0.72rem 1.05rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gcl-navy-900);
+  color: var(--gcl-navy-900) !important;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-decoration: none !important;
+  text-transform: uppercase;
+}
+
+.home-action:hover {
+  border-color: var(--gc-signal-dark);
+  color: var(--gc-signal-dark) !important;
+}
+
+.home-action--primary {
+  background: var(--gcl-navy-900);
+  color: var(--gcl-parchment-50) !important;
+}
+
+.home-action--primary:hover {
+  background: var(--gcl-navy-800);
+  color: var(--gcl-parchment-50) !important;
+}
+
+.home-pipeline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  margin-top: clamp(3rem, 7vh, 4.5rem);
+  border-top: 1px solid var(--gc-rule);
+  border-bottom: 1px solid var(--gc-rule);
+}
+
+.home-pipeline__stage {
+  display: grid;
+  min-width: 0;
+  padding: 1rem 0.9rem;
+  color: var(--gc-ink) !important;
+  text-decoration: none !important;
+}
+
+.home-pipeline__stage:hover {
+  background: color-mix(in srgb, var(--gc-signal) 9%, transparent);
+}
+
+.home-pipeline__number,
+.home-pipeline__arrow {
+  color: var(--gc-signal-dark);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.home-pipeline__number {
+  font-size: 0.78rem;
+}
+
+.home-pipeline__name {
+  margin-top: 0.25rem;
+  color: var(--gcl-navy-900);
+  font-size: clamp(0.82rem, 1.2vw, 1rem);
+  font-weight: 850;
+}
+
+.home-pipeline__verb {
+  margin-top: 0.22rem;
+  color: var(--gc-muted);
+  font-size: 0.73rem;
+  line-height: 1.45;
+}
+
+.home-pipeline__arrow {
+  align-self: center;
+  padding: 0 0.2rem;
+  font-size: 1.15rem;
+}
+
+[data-md-color-scheme="slate"] .home-action {
+  border-color: var(--gcl-gold-300);
+  color: var(--gcl-parchment-50) !important;
+}
+
+[data-md-color-scheme="slate"] .home-action--primary {
+  background: var(--gcl-navy-950);
+}
+
+[data-md-color-scheme="slate"] .home-pipeline__name {
+  color: var(--gcl-parchment-50);
+}
+
+@media (max-width: 760px) {
+  .home-hero {
+    border-top-width: 2px;
+  }
+
+  .home-hero::before {
+    left: 0.8rem;
+  }
+
+  .home-hero__inner {
+    min-height: 0;
+    padding: 3.6rem 1.35rem 2.4rem;
+  }
+
+  .home-hero h1 {
+    font-size: clamp(3rem, 15vw, 4.6rem);
+    letter-spacing: -0.035em;
+  }
+
+  .home-pipeline {
+    grid-template-columns: 1fr;
+  }
+
+  .home-pipeline__stage {
+    padding: 0.9rem 0;
+  }
+
+  .home-pipeline__arrow {
+    justify-self: start;
+    padding: 0.15rem 0;
+    transform: rotate(90deg);
+  }
+}
+
+@media print {
+  .home-hero {
+    left: auto;
+    width: auto;
+    margin: 0 0 2rem;
+    border-top-color: #000;
+  }
+
+  .home-hero__inner {
+    min-height: 0;
+    padding: 2rem 0;
+  }
+
+  .home-hero__actions {
+    display: none;
+  }
+}
