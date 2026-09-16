@@ -1,76 +1,165 @@
 # Grand Challenge Reader Guide
 
-<p class="page-deck">A reading protocol for reconstructing the object, locating the obstruction, testing the claim boundary, and identifying the next move.</p>
+<p class="page-deck">A reading protocol for locating the object, obstruction, support route, claim boundary, and next executable move.</p>
 
-<div class="reader-compact">
-  <p>The programme is built for readers, not only for solvers. A mathematical artifact succeeds when another serious reader can reconstruct what was attempted without guessing what the author meant.</p>
-  <p><strong>The author promises to mark uncertainty. The reader promises to respect partial progress when it is honestly bounded.</strong></p>
-</div>
+## Start from the reader's question
 
-## Four questions govern the reading
+Use the shortest path that answers the question you have.
 
-<div class="reader-questions">
-  <article><span>01</span><h3>What is the object?</h3><p>Identify the ingredients, examples, non-examples, ambient category, and exact formulation being preserved.</p><small>Do not let machinery arrive before the mathematical object.</small></article>
-  <article><span>02</span><h3>Where is the obstruction?</h3><p>Find the point where naive reasoning fails: explosion, singularity, non-compactness, missing invariant, undecidability, or boundary pathology.</p><small>A Work Package should teach the difficulty, not hide it.</small></article>
-  <article><span>03</span><h3>What is the claim boundary?</h3><p>Separate what is proved, formalized, exactly computed, literature-derived, heuristic, conjectural, failed, superseded, or refuted.</p><small>Status determines what kind of reliance is permitted.</small></article>
-  <article><span>04</span><h3>What is the next move?</h3><p>Demand a finite obligation: a lemma, certificate replay, counterexample search, formal definition, or residual domain reduction.</p><small>“More work is needed” is not a next move.</small></article>
-</div>
+| Question | First page |
+| --- | --- |
+| What is active now? | [Current Work](CURRENT_WORK.md) |
+| What has crossed a checked or published boundary? | [Results and Exemplars](SHOWCASE.md) |
+| How does the programme move claims? | [Programme Atlas](PROGRAMME_ATLAS.md) |
+| Which standing domains and archives exist? | [Mathematical Estate](domains/index.md) |
+
+Do not infer current priority from the domain catalogue. Do not infer theorem status from activity, publication, merge state, or visual prominence.
+
+## Five questions govern serious reading
+
+### 1. What is the object?
+
+Identify the exact mathematical object before following the machinery around it.
+
+Ask:
+
+- What data specifies one instance?
+- What ambient structure or model class is assumed?
+- Which source or construction defines the object?
+- What counts as the same object under the current formulation?
+
+### 2. What is the obstruction?
+
+Locate the smallest known reason the next claim does not already follow.
+
+The obstruction can be a missing lemma, failed hypothesis, singular case, source gap, model-class mismatch, unavailable invariant, undecidability barrier, or failed certificate replay.
+
+A general statement that the problem is difficult is not an obstruction.
+
+### 3. What is the strongest supported claim?
+
+Separate the claim from the programme's larger ambition.
+
+Determine whether support is:
+
+- exploratory;
+- audited;
+- exactly computed;
+- certificate-replayed;
+- formally proved;
+- a continuum proof;
+- a negative result.
+
+Then identify the scope, assumptions, and limitations attached to that support.
+
+### 4. What crossed a trusted boundary, and what did not?
+
+Check the semantic bridge between the intended human statement and the formal or computational object.
+
+A trusted checker can establish only the statement that it actually checks. Source concordance, model-class restrictions, translation assumptions, and omitted hypotheses remain separate obligations unless they are also discharged.
+
+### 5. What is the next bounded move?
+
+A useful next step names its input, action, output, and completion test.
+
+Examples include:
+
+- replay one theorem dependency;
+- construct one exact certificate;
+- search one bounded counterexample class;
+- prove one restricted lemma;
+- reconstruct one missing source correspondence;
+- measure one declared engineering response map.
+
+"Continue research" is not a next move.
 
 ## Read through the correct lens
 
-<div class="lens-register">
-  <div><span>New contributor</span><strong>Can I reconstruct the landscape?</strong><p>Begin with the Showcase, Domain Catalogue, Programme Atlas, and source map. Learn the nouns before proposing a route.</p></div>
-  <div><span>Campaign author</span><strong>Is the obligation sharp enough to attack?</strong><p>Inspect definitions, reductions, dependencies, failed routes, and promotion conditions.</p></div>
-  <div><span>Formalization lead</span><strong>Is the intended statement encoded?</strong><p>Compare human semantics, formal statement, assumptions, imports, and replay environment.</p></div>
-  <div><span>Skeptical reviewer</span><strong>What could downgrade this claim?</strong><p>Test the support type, active assumptions, independent artifact, and failure condition.</p></div>
-</div>
+### New contributor
+
+Reconstruct the landscape before proposing a route. Begin with the object, source boundary, first example, and current obstruction.
+
+### Campaign author
+
+Check whether the local obligation is sharp enough to attack. A Work Package should identify dependencies, completion conditions, and claim firewalls.
+
+### Formalization or certificate lead
+
+Compare the intended statement with the encoded statement. Record assumptions, imports, model restrictions, trusted environment, and semantic-bridge debt.
+
+### Skeptical reviewer
+
+Ask what evidence would downgrade the claim. Check whether the support class, current revision, source identity, and retained exclusions match the public summary.
 
 ## Anatomy of a serious artifact
 
-<div class="artifact-anatomy">
-  <div><b>01</b><span>Orientation</span><p>Problem statement, source reconstruction, status, terminology.</p></div>
-  <div><b>02</b><span>Mathematical core</span><p>Definitions, examples, invariants, normal forms, diagrams.</p></div>
-  <div><b>03</b><span>Obstruction register</span><p>Known barriers, boundary cases, complexity, failed heuristics.</p></div>
-  <div><b>04</b><span>Theorem spine</span><p>Dependency graph from local obligations to target claim.</p></div>
-  <div><b>05</b><span>Evidence ledger</span><p>Proofs, computations, certificates, citations, and status labels.</p></div>
-  <div><b>06</b><span>Continuity and handoff</span><p>Authoritative artifact, exact next task, promotion condition, and certification route.</p></div>
-</div>
+A reader-facing research artifact should expose these parts in a recoverable order:
 
-## Reading order
+1. **Status.** Current claim and lifecycle state.
+2. **Plain object.** The mathematical object before machinery.
+3. **Exact obstruction.** The smallest mechanism blocking the naive route.
+4. **Working model.** A hand-checkable example, diagram, or bounded fixture.
+5. **Restricted claim.** The exact local statement under investigation.
+6. **Theorem-spine location.** Dependencies and role in the larger route.
+7. **Support route.** Proof, computation, replay, certificate, or negative result.
+8. **Debt and boundary.** What remains open, imported, conditional, or unaudited.
+9. **First executable step.** One finite continuation action.
 
-### For the programme
+This is the programme's nine-move exposition pattern. An artifact can compress it, but it should not silently omit a stage that matters to interpretation.
 
-1. [Showcase](SHOWCASE.md) for the apparatus in one view.
-2. [Programme Domain Catalogue](domains/index.md) for the current campaign portfolio.
-3. [Programme Charter](PROGRAMME_CHARTER.md) for obligations governing every artifact.
-4. [Programme Atlas](PROGRAMME_ATLAS.md) for the transformation from question to checked claim.
-5. [Claim Boundary Doctrine](CLAIM_BOUNDARY_DOCTRINE.md) for support classes and promotion.
-6. [Programme Status Taxonomy](STATUS_TAXONOMY.md) to distinguish claims, artifact lifecycle, and campaign disposition.
-7. [Agent Council](MATH_PROGRAMME_AGENT_COUNCIL.md) for review and continuity responsibilities.
-8. The three pillar specifications for operational detail.
+## Reading a live front
 
-### For a domain
+For a live front, use this order:
 
-1. Begin at its public landing page in the [Domain Catalogue](domains/index.md).
-2. Follow the canonical master-plan link; do not infer authority from the landing page alone.
-3. Reconstruct the source boundary, exact target, and foundational profile.
-4. Follow Work Packages in dependency order, not merely chronological order.
-5. Read the claim ledger before trusting a prose summary.
-6. Inspect review records and unresolved obligations.
-7. Inspect the proof, replay, or certification packet before treating a result as promoted.
-8. Check whether a status word describes a mathematical claim, an artifact lifecycle state, or a campaign disposition.
+1. Read its entry in [Current Work](CURRENT_WORK.md).
+2. Open the live tracker named there.
+3. Recover the current object and obstruction.
+4. Follow the protected predecessor or evidence record.
+5. Identify the exact claim firewall.
+6. Confirm that the next move has a completion test.
+7. Treat the tracker as navigation; use protected repository records for authority.
 
-### For a solved-problem archive
+## Reading a bounded result
 
-1. Confirm that the target theorem is already classical.
-2. Identify which proof route is reconstructed and which sources are imported.
-3. Separate source concordance, theorem-interface reconstruction, bounded certificates, and complete proof verification.
-4. Read every retained exclusion: no novelty, no independent proof, no full formalization, or other campaign-specific boundary.
+For a result or exemplar:
 
-## The final test
+1. Start at [Results and Exemplars](SHOWCASE.md).
+2. Identify the support class.
+3. Follow the exact verification, certificate, publication, or archive record.
+4. Check retained exclusions.
+5. Distinguish mathematical support from artifact lifecycle or publication status.
+6. If a new programme starts from the result, verify that it does not silently broaden the earlier claim.
 
-A reader should be able to close the artifact and answer, in plain language:
+## Reading a standing domain
 
-> What object did we study? Why was it difficult? What changed? What may I now rely upon? What must happen next?
+The [Mathematical Estate](domains/index.md) is a scope catalogue, not a priority list.
 
-The programme's work is not merely to solve. It is to reduce confusion in a form that survives contact with proof, review, and revision.
+For a domain:
+
+1. Open its public landing page.
+2. Follow the canonical repository entry.
+3. Read the claim boundary before the historical narrative.
+4. Use current-work links only when that domain has a live active front.
+5. Follow Work Packages by dependency, not merely by date.
+6. Inspect a proof, replay, or certificate before treating a result as promoted.
+
+## Visuals
+
+A diagram should teach a structure that prose is slower at teaching.
+
+Before relying on a visual, ask:
+
+- What mathematical relation is literal?
+- What placement, scale, geometry, or styling is schematic?
+- What source or data generated the visual?
+- Does the visual summarize evidence, or merely explain it?
+
+A visual does not create proof authority. A schematic must not be read as a literal mathematical model unless its contract says which relations are exact.
+
+## Final test
+
+After reading a serious artifact, a reader should be able to state:
+
+> We studied this object. The obstruction was this. The strongest supported claim is this. This part crossed a trusted boundary. This part remains open. The next bounded move is this.
+
+If those six statements cannot be recovered, continue to the underlying record before relying on the summary.

@@ -1,96 +1,97 @@
 # Programme Atlas
 
-<p class="page-deck">A map of mathematical work as a sequence of accountable transformations, with governance preserving the meaning of every transition.</p>
+<p class="page-deck">The canonical public map of how a mathematical question changes state as it moves through discovery, solving, certification, and programme integration.</p>
 
-<div class="atlas-route" aria-label="Programme artifact route">
-  <span><b>01</b>Raw question</span>
-  <span><b>02</b>Source reconstruction</span>
-  <span><b>03</b>Status audit</span>
-  <span><b>04</b>Theorem spine</span>
-  <span><b>05</b>Work Packages</span>
-  <span><b>06</b>Evidence ledger</span>
-  <span><b>07</b>Certification handoff</span>
-  <span><b>08</b>Checked artifact</span>
-</div>
+## What the Atlas represents
 
-Each transformation changes the status of the material. The programme exists to make those changes explicit and to preserve them across revisions.
+The Atlas describes programme transitions. It does not certify any theorem.
 
-## Three execution rooms and one continuity layer
+A mathematical object can move through several support states without reaching certification. The programme preserves each transition so that a later reader can recover what changed and why.
 
-<div class="room-register">
-  <section>
-    <p class="gc-kicker">I · Discovery</p>
-    <h3>MATHFORGE</h3>
-    <p>The foundry collects problems, examples, failures, small computations, source trails, and first formulations.</p>
-    <p><strong>Generative, never authoritative.</strong></p>
-  </section>
-  <section>
-    <p class="gc-kicker">II · Campaign</p>
-    <h3>MATHSOLVE</h3>
-    <p>The campaign room builds definitions, reductions, diagrams, Work Packages, exact screens, and next-target statements.</p>
-    <p><strong>Incomplete, never vague.</strong></p>
-  </section>
-  <section>
-    <p class="gc-kicker">III · Certification</p>
-    <h3>MATHCERT</h3>
-    <p>The assay office checks claims through formal proof, exact replay, interval certificates, SAT/SMT, and other auditable routes.</p>
-    <p><strong>Unimpressed, never ambiguous.</strong></p>
-  </section>
-</div>
+![State transition from a question or source signal through MATHFORGE, MATHSOLVE, and MATHCERT. Fail-closed exits record an obstruction, proof debt, or non-promotion.](assets/claim-state-transition.svg)
 
-`MATH-PROGRAMME` governs integration, decision records, publication, and archival maintenance. It appears as a schema pillar for those artifacts, but it is not a fourth mathematical support route.
+The diagram is schematic. The arrows represent allowed research-state transitions, not logical implication between mathematical statements.
 
-## Artifact ladder
+## Three mathematical execution pillars
 
-| Stage | Artifact | Owner | Promotion condition |
-|---|---|---|---|
-| Curiosity | Lead note | MATHFORGE | Source can be reconstructed |
-| Candidate | Problem card | MATHFORGE | Status and risks recorded |
-| Campaign | Work Package | MATHSOLVE | Claim ledger and next target present |
-| Local result | Lemma, proposition, obstruction, or exact screen | MATHSOLVE | Support route identified |
-| Handoff | Certification packet | MATHSOLVE + MATHCERT | Statement and dependencies clear |
-| Certification | Checked artifact | MATHCERT | Proof or replay passes the declared gate |
-| Integration | Authoritative artifact | MATH-PROGRAMME | Reviews, terminology, decisions, and continuity agree |
-| Publication or archive | Public claim or qualified dossier | MATH-PROGRAMME | Claim boundary remains visible to the reader |
+| Pillar | Governing question | Typical artifacts | Boundary preserved |
+| --- | --- | --- | --- |
+| **MATHFORGE** | What object, source, obstruction, or candidate route is actually available? | source records, problem cards, reconnaissance, finite screens, route suggestions | discovery evidence does not become a mathematical result by presentation alone |
+| **MATHSOLVE** | Which exact obligations must close before the target can advance? | theorem spines, work packages, proof-debt registers, local lemmas, handoffs | active work does not become a completed result |
+| **MATHCERT** | Which exact claim survives the declared checks? | formal statements, exact replays, certificate checks, adjudications, claim dispositions | evidence and exposition do not become certified truth without the required gate |
 
-## Domain portfolio
+`MATH-PROGRAMME` is the integration layer. It preserves programme state, routing, terminology, decisions, publication surfaces, and archives. It is not a fourth mathematical support route.
 
-| Domain | Status | Programme role |
-|---|---|---|
-| [01 · Union-Closed Sets](domains/union_closed.md) | Open conjecture | Foundational demonstration domain |
-| [02 · Navier–Stokes Critical Integrability](domains/navier_stokes.md) | Open problem | Equation-specific analytic campaign |
-| [03 · Hodge Conjecture](domains/hodge.md) | Open conjecture | Source and equivalence normalization |
-| [04 · Birch–Swinnerton-Dyer](domains/birch_swinnerton_dyer.md) | Open conjecture | Theorem-ledger and restricted-target campaign |
-| [05 · Poincaré Reconstruction](domains/poincare_reconstruction.md) | Solved theorem | Qualified reconstruction and bounded-certification archive |
-| [06 · Yang–Mills Existence and Mass Gap](domains/yang_mills.md) | Open problem | Axiomatic source and equivalence control |
-| [07 · P versus NP](domains/p_vs_np.md) | Open problem | Machine, encoding, reduction, and barrier control |
-| [08 · Riemann Hypothesis](domains/riemann_hypothesis.md) | Open conjecture | Function, zero, equivalence, and barrier control |
+## State changes
 
-Union-Closed remains the programme's first demonstration of the complete route. It no longer exhausts the public domain catalogue. A merged WP00 dossier is documentary progress, not evidence that its terminal problem has moved toward resolution.
+| Research state | Main question | Minimum reader-visible result |
+| --- | --- | --- |
+| Question or source signal | What is worth reconstructing? | object and source identity |
+| Reconstructed object | What was actually stated or observed? | normalized statement, provenance, and imported assumptions |
+| Solving campaign | What finite obligation can be attacked? | theorem-spine location, dependencies, and completion test |
+| Local evidence | What proof, computation, certificate, or obstruction exists? | classified support route and limitations |
+| Certification handoff | What exact claim is ready to be checked? | immutable statement, dependencies, evidence, and replay contract |
+| Checked claim | What survived the declared gate? | bounded disposition and retained exclusions |
+| Integrated record | What is the authoritative current account? | protected record with review, provenance, and continuation state |
 
-## Adjacent GCL research programmes
+Not every object reaches the last row. A failed route can be a complete programme result when it records the exact obstruction and narrows the remaining search space.
 
-| Programme | Candidate scope | Routing |
-|---|---|---|
-| [BUTTERFLY CLOSURE](https://github.com/grandchallenge/BUTTERFLY) | Adopted programme for complementary low-rank observability, factorization, numerical certification, neural systems, and runtime research | Source and work-package authority remain in BUTTERFLY; any mathematical certification routes independently to MATHCERT |
+## Fail-closed exits
 
-The protected machine-readable index is
-`governance/research_programme_registry.json`. During onboarding it remains a
-portfolio index: it records BUTTERFLY adoption but does not promote scientific claims,
-authorize publication, transfer source ownership, or certify mathematics.
+### MATHFORGE exit · recorded obstruction
 
-## Cross-pillar obligations
+A source may be incomplete, inconsistent, unavailable, or insufficient for the intended claim. MATHFORGE records that obstruction instead of inventing the missing bridge.
 
-MATHFORGE must give MATHSOLVE enough context to avoid attacking a mirage.
+### MATHSOLVE exit · proof debt
 
-MATHSOLVE must give MATHCERT claims precise enough to check or reject.
+A campaign may isolate a theorem-level dependency that is not yet proved. MATHSOLVE records the dependency, its role, and the conditions that would discharge it.
 
-MATHCERT must return missing definitions, unsupported assumptions, and proof gaps to the other pillars.
+### MATHCERT exit · non-promotion
 
-MATH-PROGRAMME must preserve the authoritative artifact, review provenance, terminology, and claim boundary without converting editorial integration into mathematical promotion.
+A certificate, formalization, or replay may fail, or it may support only a narrower claim than the proposed output. MATHCERT preserves the narrower boundary and refuses the unsupported promotion.
 
-The system improves when each layer makes the others harder to fool.
+## Support-route classes
 
-## Status discipline
+The public explanation should identify which class supports a consequential statement.
 
-Claim support, artifact lifecycle, and campaign disposition are separate vocabularies. Use the [Programme Status Taxonomy](STATUS_TAXONOMY.md) before interpreting words such as `completed`, `certified`, `selected`, or `referee promoted`.
+| Support class | What it can establish |
+| --- | --- |
+| Exploratory evidence | patterns and candidate hypotheses |
+| Regression audit | continued agreement among definitions, examples, and code paths |
+| Exact finite verification | the explicitly bounded finite claim |
+| Certificate replay | the local claim represented by the replayable certificate |
+| Formal proof | the formal statement accepted by the declared trusted environment |
+| Continuum proof | the full mathematical statement over the stated domain |
+| Negative result | a bounded obstruction that rules out a declared route or claim |
+
+The classes are not interchangeable. Exact finite verification is not continuum proof. A visualization is not mathematical evidence by itself. A formal proof of the wrong statement does not establish the intended human claim.
+
+## Semantic bridge
+
+Every formal or computational route must preserve the bridge between the human claim and the checked object.
+
+A reader should be able to recover:
+
+1. the human statement;
+2. the formal or computational statement;
+3. assumptions added or removed in translation;
+4. model-class or foundational restrictions;
+5. the evidence that supports the bridge;
+6. what would falsify or downgrade the bridge.
+
+If the bridge remains unaudited, the formal or computational artifact can still be useful. The broader human claim remains below certification.
+
+## How to route a new item
+
+Use the smallest pillar that matches the present state.
+
+- Send an unclear source, object, or candidate route to **MATHFORGE**.
+- Send a normalized target with unresolved mathematics to **MATHSOLVE**.
+- Send an exact claim with a declared replay or proof surface to **MATHCERT**.
+- Use **MATH-PROGRAMME** to preserve cross-pillar routing, public state, governance, and archival continuity.
+
+Do not route by prestige. Route by the support state of the object.
+
+## Reader continuation
+
+For live work, use [Current Work](CURRENT_WORK.md). For bounded checked outputs, use [Results and Exemplars](SHOWCASE.md). For standing domains, use the [Mathematical Estate](domains/index.md). For review posture, use the [Grand Challenge Reader Guide](GRAND_CHALLENGE_READER_GUIDE.md).

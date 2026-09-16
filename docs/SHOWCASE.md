@@ -1,214 +1,104 @@
-# Showcase
+# Results and Exemplars
 
-<p class="page-deck">The programme in one view: three mathematical execution modes, one continuity layer, eight governed domains, explicit handoffs, and a refusal to confuse momentum with completion.</p>
+<p class="page-deck">Public records for results, verification surfaces, bounded certificates, reconstruction archives, and end-to-end exemplars. This page is an index; authority remains in the linked records.</p>
 
-<div class="showcase-declaration">
-  <span>Purpose</span>
-  <p>Make mathematical work cumulative, inspectable, and difficult to fool.</p>
-</div>
+## How to read this page
 
-<div class="programme-spine programme-spine--page" aria-label="MATH-PROGRAMME workflow">
-  <div class="programme-spine__stage">
-    <span class="programme-spine__number">I</span>
-    <span class="programme-spine__name">MATHFORGE</span>
-    <span class="programme-spine__verb">Questions become maps</span>
-  </div>
-  <span class="programme-spine__arrow" aria-hidden="true">→</span>
-  <div class="programme-spine__stage">
-    <span class="programme-spine__number">II</span>
-    <span class="programme-spine__name">MATHSOLVE</span>
-    <span class="programme-spine__verb">Maps become campaigns</span>
-  </div>
-  <span class="programme-spine__arrow" aria-hidden="true">→</span>
-  <div class="programme-spine__stage">
-    <span class="programme-spine__number">III</span>
-    <span class="programme-spine__name">MATHCERT</span>
-    <span class="programme-spine__verb">Claims meet the boundary</span>
-  </div>
-</div>
+The entries below are grouped by support type. They are not ranked by importance.
 
-`MATH-PROGRAMME` preserves governance, decisions, terminology, publication, archival state, and the authoritative integrated artifact. It is not a fourth proof stage.
+A result belongs here only when the public record states what crossed the boundary and what did not. Publication, merge, or visual prominence does not strengthen the mathematical claim.
 
-## The central transformation
+## VGSE-001 · restricted four-claim publication
 
-| Stage | Governing question | Required artifact | Change achieved |
-|---|---|---|---|
-| Curiosity | What might be worth studying? | Lead note | A direction becomes visible |
-| Reconstruction | What was actually asked? | Source map | Ambiguity is removed |
-| Campaign | What exact obligation can be attacked? | Work Package | Search becomes structured |
-| Evidence | What proof, computation, or obstruction exists? | Claim ledger | Support becomes inspectable |
-| Handoff | What can now be checked? | Certification packet | Dependencies become explicit |
-| Certification | What crossed the declared boundary? | Checked artifact | Local reliance becomes warranted |
-| Integration | What is the authoritative current account? | Ledger, reviews, ADRs, public page | Meaning survives revision |
+**Support class:** qualified restricted successor route  
+**Protected scope:** `VGSE-C00`, `VGSE-C01`, `VGSE-C04`, `VGSE-C05`  
+**Excluded claim:** `VGSE-C06`
 
-## What the programme refuses
+The successor route `MC-ROUTE-VGSE-001-R4` qualified exactly four claims. The original five-claim route remains unchanged and fail-closed on `VGSE-C06`.
 
-<div class="refusal-register">
-  <div><span>01</span><strong>Promising ore presented as refined metal</strong><p>Discovery may be exciting without being authoritative.</p></div>
-  <div><span>02</span><strong>Elegant exposition presented as discharged proof</strong><p>Understanding helps a proof; it does not replace one.</p></div>
-  <div><span>03</span><strong>Finite computation presented as an infinite theorem</strong><p>The bridge must itself be proved.</p></div>
-  <div><span>04</span><strong>Governance status presented as theorem status</strong><p>Completed, published, selected, and archived describe artifacts unless a mathematical support route says otherwise.</p></div>
-</div>
+The retained `C06` boundary matters. The published source package does not establish the Figure-16-to-pinned-`C` correspondence required to reopen that claim. The restricted result therefore does not qualify the original five-claim route by implication.
 
-## Status vocabulary
+The publication creates no authority for rigid foldability, collision freedom, finite thickness, manufacturing, novelty, patentability, product performance, or commercial value.
 
-<div class="status-register status-register--left" aria-label="Reader-facing claim status vocabulary">
-  <span class="claim-status claim-status--conjectural">Conjectural</span>
-  <span class="claim-status claim-status--computed">Computed</span>
-  <span class="claim-status claim-status--provisional">Provisional</span>
-  <span class="claim-status claim-status--certified">Certified</span>
-  <span class="claim-status claim-status--rejected">Rejected</span>
-</div>
+The programme has since opened a separate engineering-discovery lane. That lane starts from the bounded protected result and does not broaden it.
 
-These compact labels summarize mathematical support. They are not the same as artifact lifecycle or campaign disposition. See the [Programme Status Taxonomy](STATUS_TAXONOMY.md).
+[Inspect the current engineering handoff](CURRENT_WORK.md#vgse-001--engineering-discovery-handoff)
 
-## Domain portfolio
+## Verified corpus · OpenAI Ten Proofs
 
-| Domain | Mathematical state | Current programme boundary |
-|---|---|---|
-| [01 · Union-Closed Sets](domains/union_closed.md) | Open conjecture | Foundational demonstration domain; local proofs and bounded certificates only |
-| [02 · Navier–Stokes Critical Integrability](domains/navier_stokes.md) | Open problem | Equation-specific critical-integral routes; no regularity theorem |
-| [03 · Hodge Conjecture](domains/hodge.md) | Open conjecture | Source and equivalence normalization; no new algebraicity result |
-| [04 · Birch–Swinnerton-Dyer](domains/birch_swinnerton_dyer.md) | Open conjecture | WP00–WP04 promoted; selected restricted target remains unproved |
-| [05 · Poincaré Reconstruction](domains/poincare_reconstruction.md) | Solved classical theorem | Qualified reconstruction archive; no new proof or complete formalization |
-| [06 · Yang–Mills Existence and Mass Gap](domains/yang_mills.md) | Open problem | Source-normalized axiomatic dossier; no continuum construction or physical gap theorem |
-| [07 · P versus NP](domains/p_vs_np.md) | Open problem | Machine and encoding lock; no equality, separation, algorithm, or unrestricted lower bound |
-| [08 · Riemann Hypothesis](domains/riemann_hypothesis.md) | Open conjecture | Function and zero normalization; no proof, disproof, or newly certified zero range |
+**Support class:** protected formal verification record  
+**Verified subject:** exact supplied Lean corpus at the pinned upstream revision
 
-The catalogue is not a scoreboard. Different domains may legitimately produce a source audit, a false-proof atlas, a negative result, a selected target, a bounded certificate, or an archival dossier.
+MATHCERT rebuilt all ten supplied Lean modules and checked the twelve advertised headline declarations through the Lean kernel. The public record pins the source tree, toolchain, module identities, permitted axioms, independent review, protected merge, and post-merge replay.
 
-## Executable fixture 001 · Exact algebraic identity
+The verification does not claim line-by-line semantic equivalence with every prose statement in the source exposition. It does not create novelty or priority claims for the underlying mathematics.
 
-<div class="fixture-showcase" aria-label="UF-INV-001 exact algebraic fixture">
-  <header class="fixture-showcase__header">
-    <div>
-      <span class="fixture-showcase__index">UF-INV-001 · merged · CI enforced</span>
-      <h3>One claim, three support boundaries</h3>
-    </div>
-    <a href="https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/fixtures/algebraic/UF-INV-001">Inspect the artifact <span>→</span></a>
-  </header>
-
-  <div class="fixture-statement">
-    <span>Source statement</span>
-    <strong>x² = 1 and x ≠ −1 <i>implies</i> x = 1</strong>
-    <small>over every field extension of Q</small>
-  </div>
-
-  <div class="fixture-route" aria-label="Claim support route">
-    <div class="fixture-route__stage fixture-route__stage--audited"><span>01 · Semantic compilation</span><strong>Audited</strong><p>Replace the inequation by an inverse variable.</p></div>
-    <b aria-hidden="true">→</b>
-    <div class="fixture-route__stage fixture-route__stage--checked"><span>02 · Exact identity</span><strong>Checked</strong><p>Replay sparse polynomial arithmetic over exact rationals.</p></div>
-    <b aria-hidden="true">→</b>
-    <div class="fixture-route__stage fixture-route__stage--audited"><span>03 · Source implication</span><strong>Audited</strong><p>Depends on both semantic translation and checked identity.</p></div>
-  </div>
-
-  <div class="fixture-witness"><div class="fixture-witness__label"><span>Exact witness</span><small>expanded coefficient by coefficient</small></div><code>x − 1 = t(x² − 1) + (1 − x)(t(x + 1) − 1)</code></div>
-</div>
-
-The fixture proves that a serialized witness can be checked and adversarially mutated without promoting the surrounding semantic implication beyond its audited bridge.
-
-## Executable fixture 002 · Radical membership
-
-<div class="fixture-showcase fixture-showcase--radical" aria-label="RAD-NIL-002 radical membership fixture">
-  <header class="fixture-showcase__header">
-    <div>
-      <span class="fixture-showcase__index">RAD-NIL-002 · model-class audit</span>
-      <h3>The exponent and the universe both matter</h3>
-    </div>
-    <a href="https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/fixtures/algebraic/RAD-NIL-002">Inspect the artifact <span>→</span></a>
-  </header>
-
-  <div class="fixture-statement">
-    <span>Field-level statement</span>
-    <strong>x² = 0 <i>implies</i> x = 0</strong>
-    <small>over every field extension of Q</small>
-  </div>
-
-  <div class="fixture-model-boundary" aria-label="Valid and refuted model classes">
-    <div class="fixture-model-boundary__valid"><span>Valid model class</span><strong>Field extensions of Q</strong><p>No nonzero nilpotent elements.</p></div>
-    <div class="fixture-model-boundary__refuted"><span>Refuted generalization</span><strong>All commutative Q-algebras</strong><p>The dual numbers contain a nonzero nilpotent.</p></div>
-  </div>
-</div>
-
-The checker distinguishes ideal membership from radical membership and preserves the false broader statement with its countermodel.
+[Read the verification record](OPENAI_TEN_PROOFS_VERIFICATION.md)
 
 ## Fixture 003: The logarithmic GCD kernel
 
-<div class="fixture-showcase" aria-label="LOG-GCD-001 published certified Lean result">
-  <header class="fixture-showcase__header">
-    <div>
-      <span class="fixture-showcase__index">Fixture 003 · PUB-LOG-GCD-001 · Publication status: published</span>
-      <h3>Classical mathematics · certified formal artifact</h3>
-    </div>
-    <a href="LOG_GCD_PUBLICATION.md">Read the public note <span>→</span></a>
-  </header>
+**Publication ID:** `PUB-LOG-GCD-001`  
+**Support class:** Classical mathematics · certified formal artifact  
+Publication status: published  
+**Claim boundary:** No novelty or priority claim
 
-  <div class="fixture-statement">
-    <span>Certified Gram identity</span>
-    <strong>K(m,n) = log(gcd(m,n)) = ⟨φ(m),φ(n)⟩</strong>
-    <small>for positive inputs and a finitely supported divisor feature vector</small>
-  </div>
+The published identity is
 
-  <div class="fixture-route" aria-label="LOG-GCD support route">
-    <div class="fixture-route__stage fixture-route__stage--audited"><span>01 · Prior art</span><strong>Classical</strong><p>General GCD-matrix theory already supplies the incidence-factorization criterion.</p></div>
-    <b aria-hidden="true">→</b>
-    <div class="fixture-route__stage fixture-route__stage--checked"><span>02 · Formal artifact</span><strong>Certified</strong><p>Lean checks positive semidefiniteness and the exact finite-support Gram realization.</p></div>
-    <b aria-hidden="true">→</b>
-    <div class="fixture-route__stage fixture-route__stage--checked"><span>03 · Public claim</span><strong>Published</strong><p>The publication gate preserves every exclusion and makes no novelty claim.</p></div>
-  </div>
+`K(m,n) = log(gcd(m,n)) = <phi(m), phi(n)>`
 
-  <div class="fixture-rejections">
-    <span>No novelty or priority claim</span>
-    <ul>
-      <li>not a new theorem</li>
-      <li>not a novel kernel</li>
-      <li>not a first proof</li>
-      <li>not a first feature representation</li>
-      <li>not a first Lean formalization</li>
-    </ul>
-  </div>
-</div>
+for the declared positive-input domain and finitely supported divisor feature vector.
 
-Publication changed visibility, not mathematical history. The theorem remains classical; the formal and editorial contribution is stated without a priority claim.
+The public record separates the certified formal artifact from mathematical history. It makes no claim that the theorem, kernel, feature representation, or proof idea is new.
 
-## Verified corpus 001 · OpenAI Ten Proofs
+[Read the publication record](LOG_GCD_PUBLICATION.md) · [Read the prior-art audit](LOG_GCD_PRIOR_ART_AUDIT.md)
 
-<div class="fixture-showcase" aria-label="OpenAI Ten Proofs protected corpus verification">
-  <header class="fixture-showcase__header">
-    <div>
-      <span class="fixture-showcase__index">Corpus 001 · 10 modules · 12 headline declarations · protected</span>
-      <h3>From supplied formalizations to independently checked proof surfaces</h3>
-    </div>
-    <a href="OPENAI_TEN_PROOFS_VERIFICATION.md">Read the verification note <span>→</span></a>
-  </header>
+## Solved-problem archive · Poincaré reconstruction
 
-  <div class="fixture-statement">
-    <span>Verified subject</span>
-    <strong>openai/ten-proofs @ 94bc0feb</strong>
-    <small>exact commit, tree, module blobs, Lean toolchain, and mathlib revision pinned</small>
-  </div>
+**Support class:** qualified reconstruction archive for a solved classical theorem
 
-  <div class="fixture-route" aria-label="Ten Proofs verification route">
-    <div class="fixture-route__stage fixture-route__stage--audited"><span>01 · Source identity</span><strong>Pinned</strong><p>Ten exact upstream modules and their dependency environment.</p></div>
-    <b aria-hidden="true">→</b>
-    <div class="fixture-route__stage fixture-route__stage--checked"><span>02 · Kernel boundary</span><strong>Verified</strong><p>Every module built; twelve headline declarations and axiom closures checked.</p></div>
-    <b aria-hidden="true">→</b>
-    <div class="fixture-route__stage fixture-route__stage--checked"><span>03 · Public record</span><strong>Protected</strong><p>Independent approval, expected-head merge, and post-merge replay complete.</p></div>
-  </div>
+This archive records a bounded reconstruction route and its supporting documentary material. It is not presented as a new proof of the Poincaré conjecture and does not assign novelty to the reconstructed mathematics.
 
-  <div class="fixture-rejections">
-    <span>Boundary retained</span>
-    <ul>
-      <li>not a line-by-line equivalence claim about the PDF exposition</li>
-      <li>not a novelty or priority claim</li>
-      <li>not authority for unlisted statements or broader paraphrases</li>
-    </ul>
-  </div>
-</div>
+[Read the reconstruction archive](POINCARE_RECONSTRUCTION_ARCHIVE.md) · [Read the documentary edition](documentaries/poincare.md)
 
-The result is deliberately exact: the supplied Lean proofs crossed the kernel
-boundary, while every family-level statement qualification remains attached.
+## End-to-end proof traces
 
-## Review posture
+These traces test whether the programme can preserve source identity, proof structure, executable checking, and reader-facing explanation through a complete bounded route.
 
-> I know which domain I am reading, what is proved, what is computed, what is conjectural, what failed, what was ruled out, which artifact is authoritative, and what must happen next.
+### Euclidean GCD
+
+The Euclidean GCD trace is a compact end-to-end proof artifact. Its value is institutional: the mathematics is elementary enough that the programme machinery can be inspected without confusing governance complexity with theorem difficulty.
+
+[Read the Euclidean GCD proof trace](EUCLID_GCD_E2E_001_PROOF_TRACE.md)
+
+### Linear Diophantine solvability
+
+The linear Diophantine trace extends the same method to a second classical statement with an explicit proof and checking route.
+
+[Read the linear Diophantine proof trace](EUCLID_DIOPHANTINE_E2E_002_PROOF_TRACE.md)
+
+## Executable fixtures
+
+Fixtures test local programme claims about translation, checking, model classes, and certificate handling. They are not substitutes for the larger theorem programmes.
+
+### `UF-INV-001` · exact algebraic identity
+
+The fixture checks an exact polynomial identity over the declared field setting. It keeps the semantic translation and the exact arithmetic witness as separate support boundaries.
+
+### `RAD-NIL-002` · radical membership and model-class boundary
+
+The fixture distinguishes a valid field-level implication from its false generalization to all commutative `Q`-algebras. The countermodel is part of the retained result.
+
+[Inspect the fixture ledger](FIXTURE_LEDGER.md)
+
+## What does not belong on this page
+
+The following states belong elsewhere until their support changes:
+
+- an active work package with an unresolved theorem dependency;
+- a promising computation without the required bridge;
+- a source reconstruction that has not crossed a certification boundary;
+- a visual explanation without independently governed evidence;
+- a merged document whose mathematical claim remains open;
+- an engineering hypothesis without a validated experiment or derivation.
+
+Use [Current Work](CURRENT_WORK.md) for live obligations and [Mathematical Estate](domains/index.md) for standing programmes, domains, and archives.
