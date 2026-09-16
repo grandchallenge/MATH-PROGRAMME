@@ -23,7 +23,7 @@ A domain can remain in the estate while no active front is running. An active fr
 | [05 · Poincaré Reconstruction](poincare_reconstruction.md) | `PC-001` | Solved classical theorem | Qualified reconstruction and bounded-certification archive; no novelty claim. |
 | [06 · Yang–Mills Existence and Mass Gap](yang_mills.md) | `YM-001` | Open problem | Source-normalized axiomatic and equivalence dossier; no continuum construction or mass-gap theorem is claimed. |
 | [07 · P versus NP](p_vs_np.md) | `PNP-001` | Open problem | Machine, encoding, reduction, and barrier control; no equality, separation, algorithm, or unrestricted lower bound is claimed. |
-| [08 · Riemann Hypothesis](riemann_hypothesis.md) | `RH-001` | Open conjecture | Function, zero, source, equivalence, and barrier control; no proof or disproof is claimed. |
+| [08 · Riemann Hypothesis](riemann_hypothesis.md) | `RH-001` | Open conjecture | Function, zero, source, equivalence, and barrier control. WP01/WP02 implemented, merged, and CI-passed, with formal promotion withheld; no proof or disproof is claimed. |
 
 ## Domain authority
 
