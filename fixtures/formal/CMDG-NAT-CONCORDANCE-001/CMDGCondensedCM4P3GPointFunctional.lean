@@ -239,6 +239,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreePresheafFunctor.obj Q).map ftrue)) z)
     exact hnat.symm
   ·
+    rw [← freeHomSectionsEquiv_precomp]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
         CMDG.CondensedCM4P2E.discreteSetFreeAdj
@@ -247,9 +248,6 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     have huniqPoint :=
       CategoryTheory.types_congr_hom huniq (ULift.up (j.proj x))
     dsimp [P, D, eTail, eFree, freeHomSectionsEquiv, profinitePointProbe]
-    apply LocallyConstant.ext
-    intro s
-    have huniqPointAt := congrArg (fun h => h s) huniqPoint
     simpa [
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
@@ -274,7 +272,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       ModuleCat.freeMk,
       Adjunction.comp_unit_app,
       Adjunction.homEquiv_naturality_left,
-      ModuleCat.adj_homEquiv] using huniqPointAt
+      ModuleCat.adj_homEquiv] using huniqPoint
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
