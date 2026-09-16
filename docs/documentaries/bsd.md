@@ -265,9 +265,10 @@
 </div>
 
 <dialog class="monograph-lightbox" data-plate-dialog aria-labelledby="plate-dialog-title"><form method="dialog"><button class="monograph-lightbox__close" aria-label="Close plate view">Close</button></form><div class="monograph-lightbox__frame"><img data-plate-dialog-image alt=""><p id="plate-dialog-title" data-plate-dialog-caption></p></div></dialog>
-<noscript><p>The manuscript and source TeX remain readable without JavaScript. The stable source references retain their reviewed predecessor plates; exact-object successors are activated by the shared reader when JavaScript is available. Plate enlargement, rendered mathematics, reading progress, focus mode, and reading-position memory are unavailable; the checksum-locked PDF remains the rendered archival edition.</p></noscript>
+<noscript><p>The manuscript and source TeX remain readable without JavaScript. The stable source references retain their reviewed predecessor plates; exact-object successors are activated by the BSD-specific resolver when JavaScript is available. Plate enlargement, rendered mathematics, reading progress, focus mode, and reading-position memory are unavailable; the checksum-locked PDF remains the rendered archival edition.</p></noscript>
 </div>
 
 <script defer src="../../javascripts/documentary-mathjax.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" crossorigin="anonymous" referrerpolicy="no-referrer" data-archival-role="enhancement-only"></script>
+<script defer src="../../assets/visual_pedagogy/bsd_exact/bsd_activation.js"></script>
 <script defer src="../../javascripts/documentary.js"></script>

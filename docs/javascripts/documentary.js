@@ -37,34 +37,34 @@
     },
     bsd: {
       '../../assets/documentaries/bsd/plate_curve.svg': {
-        src: '../../assets/visual_pedagogy/bsd_exact/plate_01_rational_point_triangle.svg',
-        alt: 'Exact finite-window plot of E5, y squared equals x cubed minus 25x, with P equals 25 over 4 comma 75 over 8, paired with the exact rational right triangle of sides 3 over 2, 20 over 3, and 41 over 6 and area five.',
-        title: 'Rational Point to Rational Triangle',
-        note: 'Exact arithmetic correspondence. The finite real plot does not determine rank and does not prove BSD.'
+        src: '../../assets/visual_pedagogy/batch1/bsd/plate_curve.png',
+        alt: 'An exact real plot of E5, y squared equals x cubed minus 25x, marks P equals 25 over 4 comma 75 over 8 and is paired with a right triangle whose exact rational sides give area five.',
+        title: 'A Rational Point Opens a Door',
+        note: 'The point and area-five triangle are exact; the finite plot is not a rank computation or a proof of BSD.'
       },
       '../../assets/documentaries/bsd/plate_bridge.svg': {
-        src: '../../assets/visual_pedagogy/bsd_exact/plate_03_good_prime.svg',
-        alt: 'Exact finite-field point set for E5 modulo 13 with 19 affine solutions, total point count 20, a13 equal to minus 6, the resulting local Euler factor, and an exact finite sample of a p values at selected good primes.',
-        title: 'Counting at a Good Prime',
-        note: 'Each displayed point and trace value is exact. No single prime, and no finite sample of primes, determines rank.'
+        src: '../../assets/visual_pedagogy/batch2/bsd/plate_bridge.svg',
+        alt: 'A literal pipeline goes from a good-prime point count and local Euler factor to the global elliptic-curve L-function and then to its order of vanishing at s equals one, with BSD rank equality explicitly left conjectural.',
+        title: 'From Local Counts to the Central Point',
+        note: 'Local factors assemble the analytic ledger; no single prime determines rank, and r algebraic equals r analytic remains conjectural.'
       },
       '../../assets/documentaries/bsd/plate_harmony.svg': {
-        src: '../../assets/visual_pedagogy/bsd_exact/plate_02_group_law.svg',
-        alt: 'Exact chord-tangent addition example on y squared equals x cubed minus x plus one, with P equals zero comma one, Q equals one comma one, third intersection R equals minus one comma one, and reflected sum P plus Q equals minus one comma minus one.',
-        title: 'The Chord–Tangent Group Law',
-        note: 'Exact rational addition example. It illustrates the operation; it is not a picture of the full Mordell–Weil group.'
+        src: '../../assets/visual_pedagogy/batch2/bsd/plate_harmony.svg',
+        alt: 'Two labelled ledgers separate arithmetic rank and regulator data from analytic Euler-product and central-zero data, with a dashed BSD box asking whether r algebraic equals r analytic.',
+        title: 'Two Distinct Ledgers',
+        note: 'Arithmetic and analytic ranks are independently constructed invariants; BSD conjectures their equality.'
       },
       '../../assets/documentaries/bsd/plate_frontier.svg': {
-        src: '../../assets/visual_pedagogy/bsd_exact/plate_05_theorem_frontier.svg',
-        alt: 'Six-row theorem-status matrix separating Mordell-Weil finite generation, modularity, and analytic-rank-zero-or-one results from the universally open rank equality, Sha finiteness, and complete normalized leading-term formula.',
+        src: '../../assets/visual_pedagogy/batch2/bsd/plate_frontier.svg',
+        alt: 'A six-row BSD status matrix marks Mordell-Weil, modularity, and analytic rank zero or one as established terrain, and universal rank equality, universal finiteness of Sha, and the complete leading-term formula as open.',
         title: 'The Exact BSD Theorem Frontier',
-        note: 'Scope is part of theorem status. Established special cases do not remove the universal quantifier.'
+        note: 'Established low-rank terrain is kept separate from the still-open universal BSD obligations.'
       },
       '../../assets/documentaries/bsd/plate_overture.svg': {
-        src: '../../assets/visual_pedagogy/bsd_exact/plate_04_strong_bsd_ledger.svg',
-        alt: 'Strong BSD leading-term formula with separate labelled inputs for the real period, regulator, Tate-Shafarevich order, local Tamagawa factors, rational torsion denominator, and a three-row list separating rank equality, Sha finiteness, and the leading-term identity.',
-        title: 'The Strong BSD Leading-Term Ledger',
-        note: 'The dependency structure is explicit. It does not convert the conjectural identity or its finiteness hypothesis into established facts.'
+        src: '../../assets/visual_pedagogy/batch2/bsd/plate_overture.svg',
+        alt: 'The strong BSD leading-term formula sits above labelled boxes for the period, regulator, Tate-Shafarevich order, Tamagawa factors, and torsion denominator, with rank equality, Sha finiteness, and leading-term equality listed as distinct obligations.',
+        title: 'The Strong BSD Ledger',
+        note: 'The factor ledger is mnemonic; normalization matters, and the three strong-BSD obligations remain logically distinct.'
       }
     },
     hodge: {
@@ -128,7 +128,7 @@
       if (!activation) return;
       image.src = activation.src;
       image.alt = activation.alt;
-      image.dataset.visualPedagogyActivation = reader.dataset.gclReader === 'bsd' ? 'bsd-exact-object' : 'batch1';
+      image.dataset.visualPedagogyActivation = 'batch1';
       const figure = image.closest('[data-plate]');
       const title = figure?.querySelector('figcaption strong');
       const note = figure?.querySelector('figcaption small');
