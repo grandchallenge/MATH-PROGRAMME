@@ -22,12 +22,12 @@ The post-merge disposition promotes WP01/WP02 only as bounded research infrastru
 
 ## Canonical artifacts
 
-- [WP00 integrated audit](../../YM-WP00-source-normalization-equivalence-audit.md)
-- [WP01 false-proof atlas](../../campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/00_README.md)
-- [WP02 theorem and route ledger](../../campaigns/yang_mills/WP02_THEOREM_LEDGER/00_README.md)
-- [WP01/WP02 integration record](../../campaigns/yang_mills/YM_WP01_WP02_INTEGRATION.md)
-- [Post-merge disposition](../../campaigns/yang_mills/YM_WP01_WP02_POST_MERGE_DISPOSITION.md)
-- [Current routing gate](../../campaigns/yang_mills/YM_CURRENT_ROUTING_GATE.json)
+- [WP00 integrated audit](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/YM-WP00-source-normalization-equivalence-audit.md)
+- [WP01 false-proof atlas](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/00_README.md)
+- [WP02 theorem and route ledger](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/campaigns/yang_mills/WP02_THEOREM_LEDGER/00_README.md)
+- [WP01/WP02 integration record](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/campaigns/yang_mills/YM_WP01_WP02_INTEGRATION.md)
+- [Post-merge disposition](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/campaigns/yang_mills/YM_WP01_WP02_POST_MERGE_DISPOSITION.md)
+- [Current routing gate](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/campaigns/yang_mills/YM_CURRENT_ROUTING_GATE.json)
 - [WP00 merge record PR #86](https://github.com/grandchallenge/MATH-PROGRAMME/pull/86)
 - [WP01/WP02 merge record PR #115](https://github.com/grandchallenge/MATH-PROGRAMME/pull/115)
 - [Catalogue-integration decision ADR-0009](../decisions/ADR-0009_POST_MERGE_DOMAIN_COVERAGE.md)
