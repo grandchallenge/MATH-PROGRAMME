@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0.0",
+  "documentary_id": "BSD-001",
+  "decision_ref": "docs/decisions/ADR-0022_EXACT_OBJECT_FIRST_DOCUMENTARY_VISUALIZATION.md",
+  "semantic_master": "tools/bsd_wolfram_semantic_master.wl",
+  "delivery_compositor": "tools/compose_bsd_wolfram_plates.py",
+  "renderer_policy": "Wolfram Language verifies the exact mathematical objects and finite computations. The committed SVGs are deterministic static publication derivatives for the MkDocs site.",
+  "claim_boundary": "The overhaul changes exposition and visualization only. It does not promote any BSD claim or alter the authority of the checksum-locked documentary source/PDF artifacts.",
+  "wolfram_verified_fixtures": {
+    "E5": "y^2=x^3-25x",
+    "P5": [
+      "25/4",
+      "75/8"
+    ],
+    "triangle": [
+      "3/2",
+      "20/3",
+      "41/6"
+    ],
+    "triangle_area": 5,
+    "group_law": {
+      "E": "y^2=x^3-x+1",
+      "P": [
+        0,
+        1
+      ],
+      "Q": [
+        1,
+        1
+      ],
+      "R": [
+        -1,
+        1
+      ],
+      "P_plus_Q": [
+        -1,
+        -1
+      ]
+    },
+    "p13": {
+      "affine_solution_count": 19,
+      "projective_point_count": 20,
+      "a13": -6
+    },
+    "sample_ap": {
+      "3": 0,
+      "7": 0,
+      "11": 0,
+      "13": -6,
+      "17": -2,
+      "19": 0,
+      "23": 0,
+      "29": -10,
+      "31": 0
+    }
+  },
+  "plates": [
+    {
+      "plate_id": "BSD-WOLFRAM-PLATE-I",
+      "asset": "docs/assets/documentaries/bsd/wolfram/plate_01_rational_point_triangle.svg",
+      "sha256": "123d48b59a206e8f392087cd71f96aa7efbe0baf988ae312942494981afc7646",
+      "bytes": 7386,
+      "representation_class": "exact-object",
+      "mathematical_source": "docs/documentaries/bsd.md#rational-points",
+      "predecessor": "docs/assets/documentaries/bsd/plate_curve.svg",
+      "visual_is_evidence": false
+    },
+    {
+      "plate_id": "BSD-WOLFRAM-PLATE-II",
+      "asset": "docs/assets/documentaries/bsd/wolfram/plate_02_group_law.svg",
+      "sha256": "b9e9d6a699b59423164c3cfae13f063c65d5117492b5782dc61ec305613e97c4",
+      "bytes": 5964,
+      "representation_class": "exact-object",
+      "mathematical_source": "docs/documentaries/bsd.md#group-law",
+      "predecessor": "docs/assets/documentaries/bsd/plate_harmony.svg",
+      "visual_is_evidence": false
+    },
+    {
+      "plate_id": "BSD-WOLFRAM-PLATE-III",
+      "asset": "docs/assets/documentaries/bsd/wolfram/plate_03_good_prime.svg",
+      "sha256": "fe82ffd9c2c4b8c495365d14ac659167f07a1b48dfeae6fc63680b3874252d1d",
+      "bytes": 7898,
+      "representation_class": "exact-finite-computation",
+      "mathematical_source": "docs/documentaries/bsd.md#local-counts",
+      "predecessor": "docs/assets/documentaries/bsd/plate_bridge.svg",
+      "visual_is_evidence": false
+    },
+    {
+      "plate_id": "BSD-WOLFRAM-PLATE-IV",
+      "asset": "docs/assets/documentaries/bsd/wolfram/plate_04_strong_bsd_ledger.svg",
+      "sha256": "191ee3faf0422664b61943066061e5d3e87aac9f154707ff2bab0d5a4ae2454a",
+      "bytes": 3521,
+      "representation_class": "quantified-dependency",
+      "mathematical_source": "docs/documentaries/bsd.md#central-bridge",
+      "predecessor": "docs/assets/documentaries/bsd/plate_overture.svg",
+      "visual_is_evidence": false
+    },
+    {
+      "plate_id": "BSD-WOLFRAM-PLATE-V",
+      "asset": "docs/assets/documentaries/bsd/wolfram/plate_05_theorem_frontier.svg",
+      "sha256": "a635a766e90f24d3c022172cfd0e47925f5adf08b9e73842f21a28587aa46d4a",
+      "bytes": 4656,
+      "representation_class": "quantified-status",
+      "mathematical_source": "docs/documentaries/bsd.md#theorem-frontier",
+      "predecessor": "docs/assets/documentaries/bsd/plate_frontier.svg",
+      "visual_is_evidence": false
+    }
+  ]
+}

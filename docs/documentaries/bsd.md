@@ -11,7 +11,7 @@
     <p class="monograph-eyebrow">MATH-PROGRAMME · Documentary Treatment · BSD-001</p>
     <h1 id="monograph-title">The Hidden Music of Elliptic Curves</h1>
     <p class="monograph-hero__subtitle">A guided journey to the Birch and Swinnerton–Dyer conjecture</p>
-    <p class="monograph-hero__thesis">The rational points on a curve and the silence of its analytic function at one central point are conjectured to measure the same hidden rank.</p>
+    <p class="monograph-hero__thesis">BSD asks whether two independently constructed notions of rank—one arithmetic and one analytic—always agree, and whether their leading terms encode the same arithmetic data.</p>
     <div class="monograph-status" aria-label="Publication status"><span>Open Millennium Prize Problem</span><span>BSD-001</span><span>No proof claimed</span></div>
     <div class="monograph-actions"><a class="monograph-button monograph-button--primary" href="#monograph-start">Begin the journey</a><a class="monograph-button" href="../">Documentary library</a><a class="monograph-button" href="../sources/the_hidden_music_of_elliptic_curves.tex">Source record</a></div>
   </div>
@@ -27,138 +27,149 @@
   <div class="monograph-layout">
     <aside class="monograph-contents" aria-label="Manuscript contents">
       <p class="monograph-contents__title">The journey</p>
-      <ol><li><a href="#reader-note">How to read</a></li><li><a href="#rational-points">Rational points</a></li><li><a href="#group-law">A curve that adds</a></li><li><a href="#local-counts">Counting at primes</a></li><li><a href="#central-bridge">One number, two languages</a></li><li><a href="#theorem-frontier">The theorem frontier</a></li></ol>
+      <ol><li><a href="#reader-note">How to read</a></li><li><a href="#rational-points">Rational points</a></li><li><a href="#group-law">The group law</a></li><li><a href="#local-counts">Counting at primes</a></li><li><a href="#central-bridge">The strong formula</a></li><li><a href="#theorem-frontier">The theorem frontier</a></li></ol>
       <p class="monograph-contents__title">Technical appendix</p>
-      <ol><li><a href="#appendix-curves">Curves and rank</a></li><li><a href="#appendix-lfunction">The L-function</a></li><li><a href="#appendix-strong">Strong BSD</a></li><li><a href="#appendix-selmer">Selmer and descent</a></li><li><a href="#appendix-trust">Trust matrix</a></li><li><a href="#sources">Sources</a></li></ol>
+      <ol><li><a href="#appendix-curves">Curves and rank</a></li><li><a href="#appendix-lfunction">The L-function</a></li><li><a href="#appendix-strong">Normalization</a></li><li><a href="#appendix-selmer">Selmer and descent</a></li><li><a href="#appendix-trust">Trust matrix</a></li><li><a href="#sources">Sources</a></li></ol>
     </aside>
 
     <article class="monograph-body" aria-label="The Hidden Music of Elliptic Curves manuscript">
       <section class="monograph-section" id="reader-note" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">A note to the reader</p>
-      ## Wonder first; the open boundary always visible
+      ## Exact objects first; the open boundary always visible
 
-      An elliptic curve may be written in a line, yet its rational points can resist every direct search. Birch and Swinnerton–Dyer proposes that this arithmetic difficulty is reflected exactly by a complex analytic object assembled from point counts at every prime. The conjecture remains open.
+      Birch and Swinnerton–Dyer links the rational-point structure of an elliptic curve to the behaviour of its $L$-function at $s=1$. The conjecture remains open in general.
 
-      This browser edition is a derivative, source-normalized exposition. The plates provide memory and atmosphere; text inside them is decorative. The definitions, equations, source links, campaign records, and trust labels govern the mathematics.
+      This browser edition is a derivative, source-normalized exposition. Its numbered plates render exact mathematical objects, exact finite computations, or quantified theorem structure whenever the adjacent concept permits it. Wolfram Language is the semantic verification layer for the revised plates; the committed web graphics are deterministic publication derivatives. The plates are pedagogical, not proof evidence. Definitions, equations, source links, campaign records, and trust labels govern the mathematics.
 
       **Edition status:** Open Millennium Prize Problem; documentary exposition; no proof claim.
 
-      <div class="conjecture-box"><strong>Open conjecture</strong><p>For every elliptic curve $E/\mathbb{Q}$, the Mordell–Weil rank is conjectured to equal the order of vanishing of $L(E,s)$ at $s=1$. The universal leading-term formula and the general finiteness of the Tate–Shafarevich group remain open.</p></div>
-      <div class="warning-box"><strong>Claim boundary</strong><p>Numerical agreement, parity, Selmer bounds, family averages, one-prime results, $p$-adic formulas, and the analytic-rank-zero-or-one theorem terrain do not by themselves establish the universal complex conjecture.</p></div>
+      <div class="conjecture-box"><strong>Open conjecture</strong><p>For every elliptic curve $E/\mathbb{Q}$, BSD predicts $\operatorname{rank}E(\mathbb{Q})=\operatorname{ord}_{s=1}L(E,s)$. The universal leading-term formula and general finiteness of $\operatorname{Sha}(E/\mathbb{Q})$ remain open.</p></div>
+      <div class="warning-box"><strong>Claim boundary</strong><p>Finite computation, parity, Selmer bounds, family averages, one-prime results, $p$-adic formulas, and analytic-rank-zero-or-one theorems do not by themselves establish the universal complex conjecture.</p></div>
       </section>
-
-      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate I"><img src="../../assets/documentaries/bsd/plate_curve.svg" width="1024" height="1536" loading="lazy" alt="An illustrated map from rational right triangles and cubic curves to sparse rational points, torsion, rank, and the limits of finite search."></button><figcaption><span class="plate-label">Plate I</span><strong>The ancient question of rational solutions</strong><small>Pedagogical orientation only. The depicted curves and diagrams compress exact arithmetic into visual analogy.</small></figcaption></figure>
 
       <section class="monograph-section" id="rational-points" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter I</p>
-      ## The ancient question of rational solutions
+      ## Rational points: one exact doorway
 
-      Over the real numbers, a cubic curve is a continuous shape. Over the rational numbers, its points form a sparse constellation. The question is not merely whether a point exists, but whether all rational points can be described by finitely many instructions.
+      An elliptic curve over $\mathbb{Q}$ can be written in short Weierstrass form
 
-      <div class="definition-box"><strong>Definition</strong><p>An elliptic curve over $\mathbb{Q}$ is a smooth projective genus-one curve equipped with a rational base point. In a short Weierstrass model it may be written $E:y^2=x^3+Ax+B$ with $4A^3+27B^2\ne0$.</p></div>
+      $$E:y^2=x^3+Ax+B,\qquad 4A^3+27B^2\ne0.$$
 
-      The congruent-number problem supplies an ancient doorway. A positive integer $n$ is the area of a rational right triangle exactly when the curve
+      Its real points form continuous curves. Its rational points form a finitely generated abelian group, but finding all generators can be difficult.
+
+      The congruent-number problem gives a concrete entry point. A positive integer $n$ is the area of a rational right triangle exactly when
 
       $$E_n:y^2=x^3-n^2x$$
 
-      has a rational point of infinite order. For $n=5$, the point $(25/4,75/8)$ corresponds to a rational right triangle with sides $3/2$, $20/3$, and $41/6$.
+      has a rational point of infinite order. For $n=5$, the exact point
 
-      Search can find points and prove lower bounds. Search cannot certify that no hidden generator of enormous height remains. That stopping problem is why descent, height pairings, Selmer groups, and local information enter.
+      $$P=\left(\frac{25}{4},\frac{75}{8}\right)$$
+
+      lies on $E_5:y^2=x^3-25x$ and corresponds to a rational right triangle with sides $3/2$, $20/3$, and $41/6$. Its area is exactly $5$.
+
+      <div class="warning-box"><strong>Finite-window guardrail</strong><p>Displaying a real curve and one rational point does not determine the Mordell–Weil rank and does not prove BSD.</p></div>
       </section>
 
-      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate II"><img src="../../assets/documentaries/bsd/plate_harmony.svg" width="1024" height="1536" loading="lazy" alt="A paired arithmetic and analytic panorama links the Mordell–Weil group of rational points to the vanishing of an elliptic-curve L-function."></button><figcaption><span class="plate-label">Plate II</span><strong>Two ledgers in the same hand</strong><small>The rational-point ledger and the analytic ledger are distinct constructions. BSD predicts their exact concordance.</small></figcaption></figure>
+      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate I"><img src="../../assets/documentaries/bsd/wolfram/plate_01_rational_point_triangle.svg" width="1024" height="1536" loading="lazy" alt="Exact finite-window plot of E5, y squared equals x cubed minus 25x, with P equals 25 over 4 comma 75 over 8, paired with the exact rational right triangle of sides 3 over 2, 20 over 3, and 41 over 6 and area five."></button><figcaption><span class="plate-label">Plate I</span><strong>Rational point to rational triangle</strong><small>Exact arithmetic correspondence. The finite real plot does not determine rank and does not prove BSD.</small></figcaption></figure>
 
       <section class="monograph-section" id="group-law" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter II</p>
-      ## A curve that adds
+      ## The chord–tangent group law
 
-      Draw a line through two rational points on a nonsingular cubic. The line meets the cubic a third time; reflecting that third intersection across the horizontal axis defines the sum. Tangency supplies doubling. The geometry hides rational formulas, so rational points add to rational points.
+      A nonsingular cubic carries an addition law. A line through two points meets the cubic a third time; reflecting that third intersection across the horizontal axis gives the sum. A tangent supplies doubling.
 
-      <div class="theorem-box"><strong>Established theorem · Mordell–Weil</strong><p>The group of rational points is finitely generated: $E(\mathbb{Q})\cong\mathbb{Z}^r\oplus E(\mathbb{Q})_{\mathrm{tors}}$. The integer $r$ is the algebraic rank.</p></div>
+      Plate II fixes one exact rational example on
 
-      The torsion subgroup cycles through finitely many points. The free part extends in $r$ independent directions. Canonical heights measure those directions quadratically, and their height-pairing determinant becomes the regulator in the refined conjecture.
+      $$E:y^2=x^3-x+1.$$
 
-      <div class="ledger-pair"><div><h3>Arithmetic ledger</h3><p>Rational points</p><p>Torsion subgroup</p><p>Rank and regulator</p></div><span aria-hidden="true">↔</span><div><h3>Analytic ledger</h3><p>Prime point counts</p><p>Euler product</p><p>Central zero and leading term</p></div></div>
+      The points $P=(0,1)$ and $Q=(1,1)$ lie on $E$. Their horizontal chord $y=1$ meets $E$ again at $R=(-1,1)$. Reflection gives
+
+      $$P+Q=-R=(-1,-1).$$
+
+      <div class="theorem-box"><strong>Established theorem · Mordell–Weil</strong><p>$E(\mathbb{Q})\cong\mathbb{Z}^r\oplus E(\mathbb{Q})_{\mathrm{tors}}$. The integer $r$ is the algebraic rank.</p></div>
+
+      Canonical heights measure the independent free directions. The determinant of their height pairing is the regulator that appears in the strong BSD formula.
       </section>
 
-      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate III"><img src="../../assets/documentaries/bsd/plate_bridge.svg" width="1024" height="1536" loading="lazy" alt="Prime-by-prime point counts are assembled into Euler factors and an L-function whose behaviour at the central point is compared with rank."></button><figcaption><span class="plate-label">Plate III</span><strong>From prime counts to the central point</strong><small>No single prime determines the rank. The analytic object arises only after all local factors are assembled.</small></figcaption></figure>
+      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate II"><img src="../../assets/documentaries/bsd/wolfram/plate_02_group_law.svg" width="1024" height="1536" loading="lazy" alt="Exact chord-tangent addition example on y squared equals x cubed minus x plus one, with P equals zero comma one, Q equals one comma one, third intersection R equals minus one comma one, and reflected sum P plus Q equals minus one comma minus one."></button><figcaption><span class="plate-label">Plate II</span><strong>The chord–tangent group law</strong><small>Exact rational addition example. It illustrates the operation; it is not a picture of the full Mordell–Weil group.</small></figcaption></figure>
 
       <section class="monograph-section" id="local-counts" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter III</p>
-      ## Counting at every prime
+      ## Counting at a good prime
 
-      Reduce a suitable integral equation modulo a prime $p$ and count its points over the finite field $\mathbb{F}_p$. At a prime of good reduction define
+      Reduce a suitable integral equation modulo a prime $p$. At a prime of good reduction define
 
-      $$a_p=p+1-\#E(\mathbb{F}_p).$$
+      $$a_p=p+1-\#E(\mathbb{F}_p),$$
 
-      The local factor is
+      and
 
-      $$L_p(E,s)=\left(1-a_pp^{-s}+p^{1-2s}\right)^{-1},$$
+      $$L_p(E,s)=\left(1-a_pp^{-s}+p^{1-2s}\right)^{-1}.$$
 
-      with separate factors at bad primes. Their Euler product defines the Hasse–Weil $L$-function in its initial half-plane of convergence.
+      For $E_5:y^2=x^3-25x$ at $p=13$, exact enumeration gives $19$ affine solutions. Including the point at infinity,
 
-      <div class="imported-box"><strong>Imported established result · modularity</strong><p>Every elliptic curve over $\mathbb{Q}$ is modular. Consequently its $L$-function has analytic continuation and a functional equation centred at $s=1$. This web edition uses that theorem; it does not reconstruct its proof.</p></div>
+      $$\#E_5(\mathbb{F}_{13})=20,\qquad a_{13}=13+1-20=-6.$$
 
-      The functional equation has a sign $w_E\in\{\pm1\}$. It constrains the parity of the analytic order of vanishing, but a sign of $-1$ does not force the order to be exactly one.
+      Hence
 
-      <div class="proof-spine"><div><span>01</span><strong>Count modulo $p$</strong></div><div><span>02</span><strong>Build Euler factors</strong></div><div><span>03</span><strong>Continue $L(E,s)$</strong></div><div><span>04</span><strong>Listen at $s=1$</strong></div></div>
+      $$L_{13}(E_5,s)=\left(1+6\cdot13^{-s}+13^{1-2s}\right)^{-1}.$$
+
+      The finite sample in Plate III is exact for the displayed primes. It is not an estimator of rank.
+
+      <div class="imported-box"><strong>Imported established result · modularity</strong><p>Every elliptic curve over $\mathbb{Q}$ is modular. Its $L$-function therefore has analytic continuation and a functional equation centred at $s=1$.</p></div>
       </section>
 
-      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate IV"><img src="../../assets/documentaries/bsd/plate_overture.svg" width="1024" height="1536" loading="lazy" alt="A decorative ledger surrounds the leading-term formula with period, regulator, Tamagawa, torsion, and Tate–Shafarevich contributions."></button><figcaption><span class="plate-label">Plate IV</span><strong>The strong BSD ledger</strong><small>The visual balance is mnemonic. Every factor requires an exact mathematical definition and normalization.</small></figcaption></figure>
+      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate III"><img src="../../assets/documentaries/bsd/wolfram/plate_03_good_prime.svg" width="1024" height="1536" loading="lazy" alt="Exact finite-field point set for E5 modulo 13 with 19 affine solutions, total point count 20, a13 equal to minus 6, the resulting local Euler factor, and an exact finite sample of a p values at selected good primes."></button><figcaption><span class="plate-label">Plate III</span><strong>Counting at a good prime</strong><small>Each displayed point and trace value is exact. No single prime, and no finite sample of primes, determines the Mordell–Weil rank.</small></figcaption></figure>
 
       <section class="monograph-section" id="central-bridge" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter IV</p>
-      ## One number in two languages
+      ## The strong BSD ledger
 
-      The public face of the conjecture is the equality
+      The rank statement is
 
       $$\operatorname{rank}E(\mathbb{Q})=\operatorname{ord}_{s=1}L(E,s).$$
 
-      The left side counts independent rational generators. The right side counts how many derivatives vanish before the first nonzero Taylor coefficient appears at the central point.
-
-      The strong form predicts more. If $r=\operatorname{rank}E(\mathbb{Q})$ and the Tate–Shafarevich group is finite, then—after fixing standard conventions—
+      The strong form predicts the first nonzero Taylor coefficient as an arithmetic factorization. If $r=\operatorname{rank}E(\mathbb{Q})$ and $\operatorname{Sha}(E/\mathbb{Q})$ is finite, then under the displayed normalization,
 
       $$\frac{L^{(r)}(E,1)}{r!}=\frac{\Omega_E\,\operatorname{Reg}(E/\mathbb{Q})\,\#\operatorname{Sha}(E/\mathbb{Q})\,\prod_p c_p}{\#E(\mathbb{Q})_{\mathrm{tors}}^2}.$$
 
-      Period measures the real geometry; the regulator measures the arithmetic lattice; Tamagawa numbers record bad-prime component defects; torsion corrects finite symmetry; the Tate–Shafarevich group records locally soluble torsors that may fail globally.
+      The factors have different jobs. $\Omega_E$ is an archimedean period; the regulator measures the Mordell–Weil lattice; $c_p$ records bad-prime component data; torsion contributes a finite denominator; and $\operatorname{Sha}$ measures locally soluble torsors that may fail globally.
 
-      <div class="warning-box"><strong>Three obligations, not one slogan</strong><p>Rank equality, finiteness of $\operatorname{Sha}$, and the normalized leading-term formula are logically distinct. A theorem about one of them does not silently prove the others.</p></div>
+      <div class="warning-box"><strong>Three obligations</strong><p>Rank equality, finiteness of $\operatorname{Sha}$, and the normalized leading-term identity are logically distinct. Establishing one does not silently establish the others.</p></div>
       </section>
 
-      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate V"><img src="../../assets/documentaries/bsd/plate_frontier.svg" width="1024" height="1536" loading="lazy" alt="A map distinguishes established modularity and low-rank results from the unresolved higher-rank and universal leading-term frontier."></button><figcaption><span class="plate-label">Plate V</span><strong>Islands of theorem, ocean of conjecture</strong><small>Known results retain their exact rank range, prime dependence, family quantifier, and normalization hypotheses.</small></figcaption></figure>
+      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate IV"><img src="../../assets/documentaries/bsd/wolfram/plate_04_strong_bsd_ledger.svg" width="1024" height="1536" loading="lazy" alt="Strong BSD leading-term formula with separate labelled inputs for the real period, regulator, Tate-Shafarevich order, local Tamagawa factors, rational torsion denominator, and a three-row list separating rank equality, Sha finiteness, and the leading-term identity."></button><figcaption><span class="plate-label">Plate IV</span><strong>The strong BSD leading-term ledger</strong><small>The dependency structure is explicit. It does not convert the conjectural identity or its finiteness hypothesis into established facts.</small></figcaption></figure>
 
       <section class="monograph-section" id="theorem-frontier" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter V</p>
-      ## Islands of theorem, ocean of conjecture
+      ## The exact theorem frontier
 
-      Modularity and Mordell–Weil finite generation are theorems. Gross–Zagier and Kolyvagin establish the decisive low-rank terrain: for elliptic curves over $\mathbb{Q}$ of analytic rank zero or one, algebraic rank agrees with analytic rank and the Tate–Shafarevich group is finite.
+      The frontier is governed by quantifiers and scope. Mordell–Weil finite generation and modularity hold for every elliptic curve over $\mathbb{Q}$. Through modularity, Gross–Zagier, and Kolyvagin, the analytic-rank-zero-or-one terrain gives matching algebraic rank and finite $\operatorname{Sha}$.
 
-      <div class="theorem-box"><strong>Established low-rank terrain</strong><p>Analytic rank $0$ or $1$ yields the matching Mordell–Weil rank and finite $\operatorname{Sha}$ for elliptic curves over $\mathbb{Q}$, through modularity, Gross–Zagier, and Kolyvagin.</p></div>
+      The universal statements remain open: rank equality for every elliptic curve over $\mathbb{Q}$, general finiteness of $\operatorname{Sha}$, and the complete normalized complex leading-term formula.
 
-      Higher rank is not merely a longer version of rank one. The regulator becomes a determinant of several independent global directions; higher-order vanishing must be matched by enough arithmetic classes; local conditions and hidden Tate–Shafarevich contributions must be controlled simultaneously.
-
+      <div class="theorem-box"><strong>Established low-rank terrain</strong><p>Analytic rank $0$ or $1$ yields the matching Mordell–Weil rank and finite $\operatorname{Sha}$ for elliptic curves over $\mathbb{Q}$.</p></div>
       <div class="conjecture-box"><strong>Still open universally</strong><p>For every elliptic curve over $\mathbb{Q}$: equality of algebraic and analytic rank, finiteness of $\operatorname{Sha}$, and the complete complex leading-term formula.</p></div>
-
-      <p class="monograph-pullquote">Geometry writes the instrument. Arithmetic chooses the notes. Analysis reveals the score.</p>
       </section>
+
+      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate V"><img src="../../assets/documentaries/bsd/wolfram/plate_05_theorem_frontier.svg" width="1024" height="1536" loading="lazy" alt="Six-row theorem-status matrix separating Mordell-Weil finite generation, modularity, and analytic-rank-zero-or-one results from the universally open rank equality, Sha finiteness, and complete normalized leading-term formula."></button><figcaption><span class="plate-label">Plate V</span><strong>The exact BSD theorem frontier</strong><small>Scope is part of theorem status. Established special cases do not remove the universal quantifier.</small></figcaption></figure>
 
       <section class="monograph-section" id="appendix-curves" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Technical appendix A</p>
       ## Elliptic curves and the Mordell–Weil group
 
-      For a short Weierstrass model $E:y^2=x^3+Ax+B$, the discriminant is $\Delta=-16(4A^3+27B^2)\ne0$. The projective point $O=[0:1:0]$ is the identity.
+      For $E:y^2=x^3+Ax+B$, the discriminant is $\Delta=-16(4A^3+27B^2)\ne0$. The projective point $O=[0:1:0]$ is the identity.
 
       For distinct $P=(x_1,y_1)$ and $Q=(x_2,y_2)$ with $x_1\ne x_2$,
 
       $$m=\frac{y_2-y_1}{x_2-x_1},\qquad x_3=m^2-x_1-x_2,\qquad y_3=-y_1+m(x_1-x_3).$$
 
-      Then $P+Q=(x_3,y_3)$. Associativity is not a consequence of the picture alone; it belongs to the algebraic-group structure.
+      Then $P+Q=(x_3,y_3)$. Associativity belongs to the algebraic-group structure; the chord picture alone is not its proof.
 
-      The canonical height pairing on a basis $P_1,\ldots,P_r$ of the free part yields
+      For a basis $P_1,\ldots,P_r$ of the free part, the canonical height pairing gives
 
       $$\operatorname{Reg}(E/\mathbb{Q})=\det\bigl(\langle P_i,P_j\rangle\bigr),$$
 
-      with the empty determinant convention $1$ when $r=0$.
+      with empty determinant $1$ when $r=0$.
       </section>
 
       <section class="monograph-section" id="appendix-lfunction" data-reader-section markdown="1">
@@ -173,14 +184,14 @@
 
       $$r_{\mathrm{an}}(E)=\operatorname{ord}_{s=1}L(E,s).$$
 
-      The root number gives $(-1)^{r_{\mathrm{an}}}=w_E$. This is analytic parity, not by itself the algebraic rank equality.
+      The root number gives $(-1)^{r_{\mathrm{an}}}=w_E$. This is analytic parity; it is not by itself algebraic rank equality.
       </section>
 
       <section class="monograph-section" id="appendix-strong" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Technical appendix C</p>
       ## The strong formula and normalization discipline
 
-      Authors distribute real periods, archimedean factors, completed-function terms, and local conventions differently. A claimed comparison must first reconcile those choices. The formula displayed here uses the incomplete Hasse–Weil $L$-function and a standard real-period convention.
+      Authors distribute real periods, archimedean factors, completed-function terms, and local conventions differently. A comparison must reconcile those conventions before comparing symbols or numbers.
 
       <div class="warning-box"><strong>Normalization guardrail</strong><p>A missing period component, factorial, torsion square, bad-prime factor, or completed-function term can create a false disagreement—or a false proof. Symbol matching is not normalization matching.</p></div>
 
@@ -199,7 +210,7 @@
 
       $$0\longrightarrow E(\mathbb{Q})\otimes\mathbb{Q}_p/\mathbb{Z}_p\longrightarrow \operatorname{Sel}_{p^\infty}(E/\mathbb{Q})\longrightarrow \operatorname{Sha}(E/\mathbb{Q})[p^\infty]\longrightarrow0.$$
 
-      Descent converts an infinite search into finite covering and local-solubility problems and can give an upper bound on rank. The upper bound is sharp only after the relevant Tate–Shafarevich contribution is controlled.
+      Descent converts an infinite search into finite covering and local-solubility problems and can give an upper bound on rank. The bound is sharp only after the relevant Tate–Shafarevich contribution is controlled.
 
       <div class="warning-box"><strong>Selmer guardrail</strong><p>Selmer corank is not automatically Mordell–Weil rank. A nontrivial $p$-primary Tate–Shafarevich contribution may remain.</p></div>
       </section>
@@ -218,14 +229,14 @@
       | Universal complex leading-term formula | open | requires every normalization and arithmetic factor |
       | A fixed-curve rigorous computation | bounded evidence or certificate | does not imply the universal statement |
       | A $p$-adic or one-prime theorem | hypothesis-sensitive theorem terrain | not identical to the global complex formula |
-      | Illuminated plates | pedagogical | never authoritative proof diagrams |
+      | Exact-object documentary plates | pedagogical | reproducible representation; never proof evidence |
 
       <div class="warning-box"><strong>Final claim boundary</strong><p>This web edition changes presentation, not theorem strength. It does not prove BSD, provide a new reduction, independently verify the complete literature, or make a novelty or priority claim.</p></div>
       </section>
 
       <section class="monograph-section" id="sources" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Sources and programme crosswalk</p>
-      ## The governing literature and campaign record
+      ## Governing literature and campaign record
 
       <div class="bibliography">
       <p>Andrew Wiles, <a href="https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf">The Birch and Swinnerton–Dyer Conjecture</a>, official Millennium Problem description.</p>
@@ -241,9 +252,9 @@
 
       <section class="monograph-colophon" aria-labelledby="edition-record-title">
         <h2 id="edition-record-title">Edition record</h2>
-        <p>This is the first conversion built on the immutable Poincaré reference contract. It tests the shared reader against arithmetic geometry, local-to-global diagrams, layered conjecture statements, dense notation, and a stronger distinction among theorem, imported result, evidence, and open claim.</p>
+        <p>This browser edition uses exact-object-first visual pedagogy. The revised BSD plate sequence is bound to Wolfram Language semantic checks and deterministic static delivery assets.</p>
         <p>The web edition is derivative. The committed pointer is a source record; the checksum-locked complete illustrated source bundle is the authoritative source artifact. MathJax 3.2.2 is a version-pinned network enhancement, and the source TeX remains present when it is unavailable.</p>
-        <p><strong>Web claim boundary:</strong> Browser-native, source-normalized exposition of rational points, the Mordell–Weil group, the Hasse–Weil L-function, low-rank theorem terrain, and the strong BSD formula. Numerical agreement, parity, Selmer bounds, family results, one-prime theorems, and $p$-adic analogues are not promoted to the universal complex conjecture.</p>
+        <p><strong>Web claim boundary:</strong> Browser-native, source-normalized exposition of rational points, the Mordell–Weil group, the Hasse–Weil $L$-function, low-rank theorem terrain, and the strong BSD formula. Numerical agreement, parity, Selmer bounds, family results, one-prime theorems, and $p$-adic analogues are not promoted to the universal complex conjecture.</p>
         <div class="monograph-actions"><a class="monograph-button" href="../bsd.edition.json">Web-edition data</a><a class="monograph-button" href="../documentary_web.schema.json">Reusable schema</a><a class="monograph-button" href="../sources/the_hidden_music_of_elliptic_curves.tex">Source record</a><a class="monograph-button" href="../ARTIFACT_MANIFEST.json">Artifact manifest</a></div>
         <dl class="edition-integrity"><div><dt>Rendered PDF</dt><dd>16,582,087 bytes · <code>36254378e11fd22a067944838341ae04fedbd13e5ea588180023874d7ba49ce9</code> · <code>metadata_only</code></dd></div><div><dt>Complete LaTeX source</dt><dd>50,500 bytes · <code>9b7b95702a5305c51e66e026d44ddf3003029808edb3009ed1b2fcbc92e6b2b4</code> · <code>metadata_only</code></dd></div><div><dt>Authoritative complete illustrated source bundle</dt><dd>16,995,210 bytes · <code>c0782575453227311630e17c443a4dea08091b3a3824bc23a1af17f5bd0d8377</code> · <code>metadata_only</code></dd></div></dl>
       </section>
