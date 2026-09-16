@@ -15,40 +15,39 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#984"
   },
-  "phase": "VGSE-ENG-WP01 is protected on main at exact merge-queue commit 8f43a8211c0236595eecee1cc5c195905bf5d27b. The active successor is VGSE-ENG-WP02: quotient-response continuation and singular-locus search in the eight canonical positive-weight coordinates established by WP01.",
+  "phase": "VGSE-ENG-WP02 is substantively instantiated at exact head 229d5549689fde9d5397ed59f92890e8ba080c75 and opened as PR #995. The current gate is exact-head validation plus distinct read-only Adversary and Referee examination before protected integration.",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "8f43a8211c0236595eecee1cc5c195905bf5d27b",
-    "candidate_head_sha": "8f43a8211c0236595eecee1cc5c195905bf5d27b",
+    "protected_base_sha": "af6e1772e2d82b0b198d11c08e1369789ffbba3a",
+    "candidate_head_sha": "229d5549689fde9d5397ed59f92890e8ba080c75",
     "issue_number": 984,
-    "pr_number": null,
+    "pr_number": 995,
     "branch": "research/vgse-eng-wp02",
     "workflow_runs": []
   },
-  "terminal_condition": "The quotient-response continuation tranche reaches one of its bounded stop conditions: either a reproducible map of the first reachable rank-loss or severe-conditioning loci is retained, or the searched bounded region is shown by reproducible evidence to remain full-rank and quantitatively well conditioned. Any inverse-response solves, non-uniqueness, rank loss, infeasibility, conditioning blow-up, or negative result must be retained with provenance and without promoting C06 or any physical/manufacturing claim.",
+  "terminal_condition": "VGSE-ENG-WP02 is protected only if its exact global quotient-inverse result, global rank/conditioning consequences, broad numerical replay, feasible inverse-design result, off-image infeasibility result, and claim boundaries survive exact-head replay and distinct read-only Adversary/Referee examination, followed by native merge-queue admission. A negative result or discovered defect must be retained rather than hidden.",
   "permitted_next_actions": [
     {
-      "id": "execute_vgse_eng_wp02_quotient_response",
-      "description": "On exact branch research/vgse-eng-wp02, implement and run the WP01-directed quotient-response continuation and singular-locus search in the eight canonical positive-weight coordinates, retaining reproducible conditioning, rank, inverse-response, and negative-result evidence while preserving all current claim boundaries."
+      "id": "validate_review_vgse_eng_wp02",
+      "description": "Validate exact PR #995 head 229d5549689fde9d5397ed59f92890e8ba080c75, independently falsify the monomial certificates, global inverse, A J = I identity, global condition bound, inverse-design results, numerical screen, and claim boundaries, obtain a distinct read-only Referee disposition, repair only if evidence requires it, and integrate only after applicable protected gates are satisfied."
     }
   ],
   "next_action": {
-    "id": "execute_vgse_eng_wp02_quotient_response",
-    "description": "Continue from protected WP01 without reopening settled claims: keep the fixed topology and canonical gauge, parameterize the eight free weights logarithmically, continue along controlled directions, track the smallest singular value and condition number of the 18-by-8 response Jacobian, solve bounded target-response perturbations where conditioning permits, and map singular or high-gain regimes strictly as structural-response phenomena.",
+    "id": "validate_review_vgse_eng_wp02",
+    "description": "Perform exact-head replay and distinct read-only Adversary and Referee passes on PR #995 at 229d5549689fde9d5397ed59f92890e8ba080c75. The Adversary must independently challenge the claimed exact monomials, quotient inverse, full-rank/global-conditioning theorem, wide numerical screen, feasible and off-image inverse targets, and scope boundaries. The Referee must decide whether the WP02 stop condition is met by the stronger global result without promoting C06 or any physical claim.",
     "evidence_targets": [
       "grandchallenge/MATH-PROGRAMME#984",
+      "grandchallenge/MATH-PROGRAMME#995",
+      "research/vgse-eng-wp02@229d5549689fde9d5397ed59f92890e8ba080c75",
+      "research/vgse-eng-wp02/README.md",
+      "research/vgse-eng-wp02/analyze_wp02.py",
+      "research/vgse-eng-wp02/test_wp02.py",
+      "research/vgse-eng-wp02/RESULTS.json",
+      "research/vgse-eng-wp02/CLAIM_LEDGER.json",
+      "research/vgse-eng-wp02/NEXT_ACTION.md",
       "grandchallenge/MATH-PROGRAMME#990",
       "grandchallenge/MATH-PROGRAMME@8f43a8211c0236595eecee1cc5c195905bf5d27b",
-      "research/vgse-eng-wp02@8f43a8211c0236595eecee1cc5c195905bf5d27b",
-      "research/vgse-eng-wp01/README.md",
-      "research/vgse-eng-wp01/model.json",
-      "research/vgse-eng-wp01/analyze_wp01.py",
-      "research/vgse-eng-wp01/test_wp01.py",
-      "research/vgse-eng-wp01/RESULTS.json",
-      "research/vgse-eng-wp01/CLAIM_LEDGER.json",
-      "research/vgse-eng-wp01/NEXT_ACTION.md",
-      "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607:certificates/vgse/MC-VGSE-WP00-R4-QUAL-001.json",
-      "grandchallenge/MATHSOLVE@b0854bb7770296b610b655753bc62b27365b27bb:work_packages/VGSE_WP00/claim_ledger.json"
+      "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607:certificates/vgse/MC-VGSE-WP00-R4-QUAL-001.json"
     ]
   },
   "external_evidence": {
@@ -57,16 +56,16 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "admit VGSE-ENG-WP01 through exact native merge-queue replay and bind the WP02 successor branch",
-    "result": "PR #990 retained reviewed head e302494b683832626be95c8f4af104078cb87cf7. GitHub constructed queue-owned candidate 8f43a8211c0236595eecee1cc5c195905bf5d27b from protected base 4399602934706ac5e8234217be4150dbff17ea7a plus that exact head. GCL conformance run 35081139861, formal-validation run 35081139043, GH-OS routing run 35081139057, Programme policy run 35081139104, and aggregate validate-json all completed successfully. The native queue merged #990 as exact protected commit 8f43a8211c0236595eecee1cc5c195905bf5d27b, and protected main read back that identical verified-signed SHA. WP01 therefore establishes only its model-bounded structural-response results: eight-dimensional internal-vertex gauge redundancy in the sixteen positive raw weights, an eight-coordinate canonical quotient with full-rank local Jacobian, the strict-positive support invariant and its zero-weight falsification, raw inverse-design non-identifiability, gauge reconciliation of retained representatives, and bounded robustness evidence. C06 remains excluded and no physical, manufacturing, novelty, patentability, product, performance, or commercial claim is created. Successor branch research/vgse-eng-wp02 was created exactly at the protected merge.",
+    "action": "instantiate and open VGSE-ENG-WP02 for exact-head review",
+    "result": "Protected WP01 admitted at 8f43a8211c0236595eecee1cc5c195905bf5d27b. Checkpoint advancement PR #993 then passed all four native merge-group control families on queue-owned SHA d0a4e9255d1e9aa8cacc2993e0a663a6ae236b2b and merged. WP02 was staged separately, replayed deterministically, and its executable/documentation blobs were checked before the governed research/vgse-eng-wp02 branch fast-forwarded to exact head 229d5549689fde9d5397ed59f92890e8ba080c75. PR #995 now records the candidate global result: selected exact monomial minors give an explicit global inverse for the eight canonical quotient weights; a fixed extractor A satisfies A F(theta)=theta and hence A J(theta)=I_8 throughout the positive quotient domain; this excludes finite positive-domain rank loss and yields a finite global conditioning bound; a 4096-sample wide replay remains rank eight; feasible target recovery replays to floating precision; an explicit off-image target preserves a 0.1 consistency residual; and WP03 response-manifold feasibility is the evidence-driven successor. C06 and all physical/manufacturing/commercial claims remain excluded.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#990",
+      "grandchallenge/MATH-PROGRAMME#995",
+      "research/vgse-eng-wp02@229d5549689fde9d5397ed59f92890e8ba080c75",
+      "research/vgse-eng-wp02/RESULTS.json",
+      "research/vgse-eng-wp02/CLAIM_LEDGER.json",
+      "research/vgse-eng-wp02/NEXT_ACTION.md",
+      "grandchallenge/MATH-PROGRAMME#993",
       "grandchallenge/MATH-PROGRAMME@8f43a8211c0236595eecee1cc5c195905bf5d27b",
-      "research/vgse-eng-wp01@e302494b683832626be95c8f4af104078cb87cf7",
-      "research/vgse-eng-wp02@8f43a8211c0236595eecee1cc5c195905bf5d27b",
-      "research/vgse-eng-wp01/RESULTS.json",
-      "research/vgse-eng-wp01/CLAIM_LEDGER.json",
-      "research/vgse-eng-wp01/NEXT_ACTION.md",
       "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607"
     ]
   },
@@ -74,29 +73,30 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-ENGINEERING-DISCOVERY-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-16T09:47:45Z"
+    "observed_at": "2026-09-16T10:00:49Z"
   },
   "resume": {
     "fresh_session_safe": true,
     "requires_chat_history": false,
     "authoritative_sources": [
       "grandchallenge/MATH-PROGRAMME#984",
+      "grandchallenge/MATH-PROGRAMME#995",
+      "research/vgse-eng-wp02@229d5549689fde9d5397ed59f92890e8ba080c75",
+      "research/vgse-eng-wp02/README.md",
+      "research/vgse-eng-wp02/analyze_wp02.py",
+      "research/vgse-eng-wp02/RESULTS.json",
+      "research/vgse-eng-wp02/CLAIM_LEDGER.json",
+      "research/vgse-eng-wp02/NEXT_ACTION.md",
       "grandchallenge/MATH-PROGRAMME#990",
       "grandchallenge/MATH-PROGRAMME@8f43a8211c0236595eecee1cc5c195905bf5d27b",
-      "research/vgse-eng-wp02@8f43a8211c0236595eecee1cc5c195905bf5d27b",
-      "research/vgse-eng-wp01/README.md",
       "research/vgse-eng-wp01/model.json",
       "research/vgse-eng-wp01/analyze_wp01.py",
-      "research/vgse-eng-wp01/RESULTS.json",
-      "research/vgse-eng-wp01/CLAIM_LEDGER.json",
-      "research/vgse-eng-wp01/NEXT_ACTION.md",
       "docs/VGSE_ENGINEERING_DISCOVERY_MANDATE.md",
       "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607:certificates/vgse/MC-VGSE-WP00-R4-QUAL-001.json",
-      "grandchallenge/MATHSOLVE@b0854bb7770296b610b655753bc62b27365b27bb:work_packages/VGSE_WP00/claim_ledger.json",
       "docs/governance/SUBSTANCE_FIRST_EXECUTION_DISCIPLINE.md",
       "AGENTS.md"
     ],
-    "instructions": "Run the recorded live verification command before every material transition. Require research/vgse-eng-wp02 to remain at exact head 8f43a8211c0236595eecee1cc5c195905bf5d27b until a deliberate successor mutation is prepared; after any substantive branch mutation, invalidate prior branch-bound freshness evidence and rebind to the new exact head before the next transition. Treat WP01 and WP02 results as model-bounded structural-response results only. Preserve the C06 source-correspondence exclusion and do not infer stiffness, rigid foldability, collision freedom, finite thickness, manufacturability, durability, novelty, patentability, product performance, or commercial value. Execute the quotient-response continuation and singular-locus search before any geometry-coupling or fabrication work."
+    "instructions": "Run the recorded live verification command before every material transition. Require PR #995 and research/vgse-eng-wp02 to remain at exact head 229d5549689fde9d5397ed59f92890e8ba080c75 unless a reviewed repair deliberately changes the candidate; any head change invalidates prior exact-head review evidence and requires checkpoint rebinding. Treat all WP02 claims as fixed-graph structural-response results only. Preserve C06 exclusion and do not infer source geometry, stiffness, mechanical advantage, rigid foldability, collision freedom, finite thickness, manufacturability, durability, novelty, patentability, product performance, or commercial value. If WP02 is admitted, continue to the exact response-manifold feasibility problem specified in NEXT_ACTION.md before geometry coupling or fabrication work."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
