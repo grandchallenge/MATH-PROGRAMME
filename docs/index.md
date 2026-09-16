@@ -52,7 +52,7 @@ The diagram is schematic. It teaches programme state transitions, not logical im
 
 ## Current frontier
 
-The active work surface is narrower than the standing mathematical estate. Each row names the object now under work and the boundary that still prevents promotion.
+The programme has more than three active development fronts. To keep the public front door readable, the table below highlights three current fronts with especially clear public claim boundaries; it is not an exhaustive portfolio listing.
 
 | Campaign | Current object | Open boundary |
 | --- | --- | --- |
@@ -60,7 +60,9 @@ The active work surface is narrower than the standing mathematical estate. Each 
 | **OZ-001** | Order-7 boundary-forced residual system with a `576`-dimensional homogeneous kernel identified as a discrete-curl image | Construct a completeness-backed degree-reduced affine section over `Q[n]`, then replay the positive certificate independently in characteristic zero. |
 | **VGSE-001** | Engineering discovery over admissible origami realizations after qualification of the restricted four-claim successor | Determine which mechanical properties are invariant, tunable, robust, or synthesizable without broadening the qualified mathematics or treating the unresolved `VGSE-C06` bridge as closed. |
 
-[Inspect Current Work](CURRENT_WORK.md) for the status, object, obstruction, supported state, claim boundary, and next bounded move for each front.
+Additional active development includes the **CMDG CM4 P3-M finite-stage recovery** lane and the **NS-CI-001 critical-integrability** lane. The [Current Work](CURRENT_WORK.md) page records these additional fronts while keeping the detailed public profiles bounded.
+
+[Inspect Current Work](CURRENT_WORK.md) for the status, object, obstruction, supported state, claim boundary, and next bounded move for the highlighted fronts.
 
 ## Where to go next
 
