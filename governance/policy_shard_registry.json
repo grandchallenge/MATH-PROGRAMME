@@ -124,7 +124,9 @@
     "docs": [
       ["python", "ci/validate_docs.py"],
       ["python", "ci/test_validate_docs.py"],
-      ["mkdocs", "build", "--strict"]
+      ["python3", "ci/test_validate_rendered_docs.py"],
+      ["mkdocs", "build", "--strict"],
+      ["python3", "ci/validate_rendered_docs.py"]
     ],
     "repository-regression": [
       ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_*.py", "--report-json", "repository-regression-timing.json"]
