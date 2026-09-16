@@ -19,10 +19,15 @@ class BSDWolframLayoutRepairTests(unittest.TestCase):
 
     def test_semantic_master_is_unchanged(self):
         data = (ROOT / "tools/bsd_wolfram_semantic_master.wl").read_bytes()
-        self.assertEqual(4263, len(data))
+        self.assertEqual(4665, len(data))
         self.assertEqual(
-            "41b9e926d0edda8fbb65ead57d54fd0985689ca73ac1715731818843cc013936",
+            "d05088cf0f88c7e3c0960ebb99973fac19001a2bdb6abff3e92f8a4fe0bc2ec0",
             hashlib.sha256(data).hexdigest(),
+        )
+        header = f"blob {len(data)}\0".encode()
+        self.assertEqual(
+            "206842583d15acf91eb0e363ddb12cbf124ab0a9",
+            hashlib.sha1(header + data).hexdigest(),
         )
 
     def test_shared_documentary_runtime_not_touched_by_repair(self):
