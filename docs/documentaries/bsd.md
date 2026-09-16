@@ -39,7 +39,7 @@
 
       Birch and Swinnerton–Dyer links the rational-point structure of an elliptic curve to the behaviour of its $L$-function at $s=1$. The conjecture remains open in general.
 
-      This browser edition is a derivative, source-normalized exposition. Its numbered plates render exact mathematical objects, exact finite computations, or quantified theorem structure whenever the adjacent concept permits it. Wolfram Language is the semantic verification layer for the revised plates; the committed web graphics are deterministic publication derivatives. The plates are pedagogical, not proof evidence. Definitions, equations, source links, campaign records, and trust labels govern the mathematics.
+      This browser edition is a derivative, source-normalized exposition. Its numbered plates render exact mathematical objects, exact finite computations, or quantified theorem structure whenever the adjacent concept permits it. Wolfram Language is the canonical semantic-master language for the revised plates; the committed web graphics are deterministic publication derivatives. The plates are pedagogical, not proof evidence. Definitions, equations, source links, campaign records, and trust labels govern the mathematics.
 
       **Edition status:** Open Millennium Prize Problem; documentary exposition; no proof claim.
 
@@ -54,6 +54,8 @@
       An elliptic curve over $\mathbb{Q}$ can be written in short Weierstrass form
 
       $$E:y^2=x^3+Ax+B,\qquad 4A^3+27B^2\ne0.$$
+
+      <div class="definition-box"><strong>Definition</strong><p>An elliptic curve over $\mathbb{Q}$ is a smooth projective genus-one curve equipped with a rational base point. A short Weierstrass model has nonzero discriminant.</p></div>
 
       Its real points form continuous curves. Its rational points form a finitely generated abelian group, but finding all generators can be difficult.
 
@@ -70,7 +72,7 @@
       <div class="warning-box"><strong>Finite-window guardrail</strong><p>Displaying a real curve and one rational point does not determine the Mordell–Weil rank and does not prove BSD.</p></div>
       </section>
 
-      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate I"><img src="../../assets/documentaries/bsd/wolfram/plate_01_rational_point_triangle.svg" width="1024" height="1536" loading="lazy" alt="Exact finite-window plot of E5, y squared equals x cubed minus 25x, with P equals 25 over 4 comma 75 over 8, paired with the exact rational right triangle of sides 3 over 2, 20 over 3, and 41 over 6 and area five."></button><figcaption><span class="plate-label">Plate I</span><strong>Rational point to rational triangle</strong><small>Exact arithmetic correspondence. The finite real plot does not determine rank and does not prove BSD.</small></figcaption></figure>
+      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate I"><img src="../../assets/documentaries/bsd/plate_curve.svg" width="1024" height="1536" loading="lazy" alt="An illustrated map from rational right triangles and cubic curves to sparse rational points, torsion, rank, and the limits of finite search."></button><figcaption><span class="plate-label">Plate I</span><strong>The ancient question of rational solutions</strong><small>Fallback predecessor plate. With JavaScript enabled, the reviewed exact-object successor is activated at this stable source reference.</small></figcaption></figure>
 
       <section class="monograph-section" id="group-law" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter II</p>
@@ -91,7 +93,7 @@
       Canonical heights measure the independent free directions. The determinant of their height pairing is the regulator that appears in the strong BSD formula.
       </section>
 
-      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate II"><img src="../../assets/documentaries/bsd/wolfram/plate_02_group_law.svg" width="1024" height="1536" loading="lazy" alt="Exact chord-tangent addition example on y squared equals x cubed minus x plus one, with P equals zero comma one, Q equals one comma one, third intersection R equals minus one comma one, and reflected sum P plus Q equals minus one comma minus one."></button><figcaption><span class="plate-label">Plate II</span><strong>The chord–tangent group law</strong><small>Exact rational addition example. It illustrates the operation; it is not a picture of the full Mordell–Weil group.</small></figcaption></figure>
+      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate II"><img src="../../assets/documentaries/bsd/plate_harmony.svg" width="1024" height="1536" loading="lazy" alt="A paired arithmetic and analytic panorama links the Mordell–Weil group of rational points to the vanishing of an elliptic-curve L-function."></button><figcaption><span class="plate-label">Plate II</span><strong>Two ledgers in the same hand</strong><small>Fallback predecessor plate. With JavaScript enabled, the reviewed exact chord–tangent successor is activated at this stable source reference.</small></figcaption></figure>
 
       <section class="monograph-section" id="local-counts" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter III</p>
@@ -118,7 +120,7 @@
       <div class="imported-box"><strong>Imported established result · modularity</strong><p>Every elliptic curve over $\mathbb{Q}$ is modular. Its $L$-function therefore has analytic continuation and a functional equation centred at $s=1$.</p></div>
       </section>
 
-      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate III"><img src="../../assets/documentaries/bsd/wolfram/plate_03_good_prime.svg" width="1024" height="1536" loading="lazy" alt="Exact finite-field point set for E5 modulo 13 with 19 affine solutions, total point count 20, a13 equal to minus 6, the resulting local Euler factor, and an exact finite sample of a p values at selected good primes."></button><figcaption><span class="plate-label">Plate III</span><strong>Counting at a good prime</strong><small>Each displayed point and trace value is exact. No single prime, and no finite sample of primes, determines the Mordell–Weil rank.</small></figcaption></figure>
+      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate III"><img src="../../assets/documentaries/bsd/plate_bridge.svg" width="1024" height="1536" loading="lazy" alt="Prime-by-prime point counts are assembled into Euler factors and an L-function whose behaviour at the central point is compared with rank."></button><figcaption><span class="plate-label">Plate III</span><strong>From prime counts to the central point</strong><small>Fallback predecessor plate. With JavaScript enabled, the reviewed exact finite-field successor is activated at this stable source reference.</small></figcaption></figure>
 
       <section class="monograph-section" id="central-bridge" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter IV</p>
@@ -137,7 +139,7 @@
       <div class="warning-box"><strong>Three obligations</strong><p>Rank equality, finiteness of $\operatorname{Sha}$, and the normalized leading-term identity are logically distinct. Establishing one does not silently establish the others.</p></div>
       </section>
 
-      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate IV"><img src="../../assets/documentaries/bsd/wolfram/plate_04_strong_bsd_ledger.svg" width="1024" height="1536" loading="lazy" alt="Strong BSD leading-term formula with separate labelled inputs for the real period, regulator, Tate-Shafarevich order, local Tamagawa factors, rational torsion denominator, and a three-row list separating rank equality, Sha finiteness, and the leading-term identity."></button><figcaption><span class="plate-label">Plate IV</span><strong>The strong BSD leading-term ledger</strong><small>The dependency structure is explicit. It does not convert the conjectural identity or its finiteness hypothesis into established facts.</small></figcaption></figure>
+      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate IV"><img src="../../assets/documentaries/bsd/plate_overture.svg" width="1024" height="1536" loading="lazy" alt="A decorative ledger surrounds the leading-term formula with period, regulator, Tamagawa, torsion, and Tate–Shafarevich contributions."></button><figcaption><span class="plate-label">Plate IV</span><strong>The strong BSD ledger</strong><small>Fallback predecessor plate. With JavaScript enabled, the reviewed quantified dependency successor is activated at this stable source reference.</small></figcaption></figure>
 
       <section class="monograph-section" id="theorem-frontier" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter V</p>
@@ -151,7 +153,7 @@
       <div class="conjecture-box"><strong>Still open universally</strong><p>For every elliptic curve over $\mathbb{Q}$: equality of algebraic and analytic rank, finiteness of $\operatorname{Sha}$, and the complete complex leading-term formula.</p></div>
       </section>
 
-      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate V"><img src="../../assets/documentaries/bsd/wolfram/plate_05_theorem_frontier.svg" width="1024" height="1536" loading="lazy" alt="Six-row theorem-status matrix separating Mordell-Weil finite generation, modularity, and analytic-rank-zero-or-one results from the universally open rank equality, Sha finiteness, and complete normalized leading-term formula."></button><figcaption><span class="plate-label">Plate V</span><strong>The exact BSD theorem frontier</strong><small>Scope is part of theorem status. Established special cases do not remove the universal quantifier.</small></figcaption></figure>
+      <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate V"><img src="../../assets/documentaries/bsd/plate_frontier.svg" width="1024" height="1536" loading="lazy" alt="A map distinguishes established modularity and low-rank results from the unresolved higher-rank and universal leading-term frontier."></button><figcaption><span class="plate-label">Plate V</span><strong>Islands of theorem, ocean of conjecture</strong><small>Fallback predecessor plate. With JavaScript enabled, the reviewed quantified theorem-frontier successor is activated at this stable source reference.</small></figcaption></figure>
 
       <section class="monograph-section" id="appendix-curves" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Technical appendix A</p>
@@ -252,9 +254,9 @@
 
       <section class="monograph-colophon" aria-labelledby="edition-record-title">
         <h2 id="edition-record-title">Edition record</h2>
-        <p>This browser edition uses exact-object-first visual pedagogy. The revised BSD plate sequence is bound to Wolfram Language semantic checks and deterministic static delivery assets.</p>
+        <p>This browser edition uses exact-object-first visual pedagogy. The revised BSD plate sequence is bound to a Wolfram Language semantic master, deterministic static delivery assets, and the stable-source activation resolver.</p>
         <p>The web edition is derivative. The committed pointer is a source record; the checksum-locked complete illustrated source bundle is the authoritative source artifact. MathJax 3.2.2 is a version-pinned network enhancement, and the source TeX remains present when it is unavailable.</p>
-        <p><strong>Web claim boundary:</strong> Browser-native, source-normalized exposition of rational points, the Mordell–Weil group, the Hasse–Weil $L$-function, low-rank theorem terrain, and the strong BSD formula. Numerical agreement, parity, Selmer bounds, family results, one-prime theorems, and $p$-adic analogues are not promoted to the universal complex conjecture.</p>
+        <p><strong>Web claim boundary:</strong> Browser-native, source-normalized exposition of rational points, the Mordell–Weil group, the Hasse–Weil L-function, low-rank theorem terrain, and the strong BSD formula. Numerical agreement, parity, Selmer bounds, family results, one-prime theorems, and p-adic analogues are not promoted to the universal complex conjecture.</p>
         <div class="monograph-actions"><a class="monograph-button" href="../bsd.edition.json">Web-edition data</a><a class="monograph-button" href="../documentary_web.schema.json">Reusable schema</a><a class="monograph-button" href="../sources/the_hidden_music_of_elliptic_curves.tex">Source record</a><a class="monograph-button" href="../ARTIFACT_MANIFEST.json">Artifact manifest</a></div>
         <dl class="edition-integrity"><div><dt>Rendered PDF</dt><dd>16,582,087 bytes · <code>36254378e11fd22a067944838341ae04fedbd13e5ea588180023874d7ba49ce9</code> · <code>metadata_only</code></dd></div><div><dt>Complete LaTeX source</dt><dd>50,500 bytes · <code>9b7b95702a5305c51e66e026d44ddf3003029808edb3009ed1b2fcbc92e6b2b4</code> · <code>metadata_only</code></dd></div><div><dt>Authoritative complete illustrated source bundle</dt><dd>16,995,210 bytes · <code>c0782575453227311630e17c443a4dea08091b3a3824bc23a1af17f5bd0d8377</code> · <code>metadata_only</code></dd></div></dl>
       </section>
@@ -263,7 +265,7 @@
 </div>
 
 <dialog class="monograph-lightbox" data-plate-dialog aria-labelledby="plate-dialog-title"><form method="dialog"><button class="monograph-lightbox__close" aria-label="Close plate view">Close</button></form><div class="monograph-lightbox__frame"><img data-plate-dialog-image alt=""><p id="plate-dialog-title" data-plate-dialog-caption></p></div></dialog>
-<noscript><p>The manuscript and source TeX remain readable without JavaScript. Plate enlargement, rendered mathematics, reading progress, focus mode, and reading-position memory are unavailable; the checksum-locked PDF remains the rendered archival edition.</p></noscript>
+<noscript><p>The manuscript and source TeX remain readable without JavaScript. The stable source references retain their reviewed predecessor plates; exact-object successors are activated by the shared reader when JavaScript is available. Plate enlargement, rendered mathematics, reading progress, focus mode, and reading-position memory are unavailable; the checksum-locked PDF remains the rendered archival edition.</p></noscript>
 </div>
 
 <script defer src="../../javascripts/documentary-mathjax.js"></script>
