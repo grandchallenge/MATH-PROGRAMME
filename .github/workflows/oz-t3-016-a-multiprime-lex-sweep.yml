@@ -1,0 +1,265 @@
+name: OZ T3-016-A multi-prime lex sweep
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/oz-t3-016-a-multiprime-lex-sweep.yml'
+      - '.ghos-routing/workflows.json'
+      - 'campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/multiprime_lex_pivot_sweep.py'
+      - 'campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/MULTIPRIME_LEX_PIVOT_SWEEP_REQUEST.json'
+      - 'tests/test_oz_rt_bz_t3_016_a_multiprime_lex_sweep.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/oz-t3-016-a-multiprime-lex-sweep.yml'
+      - 'campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/multiprime_lex_pivot_sweep.py'
+      - 'campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/MULTIPRIME_LEX_PIVOT_SWEEP_REQUEST.json'
+      - 'tests/test_oz_rt_bz_t3_016_a_multiprime_lex_sweep.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oz-t3-016-a-multiprime-lex-sweep-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+env:
+  SOURCE_REPO: https://github.com/rain-1/-odd-zeta-values-moremath.git
+  SOURCE_COMMIT: 6cc0bf07137815ceeef0d9f340559f85352391e5
+  REQUEST_PATH: campaigns/odd_zeta/OZ_RT_BZ_T3_016_A/MULTIPRIME_LEX_PIVOT_SWEEP_REQUEST.json
+  MODULE_DIR: campaigns/odd_zeta/OZ_RT_BZ_T3_016_A
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+
+jobs:
+  validate-request:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    outputs:
+      enabled: ${{ steps.request.outputs.enabled }}
+      request_id: ${{ steps.request.outputs.request_id }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact subject checkout
+        env:
+          SUBJECT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$SUBJECT_SHA"
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Install exact Odd Zeta dependencies
+        run: python -m pip install --requirement requirements/oz_source_revision_delta.txt
+      - id: request
+        name: Validate multi-prime request
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          module_dir = Path(os.environ['MODULE_DIR'])
+          sys.path.insert(0, str(module_dir))
+          import multiprime_lex_pivot_sweep as multi
+
+          request = multi.load_request(os.environ['REQUEST_PATH'])
+          summary = {
+              'request_id': request['request_id'],
+              'enabled': request['enabled'],
+              'reference_prime': request['reference_prime'],
+              'reference_protected_head': request['reference_protected_head'],
+              'reference_sweep_run_id': request['reference_sweep_run_id'],
+              'reference_profile_report_id': request['reference_profile_report_id'],
+              'reference_coordinate_map_sha256': request['reference_coordinate_map_sha256'],
+              'primes': request['primes'],
+              'expected_pivot_sha256': request['expected_pivot_sha256'],
+              'n_range': [request['n_start'], request['n_stop']],
+              'chunks': multi.chunk_ranges(request),
+              'reconstruction_fit_count': request['reconstruction_fit_count'],
+              'holdout_count': request['holdout_count'],
+              'rational_degree_test_bound': request['rational_degree_test_bound'],
+              'proof_effect': request['proof_effect'],
+              'promotion_effect': request['promotion_effect'],
+          }
+          print(json.dumps(summary, sort_keys=True))
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as handle:
+              handle.write(f"enabled={'true' if request['enabled'] else 'false'}\n")
+              handle.write(f"request_id={request['request_id']}\n")
+          PY
+      - name: Replay multi-prime contract tests
+        run: python -m unittest tests/test_oz_rt_bz_t3_016_a_multiprime_lex_sweep.py -v
+      - name: Acquire exact locked upstream source for smoke replay
+        run: |
+          set -euo pipefail
+          git clone --filter=blob:none "$SOURCE_REPO" source-smoke
+          git -C source-smoke checkout --detach "$SOURCE_COMMIT"
+          test "$(git -C source-smoke rev-parse HEAD)" = "$SOURCE_COMMIT"
+          test "$(git -C source-smoke rev-parse HEAD^{tree})" = 'be780558454b704bdd016a3070d698c2e106e2b8'
+      - name: Replay admitted coordinate identity at every additional prime
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          import tempfile
+          from pathlib import Path
+
+          module_dir = Path(os.environ['MODULE_DIR'])
+          sys.path.insert(0, str(module_dir))
+          import multiprime_lex_pivot_sweep as multi
+
+          request = multi.load_request(os.environ['REQUEST_PATH'])
+          fit_rows = multi.EXPECTED_RANK + int(request['fit_extra_rows'])
+          fresh_rows = int(request['fresh_rows'])
+          nb = int(request['solver_block_size'])
+          expected_pivot = request['expected_pivot_sha256']
+          expected_coordinate = request['reference_coordinate_map_sha256']
+
+          with tempfile.TemporaryDirectory(prefix='oz-multiprime-lex-smoke-') as tmp:
+              cache = Path(tmp) / 'qrow_cache.pkl'
+              multi.lex_pivot_sweep._install_source_modules(
+                  Path('source-smoke'), cache, prewarm=True
+              )
+              for prime_index, p in enumerate(request['primes']):
+                  for n in (3, 4, 5):
+                      _section, data = multi.lex_pivot_sweep._lex_shape(
+                          n, int(p), fit_rows, fresh_rows, nb, expected_pivot
+                      )
+                      record = data['record']
+                      coordinate = data['coordinate_map']
+                      coordinate_sha = multi._sha256_bytes(
+                          multi._canonical_json_bytes(coordinate)
+                      )
+                      if record['rank'] != multi.EXPECTED_RANK:
+                          raise AssertionError(f'rank drift at p={p}, n={n}')
+                      if record['solver_nbad'] != 0 or record['fresh_violations'] != 0:
+                          raise AssertionError(f'residual drift at p={p}, n={n}')
+                      if coordinate_sha != expected_coordinate:
+                          raise AssertionError(
+                              f'coordinate-map drift at p={p}, n={n}: '
+                              f'{coordinate_sha} != {expected_coordinate}'
+                          )
+                      print(json.dumps({
+                          'prime_index': prime_index,
+                          'prime': p,
+                          'n': n,
+                          'rank': record['rank'],
+                          'fresh_violations': record['fresh_violations'],
+                          'pivot_sha256': record['pivot_sha256'],
+                          'coordinate_map_sha256': coordinate_sha,
+                      }, sort_keys=True))
+          PY
+
+  sample:
+    needs: validate-request
+    if: >-
+      needs.validate-request.outputs.enabled == 'true' &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    strategy:
+      fail-fast: false
+      matrix:
+        prime_index: [0, 1, 2]
+        chunk: [0, 1, 2, 3]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      PRIME_INDEX: ${{ matrix.prime_index }}
+      CHUNK_INDEX: ${{ matrix.chunk }}
+      OUTPUT_DIR: multiprime-lex-pivot-prime-${{ matrix.prime_index }}-chunk-${{ matrix.chunk }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Assert exact protected or dispatched subject
+        env:
+          SUBJECT_SHA: ${{ github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$SUBJECT_SHA"
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Install exact Odd Zeta dependencies
+        run: python -m pip install --requirement requirements/oz_source_revision_delta.txt
+      - name: Acquire exact locked upstream source
+        run: |
+          set -euo pipefail
+          git clone --filter=blob:none "$SOURCE_REPO" source
+          git -C source checkout --detach "$SOURCE_COMMIT"
+          test "$(git -C source rev-parse HEAD)" = "$SOURCE_COMMIT"
+          test "$(git -C source rev-parse HEAD^{tree})" = 'be780558454b704bdd016a3070d698c2e106e2b8'
+      - name: Generate additional-prime lex-pivot sample chunk
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          module_dir = Path(os.environ['MODULE_DIR'])
+          sys.path.insert(0, str(module_dir))
+          import multiprime_lex_pivot_sweep as multi
+
+          metadata = multi.run_chunk(
+              os.environ['REQUEST_PATH'],
+              Path('source'),
+              int(os.environ['PRIME_INDEX']),
+              int(os.environ['CHUNK_INDEX']),
+              Path(os.environ['OUTPUT_DIR']),
+          )
+          print(json.dumps({
+              'request_id': metadata['request_id'],
+              'prime_index': metadata['prime_index'],
+              'prime': metadata['prime'],
+              'chunk_index': metadata['chunk_index'],
+              'n_start': metadata['n_start'],
+              'n_stop': metadata['n_stop'],
+              'sample_count': metadata['sample_count'],
+              'pivot_sha256': metadata['pivot_sha256'],
+              'coordinate_map_sha256': metadata['coordinate_map_sha256'],
+              'proof_effect': metadata['proof_effect'],
+              'promotion_effect': metadata['promotion_effect'],
+          }, sort_keys=True))
+          PY
+      - name: Independently verify serialized chunk contract
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          module_dir = Path(os.environ['MODULE_DIR'])
+          sys.path.insert(0, str(module_dir))
+          import multiprime_lex_pivot_sweep as multi
+
+          replay = multi.verify_chunk(
+              os.environ['REQUEST_PATH'],
+              int(os.environ['PRIME_INDEX']),
+              int(os.environ['CHUNK_INDEX']),
+              Path(os.environ['OUTPUT_DIR']),
+          )
+          print(json.dumps(replay, sort_keys=True))
+          PY
+      - name: Capture execution environment
+        run: |
+          {
+            python --version
+            uname -a
+            python -m pip freeze
+            git -C source rev-parse HEAD
+            git -C source rev-parse HEAD^{tree}
+          } > "$OUTPUT_DIR/environment.txt"
+      - name: Preserve content-addressed additional-prime evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: oz-t3-016-a-multiprime-lex-${{ needs.validate-request.outputs.request_id }}-prime-${{ matrix.prime_index }}-chunk-${{ matrix.chunk }}
+          path: ${{ env.OUTPUT_DIR }}/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
