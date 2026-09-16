@@ -2,7 +2,8 @@
 
 **Campaign ID:** `YM-001`  
 **Mathematical status:** open problem  
-**Programme state:** WP00 promoted; WP01 and WP02 implemented as candidate packages under repository review  
+**Programme state:** WP00 promoted; WP01 promoted as eliminative infrastructure; WP02 promoted as theorem/dependency interface ledger  
+**Research routing:** native MATHSOLVE restricted-target selection open only against `YM-D001` through `YM-D005`  
 **Governance:** `ADR-0009`
 
 ## Canonical challenge
@@ -15,19 +16,22 @@ Existence and mass gap are separate but jointly required theorem trunks. A fixed
 
 `YM-WP00` fixes the official statement, Wightman and Osterwalder–Schrader floor, quantifiers, regulator and reconstruction interfaces, gap normalization, exclusion ledger, and formal proposition schemas. It is a promoted source-normalized non-solution artifact.
 
-`YM-WP01` now supplies a twenty-fixture executable false-proof atlas. `YM-WP02` supplies a source-normalized theorem and route ledger with explicit composition states and dependency debt. Both packages have completed internal role review but remain unpromoted pending repository CI, independent source-locator review, and Referee review.
+`YM-WP01` supplies a twenty-fixture executable false-proof atlas. `YM-WP02` supplies a source-normalized theorem and route ledger with explicit composition states and dependency debt. Their July 2026 package was integrated through PR #115 and passed Programme policy CI. The later MATHFORGE provider audits independently resolved the imported-source locator/scope obligation and the four moving external-source debts `YM-D006` through `YM-D009`.
 
-Mechanism generation, numerical experimentation, restricted-target selection, and novelty claims remain closed.
+The post-merge disposition promotes WP01/WP02 only as bounded research infrastructure. `YM-D001` through `YM-D005` remain open mathematical debts. The current routing gate opens restricted-target selection in `grandchallenge/MATHSOLVE` only so that one of those debts can be attacked under an exact target contract. Unrestricted mechanism generation, free-standing numerical experimentation, novelty claims, and terminal solution claims remain closed.
 
 ## Canonical artifacts
 
-- [WP00 integrated audit](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/YM-WP00-source-normalization-equivalence-audit.md)
+- [WP00 integrated audit](../../YM-WP00-source-normalization-equivalence-audit.md)
+- [WP01 false-proof atlas](../../campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/00_README.md)
+- [WP02 theorem and route ledger](../../campaigns/yang_mills/WP02_THEOREM_LEDGER/00_README.md)
+- [WP01/WP02 integration record](../../campaigns/yang_mills/YM_WP01_WP02_INTEGRATION.md)
+- [Post-merge disposition](../../campaigns/yang_mills/YM_WP01_WP02_POST_MERGE_DISPOSITION.md)
+- [Current routing gate](../../campaigns/yang_mills/YM_CURRENT_ROUTING_GATE.json)
 - [WP00 merge record PR #86](https://github.com/grandchallenge/MATH-PROGRAMME/pull/86)
-- [WP01 false-proof atlas](https://github.com/grandchallenge/MATH-PROGRAMME/blob/agent/ym-wp01-wp02-governed-parallel/campaigns/yang_mills/WP01_FALSE_PROOF_ATLAS/00_README.md)
-- [WP02 theorem and route ledger](https://github.com/grandchallenge/MATH-PROGRAMME/blob/agent/ym-wp01-wp02-governed-parallel/campaigns/yang_mills/WP02_THEOREM_LEDGER/00_README.md)
-- [Parallel integration record](https://github.com/grandchallenge/MATH-PROGRAMME/blob/agent/ym-wp01-wp02-governed-parallel/campaigns/yang_mills/YM_WP01_WP02_INTEGRATION.md)
+- [WP01/WP02 merge record PR #115](https://github.com/grandchallenge/MATH-PROGRAMME/pull/115)
 - [Catalogue-integration decision ADR-0009](../decisions/ADR-0009_POST_MERGE_DOMAIN_COVERAGE.md)
 
 ## Claim boundary
 
-The programme has not constructed four-dimensional quantum Yang–Mills theory, proved a mass gap, confinement, or an area law, or established that an existing lattice, perturbative, stochastic, numerical, gauge-fixed, or recently claimed construction satisfies the complete theorem target.
+The programme has not constructed four-dimensional quantum Yang–Mills theory, proved a physical mass gap, confinement, an area law, regulator-independent continuum control, or a complete Osterwalder–Schrader limiting hierarchy. Promotion of WP01/WP02 changes research routing only; it does not establish that any open dependency debt has been solved.
