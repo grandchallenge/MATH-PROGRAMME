@@ -35,9 +35,12 @@ The verification does not claim line-by-line semantic equivalence with every pro
 
 [Read the verification record](OPENAI_TEN_PROOFS_VERIFICATION.md)
 
-## Published classical formal artifact · logarithmic GCD kernel
+## Fixture 003: The logarithmic GCD kernel
 
-**Support class:** certified formal artifact with explicit prior-art boundary
+**Publication ID:** `PUB-LOG-GCD-001`  
+**Support class:** Classical mathematics · certified formal artifact  
+**Publication status:** published  
+**Claim boundary:** No novelty or priority claim
 
 The published identity is
 
@@ -45,7 +48,7 @@ The published identity is
 
 for the declared positive-input domain and finitely supported divisor feature vector.
 
-The public record separates the formal artifact from mathematical history. It makes no claim that the theorem, kernel, feature representation, or proof idea is new.
+The public record separates the certified formal artifact from mathematical history. It makes no claim that the theorem, kernel, feature representation, or proof idea is new.
 
 [Read the publication record](LOG_GCD_PUBLICATION.md) · [Read the prior-art audit](LOG_GCD_PRIOR_ART_AUDIT.md)
 
