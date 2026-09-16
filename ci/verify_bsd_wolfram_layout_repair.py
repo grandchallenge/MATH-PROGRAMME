@@ -100,16 +100,22 @@ def main() -> int:
     if len(plates) != 5:
         fail("expected exactly five governed BSD plates")
 
+    identity_mismatches: list[str] = []
     for plate in plates:
         path = ROOT / plate["live_path"]
         data = path.read_bytes()
         text = data.decode("utf-8")
-        if len(data) != plate["bytes"]:
-            fail(f"byte count mismatch: {plate['plate_id']}")
-        if sha256(data) != plate["sha256"]:
-            fail(f"sha256 mismatch: {plate['plate_id']}")
-        if git_blob(data) != plate["git_blob"]:
-            fail(f"git blob mismatch: {plate['plate_id']}")
+        actual_bytes = len(data)
+        actual_sha256 = sha256(data)
+        actual_blob = git_blob(data)
+        if (
+            actual_bytes != plate["bytes"]
+            or actual_sha256 != plate["sha256"]
+            or actual_blob != plate["git_blob"]
+        ):
+            identity_mismatches.append(
+                f"{plate['plate_id']}: bytes={actual_bytes} sha256={actual_sha256} git_blob={actual_blob}"
+            )
         if VIEWBOX not in text or plate.get("delivery_aspect_ratio") != "3:2":
             fail(f"landscape geometry mismatch: {plate['plate_id']}")
         if "<title" not in text or "<desc" not in text:
@@ -123,6 +129,9 @@ def main() -> int:
                 fail(f"unwrapped visible text run ({len(plain)} chars): {plate['plate_id']}")
         if plate["live_reference"] not in activation:
             fail(f"activation does not bind {plate['plate_id']}")
+
+    if identity_mismatches:
+        fail("plate identity receipt mismatch:\n" + "\n".join(identity_mismatches))
 
     with tempfile.TemporaryDirectory() as td:
         out = Path(td) / "bsd-exact"
