@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0.0",
+  "campaign_id": "VGSE-001",
+  "work_package_id": "VGSE-ENG-WP02",
+  "status": "work_branch_candidate",
+  "claims": [
+    {
+      "id": "VGSE-ENG-WP02-C01",
+      "label": "PROTECTED STARTING FACT",
+      "statement": "VGSE-ENG-WP01 is protected on MATH-PROGRAMME main at exact native merge-queue commit 8f43a8211c0236595eecee1cc5c195905bf5d27b.",
+      "authority": "grandchallenge/MATH-PROGRAMME#990",
+      "scope": "starting identity and admitted WP01 structural-response evidence only"
+    },
+    {
+      "id": "VGSE-ENG-WP02-C02",
+      "label": "VERIFIED ENGINEERING RESULT",
+      "statement": "In the WP01 canonical gauge, nine selected boundary minors are exact single monomials in the eight free positive weights. Those monomial identities yield explicit ratio formulas recovering every canonical weight from projective boundary measurements.",
+      "evidence": [
+        "analyze_wp02.py",
+        "RESULTS.json",
+        "test_wp02.py"
+      ],
+      "scope": "fixed admitted graph and GCL canonical positive-weight quotient"
+    },
+    {
+      "id": "VGSE-ENG-WP02-C03",
+      "label": "VERIFIED ENGINEERING RESULT",
+      "statement": "For theta equal to the eight canonical log weights and F the eighteen WP01 log-projective response coordinates, a fixed 8x18 matrix A satisfies A F(theta)=theta throughout the strictly positive quotient domain. Hence A J(theta)=I_8 and the response Jacobian has rank eight everywhere in that domain.",
+      "evidence": [
+        "README.md",
+        "analyze_wp02.py",
+        "RESULTS.json",
+        "test_wp02.py"
+      ],
+      "scope": "global identifiability of the WP01 structural-response quotient; not a physical observability claim"
+    },
+    {
+      "id": "VGSE-ENG-WP02-C04",
+      "label": "VERIFIED ENGINEERING RESULT",
+      "statement": "The exact left inverse and occupancy-probability Jacobian bound give sigma_min(J)>=0.42962107128932703 and kappa_2(J)<=27.93159088772589 everywhere in the strictly positive canonical quotient domain.",
+      "evidence": [
+        "analyze_wp02.py",
+        "RESULTS.json",
+        "README.md"
+      ],
+      "scope": "uniform mathematical conditioning bound in logarithmic quotient coordinates"
+    },
+    {
+      "id": "VGSE-ENG-WP02-C05",
+      "label": "NEGATIVE RESULT",
+      "statement": "The WP01 candidate search for a finite positive-domain rank-loss or conditioning-blow-up locus is falsified for the admitted quotient boundary-response map. No such locus exists inside the strictly positive canonical domain.",
+      "evidence": [
+        "analyze_wp02.py",
+        "RESULTS.json",
+        "README.md"
+      ],
+      "scope": "does not exclude singular behaviour in a future geometry-coupled or physical model"
+    },
+    {
+      "id": "VGSE-ENG-WP02-C06",
+      "label": "GCL OBSERVATION",
+      "statement": "A deterministic 4096-sample screen over the log-coordinate box [-8,8]^8 retained rank eight throughout; observed condition numbers stayed below 9.229 and the exact extractor identity replayed to floating precision.",
+      "evidence": [
+        "RESULTS.json",
+        "test_wp02.py"
+      ],
+      "scope": "implementation stress test supplementary to the exact result"
+    },
+    {
+      "id": "VGSE-ENG-WP02-C07",
+      "label": "VERIFIED ENGINEERING RESULT",
+      "statement": "A bounded feasible eight-coordinate target perturbation is recovered directly from its projective response and replays with parameter and response errors below 5e-16.",
+      "evidence": [
+        "RESULTS.json",
+        "test_wp02.py"
+      ],
+      "scope": "feasible inverse design inside the WP01 quotient-response image"
+    },
+    {
+      "id": "VGSE-ENG-WP02-C08",
+      "label": "NEGATIVE INVERSE-DESIGN RESULT",
+      "statement": "Arbitrary eighteen-dimensional desired responses need not be feasible. Perturbing only F_125 by 0.1 leaves the recovered quotient parameters unchanged and produces a forward-consistency residual of 0.1, giving an explicit off-image target.",
+      "evidence": [
+        "RESULTS.json",
+        "test_wp02.py"
+      ],
+      "scope": "one exact-structure infeasibility probe; full response-manifold constraints remain successor work"
+    },
+    {
+      "id": "VGSE-ENG-WP02-C09",
+      "label": "SOURCE FACT",
+      "statement": "VGSE-C06 remains excluded. Protected evidence does not establish the Figure-16-to-pinned-C source correspondence, and WP02 does not use visible source geometry as a weight or mechanical model.",
+      "authority": "existing VGSE source/provider record and protected restricted R4 qualification",
+      "scope": "source-attribution boundary"
+    },
+    {
+      "id": "VGSE-ENG-WP02-C10",
+      "label": "OPEN QUESTION",
+      "statement": "What are a minimal independent set of exact consistency relations defining the eight-dimensional quotient-response image inside the eighteen-dimensional log-response space?",
+      "next_action": "derive a response-manifold feasibility certificate and exact target-consistency checker"
+    },
+    {
+      "id": "VGSE-ENG-WP02-C11",
+      "label": "WORKING HYPOTHESIS",
+      "statement": "Once response-manifold feasibility is explicit, qualified C05 geometric realizations can be used to falsify candidate geometry-to-quotient couplings without assuming C06 source correspondence or physical meaning for the weights.",
+      "scope": "future geometry-coupling research only"
+    }
+  ],
+  "claim_boundary": {
+    "source_correspondence_c06": "not established",
+    "rigid_foldability": "not established",
+    "collision_freedom": "not established",
+    "finite_thickness": "not established",
+    "manufacturability": "not established",
+    "durability_fatigue": "not established",
+    "physical_stiffness_interpretation": "not established",
+    "product_performance": "not established",
+    "novelty_priority_patentability_commercial_value": "not established"
+  }
+}
