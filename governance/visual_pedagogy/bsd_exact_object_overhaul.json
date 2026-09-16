@@ -1,24 +1,27 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "operation_id": "BSD-DOC-EXACT-OBJECT-OVERHAUL-001",
   "documentary_id": "BSD-001",
   "decision_ref": "docs/decisions/ADR-0022_EXACT_OBJECT_FIRST_DOCUMENTARY_VISUALIZATION.md",
-  "pull_request": 1002,
+  "protected_predecessor_merge": "785feb7400b06b1f9a7aff315b45ef4f270b589d",
+  "protected_predecessor_pull_request": 1002,
   "semantic_master": "tools/bsd_wolfram_semantic_master.wl",
   "delivery_compositor": "tools/compose_bsd_wolfram_plates.py",
   "activation_runtime": "docs/assets/visual_pedagogy/bsd_exact/bsd_activation.js",
+  "layout_stylesheet": "docs/stylesheets/bsd-exact-plates.css",
   "activation_mode": "bsd_specific_stable_source_exact_path_rewrite",
   "live_asset_root": "docs/assets/visual_pedagogy/bsd_exact",
-  "state": "CANDIDATE__INDEPENDENT_VISUAL_SEMANTIC_REVIEW_REQUIRED_BEFORE_PROTECTED_MERGE",
+  "state": "LIVE_PROTECTED_PREDECESSOR_WITH_LAYOUT_REVISION_CANDIDATE",
   "visual_is_evidence": false,
-  "renderer_policy": "Wolfram Language is the canonical semantic-master language for exact mathematical fixtures. The deterministic compositor creates static web derivatives. The renderer and the plates create no mathematical authority.",
+  "renderer_policy": "Wolfram Language remains the canonical semantic-master language for exact mathematical fixtures. The deterministic compositor creates static web derivatives. The renderer, compositor, and plates create no mathematical authority.",
   "runtime_validation": {
     "wolfram_runtime_available_in_authoring_environment": false,
     "wolfram_master_executed_in_authoring_environment": false,
     "deterministic_delivery_replay_completed": true,
-    "independent_exact_arithmetic_replay_completed": true
+    "independent_exact_arithmetic_replay_completed": true,
+    "layout_derivative_render_smoke_test_completed": true
   },
-  "claim_boundary": "The overhaul changes exposition and visualization only. It does not prove BSD, promote any BSD claim, alter the current mathematical campaign status, or change the authority of the checksum-locked documentary source/PDF artifacts.",
+  "claim_boundary": "The revision changes exposition and visualization only. It does not prove BSD, promote any BSD claim, alter the current mathematical campaign status, or change the authority of the checksum-locked documentary source/PDF artifacts.",
   "predecessor_policy": {
     "preserve_bytes": true,
     "preserve_paths": true,
@@ -26,12 +29,32 @@
     "rollback_by_exact_predecessor": true,
     "delete_or_overwrite_predecessor": false
   },
-  "review_gate": {
+  "original_review_gate": {
     "required": true,
     "class": "independent_visual_semantic_review",
     "requested_team": "math-programme-maintainers",
-    "reviewed_head": null,
-    "evidence": null
+    "reviewed_head": "7d73965327bb11f3c7809ba410e0cd211df56502",
+    "evidence": "PR #1002 final APPROVED review by jimsteeg, submitted 2026-09-16T17:35:26Z; protected merge 785feb7400b06b1f9a7aff315b45ef4f270b589d."
+  },
+  "layout_revision": {
+    "operation_id": "BSD-DOC-EXACT-OBJECT-LANDSCAPE-002",
+    "objective": "Replace portrait delivery composition with editorial 3:2 landscape plates and permit desktop breakout beyond the 54rem prose column while preserving exact semantics and stable predecessor references.",
+    "protected_base": "785feb7400b06b1f9a7aff315b45ef4f270b589d",
+    "semantic_changes": false,
+    "stable_source_references_preserved": true,
+    "predecessor_assets_unchanged": true,
+    "desktop_max_width": "74rem",
+    "desktop_breakout_rule": "min(74rem, calc(100vw - 19rem))",
+    "mobile_breakout_disabled_below_px": 981,
+    "intrinsic_dimensions": {
+      "width": 1536,
+      "height": 1024
+    },
+    "review_gate": {
+      "required": true,
+      "class": "independent_visual_semantic_review",
+      "requested_team": "math-programme-maintainers"
+    }
   },
   "plates": [
     {
@@ -41,8 +64,10 @@
       "predecessor_blob": "88b010f956744a4303dfbfd04b9f95062dbdfe04",
       "live_path": "docs/assets/visual_pedagogy/bsd_exact/plate_01_rational_point_triangle.svg",
       "live_reference": "../../assets/visual_pedagogy/bsd_exact/plate_01_rational_point_triangle.svg",
-      "sha256": "123d48b59a206e8f392087cd71f96aa7efbe0baf988ae312942494981afc7646",
-      "bytes": 7386,
+      "sha256": "28efb6cf37a103c4d365164fb6498f61124fb31371c26402c3479f392a2e846c",
+      "bytes": 6548,
+      "delivery_viewbox": "0 0 1536 1024",
+      "delivery_aspect_ratio": "3:2",
       "representation_class": "exact-object",
       "mathematical_source": "docs/documentaries/bsd.md#rational-points"
     },
@@ -53,8 +78,10 @@
       "predecessor_blob": "845fa10b8b13ec99a8d61dd6fb51543c113f43b3",
       "live_path": "docs/assets/visual_pedagogy/bsd_exact/plate_02_group_law.svg",
       "live_reference": "../../assets/visual_pedagogy/bsd_exact/plate_02_group_law.svg",
-      "sha256": "b9e9d6a699b59423164c3cfae13f063c65d5117492b5782dc61ec305613e97c4",
-      "bytes": 5964,
+      "sha256": "a1a817924509d5170e915e0178a9471c1ffbb7d5de175c06bff42b4a61fefdf2",
+      "bytes": 5290,
+      "delivery_viewbox": "0 0 1536 1024",
+      "delivery_aspect_ratio": "3:2",
       "representation_class": "exact-object",
       "mathematical_source": "docs/documentaries/bsd.md#group-law"
     },
@@ -65,8 +92,10 @@
       "predecessor_blob": "cf46ce8633c3d964ed21ced776494375c1c0cbff",
       "live_path": "docs/assets/visual_pedagogy/bsd_exact/plate_03_good_prime.svg",
       "live_reference": "../../assets/visual_pedagogy/bsd_exact/plate_03_good_prime.svg",
-      "sha256": "fe82ffd9c2c4b8c495365d14ac659167f07a1b48dfeae6fc63680b3874252d1d",
-      "bytes": 7898,
+      "sha256": "a632bf021663e6ec5f015e7921fd56181b7a6aa57bb9467434d3e05db9a89f9f",
+      "bytes": 7484,
+      "delivery_viewbox": "0 0 1536 1024",
+      "delivery_aspect_ratio": "3:2",
       "representation_class": "exact-finite-computation",
       "mathematical_source": "docs/documentaries/bsd.md#local-counts"
     },
@@ -77,8 +106,10 @@
       "predecessor_blob": "c151081594dcf3ae04f15863f85b8c3a32aa7440",
       "live_path": "docs/assets/visual_pedagogy/bsd_exact/plate_04_strong_bsd_ledger.svg",
       "live_reference": "../../assets/visual_pedagogy/bsd_exact/plate_04_strong_bsd_ledger.svg",
-      "sha256": "191ee3faf0422664b61943066061e5d3e87aac9f154707ff2bab0d5a4ae2454a",
-      "bytes": 3521,
+      "sha256": "bde9c20bd428c3b1c930df7d6329da668b1ad0b38603937a3a853897a70301bb",
+      "bytes": 3891,
+      "delivery_viewbox": "0 0 1536 1024",
+      "delivery_aspect_ratio": "3:2",
       "representation_class": "quantified-dependency",
       "mathematical_source": "docs/documentaries/bsd.md#central-bridge"
     },
@@ -89,8 +120,10 @@
       "predecessor_blob": "457c5de53b36d2de3cac0ab534e2545949084f57",
       "live_path": "docs/assets/visual_pedagogy/bsd_exact/plate_05_theorem_frontier.svg",
       "live_reference": "../../assets/visual_pedagogy/bsd_exact/plate_05_theorem_frontier.svg",
-      "sha256": "a635a766e90f24d3c022172cfd0e47925f5adf08b9e73842f21a28587aa46d4a",
-      "bytes": 4656,
+      "sha256": "1cea92966b285199eccce2c6895cc0b335f9becce0c486187c64e77e71c74ff5",
+      "bytes": 4837,
+      "delivery_viewbox": "0 0 1536 1024",
+      "delivery_aspect_ratio": "3:2",
       "representation_class": "quantified-status",
       "mathematical_source": "docs/documentaries/bsd.md#theorem-frontier"
     }
@@ -99,6 +132,7 @@
     "No predecessor documentary asset is deleted, renamed, or overwritten.",
     "The checksum-locked documentary source and rendered PDF retain their existing authority.",
     "The activation resolver changes presentation only.",
+    "The landscape revision changes delivery geometry, not mathematical semantics.",
     "No visual is mathematical evidence.",
     "No theorem, proof, certification, novelty, priority, or product claim is promoted."
   ]
