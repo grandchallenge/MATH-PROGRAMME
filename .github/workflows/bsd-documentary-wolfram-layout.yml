@@ -1,0 +1,41 @@
+name: BSD documentary Wolfram layout repair
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/bsd-documentary-wolfram-layout.yml"
+      - "ci/verify_bsd_wolfram_layout_repair.py"
+      - "tests/test_bsd_wolfram_layout_repair.py"
+      - "governance/visual_pedagogy/bsd_exact_object_overhaul.json"
+      - "tools/bsd_wolfram_semantic_master.wl"
+      - "tools/bsd_wolfram_layout_reference.wl"
+      - "tools/compose_bsd_wolfram_plates.py"
+      - "docs/assets/visual_pedagogy/bsd_exact/**"
+      - "docs/stylesheets/bsd-exact-plates.css"
+      - "docs/documentaries/bsd.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bsd-documentary-wolfram-layout-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  exact-layout-repair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Verify governed BSD plate bytes and layout invariants
+        run: python ci/verify_bsd_wolfram_layout_repair.py
+      - name: Run BSD layout regression tests
+        run: python -m unittest tests.test_bsd_wolfram_layout_repair
