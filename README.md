@@ -50,12 +50,20 @@ This table shows material programme work that is active now. Row order reflects 
 | Frontier | Current obligation | Programme significance |
 |---|---|---|
 | **BSD-001 — rank-one leading term at literal `p=2`** | [MATHSOLVE #243](https://github.com/grandchallenge/MATHSOLVE/issues/243) replays the Burns–Sakamoto–Sano theorem chain at literal `p=2`. If the replay fails, the campaign must identify the first unrepaired theorem-level dependency. | The work targets one named theorem-level obstruction. It does not generalize the result beyond the retained claim boundary. |
-| **VGSE-001 — restricted-output route semantics after four-claim adjudication** | [MATHCERT #301](https://github.com/grandchallenge/MATHCERT/issues/301) resolves the route boundary after exact adjudication cleared `VGSE-C00`, `C01`, `C04`, and `C05` while `C06` remained blocked. | The current problem is not another geometric calculation. It is whether a four-claim output can exist without silently qualifying the five-claim route or weakening the blocked `C06` state. |
+| **VGSE-001 — engineering laws latent in origami structure** | [MATH-PROGRAMME #984](https://github.com/grandchallenge/MATH-PROGRAMME/issues/984) begins from the protected four-claim result and asks which behaviours belong to topology, which are selected by geometry, which are tunable through metric parameters, and which survive physical perturbation. | The objective is not to reproduce one historical drawing. It is to extract reusable mechanical laws and test whether desired behaviour can be designed backward through constraint structure. |
 | **OZ-001 — order-7 Brown–Zudilin certificate route** | [MATH-PROGRAMME #964](https://github.com/grandchallenge/MATH-PROGRAMME/issues/964) reduces the 576-dimensional discrete-curl kernel through a degree-minimising Popov or approximant-basis section. The resulting order-7 certificate then requires independent replay. | The work attempts to construct an exact characteristic-zero certificate inside a defined admissible class. Construction and certification remain separate steps. |
 
 Rows appear here only while the work remains materially active. Issue trackers provide navigation. Protected repository records remain authoritative.
 
 [Programme Atlas →](docs/PROGRAMME_ATLAS.md) · [MATHFORGE](https://github.com/grandchallenge/MATHFORGE) · [MATHSOLVE](https://github.com/grandchallenge/MATHSOLVE) · [MATHCERT](https://github.com/grandchallenge/MATHCERT)
+
+### VGSE-001: from reconstruction to engineering discovery
+
+The protected VGSE work has qualified four mathematical claims while leaving the Figure-16-to-pinned-`C` correspondence fail-closed. That gap limits what can be attributed to the historical source, but it does not require GCL to stop at reconstruction.
+
+The new research question is **what reusable engineering laws are latent in the origami structure**. The working model separates four layers: topology defines the admissible mechanism; geometry selects a realization; metric parameters tune response; material and thickness determine physical performance. The first task is to test that hierarchy rather than assume it.
+
+The durable mandate is [`docs/VGSE_ENGINEERING_DISCOVERY_MANDATE.md`](docs/VGSE_ENGINEERING_DISCOVERY_MANDATE.md). It directs agents to build a parameterized design-space model, probe invariants and sensitivities, attempt inverse design, preserve negative results, and keep new GCL realizations distinct from recovered source geometry.
 
 ### BSD-001: the current replay problem
 

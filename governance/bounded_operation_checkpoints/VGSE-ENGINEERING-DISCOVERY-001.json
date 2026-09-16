@@ -1,0 +1,92 @@
+{
+  "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
+  "schema_version": "1.0.0",
+  "checkpoint_id": "VGSE-ENGINEERING-DISCOVERY-001.CP001",
+  "governed_work_id": "VGSE-ENGINEERING-DISCOVERY-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "admission": {
+    "topology": "MULTI_SESSION_RESUMABLE",
+    "admission_ref": "grandchallenge/MATH-PROGRAMME#984",
+    "routine_work_excluded": true
+  },
+  "authority": {
+    "ghos_standard": "GCL-GHOS-00",
+    "ghos_version": "0.2.0",
+    "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#984"
+  },
+  "phase": "Engineering-discovery mission established and a dedicated WP01 work branch is bound; the first layered-model and design-space tranche has not yet been instantiated.",
+  "state": "AUTHORIZED_READY",
+  "identities": {
+    "protected_base_sha": "9016912a965de107fcdc71b43b46819dd0ec274d",
+    "candidate_head_sha": "4624294cd09b81145b8fe174447ba15d392f241b",
+    "issue_number": 984,
+    "pr_number": null,
+    "branch": "research/vgse-eng-wp01",
+    "workflow_runs": []
+  },
+  "terminal_condition": "The first VGSE engineering-discovery phase satisfies the material acceptance criteria in docs/VGSE_ENGINEERING_DISCOVERY_MANDATE.md: a canonical layered model exists; at least one candidate invariant is verified or falsified; parameter-to-response sensitivity is characterized; recoverable versus non-recoverable geometric information is explicit; one bounded inverse-design result is obtained; at least one robustness result is recorded; an engineering claim ledger preserves status and provenance; and the next substantive experiment or derivation is durably specified without broadening the protected mathematical claim boundary.",
+  "permitted_next_actions": [
+    {
+      "id": "instantiate_vgse_eng_wp01",
+      "description": "Create the first substantive VGSE engineering work package around a canonical layered representation and parameterized forward response map, using the protected R4 mathematical result as the bounded starting point."
+    }
+  ],
+  "next_action": {
+    "id": "instantiate_vgse_eng_wp01",
+    "description": "Instantiate VGSE-ENG-WP01 on research/vgse-eng-wp01 to separate topology, geometric realization, metric or weight parameters, and candidate physical parameters; define the first forward-response map and falsifiable invariant screen before launching broader simulation or fabrication work.",
+    "evidence_targets": [
+      "grandchallenge/MATH-PROGRAMME#984",
+      "research/vgse-eng-wp01@4624294cd09b81145b8fe174447ba15d392f241b",
+      "docs/VGSE_ENGINEERING_DISCOVERY_MANDATE.md",
+      "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607:certificates/vgse/MC-VGSE-WP00-R4-QUAL-001.json",
+      "grandchallenge/MATHSOLVE:work_packages/VGSE_WP00/claim_ledger.json",
+      "grandchallenge/MATHSOLVE:work_packages/VGSE_WP00/artifacts/code/audit_figure16_pinned_c.py"
+    ]
+  },
+  "external_evidence": {
+    "waiting": false,
+    "objects": []
+  },
+  "blocking_boundary": null,
+  "last_transition": {
+    "action": "bind the admitted VGSE engineering-discovery workset to a dedicated exact WP01 branch identity",
+    "result": "The resumable workset now has an exact live branch at 4624294cd09b81145b8fe174447ba15d392f241b. The campaign mission remains engineering discovery: identify reusable laws latent in the origami structure, with the topology/geometry/metric/material hierarchy treated as a working hypothesis. Existing R4 qualification remains bounded to C00/C01/C04/C05; C06 remains excluded. No new engineering, physical-performance, certification, manufacturing, novelty, patentability, or commercial claim is created by this checkpoint.",
+    "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#984",
+      "research/vgse-eng-wp01@4624294cd09b81145b8fe174447ba15d392f241b",
+      "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607",
+      "docs/VGSE_ENGINEERING_DISCOVERY_MANDATE.md",
+      "docs/governance/SUBSTANCE_FIRST_EXECUTION_DISCIPLINE.md"
+    ]
+  },
+  "freshness": {
+    "required_before_transition": true,
+    "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-ENGINEERING-DISCOVERY-001.json",
+    "on_mismatch": "REBIND_BEFORE_MUTATION",
+    "observed_at": "2026-09-16T01:16:00Z"
+  },
+  "resume": {
+    "fresh_session_safe": true,
+    "requires_chat_history": false,
+    "authoritative_sources": [
+      "grandchallenge/MATH-PROGRAMME#984",
+      "research/vgse-eng-wp01@4624294cd09b81145b8fe174447ba15d392f241b",
+      "docs/VGSE_ENGINEERING_DISCOVERY_MANDATE.md",
+      "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607:certificates/vgse/MC-VGSE-WP00-R4-QUAL-001.json",
+      "grandchallenge/MATHSOLVE:work_packages/VGSE_WP00/claim_ledger.json",
+      "grandchallenge/MATHSOLVE:work_packages/VGSE_WP00/artifacts/code/audit_figure16_pinned_c.py",
+      "docs/governance/SUBSTANCE_FIRST_EXECUTION_DISCIPLINE.md",
+      "AGENTS.md"
+    ],
+    "instructions": "Run the recorded live verification command before a material transition and require research/vgse-eng-wp01 to remain at the recorded exact head until the transition is durably rebound. Re-fetch the tracker and protected evidence identities. Treat the R4 four-claim qualification as the mathematical starting point, not as physical validation. Preserve the C06 source-correspondence boundary. Do not assume the visible source figure is the unique or certified physical realization. The next substantive move is VGSE-ENG-WP01: build the layered model and parameterized forward map, then probe invariants, sensitivities, degeneracies, inverse design, and robustness. Update this checkpoint when the work branch head, phase, external evidence, next action, or a genuine boundary changes."
+  },
+  "terminal_evidence": [],
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false,
+    "protected_bypass_authorized": false
+  }
+}
