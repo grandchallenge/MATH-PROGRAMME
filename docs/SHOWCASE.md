@@ -39,7 +39,7 @@ The verification does not claim line-by-line semantic equivalence with every pro
 
 **Publication ID:** `PUB-LOG-GCD-001`  
 **Support class:** Classical mathematics · certified formal artifact  
-**Publication status:** published  
+Publication status: published  
 **Claim boundary:** No novelty or priority claim
 
 The published identity is
