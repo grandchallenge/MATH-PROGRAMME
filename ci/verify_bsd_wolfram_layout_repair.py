@@ -18,8 +18,9 @@ COMPOSITOR = ROOT / "tools/compose_bsd_wolfram_plates.py"
 ACTIVATION = ROOT / "docs/assets/visual_pedagogy/bsd_exact/bsd_activation.js"
 SHARED_RUNTIME = ROOT / "docs/javascripts/documentary.js"
 
-EXPECTED_SEMANTIC_SHA256 = "41b9e926d0edda8fbb65ead57d54fd0985689ca73ac1715731818843cc013936"
-EXPECTED_SEMANTIC_BYTES = 4263
+EXPECTED_SEMANTIC_SHA256 = "d05088cf0f88c7e3c0960ebb99973fac19001a2bdb6abff3e92f8a4fe0bc2ec0"
+EXPECTED_SEMANTIC_BYTES = 4665
+EXPECTED_SEMANTIC_BLOB = "206842583d15acf91eb0e363ddb12cbf124ab0a9"
 EXPECTED_SHARED_RUNTIME_BLOB = "b53dce8861e9eee78ced01758220b3ed3110a22f"
 VIEWBOX = 'viewBox="0 0 1536 1024"'
 
@@ -46,14 +47,32 @@ def main() -> int:
         fail("visual evidence boundary was promoted")
 
     semantic = SEMANTIC.read_bytes()
-    if len(semantic) != EXPECTED_SEMANTIC_BYTES or sha256(semantic) != EXPECTED_SEMANTIC_SHA256:
+    if (
+        len(semantic) != EXPECTED_SEMANTIC_BYTES
+        or sha256(semantic) != EXPECTED_SEMANTIC_SHA256
+        or git_blob(semantic) != EXPECTED_SEMANTIC_BLOB
+    ):
         fail("semantic master changed during presentation-only repair")
+
+    runtime = manifest.get("runtime_validation", {})
+    if runtime.get("semantic_master_bytes") != EXPECTED_SEMANTIC_BYTES:
+        fail("manifest semantic byte lock disagrees with verifier")
+    if runtime.get("semantic_master_sha256") != EXPECTED_SEMANTIC_SHA256:
+        fail("manifest semantic sha256 lock disagrees with verifier")
+    if runtime.get("semantic_master_git_blob") != EXPECTED_SEMANTIC_BLOB:
+        fail("manifest semantic git-blob lock disagrees with verifier")
 
     repair = manifest.get("layout_repair", {})
     if repair.get("protected_base") != "989fd25de2d65eee4da65fc7ce1b10bebc91f963":
         fail("layout repair is not bound to the protected #1003 merge")
     if repair.get("semantic_changes") is not False:
         fail("layout repair claims a semantic change")
+    if repair.get("semantic_master_unchanged_sha256") != EXPECTED_SEMANTIC_SHA256:
+        fail("repair semantic sha256 lock disagrees with verifier")
+    if repair.get("semantic_master_unchanged_bytes") != EXPECTED_SEMANTIC_BYTES:
+        fail("repair semantic byte lock disagrees with verifier")
+    if repair.get("semantic_master_unchanged_git_blob") != EXPECTED_SEMANTIC_BLOB:
+        fail("repair semantic git-blob lock disagrees with verifier")
     if repair.get("free_coordinate_typography_synthesis_forbidden") is not True:
         fail("free-coordinate typography synthesis is not explicitly forbidden")
 
