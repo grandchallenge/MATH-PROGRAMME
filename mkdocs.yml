@@ -1,21 +1,72 @@
 site_name: GCL · Mathematics Programme
-site_description: A Grand Challenge Labs programme for turning mathematical curiosity into checked understanding.
+site_description: A governed mathematics programme for discovery, solving, and independent certification.
 site_url: https://grandchallenge.github.io/MATH-PROGRAMME/
 repo_url: https://github.com/grandchallenge/MATH-PROGRAMME
 repo_name: grandchallenge/MATH-PROGRAMME
 edit_uri: edit/main/docs/
-copyright: Grand Challenge Labs · Mathematics Programme · Edition 2026.07 · No theorem without a spine. No proof without a reader.
+copyright: Grand Challenge Labs · Mathematics Programme · Edition 2026.07
 
 docs_dir: docs
 site_dir: site
 
 nav:
   - Start Here: index.md
-  - Programme:
-      - Showcase: SHOWCASE.md
-      - Programme Charter: PROGRAMME_CHARTER.md
-      - Reader Guide: GRAND_CHALLENGE_READER_GUIDE.md
+  - Current Work: CURRENT_WORK.md
+  - Results:
+      - Results and Exemplars: SHOWCASE.md
+      - "Verified Corpus: OpenAI Ten Proofs": OPENAI_TEN_PROOFS_VERIFICATION.md
+      - Fixture Ledger: FIXTURE_LEDGER.md
+      - Euclidean GCD End-to-End Proof Trace: EUCLID_GCD_E2E_001_PROOF_TRACE.md
+      - Linear Diophantine End-to-End Proof Trace: EUCLID_DIOPHANTINE_E2E_002_PROOF_TRACE.md
+      - Logarithmic GCD Kernel: LOG_GCD_KERNEL.md
+      - LOG-GCD Prior-Art Audit: LOG_GCD_PRIOR_ART_AUDIT.md
+      - "Published Result: Logarithmic GCD Kernel": LOG_GCD_PUBLICATION.md
+      - "Solved-Problem Archive: Poincaré Reconstruction": POINCARE_RECONSTRUCTION_ARCHIVE.md
+      - Groebner Applications Manifest: GROBNER_APPLICATIONS_MANIFEST.md
+  - How the Programme Works:
       - Programme Atlas: PROGRAMME_ATLAS.md
+      - Reader Guide: GRAND_CHALLENGE_READER_GUIDE.md
+      - Programme Charter: PROGRAMME_CHARTER.md
+      - Doctrine:
+          - Technical Writing Reference: TECHNICAL_WRITING_REFERENCE.md
+          - Claim Boundary: CLAIM_BOUNDARY_DOCTRINE.md
+          - Programme Status Taxonomy: STATUS_TAXONOMY.md
+          - Pedagogy Standard: GRAND_CHALLENGE_PEDAGOGY_STANDARD.md
+          - Pedagogical Style Guide: PEDAGOGICAL_STYLE_GUIDE.md
+          - Accessible Research Guide Standard: ACCESSIBLE_RESEARCH_GUIDE_STANDARD.md
+          - Visual Pedagogy Standard: VISUAL_PEDAGOGY_STANDARD.md
+          - Chaidez Pedagogical Protocol: CHAIDEZ_PEDAGOGICAL_PROTOCOL.md
+          - Foundation-Aware Programme: FOUNDATION_AWARE_MATH_PROGRAMME.md
+          - Reduction and Certificate Foundations: REDUCTION_CERTIFICATE_FOUNDATIONS.md
+          - Groebner and EXPSPACE: GROEBNER_EXPSPACE_DOCTRINE.md
+          - Resource Budgets: RESOURCE_BUDGET_POLICY.md
+  - Mathematical Estate:
+      - Domain Catalogue: domains/index.md
+      - Domains:
+          - "Domain 01: Union-Closed Sets": domains/union_closed.md
+          - "Domain 02: Navier–Stokes Critical Integrability": domains/navier_stokes.md
+          - "Domain 03: Hodge Conjecture": domains/hodge.md
+          - "Domain 04: Birch–Swinnerton-Dyer": domains/birch_swinnerton_dyer.md
+          - "Domain 05: Poincaré Reconstruction": domains/poincare_reconstruction.md
+          - "Domain 06: Yang–Mills Existence and Mass Gap": domains/yang_mills.md
+          - "Domain 07: P versus NP": domains/p_vs_np.md
+          - "Domain 08: Riemann Hypothesis": domains/riemann_hypothesis.md
+      - Routes and Lanes:
+          - Cross-Pillar Lanes: CROSS_PILLAR_LANES.md
+          - Computational Algebraic Geometry: COMPUTATIONAL_ALGEBRAIC_GEOMETRY_LANE.md
+          - Exact Finite Enumeration: lanes/EXACT_FINITE_ENUMERATION.md
+          - Interval Arithmetic: lanes/INTERVAL_ARITHMETIC.md
+          - SAT and SMT Proof Artifacts: lanes/SAT_SMT_PROOF_ARTIFACTS.md
+          - Lean Formalization Handoff: lanes/LEAN_FORMALIZATION_HANDOFF.md
+          - Literature Synthesis to Status Spine: lanes/LITERATURE_SYNTHESIS_STATUS_SPINE.md
+          - TROPIC-GROEBNER Route: TROPIC_GROEBNER_ROUTE.md
+          - TCM Semiring-Contraction Route: routes/TCM_SEMIRING_CONTRACTION_ROUTE.md
+      - Research Intake:
+          - ResearchMath Intake: RESEARCHMATH_INTAKE_LANE.md
+          - ResearchMath Walkthrough: RESEARCHMATH_WALKTHROUGH.md
+          - RM-DIO-004 MATHSOLVE Seed: MATHSOLVE_SEED_RM_DIO_004.md
+          - External Corpus Intake Standard: EXTERNAL_CORPUS_INTAKE_STANDARD.md
+          - "Resource Note: Project-Based Research": RESOURCE_NOTES/PROJECT_BASED_UNDERGRADUATE_RESEARCH.md
       - Documentary Library:
           - Collection and Authority Guide: documentaries/index.md
           - The Shape of a Sphere: documentaries/poincare.md
@@ -46,127 +97,79 @@ nav:
               - Reviewer Delivery Standard: monographs/type-theory-series/REVIEWER_DELIVERY_STANDARD.md
               - Publication State Model: monographs/type-theory-series/PUBLICATION_STATE_MODEL.md
               - Artifact Record: monographs/type-theory-series/ARTIFACT_RECORD.md
-  - Domains:
-      - Domain Catalogue: domains/index.md
-      - "Domain 01: Union-Closed Sets": domains/union_closed.md
-      - "Domain 02: Navier–Stokes Critical Integrability": domains/navier_stokes.md
-      - "Domain 03: Hodge Conjecture": domains/hodge.md
-      - "Domain 04: Birch–Swinnerton-Dyer": domains/birch_swinnerton_dyer.md
-      - "Domain 05: Poincaré Reconstruction": domains/poincare_reconstruction.md
-      - "Domain 06: Yang–Mills Existence and Mass Gap": domains/yang_mills.md
-      - "Domain 07: P versus NP": domains/p_vs_np.md
-      - "Domain 08: Riemann Hypothesis": domains/riemann_hypothesis.md
-  - Governance:
-      - Agent Council: MATH_PROGRAMME_AGENT_COUNCIL.md
-      - Agent Council Governance: AGENT_COUNCIL_GOVERNANCE.md
-      - Agent Council Artifact Ledger: AGENT_COUNCIL_ARTIFACT_LEDGER.md
-      - Construction Gate Operating Guide: governance/CONSTRUCTION_GATE_OPERATING_GUIDE.md
-      - Execution Recovery Operating Guide: governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md
-      - GH-OS Routing Control Runbook: governance/GHOS_ROUTING_CONTROL_RUNBOOK.md
-      - GH-OS Estate Rollout Campaign: governance/GHOS_ESTATE_ROLLOUT_CAMPAIGN.md
-      - Campaign Promotion Register: CAMPAIGN_PROMOTION_REGISTER.md
-      - Programme Workflow Coverage: WORKFLOW_COVERAGE.md
-      - Administrative Maintenance Plan: governance/ADMINISTRATIVE_MAINTENANCE_PLAN.md
-      - Agent-Cadence Operating Design: governance/AGENT_CADENCE_OPERATING_DESIGN.md
-      - Streamlined Execution Amendment: governance/STREAMLINED_EXECUTION_AMENDMENT.md
-      - Substance-First Execution Discipline: governance/SUBSTANCE_FIRST_EXECUTION_DISCIPLINE.md
-      - GCL-TCS Pilot Evidence Index: governance/GCL_TCS_PILOT_EVIDENCE_INDEX.md
-      - GCL-TCS Pilot Measurement: governance/GCL_TCS_PILOT_MEASUREMENT_001.md
-      - GCL-TCS Normative Agreement Matrix: governance/GCL_TCS_NORMATIVE_AGREEMENT_MATRIX.md
-      - GCL-TCS Machine Contract Migration 0.1.0-R1: council/submissions/GCL-TCS-00/MACHINE_CONTRACT_MIGRATION_0.1.0-R1.md
-      - Administrative Maintenance Terminology: governance/ADMINISTRATIVE_MAINTENANCE_TERMINOLOGY.md
-      - GCL Institutional Truth Spine: governance/GCL_TRUTH_SPINE.md
-      - Truth Spine Initial Conformance: governance/GCL_TRUTH_SPINE_CONFORMANCE_2026_07_31.md
-      - GCL Work-Package Tooling: governance/GCL_WORK_PACKAGE_TOOLING.md
-      - GCL Negative Knowledge: governance/GCL_NEGATIVE_KNOWLEDGE.md
-      - GCL Portfolio Pilot: governance/GCL_PORTFOLIO.md
-      - GCL Portfolio Pilot View: governance/GCL_PORTFOLIO_VIEW.md
-      - GCL Synthesis Pilot: governance/GCL_SYNTHESIS.md
-      - GCL Synthesis Pilot Report: governance/GCL_SYNTHESIS_REPORT.md
-      - GCL Synthesis Review Packet: governance/GCL_SYNTHESIS_REVIEW_PACKET.md
-      - Mathematics Taxonomy Qualification Packet: governance/MATH_TAXONOMY_QUALIFICATION_PACKET_001.md
-      - Workflow Coverage Audit 2026-07-29: WORKFLOW_COVERAGE_AUDIT_2026_07_29.md
-      - Release-Trust Administration: RELEASE_TRUST_ADMINISTRATION.md
-      - Agent Council Terminology Registry: AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md
-      - Agent Council WP Checklist: AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md
-      - Agent Council Decision Index: AGENT_COUNCIL_DECISION_RECORDS.md
-      - CMDG Programme Charter: CMDG_CHARTER.md
-      - CMDG Programme Memorial: CMDG_GRAND_CHALLENGE_PROGRAMME_MEMORIAL.md
-      - CMDG Council Deliberation 001: CMDG_COUNCIL_DELIBERATION_001.md
-      - MATH-CORE-01 Council Deliberation 001: MATH_CORE_01_COUNCIL_DELIBERATION_001.md
-      - MATH-CORE Condensed Domain Shadow 001: MATH_CORE_DOMAIN_SHADOW_001.md
-      - MATH-CORE Condensed Domain Diagnostic 001: MATH_CORE_DOMAIN_DIAG_001.md
-      - PR Visual Status Reporting Council Deliberation 001: PR_VISUAL_STATUS_REPORTING_COUNCIL_DELIBERATION_001.md
-      - CMDG NAT Concordance Foundational Profiles: CMDG_NAT_CONCORDANCE_FOUNDATIONS_PROFILE_001.md
-      - CMDG NAT Concordance 001: CMDG_NAT_CONCORDANCE_001.md
-      - GCL-TCS-00 and GCL-POS-01 Council Review: council/dockets/GCL-TCS-00_GCL-POS-01_REVIEW.md
-      - Decisions:
-          - Amanuensis Office ADR-0001: decisions/ADR-0001_AMANUENSIS_CONTINUITY_OFFICE.md
-          - Union-Closed Council Pilot ADR-0002: decisions/ADR-0002_UNION_CLOSED_AGENT_COUNCIL_PILOT.md
-          - Navier–Stokes Campaign ADR-0003: decisions/ADR-0003_NAVIER_STOKES_CRITICAL_INTEGRABILITY.md
-          - Hodge Campaign ADR-0004: decisions/ADR-0004_HODGE_CONJECTURE_CAMPAIGN.md
-          - BSD WP00 Decision ADR-0005: decisions/ADR-0005_BSD_SOURCE_EQUIVALENCE.md
-          - Poincaré Archive Decision ADR-0006: decisions/ADR-0006_POINCARE_RECONSTRUCTION_ARCHIVE.md
-          - Agent Council Contract Repair ADR-0007: decisions/ADR-0007_AGENT_COUNCIL_CONTRACT_NORMALIZATION.md
-          - MkDocs Domain Coverage ADR-0008: decisions/ADR-0008_MKDOCS_DOMAIN_COVERAGE.md
-          - Post-Merge Domain Coverage ADR-0009: decisions/ADR-0009_POST_MERGE_DOMAIN_COVERAGE.md
-          - Documentary Authority ADR-0010: decisions/ADR-0010_DOCUMENTARY_LIBRARY_AUTHORITY.md
-          - Full Workflow Coverage ADR-0011: decisions/ADR-0011_FULL_WORKFLOW_COVERAGE.md
-          - Self-Authenticating Workflow Coverage ADR-0012: decisions/ADR-0012_SELF_AUTHENTICATING_WORKFLOW_COVERAGE.md
-          - NS-WP06 Undecidability Lane ADR-0013: decisions/ADR-0013_NS_WP06_UNDECIDABILITY_LANE.md
-          - Exact Artifact and Repository Execution ADR-0014: decisions/ADR-0014_EXACT_ARTIFACT_AND_REPOSITORY_EXECUTION.md
-          - Union-Closed Documentary Admission ADR-0015: decisions/ADR-0015_UNION_CLOSED_DOCUMENTARY_ADMISSION.md
-          - Accelerated Core Clarity Maintenance ADR-0016: decisions/ADR-0016_ACCELERATED_CORE_CLARITY_MAINTENANCE.md
-          - CMDG Certified Dependency Graph ADR-0017: decisions/ADR-0017_CMDG_CERTIFIED_MATHEMATICAL_DEPENDENCY_GRAPH.md
-          - Visual Pedagogy Reform ADR-0018: decisions/ADR-0018_VISUAL_PEDAGOGY_REFORM.md
-          - PR Visual Status Reporting ADR-0019: decisions/ADR-0019_PR_VISUAL_STATUS_REPORTING.md
-          - Layered Mathematics Taxonomy ADR-0020: decisions/ADR-0020_LAYERED_MATHEMATICS_TAXONOMY.md
-          - MATH-CORE-centred GCL Mathematics Architecture ADR-0021: decisions/ADR-0021_MATH_CORE_CENTRED_GCL_MATHEMATICS_ARCHITECTURE.md
-  - Doctrine:
-      - Technical Writing Reference: TECHNICAL_WRITING_REFERENCE.md
-      - Claim Boundary: CLAIM_BOUNDARY_DOCTRINE.md
-      - Programme Status Taxonomy: STATUS_TAXONOMY.md
-      - Pedagogy Standard: GRAND_CHALLENGE_PEDAGOGY_STANDARD.md
-      - Visual Pedagogy Standard: VISUAL_PEDAGOGY_STANDARD.md
-      - Accessible Research Guide Standard: ACCESSIBLE_RESEARCH_GUIDE_STANDARD.md
-      - Foundation-Aware Programme: FOUNDATION_AWARE_MATH_PROGRAMME.md
-      - Pedagogical Style Guide: PEDAGOGICAL_STYLE_GUIDE.md
-      - Chaidez Pedagogical Protocol: CHAIDEZ_PEDAGOGICAL_PROTOCOL.md
-      - Reduction and Certificate Foundations: REDUCTION_CERTIFICATE_FOUNDATIONS.md
-      - Groebner and EXPSPACE: GROEBNER_EXPSPACE_DOCTRINE.md
-      - Resource Budgets: RESOURCE_BUDGET_POLICY.md
-  - Routes and Lanes:
-      - Cross-Pillar Lanes: CROSS_PILLAR_LANES.md
-      - Computational Algebraic Geometry: COMPUTATIONAL_ALGEBRAIC_GEOMETRY_LANE.md
-      - Exact Finite Enumeration: lanes/EXACT_FINITE_ENUMERATION.md
-      - Interval Arithmetic: lanes/INTERVAL_ARITHMETIC.md
-      - SAT and SMT Proof Artifacts: lanes/SAT_SMT_PROOF_ARTIFACTS.md
-      - Lean Formalization Handoff: lanes/LEAN_FORMALIZATION_HANDOFF.md
-      - Literature Synthesis to Status Spine: lanes/LITERATURE_SYNTHESIS_STATUS_SPINE.md
-      - TROPIC-GROEBNER Route: TROPIC_GROEBNER_ROUTE.md
-      - TCM Semiring-Contraction Route: routes/TCM_SEMIRING_CONTRACTION_ROUTE.md
-  - Results and Archives:
-      - "Verified Corpus: OpenAI Ten Proofs": OPENAI_TEN_PROOFS_VERIFICATION.md
-      - Fixture Ledger: FIXTURE_LEDGER.md
-      - Euclidean GCD End-to-End Proof Trace: EUCLID_GCD_E2E_001_PROOF_TRACE.md
-      - Linear Diophantine End-to-End Proof Trace: EUCLID_DIOPHANTINE_E2E_002_PROOF_TRACE.md
-      - Logarithmic GCD Kernel: LOG_GCD_KERNEL.md
-      - LOG-GCD Prior-Art Audit: LOG_GCD_PRIOR_ART_AUDIT.md
-      - "Published Result: Logarithmic GCD Kernel": LOG_GCD_PUBLICATION.md
-      - "Solved-Problem Archive: Poincaré Reconstruction": POINCARE_RECONSTRUCTION_ARCHIVE.md
-      - Groebner Applications Manifest: GROBNER_APPLICATIONS_MANIFEST.md
-  - Research Intake:
-      - ResearchMath Intake: RESEARCHMATH_INTAKE_LANE.md
-      - ResearchMath Walkthrough: RESEARCHMATH_WALKTHROUGH.md
-      - RM-DIO-004 MATHSOLVE Seed: MATHSOLVE_SEED_RM_DIO_004.md
-      - External Corpus Intake Standard: EXTERNAL_CORPUS_INTAKE_STANDARD.md
-      - "Resource Note: Project-Based Research": RESOURCE_NOTES/PROJECT_BASED_UNDERGRADUATE_RESEARCH.md
-  - Reference:
-      - Repository Documents: REPOSITORY_DOCS.md
-      - Glossary: GLOSSARY.md
-      - Retired Minderlings Pointer: MINDERLINGS.md
-  - History and Audits:
-      - Integration Audit 2026-06-21: INTEGRATION_AUDIT_2026_06_21.md
+  - Institutional Record:
+      - Governance:
+          - Agent Council: MATH_PROGRAMME_AGENT_COUNCIL.md
+          - Agent Council Governance: AGENT_COUNCIL_GOVERNANCE.md
+          - Agent Council Artifact Ledger: AGENT_COUNCIL_ARTIFACT_LEDGER.md
+          - Construction Gate Operating Guide: governance/CONSTRUCTION_GATE_OPERATING_GUIDE.md
+          - Execution Recovery Operating Guide: governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md
+          - GH-OS Routing Control Runbook: governance/GHOS_ROUTING_CONTROL_RUNBOOK.md
+          - GH-OS Estate Rollout Campaign: governance/GHOS_ESTATE_ROLLOUT_CAMPAIGN.md
+          - Campaign Promotion Register: CAMPAIGN_PROMOTION_REGISTER.md
+          - Programme Workflow Coverage: WORKFLOW_COVERAGE.md
+          - Administrative Maintenance Plan: governance/ADMINISTRATIVE_MAINTENANCE_PLAN.md
+          - Agent-Cadence Operating Design: governance/AGENT_CADENCE_OPERATING_DESIGN.md
+          - Streamlined Execution Amendment: governance/STREAMLINED_EXECUTION_AMENDMENT.md
+          - Substance-First Execution Discipline: governance/SUBSTANCE_FIRST_EXECUTION_DISCIPLINE.md
+          - GCL-TCS Pilot Evidence Index: governance/GCL_TCS_PILOT_EVIDENCE_INDEX.md
+          - GCL-TCS Pilot Measurement: governance/GCL_TCS_PILOT_MEASUREMENT_001.md
+          - GCL-TCS Normative Agreement Matrix: governance/GCL_TCS_NORMATIVE_AGREEMENT_MATRIX.md
+          - GCL-TCS Machine Contract Migration 0.1.0-R1: council/submissions/GCL-TCS-00/MACHINE_CONTRACT_MIGRATION_0.1.0-R1.md
+          - Administrative Maintenance Terminology: governance/ADMINISTRATIVE_MAINTENANCE_TERMINOLOGY.md
+          - GCL Institutional Truth Spine: governance/GCL_TRUTH_SPINE.md
+          - Truth Spine Initial Conformance: governance/GCL_TRUTH_SPINE_CONFORMANCE_2026_07_31.md
+          - GCL Work-Package Tooling: governance/GCL_WORK_PACKAGE_TOOLING.md
+          - GCL Negative Knowledge: governance/GCL_NEGATIVE_KNOWLEDGE.md
+          - GCL Portfolio Pilot: governance/GCL_PORTFOLIO.md
+          - GCL Portfolio Pilot View: governance/GCL_PORTFOLIO_VIEW.md
+          - GCL Synthesis Pilot: governance/GCL_SYNTHESIS.md
+          - GCL Synthesis Pilot Report: governance/GCL_SYNTHESIS_REPORT.md
+          - GCL Synthesis Review Packet: governance/GCL_SYNTHESIS_REVIEW_PACKET.md
+          - Mathematics Taxonomy Qualification Packet: governance/MATH_TAXONOMY_QUALIFICATION_PACKET_001.md
+          - Workflow Coverage Audit 2026-07-29: WORKFLOW_COVERAGE_AUDIT_2026_07_29.md
+          - Release-Trust Administration: RELEASE_TRUST_ADMINISTRATION.md
+          - Agent Council Terminology Registry: AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md
+          - Agent Council WP Checklist: AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md
+          - Agent Council Decision Index: AGENT_COUNCIL_DECISION_RECORDS.md
+          - CMDG Programme Charter: CMDG_CHARTER.md
+          - CMDG Programme Memorial: CMDG_GRAND_CHALLENGE_PROGRAMME_MEMORIAL.md
+          - CMDG Council Deliberation 001: CMDG_COUNCIL_DELIBERATION_001.md
+          - MATH-CORE-01 Council Deliberation 001: MATH_CORE_01_COUNCIL_DELIBERATION_001.md
+          - MATH-CORE Condensed Domain Shadow 001: MATH_CORE_DOMAIN_SHADOW_001.md
+          - MATH-CORE Condensed Domain Diagnostic 001: MATH_CORE_DOMAIN_DIAG_001.md
+          - PR Visual Status Reporting Council Deliberation 001: PR_VISUAL_STATUS_REPORTING_COUNCIL_DELIBERATION_001.md
+          - CMDG NAT Concordance Foundational Profiles: CMDG_NAT_CONCORDANCE_FOUNDATIONS_PROFILE_001.md
+          - CMDG NAT Concordance 001: CMDG_NAT_CONCORDANCE_001.md
+          - GCL-TCS-00 and GCL-POS-01 Council Review: council/dockets/GCL-TCS-00_GCL-POS-01_REVIEW.md
+          - Decisions:
+              - Amanuensis Office ADR-0001: decisions/ADR-0001_AMANUENSIS_CONTINUITY_OFFICE.md
+              - Union-Closed Council Pilot ADR-0002: decisions/ADR-0002_UNION_CLOSED_AGENT_COUNCIL_PILOT.md
+              - Navier–Stokes Campaign ADR-0003: decisions/ADR-0003_NAVIER_STOKES_CRITICAL_INTEGRABILITY.md
+              - Hodge Campaign ADR-0004: decisions/ADR-0004_HODGE_CONJECTURE_CAMPAIGN.md
+              - BSD WP00 Decision ADR-0005: decisions/ADR-0005_BSD_SOURCE_EQUIVALENCE.md
+              - Poincaré Archive Decision ADR-0006: decisions/ADR-0006_POINCARE_RECONSTRUCTION_ARCHIVE.md
+              - Agent Council Contract Repair ADR-0007: decisions/ADR-0007_AGENT_COUNCIL_CONTRACT_NORMALIZATION.md
+              - MkDocs Domain Coverage ADR-0008: decisions/ADR-0008_MKDOCS_DOMAIN_COVERAGE.md
+              - Post-Merge Domain Coverage ADR-0009: decisions/ADR-0009_POST_MERGE_DOMAIN_COVERAGE.md
+              - Documentary Authority ADR-0010: decisions/ADR-0010_DOCUMENTARY_LIBRARY_AUTHORITY.md
+              - Full Workflow Coverage ADR-0011: decisions/ADR-0011_FULL_WORKFLOW_COVERAGE.md
+              - Self-Authenticating Workflow Coverage ADR-0012: decisions/ADR-0012_SELF_AUTHENTICATING_WORKFLOW_COVERAGE.md
+              - NS-WP06 Undecidability Lane ADR-0013: decisions/ADR-0013_NS_WP06_UNDECIDABILITY_LANE.md
+              - Exact Artifact and Repository Execution ADR-0014: decisions/ADR-0014_EXACT_ARTIFACT_AND_REPOSITORY_EXECUTION.md
+              - Union-Closed Documentary Admission ADR-0015: decisions/ADR-0015_UNION_CLOSED_DOCUMENTARY_ADMISSION.md
+              - Accelerated Core Clarity Maintenance ADR-0016: decisions/ADR-0016_ACCELERATED_CORE_CLARITY_MAINTENANCE.md
+              - CMDG Certified Dependency Graph ADR-0017: decisions/ADR-0017_CMDG_CERTIFIED_MATHEMATICAL_DEPENDENCY_GRAPH.md
+              - Visual Pedagogy Reform ADR-0018: decisions/ADR-0018_VISUAL_PEDAGOGY_REFORM.md
+              - PR Visual Status Reporting ADR-0019: decisions/ADR-0019_PR_VISUAL_STATUS_REPORTING.md
+              - Layered Mathematics Taxonomy ADR-0020: decisions/ADR-0020_LAYERED_MATHEMATICS_TAXONOMY.md
+              - MATH-CORE-centred GCL Mathematics Architecture ADR-0021: decisions/ADR-0021_MATH_CORE_CENTRED_GCL_MATHEMATICS_ARCHITECTURE.md
+      - Reference:
+          - Repository Documents: REPOSITORY_DOCS.md
+          - Glossary: GLOSSARY.md
+          - Retired Minderlings Pointer: MINDERLINGS.md
+      - History and Audits:
+          - Integration Audit 2026-06-21: INTEGRATION_AUDIT_2026_06_21.md
 
 theme:
   name: material

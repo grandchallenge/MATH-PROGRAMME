@@ -5,137 +5,139 @@ hide:
 ---
 
 <div class="frontispiece">
-  <img class="frontispiece__field" src="assets/programme-field.svg" alt="" aria-hidden="true">
   <div class="frontispiece__inner">
     <div class="frontispiece__edition">
       <span>Grand Challenge Labs</span>
       <span>Mathematics Programme · Edition 2026.07</span>
     </div>
-    <h1>MATH-<br>PROGRAMME</h1>
-    <p class="frontispiece__thesis">A public discipline for turning mathematical curiosity into checked understanding.</p>
-    <p class="frontispiece__summary">Discovery remains free to imagine. Campaigns make obligations precise. Certification decides what crossed the proof boundary. Governance preserves what those decisions mean.</p>
+    <h1>Mathematics<br>Programme</h1>
+    <p class="frontispiece__thesis">Discovery, solving, and certification are separate research states.</p>
+    <p class="frontispiece__summary">This site shows what is active now, what has crossed a checked boundary, how the programme moves claims, and where the standing mathematical estate lives.</p>
     <div class="frontispiece__actions">
-      <a class="gc-button gc-button--primary" href="SHOWCASE/">Enter the programme</a>
-      <a class="gc-button" href="domains/">Explore the domains</a>
+      <a class="gc-button gc-button--primary" href="CURRENT_WORK/">Current work</a>
+      <a class="gc-button" href="SHOWCASE/">Results</a>
     </div>
 
     <div class="programme-spine" aria-label="The three mathematical execution pillars">
-      <a class="programme-spine__stage" href="https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/MATHFORGE_SPEC.md">
+      <a class="programme-spine__stage" href="https://github.com/grandchallenge/MATHFORGE">
         <span class="programme-spine__number">I</span>
         <span class="programme-spine__name">MATHFORGE</span>
-        <span class="programme-spine__verb">Find the real problem</span>
+        <span class="programme-spine__verb">Reconstruct the object and source</span>
       </a>
       <span class="programme-spine__arrow" aria-hidden="true">→</span>
-      <a class="programme-spine__stage" href="https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/MATHSOLVE_SPEC.md">
+      <a class="programme-spine__stage" href="https://github.com/grandchallenge/MATHSOLVE">
         <span class="programme-spine__number">II</span>
         <span class="programme-spine__name">MATHSOLVE</span>
-        <span class="programme-spine__verb">Build the theorem spine</span>
+        <span class="programme-spine__verb">Close named proof obligations</span>
       </a>
       <span class="programme-spine__arrow" aria-hidden="true">→</span>
-      <a class="programme-spine__stage" href="https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/MATHCERT_SPEC.md">
+      <a class="programme-spine__stage" href="https://github.com/grandchallenge/MATHCERT">
         <span class="programme-spine__number">III</span>
         <span class="programme-spine__name">MATHCERT</span>
-        <span class="programme-spine__verb">Check the claim boundary</span>
+        <span class="programme-spine__verb">Check the exact claim boundary</span>
       </a>
     </div>
-    <p class="gc-measure"><strong>MATH-PROGRAMME</strong> is the governance, integration, publication, and archival layer. It is not a fourth proof stage.</p>
+    <p class="gc-measure"><strong>MATH-PROGRAMME</strong> preserves the integrated programme record. It does not certify mathematics by itself.</p>
   </div>
 </div>
 
-<section class="gc-section gc-section--manifesto">
-  <p class="gc-kicker">The binding maxim</p>
-  <blockquote class="gc-maxim">No theorem without a spine. No computation without a ledger. No conjecture without a map. No proof without a reader.</blockquote>
+<section class="gc-section">
+  <div class="gc-section__heading">
+    <p class="gc-kicker">Read by question</p>
+    <h2>Four questions organize the public site.</h2>
+  </div>
+
+| Reader question | Start here |
+| --- | --- |
+| What is being worked on now? | [Current Work](CURRENT_WORK.md) |
+| What has crossed a checked or published boundary? | [Results and Exemplars](SHOWCASE.md) |
+| How does a claim move through the programme? | [Programme Atlas](PROGRAMME_ATLAS.md) |
+| What standing mathematical domains and records exist? | [Mathematical Estate](domains/index.md) |
+
+The four surfaces have different purposes. Current work is time-sensitive navigation. Results are bounded records. The Atlas explains the machinery. The estate preserves standing domains and archives.
 </section>
 
-<section class="gc-section gc-section--argument">
+<section class="gc-section">
   <div class="gc-section__heading">
-    <p class="gc-kicker">Why this exists</p>
-    <h2>Mathematical work can be valuable long before it becomes a theorem.</h2>
+    <p class="gc-kicker">Current mathematical work</p>
+    <h2>The active fronts are narrower than the standing domain catalogue.</h2>
   </div>
-  <div class="argument-ledger">
-    <div class="argument-ledger__thesis">
-      <p>A serious programme must preserve that value without inflating its status.</p>
-      <p>Definitions clarified, false corridors closed, boundary cases isolated, exact screens built, and proof obligations sharpened are genuine advances. They become cumulative only when another reader can inspect what changed and why.</p>
-    </div>
-    <dl class="argument-ledger__tests">
-      <div><dt>Without a map</dt><dd>Promising questions are mistaken for well-posed problems.</dd></div>
-      <div><dt>Without a spine</dt><dd>Local insights never assemble into a proof strategy.</dd></div>
-      <div><dt>Without a ledger</dt><dd>Computation, intuition, and theorem drift into one another.</dd></div>
-      <div><dt>Without continuity</dt><dd>Later artifacts silently change what earlier decisions meant.</dd></div>
-    </dl>
-  </div>
+
+### BSD-001 · literal-`p=2` inverse-limit replay
+
+**Status:** active solving campaign; not certified.
+
+The current object is the inverse-limit step in Burns–Sakamoto–Sano Theorem 5.25 after the protected finite-level literal-`2` replay. The obstruction is precise: the published route uses full Hypothesis 4.7, while the protected campaign retains failure of the relevant infinite auxiliary-field vanishing condition.
+
+The next bounded move is to replay the transition maps, regulator compatibility, inverse-limit Kolyvagin system, Fitting ideals, and rank-one freeness without silently restoring the failed hypothesis.
+
+[Read the current-work entry →](CURRENT_WORK.md#bsd-001--literal-p2-inverse-limit-replay)
+
+### OZ-001 · order-7 certificate compression
+
+**Status:** active certificate-construction route; T3 remains open.
+
+The current object is a `576`-dimensional homogeneous residual kernel identified with a discrete-curl image. The obstruction is no longer the kernel dimension. It is the construction of a degree-reduced affine section over `Q[n]`, followed by independent characteristic-zero replay.
+
+The next bounded move is a shifted Popov, minimal-approximant, order-basis, or equivalent completeness-backed reduction for the seven residual blocks.
+
+[Read the current-work entry →](CURRENT_WORK.md#oz-001--order-7-certificate-compression)
 </section>
 
-<section class="gc-section gc-section--progress">
+<section class="gc-section">
   <div class="gc-section__heading">
-    <p class="gc-kicker">What counts as progress</p>
-    <h2>Progress is a controlled change in what the programme knows.</h2>
+    <p class="gc-kicker">Recent bounded transition</p>
+    <h2>VGSE now separates a qualified four-claim result from a new engineering question.</h2>
   </div>
-  <div class="progress-ladder" aria-label="The programme progression from orientation to certification">
-    <div><span>01</span><strong>Orient</strong><p>Reconstruct the source, status, and exact object.</p><small>Confusion decreases.</small></div>
-    <div><span>02</span><strong>Reduce</strong><p>Turn a broad problem into finite mathematical obligations.</p><small>The search space contracts.</small></div>
-    <div><span>03</span><strong>Instrument</strong><p>Build examples, exact screens, diagnostics, and ledgers.</p><small>Evidence becomes inspectable.</small></div>
-    <div><span>04</span><strong>Prove locally</strong><p>Establish a lemma inside a stated dependency boundary.</p><small>A claim earns support.</small></div>
-    <div><span>05</span><strong>Certify</strong><p>Replay the proof or certificate independently.</p><small>Reliance becomes warranted.</small></div>
+
+The restricted successor `MC-ROUTE-VGSE-001-R4` qualified exactly `VGSE-C00`, `VGSE-C01`, `VGSE-C04`, and `VGSE-C05`. The original five-claim route remains fail-closed on `VGSE-C06`.
+
+The programme has therefore moved to a separate engineering-discovery question: which mechanical properties are invariant, tunable, robust, or synthesizable across admissible origami realizations? That work does not broaden the certified mathematics or resolve `VGSE-C06`.
+
+[Inspect the bounded result →](SHOWCASE.md#vgse-001--restricted-four-claim-publication) · [Inspect the engineering handoff →](CURRENT_WORK.md#vgse-001--engineering-discovery-handoff)
+</section>
+
+<section class="gc-section">
+  <div class="gc-section__heading">
+    <p class="gc-kicker">Claim movement</p>
+    <h2>Unresolved work exits visibly instead of becoming a stronger claim.</h2>
   </div>
+
+![State transition from a question or source signal through MATHFORGE, MATHSOLVE, and MATHCERT. Fail-closed exits record an obstruction, proof debt, or non-promotion.](assets/claim-state-transition.svg)
+
+The diagram is schematic. It represents programme state transitions, not a proof. MATHFORGE can stop with a recorded obstruction. MATHSOLVE can stop with proof debt. MATHCERT can refuse promotion.
+
+[Read the Programme Atlas →](PROGRAMME_ATLAS.md)
+</section>
+
+<section class="gc-section">
+  <div class="gc-section__heading">
+    <p class="gc-kicker">Standing estate</p>
+    <h2>The domain catalogue records scope, not priority.</h2>
+  </div>
+
+The programme retains standing domains for Union-Closed Sets, Navier–Stokes, Hodge, Birch–Swinnerton-Dyer, Poincaré reconstruction, Yang–Mills, P versus NP, and the Riemann Hypothesis. A domain may be active, quiet, archival, or waiting on a later route.
+
+Presence in the catalogue does not imply current priority, progress toward a terminal theorem, or certification.
+
+[Inspect the Mathematical Estate →](domains/index.md)
 </section>
 
 <section class="gc-section gc-section--boundary">
   <div class="gc-section__heading">
-    <p class="gc-kicker">The proof boundary</p>
-    <h2>Status words describe different objects and must not collapse.</h2>
+    <p class="gc-kicker">Claim boundary</p>
+    <h2>Status words must name the kind of support they describe.</h2>
   </div>
-  <div class="status-register" aria-label="Reader-facing claim status summary">
-    <span class="claim-status claim-status--conjectural">Conjectural</span>
-    <span class="claim-status claim-status--computed">Computed</span>
-    <span class="claim-status claim-status--provisional">Provisional</span>
-    <span class="claim-status claim-status--certified">Certified</span>
-    <span class="claim-status claim-status--rejected">Rejected</span>
-  </div>
-  <p class="gc-measure">These are compact claim summaries. Artifact lifecycle and campaign disposition are separate vocabularies. <a href="STATUS_TAXONOMY/">Read the status taxonomy.</a></p>
-</section>
 
-<section class="gc-section gc-section--argument">
-  <div class="gc-section__heading">
-    <p class="gc-kicker">New protected result · September 2026</p>
-    <h2>Ten supplied Lean proofs. One exact corpus. Independently checked.</h2>
-  </div>
-  <div class="argument-ledger">
-    <div class="argument-ledger__thesis">
-      <p>MATHCERT rebuilt all ten modules in OpenAI’s <em>Ten Proofs</em> corpus and checked twelve advertised headline declarations through the Lean kernel.</p>
-      <p>The public record pins the exact source tree, toolchain, module blobs, permitted axioms, independent review, protected merge, and post-merge replay.</p>
-      <p><a class="text-link" href="OPENAI_TEN_PROOFS_VERIFICATION/">Read the verification record <span>→</span></a></p>
-    </div>
-    <dl class="argument-ledger__tests">
-      <div><dt>10 / 10</dt><dd>Exact upstream Lean modules rebuilt.</dd></div>
-      <div><dt>12 / 12</dt><dd>Headline declarations accepted by the kernel.</dd></div>
-      <div><dt>0</dt><dd>Unexpected axioms in the checked surface.</dd></div>
-      <div><dt>Protected</dt><dd>Independent approval, merge, readback, and replay complete.</dd></div>
-    </dl>
-  </div>
-</section>
+<div class="status-register" aria-label="Reader-facing claim status summary">
+  <span class="claim-status claim-status--conjectural">Conjectural</span>
+  <span class="claim-status claim-status--computed">Computed</span>
+  <span class="claim-status claim-status--provisional">Provisional</span>
+  <span class="claim-status claim-status--certified">Certified</span>
+  <span class="claim-status claim-status--rejected">Rejected</span>
+</div>
 
-<section class="gc-section gc-section--current">
-  <div class="gc-section__heading">
-    <p class="gc-kicker">The current portfolio</p>
-    <h2>Eight domains, each with a different claim boundary.</h2>
-  </div>
-  <div class="domain-brief">
-    <div class="domain-brief__identity"><span>Domains 01–08</span><strong>Open campaigns and a solved-problem archive</strong><p>One method, distinct mathematical states.</p></div>
-    <div class="domain-brief__body"><p>Union-Closed Sets remains the foundational demonstration domain. Navier–Stokes, Hodge, Birch–Swinnerton-Dyer, Yang–Mills, P versus NP, and the Riemann Hypothesis are open campaigns. Poincaré is a qualified reconstruction archive for a solved classical theorem.</p><a class="text-link" href="domains/">Inspect the domain catalogue <span>→</span></a></div>
-  </div>
-</section>
+These labels summarize mathematical support. Artifact lifecycle and campaign disposition use separate vocabularies. Public presentation does not raise claim status.
 
-<section class="gc-section gc-section--entry">
-  <div>
-    <p class="gc-kicker">Choose an entrance</p>
-    <h2>Enter by the question you need answered.</h2>
-  </div>
-  <div class="entry-links">
-    <a href="SHOWCASE/"><span>01</span><strong>What is the whole system?</strong><small>See the programme in one screen.</small></a>
-    <a href="domains/"><span>02</span><strong>Which campaigns are active?</strong><small>Inspect each domain and its exact claim boundary.</small></a>
-    <a href="GRAND_CHALLENGE_READER_GUIDE/"><span>03</span><strong>How should I read the work?</strong><small>Use the reader's compact and review lenses.</small></a>
-    <a href="CLAIM_BOUNDARY_DOCTRINE/"><span>04</span><strong>What may I rely upon?</strong><small>Inspect support classes and promotion.</small></a>
-    <a href="MATH_PROGRAMME_AGENT_COUNCIL/"><span>05</span><strong>Who preserves continuity?</strong><small>Read the review and integration responsibilities.</small></a>
-  </div>
+[Read the status taxonomy →](STATUS_TAXONOMY.md) · [Read the claim-boundary doctrine →](CLAIM_BOUNDARY_DOCTRINE.md)
 </section>
