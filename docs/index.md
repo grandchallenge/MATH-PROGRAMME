@@ -52,17 +52,22 @@ The diagram is schematic. It teaches programme state transitions, not logical im
 
 ## Current frontier
 
-The programme has more than three active development fronts. To keep the public front door readable, the table below highlights three current fronts with especially clear public claim boundaries; it is not an exhaustive portfolio listing.
+The table below displays up to ten material fronts that are in active development. It is a public orientation surface, not the authoritative active-work registry. Row order is for navigation; it does not rank theorem importance, claim strength, or institutional priority.
 
 | Campaign | Current object | Open boundary |
 | --- | --- | --- |
-| **BSD-001** | Literal-`p=2` replay of the inverse-limit passage in Burns–Sakamoto–Sano Theorem 5.25 | Replay the transition maps, regulator compatibility, inverse-limit Kolyvagin system, Fitting ideals, and rank-one freeness without silently restoring the failed infinite auxiliary-field hypothesis. |
-| **OZ-001** | Order-7 boundary-forced residual system with a `576`-dimensional homogeneous kernel identified as a discrete-curl image | Construct a completeness-backed degree-reduced affine section over `Q[n]`, then replay the positive certificate independently in characteristic zero. |
-| **VGSE-001** | Engineering discovery over admissible origami realizations after qualification of the restricted four-claim successor | Determine which mechanical properties are invariant, tunable, robust, or synthesizable without broadening the qualified mathematics or treating the unresolved `VGSE-C06` bridge as closed. |
+| **BSD-001** | Literal-`p=2` replay of the inverse-limit passage in Burns–Sakamoto–Sano Theorem 5.25. [Tracker](https://github.com/grandchallenge/MATHSOLVE/issues/245) | Establish the required transition, regulator, Kolyvagin-system, Fitting-ideal, and rank-one compatibilities without restoring the failed infinite auxiliary-field hypothesis. |
+| **OZ-001** | Order-7 boundary-forced residual system with a `576`-dimensional homogeneous kernel identified as a discrete-curl image. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/964) | Construct a completeness-backed degree-reduced affine section over `Q[n]`, then independently replay the resulting certificate in characteristic zero. |
+| **VGSE-001** | Engineering design-space and response-law extraction over admissible origami realizations. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/984) | Separate invariant, tunable, and perturbation-sensitive behaviour while keeping the unresolved source-attribution bridge outside the qualified result. |
+| **CMDG CM4 P3-M** | Finite-stage recovery from finite-coordinate dependence; the current successor attacks the pointwise Nöbeling kernel bridge. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/664) | Show that the finite-stage information annihilates the relevant kernel functional pointwise, or record the exact missing comparison/separation invariant. |
+| **NS-CI-001** | Direct `L^4_t L^6_x` critical-integral decomposition for three-dimensional Navier–Stokes. [Tracker](https://github.com/grandchallenge/MATHSOLVE/issues/59) | Produce an equation-specific integrable estimate that survives the existing low/high-mode, selector, and false-proof controls. |
+| **RSI-CCC-001** | Lean 4 formalization of one guarded self-replacement step in the selected stage-indexed model. [Tracker](https://github.com/grandchallenge/MATHSOLVE/issues/248) | Close the CCC, guarded, typed-reflection, refinement, and admission-preservation obligations without adding ambient order enrichment or unrestricted reification. |
+| **PNP-BRIDGE-001** | Proof-bearing bridges between imported `P`/`NP` definitions and the Programme machine, encoding, and polynomial-bound conventions. [Tracker](https://github.com/grandchallenge/MATHSOLVE/issues/148) | Establish the carrier, machine-simulation, polynomial-bound, and verifier-class equivalences before any endpoint theorem route can advance. |
+| **ASP T8 Noise** | Sub-Gaussian residual-energy certification and finite scaling confrontation for adaptive spectral peeling. [Tracker](https://github.com/grandchallenge/MATHFORGE/issues/115) | Derive and test a valid noisy certificate, including whether `C/Gamma^2` must be replaced by a stronger noise-dependent scaling law. |
+| **Type Theory · Volume IV** | `PROTOCOL: Computation as Communication`; composition of the session-type and process-calculus volume through durable RC admission. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/877) | Complete the formal manuscript, executable protocol core, proof audit, and durable RC package without conflating protocol fidelity with stronger progress or distributed-correctness claims. |
+| **OpenAI Ten Proofs** | Family-specific certification progression across the independently routed proof families. [Tracker](https://github.com/grandchallenge/MATHCERT/issues/43) | Advance only exact family surfaces through route, adjudication, and restricted output gates; no aggregate Ten-Proofs proof or certificate authority is implied. |
 
-Additional active development includes the **CMDG CM4 P3-M finite-stage recovery** lane and the **NS-CI-001 critical-integrability** lane. The [Current Work](CURRENT_WORK.md) page records these additional fronts while keeping the detailed public profiles bounded.
-
-[Inspect Current Work](CURRENT_WORK.md) for the status, object, obstruction, supported state, claim boundary, and next bounded move for the highlighted fronts.
+Rows remain here only while the corresponding work is materially active. The [Current Work](CURRENT_WORK.md) page gives deeper profiles for selected fronts; protected repository records and live governed trackers control exact state.
 
 ## Where to go next
 
