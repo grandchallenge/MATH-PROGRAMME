@@ -24,7 +24,7 @@ EXPECTED_SEMANTIC_BYTES = 4665
 EXPECTED_SEMANTIC_BLOB = "206842583d15acf91eb0e363ddb12cbf124ab0a9"
 EXPECTED_SHARED_RUNTIME_BLOB = "b53dce8861e9eee78ced01758220b3ed3110a22f"
 EXPECTED_NATIVE_REPAIR_BASE = "050bde21b0dabb25ae4120d3e2c8d0e271a0efc2"
-PLATE_IV_CACHE_TOKEN = "plate_04_strong_bsd_ledger.svg?v=bsd-math-v6-20260917"
+PLATE_IV_CACHE_TOKEN = "plate_04_strong_bsd_ledger.svg?v=bsd-math-v7-20260917"
 VIEWBOX = 'viewBox="0 0 1536 1024"'
 
 
@@ -64,8 +64,8 @@ def main() -> int:
         fail("manifest semantic sha256 lock disagrees with verifier")
     if runtime.get("semantic_master_git_blob") != EXPECTED_SEMANTIC_BLOB:
         fail("manifest semantic git-blob lock disagrees with verifier")
-    if runtime.get("native_mathml_img_embedding_smoke_test_completed") is not True:
-        fail("native MathML img-embedding smoke-test receipt missing")
+    if runtime.get("mathjax_svg_img_embedding_smoke_test_completed") is not True:
+        fail("MathJax SVG img-embedding smoke-test receipt missing")
 
     repair = manifest.get("native_math_presentation_repair", {})
     if repair.get("operation_id") != "BSD-DOC-NATIVE-MATH-PRESENTATION-006":
@@ -78,7 +78,7 @@ def main() -> int:
         fail("native-math semantic sha256 lock disagrees with verifier")
     if repair.get("semantic_master_unchanged_git_blob") != EXPECTED_SEMANTIC_BLOB:
         fail("native-math semantic git-blob lock disagrees with verifier")
-    if repair.get("rendering_mode") != "native_mathml_in_svg_foreignObject":
+    if repair.get("rendering_mode") != "mathjax_svg_vector_paths_with_structured_svg_support":
         fail("native-math rendering mode changed")
     gate = repair.get("review_gate", {})
     if gate.get("required") is not True or gate.get("class") != "independent_visual_semantic_review":
@@ -104,7 +104,7 @@ def main() -> int:
     if "editorial-landscape-3x2" not in activation:
         fail("BSD activation lost landscape geometry binding")
     if PLATE_IV_CACHE_TOKEN not in activation:
-        fail("Plate IV activation is not cache-busted to the reviewed native-math asset")
+        fail("Plate IV activation is not cache-busted to the reviewed vector-v7 asset")
 
     plates = manifest.get("plates", [])
     if len(plates) != 5:
@@ -137,20 +137,24 @@ def main() -> int:
                 fail(f"unwrapped visible text run ({len(plain)} chars): {plate['plate_id']}")
 
         if plate["plate_id"] == "BSD-OVERTURE-PLATE-IV":
-            for raw_token in ("L_E^", "Ω_E", "Reg(E/Q)", "#Sha(E/Q)", "_tors", "Lₑ", "Ωₑ", "native-svg-typeset-v4"):
+            for raw_token in (
+                "L_E^", "Ω_E", "Reg(E/Q)", "#Sha(E/Q)", "_tors", "Lₑ", "Ωₑ",
+                "native-svg-typeset-v4", "native-mathml-v6", "<foreignObject",
+            ):
                 if raw_token in text:
                     fail(f"superseded or source-style math leaked into Plate IV: {raw_token}")
-            required = (
-                'data-bsd-math-rendering="native-mathml-v6"',
-                'xmlns="http://www.w3.org/1998/Math/MathML"',
+            for token in (
+                'data-bsd-math-rendering="mathjax-primary-vector-v7"',
                 'aria-label="Strong BSD normalized leading-term identity"',
-                "<mfrac>", "<msub>", "<msubsup>", "<munder>", "<mi>ℚ</mi>",
-            )
-            for token in required:
+                '<defs><path id="MJX-TEX-',
+                '<use href="#MJX-TEX-',
+                '<rect x="120" y="220"',
+                "Reg(E/ℚ)", "#Sha(E/ℚ)",
+            ):
                 if token not in text:
-                    fail(f"Plate IV lost native mathematical typesetting structure: {token}")
-            if text.count("<mfrac>") < 2 or text.count("<foreignObject") < 7:
-                fail("Plate IV native mathematical structure is incomplete")
+                    fail(f"Plate IV lost reviewed vector-math structure: {token}")
+            if text.count('id="MJX-TEX-') < 20 or text.count('<use href="#MJX-TEX-') < 20:
+                fail("Plate IV MathJax vector structure is incomplete")
 
         if plate["plate_id"] == "BSD-FRONTIER-PLATE-V":
             for raw_token in ("E/Q", "E(Q)", "Sha(E/Q)"):
@@ -181,7 +185,7 @@ def main() -> int:
             if reproduced != expected:
                 fail(f"deterministic replay mismatch: {plate['plate_id']}")
 
-    print("BSD native-math delivery verification: PASS")
+    print("BSD vector-math delivery verification: PASS")
     return 0
 
 
