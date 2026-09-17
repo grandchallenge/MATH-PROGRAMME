@@ -80,6 +80,9 @@ def main() -> int:
     for token in ("ContourPlot", "Grid", "Framed", "Pane", "1536", "1024"):
         if token not in layout:
             fail(f"Wolfram layout reference missing {token!r}")
+    for token in ("Lₑ⁽ʳ⁾(1) / r!", "Ωₑ", "Reg(E/ℚ)", "#E(ℚ)ₜₒᵣₛ²"):
+        if token not in layout:
+            fail(f"Wolfram layout reference lost Plate IV typesetting token {token!r}")
 
     compositor = COMPOSITOR.read_text(encoding="utf-8")
     for forbidden in ("def mappt(", "<text x=", "polyline points=", "font-family=\"Georgia,Times New Roman,serif\""):
@@ -127,6 +130,13 @@ def main() -> int:
             plain = re.sub(r"<[^>]+>", "", block).strip()
             if len(plain) > 160 and "<tspan" not in block:
                 fail(f"unwrapped visible text run ({len(plain)} chars): {plate['plate_id']}")
+        if plate["plate_id"] == "BSD-OVERTURE-PLATE-IV":
+            for raw_token in ("L_E^", "Ω_E", "Reg(E/Q)", "#Sha(E/Q)", "_tors"):
+                if raw_token in text:
+                    fail(f"raw source-style math token leaked into Plate IV: {raw_token}")
+            for typeset_token in ("Lₑ⁽ʳ⁾", "Ωₑ", "Reg(E/ℚ)", "#Sha(E/ℚ)", "#E(ℚ)ₜₒᵣₛ²", "ordₛ₌₁"):
+                if typeset_token not in text:
+                    fail(f"Plate IV lost typeset math token: {typeset_token}")
         if plate["live_reference"] not in activation:
             fail(f"activation does not bind {plate['plate_id']}")
 
