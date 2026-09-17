@@ -103,25 +103,30 @@ plate3 = plateFrame[{
 }];
 
 (* Plate IV *)
-ledger = Grid[{{"Real period", "Ωₑ"}, {"Regulator", "Reg(E/ℚ)"}, {"Tate–Shafarevich", "#Sha(E/ℚ)"},
-               {"Local components", "∏ₚ cₚ"}, {"Torsion denominator", "#E(ℚ)ₜₒᵣₛ²"}}, Alignment -> Left];
-obligations = Grid[{{1, "Rank equality", "rank E(ℚ) = ordₛ₌₁ L(E,s)"},
+leadingLHS = Row[{Superscript[Subscript["L", "E"], "(r)"], "(1) / r!"}];
+leadingRHS = Row[{"= ", Subscript["Ω", "E"], " · Reg(E/ℚ) · #Sha(E/ℚ) · ",
+                  Subscript["∏", "p"], " ", Subscript["c", "p"], " / ",
+                  Superscript[Subscript["#E(ℚ)", "tors"], 2]}];
+ledger = Grid[{{"Real period", Subscript["Ω", "E"]}, {"Regulator", "Reg(E/ℚ)"}, {"Tate–Shafarevich", "#Sha(E/ℚ)"},
+               {"Local components", Row[{Subscript["∏", "p"], " ", Subscript["c", "p"]}]},
+               {"Torsion denominator", Superscript[Subscript["#E(ℚ)", "tors"], 2]}}, Alignment -> Left];
+obligations = Grid[{{1, "Rank equality", Row[{"rank E(ℚ) = ", Subscript["ord", "s=1"], " L(E,s)"}]},
                     {2, "Sha finiteness", "#Sha(E/ℚ) is finite"},
                     {3, "Leading term", "the normalized leading coefficient equals the complete arithmetic factor ledger"}}, Alignment -> Left];
 plate4 = plateFrame[{
   header["IV", "The strong BSD leading-term ledger", "Quantified dependency structure · three logically distinct obligations"],
   Framed[Column[{Style["The leading-term identity", 21, Bold, navy, FontFamily -> sans],
-    Style["Lₑ⁽ʳ⁾(1) / r!", 28, Bold, navy, FontFamily -> serif],
-    Style["= Ωₑ · Reg(E/ℚ) · #Sha(E/ℚ) · ∏ₚ cₚ / #E(ℚ)ₜₒᵣₛ²", 23, navy, FontFamily -> serif]}, Alignment -> Center],
+    Style[leadingLHS, 28, Bold, navy, FontFamily -> serif],
+    Style[leadingRHS, 23, navy, FontFamily -> serif]}, Alignment -> Center],
     Background -> soft, FrameStyle -> Directive[gold, Opacity[.8]], FrameMargins -> {{24, 24}, {18, 18}}],
   panel["Arithmetic factor ledger", ledger, 1270], panel["Three obligations, not one slogan", obligations, 1120],
   Style["Rank equality, Sha finiteness, and the normalized leading-term identity are separate obligations.", 14, navy, FontFamily -> serif]
 }];
 
 (* Plate V *)
-frontierRows = {{"Mordell–Weil finite generation", "all E/Q", "ESTABLISHED"}, {"Modularity", "all E/Q", "ESTABLISHED"},
-  {"rank equality + finite Sha", "analytic rank 0 or 1", "ESTABLISHED"}, {"rank E(Q) = ord at s = 1", "all E/Q", "OPEN"},
-  {"Sha(E/Q) finite", "all E/Q", "OPEN"}, {"complete normalized leading term", "all E/Q", "OPEN"}};
+frontierRows = {{"Mordell–Weil finite generation", "all E/ℚ", "ESTABLISHED"}, {"Modularity", "all E/ℚ", "ESTABLISHED"},
+  {"rank equality + finite Sha", "analytic rank 0 or 1", "ESTABLISHED"}, {"rank E(ℚ) = ord at s = 1", "all E/ℚ", "OPEN"},
+  {"Sha(E/ℚ) finite", "all E/ℚ", "OPEN"}, {"complete normalized leading term", "all E/ℚ", "OPEN"}};
 frontier = Grid[Prepend[frontierRows, {"Statement", "Scope", "Status"}], Frame -> All,
   FrameStyle -> Directive[navy, Opacity[.5]], Alignment -> {Left, Center}, Spacings -> {1.2, 1.0}];
 plate5 = plateFrame[{
