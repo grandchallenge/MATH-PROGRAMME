@@ -103,16 +103,16 @@ plate3 = plateFrame[{
 }];
 
 (* Plate IV *)
-ledger = Grid[{{"Real period", "Omega_E"}, {"Regulator", "Reg(E/Q)"}, {"Tate–Shafarevich", "#Sha(E/Q)"},
-               {"Local components", "product_p c_p"}, {"Torsion denominator", "#E(Q)_tors^2"}}, Alignment -> Left];
-obligations = Grid[{{1, "Rank equality", "rank E(Q) = ord at s = 1 of L(E,s)"},
-                    {2, "Sha finiteness", "#Sha(E/Q) is finite"},
+ledger = Grid[{{"Real period", "Ωₑ"}, {"Regulator", "Reg(E/ℚ)"}, {"Tate–Shafarevich", "#Sha(E/ℚ)"},
+               {"Local components", "∏ₚ cₚ"}, {"Torsion denominator", "#E(ℚ)ₜₒᵣₛ²"}}, Alignment -> Left];
+obligations = Grid[{{1, "Rank equality", "rank E(ℚ) = ordₛ₌₁ L(E,s)"},
+                    {2, "Sha finiteness", "#Sha(E/ℚ) is finite"},
                     {3, "Leading term", "the normalized leading coefficient equals the complete arithmetic factor ledger"}}, Alignment -> Left];
 plate4 = plateFrame[{
   header["IV", "The strong BSD leading-term ledger", "Quantified dependency structure · three logically distinct obligations"],
   Framed[Column[{Style["The leading-term identity", 21, Bold, navy, FontFamily -> sans],
-    Style["L_E^(r)(1) / r!", 28, Bold, navy, FontFamily -> serif],
-    Style["= Omega_E · Reg(E/Q) · #Sha(E/Q) · product_p c_p / #E(Q)_tors^2", 23, navy, FontFamily -> serif]}, Alignment -> Center],
+    Style["Lₑ⁽ʳ⁾(1) / r!", 28, Bold, navy, FontFamily -> serif],
+    Style["= Ωₑ · Reg(E/ℚ) · #Sha(E/ℚ) · ∏ₚ cₚ / #E(ℚ)ₜₒᵣₛ²", 23, navy, FontFamily -> serif]}, Alignment -> Center],
     Background -> soft, FrameStyle -> Directive[gold, Opacity[.8]], FrameMargins -> {{24, 24}, {18, 18}}],
   panel["Arithmetic factor ledger", ledger, 1270], panel["Three obligations, not one slogan", obligations, 1120],
   Style["Rank equality, Sha finiteness, and the normalized leading-term identity are separate obligations.", 14, navy, FontFamily -> serif]
