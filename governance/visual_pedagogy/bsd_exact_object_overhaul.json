@@ -99,6 +99,23 @@
       "requested_team": "math-programme-maintainers"
     }
   },
+  "math_typesetting_repair": {
+    "operation_id": "BSD-DOC-MATH-TYPESETTING-005",
+    "protected_base": "ca828d8d019b934590f4f45f2b17e6a198e3e14d",
+    "defect": "Plate IV exposed source-style pseudo-LaTeX tokens such as L_E^(r), Omega_E, E/Q, and _tors as literal visible text; the Plate V theorem frontier also retained E/Q and E(Q) source shorthand instead of typographic rational-field notation.",
+    "repair": "Render Plate IV subscripts and superscripts as actual display typography with the correct uppercase curve label E, use structured Wolfram Subscript/Superscript forms in the visual reference, normalize ℚ notation in Plates IV-V, and preserve every mathematical fixture and theorem-status row.",
+    "semantic_changes": false,
+    "semantic_master_unchanged_sha256": "d05088cf0f88c7e3c0960ebb99973fac19001a2bdb6abff3e92f8a4fe0bc2ec0",
+    "shared_runtime_unchanged": true,
+    "activation_runtime_unchanged": true,
+    "layout_stylesheet_unchanged": true,
+    "regression_guard": "ci/verify_bsd_wolfram_layout_repair.py rejects raw source-style Plate IV notation, rejects the lowercase-subscript workaround, requires reviewed structured typesetting, and rejects raw E/Q notation in Plate V.",
+    "review_gate": {
+      "required": true,
+      "class": "independent_visual_semantic_review",
+      "requested_team": "math-programme-maintainers"
+    }
+  },
   "plates": [
     {
       "plate_id": "BSD-CURVE-PLATE-I",
@@ -152,9 +169,9 @@
       "predecessor_blob": "c151081594dcf3ae04f15863f85b8c3a32aa7440",
       "live_path": "docs/assets/visual_pedagogy/bsd_exact/plate_04_strong_bsd_ledger.svg",
       "live_reference": "../../assets/visual_pedagogy/bsd_exact/plate_04_strong_bsd_ledger.svg",
-      "sha256": "f77fa015d77f48d1252e08be90bcece6587cfd982b99a8c9460d5f7a7907a491",
-      "bytes": 4835,
-      "git_blob": "f44f7c2bbb5c4b7596261233fa30f74bfcfee75e",
+      "sha256": "4cad83ae4c64e1bfb40c1eb9855fde0e51023d8dbb8019acf0a9dbf96c4e64d9",
+      "bytes": 5364,
+      "git_blob": "378c299081eb9d4e468043e5ae7eae2066ae1160",
       "delivery_viewbox": "0 0 1536 1024",
       "delivery_aspect_ratio": "3:2",
       "representation_class": "quantified-dependency",
@@ -167,9 +184,9 @@
       "predecessor_blob": "457c5de53b36d2de3cac0ab534e2545949084f57",
       "live_path": "docs/assets/visual_pedagogy/bsd_exact/plate_05_theorem_frontier.svg",
       "live_reference": "../../assets/visual_pedagogy/bsd_exact/plate_05_theorem_frontier.svg",
-      "sha256": "bfb45b810bbd1dc5ce436a6ee2c0841fa48a1f876680f09d7443f1cdbe3fe9ca",
-      "bytes": 6356,
-      "git_blob": "b9b7fa4e3c8a715c05455a0142355f73dc036b6d",
+      "sha256": "bc0ddfecd0591a2958799324e4b93d622a27e2d5f8e157a23981670bc5767e34",
+      "bytes": 6370,
+      "git_blob": "59b4212503ed03cfd56815d407bde8e955c8c8ca",
       "delivery_viewbox": "0 0 1536 1024",
       "delivery_aspect_ratio": "3:2",
       "representation_class": "quantified-status",
@@ -180,7 +197,7 @@
     "No predecessor documentary asset is deleted, renamed, or overwritten.",
     "The checksum-locked documentary source and rendered PDF retain their existing authority.",
     "The activation resolver changes presentation only.",
-    "The landscape, typography, spacing, and aesthetic repairs change delivery formatting, not mathematical semantics.",
+    "The landscape, typography, spacing, aesthetic, and mathematical-typesetting repairs change delivery formatting, not mathematical semantics.",
     "No visual is mathematical evidence.",
     "No theorem, proof, certification, novelty, priority, or product claim is promoted."
   ]

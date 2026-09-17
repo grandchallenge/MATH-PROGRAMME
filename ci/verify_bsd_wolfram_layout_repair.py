@@ -80,6 +80,15 @@ def main() -> int:
     for token in ("ContourPlot", "Grid", "Framed", "Pane", "1536", "1024"):
         if token not in layout:
             fail(f"Wolfram layout reference missing {token!r}")
+    for token in (
+        'leadingLHS = Row[{Superscript[Subscript["L", "E"], "(r)"]',
+        'Subscript["Ω", "E"]',
+        'Superscript[Subscript["#E(ℚ)", "tors"], 2]',
+        'Subscript["ord", "s=1"]',
+        '"all E/ℚ"',
+    ):
+        if token not in layout:
+            fail(f"Wolfram layout reference lost mathematical typesetting structure {token!r}")
 
     compositor = COMPOSITOR.read_text(encoding="utf-8")
     for forbidden in ("def mappt(", "<text x=", "polyline points=", "font-family=\"Georgia,Times New Roman,serif\""):
@@ -127,6 +136,30 @@ def main() -> int:
             plain = re.sub(r"<[^>]+>", "", block).strip()
             if len(plain) > 160 and "<tspan" not in block:
                 fail(f"unwrapped visible text run ({len(plain)} chars): {plate['plate_id']}")
+
+        if plate["plate_id"] == "BSD-OVERTURE-PLATE-IV":
+            for raw_token in ("L_E^", "Ω_E", "Reg(E/Q)", "#Sha(E/Q)", "_tors", "Lₑ", "Ωₑ"):
+                if raw_token in text:
+                    fail(f"raw or semantically degraded math token leaked into Plate IV: {raw_token}")
+            for typeset_token in (
+                'aria-label="L sub E superscript r evaluated at 1, divided by r factorial"',
+                "Reg(E/ℚ)",
+                "#Sha(E/ℚ)",
+                "∏ₚ cₚ",
+                "#E(ℚ)ₜₒᵣₛ²",
+                "ordₛ₌₁",
+            ):
+                if typeset_token not in text:
+                    fail(f"Plate IV lost reviewed mathematical typesetting: {typeset_token}")
+
+        if plate["plate_id"] == "BSD-FRONTIER-PLATE-V":
+            for raw_token in ("E/Q", "E(Q)", "Sha(E/Q)"):
+                if raw_token in text:
+                    fail(f"raw rational-field notation leaked into Plate V: {raw_token}")
+            for typeset_token in ("E/ℚ", "E(ℚ)", "Sha(E/ℚ)"):
+                if typeset_token not in text:
+                    fail(f"Plate V lost normalized rational-field notation: {typeset_token}")
+
         if plate["live_reference"] not in activation:
             fail(f"activation does not bind {plate['plate_id']}")
 
