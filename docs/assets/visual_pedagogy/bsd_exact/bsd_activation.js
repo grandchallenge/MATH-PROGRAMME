@@ -38,7 +38,7 @@
       height: 1024
     },
     '../../assets/documentaries/bsd/plate_overture.svg': {
-      src: '../../assets/visual_pedagogy/bsd_exact/plate_04_strong_bsd_ledger.svg?v=bsd-math-v3-20260917',
+      src: '../../assets/visual_pedagogy/bsd_exact/plate_04_strong_bsd_ledger.svg?v=bsd-math-v4-20260917',
       alt: 'Strong BSD leading-term formula with separate labelled inputs for the real period, regulator, Tate-Shafarevich order, local Tamagawa factors, rational torsion denominator, and a three-row list separating rank equality, Sha finiteness, and the leading-term identity.',
       title: 'The Strong BSD Leading-Term Ledger',
       note: 'The dependency structure is explicit. It does not convert the conjectural identity or its finiteness hypothesis into established facts.',
