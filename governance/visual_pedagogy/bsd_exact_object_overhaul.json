@@ -99,6 +99,23 @@
       "requested_team": "math-programme-maintainers"
     }
   },
+  "math_typesetting_repair": {
+    "operation_id": "BSD-DOC-PLATE-IV-MATH-TYPESETTING-005",
+    "protected_base": "ca828d8d019b934590f4f45f2b17e6a198e3e14d",
+    "defect": "Plate IV exposed source-style pseudo-LaTeX tokens such as L_E^(r), Omega_E, E/Q, and _tors as literal visible text.",
+    "repair": "Replace raw source-style tokens with stable Unicode mathematical typography in the reviewed static SVG and align the Wolfram visual-layout reference to the same notation.",
+    "semantic_changes": false,
+    "semantic_master_unchanged_sha256": "d05088cf0f88c7e3c0960ebb99973fac19001a2bdb6abff3e92f8a4fe0bc2ec0",
+    "shared_runtime_unchanged": true,
+    "activation_runtime_unchanged": true,
+    "layout_stylesheet_unchanged": true,
+    "regression_guard": "ci/verify_bsd_wolfram_layout_repair.py rejects the raw Plate IV source tokens and requires the reviewed typeset equivalents.",
+    "review_gate": {
+      "required": true,
+      "class": "independent_visual_semantic_review",
+      "requested_team": "math-programme-maintainers"
+    }
+  },
   "plates": [
     {
       "plate_id": "BSD-CURVE-PLATE-I",
@@ -152,9 +169,9 @@
       "predecessor_blob": "c151081594dcf3ae04f15863f85b8c3a32aa7440",
       "live_path": "docs/assets/visual_pedagogy/bsd_exact/plate_04_strong_bsd_ledger.svg",
       "live_reference": "../../assets/visual_pedagogy/bsd_exact/plate_04_strong_bsd_ledger.svg",
-      "sha256": "f77fa015d77f48d1252e08be90bcece6587cfd982b99a8c9460d5f7a7907a491",
-      "bytes": 4835,
-      "git_blob": "f44f7c2bbb5c4b7596261233fa30f74bfcfee75e",
+      "sha256": "d1de3053971b7ba056c39f2f65210f31dfafcd6d38392c6128d6adc7e52227d3",
+      "bytes": 4869,
+      "git_blob": "7cb97786e6d4015e4a510bb900610b891ecf5674",
       "delivery_viewbox": "0 0 1536 1024",
       "delivery_aspect_ratio": "3:2",
       "representation_class": "quantified-dependency",
@@ -180,7 +197,7 @@
     "No predecessor documentary asset is deleted, renamed, or overwritten.",
     "The checksum-locked documentary source and rendered PDF retain their existing authority.",
     "The activation resolver changes presentation only.",
-    "The landscape, typography, spacing, and aesthetic repairs change delivery formatting, not mathematical semantics.",
+    "The landscape, typography, spacing, aesthetic, and mathematical-typesetting repairs change delivery formatting, not mathematical semantics.",
     "No visual is mathematical evidence.",
     "No theorem, proof, certification, novelty, priority, or product claim is promoted."
   ]
