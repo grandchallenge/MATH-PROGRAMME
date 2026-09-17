@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed verifier for the BSD documentary Wolfram-layout repair."""
+"""Fail-closed verifier for the BSD documentary exact-object delivery."""
 from __future__ import annotations
 
 import hashlib
@@ -8,6 +8,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,6 +23,8 @@ EXPECTED_SEMANTIC_SHA256 = "d05088cf0f88c7e3c0960ebb99973fac19001a2bdb6abff3e92f
 EXPECTED_SEMANTIC_BYTES = 4665
 EXPECTED_SEMANTIC_BLOB = "206842583d15acf91eb0e363ddb12cbf124ab0a9"
 EXPECTED_SHARED_RUNTIME_BLOB = "b53dce8861e9eee78ced01758220b3ed3110a22f"
+EXPECTED_NATIVE_REPAIR_BASE = "050bde21b0dabb25ae4120d3e2c8d0e271a0efc2"
+PLATE_IV_CACHE_TOKEN = "plate_04_strong_bsd_ledger.svg?v=bsd-math-v6-20260917"
 VIEWBOX = 'viewBox="0 0 1536 1024"'
 
 
@@ -41,16 +44,16 @@ def main() -> int:
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     if manifest.get("schema_version") != "1.2.0":
         fail("unexpected BSD repair manifest schema")
-    if manifest.get("state") != "WOLFRAM_LAYOUT_REPAIR_CANDIDATE":
-        fail("BSD layout repair is not in the expected candidate state")
+    if manifest.get("state") != "NATIVE_MATH_PRESENTATION_REPAIR_CANDIDATE":
+        fail("BSD native-math presentation repair is not in candidate state")
     if manifest.get("visual_is_evidence") is not False:
         fail("visual evidence boundary was promoted")
 
     semantic = SEMANTIC.read_bytes()
-    if (
-        len(semantic) != EXPECTED_SEMANTIC_BYTES
-        or sha256(semantic) != EXPECTED_SEMANTIC_SHA256
-        or git_blob(semantic) != EXPECTED_SEMANTIC_BLOB
+    if (len(semantic), sha256(semantic), git_blob(semantic)) != (
+        EXPECTED_SEMANTIC_BYTES,
+        EXPECTED_SEMANTIC_SHA256,
+        EXPECTED_SEMANTIC_BLOB,
     ):
         fail("semantic master changed during presentation-only repair")
 
@@ -61,37 +64,33 @@ def main() -> int:
         fail("manifest semantic sha256 lock disagrees with verifier")
     if runtime.get("semantic_master_git_blob") != EXPECTED_SEMANTIC_BLOB:
         fail("manifest semantic git-blob lock disagrees with verifier")
+    if runtime.get("native_mathml_img_embedding_smoke_test_completed") is not True:
+        fail("native MathML img-embedding smoke-test receipt missing")
 
-    repair = manifest.get("layout_repair", {})
-    if repair.get("protected_base") != "989fd25de2d65eee4da65fc7ce1b10bebc91f963":
-        fail("layout repair is not bound to the protected #1003 merge")
+    repair = manifest.get("native_math_presentation_repair", {})
+    if repair.get("operation_id") != "BSD-DOC-NATIVE-MATH-PRESENTATION-006":
+        fail("unexpected native-math repair operation")
+    if repair.get("protected_base") != EXPECTED_NATIVE_REPAIR_BASE:
+        fail("native-math repair is not bound to the protected #1006 merge")
     if repair.get("semantic_changes") is not False:
-        fail("layout repair claims a semantic change")
+        fail("native-math repair claims a semantic change")
     if repair.get("semantic_master_unchanged_sha256") != EXPECTED_SEMANTIC_SHA256:
-        fail("repair semantic sha256 lock disagrees with verifier")
-    if repair.get("semantic_master_unchanged_bytes") != EXPECTED_SEMANTIC_BYTES:
-        fail("repair semantic byte lock disagrees with verifier")
+        fail("native-math semantic sha256 lock disagrees with verifier")
     if repair.get("semantic_master_unchanged_git_blob") != EXPECTED_SEMANTIC_BLOB:
-        fail("repair semantic git-blob lock disagrees with verifier")
-    if repair.get("free_coordinate_typography_synthesis_forbidden") is not True:
-        fail("free-coordinate typography synthesis is not explicitly forbidden")
+        fail("native-math semantic git-blob lock disagrees with verifier")
+    if repair.get("rendering_mode") != "native_mathml_in_svg_foreignObject":
+        fail("native-math rendering mode changed")
+    gate = repair.get("review_gate", {})
+    if gate.get("required") is not True or gate.get("class") != "independent_visual_semantic_review":
+        fail("independent visual-semantic review gate missing")
 
     layout = LAYOUT.read_text(encoding="utf-8")
     for token in ("ContourPlot", "Grid", "Framed", "Pane", "1536", "1024"):
         if token not in layout:
             fail(f"Wolfram layout reference missing {token!r}")
-    for token in (
-        'leadingLHS = Row[{Superscript[Subscript["L", "E"], "(r)"]',
-        'Subscript["Ω", "E"]',
-        'Superscript[Subscript["#E(ℚ)", "tors"], 2]',
-        'Subscript["ord", "s=1"]',
-        '"all E/ℚ"',
-    ):
-        if token not in layout:
-            fail(f"Wolfram layout reference lost mathematical typesetting structure {token!r}")
 
     compositor = COMPOSITOR.read_text(encoding="utf-8")
-    for forbidden in ("def mappt(", "<text x=", "polyline points=", "font-family=\"Georgia,Times New Roman,serif\""):
+    for forbidden in ("def mappt(", "<text x=", "polyline points=", 'font-family="Georgia,Times New Roman,serif"'):
         if forbidden in compositor:
             fail(f"superseded free-coordinate compositor primitive returned: {forbidden}")
     if "copies the approved static SVG snapshots" not in compositor:
@@ -104,6 +103,8 @@ def main() -> int:
     activation = ACTIVATION.read_text(encoding="utf-8")
     if "editorial-landscape-3x2" not in activation:
         fail("BSD activation lost landscape geometry binding")
+    if PLATE_IV_CACHE_TOKEN not in activation:
+        fail("Plate IV activation is not cache-busted to the reviewed native-math asset")
 
     plates = manifest.get("plates", [])
     if len(plates) != 5:
@@ -114,16 +115,15 @@ def main() -> int:
         path = ROOT / plate["live_path"]
         data = path.read_bytes()
         text = data.decode("utf-8")
-        actual_bytes = len(data)
-        actual_sha256 = sha256(data)
-        actual_blob = git_blob(data)
-        if (
-            actual_bytes != plate["bytes"]
-            or actual_sha256 != plate["sha256"]
-            or actual_blob != plate["git_blob"]
-        ):
+        try:
+            ET.fromstring(text)
+        except ET.ParseError as exc:
+            fail(f"invalid SVG XML: {plate['plate_id']}: {exc}")
+        actual = (len(data), sha256(data), git_blob(data))
+        expected = (plate["bytes"], plate["sha256"], plate["git_blob"])
+        if actual != expected:
             identity_mismatches.append(
-                f"{plate['plate_id']}: bytes={actual_bytes} sha256={actual_sha256} git_blob={actual_blob}"
+                f"{plate['plate_id']}: bytes={actual[0]} sha256={actual[1]} git_blob={actual[2]}"
             )
         if VIEWBOX not in text or plate.get("delivery_aspect_ratio") != "3:2":
             fail(f"landscape geometry mismatch: {plate['plate_id']}")
@@ -131,34 +131,34 @@ def main() -> int:
             fail(f"accessible SVG metadata missing: {plate['plate_id']}")
         if 'font-family="Georgia,Times New Roman,serif"' in text:
             fail(f"superseded compositor signature found: {plate['plate_id']}")
-        # Reject the original bleeding mode: very long unwrapped visible text runs.
         for block in re.findall(r"<text\b[^>]*>(.*?)</text>", text, flags=re.S):
             plain = re.sub(r"<[^>]+>", "", block).strip()
             if len(plain) > 160 and "<tspan" not in block:
                 fail(f"unwrapped visible text run ({len(plain)} chars): {plate['plate_id']}")
 
         if plate["plate_id"] == "BSD-OVERTURE-PLATE-IV":
-            for raw_token in ("L_E^", "Ω_E", "Reg(E/Q)", "#Sha(E/Q)", "_tors", "Lₑ", "Ωₑ"):
+            for raw_token in ("L_E^", "Ω_E", "Reg(E/Q)", "#Sha(E/Q)", "_tors", "Lₑ", "Ωₑ", "native-svg-typeset-v4"):
                 if raw_token in text:
-                    fail(f"raw or semantically degraded math token leaked into Plate IV: {raw_token}")
-            for typeset_token in (
-                'aria-label="L sub E superscript r evaluated at 1, divided by r factorial"',
-                "Reg(E/ℚ)",
-                "#Sha(E/ℚ)",
-                "∏ₚ cₚ",
-                "#E(ℚ)ₜₒᵣₛ²",
-                "ordₛ₌₁",
-            ):
-                if typeset_token not in text:
-                    fail(f"Plate IV lost reviewed mathematical typesetting: {typeset_token}")
+                    fail(f"superseded or source-style math leaked into Plate IV: {raw_token}")
+            required = (
+                'data-bsd-math-rendering="native-mathml-v6"',
+                'xmlns="http://www.w3.org/1998/Math/MathML"',
+                'aria-label="Strong BSD normalized leading-term identity"',
+                "<mfrac>", "<msub>", "<msubsup>", "<munder>", "<mi>ℚ</mi>",
+            )
+            for token in required:
+                if token not in text:
+                    fail(f"Plate IV lost native mathematical typesetting structure: {token}")
+            if text.count("<mfrac>") < 2 or text.count("<foreignObject") < 7:
+                fail("Plate IV native mathematical structure is incomplete")
 
         if plate["plate_id"] == "BSD-FRONTIER-PLATE-V":
             for raw_token in ("E/Q", "E(Q)", "Sha(E/Q)"):
                 if raw_token in text:
                     fail(f"raw rational-field notation leaked into Plate V: {raw_token}")
-            for typeset_token in ("E/ℚ", "E(ℚ)", "Sha(E/ℚ)"):
-                if typeset_token not in text:
-                    fail(f"Plate V lost normalized rational-field notation: {typeset_token}")
+            for token in ("E/ℚ", "E(ℚ)", "Sha(E/ℚ)"):
+                if token not in text:
+                    fail(f"Plate V lost normalized rational-field notation: {token}")
 
         if plate["live_reference"] not in activation:
             fail(f"activation does not bind {plate['plate_id']}")
@@ -181,7 +181,7 @@ def main() -> int:
             if reproduced != expected:
                 fail(f"deterministic replay mismatch: {plate['plate_id']}")
 
-    print("BSD Wolfram layout repair verification: PASS")
+    print("BSD native-math delivery verification: PASS")
     return 0
 
 
