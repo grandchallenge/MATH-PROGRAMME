@@ -34,6 +34,29 @@ The source-locator review covers all 21 WP02 imported sources. The theorem-body 
 
 This discharges the source-review substance retained as `YM-WP02-REV-002`.
 
+## D003 theorem-interface supplement — 2026-09-18
+
+A later protected Forge audit at `a609f40e809ebe74f35dc4ceb069c15e4d21f26e` adds the missing Balaban large-field/ultraviolet-stability spine and the qualified Magnen–Rivasseau–Sénéor fixed-infrared-cutoff construction.
+
+Current theorem interfaces are recorded in:
+
+`campaigns/yang_mills/YM_D003_UV_LARGE_FIELD_SUPPLEMENT.json`.
+
+This refines, but does not discharge, `YM-D003`:
+
+- Balaban large-field control and four-dimensional ultraviolet stability are materially available as bounded inputs;
+- MRS supplies a qualified source-stated ultraviolet-cutoff-removal construction for pure `SU(2)` at fixed infrared cutoff;
+- infrared-cutoff/infinite-volume removal remains open;
+- uniqueness and full identification of the continuum theory remain open;
+- the complete OS profile remains open and coupled to `YM-D002`;
+- a finite nonzero non-circular physical reference scale remains open and coupled to `YM-D001`.
+
+The current D003 frontier is therefore:
+
+`BALABAN_4D_UV_STABILITY_AND_LARGE_FIELD_CONTROL_AVAILABLE__IR_REMOVAL_UNIQUENESS_OS_AND_PHYSICAL_IDENTIFICATION_OPEN`.
+
+This supplement does not change the routing gate: `YM-D003` remains an admissible native Solve target and remains an open research debt.
+
 ## Referee debt disposition
 
 The nine protected debts are dispositioned as follows for the purpose of downstream routing.
@@ -42,7 +65,7 @@ The nine protected debts are dispositioned as follows for the purpose of downstr
 |---|---|---|
 | `YM-D001` | `OPEN_RESEARCH_DEBT` — regulator-survival spectral bridge remains unproved | admissible native Solve target surface |
 | `YM-D002` | `OPEN_RESEARCH_DEBT` — full limiting OS hierarchy remains unproved | admissible native Solve target surface |
-| `YM-D003` | `OPEN_RESEARCH_DEBT` — four-dimensional continuum construction remains unproved | admissible native Solve target surface |
+| `YM-D003` | `OPEN_RESEARCH_DEBT` — Balaban 4d large-field/UV stability now admitted as bounded input; IR/infinite-volume removal, uniqueness/full identification, OS, and physical scaling remain open | admissible native Solve target surface |
 | `YM-D004` | `OPEN_RESEARCH_DEBT` — local gauge-invariant observable renormalization remains unproved | admissible native Solve target surface |
 | `YM-D005` | `OPEN_RESEARCH_DEBT` — converse Euclidean-decay / physical-spectrum bridge remains unproved | admissible native Solve target surface |
 | `YM-D006` | `SOURCE_AMBIGUITY_CLOSED` — audited near-vacuum/truncated partition-function result supplies no composable continuum/gap bridge | no target bypass |
