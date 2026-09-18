@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "GCL-AGENT-CONTINUITY-PHASE-D1-001.CP001",
+  "checkpoint_id": "GCL-AGENT-CONTINUITY-PHASE-D1-001.CP002",
   "governed_work_id": "GCL-AGENT-CONTINUITY-PHASE-D1-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,8 +15,8 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1015"
   },
-  "phase": "D1 authorized; durable checkpoint admission before Stage 0 INTELLECT schema mutation",
-  "state": "AUTHORIZED_READY",
+  "phase": "Stage 0 INTELLECT schema admitted; Stage 1 MATHSOLVE migration authorized next",
+  "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "c889f253ea8113e0e521d59e620644d64a67ac33",
     "candidate_head_sha": "c889f253ea8113e0e521d59e620644d64a67ac33",
@@ -28,17 +28,18 @@
   "terminal_condition": "INTELLECT common schema and MATHSOLVE, MATH-PROGRAMME, MATHFORGE, and MATHCERT migrations are each protected-admitted in the authorized order, exact protected readback succeeds at every stage, retained local validators and fail-closed semantics remain green, and all admitted identities are recorded in MATH-PROGRAMME #1015.",
   "permitted_next_actions": [
     {
-      "id": "admit_intellect_common_schema",
-      "description": "Re-fetch live INTELLECT protected state, admit the reviewed common adoption schema under protected controls without changing policy authority semantics, read back the exact admitted schema identity, then durably advance this checkpoint."
+      "id": "migrate_mathsolve_adoption",
+      "description": "Re-fetch live MATHSOLVE protected state, migrate only the continuity adoption representation and local validator interface to the admitted INTELLECT schema, preserve all seven Solve controls and certification non-authority semantics, pass protected checks, read back exact protected state, then advance this checkpoint."
     }
   ],
   "next_action": {
-    "id": "admit_intellect_common_schema",
-    "description": "Re-fetch live INTELLECT protected main and begin only Stage 0 common-schema admission under the D0-reviewed contract; do not mutate pillar adoption records before protected INTELLECT readback.",
+    "id": "migrate_mathsolve_adoption",
+    "description": "Re-fetch live MATHSOLVE main and perform only Stage 1 migration against INTELLECT schema commit 7e6b61ddf77e2d73309657d089a98cae84cc735f / schema blob b019881a54763a949613c8116260b729742867bd.",
     "evidence_targets": [
-      "grandchallenge/MATH-PROGRAMME#1015",
-      "grandchallenge/MATH-PROGRAMME protected D0 admission c889f253ea8113e0e521d59e620644d64a67ac33",
-      "grandchallenge/INTELLECT protected main observed at D1 opening 7662e9b5eeecb065e75173176d535d57a5a42dee"
+      "grandchallenge/INTELLECT PR #114",
+      "grandchallenge/INTELLECT protected main 7e6b61ddf77e2d73309657d089a98cae84cc735f",
+      "INTELLECT schema blob b019881a54763a949613c8116260b729742867bd",
+      "grandchallenge/MATHSOLVE .gcl/agent-continuity.json and local continuity validator at live protected head"
     ]
   },
   "external_evidence": {
@@ -47,20 +48,19 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "complete Phase D0 and record separate Phase D1 disposition",
-    "result": "D0 protected admission c889f253ea8113e0e521d59e620644d64a67ac33 established lossless four-repository representation with retained local validators; MATH-PROGRAMME #1015 separately authorizes sequential D1 protected migration under the retained conditions.",
+    "action": "admit canonical downstream continuity adoption schema to INTELLECT",
+    "result": "INTELLECT PR #114 passed all required tests, policy, security, routing, continuity-contract, and validation checks and protected-merged. Protected main read back exactly at 7e6b61ddf77e2d73309657d089a98cae84cc735f; canonical schema blob is b019881a54763a949613c8116260b729742867bd.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#1013",
-      "grandchallenge/MATH-PROGRAMME#1014",
-      "grandchallenge/MATH-PROGRAMME#1015",
-      "c889f253ea8113e0e521d59e620644d64a67ac33"
+      "grandchallenge/INTELLECT#114",
+      "7e6b61ddf77e2d73309657d089a98cae84cc735f",
+      "b019881a54763a949613c8116260b729742867bd"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/GCL-AGENT-CONTINUITY-PHASE-D1-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-18T09:24:08Z"
+    "observed_at": "2026-09-18T09:39:52Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -71,7 +71,7 @@
       "grandchallenge/MATH-PROGRAMME:docs/governance/GCL_AGENT_CONTINUITY_PHASE_D0_001.md",
       "grandchallenge/INTELLECT:governance/agent_execution/GCL-AGENT-CONTINUITY-001.md"
     ],
-    "instructions": "Run the recorded live verification command before every material transition. Re-fetch the current protected target repository immediately before mutation. Preserve the D1 order INTELLECT -> MATHSOLVE -> MATH-PROGRAMME -> MATHFORGE -> MATHCERT. After each protected admission, record exact readback evidence here before starting the next stage. Any semantic weakening or authority drift is a fail-closed boundary."
+    "instructions": "Run the recorded live verification command before every material transition. Stage 0 is complete at INTELLECT protected main 7e6b61ddf77e2d73309657d089a98cae84cc735f with schema blob b019881a54763a949613c8116260b729742867bd. Next re-fetch live MATHSOLVE and migrate only its adoption representation/local-validator interface. Preserve the order MATHSOLVE -> MATH-PROGRAMME -> MATHFORGE -> MATHCERT and checkpoint exact protected readback after every stage."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
