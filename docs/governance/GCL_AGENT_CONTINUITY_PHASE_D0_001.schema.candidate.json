@@ -16,6 +16,7 @@
     "binding_surface",
     "required",
     "specialization",
+    "local_validator",
     "authority_preservation",
     "specialization_data"
   ],
@@ -54,6 +55,10 @@
     },
     "specialization": {
       "type": ["string", "null"]
+    },
+    "local_validator": {
+      "type": "string",
+      "minLength": 1
     },
     "authority_preservation": {
       "type": "object",
