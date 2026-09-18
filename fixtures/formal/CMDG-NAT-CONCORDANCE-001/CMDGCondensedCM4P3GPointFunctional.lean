@@ -261,6 +261,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       rfl
     rw [heQ1, Category.assoc]
     unfold freeHomSectionsEquiv
+    simp only [Equiv.trans_apply, id_eq]
     rw [Adjunction.homEquiv_naturality_left]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
