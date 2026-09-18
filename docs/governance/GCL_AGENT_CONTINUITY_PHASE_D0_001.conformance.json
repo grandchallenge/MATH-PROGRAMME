@@ -1,0 +1,143 @@
+{
+  "audit_id": "GCL-AGENT-CONTINUITY-PHASE-D0-001",
+  "candidate_schema_id": "GCL-AGENT-CONTINUITY-ADOPTION-001",
+  "candidate_schema_version": "1.0.0",
+  "canonical_policy": "GCL-AGENT-CONTINUITY-001@1.0.0",
+  "authority_repository": "grandchallenge/INTELLECT",
+  "authority_head": "7662e9b5eeecb065e75173176d535d57a5a42dee",
+  "migration_authorized": false,
+  "central_runtime_controller_authorized": false,
+  "records": [
+    {
+      "repository": "grandchallenge/MATHSOLVE",
+      "protected_head": "aca548821935600c36a03b70aca76a4a7f31e03b",
+      "source_blob_sha": "4e540a4421bebd1cf6dbff09b5ec2c03f3d55371",
+      "source_path": ".gcl/agent-continuity.json",
+      "local_validator": "scripts/validate_agent_continuity_adoption.py",
+      "local_validator_blob_sha": "1dde73ef018432e8f3ed29c8c686427c105f372b",
+      "common_fields_preserved_verbatim": [
+        "adoption_id",
+        "policy_id",
+        "version",
+        "authority_repository",
+        "authority_path",
+        "repository",
+        "binding_surface",
+        "required"
+      ],
+      "proposed_specialization": null,
+      "specialization_data_sources": [
+        "controls"
+      ],
+      "authority_mapping": {
+        "certification_authority_changed": "authority_preservation.certification_authority_changed"
+      },
+      "semantic_loss_detected": false,
+      "local_validator_retained": true
+    },
+    {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "protected_head": "2333f4804fe28e6e79847fdc1078a5c5ea276d75",
+      "source_blob_sha": "5f1f301ecfba68168a801b0832adb9d7bc520c59",
+      "source_path": ".gcl/agent-continuity.json",
+      "local_validator": "ci/validate_agent_continuity_adoption.py",
+      "local_validator_blob_sha": "d90c8c73caf959c294158b7ca280e44328261d4f",
+      "common_fields_preserved_verbatim": [
+        "adoption_id",
+        "policy_id",
+        "version",
+        "authority_repository",
+        "authority_path",
+        "repository",
+        "required",
+        "specialization",
+        "authority_preservation"
+      ],
+      "proposed_binding_surface": "AGENTS.md",
+      "specialization_data_sources": [
+        "implementation",
+        "applicability"
+      ],
+      "semantic_loss_detected": false,
+      "local_validator_retained": true,
+      "duplicate_checkpoint_registry_forbidden": true
+    },
+    {
+      "repository": "grandchallenge/MATHFORGE",
+      "protected_head": "5f683563d7580eecb3bc5b2582d9a4577cbb4add",
+      "source_blob_sha": "7ef3ed044da976e93624ec3bc1fa0e13cc100dca",
+      "source_path": ".gcl/agent-continuity.json",
+      "local_validator": "ci/validate_agent_continuity_adoption.py",
+      "local_validator_blob_sha": "8971b142f7c77fecf9c8e7c40065501236a260cd",
+      "common_fields_preserved_verbatim": [
+        "adoption_id",
+        "policy_id",
+        "version",
+        "authority_repository",
+        "authority_path",
+        "repository",
+        "required",
+        "specialization",
+        "authority_preservation"
+      ],
+      "proposed_binding_surface": "AGENTS.md",
+      "specialization_data_sources": [
+        "applicability",
+        "checkpoint_requirements"
+      ],
+      "semantic_loss_detected": false,
+      "local_validator_retained": true,
+      "provenance_semantics_retained": true
+    },
+    {
+      "repository": "grandchallenge/MATHCERT",
+      "protected_head": "ee58999acf43f8eed7952a06a2a9e15923d79179",
+      "source_blob_sha": "7a502c59f864c659c3fa10e20c330adb521ab4b3",
+      "source_path": ".gcl/agent-continuity.json",
+      "local_validator": "ci/validate_agent_continuity_adoption.py",
+      "local_validator_blob_sha": "097486f70ae5267cf1837c6af0b77c1f403364b5",
+      "common_fields_preserved_verbatim": [
+        "adoption_id",
+        "policy_id",
+        "version",
+        "authority_repository",
+        "authority_path",
+        "repository",
+        "required",
+        "specialization",
+        "authority_preservation"
+      ],
+      "proposed_binding_surface": "AGENTS.md",
+      "specialization_data_sources": [
+        "interruption_rebind",
+        "provenance",
+        "succession",
+        "fail_closed"
+      ],
+      "semantic_loss_detected": false,
+      "local_validator_retained": true,
+      "certification_independence_semantics_retained": true
+    }
+  ],
+  "adversarial_requirements": [
+    "reject policy_id or policy version drift",
+    "reject authority_repository or authority_path drift",
+    "reject authority_preservation.authority_changed=true",
+    "reject required=false",
+    "reject missing local_validator identity",
+    "forbid mutable or unpinned remote schema dependencies",
+    "require any repository-local schema snapshot to bind the exact admitted INTELLECT schema commit/blob identity",
+    "reject missing specialization_data",
+    "retain Programme duplicate-checkpoint prohibition in local validation",
+    "retain Forge provenance and non-promotion invariants in local validation",
+    "retain Cert anti-authority-inheritance and anti-independence-inheritance invariants in local validation",
+    "do not permit common-schema validity to imply proof, certification, publication, promotion, protected bypass, or independent review"
+  ],
+  "d1_order": [
+    "grandchallenge/MATHSOLVE",
+    "grandchallenge/MATH-PROGRAMME",
+    "grandchallenge/MATHFORGE",
+    "grandchallenge/MATHCERT"
+  ],
+  "d1_gate": "BLOCKED_PENDING_D0_DISPOSITION"
+}
