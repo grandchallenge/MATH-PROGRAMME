@@ -252,8 +252,14 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       freeHomSectionsEquiv (FintypeCat.toProfinite.obj Q1) D
         ((Condensed.finFree CMDG.CondensedCM4P3G.R.{u}).map qx ≫ eFree) = _
     rw [CMDG.CondensedCM4P2E.finiteFreeDiscreteIso.hom.naturality qx]
-    dsimp [eFree, CMDG.CondensedCM4P2E.finiteFreeDiscreteIso]
-    simp only [Category.assoc]
+    have heQ1 :
+        CMDG.CondensedCM4P2E.finiteFreeDiscreteIso.hom.app Q1 =
+          (Condensed.free CMDG.CondensedCM4P3G.R.{u}).map
+              (CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso.hom.app Q1) ≫
+            CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
+              (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q1) := by
+      rfl
+    rw [heQ1, Category.assoc]
     change
       (coherentTopology CompHaus.{u}).uliftYonedaEquiv
         ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
@@ -268,7 +274,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         (ULift.{u + 1, u} Q1.obj)
     have huniqPoint :=
       CategoryTheory.types_congr_hom huniq (ULift.up PUnit.unit)
-    dsimp [Q1, qx, D, eTail, eFree, freeHomSectionsEquiv]
+    dsimp [Q1, qx, D, eTail, freeHomSectionsEquiv]
     simpa [
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
