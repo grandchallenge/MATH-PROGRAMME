@@ -82,6 +82,23 @@ For an already authorized bounded MATH operation, follow [`docs/governance/EXECU
   or actual recovery-exhaustion boundary.
 - Fail closed on claims, certification, promotion, publication, protected-state mutation, and authority; do not fail closed merely on authorized evidence gathering and bounded repair.
 
+## Canonical bounded-turn continuity policy
+
+MATH-PROGRAMME adopts `GCL-AGENT-CONTINUITY-001@1.0.0` from
+`grandchallenge/INTELLECT/governance/agent_execution/GCL-AGENT-CONTINUITY-001.md`.
+The existing Programme continuity machinery remains the single operational
+continuity source of truth: `governance/bounded_operation_checkpoint_registry.json`,
+`WORKSET_STATE.json` where applicable, and
+`ci/validate_bounded_operation_continuity.py`. The canonical policy maps onto
+those controls; it does not create a second checkpoint registry.
+
+For interruption-prone or long-horizon work, exact-head rebinding, durable
+checkpointing, deterministic `next_action`, fresh-session-safe recovery, and a
+named legitimate stopping boundary are mandatory. Routine bounded work remains
+outside the checkpoint registry under the existing applicability rules.
+Continuity metadata grants no mathematical certification, publication,
+protected-bypass, or claim authority.
+
 ## Durable bounded-operation continuity
 
 This control applies to a multi-session governed campaign explicitly admitted in
