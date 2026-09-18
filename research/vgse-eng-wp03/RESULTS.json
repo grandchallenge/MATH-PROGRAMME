@@ -1,0 +1,213 @@
+{
+  "schema_version": "1.0.0",
+  "work_package": "VGSE-ENG-WP03",
+  "evidence_binding": {
+    "protected_wp02_merge": "52e2e3df6ac54ab63a03c867b2b82a80d93ee577",
+    "reviewed_wp02_head": "229d5549689fde9d5397ed59f92890e8ba080c75",
+    "current_protected_base_at_wp03_activation": "7c8b351cc74bcb6ac2ccd4009eb6dff99913bc19"
+  },
+  "exact_feasibility_certificate": {
+    "matching_count": 31,
+    "supported_minor_count": 19,
+    "absent_minor": "123",
+    "extractor_identity_checks": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "relation_identity_checks": {
+      "125": true,
+      "126": true,
+      "135": true,
+      "235": true,
+      "236": true,
+      "245": true,
+      "246": true,
+      "256": true,
+      "346": true,
+      "356": true
+    },
+    "relation_count": 10,
+    "residual_jacobian_rank_global": 10,
+    "residual_jacobian_structure": "diagonal in the ten dependent measurement coordinates with strictly positive diagonal factors on the positive domain",
+    "baseline_diagonal": {
+      "125": "25/2",
+      "126": "1",
+      "135": "25/2",
+      "235": "25/2",
+      "236": "1",
+      "245": "1",
+      "246": "7/2",
+      "256": "175/4",
+      "346": "7/2",
+      "356": "175/4"
+    },
+    "baseline_jacobian_determinant": "23447265625/512",
+    "minimality_argument": "The positive response image is globally a graph over eight extractor coordinates inside an eighteen-dimensional response chart, so its codimension is ten. The ten retained residuals have rank ten everywhere, hence no smaller regular equality basis can define the same local image.",
+    "extractor_coordinates": [
+      "134",
+      "234",
+      "145",
+      "146",
+      "345",
+      "136",
+      "156",
+      "456"
+    ],
+    "dependent_coordinates": [
+      "125",
+      "126",
+      "135",
+      "235",
+      "236",
+      "245",
+      "246",
+      "256",
+      "346",
+      "356"
+    ],
+    "normalized_measurement_definition": "y_I = Delta_I / Delta_124 > 0",
+    "relations": {
+      "125": "y134*y146*y125 - y134*y156 - y136*y145",
+      "126": "y134*y126 - y136",
+      "135": "y146*y135 - y134*y156 - y136*y145",
+      "235": "y134*y146*y235 - y234*(y134*y156 + y136*y145)",
+      "236": "y134*y236 - y136*y234",
+      "245": "y134*y245 - y145*y234 - y345",
+      "246": "y134*y145*y246 - y134*y456 - y145*y146*y234 - y146*y345",
+      "256": "y134*y145*y146*y256 - y134*y156*y456 - y136*y145*y456 - y145*y146*y156*y234 - y146*y156*y345",
+      "346": "y145*y346 - y134*y456 - y146*y345",
+      "356": "y145*y146*y356 - y134*y156*y456 - y136*y145*y456 - y146*y156*y345"
+    },
+    "completeness": "necessary_and_sufficient_on_positive_chart",
+    "global_graph_statement": "Every positive feasible response is uniquely determined by the eight extractor coordinates; conversely every positive extractor tuple induces one feasible eighteen-coordinate response through the admitted matching polynomials."
+  },
+  "deterministic_target_checker": {
+    "coordinate_system": "eighteen log-projective responses F_I=log(y_I)",
+    "feasible_tolerance": 1e-10,
+    "inconsistent_tolerance": 1e-07,
+    "statuses": [
+      "feasible",
+      "numerically_ambiguous",
+      "inconsistent"
+    ],
+    "feasible_probe": {
+      "log_coordinate_delta": [
+        0.31,
+        -0.27,
+        0.19,
+        -0.33,
+        0.24,
+        -0.15,
+        0.28,
+        -0.21
+      ],
+      "status": "feasible",
+      "max_abs_parameter_recovery_error": 1.6653345369377348e-16,
+      "max_abs_log_response_residual": 3.3306690738754696e-16
+    },
+    "adversarial_single_dependent_coordinate_probes": {
+      "125": {
+        "status": "inconsistent",
+        "max_abs_log_response_residual": 0.09999999999999998,
+        "worst_coordinate": "125",
+        "max_abs_recovered_theta_change": 0.0,
+        "extractor_coordinates_unchanged": true
+      },
+      "126": {
+        "status": "inconsistent",
+        "max_abs_log_response_residual": 0.09999999999999981,
+        "worst_coordinate": "126",
+        "max_abs_recovered_theta_change": 0.0,
+        "extractor_coordinates_unchanged": true
+      },
+      "135": {
+        "status": "inconsistent",
+        "max_abs_log_response_residual": 0.09999999999999998,
+        "worst_coordinate": "135",
+        "max_abs_recovered_theta_change": 0.0,
+        "extractor_coordinates_unchanged": true
+      },
+      "235": {
+        "status": "inconsistent",
+        "max_abs_log_response_residual": 0.09999999999999998,
+        "worst_coordinate": "235",
+        "max_abs_recovered_theta_change": 0.0,
+        "extractor_coordinates_unchanged": true
+      },
+      "236": {
+        "status": "inconsistent",
+        "max_abs_log_response_residual": 0.09999999999999981,
+        "worst_coordinate": "236",
+        "max_abs_recovered_theta_change": 0.0,
+        "extractor_coordinates_unchanged": true
+      },
+      "245": {
+        "status": "inconsistent",
+        "max_abs_log_response_residual": 0.09999999999999987,
+        "worst_coordinate": "245",
+        "max_abs_recovered_theta_change": 0.0,
+        "extractor_coordinates_unchanged": true
+      },
+      "246": {
+        "status": "inconsistent",
+        "max_abs_log_response_residual": 0.10000000000000009,
+        "worst_coordinate": "246",
+        "max_abs_recovered_theta_change": 0.0,
+        "extractor_coordinates_unchanged": true
+      },
+      "256": {
+        "status": "inconsistent",
+        "max_abs_log_response_residual": 0.10000000000000009,
+        "worst_coordinate": "256",
+        "max_abs_recovered_theta_change": 0.0,
+        "extractor_coordinates_unchanged": true
+      },
+      "346": {
+        "status": "inconsistent",
+        "max_abs_log_response_residual": 0.09999999999999964,
+        "worst_coordinate": "346",
+        "max_abs_recovered_theta_change": 0.0,
+        "extractor_coordinates_unchanged": true
+      },
+      "356": {
+        "status": "inconsistent",
+        "max_abs_log_response_residual": 0.09999999999999981,
+        "worst_coordinate": "356",
+        "max_abs_recovered_theta_change": 0.0,
+        "extractor_coordinates_unchanged": true
+      }
+    },
+    "ambiguous_probe": {
+      "coordinate": "125",
+      "log_response_delta": 5e-09,
+      "status": "numerically_ambiguous",
+      "max_abs_log_response_residual": 4.999999969612645e-09
+    }
+  },
+  "retraction": {
+    "definition": "P(F)=F(recover_theta(F)); the eight extractor coordinates are held fixed and the ten dependent coordinates are replayed from the admitted response map",
+    "extractor_preservation_max_abs_error": 2.220446049250313e-16,
+    "idempotence_max_abs_error": 2.220446049250313e-16,
+    "nearest_point_claim": "not established",
+    "limitation": "This is a canonical extractor-preserving feasibility retraction, not a proof of the nearest feasible response under an unconstrained eighteen-dimensional Euclidean or application-specific norm."
+  },
+  "claim_boundary": {
+    "source_correspondence_c06": "not established",
+    "geometry_coupling": "not established",
+    "physical_stiffness_interpretation": "not established",
+    "mechanical_advantage": "not established",
+    "rigid_foldability": "not established",
+    "collision_freedom": "not established",
+    "finite_thickness": "not established",
+    "manufacturability": "not established",
+    "durability_fatigue": "not established",
+    "product_performance": "not established",
+    "novelty_priority_patentability_commercial_value": "not established"
+  }
+}
