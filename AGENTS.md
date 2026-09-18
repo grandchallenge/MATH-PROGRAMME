@@ -86,8 +86,7 @@ For an already authorized bounded MATH operation, follow [`docs/governance/EXECU
 
 MATH-PROGRAMME adopts `GCL-AGENT-CONTINUITY-001@1.0.0` from
 `grandchallenge/INTELLECT/governance/agent_execution/GCL-AGENT-CONTINUITY-001.md`.
-The existing Programme continuity machinery remains the single operational
-continuity source of truth: `governance/bounded_operation_checkpoint_registry.json`,
+The existing Programme continuity machinery remains the single operational continuity source of truth: `governance/bounded_operation_checkpoint_registry.json`,
 `WORKSET_STATE.json` where applicable, and
 `ci/validate_bounded_operation_continuity.py`. The canonical policy maps onto
 those controls; it does not create a second checkpoint registry.
