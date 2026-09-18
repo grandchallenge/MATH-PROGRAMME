@@ -13,6 +13,8 @@
       "protected_head": "aca548821935600c36a03b70aca76a4a7f31e03b",
       "source_blob_sha": "4e540a4421bebd1cf6dbff09b5ec2c03f3d55371",
       "source_path": ".gcl/agent-continuity.json",
+      "local_validator": "scripts/validate_agent_continuity_adoption.py",
+      "local_validator_blob_sha": "1dde73ef018432e8f3ed29c8c686427c105f372b",
       "common_fields_preserved_verbatim": [
         "adoption_id",
         "policy_id",
@@ -38,6 +40,8 @@
       "protected_head": "2333f4804fe28e6e79847fdc1078a5c5ea276d75",
       "source_blob_sha": "5f1f301ecfba68168a801b0832adb9d7bc520c59",
       "source_path": ".gcl/agent-continuity.json",
+      "local_validator": "ci/validate_agent_continuity_adoption.py",
+      "local_validator_blob_sha": "d90c8c73caf959c294158b7ca280e44328261d4f",
       "common_fields_preserved_verbatim": [
         "adoption_id",
         "policy_id",
@@ -63,6 +67,8 @@
       "protected_head": "5f683563d7580eecb3bc5b2582d9a4577cbb4add",
       "source_blob_sha": "7ef3ed044da976e93624ec3bc1fa0e13cc100dca",
       "source_path": ".gcl/agent-continuity.json",
+      "local_validator": "ci/validate_agent_continuity_adoption.py",
+      "local_validator_blob_sha": "8971b142f7c77fecf9c8e7c40065501236a260cd",
       "common_fields_preserved_verbatim": [
         "adoption_id",
         "policy_id",
@@ -88,6 +94,8 @@
       "protected_head": "ee58999acf43f8eed7952a06a2a9e15923d79179",
       "source_blob_sha": "7a502c59f864c659c3fa10e20c330adb521ab4b3",
       "source_path": ".gcl/agent-continuity.json",
+      "local_validator": "ci/validate_agent_continuity_adoption.py",
+      "local_validator_blob_sha": "097486f70ae5267cf1837c6af0b77c1f403364b5",
       "common_fields_preserved_verbatim": [
         "adoption_id",
         "policy_id",
@@ -116,6 +124,7 @@
     "reject authority_repository or authority_path drift",
     "reject authority_preservation.authority_changed=true",
     "reject required=false",
+    "reject missing local_validator identity",
     "reject missing specialization_data",
     "retain Programme duplicate-checkpoint prohibition in local validation",
     "retain Forge provenance and non-promotion invariants in local validation",
