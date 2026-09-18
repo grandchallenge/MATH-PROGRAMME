@@ -1,30 +1,43 @@
 {
+  "schema_id": "GCL-AGENT-CONTINUITY-ADOPTION-001",
+  "schema_version": "1.0.0",
   "adoption_id": "MATH-PROGRAMME-GCL-AGENT-CONTINUITY-001",
   "policy_id": "GCL-AGENT-CONTINUITY-001",
   "version": "1.0.0",
   "authority_repository": "grandchallenge/INTELLECT",
   "authority_path": "governance/agent_execution/GCL-AGENT-CONTINUITY-001.md",
   "repository": "grandchallenge/MATH-PROGRAMME",
+  "binding_surface": "AGENTS.md",
   "required": true,
   "specialization": "MATH-PROGRAMME-BOUNDED-OPERATION-CONTINUITY-001",
-  "implementation": {
-    "authoritative_checkpoint_registry": "governance/bounded_operation_checkpoint_registry.json",
-    "validator": "ci/validate_bounded_operation_continuity.py",
-    "exact_head_preflight": "freshness.verification_command",
-    "durable_checkpoint": "bounded_operation_checkpoint_registry_and_WORKSET_STATE",
-    "alternate_agent_live_rebind": "resume.fresh_session_safe=true;resume.requires_chat_history=false",
-    "deterministic_resume": "exactly_one_next_action",
-    "named_terminal_boundary": "recognized_blocking_boundary_categories",
-    "duplicate_checkpoint_registry_forbidden": true
-  },
-  "applicability": {
-    "long_horizon_or_explicitly_admitted_operations": true,
-    "routine_bounded_work_excluded": true
-  },
+  "local_validator": "ci/validate_agent_continuity_adoption.py",
   "authority_preservation": {
     "authority_changed": false,
     "mathematical_certification_changed": false,
     "publication_authority_changed": false,
     "protected_bypass_changed": false
+  },
+  "specialization_data": {
+    "schema_binding": {
+      "authority_commit": "7e6b61ddf77e2d73309657d089a98cae84cc735f",
+      "schema_blob_sha": "b019881a54763a949613c8116260b729742867bd",
+      "local_snapshot": "schemas/agent_continuity_adoption.schema.json",
+      "local_snapshot_authoritative": false,
+      "mutable_remote_fetch_allowed": false
+    },
+    "implementation": {
+      "authoritative_checkpoint_registry": "governance/bounded_operation_checkpoint_registry.json",
+      "validator": "ci/validate_bounded_operation_continuity.py",
+      "exact_head_preflight": "freshness.verification_command",
+      "durable_checkpoint": "bounded_operation_checkpoint_registry_and_WORKSET_STATE",
+      "alternate_agent_live_rebind": "resume.fresh_session_safe=true;resume.requires_chat_history=false",
+      "deterministic_resume": "exactly_one_next_action",
+      "named_terminal_boundary": "recognized_blocking_boundary_categories",
+      "duplicate_checkpoint_registry_forbidden": true
+    },
+    "applicability": {
+      "long_horizon_or_explicitly_admitted_operations": true,
+      "routine_bounded_work_excluded": true
+    }
   }
 }
