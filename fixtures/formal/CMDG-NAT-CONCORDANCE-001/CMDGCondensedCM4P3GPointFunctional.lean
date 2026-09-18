@@ -262,7 +262,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       rfl
     rw [heQ1, Category.assoc]
     unfold freeHomSectionsEquiv
-    simp only [Equiv.trans_apply, id_eq]
+    simp only [Equiv.trans_apply, id_eq, Category.assoc]
     rw [Adjunction.homEquiv_naturality_left]
     dsimp only [id]
     unfold GrothendieckTopology.uliftYonedaEquiv
