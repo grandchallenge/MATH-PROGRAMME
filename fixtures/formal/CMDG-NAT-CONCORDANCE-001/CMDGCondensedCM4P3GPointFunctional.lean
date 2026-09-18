@@ -263,6 +263,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     unfold freeHomSectionsEquiv
     simp only [Equiv.trans_apply, id_eq]
     rw [Adjunction.homEquiv_naturality_left]
+    dsimp only [id]
     rw [(coherentTopology CompHaus.{u}).uliftYonedaEquiv_apply]
     simp only [NatTrans.comp_app, ConcreteCategory.comp_apply]
     have huniq :=
