@@ -57,10 +57,11 @@ The universal envelope contains only:
 - binding surface;
 - required-adoption flag;
 - nullable repository specialization identity;
+- explicit repository-local validator identity;
 - `authority_preservation`;
 - opaque `specialization_data` owned by the repository-local validator.
 
-The common schema requires `authority_preservation.authority_changed=false`. It deliberately does not attempt to interpret every repository-specific authority assertion.
+The common schema requires `authority_preservation.authority_changed=false` and an explicit `local_validator` path. This makes the split of responsibility machine-visible: common-schema conformance is necessary but never sufficient for repository admission. The common schema deliberately does not attempt to interpret every repository-specific authority assertion.
 
 ## 5. Repository mappings
 
@@ -162,7 +163,8 @@ A D1 implementation must demonstrate at least:
 7. Programme's duplicate-checkpoint prohibition remains locally enforced;
 8. Forge's provenance/non-promotion invariants remain locally enforced;
 9. Cert's anti-authority-inheritance and anti-independence-inheritance invariants remain locally enforced;
-10. common-schema validity cannot satisfy proof, certification, publication, promotion, protected-bypass, or independent-review requirements.
+10. missing local-validator identity fails common validation;
+11. common-schema validity cannot satisfy proof, certification, publication, promotion, protected-bypass, or independent-review requirements.
 
 ## 10. Proposed D1 ordering
 
@@ -190,7 +192,7 @@ D1 should not be authorized unless D0 review finds all of the following:
 
 - the bound four-record corpus is losslessly representable;
 - the common schema remains thinner than every repository specialization;
-- all local validators remain necessary and retained;
+- all local validators remain necessary, explicitly identified, and retained;
 - no central runtime/controller is introduced;
 - INTELLECT remains the canonical policy/schema authority;
 - no mathematical, certification, publication, promotion, protected-bypass, or independent-review authority changes.
