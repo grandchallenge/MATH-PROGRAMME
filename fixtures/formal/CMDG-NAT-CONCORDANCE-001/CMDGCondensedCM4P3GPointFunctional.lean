@@ -118,10 +118,10 @@ noncomputable def profinitePointProbe
     { toFun := fun _ => x
       continuous_toFun := continuous_const }
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Finite-stage measure/Dirac identity.  The large finite comparison is kept inside the proof so
 that its four canonical factors can be cancelled explicitly rather than normalized definitionally
 in the theorem statement. -/
-set_option backward.isDefEq.respectTransparency false in
 theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
     (X : Profinite.{u}) (x : X) (j : DiscreteQuotient X) :
     (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
