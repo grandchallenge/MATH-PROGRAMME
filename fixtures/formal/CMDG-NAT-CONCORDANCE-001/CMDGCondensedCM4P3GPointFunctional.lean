@@ -252,6 +252,15 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       freeHomSectionsEquiv (FintypeCat.toProfinite.obj Q1) D
         ((Condensed.finFree CMDG.CondensedCM4P3G.R.{u}).map qx ≫ eFree) = _
     rw [CMDG.CondensedCM4P2E.finiteFreeDiscreteIso.hom.naturality qx]
+    dsimp [eFree, CMDG.CondensedCM4P2E.finiteFreeDiscreteIso]
+    simp only [Category.assoc]
+    change
+      (coherentTopology CompHaus.{u}).uliftYonedaEquiv
+        ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
+          ((profiniteToCondensed).obj (FintypeCat.toProfinite.obj Q1)) D
+          ((Condensed.free CMDG.CondensedCM4P3G.R.{u}).map
+            (CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso.hom.app Q1) ≫ _)) = _
+    rw [Adjunction.homEquiv_naturality_left]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
         CMDG.CondensedCM4P2E.discreteSetFreeAdj
