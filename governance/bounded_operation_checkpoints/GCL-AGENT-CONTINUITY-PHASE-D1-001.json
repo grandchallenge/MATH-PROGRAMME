@@ -1,0 +1,84 @@
+{
+  "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
+  "schema_version": "1.0.0",
+  "checkpoint_id": "GCL-AGENT-CONTINUITY-PHASE-D1-001.CP001",
+  "governed_work_id": "GCL-AGENT-CONTINUITY-PHASE-D1-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "admission": {
+    "topology": "MULTI_SESSION_RESUMABLE",
+    "admission_ref": "grandchallenge/MATH-PROGRAMME#1015",
+    "routine_work_excluded": true
+  },
+  "authority": {
+    "ghos_standard": "GCL-GHOS-00",
+    "ghos_version": "0.2.0",
+    "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#1015"
+  },
+  "phase": "D1 authorized; durable checkpoint admission before Stage 0 INTELLECT schema mutation",
+  "state": "AUTHORIZED_READY",
+  "identities": {
+    "protected_base_sha": "c889f253ea8113e0e521d59e620644d64a67ac33",
+    "candidate_head_sha": "c889f253ea8113e0e521d59e620644d64a67ac33",
+    "issue_number": 1015,
+    "pr_number": null,
+    "branch": "governance/agent-continuity-phase-d1-anchor",
+    "workflow_runs": []
+  },
+  "terminal_condition": "INTELLECT common schema and MATHSOLVE, MATH-PROGRAMME, MATHFORGE, and MATHCERT migrations are each protected-admitted in the authorized order, exact protected readback succeeds at every stage, retained local validators and fail-closed semantics remain green, and all admitted identities are recorded in MATH-PROGRAMME #1015.",
+  "permitted_next_actions": [
+    {
+      "id": "admit_intellect_common_schema",
+      "description": "Re-fetch live INTELLECT protected state, admit the reviewed common adoption schema under protected controls without changing policy authority semantics, read back the exact admitted schema identity, then durably advance this checkpoint."
+    }
+  ],
+  "next_action": {
+    "id": "admit_intellect_common_schema",
+    "description": "Re-fetch live INTELLECT protected main and begin only Stage 0 common-schema admission under the D0-reviewed contract; do not mutate pillar adoption records before protected INTELLECT readback.",
+    "evidence_targets": [
+      "grandchallenge/MATH-PROGRAMME#1015",
+      "grandchallenge/MATH-PROGRAMME protected D0 admission c889f253ea8113e0e521d59e620644d64a67ac33",
+      "grandchallenge/INTELLECT protected main observed at D1 opening 7662e9b5eeecb065e75173176d535d57a5a42dee"
+    ]
+  },
+  "external_evidence": {
+    "waiting": false,
+    "objects": []
+  },
+  "blocking_boundary": null,
+  "last_transition": {
+    "action": "complete Phase D0 and record separate Phase D1 disposition",
+    "result": "D0 protected admission c889f253ea8113e0e521d59e620644d64a67ac33 established lossless four-repository representation with retained local validators; MATH-PROGRAMME #1015 separately authorizes sequential D1 protected migration under the retained conditions.",
+    "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#1013",
+      "grandchallenge/MATH-PROGRAMME#1014",
+      "grandchallenge/MATH-PROGRAMME#1015",
+      "c889f253ea8113e0e521d59e620644d64a67ac33"
+    ]
+  },
+  "freshness": {
+    "required_before_transition": true,
+    "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/GCL-AGENT-CONTINUITY-PHASE-D1-001.json",
+    "on_mismatch": "REBIND_BEFORE_MUTATION",
+    "observed_at": "2026-09-18T09:24:08Z"
+  },
+  "resume": {
+    "fresh_session_safe": true,
+    "requires_chat_history": false,
+    "authoritative_sources": [
+      "grandchallenge/MATH-PROGRAMME#1015",
+      "grandchallenge/MATH-PROGRAMME#1013",
+      "grandchallenge/MATH-PROGRAMME:docs/governance/GCL_AGENT_CONTINUITY_PHASE_D0_001.md",
+      "grandchallenge/INTELLECT:governance/agent_execution/GCL-AGENT-CONTINUITY-001.md"
+    ],
+    "instructions": "Run the recorded live verification command before every material transition. Re-fetch the current protected target repository immediately before mutation. Preserve the D1 order INTELLECT -> MATHSOLVE -> MATH-PROGRAMME -> MATHFORGE -> MATHCERT. After each protected admission, record exact readback evidence here before starting the next stage. Any semantic weakening or authority drift is a fail-closed boundary."
+  },
+  "terminal_evidence": [],
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false,
+    "protected_bypass_authorized": false
+  }
+}
