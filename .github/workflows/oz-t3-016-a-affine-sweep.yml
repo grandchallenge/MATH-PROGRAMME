@@ -231,7 +231,7 @@ jobs:
                       Path('source-smoke'), cache, prewarm=True
                   )
                   digests = set()
-                  for n in (3, 4, 5):
+                  for n in (3, 4, 5, 192, 384):
                       _section, data = lex_pivot_sweep._lex_shape(
                           n, p, fit_rows, fresh_rows, nb, expected
                       )

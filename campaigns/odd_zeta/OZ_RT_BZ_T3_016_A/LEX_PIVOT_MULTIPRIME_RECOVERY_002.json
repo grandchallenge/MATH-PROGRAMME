@@ -1,0 +1,44 @@
+{
+  "record_type": "OZ_RT_BZ_T3_016_A_MULTIPRIME_RUNTIME_RECOVERY",
+  "schema_version": "1.0.0",
+  "recovery_id": "OZ-RT-BZ-T3-016-A-LEX-PIVOT-MULTIPRIME-RECOVERY-002",
+  "predecessor_request_id": "OZ-RT-BZ-T3-016-A-LEX-PIVOT-MULTIPRIME-SWEEP-001",
+  "predecessor_protected_head": "d80c5c368954901fbe8a8c3488ee9df37e992213",
+  "predecessor_run_id": 34945709508,
+  "failure_class": "HEAVY_MATRIX_JOB_TIMEOUT",
+  "timeout_minutes": 60,
+  "heavy_jobs_total": 12,
+  "heavy_jobs_completed_successfully": 0,
+  "heavy_jobs_cancelled": 12,
+  "preserved_artifact_count": 0,
+  "validation_job_conclusion": "SUCCESS",
+  "failed_replay_primes": [
+    4194319,
+    4194329,
+    4194353
+  ],
+  "replacement_request_id": "OZ-RT-BZ-T3-016-A-LEX-PIVOT-MULTIPRIME-SWEEP-002",
+  "replacement_replay_primes": [
+    4194271,
+    4194277,
+    4194287
+  ],
+  "replacement_prime_smoke_source": {
+    "pull_request": 999,
+    "head": "26b70fa8f273468c89491225fd4ca79faac1adde",
+    "workflow_run_id": 35100971000,
+    "conclusion": "SUCCESS",
+    "scope": "PR smoke only; not protected mathematical evidence"
+  },
+  "repair_strategy": [
+    "reuse the canonical oz-t3-016-a-affine-sweep controller",
+    "replace the timed-out replay-prime set with independently smoke-verified primes",
+    "extend PR smoke to representative high-n fibers n=192 and n=384",
+    "retain the existing 3-prime x 4-chunk protected matrix and 60-minute job bound"
+  ],
+  "causal_claim": "NONE",
+  "evidence_effect": "RECOVERY_PROVENANCE_ONLY",
+  "mathematical_claim_effect": "NONE",
+  "proof_effect": "NONE",
+  "promotion_effect": "NONE"
+}
