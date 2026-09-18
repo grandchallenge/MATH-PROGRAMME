@@ -260,12 +260,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
               (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q1) := by
       rfl
     rw [heQ1, Category.assoc]
-    change
-      (coherentTopology CompHaus.{u}).uliftYonedaEquiv
-        ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
-          ((profiniteToCondensed).obj (FintypeCat.toProfinite.obj Q1)) D
-          ((Condensed.free CMDG.CondensedCM4P3G.R.{u}).map
-            (CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso.hom.app Q1) ≫ _)) = _
+    unfold freeHomSectionsEquiv
     rw [Adjunction.homEquiv_naturality_left]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
