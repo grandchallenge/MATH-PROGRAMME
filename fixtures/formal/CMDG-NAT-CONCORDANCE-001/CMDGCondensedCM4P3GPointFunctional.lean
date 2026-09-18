@@ -240,14 +240,26 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     exact hnat.symm
   ·
     rw [← freeHomSectionsEquiv_precomp]
+    let Q1 : FintypeCat.{u} := FintypeCat.of PUnit.{u + 1}
+    let qx : Q1 ⟶ Q := FintypeCat.homMk (fun _ => j.proj x)
+    have hpoint :
+        profinitePointProbe (X.diagram.obj j) ((finiteQuotientMap X j).hom.hom x) =
+          FintypeCat.toProfinite.map qx := by
+      ext y
+      rfl
+    rw [hpoint]
+    change
+      freeHomSectionsEquiv (FintypeCat.toProfinite.obj Q1) D
+        ((Condensed.finFree CMDG.CondensedCM4P3G.R.{u}).map qx ≫ eFree) = _
+    rw [CMDG.CondensedCM4P2E.finiteFreeDiscreteIso.hom.naturality qx]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
         CMDG.CondensedCM4P2E.discreteSetFreeAdj
         CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
-        (ULift.{u + 1, u} Q.obj)
+        (ULift.{u + 1, u} Q1.obj)
     have huniqPoint :=
-      CategoryTheory.types_congr_hom huniq (ULift.up (j.proj x))
-    dsimp [P, D, eTail, eFree, freeHomSectionsEquiv, profinitePointProbe]
+      CategoryTheory.types_congr_hom huniq (ULift.up PUnit.unit)
+    dsimp [Q1, qx, D, eTail, eFree, freeHomSectionsEquiv]
     simpa [
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
