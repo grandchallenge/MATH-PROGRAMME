@@ -7,21 +7,38 @@
       {
         "shard": "oz",
         "command_index": 1,
-        "command": ["python3", "ci/policy_oz_replay.py", "--mode", "routed", "--report-json", "oz-test-timing.json"],
+        "command": [
+          "python3",
+          "ci/policy_oz_replay.py",
+          "--mode",
+          "routed",
+          "--report-json",
+          "oz-test-timing.json"
+        ],
         "timeout_seconds": 1680,
         "reason": "A scheduled or manual full OZ sentinel may replay the measured computational modules; protected evidence is bounded by the existing 27-minute inner envelope plus cleanup."
       },
       {
         "shard": "campaigns",
         "command_index": 2,
-        "command": ["python3", "ci/validate_campaign_replays.py"],
+        "command": [
+          "python3",
+          "ci/validate_campaign_replays.py"
+        ],
         "timeout_seconds": 1680,
         "reason": "The complete campaign replay traverses the retained computational Odd Zeta stages; native merge-group evidence exceeded the 15-minute default while continuing to produce valid replay output."
       },
       {
         "shard": "campaigns",
         "command_index": 5,
-        "command": ["python3", "ci/policy_oz_replay.py", "--mode", "campaign", "--report-json", "oz-campaign-test-timing.json"],
+        "command": [
+          "python3",
+          "ci/policy_oz_replay.py",
+          "--mode",
+          "campaign",
+          "--report-json",
+          "oz-campaign-test-timing.json"
+        ],
         "timeout_seconds": 1680,
         "reason": "A material Odd Zeta campaign transition may invalidate the full downstream computational replay closure; unrelated campaign transitions exit immediately."
       }
@@ -34,103 +51,398 @@
         "test_administrative*.py",
         "test_campaign*.py"
       ],
-      "manifests": ["governance/contract_test_manifest.json"]
+      "manifests": [
+        "governance/contract_test_manifest.json"
+      ]
     }
   },
   "shards": {
     "core": [
-      ["python3", "ci/validate_schema_json.py"],
-      ["python3", "ci/validate_programme_math_core.py"],
-      ["python3", "ci/test_programme_math_core.py"],
-      ["python3", "ci/validate_math_core_domain_shadow.py"],
-      ["python3", "ci/test_math_core_domain_shadow.py"],
-      ["python3", "ci/validate_math_core_domain_diag.py"],
-      ["python3", "ci/test_math_core_domain_diag.py"],
-      ["python3", "ci/validate_programme_math_core_uc_sources.py"],
-      ["python3", "ci/validate_programme_math_core_uc_pilot.py"],
-      ["python3", "ci/test_programme_math_core_uc_pilot.py"],
-      ["python3", "ci/policy_impact.py", "validate"],
-      ["python3", "ci/test_policy_impact.py"],
-      ["python3", "ci/formal_validation.py", "validate"],
-      ["python3", "ci/test_formal_validation.py"],
-      ["python3", "ci/test_policy_shard_runtime.py"],
-      ["python3", "ci/test_policy_oz_replay.py"]
+      [
+        "python3",
+        "ci/validate_schema_json.py"
+      ],
+      [
+        "python3",
+        "ci/validate_programme_math_core.py"
+      ],
+      [
+        "python3",
+        "ci/test_programme_math_core.py"
+      ],
+      [
+        "python3",
+        "ci/validate_math_core_domain_shadow.py"
+      ],
+      [
+        "python3",
+        "ci/test_math_core_domain_shadow.py"
+      ],
+      [
+        "python3",
+        "ci/validate_math_core_domain_diag.py"
+      ],
+      [
+        "python3",
+        "ci/test_math_core_domain_diag.py"
+      ],
+      [
+        "python3",
+        "ci/validate_programme_math_core_uc_sources.py"
+      ],
+      [
+        "python3",
+        "ci/validate_programme_math_core_uc_pilot.py"
+      ],
+      [
+        "python3",
+        "ci/test_programme_math_core_uc_pilot.py"
+      ],
+      [
+        "python3",
+        "ci/policy_impact.py",
+        "validate"
+      ],
+      [
+        "python3",
+        "ci/test_policy_impact.py"
+      ],
+      [
+        "python3",
+        "ci/formal_validation.py",
+        "validate"
+      ],
+      [
+        "python3",
+        "ci/test_formal_validation.py"
+      ],
+      [
+        "python3",
+        "ci/test_policy_shard_runtime.py"
+      ],
+      [
+        "python3",
+        "ci/test_policy_oz_replay.py"
+      ],
+      [
+        "python3",
+        "ci/validate_agent_continuity_adoption.py"
+      ],
+      [
+        "python3",
+        "ci/test_agent_continuity_adoption.py"
+      ]
     ],
     "fixtures": [
-      ["python3", "ci/check_algebraic_fixture.py", "fixtures/algebraic/UF-INV-001"],
-      ["python3", "ci/test_algebraic_fixture.py"],
-      ["python3", "ci/check_radical_fixture.py", "fixtures/algebraic/RAD-NIL-002"],
-      ["python3", "ci/test_radical_fixture.py"],
-      ["python3", "ci/validate_grobner_manifest.py"],
-      ["python3", "ci/test_grobner_manifest.py"],
-      ["python3", "ci/validate_chaidez_pedagogy.py"],
-      ["python3", "ci/test_chaidez_pedagogy.py"],
-      ["python3", "ci/validate_researchmath_fixture.py"],
-      ["python3", "ci/test_researchmath_fixture.py"],
-      ["python3", "ci/validate_log_gcd_fixture.py", "fixtures/formal/LOG-GCD-001"],
-      ["python3", "ci/test_log_gcd_fixture.py"],
-      ["python3", "ci/validate_log_gcd_publication.py", "fixtures/formal/LOG-GCD-001"],
-      ["python3", "ci/test_log_gcd_publication.py"],
-      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_*fixture*.py", "--report-json", "fixture-test-timing.json"]
+      [
+        "python3",
+        "ci/check_algebraic_fixture.py",
+        "fixtures/algebraic/UF-INV-001"
+      ],
+      [
+        "python3",
+        "ci/test_algebraic_fixture.py"
+      ],
+      [
+        "python3",
+        "ci/check_radical_fixture.py",
+        "fixtures/algebraic/RAD-NIL-002"
+      ],
+      [
+        "python3",
+        "ci/test_radical_fixture.py"
+      ],
+      [
+        "python3",
+        "ci/validate_grobner_manifest.py"
+      ],
+      [
+        "python3",
+        "ci/test_grobner_manifest.py"
+      ],
+      [
+        "python3",
+        "ci/validate_chaidez_pedagogy.py"
+      ],
+      [
+        "python3",
+        "ci/test_chaidez_pedagogy.py"
+      ],
+      [
+        "python3",
+        "ci/validate_researchmath_fixture.py"
+      ],
+      [
+        "python3",
+        "ci/test_researchmath_fixture.py"
+      ],
+      [
+        "python3",
+        "ci/validate_log_gcd_fixture.py",
+        "fixtures/formal/LOG-GCD-001"
+      ],
+      [
+        "python3",
+        "ci/test_log_gcd_fixture.py"
+      ],
+      [
+        "python3",
+        "ci/validate_log_gcd_publication.py",
+        "fixtures/formal/LOG-GCD-001"
+      ],
+      [
+        "python3",
+        "ci/test_log_gcd_publication.py"
+      ],
+      [
+        "python3",
+        "ci/run_unittest_modules.py",
+        "--discover-root",
+        "tests",
+        "--pattern",
+        "test_*fixture*.py",
+        "--report-json",
+        "fixture-test-timing.json"
+      ]
     ],
     "cmdg": [
-      ["python3", "ci/validate_cmdg_schema_contracts.py"],
-      ["python3", "ci/validate_cmdg_graph_package.py", "--report", "cmdg-validator-report.json"],
-      ["python3", "ci/validate_cmdg_nat_foundations_profile.py"],
-      ["python3", "ci/validate_cmdg_workflow_impact_gating.py"],
-      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_cmdg*.py", "--report-json", "cmdg-test-timing.json"]
+      [
+        "python3",
+        "ci/validate_cmdg_schema_contracts.py"
+      ],
+      [
+        "python3",
+        "ci/validate_cmdg_graph_package.py",
+        "--report",
+        "cmdg-validator-report.json"
+      ],
+      [
+        "python3",
+        "ci/validate_cmdg_nat_foundations_profile.py"
+      ],
+      [
+        "python3",
+        "ci/validate_cmdg_workflow_impact_gating.py"
+      ],
+      [
+        "python3",
+        "ci/run_unittest_modules.py",
+        "--discover-root",
+        "tests",
+        "--pattern",
+        "test_cmdg*.py",
+        "--report-json",
+        "cmdg-test-timing.json"
+      ]
     ],
     "oz": [
-      ["python3", "ci/policy_oz_replay.py", "--mode", "routed", "--report-json", "oz-test-timing.json"]
+      [
+        "python3",
+        "ci/policy_oz_replay.py",
+        "--mode",
+        "routed",
+        "--report-json",
+        "oz-test-timing.json"
+      ]
     ],
     "administrative": [
-      ["python3", "ci/validate_administrative_structural_sweep.py"],
-      ["python3", "ci/validate_administrative_cadence_reconciliation.py"],
-      ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_administrative*.py"]
+      [
+        "python3",
+        "ci/validate_administrative_structural_sweep.py"
+      ],
+      [
+        "python3",
+        "ci/validate_administrative_cadence_reconciliation.py"
+      ],
+      [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_administrative*.py"
+      ]
     ],
     "campaigns": [
-      ["python3", "ci/campaign_admission_control.py"],
-      ["python3", "ci/validate_campaign_replays.py"],
-      ["python3", "ci/test_campaign_replays.py"],
-      ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "test_campaign*.py"],
-      ["python3", "ci/policy_oz_replay.py", "--mode", "campaign", "--report-json", "oz-campaign-test-timing.json"]
+      [
+        "python3",
+        "ci/campaign_admission_control.py"
+      ],
+      [
+        "python3",
+        "ci/validate_campaign_replays.py"
+      ],
+      [
+        "python3",
+        "ci/test_campaign_replays.py"
+      ],
+      [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_campaign*.py"
+      ],
+      [
+        "python3",
+        "ci/policy_oz_replay.py",
+        "--mode",
+        "campaign",
+        "--report-json",
+        "oz-campaign-test-timing.json"
+      ]
     ],
     "contracts": [
-      ["python3", "ci/ghos_execution_routing.py"],
-      ["python", "-m", "unittest", "tests.test_ghos_execution_routing"],
-      ["python", "ci/validate_programme.py"],
-      ["python", "ci/test_validate_programme.py"],
-      ["python3", "ci/validate_documentary_closure.py"],
-      ["python3", "ci/test_documentary_closure.py"],
-      ["python3", "ci/validate_bounded_operation_continuity.py"],
-      ["python3", "ci/test_bounded_operation_continuity.py"],
-      ["python3", "ci/validate_retired_paths.py"],
-      ["python3", "ci/test_retired_paths.py"],
-      ["python3", "ci/validate_workflow_coverage_v2.py"],
-      ["python3", "ci/test_workflow_coverage_v2.py"],
-      ["python3", "ci/test_workflow_coverage.py"],
-      ["python3", "ci/pr_visual_status_policy.py", "--help"],
-      ["python3", "ci/pr_visual_status_transport.py", "--help"],
-      ["python3", "ci/pr_visual_status_operational.py", "--help"],
-      ["python3", "ci/construction_integrity.py", "--help"],
-      ["python3", "ci/validate_policy_reachability.py"],
-      ["python3", "ci/test_policy_reachability.py"],
-      ["python3", "ci/validate_repository_execution.py"],
-      ["python3", "ci/test_repository_execution.py"],
-      ["python3", "ci/validate_workflow_semantics.py"],
-      ["python3", "ci/test_workflow_semantics.py"],
-      ["python3", "ci/run_unittest_modules.py", "--manifest", "governance/contract_test_manifest.json", "--report-json", "contract-test-timing.json"]
+      [
+        "python3",
+        "ci/ghos_execution_routing.py"
+      ],
+      [
+        "python",
+        "-m",
+        "unittest",
+        "tests.test_ghos_execution_routing"
+      ],
+      [
+        "python",
+        "ci/validate_programme.py"
+      ],
+      [
+        "python",
+        "ci/test_validate_programme.py"
+      ],
+      [
+        "python3",
+        "ci/validate_documentary_closure.py"
+      ],
+      [
+        "python3",
+        "ci/test_documentary_closure.py"
+      ],
+      [
+        "python3",
+        "ci/validate_bounded_operation_continuity.py"
+      ],
+      [
+        "python3",
+        "ci/test_bounded_operation_continuity.py"
+      ],
+      [
+        "python3",
+        "ci/validate_retired_paths.py"
+      ],
+      [
+        "python3",
+        "ci/test_retired_paths.py"
+      ],
+      [
+        "python3",
+        "ci/validate_workflow_coverage_v2.py"
+      ],
+      [
+        "python3",
+        "ci/test_workflow_coverage_v2.py"
+      ],
+      [
+        "python3",
+        "ci/test_workflow_coverage.py"
+      ],
+      [
+        "python3",
+        "ci/pr_visual_status_policy.py",
+        "--help"
+      ],
+      [
+        "python3",
+        "ci/pr_visual_status_transport.py",
+        "--help"
+      ],
+      [
+        "python3",
+        "ci/pr_visual_status_operational.py",
+        "--help"
+      ],
+      [
+        "python3",
+        "ci/construction_integrity.py",
+        "--help"
+      ],
+      [
+        "python3",
+        "ci/validate_policy_reachability.py"
+      ],
+      [
+        "python3",
+        "ci/test_policy_reachability.py"
+      ],
+      [
+        "python3",
+        "ci/validate_repository_execution.py"
+      ],
+      [
+        "python3",
+        "ci/test_repository_execution.py"
+      ],
+      [
+        "python3",
+        "ci/validate_workflow_semantics.py"
+      ],
+      [
+        "python3",
+        "ci/test_workflow_semantics.py"
+      ],
+      [
+        "python3",
+        "ci/run_unittest_modules.py",
+        "--manifest",
+        "governance/contract_test_manifest.json",
+        "--report-json",
+        "contract-test-timing.json"
+      ]
     ],
     "docs": [
-      ["python", "ci/validate_docs.py"],
-      ["python", "ci/test_validate_docs.py"],
-      ["python3", "ci/test_validate_rendered_docs.py"],
-      ["python3", "ci/verify_bsd_wolfram_layout_repair.py"],
-      ["mkdocs", "build", "--strict"],
-      ["python3", "ci/validate_rendered_docs.py"]
+      [
+        "python",
+        "ci/validate_docs.py"
+      ],
+      [
+        "python",
+        "ci/test_validate_docs.py"
+      ],
+      [
+        "python3",
+        "ci/test_validate_rendered_docs.py"
+      ],
+      [
+        "python3",
+        "ci/verify_bsd_wolfram_layout_repair.py"
+      ],
+      [
+        "mkdocs",
+        "build",
+        "--strict"
+      ],
+      [
+        "python3",
+        "ci/validate_rendered_docs.py"
+      ]
     ],
     "repository-regression": [
-      ["python3", "ci/run_unittest_modules.py", "--discover-root", "tests", "--pattern", "test_*.py", "--report-json", "repository-regression-timing.json"]
+      [
+        "python3",
+        "ci/run_unittest_modules.py",
+        "--discover-root",
+        "tests",
+        "--pattern",
+        "test_*.py",
+        "--report-json",
+        "repository-regression-timing.json"
+      ]
     ]
   }
 }
