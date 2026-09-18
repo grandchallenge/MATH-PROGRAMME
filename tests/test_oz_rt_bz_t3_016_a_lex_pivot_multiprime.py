@@ -87,7 +87,7 @@ class OzRtBzT3016ALexPivotMultiprimeTests(unittest.TestCase):
 
     def test_anchor_prime_and_anchor_identity_fail_closed(self) -> None:
         request = self.request()
-        request["replay_primes"] = [4194301, 4194271]
+        request["replay_primes"] = [4194271, 4194301]
         with self.assertRaisesRegex(AssertionError, "independent"):
             lex_pivot_multiprime.validate_request(request)
 
