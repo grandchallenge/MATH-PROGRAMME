@@ -299,6 +299,8 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap,
       ModuleCat.freeMk,
+      Functor.FullyFaithful.homEquiv_apply,
+      Functor.map_comp,
       Category.assoc,
       Adjunction.comp_unit_app,
       Adjunction.homEquiv_naturality_left,
