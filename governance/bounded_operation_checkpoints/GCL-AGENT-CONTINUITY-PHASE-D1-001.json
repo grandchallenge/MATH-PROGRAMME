@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "GCL-AGENT-CONTINUITY-PHASE-D1-001.CP004",
+  "checkpoint_id": "GCL-AGENT-CONTINUITY-PHASE-D1-001.CP005",
   "governed_work_id": "GCL-AGENT-CONTINUITY-PHASE-D1-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1015"
   },
-  "phase": "Stages 0-2 protected complete; Stage 3 MATHFORGE adoption migration authorized next",
+  "phase": "Stages 0-3 protected complete; Stage 4 MATHCERT adoption migration authorized next",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "c889f253ea8113e0e521d59e620644d64a67ac33",
@@ -28,17 +28,18 @@
   "terminal_condition": "INTELLECT common schema and MATHSOLVE, MATH-PROGRAMME, MATHFORGE, and MATHCERT migrations are each protected-admitted in the authorized order, exact protected readback succeeds at every stage, retained local validators and fail-closed semantics remain green, and all admitted identities are recorded in MATH-PROGRAMME #1015.",
   "permitted_next_actions": [
     {
-      "id": "migrate_mathforge_adoption",
-      "description": "Re-fetch live MATHFORGE protected state, migrate only its continuity adoption representation and local validator/test interface to the admitted INTELLECT schema, preserve all provenance/checkpoint/non-promotion/independence semantics, pass protected checks, read back exact protected state, then advance this checkpoint."
+      "id": "migrate_mathcert_adoption",
+      "description": "Re-fetch live MATHCERT protected state, migrate only its continuity adoption representation and local validator/test interface to the admitted INTELLECT schema, preserve all certification-independence and anti-authority-inheritance fail-closed semantics, satisfy exact-head distinct-actor protected merge approval, read back exact protected state, then terminalize this checkpoint and close D1."
     }
   ],
   "next_action": {
-    "id": "migrate_mathforge_adoption",
-    "description": "Re-fetch live MATHFORGE main and perform only Stage 3 migration against INTELLECT schema commit 7e6b61ddf77e2d73309657d089a98cae84cc735f / blob b019881a54763a949613c8116260b729742867bd.",
+    "id": "migrate_mathcert_adoption",
+    "description": "Re-fetch live MATHCERT main and perform only Stage 4 migration against INTELLECT schema commit 7e6b61ddf77e2d73309657d089a98cae84cc735f / blob b019881a54763a949613c8116260b729742867bd; preserve certification independence and exact-head last-push approval.",
     "evidence_targets": [
-      "grandchallenge/MATH-PROGRAMME PR #1019",
-      "grandchallenge/MATH-PROGRAMME protected main 02aec84dd670155330487ae46c0654b53febc243",
-      "grandchallenge/MATHFORGE .gcl/agent-continuity.json and local continuity validator/tests at live protected head"
+      "grandchallenge/MATHFORGE PR #252",
+      "grandchallenge/MATHFORGE protected main 88c4f1b13bb818948fe7595d0d6cdb994a6fd162",
+      "grandchallenge/MATHCERT .gcl/agent-continuity.json and local continuity validator/tests at live protected head",
+      "MATHCERT protected ruleset exact-head distinct-actor last-push approval requirement"
     ]
   },
   "external_evidence": {
@@ -47,12 +48,12 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "migrate MATH-PROGRAMME continuity adoption to the common schema",
-    "result": "MATH-PROGRAMME PR #1019 preserved the existing bounded-operation registry/validator as the single operational continuity source of truth, retained Programme applicability and authority semantics, validated the exact canonical schema blob and adversarial mutations, passed all protected checks and merge-group replay, and protected-merged. Main read back exactly at 02aec84dd670155330487ae46c0654b53febc243.",
+    "action": "migrate MATHFORGE continuity adoption to the common schema",
+    "result": "MATHFORGE PR #252 preserved all provenance/checkpoint/applicability fields, discovery-evidence non-proof, certification/promotion non-authority, and independence non-inheritance semantics; validated the exact canonical schema blob; passed reconnaissance plus all protected required checks; and protected-merged. Main read back exactly at 88c4f1b13bb818948fe7595d0d6cdb994a6fd162.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#1019",
-      "02aec84dd670155330487ae46c0654b53febc243",
-      "Programme adoption blob 78d2e453ed47c3c91953990c71399f729d0e7179",
+      "grandchallenge/MATHFORGE#252",
+      "88c4f1b13bb818948fe7595d0d6cdb994a6fd162",
+      "Forge adoption blob 4b041e9c63fcb117738050cd508522ca09a47cc2",
       "schema blob b019881a54763a949613c8116260b729742867bd"
     ]
   },
@@ -60,7 +61,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/GCL-AGENT-CONTINUITY-PHASE-D1-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-18T10:03:25Z"
+    "observed_at": "2026-09-18T10:14:13Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -71,7 +72,7 @@
       "grandchallenge/MATH-PROGRAMME:docs/governance/GCL_AGENT_CONTINUITY_PHASE_D0_001.md",
       "grandchallenge/INTELLECT:governance/agent_execution/GCL-AGENT-CONTINUITY-001.md"
     ],
-    "instructions": "Run the recorded live verification command before every material transition. Stages 0-2 are protected complete: INTELLECT 7e6b61ddf77e2d73309657d089a98cae84cc735f, MATHSOLVE c7dadfdf3fc214ad2bcbc980842db9331e07eae0, and MATH-PROGRAMME 02aec84dd670155330487ae46c0654b53febc243. Next re-fetch live MATHFORGE and migrate only its adoption representation/local-validator interface while preserving provenance, non-promotion, and independence non-inheritance semantics. Then continue MATHCERT last."
+    "instructions": "Run the recorded live verification command before every material transition. Stages 0-3 are protected complete: INTELLECT 7e6b61ddf77e2d73309657d089a98cae84cc735f, MATHSOLVE c7dadfdf3fc214ad2bcbc980842db9331e07eae0, MATH-PROGRAMME 02aec84dd670155330487ae46c0654b53febc243, and MATHFORGE 88c4f1b13bb818948fe7595d0d6cdb994a6fd162. Next re-fetch live MATHCERT and migrate only its adoption representation/local-validator interface while retaining all certification-independence and anti-authority-inheritance fail-closed semantics. MATHCERT protected merge still requires fresh distinct-actor last-push approval."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
