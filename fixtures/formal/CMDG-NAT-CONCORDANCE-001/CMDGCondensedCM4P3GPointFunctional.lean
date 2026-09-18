@@ -118,7 +118,6 @@ noncomputable def profinitePointProbe
     { toFun := fun _ => x
       continuous_toFun := continuous_const }
 
-set_option backward.isDefEq.respectTransparency false in
 /-- Finite-stage measure/Dirac identity.  The large finite comparison is kept inside the proof so
 that its four canonical factors can be cancelled explicitly rather than normalized definitionally
 in the theorem statement. -/
@@ -262,13 +261,14 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       rfl
     rw [heQ1, Category.assoc]
     unfold freeHomSectionsEquiv
-    simp only [Equiv.trans_apply, id_eq, Category.assoc]
+    simp only [Equiv.trans_apply, id_eq]
     rw [Adjunction.homEquiv_naturality_left]
     dsimp only [id]
-    unfold GrothendieckTopology.uliftYonedaEquiv
-    simp only [Equiv.trans_apply]
-    unfold CategoryTheory.uliftYonedaEquiv
-    simp only [NatTrans.comp_app, ConcreteCategory.comp_apply]
+    set_option backward.isDefEq.respectTransparency false in
+      unfold GrothendieckTopology.uliftYonedaEquiv
+      simp only [Equiv.trans_apply]
+      unfold CategoryTheory.uliftYonedaEquiv
+      simp only [NatTrans.comp_app, ConcreteCategory.comp_apply]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
         CMDG.CondensedCM4P2E.discreteSetFreeAdj
