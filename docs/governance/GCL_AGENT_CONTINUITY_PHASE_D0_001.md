@@ -148,7 +148,7 @@ common schema      local validator
 validation         specialization semantics
 ```
 
-Each repository validates locally in its own protected CI surface. A shared schema is a representation contract, not a remote runtime dependency.
+Each repository validates locally in its own protected CI surface. D1 must not introduce a mutable network fetch of the schema at CI/runtime. A repository may carry a non-authoritative local schema snapshot only when that snapshot is bound to the exact admitted INTELLECT schema commit/blob identity and its validator fails on drift. A shared schema is a representation contract, not a remote runtime dependency.
 
 ## 9. Required adversarial properties
 
@@ -164,7 +164,9 @@ A D1 implementation must demonstrate at least:
 8. Forge's provenance/non-promotion invariants remain locally enforced;
 9. Cert's anti-authority-inheritance and anti-independence-inheritance invariants remain locally enforced;
 10. missing local-validator identity fails common validation;
-11. common-schema validity cannot satisfy proof, certification, publication, promotion, protected-bypass, or independent-review requirements.
+11. a mutable or unpinned remote schema dependency is forbidden;
+12. a repository-local schema snapshot must be exact-digest bound to the admitted INTELLECT schema identity;
+13. common-schema validity cannot satisfy proof, certification, publication, promotion, protected-bypass, or independent-review requirements.
 
 ## 10. Proposed D1 ordering
 
@@ -194,7 +196,7 @@ D1 should not be authorized unless D0 review finds all of the following:
 - the common schema remains thinner than every repository specialization;
 - all local validators remain necessary, explicitly identified, and retained;
 - no central runtime/controller is introduced;
-- INTELLECT remains the canonical policy/schema authority;
+- INTELLECT remains the canonical policy/schema authority, with any local schema snapshot exact-digest bound and non-authoritative;
 - no mathematical, certification, publication, promotion, protected-bypass, or independent-review authority changes.
 
 ## 12. Current boundary
