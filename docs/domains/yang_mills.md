@@ -20,6 +20,8 @@ Existence and mass gap are separate but jointly required theorem trunks. A fixed
 
 The post-merge disposition promotes WP01/WP02 only as bounded research infrastructure. `YM-D001` through `YM-D005` remain open mathematical debts. The current routing gate opens restricted-target selection in `grandchallenge/MATHSOLVE` only so that one of those debts can be attacked under an exact target contract. Unrestricted mechanism generation, free-standing numerical experimentation, novelty claims, and terminal solution claims remain closed.
 
+A protected 2026-09-18 D003 supplement now admits the Balaban four-dimensional large-field/ultraviolet-stability spine as bounded theorem input and records the Magnen–Rivasseau–Sénéor fixed-infrared-cutoff UV-removal construction with its explicit proof-completeness, IR, topology, and OS limitations. D003 therefore no longer treats 4d large-field control as wholly absent; its live residual frontier is infrared/infinite-volume removal, uniqueness/full continuum identification, complete OS reconstruction, and physical scale identification.
+
 ## Canonical artifacts
 
 - [WP00 integrated audit](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/YM-WP00-source-normalization-equivalence-audit.md)
@@ -28,6 +30,7 @@ The post-merge disposition promotes WP01/WP02 only as bounded research infrastru
 - [WP01/WP02 integration record](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/campaigns/yang_mills/YM_WP01_WP02_INTEGRATION.md)
 - [Post-merge disposition](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/campaigns/yang_mills/YM_WP01_WP02_POST_MERGE_DISPOSITION.md)
 - [Current routing gate](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/campaigns/yang_mills/YM_CURRENT_ROUTING_GATE.json)
+- [D003 UV/large-field supplement](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/campaigns/yang_mills/YM_D003_UV_LARGE_FIELD_SUPPLEMENT.json)
 - [WP00 merge record PR #86](https://github.com/grandchallenge/MATH-PROGRAMME/pull/86)
 - [WP01/WP02 merge record PR #115](https://github.com/grandchallenge/MATH-PROGRAMME/pull/115)
 - [Catalogue-integration decision ADR-0009](../decisions/ADR-0009_POST_MERGE_DOMAIN_COVERAGE.md)
