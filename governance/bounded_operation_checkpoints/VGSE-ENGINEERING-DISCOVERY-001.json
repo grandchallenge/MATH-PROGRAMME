@@ -15,61 +15,46 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#984"
   },
-  "phase": "VGSE-ENG-WP03 exact candidate 002caf4ba1475c70d320ba5ef9ddb19a555cb82a is open as substantive PR #1025. The package is byte-verified against locally replayed artifacts. Current gate: exact-head replay, distinct read-only Adversary and Referee examination, then native merge-queue admission if unchanged and green.",
-  "state": "IN_PROGRESS",
+  "phase": "VGSE-ENG-WP03 terminal: exact response-manifold feasibility certificate admitted through the native merge queue and read back from protected main.",
+  "state": "TERMINAL",
   "identities": {
-    "protected_base_sha": "7f9fe37b29c3f0b3564b6281a068197372f1d863",
-    "candidate_head_sha": "002caf4ba1475c70d320ba5ef9ddb19a555cb82a",
+    "protected_base_sha": "4a13e2deb6dfc56bc5dcbd121d076919217f68dc",
+    "candidate_head_sha": "4a13e2deb6dfc56bc5dcbd121d076919217f68dc",
     "issue_number": 984,
-    "pr_number": 1025,
-    "branch": "research/vgse-eng-wp03",
+    "pr_number": null,
+    "branch": "governance/vgse-eng-wp03-terminal",
     "workflow_runs": []
   },
   "terminal_condition": "VGSE-ENG-WP03 stops only when either (a) a complete minimal independently checked feasibility certificate for the eight-dimensional quotient-response image inside the eighteen-dimensional response space is retained reproducibly and admitted through the native merge queue, or (b) a precise obstruction shows that the proposed relation set is incomplete, dependent, or numerically unsuitable. Negative results must be retained. C06 and all geometry/physical/manufacturing/commercial claims remain excluded.",
-  "permitted_next_actions": [
-    {
-      "id": "review_vgse_eng_wp03",
-      "description": "Replay exact candidate 002caf4ba1475c70d320ba5ef9ddb19a555cb82a, perform distinct read-only Adversary and Referee examination, retain any defect or negative result, and admit through the native merge queue only if the exact head remains unchanged and all protected checks are green."
-    }
-  ],
-  "next_action": {
-    "id": "review_vgse_eng_wp03",
-    "description": "Validate and independently examine PR #1025 at exact head 002caf4ba1475c70d320ba5ef9ddb19a555cb82a. Do not mutate the substantive branch after exact-head review without rebinding and replay.",
-    "evidence_targets": [
-      "grandchallenge/MATH-PROGRAMME#1025",
-      "research/vgse-eng-wp03/README.md",
-      "research/vgse-eng-wp03/analyze_wp03.py",
-      "research/vgse-eng-wp03/wp03_core.py",
-      "research/vgse-eng-wp03/wp03_exact.py",
-      "research/vgse-eng-wp03/wp03_numeric.py",
-      "research/vgse-eng-wp03/wp03_build.py",
-      "research/vgse-eng-wp03/RESULTS.json",
-      "research/vgse-eng-wp03/test_wp03.py",
-      "research/vgse-eng-wp03/CLAIM_LEDGER.json",
-      "research/vgse-eng-wp03/NEXT_ACTION.md",
-      "grandchallenge/MATH-PROGRAMME@7f9fe37b29c3f0b3564b6281a068197372f1d863"
-    ]
-  },
+  "permitted_next_actions": [],
+  "next_action": null,
   "external_evidence": {
     "waiting": false,
     "objects": []
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "instantiate WP03 candidate and bind exact substantive review subject",
-    "result": "Protected WP03 activation PR #1024 merged through the native queue as 7f9fe37b29c3f0b3564b6281a068197372f1d863. The locally replayed WP03 package was staged separately; all retained artifact blobs were byte-bound to their locally validated Git identities. The governed research branch advanced by pure fast-forward to 002caf4ba1475c70d320ba5ef9ddb19a555cb82a and substantive PR #1025 opened at that exact head. No further substantive mutation is permitted without rebind/review replay.",
+    "action": "admit VGSE-ENG-WP03 exact response-manifold feasibility and complete the bounded engineering-discovery tranche",
+    "result": "Substantive PR #1025 remained exactly at reviewed candidate 002caf4ba1475c70d320ba5ef9ddb19a555cb82a. Distinct read-only Adversary and Referee reviews found no blocking defect and preserved the C06/physical boundary. Native merge-group candidate 4a13e2deb6dfc56bc5dcbd121d076919217f68dc was constructed against protected base 9c337826972c15bb39b7910e9ffe96f74913a14e. GCL conformance, GH-OS routing enforcement, formal-validation, Programme policy checks, and aggregate validate-json all succeeded. PR #1025 then merged as the same queue-owned commit, and protected main read back exactly at 4a13e2deb6dfc56bc5dcbd121d076919217f68dc.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#1024",
-      "grandchallenge/MATH-PROGRAMME@7f9fe37b29c3f0b3564b6281a068197372f1d863",
       "grandchallenge/MATH-PROGRAMME#1025",
-      "research/vgse-eng-wp03@002caf4ba1475c70d320ba5ef9ddb19a555cb82a"
+      "candidate 002caf4ba1475c70d320ba5ef9ddb19a555cb82a",
+      "Adversary review 5253278971",
+      "Referee review 5253281416",
+      "merge-group/protected merge 4a13e2deb6dfc56bc5dcbd121d076919217f68dc",
+      "GCL conformance run 35440091251",
+      "GH-OS routing run 35440090641",
+      "formal-validation run 35440090648",
+      "Programme policy run 35440090676",
+      "grandchallenge/MATH-PROGRAMME#1027",
+      "checkpoint replay merge a17d0ea51f4b2b65a7b98adb467b91ac8fb47de0"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-ENGINEERING-DISCOVERY-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-18T22:49:00Z"
+    "observed_at": "2026-09-19T11:28:01Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -77,25 +62,34 @@
     "authoritative_sources": [
       "grandchallenge/MATH-PROGRAMME#984",
       "grandchallenge/MATH-PROGRAMME#1025",
-      "research/vgse-eng-wp03@002caf4ba1475c70d320ba5ef9ddb19a555cb82a",
+      "grandchallenge/MATH-PROGRAMME@4a13e2deb6dfc56bc5dcbd121d076919217f68dc",
       "research/vgse-eng-wp03/README.md",
-      "research/vgse-eng-wp03/analyze_wp03.py",
-      "research/vgse-eng-wp03/wp03_core.py",
-      "research/vgse-eng-wp03/wp03_exact.py",
-      "research/vgse-eng-wp03/wp03_numeric.py",
-      "research/vgse-eng-wp03/wp03_build.py",
       "research/vgse-eng-wp03/RESULTS.json",
-      "research/vgse-eng-wp03/test_wp03.py",
       "research/vgse-eng-wp03/CLAIM_LEDGER.json",
       "research/vgse-eng-wp03/NEXT_ACTION.md",
-      "grandchallenge/MATH-PROGRAMME@52e2e3df6ac54ab63a03c867b2b82a80d93ee577",
-      "docs/VGSE_ENGINEERING_DISCOVERY_MANDATE.md",
-      "docs/governance/SUBSTANCE_FIRST_EXECUTION_DISCIPLINE.md",
-      "AGENTS.md"
+      "grandchallenge/MATH-PROGRAMME#1027",
+      "grandchallenge/MATH-PROGRAMME@a17d0ea51f4b2b65a7b98adb467b91ac8fb47de0",
+      "docs/VGSE_ENGINEERING_DISCOVERY_MANDATE.md"
     ],
-    "instructions": "Require PR #1025 head to remain exactly 002caf4ba1475c70d320ba5ef9ddb19a555cb82a. Replay the retained package and obtain distinct read-only Adversary and Referee dispositions anchored to that exact commit. Any later candidate-head change invalidates those reviews and requires checkpoint rebind plus fresh replay. If exact-head checks and reviews pass, use the native merge queue and bind final admission to its merge-group SHA. After protected WP03 admission, terminalize this bounded tranche; do not auto-start WP04. Preserve C06 and all geometry/physical/manufacturing/commercial claim exclusions."
+    "instructions": "This bounded VGSE engineering-discovery tranche is terminal. No WP04 or geometry/physical continuation is authorized by this checkpoint. Any future tranche must be separately admitted against then-current protected state. Preserve VGSE-C06 exclusion and do not infer source geometry, stiffness, mechanical advantage, rigid foldability, collision freedom, finite thickness, manufacturability, durability, product performance, novelty, patentability, or commercial value from WP01-WP03."
   },
-  "terminal_evidence": [],
+  "terminal_evidence": [
+    "WP01 layered model and first response-law tranche protected earlier in this operation",
+    "WP02 global quotient inverse protected at 52e2e3df6ac54ab63a03c867b2b82a80d93ee577",
+    "WP03 activation checkpoint protected at 7f9fe37b29c3f0b3564b6281a068197372f1d863",
+    "WP03 exact-review checkpoint replay protected through PR #1027 at a17d0ea51f4b2b65a7b98adb467b91ac8fb47de0",
+    "WP03 reviewed candidate 002caf4ba1475c70d320ba5ef9ddb19a555cb82a",
+    "Adversary review 5253278971: CLEAR_NO_BLOCKING_DEFECT",
+    "Referee review 5253281416: ADMISSIBLE_FOR_PROTECTED_INTEGRATION_AFTER_REQUIRED_STATUS_CHECKS_AND_CONTINUITY_REBIND",
+    "WP03 native merge-group/protected merge 4a13e2deb6dfc56bc5dcbd121d076919217f68dc",
+    "merge-group GCL conformance run 35440091251 success",
+    "merge-group GH-OS routing run 35440090641 success",
+    "merge-group formal-validation run 35440090648 success",
+    "merge-group Programme policy run 35440090676 success including validate-json",
+    "protected main exact readback 4a13e2deb6dfc56bc5dcbd121d076919217f68dc",
+    "WP03 retained RESULTS.json blob c5dc15bbd2c923c6c9d4840878a58e51da97767d",
+    "VGSE-C06 and all geometry/physical/manufacturing/commercial claim exclusions retained"
+  ],
   "claim_boundaries": {
     "mathematical_claim_authorized": false,
     "certification_claim_authorized": false,
