@@ -96,3 +96,11 @@ An execution already in flight before this profile becomes protected is grandfat
 ## Claim boundary
 
 This profile changes execution topology only. It does not establish a theorem, scientific result, runtime or cost superiority claim, hardware claim, novelty claim, publication authority, certification, or deployment authority.
+
+## Documentary record
+
+The protected admission and review record is registered at
+`governance/rebuild_evidence/MP-EXTERNAL-EXECUTION-PLANE-001/closure_contract.json`.
+That record distinguishes the substantively reviewed candidate, the later navigation-only
+repair, and the protected merge. It records no unresolved documentary obligation and does
+not widen the claim boundary above.
