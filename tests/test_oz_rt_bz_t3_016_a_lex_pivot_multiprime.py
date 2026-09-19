@@ -32,7 +32,7 @@ class OzRtBzT3016ALexPivotMultiprimeTests(unittest.TestCase):
             },
             "source_commit": lex_pivot_multiprime.SOURCE_COMMIT,
             "source_tree": lex_pivot_multiprime.SOURCE_TREE,
-            "replay_primes": [4194319, 4194329, 4194353],
+            "replay_primes": [4194271, 4194277, 4194287],
             "n_start": 3,
             "n_stop": 384,
             "chunks": 4,
@@ -66,28 +66,28 @@ class OzRtBzT3016ALexPivotMultiprimeTests(unittest.TestCase):
 
     def test_bad_prime_duplicate_order_and_float_bound_fail_closed(self) -> None:
         request = self.request()
-        request["replay_primes"] = [4194319, 4194319]
+        request["replay_primes"] = [4194271, 4194271]
         with self.assertRaisesRegex(AssertionError, "strictly increasing"):
             lex_pivot_multiprime.validate_request(request)
 
         request = self.request()
-        request["replay_primes"] = [4194329, 4194319]
+        request["replay_primes"] = [4194277, 4194271]
         with self.assertRaisesRegex(AssertionError, "strictly increasing"):
             lex_pivot_multiprime.validate_request(request)
 
         request = self.request()
-        request["replay_primes"] = [4194319, 4194321]
+        request["replay_primes"] = [4194271, 4194273]
         with self.assertRaisesRegex(AssertionError, "not prime"):
             lex_pivot_multiprime.validate_request(request)
 
         request = self.request()
-        request["replay_primes"] = [4194319, 11863289]
+        request["replay_primes"] = [4194271, 11863289]
         with self.assertRaisesRegex(AssertionError, "exactness bound"):
             lex_pivot_multiprime.validate_request(request)
 
     def test_anchor_prime_and_anchor_identity_fail_closed(self) -> None:
         request = self.request()
-        request["replay_primes"] = [4194301, 4194319]
+        request["replay_primes"] = [4194271, 4194301]
         with self.assertRaisesRegex(AssertionError, "independent"):
             lex_pivot_multiprime.validate_request(request)
 
@@ -120,9 +120,25 @@ class OzRtBzT3016ALexPivotMultiprimeTests(unittest.TestCase):
     def test_repository_request_is_enabled_and_exact(self) -> None:
         request = lex_pivot_multiprime.load_request()
         self.assertTrue(request["enabled"])
-        self.assertEqual(request["replay_primes"], [4194319, 4194329, 4194353])
+        self.assertEqual(request["replay_primes"], [4194271, 4194277, 4194287])
         self.assertEqual(request["expected_pivot_sha256"], lex_pivot_multiprime.ANCHOR_PIVOT_SHA256)
         self.assertEqual(request["anchor_profile"]["profile_blob_sha"], lex_pivot_multiprime.ANCHOR_PROFILE_BLOB_SHA)
+
+    def test_runtime_recovery_receipt_binds_failed_request(self) -> None:
+        recovery = json.loads(
+            (HERE / "LEX_PIVOT_MULTIPRIME_RECOVERY_002.json").read_text(encoding="utf-8")
+        )
+        request = lex_pivot_multiprime.load_request()
+        self.assertEqual(
+            recovery["predecessor_request_id"],
+            "OZ-RT-BZ-T3-016-A-LEX-PIVOT-MULTIPRIME-SWEEP-001",
+        )
+        self.assertEqual(recovery["predecessor_run_id"], 34945709508)
+        self.assertEqual(recovery["replacement_request_id"], request["request_id"])
+        self.assertEqual(recovery["replacement_replay_primes"], request["replay_primes"])
+        self.assertEqual(recovery["preserved_artifact_count"], 0)
+        self.assertEqual(recovery["proof_effect"], "NONE")
+        self.assertEqual(recovery["promotion_effect"], "NONE")
 
     def test_disabled_request_cannot_execute(self) -> None:
         request = self.request()
