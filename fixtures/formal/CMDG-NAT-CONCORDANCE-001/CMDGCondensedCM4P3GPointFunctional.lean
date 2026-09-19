@@ -283,8 +283,9 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
     have hrep :
         (ConcreteCategory.hom
-          ((CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso.hom.app Q1).hom.app
-            (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
+          (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
+            (CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso.hom.app Q1)).app
+              (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
           (ULift.up
             (𝟙 (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))) =
           (ConcreteCategory.hom
@@ -300,7 +301,9 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         CMDG.CondensedCM4P2E.continuousULiftSectionEquiv,
         CMDG.CondensedCM4P2E.finiteDiscreteCondensedIso,
         CMDG.CondensedCM4P2E.finiteDiscreteULiftIso,
-        CMDG.CondensedCM4P2E.discreteTopCondensedIso]
+        CMDG.CondensedCM4P2E.discreteTopCondensedIso,
+        CondensedSet.LocallyConstant.iso,
+        CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app]
     rw [hrep]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
