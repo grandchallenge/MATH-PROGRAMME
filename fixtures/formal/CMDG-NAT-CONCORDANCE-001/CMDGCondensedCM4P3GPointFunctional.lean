@@ -296,8 +296,10 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       dsimp [Q1]
       set_option backward.defeqAttrib.useBackward true in
       set_option backward.isDefEq.respectTransparency false in
-        apply ULift.ext
-        rfl
+        change
+          (ULift.up PUnit.unit : ULift.{u + 1, u} PUnit.{u + 1}) =
+            ULift.up PUnit.unit
+      rfl
     rw [hrep]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
