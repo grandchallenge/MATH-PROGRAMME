@@ -293,13 +293,33 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             ((Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app
               (ULift.{u + 1, u} Q1.obj)))
             (ULift.up PUnit.unit) := by
-      dsimp [Q1]
-      set_option backward.defeqAttrib.useBackward true in
-      set_option backward.isDefEq.respectTransparency false in
-        change
-          (ULift.up PUnit.unit : ULift.{u + 1, u} PUnit.{u + 1}) =
-            ULift.up PUnit.unit
-      rfl
+      have hlcUnit :=
+        CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
+          CondensedSet.LocallyConstant.adjunction
+          (Condensed.discreteUnderlyingAdj (Type (u + 1)))
+          (ULift.{u + 1, u} Q1.obj)
+      have hlcUnitPoint :=
+        CategoryTheory.types_congr_hom hlcUnit (ULift.up PUnit.unit)
+      dsimp [Q1] at hlcUnitPoint ⊢
+      simpa [
+        CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
+        CMDG.CondensedCM4P2E.compHausTopULiftNatIso,
+        CMDG.CondensedCM4P2E.compHausTopULiftIso,
+        CMDG.CondensedCM4P2E.compHausTopULiftPresheafIso,
+        CMDG.CondensedCM4P2E.continuousULiftSectionEquiv,
+        CMDG.CondensedCM4P2E.finiteDiscreteCondensedIso,
+        CMDG.CondensedCM4P2E.finiteDiscreteULiftIso,
+        CMDG.CondensedCM4P2E.discreteTopCondensedIso,
+        CompHausLike.LocallyConstant.functorIso,
+        CondensedSet.LocallyConstant.iso,
+        CompHausLike.LocallyConstant.unit,
+        TopCat.uliftFunctorObjHomeo,
+        TopCat.uliftFunctor,
+        Homeomorph.ofDiscrete,
+        Functor.map_comp,
+        NatTrans.comp_app,
+        ConcreteCategory.comp_apply,
+        Category.assoc] using hlcUnitPoint
     rw [hrep]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
