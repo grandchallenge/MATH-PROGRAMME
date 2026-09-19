@@ -281,6 +281,24 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
                     Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map qx))) = _
       rw [CategoryTheory.uliftYonedaEquiv_apply]
       simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
+    have hrep :
+        (ConcreteCategory.hom
+          ((CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso.hom.app Q1).hom.app
+            (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
+          (ULift.up
+            (𝟙 (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))) =
+          ULift.up PUnit.unit := by
+      dsimp [Q1]
+      simp [
+        CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
+        CMDG.CondensedCM4P2E.compHausTopULiftNatIso,
+        CMDG.CondensedCM4P2E.compHausTopULiftIso,
+        CMDG.CondensedCM4P2E.compHausTopULiftPresheafIso,
+        CMDG.CondensedCM4P2E.continuousULiftSectionEquiv,
+        CMDG.CondensedCM4P2E.finiteDiscreteCondensedIso,
+        CMDG.CondensedCM4P2E.finiteDiscreteULiftIso,
+        CMDG.CondensedCM4P2E.discreteTopCondensedIso]
+    rw [hrep]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
         CMDG.CondensedCM4P2E.discreteSetFreeAdj
