@@ -266,7 +266,19 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     dsimp only [id]
     set_option backward.isDefEq.respectTransparency false in
       unfold GrothendieckTopology.uliftYonedaEquiv
-      simp only [Equiv.trans_apply, Functor.FullyFaithful.homEquiv_apply]
+      simp only [Equiv.trans_apply]
+      change
+        CategoryTheory.uliftYonedaEquiv
+          ((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
+            (CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso.hom.app Q1 ≫
+              (Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
+                ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙ Condensed.discrete (Type (u + 1))).obj Q1)
+                D
+                (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
+                    (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q1) ≫
+                  (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+                    ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
+                    Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map qx))) = _
       rw [CategoryTheory.uliftYonedaEquiv_apply]
       simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
     have huniq :=
