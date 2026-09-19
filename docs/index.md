@@ -50,6 +50,12 @@ The diagram is schematic. It teaches programme state transitions, not logical im
 
 [Read the Programme Atlas](PROGRAMME_ATLAS.md) for the full state model, support classes, and semantic-bridge requirements.
 
+## The GCL continuity fabric
+
+![GCL Agent Continuity fabric showing the relationship between the canonical governance layer, specialised repositories, and protected admission.](assets/gcl-agent-continuity-fabric.png)
+
+This public orientation diagram shows how the canonical policy and bounded-operation layers relate to the specialised MATHFORGE, MATHSOLVE, and MATHCERT repositories. The artwork is explanatory, not operative: repository-local policy, protected records, validators, and exact-head evidence remain authoritative. It does not grant authority, certify mathematics, or imply authority inheritance across repositories.
+
 ## Current frontier
 
 The table below displays up to twenty material fronts that are in active development. It is a public orientation surface, not the authoritative active-work registry. Row order is for navigation; it does not rank theorem importance, claim strength, or institutional priority.
