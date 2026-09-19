@@ -1,0 +1,256 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/external_execution_manifest.schema.json",
+  "title": "GCL External Execution Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_type",
+    "campaign",
+    "operation",
+    "source",
+    "authority",
+    "provider",
+    "work_units",
+    "scientific_invariants",
+    "operational_parameters",
+    "retry_policy",
+    "output_contract",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "record_type": {
+      "const": "GCL_EXTERNAL_EXECUTION_MANIFEST"
+    },
+    "campaign": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "commit",
+        "source_payload_sha256"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "pattern": "^grandchallenge/[A-Za-z0-9._-]+$"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "source_payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_ref",
+        "scientific_execution_authorized"
+      ],
+      "properties": {
+        "operation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scientific_execution_authorized": {
+          "type": "boolean"
+        }
+      }
+    },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "class",
+        "adapter",
+        "provider_selection_locked_before_execution",
+        "repository_write_credentials"
+      ],
+      "properties": {
+        "class": {
+          "enum": [
+            "cloud_batch",
+            "kubernetes",
+            "slurm",
+            "hosted_session",
+            "local_batch",
+            "other_external"
+          ]
+        },
+        "adapter": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_selection_locked_before_execution": {
+          "const": true
+        },
+        "repository_write_credentials": {
+          "const": false
+        }
+      }
+    },
+    "work_units": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enumeration",
+        "axes",
+        "expected_total",
+        "work_unit_id_template"
+      ],
+      "properties": {
+        "enumeration": {
+          "const": "cartesian_product"
+        },
+        "axes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "values": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": [
+                    "string",
+                    "integer"
+                  ]
+                }
+              },
+              "integer_range": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "start",
+                  "stop_exclusive",
+                  "step"
+                ],
+                "properties": {
+                  "start": {
+                    "type": "integer"
+                  },
+                  "stop_exclusive": {
+                    "type": "integer"
+                  },
+                  "step": {
+                    "const": 1
+                  }
+                }
+              }
+            },
+            "oneOf": [
+              {
+                "required": [
+                  "values"
+                ]
+              },
+              {
+                "required": [
+                  "integer_range"
+                ]
+              }
+            ]
+          }
+        },
+        "expected_total": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "work_unit_id_template": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "scientific_invariants": {
+      "type": "object",
+      "minProperties": 1
+    },
+    "operational_parameters": {
+      "type": "object"
+    },
+    "retry_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_attempts",
+        "same_work_unit_identity",
+        "same_scientific_inputs"
+      ],
+      "properties": {
+        "max_attempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "same_work_unit_identity": {
+          "const": true
+        },
+        "same_scientific_inputs": {
+          "const": true
+        }
+      }
+    },
+    "output_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_record_type",
+        "required_artifacts",
+        "all_work_units_required_before_aggregation"
+      ],
+      "properties": {
+        "receipt_record_type": {
+          "const": "GCL_EXTERNAL_EXECUTION_RECEIPT"
+        },
+        "required_artifacts": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "all_work_units_required_before_aggregation": {
+          "const": true
+        }
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "const": false
+      }
+    }
+  }
+}
