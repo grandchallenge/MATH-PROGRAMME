@@ -282,13 +282,6 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
                     Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map qx))) = _
       rw [CategoryTheory.uliftYonedaEquiv_apply]
       simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
-    have hlc :=
-      CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app
-        CondensedSet.LocallyConstant.adjunction
-        (Condensed.discreteUnderlyingAdj (Type (u + 1)))
-        (ULift.{u + 1, u} Q1.obj)
-    have hlcPoint :=
-      CategoryTheory.types_congr_hom hlc (ULift.up PUnit.unit)
     have hrep :
         (ConcreteCategory.hom
           (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
@@ -300,18 +293,11 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             ((Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app
               (ULift.{u + 1, u} Q1.obj)))
             (ULift.up PUnit.unit) := by
-      dsimp [Q1] at hlcPoint ⊢
-      simpa [
-        CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
-        CMDG.CondensedCM4P2E.compHausTopULiftNatIso,
-        CMDG.CondensedCM4P2E.compHausTopULiftIso,
-        CMDG.CondensedCM4P2E.compHausTopULiftPresheafIso,
-        CMDG.CondensedCM4P2E.continuousULiftSectionEquiv,
-        CMDG.CondensedCM4P2E.finiteDiscreteCondensedIso,
-        CMDG.CondensedCM4P2E.finiteDiscreteULiftIso,
-        CMDG.CondensedCM4P2E.discreteTopCondensedIso,
-        CondensedSet.LocallyConstant.iso,
-        CompHausLike.LocallyConstant.unit] using hlcPoint
+      dsimp [Q1]
+      set_option backward.defeqAttrib.useBackward true in
+      set_option backward.isDefEq.respectTransparency false in
+        apply ULift.ext
+        rfl
     rw [hrep]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
