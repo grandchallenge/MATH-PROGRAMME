@@ -287,7 +287,10 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
           (ULift.up
             (𝟙 (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))) =
-          ULift.up PUnit.unit := by
+          (ConcreteCategory.hom
+            ((Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app
+              (ULift.{u + 1, u} Q1.obj)))
+            (ULift.up PUnit.unit) := by
       dsimp [Q1]
       simp [
         CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
