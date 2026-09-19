@@ -1,0 +1,65 @@
+{
+  "$schema": "../schemas/external_execution_plane_profile.schema.json",
+  "schema_version": "1.0.0",
+  "profile_id": "MP-EXTERNAL-EXECUTION-PLANE-001",
+  "status": "ACTIVE_ON_PROTECTED_MERGE",
+  "authority": {
+    "standard": "GCL-CEX-01",
+    "standard_version": "0.1.0",
+    "standard_commit": "efe06a27aa594c63bd0489929ffd9fff1e2daeb9",
+    "programme_adoption": "governance/GCL-CEX-01-ADOPTION.json",
+    "streamlined_execution": "MP-STREAMLINED-EXECUTION-001"
+  },
+  "github_control_plane": {
+    "roles": [
+      "authorize",
+      "freeze",
+      "package",
+      "submit_or_handoff",
+      "verify_receipts",
+      "check_aggregation",
+      "protected_readmission"
+    ],
+    "large_scientific_batch_primary_execution": false
+  },
+  "thresholds": {
+    "max_scientific_work_units_before_external": 32,
+    "max_parallel_per_github_workflow": 16,
+    "max_github_parallel_per_campaign": 32,
+    "max_expected_github_runner_minutes": 240
+  },
+  "external_execution": {
+    "required_when_any_threshold_exceeded": true,
+    "provider_neutral": true,
+    "provider_selection_is_operational": true,
+    "repository_write_credentials_allowed": false,
+    "manifest_required": true,
+    "per_work_unit_receipt_required": true
+  },
+  "receipt_requirements": [
+    "manifest_sha256",
+    "work_unit_id",
+    "source_commit",
+    "source_payload_sha256",
+    "provider_execution_id",
+    "started_at",
+    "finished_at",
+    "returncode",
+    "output_artifact_digests",
+    "scientific_semantics_changed_false",
+    "promotion_claim_false",
+    "repository_mutation_false"
+  ],
+  "grandfathering": {
+    "in_flight_execution_may_finish": true,
+    "retry_or_successor_must_use_profile": true
+  },
+  "claim_boundaries": {
+    "mathematical_certification": false,
+    "scientific_claim_promotion": false,
+    "publication": false,
+    "production_activation": false,
+    "credential_expansion": false,
+    "commercial_claim": false
+  }
+}

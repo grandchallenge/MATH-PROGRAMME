@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/external_execution_receipt.schema.json",
+  "title": "GCL External Execution Work Unit Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_type",
+    "manifest_sha256",
+    "work_unit_id",
+    "source_commit",
+    "source_payload_sha256",
+    "provider",
+    "status",
+    "started_at",
+    "finished_at",
+    "returncode",
+    "output_artifacts",
+    "scientific_semantics_changed",
+    "promotion_claim",
+    "repository_mutation_performed"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "record_type": {
+      "const": "GCL_EXTERNAL_EXECUTION_RECEIPT"
+    },
+    "manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "work_unit_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "source_payload_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "class",
+        "adapter",
+        "execution_id",
+        "attempt"
+      ],
+      "properties": {
+        "class": {
+          "enum": [
+            "cloud_batch",
+            "kubernetes",
+            "slurm",
+            "hosted_session",
+            "local_batch",
+            "other_external"
+          ]
+        },
+        "adapter": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "SUCCESS",
+        "OPERATIONAL_FAILURE"
+      ]
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "finished_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "returncode": {
+      "type": "integer"
+    },
+    "output_artifacts": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "bytes",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "runtime": {
+      "type": "object"
+    },
+    "error": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "scientific_semantics_changed": {
+      "const": false
+    },
+    "promotion_claim": {
+      "const": false
+    },
+    "repository_mutation_performed": {
+      "const": false
+    }
+  }
+}
