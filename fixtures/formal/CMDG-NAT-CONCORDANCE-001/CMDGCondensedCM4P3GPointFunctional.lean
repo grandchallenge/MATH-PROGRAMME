@@ -1,4 +1,5 @@
 import CMDGCondensedCM4P3MFiniteQuotientBridge
+import Mathlib.Condensed.Discrete.Characterization
 import CMDGCondensedCM4P3G
 import CMDGCondensedCM4P3GFiniteBooleanMeasureHom
 
@@ -283,7 +284,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
     have hlc :=
       CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app
-        (CompHausLike.LocallyConstant.adjunction.{u, u + 1} _ _)
+        CondensedSet.LocallyConstant.adjunction
         (Condensed.discreteUnderlyingAdj (Type (u + 1)))
         (ULift.{u + 1, u} Q1.obj)
     have hlcPoint :=
