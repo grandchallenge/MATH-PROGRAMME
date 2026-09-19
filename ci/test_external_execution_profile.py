@@ -25,6 +25,9 @@ class ExternalExecutionProfileTests(unittest.TestCase):
     def test_profile_is_valid(self) -> None:
         mod.validate()
 
+    def test_specialized_resources_require_external_compute(self) -> None:
+        self.assertTrue(self.profile["thresholds"]["specialized_resource_requires_external"])
+
     def test_github_parallelism_cannot_expand_to_campaign_fanout(self) -> None:
         mutated = copy.deepcopy(self.profile)
         mutated["thresholds"]["max_parallel_per_github_workflow"] = 256
