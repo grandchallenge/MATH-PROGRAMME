@@ -283,9 +283,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
     have hlc :=
       CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app
-        (CompHausLike.LocallyConstant.adjunction
-          (P := fun _ : TopCat.{u} => True)
-          (hs := fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 1 3).mp))
+        (CompHausLike.LocallyConstant.adjunction _ _)
         (Condensed.discreteUnderlyingAdj (Type (u + 1)))
         (ULift.{u + 1, u} Q1.obj)
     have hlcPoint :=
