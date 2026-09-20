@@ -318,18 +318,9 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
               (Functor.isoWhiskerLeft
                 CMDG.CondensedCM4P2E.finiteUnderlyingULift
                 CondensedSet.LocallyConstant.iso).hom.app Q1 := by
-        dsimp [frontIso]
-        simp only [
-          CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
-          CMDG.CondensedCM4P2E.finiteDiscreteCondensedIso,
-          CMDG.CondensedCM4P2E.discreteTopCondensedIso,
-          Iso.trans_hom,
-          NatTrans.comp_app,
-          Functor.isoWhiskerLeft_hom,
-          Functor.isoWhiskerRight_hom,
-          Functor.whiskerLeft_app,
-          Functor.whiskerRight_app,
-          Category.assoc]
+        set_option backward.defeqAttrib.useBackward true in
+        set_option backward.isDefEq.respectTransparency false in
+          rfl
       have hfront :
           (ConcreteCategory.hom
             (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
