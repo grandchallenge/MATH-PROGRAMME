@@ -300,34 +300,49 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
           (ULift.{u + 1, u} Q1.obj)
       have hlcUnitPoint :=
         CategoryTheory.types_congr_hom hlcUnit (ULift.up PUnit.unit)
-      dsimp [Q1] at hlcUnitPoint ⊢
-      rw [← hlcUnitPoint]
-      simp [
-        CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
-        CMDG.CondensedCM4P2E.compHausTopULiftNatIso,
-        CMDG.CondensedCM4P2E.compHausTopULiftIso,
-        CMDG.CondensedCM4P2E.compHausTopULiftPresheafIso,
-        CMDG.CondensedCM4P2E.continuousULiftSectionEquiv,
-        CMDG.CondensedCM4P2E.finiteDiscreteCondensedIso,
-        CMDG.CondensedCM4P2E.finiteDiscreteULiftIso,
-        CMDG.CondensedCM4P2E.discreteTopCondensedIso,
-        CompHausLike.LocallyConstant.functorIso,
-        CondensedSet.LocallyConstant.iso,
-        CompHausLike.LocallyConstant.unit,
-        TopCat.uliftFunctorObjHomeo,
-        TopCat.uliftFunctor,
-        Homeomorph.ofDiscrete,
-        Iso.trans_hom,
-        Iso.symm_hom,
-        Functor.isoWhiskerLeft_hom,
-        Functor.isoWhiskerRight_hom,
-        NatIso.ofComponents_hom_app,
-        Functor.whiskerLeft_app,
-        Functor.whiskerRight_app,
-        Functor.map_comp,
-        NatTrans.comp_app,
-        ConcreteCategory.comp_apply,
-        Category.assoc]
+      let frontIso :=
+        Functor.isoWhiskerLeft
+            (FintypeCat.toProfinite ⋙ profiniteToCompHaus)
+            CMDG.CondensedCM4P2E.compHausTopULiftNatIso ≪≫
+          Functor.isoWhiskerRight
+              CMDG.CondensedCM4P2E.finiteDiscreteULiftIso
+              topCatToCondensedSet ≪≫
+            Functor.isoWhiskerLeft
+              CMDG.CondensedCM4P2E.finiteUnderlyingULift
+              (CompHausLike.LocallyConstant.functorIso
+                (fun _ : TopCat.{u} => True)
+                (fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 0 2).mp)).symm
+      have hdecomp :
+          CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso.hom.app Q1 =
+            frontIso.hom.app Q1 ≫
+              (Functor.isoWhiskerLeft
+                CMDG.CondensedCM4P2E.finiteUnderlyingULift
+                CondensedSet.LocallyConstant.iso).hom.app Q1 := by
+        dsimp [frontIso]
+        simp [
+          CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
+          CMDG.CondensedCM4P2E.finiteDiscreteCondensedIso,
+          CMDG.CondensedCM4P2E.discreteTopCondensedIso,
+          Category.assoc]
+      have hfront :
+          (ConcreteCategory.hom
+            (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
+              (frontIso.hom.app Q1)).app
+                (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
+            (ULift.up
+              (𝟙 (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))) =
+            (ConcreteCategory.hom
+              (CondensedSet.LocallyConstant.adjunction.unit.app
+                (ULift.{u + 1, u} Q1.obj)))
+              (ULift.up PUnit.unit) := by
+        dsimp [Q1]
+        apply LocallyConstant.ext
+        intro s
+        exact Subsingleton.elim _ _
+      rw [hdecomp]
+      simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
+      rw [hfront]
+      exact hlcUnitPoint
     rw [hrep]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
