@@ -369,6 +369,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
                 Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map qx))).app
               (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1))))
     have hrepPost := congrArg postFree hrep
+    dsimp [postFree] at hrepPost
     rw [hrepPost]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
