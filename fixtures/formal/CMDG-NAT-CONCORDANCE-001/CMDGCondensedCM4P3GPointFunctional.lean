@@ -301,7 +301,8 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       have hlcUnitPoint :=
         CategoryTheory.types_congr_hom hlcUnit (ULift.up PUnit.unit)
       dsimp [Q1] at hlcUnitPoint ⊢
-      simpa [
+      rw [← hlcUnitPoint]
+      simp [
         CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
         CMDG.CondensedCM4P2E.compHausTopULiftNatIso,
         CMDG.CondensedCM4P2E.compHausTopULiftIso,
@@ -319,7 +320,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         Functor.map_comp,
         NatTrans.comp_app,
         ConcreteCategory.comp_apply,
-        Category.assoc] using hlcUnitPoint
+        Category.assoc]
     rw [hrep]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
