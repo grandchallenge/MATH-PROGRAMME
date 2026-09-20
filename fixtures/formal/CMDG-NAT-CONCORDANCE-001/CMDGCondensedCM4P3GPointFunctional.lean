@@ -355,21 +355,55 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
                   (ULift.{u + 1, u} Q1.obj)))
                 (ULift.up PUnit.unit)) := congrArg post hfront
           _ = _ := hlcUnitPoint
-    let postFree :=
-      ConcreteCategory.hom
-        (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
-          ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
-            ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-              Condensed.discrete (Type (u + 1))).obj Q1)
-            D
-            (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
-                (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q1) ≫
-              (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-                ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
-                Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map qx))).app
-              (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1))))
-    have hrepPost := congrArg postFree hrep
-    dsimp [postFree] at hrepPost
+    have hrepPost :
+        (ConcreteCategory.hom
+          (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
+            ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
+              ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+                Condensed.discrete (Type (u + 1))).obj Q1)
+              D
+              (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
+                  (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q1) ≫
+                (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+                  ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
+                  Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map qx))).app
+                (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
+          ((ConcreteCategory.hom
+            (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
+              (CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso.hom.app Q1)).app
+                (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
+            (ULift.up
+              (𝟙 (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1))))) =
+        (ConcreteCategory.hom
+          (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
+            ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
+              ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+                Condensed.discrete (Type (u + 1))).obj Q1)
+              D
+              (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
+                  (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q1) ≫
+                (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+                  ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
+                  Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map qx))).app
+                (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
+          ((ConcreteCategory.hom
+            ((Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app
+              (ULift.{u + 1, u} Q1.obj)))
+            (ULift.up PUnit.unit)) := by
+      exact congrArg
+        (ConcreteCategory.hom
+          (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
+            ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
+              ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+                Condensed.discrete (Type (u + 1))).obj Q1)
+              D
+              (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
+                  (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q1) ≫
+                (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+                  ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
+                  Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map qx))).app
+                (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
+        hrep
     rw [hrepPost]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
