@@ -319,10 +319,16 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
                 CMDG.CondensedCM4P2E.finiteUnderlyingULift
                 CondensedSet.LocallyConstant.iso).hom.app Q1 := by
         dsimp [frontIso]
-        simp [
+        simp only [
           CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
           CMDG.CondensedCM4P2E.finiteDiscreteCondensedIso,
           CMDG.CondensedCM4P2E.discreteTopCondensedIso,
+          Iso.trans_hom,
+          NatTrans.comp_app,
+          Functor.isoWhiskerLeft_hom,
+          Functor.isoWhiskerRight_hom,
+          Functor.whiskerLeft_app,
+          Functor.whiskerRight_app,
           Category.assoc]
       have hfront :
           (ConcreteCategory.hom
@@ -338,8 +344,11 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         dsimp [Q1]
         apply LocallyConstant.ext
         intro s
+        apply ULift.ext
         exact Subsingleton.elim _ _
-      rw [hdecomp]
+      set_option backward.defeqAttrib.useBackward true in
+      set_option backward.isDefEq.respectTransparency false in
+        rw [hdecomp]
       simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
       rw [hfront]
       exact hlcUnitPoint
