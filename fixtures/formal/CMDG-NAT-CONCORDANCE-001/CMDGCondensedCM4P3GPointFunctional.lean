@@ -340,9 +340,9 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       set_option backward.defeqAttrib.useBackward true in
       set_option backward.isDefEq.respectTransparency false in
         rw [hdecomp]
-      simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
-      rw [hfront]
-      exact hlcUnitPoint
+        simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
+        rw [hfront]
+        exact hlcUnitPoint
     rw [hrep]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
