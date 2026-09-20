@@ -414,12 +414,14 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         (ULift.{u + 1, u} Q1.obj)
     have huniqPoint :=
       CategoryTheory.types_congr_hom huniq (ULift.up PUnit.unit)
-    have huniqPointMapped :=
-      congrArg
-        (ConcreteCategory.hom
-          ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-            ModuleCat.free CMDG.CondensedCM4P3G.R.{u}).map qx))
-        huniqPoint
+    have huniqPointMapped := by
+      set_option backward.defeqAttrib.useBackward true in
+      set_option backward.isDefEq.respectTransparency false in
+        exact congrArg
+          (ConcreteCategory.hom
+            ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+              ModuleCat.free CMDG.CondensedCM4P3G.R.{u}).map qx))
+          huniqPoint
     dsimp [Q1, qx, D, eTail, freeHomSectionsEquiv]
     simp [
       Q,
