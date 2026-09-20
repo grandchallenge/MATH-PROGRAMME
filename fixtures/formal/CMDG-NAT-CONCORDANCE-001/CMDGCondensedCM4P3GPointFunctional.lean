@@ -414,6 +414,12 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         (ULift.{u + 1, u} Q1.obj)
     have huniqPoint :=
       CategoryTheory.types_congr_hom huniq (ULift.up PUnit.unit)
+    have huniqPointMapped :=
+      congrArg
+        (ConcreteCategory.hom
+          ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+            ModuleCat.free CMDG.CondensedCM4P3G.R.{u}).map qx))
+        huniqPoint
     dsimp [Q1, qx, D, eTail, freeHomSectionsEquiv]
     simpa [
       Q,
@@ -449,7 +455,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       Category.assoc,
       Adjunction.comp_unit_app,
       Adjunction.homEquiv_naturality_left,
-      ModuleCat.adj_homEquiv] using huniqPoint
+      ModuleCat.adj_homEquiv] using huniqPointMapped
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
