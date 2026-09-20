@@ -341,8 +341,20 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       set_option backward.isDefEq.respectTransparency false in
         rw [hdecomp]
         simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
-        rw [hfront]
-        exact hlcUnitPoint
+        let post :=
+          ConcreteCategory.hom
+            (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
+              ((Functor.isoWhiskerLeft
+                CMDG.CondensedCM4P2E.finiteUnderlyingULift
+                CondensedSet.LocallyConstant.iso).hom.app Q1)).app
+                  (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1))))
+        calc
+          _ = post
+              ((ConcreteCategory.hom
+                (CondensedSet.LocallyConstant.adjunction.unit.app
+                  (ULift.{u + 1, u} Q1.obj)))
+                (ULift.up PUnit.unit)) := congrArg post hfront
+          _ = _ := hlcUnitPoint
     rw [hrep]
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
