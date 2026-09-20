@@ -404,7 +404,9 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
                   Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map qx))).app
                 (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
         hrep
-    rw [hrepPost]
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      refine hrepPost.trans ?_
     have huniq :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
         CMDG.CondensedCM4P2E.discreteSetFreeAdj
