@@ -421,7 +421,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             ModuleCat.free CMDG.CondensedCM4P3G.R.{u}).map qx))
         huniqPoint
     dsimp [Q1, qx, D, eTail, freeHomSectionsEquiv]
-    simpa [
+    simp [
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
       CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
@@ -455,7 +455,30 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       Category.assoc,
       Adjunction.comp_unit_app,
       Adjunction.homEquiv_naturality_left,
-      ModuleCat.adj_homEquiv] using huniqPointMapped
+
+      ModuleCat.adj_homEquiv] at huniqPointMapped
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      refine huniqPointMapped.trans ?_
+    simp [
+      Q,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply,
+      CondensedMod.LocallyConstant.functorIsoDiscrete,
+      CondensedMod.LocallyConstant.functorIsoDiscreteComponents,
+      CondensedMod.LocallyConstant.functorIsoDiscreteAux₂,
+      CondensedMod.LocallyConstant.functorIsoDiscreteAux₁,
+      Functor.map_comp,
+      NatTrans.comp_app,
+      ConcreteCategory.comp_apply,
+      Category.assoc]
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
