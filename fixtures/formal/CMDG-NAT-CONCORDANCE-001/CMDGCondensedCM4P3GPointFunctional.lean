@@ -458,11 +458,17 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
               (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q)) := by
       simpa only [Functor.comp_obj, Functor.comp_map] using hfreeNat
+    have hunitNat :=
+      (Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.naturality
+        (CMDG.CondensedCM4P2E.finiteUnderlyingULift.map qx)
+    have hunitPoint :=
+      CategoryTheory.types_congr_hom hunitNat (ULift.up PUnit.unit)
     rw [hdiscNatTarget]
     dsimp only [D]
     rw [hfreeNatTarget]
     dsimp [Q1, qx, eTail, freeHomSectionsEquiv]
     simpa [
+      hunitPoint,
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
       CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
