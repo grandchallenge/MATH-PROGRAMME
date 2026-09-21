@@ -417,7 +417,19 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     have hdiscNat :=
       CMDG.CondensedCM4P2E.discreteFreeIso.hom.naturality
         (CMDG.CondensedCM4P2E.finiteUnderlyingULift.map qx)
-    rw [← hdiscNat]
+    have hdiscNatTarget :
+        CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
+              (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q1) ≫
+            (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+              ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
+              Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map qx =
+          (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+              Condensed.discrete (Type (u + 1)) ⋙
+              Condensed.free CMDG.CondensedCM4P3G.R.{u}).map qx ≫
+            CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
+              (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q) := by
+      simpa only [Functor.comp_map] using hdiscNat.symm
+    rw [hdiscNatTarget]
     dsimp [Q1, qx, D, eTail, freeHomSectionsEquiv]
     simpa [
       Q,
