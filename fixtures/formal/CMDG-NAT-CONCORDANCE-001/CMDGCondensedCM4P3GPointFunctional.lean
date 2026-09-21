@@ -407,27 +407,15 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     set_option backward.defeqAttrib.useBackward true in
     set_option backward.isDefEq.respectTransparency false in
       refine hrepPost.trans ?_
-    have huniq :=
+    have huniqQ :=
       CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
         CMDG.CondensedCM4P2E.discreteSetFreeAdj
         CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
-        (ULift.{u + 1, u} Q1.obj)
-    have huniqPoint :=
-      CategoryTheory.types_congr_hom huniq (ULift.up PUnit.unit)
-    set_option backward.defeqAttrib.useBackward true in
-    set_option backward.isDefEq.respectTransparency false in
-      change
-        (_ : ULift.{u + 1, u} Q1.obj →₀ CMDG.CondensedCM4P3G.R.{u}) =
-          (_ : ULift.{u + 1, u} Q1.obj →₀ CMDG.CondensedCM4P3G.R.{u})
-        at huniqPoint
-    have huniqPointMapped :=
-      congrArg
-        (ConcreteCategory.hom
-          ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-            ModuleCat.free CMDG.CondensedCM4P3G.R.{u}).map qx))
-        huniqPoint
+        (ULift.{u + 1, u} Q.obj)
+    have huniqQPoint :=
+      CategoryTheory.types_congr_hom huniqQ (ULift.up (j.proj x))
     dsimp [Q1, qx, D, eTail, freeHomSectionsEquiv]
-    simp [
+    simpa [
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
       CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
@@ -448,6 +436,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single,
       ModuleCat.freeMk,
       Equiv.coe_fn_mk,
       Functor.FullyFaithful.homEquiv_apply,
@@ -461,30 +450,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       Category.assoc,
       Adjunction.comp_unit_app,
       Adjunction.homEquiv_naturality_left,
-
-      ModuleCat.adj_homEquiv] at huniqPointMapped
-    set_option backward.defeqAttrib.useBackward true in
-    set_option backward.isDefEq.respectTransparency false in
-      refine huniqPointMapped.trans ?_
-    simp [
-      Q,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply,
-      CondensedMod.LocallyConstant.functorIsoDiscrete,
-      CondensedMod.LocallyConstant.functorIsoDiscreteComponents,
-      CondensedMod.LocallyConstant.functorIsoDiscreteAux₂,
-      CondensedMod.LocallyConstant.functorIsoDiscreteAux₁,
-      Functor.map_comp,
-      NatTrans.comp_app,
-      ConcreteCategory.comp_apply,
-      Category.assoc]
+      ModuleCat.adj_homEquiv] using huniqQPoint
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
