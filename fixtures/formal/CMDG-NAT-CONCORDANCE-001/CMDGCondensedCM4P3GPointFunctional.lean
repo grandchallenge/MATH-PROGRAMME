@@ -429,7 +429,32 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
               (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q) := by
       simpa only [Functor.comp_map] using hdiscNat.symm
-    rw [hdiscNatTarget]
+    have hfreeNat :=
+      (Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv_naturality_left
+        ((Condensed.discrete (Type (u + 1))).map
+          (CMDG.CondensedCM4P2E.finiteUnderlyingULift.map qx))
+        (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
+          (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q))
+    have hfreeNatTarget :
+        ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
+          ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+            Condensed.discrete (Type (u + 1))).obj Q1)
+          D)
+          ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+              Condensed.discrete (Type (u + 1)) ⋙
+              Condensed.free CMDG.CondensedCM4P3G.R.{u}).map qx ≫
+            CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
+              (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q)) =
+        (Condensed.discrete (Type (u + 1))).map
+            (CMDG.CondensedCM4P2E.finiteUnderlyingULift.map qx) ≫
+          ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
+            ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+              Condensed.discrete (Type (u + 1))).obj Q)
+            D)
+            (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
+              (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q)) := by
+      simpa only [Functor.comp_map] using hfreeNat
+    rw [hdiscNatTarget, hfreeNatTarget]
     dsimp [Q1, qx, D, eTail, freeHomSectionsEquiv]
     simpa [
       Q,
