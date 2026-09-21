@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/mathforge_external_source_import.schema.json",
+  "title": "MATHFORGE External Source Import Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "provider_repository", "provider_commit", "verified_at", "sources"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "registry_id": {"const": "MATHFORGE-EXTERNAL-SOURCE-IMPORTS"},
+    "provider_repository": {"const": "grandchallenge/MATHFORGE"},
+    "provider_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "verified_at": {"type": "string", "format": "date"},
+    "sources": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["source_id", "source_class", "upstream", "upstream_commit", "artifacts", "programme_disposition", "claim_boundary"],
+        "properties": {
+          "source_id": {"type": "string", "pattern": "^[A-Z][A-Z0-9-]+$"},
+          "source_class": {"enum": ["corpus_row", "formal_statement_repository"]},
+          "upstream": {"type": "string", "minLength": 3},
+          "upstream_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "programme_disposition": {"enum": ["CONFORMANCE_FIXTURE_ONLY", "ADMITTED_PROVIDER_EVIDENCE"]},
+          "claim_boundary": {"type": "string", "minLength": 80},
+          "artifacts": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["kind", "path", "git_blob_sha1"], "properties": {"kind": {"type": "string"}, "path": {"type": "string"}, "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}}}}
+        }
+      }
+    }
+  }
+}
