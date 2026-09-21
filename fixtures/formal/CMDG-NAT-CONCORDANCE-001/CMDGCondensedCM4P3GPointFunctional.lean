@@ -439,7 +439,9 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
           ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
             Condensed.discrete (Type (u + 1))).obj Q1)
-          D)
+          ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+            ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
+            Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).obj Q))
           ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
               Condensed.discrete (Type (u + 1)) ⋙
               Condensed.free CMDG.CondensedCM4P3G.R.{u}).map qx ≫
@@ -450,14 +452,16 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
           ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
             ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
               Condensed.discrete (Type (u + 1))).obj Q)
-            D)
+            ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+            ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
+            Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).obj Q))
             (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
               (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q)) := by
-      set_option backward.defeqAttrib.useBackward true in
-      set_option backward.isDefEq.respectTransparency false in
-        simpa only [Functor.comp_obj, Functor.comp_map] using hfreeNat
-    rw [hdiscNatTarget, hfreeNatTarget]
-    dsimp [Q1, qx, D, eTail, freeHomSectionsEquiv]
+      simpa only [Functor.comp_obj, Functor.comp_map] using hfreeNat
+    rw [hdiscNatTarget]
+    dsimp only [D]
+    rw [hfreeNatTarget]
+    dsimp [Q1, qx, eTail, freeHomSectionsEquiv]
     simpa [
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
