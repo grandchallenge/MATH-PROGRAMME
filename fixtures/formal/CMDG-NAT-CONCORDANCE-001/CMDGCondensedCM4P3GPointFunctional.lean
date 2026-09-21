@@ -414,6 +414,10 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         (ULift.{u + 1, u} Q.obj)
     have huniqQPoint :=
       CategoryTheory.types_congr_hom huniqQ (ULift.up (j.proj x))
+    have hdiscNat :=
+      CMDG.CondensedCM4P2E.discreteFreeIso.hom.naturality
+        (CMDG.CondensedCM4P2E.finiteUnderlyingULift.map qx)
+    rw [← hdiscNat]
     dsimp [Q1, qx, D, eTail, freeHomSectionsEquiv]
     simpa [
       Q,
