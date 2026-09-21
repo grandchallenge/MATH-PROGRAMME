@@ -453,7 +453,8 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             D)
             (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
               (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q)) := by
-      simpa only [Functor.comp_map] using hfreeNat
+      dsimp [D]
+      simpa only [Functor.comp_obj, Functor.comp_map] using hfreeNat
     rw [hdiscNatTarget, hfreeNatTarget]
     dsimp [Q1, qx, D, eTail, freeHomSectionsEquiv]
     simpa [
