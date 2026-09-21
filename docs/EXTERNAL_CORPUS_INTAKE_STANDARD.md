@@ -49,7 +49,7 @@ Every imported row must preserve:
 
 ## Reliability register
 
-A corpus must receive a reliability register before its rows are used for campaign selection.
+A corpus must receive a MATHFORGE-owned reliability register before its rows are used for campaign selection. Programme may retain conformance mirrors, but it imports canonical source reconstruction by immutable Forge commit and artifact identity.
 
 | Register field | Question |
 | --- | --- |
@@ -144,6 +144,6 @@ An intake fixture should be rejected if it:
 
 ## ResearchMath as first instance
 
-`RM-DIO-004` is the first executable instance of this standard. It preserves a ResearchMath row, downgrades imported status to unverified unknown, extracts the Diophantine curve, classifies the route, and hands off a finite exact sanity screen.
+`RM-DIO-004` is the first executable instance of this standard. Its canonical MATHFORGE package pins the dataset repository commit, LFS object, config, split and row index; supplies the reliability register; downgrades imported status to unverified unknown; extracts the Diophantine curve; and proposes a finite exact sanity screen. The Programme copy is a conformance fixture bound to that protected provider identity.
 
 The fixture is successful because it refuses to become impressive. It does the smaller necessary thing: it proves that external mathematical corpora can enter the programme without weakening the claim boundary.
