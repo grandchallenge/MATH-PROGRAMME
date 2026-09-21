@@ -466,9 +466,11 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     rw [hdiscNatTarget]
     dsimp only [D]
     rw [hfreeNatTarget]
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      rw [← hunitPoint]
     dsimp [Q1, qx, eTail, freeHomSectionsEquiv]
     simpa [
-      hunitPoint,
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
       CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
