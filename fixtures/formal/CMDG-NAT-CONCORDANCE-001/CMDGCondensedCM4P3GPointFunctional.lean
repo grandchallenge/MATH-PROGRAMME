@@ -590,7 +590,24 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             CMDG.CondensedCM4P3G.R.{u}).obj M)
       set_option backward.defeqAttrib.useBackward true in
       set_option backward.isDefEq.respectTransparency false in
-        rw [Category.assoc, htriangle, Category.comp_id]
+        change
+          (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
+              CMDG.CondensedCM4P3G.R.{u} M).hom ≫
+              ((Condensed.discreteUnderlyingAdj
+                (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app
+                  ((Condensed.underlying
+                    (ModuleCat CMDG.CondensedCM4P3G.R.{u})).obj
+                    ((CondensedMod.LocallyConstant.functor
+                      CMDG.CondensedCM4P3G.R.{u}).obj M)) ≫
+                (Condensed.underlying
+                  (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
+                  ((Condensed.discreteUnderlyingAdj
+                    (ModuleCat CMDG.CondensedCM4P3G.R.{u})).counit.app
+                    ((CondensedMod.LocallyConstant.functor
+                      CMDG.CondensedCM4P3G.R.{u}).obj M))) =
+            (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
+              CMDG.CondensedCM4P3G.R.{u} M).hom
+      rw [htriangle, Category.comp_id]
     have hlcUnitPoint :
         (ConcreteCategory.hom
           ((CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M))
