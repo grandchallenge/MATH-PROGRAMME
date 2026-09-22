@@ -257,14 +257,6 @@ def open_pr(gh: Github, item: dict[str, Any]) -> dict[str, Any]:
     return pr
 
 
-def comment_issue(gh: Github, issue_number: int, body: str) -> None:
-    gh.request(
-        "POST",
-        f"/repos/{OWNER}/{REPO}/issues/{issue_number}/comments",
-        {"body": body},
-    )
-
-
 def run(apply: bool) -> dict[str, Any]:
     token = os.environ.get("MATHSOLVE_INTAKE_PR_TOKEN", "")
     if not token:
@@ -279,7 +271,6 @@ def run(apply: bool) -> dict[str, Any]:
         "authority": {
             "contents": "read",
             "pull_requests": "write",
-            "issues": "write",
             "merge": False,
             "review": False,
             "campaign_mutation": False,
@@ -305,13 +296,6 @@ def run(apply: bool) -> dict[str, Any]:
                 "pr_number": number,
                 "pr_url": url,
             })
-            if isinstance(item.get("github_issue_number"), int):
-                comment_issue(
-                    gh,
-                    item["github_issue_number"],
-                    f"INTAKE CONTROLLER — raw-evidence PR created by bounded Release Trust controller: #{number}. "
-                    "Mathematical status remains unadjudicated.",
-                )
         except ControllerError as exc:
             report["errors"].append({"branch": branch, "error": str(exc)})
 
