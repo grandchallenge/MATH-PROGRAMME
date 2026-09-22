@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.0.0",
+  "work_package": "VGSE-ENG-WP04",
+  "audit_question": "How many genuinely independent geometry/quotient pairings are available under current authority?",
+  "definitions": {
+    "independent_pair": "A geometry/quotient observation in which the quotient value was not itself reused as an input to generate or reconstruct the geometry being paired with it.",
+    "reconstructed_pair": "A geometry/quotient association created by a governed reconstruction whose geometry-generation pipeline consumes the same weight fixture or equivalent quotient information."
+  },
+  "protected_sources": [
+    {
+      "id": "C05",
+      "repo": "grandchallenge/MATHCERT",
+      "ref": "2f27aed33b32b4caf6ff8622c87cfd6d40e97607",
+      "path": "evidence/vgse/VGSE-WP00-CERT-001-planar.json",
+      "blob": "4ec159d6c7786f4c576f0b5b8a6a1088bf054a7a"
+    },
+    {
+      "id": "C04",
+      "repo": "grandchallenge/MATHCERT",
+      "ref": "2f27aed33b32b4caf6ff8622c87cfd6d40e97607",
+      "path": "evidence/vgse/VGSE-WP00-CERT-001-exact-algebraic-graph.json",
+      "blob": "f804023ea346feea9bbcc7feecdc19b442f0448d"
+    },
+    {
+      "id": "C06_BINDING",
+      "repo": "grandchallenge/MATHCERT",
+      "ref": "2f27aed33b32b4caf6ff8622c87cfd6d40e97607",
+      "path": "evidence/vgse/VGSE-WP00-CERT-001-c06-producer-binding.json",
+      "blob": "80ca458063ac2d500a2046f9594e90de0d737f86"
+    },
+    {
+      "id": "SOLVE_RECONSTRUCTION",
+      "repo": "grandchallenge/MATHSOLVE",
+      "ref": "b0854bb7770296b610b655753bc62b27365b27bb",
+      "path": "work_packages/VGSE_WP00/artifacts/data/reconstruction_summary.json",
+      "blob": "d4e38837a6982b400e0c5137acb55e982aaa10bf"
+    },
+    {
+      "id": "SOLVE_RECONSTRUCTION_CODE",
+      "repo": "grandchallenge/MATHSOLVE",
+      "ref": "b0854bb7770296b610b655753bc62b27365b27bb",
+      "path": "work_packages/VGSE_WP00/artifacts/code/reconstruct_b3.py"
+    },
+    {
+      "id": "SOURCE_VECTORS",
+      "repo": "grandchallenge/MATHSOLVE",
+      "ref": "b0854bb7770296b610b655753bc62b27365b27bb",
+      "path": "work_packages/VGSE_WP00/artifacts/data/figure16_source_vectors.json",
+      "blob": "8449555b71a38670374f172edd549385c3dda47d"
+    }
+  ],
+  "quotient_point": {
+    "id": "Q_PINNED_C_CANONICAL",
+    "coordinates": [
+      "1",
+      "1",
+      "2/7",
+      "25/7",
+      "6/7",
+      "3/25",
+      "2/25",
+      "9/7"
+    ],
+    "authority": "protected C04 exact representative plus WP01 canonical gauge"
+  },
+  "candidate_pairs": [
+    {
+      "pair_id": "C05_BRANCH_1_WITH_Q_PINNED_C",
+      "geometry": "C05 certified branch 1",
+      "quotient": "Q_PINNED_C_CANONICAL",
+      "classification": "reconstructed correspondence",
+      "independent": false,
+      "reason": "The governed reconstruction loads one graph_weight_fixture before iterating over all five algebraic solutions; each generated geometry is therefore downstream of the same weight fixture rather than an independent observation of geometry against quotient.",
+      "permitted_use": "construction consistency and obstruction analysis only; not training/identification evidence for a general geometry-to-quotient law"
+    },
+    {
+      "pair_id": "C05_BRANCH_2_WITH_Q_PINNED_C",
+      "geometry": "C05 certified branch 2",
+      "quotient": "Q_PINNED_C_CANONICAL",
+      "classification": "reconstructed correspondence",
+      "independent": false,
+      "reason": "The governed reconstruction loads one graph_weight_fixture before iterating over all five algebraic solutions; each generated geometry is therefore downstream of the same weight fixture rather than an independent observation of geometry against quotient.",
+      "permitted_use": "construction consistency and obstruction analysis only; not training/identification evidence for a general geometry-to-quotient law"
+    },
+    {
+      "pair_id": "C05_BRANCH_3_WITH_Q_PINNED_C",
+      "geometry": "C05 certified branch 3",
+      "quotient": "Q_PINNED_C_CANONICAL",
+      "classification": "reconstructed correspondence",
+      "independent": false,
+      "reason": "The governed reconstruction loads one graph_weight_fixture before iterating over all five algebraic solutions; each generated geometry is therefore downstream of the same weight fixture rather than an independent observation of geometry against quotient.",
+      "permitted_use": "construction consistency and obstruction analysis only; not training/identification evidence for a general geometry-to-quotient law"
+    },
+    {
+      "pair_id": "C05_BRANCH_4_WITH_Q_PINNED_C",
+      "geometry": "C05 certified branch 4",
+      "quotient": "Q_PINNED_C_CANONICAL",
+      "classification": "reconstructed correspondence",
+      "independent": false,
+      "reason": "The governed reconstruction loads one graph_weight_fixture before iterating over all five algebraic solutions; each generated geometry is therefore downstream of the same weight fixture rather than an independent observation of geometry against quotient.",
+      "permitted_use": "construction consistency and obstruction analysis only; not training/identification evidence for a general geometry-to-quotient law"
+    },
+    {
+      "pair_id": "C05_BRANCH_5_WITH_Q_PINNED_C",
+      "geometry": "C05 certified branch 5",
+      "quotient": "Q_PINNED_C_CANONICAL",
+      "classification": "reconstructed correspondence",
+      "independent": false,
+      "reason": "The governed reconstruction loads one graph_weight_fixture before iterating over all five algebraic solutions; each generated geometry is therefore downstream of the same weight fixture rather than an independent observation of geometry against quotient.",
+      "permitted_use": "construction consistency and obstruction analysis only; not training/identification evidence for a general geometry-to-quotient law"
+    }
+  ],
+  "source_geometry_candidates": {
+    "count": 5,
+    "classification": "source-derived geometry with unsupported quotient pairing",
+    "quotient_pair_authorized": false,
+    "reason": "The protected C06 producer audit rejects the visible source-vector Euclidean geometric weight class as a measurement of pinned C, even after all 720 boundary relabelings and both global color/complement conventions."
+  },
+  "counts": {
+    "total_reconstructed_pairs": 5,
+    "genuinely_independent_pairs": 0,
+    "independently_varied_quotient_points": 0,
+    "source_geometry_records": 5,
+    "source_geometry_records_with_authorized_quotient_pair": 0
+  },
+  "conclusion": {
+    "status": "INSUFFICIENT_INDEPENDENT_PAIRING_FOR_GENERAL_COUPLING_IDENTIFICATION",
+    "statement": "Current authority contains five reconstructed geometry branches over one reused quotient fixture and five source geometries with no authorized pinned-C quotient pairing. It contains no independently varied geometry/quotient observations.",
+    "anti_interpolation_rule": "No regression or interpolant fitted to these records may be promoted as a discovered general Phi:G->Q."
+  }
+}
