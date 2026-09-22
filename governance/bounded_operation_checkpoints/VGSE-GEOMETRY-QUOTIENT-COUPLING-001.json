@@ -15,62 +15,46 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1042"
   },
-  "phase": "WP04 terminal candidate exact-head reviewed; continuity rebind required before protected integration.",
-  "state": "IN_PROGRESS",
+  "phase": "WP04 terminal: GEOMETRY_QUOTIENT_NON_IDENTIFIABLE admitted through native merge queue and read back from protected main.",
+  "state": "TERMINAL",
   "identities": {
-    "protected_base_sha": "fb34625c756d5500a63478a11e9f1d2dc89c722e",
-    "candidate_head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+    "protected_base_sha": "05e384156859269221e77fdcd61606e06f56ddd1",
+    "candidate_head_sha": "05e384156859269221e77fdcd61606e06f56ddd1",
     "issue_number": 1042,
-    "pr_number": 1044,
-    "branch": "research/vgse-eng-wp04",
+    "pr_number": null,
+    "branch": null,
     "workflow_runs": []
   },
   "terminal_condition": "Terminate only at one declared WP04 disposition: GEOMETRY_QUOTIENT_COUPLING_ESTABLISHED, GEOMETRY_QUOTIENT_COUPLING_PARTIAL, GEOMETRY_REQUIRES_LATENT_METRIC_VARIABLES, GEOMETRY_QUOTIENT_NON_IDENTIFIABLE, or CANDIDATE_COUPLINGS_FALSIFIED, with exact-head replay, independent Adversary and Referee review, protected admission, and claim-boundary preservation.",
-  "permitted_next_actions": [
-    {
-      "id": "protect-review-bind",
-      "description": "Protect this exact-head continuity rebind through ordinary PR and native merge-queue gates."
-    },
-    {
-      "id": "enqueue-substantive-pr",
-      "description": "After the continuity rebind is protected, enable native queue admission for PR #1044 without changing its head."
-    },
-    {
-      "id": "readback-terminal",
-      "description": "After PR #1044 merges, verify exact protected-main readback and record terminal checkpoint evidence."
-    }
-  ],
-  "next_action": {
-    "id": "protect-review-bind",
-    "description": "Protect the exact-head WP04 review/continuity bind before queueing substantive PR #1044.",
-    "evidence_targets": [
-      "PR #1044 head 14c8d77fd1e64c09680dcda77ae65939b257d579",
-      "Adversary review 5284024459",
-      "Referee review 5284034660",
-      "exact-head deterministic artifact replay PASS"
-    ]
-  },
+  "permitted_next_actions": [],
+  "next_action": null,
   "external_evidence": {
     "waiting": false,
     "objects": []
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "complete WP04 substantive candidate, exact-head replay, and distinct Adversary/Referee review",
-    "result": "PR #1044 is fixed at 14c8d77fd1e64c09680dcda77ae65939b257d579. Exact-head deterministic artifact replay passed. Adversary review 5284024459 returned CLEAR_NO_BLOCKING_DEFECT. Referee review 5284034660 returned ADMISSIBLE_FOR_PROTECTED_INTEGRATION_AFTER_CONTINUITY_REBIND_AND_REQUIRED_CHECKS.",
+    "action": "admit WP04 geometry-to-quotient non-identifiability result and terminate bounded tranche",
+    "result": "Substantive PR #1044 remained exactly at reviewed head 14c8d77fd1e64c09680dcda77ae65939b257d579. Exact-head deterministic artifact replay passed. Adversary review 5284024459 and Referee review 5284034660 cleared the candidate. Continuity rebind PR #1045 was protected first at 4d3c8b8d580c9fab93cd23131329fd6e8334a283. Native merge-group candidate 05e384156859269221e77fdcd61606e06f56ddd1 then passed GCL conformance, GH-OS routing enforcement, formal validation, and Programme policy checks; PR #1044 merged as that queue-owned commit and protected main read back exactly at the same SHA.",
     "evidence_refs": [
       "grandchallenge/MATH-PROGRAMME#1044",
-      "candidate 14c8d77fd1e64c09680dcda77ae65939b257d579",
+      "reviewed candidate 14c8d77fd1e64c09680dcda77ae65939b257d579",
       "Adversary review 5284024459",
       "Referee review 5284034660",
-      "terminal candidate GEOMETRY_QUOTIENT_NON_IDENTIFIABLE"
+      "grandchallenge/MATH-PROGRAMME#1045",
+      "protected continuity bind 4d3c8b8d580c9fab93cd23131329fd6e8334a283",
+      "merge-group/protected merge 05e384156859269221e77fdcd61606e06f56ddd1",
+      "GCL conformance run 35787808881",
+      "GH-OS routing enforcement run 35787807786",
+      "formal-validation run 35787807869",
+      "Programme policy checks run 35787807909"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-GEOMETRY-QUOTIENT-COUPLING-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-22T21:33:00Z"
+    "observed_at": "2026-09-22T21:41:15Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -78,15 +62,30 @@
     "authoritative_sources": [
       "grandchallenge/MATH-PROGRAMME#1042",
       "grandchallenge/MATH-PROGRAMME#1044",
-      "grandchallenge/MATH-PROGRAMME@14c8d77fd1e64c09680dcda77ae65939b257d579:research/vgse-eng-wp04/README.md",
-      "grandchallenge/MATH-PROGRAMME@14c8d77fd1e64c09680dcda77ae65939b257d579:research/vgse-eng-wp04/RESULTS.json",
-      "grandchallenge/MATH-PROGRAMME@14c8d77fd1e64c09680dcda77ae65939b257d579:research/vgse-eng-wp04/CLAIM_LEDGER.json",
-      "Adversary review 5284024459",
-      "Referee review 5284034660"
+      "grandchallenge/MATH-PROGRAMME@05e384156859269221e77fdcd61606e06f56ddd1",
+      "research/vgse-eng-wp04/README.md",
+      "research/vgse-eng-wp04/RESULTS.json",
+      "research/vgse-eng-wp04/CLAIM_LEDGER.json",
+      "research/vgse-eng-wp04/NEXT_ACTION.md"
     ],
-    "instructions": "Rebind to live PR #1044 and require exact head 14c8d77fd1e64c09680dcda77ae65939b257d579. If the head moves, invalidate both reviews and rerun exact-head replay. Preserve C06 and all physical/manufacturing/commercial exclusions. Protect this checkpoint bind before substantive queue admission."
+    "instructions": "This WP04 tranche is terminal with disposition GEOMETRY_QUOTIENT_NON_IDENTIFIABLE under current qualified evidence. No WP05 is authorized. Reopen only with independently varied admitted geometry/quotient pairs, an exact structural geometry-to-quotient inversion theorem, or a separately governed source-authorized correspondence. Preserve C06 and all physical/manufacturing/commercial exclusions."
   },
-  "terminal_evidence": [],
+  "terminal_evidence": [
+    "WP04 admission protected through PR #1043 at fb34625c756d5500a63478a11e9f1d2dc89c722e",
+    "WP04 reviewed substantive head 14c8d77fd1e64c09680dcda77ae65939b257d579",
+    "exact-head deterministic artifact replay PASS",
+    "Adversary review 5284024459: CLEAR_NO_BLOCKING_DEFECT",
+    "Referee review 5284034660: ADMISSIBLE_FOR_PROTECTED_INTEGRATION_AFTER_CONTINUITY_REBIND_AND_REQUIRED_CHECKS",
+    "continuity rebind protected through PR #1045 at 4d3c8b8d580c9fab93cd23131329fd6e8334a283",
+    "substantive native merge-group/protected merge 05e384156859269221e77fdcd61606e06f56ddd1",
+    "merge-group GCL conformance success run 35787808881",
+    "merge-group GH-OS routing success run 35787807786",
+    "merge-group formal-validation success run 35787807869",
+    "merge-group Programme policy success run 35787807909",
+    "protected main exact readback 05e384156859269221e77fdcd61606e06f56ddd1",
+    "terminal disposition GEOMETRY_QUOTIENT_NON_IDENTIFIABLE",
+    "VGSE-C06 and all source/physical/manufacturing/product/patent/commercial exclusions retained"
+  ],
   "claim_boundaries": {
     "mathematical_claim_authorized": false,
     "certification_claim_authorized": false,
