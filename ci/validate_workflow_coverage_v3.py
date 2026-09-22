@@ -260,9 +260,10 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         return errors
     workflow = legacy.load_yaml_text(text)
     trigger = _trigger(workflow)
-    if set(trigger) != {"schedule", "workflow_dispatch"}:
+    expected_triggers = {"schedule", "workflow_dispatch", "workflow_run"}
+    if set(trigger) != expected_triggers:
         errors.append(
-            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: triggers must be exactly schedule and workflow_dispatch"
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: triggers must be exactly schedule, workflow_dispatch, and workflow_run"
         )
     schedule = trigger.get("schedule", [])
     expected_schedule = [{"cron": "*/10 * * * *"}]
@@ -270,6 +271,20 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         errors.append(
             f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: schedule must remain every ten minutes"
         )
+    workflow_run = trigger.get("workflow_run", {})
+    if not isinstance(workflow_run, dict):
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: workflow_run trigger must be structured"
+        )
+    else:
+        if workflow_run.get("workflows") != ["Administrative maintenance dispatcher"]:
+            errors.append(
+                f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: workflow_run must bind Administrative maintenance dispatcher only"
+            )
+        if workflow_run.get("types") != ["completed"]:
+            errors.append(
+                f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: workflow_run type must be completed only"
+            )
     if workflow.get("permissions") != {"contents": "read"}:
         errors.append(
             f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: top-level permissions must remain contents-read only"
@@ -282,6 +297,10 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
     if job.get("permissions") != {"contents": "read"}:
         errors.append(
             f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: workflow token must remain contents-read only"
+        )
+    if job.get("if") != "github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'":
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: workflow_run wake must be gated on successful dispatcher completion"
         )
     required = (
         APP_ACTION,
@@ -322,7 +341,6 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         "/git/refs/heads/main",
         "pull_request_target:",
         "repository_dispatch:",
-        "workflow_run:",
     )
     for marker in forbidden:
         if marker in text:
@@ -330,7 +348,6 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
                 f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: forbidden controller capability {marker}"
             )
     return errors
-
 
 def ghos_routing_enforcement_errors(texts: dict[str, str]) -> list[str]:
     errors: list[str] = []
