@@ -538,18 +538,48 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     let M : ModuleCat.{u + 1} CMDG.CondensedCM4P3G.R.{u} :=
       (ModuleCat.free CMDG.CondensedCM4P3G.R.{u}).obj
         (ULift.{u + 1, u} Q.obj)
+    have hlcUnitMap :
+        (CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M =
+          (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
+            CMDG.CondensedCM4P3G.R.{u} M).hom := by
+      set_option backward.defeqAttrib.useBackward true in
+      set_option backward.isDefEq.respectTransparency false in
+        change
+          (Condensed.discreteUnderlyingAdj
+              (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app M ≫
+              (Condensed.underlying
+                (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
+                ((CondensedMod.LocallyConstant.functorIsoDiscreteComponents
+                  CMDG.CondensedCM4P3G.R.{u} M).hom) =
+            (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
+              CMDG.CondensedCM4P3G.R.{u} M).hom
+      rw [show
+        (CondensedMod.LocallyConstant.functorIsoDiscreteComponents
+            CMDG.CondensedCM4P3G.R.{u} M).hom =
+          (Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
+              (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
+                CMDG.CondensedCM4P3G.R.{u} M).hom ≫
+            (Condensed.discreteUnderlyingAdj
+              (ModuleCat CMDG.CondensedCM4P3G.R.{u})).counit.app
+              ((CondensedMod.LocallyConstant.functor
+                CMDG.CondensedCM4P3G.R.{u}).obj M) by
+          rfl]
+      simp only [Functor.map_comp, Category.assoc]
+      rw [← (Condensed.discreteUnderlyingAdj
+        (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.naturality
+          (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
+            CMDG.CondensedCM4P3G.R.{u} M).hom]
+      simp only [Functor.id_map, Category.assoc,
+        (Condensed.discreteUnderlyingAdj
+          (ModuleCat CMDG.CondensedCM4P3G.R.{u})).right_triangle_components,
+        Category.comp_id]
     have hlcUnitPoint :
         (ConcreteCategory.hom
           ((CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M))
           (ModuleCat.freeMk (ULift.up (j.proj x))) =
         LocallyConstant.const (CompHaus.of PUnit.{u + 1})
           (ModuleCat.freeMk (ULift.up (j.proj x))) := by
-      dsimp [M, CondensedMod.LocallyConstant.adjunction,
-        Adjunction.ofNatIsoLeft,
-        CondensedMod.LocallyConstant.functorIsoDiscrete,
-        CondensedMod.LocallyConstant.functorIsoDiscreteComponents,
-        CondensedMod.LocallyConstant.functorIsoDiscreteAux₂,
-        CondensedMod.LocallyConstant.functorIsoDiscreteAux₁]
+      rw [hlcUnitMap]
       rfl
     simpa [
       Q,
