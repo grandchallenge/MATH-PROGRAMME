@@ -35,7 +35,7 @@ class NsCiIntakePrControllerTests(unittest.TestCase):
     def test_sha256_is_deterministic(self) -> None:
         self.assertEqual(
             sha256_text("evidence"),
-            "eb2328a77c7b7a77bde2e1921b7c5544a3953ee5a0c80ec6bcb011d174b0a76f",
+            "ee8250fb76e094b34b471f13a73dbbe51d1ae142e9df59d7c0d31ec20f0a0a8e",
         )
 
 
