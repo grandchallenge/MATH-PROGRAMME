@@ -35,6 +35,8 @@ The independently required `routing-enforcement` check runs from the protected b
 
 Routine care, external gate upgrades, digest rotation, protected self-modification, ruleset recovery, controller changes, and hostile proof are governed by [`GH-OS routing control runbook`](GHOS_ROUTING_CONTROL_RUNBOOK.md).
 
+The bounded outside-intelligence contribution path is governed by the [`GCL Controlled Epistemic Interface`](GCL_CONTROLLED_EPISTEMIC_INTERFACE.md). That interface is an evidence-intake path, not a substitute persistent controller or mathematical-authority surface.
+
 ## Material-identity binding
 
 Before recovery or repair, bind the operation to every exact identity that is material to the failing evidence route. Depending on the operation, this includes:
