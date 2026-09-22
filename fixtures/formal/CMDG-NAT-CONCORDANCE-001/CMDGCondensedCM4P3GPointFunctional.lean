@@ -554,6 +554,10 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       set_option backward.defeqAttrib.useBackward true in
       set_option backward.isDefEq.respectTransparency false in
         simpa only [
+          CMDG.CondensedCM4P3G.R,
+          CMDG.CondensedCM4P3D.R,
+          CMDG.CondensedCM4P2E.R,
+          CMDG.CondensedCM4P2D.R,
           Condensed.underlying,
           sheafSections,
           Functor.flip_obj_obj,
