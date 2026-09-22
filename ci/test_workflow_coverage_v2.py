@@ -247,6 +247,47 @@ def main() -> int:
         registry=registry,
     )
 
+    nsci_controller = "ns-ci-intake-pr-controller.yml"
+
+    nsci_environment_removed = dict(texts)
+    nsci_environment_removed[nsci_controller] = nsci_environment_removed[nsci_controller].replace(
+        "    environment: release-trust\n",
+        "",
+        1,
+    )
+    require_error(
+        nsci_environment_removed,
+        evidence,
+        "reconcile job must bind protected environment release-trust",
+        registry=registry,
+    )
+
+    nsci_contents_write = dict(texts)
+    nsci_contents_write[nsci_controller] = nsci_contents_write[nsci_controller].replace(
+        "          permission-contents: read",
+        "          permission-contents: write",
+        1,
+    )
+    require_error(
+        nsci_contents_write,
+        evidence,
+        "forbidden controller capability permission-contents: write",
+        registry=registry,
+    )
+
+    nsci_repo_scope_drift = dict(texts)
+    nsci_repo_scope_drift[nsci_controller] = nsci_repo_scope_drift[nsci_controller].replace(
+        "          repositories: MATHSOLVE",
+        "          repositories: MATH-PROGRAMME",
+        1,
+    )
+    require_error(
+        nsci_repo_scope_drift,
+        evidence,
+        "missing bounded controller marker repositories: MATHSOLVE",
+        registry=registry,
+    )
+
     print("workflow coverage v3 adversarial tests passed")
     return 0
 
