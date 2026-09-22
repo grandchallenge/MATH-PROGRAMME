@@ -564,26 +564,13 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
               ((CondensedMod.LocallyConstant.functor
                 CMDG.CondensedCM4P3G.R.{u}).obj M) by
           rfl]
-      rw [Functor.map_comp]
-      have hunitNat :
-          (Condensed.discreteUnderlyingAdj
-              (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app M ≫
-              (Condensed.underlying
-                (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
-                ((Condensed.discrete
-                  (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
-                  (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
-                    CMDG.CondensedCM4P3G.R.{u} M).hom) =
+      simp only [Functor.map_comp, Category.assoc]
+      have hunitNat :=
+        ((Condensed.discreteUnderlyingAdj
+          (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.naturality
             (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
-                CMDG.CondensedCM4P3G.R.{u} M).hom ≫
-              (Condensed.discreteUnderlyingAdj
-                (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app
-                (↧(LocallyConstant (CompHaus.of PUnit.{u + 1}) M)) := by
-        simpa only [Functor.comp_map, Functor.id_map] using
-          ((Condensed.discreteUnderlyingAdj
-            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.naturality
-              (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
-                CMDG.CondensedCM4P3G.R.{u} M).hom).symm
+              CMDG.CondensedCM4P3G.R.{u} M).hom).symm
+      simp only [Functor.comp_map, Functor.id_map] at hunitNat
       rw [hunitNat]
       simp only [Category.assoc,
         (Condensed.discreteUnderlyingAdj
