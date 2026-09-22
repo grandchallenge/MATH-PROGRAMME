@@ -1,0 +1,104 @@
+{
+  "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
+  "schema_version": "1.0.0",
+  "checkpoint_id": "VGSE-GEOMETRY-QUOTIENT-COUPLING-001.CP001",
+  "governed_work_id": "VGSE-GEOMETRY-QUOTIENT-COUPLING-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "admission": {
+    "topology": "MULTI_SESSION_RESUMABLE",
+    "admission_ref": "grandchallenge/MATH-PROGRAMME#1042",
+    "routine_work_excluded": true
+  },
+  "authority": {
+    "ghos_standard": "GCL-GHOS-00",
+    "ghos_version": "0.2.0",
+    "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#1042"
+  },
+  "phase": "WP04 admission: mandate and resumable checkpoint installation before substantive geometry-to-quotient research.",
+  "state": "AUTHORIZED_READY",
+  "identities": {
+    "protected_base_sha": "598a13d8a390fcab722b84b4a494921fc50d0e56",
+    "candidate_head_sha": "f5a0714e368694bc908bad7d039a19f62657e8c0",
+    "issue_number": 1042,
+    "pr_number": null,
+    "branch": "governance/vgse-geometry-quotient-coupling-admission",
+    "workflow_runs": []
+  },
+  "terminal_condition": "Terminate only at one declared WP04 disposition: GEOMETRY_QUOTIENT_COUPLING_ESTABLISHED, GEOMETRY_QUOTIENT_COUPLING_PARTIAL, GEOMETRY_REQUIRES_LATENT_METRIC_VARIABLES, GEOMETRY_QUOTIENT_NON_IDENTIFIABLE, or CANDIDATE_COUPLINGS_FALSIFIED, with exact-head replay, independent Adversary and Referee review, protected admission, and claim-boundary preservation.",
+  "permitted_next_actions": [
+    {
+      "id": "admit-mandate",
+      "description": "Protect the WP04 mandate and checkpoint through ordinary PR and merge-queue gates."
+    },
+    {
+      "id": "instantiate-research",
+      "description": "After admission, create research/vgse-eng-wp04 on a fresh research branch."
+    },
+    {
+      "id": "audit-c05-evidence",
+      "description": "Define the exact admitted C05 geometry family and enumerate authorized geometry/quotient pairings before model fitting."
+    },
+    {
+      "id": "test-h1",
+      "description": "Deliberately test and attempt to falsify direct Euclidean length/ratio coupling first."
+    },
+    {
+      "id": "continue-hypotheses",
+      "description": "Proceed through H0/H2/H3/H4, preserving negative results and identifiability diagnostics."
+    }
+  ],
+  "next_action": {
+    "id": "admit-mandate",
+    "description": "Open and protect the mandate/checkpoint admission PR before substantive WP04 research.",
+    "evidence_targets": [
+      "docs/VGSE_GEOMETRY_QUOTIENT_COUPLING_MANDATE.md",
+      "governance/bounded_operation_checkpoints/VGSE-GEOMETRY-QUOTIENT-COUPLING-001.json",
+      "governance/bounded_operation_checkpoint_registry.json"
+    ]
+  },
+  "external_evidence": {
+    "waiting": false,
+    "objects": []
+  },
+  "blocking_boundary": null,
+  "last_transition": {
+    "action": "repair admission policy failures after first CI pass",
+    "result": "Bounded-operation continuity required a non-null branch candidate identity; documentation policy required every docs Markdown file to be in mkdocs navigation. The admission record now binds the pre-repair candidate head and the WP04 mandate is added to Current Work navigation.",
+    "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#1043",
+      "candidate f5a0714e368694bc908bad7d039a19f62657e8c0",
+      "Programme policy checks run 35724707594",
+      "Policy shard / contracts check 106735558818",
+      "Policy shard / docs check 106735558656"
+    ]
+  },
+  "freshness": {
+    "required_before_transition": true,
+    "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-GEOMETRY-QUOTIENT-COUPLING-001.json",
+    "on_mismatch": "REBIND_BEFORE_MUTATION",
+    "observed_at": "2026-09-22T12:00:00Z"
+  },
+  "resume": {
+    "fresh_session_safe": true,
+    "requires_chat_history": false,
+    "authoritative_sources": [
+      "grandchallenge/MATH-PROGRAMME#1042",
+      "docs/VGSE_GEOMETRY_QUOTIENT_COUPLING_MANDATE.md",
+      "research/vgse-eng-wp01/README.md",
+      "research/vgse-eng-wp02/README.md",
+      "research/vgse-eng-wp03/README.md",
+      "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607:evidence/vgse/VGSE-WP00-CERT-001-planar.json",
+      "grandchallenge/MATHSOLVE@b0854bb7770296b610b655753bc62b27365b27bb:work_packages/VGSE_WP00/claim_ledger.json"
+    ],
+    "instructions": "Rebind to live protected main before every transition. Preserve C06 exclusion. Do not infer source geometry or physical/mechanical/manufacturing/commercial meaning from structural weights. Complete the C05 geometry/evidence audit before proposing a preferred coupling."
+  },
+  "terminal_evidence": [],
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false,
+    "protected_bypass_authorized": false
+  }
+}
