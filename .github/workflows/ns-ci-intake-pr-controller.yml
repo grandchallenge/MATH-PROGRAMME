@@ -1,0 +1,58 @@
+name: NS-CI intake PR controller
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ns-ci-intake-pr-controller
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: release-trust
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+
+      - name: Mint bounded MATHSOLVE intake PR token
+        id: intake-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATHSOLVE
+          permission-contents: read
+          permission-pull-requests: write
+          permission-issues: write
+
+      - name: Reconcile validated intake branches to PRs
+        env:
+          MATHSOLVE_INTAKE_PR_TOKEN: ${{ steps.intake-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          python ci/ns_ci_intake_pr_controller.py             --apply             --report ns-ci-intake-pr-controller-report.json
+
+      - name: Preserve controller evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: ns-ci-intake-pr-controller-report
+          path: ns-ci-intake-pr-controller-report.json
+          if-no-files-found: warn
+          retention-days: 30
