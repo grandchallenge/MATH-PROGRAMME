@@ -275,6 +275,19 @@ def main() -> int:
         registry=registry,
     )
 
+    nsci_issue_write = dict(texts)
+    nsci_issue_write[nsci_controller] = nsci_issue_write[nsci_controller].replace(
+        "          permission-pull-requests: write",
+        "          permission-pull-requests: write\n          permission-issues: write",
+        1,
+    )
+    require_error(
+        nsci_issue_write,
+        evidence,
+        "forbidden controller capability permission-issues: write",
+        registry=registry,
+    )
+
     nsci_repo_scope_drift = dict(texts)
     nsci_repo_scope_drift[nsci_controller] = nsci_repo_scope_drift[nsci_controller].replace(
         "          repositories: MATHSOLVE",
