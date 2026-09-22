@@ -117,6 +117,7 @@ def candidate_workflow_errors(texts: dict[str, str]) -> list[str]:
         "git push origin main",
         "/git/refs/heads/main",
         "permission-checks: write",
+        "permission-issues: write",
     ):
         if forbidden in text:
             errors.append(f"administrative-maintenance-candidate.yml: forbidden runtime capability {forbidden}")
@@ -291,7 +292,6 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         "repositories: MATHSOLVE",
         "permission-contents: read",
         "permission-pull-requests: write",
-        "permission-issues: write",
         "MATHSOLVE_INTAKE_PR_TOKEN: ${{ steps.intake-token.outputs.token }}",
         "python ci/ns_ci_intake_pr_controller.py",
         "--apply",
@@ -311,10 +311,6 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
     if text.count("permission-pull-requests: write") != 1:
         errors.append(
             f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one PR-write App grant is required"
-        )
-    if text.count("permission-issues: write") != 1:
-        errors.append(
-            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one issue-write App grant is required"
         )
     forbidden = (
         "permission-contents: write",
