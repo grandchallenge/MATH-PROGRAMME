@@ -117,7 +117,6 @@ def candidate_workflow_errors(texts: dict[str, str]) -> list[str]:
         "git push origin main",
         "/git/refs/heads/main",
         "permission-checks: write",
-        "permission-issues: write",
     ):
         if forbidden in text:
             errors.append(f"administrative-maintenance-candidate.yml: forbidden runtime capability {forbidden}")
@@ -317,6 +316,7 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         "permission-administration:",
         "permission-actions: write",
         "permission-checks: write",
+        "permission-issues: write",
         "gh pr merge",
         "git push",
         "/git/refs/heads/main",
