@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "control_id": "MP-NSCI-INTAKE-PR-CONTROLLER-001",
-  "status": "CANDIDATE",
+  "status": "ACTIVE",
   "purpose": "Open raw-evidence pull requests in grandchallenge/MATHSOLVE for already-created and validated NS-CI intake evidence branches.",
   "authority_source": "existing GCL Release Trust GitHub App installation; short-lived per-run token only",
   "environment": "release-trust",
@@ -56,5 +56,12 @@
     "claim_promotion": false,
     "commercial": false
   },
-  "first_valid_result_lock": "dispatch_level_protected_raw_existence"
+  "first_valid_result_lock": "dispatch_level_protected_raw_existence",
+  "activation": {
+    "protected_merge": "17a6701f2b5ab858f5f061f6160431a042fef1bf",
+    "source_pr": 1038,
+    "reviewed_head": "e0bf9f83365cd74884d290868a2228462470ff25",
+    "activation_disposition": "ACCEPT_FOR_BOUNDED_CONTROLLER_ACTIVATION",
+    "live_runtime_qualification": "required_and_observed_separately"
+  }
 }
