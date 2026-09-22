@@ -556,6 +556,8 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         simpa only [
           Condensed.underlying,
           sheafSections,
+          Functor.flip_obj_obj,
+          Functor.flip_obj_map,
           Functor.comp_obj,
           ConcreteCategory.comp_apply,
           Adjunction.homEquiv_unit] using huniqQUnitPoint
