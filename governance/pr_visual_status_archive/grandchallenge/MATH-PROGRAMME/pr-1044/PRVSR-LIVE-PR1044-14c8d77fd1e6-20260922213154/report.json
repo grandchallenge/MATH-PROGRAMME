@@ -1,0 +1,263 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "NOT_REQUIRED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": null,
+      "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+      "name": "formal-validation / formal-validation",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+      "name": "policy / policy",
+      "required": true,
+      "run_id": 106946714147,
+      "status": "completed"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+      "name": "routing-enforcement",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+      "name": "security / action-policy",
+      "required": true,
+      "run_id": 106946714157,
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+      "name": "validate-json",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "CHECKS_PENDING",
+    "reasons": [
+      "4 required check(s) are not complete"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-09-22T21:30:52Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-09-22T21:31:35Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+    "exact_head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+    "pr_number": 1044,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "VGSE ENG WP04: geometry-to-quotient non-identifiability"
+  },
+  "integration": {
+    "merge_commit_sha": "a4d2ed5554742a576e1a9893fc5f6fb06c8192a8",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 10,
+      "collector_limitations": [],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 106946697711,
+          "conclusion": null,
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "Analyze (actions)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 106946697359,
+          "conclusion": null,
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "Analyze (c-cpp)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 106946697436,
+          "conclusion": null,
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 106946710619,
+          "conclusion": "success",
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "Classify material formal closure",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 106946741981,
+          "conclusion": "success",
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 106946713622,
+          "conclusion": "success",
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 106946713961,
+          "conclusion": "success",
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 106946701624,
+          "conclusion": "skipped",
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "GH-OS merge-group admission controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 106946700201,
+          "conclusion": null,
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "GH-OS pre-queue effective candidate controller",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 106946701719,
+          "conclusion": "skipped",
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "GH-OS protected-base revalidation dispatcher",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 106946700446,
+          "conclusion": null,
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "admit",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 106946734562,
+          "conclusion": null,
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 106946795827,
+          "conclusion": null,
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "formal-validation",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 106946797583,
+          "conclusion": "skipped",
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "matrix.lane",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 106946714147,
+          "conclusion": "success",
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 106946702086,
+          "conclusion": "skipped",
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 106946714157,
+          "conclusion": null,
+          "head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
+          "name": "security / action-policy",
+          "status": "in_progress"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [
+        "formal-validation / formal-validation",
+        "policy / policy",
+        "routing-enforcement",
+        "security / action-policy",
+        "validate-json"
+      ],
+      "ruleset_source_available": true
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-09-22T21:31:54Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "bf96f1d3f532bc0d5261e90e9b1d8ee992ca044303066539cfb2232562bc38d2"
+  },
+  "report_id": "PRVSR-LIVE-PR1044-14c8d77fd1e6-20260922213154",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification"
+    ]
+  }
+}
