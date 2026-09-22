@@ -249,6 +249,45 @@ def main() -> int:
 
     nsci_controller = "ns-ci-intake-pr-controller.yml"
 
+    nsci_workflow_run_removed = dict(texts)
+    nsci_workflow_run_removed[nsci_controller] = nsci_workflow_run_removed[nsci_controller].replace(
+        "  workflow_run:\n    workflows:\n      - Administrative maintenance dispatcher\n    types:\n      - completed\n",
+        "",
+        1,
+    )
+    require_error(
+        nsci_workflow_run_removed,
+        evidence,
+        "triggers must be exactly schedule, workflow_dispatch, and workflow_run",
+        registry=registry,
+    )
+
+    nsci_workflow_run_source_drift = dict(texts)
+    nsci_workflow_run_source_drift[nsci_controller] = nsci_workflow_run_source_drift[nsci_controller].replace(
+        "      - Administrative maintenance dispatcher",
+        "      - formal-validation",
+        1,
+    )
+    require_error(
+        nsci_workflow_run_source_drift,
+        evidence,
+        "workflow_run must bind Administrative maintenance dispatcher only",
+        registry=registry,
+    )
+
+    nsci_workflow_run_gate_removed = dict(texts)
+    nsci_workflow_run_gate_removed[nsci_controller] = nsci_workflow_run_gate_removed[nsci_controller].replace(
+        "    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'\n",
+        "",
+        1,
+    )
+    require_error(
+        nsci_workflow_run_gate_removed,
+        evidence,
+        "workflow_run wake must be gated on successful dispatcher completion",
+        registry=registry,
+    )
+
     nsci_environment_removed = dict(texts)
     nsci_environment_removed[nsci_controller] = nsci_environment_removed[nsci_controller].replace(
         "    environment: release-trust\n",
