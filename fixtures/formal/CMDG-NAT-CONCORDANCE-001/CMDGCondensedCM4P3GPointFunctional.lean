@@ -564,7 +564,19 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
               ((CondensedMod.LocallyConstant.functor
                 CMDG.CondensedCM4P3G.R.{u}).obj M) by
           rfl]
-      simp only [Functor.map_comp, Category.assoc]
+      have hmapComp :=
+        (Condensed.underlying
+          (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map_comp
+          ((Condensed.discrete
+            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
+            (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
+              CMDG.CondensedCM4P3G.R.{u} M).hom)
+          ((Condensed.discreteUnderlyingAdj
+            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).counit.app
+            ((CondensedMod.LocallyConstant.functor
+              CMDG.CondensedCM4P3G.R.{u}).obj M))
+      rw [hmapComp]
+      simp only [Category.assoc]
       have hunitNat :=
         ((Condensed.discreteUnderlyingAdj
           (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.naturality
@@ -627,7 +639,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       Equiv.trans_apply,
       Adjunction.homEquiv_unit,
       Adjunction.homEquiv_naturality_left,
-      ModuleCat.adj_homEquiv]
+      ModuleCat.adj_homEquiv] using hlcUnitPoint
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
