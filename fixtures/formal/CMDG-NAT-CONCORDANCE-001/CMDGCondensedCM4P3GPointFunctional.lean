@@ -554,6 +554,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       set_option backward.defeqAttrib.useBackward true in
       set_option backward.isDefEq.respectTransparency false in
         simpa only [
+          Condensed.underlying,
           Functor.comp_obj,
           ConcreteCategory.comp_apply,
           Adjunction.homEquiv_unit] using huniqQUnitPoint
