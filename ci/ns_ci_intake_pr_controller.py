@@ -128,7 +128,7 @@ def main_has_any_raw(gh: Github, dispatch_id: str) -> bool:
         return False
     if not isinstance(items, list):
         raise ControllerError(f"{dispatch_id}: protected raw directory response is not a list")
-    pattern = re.compile(r"^github-comment-[0-9]+\\.md$")
+    pattern = re.compile(r"^github-comment-[0-9]+\.md$")
     return any(
         isinstance(item, dict)
         and isinstance(item.get("name"), str)
