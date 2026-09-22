@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0.0",
+  "control_id": "MP-NSCI-INTAKE-PR-CONTROLLER-001",
+  "status": "CANDIDATE",
+  "purpose": "Open raw-evidence pull requests in grandchallenge/MATHSOLVE for already-created and validated NS-CI intake evidence branches.",
+  "authority_source": "existing GCL Release Trust GitHub App installation; short-lived per-run token only",
+  "environment": "release-trust",
+  "target_repository": "grandchallenge/MATHSOLVE",
+  "branch_prefix": "intake/nsci-",
+  "token_scope": {
+    "repositories": [
+      "MATHSOLVE"
+    ],
+    "permissions": {
+      "contents": "read",
+      "pull_requests": "write",
+      "issues": "write"
+    }
+  },
+  "allowed_actions": [
+    "read protected MATHSOLVE dispatch records",
+    "read intake branch raw evidence and receipt",
+    "compare intake branch to protected main",
+    "open a pull request from an existing validated intake branch to main",
+    "post a mechanical intake-controller status comment on the bound dispatch issue"
+  ],
+  "prohibited_actions": [
+    "write repository contents",
+    "create or alter intake evidence branches",
+    "merge or approve pull requests",
+    "modify protected main",
+    "modify campaign state",
+    "perform mathematical adjudication",
+    "claim certification or canonical mathematical effect",
+    "use administration, actions-write, checks-write, or workflow-write authority"
+  ],
+  "validation_requirements": [
+    "branch maps exactly to a protected dispatch identifier",
+    "dispatch is READY_FOR_GITHUB_COMMENT",
+    "branch diff is exactly one raw result and one receipt for the same comment id",
+    "receipt binds the protected dispatch, issue, bootstrap, handoff, and raw SHA-256",
+    "receipt is schema-valid, current-for-dispatch, received_unadjudicated, and canonical_claim_effect=false",
+    "raw evidence is not already present on protected main",
+    "no open intake PR already exists for the branch"
+  ],
+  "wake": {
+    "kind": "GitHub Actions schedule",
+    "cadence": "every 10 minutes",
+    "manual_replay": true
+  },
+  "claim_boundaries": {
+    "constitutional": false,
+    "merge": false,
+    "certification": false,
+    "production": false,
+    "publication": false,
+    "mathematical_claim": false,
+    "claim_promotion": false,
+    "commercial": false
+  }
+}
