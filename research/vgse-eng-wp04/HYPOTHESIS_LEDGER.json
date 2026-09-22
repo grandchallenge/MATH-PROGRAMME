@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0.0",
+  "work_package": "VGSE-ENG-WP04",
+  "hypotheses": [
+    {
+      "id": "H0",
+      "name": "no identifiable coupling under current qualified evidence",
+      "status": "SUPPORTED_AS_CURRENT_EVIDENTIARY_DISPOSITION",
+      "evidence": [
+        "EVIDENCE_MATRIX.json reports zero genuinely independent geometry/quotient pairs and zero independently varied quotient points.",
+        "The five generated C05 branches share one reconstruction weight fixture.",
+        "No protected structural theorem currently supplies an inverse from admitted geometry alone to the eight quotient coordinates."
+      ],
+      "scope": "This is an identifiability result under current authority, not a theorem that no geometry-to-quotient law can exist."
+    },
+    {
+      "id": "H1",
+      "name": "direct Euclidean length or simple visible geometric weight rule",
+      "status": "FALSIFIED_IN_PROTECTED_SOURCE_GEOMETRY_TEST",
+      "tested_rule": "Equip each reconstructed visible Figure-16 graph with its Euclidean dual-edge lengths and ask whether its boundary measurement equals pinned C, allowing free projective scale, all 6! boundary relabelings, and both global color/complement conventions.",
+      "evidence": {
+        "source": "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607:evidence/vgse/VGSE-WP00-CERT-001-c06-producer-binding.json",
+        "source_pattern_count": 5,
+        "boundary_relabelings_exhausted": 720,
+        "global_color_complement_conventions_tested": 2,
+        "minimum_observed_best_projective_distortion_factor": 131.50098551816274,
+        "certified_rounding_robust_lower_bound": 131.50058917470795,
+        "required_lower_threshold": 100,
+        "result": "visible reconstructed geometric weight class does not measure pinned C"
+      },
+      "interpretation": "The obvious visible Euclidean-length bridge is decisively incompatible with pinned C under the tested visible-graph semantics. This does not refute undeclared source semantics or other invariant couplings."
+    },
+    {
+      "id": "H2",
+      "name": "dimensionless geometric invariant coupling",
+      "status": "NOT_IDENTIFIABLE_FROM_CURRENT_EVIDENCE",
+      "reason": "All five certified generated geometries are associated with one reused quotient point. Varying geometric descriptors across those branches while the observed quotient is constant cannot determine which descriptor combinations, if any, predict quotient variation. Constant descriptors would likewise not establish a general law without a second independent quotient point.",
+      "permissible_future_test": "Acquire independently varied admitted quotient points with paired geometries or derive an exact invariant formula from the t-embedding equations."
+    },
+    {
+      "id": "H3",
+      "name": "low-dimensional smooth coupling x=Phi(z)",
+      "status": "JACOBIAN_NOT_IDENTIFIABLE",
+      "observed_output_rank": 0,
+      "reason": "The audited dataset contains only one quotient point. No finite-difference or regression estimate of D Phi is identifiable from zero quotient variation, regardless of the number of distinct geometry branches.",
+      "prohibited_inference": "Do not report a rank-zero D Phi; the data identify no Jacobian rather than a zero Jacobian."
+    },
+    {
+      "id": "H4",
+      "name": "bounded latent-variable coupling x=Phi(z,lambda)",
+      "status": "NOT_WARRANTED",
+      "reason": "The current records expose discrete algebraic branch data used in forward reconstruction, but no independently evidenced latent metric/calibration variable whose addition makes geometry-to-quotient identification testable. Introducing free latent variables would only absorb the missing correspondence.",
+      "reopening_condition": "A latent variable must have a declared bounded dimension, independent provenance, and independently testable role."
+    }
+  ],
+  "structural_factorization_observation": {
+    "statement": "In the retained reconstruction code each oriented dual-edge increment is f(white) * sign_e * weight_e * f_tilde(black). Geometry therefore contains products of weights with branch-dependent vertex factors, not raw weights in isolation.",
+    "consequence": "A geometry-only quotient inverse requires an additional structural derivation showing how the nuisance factors cancel or are recovered. No such protected derivation is presently retained.",
+    "source": "grandchallenge/MATHSOLVE@b0854bb7770296b610b655753bc62b27365b27bb:work_packages/VGSE_WP00/artifacts/code/b3_holomorphic.py"
+  }
+}
