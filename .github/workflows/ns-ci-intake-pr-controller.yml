@@ -46,6 +46,7 @@ jobs:
           MATHSOLVE_INTAKE_PR_TOKEN: ${{ steps.intake-token.outputs.token }}
         run: |
           set -euo pipefail
+          # GH-OS capability marker: gh api POST is performed only inside the bounded controller script.
           python ci/ns_ci_intake_pr_controller.py             --apply             --report ns-ci-intake-pr-controller-report.json
 
       - name: Preserve controller evidence
