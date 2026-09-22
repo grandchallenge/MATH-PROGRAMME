@@ -438,6 +438,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
           (ULift.{u + 1, u} Q.obj) := by
       simpa only [
         Functor.comp_obj,
+        CMDG.CondensedCM4P2E.discreteFreeIso,
         CMDG.CondensedCM4P2E.discreteSetFreeAdj,
         Adjunction.comp_homEquiv,
         Equiv.trans_apply] using huniqQHomEquiv
