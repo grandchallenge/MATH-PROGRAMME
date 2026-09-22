@@ -532,42 +532,9 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     set_option backward.isDefEq.respectTransparency false in
       refine hunitPost.trans ?_
     dsimp [postUnit, Q1, qx, eTail, freeHomSectionsEquiv]
-    have huniqQUnitSection :
-        (ConcreteCategory.hom
-          (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
-            ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
-              ((Condensed.discrete (Type (u + 1))).obj (ULift.{u + 1, u} Q.obj))
-              ((ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
-                Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).obj
-                  (ULift.{u + 1, u} Q.obj))
-              (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
-                (ULift.{u + 1, u} Q.obj)))).app
-                  (op (CompHaus.of PUnit.{u + 1}))))
-          ((ConcreteCategory.hom
-            ((Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app
-              (ULift.{u + 1, u} Q.obj)))
-            (ULift.up (j.proj x))) =
-        (ConcreteCategory.hom
-          (CMDG.CondensedCM4P2E.freeDiscreteModuleAdj.unit.app
-            (ULift.{u + 1, u} Q.obj)))
-          (ULift.up (j.proj x)) := by
-      set_option backward.defeqAttrib.useBackward true in
-      set_option backward.isDefEq.respectTransparency false in
-        simpa only [
-          CMDG.CondensedCM4P3G.R,
-          CMDG.CondensedCM4P3D.R,
-          CMDG.CondensedCM4P2E.R,
-          CMDG.CondensedCM4P2D.R,
-          Condensed.underlying,
-          sheafSections,
-          Functor.flip_obj_obj,
-          Functor.flip_obj_map,
-          Functor.comp_obj,
-          ConcreteCategory.comp_apply,
-          Adjunction.homEquiv_unit] using huniqQUnitPoint
     set_option backward.defeqAttrib.useBackward true in
     set_option backward.isDefEq.respectTransparency false in
-      refine huniqQUnitSection.trans ?_
+      refine huniqQUnitPoint.trans ?_
     simpa [
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
