@@ -492,14 +492,28 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
           (ConcreteCategory.hom
             ((Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app
               (ULift.{u + 1, u} Q.obj)))
-            (ULift.up (j.proj x))
-        simpa [Q1, qx] using hunitPoint.symm
+            (ULift.up ((ConcreteCategory.hom qx.hom) PUnit.unit))
+        exact hunitPoint.symm
+    let postUnit :=
+      ConcreteCategory.hom
+        (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
+          ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
+            ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+              Condensed.discrete (Type (u + 1))).obj Q)
+            ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+              ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
+              Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).obj Q)
+            (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
+              (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q)))).app
+                (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1))))
+    have hunitPost := congrArg postUnit hunitSection
     rw [hdiscNatTarget]
     dsimp only [D]
     rw [hfreeNatTarget]
-    simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
-    rw [hunitSection]
-    dsimp [Q1, qx, eTail, freeHomSectionsEquiv]
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      refine hunitPost.trans ?_
+    dsimp [postUnit, Q1, qx, eTail, freeHomSectionsEquiv]
     simpa [
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
