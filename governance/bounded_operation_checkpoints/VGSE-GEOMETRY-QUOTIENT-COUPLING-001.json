@@ -15,46 +15,39 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1042"
   },
-  "phase": "WP04 admission: mandate and resumable checkpoint installation before substantive geometry-to-quotient research.",
-  "state": "AUTHORIZED_READY",
+  "phase": "WP04 terminal candidate exact-head reviewed; continuity rebind required before protected integration.",
+  "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "598a13d8a390fcab722b84b4a494921fc50d0e56",
-    "candidate_head_sha": "f5a0714e368694bc908bad7d039a19f62657e8c0",
+    "protected_base_sha": "fb34625c756d5500a63478a11e9f1d2dc89c722e",
+    "candidate_head_sha": "14c8d77fd1e64c09680dcda77ae65939b257d579",
     "issue_number": 1042,
-    "pr_number": null,
-    "branch": "governance/vgse-geometry-quotient-coupling-admission",
+    "pr_number": 1044,
+    "branch": "research/vgse-eng-wp04",
     "workflow_runs": []
   },
   "terminal_condition": "Terminate only at one declared WP04 disposition: GEOMETRY_QUOTIENT_COUPLING_ESTABLISHED, GEOMETRY_QUOTIENT_COUPLING_PARTIAL, GEOMETRY_REQUIRES_LATENT_METRIC_VARIABLES, GEOMETRY_QUOTIENT_NON_IDENTIFIABLE, or CANDIDATE_COUPLINGS_FALSIFIED, with exact-head replay, independent Adversary and Referee review, protected admission, and claim-boundary preservation.",
   "permitted_next_actions": [
     {
-      "id": "admit-mandate",
-      "description": "Protect the WP04 mandate and checkpoint through ordinary PR and merge-queue gates."
+      "id": "protect-review-bind",
+      "description": "Protect this exact-head continuity rebind through ordinary PR and native merge-queue gates."
     },
     {
-      "id": "instantiate-research",
-      "description": "After admission, create research/vgse-eng-wp04 on a fresh research branch."
+      "id": "enqueue-substantive-pr",
+      "description": "After the continuity rebind is protected, enable native queue admission for PR #1044 without changing its head."
     },
     {
-      "id": "audit-c05-evidence",
-      "description": "Define the exact admitted C05 geometry family and enumerate authorized geometry/quotient pairings before model fitting."
-    },
-    {
-      "id": "test-h1",
-      "description": "Deliberately test and attempt to falsify direct Euclidean length/ratio coupling first."
-    },
-    {
-      "id": "continue-hypotheses",
-      "description": "Proceed through H0/H2/H3/H4, preserving negative results and identifiability diagnostics."
+      "id": "readback-terminal",
+      "description": "After PR #1044 merges, verify exact protected-main readback and record terminal checkpoint evidence."
     }
   ],
   "next_action": {
-    "id": "admit-mandate",
-    "description": "Open and protect the mandate/checkpoint admission PR before substantive WP04 research.",
+    "id": "protect-review-bind",
+    "description": "Protect the exact-head WP04 review/continuity bind before queueing substantive PR #1044.",
     "evidence_targets": [
-      "docs/VGSE_GEOMETRY_QUOTIENT_COUPLING_MANDATE.md",
-      "governance/bounded_operation_checkpoints/VGSE-GEOMETRY-QUOTIENT-COUPLING-001.json",
-      "governance/bounded_operation_checkpoint_registry.json"
+      "PR #1044 head 14c8d77fd1e64c09680dcda77ae65939b257d579",
+      "Adversary review 5284024459",
+      "Referee review 5284034660",
+      "exact-head deterministic artifact replay PASS"
     ]
   },
   "external_evidence": {
@@ -63,35 +56,35 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "repair admission policy failures after first CI pass",
-    "result": "Bounded-operation continuity required a non-null branch candidate identity; documentation policy required every docs Markdown file to be in mkdocs navigation. The admission record now binds the pre-repair candidate head and the WP04 mandate is added to Current Work navigation.",
+    "action": "complete WP04 substantive candidate, exact-head replay, and distinct Adversary/Referee review",
+    "result": "PR #1044 is fixed at 14c8d77fd1e64c09680dcda77ae65939b257d579. Exact-head deterministic artifact replay passed. Adversary review 5284024459 returned CLEAR_NO_BLOCKING_DEFECT. Referee review 5284034660 returned ADMISSIBLE_FOR_PROTECTED_INTEGRATION_AFTER_CONTINUITY_REBIND_AND_REQUIRED_CHECKS.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#1043",
-      "candidate f5a0714e368694bc908bad7d039a19f62657e8c0",
-      "Programme policy checks run 35724707594",
-      "Policy shard / contracts check 106735558818",
-      "Policy shard / docs check 106735558656"
+      "grandchallenge/MATH-PROGRAMME#1044",
+      "candidate 14c8d77fd1e64c09680dcda77ae65939b257d579",
+      "Adversary review 5284024459",
+      "Referee review 5284034660",
+      "terminal candidate GEOMETRY_QUOTIENT_NON_IDENTIFIABLE"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-GEOMETRY-QUOTIENT-COUPLING-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-22T12:00:00Z"
+    "observed_at": "2026-09-22T21:33:00Z"
   },
   "resume": {
     "fresh_session_safe": true,
     "requires_chat_history": false,
     "authoritative_sources": [
       "grandchallenge/MATH-PROGRAMME#1042",
-      "docs/VGSE_GEOMETRY_QUOTIENT_COUPLING_MANDATE.md",
-      "research/vgse-eng-wp01/README.md",
-      "research/vgse-eng-wp02/README.md",
-      "research/vgse-eng-wp03/README.md",
-      "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607:evidence/vgse/VGSE-WP00-CERT-001-planar.json",
-      "grandchallenge/MATHSOLVE@b0854bb7770296b610b655753bc62b27365b27bb:work_packages/VGSE_WP00/claim_ledger.json"
+      "grandchallenge/MATH-PROGRAMME#1044",
+      "grandchallenge/MATH-PROGRAMME@14c8d77fd1e64c09680dcda77ae65939b257d579:research/vgse-eng-wp04/README.md",
+      "grandchallenge/MATH-PROGRAMME@14c8d77fd1e64c09680dcda77ae65939b257d579:research/vgse-eng-wp04/RESULTS.json",
+      "grandchallenge/MATH-PROGRAMME@14c8d77fd1e64c09680dcda77ae65939b257d579:research/vgse-eng-wp04/CLAIM_LEDGER.json",
+      "Adversary review 5284024459",
+      "Referee review 5284034660"
     ],
-    "instructions": "Rebind to live protected main before every transition. Preserve C06 exclusion. Do not infer source geometry or physical/mechanical/manufacturing/commercial meaning from structural weights. Complete the C05 geometry/evidence audit before proposing a preferred coupling."
+    "instructions": "Rebind to live PR #1044 and require exact head 14c8d77fd1e64c09680dcda77ae65939b257d579. If the head moves, invalidate both reviews and rerun exact-head replay. Preserve C06 and all physical/manufacturing/commercial exclusions. Protect this checkpoint bind before substantive queue admission."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
