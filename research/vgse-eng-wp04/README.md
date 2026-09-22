@@ -9,9 +9,7 @@
 
 Does the qualified C05 geometric-realization evidence identify a mathematical coupling
 
-[
-Phi:mathcal G	omathcal Q,qquad mathcal Q=(mathbb R_{>0})^8,
-]
+`Phi: G -> Q`, with `Q = (R_{>0})^8`,
 
 to the eight protected WP01/WP02 quotient coordinates?
 
