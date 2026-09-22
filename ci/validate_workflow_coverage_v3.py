@@ -14,9 +14,11 @@ MAINTENANCE_AUTOMATION_WORKFLOWS = {
 }
 ACTIVATION_WORKFLOW = "administrative-autonomy-activation.yml"
 GHOS_ROUTING_WORKFLOW = "ghos-routing-enforcement.yml"
+NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW = "ns-ci-intake-pr-controller.yml"
 EXTRA_WORKFLOWS = MAINTENANCE_AUTOMATION_WORKFLOWS | {
     ACTIVATION_WORKFLOW,
     GHOS_ROUTING_WORKFLOW,
+    NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW,
 }
 legacy.EXPECTED_WORKFLOWS = set(legacy.EXPECTED_WORKFLOWS) | EXTRA_WORKFLOWS
 
@@ -251,6 +253,89 @@ def activation_workflow_errors(texts: dict[str, str]) -> list[str]:
     return errors
 
 
+def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    text = texts.get(NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW)
+    if text is None:
+        return errors
+    workflow = legacy.load_yaml_text(text)
+    trigger = _trigger(workflow)
+    if set(trigger) != {"schedule", "workflow_dispatch"}:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: triggers must be exactly schedule and workflow_dispatch"
+        )
+    schedule = trigger.get("schedule", [])
+    expected_schedule = [{"cron": "*/10 * * * *"}]
+    if schedule != expected_schedule:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: schedule must remain every ten minutes"
+        )
+    if workflow.get("permissions") != {"contents": "read"}:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: top-level permissions must remain contents-read only"
+        )
+    job = _job(workflow, "reconcile")
+    if job.get("environment") != PROTECTED_ENVIRONMENT:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: reconcile job must bind protected environment release-trust"
+        )
+    if job.get("permissions") != {"contents": "read"}:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: workflow token must remain contents-read only"
+        )
+    required = (
+        APP_ACTION,
+        APP_ID,
+        APP_KEY,
+        "id: intake-token",
+        "repositories: MATHSOLVE",
+        "permission-contents: read",
+        "permission-pull-requests: write",
+        "permission-issues: write",
+        "MATHSOLVE_INTAKE_PR_TOKEN: ${{ steps.intake-token.outputs.token }}",
+        "python ci/ns_ci_intake_pr_controller.py",
+        "--apply",
+        "--report ns-ci-intake-pr-controller-report.json",
+        "name: ns-ci-intake-pr-controller-report",
+        "retention-days: 30",
+    )
+    for marker in required:
+        if marker not in text:
+            errors.append(
+                f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: missing bounded controller marker {marker}"
+            )
+    if text.count(APP_ACTION) != 1:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one bounded App token is required"
+        )
+    if text.count("permission-pull-requests: write") != 1:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one PR-write App grant is required"
+        )
+    if text.count("permission-issues: write") != 1:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one issue-write App grant is required"
+        )
+    forbidden = (
+        "permission-contents: write",
+        "permission-administration:",
+        "permission-actions: write",
+        "permission-checks: write",
+        "gh pr merge",
+        "git push",
+        "/git/refs/heads/main",
+        "pull_request_target:",
+        "repository_dispatch:",
+        "workflow_run:",
+    )
+    for marker in forbidden:
+        if marker in text:
+            errors.append(
+                f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: forbidden controller capability {marker}"
+            )
+    return errors
+
+
 def ghos_routing_enforcement_errors(texts: dict[str, str]) -> list[str]:
     errors: list[str] = []
     text = texts.get(GHOS_ROUTING_WORKFLOW)
@@ -415,6 +500,7 @@ def workflow_coverage_errors(root=legacy.ROOT, texts=None, evidence=None):
     errors.extend(synchronization_workflow_errors(texts))
     errors.extend(validation_workflow_errors(texts))
     errors.extend(activation_workflow_errors(texts))
+    errors.extend(ns_ci_intake_pr_controller_errors(texts))
     errors.extend(ghos_routing_enforcement_errors(texts))
     return errors
 
