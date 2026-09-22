@@ -291,7 +291,6 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         "repositories: MATHSOLVE",
         "permission-contents: read",
         "permission-pull-requests: write",
-        "permission-issues: write",
         "MATHSOLVE_INTAKE_PR_TOKEN: ${{ steps.intake-token.outputs.token }}",
         "python ci/ns_ci_intake_pr_controller.py",
         "--apply",
@@ -312,15 +311,12 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         errors.append(
             f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one PR-write App grant is required"
         )
-    if text.count("permission-issues: write") != 1:
-        errors.append(
-            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one issue-write App grant is required"
-        )
     forbidden = (
         "permission-contents: write",
         "permission-administration:",
         "permission-actions: write",
         "permission-checks: write",
+        "permission-issues: write",
         "gh pr merge",
         "git push",
         "/git/refs/heads/main",
