@@ -576,14 +576,13 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             ((CondensedMod.LocallyConstant.functor
               CMDG.CondensedCM4P3G.R.{u}).obj M))
       rw [hmapComp]
-      simp only [Category.assoc]
       have hunitNat :=
         ((Condensed.discreteUnderlyingAdj
           (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.naturality
             (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
               CMDG.CondensedCM4P3G.R.{u} M).hom).symm
       simp only [Functor.comp_map, Functor.id_map] at hunitNat
-      rw [hunitNat]
+      rw [← Category.assoc, hunitNat]
       simp only [Category.assoc,
         (Condensed.discreteUnderlyingAdj
           (ModuleCat CMDG.CondensedCM4P3G.R.{u})).right_triangle_components,
