@@ -422,13 +422,18 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     have huniqQHomEquivExpanded :
         (Condensed.discreteUnderlyingAdj (Type (u + 1))).homEquiv
           (ULift.{u + 1, u} Q.obj)
-          ((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).obj D)
+          ((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).obj
+            ((ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
+              Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).obj
+                (ULift.{u + 1, u} Q.obj)))
           (((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
-            ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-              Condensed.discrete (Type (u + 1))).obj Q)
-            D)
+            ((Condensed.discrete (Type (u + 1))).obj
+              (ULift.{u + 1, u} Q.obj))
+            ((ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
+              Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).obj
+                (ULift.{u + 1, u} Q.obj)))
             (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
-              (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q))) =
+              (ULift.{u + 1, u} Q.obj))) =
         CMDG.CondensedCM4P2E.freeDiscreteModuleAdj.unit.app
           (ULift.{u + 1, u} Q.obj) := by
       simpa only [
