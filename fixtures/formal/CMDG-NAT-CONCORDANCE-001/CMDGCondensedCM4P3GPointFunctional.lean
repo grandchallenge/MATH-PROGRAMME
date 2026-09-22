@@ -500,7 +500,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
           (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
             ((Condensed.discrete (Type (u + 1))).map
               (CMDG.CondensedCM4P2E.finiteUnderlyingULift.map qx))).app
-                (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
+                (op (CompHaus.of PUnit.{u + 1}))))
           ((ConcreteCategory.hom
             ((Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app
               (ULift.{u + 1, u} Q1.obj)))
@@ -508,23 +508,9 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         (ConcreteCategory.hom
           ((Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app
             (ULift.{u + 1, u} Q.obj)))
-          (ULift.up (j.proj x)) := by
+          (ULift.up ((ConcreteCategory.hom qx.hom) PUnit.unit)) := by
       set_option backward.defeqAttrib.useBackward true in
       set_option backward.isDefEq.respectTransparency false in
-        change
-          (ConcreteCategory.hom
-            (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
-              ((Condensed.discrete (Type (u + 1))).map
-                (CMDG.CondensedCM4P2E.finiteUnderlyingULift.map qx))).app
-                  (op (CompHaus.of PUnit.{u + 1}))))
-            ((ConcreteCategory.hom
-              ((Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app
-                (ULift.{u + 1, u} Q1.obj)))
-              (ULift.up PUnit.unit)) =
-          (ConcreteCategory.hom
-            ((Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app
-              (ULift.{u + 1, u} Q.obj)))
-            (ULift.up ((ConcreteCategory.hom qx.hom) PUnit.unit))
         exact hunitPoint.symm
     let postUnit :=
       ConcreteCategory.hom
@@ -537,7 +523,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
               Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).obj Q)
             (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
               (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q)))).app
-                (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1))))
+                (op (CompHaus.of PUnit.{u + 1})))
     have hunitPost := congrArg postUnit hunitSection
     rw [hdiscNatTarget]
     dsimp only [D]
@@ -570,6 +556,11 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap,
       CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single,
+      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply,
+      CondensedMod.LocallyConstant.functorIsoDiscrete,
+      CondensedMod.LocallyConstant.functorIsoDiscreteComponents,
+      CondensedMod.LocallyConstant.functorIsoDiscreteAux₂,
+      CondensedMod.LocallyConstant.functorIsoDiscreteAux₁,
       ModuleCat.freeMk,
       Equiv.coe_fn_mk,
       Functor.FullyFaithful.homEquiv_apply,
