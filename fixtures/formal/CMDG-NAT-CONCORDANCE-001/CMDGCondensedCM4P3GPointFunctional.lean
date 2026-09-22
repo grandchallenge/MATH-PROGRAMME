@@ -442,8 +442,10 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         CMDG.CondensedCM4P2E.discreteSetFreeAdj,
         Adjunction.comp_homEquiv,
         Equiv.trans_apply] using huniqQHomEquiv
-    have huniqQHomEquivPoint :=
-      CategoryTheory.types_congr_hom huniqQHomEquivExpanded (ULift.up (j.proj x))
+    have huniqQUnitExpanded := huniqQHomEquivExpanded
+    rw [Adjunction.homEquiv_unit] at huniqQUnitExpanded
+    have huniqQUnitPoint :=
+      CategoryTheory.types_congr_hom huniqQUnitExpanded (ULift.up (j.proj x))
     have hdiscNat :=
       CMDG.CondensedCM4P2E.discreteFreeIso.hom.naturality
         (CMDG.CondensedCM4P2E.finiteUnderlyingULift.map qx)
@@ -582,7 +584,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       Equiv.trans_apply,
       Adjunction.homEquiv_unit,
       Adjunction.homEquiv_naturality_left,
-      ModuleCat.adj_homEquiv] using huniqQHomEquivPoint
+      ModuleCat.adj_homEquiv] using huniqQUnitPoint
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
