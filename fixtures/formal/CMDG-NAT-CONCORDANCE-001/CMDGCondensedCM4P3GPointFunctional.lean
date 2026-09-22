@@ -556,6 +556,8 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       Category.assoc,
       Adjunction.comp_unit_app,
       Adjunction.comp_homEquiv,
+      Equiv.trans_apply,
+      Adjunction.homEquiv_unit,
       Adjunction.homEquiv_naturality_left,
       ModuleCat.adj_homEquiv] using huniqQHomEquivPoint
 
