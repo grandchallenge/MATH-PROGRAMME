@@ -546,7 +546,9 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     set_option backward.isDefEq.respectTransparency false in
       refine hunitPost.trans ?_
     dsimp [postUnit, Q1, qx, eTail, freeHomSectionsEquiv]
-    simpa [
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      simpa [
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
       CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
