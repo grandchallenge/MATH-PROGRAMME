@@ -583,10 +583,14 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
               CMDG.CondensedCM4P3G.R.{u} M).hom).symm
       simp only [Functor.comp_map, Functor.id_map] at hunitNat
       rw [← Category.assoc, hunitNat]
-      simp only [Category.assoc,
+      have htriangle :=
         (Condensed.discreteUnderlyingAdj
-          (ModuleCat CMDG.CondensedCM4P3G.R.{u})).right_triangle_components,
-        Category.comp_id]
+          (ModuleCat CMDG.CondensedCM4P3G.R.{u})).right_triangle_components
+          ((CondensedMod.LocallyConstant.functor
+            CMDG.CondensedCM4P3G.R.{u}).obj M)
+      set_option backward.defeqAttrib.useBackward true in
+      set_option backward.isDefEq.respectTransparency false in
+        rw [Category.assoc, htriangle, Category.comp_id]
     have hlcUnitPoint :
         (ConcreteCategory.hom
           ((CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M))
