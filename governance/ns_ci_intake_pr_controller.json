@@ -38,7 +38,7 @@
     "branch diff is exactly one raw result and one receipt for the same comment id",
     "receipt binds the protected dispatch, issue, bootstrap, handoff, and raw SHA-256",
     "receipt is schema-valid, current-for-dispatch, received_unadjudicated, and canonical_claim_effect=false",
-    "raw evidence is not already present on protected main",
+    "no raw result for the dispatch is already present on protected main",
     "no open intake PR already exists for the branch"
   ],
   "wake": {
@@ -55,5 +55,6 @@
     "mathematical_claim": false,
     "claim_promotion": false,
     "commercial": false
-  }
+  },
+  "first_valid_result_lock": "dispatch_level_protected_raw_existence"
 }
