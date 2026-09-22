@@ -419,8 +419,24 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         CMDG.CondensedCM4P2E.discreteSetFreeAdj
         CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
         (ULift.{u + 1, u} Q.obj)
+    have huniqQHomEquivExpanded :
+        (Condensed.discreteUnderlyingAdj (Type (u + 1))).homEquiv
+          (ULift.{u + 1, u} Q.obj)
+          ((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).obj D)
+          (((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
+            ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
+              Condensed.discrete (Type (u + 1))).obj Q)
+            D)
+            (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
+              (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q))) =
+        CMDG.CondensedCM4P2E.freeDiscreteModuleAdj.unit.app
+          (ULift.{u + 1, u} Q.obj) := by
+      simpa only [
+        CMDG.CondensedCM4P2E.discreteSetFreeAdj,
+        Adjunction.comp_homEquiv,
+        Equiv.trans_apply] using huniqQHomEquiv
     have huniqQHomEquivPoint :=
-      CategoryTheory.types_congr_hom huniqQHomEquiv (ULift.up (j.proj x))
+      CategoryTheory.types_congr_hom huniqQHomEquivExpanded (ULift.up (j.proj x))
     have hdiscNat :=
       CMDG.CondensedCM4P2E.discreteFreeIso.hom.naturality
         (CMDG.CondensedCM4P2E.finiteUnderlyingULift.map qx)
