@@ -120,9 +120,21 @@ def list_intake_branches(gh: Github) -> list[str]:
     return sorted(set(names))
 
 
-def main_has_raw(gh: Github, raw_path: str) -> bool:
-    encoded_path = urllib.parse.quote(raw_path, safe="/")
-    return gh.get_optional(f"/repos/{OWNER}/{REPO}/contents/{encoded_path}?ref=main") is not None
+def main_has_any_raw(gh: Github, dispatch_id: str) -> bool:
+    raw_dir = f"{RAW_DIR}/{dispatch_id}"
+    encoded_dir = urllib.parse.quote(raw_dir, safe="/")
+    items = gh.get_optional(f"/repos/{OWNER}/{REPO}/contents/{encoded_dir}?ref=main")
+    if items is None:
+        return False
+    if not isinstance(items, list):
+        raise ControllerError(f"{dispatch_id}: protected raw directory response is not a list")
+    pattern = re.compile(r"^github-comment-[0-9]+\.md$")
+    return any(
+        isinstance(item, dict)
+        and isinstance(item.get("name"), str)
+        and pattern.fullmatch(item["name"])
+        for item in items
+    )
 
 
 def find_open_pr(gh: Github, branch: str) -> dict[str, Any] | None:
@@ -216,7 +228,7 @@ def validate_candidate(gh: Github, branch: str) -> dict[str, Any]:
     if failed:
         raise ControllerError(f"{dispatch_id}: receipt validation failed: {', '.join(failed)}")
 
-    if main_has_raw(gh, raw_path):
+    if main_has_any_raw(gh, dispatch_id):
         state = "ALREADY_PROTECTED"
     else:
         existing = find_open_pr(gh, branch)

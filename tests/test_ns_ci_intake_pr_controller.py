@@ -4,6 +4,7 @@ from ci.ns_ci_intake_pr_controller import (
     ControllerError,
     derive_dispatch_id,
     expected_paths,
+    main_has_any_raw,
     sha256_text,
 )
 
@@ -31,6 +32,26 @@ class NsCiIntakePrControllerTests(unittest.TestCase):
             "contributions/NS-CI-001/C2_MIX_DIRECTION_COMPRESSION_LEDGER_CHARGE/"
             "receipts/NSCI-C2-B-COOP-001/github-comment-12345.json",
         )
+
+    def test_dispatch_level_first_result_lock_detects_any_protected_raw(self) -> None:
+        class FakeGithub:
+            def get_optional(self, path):
+                self.last_path = path
+                return [
+                    {"name": "github-comment-111.md"},
+                    {"name": "other.txt"},
+                ]
+
+        gh = FakeGithub()
+        self.assertTrue(main_has_any_raw(gh, "NSCI-C2-B-COOP-001"))
+        self.assertIn("raw/NSCI-C2-B-COOP-001", gh.last_path)
+
+    def test_dispatch_level_first_result_lock_allows_empty_directory(self) -> None:
+        class FakeGithub:
+            def get_optional(self, path):
+                return None
+
+        self.assertFalse(main_has_any_raw(FakeGithub(), "NSCI-C2-A-BLIND-001"))
 
     def test_sha256_is_deterministic(self) -> None:
         self.assertEqual(
