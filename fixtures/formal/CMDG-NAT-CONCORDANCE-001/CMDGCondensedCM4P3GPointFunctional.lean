@@ -578,7 +578,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       Equiv.trans_apply,
       Adjunction.homEquiv_unit,
       Adjunction.homEquiv_naturality_left,
-      ModuleCat.adj_homEquiv] using huniqQUnitPoint
+      ModuleCat.adj_homEquiv]
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
