@@ -535,6 +535,22 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     set_option backward.defeqAttrib.useBackward true in
     set_option backward.isDefEq.respectTransparency false in
       refine huniqQUnitPoint.trans ?_
+    let M : ModuleCat.{u + 1} CMDG.CondensedCM4P3G.R.{u} :=
+      (ModuleCat.free CMDG.CondensedCM4P3G.R.{u}).obj
+        (ULift.{u + 1, u} Q.obj)
+    have hlcUnitPoint :
+        (ConcreteCategory.hom
+          ((CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M))
+          (ModuleCat.freeMk (ULift.up (j.proj x))) =
+        LocallyConstant.const (CompHaus.of PUnit.{u + 1})
+          (ModuleCat.freeMk (ULift.up (j.proj x))) := by
+      dsimp [M, CondensedMod.LocallyConstant.adjunction,
+        Adjunction.ofNatIsoLeft,
+        CondensedMod.LocallyConstant.functorIsoDiscrete,
+        CondensedMod.LocallyConstant.functorIsoDiscreteComponents,
+        CondensedMod.LocallyConstant.functorIsoDiscreteAux₂,
+        CondensedMod.LocallyConstant.functorIsoDiscreteAux₁]
+      rfl
     simpa [
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
