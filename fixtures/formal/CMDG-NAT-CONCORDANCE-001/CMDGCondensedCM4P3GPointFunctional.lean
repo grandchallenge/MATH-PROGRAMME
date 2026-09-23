@@ -670,7 +670,15 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             ((Condensed.discreteUnderlyingAdj
               (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app M) by
       rfl]
-    rw [hdiscreteUnitFactorForget]
+    simp only [ConcreteCategory.comp_apply]
+    have hdiscreteUnitFactorPoint :=
+      CategoryTheory.types_congr_hom
+        hdiscreteUnitFactorForget
+        ((ConcreteCategory.hom
+          ((ModuleCat.adj CMDG.CondensedCM4P3G.R.{u}).unit.app
+            (ULift.{u + 1, u} Q.obj)))
+          (ULift.up (j.proj x)))
+    rw [hdiscreteUnitFactorPoint]
     simp only [Functor.map_comp, ConcreteCategory.comp_apply]
     rw [hmoduleUnitPoint]
     have hlcUnitPointForget :
