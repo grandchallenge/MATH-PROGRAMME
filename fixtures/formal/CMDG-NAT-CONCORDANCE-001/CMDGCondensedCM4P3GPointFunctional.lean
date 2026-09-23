@@ -614,6 +614,25 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
               CMDG.CondensedCM4P3G.R.{u} M).hom ≫ k)
           htriangle
       exact htrianglePost.trans (Category.comp_id _)
+    have hdiscreteUnitFactor :
+        (Condensed.discreteUnderlyingAdj
+            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app M =
+          (CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M ≫
+            (Condensed.underlying
+              (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
+              ((CondensedMod.LocallyConstant.functorIsoDiscrete
+                CMDG.CondensedCM4P3G.R.{u}).hom.app M) := by
+      have htransport :
+          (CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M =
+            (Condensed.discreteUnderlyingAdj
+                (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app M ≫
+              (Condensed.underlying
+                (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
+                ((CondensedMod.LocallyConstant.functorIsoDiscrete
+                  CMDG.CondensedCM4P3G.R.{u}).inv.app M) := by
+        rfl
+      rw [htransport, Category.assoc, ← Functor.map_comp,
+        Iso.inv_hom_id_app, Functor.map_id, Category.comp_id]
     have hlcUnitPoint :
         (ConcreteCategory.hom
           ((CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M))
@@ -622,6 +641,16 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
           (ModuleCat.freeMk (ULift.up (j.proj x))) := by
       rw [hlcUnitMap]
       rfl
+    rw [show
+      CMDG.CondensedCM4P2E.freeDiscreteModuleAdj.unit.app
+          (ULift.{u + 1, u} Q.obj) =
+        (ModuleCat.adj CMDG.CondensedCM4P3G.R.{u}).unit.app
+            (ULift.{u + 1, u} Q.obj) ≫
+          (CategoryTheory.forget (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
+            hdiscreteUnitFactor by
+      rfl]
+    simp only [ConcreteCategory.comp_apply, ModuleCat.freeMk]
+    rw [hlcUnitPoint]
     simpa [
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
