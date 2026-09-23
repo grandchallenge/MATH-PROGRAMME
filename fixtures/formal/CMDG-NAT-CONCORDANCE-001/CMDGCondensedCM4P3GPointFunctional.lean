@@ -298,354 +298,13 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
           CondensedSet.LocallyConstant.adjunction
           (Condensed.discreteUnderlyingAdj (Type (u + 1)))
           (ULift.{u + 1, u} Q1.obj)
-      have hlcUnitPoint :=
-        CategoryTheory.types_congr_hom hlcUnit (ULift.up PUnit.unit)
-      let frontIso :=
-        Functor.isoWhiskerLeft
-            (FintypeCat.toProfinite ⋙ profiniteToCompHaus)
-            CMDG.CondensedCM4P2E.compHausTopULiftNatIso ≪≫
-          Functor.isoWhiskerRight
-              CMDG.CondensedCM4P2E.finiteDiscreteULiftIso
-              topCatToCondensedSet ≪≫
-            Functor.isoWhiskerLeft
-              CMDG.CondensedCM4P2E.finiteUnderlyingULift
-              (CompHausLike.LocallyConstant.functorIso
-                (fun _ : TopCat.{u} => True)
-                (fun _ _ _ => ((CompHaus.effectiveEpi_tfae _).out 0 2).mp)).symm
-      have hdecomp :
-          CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso.hom.app Q1 =
-            frontIso.hom.app Q1 ≫
-              (Functor.isoWhiskerLeft
-                CMDG.CondensedCM4P2E.finiteUnderlyingULift
-                CondensedSet.LocallyConstant.iso).hom.app Q1 := by
-        set_option backward.defeqAttrib.useBackward true in
-        set_option backward.isDefEq.respectTransparency false in
-          rfl
-      have hfront :
-          (ConcreteCategory.hom
-            (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
-              (frontIso.hom.app Q1)).app
-                (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
-            (ULift.up
-              (𝟙 (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))) =
-            (ConcreteCategory.hom
-              (CondensedSet.LocallyConstant.adjunction.unit.app
-                (ULift.{u + 1, u} Q1.obj)))
-              (ULift.up PUnit.unit) := by
-        dsimp [Q1]
-        apply LocallyConstant.ext
-        intro s
-        apply ULift.ext
-        exact Subsingleton.elim _ _
-      set_option backward.defeqAttrib.useBackward true in
-      set_option backward.isDefEq.respectTransparency false in
-        rw [hdecomp]
-        simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
-        let post :=
-          ConcreteCategory.hom
-            (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
-              ((Functor.isoWhiskerLeft
-                CMDG.CondensedCM4P2E.finiteUnderlyingULift
-                CondensedSet.LocallyConstant.iso).hom.app Q1)).app
-                  (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1))))
-        calc
-          _ = post
-              ((ConcreteCategory.hom
-                (CondensedSet.LocallyConstant.adjunction.unit.app
-                  (ULift.{u + 1, u} Q1.obj)))
-                (ULift.up PUnit.unit)) := congrArg post hfront
-          _ = _ := hlcUnitPoint
-    have hrepPost :
-        (ConcreteCategory.hom
-          (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
-            ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
-              ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-                Condensed.discrete (Type (u + 1))).obj Q1)
-              D
-              (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
-                  (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q1) ≫
-                (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-                  ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
-                  Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map qx))).app
-                (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
-          ((ConcreteCategory.hom
-            (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
-              (CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso.hom.app Q1)).app
-                (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
-            (ULift.up
-              (𝟙 (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1))))) =
-        (ConcreteCategory.hom
-          (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
-            ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
-              ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-                Condensed.discrete (Type (u + 1))).obj Q1)
-              D
-              (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
-                  (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q1) ≫
-                (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-                  ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
-                  Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map qx))).app
-                (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
-          ((ConcreteCategory.hom
-            ((Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app
-              (ULift.{u + 1, u} Q1.obj)))
-            (ULift.up PUnit.unit)) := by
-      exact congrArg
-        (ConcreteCategory.hom
-          (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
-            ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
-              ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-                Condensed.discrete (Type (u + 1))).obj Q1)
-              D
-              (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
-                  (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q1) ≫
-                (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-                  ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
-                  Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map qx))).app
-                (op (profiniteToCompHaus.obj (FintypeCat.toProfinite.obj Q1)))))
-        hrep
-    set_option backward.defeqAttrib.useBackward true in
-    set_option backward.isDefEq.respectTransparency false in
-      refine hrepPost.trans ?_
-    have huniqQ :=
-      CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app
-        CMDG.CondensedCM4P2E.discreteSetFreeAdj
-        CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
-        (ULift.{u + 1, u} Q.obj)
-    have huniqQPoint :=
-      CategoryTheory.types_congr_hom huniqQ (ULift.up (j.proj x))
-    have huniqQHomEquiv :=
-      CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app
-        CMDG.CondensedCM4P2E.discreteSetFreeAdj
-        CMDG.CondensedCM4P2E.freeDiscreteModuleAdj
-        (ULift.{u + 1, u} Q.obj)
-    have huniqQHomEquivExpanded :
-        (Condensed.discreteUnderlyingAdj (Type (u + 1))).homEquiv
-          (ULift.{u + 1, u} Q.obj)
-          ((Condensed.forget CMDG.CondensedCM4P2E.R.{u}).obj
-            ((ModuleCat.free CMDG.CondensedCM4P2E.R.{u} ⋙
-              Condensed.discrete (ModuleCat CMDG.CondensedCM4P2E.R.{u})).obj
-                (ULift.{u + 1, u} Q.obj)))
-          (((Condensed.freeForgetAdjunction CMDG.CondensedCM4P2E.R.{u}).homEquiv
-            ((Condensed.discrete (Type (u + 1))).obj
-              (ULift.{u + 1, u} Q.obj))
-            ((ModuleCat.free CMDG.CondensedCM4P2E.R.{u} ⋙
-              Condensed.discrete (ModuleCat CMDG.CondensedCM4P2E.R.{u})).obj
-                (ULift.{u + 1, u} Q.obj)))
-            (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
-              (ULift.{u + 1, u} Q.obj))) =
-        CMDG.CondensedCM4P2E.freeDiscreteModuleAdj.unit.app
-          (ULift.{u + 1, u} Q.obj) := by
-      simpa only [
-        Functor.comp_obj,
-        CMDG.CondensedCM4P2E.discreteFreeIso,
-        CMDG.CondensedCM4P2E.discreteSetFreeAdj,
-        Adjunction.comp_homEquiv,
-        Equiv.trans_apply] using huniqQHomEquiv
-    have huniqQUnitExpanded := huniqQHomEquivExpanded
-    rw [Adjunction.homEquiv_unit] at huniqQUnitExpanded
-    have huniqQUnitPoint :=
-      CategoryTheory.types_congr_hom huniqQUnitExpanded (ULift.up (j.proj x))
-    have hdiscNat :=
-      CMDG.CondensedCM4P2E.discreteFreeIso.hom.naturality
-        (CMDG.CondensedCM4P2E.finiteUnderlyingULift.map qx)
-    have hdiscNatTarget :
-        CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
-              (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q1) ≫
-            (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-              ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
-              Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map qx =
-          (CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-              Condensed.discrete (Type (u + 1)) ⋙
-              Condensed.free CMDG.CondensedCM4P3G.R.{u}).map qx ≫
-            CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
-              (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q) := by
-      simpa only [Functor.comp_map] using hdiscNat.symm
-    have hfreeNat :=
-      (Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv_naturality_left
-        ((Condensed.discrete (Type (u + 1))).map
-          (CMDG.CondensedCM4P2E.finiteUnderlyingULift.map qx))
-        (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
-          (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q))
-    have hfreeNatTarget :
-        ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
-          ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-            Condensed.discrete (Type (u + 1))).obj Q1)
-          ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-            ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
-            Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).obj Q))
-          ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-              Condensed.discrete (Type (u + 1)) ⋙
-              Condensed.free CMDG.CondensedCM4P3G.R.{u}).map qx ≫
-            CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
-              (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q)) =
-        (Condensed.discrete (Type (u + 1))).map
-            (CMDG.CondensedCM4P2E.finiteUnderlyingULift.map qx) ≫
-          ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
-            ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-              Condensed.discrete (Type (u + 1))).obj Q)
-            ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-            ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
-            Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).obj Q))
-            (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
-              (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q)) := by
-      simpa only [Functor.comp_obj, Functor.comp_map] using hfreeNat
-    have hunitNat :=
-      (Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.naturality
-        (CMDG.CondensedCM4P2E.finiteUnderlyingULift.map qx)
-    have hunitPoint :=
-      CategoryTheory.types_congr_hom hunitNat (ULift.up PUnit.unit)
-    have hunitSection :
-        (ConcreteCategory.hom
-          (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
-            ((Condensed.discrete (Type (u + 1))).map
-              (CMDG.CondensedCM4P2E.finiteUnderlyingULift.map qx))).app
-                (op (CompHaus.of PUnit.{u + 1}))))
-          ((ConcreteCategory.hom
-            ((Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app
-              (ULift.{u + 1, u} Q1.obj)))
-            (ULift.up PUnit.unit)) =
-        (ConcreteCategory.hom
-          ((Condensed.discreteUnderlyingAdj (Type (u + 1))).unit.app
-            (ULift.{u + 1, u} Q.obj)))
-          (ULift.up ((ConcreteCategory.hom qx.hom) PUnit.unit)) := by
-      set_option backward.defeqAttrib.useBackward true in
-      set_option backward.isDefEq.respectTransparency false in
-        exact hunitPoint.symm
-    let postUnit :=
-      ConcreteCategory.hom
-        (((sheafToPresheaf (coherentTopology CompHaus.{u}) (Type (u + 1))).map
-          ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
-            ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-              Condensed.discrete (Type (u + 1))).obj Q)
-            ((CMDG.CondensedCM4P2E.finiteUnderlyingULift ⋙
-              ModuleCat.free CMDG.CondensedCM4P3G.R.{u} ⋙
-              Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).obj Q)
-            (CMDG.CondensedCM4P2E.discreteFreeIso.hom.app
-              (CMDG.CondensedCM4P2E.finiteUnderlyingULift.obj Q)))).app
-                (op (CompHaus.of PUnit.{u + 1})))
-    have hunitPost := congrArg postUnit hunitSection
-    rw [hdiscNatTarget]
-    dsimp only [D]
-    rw [hfreeNatTarget]
-    set_option backward.defeqAttrib.useBackward true in
-    set_option backward.isDefEq.respectTransparency false in
-      refine hunitPost.trans ?_
-    dsimp [postUnit, Q1, qx, eTail, freeHomSectionsEquiv]
-    set_option backward.defeqAttrib.useBackward true in
-    set_option backward.isDefEq.respectTransparency false in
-      refine huniqQUnitPoint.trans ?_
-    let M : ModuleCat.{u + 1} CMDG.CondensedCM4P3G.R.{u} :=
-      (ModuleCat.free CMDG.CondensedCM4P3G.R.{u}).obj
-        (ULift.{u + 1, u} Q.obj)
-    have hlcUnitMap :
-        (CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M =
-          (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
-            CMDG.CondensedCM4P3G.R.{u} M).hom := by
-      set_option backward.defeqAttrib.useBackward true in
-      set_option backward.isDefEq.respectTransparency false in
-        change
-          (Condensed.discreteUnderlyingAdj
-              (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app M ≫
-              (Condensed.underlying
-                (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
-                ((CondensedMod.LocallyConstant.functorIsoDiscreteComponents
-                  CMDG.CondensedCM4P3G.R.{u} M).hom) =
-            (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
-              CMDG.CondensedCM4P3G.R.{u} M).hom
-      rw [show
-        (CondensedMod.LocallyConstant.functorIsoDiscreteComponents
-            CMDG.CondensedCM4P3G.R.{u} M).hom =
-          (Condensed.discrete (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
-              (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
-                CMDG.CondensedCM4P3G.R.{u} M).hom ≫
-            (Condensed.discreteUnderlyingAdj
-              (ModuleCat CMDG.CondensedCM4P3G.R.{u})).counit.app
-              ((CondensedMod.LocallyConstant.functor
-                CMDG.CondensedCM4P3G.R.{u}).obj M) by
-          rfl]
-      have hmapComp :=
-        (Condensed.underlying
-          (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map_comp
-          ((Condensed.discrete
-            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
-            (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
-              CMDG.CondensedCM4P3G.R.{u} M).hom)
-          ((Condensed.discreteUnderlyingAdj
-            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).counit.app
-            ((CondensedMod.LocallyConstant.functor
-              CMDG.CondensedCM4P3G.R.{u}).obj M))
-      rw [hmapComp]
-      have hunitNat :=
-        ((Condensed.discreteUnderlyingAdj
-          (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.naturality
-            (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
-              CMDG.CondensedCM4P3G.R.{u} M).hom).symm
-      simp only [Functor.comp_map, Functor.id_map] at hunitNat
-      rw [← Category.assoc, hunitNat]
-      have htriangle :=
-        (Condensed.discreteUnderlyingAdj
-          (ModuleCat CMDG.CondensedCM4P3G.R.{u})).right_triangle_components
-          ((CondensedMod.LocallyConstant.functor
-            CMDG.CondensedCM4P3G.R.{u}).obj M)
-      set_option backward.defeqAttrib.useBackward true in
-      set_option backward.isDefEq.respectTransparency false in
-        change
-          (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
-              CMDG.CondensedCM4P3G.R.{u} M).hom ≫
-              ((Condensed.discreteUnderlyingAdj
-                (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app
-                  ((Condensed.underlying
-                    (ModuleCat CMDG.CondensedCM4P3G.R.{u})).obj
-                    ((CondensedMod.LocallyConstant.functor
-                      CMDG.CondensedCM4P3G.R.{u}).obj M)) ≫
-                (Condensed.underlying
-                  (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
-                  ((Condensed.discreteUnderlyingAdj
-                    (ModuleCat CMDG.CondensedCM4P3G.R.{u})).counit.app
-                    ((CondensedMod.LocallyConstant.functor
-                      CMDG.CondensedCM4P3G.R.{u}).obj M))) =
-            (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
-              CMDG.CondensedCM4P3G.R.{u} M).hom
-      have htrianglePost :=
-        congrArg
-          (fun k =>
-            (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
-              CMDG.CondensedCM4P3G.R.{u} M).hom ≫ k)
-          htriangle
-      exact htrianglePost.trans (Category.comp_id _)
-    have hdiscreteUnitFactor :
-        (Condensed.discreteUnderlyingAdj
-            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app M =
-          (CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M ≫
-            (Condensed.underlying
-              (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
-              ((CondensedMod.LocallyConstant.functorIsoDiscrete
-                CMDG.CondensedCM4P3G.R.{u}).hom.app M) := by
-      have htransport :
-          (CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M =
-            (Condensed.discreteUnderlyingAdj
-                (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app M ≫
-              (Condensed.underlying
-                (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
-                ((CondensedMod.LocallyConstant.functorIsoDiscrete
-                  CMDG.CondensedCM4P3G.R.{u}).inv.app M) := by
-        rfl
-      rw [htransport, Category.assoc, ← Functor.map_comp,
-        Iso.inv_hom_id_app]
-      have hmapId :=
-        (Condensed.underlying
-          (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map_id
-          ((Condensed.discrete
-            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).obj M)
-      rw [hmapId]
-      exact (Category.comp_id _).symm
+      let mx : M := ModuleCat.freeMk (ULift.up (j.proj x))
     have hlcUnitPoint :
         (ConcreteCategory.hom
           ((CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M))
-          (ModuleCat.freeMk (ULift.up (j.proj x))) =
-        LocallyConstant.const (CompHaus.of PUnit.{u + 1})
-          (ModuleCat.freeMk (ULift.up (j.proj x))) := by
+          mx =
+        LocallyConstant.const (CompHaus.of PUnit.{u + 1}) mx := by
+      dsimp [mx]
       rw [hlcUnitMap]
       rfl
     have hmoduleUnit :=
@@ -663,8 +322,13 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
           (ULift.up (j.proj x)) =
         ModuleCat.freeMk (ULift.up (j.proj x)) := by
       rfl
-    have hmoduleUnitPointFreeMk :=
-      hmoduleUnitPoint.trans hfreeHomIdentity
+    have hmoduleUnitPointMx :
+        (ConcreteCategory.hom
+          ((ModuleCat.adj CMDG.CondensedCM4P3G.R.{u}).unit.app
+            (ULift.{u + 1, u} Q.obj)))
+          (ULift.up (j.proj x)) = mx := by
+      dsimp [mx]
+      exact hmoduleUnitPoint.trans hfreeHomIdentity
     have hdiscreteUnitFactorForget :=
       congrArg
         (fun k =>
@@ -692,21 +356,18 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             ((ModuleCat.adj CMDG.CondensedCM4P3G.R.{u}).unit.app
               (ULift.{u + 1, u} Q.obj)))
             (ULift.up (j.proj x))) = _
-    rw [hmoduleUnitPointFreeMk]
-    have hdiscreteUnitFactorFreeMk :=
-      CategoryTheory.types_congr_hom
-        hdiscreteUnitFactorForget
-        (ModuleCat.freeMk (ULift.up (j.proj x)))
-    rw [hdiscreteUnitFactorFreeMk]
+    rw [hmoduleUnitPointMx]
+    have hdiscreteUnitFactorMx :=
+      CategoryTheory.types_congr_hom hdiscreteUnitFactorForget mx
+    rw [hdiscreteUnitFactorMx]
     have hlcUnitPointForget :
         (ConcreteCategory.hom
           ((CategoryTheory.forget
             (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
             ((CondensedMod.LocallyConstant.adjunction
               CMDG.CondensedCM4P3G.R.{u}).unit.app M)))
-          (ModuleCat.freeMk (ULift.up (j.proj x))) =
-        LocallyConstant.const (CompHaus.of PUnit.{u + 1})
-          (ModuleCat.freeMk (ULift.up (j.proj x))) := by
+          mx =
+        LocallyConstant.const (CompHaus.of PUnit.{u + 1}) mx := by
       exact hlcUnitPoint
     set_option backward.defeqAttrib.useBackward true in
     set_option backward.isDefEq.respectTransparency false in
@@ -723,9 +384,10 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
               (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
               ((CondensedMod.LocallyConstant.adjunction
                 CMDG.CondensedCM4P3G.R.{u}).unit.app M)))
-            (ModuleCat.freeMk (ULift.up (j.proj x)))) = _
+            mx) = _
     rw [hlcUnitPointForget]
     simpa [
+      mx,
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
       CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
