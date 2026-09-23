@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0.0",
+  "work_package": "VGSE-ENG-WP05",
+  "sources": {
+    "exact_primitive": "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607:ci/replay_vgse_wp00_planar_evidence.py",
+    "numerical_branches": "grandchallenge/MATHSOLVE@b0854bb7770296b610b655753bc62b27365b27bb:work_packages/VGSE_WP00/artifacts/data/reconstruction_summary.json",
+    "algebraic_witnesses": "grandchallenge/MATHSOLVE@b0854bb7770296b610b655753bc62b27365b27bb:work_packages/VGSE_WP00/artifacts/data/expected_replay.json"
+  },
+  "signed_targets": {
+    "P12": "1",
+    "P13": "1",
+    "P14": "25/3",
+    "P15": "-7/2",
+    "P16": "25/2",
+    "C1": "-6/7",
+    "C2": "-4/21",
+    "C3": "18/175"
+  },
+  "closed_cycle_replay": {
+    "branch_count": 5,
+    "max_absolute_error": 2.1823508587380098e-14,
+    "target_values": [
+      "-6/7",
+      "-4/21",
+      "18/175"
+    ],
+    "branch_real_values": [
+      [
+        -0.8571428571428541,
+        -0.1904761904761797,
+        0.10285714285713438
+      ],
+      [
+        -0.8571428571428612,
+        -0.19047619047619463,
+        0.1028571428571439
+      ],
+      [
+        -0.8571428571428734,
+        -0.19047619047618103,
+        0.10285714285714231
+      ],
+      [
+        -0.8571428571428659,
+        -0.1904761904761933,
+        0.1028571428571445
+      ],
+      [
+        -0.8571428571428624,
+        -0.1904761904761921,
+        0.10285714285714644
+      ]
+    ],
+    "max_imaginary_magnitude": 1.4488410471358293e-14,
+    "disposition": "PASS",
+    "interpretation": "All three geometry-only cycle monomials are branch invariant to numerical replay precision and agree with the protected exact signed weight invariants."
+  },
+  "boundary_path_replay": {
+    "branch_count": 5,
+    "raw_geometry_products_are_branch_invariant": false,
+    "raw_magnitude_variation": {
+      "P12": {
+        "min": 0.01184095590352242,
+        "max": 0.02239999767660443,
+        "max_over_min": 1.8917389659344082
+      },
+      "P13": {
+        "min": 0.4007319603441581,
+        "max": 2.3212797687836613,
+        "max_over_min": 5.792599539078668
+      },
+      "P14": {
+        "min": 0.372867655199338,
+        "max": 2.8388525798991555,
+        "max_over_min": 7.613566208582728
+      },
+      "P15": {
+        "min": 0.008017415407920904,
+        "max": 0.2979782445715199,
+        "max_over_min": 37.166372129992
+      },
+      "P16": {
+        "min": 0.008251985243760546,
+        "max": 0.28923071119469485,
+        "max_over_min": 35.04983378555926
+      }
+    },
+    "boundary_normalized_targets": [
+      "1",
+      "1",
+      "25/3",
+      "-7/2",
+      "25/2"
+    ],
+    "max_absolute_error_after_boundary_normalization": 6.901080022590147e-13,
+    "disposition": "PASS_WITH_REQUIRED_BOUNDARY_CALIBRATION",
+    "interpretation": "The five path products vary by branch, in some cases by more than 35x in magnitude. Dividing by the exact branch endpoint factors recovers the five protected signed weight invariants on every branch."
+  },
+  "exactness_boundary": {
+    "cancellation_identity": "exact symbolic algebra from the protected MATHCERT primitive",
+    "lattice_and_chart": "exact integer/rational algebra",
+    "five_branch_values": "floating-point replay of retained generated embeddings and witnesses",
+    "numerical_replay_does_not_upgrade_source_correspondence": true
+  }
+}
