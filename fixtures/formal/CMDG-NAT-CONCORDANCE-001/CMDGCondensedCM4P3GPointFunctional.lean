@@ -641,15 +641,23 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
           (ModuleCat.freeMk (ULift.up (j.proj x))) := by
       rw [hlcUnitMap]
       rfl
+    have hdiscreteUnitFactorForget :=
+      congrArg
+        (fun k =>
+          (CategoryTheory.forget
+            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map k)
+        hdiscreteUnitFactor
     rw [show
       CMDG.CondensedCM4P2E.freeDiscreteModuleAdj.unit.app
           (ULift.{u + 1, u} Q.obj) =
         (ModuleCat.adj CMDG.CondensedCM4P3G.R.{u}).unit.app
             (ULift.{u + 1, u} Q.obj) ≫
           (CategoryTheory.forget (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
-            hdiscreteUnitFactor by
+            ((Condensed.discreteUnderlyingAdj
+              (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app M) by
       rfl]
-    simp only [ConcreteCategory.comp_apply, ModuleCat.freeMk]
+    rw [hdiscreteUnitFactorForget]
+    simp only [Functor.map_comp, ConcreteCategory.comp_apply, ModuleCat.freeMk]
     rw [hlcUnitPoint]
     simpa [
       Q,
