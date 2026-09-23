@@ -1,0 +1,87 @@
+{
+  "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
+  "schema_version": "1.0.0",
+  "checkpoint_id": "VGSE-CYCLE-INVARIANT-QUOTIENT-RECONSTRUCTION-001.CP001",
+  "governed_work_id": "VGSE-CYCLE-INVARIANT-QUOTIENT-RECONSTRUCTION-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "admission": {
+    "topology": "MULTI_SESSION_RESUMABLE",
+    "admission_ref": "grandchallenge/MATH-PROGRAMME#1048",
+    "routine_work_excluded": true
+  },
+  "authority": {
+    "ghos_standard": "GCL-GHOS-00",
+    "ghos_version": "0.2.0",
+    "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#1048"
+  },
+  "phase": "WP05 admission: exact cycle-invariant quotient reconstruction mandate awaiting protected admission before substantive research.",
+  "state": "AUTHORIZED_READY",
+  "identities": {
+    "protected_base_sha": "4b78daac0b85298957b52e34687423e5442b5e51",
+    "candidate_head_sha": "cc5a4bf3c41b740a8fd7d7213f1eb6f3f499dd4a",
+    "issue_number": 1048,
+    "pr_number": null,
+    "branch": "governance/vgse-cycle-invariant-quotient-reconstruction-admission",
+    "workflow_runs": []
+  },
+  "terminal_condition": "Terminate only at one declared WP05 disposition: CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_ESTABLISHED, CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_PARTIAL, CYCLE_INVARIANTS_EXIST_BUT_DO_NOT_SPAN_QUOTIENT, NUISANCE_FACTOR_CANCELLATION_FALSIFIED, or CYCLE_INVARIANT_ROUTE_NON_IDENTIFIABLE, with exact-head replay, independent Adversary and Referee review, protected admission, and claim-boundary preservation.",
+  "permitted_next_actions": [
+    {
+      "id": "protect-admission",
+      "description": "Protect the WP05 mandate and continuity checkpoint through the ordinary PR/native merge-queue gates before creating substantive research artifacts."
+    }
+  ],
+  "next_action": {
+    "id": "protect-admission",
+    "description": "Open and protect the admission-only PR for the WP05 mandate, checkpoint, registry entry, and documentation navigation.",
+    "evidence_targets": [
+      "docs/VGSE_CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_MANDATE.md",
+      "governance/bounded_operation_checkpoints/VGSE-CYCLE-INVARIANT-QUOTIENT-RECONSTRUCTION-001.json",
+      "governance/bounded_operation_checkpoint_registry.json",
+      "mkdocs.yml"
+    ]
+  },
+  "external_evidence": {
+    "waiting": false,
+    "objects": []
+  },
+  "blocking_boundary": null,
+  "last_transition": {
+    "action": "authorize fresh WP05 cycle-invariant successor after terminal WP04 closure",
+    "result": "No duplicate successor was found. Current protected main descends from the terminal WP04 checkpoint. A fresh tracker and admission branch were created; substantive research remains forbidden until protected admission.",
+    "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#1048",
+      "grandchallenge/MATH-PROGRAMME@4b78daac0b85298957b52e34687423e5442b5e51",
+      "governance/bounded_operation_checkpoints/VGSE-GEOMETRY-QUOTIENT-COUPLING-001.json",
+      "docs/VGSE_CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_MANDATE.md"
+    ]
+  },
+  "freshness": {
+    "required_before_transition": true,
+    "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-CYCLE-INVARIANT-QUOTIENT-RECONSTRUCTION-001.json",
+    "on_mismatch": "REBIND_BEFORE_MUTATION",
+    "observed_at": "2026-09-23T09:12:24Z"
+  },
+  "resume": {
+    "fresh_session_safe": true,
+    "requires_chat_history": false,
+    "authoritative_sources": [
+      "grandchallenge/MATH-PROGRAMME#1048",
+      "docs/VGSE_CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_MANDATE.md",
+      "research/vgse-eng-wp04/README.md",
+      "research/vgse-eng-wp04/RESULTS.json",
+      "grandchallenge/MATHSOLVE@b0854bb7770296b610b655753bc62b27365b27bb:work_packages/VGSE_WP00/artifacts/code/b3_holomorphic.py",
+      "grandchallenge/MATH-PROGRAMME:research/vgse-eng-wp01/model.json"
+    ],
+    "instructions": "Protect admission before substantive work. Then derive the natural graph gauge-invariant lattice independently of the WP01 chart, prove or falsify cancellation of discrete-holomorphic vertex factors including signs/orientations, test all five C05 branches, and compare surviving exact invariants with the protected eight-dimensional quotient. Preserve all C06 and physical/manufacturing/commercial exclusions."
+  },
+  "terminal_evidence": [],
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false,
+    "protected_bypass_authorized": false
+  }
+}
