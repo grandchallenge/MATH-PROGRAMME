@@ -607,7 +607,13 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
                       CMDG.CondensedCM4P3G.R.{u}).obj M))) =
             (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
               CMDG.CondensedCM4P3G.R.{u} M).hom
-      rw [htriangle, Category.comp_id]
+      have htrianglePost :=
+        congrArg
+          (fun k =>
+            (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
+              CMDG.CondensedCM4P3G.R.{u} M).hom ≫ k)
+          htriangle
+      simpa only [Category.assoc, Category.comp_id] using htrianglePost
     have hlcUnitPoint :
         (ConcreteCategory.hom
           ((CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M))
