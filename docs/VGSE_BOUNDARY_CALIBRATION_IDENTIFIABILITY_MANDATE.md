@@ -16,6 +16,27 @@ WP06 must distinguish two very different statements:
 
 Only the second answers the geometry-to-quotient question.
 
+## Source-definition gate — TE3
+
+The primary source defines the geometric edge weight of an embedding as the Euclidean length of the corresponding dual edge, and defines gauge equivalence using a positive vertex function fixed to (1) at every boundary vertex. A source-defined t-immersion/t-embedding must satisfy **TE3**: the original graph weights and these Euclidean geometric edge weights are gauge equivalent.
+
+Therefore WP06 must test TE3 **before** interpreting boundary calibration as missing geometry.
+
+For each retained C05 branch:
+
+1. compute all sixteen Euclidean dual-edge lengths from the protected embedding coordinates;
+2. solve the exact/log-linear internal-vertex gauge system with all six boundary gauges fixed to (1);
+3. report residuals edge by edge;
+4. compare against both the MATHSOLVE numerical representative and the exact MATHCERT representative (which are gauge-equivalent and must give the same quotient-level answer);
+5. determine whether C05's phrase “planar t-embeddings” is source-definition conformant.
+
+The decision fork is strict:
+
+- if TE3 passes, geometry already determines the full weight quotient via the Euclidean length class, and the WP05 five-boundary-factor obstruction was an artifact of using the algebraic primitive factors rather than the source-defined geometric weight map;
+- if TE3 fails, the retained C05 objects are planar algebraic Kenyon–Smirnov realizations with the recorded convexity/Kawasaki properties, but the evidence currently does not justify calling them t-embeddings in the source-defined sense. In that case, open a correction path for C05 and analyze boundary rescaling only for the broader algebraic-realization class.
+
+Do not preserve the existing label merely for continuity if TE3 falsifies it.
+
 ## Candidate boundary-rescaling symmetry
 
 For each degree-one boundary vertex (U_i), let (eta_i) denote its discrete-holomorphic boundary factor and let (k_{B_i}>0) be its boundary-edge weight.
