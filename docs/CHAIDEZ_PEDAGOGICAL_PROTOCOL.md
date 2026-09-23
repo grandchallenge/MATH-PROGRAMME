@@ -9,6 +9,13 @@ This protocol adopts that discipline for MATHSOLVE. It is a campaign-level
 instance of the [Grand Challenge Pedagogy Standard](GRAND_CHALLENGE_PEDAGOGY_STANDARD.md).
 New Work Packages should also follow the [Foundation-Aware MATH-PROGRAMME Doctrine](FOUNDATION_AWARE_MATH_PROGRAMME.md).
 
+External catalog entries remain source records throughout MATHFORGE intake and
+semantic review. They do not receive a Chaidez dossier merely by being
+cataloged. The full dossier becomes mandatory only when a reviewed entry is
+promoted into MATHSOLVE: `SEMANTICALLY_REVIEWED` is the minimum proposal tier,
+and an exact imported campaign target must be `CAMPAIGN_CONCORDANT`. Promotion
+is never automatic, and no catalog assurance tier is proof or certification.
+
 ## The campaign is one theorem spine
 
 A domain is not a pile of Work Packages. It is one evolving theorem spine with
