@@ -1,25 +1,171 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "2.0.0",
   "registry_id": "MATHFORGE-EXTERNAL-SOURCE-IMPORTS",
-  "provider_repository": "grandchallenge/MATHFORGE",
-  "provider_commit": "bab7ae57f54601b49ad9fc870051095ad487c64a",
-  "verified_at": "2026-09-21",
-  "sources": [
-    {
-      "source_id": "RM-AMPHORA-001",
-      "source_class": "corpus_row",
-      "upstream": "amphora/ResearchMath-14k",
-      "upstream_commit": "f22d0f28b55e6e777acf82e722d97ae982dff02e",
-      "artifacts": [
-        {"kind": "external_source_registry", "path": "governance/external_sources.json", "git_blob_sha1": "0b05cdc69a43e1f3c84b4fa4bff37e7cd250094f"},
-        {"kind": "corpus_source_lock", "path": "forge/intake/researchmath14k/RM-DIO-004/source_lock.json", "git_blob_sha1": "a465a003a28d3182ec2296dbe88fb51af63ce0ca"},
-        {"kind": "corpus_reliability_register", "path": "forge/intake/researchmath14k/RM-DIO-004/reliability_register.json", "git_blob_sha1": "2bcd7cf431231b883eb92c302d72da5a139298a6"},
-        {"kind": "corpus_source_row", "path": "forge/intake/researchmath14k/RM-DIO-004/source_row.json", "git_blob_sha1": "0ad6ee2599b59a8bd9cebb2a8e39974f1e968ef9"},
-        {"kind": "corpus_problem_card", "path": "forge/intake/researchmath14k/RM-DIO-004/problem_card.json", "git_blob_sha1": "a66b185460e57e975140b9a211394b7e8e9268d0"},
-        {"kind": "provisional_handoff", "path": "forge/intake/researchmath14k/RM-DIO-004/mathsolve_handoff.json", "git_blob_sha1": "40f37c02db51ae48d02be7e43ca515bb9eddf2a8"}
-      ],
-      "programme_disposition": "CONFORMANCE_FIXTURE_ONLY",
-      "claim_boundary": "Programme imports the exact MATHFORGE corpus intake as provenance and conformance evidence only. This does not establish status, semantic equivalence, proof, novelty, campaign authority, or certification."
+  "source_foundry": {
+    "repository": "grandchallenge/MATHFORGE",
+    "commit": "638190868060e60e109197af602fda4fb80fd02b",
+    "registry_artifact": {
+      "kind": "external_provider_registry",
+      "path": "governance/external_sources.json",
+      "git_blob_sha1": "01edc3108a6292c36a9e8820b5262631e7db7623",
+      "sha256": "22defed8f755c716ee756d127a8943c2c0f50531eaafa5d1385decb83b659daf"
     }
-  ]
+  },
+  "verified_at": "2026-09-23",
+  "catalog_release": {
+    "catalog_release_id": "GCL-CATALOG-TWO-PROVIDER-001",
+    "entry_count": 17288,
+    "manifest_artifact": {
+      "kind": "semantic_catalog_manifest",
+      "path": "catalog/manifest.json",
+      "git_blob_sha1": "4eb09fa37451e7644c870525db64fa6cc73a609b",
+      "sha256": "9bd37b7f655dc652ab3b7174e3785ec97fb8ee230c97e1f3a8be77ec254f4dc2"
+    },
+    "relation_artifacts": [
+      {
+        "kind": "typed_relation_set",
+        "path": "catalog/relations/relations.json",
+        "git_blob_sha1": "9bac7553de345d901e565f39d57bd78780864356",
+        "sha256": "0dbaf1a15a8f76d2bcb61db872d11e024adf7c3233ac930297f75cdbd8abab09"
+      },
+      {
+        "kind": "typed_relation_set",
+        "path": "catalog/relations/researchmath-duplicate-candidates.json",
+        "git_blob_sha1": "f4b544f87097214771e402ed1c9a5a27f7e93761",
+        "sha256": "90e49dcc14acba378faf4d89f2ba6b1b50d75c8511cf9ba12988d01502ec91f8"
+      }
+    ]
+  },
+  "providers": [
+    {
+      "provider_id": "RM-AMPHORA-001",
+      "legacy_source_ids": [
+        "RM-AMPHORA-001"
+      ],
+      "snapshot_id": "RM-AMPHORA-001-F22D0F28",
+      "upstream_revision": "f22d0f28b55e6e777acf82e722d97ae982dff02e",
+      "visibility": "public_full_text",
+      "inventory_count": 14056,
+      "manifest_artifact": {
+        "kind": "snapshot_manifest",
+        "path": "catalog/providers/RM-AMPHORA-001-F22D0F28.json",
+        "git_blob_sha1": "42521ace8b5a951f969cbd024b5211dae39e4477",
+        "sha256": "f5ed514bad9ad0a6ad39baa2e2eabaa3232c95f94f5892da7b925c53e6c264dc"
+      },
+      "composition_artifact": {
+        "kind": "composition_summary",
+        "path": "catalog/providers/RM-AMPHORA-001-F22D0F28-composition.json",
+        "git_blob_sha1": "7adc5cb304b5a82b6d9800e461cade887c142829",
+        "sha256": "10d555b41718107676039a2e42984229a613e420d134b1061af0bcc733d5aceb"
+      },
+      "catalog_shards": [
+        {
+          "kind": "catalog_shard",
+          "path": "catalog/entries/researchmath-00000.jsonl",
+          "git_blob_sha1": "f6ebd104e8003d35e3fef24d9d90f3bb6d1fe101",
+          "sha256": "4bc4ead2a587703acb0d544f9d02d56e0bd3c469971912a6c09630a3b41a1add"
+        },
+        {
+          "kind": "catalog_shard",
+          "path": "catalog/entries/researchmath-00001.jsonl",
+          "git_blob_sha1": "08d72032414349d7417947fa69304a311f8c09d3",
+          "sha256": "ee498dd91851fff74f487c4c21c334e0c3da383cd50f600a7e3c2b2a709bd596"
+        },
+        {
+          "kind": "catalog_shard",
+          "path": "catalog/entries/researchmath-00002.jsonl",
+          "git_blob_sha1": "e5d6e595c1f0c1352a2bd90e4abb91bf6b1b76ed",
+          "sha256": "ba9932103bb442855587e09b1fcf570aea6fec54ea69c60d4e0fe746c19f2d03"
+        },
+        {
+          "kind": "catalog_shard",
+          "path": "catalog/entries/researchmath-00003.jsonl",
+          "git_blob_sha1": "5608a1120790523a0e2ff479b9150e0bfe34ccf8",
+          "sha256": "c63330c6e6567eaf48869b6a0935534d1b7c5dce08f2ab1b3859d0b41dadbbe9"
+        },
+        {
+          "kind": "catalog_shard",
+          "path": "catalog/entries/researchmath-00004.jsonl",
+          "git_blob_sha1": "13183203281b6ff85ae928abc901b96f02da2b41",
+          "sha256": "71912f6d19e3f0c07b99140c3a6ba6ced91c7c55f31e37539ea625140bf19e70"
+        },
+        {
+          "kind": "catalog_shard",
+          "path": "catalog/entries/researchmath-00005.jsonl",
+          "git_blob_sha1": "89c47dd64b6cb61d9a6a9be8158e9b003dde5c34",
+          "sha256": "eeb10ec8fb00f93c16d5f9556232e6bd5b20cec1ca7e810a62d225c7be85ce98"
+        },
+        {
+          "kind": "catalog_shard",
+          "path": "catalog/entries/researchmath-00006.jsonl",
+          "git_blob_sha1": "77318f1c9ebcdc1da29e048970e9dc7d31922f1d",
+          "sha256": "8926fbbb45f3e60da4a8ce706588dbf0e7b3ed188f0bf1f9f6c20ca3a79665ba"
+        },
+        {
+          "kind": "catalog_shard",
+          "path": "catalog/entries/researchmath-00007.jsonl",
+          "git_blob_sha1": "5818f689641fd417ee7d5918ae5a0bd3a9c96527",
+          "sha256": "8d347d23eb928af4f70a7e54754842ddab75fd9b8650e9cc27fe4d3acc542082"
+        }
+      ],
+      "programme_disposition": "READ_ONLY_SEMANTIC_CATALOG",
+      "claim_boundary": "Programme imports this exact MATHFORGE snapshot as read-only provenance and tiered catalog metadata. It does not adopt provider status as Programme status, create a Solve result, mutate the canonical Claim Ledger, prove a mathematical claim, or issue or imply a MATHCERT certificate."
+    },
+    {
+      "provider_id": "FC-GDM",
+      "legacy_source_ids": [
+        "FC-GDM-001",
+        "FC-GDM-002"
+      ],
+      "snapshot_id": "FC-GDM-85F86371",
+      "upstream_revision": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+      "visibility": "public_metadata_only",
+      "inventory_count": 3232,
+      "manifest_artifact": {
+        "kind": "snapshot_manifest",
+        "path": "catalog/providers/FC-GDM-85F86371.json",
+        "git_blob_sha1": "5e74d0ceec81d313e9c858ec5bd4014fa543314f",
+        "sha256": "faa43f174717ef0126114b9bbd61bb9fdc827ce7eb9f64e56c1e63c7b15608db"
+      },
+      "composition_artifact": {
+        "kind": "composition_summary",
+        "path": "catalog/providers/FC-GDM-85F86371-composition.json",
+        "git_blob_sha1": "bc0a92eeefc69e92a2e08c99f903b93f966257d8",
+        "sha256": "d63066c67be1aa341466da4fa85d6d1eb4530fe435d2f359e634eebb6982e4d1"
+      },
+      "catalog_shards": [
+        {
+          "kind": "catalog_shard",
+          "path": "catalog/entries/formal-conjectures-00000.jsonl",
+          "git_blob_sha1": "bde080f555ac1c07a6047fbab0137cd48d3a5cc3",
+          "sha256": "33d1929f630431fe731cf0880cd01312cee3c7fa043ed5f1d4499fa28c0533fd"
+        },
+        {
+          "kind": "catalog_shard",
+          "path": "catalog/entries/formal-conjectures-00001.jsonl",
+          "git_blob_sha1": "49c3fc04c06cff45698dfd66b995020891aa3e4e",
+          "sha256": "b9284333f076b0b4b702f08d977c8e0bdede815599e22750e0c70c5ee214c54f"
+        }
+      ],
+      "programme_disposition": "READ_ONLY_SEMANTIC_CATALOG",
+      "claim_boundary": "Programme imports this exact MATHFORGE snapshot as read-only provenance and tiered catalog metadata. It does not adopt provider status as Programme status, create a Solve result, mutate the canonical Claim Ledger, prove a mathematical claim, or issue or imply a MATHCERT certificate."
+    }
+  ],
+  "legacy_registry": {
+    "path": "governance/mathforge_provider_imports.json",
+    "disposition": "HISTORICAL_COMPATIBILITY_ONLY",
+    "authority": false
+  },
+  "math_core_projection": {
+    "path": "governance/math_core_semantic_catalog_projection.json",
+    "mode": "READ_ONLY_PROVENANCE_BOUND",
+    "canonical_claim_ledger_mutation": false
+  },
+  "routing_boundaries": {
+    "mathsolve_minimum_proposal_tier": "SEMANTICALLY_REVIEWED",
+    "exact_campaign_target_tier": "CAMPAIGN_CONCORDANT",
+    "catalog_creates_result": false,
+    "catalog_creates_claim": false,
+    "catalog_creates_certificate": false
+  }
 }
