@@ -728,7 +728,9 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
                 CMDG.CondensedCM4P3G.R.{u}).unit.app M)))
             mx) = _
     rw [hlcUnitPointForget]
-    simpa [
+    apply LocallyConstant.ext
+    intro p
+    simp [
       mx,
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
