@@ -1,0 +1,87 @@
+{
+  "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
+  "schema_version": "1.0.0",
+  "checkpoint_id": "VGSE-BOUNDARY-CALIBRATION-IDENTIFIABILITY-001.CP001",
+  "governed_work_id": "VGSE-BOUNDARY-CALIBRATION-IDENTIFIABILITY-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "admission": {
+    "topology": "MULTI_SESSION_RESUMABLE",
+    "admission_ref": "grandchallenge/MATH-PROGRAMME#1053",
+    "routine_work_excluded": true
+  },
+  "authority": {
+    "ghos_standard": "GCL-GHOS-00",
+    "ghos_version": "0.2.0",
+    "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#1053"
+  },
+  "phase": "WP06 admission: boundary calibration identifiability theorem awaiting protected admission.",
+  "state": "AUTHORIZED_READY",
+  "identities": {
+    "protected_base_sha": "797139a7aef1a445461e24151493885be38159f1",
+    "candidate_head_sha": "1a94c8b3eea7b99ba626ffbc308a5dae33b88c58",
+    "issue_number": 1053,
+    "pr_number": null,
+    "branch": "governance/vgse-boundary-calibration-identifiability-admission",
+    "workflow_runs": []
+  },
+  "terminal_condition": "Terminate only at one WP06 disposition: BOUNDARY_FACTORS_GEOMETRY_IDENTIFIABLE, BOUNDARY_FACTORS_IDENTIFIABLE_WITH_CANONICAL_NORMALIZATION, BOUNDARY_CALIBRATION_FIVE_DIMENSIONAL_OBSTRUCTION, BOUNDARY_CALIBRATION_PARTIAL_IDENTIFIABILITY, or BOUNDARY_CALIBRATION_UNRESOLVED, with exact-head replay, independent Adversary and Referee review, protected admission, and claim-boundary preservation.",
+  "permitted_next_actions": [
+    {
+      "id": "protect-admission",
+      "description": "Protect the WP06 mandate and checkpoint before substantive research."
+    }
+  ],
+  "next_action": {
+    "id": "protect-admission",
+    "description": "Open and protect the admission-only PR for the WP06 mandate, checkpoint, registry entry, and documentation navigation.",
+    "evidence_targets": [
+      "docs/VGSE_BOUNDARY_CALIBRATION_IDENTIFIABILITY_MANDATE.md",
+      "governance/bounded_operation_checkpoints/VGSE-BOUNDARY-CALIBRATION-IDENTIFIABILITY-001.json",
+      "governance/bounded_operation_checkpoint_registry.json",
+      "mkdocs.yml"
+    ]
+  },
+  "external_evidence": {
+    "waiting": false,
+    "objects": []
+  },
+  "blocking_boundary": null,
+  "last_transition": {
+    "action": "authorize fresh WP06 boundary calibration identifiability successor",
+    "result": "WP05 is terminal and its tracker is closed. Read-only reconnaissance found no duplicate WP06 work. The successor is restricted to exact geometry-only identifiability of the five remaining boundary directions.",
+    "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#1053",
+      "grandchallenge/MATH-PROGRAMME@797139a7aef1a445461e24151493885be38159f1",
+      "governance/bounded_operation_checkpoints/VGSE-CYCLE-INVARIANT-QUOTIENT-RECONSTRUCTION-001.json",
+      "docs/VGSE_BOUNDARY_CALIBRATION_IDENTIFIABILITY_MANDATE.md"
+    ]
+  },
+  "freshness": {
+    "required_before_transition": true,
+    "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-BOUNDARY-CALIBRATION-IDENTIFIABILITY-001.json",
+    "on_mismatch": "REBIND_BEFORE_MUTATION",
+    "observed_at": "2026-09-23T11:50:07Z"
+  },
+  "resume": {
+    "fresh_session_safe": true,
+    "requires_chat_history": false,
+    "authoritative_sources": [
+      "grandchallenge/MATH-PROGRAMME#1053",
+      "docs/VGSE_BOUNDARY_CALIBRATION_IDENTIFIABILITY_MANDATE.md",
+      "research/vgse-eng-wp05/INVARIANT_LATTICE.json",
+      "research/vgse-eng-wp05/CANCELLATION_DERIVATION.md",
+      "research/vgse-eng-wp05/RESULTS.json",
+      "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607:ci/replay_vgse_wp00_planar_evidence.py"
+    ],
+    "instructions": "Protect admission before substantive work. Then prove or falsify the degree-one boundary rescaling symmetry, compute its exact rank on the WP05 quotient basis, and audit every possible C05 geometry-only normalization for circular dependence on the known quotient, response, or algebraic branch witness."
+  },
+  "terminal_evidence": [],
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false,
+    "protected_bypass_authorized": false
+  }
+}
