@@ -648,6 +648,13 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
           (ModuleCat.freeMk (ULift.up (j.proj x))) := by
       rw [hlcUnitMap]
       rfl
+    have hmoduleUnit :=
+      (ModuleCat.adj CMDG.CondensedCM4P3G.R.{u}).homEquiv_id
+        (ULift.{u + 1, u} Q.obj)
+    rw [ModuleCat.adj_homEquiv] at hmoduleUnit
+    have hmoduleUnitPoint :=
+      CategoryTheory.types_congr_hom hmoduleUnit.symm
+        (ULift.up (j.proj x))
     have hdiscreteUnitFactorForget :=
       congrArg
         (fun k =>
@@ -664,8 +671,19 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
               (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app M) by
       rfl]
     rw [hdiscreteUnitFactorForget]
-    simp only [Functor.map_comp, ConcreteCategory.comp_apply, ModuleCat.freeMk]
-    rw [hlcUnitPoint]
+    simp only [Functor.map_comp, ConcreteCategory.comp_apply]
+    rw [hmoduleUnitPoint]
+    have hlcUnitPointForget :
+        (ConcreteCategory.hom
+          ((CategoryTheory.forget
+            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
+            ((CondensedMod.LocallyConstant.adjunction
+              CMDG.CondensedCM4P3G.R.{u}).unit.app M)))
+          (ModuleCat.freeMk (ULift.up (j.proj x))) =
+        LocallyConstant.const (CompHaus.of PUnit.{u + 1})
+          (ModuleCat.freeMk (ULift.up (j.proj x))) := by
+      exact hlcUnitPoint
+    rw [hlcUnitPointForget]
     simpa [
       Q,
       CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
