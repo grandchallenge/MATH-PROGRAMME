@@ -613,7 +613,7 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             (CondensedMod.LocallyConstant.functorIsoDiscreteAux₁
               CMDG.CondensedCM4P3G.R.{u} M).hom ≫ k)
           htriangle
-      simpa only [Functor.id_obj, Category.assoc, Category.comp_id] using htrianglePost
+      exact htrianglePost.trans (Category.comp_id _)
     have hlcUnitPoint :
         (ConcreteCategory.hom
           ((CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M))
