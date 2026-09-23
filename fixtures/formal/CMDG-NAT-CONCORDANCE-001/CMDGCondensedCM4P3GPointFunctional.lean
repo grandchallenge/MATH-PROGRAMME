@@ -727,9 +727,28 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
               ((CondensedMod.LocallyConstant.adjunction
                 CMDG.CondensedCM4P3G.R.{u}).unit.app M)))
             mx) = _
-    rw [hlcUnitPointForget]
-    apply LocallyConstant.ext
-    intro p
+    have hdiscreteUnitPoint :
+        (ConcreteCategory.hom
+          ((CategoryTheory.forget
+            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
+            ((Condensed.discreteUnderlyingAdj
+              (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app M)))
+          mx = mx := by
+      rfl
+    have hfunctorIsoConst :
+        (ConcreteCategory.hom
+          ((CategoryTheory.forget
+            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
+            ((Condensed.underlying
+              (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
+              ((CondensedMod.LocallyConstant.functorIsoDiscrete
+                CMDG.CondensedCM4P3G.R.{u}).hom.app M))))
+          (LocallyConstant.const (CompHaus.of PUnit.{u + 1}) mx) = mx := by
+      have h := hdiscreteUnitFactorMx
+      simp only [Functor.map_comp, ConcreteCategory.comp_apply] at h
+      rw [hlcUnitPointForget, hdiscreteUnitPoint] at h
+      exact h.symm
+    rw [hlcUnitPointForget, hfunctorIsoConst]
     simp [
       mx,
       Q,
