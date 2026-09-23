@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = ROOT / "governance" / "mathforge_provider_imports.json"
 SCHEMA_PATH = ROOT / "schemas" / "mathforge_provider_import.schema.json"
 DOMAIN_REGISTRY_PATH = ROOT / "DOMAIN_REGISTRY.yaml"
+MIGRATION_PATH = ROOT / "governance" / "mathforge_provider_registry_migration.json"
 
 EXPECTED_PROVIDER_COMMIT = "c44fef1d5d235b2e496bcee9ba0f7fc54212fa0d"
 EXPECTED_IMPORTS = {
@@ -121,6 +122,15 @@ def supplemental_artifact_errors(campaign_id: str, entry: dict[str, Any]) -> lis
 def mathforge_provider_import_errors(registry: dict[str, Any] | None = None, *, active_campaigns: set[str] | None = None) -> list[str]:
     instance = registry if registry is not None else load_json(REGISTRY_PATH)
     errors = schema_errors(instance)
+    migration = load_json(MIGRATION_PATH)
+    if migration.get("current_authority") != "governance/mathforge_external_source_imports.json":
+        errors.append("MATHFORGE imports: current unified authority drift")
+    if migration.get("historical_compatibility_record") != "governance/mathforge_provider_imports.json":
+        errors.append("MATHFORGE imports: historical registry identity drift")
+    if migration.get("disposition") != "HISTORICAL_COMPATIBILITY_ONLY":
+        errors.append("MATHFORGE imports: legacy registry regained authority")
+    if migration.get("legacy_provider_commit") != EXPECTED_PROVIDER_COMMIT:
+        errors.append("MATHFORGE imports: historical provider commit migration drift")
     if instance.get("provider_repository") != "grandchallenge/MATHFORGE":
         errors.append("MATHFORGE imports: provider repository is not canonical")
     if instance.get("provider_commit") != EXPECTED_PROVIDER_COMMIT:
@@ -190,7 +200,7 @@ def main() -> int:
     if errors:
         print("\n".join(errors), file=sys.stderr)
         return 1
-    print("MATHFORGE provider imports are pinned: 8 campaigns, exact merged commit, unchanged coverage modes, FC-GDM-001 RH/NS supplements, FC-GDM-002 expanded artifact identities, and promotion coverage")
+    print("Historical MATHFORGE provider imports remain immutable compatibility evidence for 8 campaigns; the migration ledger explicitly withholds current authority")
     return 0
 
 

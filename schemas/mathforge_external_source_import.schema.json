@@ -1,31 +1,59 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://grandchallenge.ai/schemas/mathforge_external_source_import.schema.json",
-  "title": "MATHFORGE External Source Import Registry",
+  "title": "Programme unified MATHFORGE semantic catalog import registry",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "registry_id", "provider_repository", "provider_commit", "verified_at", "sources"],
+  "required": ["schema_version", "registry_id", "source_foundry", "verified_at", "catalog_release", "providers", "legacy_registry", "math_core_projection", "routing_boundaries"],
   "properties": {
-    "schema_version": {"const": "1.0.0"},
+    "schema_version": {"const": "2.0.0"},
     "registry_id": {"const": "MATHFORGE-EXTERNAL-SOURCE-IMPORTS"},
-    "provider_repository": {"const": "grandchallenge/MATHFORGE"},
-    "provider_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "source_foundry": {
+      "type": "object", "additionalProperties": false, "required": ["repository", "commit", "registry_artifact"],
+      "properties": {"repository": {"const": "grandchallenge/MATHFORGE"}, "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"}, "registry_artifact": {"$ref": "#/$defs/artifact"}}
+    },
     "verified_at": {"type": "string", "format": "date"},
-    "sources": {
-      "type": "array", "minItems": 1,
-      "items": {
+    "catalog_release": {
+      "type": "object", "additionalProperties": false, "required": ["catalog_release_id", "entry_count", "manifest_artifact", "relation_artifacts"],
+      "properties": {
+        "catalog_release_id": {"type": "string", "pattern": "^GCL-CATALOG-[A-Z0-9-]+$"}, "entry_count": {"type": "integer", "minimum": 1},
+        "manifest_artifact": {"$ref": "#/$defs/artifact"}, "relation_artifacts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/artifact"}}
+      }
+    },
+    "providers": {
+      "type": "array", "minItems": 2, "items": {
         "type": "object", "additionalProperties": false,
-        "required": ["source_id", "source_class", "upstream", "upstream_commit", "artifacts", "programme_disposition", "claim_boundary"],
+        "required": ["provider_id", "legacy_source_ids", "snapshot_id", "upstream_revision", "visibility", "inventory_count", "manifest_artifact", "composition_artifact", "catalog_shards", "programme_disposition", "claim_boundary"],
         "properties": {
-          "source_id": {"type": "string", "pattern": "^[A-Z][A-Z0-9-]+$"},
-          "source_class": {"enum": ["corpus_row", "formal_statement_repository"]},
-          "upstream": {"type": "string", "minLength": 3},
-          "upstream_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-          "programme_disposition": {"enum": ["CONFORMANCE_FIXTURE_ONLY", "ADMITTED_PROVIDER_EVIDENCE"]},
-          "claim_boundary": {"type": "string", "minLength": 80},
-          "artifacts": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["kind", "path", "git_blob_sha1"], "properties": {"kind": {"type": "string"}, "path": {"type": "string"}, "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}}}}
+          "provider_id": {"type": "string", "pattern": "^[A-Z][A-Z0-9-]+$"}, "legacy_source_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "snapshot_id": {"type": "string", "pattern": "^[A-Z0-9-]+$"}, "upstream_revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "visibility": {"enum": ["public_full_text", "public_metadata_only", "internal_review"]}, "inventory_count": {"type": "integer", "minimum": 1},
+          "manifest_artifact": {"$ref": "#/$defs/artifact"}, "composition_artifact": {"$ref": "#/$defs/artifact"},
+          "catalog_shards": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/artifact"}},
+          "programme_disposition": {"const": "READ_ONLY_SEMANTIC_CATALOG"}, "claim_boundary": {"type": "string", "minLength": 100}
         }
       }
+    },
+    "legacy_registry": {
+      "type": "object", "additionalProperties": false, "required": ["path", "disposition", "authority"],
+      "properties": {"path": {"const": "governance/mathforge_provider_imports.json"}, "disposition": {"const": "HISTORICAL_COMPATIBILITY_ONLY"}, "authority": {"const": false}}
+    },
+    "math_core_projection": {
+      "type": "object", "additionalProperties": false, "required": ["path", "mode", "canonical_claim_ledger_mutation"],
+      "properties": {"path": {"const": "governance/math_core_semantic_catalog_projection.json"}, "mode": {"const": "READ_ONLY_PROVENANCE_BOUND"}, "canonical_claim_ledger_mutation": {"const": false}}
+    },
+    "routing_boundaries": {
+      "type": "object", "additionalProperties": false, "required": ["mathsolve_minimum_proposal_tier", "exact_campaign_target_tier", "catalog_creates_result", "catalog_creates_claim", "catalog_creates_certificate"],
+      "properties": {
+        "mathsolve_minimum_proposal_tier": {"const": "SEMANTICALLY_REVIEWED"}, "exact_campaign_target_tier": {"const": "CAMPAIGN_CONCORDANT"},
+        "catalog_creates_result": {"const": false}, "catalog_creates_claim": {"const": false}, "catalog_creates_certificate": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "path", "git_blob_sha1", "sha256"],
+      "properties": {"kind": {"type": "string", "minLength": 3}, "path": {"type": "string", "minLength": 3}, "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
     }
   }
 }
