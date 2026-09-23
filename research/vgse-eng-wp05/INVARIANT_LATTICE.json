@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "work_package": "VGSE-ENG-WP05",
+  "construction": "Lexicographic spanning tree on the full 14-vertex graph; five U1-to-Uj tree paths plus the three fundamental cycles from non-tree edges.",
+  "basis_order": [
+    "P12",
+    "P13",
+    "P14",
+    "P15",
+    "P16",
+    "C1",
+    "C2",
+    "C3"
+  ],
+  "basis": [
+    {
+      "id": "P12",
+      "kind": "boundary_path",
+      "path": "U1->U2",
+      "exponents": {
+        "F07|F02": 1,
+        "B1": -1,
+        "B2": -1
+      },
+      "kasteleyn_sign_factor": 1,
+      "positive_weight_value": "1",
+      "signed_weight_value": "1"
+    },
+    {
+      "id": "P13",
+      "kind": "boundary_path",
+      "path": "U1->U3",
+      "exponents": {
+        "F01|F02": -1,
+        "F07|F02": 1,
+        "B1": -1,
+        "B3": 1
+      },
+      "kasteleyn_sign_factor": 1,
+      "positive_weight_value": "1",
+      "signed_weight_value": "1"
+    },
+    {
+      "id": "P14",
+      "kind": "boundary_path",
+      "path": "U1->U4",
+      "exponents": {
+        "F01|F04": 1,
+        "F01|F02": -1,
+        "F07|F02": 1,
+        "F05|F04": -1,
+        "B1": -1,
+        "B4": 1
+      },
+      "kasteleyn_sign_factor": 1,
+      "positive_weight_value": "25/3",
+      "signed_weight_value": "25/3"
+    },
+    {
+      "id": "P15",
+      "kind": "boundary_path",
+      "path": "U1->U5",
+      "exponents": {
+        "F01|F04": 1,
+        "F01|F02": -1,
+        "F07|F02": 1,
+        "F03|F06": 1,
+        "F03|F04": -1,
+        "B1": -1,
+        "B5": -1
+      },
+      "kasteleyn_sign_factor": -1,
+      "positive_weight_value": "7/2",
+      "signed_weight_value": "-7/2"
+    },
+    {
+      "id": "P16",
+      "kind": "boundary_path",
+      "path": "U1->U6",
+      "exponents": {
+        "F01|F04": 1,
+        "F01|F02": -1,
+        "F07|F02": 1,
+        "F03|F04": -1,
+        "F03|F08": 1,
+        "B1": -1,
+        "B6": -1
+      },
+      "kasteleyn_sign_factor": 1,
+      "positive_weight_value": "25/2",
+      "signed_weight_value": "25/2"
+    },
+    {
+      "id": "C1",
+      "kind": "closed_cycle",
+      "chord": "F07|F04",
+      "exponents": {
+        "F01|F04": -1,
+        "F01|F02": 1,
+        "F07|F02": -1,
+        "F07|F04": 1
+      },
+      "kasteleyn_sign_factor": -1,
+      "positive_weight_value": "6/7",
+      "signed_weight_value": "-6/7"
+    },
+    {
+      "id": "C2",
+      "kind": "closed_cycle",
+      "chord": "F05|F06",
+      "exponents": {
+        "F03|F06": -1,
+        "F03|F04": 1,
+        "F05|F04": -1,
+        "F05|F06": 1
+      },
+      "kasteleyn_sign_factor": -1,
+      "positive_weight_value": "4/21",
+      "signed_weight_value": "-4/21"
+    },
+    {
+      "id": "C3",
+      "kind": "closed_cycle",
+      "chord": "F07|F08",
+      "exponents": {
+        "F01|F04": -1,
+        "F01|F02": 1,
+        "F07|F02": -1,
+        "F03|F04": 1,
+        "F03|F08": -1,
+        "F07|F08": 1
+      },
+      "kasteleyn_sign_factor": 1,
+      "positive_weight_value": "18/175",
+      "signed_weight_value": "18/175"
+    }
+  ],
+  "rank": 8,
+  "closed_cycle_sublattice_rank": 3,
+  "boundary_path_complement_rank": 5,
+  "exact_claim": "The eight listed exponent vectors form a Z-basis of ker_Z(G). The corresponding positive monomials are a complete coordinate system on the WP01 weight quotient.",
+  "geometry_only_warning": "Only the three closed-cycle rows cancel every white/black vertex factor without additional boundary calibration."
+}
