@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "2.0.0",
   "protocol_id": "CHAIDEZ-PEDAGOGY-001",
   "campaign_unit": "SINGLE_THEOREM_SPINE",
   "result_status_fields": [
@@ -7,17 +7,19 @@
     "conditional_on",
     "strongest_supported_claim",
     "not_claimed",
-    "computation_class",
+    "support_route_class",
+    "foundational_profile",
     "certification_state",
     "first_executable_step"
   ],
   "exposition_sequence": [
+    "STATUS_BOX",
     "PLAIN_OBJECT",
     "EXACT_OBSTRUCTION",
     "WORKING_MODEL",
     "RESTRICTED_CLAIM",
-    "THEOREM_SPINE",
-    "MATHEMATICAL_ACTION",
+    "SPINE_LOCATION",
+    "SUPPORT_ROUTE",
     "DEBT_AND_CLAIM_BOUNDARY",
     "FIRST_EXECUTABLE_STEP"
   ],
@@ -27,11 +29,14 @@
     "WHAT_REMAINS_OPEN",
     "WHAT_REQUIRES_EXTERNAL_VERIFICATION"
   ],
-  "computation_classes": [
+  "support_route_classes": [
     "EXPLORATORY_EVIDENCE",
     "REGRESSION_AUDIT",
     "EXACT_FINITE_VERIFICATION",
-    "CONTINUUM_PROOF"
+    "CERTIFICATE_REPLAY",
+    "FORMAL_PROOF",
+    "CONTINUUM_PROOF",
+    "NEGATIVE_RESULT"
   ],
   "proof_debt_categories": [
     "MISSING_LEMMA",
@@ -39,6 +44,7 @@
     "EXTERNAL_SOURCE",
     "COMPUTATIONAL_REPLAY",
     "SEMANTIC_CORRESPONDENCE",
+    "FOUNDATIONAL_PROFILE_GAP",
     "ANALYTIC_ESTIMATE",
     "FORMALIZATION_BLOCKER"
   ],
@@ -47,6 +53,7 @@
     "role",
     "status",
     "dependencies",
+    "support_route_class",
     "discharge_criterion",
     "proof_debt_ids"
   ],
@@ -55,8 +62,17 @@
     "dependencies_named": true,
     "proof_debt_register_current": true,
     "trust_quartet_complete": true,
+    "foundational_profile_present_or_deferred": true,
     "first_executable_step_present": true,
     "next_package_names_spine_node": true
+  },
+  "external_catalog_promotion": {
+    "catalog_entry_disposition": "SOURCE_RECORD_ONLY",
+    "full_dossier_trigger": "REVIEWED_PROMOTION_TO_MATHSOLVE",
+    "minimum_proposal_assurance_tier": "SEMANTICALLY_REVIEWED",
+    "exact_campaign_target_assurance_tier": "CAMPAIGN_CONCORDANT",
+    "automatic_promotion": false,
+    "catalog_assurance_is_proof_or_certification": false
   },
   "required_work_package_artifacts": [
     "RESULT_STATUS",

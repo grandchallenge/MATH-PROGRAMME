@@ -17,17 +17,19 @@ EXPECTED = {
         "conditional_on",
         "strongest_supported_claim",
         "not_claimed",
-        "computation_class",
+        "support_route_class",
+        "foundational_profile",
         "certification_state",
         "first_executable_step",
     ],
     "exposition_sequence": [
+        "STATUS_BOX",
         "PLAIN_OBJECT",
         "EXACT_OBSTRUCTION",
         "WORKING_MODEL",
         "RESTRICTED_CLAIM",
-        "THEOREM_SPINE",
-        "MATHEMATICAL_ACTION",
+        "SPINE_LOCATION",
+        "SUPPORT_ROUTE",
         "DEBT_AND_CLAIM_BOUNDARY",
         "FIRST_EXECUTABLE_STEP",
     ],
@@ -37,11 +39,14 @@ EXPECTED = {
         "WHAT_REMAINS_OPEN",
         "WHAT_REQUIRES_EXTERNAL_VERIFICATION",
     ],
-    "computation_classes": [
+    "support_route_classes": [
         "EXPLORATORY_EVIDENCE",
         "REGRESSION_AUDIT",
         "EXACT_FINITE_VERIFICATION",
+        "CERTIFICATE_REPLAY",
+        "FORMAL_PROOF",
         "CONTINUUM_PROOF",
+        "NEGATIVE_RESULT",
     ],
     "proof_debt_categories": [
         "MISSING_LEMMA",
@@ -49,6 +54,7 @@ EXPECTED = {
         "EXTERNAL_SOURCE",
         "COMPUTATIONAL_REPLAY",
         "SEMANTIC_CORRESPONDENCE",
+        "FOUNDATIONAL_PROFILE_GAP",
         "ANALYTIC_ESTIMATE",
         "FORMALIZATION_BLOCKER",
     ],
@@ -57,6 +63,7 @@ EXPECTED = {
         "role",
         "status",
         "dependencies",
+        "support_route_class",
         "discharge_criterion",
         "proof_debt_ids",
     ],
@@ -81,6 +88,7 @@ GATE_FIELDS = [
     "dependencies_named",
     "proof_debt_register_current",
     "trust_quartet_complete",
+    "foundational_profile_present_or_deferred",
     "first_executable_step_present",
     "next_package_names_spine_node",
 ]
@@ -93,8 +101,8 @@ def validate(path: Path) -> list[str]:
         return [f"cannot load contract: {exc}"]
 
     errors: list[str] = []
-    if data.get("schema_version") != "1.0.0":
-        errors.append("schema_version must be 1.0.0")
+    if data.get("schema_version") != "2.0.0":
+        errors.append("schema_version must be 2.0.0")
     if data.get("protocol_id") != "CHAIDEZ-PEDAGOGY-001":
         errors.append("protocol_id must be CHAIDEZ-PEDAGOGY-001")
     if data.get("campaign_unit") != "SINGLE_THEOREM_SPINE":
@@ -103,6 +111,17 @@ def validate(path: Path) -> list[str]:
     for field, expected in EXPECTED.items():
         if data.get(field) != expected:
             errors.append(f"{field} must match the canonical ordered list")
+
+    expected_promotion = {
+        "catalog_entry_disposition": "SOURCE_RECORD_ONLY",
+        "full_dossier_trigger": "REVIEWED_PROMOTION_TO_MATHSOLVE",
+        "minimum_proposal_assurance_tier": "SEMANTICALLY_REVIEWED",
+        "exact_campaign_target_assurance_tier": "CAMPAIGN_CONCORDANT",
+        "automatic_promotion": False,
+        "catalog_assurance_is_proof_or_certification": False,
+    }
+    if data.get("external_catalog_promotion") != expected_promotion:
+        errors.append("external_catalog_promotion must preserve the reviewed-promotion boundary")
 
     gate = data.get("escalation_gate")
     if not isinstance(gate, dict):

@@ -27,3 +27,14 @@ Only license-cleared text is displayed. DeepMind entries are public metadata onl
 - MATHSOLVE may consider reviewed catalog entries as proposals. A catalog entry is never a result.
 - MATH-CORE receives read-only provenance-bound nodes and typed edges. The catalog cannot mutate the canonical Claim Ledger.
 - MATHCERT receives a separately scoped local claim and evidence package. Certification is never inferred from an assurance badge.
+
+## Chaidez promotion boundary
+
+Catalog entries are source records, not work packages, so ordinary intake does
+not manufacture a theorem spine or proof dossier. When a qualified reviewer
+promotes a `SEMANTICALLY_REVIEWED` entry as a MATHSOLVE proposal, the promotion
+must carry a complete Chaidez dossier governed by
+`CHAIDEZ-PEDAGOGY-001` version `2.0.0`. An exact imported campaign target also
+requires `CAMPAIGN_CONCORDANT` assurance and a reviewed typed relation. The
+dossier describes the proposed local work and its limits; it does not upgrade
+the source assertion, establish a claim, or authorize certification.

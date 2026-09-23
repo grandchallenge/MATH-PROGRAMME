@@ -40,8 +40,12 @@ def main() -> int:
         require_rejected(directory, "missing_trust_question", case)
 
         case = copy.deepcopy(canonical)
-        case["computation_classes"][2] = "NUMERICAL_EVIDENCE"
-        require_rejected(directory, "blurred_computation_class", case)
+        case["support_route_classes"][2] = "NUMERICAL_EVIDENCE"
+        require_rejected(directory, "blurred_support_route_class", case)
+
+        case = copy.deepcopy(canonical)
+        case["result_status_fields"].remove("foundational_profile")
+        require_rejected(directory, "missing_foundational_profile", case)
 
         case = copy.deepcopy(canonical)
         case["proof_debt_categories"].remove("SEMANTIC_CORRESPONDENCE")
@@ -54,6 +58,14 @@ def main() -> int:
         case = copy.deepcopy(canonical)
         case["escalation_gate"]["proof_debt_register_current"] = False
         require_rejected(directory, "disabled_debt_gate", case)
+
+        case = copy.deepcopy(canonical)
+        case["external_catalog_promotion"]["full_dossier_trigger"] = "CATALOG_INGESTION"
+        require_rejected(directory, "premature_catalog_dossier", case)
+
+        case = copy.deepcopy(canonical)
+        case["external_catalog_promotion"]["automatic_promotion"] = True
+        require_rejected(directory, "automatic_catalog_promotion", case)
 
         case = copy.deepcopy(canonical)
         case["required_work_package_artifacts"].remove("NEXT_EXECUTABLE_STEP")
