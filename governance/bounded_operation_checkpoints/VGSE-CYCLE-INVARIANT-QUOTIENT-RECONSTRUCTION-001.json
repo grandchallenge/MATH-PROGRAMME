@@ -15,56 +15,49 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1048"
   },
-  "phase": "WP05 reviewed candidate: exact cycle/path invariant partial reconstruction awaiting protected continuity rebind and native merge-queue admission.",
-  "state": "IN_PROGRESS",
+  "phase": "WP05 terminal: CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_PARTIAL admitted through native merge queue and read back from protected main.",
+  "state": "TERMINAL",
   "identities": {
-    "protected_base_sha": "dc0e579ce8f9dddf04045b6eea2669d8fa533003",
-    "candidate_head_sha": "4039300945621d4c265e22a94b15bc65a2640ccf",
+    "protected_base_sha": "14cc43f3429190d353c408777879fff8e376b9c4",
+    "candidate_head_sha": "14cc43f3429190d353c408777879fff8e376b9c4",
     "issue_number": 1048,
-    "pr_number": 1050,
-    "branch": "research/vgse-eng-wp05",
+    "pr_number": null,
+    "branch": null,
     "workflow_runs": []
   },
   "terminal_condition": "Terminate only at one declared WP05 disposition: CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_ESTABLISHED, CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_PARTIAL, CYCLE_INVARIANTS_EXIST_BUT_DO_NOT_SPAN_QUOTIENT, NUISANCE_FACTOR_CANCELLATION_FALSIFIED, or CYCLE_INVARIANT_ROUTE_NON_IDENTIFIABLE, with exact-head replay, independent Adversary and Referee review, protected admission, and claim-boundary preservation.",
-  "permitted_next_actions": [
-    {
-      "id": "protect-reviewed-candidate",
-      "description": "Protect this exact reviewed-candidate continuity bind, then admit unchanged substantive PR #1050 through required checks and the native merge queue."
-    }
-  ],
-  "next_action": {
-    "id": "protect-reviewed-candidate",
-    "description": "Protect the continuity rebind to reviewed head 4039300945621d4c265e22a94b15bc65a2640ccf before enabling substantive merge admission.",
-    "evidence_targets": [
-      "grandchallenge/MATH-PROGRAMME#1050",
-      "reviewed candidate 4039300945621d4c265e22a94b15bc65a2640ccf",
-      "Adversary review 5289205285",
-      "Referee review 5289205706",
-      "research/vgse-eng-wp05/RESULTS.json",
-      "research/vgse-eng-wp05/CLAIM_LEDGER.json"
-    ]
-  },
+  "permitted_next_actions": [],
+  "next_action": null,
   "external_evidence": {
     "waiting": false,
     "objects": []
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "bind exact reviewed WP05 research candidate",
-    "result": "Substantive PR #1050 is unchanged at 4039300945621d4c265e22a94b15bc65a2640ccf. Independent deterministic artifact replay returned PASS. Adversary review 5289205285 returned CLEAR_NO_BLOCKING_DEFECT and Referee review 5289205706 returned ADMISSIBLE_FOR_PROTECTED_INTEGRATION_AFTER_CONTINUITY_REBIND_AND_REQUIRED_CHECKS. No substantive repair was requested.",
+    "action": "admit WP05 exact cycle/path invariant partial reconstruction and terminate bounded tranche",
+    "result": "Admission PR #1049 was protected at dc0e579ce8f9dddf04045b6eea2669d8fa533003. Substantive PR #1050 remained exactly at reviewed head 4039300945621d4c265e22a94b15bc65a2640ccf. Exact-head deterministic replay passed. Adversary review 5289205285 and Referee review 5289205706 cleared the candidate. Continuity rebind PR #1051 was protected first at 8339d056d476d1fe5a59b66cf9f8289cc5e097c3. Native merge-group candidate 14cc43f3429190d353c408777879fff8e376b9c4 then passed GCL conformance, GH-OS routing enforcement, formal validation, and Programme policy checks; PR #1050 merged as that queue-owned commit and protected main read back exactly at the same SHA.",
     "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#1049",
+      "protected admission dc0e579ce8f9dddf04045b6eea2669d8fa533003",
       "grandchallenge/MATH-PROGRAMME#1050",
       "reviewed candidate 4039300945621d4c265e22a94b15bc65a2640ccf",
       "exact-head deterministic artifact replay PASS",
       "Adversary review 5289205285",
-      "Referee review 5289205706"
+      "Referee review 5289205706",
+      "grandchallenge/MATH-PROGRAMME#1051",
+      "protected continuity bind 8339d056d476d1fe5a59b66cf9f8289cc5e097c3",
+      "merge-group/protected substantive merge 14cc43f3429190d353c408777879fff8e376b9c4",
+      "GCL conformance run 35844429165",
+      "GH-OS routing enforcement run 35844427887",
+      "formal-validation run 35844427861",
+      "Programme policy checks run 35844427942"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-CYCLE-INVARIANT-QUOTIENT-RECONSTRUCTION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-23T09:31:44Z"
+    "observed_at": "2026-09-23T09:43:40Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -72,7 +65,8 @@
     "authoritative_sources": [
       "grandchallenge/MATH-PROGRAMME#1048",
       "grandchallenge/MATH-PROGRAMME#1050",
-      "grandchallenge/MATH-PROGRAMME@4039300945621d4c265e22a94b15bc65a2640ccf",
+      "grandchallenge/MATH-PROGRAMME@14cc43f3429190d353c408777879fff8e376b9c4",
+      "reviewed candidate 4039300945621d4c265e22a94b15bc65a2640ccf",
       "Adversary review 5289205285",
       "Referee review 5289205706",
       "research/vgse-eng-wp05/README.md",
@@ -80,9 +74,28 @@
       "research/vgse-eng-wp05/CLAIM_LEDGER.json",
       "research/vgse-eng-wp05/NEXT_ACTION.md"
     ],
-    "instructions": "Preserve substantive PR #1050 exactly at reviewed head 4039300945621d4c265e22a94b15bc65a2640ccf. Protect this continuity rebind first, then use required checks and the native merge queue. Terminal candidate is CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_PARTIAL: 3/8 quotient directions are exact geometry-only closed-cycle invariants; all 8 require certified branch boundary calibration. Preserve all C06 and source/physical/manufacturing/commercial exclusions."
+    "instructions": "WP05 is terminal with disposition CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_PARTIAL. Exact closed-cycle cancellation recovers 3 of 8 quotient directions from embedding increments alone. All 8 directions are reconstructed only when the certified branch boundary factors are also supplied. No full geometry-only inverse is established. Reopen only for a separately bounded structural derivation of the five boundary factors from admitted embedding geometry without consuming the algebraic branch witness, known quotient, or a source-correspondence assumption. Preserve all C06 and source/physical/manufacturing/commercial exclusions."
   },
-  "terminal_evidence": [],
+  "terminal_evidence": [
+    "WP05 admission protected through PR #1049 at dc0e579ce8f9dddf04045b6eea2669d8fa533003",
+    "WP05 reviewed substantive head 4039300945621d4c265e22a94b15bc65a2640ccf",
+    "exact-head deterministic artifact replay PASS",
+    "Adversary review 5289205285: CLEAR_NO_BLOCKING_DEFECT",
+    "Referee review 5289205706: ADMISSIBLE_FOR_PROTECTED_INTEGRATION_AFTER_CONTINUITY_REBIND_AND_REQUIRED_CHECKS",
+    "continuity rebind protected through PR #1051 at 8339d056d476d1fe5a59b66cf9f8289cc5e097c3",
+    "substantive native merge-group/protected merge 14cc43f3429190d353c408777879fff8e376b9c4",
+    "merge-group GCL conformance success run 35844429165",
+    "merge-group GH-OS routing success run 35844427887",
+    "merge-group formal-validation success run 35844427861",
+    "merge-group Programme policy success run 35844427942",
+    "protected main exact readback 14cc43f3429190d353c408777879fff8e376b9c4",
+    "exact invariant lattice rank 8 decomposes as 3 closed cycles plus 5 boundary paths",
+    "exact geometry-only closed-cycle reconstruction rank 3 with signed invariants -6/7, -4/21, 18/175",
+    "exact calibrated path-plus-cycle reconstruction spans all 8 quotient directions via unimodular chart det -1",
+    "full geometry-only inverse not established because five boundary path directions retain branch endpoint factors",
+    "terminal disposition CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_PARTIAL",
+    "VGSE-C06 and all source/physical/manufacturing/product/patent/commercial exclusions retained"
+  ],
   "claim_boundaries": {
     "mathematical_claim_authorized": false,
     "certification_claim_authorized": false,
