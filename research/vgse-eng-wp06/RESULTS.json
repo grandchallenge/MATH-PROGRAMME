@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "work_package": "VGSE-ENG-WP06",
+  "source_defined_t_embedding": {
+    "full_geometry_to_quotient_identifiability": true,
+    "recovered_rank": 8,
+    "mechanism": "TE3: Euclidean geometric edge weights and graph weights are boundary-fixed gauge equivalent.",
+    "boundary_factor_reconstruction_needed": false
+  },
+  "retained_c05_against_protected_c04": {
+    "te3_status": "FAILS_NUMERICAL_REPLAY_ON_ALL_FIVE_BRANCHES",
+    "simplest_invariant": "P12",
+    "target": "1",
+    "observed_range": [
+      0.011840955903522417,
+      0.022399997676604427
+    ],
+    "cycle_invariants_status": "all three agree to ~1e-13 relative precision",
+    "path_invariants_status": "all five do not reproduce the protected quotient",
+    "evidence_correction_status": "INDEPENDENT_INTERVAL_OR_EXACT_MATHCERT_REPLAY_REQUIRED_BEFORE_PROTECTED_ADJUDICATION_CHANGE"
+  },
+  "broader_algebraic_realization_class": {
+    "geometry_only_identifiable_rank": 3,
+    "boundary_ambiguity_rank": 5,
+    "rescaling_group_dimension": 6,
+    "quotient_action_rank": 5,
+    "quotient_action_kernel_dimension": 1,
+    "exact_obstruction": true
+  },
+  "fixed_response_branch_lookup": {
+    "status": "CIRCULAR_FOR_STRUCTURAL_INVERSE",
+    "reason": "The five branches share one quotient and the branch algebra is constructed from the pinned response."
+  },
+  "terminal_candidate": "BOUNDARY_CALIBRATION_FIVE_DIMENSIONAL_OBSTRUCTION",
+  "terminal_interpretation": "The obstruction applies to the broader algebraic-realization class represented by current C05 artifacts. In the stricter source-defined t-embedding class, TE3 instead makes the full quotient geometry-identifiable. Current C05 does not yet establish membership in that stricter class for the protected C04 weight class.",
+  "next_required_action": "Launch an independent MATHCERT TE3 conformance replay and correct or qualify VGSE-C05 if the failure is certified.",
+  "claim_boundary": {
+    "vgse_c06": false,
+    "source_correspondence": false,
+    "mechanics": false,
+    "manufacturing": false,
+    "product": false,
+    "patent": false,
+    "commercial": false
+  }
+}
