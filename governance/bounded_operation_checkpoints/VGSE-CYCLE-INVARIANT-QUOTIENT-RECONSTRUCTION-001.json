@@ -15,31 +15,33 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1048"
   },
-  "phase": "WP05 admission: exact cycle-invariant quotient reconstruction mandate awaiting protected admission before substantive research.",
-  "state": "AUTHORIZED_READY",
+  "phase": "WP05 reviewed candidate: exact cycle/path invariant partial reconstruction awaiting protected continuity rebind and native merge-queue admission.",
+  "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "4b78daac0b85298957b52e34687423e5442b5e51",
-    "candidate_head_sha": "cc5a4bf3c41b740a8fd7d7213f1eb6f3f499dd4a",
+    "protected_base_sha": "dc0e579ce8f9dddf04045b6eea2669d8fa533003",
+    "candidate_head_sha": "4039300945621d4c265e22a94b15bc65a2640ccf",
     "issue_number": 1048,
-    "pr_number": null,
-    "branch": "governance/vgse-cycle-invariant-quotient-reconstruction-admission",
+    "pr_number": 1050,
+    "branch": "research/vgse-eng-wp05",
     "workflow_runs": []
   },
   "terminal_condition": "Terminate only at one declared WP05 disposition: CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_ESTABLISHED, CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_PARTIAL, CYCLE_INVARIANTS_EXIST_BUT_DO_NOT_SPAN_QUOTIENT, NUISANCE_FACTOR_CANCELLATION_FALSIFIED, or CYCLE_INVARIANT_ROUTE_NON_IDENTIFIABLE, with exact-head replay, independent Adversary and Referee review, protected admission, and claim-boundary preservation.",
   "permitted_next_actions": [
     {
-      "id": "protect-admission",
-      "description": "Protect the WP05 mandate and continuity checkpoint through the ordinary PR/native merge-queue gates before creating substantive research artifacts."
+      "id": "protect-reviewed-candidate",
+      "description": "Protect this exact reviewed-candidate continuity bind, then admit unchanged substantive PR #1050 through required checks and the native merge queue."
     }
   ],
   "next_action": {
-    "id": "protect-admission",
-    "description": "Open and protect the admission-only PR for the WP05 mandate, checkpoint, registry entry, and documentation navigation.",
+    "id": "protect-reviewed-candidate",
+    "description": "Protect the continuity rebind to reviewed head 4039300945621d4c265e22a94b15bc65a2640ccf before enabling substantive merge admission.",
     "evidence_targets": [
-      "docs/VGSE_CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_MANDATE.md",
-      "governance/bounded_operation_checkpoints/VGSE-CYCLE-INVARIANT-QUOTIENT-RECONSTRUCTION-001.json",
-      "governance/bounded_operation_checkpoint_registry.json",
-      "mkdocs.yml"
+      "grandchallenge/MATH-PROGRAMME#1050",
+      "reviewed candidate 4039300945621d4c265e22a94b15bc65a2640ccf",
+      "Adversary review 5289205285",
+      "Referee review 5289205706",
+      "research/vgse-eng-wp05/RESULTS.json",
+      "research/vgse-eng-wp05/CLAIM_LEDGER.json"
     ]
   },
   "external_evidence": {
@@ -48,33 +50,37 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "authorize fresh WP05 cycle-invariant successor after terminal WP04 closure",
-    "result": "No duplicate successor was found. Current protected main descends from the terminal WP04 checkpoint. A fresh tracker and admission branch were created; substantive research remains forbidden until protected admission.",
+    "action": "bind exact reviewed WP05 research candidate",
+    "result": "Substantive PR #1050 is unchanged at 4039300945621d4c265e22a94b15bc65a2640ccf. Independent deterministic artifact replay returned PASS. Adversary review 5289205285 returned CLEAR_NO_BLOCKING_DEFECT and Referee review 5289205706 returned ADMISSIBLE_FOR_PROTECTED_INTEGRATION_AFTER_CONTINUITY_REBIND_AND_REQUIRED_CHECKS. No substantive repair was requested.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#1048",
-      "grandchallenge/MATH-PROGRAMME@4b78daac0b85298957b52e34687423e5442b5e51",
-      "governance/bounded_operation_checkpoints/VGSE-GEOMETRY-QUOTIENT-COUPLING-001.json",
-      "docs/VGSE_CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_MANDATE.md"
+      "grandchallenge/MATH-PROGRAMME#1050",
+      "reviewed candidate 4039300945621d4c265e22a94b15bc65a2640ccf",
+      "exact-head deterministic artifact replay PASS",
+      "Adversary review 5289205285",
+      "Referee review 5289205706"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-CYCLE-INVARIANT-QUOTIENT-RECONSTRUCTION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-23T09:12:24Z"
+    "observed_at": "2026-09-23T09:31:44Z"
   },
   "resume": {
     "fresh_session_safe": true,
     "requires_chat_history": false,
     "authoritative_sources": [
       "grandchallenge/MATH-PROGRAMME#1048",
-      "docs/VGSE_CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_MANDATE.md",
-      "research/vgse-eng-wp04/README.md",
-      "research/vgse-eng-wp04/RESULTS.json",
-      "grandchallenge/MATHSOLVE@b0854bb7770296b610b655753bc62b27365b27bb:work_packages/VGSE_WP00/artifacts/code/b3_holomorphic.py",
-      "grandchallenge/MATH-PROGRAMME:research/vgse-eng-wp01/model.json"
+      "grandchallenge/MATH-PROGRAMME#1050",
+      "grandchallenge/MATH-PROGRAMME@4039300945621d4c265e22a94b15bc65a2640ccf",
+      "Adversary review 5289205285",
+      "Referee review 5289205706",
+      "research/vgse-eng-wp05/README.md",
+      "research/vgse-eng-wp05/RESULTS.json",
+      "research/vgse-eng-wp05/CLAIM_LEDGER.json",
+      "research/vgse-eng-wp05/NEXT_ACTION.md"
     ],
-    "instructions": "Protect admission before substantive work. Then derive the natural graph gauge-invariant lattice independently of the WP01 chart, prove or falsify cancellation of discrete-holomorphic vertex factors including signs/orientations, test all five C05 branches, and compare surviving exact invariants with the protected eight-dimensional quotient. Preserve all C06 and physical/manufacturing/commercial exclusions."
+    "instructions": "Preserve substantive PR #1050 exactly at reviewed head 4039300945621d4c265e22a94b15bc65a2640ccf. Protect this continuity rebind first, then use required checks and the native merge queue. Terminal candidate is CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_PARTIAL: 3/8 quotient directions are exact geometry-only closed-cycle invariants; all 8 require certified branch boundary calibration. Preserve all C06 and source/physical/manufacturing/commercial exclusions."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
