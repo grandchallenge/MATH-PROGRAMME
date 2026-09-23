@@ -632,7 +632,14 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
                   CMDG.CondensedCM4P3G.R.{u}).inv.app M) := by
         rfl
       rw [htransport, Category.assoc, ← Functor.map_comp,
-        Iso.inv_hom_id_app, Functor.map_id, Category.comp_id]
+        Iso.inv_hom_id_app]
+      have hmapId :=
+        (Condensed.underlying
+          (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map_id
+          ((Condensed.discrete
+            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).obj M)
+      rw [hmapId]
+      exact (Category.comp_id _).symm
     have hlcUnitPoint :
         (ConcreteCategory.hom
           ((CondensedMod.LocallyConstant.adjunction CMDG.CondensedCM4P3G.R.{u}).unit.app M))
