@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP002",
+  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP003",
   "governed_work_id": "CHAIDEZ-V2-HARDENING-001",
   "repository": "grandchallenge/MATHCERT",
   "admission": {
@@ -15,52 +15,74 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1058"
   },
-  "phase": "Programme initial coverage and Solve v2 protected; Cert receiver pushed, PR admission next",
-  "state": "AUTHORIZED_READY",
+  "phase": "Cert prerequisite path registration open; receiver waits for protected registration and replay",
+  "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "2c0fb3f2b86e842bec2a0ab02f922c3e8287de7c",
-    "candidate_head_sha": "2bc45a51595132786af3ed48e96b7847113953d9",
+    "candidate_head_sha": "9941e26f12f5b1605e0088c0962ffab7f374ead9",
     "issue_number": null,
-    "pr_number": null,
-    "branch": "platform/certification/chaidez-external-intake-v2",
-    "workflow_runs": []
+    "pr_number": 333,
+    "branch": "platform/certification/chaidez-path-registration",
+    "workflow_runs": [
+      {
+        "run_id": 35977478333,
+        "name": "Cert checks",
+        "status": "in_progress",
+        "conclusion": null,
+        "job_id": 107561271154
+      }
+    ]
   },
   "terminal_condition": "All stages in docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md admitted, protected artifact reconciliation and post-merge checks pass, ledger has no unresolved required obligations; production promotions remain zero.",
   "permitted_next_actions": [
     {
-      "id": "admit-cert",
-      "description": "Open the exact Cert candidate PR, replay FULL_ESTATE and verify required latest-push review before any protected merge."
+      "id": "read-registration-gates",
+      "description": "Query Cert #333 head, required checks and REST review commit bindings; if FULL_ESTATE and genuine latest-push approval pass, admit with exact-head protection and read back."
     }
   ],
   "next_action": {
-    "id": "admit-cert",
-    "description": "Open the exact Cert candidate PR, replay FULL_ESTATE and verify required latest-push review before any protected merge.",
+    "id": "read-registration-gates",
+    "description": "Query Cert #333 head, required checks and REST review commit bindings; if FULL_ESTATE and genuine latest-push approval pass, admit with exact-head protection and read back.",
     "evidence_targets": [
-      "grandchallenge/MATH-PROGRAMME#1058",
-      "grandchallenge/MATHSOLVE#449",
-      "grandchallenge/MATHCERT:2bc45a51595132786af3ed48e96b7847113953d9"
+      "grandchallenge/MATHCERT#333",
+      "grandchallenge/MATHCERT:9941e26f12f5b1605e0088c0962ffab7f374ead9",
+      "https://github.com/grandchallenge/MATHCERT/actions/runs/35977478333",
+      "https://api.github.com/repos/grandchallenge/MATHCERT/pulls/333/reviews"
     ]
   },
   "external_evidence": {
-    "waiting": false,
-    "objects": []
+    "waiting": true,
+    "objects": [
+      {
+        "kind": "workflow_run",
+        "identity": "grandchallenge/MATHCERT/actions/runs/35977478333",
+        "status": "FULL_ESTATE in progress at 9941e26f12f5b1605e0088c0962ffab7f374ead9"
+      },
+      {
+        "kind": "review",
+        "identity": "grandchallenge/MATHCERT#333@9941e26f12f5b1605e0088c0962ffab7f374ead9",
+        "status": "REVIEW_REQUIRED; no approval present at readback"
+      }
+    ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "Rebind stale initial checkpoint to verified completed Programme/Solve stages and pushed Cert candidate",
-    "result": "Programme #1059 protected at 79d8464242297b4a47eef685303d4dc61aae77c5 (policy run 35951831627 success); Solve #448/#449 protected at b9906e0d150e232efed1a5e4fbd2f5081609ab56 (checks 35953691652 success). Cert 10 receiving tests pass locally only. Forge clarification and Programme final reconciliation remain unadmitted. Production promotions remain zero.",
+    "action": "Split path pre-registration after protected-base guard rejected receiver self-registration",
+    "result": "Cert #332 at 2bc45a51595132786af3ed48e96b7847113953d9 failed certify run 35977194416 in the protected-base path guard, before receiving or Lean replay. #333 contains only the existing manifest and its test module; 27 local tests pass and the unchanged protected-base guard accepts FULL_ESTATE. The receiver's 10 local tests pass but do not replace hosted admission. Programme #1059 and Solve #448/#449 remain protected. Forge clarification, final Programme ledger/receipt and four-repository protected readback remain outstanding; production stays zero.",
     "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#1058",
       "grandchallenge/MATH-PROGRAMME#1059",
-      "grandchallenge/MATHSOLVE#448",
       "grandchallenge/MATHSOLVE#449",
-      "grandchallenge/MATHCERT:2bc45a51595132786af3ed48e96b7847113953d9"
+      "grandchallenge/MATHCERT#332",
+      "grandchallenge/MATHCERT#333",
+      "https://github.com/grandchallenge/MATHCERT/actions/runs/35977194416"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/CHAIDEZ-V2-HARDENING-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-24T08:44:44Z"
+    "observed_at": "2026-09-24T08:49:23Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -70,7 +92,7 @@
       "docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md",
       "governance/chaidez_conformance_coverage.json"
     ],
-    "instructions": "Read issue and implementation record, verify checkpoint freshness and material closure, resume serially. Preserve historical baseline. Record every merge and unresolved obligation in issue and checkpoint. No mathematical review or certificate is authorized."
+    "instructions": "Read the governing issue and this checkpoint, verify live exact identities before action. After #333 protected admission and relevant post-merge readback, integrate its material path-policy dependency into #332, replay FULL_ESTATE, and require the protected latest-push approval for that resulting head. Do not infer or fabricate approval. Then admit Forge documentation only, finalize Programme requirement coverage and a deterministic explicit-root reconciliation receipt, and read back all protected stages. The incomplete local reconciliation draft is not an authoritative receipt. Preserve historical baseline, catalog, generic handoffs and claims. No mathematical review or certificate is authorized."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
