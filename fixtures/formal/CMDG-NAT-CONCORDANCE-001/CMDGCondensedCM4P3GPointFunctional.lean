@@ -789,8 +789,12 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       change c p = Finsupp.single q (1 : CMDG.CondensedCM4P3G.R.{u})
       have hp :=
         CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply
-          Q q U (1 : LocallyConstant P CMDG.CondensedCM4P3G.R.{u}) p
-      simpa [c] using hp
+          Q q U
+          (1 : LocallyConstant P
+            CMDG.CondensedCM4P2E.FiniteDualTransport.R.{u}) p
+      set_option backward.defeqAttrib.useBackward true in
+      set_option backward.isDefEq.respectTransparency false in
+        exact hp
     have hfU :
         fU (Finsupp.single q (1 : CMDG.CondensedCM4P3G.R.{u})) = mx := by
       change
