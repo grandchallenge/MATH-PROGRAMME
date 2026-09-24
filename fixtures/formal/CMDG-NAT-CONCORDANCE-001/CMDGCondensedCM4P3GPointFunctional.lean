@@ -933,6 +933,7 @@ theorem kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kerne
     (x : X) :
     kernelProductFunctional X d (integralBasisEvaluationWeight X x) = 0 := by
   let P := Profinite.of PUnit.{u + 1}
+  let U := op ((profiniteToCompHaus).obj P)
   let qtrue := basisBooleanPointProbe X (fun _ => true)
   let qx := profinitePointProbe X x
   let e :=
@@ -980,8 +981,8 @@ theorem kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kerne
   have hz :
       freeHomSectionsEquiv P coefficientObject
           (0 : FreeHom P coefficientObject) =
-        (0 : ↑(Sections P coefficientObject)) := by
-    let z : ↑(Sections P coefficientObject) :=
+        (0 : coefficientObject.obj.obj U) := by
+    let z : coefficientObject.obj.obj U :=
       freeHomSectionsEquiv P coefficientObject
         (0 : FreeHom P coefficientObject)
     have hzz : z = z + z := by
@@ -994,7 +995,7 @@ theorem kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kerne
           ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
             (weightedFiniteBooleanMeasureLimitLift X
                 (integralBasisEvaluationWeight X x) ≫ e ≫ d)) =
-        (0 : ↑(Sections P coefficientObject)) := by
+        (0 : coefficientObject.obj.obj U) := by
     rw [hmor]
     exact hz
   rw [freeHomSectionsEquiv_precomp] at hs0
