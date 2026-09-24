@@ -769,31 +769,39 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       exact h.symm
     rw [hlcUnitPointForget, hfunctorIsoConst]
     let U := op ((profiniteToCompHaus).obj P)
+    let q : Q.obj := by
+      set_option backward.isDefEq.respectTransparency false in
+        exact (finiteQuotientMap X j).hom.hom x
     let fU :
         CMDG.CondensedCM4P2E.Algebraic.finiteSmallFreeModule.obj Q ⟶ M :=
       (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso Q).hom
     let c : LocallyConstant P (Q.obj →₀ CMDG.CondensedCM4P3G.R.{u}) :=
       (ConcreteCategory.hom
         ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion
-          Q (j.proj x)).app U))
+          Q q).app U))
         (1 : LocallyConstant P CMDG.CondensedCM4P3G.R.{u})
     have hc :
         c =
           LocallyConstant.const (CompHaus.of PUnit.{u + 1})
-            (Finsupp.single (j.proj x) (1 : CMDG.CondensedCM4P3G.R.{u})) := by
-      dsimp only [c]
+            (Finsupp.single q (1 : CMDG.CondensedCM4P3G.R.{u})) := by
       apply LocallyConstant.ext
       intro p
-      rw [CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply]
-      rfl
+      change c p = Finsupp.single q (1 : CMDG.CondensedCM4P3G.R.{u})
+      have hp :=
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply
+          Q q U (1 : LocallyConstant P CMDG.CondensedCM4P3G.R.{u}) p
+      simpa [c] using hp
     have hfU :
-        fU (Finsupp.single (j.proj x) (1 : CMDG.CondensedCM4P3G.R.{u})) = mx := by
+        fU (Finsupp.single q (1 : CMDG.CondensedCM4P3G.R.{u})) = mx := by
       change
         CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv Q
-            (Finsupp.single (j.proj x) (1 : CMDG.CondensedCM4P3G.R.{u})) =
+            (Finsupp.single q (1 : CMDG.CondensedCM4P3G.R.{u})) =
           ModuleCat.freeMk (ULift.up (j.proj x))
       rw [CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single]
-      rfl
+      set_option backward.defeqAttrib.useBackward true in
+      set_option backward.isDefEq.respectTransparency false in
+        dsimp [q, Q]
+        rfl
     have hmap :
         (ConcreteCategory.hom
           (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map
@@ -803,7 +811,8 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       rw [hc]
       apply LocallyConstant.ext
       intro p
-      change fU (Finsupp.single (j.proj x) (1 : CMDG.CondensedCM4P3G.R.{u})) = mx
+      set_option backward.isDefEq.respectTransparency false in
+        change fU (Finsupp.single q (1 : CMDG.CondensedCM4P3G.R.{u})) = mx
       exact hfU
     have hIsoNat :=
       (CondensedMod.LocallyConstant.functorIsoDiscrete
@@ -847,7 +856,10 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
             (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map
               ((CondensedMod.LocallyConstant.functor
                 CMDG.CondensedCM4P3G.R.{u}).map fU)).hom.app U)) c)
-    rw [hmap, hfunctorIsoConst]
+    rw [hmap]
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      exact hfunctorIsoConst.symm
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
