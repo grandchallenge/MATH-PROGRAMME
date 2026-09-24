@@ -24,3 +24,45 @@ The governed ledger records every contract member separately with owner, operati
 Tests must mutate every required field, stage, quartet member, debt and artifact role; exercise traversal, untracked/missing bytes, duplicate IDs, digest drift, inadequate assurance, absent relation, inconsistent machine claims/quartet/debt and handoff state. Prove all eleven generic handoffs unchanged and valid, WP06 claim unchanged, legacy RM-DIO classification explicit, no canary in authoritative inventories. Do not claim natural-language semantic review from structural tests.
 
 Finish only with no unexplained ledger gaps, empty reconciled production registry, complete canary, operational Cert checks, exact protected provenance, passed affected checks and protected readback. Report local, pushed, PR-open, queued, merged and readback states distinctly. Stop for a named plan/repository contradiction; preserve unrelated user edits in existing working copies.
+
+## Reconciliation and evidence finalization
+
+The deterministic integration command uses four explicit authenticated checkouts.
+Fetch their protected `origin/main` references before running it; it neither
+fetches credentials nor guesses sibling directories. It checks commits against
+protected ancestry, reads regular Git blobs rather than mutable working files,
+and checks both Git blob and SHA-256 receipts. It reconciles all 17,288 source
+entries, zero ordinary-entry dossiers, zero production promotions/intakes,
+unchanged generic handoffs, the unchanged WP06 Claim Ledger, and the exact
+protected Solve contract consumed by Cert. The path-platform boundary is also
+checked. This is not a mathematical proof or certification route.
+
+```sh
+python ci/reconcile_chaidez_conformance.py \
+  --programme-root /path/to/MATH-PROGRAMME \
+  --forge-root /path/to/MATHFORGE \
+  --solve-root /path/to/MATHSOLVE \
+  --cert-root /path/to/MATHCERT \
+  --check-receipt governance/chaidez_reconciliation_receipt.json \
+  --coverage-ledger governance/chaidez_conformance_coverage.json
+```
+
+The manifest pins the policy/import snapshot and the admitted pillar snapshots;
+it does not require unrelated later main commits to replace byte-identical
+material evidence. The cross-repository replay is an authenticated integration
+operation, not a scheduled workflow. Ordinary policy CI performs the explicit
+offline schema/accounting check and local mutation tests only.
+
+Final documentary admission has two commits to avoid self-referential hashes:
+first protect the replay command, manifest and deterministic receipt, then pin
+that protected receipt and its tests in the final coverage ledger. An INITIAL
+ledger or a null integration receipt is not completion. The final CLOSED ledger
+must pass its schema/inventory validator and the explicit-root replay of all
+documentation, validator and test pins. The selected receipt remains byte-stable
+when that later ledger is added.
+
+CANARY_REPLAYED means the machine contract and a synthetic filesystem bundle
+were exercised. It does not mean that a real source was semantically adjudicated,
+promoted, proved or independently certified. Qualified source review, promotion
+decision and MATHCERT independent verification remain reserved acts. With zero
+production promotions no row may be PRODUCTION_EXERCISED.
