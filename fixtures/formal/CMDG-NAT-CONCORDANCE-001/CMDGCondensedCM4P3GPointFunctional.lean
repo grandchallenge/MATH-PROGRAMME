@@ -920,9 +920,96 @@ theorem weightedFiniteBooleanMeasureLimitLift_measureSolidification_evaluationWe
           rw [Category.assoc, ← hnat]
           rw [← Category.assoc, ← Functor.map_comp, hpoint]
 
+/-- A morphism in the kernel of profinite solidification annihilates the full
+basis-evaluation weight at every point.  This is the first direct use of the #664 kernel
+hypothesis after the finite Dirac identity has been assembled globally. -/
+theorem kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kernel
+    (X : Profinite.{u})
+    (d :
+      (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X ⟶
+        coefficientObject)
+    (hd :
+      (Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u}).app X ≫ d = 0)
+    (x : X) :
+    kernelProductFunctional X d (integralBasisEvaluationWeight X x) = 0 := by
+  let P := Profinite.of PUnit.{u + 1}
+  let qtrue := basisBooleanPointProbe X (fun _ => true)
+  let qx := profinitePointProbe X x
+  let e :=
+    CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.hom.app X
+  have hsolid :
+      measureSolidification.app X ≫ e =
+        (Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u}).app X := by
+    simpa [e] using
+      congrArg (fun η => η.app X)
+        measureSolidification_comp_measureProfiniteSolidNatIso
+  have hlimit :=
+    weightedFiniteBooleanMeasureLimitLift_measureSolidification_evaluationWeight_allTrue X x
+  have hmor :
+      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+          (weightedFiniteBooleanMeasureLimitLift X
+              (integralBasisEvaluationWeight X x) ≫ e ≫ d) =
+        0 := by
+    calc
+      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+          (weightedFiniteBooleanMeasureLimitLift X
+              (integralBasisEvaluationWeight X x) ≫ e ≫ d) =
+        ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+          weightedFiniteBooleanMeasureLimitLift X
+            (integralBasisEvaluationWeight X x)) ≫ e ≫ d := by
+              simp only [Category.assoc]
+      _ =
+        ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qx ≫
+          measureSolidification.app X) ≫ e ≫ d := by
+            rw [hlimit]
+      _ =
+        (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qx ≫
+          (measureSolidification.app X ≫ e) ≫ d := by
+            simp only [Category.assoc]
+      _ =
+        (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qx ≫
+          (Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u}).app X ≫ d := by
+            rw [hsolid]
+      _ =
+        (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qx ≫ 0 := by
+            rw [hd]
+      _ = 0 := by simp
+  have hzadd :=
+    freeHomSectionsEquiv_add P coefficientObject
+      (0 : FreeHom P coefficientObject) (0 : FreeHom P coefficientObject)
+  have hz :
+      freeHomSectionsEquiv P coefficientObject
+          (0 : FreeHom P coefficientObject) = 0 := by
+    let z :=
+      freeHomSectionsEquiv P coefficientObject
+        (0 : FreeHom P coefficientObject)
+    have hzz : z = z + z := by
+      simpa [z] using hzadd
+    have hzz' : z + z = z + 0 :=
+      hzz.symm.trans (add_zero z).symm
+    exact add_left_cancel hzz'
+  have hs0 :
+      freeHomSectionsEquiv P coefficientObject
+          ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+            (weightedFiniteBooleanMeasureLimitLift X
+                (integralBasisEvaluationWeight X x) ≫ e ≫ d)) = 0 := by
+    rw [hmor]
+    exact hz
+  rw [freeHomSectionsEquiv_precomp] at hs0
+  have hsPoint := congrArg
+    (fun f : LocallyConstant P CMDG.CondensedCM4P3G.R.{u} => f PUnit.unit) hs0
+  have hsection :
+      kernelProductSection X d (integralBasisEvaluationWeight X x)
+          (fun _ => true) = 0 := by
+    simpa [P, qtrue, kernelProductSection, basisBooleanPointProbe] using hsPoint
+  rw [kernelProductFunctional_apply]
+  simpa using congrArg ULift.down hsection
+
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
 #check weightedFiniteBooleanMeasureLimitLift_measureSolidification_evaluationWeight_allTrue
 #print axioms weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
+#print axioms weightedFiniteBooleanMeasureLimitLift_measureSolidification_evaluationWeight_allTrue
+#print axioms kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kernel
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
