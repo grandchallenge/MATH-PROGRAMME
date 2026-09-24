@@ -2,23 +2,38 @@
 
 ## Independent intelligence intake without institutional assimilation
 
+| Status field | Current state |
+|---|---|
+| Result status | `audited` operational doctrine over a protected interface |
+| Conditional on | Protected MATHSOLVE dispatch/intake records, the active controller contract, and the ordinary MATHSOLVE/MATHCERT governance routes remaining authoritative |
+| Strongest supported claim | GCL can receive one bounded contribution from independent intelligence, preserve its exact returned evidence and provenance, and adjudicate it separately without granting the contributor institutional authority |
+| Not claimed | Mathematical correctness, statistical or cryptographic independence, novelty, certification, claim promotion, merge authority, publication authority, or MATHCERT effect |
+| Support-route class | `regression audit` of protected implementation and pilot evidence; mathematical claims carried through the interface retain their own support classes |
+| Foundational profile | Not applicable to this governance interface; any mathematical contribution retains the foundation profile of its own campaign |
+| Certification state | Documentary and operational state protected; no mathematical certification is created by this page |
+| First executable step | Before the next CEI dispatch, compare the dispatch contract, RESULT/1 grammar, controller machine contract, workflow wake paths, and claim boundaries; complete when all five agree on protected state |
+
 **Control surface:** `GCL-CEI-001`  
 **Documentary lifecycle:** `active`  
 **Documentary role:** governed human-readable operational description of the protected independent-intelligence intake path  
 **Initial protected admission:** MATH-PROGRAMME PR #1041, merge `598a13d8a390fcab722b84b4a494921fc50d0e56`  
-**Controller:** `MP-NSCI-INTAKE-PR-CONTROLLER-001`, machine status `ACTIVE`  
-**Claim boundary:** this interface transports and preserves bounded mathematical contributions. It does not certify mathematics, promote claims, merge protected state, or substitute for MATHCERT.
+**Controller:** `MP-NSCI-INTAKE-PR-CONTROLLER-001`, machine status `ACTIVE`
 
-## 1. The point
+## 1. Plain object
 
-GCL sometimes needs a contribution from an intelligent reasoner that has **not** been assimilated into the institution's accumulated context, vocabulary, preferred proof routes, or local consensus.
+The object is a controlled boundary between **outside reasoning** and **inside governed knowledge**.
 
-The purpose is not anonymity and not mystique. It is epistemic separation.
+GCL gives an independent reasoner one complete, bounded problem description. The reasoner returns one bounded result. GitHub preserves exactly what was returned. Only after preservation does GCL decide what, if anything, the result earns.
 
-The controlled interface therefore does two things at once:
+In compact form:
 
-1. gives the independent reasoner enough information to solve one bounded problem well; and
-2. prevents the reasoner from needing to become an internal GCL agent in order to contribute.
+```text
+GCL supplies the problem world.
+Independent intelligence supplies one bounded thought.
+GitHub preserves the thought.
+GCL tests the thought.
+Protected knowledge changes only through the existing governed route.
+```
 
 The governing sentence is:
 
@@ -26,7 +41,104 @@ The governing sentence is:
 
 This is a contribution interface, not an authority interface.
 
-## 2. Core topology
+## 2. Exact obstruction
+
+Two tempting designs fail for exact reasons.
+
+### Failure A — open-ended assimilation
+
+A contributor is told to read the repository, absorb prior discussion, inspect campaign history, and then help.
+
+That may produce useful work, but it destroys the property this interface needs: the returned reasoning is no longer independent of GCL's accumulated local framing.
+
+The failure is not philosophical. It is operational:
+
+```text
+repository immersion
+    -> institutional context acquisition
+    -> local framing enters the reasoning path
+    -> zero-context contribution claim no longer holds
+```
+
+### Failure B — direct admission
+
+A contributor returns a plausible proof or counterexample and the institution treats the result as accepted because the contributor appears capable.
+
+That collapses generation into adjudication:
+
+```text
+returned result
+    -> assumed correctness
+    -> claim promotion
+```
+
+The controlled interface forbids that collapse. Its semantic sequence is:
+
+```text
+receive
+!=
+believe
+!=
+admit
+!=
+certify
+```
+
+The exact obstruction is therefore a trust-boundary problem: GCL needs epistemic separation **without** losing provenance, and provenance **without** converting receipt into authority.
+
+## 3. Working model
+
+The smallest useful model is:
+
+```text
+one dispatch
+    ->
+one bounded reasoning task
+    ->
+one RESULT/1
+    ->
+one immutable evidence object
+    ->
+separate adjudication
+```
+
+Contrast that with the failure mode:
+
+```text
+open-ended conversation
+    ->
+many partially authoritative artifacts
+    ->
+ambiguous provenance
+    ->
+unclear claim effect
+```
+
+The protected NS-CI pilot instantiated the first model. A zero-context bootstrap defined the entire work-set, a contributor returned one `GCL-CONTRIBUTION-RESULT/1`, intake preserved the raw result and receipt, and GCL adjudicated the mathematics separately.
+
+## 4. Restricted claim
+
+The interface supports this restricted operational claim:
+
+> Given a complete bounded dispatch and a contract-valid RESULT/1 return, GCL can preserve the returned contribution with provenance, keep it non-authoritative on receipt, and route subsequent adjudication through existing protected controls.
+
+The interface does **not** establish:
+
+- that the contribution is mathematically correct;
+- that the contributor is statistically, cryptographically, or philosophically independent;
+- that common pretraining or shared background knowledge is absent;
+- that a preserved result is admitted;
+- that an admitted result is certified;
+- that MATHSOLVE evidence has MATHCERT effect;
+- that the contributor acquires merge, publication, campaign, or claim-promotion authority.
+
+For a zero-context dispatch, independence is a **work-context property**:
+
+> **A valid contribution must be understandable and executable as intellectual work from the dispatch itself.**
+
+## 5. Governance-spine location
+
+The CEI sits between problem dispatch and institutional adjudication. It does not replace either side.
 
 ```text
 +------------------------------+
@@ -45,8 +157,7 @@ This is a contribution interface, not an authority interface.
                v
 +------------------------------+
 |           RESULT/1           |
-| one bounded mathematical     |
-| contribution                 |
+| one bounded contribution     |
 +--------------+---------------+
                |
                v
@@ -73,12 +184,12 @@ This is a contribution interface, not an authority interface.
                v
 +------------------------------+
 |  MATHCERT / PROTECTED STATE  |
-| only through the pre-existing|
-| governed route               |
+| only through pre-existing    |
+| governed routes              |
 +------------------------------+
 ```
 
-The implementation contains one additional control-plane hop between intake evidence and the ordinary evidence pull request:
+The implementation contains one additional control-plane hop:
 
 ```text
 validated intake branch
@@ -90,30 +201,11 @@ bounded Release Trust controller
 ordinary MATHSOLVE evidence PR
 ```
 
-That controller can validate and open the PR. It cannot adjudicate, approve, merge, certify, promote, publish, or mutate campaign state.
+That controller may validate and open the PR. It may not adjudicate, approve, merge, certify, promote, publish, or mutate campaign state.
 
-## 3. What "independent" means here
+## 6. Dispatch contract
 
-Independence is a **work-context property**.
-
-For a zero-context dispatch, the contributing reasoner receives the dispatch/bootstrap and ordinary mathematical background knowledge, but does not need repository history, prior agent discussion, institutional preferences, hidden campaign state, or GCL's internal theory of what the answer "should" be.
-
-This produces a useful kind of separation:
-
-- the contributor is not trained during the task into GCL's current local consensus;
-- the problem statement is explicit enough that missing chat history is not a hidden dependency;
-- the result can disagree with internal expectations without protocol failure;
-- the returned object can be judged on its mathematical content rather than on institutional fluency.
-
-It does **not** establish statistical independence, cryptographic independence, lack of common pretraining, or philosophical neutrality. Those are different claims.
-
-The useful invariant is narrower:
-
-> **A valid contribution must be understandable and executable as intellectual work from the dispatch itself.**
-
-## 4. Dispatch contract
-
-A dispatch is responsible for defining the complete bounded work-set.
+A dispatch defines the complete bounded work-set.
 
 It should contain, as applicable:
 
@@ -129,47 +221,30 @@ It should contain, as applicable:
 - the exact return grammar;
 - the exact place where the result must be returned.
 
-The dispatch should be written so that "read the repository first" is unnecessary.
+The dispatch should make “read the repository first” unnecessary.
 
-For the protected NS-CI pilot, the bootstrap explicitly tells the contributor that the document is the entire work-set and binds the contributor to a single bounded response object.
+For the protected NS-CI pilot, the bootstrap explicitly states that the document is the entire work-set and binds the contributor to one bounded response object.
 
-## 5. RESULT/1: the narrow crossing
+## 7. RESULT/1: the narrow crossing
 
 The contributor returns exactly one object under the `GCL-CONTRIBUTION-RESULT/1` grammar.
 
-The narrow return surface is deliberate.
+The narrow return surface prevents an informal cloud of attachments, private notes, side files, hidden calculations, or supplementary artifacts from becoming ambiguous evidence.
 
-A valid result is not accompanied by an informal cloud of attachments, private notes, side files, hidden calculations, or unbounded follow-up artifacts that the receiving institution must interpret.
+The one-result rule improves:
 
-The interface therefore prefers:
+- provenance;
+- hashing;
+- replay;
+- first-result locking;
+- adversarial review;
+- separation between contribution and institutional interpretation.
 
-```text
-one dispatch
-    ->
-one bounded reasoning task
-    ->
-one RESULT/1
-    ->
-one immutable evidence object
-```
-
-over:
-
-```text
-open-ended conversation
-    ->
-many partially authoritative artifacts
-    ->
-ambiguous provenance
-```
-
-The one-result rule improves provenance, hashing, replay, first-result locking, and adversarial review.
-
-## 6. GitHub intake is a preservation boundary
+## 8. Support route: intake and preservation
 
 The intake layer does not decide whether the mathematics is correct.
 
-Its function is mechanical and evidentiary:
+Its role is mechanical and evidentiary:
 
 1. authenticate the GitHub actor and source comment;
 2. bind the result to the exact registered dispatch;
@@ -186,7 +261,7 @@ The intake must not execute contributor-supplied material.
 
 A syntactically valid result is therefore **evidence received**, not **mathematics accepted**.
 
-## 7. Evidence shape
+### Evidence shape
 
 The durable MATHSOLVE intake result has two primary objects:
 
@@ -195,17 +270,15 @@ raw result snapshot
 machine receipt
 ```
 
-The receipt binds the contribution to the evidence chain, including the dispatch identity, source issue/comment identity, contributor actor, bootstrap or handoff identities, raw-result digest, schema state, and non-adjudicated claim state.
+The receipt binds the contribution to the dispatch identity, source issue/comment identity, contributor actor, bootstrap or handoff identities, raw-result digest, schema state, and non-adjudicated claim state.
 
-This creates a simple reconstruction property:
-
-> A later reviewer should be able to identify exactly what the outside reasoner returned, who returned it through GitHub, what dispatch it answered, and whether the preserved bytes are unchanged.
+A later reviewer should be able to determine exactly what was returned, who returned it through GitHub, what dispatch it answered, and whether the preserved bytes changed.
 
 The receipt is provenance. It is not a proof certificate.
 
-## 8. Bounded Release Trust controller
+## 9. Bounded Release Trust controller
 
-The active controller is:
+The active machine contract is:
 
 `governance/ns_ci_intake_pr_controller.json`
 
@@ -213,20 +286,11 @@ with control ID:
 
 `MP-NSCI-INTAKE-PR-CONTROLLER-001`.
 
-Protected readback after PR #1040 reports:
-
-```text
-status: ACTIVE
-target repository: MATHSOLVE
-contents: read
-pull_requests: write
-```
-
-Its permitted role is intentionally small:
+Its protected authority is intentionally small:
 
 - read protected MATHSOLVE dispatch records;
-- read the already-created intake branch;
-- compare its raw result and receipt against protected requirements;
+- read an already-created intake branch;
+- compare raw result and receipt against protected requirements;
 - open an ordinary pull request from that existing validated branch.
 
 It may not:
@@ -240,36 +304,30 @@ It may not:
 - certify or promote claims;
 - acquire Actions-write, workflow-write, checks-write, or administration authority.
 
-The controller therefore closes an automation gap without collapsing intake, adjudication, and acceptance into one actor.
+The controller closes an automation gap without collapsing intake, adjudication, and acceptance into one actor.
 
-## 9. Wake and persistence
+### Wake and persistence
 
-The controller is a repository-bound GitHub Actions workflow.
-
-Protected workflow behavior now includes all three wake paths:
+Protected workflow behavior has three wake paths:
 
 1. scheduled reconciliation every ten minutes;
 2. manual replay;
-3. a bounded `workflow_run` wake after successful completion of the existing **Administrative maintenance dispatcher**.
+3. a success-gated `workflow_run` wake after the **Administrative maintenance dispatcher** completes.
 
-The `workflow_run` path is success-gated.
-
-This was admitted by MATH-PROGRAMME PR #1039 and protected at merge commit:
+PR #1039 admitted the third path at merge commit:
 
 `536e377529dd6a313e79c2f91c1dc2567ad924a5`.
 
-The wake path changes latency and persistence only. It does not change credential scope or claim authority.
+The wake changes latency and persistence only. It does not change credential scope or claim authority.
 
-## 10. Adjudication is intentionally separate
+## 10. Adjudication is a separate action
 
 GCL adjudication occurs only after raw preservation.
 
-This ordering matters.
-
-The preserved external result is not rewritten into the form GCL wishes the contributor had supplied. Instead, adjudication may:
+The preserved result is not rewritten into the form GCL wishes the contributor had supplied. Adjudication may instead:
 
 - verify a derivation;
-- identify an actual useful lemma inside an overclaim;
+- identify a useful lemma inside an overclaim;
 - construct counterexamples;
 - compare the result with internal evidence;
 - narrow a statement;
@@ -277,49 +335,35 @@ The preserved external result is not rewritten into the form GCL wishes the cont
 - preserve negative information;
 - admit only the fragment that survives scrutiny.
 
-This allows GCL to use independent intelligence without outsourcing institutional judgment.
-
-The correct semantic sequence is:
-
-```text
-receive
-!=
-believe
-!=
-admit
-!=
-certify
-```
-
-Each transition has a different owner.
+This is the semantic bridge between **outside contribution** and **inside claim state**. The bridge is governed review, not contributor identity and not intake success.
 
 ## 11. Protected pilot evidence
 
 The interface has been exercised on real mathematical content.
 
-### Cooperative contribution
+### Cooperative mathematical contribution
 
-The protected NS-CI contribution from issue #426 / comment `5768723180` was adjudicated in MATHSOLVE PR #436.
+The NS-CI contribution from issue #426 / comment `5768723180` was adjudicated in MATHSOLVE PR #436.
 
 Protected merge:
 
-`b9e41f38a438fd3e039cf55fb59d7cd1ae0d1bc8`
+`b9e41f38a438fd3e039cf55fb59d7cd1ae0d1bc8`.
 
-The adjudication admitted only a reduced theorem and explicitly rejected stronger unsupported packet-realizability and necessity/sufficiency claims.
+The adjudication admitted only a reduced theorem and rejected stronger unsupported packet-realizability and necessity/sufficiency claims.
 
-This is the intended behavior of the interface: useful mathematics may survive even when the contributor's strongest formulation does not.
+This is a concrete negative-control result: the interface preserved useful mathematics **without** preserving the contributor's strongest claim as institutional truth.
 
 ### Release Trust qualification
 
-The bounded Release Trust controller independently revalidated the adversarial fixture dispatch `NSCI-C2-B-ADV-999` and opened MATHSOLVE PR #445 as `gcl-release-trust[bot]`.
+The bounded Release Trust controller revalidated adversarial fixture dispatch `NSCI-C2-B-ADV-999` and opened MATHSOLVE PR #445 as `gcl-release-trust[bot]`.
 
 That PR preserved exactly the raw result and machine receipt and merged at:
 
 `78c31d50671ad98305062c7104ed1e3c1812fc0c`.
 
-Its body explicitly records that it does not adjudicate mathematics, infer independence, certify a claim, or alter campaign state.
+Its body records that it does not adjudicate mathematics, infer independence, certify a claim, or alter campaign state.
 
-Together these two cases exercise both sides of the interface:
+Together, the two pilot cases exercise:
 
 ```text
 outside mathematical contribution
@@ -329,45 +373,31 @@ trusted mechanical preservation
 separate institutional adjudication
 ```
 
-## 12. Housekeeping closure
+## 12. Debt and claim boundary
 
-Two post-qualification residuals were identified and are now closed.
+### What is established
 
-### Residual A — deterministic recurring wake
+- the protected intake path exists;
+- the controller is `ACTIVE`;
+- one-result preservation and receipt generation have been exercised;
+- the Release Trust controller can open an ordinary evidence PR from a valid intake branch;
+- the cooperative pilot demonstrates that adjudication can narrow an external result instead of accepting it wholesale;
+- the controller's wake metadata and protected workflow are aligned.
 
-PR #1039 added the successful Administrative maintenance dispatcher completion as a bounded recurring wake source while preserving the ten-minute schedule and manual replay.
+### What remains outside this claim
 
-Protected merge:
+- mathematical correctness of any future contribution;
+- statistical or cryptographic independence;
+- universal sufficiency of the RESULT/1 schema;
+- MATHCERT certification;
+- theorem promotion;
+- publication or commercial authority.
 
-`536e377529dd6a313e79c2f91c1dc2567ad924a5`
+### Documentary debt
 
-Protected readback confirms the `workflow_run` trigger and success gate are present.
+The continuing debt is synchronization, not missing mathematical proof: the human-readable page, controller contract, workflow, dispatch grammar, and protected evidence path must remain mutually consistent as the interface evolves.
 
-### Residual B — stale controller lifecycle metadata
-
-The machine controller contract still described itself as `CANDIDATE` after successful live qualification.
-
-PR #1040 changed only:
-
-```text
-CANDIDATE -> ACTIVE
-```
-
-No token scope, permitted action, prohibited action, validation rule, first-result lock, or claim boundary changed.
-
-Protected merge establishing that closure:
-
-`01b334c14dec59b49cca3cc014acafd0870d7011`
-
-Protected readback at that closure confirmed:
-
-`"status": "ACTIVE"`.
-
-That SHA is retained as historical closure evidence, not as a claim about the repository's current head. Current controller state is read from the protected machine contract `governance/ns_ci_intake_pr_controller.json`.
-
-Disposition:
-
-`HOUSEKEEPING_RESIDUALS_CLOSED__PROTECTED_READBACK_CONFIRMED`.
+Any material mismatch is a governance defect and should fail closed before a new dispatch relies on the changed surface.
 
 ## 13. Failure semantics
 
@@ -407,18 +437,26 @@ For a new controlled independent contribution:
 4. publish the dispatch through the governed route;
 5. provide the bootstrap to the independent reasoner;
 6. require one RESULT/1 through the declared GitHub comment surface;
-7. let the intake workflow authenticate, validate, hash, and preserve the result;
+7. let intake authenticate, validate, hash, and preserve the result;
 8. let the bounded Release Trust controller open the ordinary evidence PR when the intake branch is valid;
 9. protect the raw evidence through ordinary repository controls;
 10. adjudicate the mathematics separately;
 11. admit, narrow, reject, or retain negative knowledge according to evidence;
-12. use MATHCERT only through its existing independent route where certification is actually required.
+12. use MATHCERT only through its existing independent route where certification is required.
 
 Do not merge these stages for convenience.
 
-## 15. Source-of-truth surfaces
+## 15. Trust quartet
 
-The principal protected implementation and documentary anchors are:
+**What is proved?** No new mathematical theorem is proved by this governance page.
+
+**What is checked?** The protected interface topology, authority boundary, pilot evidence, controller contract, and wake behavior are represented by protected repository artifacts and regression/governance checks.
+
+**What remains open?** The correctness and value of each future contribution remain open until separately adjudicated.
+
+**What requires external verification?** Any mathematical statement that depends on external sources, independent replay, or MATHCERT review retains those obligations in its own campaign.
+
+## 16. Source-of-truth surfaces
 
 | Function | Protected surface |
 |---|---|
@@ -433,25 +471,44 @@ The principal protected implementation and documentary anchors are:
 | Release Trust qualification evidence | MATHSOLVE PR #445 |
 | Deterministic wake admission | MATH-PROGRAMME PR #1039 |
 | ACTIVE lifecycle reconciliation | MATH-PROGRAMME PR #1040 |
+| Initial CEI documentary admission | MATH-PROGRAMME PR #1041 |
 
 The raw contribution and receipt remain MATHSOLVE evidence. This document explains the interface and its invariants; it does not replace those evidence objects.
 
-## 16. The architectural lesson
+## 17. Historical housekeeping evidence
 
-The controlled epistemic interface is useful because it preserves a productive asymmetry:
-
-> **Outside intelligence is allowed to be intellectually foreign. Inside governance remains responsible for what becomes institutional knowledge.**
-
-The interface therefore separates **generation** from **assimilation**, **evidence** from **belief**, and **useful contribution** from **authority**.
-
-In compact form:
+PR #1040 changed the controller lifecycle metadata from:
 
 ```text
-GCL supplies the world.
-Independent intelligence supplies a bounded thought.
-GitHub preserves the thought.
-GCL tests the thought.
-Protected knowledge changes only through the existing governed route.
+CANDIDATE -> ACTIVE
 ```
+
+without changing token scope, permitted action, prohibited action, validation rule, first-result lock, or claim boundary.
+
+The protected merge establishing that closure was:
+
+`01b334c14dec59b49cca3cc014acafd0870d7011`.
+
+That SHA is historical closure evidence, not a statement about the repository's current head. Current controller state is read from the protected machine contract.
+
+Earlier documentary drift between the public page and machine wake contract was repaired through PR #1062 and protected at:
+
+`ab13f94e37d493212468664e620746dd7c023a23`.
+
+## 18. First executable step
+
+Before issuing the next CEI dispatch, perform one bounded conformance audit.
+
+**Input:** the candidate dispatch/bootstrap, RESULT/1 grammar, `governance/ns_ci_intake_pr_controller.json`, `.github/workflows/ns-ci-intake-pr-controller.yml`, and this page.
+
+**Action:** compare dispatch identity rules, return grammar, first-result locking, wake behavior, controller permissions, prohibited actions, and claim boundaries across those surfaces.
+
+**Output:** one pass/fail record naming every inspected protected artifact and exact SHA.
+
+**Completion test:** PASS only if the human-readable description, machine contract, workflow, and dispatch all describe the same authority and evidence path with no unresolved drift.
+
+The architectural lesson remains:
+
+> **Outside intelligence is allowed to be intellectually foreign. Inside governance remains responsible for what becomes institutional knowledge.**
 
 That separation is the feature.
