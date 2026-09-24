@@ -769,11 +769,10 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       exact h.symm
     rw [hlcUnitPointForget, hfunctorIsoConst]
     let U := op ((profiniteToCompHaus).obj P)
-    let N : ModuleCat.{u + 1} CMDG.CondensedCM4P3G.R.{u} :=
-      CMDG.CondensedCM4P2E.Algebraic.finiteSmallFreeModule.obj Q
-    let fU : N ⟶ M :=
+    let fU :
+        CMDG.CondensedCM4P2E.Algebraic.finiteSmallFreeModule.obj Q ⟶ M :=
       (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso Q).hom
-    let c : LocallyConstant P N :=
+    let c : LocallyConstant P (Q.obj →₀ CMDG.CondensedCM4P3G.R.{u}) :=
       (ConcreteCategory.hom
         ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion
           Q (j.proj x)).app U))
@@ -782,22 +781,19 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
         c =
           LocallyConstant.const (CompHaus.of PUnit.{u + 1})
             (Finsupp.single (j.proj x) (1 : CMDG.CondensedCM4P3G.R.{u})) := by
+      dsimp only [c]
       apply LocallyConstant.ext
       intro p
-      have hp :=
-        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply
-          Q (j.proj x) U
-          (1 : LocallyConstant P CMDG.CondensedCM4P3G.R.{u}) p
-      simpa [c, U, P] using hp
+      rw [CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply]
+      rfl
     have hfU :
         fU (Finsupp.single (j.proj x) (1 : CMDG.CondensedCM4P3G.R.{u})) = mx := by
       change
         CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv Q
             (Finsupp.single (j.proj x) (1 : CMDG.CondensedCM4P3G.R.{u})) =
           ModuleCat.freeMk (ULift.up (j.proj x))
-      simpa [mx] using
-        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single
-          Q (j.proj x) (1 : CMDG.CondensedCM4P3G.R.{u}))
+      rw [CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single]
+      rfl
     have hmap :
         (ConcreteCategory.hom
           (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map
@@ -817,12 +813,13 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
           (CondensedMod.LocallyConstant.functor CMDG.CondensedCM4P3G.R.{u}).map fU ≫
             (CondensedMod.LocallyConstant.functorIsoDiscrete
               CMDG.CondensedCM4P3G.R.{u}).hom.app M := by
-      dsimp [eTail, fU, N,
+      dsimp [eTail, fU,
         CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
         CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
         CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
         CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso]
-      exact hIsoNat.symm
+      set_option backward.isDefEq.respectTransparency false in
+        exact hIsoNat.symm
     change
       (ConcreteCategory.hom
         ((CategoryTheory.forget
@@ -833,7 +830,23 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       (ConcreteCategory.hom
         (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.app U)) c
     rw [htail]
-    simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      change
+        (ConcreteCategory.hom
+          ((CategoryTheory.forget
+            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
+            ((Condensed.discreteUnderlyingAdj
+              (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app M)))
+          mx =
+        (ConcreteCategory.hom
+          (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map
+            ((CondensedMod.LocallyConstant.functorIsoDiscrete
+              CMDG.CondensedCM4P3G.R.{u}).hom.app M)).hom.app U))
+          ((ConcreteCategory.hom
+            (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map
+              ((CondensedMod.LocallyConstant.functor
+                CMDG.CondensedCM4P3G.R.{u}).map fU)).hom.app U)) c)
     rw [hmap, hfunctorIsoConst]
 
 #check profinitePointProbe
