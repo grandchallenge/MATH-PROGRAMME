@@ -1,0 +1,80 @@
+{
+  "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
+  "schema_version": "1.0.0",
+  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP001",
+  "governed_work_id": "CHAIDEZ-V2-HARDENING-001",
+  "repository": "grandchallenge/MATHSOLVE",
+  "admission": {
+    "topology": "MULTI_SESSION_RESUMABLE",
+    "admission_ref": "grandchallenge/MATH-PROGRAMME#1058",
+    "routine_work_excluded": true
+  },
+  "authority": {
+    "ghos_standard": "GCL-GHOS-00",
+    "ghos_version": "0.2.0",
+    "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#1058"
+  },
+  "phase": "Programme initial coverage admission; MATHSOLVE baseline rebound for next stage",
+  "state": "AUTHORIZED_READY",
+  "identities": {
+    "protected_base_sha": "7e1f27f7ec205d511570cf3b498037a8907a89c6",
+    "candidate_head_sha": "7e1f27f7ec205d511570cf3b498037a8907a89c6",
+    "issue_number": null,
+    "pr_number": null,
+    "branch": "main",
+    "workflow_runs": []
+  },
+  "terminal_condition": "All stages in docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md admitted, protected artifact reconciliation and post-merge checks pass, ledger has no unresolved required obligations; production promotions remain zero.",
+  "permitted_next_actions": [
+    {
+      "id": "implement-solve",
+      "description": "After Programme initial admission, implement dossier and supplement v2, zero registry, canary and WP06 compatibility."
+    }
+  ],
+  "next_action": {
+    "id": "implement-solve",
+    "description": "Verify MATHSOLVE main baseline, then prepare the MATHSOLVE stage described in the protected implementation record.",
+    "evidence_targets": [
+      "grandchallenge/MATH-PROGRAMME#1058",
+      "docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md",
+      "grandchallenge/MATHSOLVE:7e1f27f7ec205d511570cf3b498037a8907a89c6"
+    ]
+  },
+  "external_evidence": {
+    "waiting": false,
+    "objects": []
+  },
+  "blocking_boundary": null,
+  "last_transition": {
+    "action": "Bind approved plan to protected baseline",
+    "result": "Initial coverage records policy only; no completion or production promotion claimed.",
+    "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#1058"
+    ]
+  },
+  "freshness": {
+    "required_before_transition": true,
+    "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/CHAIDEZ-V2-HARDENING-001.json",
+    "on_mismatch": "REBIND_BEFORE_MUTATION",
+    "observed_at": "2026-09-24T00:17:47.028Z"
+  },
+  "resume": {
+    "fresh_session_safe": true,
+    "requires_chat_history": false,
+    "authoritative_sources": [
+      "grandchallenge/MATH-PROGRAMME#1058",
+      "docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md",
+      "governance/chaidez_conformance_coverage.json"
+    ],
+    "instructions": "Read issue and implementation record, verify checkpoint freshness and material closure, resume serially. Preserve historical baseline. Record every merge and unresolved obligation in issue and checkpoint. No mathematical review or certificate is authorized."
+  },
+  "terminal_evidence": [],
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false,
+    "protected_bypass_authorized": false
+  }
+}

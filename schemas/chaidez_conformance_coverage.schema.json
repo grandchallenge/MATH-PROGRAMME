@@ -1,0 +1,290 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "protocol_id",
+    "phase",
+    "production_promotion_count",
+    "requirements",
+    "integration_receipt"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "protocol_id": {
+      "const": "CHAIDEZ-PEDAGOGY-001"
+    },
+    "phase": {
+      "enum": [
+        "INITIAL",
+        "CLOSED"
+      ]
+    },
+    "production_promotion_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "owner",
+          "documentation",
+          "validator",
+          "positive_test",
+          "negative_test",
+          "coverage",
+          "unresolved_obligation"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "owner": {
+            "enum": [
+              "MATH-PROGRAMME",
+              "MATHSOLVE",
+              "MATHCERT",
+              "MATHFORGE"
+            ]
+          },
+          "documentation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "repository",
+              "commit",
+              "path",
+              "git_blob_sha1",
+              "sha256"
+            ],
+            "properties": {
+              "repository": {
+                "enum": [
+                  "grandchallenge/MATH-PROGRAMME",
+                  "grandchallenge/MATHFORGE",
+                  "grandchallenge/MATHSOLVE",
+                  "grandchallenge/MATHCERT"
+                ]
+              },
+              "commit": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "git_blob_sha1": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            }
+          },
+          "validator": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "repository",
+                  "commit",
+                  "path",
+                  "git_blob_sha1",
+                  "sha256"
+                ],
+                "properties": {
+                  "repository": {
+                    "enum": [
+                      "grandchallenge/MATH-PROGRAMME",
+                      "grandchallenge/MATHFORGE",
+                      "grandchallenge/MATHSOLVE",
+                      "grandchallenge/MATHCERT"
+                    ]
+                  },
+                  "commit": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{40}$"
+                  },
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "git_blob_sha1": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{40}$"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "positive_test": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "repository",
+                  "commit",
+                  "path",
+                  "git_blob_sha1",
+                  "sha256"
+                ],
+                "properties": {
+                  "repository": {
+                    "enum": [
+                      "grandchallenge/MATH-PROGRAMME",
+                      "grandchallenge/MATHFORGE",
+                      "grandchallenge/MATHSOLVE",
+                      "grandchallenge/MATHCERT"
+                    ]
+                  },
+                  "commit": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{40}$"
+                  },
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "git_blob_sha1": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{40}$"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "negative_test": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "repository",
+                  "commit",
+                  "path",
+                  "git_blob_sha1",
+                  "sha256"
+                ],
+                "properties": {
+                  "repository": {
+                    "enum": [
+                      "grandchallenge/MATH-PROGRAMME",
+                      "grandchallenge/MATHFORGE",
+                      "grandchallenge/MATHSOLVE",
+                      "grandchallenge/MATHCERT"
+                    ]
+                  },
+                  "commit": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{40}$"
+                  },
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "git_blob_sha1": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{40}$"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "coverage": {
+            "enum": [
+              "POLICY_ONLY",
+              "SCHEMA_ENFORCED",
+              "CANARY_REPLAYED",
+              "PRODUCTION_EXERCISED"
+            ]
+          },
+          "unresolved_obligation": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "integration_receipt": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "repository",
+            "commit",
+            "path",
+            "git_blob_sha1",
+            "sha256"
+          ],
+          "properties": {
+            "repository": {
+              "enum": [
+                "grandchallenge/MATH-PROGRAMME",
+                "grandchallenge/MATHFORGE",
+                "grandchallenge/MATHSOLVE",
+                "grandchallenge/MATHCERT"
+              ]
+            },
+            "commit": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{40}$"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "git_blob_sha1": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{40}$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}
