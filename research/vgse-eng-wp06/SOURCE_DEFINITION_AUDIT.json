@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "work_package": "VGSE-ENG-WP06",
+  "primary_source": {
+    "title": "Amplituhedra and origami, I: tree level",
+    "author": "Pavel Galashin",
+    "arxiv": "2410.09574v2",
+    "date": "2026-06-03",
+    "programme_source_identity": {
+      "author_pdf_sha256": "e513789426ae6247438920bfc80cfba6bd9c32dc6799a4f7873d806a865f95de",
+      "arxiv_v2_pdf_sha256": "f5aefb71dd0d662679e85cd0c7f96d1bbbc029a6b5cd2f1cfaa06286cc718e34"
+    },
+    "source_definition": {
+      "geometric_edge_weight": "For an edge e dual to {g1*,g2*}, the geometric edge weight is the Euclidean length |xhat(g1*)-xhat(g2*)|.",
+      "gauge_equivalence": "wt' is gauge equivalent to wt when wt'(e)=g(w) wt(e) g(b) for e={w,b}, with g=1 at every boundary vertex.",
+      "TE3": "A t-immersion/t-embedding of (Gamma,wt) requires wt and the Euclidean geometric edge weights to be gauge equivalent."
+    },
+    "source_locations": [
+      "Section 1.2, geometric edge-weight definition and gauge equivalence",
+      "Definition of t-immersion, condition TE3"
+    ]
+  },
+  "current_c05": {
+    "claim_id": "VGSE-C05",
+    "registered_statement": "The five retained algebraic witnesses extend to five planar t-embeddings satisfying the recorded boundary and geometric constraints.",
+    "evidence": "grandchallenge/MATHCERT@2f27aed33b32b4caf6ff8622c87cfd6d40e97607:evidence/vgse/VGSE-WP00-CERT-001-planar.json",
+    "evidence_checks": [
+      "five discrete-holomorphic extensions",
+      "primitive closure",
+      "prescribed boundary",
+      "strict convexity/noncrossing",
+      "Kawasaki equalities",
+      "boundary-angle inequalities",
+      "five distinct embeddings"
+    ],
+    "missing_source_definition_check": "No TE3 gauge-equivalence check between the protected graph weights and Euclidean dual-edge lengths is recorded in the evidence."
+  },
+  "decision_rule": "If TE3 fails for the retained C04 weight class, the evidence supports planar algebraic Kenyon-Smirnov realizations with the listed geometric properties, not t-embeddings of that protected weighted graph in the source-defined sense."
+}
