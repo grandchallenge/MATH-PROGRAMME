@@ -15,11 +15,11 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1053"
   },
-  "phase": "WP06 reviewed candidate: source-TE3 identifiability fork and five-dimensional algebraic boundary obstruction awaiting protected continuity rebind and native merge-queue admission.",
+  "phase": "WP06 repaired exact-head candidate and independent MATHCERT TE3 certificate are complete; awaiting protected continuity rebind, fresh exact-head review, and substantive protected integration.",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "316495598b61a7959515b44a77ff94a77605984d",
-    "candidate_head_sha": "282675df35123008cabcc8f726cd13a91fb7494e",
+    "protected_base_sha": "726b7e96f1d7e8cfa05d988c264162e0541c542d",
+    "candidate_head_sha": "3f5cf2b3fd2e92ce4e3db622311d2d03c08f38a2",
     "issue_number": 1053,
     "pr_number": 1055,
     "branch": "research/vgse-eng-wp06",
@@ -28,43 +28,47 @@
   "terminal_condition": "Terminate only at one WP06 disposition: BOUNDARY_FACTORS_GEOMETRY_IDENTIFIABLE, BOUNDARY_FACTORS_IDENTIFIABLE_WITH_CANONICAL_NORMALIZATION, BOUNDARY_CALIBRATION_FIVE_DIMENSIONAL_OBSTRUCTION, BOUNDARY_CALIBRATION_PARTIAL_IDENTIFIABILITY, or BOUNDARY_CALIBRATION_UNRESOLVED, with exact-head replay, independent Adversary and Referee review, protected admission, and claim-boundary preservation.",
   "permitted_next_actions": [
     {
-      "id": "protect-reviewed-candidate",
-      "description": "Protect this exact reviewed-candidate continuity bind, then admit unchanged substantive PR #1055 through required checks and the native merge queue."
+      "id": "protect-rebound-candidate",
+      "description": "Protect this continuity rebind to repaired WP06 head 3f5cf2b3fd2e92ce4e3db622311d2d03c08f38a2 and certified MATHCERT TE3 result before substantive merge."
     }
   ],
   "next_action": {
-    "id": "protect-reviewed-candidate",
-    "description": "Protect the continuity rebind to reviewed head 282675df35123008cabcc8f726cd13a91fb7494e before substantive merge admission.",
+    "id": "protect-rebound-candidate",
+    "description": "Protect the repaired exact-head WP06 continuity bind and MATHCERT #327 terminal certificate, then perform fresh exact-head review and native protected integration of PR #1055.",
     "evidence_targets": [
       "grandchallenge/MATH-PROGRAMME#1055",
-      "reviewed candidate 282675df35123008cabcc8f726cd13a91fb7494e",
-      "Adversary review 5290719231",
-      "Referee review 5290719700",
-      "grandchallenge/MATHCERT#327"
+      "candidate 3f5cf2b3fd2e92ce4e3db622311d2d03c08f38a2",
+      "grandchallenge/MATHCERT#335",
+      "MATHCERT protected merge 15b68c196d020045bea42fc34236e0647b87cbb9"
     ]
   },
   "external_evidence": {
     "waiting": false,
-    "objects": []
+    "objects": [
+      {
+        "kind": "external_source",
+        "identity": "grandchallenge/MATHCERT#335@15b68c196d020045bea42fc34236e0647b87cbb9",
+        "status": "TE3_FAILS_FOR_PROTECTED_C04_WEIGHT_CLASS_ON_ALL_FIVE_RETAINED_C05_BRANCHES"
+      }
+    ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "bind exact reviewed WP06 research candidate",
-    "result": "PR #1055 is unchanged at 282675df35123008cabcc8f726cd13a91fb7494e. Exact-head deterministic replay passed. Adversary review 5290719231 cleared the candidate with the C05 correction explicitly gated behind independent MATHCERT replay. Referee review 5290719700 found the result admissible after continuity rebind and required checks.",
+    "action": "rebind repaired WP06 candidate after independent TE3 certification",
+    "result": "The WP06 proof artifact was repaired without changing the mathematical result, moving the candidate to 3f5cf2b3fd2e92ce4e3db622311d2d03c08f38a2. MATHCERT independently certified TE3 failure on all five retained C05 branches and protected the audit at 15b68c196d020045bea42fc34236e0647b87cbb9. Protected GI-STEWARD-0003 permits routine bounded progression without ceremonial Human Steward intervention.",
     "evidence_refs": [
       "grandchallenge/MATH-PROGRAMME#1055",
-      "reviewed candidate 282675df35123008cabcc8f726cd13a91fb7494e",
-      "exact-head deterministic artifact replay PASS",
-      "Adversary review 5290719231",
-      "Referee review 5290719700",
-      "grandchallenge/MATHCERT#327"
+      "grandchallenge/MATH-PROGRAMME@3f5cf2b3fd2e92ce4e3db622311d2d03c08f38a2",
+      "grandchallenge/MATHCERT#327",
+      "grandchallenge/MATHCERT#335",
+      "grandchallenge/MATHCERT@15b68c196d020045bea42fc34236e0647b87cbb9"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-BOUNDARY-CALIBRATION-IDENTIFIABILITY-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-23T12:07:00Z"
+    "observed_at": "2026-09-24T09:34:00Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -72,15 +76,16 @@
     "authoritative_sources": [
       "grandchallenge/MATH-PROGRAMME#1053",
       "grandchallenge/MATH-PROGRAMME#1055",
-      "grandchallenge/MATH-PROGRAMME@282675df35123008cabcc8f726cd13a91fb7494e",
-      "Adversary review 5290719231",
-      "Referee review 5290719700",
+      "grandchallenge/MATH-PROGRAMME@3f5cf2b3fd2e92ce4e3db622311d2d03c08f38a2",
       "grandchallenge/MATHCERT#327",
+      "grandchallenge/MATHCERT#335",
+      "grandchallenge/MATHCERT@15b68c196d020045bea42fc34236e0647b87cbb9",
       "research/vgse-eng-wp06/README.md",
       "research/vgse-eng-wp06/RESULTS.json",
-      "research/vgse-eng-wp06/CLAIM_LEDGER.json"
+      "research/vgse-eng-wp06/CLAIM_LEDGER.json",
+      "research/vgse-eng-wp06/IDENTIFIABILITY_PROOF.md"
     ],
-    "instructions": "Preserve PR #1055 exactly at reviewed head 282675df35123008cabcc8f726cd13a91fb7494e. Protect this rebind before native merge admission. Terminal candidate is BOUNDARY_CALIBRATION_FIVE_DIMENSIONAL_OBSTRUCTION for the broader algebraic-realization class, while source-defined TE3 t-embeddings are fully 8/8 geometry-identifiable. Do not alter protected C05 adjudication until MATHCERT #327 independently certifies or refutes the TE3 failure."
+    "instructions": "Protect this repaired continuity rebind, then perform fresh exact-head Adversary and Referee review on 3f5cf2b3fd2e92ce4e3db622311d2d03c08f38a2. The independent MATHCERT certificate now confirms the TE3 failure for the retained C05/C04 pairing. Proceed under GI-STEWARD-0003 without ceremonial Human Steward action. Terminal result remains BOUNDARY_CALIBRATION_FIVE_DIMENSIONAL_OBSTRUCTION for the broader algebraic-realization class, with 8/8 geometry identifiability for actual source-defined TE3 t-embeddings."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
