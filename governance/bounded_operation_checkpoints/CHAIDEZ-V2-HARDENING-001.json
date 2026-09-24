@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP005",
+  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP006",
   "governed_work_id": "CHAIDEZ-V2-HARDENING-001",
   "repository": "grandchallenge/MATHCERT",
   "admission": {
@@ -34,8 +34,8 @@
       {
         "run_id": 36069517510,
         "name": "Cert checks",
-        "status": "in_progress",
-        "conclusion": null,
+        "status": "completed",
+        "conclusion": "success",
         "job_id": 107866942676
       }
     ]
@@ -43,18 +43,17 @@
   "terminal_condition": "All stages in docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md admitted, protected artifact reconciliation and post-merge checks pass, ledger has no unresolved required obligations; production promotions remain zero.",
   "permitted_next_actions": [
     {
-      "id": "replay-receiver-protected-manifest",
-      "description": "Verify #332 head 463a8889a5fed187d912f5f8ee196b5845312577 and protected platform registration at 737e0de5879d40880454dccca14ff3dd76603852, then rerun failed certify run 36014415913 unchanged-head. Read back the prerequisite protected-main run 36069517510 and receiver FULL_ESTATE checks; require genuine exact-head review before receiver admission."
+      "id": "read-receiver-replay-and-review",
+      "description": "Read certify run 36014415913 attempt 2 job 107867347523 at unchanged #332 head 463a8889a5fed187d912f5f8ee196b5845312577. Diagnose any actual failure; after FULL_ESTATE success obtain genuine approval bound to that head. Admit only after fresh required checks, reviews and rules, then read back protected receiver bytes and post-merge workflows."
     }
   ],
   "next_action": {
-    "id": "replay-receiver-protected-manifest",
-    "description": "Verify #332 head 463a8889a5fed187d912f5f8ee196b5845312577 and protected platform registration at 737e0de5879d40880454dccca14ff3dd76603852, then rerun failed certify run 36014415913 unchanged-head. Read back the prerequisite protected-main run 36069517510 and receiver FULL_ESTATE checks; require genuine exact-head review before receiver admission.",
+    "id": "read-receiver-replay-and-review",
+    "description": "Read certify run 36014415913 attempt 2 job 107867347523 at unchanged #332 head 463a8889a5fed187d912f5f8ee196b5845312577. Diagnose any actual failure; after FULL_ESTATE success obtain genuine approval bound to that head. Admit only after fresh required checks, reviews and rules, then read back protected receiver bytes and post-merge workflows.",
     "evidence_targets": [
       "grandchallenge/MATHCERT#332",
-      "grandchallenge/MATHCERT#336",
       "https://github.com/grandchallenge/MATHCERT/actions/runs/36014415913",
-      "https://github.com/grandchallenge/MATHCERT/actions/runs/36069517510"
+      "https://api.github.com/repos/grandchallenge/MATHCERT/pulls/332/reviews"
     ]
   },
   "external_evidence": {
@@ -62,8 +61,8 @@
     "objects": [
       {
         "kind": "workflow_run",
-        "identity": "grandchallenge/MATHCERT/actions/runs/36069517510",
-        "status": "Protected prerequisite replay in progress"
+        "identity": "grandchallenge/MATHCERT/actions/runs/36014415913/attempts/2",
+        "status": "FULL_ESTATE replay in progress; platform guard and Lean build passed; final certification checks running"
       },
       {
         "kind": "review",
@@ -75,7 +74,7 @@
   "blocking_boundary": null,
   "last_transition": {
     "action": "Admit #336 with genuine exact-head review and all required checks",
-    "result": "jimsteeg approved ef833734f2aba2a6de5c2e8ee91ebc94366792c7 at 2026-09-24T22:45:38Z. Required checks passed including FULL_ESTATE 36014342766. Expected-head merge produced protected 737e0de5879d40880454dccca14ff3dd76603852 with parents 15b68c196d020045bea42fc34236e0647b87cbb9 and ef833734f2aba2a6de5c2e8ee91ebc94366792c7. Post-merge workflows remain in progress. Receiver head 463a8889a5fed187d912f5f8ee196b5845312577 remains unchanged and unapproved. Forge documentation and Programme reconciliation preparation remain pushed, not admitted; production promotions and intakes remain zero.",
+    "result": "jimsteeg approved ef833734f2aba2a6de5c2e8ee91ebc94366792c7 at 2026-09-24T22:45:38Z. Required checks passed including FULL_ESTATE 36014342766. Expected-head merge produced protected 737e0de5879d40880454dccca14ff3dd76603852 with parents 15b68c196d020045bea42fc34236e0647b87cbb9 and ef833734f2aba2a6de5c2e8ee91ebc94366792c7. Post-merge workflows remain in progress. Receiver head 463a8889a5fed187d912f5f8ee196b5845312577 remains unchanged and unapproved. Forge documentation and Programme reconciliation preparation remain pushed, not admitted; production promotions and intakes remain zero. Protected #336 content matched both reviewed blobs exactly: platform manifest 320fa20c79edb3fa5aa2464fa8de5a1b567727c0 and test 97c10c79a597a7ab2d1fb7007bef059934d43af6. All post-merge workflows succeeded: Cert checks 36069517510, conformance 36069518480, review gate 36069517502, push 36069517668. Receiver replay attempt 2 was started unchanged-head and passed the protected platform guard. Programme reconciliation unit tests 12/12, Solve dossier tests 23/23 and catalog inventory 17288 passed locally; no final protected integration receipt exists. GitHub still reports #332 baseRefOid 15b68c196d020045bea42fc34236e0647b87cbb9; identities.protected_base_sha matches that PR field, while the actual protected main is 737e0de5879d40880454dccca14ff3dd76603852.",
     "evidence_refs": [
       "grandchallenge/MATHCERT#332",
       "grandchallenge/MATHCERT#336",
@@ -87,7 +86,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/CHAIDEZ-V2-HARDENING-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-24T22:49:02Z"
+    "observed_at": "2026-09-24T22:53:19Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -97,7 +96,7 @@
       "docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md",
       "governance/chaidez_conformance_coverage.json"
     ],
-    "instructions": "Verify this checkpoint against live #332 and protected main. Read back #336 protected merge 737e0de5879d40880454dccca14ff3dd76603852 and its post-merge workflows. Rerun failed required run 36014415913 on unchanged receiver head 463a8889a5fed187d912f5f8ee196b5845312577 to consume the admitted ci/check_ledgers.py platform declaration. Require successful FULL_ESTATE and genuine latest-push approval before exact-head receiver merge. Do not fabricate approval or broaden canary exclusions. Then admit Forge documentation at branch codex/chaidez-foundry-boundary and finalize Programme explicit-root reconciliation and evidence ledger in two protected steps. Prep code/branches are not final receipts. Preserve 17288 source records and zero production promotions and intakes."
+    "instructions": "Verify this checkpoint against live #332 and protected main. Read back #336 protected merge 737e0de5879d40880454dccca14ff3dd76603852 and its post-merge workflows. Read already-running required run 36014415913 attempt 2 job 107867347523 on unchanged receiver head 463a8889a5fed187d912f5f8ee196b5845312577 to consume the admitted ci/check_ledgers.py platform declaration. Require successful FULL_ESTATE and genuine latest-push approval before exact-head receiver merge. Do not fabricate approval or broaden canary exclusions. Then admit Forge documentation at branch codex/chaidez-foundry-boundary and finalize Programme explicit-root reconciliation and evidence ledger in two protected steps. Prep code/branches are not final receipts. Preserve 17288 source records and zero production promotions and intakes."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
