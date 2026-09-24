@@ -865,8 +865,64 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
     set_option backward.isDefEq.respectTransparency false in
       exact hfunctorIsoConst.symm
 
+/-- The finite evaluation-weight/Dirac identity assembles through the protected
+finite-quotient limit to the global measure object. -/
+theorem weightedFiniteBooleanMeasureLimitLift_measureSolidification_evaluationWeight_allTrue
+    (X : Profinite.{u}) (x : X) :
+    (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
+        (basisBooleanPointProbe X (fun _ => true)) ≫
+      weightedFiniteBooleanMeasureLimitLift X (integralBasisEvaluationWeight X x) =
+    (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
+        (profinitePointProbe X x) ≫
+      measureSolidification.app X := by
+  apply (measureFunctorMapConeIsLimit X).hom_ext
+  intro j
+  let q := finiteQuotientMap X j
+  let px :=
+    profinitePointProbe (X.diagram.obj j) ((finiteQuotientMap X j).hom.hom x)
+  have hleft := congrArg
+    (fun g =>
+      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
+          (basisBooleanPointProbe X (fun _ => true)) ≫ g)
+    (weightedFiniteBooleanMeasureLimitLift_fac
+      X (integralBasisEvaluationWeight X x) j)
+  have hpoint :
+      profinitePointProbe X x ≫ q = px := by
+    ext y
+    rfl
+  have hnat := measureSolidification.naturality q
+  have hfinite :=
+    weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue X x j
+  calc
+    ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
+        (basisBooleanPointProbe X (fun _ => true)) ≫
+      weightedFiniteBooleanMeasureLimitLift X (integralBasisEvaluationWeight X x)) ≫
+        (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j =
+      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
+          (basisBooleanPointProbe X (fun _ => true)) ≫
+        weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j := by
+          rw [Category.assoc]
+          exact hleft
+    _ =
+      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map px ≫
+        measureSolidification.app (X.diagram.obj j) := hfinite
+    _ =
+      ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
+          (profinitePointProbe X x) ≫ measureSolidification.app X) ≫
+        (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j := by
+          change
+            (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map px ≫
+                measureSolidification.app (X.diagram.obj j) =
+              ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
+                  (profinitePointProbe X x) ≫ measureSolidification.app X) ≫
+                CMDG.CondensedCM4P2D.measureFunctor.map q
+          rw [Category.assoc, ← hnat]
+          rw [← Category.assoc, ← Functor.map_comp, hpoint]
+          rfl
+
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
+#check weightedFiniteBooleanMeasureLimitLift_measureSolidification_evaluationWeight_allTrue
 #print axioms weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
