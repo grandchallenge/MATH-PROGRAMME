@@ -42,9 +42,14 @@
     "no open intake PR already exists for the branch"
   ],
   "wake": {
-    "kind": "GitHub Actions schedule",
+    "kind": "GitHub Actions",
     "cadence": "every 10 minutes",
-    "manual_replay": true
+    "manual_replay": true,
+    "workflow_run": {
+      "workflow": "Administrative maintenance dispatcher",
+      "event": "completed",
+      "success_only": true
+    }
   },
   "claim_boundaries": {
     "constitutional": false,

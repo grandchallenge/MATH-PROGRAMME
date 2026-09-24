@@ -3,10 +3,10 @@
 ## Independent intelligence intake without institutional assimilation
 
 **Control surface:** `GCL-CEI-001`  
-**Operational status:** `OPERATIONAL__PROTECTED`  
-**Documentary status:** canonical operational description of the protected independent-intelligence intake path  
-**Protected readback:** `grandchallenge/MATH-PROGRAMME@01b334c14dec59b49cca3cc014acafd0870d7011`  
-**Controller:** `MP-NSCI-INTAKE-PR-CONTROLLER-001`, status `ACTIVE`  
+**Documentary lifecycle:** `active`  
+**Documentary role:** governed human-readable operational description of the protected independent-intelligence intake path  
+**Initial protected admission:** MATH-PROGRAMME PR #1041, merge `598a13d8a390fcab722b84b4a494921fc50d0e56`  
+**Controller:** `MP-NSCI-INTAKE-PR-CONTROLLER-001`, machine status `ACTIVE`  
 **Claim boundary:** this interface transports and preserves bounded mathematical contributions. It does not certify mathematics, promote claims, merge protected state, or substitute for MATHCERT.
 
 ## 1. The point
@@ -355,13 +355,15 @@ CANDIDATE -> ACTIVE
 
 No token scope, permitted action, prohibited action, validation rule, first-result lock, or claim boundary changed.
 
-Protected merge and current `main`:
+Protected merge establishing that closure:
 
 `01b334c14dec59b49cca3cc014acafd0870d7011`
 
-Protected readback confirms:
+Protected readback at that closure confirmed:
 
 `"status": "ACTIVE"`.
+
+That SHA is retained as historical closure evidence, not as a claim about the repository's current head. Current controller state is read from the protected machine contract `governance/ns_ci_intake_pr_controller.json`.
 
 Disposition:
 
