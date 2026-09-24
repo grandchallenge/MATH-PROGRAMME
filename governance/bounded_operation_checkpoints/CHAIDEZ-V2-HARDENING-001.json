@@ -1,9 +1,9 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP001",
+  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP002",
   "governed_work_id": "CHAIDEZ-V2-HARDENING-001",
-  "repository": "grandchallenge/MATHSOLVE",
+  "repository": "grandchallenge/MATHCERT",
   "admission": {
     "topology": "MULTI_SESSION_RESUMABLE",
     "admission_ref": "grandchallenge/MATH-PROGRAMME#1058",
@@ -15,30 +15,30 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1058"
   },
-  "phase": "Programme initial coverage admission; MATHSOLVE baseline rebound for next stage",
+  "phase": "Programme initial coverage and Solve v2 protected; Cert receiver pushed, PR admission next",
   "state": "AUTHORIZED_READY",
   "identities": {
-    "protected_base_sha": "7e1f27f7ec205d511570cf3b498037a8907a89c6",
-    "candidate_head_sha": "7e1f27f7ec205d511570cf3b498037a8907a89c6",
+    "protected_base_sha": "2c0fb3f2b86e842bec2a0ab02f922c3e8287de7c",
+    "candidate_head_sha": "2bc45a51595132786af3ed48e96b7847113953d9",
     "issue_number": null,
     "pr_number": null,
-    "branch": "main",
+    "branch": "platform/certification/chaidez-external-intake-v2",
     "workflow_runs": []
   },
   "terminal_condition": "All stages in docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md admitted, protected artifact reconciliation and post-merge checks pass, ledger has no unresolved required obligations; production promotions remain zero.",
   "permitted_next_actions": [
     {
-      "id": "implement-solve",
-      "description": "After Programme initial admission, implement dossier and supplement v2, zero registry, canary and WP06 compatibility."
+      "id": "admit-cert",
+      "description": "Open the exact Cert candidate PR, replay FULL_ESTATE and verify required latest-push review before any protected merge."
     }
   ],
   "next_action": {
-    "id": "implement-solve",
-    "description": "Verify MATHSOLVE main baseline, then prepare the MATHSOLVE stage described in the protected implementation record.",
+    "id": "admit-cert",
+    "description": "Open the exact Cert candidate PR, replay FULL_ESTATE and verify required latest-push review before any protected merge.",
     "evidence_targets": [
       "grandchallenge/MATH-PROGRAMME#1058",
-      "docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md",
-      "grandchallenge/MATHSOLVE:7e1f27f7ec205d511570cf3b498037a8907a89c6"
+      "grandchallenge/MATHSOLVE#449",
+      "grandchallenge/MATHCERT:2bc45a51595132786af3ed48e96b7847113953d9"
     ]
   },
   "external_evidence": {
@@ -47,17 +47,20 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "Bind approved plan to protected baseline",
-    "result": "Initial coverage records policy only; no completion or production promotion claimed.",
+    "action": "Rebind stale initial checkpoint to verified completed Programme/Solve stages and pushed Cert candidate",
+    "result": "Programme #1059 protected at 79d8464242297b4a47eef685303d4dc61aae77c5 (policy run 35951831627 success); Solve #448/#449 protected at b9906e0d150e232efed1a5e4fbd2f5081609ab56 (checks 35953691652 success). Cert 10 receiving tests pass locally only. Forge clarification and Programme final reconciliation remain unadmitted. Production promotions remain zero.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#1058"
+      "grandchallenge/MATH-PROGRAMME#1059",
+      "grandchallenge/MATHSOLVE#448",
+      "grandchallenge/MATHSOLVE#449",
+      "grandchallenge/MATHCERT:2bc45a51595132786af3ed48e96b7847113953d9"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/CHAIDEZ-V2-HARDENING-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-24T00:17:47.028Z"
+    "observed_at": "2026-09-24T08:44:44Z"
   },
   "resume": {
     "fresh_session_safe": true,
