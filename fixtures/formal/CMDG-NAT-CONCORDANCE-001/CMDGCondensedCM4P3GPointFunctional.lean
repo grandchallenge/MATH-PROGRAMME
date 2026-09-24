@@ -768,51 +768,73 @@ theorem weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_a
       rw [hlcUnitPointForget] at h
       exact h.symm
     rw [hlcUnitPointForget, hfunctorIsoConst]
-    simp [
-      mx,
-      Q,
-      CMDG.CondensedCM4P2E.finiteFreeDiscreteIso,
-      CMDG.CondensedCM4P2E.finiteRepresentableCondensedIso,
-      CMDG.CondensedCM4P2E.finiteDiscreteCondensedIso,
-      CMDG.CondensedCM4P2E.compHausTopULiftNatIso,
-      CMDG.CondensedCM4P2E.compHausTopULiftIso,
-      CMDG.CondensedCM4P2E.compHausTopULiftPresheafIso,
-      CMDG.CondensedCM4P2E.continuousULiftSectionEquiv,
-      CMDG.CondensedCM4P2E.finiteDiscreteULiftIso,
-      CMDG.CondensedCM4P2E.discreteTopCondensedIso,
-      CMDG.CondensedCM4P2E.discreteFreeIso,
-      CMDG.CondensedCM4P2E.discreteSetFreeAdj,
-      CMDG.CondensedCM4P2E.freeDiscreteModuleAdj,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateModuleMap,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single,
-      CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply,
-      CondensedMod.LocallyConstant.functorIsoDiscrete,
-      CondensedMod.LocallyConstant.functorIsoDiscreteComponents,
-      CondensedMod.LocallyConstant.functorIsoDiscreteAux₂,
-      CondensedMod.LocallyConstant.functorIsoDiscreteAux₁,
-      ModuleCat.freeMk,
-      Equiv.coe_fn_mk,
-      Functor.FullyFaithful.homEquiv_apply,
-      Functor.map_comp,
-      Functor.comp_map,
-      NatTrans.comp_app,
-      ConcreteCategory.comp_apply,
-      Functor.map_id,
-      Category.id_comp,
-      Category.comp_id,
-      Category.assoc,
-      Adjunction.comp_unit_app,
-      Adjunction.comp_homEquiv,
-      Equiv.trans_apply,
-      Adjunction.homEquiv_unit,
-      Adjunction.homEquiv_naturality_left,
-      ModuleCat.adj_homEquiv]
+    let U := op ((profiniteToCompHaus).obj P)
+    let N : ModuleCat.{u + 1} CMDG.CondensedCM4P3G.R.{u} :=
+      CMDG.CondensedCM4P2E.Algebraic.finiteSmallFreeModule.obj Q
+    let fU : N ⟶ M :=
+      (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso Q).hom
+    let c : LocallyConstant P N :=
+      (ConcreteCategory.hom
+        ((CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion
+          Q (j.proj x)).app U))
+        (1 : LocallyConstant P CMDG.CondensedCM4P3G.R.{u})
+    have hc :
+        c =
+          LocallyConstant.const (CompHaus.of PUnit.{u + 1})
+            (Finsupp.single (j.proj x) (1 : CMDG.CondensedCM4P3G.R.{u})) := by
+      apply LocallyConstant.ext
+      intro p
+      have hp :=
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCoordinateInclusion_apply
+          Q (j.proj x) U
+          (1 : LocallyConstant P CMDG.CondensedCM4P3G.R.{u}) p
+      simpa [c, U, P] using hp
+    have hfU :
+        fU (Finsupp.single (j.proj x) (1 : CMDG.CondensedCM4P3G.R.{u})) = mx := by
+      change
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv Q
+            (Finsupp.single (j.proj x) (1 : CMDG.CondensedCM4P3G.R.{u})) =
+          ModuleCat.freeMk (ULift.up (j.proj x))
+      simpa [mx] using
+        (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftLinearEquiv_single
+          Q (j.proj x) (1 : CMDG.CondensedCM4P3G.R.{u}))
+    have hmap :
+        (ConcreteCategory.hom
+          (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map
+            ((CondensedMod.LocallyConstant.functor CMDG.CondensedCM4P3G.R.{u}).map fU)).hom.app U))
+          c =
+        LocallyConstant.const (CompHaus.of PUnit.{u + 1}) mx := by
+      rw [hc]
+      apply LocallyConstant.ext
+      intro p
+      change fU (Finsupp.single (j.proj x) (1 : CMDG.CondensedCM4P3G.R.{u})) = mx
+      exact hfU
+    have hIsoNat :=
+      (CondensedMod.LocallyConstant.functorIsoDiscrete
+        CMDG.CondensedCM4P3G.R.{u}).hom.naturality fU
+    have htail :
+        eTail =
+          (CondensedMod.LocallyConstant.functor CMDG.CondensedCM4P3G.R.{u}).map fU ≫
+            (CondensedMod.LocallyConstant.functorIsoDiscrete
+              CMDG.CondensedCM4P3G.R.{u}).hom.app M := by
+      dsimp [eTail, fU, N,
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeCondensedDiscreteNatIso,
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeDiscreteULiftNatIso,
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftNatIso,
+        CMDG.CondensedCM4P2E.FiniteDualTransport.finiteSmallFreeULiftIso]
+      exact hIsoNat.symm
+    change
+      (ConcreteCategory.hom
+        ((CategoryTheory.forget
+          (ModuleCat CMDG.CondensedCM4P3G.R.{u})).map
+          ((Condensed.discreteUnderlyingAdj
+            (ModuleCat CMDG.CondensedCM4P3G.R.{u})).unit.app M)))
+        mx =
+      (ConcreteCategory.hom
+        (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map eTail).hom.app U)) c
+    rw [htail]
+    simp only [Functor.map_comp, NatTrans.comp_app, ConcreteCategory.comp_apply]
+    rw [hmap, hfunctorIsoConst]
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
