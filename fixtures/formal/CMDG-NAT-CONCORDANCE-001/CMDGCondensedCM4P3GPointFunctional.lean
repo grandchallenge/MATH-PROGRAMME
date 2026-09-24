@@ -901,8 +901,9 @@ theorem weightedFiniteBooleanMeasureLimitLift_measureSolidification_evaluationWe
       (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
           (basisBooleanPointProbe X (fun _ => true)) ≫
         weightedFiniteBooleanMeasureHom X (integralBasisEvaluationWeight X x) j := by
-          rw [Category.assoc]
-          exact hleft
+          set_option backward.defeqAttrib.useBackward true in
+          set_option backward.isDefEq.respectTransparency false in
+            simpa only [Category.assoc] using hleft
     _ =
       (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map px ≫
         measureSolidification.app (X.diagram.obj j) := hfinite
@@ -918,7 +919,6 @@ theorem weightedFiniteBooleanMeasureLimitLift_measureSolidification_evaluationWe
                 CMDG.CondensedCM4P2D.measureFunctor.map q
           rw [Category.assoc, ← hnat]
           rw [← Category.assoc, ← Functor.map_comp, hpoint]
-          rfl
 
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
