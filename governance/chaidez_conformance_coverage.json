@@ -1,1113 +1,2361 @@
 {
   "schema_version": "1.0.0",
   "protocol_id": "CHAIDEZ-PEDAGOGY-001",
-  "phase": "INITIAL",
+  "phase": "CLOSED",
   "production_promotion_count": 0,
   "requirements": [
     {
       "id": "campaign_unit",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "result_status_fields.result_status",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "result_status_fields.conditional_on",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "result_status_fields.strongest_supported_claim",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "result_status_fields.not_claimed",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "result_status_fields.support_route_class",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "result_status_fields.foundational_profile",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "result_status_fields.certification_state",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "result_status_fields.first_executable_step",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "exposition_sequence.STATUS_BOX",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "exposition_sequence.PLAIN_OBJECT",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "exposition_sequence.EXACT_OBSTRUCTION",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "exposition_sequence.WORKING_MODEL",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "exposition_sequence.RESTRICTED_CLAIM",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "exposition_sequence.SPINE_LOCATION",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "exposition_sequence.SUPPORT_ROUTE",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "exposition_sequence.DEBT_AND_CLAIM_BOUNDARY",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "exposition_sequence.FIRST_EXECUTABLE_STEP",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "trust_quartet.WHAT_IS_PROVED",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "trust_quartet.WHAT_IS_CHECKED",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "trust_quartet.WHAT_REMAINS_OPEN",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "trust_quartet.WHAT_REQUIRES_EXTERNAL_VERIFICATION",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "support_route_classes.EXPLORATORY_EVIDENCE",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "support_route_classes.REGRESSION_AUDIT",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "support_route_classes.EXACT_FINITE_VERIFICATION",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "support_route_classes.CERTIFICATE_REPLAY",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "support_route_classes.FORMAL_PROOF",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "support_route_classes.CONTINUUM_PROOF",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "support_route_classes.NEGATIVE_RESULT",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "proof_debt_categories.MISSING_LEMMA",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "proof_debt_categories.UNPROVED_BRIDGE",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "proof_debt_categories.EXTERNAL_SOURCE",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "proof_debt_categories.COMPUTATIONAL_REPLAY",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "proof_debt_categories.SEMANTIC_CORRESPONDENCE",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "proof_debt_categories.FOUNDATIONAL_PROFILE_GAP",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "proof_debt_categories.ANALYTIC_ESTIMATE",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "proof_debt_categories.FORMALIZATION_BLOCKER",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "spine_node_fields.node_id",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "spine_node_fields.role",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "spine_node_fields.status",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "spine_node_fields.dependencies",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "spine_node_fields.support_route_class",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "spine_node_fields.discharge_criterion",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "spine_node_fields.proof_debt_ids",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "escalation_gate.theorem_spine_audited",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "escalation_gate.dependencies_named",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "escalation_gate.proof_debt_register_current",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "escalation_gate.trust_quartet_complete",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "escalation_gate.foundational_profile_present_or_deferred",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "escalation_gate.first_executable_step_present",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "escalation_gate.next_package_names_spine_node",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "external_catalog_promotion.catalog_entry_disposition",
-      "owner": "MATHSOLVE",
+      "owner": "MATHFORGE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHFORGE",
+        "commit": "c8fa30353285b55d0fe11a8a6e0f076a4cdb0cf2",
+        "path": "catalog/README.md",
+        "git_blob_sha1": "23d66f41750a1be9dcfc575846b9f87bc729c9c7",
+        "sha256": "ad2729aeaea9cddfba57a15ca2403a554833f6cad28365d735c743fe92123f13"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATH-PROGRAMME",
+        "commit": "76d466194c71d43c21ee7184be1fbf33c085ce65",
+        "path": "ci/reconcile_chaidez_conformance.py",
+        "git_blob_sha1": "1e9abfed4d0029fa85b21a6f16147e6c7312c00b",
+        "sha256": "2b01d6def4b507b0d4669da1db9a6a837c985a888fd903ce38dc78c422571e3f"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATH-PROGRAMME",
+        "commit": "76d466194c71d43c21ee7184be1fbf33c085ce65",
+        "path": "ci/test_chaidez_reconciliation.py",
+        "git_blob_sha1": "72846692fdd7cfdb1163773afe562b5d1ec6f2fe",
+        "sha256": "8531cc42cd5b1dce32818d2dbf8de0a7d964cd81dfdf89b5b5cd66e69601926f"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATH-PROGRAMME",
+        "commit": "76d466194c71d43c21ee7184be1fbf33c085ce65",
+        "path": "ci/test_chaidez_reconciliation.py",
+        "git_blob_sha1": "72846692fdd7cfdb1163773afe562b5d1ec6f2fe",
+        "sha256": "8531cc42cd5b1dce32818d2dbf8de0a7d964cd81dfdf89b5b5cd66e69601926f"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "external_catalog_promotion.full_dossier_trigger",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "external_catalog_promotion.minimum_proposal_assurance_tier",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "external_catalog_promotion.exact_campaign_target_assurance_tier",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "external_catalog_promotion.automatic_promotion",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "external_catalog_promotion.catalog_assurance_is_proof_or_certification",
-      "owner": "MATHSOLVE",
+      "owner": "MATHCERT",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHCERT",
+        "commit": "ebedf02e4a2276c9494ce3ea4f8f2b5c51f0ca71",
+        "path": "docs/EXTERNAL_CATALOG_CERTIFICATION_INTAKE.md",
+        "git_blob_sha1": "648c3f6726913887d29a8b67599477cae023e620",
+        "sha256": "7ecf8969c2dfd8232a2e3617ea77fdd87ab90f60a3dad62a9639c44ee3097ac8"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHCERT",
+        "commit": "ebedf02e4a2276c9494ce3ea4f8f2b5c51f0ca71",
+        "path": "ci/validate_external_catalog_certification_intake.py",
+        "git_blob_sha1": "f367b053546464fa075de17238df3158be26ce59",
+        "sha256": "586c9709fa3047b9c61f8688038da778124743f70edc3f7538dfc6ec1aacb9b6"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHCERT",
+        "commit": "ebedf02e4a2276c9494ce3ea4f8f2b5c51f0ca71",
+        "path": "ci/test_external_catalog_certification_intake.py",
+        "git_blob_sha1": "3ae117a22cbdcfec66d52ff38297b06b2e3640b3",
+        "sha256": "aa1445ee8413f75129e63de8be3e4b7e9134e5b9098d09f89f877a3356ee04dd"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHCERT",
+        "commit": "ebedf02e4a2276c9494ce3ea4f8f2b5c51f0ca71",
+        "path": "ci/test_external_catalog_certification_intake.py",
+        "git_blob_sha1": "3ae117a22cbdcfec66d52ff38297b06b2e3640b3",
+        "sha256": "aa1445ee8413f75129e63de8be3e4b7e9134e5b9098d09f89f877a3356ee04dd"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "required_work_package_artifacts.RESULT_STATUS",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "required_work_package_artifacts.LAY_COMPANION",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "required_work_package_artifacts.OBJECT_AND_OBSTRUCTION",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "required_work_package_artifacts.STATUS_AUDIT",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "required_work_package_artifacts.CLAIM_LEDGER",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "required_work_package_artifacts.THEOREM_SPINE",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "required_work_package_artifacts.DEPENDENCY_DAG",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "required_work_package_artifacts.PROOFS_AND_COMPUTATIONS",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "required_work_package_artifacts.FAILURE_AND_NEGATIVE_RESULTS",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "required_work_package_artifacts.PROOF_DEBT_REGISTER",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "required_work_package_artifacts.CERT_HANDOFF",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     },
     {
       "id": "required_work_package_artifacts.NEXT_EXECUTABLE_STEP",
       "owner": "MATHSOLVE",
       "documentation": {
-        "repository": "grandchallenge/MATH-PROGRAMME",
-        "commit": "861479cb599df01f6e9cafc8647fdefe56249d29",
-        "path": "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
-        "git_blob_sha1": "4094ec3e46bbf3d5e3230d36c3ceca4952247676",
-        "sha256": "4bc1c2d4660ddbe1c75b31c1b21e964b46d55f19160f3586fc414b310a9da1ae"
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "docs/EXTERNAL_CATALOG_REVIEWED_PROMOTION.md",
+        "git_blob_sha1": "d23abcafc63c992403301cbb16d3ef3ec0b3c271",
+        "sha256": "b82e0f859c09d4f44b979f2b127039350d275e0c7ab755fe74c283eead50902e"
       },
-      "validator": null,
-      "positive_test": null,
-      "negative_test": null,
-      "coverage": "POLICY_ONLY",
-      "unresolved_obligation": "Implement dossier v2 enforcement and protected filesystem canary; baseline checks do not establish this requirement."
+      "validator": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/validate_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "aede693f294e317d820819a030329a0280e3d767",
+        "sha256": "b0c1c47cef821c669166a2ac56e01045d71c60aab74e3a6d6faa859c1474c050"
+      },
+      "positive_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "negative_test": {
+        "repository": "grandchallenge/MATHSOLVE",
+        "commit": "b9906e0d150e232efed1a5e4fbd2f5081609ab56",
+        "path": "ci/test_external_catalog_promotion_dossiers.py",
+        "git_blob_sha1": "bc1f2de4681d968d490ee19d07a6c889f15d4e94",
+        "sha256": "d2363d34375a01159d27e50362bc509a7993bab8768c6990094d297b71797c34"
+      },
+      "coverage": "CANARY_REPLAYED",
+      "unresolved_obligation": null
     }
   ],
-  "integration_receipt": null
+  "integration_receipt": {
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "commit": "76d466194c71d43c21ee7184be1fbf33c085ce65",
+    "path": "governance/chaidez_reconciliation_receipt.json",
+    "git_blob_sha1": "6466d62e9e6a425c239a090d575f0215376d4987",
+    "sha256": "e52f15b27c662d96a4f7824105aa59270602b28c4d68d9920af2bbe8c954ece8"
+  }
 }
