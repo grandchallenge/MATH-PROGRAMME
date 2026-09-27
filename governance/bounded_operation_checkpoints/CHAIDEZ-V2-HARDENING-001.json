@@ -1,9 +1,9 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP010",
+  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP011",
   "governed_work_id": "CHAIDEZ-V2-HARDENING-001",
-  "repository": "grandchallenge/MATHFORGE",
+  "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
     "topology": "MULTI_SESSION_RESUMABLE",
     "admission_ref": "grandchallenge/MATH-PROGRAMME#1058",
@@ -15,52 +15,62 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1058"
   },
-  "phase": "Pillars admitted; Programme receipt preparation and two-stage ledger closure",
-  "state": "IN_PROGRESS",
+  "phase": "Closed coverage ledger PR awaits protected admission",
+  "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
-    "protected_base_sha": "ca0feb88e7657deae4ef7b3950257a885eb1e085",
-    "candidate_head_sha": "c8fa30353285b55d0fe11a8a6e0f076a4cdb0cf2",
+    "protected_base_sha": "76d466194c71d43c21ee7184be1fbf33c085ce65",
+    "candidate_head_sha": "47ad7013f601089087d5c712ffb8755abd5bba69",
     "issue_number": null,
-    "pr_number": null,
-    "branch": "main",
+    "pr_number": 1066,
+    "branch": "codex/chaidez-coverage-closure",
     "workflow_runs": []
   },
   "terminal_condition": "All stages in docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md admitted, protected artifact reconciliation and post-merge checks pass, ledger has no unresolved required obligations; production promotions remain zero.",
   "permitted_next_actions": [
     {
-      "id": "admit-programme-reconciliation-receipt",
-      "description": "Verify admitted Forge main dependency, generate and replay the explicit-root receipt using governance/chaidez_reconciliation_manifest.json, run Programme policy checks, then open and admit codex/chaidez-final-evidence through current protected controls. This checkpoint binds the stable foundry dependency, not its containing Programme commit."
+      "id": "admit-programme-closed-ledger",
+      "description": "Verify Programme #1066 exact head 47ad7013f601089087d5c712ffb8755abd5bba69, its required checks and merge-queue admission. Merge only after current protected controls pass; then read back the CLOSED 69-row ledger, pinned receipt and post-merge workflows."
     }
   ],
   "next_action": {
-    "id": "admit-programme-reconciliation-receipt",
-    "description": "Verify admitted Forge main dependency, generate and replay the explicit-root receipt using governance/chaidez_reconciliation_manifest.json, run Programme policy checks, then open and admit codex/chaidez-final-evidence through current protected controls. This checkpoint binds the stable foundry dependency, not its containing Programme commit.",
+    "id": "admit-programme-closed-ledger",
+    "description": "Verify Programme #1066 exact head 47ad7013f601089087d5c712ffb8755abd5bba69, its required checks and merge-queue admission. Merge only after current protected controls pass; then read back the CLOSED 69-row ledger, pinned receipt and post-merge workflows.",
     "evidence_targets": [
       "grandchallenge/MATH-PROGRAMME#1058",
       "grandchallenge/MATHFORGE#281",
       "grandchallenge/MATHCERT#332",
-      "governance/chaidez_reconciliation_manifest.json"
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/1066",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/36292999121",
+      "governance/chaidez_conformance_coverage.json"
     ]
   },
   "external_evidence": {
-    "waiting": false,
-    "objects": []
+    "waiting": true,
+    "objects": [
+      {
+        "kind": "artifact",
+        "identity": "grandchallenge/MATH-PROGRAMME#1066@47ad7013f601089087d5c712ffb8755abd5bba69",
+        "status": "OPEN; required policy/security/formal checks still settling; merge queue not yet admitted"
+      }
+    ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "Read back receiver and admit Forge documentation",
-    "result": "Cert #332 is protected at ebedf02e4a2276c9494ce3ea4f8f2b5c51f0ca71 with correct parents and identical receiver artifacts; all four post-merge workflows including Cert checks36290818637 succeeded. Forge #281 admitted docs-only head16b58d9 at protectedc8fa30353285b55d0fe11a8a6e0f076a4cdb0cf2 after all four required checks passed. Initial protected-object diagnostic reconciled148 artifacts,17288 sources,zero ordinary dossiers/production promotions/intakes,11 unchanged generic handoffs and unchanged WP06 claim. Final receipt will use admitted Forge documentation; diagnostic was not published as final. Newer Programme and Solve main changes are unrelated to the pinned contract/import/dossier/WP06 artifacts.",
+    "action": "Close the coverage ledger after protected receipt admission",
+    "result": "Programme PR #1065 merged through the queue at 76d466194c71d43c21ee7184be1fbf33c085ce65, protecting the 148-artifact receipt and reconciliation implementation. A second explicit-root replay matched the receipt byte-for-byte. The successor PR #1066 at 47ad7013f601089087d5c712ffb8755abd5bba69 marks all 69 requirements CANARY_REPLAYED, sets phase CLOSED, pins the protected receipt, and retains zero production promotions/intakes. Required checks are still settling; no final ledger readback exists yet.",
     "evidence_refs": [
       "grandchallenge/MATHFORGE#281",
       "grandchallenge/MATHCERT#332",
-      "https://github.com/grandchallenge/MATHCERT/actions/runs/36290818637"
+      "grandchallenge/MATH-PROGRAMME#1065",
+      "grandchallenge/MATH-PROGRAMME#1066",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/1065/merge"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/CHAIDEZ-V2-HARDENING-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-27T03:20:51Z"
+    "observed_at": "2026-09-27T03:36:00Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -70,7 +80,7 @@
       "docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md",
       "governance/chaidez_conformance_coverage.json"
     ],
-    "instructions": "The four pillar implementation stages are protected; confirm Forge post-merge checks and preserve immutable inputs in the Programme reconciliation manifest. Generate and compare the deterministic receipt with all four explicit authenticated roots, then admit Programme code/manifest/receipt. Afterwards fill all69 coverage rows with exact protected documentation, validators and positive/negative test blobs; pin the now-protected receipt, set CLOSED only when validators and replay pass, and admit the ledger separately. Read back final protected artifacts and affected workflows before terminal checkpoint and issue closure. Current checkpoint identities bind admitted Forge dependency to avoid a self-referential Programme hash; requery any Programme PR head/base/checks/reviews directly before its mutation. Zero production promotion/intake and no mathematical certification remain required."
+    "instructions": "Verify #1066 against live GitHub before any merge action. It must retain exact head 47ad7013f601089087d5c712ffb8755abd5bba69 and base 76d466194c71d43c21ee7184be1fbf33c085ce65; require all current protected checks and queue admission. After merge, read back protected main, the CLOSED coverage ledger, integration receipt identity and post-merge workflows, then rerun the explicit-root reconciliation with the closed ledger. Do not mark terminal until all 69 rows have no unresolved obligations, no row is PRODUCTION_EXERCISED, receipt and catalog counts remain 148 and 17288, zero promotions/intakes remain, and final documentation/issue readback is posted. No mathematical certification or source-semantic review is authorized."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
