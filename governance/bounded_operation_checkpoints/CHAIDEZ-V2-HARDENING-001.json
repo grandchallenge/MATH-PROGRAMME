@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP011",
+  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP012",
   "governed_work_id": "CHAIDEZ-V2-HARDENING-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,62 +15,43 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1058"
   },
-  "phase": "Closed coverage ledger PR awaits protected admission",
-  "state": "AWAITING_EXTERNAL_EVIDENCE",
+  "phase": "All four pillars and final documentary ledger protected and read back",
+  "state": "TERMINAL",
   "identities": {
-    "protected_base_sha": "76d466194c71d43c21ee7184be1fbf33c085ce65",
-    "candidate_head_sha": "47ad7013f601089087d5c712ffb8755abd5bba69",
+    "protected_base_sha": "4e4f06757e7e49421de57a2514ff6188ead1e086",
+    "candidate_head_sha": "4e4f06757e7e49421de57a2514ff6188ead1e086",
     "issue_number": null,
-    "pr_number": 1066,
-    "branch": "codex/chaidez-coverage-closure",
+    "pr_number": null,
+    "branch": "main",
     "workflow_runs": []
   },
   "terminal_condition": "All stages in docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md admitted, protected artifact reconciliation and post-merge checks pass, ledger has no unresolved required obligations; production promotions remain zero.",
-  "permitted_next_actions": [
-    {
-      "id": "admit-programme-closed-ledger",
-      "description": "Verify Programme #1066 exact head 47ad7013f601089087d5c712ffb8755abd5bba69, its required checks and merge-queue admission. Merge only after current protected controls pass; then read back the CLOSED 69-row ledger, pinned receipt and post-merge workflows."
-    }
-  ],
-  "next_action": {
-    "id": "admit-programme-closed-ledger",
-    "description": "Verify Programme #1066 exact head 47ad7013f601089087d5c712ffb8755abd5bba69, its required checks and merge-queue admission. Merge only after current protected controls pass; then read back the CLOSED 69-row ledger, pinned receipt and post-merge workflows.",
-    "evidence_targets": [
-      "grandchallenge/MATH-PROGRAMME#1058",
-      "grandchallenge/MATHFORGE#281",
-      "grandchallenge/MATHCERT#332",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/1066",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/36292999121",
-      "governance/chaidez_conformance_coverage.json"
-    ]
-  },
+  "permitted_next_actions": [],
+  "next_action": null,
   "external_evidence": {
-    "waiting": true,
-    "objects": [
-      {
-        "kind": "artifact",
-        "identity": "grandchallenge/MATH-PROGRAMME#1066@47ad7013f601089087d5c712ffb8755abd5bba69",
-        "status": "OPEN; required policy/security/formal checks still settling; merge queue not yet admitted"
-      }
-    ]
+    "waiting": false,
+    "objects": []
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "Close the coverage ledger after protected receipt admission",
-    "result": "Programme PR #1065 merged through the queue at 76d466194c71d43c21ee7184be1fbf33c085ce65, protecting the 148-artifact receipt and reconciliation implementation. A second explicit-root replay matched the receipt byte-for-byte. The successor PR #1066 at 47ad7013f601089087d5c712ffb8755abd5bba69 marks all 69 requirements CANARY_REPLAYED, sets phase CLOSED, pins the protected receipt, and retains zero production promotions/intakes. Required checks are still settling; no final ledger readback exists yet.",
+    "action": "Complete protected four-pillar Chaidez documentary admission and readback",
+    "result": "Programme PR #1065 protected the deterministic reconciliation receipt at 76d466194c71d43c21ee7184be1fbf33c085ce65. Programme PR #1066 then merged through the protected queue at 4e4f06757e7e49421de57a2514ff6188ead1e086 with parent 76d466194c71d43c21ee7184be1fbf33c085ce65 and candidate 99d70b0ced80b9b66b87aedfc09f98c6792ad87a. Protected-main readback shows phase CLOSED, 69 requirements, receipt pin 76d4661, 148 artifacts, 17,288 catalog entries, zero promotions/intakes, production_exercised false, eleven generic handoffs unchanged and WP06 Claim Ledger unchanged. The final explicit-root replay matched the committed receipt. Required protected main checks passed. A non-required documentation-site workflow failed because its upstream validated-site artifact was absent; unrelated GH-OS dispatch failures concern old PRs #848/#884/#919/#1055 and are not this operation's gates. No mathematical certification, source-semantic adjudication or production promotion occurred.",
     "evidence_refs": [
       "grandchallenge/MATHFORGE#281",
       "grandchallenge/MATHCERT#332",
       "grandchallenge/MATH-PROGRAMME#1065",
       "grandchallenge/MATH-PROGRAMME#1066",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/1065/merge"
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/1065/merge",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/commit/4e4f06757e7e49421de57a2514ff6188ead1e086",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/36293439452",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/36293439485"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/CHAIDEZ-V2-HARDENING-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-27T03:36:00Z"
+    "observed_at": "2026-09-27T04:12:00Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -80,9 +61,16 @@
       "docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md",
       "governance/chaidez_conformance_coverage.json"
     ],
-    "instructions": "Verify #1066 against live GitHub before any merge action. It must retain exact head 47ad7013f601089087d5c712ffb8755abd5bba69 and base 76d466194c71d43c21ee7184be1fbf33c085ce65; require all current protected checks and queue admission. After merge, read back protected main, the CLOSED coverage ledger, integration receipt identity and post-merge workflows, then rerun the explicit-root reconciliation with the closed ledger. Do not mark terminal until all 69 rows have no unresolved obligations, no row is PRODUCTION_EXERCISED, receipt and catalog counts remain 148 and 17288, zero promotions/intakes remain, and final documentation/issue readback is posted. No mathematical certification or source-semantic review is authorized."
+    "instructions": "Terminal record. Resume only for documentary correction or a separately authorized successor operation. The protected-main and explicit-root readbacks above are authoritative; this checkpoint grants no mathematical, certification, publication or protected-bypass authority."
   },
-  "terminal_evidence": [],
+  "terminal_evidence": [
+    "grandchallenge/MATH-PROGRAMME#1065 merged at 76d466194c71d43c21ee7184be1fbf33c085ce65",
+    "grandchallenge/MATHCERT#332 merged at ebedf02e4a2276c9494ce3ea4f8f2b5c51f0ca71",
+    "grandchallenge/MATHFORGE#281 merged at c8fa30353285b55d0fe11a8a6e0f076a4cdb0cf2",
+    "grandchallenge/MATH-PROGRAMME#1066 merged at 4e4f06757e7e49421de57a2514ff6188ead1e086",
+    "final closed-ledger replay matched 148 artifacts and 17288 catalog entries",
+    "protected readback confirmed zero production promotions and zero certification intakes"
+  ],
   "claim_boundaries": {
     "mathematical_claim_authorized": false,
     "certification_claim_authorized": false,
