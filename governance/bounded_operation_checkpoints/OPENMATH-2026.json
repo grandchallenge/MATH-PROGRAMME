@@ -1,0 +1,111 @@
+{
+  "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
+  "schema_version": "1.0.0",
+  "checkpoint_id": "OPENMATH-2026.CP001",
+  "governed_work_id": "OPENMATH-2026",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "admission": {
+    "topology": "MULTI_SESSION_RESUMABLE",
+    "admission_ref": "grandchallenge/MATH-PROGRAMME#1072",
+    "routine_work_excluded": true
+  },
+  "authority": {
+    "ghos_standard": "GCL-GHOS-00",
+    "ghos_version": "0.2.0",
+    "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#1072"
+  },
+  "phase": "Protected Programme, Forge, and Solve bootstrap is complete and MATHCERT readiness is established; exact organizer-authoritative records for all six AutoLab hills remain to be acquired before hill-specific mathematical execution.",
+  "state": "AWAITING_EXTERNAL_EVIDENCE",
+  "identities": {
+    "protected_base_sha": "5fb372a59d80ada7f9d6e7079729c20dc2702e64",
+    "candidate_head_sha": "5fb372a59d80ada7f9d6e7079729c20dc2702e64",
+    "issue_number": 1072,
+    "pr_number": null,
+    "branch": "campaign/openmath-2026-hill-acquisition",
+    "workflow_runs": []
+  },
+  "terminal_condition": "The OpenMath 2026 closeout preserves exact hill/source identities, admitted Forge and Solve lineage, retained positive and negative route evidence, exact external submission/checker artifacts where produced, current MATHCERT dispositions for claim-bearing outputs, and a Programme closeout that makes no certification, novelty, priority, or promotion claim by implication.",
+  "permitted_next_actions": [
+    {
+      "id": "acquire_six_hill_records",
+      "description": "Acquire an organizer-authoritative AutoLab list export or rendering, preferably through the documented autolab lists show alejandrozu/openmath route, bind all six exact hill identities and statements into MATHFORGE source locks, and release no hill-specific Solve lane from placeholders."
+    }
+  ],
+  "next_action": {
+    "id": "acquire_six_hill_records",
+    "description": "Acquire all six exact organizer-authoritative hill records and update the protected Forge source-lock ledger before any hill-specific mathematical execution.",
+    "evidence_targets": [
+      "https://app.autolab.ai/lists/alejandrozu/openmath",
+      "autolab lists show alejandrozu/openmath",
+      "grandchallenge/MATHFORGE#282",
+      "grandchallenge/MATHSOLVE#454",
+      "grandchallenge/MATHCERT#339"
+    ]
+  },
+  "external_evidence": {
+    "waiting": true,
+    "objects": [
+      {
+        "kind": "external_source",
+        "identity": "https://app.autolab.ai/lists/alejandrozu/openmath",
+        "status": "LIST_IDENTITY_OBSERVED__EXACT_SIX_HILL_RECORDS_NOT_ACQUIRED"
+      },
+      {
+        "kind": "external_source",
+        "identity": "autolab lists show alejandrozu/openmath",
+        "status": "DOCUMENTED_AUTHORITATIVE_ACQUISITION_PATH__NOT_EXECUTABLE_IN_CURRENT_ENVIRONMENT"
+      }
+    ]
+  },
+  "blocking_boundary": null,
+  "last_transition": {
+    "action": "Protect the OpenMath sprint bootstrap across Programme, Forge, and Solve and establish the separate MATHCERT readiness boundary.",
+    "result": "MATH-PROGRAMME PR #1073 merged at 5fb372a59d80ada7f9d6e7079729c20dc2702e64; MATHFORGE intake/provider lineage merged through PRs #283 and #284 with protected head 56b2c5aba769995fd1cb02a58ee25f757cc990c8; MATHSOLVE PR #456 merged at 3bd9014dc01c1ad225b84801bf02b9aec688df36; MATHCERT issue #339 records readiness only. All six hill slots remain intentionally unresolved, and no mathematical claim or certification state was created.",
+    "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#1072",
+      "grandchallenge/MATH-PROGRAMME#1073",
+      "grandchallenge/MATH-PROGRAMME@5fb372a59d80ada7f9d6e7079729c20dc2702e64",
+      "grandchallenge/MATHFORGE#282",
+      "grandchallenge/MATHFORGE#283",
+      "grandchallenge/MATHFORGE#284",
+      "grandchallenge/MATHFORGE@56b2c5aba769995fd1cb02a58ee25f757cc990c8",
+      "grandchallenge/MATHSOLVE#454",
+      "grandchallenge/MATHSOLVE#456",
+      "grandchallenge/MATHSOLVE@3bd9014dc01c1ad225b84801bf02b9aec688df36",
+      "grandchallenge/MATHCERT#339",
+      "grandchallenge/MATHCERT@9b1d2bddd8446db66d5039ddcffa067c533db84c"
+    ]
+  },
+  "freshness": {
+    "required_before_transition": true,
+    "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/OPENMATH-2026.json",
+    "on_mismatch": "REBIND_BEFORE_MUTATION",
+    "observed_at": "2026-09-27T13:46:00Z"
+  },
+  "resume": {
+    "fresh_session_safe": true,
+    "requires_chat_history": false,
+    "authoritative_sources": [
+      "grandchallenge/MATH-PROGRAMME#1072",
+      "governance/openmath_2026_campaign_binding.json",
+      "docs/campaigns/OPENMATH_2026_CHARTER.md",
+      "docs/campaigns/OPENMATH_2026_SPRINT_PROFILE.md",
+      "governance/openmath_2026_external_state.json",
+      "grandchallenge/MATHFORGE#282",
+      "grandchallenge/MATHFORGE@56b2c5aba769995fd1cb02a58ee25f757cc990c8",
+      "grandchallenge/MATHSOLVE#454",
+      "grandchallenge/MATHSOLVE@3bd9014dc01c1ad225b84801bf02b9aec688df36",
+      "grandchallenge/MATHCERT#339"
+    ],
+    "instructions": "Run the live verification command before mutation. First acquire the exact six hills through an organizer-authoritative AutoLab surface; do not populate placeholders by inference. Update and protect MATHFORGE source locks first. Then instantiate MATHSOLVE obligation DAGs only for locked hills. Route every claim-bearing output to MATHCERT through its independent certification boundary. After every material transition, rebind this checkpoint and the cross-pillar binding to the exact protected identities."
+  },
+  "terminal_evidence": [],
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false,
+    "protected_bypass_authorized": false
+  }
+}
