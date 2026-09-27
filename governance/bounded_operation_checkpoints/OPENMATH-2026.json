@@ -15,11 +15,11 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1072"
   },
-  "phase": "OM26-H1 Kobon triangles now has a protected content-addressed MATHFORGE source lock and a protected MATHSOLVE work package. H1 is active at the independent exact baseline-replay gate; OM26-H2 through OM26-H6 remain source-lock pending.",
+  "phase": "OM26-H1 Kobon triangles has passed H1-01 baseline evaluator concordance: the independent exact GCL scorer and authenticated AutoLab public evaluator both return 16 on the identical baseline. Bounded post-baseline construction research is released; OM26-H2 through OM26-H6 remain source-lock pending.",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "7da72057278849e2107abd3279959436a7cdfec3",
-    "candidate_head_sha": "7da72057278849e2107abd3279959436a7cdfec3",
+    "protected_base_sha": "5754b1d5205bf2d5f98695b8da6d6d57e25f25e0",
+    "candidate_head_sha": "5754b1d5205bf2d5f98695b8da6d6d57e25f25e0",
     "issue_number": 1072,
     "pr_number": null,
     "branch": "campaign/openmath-2026-hill-acquisition",
@@ -28,8 +28,8 @@
   "terminal_condition": "The OpenMath 2026 closeout preserves exact hill/source identities, admitted Forge and Solve lineage, retained positive and negative route evidence, exact external submission/checker artifacts where produced, current MATHCERT dispositions for claim-bearing outputs, and a Programme closeout that makes no certification, novelty, priority, or promotion claim by implication.",
   "permitted_next_actions": [
     {
-      "id": "execute_h1_baseline_replay",
-      "description": "For OM26-H1, implement an independent exact Kobon scorer, reproduce the displayed n=18 baseline score of 16, and cross-check the same solution with the AutoLab/local hill evaluator; stop on any mismatch before search."
+      "id": "execute_h1_post_baseline_tranche",
+      "description": "For OM26-H1, activate exact face-criterion proof/falsification and a bounded diversified construction-search tranche; require independent adversarial replay before any candidate enters the campaign-best ladder."
     },
     {
       "id": "acquire_remaining_hill_records",
@@ -37,12 +37,13 @@
     }
   ],
   "next_action": {
-    "id": "execute_h1_baseline_replay",
-    "description": "Execute the OM26-H1 H1-01 gate: independently reproduce the displayed n=18 baseline score 16 using exact rational geometry and cross-check the identical solution.json with the AutoLab/local evaluator. Reconcile any mismatch before activating construction search.",
+    "id": "execute_h1_post_baseline_tranche",
+    "description": "Execute the first bounded post-baseline OM26-H1 tranche: prioritize H1-02 exact face-criterion proof/falsification and a small diversified H1-06 construction search, retaining exact rational candidates and requiring H1-07 before promotion.",
     "evidence_targets": [
-      "grandchallenge/MATHFORGE@73f1890387eec56eb6be31f8c00f10b6a5a56383:reports/discovery/openmath_2026/hills/OM26-H1_KOBON_TRIANGLES/SOURCE_LOCK.json",
-      "grandchallenge/MATHSOLVE@1d943e341b7340e65e155c6ba5a900b48708c3d3:work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/OBLIGATION_GRAPH.md",
-      "grandchallenge/MATHSOLVE@1d943e341b7340e65e155c6ba5a900b48708c3d3:work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/NEXT_ACTION.md"
+      "grandchallenge/MATHSOLVE@2ded7f7e830d6c7699636fe102676a8b296c9885:work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/BASELINE_GATE_STATUS.json",
+      "grandchallenge/MATHSOLVE@2ded7f7e830d6c7699636fe102676a8b296c9885:work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/BASELINE_AUTOLAB_RECEIPT.json",
+      "grandchallenge/MATHSOLVE@2ded7f7e830d6c7699636fe102676a8b296c9885:work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/ROUTE_LEDGER.md",
+      "grandchallenge/MATHSOLVE@2ded7f7e830d6c7699636fe102676a8b296c9885:work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/NEXT_ACTION.md"
     ]
   },
   "external_evidence": {
@@ -51,7 +52,7 @@
       {
         "kind": "external_source",
         "identity": "https://app.autolab.ai/hills/alejandrozu/kobon-triangles",
-        "status": "AUTHENTICATED_RENDER_CAPTURED__CONTENT_ADDRESSED__SOLVE_RESEARCH_RELEASED__FINAL_SUBMISSION_CONCORDANCE_REQUIRED"
+        "status": "AUTHENTICATED_PUBLIC_SNAPSHOT_7d3f1d91dcb8__BASELINE_PUBLIC_EVALUATOR_CONCORDANCE_PASS_16__FINAL_SUBMISSION_CONCORDANCE_REQUIRED"
       },
       {
         "kind": "external_source",
@@ -67,21 +68,21 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "Admit the authenticated Kobon-triangles hill body through MATHFORGE and instantiate its exact MATHSOLVE work package.",
-    "result": "MATHFORGE PR #285 merged at protected head 73f1890387eec56eb6be31f8c00f10b6a5a56383 with the content-addressed OM26-H1 source/evaluator packet. MATHSOLVE PR #457 merged at protected head 1d943e341b7340e65e155c6ba5a900b48708c3d3 with the OM26-H1 obligation graph, route/failure ledgers, replay environment, provenance, and exact next action. H1 is released for research/candidate construction only; final submission remains live-concordance gated. The Human Steward confirms the sprint cardinality is six and the rendered seven-hill sidebar count is a typo. No score, optimality, novelty, competition-acceptance, or certification claim was created.",
+    "action": "Implement and cross-check the OM26-H1 exact baseline evaluator gate.",
+    "result": "MATHSOLVE PR #458 merged at protected head 2ded7f7e830d6c7699636fe102676a8b296c9885. The independent GCL exact scorer returns 16 for the source-reported n=18 baseline, with six bounded adversarial tests passing. Authenticated AutoLab public snapshot 7d3f1d91dcb8 (manifest 0.1.0, spec 2), evaluated with hills==0.11.0 in public working-tree mode, independently returns PASSED triangles=16. H1-01 is closed and bounded construction search is released. The AutoLab local score is explicitly unofficial because private evaluator regression fixtures are not distributed; no competition acceptance, optimality, novelty, best-known, or certification claim is created.",
     "evidence_refs": [
-      "grandchallenge/MATHFORGE#285",
-      "grandchallenge/MATHFORGE@73f1890387eec56eb6be31f8c00f10b6a5a56383",
-      "grandchallenge/MATHSOLVE#457",
-      "grandchallenge/MATHSOLVE@1d943e341b7340e65e155c6ba5a900b48708c3d3",
-      "grandchallenge/MATHCERT#339"
+      "grandchallenge/MATHSOLVE#458",
+      "grandchallenge/MATHSOLVE@2ded7f7e830d6c7699636fe102676a8b296c9885",
+      "grandchallenge/MATHSOLVE@2ded7f7e830d6c7699636fe102676a8b296c9885:work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/BASELINE_INTERNAL_RECEIPT.json",
+      "grandchallenge/MATHSOLVE@2ded7f7e830d6c7699636fe102676a8b296c9885:work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/BASELINE_AUTOLAB_RECEIPT.json",
+      "github-actions:grandchallenge/MATHSOLVE/run/36354560504/job/108719571277"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/OPENMATH-2026.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-27T14:43:47Z"
+    "observed_at": "2026-09-27T22:16:50Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -95,11 +96,13 @@
       "grandchallenge/MATHFORGE@73f1890387eec56eb6be31f8c00f10b6a5a56383",
       "grandchallenge/MATHFORGE@73f1890387eec56eb6be31f8c00f10b6a5a56383:reports/discovery/openmath_2026/hills/OM26-H1_KOBON_TRIANGLES/SOURCE_LOCK.json",
       "grandchallenge/MATHSOLVE#454",
-      "grandchallenge/MATHSOLVE@1d943e341b7340e65e155c6ba5a900b48708c3d3",
-      "grandchallenge/MATHSOLVE@1d943e341b7340e65e155c6ba5a900b48708c3d3:work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/HILL_LOCK.json",
+      "grandchallenge/MATHSOLVE#458",
+      "grandchallenge/MATHSOLVE@2ded7f7e830d6c7699636fe102676a8b296c9885",
+      "grandchallenge/MATHSOLVE@2ded7f7e830d6c7699636fe102676a8b296c9885:work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/BASELINE_GATE_STATUS.json",
+      "grandchallenge/MATHSOLVE@2ded7f7e830d6c7699636fe102676a8b296c9885:work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/BASELINE_AUTOLAB_RECEIPT.json",
       "grandchallenge/MATHCERT#339"
     ],
-    "instructions": "Run the live verification command before mutation. OM26-H1 is source-locked and may proceed only through its recorded obligation graph; first complete the exact baseline-replay gate and stop on evaluator mismatch. Continue acquiring OM26-H2 through OM26-H6 only from organizer-authoritative surfaces and protect Forge locks before Solve release. Before any CEI dispatch, complete the standing exact-SHA conformance audit. Route every claim-bearing result to MATHCERT independently. Rebind this checkpoint and the cross-pillar binding after each material transition."
+    "instructions": "Run the live verification command before mutation. OM26-H1 H1-01 is complete and construction research is released under the route ledger; prioritize H1-02 and a bounded H1-06 tranche, and require H1-07 independent adversarial replay before candidate promotion. Continue acquiring OM26-H2 through OM26-H6 only from organizer-authoritative surfaces and protect Forge locks before Solve release. Before any CEI dispatch, complete the standing exact-SHA conformance audit. Final competition submission remains H1-11 live-concordance gated. Route every claim-bearing result to MATHCERT independently. Rebind this checkpoint and the cross-pillar binding after each material transition."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
