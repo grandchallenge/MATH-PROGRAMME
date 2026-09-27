@@ -66,3 +66,47 @@ were exercised. It does not mean that a real source was semantically adjudicated
 promoted, proved or independently certified. Qualified source review, promotion
 decision and MATHCERT independent verification remain reserved acts. With zero
 production promotions no row may be PRODUCTION_EXERCISED.
+
+## Protected implementation inputs
+
+The release manifest deliberately pins material snapshots, not unrelated newer
+commits. Programme policy/import bytes at `726b7e96f1d7e8cfa05d988c264162e0541c542d`
+remain unchanged on the current protected branch. Later Solve WP07/WP08 work is
+outside this documentary migration; it does not replace the protected Solve
+gate consumed by Cert.
+
+| Pillar | Protected implementation | Admission evidence |
+| --- | --- | --- |
+| Programme policy/compatibility | `79d8464242297b4a47eef685303d4dc61aae77c5` | PR #1059; policy run 35951831627 |
+| Solve dossier gate and debt correction | `b9906e0d150e232efed1a5e4fbd2f5081609ab56` | PRs #448/#449; protected checks 35953691652 |
+| Cert receiving gate | `ebedf02e4a2276c9494ce3ea4f8f2b5c51f0ca71` | PR #332, prerequisites #333/#336; FULL_ESTATE 36014415913 attempt 2; protected checks 36290818637 |
+| Forge boundary documentation | `c8fa30353285b55d0fe11a8a6e0f076a4cdb0cf2` | PR #281; protected Forge checks 36291138551 |
+
+Cert reviewer `jimsteeg` approved exact receiver head
+`463a8889a5fed187d912f5f8ee196b5845312577` on 2026-09-24T23:21:39Z.
+The earlier dismissed approval was not reused. These are engineering admissions,
+not independent mathematical verification dispositions. Historical failed runs
+and superseded heads remain in PR history as provenance.
+
+## Requirement-to-test interpretation
+
+Each coverage row pins actual protected files with both digests. The following
+index identifies the test cases within those files; it does not replace the
+69-member machine-readable ledger. Narrative fidelity and reviewer qualification
+remain human obligations at a future real promotion, not claims made by these
+structural tests.
+
+| Contract members | Positive and negative coverage |
+| --- | --- |
+| Single spine, eight status fields, nine exposition stages, quartet, node/debt fields and twelve artifact roles | Solve `test_complete_on_disk_canary`, `test_every_required_dossier_member`, `test_all_status_fields_stages_quartet_roles_required`; malformed/missing members rejected |
+| Support routes and debt categories | Solve `test_every_support_route_is_accepted_structurally`, `test_every_debt_category_and_foundation_disposition`, `test_unknown_enums_and_forbidden_authority` |
+| Dependency audit, current debt, local node and first executable step | Solve `test_spine_dependencies_duplicates_debt_and_quartet_consistency`, `test_checked_claim_cannot_hide_open_debt`, `test_refutation_cannot_hide_open_prerequisite_debt` |
+| Source-record-only disposition | Programme `test_source_inventory_prohibits_dossiers_and_wrong_provider`, plus the complete protected source inventory in the integration receipt |
+| Reviewed promotion, minimum assurance, exact target and no automatic promotion | Solve `test_inadequate_assurance_and_source_identity`, `test_exact_target_cannot_use_similarity_or_missing_review`, `test_unknown_enums_and_forbidden_authority`, `test_canary_cannot_cross_into_production` |
+| No catalog-derived proof or certification | Cert `test_full_canary_reaches_receiving_gate_not_certification`, `test_independent_verification_is_not_inferred`, `test_claim_inflation_debt_omission_and_trust_disagreement` |
+| File-backed artifact identity | Solve filesystem/path, untracked/symlink and distinct-anchor tests; Programme protected-blob and both-digest mutation tests |
+| Compatibility preservation | Solve `test_wp06_complete_without_claim_expansion`, `test_eleven_generic_handoffs_and_rm_dio_legacy_preserved`; Programme integration receipt |
+
+The receipt is a reproducible protected-object reconciliation, not a natural
+production exercise. Closure still requires its subsequent protected pin in a
+valid CLOSED coverage ledger and the final protected-main readback.

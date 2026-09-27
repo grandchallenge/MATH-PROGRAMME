@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP009",
+  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP010",
   "governed_work_id": "CHAIDEZ-V2-HARDENING-001",
   "repository": "grandchallenge/MATHFORGE",
   "admission": {
@@ -15,29 +15,31 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1058"
   },
-  "phase": "Forge documentary PR checks passed; Cert protected replay finishing",
+  "phase": "Pillars admitted; Programme receipt preparation and two-stage ledger closure",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "ca0feb88e7657deae4ef7b3950257a885eb1e085",
-    "candidate_head_sha": "16b58d9c1e58cc5e785469a4d4227da3fcda5e81",
+    "candidate_head_sha": "c8fa30353285b55d0fe11a8a6e0f076a4cdb0cf2",
     "issue_number": null,
-    "pr_number": 281,
-    "branch": "codex/chaidez-foundry-boundary",
+    "pr_number": null,
+    "branch": "main",
     "workflow_runs": []
   },
   "terminal_condition": "All stages in docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md admitted, protected artifact reconciliation and post-merge checks pass, ledger has no unresolved required obligations; production promotions remain zero.",
   "permitted_next_actions": [
     {
-      "id": "admit-forge-documentary-boundary",
-      "description": "Read Cert post-merge run 36290818637 and Forge #281 exact-head required checks; after successful Cert readback merge Forge docs-only head 16b58d9c1e58cc5e785469a4d4227da3fcda5e81 through protected controls, then read back."
+      "id": "admit-programme-reconciliation-receipt",
+      "description": "Verify admitted Forge main dependency, generate and replay the explicit-root receipt using governance/chaidez_reconciliation_manifest.json, run Programme policy checks, then open and admit codex/chaidez-final-evidence through current protected controls. This checkpoint binds the stable foundry dependency, not its containing Programme commit."
     }
   ],
   "next_action": {
-    "id": "admit-forge-documentary-boundary",
-    "description": "Read Cert post-merge run 36290818637 and Forge #281 exact-head required checks; after successful Cert readback merge Forge docs-only head 16b58d9c1e58cc5e785469a4d4227da3fcda5e81 through protected controls, then read back.",
+    "id": "admit-programme-reconciliation-receipt",
+    "description": "Verify admitted Forge main dependency, generate and replay the explicit-root receipt using governance/chaidez_reconciliation_manifest.json, run Programme policy checks, then open and admit codex/chaidez-final-evidence through current protected controls. This checkpoint binds the stable foundry dependency, not its containing Programme commit.",
     "evidence_targets": [
+      "grandchallenge/MATH-PROGRAMME#1058",
       "grandchallenge/MATHFORGE#281",
-      "https://github.com/grandchallenge/MATHCERT/actions/runs/36290818637"
+      "grandchallenge/MATHCERT#332",
+      "governance/chaidez_reconciliation_manifest.json"
     ]
   },
   "external_evidence": {
@@ -46,11 +48,11 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "Admit approved exact-head receiver #332",
-    "result": "jimsteeg approved receiver head 463a8889a5fed187d912f5f8ee196b5845312577 at 2026-09-24T23:21:39Z; all four required checks passed including FULL_ESTATE. Expected-head merge admitted ebedf02e4a2276c9494ce3ea4f8f2b5c51f0ca71 at 2026-09-27T03:14:13Z. Post-merge runs 36290818637, 36290819020, 36290818113 and 36290818624 require readback. Forge docs candidate is unchanged16b58d9, mainca0feb88, rules require reconnaissance/policy/security/routing and zero reviews. No production promotion or certificate created. Forge #281 is open at exact prepared head; all four required checks passed, including reconnaissance36290924284. Cert protected blobs match the tested receiver; merge parentage is 737e0de plus463a8889. Cert full post-merge replay remains in progress. Programme source-import snapshot remains byte-identical; unrelated newer Programme changes do not overlap this work.",
+    "action": "Read back receiver and admit Forge documentation",
+    "result": "Cert #332 is protected at ebedf02e4a2276c9494ce3ea4f8f2b5c51f0ca71 with correct parents and identical receiver artifacts; all four post-merge workflows including Cert checks36290818637 succeeded. Forge #281 admitted docs-only head16b58d9 at protectedc8fa30353285b55d0fe11a8a6e0f076a4cdb0cf2 after all four required checks passed. Initial protected-object diagnostic reconciled148 artifacts,17288 sources,zero ordinary dossiers/production promotions/intakes,11 unchanged generic handoffs and unchanged WP06 claim. Final receipt will use admitted Forge documentation; diagnostic was not published as final. Newer Programme and Solve main changes are unrelated to the pinned contract/import/dossier/WP06 artifacts.",
     "evidence_refs": [
+      "grandchallenge/MATHFORGE#281",
       "grandchallenge/MATHCERT#332",
-      "https://github.com/grandchallenge/MATHCERT/actions/runs/36014415913/attempts/2",
       "https://github.com/grandchallenge/MATHCERT/actions/runs/36290818637"
     ]
   },
@@ -58,7 +60,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/CHAIDEZ-V2-HARDENING-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-27T03:14:13Z"
+    "observed_at": "2026-09-27T03:20:51Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -68,7 +70,7 @@
       "docs/CHAIDEZ_CONFORMANCE_IMPLEMENTATION.md",
       "governance/chaidez_conformance_coverage.json"
     ],
-    "instructions": "Verify branch-bound Forge candidate and read Cert protected merge ebedf02e4a2276c9494ce3ea4f8f2b5c51f0ca71 and post-merge runs. Open/check/admit docs-only Forge branch through protected controls. Then complete Programme manifest and deterministic authenticated explicit-root reconciliation receipt (code already prepared), admit it first, and separately pin its protected artifacts in the CLOSED 69-row coverage ledger. Final protected-main/post-merge readback is required before closing #1058. Preserve catalog17288, zero promotions/intakes, eleven generic handoffs and unchanged WP06 claim."
+    "instructions": "The four pillar implementation stages are protected; confirm Forge post-merge checks and preserve immutable inputs in the Programme reconciliation manifest. Generate and compare the deterministic receipt with all four explicit authenticated roots, then admit Programme code/manifest/receipt. Afterwards fill all69 coverage rows with exact protected documentation, validators and positive/negative test blobs; pin the now-protected receipt, set CLOSED only when validators and replay pass, and admit the ledger separately. Read back final protected artifacts and affected workflows before terminal checkpoint and issue closure. Current checkpoint identities bind admitted Forge dependency to avoid a self-referential Programme hash; requery any Programme PR head/base/checks/reviews directly before its mutation. Zero production promotion/intake and no mathematical certification remain required."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
