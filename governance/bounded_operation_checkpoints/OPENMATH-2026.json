@@ -1,0 +1,98 @@
+{
+  "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
+  "schema_version": "1.0.0",
+  "checkpoint_id": "OPENMATH-2026.CP001",
+  "governed_work_id": "OPENMATH-2026",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "admission": {
+    "topology": "MULTI_SESSION_RESUMABLE",
+    "admission_ref": "grandchallenge/MATH-PROGRAMME#1072",
+    "routine_work_excluded": true
+  },
+  "authority": {
+    "ghos_standard": "GCL-GHOS-00",
+    "ghos_version": "0.2.0",
+    "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#1072"
+  },
+  "phase": "Bootstrap the bounded OpenMath 2026 campaign and acquire authoritative source locks for the six external hills.",
+  "state": "IN_PROGRESS",
+  "identities": {
+    "protected_base_sha": "64ad90b3108f476225cc1ca5a2889e71b3719cc8",
+    "candidate_head_sha": null,
+    "issue_number": 1072,
+    "pr_number": null,
+    "branch": "campaign/openmath-2026-bootstrap",
+    "workflow_runs": []
+  },
+  "terminal_condition": "The event closeout preserves exact hill/source identities, admitted Forge and Solve lineage, all retained route/failure evidence, exact external submission/checker artifacts where any were produced, current MATHCERT dispositions for claim-bearing outputs, and a Programme closeout that makes no certification or novelty claim by implication.",
+  "permitted_next_actions": [
+    {
+      "id": "acquire_six_hill_locks",
+      "description": "Acquire the six organizer-authoritative AutoLab hill records, bind each to an exact statement/source identity, and populate the Forge intake without inventing unresolved client-rendered content."
+    },
+    {
+      "id": "prepare_shared_sprint_infrastructure",
+      "description": "Prepare common Forge/Solve templates, formal-environment inventory, checker-contract audit, and CEI dispatch scaffolding that does not depend on unresolved hill content."
+    }
+  ],
+  "next_action": {
+    "id": "acquire_six_hill_locks",
+    "description": "Acquire and durably lock all six organizer-authoritative hill identities/statements before authorizing per-hill mathematical work.",
+    "evidence_targets": [
+      "https://app.autolab.ai/lists/alejandrozu/openmath",
+      "https://rsihouse.ai/openmath",
+      "https://www.unsolvedmath.com/",
+      "grandchallenge/MATH-PROGRAMME#1072",
+      "governance/openmath_2026_external_state.json"
+    ]
+  },
+  "external_evidence": {
+    "waiting": true,
+    "objects": [
+      {
+        "identity": "https://app.autolab.ai/lists/alejandrozu/openmath",
+        "state": "AUTHORITATIVE_HILL_BODIES_NOT_YET_ACQUIRED",
+        "next_action": "Acquire an organizer-authoritative rendered/exported list or equivalent exact hill records; do not infer titles or statements from adjacent sources."
+      }
+    ]
+  },
+  "blocking_boundary": "Per-hill mathematical execution is blocked until exact external hill identities and statements are acquired. Shared non-claim infrastructure work remains authorized.",
+  "last_transition": {
+    "action": "instantiate OPENMATH-2026 bounded campaign",
+    "result": "Tracker #1072 created and bootstrap branch opened from protected main 64ad90b3108f476225cc1ca5a2889e71b3719cc8. The campaign records the external-list acquisition gap explicitly and authorizes no inferred hill content.",
+    "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#1072",
+      "grandchallenge/MATH-PROGRAMME@64ad90b3108f476225cc1ca5a2889e71b3719cc8"
+    ]
+  },
+  "freshness": {
+    "required_before_transition": true,
+    "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/OPENMATH-2026.json",
+    "on_mismatch": "REBIND_BEFORE_MUTATION",
+    "observed_at": "2026-09-27T13:08:26Z"
+  },
+  "resume": {
+    "fresh_session_safe": true,
+    "requires_chat_history": false,
+    "authoritative_sources": [
+      "grandchallenge/MATH-PROGRAMME#1072",
+      "docs/campaigns/OPENMATH_2026_CHARTER.md",
+      "docs/campaigns/OPENMATH_2026_SPRINT_PROFILE.md",
+      "governance/openmath_2026_external_state.json",
+      "docs/governance/GCL_CONTROLLED_EPISTEMIC_INTERFACE.md",
+      "MATHFORGE_SPEC.md",
+      "MATHSOLVE_SPEC.md",
+      "MATHCERT_SPEC.md"
+    ],
+    "instructions": "Rebind live protected state, then perform the exact recorded next action. Do not begin hill-specific mathematical work from placeholders. Once an exact hill lock is acquired, route source/status work to MATHFORGE, theorem/route work to MATHSOLVE, and claim-bearing outputs to MATHCERT. Update this checkpoint after each material phase or external-evidence transition."
+  },
+  "terminal_evidence": [],
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false,
+    "protected_bypass_authorized": false
+  }
+}
