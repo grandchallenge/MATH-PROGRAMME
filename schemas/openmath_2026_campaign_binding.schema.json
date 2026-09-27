@@ -5,81 +5,208 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "$schema", "schema_version", "record_id", "campaign_id", "lifecycle",
-    "programme", "forge", "solve", "cert", "external_acquisition",
-    "next_action", "claim_boundary"
+    "$schema",
+    "schema_version",
+    "record_id",
+    "campaign_id",
+    "lifecycle",
+    "programme",
+    "forge",
+    "solve",
+    "cert",
+    "external_acquisition",
+    "next_action",
+    "claim_boundary"
   ],
   "properties": {
-    "$schema": {"const": "../schemas/openmath_2026_campaign_binding.schema.json"},
-    "schema_version": {"const": "1.0.0"},
-    "record_id": {"const": "MP-OPENMATH-2026-BINDING-001"},
-    "campaign_id": {"const": "OPENMATH-2026"},
-    "lifecycle": {"enum": ["CANDIDATE_SOURCE_LOCK_PENDING", "SOURCE_LOCK_PARTIAL", "SOURCE_LOCK_COMPLETE", "ACTIVE_SOLVE", "CLOSEOUT"]},
-    "programme": {"$ref": "#/$defs/pillar"},
-    "forge": {"$ref": "#/$defs/pillar"},
-    "solve": {"$ref": "#/$defs/pillar"},
+    "$schema": {
+      "const": "../schemas/openmath_2026_campaign_binding.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "record_id": {
+      "const": "MP-OPENMATH-2026-BINDING-001"
+    },
+    "campaign_id": {
+      "const": "OPENMATH-2026"
+    },
+    "lifecycle": {
+      "enum": [
+        "CANDIDATE_SOURCE_LOCK_PENDING",
+        "SOURCE_LOCK_PARTIAL",
+        "SOURCE_LOCK_COMPLETE",
+        "ACTIVE_SOLVE",
+        "CLOSEOUT"
+      ]
+    },
+    "programme": {
+      "$ref": "#/$defs/pillar"
+    },
+    "forge": {
+      "$ref": "#/$defs/pillar"
+    },
+    "solve": {
+      "$ref": "#/$defs/pillar"
+    },
     "cert": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["repository", "issue", "commit_sha", "readiness_state", "certification_effect"],
+      "required": [
+        "repository",
+        "issue",
+        "commit_sha",
+        "readiness_state",
+        "certification_effect"
+      ],
       "properties": {
-        "repository": {"const": "grandchallenge/MATHCERT"},
-        "issue": {"const": 339},
-        "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-        "readiness_state": {"const": "NO_CLAIM_INTAKE_YET"},
-        "certification_effect": {"const": false}
+        "repository": {
+          "const": "grandchallenge/MATHCERT"
+        },
+        "issue": {
+          "const": 339
+        },
+        "commit_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "readiness_state": {
+          "enum": [
+            "NO_CLAIM_INTAKE_YET",
+            "CLAIM_INTAKE_PENDING_INDEPENDENT_REVIEW",
+            "CLAIM_INTAKE_ADMITTED_PENDING_INDEPENDENT_REVIEW",
+            "CERTIFICATION_IN_PROGRESS",
+            "CERTIFICATION_DISPOSITION_AVAILABLE"
+          ]
+        },
+        "certification_effect": {
+          "const": false
+        },
+        "claim_intake_issue": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "claim_intake_pr": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        }
       }
     },
     "external_acquisition": {
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "canonical_list_url", "documented_cli_command", "expected_hill_count",
-        "current_state", "inference_allowed"
+        "canonical_list_url",
+        "documented_cli_command",
+        "expected_hill_count",
+        "current_state",
+        "inference_allowed"
       ],
       "properties": {
-        "canonical_list_url": {"const": "https://app.autolab.ai/lists/alejandrozu/openmath"},
-        "documented_cli_command": {"const": "autolab lists show alejandrozu/openmath"},
-        "expected_hill_count": {"const": 6},
-        "current_state": {"enum": ["PENDING_AUTHORITATIVE_HILL_RECORDS", "PARTIAL_AUTHORITATIVE_HILL_RECORDS", "COMPLETE_AUTHORITATIVE_HILL_RECORDS"]},
-        "inference_allowed": {"const": false}
+        "canonical_list_url": {
+          "const": "https://app.autolab.ai/lists/alejandrozu/openmath"
+        },
+        "documented_cli_command": {
+          "const": "autolab lists show alejandrozu/openmath"
+        },
+        "expected_hill_count": {
+          "const": 6
+        },
+        "current_state": {
+          "enum": [
+            "PENDING_AUTHORITATIVE_HILL_RECORDS",
+            "PARTIAL_AUTHORITATIVE_HILL_RECORDS",
+            "COMPLETE_AUTHORITATIVE_HILL_RECORDS"
+          ]
+        },
+        "inference_allowed": {
+          "const": false
+        }
       }
     },
     "next_action": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "description", "completion_test"],
+      "required": [
+        "id",
+        "description",
+        "completion_test"
+      ],
       "properties": {
-        "id": {"const": "acquire_six_hill_records"},
-        "description": {"type": "string", "minLength": 20},
-        "completion_test": {"type": "string", "minLength": 20}
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]+$",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 20
+        },
+        "completion_test": {
+          "type": "string",
+          "minLength": 20
+        }
       }
     },
-    "claim_boundary": {"type": "string", "minLength": 80}
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 80
+    }
   },
   "$defs": {
     "artifact": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["path", "git_blob_sha1"],
+      "required": [
+        "path",
+        "git_blob_sha1"
+      ],
       "properties": {
-        "path": {"type": "string", "minLength": 1},
-        "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "git_blob_sha1": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
       }
     },
     "pillar": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["repository", "issue", "commit_sha", "artifacts"],
+      "required": [
+        "repository",
+        "issue",
+        "commit_sha",
+        "artifacts"
+      ],
       "properties": {
-        "repository": {"type": "string", "pattern": "^grandchallenge/[A-Za-z0-9_.-]+$"},
-        "issue": {"type": "integer", "minimum": 1},
-        "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "repository": {
+          "type": "string",
+          "pattern": "^grandchallenge/[A-Za-z0-9_.-]+$"
+        },
+        "issue": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "commit_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
         "artifacts": {
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,
-          "items": {"$ref": "#/$defs/artifact"}
+          "items": {
+            "$ref": "#/$defs/artifact"
+          }
         }
       }
     }
