@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP008",
+  "checkpoint_id": "CHAIDEZ-V2-HARDENING-001.CP009",
   "governed_work_id": "CHAIDEZ-V2-HARDENING-001",
   "repository": "grandchallenge/MATHFORGE",
   "admission": {
@@ -15,13 +15,13 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1058"
   },
-  "phase": "Cert receiver admitted; prepare foundry documentary admission",
+  "phase": "Forge documentary PR checks passed; Cert protected replay finishing",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "ca0feb88e7657deae4ef7b3950257a885eb1e085",
     "candidate_head_sha": "16b58d9c1e58cc5e785469a4d4227da3fcda5e81",
     "issue_number": null,
-    "pr_number": null,
+    "pr_number": 281,
     "branch": "codex/chaidez-foundry-boundary",
     "workflow_runs": []
   },
@@ -29,15 +29,15 @@
   "permitted_next_actions": [
     {
       "id": "admit-forge-documentary-boundary",
-      "description": "Open the docs-only Forge candidate PR, verify required checks and rules and admit through protected controls after Cert post-merge readback. Preserve catalog bytes; no source promotion or dossier machinery."
+      "description": "Read Cert post-merge run 36290818637 and Forge #281 exact-head required checks; after successful Cert readback merge Forge docs-only head 16b58d9c1e58cc5e785469a4d4227da3fcda5e81 through protected controls, then read back."
     }
   ],
   "next_action": {
     "id": "admit-forge-documentary-boundary",
-    "description": "Open the docs-only Forge candidate PR, verify required checks and rules and admit through protected controls after Cert post-merge readback. Preserve catalog bytes; no source promotion or dossier machinery.",
+    "description": "Read Cert post-merge run 36290818637 and Forge #281 exact-head required checks; after successful Cert readback merge Forge docs-only head 16b58d9c1e58cc5e785469a4d4227da3fcda5e81 through protected controls, then read back.",
     "evidence_targets": [
-      "grandchallenge/MATHFORGE:16b58d9c1e58cc5e785469a4d4227da3fcda5e81",
-      "grandchallenge/MATHCERT#332"
+      "grandchallenge/MATHFORGE#281",
+      "https://github.com/grandchallenge/MATHCERT/actions/runs/36290818637"
     ]
   },
   "external_evidence": {
@@ -47,7 +47,7 @@
   "blocking_boundary": null,
   "last_transition": {
     "action": "Admit approved exact-head receiver #332",
-    "result": "jimsteeg approved receiver head 463a8889a5fed187d912f5f8ee196b5845312577 at 2026-09-24T23:21:39Z; all four required checks passed including FULL_ESTATE. Expected-head merge admitted ebedf02e4a2276c9494ce3ea4f8f2b5c51f0ca71 at 2026-09-27T03:14:13Z. Post-merge runs 36290818637, 36290819020, 36290818113 and 36290818624 require readback. Forge docs candidate is unchanged16b58d9, mainca0feb88, rules require reconnaissance/policy/security/routing and zero reviews. No production promotion or certificate created.",
+    "result": "jimsteeg approved receiver head 463a8889a5fed187d912f5f8ee196b5845312577 at 2026-09-24T23:21:39Z; all four required checks passed including FULL_ESTATE. Expected-head merge admitted ebedf02e4a2276c9494ce3ea4f8f2b5c51f0ca71 at 2026-09-27T03:14:13Z. Post-merge runs 36290818637, 36290819020, 36290818113 and 36290818624 require readback. Forge docs candidate is unchanged16b58d9, mainca0feb88, rules require reconnaissance/policy/security/routing and zero reviews. No production promotion or certificate created. Forge #281 is open at exact prepared head; all four required checks passed, including reconnaissance36290924284. Cert protected blobs match the tested receiver; merge parentage is 737e0de plus463a8889. Cert full post-merge replay remains in progress. Programme source-import snapshot remains byte-identical; unrelated newer Programme changes do not overlap this work.",
     "evidence_refs": [
       "grandchallenge/MATHCERT#332",
       "https://github.com/grandchallenge/MATHCERT/actions/runs/36014415913/attempts/2",
