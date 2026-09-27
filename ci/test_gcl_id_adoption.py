@@ -108,6 +108,18 @@ class GCLIDAdoptionTests(unittest.TestCase):
         record["failure_classification"] = ["IDENTIFIABLE_WITH_DECLARED_NORMALIZATION"]
         mod.validate_preflight_object(record)
 
+    def test_full_identifiability_needs_no_failure_label(self) -> None:
+        record = lite_record()
+        record["observational_equivalence"]["status"] = "INJECTIVITY_ESTABLISHED"
+        record["recoverable_object"]["classification"] = "FULL_IDENTIFIABILITY"
+        record["recoverable_object"]["strongest_justified_object"] = "full representative"
+        record["solver_gate"]["full_representative_recovery_claim_permitted"] = True
+        record["solver_gate"]["reason"] = "injectivity established under the declared observation contract"
+        record["evidence_refs"] = ["theorem:injectivity"]
+        record["failure_classification"] = []
+        record["unresolved_assumptions"] = []
+        mod.validate_preflight_object(record)
+
     def test_completed_certified_level_requires_mathcert_reference(self) -> None:
         record = lite_record()
         record["level"] = "ID-CERTIFIED"
