@@ -1,0 +1,361 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/gcl_id_programme_adoption.schema.json",
+  "title": "MATH-PROGRAMME GCL-ID-00 adoption",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "record_type",
+    "repository",
+    "standard",
+    "standard_version",
+    "standard_repository",
+    "standard_commit",
+    "standard_source_path",
+    "standard_git_blob_sha1",
+    "admission_record",
+    "admission_git_blob_sha1",
+    "authority",
+    "programme_base",
+    "governing_issue",
+    "status",
+    "effective_condition",
+    "applicability",
+    "levels",
+    "anti_bureaucracy",
+    "record_contract",
+    "observational_review",
+    "historical_motivation",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../schemas/gcl_id_programme_adoption.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "record_type": {
+      "const": "GCL_STANDARD_PROGRAMME_ADOPTION"
+    },
+    "repository": {
+      "const": "grandchallenge/MATH-PROGRAMME"
+    },
+    "standard": {
+      "const": "GCL-ID-00"
+    },
+    "standard_version": {
+      "const": "0.1.0"
+    },
+    "standard_repository": {
+      "const": "grandchallenge/gcl-standards"
+    },
+    "standard_commit": {
+      "const": "fca21c1efef6dc3a560aa18c687579605c4579e0"
+    },
+    "standard_source_path": {
+      "const": "standards/GCL-ID-00.md"
+    },
+    "standard_git_blob_sha1": {
+      "const": "4a7d5968bdbce38e6e462ed7c17a61ea6d5ca992"
+    },
+    "admission_record": {
+      "const": "admissions/GCL-ID-00-0.1.0.json"
+    },
+    "admission_git_blob_sha1": {
+      "const": "d918a19b85b7ee81b403e5e270aa6ea366513c56"
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "directive",
+        "effective_commit",
+        "work_class",
+        "effects",
+        "reserved_action_required",
+        "human_steward_gate"
+      ],
+      "properties": {
+        "repository": {
+          "const": "grandchallenge/INTELLECT"
+        },
+        "directive": {
+          "const": "GI-STEWARD-0003"
+        },
+        "effective_commit": {
+          "const": "cacfe1f749b91a335e1d1734352cecff56bad7c1"
+        },
+        "work_class": {
+          "const": "substantive"
+        },
+        "effects": {
+          "const": [
+            "public_contract"
+          ]
+        },
+        "reserved_action_required": {
+          "const": false
+        },
+        "human_steward_gate": {
+          "const": "not_applicable_under_GI_STEWARD_0003"
+        }
+      }
+    },
+    "programme_base": {
+      "const": "afde6f69a95a2a488f6806c6f85af5a71bddfeea"
+    },
+    "governing_issue": {
+      "const": "grandchallenge/MATH-PROGRAMME#1070"
+    },
+    "status": {
+      "const": "effective"
+    },
+    "effective_condition": {
+      "const": "protected_merge_of_this_exact_adoption_record"
+    },
+    "applicability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "trigger",
+        "trigger_examples",
+        "exclusions",
+        "grandfathering"
+      ],
+      "properties": {
+        "trigger": {
+          "const": "A work package makes, tests, or materially depends on a claim that hidden state, parameters, calibration, representation, geometry, or other latent structure can be reconstructed from declared observations."
+        },
+        "trigger_examples": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "exclusions": {
+          "const": [
+            "ordinary_forward_computation",
+            "theorem_proving_without_reconstruction_claim",
+            "numerical_evaluation_without_latent_recovery",
+            "exploratory_work_without_representative_recovery_claim"
+          ]
+        },
+        "grandfathering": {
+          "const": "No retrospective rewrite is required. Existing work enters scope only at a new material inverse/reconstruction tranche or when it makes a new recovery claim."
+        }
+      }
+    },
+    "levels": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "default",
+        "lite",
+        "analysis",
+        "certified"
+      ],
+      "properties": {
+        "default": {
+          "const": "ID-PREFLIGHT-LITE"
+        },
+        "lite": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "required_fields",
+            "purpose"
+          ],
+          "properties": {
+            "required_fields": {
+              "const": [
+                "recovery_target",
+                "solver_observations",
+                "known_observation_preserving_equivalences",
+                "strongest_justified_recoverable_object",
+                "extra_information_or_normalization_for_stronger_recovery"
+              ]
+            },
+            "purpose": {
+              "const": "cheap_pre_solver_category_error_check"
+            }
+          }
+        },
+        "analysis": {
+          "const": "ID-ANALYSIS when identifiability materially affects the campaign, a nontrivial ambiguity is found, or a representative-level recovery claim remains consequential."
+        },
+        "certified": {
+          "const": "ID-CERTIFIED when an identifiability or obstruction statement itself is promoted as a mathematical claim; MATHCERT remains the certification authority."
+        }
+      }
+    },
+    "anti_bureaucracy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "injectivity_proof_required_before_experimentation",
+        "unresolved_is_valid",
+        "ordinary_exploration_exempt",
+        "retrospective_rewrite_required",
+        "structural_ambiguity_may_be_reported_as_optimizer_failure"
+      ],
+      "properties": {
+        "injectivity_proof_required_before_experimentation": {
+          "const": false
+        },
+        "unresolved_is_valid": {
+          "const": true
+        },
+        "ordinary_exploration_exempt": {
+          "const": true
+        },
+        "retrospective_rewrite_required": {
+          "const": false
+        },
+        "structural_ambiguity_may_be_reported_as_optimizer_failure": {
+          "const": false
+        }
+      }
+    },
+    "record_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "directory",
+        "default_level",
+        "records_required_only_when_in_scope"
+      ],
+      "properties": {
+        "schema": {
+          "const": "schemas/identifiability_preflight.schema.json"
+        },
+        "directory": {
+          "const": "governance/identifiability_preflights"
+        },
+        "default_level": {
+          "const": "ID-PREFLIGHT-LITE"
+        },
+        "records_required_only_when_in_scope": {
+          "const": true
+        }
+      }
+    },
+    "observational_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prospective",
+        "minimum_completed_packages",
+        "target_completed_packages",
+        "maximum_completed_packages_before_review_required",
+        "review_record",
+        "metrics",
+        "simplification_rule"
+      ],
+      "properties": {
+        "prospective": {
+          "const": true
+        },
+        "minimum_completed_packages": {
+          "const": 8
+        },
+        "target_completed_packages": {
+          "const": 10
+        },
+        "maximum_completed_packages_before_review_required": {
+          "const": 12
+        },
+        "review_record": {
+          "const": "governance/GCL-ID-00-OBSERVATIONAL-REVIEW.json"
+        },
+        "metrics": {
+          "const": [
+            "target_changed",
+            "hidden_prior_or_training_information_exposed",
+            "futile_solver_work_stopped",
+            "conditioning_distinguished_from_structural_non_identifiability",
+            "paperwork_only"
+          ]
+        },
+        "simplification_rule": {
+          "const": "If the profile becomes ceremonial or paperwork-dominant, simplify it through a separately governed revision."
+        }
+      }
+    },
+    "historical_motivation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_package",
+        "programme_substantive_merge",
+        "programme_terminal_checkpoint",
+        "mathcert_te3_audit",
+        "counts_toward_prospective_review"
+      ],
+      "properties": {
+        "work_package": {
+          "const": "VGSE-ENG-WP06"
+        },
+        "programme_substantive_merge": {
+          "const": "9663a9bc8f71af808ea4578a02467cfd47c29d92"
+        },
+        "programme_terminal_checkpoint": {
+          "const": "f132000f8308c65ac89c31d90d5e22df6c5dc56c"
+        },
+        "mathcert_te3_audit": {
+          "const": "15b68c196d020045bea42fc34236e0647b87cbb9"
+        },
+        "counts_toward_prospective_review": {
+          "const": false
+        }
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "constitutional_authority_created",
+        "mathematical_certification",
+        "scientific_claim_promotion",
+        "publication",
+        "production_activation",
+        "credential_expansion",
+        "commercial_claim",
+        "agent_permission_escalation"
+      ],
+      "properties": {
+        "constitutional_authority_created": {
+          "const": false
+        },
+        "mathematical_certification": {
+          "const": false
+        },
+        "scientific_claim_promotion": {
+          "const": false
+        },
+        "publication": {
+          "const": false
+        },
+        "production_activation": {
+          "const": false
+        },
+        "credential_expansion": {
+          "const": false
+        },
+        "commercial_claim": {
+          "const": false
+        },
+        "agent_permission_escalation": {
+          "const": false
+        }
+      }
+    }
+  }
+}

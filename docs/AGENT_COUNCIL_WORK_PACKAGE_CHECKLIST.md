@@ -17,6 +17,20 @@ Certification-bound MATHSOLVE packages additionally require an explicit MATHCERT
 - [ ] Evidence or certification route identified.
 - [ ] Material evidence closure identified well enough to determine affected checks and review jurisdiction.
 
+## GCL-ID-00 identifiability preflight — only when applicable
+
+Apply this section only when the work package makes, tests, or materially depends on a latent/reconstruction claim. It is not a universal research gate.
+
+- [ ] Exact recovery target stated.
+- [ ] Solver observations stated separately from training, fixture, prior, or other side information.
+- [ ] Known observation-preserving transformations or distinct indistinguishable states recorded; absence of a known symmetry is not treated as proof of injectivity.
+- [ ] Strongest currently justified recoverable object stated: full representative, normalized representative, quotient/invariant, partial/set-valued object, or `UNRESOLVED`.
+- [ ] Added measurement, normalization, prior, intervention, or compatibility condition needed for stronger recovery stated.
+- [ ] Structural non-identifiability is not reported as an optimizer defect.
+- [ ] Default record is `ID-PREFLIGHT-LITE`; escalation to `ID-ANALYSIS` is justified only when identifiability materially affects the campaign.
+- [ ] Any `ID-CERTIFIED` mathematical claim is routed to MATHCERT.
+- [ ] Ordinary forward work and exploration without a representative-recovery claim are left outside this control.
+
 ## Council review — apply by jurisdiction
 
 The following are review responsibilities, not a universal approval quorum. Mark an office applicable, not applicable, or satisfied by retained evidence as the governing contract permits.

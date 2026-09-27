@@ -22,6 +22,14 @@ For bounded work within already-authorized scope:
 
 Do not request a fresh Human Steward approval or generic independent review for routine work. Do not manufacture a synchronization commit, update a branch, rerun unaffected checks, or invalidate a prior disposition merely because protected `main` moved. Specialist non-author review remains appropriate for substantive mathematical certification, source-semantic adjudication, constitutional authority expansion, security-sensitive protection weakening, and external claim promotion.
 
+## GCL-ID-00 identifiability preflight
+
+MATH-PROGRAMME adopts GCL-ID-00 v0.1.0 through `governance/GCL-ID-00-ADOPTION.json`. Apply it only when a work package makes, tests, or materially depends on a reconstruction claim about hidden state, parameters, calibration, representation, geometry, or another latent object.
+
+The default is `ID-PREFLIGHT-LITE`. Before substantial solver effort, record the recovery target, the observations actually available to the solver, known observation-preserving equivalences, the strongest justified recoverable object, and any extra information or normalization required for stronger recovery. Use `schemas/identifiability_preflight.schema.json` and `governance/identifiability_preflights/`.
+
+Do not require a proof of injectivity before experimentation. `UNRESOLVED` is valid. Ordinary forward computation, theorem proving without a reconstruction claim, numerical evaluation without latent recovery, and exploration without representative-recovery claims are outside this profile. Escalate to `ID-ANALYSIS` only when identifiability materially affects the campaign. An `ID-CERTIFIED` mathematical identifiability or obstruction claim remains subject to MATHCERT.
+
 ## Mandatory execution routing
 
 Every direct workflow under `.github/workflows/` must be registered in `.ghos-routing/workflows.json`. Workflow bytes determine observed execution features and topology; registry prose cannot downgrade them. Any workflow that is autonomous, opaque, credential-bearing, waiting, or write-capable must use the exact admitted persistent controller with compatible capabilities.
