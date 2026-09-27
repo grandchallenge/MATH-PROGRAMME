@@ -1,0 +1,100 @@
+{
+  "$schema": "../schemas/openmath_2026_campaign_binding.schema.json",
+  "schema_version": "1.0.0",
+  "record_id": "MP-OPENMATH-2026-BINDING-001",
+  "campaign_id": "OPENMATH-2026",
+  "lifecycle": "CANDIDATE_SOURCE_LOCK_PENDING",
+  "programme": {
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "issue": 1072,
+    "commit_sha": "5fb372a59d80ada7f9d6e7079729c20dc2702e64",
+    "artifacts": [
+      {
+        "path": "docs/campaigns/OPENMATH_2026_CHARTER.md",
+        "git_blob_sha1": "1b115f6b14bdbdf8a6f7c379d31231bd41ec5828"
+      },
+      {
+        "path": "docs/campaigns/OPENMATH_2026_SPRINT_PROFILE.md",
+        "git_blob_sha1": "f7359e7f22ab9c8de370d88c5d1ee059502f4b13"
+      },
+      {
+        "path": "governance/openmath_2026_external_state.json",
+        "git_blob_sha1": "d355be89d5ed4c5f1a70dff9d20026451a17c8db"
+      }
+    ]
+  },
+  "forge": {
+    "repository": "grandchallenge/MATHFORGE",
+    "issue": 282,
+    "commit_sha": "56b2c5aba769995fd1cb02a58ee25f757cc990c8",
+    "artifacts": [
+      {
+        "path": "provider_manifests/OPENMATH-2026.json",
+        "git_blob_sha1": "d4fae2f4f055b0fa134533e3715260160519720d"
+      },
+      {
+        "path": "reports/discovery/openmath_2026/hill_source_locks.json",
+        "git_blob_sha1": "606f050bd9b158e40be1ed8f12d6df9d0cac4721"
+      },
+      {
+        "path": "reports/discovery/openmath_2026/reconnaissance_matrix.json",
+        "git_blob_sha1": "0d2038fcf9f8e16b55d81c909eb5a6006116033f"
+      }
+    ]
+  },
+  "solve": {
+    "repository": "grandchallenge/MATHSOLVE",
+    "issue": 454,
+    "commit_sha": "3bd9014dc01c1ad225b84801bf02b9aec688df36",
+    "artifacts": [
+      {
+        "path": "work_packages/OPENMATH_2026/README.md",
+        "git_blob_sha1": "43fdef063e2b2fe2e4236279985a2aa0f7f5f1d5"
+      },
+      {
+        "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
+        "git_blob_sha1": "85ea0f524f1f21178b1869381ab4619a9b160cf1"
+      },
+      {
+        "path": "work_packages/OPENMATH_2026/CLAIM_LEDGER.json",
+        "git_blob_sha1": "c3f69243fe199e3eca27d330cc01688c199ead16"
+      },
+      {
+        "path": "work_packages/OPENMATH_2026/OBLIGATION_TEMPLATE.md",
+        "git_blob_sha1": "b6419037c35c7803a4748eccf80bec4b9d4d2954"
+      },
+      {
+        "path": "work_packages/OPENMATH_2026/FAILURE_LEDGER.md",
+        "git_blob_sha1": "00f7efe8898c237a18f4dcbf36346c2e74ecccc2"
+      },
+      {
+        "path": "work_packages/OPENMATH_2026/NEXT_ACTION.md",
+        "git_blob_sha1": "b4e46fc8be39b82a1517e1037d436725b847b96e"
+      },
+      {
+        "path": "work_packages/OPENMATH_2026/CEI_DISPATCH_TEMPLATE.md",
+        "git_blob_sha1": "e25ebe5a06113068e91146b4f1a9761eb248503f"
+      }
+    ]
+  },
+  "cert": {
+    "repository": "grandchallenge/MATHCERT",
+    "issue": 339,
+    "commit_sha": "9b1d2bddd8446db66d5039ddcffa067c533db84c",
+    "readiness_state": "NO_CLAIM_INTAKE_YET",
+    "certification_effect": false
+  },
+  "external_acquisition": {
+    "canonical_list_url": "https://app.autolab.ai/lists/alejandrozu/openmath",
+    "documented_cli_command": "autolab lists show alejandrozu/openmath",
+    "expected_hill_count": 6,
+    "current_state": "PENDING_AUTHORITATIVE_HILL_RECORDS",
+    "inference_allowed": false
+  },
+  "next_action": {
+    "id": "acquire_six_hill_records",
+    "description": "Acquire the six organizer-authoritative AutoLab hill records, then update the Forge source-lock ledger before releasing any hill-specific Solve lane.",
+    "completion_test": "PASS only when six non-placeholder exact hill identities and statements are bound to authoritative evidence, or when an organizer-authoritative record establishes that the focus set changed."
+  },
+  "claim_boundary": "This binding records protected cross-pillar campaign topology and the exact external acquisition obligation. It does not identify an unresolved hill by inference, prove or certify any mathematical statement, establish novelty or priority, imply competition acceptance, or authorize publication or Programme promotion."
+}
