@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "operation_id",
+    "repositories"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "operation_id": {
+      "const": "CHAIDEZ-V2-HARDENING-001"
+    },
+    "repositories": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "MATH-PROGRAMME",
+        "MATHFORGE",
+        "MATHSOLVE",
+        "MATHCERT"
+      ],
+      "properties": {
+        "MATH-PROGRAMME": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "MATHFORGE": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "MATHSOLVE": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "MATHCERT": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        }
+      }
+    }
+  }
+}
