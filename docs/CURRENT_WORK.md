@@ -100,52 +100,65 @@ Construct a shifted Popov, minimal-approximant, order-basis, or equivalent compl
 
 A constructive completion must produce an explicit degree-reduced section. A positive route then requires independent exact replay over `Q(n,k,l)` before the certificate state can advance.
 
-<a id="vgse-001--engineering-discovery-handoff"></a>
+<a id="vgse-001--mechanical-semantics"></a>
 
-## VGSE-001 · engineering-discovery handoff
+## VGSE-001 · TE3-native design to mechanical semantics
 
-**Live tracker:** [MATH-PROGRAMME #984](https://github.com/grandchallenge/MATH-PROGRAMME/issues/984)  
-**Status:** engineering discovery built on a bounded protected mathematical result.
+**Live campaign tracker:** [MATH-PROGRAMME #1084](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1084)  
+**Live M0 tracker:** [MATH-PROGRAMME #1085](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1085)  
+**Status:** fresh governed phase; M0 TE3 realization atlas is the only currently authorized substantive tranche.
 
 ### Object
 
-The new object is not the historical source figure by itself. It is the family of admissible origami structures and the relation between four layers:
+VGSE now separates three maps that predecessor work showed must not be conflated:
 
 ```text
-topology / combinatorics
-  -> geometric realization
-  -> metric or weight parameters
-  -> material and thickness parameters
-  -> mechanical response
+quotient coordinates x
+  -> TE3-consistent geometry g
+  -> explicitly defined mechanical behaviour m
 ```
 
-The research question is which properties are invariant, which are tunable, which survive perturbation, and which can be synthesized from a target response.
-
-### Supported state
-
-The restricted successor `MC-ROUTE-VGSE-001-R4` has a protected qualified result for exactly `VGSE-C00`, `VGSE-C01`, `VGSE-C04`, and `VGSE-C05`.
-
-The original five-claim route remains unchanged and fail-closed on `VGSE-C06`. The source package does not establish the Figure-16-to-pinned-`C` correspondence required for that claim.
+WP01-WP06 established a mathematical control space and then resolved the geometry-identifiability boundary. They did not establish mechanical semantics.
 
 ### Obstruction
 
-The engineering programme must not treat a visible source drawing as a certified physical design. It must construct its own layered model and distinguish source reconstruction from GCL-designed realizations.
+The next missing object is not another reconstruction of the five retained C05 branches.
+
+The programme needs genuinely independent GCL-designed TE3-conformant realizations across quotient space. Until those exist, there is no justified design family on which to ask which quotient directions control kinematics or other mechanical observables.
+
+### Supported state
+
+Protected predecessor work establishes:
+
+- an eight-dimensional positive quotient and exact mathematical response inverse;
+- exact feasibility relations for the protected response manifold;
+- failure of the retained five-branch catalogue to identify a general empirical geometry-to-quotient law;
+- an exact `3 closed cycles + 5 boundary paths` invariant decomposition;
+- 8/8 geometry identifiability for genuine source-defined TE3 t-embeddings;
+- a five-dimensional boundary ambiguity for the broader algebraic-realization class without TE3;
+- certified TE3 failure of the retained five C05 branches relative to protected C04.
+
+`VGSE-C06` remains fail-closed and is not on the critical path of the new phase.
 
 ### Claim boundary
 
-The engineering handoff does not establish rigid foldability, collision freedom, finite-thickness feasibility, manufacturability, product performance, novelty, priority, patentability, or commercial value.
+M0 establishes no mechanics. The campaign currently has no authority for rigid foldability, collision freedom, finite thickness, stiffness, constitutive behaviour, material performance, manufacturability, product performance, novelty, patentability, or commercial value.
 
 ### Next bounded move
 
-The first phase must produce:
+Execute **M0 — TE3 realization atlas**:
 
-- one canonical layered representation;
-- at least one verified invariant or falsified invariant candidate;
-- a sensitivity map for the response-controlling parameters;
-- a statement of what can and cannot be recovered from visible geometry;
-- one bounded inverse-design result, including an impossibility or ill-conditioning result if that is what the evidence supports;
-- an engineering claim ledger;
-- one executable next experiment or derivation.
+1. pin the exact forward TE3 realization contract;
+2. sample genuinely independent quotient points;
+3. construct or reject TE3-consistent geometries;
+4. replay TE3 independently on every retained success;
+5. characterize multiplicity, components, singularities, and conditioning;
+6. falsify at least one overbroad realization hypothesis;
+7. terminate at one declared M0 disposition.
+
+M1 kinematic semantics and M2 identifiability-aware inverse design remain blocked pending separate protected activation.
+
+[Read the campaign mandate](VGSE_MECHANICAL_SEMANTICS_MANDATE.md)
 
 ## Additional active development
 
