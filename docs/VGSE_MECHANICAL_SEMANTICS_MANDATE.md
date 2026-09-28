@@ -4,8 +4,10 @@
 **Phase:** `VGSE-MECHANICAL-SEMANTICS-001`  
 **Programme tracker:** `grandchallenge/MATH-PROGRAMME#1084`  
 **M0 tracker:** `grandchallenge/MATH-PROGRAMME#1085`  
-**Protected admission base:** `f32a1e0cf2b90cb0fda8552effe8de4e713712d2`  
-**Status:** candidate campaign mandate; M0 becomes `AUTHORIZED_READY` only on protected merge of the admission packet
+**Preparation base:** `f32a1e0cf2b90cb0fda8552effe8de4e713712d2`  
+**Protected campaign admission:** PR `#1086`, merge/readback `fee2dfed5876ea91543ceae1400b5e355a6583e5`  
+**Protected continuity rebind:** PR `#1087`, merge/readback `8c8acbe71c649b75bff05d7c835db235cf326003`  
+**Status:** `PROTECTED_ACTIVE`; M0 is `AUTHORIZED_READY`; M1 and M2 remain blocked pending separately governed successor activations
 
 ## 1. Core clarity
 
