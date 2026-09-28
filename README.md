@@ -50,7 +50,7 @@ This table shows selected material programme work that is active now. It is deli
 | Frontier | Current obligation | Programme significance |
 |---|---|---|
 | **BSD-001 — rank-one leading term at literal `p=2`** | [MATHSOLVE #243](https://github.com/grandchallenge/MATHSOLVE/issues/243) replays the Burns–Sakamoto–Sano theorem chain at literal `p=2`. If the replay fails, the campaign must identify the first unrepaired theorem-level dependency. | The work targets one named theorem-level obstruction. It does not generalize the result beyond the retained claim boundary. |
-| **VGSE-001 — engineering laws latent in origami structure** | [MATH-PROGRAMME #984](https://github.com/grandchallenge/MATH-PROGRAMME/issues/984) begins from the protected four-claim result and asks which behaviours belong to topology, which are selected by geometry, which are tunable through metric parameters, and which survive physical perturbation. | The objective is not to reproduce one historical drawing. It is to extract reusable mechanical laws and test whether desired behaviour can be designed backward through constraint structure. |
+| **VGSE-001 — TE3-native design to mechanical semantics** | [MATH-PROGRAMME #1084](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1084) opens the post-WP06 phase. [M0 #1085](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1085) constructs genuinely independent TE3-consistent realizations across the protected quotient space before any mechanical interpretation is attempted. | The programme now separates mathematical design coordinates, TE3 geometry, and mechanical behaviour. The immediate objective is a realizable design family, not further reconstruction of the historical specimen. |
 | **OZ-001 — order-7 Brown–Zudilin certificate route** | [MATH-PROGRAMME #964](https://github.com/grandchallenge/MATH-PROGRAMME/issues/964) reduces the 576-dimensional discrete-curl kernel through a degree-minimising Popov or approximant-basis section. The resulting order-7 certificate then requires independent replay. | The work attempts to construct an exact characteristic-zero certificate inside a defined admissible class. Construction and certification remain separate steps. |
 
 Other active development includes [CMDG CM4 P3-M finite-stage recovery](https://github.com/grandchallenge/MATH-PROGRAMME/issues/662) and the [NS-CI-001 critical-integrability lane](https://github.com/grandchallenge/MATH-PROGRAMME/issues/55). The public table is a compact orientation surface, not the programme's full active-work registry.
@@ -59,13 +59,13 @@ Rows appear here only while the work remains materially active. Issue trackers p
 
 [Programme Atlas →](docs/PROGRAMME_ATLAS.md) · [MATHFORGE](https://github.com/grandchallenge/MATHFORGE) · [MATHSOLVE](https://github.com/grandchallenge/MATHSOLVE) · [MATHCERT](https://github.com/grandchallenge/MATHCERT)
 
-### VGSE-001: from reconstruction to engineering discovery
+### VGSE-001: from mathematical control space to mechanical semantics
 
-The protected VGSE work has qualified four mathematical claims while leaving the Figure-16-to-pinned-`C` correspondence fail-closed. That gap limits what can be attributed to the historical source, but it does not require GCL to stop at reconstruction.
+WP01-WP06 established the mathematical design coordinates and, just as importantly, the boundary of what the retained geometry can identify. The five retained C05 branches are not a mechanically validated design family, and they fail source-definition TE3 relative to the protected C04 weight class.
 
-The new research question is **what reusable engineering laws are latent in the origami structure**. The working model separates four layers: topology defines the admissible mechanism; geometry selects a realization; metric parameters tune response; material and thickness determine physical performance. The first task is to test that hierarchy rather than assume it.
+The active phase therefore changes the object. M0 constructs new GCL-designed TE3-conformant realizations from genuinely independent quotient points and maps existence, multiplicity, components, singularities, and conditioning. Only after that protected boundary may a separately admitted M1 attach explicit kinematic semantics. M2 is reserved for a bounded inverse-design problem and must apply the adopted GCL-ID-00 identifiability preflight before substantial inverse optimization.
 
-The durable mandate is [`docs/VGSE_ENGINEERING_DISCOVERY_MANDATE.md`](docs/VGSE_ENGINEERING_DISCOVERY_MANDATE.md). It directs agents to build a parameterized design-space model, probe invariants and sensitivities, attempt inverse design, preserve negative results, and keep new GCL realizations distinct from recovered source geometry.
+The durable mandate is [`docs/VGSE_MECHANICAL_SEMANTICS_MANDATE.md`](docs/VGSE_MECHANICAL_SEMANTICS_MANDATE.md). Historical source correspondence `VGSE-C06` remains fail-closed and is not on the critical path.
 
 ### BSD-001: the current replay problem
 
