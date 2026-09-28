@@ -1,4 +1,4 @@
-# OPENMATH-2026 — bounded six-hill sprint campaign
+# OPENMATH-2026 — bounded seven-hill sprint campaign
 
 **Programme tracker:** `grandchallenge/MATH-PROGRAMME#1072`  
 **Event window:** 2026-09-27 through 2026-10-02  
@@ -45,13 +45,13 @@ The campaign is bound to the following public external surfaces:
 - event announcement: `https://luma.com/yzp9abvr`
 - Ulam / UnsolvedMath archive: `https://www.unsolvedmath.com/`
 
-At campaign creation, the public AutoLab page exposed the list identity but the six client-rendered hill bodies were not recoverable through the available non-interactive retrieval path. No hill title, statement, identifier, difficulty, evaluator, or formal target is therefore inferred or invented here.
+At campaign creation, the public AutoLab page exposed the list identity but the then-current six client-rendered hill bodies were not recoverable through the available non-interactive retrieval path. That historical acquisition state is preserved. The Human Steward later reported that an additional Erdős problem had been added, bringing the current sprint cardinality to seven. No unresolved hill title, statement, identifier, difficulty, evaluator, or formal target is inferred or invented from that high-level update.
 
 Per-hill mathematical work is blocked until the exact hill records are acquired and recorded under the source-lock contract.
 
 ## Campaign lanes
 
-The campaign reserves six hill slots:
+The campaign currently reserves seven hill slots:
 
 - `OM26-H1`
 - `OM26-H2`
@@ -59,10 +59,11 @@ The campaign reserves six hill slots:
 - `OM26-H4`
 - `OM26-H5`
 - `OM26-H6`
+- `OM26-H7`
 
 Each slot becomes executable only after its exact external identity is locked.
 
-Shared lanes may proceed before all six locks are complete:
+Shared lanes may proceed before all seven current locks are complete:
 
 1. source/status acquisition machinery;
 2. formalization environment inventory;
@@ -193,4 +194,6 @@ The existing invariant remains controlling:
 
 ## First executable action
 
-Acquire the exact six AutoLab hill records and write the source-lock packet. Completion requires six non-placeholder hill identities and statements, or an explicit authoritative record that the external focus set changed. Until then, the six mathematical lanes remain blocked while shared infrastructure work may proceed.
+OM26-H1 is source-locked and active. The Human Steward reports that an additional Erdős problem has been added, so current campaign cardinality is seven. OM26-H2 through OM26-H7 remain source-lock pending. Continue organizer-authoritative acquisition for those six unresolved hills without inferring their contents.
+
+For OM26-H1, the next mathematical action is the H1-12 multi-core incidence lane: after the protected projective reduction removes parallelism, any hypothetical 95-triangle witness is source-conditionally confined to arrangements with at least three finite multiple points. Attack that q >= 3 residual directly; do not repeat the exhausted local/topology search neighborhoods without a structurally distinct generator.
