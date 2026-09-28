@@ -49,19 +49,19 @@
   "solve": {
     "repository": "grandchallenge/MATHSOLVE",
     "issue": 454,
-    "commit_sha": "fc30a46c6edb014d30995ef0bea4ce6ac4fd5ad4",
+    "commit_sha": "f7c376c9fbeed36936ffeeda8a5b563d40013f8c",
     "artifacts": [
       {
         "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
-        "git_blob_sha1": "b1042be736bc4fb028b0b8dc5517408b4d8cd1d5"
+        "git_blob_sha1": "d23351073a405472ba76b4eb7a5e9e888ea8fe20"
       },
       {
         "path": "work_packages/OPENMATH_2026/NEXT_ACTION.md",
-        "git_blob_sha1": "d8c875b481a2bdc4cc657a1c2467aef2503dac1f"
+        "git_blob_sha1": "0fe4bd26780fc304ec8e4c524f10f594d5b1f6d0"
       },
       {
         "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/CLAIM_LEDGER.json",
-        "git_blob_sha1": "d50c33ffc4cab6882379722da9d2b297daf6ea73"
+        "git_blob_sha1": "fe5f8ebdc5dc91afc5b9f4e3a37773dfda0ebec9"
       },
       {
         "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/CANDIDATE_LADDER.json",
@@ -97,7 +97,7 @@
       },
       {
         "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_12_STATUS.json",
-        "git_blob_sha1": "5169cc2998618f501935a303b0a7baa9a6fe1e42"
+        "git_blob_sha1": "f358c3bb59f9643c26098e1c6908f18db4172a85"
       },
       {
         "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/MATHCERT_HANDOFF_RH_BADER93.md",
@@ -106,6 +106,14 @@
       {
         "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_12_FOUR_CORE_PROFILE_REDUCTION.md",
         "git_blob_sha1": "8495471100d0687b8a1194949dc4bd7afcef35dc"
+      },
+      {
+        "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_12_SATURATED_CORE_HULL_REDUCTION.md",
+        "git_blob_sha1": "e68f1b060d65a3daabf9bbfbefd2f45eebd412ec"
+      },
+      {
+        "path": "ci/validate_openmath_h1_12_saturated_core.py",
+        "git_blob_sha1": "a689fbc0edd7d75007b7101fbd2d4e2978b71d99"
       }
     ]
   },
@@ -126,9 +134,9 @@
     "inference_allowed": false
   },
   "next_action": {
-    "id": "resolve_h1_12_dense_q4_profiles",
-    "description": "Resolve the dense OM26-H1 H1-12 four-core strata first: 3335 and 3444 require complete D2=6 core sharing, while 3344 requires D2>=5. Keep 3333, 3334, and q>=5 as separate residuals; independently reconstruct source-scoped geometry where possible.",
-    "completion_test": "PASS for this transition only when at least one dense q=4 profile is eliminated or realized by a replayable exact construction, the q=4 residual is otherwise strictly narrowed, or a required geometric premise is independently established. No source-conditional reduction may be promoted to hill-global <=94."
+    "id": "resolve_h1_12_q4_3334",
+    "description": "Analyze the OM26-H1 q=4 multiplicity profile 3334 first. Split by D2=3,4,5, derive exact core-graph and local fan consequences, and seek a geometric contradiction, stricter normal form, or replayable exact construction. Keep 3333 and q>=5 separate.",
+    "completion_test": "PASS for this transition only when the 3334 residual is eliminated, realized by a replayable exact construction, or strictly narrowed by a proof-quality structural result. Source-conditional fan premises must remain explicitly scoped and no result may be promoted to hill-global <=94 without closing the remaining residuals."
   },
-  "claim_boundary": "OPENMATH-2026 currently has seven hills; OM26-H7 remains source-lock pending. OM26-H1 campaign-best-observed remains 93. Protected Solve fc30a46c6edb014d30995ef0bea4ce6ac4fd5ad4 removes parallelism, conditionally excludes q<=3 score-95 witnesses, and reduces q=4 to multiplicity profiles 3333,3334,3335,3344,3444 with minimum D2 values 1,3,6,5,6 under the named source-scoped charging/fan premises. The remaining residual is those q=4 strata or q>=5. The source-scoped geometric premises are not independently certified, so no hill-global <=94 conclusion follows. MATHCERT intakes remain protected but non-certifying. No global best-known, optimality, novelty, priority, official competition-acceptance, certification, publication, or Programme-promotion claim is authorized."
+  "claim_boundary": "OPENMATH-2026 currently has seven hills; OM26-H7 remains source-lock pending. OM26-H1 campaign-best-observed remains 93. Protected Solve f7c376c9fbeed36936ffeeda8a5b563d40013f8c removes parallelism and, conditional on the named source-scoped fan/charging premises, excludes q<=3 and q=4 profiles 3335,3344,3444 from a 95 witness. The live residual is q=4 profile 3333 or 3334, or q>=5. The convex-hull component of the latest reduction is GCL-reconstructed; the local no-long-run fan premise remains source-scoped. No hill-global <=94, optimality, novelty, certification, competition-acceptance, publication, or Programme-promotion claim is authorized."
 }
