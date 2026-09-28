@@ -7,7 +7,7 @@
   "programme": {
     "repository": "grandchallenge/MATH-PROGRAMME",
     "issue": 1072,
-    "commit_sha": "da1b37c3fb053fc8686321b45194902e6e8c1e0c",
+    "commit_sha": "6b20e8f4fdd2aa89c8103f2975737338444ed07c",
     "artifacts": [
       {
         "path": "docs/campaigns/OPENMATH_2026_CHARTER.md",
@@ -69,43 +69,51 @@
   "solve": {
     "repository": "grandchallenge/MATHSOLVE",
     "issue": 454,
-    "commit_sha": "47a7318488229da3e7aaff67d68ebec7de7a4ab1",
+    "commit_sha": "5e5770c287f6bbf8e66f8cab4487594db6100f53",
     "artifacts": [
       {
         "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
-        "git_blob_sha1": "b7a89d5a4a23f7a825104cef5730c022081438e4"
+        "git_blob_sha1": "ca94eaa6d9cd01d3c952679f7388dafeafeeebf2"
       },
       {
         "path": "work_packages/OPENMATH_2026/NEXT_ACTION.md",
-        "git_blob_sha1": "cb2a2529f0771dafc57b036ec1a6523dcacde267"
+        "git_blob_sha1": "4e6d2379ae4986d7ac083df8e4577aed635f117c"
       },
       {
         "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/CLAIM_LEDGER.json",
-        "git_blob_sha1": "2aad160289527b58da828aa5b25d42041b438ad0"
+        "git_blob_sha1": "a269fb1c2793225bbbf9acebe5f2318025d79c59"
       },
       {
-        "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/OBLIGATION_GRAPH.md",
-        "git_blob_sha1": "288d8da535ea40c23bb43f59a433d65e6a8e206d"
+        "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/CANDIDATE_LADDER.json",
+        "git_blob_sha1": "53592a6b261147e2545a501167f42124f3a1d2e7"
+      },
+      {
+        "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/candidates/RH_BADER_RECONSTRUCTION_093/solution.json",
+        "git_blob_sha1": "bb244e4b0422922ae9f85cc4facb2109c33162b3"
+      },
+      {
+        "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/BADER_93_SOURCE.json",
+        "git_blob_sha1": "0a2e2ddc355f1b5d237cffdb24b152b69b66ba30"
+      },
+      {
+        "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/BADER_93_ORDER_TABLE.json",
+        "git_blob_sha1": "679edd9f3e218e6685186708584eaa6173c25415"
+      },
+      {
+        "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_07_RH_BADER93_REPLAY_RECEIPT.json",
+        "git_blob_sha1": "cc6a593953de2ce523e19e16022dce60e562dc99"
+      },
+      {
+        "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/MATHCERT_HANDOFF_RH_BADER93.md",
+        "git_blob_sha1": "db4e772d072050f575c86271ed88e3674c128f79"
       },
       {
         "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_02_PROOF_RECEIPT.json",
         "git_blob_sha1": "caae12a8ef1aee4dc783201c9dd0cba60bbc1b83"
       },
       {
-        "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_06_SEARCH_RECEIPT.json",
-        "git_blob_sha1": "14e64403c62a22142ca79b3de914963a72ac2caa"
-      },
-      {
         "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_07_REPLAY_RECEIPT.json",
         "git_blob_sha1": "8fe38960ace381ae4a4f8781a48f47a9fc135a0f"
-      },
-      {
-        "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/CANDIDATE_LADDER.json",
-        "git_blob_sha1": "dfeb16437e9280cfc747b4ad7a34b5a85107c1fa"
-      },
-      {
-        "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/MATHCERT_HANDOFF_H1_02_H1_07.md",
-        "git_blob_sha1": "af86b409ca1f13907a0310c951a42d89c6b3a280"
       }
     ]
   },
@@ -115,8 +123,8 @@
     "commit_sha": "9b1d2bddd8446db66d5039ddcffa067c533db84c",
     "readiness_state": "CLAIM_INTAKE_PENDING_INDEPENDENT_REVIEW",
     "certification_effect": false,
-    "claim_intake_issue": 341,
-    "claim_intake_pr": 342
+    "claim_intake_issue": 343,
+    "claim_intake_pr": 344
   },
   "external_acquisition": {
     "canonical_list_url": "https://app.autolab.ai/lists/alejandrozu/openmath",
@@ -126,9 +134,9 @@
     "inference_allowed": false
   },
   "next_action": {
-    "id": "admit_h1_cert_intake",
-    "description": "Obtain the required MATHCERT maintainer review and protected admission of PR #342, then rebind and launch the now source-cleared 93-order-type rational reconstruction tranche.",
-    "completion_test": "PASS when MATHCERT PR #342 is protected as an independent-review intake and the Programme binding is refreshed to that exact Cert commit; the Forge literature gate is already protected at 9e00c45fd665546b813f9234314a63eddbec854d."
+    "id": "execute_h1_94_routes",
+    "description": "Run two independent OM26-H1 successor routes: audit whether the externally reported 94 upper bound is valid under the hill's unrestricted parallel/concurrent semantics, and separately run a narrow exact search for a 94-triangle construction from the protected 93 leader.",
+    "completion_test": "PASS only when each route has its own durable disposition: the bound route must identify a source-faithful proof or a precise unresolved gap, while any 94 construction must pass exact independent replay before promotion. Search failure is not a bound, and construction success alone is not optimality."
   },
-  "claim_boundary": "OM26-H1 has protected Solve-level H1-02/H1-06/H1-07 evidence with campaign-best-observed 86 and protected MATHFORGE literature reconnaissance showing an external 93 construction benchmark plus a simple-arrangement 94 bound. MATHCERT intake remains pending required independent review. No best-known, hill-global-optimum, novelty, priority, official competition-acceptance, certification, publication, or Programme-promotion claim is authorized."
+  "claim_boundary": "OM26-H1 now has a protected exact rational construction with 93 counted triangular faces at n=18, reconstructed by GCL from an externally sourced Johannes Bader order type and independently replayed by the Solve direct oracle and authenticated AutoLab public evaluator. This is campaign-best-observed and not a GCL claim of global best-known status, optimality, novelty, priority, official competition acceptance, certification, publication, or Programme promotion. The published simple-arrangement 94 theorem and the hill's unrestricted degeneracy semantics remain a separate bound-transfer question. MATHCERT intakes #341/#342 and #343/#344 remain pending independent review."
 }
