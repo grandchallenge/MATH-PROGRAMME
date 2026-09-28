@@ -15,11 +15,11 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1085"
   },
-  "phase": "M0 admission: TE3-native realization atlas prepared as the first and only currently authorized substantive tranche of VGSE-MECHANICAL-SEMANTICS-001.",
+  "phase": "M0 authorized ready against protected VGSE-MECHANICAL-SEMANTICS-001 admission.",
   "state": "AUTHORIZED_READY",
   "identities": {
-    "protected_base_sha": "f32a1e0cf2b90cb0fda8552effe8de4e713712d2",
-    "candidate_head_sha": "b8b23d4a8724f964647230b2a76f519ba55e90eb",
+    "protected_base_sha": "fee2dfed5876ea91543ceae1400b5e355a6583e5",
+    "candidate_head_sha": "fee2dfed5876ea91543ceae1400b5e355a6583e5",
     "issue_number": 1085,
     "pr_number": null,
     "branch": "research/vgse-ms-m0",
@@ -55,22 +55,21 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "prepare fresh post-WP06 VGSE phase and authorize M0 only",
-    "result": "Human Steward approved the proposed TE3-native design to mechanical-semantics campaign structure. M0 is prepared as the only substantive authorized tranche; M1 kinematic semantics and M2 identifiability-aware inverse design remain blocked pending separately governed successor activations. A dedicated M0 execution branch was created at exact head b8b23d4a8724f964647230b2a76f519ba55e90eb for durable pre-admission continuity; after protected campaign admission it must be rebound to the protected admission commit before substantive mutation.",
+    "action": "rebind M0 execution branch and checkpoint to protected campaign admission",
+    "result": "Campaign admission PR #1086 merged through the native queue at fee2dfed5876ea91543ceae1400b5e355a6583e5. Protected main read back exactly at that SHA. Dedicated execution branch research/vgse-ms-m0 was fast-forwarded without force to the same protected commit. M0 is now authorized ready for its deterministic first action; M1 and M2 remain unauthorized.",
     "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#1086",
+      "protected campaign admission fee2dfed5876ea91543ceae1400b5e355a6583e5",
       "grandchallenge/MATH-PROGRAMME#1084",
       "grandchallenge/MATH-PROGRAMME#1085",
-      "grandchallenge/MATH-PROGRAMME@f32a1e0cf2b90cb0fda8552effe8de4e713712d2",
-      "WP06 protected substantive merge 9663a9bc8f71af808ea4578a02467cfd47c29d92",
-      "MATHCERT TE3 audit 15b68c196d020045bea42fc34236e0647b87cbb9",
-      "GCL-ID-00 Programme adoption 64ad90b3108f476225cc1ca5a2889e71b3719cc8"
+      "research/vgse-ms-m0@fee2dfed5876ea91543ceae1400b5e355a6583e5"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-TE3-REALIZATION-ATLAS-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-27T21:41:00-07:00"
+    "observed_at": "2026-09-27T21:57:44-07:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -78,6 +77,7 @@
     "authoritative_sources": [
       "grandchallenge/MATH-PROGRAMME#1084",
       "grandchallenge/MATH-PROGRAMME#1085",
+      "grandchallenge/MATH-PROGRAMME@fee2dfed5876ea91543ceae1400b5e355a6583e5",
       "docs/VGSE_MECHANICAL_SEMANTICS_MANDATE.md",
       "research/vgse-ms-m0/README.md",
       "research/vgse-eng-wp03/RESULTS.json",
@@ -87,7 +87,7 @@
       "governance/GCL-ID-00-ADOPTION.json",
       "grandchallenge/MATHCERT@15b68c196d020045bea42fc34236e0647b87cbb9"
     ],
-    "instructions": "Before substantive M0 mutation after campaign admission, rebind research/vgse-ms-m0 and this checkpoint to the protected admission commit if protected state moved. Then execute only M0: build genuinely independent GCL-designed TE3-conformant quotient-to-geometry realizations and characterize existence, multiplicity, components, singularities, and conditioning. Do not reopen WP01-WP06. Preserve C06/source-correspondence and all mechanical/physical/manufacturing/product/patent/commercial exclusions. M1 and M2 require separate protected activation. If M0 becomes an inverse/reconstruction claim, apply the adopted GCL-ID-00 trigger."
+    "instructions": "Checkpoint and execution branch are bound to protected campaign admission fee2dfed5876ea91543ceae1400b5e355a6583e5. Execute only M0. Begin with the exact TE3 forward-realization model contract, then sample genuinely independent quotient points and retain existence, multiplicity, component, singularity, conditioning, and falsification evidence. Do not reopen WP01-WP06. Preserve C06/source-correspondence and all mechanical/physical/manufacturing/product/patent/commercial exclusions. M1 and M2 require separate protected activation. If M0 becomes an inverse/reconstruction claim, apply the adopted GCL-ID-00 trigger."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
