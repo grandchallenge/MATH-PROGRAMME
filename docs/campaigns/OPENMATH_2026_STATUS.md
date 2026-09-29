@@ -6,6 +6,10 @@
 >
 > Historical records `governance/openmath_2026_external_state.json` and `governance/openmath_2026_campaign_binding.json` are **SUPERSEDED_FOR_CURRENT_STATE**. Preserve them as history; do not use them to resume current work.
 
+## Current topology
+
+OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4, H5, H6, H7**. Historical aggregate labels such as `H2-H7` identify closed onboarding transactions only and are not current campaign topology.
+
 ## Campaign summary
 
 - Hills: **7 / 7 source-locked and Solve-released**
@@ -13,7 +17,7 @@
 - Certified hills: **0**
 - Official competition submissions: **0**
 - Official competition acceptances: **0**
-- Current blocking next action: **hydrate and launch Agents 002-007 WP01**
+- Current blocking next action: **hydrate and launch every exact hill lane whose agent state is `LEASED_NOT_LAUNCHED`**
 
 `LEASED` does not mean `LAUNCHED`. `RETURNED` does not mean `CAPTURED`. `CAPTURED` does not mean `ACCEPTED` or `CERTIFIED`.
 
@@ -51,7 +55,7 @@ For H1:
 
 There is no protected `SUBMITTED` or `ACCEPTED` receipt.
 
-For H2-H7 there is not yet a candidate submission object.
+For H2, H3, H4, H5, H6, and H7 there is not yet a candidate submission object.
 
 ## Independent-agent state
 
@@ -63,7 +67,7 @@ For H2-H7 there is not yet a candidate submission object.
 - Agent 006 / H6: `LEASED_NOT_LAUNCHED`
 - Agent 007 / H7: `LEASED_NOT_LAUNCHED`
 
-The H2-H7 classification means protected leases exist, but there is no durable launch or result evidence on the governed surfaces. It does not make claims about invisible off-platform activity.
+For each of H2, H3, H4, H5, H6, and H7, `LEASED_NOT_LAUNCHED` means a protected lease exists but there is no durable launch or result evidence on the governed surfaces. It does not make claims about invisible off-platform activity.
 
 ## Exact domain authorities
 
@@ -74,13 +78,13 @@ The H2-H7 classification means protected leases exist, but there is no durable l
 
 ## Current next action
 
-**Hydrate and launch Agents 002-007 on their protected WP01 leases.**
+**Hydrate and launch each exact hill lane whose protected agent state is `LEASED_NOT_LAUNCHED`.**
 
-Agent 001 adjudication is closed. The next bounded campaign operation is the zero-context launch/hydration tranche for Agents 002-007.
+Agent 001 adjudication is closed. The current selection rule yields H2, H3, H4, H5, H6, and H7. This is a state-driven operation over peer hill lanes, not a separate H2-H7 campaign partition.
 
 Until durable launch evidence is recorded:
 
-- Agents 002-007 remain `LEASED_NOT_LAUNCHED`;
+- H2, H3, H4, H5, H6, and H7 remain `LEASED_NOT_LAUNCHED`;
 - `LEASED` SHALL NOT be reported as `LAUNCHED`;
 - no returned result is inferred from silence or lease state.
 
