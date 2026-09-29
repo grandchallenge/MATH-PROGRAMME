@@ -159,7 +159,7 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
 
     human = (root / "docs" / "campaigns" / "OPENMATH_2026_STATUS.md").read_text(encoding="utf-8")
     required_human = [
-        "Canonical machine authority: `governance/openmath_2026_campaign_state.json`",
+        "**Canonical machine authority:** `governance/openmath_2026_campaign_state.json`",
         "SUPERSEDED_FOR_CURRENT_STATE",
         "1 CAPTURED pending adjudication; 6 LEASED_NOT_LAUNCHED",
         "Official competition submissions: **0**",
