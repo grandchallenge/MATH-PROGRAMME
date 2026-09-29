@@ -72,15 +72,15 @@
     },
     "solve": {
       "repository": "grandchallenge/MATHSOLVE",
-      "observed_main": "c5e9073c82d41088bcb84cc815c86428914d1a82",
+      "observed_main": "8adc94b163d9256f3abaa79cd570ffdd8984a473",
       "artifacts": [
         {
           "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
-          "git_blob_sha1": "9e8d471a6b4590c7ba807fe97054fef712968c91"
+          "git_blob_sha1": "d3386af83b308d695625a1d183c193b8c171ec7f"
         },
         {
           "path": ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json",
-          "git_blob_sha1": "68f9d7e9b6a36c3ebd4acc3daf714299a8ebb710"
+          "git_blob_sha1": "a64347dfce7aa7e5ea1ab3f816336bdf71df69e2"
         },
         {
           "path": ".gcl/completions/OM26-CORE-CLARITY-RECONCILE-001/COMPLETION_RECEIPT.json",
@@ -112,7 +112,7 @@
         },
         {
           "path": "handoffs/OPENMATH-2026/CEX_TRANSPORT_CONTRACT.md",
-          "git_blob_sha1": "a3a14c447912b96700863257b451fd92f8417550"
+          "git_blob_sha1": "702403c995d0f448b7ac55c4c3c9b6b6ac91985c"
         },
         {
           "path": ".gcl/completions/OM26-H2-WP01-ADJ-001/COMPLETION_RECEIPT.json",
@@ -121,6 +121,18 @@
         {
           "path": ".gcl/completions/OM26-H2-WP02-INSTANTIATE/COMPLETION_RECEIPT.json",
           "git_blob_sha1": "39cb0dcdd61feae7e075264fe407539d33a8166c"
+        },
+        {
+          "path": ".gcl/completions/OM26-H2-WP02-ADJ-001/COMPLETION_RECEIPT.json",
+          "git_blob_sha1": "7366968340f54eee6b6a1368eab3116c4fb5ef34"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H2/WP02/adjudications/OM26-H2-WP02-ADJ-001.json",
+          "git_blob_sha1": "1d87c19cbf99082866b814d4a84f3758812ace95"
+        },
+        {
+          "path": "handoffs/OPENMATH-2026/launch/OM26-H2-WP03.md",
+          "git_blob_sha1": "3e25afafa28b166fee0b7aff70e34fad6d5ce977"
         }
       ]
     },
@@ -163,7 +175,7 @@
       "captured_pending_adjudication": 0,
       "leased_not_launched": 6,
       "launched_without_return": 0,
-      "accepted": 2
+      "accepted": 3
     },
     "certification": {
       "h1": "PENDING_INDEPENDENT_CERT_EXECUTOR",
@@ -253,26 +265,55 @@
         "solve_release": "DECOMPOSITION_AND_BOUNDED_RESEARCH"
       },
       "solve": {
-        "state": "WP02_LEASED_NOT_LAUNCHED",
+        "state": "WP03_LEASED_NOT_LAUNCHED",
         "predecessor_wp01": "ACCEPTED_SCORER_CONCORDANCE_WITH_SEARCH_NARROWING",
-        "frontier": "EXACT_SEARCH_DESIGN__PROVED_SYMMETRY_AND_PRUNING_REQUIRED"
+        "predecessor_wp02": "ACCEPTED_WITNESSES_WITH_EXACT_SEARCH_REPLAY_REJECTED",
+        "accepted_witnesses": [
+          {
+            "steps": 89911,
+            "ones": 185,
+            "tape_span": 541
+          },
+          {
+            "steps": 8021,
+            "ones": 41,
+            "tape_span": 122,
+            "first_write": 0
+          }
+        ],
+        "frontier": "EXACT_SEARCH_REPLAY_CLOSURE__PRUNING_AUDIT_REQUIRED"
       },
       "external_agent": {
-        "assignment_id": "OM26-H2-WP02",
-        "dispatch_id": "OM26-H2-WP02-IA-001",
-        "agent_ref": "INDEPENDENT-AGENT-008",
-        "issue_number": 526,
+        "assignment_id": "OM26-H2-WP03",
+        "dispatch_id": "OM26-H2-WP03-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-009",
+        "issue_number": 537,
         "lifecycle": "LEASED_NOT_LAUNCHED",
         "launch_evidence": null,
         "return_evidence": null,
         "adjudication": "NOT_STARTED",
+        "immutable_task_url": "https://github.com/grandchallenge/MATHSOLVE/blob/e64c93148ddecbc8e51352c24926898e42b8ea10/handoffs/OPENMATH-2026/launch/OM26-H2-WP03.md",
         "predecessor": {
-          "assignment_id": "OM26-H2-WP01",
-          "dispatch_id": "OM26-H2-WP01-IA-001",
-          "agent_ref": "INDEPENDENT-AGENT-002",
-          "issue_number": 505,
+          "assignment_id": "OM26-H2-WP02",
+          "dispatch_id": "OM26-H2-WP02-IA-001",
+          "agent_ref": "INDEPENDENT-AGENT-008",
+          "issue_number": 526,
           "lifecycle": "ACCEPTED",
-          "adjudication": "ACCEPTED_SCORER_CONCORDANCE_WITH_SEARCH_NARROWING"
+          "adjudication": "ACCEPTED_WITNESSES_WITH_EXACT_SEARCH_REPLAY_REJECTED",
+          "accepted_witnesses": [
+            {
+              "steps": 89911,
+              "ones": 185,
+              "tape_span": 541
+            },
+            {
+              "steps": 8021,
+              "ones": 41,
+              "tape_span": 122,
+              "first_write": 0
+            }
+          ],
+          "completion_receipt": ".gcl/completions/OM26-H2-WP02-ADJ-001/COMPLETION_RECEIPT.json"
         }
       },
       "cert": {
@@ -282,10 +323,11 @@
       "competition": {
         "lifecycle": "NO_PROMOTED_CANDIDATE",
         "candidate": null,
+        "verified_solve_witnesses": 2,
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "HYDRATE_AND_LAUNCH_EXACT_ACTIVE_LEASE__OM26-H2-WP02__SELF_CONTAINED_RELAY_RETURN",
+      "next_action": "LAUNCH_EXACT_ACTIVE_LEASE__OM26-H2-WP03__IMMUTABLE_LINK_IN_RELAY_OUT",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -475,7 +517,7 @@
       "OM26-H6",
       "OM26-H7"
     ],
-    "description": "For each selected peer hill lane, verify its exact protected lease, supply a self-contained protected task envelope, and require one complete GCL-RETURN-RELAY/1 result to the launcher. Authenticated GCL infrastructure owns durable GitHub intake.",
+    "description": "For each selected peer hill lane, verify its exact protected lease and hand the zero-context worker its registered immutable public task URL. The worker returns one complete GCL-RETURN-RELAY/1 payload; authenticated GCL infrastructure owns durable GitHub intake.",
     "completion_test": "Each selected exact hill lease is either durably LAUNCHED with exact dispatch/agent identity and launch evidence, or explicitly BLOCKED with a protected reason. Reconcile canonical campaign state before any subsequent discretionary OPENMATH operation."
   },
   "claim_boundaries": {
@@ -485,6 +527,7 @@
     "competition_submission": false,
     "competition_acceptance": false,
     "novelty_or_priority": false,
-    "publication_authority": false
+    "publication_authority": false,
+    "h2_wp02_mathematics_adjudicated": true
   }
 }
