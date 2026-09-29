@@ -1,5 +1,7 @@
 # OPENMATH-2026 — bounded seven-hill sprint campaign
 
+> **Current-state authority:** [OPENMATH-2026 Current Campaign State](OPENMATH_2026_STATUS.md). This document supplies charter/profile context and is not the current operational dashboard.
+
 **Programme tracker:** `grandchallenge/MATH-PROGRAMME#1072`  
 **Event window:** 2026-09-27 through 2026-10-02  
 **Initial state:** `EXTERNAL_HILL_LOCK_PENDING`  

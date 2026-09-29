@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "GCL_CORE_CLARITY_RECONCILIATION",
+  "reconciliation_id": "OPENMATH-2026-CORE-CLARITY-001",
+  "campaign": "OPENMATH-2026",
+  "governing_issue": "grandchallenge/MATH-PROGRAMME#1072",
+  "standard": {
+    "id": "GCL-CC-00",
+    "version": "0.1.0",
+    "protected_commit": "6704b4037161133a1efeedddcb69060a79cb7bc7",
+    "standard_blob": "b166204c6204ec96dcbf48c48c8688cca3a4cce4",
+    "admission_blob": "8adca06e54833fa3e37ba82ce4c2facd278f4d76"
+  },
+  "defects": [
+    "Programme current-state surfaces lagged protected Forge/Solve state.",
+    "External-agent lease state was not distinguished from launch/return/capture state.",
+    "H1 Agent 001 returned evidence was stranded by an intake infrastructure defect.",
+    "Competition submission state was not explicit at campaign level.",
+    "Repeated local remediations had no single campaign-level reconciliation closure."
+  ],
+  "migration": {
+    "canonical_state": "governance/openmath_2026_campaign_state.json",
+    "human_view": "docs/campaigns/OPENMATH_2026_STATUS.md",
+    "domain_authority_rule": "Forge/Solve/Cert remain authoritative for their exact bound artifacts; Programme owns only the campaign projection.",
+    "historical_records_preserved": true,
+    "stale_records": [
+      {
+        "path": "governance/openmath_2026_external_state.json",
+        "status": "SUPERSEDED_FOR_CURRENT_STATE"
+      },
+      {
+        "path": "governance/openmath_2026_campaign_binding.json",
+        "status": "SUPERSEDED_FOR_CURRENT_STATE"
+      }
+    ],
+    "solve_reconciliation": {
+      "protected_merge": "77f6dbd3624bbbfeac36640ca84d90e36969f9ee",
+      "protected_completion_merge": "aa4253897f008c197bc8929b503614d652c4fb14",
+      "completion_receipt_blob": "edb7a573640806c38c262186eea8b0bee49cbfdc"
+    }
+  },
+  "target_state": {
+    "hill_count": 7,
+    "agent001": "CAPTURED_RECOVERED_UNADJUDICATED",
+    "agents002_007": "LEASED_NOT_LAUNCHED",
+    "official_competition_submissions": 0,
+    "next_action": "adjudicate_agent001_recovered_result"
+  },
+  "completion_requires": [
+    "GCL-CC-00 Programme adoption protected",
+    "one canonical seven-hill campaign record protected",
+    "human status view mechanically agrees",
+    "stale Programme current-state surfaces explicitly superseded",
+    "Programme bounded-operation checkpoint current",
+    "live Forge/Solve/Cert blob verification green",
+    "protected merge",
+    "protected-main readback",
+    "completion receipt"
+  ],
+  "remediation_rule": "This reconciliation absorbs the identified drift defects. No successor remediation may layer over an unresolved item from this record; it must close this record or explicitly supersede it.",
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "competition_submission_authorized": false,
+    "agent_launch_authorized": false,
+    "publication_authorized": false
+  },
+  "freeze_record": "governance/openmath_2026_core_clarity_freeze.json",
+  "completion_receipt": "governance/openmath_2026_core_clarity_completion_receipt.json",
+  "governed_artifacts": [
+    "governance/GCL-CC-00-ADOPTION.json",
+    "schemas/gcl_cc_programme_adoption.schema.json",
+    "ci/validate_gcl_cc_adoption.py",
+    "governance/openmath_2026_campaign_state.json",
+    "schemas/openmath_2026_campaign_state.schema.json",
+    "governance/openmath_2026_supersession_registry.json",
+    "docs/campaigns/OPENMATH_2026_STATUS.md",
+    "docs/campaigns/OPENMATH_2026_CHARTER.md",
+    "docs/campaigns/OPENMATH_2026_SPRINT_PROFILE.md",
+    "mkdocs.yml",
+    "ci/validate_openmath_2026_core_clarity.py",
+    ".github/workflows/openmath-core-clarity.yml",
+    ".ghos-routing/workflows.json",
+    "governance/policy_shard_registry.json",
+    "governance/openmath_2026_core_clarity_reconciliation.json"
+  ]
+}
