@@ -52,15 +52,15 @@
     },
     "solve": {
       "repository": "grandchallenge/MATHSOLVE",
-      "observed_main": "aa4253897f008c197bc8929b503614d652c4fb14",
+      "observed_main": "0da480a62e86a623a87f07f6d75ed8ed810ee15a",
       "artifacts": [
         {
           "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
-          "git_blob_sha1": "b0825febdfa58ceefb3b398fdf53d8e5e6987950"
+          "git_blob_sha1": "90241fbfc4e3d610b60e08f209b8b370f547311d"
         },
         {
           "path": ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json",
-          "git_blob_sha1": "2e3d380a512cf26389dcf0a2304a974618755f01"
+          "git_blob_sha1": "4962c6495facb00d19962d3cc979b96abf49164e"
         },
         {
           "path": ".gcl/completions/OM26-CORE-CLARITY-RECONCILE-001/COMPLETION_RECEIPT.json",
@@ -68,11 +68,19 @@
         },
         {
           "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_12_STATUS.json",
-          "git_blob_sha1": "d81f830ca6ae643a3f98b06ea6094a7ff49fef1e"
+          "git_blob_sha1": "068020e90f91f3040415527b920c8116aa5c524c"
         },
         {
           "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_07_RH_BADER93_REPLAY_RECEIPT.json",
           "git_blob_sha1": "cc6a593953de2ce523e19e16022dce60e562dc99"
+        },
+        {
+          "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/CLAIM_LEDGER.json",
+          "git_blob_sha1": "4a7a52d635b4d9a87ec47eedd48f65be5fe757f7"
+        },
+        {
+          "path": ".gcl/completions/OM26-H1-H1-12-ADJ-001/COMPLETION_RECEIPT.json",
+          "git_blob_sha1": "e37a5e224702b6cfd187b8752bf787a2cc51d4d0"
         }
       ]
     },
@@ -112,10 +120,10 @@
     "source_locked_hills": 7,
     "solve_released_hills": 7,
     "external_agents": {
-      "captured_pending_adjudication": 1,
+      "captured_pending_adjudication": 0,
       "leased_not_launched": 6,
       "launched_without_return": 0,
-      "accepted": 0
+      "accepted": 1
     },
     "certification": {
       "h1": "PENDING_INDEPENDENT_CERT_EXECUTOR",
@@ -143,18 +151,20 @@
         "state": "ACTIVE",
         "campaign_best_observed": 93,
         "best_candidate": "RH_BADER_RECONSTRUCTION_093",
-        "frontier": "Q_GE_6_OR_Q5_EXACT_NESTED_TRIANGLE_EQUALITY__SOURCE_CONDITIONAL",
-        "frontier_changed_by_agent001": false
+        "frontier": "Q_GE_6__SOURCE_CONDITIONAL",
+        "frontier_changed_by_agent001": true
       },
       "external_agent": {
         "assignment_id": "OM26-H1-H1-12",
         "dispatch_id": "OM26-H1-H1-12-IA-001",
         "agent_ref": "INDEPENDENT-AGENT-001",
         "issue_number": 498,
-        "lifecycle": "CAPTURED",
+        "lifecycle": "ACCEPTED",
         "return_comment_id": 5881108260,
-        "capture_state": "CAPTURED_RECOVERED_UNADJUDICATED",
-        "adjudication": "PENDING"
+        "capture_state": "CAPTURED_RECOVERED_ADJUDICATED",
+        "adjudication": "ACCEPTED_SOURCE_CONDITIONAL_REDUCTION",
+        "accepted_claim": "OM26-H1-RED-023",
+        "adjudication_operation": "OM26-H1-H1-12-ADJ-001"
       },
       "cert": {
         "state": "ADMITTED_PENDING_INDEPENDENT_CERT_EXECUTOR",
@@ -174,7 +184,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "ADJUDICATE_RECOVERED_AGENT001_RESULT"
+      "next_action": "Q_GE_6_RESEARCH_DEFERRED_UNTIL_AFTER_CURRENT_CAMPAIGN_ACTION"
     },
     {
       "hill_slot": "OM26-H2",
@@ -208,7 +218,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_AFTER_CURRENT_CAMPAIGN_NEXT_ACTION"
+      "next_action": "LAUNCH_IN_CURRENT_AGENT_CREW_TRANCHE"
     },
     {
       "hill_slot": "OM26-H3",
@@ -242,7 +252,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_AFTER_CURRENT_CAMPAIGN_NEXT_ACTION"
+      "next_action": "LAUNCH_IN_CURRENT_AGENT_CREW_TRANCHE"
     },
     {
       "hill_slot": "OM26-H4",
@@ -276,7 +286,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_AFTER_CURRENT_CAMPAIGN_NEXT_ACTION"
+      "next_action": "LAUNCH_IN_CURRENT_AGENT_CREW_TRANCHE"
     },
     {
       "hill_slot": "OM26-H5",
@@ -310,7 +320,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_AFTER_CURRENT_CAMPAIGN_NEXT_ACTION"
+      "next_action": "LAUNCH_IN_CURRENT_AGENT_CREW_TRANCHE"
     },
     {
       "hill_slot": "OM26-H6",
@@ -344,7 +354,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_AFTER_CURRENT_CAMPAIGN_NEXT_ACTION"
+      "next_action": "LAUNCH_IN_CURRENT_AGENT_CREW_TRANCHE"
     },
     {
       "hill_slot": "OM26-H7",
@@ -378,16 +388,16 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_AFTER_CURRENT_CAMPAIGN_NEXT_ACTION"
+      "next_action": "LAUNCH_IN_CURRENT_AGENT_CREW_TRANCHE"
     }
   ],
   "next_action": {
-    "id": "adjudicate_agent001_recovered_result",
-    "description": "Adjudicate the recovered OM26-H1-H1-12-IA-001 result against the protected H1-12 packet. Until that adjudication closes, the H1 frontier remains q=5 exact nested-triangle equality or q>=6 and Agents 002-007 remain LEASED_NOT_LAUNCHED.",
-    "completion_test": "A protected adjudication accepts, rejects, or supersedes the recovered Agent 001 contribution with exact evidence, followed by canonical campaign-state reconciliation before any next discretionary OPENMATH substantive operation."
+    "id": "launch_agents002_007_wp01",
+    "description": "Hydrate and launch the six already-protected WP01 leases for Agents 002-007 using their exact zero-context bootstraps. Record LAUNCHED only when durable launch evidence exists; do not infer launch from lease state.",
+    "completion_test": "Each of OM26-H2-WP01 through OM26-H7-WP01 is either durably LAUNCHED with exact dispatch/agent identity and launch evidence, or explicitly BLOCKED with a protected reason. Canonical campaign state must then be reconciled before any subsequent discretionary OPENMATH operation."
   },
   "claim_boundaries": {
-    "agent001_mathematics_adjudicated": false,
+    "agent001_mathematics_adjudicated": true,
     "h1_optimality_claim": false,
     "mathematical_certification": false,
     "competition_submission": false,

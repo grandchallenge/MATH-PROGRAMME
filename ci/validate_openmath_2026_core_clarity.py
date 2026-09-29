@@ -105,13 +105,17 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
     h1 = hills["OM26-H1"]
     require(h1["solve"]["campaign_best_observed"] == 93, "H1 campaign best must remain 93")
     require(
-        h1["solve"]["frontier"] == "Q_GE_6_OR_Q5_EXACT_NESTED_TRIANGLE_EQUALITY__SOURCE_CONDITIONAL",
+        h1["solve"]["frontier"] == "Q_GE_6__SOURCE_CONDITIONAL",
         "H1 protected frontier drift",
     )
-    require(h1["solve"]["frontier_changed_by_agent001"] is False, "unadjudicated Agent 001 result changed frontier")
-    require(h1["external_agent"]["lifecycle"] == "CAPTURED", "H1 Agent 001 must be CAPTURED")
-    require(h1["external_agent"]["capture_state"] == "CAPTURED_RECOVERED_UNADJUDICATED", "H1 capture state drift")
-    require(h1["external_agent"]["adjudication"] == "PENDING", "H1 adjudication must remain PENDING")
+    require(h1["solve"]["frontier_changed_by_agent001"] is True, "accepted Agent 001 result must advance q5 frontier")
+    require(h1["external_agent"]["lifecycle"] == "ACCEPTED", "H1 Agent 001 must be ACCEPTED")
+    require(h1["external_agent"]["capture_state"] == "CAPTURED_RECOVERED_ADJUDICATED", "H1 capture state drift")
+    require(
+        h1["external_agent"]["adjudication"] == "ACCEPTED_SOURCE_CONDITIONAL_REDUCTION",
+        "H1 adjudication state mismatch",
+    )
+    require(h1["external_agent"]["accepted_claim"] == "OM26-H1-RED-023", "H1 accepted claim mismatch")
     require(h1["cert"]["certification_effect"] is False, "H1 Cert intake cannot self-certify")
     require(h1["competition"]["lifecycle"] == "CERT_PENDING", "H1 competition lifecycle drift")
     require(h1["competition"]["public_evaluator_replay"] == "PASS__UNOFFICIAL_LOCAL_SCORE", "H1 evaluator boundary drift")
@@ -127,14 +131,17 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
 
     agents = state["summary"]["external_agents"]
     require(agents == {
-        "captured_pending_adjudication": 1,
+        "captured_pending_adjudication": 0,
         "leased_not_launched": 6,
         "launched_without_return": 0,
-        "accepted": 0,
+        "accepted": 1,
     }, "agent summary does not equal hill projection")
     competition = state["summary"]["competition"]
     require(competition["submitted_hills"] == 0 and competition["accepted_hills"] == 0, "competition summary implies an external result")
-    require(state["next_action"]["id"] == "adjudicate_agent001_recovered_result", "next action is not deterministic Agent 001 adjudication")
+    require(
+        state["next_action"]["id"] == "launch_agents002_007_wp01",
+        "next action is not the deterministic Agents 002-007 launch tranche",
+    )
 
     supersession_registry = load(root / "governance" / "openmath_2026_supersession_registry.json")
     require(
@@ -161,22 +168,27 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
     required_human = [
         "**Canonical machine authority:** `governance/openmath_2026_campaign_state.json`",
         "SUPERSEDED_FOR_CURRENT_STATE",
-        "1 CAPTURED pending adjudication; 6 LEASED_NOT_LAUNCHED",
+        "1 ACCEPTED; 6 LEASED_NOT_LAUNCHED",
         "Official competition submissions: **0**",
-        "Agent 001 result recovered; adjudication **PENDING**",
+        "Agent 001 q=5 reduction accepted at Solve level as `OM26-H1-RED-023`",
         "**CERT_PENDING; NOT_SUBMITTED**",
-        "**Adjudicate the recovered Agent 001 H1 result.**",
+        "**Hydrate and launch Agents 002-007 on their protected WP01 leases.**",
         "control-plane drift",
     ]
     for marker in required_human:
         require(marker in human, f"human status view missing canonical marker: {marker}")
     for i in range(2, 8):
         require(f"| H{i} |" in human and f"Agent 00{i} / #{503+i}" in human, f"human status missing OM26-H{i}")
-    require(human.count("LEASED_NOT_LAUNCHED") >= 7, "human status does not expose all lease lifecycle states")
+    require(human.count("LEASED_NOT_LAUNCHED") >= 6, "human status does not expose all lease lifecycle states")
     require(human.count("NOT_SUBMITTED") >= 8, "human status does not make competition state explicit")
 
-    if any(bool(value) for value in state["claim_boundaries"].values()):
-        raise CoreClarityError("canonical state widens prohibited claim authority")
+    boundaries = state["claim_boundaries"]
+    require(boundaries.get("agent001_mathematics_adjudicated") is True, "Agent 001 adjudication status must be true")
+    for key, value in boundaries.items():
+        if key == "agent001_mathematics_adjudicated":
+            continue
+        if bool(value):
+            raise CoreClarityError(f"canonical state widens prohibited claim authority: {key}")
     return state
 
 
