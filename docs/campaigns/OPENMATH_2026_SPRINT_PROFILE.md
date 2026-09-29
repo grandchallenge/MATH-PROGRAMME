@@ -1,5 +1,7 @@
 # OPENMATH-2026 sprint profile
 
+> **Current-state authority:** [OPENMATH-2026 Current Campaign State](OPENMATH_2026_STATUS.md). This document supplies charter/profile context and is not the current operational dashboard.
+
 **Campaign:** `OPENMATH-2026`  
 **Tracker:** `grandchallenge/MATH-PROGRAMME#1072`  
 **Applies:** 2026-09-27 through 2026-10-02, plus bounded closeout
