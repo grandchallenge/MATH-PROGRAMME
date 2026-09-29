@@ -9,11 +9,11 @@
 ## Campaign summary
 
 - Hills: **7 / 7 source-locked and Solve-released**
-- Independent-agent state: **1 CAPTURED pending adjudication; 6 LEASED_NOT_LAUNCHED**
+- Independent-agent state: **1 ACCEPTED; 6 LEASED_NOT_LAUNCHED**
 - Certified hills: **0**
 - Official competition submissions: **0**
 - Official competition acceptances: **0**
-- Current blocking next action: **adjudicate recovered Agent 001 result**
+- Current blocking next action: **hydrate and launch Agents 002-007 WP01**
 
 `LEASED` does not mean `LAUNCHED`. `RETURNED` does not mean `CAPTURED`. `CAPTURED` does not mean `ACCEPTED` or `CERTIFIED`.
 
@@ -21,7 +21,7 @@
 
 | Hill | Problem | Source / Solve | Independent agent | Cert | Competition |
 |---|---|---|---|---|---|
-| H1 | Kobon triangles | Source locked; active; campaign best observed **93**; protected frontier remains **q=5 exact nested-triangle equality or q>=6**, source-conditional | **CAPTURED** — Agent 001 result recovered; adjudication **PENDING** | H1 claims admitted; independent Cert executor **PENDING** | **CERT_PENDING; NOT_SUBMITTED** |
+| H1 | Kobon triangles | Source locked; active; campaign best observed **93**; protected frontier is now **q>=6**, source-conditional | **ACCEPTED** — Agent 001 q=5 reduction accepted at Solve level as `OM26-H1-RED-023` | H1 claims admitted; independent Cert executor **PENDING** | **CERT_PENDING; NOT_SUBMITTED** |
 | H2 | Busy Beaver 6 certificates | Source locked, slot-bound, semantic pack protected, Solve WP01 ready | **LEASED_NOT_LAUNCHED** — Agent 002 / #505 | NOT_YET_ELIGIBLE | **NO_CANDIDATE; NOT_SUBMITTED** |
 | H3 | Clique-cluster Ramsey multiplicity | Source locked, slot-bound, semantic pack protected, Solve WP01 ready | **LEASED_NOT_LAUNCHED** — Agent 003 / #506 | NOT_YET_ELIGIBLE | **NO_CANDIDATE; NOT_SUBMITTED** |
 | H4 | Collatz modular descent | Source locked, slot-bound, semantic pack protected, Solve WP01 ready | **LEASED_NOT_LAUNCHED** — Agent 004 / #507 | NOT_YET_ELIGIBLE | **NO_CANDIDATE; NOT_SUBMITTED** |
@@ -33,12 +33,13 @@
 
 We have an exact rational 18-line construction scoring **93** under the protected Solve replay and the public AutoLab evaluator. That evaluator replay is an unofficial local score, not an official competition entry.
 
-The protected upper-bound route has narrowed a possible 95-triangle witness to either:
+The recovered Agent 001 reduction has now been adjudicated and **accepted at Solve level** as the source-conditional claim `OM26-H1-RED-023`.
 
-1. the exact surviving q=5 nested-triangle equality geometry; or
-2. q>=6 finite multiple points.
+Its exact effect is to exclude the sole remaining q=5 equality normal form. The protected H1-12 frontier is therefore now:
 
-Agent 001 returned a claimed reduction closing the q=5 case. The original intake infrastructure rejected the return incorrectly. The exact returned bytes are now durably recovered and pass the repaired generic RESULT/1 parser, but the mathematics has **not** been adjudicated. Therefore the protected H1 frontier has **not** been advanced by the recovered claim.
+`q >= 6`
+
+subject to the same predecessor source-scoped local fan/no-consecutive-D1 and clean-line charging premises. This is not MATHCERT certification and does not establish that score 93 is globally optimal.
 
 ## Competition state
 
@@ -54,7 +55,7 @@ For H2-H7 there is not yet a candidate submission object.
 
 ## Independent-agent state
 
-- Agent 001 / H1: `CAPTURED_RECOVERED_UNADJUDICATED`
+- Agent 001 / H1: `ACCEPTED_SOURCE_CONDITIONAL_REDUCTION` (`OM26-H1-RED-023`)
 - Agent 002 / H2: `LEASED_NOT_LAUNCHED`
 - Agent 003 / H3: `LEASED_NOT_LAUNCHED`
 - Agent 004 / H4: `LEASED_NOT_LAUNCHED`
@@ -73,16 +74,17 @@ The H2-H7 classification means protected leases exist, but there is no durable l
 
 ## Current next action
 
-**Adjudicate the recovered Agent 001 H1 result.**
+**Hydrate and launch Agents 002-007 on their protected WP01 leases.**
 
-Until that bounded adjudication closes:
+Agent 001 adjudication is closed. The next bounded campaign operation is the zero-context launch/hydration tranche for Agents 002-007.
 
-- the H1 frontier remains unchanged;
-- Agent 001's claimed q=5 closure is not an admitted mathematical result;
+Until durable launch evidence is recorded:
+
 - Agents 002-007 remain `LEASED_NOT_LAUNCHED`;
-- no discretionary next OpenMath mathematical tranche is authorized by the campaign control plane.
+- `LEASED` SHALL NOT be reported as `LAUNCHED`;
+- no returned result is inferred from silence or lease state.
 
-After that operation, the canonical campaign state SHALL be reconciled again before further discretionary substantive work.
+After the launch tranche, the canonical campaign state SHALL be reconciled again before further discretionary substantive work.
 
 ## CORE CLARITY rule
 
