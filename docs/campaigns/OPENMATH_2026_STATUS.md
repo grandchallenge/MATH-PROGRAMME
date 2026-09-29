@@ -13,7 +13,7 @@ OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4
 ## Campaign summary
 
 - Hills: **7 / 7 source-locked and Solve-released**
-- Independent-agent state: **1 ACCEPTED; 6 LEASED_NOT_LAUNCHED**
+- Independent-agent state: **2 ACCEPTED; 6 LEASED_NOT_LAUNCHED**
 - Certified hills: **0**
 - Official competition submissions: **0**
 - Official competition acceptances: **0**
@@ -26,7 +26,7 @@ OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4
 | Hill | Problem | Source / Solve | Independent agent | Cert | Competition |
 |---|---|---|---|---|---|
 | H1 | Kobon triangles | Source locked; active; campaign best observed **93**; protected frontier is now **q>=6**, source-conditional | **ACCEPTED** — Agent 001 q=5 reduction accepted at Solve level as `OM26-H1-RED-023` | H1 claims admitted; independent Cert executor **PENDING** | **CERT_PENDING; NOT_SUBMITTED** |
-| H2 | Busy Beaver 6 certificates | Source locked, slot-bound, semantic pack protected, Solve WP01 ready | **LEASED_NOT_LAUNCHED** — Agent 002 / #505 | NOT_YET_ELIGIBLE | **NO_CANDIDATE; NOT_SUBMITTED** |
+| H2 | Busy Beaver 6 certificates | Source locked; WP01 accepted; WP02 exact-search design protected | **LEASED_NOT_LAUNCHED** — Agent 008 / #526; predecessor Agent 002 WP01 **ACCEPTED** | NOT_YET_ELIGIBLE | **NO_PROMOTED_CANDIDATE; NOT_SUBMITTED** |
 | H3 | Clique-cluster Ramsey multiplicity | Source locked, slot-bound, semantic pack protected, Solve WP01 ready | **LEASED_NOT_LAUNCHED** — Agent 003 / #506 | NOT_YET_ELIGIBLE | **NO_CANDIDATE; NOT_SUBMITTED** |
 | H4 | Collatz modular descent | Source locked, slot-bound, semantic pack protected, Solve WP01 ready | **LEASED_NOT_LAUNCHED** — Agent 004 / #507 | NOT_YET_ELIGIBLE | **NO_CANDIDATE; NOT_SUBMITTED** |
 | H5 | Grothendieck constant witnesses | Source locked, slot-bound, semantic pack protected, Solve WP01 ready | **LEASED_NOT_LAUNCHED** — Agent 005 / #508 | NOT_YET_ELIGIBLE | **NO_CANDIDATE; NOT_SUBMITTED** |
@@ -60,14 +60,15 @@ For H2, H3, H4, H5, H6, and H7 there is not yet a candidate submission object.
 ## Independent-agent state
 
 - Agent 001 / H1: `ACCEPTED_SOURCE_CONDITIONAL_REDUCTION` (`OM26-H1-RED-023`)
-- Agent 002 / H2: `LEASED_NOT_LAUNCHED`
+- Agent 002 / H2 WP01: `ACCEPTED_SCORER_CONCORDANCE_WITH_SEARCH_NARROWING`
+- Agent 008 / H2 WP02: `LEASED_NOT_LAUNCHED`
 - Agent 003 / H3: `LEASED_NOT_LAUNCHED`
 - Agent 004 / H4: `LEASED_NOT_LAUNCHED`
 - Agent 005 / H5: `LEASED_NOT_LAUNCHED`
 - Agent 006 / H6: `LEASED_NOT_LAUNCHED`
 - Agent 007 / H7: `LEASED_NOT_LAUNCHED`
 
-For each of H2, H3, H4, H5, H6, and H7, `LEASED_NOT_LAUNCHED` means a protected lease exists but there is no durable launch or result evidence on the governed surfaces. It does not make claims about invisible off-platform activity.
+For the active H2 WP02, H3 WP01, H4 WP01, H5 WP01, H6 WP01, and H7 WP01 assignments, `LEASED_NOT_LAUNCHED` means a protected lease exists but there is no durable launch or result evidence on the governed surfaces. It does not make claims about invisible off-platform activity.
 
 ## Exact domain authorities
 
@@ -78,13 +79,15 @@ For each of H2, H3, H4, H5, H6, and H7, `LEASED_NOT_LAUNCHED` means a protected 
 
 ## Current next action
 
-**Hydrate and launch each exact hill lane whose protected agent state is `LEASED_NOT_LAUNCHED`.**
+**Hydrate and launch each exact active lease whose protected lifecycle is `LEASED_NOT_LAUNCHED`.**
 
-Agent 001 adjudication is closed. The current selection rule yields H2, H3, H4, H5, H6, and H7. This is a state-driven operation over peer hill lanes, not a separate H2-H7 campaign partition.
+Agent 001 and H2 WP01 adjudications are closed. The current exact active leases are H2 WP02, H3 WP01, H4 WP01, H5 WP01, H6 WP01, and H7 WP01. Each is a peer hill-lane operation.
+
+Launches use self-contained protected task envelopes. The zero-context agent returns one complete `GCL-RETURN-RELAY/1` payload to the launcher; authenticated GCL infrastructure owns durable GitHub intake.
 
 Until durable launch evidence is recorded:
 
-- H2, H3, H4, H5, H6, and H7 remain `LEASED_NOT_LAUNCHED`;
+- H2 WP02, H3 WP01, H4 WP01, H5 WP01, H6 WP01, and H7 WP01 remain `LEASED_NOT_LAUNCHED`;
 - `LEASED` SHALL NOT be reported as `LAUNCHED`;
 - no returned result is inferred from silence or lease state.
 
