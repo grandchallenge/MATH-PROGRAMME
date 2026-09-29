@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "GCL_COMPLETION_RECEIPT",
+  "reconciliation_id": "OPENMATH-2026-CORE-CLARITY-001",
+  "campaign": "OPENMATH-2026",
+  "state": "CLOSED__CORE_CLARITY_RECONCILED",
+  "standard": {
+    "id": "GCL-CC-00",
+    "version": "0.1.0",
+    "admitted_at": "grandchallenge/gcl-standards@6704b4037161133a1efeedddcb69060a79cb7bc7",
+    "programme_adoption": "governance/GCL-CC-00-ADOPTION.json",
+    "programme_adoption_blob": "6f58978ca2302192ab6764fa7fc3e6f67db0ef1a"
+  },
+  "candidate": {
+    "pr": 1089,
+    "reviewed_head": "5abb3a1a4acfa200d615f9ed79cc67245629d2c8",
+    "protected_merge_group": "1236ff130da2c4d3b18016ce405e2d0ef121150c",
+    "merged_at": "2026-09-29T01:50:33Z",
+    "exact_head_reviews": {
+      "adversary_review_id": 5346718317,
+      "referee_review_id": 5346718470
+    },
+    "checks": {
+      "pr_head_total": 27,
+      "pr_head_all_accepted": true,
+      "merge_group_total": 22,
+      "merge_group_all_accepted": true,
+      "canonical_projection_validation": "PASS",
+      "live_forge_solve_cert_verification": "PASS",
+      "policy": "PASS",
+      "security": "PASS",
+      "merge_queue_required_and_used": true
+    }
+  },
+  "protected_readback": {
+    "protected_main": "1236ff130da2c4d3b18016ce405e2d0ef121150c",
+    "artifacts": {
+      "governance/GCL-CC-00-ADOPTION.json": "6f58978ca2302192ab6764fa7fc3e6f67db0ef1a",
+      "governance/openmath_2026_campaign_state.json": "1d3d1161b39cceb3a8a1e9ab3af2a57a0b1fe2c1",
+      "governance/openmath_2026_supersession_registry.json": "fc95bbbcecc41044cc38feff2bc5af6f1eccddc4",
+      "governance/openmath_2026_core_clarity_reconciliation.json": "a4303c0547a120c6251c22f5d58a88a4e218e6ba",
+      "governance/openmath_2026_core_clarity_freeze.json": "1c1a951a2a23dc50012b53e4cba116c9a3c46f84",
+      "docs/campaigns/OPENMATH_2026_STATUS.md": "0e1bcdd327fd94336daa69b5f8d5c3aee6f0f2f3",
+      "ci/validate_openmath_2026_core_clarity.py": "4cf9769ddbc3d2c143b8b06a3de148cc66c0e590",
+      ".github/workflows/openmath-core-clarity.yml": "897970ebc26ea66a073a726dff6baa20d4b9d578"
+    }
+  },
+  "live_domain_readback": {
+    "status": "PASS",
+    "forge": [
+      {
+        "path": "reports/discovery/openmath_2026/hill_source_locks.json",
+        "blob": "2334bb7e67b5863c2110b6e21b6e47cfd5061d4d"
+      },
+      {
+        "path": "reports/discovery/openmath_2026/SEMANTIC_PACKS.json",
+        "blob": "aaf8aa9b65d2218943b5dc9f3840cb16751a1ef0"
+      },
+      {
+        "path": "reports/discovery/openmath_2026/SEMANTIC_PACK_READBACK.json",
+        "blob": "e3a92514009c04b5d53964fc0dd7c94cecb9f34a"
+      }
+    ],
+    "solve": [
+      {
+        "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
+        "blob": "b0825febdfa58ceefb3b398fdf53d8e5e6987950"
+      },
+      {
+        "path": ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json",
+        "blob": "2e3d380a512cf26389dcf0a2304a974618755f01"
+      },
+      {
+        "path": ".gcl/completions/OM26-CORE-CLARITY-RECONCILE-001/COMPLETION_RECEIPT.json",
+        "blob": "edb7a573640806c38c262186eea8b0bee49cbfdc"
+      }
+    ],
+    "cert": [
+      {
+        "path": "evidence/openmath_2026/OM26-H1/INTAKE.json",
+        "blob": "dbd2098d3891c9a0c5050993d8a82b736330c5f4"
+      },
+      {
+        "path": "evidence/openmath_2026/OM26-H1/RH_BADER93_INTAKE.json",
+        "blob": "89d406dbdfacb4cf4f4c0b5048218850c1fe4e9a"
+      }
+    ]
+  },
+  "reconciled_state": {
+    "canonical_hills": 7,
+    "source_locked_hills": 7,
+    "solve_released_hills": 7,
+    "h1": {
+      "campaign_best_observed": 93,
+      "protected_frontier": "Q_GE_6_OR_Q5_EXACT_NESTED_TRIANGLE_EQUALITY__SOURCE_CONDITIONAL",
+      "agent001": "CAPTURED_RECOVERED_UNADJUDICATED",
+      "adjudication": "PENDING",
+      "cert": "ADMITTED_PENDING_INDEPENDENT_CERT_EXECUTOR",
+      "competition": "CERT_PENDING__NOT_SUBMITTED"
+    },
+    "h2_h7": {
+      "count": 6,
+      "external_agent_state": "LEASED_NOT_LAUNCHED",
+      "launched": 0,
+      "returned": 0,
+      "captured": 0,
+      "competition_submission": "NOT_SUBMITTED"
+    },
+    "official_competition_submissions": 0,
+    "official_competition_acceptances": 0
+  },
+  "supersession": {
+    "governance/openmath_2026_external_state.json": "SUPERSEDED_FOR_CURRENT_STATE__HISTORICAL_ONLY",
+    "governance/openmath_2026_campaign_binding.json": "SUPERSEDED_FOR_CURRENT_STATE__HISTORICAL_ONLY",
+    "governance/bounded_operation_checkpoints/OPENMATH-2026.json": "TERMINALIZED__CURRENT_STATE_AUTHORITY_MOVED_TO_CANONICAL_CAMPAIGN_STATE"
+  },
+  "canonical_restart": {
+    "machine_state": "governance/openmath_2026_campaign_state.json",
+    "human_view": "docs/campaigns/OPENMATH_2026_STATUS.md",
+    "requires_chat_history": false,
+    "next_action": "adjudicate_agent001_recovered_result",
+    "drift_rule": "BLOCK_DISCRETIONARY_SUBSTANTIVE_ADVANCEMENT"
+  },
+  "completion_test": {
+    "gcl_cc_adopted": true,
+    "canonical_seven_hill_state_protected": true,
+    "human_view_agrees": true,
+    "stale_programme_surfaces_superseded": true,
+    "legacy_checkpoint_terminalized": true,
+    "agent001_recovered": true,
+    "agents002_007_explicitly_not_launched": true,
+    "competition_state_explicit": true,
+    "protected_main_readback": true,
+    "live_domain_bindings_match": true,
+    "deterministic_next_action": true
+  },
+  "claim_boundary": "Campaign-control reconciliation only. Agent 001 mathematics remains unadjudicated; H1 is not certified or proved optimal; no agent is launched by this receipt; no competition submission or acceptance is created."
+}
