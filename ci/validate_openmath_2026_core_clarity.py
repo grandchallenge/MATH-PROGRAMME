@@ -172,7 +172,7 @@ def remote_blob(repository: str, path: str) -> str:
     if not token:
         raise CoreClarityError("GH_TOKEN is required for --verify-live")
     cmd = [
-        "gh", "api",
+        "gh", "api", "-X", "GET",
         f"repos/{repository}/contents/{path}",
         "-f", "ref=main",
         "--jq", ".sha",
