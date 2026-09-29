@@ -66,15 +66,15 @@
     },
     "solve": {
       "repository": "grandchallenge/MATHSOLVE",
-      "observed_main": "a2d4b19cbb9fad644d31465124e782fd789c226d",
+      "observed_main": "c5e9073c82d41088bcb84cc815c86428914d1a82",
       "artifacts": [
         {
           "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
-          "git_blob_sha1": "ae4f4e5a9fc5be3ce6ec5e0ec1287de37e29fec8"
+          "git_blob_sha1": "9e8d471a6b4590c7ba807fe97054fef712968c91"
         },
         {
           "path": ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json",
-          "git_blob_sha1": "8043a11ed97a9a1bb06b334eca178860ed3b1524"
+          "git_blob_sha1": "68f9d7e9b6a36c3ebd4acc3daf714299a8ebb710"
         },
         {
           "path": ".gcl/completions/OM26-CORE-CLARITY-RECONCILE-001/COMPLETION_RECEIPT.json",
@@ -102,7 +102,19 @@
         },
         {
           "path": ".gcl/operations/OM26-SEVEN-HILL-CONSOLIDATION-001/CHECKPOINT.json",
-          "git_blob_sha1": "31f8d880132707bc1de6ad43597bea5b15d5e8bb"
+          "git_blob_sha1": "67220979545f1dd1af007d592a2918cf97591fbe"
+        },
+        {
+          "path": "handoffs/OPENMATH-2026/CEX_TRANSPORT_CONTRACT.md",
+          "git_blob_sha1": "a3a14c447912b96700863257b451fd92f8417550"
+        },
+        {
+          "path": ".gcl/completions/OM26-H2-WP01-ADJ-001/COMPLETION_RECEIPT.json",
+          "git_blob_sha1": "1b8a28e49c3c6736cc2ebdb7060bf20280604647"
+        },
+        {
+          "path": ".gcl/completions/OM26-H2-WP02-INSTANTIATE/COMPLETION_RECEIPT.json",
+          "git_blob_sha1": "39cb0dcdd61feae7e075264fe407539d33a8166c"
         }
       ]
     },
@@ -145,11 +157,16 @@
       "captured_pending_adjudication": 0,
       "leased_not_launched": 6,
       "launched_without_return": 0,
-      "accepted": 1
+      "accepted": 2
     },
     "certification": {
       "h1": "PENDING_INDEPENDENT_CERT_EXECUTOR",
-      "h2_h7": "NOT_YET_ELIGIBLE",
+      "h2": "NOT_YET_ELIGIBLE",
+      "h3": "NOT_YET_ELIGIBLE",
+      "h4": "NOT_YET_ELIGIBLE",
+      "h5": "NOT_YET_ELIGIBLE",
+      "h6": "NOT_YET_ELIGIBLE",
+      "h7": "NOT_YET_ELIGIBLE",
       "certified_hills": 0
     },
     "competition": {
@@ -230,29 +247,39 @@
         "solve_release": "DECOMPOSITION_AND_BOUNDED_RESEARCH"
       },
       "solve": {
-        "state": "WP01_READY"
+        "state": "WP02_LEASED_NOT_LAUNCHED",
+        "predecessor_wp01": "ACCEPTED_SCORER_CONCORDANCE_WITH_SEARCH_NARROWING",
+        "frontier": "EXACT_SEARCH_DESIGN__PROVED_SYMMETRY_AND_PRUNING_REQUIRED"
       },
       "external_agent": {
-        "assignment_id": "OM26-H2-WP01",
-        "dispatch_id": "OM26-H2-WP01-IA-001",
-        "agent_ref": "INDEPENDENT-AGENT-002",
-        "issue_number": 505,
+        "assignment_id": "OM26-H2-WP02",
+        "dispatch_id": "OM26-H2-WP02-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-008",
+        "issue_number": 526,
         "lifecycle": "LEASED_NOT_LAUNCHED",
         "launch_evidence": null,
         "return_evidence": null,
-        "adjudication": "NOT_STARTED"
+        "adjudication": "NOT_STARTED",
+        "predecessor": {
+          "assignment_id": "OM26-H2-WP01",
+          "dispatch_id": "OM26-H2-WP01-IA-001",
+          "agent_ref": "INDEPENDENT-AGENT-002",
+          "issue_number": 505,
+          "lifecycle": "ACCEPTED",
+          "adjudication": "ACCEPTED_SCORER_CONCORDANCE_WITH_SEARCH_NARROWING"
+        }
       },
       "cert": {
         "state": "NOT_YET_ELIGIBLE",
         "certification_effect": false
       },
       "competition": {
-        "lifecycle": "NO_CANDIDATE",
+        "lifecycle": "NO_PROMOTED_CANDIDATE",
         "candidate": null,
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "HYDRATE_AND_LAUNCH_IF_LIFECYCLE_REMAINS_LEASED_NOT_LAUNCHED",
+      "next_action": "HYDRATE_AND_LAUNCH_EXACT_ACTIVE_LEASE__OM26-H2-WP02__SELF_CONTAINED_RELAY_RETURN",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -287,7 +314,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "HYDRATE_AND_LAUNCH_IF_LIFECYCLE_REMAINS_LEASED_NOT_LAUNCHED",
+      "next_action": "HYDRATE_AND_LAUNCH_EXACT_ACTIVE_LEASE__OM26-H3-WP01__SELF_CONTAINED_RELAY_RETURN",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -322,7 +349,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "HYDRATE_AND_LAUNCH_IF_LIFECYCLE_REMAINS_LEASED_NOT_LAUNCHED",
+      "next_action": "HYDRATE_AND_LAUNCH_EXACT_ACTIVE_LEASE__OM26-H4-WP01__SELF_CONTAINED_RELAY_RETURN",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -357,7 +384,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "HYDRATE_AND_LAUNCH_IF_LIFECYCLE_REMAINS_LEASED_NOT_LAUNCHED",
+      "next_action": "HYDRATE_AND_LAUNCH_EXACT_ACTIVE_LEASE__OM26-H5-WP01__SELF_CONTAINED_RELAY_RETURN",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -392,7 +419,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "HYDRATE_AND_LAUNCH_IF_LIFECYCLE_REMAINS_LEASED_NOT_LAUNCHED",
+      "next_action": "HYDRATE_AND_LAUNCH_EXACT_ACTIVE_LEASE__OM26-H6-WP01__SELF_CONTAINED_RELAY_RETURN",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -427,13 +454,13 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "HYDRATE_AND_LAUNCH_IF_LIFECYCLE_REMAINS_LEASED_NOT_LAUNCHED",
+      "next_action": "HYDRATE_AND_LAUNCH_EXACT_ACTIVE_LEASE__OM26-H7-WP01__SELF_CONTAINED_RELAY_RETURN",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     }
   ],
   "next_action": {
-    "id": "launch_pending_hill_agents_wp01",
-    "selection_rule": "Select current hill lanes whose external_agent.lifecycle is LEASED_NOT_LAUNCHED.",
+    "id": "launch_pending_exact_hill_leases",
+    "selection_rule": "Select each current hill lane whose exact active assignment lifecycle is LEASED_NOT_LAUNCHED.",
     "currently_selected": [
       "OM26-H2",
       "OM26-H3",
@@ -442,8 +469,8 @@
       "OM26-H6",
       "OM26-H7"
     ],
-    "description": "Hydrate and launch each selected exact hill lane using its protected WP01 dispatch. Record LAUNCHED only when durable launch evidence exists; do not infer launch from lease state.",
-    "completion_test": "Every selected hill lane is either durably LAUNCHED with exact dispatch/agent identity and launch evidence, or explicitly BLOCKED with a protected reason. Reconcile canonical campaign state before any subsequent discretionary OPENMATH operation."
+    "description": "For each selected peer hill lane, verify its exact protected lease, supply a self-contained protected task envelope, and require one complete GCL-RETURN-RELAY/1 result to the launcher. Authenticated GCL infrastructure owns durable GitHub intake.",
+    "completion_test": "Each selected exact hill lease is either durably LAUNCHED with exact dispatch/agent identity and launch evidence, or explicitly BLOCKED with a protected reason. Reconcile canonical campaign state before any subsequent discretionary OPENMATH operation."
   },
   "claim_boundaries": {
     "agent001_mathematics_adjudicated": true,
