@@ -89,6 +89,25 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
     require(state["summary"]["hill_count"] == 7, "hill-count summary must be seven")
     require(state["summary"]["source_locked_hills"] == 7, "all seven hills must be source locked")
     require(state["summary"]["solve_released_hills"] == 7, "all seven hills must be Solve released")
+    topology = state["canonical_authority"].get("topology", {})
+    require(topology.get("lane_model") == "SEVEN_FIRST_CLASS_HILLS", "canonical topology model drift")
+    require(topology.get("hills") == [f"OM26-H{i}" for i in range(1, 8)], "canonical topology roster drift")
+    require(topology.get("grouped_current_lanes") == [], "canonical topology still exposes grouped current lanes")
+    require(
+        state["summary"].get("current_topology") == {
+            "lane_model": "SEVEN_FIRST_CLASS_HILLS",
+            "hill_count": 7,
+            "grouped_current_lanes": 0,
+        },
+        "summary current topology drift",
+    )
+    require(
+        state["summary"].get("historical_tranches", {}).get("H2-H7") == {
+            "status": "HISTORICAL_PROVENANCE_ONLY",
+            "current_authority": False,
+        },
+        "historical H2-H7 classification drift",
+    )
 
     hills = {row["hill_slot"]: row for row in state["hills"]}
     require(set(hills) == set(EXPECTED_HILLS), "canonical hill roster mismatch")
@@ -96,6 +115,7 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
         row = hills[slot]
         require(row["title"] == title, f"{slot} title drift")
         require(row["external_hill_id"] == external_id, f"{slot} external identity drift")
+        require(row.get("topology_role") == "FIRST_CLASS_HILL_LANE", f"{slot} topology role drift")
         require(
             row["competition"]["official_submission"] == "NOT_SUBMITTED",
             f"{slot} must explicitly record NOT_SUBMITTED",
@@ -139,8 +159,16 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
     competition = state["summary"]["competition"]
     require(competition["submitted_hills"] == 0 and competition["accepted_hills"] == 0, "competition summary implies an external result")
     require(
-        state["next_action"]["id"] == "launch_agents002_007_wp01",
-        "next action is not the deterministic Agents 002-007 launch tranche",
+        state["next_action"]["id"] == "launch_pending_hill_agents_wp01",
+        "next action is not state-driven pending-hill launch",
+    )
+    require(
+        state["next_action"].get("selection_rule") == "Select current hill lanes whose external_agent.lifecycle is LEASED_NOT_LAUNCHED.",
+        "pending-hill selection rule drift",
+    )
+    require(
+        state["next_action"].get("currently_selected") == [f"OM26-H{i}" for i in range(2, 8)],
+        "pending-hill current selection drift",
     )
 
     supersession_registry = load(root / "governance" / "openmath_2026_supersession_registry.json")
@@ -172,7 +200,8 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
         "Official competition submissions: **0**",
         "Agent 001 q=5 reduction accepted at Solve level as `OM26-H1-RED-023`",
         "**CERT_PENDING; NOT_SUBMITTED**",
-        "**Hydrate and launch Agents 002-007 on their protected WP01 leases.**",
+        "OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4, H5, H6, H7**.",
+        "**Hydrate and launch each exact hill lane whose protected agent state is `LEASED_NOT_LAUNCHED`.**",
         "control-plane drift",
     ]
     for marker in required_human:
