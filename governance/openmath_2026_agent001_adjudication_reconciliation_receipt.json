@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "GCL_COMPLETION_RECEIPT",
+  "reconciliation_id": "OPENMATH-2026-AGENT001-ADJUDICATION-RECONCILE-001",
+  "campaign": "OPENMATH-2026",
+  "state": "CLOSED__AGENT001_ADJUDICATION_RECONCILED",
+  "solve": {
+    "adjudication_operation": "OM26-H1-H1-12-ADJ-001",
+    "protected_adjudication_merge": "dc8e4bbebf7df3d2310f1c324a132b386c73ab04",
+    "protected_completion_merge": "0da480a62e86a623a87f07f6d75ed8ed810ee15a",
+    "completion_receipt": {
+      "path": ".gcl/completions/OM26-H1-H1-12-ADJ-001/COMPLETION_RECEIPT.json",
+      "git_blob_sha1": "e37a5e224702b6cfd187b8752bf787a2cc51d4d0"
+    },
+    "accepted_claim": "OM26-H1-RED-023",
+    "disposition": "ACCEPTED_SOURCE_CONDITIONAL_REDUCTION",
+    "resulting_frontier": "Q_GE_6__SOURCE_CONDITIONAL"
+  },
+  "programme": {
+    "pr": 1091,
+    "candidate_head": "eaa4921b2ae1f9d93dada230d69c4455c897ddf9",
+    "merge_group": "a3831fc72c6892f776072a38b1ce2f5a6ea2ce37",
+    "protected_main": "a3831fc72c6892f776072a38b1ce2f5a6ea2ce37",
+    "merged_at": "2026-09-29T02:46:36Z",
+    "exact_head_reviews": {
+      "adversary_review_id": 5347081338,
+      "referee_review_id": 5347081588
+    },
+    "checks": {
+      "pr_head_total": 29,
+      "pr_head_all_accepted": true,
+      "merge_group_total": 22,
+      "merge_group_all_accepted": true,
+      "core_clarity_control_plane": "PASS",
+      "formal_validation": "PASS",
+      "merge_queue_required_and_used": true
+    },
+    "protected_readback": {
+      "governance/openmath_2026_campaign_state.json": "6d45627f7885dc9ebe1c93e840fe521cdbb6b3dc",
+      "docs/campaigns/OPENMATH_2026_STATUS.md": "32bb04c37115c6329a99d9ded1cfc60f1f4aa657",
+      "ci/validate_openmath_2026_core_clarity.py": "fd3f1314415a11700b246fc44a4b86a4cf227327"
+    }
+  },
+  "established_state": {
+    "h1": {
+      "campaign_best_observed": 93,
+      "frontier": "Q_GE_6__SOURCE_CONDITIONAL",
+      "agent001": "ACCEPTED_SOURCE_CONDITIONAL_REDUCTION",
+      "accepted_claim": "OM26-H1-RED-023",
+      "certification": "PENDING_INDEPENDENT_CERT_EXECUTOR",
+      "official_competition_submission": "NOT_SUBMITTED"
+    },
+    "h2_h7": {
+      "agent_count": 6,
+      "lifecycle": "LEASED_NOT_LAUNCHED",
+      "launched": 0,
+      "returned": 0,
+      "captured": 0,
+      "official_competition_submission": "NOT_SUBMITTED"
+    }
+  },
+  "next_action": {
+    "id": "launch_agents002_007_wp01",
+    "description": "Hydrate and launch Agents 002-007 from their already-protected WP01 leases. A lifecycle may become LAUNCHED only when durable launch evidence exists. Reconcile the canonical campaign state after the bounded launch tranche."
+  },
+  "claim_boundary": "Agent 001 is accepted only as a Solve-level source-conditional reduction. q>=6 and predecessor source-scoped premises remain open; no MATHCERT certification, hill-global optimality, external-agent launch, competition submission, or competition acceptance is created by this reconciliation."
+}
