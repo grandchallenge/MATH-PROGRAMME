@@ -17,6 +17,7 @@ STATE = ROOT / "governance" / "openmath_2026_campaign_state.json"
 STATE_SCHEMA = ROOT / "schemas" / "openmath_2026_campaign_state.schema.json"
 HUMAN = ROOT / "docs" / "campaigns" / "OPENMATH_2026_STATUS.md"
 ADOPTION = ROOT / "governance" / "GCL-CC-00-ADOPTION.json"
+SUPERSESSION = ROOT / "governance" / "openmath_2026_supersession_registry.json"
 
 EXPECTED_HILLS = {
     "OM26-H1": ("Kobon triangles", "alejandrozu/kobon-triangles"),
@@ -135,6 +136,14 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
     require(competition["submitted_hills"] == 0 and competition["accepted_hills"] == 0, "competition summary implies an external result")
     require(state["next_action"]["id"] == "adjudicate_agent001_recovered_result", "next action is not deterministic Agent 001 adjudication")
 
+    supersession_registry = load(root / "governance" / "openmath_2026_supersession_registry.json")
+    require(
+        supersession_registry.get("current_state_authority") == "governance/openmath_2026_campaign_state.json",
+        "supersession registry current-state authority drift",
+    )
+    registry_rows = {row["path"]: row for row in supersession_registry.get("records", [])}
+    require(set(registry_rows) == set(EXPECTED_LEGACY), "supersession registry roster mismatch")
+
     superseded = {row["path"]: row for row in state["superseded_current_state_surfaces"]}
     require(set(superseded) == set(EXPECTED_LEGACY), "superseded Programme surface roster mismatch")
     for rel, expected_blob in EXPECTED_LEGACY.items():
@@ -142,6 +151,10 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
         require(row["status"] == "SUPERSEDED_FOR_CURRENT_STATE", f"{rel} is not marked superseded")
         require(row["historical_only"] is True, f"{rel} is not historical-only")
         require(row["git_blob_sha1"] == expected_blob, f"{rel} supersession blob mismatch")
+        registry_row = registry_rows[rel]
+        require(registry_row["git_blob_sha1"] == expected_blob, f"{rel} supersession registry blob mismatch")
+        require(registry_row["status"] == "SUPERSEDED_FOR_CURRENT_STATE", f"{rel} registry status drift")
+        require(registry_row["historical_only"] is True, f"{rel} registry historical-only drift")
         require(git_blob_sha1(root / rel) == expected_blob, f"{rel} local historical bytes drift")
 
     human = (root / "docs" / "campaigns" / "OPENMATH_2026_STATUS.md").read_text(encoding="utf-8")
