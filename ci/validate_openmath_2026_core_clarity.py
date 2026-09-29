@@ -153,14 +153,27 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
     require(h1["competition"]["public_evaluator_replay"] == "PASS__UNOFFICIAL_LOCAL_SCORE", "H1 evaluator boundary drift")
 
     h2 = hills["OM26-H2"]
-    require(h2["external_agent"]["assignment_id"] == "OM26-H2-WP02", "H2 current assignment drift")
-    require(h2["external_agent"]["agent_ref"] == "INDEPENDENT-AGENT-008", "H2 current agent drift")
-    require(h2["external_agent"]["issue_number"] == 526, "H2 current return surface drift")
-    require(h2["external_agent"]["lifecycle"] == "LEASED_NOT_LAUNCHED", "H2 WP02 lifecycle drift")
-    require(h2["external_agent"]["predecessor"]["lifecycle"] == "ACCEPTED", "H2 WP01 predecessor acceptance drift")
+    require(h2["external_agent"]["assignment_id"] == "OM26-H2-WP03", "H2 current assignment drift")
+    require(h2["external_agent"]["agent_ref"] == "INDEPENDENT-AGENT-009", "H2 current agent drift")
+    require(h2["external_agent"]["issue_number"] == 537, "H2 current return surface drift")
+    require(h2["external_agent"]["lifecycle"] == "LEASED_NOT_LAUNCHED", "H2 WP03 lifecycle drift")
     require(
-        h2["external_agent"]["predecessor"]["adjudication"] == "ACCEPTED_SCORER_CONCORDANCE_WITH_SEARCH_NARROWING",
-        "H2 WP01 adjudication drift",
+        h2["external_agent"]["immutable_task_url"]
+        == "https://github.com/grandchallenge/MATHSOLVE/blob/e64c93148ddecbc8e51352c24926898e42b8ea10/handoffs/OPENMATH-2026/launch/OM26-H2-WP03.md",
+        "H2 immutable launch task drift",
+    )
+    require(h2["external_agent"]["predecessor"]["lifecycle"] == "ACCEPTED", "H2 WP02 predecessor acceptance drift")
+    require(
+        h2["external_agent"]["predecessor"]["adjudication"] == "ACCEPTED_WITNESSES_WITH_EXACT_SEARCH_REPLAY_REJECTED",
+        "H2 WP02 adjudication drift",
+    )
+    require(
+        h2["external_agent"]["predecessor"]["accepted_witnesses"]
+        == [
+            {"steps": 89911, "ones": 185, "tape_span": 541},
+            {"steps": 8021, "ones": 41, "tape_span": 122, "first_write": 0},
+        ],
+        "H2 WP02 accepted witness set drift",
     )
     require(h2["competition"]["lifecycle"] == "NO_PROMOTED_CANDIDATE", "H2 competition lifecycle drift")
 
@@ -178,7 +191,7 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
         "captured_pending_adjudication": 0,
         "leased_not_launched": 6,
         "launched_without_return": 0,
-        "accepted": 2,
+        "accepted": 3,
     }, "agent summary does not equal protected Solve state")
     competition = state["summary"]["competition"]
     require(competition["submitted_hills"] == 0 and competition["accepted_hills"] == 0, "competition summary implies an external result")
@@ -220,19 +233,19 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
     required_human = [
         "**Canonical machine authority:** `governance/openmath_2026_campaign_state.json`",
         "SUPERSEDED_FOR_CURRENT_STATE",
-        "2 ACCEPTED; 6 LEASED_NOT_LAUNCHED",
+        "3 ACCEPTED; 6 LEASED_NOT_LAUNCHED",
         "Official competition submissions: **0**",
         "Agent 001 q=5 reduction accepted at Solve level as `OM26-H1-RED-023`",
         "**CERT_PENDING; NOT_SUBMITTED**",
         "OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4, H5, H6, H7**.",
-        "**Hydrate and launch each exact active lease whose protected lifecycle is `LEASED_NOT_LAUNCHED`.**",
+        "**Launch each exact active lease whose protected lifecycle is `LEASED_NOT_LAUNCHED` from its registered immutable task URL.**",
         "`GCL-RETURN-RELAY/1`",
         "control-plane drift",
     ]
     for marker in required_human:
         require(marker in human, f"human status view missing canonical marker: {marker}")
-    require("| H2 |" in human and "Agent 008 / #526" in human, "human status missing current OM26-H2 WP02 lease")
-    require("Agent 002 WP01 **ACCEPTED**" in human, "human status missing H2 WP01 accepted predecessor")
+    require("| H2 |" in human and "Agent 009 / #537" in human, "human status missing current OM26-H2 WP03 lease")
+    require("Agent 008 WP02 **ACCEPTED**" in human, "human status missing H2 WP02 accepted predecessor")
     for i in range(3, 8):
         require(f"| H{i} |" in human and f"Agent 00{i} / #{503+i}" in human, f"human status missing OM26-H{i}")
     require(human.count("LEASED_NOT_LAUNCHED") >= 6, "human status does not expose all lease lifecycle states")
@@ -258,8 +271,10 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
 
     boundaries = state["claim_boundaries"]
     require(boundaries.get("agent001_mathematics_adjudicated") is True, "Agent 001 adjudication status must be true")
+    require(boundaries.get("h2_wp02_mathematics_adjudicated") is True, "H2 WP02 adjudication status must be true")
+    admitted_status_keys = {"agent001_mathematics_adjudicated", "h2_wp02_mathematics_adjudicated"}
     for key, value in boundaries.items():
-        if key == "agent001_mathematics_adjudicated":
+        if key in admitted_status_keys:
             continue
         if bool(value):
             raise CoreClarityError(f"canonical state widens prohibited claim authority: {key}")
