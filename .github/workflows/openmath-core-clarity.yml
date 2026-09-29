@@ -1,0 +1,61 @@
+name: OPENMATH Core Clarity control plane
+
+on:
+  pull_request:
+    paths:
+      - "governance/GCL-CC-00-ADOPTION.json"
+      - "governance/openmath_2026_campaign_state.json"
+      - "governance/openmath_2026_external_state.json"
+      - "governance/openmath_2026_campaign_binding.json"
+      - "governance/bounded_operation_checkpoints/OPENMATH-2026.json"
+      - "docs/campaigns/OPENMATH_2026_STATUS.md"
+      - "schemas/gcl_cc_programme_adoption.schema.json"
+      - "schemas/openmath_2026_campaign_state.schema.json"
+      - "ci/validate_gcl_cc_adoption.py"
+      - "ci/validate_openmath_2026_core_clarity.py"
+      - ".github/workflows/openmath-core-clarity.yml"
+      - ".ghos-routing/workflows.json"
+  push:
+    branches: [main]
+    paths:
+      - "governance/openmath_2026_campaign_state.json"
+      - "docs/campaigns/OPENMATH_2026_STATUS.md"
+      - "ci/validate_openmath_2026_core_clarity.py"
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: openmath-core-clarity-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact subject
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+
+      - name: Install governed policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+
+      - name: Validate GCL-CC-00 Programme adoption
+        run: python ci/validate_gcl_cc_adoption.py
+
+      - name: Validate canonical campaign projection
+        run: python ci/validate_openmath_2026_core_clarity.py
+
+      - name: Verify live Forge / Solve / Cert bindings
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python ci/validate_openmath_2026_core_clarity.py --verify-live
