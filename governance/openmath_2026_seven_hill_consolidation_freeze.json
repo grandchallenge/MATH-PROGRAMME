@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "GCL_CONTENT_FREEZE",
+  "campaign": "OPENMATH-2026",
+  "operation": "OPENMATH-2026-SEVEN-HILL-CONSOLIDATION-001",
+  "protected_base": "306e4fdfa641ca69d910bc8b280cba91828bda29",
+  "assembled_from_head": "1255bf9191da24cce44de38b7ce6ed39bd08053e",
+  "upstream_solve": {
+    "protected_main": "a2d4b19cbb9fad644d31465124e782fd789c226d",
+    "hill_lanes_blob": "ae4f4e5a9fc5be3ce6ec5e0ec1287de37e29fec8",
+    "assignment_registry_blob": "8043a11ed97a9a1bb06b334eca178860ed3b1524",
+    "historical_tranche_registry_blob": "4f35fc50d79d1d276d2e1153dc085f82d4b7c627",
+    "checkpoint_blob": "31f8d880132707bc1de6ad43597bea5b15d5e8bb"
+  },
+  "current_topology": {
+    "lane_model": "SEVEN_FIRST_CLASS_HILLS",
+    "hills": [
+      "OM26-H1",
+      "OM26-H2",
+      "OM26-H3",
+      "OM26-H4",
+      "OM26-H5",
+      "OM26-H6",
+      "OM26-H7"
+    ],
+    "grouped_current_lanes": []
+  },
+  "artifacts": {
+    "governance/openmath_2026_campaign_state.json": "3af42917c86baadc4f789d3276862be44ee67581",
+    "docs/campaigns/OPENMATH_2026_STATUS.md": "012b6602ffa9c0aacae26fdb961b4496a828c2d7",
+    "ci/validate_openmath_2026_core_clarity.py": "2413c34ec4d60fd79e2edd1154573c68ecefabc9",
+    "governance/openmath_2026_seven_hill_consolidation.json": "2509603da6afe257d09d9f45385dfb9c1789165c",
+    "governance/openmath_2026_seven_hill_consolidation_checkpoint.json": "9159111cb43d27125a4c1b12d935e4864d14722d"
+  },
+  "preservation": {
+    "hill_mathematics_changed": false,
+    "external_agent_lifecycle_changed": false,
+    "certification_changed": false,
+    "competition_changed": false,
+    "historical_h2_h7_artifacts_rewritten": false
+  },
+  "invalidation": {
+    "governed_artifact_change": "new freeze required",
+    "candidate_head_change": "exact-head review and CI must target final head"
+  },
+  "authority_boundary": "Programme topology reconciliation only."
+}
