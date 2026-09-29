@@ -9,16 +9,28 @@ import urllib.parse
 from pathlib import Path
 from typing import Any
 
-from ci.ns_ci_intake_pr_controller import (
-    ControllerError,
-    Github,
-    OWNER,
-    REPO,
-    compare_files,
-    fetch_text,
-    find_open_pr,
-    sha256_text,
-)
+try:
+    from ci.ns_ci_intake_pr_controller import (
+        ControllerError,
+        Github,
+        OWNER,
+        REPO,
+        compare_files,
+        fetch_text,
+        find_open_pr,
+        sha256_text,
+    )
+except ModuleNotFoundError:
+    from ns_ci_intake_pr_controller import (
+        ControllerError,
+        Github,
+        OWNER,
+        REPO,
+        compare_files,
+        fetch_text,
+        find_open_pr,
+        sha256_text,
+    )
 
 BRANCH_PREFIX = "intake/openmath-"
 DISPATCH_RE = re.compile(r"^OM26-H([2-7])-WP([0-9]{2})-IA-([0-9]{3})$")
