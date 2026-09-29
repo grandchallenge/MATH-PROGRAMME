@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "GCL_DEPRECATED_TOPOLOGY_POLICY",
+  "campaign": "OPENMATH-2026",
+  "invariant_id": "CURRENT_TOPOLOGY_NO_H2_H7_GROUPING",
+  "current_topology": {
+    "lane_model": "SEVEN_FIRST_CLASS_HILLS",
+    "hills": [
+      "OM26-H1",
+      "OM26-H2",
+      "OM26-H3",
+      "OM26-H4",
+      "OM26-H5",
+      "OM26-H6",
+      "OM26-H7"
+    ]
+  },
+  "deprecated_tokens": [
+    "H2-H7",
+    "OM26-H2-H7"
+  ],
+  "allowed_contexts": [
+    "closed historical operation identifiers",
+    "historical completion receipts and admission freezes",
+    "historical tranche registries",
+    "explicit deprecation statements that deny current authority"
+  ],
+  "forbidden_contexts": [
+    "current hill state",
+    "current next_action",
+    "current lease or launch selection",
+    "current certification summary",
+    "current campaign status summaries",
+    "launcher/bootstrap instructions",
+    "current claim boundaries",
+    "successor planning"
+  ],
+  "enforcement": {
+    "on_violation": "BLOCK_DISCRETIONARY_SUBSTANTIVE_ADVANCEMENT",
+    "rule": "Deprecated aggregate topology syntax SHALL NOT appear on current operational surfaces. Historical provenance SHALL remain immutable."
+  }
+}
