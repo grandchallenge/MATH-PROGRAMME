@@ -220,20 +220,26 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
     required_human = [
         "**Canonical machine authority:** `governance/openmath_2026_campaign_state.json`",
         "SUPERSEDED_FOR_CURRENT_STATE",
-        "1 ACCEPTED; 6 LEASED_NOT_LAUNCHED",
+        "2 ACCEPTED; 6 LEASED_NOT_LAUNCHED",
         "Official competition submissions: **0**",
         "Agent 001 q=5 reduction accepted at Solve level as `OM26-H1-RED-023`",
         "**CERT_PENDING; NOT_SUBMITTED**",
         "OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4, H5, H6, H7**.",
-        "**Hydrate and launch each exact hill lane whose protected agent state is `LEASED_NOT_LAUNCHED`.**",
+        "**Hydrate and launch each exact active lease whose protected lifecycle is `LEASED_NOT_LAUNCHED`.**",
+        "`GCL-RETURN-RELAY/1`",
         "control-plane drift",
     ]
     for marker in required_human:
         require(marker in human, f"human status view missing canonical marker: {marker}")
-    for i in range(2, 8):
+    require("| H2 |" in human and "Agent 008 / #526" in human, "human status missing current OM26-H2 WP02 lease")
+    require("Agent 002 WP01 **ACCEPTED**" in human, "human status missing H2 WP01 accepted predecessor")
+    for i in range(3, 8):
         require(f"| H{i} |" in human and f"Agent 00{i} / #{503+i}" in human, f"human status missing OM26-H{i}")
     require(human.count("LEASED_NOT_LAUNCHED") >= 6, "human status does not expose all lease lifecycle states")
     require(human.count("NOT_SUBMITTED") >= 8, "human status does not make competition state explicit")
+    allowed_deprecation_sentence = "Historical aggregate labels such as `H2-H7` identify closed onboarding transactions only and are not current campaign topology."
+    human_without_explicit_deprecation = human.replace(allowed_deprecation_sentence, "")
+    require("H2-H7" not in human_without_explicit_deprecation, "deprecated H2-H7 grouping leaked into current human status")
 
     # Current operational projections must not reuse the deprecated aggregate topology.
     deprecated = "H2-H7"
