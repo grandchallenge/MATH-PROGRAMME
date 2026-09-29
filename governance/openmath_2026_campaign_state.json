@@ -7,7 +7,21 @@
     "repository": "grandchallenge/MATH-PROGRAMME",
     "path": "governance/openmath_2026_campaign_state.json",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1072",
-    "rule": "This is the sole Programme current-state authority for OPENMATH-2026. Domain repositories remain authoritative for their bound artifacts."
+    "rule": "This is the sole Programme current-state authority for OPENMATH-2026. Domain repositories remain authoritative for their bound artifacts.",
+    "topology": {
+      "lane_model": "SEVEN_FIRST_CLASS_HILLS",
+      "hills": [
+        "OM26-H1",
+        "OM26-H2",
+        "OM26-H3",
+        "OM26-H4",
+        "OM26-H5",
+        "OM26-H6",
+        "OM26-H7"
+      ],
+      "grouped_current_lanes": [],
+      "rule": "Current OPENMATH-2026 authority is seven peer hill lanes. Aggregate H2-H7 labels are historical provenance only."
+    }
   },
   "status": "ACTIVE__CONTROL_PLANE_COHERENT",
   "effective_condition": "protected_merge_of_this_exact_record",
@@ -52,15 +66,15 @@
     },
     "solve": {
       "repository": "grandchallenge/MATHSOLVE",
-      "observed_main": "0da480a62e86a623a87f07f6d75ed8ed810ee15a",
+      "observed_main": "a2d4b19cbb9fad644d31465124e782fd789c226d",
       "artifacts": [
         {
           "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
-          "git_blob_sha1": "90241fbfc4e3d610b60e08f209b8b370f547311d"
+          "git_blob_sha1": "ae4f4e5a9fc5be3ce6ec5e0ec1287de37e29fec8"
         },
         {
           "path": ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json",
-          "git_blob_sha1": "4962c6495facb00d19962d3cc979b96abf49164e"
+          "git_blob_sha1": "8043a11ed97a9a1bb06b334eca178860ed3b1524"
         },
         {
           "path": ".gcl/completions/OM26-CORE-CLARITY-RECONCILE-001/COMPLETION_RECEIPT.json",
@@ -81,6 +95,14 @@
         {
           "path": ".gcl/completions/OM26-H1-H1-12-ADJ-001/COMPLETION_RECEIPT.json",
           "git_blob_sha1": "e37a5e224702b6cfd187b8752bf787a2cc51d4d0"
+        },
+        {
+          "path": "work_packages/OPENMATH_2026/HISTORICAL_TRANCHE_REGISTRY.json",
+          "git_blob_sha1": "4f35fc50d79d1d276d2e1153dc085f82d4b7c627"
+        },
+        {
+          "path": ".gcl/operations/OM26-SEVEN-HILL-CONSOLIDATION-001/CHECKPOINT.json",
+          "git_blob_sha1": "31f8d880132707bc1de6ad43597bea5b15d5e8bb"
         }
       ]
     },
@@ -135,6 +157,17 @@
       "submitted_hills": 0,
       "accepted_hills": 0,
       "rule": "No local evaluator, CI, Solve replay, intake, or Cert-pending state is an official competition submission."
+    },
+    "current_topology": {
+      "lane_model": "SEVEN_FIRST_CLASS_HILLS",
+      "hill_count": 7,
+      "grouped_current_lanes": 0
+    },
+    "historical_tranches": {
+      "H2-H7": {
+        "status": "HISTORICAL_PROVENANCE_ONLY",
+        "current_authority": false
+      }
     }
   },
   "hills": [
@@ -184,7 +217,8 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "Q_GE_6_RESEARCH_DEFERRED_UNTIL_AFTER_CURRENT_CAMPAIGN_ACTION"
+      "next_action": "NO_CURRENT_AGENT_LAUNCH__AGENT001_ACCEPTED_CLOSED__Q_GE_6_RESEARCH_DEFERRED",
+      "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
       "hill_slot": "OM26-H2",
@@ -218,7 +252,8 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_IN_CURRENT_AGENT_CREW_TRANCHE"
+      "next_action": "HYDRATE_AND_LAUNCH_IF_LIFECYCLE_REMAINS_LEASED_NOT_LAUNCHED",
+      "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
       "hill_slot": "OM26-H3",
@@ -252,7 +287,8 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_IN_CURRENT_AGENT_CREW_TRANCHE"
+      "next_action": "HYDRATE_AND_LAUNCH_IF_LIFECYCLE_REMAINS_LEASED_NOT_LAUNCHED",
+      "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
       "hill_slot": "OM26-H4",
@@ -286,7 +322,8 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_IN_CURRENT_AGENT_CREW_TRANCHE"
+      "next_action": "HYDRATE_AND_LAUNCH_IF_LIFECYCLE_REMAINS_LEASED_NOT_LAUNCHED",
+      "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
       "hill_slot": "OM26-H5",
@@ -320,7 +357,8 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_IN_CURRENT_AGENT_CREW_TRANCHE"
+      "next_action": "HYDRATE_AND_LAUNCH_IF_LIFECYCLE_REMAINS_LEASED_NOT_LAUNCHED",
+      "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
       "hill_slot": "OM26-H6",
@@ -354,7 +392,8 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_IN_CURRENT_AGENT_CREW_TRANCHE"
+      "next_action": "HYDRATE_AND_LAUNCH_IF_LIFECYCLE_REMAINS_LEASED_NOT_LAUNCHED",
+      "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
       "hill_slot": "OM26-H7",
@@ -388,13 +427,23 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_IN_CURRENT_AGENT_CREW_TRANCHE"
+      "next_action": "HYDRATE_AND_LAUNCH_IF_LIFECYCLE_REMAINS_LEASED_NOT_LAUNCHED",
+      "topology_role": "FIRST_CLASS_HILL_LANE"
     }
   ],
   "next_action": {
-    "id": "launch_agents002_007_wp01",
-    "description": "Hydrate and launch the six already-protected WP01 leases for Agents 002-007 using their exact zero-context bootstraps. Record LAUNCHED only when durable launch evidence exists; do not infer launch from lease state.",
-    "completion_test": "Each of OM26-H2-WP01 through OM26-H7-WP01 is either durably LAUNCHED with exact dispatch/agent identity and launch evidence, or explicitly BLOCKED with a protected reason. Canonical campaign state must then be reconciled before any subsequent discretionary OPENMATH operation."
+    "id": "launch_pending_hill_agents_wp01",
+    "selection_rule": "Select current hill lanes whose external_agent.lifecycle is LEASED_NOT_LAUNCHED.",
+    "currently_selected": [
+      "OM26-H2",
+      "OM26-H3",
+      "OM26-H4",
+      "OM26-H5",
+      "OM26-H6",
+      "OM26-H7"
+    ],
+    "description": "Hydrate and launch each selected exact hill lane using its protected WP01 dispatch. Record LAUNCHED only when durable launch evidence exists; do not infer launch from lease state.",
+    "completion_test": "Every selected hill lane is either durably LAUNCHED with exact dispatch/agent identity and launch evidence, or explicitly BLOCKED with a protected reason. Reconcile canonical campaign state before any subsequent discretionary OPENMATH operation."
   },
   "claim_boundaries": {
     "agent001_mathematics_adjudicated": true,
