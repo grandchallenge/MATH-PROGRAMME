@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "GCL_CORE_CLARITY_RECONCILIATION_FREEZE",
+  "reconciliation_id": "OPENMATH-2026-CORE-CLARITY-001",
+  "campaign": "OPENMATH-2026",
+  "protected_base": "6fae2b2df9bc0bb180a63c76fc9752656285da02",
+  "assembled_from_head": "b6a9130b91a679d36343fc8eeb54d7b4b3d7e939",
+  "standard": {
+    "id": "GCL-CC-00",
+    "protected_commit": "6704b4037161133a1efeedddcb69060a79cb7bc7",
+    "standard_blob": "b166204c6204ec96dcbf48c48c8688cca3a4cce4",
+    "admission_blob": "8adca06e54833fa3e37ba82ce4c2facd278f4d76"
+  },
+  "domain_snapshot": {
+    "forge_main": "782b80c8c57d4e77356d8c77c50ee1fffdcd92b8",
+    "solve_main": "aa4253897f008c197bc8929b503614d652c4fb14",
+    "cert_main": "8a2610215989bec15474f0a088945c0a1b6d8172",
+    "solve_reconciliation_receipt_blob": "edb7a573640806c38c262186eea8b0bee49cbfdc"
+  },
+  "artifacts": {
+    "governance/GCL-CC-00-ADOPTION.json": "6f58978ca2302192ab6764fa7fc3e6f67db0ef1a",
+    "schemas/gcl_cc_programme_adoption.schema.json": "d7c29c3099e6fc6bd2f68d5ce3f678ca3404193d",
+    "ci/validate_gcl_cc_adoption.py": "754aa70606a4498b57654c95b105ae10ffb92782",
+    "governance/openmath_2026_campaign_state.json": "1d3d1161b39cceb3a8a1e9ab3af2a57a0b1fe2c1",
+    "schemas/openmath_2026_campaign_state.schema.json": "26cab111afb4bc258936de5fb4a682d2572c0a76",
+    "governance/openmath_2026_supersession_registry.json": "fc95bbbcecc41044cc38feff2bc5af6f1eccddc4",
+    "docs/campaigns/OPENMATH_2026_STATUS.md": "0e1bcdd327fd94336daa69b5f8d5c3aee6f0f2f3",
+    "docs/campaigns/OPENMATH_2026_CHARTER.md": "d97b9a8b926bac56ee960d30ec5db8d71441d7c7",
+    "docs/campaigns/OPENMATH_2026_SPRINT_PROFILE.md": "2207ab4c3a8a86540afb78b735b696ec60ba2eaf",
+    "mkdocs.yml": "13000e1a16de99fb3dee874f510bc951dfbb5d4a",
+    "ci/validate_openmath_2026_core_clarity.py": "d154490bd3d7f6625ea8b47845644f54cd85f02f",
+    ".github/workflows/openmath-core-clarity.yml": "897970ebc26ea66a073a726dff6baa20d4b9d578",
+    ".ghos-routing/workflows.json": "87e1055b01c752d3b3758e3411889d0c0f34325c",
+    "governance/policy_shard_registry.json": "a89504a113b744195fd8f53bcaaae06d8137dc7f",
+    "governance/openmath_2026_core_clarity_reconciliation.json": "a4303c0547a120c6251c22f5d58a88a4e218e6ba"
+  },
+  "target_state": {
+    "canonical_hills": 7,
+    "h1_agent001": "CAPTURED_RECOVERED_UNADJUDICATED",
+    "h2_h7": "LEASED_NOT_LAUNCHED",
+    "competition_submitted": 0,
+    "next_action": "adjudicate_agent001_recovered_result"
+  },
+  "invalidation": {
+    "governed_artifact_change": "refresh freeze and exact-head reviews",
+    "domain_artifact_change": "reconcile canonical state before merge",
+    "external_agent_event": "reconcile lifecycle readback and canonical state before merge",
+    "competition_event": "reconcile competition state before merge"
+  },
+  "claim_boundary": "Control-plane reconciliation only; no mathematical, certification, agent-launch, or competition-submission effect."
+}
