@@ -1,0 +1,398 @@
+{
+  "$schema": "../schemas/openmath_2026_campaign_state.schema.json",
+  "schema_version": "1.0.0",
+  "record_type": "OPENMATH_2026_CANONICAL_CAMPAIGN_STATE",
+  "campaign_id": "OPENMATH-2026",
+  "canonical_authority": {
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "path": "governance/openmath_2026_campaign_state.json",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#1072",
+    "rule": "This is the sole Programme current-state authority for OPENMATH-2026. Domain repositories remain authoritative for their bound artifacts."
+  },
+  "status": "ACTIVE__CONTROL_PLANE_COHERENT",
+  "effective_condition": "protected_merge_of_this_exact_record",
+  "standards": {
+    "core_clarity": {
+      "id": "GCL-CC-00",
+      "version": "0.1.0",
+      "repository": "grandchallenge/gcl-standards",
+      "protected_commit": "6704b4037161133a1efeedddcb69060a79cb7bc7",
+      "standard_blob": "b166204c6204ec96dcbf48c48c8688cca3a4cce4",
+      "admission_blob": "8adca06e54833fa3e37ba82ce4c2facd278f4d76"
+    },
+    "campaign_execution": {
+      "id": "GCL-CEX-01",
+      "version": "0.1.0",
+      "adopted": true
+    },
+    "github_operations": {
+      "id": "GCL-GHOS-00",
+      "version": "0.2.0",
+      "adopted": true
+    }
+  },
+  "domain_bindings": {
+    "forge": {
+      "repository": "grandchallenge/MATHFORGE",
+      "observed_main": "782b80c8c57d4e77356d8c77c50ee1fffdcd92b8",
+      "artifacts": [
+        {
+          "path": "reports/discovery/openmath_2026/hill_source_locks.json",
+          "git_blob_sha1": "2334bb7e67b5863c2110b6e21b6e47cfd5061d4d"
+        },
+        {
+          "path": "reports/discovery/openmath_2026/SEMANTIC_PACKS.json",
+          "git_blob_sha1": "aaf8aa9b65d2218943b5dc9f3840cb16751a1ef0"
+        },
+        {
+          "path": "reports/discovery/openmath_2026/SEMANTIC_PACK_READBACK.json",
+          "git_blob_sha1": "e3a92514009c04b5d53964fc0dd7c94cecb9f34a"
+        }
+      ]
+    },
+    "solve": {
+      "repository": "grandchallenge/MATHSOLVE",
+      "observed_main": "aa4253897f008c197bc8929b503614d652c4fb14",
+      "artifacts": [
+        {
+          "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
+          "git_blob_sha1": "b0825febdfa58ceefb3b398fdf53d8e5e6987950"
+        },
+        {
+          "path": ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json",
+          "git_blob_sha1": "2e3d380a512cf26389dcf0a2304a974618755f01"
+        },
+        {
+          "path": ".gcl/completions/OM26-CORE-CLARITY-RECONCILE-001/COMPLETION_RECEIPT.json",
+          "git_blob_sha1": "edb7a573640806c38c262186eea8b0bee49cbfdc"
+        },
+        {
+          "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_12_STATUS.json",
+          "git_blob_sha1": "d81f830ca6ae643a3f98b06ea6094a7ff49fef1e"
+        },
+        {
+          "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_07_RH_BADER93_REPLAY_RECEIPT.json",
+          "git_blob_sha1": "cc6a593953de2ce523e19e16022dce60e562dc99"
+        }
+      ]
+    },
+    "cert": {
+      "repository": "grandchallenge/MATHCERT",
+      "observed_main": "8a2610215989bec15474f0a088945c0a1b6d8172",
+      "artifacts": [
+        {
+          "path": "evidence/openmath_2026/OM26-H1/INTAKE.json",
+          "git_blob_sha1": "dbd2098d3891c9a0c5050993d8a82b736330c5f4"
+        },
+        {
+          "path": "evidence/openmath_2026/OM26-H1/RH_BADER93_INTAKE.json",
+          "git_blob_sha1": "89d406dbdfacb4cf4f4c0b5048218850c1fe4e9a"
+        }
+      ]
+    }
+  },
+  "superseded_current_state_surfaces": [
+    {
+      "path": "governance/openmath_2026_external_state.json",
+      "git_blob_sha1": "d355be89d5ed4c5f1a70dff9d20026451a17c8db",
+      "status": "SUPERSEDED_FOR_CURRENT_STATE",
+      "historical_only": true,
+      "reason": "Bootstrap external-state snapshot predates exact seven-hill source locks, leases, lifecycle recovery, and current competition state."
+    },
+    {
+      "path": "governance/openmath_2026_campaign_binding.json",
+      "git_blob_sha1": "36d89557ba5aab589cdf03b099df1d7778a74267",
+      "status": "SUPERSEDED_FOR_CURRENT_STATE",
+      "historical_only": true,
+      "reason": "Earlier cross-pillar binding predates current Forge release, Solve Core Clarity reconciliation, Agent 001 recovery, and explicit competition lifecycle."
+    }
+  ],
+  "summary": {
+    "hill_count": 7,
+    "source_locked_hills": 7,
+    "solve_released_hills": 7,
+    "external_agents": {
+      "captured_pending_adjudication": 1,
+      "leased_not_launched": 6,
+      "launched_without_return": 0,
+      "accepted": 0
+    },
+    "certification": {
+      "h1": "PENDING_INDEPENDENT_CERT_EXECUTOR",
+      "h2_h7": "NOT_YET_ELIGIBLE",
+      "certified_hills": 0
+    },
+    "competition": {
+      "locally_verified_candidates": 1,
+      "submitted_hills": 0,
+      "accepted_hills": 0,
+      "rule": "No local evaluator, CI, Solve replay, intake, or Cert-pending state is an official competition submission."
+    }
+  },
+  "hills": [
+    {
+      "hill_slot": "OM26-H1",
+      "title": "Kobon triangles",
+      "external_hill_id": "alejandrozu/kobon-triangles",
+      "source": {
+        "state": "SOURCE_LOCKED_CONTENT_ADDRESSED",
+        "forge_source_lock_blob": "7a90cd6eeb54e8e4c5b63c5977e40a1ab5bcaa2c",
+        "solve_release": "RESEARCH_AND_CANDIDATE_CONSTRUCTION"
+      },
+      "solve": {
+        "state": "ACTIVE",
+        "campaign_best_observed": 93,
+        "best_candidate": "RH_BADER_RECONSTRUCTION_093",
+        "frontier": "Q_GE_6_OR_Q5_EXACT_NESTED_TRIANGLE_EQUALITY__SOURCE_CONDITIONAL",
+        "frontier_changed_by_agent001": false
+      },
+      "external_agent": {
+        "assignment_id": "OM26-H1-H1-12",
+        "dispatch_id": "OM26-H1-H1-12-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-001",
+        "issue_number": 498,
+        "lifecycle": "CAPTURED",
+        "return_comment_id": 5881108260,
+        "capture_state": "CAPTURED_RECOVERED_UNADJUDICATED",
+        "adjudication": "PENDING"
+      },
+      "cert": {
+        "state": "ADMITTED_PENDING_INDEPENDENT_CERT_EXECUTOR",
+        "certification_effect": false,
+        "targets": [
+          "OM26-H1-THM-001",
+          "OM26-H1-CON-001",
+          "OM26-H1-CON-002"
+        ]
+      },
+      "competition": {
+        "lifecycle": "CERT_PENDING",
+        "candidate": "RH_BADER_RECONSTRUCTION_093",
+        "local_score": 93,
+        "local_verification": "PASS",
+        "public_evaluator_replay": "PASS__UNOFFICIAL_LOCAL_SCORE",
+        "official_submission": "NOT_SUBMITTED",
+        "official_acceptance": "NONE"
+      },
+      "next_action": "ADJUDICATE_RECOVERED_AGENT001_RESULT"
+    },
+    {
+      "hill_slot": "OM26-H2",
+      "title": "Busy Beaver 6 certificates",
+      "external_hill_id": "alejandrozu/busy-beaver-6-certificates",
+      "source": {
+        "state": "SOURCE_LOCKED_SLOT_BOUND__SEMANTIC_PACK_PROTECTED__SOLVE_RELEASED",
+        "forge_source_lock_blob": "d590cf562f562a81df64d403ff5d9aa01e25626c",
+        "solve_release": "DECOMPOSITION_AND_BOUNDED_RESEARCH"
+      },
+      "solve": {
+        "state": "WP01_READY"
+      },
+      "external_agent": {
+        "assignment_id": "OM26-H2-WP01",
+        "dispatch_id": "OM26-H2-WP01-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-002",
+        "issue_number": 505,
+        "lifecycle": "LEASED_NOT_LAUNCHED",
+        "launch_evidence": null,
+        "return_evidence": null,
+        "adjudication": "NOT_STARTED"
+      },
+      "cert": {
+        "state": "NOT_YET_ELIGIBLE",
+        "certification_effect": false
+      },
+      "competition": {
+        "lifecycle": "NO_CANDIDATE",
+        "candidate": null,
+        "official_submission": "NOT_SUBMITTED",
+        "official_acceptance": "NONE"
+      },
+      "next_action": "LAUNCH_AFTER_CURRENT_CAMPAIGN_NEXT_ACTION"
+    },
+    {
+      "hill_slot": "OM26-H3",
+      "title": "Clique-cluster Ramsey multiplicity",
+      "external_hill_id": "alejandrozu/clique-cluster-ramsey-multiplicity",
+      "source": {
+        "state": "SOURCE_LOCKED_SLOT_BOUND__SEMANTIC_PACK_PROTECTED__SOLVE_RELEASED",
+        "forge_source_lock_blob": "11d2a15fac721495bc0cc9b7f638a364ad55a719",
+        "solve_release": "DECOMPOSITION_AND_BOUNDED_RESEARCH"
+      },
+      "solve": {
+        "state": "WP01_READY"
+      },
+      "external_agent": {
+        "assignment_id": "OM26-H3-WP01",
+        "dispatch_id": "OM26-H3-WP01-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-003",
+        "issue_number": 506,
+        "lifecycle": "LEASED_NOT_LAUNCHED",
+        "launch_evidence": null,
+        "return_evidence": null,
+        "adjudication": "NOT_STARTED"
+      },
+      "cert": {
+        "state": "NOT_YET_ELIGIBLE",
+        "certification_effect": false
+      },
+      "competition": {
+        "lifecycle": "NO_CANDIDATE",
+        "candidate": null,
+        "official_submission": "NOT_SUBMITTED",
+        "official_acceptance": "NONE"
+      },
+      "next_action": "LAUNCH_AFTER_CURRENT_CAMPAIGN_NEXT_ACTION"
+    },
+    {
+      "hill_slot": "OM26-H4",
+      "title": "Collatz modular descent",
+      "external_hill_id": "alejandrozu/collatz-modular-descent",
+      "source": {
+        "state": "SOURCE_LOCKED_SLOT_BOUND__SEMANTIC_PACK_PROTECTED__SOLVE_RELEASED",
+        "forge_source_lock_blob": "4ec9e0cdad3bc572b4577809d0323f9c670a379c",
+        "solve_release": "DECOMPOSITION_AND_BOUNDED_RESEARCH"
+      },
+      "solve": {
+        "state": "WP01_READY"
+      },
+      "external_agent": {
+        "assignment_id": "OM26-H4-WP01",
+        "dispatch_id": "OM26-H4-WP01-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-004",
+        "issue_number": 507,
+        "lifecycle": "LEASED_NOT_LAUNCHED",
+        "launch_evidence": null,
+        "return_evidence": null,
+        "adjudication": "NOT_STARTED"
+      },
+      "cert": {
+        "state": "NOT_YET_ELIGIBLE",
+        "certification_effect": false
+      },
+      "competition": {
+        "lifecycle": "NO_CANDIDATE",
+        "candidate": null,
+        "official_submission": "NOT_SUBMITTED",
+        "official_acceptance": "NONE"
+      },
+      "next_action": "LAUNCH_AFTER_CURRENT_CAMPAIGN_NEXT_ACTION"
+    },
+    {
+      "hill_slot": "OM26-H5",
+      "title": "Grothendieck constant witnesses",
+      "external_hill_id": "alejandrozu/grothendieck-constant-witnesses",
+      "source": {
+        "state": "SOURCE_LOCKED_SLOT_BOUND__SEMANTIC_PACK_PROTECTED__SOLVE_RELEASED",
+        "forge_source_lock_blob": "c5c72c4b00fdf1d12eafa6673ed0752a76d66a26",
+        "solve_release": "DECOMPOSITION_AND_BOUNDED_RESEARCH"
+      },
+      "solve": {
+        "state": "WP01_READY"
+      },
+      "external_agent": {
+        "assignment_id": "OM26-H5-WP01",
+        "dispatch_id": "OM26-H5-WP01-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-005",
+        "issue_number": 508,
+        "lifecycle": "LEASED_NOT_LAUNCHED",
+        "launch_evidence": null,
+        "return_evidence": null,
+        "adjudication": "NOT_STARTED"
+      },
+      "cert": {
+        "state": "NOT_YET_ELIGIBLE",
+        "certification_effect": false
+      },
+      "competition": {
+        "lifecycle": "NO_CANDIDATE",
+        "candidate": null,
+        "official_submission": "NOT_SUBMITTED",
+        "official_acceptance": "NONE"
+      },
+      "next_action": "LAUNCH_AFTER_CURRENT_CAMPAIGN_NEXT_ACTION"
+    },
+    {
+      "hill_slot": "OM26-H6",
+      "title": "3x3 matrix multiplication tensor",
+      "external_hill_id": "alejandrozu/matrix-multiplication-tensor-3x3",
+      "source": {
+        "state": "SOURCE_LOCKED_SLOT_BOUND__SEMANTIC_PACK_PROTECTED__SOLVE_RELEASED",
+        "forge_source_lock_blob": "a7ec3fc86696698ba729632ae16397e05189221b",
+        "solve_release": "DECOMPOSITION_AND_BOUNDED_RESEARCH"
+      },
+      "solve": {
+        "state": "WP01_READY"
+      },
+      "external_agent": {
+        "assignment_id": "OM26-H6-WP01",
+        "dispatch_id": "OM26-H6-WP01-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-006",
+        "issue_number": 509,
+        "lifecycle": "LEASED_NOT_LAUNCHED",
+        "launch_evidence": null,
+        "return_evidence": null,
+        "adjudication": "NOT_STARTED"
+      },
+      "cert": {
+        "state": "NOT_YET_ELIGIBLE",
+        "certification_effect": false
+      },
+      "competition": {
+        "lifecycle": "NO_CANDIDATE",
+        "candidate": null,
+        "official_submission": "NOT_SUBMITTED",
+        "official_acceptance": "NONE"
+      },
+      "next_action": "LAUNCH_AFTER_CURRENT_CAMPAIGN_NEXT_ACTION"
+    },
+    {
+      "hill_slot": "OM26-H7",
+      "title": "Erdős Problem 3",
+      "external_hill_id": "ottogin/erdos-3",
+      "source": {
+        "state": "SOURCE_LOCKED_SLOT_BOUND__SEMANTIC_PACK_PROTECTED__SOLVE_RELEASED",
+        "forge_source_lock_blob": "2e3551cf7be57f1920382296bbb0d6ebea4379d6",
+        "solve_release": "DECOMPOSITION_AND_BOUNDED_RESEARCH"
+      },
+      "solve": {
+        "state": "WP01_READY"
+      },
+      "external_agent": {
+        "assignment_id": "OM26-H7-WP01",
+        "dispatch_id": "OM26-H7-WP01-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-007",
+        "issue_number": 510,
+        "lifecycle": "LEASED_NOT_LAUNCHED",
+        "launch_evidence": null,
+        "return_evidence": null,
+        "adjudication": "NOT_STARTED"
+      },
+      "cert": {
+        "state": "NOT_YET_ELIGIBLE",
+        "certification_effect": false
+      },
+      "competition": {
+        "lifecycle": "NO_CANDIDATE",
+        "candidate": null,
+        "official_submission": "NOT_SUBMITTED",
+        "official_acceptance": "NONE"
+      },
+      "next_action": "LAUNCH_AFTER_CURRENT_CAMPAIGN_NEXT_ACTION"
+    }
+  ],
+  "next_action": {
+    "id": "adjudicate_agent001_recovered_result",
+    "description": "Adjudicate the recovered OM26-H1-H1-12-IA-001 result against the protected H1-12 packet. Until that adjudication closes, the H1 frontier remains q=5 exact nested-triangle equality or q>=6 and Agents 002-007 remain LEASED_NOT_LAUNCHED.",
+    "completion_test": "A protected adjudication accepts, rejects, or supersedes the recovered Agent 001 contribution with exact evidence, followed by canonical campaign-state reconciliation before any next discretionary OPENMATH substantive operation."
+  },
+  "claim_boundaries": {
+    "agent001_mathematics_adjudicated": false,
+    "h1_optimality_claim": false,
+    "mathematical_certification": false,
+    "competition_submission": false,
+    "competition_acceptance": false,
+    "novelty_or_priority": false,
+    "publication_authority": false
+  }
+}
