@@ -359,10 +359,21 @@ def openmath_lifecycle_controller_errors(texts: dict[str, str]) -> list[str]:
         return errors
     workflow = legacy.load_yaml_text(text)
     trigger = _trigger(workflow)
-    if set(trigger) != {"schedule", "workflow_dispatch"}:
-        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: triggers must be exactly schedule and workflow_dispatch")
+    if set(trigger) != {"push", "schedule", "workflow_dispatch"}:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: triggers must be exactly push, schedule, and workflow_dispatch")
     if trigger.get("schedule") != [{"cron": "*/5 * * * *"}]:
         errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: schedule must remain every five minutes")
+    expected_push = {
+        "branches": ["main"],
+        "paths": [
+            ".github/workflows/openmath-unattended-lifecycle-controller.yml",
+            "ci/openmath_lifecycle_controller.py",
+            "governance/openmath_unattended_lifecycle_controller.json",
+            "tests/test_openmath_lifecycle_controller.py",
+        ],
+    }
+    if trigger.get("push") != expected_push:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: push wake must remain scoped to controller self-test surfaces on main")
     if workflow.get("permissions") != {"contents": "read"}:
         errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: top-level permissions must remain contents-read only")
     job = _job(workflow, "reconcile")
