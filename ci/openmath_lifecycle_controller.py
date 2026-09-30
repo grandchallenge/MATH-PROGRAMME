@@ -698,11 +698,14 @@ def recover_legacy(gh: Github, branch: str, checkout: Path, refresh: bool = Fals
                 "ref":f"refs/heads/{recovery_branch}","sha":sha
             })
         launch_path=f"handoffs/OPENMATH-2026/launch/{p['successor_assignment']}.md"
-        put_file(
-            gh,SOLVE,recovery_branch,launch_path,
-            (candidate_root/launch_path).read_text(encoding="utf-8"),
-            f"OPENMATH: publish immutable successor task for {dispatch}",
-        )
+        successor_registry=json.loads((candidate_root/".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json").read_text(encoding="utf-8"))
+        successor=next(x for x in successor_registry["assignments"] if x.get("assignment_id")==p["successor_assignment"])
+        for task_path in (successor["work_package"], launch_path):
+            put_file(
+                gh,SOLVE,recovery_branch,task_path,
+                (candidate_root/task_path).read_text(encoding="utf-8"),
+                f"OPENMATH: publish immutable successor task for {dispatch}",
+            )
         pin_ref=gh.request(
             "GET",f"/repos/{OWNER}/{SOLVE}/git/ref/heads/{urllib.parse.quote(recovery_branch,safe='/')}"
         )
