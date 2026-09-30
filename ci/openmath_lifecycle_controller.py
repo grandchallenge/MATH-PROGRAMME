@@ -11,7 +11,10 @@ import urllib.parse
 from pathlib import Path
 from typing import Any
 
-from ci.ns_ci_intake_pr_controller import ControllerError, Github
+try:
+    from ci.ns_ci_intake_pr_controller import ControllerError, Github
+except ModuleNotFoundError:
+    from ns_ci_intake_pr_controller import ControllerError, Github
 
 OWNER = "grandchallenge"
 SOLVE = "MATHSOLVE"
