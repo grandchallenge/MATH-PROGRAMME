@@ -1,9 +1,10 @@
 import copy
 import json
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
-from ci.openmath_lifecycle_controller import apply_projection_to_state, dispatch_parts
+from ci.openmath_lifecycle_controller import apply_projection_to_state, dispatch_parts, ensure_solve_merge
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -57,6 +58,26 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         self.assertFalse(automation["manual_transport_required"])
         self.assertFalse(automation["manual_controller_wake_required"])
         self.assertIn("OM26-H3", candidate["next_action"]["currently_selected"])
+
+    def test_pending_merge_is_bounded_and_does_not_wait(self):
+        gh=unittest.mock.Mock()
+        gh.request.return_value={"number":564,"mergeable":True,"merged_at":None}
+        item={"branch":"intake/openmath-om26-h7-wp02-ia-001","dispatch_id":"OM26-H7-WP02-IA-001"}
+        with patch("ci.openmath_lifecycle_controller.main_has_manifest",return_value=False), patch("ci.openmath_lifecycle_controller.find_pr",return_value={"number":564}), patch("ci.openmath_lifecycle_controller.enable_auto_merge"), patch("ci.openmath_lifecycle_controller.wait_merged",side_effect=AssertionError("blocking wait")):
+            result=ensure_solve_merge(gh,item)
+        self.assertTrue(result["pending"])
+        self.assertEqual(result["number"],564)
+
+    def test_conflict_refresh_uses_protected_generator_and_rebinds_projection(self):
+        gh=unittest.mock.Mock()
+        gh.request.side_effect=[{"number":564,"mergeable":False},{"number":565,"merged_at":None}]
+        item={"branch":"intake/openmath-om26-h7-wp02-ia-001","dispatch_id":"OM26-H7-WP02-IA-001","projection_blob":"old"}
+        refreshed={**item,"branch":"candidate/openmath-om26-h7-wp02-ia-001","projection_blob":"fresh"}
+        with patch("ci.openmath_lifecycle_controller.main_has_manifest",return_value=False), patch("ci.openmath_lifecycle_controller.find_pr",side_effect=[{"number":564},{"number":565}]), patch("ci.openmath_lifecycle_controller.enable_auto_merge"), patch("ci.openmath_lifecycle_controller.recover_legacy",return_value=refreshed) as rebuild:
+            result=ensure_solve_merge(gh,item,ROOT)
+        rebuild.assert_called_once_with(gh,"intake/openmath-om26-h7-wp02-ia-001",ROOT,refresh=True)
+        self.assertEqual(item["projection_blob"],"fresh")
+        self.assertEqual(result["branch"],refreshed["branch"])
 
     def test_event_backstop_uses_protected_main(self):
         workflow = (ROOT / ".github/workflows/openmath-unattended-lifecycle-controller.yml").read_text(encoding="utf-8")
