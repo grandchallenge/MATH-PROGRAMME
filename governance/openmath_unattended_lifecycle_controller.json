@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "control_id": "MP-OPENMATH-UNATTENDED-LIFECYCLE-001",
   "status": "ACTIVE",
-  "purpose": "Carry one validated OPENMATH RESULT/1 from protected lifecycle candidate through protected Solve merge, Programme reconciliation, and ADVANCED without human evidence transport or controller wake-up.",
+  "purpose": "Carry a validated OPENMATH RESULT/1 through permanent capture, bounded replay/adjudication, protected Solve merge, Programme reconciliation, and ADVANCED without manual wake. Recover exactly locked legacy returns in the same controller.",
   "frozen_architecture": {
     "topology": "SEVEN_PEER_HILLS",
     "transport": "LINK_IN_RELAY_OUT",
@@ -34,7 +34,8 @@
         "MATHSOLVE"
       ],
       "permissions": {
-        "contents": "read",
+        "contents": "write",
+        "issues": "write",
         "pull-requests": "write"
       }
     },
@@ -49,6 +50,9 @@
     }
   },
   "allowed_actions": [
+    "inspect exact first-result-locked legacy raw/receipt and verify original GitHub comment identity",
+    "create one bounded replay-closure successor issue from protected original return",
+    "build a new successor candidate branch from protected Solve main without rewriting any legacy evidence branch",
     "read and validate existing MATHSOLVE lifecycle candidate branches",
     "open a pull request for a validated lifecycle candidate",
     "enable protected auto-merge; never bypass branch protection",
@@ -67,7 +71,7 @@
     "topology redesign",
     "manual evidence shuttling as a normal transition"
   ],
-  "fail_closed_rule": "Any identity, manifest, check, merge, or projection mismatch leaves a durable controller error and does not widen mathematical authority.",
+  "fail_closed_rule": "Any identity, provenance, first-result lock, candidate manifest, protected merge, or Programme projection mismatch stops promotion; original legacy evidence remains unchanged. Failure produces a durable controller report with exact branch and error.",
   "acceptance_test": {
     "id": "OPENMATH-RETURNED-TO-ADVANCED-001",
     "fixture": "OM26-H2-WP02-IA-001",
@@ -75,7 +79,12 @@
     "manual_transport_allowed": false,
     "manual_controller_wake_allowed": false,
     "live_controller_smoke_required": true,
-    "live_controller_smoke_trigger": "protected push on controller self-test surface"
+    "live_controller_smoke_trigger": "protected push on controller self-test surface",
+    "live_legacy_return_recovery_required": true,
+    "live_legacy_fixtures": [
+      "OM26-H3-WP01-IA-001",
+      "OM26-H6-WP01-IA-001"
+    ]
   },
   "paired_solve_implementation": {
     "repository": "grandchallenge/MATHSOLVE",

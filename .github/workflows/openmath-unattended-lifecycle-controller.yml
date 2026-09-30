@@ -45,7 +45,8 @@ jobs:
           private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
           owner: grandchallenge
           repositories: MATHSOLVE
-          permission-contents: read
+          permission-contents: write
+          permission-issues: write
           permission-pull-requests: write
 
       - name: Mint bounded Programme reconciliation token
@@ -59,10 +60,20 @@ jobs:
           permission-contents: write
           permission-pull-requests: write
 
+      - name: Checkout protected MATHSOLVE candidate generator
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: grandchallenge/MATHSOLVE
+          ref: main
+          path: solve-lifecycle
+          token: ${{ steps.solve-token.outputs.token }}
+          persist-credentials: false
+
       - name: Carry OPENMATH returns through ADVANCED
         env:
           MATHSOLVE_LIFECYCLE_TOKEN: ${{ steps.solve-token.outputs.token }}
           MATH_PROGRAMME_LIFECYCLE_TOKEN: ${{ steps.programme-token.outputs.token }}
+          MATHSOLVE_CHECKOUT_DIR: ${{ github.workspace }}/solve-lifecycle
         run: |
           set -euo pipefail
           python ci/openmath_lifecycle_controller.py \

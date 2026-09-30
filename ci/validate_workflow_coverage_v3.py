@@ -387,13 +387,16 @@ def openmath_lifecycle_controller_errors(texts: dict[str, str]) -> list[str]:
         APP_KEY,
         "id: solve-token",
         "repositories: MATHSOLVE",
-        "permission-contents: read",
+        "permission-contents: write",
+        "permission-issues: write",
         "permission-pull-requests: write",
         "id: programme-token",
         "repositories: MATH-PROGRAMME",
         "permission-contents: write",
         "MATHSOLVE_LIFECYCLE_TOKEN: ${{ steps.solve-token.outputs.token }}",
         "MATH_PROGRAMME_LIFECYCLE_TOKEN: ${{ steps.programme-token.outputs.token }}",
+        "MATHSOLVE_CHECKOUT_DIR: ${{ github.workspace }}/solve-lifecycle",
+        "path: solve-lifecycle",
         "python ci/openmath_lifecycle_controller.py",
         "--apply",
         "--report openmath-lifecycle-controller-report.json",
@@ -405,15 +408,16 @@ def openmath_lifecycle_controller_errors(texts: dict[str, str]) -> list[str]:
             errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: missing bounded lifecycle marker {marker}")
     if text.count(APP_ACTION) != 2:
         errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: exactly two separately scoped App tokens are required")
-    if text.count("permission-contents: write") != 1:
-        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: exactly one Programme contents-write grant is required")
+    if text.count("permission-contents: write") != 2:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: exactly two scoped contents-write grants are required")
+    if text.count("permission-issues: write") != 1:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: exactly one Solve issue-write grant is required")
     if text.count("permission-pull-requests: write") != 2:
         errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: exactly two PR-write grants are required")
     for forbidden in (
         "permission-administration:",
         "permission-actions: write",
         "permission-checks: write",
-        "permission-issues: write",
         "gh pr merge",
         "git push",
         "/git/refs/heads/main",
