@@ -115,7 +115,11 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
     h1 = rows["OM26-H1"]
     require(h1.get("solve", {}).get("campaign_best_observed") == 93, "H1 campaign best drift")
     require(h1.get("solve", {}).get("frontier") == "Q_GE_6__SOURCE_CONDITIONAL", "H1 frontier drift")
-    require(h1.get("external_agent", {}).get("lifecycle") == "ACCEPTED", "H1 accepted result lost")
+    h1_agent = h1.get("external_agent", {})
+    h1_history = h1_agent if h1_agent.get("lifecycle") == "ACCEPTED" else h1_agent.get("predecessor", {})
+    require(h1_history.get("lifecycle") == "ACCEPTED", "H1 accepted result lost")
+    require(h1_history.get("assignment_id") == "OM26-H1-H1-12", "H1 accepted assignment history drift")
+    require(h1_history.get("accepted_claim") == "OM26-H1-RED-023", "H1 source-conditional accepted claim lost")
 
     h2 = rows["OM26-H2"]
     require(str(h2.get("external_agent", {}).get("assignment_id","")).startswith("OM26-H2-WP"), "H2 current assignment syntax drift")
