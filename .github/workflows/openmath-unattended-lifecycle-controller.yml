@@ -1,6 +1,14 @@
 name: OPENMATH unattended lifecycle controller
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/openmath-unattended-lifecycle-controller.yml"
+      - "ci/openmath_lifecycle_controller.py"
+      - "governance/openmath_unattended_lifecycle_controller.json"
+      - "tests/test_openmath_lifecycle_controller.py"
   schedule:
     - cron: "*/5 * * * *"
   workflow_dispatch:

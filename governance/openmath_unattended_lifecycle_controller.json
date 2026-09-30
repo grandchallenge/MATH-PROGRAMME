@@ -22,8 +22,10 @@
   ],
   "wake": {
     "kind": "GitHub Actions",
-    "cadence": "every five minutes",
-    "manual_replay": true
+    "primary_operational_wake": "scheduled poll every five minutes",
+    "live_smoke_wake": "protected main push limited to controller self-test surfaces",
+    "manual_diagnostic": "workflow_dispatch",
+    "manual_controller_wake_required": false
   },
   "credentials": {
     "environment": "release-trust",
@@ -71,16 +73,21 @@
     "fixture": "OM26-H2-WP02-IA-001",
     "required_result": "PASS",
     "manual_transport_allowed": false,
-    "manual_controller_wake_allowed": false
+    "manual_controller_wake_allowed": false,
+    "live_controller_smoke_required": true,
+    "live_controller_smoke_trigger": "protected push on controller self-test surface"
   },
   "paired_solve_implementation": {
     "repository": "grandchallenge/MATHSOLVE",
     "base_pull_request": 542,
     "hardening_pull_request": 543,
-    "protected_merge": "1b4c0496b0dfe6b304272910875de71274d95c32",
+    "acceptance_closure_pull_request": 544,
+    "protected_merge": "631ddb201ac2ead06373e8cc3e6d08eadbf51c16",
     "lifecycle_contract_path": ".gcl/campaigns/OPENMATH-2026/LIFECYCLE_CONTRACT.json",
     "lifecycle_contract_git_blob_sha1": "c3f4fc75424210def1ad025e20da36b7fce6257f",
     "candidate_generator_path": "ci/openmath_lifecycle_candidate.py",
-    "candidate_generator_git_blob_sha1": "30d0db5bfe09a5a173482b70352fbc9153fc6299"
+    "candidate_generator_git_blob_sha1": "30d0db5bfe09a5a173482b70352fbc9153fc6299",
+    "acceptance_runner_path": "ci/openmath_lifecycle_acceptance.py",
+    "acceptance_runner_git_blob_sha1": "0ae6986d8f164199712f014c8501ae89a5c0ec8d"
   }
 }

@@ -68,13 +68,17 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         )
         self.assertFalse(control["acceptance_test"]["manual_transport_allowed"])
         self.assertFalse(control["acceptance_test"]["manual_controller_wake_allowed"])
+        self.assertTrue(control["acceptance_test"]["live_controller_smoke_required"])
+        self.assertFalse(control["wake"]["manual_controller_wake_required"])
+        self.assertEqual(control["wake"]["primary_operational_wake"], "scheduled poll every five minutes")
         binding = control["paired_solve_implementation"]
         self.assertEqual(binding["repository"], "grandchallenge/MATHSOLVE")
         self.assertEqual(binding["base_pull_request"], 542)
         self.assertEqual(binding["hardening_pull_request"], 543)
+        self.assertEqual(binding["acceptance_closure_pull_request"], 544)
         self.assertEqual(
             binding["protected_merge"],
-            "1b4c0496b0dfe6b304272910875de71274d95c32",
+            "631ddb201ac2ead06373e8cc3e6d08eadbf51c16",
         )
         self.assertEqual(
             binding["lifecycle_contract_git_blob_sha1"],
@@ -83,6 +87,10 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         self.assertEqual(
             binding["candidate_generator_git_blob_sha1"],
             "30d0db5bfe09a5a173482b70352fbc9153fc6299",
+        )
+        self.assertEqual(
+            binding["acceptance_runner_git_blob_sha1"],
+            "0ae6986d8f164199712f014c8501ae89a5c0ec8d",
         )
 
 
