@@ -359,8 +359,10 @@ def openmath_lifecycle_controller_errors(texts: dict[str, str]) -> list[str]:
         return errors
     workflow = legacy.load_yaml_text(text)
     trigger = _trigger(workflow)
-    if set(trigger) != {"push", "schedule", "workflow_dispatch"}:
-        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: triggers must be exactly push, schedule, and workflow_dispatch")
+    if set(trigger) != {"push", "schedule", "workflow_dispatch", "workflow_run"}:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: triggers must be exactly push, schedule, workflow_dispatch, and workflow_run")
+    if trigger.get("workflow_run") != {"workflows": ["Administrative maintenance dispatcher"], "types": ["completed"]}:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: event wake must bind only maintenance dispatcher completion")
     if trigger.get("schedule") != [{"cron": "*/5 * * * *"}]:
         errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: schedule must remain every five minutes")
     expected_push = {
@@ -377,6 +379,8 @@ def openmath_lifecycle_controller_errors(texts: dict[str, str]) -> list[str]:
     if workflow.get("permissions") != {"contents": "read"}:
         errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: top-level permissions must remain contents-read only")
     job = _job(workflow, "reconcile")
+    if job.get("if") != "github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'":
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: event wake must require successful completion")
     if job.get("environment") != PROTECTED_ENVIRONMENT:
         errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: reconcile job must bind release-trust")
     if job.get("permissions") != {"contents": "read"}:

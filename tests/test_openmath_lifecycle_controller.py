@@ -58,6 +58,16 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         self.assertFalse(automation["manual_controller_wake_required"])
         self.assertIn("OM26-H3", candidate["next_action"]["currently_selected"])
 
+    def test_event_backstop_uses_protected_main(self):
+        workflow = (ROOT / ".github/workflows/openmath-unattended-lifecycle-controller.yml").read_text(encoding="utf-8")
+        control = json.loads((ROOT / "governance/openmath_unattended_lifecycle_controller.json").read_text(encoding="utf-8"))
+        self.assertIn("  workflow_run:\n    workflows:\n      - Administrative maintenance dispatcher\n    types:\n      - completed\n", workflow)
+        self.assertIn("github.event.workflow_run.conclusion == 'success'", workflow)
+        self.assertIn("          ref: main", workflow)
+        self.assertNotIn("github.event.workflow_run.head_sha", workflow)
+        self.assertIn("successful completion of Administrative maintenance dispatcher", control["wake"]["event_backstop"])
+        self.assertFalse(control["wake"]["scheduled_delivery_guaranteed"])
+
     def test_frozen_pipeline_is_exact(self):
         control = json.loads(
             (ROOT / "governance/openmath_unattended_lifecycle_controller.json").read_text(encoding="utf-8")
