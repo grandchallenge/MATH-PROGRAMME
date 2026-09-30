@@ -3,7 +3,7 @@ import json
 import unittest
 from pathlib import Path
 
-from ci.openmath_lifecycle_controller import apply_projection_to_state
+from ci.openmath_lifecycle_controller import apply_projection_to_state, dispatch_parts
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -67,6 +67,14 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         self.assertNotIn("github.event.workflow_run.head_sha", workflow)
         self.assertIn("successful completion of Administrative maintenance dispatcher", control["wake"]["event_backstop"])
         self.assertFalse(control["wake"]["scheduled_delivery_guaranteed"])
+
+    def test_h1_wp_dispatch_uses_the_same_pipeline(self):
+        self.assertEqual(dispatch_parts('intake/openmath-om26-h1-wp01-ia-001'), ('OM26-H1-WP01-IA-001', 'OM26-H1', 'WP01'))
+
+    def test_return_wake_is_narrow_and_uses_no_payload_code(self):
+        workflow = (ROOT / '.github/workflows/openmath-unattended-lifecycle-controller.yml').read_text(encoding='utf-8')
+        self.assertIn('  repository_dispatch:\n    types:\n      - openmath-return-ready\n', workflow)
+        self.assertNotIn('github.event.client_payload', workflow)
 
     def test_frozen_pipeline_is_exact(self):
         control = json.loads(

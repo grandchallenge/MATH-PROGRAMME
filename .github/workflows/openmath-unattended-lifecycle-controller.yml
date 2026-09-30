@@ -9,6 +9,9 @@ on:
       - "ci/openmath_lifecycle_controller.py"
       - "governance/openmath_unattended_lifecycle_controller.json"
       - "tests/test_openmath_lifecycle_controller.py"
+  repository_dispatch:
+    types:
+      - openmath-return-ready
   workflow_run:
     workflows:
       - Administrative maintenance dispatcher

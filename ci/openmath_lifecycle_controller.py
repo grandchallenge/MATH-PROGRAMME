@@ -25,7 +25,7 @@ SOLVE = "MATHSOLVE"
 PROGRAMME = "MATH-PROGRAMME"
 BRANCH_PREFIX = "intake/openmath-"
 RECOVERY_PREFIX = "candidate/openmath-"
-DISPATCH_RE = re.compile(r"^(OM26-H([2-7])-WP([0-9]{2}))-IA-([0-9]{3})$")
+DISPATCH_RE = re.compile(r"^(OM26-H([1-7])-WP([0-9]{2}))-IA-([0-9]{3})$")
 PIPELINE = ["RETURNED","CAPTURED","REPLAYED","ADJUDICATED","ADVANCED"]
 
 
