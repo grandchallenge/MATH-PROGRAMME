@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0.0",
+  "control_id": "MP-OPENMATH-UNATTENDED-LIFECYCLE-001",
+  "status": "ACTIVE",
+  "purpose": "Carry one validated OPENMATH RESULT/1 from protected lifecycle candidate through protected Solve merge, Programme reconciliation, and ADVANCED without human evidence transport or controller wake-up.",
+  "frozen_architecture": {
+    "topology": "SEVEN_PEER_HILLS",
+    "transport": "LINK_IN_RELAY_OUT",
+    "durable_substrate": "GITHUB_TASK_AND_EVIDENCE",
+    "external_intelligence": "ZERO_CONTEXT_AGENTS",
+    "result_grammar": "GCL-CONTRIBUTION-RESULT/1",
+    "authority_boundary": "MATHFORGE_TO_MATHSOLVE_TO_MATHCERT"
+  },
+  "lifecycle": [
+    "READY",
+    "LAUNCHED",
+    "RETURNED",
+    "CAPTURED",
+    "REPLAYED",
+    "ADJUDICATED",
+    "ADVANCED"
+  ],
+  "wake": {
+    "kind": "GitHub Actions",
+    "cadence": "every five minutes",
+    "manual_replay": true
+  },
+  "credentials": {
+    "environment": "release-trust",
+    "solve_token": {
+      "repositories": [
+        "MATHSOLVE"
+      ],
+      "permissions": {
+        "contents": "read",
+        "pull-requests": "write"
+      }
+    },
+    "programme_token": {
+      "repositories": [
+        "MATH-PROGRAMME"
+      ],
+      "permissions": {
+        "contents": "write",
+        "pull-requests": "write"
+      }
+    }
+  },
+  "allowed_actions": [
+    "read and validate existing MATHSOLVE lifecycle candidate branches",
+    "open a pull request for a validated lifecycle candidate",
+    "enable protected auto-merge; never bypass branch protection",
+    "wait for protected Solve merge",
+    "read the protected Programme projection from merged Solve main",
+    "create one bounded Programme reconciliation branch and pull request",
+    "enable protected Programme auto-merge and wait for it",
+    "verify protected Programme state records ADVANCED"
+  ],
+  "prohibited_actions": [
+    "direct push to protected main",
+    "administration or branch-protection mutation",
+    "claim mathematical correctness not established by the Solve adjudication",
+    "MATHCERT certification",
+    "competition submission",
+    "topology redesign",
+    "manual evidence shuttling as a normal transition"
+  ],
+  "fail_closed_rule": "Any identity, manifest, check, merge, or projection mismatch leaves a durable controller error and does not widen mathematical authority.",
+  "acceptance_test": {
+    "id": "OPENMATH-RETURNED-TO-ADVANCED-001",
+    "fixture": "OM26-H2-WP02-IA-001",
+    "required_result": "PASS",
+    "manual_transport_allowed": false,
+    "manual_controller_wake_allowed": false
+  }
+}
