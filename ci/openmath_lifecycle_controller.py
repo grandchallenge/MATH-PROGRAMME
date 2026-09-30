@@ -193,6 +193,22 @@ def main_has_manifest(gh: Github, item: dict[str,Any]) -> bool:
     return optional_content(gh,SOLVE,item["manifest_path"],"main") is not None
 
 
+def protected_raw_exists(gh: Github, dispatch: str) -> bool:
+    base, _hill, _wp = base_for(dispatch)
+    raw_dir = urllib.parse.quote(f"{base}/raw/{dispatch}", safe="/")
+    items = gh.get_optional(f"/repos/{OWNER}/{SOLVE}/contents/{raw_dir}?ref=main")
+    if items is None:
+        return False
+    if not isinstance(items, list):
+        raise ControllerError(f"{dispatch}: protected raw directory response malformed")
+    return any(
+        isinstance(row, dict)
+        and isinstance(row.get("name"), str)
+        and re.fullmatch(r"github-comment-[0-9]+[.]md", row["name"])
+        for row in items
+    )
+
+
 def ensure_solve_merge(gh: Github, item: dict[str,Any]) -> dict[str,Any]:
     if main_has_manifest(gh,item):
         # Find the historical merged PR if available; main SHA is sufficient otherwise.
@@ -460,7 +476,22 @@ def run(apply: bool) -> dict[str,Any]:
     }
     for branch in branch_names(solve_gh):
         try:
-            item=validate_candidate(solve_gh,branch)
+            try:
+                item=validate_candidate(solve_gh,branch)
+            except ControllerError as exc:
+                if "lifecycle MANIFEST missing" not in str(exc):
+                    raise
+                dispatch, hill, wp = dispatch_parts(branch)
+                if not protected_raw_exists(solve_gh, dispatch):
+                    raise
+                report["processed"].append({
+                    "dispatch_id": dispatch,
+                    "hill": hill,
+                    "wp": wp,
+                    "branch": branch,
+                    "state": "LEGACY_ALREADY_PROTECTED",
+                })
+                continue
             if not apply:
                 report["processed"].append({**item,"state":"VALIDATED_DRY_RUN"})
                 continue
