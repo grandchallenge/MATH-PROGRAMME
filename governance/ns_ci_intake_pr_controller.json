@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "control_id": "MP-EXTERNAL-INTAKE-PR-CONTROLLER-001",
   "status": "ACTIVE",
-  "purpose": "Open raw-evidence pull requests in grandchallenge/MATHSOLVE for already-created and validated NS-CI and OPENMATH intake evidence branches.",
+  "purpose": "Open raw-evidence pull requests in grandchallenge/MATHSOLVE for already-created and validated NS-CI intake evidence branches. OPENMATH ownership moved to MP-OPENMATH-UNATTENDED-LIFECYCLE-001.",
   "authority_source": "existing GCL Release Trust GitHub App installation; short-lived per-run token only",
   "environment": "release-trust",
   "target_repository": "grandchallenge/MATHSOLVE",
@@ -17,7 +17,7 @@
   },
   "allowed_actions": [
     "read protected MATHSOLVE dispatch records",
-    "read already-created NS-CI and OPENMATH intake evidence branches",
+    "read already-created NS-CI intake evidence branches",
     "validate each branch against its campaign-specific dispatch and receipt schema",
     "compare intake branch to protected main",
     "open a pull request from an existing validated intake branch to main"
@@ -33,7 +33,7 @@
     "use administration, actions-write, checks-write, or workflow-write authority"
   ],
   "validation_requirements": [
-    "branch maps exactly to a protected NS-CI or OPENMATH dispatch identifier",
+    "branch maps exactly to a protected NS-CI dispatch identifier",
     "dispatch is READY_FOR_GITHUB_COMMENT",
     "branch diff is exactly one raw result and one receipt for the same comment id",
     "receipt binds the protected dispatch, issue, bootstrap, handoff, and raw artifact identity required by that campaign schema",
@@ -63,7 +63,7 @@
   },
   "first_valid_result_lock": "dispatch_level_protected_raw_existence",
   "branch_prefixes": [
-    "intake/nsci-",
-    "intake/openmath-"
-  ]
+    "intake/nsci-"
+  ],
+  "superseded_openmath_owner": "MP-OPENMATH-UNATTENDED-LIFECYCLE-001"
 }

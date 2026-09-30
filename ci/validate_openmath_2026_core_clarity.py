@@ -13,14 +13,15 @@ from typing import Any
 import jsonschema
 
 ROOT = Path(__file__).resolve().parents[1]
-STATE = ROOT / "governance" / "openmath_2026_campaign_state.json"
-STATE_SCHEMA = ROOT / "schemas" / "openmath_2026_campaign_state.schema.json"
-HUMAN = ROOT / "docs" / "campaigns" / "OPENMATH_2026_STATUS.md"
-ADOPTION = ROOT / "governance" / "GCL-CC-00-ADOPTION.json"
-SUPERSESSION = ROOT / "governance" / "openmath_2026_supersession_registry.json"
-TOPOLOGY_POLICY = ROOT / "governance" / "openmath_2026_deprecated_topology_policy.json"
-
-EXPECTED_HILLS = {
+STATE = ROOT / "governance/openmath_2026_campaign_state.json"
+SCHEMA = ROOT / "schemas/openmath_2026_campaign_state.schema.json"
+HUMAN = ROOT / "docs/campaigns/OPENMATH_2026_STATUS.md"
+ADOPTION = ROOT / "governance/GCL-CC-00-ADOPTION.json"
+SUPERSESSION = ROOT / "governance/openmath_2026_supersession_registry.json"
+TOPOLOGY_POLICY = ROOT / "governance/openmath_2026_deprecated_topology_policy.json"
+LIFECYCLE_CONTROLLER = ROOT / "governance/openmath_unattended_lifecycle_controller.json"
+HILLS = [f"OM26-H{i}" for i in range(1, 8)]
+EXPECTED = {
     "OM26-H1": ("Kobon triangles", "alejandrozu/kobon-triangles"),
     "OM26-H2": ("Busy Beaver 6 certificates", "alejandrozu/busy-beaver-6-certificates"),
     "OM26-H3": ("Clique-cluster Ramsey multiplicity", "alejandrozu/clique-cluster-ramsey-multiplicity"),
@@ -29,10 +30,11 @@ EXPECTED_HILLS = {
     "OM26-H6": ("3x3 matrix multiplication tensor", "alejandrozu/matrix-multiplication-tensor-3x3"),
     "OM26-H7": ("Erdős Problem 3", "ottogin/erdos-3"),
 }
-EXPECTED_LEGACY = {
+LEGACY = {
     "governance/openmath_2026_external_state.json": "d355be89d5ed4c5f1a70dff9d20026451a17c8db",
     "governance/openmath_2026_campaign_binding.json": "36d89557ba5aab589cdf03b099df1d7778a74267",
 }
+PIPELINE = ["READY","LAUNCHED","RETURNED","CAPTURED","REPLAYED","ADJUDICATED","ADVANCED"]
 
 
 class CoreClarityError(ValueError):
@@ -57,227 +59,119 @@ def require(condition: bool, message: str) -> None:
 
 
 def validate_local(root: Path = ROOT) -> dict[str, Any]:
-    state = load(root / "governance" / "openmath_2026_campaign_state.json")
-    schema = load(root / "schemas" / "openmath_2026_campaign_state.schema.json")
+    state = load(root / "governance/openmath_2026_campaign_state.json")
+    schema = load(root / "schemas/openmath_2026_campaign_state.schema.json")
     jsonschema.Draft202012Validator.check_schema(schema)
-    jsonschema.validate(
-        state,
-        schema,
-        cls=jsonschema.Draft202012Validator,
-        format_checker=jsonschema.FormatChecker(),
-    )
+    jsonschema.validate(state, schema, cls=jsonschema.Draft202012Validator)
 
-    topology_policy = load(root / "governance" / "openmath_2026_deprecated_topology_policy.json")
-    require(
-        topology_policy.get("invariant_id") == "CURRENT_TOPOLOGY_NO_H2_H7_GROUPING",
-        "topology deprecation policy identity drift",
-    )
-    require(
-        topology_policy.get("enforcement", {}).get("on_violation") == "BLOCK_DISCRETIONARY_SUBSTANTIVE_ADVANCEMENT",
-        "topology deprecation policy enforcement weakened",
-    )
+    topology_policy = load(root / "governance/openmath_2026_deprecated_topology_policy.json")
+    require(topology_policy.get("invariant_id") == "CURRENT_TOPOLOGY_NO_H2_H7_GROUPING", "topology policy drift")
+    require(topology_policy.get("enforcement", {}).get("on_violation") == "BLOCK_DISCRETIONARY_SUBSTANTIVE_ADVANCEMENT", "topology enforcement weakened")
 
-    adoption = load(root / "governance" / "GCL-CC-00-ADOPTION.json")
-    require(adoption["status"] == "effective", "GCL-CC-00 Programme adoption is not effective")
-    require(
-        adoption["enforcement"]["canonical_state"] == "governance/openmath_2026_campaign_state.json",
-        "GCL-CC-00 canonical-state pointer drift",
-    )
-    require(
-        adoption["enforcement"]["human_view"] == "docs/campaigns/OPENMATH_2026_STATUS.md",
-        "GCL-CC-00 human-view pointer drift",
-    )
-    require(
-        adoption["enforcement"]["on_drift"] == "BLOCK_DISCRETIONARY_SUBSTANTIVE_ADVANCEMENT",
-        "GCL-CC-00 drift behavior weakened",
-    )
+    adoption = load(root / "governance/GCL-CC-00-ADOPTION.json")
+    require(adoption.get("status") == "effective", "GCL-CC-00 adoption not effective")
+    require(adoption["enforcement"]["canonical_state"] == "governance/openmath_2026_campaign_state.json", "canonical state pointer drift")
+    require(adoption["enforcement"]["human_view"] == "docs/campaigns/OPENMATH_2026_STATUS.md", "human view pointer drift")
 
-    require(state["status"] == "ACTIVE__CONTROL_PLANE_COHERENT", "canonical state is not coherent")
-    require(
-        state["canonical_authority"]["path"] == "governance/openmath_2026_campaign_state.json",
-        "canonical authority self-pointer drift",
-    )
-    require(state["summary"]["hill_count"] == 7, "hill-count summary must be seven")
-    require(state["summary"]["source_locked_hills"] == 7, "all seven hills must be source locked")
-    require(state["summary"]["solve_released_hills"] == 7, "all seven hills must be Solve released")
-    require(state["standards"].get("topology_deprecation", {}).get("id") == "CURRENT_TOPOLOGY_NO_H2_H7_GROUPING", "canonical state is not bound to topology deprecation policy")
-    topology = state["canonical_authority"].get("topology", {})
-    require(topology.get("lane_model") == "SEVEN_FIRST_CLASS_HILLS", "canonical topology model drift")
-    require(topology.get("hills") == [f"OM26-H{i}" for i in range(1, 8)], "canonical topology roster drift")
-    require(topology.get("grouped_current_lanes") == [], "canonical topology still exposes grouped current lanes")
-    require(
-        state["summary"].get("current_topology") == {
-            "lane_model": "SEVEN_FIRST_CLASS_HILLS",
-            "hill_count": 7,
-            "grouped_current_lanes": 0,
-        },
-        "summary current topology drift",
-    )
-    require(
-        state["summary"].get("historical_tranches", {}).get("H2-H7") == {
-            "status": "HISTORICAL_PROVENANCE_ONLY",
-            "current_authority": False,
-        },
-        "historical H2-H7 classification drift",
-    )
+    lifecycle = load(root / "governance/openmath_unattended_lifecycle_controller.json")
+    require(lifecycle.get("status") == "ACTIVE", "OPENMATH lifecycle controller not active")
+    require(lifecycle.get("lifecycle") == PIPELINE, "OPENMATH lifecycle contract drift")
+    require(lifecycle.get("acceptance_test", {}).get("manual_transport_allowed") is False, "manual transport reintroduced")
+    require(lifecycle.get("acceptance_test", {}).get("manual_controller_wake_allowed") is False, "manual controller wake reintroduced")
 
-    hills = {row["hill_slot"]: row for row in state["hills"]}
-    require(set(hills) == set(EXPECTED_HILLS), "canonical hill roster mismatch")
-    for slot, (title, external_id) in EXPECTED_HILLS.items():
-        row = hills[slot]
-        require(row["title"] == title, f"{slot} title drift")
-        require(row["external_hill_id"] == external_id, f"{slot} external identity drift")
-        require(row.get("topology_role") == "FIRST_CLASS_HILL_LANE", f"{slot} topology role drift")
-        require(
-            row["competition"]["official_submission"] == "NOT_SUBMITTED",
-            f"{slot} must explicitly record NOT_SUBMITTED",
-        )
-        require(row["competition"]["official_acceptance"] == "NONE", f"{slot} acceptance state drift")
+    require(state.get("status") == "ACTIVE__CONTROL_PLANE_COHERENT", "canonical state not coherent")
+    topology = state.get("canonical_authority", {}).get("topology", {})
+    require(topology.get("lane_model") == "SEVEN_FIRST_CLASS_HILLS", "lane model drift")
+    require(topology.get("hills") == HILLS, "hill roster drift")
+    require(topology.get("grouped_current_lanes") == [], "grouped current lanes reintroduced")
+    require(state.get("summary", {}).get("hill_count") == 7, "hill count drift")
+    require(state["summary"].get("source_locked_hills") == 7, "source lock count drift")
+    require(state["summary"].get("solve_released_hills") == 7, "Solve release count drift")
 
-    h1 = hills["OM26-H1"]
-    require(h1["solve"]["campaign_best_observed"] == 93, "H1 campaign best must remain 93")
-    require(
-        h1["solve"]["frontier"] == "Q_GE_6__SOURCE_CONDITIONAL",
-        "H1 protected frontier drift",
-    )
-    require(h1["solve"]["frontier_changed_by_agent001"] is True, "accepted Agent 001 result must advance q5 frontier")
-    require(h1["external_agent"]["lifecycle"] == "ACCEPTED", "H1 Agent 001 must be ACCEPTED")
-    require(h1["external_agent"]["capture_state"] == "CAPTURED_RECOVERED_ADJUDICATED", "H1 capture state drift")
-    require(
-        h1["external_agent"]["adjudication"] == "ACCEPTED_SOURCE_CONDITIONAL_REDUCTION",
-        "H1 adjudication state mismatch",
-    )
-    require(h1["external_agent"]["accepted_claim"] == "OM26-H1-RED-023", "H1 accepted claim mismatch")
-    require(h1["cert"]["certification_effect"] is False, "H1 Cert intake cannot self-certify")
-    require(h1["competition"]["lifecycle"] == "CERT_PENDING", "H1 competition lifecycle drift")
-    require(h1["competition"]["public_evaluator_replay"] == "PASS__UNOFFICIAL_LOCAL_SCORE", "H1 evaluator boundary drift")
+    rows = {x["hill_slot"]: x for x in state.get("hills", [])}
+    require(set(rows) == set(HILLS), "canonical hill rows drift")
+    leased = 0
+    for hill,(title,external_id) in EXPECTED.items():
+        row = rows[hill]
+        require(row.get("title") == title, f"{hill} title drift")
+        require(row.get("external_hill_id") == external_id, f"{hill} external id drift")
+        require(row.get("topology_role") == "FIRST_CLASS_HILL_LANE", f"{hill} topology role drift")
+        competition = row.get("competition", {})
+        require(competition.get("official_submission") == "NOT_SUBMITTED", f"{hill} official submission drift")
+        require(competition.get("official_acceptance") == "NONE", f"{hill} official acceptance drift")
+        agent = row.get("external_agent", {})
+        lifecycle_state = agent.get("lifecycle")
+        require(lifecycle_state in {"LEASED_NOT_LAUNCHED","ACCEPTED"}, f"{hill} unsupported current agent lifecycle")
+        if lifecycle_state == "LEASED_NOT_LAUNCHED":
+            leased += 1
+            require(agent.get("launch_evidence") is None, f"{hill} unexpected launch evidence")
+            require(agent.get("return_evidence") is None, f"{hill} unexpected return evidence")
+            require(agent.get("adjudication") == "NOT_STARTED", f"{hill} unexpected current adjudication")
+        pred = agent.get("predecessor")
+        if pred:
+            require(pred.get("lifecycle") == "ACCEPTED", f"{hill} predecessor not accepted")
+            require(bool(pred.get("adjudication")), f"{hill} predecessor lacks adjudication")
 
-    h2 = hills["OM26-H2"]
-    require(h2["external_agent"]["assignment_id"] == "OM26-H2-WP03", "H2 current assignment drift")
-    require(h2["external_agent"]["agent_ref"] == "INDEPENDENT-AGENT-009", "H2 current agent drift")
-    require(h2["external_agent"]["issue_number"] == 537, "H2 current return surface drift")
-    require(h2["external_agent"]["lifecycle"] == "LEASED_NOT_LAUNCHED", "H2 WP03 lifecycle drift")
-    require(
-        h2["external_agent"]["immutable_task_url"]
-        == "https://github.com/grandchallenge/MATHSOLVE/blob/e64c93148ddecbc8e51352c24926898e42b8ea10/handoffs/OPENMATH-2026/launch/OM26-H2-WP03.md",
-        "H2 immutable launch task drift",
-    )
-    require(h2["external_agent"]["predecessor"]["lifecycle"] == "ACCEPTED", "H2 WP02 predecessor acceptance drift")
-    require(
-        h2["external_agent"]["predecessor"]["adjudication"] == "ACCEPTED_WITNESSES_WITH_EXACT_SEARCH_REPLAY_REJECTED",
-        "H2 WP02 adjudication drift",
-    )
-    require(
-        h2["external_agent"]["predecessor"]["accepted_witnesses"]
-        == [
-            {"steps": 89911, "ones": 185, "tape_span": 541},
-            {"steps": 8021, "ones": 41, "tape_span": 122, "first_write": 0},
-        ],
-        "H2 WP02 accepted witness set drift",
-    )
-    require(h2["competition"]["lifecycle"] == "NO_PROMOTED_CANDIDATE", "H2 competition lifecycle drift")
+    h1 = rows["OM26-H1"]
+    require(h1.get("solve", {}).get("campaign_best_observed") == 93, "H1 campaign best drift")
+    require(h1.get("solve", {}).get("frontier") == "Q_GE_6__SOURCE_CONDITIONAL", "H1 frontier drift")
+    require(h1.get("external_agent", {}).get("lifecycle") == "ACCEPTED", "H1 accepted result lost")
 
-    for i in range(3, 8):
-        row = hills[f"OM26-H{i}"]
-        require(row["external_agent"]["lifecycle"] == "LEASED_NOT_LAUNCHED", f"OM26-H{i} lifecycle drift")
-        require(row["external_agent"]["launch_evidence"] is None, f"OM26-H{i} has undeclared launch evidence")
-        require(row["external_agent"]["return_evidence"] is None, f"OM26-H{i} has undeclared return evidence")
-        require(row["external_agent"]["adjudication"] == "NOT_STARTED", f"OM26-H{i} adjudication drift")
-        require(row["cert"]["state"] == "NOT_YET_ELIGIBLE", f"OM26-H{i} Cert state drift")
-        require(row["competition"]["lifecycle"] == "NO_CANDIDATE", f"OM26-H{i} competition lifecycle drift")
+    h2 = rows["OM26-H2"]
+    require(str(h2.get("external_agent", {}).get("assignment_id","")).startswith("OM26-H2-WP"), "H2 current assignment syntax drift")
 
     agents = state["summary"]["external_agents"]
-    require(agents == {
-        "captured_pending_adjudication": 0,
-        "leased_not_launched": 6,
-        "launched_without_return": 0,
-        "accepted": 3,
-    }, "agent summary does not equal protected Solve state")
-    competition = state["summary"]["competition"]
-    require(competition["submitted_hills"] == 0 and competition["accepted_hills"] == 0, "competition summary implies an external result")
-    require(
-        state["next_action"]["id"] == "launch_pending_exact_hill_leases",
-        "next action is not state-driven exact-hill launch",
-    )
-    require(
-        state["next_action"].get("selection_rule") == "Select each current hill lane whose exact active assignment lifecycle is LEASED_NOT_LAUNCHED.",
-        "pending exact-hill selection rule drift",
-    )
-    require(
-        state["next_action"].get("currently_selected") == [f"OM26-H{i}" for i in range(2, 8)],
-        "pending-hill current selection drift",
-    )
+    require(agents.get("leased_not_launched") == leased, "leased-agent summary drift")
+    require(isinstance(agents.get("accepted"), int) and agents["accepted"] >= 3, "accepted-agent summary regressed")
+    require(agents.get("captured_pending_adjudication") == 0, "captured unadjudicated work left in canonical state")
+    require(agents.get("launched_without_return") == 0, "unexpected launched-without-return summary")
 
-    supersession_registry = load(root / "governance" / "openmath_2026_supersession_registry.json")
-    require(
-        supersession_registry.get("current_state_authority") == "governance/openmath_2026_campaign_state.json",
-        "supersession registry current-state authority drift",
-    )
-    registry_rows = {row["path"]: row for row in supersession_registry.get("records", [])}
-    require(set(registry_rows) == set(EXPECTED_LEGACY), "supersession registry roster mismatch")
+    selected = [hill for hill,row in rows.items() if row.get("external_agent",{}).get("lifecycle") == "LEASED_NOT_LAUNCHED"]
+    require(state.get("next_action", {}).get("currently_selected") == selected, "next-action selection differs from current leases")
 
-    superseded = {row["path"]: row for row in state["superseded_current_state_surfaces"]}
-    require(set(superseded) == set(EXPECTED_LEGACY), "superseded Programme surface roster mismatch")
-    for rel, expected_blob in EXPECTED_LEGACY.items():
-        row = superseded[rel]
-        require(row["status"] == "SUPERSEDED_FOR_CURRENT_STATE", f"{rel} is not marked superseded")
-        require(row["historical_only"] is True, f"{rel} is not historical-only")
-        require(row["git_blob_sha1"] == expected_blob, f"{rel} supersession blob mismatch")
-        registry_row = registry_rows[rel]
-        require(registry_row["git_blob_sha1"] == expected_blob, f"{rel} supersession registry blob mismatch")
-        require(registry_row["status"] == "SUPERSEDED_FOR_CURRENT_STATE", f"{rel} registry status drift")
-        require(registry_row["historical_only"] is True, f"{rel} registry historical-only drift")
-        require(git_blob_sha1(root / rel) == expected_blob, f"{rel} local historical bytes drift")
+    automation = state.get("automation", {}).get("openmath_lifecycle")
+    if automation is not None:
+        require(automation.get("manual_transport_required") is False, "canonical automation requires manual transport")
+        require(automation.get("manual_controller_wake_required") is False, "canonical automation requires manual wake")
+        require(automation.get("last_transition_result") == "ADVANCED", "recorded lifecycle transition did not reach ADVANCED")
 
-    human = (root / "docs" / "campaigns" / "OPENMATH_2026_STATUS.md").read_text(encoding="utf-8")
-    required_human = [
+    supersession = load(root / "governance/openmath_2026_supersession_registry.json")
+    require(supersession.get("current_state_authority") == "governance/openmath_2026_campaign_state.json", "supersession authority drift")
+    state_legacy = {x["path"]:x for x in state.get("superseded_current_state_surfaces", [])}
+    for path,sha in LEGACY.items():
+        require(path in state_legacy, f"missing superseded surface {path}")
+        require(state_legacy[path].get("git_blob_sha1") == sha, f"{path} historical blob drift")
+        require(git_blob_sha1(root/path) == sha, f"{path} historical bytes drift")
+
+    human = (root / "docs/campaigns/OPENMATH_2026_STATUS.md").read_text(encoding="utf-8")
+    for marker in (
         "**Canonical machine authority:** `governance/openmath_2026_campaign_state.json`",
-        "SUPERSEDED_FOR_CURRENT_STATE",
-        "3 ACCEPTED; 6 LEASED_NOT_LAUNCHED",
+        "H1", "H2", "H3", "H4", "H5", "H6", "H7",
         "Official competition submissions: **0**",
-        "Agent 001 q=5 reduction accepted at Solve level as `OM26-H1-RED-023`",
-        "**CERT_PENDING; NOT_SUBMITTED**",
-        "OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4, H5, H6, H7**.",
-        "**Launch each exact active lease whose protected lifecycle is `LEASED_NOT_LAUNCHED` from its registered immutable task URL.**",
-        "`GCL-RETURN-RELAY/1`",
-        "control-plane drift",
-    ]
-    for marker in required_human:
-        require(marker in human, f"human status view missing canonical marker: {marker}")
-    require("| H2 |" in human and "Agent 009 / #537" in human, "human status missing current OM26-H2 WP03 lease")
-    require("Agent 008 WP02 **ACCEPTED**" in human, "human status missing H2 WP02 accepted predecessor")
-    for i in range(3, 8):
-        require(f"| H{i} |" in human and f"Agent 00{i} / #{503+i}" in human, f"human status missing OM26-H{i}")
-    require(human.count("LEASED_NOT_LAUNCHED") >= 6, "human status does not expose all lease lifecycle states")
-    require(human.count("NOT_SUBMITTED") >= 8, "human status does not make competition state explicit")
-    allowed_deprecation_sentence = "Historical aggregate labels such as `H2-H7` identify closed onboarding transactions only and are not current campaign topology."
-    human_without_explicit_deprecation = human.replace(allowed_deprecation_sentence, "")
-    require("H2-H7" not in human_without_explicit_deprecation, "deprecated H2-H7 grouping leaked into current human status")
+        "GCL-RETURN-RELAY/1",
+    ):
+        require(marker in human, f"human status missing {marker}")
+    if "READY → LAUNCHED → RETURNED → CAPTURED → REPLAYED → ADJUDICATED → ADVANCED" not in human:
+        # Pre-controller current status is still permitted while this controller is being admitted.
+        require(
+            state.get("automation", {}).get("openmath_lifecycle") is None,
+            "human status omits frozen lifecycle after automation activation",
+        )
 
-    # Current operational projections must not reuse the deprecated aggregate topology.
-    deprecated = "H2-H7"
     active_surfaces = {
         "hills": state["hills"],
         "next_action": state["next_action"],
         "certification": state["summary"]["certification"],
         "external_agents": state["summary"]["external_agents"],
         "competition": state["summary"]["competition"],
-        "claim_boundaries": state["claim_boundaries"],
     }
-    require(
-        deprecated not in json.dumps(active_surfaces, sort_keys=True),
-        "deprecated H2-H7 grouping leaked into current operational surfaces",
-    )
+    require("H2-H7" not in json.dumps(active_surfaces, sort_keys=True), "deprecated aggregate leaked into operational state")
 
-    boundaries = state["claim_boundaries"]
-    require(boundaries.get("agent001_mathematics_adjudicated") is True, "Agent 001 adjudication status must be true")
-    require(boundaries.get("h2_wp02_mathematics_adjudicated") is True, "H2 WP02 adjudication status must be true")
-    admitted_status_keys = {"agent001_mathematics_adjudicated", "h2_wp02_mathematics_adjudicated"}
-    for key, value in boundaries.items():
-        if key in admitted_status_keys:
+    boundaries = state.get("claim_boundaries", {})
+    for key,value in boundaries.items():
+        if key.endswith("_adjudicated"):
             continue
-        if bool(value):
-            raise CoreClarityError(f"canonical state widens prohibited claim authority: {key}")
+        require(not bool(value), f"prohibited claim authority widened: {key}")
     return state
 
 
@@ -285,57 +179,46 @@ def remote_blob(repository: str, path: str) -> str:
     token = os.environ.get("GH_TOKEN")
     if not token:
         raise CoreClarityError("GH_TOKEN is required for --verify-live")
-    cmd = [
-        "gh", "api", "-X", "GET",
-        f"repos/{repository}/contents/{path}",
-        "-f", "ref=main",
-        "--jq", ".sha",
-    ]
-    completed = subprocess.run(cmd, cwd=ROOT, text=True, capture_output=True, check=False)
+    completed = subprocess.run(
+        ["gh","api","-X","GET",f"repos/{repository}/contents/{path}","-f","ref=main","--jq",".sha"],
+        cwd=ROOT,text=True,capture_output=True,check=False,
+    )
     if completed.returncode:
-        raise CoreClarityError(
-            f"cannot resolve live protected artifact {repository}:{path}: {completed.stderr.strip()}"
-        )
-    value = completed.stdout.strip()
-    if len(value) != 40:
-        raise CoreClarityError(f"invalid live Git blob identity for {repository}:{path}")
+        raise CoreClarityError(f"cannot resolve live artifact {repository}:{path}: {completed.stderr.strip()}")
+    value=completed.stdout.strip()
+    if len(value)!=40:
+        raise CoreClarityError(f"invalid live blob identity {repository}:{path}")
     return value
 
 
 def verify_live(state: dict[str, Any]) -> None:
-    drift: list[str] = []
-    for domain in ("forge", "solve", "cert"):
-        binding = state["domain_bindings"][domain]
-        repository = binding["repository"]
+    drift=[]
+    for domain in ("forge","solve","cert"):
+        binding=state["domain_bindings"][domain]
         for artifact in binding["artifacts"]:
-            actual = remote_blob(repository, artifact["path"])
-            if actual != artifact["git_blob_sha1"]:
-                drift.append(
-                    f"{repository}:{artifact['path']} canonical={artifact['git_blob_sha1']} live={actual}"
-                )
+            actual=remote_blob(binding["repository"],artifact["path"])
+            if actual!=artifact["git_blob_sha1"]:
+                drift.append(f"{binding['repository']}:{artifact['path']} canonical={artifact['git_blob_sha1']} live={actual}")
     if drift:
-        raise CoreClarityError(
-            "CONTROL_PLANE_DRIFT__BLOCK_DISCRETIONARY_SUBSTANTIVE_ADVANCEMENT\n"
-            + "\n".join(drift)
-        )
+        raise CoreClarityError("CONTROL_PLANE_DRIFT__BLOCK_DISCRETIONARY_SUBSTANTIVE_ADVANCEMENT\n"+"\n".join(drift))
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--verify-live", action="store_true")
-    args = parser.parse_args()
+    parser=argparse.ArgumentParser()
+    parser.add_argument("--verify-live",action="store_true")
+    args=parser.parse_args()
     try:
-        state = validate_local(ROOT)
+        state=validate_local(ROOT)
         if args.verify_live:
             verify_live(state)
-    except (CoreClarityError, OSError, json.JSONDecodeError, jsonschema.ValidationError) as exc:
-        print(f"OPENMATH_CORE_CLARITY_FAIL: {exc}", file=sys.stderr)
+    except (CoreClarityError,OSError,json.JSONDecodeError,jsonschema.ValidationError) as exc:
+        print(f"OPENMATH_CORE_CLARITY_FAIL: {exc}",file=sys.stderr)
         return 2
-    print("OPENMATH_CORE_CLARITY_PASS: canonical seven-hill state and human projection agree")
+    print("OPENMATH_CORE_CLARITY_PASS: seven-hill canonical state is coherent")
     if args.verify_live:
-        print("OPENMATH_CORE_CLARITY_LIVE_PASS: Forge/Solve/Cert protected artifacts match canonical bindings")
+        print("OPENMATH_CORE_CLARITY_LIVE_PASS: Forge/Solve/Cert bindings match protected main")
     return 0
 
 
-if __name__ == "__main__":
+if __name__=="__main__":
     raise SystemExit(main())

@@ -1,0 +1,71 @@
+name: OPENMATH unattended lifecycle controller
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: openmath-unattended-lifecycle-controller
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    environment: release-trust
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+
+      - name: Mint bounded MATHSOLVE lifecycle token
+        id: solve-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATHSOLVE
+          permission-contents: read
+          permission-pull-requests: write
+
+      - name: Mint bounded Programme reconciliation token
+        id: programme-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-contents: write
+          permission-pull-requests: write
+
+      - name: Carry OPENMATH returns through ADVANCED
+        env:
+          MATHSOLVE_LIFECYCLE_TOKEN: ${{ steps.solve-token.outputs.token }}
+          MATH_PROGRAMME_LIFECYCLE_TOKEN: ${{ steps.programme-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          python ci/openmath_lifecycle_controller.py \
+            --apply \
+            --report openmath-lifecycle-controller-report.json
+
+      - name: Preserve lifecycle evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: openmath-lifecycle-controller-report
+          path: openmath-lifecycle-controller-report.json
+          if-no-files-found: error
+          retention-days: 90

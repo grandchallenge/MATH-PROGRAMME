@@ -15,10 +15,12 @@ MAINTENANCE_AUTOMATION_WORKFLOWS = {
 ACTIVATION_WORKFLOW = "administrative-autonomy-activation.yml"
 GHOS_ROUTING_WORKFLOW = "ghos-routing-enforcement.yml"
 NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW = "ns-ci-intake-pr-controller.yml"
+OPENMATH_LIFECYCLE_WORKFLOW = "openmath-unattended-lifecycle-controller.yml"
 EXTRA_WORKFLOWS = MAINTENANCE_AUTOMATION_WORKFLOWS | {
     ACTIVATION_WORKFLOW,
     GHOS_ROUTING_WORKFLOW,
     NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW,
+    OPENMATH_LIFECYCLE_WORKFLOW,
 }
 legacy.EXPECTED_WORKFLOWS = set(legacy.EXPECTED_WORKFLOWS) | EXTRA_WORKFLOWS
 
@@ -349,6 +351,69 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
             )
     return errors
 
+
+def openmath_lifecycle_controller_errors(texts: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    text = texts.get(OPENMATH_LIFECYCLE_WORKFLOW)
+    if text is None:
+        return errors
+    workflow = legacy.load_yaml_text(text)
+    trigger = _trigger(workflow)
+    if set(trigger) != {"schedule", "workflow_dispatch"}:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: triggers must be exactly schedule and workflow_dispatch")
+    if trigger.get("schedule") != [{"cron": "*/5 * * * *"}]:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: schedule must remain every five minutes")
+    if workflow.get("permissions") != {"contents": "read"}:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: top-level permissions must remain contents-read only")
+    job = _job(workflow, "reconcile")
+    if job.get("environment") != PROTECTED_ENVIRONMENT:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: reconcile job must bind release-trust")
+    if job.get("permissions") != {"contents": "read"}:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: workflow token must remain contents-read only")
+    required = (
+        APP_ACTION,
+        APP_ID,
+        APP_KEY,
+        "id: solve-token",
+        "repositories: MATHSOLVE",
+        "permission-contents: read",
+        "permission-pull-requests: write",
+        "id: programme-token",
+        "repositories: MATH-PROGRAMME",
+        "permission-contents: write",
+        "MATHSOLVE_LIFECYCLE_TOKEN: ${{ steps.solve-token.outputs.token }}",
+        "MATH_PROGRAMME_LIFECYCLE_TOKEN: ${{ steps.programme-token.outputs.token }}",
+        "python ci/openmath_lifecycle_controller.py",
+        "--apply",
+        "--report openmath-lifecycle-controller-report.json",
+        "name: openmath-lifecycle-controller-report",
+        "retention-days: 90",
+    )
+    for marker in required:
+        if marker not in text:
+            errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: missing bounded lifecycle marker {marker}")
+    if text.count(APP_ACTION) != 2:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: exactly two separately scoped App tokens are required")
+    if text.count("permission-contents: write") != 1:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: exactly one Programme contents-write grant is required")
+    if text.count("permission-pull-requests: write") != 2:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: exactly two PR-write grants are required")
+    for forbidden in (
+        "permission-administration:",
+        "permission-actions: write",
+        "permission-checks: write",
+        "permission-issues: write",
+        "gh pr merge",
+        "git push",
+        "/git/refs/heads/main",
+        "pull_request_target:",
+        "repository_dispatch:",
+    ):
+        if forbidden in text:
+            errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: forbidden controller capability {forbidden}")
+    return errors
+
+
 def ghos_routing_enforcement_errors(texts: dict[str, str]) -> list[str]:
     errors: list[str] = []
     text = texts.get(GHOS_ROUTING_WORKFLOW)
@@ -514,6 +579,7 @@ def workflow_coverage_errors(root=legacy.ROOT, texts=None, evidence=None):
     errors.extend(validation_workflow_errors(texts))
     errors.extend(activation_workflow_errors(texts))
     errors.extend(ns_ci_intake_pr_controller_errors(texts))
+    errors.extend(openmath_lifecycle_controller_errors(texts))
     errors.extend(ghos_routing_enforcement_errors(texts))
     return errors
 

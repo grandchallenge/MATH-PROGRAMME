@@ -14,6 +14,10 @@ on:
       - "schemas/openmath_2026_campaign_state.schema.json"
       - "ci/validate_gcl_cc_adoption.py"
       - "ci/validate_openmath_2026_core_clarity.py"
+      - "ci/openmath_lifecycle_controller.py"
+      - "tests/test_openmath_lifecycle_controller.py"
+      - "governance/openmath_unattended_lifecycle_controller.json"
+      - ".github/workflows/openmath-unattended-lifecycle-controller.yml"
       - ".github/workflows/openmath-core-clarity.yml"
       - ".ghos-routing/workflows.json"
   push:
@@ -22,6 +26,10 @@ on:
       - "governance/openmath_2026_campaign_state.json"
       - "docs/campaigns/OPENMATH_2026_STATUS.md"
       - "ci/validate_openmath_2026_core_clarity.py"
+      - "ci/openmath_lifecycle_controller.py"
+      - "tests/test_openmath_lifecycle_controller.py"
+      - "governance/openmath_unattended_lifecycle_controller.json"
+      - ".github/workflows/openmath-unattended-lifecycle-controller.yml"
   schedule:
     - cron: "17 * * * *"
   workflow_dispatch:
@@ -55,6 +63,9 @@ jobs:
 
       - name: Validate canonical campaign projection
         run: python ci/validate_openmath_2026_core_clarity.py
+
+      - name: Regress unattended lifecycle controller
+        run: python -m unittest tests.test_openmath_lifecycle_controller
 
       - name: Verify live Forge / Solve / Cert bindings
         env:
