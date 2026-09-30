@@ -233,7 +233,7 @@ def protected_raw_exists(gh: Github, dispatch: str) -> bool:
     )
 
 
-def ensure_solve_merge(gh: Github, item: dict[str,Any]) -> dict[str,Any]:
+def ensure_solve_merge(gh: Github, item: dict[str,Any], checkout: Path | None = None) -> dict[str,Any]:
     if main_has_manifest(gh,item):
         # Find the historical merged PR if available; main SHA is sufficient otherwise.
         ref=gh.request("GET",f"/repos/{OWNER}/{SOLVE}/git/ref/heads/main")
@@ -248,8 +248,20 @@ def ensure_solve_merge(gh: Github, item: dict[str,Any]) -> dict[str,Any]:
             "The candidate carries the return through CAPTURED, REPLAYED, bounded ADJUDICATED, "
             "and ADVANCED successor state. No certification or competition authority is created.",
         )
+    live=gh.request("GET",f"/repos/{OWNER}/{SOLVE}/pulls/{pr['number']}")
+    if live.get("mergeable") is False:
+        if checkout is None or not checkout.is_dir():
+            raise ControllerError("protected Solve checkout unavailable for candidate refresh")
+        refreshed=recover_legacy(gh,item["branch"],checkout,refresh=True)
+        item.update(refreshed)
+        pr=find_pr(gh,SOLVE,item["branch"])
+        if pr is None:
+            pr=open_pr(gh,SOLVE,item["branch"],f"OPENMATH lifecycle: {item['dispatch_id']}",
+                       "Rebuilt from protected main and the unchanged first-result lock after concurrent lifecycle advancement. No claim promotion.")
     enable_auto_merge(gh,pr)
-    merged=wait_merged(gh,SOLVE,pr["number"])
+    merged=gh.request("GET",f"/repos/{OWNER}/{SOLVE}/pulls/{pr['number']}")
+    if not merged.get("merged_at"):
+        return {"number":pr["number"],"pending":True,"branch":item["branch"]}
     return {
         "merge_commit_sha":merged.get("merge_commit_sha"),
         "number":merged["number"],
@@ -351,7 +363,7 @@ def apply_projection_to_state(state: dict[str,Any], projection: dict[str,Any], s
             "accepted_claims":pred.get("accepted_claims",[]),
         },
     }
-    row["next_action"]=f"LAUNCH_EXACT_ACTIVE_LEASE__{succ['assignment_id']}__IMMUTABLE_LINK_IN_RELAY_OUT"
+    row["next_action"]=f"RECEIVE_VOLUNTARY_RETURN__{succ['assignment_id']}__IMMUTABLE_LINK_IN_RELAY_OUT"
 
     summary=projection["external_agent_summary"]
     state["summary"]["external_agents"]={
@@ -365,10 +377,10 @@ def apply_projection_to_state(state: dict[str,Any], projection: dict[str,Any], s
         if x.get("external_agent",{}).get("lifecycle")=="LEASED_NOT_LAUNCHED"
     ]
     state["next_action"]={
-        "id":"launch_pending_exact_hill_leases",
+        "id":"publish_and_receive_voluntary_contributions",
         "selection_rule":"Select each current hill lane whose exact active assignment lifecycle is LEASED_NOT_LAUNCHED.",
         "currently_selected":selected,
-        "description":"Launch each selected lane from its registered immutable LINK_IN_RELAY_OUT task URL. Valid returns are carried automatically through CAPTURED, REPLAYED, ADJUDICATED, and ADVANCED.",
+        "description":"Keep each registered immutable LINK_IN_RELAY_OUT task available for voluntary participants. GCL may launch its own workers optionally. Valid returns advance automatically through CAPTURED, REPLAYED, ADJUDICATED, and ADVANCED.",
         "completion_test":"Every returned result either reaches ADVANCED automatically or leaves a protected infrastructure blocker; no human evidence shuttling or controller prompt is permitted.",
     }
     state.setdefault("automation",{})["openmath_lifecycle"]={
@@ -401,6 +413,8 @@ def create_branch(gh: Github, repo: str, branch: str) -> str:
 
 def put_file(gh: Github, repo: str, branch: str, path: str, content: str, message: str) -> None:
     current=optional_content(gh,repo,path,branch)
+    if current is not None and current[0] == content:
+        return
     payload={
         "message":message,
         "content":base64.b64encode(content.encode("utf-8")).decode("ascii"),
@@ -430,8 +444,14 @@ def ensure_programme_reconciliation(
         ref=programme_gh.request("GET",f"/repos/{OWNER}/{PROGRAMME}/git/ref/heads/main")
         return {"already_reconciled":True,"merge_commit_sha":ref.get("object",{}).get("sha"),"number":None}
 
-    state=apply_projection_to_state(state,projection,solve_sha,blobs)
     branch=f"reconcile/openmath-{dispatch.lower()}"
+    pr=find_pr(programme_gh,PROGRAMME,branch)
+    if pr is not None:
+        live=programme_gh.request("GET",f"/repos/{OWNER}/{PROGRAMME}/pulls/{pr['number']}")
+        if live.get("mergeable") is not False:
+            enable_auto_merge(programme_gh,pr)
+            return {"pending":True,"number":pr["number"]}
+    state=apply_projection_to_state(state,projection,solve_sha,blobs)
     create_branch(programme_gh,PROGRAMME,branch)
     put_file(
         programme_gh,PROGRAMME,branch,
@@ -472,7 +492,9 @@ def ensure_programme_reconciliation(
             "No mathematical certification or competition authority is created.",
         )
     enable_auto_merge(programme_gh,pr)
-    merged=wait_merged(programme_gh,PROGRAMME,pr["number"])
+    merged=programme_gh.request("GET",f"/repos/{OWNER}/{PROGRAMME}/pulls/{pr['number']}")
+    if not merged.get("merged_at"):
+        return {"pending":True,"number":pr["number"]}
     return {"already_reconciled":False,"number":merged["number"],"merge_commit_sha":merged.get("merge_commit_sha")}
 
 
@@ -502,7 +524,7 @@ def verify_advanced(programme_gh: Github, projection: dict[str,Any]) -> None:
 
 def legacy_source(gh: Github, branch: str) -> dict[str, Any] | None:
     """Read an already-locked legacy return without altering its original branch."""
-    if not branch.startswith(BRANCH_PREFIX):
+    if not branch.startswith((BRANCH_PREFIX, RECOVERY_PREFIX)):
         return None
     dispatch, hill, wp = dispatch_parts(branch)
     base, _, _ = base_for(dispatch)
@@ -593,7 +615,7 @@ def _existing_successor_issue(gh: Github, title: str) -> dict[str, Any] | None:
     return matches[0] if matches else None
 
 
-def recover_legacy(gh: Github, branch: str, checkout: Path) -> dict[str, Any]:
+def recover_legacy(gh: Github, branch: str, checkout: Path, refresh: bool = False) -> dict[str, Any]:
     """Promote locked old-format evidence into a new, protected lifecycle candidate."""
     src=legacy_source(gh,branch)
     if src is None:
@@ -641,29 +663,29 @@ def recover_legacy(gh: Github, branch: str, checkout: Path) -> dict[str, Any]:
             raise ControllerError(f"{dispatch}: successor issue creation failed")
         manifest=generator.apply_candidate(candidate_root,intake_dir,issue_number,issue_url)
 
-        provenance_path=f"contributions/OPENMATH-2026/{src['hill']}/{src['wp']}/lifecycle/{dispatch}/LEGACY_SOURCE.json"
-        provenance={
-            "schema_version":"1.0.0",
-            "record_type":"OPENMATH_LEGACY_INTAKE_RECOVERY",
-            "dispatch_id":dispatch,
-            "source_branch":branch,
-            "source_commit":src["source_commit"],
-            "raw_path":src["raw_path"],
-            "raw_git_blob_sha1":src["raw_blob"],
-            "receipt_path":src["receipt_path"],
-            "receipt_git_blob_sha1":src["receipt_blob"],
-            "comment_id":src["comment_id"],
-            "successor_issue_number":issue_number,
-            "claim_effect":"NONE",
-        }
-        provenance_file=candidate_root/provenance_path
-        provenance_file.parent.mkdir(parents=True,exist_ok=True)
-        provenance_file.write_text(json.dumps(provenance,indent=2)+"\n",encoding="utf-8")
-        manifest_path=f"contributions/OPENMATH-2026/{src['hill']}/{src['wp']}/lifecycle/{dispatch}/MANIFEST.json"
-        manifest["changed_paths"]=sorted(set(manifest["changed_paths"]+[provenance_path]))
-        manifest["legacy_provenance_path"]=provenance_path
-        (candidate_root/manifest_path).write_text(json.dumps(manifest,indent=2)+"\n",encoding="utf-8")
-
+        if not refresh:
+            provenance_path=f"contributions/OPENMATH-2026/{src['hill']}/{src['wp']}/lifecycle/{dispatch}/LEGACY_SOURCE.json"
+            provenance={
+                "schema_version":"1.0.0",
+                "record_type":"OPENMATH_LEGACY_INTAKE_RECOVERY",
+                "dispatch_id":dispatch,
+                "source_branch":branch,
+                "source_commit":src["source_commit"],
+                "raw_path":src["raw_path"],
+                "raw_git_blob_sha1":src["raw_blob"],
+                "receipt_path":src["receipt_path"],
+                "receipt_git_blob_sha1":src["receipt_blob"],
+                "comment_id":src["comment_id"],
+                "successor_issue_number":issue_number,
+                "claim_effect":"NONE",
+            }
+            provenance_file=candidate_root/provenance_path
+            provenance_file.parent.mkdir(parents=True,exist_ok=True)
+            provenance_file.write_text(json.dumps(provenance,indent=2)+"\n",encoding="utf-8")
+            manifest_path=f"contributions/OPENMATH-2026/{src['hill']}/{src['wp']}/lifecycle/{dispatch}/MANIFEST.json"
+            manifest["changed_paths"]=sorted(set(manifest["changed_paths"]+[provenance_path]))
+            manifest["legacy_provenance_path"]=provenance_path
+            (candidate_root/manifest_path).write_text(json.dumps(manifest,indent=2)+"\n",encoding="utf-8")
         branch_ref=gh.get_optional(
             f"/repos/{OWNER}/{SOLVE}/git/ref/heads/{urllib.parse.quote(recovery_branch,safe='/')}"
         )
@@ -700,8 +722,8 @@ def recover_legacy(gh: Github, branch: str, checkout: Path) -> dict[str, Any]:
                 f"OPENMATH lifecycle: {dispatch} {file.name}",
             )
     result=validate_candidate(gh,recovery_branch)
-    result["legacy_source_branch"]=branch
-    result["legacy_source_commit"]=src["source_commit"]
+    result["source_branch"]=branch
+    result["source_commit"]=src["source_commit"]
     return result
 
 
@@ -753,14 +775,21 @@ def run(apply: bool) -> dict[str,Any]:
             if not apply:
                 report["processed"].append({**item,"state":"VALIDATED_DRY_RUN"})
                 continue
-            solve_merge=ensure_solve_merge(solve_gh,item)
+            solve_merge=ensure_solve_merge(solve_gh,item,solve_checkout)
+            if solve_merge.get("pending"):
+                report["processed"].append({**item,"state":"AWAITING_PROTECTED_SOLVE_MERGE","solve_merge":solve_merge})
+                return report
             solve_sha=solve_merge.get("merge_commit_sha")
             if not isinstance(solve_sha,str):
                 ref=solve_gh.request("GET",f"/repos/{OWNER}/{SOLVE}/git/ref/heads/main")
                 solve_sha=ref.get("object",{}).get("sha")
             projection,blobs=live_solve_projection(solve_gh,item)
             programme_merge=ensure_programme_reconciliation(programme_gh,projection,solve_sha,blobs)
+            if programme_merge.get("pending"):
+                report["processed"].append({**item,"state":"AWAITING_PROTECTED_PROGRAMME_MERGE","solve_merge":solve_merge,"programme_merge":programme_merge})
+                return report
             verify_advanced(programme_gh,projection)
+            recovered.add(dispatch)
             report["processed"].append({
                 **item,
                 "solve_merge":solve_merge,
