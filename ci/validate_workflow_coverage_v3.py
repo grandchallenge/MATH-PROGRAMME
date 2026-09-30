@@ -359,10 +359,12 @@ def openmath_lifecycle_controller_errors(texts: dict[str, str]) -> list[str]:
         return errors
     workflow = legacy.load_yaml_text(text)
     trigger = _trigger(workflow)
-    if set(trigger) != {"push", "schedule", "workflow_dispatch", "workflow_run"}:
-        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: triggers must be exactly push, schedule, workflow_dispatch, and workflow_run")
+    if set(trigger) != {"push", "schedule", "workflow_dispatch", "workflow_run", "repository_dispatch"}:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: triggers must be exactly push, schedule, workflow_dispatch, workflow_run, and repository_dispatch")
     if trigger.get("workflow_run") != {"workflows": ["Administrative maintenance dispatcher"], "types": ["completed"]}:
         errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: event wake must bind only maintenance dispatcher completion")
+    if trigger.get("repository_dispatch") != {"types": ["openmath-return-ready"]}:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: repository dispatch must bind only openmath-return-ready")
     if trigger.get("schedule") != [{"cron": "*/5 * * * *"}]:
         errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: schedule must remain every five minutes")
     expected_push = {
@@ -426,7 +428,6 @@ def openmath_lifecycle_controller_errors(texts: dict[str, str]) -> list[str]:
         "git push",
         "/git/refs/heads/main",
         "pull_request_target:",
-        "repository_dispatch:",
     ):
         if forbidden in text:
             errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: forbidden controller capability {forbidden}")
