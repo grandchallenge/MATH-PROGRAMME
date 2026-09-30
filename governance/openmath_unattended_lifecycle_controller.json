@@ -22,8 +22,10 @@
   ],
   "wake": {
     "kind": "GitHub Actions",
-    "cadence": "every five minutes",
-    "manual_replay": true
+    "primary_operational_wake": "scheduled poll every five minutes",
+    "live_smoke_wake": "protected main push limited to controller self-test surfaces",
+    "manual_diagnostic": "workflow_dispatch",
+    "manual_controller_wake_required": false
   },
   "credentials": {
     "environment": "release-trust",
@@ -71,7 +73,9 @@
     "fixture": "OM26-H2-WP02-IA-001",
     "required_result": "PASS",
     "manual_transport_allowed": false,
-    "manual_controller_wake_allowed": false
+    "manual_controller_wake_allowed": false,
+    "live_controller_smoke_required": true,
+    "live_controller_smoke_trigger": "protected push on controller self-test surface"
   },
   "paired_solve_implementation": {
     "repository": "grandchallenge/MATHSOLVE",
