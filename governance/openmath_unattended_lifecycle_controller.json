@@ -25,7 +25,15 @@
     "primary_operational_wake": "scheduled poll every five minutes",
     "live_smoke_wake": "protected main push limited to controller self-test surfaces",
     "manual_diagnostic": "workflow_dispatch",
-    "manual_controller_wake_required": false
+    "manual_controller_wake_required": false,
+    "event_backstop": "successful completion of Administrative maintenance dispatcher; event-driven reconciliation independent of this workflow's cron",
+    "scheduled_delivery_guaranteed": false,
+    "operational_evidence": {
+      "idempotent_repeat_run": 36698910067,
+      "result": "PASS_LEGACY_ALREADY_PROTECTED_NO_ERRORS",
+      "scheduled_wake": "UNOBSERVED",
+      "event_backstop": "PENDING_PROTECTED_ADMISSION_AND_LIVE_WORKFLOW_RUN"
+    }
   },
   "credentials": {
     "environment": "release-trust",
