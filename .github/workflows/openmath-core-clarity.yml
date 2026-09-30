@@ -16,6 +16,7 @@ on:
       - "ci/validate_openmath_2026_core_clarity.py"
       - "ci/openmath_lifecycle_controller.py"
       - "tests/test_openmath_lifecycle_controller.py"
+      - "tests/test_openmath_lifecycle_legacy_recovery.py"
       - "governance/openmath_unattended_lifecycle_controller.json"
       - ".github/workflows/openmath-unattended-lifecycle-controller.yml"
       - ".github/workflows/openmath-core-clarity.yml"
@@ -28,6 +29,7 @@ on:
       - "ci/validate_openmath_2026_core_clarity.py"
       - "ci/openmath_lifecycle_controller.py"
       - "tests/test_openmath_lifecycle_controller.py"
+      - "tests/test_openmath_lifecycle_legacy_recovery.py"
       - "governance/openmath_unattended_lifecycle_controller.json"
       - ".github/workflows/openmath-unattended-lifecycle-controller.yml"
   schedule:
@@ -65,7 +67,7 @@ jobs:
         run: python ci/validate_openmath_2026_core_clarity.py
 
       - name: Regress unattended lifecycle controller
-        run: python -m unittest tests.test_openmath_lifecycle_controller
+        run: python -m unittest tests.test_openmath_lifecycle_controller tests.test_openmath_lifecycle_legacy_recovery
 
       - name: Verify live Forge / Solve / Cert bindings
         env:
