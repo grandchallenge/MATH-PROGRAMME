@@ -68,6 +68,9 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         )
         self.assertFalse(control["acceptance_test"]["manual_transport_allowed"])
         self.assertFalse(control["acceptance_test"]["manual_controller_wake_allowed"])
+        self.assertTrue(control["acceptance_test"]["live_controller_smoke_required"])
+        self.assertFalse(control["wake"]["manual_controller_wake_required"])
+        self.assertEqual(control["wake"]["primary_operational_wake"], "scheduled poll every five minutes")
         binding = control["paired_solve_implementation"]
         self.assertEqual(binding["repository"], "grandchallenge/MATHSOLVE")
         self.assertEqual(binding["base_pull_request"], 542)
