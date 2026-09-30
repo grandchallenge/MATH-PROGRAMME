@@ -35,7 +35,7 @@
       "event_backstop": "PASS_WORKFLOW_RUN_36704182443",
       "event_backstop_run": 36704182443,
       "event_backstop_artifact": 11091550865,
-      "return_event": "PENDING_SOLVE_SIGNAL_AND_LIVE_VERIFICATION"
+      "return_event": "PASS_REPOSITORY_DISPATCH_36713531141"
     },
     "return_event": "repository_dispatch/openmath-return-ready from protected Solve intake; advisory wake only, protected state is re-read"
   },
@@ -72,7 +72,8 @@
     "read the protected Programme projection from merged Solve main",
     "create one bounded Programme reconciliation branch and pull request",
     "enable protected Programme auto-merge and wait for it",
-    "verify protected Programme state records ADVANCED"
+    "verify protected Programme state records ADVANCED",
+    "rebuild a conflicting lifecycle candidate from protected Solve main and the unchanged verified first-result lock; preserve the existing successor issue"
   ],
   "prohibited_actions": [
     "direct push to protected main",
@@ -110,5 +111,18 @@
     "candidate_generator_git_blob_sha1": "30d0db5bfe09a5a173482b70352fbc9153fc6299",
     "acceptance_runner_path": "ci/openmath_lifecycle_acceptance.py",
     "acceptance_runner_git_blob_sha1": "0ae6986d8f164199712f014c8501ae89a5c0ec8d"
-  }
+  },
+  "participation": {
+    "mode": "VOLUNTARY",
+    "worker_launch_required": false,
+    "gcl_worker_launch": "OPTIONAL",
+    "automated_scope": [
+      "immutable task publication",
+      "first-result-locked intake",
+      "bounded replay and adjudication",
+      "protected advancement",
+      "successor task publication"
+    ]
+  },
+  "merge_progression": "Bounded serialized attempts: publish or refresh one pending protected candidate, record exact PR identity, and resume automatically on the next wake; never hold the controller while awaiting CI or merge."
 }
