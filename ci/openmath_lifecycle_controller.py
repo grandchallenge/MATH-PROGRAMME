@@ -175,10 +175,15 @@ def validate_candidate(gh: Github, branch: str) -> dict[str,Any]:
     failed=[k for k,v in checks.items() if not v]
     if failed:
         raise ControllerError(f"{dispatch}: lifecycle manifest failed {', '.join(failed)}")
-    changed=compare_files(gh,branch)
-    expected=manifest.get("changed_paths")
-    if not isinstance(expected,list) or sorted(expected)!=changed:
-        raise ControllerError(f"{dispatch}: branch diff differs from lifecycle manifest")
+    protected=optional_content(gh,SOLVE,manifest_path,"main")
+    if protected is None:
+        changed=compare_files(gh,branch)
+        expected=manifest.get("changed_paths")
+        if not isinstance(expected,list) or sorted(expected)!=changed:
+            raise ControllerError(f"{dispatch}: branch diff differs from lifecycle manifest")
+    else:
+        if protected[1] != manifest_blob:
+            raise ControllerError(f"{dispatch}: protected lifecycle manifest differs from candidate")
     mandatory=[
         manifest.get("programme_projection_path"),
         f"{base}/raw/{dispatch}/github-comment-{manifest.get('comment_id')}.md",
@@ -188,7 +193,12 @@ def validate_candidate(gh: Github, branch: str) -> dict[str,Any]:
         "work_packages/OPENMATH_2026/HILL_LANES.json",
     ]
     for path in mandatory:
-        if not isinstance(path,str) or path not in changed:
+        if not isinstance(path,str):
+            raise ControllerError(f"{dispatch}: mandatory lifecycle artifact path malformed")
+        if protected is not None:
+            if optional_content(gh,SOLVE,path,"main") is None:
+                raise ControllerError(f"{dispatch}: protected lifecycle artifact missing: {path}")
+        elif path not in changed:
             raise ControllerError(f"{dispatch}: mandatory lifecycle artifact missing: {path}")
     projection_text,projection_blob=fetch_content(gh,SOLVE,manifest["programme_projection_path"],branch)
     projection=json.loads(projection_text)
@@ -411,7 +421,12 @@ def ensure_programme_reconciliation(
     dispatch=projection["source_dispatch"]
     state_text,_=fetch_content(programme_gh,PROGRAMME,"governance/openmath_2026_campaign_state.json","main")
     state=json.loads(state_text)
-    if state.get("automation",{}).get("openmath_lifecycle",{}).get("last_transition_dispatch")==dispatch:
+    receipt_path=f"governance/openmath_2026_lifecycle_reconciliations/{dispatch}.json"
+    existing_receipt=optional_content(programme_gh,PROGRAMME,receipt_path,"main")
+    if existing_receipt is not None:
+        receipt=json.loads(existing_receipt[0])
+        if receipt.get("dispatch_id")!=dispatch or receipt.get("result")!="ADVANCED":
+            raise ControllerError(f"{dispatch}: protected Programme reconciliation receipt mismatch")
         ref=programme_gh.request("GET",f"/repos/{OWNER}/{PROGRAMME}/git/ref/heads/main")
         return {"already_reconciled":True,"merge_commit_sha":ref.get("object",{}).get("sha"),"number":None}
 
@@ -462,14 +477,26 @@ def ensure_programme_reconciliation(
 
 
 def verify_advanced(programme_gh: Github, projection: dict[str,Any]) -> None:
+    dispatch=projection["source_dispatch"]
+    receipt_path=f"governance/openmath_2026_lifecycle_reconciliations/{dispatch}.json"
+    receipt_text,_=fetch_content(programme_gh,PROGRAMME,receipt_path,"main")
+    receipt=json.loads(receipt_text)
+    if (receipt.get("dispatch_id")!=dispatch
+            or receipt.get("hill")!=projection["hill"]
+            or receipt.get("result")!="ADVANCED"
+            or receipt.get("pipeline")!=PIPELINE):
+        raise ControllerError(f"{dispatch}: Programme protected completion receipt invalid")
     state_text,_=fetch_content(programme_gh,PROGRAMME,"governance/openmath_2026_campaign_state.json","main")
     state=json.loads(state_text)
-    auto=state.get("automation",{}).get("openmath_lifecycle",{})
-    if auto.get("last_transition_dispatch")!=projection["source_dispatch"] or auto.get("last_transition_result")!="ADVANCED":
-        raise ControllerError("Programme protected state did not reach ADVANCED")
     hill=next(x for x in state["hills"] if x["hill_slot"]==projection["hill"])
-    if hill.get("external_agent",{}).get("assignment_id")!=projection["successor"]["assignment_id"]:
-        raise ControllerError("Programme successor projection mismatch")
+    current=hill.get("external_agent",{}).get("assignment_id")
+    successor=projection["successor"]["assignment_id"]
+    # The successor may itself later complete; a protected per-dispatch receipt
+    # remains authoritative evidence that this transition reached ADVANCED.
+    if current!=successor:
+        ancestors=hill.get("external_agent",{}).get("predecessor",{})
+        if ancestors.get("assignment_id")!=successor:
+            raise ControllerError(f"{dispatch}: protected successor was lost")
 
 
 
