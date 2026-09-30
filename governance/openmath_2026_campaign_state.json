@@ -72,15 +72,15 @@
     },
     "solve": {
       "repository": "grandchallenge/MATHSOLVE",
-      "observed_main": "e5aab29ead9298cd97d37003d4522584bca8d833",
+      "observed_main": "d8094091b6440f0bf52f4a89e4b78c25789e1fb6",
       "artifacts": [
         {
           "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
-          "git_blob_sha1": "6b3cf1fc8b6cf27062fef9595fd067283e6a9405"
+          "git_blob_sha1": "67505b74b8fa902b78c666fbe69fa2ebdf832554"
         },
         {
           "path": ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json",
-          "git_blob_sha1": "7b21c819089fb55a807f2c02c28e50d30c400b0d"
+          "git_blob_sha1": "92d59279a8aec58b702c1a08922c3482ba18e373"
         },
         {
           "path": ".gcl/completions/OM26-CORE-CLARITY-RECONCILE-001/COMPLETION_RECEIPT.json",
@@ -161,6 +161,22 @@
         {
           "path": "contributions/OPENMATH-2026/OM26-H7/WP01/lifecycle/OM26-H7-WP01-IA-001/PROGRAMME_PROJECTION.json",
           "git_blob_sha1": "ee884f82d32edb2fdb849b8c5a685b770422317f"
+        },
+        {
+          "path": "handoffs/OPENMATH-2026/jobs/OM26-H1-WP01-IA-001.md",
+          "git_blob_sha1": "76a5f2820b82923c529f810664dc3b7b796db31d"
+        },
+        {
+          "path": "handoffs/OPENMATH-2026/launch/OM26-H1-WP01.md",
+          "git_blob_sha1": "411ca0c9945058acf92e2118a344928cdb53b9f8"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H1/WP01/dispatches/OM26-H1-WP01-IA-001.json",
+          "git_blob_sha1": "bdb7c7cd28b606b78c9398b6ff300f91aa4cd276"
+        },
+        {
+          "path": ".gcl/operations/OM26-H1-WP01-IA-001/OPERATION.json",
+          "git_blob_sha1": "7411137ab4820321dfeae9eb7e6f21c3d6462590"
         }
       ]
     },
@@ -201,7 +217,7 @@
     "solve_released_hills": 7,
     "external_agents": {
       "captured_pending_adjudication": 0,
-      "leased_not_launched": 6,
+      "leased_not_launched": 7,
       "launched_without_return": 0,
       "accepted": 6
     },
@@ -244,23 +260,33 @@
         "solve_release": "RESEARCH_AND_CANDIDATE_CONSTRUCTION"
       },
       "solve": {
-        "state": "ACTIVE",
+        "state": "WP01_LEASED_NOT_LAUNCHED",
         "campaign_best_observed": 93,
         "best_candidate": "RH_BADER_RECONSTRUCTION_093",
         "frontier": "Q_GE_6__SOURCE_CONDITIONAL",
         "frontier_changed_by_agent001": true
       },
       "external_agent": {
-        "assignment_id": "OM26-H1-H1-12",
-        "dispatch_id": "OM26-H1-H1-12-IA-001",
-        "agent_ref": "INDEPENDENT-AGENT-001",
-        "issue_number": 498,
-        "lifecycle": "ACCEPTED",
-        "return_comment_id": 5881108260,
-        "capture_state": "CAPTURED_RECOVERED_ADJUDICATED",
-        "adjudication": "ACCEPTED_SOURCE_CONDITIONAL_REDUCTION",
-        "accepted_claim": "OM26-H1-RED-023",
-        "adjudication_operation": "OM26-H1-H1-12-ADJ-001"
+        "assignment_id": "OM26-H1-WP01",
+        "dispatch_id": "OM26-H1-WP01-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-101",
+        "issue_number": 553,
+        "lifecycle": "LEASED_NOT_LAUNCHED",
+        "launch_evidence": null,
+        "return_evidence": null,
+        "adjudication": "NOT_STARTED",
+        "predecessor": {
+          "assignment_id": "OM26-H1-H1-12",
+          "dispatch_id": "OM26-H1-H1-12-IA-001",
+          "agent_ref": "INDEPENDENT-AGENT-001",
+          "issue_number": 498,
+          "lifecycle": "ACCEPTED",
+          "return_comment_id": 5881108260,
+          "capture_state": "CAPTURED_RECOVERED_ADJUDICATED",
+          "adjudication": "ACCEPTED_SOURCE_CONDITIONAL_REDUCTION",
+          "accepted_claim": "OM26-H1-RED-023",
+          "adjudication_operation": "OM26-H1-H1-12-ADJ-001"
+        }
       },
       "cert": {
         "state": "ADMITTED_PENDING_INDEPENDENT_CERT_EXECUTOR",
@@ -280,7 +306,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "NO_CURRENT_AGENT_LAUNCH__AGENT001_ACCEPTED_CLOSED__Q_GE_6_RESEARCH_DEFERRED",
+      "next_action": "LAUNCH_EXACT_ACTIVE_LEASE__OM26-H1-WP01__IMMUTABLE_LINK_IN_RELAY_OUT",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -518,7 +544,7 @@
     },
     {
       "hill_slot": "OM26-H7",
-      "title": "Erd\u0151s Problem 3",
+      "title": "Erdős Problem 3",
       "external_hill_id": "ottogin/erdos-3",
       "source": {
         "state": "SOURCE_LOCKED_SLOT_BOUND__SEMANTIC_PACK_PROTECTED__SOLVE_RELEASED",
@@ -565,6 +591,7 @@
     "id": "launch_pending_exact_hill_leases",
     "selection_rule": "Select each current hill lane whose exact active assignment lifecycle is LEASED_NOT_LAUNCHED.",
     "currently_selected": [
+      "OM26-H1",
       "OM26-H2",
       "OM26-H3",
       "OM26-H4",
@@ -572,7 +599,7 @@
       "OM26-H6",
       "OM26-H7"
     ],
-    "description": "Launch each selected lane from its registered immutable LINK_IN_RELAY_OUT task URL. Valid returns are carried automatically through CAPTURED, REPLAYED, ADJUDICATED, and ADVANCED.",
+    "description": "Launch each selected lane from its registered immutable LINK_IN_RELAY_OUT task URL. Assignment supply is protected; an independent background worker launch provider remains unverified. Valid returns are carried automatically through CAPTURED, REPLAYED, ADJUDICATED, and ADVANCED.",
     "completion_test": "Every returned result either reaches ADVANCED automatically or leaves a protected infrastructure blocker; no human evidence shuttling or controller prompt is permitted."
   },
   "claim_boundaries": {
@@ -587,7 +614,7 @@
   },
   "automation": {
     "openmath_lifecycle": {
-      "contract": "READY\u2192LAUNCHED\u2192RETURNED\u2192CAPTURED\u2192REPLAYED\u2192ADJUDICATED\u2192ADVANCED",
+      "contract": "READY→LAUNCHED→RETURNED→CAPTURED→REPLAYED→ADJUDICATED→ADVANCED",
       "last_transition_dispatch": "OM26-H7-WP01-IA-001",
       "last_transition_hill": "OM26-H7",
       "last_transition_result": "ADVANCED",
