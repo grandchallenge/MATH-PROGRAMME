@@ -3,6 +3,10 @@ from __future__ import annotations
 
 import argparse
 import base64
+import importlib.util
+import shutil
+import subprocess
+import tempfile
 import json
 import os
 import re
@@ -20,6 +24,7 @@ OWNER = "grandchallenge"
 SOLVE = "MATHSOLVE"
 PROGRAMME = "MATH-PROGRAMME"
 BRANCH_PREFIX = "intake/openmath-"
+RECOVERY_PREFIX = "candidate/openmath-"
 DISPATCH_RE = re.compile(r"^(OM26-H([2-7])-WP([0-9]{2}))-IA-([0-9]{3})$")
 PIPELINE = ["RETURNED","CAPTURED","REPLAYED","ADJUDICATED","ADVANCED"]
 
@@ -49,24 +54,30 @@ def optional_content(gh: Github, repo: str, path: str, ref: str) -> tuple[str, s
 
 
 def branch_names(gh: Github) -> list[str]:
-    prefix = urllib.parse.quote(f"heads/{BRANCH_PREFIX}", safe="/")
-    refs = gh.get_optional(f"/repos/{OWNER}/{SOLVE}/git/matching-refs/{prefix}")
-    if refs is None:
-        return []
-    if not isinstance(refs, list):
-        raise ControllerError("OPENMATH matching refs response malformed")
-    out=[]
-    for row in refs:
-        ref=row.get("ref") if isinstance(row,dict) else None
-        if isinstance(ref,str) and ref.startswith("refs/heads/"):
-            out.append(ref[len("refs/heads/"):])
-    return sorted(set(out))
+    out: set[str] = set()
+    for branch_prefix in (BRANCH_PREFIX, RECOVERY_PREFIX):
+        prefix = urllib.parse.quote(f"heads/{branch_prefix}", safe="/")
+        refs = gh.get_optional(f"/repos/{OWNER}/{SOLVE}/git/matching-refs/{prefix}")
+        if refs is None:
+            continue
+        if not isinstance(refs, list):
+            raise ControllerError("OPENMATH matching refs response malformed")
+        for row in refs:
+            ref = row.get("ref") if isinstance(row, dict) else None
+            if isinstance(ref, str) and ref.startswith("refs/heads/"):
+                name = ref[len("refs/heads/"):]
+                if name.startswith(branch_prefix):
+                    out.add(name)
+    return sorted(out)
 
 
 def dispatch_parts(branch: str) -> tuple[str, str, str]:
-    if not branch.startswith(BRANCH_PREFIX):
-        raise ControllerError("not an OPENMATH intake branch")
-    dispatch=branch[len(BRANCH_PREFIX):].upper()
+    branch_prefix = next(
+        (prefix for prefix in (BRANCH_PREFIX, RECOVERY_PREFIX) if branch.startswith(prefix)), None
+    )
+    if branch_prefix is None:
+        raise ControllerError("not a registered OPENMATH lifecycle branch")
+    dispatch=branch[len(branch_prefix):].upper()
     match=DISPATCH_RE.fullmatch(dispatch)
     if not match:
         raise ControllerError(f"invalid OPENMATH dispatch branch: {branch}")
@@ -461,6 +472,213 @@ def verify_advanced(programme_gh: Github, projection: dict[str,Any]) -> None:
         raise ControllerError("Programme successor projection mismatch")
 
 
+
+def legacy_source(gh: Github, branch: str) -> dict[str, Any] | None:
+    """Read an already-locked legacy return without altering its original branch."""
+    if not branch.startswith(BRANCH_PREFIX):
+        return None
+    dispatch, hill, wp = dispatch_parts(branch)
+    base, _, _ = base_for(dispatch)
+    raw_dir = urllib.parse.quote(f"{base}/raw/{dispatch}", safe="/")
+    receipt_dir = urllib.parse.quote(f"{base}/receipts/{dispatch}", safe="/")
+    raw_files = gh.get_optional(f"/repos/{OWNER}/{SOLVE}/contents/{raw_dir}?ref={urllib.parse.quote(branch)}")
+    receipt_files = gh.get_optional(f"/repos/{OWNER}/{SOLVE}/contents/{receipt_dir}?ref={urllib.parse.quote(branch)}")
+    if raw_files is None and receipt_files is None:
+        return None
+    if not isinstance(raw_files, list) or not isinstance(receipt_files, list):
+        raise ControllerError(f"{dispatch}: legacy raw/receipt directories malformed")
+    raw = [x["name"] for x in raw_files if isinstance(x,dict)
+           and re.fullmatch(r"github-comment-[0-9]+[.]md", str(x.get("name","")))]
+    receipts = [x["name"] for x in receipt_files if isinstance(x,dict)
+                and re.fullmatch(r"github-comment-[0-9]+[.]json", str(x.get("name","")))]
+    if len(raw) != 1 or len(receipts) != 1:
+        raise ControllerError(f"{dispatch}: legacy first-result lock is ambiguous")
+    cid = int(raw[0].removeprefix("github-comment-").removesuffix(".md"))
+    if receipts[0] != f"github-comment-{cid}.json":
+        raise ControllerError(f"{dispatch}: locked raw/receipt comment identities differ")
+    raw_path = f"{base}/raw/{dispatch}/{raw[0]}"
+    receipt_path = f"{base}/receipts/{dispatch}/{receipts[0]}"
+    raw_text, raw_blob = fetch_content(gh, SOLVE, raw_path, branch)
+    receipt_text, receipt_blob = fetch_content(gh, SOLVE, receipt_path, branch)
+    receipt = json.loads(receipt_text)
+    if any((
+        receipt.get("dispatch_id") != dispatch,
+        receipt.get("assignment_id") != dispatch.rsplit("-IA-",1)[0],
+        receipt.get("github_comment_id") != cid,
+        receipt.get("raw_artifact_path") != raw_path,
+        receipt.get("schema_result") != "valid",
+        receipt.get("canonical_claim_effect") is not False,
+        receipt.get("handling_state") != "received_unadjudicated",
+        receipt.get("result_protocol") != "GCL-CONTRIBUTION-RESULT/1",
+    )):
+        raise ControllerError(f"{dispatch}: legacy receipt identity/claim checks failed")
+    comment = gh.request("GET",f"/repos/{OWNER}/{SOLVE}/issues/comments/{cid}")
+    if not isinstance(comment,dict) or comment.get("id") != cid or not isinstance(comment.get("body"),str):
+        raise ControllerError(f"{dispatch}: source GitHub comment unavailable")
+    # Issue transport may add one terminal LF. All other returned bytes remain locked.
+    if comment["body"].removesuffix("\n") != raw_text.removesuffix("\n"):
+        raise ControllerError(f"{dispatch}: protected raw differs from source comment")
+    if comment.get("issue_url","").rsplit("/",1)[-1] != str(receipt.get("github_issue_number")):
+        raise ControllerError(f"{dispatch}: source issue identity mismatch")
+    branch_ref = gh.request(
+        "GET",f"/repos/{OWNER}/{SOLVE}/git/ref/heads/{urllib.parse.quote(branch,safe='/')}"
+    )
+    source_commit=branch_ref.get("object",{}).get("sha")
+    if not isinstance(source_commit,str) or not re.fullmatch(r"[0-9a-f]{40}",source_commit):
+        raise ControllerError(f"{dispatch}: source branch identity missing")
+    return {
+        "dispatch_id":dispatch,"hill":hill,"wp":wp,"branch":branch,
+        "raw_text":raw_text,"receipt_text":receipt_text,"receipt":receipt,
+        "raw_path":raw_path,"receipt_path":receipt_path,
+        "raw_blob":raw_blob,"receipt_blob":receipt_blob,
+        "source_commit":source_commit,"comment_id":cid,
+    }
+
+
+def _solve_generator(checkout: Path) -> Any:
+    script=checkout / "ci/openmath_lifecycle_candidate.py"
+    if not script.is_file():
+        raise ControllerError("pinned Solve lifecycle generator checkout unavailable")
+    spec=importlib.util.spec_from_file_location("openmath_solve_candidate_recovery",script)
+    if spec is None or spec.loader is None:
+        raise ControllerError("unable to load protected Solve candidate generator")
+    mod=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _refresh_solve_checkout(checkout: Path) -> None:
+    for cmd in (
+        ["git","-C",str(checkout),"fetch","--depth=1","origin","main"],
+        ["git","-C",str(checkout),"reset","--hard","FETCH_HEAD"],
+    ):
+        proc=subprocess.run(cmd,text=True,capture_output=True,timeout=120,check=False)
+        if proc.returncode:
+            raise ControllerError(f"unable to refresh protected Solve checkout: {proc.stderr[-500:]}")
+
+
+def _existing_successor_issue(gh: Github, title: str) -> dict[str, Any] | None:
+    query=urllib.parse.quote(f'repo:{OWNER}/{SOLVE} in:title "{title.split()[2]}"')
+    result=gh.request("GET",f"/search/issues?q={query}&per_page=100")
+    matches=[x for x in result.get("items",[]) if x.get("title")==title and "pull_request" not in x]
+    if len(matches)>1:
+        raise ControllerError("multiple successor issues share exact identity")
+    return matches[0] if matches else None
+
+
+def recover_legacy(gh: Github, branch: str, checkout: Path) -> dict[str, Any]:
+    """Promote locked old-format evidence into a new, protected lifecycle candidate."""
+    src=legacy_source(gh,branch)
+    if src is None:
+        raise ControllerError(f"{branch}: no recoverable locked legacy result")
+    dispatch=src["dispatch_id"]
+    recovery_branch=f"{RECOVERY_PREFIX}{dispatch.lower()}"
+    if protected_raw_exists(gh,dispatch):
+        raise ControllerError(f"{dispatch}: raw already protected but no lifecycle manifest; manual integrity inspection required")
+
+    _refresh_solve_checkout(checkout)
+    generator=_solve_generator(checkout)
+    with tempfile.TemporaryDirectory(prefix="om26-recovery-") as temp:
+        root=Path(temp)
+        candidate_root=root/"solve"
+        shutil.copytree(checkout,candidate_root,ignore=shutil.ignore_patterns(".git"))
+        intake_dir=root/"intake"
+        intake_dir.mkdir()
+        (intake_dir/"RAW.md").write_text(src["raw_text"],encoding="utf-8")
+        (intake_dir/"RECEIPT.json").write_text(src["receipt_text"],encoding="utf-8")
+        meta={
+            "dispatch_id":dispatch,"comment_id":src["comment_id"],
+            "raw_repo_path":src["raw_path"],"receipt_repo_path":src["receipt_path"],
+        }
+        (intake_dir/"META.json").write_text(json.dumps(meta,indent=2)+"\n",encoding="utf-8")
+
+        registry=json.loads(
+            (candidate_root/".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json").read_text(encoding="utf-8")
+        )
+        item=next((x for x in registry["assignments"] if x.get("assignment_id")==src["receipt"]["assignment_id"]),None)
+        if item is None or item.get("state") not in ("LEASED_NOT_LAUNCHED","LAUNCHED","RETURNED","CAPTURED"):
+            raise ControllerError(f"{dispatch}: legacy assignment no longer open")
+        lease=item.get("lease",{})
+        if lease.get("dispatch_id")!=dispatch or lease.get("agent_ref")!=src["receipt"]["agent_ref"]:
+            raise ControllerError(f"{dispatch}: legacy return disagrees with live protected lease")
+        p=generator.plan(intake_dir)
+        title=p["issue_title"]
+        issue=_existing_successor_issue(gh,title)
+        if issue is None:
+            issue=gh.request("POST",f"/repos/{OWNER}/{SOLVE}/issues",{
+                "title":title,"body":p["issue_body"]
+            })
+        issue_number=issue.get("number")
+        issue_url=issue.get("html_url")
+        if not isinstance(issue_number,int) or not isinstance(issue_url,str):
+            raise ControllerError(f"{dispatch}: successor issue creation failed")
+        manifest=generator.apply_candidate(candidate_root,intake_dir,issue_number,issue_url)
+
+        provenance_path=f"contributions/OPENMATH-2026/{src['hill']}/{src['wp']}/lifecycle/{dispatch}/LEGACY_SOURCE.json"
+        provenance={
+            "schema_version":"1.0.0",
+            "record_type":"OPENMATH_LEGACY_INTAKE_RECOVERY",
+            "dispatch_id":dispatch,
+            "source_branch":branch,
+            "source_commit":src["source_commit"],
+            "raw_path":src["raw_path"],
+            "raw_git_blob_sha1":src["raw_blob"],
+            "receipt_path":src["receipt_path"],
+            "receipt_git_blob_sha1":src["receipt_blob"],
+            "comment_id":src["comment_id"],
+            "successor_issue_number":issue_number,
+            "claim_effect":"NONE",
+        }
+        provenance_file=candidate_root/provenance_path
+        provenance_file.parent.mkdir(parents=True,exist_ok=True)
+        provenance_file.write_text(json.dumps(provenance,indent=2)+"\n",encoding="utf-8")
+        manifest_path=f"contributions/OPENMATH-2026/{src['hill']}/{src['wp']}/lifecycle/{dispatch}/MANIFEST.json"
+        manifest["changed_paths"]=sorted(set(manifest["changed_paths"]+[provenance_path]))
+        manifest["legacy_provenance_path"]=provenance_path
+        (candidate_root/manifest_path).write_text(json.dumps(manifest,indent=2)+"\n",encoding="utf-8")
+
+        branch_ref=gh.get_optional(
+            f"/repos/{OWNER}/{SOLVE}/git/ref/heads/{urllib.parse.quote(recovery_branch,safe='/')}"
+        )
+        if branch_ref is None:
+            main_ref=gh.request("GET",f"/repos/{OWNER}/{SOLVE}/git/ref/heads/main")
+            sha=main_ref.get("object",{}).get("sha")
+            if not isinstance(sha,str):
+                raise ControllerError("live Solve main ref unavailable")
+            gh.request("POST",f"/repos/{OWNER}/{SOLVE}/git/refs",{
+                "ref":f"refs/heads/{recovery_branch}","sha":sha
+            })
+        launch_path=f"handoffs/OPENMATH-2026/launch/{p['successor_assignment']}.md"
+        put_file(
+            gh,SOLVE,recovery_branch,launch_path,
+            (candidate_root/launch_path).read_text(encoding="utf-8"),
+            f"OPENMATH: publish immutable successor task for {dispatch}",
+        )
+        pin_ref=gh.request(
+            "GET",f"/repos/{OWNER}/{SOLVE}/git/ref/heads/{urllib.parse.quote(recovery_branch,safe='/')}"
+        )
+        content_commit=pin_ref.get("object",{}).get("sha")
+        if not isinstance(content_commit,str) or not re.fullmatch(r"[0-9a-f]{40}",content_commit):
+            raise ControllerError(f"{dispatch}: immutable successor commit not available")
+        generator.finalize_pin(candidate_root,dispatch,content_commit)
+
+        for path in manifest["changed_paths"]:
+            if path==launch_path:
+                continue
+            file=candidate_root/path
+            if not file.is_file():
+                raise ControllerError(f"{dispatch}: missing generated candidate artifact {path}")
+            put_file(
+                gh,SOLVE,recovery_branch,path,file.read_text(encoding="utf-8"),
+                f"OPENMATH lifecycle: {dispatch} {file.name}",
+            )
+    result=validate_candidate(gh,recovery_branch)
+    result["legacy_source_branch"]=branch
+    result["legacy_source_commit"]=src["source_commit"]
+    return result
+
+
+
 def run(apply: bool) -> dict[str,Any]:
     solve_token=os.environ.get("MATHSOLVE_LIFECYCLE_TOKEN","")
     programme_token=os.environ.get("MATH_PROGRAMME_LIFECYCLE_TOKEN","")
@@ -477,24 +695,34 @@ def run(apply: bool) -> dict[str,Any]:
         "errors":[],
         "authority_created":False,
     }
+    recovered: set[str] = set()
+    solve_checkout=Path(os.environ.get("MATHSOLVE_CHECKOUT_DIR",""))
     for branch in branch_names(solve_gh):
         try:
+            dispatch, hill, wp = dispatch_parts(branch)
+            if dispatch in recovered:
+                continue
             try:
                 item=validate_candidate(solve_gh,branch)
             except ControllerError as exc:
-                if "lifecycle MANIFEST missing" not in str(exc):
+                if "lifecycle MANIFEST missing" not in str(exc) or not branch.startswith(BRANCH_PREFIX):
                     raise
-                dispatch, hill, wp = dispatch_parts(branch)
-                if not protected_raw_exists(solve_gh, dispatch):
-                    raise
-                report["processed"].append({
-                    "dispatch_id": dispatch,
-                    "hill": hill,
-                    "wp": wp,
-                    "branch": branch,
-                    "state": "LEGACY_ALREADY_PROTECTED",
-                })
-                continue
+                if protected_raw_exists(solve_gh,dispatch):
+                    report["processed"].append({
+                        "dispatch_id":dispatch,"hill":hill,"wp":wp,
+                        "branch":branch,"state":"LEGACY_ALREADY_PROTECTED",
+                    })
+                    continue
+                if not apply:
+                    report["processed"].append({
+                        "dispatch_id":dispatch,"hill":hill,"wp":wp,
+                        "branch":branch,"state":"LEGACY_RECOVERY_REQUIRED",
+                    })
+                    continue
+                if not solve_checkout.is_dir():
+                    raise ControllerError("protected Solve checkout unavailable for legacy recovery")
+                item=recover_legacy(solve_gh,branch,solve_checkout)
+                recovered.add(dispatch)
             if not apply:
                 report["processed"].append({**item,"state":"VALIDATED_DRY_RUN"})
                 continue
