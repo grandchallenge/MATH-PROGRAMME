@@ -70,7 +70,8 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         self.assertFalse(control["acceptance_test"]["manual_controller_wake_allowed"])
         binding = control["paired_solve_implementation"]
         self.assertEqual(binding["repository"], "grandchallenge/MATHSOLVE")
-        self.assertEqual(binding["base_pull_request"], 542)\n        self.assertEqual(binding["hardening_pull_request"], 543)
+        self.assertEqual(binding["base_pull_request"], 542)
+        self.assertEqual(binding["hardening_pull_request"], 543)
         self.assertEqual(
             binding["protected_merge"],
             "1b4c0496b0dfe6b304272910875de71274d95c32",
