@@ -58,6 +58,9 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         self.assertFalse(automation["manual_transport_required"])
         self.assertFalse(automation["manual_controller_wake_required"])
         self.assertIn("OM26-H3", candidate["next_action"]["currently_selected"])
+        self.assertEqual(candidate["next_action"]["research_direction"], state["next_action"]["research_direction"])
+        self.assertEqual(candidate["next_action"]["id"], state["next_action"]["id"])
+        self.assertEqual(candidate["next_action"]["description"], state["next_action"]["description"])
 
     def test_protected_advance_survives_deleted_candidate_branch(self):
         registry={"assignments":[{"lifecycle":{"pipeline_state":"ADVANCED"},"lease":{"dispatch_id":"OM26-H1-WP01-IA-001"}}]}

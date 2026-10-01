@@ -50,6 +50,8 @@
 | RH-WP02 | work package | MATHSOLVE | `campaigns/riemann_hypothesis/WP02_THEOREM_LEDGER/00_README.md` | implemented, merged, and CI-passed; formal promotion withheld under retained blocking review | `ADR-0010`; `ADR-0011`; `RH-WP01-WP02-POST-MERGE-DISPOSITION` | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `reviews/riemann_hypothesis/RH-WP02.agent_review.yaml`; `campaigns/riemann_hypothesis/RH_WP01_WP02_POST_MERGE_DISPOSITION.md`; `ci/campaign_replay_registry.json` | 2026-07-26 | blocked |
 | MP-EXTERNAL-EXECUTION-PLANE-001 | execution-topology control profile | MATH-PROGRAMME | `docs/governance/EXTERNAL_EXECUTION_PLANE_PROFILE.md` | active on protected main; topology control only | `GCL-CEX-01`; `MP-STREAMLINED-EXECUTION-001`; MATH-PROGRAMME PR #1028 | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | `governance/rebuild_evidence/MP-EXTERNAL-EXECUTION-PLANE-001/closure_contract.json` | 2026-09-19 | reviewed |
 
+| OPENMATH-RESEARCH-DIRECTION-001 | research agenda | MATH-PROGRAMME | `docs/campaigns/OPENMATH_2026_RESEARCH_AGENDA.md`; `governance/openmath_2026_campaign_state.json` | active research direction; H1 internal finite replay and premise audit prioritized; seven voluntary leases preserved; mathematical and independent Cert obligations remain open | Human Steward instruction 2026-10-01; MP-STREAMLINED-EXECUTION-001 | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | agenda provenance; MATHSOLVE PR #582 and exact replay receipt; same-system non-authoring read-only logical audits; protected checks and readback | 2026-10-01 | reviewed |
+
 ## Update rules
 
 1. Artifact IDs are never reused.
