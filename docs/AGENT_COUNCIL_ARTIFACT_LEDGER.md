@@ -70,3 +70,5 @@
 12. Pages may deploy only the exact policy-produced site artifact for a validated commit that remains current `main`.
 13. Exact top-level pins do not assert a complete transitive hash lock.
 14. Bounded interface fixtures remain software evidence and cannot promote continuum or metamathematical claims.
+
+| OPENMATH-H1-PRISM-OBSTRUCTION-001 | conditional geometric obstruction and exact certificates | MATHSOLVE / MATH-PROGRAMME | MATHSOLVE `work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_SATURATED_PRISM_OBSTRUCTION.md`; canonical agenda and campaign state | sixty prisms excluded conditional on fan/charging premises; four q=6 profiles remain; independent geometric review open; no claim promotion | Human Steward target 2026-10-01; MP-STREAMLINED-EXECUTION-001 | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | MATHSOLVE PR #584; predecessor-bound receipt; ten local words and sixty triangle certificates; same-system non-authoring read-only logical audits; protected checks/readback | 2026-10-01 | reviewed |

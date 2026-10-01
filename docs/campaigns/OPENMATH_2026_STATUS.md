@@ -32,7 +32,7 @@ OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4
 
 Research agenda: [seven-hill objectives and immediate priorities](OPENMATH_2026_RESEARCH_AGENDA.md).
 
-**Immediate internal target:** H1: test saturated six-clean-line/three-unused-segment charge consistency and global line incidence in the sixty prism candidates, conditional on the new face-to-fan/charging paper proof. Independent geometric adjudication remains pending.
+**Immediate internal target:** H1: profile 333444 is conditionally excluded by the saturated prism triangle obstruction (all sixty candidates). Next test the sixty D2=7 graphs in profile 333335 against elementary triangle geometry and compatible cyclic ray orders. Independent geometric review remains pending.
 
 **Parallel Cert lane:** MATHCERT #345: fresh non-authoring exact replay of OM26-H1-CON-002 (93-triangle construction). This does not certify the six-core upper-bound premises.
 
