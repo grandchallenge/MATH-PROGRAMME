@@ -321,6 +321,12 @@ def render_status(state: dict[str,Any]) -> str:
             f"**{agent.get('lifecycle')}** — {agent.get('agent_ref')} / #{agent.get('issue_number')} | "
             f"{competition.get('official_submission','NOT_SUBMITTED')} |"
         )
+    support_rows=[(r["hill_slot"],slot,a) for r in state["hills"]
+                  for slot,a in r.get("supporting_agents",{}).items()]
+    if support_rows:
+        lines += ["", "## Supporting assignments", "", "| Hill | Packet | Agent and return |", "|---|---|---|"]
+        for hill,slot,a in support_rows:
+            lines.append(f"| {hill} | {slot} | {a.get('lifecycle')} — {a.get('agent_ref')} / #{a.get('issue_number')} |")
     lines += [
         "",
         "## Current next action",
@@ -356,15 +362,22 @@ def render_status(state: dict[str,Any]) -> str:
 def apply_projection_to_state(state: dict[str,Any], projection: dict[str,Any], solve_sha: str, blobs: dict[str,str]) -> dict[str,Any]:
     hill=projection["hill"]
     row=next(x for x in state["hills"] if x["hill_slot"]==hill)
-    old_agent=row.get("external_agent",{})
+    is_support = projection.get("lane_role") == "SUPPORT"
+    support_slot = projection.get("support_slot")
+    if is_support and (hill != "OM26-H1" or not isinstance(support_slot,str) or not support_slot):
+        raise ControllerError("supporting projection must bind a named H1 slot")
+    agents = row.setdefault("supporting_agents", {}) if is_support else row
+    agent_key = support_slot if is_support else "external_agent"
+    old_agent=agents.get(agent_key,{})
     pred=projection["predecessor"]
     succ=projection["successor"]
 
-    row["solve"]["state"]=f"{succ['assignment_id'].rsplit('-',1)[-1]}_LEASED_NOT_LAUNCHED"
-    if hill != "OM26-H1":
-        row["solve"]["frontier"]="AUTOMATED_REPLAY_CLOSURE_REQUIRED"
-    row["solve"]["replay_closure"]="AUTOMATED_REPLAY_CLOSURE_REQUIRED"
-    row["external_agent"]={
+    if not is_support:
+        row["solve"]["state"]=f"{succ['assignment_id'].rsplit('-',1)[-1]}_LEASED_NOT_LAUNCHED"
+        if hill != "OM26-H1":
+            row["solve"]["frontier"]="AUTOMATED_REPLAY_CLOSURE_REQUIRED"
+        row["solve"]["replay_closure"]="AUTOMATED_REPLAY_CLOSURE_REQUIRED"
+    agents[agent_key]={
         "assignment_id":succ["assignment_id"],
         "dispatch_id":succ["dispatch_id"],
         "agent_ref":succ["agent_ref"],
@@ -383,7 +396,8 @@ def apply_projection_to_state(state: dict[str,Any], projection: dict[str,Any], s
             "predecessor":old_agent.get("predecessor"),
         },
     }
-    row["next_action"]=f"RECEIVE_VOLUNTARY_RETURN__{succ['assignment_id']}__IMMUTABLE_LINK_IN_RELAY_OUT"
+    if not is_support:
+        row["next_action"]=f"RECEIVE_VOLUNTARY_RETURN__{succ['assignment_id']}__IMMUTABLE_LINK_IN_RELAY_OUT"
 
     summary=projection["external_agent_summary"]
     state["summary"]["external_agents"]={
@@ -535,12 +549,14 @@ def verify_advanced(programme_gh: Github, projection: dict[str,Any]) -> None:
     state_text,_=fetch_content(programme_gh,PROGRAMME,"governance/openmath_2026_campaign_state.json","main")
     state=json.loads(state_text)
     hill=next(x for x in state["hills"] if x["hill_slot"]==projection["hill"])
-    current=hill.get("external_agent",{}).get("assignment_id")
+    agent=(hill.get("supporting_agents",{}).get(projection.get("support_slot"),{})
+           if projection.get("lane_role")=="SUPPORT" else hill.get("external_agent",{}))
+    current=agent.get("assignment_id")
     successor=projection["successor"]["assignment_id"]
     # The successor may itself later complete; a protected per-dispatch receipt
     # remains authoritative evidence that this transition reached ADVANCED.
     if current!=successor:
-        ancestors=hill.get("external_agent",{}).get("predecessor",{})
+        ancestors=agent.get("predecessor",{})
         while ancestors.get("assignment_id")!=successor and isinstance(ancestors.get("predecessor"),dict):
             ancestors=ancestors["predecessor"]
         if ancestors.get("assignment_id")!=successor:

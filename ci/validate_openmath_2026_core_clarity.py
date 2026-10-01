@@ -112,6 +112,14 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
             require(pred.get("lifecycle") == "ACCEPTED", f"{hill} predecessor not accepted")
             require(bool(pred.get("adjudication")), f"{hill} predecessor lacks adjudication")
 
+    for hill,row in rows.items():
+        for slot,agent in row.get("supporting_agents",{}).items():
+            require(hill == "OM26-H1", "supporting assignment outside H1")
+            require(agent.get("lifecycle") == "LEASED_NOT_LAUNCHED", f"{slot} supporting lifecycle drift")
+            require(agent.get("launch_evidence") is None and agent.get("return_evidence") is None, f"{slot} unexpected execution evidence")
+            require(agent.get("adjudication") == "NOT_STARTED", f"{slot} supporting adjudication drift")
+            leased += 1
+
     h1 = rows["OM26-H1"]
     require(h1.get("solve", {}).get("campaign_best_observed") == 93, "H1 campaign best drift")
     require(h1.get("solve", {}).get("frontier") == "Q_GE_6__SOURCE_CONDITIONAL", "H1 frontier drift")

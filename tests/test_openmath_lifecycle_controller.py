@@ -171,3 +171,20 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class SupportingH1ProjectionTest(unittest.TestCase):
+    def test_support_return_preserves_primary_and_claims(self):
+        state=json.loads((ROOT/'governance/openmath_2026_campaign_state.json').read_text())
+        h1=next(x for x in state['hills'] if x['hill_slot']=='OM26-H1')
+        primary=copy.deepcopy(h1['external_agent']); solve=copy.deepcopy(h1['solve'])
+        h1['supporting_agents']={'H1-Q6':{'assignment_id':'OM26-H1-WP30','agent_ref':'INDEPENDENT-AGENT-130','issue_number':598}}
+        projection={'source_dispatch':'OM26-H1-WP30-IA-001','hill':'OM26-H1','lane_role':'SUPPORT','support_slot':'H1-Q6',
+                    'predecessor':{'assignment_id':'OM26-H1-WP30','agent_ref':'INDEPENDENT-AGENT-130','adjudication':'ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION','accepted_claims':[]},
+                    'successor':{'assignment_id':'OM26-H1-WP31','dispatch_id':'OM26-H1-WP31-IA-001','agent_ref':'INDEPENDENT-AGENT-131','issue_number':999,'lifecycle':'LEASED_NOT_LAUNCHED'},
+                    'external_agent_summary':{'accepted_agents':13,'leased_not_launched_agents':9}}
+        result=apply_projection_to_state(state,projection,'a'*40,{})
+        row=next(x for x in result['hills'] if x['hill_slot']=='OM26-H1')
+        self.assertEqual(row['external_agent'],primary)
+        self.assertEqual(row['solve'],solve)
+        self.assertEqual(row['supporting_agents']['H1-Q6']['assignment_id'],'OM26-H1-WP31')
+        self.assertEqual(result['automation']['openmath_lifecycle']['last_transition_result'],'ADVANCED')
