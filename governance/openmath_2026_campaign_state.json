@@ -72,15 +72,15 @@
     },
     "solve": {
       "repository": "grandchallenge/MATHSOLVE",
-      "observed_main": "d1ab0654a70450bd643d55aa7dfd76d973db9b48",
+      "observed_main": "1df1a90df4b5f42bb0ed9f7ce6db70735bc6a949",
       "artifacts": [
         {
           "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
-          "git_blob_sha1": "4f25586e535b7472cdce8949727b9f2dce1c5b33"
+          "git_blob_sha1": "3b2f2cd8cbb1ff262dba57c503b12d08056a899a"
         },
         {
           "path": ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json",
-          "git_blob_sha1": "23e793e9446d4a4ff312e9eb1f3571a61ebddd7f"
+          "git_blob_sha1": "a4f8404134c673deea9942db6a8ad16f2f491cb0"
         },
         {
           "path": ".gcl/completions/OM26-CORE-CLARITY-RECONCILE-001/COMPLETION_RECEIPT.json",
@@ -203,12 +203,36 @@
           "git_blob_sha1": "b9c4f4a24b721a75379ffedd22fa3093bab800a8"
         },
         {
-          "path": "contributions/OPENMATH-2026/OM26-H1/WP01/lifecycle/OM26-H1-WP01-IA-001/MANIFEST.json",
-          "git_blob_sha1": "6254180c3a070c55080fc7eae89a6a138e070a62"
+          "path": "contributions/OPENMATH-2026/OM26-H4/WP01/lifecycle/OM26-H4-WP01-IA-001/MANIFEST.json",
+          "git_blob_sha1": "5a0595d5950bbe1aebbf656c6c7402b1e6ed20fe"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H4/WP01/lifecycle/OM26-H4-WP01-IA-001/PROGRAMME_PROJECTION.json",
+          "git_blob_sha1": "be810041730b6f49da1008f7f39f1015e0b5520f"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H5/WP01/lifecycle/OM26-H5-WP01-IA-001/MANIFEST.json",
+          "git_blob_sha1": "bc9d0559125535b1a285fe6ae13770a4a05e70a0"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H5/WP01/lifecycle/OM26-H5-WP01-IA-001/PROGRAMME_PROJECTION.json",
+          "git_blob_sha1": "5a655e7203b9ab39fd70ed1029fbee1390a8b87e"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H7/WP02/lifecycle/OM26-H7-WP02-IA-001/MANIFEST.json",
+          "git_blob_sha1": "9991087a0e8d5054c256df3ba7ee37eae8c35d30"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H7/WP02/lifecycle/OM26-H7-WP02-IA-001/PROGRAMME_PROJECTION.json",
+          "git_blob_sha1": "207b4032ceafa42116578d3be1fb2998ca7f471b"
         },
         {
           "path": "contributions/OPENMATH-2026/OM26-H1/WP01/lifecycle/OM26-H1-WP01-IA-001/PROGRAMME_PROJECTION.json",
           "git_blob_sha1": "550c03224b18ab92e6fa70a5a63390a392b53d22"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H1/WP01/lifecycle/OM26-H1-WP01-IA-001/MANIFEST.json",
+          "git_blob_sha1": "6254180c3a070c55080fc7eae89a6a138e070a62"
         }
       ]
     },
@@ -251,7 +275,7 @@
       "captured_pending_adjudication": 0,
       "leased_not_launched": 7,
       "launched_without_return": 0,
-      "accepted": 10
+      "accepted": 13
     },
     "certification": {
       "h1": "PENDING_INDEPENDENT_CERT_EXECUTOR",
@@ -464,17 +488,26 @@
         "solve_release": "DECOMPOSITION_AND_BOUNDED_RESEARCH"
       },
       "solve": {
-        "state": "WP01_READY"
+        "state": "WP02_LEASED_NOT_LAUNCHED",
+        "frontier": "AUTOMATED_REPLAY_CLOSURE_REQUIRED"
       },
       "external_agent": {
-        "assignment_id": "OM26-H4-WP01",
-        "dispatch_id": "OM26-H4-WP01-IA-001",
-        "agent_ref": "INDEPENDENT-AGENT-004",
-        "issue_number": 507,
+        "assignment_id": "OM26-H4-WP02",
+        "dispatch_id": "OM26-H4-WP02-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-402",
+        "issue_number": 559,
         "lifecycle": "LEASED_NOT_LAUNCHED",
         "launch_evidence": null,
         "return_evidence": null,
-        "adjudication": "NOT_STARTED"
+        "adjudication": "NOT_STARTED",
+        "predecessor": {
+          "assignment_id": "OM26-H4-WP01",
+          "agent_ref": "INDEPENDENT-AGENT-004",
+          "issue_number": 507,
+          "lifecycle": "ACCEPTED",
+          "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
+          "accepted_claims": []
+        }
       },
       "cert": {
         "state": "NOT_YET_ELIGIBLE",
@@ -486,7 +519,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "HYDRATE_AND_LAUNCH_EXACT_ACTIVE_LEASE__OM26-H4-WP01__SELF_CONTAINED_RELAY_RETURN",
+      "next_action": "RECEIVE_VOLUNTARY_RETURN__OM26-H4-WP02__IMMUTABLE_LINK_IN_RELAY_OUT",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -499,17 +532,26 @@
         "solve_release": "DECOMPOSITION_AND_BOUNDED_RESEARCH"
       },
       "solve": {
-        "state": "WP01_READY"
+        "state": "WP02_LEASED_NOT_LAUNCHED",
+        "frontier": "AUTOMATED_REPLAY_CLOSURE_REQUIRED"
       },
       "external_agent": {
-        "assignment_id": "OM26-H5-WP01",
-        "dispatch_id": "OM26-H5-WP01-IA-001",
-        "agent_ref": "INDEPENDENT-AGENT-005",
-        "issue_number": 508,
+        "assignment_id": "OM26-H5-WP02",
+        "dispatch_id": "OM26-H5-WP02-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-502",
+        "issue_number": 560,
         "lifecycle": "LEASED_NOT_LAUNCHED",
         "launch_evidence": null,
         "return_evidence": null,
-        "adjudication": "NOT_STARTED"
+        "adjudication": "NOT_STARTED",
+        "predecessor": {
+          "assignment_id": "OM26-H5-WP01",
+          "agent_ref": "INDEPENDENT-AGENT-005",
+          "issue_number": 508,
+          "lifecycle": "ACCEPTED",
+          "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
+          "accepted_claims": []
+        }
       },
       "cert": {
         "state": "NOT_YET_ELIGIBLE",
@@ -521,7 +563,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "HYDRATE_AND_LAUNCH_EXACT_ACTIVE_LEASE__OM26-H5-WP01__SELF_CONTAINED_RELAY_RETURN",
+      "next_action": "RECEIVE_VOLUNTARY_RETURN__OM26-H5-WP02__IMMUTABLE_LINK_IN_RELAY_OUT",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -565,7 +607,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_EXACT_ACTIVE_LEASE__OM26-H6-WP03__IMMUTABLE_LINK_IN_RELAY_OUT",
+      "next_action": "RECEIVE_VOLUNTARY_RETURN__OM26-H6-WP03__IMMUTABLE_LINK_IN_RELAY_OUT",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -578,22 +620,22 @@
         "solve_release": "DECOMPOSITION_AND_BOUNDED_RESEARCH"
       },
       "solve": {
-        "state": "WP02_LEASED_NOT_LAUNCHED",
+        "state": "WP03_LEASED_NOT_LAUNCHED",
         "frontier": "AUTOMATED_REPLAY_CLOSURE_REQUIRED"
       },
       "external_agent": {
-        "assignment_id": "OM26-H7-WP02",
-        "dispatch_id": "OM26-H7-WP02-IA-001",
-        "agent_ref": "INDEPENDENT-AGENT-702",
-        "issue_number": 551,
+        "assignment_id": "OM26-H7-WP03",
+        "dispatch_id": "OM26-H7-WP03-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-703",
+        "issue_number": 557,
         "lifecycle": "LEASED_NOT_LAUNCHED",
         "launch_evidence": null,
         "return_evidence": null,
         "adjudication": "NOT_STARTED",
         "predecessor": {
-          "assignment_id": "OM26-H7-WP01",
-          "agent_ref": "INDEPENDENT-AGENT-007",
-          "issue_number": 510,
+          "assignment_id": "OM26-H7-WP02",
+          "agent_ref": "INDEPENDENT-AGENT-702",
+          "issue_number": 551,
           "lifecycle": "ACCEPTED",
           "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
           "accepted_claims": []
@@ -609,7 +651,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_EXACT_ACTIVE_LEASE__OM26-H7-WP02__IMMUTABLE_LINK_IN_RELAY_OUT",
+      "next_action": "RECEIVE_VOLUNTARY_RETURN__OM26-H7-WP03__IMMUTABLE_LINK_IN_RELAY_OUT",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     }
   ],
