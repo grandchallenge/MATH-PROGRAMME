@@ -325,7 +325,13 @@ def render_status(state: dict[str,Any]) -> str:
         "",
         "## Current next action",
         "",
-        "**Keep each immutable task available for voluntary participants. GCL may optionally launch its own workers.**",
+        f"**{state['next_action']['description']}**",
+        "",
+        "Research agenda: [seven-hill objectives and immediate priorities](OPENMATH_2026_RESEARCH_AGENDA.md).",
+        "",
+        f"**Immediate internal target:** {state['next_action'].get('research_direction', {}).get('internal_priority', 'Read the current research agenda and verify protected evidence before work.')}",
+        "",
+        f"**Parallel Cert lane:** {state['next_action'].get('research_direction', {}).get('parallel_cert_target', 'Certification remains separate from intake and replay.')}",
         "",
         "Participation uses ordinary authenticated GitHub issue-comment capability. Pseudonymous accounts are sufficient; no GCL organization membership, collaborator invitation, repository write access, or GCL-specific credentials are required. Zero-credential intake is postponed.",
         "",
@@ -335,7 +341,7 @@ def render_status(state: dict[str,Any]) -> str:
         "",
         "The protected OPENMATH lifecycle controller carries valid returns through capture, replay, bounded adjudication, Programme reconciliation, and successor generation without manual evidence transport or controller wake-up. Receipt, acceptance, adjudication, and mathematical certification remain separate.",
         "",
-        "See the [outside-participant trial procedure](OPENMATH_2026_PARTICIPANT_TRIAL.md). The trial remains pending until a genuine outside participant supplies a durable return and the protected lifecycle evidence is read back.",
+        "See the [outside-participant trial procedure](OPENMATH_2026_PARTICIPANT_TRIAL.md). The trial is optional operational assurance when a genuine outside participant contributes; it is not a prerequisite for internal research or seven-hill participation.",
         "",
         "## CORE CLARITY rule",
         "",
@@ -390,13 +396,17 @@ def apply_projection_to_state(state: dict[str,Any], projection: dict[str,Any], s
         x["hill_slot"] for x in state["hills"]
         if x.get("external_agent",{}).get("lifecycle")=="LEASED_NOT_LAUNCHED"
     ]
-    state["next_action"]={
+    next_action = state.setdefault("next_action", {})
+    defaults = {
         "id":"publish_and_receive_voluntary_contributions",
         "selection_rule":"Select each current hill lane whose exact active assignment lifecycle is LEASED_NOT_LAUNCHED.",
         "currently_selected":selected,
         "description":"Keep each registered immutable LINK_IN_RELAY_OUT task available for voluntary participants. GCL may launch its own workers optionally. Valid returns advance automatically through CAPTURED, REPLAYED, ADJUDICATED, and ADVANCED.",
         "completion_test":"Every returned result either reaches ADVANCED automatically or leaves a protected infrastructure blocker; no human evidence shuttling or controller prompt is permitted.",
     }
+    for key, value in defaults.items():
+        next_action.setdefault(key, value)
+    next_action["currently_selected"] = selected
     state.setdefault("automation",{})["openmath_lifecycle"]={
         "contract":"READY→LAUNCHED→RETURNED→CAPTURED→REPLAYED→ADJUDICATED→ADVANCED",
         "last_transition_dispatch":projection["source_dispatch"],

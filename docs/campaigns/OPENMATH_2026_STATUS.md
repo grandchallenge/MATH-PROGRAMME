@@ -28,7 +28,13 @@ OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4
 
 ## Current next action
 
-**Keep each immutable task available for voluntary participants. GCL may optionally launch its own workers.**
+**Advance bounded mathematical evidence across seven hills; concentrate internal effort on H1 six-core replay and premise closure while receiving voluntary contributions automatically.**
+
+Research agenda: [seven-hill objectives and immediate priorities](OPENMATH_2026_RESEARCH_AGENDA.md).
+
+**Immediate internal target:** H1: audit the six-core fan and clean-line charging premises; protected finite replay reproduces five profiles and reduces 333444 to 60 planar prism candidates. Conditional geometry remains open.
+
+**Parallel Cert lane:** MATHCERT #345: fresh non-authoring exact replay of OM26-H1-CON-002 (93-triangle construction). This does not certify the six-core upper-bound premises.
 
 Participation uses ordinary authenticated GitHub issue-comment capability. Pseudonymous accounts are sufficient; no GCL organization membership, collaborator invitation, repository write access, or GCL-specific credentials are required. Zero-credential intake is postponed.
 
@@ -38,7 +44,7 @@ Read the [participant entrypoint](https://github.com/grandchallenge/MATHSOLVE/bl
 
 The protected OPENMATH lifecycle controller carries valid returns through capture, replay, bounded adjudication, Programme reconciliation, and successor generation without manual evidence transport or controller wake-up. Receipt, acceptance, adjudication, and mathematical certification remain separate.
 
-See the [outside-participant trial procedure](OPENMATH_2026_PARTICIPANT_TRIAL.md). The trial remains pending until a genuine outside participant supplies a durable return and the protected lifecycle evidence is read back.
+See the [outside-participant trial procedure](OPENMATH_2026_PARTICIPANT_TRIAL.md). The trial is optional operational assurance when a genuine outside participant contributes; it is not a prerequisite for internal research or seven-hill participation.
 
 ## CORE CLARITY rule
 
