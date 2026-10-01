@@ -72,7 +72,7 @@
     },
     "solve": {
       "repository": "grandchallenge/MATHSOLVE",
-      "observed_main": "ecd9f022f51ed0ad4645ae579e79fa386c4a0cdd",
+      "observed_main": "659b9101705396e3344a551eddd557b3819c9132",
       "artifacts": [
         {
           "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
@@ -245,6 +245,18 @@
         {
           "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_Q6_INTERNAL_REPLAY.md",
           "git_blob_sha1": "6306dee5bd10fbe129440cb80cd1f128ff8b4828"
+        },
+        {
+          "path": "ci/validate_openmath_h1_geometric_premises.py",
+          "git_blob_sha1": "9ce14a58c4c8e965072b33c4999df403aaeb8102"
+        },
+        {
+          "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_SIX_CORE_PREMISE_PROOF.md",
+          "git_blob_sha1": "f4c63a43cad65d14a1100e3d9faeae98d50a87b1"
+        },
+        {
+          "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_SIX_CORE_PREMISE_AUDIT_RECEIPT.json",
+          "git_blob_sha1": "b70f5e6950ce62c300825da694d84cd8b8d9a753"
         }
       ]
     },
@@ -685,10 +697,17 @@
       "objective": "Produce stronger exact constructions, reductions, proofs or falsifications on seven peer hills through Forge \u2192 Solve \u2192 Cert.",
       "agenda": "docs/campaigns/OPENMATH_2026_RESEARCH_AGENDA.md",
       "infrastructure_disposition": "Baseline unattended acceptance is protected; operate the existing intake and repair demonstrated failures. Outside participation is voluntary and is not a gate on internal research.",
-      "internal_priority": "H1: audit the six-core fan and clean-line charging premises; protected finite replay reproduces five profiles and reduces 333444 to 60 planar prism candidates. Conditional geometry remains open.",
+      "internal_priority": "H1: test saturated six-clean-line/three-unused-segment charge consistency and global line incidence in the sixty prism candidates, conditional on the new face-to-fan/charging paper proof. Independent geometric adjudication remains pending.",
       "parallel_cert_target": "MATHCERT #345: fresh non-authoring exact replay of OM26-H1-CON-002 (93-triangle construction). This does not certify the six-core upper-bound premises.",
       "public_assignment_policy": "Keep seven existing exact leases available; do not consume a zero-context lease with current-context internal work.",
-      "claim_boundary": "Internal finite replay is bounded evidence; no unconditional score bound, realizability, certification, optimality or competition submission is inferred."
+      "claim_boundary": "Internal finite replay is bounded evidence; no unconditional score bound, realizability, certification, optimality or competition submission is inferred.",
+      "premise_audit": {
+        "state": "PAPER_PROOF_CANDIDATE__INDEPENDENT_GEOMETRIC_REVIEW_PENDING",
+        "record": "OM26-H1-SIX-CORE-PREMISE-AUDIT-001",
+        "solve_artifact": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_SIX_CORE_PREMISE_PROOF.md",
+        "finite_checks": "Eight exact eighteen-line six-core fixtures passed; tests do not prove the general theorem.",
+        "claim_promotion": false
+      }
     }
   },
   "claim_boundaries": {

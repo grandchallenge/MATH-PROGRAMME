@@ -52,6 +52,8 @@
 
 | OPENMATH-RESEARCH-DIRECTION-001 | research agenda | MATH-PROGRAMME | `docs/campaigns/OPENMATH_2026_RESEARCH_AGENDA.md`; `governance/openmath_2026_campaign_state.json` | active research direction; H1 internal finite replay and premise audit prioritized; seven voluntary leases preserved; mathematical and independent Cert obligations remain open | Human Steward instruction 2026-10-01; MP-STREAMLINED-EXECUTION-001 | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | agenda provenance; MATHSOLVE PR #582 and exact replay receipt; same-system non-authoring read-only logical audits; protected checks and readback | 2026-10-01 | reviewed |
 
+| OPENMATH-H1-PREMISE-AUDIT-001 | geometric proof candidate and exact regression evidence | MATHSOLVE / MATH-PROGRAMME | MATHSOLVE `work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_SIX_CORE_PREMISE_PROOF.md`; canonical research agenda and campaign state | paper proof supplied; eight six-core exact fixtures pass; independent geometric adjudication and certification remain open; no claim promotion | Human Steward direction 2026-10-01; MP-STREAMLINED-EXECUTION-001 | `docs/AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md` | MATHSOLVE PR #583; source-pinned manuscript provenance; exact audit receipt; same-system non-authoring read-only logical audits; protected checks/readback | 2026-10-01 | reviewed |
+
 ## Update rules
 
 1. Artifact IDs are never reused.
