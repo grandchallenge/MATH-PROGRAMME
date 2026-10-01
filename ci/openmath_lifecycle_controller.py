@@ -151,11 +151,12 @@ def wait_merged(gh: Github, repo: str, number: int, timeout: int=2700) -> dict[s
     raise ControllerError(f"{repo} PR #{number} did not merge before timeout; last={last and last.get('mergeable_state')}")
 
 
-def validate_candidate(gh: Github, branch: str) -> dict[str,Any]:
+def validate_candidate(gh: Github, branch: str, ref: str | None = None) -> dict[str,Any]:
     dispatch,hill,wp=dispatch_parts(branch)
+    source=ref or branch
     base,_,_=base_for(dispatch)
     manifest_path=f"{base}/lifecycle/{dispatch}/MANIFEST.json"
-    manifest_item=optional_content(gh,SOLVE,manifest_path,branch)
+    manifest_item=optional_content(gh,SOLVE,manifest_path,source)
     if manifest_item is None:
         raise ControllerError(f"{dispatch}: lifecycle MANIFEST missing")
     manifest_text,manifest_blob=manifest_item
@@ -200,7 +201,7 @@ def validate_candidate(gh: Github, branch: str) -> dict[str,Any]:
                 raise ControllerError(f"{dispatch}: protected lifecycle artifact missing: {path}")
         elif path not in changed:
             raise ControllerError(f"{dispatch}: mandatory lifecycle artifact missing: {path}")
-    projection_text,projection_blob=fetch_content(gh,SOLVE,manifest["programme_projection_path"],branch)
+    projection_text,projection_blob=fetch_content(gh,SOLVE,manifest["programme_projection_path"],source)
     projection=json.loads(projection_text)
     if projection.get("pipeline_trace")!=PIPELINE or projection.get("source_dispatch")!=dispatch:
         raise ControllerError(f"{dispatch}: Programme projection identity drift")
@@ -284,6 +285,8 @@ def live_solve_projection(gh: Github, item: dict[str,Any]) -> tuple[dict[str,Any
     for path in paths:
         _text,sha=fetch_content(gh,SOLVE,path,"main")
         blobs[path]=sha
+        if path == ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json":
+            projection["external_agent_summary"]=json.loads(_text)["mathematics_release_policy"]["summary"]
     return projection,blobs
 
 
@@ -322,7 +325,7 @@ def render_status(state: dict[str,Any]) -> str:
         "",
         "## Current next action",
         "",
-        "**Launch each exact active lease whose protected lifecycle is `LEASED_NOT_LAUNCHED` from its registered immutable task URL.**",
+        "**Keep each immutable task available for voluntary participants. GCL may optionally launch its own workers.**",
         "",
         "Returns use `GCL-RETURN-RELAY/1`. The protected OPENMATH lifecycle controller carries valid returns through capture, replay, bounded adjudication, Programme reconciliation, and successor generation without manual evidence transport or controller wake-up.",
         "",
@@ -344,7 +347,9 @@ def apply_projection_to_state(state: dict[str,Any], projection: dict[str,Any], s
     succ=projection["successor"]
 
     row["solve"]["state"]=f"{succ['assignment_id'].rsplit('-',1)[-1]}_LEASED_NOT_LAUNCHED"
-    row["solve"]["frontier"]="AUTOMATED_REPLAY_CLOSURE_REQUIRED"
+    if hill != "OM26-H1":
+        row["solve"]["frontier"]="AUTOMATED_REPLAY_CLOSURE_REQUIRED"
+    row["solve"]["replay_closure"]="AUTOMATED_REPLAY_CLOSURE_REQUIRED"
     row["external_agent"]={
         "assignment_id":succ["assignment_id"],
         "dispatch_id":succ["dispatch_id"],
@@ -361,6 +366,7 @@ def apply_projection_to_state(state: dict[str,Any], projection: dict[str,Any], s
             "lifecycle":"ACCEPTED",
             "adjudication":pred["adjudication"],
             "accepted_claims":pred.get("accepted_claims",[]),
+            "predecessor":old_agent.get("predecessor"),
         },
     }
     row["next_action"]=f"RECEIVE_VOLUNTARY_RETURN__{succ['assignment_id']}__IMMUTABLE_LINK_IN_RELAY_OUT"
@@ -517,6 +523,8 @@ def verify_advanced(programme_gh: Github, projection: dict[str,Any]) -> None:
     # remains authoritative evidence that this transition reached ADVANCED.
     if current!=successor:
         ancestors=hill.get("external_agent",{}).get("predecessor",{})
+        while ancestors.get("assignment_id")!=successor and isinstance(ancestors.get("predecessor"),dict):
+            ancestors=ancestors["predecessor"]
         if ancestors.get("assignment_id")!=successor:
             raise ControllerError(f"{dispatch}: protected successor was lost")
 
@@ -731,6 +739,23 @@ def recover_legacy(gh: Github, branch: str, checkout: Path, refresh: bool = Fals
 
 
 
+def candidate_sources(gh: Github) -> list[tuple[str, str | None]]:
+    """Protected lifecycle records survive automatic deletion of merged branches."""
+    text,_=fetch_content(gh,SOLVE,".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json","main")
+    registry=json.loads(text)
+    protected=[]
+    for assignment in registry.get("assignments",[]):
+        if assignment.get("lifecycle",{}).get("pipeline_state") != "ADVANCED":
+            continue
+        dispatch=assignment.get("lease",{}).get("dispatch_id")
+        if not isinstance(dispatch,str) or DISPATCH_RE.fullmatch(dispatch) is None:
+            raise ControllerError("protected ADVANCED assignment has invalid dispatch identity")
+        base,_,_=base_for(dispatch)
+        if optional_content(gh,SOLVE,f"{base}/lifecycle/{dispatch}/MANIFEST.json","main") is not None:
+            protected.append((f"{BRANCH_PREFIX}{dispatch.lower()}","main"))
+    return sorted(protected)+[(branch,None) for branch in branch_names(gh)]
+
+
 def run(apply: bool) -> dict[str,Any]:
     solve_token=os.environ.get("MATHSOLVE_LIFECYCLE_TOKEN","")
     programme_token=os.environ.get("MATH_PROGRAMME_LIFECYCLE_TOKEN","")
@@ -749,13 +774,13 @@ def run(apply: bool) -> dict[str,Any]:
     }
     recovered: set[str] = set()
     solve_checkout=Path(os.environ.get("MATHSOLVE_CHECKOUT_DIR",""))
-    for branch in branch_names(solve_gh):
+    for branch,source_ref in candidate_sources(solve_gh):
         try:
             dispatch, hill, wp = dispatch_parts(branch)
             if dispatch in recovered:
                 continue
             try:
-                item=validate_candidate(solve_gh,branch)
+                item=validate_candidate(solve_gh,branch,source_ref)
             except ControllerError as exc:
                 if "lifecycle MANIFEST missing" not in str(exc) or not branch.startswith(BRANCH_PREFIX):
                     raise

@@ -18,7 +18,7 @@ OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4
 
 | Hill | Problem | Independent agent | Competition |
 |---|---|---|---|
-| H1 | Kobon triangles | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-101 / #553 | NOT_SUBMITTED |
+| H1 | Kobon triangles | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-102 / #563 | NOT_SUBMITTED |
 | H2 | Busy Beaver 6 certificates | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-204 / #561 | NOT_SUBMITTED |
 | H3 | Clique-cluster Ramsey multiplicity | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-303 / #562 | NOT_SUBMITTED |
 | H4 | Collatz modular descent | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-402 / #559 | NOT_SUBMITTED |
@@ -28,7 +28,7 @@ OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4
 
 ## Current next action
 
-**Launch each exact active lease whose protected lifecycle is `LEASED_NOT_LAUNCHED` from its registered immutable task URL.**
+**Keep each immutable task available for voluntary participants. GCL may optionally launch its own workers.**
 
 Returns use `GCL-RETURN-RELAY/1`. The protected OPENMATH lifecycle controller carries valid returns through capture, replay, bounded adjudication, Programme reconciliation, and successor generation without manual evidence transport or controller wake-up.
 

@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import patch
 from pathlib import Path
 
-from ci.openmath_lifecycle_controller import apply_projection_to_state, dispatch_parts, ensure_solve_merge
+from ci.openmath_lifecycle_controller import apply_projection_to_state, dispatch_parts, ensure_solve_merge, candidate_sources, ControllerError, live_solve_projection
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -59,6 +59,16 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         self.assertFalse(automation["manual_controller_wake_required"])
         self.assertIn("OM26-H3", candidate["next_action"]["currently_selected"])
 
+    def test_protected_advance_survives_deleted_candidate_branch(self):
+        registry={"assignments":[{"lifecycle":{"pipeline_state":"ADVANCED"},"lease":{"dispatch_id":"OM26-H1-WP01-IA-001"}}]}
+        with patch("ci.openmath_lifecycle_controller.fetch_content",return_value=(json.dumps(registry),"a"*40)), patch("ci.openmath_lifecycle_controller.optional_content",return_value=("{}","b"*40)), patch("ci.openmath_lifecycle_controller.branch_names",return_value=[]):
+            self.assertEqual(candidate_sources(unittest.mock.Mock()),[("intake/openmath-om26-h1-wp01-ia-001","main")])
+
+    def test_protected_advance_with_invalid_dispatch_fails_closed(self):
+        registry={"assignments":[{"lifecycle":{"pipeline_state":"ADVANCED"},"lease":{"dispatch_id":"untrusted"}}]}
+        with patch("ci.openmath_lifecycle_controller.fetch_content",return_value=(json.dumps(registry),"a"*40)), self.assertRaises(ControllerError):
+            candidate_sources(unittest.mock.Mock())
+
     def test_pending_merge_is_bounded_and_does_not_wait(self):
         gh=unittest.mock.Mock()
         gh.request.return_value={"number":564,"mergeable":True,"merged_at":None}
@@ -78,6 +88,29 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         rebuild.assert_called_once_with(gh,"intake/openmath-om26-h7-wp02-ia-001",ROOT,refresh=True)
         self.assertEqual(item["projection_blob"],"fresh")
         self.assertEqual(result["branch"],refreshed["branch"])
+
+    def test_h1_successors_retain_source_conditional_claim_history(self):
+        state=json.loads((ROOT/"governance/openmath_2026_campaign_state.json").read_text())
+        h1=next(x for x in state["hills"] if x["hill_slot"]=="OM26-H1")
+        current=h1["external_agent"]
+        projection={"source_dispatch":"OM26-H1-WP02-IA-001","hill":"OM26-H1","predecessor":{"assignment_id":current["assignment_id"],"agent_ref":current["agent_ref"],"adjudication":"ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION","accepted_claims":[]},"successor":{"assignment_id":"OM26-H1-WP03","dispatch_id":"OM26-H1-WP03-IA-001","agent_ref":"INDEPENDENT-AGENT-103","issue_number":999,"lifecycle":"LEASED_NOT_LAUNCHED"},"external_agent_summary":{"accepted_agents":9,"leased_not_launched_agents":7}}
+        result=apply_projection_to_state(state,projection,"a"*40,{})
+        h1=next(x for x in result["hills"] if x["hill_slot"]=="OM26-H1")
+        self.assertEqual(h1["solve"]["frontier"],"Q_GE_6__SOURCE_CONDITIONAL")
+        history=h1["external_agent"]
+        while history.get("assignment_id")!="OM26-H1-H1-12":
+            history=history["predecessor"]
+        self.assertEqual(history["accepted_claim"],"OM26-H1-RED-023")
+
+    def test_resume_uses_current_totals_instead_of_historical_projection(self):
+        historical={"external_agent_summary":{"accepted_agents":8}}
+        registry={"mathematics_release_policy":{"summary":{"accepted_agents":12,"leased_not_launched_agents":7}}}
+        def fetch(gh,repo,path,ref):
+            value=historical if path=="projection.json" else registry if path.endswith("CEX_ASSIGNMENTS.json") else {}
+            return json.dumps(value),"a"*40
+        with patch("ci.openmath_lifecycle_controller.fetch_content",side_effect=fetch):
+            projection,_=live_solve_projection(unittest.mock.Mock(),{"projection_path":"projection.json","manifest_path":"manifest.json"})
+        self.assertEqual(projection["external_agent_summary"]["accepted_agents"],12)
 
     def test_event_backstop_uses_protected_main(self):
         workflow = (ROOT / ".github/workflows/openmath-unattended-lifecycle-controller.yml").read_text(encoding="utf-8")

@@ -225,6 +225,14 @@
         {
           "path": "contributions/OPENMATH-2026/OM26-H7/WP02/lifecycle/OM26-H7-WP02-IA-001/PROGRAMME_PROJECTION.json",
           "git_blob_sha1": "207b4032ceafa42116578d3be1fb2998ca7f471b"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H1/WP01/lifecycle/OM26-H1-WP01-IA-001/PROGRAMME_PROJECTION.json",
+          "git_blob_sha1": "550c03224b18ab92e6fa70a5a63390a392b53d22"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H1/WP01/lifecycle/OM26-H1-WP01-IA-001/MANIFEST.json",
+          "git_blob_sha1": "6254180c3a070c55080fc7eae89a6a138e070a62"
         }
       ]
     },
@@ -308,32 +316,41 @@
         "solve_release": "RESEARCH_AND_CANDIDATE_CONSTRUCTION"
       },
       "solve": {
-        "state": "WP01_LEASED_NOT_LAUNCHED",
+        "state": "WP02_LEASED_NOT_LAUNCHED",
         "campaign_best_observed": 93,
         "best_candidate": "RH_BADER_RECONSTRUCTION_093",
         "frontier": "Q_GE_6__SOURCE_CONDITIONAL",
-        "frontier_changed_by_agent001": true
+        "frontier_changed_by_agent001": true,
+        "replay_closure": "AUTOMATED_REPLAY_CLOSURE_REQUIRED"
       },
       "external_agent": {
-        "assignment_id": "OM26-H1-WP01",
-        "dispatch_id": "OM26-H1-WP01-IA-001",
-        "agent_ref": "INDEPENDENT-AGENT-101",
-        "issue_number": 553,
+        "assignment_id": "OM26-H1-WP02",
+        "dispatch_id": "OM26-H1-WP02-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-102",
+        "issue_number": 563,
         "lifecycle": "LEASED_NOT_LAUNCHED",
         "launch_evidence": null,
         "return_evidence": null,
         "adjudication": "NOT_STARTED",
         "predecessor": {
-          "assignment_id": "OM26-H1-H1-12",
-          "dispatch_id": "OM26-H1-H1-12-IA-001",
-          "agent_ref": "INDEPENDENT-AGENT-001",
-          "issue_number": 498,
+          "assignment_id": "OM26-H1-WP01",
+          "agent_ref": "INDEPENDENT-AGENT-101",
+          "issue_number": 553,
           "lifecycle": "ACCEPTED",
-          "return_comment_id": 5881108260,
-          "capture_state": "CAPTURED_RECOVERED_ADJUDICATED",
-          "adjudication": "ACCEPTED_SOURCE_CONDITIONAL_REDUCTION",
-          "accepted_claim": "OM26-H1-RED-023",
-          "adjudication_operation": "OM26-H1-H1-12-ADJ-001"
+          "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
+          "accepted_claims": [],
+          "predecessor": {
+            "assignment_id": "OM26-H1-H1-12",
+            "dispatch_id": "OM26-H1-H1-12-IA-001",
+            "agent_ref": "INDEPENDENT-AGENT-001",
+            "issue_number": 498,
+            "lifecycle": "ACCEPTED",
+            "return_comment_id": 5881108260,
+            "capture_state": "CAPTURED_RECOVERED_ADJUDICATED",
+            "adjudication": "ACCEPTED_SOURCE_CONDITIONAL_REDUCTION",
+            "accepted_claim": "OM26-H1-RED-023",
+            "adjudication_operation": "OM26-H1-H1-12-ADJ-001"
+          }
         }
       },
       "cert": {
@@ -354,7 +371,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_EXACT_ACTIVE_LEASE__OM26-H1-WP01__IMMUTABLE_LINK_IN_RELAY_OUT",
+      "next_action": "RECEIVE_VOLUNTARY_RETURN__OM26-H1-WP02__IMMUTABLE_LINK_IN_RELAY_OUT",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -590,7 +607,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_EXACT_ACTIVE_LEASE__OM26-H6-WP03__IMMUTABLE_LINK_IN_RELAY_OUT",
+      "next_action": "RECEIVE_VOLUNTARY_RETURN__OM26-H6-WP03__IMMUTABLE_LINK_IN_RELAY_OUT",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -666,8 +683,8 @@
   "automation": {
     "openmath_lifecycle": {
       "contract": "READY\u2192LAUNCHED\u2192RETURNED\u2192CAPTURED\u2192REPLAYED\u2192ADJUDICATED\u2192ADVANCED",
-      "last_transition_dispatch": "OM26-H7-WP02-IA-001",
-      "last_transition_hill": "OM26-H7",
+      "last_transition_dispatch": "OM26-H1-WP01-IA-001",
+      "last_transition_hill": "OM26-H1",
       "last_transition_result": "ADVANCED",
       "manual_transport_required": false,
       "manual_controller_wake_required": false
