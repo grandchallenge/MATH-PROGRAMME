@@ -72,15 +72,15 @@
     },
     "solve": {
       "repository": "grandchallenge/MATHSOLVE",
-      "observed_main": "8005522dcd7b1ebeee5e195c1ff43eb8bfd12a93",
+      "observed_main": "0f046a68d455523ef83bede40913c29dce3a2850",
       "artifacts": [
         {
           "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
-          "git_blob_sha1": "80a870ced4dc4675658f247eff6a9086e65ac992"
+          "git_blob_sha1": "52389e825e473482d9e5e628672f84fcdf589d29"
         },
         {
           "path": ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json",
-          "git_blob_sha1": "f8959116661d1e3c06b5258fa5ec4d55407169cf"
+          "git_blob_sha1": "d717a6845b8b64fc122d4c21389907b4ad2ebd80"
         },
         {
           "path": ".gcl/completions/OM26-CORE-CLARITY-RECONCILE-001/COMPLETION_RECEIPT.json",
@@ -112,7 +112,7 @@
         },
         {
           "path": "handoffs/OPENMATH-2026/CEX_TRANSPORT_CONTRACT.md",
-          "git_blob_sha1": "702403c995d0f448b7ac55c4c3c9b6b6ac91985c"
+          "git_blob_sha1": "80e4d26f8c3cef6eb5ea519dc295ccf388d105a3"
         },
         {
           "path": ".gcl/completions/OM26-H2-WP01-ADJ-001/COMPLETION_RECEIPT.json",
@@ -185,6 +185,22 @@
         {
           "path": "contributions/OPENMATH-2026/OM26-H6/WP02/lifecycle/OM26-H6-WP02-IA-001/PROGRAMME_PROJECTION.json",
           "git_blob_sha1": "1d9bd80c51499194c6ed39f548e9521098237982"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H1/WP01/lifecycle/OM26-H1-WP01-IA-001/MANIFEST.json",
+          "git_blob_sha1": "6254180c3a070c55080fc7eae89a6a138e070a62"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H1/WP01/lifecycle/OM26-H1-WP01-IA-001/PROGRAMME_PROJECTION.json",
+          "git_blob_sha1": "550c03224b18ab92e6fa70a5a63390a392b53d22"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H2/WP03/lifecycle/OM26-H2-WP03-IA-001/MANIFEST.json",
+          "git_blob_sha1": "eb777fb7cbacedf0720459268ee5a41636883c5c"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H2/WP03/lifecycle/OM26-H2-WP03-IA-001/PROGRAMME_PROJECTION.json",
+          "git_blob_sha1": "1646170723b9da34e739ce8c6d5d7f0a2fe6f131"
         }
       ]
     },
@@ -227,7 +243,7 @@
       "captured_pending_adjudication": 0,
       "leased_not_launched": 7,
       "launched_without_return": 0,
-      "accepted": 7
+      "accepted": 9
     },
     "certification": {
       "h1": "PENDING_INDEPENDENT_CERT_EXECUTOR",
@@ -268,32 +284,41 @@
         "solve_release": "RESEARCH_AND_CANDIDATE_CONSTRUCTION"
       },
       "solve": {
-        "state": "WP01_LEASED_NOT_LAUNCHED",
+        "state": "WP02_LEASED_NOT_LAUNCHED",
         "campaign_best_observed": 93,
         "best_candidate": "RH_BADER_RECONSTRUCTION_093",
         "frontier": "Q_GE_6__SOURCE_CONDITIONAL",
-        "frontier_changed_by_agent001": true
+        "frontier_changed_by_agent001": true,
+        "replay_closure": "AUTOMATED_REPLAY_CLOSURE_REQUIRED"
       },
       "external_agent": {
-        "assignment_id": "OM26-H1-WP01",
-        "dispatch_id": "OM26-H1-WP01-IA-001",
-        "agent_ref": "INDEPENDENT-AGENT-101",
-        "issue_number": 553,
+        "assignment_id": "OM26-H1-WP02",
+        "dispatch_id": "OM26-H1-WP02-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-102",
+        "issue_number": 563,
         "lifecycle": "LEASED_NOT_LAUNCHED",
         "launch_evidence": null,
         "return_evidence": null,
         "adjudication": "NOT_STARTED",
         "predecessor": {
-          "assignment_id": "OM26-H1-H1-12",
-          "dispatch_id": "OM26-H1-H1-12-IA-001",
-          "agent_ref": "INDEPENDENT-AGENT-001",
-          "issue_number": 498,
+          "assignment_id": "OM26-H1-WP01",
+          "agent_ref": "INDEPENDENT-AGENT-101",
+          "issue_number": 553,
           "lifecycle": "ACCEPTED",
-          "return_comment_id": 5881108260,
-          "capture_state": "CAPTURED_RECOVERED_ADJUDICATED",
-          "adjudication": "ACCEPTED_SOURCE_CONDITIONAL_REDUCTION",
-          "accepted_claim": "OM26-H1-RED-023",
-          "adjudication_operation": "OM26-H1-H1-12-ADJ-001"
+          "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
+          "accepted_claims": [],
+          "predecessor": {
+            "assignment_id": "OM26-H1-H1-12",
+            "dispatch_id": "OM26-H1-H1-12-IA-001",
+            "agent_ref": "INDEPENDENT-AGENT-001",
+            "issue_number": 498,
+            "lifecycle": "ACCEPTED",
+            "return_comment_id": 5881108260,
+            "capture_state": "CAPTURED_RECOVERED_ADJUDICATED",
+            "adjudication": "ACCEPTED_SOURCE_CONDITIONAL_REDUCTION",
+            "accepted_claim": "OM26-H1-RED-023",
+            "adjudication_operation": "OM26-H1-H1-12-ADJ-001"
+          }
         }
       },
       "cert": {
@@ -314,7 +339,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_EXACT_ACTIVE_LEASE__OM26-H1-WP01__IMMUTABLE_LINK_IN_RELAY_OUT",
+      "next_action": "RECEIVE_VOLUNTARY_RETURN__OM26-H1-WP02__IMMUTABLE_LINK_IN_RELAY_OUT",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -327,7 +352,7 @@
         "solve_release": "DECOMPOSITION_AND_BOUNDED_RESEARCH"
       },
       "solve": {
-        "state": "WP03_LEASED_NOT_LAUNCHED",
+        "state": "WP04_LEASED_NOT_LAUNCHED",
         "predecessor_wp01": "ACCEPTED_SCORER_CONCORDANCE_WITH_SEARCH_NARROWING",
         "predecessor_wp02": "ACCEPTED_WITNESSES_WITH_EXACT_SEARCH_REPLAY_REJECTED",
         "accepted_witnesses": [
@@ -343,39 +368,47 @@
             "first_write": 0
           }
         ],
-        "frontier": "EXACT_SEARCH_REPLAY_CLOSURE__PRUNING_AUDIT_REQUIRED"
+        "frontier": "AUTOMATED_REPLAY_CLOSURE_REQUIRED",
+        "replay_closure": "AUTOMATED_REPLAY_CLOSURE_REQUIRED"
       },
       "external_agent": {
-        "assignment_id": "OM26-H2-WP03",
-        "dispatch_id": "OM26-H2-WP03-IA-001",
-        "agent_ref": "INDEPENDENT-AGENT-009",
-        "issue_number": 537,
+        "assignment_id": "OM26-H2-WP04",
+        "dispatch_id": "OM26-H2-WP04-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-204",
+        "issue_number": 561,
         "lifecycle": "LEASED_NOT_LAUNCHED",
         "launch_evidence": null,
         "return_evidence": null,
         "adjudication": "NOT_STARTED",
-        "immutable_task_url": "https://github.com/grandchallenge/MATHSOLVE/blob/e64c93148ddecbc8e51352c24926898e42b8ea10/handoffs/OPENMATH-2026/launch/OM26-H2-WP03.md",
         "predecessor": {
-          "assignment_id": "OM26-H2-WP02",
-          "dispatch_id": "OM26-H2-WP02-IA-001",
-          "agent_ref": "INDEPENDENT-AGENT-008",
-          "issue_number": 526,
+          "assignment_id": "OM26-H2-WP03",
+          "agent_ref": "INDEPENDENT-AGENT-009",
+          "issue_number": 537,
           "lifecycle": "ACCEPTED",
-          "adjudication": "ACCEPTED_WITNESSES_WITH_EXACT_SEARCH_REPLAY_REJECTED",
-          "accepted_witnesses": [
-            {
-              "steps": 89911,
-              "ones": 185,
-              "tape_span": 541
-            },
-            {
-              "steps": 8021,
-              "ones": 41,
-              "tape_span": 122,
-              "first_write": 0
-            }
-          ],
-          "completion_receipt": ".gcl/completions/OM26-H2-WP02-ADJ-001/COMPLETION_RECEIPT.json"
+          "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
+          "accepted_claims": [],
+          "predecessor": {
+            "assignment_id": "OM26-H2-WP02",
+            "dispatch_id": "OM26-H2-WP02-IA-001",
+            "agent_ref": "INDEPENDENT-AGENT-008",
+            "issue_number": 526,
+            "lifecycle": "ACCEPTED",
+            "adjudication": "ACCEPTED_WITNESSES_WITH_EXACT_SEARCH_REPLAY_REJECTED",
+            "accepted_witnesses": [
+              {
+                "steps": 89911,
+                "ones": 185,
+                "tape_span": 541
+              },
+              {
+                "steps": 8021,
+                "ones": 41,
+                "tape_span": 122,
+                "first_write": 0
+              }
+            ],
+            "completion_receipt": ".gcl/completions/OM26-H2-WP02-ADJ-001/COMPLETION_RECEIPT.json"
+          }
         }
       },
       "cert": {
@@ -389,7 +422,7 @@
         "official_submission": "NOT_SUBMITTED",
         "official_acceptance": "NONE"
       },
-      "next_action": "LAUNCH_EXACT_ACTIVE_LEASE__OM26-H2-WP03__IMMUTABLE_LINK_IN_RELAY_OUT",
+      "next_action": "RECEIVE_VOLUNTARY_RETURN__OM26-H2-WP04__IMMUTABLE_LINK_IN_RELAY_OUT",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -596,7 +629,7 @@
     }
   ],
   "next_action": {
-    "id": "launch_pending_exact_hill_leases",
+    "id": "publish_and_receive_voluntary_contributions",
     "selection_rule": "Select each current hill lane whose exact active assignment lifecycle is LEASED_NOT_LAUNCHED.",
     "currently_selected": [
       "OM26-H1",
@@ -607,7 +640,7 @@
       "OM26-H6",
       "OM26-H7"
     ],
-    "description": "Launch each selected lane from its registered immutable LINK_IN_RELAY_OUT task URL. Valid returns are carried automatically through CAPTURED, REPLAYED, ADJUDICATED, and ADVANCED.",
+    "description": "Keep each registered immutable LINK_IN_RELAY_OUT task available for voluntary participants. GCL may launch its own workers optionally. Valid returns advance automatically through CAPTURED, REPLAYED, ADJUDICATED, and ADVANCED.",
     "completion_test": "Every returned result either reaches ADVANCED automatically or leaves a protected infrastructure blocker; no human evidence shuttling or controller prompt is permitted."
   },
   "claim_boundaries": {
@@ -623,8 +656,8 @@
   "automation": {
     "openmath_lifecycle": {
       "contract": "READY\u2192LAUNCHED\u2192RETURNED\u2192CAPTURED\u2192REPLAYED\u2192ADJUDICATED\u2192ADVANCED",
-      "last_transition_dispatch": "OM26-H6-WP02-IA-001",
-      "last_transition_hill": "OM26-H6",
+      "last_transition_dispatch": "OM26-H2-WP03-IA-001",
+      "last_transition_hill": "OM26-H2",
       "last_transition_result": "ADVANCED",
       "manual_transport_required": false,
       "manual_controller_wake_required": false
