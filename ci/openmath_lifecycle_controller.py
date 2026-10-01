@@ -151,11 +151,12 @@ def wait_merged(gh: Github, repo: str, number: int, timeout: int=2700) -> dict[s
     raise ControllerError(f"{repo} PR #{number} did not merge before timeout; last={last and last.get('mergeable_state')}")
 
 
-def validate_candidate(gh: Github, branch: str) -> dict[str,Any]:
+def validate_candidate(gh: Github, branch: str, ref: str | None = None) -> dict[str,Any]:
     dispatch,hill,wp=dispatch_parts(branch)
+    source=ref or branch
     base,_,_=base_for(dispatch)
     manifest_path=f"{base}/lifecycle/{dispatch}/MANIFEST.json"
-    manifest_item=optional_content(gh,SOLVE,manifest_path,branch)
+    manifest_item=optional_content(gh,SOLVE,manifest_path,source)
     if manifest_item is None:
         raise ControllerError(f"{dispatch}: lifecycle MANIFEST missing")
     manifest_text,manifest_blob=manifest_item
@@ -200,7 +201,7 @@ def validate_candidate(gh: Github, branch: str) -> dict[str,Any]:
                 raise ControllerError(f"{dispatch}: protected lifecycle artifact missing: {path}")
         elif path not in changed:
             raise ControllerError(f"{dispatch}: mandatory lifecycle artifact missing: {path}")
-    projection_text,projection_blob=fetch_content(gh,SOLVE,manifest["programme_projection_path"],branch)
+    projection_text,projection_blob=fetch_content(gh,SOLVE,manifest["programme_projection_path"],source)
     projection=json.loads(projection_text)
     if projection.get("pipeline_trace")!=PIPELINE or projection.get("source_dispatch")!=dispatch:
         raise ControllerError(f"{dispatch}: Programme projection identity drift")
@@ -731,6 +732,23 @@ def recover_legacy(gh: Github, branch: str, checkout: Path, refresh: bool = Fals
 
 
 
+def candidate_sources(gh: Github) -> list[tuple[str, str | None]]:
+    """Protected lifecycle records survive automatic deletion of merged branches."""
+    text,_=fetch_content(gh,SOLVE,".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json","main")
+    registry=json.loads(text)
+    protected=[]
+    for assignment in registry.get("assignments",[]):
+        if assignment.get("lifecycle",{}).get("pipeline_state") != "ADVANCED":
+            continue
+        dispatch=assignment.get("lease",{}).get("dispatch_id")
+        if not isinstance(dispatch,str) or DISPATCH_RE.fullmatch(dispatch) is None:
+            raise ControllerError("protected ADVANCED assignment has invalid dispatch identity")
+        base,_,_=base_for(dispatch)
+        if optional_content(gh,SOLVE,f"{base}/lifecycle/{dispatch}/MANIFEST.json","main") is not None:
+            protected.append((f"{BRANCH_PREFIX}{dispatch.lower()}","main"))
+    return sorted(protected)+[(branch,None) for branch in branch_names(gh)]
+
+
 def run(apply: bool) -> dict[str,Any]:
     solve_token=os.environ.get("MATHSOLVE_LIFECYCLE_TOKEN","")
     programme_token=os.environ.get("MATH_PROGRAMME_LIFECYCLE_TOKEN","")
@@ -749,13 +767,13 @@ def run(apply: bool) -> dict[str,Any]:
     }
     recovered: set[str] = set()
     solve_checkout=Path(os.environ.get("MATHSOLVE_CHECKOUT_DIR",""))
-    for branch in branch_names(solve_gh):
+    for branch,source_ref in candidate_sources(solve_gh):
         try:
             dispatch, hill, wp = dispatch_parts(branch)
             if dispatch in recovered:
                 continue
             try:
-                item=validate_candidate(solve_gh,branch)
+                item=validate_candidate(solve_gh,branch,source_ref)
             except ControllerError as exc:
                 if "lifecycle MANIFEST missing" not in str(exc) or not branch.startswith(BRANCH_PREFIX):
                     raise
