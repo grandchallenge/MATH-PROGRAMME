@@ -72,7 +72,7 @@
     },
     "solve": {
       "repository": "grandchallenge/MATHSOLVE",
-      "observed_main": "659b9101705396e3344a551eddd557b3819c9132",
+      "observed_main": "51ceee117c73f38e1e6505b496ba102ce3d5bd17",
       "artifacts": [
         {
           "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
@@ -257,6 +257,18 @@
         {
           "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_SIX_CORE_PREMISE_AUDIT_RECEIPT.json",
           "git_blob_sha1": "b70f5e6950ce62c300825da694d84cd8b8d9a753"
+        },
+        {
+          "path": "ci/validate_openmath_h1_prism_obstruction.py",
+          "git_blob_sha1": "852285a2371aa1a99cbc54147d9f8e67adbf88f5"
+        },
+        {
+          "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_SATURATED_PRISM_OBSTRUCTION.md",
+          "git_blob_sha1": "d0fee48218317d87da6b84e54a1f6a0114fa2776"
+        },
+        {
+          "path": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_SATURATED_PRISM_OBSTRUCTION_RECEIPT.json",
+          "git_blob_sha1": "51af778c78c9758805704a2ce23f562d310ebc93"
         }
       ]
     },
@@ -697,7 +709,7 @@
       "objective": "Produce stronger exact constructions, reductions, proofs or falsifications on seven peer hills through Forge \u2192 Solve \u2192 Cert.",
       "agenda": "docs/campaigns/OPENMATH_2026_RESEARCH_AGENDA.md",
       "infrastructure_disposition": "Baseline unattended acceptance is protected; operate the existing intake and repair demonstrated failures. Outside participation is voluntary and is not a gate on internal research.",
-      "internal_priority": "H1: test saturated six-clean-line/three-unused-segment charge consistency and global line incidence in the sixty prism candidates, conditional on the new face-to-fan/charging paper proof. Independent geometric adjudication remains pending.",
+      "internal_priority": "H1: profile 333444 is conditionally excluded by the saturated prism triangle obstruction (all sixty candidates). Next test the sixty D2=7 graphs in profile 333335 against elementary triangle geometry and compatible cyclic ray orders. Independent geometric review remains pending.",
       "parallel_cert_target": "MATHCERT #345: fresh non-authoring exact replay of OM26-H1-CON-002 (93-triangle construction). This does not certify the six-core upper-bound premises.",
       "public_assignment_policy": "Keep seven existing exact leases available; do not consume a zero-context lease with current-context internal work.",
       "claim_boundary": "Internal finite replay is bounded evidence; no unconditional score bound, realizability, certification, optimality or competition submission is inferred.",
@@ -706,6 +718,19 @@
         "record": "OM26-H1-SIX-CORE-PREMISE-AUDIT-001",
         "solve_artifact": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_SIX_CORE_PREMISE_PROOF.md",
         "finite_checks": "Eight exact eighteen-line six-core fixtures passed; tests do not prove the general theorem.",
+        "claim_promotion": false
+      },
+      "prism_obstruction": {
+        "state": "CONDITIONAL_PAPER_PROOF__INDEPENDENT_GEOMETRIC_REVIEW_PENDING",
+        "record": "OM26-H1-SATURATED-PRISM-OBSTRUCTION-001",
+        "solve_artifact": "work_packages/OPENMATH_2026/OM26_H1_KOBON_TRIANGLES/H1_SATURATED_PRISM_OBSTRUCTION.md",
+        "prism_candidates_excluded": 60,
+        "remaining_q6_profiles": [
+          "333333",
+          "333334",
+          "333335",
+          "333344"
+        ],
         "claim_promotion": false
       }
     }
