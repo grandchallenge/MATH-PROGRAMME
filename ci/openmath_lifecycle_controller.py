@@ -323,7 +323,7 @@ def render_status(state: dict[str,Any]) -> str:
         "",
         "## Current next action",
         "",
-        "**Launch each exact active lease whose protected lifecycle is `LEASED_NOT_LAUNCHED` from its registered immutable task URL.**",
+        "**Keep each immutable task available for voluntary participants. GCL may optionally launch its own workers.**",
         "",
         "Returns use `GCL-RETURN-RELAY/1`. The protected OPENMATH lifecycle controller carries valid returns through capture, replay, bounded adjudication, Programme reconciliation, and successor generation without manual evidence transport or controller wake-up.",
         "",
@@ -345,7 +345,9 @@ def apply_projection_to_state(state: dict[str,Any], projection: dict[str,Any], s
     succ=projection["successor"]
 
     row["solve"]["state"]=f"{succ['assignment_id'].rsplit('-',1)[-1]}_LEASED_NOT_LAUNCHED"
-    row["solve"]["frontier"]="AUTOMATED_REPLAY_CLOSURE_REQUIRED"
+    if hill != "OM26-H1":
+        row["solve"]["frontier"]="AUTOMATED_REPLAY_CLOSURE_REQUIRED"
+    row["solve"]["replay_closure"]="AUTOMATED_REPLAY_CLOSURE_REQUIRED"
     row["external_agent"]={
         "assignment_id":succ["assignment_id"],
         "dispatch_id":succ["dispatch_id"],
@@ -362,6 +364,7 @@ def apply_projection_to_state(state: dict[str,Any], projection: dict[str,Any], s
             "lifecycle":"ACCEPTED",
             "adjudication":pred["adjudication"],
             "accepted_claims":pred.get("accepted_claims",[]),
+            "predecessor":old_agent.get("predecessor"),
         },
     }
     row["next_action"]=f"RECEIVE_VOLUNTARY_RETURN__{succ['assignment_id']}__IMMUTABLE_LINK_IN_RELAY_OUT"
@@ -518,6 +521,8 @@ def verify_advanced(programme_gh: Github, projection: dict[str,Any]) -> None:
     # remains authoritative evidence that this transition reached ADVANCED.
     if current!=successor:
         ancestors=hill.get("external_agent",{}).get("predecessor",{})
+        while ancestors.get("assignment_id")!=successor and isinstance(ancestors.get("predecessor"),dict):
+            ancestors=ancestors["predecessor"]
         if ancestors.get("assignment_id")!=successor:
             raise ControllerError(f"{dispatch}: protected successor was lost")
 
