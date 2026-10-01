@@ -285,6 +285,8 @@ def live_solve_projection(gh: Github, item: dict[str,Any]) -> tuple[dict[str,Any
     for path in paths:
         _text,sha=fetch_content(gh,SOLVE,path,"main")
         blobs[path]=sha
+        if path == ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json":
+            projection["external_agent_summary"]=json.loads(_text)["mathematics_release_policy"]["summary"]
     return projection,blobs
 
 
