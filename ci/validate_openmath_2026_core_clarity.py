@@ -109,7 +109,12 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
             require(agent.get("adjudication") == "NOT_STARTED", f"{hill} unexpected current adjudication")
         pred = agent.get("predecessor")
         if pred:
-            require(pred.get("lifecycle") == "ACCEPTED", f"{hill} predecessor not accepted")
+            if pred.get("lifecycle") == "SUPERSEDED":
+                require(pred.get("superseded_by") == agent.get("assignment_id"), f"{hill} supersession target drift")
+                require(pred.get("launch_evidence") is None and pred.get("return_evidence") is None, f"{hill} executed task cannot be retired as unlaunched")
+                require(pred.get("accepted_claims") == [], f"{hill} retired task invents accepted claims")
+            else:
+                require(pred.get("lifecycle") == "ACCEPTED", f"{hill} predecessor not accepted")
             require(bool(pred.get("adjudication")), f"{hill} predecessor lacks adjudication")
 
     for hill,row in rows.items():

@@ -188,3 +188,15 @@ class SupportingH1ProjectionTest(unittest.TestCase):
         self.assertEqual(row['solve'],solve)
         self.assertEqual(row['supporting_agents']['H1-Q6']['assignment_id'],'OM26-H1-WP31')
         self.assertEqual(result['automation']['openmath_lifecycle']['last_transition_result'],'ADVANCED')
+
+class EventWindowSupersessionHistoryTest(unittest.TestCase):
+    def test_retired_unlaunched_task_remains_in_history_without_accepted_claim(self):
+        state=json.loads((ROOT/'governance/openmath_2026_campaign_state.json').read_text())
+        h2=next(x for x in state['hills'] if x['hill_slot']=='OM26-H2')
+        history=h2['external_agent']
+        while history.get('assignment_id')!='OM26-H2-WP04' and isinstance(history.get('predecessor'),dict):
+            history=history['predecessor']
+        self.assertEqual(history['assignment_id'],'OM26-H2-WP04')
+        self.assertEqual(history['lifecycle'],'SUPERSEDED')
+        self.assertEqual(history['accepted_claims'],[])
+        self.assertIsNone(history['launch_evidence'])
