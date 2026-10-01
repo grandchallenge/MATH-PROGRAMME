@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import patch
 from pathlib import Path
 
-from ci.openmath_lifecycle_controller import apply_projection_to_state, dispatch_parts, ensure_solve_merge
+from ci.openmath_lifecycle_controller import apply_projection_to_state, dispatch_parts, ensure_solve_merge, candidate_sources, ControllerError
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -58,6 +58,16 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         self.assertFalse(automation["manual_transport_required"])
         self.assertFalse(automation["manual_controller_wake_required"])
         self.assertIn("OM26-H3", candidate["next_action"]["currently_selected"])
+
+    def test_protected_advance_survives_deleted_candidate_branch(self):
+        registry={"assignments":[{"lifecycle":{"pipeline_state":"ADVANCED"},"lease":{"dispatch_id":"OM26-H1-WP01-IA-001"}}]}
+        with patch("ci.openmath_lifecycle_controller.fetch_content",return_value=(json.dumps(registry),"a"*40)), patch("ci.openmath_lifecycle_controller.optional_content",return_value=("{}","b"*40)), patch("ci.openmath_lifecycle_controller.branch_names",return_value=[]):
+            self.assertEqual(candidate_sources(unittest.mock.Mock()),[("intake/openmath-om26-h1-wp01-ia-001","main")])
+
+    def test_protected_advance_with_invalid_dispatch_fails_closed(self):
+        registry={"assignments":[{"lifecycle":{"pipeline_state":"ADVANCED"},"lease":{"dispatch_id":"untrusted"}}]}
+        with patch("ci.openmath_lifecycle_controller.fetch_content",return_value=(json.dumps(registry),"a"*40)), self.assertRaises(ControllerError):
+            candidate_sources(unittest.mock.Mock())
 
     def test_pending_merge_is_bounded_and_does_not_wait(self):
         gh=unittest.mock.Mock()
