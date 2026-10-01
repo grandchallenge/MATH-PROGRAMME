@@ -89,6 +89,19 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         self.assertEqual(item["projection_blob"],"fresh")
         self.assertEqual(result["branch"],refreshed["branch"])
 
+    def test_h1_successors_retain_source_conditional_claim_history(self):
+        state=json.loads((ROOT/"governance/openmath_2026_campaign_state.json").read_text())
+        h1=next(x for x in state["hills"] if x["hill_slot"]=="OM26-H1")
+        current=h1["external_agent"]
+        projection={"source_dispatch":"OM26-H1-WP02-IA-001","hill":"OM26-H1","predecessor":{"assignment_id":current["assignment_id"],"agent_ref":current["agent_ref"],"adjudication":"ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION","accepted_claims":[]},"successor":{"assignment_id":"OM26-H1-WP03","dispatch_id":"OM26-H1-WP03-IA-001","agent_ref":"INDEPENDENT-AGENT-103","issue_number":999,"lifecycle":"LEASED_NOT_LAUNCHED"},"external_agent_summary":{"accepted_agents":9,"leased_not_launched_agents":7}}
+        result=apply_projection_to_state(state,projection,"a"*40,{})
+        h1=next(x for x in result["hills"] if x["hill_slot"]=="OM26-H1")
+        self.assertEqual(h1["solve"]["frontier"],"Q_GE_6__SOURCE_CONDITIONAL")
+        history=h1["external_agent"]
+        while history.get("assignment_id")!="OM26-H1-H1-12":
+            history=history["predecessor"]
+        self.assertEqual(history["accepted_claim"],"OM26-H1-RED-023")
+
     def test_event_backstop_uses_protected_main(self):
         workflow = (ROOT / ".github/workflows/openmath-unattended-lifecycle-controller.yml").read_text(encoding="utf-8")
         control = json.loads((ROOT / "governance/openmath_unattended_lifecycle_controller.json").read_text(encoding="utf-8"))
