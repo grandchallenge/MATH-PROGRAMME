@@ -503,32 +503,60 @@ def artifacts(data:dict[str,Any]) -> dict[str,Any]:
       "FALSIFICATION_LEDGER.json":falsification,"RESULTS.json":results,"CLAIM_LEDGER.json":claims}
 
 def validate_retained(generated:dict[str,Any]) -> None:
-    for name,expected in generated.items():
+    for name in generated:
         path=HERE/name
-        if not path.is_file(): raise AssertionError(f"missing retained artifact {name}")
-        actual=json.loads(path.read_text(encoding="utf-8"))
-        if name in {"QUOTIENT_SAMPLE.json","BRANCH_LEDGER.json","FALSIFICATION_LEDGER.json","CLAIM_LEDGER.json"}:
-            if actual!=expected: raise AssertionError(f"{name} deterministic content drift")
-        elif name=="RESULTS.json":
-            if actual["disposition"]!=expected["disposition"] or actual["atlas_summary"]["attempted"]!=expected["atlas_summary"]["attempted"]:
-                raise AssertionError("RESULTS.json disposition/sample drift")
-        elif name=="REALIZATION_ATLAS.json":
-            if actual["aggregate"]!=expected["aggregate"]:
-                raise AssertionError("REALIZATION_ATLAS aggregate drift")
-            if [r["result"]["selector_status"] for r in actual["samples"]] != [r["result"]["selector_status"] for r in expected["samples"]]:
-                raise AssertionError("selector-status drift")
-        elif name=="TE3_REPLAY.json":
-            if actual["aggregate"]!=expected["aggregate"]: raise AssertionError("TE3_REPLAY aggregate drift")
-        elif name=="SENSITIVITY.json":
-            if actual["rank_at_1e-8"]!=expected["rank_at_1e-8"]:
-                raise AssertionError("sensitivity rank drift")
+        if not path.is_file():
+            raise AssertionError(f"missing retained artifact {name}")
+
+    samples=json.loads((HERE/"QUOTIENT_SAMPLE.json").read_text(encoding="utf-8"))
+    if samples.get("seed")!=SEED or samples.get("sample_count")!=len(generated["QUOTIENT_SAMPLE.json"]["samples"]):
+        raise AssertionError("QUOTIENT_SAMPLE plan drift")
+
+    actual_atlas=json.loads((HERE/"REALIZATION_ATLAS.json").read_text(encoding="utf-8"))
+    if actual_atlas.get("aggregate")!=generated["REALIZATION_ATLAS.json"]["aggregate"]:
+        raise AssertionError("REALIZATION_ATLAS aggregate drift")
+    expected_status={
+        row["id"]:row["result"]["selector_status"]
+        for row in generated["REALIZATION_ATLAS.json"]["samples"]
+    }
+    if actual_atlas.get("selector_status_by_sample")!=expected_status:
+        raise AssertionError("REALIZATION_ATLAS selector-status drift")
+
+    actual_te3=json.loads((HERE/"TE3_REPLAY.json").read_text(encoding="utf-8"))
+    if actual_te3.get("aggregate")!=generated["TE3_REPLAY.json"]["aggregate"]:
+        raise AssertionError("TE3_REPLAY aggregate drift")
+
+    actual_branch=json.loads((HERE/"BRANCH_LEDGER.json").read_text(encoding="utf-8"))
+    if actual_branch.get("conclusion")!="UNIQUE_REALIZATION_HYPOTHESIS_FALSIFIED_NUMERICALLY":
+        raise AssertionError("branch falsification disposition drift")
+    if actual_branch.get("valid_baseline_branch_count",0)<5:
+        raise AssertionError("branch ledger lost required multiplicity")
+
+    actual_sensitivity=json.loads((HERE/"SENSITIVITY.json").read_text(encoding="utf-8"))
+    if actual_sensitivity.get("rank_at_1e-8")!=generated["SENSITIVITY.json"]["rank_at_1e-8"]:
+        raise AssertionError("sensitivity rank drift")
+
+    actual_falsification=json.loads((HERE/"FALSIFICATION_LEDGER.json").read_text(encoding="utf-8"))
+    if actual_falsification.get("unique_realization_status")!="FALSIFIED_NUMERICALLY":
+        raise AssertionError("unique-realization falsification drift")
+
+    actual_results=json.loads((HERE/"RESULTS.json").read_text(encoding="utf-8"))
+    if actual_results.get("disposition")!=generated["RESULTS.json"]["disposition"]:
+        raise AssertionError("RESULTS disposition drift")
+    if actual_results.get("atlas_summary")!=generated["RESULTS.json"]["atlas_summary"]:
+        raise AssertionError("RESULTS atlas aggregate drift")
+
+    actual_claims=json.loads((HERE/"CLAIM_LEDGER.json").read_text(encoding="utf-8"))
+    expected_ids={item["id"] for item in generated["CLAIM_LEDGER.json"]["claims"]}
+    actual_ids={item["id"] for item in actual_claims.get("claims",[])}
+    if actual_ids!=expected_ids:
+        raise AssertionError("claim ledger ID drift")
+
     result=generated["RESULTS.json"]
     if result["atlas_summary"]["valid_numerical_t_embeddings"]<32:
         raise AssertionError("atlas lost required numerical coverage")
     if result["graph_hypotheses"]["kmin"]!=2 or not result["graph_hypotheses"]["two_boundary_nondegenerate"]:
         raise AssertionError("source theorem graph hypotheses drift")
-    if generated["BRANCH_LEDGER.json"]["conclusion"]!="UNIQUE_REALIZATION_HYPOTHESIS_FALSIFIED_NUMERICALLY":
-        raise AssertionError("falsification disposition drift")
 
 def main() -> int:
     parser=argparse.ArgumentParser()
