@@ -72,15 +72,15 @@
     },
     "solve": {
       "repository": "grandchallenge/MATHSOLVE",
-      "observed_main": "76e64c890844995a853b12fdbcf514d9cfd37a44",
+      "observed_main": "1a3a3cdd2b6fbcb3bb9b9d35ed2650af17784b71",
       "artifacts": [
         {
           "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
-          "git_blob_sha1": "97c6f511b5845ee48b77449735a85157903f96d9"
+          "git_blob_sha1": "2e9f7b7807712c3badc11320b4fc1a40fa3f3931"
         },
         {
           "path": ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json",
-          "git_blob_sha1": "1927b840e8b146a66e03fcbb090e91dfdd2264cc"
+          "git_blob_sha1": "d7be810bd1739089a3a91f6e4714b35d0ab6554f"
         },
         {
           "path": ".gcl/completions/OM26-CORE-CLARITY-RECONCILE-001/COMPLETION_RECEIPT.json",
@@ -545,6 +545,14 @@
         {
           "path": "contributions/OPENMATH-2026/OM26-H2/WP06/lifecycle/OM26-H2-WP06-IA-001/PROGRAMME_PROJECTION.json",
           "git_blob_sha1": "93fe5a742c7e642955fbb5f2c212c8cd136b9839"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H4/WP04/lifecycle/OM26-H4-WP04-IA-001/MANIFEST.json",
+          "git_blob_sha1": "d07c6130f9136da2e2f30d939bb6bc22676585e6"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H4/WP04/lifecycle/OM26-H4-WP04-IA-001/PROGRAMME_PROJECTION.json",
+          "git_blob_sha1": "4b84349f1ddfca3af4d1d05431e69f4c30b596ce"
         }
       ]
     },
@@ -587,7 +595,7 @@
       "captured_pending_adjudication": 0,
       "leased_not_launched": 9,
       "launched_without_return": 0,
-      "accepted": 26
+      "accepted": 27
     },
     "certification": {
       "h1": "PENDING_INDEPENDENT_CERT_EXECUTOR",
@@ -1071,45 +1079,53 @@
         "solve_release": "DECOMPOSITION_AND_BOUNDED_RESEARCH"
       },
       "solve": {
-        "state": "WP04_LEASED_NOT_LAUNCHED",
+        "state": "WP05_LEASED_NOT_LAUNCHED",
         "frontier": "AUTOMATED_REPLAY_CLOSURE_REQUIRED",
         "replay_closure": "AUTOMATED_REPLAY_CLOSURE_REQUIRED"
       },
       "external_agent": {
-        "assignment_id": "OM26-H4-WP04",
-        "dispatch_id": "OM26-H4-WP04-IA-001",
-        "agent_ref": "INDEPENDENT-AGENT-404",
-        "issue_number": 615,
+        "assignment_id": "OM26-H4-WP05",
+        "dispatch_id": "OM26-H4-WP05-IA-001",
+        "agent_ref": "INDEPENDENT-AGENT-405",
+        "issue_number": 631,
         "lifecycle": "LEASED_NOT_LAUNCHED",
         "launch_evidence": null,
         "return_evidence": null,
         "adjudication": "NOT_STARTED",
         "predecessor": {
-          "assignment_id": "OM26-H4-WP03",
-          "agent_ref": "INDEPENDENT-AGENT-403",
-          "issue_number": 601,
+          "assignment_id": "OM26-H4-WP04",
+          "agent_ref": "INDEPENDENT-AGENT-404",
+          "issue_number": 615,
           "lifecycle": "ACCEPTED",
           "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
           "accepted_claims": [],
           "predecessor": {
-            "assignment_id": "OM26-H4-WP02",
-            "dispatch_id": "OM26-H4-WP02-IA-001",
-            "agent_ref": "INDEPENDENT-AGENT-402",
-            "issue_number": 559,
-            "lifecycle": "SUPERSEDED",
-            "launch_evidence": null,
-            "return_evidence": null,
-            "adjudication": "NOT_APPLICABLE_UNLAUNCHED_TASK_REPLACED",
-            "predecessor": {
-              "assignment_id": "OM26-H4-WP01",
-              "agent_ref": "INDEPENDENT-AGENT-004",
-              "issue_number": 507,
-              "lifecycle": "ACCEPTED",
-              "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
-              "accepted_claims": []
-            },
+            "assignment_id": "OM26-H4-WP03",
+            "agent_ref": "INDEPENDENT-AGENT-403",
+            "issue_number": 601,
+            "lifecycle": "ACCEPTED",
+            "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
             "accepted_claims": [],
-            "superseded_by": "OM26-H4-WP03"
+            "predecessor": {
+              "assignment_id": "OM26-H4-WP02",
+              "dispatch_id": "OM26-H4-WP02-IA-001",
+              "agent_ref": "INDEPENDENT-AGENT-402",
+              "issue_number": 559,
+              "lifecycle": "SUPERSEDED",
+              "launch_evidence": null,
+              "return_evidence": null,
+              "adjudication": "NOT_APPLICABLE_UNLAUNCHED_TASK_REPLACED",
+              "predecessor": {
+                "assignment_id": "OM26-H4-WP01",
+                "agent_ref": "INDEPENDENT-AGENT-004",
+                "issue_number": 507,
+                "lifecycle": "ACCEPTED",
+                "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
+                "accepted_claims": []
+              },
+              "accepted_claims": [],
+              "superseded_by": "OM26-H4-WP03"
+            }
           }
         }
       },
@@ -1135,7 +1151,7 @@
           }
         }
       },
-      "next_action": "RECEIVE_VOLUNTARY_RETURN__OM26-H4-WP04__IMMUTABLE_LINK_IN_RELAY_OUT",
+      "next_action": "RECEIVE_VOLUNTARY_RETURN__OM26-H4-WP05__IMMUTABLE_LINK_IN_RELAY_OUT",
       "topology_role": "FIRST_CLASS_HILL_LANE"
     },
     {
@@ -1302,7 +1318,7 @@
     },
     {
       "hill_slot": "OM26-H7",
-      "title": "Erd\u0151s Problem 3",
+      "title": "Erdős Problem 3",
       "external_hill_id": "ottogin/erdos-3",
       "source": {
         "state": "SOURCE_LOCKED_SLOT_BOUND__SEMANTIC_PACK_PROTECTED__SOLVE_RELEASED",
@@ -1381,7 +1397,7 @@
     "description": "Maximize defensible event-window contributions. Execute H1 premise closure and the remaining q>=6 attack, with H7 as the parallel formal lane; use bounded delta gates for lower-priority hills.",
     "completion_test": "Every eligible return reaches durable capture and protected advancement; mathematical promotion requires exact replay/formal checking, novelty review and a Section 8 update.",
     "research_direction": {
-      "objective": "Produce stronger exact constructions, reductions, proofs or falsifications on seven peer hills through Forge \u2192 Solve \u2192 Cert.",
+      "objective": "Produce stronger exact constructions, reductions, proofs or falsifications on seven peer hills through Forge → Solve → Cert.",
       "agenda": "docs/campaigns/OPENMATH_2026_RESEARCH_AGENDA.md",
       "infrastructure_disposition": "Baseline unattended acceptance is protected; operate the existing intake and repair demonstrated failures. Outside participation is voluntary and is not a gate on internal research.",
       "internal_priority": "H1: independently discharge or replace remaining source-scoped geometric premises, then attack q>=6; first finite stratum is 333335 at D2=7. H7 runs as the parallel formal lane.",
@@ -1434,9 +1450,9 @@
   },
   "automation": {
     "openmath_lifecycle": {
-      "contract": "READY\u2192LAUNCHED\u2192RETURNED\u2192CAPTURED\u2192REPLAYED\u2192ADJUDICATED\u2192ADVANCED",
-      "last_transition_dispatch": "OM26-H2-WP06-IA-001",
-      "last_transition_hill": "OM26-H2",
+      "contract": "READY→LAUNCHED→RETURNED→CAPTURED→REPLAYED→ADJUDICATED→ADVANCED",
+      "last_transition_dispatch": "OM26-H4-WP04-IA-001",
+      "last_transition_hill": "OM26-H4",
       "last_transition_result": "ADVANCED",
       "manual_transport_required": false,
       "manual_controller_wake_required": false
