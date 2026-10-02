@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0.0",
+  "work_package": "VGSE-ENG-WP05",
+  "protected_start": "dc0e579ce8f9dddf04045b6eea2669d8fa533003",
+  "research_question": "Can the WP01 eight-dimensional positive weight quotient be reconstructed exactly from cycle/path invariants of a qualified C05 embedding?",
+  "exact_results": {
+    "gauge_action_rank": 8,
+    "invariant_lattice_rank": 8,
+    "pure_closed_cycle_rank": 3,
+    "boundary_path_complement_rank": 5,
+    "natural_basis_to_wp01_determinant": -1,
+    "full_invariant_basis_spans_wp01_quotient": true
+  },
+  "geometry_only_result": {
+    "independent_quotient_coordinates_recovered": 3,
+    "total_quotient_dimension": 8,
+    "recovered": [
+      "C1",
+      "C2",
+      "C3"
+    ],
+    "exact_signed_values": [
+      "-6/7",
+      "-4/21",
+      "18/175"
+    ],
+    "full_geometry_only_inverse_established": false,
+    "reason": "The other five invariant directions are boundary-to-boundary paths. Their monomials retain branch endpoint factors beta_i, and no geometry-only recovery of those factors has been established."
+  },
+  "calibrated_result": {
+    "independent_quotient_coordinates_recovered": 8,
+    "requires": "C05 algebraic branch boundary factors beta_i in addition to embedding increments",
+    "exact_chart_invertible": true,
+    "interpretation": "With branch boundary calibration, all eight gauge-invariant weight coordinates are exactly reconstructed and converted to/from the WP01 chart by a unimodular monomial map."
+  },
+  "falsification": {
+    "hypothesis": "all eight quotient directions arise as closed-cycle geometry invariants",
+    "status": "FALSIFIED",
+    "exact_reason": "The connected full graph has cycle rank 16-14+1=3. The remaining five gauge-invariant directions necessarily carry boundary flow."
+  },
+  "numerical_replay": {
+    "branches": 5,
+    "max_cycle_absolute_error": 2.1823508587380098e-14,
+    "max_boundary_normalized_path_absolute_error": 6.901080022590147e-13
+  },
+  "terminal_disposition": "CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_PARTIAL",
+  "terminal_statement": "WP05 establishes an exact three-dimensional geometry-only cycle reconstruction and an exact eight-dimensional path+cycle reconstruction when the certified branch boundary factors are supplied. It does not establish a full geometry-only inverse because five boundary-path directions retain branch endpoint calibration.",
+  "next_research_boundary": "Determine whether the five boundary factors beta_i can themselves be recovered canonically from the admitted embedding geometry, without consuming the algebraic branch witness or the known quotient.",
+  "claim_boundary": {
+    "vgse_c06": false,
+    "source_correspondence": false,
+    "rigid_foldability": false,
+    "collision_freedom": false,
+    "finite_thickness": false,
+    "material_model": false,
+    "manufacturability": false,
+    "product_performance": false,
+    "patentability": false,
+    "commercial_value": false
+  }
+}

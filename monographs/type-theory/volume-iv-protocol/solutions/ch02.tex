@@ -1,0 +1,37 @@
+\chapter{Two Ends of One Obligation}
+
+\section*{2.1}
+$\dual{\send{\Nat}{\recv{\Bool}{\mathsf{end!}}}}=\recv{\Nat}{\send{\Bool}{\mathsf{end?}}}$.
+
+\section*{2.2}
+$\dual{\mathsf{end!}}=\mathsf{end?}$. Separate constructors record which endpoint actively closes and which waits.
+
+\section*{2.3}
+Session duality is a syntax-directed exchange of complementary endpoint actions; logical negation belongs to a particular logic and is not identified with it here.
+
+\section*{2.4}
+Client: $?\Bool.!\Nat.\mathsf{end?}$. Peer: $!\Bool.?\Nat.\mathsf{end!}$.
+
+\section*{2.5}
+$(\nu x\,y)(x!\chanval{7}.P\mid y?(n).Q)\to(\nu x\,y)(P\mid Q[7/n])$.
+
+\section*{2.6}
+$\uplus$ requires disjoint domains, preventing one linear binding from appearing in both parallel premises.
+
+\section*{2.7}
+Duality constrains each paired frontier. Two processes can nevertheless wait first on different sessions so that neither reaches the send needed by the other.
+
+\section*{2.8}
+Examples: compilation preserves endpoint identity; the runtime prevents hidden aliasing/duplication; FFI boundaries preserve ownership. Any two explicit assumptions suffice.
+
+\section*{2.9}
+Structural induction. Send and receive swap twice and use the induction hypothesis on the continuation; active and passive end swap twice directly.
+
+\section*{2.10}
+Each finite binding is assigned to exactly one side. Therefore the domains are disjoint, their union contains every original binding, and no new binding appears.
+
+\section*{2.11}
+Report the first mismatch and its class, for example direction, payload, label, or premature termination, together with the residual session states.
+
+\section*{2.12}
+Use two sessions $a,b$ with $P$ receiving on $b$ before sending on $a$, and $Q$ receiving on $a$ before sending on $b$. Pairwise types remain dual, but the wait-for graph is the two-node cycle.

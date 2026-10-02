@@ -1,0 +1,91 @@
+\chapter{Choice Has Two Sides}
+
+Communication is not always a fixed sequence. One endpoint may choose a label; the peer must be ready to offer that label. Session types make the asymmetry explicit: \emph{selection} is an internal decision, while \emph{branching} exposes alternatives to the peer.
+
+\section{Selection and offering}
+Extend the finite session grammar with
+\[
+\sel{l_i:S_i}_{i\in I}
+\qquad\text{and}\qquad
+\bra{l_i:S_i}_{i\in I}.
+\]
+The duality clauses are
+\[
+\dual{\sel{l_i:S_i}_{i\in I}}
+=\bra{l_i:\dual{S_i}}_{i\in I},
+\quad
+\dual{\bra{l_i:S_i}_{i\in I}}
+=\sel{l_i:\dual{S_i}}_{i\in I}.
+\]
+A selecting process $x\oplus l_k.P$ commits to one label $l_k$. Its peer $y\&\{l_i:Q_i\}_{i\in I}$ must offer that label.
+
+\input{plates/plate08}
+
+\section{Branch synchronization}
+\begin{proposition}[T4.4, principal communication compatibility]
+For finite \texttt{PROTO-0}, every principal communication redex between paired endpoints with dual session types advances to continuations governed by dual continuation types. This includes send/receive, select/branch, and close/wait.
+\end{proposition}
+\begin{proof}
+By cases on the outer constructor of one endpoint type. Send/receive is Chapter 3. For selection, duality gives an offered branch set with the same labels; choosing $l_k$ advances both sides to $S_k$ and $\dual{S_k}$. The branching case is symmetric. For $\mathsf{end!}$, duality gives $\mathsf{end?}$ and the close/wait redex discharges both terminal obligations.
+\end{proof}
+
+\section{The branch knows what the peer chose}
+A local selection may be controlled by data unavailable to the offering endpoint. The label itself communicates enough information for the peer to choose the correct continuation. This is the first small example of a broader multiparty problem: in larger protocols, every role whose behavior depends on a choice must somehow learn the decision.
+
+\section{Worked example}
+\begin{workedexample}
+Let a client select either
+\[
+\sel{\mathsf{ok}:\recv{\Nat}{\mathsf{end!}},
+      \mathsf{cancel}:\mathsf{end!}}.
+\]
+The service offers the dual branches. Selecting $\mathsf{ok}$ exposes the receive/send continuation; selecting $\mathsf{cancel}$ moves both peers directly to complementary termination. A service that offers only $\mathsf{ok}$ is not compatible with the original client type.
+\end{workedexample}
+
+\section{Do not confuse: labels with global agreement}
+\begin{warningbox}
+Matching labels solve one local synchronization problem. They do not prove that three or more roles agree on the same global branch, nor that the role that must react has learned the choice. Those are multiparty/projectability obligations.
+\end{warningbox}
+
+The multiparty version of this obligation is illustrated later by canonical Plate 22 in Chapter 9, where branch knowledge must reach every role whose continuation depends on the choice.
+
+\section{Computational laboratory}
+\begin{labbox}
+Run
+\[
+  \texttt{python labs/lab04_branching.py}.
+\]
+The laboratory enumerates finite branch choices, accepts only labels offered by the peer, and records the resulting continuation pair. It is executable evidence for the stated finite fixtures and does not enlarge the theorem scope.
+\end{labbox}
+
+\section{Exercises}
+\subsection*{Checkpoint}
+\begin{enumerate}[label=\textbf{4.\arabic*},start=1]
+\item State the dual of $\sel{\mathsf{yes}:S,\mathsf{no}:T}$.
+\item Distinguish internal selection from external branching in one sentence.
+\item What must be true of the label sets of two exactly dual finite choice types?
+\end{enumerate}
+\subsection*{Core}
+\begin{enumerate}[label=\textbf{4.\arabic*},start=4]
+\item Give the reduction of a selection of label $\mathsf{ok}$ against a two-branch offer.
+\item Construct a label-mismatch example with otherwise compatible continuations.
+\item Write a finite protocol in which a client chooses retry or abort, then compute the peer dual.
+\end{enumerate}
+\subsection*{Synthesis}
+\begin{enumerate}[label=\textbf{4.\arabic*},start=7]
+\item Explain why external branching is a promise to accept a peer choice rather than a nondeterministic local choice.
+\item Relate branch knowledge to the later multiparty projection problem without claiming equivalence.
+\end{enumerate}
+\subsection*{Proof Workshop}
+\begin{enumerate}[label=\textbf{4.\arabic*},start=9]
+\item Prove the selection/branch case of T4.4.
+\item Extend the proof of duality involution T4.1 to the two choice constructors.
+\end{enumerate}
+\subsection*{Design Clinic}
+\begin{enumerate}[label=\textbf{4.\arabic*},start=11]
+\item Design an error message that distinguishes missing label, duplicate label, and incompatible continuation.
+\end{enumerate}
+\subsection*{Challenge}
+\begin{enumerate}[label=\textbf{4.\arabic*},start=12]
+\item Investigate how branch subtyping might safely vary label sets; state a conjecture to be tested in Chapter 10.
+\end{enumerate}

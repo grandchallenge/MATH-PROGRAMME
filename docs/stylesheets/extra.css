@@ -577,3 +577,34 @@ input {
     transition-duration: 0.01ms !important;
   }
 }
+.catalog-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0;
+}
+
+.catalog-controls label,
+.catalog-controls input,
+.catalog-controls select {
+  display: block;
+  width: 100%;
+}
+
+.catalog-entry {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.4rem;
+  margin: 0.8rem 0;
+  padding: 0.8rem 1rem;
+}
+
+.catalog-badge {
+  background: var(--md-accent-fg-color--transparent);
+  border-radius: 1rem;
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin: 0.35rem 0.2rem 0.35rem 0;
+  padding: 0.15rem 0.55rem;
+}

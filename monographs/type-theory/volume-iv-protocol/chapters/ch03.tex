@@ -1,0 +1,94 @@
+\chapter{Say It, Then Continue}
+
+A communication step is useful only if the static account survives it. The sender consumes one output obligation; the receiver consumes the matching input obligation; both continuations must remain typable under the advanced session environment. This is the interactive analogue of preservation, but the object being preserved is not a closed term type. It is a relation between process state and protocol state.
+
+\section{The commuting obligation}
+Write the principal redex as
+\[
+(\nu x\,y)(x!\chanval{v}.P \mid y?(z).Q)
+\to
+(\nu x\,y)(P\mid Q[v/z]).
+\]
+If the endpoint types are $\send{A}{S}$ and $\recv{A}{\dual S}$, then the protocol frontier must advance to $S$ and $\dual S$. We therefore track a process step and an environment step together:
+\[
+P\to P',\qquad \Delta\envstep\Delta'.
+\]
+The preservation question is whether $\ptypes{\Gamma}{\Delta}{P}$ implies $\ptypes{\Gamma}{\Delta'}{P'}$ for the exact reduction cases admitted by the calculus.
+
+\input{plates/plate07}
+
+\section{Payload substitution}
+\begin{lemma}[T4.3, payload substitution]
+In the first-order payload layer of \texttt{PROTO-0}, if $\Gamma,z:A\vdash e:B$ and $\Gamma\vdash v:A$, then $\Gamma\vdash e[v/z]:B$.
+\end{lemma}
+\begin{proof}
+By structural induction on the payload expression $e$. Variables are the critical case: $z[v/z]=v$, while every other variable keeps its typing assumption. Pair, injection, and primitive-elimination cases follow from the induction hypotheses. Capture avoidance is immediate for the first-order fragment; if binders are added to the payload language, the ordinary alpha-renaming side condition is required.
+\end{proof}
+
+\section{Principal communication}
+\begin{proposition}[Send/receive preservation kernel]
+Suppose
+\[
+\ptypes{\Gamma}{\Delta,x:\send{A}{S},y:\recv{A}{\dual S}}
+{(\nu x\,y)(x!\chanval{v}.P\mid y?(z).Q)}
+\]
+with $\Gamma\vdash v:A$. Then the principal step is typable under the environment obtained by replacing those two bindings by $x:S$ and $y:\dual S$.
+\end{proposition}
+\begin{proof}
+Invert the output and input typing derivations. The sender continuation is typed under $x:S$; the receiver continuation is typed under $y:\dual S$ and $z:A$. Apply T4.3 to $Q$ using $\Gamma\vdash v:A$. The parallel rule then reconstructs the post-step process with the same disjoint split except for the advanced endpoint bindings.
+\end{proof}
+
+\input{plates/plate09}
+
+\section{Worked example}
+\begin{workedexample}
+For $S=\send{\Nat}{\recv{\Bool}{\mathsf{end!}}}$, a transfer of $7$ changes the client obligation from $!\Nat.? \Bool.\mathsf{end!}$ to $?\Bool.\mathsf{end!}$ and the service obligation from its dual to $!\Bool.\mathsf{end?}$. The integer $7$ is substituted only in the receiver continuation. No liveness conclusion follows from this one step.
+\end{workedexample}
+
+\section{Do not confuse: preservation with availability}
+\begin{warningbox}
+Preservation is conditional: \emph{if} a typed process takes a reduction step, the result remains typed under the advanced protocol state. It does not say that a reduction step exists. Availability is a progress question, and global availability is stronger still.
+\end{warningbox}
+
+\input{plates/plate33}
+
+\section{Computational laboratory}
+\begin{labbox}
+Run
+\[
+  \texttt{python labs/lab03_fidelity.py}.
+\]
+The laboratory checks principal send/receive steps and verifies that process actions and finite session states advance together. It is executable evidence for the stated finite fixtures and does not enlarge the theorem scope.
+\end{labbox}
+
+\section{Exercises}
+\subsection*{Checkpoint}
+\begin{enumerate}[label=\textbf{3.\arabic*},start=1]
+\item Given $x:!\Nat.?\Bool.\mathsf{end!}$, state the type of $x$ immediately after the natural-number send.
+\item State the two premises of T4.3 and its conclusion.
+\item Explain why environment evolution is written separately from process reduction.
+\end{enumerate}
+\subsection*{Core}
+\begin{enumerate}[label=\textbf{3.\arabic*},start=4]
+\item Derive the post-step endpoint types for a Boolean send/receive redex.
+\item Give a payload-substitution example using a pair and identify the substituted variable.
+\item Construct a principal redex whose payload type is wrong and state exactly which typing premise fails.
+\end{enumerate}
+\subsection*{Synthesis}
+\begin{enumerate}[label=\textbf{3.\arabic*},start=7]
+\item Compare ordinary subject reduction for a closed term with session fidelity for a process.
+\item Explain why deterministic lab traces do not make the mathematical reduction relation deterministic.
+\end{enumerate}
+\subsection*{Proof Workshop}
+\begin{enumerate}[label=\textbf{3.\arabic*},start=9]
+\item Prove T4.3 for product formation in the payload layer.
+\item Prove the send/receive preservation kernel by inversion on the two prefix typing rules.
+\end{enumerate}
+\subsection*{Design Clinic}
+\begin{enumerate}[label=\textbf{3.\arabic*},start=11]
+\item Design an evidence record that stores pre-process, pre-environment, action, post-process, and post-environment without conflating them.
+\end{enumerate}
+\subsection*{Challenge}
+\begin{enumerate}[label=\textbf{3.\arabic*},start=12]
+\item Extend the preservation kernel with one additional payload constructor and state the new substitution case.
+\end{enumerate}

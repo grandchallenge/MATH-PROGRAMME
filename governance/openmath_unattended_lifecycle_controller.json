@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0.0",
+  "control_id": "MP-OPENMATH-UNATTENDED-LIFECYCLE-001",
+  "status": "ACTIVE",
+  "purpose": "Carry a validated OPENMATH RESULT/1 through permanent capture, bounded replay/adjudication, protected Solve merge, Programme reconciliation, and ADVANCED without manual wake. Recover exactly locked legacy returns in the same controller.",
+  "frozen_architecture": {
+    "topology": "SEVEN_PEER_HILLS",
+    "transport": "LINK_IN_RELAY_OUT",
+    "durable_substrate": "GITHUB_TASK_AND_EVIDENCE",
+    "external_intelligence": "ZERO_CONTEXT_AGENTS",
+    "result_grammar": "GCL-CONTRIBUTION-RESULT/1",
+    "authority_boundary": "MATHFORGE_TO_MATHSOLVE_TO_MATHCERT"
+  },
+  "lifecycle": [
+    "READY",
+    "LAUNCHED",
+    "RETURNED",
+    "CAPTURED",
+    "REPLAYED",
+    "ADJUDICATED",
+    "ADVANCED"
+  ],
+  "wake": {
+    "kind": "GitHub Actions",
+    "primary_operational_wake": "repository_dispatch/openmath-return-ready plus protected lifecycle reconciliation pushes",
+    "live_smoke_wake": "protected main push limited to controller self-test and lifecycle reconciliation surfaces",
+    "manual_diagnostic": "workflow_dispatch",
+    "manual_controller_wake_required": false,
+    "event_backstop": "protected Programme lifecycle reconciliation merge push; each merged reconciliation wakes the next bounded transition",
+    "scheduled_delivery_guaranteed": false,
+    "operational_evidence": {
+      "architecture": "EVENT_CHAIN_PLUS_TWICE_HOURLY_RECOVERY_POLL",
+      "rate_limit_incident_run": 37013577638,
+      "rate_limit_incident_disposition": "REPAIRED_BY_PR_1142",
+      "rate_budget_repair_merge": "51355bda7d61d8a840e01cc1b06276c0cb768b94",
+      "current_event_chain_smoke": "TRIGGER_ON_PROTECTED_MERGE_OF_THIS_CONTROL_RECORD",
+      "superseded_pre_repair_evidence": {
+        "idempotent_repeat_run": 36698910067,
+        "result": "PASS_LEGACY_ALREADY_PROTECTED_NO_ERRORS",
+        "scheduled_wake": "UNOBSERVED",
+        "event_backstop": "PASS_WORKFLOW_RUN_36704182443",
+        "event_backstop_run": 36704182443,
+        "event_backstop_artifact": 11091550865,
+        "return_event": "PASS_REPOSITORY_DISPATCH_36713531141"
+      }
+    },
+    "return_event": "repository_dispatch/openmath-return-ready from protected Solve intake; advisory wake only, protected state is re-read",
+    "recovery_poll": "scheduled recovery poll at minutes 17 and 47 of each hour",
+    "rate_budget": "Normal advancement must scan local protected state and spend REST calls only on pending/live lifecycle work; historical ADVANCED+reconciled records are not re-read through REST."
+  },
+  "credentials": {
+    "environment": "release-trust",
+    "solve_token": {
+      "repositories": [
+        "MATHSOLVE"
+      ],
+      "permissions": {
+        "contents": "write",
+        "issues": "write",
+        "pull-requests": "write"
+      }
+    },
+    "programme_token": {
+      "repositories": [
+        "MATH-PROGRAMME"
+      ],
+      "permissions": {
+        "contents": "write",
+        "pull-requests": "write"
+      }
+    }
+  },
+  "allowed_actions": [
+    "inspect exact first-result-locked legacy raw/receipt and verify original GitHub comment identity",
+    "create one bounded replay-closure successor issue from protected original return",
+    "build a new successor candidate branch from protected Solve main without rewriting any legacy evidence branch",
+    "read and validate existing MATHSOLVE lifecycle candidate branches",
+    "open a pull request for a validated lifecycle candidate",
+    "enable protected auto-merge; never bypass branch protection",
+    "wait for protected Solve merge",
+    "read the protected Programme projection from merged Solve main",
+    "create one bounded Programme reconciliation branch and pull request",
+    "enable protected Programme auto-merge and wait for it",
+    "verify protected Programme state records ADVANCED",
+    "rebuild a conflicting lifecycle candidate from protected Solve main and the unchanged verified first-result lock; preserve the existing successor issue"
+  ],
+  "prohibited_actions": [
+    "direct push to protected main",
+    "administration or branch-protection mutation",
+    "claim mathematical correctness not established by the Solve adjudication",
+    "MATHCERT certification",
+    "competition submission",
+    "topology redesign",
+    "manual evidence shuttling as a normal transition"
+  ],
+  "fail_closed_rule": "Any identity, provenance, first-result lock, candidate manifest, protected merge, or Programme projection mismatch stops promotion; original legacy evidence remains unchanged. Failure produces a durable controller report with exact branch and error.",
+  "acceptance_test": {
+    "id": "OPENMATH-RETURNED-TO-ADVANCED-001",
+    "fixture": "OM26-H2-WP02-IA-001",
+    "required_result": "PASS",
+    "manual_transport_allowed": false,
+    "manual_controller_wake_allowed": false,
+    "live_controller_smoke_required": true,
+    "live_controller_smoke_trigger": "protected push on controller self-test surface",
+    "live_legacy_return_recovery_required": true,
+    "live_legacy_fixtures": [
+      "OM26-H3-WP01-IA-001",
+      "OM26-H6-WP01-IA-001"
+    ]
+  },
+  "paired_solve_implementation": {
+    "repository": "grandchallenge/MATHSOLVE",
+    "base_pull_request": 542,
+    "hardening_pull_request": 543,
+    "acceptance_closure_pull_request": 544,
+    "protected_merge": "631ddb201ac2ead06373e8cc3e6d08eadbf51c16",
+    "lifecycle_contract_path": ".gcl/campaigns/OPENMATH-2026/LIFECYCLE_CONTRACT.json",
+    "lifecycle_contract_git_blob_sha1": "c3f4fc75424210def1ad025e20da36b7fce6257f",
+    "candidate_generator_path": "ci/openmath_lifecycle_candidate.py",
+    "candidate_generator_git_blob_sha1": "30d0db5bfe09a5a173482b70352fbc9153fc6299",
+    "acceptance_runner_path": "ci/openmath_lifecycle_acceptance.py",
+    "acceptance_runner_git_blob_sha1": "0ae6986d8f164199712f014c8501ae89a5c0ec8d",
+    "event_window_activation_pull_request": 596,
+    "event_window_activation_merge": "8dc3dafbb3efbd017a434dc61d7af1311513386a",
+    "event_window_candidate_generator_git_blob_sha1": "5e6b94411988272b252696fcc10de4c21d12a027"
+  },
+  "participation": {
+    "mode": "VOLUNTARY",
+    "worker_launch_required": false,
+    "gcl_worker_launch": "OPTIONAL",
+    "automated_scope": [
+      "immutable task publication",
+      "first-result-locked intake",
+      "bounded replay and adjudication",
+      "protected advancement",
+      "successor task publication"
+    ]
+  },
+  "merge_progression": "Event-chained bounded serialized attempts: return dispatch wakes capture; protected Solve merge wakes Programme; protected Programme reconciliation push wakes the next pending transition. A twice-hourly schedule is recovery-only. Never hold the controller while awaiting CI or merge.",
+  "supporting_assignments": {
+    "scope": "H1 supporting tasks with distinct protected identities",
+    "projection_rule": "Supporting results advance their named support slot and never replace the primary hill assignment or mathematical frontier",
+    "topology_effect": "NONE__SEVEN_PEER_HILLS"
+  }
+}

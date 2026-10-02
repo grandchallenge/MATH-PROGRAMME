@@ -2,7 +2,7 @@
 
 ## Purpose
 
-ResearchMath-14k is useful to MATHFORGE as a sourcing corpus, not as a theorem oracle. The intake lane turns one dataset row into an audited problem card, a route classification, and a MATHSOLVE-ready Work Package seed while refusing to promote the row's status or solve the problem.
+ResearchMath-14k is useful to MATHFORGE as a sourcing corpus, not as a theorem oracle. Canonical intake now lives in MATHFORGE under `forge/intake/researchmath14k/` and is imported here at an immutable protected commit through `governance/mathforge_external_source_imports.json`. This Programme fixture is a conformance mirror: it demonstrates the source-row, problem-card, and handoff contract but is not the authoritative source reconstruction.
 
 The fixture is deliberately modest:
 
@@ -22,7 +22,7 @@ Fixture `RM-DIO-004` ingests the ResearchMath viewer row whose original question
 x^2 - x = y^5 - y.
 ```
 
-The row imports the dataset status `unknown`. MATHFORGE preserves that status as intake metadata but downgrades it operationally to `STATUS_UNVERIFIED_UNKNOWN`; no independent literature-status reconstruction is claimed.
+The row is pinned to Hugging Face repository commit `f22d0f28b55e6e777acf82e722d97ae982dff02e`, LFS data object `3f6c96d18925a47ac223555717226c5408cc9c75e07a1e96bddcffde8a06f029`, config `ResearchMath-14k`, split `test`, row `0`. It imports status `unknown`, which remains `STATUS_UNVERIFIED_UNKNOWN`; no independent current-status reconstruction is claimed.
 
 ## Artifacts
 
@@ -75,4 +75,4 @@ The adversarial suite rejects attempts to:
 
 MATHFORGE may preserve, audit, classify, and hand off. MATHSOLVE may open a Chaidez-style campaign and run exact bounded screens. MATHCERT has no theorem to certify from this fixture.
 
-The value is the intake machinery itself: a noisy research-problem corpus can now feed the programme without becoming an authority.
+The value is the intake machinery itself: a noisy research-problem corpus can feed Forge triage without becoming an authority. Programme admission, campaign authority, and certification remain separate transitions.

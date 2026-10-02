@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
+  "schema_version": "1.0.0",
+  "checkpoint_id": "TYPE-THEORY-VOL-IV-001.CP001",
+  "governed_work_id": "TYPE-THEORY-VOL-IV-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "admission": {
+    "topology": "MULTI_SESSION_RESUMABLE",
+    "admission_ref": "grandchallenge/MATH-PROGRAMME#877",
+    "routine_work_excluded": true
+  },
+  "authority": {
+    "ghos_standard": "GCL-GHOS-00",
+    "ghos_version": "0.2.0",
+    "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#877"
+  },
+  "phase": "Gate 7 composition candidate is materially assembled; durable resume state must be reconciled before exact-head replay and Gate 7A admission.",
+  "state": "IN_PROGRESS",
+  "identities": {
+    "protected_base_sha": "823265684d0057e74fca267ce6b51cf1c12d191b",
+    "candidate_head_sha": "0cfdb07cd3a63809f77653f4fd6095e032bd006f",
+    "issue_number": 877,
+    "pr_number": null,
+    "branch": "docs/type-theory-vol-iv-full-composition-001",
+    "workflow_runs": []
+  },
+  "terminal_condition": "The exact Volume IV RC passes the applicable Gate 7 composition checks and rendered inspection, its release evidence is recorded, the exact RC is admitted through Gate 7A protected controls and read back from protected state, and the Gate 8 reviewer-delivery surface is prepared without claiming independent review or publication authority.",
+  "permitted_next_actions": [
+    {
+      "id": "reconcile_gate7_resume_state",
+      "description": "Reconcile the candidate WORKSET_STATE.json to exact head 0cfdb07cd3a63809f77653f4fd6095e032bd006f and the actual Gate 7 position, then record exact replay as the deterministic next action without changing mathematical or publication claims."
+    }
+  ],
+  "next_action": {
+    "id": "reconcile_gate7_resume_state",
+    "description": "Reconcile the stale Volume IV workset resume record at the exact candidate head before the final Gate 7 replay.",
+    "evidence_targets": [
+      "grandchallenge/MATH-PROGRAMME#877",
+      "branch docs/type-theory-vol-iv-full-composition-001 head 0cfdb07cd3a63809f77653f4fd6095e032bd006f",
+      "monographs/type-theory/volume-iv-protocol/WORKSET_STATE.json",
+      "docs/monographs/type-theory-series/QUALITY_GATES.md"
+    ]
+  },
+  "external_evidence": {
+    "waiting": false,
+    "objects": []
+  },
+  "blocking_boundary": null,
+  "last_transition": {
+    "action": "classify TYPE-THEORY-VOL-IV-001 as a long-horizon governed workset requiring durable continuity",
+    "result": "The workset is now bound to exact branch head 0cfdb07cd3a63809f77653f4fd6095e032bd006f with a deterministic resume action. No Gate 7, Gate 7A, Gate 8, certification, or publication claim is created by this checkpoint.",
+    "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#877",
+      "docs/type-theory-vol-iv-full-composition-001@0cfdb07cd3a63809f77653f4fd6095e032bd006f",
+      "docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md"
+    ]
+  },
+  "freshness": {
+    "required_before_transition": true,
+    "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/TYPE-THEORY-VOL-IV-001.json",
+    "on_mismatch": "REBIND_BEFORE_MUTATION",
+    "observed_at": "2026-09-07T14:15:00Z"
+  },
+  "resume": {
+    "fresh_session_safe": true,
+    "requires_chat_history": false,
+    "authoritative_sources": [
+      "grandchallenge/MATH-PROGRAMME#877",
+      "docs/monographs/type-theory-series/SERIES_HANDOFF.md",
+      "docs/monographs/type-theory-series/QUALITY_GATES.md",
+      "monographs/type-theory/volume-iv-protocol/WORKSET_STATE.json",
+      "docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md",
+      "AGENTS.md"
+    ],
+    "instructions": "Run the recorded live verification command before mutation. Continue from the exact branch head and issue state, not from chat history. First reconcile the stale workset resume record. Thereafter update this checkpoint whenever the candidate head, phase, external-evidence state, next action, or a genuine blocking boundary changes. Do not infer Gate 7 completion, durable admission, independent review, certification, or publication authority from this checkpoint."
+  },
+  "terminal_evidence": [],
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false,
+    "protected_bypass_authorized": false
+  }
+}

@@ -4,15 +4,41 @@
   "title": "Programme policy impact gating control",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version","control_id","status","issue","protected_required_contexts","classifier","formal_replay","policy_dag","authority_boundary","claim_boundaries"],
+  "required": ["schema_version", "control_id", "status", "issue", "protected_required_contexts", "classifier", "formal_validation", "policy_dag", "authority_boundary", "claim_boundaries"],
   "properties": {
-    "schema_version": {"const": "1.0.0"},
+    "schema_version": {"const": "2.0.0"},
     "control_id": {"const": "MP-POLICY-IMPACT-GATING-001"},
     "status": {"const": "ACTIVE_ON_PROTECTED_MERGE"},
-    "issue": {"const": 390},
-    "protected_required_contexts": {"type": "array", "minItems": 6, "uniqueItems": true},
-    "classifier": {"type": "object"},
-    "formal_replay": {"type": "object"},
+    "issue": {"const": 936},
+    "protected_required_contexts": {
+      "const": ["validate-json", "formal-validation / formal-validation", "policy / policy", "security / action-policy"]
+    },
+    "classifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["implementation", "shard_registry", "unknown_path_behavior", "classifier_change_behavior"],
+      "properties": {
+        "implementation": {"const": "ci/policy_impact.py"},
+        "shard_registry": {"const": "governance/policy_shard_registry.json"},
+        "unknown_path_behavior": {"const": "FULL_FANOUT"},
+        "classifier_change_behavior": {"const": "FULL_FANOUT"}
+      }
+    },
+    "formal_validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["registry", "workflow", "required_context", "unaffected_lane_behavior", "unknown_formal_path_behavior", "control_plane_change_behavior", "protected_sentinel", "compatibility_aliases"],
+      "properties": {
+        "registry": {"const": "governance/formal_validation_registry.json"},
+        "workflow": {"const": ".github/workflows/formal-validation.yml"},
+        "required_context": {"const": "formal-validation / formal-validation"},
+        "unaffected_lane_behavior": {"const": "ABSENT"},
+        "unknown_formal_path_behavior": {"const": "ERROR"},
+        "control_plane_change_behavior": {"const": "FULL_FORMAL_FANOUT"},
+        "protected_sentinel": {"type": "object"},
+        "compatibility_aliases": {"type": "object"}
+      }
+    },
     "policy_dag": {"type": "object"},
     "authority_boundary": {"type": "object"},
     "claim_boundaries": {"type": "object"}

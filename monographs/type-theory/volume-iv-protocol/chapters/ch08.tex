@@ -1,0 +1,91 @@
+\chapter{Messages in Flight}
+
+Synchronous communication treats a send and its matching receive as one rendezvous. Real systems often buffer messages. Once a send can complete before the peer receives, the queue is part of the semantic state. The proof obligations change with it.
+
+\section{Configurations include queues}
+A bounded \texttt{PROTO-A1} configuration is written schematically as
+\[
+\langle P,Q;\;q_{xy},q_{yx}\rangle.
+\]
+A send appends a typed message to the appropriate FIFO queue. A receive consumes the oldest compatible message. Endpoint session states and queue contents must therefore be typed together.
+
+\input{plates/plate15}
+
+\section{Queue typing invariant}
+\begin{definition}[Queue-consistency frontier]
+For the teaching fragment, a queue is consistent with a sender/receiver pair when its messages are exactly a finite prefix of outputs already consumed by the sender's local session state but not yet consumed by the receiver's local state, in FIFO order and with the declared payload/label classes.
+\end{definition}
+\begin{theorem}[T4.13, finite asynchronous queue invariant]
+If a bounded \texttt{PROTO-A1} configuration is queue-consistent and takes one enqueue or dequeue step, the resulting configuration is queue-consistent under the corresponding endpoint-state evolution.
+\end{theorem}
+\begin{proof}
+By cases on the step. Enqueue appends exactly the message class required by the sender's next output and advances only the sender frontier, extending the pending prefix by one. Dequeue requires the queue head to match the receiver's next input and removes exactly that head while advancing the receiver frontier. FIFO order is preserved in both cases.
+\end{proof}
+
+\input{plates/plate16}
+
+\section{Asynchronous fidelity}
+\begin{theorem}[T4.14, bounded asynchronous fidelity]
+For the finite queue-aware fragment defined above, a well-typed configuration that takes one asynchronous reduction remains well typed under the evolved endpoint and queue state.
+\end{theorem}
+\begin{proof}
+Combine T4.13 with the finite prefix typing rules. Process-local continuation typing is preserved exactly as in T4.4; the difference is that sender and receiver frontiers need not advance in the same operational step. The queue-consistency judgment records the gap.
+\end{proof}
+
+\input{plates/plate17}
+
+\section{Not the same trace semantics}
+A synchronous handshake yields one joint event. An asynchronous run may expose separate enqueue and dequeue events and intermediate queue states. For selected finite examples we can erase queue-internal steps and compare visible communication traces, but T4.15 is deliberately not a universal equivalence theorem.
+
+\section{Orphans and growth}
+If the model permits a peer to terminate while messages remain queued, those messages are orphaned. If queues are unbounded, resource consumption becomes a semantic and systems concern beyond finite type fidelity. The lab makes both states visible rather than silently assuming them away.
+
+\input{plates/plate18}
+
+\section{Do not confuse: FIFO as reality}
+\begin{warningbox}
+FIFO is an explicit assumption of \texttt{PROTO-A1}. Networks, brokers, retries, and replicated transports may reorder, duplicate, or lose messages. Those behaviors require a different semantics; they cannot be ``covered'' by leaving the queue model implicit.
+\end{warningbox}
+
+\input{plates/plate36}
+
+\section{Computational laboratory}
+\begin{labbox}
+Run
+\[
+  \texttt{python labs/lab08_async.py}.
+\]
+The laboratory simulates finite typed FIFO sends/receives, checks queue consistency after every step, and reports orphan and bounded-growth diagnostics. It is executable evidence for the stated finite fixtures and does not enlarge the theorem scope.
+\end{labbox}
+
+\section{Exercises}
+\subsection*{Checkpoint}
+\begin{enumerate}[label=\textbf{8.\arabic*},start=1]
+\item What new state component appears in $\texttt{PROTO-A1}$ that is absent from synchronous $\texttt{PROTO-0}$?
+\item State the FIFO assumption.
+\item What does queue consistency record between sender and receiver frontiers?
+\end{enumerate}
+\subsection*{Core}
+\begin{enumerate}[label=\textbf{8.\arabic*},start=4]
+\item Simulate one enqueue followed later by the matching dequeue.
+\item Give a bounded queue state that violates payload typing.
+\item Construct an orphan-message state and identify which model rule would have to permit it.
+\end{enumerate}
+\subsection*{Synthesis}
+\begin{enumerate}[label=\textbf{8.\arabic*},start=7]
+\item Explain why the synchronous and asynchronous state spaces are not identical.
+\item Explain why erasing enqueue/dequeue detail in one example is not a proof of universal trace equivalence.
+\end{enumerate}
+\subsection*{Proof Workshop}
+\begin{enumerate}[label=\textbf{8.\arabic*},start=9]
+\item Prove the enqueue case of T4.13.
+\item Derive T4.14 for one receive step from the queue invariant and continuation typing.
+\end{enumerate}
+\subsection*{Design Clinic}
+\begin{enumerate}[label=\textbf{8.\arabic*},start=11]
+\item Design a bounded-buffer policy and state which new failure must be modeled when the buffer is full.
+\end{enumerate}
+\subsection*{Challenge}
+\begin{enumerate}[label=\textbf{8.\arabic*},start=12]
+\item Investigate one literature result about buffer bounds from session types and state its exact calculus/hypotheses before comparing it with this teaching fragment.
+\end{enumerate}

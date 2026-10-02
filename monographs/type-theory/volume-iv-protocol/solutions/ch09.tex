@@ -1,0 +1,37 @@
+\chapter{More Than Two Voices}
+
+\section*{9.1}
+A global description records interactions and causal ordering across roles, information no one local binary endpoint necessarily sees.
+
+\section*{9.2}
+Projection extracts from a global description the send/receive/branch obligations relevant to one role.
+
+\section*{9.3}
+It is a specification; projected participants can execute without a component that centrally schedules every event.
+
+\section*{9.4}
+Worker: receive `job:Nat` from broker, then send `result:Bool` to broker.
+
+\section*{9.5}
+Client: send `job:Nat` to broker, then receive `result:Bool` from broker.
+
+\section*{9.6}
+Let $A$ choose labels $l_1/l_2$ when talking to $B$, but require $C$ to send different next messages depending on that label without informing $C$. The local behavior for $C$ is underdetermined.
+
+\section*{9.7}
+Pairwise endpoint types can each look compatible while the combined causal ordering or branch knowledge cannot be realized globally.
+
+\section*{9.8}
+Exhaustion establishes equality of two finite trace sets for registered fixtures. A general theorem quantifies over a defined class of all well-formed/projectable global types.
+
+\section*{9.9}
+The unbranched choreography has exactly one global event sequence. Each event appears as complementary send/receive in the two projections, so synchronized composition reconstructs the same four-event sequence.
+
+\section*{9.10}
+For each global branch, any uninvolved role whose later behavior differs across branches must receive enough information to choose a unique local continuation. Violation makes projection ambiguous.
+
+\section*{9.11}
+Report the branch point, choosing role, dependent role, and the first pair of incompatible local continuations lacking a distinguishing message.
+
+\section*{9.12}
+Full credit requires an exact MPST source and theorem/hypothesis statement; citing the area generically is insufficient.

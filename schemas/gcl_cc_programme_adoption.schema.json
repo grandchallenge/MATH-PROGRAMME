@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/gcl_cc_programme_adoption.schema.json",
+  "title": "GCL-CC-00 Programme Adoption",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "record_type",
+    "repository",
+    "standard",
+    "standard_version",
+    "standard_repository",
+    "standard_commit",
+    "standard_source_path",
+    "standard_git_blob_sha1",
+    "admission_record",
+    "admission_git_blob_sha1",
+    "programme_base",
+    "governing_issue",
+    "status",
+    "effective_condition",
+    "applicability",
+    "lifecycle_contracts",
+    "completion_contract",
+    "remediation_contract",
+    "enforcement",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../schemas/gcl_cc_programme_adoption.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "record_type": {
+      "const": "GCL_STANDARD_PROGRAMME_ADOPTION"
+    },
+    "repository": {
+      "const": "grandchallenge/MATH-PROGRAMME"
+    },
+    "standard": {
+      "const": "GCL-CC-00"
+    },
+    "standard_version": {
+      "const": "0.1.0"
+    },
+    "standard_repository": {
+      "const": "grandchallenge/gcl-standards"
+    },
+    "standard_commit": {
+      "const": "6704b4037161133a1efeedddcb69060a79cb7bc7"
+    },
+    "standard_source_path": {
+      "const": "standards/GCL-CC-00.md"
+    },
+    "standard_git_blob_sha1": {
+      "const": "b166204c6204ec96dcbf48c48c8688cca3a4cce4"
+    },
+    "admission_record": {
+      "const": "admissions/GCL-CC-00-0.1.0.json"
+    },
+    "admission_git_blob_sha1": {
+      "const": "8adca06e54833fa3e37ba82ce4c2facd278f4d76"
+    },
+    "programme_base": {
+      "const": "6fae2b2df9bc0bb180a63c76fc9752656285da02"
+    },
+    "governing_issue": {
+      "const": "grandchallenge/MATH-PROGRAMME#1072"
+    },
+    "status": {
+      "const": "effective"
+    },
+    "effective_condition": {
+      "const": "protected_merge_of_this_exact_adoption_record"
+    },
+    "applicability": {
+      "type": "object"
+    },
+    "lifecycle_contracts": {
+      "type": "object"
+    },
+    "completion_contract": {
+      "type": "object"
+    },
+    "remediation_contract": {
+      "type": "object"
+    },
+    "enforcement": {
+      "type": "object"
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": {
+        "const": false
+      }
+    }
+  }
+}

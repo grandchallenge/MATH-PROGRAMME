@@ -1,0 +1,86 @@
+{
+  "$schema": "../schemas/gcl_cc_programme_adoption.schema.json",
+  "schema_version": "1.0.0",
+  "record_type": "GCL_STANDARD_PROGRAMME_ADOPTION",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "standard": "GCL-CC-00",
+  "standard_version": "0.1.0",
+  "standard_repository": "grandchallenge/gcl-standards",
+  "standard_commit": "6704b4037161133a1efeedddcb69060a79cb7bc7",
+  "standard_source_path": "standards/GCL-CC-00.md",
+  "standard_git_blob_sha1": "b166204c6204ec96dcbf48c48c8688cca3a4cce4",
+  "admission_record": "admissions/GCL-CC-00-0.1.0.json",
+  "admission_git_blob_sha1": "8adca06e54833fa3e37ba82ce4c2facd278f4d76",
+  "programme_base": "6fae2b2df9bc0bb180a63c76fc9752656285da02",
+  "governing_issue": "grandchallenge/MATH-PROGRAMME#1072",
+  "status": "effective",
+  "effective_condition": "protected_merge_of_this_exact_adoption_record",
+  "applicability": {
+    "scope": "all_governed_GCL_campaigns_in_MATH_PROGRAMME",
+    "canonical_campaign_record_required": true,
+    "human_view_derived_or_validated": true,
+    "operational_presentational_drift_blocking": true,
+    "fresh_session_resume_from_protected_state": true
+  },
+  "lifecycle_contracts": {
+    "external_agent": [
+      "PREPARED",
+      "LEASED",
+      "LAUNCHED",
+      "RETURNED",
+      "CAPTURED",
+      "ADJUDICATING",
+      "ACCEPTED",
+      "REJECTED",
+      "SUPERSEDED",
+      "CLOSED"
+    ],
+    "leased_not_launched_substate": "LEASED_NOT_LAUNCHED",
+    "competition": [
+      "CANDIDATE",
+      "LOCALLY_VERIFIED",
+      "CERT_PENDING",
+      "CERTIFIED",
+      "SUBMISSION_READY",
+      "SUBMITTED",
+      "ACCEPTED",
+      "REJECTED"
+    ],
+    "explicit_not_submitted_required": true
+  },
+  "completion_contract": {
+    "protected_mutation": true,
+    "required_checks": true,
+    "protected_main_readback": true,
+    "canonical_campaign_state": true,
+    "human_view_agreement": true,
+    "supersession_explicit": true,
+    "next_action_unambiguous": true
+  },
+  "remediation_contract": {
+    "permitted_modes": [
+      "REPAIR_IN_PLACE",
+      "EXPLICIT_SUPERSESSION_WITH_MIGRATION"
+    ],
+    "unresolved_remediation_layering_permitted": false,
+    "migration_and_retirement_required_for_parallel_replacement": true
+  },
+  "enforcement": {
+    "initial_campaign": "OPENMATH-2026",
+    "canonical_state": "governance/openmath_2026_campaign_state.json",
+    "human_view": "docs/campaigns/OPENMATH_2026_STATUS.md",
+    "local_validator": "ci/validate_openmath_2026_core_clarity.py",
+    "live_verification": "required_before_campaign_transition",
+    "on_drift": "BLOCK_DISCRETIONARY_SUBSTANTIVE_ADVANCEMENT"
+  },
+  "claim_boundaries": {
+    "constitutional_authority_created": false,
+    "mathematical_certification": false,
+    "scientific_claim_promotion": false,
+    "publication": false,
+    "production_activation": false,
+    "credential_expansion": false,
+    "competition_submission": false,
+    "agent_permission_escalation": false
+  }
+}

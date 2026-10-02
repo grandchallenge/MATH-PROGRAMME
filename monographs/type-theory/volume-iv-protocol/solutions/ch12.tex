@@ -1,0 +1,37 @@
+\chapter{Watching the Conversation}
+
+\section*{12.1}
+One state corresponds to one residual finite session type, plus a terminal accepted state.
+
+\section*{12.2}
+The local trace must be complete and fully observed through the monitor's event abstraction.
+
+\section*{12.3}
+Acceptance/rejection classifies observed behavior; recovery requires actions and fault semantics not supplied by the automaton theorem.
+
+\section*{12.4}
+States expect `send Nat`, then `recv Bool`, then `close`, then accept.
+
+\section*{12.5}
+For a session beginning `send Nat`, a first event `recv Nat` is rejected at the initial state.
+
+\section*{12.6}
+`send Nat` alone is valid so far but incomplete because the residual session still requires `recv Bool; close`.
+
+\section*{12.7}
+Static typing reasons before execution from source/derivation structure. Monitoring reasons during execution from the events it can observe.
+
+\section*{12.8}
+A crash before instrumentation emits an event, or a semantic payload error that preserves type/order, may be invisible.
+
+\section*{12.9}
+The generated send-state has exactly one transition class, `send A`, to the monitor for the continuation. Acceptance after that transition reduces to the induction hypothesis.
+
+\section*{12.10}
+An internal-choice monitor has outgoing transitions only for the declared labels, each to the monitor generated from that continuation; apply the induction hypothesis on the chosen branch.
+
+\section*{12.11}
+Store observed event, expected class/set, residual session state, result, observation source, and timestamp separately.
+
+\section*{12.12}
+Distributed correlation needs an assumption such as trustworthy causal identifiers or synchronized clocks; without it, event order across peers may be ambiguous.

@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 934,
+  "operation": "OZ-RT-BZ-T3-011-P",
+  "stage": "T3_011_P_ALL_RECIPROCAL_TRIVARIATE_LAURENT_COKERNEL_AUDIT",
+  "predecessor": {
+    "reviewed_head": "da9e2204edc452f39328ba88de54d73455ba9f32",
+    "merge_commit": "0065b997317d59a9c20f3fbff8792b37527b4a65",
+    "required_terminal": "ACTIVE_SPECTATOR_DOUBLE_RECIPROCAL_TRIVARIATE_RESPONSE_CLASS_COKERNEL_INVISIBLE",
+    "expected_possible_record_count": 2564,
+    "expected_tested_record_count": 2564,
+    "expected_semantic_functional_ambiguity": null,
+    "expected_first_cokernel_breaking_direction": null,
+    "expected_characterized_blocker": null,
+    "expected_support_signature_pairs_inspected": 0
+  },
+  "boundary_predecessors": {
+    "double_reciprocal_active_positive_spectator": {
+      "operation": "OZ-RT-BZ-T3-011-N",
+      "required_terminal": "DOUBLE_RECIPROCAL_ACTIVE_TRIVARIATE_RESPONSE_CLASS_COKERNEL_INVISIBLE"
+    },
+    "negative_negative_pairwise": {
+      "operation": "OZ-RT-BZ-T3-011-I",
+      "required_terminal": "MIXED_RECIPROCAL_RESPONSE_CLASS_COKERNEL_INVISIBLE"
+    },
+    "active_reciprocal_degree_zero_faces": {
+      "anchor": "DIRECT_RESPONSE_ONLY_NO_PREDECESSOR_CLASS_PROMOTION",
+      "reason": "removing one active multiplier while retaining a reciprocal unshifted spectator is not silently identified with a protected trivariate sign octant"
+    }
+  },
+  "clean_question": "does the protected endpoint cokernel witness annihilate every all-reciprocal trivariate response Delta_c Delta_d(x_c^-r x_d^-s x_e^-t G), r,s,t>=1, with e the unique unshifted spectator?",
+  "all_reciprocal_trivariate_class": {
+    "orientations": [
+      "negative_left_negative_right_negative_spectator"
+    ],
+    "monomial_domain": "x_c^-r*x_d^-s*x_e^-t with integers r>=1,s>=1,t>=1",
+    "unordered_pair_order": [["n1","k1"],["n1","l1"],["n2","k1"],["n2","l1"],["n3","k1"],["n3","l1"],["k1","l1"]],
+    "spectator_axis_rule": "e is the unique axis in {n,k,l} distinct from axis(c) and axis(d)",
+    "spectator_is_unshifted": true,
+    "reciprocal_active_axis_count": 2,
+    "reciprocal_spectator": true,
+    "all_reciprocal_trivariate_octant_authorized": true,
+    "coordinate_zero_poles_only": true,
+    "complete_overlap_derived_from_exact_laurent_signatures": true,
+    "support_feasible_recession_must_stop_as_characterized_blocker": true,
+    "support_seed_required_for_recession": true,
+    "arbitrary_degree_cutoff_authorized": false,
+    "spectator_reciprocal_degree_zero_boundary_must_match_protected_I": true,
+    "active_reciprocal_degree_zero_faces_are_direct_response_anchors_only": true,
+    "shifted_spectator_authorized": false,
+    "shifted_poles_authorized": false,
+    "arbitrary_rational_functions_authorized": false,
+    "support_or_harmonic_enlargement_authorized": false,
+    "candidate_bank_or_scalar_namespace_widening_authorized": false,
+    "recurrence_search_authorized": false,
+    "correction_layer_recombination_authorized": false,
+    "candidate_linear_combinations_authorized": false,
+    "third_finite_difference_operator_authorized": false
+  },
+  "terminals": {
+    "escape": "ALL_RECIPROCAL_TRIVARIATE_RESPONSE_ESCAPE_FOUND",
+    "closure": "ALL_RECIPROCAL_TRIVARIATE_RESPONSE_CLASS_COKERNEL_INVISIBLE",
+    "semantic_ambiguity": "ALL_RECIPROCAL_TRIVARIATE_RESPONSE_NOT_CERTIFIED__SEMANTIC_FUNCTIONAL_AMBIGUITY",
+    "blocker": "ALL_RECIPROCAL_TRIVARIATE_RESPONSE_NOT_CERTIFIED__CHARACTERIZED_BLOCKER"
+  },
+  "claim_firewall": {
+    "theorem_promotion_authorized": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}

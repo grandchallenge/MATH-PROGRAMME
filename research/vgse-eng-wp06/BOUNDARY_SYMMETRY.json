@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "work_package": "VGSE-ENG-WP06",
+  "model": "broader algebraic Kenyon-Smirnov realization class, without imposing source TE3",
+  "boundary_colors": {
+    "U1": "black",
+    "U2": "white",
+    "U3": "black",
+    "U4": "black",
+    "U5": "white",
+    "U6": "white"
+  },
+  "transformation": {
+    "parameters": "c_i > 0 independently for i=1,...,6",
+    "boundary_factor": "beta_i -> c_i beta_i",
+    "boundary_edge_weight": "k_Bi -> k_Bi / c_i",
+    "complementary_boundary_datum": "gamma_i -> gamma_i / c_i so that beta_i gamma_i and the prescribed boundary edge increment remain fixed",
+    "internal_weights": "unchanged",
+    "internal_vertex_factors": "unchanged",
+    "kasteleyn_signs": "unchanged"
+  },
+  "preservation_proof": {
+    "primitive_boundary_edge": "Each boundary primitive increment contains k_Bi beta_i times the unchanged internal endpoint factor, so (k_Bi/c_i)(c_i beta_i)=k_Bi beta_i.",
+    "primitive_internal_edges": "unchanged term by term",
+    "interior_discrete_holomorphic_equations": "At the internal endpoint incident to B_i, the only changed boundary contribution contains the same invariant product k_Bi beta_i.",
+    "complementary_boundary_equation": "The equation on the opposite discrete-holomorphic system contains k_Bi times the unchanged internal factor and the complementary boundary datum; both sides scale by 1/c_i.",
+    "prescribed_boundary": "beta_i gamma_i is invariant, so the boundary edge vector is unchanged.",
+    "geometry": "Every primitive increment is unchanged, hence the entire labeled embedding is unchanged.",
+    "positivity": "c_i>0 preserves positive edge weights.",
+    "kasteleyn": "signs are unchanged."
+  },
+  "source_TE3_effect": "This symmetry generally changes the boundary-fixed weight gauge class and therefore does not preserve TE3 for a fixed weighted graph. That is exactly why it is an obstruction only in the broader algebraic-realization class.",
+  "exact_conclusion": "Without TE3 or another independent boundary normalization, the primitive geometry cannot determine all boundary weight directions."
+}

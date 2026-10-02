@@ -2,9 +2,9 @@
 
 ## Purpose
 
-This runbook governs maintenance of MATH-PROGRAMME's mandatory execution-routing control. The control is self-policing, not self-authorizing: it detects coverage, capability, topology, controller, identity, and enforcement drift.
+This runbook governs MATH-PROGRAMME's mandatory execution-routing control. The control is self-policing, not self-authorizing. It detects coverage, capability, topology, controller, identity, and enforcement drift.
 
-Routine workflow maintenance follows the standing delegated execution model. A legitimate routine change does not require fresh Human Steward or generic independent approval merely because its commit is new. Security-sensitive weakening, external gate authority changes, controller capability expansion, or temporary removal of protected enforcement remains a reserved control-plane boundary and receives the specialist or Human Steward authority required by that exact action.
+Routine workflow maintenance follows the standing delegated execution model. A legitimate routine change does not require fresh Human Steward or generic independent approval merely because its commit is new. Security-sensitive weakening, external gate authority changes, controller capability expansion, merge-queue admission changes, or temporary removal of protected enforcement remains a reserved control-plane boundary and receives the specialist or Human Steward authority required by that exact action.
 
 This runbook grants no certification, mathematical-claim, publication, external-claim, or protected-bypass authority.
 
@@ -15,13 +15,28 @@ This runbook grants no certification, mathematical-claim, publication, external-
 | `.ghos-routing/workflows.json` | Complete workflow inventory, derived features, topology, controller, and fixed authority boundaries |
 | `ci/ghos_execution_routing.py` | Repository-local deterministic validator |
 | `schemas/ghos_execution_routing.schema.json` | Closed routing-record schema |
-| `tests/test_ghos_execution_routing.py` | Core hostile semantic tests plus effective-candidate, base-advance, and enforcement-contract regressions |
-| `.github/workflows/ghos-routing-enforcement.yml` | Protected-base candidate-independent enforcement and protected-base revalidation dispatcher |
+| `tests/test_ghos_execution_routing.py` | Core hostile semantic tests plus pre-queue, merge-group, base-advance, and enforcement-contract regressions |
+| `.github/workflows/ghos-routing-enforcement.yml` | Protected pre-queue controller, native merge-group admission controller, and protected-base revalidation dispatcher |
 | `grandchallenge/.github/scripts/ghos_execution_routing_gate.py` | External governed gate whose bytes are SHA-256 pinned by the enforcement workflow |
-| Ruleset `21969152` | Dedicated protected-main requirement for `routing-enforcement` |
+| Ruleset `21969152` | Dedicated protected-main requirement for `routing-enforcement` and mandatory native merge queue |
 | Ruleset `17137629` | Separate Programme profile; not the GH-OS routing ruleset |
 
-The dedicated routing ruleset currently requires `routing-enforcement` with `strict_required_status_checks_policy: false` and no bypass actors. Non-strict status policy is deliberate: it permits concurrent mergeable development without update-branch synchronization solely for freshness. The protected controller supplies freshness by binding the required context to the effective merge candidate and revalidating open pull requests after protected-main movement.
+The dedicated routing ruleset requires `routing-enforcement` with `strict_required_status_checks_policy: false`, zero bypass actors, and a mandatory native merge queue. Non-strict status policy remains deliberate. Freshness is supplied by the merge queue's queue-owned candidate rather than update-branch synchronization.
+
+The same required context has two distinct stages:
+
+1. **Pre-queue eligibility.** The protected `pull_request_target` controller validates the current effective PR candidate and publishes `routing-enforcement` to the PR head. This status permits queue entry only. It is not final merge authority.
+2. **Final protected admission.** GitHub creates a `merge_group` candidate against the current target state. The merge-group controller evaluates that exact queue-owned SHA and publishes `routing-enforcement` to it. The mandatory merge queue may merge only after the required checks pass on that merge group.
+
+A head-bound routing success is safe only while the merge queue remains mandatory. Never treat a head-bound status as permission for direct protected merge.
+
+## Exact self-protection boundary
+
+Ordinary candidates cannot modify `.github/workflows/ghos-routing-enforcement.yml`. The protected pre-queue controller compares that workflow's bytes in the effective candidate with the bytes on current protected `main` and rejects any ordinary candidate difference.
+
+This is deliberately narrower than a blanket ban on `.github/workflows/`. Other workflow files may be added, changed, renamed, or removed through ordinary governed development. Such changes must still satisfy complete routing inventory coverage, byte-derived feature equality, topology, controller compatibility, authority boundaries, and all materially affected protected checks.
+
+Do not describe this control as making every workflow immutable.
 
 ## Routine workflow maintenance
 
@@ -31,36 +46,92 @@ When adding, deleting, renaming, or changing a workflow:
 2. Update exactly one corresponding entry in `.ghos-routing/workflows.json`, or remove the stale entry when deleting a workflow.
 3. Use the exact feature list and topology derived from workflow bytes. Do not weaken or over-declare them manually; the shared gate requires equality with its byte-derived result.
 4. For any non-`BOUNDED_ATOMIC` workflow, use the exact admitted controller and confirm that all derived features are supported. Otherwise decompose the operation into independently recoverable bounded workflows.
-5. Run the focused routing/semantic tests needed by the changed control. Current policy impact routing will select the additional protected shards actually affected.
-6. Require `routing-enforcement` on changed workflow bytes and the affected policy/security checks selected by current policy. Do not require repository-wide, campaign-wide, formal, or computational replay when their material inputs are unchanged.
-7. Merge through protected controls under standing delegated authority when the change is routine, mergeable, and does not weaken or expand the protected control boundary.
+5. Run the focused routing and semantic tests needed by the changed control. Current policy impact routing selects the additional protected shards actually affected.
+6. Required workflows that participate in protected merge admission must report their required checks on `merge_group` candidates. Do not add a required check that cannot execute on merge groups.
+7. Merge through protected controls under standing delegated authority when the change is routine, queue-admissible, and does not weaken or expand the protected control boundary.
 
 The expected maintenance burden is one routing-entry update per workflow change plus affected validation. The gate supplies the authoritative diagnostic when the entry drifts.
 
-## Candidate-independent enforcement and concurrency
+## Pre-queue candidate-independent enforcement
 
-The enforcement workflow executes protected controller logic from protected `main` under `pull_request_target` or a protected `workflow_dispatch`. Candidate content is inert data and must never be executed under the privileged controller.
+The pre-queue enforcement workflow executes protected controller logic from protected `main` under `pull_request_target` or protected `workflow_dispatch`. Candidate content is inert data and must never be executed under the privileged controller.
 
 For each pull request targeting `main`, the controller:
 
 1. checks out current protected `main` with credentials disabled;
 2. reads the current pull-request identity through the GitHub API;
 3. fetches `refs/pull/<number>/head` and `refs/pull/<number>/merge` as data;
-4. accepts the merge ref only when its two parents are exactly the current protected-main commit followed by the current pull-request head commit, and the API-reported test-merge identity equals the fetched merge identity;
-5. fails closed after a bounded retry when GitHub cannot supply that exact effective candidate;
-6. materializes the verified merge tree without executing any candidate-controlled program, action, hook, script, dependency declaration, or workflow;
-7. compares the effective candidate's enforcement-workflow bytes with the protected-base enforcement workflow and rejects ordinary self-modification;
-8. verifies the content-addressed external gate and runs that gate only against the inert effective-candidate tree;
-9. re-fetches protected `main` before admitting the gate result and fails if the protected base moved during evaluation; and
-10. publishes the required `routing-enforcement` status to the verified effective merge commit, not to a stale head-only snapshot.
+4. accepts the test merge only when its two parents are exactly current protected `main` followed by the current PR head, and the API-reported test-merge identity equals the fetched identity;
+5. retries the synthetic merge identity a bounded five times, recording resolution attempts and elapsed time;
+6. fails closed when GitHub cannot supply that exact current effective candidate;
+7. materializes the verified merge tree without executing candidate-controlled programs, actions, hooks, scripts, dependency declarations, or workflows;
+8. compares the effective candidate's GH-OS enforcement workflow bytes with protected `main` and rejects ordinary self-modification;
+9. verifies the content-addressed external gate and runs that gate only against the inert effective-candidate tree;
+10. re-fetches protected `main` before admitting the gate result and fails if the protected base moved during evaluation; and
+11. publishes the required pre-queue `routing-enforcement` status to the PR head.
 
-The controller job is deliberately not named `routing-enforcement`. The dedicated required context is the commit status emitted only for the verified effective merge commit. Therefore a successful routing result attached only to a pull-request head cannot stand in for evaluation of a materially different current effective merge candidate.
+The head status means only: the current PR head passed protected pre-queue routing evaluation against the then-current effective candidate. Protected-base revalidation refreshes this evidence after `main` movement. A stale head status can at most permit queue entry; it cannot authorize final merge because the merge queue itself is mandatory.
 
-Protected-main movement does not require update-branch synchronization. On each push to `main`, the protected workflow dispatches a fresh effective-candidate evaluation for every open pull request targeting `main`. GitHub may regenerate the virtual merge candidate; the controller accepts it only after the exact-parent checks above. A disjoint protected-base change should therefore produce a fresh passing effective-candidate result without mutating the pull-request branch. A relevant protected-base routing change is necessarily present in the effective tree and can invalidate the gate result.
+## Native merge-group final admission
 
-If protected-main movement occurs while a controller evaluation is in flight, the protected-base recheck fails that attempt rather than publishing success for a stale base. The subsequent protected-main dispatch supplies the fresh evaluation. If GitHub cannot generate the current merge candidate or cannot dispatch the revalidation, the current effective candidate lacks a passing required context and remains blocked; absence of evidence is not success.
+GitHub documents `GITHUB_SHA` for `merge_group: checks_requested` as the merge-group SHA and `GITHUB_REF` as the merge-group ref. The final controller uses those queue-owned identities directly.
 
-Do not evaluate the routing contract against raw stale branch snapshots where the protected control requires the effective merge candidate.
+For each merge-group event, the controller:
+
+1. checks out current protected `main` with credentials disabled;
+2. requires `GITHUB_REF` to be under `refs/heads/gh-readonly-queue/main/`;
+3. fetches that exact queue ref and requires the fetched SHA to equal `GITHUB_SHA`;
+4. requires current protected `main` to be an ancestor of the merge-group SHA;
+5. materializes the merge-group candidate as inert data;
+6. requires the candidate's GH-OS enforcement workflow bytes to equal current protected `main`;
+7. verifies the same pinned external gate and executes it only against the inert merge-group tree;
+8. re-fetches protected `main` after evaluation and rejects the result if the protected base moved; and
+9. publishes `routing-enforcement` to the exact merge-group SHA.
+
+GitHub, not an external bot, performs the final merge after all required checks pass on the queue candidate. This removes reliance on the ephemeral `refs/pull/<number>/merge` SHA for final admission and closes the post-status/pre-merge freshness gap by making the queue-owned candidate the final unit of admission.
+
+If the merge-group ref, SHA, protected-base ancestry, protected workflow bytes, gate digest, gate result, or post-gate protected-base identity cannot be proven, the required context fails closed.
+
+## Protected-base refresh and telemetry
+
+On every push to protected `main`, the protected workflow enumerates open PRs targeting `main` and dispatches fresh pre-queue evaluation without mutating candidate branches.
+
+The dispatcher records:
+
+- open PR count;
+- dispatched revalidation count;
+- GitHub API call count; and
+- dispatch elapsed time.
+
+The pre-queue identity resolver records:
+
+- bounded resolution attempt count;
+- resolution elapsed time;
+- protected-base SHA;
+- PR-head SHA; and
+- resolved synthetic merge SHA, or the final fail-closed identity diagnostic.
+
+This telemetry is evidence for later scalability decisions. Do not introduce naive path-overlap filtering. Any future reduction in revalidation must prove that the protected-base delta cannot affect GH-OS gate inputs or routing semantics.
+
+## Programme required checks on merge groups
+
+Every context required by Programme ruleset `17137629` must also execute on merge-group candidates. The Programme policy workflow therefore accepts `merge_group: checks_requested` and conservatively routes merge-group events to full policy and formal replay closure. `GCL conformance` already accepts `merge_group` events.
+
+Do not optimize merge-group policy impact until the event inputs used for narrowing are themselves governed and tested. A merge-group event with uncertain material delta receives full validation rather than accidental attestation reuse.
+
+## Merge-queue configuration
+
+The initial protected queue configuration is intentionally conservative:
+
+- `grouping_strategy: ALLGREEN`;
+- `max_entries_to_build: 1`;
+- `max_entries_to_merge: 1`;
+- `min_entries_to_merge: 1`;
+- `min_entries_to_merge_wait_minutes: 0`;
+- `merge_method: MERGE`; and
+- `check_response_timeout_minutes: 60`.
+
+One entry per build and one entry per merge keeps the first admitted queue behavior equivalent to a single-candidate control. `ALLGREEN` requires the complete merge-group candidate to pass. The 60-minute timeout exceeds the current longest individual Programme job timeout of 50 minutes while retaining a bounded fail-closed backstop. Increase queue concurrency only from measured telemetry and through governed ruleset change.
 
 ## External gate and digest rotation
 
@@ -69,9 +140,9 @@ An external gate semantic change is a control-plane upgrade rather than ordinary
 1. Change and test the gate in `grandchallenge/.github` through its protected path.
 2. Record the merged gate commit, exact script blob, SHA-256, test evidence, compatibility statement, and affected repositories.
 3. Prefer a versioned successor path while the prior pinned path remains available when consumers require staged migration.
-4. Prepare the smallest consumer update containing the justified pin/path change and necessarily synchronized local validator, schema, tests, controller catalog, registry, or documentation.
-5. Obtain specialist non-author review when the change alters security-sensitive enforcement semantics, controller authority, or another reserved boundary. A pure content-addressed repin to already-admitted equivalent semantics does not acquire a generic reviewer gate merely because the digest changed.
-6. Follow the protected self-modification procedure only if the active self-protection makes ordinary protected admission impossible.
+4. Prepare the smallest consumer update containing the justified pin or path change and necessarily synchronized local validator, schema, tests, controller catalog, registry, or documentation.
+5. Obtain specialist non-author review when the change alters security-sensitive enforcement semantics, controller authority, or another reserved boundary.
+6. Follow the protected self-modification procedure when active self-protection makes ordinary protected admission impossible.
 7. After a material enforcement upgrade, run focused hostile proof that candidate-controlled local validation cannot bypass the protected external gate.
 
 A digest mismatch is an expected fail-closed condition. Never solve it by removing the digest check, following an unpinned branch, or executing candidate code.
@@ -80,23 +151,18 @@ A digest mismatch is an expected fail-closed condition. Never solve it by removi
 
 The active enforcement workflow rejects candidate modification of itself. A legitimate successor that therefore requires temporary relaxation of the dedicated routing rule crosses a security-sensitive protection boundary and is not routine delegation.
 
-1. Freeze only the affected workflow-control mutation while preparing the bootstrap; unrelated bounded read-only or disjoint work may continue.
-2. Record protected-main identity, dedicated routing ruleset `21969152`, required context, bypass actors, enforcement-workflow blob, external gate identity/digest, and separate Programme ruleset `17137629`.
-3. Obtain the reserved authorization required for the exact temporary weakening and successor control bytes. Do not add a bypass actor or weaken unrelated rules.
+1. Freeze only the affected workflow-control mutation while preparing the bootstrap. Unrelated bounded read-only or disjoint work may continue.
+2. Record protected-main identity, dedicated routing ruleset `21969152`, required context, merge-queue rule, bypass actors, enforcement-workflow blob, external gate identity and digest, and separate Programme ruleset `17137629`.
+3. Obtain the reserved authorization required for the exact temporary weakening, successor control bytes, and ruleset successor. Do not add a bypass actor or weaken unrelated rules.
 4. Remove or disable only the routing requirement necessary for the bootstrap. Preserve every other applicable protected rule.
 5. Merge only the authorized material successor after all other affected checks and specialist review required by the security boundary pass.
-6. Immediately restore ruleset `21969152` active with `routing-enforcement`, `strict_required_status_checks_policy: false`, and zero bypass actors. Do not restore obsolete strict/up-to-date synchronization semantics.
-7. Read back the complete ruleset, protected merge, enforcement blob, registry, validator, external digest, and post-merge checks.
-8. Execute focused hostile proof before declaring the control restored.
-9. Record before/after protection identity and the material authorization in the governing issue or protected evidence record.
+6. Immediately restore ruleset `21969152` active with `routing-enforcement`, `strict_required_status_checks_policy: false`, zero bypass actors, and the exact authorized mandatory merge-queue configuration.
+7. Read back the complete ruleset, protected merge, enforcement blob, Programme required workflows, registry, validator, external digest, and post-merge checks.
+8. Execute a live merge-group proof and focused hostile proof before declaring the control restored.
+9. Re-run the #881 stale-C1 TOCTOU assurance on the native queue path.
+10. Record before and after protection identity and the material authorization in the governing issue or protected evidence record.
 
-If the successor identity, reserved authorization, ruleset snapshot, or restoration route is unavailable, stop. Do not leave the routing requirement disabled while diagnosing an unrelated failure.
-
-## Admitted-controller changes
-
-The controller catalog is code-governed in both local and external gates. Adding or changing a controller requires evidence for its durable wake mechanism, state store, supported feature classes, repository identity, and failure/recovery behavior.
-
-Controller capability expansion is a material control-plane change. Update the external gate, local validator, schema if necessary, registry, hostile tests, and affected workflow entries together. Demonstrate agent replacement, stale evidence rejection, interrupted execution recovery, and unauthorized-transition failure before admission. Controller capability never supplies authority.
+If the successor identity, reserved authorization, ruleset snapshot, merge-queue configuration, or restoration route is unavailable, stop. Do not leave the routing requirement disabled while diagnosing an unrelated failure.
 
 ## Ruleset care
 
@@ -105,38 +171,43 @@ After routing administration or a material control upgrade:
 1. Read dedicated routing ruleset `21969152` from GitHub.
 2. Confirm it is active on `refs/heads/main`.
 3. Confirm `routing-enforcement` is required with `strict_required_status_checks_policy: false`.
-4. Confirm bypass actors remain empty.
-5. Confirm the passing required context is bound to the current effective merge commit when a pull request is being admitted; a head-only status is not equivalent.
-6. Read Programme profile `17137629` separately so a routing transaction cannot silently weaken unrelated Programme protections.
-7. Open a bounded repair immediately on material drift. Pause only the affected unattended transition if enforcement is no longer mandatory.
+4. Confirm the mandatory merge-queue rule matches the protected configuration.
+5. Confirm bypass actors remain empty.
+6. Confirm pre-queue routing is present on an eligible PR head only as queue-entry evidence.
+7. Confirm final routing is present on the exact current merge-group SHA before protected merge.
+8. Read Programme profile `17137629` separately so a routing transaction cannot silently weaken unrelated Programme protections.
+9. Open a bounded repair immediately on material drift. Pause only the affected unattended transition if enforcement is no longer mandatory.
 
-Do not interpret a passing optional routing check or a stale head-only result as equivalent to the required protected effective-candidate context.
+Never interpret a head-only routing success as final protected admission.
 
 ## Emergency diagnosis
 
 Use this order when `routing-enforcement` fails:
 
-1. Bind the failure to repository, pull request, current protected-base SHA, pull-request head SHA, verified effective-merge SHA and parent identities, workflow run, external gate digest, and emitted status context where available.
-2. Classify the first exact error: missing registry, coverage mismatch, feature drift, topology drift, controller mismatch, repository mismatch, unavailable/stale merge ref, merge-parent mismatch, protected-base movement during evaluation, self-modification, external digest failure, status-publication failure, revalidation-dispatch failure, dependency failure, or platform outage.
-3. For candidate drift, correct the changed candidate registry/workflow and rerun the affected routing check. Do not refresh unrelated review or CI evidence.
-4. For a stale or unavailable merge ref, retain the required context and retry through the protected controller; do not fall back to head-only validation.
-5. For an external digest mismatch, verify the protected shared script and change history; use the control-upgrade route rather than changing the pin ad hoc.
-6. For a platform outage, leave the gate required and recover evidence through the execution-recovery guide. Do not infer success from absence of a result.
-7. For unexpected ruleset drift or missing enforcement, pause the affected unattended transition until protected enforcement is restored and proven.
+1. Identify the stage: pre-queue or merge-group.
+2. Bind the failure to repository, protected-base SHA, PR head or merge-group SHA, workflow run, external gate digest, and emitted status context where available.
+3. Classify the first exact error: unavailable or stale PR merge ref, merge-parent mismatch, unexpected queue ref, merge-group SHA mismatch, protected-base ancestry failure, protected-base movement during evaluation, self-modification, external digest failure, gate failure, status-publication failure, revalidation-dispatch failure, dependency failure, queue timeout, or platform outage.
+4. For a stale or unavailable PR merge ref, retain the required context and retry through the protected pre-queue controller. Do not infer success.
+5. For a merge-group failure, allow the native queue to regenerate the candidate after the underlying condition is corrected. Do not copy a status from a PR head or older merge group.
+6. For an external digest mismatch, verify the protected shared script and change history; use the control-upgrade route rather than changing the pin ad hoc.
+7. For a platform outage, leave the gate and merge queue required. Do not infer success from absence of a result.
+8. For unexpected ruleset drift or missing queue enforcement, pause affected protected admission until the control is restored and proven.
 
-Never solve an emergency by executing untrusted candidate code under `pull_request_target`, granting write credentials to candidate content, removing authority boundaries, or carrying an approval to materially changed security-control bytes.
+Never solve an emergency by executing untrusted candidate code under `pull_request_target`, granting candidate content write credentials, adding a routing bypass actor, removing the merge queue while relying on head-bound routing success, or carrying approval to materially changed security-control bytes.
 
 ## Periodic and sentinel evidence
 
-After every material control upgrade, and through the programme's existing scheduled/manual assurance rather than a separate timer, retain or verify as appropriate:
+After every material control upgrade, and through existing scheduled or manual assurance rather than a separate timer, retain or verify as appropriate:
 
 - current protected-main and enforcement-workflow identities;
-- successful workflow inventory/coverage validation;
-- external gate commit/path/digest;
-- dedicated routing ruleset identity, required context, strictness, and bypass actors;
-- proof that the required context is attached to the current effective merge candidate rather than only to the pull-request head;
+- successful workflow inventory and coverage validation;
+- external gate commit, path, and digest;
+- dedicated routing ruleset identity, required context, merge-queue configuration, strictness, and bypass actors;
+- pre-queue status placement and current effective-candidate identity;
+- final merge-group status placement and queue-owned candidate identity;
 - separate Programme-profile readback where routing administration occurred;
 - focused hostile-test results, including relevant and disjoint protected-base movement;
-- live or fixture-based fail-closed proof outside candidate control.
+- synthetic-ref resolution and base-refresh telemetry; and
+- live fail-closed proof outside candidate control.
 
 Routine periods with no workflow, controller, gate, or ruleset change require verification or protected evidence reuse, not ceremonial regeneration of unchanged records.

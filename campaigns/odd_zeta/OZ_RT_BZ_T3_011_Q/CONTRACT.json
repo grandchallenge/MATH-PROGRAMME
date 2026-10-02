@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 939,
+  "operation": "OZ-RT-BZ-T3-011-Q",
+  "stage": "T3_011_Q_ACTIVE_ZERO_TRIVARIATE_LAURENT_FACE_AUDIT",
+  "protected_base": "954f6382d4d5499bf3653a34627ac46605980cd3",
+  "predecessor": {
+    "operation": "OZ-RT-BZ-T3-011-P",
+    "protected_merge": "954f6382d4d5499bf3653a34627ac46605980cd3",
+    "required_terminal": "ALL_RECIPROCAL_TRIVARIATE_RESPONSE_CLASS_COKERNEL_INVISIBLE"
+  },
+  "protected_face_sources": {
+    "M": "single-reciprocal-active positive-spectator boundary to K; establishes the ++ surviving-axis/spectator face",
+    "N": "double-reciprocal-active positive-spectator boundaries to M; establishes the -+ face",
+    "O": "reciprocal-spectator single-reciprocal-active boundaries; supplies the +- face and one direct -- anchor",
+    "P": "all-reciprocal trivariate class; supplies both direct -- active-zero anchors"
+  },
+  "scope": {
+    "only_existing_active_zero_faces": true,
+    "shifted_poles_authorized": false,
+    "arbitrary_rational_functions_authorized": false,
+    "support_or_harmonic_enlargement_authorized": false,
+    "candidate_bank_or_scalar_namespace_widening_authorized": false,
+    "recurrence_widening_authorized": false,
+    "correction_recombination_authorized": false,
+    "candidate_linear_combinations_authorized": false,
+    "third_finite_difference_operator_authorized": false,
+    "source_or_representative_substitution_authorized": false,
+    "arbitrary_degree_cutoff_authorized": false
+  },
+  "partition": {
+    "one_active_exponent_zero": {
+      "sign_families": ["++", "-+", "+-", "--"],
+      "must_be_exhaustive": true
+    },
+    "not_claimed_by_Q": {
+      "both_active_exponents_zero_with_nonzero_spectator": true,
+      "full_coordinate_zero_laurent_algebra_closure_without_separate_coverage": false
+    }
+  },
+  "terminals": {
+    "escape": "ACTIVE_ZERO_LAURENT_FACE_ESCAPE_FOUND",
+    "closure": "ACTIVE_ZERO_LAURENT_FACES_COKERNEL_INVISIBLE",
+    "blocker": "ACTIVE_ZERO_LAURENT_FACES_NOT_CERTIFIED__CHARACTERIZED_BLOCKER"
+  },
+  "conditional_corollary": "FROZEN_COORDINATE_ZERO_LAURENT_MONOMIAL_RESPONSE_ALGEBRA_COKERNEL_INVISIBLE",
+  "claim_firewall": {
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}

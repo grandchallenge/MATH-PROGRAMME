@@ -1,0 +1,37 @@
+\chapter{Say It, Then Continue}
+
+\section*{3.1}
+After the send, the endpoint has type $?\Bool.\mathsf{end!}$.
+
+\section*{3.2}
+Premises: $\Gamma,z:A\vdash e:B$ and $\Gamma\vdash v:A$. Conclusion: $\Gamma\vdash e[v/z]:B$.
+
+\section*{3.3}
+Process reduction changes runtime syntax; environment evolution changes the protocol obligations used to type that syntax. Keeping them distinct exposes the preservation relation.
+
+\section*{3.4}
+For $x:!\Bool.S$ and $y:?\Bool.\dual S$, a Boolean transfer advances the pair to $x:S,y:\dual S$.
+
+\section*{3.5}
+If $e=(z,w)$ with $z:A,w:C$ and $v:A$, then $e[v/z]=(v,w)$ and has type $A\times C$.
+
+\section*{3.6}
+Send a Bool at an endpoint typed $!\Nat.S$. The premise $\Gamma\vdash v:\Nat$ fails.
+
+\section*{3.7}
+Closed subject reduction keeps one term's type fixed across evaluation. Session fidelity keeps a process typable while its channel environment advances with communication.
+
+\section*{3.8}
+The lab fixes one scheduler only to make evidence reproducible. A model with multiple disjoint redexes can still admit several mathematical next steps.
+
+\section*{3.9}
+For $e=(e_1,e_2)$, invert product typing, apply the induction hypothesis to each component, then reapply product formation.
+
+\section*{3.10}
+Invert output and input typing; use payload substitution in the receiver; replace the two endpoint prefixes by their continuations; reconstruct the disjoint parallel split.
+
+\section*{3.11}
+Record separate fields `pre_process`, `pre_environment`, `action`, `post_process`, `post_environment`, plus a fixture identity. Do not encode the environment change only as prose.
+
+\section*{3.12}
+Adding sums requires substitution cases for injections and case analysis. Each follows by applying the induction hypothesis to the substituted subexpressions.

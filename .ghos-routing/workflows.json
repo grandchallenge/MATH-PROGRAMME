@@ -133,6 +133,7 @@
     {
       "path": ".github/workflows/cmdg-condensed-cm1.yml",
       "observed_features": [
+        "EXTERNAL_REUSABLE_JOB",
         "OPAQUE_EXECUTION"
       ],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
@@ -141,6 +142,7 @@
     {
       "path": ".github/workflows/cmdg-condensed-cm2.yml",
       "observed_features": [
+        "EXTERNAL_REUSABLE_JOB",
         "OPAQUE_EXECUTION"
       ],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
@@ -149,6 +151,7 @@
     {
       "path": ".github/workflows/cmdg-condensed-cm3.yml",
       "observed_features": [
+        "EXTERNAL_REUSABLE_JOB",
         "OPAQUE_EXECUTION"
       ],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
@@ -157,6 +160,7 @@
     {
       "path": ".github/workflows/cmdg-condensed-cm4-p2-d.yml",
       "observed_features": [
+        "EXTERNAL_REUSABLE_JOB",
         "OPAQUE_EXECUTION"
       ],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
@@ -165,6 +169,7 @@
     {
       "path": ".github/workflows/cmdg-condensed-cm4-p2-e.yml",
       "observed_features": [
+        "EXTERNAL_REUSABLE_JOB",
         "OPAQUE_EXECUTION"
       ],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
@@ -173,6 +178,7 @@
     {
       "path": ".github/workflows/cmdg-condensed-cm4-p2.yml",
       "observed_features": [
+        "EXTERNAL_REUSABLE_JOB",
         "OPAQUE_EXECUTION"
       ],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
@@ -181,6 +187,7 @@
     {
       "path": ".github/workflows/cmdg-condensed-cm4-p3.yml",
       "observed_features": [
+        "EXTERNAL_REUSABLE_JOB",
         "OPAQUE_EXECUTION"
       ],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
@@ -189,6 +196,7 @@
     {
       "path": ".github/workflows/cmdg-condensed-cm4.yml",
       "observed_features": [
+        "EXTERNAL_REUSABLE_JOB",
         "OPAQUE_EXECUTION"
       ],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
@@ -196,6 +204,15 @@
     },
     {
       "path": ".github/workflows/cmdg-euclid-bridge.yml",
+      "observed_features": [
+        "EXTERNAL_REUSABLE_JOB",
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/cmdg-formal-lane-replay.yml",
       "observed_features": [
         "OPAQUE_EXECUTION"
       ],
@@ -205,6 +222,7 @@
     {
       "path": ".github/workflows/cmdg-nat-concordance.yml",
       "observed_features": [
+        "EXTERNAL_REUSABLE_JOB",
         "OPAQUE_EXECUTION"
       ],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
@@ -214,7 +232,6 @@
       "path": ".github/workflows/cmdg-postmerge.yml",
       "observed_features": [
         "AUTONOMOUS_WAKE",
-        "EXTERNAL_REUSABLE_JOB",
         "OPAQUE_EXECUTION",
         "SCHEDULED"
       ],
@@ -224,6 +241,7 @@
     {
       "path": ".github/workflows/cmdg-solid-c05.yml",
       "observed_features": [
+        "EXTERNAL_REUSABLE_JOB",
         "OPAQUE_EXECUTION"
       ],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
@@ -232,6 +250,7 @@
     {
       "path": ".github/workflows/cmdg-vertical-spine-v0.yml",
       "observed_features": [
+        "EXTERNAL_REUSABLE_JOB",
         "OPAQUE_EXECUTION"
       ],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
@@ -243,6 +262,16 @@
         "OPAQUE_EXECUTION",
         "SECRET_CREDENTIAL",
         "WRITE_CAPABLE"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/formal-validation.yml",
+      "observed_features": [
+        "AUTONOMOUS_WAKE",
+        "OPAQUE_EXECUTION",
+        "SCHEDULED"
       ],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
       "controller_id": "GITHUB_ACTIONS"
@@ -265,6 +294,42 @@
         "OPAQUE_EXECUTION",
         "SECRET_CREDENTIAL",
         "WRITE_CAPABLE"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/ns-ci-intake-pr-controller.yml",
+      "observed_features": [
+        "AUTONOMOUS_WAKE",
+        "OPAQUE_EXECUTION",
+        "SCHEDULED",
+        "SECRET_CREDENTIAL",
+        "UNATTENDED_DISPATCH",
+        "WRITE_CAPABLE"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/openmath-core-clarity.yml",
+      "observed_features": [
+        "AUTONOMOUS_WAKE",
+        "OPAQUE_EXECUTION",
+        "SCHEDULED",
+        "SECRET_CREDENTIAL"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/openmath-unattended-lifecycle-controller.yml",
+      "observed_features": [
+        "AUTONOMOUS_WAKE",
+        "OPAQUE_EXECUTION",
+        "SCHEDULED",
+        "SECRET_CREDENTIAL",
+        "UNATTENDED_DISPATCH"
       ],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
       "controller_id": "GITHUB_ACTIONS"
@@ -300,6 +365,14 @@
       "path": ".github/workflows/oz-rt-lb-instance.yml",
       "observed_features": [
         "EXTERNAL_WAIT",
+        "OPAQUE_EXECUTION"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/oz-t3-016-a-affine-sweep.yml",
+      "observed_features": [
         "OPAQUE_EXECUTION"
       ],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",

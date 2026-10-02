@@ -35,8 +35,11 @@ def rejected(mutator) -> None:
 def main() -> int:
     check_fixture()
     rejected(lambda root: mutate_file(root, "source_row.json", lambda data: data.update(open_status="solved")))
+    rejected(lambda root: mutate_file(root, "source_row.json", lambda data: data["dataset"].update(repository_commit="0" * 40)))
+    rejected(lambda root: mutate_file(root, "source_row.json", lambda data: data["dataset"].update(row_index=1)))
     rejected(lambda root: mutate_file(root, "source_row.json", lambda data: data.pop("question_link")))
     rejected(lambda root: mutate_file(root, "problem_card.json", lambda data: data.update(source_row_sha256="0" * 64)))
+    rejected(lambda root: mutate_file(root, "problem_card.json", lambda data: data["canonical_provider"].update(disposition="ADMITTED_PROVIDER_EVIDENCE")))
     rejected(lambda root: mutate_file(root, "problem_card.json", lambda data: data["status_audit"].update(promotion_allowed=True)))
     rejected(lambda root: mutate_file(root, "problem_card.json", lambda data: data["algebraic_extraction"]["equations"][0]["canonical_polynomial"][2].update(coefficient=[1, 1])))
     rejected(lambda root: mutate_file(root, "problem_card.json", lambda data: data["semantic_boundary"].update(excluded_inference="")))

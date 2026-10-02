@@ -239,8 +239,8 @@ def authority_contract_errors() -> list[str]:
     index = (DOCS / "index.md").read_text(encoding="utf-8")
     editions = set(re.findall(r"Edition (20\d{2}\.\d{2})", mkdocs, flags=re.IGNORECASE))
     editions.update(re.findall(r"edition (20\d{2}\.\d{2})", index, flags=re.IGNORECASE))
-    if editions != {"2026.07"}:
-        errors.append(f"edition markers must agree on 2026.07, found {sorted(editions)}")
+    if editions != {"2026.09"}:
+        errors.append(f"edition markers must agree on 2026.09, found {sorted(editions)}")
 
     manifest = (ROOT / "FILE_MANIFEST.md").read_text(encoding="utf-8")
     if "Current governed inventory" not in manifest:

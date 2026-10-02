@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 914,
+  "operation": "OZ-RT-BZ-T3-011-J",
+  "stage": "T3_011_J_MIXED_SIGN_LAURENT_COKERNEL_AUDIT",
+  "predecessor": {
+    "reviewed_head": "9a305d7423cc7c258230865fa1d4deca7c9138e6",
+    "merge_commit": "76e11a33fd47e8a24f9aaf1d64788ceacfecd297",
+    "required_terminal": "MIXED_RECIPROCAL_RESPONSE_CLASS_COKERNEL_INVISIBLE",
+    "expected_possible_record_count": 1282,
+    "expected_tested_record_count": 1282,
+    "expected_semantic_functional_ambiguity": null,
+    "expected_first_cokernel_breaking_direction": null
+  },
+  "clean_question": "does the protected endpoint cokernel witness annihilate both remaining mixed-sign Laurent quadrants x_c^r x_d^{-s} G and x_c^{-r} x_d^s G, r,s>=1, on the frozen pairwise endpoint banks?",
+  "mixed_sign_laurent_class": {
+    "monomial_domains": [
+      "x_c^r*x_d^{-s} with integers r>=1,s>=1",
+      "x_c^{-r}*x_d^s with integers r>=1,s>=1"
+    ],
+    "orientation_order": [
+      "positive_left_negative_right",
+      "negative_left_positive_right"
+    ],
+    "unordered_pair_order": [
+      ["n1", "k1"],
+      ["n1", "l1"],
+      ["n2", "k1"],
+      ["n2", "l1"],
+      ["n3", "k1"],
+      ["n3", "l1"],
+      ["k1", "l1"]
+    ],
+    "only_poles": ["x_c=0", "x_d=0"],
+    "finite_support_overlap_must_be_derived_without_degree_cutoff": true,
+    "rank_one_signature_cancellation_must_be_reported_as_unbounded_overlap": true,
+    "positive_axis_boundaries_require_protected_polynomial_closure": true,
+    "reciprocal_axis_boundaries_require_T3_011_H_closure": true,
+    "negative_negative_quadrant_is_T3_011_I_closed": true,
+    "shifted_poles_authorized": false,
+    "arbitrary_rational_functions_authorized": false,
+    "support_or_harmonic_enlargement_authorized": false,
+    "candidate_bank_or_scalar_namespace_widening_authorized": false,
+    "recurrence_search_authorized": false,
+    "correction_layer_recombination_authorized": false,
+    "candidate_linear_combinations_authorized": false,
+    "trivariate_spectator_multipliers_authorized": false
+  },
+  "terminals": {
+    "escape": "MIXED_SIGN_LAURENT_RESPONSE_ESCAPE_FOUND",
+    "closure": "MIXED_SIGN_LAURENT_RESPONSE_CLASS_COKERNEL_INVISIBLE",
+    "semantic_ambiguity": "MIXED_SIGN_LAURENT_RESPONSE_NOT_CERTIFIED__SEMANTIC_FUNCTIONAL_AMBIGUITY",
+    "unbounded_overlap": "MIXED_SIGN_LAURENT_RESPONSE_NOT_CERTIFIED__UNBOUNDED_SIGNATURE_OVERLAP",
+    "blocker": "MIXED_SIGN_LAURENT_RESPONSE_NOT_CERTIFIED__CHARACTERIZED_BLOCKER"
+  },
+  "claim_firewall": {
+    "theorem_promotion_authorized": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}

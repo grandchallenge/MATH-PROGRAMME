@@ -89,9 +89,10 @@ class ReviewedRoutingTests(unittest.TestCase):
             )
         )
 
-    def test_ready_hc_is_not_adjudicated_but_uc_is(self):
+    def test_qualified_hc_allows_integration_but_not_claim_promotion(self):
         data = self.registry()
-        self.assertTrue(routing.provider_gate_errors("HC-001", "JUDGMENT", data))
+        self.assertEqual(routing.provider_gate_errors("HC-001", "INTEGRATION", data), [])
+        self.assertTrue(routing.provider_gate_errors("HC-001", "CLAIM_PROMOTION", data))
         self.assertEqual(routing.provider_gate_errors("UC-001", "INTEGRATION", data), [])
         self.assertTrue(routing.provider_gate_errors("UC-001", "CLAIM_PROMOTION", data))
 
@@ -130,13 +131,35 @@ class ReviewedRoutingTests(unittest.TestCase):
 
     def test_intake_route_cannot_carry_cert_output(self):
         data = self.registry()
-        hc = self.campaign(data, "HC-001")
-        hc["cert"]["cert_output"] = copy.deepcopy(
+        ym = self.campaign(data, "YM-001")
+        ym["cert"]["cert_output"] = copy.deepcopy(
             self.campaign(data, "RH-001")["cert"]["cert_output"]
         )
         self.assertTrue(
             any(
-                "HC-001 intake route may not carry a Cert output" in error
+                "YM-001 intake route may not carry a Cert output" in error
+                for error in routing.routing_errors(data, active=set())
+            )
+        )
+
+    def test_hc_qualified_output_identity_is_fixed(self):
+        data = self.registry()
+        hc = self.campaign(data, "HC-001")
+        hc["cert"]["cert_output"]["digest"] = "0" * 40
+        self.assertTrue(
+            any(
+                "HC-001 Cert output digest drift" in error
+                for error in routing.routing_errors(data, active=set())
+            )
+        )
+
+    def test_hc_bounded_qualification_scope_cannot_expand(self):
+        data = self.registry()
+        hc = self.campaign(data, "HC-001")
+        hc["cert"]["qualification_scope"] = "qualified_interface_only"
+        self.assertTrue(
+            any(
+                "HC-001 qualification scope drift" in error
                 for error in routing.routing_errors(data, active=set())
             )
         )

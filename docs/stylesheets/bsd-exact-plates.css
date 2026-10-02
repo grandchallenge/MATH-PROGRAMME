@@ -1,0 +1,35 @@
+/* BSD exact-object plate layout revision — editorial landscape breakout.
+   Scoped to the BSD reader after exact-object activation; predecessor/fallback assets are untouched. */
+[data-gcl-reader="bsd"].bsd-exact-landscape .monograph-plate {
+  --bsd-plate-max: 74rem;
+}
+[data-gcl-reader="bsd"].bsd-exact-landscape .monograph-plate img {
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
+}
+@media (min-width: 981px) {
+  [data-gcl-reader="bsd"].bsd-exact-landscape .monograph-plate {
+    width: min(var(--bsd-plate-max), calc(100vw - 19rem));
+    max-width: none;
+    margin-left: 50%;
+    margin-right: 0;
+    transform: translateX(-50%);
+  }
+}
+@media (max-width: 980px) {
+  [data-gcl-reader="bsd"].bsd-exact-landscape .monograph-plate {
+    width: min(100%, 58rem);
+    transform: none;
+  }
+}
+@media print {
+  [data-gcl-reader="bsd"].bsd-exact-landscape .monograph-plate {
+    width: 100%;
+    margin-left: 0;
+    transform: none;
+  }
+  [data-gcl-reader="bsd"].bsd-exact-landscape .monograph-plate img {
+    aspect-ratio: auto;
+    max-height: 180mm;
+  }
+}

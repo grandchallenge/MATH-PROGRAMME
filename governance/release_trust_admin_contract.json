@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/release_trust_admin_contract.schema.json",
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "contract_id": "ORG-REL-TRUST-01",
   "api_version": "2022-11-28",
   "administration_secret": "GCL_REPOSITORY_ADMIN_TOKEN",
@@ -25,7 +25,8 @@
         "certify",
         "policy / policy",
         "security / action-policy"
-      ]
+      ],
+      "bypass_actors": []
     },
     {
       "repository": "grandchallenge/MATHSOLVE",
@@ -35,7 +36,8 @@
         "ledgers",
         "policy / policy",
         "security / action-policy"
-      ]
+      ],
+      "bypass_actors": []
     },
     {
       "repository": "grandchallenge/MATH-PROGRAMME",
@@ -43,11 +45,16 @@
       "strict_status_checks": false,
       "required_checks": [
         "validate-json",
-        "Replay LOG-GCD-001 in Lean",
-        "Replay PC-WP04 bounded certificate",
-        "Replay pinned Union-Closed MATHCERT evidence",
+        "formal-validation / formal-validation",
         "policy / policy",
         "security / action-policy"
+      ],
+      "bypass_actors": [
+        {
+          "actor_id": 4423678,
+          "actor_type": "Integration",
+          "bypass_mode": "pull_request"
+        }
       ]
     },
     {
@@ -60,7 +67,8 @@
         "policy / policy",
         "security / action-policy",
         "routing-enforcement"
-      ]
+      ],
+      "bypass_actors": []
     }
   ],
   "branch_policy": {

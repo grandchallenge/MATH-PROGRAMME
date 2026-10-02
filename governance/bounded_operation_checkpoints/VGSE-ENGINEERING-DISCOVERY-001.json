@@ -1,0 +1,100 @@
+{
+  "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
+  "schema_version": "1.0.0",
+  "checkpoint_id": "VGSE-ENGINEERING-DISCOVERY-001.CP001",
+  "governed_work_id": "VGSE-ENGINEERING-DISCOVERY-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "admission": {
+    "topology": "MULTI_SESSION_RESUMABLE",
+    "admission_ref": "grandchallenge/MATH-PROGRAMME#984",
+    "routine_work_excluded": true
+  },
+  "authority": {
+    "ghos_standard": "GCL-GHOS-00",
+    "ghos_version": "0.2.0",
+    "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#984"
+  },
+  "phase": "VGSE-ENG-WP03 terminal: exact response-manifold feasibility certificate admitted through the native merge queue and read back from protected main.",
+  "state": "TERMINAL",
+  "identities": {
+    "protected_base_sha": "4a13e2deb6dfc56bc5dcbd121d076919217f68dc",
+    "candidate_head_sha": "4a13e2deb6dfc56bc5dcbd121d076919217f68dc",
+    "issue_number": 984,
+    "pr_number": null,
+    "branch": "governance/vgse-eng-wp03-terminal",
+    "workflow_runs": []
+  },
+  "terminal_condition": "VGSE-ENG-WP03 stops only when either (a) a complete minimal independently checked feasibility certificate for the eight-dimensional quotient-response image inside the eighteen-dimensional response space is retained reproducibly and admitted through the native merge queue, or (b) a precise obstruction shows that the proposed relation set is incomplete, dependent, or numerically unsuitable. Negative results must be retained. C06 and all geometry/physical/manufacturing/commercial claims remain excluded.",
+  "permitted_next_actions": [],
+  "next_action": null,
+  "external_evidence": {
+    "waiting": false,
+    "objects": []
+  },
+  "blocking_boundary": null,
+  "last_transition": {
+    "action": "admit VGSE-ENG-WP03 exact response-manifold feasibility and complete the bounded engineering-discovery tranche",
+    "result": "Substantive PR #1025 remained exactly at reviewed candidate 002caf4ba1475c70d320ba5ef9ddb19a555cb82a. Distinct read-only Adversary and Referee reviews found no blocking defect and preserved the C06/physical boundary. Native merge-group candidate 4a13e2deb6dfc56bc5dcbd121d076919217f68dc was constructed against protected base 9c337826972c15bb39b7910e9ffe96f74913a14e. GCL conformance, GH-OS routing enforcement, formal-validation, Programme policy checks, and aggregate validate-json all succeeded. PR #1025 then merged as the same queue-owned commit, and protected main read back exactly at 4a13e2deb6dfc56bc5dcbd121d076919217f68dc.",
+    "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#1025",
+      "candidate 002caf4ba1475c70d320ba5ef9ddb19a555cb82a",
+      "Adversary review 5253278971",
+      "Referee review 5253281416",
+      "merge-group/protected merge 4a13e2deb6dfc56bc5dcbd121d076919217f68dc",
+      "GCL conformance run 35440091251",
+      "GH-OS routing run 35440090641",
+      "formal-validation run 35440090648",
+      "Programme policy run 35440090676",
+      "grandchallenge/MATH-PROGRAMME#1027",
+      "checkpoint replay merge a17d0ea51f4b2b65a7b98adb467b91ac8fb47de0"
+    ]
+  },
+  "freshness": {
+    "required_before_transition": true,
+    "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-ENGINEERING-DISCOVERY-001.json",
+    "on_mismatch": "REBIND_BEFORE_MUTATION",
+    "observed_at": "2026-09-19T11:28:01Z"
+  },
+  "resume": {
+    "fresh_session_safe": true,
+    "requires_chat_history": false,
+    "authoritative_sources": [
+      "grandchallenge/MATH-PROGRAMME#984",
+      "grandchallenge/MATH-PROGRAMME#1025",
+      "grandchallenge/MATH-PROGRAMME@4a13e2deb6dfc56bc5dcbd121d076919217f68dc",
+      "research/vgse-eng-wp03/README.md",
+      "research/vgse-eng-wp03/RESULTS.json",
+      "research/vgse-eng-wp03/CLAIM_LEDGER.json",
+      "research/vgse-eng-wp03/NEXT_ACTION.md",
+      "grandchallenge/MATH-PROGRAMME#1027",
+      "grandchallenge/MATH-PROGRAMME@a17d0ea51f4b2b65a7b98adb467b91ac8fb47de0",
+      "docs/VGSE_ENGINEERING_DISCOVERY_MANDATE.md"
+    ],
+    "instructions": "This bounded VGSE engineering-discovery tranche is terminal. No WP04 or geometry/physical continuation is authorized by this checkpoint. Any future tranche must be separately admitted against then-current protected state. Preserve VGSE-C06 exclusion and do not infer source geometry, stiffness, mechanical advantage, rigid foldability, collision freedom, finite thickness, manufacturability, durability, product performance, novelty, patentability, or commercial value from WP01-WP03."
+  },
+  "terminal_evidence": [
+    "WP01 layered model and first response-law tranche protected earlier in this operation",
+    "WP02 global quotient inverse protected at 52e2e3df6ac54ab63a03c867b2b82a80d93ee577",
+    "WP03 activation checkpoint protected at 7f9fe37b29c3f0b3564b6281a068197372f1d863",
+    "WP03 exact-review checkpoint replay protected through PR #1027 at a17d0ea51f4b2b65a7b98adb467b91ac8fb47de0",
+    "WP03 reviewed candidate 002caf4ba1475c70d320ba5ef9ddb19a555cb82a",
+    "Adversary review 5253278971: CLEAR_NO_BLOCKING_DEFECT",
+    "Referee review 5253281416: ADMISSIBLE_FOR_PROTECTED_INTEGRATION_AFTER_REQUIRED_STATUS_CHECKS_AND_CONTINUITY_REBIND",
+    "WP03 native merge-group/protected merge 4a13e2deb6dfc56bc5dcbd121d076919217f68dc",
+    "merge-group GCL conformance run 35440091251 success",
+    "merge-group GH-OS routing run 35440090641 success",
+    "merge-group formal-validation run 35440090648 success",
+    "merge-group Programme policy run 35440090676 success including validate-json",
+    "protected main exact readback 4a13e2deb6dfc56bc5dcbd121d076919217f68dc",
+    "WP03 retained RESULTS.json blob c5dc15bbd2c923c6c9d4840878a58e51da97767d",
+    "VGSE-C06 and all geometry/physical/manufacturing/commercial claim exclusions retained"
+  ],
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false,
+    "protected_bypass_authorized": false
+  }
+}

@@ -12,7 +12,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[LE,RO]{\small\sffamily PROTOCOL}
-\fancyhead[RE,LO]{\small\sffamily Type Theory — Volume IV}
+\fancyhead[RE,LO]{\small\sffamily Type Theory --- Volume IV}
 \fancyfoot[C]{\thepage}
 \begin{document}
 \frontmatter
@@ -42,49 +42,135 @@ The phrase ``grand unified theory'' names a research thesis, not an established 
 This volume asks what changes when the primary computational object is interaction rather than
 closed function evaluation.
 
-The present Gate-1 teaching kernel develops only a finite synchronous binary session calculus.
-It establishes the vocabulary and executable evidence needed for later chapters. It does not
-establish arbitrary deadlock freedom, fairness, fault tolerance, security, asynchronous
-correctness, or distributed-system correctness.
+The core positive result is deliberately scoped. Finite synchronous binary session typing can
+track complementary communication obligations through reduction, yielding subject reduction,
+communication safety, and a narrow single-session progress theorem. The volume then changes the
+model on purpose: multiple sessions expose a typed deadlock; guarded recursion exposes the
+difference between well-formed recurrence and productivity; asynchronous queues change the state
+space; global descriptions add multiparty structure; subtyping adds replacement; monitors add an
+observation boundary; faults and effects expose obligations not contained in local protocol state.
+
+No chapter establishes arbitrary deadlock freedom, fairness, fault tolerance, security,
+scheduler independence, correctness of real network transports, or application-level correctness
+merely from session fidelity.
 
 \chapter*{How to read the formalism}
-A session type is an ordered communication obligation. A typing judgment
+A session type is an ordered communication obligation. A process judgment
 \[
   \ptypes{\Gamma}{\Delta}{P}
 \]
 separates reusable value assumptions in \(\Gamma\) from linear channel obligations in
-\(\Delta\). The distinction is essential: the calculus is designed so that two parallel
-subprocesses cannot independently consume the same linear endpoint obligation.
+\(\Delta\). The process step \(P\to P'\), protocol-environment step
+\(\Delta\envstep\Delta'\), process structural congruence \(P\pcong Q\), and later
+asynchronous queue transitions are distinct semantic relations.
+
+The volume uses several named calculi rather than silently changing one calculus under the reader:
+\texttt{PROTO-0} (finite synchronous binary core), \texttt{PROTO-N1} (multi-session network
+extension), \texttt{PROTO-R1} (guarded recursion), \texttt{PROTO-A1} (explicit FIFO queues),
+\texttt{PROTO-M1} (bounded multiparty comparison), \texttt{PROTO-S1} (bounded synchronous
+subtyping), and \texttt{PROTO-MON1} (finite runtime monitoring).
+
+\chapter*{Historical orientation}
+The process-calculus background includes Hoare's CSP tradition \cite{hoare1978}, Milner's CCS
+\cite{milner1980}, and the later \(\pi\)-calculus development of Milner, Parrow, and Walker
+\cite{milner1992}. The session-type line used here begins with exact, calculus-specific work such
+as Honda's dyadic interaction types \cite{honda1993} and the structured communication discipline
+of Honda, Vasconcelos, and Kubo \cite{honda1998}. Linear logic \cite{girard1987} supplies an
+important proof-theoretic lineage, but Chapter 13 keeps proof/process correspondences
+calculus-specific.
 
 \tableofcontents
 
 \mainmatter
+\index{session types}\index{protocol traces}\index{PROTO-0}\index{trace validation}
 \input{chapters/ch01}
+\index{session duality}\index{linear channel environment}\index{paired endpoints}
 \input{chapters/ch02}
+\index{payload substitution}\index{session fidelity}\index{environment evolution}\index{subject reduction}
+\input{chapters/ch03}
+\index{internal choice}\index{external choice}\index{selection}\index{branching}
+\input{chapters/ch04}
+\index{linearity}\index{environment splitting}\index{structural congruence}\index{communication safety}
+\input{chapters/ch05}
+\index{progress}\index{deadlock freedom}\index{wait-for graph}\index{multi-session deadlock}
+\input{chapters/ch06}
+\index{guarded recursion}\index{recursive session types}\index{unfolding}\index{productivity}
+\input{chapters/ch07}
+\index{asynchronous semantics}\index{FIFO queues}\index{queue consistency}\index{asynchronous fidelity}
+\input{chapters/ch08}
+\index{multiparty session types}\index{choreography}\index{projection}\index{projectability}\index{exhaustive trace reconstruction}
+\input{chapters/ch09}
+\index{session subtyping}\index{substitutability}\index{internal-choice width}\index{external-choice width}
+\input{chapters/ch10}
+\index{fault tolerance}\index{message loss}\index{crash faults}\index{timeouts}\index{application correctness}
+\input{chapters/ch11}
+\index{runtime monitoring}\index{monitor soundness}\index{observation boundary}\index{monitor generation}
+\input{chapters/ch12}
+\index{linear logic}\index{propositions as sessions}\index{proof-process correspondence}\index{structural analogy}
+\input{chapters/ch13}
+\index{effects}\index{world state}\index{protocol conformance}\index{application correctness}\index{effect projection}
+\input{chapters/ch14}
 
 \backmatter
-\chapter*{Gate-1 transition}
-The first two chapters establish the smallest executable protocol kernel. The next chapter must
-prove that a well-typed communication step advances process state and session state together.
-Later chapters will then deliberately construct a locally well-typed multi-session deadlock to
-separate session fidelity from global liveness.
+\chapter*{What Volume IV established}
+Within the exact finite fragments stated in the theorem audit, the composition develops and
+internally proves or checks: finite duality involution; linear environment splitting; payload
+substitution; principal redex compatibility; finite synchronous subject reduction and
+communication safety; narrow one-session progress; a well-typed multi-session deadlock witness;
+guarded unfolding and one-step recursive preservation; bounded FIFO queue invariants and
+asynchronous fidelity; finite per-exemplar multiparty projection checks; bounded synchronous
+session subtyping safety; finite monitor soundness; and selected structural-congruence typing.
 
-\chapter*{Gate-1 notation guide}
+The negative results are equally important. Local session typing does not imply unrestricted
+global progress, fault tolerance, fairness, security, or application correctness. Recursive
+well-formedness does not imply productivity. Synchronous and asynchronous semantics are not
+declared universally equivalent. General multiparty projection and general asynchronous
+subtyping remain literature-dependent or outside scope.
+
+\chapter*{Transition to Volume V}
+Protocol state becomes insufficient when an event changes or observes state not owned by the
+session frontier: a database, file, device, capability, exception state, random source, or other
+environmental object. The next volume therefore asks:
+
+\begin{quote}
+\textbf{Once communication is typed, how do we type the events by which computation changes or
+observes a world not reducible to the protocol itself?}
+\end{quote}
+
+That is the forced transition to Volume V --- \emph{EFFECTS: Computation Meets the World}.
+
+\chapter*{Notation guide}
 \begin{tabularx}{\textwidth}{@{}lX@{}}
 \toprule
 Notation & Meaning in this volume \\
 \midrule
-\(\send{A}{S}\) & send a value of payload type \(A\), then continue as \(S\) \\
-\(\recv{A}{S}\) & receive a value of payload type \(A\), then continue as \(S\) \\
+\(\send{A}{S}\) & send payload type \(A\), then continue as \(S\) \\
+\(\recv{A}{S}\) & receive payload type \(A\), then continue as \(S\) \\
 \(\sel{l_i:S_i}\) & internally select one labeled continuation \\
 \(\bra{l_i:S_i}\) & externally offer labeled continuations \\
-\(\dual{S}\) & protocol dual of session type \(S\) \\
-\(\ptypes{\Gamma}{\Delta}{P}\) & process \(P\) is typed under value context \(\Gamma\) and linear channel environment \(\Delta\) \\
-\(P\to P'\) & one process reduction step \\
-\(P\pcong Q\) & selected process structural congruence relation \\
-\(\Delta\envstep\Delta'\) & protocol-obligation environment evolves with communication \\
+\(\dual{S}\) & session dual in the stated local calculus \\
+\(\ptypes{\Gamma}{\Delta}{P}\) & process \(P\) typed under reusable value context and linear channel environment \\
+\(P\to P'\) & one process reduction step in the active calculus \\
+\(P\pcong Q\) & selected process structural congruence \\
+\(\Delta\envstep\Delta'\) & protocol-obligation environment evolution \\
+\(S\subsess T\) & bounded synchronous session replacement/subtyping relation in \texttt{PROTO-S1} \\
+\(\proj{G}{p}\) & finite global-description projection to role \(p\) in \texttt{PROTO-M1} \\
 \bottomrule
 \end{tabularx}
+
+\begin{thebibliography}{99}
+\bibitem{hoare1978} C. A. R. Hoare. Communicating Sequential Processes. \emph{Communications of the ACM}, 21(8), 1978.
+\bibitem{milner1980} Robin Milner. \emph{A Calculus of Communicating Systems}. Lecture Notes in Computer Science 92. Springer, 1980.
+\bibitem{milner1992} Robin Milner, Joachim Parrow, and David Walker. A calculus of mobile processes, I--II. \emph{Information and Computation}, 100(1), 1992.
+\bibitem{girard1987} Jean-Yves Girard. Linear logic. \emph{Theoretical Computer Science}, 50(1):1--101, 1987.
+\bibitem{honda1993} Kohei Honda. Types for dyadic interaction. In \emph{CONCUR'93}, LNCS 715, pp. 509--523. Springer, 1993.
+\bibitem{honda1998} Kohei Honda, Vasco T. Vasconcelos, and Makoto Kubo. Language primitives and type discipline for structured communication-based programming. In \emph{ESOP'98}, LNCS 1381, pp. 122--138. Springer, 1998.
+\bibitem{gayhole2005} Simon J. Gay and Malcolm Hole. Subtyping for session types in the pi calculus. \emph{Acta Informatica}, 42(2--3):191--225, 2005.
+\bibitem{honda2008} Kohei Honda, Nobuko Yoshida, and Marco Carbone. Multiparty asynchronous session types. In \emph{POPL 2008}, pp. 273--284. ACM, 2008.
+\bibitem{gayvasconcelos2010} Simon J. Gay and Vasco T. Vasconcelos. Linear type theory for asynchronous session types. \emph{Journal of Functional Programming}, 20(1):19--50, 2010.
+\bibitem{cairespfenning2010} Luís Caires and Frank Pfenning. Session types as intuitionistic linear propositions. In \emph{CONCUR 2010}, LNCS 6269, pp. 222--236. Springer, 2010.
+\bibitem{wadler2014} Philip Wadler. Propositions as sessions. \emph{Journal of Functional Programming}, 24(2--3):384--418, 2014.
+\end{thebibliography}
 
 \printindex
 \end{document}

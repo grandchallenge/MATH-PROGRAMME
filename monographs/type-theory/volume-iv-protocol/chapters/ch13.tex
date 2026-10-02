@@ -1,0 +1,76 @@
+\chapter{Processes as Proofs, Carefully}
+
+Volume III showed that proof terms and programs can share a constructive syntax. Concurrency invites a further correspondence: linear-logic structure can be interpreted as communication structure. The result is powerful precisely when kept calculus-specific. A slogan such as 'cut is communication' is not a universal theorem about every process calculus.
+
+\section{Why linear logic is suggestive}
+Linear logic makes resource use explicit \cite{girard1987}. Session calculi also track obligations that are consumed as communication advances. This shared discipline motivated exact proof/process correspondences in specific systems, including work by Caires and Pfenning \cite{cairespfenning2010} and Wadler's CP/GV development \cite{wadler2014}.
+
+\input{plates/plate37}
+
+\section{A bounded comparison table}
+This chapter uses a comparison layer rather than adding another theorem to \texttt{PROTO-0}. It aligns selected structural roles:
+\[
+\begin{array}{c|c}
+\text{proof-theoretic role} & \text{process role}\\\hline
+\text{cut/composition} & \text{private channel connection}\\
+\text{linear resource} & \text{single-use session obligation}\\
+\text{dual connective behavior} & \text{complementary endpoint action}
+\end{array}
+\]
+The table is not a translation function and carries no adequacy claim.
+
+\section{Exact correspondence needs an exact calculus}
+Caires--Pfenning interpret session types as intuitionistic linear propositions for their calculus \cite{cairespfenning2010}. Wadler's CP presents a calculus where propositions of classical linear logic correspond to session types and relates it to GV \cite{wadler2014}. These are exact mathematical constructions with their own syntax, typing, and operational semantics. They do not license rewriting the current \texttt{PROTO-0} theorems as logical cut-elimination theorems without a translation and proof.
+
+\section{Cut as channel composition, with conditions}
+\begin{workedexample}
+A restriction $(\nu x\,y)(P\mid Q)$ structurally resembles connecting two derivations through a private interface. In a propositions-as-sessions calculus, a precise translation can make such a statement theorem-level. Here the picture is only a comparison until we define and verify the translation.
+\end{workedexample}
+
+\section{Do not confuse: structural consonance with identity}
+\begin{warningbox}
+The series thesis benefits from exact correspondences, but it is weakened by pretending that nearby structures are identical. 'Proofs as processes' is a family of calculus-specific results. Session duality is not logical negation in general; process reduction is not proof normalization in general.
+\end{warningbox}
+
+\input{plates/plate38}
+
+\section{Computational laboratory}
+\begin{labbox}
+Run
+\[
+  \texttt{python labs/lab13_logic_process.py}.
+\]
+The laboratory records a bounded correspondence table and checks that every asserted row is tagged as exact-in-cited-calculus, structural-analogy, or not-established for PROTO-0. It is executable evidence for the stated finite fixtures and does not enlarge the theorem scope.
+\end{labbox}
+
+\section{Exercises}
+\subsection*{Checkpoint}
+\begin{enumerate}[label=\textbf{13.\arabic*},start=1]
+\item Why does linear logic naturally invite comparison with session obligations?
+\item Name one cited propositions-as-sessions calculus.
+\item Why is the chapter's comparison table not itself a translation theorem?
+\end{enumerate}
+\subsection*{Core}
+\begin{enumerate}[label=\textbf{13.\arabic*},start=4]
+\item Give one structural similarity between cut and private channel composition.
+\item Give one reason process reduction need not equal proof normalization in an arbitrary calculus.
+\item Classify 'session duality is logical negation' under this volume's claim discipline.
+\end{enumerate}
+\subsection*{Synthesis}
+\begin{enumerate}[label=\textbf{13.\arabic*},start=7]
+\item Explain how an exact translation would strengthen the status of a mere analogy.
+\item Compare the authority of a cited external correspondence with an executable comparison table.
+\end{enumerate}
+\subsection*{Proof Workshop}
+\begin{enumerate}[label=\textbf{13.\arabic*},start=9]
+\item State what would need to be proved for a translation from $\texttt{PROTO-0}$ to a linear-logic calculus to preserve typing.
+\item State a second obligation needed to relate process reduction to cut elimination.
+\end{enumerate}
+\subsection*{Design Clinic}
+\begin{enumerate}[label=\textbf{13.\arabic*},start=11]
+\item Design a claim ledger with separate fields for equivalence, correspondence, analogy, and motivating resemblance.
+\end{enumerate}
+\subsection*{Challenge}
+\begin{enumerate}[label=\textbf{13.\arabic*},start=12]
+\item Read either Caires--Pfenning or Wadler and identify one theorem that is exact for their calculus but should not be silently transferred to $\texttt{PROTO-0}$.
+\end{enumerate}
