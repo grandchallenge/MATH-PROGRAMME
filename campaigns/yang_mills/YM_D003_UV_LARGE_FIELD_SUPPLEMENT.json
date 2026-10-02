@@ -1,0 +1,148 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "YM-D003-UV-LARGE-FIELD-SUPPLEMENT",
+  "campaign_id": "YM-001",
+  "effective_after_protected_merge": true,
+  "historical_wp02_ledger_immutable": true,
+  "source_authority": {
+    "repository": "grandchallenge/MATHFORGE",
+    "protected_merge": "a609f40e809ebe74f35dc4ceb069c15e4d21f26e",
+    "audit_path": "sources/YM-001/YM_D003_BALABAN_MRS_SOURCE_AUDIT.md",
+    "intake_path": "sources/YM-001/YM_D003_BALABAN_MRS_SOURCE_INTAKE.json"
+  },
+  "source_records": [
+    {
+      "id": "YM-SRC-021",
+      "title": "Renormalization group approach to lattice gauge field theories — II. Cluster expansions",
+      "authors": ["Tadeusz Balaban"],
+      "year": 1988,
+      "source_type": "PRIMARY_JOURNAL",
+      "locator": "doi:10.1007/BF01239022",
+      "audit_state": "FORGE_PROTECTED_SCOPE_ADMITTED",
+      "scope": "Completes the sequence of effective actions in the small-field approximation through exponentiated cluster expansion.",
+      "claim_boundary": "Small-field completion is not four-dimensional large-field control, full UV continuum construction, IR removal, OS reconstruction, or mass gap."
+    },
+    {
+      "id": "YM-SRC-022",
+      "title": "Convergent renormalization expansions for lattice gauge theories",
+      "authors": ["Tadeusz Balaban"],
+      "year": 1988,
+      "source_type": "PRIMARY_JOURNAL",
+      "locator": "doi:10.1007/BF01217741",
+      "audit_state": "FORGE_PROTECTED_SCOPE_ADMITTED",
+      "scope": "Introduces complete effective densities including large-field domains and proves preservation under renormalization transformations; inspected convergence conclusion is qualified to superrenormalizable models.",
+      "claim_boundary": "This source alone is not the completed four-dimensional pure-gauge ultraviolet-stability theorem."
+    },
+    {
+      "id": "YM-SRC-023",
+      "title": "Large field renormalization. I. The basic step of the R operation",
+      "authors": ["Tadeusz Balaban"],
+      "year": 1989,
+      "source_type": "PRIMARY_JOURNAL",
+      "locator": "doi:10.1007/BF01257412",
+      "audit_state": "FORGE_PROTECTED_SCOPE_ADMITTED",
+      "scope": "Constructs the R operation for large-field regions in the four-dimensional gauge-theory RG programme.",
+      "claim_boundary": "Part I defers completion of the ultraviolet-stability proof to Part II."
+    },
+    {
+      "id": "YM-SRC-024",
+      "title": "Large field renormalization. II. Localization, exponentiation, and bounds for the R operation",
+      "authors": ["Tadeusz Balaban"],
+      "year": 1989,
+      "source_type": "PRIMARY_JOURNAL",
+      "locator": "doi:10.1007/BF01238433",
+      "audit_state": "FORGE_PROTECTED_SCOPE_ADMITTED",
+      "scope": "Completes the proof of ultraviolet stability of four-dimensional pure gauge field theories in the source RG framework.",
+      "claim_boundary": "Ultraviolet stability is not by itself existence/uniqueness of the full continuum Schwinger hierarchy, IR/infinite-volume removal, OS reconstruction, a physical reference scale, or a mass gap."
+    },
+    {
+      "id": "YM-SRC-025",
+      "title": "Construction of YM_4 with an infrared cutoff",
+      "authors": ["Jacques Magnen", "Vincent Rivasseau", "Roland Seneor"],
+      "year": 1993,
+      "source_type": "PRIMARY_JOURNAL",
+      "locator": "doi:10.1007/BF02097397",
+      "audit_state": "FORGE_PROTECTED_QUALIFIED_SOURCE_CLAIM",
+      "scope": "Pure SU(2), four dimensions, trivial topological sector; source-stated ultraviolet-cutoff-free Schwinger construction at fixed infrared cutoff with Slavnov identities.",
+      "claim_boundary": "The source explicitly does not remove the infrared cutoff, does not prove the complete OS profile, omits nontrivial topology, and states that detailed convergence proofs are not all written out."
+    }
+  ],
+  "theorem_interfaces": [
+    {
+      "id": "YM-T-210",
+      "name": "Balaban four-dimensional large-field completion and ultraviolet stability",
+      "status": "THEOREM_PARTIAL",
+      "dimension": "4",
+      "gauge_group": "pure gauge groups in the source lattice RG framework",
+      "regulator": "lattice renormalization group with ultraviolet refinement",
+      "volume": "source finite-volume lattice framework",
+      "coupling_regime": "weak-coupling ultraviolet RG regime with large-field R-operation control",
+      "direction": "large_field_control_and_ultraviolet_stability",
+      "quantifiers": "within the source RG setup and hypotheses",
+      "normalization": "Balaban lattice RG conventions",
+      "hypotheses": [
+        "source lattice pure-gauge setup",
+        "Balaban small-field/background-field RG machinery",
+        "R-operation localization/exponentiation/bounds"
+      ],
+      "conclusion": "The large-field R-operation closes the large-field obstruction and completes the source proof of ultraviolet stability for four-dimensional pure gauge field theories.",
+      "source_ids": ["YM-SRC-004", "YM-SRC-021", "YM-SRC-022", "YM-SRC-023", "YM-SRC-024"],
+      "source_locator": "Balaban CMP 109 (1987), 116 (1988), 119 (1988), 122 I-II (1989); Forge protected audit at a609f40e809ebe74f35dc4ceb069c15e4d21f26e",
+      "composition_state": "COMPOSABLE_AS_4D_UV_STABILITY_AND_LARGE_FIELD_INPUT_ONLY",
+      "claim_boundary": "Does not establish IR/infinite-volume removal, uniqueness of a full continuum limit, complete OS reconstruction, nontriviality of the terminal theory, physical reference scale, or mass gap.",
+      "residual_hypotheses": [
+        "infrared cutoff / infinite-volume removal",
+        "uniqueness and full continuum identification",
+        "complete OS profile",
+        "physical scale setting",
+        "physical spectral gap"
+      ],
+      "last_audited": "2026-09-18"
+    },
+    {
+      "id": "YM-T-220",
+      "name": "MRS source-stated ultraviolet-cutoff removal at fixed infrared cutoff",
+      "status": "QUALIFIED_CONSTRUCTIVE_SOURCE_CLAIM",
+      "dimension": "4",
+      "gauge_group": "SU(2)",
+      "regulator": "momentum-space ultraviolet cutoff removed; fixed infrared cutoff retained",
+      "volume": "fixed infrared-regulated / finite-volume-equivalent setting",
+      "coupling_regime": "asymptotically free ultraviolet construction",
+      "direction": "uv_cutoff_removal_at_fixed_ir",
+      "quantifiers": "pure SU(2), trivial topological sector, source regularized axial-gauge construction",
+      "normalization": "MRS momentum-cutoff and gauge-restoring-counterterm conventions",
+      "hypotheses": [
+        "fixed infrared cutoff",
+        "trivial topological sector",
+        "source stabilizing cutoff class",
+        "source small-/large-field construction"
+      ],
+      "conclusion": "The source states existence of the ultraviolet limit of its Schwinger functions and Slavnov identities at fixed infrared cutoff.",
+      "source_ids": ["YM-SRC-025"],
+      "source_locator": "CMP 155 (1993), 325-383; Forge protected body audit at a609f40e809ebe74f35dc4ceb069c15e4d21f26e",
+      "composition_state": "QUALIFIED_FIXED_IR_INPUT_ONLY",
+      "claim_boundary": "The paper itself states that detailed convergence proofs are not all supplied, does not remove the infrared cutoff, does not prove the complete OS axiom set, and does not address nontrivial topology or the mass gap.",
+      "residual_hypotheses": [
+        "full proof-completeness if theorem-number-exact use is required",
+        "infrared cutoff / infinite-volume removal",
+        "complete OS profile",
+        "topological sectors",
+        "physical scale setting",
+        "physical mass gap"
+      ],
+      "last_audited": "2026-09-18"
+    }
+  ],
+  "d003_current_decomposition": {
+    "large_field_control": "MATERIALLY_SUPPLIED_BY_YM-T-210",
+    "four_dimensional_ultraviolet_stability": "MATERIALLY_SUPPLIED_BY_YM-T-210",
+    "uv_cutoff_free_schwinger_interface_at_fixed_ir": "QUALIFIED_SOURCE_INPUT_YM-T-220",
+    "infrared_cutoff_and_infinite_volume_removal": "OPEN_RESEARCH_DEBT",
+    "continuum_uniqueness_and_full_identification": "OPEN_RESEARCH_DEBT",
+    "complete_os_profile": "OPEN_RESEARCH_DEBT_COUPLED_TO_YM-D002",
+    "noncircular_physical_reference_scale": "OPEN_RESEARCH_DEBT_COUPLED_TO_YM-D001",
+    "physical_mass_gap": "OPEN_RESEARCH_DEBT"
+  },
+  "current_frontier": "BALABAN_4D_UV_STABILITY_AND_LARGE_FIELD_CONTROL_AVAILABLE__IR_REMOVAL_UNIQUENESS_OS_AND_PHYSICAL_IDENTIFICATION_OPEN",
+  "claim_boundary": "This supplement refines current theorem interfaces only. YM-D003 remains open and no Yang-Mills existence, physical mass gap, confinement, certification, novelty, priority, or terminal claim is established."
+}

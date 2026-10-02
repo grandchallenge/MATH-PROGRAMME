@@ -1,0 +1,57 @@
+% Shared GCL Type Theory monograph style — series contract
+\usepackage[paperwidth=7in,paperheight=10in,inner=0.82in,outer=0.72in,top=0.78in,bottom=0.82in]{geometry}
+\usepackage{fontspec}
+\setmainfont{Libertinus Serif}
+\setsansfont{Libertinus Sans}
+\setmonofont{DejaVu Sans Mono}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools,amsthm}
+\usepackage{graphicx}
+\usepackage{unicode-math}
+\setmathfont{Libertinus Math}
+\usepackage{booktabs,longtable,tabularx,array,multicol}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\definecolor{GCLInk}{HTML}{191919}
+\definecolor{GCLWarm}{HTML}{8B5E34}
+\definecolor{GCLPale}{HTML}{F2EBDD}
+\definecolor{GCLBlue}{HTML}{385A6B}
+\definecolor{GCLGreen}{HTML}{4C6251}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathreplacing,fit,backgrounds,matrix,shapes.geometric}
+\tikzset{
+  gclplate/.style={>=Latex,font=\sffamily\small},
+  gcllabel/.style={fill=white,fill opacity=0.94,text opacity=1,rounded corners=1pt,inner sep=1.3pt},
+  gclarrow/.style={->,line cap=round,line join=round},
+  gclwarmarrow/.style={gclarrow,GCLWarm,line width=0.9pt},
+  gclbluearrow/.style={gclarrow,GCLBlue,line width=0.9pt}
+}
+\usepackage[most]{tcolorbox}
+\usepackage{listings,fancyhdr,titlesec,hyperref,bookmark,needspace,imakeidx}
+\makeindex
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.52em}
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\brokenpenalty=5000
+\emergencystretch=1.5em
+\setlist{itemsep=0.25em,topsep=0.4em}
+\newtcolorbox{intuition}[1][]{enhanced,breakable,colback=GCLPale!55,colframe=GCLWarm!70!black,title=Intuition,#1}
+\newtcolorbox{formal}[1][]{enhanced,breakable,colback=white,colframe=GCLBlue!75!black,title=Formal Interlude,#1}
+\newtcolorbox{checkpoint}[1][]{enhanced,breakable,colback=GCLGreen!5,colframe=GCLGreen!80!black,title=Checkpoint,#1}
+\newtcolorbox{warningbox}[1][]{enhanced,breakable,colback=red!2,colframe=red!55!black,title=Do not confuse,#1}
+\newtcolorbox{labbox}[1][]{enhanced,breakable,colback=blue!2,colframe=GCLBlue,title=Computational Laboratory,#1}
+\newtcolorbox{principle}[1][]{enhanced,breakable,colback=GCLPale,colframe=GCLWarm,title=Governing Principle,#1}
+\newtcolorbox{workedexample}[1][]{enhanced,breakable,colback=GCLBlue!3,colframe=GCLBlue!70!black,title=Worked Example,#1}
+\newtcolorbox{proofworkshop}[1][]{enhanced,breakable,colback=GCLGreen!4,colframe=GCLGreen!75!black,title=Proof Workshop,#1}
+\newtcolorbox{designclinic}[1][]{enhanced,breakable,colback=GCLPale!65,colframe=GCLWarm!80!black,title=Design Clinic,#1}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0",
+  "control_id": "MP-EXTERNAL-INTAKE-PR-CONTROLLER-001",
+  "status": "ACTIVE",
+  "purpose": "Open raw-evidence pull requests in grandchallenge/MATHSOLVE for already-created and validated NS-CI intake evidence branches. OPENMATH ownership moved to MP-OPENMATH-UNATTENDED-LIFECYCLE-001.",
+  "authority_source": "existing GCL Release Trust GitHub App installation; short-lived per-run token only",
+  "environment": "release-trust",
+  "target_repository": "grandchallenge/MATHSOLVE",
+  "token_scope": {
+    "repositories": [
+      "MATHSOLVE"
+    ],
+    "permissions": {
+      "contents": "read",
+      "pull_requests": "write"
+    }
+  },
+  "allowed_actions": [
+    "read protected MATHSOLVE dispatch records",
+    "read already-created NS-CI intake evidence branches",
+    "validate each branch against its campaign-specific dispatch and receipt schema",
+    "compare intake branch to protected main",
+    "open a pull request from an existing validated intake branch to main"
+  ],
+  "prohibited_actions": [
+    "write repository contents",
+    "create or alter intake evidence branches",
+    "merge or approve pull requests",
+    "modify protected main",
+    "modify campaign state",
+    "perform mathematical adjudication",
+    "claim certification or canonical mathematical effect",
+    "use administration, actions-write, checks-write, or workflow-write authority"
+  ],
+  "validation_requirements": [
+    "branch maps exactly to a protected NS-CI dispatch identifier",
+    "dispatch is READY_FOR_GITHUB_COMMENT",
+    "branch diff is exactly one raw result and one receipt for the same comment id",
+    "receipt binds the protected dispatch, issue, bootstrap, handoff, and raw artifact identity required by that campaign schema",
+    "receipt is schema-valid, current-for-dispatch, received_unadjudicated, and canonical_claim_effect=false",
+    "no raw result for the dispatch is already present on protected main",
+    "no open intake PR already exists for the branch"
+  ],
+  "wake": {
+    "kind": "GitHub Actions",
+    "cadence": "every 10 minutes",
+    "manual_replay": true,
+    "workflow_run": {
+      "workflow": "Administrative maintenance dispatcher",
+      "event": "completed",
+      "success_only": true
+    }
+  },
+  "claim_boundaries": {
+    "constitutional": false,
+    "merge": false,
+    "certification": false,
+    "production": false,
+    "publication": false,
+    "mathematical_claim": false,
+    "claim_promotion": false,
+    "commercial": false
+  },
+  "first_valid_result_lock": "dispatch_level_protected_raw_existence",
+  "branch_prefixes": [
+    "intake/nsci-"
+  ],
+  "superseded_openmath_owner": "MP-OPENMATH-UNATTENDED-LIFECYCLE-001"
+}

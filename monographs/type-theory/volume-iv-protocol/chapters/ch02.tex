@@ -1,0 +1,290 @@
+
+\chapter{Two Ends of One Obligation}
+
+A protocol becomes useful only when two endpoints can meet. If one endpoint promises to send a
+natural number, the peer must be prepared to receive one. If one endpoint selects a branch, the
+peer must offer that branch. The relation connecting the two endpoint views is
+\keyword{session duality}.
+
+\section{Complementary views}
+
+For the finite Gate-1 language, duality is defined structurally:
+\[
+\begin{aligned}
+ \dual{\send{A}{S}} &= \recv{A}{\dual{S}}, &
+ \dual{\recv{A}{S}} &= \send{A}{\dual{S}},\\
+ \dual{\mathsf{end!}} &= \mathsf{end?}, &
+ \dual{\mathsf{end?}} &= \mathsf{end!}.
+\end{aligned}
+\]
+
+Thus
+\[
+ \dual{\send{\Nat}{\recv{\Bool}{\mathsf{end!}}}}
+ =
+ \recv{\Nat}{\send{\Bool}{\mathsf{end?}}}.
+\]
+
+\input{plates/plate03}
+
+\begin{warningbox}
+Duality is not a generic synonym for logical negation. It is an operation on a particular session
+syntax that swaps complementary communication actions. Chapter 13 later studies proof/process
+correspondences under explicit translations; no such unrestricted identification is assumed here.
+\end{warningbox}
+
+\begin{theorem}[T4.1, finite duality involution]
+For every finite Gate-1 session type \(S\),
+\[
+  \dual{\dual{S}}=S.
+\]
+\end{theorem}
+
+\begin{proof}
+By structural induction on \(S\). If \(S=\mathsf{end!}\) or
+\(S=\mathsf{end?}\), the claim follows from the two terminal clauses. If
+\(S=\send{A}{T}\), then
+\[
+  \dual{\dual{\send{A}{T}}}
+  =\dual{\recv{A}{\dual{T}}}
+  =\send{A}{\dual{\dual{T}}}
+  =\send{A}{T}
+\]
+by the induction hypothesis. The input case is symmetric.
+\end{proof}
+
+The theorem is small, but it carries a critical burden: it justifies treating duality as a
+two-sided endpoint transformation for this finite syntax.
+
+\section{Paired endpoints}
+
+We write
+\[
+  (\nu x\,y)P
+\]
+for a restriction that creates paired endpoints \(x\) and \(y\) inside \(P\). If \(x\) is governed
+by \(S\), then \(y\) is governed by \(\dual{S}\).
+
+Consider
+\[
+(\nu x\,y)(
+  x!\chanval{42}.x?(b).\mathsf{close}\;x.0
+  \mid
+  y?(n).y!\chanval{\mathsf{true}}.\mathsf{wait}\;y.0
+).
+\]
+
+The first visible pair of prefixes are complementary. A synchronous reduction can transfer the
+value \(42\) from the sender to the receiver:
+\[
+\begin{aligned}
+&(\nu x\,y)(
+  x!\chanval{42}.P
+  \mid
+  y?(n).Q
+)\\
+&\qquad \to
+(\nu x\,y)(
+  P
+  \mid
+  Q[42/n]
+).
+\end{aligned}
+\]
+
+\input{plates/plate04}
+
+\begin{formal}
+The process reduction is accompanied by evolution of the channel environment.
+If the pre-step environment contains
+\[
+  x:\send{A}{S},\qquad y:\recv{A}{\dual{S}},
+\]
+then after communication the corresponding obligations are
+\[
+  x:S,\qquad y:\dual{S}.
+\]
+We write this abstractly as
+\[
+   \Delta \envstep \Delta'.
+\]
+
+The later subject-reduction theorem will state that process reduction and environment evolution
+remain synchronized.
+\end{formal}
+
+At Gate 1 we prove only principal-redex compatibility. The full subject-reduction induction is a
+Chapter-3 obligation.
+
+\begin{proposition}[Principal send/receive compatibility]
+Suppose the restricted endpoints \(x,y\) carry dual finite session types whose first actions are
+\(\send{A}{S}\) and \(\recv{A}{\dual{S}}\), and suppose the sent value has payload type \(A\).
+Then the principal synchronous communication step advances the endpoint obligations to
+\(S\) and \(\dual{S}\).
+\end{proposition}
+
+\begin{proof}
+Immediate from the output/input typing premises, the duality definition, and the principal
+communication reduction. The receiver continuation substitutes a value already typed at \(A\);
+the remaining channel obligations are exactly the continuations recorded by the two session
+constructors. This proposition intentionally does not yet claim preservation under arbitrary
+evaluation contexts or structural congruence.
+\end{proof}
+
+\section{Linearity: one obligation, one owner in the derivation}
+
+A process may use parallel composition:
+\[
+   P\mid Q.
+\]
+To keep a linear endpoint from being independently consumed by both sides, the channel
+environment is split:
+\[
+\frac{
+  \ptypes{\Gamma}{\Delta_1}{P}
+  \qquad
+  \ptypes{\Gamma}{\Delta_2}{Q}
+  \qquad
+  \Delta=\Delta_1\uplus\Delta_2
+}{
+  \ptypes{\Gamma}{\Delta}{P\mid Q}
+}.
+\]
+
+The disjoint union symbol matters. It means that a linear channel binding belongs to at most one
+premise.
+
+\input{plates/plate05}
+
+\begin{proposition}[T4.2, disjoint linear splitting]
+If \(\Delta=\Delta_1\uplus\Delta_2\), then no endpoint binding occurs in both
+\(\Delta_1\) and \(\Delta_2\). Conversely, the union reconstructs exactly the bindings of
+\(\Delta\).
+\end{proposition}
+
+\begin{proof}
+This is a property of the finite-map splitting relation used by `PROTO-0`. The derivation of a
+split is built only from assigning each distinct binding to exactly one side. Induction on that
+construction gives disjointness and reconstruction.
+\end{proof}
+
+\begin{warningbox}
+A linear typing derivation controls formal use of an endpoint name. It does not prove that a
+compiler, operating system, broker, network stack, or physical transport maintains unique
+ownership. The implementation theorem would require an additional compilation/runtime model.
+\end{warningbox}
+
+\section{What duality prevents}
+
+Two peers can have the same payload vocabulary and still be incompatible.
+
+For example,
+\[
+S_1=\send{\Nat}{\recv{\Bool}{\mathsf{end!}}},
+\qquad
+S_2=\send{\Nat}{\recv{\Bool}{\mathsf{end!}}}.
+\]
+Both attempt to send first. They are not dual. Under the synchronous semantics there is no
+principal send/receive redex between them.
+
+The dual peer is instead
+\[
+\dual{S_1}=\recv{\Nat}{\send{\Bool}{\mathsf{end?}}}.
+\]
+
+\begin{workedexample}
+The laboratory compares peers structurally rather than by checking only their payload multiset.
+It therefore rejects the pair
+\[
+ \send{\Nat}{\recv{\Bool}{\mathsf{end!}}}
+ \quad\text{and}\quad
+ \send{\Nat}{\recv{\Bool}{\mathsf{end!}}},
+\]
+even though both mention exactly one \(\Nat\) and one \(\Bool\).
+\end{workedexample}
+
+\section{Safety is not enough}
+
+It is tempting to jump from ``the endpoints are dual'' to ``the whole distributed program cannot
+get stuck.'' That inference is false once a process can interleave several sessions.
+
+Suppose one process waits on channel \(x\) before sending on \(u\), while another waits on \(v\)
+before sending on \(y\), and the restrictions pair \(x\) with \(y\) and \(u\) with \(v\).
+Each individual endpoint can be assigned a locally compatible session type, yet the network can
+form a cycle of waits with no enabled communication.
+
+\input{plates/plate06}
+
+This is the most important negative boundary in the volume.
+
+\begin{principle}
+Session fidelity is a local type-preservation property. Global liveness requires additional
+structure or hypotheses. Do not obtain deadlock freedom by renaming fidelity.
+\end{principle}
+
+The full counterexample is developed in Chapter 6. Gate 1 includes the plate now because the
+reader must know from the beginning that the volume will not hide this distinction.
+
+\section{Computational laboratory}
+
+\begin{labbox}
+Run
+\[
+  \texttt{python labs/lab02_duality_checker.py}.
+\]
+The laboratory parses finite sessions, computes duals, verifies involution over a fixture set,
+accepts exact dual peers, and rejects same-direction or label-incompatible peers.
+\end{labbox}
+
+The checker is executable evidence for the finite syntax. It is not a proof of every theorem in
+the later recursive, asynchronous, or multiparty calculi.
+
+\section{Exercises}
+
+\subsection*{Checkpoint}
+\begin{enumerate}[label=\textbf{2.\arabic*}]
+\item Compute
+\(\dual{\send{\Nat}{\recv{\Bool}{\mathsf{end!}}}}\).
+\item State the dual of \(\mathsf{end!}\) and explain why using one undirected terminal constructor
+would hide a protocol obligation in this teaching calculus.
+\item In one sentence, distinguish session duality from logical negation.
+\end{enumerate}
+
+\subsection*{Core}
+\begin{enumerate}[label=\textbf{2.\arabic*},start=4]
+\item Write the two endpoint types for a protocol in which the client receives a Boolean and then
+sends a natural number before the client waits for close.
+\item Give a principal synchronous reduction for
+\((\nu x\,y)(x!\chanval{7}.P \mid y?(n).Q)\).
+\item Explain why the parallel typing rule uses
+\(\Delta_1\uplus\Delta_2\) rather than ordinary union.
+\end{enumerate}
+
+\subsection*{Synthesis}
+\begin{enumerate}[label=\textbf{2.\arabic*},start=7]
+\item Compare ``dual endpoints'' with ``deadlock-free network.'' Give a concrete reason the first
+does not imply the second in a multi-session setting.
+\item Compare formal linearity of an endpoint variable with unique ownership of a real socket.
+List two implementation assumptions needed to connect them.
+\end{enumerate}
+
+\subsection*{Proof Workshop}
+\begin{enumerate}[label=\textbf{2.\arabic*},start=9]
+\item Prove T4.1 for the finite Gate-1 syntax using structural induction.
+\item Prove that if a finite channel environment is split by assigning every binding to exactly one
+of two subenvironments, then the two subenvironments are disjoint and reconstruct the original.
+\end{enumerate}
+
+\subsection*{Design Clinic}
+\begin{enumerate}[label=\textbf{2.\arabic*},start=11]
+\item Design an error report for a duality checker that distinguishes payload mismatch, direction
+mismatch, and premature termination. Explain why one generic ``protocol mismatch'' message loses
+useful evidence.
+\end{enumerate}
+
+\subsection*{Challenge}
+\begin{enumerate}[label=\textbf{2.\arabic*},start=12]
+\item Construct a two-session cyclic wait in prose or process pseudocode. Assign locally compatible
+session actions to every endpoint, then identify the wait-for cycle. State precisely which property
+fails and which local safety property can remain intact.
+\end{enumerate}

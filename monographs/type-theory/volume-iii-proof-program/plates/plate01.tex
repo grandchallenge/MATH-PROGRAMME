@@ -1,0 +1,22 @@
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}[gclplate,scale=.88]
+\node[anchor=west,font=\sffamily\bfseries\Large,gcllabel] at (-6,3.9) {ONE CONSTRUCTIVE OBJECT, TWO PRESENTATIONS};
+\draw[GCLWarm,line width=1pt] (-6,3.55)--(6,3.55);
+\node[gcllabel,font=\bfseries] at (-3.2,2.85) {Natural deduction};
+\node[gcllabel] at (-4.7,1.65) {$[x{:}A]$};
+\node[gcllabel] at (-2.0,1.65) {$B$};
+\draw[-] (-4.3,1.35)--(-2.4,1.35);
+\node[gcllabel] at (-3.35,.65) {$A\to B\quad(\to I)$};
+\draw[gclwarmarrow] (-3.35,1.28)--(-3.35,.95);
+\node[gcllabel,font=\bfseries] at (3.2,2.85) {Assigned proof term};
+\node[gcllabel] at (1.55,1.65) {$x{:}A$};
+\node[gcllabel] at (4.25,1.65) {$t{:}B$};
+\node[gcllabel] at (3.0,.65) {$\lambda x{:}A.t:A\to B$};
+\draw[gclbluearrow] (3.0,1.3)--(3.0,.95);
+\draw[dashed,GCLInk!55] (0,-.2)--(0,3.1);
+\node[gcllabel,align=center] at (0,-.65) {same premise/conclusion shape\\under the selected term assignment};
+\end{tikzpicture}
+\caption{\textbf{Plate 1. One constructive object, two presentations.} Implication introduction discharges an assumption on the proof side and binds a variable on the term side. The alignment is exact for the selected $\mathrm{CH}\text{-}0$ term assignment; it is not a claim that every proof formalism has this syntax.}
+\label{plate:two-presentations}
+\end{figure}

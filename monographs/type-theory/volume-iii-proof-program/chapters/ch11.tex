@@ -1,0 +1,49 @@
+\chapter{Extraction}
+\label{ch:extraction}
+
+If a constructive proof already contains an executable term, why speak of extraction at all? Because practical proof artifacts usually contain structure that a runtime does not need: type annotations, proof-only arguments, certificates, logical wrappers, and sometimes opaque or axiomatic ingredients. Extraction is a controlled transformation from a proof-bearing artifact to a retained program.
+
+\input{plates/plate31.tex}
+
+This volume makes only example-level extraction claims. The selected examples start from proof terms in calculi whose computational content is explicit, apply a declared erasure/translation, evaluate the retained program, and replay the concrete specification against the output.
+
+\begin{proposition}[Witness preservation in the selected existential extractor]
+For the finite $\Sigma$-style examples admitted by \texttt{lab11\_extractor.py}, if the checker accepts a package $\langle a,p\rangle:\Sigma(x:A).B(x)$ and the extractor returns witness $a$, then replay of the registered decidable predicate for $B$ accepts that returned witness.
+\end{proposition}
+\begin{proof}
+The laboratory's accepted package format contains the witness and a certificate produced by the same decidable predicate used for replay. Acceptance first checks the witness domain and certificate. Extraction projects the witness without changing it. Replay recomputes the predicate on that exact value. Therefore accepted fixtures satisfy the registered predicate after extraction. The proposition is about this concrete architecture, not arbitrary proof-assistant extraction.
+\end{proof}
+
+\input{plates/plate32.tex}
+
+\begin{workedexample}[title={A proof that returns the witness}]
+Suppose the finite goal is $\exists n\in\{0,1,2,3,4\}.\;n^2=4$. A constructive proof can carry $n=2$ together with checked evidence for $2^2=4$. The extractor keeps $2$ and discards the certificate after checking. Runtime output therefore preserves the computationally relevant witness.
+\end{workedexample}
+
+Extraction becomes more delicate when the proof uses classical axioms, opaque constants, effects, quotienting, or principles whose computational interpretation is external. A production system may translate such ingredients, reject extraction, retain runtime support, or erase them under a justified irrelevance theorem. The correct statement is system-specific.
+
+\input{plates/plate33.tex}
+
+\begin{warningbox}
+The examples do not establish a general extraction-correctness theorem for Coq, Lean, Agda, or any other industrial proof assistant. Those systems have their own calculi, kernels, erasure rules, code generators, and trust boundaries.
+\end{warningbox}
+
+\begin{labbox}
+Run \texttt{python labs/lab11_extractor.py}. It checks finite witness/certificate packages, extracts accepted witnesses, replays the registered predicates, and rejects corrupted certificates.
+\end{labbox}
+
+\section*{Exercises}\addcontentsline{toc}{section}{Exercises}
+\begin{enumerate}[label=\textbf{11.\arabic*.}]
+\item \textbf{Checkpoint.} Distinguish evaluation from extraction.
+\item \textbf{Checkpoint.} What information is retained from the selected $\Sigma$ example?
+\item \textbf{Checkpoint.} Why is replay performed after extraction?
+\item \textbf{Core.} Give a finite existential proposition and a witness-producing proof object.
+\item \textbf{Core.} Identify which fields of that object a runtime needs.
+\item \textbf{Core.} Construct a corrupted certificate that the extractor must reject before output.
+\item \textbf{Synthesis.} Explain how proof irrelevance and extraction can interact without being the same notion.
+\item \textbf{Synthesis.} List three ingredients that can complicate executable extraction.
+\item \textbf{Proof Workshop.} Prove witness preservation for the finite package format.
+\item \textbf{Proof Workshop.} State an end-to-end extraction theorem stronger than the one proved here and list its extra obligations.
+\item \textbf{Design Clinic.} Separate checker, extractor, and replay responsibilities in an API.
+\item \textbf{Challenge.} Explain why a successful extracted executable is evidence about a pipeline but not by itself a proof that the source theorem was formalized correctly.
+\end{enumerate}

@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": {
+    "volume": "I",
+    "release": "RC1.1_RECONCILED",
+    "main_tex_sha256": "ceb02e6c84011615c7557c9bf4bba391290f43d6d54d9c5033dab9215af14d01",
+    "rebuild_core_sha256": "013fd6b5f78a8bb45711bb9e167321f7ca58324b7a0ae3f0c7e594ba63a96e3b",
+    "protected_source_admission_commit": "0b18341a7536d021b6ab007c033a72b32e3ff7e1",
+    "protected_release_tree_sha": "3a7dbb5d0990b75ce15c70daa91b232138b3a9a0",
+    "durable_state_record_commit": "c2911113beaf58c17e2d88a908021d66dcf9a7bf",
+    "tracking_issue": 859
+  },
+  "coverage_rule": "Review all named theorem/proposition/lemma/corollary environments in exact main.tex. Result count and statement hashes were derived from that exact source; they are coverage fingerprints, not review conclusions.",
+  "result_count": 19,
+  "results": [
+    {"id":"T01","kind":"PROPOSITION","title":"Inversion for natural-number constructors","label":"prop:nat-inversion","chapter":"Judgments: The Atomic Form of Formal Meaning","source_line_start":468,"source_line_end":474,"statement_sha256":"508c93640ce21206432ecb1f91cf3eb2f0554b25b71b0615c190030a95d31d33","status":"PENDING","notes":""},
+    {"id":"T02","kind":"THEOREM","title":"Weakening for the simple core","label":"thm:weakening","chapter":"Contexts: Worlds of Assumption","source_line_start":640,"source_line_end":642,"statement_sha256":"d947c64c9073790df75c7bd284a803f3782abd1b9b622d84f781fb0ce22cd2ac","status":"PENDING","notes":""},
+    {"id":"T03","kind":"THEOREM","title":"Free-variable adequacy","label":"thm:fv-adequacy","chapter":"Variables and Dependency: Naming What the Future May Supply","source_line_start":810,"source_line_end":815,"statement_sha256":"7e9a82372fd27e5b3f6d38c50015c36603c094d85a3a50ea84a4f0efb45fbde5","status":"PENDING","notes":""},
+    {"id":"T04","kind":"THEOREM","title":"Substitution for the simple core","label":"thm:substitution","chapter":"Substitution: Information in Motion","source_line_start":980,"source_line_end":992,"statement_sha256":"eadaaabac711dd3cdf95db80d06010d997174eda295d4794deb0a356227ed97c","status":"PENDING","notes":""},
+    {"id":"T05","kind":"COROLLARY","title":"Beta preservation","label":"cor:beta-preservation","chapter":"Substitution: Information in Motion","source_line_start":996,"source_line_end":998,"statement_sha256":"7767a0099c283dfdc2f44f8300869d1459e4898ee1618aa4cb806deb9940cdfc","status":"PENDING","notes":""},
+    {"id":"T06","kind":"PROPOSITION","title":"Uniqueness of synthesized types","label":"prop:synth-unique","chapter":"Rules: How a Language Grows","source_line_start":1194,"source_line_end":1196,"statement_sha256":"0693fd504bcfc868c46fbebc917e139390ef2be0e6523b845a02e9990b1d2ce9","status":"PENDING","notes":""},
+    {"id":"T07","kind":"THEOREM","title":"Typing is stable under the fundamental function computation","label":"thm:function-beta","chapter":"Functions: Packaging Hypothetical Computation","source_line_start":1379,"source_line_end":1385,"statement_sha256":"833b9b3d4aaee76097cc54eb66f54ff72e4f355b13cd42d32b7516398cb3dcea","status":"PENDING","notes":""},
+    {"id":"T08","kind":"THEOREM","title":"Canonical forms for products and sums","label":"thm:canonical-product-sum","chapter":"Products and Sums: The Algebra of Information","source_line_start":1599,"source_line_end":1605,"statement_sha256":"ed9792cef63fc1719cda00d0306b4b6bee7d02540b93ac004c19994649519a0a","status":"PENDING","notes":""},
+    {"id":"T09","kind":"THEOREM","title":"The recursor iterates its step along numeral structure","label":"thm:natrec-numeral","chapter":"Natural Numbers and Induction: Computation from Generation","source_line_start":1796,"source_line_end":1802,"statement_sha256":"5e9b9a32ef5c41555dd78f155cd6a8d3eef2050b5d548ec043fc366c1504f9e2","status":"PENDING","notes":""},
+    {"id":"T10","kind":"THEOREM","title":"Normalization decides reduction-generated definitional equality under standard hypotheses","label":"thm:defeq-normalization","chapter":"Equality and Conversion: When Are Two Programs the Same?","source_line_start":2014,"source_line_end":2016,"statement_sha256":"940dee0e6ac367a8d780630af08498b69dc7f3c03a972c0d4693320b59b03a52","status":"PENDING","notes":""},
+    {"id":"T11","kind":"PROPOSITION","title":"The usual $\\Omega$ is not simply typable","label":"prop:omega-not-stlc","chapter":"Normalization: Computation as the Exposure of Canonical Form","source_line_start":2133,"source_line_end":2135,"statement_sha256":"f780d5338628094ccbabb7539843ccbce409889fa0c15d669de2c92647e310c0","status":"PENDING","notes":""},
+    {"id":"T12","kind":"THEOREM","title":"Canonical forms for closed TinyTT values","label":"thm:canonical-core","chapter":"Normalization: Computation as the Exposure of Canonical Form","source_line_start":2200,"source_line_end":2210,"statement_sha256":"c822cba8fe924797051276b7704148c8f1641a6e4cedcf7d6ee3468976dbc771","status":"PENDING","notes":""},
+    {"id":"T13","kind":"THEOREM","title":"Preservation for the TinyTT core","label":"thm:preservation","chapter":"Normalization: Computation as the Exposure of Canonical Form","source_line_start":2215,"source_line_end":2217,"statement_sha256":"43371355510995a278955480556ca328d100bef838e8a97404f0a5ae00706409","status":"PENDING","notes":""},
+    {"id":"T14","kind":"THEOREM","title":"Progress for closed TinyTT terms","label":"thm:progress","chapter":"Normalization: Computation as the Exposure of Canonical Form","source_line_start":2226,"source_line_end":2228,"statement_sha256":"b7a54d147ebeec6707e44d2b70aec48b9aabdecc1acfb5e761932d183a4e8538","status":"PENDING","notes":""},
+    {"id":"T15","kind":"COROLLARY","title":"No stuck closed well-typed states","label":"cor:type-safety","chapter":"Normalization: Computation as the Exposure of Canonical Form","source_line_start":2233,"source_line_end":2235,"statement_sha256":"c3a01a884a5b02f7ce0a5b5860e03b6e0325fc88e940d6faaf2e26b10e1d3356","status":"PENDING","notes":""},
+    {"id":"T16","kind":"PROPOSITION","title":"Implication detour elimination is beta reduction","label":"prop:ch-beta","chapter":"Proof and Program: The Curry-Howard Lens","source_line_start":2427,"source_line_end":2434,"statement_sha256":"7e15abff51f93eef5bdda4a53ca7b6d43b6c1d99703e594ec8a4cdf4738b8e24","status":"PENDING","notes":""},
+    {"id":"T17","kind":"PROPOSITION","title":"Independent checking localizes trust for the core judgment","label":"prop:verification-dominates-search","chapter":"Type Checking: Turning Judgments into an Algorithm","source_line_start":2617,"source_line_end":2619,"statement_sha256":"d9ccd57a346a7b42a1bf52bb3f213cd482a27eebec424d2ed495aea4ed753879","status":"PENDING","notes":""},
+    {"id":"T18","kind":"THEOREM","title":"Soundness of the TinyTT bidirectional checker","label":"thm:algo-sound","chapter":"Type Checking: Turning Judgments into an Algorithm","source_line_start":2651,"source_line_end":2657,"statement_sha256":"5673570cb6a0d53899bfa353ba0d5d8742d94a3c58d5248fa646ce20a23fbfa9","status":"PENDING","notes":""},
+    {"id":"T19","kind":"PROPOSITION","title":"The simple-arrow grammar cannot bind a term in its codomain","label":"prop:dependent-threshold","chapter":"Judgment as Communication: From Expressions to Protocol States","source_line_start":2900,"source_line_end":2902,"statement_sha256":"e150718e45fd408f161758f62a4f778dd31222b8d527f941876061c584ef5c2e","status":"PENDING","notes":""}
+  ],
+  "cross_cutting_checks": [
+    {"id":"C01","check":"Generalized substitution carries the trailing context and handles binders without dropping context.","status":"PENDING"},
+    {"id":"C02","check":"Weakening freshness/distinct-name assumptions are preserved; implementation shadowing is not imported into the formal theorem.","status":"PENDING"},
+    {"id":"C03","check":"Declarative preservation is not conflated with bidirectional re-synthesis after annotation erasure.","status":"PENDING"},
+    {"id":"C04","check":"Progress proves immediate value-or-step without a normalization assumption; canonical forms cover the eliminators used.","status":"PENDING"},
+    {"id":"C05","check":"The normalization/equality theorem remains conditional on all stated metatheoretic hypotheses.","status":"PENDING"},
+    {"id":"C06","check":"Natrec iteration is an equality/congruence-closure result, not a false literal CBV trace claim for open terms.","status":"PENDING"},
+    {"id":"C07","check":"Omega non-typability is restricted to ordinary finite simple types and does not overclaim against recursive types.","status":"PENDING"},
+    {"id":"C08","check":"Localized trust is conditional on an independently implemented sound kernel and does not establish surface-intent preservation.","status":"PENDING"},
+    {"id":"C09","check":"Curry–Howard claims are scoped to the corresponding constructive proof/term rules.","status":"PENDING"},
+    {"id":"C10","check":"The dependent threshold is only a limitation of the Volume-I simple-arrow grammar.","status":"PENDING"}
+  ]
+}

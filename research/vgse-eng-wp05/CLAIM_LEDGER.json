@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0.0",
+  "work_package_id": "VGSE-ENG-WP05",
+  "campaign_id": "VGSE-001",
+  "status": "terminal_candidate_pending_exact_head_review_and_protected_admission",
+  "claims": [
+    {
+      "id": "VGSE-ENG-WP05-C01",
+      "label": "EXACT GRAPH FACT",
+      "statement": "The internal-vertex gauge action on the 16 edge weights has rank 8, so its integer monomial invariant lattice has rank 8.",
+      "evidence": [
+        "GAUGE_ACTION.json",
+        "INVARIANT_LATTICE.json"
+      ]
+    },
+    {
+      "id": "VGSE-ENG-WP05-C02",
+      "label": "EXACT GRAPH FACT",
+      "statement": "The natural invariant flow space decomposes into three closed-cycle directions and five independent boundary-to-boundary path directions. The full closed-cycle rank is 16-14+1=3.",
+      "evidence": [
+        "GRAPH_INCIDENCE.json",
+        "INVARIANT_LATTICE.json"
+      ]
+    },
+    {
+      "id": "VGSE-ENG-WP05-C03",
+      "label": "EXACT CANCELLATION THEOREM",
+      "statement": "For any closed-cycle exponent vector q, every discrete-holomorphic vertex factor cancels exactly from the protected primitive, leaving the signed graph-weight monomial. The retained basis yields -6/7, -4/21, and 18/175.",
+      "evidence": [
+        "CANCELLATION_DERIVATION.md",
+        "INVARIANT_LATTICE.json"
+      ],
+      "authority": "independent MATHCERT exact C05 primitive replay"
+    },
+    {
+      "id": "VGSE-ENG-WP05-C04",
+      "label": "EXACT QUOTIENT FACT",
+      "statement": "The five boundary paths plus three cycles form a complete integer invariant basis. Their positive weight monomials are related to the WP01 coordinates by an integer 8x8 matrix with determinant -1 and an exact integer inverse.",
+      "evidence": [
+        "QUOTIENT_CHART.json"
+      ]
+    },
+    {
+      "id": "VGSE-ENG-WP05-C05",
+      "label": "EXACT OBSTRUCTION",
+      "statement": "The five boundary-path geometry products retain endpoint boundary factors beta_i. Hence the closed-cycle cancellation route alone recovers only three independent quotient directions from geometry increments without additional boundary calibration.",
+      "evidence": [
+        "CANCELLATION_DERIVATION.md",
+        "GAUGE_ACTION.json",
+        "INVARIANT_LATTICE.json"
+      ],
+      "scope": "This is an obstruction for the exact monomial cancellation route, not a universal impossibility theorem for every conceivable geometry inversion."
+    },
+    {
+      "id": "VGSE-ENG-WP05-C06",
+      "label": "CONDITIONAL EXACT RECONSTRUCTION",
+      "statement": "When the certified algebraic-branch boundary factors beta_i are supplied, the five path products normalize to the remaining five signed weight invariants, and the full eight-dimensional quotient is reconstructed through the exact unimodular chart.",
+      "evidence": [
+        "CANCELLATION_DERIVATION.md",
+        "QUOTIENT_CHART.json",
+        "BRANCH_REPLAY.json"
+      ]
+    },
+    {
+      "id": "VGSE-ENG-WP05-C07",
+      "label": "NUMERICAL REPLAY",
+      "statement": "Across all five retained generated C05 branches, the three raw cycle products agree with their exact targets to maximum absolute error 2.19e-14. The five raw path products vary by branch, but after branch boundary normalization agree with targets to maximum absolute error 6.91e-13.",
+      "evidence": [
+        "BRANCH_REPLAY.json"
+      ],
+      "scope": "Numerical replay supports the exact identities; it is not itself the exact proof."
+    },
+    {
+      "id": "VGSE-ENG-WP05-C08",
+      "label": "RESEARCH DISPOSITION",
+      "statement": "The supported terminal disposition is CYCLE_INVARIANT_QUOTIENT_RECONSTRUCTION_PARTIAL: three quotient directions are geometry-only cycle invariants; all eight are recoverable only with branch boundary calibration.",
+      "evidence": [
+        "RESULTS.json",
+        "CANCELLATION_DERIVATION.md"
+      ]
+    },
+    {
+      "id": "VGSE-ENG-WP05-C09",
+      "label": "CLAIM BOUNDARY",
+      "statement": "WP05 does not establish VGSE-C06, Figure-16-to-pinned-C source correspondence, physical stiffness, mechanical advantage, rigid foldability, collision freedom, finite thickness, material response, manufacturability, tolerance or fatigue performance, product performance, novelty, priority, patentability, or commercial value."
+    }
+  ]
+}

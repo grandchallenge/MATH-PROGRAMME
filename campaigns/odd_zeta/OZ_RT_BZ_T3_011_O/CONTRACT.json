@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 931,
+  "operation": "OZ-RT-BZ-T3-011-O",
+  "stage": "T3_011_O_ACTIVE_SPECTATOR_DOUBLE_RECIPROCAL_TRIVARIATE_COKERNEL_AUDIT",
+  "predecessor": {
+    "reviewed_head": "a71335bdf4651d0ac0f693ff22802dd96ff098de",
+    "merge_commit": "70a688252f6ec440dff7380ea778401d3252c9fa",
+    "required_terminal": "DOUBLE_RECIPROCAL_ACTIVE_TRIVARIATE_RESPONSE_CLASS_COKERNEL_INVISIBLE",
+    "expected_possible_record_count": 1282,
+    "expected_tested_record_count": 1282,
+    "expected_semantic_functional_ambiguity": null,
+    "expected_first_cokernel_breaking_direction": null,
+    "expected_characterized_blocker": null,
+    "expected_support_signature_pairs_inspected": 0
+  },
+  "boundary_predecessors": {
+    "single_reciprocal_active_positive_spectator": {
+      "operation": "OZ-RT-BZ-T3-011-M",
+      "required_terminal": "SINGLE_RECIPROCAL_ACTIVE_TRIVARIATE_RESPONSE_CLASS_COKERNEL_INVISIBLE"
+    },
+    "positive_active_reciprocal_spectator": {
+      "operation": "OZ-RT-BZ-T3-011-L",
+      "required_terminal": "RECIPROCAL_SPECTATOR_RESPONSE_CLASS_COKERNEL_INVISIBLE"
+    },
+    "positive_active_degree_zero": {
+      "anchor": "DIRECT_RESPONSE_ONLY_NOT_T3_011_I",
+      "reason": "the second reciprocal coordinate is the unshifted spectator rather than the second active finite-difference axis"
+    }
+  },
+  "clean_question": "does the protected endpoint cokernel witness annihilate every active-plus-spectator double-reciprocal response Delta_c Delta_d(x_c^-r x_d^s x_e^-t G) and Delta_c Delta_d(x_c^r x_d^-s x_e^-t G), r,s,t>=1, with e the unique unshifted spectator?",
+  "active_spectator_double_reciprocal_trivariate_class": {
+    "orientations": [
+      "negative_left_positive_right",
+      "positive_left_negative_right"
+    ],
+    "monomial_domains": [
+      "x_c^-r*x_d^s*x_e^-t with integers r>=1,s>=1,t>=1",
+      "x_c^r*x_d^-s*x_e^-t with integers r>=1,s>=1,t>=1"
+    ],
+    "unordered_pair_order": [["n1","k1"],["n1","l1"],["n2","k1"],["n2","l1"],["n3","k1"],["n3","l1"],["k1","l1"]],
+    "spectator_axis_rule": "e is the unique axis in {n,k,l} distinct from axis(c) and axis(d)",
+    "spectator_is_unshifted": true,
+    "reciprocal_active_axis_count": 1,
+    "reciprocal_spectator": true,
+    "coordinate_zero_poles_only": true,
+    "complete_overlap_derived_from_exact_laurent_signatures": true,
+    "support_feasible_recession_must_stop_as_characterized_blocker": true,
+    "support_seed_required_for_recession": true,
+    "arbitrary_degree_cutoff_authorized": false,
+    "spectator_reciprocal_degree_zero_boundary_must_match_protected_M": true,
+    "reciprocal_active_degree_zero_boundary_must_match_protected_L": true,
+    "positive_active_degree_zero_is_direct_response_anchor_only": true,
+    "double_reciprocal_active_positive_spectator_reopening_authorized": false,
+    "all_reciprocal_trivariate_octant_authorized": false,
+    "third_reciprocal_axis_authorized": false,
+    "shifted_spectator_authorized": false,
+    "shifted_poles_authorized": false,
+    "arbitrary_rational_functions_authorized": false,
+    "support_or_harmonic_enlargement_authorized": false,
+    "candidate_bank_or_scalar_namespace_widening_authorized": false,
+    "recurrence_search_authorized": false,
+    "correction_layer_recombination_authorized": false,
+    "candidate_linear_combinations_authorized": false,
+    "third_finite_difference_operator_authorized": false
+  },
+  "terminals": {
+    "escape": "ACTIVE_SPECTATOR_DOUBLE_RECIPROCAL_TRIVARIATE_RESPONSE_ESCAPE_FOUND",
+    "closure": "ACTIVE_SPECTATOR_DOUBLE_RECIPROCAL_TRIVARIATE_RESPONSE_CLASS_COKERNEL_INVISIBLE",
+    "semantic_ambiguity": "ACTIVE_SPECTATOR_DOUBLE_RECIPROCAL_TRIVARIATE_RESPONSE_NOT_CERTIFIED__SEMANTIC_FUNCTIONAL_AMBIGUITY",
+    "blocker": "ACTIVE_SPECTATOR_DOUBLE_RECIPROCAL_TRIVARIATE_RESPONSE_NOT_CERTIFIED__CHARACTERIZED_BLOCKER"
+  },
+  "claim_firewall": {
+    "theorem_promotion_authorized": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}

@@ -1,0 +1,47 @@
+\chapter{When Proofs Matter}
+\label{ch:relevance}
+
+Propositions-as-types does not entail proof irrelevance. In the calculi used so far, proof terms are ordinary typed terms. Two inhabitants can carry different data, select different branches, or induce different runtime behavior. Erasure is therefore an additional policy, not a consequence of the correspondence itself.
+
+\input{plates/plate28.tex}
+
+Call an argument \emph{computationally irrelevant} only when the target language and extraction policy have established that removing it cannot change the retained observable behavior. That criterion may be syntactic, semantic, universe-specific, or proof-assistant-specific. Volume III uses a deliberately small marked fragment: terms annotated \texttt{ghost} may be erased only when the checker verifies that no retained computation depends on their value.
+
+\begin{proposition}[Toy erasure preservation]
+For the marked erasure fragment defined in the laboratory, if a term passes the relevance checker and evaluates to retained output $v$, then its erased form evaluates to the same retained output on the retained fixture semantics.
+\end{proposition}
+\begin{proof}
+Induct on the checked term. Ordinary constructors are preserved recursively. At a \texttt{ghost} binder, the relevance checker has established that the bound value occurs only in erasable positions, so deleting the binder and its erasable uses leaves every retained constructor and branch guard unchanged. The result is deliberately architecture-specific; it is not global proof irrelevance.
+\end{proof}
+
+\input{plates/plate29.tex}
+
+\begin{workedexample}[title={Two inhabitants can compute differently}]
+An inhabitant of $A+B$ is either $\operatorname{inl}(a)$ or $\operatorname{inr}(b)$. A case consumer may return different results for the two tags. Quotienting these proofs merely because they inhabit the same proposition would erase a branch choice that the program observes. Proof irrelevance is therefore incompatible with this relevance-sensitive interpretation unless the observable language is changed.
+\end{workedexample}
+
+\input{plates/plate30.tex}
+
+\begin{warningbox}
+Some type theories deliberately validate proof irrelevance for selected proposition universes or proof fields. That design is coherent. The error would be to infer it automatically from Curry--Howard or to apply an erasure theorem outside the fragment for which its dependency conditions were proved.
+\end{warningbox}
+
+\begin{labbox}
+Run \texttt{python labs/lab10_erasure.py}. It compares relevant and erasable fixtures, rejects a hostile case where a supposedly erased value controls retained output, and records both traces.
+\end{labbox}
+
+\section*{Exercises}\addcontentsline{toc}{section}{Exercises}
+\begin{enumerate}[label=\textbf{10.\arabic*.}]
+\item \textbf{Checkpoint.} Define proof relevance operationally in one sentence.
+\item \textbf{Checkpoint.} Why does a sum proof expose relevance?
+\item \textbf{Checkpoint.} Is proof irrelevance assumed by $\mathrm{CH}\text{-}0$?
+\item \textbf{Core.} Give two same-typed terms whose observable results differ in a relevance-sensitive context.
+\item \textbf{Core.} Mark an argument that can safely be erased under the toy policy.
+\item \textbf{Core.} Give an argument that must not be erased because it controls a branch.
+\item \textbf{Synthesis.} Distinguish semantic proof irrelevance from compiler dead-code elimination.
+\item \textbf{Synthesis.} Explain how erasure changes the meaning of “the proof is the program.”
+\item \textbf{Proof Workshop.} Prove the toy erasure proposition for an ordinary application constructor.
+\item \textbf{Proof Workshop.} Explain the dependency invariant required at a ghost binder.
+\item \textbf{Design Clinic.} Specify a hostile fixture that catches an unsound erasure pass.
+\item \textbf{Challenge.} Describe a setting in which proof irrelevance is desirable and state what computational information is intentionally surrendered.
+\end{enumerate}

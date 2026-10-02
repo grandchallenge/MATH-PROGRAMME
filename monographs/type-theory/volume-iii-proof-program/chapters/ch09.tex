@@ -1,0 +1,49 @@
+\chapter{Classical Logic as Control}
+\label{ch:classical-control}
+
+Classical reasoning need not be forced into the pure constructive core. A more informative strategy is to translate it. Continuation-passing style makes the future use of a computation explicit as an argument. This gives certain classical principles a computational reading in terms of control.
+
+Fix an answer type $R$. For the restricted arrow fragment used here, define a call-by-name CPS target by assigning each source computation $M:A$ a target term $M^{\mathsf{cps}}:(A^\star\to R)\to R$. Atomic types translate to themselves; arrows translate to functions between CPS-aware values according to the chapter's displayed grammar. Variables, abstraction, and application are translated structurally with fresh continuations.
+
+\input{plates/plate25.tex}
+
+\begin{theorem}[Typing preservation for the restricted CPS translation]
+For the source fragment explicitly defined in this chapter, if $\Gamma\vdash M:A$, then the translated context types $M^{\mathsf{cps}}$ at $(A^\star\to R)\to R$.
+\end{theorem}
+\begin{proof}
+Induct on the source typing derivation. The variable case passes the translated value to the current continuation. The abstraction case builds a target function whose body satisfies the induction hypothesis under the translated argument binding. The application case sequences the translated function and argument through fresh continuations and then invokes the function value. Each continuation is assigned exactly the answer type $R$, so the target typing derivation closes. The theorem is only for the displayed translation; it is not a normalization theorem for arbitrary control operators.
+\end{proof}
+
+Double negation provides the logical shape behind this translation: a CPS computation of result $A$ can be read as expecting a continuation $A\to R$. With $R=\Empty$, the outer shape resembles $\neg\neg A$. Classical reasoning can therefore be embedded into a constructive target by a negative translation, while control operators can make continuation structure operationally explicit.
+
+\input{plates/plate26.tex}
+
+\begin{workedexample}[title={The continuation is part of the term}]
+A direct-style computation asks “what value do I return?” Its CPS translation asks “what should I do with the value next?” Making that second question explicit turns evaluation context into a typed parameter. Certain classical proof steps can then be interpreted as manipulating that context rather than conjuring a constructive witness from nowhere.
+\end{workedexample}
+
+\input{plates/plate27.tex}
+
+\begin{warningbox}
+This chapter establishes a typed translation and selected control examples. It does not state that classical logic and control operators are literally identical, nor that $\mathrm{CHC}\text{-}1$ inherits $\mathrm{CH}\text{-}0$ strong normalization or extraction properties.
+\end{warningbox}
+
+\begin{labbox}
+Run \texttt{python labs/lab09_cps.py}. The laboratory checks the translation on a finite typed arrow-term suite and compares direct and CPS results for closed fixtures. The agreement is fixture-scoped.
+\end{labbox}
+
+\section*{Exercises}\addcontentsline{toc}{section}{Exercises}
+\begin{enumerate}[label=\textbf{9.\arabic*.}]
+\item \textbf{Checkpoint.} What is a continuation?
+\item \textbf{Checkpoint.} Why is an answer type $R$ fixed in the restricted translation?
+\item \textbf{Checkpoint.} What logical shape appears when $R=\Empty$?
+\item \textbf{Core.} CPS-translate a typed identity term under the displayed rules.
+\item \textbf{Core.} Track the types of the continuations introduced by an application translation.
+\item \textbf{Core.} Compare direct and CPS evaluation of a closed composition example.
+\item \textbf{Synthesis.} Explain why translation is weaker than literal identity but stronger than a loose analogy.
+\item \textbf{Synthesis.} Explain why control can threaten naive transfer of extraction claims.
+\item \textbf{Proof Workshop.} Write the abstraction case of CPS typing preservation in full.
+\item \textbf{Proof Workshop.} Write the application case in full, including fresh-variable assumptions.
+\item \textbf{Design Clinic.} Specify an alpha-renaming discipline for a CPS translator.
+\item \textbf{Challenge.} Identify which theorem would have to be re-proved before claiming strong normalization for an extended control calculus.
+\end{enumerate}

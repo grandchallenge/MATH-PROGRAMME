@@ -1,0 +1,108 @@
+{
+  "$schema": "../schemas/gcl_id_programme_adoption.schema.json",
+  "schema_version": "1.0.0",
+  "record_type": "GCL_STANDARD_PROGRAMME_ADOPTION",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "standard": "GCL-ID-00",
+  "standard_version": "0.1.0",
+  "standard_repository": "grandchallenge/gcl-standards",
+  "standard_commit": "fca21c1efef6dc3a560aa18c687579605c4579e0",
+  "standard_source_path": "standards/GCL-ID-00.md",
+  "standard_git_blob_sha1": "4a7d5968bdbce38e6e462ed7c17a61ea6d5ca992",
+  "admission_record": "admissions/GCL-ID-00-0.1.0.json",
+  "admission_git_blob_sha1": "d918a19b85b7ee81b403e5e270aa6ea366513c56",
+  "authority": {
+    "repository": "grandchallenge/INTELLECT",
+    "directive": "GI-STEWARD-0003",
+    "effective_commit": "cacfe1f749b91a335e1d1734352cecff56bad7c1",
+    "work_class": "substantive",
+    "effects": [
+      "public_contract"
+    ],
+    "reserved_action_required": false,
+    "human_steward_gate": "not_applicable_under_GI_STEWARD_0003"
+  },
+  "programme_base": "afde6f69a95a2a488f6806c6f85af5a71bddfeea",
+  "governing_issue": "grandchallenge/MATH-PROGRAMME#1070",
+  "status": "effective",
+  "effective_condition": "protected_merge_of_this_exact_adoption_record",
+  "applicability": {
+    "trigger": "A work package makes, tests, or materially depends on a claim that hidden state, parameters, calibration, representation, geometry, or other latent structure can be reconstructed from declared observations.",
+    "trigger_examples": [
+      "inverse_problem",
+      "parameter_reconstruction",
+      "latent_state_recovery",
+      "geometric_reconstruction",
+      "calibration_recovery",
+      "learned_inverse_map",
+      "system_identification"
+    ],
+    "exclusions": [
+      "ordinary_forward_computation",
+      "theorem_proving_without_reconstruction_claim",
+      "numerical_evaluation_without_latent_recovery",
+      "exploratory_work_without_representative_recovery_claim"
+    ],
+    "grandfathering": "No retrospective rewrite is required. Existing work enters scope only at a new material inverse/reconstruction tranche or when it makes a new recovery claim."
+  },
+  "levels": {
+    "default": "ID-PREFLIGHT-LITE",
+    "lite": {
+      "required_fields": [
+        "recovery_target",
+        "solver_observations",
+        "known_observation_preserving_equivalences",
+        "strongest_justified_recoverable_object",
+        "extra_information_or_normalization_for_stronger_recovery"
+      ],
+      "purpose": "cheap_pre_solver_category_error_check"
+    },
+    "analysis": "ID-ANALYSIS when identifiability materially affects the campaign, a nontrivial ambiguity is found, or a representative-level recovery claim remains consequential.",
+    "certified": "ID-CERTIFIED when an identifiability or obstruction statement itself is promoted as a mathematical claim; MATHCERT remains the certification authority."
+  },
+  "anti_bureaucracy": {
+    "injectivity_proof_required_before_experimentation": false,
+    "unresolved_is_valid": true,
+    "ordinary_exploration_exempt": true,
+    "retrospective_rewrite_required": false,
+    "structural_ambiguity_may_be_reported_as_optimizer_failure": false
+  },
+  "record_contract": {
+    "schema": "schemas/identifiability_preflight.schema.json",
+    "directory": "governance/identifiability_preflights",
+    "default_level": "ID-PREFLIGHT-LITE",
+    "records_required_only_when_in_scope": true
+  },
+  "observational_review": {
+    "prospective": true,
+    "minimum_completed_packages": 8,
+    "target_completed_packages": 10,
+    "maximum_completed_packages_before_review_required": 12,
+    "review_record": "governance/GCL-ID-00-OBSERVATIONAL-REVIEW.json",
+    "metrics": [
+      "target_changed",
+      "hidden_prior_or_training_information_exposed",
+      "futile_solver_work_stopped",
+      "conditioning_distinguished_from_structural_non_identifiability",
+      "paperwork_only"
+    ],
+    "simplification_rule": "If the profile becomes ceremonial or paperwork-dominant, simplify it through a separately governed revision."
+  },
+  "historical_motivation": {
+    "work_package": "VGSE-ENG-WP06",
+    "programme_substantive_merge": "9663a9bc8f71af808ea4578a02467cfd47c29d92",
+    "programme_terminal_checkpoint": "f132000f8308c65ac89c31d90d5e22df6c5dc56c",
+    "mathcert_te3_audit": "15b68c196d020045bea42fc34236e0647b87cbb9",
+    "counts_toward_prospective_review": false
+  },
+  "claim_boundaries": {
+    "constitutional_authority_created": false,
+    "mathematical_certification": false,
+    "scientific_claim_promotion": false,
+    "publication": false,
+    "production_activation": false,
+    "credential_expansion": false,
+    "commercial_claim": false,
+    "agent_permission_escalation": false
+  }
+}

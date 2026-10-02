@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0.0",
+  "issue": 962,
+  "operation": "OZ-RT-BZ-T3-015-C",
+  "stage": "T3_015_C_COMPLETENESS_BACKED_DISCRETE_RESIDUE_OBSTRUCTION",
+  "protected_base": "5882e3cd24dff62bf9331ee230274f3acd79f3f2",
+  "hypothesis_class": {
+    "id": "SOURCE_DECLARED_RATIONAL_DELTA_COEFFICIENT_CLASS_001",
+    "new_hypothesis_class": false,
+    "coefficient_field": "Q(n,k,l)",
+    "operator_semantics": "mu_s(n,k,l)*(q_i(shift)*M_shift-q_i(n,k,l)*M)",
+    "support_widening": false,
+    "harmonic_widening": false,
+    "scalar_namespace_widening": false,
+    "recurrence_order_change": false,
+    "recurrence_refit": false,
+    "degree_or_denominator_scan": false
+  },
+  "predecessor": {
+    "operation": "OZ-RT-BZ-T3-015-B",
+    "issue": 958,
+    "exact_head": "188569f80946968250b9d71d87b8f32e3ee9f565",
+    "protected_merge": "5882e3cd24dff62bf9331ee230274f3acd79f3f2",
+    "required_terminal": "GLOBAL_RATIONAL_DELTA_SOLVER_STRUCTURE_EXTRACTED__COMPLETE_RATIONAL_SOLVER_REQUIRED",
+    "module_sha256": "cdabf6d7873f3aa8e9d53b39fd7b15341dbee58ce9684911d015aee9aaae04da"
+  },
+  "witness": {
+    "generator_index": 59,
+    "monomial": ["H_k_2", "H_nk_1", "H_nkl_1"],
+    "channel": "k1",
+    "scalar": "SK",
+    "shift": [0, 1, 0],
+    "forced_equation": "q_59(n,k+1,l)-q_59(n,k,l)=1/(k+l+1)"
+  },
+  "completeness_argument": {
+    "kind": "DISCRETE_RESIDUE_ON_INTEGER_SHIFT_ORBIT",
+    "base_field": "Q(n,l)",
+    "rational_function_field": "Q(n,l)(k)",
+    "shift": "tau(k)=k+1",
+    "pole_orbit_representative": "k+l+1",
+    "pole_order": 1,
+    "target_discrete_residue": 1,
+    "rational_forward_difference_required_residue": 0,
+    "bounded_ansatz_used": false,
+    "degree_cutoff": null,
+    "denominator_cutoff": null
+  },
+  "authorized_terminal": "GLOBAL_RATIONAL_DELTA_CLASS_OBSTRUCTED__COMPLETENESS_BACKED",
+  "claim_firewall": {
+    "global_certificate_constructed": false,
+    "residual_sum_zero_proved": false,
+    "proof_effect": "NONE",
+    "promotion_effect": "NONE",
+    "t3_status": "OPEN_WITH_CHARACTERIZED_BLOCKER"
+  }
+}

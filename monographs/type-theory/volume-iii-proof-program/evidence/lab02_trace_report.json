@@ -1,0 +1,11 @@
+{
+  "calculus": "CH-0 implication fragment",
+  "strategy": "deterministic normal order",
+  "ok": true,
+  "cases": [
+    {"name":"identity-beta","type":"(P -> P)","steps":1,"trace":["((lam f:(P -> P). f) (lam x:P. x))","(lam x:P. x)"]},
+    {"name":"nested-beta","type":"(P -> P)","steps":2,"trace":["((lam f:(P -> P). (lam y:P. (f y))) (lam x:P. x))","(lam y:P. ((lam x:P. x) y))","(lam y:P. y)"]},
+    {"name":"capture-avoidance","type":"(Q -> P)","steps":1,"trace":["((lam x:P. (lam y:Q. x)) y)","(lam y1:Q. y)"]}
+  ],
+  "claim_boundary": "The traces test this evaluator and type preservation on fixtures; they do not prove strong normalization."
+}

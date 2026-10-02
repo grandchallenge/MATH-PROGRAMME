@@ -1,0 +1,266 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/identifiability_preflight.schema.json",
+  "title": "MATH-PROGRAMME identifiability preflight",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "record_type",
+    "identifier",
+    "work_package",
+    "status",
+    "standard",
+    "standard_version",
+    "programme_adoption",
+    "level",
+    "recovery_target",
+    "observation_contract",
+    "observational_equivalence",
+    "recoverable_object",
+    "symmetry_breaking",
+    "solver_gate",
+    "failure_classification",
+    "evidence_refs",
+    "unresolved_assumptions",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../../schemas/identifiability_preflight.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "record_type": {
+      "const": "GCL_IDENTIFIABILITY_PREFLIGHT"
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Z0-9][A-Z0-9._-]+$"
+    },
+    "work_package": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "OPEN",
+        "COMPLETE"
+      ]
+    },
+    "standard": {
+      "const": "GCL-ID-00"
+    },
+    "standard_version": {
+      "const": "0.1.0"
+    },
+    "programme_adoption": {
+      "const": "governance/GCL-ID-00-ADOPTION.json"
+    },
+    "level": {
+      "enum": [
+        "ID-PREFLIGHT-LITE",
+        "ID-ANALYSIS",
+        "ID-CERTIFIED"
+      ]
+    },
+    "recovery_target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "description",
+        "representative_level_claim"
+      ],
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "representative_level_claim": {
+          "type": "boolean"
+        }
+      }
+    },
+    "observation_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "solver_observations",
+        "side_information",
+        "training_or_fixture_information_not_available_to_solver"
+      ],
+      "properties": {
+        "solver_observations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "side_information": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "training_or_fixture_information_not_available_to_solver": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "observational_equivalence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "known_transformations",
+        "status"
+      ],
+      "properties": {
+        "known_transformations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "status": {
+          "enum": [
+            "NONE_KNOWN_NOT_PROOF_OF_INJECTIVITY",
+            "NONTRIVIAL_EQUIVALENCE_FOUND",
+            "INJECTIVITY_ESTABLISHED",
+            "UNRESOLVED"
+          ]
+        }
+      }
+    },
+    "recoverable_object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strongest_justified_object",
+        "classification"
+      ],
+      "properties": {
+        "strongest_justified_object": {
+          "type": "string",
+          "minLength": 1
+        },
+        "classification": {
+          "enum": [
+            "FULL_IDENTIFIABILITY",
+            "QUOTIENT_IDENTIFIABLE_ONLY",
+            "IDENTIFIABLE_WITH_DECLARED_NORMALIZATION",
+            "LOCAL_OR_PARTIAL_IDENTIFIABILITY",
+            "STRUCTURAL_NON_IDENTIFIABILITY",
+            "UNRESOLVED"
+          ]
+        }
+      }
+    },
+    "symmetry_breaking": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "extra_information_or_normalization_for_stronger_recovery"
+      ],
+      "properties": {
+        "extra_information_or_normalization_for_stronger_recovery": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "solver_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_after_preflight",
+        "full_representative_recovery_claim_permitted",
+        "reason"
+      ],
+      "properties": {
+        "target_after_preflight": {
+          "type": "string",
+          "minLength": 1
+        },
+        "full_representative_recovery_claim_permitted": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "failure_classification": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "STRUCTURAL_NON_IDENTIFIABILITY",
+          "QUOTIENT_IDENTIFIABLE_ONLY",
+          "IDENTIFIABLE_WITH_DECLARED_NORMALIZATION",
+          "LOCAL_OR_PARTIAL_IDENTIFIABILITY",
+          "NUMERICAL_ILL_CONDITIONING",
+          "FINITE_DATA_OR_NOISE_LIMITED",
+          "MODEL_MISMATCH",
+          "OPTIMIZATION_OR_SEARCH_FAILURE",
+          "UNRESOLVED"
+        ]
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "unresolved_assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mathematical_certification",
+        "scientific_claim_promotion",
+        "publication",
+        "production_activation",
+        "commercial_claim"
+      ],
+      "properties": {
+        "mathematical_certification": {
+          "const": false
+        },
+        "scientific_claim_promotion": {
+          "const": false
+        },
+        "publication": {
+          "const": false
+        },
+        "production_activation": {
+          "const": false
+        },
+        "commercial_claim": {
+          "const": false
+        }
+      }
+    }
+  }
+}

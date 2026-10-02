@@ -1,0 +1,61 @@
+\chapter{Where Proof / Program Stops Being Enough}
+\label{ch:protocol-threshold}
+
+The strongest results in this volume concern constructions that can be represented as terms and simplified toward values or normal forms. But many correct computations are not supposed to finish. A server, channel endpoint, operating system, or agent may remain live indefinitely because continued interaction is its purpose.
+
+\input{plates/plate40.tex}
+
+A closed function type $A\to B$ says: given an $A$, construct a $B$. It does not by itself say who sends first, which messages may follow which, whether two peers have complementary obligations, whether a resource may be used exactly once, or whether a well-typed conversation can deadlock.
+
+The teaching laboratory contrasts two objects:
+\begin{enumerate}
+\item a closed term that evaluates to a final value;
+\item a two-party state machine whose successful execution is an indefinitely extensible trace of legal message transitions.
+\end{enumerate}
+For the second object, “normal form” is not the central success criterion. A permanently quiescent endpoint may be broken; a nonterminating endpoint may be correct.
+
+\begin{proposition}[Closed normalization does not imply protocol correctness]
+There exists a finite-state two-party protocol representation whose local message handlers are terminating functions while the protocol as a whole can violate a declared peer-ordering obligation.
+\end{proposition}
+\begin{proof}
+Take two terminating handlers for messages \texttt{hello} and \texttt{ack}. Define the protocol obligation that the client sends \texttt{hello} before receiving \texttt{ack}, while a malformed peer emits \texttt{ack} in the initial state. Each handler terminates on its input, yet the trace violates the protocol transition relation at its first step. Thus termination of the component functions does not imply trace conformance.
+\end{proof}
+
+\input{plates/plate41.tex}
+
+What is missing is a type for interaction itself. We need complementary endpoint obligations, channel state, controlled resource use, branching/selection, recursion, and metatheorems that distinguish communication safety from progress and deadlock freedom. Those are not decorative extensions of the closed-term story. They change the primary computational object.
+
+\input{plates/plate42.tex}
+
+\begin{principle}
+Volume III has reached its boundary when the question changes from “what value does this construction produce?” to “what obligations must two evolving computations maintain toward each other?”
+\end{principle}
+
+\begin{warningbox}
+The protocol laboratory does not establish session fidelity, deadlock freedom, distributed-system correctness, fairness, or liveness. It demonstrates why those become new theorem obligations.
+\end{warningbox}
+
+\begin{labbox}
+Run \texttt{python labs/lab14_protocol_threshold.py}. It compares a terminating closed evaluator with legal and hostile protocol traces. The hostile trace shows that local termination and typing are insufficient for interaction correctness.
+\end{labbox}
+
+\section{What survives the volume}
+The evidence now supports a stratified conclusion. In pure constructive fragments, proof construction and program construction can share exact rule/term structure, and principal proof normalization can correspond to program reduction. Dependent quantifiers extend this reading through witness-sensitive construction. Sequent cut elimination is closely related through translation, not vocabulary. Classical reasoning may require translation or control. Erasure and extraction require explicit relevance policies. Parametricity adds semantic uniformity hypotheses. Proof assistants insert a trust architecture between surface proof and kernel acceptance. Open interaction finally exceeds the closed-value model.
+
+The residual thesis is stronger for being narrower: type theory provides a disciplined grammar for computational possibility, but the grammar must grow when the computational object changes.
+
+\section*{Exercises}\addcontentsline{toc}{section}{Exercises}
+\begin{enumerate}[label=\textbf{14.\arabic*.}]
+\item \textbf{Checkpoint.} Why can correct interaction be nonterminating?
+\item \textbf{Checkpoint.} Name one fact not expressed by a plain $A\to B$ type.
+\item \textbf{Checkpoint.} Distinguish local handler termination from trace conformance.
+\item \textbf{Core.} Construct a two-state request/response protocol.
+\item \textbf{Core.} Give a hostile trace that violates its ordering rule.
+\item \textbf{Core.} State separate safety and liveness questions for the protocol.
+\item \textbf{Synthesis.} Explain why session fidelity is not the same as distributed-system correctness.
+\item \textbf{Synthesis.} Summarize the strongest form of Curry--Howard correspondence that survives Chapters 1--14.
+\item \textbf{Proof Workshop.} Prove the closed-normalization/protocol-correctness separation proposition with an explicit trace.
+\item \textbf{Proof Workshop.} Identify the additional hypotheses needed to turn local progress into a global communication-progress theorem.
+\item \textbf{Design Clinic.} Specify the state and transition data a typed protocol language should expose.
+\item \textbf{Challenge.} Draft the minimum formal vocabulary Volume IV must add before duality and deadlock claims can be meaningful.
+\end{enumerate}

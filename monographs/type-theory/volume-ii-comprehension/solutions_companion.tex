@@ -1,0 +1,160 @@
+\documentclass[11pt,openany]{book}
+\input{series_style.tex}
+\input{series_macros.tex}
+\input{volume_macros.tex}
+\hypersetup{colorlinks=true,linkcolor=GCLBlue,urlcolor=GCLBlue,citecolor=GCLGreen,
+  pdftitle={COMPREHENSION — Solutions Companion},pdfauthor={Grand Challenge Labs}}
+\begin{document}
+\frontmatter
+\begin{titlepage}
+\pagecolor{GCLPale!35}\color{GCLInk}\centering
+\vspace*{1.5cm}
+{\small\sffamily GRAND CHALLENGE MONOGRAPH COLLECTION\par}
+\vspace{0.8cm}{\Huge\bfseries COMPREHENSION\par}
+\vspace{0.25cm}{\Large How Computational Worlds Are Built\par}
+\vspace{0.4cm}{\large Volume II — Solutions Companion\par}
+\vfill{\large Grand Challenge Labs\par}
+\end{titlepage}
+\nopagecolor\color{GCLInk}
+\chapter*{Use of this companion}
+This Stage-B companion covers the 24 exercises in Chapters 1–2. Every exercise has either a worked solution or an explicit rubric. It is not a substitute for independent mathematical review of the manuscript's theorem statements.
+\tableofcontents
+\mainmatter
+
+\chapter{Solutions to Chapter 1 — A Type Can Depend on a Value}
+
+\section*{1.1 Checkpoint}
+The context $n:\Nat,i:\Fin(n)$ is well formed: first $\Nat$ forms, then the variable rule gives $n:\Nat$, hence $\Fin(n)\type$, so the context may be extended by $i:\Fin(n)$. The reversed context is not well formed because $n$ is unavailable when $\Fin(n)$ must be formed.
+
+\section*{1.2 Checkpoint}
+From $n:\Nat\vdash n:\Nat$, successor formation gives $n:\Nat\vdash \mathrm{succ}(n):\Nat$. The $\Fin$ formation rule then yields
+\[
+ n:\Nat\vdash \Fin(\mathrm{succ}(n))\type.
+\]
+
+\section*{1.3 Checkpoint}
+In COMP-0, $\Fin(n)\type$ is derived from the typing premise $n:\Nat$; no operational rule evaluates $n$ or branches on its value during type formation.
+
+\section*{1.4 Core}
+One example is
+\[
+ n:\Nat,\quad i:\Fin(n),\quad j:\Fin(\mathrm{succ}(n)),\quad b:\mathsf{Bool}.
+\]
+Both $i$ and $j$ have types depending on $n$.
+
+\section*{1.5 Core}
+Start from $n:\Nat\vdash n:\Nat$, hence $n:\Nat\vdash\Fin(n)\type$. Since $b$ is fresh and $\mathsf{Bool}$ is well formed, weakening gives
+\[
+ n:\Nat,b:\mathsf{Bool}\vdash \Fin(n)\type.
+\]
+
+\section*{1.6 Core}
+Start with $n:\Nat,i:\Fin(n)$. Exchanging the declarations produces $i:\Fin(n),n:\Nat$, but forming the first declaration requires $n:\Nat$ in the empty prefix, which is unavailable.
+
+\section*{1.7 Synthesis}
+A compiler may store bindings in a hash table, persistent map, de Bruijn-indexed vector, or graph. The invariant is not the container representation; it is that a declaration's type may refer only to names valid in its prefix and that lookup preserves the corresponding type.
+
+\section*{1.8 Synthesis}
+A defensible reformulation is: ``In dependent type theory, type expressions may contain free term variables that are already typed in the context, so fixing those terms can specialize later type expressions.'' This avoids pretending that runtime values are literally stored inside types.
+
+\section*{1.9 Proof Workshop}
+If the referenced variable $y$ lies in $\Gamma$, inserting fresh $x:A$ after $\Gamma$ preserves the declaration of $y$, and repeated weakening through $\Delta$ yields the same variable judgment. If $y$ lies in $\Delta$, the induction on the well-formed construction of $\Delta$ shows that its declaration remains present with the same type because the inserted $x$ is fresh and no original declaration mentions it.
+
+\section*{1.10 Proof Workshop}
+Given $\Gamma\vdash t:\Nat$, weakening gives $\Gamma,b:\mathsf{Bool}\vdash t:\Nat$ for fresh $b$. Applying $\Fin$ formation gives
+\[
+ \Gamma,b:\mathsf{Bool}\vdash \Fin(t)\type.
+\]
+
+\section*{1.11 Design Clinic}
+Add the formation rule
+\[
+\frac{\Gamma\vdash m:\Nat\qquad \Gamma\vdash n:\Nat}
+     {\Gamma\vdash \mathsf{Matrix}(m,n)\type}.
+\]
+This permits contexts such as
+\[
+ m:\Nat,n:\Nat,A:\mathsf{Matrix}(m,n).
+\]
+No constructor or semantic claim is needed yet.
+
+\section*{1.12 Challenge}
+A sufficient condition for exchanging adjacent declarations $x:A,y:B$ is that $x\notin FV(B)$ and $y\notin FV(A)$, together with freshness and well-formedness of both types in the common prefix. Under those conditions neither declaration needs the other in order to form.
+
+\chapter{Solutions to Chapter 2 — Substitution Changes the World}
+
+\section*{2.1 Checkpoint}
+\[
+ \Fin(\mathrm{succ}(n))[0/n]
+ = \Fin(\mathrm{succ}(0)).
+\]
+
+\section*{2.2 Checkpoint}
+\[
+ i:\Fin(n),j:\Fin(\mathrm{succ}(n))
+\]
+becomes
+\[
+ i:\Fin(\mathrm{succ}(0)),
+ \quad j:\Fin(\mathrm{succ}(\mathrm{succ}(0))).
+\]
+
+\section*{2.3 Checkpoint}
+Substitution is a recursively defined structural transformation of syntax. Reduction is a relation describing computational steps. Beta reduction later uses substitution, but the two notions are not identical.
+
+\section*{2.4 Core}
+The Boolean declaration does not mention $n$, so
+\[
+ \Delta[\mathrm{succ}(0)/n]
+ = i:\Fin(\mathrm{succ}(0)),b:\mathsf{Bool}.
+\]
+
+\section*{2.5 Core}
+From a premise $\Gamma,n:\Nat,\Delta\vdash \mathrm{succ}(n):\Nat$, generalized term substitution gives
+\[
+ \Gamma,\Delta[a/n]\vdash \mathrm{succ}(a):\Nat
+\]
+for $\Gamma\vdash a:\Nat$. Applying $\Fin$ formation yields
+\[
+ \Gamma,\Delta[a/n]\vdash \Fin(\mathrm{succ}(a))\type,
+\]
+which is exactly the substituted type.
+
+\section*{2.6 Core}
+In $n:\Nat,i:\Fin(n)$, substituting $3$ for $n$ leaves the variable term $i$ syntactically unchanged but changes its declared type from $\Fin(n)$ to $\Fin(3)$.
+
+\section*{2.7 Synthesis}
+A theorem only about $\Gamma,n:\Nat\vdash J$ cannot justify judgments beneath the later declaration $i:\Fin(n)$, because after substitution that declaration itself must become $i:\Fin(a)$. The theorem must transform the suffix that depends on the substituted variable.
+
+\section*{2.8 Synthesis}
+Similarity: both specialize a parameterized object after supplying an argument. Difference: dependent substitution is part of the formal metatheory and can rewrite the types in which later terms are judged; conventional generic specialization need not have any such judgmental meaning.
+
+\section*{2.9 Proof Workshop}
+For $E=x$,
+\[
+ x[a/x][b/y]=a[b/y].
+\]
+The right side is
+\[
+ x[b/y][a[b/y]/x]=x[a[b/y]/x]=a[b/y].
+\]
+For $E=y$, the left side is $y[a/x][b/y]=b$. The right side is $y[b/y][a[b/y]/x]=b[a[b/y]/x]$. The side condition $x\notin FV(b)$ makes this equal to $b$.
+
+\section*{2.10 Proof Workshop}
+A derivation of $\Fin(t)\type$ ends with a premise $t:\Nat$. Apply the term-typing substitution induction hypothesis to obtain $t[a/x]:\Nat$ in the transformed context. Then reapply the $\Fin$ formation rule. Since substitution on types is defined by $\Fin(t)[a/x]=\Fin(t[a/x])$, the required conclusion follows.
+
+\section*{2.11 Design Clinic}
+Define
+\[
+ \mathsf{Cell}(r,c)[a/x]
+ = \mathsf{Cell}(r[a/x],c[a/x]).
+\]
+The substitution proof gains one type-formation case with two natural-number premises; apply the term substitution induction hypothesis to each index and reapply the new formation rule.
+
+\section*{2.12 Challenge}
+Take $E=y$, $a=y$, and $b=\mathrm{succ}(x)$. Then $x\in FV(b)$, violating the omitted condition. The left side is $\mathrm{succ}(x)$, while the right side first gives $y[b/y]=\mathrm{succ}(x)$ and then substitutes $a[b/y]=\mathrm{succ}(x)$ for $x$, yielding $\mathrm{succ}(\mathrm{succ}(x))$. They differ. A standard corrected law keeps $x\notin FV(b)$ (or uses a simultaneous substitution formulation that records dependencies explicitly).
+
+\backmatter
+\chapter*{Tranche completeness}
+Exercises in Chapters 1–2: 24. Solutions/rubrics: 24. The remainder of Volume II is not yet represented in this companion.
+\end{document}

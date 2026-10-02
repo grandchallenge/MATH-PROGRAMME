@@ -1,0 +1,77 @@
+\chapter{Conjunction Carries Both}
+\label{ch:conjunction}
+
+Implication showed how a discharged assumption becomes a function. Conjunction adds a different demand: constructive evidence for $A\land B$ must provide both components. In $\mathrm{CH}\text{-}0$ the corresponding type is $A\times B$, and its canonical constructor is a pair.
+
+\begin{formal}[title={Product rules}]
+\[
+\frac{\Gamma\vdash a:A\qquad\Gamma\vdash b:B}{\Gamma\vdash\langle a,b\rangle:A\times B}\;\times I
+\]
+\[
+\frac{\Gamma\vdash p:A\times B}{\Gamma\vdash\pi_1 p:A}\;\times E_1
+\qquad
+\frac{\Gamma\vdash p:A\times B}{\Gamma\vdash\pi_2 p:B}\;\times E_2.
+\]
+The principal reductions are $\pi_1\langle a,b\rangle\step a$ and $\pi_2\langle a,b\rangle\step b$.
+\end{formal}
+
+The logical reading is exact at the rule level: conjunction introduction requires both derivations; each elimination selects one component. The computational reading is equally direct: construct a pair; project one field.
+
+\input{plates/plate07.tex}
+
+\begin{proposition}[Product term assignment]
+If a natural-deduction derivation in the $\{\to,\times\}$ fragment is assigned terms recursively by mapping conjunction introduction to pairing and conjunction elimination to projection, then the assigned term has the derived formula as its $\mathrm{CH}\text{-}0$ type.
+\end{proposition}
+\begin{proof}
+Extend the induction of Chapter~\ref{ch:proof-that-runs}. The only new final-rule cases are $\times I$, $\times E_1$, and $\times E_2$; each is exactly the corresponding typing rule displayed above. The implication cases are unchanged.
+\end{proof}
+
+\begin{lemma}[Product canonical form]
+If $v$ is a closed $\mathrm{CH}\text{-}0$ value and $\vdash v:A\times B$, then $v=\langle v_1,v_2\rangle$ for values $v_1,v_2$ with $\vdash v_1:A$ and $\vdash v_2:B$.
+\end{lemma}
+\begin{proof}
+Inspect the value grammar and invert the final typing rule. A lambda has arrow type, an injection has sum type, and $\star$ has unit type. The only value constructor whose conclusion has product type is pairing. Inversion of $\times I$ gives the component types.
+\end{proof}
+
+\input{plates/plate08.tex}
+
+\begin{workedexample}[title={A proof object that cannot forget either side}]
+From $f:P\to Q$ and $x:P$, the term
+\[
+\langle x,f\,x\rangle:P\times Q
+\]
+contains evidence for both claims. Projecting the first component returns $x$; projecting the second computes $f\,x$. A proof-irrelevant truth value for ``$P$ and $Q$'' would not by itself expose these two computationally distinct projections.
+\end{workedexample}
+
+\begin{theorem}[Principal product preservation]
+If $\Gamma\vdash \pi_i\langle a,b\rangle:C$ and the principal product redex contracts to $t$, then $\Gamma\vdash t:C$.
+\end{theorem}
+\begin{proof}
+For $i=1$, inversion yields $\Gamma\vdash a:A$ and $C=A$; the reduct is $a$. The $i=2$ case is symmetric.
+\end{proof}
+
+\input{plates/plate09.tex}
+
+\begin{warningbox}
+Conjunction/product correspondence does not mean that every semantic product is a proposition or that all proofs of a conjunction are equal. The chapter establishes a constructor/eliminator correspondence in $\mathrm{CH}\text{-}0$.
+\end{warningbox}
+
+\begin{labbox}
+Run \texttt{python labs/lab03_products.py}. The laboratory enumerates retained well-typed product fixtures, checks both projections, and rejects malformed projection heads. Its JSON report is implementation evidence only.
+\end{labbox}
+
+\section*{Exercises}\addcontentsline{toc}{section}{Exercises}
+\begin{enumerate}[label=\textbf{3.\arabic*.}]
+\item \textbf{Checkpoint.} State the three product typing rules.
+\item \textbf{Checkpoint.} Contract $\pi_2\langle a,b\rangle$.
+\item \textbf{Checkpoint.} What extra information does a pair contain beyond the assertion that both components are inhabited?
+\item \textbf{Core.} Type $\lambda x{:}P.\langle x,x\rangle$.
+\item \textbf{Core.} Derive $(P\times Q)\to(Q\times P)$ and give its term.
+\item \textbf{Core.} Normalize $\pi_1\langle(\lambda x{:}P.x)u,v\rangle$ under compatible closure.
+\item \textbf{Synthesis.} Compare conjunction elimination with record projection.
+\item \textbf{Synthesis.} Explain why product canonical forms are a typing theorem, not a statement about arbitrary runtime data.
+\item \textbf{Proof Workshop.} Extend substitution through the pair and projection cases.
+\item \textbf{Proof Workshop.} Prove both principal product-preservation cases.
+\item \textbf{Design Clinic.} Specify negative fixtures a product checker must reject.
+\item \textbf{Challenge.} Formulate product eta as an equational law and explain why it is not a one-step operational reduction in this volume.
+\end{enumerate}

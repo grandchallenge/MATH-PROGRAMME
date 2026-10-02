@@ -1,0 +1,88 @@
+\chapter{More Than Two Voices}
+
+Binary duality gives two local views of one conversation. A three-party protocol introduces a different problem: each role sees only part of the conversation, yet the local pieces must fit one global causal story. Multiparty session types address that gap with global descriptions and projection.
+
+\section{A finite choreography}
+For the bounded \texttt{PROTO-M1} layer, a global description is a finite tree of interactions
+\[
+p\to q : \ell(A);\;G
+\]
+and labeled branches. It is a specification artifact, not a runtime orchestrator. Projection $\proj{G}{p}$ extracts the local obligations relevant to role $p$ when the finite choreography satisfies the simple projectability conditions used here.
+
+\input{plates/plate19}
+
+\section{Projection example}
+Consider three roles: client $C$, broker $B$, worker $W$.
+\[
+C\to B:\mathsf{job}(\Nat);
+\quad
+B\to W:\mathsf{job}(\Nat);
+\quad
+W\to B:\mathsf{result}(\Bool);
+\quad
+B\to C:\mathsf{result}(\Bool).
+\]
+Projection gives $C$ only its exchange with $B$, $W$ only its exchange with $B$, and $B$ the four-step local sequence. The global ordering explains how these local views are intended to compose.
+
+\input{plates/plate20}
+
+\section{Exemplar trace theorem}
+\begin{proposition}[T4.16, projection trace preservation for the registered finite exemplars]
+For each acyclic choreography registered in Lab 09, exhaustive enumeration of its finite branch choices yields the same role-labeled communication traces as the synchronized composition of its projected local types after hiding projection bookkeeping.
+\end{proposition}
+\begin{proof}
+This is a finite per-exemplar result, not a general MPST theorem. Lab 09 enumerates every branch path of each registered choreography, projects each role, then reconstructs all synchronized local traces. Equality of the two finite trace sets is checked exhaustively and retained as machine-readable evidence.
+\end{proof}
+
+\section{Where projection can fail}
+If one role's next behavior depends on a branch chosen elsewhere but no message reveals that choice, its local projection is ambiguous. More generally, realizability and projectability impose global conditions. T4.17, general multiparty projection correctness, is imported only when a cited external theorem's exact hypotheses are stated; it is not re-proved by this monograph.
+
+\input{plates/plate21}
+
+\section{Do not confuse: a global type with a central controller}
+\begin{warningbox}
+A choreography describes a global protocol. It does not imply a runtime component that observes or schedules every event. Whether projected peers realize the global description is a theorem question, not an architectural diagram.
+\end{warningbox}
+
+\input{plates/plate22}
+
+\section{Computational laboratory}
+\begin{labbox}
+Run
+\[
+  \texttt{python labs/lab09_multiparty.py}.
+\]
+The laboratory projects a small finite choreography to role-local traces and exhaustively compares reconstructed traces for the registered examples. It is executable evidence for the stated finite fixtures and does not enlarge the theorem scope.
+\end{labbox}
+
+\section{Exercises}
+\subsection*{Checkpoint}
+\begin{enumerate}[label=\textbf{9.\arabic*},start=1]
+\item What information does a global description add beyond one binary endpoint type?
+\item Define projection informally.
+\item Why is a choreography not automatically a runtime orchestrator?
+\end{enumerate}
+\subsection*{Core}
+\begin{enumerate}[label=\textbf{9.\arabic*},start=4]
+\item Project the four-step client-broker-worker example to the worker role.
+\item Project the same example to the client role.
+\item Construct a branch whose outcome is unknown to a role that must later act differently.
+\end{enumerate}
+\subsection*{Synthesis}
+\begin{enumerate}[label=\textbf{9.\arabic*},start=7]
+\item Explain why pairwise local compatibility can be insufficient for a globally coherent choreography.
+\item Explain the evidentiary difference between an exhaustive finite exemplar and a general projection theorem.
+\end{enumerate}
+\subsection*{Proof Workshop}
+\begin{enumerate}[label=\textbf{9.\arabic*},start=9]
+\item Prove T4.16 for the single unbranched four-event exemplar by direct trace comparison.
+\item State a projectability side condition for a finite branch and show how violating it breaks local determinacy.
+\end{enumerate}
+\subsection*{Design Clinic}
+\begin{enumerate}[label=\textbf{9.\arabic*},start=11]
+\item Design a diagnostic that reports which role lacks branch knowledge.
+\end{enumerate}
+\subsection*{Challenge}
+\begin{enumerate}[label=\textbf{9.\arabic*},start=12]
+\item Read an MPST source and identify the exact theorem name and hypotheses needed before replacing this chapter's per-exemplar result with a general theorem.
+\end{enumerate}

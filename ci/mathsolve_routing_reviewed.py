@@ -17,10 +17,10 @@ DOMAIN_REGISTRY_PATH = ROOT / "DOMAIN_REGISTRY.yaml"
 
 EXPECTED_PROVIDER_COMMIT = "c9b9d0122017df7a117847d9ff1c2b9f6d6b75a1"
 EXPECTED_PROVIDER_PULL_REQUEST = "https://github.com/grandchallenge/MATHSOLVE/pull/95"
-EXPECTED_CERT_PROVIDER_COMMIT = "64e042ddb1147338ad7868a2847715fe7c1c079d"
-EXPECTED_CERT_PROVIDER_PULL_REQUEST = "https://github.com/grandchallenge/MATHCERT/pull/79"
+EXPECTED_CERT_PROVIDER_COMMIT = "e0c3905b8e5ca39612f46d90a522fd289c73f4ba"
+EXPECTED_CERT_PROVIDER_PULL_REQUEST = "https://github.com/grandchallenge/MATHCERT/pull/257"
 EXPECTED_CERT_REGISTRY_PATH = "governance/certification_routes.json"
-EXPECTED_CERT_REGISTRY_BLOB = "cf876f43ae824f965a3aedf411671c110c380028"
+EXPECTED_CERT_REGISTRY_BLOB = "42ac6b2b544976986569e783a835271417485480"
 EXPECTED_PREDECESSOR = {
     "path": "governance/mathcert_cross_repository_conformance.json",
     "audit_id": "MP-MC-CONFORMANCE-001",
@@ -50,7 +50,7 @@ EXPECTED_HANDOFFS = {
 EXPECTED_CERT_ROUTE_STATES = {
     "UC-001": "qualified",
     "NS-CI-001": "qualified",
-    "HC-001": "ready",
+    "HC-001": "qualified",
     "BSD-001": "pending",
     "PNP-001": "pending",
     "RH-001": "qualified",
@@ -72,6 +72,13 @@ EXPECTED_CERT_OUTPUTS = {
         "digest_algorithm": "git_blob_sha1",
         "digest": "6047ad774957974a6c2aa86bae72b51841e774a4",
     },
+    "HC-001": {
+        "repository": "grandchallenge/MATHCERT",
+        "commit_sha": "fdc33903593b6bc4a021ad7158f3533f50da8705",
+        "path": "certificates/hodge/MC-HC-WP00-QUAL-001.json",
+        "digest_algorithm": "git_blob_sha1",
+        "digest": "38830b24464f148a53f0a0a3e47e97d307fadf23",
+    },
     "RH-001": {
         "repository": "grandchallenge/MATHCERT",
         "commit_sha": "b1aa08001eb8537be8e204c3866aefd5f898252e",
@@ -83,6 +90,7 @@ EXPECTED_CERT_OUTPUTS = {
 EXPECTED_QUALIFICATION_SCOPES = {
     "UC-001": "qualified_restricted_claims_only",
     "NS-CI-001": "qualified_interface_only",
+    "HC-001": "qualified_semantic_and_conditional_interface_only",
     "RH-001": "qualified_interface_only",
 }
 ALIASES = {"UC": "UC-001"}

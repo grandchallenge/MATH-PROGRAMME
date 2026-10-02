@@ -1,0 +1,11 @@
+{
+  "calculus": "CH-0 implication fragment",
+  "ok": true,
+  "fixtures": [
+    {"name":"identity","expected_accept":true,"accepted":true,"detail":"(P -> P)"},
+    {"name":"k","expected_accept":true,"accepted":true,"detail":"(P -> (Q -> P))"},
+    {"name":"compose","expected_accept":true,"accepted":true,"detail":"((Q -> R) -> ((P -> Q) -> (P -> R)))"},
+    {"name":"bad-argument","expected_accept":false,"accepted":false,"detail":"application expected P, got (Q -> Q)"},
+    {"name":"unbound","expected_accept":false,"accepted":false,"detail":"unbound variable 'z'"}
+  ]
+}

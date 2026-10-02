@@ -19,13 +19,14 @@ ROUTING_OVERLAY_PATH = ROOT / "governance" / "mathsolve_routing_audit_vgse.json"
 DOMAIN_PATH = ROOT / "DOMAIN_REGISTRY.yaml"
 
 EXPECTED_ROUTING = {
-    "qualified": {"UC-001", "NS-CI-001", "RH-001"},
-    "ready": {"HC-001"},
+    "qualified": {"UC-001", "NS-CI-001", "HC-001", "RH-001"},
+    "ready": set(),
     "pending": {"BSD-001", "PNP-001", "YM-001", "OZ-001", "VGSE-001"},
 }
 EXPECTED_SCOPES = {
     "UC-001": "qualified_restricted_claims_only",
     "NS-CI-001": "qualified_interface_only",
+    "HC-001": "qualified_semantic_and_conditional_interface_only",
     "RH-001": "qualified_interface_only",
 }
 # The umbrella audit is retained historical evidence for the eight-route state.
@@ -143,6 +144,10 @@ def validation_errors(
                     errors.append(f"umbrella audit: {campaign_id} qualification is not interface-only")
                 elif expected_scope == "qualified_restricted_claims_only":
                     errors.append(f"umbrella audit: {campaign_id} qualification is not restricted-claims-only")
+                elif expected_scope == "qualified_semantic_and_conditional_interface_only":
+                    errors.append(
+                        f"umbrella audit: {campaign_id} qualification is not bounded semantic-and-conditional interface only"
+                    )
                 else:
                     errors.append(f"umbrella audit: unexpected qualified campaign {campaign_id}")
             if entry.get("promotion", {}).get("state") != "blocked":

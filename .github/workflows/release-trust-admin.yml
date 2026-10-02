@@ -9,6 +9,7 @@ on:
         type: choice
         options:
           - release_trust
+          - programme_formal_context
           - intellect_profile
         default: release_trust
       mode:
@@ -93,6 +94,49 @@ jobs:
         with:
           name: release-trust-evidence
           path: release-trust-evidence.json
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 0
+
+  migrate-programme-formal-context:
+    if: inputs.operation == 'programme_formal_context'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: release-trust
+    steps:
+      - name: Mint short-lived Programme administration token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-administration: write
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install governed policy dependencies
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Validate narrow migration contract
+        run: python ci/programme_formal_context_migration.py --mode validate
+      - name: Apply or verify Programme formal-context migration
+        env:
+          GCL_REPOSITORY_ADMIN_TOKEN: ${{ steps.app-token.outputs.token }}
+          ADMIN_MODE: ${{ inputs.mode }}
+        run: |
+          set -euo pipefail
+          python ci/programme_formal_context_migration.py \
+            --mode "${ADMIN_MODE}" \
+            --evidence programme-formal-context-migration-evidence.json
+      - name: Upload Programme migration evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: programme-formal-context-migration-evidence
+          path: programme-formal-context-migration-evidence.json
           if-no-files-found: error
           retention-days: 90
           compression-level: 0

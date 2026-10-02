@@ -13,7 +13,15 @@ MAINTENANCE_AUTOMATION_WORKFLOWS = {
     "administrative-maintenance-synchronization.yml",
 }
 ACTIVATION_WORKFLOW = "administrative-autonomy-activation.yml"
-EXTRA_WORKFLOWS = MAINTENANCE_AUTOMATION_WORKFLOWS | {ACTIVATION_WORKFLOW}
+GHOS_ROUTING_WORKFLOW = "ghos-routing-enforcement.yml"
+NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW = "ns-ci-intake-pr-controller.yml"
+OPENMATH_LIFECYCLE_WORKFLOW = "openmath-unattended-lifecycle-controller.yml"
+EXTRA_WORKFLOWS = MAINTENANCE_AUTOMATION_WORKFLOWS | {
+    ACTIVATION_WORKFLOW,
+    GHOS_ROUTING_WORKFLOW,
+    NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW,
+    OPENMATH_LIFECYCLE_WORKFLOW,
+}
 legacy.EXPECTED_WORKFLOWS = set(legacy.EXPECTED_WORKFLOWS) | EXTRA_WORKFLOWS
 
 APP_ACTION = "actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1"
@@ -247,18 +255,352 @@ def activation_workflow_errors(texts: dict[str, str]) -> list[str]:
     return errors
 
 
+def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    text = texts.get(NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW)
+    if text is None:
+        return errors
+    workflow = legacy.load_yaml_text(text)
+    trigger = _trigger(workflow)
+    expected_triggers = {"schedule", "workflow_dispatch", "workflow_run"}
+    if set(trigger) != expected_triggers:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: triggers must be exactly schedule, workflow_dispatch, and workflow_run"
+        )
+    schedule = trigger.get("schedule", [])
+    expected_schedule = [{"cron": "*/10 * * * *"}]
+    if schedule != expected_schedule:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: schedule must remain every ten minutes"
+        )
+    workflow_run = trigger.get("workflow_run", {})
+    if not isinstance(workflow_run, dict):
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: workflow_run trigger must be structured"
+        )
+    else:
+        if workflow_run.get("workflows") != ["Administrative maintenance dispatcher"]:
+            errors.append(
+                f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: workflow_run must bind Administrative maintenance dispatcher only"
+            )
+        if workflow_run.get("types") != ["completed"]:
+            errors.append(
+                f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: workflow_run type must be completed only"
+            )
+    if workflow.get("permissions") != {"contents": "read"}:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: top-level permissions must remain contents-read only"
+        )
+    job = _job(workflow, "reconcile")
+    if job.get("environment") != PROTECTED_ENVIRONMENT:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: reconcile job must bind protected environment release-trust"
+        )
+    if job.get("permissions") != {"contents": "read"}:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: workflow token must remain contents-read only"
+        )
+    if job.get("if") != "github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'":
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: workflow_run wake must be gated on successful dispatcher completion"
+        )
+    required = (
+        APP_ACTION,
+        APP_ID,
+        APP_KEY,
+        "id: intake-token",
+        "repositories: MATHSOLVE",
+        "permission-contents: read",
+        "permission-pull-requests: write",
+        "MATHSOLVE_INTAKE_PR_TOKEN: ${{ steps.intake-token.outputs.token }}",
+        "python ci/ns_ci_intake_pr_controller.py",
+        "--apply",
+        "--report ns-ci-intake-pr-controller-report.json",
+        "name: ns-ci-intake-pr-controller-report",
+        "retention-days: 30",
+    )
+    for marker in required:
+        if marker not in text:
+            errors.append(
+                f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: missing bounded controller marker {marker}"
+            )
+    if text.count(APP_ACTION) != 1:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one bounded App token is required"
+        )
+    if text.count("permission-pull-requests: write") != 1:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one PR-write App grant is required"
+        )
+    forbidden = (
+        "permission-contents: write",
+        "permission-administration:",
+        "permission-actions: write",
+        "permission-checks: write",
+        "permission-issues: write",
+        "gh pr merge",
+        "git push",
+        "/git/refs/heads/main",
+        "pull_request_target:",
+        "repository_dispatch:",
+    )
+    for marker in forbidden:
+        if marker in text:
+            errors.append(
+                f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: forbidden controller capability {marker}"
+            )
+    return errors
+
+
+def openmath_lifecycle_controller_errors(texts: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    text = texts.get(OPENMATH_LIFECYCLE_WORKFLOW)
+    if text is None:
+        return errors
+    workflow = legacy.load_yaml_text(text)
+    trigger = _trigger(workflow)
+    if set(trigger) != {"push", "schedule", "workflow_dispatch", "repository_dispatch"}:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: triggers must be exactly push, schedule, workflow_dispatch, and repository_dispatch")
+    if trigger.get("repository_dispatch") != {"types": ["openmath-return-ready"]}:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: repository dispatch must bind only openmath-return-ready")
+    if trigger.get("schedule") != [{"cron": "17,47 * * * *"}]:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: recovery schedule must remain twice hourly at minutes 17 and 47")
+    expected_push = {
+        "branches": ["main"],
+        "paths": [
+            ".github/workflows/openmath-unattended-lifecycle-controller.yml",
+            "ci/openmath_lifecycle_controller.py",
+            "governance/openmath_unattended_lifecycle_controller.json",
+            "tests/test_openmath_lifecycle_controller.py",
+            "governance/openmath_2026_campaign_state.json",
+            "governance/openmath_2026_lifecycle_reconciliations/**",
+        ],
+    }
+    if trigger.get("push") != expected_push:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: push wake must cover controller self-tests and protected lifecycle reconciliation surfaces on main")
+    if workflow.get("permissions") != {"contents": "read"}:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: top-level permissions must remain contents-read only")
+    job = _job(workflow, "reconcile")
+    if job.get("if") is not None:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: reconcile job may not depend on the removed maintenance workflow_run wake")
+    if job.get("environment") != PROTECTED_ENVIRONMENT:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: reconcile job must bind release-trust")
+    if job.get("permissions") != {"contents": "read"}:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: workflow token must remain contents-read only")
+    required = (
+        APP_ACTION,
+        APP_ID,
+        APP_KEY,
+        "id: solve-token",
+        "repositories: MATHSOLVE",
+        "permission-contents: write",
+        "permission-issues: write",
+        "permission-pull-requests: write",
+        "id: programme-token",
+        "repositories: MATH-PROGRAMME",
+        "permission-contents: write",
+        "MATHSOLVE_LIFECYCLE_TOKEN: ${{ steps.solve-token.outputs.token }}",
+        "MATH_PROGRAMME_LIFECYCLE_TOKEN: ${{ steps.programme-token.outputs.token }}",
+        "MATHSOLVE_CHECKOUT_DIR: ${{ github.workspace }}/solve-lifecycle",
+        "path: solve-lifecycle",
+        "python ci/openmath_lifecycle_controller.py",
+        "--apply",
+        "--report openmath-lifecycle-controller-report.json",
+        "name: openmath-lifecycle-controller-report",
+        "retention-days: 90",
+    )
+    for marker in required:
+        if marker not in text:
+            errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: missing bounded lifecycle marker {marker}")
+    if text.count(APP_ACTION) != 2:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: exactly two separately scoped App tokens are required")
+    if text.count("permission-contents: write") != 2:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: exactly two scoped contents-write grants are required")
+    if text.count("permission-issues: write") != 1:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: exactly one Solve issue-write grant is required")
+    if text.count("permission-pull-requests: write") != 2:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: exactly two PR-write grants are required")
+    for forbidden in (
+        "permission-administration:",
+        "permission-actions: write",
+        "permission-checks: write",
+        "gh pr merge",
+        "git push",
+        "/git/refs/heads/main",
+        "pull_request_target:",
+    ):
+        if forbidden in text:
+            errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: forbidden controller capability {forbidden}")
+    return errors
+
+
+def ghos_routing_enforcement_errors(texts: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    text = texts.get(GHOS_ROUTING_WORKFLOW)
+    if text is None:
+        return errors
+    workflow = legacy.load_yaml_text(text)
+    trigger = _trigger(workflow)
+    expected_triggers = {"pull_request_target", "merge_group", "push", "workflow_dispatch"}
+    if set(trigger) != expected_triggers:
+        errors.append(
+            f"{GHOS_ROUTING_WORKFLOW}: triggers must be exactly pull_request_target, merge_group, push, and workflow_dispatch"
+        )
+    pull_request_target = trigger.get("pull_request_target", {})
+    pr_types = pull_request_target.get("types", []) if isinstance(pull_request_target, dict) else []
+    if pr_types != ["opened", "synchronize", "reopened", "ready_for_review"]:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: pull_request_target trigger set drift")
+    if isinstance(pull_request_target, dict) and _as_list(pull_request_target.get("branches")) != ["main"]:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: pull_request_target must bind main")
+    merge_group = trigger.get("merge_group", {})
+    merge_group_types = merge_group.get("types", []) if isinstance(merge_group, dict) else []
+    if merge_group_types != ["checks_requested"]:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: merge_group must be checks_requested only")
+    push = trigger.get("push", {})
+    if not isinstance(push, dict) or _as_list(push.get("branches")) != ["main"]:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: push trigger must bind main")
+    workflow_dispatch = trigger.get("workflow_dispatch", {})
+    inputs = workflow_dispatch.get("inputs", {}) if isinstance(workflow_dispatch, dict) else {}
+    pr_number = inputs.get("pr_number", {}) if isinstance(inputs, dict) else {}
+    if (
+        not isinstance(pr_number, dict)
+        or str(pr_number.get("required", "")).lower() != "true"
+        or pr_number.get("type") != "string"
+    ):
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: workflow_dispatch must require string pr_number")
+
+    if workflow.get("permissions") != {"contents": "read"}:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: top-level permissions must remain contents-read only")
+    jobs = workflow.get("jobs", {})
+    expected_jobs = {"routing-controller", "merge-group-controller", "base-refresh"}
+    if not isinstance(jobs, dict) or set(jobs) != expected_jobs:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: job set must remain pre-queue controller, merge-group controller, plus base-refresh")
+    routing_controller = _job(workflow, "routing-controller")
+    merge_group_controller = _job(workflow, "merge-group-controller")
+    base_refresh = _job(workflow, "base-refresh")
+    expected_controller_permissions = {
+        "contents": "read",
+        "pull-requests": "read",
+        "statuses": "write",
+    }
+    expected_merge_group_permissions = {
+        "contents": "read",
+        "statuses": "write",
+    }
+    expected_refresh_permissions = {
+        "actions": "write",
+        "contents": "read",
+        "pull-requests": "read",
+    }
+    if routing_controller.get("permissions") != expected_controller_permissions:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: routing-controller permission profile drift")
+    if merge_group_controller.get("permissions") != expected_merge_group_permissions:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: merge-group-controller permission profile drift")
+    if base_refresh.get("permissions") != expected_refresh_permissions:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: base-refresh permission profile drift")
+
+    required_markers = (
+        "refs/pull/${PR_NUMBER}/merge",
+        'test "$PARENT_BASE" = "$CURRENT_BASE"',
+        'test "$PARENT_HEAD" = "$HEAD_SHA"',
+        "GHOS_PREQUEUE_RESOLUTION_ATTEMPT",
+        "GHOS_PREQUEUE_RESOLUTION_FAILED",
+        "GHOS_PREQUEUE_RESOLVED",
+        "Reject enforcement self-modification",
+        "protected-base/.github/workflows/ghos-routing-enforcement.yml",
+        "effective-candidate/.github/workflows/ghos-routing-enforcement.yml",
+        "refs/heads/gh-readonly-queue/main/*",
+        'test "$FETCHED_SHA" = "$MERGE_GROUP_SHA"',
+        'merge-base --is-ancestor "$CURRENT_BASE" "$MERGE_GROUP_SHA"',
+        "Verify merge-group uses protected enforcement workflow",
+        "ef1cce6029233a68cf46063cea2384772fcae613",
+        "fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17",
+        "--root effective-candidate",
+        "Verify protected base remained current through evaluation",
+        "Verify protected base remained current through merge-group evaluation",
+        '"context": "routing-enforcement"',
+        '/statuses/{os.environ["STATUS_SHA"]}',
+        "GH-OS pre-queue routing valid; final merge-group check still required",
+        "GH-OS routing valid on native merge-group candidate",
+        "/actions/workflows/ghos-routing-enforcement.yml/dispatches",
+        "GHOS_BASE_REFRESH_OPEN_PR_COUNT",
+        "GHOS_BASE_REFRESH_DISPATCH_COUNT",
+        "GHOS_BASE_REFRESH_API_CALLS",
+        "GHOS_BASE_REFRESH_ELAPSED_SECONDS",
+        "persist-credentials: false",
+    )
+    for marker in required_markers:
+        if marker not in text:
+            errors.append(f"{GHOS_ROUTING_WORKFLOW}: missing native-admission control marker {marker}")
+
+    if text.count("statuses: write") != 2:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: exactly two narrowly scoped status-write grants are required")
+    if text.count("actions: write") != 1:
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: exactly one actions-write grant is required")
+    for forbidden in (
+        "contents: write",
+        "pull-requests: write",
+        "checks: write",
+        "issues: write",
+        "administration: write",
+        "permission-contents: write",
+        "permission-pull-requests: write",
+        "permission-checks: write",
+        "permission-issues: write",
+        "permission-administration: write",
+        "gh pr merge",
+        "git push origin main",
+        "/git/refs/heads/main",
+    ):
+        if forbidden in text:
+            errors.append(f"{GHOS_ROUTING_WORKFLOW}: forbidden routing-controller capability {forbidden}")
+
+    prequeue_sequence = (
+        "Resolve current effective merge identity",
+        "Mark pre-queue routing pending on PR head",
+        "Materialize effective candidate as inert data",
+        "Reject enforcement self-modification",
+        "Verify and execute external gate against effective candidate",
+        "Verify protected base remained current through evaluation",
+        "Publish required pre-queue status on PR head",
+    )
+    positions = [text.find(marker) for marker in prequeue_sequence]
+    if any(position < 0 for position in positions) or positions != sorted(positions):
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: pre-queue validation sequence drift")
+
+    merge_group_sequence = (
+        "Bind native merge-group identity",
+        "Mark merge-group routing pending",
+        "Materialize merge-group candidate as inert data",
+        "Verify merge-group uses protected enforcement workflow",
+        "Verify and execute external gate against merge-group candidate",
+        "Verify protected base remained current through merge-group evaluation",
+        "Publish required merge-group status",
+    )
+    positions = [text.find(marker) for marker in merge_group_sequence]
+    if any(position < 0 for position in positions) or positions != sorted(positions):
+        errors.append(f"{GHOS_ROUTING_WORKFLOW}: merge-group validation sequence drift")
+    return errors
+
+
 def workflow_coverage_errors(root=legacy.ROOT, texts=None, evidence=None):
     texts = legacy.workflow_texts(root) if texts is None else texts
     errors = legacy.workflow_coverage_errors(root=root, texts=texts, evidence=evidence)
     delegated = {
         f"{ACTIVATION_WORKFLOW}:activate: non-Pages job permissions may not exceed contents: read",
         "administrative-maintenance-candidate.yml:prepare: non-Pages job permissions may not exceed contents: read",
+        f"{GHOS_ROUTING_WORKFLOW}:routing-controller: non-Pages job permissions may not exceed contents: read",
+        f"{GHOS_ROUTING_WORKFLOW}:merge-group-controller: non-Pages job permissions may not exceed contents: read",
+        f"{GHOS_ROUTING_WORKFLOW}:base-refresh: non-Pages job permissions may not exceed contents: read",
     }
     errors = [error for error in errors if error not in delegated]
     errors.extend(candidate_workflow_errors(texts))
     errors.extend(synchronization_workflow_errors(texts))
     errors.extend(validation_workflow_errors(texts))
     errors.extend(activation_workflow_errors(texts))
+    errors.extend(ns_ci_intake_pr_controller_errors(texts))
+    errors.extend(openmath_lifecycle_controller_errors(texts))
+    errors.extend(ghos_routing_enforcement_errors(texts))
     return errors
 
 
@@ -269,7 +611,11 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"workflow coverage v3 validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print("workflow coverage v3: active bounded administrative runtime, separated Candidate and Referee identities, protected exact-head merge, mirror-only synchronization, manual control-plane gates, and claim boundaries are valid")
+    print(
+        "workflow coverage v3: active bounded administrative runtime, separated Candidate and Referee identities, "
+        "protected exact-head merge, two-stage pre-queue/native-merge-group GH-OS routing with bounded status/action privileges, "
+        "mirror-only synchronization, manual control-plane gates, and claim boundaries are valid"
+    )
     return 0
 
 

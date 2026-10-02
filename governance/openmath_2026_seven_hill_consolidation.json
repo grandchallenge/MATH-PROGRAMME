@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "GCL_CORE_CLARITY_RECONCILIATION",
+  "reconciliation_id": "OPENMATH-2026-SEVEN-HILL-CONSOLIDATION-001",
+  "campaign": "OPENMATH-2026",
+  "standard": "GCL-CC-00",
+  "protected_base": "306e4fdfa641ca69d910bc8b280cba91828bda29",
+  "upstream_solve": {
+    "protected_main": "a2d4b19cbb9fad644d31465124e782fd789c226d",
+    "hill_lanes_blob": "ae4f4e5a9fc5be3ce6ec5e0ec1287de37e29fec8",
+    "assignment_registry_blob": "8043a11ed97a9a1bb06b334eca178860ed3b1524",
+    "historical_tranche_registry_blob": "4f35fc50d79d1d276d2e1153dc085f82d4b7c627",
+    "checkpoint_blob": "31f8d880132707bc1de6ad43597bea5b15d5e8bb"
+  },
+  "objective": "Project the protected Solve seven-hill topology into the single Programme canonical campaign state. Current authority SHALL be H1-H7 only; aggregate H2-H7 labels SHALL be historical provenance only.",
+  "permitted_mutations": [
+    "canonical campaign state",
+    "human campaign view",
+    "Core Clarity validator",
+    "bounded reconciliation record/checkpoint"
+  ],
+  "prohibited": [
+    "mathematical state change",
+    "agent lifecycle change",
+    "certification state change",
+    "competition submission",
+    "rewriting historical Solve artifacts"
+  ],
+  "completion_requires": [
+    "canonical topology exactly H1-H7",
+    "H2-H7 explicitly historical-only",
+    "live Solve bindings match protected consolidation",
+    "human view agrees",
+    "protected merge/readback",
+    "Programme completion receipt",
+    "Solve final completion receipt"
+  ],
+  "claim_boundary": "Campaign topology projection only.",
+  "governed_artifacts": [
+    "governance/openmath_2026_campaign_state.json",
+    "docs/campaigns/OPENMATH_2026_STATUS.md",
+    "ci/validate_openmath_2026_core_clarity.py",
+    "governance/openmath_2026_seven_hill_consolidation.json",
+    "governance/openmath_2026_seven_hill_consolidation_checkpoint.json",
+    "governance/openmath_2026_seven_hill_consolidation_freeze.json"
+  ],
+  "freeze_manifest": "governance/openmath_2026_seven_hill_consolidation_freeze.json",
+  "completion_receipt": "governance/openmath_2026_seven_hill_consolidation_completion_receipt.json"
+}

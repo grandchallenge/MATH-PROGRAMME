@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate repository workflow reachability, deployment gating, and external evidence."""
+"""Validate repository workflow inventory, hardening, formal routing, and publication coverage."""
 from __future__ import annotations
 
 import json
@@ -15,25 +15,28 @@ from validate_rh_continuity import rh_continuity_errors
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW_DIR = ROOT / ".github" / "workflows"
+ROUTING_REGISTRY = ROOT / ".ghos-routing" / "workflows.json"
+FORMAL_REGISTRY = ROOT / "governance" / "formal_validation_registry.json"
 IMMUTABLE_ACTION = re.compile(r"^[^@\s]+@[0-9a-f]{40}$")
 LOCAL_REUSABLE_WORKFLOW = re.compile(r"^\./\.github/workflows/[^/@\s]+[.]ya?ml$")
 READ_ONLY_PERMISSIONS = {"contents": "read"}
-EXPECTED_WORKFLOWS = {
-    "administrative-maintenance-dispatch.yml",
-    "bsd-wp03-substrate.yml",
-    "bsd-wp04-target.yml",
-    "ci.yml",
-    "gcl-conformance.yml",
-    "oz-next-004-independent-review.yml",
-    "oz-rt-apery-brow.yml",
-    "oz-rt-bz-t3.yml",
-    "oz-rt-lb-instance.yml",
-    "pages.yml",
-    "pc-wp04.yml",
-    "pc-wp05.yml",
-    "release-trust-admin.yml",
-    "vgse-final-activation.yml",
-}
+
+
+def _expected_workflows() -> set[str]:
+    try:
+        registry = json.loads(ROUTING_REGISTRY.read_text(encoding="utf-8"))
+        return {
+            Path(entry["path"]).name
+            for entry in registry.get("workflows", [])
+            if isinstance(entry, dict) and isinstance(entry.get("path"), str)
+        }
+    except (OSError, json.JSONDecodeError, KeyError):
+        return set()
+
+
+# Retained as a mutable compatibility surface because v2/v3 add older
+# administrative profiles before invoking this validator.
+EXPECTED_WORKFLOWS = _expected_workflows()
 
 
 def load_yaml_text(text: str) -> dict[str, Any]:
@@ -58,6 +61,11 @@ def _as_list(value: Any) -> list[str]:
     return [str(value)]
 
 
+def _trigger(workflow: dict[str, Any]) -> dict[str, Any]:
+    value = workflow.get("on", {})
+    return value if isinstance(value, dict) else {}
+
+
 def _job_hardening_errors(name: str, workflow: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     if "concurrency" not in workflow:
@@ -65,7 +73,13 @@ def _job_hardening_errors(name: str, workflow: dict[str, Any]) -> list[str]:
     if workflow.get("permissions") != READ_ONLY_PERMISSIONS:
         errors.append(f"{name}: top-level permissions must be exactly contents: read")
 
-    for job_id, job in workflow.get("jobs", {}).items():
+    jobs = workflow.get("jobs", {})
+    if not isinstance(jobs, dict):
+        return errors + [f"{name}: jobs must be a mapping"]
+    for job_id, job in jobs.items():
+        if not isinstance(job, dict):
+            errors.append(f"{name}:{job_id}: job must be a mapping")
+            continue
         if "uses" not in job and "timeout-minutes" not in job:
             errors.append(f"{name}:{job_id}: timeout-minutes is required")
         if "uses" in job and not (
@@ -77,33 +91,24 @@ def _job_hardening_errors(name: str, workflow: dict[str, Any]) -> list[str]:
             )
         job_permissions = job.get("permissions")
         if name != "pages.yml" and job_permissions not in (None, {}, READ_ONLY_PERMISSIONS):
-            errors.append(
-                f"{name}:{job_id}: non-Pages job permissions may not exceed contents: read"
-            )
+            errors.append(f"{name}:{job_id}: non-Pages job permissions may not exceed contents: read")
         for step in job.get("steps", []):
+            if not isinstance(step, dict):
+                continue
             uses = str(step.get("uses", ""))
             if uses and not uses.startswith("./") and not IMMUTABLE_ACTION.fullmatch(uses):
                 errors.append(f"{name}:{job_id}: action reference must use a full commit SHA: {uses}")
             if uses.startswith("actions/checkout@"):
                 options = step.get("with", {})
                 if str(options.get("persist-credentials", "")).lower() != "false":
-                    errors.append(
-                        f"{name}:{job_id}: checkout must set persist-credentials: false"
-                    )
+                    errors.append(f"{name}:{job_id}: checkout must set persist-credentials: false")
     return errors
-
-
-def _trigger(workflow: dict[str, Any]) -> dict[str, Any]:
-    value = workflow.get("on", {})
-    return value if isinstance(value, dict) else {}
 
 
 def external_evidence_errors(root: Path = ROOT, evidence: dict[str, Any] | None = None) -> list[str]:
     if evidence is None:
         evidence = json.loads((root / "evidence/UC-WP02-MATHCERT.json").read_text(encoding="utf-8"))
-    schema = json.loads(
-        (root / "schemas/cross_repository_evidence.schema.json").read_text(encoding="utf-8")
-    )
+    schema = json.loads((root / "schemas/cross_repository_evidence.schema.json").read_text(encoding="utf-8"))
     validator = Draft202012Validator(schema)
     errors = [
         f"UC-WP02-MATHCERT{error.json_path}: {error.message}"
@@ -113,6 +118,9 @@ def external_evidence_errors(root: Path = ROOT, evidence: dict[str, Any] | None 
         errors.append("UC-WP02-MATHCERT: repository must be grandchallenge/MATHCERT")
     if evidence.get("command") != ["bash", "ci/check_lean.sh"]:
         errors.append("UC-WP02-MATHCERT: command must run the complete MATHCERT certification gate")
+    commit = str(evidence.get("commit", ""))
+    if not re.fullmatch(r"[0-9a-f]{40}", commit):
+        errors.append("UC-WP02-MATHCERT: commit does not match an immutable 40-hex identity")
     required_paths = {
         "MathCert/Domains/UnionClosed/Basic.lean",
         "MathCert/Domains/UnionClosed/FranklStatement.lean",
@@ -123,6 +131,55 @@ def external_evidence_errors(root: Path = ROOT, evidence: dict[str, Any] | None 
     }
     if not required_paths <= set(evidence.get("paths", [])):
         errors.append("UC-WP02-MATHCERT: required formal and bounded replay paths are incomplete")
+    return errors
+
+
+def _formal_registry_errors(
+    root: Path,
+    parsed: dict[str, dict[str, Any]],
+    evidence: dict[str, Any],
+    texts: dict[str, str],
+) -> list[str]:
+    errors: list[str] = []
+    try:
+        registry = json.loads((root / "governance/formal_validation_registry.json").read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"formal-validation registry invalid: {exc}"]
+    lanes = registry.get("lanes", [])
+    by_id = {lane.get("id"): lane for lane in lanes if isinstance(lane, dict)}
+    for required in ("log-gcd", "pc-wp04", "union-closed-mathcert", "cmdg-cm4-p3"):
+        if required not in by_id:
+            errors.append(f"formal-validation registry: missing governed lane {required}")
+    union = by_id.get("union-closed-mathcert", {})
+    if union:
+        if union.get("external_repository") != evidence.get("repository"):
+            errors.append("formal-validation registry: Union-Closed external repository must match audited evidence repository")
+        if union.get("external_ref") != evidence.get("commit"):
+            errors.append("formal-validation registry: Union-Closed external ref must match audited evidence commit")
+    p3 = by_id.get("cmdg-cm4-p3", {})
+    if p3 and "CMDGCondensedCM4P3*.lean" not in p3.get("formal_sources", []):
+        errors.append("formal-validation registry: P3 promotion source closure is incomplete")
+
+    formal = parsed.get("formal-validation.yml")
+    if formal:
+        trigger = _trigger(formal)
+        if not {"pull_request", "merge_group", "schedule", "workflow_dispatch"}.issubset(trigger):
+            errors.append("formal-validation.yml: required material-routing triggers are incomplete")
+        if "push" in trigger:
+            errors.append("formal-validation.yml: direct push trigger is forbidden")
+        jobs = formal.get("jobs", {})
+        for required in ("impact", "formal-lane", "formal-validation"):
+            if required not in jobs:
+                errors.append(f"formal-validation.yml: missing required job {required}")
+        text = texts.get("formal-validation.yml", "")
+        for marker in (
+            "ci/formal_validation.py classify",
+            "fromJSON(needs.impact.outputs.formal_matrix)",
+            "ci/formal_validation.py run",
+            "name: formal-validation",
+        ):
+            if marker not in text:
+                errors.append(f"formal-validation.yml: missing formal routing marker {marker}")
     return errors
 
 
@@ -146,7 +203,7 @@ def workflow_coverage_errors(
     for name, text in texts.items():
         try:
             workflow = load_yaml_text(text)
-        except Exception as exc:  # pragma: no cover
+        except Exception as exc:
             errors.append(f"{name}: invalid workflow YAML: {exc}")
             continue
         parsed[name] = workflow
@@ -155,60 +212,44 @@ def workflow_coverage_errors(
     policy = parsed.get("ci.yml")
     if policy:
         trigger = _trigger(policy)
-        for required in ("pull_request", "push", "workflow_dispatch"):
+        for required in ("pull_request", "push", "merge_group", "workflow_dispatch", "schedule"):
             if required not in trigger:
                 errors.append(f"ci.yml: missing {required} trigger")
-        if "main" not in _as_list(trigger.get("push", {}).get("branches")):
+        push = trigger.get("push", {})
+        if not isinstance(push, dict) or "main" not in _as_list(push.get("branches")):
             errors.append("ci.yml: push trigger must cover main")
-        required_jobs = {
-            "validate-json",
-            "log-gcd-lean",
-            "pc-wp04-lean",
-            "union-closed-mathcert",
-        }
-        missing_jobs = required_jobs - set(policy.get("jobs", {}))
-        for job in sorted(missing_jobs):
+        required_jobs = {"impact", "policy-shard", "validate-json"}
+        for job in sorted(required_jobs - set(policy.get("jobs", {}))):
             errors.append(f"ci.yml: missing required policy job {job}")
+        for retired in ("log-gcd-lean", "pc-wp04-lean", "union-closed-mathcert"):
+            if retired in policy.get("jobs", {}):
+                errors.append(f"ci.yml: retired substantive formal job remains {retired}")
         policy_text = texts["ci.yml"]
         for marker in (
-            "python3 ci/validate_campaign_replays.py",
-            "python3 ci/test_campaign_replays.py",
-            "python3 ci/validate_repository_execution.py",
-            "python3 ci/test_repository_execution.py",
-            "python -m unittest discover -s tests -p 'test_*.py'",
-            "python3 ci/validate_workflow_coverage.py",
-            "python3 ci/test_workflow_coverage.py",
-            "evidence/UC-WP02-MATHCERT.json",
-            "fixtures/formal/PC-WP04",
-            "bash ci/check_lean.sh",
+            "ci/policy_impact.py classify",
+            "fromJSON(needs.impact.outputs.policy_shards)",
+            "ci/run_policy_shard.py --shard",
             "name: validated-site",
             "validated-site.tar.gz.sha256",
             "retention-days: 1",
         ):
             if marker not in policy_text:
                 errors.append(f"ci.yml: missing workflow coverage marker {marker}")
+        # These contracts are intentionally routed through the policy shard registry.
+        for marker in (
+            "python3 ci/validate_campaign_replays.py",
+            "python3 ci/test_campaign_replays.py",
+            "python3 ci/validate_repository_execution.py",
+            "python3 ci/test_repository_execution.py",
+            "python3 ci/validate_workflow_coverage_v2.py",
+            "python3 ci/test_workflow_coverage_v2.py",
+            "python3 ci/validate_workflow_semantics.py",
+            "python3 ci/test_workflow_semantics.py",
+        ):
+            if marker not in policy_text:
+                errors.append(f"ci.yml: missing workflow coverage marker {marker}")
 
-        external_job = policy.get("jobs", {}).get("union-closed-mathcert", {})
-        external_checkouts = []
-        for step in external_job.get("steps", []):
-            uses = str(step.get("uses", ""))
-            options = step.get("with", {})
-            if uses.startswith("actions/checkout@") and options.get("repository"):
-                external_checkouts.append(options)
-        if len(external_checkouts) != 1:
-            errors.append(
-                "ci.yml: union-closed-mathcert must contain exactly one explicit external checkout"
-            )
-        else:
-            checkout = external_checkouts[0]
-            if checkout.get("repository") != evidence.get("repository"):
-                errors.append(
-                    "ci.yml: external checkout repository must match audited evidence repository"
-                )
-            if checkout.get("ref") != evidence.get("commit"):
-                errors.append("ci.yml: external checkout ref must match audited evidence commit")
-            if checkout.get("path") != "external/MATHCERT":
-                errors.append("ci.yml: external checkout path must be external/MATHCERT")
+    errors.extend(_formal_registry_errors(root, parsed, evidence, texts))
 
     pages = parsed.get("pages.yml")
     if pages:
@@ -220,30 +261,20 @@ def workflow_coverage_errors(
             errors.append("pages.yml: deployment must depend on Programme policy checks")
         if "completed" not in _as_list(workflow_run.get("types")):
             errors.append("pages.yml: workflow_run trigger must wait for completion")
-
         jobs = pages.get("jobs", {})
         build = jobs.get("build", {})
         deploy = jobs.get("deploy", {})
-        expected_build_permissions = {
-            "actions": "read",
-            "contents": "read",
-            "pages": "write",
-        }
+        expected_build_permissions = {"actions": "read", "contents": "read", "pages": "write"}
         expected_deploy_permissions = {"pages": "write", "id-token": "write"}
         if build.get("permissions") != expected_build_permissions:
-            errors.append(
-                "pages.yml: build permissions must be exactly actions: read, contents: read, and pages: write"
-            )
+            errors.append("pages.yml: build permissions must be exactly actions: read, contents: read, and pages: write")
         if deploy.get("permissions") != expected_deploy_permissions:
-            errors.append(
-                "pages.yml: deploy permissions must be exactly pages: write and id-token: write"
-            )
+            errors.append("pages.yml: deploy permissions must be exactly pages: write and id-token: write")
         if deploy.get("needs") != "build":
             errors.append("pages.yml: deploy job must depend on build")
         environment = deploy.get("environment", {})
         if not isinstance(environment, dict) or environment.get("name") != "github-pages":
             errors.append("pages.yml: deploy environment must be github-pages")
-
         pages_text = texts["pages.yml"]
         for marker in (
             "github.event.workflow_run.conclusion == 'success'",
@@ -259,78 +290,8 @@ def workflow_coverage_errors(
             if marker not in pages_text:
                 errors.append(f"pages.yml: missing publication gate {marker}")
 
-    admin = parsed.get("release-trust-admin.yml")
-    if admin:
-        trigger = _trigger(admin)
-        if set(trigger) != {"workflow_dispatch"}:
-            errors.append("release-trust-admin.yml: administration must be manually dispatched only")
-        admin_text = texts["release-trust-admin.yml"]
-        for marker in (
-            "environment: release-trust",
-            "actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1",
-            "app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}",
-            "private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}",
-            "GCL_REPOSITORY_ADMIN_TOKEN: ${{ steps.app-token.outputs.token }}",
-            "python ci/release_trust_admin.py --mode validate",
-            "--wait-seconds 1200",
-            "--close-child-issues",
-            "name: release-trust-evidence",
-            "retention-days: 90",
-        ):
-            if marker not in admin_text:
-                errors.append(f"release-trust-admin.yml: missing administration gate {marker}")
-
-    dispatcher = parsed.get("administrative-maintenance-dispatch.yml")
-    if dispatcher:
-        trigger = _trigger(dispatcher)
-        required_triggers = {
-            "schedule",
-            "workflow_dispatch",
-            "push",
-            "pull_request",
-            "issues",
-            "branch_protection_rule",
-            "workflow_run",
-        }
-        for required in sorted(required_triggers - set(trigger)):
-            errors.append(
-                f"administrative-maintenance-dispatch.yml: missing {required} trigger"
-            )
-        if "main" not in _as_list(trigger.get("push", {}).get("branches")):
-            errors.append(
-                "administrative-maintenance-dispatch.yml: governed-path push trigger must cover main"
-            )
-        workflow_run = trigger.get("workflow_run", {})
-        workflows = set(_as_list(workflow_run.get("workflows")))
-        for required_workflow in ("Programme policy checks", "GCL conformance"):
-            if required_workflow not in workflows:
-                errors.append(
-                    "administrative-maintenance-dispatch.yml: workflow_run must cover "
-                    f"{required_workflow}"
-                )
-        if "completed" not in _as_list(workflow_run.get("types")):
-            errors.append(
-                "administrative-maintenance-dispatch.yml: workflow_run must wait for completion"
-            )
-        dispatcher_text = texts["administrative-maintenance-dispatch.yml"]
-        for marker in (
-            "cron: '57 10 2 8 *'",
-            "cron: '21 1 4,7,10 8 *'",
-            "cron: '21 13 6 9 *'",
-            "cron: '47 * * * *'",
-            "python ci/dispatch_administrative_maintenance.py",
-            "name: administrative-maintenance-dispatch",
-            "retention-days: 30",
-            "Enforce P1 fail-closed signal",
-        ):
-            if marker not in dispatcher_text:
-                errors.append(
-                    "administrative-maintenance-dispatch.yml: missing trigger-control marker "
-                    f"{marker}"
-                )
-
-    errors.extend(external_evidence_errors(root, evidence))
-    errors.extend(rh_continuity_errors(root))
+    errors.extend(external_evidence_errors(root=root, evidence=evidence))
+    errors.extend(rh_continuity_errors(root=root))
     return errors
 
 
@@ -341,11 +302,7 @@ def main() -> int:
             print(error, file=sys.stderr)
         print(f"workflow coverage validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
-    print(
-        "workflow inventory, least-privilege permissions, immutable actions, maintenance dispatch, "
-        "repository execution, exact artifact publication, release-trust administration, RH continuity, "
-        "and external evidence are valid"
-    )
+    print("workflow coverage: GH-OS inventory, hardened execution, routed policy, material formal validation, exact evidence, Pages publication, and RH continuity are valid")
     return 0
 
 

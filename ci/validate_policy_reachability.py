@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate that executable CI policy scripts are reachable from a governed workflow or shard registry."""
+"""Validate that executable CI policy scripts are reachable from a governed execution root."""
 from __future__ import annotations
 import ast, json, re, sys
 from pathlib import Path
@@ -17,6 +17,7 @@ TOOLING_CONTROL_PATHS=('ci/gcl.py','governance/gcl_tooling_command_contract.json
 NEGATIVE_KNOWLEDGE_CONTROL_PATHS=('ci/validate_negative_knowledge.py','negative_knowledge/pilot_registry.json','schemas/negative_knowledge_registry.schema.json')
 PORTFOLIO_CONTROL_PATHS=('ci/render_portfolio.py','ci/validate_portfolio.py','portfolio/pilot_registry.json','schemas/gcl_portfolio_registry.schema.json','docs/governance/GCL_PORTFOLIO_VIEW.md')
 SYNTHESIS_CONTROL_PATHS=('ci/render_synthesis.py','ci/validate_synthesis.py','synthesis/pilot_registry.json','schemas/gcl_synthesis_registry.schema.json','docs/governance/GCL_SYNTHESIS_REPORT.md','docs/governance/GCL_SYNTHESIS_REVIEW_PACKET.md')
+
 def registry_python_roots(path:Path)->set[str]:
     roots=set()
     if not path.is_file():return roots
@@ -26,6 +27,19 @@ def registry_python_roots(path:Path)->set[str]:
         for command in commands:
             if isinstance(command,list) and len(command)>=2 and command[0] in {'python','python3'} and str(command[1]).endswith('.py'):roots.add(str(command[1]))
     return roots
+
+def formal_registry_python_roots(path:Path)->set[str]:
+    """Return Python validators executed dynamically by the governed formal router."""
+    roots=set()
+    if not path.is_file():return roots
+    data=json.loads(path.read_text(encoding='utf-8'))
+    for lane in data.get('lanes',[]):
+        if not isinstance(lane,dict):continue
+        for command in lane.get('validator_commands',[]):
+            if isinstance(command,list) and len(command)>=2 and command[0] in {'python','python3'} and str(command[1]).endswith('.py'):
+                roots.add(str(command[1]))
+    return roots
+
 def workflow_python_roots(root:Path=ROOT)->set[str]:
     roots=set()
     for path in sorted((root/'.github/workflows').glob('*.y*ml')):
@@ -41,7 +55,9 @@ def workflow_python_roots(root:Path=ROOT)->set[str]:
             cmd=entry.get('command',[])
             if len(cmd)>=2 and cmd[0] in {'python','python3'}:roots.add(str(cmd[1]))
     roots.update(registry_python_roots(root/'governance/policy_shard_registry.json'))
+    roots.update(formal_registry_python_roots(root/'governance/formal_validation_registry.json'))
     return roots
+
 def ci_modules(root:Path=ROOT)->dict[str,str]:return {p.stem:p.relative_to(root).as_posix() for p in sorted((root/'ci').glob('*.py')) if p.is_file()}
 def imported_ci_paths(path:Path,modules:dict[str,str])->set[str]:
     try:tree=ast.parse(path.read_text(encoding='utf-8'),filename=str(path))
@@ -77,7 +93,7 @@ def conditional(root:Path,label:str,paths:tuple[str,...],validator)->list[str]:
     return [f'{label}: {e}' for e in validator()]
 def policy_reachability_errors(root:Path=ROOT)->list[str]:
     reachable,errors=reachable_ci_scripts(root)
-    for p in sorted(executable_ci_scripts(root)-reachable):errors.append(f'CI policy reachability: executable script is unreachable from workflows or governed shard registry: {p}')
+    for p in sorted(executable_ci_scripts(root)-reachable):errors.append(f'CI policy reachability: executable script is unreachable from workflows or governed execution registries: {p}')
     for e in validate_administrative_maintenance_control(ADMINISTRATIVE_MAINTENANCE_CONTROL,ADMINISTRATIVE_MAINTENANCE_SCHEMA):errors.append(f'administrative maintenance control: {e}')
     for e in validate_gcl_truth_spine(GCL_TRUTH_SPINE_REGISTRY,GCL_TRUTH_SPINE_REGISTRY_SCHEMA,GCL_TRUTH_SPINE_MATRIX,GCL_TRUTH_SPINE_MATRIX_SCHEMA):errors.append(f'GCL truth spine: {e}')
     present=[x for x in TOOLING_CONTROL_PATHS if (root/x).is_file()]
@@ -94,5 +110,5 @@ def main()->int:
     if errors:
         for e in errors:print(e,file=sys.stderr)
         print(f'CI policy reachability failed with {len(errors)} error(s)',file=sys.stderr);return 1
-    print('every executable CI policy script is reachable from a governed workflow or shard registry');return 0
+    print('every executable CI policy script is reachable from a governed workflow or execution registry');return 0
 if __name__=='__main__':raise SystemExit(main())

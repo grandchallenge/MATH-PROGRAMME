@@ -175,8 +175,27 @@ def delete_branch(client: Client, repo: str, name: str) -> None:
     try:
         client.delete(f"/repos/{repo}/git/refs/heads/{encoded}")
     except AutonomyError as exc:
-        if " 404 " not in str(exc):
+        if " 404 " in str(exc):
+            return
+        # Automatic post-merge cleanup can win this race. A 422 alone is
+        # not evidence of absence: protected refs also reject deletion.
+        prefix = f"DELETE /repos/{repo}/git/refs/heads/{encoded} failed: 422 "
+        detail = str(exc)
+        if not detail.startswith(prefix):
             raise
+        try:
+            missing = json.loads(detail[len(prefix):]).get("message") == "Reference does not exist"
+        except (ValueError, AttributeError):
+            missing = False
+        if not missing:
+            raise
+        try:
+            client.get(f"/repos/{repo}/git/ref/heads/{encoded}")
+        except AutonomyError as readback_error:
+            if " 404 " in str(readback_error):
+                return
+            raise
+        raise AutonomyError("branch cleanup absence readback failed") from exc
 
 
 def content(

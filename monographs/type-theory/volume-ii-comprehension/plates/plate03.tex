@@ -1,0 +1,23 @@
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}[gclplate]
+\node[anchor=west,font=\sffamily\bfseries\Large,gcllabel] at (-6,4.1) {SUBSTITUTION REWRITES THE WORLD};
+\draw[GCLWarm,line width=1pt] (-6,3.72)--(6,3.72);
+
+\node[gcllabel,font=\bfseries] at (-3.6,2.9) {Before};
+\node[gcllabel,draw=GCLBlue,rounded corners=4pt,align=left,minimum width=4.6cm,minimum height=2.2cm] (before) at (-3.6,1.1) {$n:\Nat$\\$i:\Fin(n)$\\$j:\Fin(\mathrm{succ}(n))$};
+
+\node[gcllabel,draw=GCLWarm,rounded corners=12pt,font=\bfseries] (sub) at (0,1.1) {$[3/n]$};
+
+\node[gcllabel,font=\bfseries] at (3.6,2.9) {After};
+\node[gcllabel,draw=GCLGreen,rounded corners=4pt,align=left,minimum width=4.6cm,minimum height=2.2cm] (after) at (3.6,1.1) {$i:\Fin(3)$\\$j:\Fin(\mathrm{succ}(3))$};
+
+\draw[gclwarmarrow] (before.east) -- (sub.west);
+\draw[gclwarmarrow] (sub.east) -- (after.west);
+
+\node[gcllabel,align=center] at (0,-1.25) {The declaration for $n$ disappears.\\Every later type that mentioned $n$ is specialized.};
+\node[gcllabel,font=\bfseries,text=GCLWarm] at (0,-2.45) {This is substitution, not evaluation.};
+\end{tikzpicture}
+\caption{\textbf{Plate 3. Substitution rewrites the world.} Replacing a variable in dependent type theory propagates through the types of later declarations as well as through terms. The example is structural, capture-free substitution; no execution step is being depicted.}
+\label{plate:substitution-world}
+\end{figure}

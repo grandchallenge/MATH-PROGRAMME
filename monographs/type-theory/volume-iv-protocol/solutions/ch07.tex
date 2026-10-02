@@ -1,0 +1,37 @@
+\chapter{Conversations That Do Not End}
+
+\section*{7.1}
+Yes: $\mu t.!\Nat.t$ is guarded. No: $\mu t.t$ is unguarded.
+
+\section*{7.2}
+$?\Nat.!\Bool.(\mu t.?\Nat.!\Bool.t)$.
+
+\section*{7.3}
+Unfolding rewrites a type expression to expose its next constructor. It does not schedule or execute a process.
+
+\section*{7.4}
+$\mu t.?Req.!Resp.t$.
+
+\section*{7.5}
+$\mu t.t$ is rejected because the recursive occurrence is reached without crossing a communication constructor.
+
+\section*{7.6}
+First unfolding: $!Ping.?Pong.R$ where $R=\mu t.!Ping.?Pong.t$. Second unfolding exposes the same $!Ping.?Pong$ prefix again after the recursive occurrence.
+
+\section*{7.7}
+A server can satisfy every finite prefix of an intended request/reply discipline while intentionally remaining available for further requests.
+
+\section*{7.8}
+T4.10 states only that unfolding preserves well-formed syntax. It has no scheduler, response-time, or eventuality premise.
+
+\section*{7.9}
+For $\mu t.!A.S$, guardedness places recursive occurrences in $S$ beneath the send constructor. Substitution re-inserts the well-formed recursive type in those positions; send formation is preserved.
+
+\section*{7.10}
+T4.10 legitimizes the unfolding that exposes a finite outer prefix; T4.4 then preserves the principal communication step through that prefix.
+
+\section*{7.11}
+One possible contract is: under weak fairness, every continuously enabled request-handling action is eventually scheduled. This is an added temporal assumption, not guardedness.
+
+\section*{7.12}
+Infinite correct trace: repeated `recv Req; send Resp`. Finite stuck trace: a guarded peer waiting on a message that its environment never sends. Guarded syntax permits both without extra liveness assumptions.

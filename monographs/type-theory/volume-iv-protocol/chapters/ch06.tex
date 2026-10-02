@@ -1,0 +1,101 @@
+\chapter{Safe Can Still Be Stuck}
+
+Safety removes bad communications; it does not manufacture good ones. A network can contain only locally compatible endpoint actions and still arrange those actions in a cycle of waiting. This chapter makes that boundary formal because the entire unification thesis depends on not converting a local typing guarantee into a global temporal guarantee.
+
+\section{One session is special}
+For a deliberately narrow topology, progress is recoverable. Consider a closed canonical network
+\[
+(\nu x\,y)(P\mid Q)
+\]
+where $P$ and $Q$ are sequential finite \texttt{PROTO-0} processes, their only linear endpoints are $x$ and $y$, and those endpoints have dual session types. There are no unrelated sessions on which either side may block first.
+
+\input{plates/plate12}
+
+\section{A scoped progress theorem}
+\begin{theorem}[T4.7, single-session progress]
+If a canonical one-session network as above is well typed, then either both endpoints have discharged their terminal obligations and the network is structurally congruent to termination, or a principal communication reduction is enabled.
+\end{theorem}
+\begin{proof}
+By cases on the outer constructor of the session type at $x$. Duality determines the complementary constructor at $y$. Sequential canonical forms force the corresponding prefixes to be at the front of $P$ and $Q$: send faces receive, selection faces branch, and close faces wait. Hence a principal redex exists. Terminal completion is the only no-step case. The one-session/sequential hypotheses are essential.
+\end{proof}
+
+\section{The two-session cycle}
+Now use two sessions $(x,y)$ and $(u,v)$:
+\[
+\begin{aligned}
+P &= u?(z).\,x!\chanval{0}.\,\mathsf{close}\;x.\,\mathsf{wait}\;u.0,\\
+Q &= y?(n).\,v!\chanval{\mathsf{true}}.\,\mathsf{close}\;v.\,\mathsf{wait}\;y.0.
+\end{aligned}
+\]
+Assign
+\[
+x:!\Nat.\mathsf{end!},\ y:?\Nat.\mathsf{end?},
+\quad
+u:?\Bool.\mathsf{end?},\ v:!\Bool.\mathsf{end!}.
+\]
+Each pair is locally dual. Initially $P$ waits on $u$ for $Q$, while $Q$ waits on $y$ for $P$. Neither send has been reached.
+
+\input{plates/plate34}
+
+\section{The negative theorem}
+\begin{proposition}[T4.9, local typing does not imply deadlock freedom]
+There exists a closed \texttt{PROTO-N1} network that is locally well typed at every binary session endpoint yet has no enabled communication.
+\end{proposition}
+\begin{proof}
+Use the two-session network above under restrictions $(\nu x\,y)(\nu u\,v)$. The local typing derivations follow from the dual endpoint assignments. The only exposed prefixes are receives on $u$ and $y$. Their dual sends occur later in the opposite processes, so no principal redex exists. The wait-for graph contains the cycle $P\to Q\to P$.
+\end{proof}
+
+\section{Four liveness words}
+Deadlock freedom, lock freedom, starvation freedom, and fairness are not synonyms. Deadlock freedom rules out a global state with no enabled progress. Lock freedom typically asks that some operation completes despite interference. Starvation freedom asks that a particular enabled participant is not postponed forever. Fairness is usually a scheduler or environment assumption. The exact definitions vary by model; this volume uses the terms only with explicit hypotheses.
+
+\section{Do not confuse: a counterexample with a failure of session typing}
+\begin{warningbox}
+The cyclic-wait witness does not show that session fidelity is false. It shows that the inference
+\[
+\text{local session typing}\Longrightarrow\text{unrestricted global progress}
+\]
+is false for the chosen multi-session extension.
+\end{warningbox}
+
+\input{plates/plate35}
+
+\section{Computational laboratory}
+\begin{labbox}
+Run
+\[
+  \texttt{python labs/lab06_deadlock.py}.
+\]
+The laboratory constructs the typed two-session wait cycle, builds its wait-for graph, and detects the cycle while preserving local duality checks. It is executable evidence for the stated finite fixtures and does not enlarge the theorem scope.
+\end{labbox}
+
+\section{Exercises}
+\subsection*{Checkpoint}
+\begin{enumerate}[label=\textbf{6.\arabic*},start=1]
+\item State the topology restriction in T4.7.
+\item Which property fails in the T4.9 witness: fidelity, payload safety, or global progress?
+\item Write the two dual endpoint-type pairs used in the cyclic-wait witness.
+\end{enumerate}
+\subsection*{Core}
+\begin{enumerate}[label=\textbf{6.\arabic*},start=4]
+\item Draw the wait-for graph of the two-process deadlock.
+\item Modify the order of one process so that an initial communication becomes enabled.
+\item Give a three-process wait cycle using three sessions.
+\end{enumerate}
+\subsection*{Synthesis}
+\begin{enumerate}[label=\textbf{6.\arabic*},start=7]
+\item Explain why T4.7 does not contradict T4.9.
+\item Distinguish deadlock freedom, starvation freedom, and fairness with one counterexample relation among them.
+\end{enumerate}
+\subsection*{Proof Workshop}
+\begin{enumerate}[label=\textbf{6.\arabic*},start=9]
+\item Prove the send/receive outer-constructor case of T4.7.
+\item Give the complete typing-and-stuckness argument for T4.9.
+\end{enumerate}
+\subsection*{Design Clinic}
+\begin{enumerate}[label=\textbf{6.\arabic*},start=11]
+\item Design a static dependency-order discipline that would reject the two-session witness; state what new global information it needs.
+\end{enumerate}
+\subsection*{Challenge}
+\begin{enumerate}[label=\textbf{6.\arabic*},start=12]
+\item Research a deadlock-free session calculus and identify one structural hypothesis stronger than local binary duality; report it as literature-dependent, not as a theorem of this volume.
+\end{enumerate}

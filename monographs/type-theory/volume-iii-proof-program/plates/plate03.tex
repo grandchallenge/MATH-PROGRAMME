@@ -1,0 +1,19 @@
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}[gclplate,scale=.88]
+\node[anchor=west,font=\sffamily\bfseries\Large,gcllabel] at (-6,3.9) {THE IMPLICATION MACHINE};
+\draw[GCLWarm,line width=1pt] (-6,3.55)--(6,3.55);
+\node[gcllabel] (assume) at (-4.3,1.7) {assume $x{:}A$};
+\node[gcllabel] (body) at (0,1.7) {derive $t{:}B$};
+\node[gcllabel] (bind) at (4.2,1.7) {$\lambda x{:}A.t:A\to B$};
+\draw[gclwarmarrow] (assume.east) -- (body.west);
+\draw[gclwarmarrow] (body.east) -- (bind.west);
+\node[gcllabel] (arg) at (0,.25) {$u{:}A$};
+\node[gcllabel] (app) at (4.2,.25) {$(\lambda x{:}A.t)\,u:B$};
+\draw[gclbluearrow] (arg.east) -- (app.west);
+\draw[gclbluearrow] (bind.south) to[out=-90,in=90] (app.north);
+\node[gcllabel,align=center] at (-3.9,-.6) {discharge $\leftrightarrow$ bind\\eliminate $\leftrightarrow$ apply};
+\end{tikzpicture}
+\caption{\textbf{Plate 3. The implication machine.} Assumption discharge becomes lexical binding, and modus ponens becomes application. The runtime reading does not replace semantic truth conditions; it exposes the constructive term carried by this calculus.}
+\label{plate:implication-machine}
+\end{figure}

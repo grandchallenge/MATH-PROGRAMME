@@ -24,6 +24,9 @@ REQUIRED_SOURCE_FIELDS = {
     "status_evidence_urls",
 }
 FORBIDDEN_STATUSES = {"SOLVED", "CERTIFIED", "CHECKED", "CHECKED_GLOBAL_STATUS", "COMPLETE_INTEGER_CLASSIFICATION"}
+EXPECTED_PROVIDER_COMMIT = "bab7ae57f54601b49ad9fc870051095ad487c64a"
+EXPECTED_DATASET_COMMIT = "f22d0f28b55e6e777acf82e722d97ae982dff02e"
+EXPECTED_DATA_LFS_SHA256 = "3f6c96d18925a47ac223555717226c5408cc9c75e07a1e96bddcffde8a06f029"
 
 
 class ResearchMathFixtureError(ValueError):
@@ -68,7 +71,11 @@ def check_source_row(source: dict[str, Any]) -> None:
     dataset = source.get("dataset")
     require(isinstance(dataset, dict), "source dataset metadata must be an object")
     require(dataset.get("name") == "amphora/ResearchMath-14k", "wrong source dataset")
+    require(dataset.get("repository_commit") == EXPECTED_DATASET_COMMIT, "dataset repository commit drift")
+    require(dataset.get("data_lfs_sha256") == EXPECTED_DATA_LFS_SHA256, "dataset LFS identity drift")
+    require(dataset.get("config") == "ResearchMath-14k", "wrong source config")
     require(dataset.get("split") == "test", "wrong source split")
+    require(dataset.get("row_index") == 0, "source row index drift")
     require(dataset.get("dataset_license") == "MIT", "source license must be preserved")
     require(dataset.get("row_source") == "huggingface_dataset_viewer_sample", "row source must be preserved")
     require(source.get("paper_id") == "07-workshop-problems", "unexpected paper_id")
@@ -82,6 +89,12 @@ def check_problem_card(card: dict[str, Any], source_hash: str) -> None:
     require(card.get("fixture_id") == "RM-DIO-004", "problem card fixture_id mismatch")
     require(card.get("artifact_kind") == "researchmath_problem_card", "wrong artifact_kind")
     require(card.get("schema_version") == "1.0.0", "unsupported problem-card schema")
+    provider = card.get("canonical_provider")
+    require(isinstance(provider, dict), "canonical MATHFORGE provider binding required")
+    require(provider.get("repository") == "grandchallenge/MATHFORGE", "wrong canonical provider")
+    require(provider.get("commit") == EXPECTED_PROVIDER_COMMIT, "canonical provider commit drift")
+    require(provider.get("source_id") == "RM-AMPHORA-001", "canonical source identity drift")
+    require(provider.get("disposition") == "CONFORMANCE_FIXTURE_ONLY", "Programme fixture may not grant admission")
     require(card.get("source_row_sha256") == source_hash, "problem card source hash mismatch")
     status = card.get("status_audit")
     require(isinstance(status, dict), "status_audit must be an object")
@@ -119,6 +132,10 @@ def check_problem_card(card: dict[str, Any], source_hash: str) -> None:
 def check_handoff(handoff: dict[str, Any], source_hash: str, card_hash: str) -> None:
     require(handoff.get("fixture_id") == "RM-DIO-004", "handoff fixture_id mismatch")
     require(handoff.get("artifact_kind") == "mathsolve_handoff", "wrong handoff artifact kind")
+    provider = handoff.get("canonical_provider")
+    require(isinstance(provider, dict), "handoff canonical provider binding required")
+    require(provider.get("commit") == EXPECTED_PROVIDER_COMMIT, "handoff provider commit drift")
+    require(provider.get("disposition") == "CONFORMANCE_FIXTURE_ONLY", "handoff may not grant admission")
     require(handoff.get("source_row_sha256") == source_hash, "handoff source hash mismatch")
     require(handoff.get("problem_card_sha256") == card_hash, "handoff problem-card hash mismatch")
     require(handoff.get("from_pillar") == "MATHFORGE" and handoff.get("to_pillar") == "MATHSOLVE", "wrong pillar handoff")
