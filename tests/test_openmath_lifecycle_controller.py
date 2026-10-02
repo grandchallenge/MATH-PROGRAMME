@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import patch
 from pathlib import Path
 
-from ci.openmath_lifecycle_controller import apply_projection_to_state, dispatch_parts, ensure_solve_merge, candidate_sources, ControllerError, live_solve_projection, verify_locked_source_comment
+from ci.openmath_lifecycle_controller import apply_projection_to_state, dispatch_parts, ensure_solve_merge, candidate_sources, ControllerError, live_solve_projection, verify_locked_source_comment, synchronize_successor_issue
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -100,6 +100,36 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         verify_locked_source_comment({},"RESULT\n","RESULT","OM26-H1-WP01-IA-001")
         with self.assertRaises(ControllerError):
             verify_locked_source_comment({},"RESULT","OTHER","OM26-H1-WP01-IA-001")
+
+    def test_unused_successor_issue_contract_is_synchronized(self):
+        gh=unittest.mock.Mock()
+        gh.request.side_effect=[[],{"number":630,"body":"new body","state":"open"}]
+        result=synchronize_successor_issue(
+            gh,{"number":630,"body":"old body","state":"open"},"new body","OM26-H2-WP06-IA-001"
+        )
+        self.assertEqual(result["body"],"new body")
+        self.assertEqual(
+            gh.request.call_args_list[1],
+            unittest.mock.call(
+                "PATCH","/repos/grandchallenge/MATHSOLVE/issues/630",{"body":"new body"}
+            ),
+        )
+
+    def test_successor_issue_with_participation_cannot_be_rewritten(self):
+        gh=unittest.mock.Mock()
+        gh.request.return_value=[{"id":1,"body":"participant evidence"}]
+        with self.assertRaisesRegex(ControllerError,"refuse to rewrite return surface"):
+            synchronize_successor_issue(
+                gh,{"number":630,"body":"old body","state":"open"},"new body","OM26-H2-WP06-IA-001"
+            )
+
+    def test_exact_open_successor_issue_requires_no_mutation(self):
+        gh=unittest.mock.Mock()
+        issue={"number":630,"body":"same body","state":"open"}
+        self.assertEqual(
+            synchronize_successor_issue(gh,issue,"same body","OM26-H2-WP06-IA-001"),issue
+        )
+        gh.request.assert_not_called()
 
     def test_pending_merge_is_bounded_and_does_not_wait(self):
         gh=unittest.mock.Mock()
