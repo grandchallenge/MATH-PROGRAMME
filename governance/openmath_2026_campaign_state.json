@@ -72,15 +72,15 @@
     },
     "solve": {
       "repository": "grandchallenge/MATHSOLVE",
-      "observed_main": "eff738dd8935549d46226f498a18c8868e05c9f8",
+      "observed_main": "a45d3aea2780836182e81a6e2827cbcc6e5c8d9e",
       "artifacts": [
         {
           "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
-          "git_blob_sha1": "164422f725633cfe9741ceeb06196b0d7a5139ff"
+          "git_blob_sha1": "a175e30fa375bbedeca14736422f5028de6855f4"
         },
         {
           "path": ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json",
-          "git_blob_sha1": "3473e7e49ea800094f983ad0677f92099eafe194"
+          "git_blob_sha1": "d04c35298e870d4f3d16916b1ec63861a8a2b1f0"
         },
         {
           "path": ".gcl/completions/OM26-CORE-CLARITY-RECONCILE-001/COMPLETION_RECEIPT.json",
@@ -569,6 +569,14 @@
         {
           "path": "contributions/OPENMATH-2026/OM26-H2/WP07/lifecycle/OM26-H2-WP07-IA-001/PROGRAMME_PROJECTION.json",
           "git_blob_sha1": "a4430b6370cb86756d6fe8e1321d2e24922c78d6"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H1/WP32/lifecycle/OM26-H1-WP32-IA-001/MANIFEST.json",
+          "git_blob_sha1": "5c4abf82959fa6d387916f1309f3efaa69233716"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H1/WP32/lifecycle/OM26-H1-WP32-IA-001/PROGRAMME_PROJECTION.json",
+          "git_blob_sha1": "322639c21c2c4302e9480fdd1fc0e4b237512d36"
         }
       ]
     },
@@ -611,7 +619,7 @@
       "captured_pending_adjudication": 0,
       "leased_not_launched": 9,
       "launched_without_return": 0,
-      "accepted": 29
+      "accepted": 30
     },
     "certification": {
       "h1": "PENDING_INDEPENDENT_CERT_EXECUTOR",
@@ -880,22 +888,30 @@
       "topology_role": "FIRST_CLASS_HILL_LANE",
       "supporting_agents": {
         "H1-Q6": {
-          "assignment_id": "OM26-H1-WP31",
-          "dispatch_id": "OM26-H1-WP31-IA-001",
-          "agent_ref": "INDEPENDENT-AGENT-131",
-          "issue_number": 608,
+          "assignment_id": "OM26-H1-WP33",
+          "dispatch_id": "OM26-H1-WP33-IA-001",
+          "agent_ref": "INDEPENDENT-AGENT-133",
+          "issue_number": 659,
           "lifecycle": "LEASED_NOT_LAUNCHED",
           "launch_evidence": null,
           "return_evidence": null,
           "adjudication": "NOT_STARTED",
           "predecessor": {
-            "assignment_id": "OM26-H1-WP30",
-            "agent_ref": "INDEPENDENT-AGENT-130",
-            "issue_number": 598,
+            "assignment_id": "OM26-H1-WP32",
+            "agent_ref": "INDEPENDENT-AGENT-132",
+            "issue_number": 608,
             "lifecycle": "ACCEPTED",
             "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
             "accepted_claims": [],
-            "predecessor": null
+            "predecessor": {
+              "assignment_id": "OM26-H1-WP30",
+              "agent_ref": "INDEPENDENT-AGENT-130",
+              "issue_number": 598,
+              "lifecycle": "ACCEPTED",
+              "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
+              "accepted_claims": [],
+              "predecessor": null
+            }
           }
         },
         "H1-ADVERSARY": {
@@ -1483,8 +1499,8 @@
   "automation": {
     "openmath_lifecycle": {
       "contract": "READY\u2192LAUNCHED\u2192RETURNED\u2192CAPTURED\u2192REPLAYED\u2192ADJUDICATED\u2192ADVANCED",
-      "last_transition_dispatch": "OM26-H2-WP07-IA-001",
-      "last_transition_hill": "OM26-H2",
+      "last_transition_dispatch": "OM26-H1-WP32-IA-001",
+      "last_transition_hill": "OM26-H1",
       "last_transition_result": "ADVANCED",
       "manual_transport_required": false,
       "manual_controller_wake_required": false
