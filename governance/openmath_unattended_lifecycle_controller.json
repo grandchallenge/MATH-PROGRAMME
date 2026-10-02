@@ -29,13 +29,20 @@
     "event_backstop": "protected Programme lifecycle reconciliation merge push; each merged reconciliation wakes the next bounded transition",
     "scheduled_delivery_guaranteed": false,
     "operational_evidence": {
-      "idempotent_repeat_run": 36698910067,
-      "result": "PASS_LEGACY_ALREADY_PROTECTED_NO_ERRORS",
-      "scheduled_wake": "UNOBSERVED",
-      "event_backstop": "PASS_WORKFLOW_RUN_36704182443",
-      "event_backstop_run": 36704182443,
-      "event_backstop_artifact": 11091550865,
-      "return_event": "PASS_REPOSITORY_DISPATCH_36713531141"
+      "architecture": "EVENT_CHAIN_PLUS_TWICE_HOURLY_RECOVERY_POLL",
+      "rate_limit_incident_run": 37013577638,
+      "rate_limit_incident_disposition": "REPAIRED_BY_PR_1142",
+      "rate_budget_repair_merge": "51355bda7d61d8a840e01cc1b06276c0cb768b94",
+      "current_event_chain_smoke": "TRIGGER_ON_PROTECTED_MERGE_OF_THIS_CONTROL_RECORD",
+      "superseded_pre_repair_evidence": {
+        "idempotent_repeat_run": 36698910067,
+        "result": "PASS_LEGACY_ALREADY_PROTECTED_NO_ERRORS",
+        "scheduled_wake": "UNOBSERVED",
+        "event_backstop": "PASS_WORKFLOW_RUN_36704182443",
+        "event_backstop_run": 36704182443,
+        "event_backstop_artifact": 11091550865,
+        "return_event": "PASS_REPOSITORY_DISPATCH_36713531141"
+      }
     },
     "return_event": "repository_dispatch/openmath-return-ready from protected Solve intake; advisory wake only, protected state is re-read",
     "recovery_poll": "scheduled recovery poll at minutes 17 and 47 of each hour",
