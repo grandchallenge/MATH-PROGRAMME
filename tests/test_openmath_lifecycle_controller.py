@@ -1,5 +1,6 @@
 import copy
 import json
+import tempfile
 import unittest
 from unittest.mock import patch
 from pathlib import Path
@@ -66,6 +67,46 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         registry={"assignments":[{"lifecycle":{"pipeline_state":"ADVANCED"},"lease":{"dispatch_id":"OM26-H1-WP01-IA-001"}}]}
         with patch("ci.openmath_lifecycle_controller.fetch_content",return_value=(json.dumps(registry),"a"*40)), patch("ci.openmath_lifecycle_controller.optional_content",return_value=("{}","b"*40)), patch("ci.openmath_lifecycle_controller.branch_names",return_value=[]):
             self.assertEqual(candidate_sources(unittest.mock.Mock()),[("intake/openmath-om26-h1-wp01-ia-001","main")])
+
+    def test_local_candidate_scan_skips_fully_reconciled_history(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            solve=root/"solve"
+            programme=root/"programme"
+            registry={
+                "assignments":[
+                    {"lifecycle":{"pipeline_state":"ADVANCED"},"lease":{"dispatch_id":"OM26-H1-WP01-IA-001"}},
+                    {"lifecycle":{"pipeline_state":"ADVANCED"},"lease":{"dispatch_id":"OM26-H2-WP01-IA-001"}},
+                ]
+            }
+            reg=solve/".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json"
+            reg.parent.mkdir(parents=True)
+            reg.write_text(json.dumps(registry),encoding="utf-8")
+            for dispatch,hill,wp in [
+                ("OM26-H1-WP01-IA-001","OM26-H1","WP01"),
+                ("OM26-H2-WP01-IA-001","OM26-H2","WP01"),
+            ]:
+                manifest=solve/f"contributions/OPENMATH-2026/{hill}/{wp}/lifecycle/{dispatch}/MANIFEST.json"
+                manifest.parent.mkdir(parents=True,exist_ok=True)
+                manifest.write_text("{}",encoding="utf-8")
+            receipt=programme/"governance/openmath_2026_lifecycle_reconciliations/OM26-H2-WP01-IA-001.json"
+            receipt.parent.mkdir(parents=True)
+            receipt.write_text(json.dumps({
+                "dispatch_id":"OM26-H2-WP01-IA-001",
+                "result":"ADVANCED",
+                "pipeline":["RETURNED","CAPTURED","REPLAYED","ADJUDICATED","ADVANCED"],
+            }),encoding="utf-8")
+            live=[
+                "intake/openmath-om26-h1-wp01-ia-001",
+                "intake/openmath-om26-h2-wp01-ia-001",
+                "intake/openmath-om26-h3-wp01-ia-001",
+            ]
+            with patch("ci.openmath_lifecycle_controller.branch_names",return_value=live):
+                sources=candidate_sources(unittest.mock.Mock(),solve,programme)
+            self.assertEqual(sources,[
+                ("intake/openmath-om26-h1-wp01-ia-001","main"),
+                ("intake/openmath-om26-h3-wp01-ia-001",None),
+            ])
 
     def test_protected_advance_with_invalid_dispatch_fails_closed(self):
         registry={"assignments":[{"lifecycle":{"pipeline_state":"ADVANCED"},"lease":{"dispatch_id":"untrusted"}}]}
@@ -174,14 +215,15 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
             projection,_=live_solve_projection(unittest.mock.Mock(),{"projection_path":"projection.json","manifest_path":"manifest.json"})
         self.assertEqual(projection["external_agent_summary"]["accepted_agents"],12)
 
-    def test_event_backstop_uses_protected_main(self):
+    def test_event_chain_uses_protected_main_and_rate_budgeted_recovery_poll(self):
         workflow = (ROOT / ".github/workflows/openmath-unattended-lifecycle-controller.yml").read_text(encoding="utf-8")
         control = json.loads((ROOT / "governance/openmath_unattended_lifecycle_controller.json").read_text(encoding="utf-8"))
-        self.assertIn("  workflow_run:\n    workflows:\n      - Administrative maintenance dispatcher\n    types:\n      - completed\n", workflow)
-        self.assertIn("github.event.workflow_run.conclusion == 'success'", workflow)
+        self.assertNotIn("  workflow_run:", workflow)
+        self.assertIn('      - "governance/openmath_2026_lifecycle_reconciliations/**"', workflow)
+        self.assertIn('    - cron: "17,47 * * * *"', workflow)
         self.assertIn("          ref: main", workflow)
-        self.assertNotIn("github.event.workflow_run.head_sha", workflow)
-        self.assertIn("successful completion of Administrative maintenance dispatcher", control["wake"]["event_backstop"])
+        self.assertIn("protected Programme lifecycle reconciliation merge push", control["wake"]["event_backstop"])
+        self.assertIn("local protected state", control["wake"]["rate_budget"])
         self.assertFalse(control["wake"]["scheduled_delivery_guaranteed"])
 
     def test_h1_wp_dispatch_uses_the_same_pipeline(self):
@@ -204,7 +246,8 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         self.assertFalse(control["acceptance_test"]["manual_controller_wake_allowed"])
         self.assertTrue(control["acceptance_test"]["live_controller_smoke_required"])
         self.assertFalse(control["wake"]["manual_controller_wake_required"])
-        self.assertEqual(control["wake"]["primary_operational_wake"], "scheduled poll every five minutes")
+        self.assertEqual(control["wake"]["primary_operational_wake"], "repository_dispatch/openmath-return-ready plus protected lifecycle reconciliation pushes")
+        self.assertEqual(control["wake"]["recovery_poll"], "scheduled recovery poll at minutes 17 and 47 of each hour")
         binding = control["paired_solve_implementation"]
         self.assertEqual(binding["repository"], "grandchallenge/MATHSOLVE")
         self.assertEqual(binding["base_pull_request"], 542)

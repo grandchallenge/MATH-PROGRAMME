@@ -9,16 +9,13 @@ on:
       - "ci/openmath_lifecycle_controller.py"
       - "governance/openmath_unattended_lifecycle_controller.json"
       - "tests/test_openmath_lifecycle_controller.py"
+      - "governance/openmath_2026_campaign_state.json"
+      - "governance/openmath_2026_lifecycle_reconciliations/**"
   repository_dispatch:
     types:
       - openmath-return-ready
-  workflow_run:
-    workflows:
-      - Administrative maintenance dispatcher
-    types:
-      - completed
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "17,47 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -30,7 +27,6 @@ concurrency:
 
 jobs:
   reconcile:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 75
     environment: release-trust
