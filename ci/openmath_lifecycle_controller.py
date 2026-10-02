@@ -836,11 +836,46 @@ def recover_legacy(gh: Github, branch: str, checkout: Path, refresh: bool = Fals
 
 
 
-def candidate_sources(gh: Github) -> list[tuple[str, str | None]]:
-    """Protected lifecycle records survive automatic deletion of merged branches."""
-    text,_=fetch_content(gh,SOLVE,".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json","main")
-    registry=json.loads(text)
-    protected=[]
+def _local_programme_reconciled(programme_root: Path | None, dispatch: str) -> bool:
+    if programme_root is None:
+        return False
+    path=programme_root/"governance/openmath_2026_lifecycle_reconciliations"/f"{dispatch}.json"
+    if not path.is_file():
+        return False
+    try:
+        receipt=json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ControllerError(f"{dispatch}: local Programme reconciliation receipt is invalid JSON") from exc
+    if (receipt.get("dispatch_id")!=dispatch
+            or receipt.get("result")!="ADVANCED"
+            or receipt.get("pipeline")!=PIPELINE):
+        raise ControllerError(f"{dispatch}: local Programme reconciliation receipt is invalid")
+    return True
+
+
+def candidate_sources(
+    gh: Github,
+    solve_checkout: Path | None = None,
+    programme_root: Path | None = None,
+) -> list[tuple[str, str | None]]:
+    """Return only lifecycle transitions that still require protected work.
+
+    Prefer the already-checked-out protected Solve state over REST for registry
+    and manifest inspection. This keeps the Release Trust installation budget
+    proportional to live work instead of historical campaign size.
+    """
+    registry_path=(solve_checkout/".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json"
+                   if solve_checkout is not None else None)
+    if registry_path is not None and registry_path.is_file():
+        registry=json.loads(registry_path.read_text(encoding="utf-8"))
+        local_solve=True
+    else:
+        text,_=fetch_content(gh,SOLVE,".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json","main")
+        registry=json.loads(text)
+        local_solve=False
+
+    protected_by_dispatch: dict[str, tuple[str, str | None]]={}
+    protected_manifest_dispatches: set[str]=set()
     for assignment in registry.get("assignments",[]):
         if assignment.get("lifecycle",{}).get("pipeline_state") != "ADVANCED":
             continue
@@ -848,9 +883,26 @@ def candidate_sources(gh: Github) -> list[tuple[str, str | None]]:
         if not isinstance(dispatch,str) or DISPATCH_RE.fullmatch(dispatch) is None:
             raise ControllerError("protected ADVANCED assignment has invalid dispatch identity")
         base,_,_=base_for(dispatch)
-        if optional_content(gh,SOLVE,f"{base}/lifecycle/{dispatch}/MANIFEST.json","main") is not None:
-            protected.append((f"{BRANCH_PREFIX}{dispatch.lower()}","main"))
-    return sorted(protected)+[(branch,None) for branch in branch_names(gh)]
+        manifest_path=f"{base}/lifecycle/{dispatch}/MANIFEST.json"
+        if local_solve:
+            manifest_exists=(solve_checkout/manifest_path).is_file()
+        else:
+            manifest_exists=optional_content(gh,SOLVE,manifest_path,"main") is not None
+        if not manifest_exists:
+            continue
+        protected_manifest_dispatches.add(dispatch)
+        if not _local_programme_reconciled(programme_root,dispatch):
+            protected_by_dispatch[dispatch]=(f"{BRANCH_PREFIX}{dispatch.lower()}","main")
+
+    live=[]
+    for branch in branch_names(gh):
+        dispatch,_,_=dispatch_parts(branch)
+        if dispatch in protected_by_dispatch:
+            continue
+        if dispatch in protected_manifest_dispatches and _local_programme_reconciled(programme_root,dispatch):
+            continue
+        live.append((branch,None))
+    return sorted(protected_by_dispatch.values())+sorted(live)
 
 
 def run(apply: bool) -> dict[str,Any]:
@@ -871,7 +923,10 @@ def run(apply: bool) -> dict[str,Any]:
     }
     recovered: set[str] = set()
     solve_checkout=Path(os.environ.get("MATHSOLVE_CHECKOUT_DIR",""))
-    for branch,source_ref in candidate_sources(solve_gh):
+    programme_root=Path(__file__).resolve().parents[1]
+    if solve_checkout.is_dir():
+        _refresh_solve_checkout(solve_checkout)
+    for branch,source_ref in candidate_sources(solve_gh,solve_checkout,programme_root):
         try:
             dispatch, hill, wp = dispatch_parts(branch)
             if dispatch in recovered:
