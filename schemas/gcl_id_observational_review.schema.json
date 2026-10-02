@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/gcl_id_observational_review.schema.json",
+  "title": "GCL-ID-00 observational review",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "record_type",
+    "standard",
+    "standard_version",
+    "programme_adoption",
+    "completed_package_count",
+    "review_window",
+    "metrics",
+    "disposition",
+    "evidence_refs",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../schemas/gcl_id_observational_review.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "record_type": {
+      "const": "GCL_ID_OBSERVATIONAL_REVIEW"
+    },
+    "standard": {
+      "const": "GCL-ID-00"
+    },
+    "standard_version": {
+      "const": "0.1.0"
+    },
+    "programme_adoption": {
+      "const": "governance/GCL-ID-00-ADOPTION.json"
+    },
+    "completed_package_count": {
+      "type": "integer",
+      "minimum": 8
+    },
+    "review_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimum",
+        "target",
+        "maximum"
+      ],
+      "properties": {
+        "minimum": {
+          "const": 8
+        },
+        "target": {
+          "const": 10
+        },
+        "maximum": {
+          "const": 12
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_changed",
+        "hidden_prior_or_training_information_exposed",
+        "futile_solver_work_stopped",
+        "conditioning_distinguished_from_structural_non_identifiability",
+        "paperwork_only"
+      ],
+      "properties": {
+        "target_changed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hidden_prior_or_training_information_exposed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "futile_solver_work_stopped": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "conditioning_distinguished_from_structural_non_identifiability": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "paperwork_only": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "disposition": {
+      "enum": [
+        "KEEP_AS_IS",
+        "SIMPLIFY_PROFILE",
+        "STRENGTHEN_PROFILE",
+        "REVISE_APPLICABILITY"
+      ]
+    },
+    "evidence_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mathematical_certification",
+        "scientific_claim_promotion",
+        "publication",
+        "production_activation",
+        "commercial_claim"
+      ],
+      "properties": {
+        "mathematical_certification": {
+          "const": false
+        },
+        "scientific_claim_promotion": {
+          "const": false
+        },
+        "publication": {
+          "const": false
+        },
+        "production_activation": {
+          "const": false
+        },
+        "commercial_claim": {
+          "const": false
+        }
+      }
+    }
+  }
+}

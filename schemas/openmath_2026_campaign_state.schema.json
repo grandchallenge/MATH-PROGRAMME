@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/openmath_2026_campaign_state.schema.json",
+  "title": "OPENMATH-2026 canonical campaign state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "record_type",
+    "campaign_id",
+    "canonical_authority",
+    "status",
+    "effective_condition",
+    "standards",
+    "domain_bindings",
+    "superseded_current_state_surfaces",
+    "summary",
+    "hills",
+    "next_action",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../schemas/openmath_2026_campaign_state.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "record_type": {
+      "const": "OPENMATH_2026_CANONICAL_CAMPAIGN_STATE"
+    },
+    "campaign_id": {
+      "const": "OPENMATH-2026"
+    },
+    "canonical_authority": {
+      "type": "object"
+    },
+    "status": {
+      "const": "ACTIVE__CONTROL_PLANE_COHERENT"
+    },
+    "effective_condition": {
+      "const": "protected_merge_of_this_exact_record"
+    },
+    "standards": {
+      "type": "object"
+    },
+    "domain_bindings": {
+      "type": "object"
+    },
+    "superseded_current_state_surfaces": {
+      "type": "array",
+      "minItems": 2
+    },
+    "summary": {
+      "type": "object"
+    },
+    "hills": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7
+    },
+    "next_action": {
+      "type": "object"
+    },
+    "claim_boundaries": {
+      "type": "object"
+    },
+    "automation": {
+      "type": "object"
+    }
+  }
+}

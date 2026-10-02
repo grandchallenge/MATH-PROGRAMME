@@ -1,0 +1,93 @@
+{
+  "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
+  "schema_version": "1.0.0",
+  "checkpoint_id": "OPENMATH-2026.CP001",
+  "governed_work_id": "OPENMATH-2026",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "admission": {
+    "topology": "MULTI_SESSION_RESUMABLE",
+    "admission_ref": "grandchallenge/MATH-PROGRAMME#1072",
+    "routine_work_excluded": true
+  },
+  "authority": {
+    "ghos_standard": "GCL-GHOS-00",
+    "ghos_version": "0.2.0",
+    "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#1072"
+  },
+  "phase": "Core Clarity migration complete. Current OPENMATH-2026 state and restart authority have moved to governance/openmath_2026_campaign_state.json under adopted GCL-CC-00. This legacy bounded-operation checkpoint is terminal and historical.",
+  "state": "TERMINAL",
+  "identities": {
+    "protected_base_sha": "1236ff130da2c4d3b18016ce405e2d0ef121150c",
+    "candidate_head_sha": null,
+    "issue_number": 1072,
+    "pr_number": null,
+    "branch": null,
+    "workflow_runs": []
+  },
+  "terminal_condition": "Terminal once PR #1089 is protected through the merge queue, protected-main readback confirms the canonical seven-hill campaign state, and the Core Clarity completion receipt is protected. Future OPENMATH-2026 continuity resumes from governance/openmath_2026_campaign_state.json, not this checkpoint.",
+  "permitted_next_actions": [],
+  "next_action": null,
+  "external_evidence": {
+    "waiting": false,
+    "objects": [
+      {
+        "kind": "artifact",
+        "identity": "grandchallenge/MATH-PROGRAMME@1236ff130da2c4d3b18016ce405e2d0ef121150c:governance/openmath_2026_campaign_state.json",
+        "status": "PROTECTED__CANONICAL_CURRENT_STATE_AUTHORITY"
+      },
+      {
+        "kind": "artifact",
+        "identity": "grandchallenge/MATHSOLVE@aa4253897f008c197bc8929b503614d652c4fb14:.gcl/completions/OM26-CORE-CLARITY-RECONCILE-001/COMPLETION_RECEIPT.json",
+        "status": "PROTECTED__SOLVE_RECONCILIATION_CLOSED"
+      },
+      {
+        "kind": "artifact",
+        "identity": "grandchallenge/gcl-standards@6704b4037161133a1efeedddcb69060a79cb7bc7:admissions/GCL-CC-00-0.1.0.json",
+        "status": "PROTECTED__GCL_CC_00_ADMITTED"
+      }
+    ]
+  },
+  "blocking_boundary": null,
+  "last_transition": {
+    "action": "Migrate OPENMATH-2026 current-state and restart authority from the stale bounded-operation checkpoint to the canonical GCL-CC-00 campaign state.",
+    "result": "PR #1089 merged through the required merge queue at 1236ff130da2c4d3b18016ce405e2d0ef121150c. The canonical seven-hill state, validated human view, explicit supersession registry, agent lifecycles, competition states, and live Forge/Solve/Cert bindings are protected. This checkpoint is therefore retired from current-state authority.",
+    "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#1089",
+      "grandchallenge/MATH-PROGRAMME@1236ff130da2c4d3b18016ce405e2d0ef121150c:governance/openmath_2026_campaign_state.json",
+      "grandchallenge/MATH-PROGRAMME@1236ff130da2c4d3b18016ce405e2d0ef121150c:docs/campaigns/OPENMATH_2026_STATUS.md",
+      "grandchallenge/MATH-PROGRAMME@1236ff130da2c4d3b18016ce405e2d0ef121150c:governance/openmath_2026_supersession_registry.json"
+    ]
+  },
+  "freshness": {
+    "required_before_transition": true,
+    "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/OPENMATH-2026.json",
+    "on_mismatch": "REBIND_BEFORE_MUTATION",
+    "observed_at": "2026-09-29T01:50:33Z"
+  },
+  "resume": {
+    "fresh_session_safe": true,
+    "requires_chat_history": false,
+    "authoritative_sources": [
+      "governance/openmath_2026_campaign_state.json",
+      "docs/campaigns/OPENMATH_2026_STATUS.md",
+      "governance/GCL-CC-00-ADOPTION.json",
+      "governance/openmath_2026_supersession_registry.json",
+      "grandchallenge/MATHSOLVE@aa4253897f008c197bc8929b503614d652c4fb14:.gcl/completions/OM26-CORE-CLARITY-RECONCILE-001/COMPLETION_RECEIPT.json"
+    ],
+    "instructions": "Do not resume from this terminal checkpoint's historical phase text. Read governance/openmath_2026_campaign_state.json as the sole Programme current-state authority. Verify its live Forge/Solve/Cert bindings before mutation. Execute only its declared next_action, then reconcile the canonical campaign state again before further discretionary substantive OPENMATH work."
+  },
+  "terminal_evidence": [
+    "grandchallenge/MATH-PROGRAMME#1089",
+    "grandchallenge/MATH-PROGRAMME@1236ff130da2c4d3b18016ce405e2d0ef121150c:governance/openmath_2026_campaign_state.json",
+    "grandchallenge/MATH-PROGRAMME@1236ff130da2c4d3b18016ce405e2d0ef121150c:docs/campaigns/OPENMATH_2026_STATUS.md",
+    "governance/openmath_2026_core_clarity_completion_receipt.json"
+  ],
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false,
+    "protected_bypass_authorized": false
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/external_execution_plane_profile.schema.json",
+  "title": "MATH-PROGRAMME External Execution Plane Profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "profile_id",
+    "status",
+    "authority",
+    "github_control_plane",
+    "thresholds",
+    "external_execution",
+    "receipt_requirements",
+    "grandfathering",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../schemas/external_execution_plane_profile.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "profile_id": {
+      "const": "MP-EXTERNAL-EXECUTION-PLANE-001"
+    },
+    "status": {
+      "const": "ACTIVE_ON_PROTECTED_MERGE"
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "standard",
+        "standard_version",
+        "standard_commit",
+        "programme_adoption",
+        "streamlined_execution"
+      ],
+      "properties": {
+        "standard": {
+          "const": "GCL-CEX-01"
+        },
+        "standard_version": {
+          "const": "0.1.0"
+        },
+        "standard_commit": {
+          "const": "efe06a27aa594c63bd0489929ffd9fff1e2daeb9"
+        },
+        "programme_adoption": {
+          "const": "governance/GCL-CEX-01-ADOPTION.json"
+        },
+        "streamlined_execution": {
+          "const": "MP-STREAMLINED-EXECUTION-001"
+        }
+      }
+    },
+    "github_control_plane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "roles",
+        "large_scientific_batch_primary_execution"
+      ],
+      "properties": {
+        "roles": {
+          "const": [
+            "authorize",
+            "freeze",
+            "package",
+            "submit_or_handoff",
+            "verify_receipts",
+            "check_aggregation",
+            "protected_readmission"
+          ]
+        },
+        "large_scientific_batch_primary_execution": {
+          "const": false
+        }
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_scientific_work_units_before_external",
+        "max_parallel_per_github_workflow",
+        "max_github_parallel_per_campaign",
+        "max_expected_github_runner_minutes",
+        "specialized_resource_requires_external"
+      ],
+      "properties": {
+        "max_scientific_work_units_before_external": {
+          "const": 32
+        },
+        "max_parallel_per_github_workflow": {
+          "const": 16
+        },
+        "max_github_parallel_per_campaign": {
+          "const": 32
+        },
+        "max_expected_github_runner_minutes": {
+          "const": 240
+        },
+        "specialized_resource_requires_external": {
+          "const": true
+        }
+      }
+    },
+    "external_execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_when_any_threshold_exceeded",
+        "provider_neutral",
+        "provider_selection_is_operational",
+        "repository_write_credentials_allowed",
+        "manifest_required",
+        "per_work_unit_receipt_required"
+      ],
+      "properties": {
+        "required_when_any_threshold_exceeded": {
+          "const": true
+        },
+        "provider_neutral": {
+          "const": true
+        },
+        "provider_selection_is_operational": {
+          "const": true
+        },
+        "repository_write_credentials_allowed": {
+          "const": false
+        },
+        "manifest_required": {
+          "const": true
+        },
+        "per_work_unit_receipt_required": {
+          "const": true
+        }
+      }
+    },
+    "receipt_requirements": {
+      "const": [
+        "manifest_sha256",
+        "work_unit_id",
+        "source_commit",
+        "source_payload_sha256",
+        "provider_execution_id",
+        "started_at",
+        "finished_at",
+        "returncode",
+        "output_artifact_digests",
+        "scientific_semantics_changed_false",
+        "promotion_claim_false",
+        "repository_mutation_false"
+      ]
+    },
+    "grandfathering": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "in_flight_execution_may_finish",
+        "retry_or_successor_must_use_profile"
+      ],
+      "properties": {
+        "in_flight_execution_may_finish": {
+          "const": true
+        },
+        "retry_or_successor_must_use_profile": {
+          "const": true
+        }
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mathematical_certification",
+        "scientific_claim_promotion",
+        "publication",
+        "production_activation",
+        "credential_expansion",
+        "commercial_claim"
+      ],
+      "properties": {
+        "mathematical_certification": {
+          "const": false
+        },
+        "scientific_claim_promotion": {
+          "const": false
+        },
+        "publication": {
+          "const": false
+        },
+        "production_activation": {
+          "const": false
+        },
+        "credential_expansion": {
+          "const": false
+        },
+        "commercial_claim": {
+          "const": false
+        }
+      }
+    }
+  }
+}

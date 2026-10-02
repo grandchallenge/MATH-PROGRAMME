@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "protocol_id": "CHAIDEZ-PEDAGOGY-001",
+  "from_version": "1.0.0",
+  "to_version": "2.0.0",
+  "scope": "CHAIDEZ_RESULT_STATUS_ONLY",
+  "field_renames": {
+    "computation_class": "support_route_class"
+  },
+  "exposition_stage_mapping": {
+    "PLAIN_OBJECT": "PLAIN_OBJECT",
+    "EXACT_OBSTRUCTION": "EXACT_OBSTRUCTION",
+    "WORKING_MODEL": "WORKING_MODEL",
+    "RESTRICTED_CLAIM": "RESTRICTED_CLAIM",
+    "THEOREM_SPINE": "SPINE_LOCATION",
+    "MATHEMATICAL_ACTION": "SUPPORT_ROUTE",
+    "DEBT_AND_CLAIM_BOUNDARY": "DEBT_AND_CLAIM_BOUNDARY",
+    "FIRST_EXECUTABLE_STEP": "FIRST_EXECUTABLE_STEP"
+  },
+  "added_exposition_stages": [
+    "STATUS_BOX"
+  ],
+  "added_result_status_fields": [
+    "foundational_profile"
+  ],
+  "added_debt_categories": [
+    "FOUNDATIONAL_PROFILE_GAP"
+  ],
+  "added_support_routes": [
+    "CERTIFICATE_REPLAY",
+    "FORMAL_PROOF",
+    "NEGATIVE_RESULT"
+  ],
+  "historical_rewrite": false,
+  "resource_ledger_rename": false,
+  "claim_upgrade": false,
+  "migration_rule": "Review support meaning before mapping; finite Lean-supported WP06 exposition uses FORMAL_PROOF, with its original restricted statement preserved. No automatic status or proof upgrade."
+}

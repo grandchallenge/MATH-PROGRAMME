@@ -22,6 +22,14 @@ For bounded work within already-authorized scope:
 
 Do not request a fresh Human Steward approval or generic independent review for routine work. Do not manufacture a synchronization commit, update a branch, rerun unaffected checks, or invalidate a prior disposition merely because protected `main` moved. Specialist non-author review remains appropriate for substantive mathematical certification, source-semantic adjudication, constitutional authority expansion, security-sensitive protection weakening, and external claim promotion.
 
+## GCL-ID-00 identifiability preflight
+
+MATH-PROGRAMME adopts GCL-ID-00 v0.1.0 through `governance/GCL-ID-00-ADOPTION.json`. Apply it only when a work package makes, tests, or materially depends on a reconstruction claim about hidden state, parameters, calibration, representation, geometry, or another latent object.
+
+The default is `ID-PREFLIGHT-LITE`. Before substantial solver effort, record the recovery target, the observations actually available to the solver, known observation-preserving equivalences, the strongest justified recoverable object, and any extra information or normalization required for stronger recovery. Use `schemas/identifiability_preflight.schema.json` and `governance/identifiability_preflights/`.
+
+Do not require a proof of injectivity before experimentation. `UNRESOLVED` is valid. Ordinary forward computation, theorem proving without a reconstruction claim, numerical evaluation without latent recovery, and exploration without representative-recovery claims are outside this profile. Escalate to `ID-ANALYSIS` only when identifiability materially affects the campaign. An `ID-CERTIFIED` mathematical identifiability or obstruction claim remains subject to MATHCERT.
+
 ## Mandatory execution routing
 
 Every direct workflow under `.github/workflows/` must be registered in `.ghos-routing/workflows.json`. Workflow bytes determine observed execution features and topology; registry prose cannot downgrade them. Any workflow that is autonomous, opaque, credential-bearing, waiting, or write-capable must use the exact admitted persistent controller with compatible capabilities.
@@ -74,13 +82,29 @@ For an already authorized bounded MATH operation, follow [`docs/governance/EXECU
 - Bind diagnostics to the exact run/job/artifact and candidate bytes they actually describe. Do not patch from stale diagnostics.
 - A repository-head change matters only when it changes material evidence closure, a relevant protected dependency, mergeability, scope, or authority. Unrelated `main` movement does not invalidate evidence.
 - Repair only the demonstrated failing theorem/module/validator/scope, then rerun the affected replay or checks. Do not rerun unrelated expensive lanes merely for a numerically fresh head.
-- If connected diagnostic surfaces remain unavailable, use the guide's
-  authenticated local extraction route rather than declaring missing logs a
-  terminal blocker.
+- If connected GitHub, CI, compiler, or logging surfaces cannot expose exact evidence and a known authenticated operator shell is available, emit an exact-identity-bound, self-contained `gh`/GitHub API recovery script in the same response. The script must be safe to paste into the existing shell, must not use top-level shell-kill behavior, must reject stale material identities, and must avoid mutation unless separately authorized.
+- Human execution of that script is an evidence-transport step, not Human Steward approval or escalation. Continue from returned evidence without requesting a fresh approval when the operation remains within existing authority.
+- Do not claim an authentication, substantive evidentiary, or recovery-exhaustion boundary while that authenticated operator route remains available and unattempted. If it cannot recover sufficient evidence, continue to the applicable pinned replay or other authorized recovery route before declaring exhaustion.
 - Stop or escalate only at a named governance, authority, authentication,
   safety, protected-state, materially changed-state, substantive evidentiary,
   or actual recovery-exhaustion boundary.
 - Fail closed on claims, certification, promotion, publication, protected-state mutation, and authority; do not fail closed merely on authorized evidence gathering and bounded repair.
+
+## Canonical bounded-turn continuity policy
+
+MATH-PROGRAMME adopts `GCL-AGENT-CONTINUITY-001@1.0.0` from
+`grandchallenge/INTELLECT/governance/agent_execution/GCL-AGENT-CONTINUITY-001.md`.
+The existing Programme continuity machinery remains the single operational continuity source of truth: `governance/bounded_operation_checkpoint_registry.json`,
+`WORKSET_STATE.json` where applicable, and
+`ci/validate_bounded_operation_continuity.py`. The canonical policy maps onto
+those controls; it does not create a second checkpoint registry.
+
+For interruption-prone or long-horizon work, exact-head rebinding, durable
+checkpointing, deterministic `next_action`, fresh-session-safe recovery, and a
+named legitimate stopping boundary are mandatory. Routine bounded work remains
+outside the checkpoint registry under the existing applicability rules.
+Continuity metadata grants no mathematical certification, publication,
+protected-bypass, or claim authority.
 
 ## Durable bounded-operation continuity
 

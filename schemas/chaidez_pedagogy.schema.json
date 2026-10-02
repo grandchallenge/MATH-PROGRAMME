@@ -11,25 +11,26 @@
     "result_status_fields",
     "exposition_sequence",
     "trust_quartet",
-    "computation_classes",
+    "support_route_classes",
     "proof_debt_categories",
     "spine_node_fields",
     "escalation_gate",
-    "required_work_package_artifacts"
+    "required_work_package_artifacts",
+    "external_catalog_promotion"
   ],
   "properties": {
-    "schema_version": {"const": "1.0.0"},
+    "schema_version": {"const": "2.0.0"},
     "protocol_id": {"const": "CHAIDEZ-PEDAGOGY-001"},
     "campaign_unit": {"const": "SINGLE_THEOREM_SPINE"},
     "result_status_fields": {
       "type": "array",
-      "minItems": 7,
+      "minItems": 8,
       "uniqueItems": true,
       "items": {"type": "string"}
     },
     "exposition_sequence": {
       "type": "array",
-      "minItems": 8,
+      "minItems": 9,
       "uniqueItems": true,
       "items": {"type": "string"}
     },
@@ -40,22 +41,22 @@
       "uniqueItems": true,
       "items": {"type": "string"}
     },
-    "computation_classes": {
+    "support_route_classes": {
       "type": "array",
-      "minItems": 4,
-      "maxItems": 4,
+      "minItems": 7,
+      "maxItems": 7,
       "uniqueItems": true,
       "items": {"type": "string"}
     },
     "proof_debt_categories": {
       "type": "array",
-      "minItems": 7,
+      "minItems": 8,
       "uniqueItems": true,
       "items": {"type": "string"}
     },
     "spine_node_fields": {
       "type": "array",
-      "minItems": 6,
+      "minItems": 7,
       "uniqueItems": true,
       "items": {"type": "string"}
     },
@@ -67,6 +68,7 @@
         "dependencies_named",
         "proof_debt_register_current",
         "trust_quartet_complete",
+        "foundational_profile_present_or_deferred",
         "first_executable_step_present",
         "next_package_names_spine_node"
       ],
@@ -75,8 +77,22 @@
         "dependencies_named": {"const": true},
         "proof_debt_register_current": {"const": true},
         "trust_quartet_complete": {"const": true},
+        "foundational_profile_present_or_deferred": {"const": true},
         "first_executable_step_present": {"const": true},
         "next_package_names_spine_node": {"const": true}
+      }
+    },
+    "external_catalog_promotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["catalog_entry_disposition", "full_dossier_trigger", "minimum_proposal_assurance_tier", "exact_campaign_target_assurance_tier", "automatic_promotion", "catalog_assurance_is_proof_or_certification"],
+      "properties": {
+        "catalog_entry_disposition": {"const": "SOURCE_RECORD_ONLY"},
+        "full_dossier_trigger": {"const": "REVIEWED_PROMOTION_TO_MATHSOLVE"},
+        "minimum_proposal_assurance_tier": {"const": "SEMANTICALLY_REVIEWED"},
+        "exact_campaign_target_assurance_tier": {"const": "CAMPAIGN_CONCORDANT"},
+        "automatic_promotion": {"const": false},
+        "catalog_assurance_is_proof_or_certification": {"const": false}
       }
     },
     "required_work_package_artifacts": {

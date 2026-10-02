@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "OPENMATH_2026_SUPERSESSION_REGISTRY",
+  "campaign": "OPENMATH-2026",
+  "current_state_authority": "governance/openmath_2026_campaign_state.json",
+  "records": [
+    {
+      "path": "governance/openmath_2026_external_state.json",
+      "git_blob_sha1": "d355be89d5ed4c5f1a70dff9d20026451a17c8db",
+      "status": "SUPERSEDED_FOR_CURRENT_STATE",
+      "historical_only": true,
+      "superseded_by": "governance/openmath_2026_campaign_state.json",
+      "retained_purpose": "Historical bootstrap snapshot of initially observed external competition surfaces."
+    },
+    {
+      "path": "governance/openmath_2026_campaign_binding.json",
+      "git_blob_sha1": "36d89557ba5aab589cdf03b099df1d7778a74267",
+      "status": "SUPERSEDED_FOR_CURRENT_STATE",
+      "historical_only": true,
+      "superseded_by": "governance/openmath_2026_campaign_state.json",
+      "retained_purpose": "Historical cross-pillar binding before the Core Clarity canonical campaign-state migration."
+    }
+  ],
+  "rule": "These exact historical bytes remain preserved but SHALL NOT be used to resume or report current OPENMATH-2026 state.",
+  "claim_boundary": "Supersession changes current-state authority only; it does not alter the historical observations contained in the retained records."
+}

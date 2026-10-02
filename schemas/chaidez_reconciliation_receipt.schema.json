@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "operation_id",
+    "chain_kind",
+    "protected_inputs",
+    "artifact_count",
+    "artifacts",
+    "catalog_entry_count",
+    "production_promotion_count",
+    "production_certification_intake_count",
+    "production_exercised",
+    "ordinary_catalog_dossiers",
+    "generic_handoffs_unchanged",
+    "wp06_claim_ledger_unchanged"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "operation_id": {
+      "const": "CHAIDEZ-V2-HARDENING-001"
+    },
+    "chain_kind": {
+      "const": "POLICY_AND_CANARY_NOT_PRODUCTION"
+    },
+    "protected_inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "MATH-PROGRAMME",
+        "MATHFORGE",
+        "MATHSOLVE",
+        "MATHCERT"
+      ],
+      "properties": {
+        "MATH-PROGRAMME": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "MATHFORGE": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "MATHSOLVE": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "MATHCERT": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        }
+      }
+    },
+    "artifact_count": {
+      "type": "integer",
+      "minimum": 4
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "repository",
+          "commit",
+          "path",
+          "git_blob_sha1",
+          "sha256"
+        ],
+        "properties": {
+          "repository": {
+            "enum": [
+              "grandchallenge/MATH-PROGRAMME",
+              "grandchallenge/MATHFORGE",
+              "grandchallenge/MATHSOLVE",
+              "grandchallenge/MATHCERT"
+            ]
+          },
+          "commit": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "git_blob_sha1": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "catalog_entry_count": {
+      "const": 17288
+    },
+    "production_promotion_count": {
+      "const": 0
+    },
+    "production_certification_intake_count": {
+      "const": 0
+    },
+    "production_exercised": {
+      "const": false
+    },
+    "ordinary_catalog_dossiers": {
+      "const": 0
+    },
+    "generic_handoffs_unchanged": {
+      "const": 11
+    },
+    "wp06_claim_ledger_unchanged": {
+      "const": true
+    }
+  }
+}

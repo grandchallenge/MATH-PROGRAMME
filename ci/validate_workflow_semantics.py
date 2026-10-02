@@ -308,7 +308,7 @@ def workflow_semantic_errors(
         errors.append("formal-validation.yml:formal-lane must use classifier-produced dynamic matrix")
     if not marker(job_runs(formal_workflow, "formal-lane"), "ci/formal_validation.py run"):
         errors.append("formal-validation.yml:formal-lane must execute generic lane runner")
-    if not steps_using(lane_job, "grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4"):
+    if not steps_using(lane_job, "grandchallenge/lean-action@37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01"):
         errors.append("formal-validation.yml: formal lanes must use the exact governed Lean action")
 
     formal_aggregate = formal_workflow.get("jobs", {}).get("formal-validation", {})

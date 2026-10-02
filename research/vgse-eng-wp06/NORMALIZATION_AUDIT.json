@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "work_package": "VGSE-ENG-WP06",
+  "candidates": [
+    {
+      "normalization": "source TE3",
+      "geometry_only": true,
+      "status": "CANONICAL_FOR_TRUE_T_EMBEDDINGS",
+      "rule": "Use Euclidean dual-edge lengths as geometric weights. Their internal-vertex gauge class is, by TE3, the graph-weight gauge class.",
+      "information_consumed": "labeled embedding geometry and graph incidence only",
+      "quotient_rank_recovered": 8,
+      "caveat": "The retained C05 generated branches fail the TE3 test against the protected C04 weight class, so this rule does not recover that pinned quotient from those current objects."
+    },
+    {
+      "normalization": "identify one of five C05 algebraic roots from an interior coordinate and then read alpha_i",
+      "geometry_only": false,
+      "status": "REJECTED_AS_STRUCTURALLY_CIRCULAR",
+      "rule": "Geometry can separate the five retained branches, but the alpha_i/branch catalogue was constructed from the pinned response/arrangement.",
+      "information_consumed": "known response-dependent algebraic branch data",
+      "reason": "It answers which branch of one fixed response generated the geometry, not which quotient generated an arbitrary geometry."
+    },
+    {
+      "normalization": "WP05 certified branch boundary factors",
+      "geometry_only": false,
+      "status": "VALID_CALIBRATED_RECONSTRUCTION_NOT_GEOMETRY_INVERSE",
+      "quotient_rank_recovered": 8,
+      "information_consumed": "algebraic witness boundary data",
+      "reason": "These factors explicitly supply the five degrees that geometry alone leaves free in the broader algebraic-realization class."
+    },
+    {
+      "normalization": "primitive geometry alone without TE3",
+      "geometry_only": true,
+      "status": "FIVE_DIMENSIONAL_NON_IDENTIFIABILITY",
+      "quotient_rank_recovered": 3,
+      "reason": "Exact positive boundary-rescaling symmetry fixes every primitive increment while moving five quotient directions."
+    }
+  ],
+  "fixed_response_warning": "Within the five retained C05 branches the protected quotient is constant by construction. A map from branch geometry to that already-known constant quotient is not evidence of structural geometry-to-quotient identifiability.",
+  "conclusion": "There is no missing clever formula for five boundary factors inside the unrestricted primitive geometry. The missing information is precisely the boundary normalization that TE3 supplies in the source-defined t-embedding category."
+}

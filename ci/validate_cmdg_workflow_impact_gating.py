@@ -121,7 +121,7 @@ def validation_errors(
     for marker in (
         "ci/formal_validation.py run",
         "--mode promotion",
-        "grandchallenge/lean-action@138a564e38a62ce545e8d47d86a97628463aced4",
+        "grandchallenge/lean-action@37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01",
     ):
         if marker not in shared:
             errors.append(f"shared CMDG executor missing marker: {marker}")
