@@ -52,3 +52,37 @@ Stop at one declared M0 terminal disposition. Preserve a negative, partial, bran
 ## Claim boundary
 
 No source correspondence or `VGSE-C06`. No mechanics, rigid foldability, collision, finite thickness, stiffness, material, manufacture, product, patent, or commercial claim.
+
+
+## Current M0 result
+
+The first deterministic atlas tranche is complete enough for protected review.
+
+- Exact finite graph audit: 31 almost-perfect matchings, `kmin = 2`, and all six adjacent boundary pairs satisfy the two-boundary-nondegeneracy witness condition.
+- Protected baseline: a new GCL-designed numerical t-embedding satisfies TE1-TE5 and the noncrossing/injectivity replay. The maximum TE3 relative gauge error is below `1e-12` across the retained successful atlas.
+- Independent quotient coverage: 41 quotient points were attempted. The representative selector found 40 valid numerical t-embeddings. Every baseline, axis, log-radius-`0.5`, and log-radius-`1.5` sample succeeded. One of eight log-radius-`3` stress samples hit `SELECTOR_COVERAGE_LIMIT`.
+- The selector limit is not a nonexistence result. Galashin Corollary 1.13 supplies a separate source-conditional existence statement once the exact graph hypotheses and the pinned source theorem are accepted.
+- Uniqueness is falsified numerically: five admissible representatives at the same protected quotient point have distinct perimeter-normalized boundary-edge signatures.
+- The local Jacobian of one fixed representative branch from eight log-quotient coordinates to six perimeter-normalized boundary-edge lengths has numerical rank `5` at tolerance `1e-8`. This is geometric branch sensitivity, not a mechanical response.
+
+The retained disposition is:
+
+`TE3_REALIZATION_ATLAS_PARTIAL`
+
+“Partial” refers to constructor/branch coverage, not failure of the source existence theorem. M0 does not claim a complete classification of all t-embedding branches or a globally complete numerical selector.
+
+## Replay
+
+```bash
+python -m pip install -r research/vgse-ms-m0/requirements.txt
+python research/vgse-ms-m0/analyze_m0.py --check
+python research/vgse-ms-m0/test_m0.py
+```
+
+A path-scoped GitHub Actions workflow runs the same replay when the M0 evidence surface changes.
+
+## Successor boundary
+
+The retained atlas is a genuine TE3-native design family and is sufficient evidence to ask whether a separately defined kinematic model attaches stable meaning to any of its coordinates.
+
+That question belongs to M1. M0 does not authorize M1 automatically.
