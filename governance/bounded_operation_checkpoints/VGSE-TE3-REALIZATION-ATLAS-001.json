@@ -15,32 +15,33 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1085"
   },
-  "phase": "M0 authorized ready against protected VGSE-MECHANICAL-SEMANTICS-001 admission.",
-  "state": "AUTHORIZED_READY",
+  "phase": "M0 candidate assembled: deterministic TE3-native realization atlas awaits exact-head replay and protected review.",
+  "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "fee2dfed5876ea91543ceae1400b5e355a6583e5",
-    "candidate_head_sha": "fee2dfed5876ea91543ceae1400b5e355a6583e5",
+    "protected_base_sha": "51355bda7d61d8a840e01cc1b06276c0cb768b94",
+    "candidate_head_sha": "e7c76a8b10eccca1087f157783585687e0a499db",
     "issue_number": 1085,
     "pr_number": null,
-    "branch": "research/vgse-ms-m0",
+    "branch": "research/vgse-ms-m0-r2",
     "workflow_runs": []
   },
   "terminal_condition": "Terminate M0 only at TE3_REALIZATION_ATLAS_ESTABLISHED, TE3_REALIZATION_ATLAS_PARTIAL, TE3_REALIZATION_COMPONENT_RESTRICTED, TE3_REALIZATION_CONSTRUCTION_OBSTRUCTED, or TE3_REALIZATION_UNRESOLVED, with independent realization points, TE3 replay, claim-boundary preservation, exact-head review, native protected integration, and no automatic M1 authorization.",
   "permitted_next_actions": [
     {
-      "id": "instantiate_vgse_ms_m0",
-      "description": "Instantiate the M0 TE3 realization model contract and independently sampled quotient-to-geometry atlas work under research/vgse-ms-m0."
+      "id": "submit_m0_candidate_for_replay",
+      "description": "Open the substantive M0 pull request from exact head e7c76a8b10eccca1087f157783585687e0a499db and require the path-scoped deterministic replay plus normal Programme gates."
     }
   ],
   "next_action": {
-    "id": "instantiate_vgse_ms_m0",
-    "description": "Construct the exact forward TE3 realization contract, sample genuinely independent quotient points, and produce the first replayable existence/multiplicity/conditioning evidence without making mechanical claims.",
+    "id": "submit_m0_candidate_for_replay",
+    "description": "Submit exact M0 candidate e7c76a8b10eccca1087f157783585687e0a499db for deterministic replay, distinct Adversary/Referee review, and protected integration if green.",
     "evidence_targets": [
-      "research/vgse-ms-m0/MODEL_CONTRACT.json",
-      "research/vgse-ms-m0/QUOTIENT_SAMPLE.json",
+      "research/vgse-ms-m0/RESULTS.json",
       "research/vgse-ms-m0/REALIZATION_ATLAS.json",
+      "research/vgse-ms-m0/BRANCH_LEDGER.json",
       "research/vgse-ms-m0/TE3_REPLAY.json",
-      "research/vgse-ms-m0/FALSIFICATION_LEDGER.json"
+      "research/vgse-ms-m0/analyze_m0.py",
+      ".github/workflows/vgse-ms-m0-replay.yml"
     ]
   },
   "external_evidence": {
@@ -55,21 +56,21 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "rebind M0 execution branch and checkpoint to protected campaign admission",
-    "result": "Campaign admission PR #1086 merged through the native queue at fee2dfed5876ea91543ceae1400b5e355a6583e5. Protected main read back exactly at that SHA. Dedicated execution branch research/vgse-ms-m0 was fast-forwarded without force to the same protected commit. M0 is now authorized ready for its deterministic first action; M1 and M2 remain unauthorized.",
+    "action": "rebind M0 continuity to rebased exact research candidate",
+    "result": "M0 substantive evidence was restaged without stale-history merge onto research/vgse-ms-m0-r2 from protected main 51355bda7d61d8a840e01cc1b06276c0cb768b94. The exact candidate head is e7c76a8b10eccca1087f157783585687e0a499db. Candidate disposition is TE3_REALIZATION_ATLAS_PARTIAL pending replay and review.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#1086",
-      "protected campaign admission fee2dfed5876ea91543ceae1400b5e355a6583e5",
-      "grandchallenge/MATH-PROGRAMME#1084",
       "grandchallenge/MATH-PROGRAMME#1085",
-      "research/vgse-ms-m0@fee2dfed5876ea91543ceae1400b5e355a6583e5"
+      "grandchallenge/MATH-PROGRAMME@51355bda7d61d8a840e01cc1b06276c0cb768b94",
+      "research/vgse-ms-m0/RESULTS.json",
+      "research/vgse-ms-m0/BRANCH_LEDGER.json",
+      "research/vgse-ms-m0/TE3_REPLAY.json"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-TE3-REALIZATION-ATLAS-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-09-27T21:57:44-07:00"
+    "observed_at": "2026-10-02T13:51:00-07:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -77,17 +78,16 @@
     "authoritative_sources": [
       "grandchallenge/MATH-PROGRAMME#1084",
       "grandchallenge/MATH-PROGRAMME#1085",
-      "grandchallenge/MATH-PROGRAMME@fee2dfed5876ea91543ceae1400b5e355a6583e5",
       "docs/VGSE_MECHANICAL_SEMANTICS_MANDATE.md",
       "research/vgse-ms-m0/README.md",
-      "research/vgse-eng-wp03/RESULTS.json",
-      "research/vgse-eng-wp05/RESULTS.json",
-      "research/vgse-eng-wp06/RESULTS.json",
-      "research/vgse-eng-wp06/IDENTIFIABILITY_PROOF.md",
+      "research/vgse-ms-m0/MODEL_CONTRACT.json",
+      "research/vgse-ms-m0/RESULTS.json",
+      "research/vgse-ms-m0/BRANCH_LEDGER.json",
+      "research/vgse-ms-m0/TE3_REPLAY.json",
       "governance/GCL-ID-00-ADOPTION.json",
       "grandchallenge/MATHCERT@15b68c196d020045bea42fc34236e0647b87cbb9"
     ],
-    "instructions": "Checkpoint and execution branch are bound to protected campaign admission fee2dfed5876ea91543ceae1400b5e355a6583e5. Execute only M0. Begin with the exact TE3 forward-realization model contract, then sample genuinely independent quotient points and retain existence, multiplicity, component, singularity, conditioning, and falsification evidence. Do not reopen WP01-WP06. Preserve C06/source-correspondence and all mechanical/physical/manufacturing/product/patent/commercial exclusions. M1 and M2 require separate protected activation. If M0 becomes an inverse/reconstruction claim, apply the adopted GCL-ID-00 trigger."
+    "instructions": "Verify live identity first. Then submit or review only the exact M0 candidate head e7c76a8b10eccca1087f157783585687e0a499db. Require the path-scoped deterministic replay and normal Programme checks. Preserve TE3_REALIZATION_ATLAS_PARTIAL unless the exact replay or review changes it. Do not authorize M1 within the M0 substantive PR."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
